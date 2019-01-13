@@ -1,0 +1,62 @@
+{
+  "private": true,
+  "name": "root",
+  "workspaces": {
+    "packages": [
+      "@packages/*",
+      "@deps/*"
+    ]
+  },
+  "scripts": {
+    "build": "lerna run build",
+    "dev": "lerna run dev",
+    "test": "jest -c @packages/remirror/jest.config.js",
+    "test:ci": "jest --coverage",
+    "test:watch": "jest -c @packages/remirror/jest.config.js --watch --verbose=false"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "nps checks",
+      "post-merge": "lerna bootstrap"
+    }
+  },
+  "lint-staged": {
+    "@packages/*/src/**/*.{ts,tsx}": [
+      "tslint --fix",
+      "git add",
+      "jest --coverage=false --bail --findRelatedTests"
+    ],
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ],
+    "*.yml": [
+      "prettier --write",
+      "git add"
+    ],
+    "**/.babelrc.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "package.json": [
+      "prettier-package-json --write",
+      "git add"
+    ],
+    "@{packages,deps}/*/package.json": [
+      "prettier-package-json --write",
+      "git add"
+    ]
+  },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0",
+    "react": "16.8.0-alpha.0",
+    "react-dom": "16.8.0-alpha.0",
+    "jsdom": "13.1.0",
+    "hoist-non-react-statics": "3.2.1"
+  }
+}

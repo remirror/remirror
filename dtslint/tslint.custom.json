@@ -1,0 +1,6 @@
+{
+  "extends": "../@packages/tslint/main.json",
+  "rules": {
+    "custom-expect": true
+  }
+}

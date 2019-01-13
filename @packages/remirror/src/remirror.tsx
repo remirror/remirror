@@ -1,0 +1,614 @@
+import React, { cloneElement, Component, ReactNode, Ref } from 'react';
+
+import { isFunction, isPlainObject, isString, memoize } from 'lodash';
+import { gapCursor } from 'prosemirror-gapcursor';
+import { InputRule, inputRules, undoInputRule } from 'prosemirror-inputrules';
+import { keymap } from 'prosemirror-keymap';
+import { DOMParser, DOMSerializer, Schema } from 'prosemirror-model';
+import { EditorState, Transaction } from 'prosemirror-state';
+import { EditorView } from 'prosemirror-view';
+import { PlainObject } from 'simplytyped';
+import { baseKeymap, selectParentNode } from './config/commands';
+import { Bold } from './config/marks';
+import { Doc, Paragraph, Text } from './config/nodes';
+import { ExtensionManager } from './config/utils';
+import { getMarkAttrs, markActive, nodeActive } from './config/utils/document-helpers';
+import { Cast } from './helpers';
+import { ObjectNode } from './renderer/renderer';
+import {
+  EditorSchema,
+  IExtension,
+  MarkExtensionSpec,
+  NodeExtensionSpec,
+  OffsetCalculator,
+  Position,
+  ProsemirrorPlugin,
+  RawMenuPositionData,
+  ShouldRenderMenu,
+} from './types';
+
+interface State {
+  editorState: EditorState;
+  selectionAnchor?: number;
+}
+
+export interface GetMenuPropsConfig<T extends string = 'ref'> extends BaseGetterConfig<T> {
+  offset?: OffsetCalculator;
+  shouldRender?: ShouldRenderMenu;
+  offscreenPosition?: Partial<Position>;
+  name: string;
+}
+
+export interface BaseGetterConfig<T extends string = 'ref'> {
+  refKey?: T;
+}
+
+export interface GetRootPropsConfig<T extends string = 'ref'>
+  extends BaseGetterConfig<T>,
+    PlainObject {}
+
+export interface InjectedRemirrorProps {
+  /**
+   * The prosemirror view
+   */
+  view: EditorView<EditorSchema>;
+  commands: Record<string, () => void>;
+  activeMarks: Record<string, () => boolean>;
+  activeNodes: Record<string, () => boolean>;
+  getMarkAttr(type: string): Record<string, string>;
+  clearContent(triggerOnChange?: boolean): void;
+  setContent(content: string | ObjectNode, triggerOnChange?: boolean): void;
+
+  getRootProps<T extends string = 'ref'>(
+    options?: GetRootPropsConfig<T>,
+  ): PlainObject & { [P in Exclude<T, 'children' | 'key'>]: React.Ref<any> };
+  getMenuProps<T extends string = 'ref'>(
+    options: GetMenuPropsConfig<T>,
+  ): { position: Position; rawData: RawMenuPositionData | null; offscreen: boolean } & {
+    [P in Exclude<T, 'children' | 'key' | 'position' | 'rawData' | 'offscreen'>]: React.Ref<any>
+  };
+}
+
+export type RenderPropFunction = (params: InjectedRemirrorProps) => JSX.Element;
+
+export interface RemirrorEventListenerParams {
+  state: EditorState<EditorSchema>;
+  view: EditorView<EditorSchema>;
+  getHTML(): string;
+  getText(lineBreakDivider?: string): string;
+  getJSON(): ObjectNode;
+}
+
+export type RemirrorEventListener = (params: RemirrorEventListenerParams) => void;
+export type AttributePropFunction = (params: RemirrorEventListenerParams) => Record<string, string>;
+
+export interface RemirrorProps {
+  autoFocus?: boolean;
+  placeholder?: string;
+  onChange?: RemirrorEventListener;
+  onFocus?: RemirrorEventListener;
+  onBlur?: RemirrorEventListener;
+  onFirstRender?: RemirrorEventListener;
+  children: RenderPropFunction;
+  dispatchTransaction?: ((tr: Transaction<EditorSchema>) => void) | null;
+  initialContent: ObjectNode | string;
+  attributes: Record<string, string> | AttributePropFunction;
+  editable: boolean;
+  label?: string;
+  useBuiltInExtensions?: boolean;
+  extensions: IExtension[];
+}
+
+const defaultInitialContent: ObjectNode = {
+  type: 'doc',
+  content: [],
+};
+
+export class Remirror extends Component<RemirrorProps, State> {
+  public static defaultProps = {
+    initialContent: defaultInitialContent,
+    extensions: [],
+    editable: true,
+    useBuiltInExtensions: true,
+    attributes: {},
+  };
+
+  public schema: EditorSchema;
+  private editorRef?: HTMLElement;
+  private menuRefMap = new Map<string, HTMLElement>();
+
+  private onRef: Ref<HTMLElement> = ref => {
+    if (ref) {
+      this.editorRef = ref;
+      this.onRefLoad();
+    }
+  };
+
+  private onMenuRefFactory = memoize(
+    (name: string): Ref<HTMLElement> => ref => {
+      if (ref && this.menuRefMap.get(name) !== ref) {
+        this.menuRefMap.set(name, ref);
+      }
+    },
+  );
+
+  private view: EditorView<EditorSchema>;
+  private extensionManager: ExtensionManager;
+  private nodes: Record<string, NodeExtensionSpec>;
+  private marks: Record<string, MarkExtensionSpec>;
+  private plugins: ProsemirrorPlugin[];
+  private keymaps: ProsemirrorPlugin[];
+  private inputRules: InputRule[];
+  private pasteRules: ProsemirrorPlugin[];
+  private commands: Record<string, () => void>;
+  private activeMarks: Record<string, () => boolean>;
+  private activeNodes: Record<string, () => boolean>;
+  private markAttrs: Record<string, Record<string, string>>;
+
+  private get builtInExtensions() {
+    return !this.props.useBuiltInExtensions
+      ? []
+      : [new Doc(), new Text(), new Paragraph(), new Bold()];
+  }
+
+  constructor(props: RemirrorProps) {
+    super(props);
+    this.extensionManager = this.createExtensions();
+    this.nodes = this.extensionManager.nodes;
+    this.marks = this.extensionManager.marks;
+    this.plugins = this.extensionManager.plugins;
+    this.schema = this.createSchema();
+    this.keymaps = this.extensionManager.keymaps({ schema: this.schema });
+    this.inputRules = this.extensionManager.inputRules({ schema: this.schema });
+    this.pasteRules = this.extensionManager.pasteRules({ schema: this.schema });
+    this.state = this.createInitialState();
+    this.view = this.createView();
+    this.commands = this.extensionManager.commands({
+      schema: this.schema,
+      view: this.view,
+      editable: this.props.editable,
+    });
+    this.activeMarks = this.setActiveMarks();
+    this.activeNodes = this.setActiveNodes();
+    this.markAttrs = this.setMarkAttrs();
+  }
+
+  /**
+   * Create the extensions configuration through the extension manager
+   */
+  private createExtensions() {
+    return new ExtensionManager([...this.builtInExtensions, ...this.props.extensions]);
+  }
+
+  /**
+   * Dynamically create the editor schema based on the extensions that have been passed in.
+   */
+  private createSchema() {
+    // console.log(this.extensionManager.nodes);
+    return new Schema({
+      nodes: this.nodes,
+      marks: this.marks,
+    });
+  }
+
+  private rootPropsConfig = {
+    called: false,
+    refKey: 'ref',
+    suppressRefError: false,
+  };
+
+  private getRootProps: InjectedRemirrorProps['getRootProps'] = options => {
+    const { refKey = 'ref', ...config } = options || {};
+
+    this.rootPropsConfig.called = true;
+    this.rootPropsConfig.refKey = refKey;
+    return {
+      [refKey]: this.onRef,
+      ...config,
+    };
+  };
+
+  private getMenuProps: InjectedRemirrorProps['getMenuProps'] = options => {
+    const { refKey = 'ref', ...config } = options || {};
+    const el = this.menuRefMap.get(config.name);
+    return {
+      ...this.calculateMenuPosition(
+        config ? config.offset || {} : {},
+        config.shouldRender,
+        config.offscreenPosition,
+        el,
+      ),
+      [refKey]: this.onMenuRefFactory(config.name),
+    } as ReturnType<InjectedRemirrorProps['getMenuProps']>;
+  };
+
+  private calculateMenuPosition(
+    offset: OffsetCalculator,
+    shouldRender: ShouldRenderMenu = defaultShouldRender,
+    offscreenPosition: Partial<Position> = defaultOffscreenPosition,
+    el?: HTMLElement,
+  ): { position: Position; rawData: RawMenuPositionData | null; offscreen: boolean } {
+    const empty = {
+      position: { ...defaultOffscreenPosition, ...offscreenPosition },
+      rawData: null,
+      offscreen: true,
+    };
+    if (!this.view || !this.view.hasFocus() || !el) {
+      return empty;
+    }
+
+    const { selection } = this.view.state;
+    const { offsetWidth, offsetHeight, offsetParent } = el;
+    const shouldRenderProps = {
+      selection,
+      offsetWidth,
+      offsetHeight,
+      emptySelection: selection.empty,
+    };
+
+    if (!shouldRender(shouldRenderProps)) {
+      return empty;
+    }
+
+    const coords = this.view.coordsAtPos(selection.$anchor.pos);
+    const absCoords = getAbsoluteCoordinates(coords, offsetParent!, offsetHeight);
+
+    const rawData = {
+      ...shouldRenderProps,
+      ...absCoords,
+      windowTop: coords.top,
+      windowLeft: coords.left,
+      windowBottom: coords.bottom,
+      windowRight: coords.right,
+      selectionAnchor: this.state.selectionAnchor!,
+    };
+
+    const offsetCalculator = { ...baseOffsetCalculator, ...simpleOffsetCalculator, ...offset };
+
+    const position = {
+      top: offsetCalculator.top(rawData),
+      left: offsetCalculator.left(rawData),
+      right: offsetCalculator.right(rawData),
+      bottom: offsetCalculator.bottom(rawData),
+    };
+
+    return {
+      rawData,
+      position,
+      offscreen: false,
+    };
+  }
+
+  private createInitialState() {
+    return {
+      editorState: EditorState.create({
+        doc: this.createDocument(this.props.initialContent),
+        plugins: [
+          ...this.plugins,
+          inputRules({
+            rules: this.inputRules,
+          }),
+          ...this.pasteRules,
+          ...this.keymaps,
+          keymap({
+            Backspace: undoInputRule,
+            Escape: selectParentNode,
+          }),
+          keymap(baseKeymap),
+          gapCursor(),
+          // new Plugin({
+          //   props: {
+          //     editable: () => this.props.editable,
+          //   },
+          // }),
+        ],
+      }),
+    };
+  }
+
+  private createDocument(content: string | ObjectNode) {
+    if (isObjectNode(content)) {
+      try {
+        return this.schema.nodeFromJSON(content);
+      } catch (e) {
+        return this.schema.nodeFromJSON(content);
+      }
+    }
+    if (isString(content)) {
+      const element = document.createElement('div');
+      element.innerHTML = content.trim();
+
+      return DOMParser.fromSchema(this.schema).parse(element);
+    }
+    return null;
+  }
+
+  private createView() {
+    return new EditorView<EditorSchema>(undefined, {
+      state: this.state.editorState,
+      dispatchTransaction: this.dispatchTransaction,
+      attributes: this.getAttributes,
+      editable: () => {
+        return this.props.editable;
+      },
+    });
+  }
+
+  /**
+   * This sets the attributes that wrap the outer prosemirror node.
+   * It is currently used for setting the aria attributes on the content-editable prosemirror div.
+   */
+  private getAttributes = (state: EditorState<EditorSchema>) => {
+    const { attributes } = this.props;
+    const propAttributes = isAttributeFunction(attributes)
+      ? attributes({ ...this.eventListenerParams, state })
+      : attributes;
+
+    const defaultAttributes = {
+      role: 'textbox',
+      'aria-multiline': 'true',
+      'aria-placeholder': this.props.placeholder || '',
+      ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
+      'aria-label': this.props.label || '',
+    };
+
+    return { ...defaultAttributes, ...propAttributes };
+  };
+
+  private setActiveMarks() {
+    const initialActiveMarks: Record<string, () => boolean> = {};
+    return Object.entries(this.schema.marks).reduce(
+      (marks, [name, mark]) => ({
+        ...marks,
+        [name]: () => markActive(mark, this.state.editorState),
+      }),
+      initialActiveMarks,
+    );
+  }
+
+  private setActiveNodes() {
+    const initialActiveNodes: Record<string, () => boolean> = {};
+    return Object.entries(this.schema.nodes).reduce(
+      (nodes, [name, node]) => ({
+        ...nodes,
+        [name]: (attrs?: object) => nodeActive(node, attrs, this.state.editorState),
+      }),
+      initialActiveNodes,
+    );
+  }
+
+  private setMarkAttrs() {
+    const initialActiveNodes: Record<string, Record<string, string>> = {};
+    return Object.entries(this.schema.marks).reduce(
+      (attrs, [name, attr]) => ({
+        ...attrs,
+        [name]: getMarkAttrs(attr, this.state.editorState),
+      }),
+      initialActiveNodes,
+    );
+  }
+
+  /**
+   * Retrieve the mark attributes.
+   * @param type
+   */
+  public getMarkAttr(type: string) {
+    return this.markAttrs[type];
+  }
+
+  /**
+   * Part of the Prosemirror API and is called whenever there is state change in the editor.
+   */
+  private dispatchTransaction = (transaction: Transaction<EditorSchema>) => {
+    const { onChange, dispatchTransaction } = this.props;
+    if (dispatchTransaction) {
+      dispatchTransaction(transaction);
+    }
+    const { state, transactions } = this.view.state.applyTransaction(transaction);
+    this.view.updateState(state);
+    this.setState({ editorState: state });
+    if (transactions.some(tr => tr.docChanged) && onChange) {
+      onChange({ ...this.eventListenerParams, state });
+    }
+  };
+
+  private onRefLoad() {
+    if (!this.editorRef) {
+      throw Error(
+        'Something went wrong when initializing the text editor. Please check your setup.',
+      );
+    }
+    const { autoFocus, onFirstRender } = this.props;
+    this.editorRef.appendChild(this.view.dom);
+    if (autoFocus) {
+      this.view.focus();
+    }
+    if (onFirstRender) {
+      onFirstRender(this.eventListenerParams);
+    }
+
+    this.view.dom.addEventListener('blur', this.onBlur);
+    this.view.dom.addEventListener('focus', this.onFocus);
+
+    /* For tables */
+    // document.execCommand('enableObjectResizing', false);
+    // document.execCommand('enableInlineTableEditing', false);
+  }
+
+  public componentDidUpdate(prevProps: RemirrorProps) {
+    if (this.props.editable !== prevProps.editable && this.view && this.editorRef) {
+      this.view.setProps({ ...this.view.props, editable: () => this.props.editable });
+    }
+  }
+
+  public componentWillUnmount() {
+    this.view.dom.removeEventListener('blur', this.onBlur);
+    this.view.dom.removeEventListener('focus', this.onFocus);
+    this.view.destroy();
+  }
+
+  private onBlur = () => {
+    if (this.props.onBlur) {
+      this.props.onBlur(this.eventListenerParams);
+    }
+  };
+
+  private onFocus = () => {
+    if (this.props.onFocus) {
+      this.props.onFocus(this.eventListenerParams);
+    }
+  };
+
+  private setContent = (content: string | ObjectNode, triggerOnChange = false) => {
+    const editorState = EditorState.create({
+      schema: this.schema,
+      doc: this.createDocument(content),
+      plugins: this.plugins,
+    });
+
+    const afterUpdate = () => {
+      this.view.updateState(editorState);
+
+      if (triggerOnChange && this.props.onChange) {
+        this.props.onChange({ ...this.eventListenerParams, state: editorState });
+      }
+    };
+
+    this.setState({ editorState }, afterUpdate);
+  };
+
+  private clearContent = (triggerOnChange = false) => {
+    this.setContent(defaultInitialContent, triggerOnChange);
+  };
+
+  get eventListenerParams(): RemirrorEventListenerParams {
+    return {
+      state: this.state.editorState,
+      view: this.view,
+      getHTML: this.getHTML,
+      getJSON: this.getJSON,
+      getText: this.getText,
+    };
+  }
+
+  get renderParams(): InjectedRemirrorProps {
+    return {
+      view: this.view,
+      commands: this.commands,
+      activeMarks: this.activeMarks,
+      activeNodes: this.activeNodes,
+      getMarkAttr: this.getMarkAttr,
+      clearContent: this.clearContent,
+      setContent: this.setContent,
+
+      /* Getters */
+      getRootProps: this.getRootProps,
+      getMenuProps: this.getMenuProps,
+    };
+  }
+
+  private getText = (lineBreakDivider = '\n\n') => {
+    const { doc } = this.state.editorState;
+    return doc.textBetween(0, doc.content.size, lineBreakDivider);
+  };
+
+  private getHTML = () => {
+    const div = document.createElement('div');
+    const fragment = DOMSerializer.fromSchema(this.schema).serializeFragment(
+      this.state.editorState.doc.content,
+    );
+
+    div.appendChild(fragment);
+
+    return div.innerHTML;
+  };
+
+  private getJSON = (): ObjectNode => {
+    return this.state.editorState.toJSON() as ObjectNode;
+  };
+
+  public render() {
+    const { children } = this.props;
+    if (!isRenderProp(children)) {
+      throw new Error('The child argument to the Remirror component must be a function.');
+    }
+
+    /* Reset the root props called status */
+    this.rootPropsConfig.called = false;
+    this.rootPropsConfig.refKey = '';
+
+    const element = children({
+      ...this.renderParams,
+    });
+
+    if (this.rootPropsConfig.called) {
+      return element;
+    }
+
+    if (isDOMElement(element)) {
+      // they didn't apply the root props, but we can clone
+      // this and apply the props ourselves
+      return cloneElement(element, this.getRootProps(getElementProps(element)));
+    }
+
+    return null;
+  }
+}
+
+const isAttributeFunction = (arg: unknown): arg is AttributePropFunction => isFunction(arg);
+const isRenderProp = (arg: unknown): arg is RenderPropFunction => isFunction(arg);
+const isObjectNode = (arg: unknown): arg is ObjectNode => {
+  if (isPlainObject(arg) && Cast(arg).type === 'doc') {
+    return true;
+  }
+  return false;
+};
+const isDOMElement = (element: ReactNode) => {
+  return element && isString(Cast<JSX.Element>(element).type);
+};
+const getElementProps = (element: JSX.Element): PlainObject => {
+  return element.props;
+};
+
+const baseOffsetCalculator: Required<OffsetCalculator> = {
+  top: () => 0,
+  left: () => 0,
+  right: () => 0,
+  bottom: () => 0,
+};
+
+export const simpleOffsetCalculator: OffsetCalculator = {
+  left: props =>
+    window.innerWidth - props.offsetWidth < props.left
+      ? props.left - props.offsetWidth + 20
+      : props.left,
+  top: props => (props.windowTop < 30 ? props.top + 20 : props.top - 10),
+};
+
+const defaultShouldRender: ShouldRenderMenu = props => props.selection && !props.selection.empty;
+const defaultOffscreenPosition: Position = { left: -1000, top: 0, bottom: 0, right: 0 };
+
+/**
+ * We need to translate the co-ordinates because `coordsAtPos` returns co-ordinates
+ * relative to `window`. And, also need to adjust the cursor container height.
+ * (0, 0)
+ * +--------------------- [window] ---------------------+
+ * |   (left, top) +-------- [Offset Parent] --------+  |
+ * | {coordsAtPos} | [Cursor]   <- cursorHeight      |  |
+ * |               | [FloatingToolbar]               |  |
+ */
+const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, cursorHeight: number) => {
+  const {
+    left: offsetParentLeft,
+    top: offsetParentTop,
+    height: offsetParentHeight,
+  } = offsetParent.getBoundingClientRect();
+
+  return {
+    left: coords.left - offsetParentLeft,
+    right: coords.right - offsetParentLeft,
+    top: coords.top - (offsetParentTop - cursorHeight) + offsetParent.scrollTop,
+    bottom:
+      offsetParentHeight - (coords.top - (offsetParentTop - cursorHeight) - offsetParent.scrollTop),
+  };
+};

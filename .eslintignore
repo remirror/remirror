@@ -1,0 +1,5 @@
+!.babelrc.js
+!**/.babelrc.js
+lib
+dist
+node_modules

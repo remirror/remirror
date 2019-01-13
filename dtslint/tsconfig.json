@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "lib": ["es6", "es2018", "es2017", "es2016", "es7"],
+    "noImplicitReturns": true,
+    "target": "es5",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "alwaysStrict": true
+  },
+  "files": ["firestore-schema.dts.ts"]
+}

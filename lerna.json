@@ -1,0 +1,26 @@
+{
+  "packages": ["@packages/*", "@deps/*"],
+  "publish": {},
+  "command": {
+    "publish": {
+      "message": "chore(release): publish %s",
+      "registry": "https://registry.npmjs.org/",
+      "npmClient": "npm",
+      "signGitCommit": true,
+      "signGitTag": true,
+      "allowBranch": ["master", "develop", "feat/*"]
+    }
+  },
+  "version": "0.0.1",
+  "npmClient": "yarn",
+  "registry": "https://registry.npmjs.org/",
+  "useWorkspaces": true,
+  "npmClientArgs": ["--no-lockfile"],
+  "ignoreChanges": [
+    "**/__fixtures__/**",
+    "**/__tests__/**",
+    "**/__mocks__/**",
+    "**/__stories__/**",
+    "**/*.md"
+  ]
+}

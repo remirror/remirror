@@ -1,0 +1,13 @@
+{
+  "extends": "@kj/tslint-rules/react",
+  "rules": {
+    "custom-no-implicit-dependencies": [
+      true,
+      "dev",
+      ["jest-axe", "jest", "jest-dom", "react-testing-library", "@test-utils", "@storybook"]
+    ],
+    "no-empty": false,
+    "no-any": false,
+    "no-object-literal-type-assertion": false
+  }
+}
