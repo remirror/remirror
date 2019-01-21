@@ -1,17 +1,18 @@
 # Remirror
 
+_**Note:** This project is currently purely conceptual and may never progress beyond this point._
+
 An editor for universal react code.
 
-- Supports desktop and mobile,
-- Support for SSR
-- Support for React Native
-- Support for flutter (once flutter release BiDirectional communications within a WebView).
+- Supports desktop and mobile.
+- Support for SSR.
+- Support for React Native.
 
 The goal is to allow full control of your text editor in all environments.
 
 **First release goals:**
 
-- [ ] Working implementation of suggested usernames with react ui built in
+- [ ] Working implementation of suggested usernames with react ui built in.
 
 **Examples:**
 
