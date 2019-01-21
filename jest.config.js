@@ -9,8 +9,6 @@ const coverageThreshold = {
   },
 };
 
-console.log('LOADING CONFIG');
-
 module.exports = {
   cacheDirectory: '<rootDir>/.jest',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],

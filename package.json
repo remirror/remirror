@@ -9,15 +9,24 @@
   },
   "scripts": {
     "build": "lerna run build",
-    "dev": "lerna run dev",
-    "test": "jest -c @packages/remirror/jest.config.js",
+    "checks": "run-s lint typecheck test",
+    "checks:parallel": "run-p lint typecheck test",
+    "dev": "lerna run dev --parallel",
+    "lint": "run-s lint:dts lint:ts",
+    "lint:dts": "tslint -p dtslint/tsconfig.custom.json -c dtslint/tslint.custom.json dtslint/*.dts.ts",
+    "lint:fix": "lerna run lint --parallel -- --fix",
+    "lint:ts": "lerna run lint --parallel",
+    "publish:alpha": "lerna publish prerelease --preid=alpha --exact --dist-tag=alpha",
+    "test": "jest ",
     "test:ci": "jest --coverage",
-    "test:watch": "jest -c @packages/remirror/jest.config.js --watch --verbose=false"
+    "test:watch": "jest  --watch --verbose=false --coverage=false",
+    "typecheck": "lerna run typecheck",
+    "yarn:integrity": "yarn check --integrity"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "nps checks",
+      "pre-push": "yarn checks",
       "post-merge": "lerna bootstrap"
     }
   },

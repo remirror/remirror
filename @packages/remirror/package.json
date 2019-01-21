@@ -1,9 +1,9 @@
 {
   "name": "remirror",
-  "description": "React-Prosemirror text editor building blocks",
+  "description": "A text editor for react built with prosemirror",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "repository": "https://github.com/kickjump/remirror",
+  "repository": "https://github.com/ifiokjr/remirror",
   "version": "0.0.0",
   "main": "lib/index.js",
   "module": "lib/dist/remirror.components.esm.js",

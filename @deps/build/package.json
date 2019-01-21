@@ -52,6 +52,12 @@
     "react-dom": "16.8.0-alpha.0",
     "regenerator-runtime": "0.13.1",
     "rimraf": "2.6.3",
+    "rollup": "1.1.0",
+    "rollup-plugin-babel": "4.3.1",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "4.0.0",
+    "rollup-plugin-replace": "2.1.0",
+    "rollup-plugin-terser": "4.0.2",
     "tslint": "5.12.1",
     "typescript": "3.2.4",
     "typescript-styled-plugin": "0.13.0"

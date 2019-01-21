@@ -95,12 +95,11 @@ describe('Remirror', () => {
 
   it('should render a unique class on the root document', () => {
     const mock = jest.fn(() => <div />);
-    const { getByLabelText, debug } = render(
+    const { getByLabelText } = render(
       <Remirror label={label} {...handlers}>
         {mock}
       </Remirror>,
     );
-    debug();
     const editorNode = getByLabelText(label);
     expect(editorNode.className).toMatch(/remirror-[0-9]+/);
   });
