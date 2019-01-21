@@ -8,9 +8,14 @@ import { Mention } from '../config/nodes';
 const EditorLayout: FunctionComponent = () => {
   const [json, setJson] = useState(JSON.stringify(initialJson, null, 2));
 
-  const onChange: RemirrorEventListener = ({ getDocJSON }) => {
-    console.log('onChange has been called', isEqual(json, getDocJSON()));
-    setJson(JSON.stringify(getDocJSON(), null, 2));
+  const onChange: RemirrorEventListener = ({ getDocJSON, view, state }) => {
+    const newJson = JSON.stringify(getDocJSON(), null, 2);
+    console.log(
+      'onChange has been called',
+      isEqual(json, newJson),
+      isEqual(view.state.doc.toJSON(), getDocJSON()),
+    );
+    setJson(newJson);
   };
 
   const runAction = memoize(

@@ -391,10 +391,11 @@ export class Remirror extends Component<RemirrorProps, State> {
     const { state, transactions } = this.view.state.applyTransaction(transaction);
     console.log('Steps', transaction.steps);
     this.view.updateState(state);
-    this.setState({ editorState: state });
-    if (transactions.some(tr => tr.docChanged) && onChange) {
-      onChange({ ...this.eventListenerParams, state });
-    }
+    this.setState({ editorState: state }, () => {
+      if (transactions.some(tr => tr.docChanged) && onChange) {
+        onChange({ ...this.eventListenerParams, state });
+      }
+    });
   };
 
   private onRefLoad() {
