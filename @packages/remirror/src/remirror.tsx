@@ -430,6 +430,13 @@ export class Remirror extends Component<RemirrorProps, State> {
   public componentWillUnmount() {
     this.view.dom.removeEventListener('blur', this.onBlur);
     this.view.dom.removeEventListener('focus', this.onFocus);
+    const editorState = this.view.state;
+    this.view.state.plugins.forEach(plugin => {
+      const state = plugin.getState(editorState);
+      if (state && state.destroy) {
+        state.destroy();
+      }
+    });
     this.view.destroy();
   }
 
