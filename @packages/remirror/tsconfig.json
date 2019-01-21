@@ -4,7 +4,7 @@
     "lib": ["es6", "es2018", "es2017", "es2016", "es7", "dom"],
     "jsx": "react",
     "outDir": "lib",
-    "baseUrl": "./src",
+    "baseUrl": "src",
     "types": ["jest", "jest-extended", "jest-axe", "jest-dom/extend-expect"],
     "plugins": [{ "name": "typescript-styled-plugin", "tags": ["styled"] }],
     "paths": {

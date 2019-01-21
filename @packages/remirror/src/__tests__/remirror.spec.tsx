@@ -1,6 +1,7 @@
 import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
 import { axe, fireEvent, render, renderString } from '@test-utils';
+import { PlainObject } from 'simplytyped';
 import { InjectedRemirrorProps, Remirror } from '..';
 
 const findTextElement = (node: Node, text: string): Node | null => {
@@ -142,7 +143,43 @@ describe('Remirror', () => {
   });
 
   describe('getMenuProps', () => {
-    it('provides correct props', () => {});
+    const mock = jest.fn();
+    const Menu: FunctionComponent<RefAttributes<HTMLDivElement> & PlainObject> = forwardRef(
+      (_, ref) => {
+        mock(ref);
+        return null;
+      },
+    );
+    // TODO implement
+    it('updates the offscreen attribute when a selection is active', () => {
+      render(
+        <Remirror>
+          {({ getMenuProps }) => {
+            const { ref } = getMenuProps({ name: 'test' });
+            return (
+              <div>
+                <Menu ref={ref} />
+              </div>
+            );
+          }}
+        </Remirror>,
+      );
+      expect(mock).toHaveBeenCalledWith(expect.any(Function));
+    });
+    it('provides correct menu props', () => {
+      render(
+        <Remirror>
+          {({ getMenuProps }) => {
+            const { ref, ...props } = getMenuProps({ name: 'test' });
+            expect(ref).toEqual(expect.any(Function));
+            expect(props).toContainAllKeys(['position', 'rawData', 'offscreen']);
+            expect(props.offscreen).toBe(true);
+            return <div />;
+          }}
+        </Remirror>,
+      );
+      expect.hasAssertions();
+    });
   });
 });
 
