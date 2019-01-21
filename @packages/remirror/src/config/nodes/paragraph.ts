@@ -3,9 +3,7 @@ import { setBlockType } from '../commands';
 import { NodeExtension } from '../utils/node-extension';
 
 export class Paragraph extends NodeExtension {
-  get name() {
-    return 'paragraph';
-  }
+  public readonly name = 'paragraph';
 
   get schema() {
     return {

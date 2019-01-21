@@ -8,7 +8,13 @@ import {
   NodeType,
   Schema,
 } from 'prosemirror-model';
-import { EditorState, Plugin as PMPlugin, Selection, Transaction } from 'prosemirror-state';
+import {
+  EditorState,
+  Plugin as PMPlugin,
+  PluginKey,
+  Selection,
+  Transaction,
+} from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { Omit } from 'simplytyped';
 
@@ -50,7 +56,8 @@ export type EditorSchema = Schema<string, string>;
 
 export interface IExtension {
   readonly name: string;
-  readonly type: string;
+  readonly pluginKey: PluginKey;
+  readonly type: ExtensionType;
   readonly defaultOptions?: Record<string, any>;
   readonly plugins?: ProsemirrorPlugin[];
   commands?(params: SchemaParams): FlexibleConfig<ExtensionCommandFunction>;
@@ -96,12 +103,12 @@ export interface ISharedExtension<T extends NodeType | MarkType> extends IExtens
 }
 
 export interface INodeExtension extends ISharedExtension<NodeType<EditorSchema>> {
-  readonly type: 'node';
+  readonly type: ExtensionType.NODE;
   schema: NodeExtensionSpec;
 }
 
 export interface IMarkExtension extends ISharedExtension<MarkType<EditorSchema>> {
-  readonly type: 'mark';
+  readonly type: ExtensionType.MARK;
   schema: MarkExtensionSpec;
 }
 
@@ -159,3 +166,24 @@ export interface ActionMethods {
 }
 
 export type RemirrorActions<GKeys extends string = string> = Record<GKeys, ActionMethods>;
+
+/**
+ * Marks are categorised into different groups. One motivation for this was to allow the `code` mark
+ * to exclude other marks, without needing to explicitly name them. Explicit naming requires the
+ * named mark to exist in the schema. This is undesirable because we want to construct different
+ * schemas that have different sets of nodes/marks.
+ */
+export enum MarkGroup {
+  FONT_STYLE = 'fontStyle',
+  SEARCH_QUERY = 'searchQuery',
+  LINK = 'link',
+  COLOR = 'color',
+  ALIGNMENT = 'alignment',
+  INDENTATION = 'indentation',
+}
+
+export enum ExtensionType {
+  NODE = 'node',
+  MARK = 'mark',
+  EXTENSION = 'extension',
+}

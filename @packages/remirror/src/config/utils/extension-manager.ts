@@ -1,7 +1,7 @@
 import { InputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
-import { EditorState } from 'prosemirror-state';
+import { EditorState, PluginKey } from 'prosemirror-state';
 import { AnyFunc } from 'simplytyped';
 import {
   ActionMethods,
@@ -9,6 +9,7 @@ import {
   ExtensionActiveFunction,
   ExtensionCommandFunction,
   ExtensionEnabledFunction,
+  ExtensionType,
   FlexibleConfig,
   IExtension,
   IMarkExtension,
@@ -19,27 +20,6 @@ import {
   RemirrorActions,
   SchemaParams,
 } from '../../types';
-
-const isNodeExtension = (ext: IExtension): ext is INodeExtension => ext.type === 'node';
-const isMarkExtension = (ext: IExtension): ext is IMarkExtension => ext.type === 'mark';
-
-const hasExtensionProperty = <GExt extends IExtension, GKey extends keyof GExt>(property: GKey) => (
-  ext: GExt,
-): ext is GExt & Pick<Required<GExt>, GKey> => Boolean(ext[property]);
-
-type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys';
-const extensionPropertyMapper = <
-  GExt extends IExtension,
-  GExtensionMethodProp extends ExtensionMethodProperties
->(
-  property: GExtensionMethodProp,
-  schema: Schema,
-) => (extension: GExt) =>
-  isNodeExtension(extension)
-    ? extension[property]({ schema, type: schema.nodes[extension.name] })
-    : isMarkExtension(extension)
-    ? extension[property]({ schema, type: schema.marks[extension.name] })
-    : extension[property]({ schema });
 
 export class ExtensionManager {
   constructor(
@@ -67,6 +47,20 @@ export class ExtensionManager {
       }),
       initialEditorMarks,
     );
+  }
+
+  /**
+   * Currently an extension can have only one pluginKey but multiple plugins - which is a potential bug.
+   * TODO enhance pluginKey assignment
+   */
+  get pluginKeys() {
+    const initialPluginKeys: Record<string, PluginKey> = {};
+    return this.extensions
+      .filter(extension => extension.plugins)
+      .reduce(
+        (allPluginKeys, { pluginKey, name }) => ({ ...allPluginKeys, ...{ [name]: pluginKey } }),
+        initialPluginKeys,
+      );
   }
 
   get plugins() {
@@ -277,3 +271,24 @@ const createFlexibleFunctionMap = <
       };
     }, initialItems);
 };
+
+const isNodeExtension = (ext: IExtension): ext is INodeExtension => ext.type === ExtensionType.NODE;
+const isMarkExtension = (ext: IExtension): ext is IMarkExtension => ext.type === ExtensionType.MARK;
+
+const hasExtensionProperty = <GExt extends IExtension, GKey extends keyof GExt>(property: GKey) => (
+  ext: GExt,
+): ext is GExt & Pick<Required<GExt>, GKey> => Boolean(ext[property]);
+
+type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys';
+const extensionPropertyMapper = <
+  GExt extends IExtension,
+  GExtensionMethodProp extends ExtensionMethodProperties
+>(
+  property: GExtensionMethodProp,
+  schema: Schema,
+) => (extension: GExt) =>
+  isNodeExtension(extension)
+    ? extension[property]({ schema, type: schema.nodes[extension.name] })
+    : isMarkExtension(extension)
+    ? extension[property]({ schema, type: schema.marks[extension.name] })
+    : extension[property]({ schema });

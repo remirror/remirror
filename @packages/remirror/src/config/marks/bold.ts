@@ -1,26 +1,35 @@
+import { isString } from 'lodash';
+import { MarkSpec } from 'prosemirror-model';
+import { Cast } from '../../helpers';
 import { SchemaMarkTypeParams } from '../../types';
 import { toggleMark } from '../commands';
 import { markInputRule } from '../commands/mark-input-rule';
 import { MarkExtension } from '../utils';
 
 export class Bold extends MarkExtension {
-  get name() {
-    return 'bold';
-  }
+  public readonly name = 'bold';
 
-  get schema() {
+  get schema(): MarkSpec {
     return {
       parseDOM: [
         {
           tag: 'strong',
         },
+        // This works around a Google Docs misbehavior where
+        // pasted content will be inexplicably wrapped in `<b>`
+        // tags with a font-weight normal.
         {
           tag: 'b',
-          getAttrs: (node: HTMLElement) => node.style.fontWeight !== 'normal' && null,
+          getAttrs(node) {
+            const element = Cast<HTMLElement>(node);
+            return element.style.fontWeight !== 'normal' && null;
+          },
         },
         {
           style: 'font-weight',
-          getAttrs: (value: string) => /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null,
+          getAttrs(value) {
+            return isString(value) && /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null;
+          },
         },
       ],
       toDOM: () => ['strong', 0],

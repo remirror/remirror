@@ -1,14 +1,8 @@
-// declare module 'hoist-non-react-statics' {
-//   import React from 'react';
+declare module 'css-in-js-utils/lib/cssifyObject' {
+  import * as CSS from 'csstype';
 
-//   declare function hoistNonReactStatics<Own, Custom>(
-//     TargetComponent: React.ComponentType<Own>,
-//     SourceComponent: React.ComponentType<Custom>,
-//     customStatic?: object,
-//   ): React.ComponentType<Own>;
-
-//   export default hoistNonReactStatics;
-// }
+  export default function(obj: CSS.Properties<any>): string;
+}
 
 declare module 'prosemirror-dropcursor' {
   import { Plugin, Selection } from 'prosemirror-state';

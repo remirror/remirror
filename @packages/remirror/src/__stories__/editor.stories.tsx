@@ -8,12 +8,12 @@ import { Mention } from '../config/nodes';
 const EditorLayout: FunctionComponent = () => {
   const [json, setJson] = useState(JSON.stringify(initialJson, null, 2));
 
-  const onChange: RemirrorEventListener = ({ getDocJSON, view, state }) => {
-    const newJson = JSON.stringify(getDocJSON(), null, 2);
+  const onChange: RemirrorEventListener = ({ getJSON, view }) => {
+    const newJson = JSON.stringify(getJSON(), null, 2);
     console.log(
       'onChange has been called',
       isEqual(json, newJson),
-      isEqual(view.state.doc.toJSON(), getDocJSON()),
+      isEqual(view.state.doc.toJSON(), getJSON()),
     );
     setJson(newJson);
   };
@@ -33,22 +33,10 @@ const EditorLayout: FunctionComponent = () => {
         gridTemplateAreas: '"editor" "json"',
       }}
     >
-      <style>
-        {`
-      .ProseMirror {
-        padding: 10px;
-        background: #fffeee;
-        min-height: 200px;
-      }
-
-      .ProseMirror:focus {
-        outline: none;
-      }`}
-      </style>
       <div style={{ gridArea: 'editor' }}>
         <Remirror
           onChange={onChange}
-          placeholder='This is a placeholder'
+          placeholder='Start typing for magic...'
           autoFocus={true}
           initialContent={initialJson}
           extensions={[

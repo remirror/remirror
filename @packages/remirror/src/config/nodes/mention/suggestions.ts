@@ -2,9 +2,9 @@ import { curry } from 'lodash';
 import { ResolvedPos } from 'prosemirror-model';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view';
-import { CommandFunction, EditorSchema, SuggestionsRange } from '../../types';
-import { insertText } from '../commands';
-import { getPluginState } from '../utils/document-helpers';
+import { CommandFunction, EditorSchema, SuggestionsRange } from '../../../types';
+import { insertText } from '../../commands';
+import { getPluginState } from '../../utils/document-helpers';
 
 export interface SuggestionsMatcher {
   char: string;

@@ -1,11 +1,16 @@
-import { INodeExtension } from '../../types';
+import {
+  ExtensionActiveFunction,
+  ExtensionType,
+  FlexibleConfig,
+  INodeExtension,
+  SchemaWithStateParams,
+} from '../../types';
 import { nodeActive } from './document-helpers';
 import { Extension } from './extension';
 
-export class NodeExtension<T extends {} = {}> extends Extension<T> implements INodeExtension {
-  get type() {
-    return 'node' as 'node';
-  }
+export abstract class NodeExtension<T extends {} = {}> extends Extension<T>
+  implements INodeExtension {
+  public readonly type = ExtensionType.NODE;
 
   get view() {
     return undefined;
@@ -15,6 +20,10 @@ export class NodeExtension<T extends {} = {}> extends Extension<T> implements IN
     return {};
   }
 
-  public active: INodeExtension['active'] = ({ getEditorState, schema }) => attrs =>
-    nodeActive(schema.nodes.name, attrs, getEditorState());
+  public active({
+    getEditorState,
+    schema,
+  }: SchemaWithStateParams): FlexibleConfig<ExtensionActiveFunction> {
+    return attrs => nodeActive(schema.nodes.name, attrs, getEditorState());
+  }
 }

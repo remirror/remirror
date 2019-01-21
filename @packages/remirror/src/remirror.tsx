@@ -1,19 +1,23 @@
 import React, { cloneElement, Component, ReactNode, Ref } from 'react';
 
-import { isFunction, isPlainObject, isString, memoize, pick } from 'lodash';
+import { isFunction, isPlainObject, isString, memoize, pick, uniqueId } from 'lodash';
 import { InputRule, inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { DOMParser, DOMSerializer, Schema } from 'prosemirror-model';
-import { EditorState, Transaction } from 'prosemirror-state';
+import { EditorState, PluginKey, Transaction } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { PlainObject } from 'simplytyped';
+import { RemirrorCustomStyles, RemirrorStyle, RemirrorStyleProps } from './components';
 import { baseKeymap, selectParentNode } from './config/commands';
 import { Bold } from './config/marks';
 import { Doc, Paragraph, Text } from './config/nodes';
+import { PlaceholderPluginState } from './config/plugins';
+import Placeholder from './config/plugins/placeholder';
 import { ExtensionManager } from './config/utils';
-import { getMarkAttrs } from './config/utils/document-helpers';
+import { getMarkAttrs, getPluginKeyState } from './config/utils/document-helpers';
 import { Cast } from './helpers';
 import { ObjectNode } from './renderer/renderer';
+import { defaultStyles } from './styles';
 import {
   EditorSchema,
   IExtension,
@@ -96,6 +100,7 @@ export interface RemirrorProps {
   label?: string;
   useBuiltInExtensions?: boolean;
   extensions: IExtension[];
+  styles?: Partial<RemirrorCustomStyles> | null;
 }
 
 const defaultInitialContent: ObjectNode = {
@@ -110,6 +115,7 @@ export class Remirror extends Component<RemirrorProps, State> {
     editable: true,
     useBuiltInExtensions: true,
     attributes: {},
+    styles: defaultStyles,
   };
 
   public schema: EditorSchema;
@@ -131,6 +137,7 @@ export class Remirror extends Component<RemirrorProps, State> {
     },
   );
 
+  private uid = uniqueId('remirror-');
   private view: EditorView<EditorSchema>;
   private extensionManager: ExtensionManager;
   private nodes: Record<string, NodeExtensionSpec>;
@@ -141,11 +148,12 @@ export class Remirror extends Component<RemirrorProps, State> {
   private pasteRules: ProsemirrorPlugin[];
   private actions: RemirrorActions;
   private markAttrs: Record<string, Record<string, string>>;
+  private pluginKeys: Record<string, PluginKey>;
 
   private get builtInExtensions() {
     return !this.props.useBuiltInExtensions
       ? []
-      : [new Doc(), new Text(), new Paragraph(), new Bold()];
+      : [new Doc(), new Text(), new Paragraph(), new Bold(), new Placeholder()];
   }
 
   constructor(props: RemirrorProps) {
@@ -154,6 +162,7 @@ export class Remirror extends Component<RemirrorProps, State> {
     this.nodes = this.extensionManager.nodes;
     this.marks = this.extensionManager.marks;
     this.plugins = this.extensionManager.plugins;
+    this.pluginKeys = this.extensionManager.pluginKeys;
     this.schema = this.createSchema();
     this.keymaps = this.extensionManager.keymaps({ schema: this.schema });
     this.inputRules = this.extensionManager.inputRules({ schema: this.schema });
@@ -182,7 +191,6 @@ export class Remirror extends Component<RemirrorProps, State> {
    * Dynamically create the editor schema based on the extensions that have been passed in.
    */
   private createSchema() {
-    // console.log(this.extensionManager.nodes);
     return new Schema({
       nodes: this.nodes,
       marks: this.marks,
@@ -356,6 +364,7 @@ export class Remirror extends Component<RemirrorProps, State> {
       'aria-placeholder': this.props.placeholder || '',
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label || '',
+      class: this.uid,
     };
 
     return { ...defaultAttributes, ...propAttributes };
@@ -523,6 +532,28 @@ export class Remirror extends Component<RemirrorProps, State> {
     return this.state.editorState.doc.toJSON() as ObjectNode;
   };
 
+  private getPluginKeyState<T>(name: string): T | undefined {
+    return this.pluginKeys[name]
+      ? getPluginKeyState(this.pluginKeys[name], this.state.editorState)
+      : undefined;
+  }
+
+  private get placeholder(): RemirrorStyleProps['placeholder'] {
+    const { placeholder } = this.props;
+    const pluginState = this.getPluginKeyState<PlaceholderPluginState>('placeholder');
+    if (placeholder && !pluginState) {
+      console.error(
+        'To use a placeholder you must provide a placeholder plugin (or set `props.useBuiltInExtensions` to true).',
+      );
+    }
+    return placeholder && pluginState
+      ? {
+          text: placeholder,
+          className: pluginState.emptyNodeClass,
+        }
+      : undefined;
+  }
+
   public render() {
     const { children } = this.props;
     if (!isRenderProp(children)) {
@@ -533,21 +564,24 @@ export class Remirror extends Component<RemirrorProps, State> {
     this.rootPropsConfig.called = false;
     this.rootPropsConfig.refKey = '';
 
-    const element = children({
+    let element: JSX.Element | null = children({
       ...this.renderParams,
     });
 
-    if (this.rootPropsConfig.called) {
-      return element;
+    if (!this.rootPropsConfig.called) {
+      element = isDOMElement(element)
+        ? cloneElement(element, this.getRootProps(getElementProps(element)))
+        : null;
     }
 
-    if (isDOMElement(element)) {
-      // they didn't apply the root props, but we can clone
-      // this and apply the props ourselves
-      return cloneElement(element, this.getRootProps(getElementProps(element)));
-    }
-
-    return null;
+    return element ? (
+      <>
+        <RemirrorStyle uid={this.uid} placeholder={this.placeholder} styles={this.props.styles} />
+        {element}
+      </>
+    ) : (
+      element
+    );
   }
 }
 

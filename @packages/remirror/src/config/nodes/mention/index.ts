@@ -1,13 +1,13 @@
-import { ExtensionCommandFunction, NodeExtensionSpec, SchemaParams } from '../../types';
-import { replaceText } from '../commands';
-import { SuggestionsPlugin, SuggestionsPluginProps } from '../plugins/suggestions';
-import { NodeExtension } from '../utils';
+import { ExtensionCommandFunction, NodeExtensionSpec, SchemaParams } from '../../../types';
+import { replaceText } from '../../commands';
+import { NodeExtension } from '../../utils';
+import { SuggestionsPlugin, SuggestionsPluginProps } from './suggestions';
 
-export interface MentionNodeExtensionProps extends SuggestionsPluginProps {
+export interface MentionNodeExtensionOptions extends SuggestionsPluginProps {
   mentionClassName?: string;
 }
 
-export class Mention extends NodeExtension<MentionNodeExtensionProps> {
+export class Mention extends NodeExtension<MentionNodeExtensionOptions> {
   get name() {
     return 'mention';
   }

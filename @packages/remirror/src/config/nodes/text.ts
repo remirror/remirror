@@ -1,9 +1,7 @@
 import { NodeExtension } from '../utils/node-extension';
 
 export class Text extends NodeExtension {
-  get name() {
-    return 'text';
-  }
+  public readonly name = 'text';
 
   get schema() {
     return {

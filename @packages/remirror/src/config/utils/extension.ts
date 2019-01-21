@@ -1,27 +1,45 @@
 import { InputRule } from 'prosemirror-inputrules';
+import { PluginKey } from 'prosemirror-state';
 import { Cast } from '../../helpers';
-import { IExtension, ProsemirrorPlugin, SchemaParams, SchemaWithStateParams } from '../../types';
+import {
+  CommandFunction,
+  ExtensionActiveFunction,
+  ExtensionType,
+  FlexibleConfig,
+  IExtension,
+  ProsemirrorPlugin,
+  SchemaParams,
+  SchemaWithStateParams,
+} from '../../types';
 
-export class Extension<T extends {} = {}> implements IExtension {
+export abstract class Extension<T extends {} = {}> implements IExtension {
   public readonly options: T;
+  public readonly type: ExtensionType = ExtensionType.EXTENSION;
+  public abstract readonly name: string;
+  private pk?: PluginKey;
 
-  constructor(...args: keyof T extends never ? [] : [T]) {
+  constructor(...args: keyof T extends never ? [] : [T?]) {
     if (args[0]) {
       this.options = {
         ...this.defaultOptions,
         ...args[0],
       };
     } else {
-      this.options = Cast(this.defaultOptions);
+      this.options = Cast<T>(this.defaultOptions);
     }
+    this.init();
   }
 
-  get name() {
-    return '';
+  private init() {
+    this.pk = new PluginKey(this.name);
   }
 
-  get type() {
-    return 'extension';
+  public get pluginKey(): PluginKey {
+    if (this.pk) {
+      return this.pk;
+    }
+    this.pk = new PluginKey(this.name);
+    return this.pk;
   }
 
   get defaultOptions(): Partial<T> {
@@ -36,15 +54,15 @@ export class Extension<T extends {} = {}> implements IExtension {
     return [];
   }
 
-  public keys: IExtension['keys'] = () => {
+  public keys(_: SchemaParams): Record<string, CommandFunction> {
     return {};
-  };
+  }
 
   public pasteRules: IExtension['pasteRules'] = () => {
     return [];
   };
 
-  public active(_: SchemaWithStateParams) {
+  public active(_: SchemaWithStateParams): FlexibleConfig<ExtensionActiveFunction> {
     return () => false;
   }
 

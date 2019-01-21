@@ -43,7 +43,7 @@ describe('Remirror', () => {
     expect(handlers.onFirstRender.mock.calls[0][0].getHTML().type).toBe(undefined);
 
     const editorNode = getByLabelText(label);
-    expect(editorNode).toHaveAttribute('role');
+    expect(editorNode).toHaveAttribute('role', 'textbox');
   });
 
   it('should not render the editor when no render prop available', () => {
@@ -90,6 +90,18 @@ describe('Remirror', () => {
     expect(getByLabelText(label)).toHaveAttribute('contenteditable', 'true');
     rerender(<El editable={false} />);
     expect(getByLabelText(label)).toHaveAttribute('contenteditable', 'false');
+  });
+
+  it('should render a unique class on the root document', () => {
+    const mock = jest.fn(() => <div />);
+    const { getByLabelText, debug } = render(
+      <Remirror label={label} {...handlers}>
+        {mock}
+      </Remirror>,
+    );
+    debug();
+    const editorNode = getByLabelText(label);
+    expect(editorNode.className).toMatch(/remirror-[0-9]+/);
   });
 
   describe('getRootProps', () => {

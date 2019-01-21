@@ -1,6 +1,6 @@
 import { curry } from 'lodash';
 import { Mark, MarkType, NodeType } from 'prosemirror-model';
-import { EditorState, NodeSelection, Plugin } from 'prosemirror-state';
+import { EditorState, NodeSelection, Plugin, PluginKey } from 'prosemirror-state';
 import { EditorSchema } from '../../types';
 
 export const markActive = curry((type: MarkType, state: EditorState) => {
@@ -49,3 +49,5 @@ export const getMarkAttrs = curry((type: MarkType, state: EditorState<EditorSche
 });
 
 export const getPluginState = <T>(plugin: Plugin, state: EditorState): T => plugin.getState(state);
+export const getPluginKeyState = <T>(pluginKey: PluginKey, state: EditorState): T =>
+  pluginKey.getState(state);
