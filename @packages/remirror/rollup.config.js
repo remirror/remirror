@@ -60,19 +60,6 @@ const esConfig = {
   plugins: [plugins.babel, plugins.resolve, plugins.cjs],
 };
 
-/* CommonJS config */
-
-const cjsConfig = {
-  ...baseConfig,
-  output: {
-    file: 'lib/dist/plejio.components.js',
-    format: 'cjs',
-    sourcemap: true,
-  },
-  external,
-  plugins: [plugins.babel, plugins.browser, plugins.cjs],
-};
-
 // So that the DEV build doesn't break while working on the project
 const umdDefaultGlobals = external.reduce((prev, curr) => {
   return { ...prev, [curr]: camelCase(curr) };
@@ -85,7 +72,6 @@ const globals = {
   ...{
     react: 'React',
     'react-dom': 'ReactDOM',
-    'styled-normalize': 'styledNormalize',
   },
 };
 
@@ -94,7 +80,7 @@ const globals = {
 const umdConfig = {
   ...baseConfig,
   output: {
-    name: 'plejioUI',
+    name: 'Remirror',
     file: pkg.browser,
     format: 'umd',
     globals,
@@ -116,9 +102,10 @@ const minConfig = {
   plugins: [...umdConfig.plugins, plugins.replace, plugins.uglify],
 };
 
-const configs = [esConfig, cjsConfig, umdConfig];
+const configs = [esConfig, umdConfig];
 
 /* Don't build minified while in development */
+
 if (!process.argv.includes('-w')) configs.push(minConfig);
 
 export default configs;

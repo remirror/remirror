@@ -6,8 +6,8 @@
   "repository": "https://github.com/ifiokjr/remirror",
   "version": "0.0.0",
   "main": "lib/index.js",
-  "module": "lib/dist/remirror.components.esm.js",
-  "browser": "lib/dist/remirror.components.umd.js",
+  "module": "lib/dist/remirror.esm.js",
+  "browser": "lib/dist/remirror.umd.js",
   "files": [
     "lib"
   ],
@@ -72,5 +72,11 @@
     "react": "16.8.0-alpha.0",
     "react-dom": "16.8.0-alpha.0"
   },
+  "keywords": [
+    "prosemirror",
+    "react",
+    "ssr",
+    "text editor"
+  ],
   "types": "lib/index.d.ts"
 }

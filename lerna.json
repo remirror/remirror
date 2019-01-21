@@ -8,10 +8,10 @@
       "npmClient": "npm",
       "signGitCommit": true,
       "signGitTag": true,
-      "allowBranch": ["master", "develop", "feat/*"]
+      "allowBranch": ["master"]
     }
   },
-  "version": "0.0.1",
+  "version": "0.0.0",
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
   "useWorkspaces": true,

@@ -1,8 +1,7 @@
 {
   "private": true,
-  "name": "@plejio/build",
+  "name": "@remirror/build",
   "description": "A collection of the build dependencies needed. Helps clear up the root package.json",
-  "version": "0.0.1-alpha.26",
   "dependencies": {
     "@babel/cli": "7.2.3",
     "@babel/core": "7.2.2",

@@ -1,8 +1,7 @@
 {
   "private": true,
-  "name": "@plejio/test",
+  "name": "@remirror/test",
   "description": "A collection of the test and lint dependencies",
-  "version": "0.0.1-alpha.26",
   "dependencies": {
     "@kj/tslint-rules": "1.0.3",
     "dtslint": "0.4.2",

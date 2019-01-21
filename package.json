@@ -16,6 +16,7 @@
     "lint:dts": "tslint -p dtslint/tsconfig.custom.json -c dtslint/tslint.custom.json dtslint/*.dts.ts",
     "lint:fix": "lerna run lint --parallel -- --fix",
     "lint:ts": "lerna run lint --parallel",
+    "prepublish:alpha": "run-s build",
     "publish:alpha": "lerna publish prerelease --preid=alpha --exact --dist-tag=alpha",
     "test": "jest ",
     "test:ci": "jest --coverage",
