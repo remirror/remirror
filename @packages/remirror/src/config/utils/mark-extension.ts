@@ -1,4 +1,5 @@
-import { IMarkExtension } from '../../types';
+import { IMarkExtension, SchemaWithStateParams } from '../../types';
+import { markActive } from './document-helpers';
 import { Extension } from './extension';
 
 export class MarkExtension extends Extension implements IMarkExtension {
@@ -12,5 +13,9 @@ export class MarkExtension extends Extension implements IMarkExtension {
 
   get schema() {
     return {};
+  }
+
+  public active({ getEditorState, schema }: SchemaWithStateParams) {
+    return () => markActive(schema.marks[this.name], getEditorState());
   }
 }

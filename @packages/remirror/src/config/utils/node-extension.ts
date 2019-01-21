@@ -1,4 +1,5 @@
 import { INodeExtension } from '../../types';
+import { nodeActive } from './document-helpers';
 import { Extension } from './extension';
 
 export class NodeExtension<T extends {} = {}> extends Extension<T> implements INodeExtension {
@@ -13,4 +14,7 @@ export class NodeExtension<T extends {} = {}> extends Extension<T> implements IN
   get schema() {
     return {};
   }
+
+  public active: INodeExtension['active'] = ({ getEditorState, schema }) => attrs =>
+    nodeActive(schema.nodes.name, attrs, getEditorState());
 }

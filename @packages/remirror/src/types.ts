@@ -53,22 +53,27 @@ export interface IExtension {
   readonly type: string;
   readonly defaultOptions?: Record<string, any>;
   readonly plugins?: ProsemirrorPlugin[];
-  commands?(
-    params: SchemaParams,
-  ):
-    | ExtensionCommandFunction
-    | ExtensionCommandFunction[]
-    | Record<string, ExtensionCommandFunction | ExtensionCommandFunction[]>;
+  commands?(params: SchemaParams): FlexibleConfig<ExtensionCommandFunction>;
   pasteRules(params: SchemaParams): ProsemirrorPlugin[];
   inputRules(params: SchemaParams): InputRule[];
   keys(params: SchemaParams): Keys;
+  active(params: SchemaWithStateParams): FlexibleConfig<ExtensionActiveFunction>;
+  enabled(params: SchemaWithStateParams): FlexibleConfig<ExtensionEnabledFunction>;
 }
 
 export interface SchemaParams {
   schema: Schema;
 }
 
+export interface SchemaWithStateParams extends SchemaParams {
+  getEditorState: () => EditorState;
+}
+
+export type FlexibleConfig<GFunc> = GFunc | GFunc[] | Record<string, GFunc | GFunc[]>;
+
 export type ExtensionCommandFunction = (attrs?: Attrs) => CommandFunction;
+export type ExtensionActiveFunction = (attrs?: Attrs) => boolean;
+export type ExtensionEnabledFunction = () => boolean;
 
 export interface SchemaTypeParams<T> extends SchemaParams {
   type: T;
@@ -79,17 +84,12 @@ export type SchemaMarkTypeParams = SchemaTypeParams<MarkType<EditorSchema>>;
 
 export interface CommandParams extends SchemaParams {
   view: EditorView;
-  editable: boolean;
+  isEditable: () => boolean;
 }
 
 export interface ISharedExtension<T extends NodeType | MarkType> extends IExtension {
   readonly view: any;
-  commands?(
-    params: SchemaTypeParams<T>,
-  ):
-    | ExtensionCommandFunction
-    | ExtensionCommandFunction[]
-    | Record<string, ExtensionCommandFunction>;
+  commands?(params: SchemaTypeParams<T>): FlexibleConfig<ExtensionCommandFunction>;
   pasteRules(params: SchemaTypeParams<T>): ProsemirrorPlugin[];
   inputRules(params: SchemaTypeParams<T>): InputRule[];
   keys(params: SchemaTypeParams<T>): Keys;
@@ -138,6 +138,7 @@ export interface RawMenuPositionData extends Position, ShouldRenderMenuProps {
   windowLeft: number;
   windowBottom: number;
   windowRight: number;
+  nonTextNode: Pick<HTMLElement, 'offsetWidth' | 'offsetHeight' | 'offsetLeft' | 'offsetTop'>;
 }
 
 export type OffsetCalculatorMethod = (props: RawMenuPositionData) => number;
@@ -149,4 +150,12 @@ export interface OffsetCalculator {
   bottom?: OffsetCalculatorMethod;
 }
 
-type ElementUnion = Value<HTMLElementTagNameMap>;
+export type ElementUnion = Value<HTMLElementTagNameMap>;
+
+export interface ActionMethods {
+  run(): void;
+  isActive(): boolean;
+  isEnabled(): boolean;
+}
+
+export type RemirrorActions<GKeys extends string = string> = Record<GKeys, ActionMethods>;

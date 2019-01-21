@@ -1,7 +1,6 @@
 import React, { cloneElement, Component, ReactNode, Ref } from 'react';
 
-import { isFunction, isPlainObject, isString, memoize } from 'lodash';
-import { gapCursor } from 'prosemirror-gapcursor';
+import { isFunction, isPlainObject, isString, memoize, pick } from 'lodash';
 import { InputRule, inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { DOMParser, DOMSerializer, Schema } from 'prosemirror-model';
@@ -12,7 +11,7 @@ import { baseKeymap, selectParentNode } from './config/commands';
 import { Bold } from './config/marks';
 import { Doc, Paragraph, Text } from './config/nodes';
 import { ExtensionManager } from './config/utils';
-import { getMarkAttrs, markActive, nodeActive } from './config/utils/document-helpers';
+import { getMarkAttrs } from './config/utils/document-helpers';
 import { Cast } from './helpers';
 import { ObjectNode } from './renderer/renderer';
 import {
@@ -24,6 +23,7 @@ import {
   Position,
   ProsemirrorPlugin,
   RawMenuPositionData,
+  RemirrorActions,
   ShouldRenderMenu,
 } from './types';
 
@@ -52,9 +52,7 @@ export interface InjectedRemirrorProps {
    * The prosemirror view
    */
   view: EditorView<EditorSchema>;
-  commands: Record<string, () => void>;
-  activeMarks: Record<string, () => boolean>;
-  activeNodes: Record<string, () => boolean>;
+  actions: RemirrorActions;
   getMarkAttr(type: string): Record<string, string>;
   clearContent(triggerOnChange?: boolean): void;
   setContent(content: string | ObjectNode, triggerOnChange?: boolean): void;
@@ -77,6 +75,7 @@ export interface RemirrorEventListenerParams {
   getHTML(): string;
   getText(lineBreakDivider?: string): string;
   getJSON(): ObjectNode;
+  getDocJSON(): ObjectNode;
 }
 
 export type RemirrorEventListener = (params: RemirrorEventListenerParams) => void;
@@ -140,9 +139,7 @@ export class Remirror extends Component<RemirrorProps, State> {
   private keymaps: ProsemirrorPlugin[];
   private inputRules: InputRule[];
   private pasteRules: ProsemirrorPlugin[];
-  private commands: Record<string, () => void>;
-  private activeMarks: Record<string, () => boolean>;
-  private activeNodes: Record<string, () => boolean>;
+  private actions: RemirrorActions;
   private markAttrs: Record<string, Record<string, string>>;
 
   private get builtInExtensions() {
@@ -163,13 +160,11 @@ export class Remirror extends Component<RemirrorProps, State> {
     this.pasteRules = this.extensionManager.pasteRules({ schema: this.schema });
     this.state = this.createInitialState();
     this.view = this.createView();
-    this.commands = this.extensionManager.commands({
+    this.actions = this.extensionManager.actions({
       schema: this.schema,
       view: this.view,
-      editable: this.props.editable,
+      isEditable: () => this.props.editable,
     });
-    this.activeMarks = this.setActiveMarks();
-    this.activeNodes = this.setActiveNodes();
     this.markAttrs = this.setMarkAttrs();
   }
 
@@ -177,7 +172,10 @@ export class Remirror extends Component<RemirrorProps, State> {
    * Create the extensions configuration through the extension manager
    */
   private createExtensions() {
-    return new ExtensionManager([...this.builtInExtensions, ...this.props.extensions]);
+    return new ExtensionManager(
+      [...this.builtInExtensions, ...this.props.extensions],
+      () => this.state.editorState,
+    );
   }
 
   /**
@@ -251,11 +249,19 @@ export class Remirror extends Component<RemirrorProps, State> {
     }
 
     const coords = this.view.coordsAtPos(selection.$anchor.pos);
+    const nodeAtPosition = this.view.domAtPos(selection.anchor).node;
+    const nonTextNode = pick(getNearestNonTextNode(nodeAtPosition), [
+      'offsetHeight',
+      'offsetLeft',
+      'offsetTop',
+      'offsetWidth',
+    ]);
     const absCoords = getAbsoluteCoordinates(coords, offsetParent!, offsetHeight);
 
     const rawData = {
       ...shouldRenderProps,
       ...absCoords,
+      nonTextNode,
       windowTop: coords.top,
       windowLeft: coords.left,
       windowBottom: coords.bottom,
@@ -295,7 +301,7 @@ export class Remirror extends Component<RemirrorProps, State> {
             Escape: selectParentNode,
           }),
           keymap(baseKeymap),
-          gapCursor(),
+          // gapCursor(),
           // new Plugin({
           //   props: {
           //     editable: () => this.props.editable,
@@ -355,28 +361,6 @@ export class Remirror extends Component<RemirrorProps, State> {
     return { ...defaultAttributes, ...propAttributes };
   };
 
-  private setActiveMarks() {
-    const initialActiveMarks: Record<string, () => boolean> = {};
-    return Object.entries(this.schema.marks).reduce(
-      (marks, [name, mark]) => ({
-        ...marks,
-        [name]: () => markActive(mark, this.state.editorState),
-      }),
-      initialActiveMarks,
-    );
-  }
-
-  private setActiveNodes() {
-    const initialActiveNodes: Record<string, () => boolean> = {};
-    return Object.entries(this.schema.nodes).reduce(
-      (nodes, [name, node]) => ({
-        ...nodes,
-        [name]: (attrs?: object) => nodeActive(node, attrs, this.state.editorState),
-      }),
-      initialActiveNodes,
-    );
-  }
-
   private setMarkAttrs() {
     const initialActiveNodes: Record<string, Record<string, string>> = {};
     return Object.entries(this.schema.marks).reduce(
@@ -405,6 +389,7 @@ export class Remirror extends Component<RemirrorProps, State> {
       dispatchTransaction(transaction);
     }
     const { state, transactions } = this.view.state.applyTransaction(transaction);
+    console.log('Steps', transaction.steps);
     this.view.updateState(state);
     this.setState({ editorState: state });
     if (transactions.some(tr => tr.docChanged) && onChange) {
@@ -487,6 +472,7 @@ export class Remirror extends Component<RemirrorProps, State> {
       view: this.view,
       getHTML: this.getHTML,
       getJSON: this.getJSON,
+      getDocJSON: this.getDocJSON,
       getText: this.getText,
     };
   }
@@ -494,9 +480,7 @@ export class Remirror extends Component<RemirrorProps, State> {
   get renderParams(): InjectedRemirrorProps {
     return {
       view: this.view,
-      commands: this.commands,
-      activeMarks: this.activeMarks,
-      activeNodes: this.activeNodes,
+      actions: this.actions,
       getMarkAttr: this.getMarkAttr,
       clearContent: this.clearContent,
       setContent: this.setContent,
@@ -525,6 +509,10 @@ export class Remirror extends Component<RemirrorProps, State> {
 
   private getJSON = (): ObjectNode => {
     return this.state.editorState.toJSON() as ObjectNode;
+  };
+
+  private getDocJSON = (): ObjectNode => {
+    return this.state.editorState.doc.toJSON() as ObjectNode;
   };
 
   public render() {
@@ -578,11 +566,10 @@ const baseOffsetCalculator: Required<OffsetCalculator> = {
 };
 
 export const simpleOffsetCalculator: OffsetCalculator = {
-  left: props =>
-    window.innerWidth - props.offsetWidth < props.left
-      ? props.left - props.offsetWidth + 20
-      : props.left,
-  top: props => (props.windowTop < 30 ? props.top + 20 : props.top - 10),
+  left: props => props.left,
+  top: props => props.top,
+  right: props => props.right,
+  bottom: props => props.bottom,
 };
 
 const defaultShouldRender: ShouldRenderMenu = props => props.selection && !props.selection.empty;
@@ -612,3 +599,6 @@ const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, cursorH
       offsetParentHeight - (coords.top - (offsetParentTop - cursorHeight) - offsetParent.scrollTop),
   };
 };
+
+const getNearestNonTextNode = (node: Node) =>
+  node.nodeType === Node.TEXT_NODE ? (node.parentNode as HTMLElement) : (node as HTMLElement);

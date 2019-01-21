@@ -1,29 +1,40 @@
 import { InputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
+import { EditorState } from 'prosemirror-state';
+import { AnyFunc } from 'simplytyped';
 import {
+  ActionMethods,
   CommandParams,
+  ExtensionActiveFunction,
+  ExtensionCommandFunction,
+  ExtensionEnabledFunction,
+  FlexibleConfig,
   IExtension,
   IMarkExtension,
   INodeExtension,
   MarkExtensionSpec,
   NodeExtensionSpec,
   ProsemirrorPlugin,
+  RemirrorActions,
   SchemaParams,
 } from '../../types';
 
 const isNodeExtension = (ext: IExtension): ext is INodeExtension => ext.type === 'node';
 const isMarkExtension = (ext: IExtension): ext is IMarkExtension => ext.type === 'mark';
 
-const hasExtensionProperty = <T extends IExtension, U extends keyof T>(property: U) => (
-  ext: T,
-): ext is T & Pick<Required<T>, U> => Boolean(ext[property]);
+const hasExtensionProperty = <GExt extends IExtension, GKey extends keyof GExt>(property: GKey) => (
+  ext: GExt,
+): ext is GExt & Pick<Required<GExt>, GKey> => Boolean(ext[property]);
 
 type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys';
-const extensionPropertyMapper = <T extends IExtension, U extends ExtensionMethodProperties>(
-  property: U,
+const extensionPropertyMapper = <
+  GExt extends IExtension,
+  GExtensionMethodProp extends ExtensionMethodProperties
+>(
+  property: GExtensionMethodProp,
   schema: Schema,
-) => (extension: T) =>
+) => (extension: GExt) =>
   isNodeExtension(extension)
     ? extension[property]({ schema, type: schema.nodes[extension.name] })
     : isMarkExtension(extension)
@@ -31,9 +42,10 @@ const extensionPropertyMapper = <T extends IExtension, U extends ExtensionMethod
     : extension[property]({ schema });
 
 export class ExtensionManager {
-  constructor(public extensions: IExtension[]) {
-    this.extensions = extensions;
-  }
+  constructor(
+    public readonly extensions: IExtension[],
+    private getEditorState: () => EditorState,
+  ) {}
 
   get nodes() {
     const initialEditorNodes: Record<string, NodeExtensionSpec> = {};
@@ -93,70 +105,175 @@ export class ExtensionManager {
     );
   }
 
+  public actions(params: CommandParams): RemirrorActions {
+    const initialActions: RemirrorActions = {};
+    const commands = this.commands(params);
+    const active = this.active(params);
+    const enabled = this.enabled(params);
+
+    return Object.entries(commands).reduce((accumulatedActions, [name, command]) => {
+      const action: ActionMethods = {
+        run: command,
+        isActive: active[name] ? active[name] : () => false,
+        isEnabled: enabled[name] ? enabled[name] : () => true,
+      };
+      return {
+        ...accumulatedActions,
+        [name]: action,
+      };
+    }, initialActions);
+  }
+
   /**
-   * Generate all the commands for usage within the UI.
+   * Generate all the actions for usage within the UI.
+   *
+   * Typically actions are used to create interactive menus.
    * For example a menu can use a command to toggle bold.
    */
-  public commands({ schema, view, editable }: CommandParams) {
-    const initialCommands: Record<string, () => void> = {};
-    return this.extensions
-      .filter(hasExtensionProperty('commands'))
-      .reduce((allCommands, extension) => {
-        const { name } = extension;
-        const commands: Record<string, () => void> = {};
-        const value = extension.commands({
-          schema,
-          ...(isMarkExtension(extension)
-            ? { type: schema.marks[extension.name] }
-            : isNodeExtension(extension)
-            ? { type: schema.nodes[extension.name] }
-            : {}),
-        });
+  private commands = createFlexibleFunctionMap<'commands', () => void, ExtensionCommandFunction>({
+    ctx: this,
+    key: 'commands',
+    methodFactory: (params, method) => () => {
+      if (!params.isEditable()) {
+        return false;
+      }
+      params.view.focus();
+      return method()(params.view.state, params.view.dispatch);
+    },
+    checkUniqueness: true,
+    arrayTransformer: (fns, params, methodFactory) => () => {
+      fns.forEach(callback => {
+        methodFactory(params, callback);
+      });
+    },
+    getItemParams: (ext, params) =>
+      ext.commands({
+        schema: params.schema,
+        ...(isMarkExtension(ext)
+          ? { type: params.schema.marks[ext.name] }
+          : isNodeExtension(ext)
+          ? { type: params.schema.nodes[ext.name] }
+          : {}),
+      }),
+  });
 
-        if (Array.isArray(value)) {
-          commands[name] = () =>
-            value.forEach(callback => {
-              if (!editable) {
-                return false;
-              }
-              view.focus();
-              return callback()(view.state, view.dispatch);
-            });
-        } else if (typeof value === 'function') {
-          commands[name] = () => {
-            if (!editable) {
-              return false;
-            }
-            view.focus();
-            return value()(view.state, view.dispatch);
-          };
-        } else if (typeof value === 'object') {
-          Object.entries(value).forEach(([commandName, commandValue]) => {
-            if (Array.isArray(commandValue)) {
-              commands[commandName] = () =>
-                commandValue.forEach(callback => {
-                  if (!editable) {
-                    return false;
-                  }
-                  view.focus();
-                  return callback()(view.state, view.dispatch);
-                });
-            } else {
-              commands[commandName] = () => {
-                if (!editable) {
-                  return false;
-                }
-                view.focus();
-                return commandValue()(view.state, view.dispatch);
-              };
-            }
-          });
-        }
+  private active = createFlexibleFunctionMap<'active', () => boolean, ExtensionActiveFunction>({
+    ctx: this,
+    key: 'active',
+    methodFactory: (_, method) => () => {
+      return method();
+    },
+    checkUniqueness: false,
+    arrayTransformer: (fns, params, methodFactory) => () => {
+      return fns
+        .map(callback => {
+          methodFactory(params, callback);
+        })
+        .every(Boolean);
+    },
+    getItemParams: (ext, params) =>
+      ext.active({
+        schema: params.schema,
+        getEditorState: this.getEditorState,
+      }),
+  });
 
-        return {
-          ...allCommands,
-          ...commands,
-        };
-      }, initialCommands);
-  }
+  private enabled = createFlexibleFunctionMap<'enabled', () => boolean, ExtensionEnabledFunction>({
+    ctx: this,
+    key: 'enabled',
+    methodFactory: (_, method) => () => {
+      return method();
+    },
+    checkUniqueness: false,
+    arrayTransformer: (fns, params, methodFactory) => () => {
+      return fns
+        .map(callback => {
+          methodFactory(params, callback);
+        })
+        .every(Boolean);
+    },
+    getItemParams: (ext, params) =>
+      ext.enabled({
+        schema: params.schema,
+        getEditorState: this.getEditorState,
+      }),
+  });
 }
+
+type MethodFactory<GMappedFunc extends AnyFunc, GFunc extends AnyFunc> = (
+  params: CommandParams,
+  method: GFunc,
+) => GMappedFunc;
+
+const isNameUnique = (name: string, set: Set<string>, type = 'extension') => {
+  // Put this check behind a development flag later
+  if (set.has(name)) {
+    // tslint:disable-next-line:no-console
+    console.error(
+      `There is a naming conflict for the name: ${name} used in this type: ${type}. Please rename to avoid runtime errors.`,
+    );
+    return;
+  }
+  set.add(name);
+};
+
+const createFlexibleFunctionMap = <
+  GKey extends keyof IExtension,
+  GMappedFunc extends AnyFunc,
+  GFunc extends AnyFunc
+>({
+  key,
+  checkUniqueness,
+  getItemParams,
+  methodFactory,
+  arrayTransformer,
+  ctx,
+}: {
+  checkUniqueness: boolean;
+  key: GKey;
+  getItemParams: (
+    ext: IExtension & Pick<Required<IExtension>, GKey>,
+    params: CommandParams,
+  ) => FlexibleConfig<GFunc>;
+  methodFactory: MethodFactory<GMappedFunc, GFunc>;
+  arrayTransformer: (
+    fns: GFunc[],
+    params: CommandParams,
+    methodFactory: MethodFactory<GMappedFunc, GFunc>,
+  ) => GMappedFunc;
+  ctx: ExtensionManager;
+}) => (params: CommandParams): Record<string, GMappedFunc> => {
+  const initialItems: Record<string, GMappedFunc> = {};
+  const names = new Set<string>();
+
+  return ctx.extensions
+    .filter(hasExtensionProperty(key))
+    .reduce((accumulatedItems, currentExtension) => {
+      const { name } = currentExtension;
+      if (checkUniqueness) {
+        isNameUnique(name, names);
+      }
+
+      const items: Record<string, GMappedFunc> = {};
+      const item = getItemParams(currentExtension, params);
+      if (Array.isArray(item)) {
+        items[name] = arrayTransformer(item, params, methodFactory);
+      } else if (typeof item === 'function') {
+        items[name] = methodFactory(params, item);
+      } else {
+        Object.entries(item).forEach(([commandName, commandValue]) => {
+          if (checkUniqueness) {
+            isNameUnique(commandName, names);
+          }
+          items[commandName] = Array.isArray(commandValue)
+            ? arrayTransformer(commandValue, params, methodFactory)
+            : methodFactory(params, commandValue);
+        });
+      }
+
+      return {
+        ...accumulatedItems,
+        ...items,
+      };
+    }, initialItems);
+};

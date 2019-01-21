@@ -34,6 +34,7 @@
   "dependencies": {
     "@types/hoist-non-react-statics": "3.0.1",
     "@types/lodash": "4.14.120",
+    "@types/nanoid": "1.2.0",
     "@types/prosemirror-commands": "1.0.1",
     "@types/prosemirror-gapcursor": "1.0.1",
     "@types/prosemirror-history": "1.0.1",
@@ -50,6 +51,7 @@
     "@types/react-icons": "2.2.6",
     "hoist-non-react-statics": "3.2.1",
     "lodash": "4.17.11",
+    "nanoid": "2.0.1",
     "prosemirror-commands": "1.0.7",
     "prosemirror-dropcursor": "1.1.1",
     "prosemirror-gapcursor": "1.0.3",

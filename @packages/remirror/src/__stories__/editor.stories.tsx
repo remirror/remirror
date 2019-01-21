@@ -1,15 +1,24 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, MouseEventHandler, useState } from 'react';
 
 import { storiesOf } from '@storybook/react';
+import { isEqual, memoize } from 'lodash';
 import { Remirror, RemirrorEventListener, RenderTree } from '../';
 import { Mention } from '../config/nodes';
 
 const EditorLayout: FunctionComponent = () => {
   const [json, setJson] = useState(JSON.stringify(initialJson, null, 2));
 
-  const onChange: RemirrorEventListener = ({ getJSON }) => {
-    setJson(JSON.stringify(getJSON(), null, 2));
+  const onChange: RemirrorEventListener = ({ getDocJSON }) => {
+    console.log('onChange has been called', isEqual(json, getDocJSON()));
+    setJson(JSON.stringify(getDocJSON(), null, 2));
   };
+
+  const runAction = memoize(
+    (method: () => void): MouseEventHandler<HTMLElement> => e => {
+      e.preventDefault();
+      method();
+    },
+  );
 
   return (
     <div
@@ -40,36 +49,47 @@ const EditorLayout: FunctionComponent = () => {
           extensions={[
             new Mention({
               onKeyDown: arg => {
-                // tslint:disable-next-line:no-console
-                console.log(arg);
+                console.log('Mention is being called', arg);
                 return false;
               },
             }),
           ]}
         >
-          {({ getMenuProps }) => {
+          {({ getMenuProps, actions }) => {
             const menuProps = getMenuProps({
               name: 'floating-menu',
-              offset: {
-                // top: pos => pos.top,
-                // bottom: pos => pos.bottom,
-                // left: pos => pos.left,
-                // right: pos => pos.right,
-              },
             });
             return (
               <div>
                 <div
-                  ref={menuProps.ref}
                   style={{
                     position: 'absolute',
                     top: menuProps.position.top,
                     left: menuProps.position.left,
-                    height: 10,
-                    width: 10,
-                    backgroundColor: 'red',
                   }}
-                />
+                  ref={menuProps.ref}
+                >
+                  <button
+                    style={{
+                      backgroundColor: actions.bold.isActive() ? 'white' : 'pink',
+                      fontWeight: actions.bold.isActive() ? 600 : 300,
+                    }}
+                    disabled={!actions.bold.isEnabled()}
+                    onClick={runAction(actions.bold.run)}
+                  >
+                    B
+                  </button>
+                  <button
+                    style={{
+                      backgroundColor: actions.paragraph.isActive() ? 'white' : 'pink',
+                      fontWeight: actions.paragraph.isActive() ? 600 : 300,
+                    }}
+                    disabled={!actions.paragraph.isEnabled()}
+                    onClick={runAction(actions.paragraph.run)}
+                  >
+                    #
+                  </button>
+                </div>
               </div>
             );
           }}

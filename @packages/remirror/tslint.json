@@ -8,6 +8,7 @@
     ],
     "no-empty": false,
     "no-any": false,
-    "no-object-literal-type-assertion": false
+    "no-object-literal-type-assertion": false,
+    "no-console": false
   }
 }

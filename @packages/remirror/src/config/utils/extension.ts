@@ -1,5 +1,6 @@
+import { InputRule } from 'prosemirror-inputrules';
 import { Cast } from '../../helpers';
-import { IExtension, ProsemirrorPlugin } from '../../types';
+import { IExtension, ProsemirrorPlugin, SchemaParams, SchemaWithStateParams } from '../../types';
 
 export class Extension<T extends {} = {}> implements IExtension {
   public readonly options: T;
@@ -31,9 +32,9 @@ export class Extension<T extends {} = {}> implements IExtension {
     return [] as ProsemirrorPlugin[];
   }
 
-  public inputRules: IExtension['inputRules'] = () => {
+  public inputRules(_: SchemaParams): InputRule[] {
     return [];
-  };
+  }
 
   public keys: IExtension['keys'] = () => {
     return {};
@@ -42,4 +43,12 @@ export class Extension<T extends {} = {}> implements IExtension {
   public pasteRules: IExtension['pasteRules'] = () => {
     return [];
   };
+
+  public active(_: SchemaWithStateParams) {
+    return () => false;
+  }
+
+  public enabled(_: SchemaWithStateParams) {
+    return () => true;
+  }
 }

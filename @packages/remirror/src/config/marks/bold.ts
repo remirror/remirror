@@ -34,10 +34,12 @@ export class Bold extends MarkExtension {
   };
 
   public commands({ type }: SchemaMarkTypeParams) {
-    return () => toggleMark(type);
+    return () => {
+      return toggleMark(type);
+    };
   }
 
-  public inputRules = ({ type }: SchemaMarkTypeParams) => {
+  public inputRules({ type }: SchemaMarkTypeParams) {
     return [markInputRule(/(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type)];
-  };
+  }
 }
