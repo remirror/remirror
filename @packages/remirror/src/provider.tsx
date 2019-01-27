@@ -4,14 +4,17 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import { isEmpty } from 'lodash';
 import { Omit } from 'simplytyped';
 import { Cast } from './helpers';
-import { InjectedRemirrorProps, Remirror, RemirrorProps } from './remirror';
+import { Remirror } from './remirror';
+import { InjectedRemirrorProps, RemirrorProps } from './types';
 
-const TextEditorContext = createContext<InjectedRemirrorProps>(Cast<InjectedRemirrorProps>({}));
+export const RemirrorContext = createContext<InjectedRemirrorProps>(
+  Cast<InjectedRemirrorProps>({}),
+);
 
-export const TextEditorProvider: FC<RemirrorProps> = ({ children, ...props }) => {
+export const RemirrorProvider: FC<RemirrorProps> = ({ children, ...props }) => {
   return (
     <Remirror {...props}>
-      {value => <TextEditorContext.Provider value={value}>{children}</TextEditorContext.Provider>}
+      {value => <RemirrorContext.Provider value={value}>{children}</RemirrorContext.Provider>}
     </Remirror>
   );
 };
@@ -23,16 +26,18 @@ const checkValidRenderPropParams = (params: InjectedRemirrorProps) => {
   return true;
 };
 
-export const withTextEditor = <P extends InjectedRemirrorProps>(Wrapped: ComponentType<P>) => {
-  const EnhancedComponent: FunctionComponent<Omit<P, keyof InjectedRemirrorProps>> = props => {
+export const withRemirror = <GProps extends InjectedRemirrorProps>(
+  Wrapped: ComponentType<GProps>,
+) => {
+  type EnhancedComponentProps = Omit<GProps, keyof InjectedRemirrorProps>;
+  const EnhancedComponent: FunctionComponent<EnhancedComponentProps> = props => {
     return (
-      <TextEditorContext.Consumer>
+      <RemirrorContext.Consumer>
         {params => {
           checkValidRenderPropParams(params);
-          const p = { ...props, ...params };
-          return <Wrapped {...Cast(p)} />;
+          return <Wrapped {...Cast<GProps>({ ...props, ...params })} />;
         }}
-      </TextEditorContext.Consumer>
+      </RemirrorContext.Consumer>
     );
   };
 
