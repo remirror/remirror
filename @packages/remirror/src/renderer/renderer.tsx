@@ -1,6 +1,6 @@
 import { isString } from 'lodash';
 import React, { ComponentType, FC, FunctionComponent } from 'react';
-import { Literal } from '../helpers';
+import { ObjectMark, ObjectNode } from '../types';
 
 /* Inspired by https://github.com/rexxars/react-prosemirror-document */
 
@@ -43,19 +43,6 @@ const TextHandler: FC<TextHandlerProps> = ({ node, ...props }) => {
 
 const normalizeMark = (mark: ObjectMark | string) =>
   isString(mark) ? { type: mark, attrs: {} } : { attrs: {}, ...mark };
-
-export interface ObjectMark {
-  type: string;
-  attrs?: Record<string, string | null>;
-}
-
-export interface ObjectNode {
-  type: string;
-  marks?: Array<ObjectMark | string>;
-  text?: string;
-  content?: ObjectNode[];
-  attrs?: Record<string, Literal | object>;
-}
 
 const CodeBlock: FC<{
   node: ObjectNode;

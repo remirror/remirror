@@ -8,7 +8,7 @@ import {
 import { nodeActive } from './document-helpers';
 import { Extension } from './extension';
 
-export abstract class NodeExtension<T extends {} = {}> extends Extension<T>
+export abstract class NodeExtension<GOptions extends {} = {}> extends Extension<GOptions>
   implements INodeExtension {
   public readonly type = ExtensionType.NODE;
 

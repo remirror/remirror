@@ -1,114 +1,54 @@
-import React, { cloneElement, Component, ReactNode, Ref } from 'react';
+import React, { cloneElement, Component, Ref } from 'react';
 
-import { isFunction, isPlainObject, isString, memoize, pick, uniqueId } from 'lodash';
+import { isString, memoize, pick, uniqueId } from 'lodash';
 import { InputRule, inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { DOMParser, DOMSerializer, Schema } from 'prosemirror-model';
 import { EditorState, PluginKey, Transaction } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-import { PlainObject } from 'simplytyped';
-import { RemirrorCustomStyles, RemirrorStyle, RemirrorStyleProps } from './components';
+import { RemirrorStyle, RemirrorStyleProps } from './components';
 import { baseKeymap, selectParentNode } from './config/commands';
 import { Bold } from './config/marks';
 import { Doc, Paragraph, Text } from './config/nodes';
-import { PlaceholderPluginState } from './config/plugins';
-import Placeholder from './config/plugins/placeholder';
+import { Placeholder, PlaceholderPluginState } from './config/plugins';
 import { ExtensionManager } from './config/utils';
 import { getMarkAttrs, getPluginKeyState } from './config/utils/document-helpers';
-import { Cast } from './helpers';
-import { ObjectNode } from './renderer/renderer';
+import {
+  baseOffsetCalculator,
+  defaultOffscreenPosition,
+  defaultShouldRender,
+  getAbsoluteCoordinates,
+  getElementProps,
+  getNearestNonTextNode,
+  isAttributeFunction,
+  isDOMElement,
+  isObjectNode,
+  isRenderProp,
+  simpleOffsetCalculator,
+} from './helpers';
 import { defaultStyles } from './styles';
 import {
   EditorSchema,
-  IExtension,
-  MarkExtensionSpec,
-  NodeExtensionSpec,
+  InjectedRemirrorProps,
+  MarkExtensionSpecification,
+  NodeExtensionSpecification,
+  ObjectNode,
   OffsetCalculator,
   Position,
   ProsemirrorPlugin,
   RawMenuPositionData,
   RemirrorActions,
+  RemirrorEventListenerParams,
+  RemirrorProps,
   ShouldRenderMenu,
 } from './types';
-
-interface State {
-  editorState: EditorState;
-  selectionAnchor?: number;
-}
-
-export interface GetMenuPropsConfig<T extends string = 'ref'> extends BaseGetterConfig<T> {
-  offset?: OffsetCalculator;
-  shouldRender?: ShouldRenderMenu;
-  offscreenPosition?: Partial<Position>;
-  name: string;
-}
-
-export interface BaseGetterConfig<T extends string = 'ref'> {
-  refKey?: T;
-}
-
-export interface GetRootPropsConfig<T extends string = 'ref'>
-  extends BaseGetterConfig<T>,
-    PlainObject {}
-
-export interface InjectedRemirrorProps {
-  /**
-   * The prosemirror view
-   */
-  view: EditorView<EditorSchema>;
-  actions: RemirrorActions;
-  getMarkAttr(type: string): Record<string, string>;
-  clearContent(triggerOnChange?: boolean): void;
-  setContent(content: string | ObjectNode, triggerOnChange?: boolean): void;
-
-  getRootProps<T extends string = 'ref'>(
-    options?: GetRootPropsConfig<T>,
-  ): PlainObject & { [P in Exclude<T, 'children' | 'key'>]: React.Ref<any> };
-  getMenuProps<T extends string = 'ref'>(
-    options: GetMenuPropsConfig<T>,
-  ): { position: Position; rawData: RawMenuPositionData | null; offscreen: boolean } & {
-    [P in Exclude<T, 'children' | 'key' | 'position' | 'rawData' | 'offscreen'>]: React.Ref<any>
-  };
-}
-
-export type RenderPropFunction = (params: InjectedRemirrorProps) => JSX.Element;
-
-export interface RemirrorEventListenerParams {
-  state: EditorState<EditorSchema>;
-  view: EditorView<EditorSchema>;
-  getHTML(): string;
-  getText(lineBreakDivider?: string): string;
-  getJSON(): ObjectNode;
-  getDocJSON(): ObjectNode;
-}
-
-export type RemirrorEventListener = (params: RemirrorEventListenerParams) => void;
-export type AttributePropFunction = (params: RemirrorEventListenerParams) => Record<string, string>;
-
-export interface RemirrorProps {
-  autoFocus?: boolean;
-  placeholder?: string;
-  onChange?: RemirrorEventListener;
-  onFocus?: RemirrorEventListener;
-  onBlur?: RemirrorEventListener;
-  onFirstRender?: RemirrorEventListener;
-  children: RenderPropFunction;
-  dispatchTransaction?: ((tr: Transaction<EditorSchema>) => void) | null;
-  initialContent: ObjectNode | string;
-  attributes: Record<string, string> | AttributePropFunction;
-  editable: boolean;
-  label?: string;
-  useBuiltInExtensions?: boolean;
-  extensions: IExtension[];
-  styles?: Partial<RemirrorCustomStyles> | null;
-}
 
 const defaultInitialContent: ObjectNode = {
   type: 'doc',
   content: [],
 };
 
-export class Remirror extends Component<RemirrorProps, State> {
+export class Remirror extends Component<RemirrorProps, { editorState: EditorState }> {
   public static defaultProps = {
     initialContent: defaultInitialContent,
     extensions: [],
@@ -140,8 +80,8 @@ export class Remirror extends Component<RemirrorProps, State> {
   private uid = uniqueId('remirror-');
   private view: EditorView<EditorSchema>;
   private extensionManager: ExtensionManager;
-  private nodes: Record<string, NodeExtensionSpec>;
-  private marks: Record<string, MarkExtensionSpec>;
+  private nodes: Record<string, NodeExtensionSpecification>;
+  private marks: Record<string, MarkExtensionSpecification>;
   private plugins: ProsemirrorPlugin[];
   private keymaps: ProsemirrorPlugin[];
   private inputRules: InputRule[];
@@ -274,7 +214,6 @@ export class Remirror extends Component<RemirrorProps, State> {
       windowLeft: coords.left,
       windowBottom: coords.bottom,
       windowRight: coords.right,
-      selectionAnchor: this.state.selectionAnchor!,
     };
 
     const offsetCalculator = { ...baseOffsetCalculator, ...simpleOffsetCalculator, ...offset };
@@ -532,7 +471,7 @@ export class Remirror extends Component<RemirrorProps, State> {
     return this.state.editorState.doc.toJSON() as ObjectNode;
   };
 
-  private getPluginKeyState<T>(name: string): T | undefined {
+  private getPluginKeyState<GState>(name: string): GState | undefined {
     return this.pluginKeys[name]
       ? getPluginKeyState(this.pluginKeys[name], this.state.editorState)
       : undefined;
@@ -569,9 +508,11 @@ export class Remirror extends Component<RemirrorProps, State> {
     });
 
     if (!this.rootPropsConfig.called) {
-      element = isDOMElement(element)
-        ? cloneElement(element, this.getRootProps(getElementProps(element)))
-        : null;
+      element = isDOMElement(element) ? (
+        cloneElement(element, this.getRootProps(getElementProps(element)))
+      ) : (
+        <div {...this.getRootProps(getElementProps(element))}>{element}</div>
+      );
     }
 
     return element ? (
@@ -584,63 +525,3 @@ export class Remirror extends Component<RemirrorProps, State> {
     );
   }
 }
-
-const isAttributeFunction = (arg: unknown): arg is AttributePropFunction => isFunction(arg);
-const isRenderProp = (arg: unknown): arg is RenderPropFunction => isFunction(arg);
-const isObjectNode = (arg: unknown): arg is ObjectNode => {
-  if (isPlainObject(arg) && Cast(arg).type === 'doc') {
-    return true;
-  }
-  return false;
-};
-const isDOMElement = (element: ReactNode) => {
-  return element && isString(Cast<JSX.Element>(element).type);
-};
-const getElementProps = (element: JSX.Element): PlainObject => {
-  return element.props;
-};
-
-const baseOffsetCalculator: Required<OffsetCalculator> = {
-  top: () => 0,
-  left: () => 0,
-  right: () => 0,
-  bottom: () => 0,
-};
-
-export const simpleOffsetCalculator: OffsetCalculator = {
-  left: props => props.left,
-  top: props => props.top,
-  right: props => props.right,
-  bottom: props => props.bottom,
-};
-
-const defaultShouldRender: ShouldRenderMenu = props => props.selection && !props.selection.empty;
-const defaultOffscreenPosition: Position = { left: -1000, top: 0, bottom: 0, right: 0 };
-
-/**
- * We need to translate the co-ordinates because `coordsAtPos` returns co-ordinates
- * relative to `window`. And, also need to adjust the cursor container height.
- * (0, 0)
- * +--------------------- [window] ---------------------+
- * |   (left, top) +-------- [Offset Parent] --------+  |
- * | {coordsAtPos} | [Cursor]   <- cursorHeight      |  |
- * |               | [FloatingToolbar]               |  |
- */
-const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, cursorHeight: number) => {
-  const {
-    left: offsetParentLeft,
-    top: offsetParentTop,
-    height: offsetParentHeight,
-  } = offsetParent.getBoundingClientRect();
-
-  return {
-    left: coords.left - offsetParentLeft,
-    right: coords.right - offsetParentLeft,
-    top: coords.top - (offsetParentTop - cursorHeight) + offsetParent.scrollTop,
-    bottom:
-      offsetParentHeight - (coords.top - (offsetParentTop - cursorHeight) - offsetParent.scrollTop),
-  };
-};
-
-const getNearestNonTextNode = (node: Node) =>
-  node.nodeType === Node.TEXT_NODE ? (node.parentNode as HTMLElement) : (node as HTMLElement);

@@ -12,20 +12,20 @@ import {
   SchemaWithStateParams,
 } from '../../types';
 
-export abstract class Extension<T extends {} = {}> implements IExtension {
-  public readonly options: T;
+export abstract class Extension<GOptions extends {} = {}> implements IExtension {
+  public readonly options: GOptions;
   public readonly type: ExtensionType = ExtensionType.EXTENSION;
   public abstract readonly name: string;
   private pk?: PluginKey;
 
-  constructor(...args: keyof T extends never ? [] : [T?]) {
+  constructor(...args: keyof GOptions extends never ? [] : [GOptions?]) {
     if (args[0]) {
       this.options = {
         ...this.defaultOptions,
         ...args[0],
       };
     } else {
-      this.options = Cast<T>(this.defaultOptions);
+      this.options = Cast<GOptions>(this.defaultOptions);
     }
     this.init();
   }
@@ -42,7 +42,7 @@ export abstract class Extension<T extends {} = {}> implements IExtension {
     return this.pk;
   }
 
-  get defaultOptions(): Partial<T> {
+  get defaultOptions(): Partial<GOptions> {
     return {};
   }
 

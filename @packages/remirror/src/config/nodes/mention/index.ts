@@ -1,4 +1,4 @@
-import { ExtensionCommandFunction, NodeExtensionSpec, SchemaParams } from '../../../types';
+import { ExtensionCommandFunction, NodeExtensionSpecification, SchemaParams } from '../../../types';
 import { replaceText } from '../../commands';
 import { NodeExtension } from '../../utils';
 import { SuggestionsPlugin, SuggestionsPluginProps } from './suggestions';
@@ -24,7 +24,7 @@ export class Mention extends NodeExtension<MentionNodeExtensionOptions> {
     };
   }
 
-  get schema(): NodeExtensionSpec {
+  get schema(): NodeExtensionSpecification {
     const {
       mentionClassName = this.defaultOptions.mentionClassName,
       matcher = this.defaultOptions.matcher,

@@ -32,12 +32,12 @@ export interface SuggestionsCallbackParams extends SuggestionsPluginState {
   command: (params: Pick<SuggestionsCommandParams, 'attrs' | 'range'>) => void;
 }
 
-export interface SuggestionsPluginProps<T = any> {
+export interface SuggestionsPluginProps<GItem = any> {
   matcher?: SuggestionsMatcher;
   appendText?: string | null;
   suggestionsClassName?: string;
   command?(params: SuggestionsCommandParams): CommandFunction;
-  items?: T[] | (() => T[]);
+  items?: GItem[] | (() => GItem[]);
   onEnter?(params: SuggestionsCallbackParams): void;
   onChange?(params: SuggestionsCallbackParams): void;
   onExit?(params: SuggestionsCallbackParams): void;

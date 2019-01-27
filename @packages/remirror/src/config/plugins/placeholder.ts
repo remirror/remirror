@@ -8,7 +8,7 @@ export interface PlaceholderOptions {
 }
 export interface PlaceholderPluginState extends Required<PlaceholderOptions> {}
 
-export default class Placeholder extends Extension<PlaceholderOptions> {
+export class Placeholder extends Extension<PlaceholderOptions> {
   public readonly name = 'placeholder';
 
   get defaultOptions() {

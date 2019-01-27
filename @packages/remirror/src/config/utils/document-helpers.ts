@@ -1,26 +1,25 @@
-import { curry } from 'lodash';
 import { Mark, MarkType, NodeType } from 'prosemirror-model';
 import { EditorState, NodeSelection, Plugin, PluginKey } from 'prosemirror-state';
 import { EditorSchema } from '../../types';
 
-export const markActive = curry((type: MarkType, state: EditorState) => {
+export const markActive = (type: MarkType, state: EditorState) => {
   const { from, $from, to, empty } = state.selection;
   return Boolean(
     empty
       ? type.isInSet(state.storedMarks || $from.marks())
       : state.doc.rangeHasMark(from, to, type),
   );
-});
+};
 
-export const nodeActive = curry((type: NodeType, attrs = {}, state: EditorState) => {
+export const nodeActive = (type: NodeType, attrs = {}, state: EditorState) => {
   const { $from, to, node } = state.selection as NodeSelection;
   if (node) {
     return node.hasMarkup(type, attrs);
   }
   return to <= $from.end() && $from.parent.hasMarkup(type, attrs);
-});
+};
 
-export const canInsertNode = curry((type: NodeType, state: EditorState) => {
+export const canInsertNode = (type: NodeType, state: EditorState) => {
   const { $from } = state.selection;
   for (let d = $from.depth; d >= 0; d--) {
     const index = $from.index(d);
@@ -29,9 +28,9 @@ export const canInsertNode = curry((type: NodeType, state: EditorState) => {
     }
   }
   return false;
-});
+};
 
-export const getMarkAttrs = curry((type: MarkType, state: EditorState<EditorSchema>) => {
+export const getMarkAttrs = (type: MarkType, state: EditorState<EditorSchema>) => {
   const { from, to } = state.selection;
   let marks: Mark[] = [];
 
@@ -46,8 +45,9 @@ export const getMarkAttrs = curry((type: MarkType, state: EditorState<EditorSche
   }
 
   return {};
-});
+};
 
-export const getPluginState = <T>(plugin: Plugin, state: EditorState): T => plugin.getState(state);
-export const getPluginKeyState = <T>(pluginKey: PluginKey, state: EditorState): T =>
+export const getPluginState = <GState>(plugin: Plugin, state: EditorState): GState =>
+  plugin.getState(state);
+export const getPluginKeyState = <GState>(pluginKey: PluginKey, state: EditorState): GState =>
   pluginKey.getState(state);
