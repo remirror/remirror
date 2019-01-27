@@ -18,7 +18,7 @@ module.exports = {
   moduleDirectories: ['node_modules'],
   testPathIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/node_modules/'],
   testRegex,
-  setupTestFrameworkScriptFile: join(__dirname, 'jest.framework.ts'),
+  setupFilesAfterEnv: [join(__dirname, 'jest.framework.ts')],
   cacheDirectory: '../../.jest/cache',
   testEnvironment: 'node',
 };

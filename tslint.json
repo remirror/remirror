@@ -9,6 +9,7 @@
     "no-empty": false,
     "no-any": false,
     "no-object-literal-type-assertion": false,
-    "no-console": false
+    "no-console": false,
+    "max-classes-per-file": false
   }
 }

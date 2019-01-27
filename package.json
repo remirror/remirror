@@ -64,9 +64,9 @@
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0",
-    "react": "16.8.0-alpha.0",
-    "react-dom": "16.8.0-alpha.0",
-    "jsdom": "13.1.0",
-    "hoist-non-react-statics": "3.2.1"
+    "react": "16.8.0-alpha.1",
+    "react-dom": "16.8.0-alpha.1",
+    "jsdom": "13.2.0",
+    "hoist-non-react-statics": "3.3.0"
   }
 }
