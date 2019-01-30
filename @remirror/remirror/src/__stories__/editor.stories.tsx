@@ -2,7 +2,7 @@ import React, { FunctionComponent, MouseEventHandler, useState } from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { isEqual, memoize } from 'lodash';
-import { Remirror, RemirrorEventListener, RenderTree } from '../../';
+import { Remirror, RemirrorEventListener, RenderTree } from '../';
 import { Mention } from '../config/nodes';
 
 const EditorLayout: FunctionComponent = () => {

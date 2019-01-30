@@ -9,20 +9,25 @@
   },
   "scripts": {
     "build": "lerna run build",
-    "checks": "run-s lint typecheck test",
+    "checks": "run-s integrity lint typecheck test",
     "checks:parallel": "run-p lint typecheck test",
+    "ci:checks": "run-s integrity lint typecheck build test:ci",
     "dev": "lerna run dev --parallel",
-    "lint": "run-s lint:dts lint:ts",
+    "fix": "run-s fix:*",
+    "fix:config": "tslint --project config/tsconfig.json --config tslint.json --fix",
+    "fix:lint": "lerna run lint --parallel -- --fix",
+    "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md}\"",
+    "integrity": "yarn check --integrity",
+    "lint": "run-s lint:*",
+    "lint:config": "tslint --project config/tsconfig.json --config tslint.json",
     "lint:dts": "tslint -p dtslint/tsconfig.custom.json -c dtslint/tslint.custom.json dtslint/*.dts.ts",
-    "lint:fix": "lerna run lint --parallel -- --fix",
     "lint:ts": "lerna run lint --parallel",
-    "prepublish:alpha": "run-s build",
+    "prepublish:alpha": "run-s ci:checks",
     "publish:alpha": "lerna publish prerelease --preid=alpha --exact --dist-tag=alpha",
     "test": "jest ",
-    "test:ci": "jest --coverage",
+    "test:ci": "cross-env TEST_ENV=live jest",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
-    "typecheck": "lerna run typecheck",
-    "yarn:integrity": "yarn check --integrity"
+    "typecheck": "lerna run typecheck"
   },
   "husky": {
     "hooks": {

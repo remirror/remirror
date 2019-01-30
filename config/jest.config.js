@@ -15,6 +15,17 @@ module.exports = {
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': join(__dirname, './jest.transformer.js'),
   },
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/dtslint/',
+    '\\.d.ts',
+    '/__mocks__/',
+    '/__tests__/',
+    '/__fixtures__/',
+    'jest\\.*\\.ts',
+    'live-test-helpers\\.ts',
+    'unit-test-helpers\\.ts',
+  ],
   moduleDirectories: ['node_modules'],
   testPathIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/node_modules/'],
   testRegex,

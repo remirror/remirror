@@ -4,7 +4,15 @@
     "custom-no-implicit-dependencies": [
       true,
       "dev",
-      ["jest-axe", "jest", "jest-dom", "react-testing-library", "@test-utils", "@storybook"]
+      [
+        "jest-axe",
+        "jest",
+        "jest-dom",
+        "react-testing-library",
+        "@test-utils",
+        "@storybook",
+        "jest-extended"
+      ]
     ],
     "no-empty": false,
     "no-any": false,

@@ -2,7 +2,7 @@ import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
 import { axe, fireEvent, render, renderString } from '@test-utils';
 import { PlainObject } from 'simplytyped';
-import { InjectedRemirrorProps, Remirror } from '../..';
+import { InjectedRemirrorProps, Remirror } from '..';
 
 const findTextElement = (node: Node, text: string): Node | null => {
   if (node.nodeType === 3) {

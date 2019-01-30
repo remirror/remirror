@@ -1,0 +1,35 @@
+language: node_js
+cache:
+  yarn: true
+  directories:
+    - node_modules
+git:
+  depth: 5
+node_js:
+  - '10'
+  - '11'
+env:
+  global:
+    - PATH=$HOME/.yarn/bin:$HOME/bin:$PATH
+before_install:
+  - yarn ci:setup
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > $HOME/bin/cc-test-reporter
+  - chmod +x $HOME/bin/cc-test-reporter
+  - cc-test-reporter before-build
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  - export PATH=$HOME/.yarn/bin:$HOME/bin:$PATH
+install:
+  - yarn install
+script:
+  - yarn ci:checks
+after_script:
+  - cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+notifications:
+  slack:
+    rooms:
+      secure: ILLg1Iu+4uFV+wZR/pjIIvp5otps6xmmjpyfiKNvZbnVWDkQd4G4wMuojhz+hhSLRTKjGgjbCTktPgx++gsjGaBUZhmrOq7a7BeP7/JPaX3i8vZ7nUuWLcO1M8qn6sPB80ctwujhTglq8wxn5AJPhgdtssQSvI5rULCbCS0HqlnWKTlkedl5pBLJg920YmGYLrCOjpGX6YdM8qBxZHkD+gkR4DagSk4x87blMg8LP+SHaE0RmA6/+BXlUKJibgl438XrAmK0YYXVz9+z7FbU5FwBtQ9YC6Lzv5kov+QS7SNH0fsN3B5quzjd6X1C8ZnpiqNR9TCpDTn14iYsVfAY6onj35XIIJzaWG/PsedlqNOWm4Q6IAbucPNLJGzTYXrLcq95m07blsLl4vZvdkwshggG1IdoJdQmivY8oitZN72FkZSITCQSd8kYApuVWxXNRPKcxdu7liPgYUN120rlvXpWw29dV2B7RmV0cFdgaxkL3You6XHox8c83mdbrvq1vSudOfOp4PLM80CfKTFx6j37zq/42eNdf/5ls72ZT+kLvs3ebAHFZ+DCqwdCyV3ApT1YLq43Zpm6IFWpiP0Sbi6tUj9yTzhhI96pVXmEo9+cUGowSjk/6T2pEFPdqIbuwcYkN/cajTMGj2F0OBQZaa90T3r0dCmPKCX0WE6Xp+Q=
+
+# Safelist
+branches:
+  only:
+    - master

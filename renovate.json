@@ -1,0 +1,11 @@
+{
+  "timezone": "Europe/London",
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "extends": ["config:base", "docker:disable", ":disableDigestUpdates"],
+  "automerge": true,
+  "major": {
+    "automerge": false
+  }
+}
