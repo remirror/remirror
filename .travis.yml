@@ -12,7 +12,8 @@ env:
   global:
     - PATH=$HOME/.yarn/bin:$HOME/bin:$PATH
 before_install:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > $HOME/bin/cc-test-reporter
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+    > $HOME/bin/cc-test-reporter
   - chmod +x $HOME/bin/cc-test-reporter
   - cc-test-reporter before-build
   - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -26,9 +27,8 @@ after_script:
 notifications:
   slack:
     rooms:
-      secure: ILLg1Iu+4uFV+wZR/pjIIvp5otps6xmmjpyfiKNvZbnVWDkQd4G4wMuojhz+hhSLRTKjGgjbCTktPgx++gsjGaBUZhmrOq7a7BeP7/JPaX3i8vZ7nUuWLcO1M8qn6sPB80ctwujhTglq8wxn5AJPhgdtssQSvI5rULCbCS0HqlnWKTlkedl5pBLJg920YmGYLrCOjpGX6YdM8qBxZHkD+gkR4DagSk4x87blMg8LP+SHaE0RmA6/+BXlUKJibgl438XrAmK0YYXVz9+z7FbU5FwBtQ9YC6Lzv5kov+QS7SNH0fsN3B5quzjd6X1C8ZnpiqNR9TCpDTn14iYsVfAY6onj35XIIJzaWG/PsedlqNOWm4Q6IAbucPNLJGzTYXrLcq95m07blsLl4vZvdkwshggG1IdoJdQmivY8oitZN72FkZSITCQSd8kYApuVWxXNRPKcxdu7liPgYUN120rlvXpWw29dV2B7RmV0cFdgaxkL3You6XHox8c83mdbrvq1vSudOfOp4PLM80CfKTFx6j37zq/42eNdf/5ls72ZT+kLvs3ebAHFZ+DCqwdCyV3ApT1YLq43Zpm6IFWpiP0Sbi6tUj9yTzhhI96pVXmEo9+cUGowSjk/6T2pEFPdqIbuwcYkN/cajTMGj2F0OBQZaa90T3r0dCmPKCX0WE6Xp+Q=
+      secure: j2M2e9gEo/aSsywv3P7ccqVNmN7eVNK4zJoSJy1SOtVqcZtYQChxM4nkTha86PnhCzGlBMpFbL6jl0OeEWvQfeAk2GOvDwqMM4o0/Mi5twWJM8bXkGhIbvCswoHXbZOgdpa6jbwOufUGOzKS19YSkr+TDmhK1M5R0aXUASKprrwgT/rZ/yLrN0IbGVsYw2PpV3V3HRLTrWjguAiJqcIUD8/58mwjN6J163Z3e/2NWdFivzYyH9LTRgMShD2opvP89pp2GiSgOkfAMfv+AN4t8v877b2toRbdAJQvtNFaHTvcCuoXaOK9hAKXK3NrunR7XLQZCayywQI5dcrcKW+ad/KiM3y6NVZJYoqOSyVkv/QTJt0/LNUp/Llv3EfS654D1NEDj+9FhZSxJz3heV7RdOOVoTy6RiyA1VGd54ED5DZQ5NZE14uZY38/NuhawSMRkBYBrb0AiQez5pqQ3/Bbmkj8d9RjbMiJm9nhHcCiyXUz1wEB3v3HLmS2cyIAe1gNcuyw0MDp2MpMm9GQZCbbomQJItnQy2SZLco3ig1sUpZoyAlTPM8ANWN6hVpd7CEd75fXPThxadVdeQaZ7OtY11fkCeQxpASBRIliTY+ZrVe37uOBWrvbo8jg0vBUMhbn34ksYzfSq+fJ0DNCSAu1eRRQFuvFBVviDSaKce2XKqA=
 
-# Safelist
 branches:
   only:
     - master
