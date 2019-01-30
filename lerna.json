@@ -1,5 +1,5 @@
 {
-  "packages": ["@packages/*", "@deps/*"],
+  "packages": ["@remirror/*", "dependencies/*"],
   "publish": {},
   "command": {
     "publish": {

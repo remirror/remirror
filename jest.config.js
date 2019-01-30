@@ -23,7 +23,7 @@ module.exports = {
     '!jest.*.ts',
   ],
   coveragePathIgnorePatterns: ['**/dtslint/*.ts'],
-  projects: ['<rootDir>/@packages/*'], // Doesn't work with only one project https://github.com/facebook/jest/pull/7498
+  projects: ['<rootDir>/@remirror/*'], // Doesn't work with only one project https://github.com/facebook/jest/pull/7498
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
   ...(process.env.TEST_ENV ? coverageThreshold : {}),
 };

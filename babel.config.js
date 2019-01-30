@@ -17,5 +17,5 @@ module.exports = {
     ],
     '@babel/preset-typescript',
   ],
-  babelrcRoots: ['./', './@packages/*'],
+  babelrcRoots: ['./', './@remirror/*'],
 };

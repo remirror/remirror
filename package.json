@@ -3,8 +3,8 @@
   "name": "root",
   "workspaces": {
     "packages": [
-      "@packages/*",
-      "@deps/*"
+      "@remirror/*",
+      "dependencies/*"
     ]
   },
   "scripts": {
@@ -32,7 +32,7 @@
     }
   },
   "lint-staged": {
-    "@packages/*/src/**/*.{ts,tsx}": [
+    "@remirror/*/src/**/*.{ts,tsx}": [
       "tslint --fix",
       "git add",
       "jest --coverage=false --bail --findRelatedTests"
@@ -57,7 +57,7 @@
       "prettier-package-json --write",
       "git add"
     ],
-    "@{packages,deps}/*/package.json": [
+    "**/package.json": [
       "prettier-package-json --write",
       "git add"
     ]

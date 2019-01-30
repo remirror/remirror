@@ -106,9 +106,9 @@ tmp**
 .local.env
 
 # Only keep the workspace yarn.lock file
-@packages/**/yarn.lock
+@remirror/**/yarn.lock
 @apps/**/yarn.lock
 @cloud/**/yarn.lock
-@deps/**/yarn.lock
+dependencies/**/yarn.lock
 
 ./**/.vscode
