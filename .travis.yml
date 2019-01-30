@@ -12,7 +12,6 @@ env:
   global:
     - PATH=$HOME/.yarn/bin:$HOME/bin:$PATH
 before_install:
-  - yarn ci:setup
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > $HOME/bin/cc-test-reporter
   - chmod +x $HOME/bin/cc-test-reporter
   - cc-test-reporter before-build
