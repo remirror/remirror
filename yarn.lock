@@ -9371,10 +9371,10 @@ prosemirror-schema-basic@1.0.0:
   dependencies:
     prosemirror-model "^1.0.0"
 
-prosemirror-schema-list@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/prosemirror-schema-list/-/prosemirror-schema-list-1.0.1.tgz#f216e0cf4809b6074aa27912449ac89897f1ae94"
-  integrity sha512-AiLIX6qm6PEeDtMCKZLcSLi55WXo1ls7DnRK+4hSkoi0IIzNdxGsRlecCd3MzEu//DVz3nAEh+zEmslyW+uk8g==
+prosemirror-schema-list@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/prosemirror-schema-list/-/prosemirror-schema-list-1.0.2.tgz#8381fb0c1eaf439d848059f62e2fac517033c2ef"
+  integrity sha512-IJ4DEpUEymfO+NNA4DAgCMF39XiQqpmCoPYY3SXa1jYcVgObGpGfJlSjZYVFEpimoLI7/mLoOLDhCtpGCRhTfg==
   dependencies:
     prosemirror-model "^1.0.0"
     prosemirror-transform "^1.0.0"
