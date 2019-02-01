@@ -1,7 +1,7 @@
 {
   "extends": "../base.tsconfig.json",
   "compilerOptions": {
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "types": ["jest", "node"]
   },
   "include": ["*.ts"]
