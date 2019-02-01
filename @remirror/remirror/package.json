@@ -39,7 +39,7 @@
     "@types/prosemirror-inputrules": "1.0.2",
     "@types/prosemirror-keymap": "1.0.1",
     "@types/prosemirror-menu": "1.0.1",
-    "@types/prosemirror-model": "1.5.1",
+    "@types/prosemirror-model": "1.7.0",
     "@types/prosemirror-schema-basic": "1.0.1",
     "@types/prosemirror-schema-list": "1.0.1",
     "@types/prosemirror-state": "1.2.1",
