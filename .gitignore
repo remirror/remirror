@@ -113,5 +113,9 @@ dependencies/**/yarn.lock
 
 ./**/.vscode
 
-
+# Docz
 .docz
+
+# Cypress
+/e2e/**/videos
+*.mp4

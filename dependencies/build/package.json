@@ -58,8 +58,11 @@
     "rollup-plugin-node-resolve": "4.0.0",
     "rollup-plugin-replace": "2.1.0",
     "rollup-plugin-terser": "4.0.3",
+    "ts-loader": "5.3.3",
     "tslint": "5.12.1",
     "typescript": "3.3.1",
-    "typescript-styled-plugin": "0.13.0"
+    "typescript-styled-plugin": "0.13.0",
+    "webpack": "4.29.0",
+    "webpack-cli": "3.2.1"
   }
 }

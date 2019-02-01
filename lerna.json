@@ -1,5 +1,6 @@
 {
   "publish": {},
+  "packages": ["@remirror/*", "dependencies/*", "docz", "e2e"],
   "command": {
     "publish": {
       "message": "chore(release): publish %s",
