@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "config:base",
+    "docker:disable",
+    ":disableDigestUpdates",
+    "group:test",
+    "monorepo:accounts",
+    "group:allNonMajor"
+  ],
+  "timezone": "Europe/London",
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "prConcurrentLimit": 3,
+  "prHourlyLimit": 2,
+  "labels": ["type: dependencies", "renovate"]
+}
