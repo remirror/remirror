@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`docz setup 1`] = `
+<DocumentFragment>
+  <div
+    class="css-slbem0"
+    kind="info"
+  />
+</DocumentFragment>
+`;
+
+exports[`docz setup 2`] = `
+<DocumentFragment>
+  <div
+    class="css-cll8dr"
+    kind="negative"
+  />
+</DocumentFragment>
+`;

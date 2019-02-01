@@ -16,6 +16,10 @@
     "experimentalDecorators": true,
     "strict": true,
     "alwaysStrict": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+    "paths": {
+      "@test-utils": ["@remirror/remirror/src/__tests__/test-utils.tsx"]
+    }
   }
 }

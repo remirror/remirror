@@ -1,4 +1,6 @@
-const { join } = require('path');
+const { join, resolve } = require('path');
+
+const baseDir = (...paths) => resolve(__dirname, '..', join(...paths));
 
 const testRegex = process.env.TEST_ENV
   ? '/__tests__/.*\\.(spec|test)\\.tsx?$'
@@ -32,4 +34,7 @@ module.exports = {
   setupFilesAfterEnv: [join(__dirname, 'jest.framework.ts')],
   cacheDirectory: '../../.jest/cache',
   testEnvironment: 'node',
+  moduleNameMapper: {
+    '@test-utils$': baseDir('@remirror', 'remirror', 'src', '__tests__', 'test-utils.tsx'),
+  },
 };

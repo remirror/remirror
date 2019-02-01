@@ -112,3 +112,6 @@ tmp**
 dependencies/**/yarn.lock
 
 ./**/.vscode
+
+
+.docz
