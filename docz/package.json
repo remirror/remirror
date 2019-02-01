@@ -8,7 +8,7 @@
     "build": "docz build",
     "clean": "rimraf .docz",
     "dev": "docz dev",
-    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "lint": "tslint --project tsconfig.json --config ../tslint.json",
     "test": "jest",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },

@@ -1,0 +1,11 @@
+{
+  "extends": "../base.tsconfig.json",
+  "compilerOptions": {
+    "lib": ["esnext", "dom"],
+    "jsx": "react",
+    "outDir": "dist",
+    "declaration": true,
+    "types": ["cypress"]
+  },
+  "include": ["cypress/*/*.ts"]
+}

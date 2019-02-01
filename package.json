@@ -5,7 +5,8 @@
     "packages": [
       "@remirror/*",
       "dependencies/*",
-      "docz"
+      "docz",
+      "e2e"
     ]
   },
   "scripts": {
@@ -13,6 +14,9 @@
     "checks": "run-s integrity lint typecheck test",
     "checks:parallel": "run-p lint typecheck test",
     "ci:checks": "run-s integrity lint typecheck build test:ci",
+    "clean": "run-p clean:*",
+    "clean:modules": "lerna clean --yes && lerna run --parallel clean",
+    "clean:root": "rimraf node_modules .jest coverage",
     "dev": "lerna run dev --parallel",
     "fix": "run-s fix:*",
     "fix:config": "tslint --project config/tsconfig.json --config tslint.json --fix",
@@ -25,8 +29,11 @@
     "lint:ts": "lerna run lint --parallel",
     "prepublish:alpha": "run-s ci:checks",
     "publish:alpha": "lerna publish prerelease --preid=alpha --exact --dist-tag=alpha",
-    "test": "jest ",
-    "test:ci": "cross-env TEST_ENV=live jest",
+    "test": "jest",
+    "test:ci": "run-s test:live test:e2e",
+    "test:e2e": "cd e2e && yarn cypress:run",
+    "test:e2e:watch": "cd e2e && cypress:open --scope@",
+    "test:live": "cross-env TEST_ENV=live jest",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
     "typecheck": "lerna run typecheck"
   },
