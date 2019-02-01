@@ -4,7 +4,8 @@
   "workspaces": {
     "packages": [
       "@remirror/*",
-      "dependencies/*"
+      "dependencies/*",
+      "docz"
     ]
   },
   "scripts": {
@@ -16,7 +17,7 @@
     "fix": "run-s fix:*",
     "fix:config": "tslint --project config/tsconfig.json --config tslint.json --fix",
     "fix:lint": "lerna run lint --parallel -- --fix",
-    "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md}\"",
+    "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md,mdx}\"",
     "integrity": "yarn check --integrity",
     "lint": "run-s lint:*",
     "lint:config": "tslint --project config/tsconfig.json --config tslint.json",
@@ -37,20 +38,18 @@
     }
   },
   "lint-staged": {
-    "@remirror/*/src/**/*.{ts,tsx}": [
+    "@remirror/**/*.{ts,tsx}": [
       "tslint --fix",
-      "git add",
+      "git add"
+    ],
+    "@remirror/*/src/**/*.{ts,tsx}": [
       "jest --coverage=false --bail --findRelatedTests"
     ],
     "*.js": [
       "eslint --fix",
       "git add"
     ],
-    "*.json": [
-      "prettier --write",
-      "git add"
-    ],
-    "*.yml": [
+    "*.{json,yml,yaml,md,mdx}": [
       "prettier --write",
       "git add"
     ],

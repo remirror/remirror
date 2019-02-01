@@ -24,6 +24,5 @@ about: Suggest an idea for this project
 
 - [ ] Web
 - [ ] Native (Mobile)
-- [ ] Server
 
 <!--- Describe how this affects the above environments -->
