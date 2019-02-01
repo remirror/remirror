@@ -3,8 +3,9 @@
   "compilerOptions": {
     "lib": ["esnext", "dom"],
     "jsx": "react",
-    "outDir": "dist",
-    "declaration": true
+    "outDir": "lib",
+    "declaration": true,
+    "plugins": [{ "name": "typescript-styled-plugin" }]
   },
   "include": ["src"]
 }

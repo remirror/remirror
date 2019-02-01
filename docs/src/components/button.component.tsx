@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { SFC } from 'react';
+import React, { FunctionComponent } from 'react';
 
 const scales = {
   small: `
@@ -16,7 +16,7 @@ const scales = {
   `,
 };
 
-const kind = (outline: boolean) => (bg: string, color: string) => {
+const kindFactory = (outline: boolean) => (bg: string, color: string) => {
   const boxShadowColor = outline ? bg : 'transparent';
   const backgroundColor = outline ? 'transparent' : bg;
 
@@ -37,7 +37,7 @@ type Kind = 'primary' | 'secondary' | 'cancel' | 'dark' | 'gray';
 type Kinds = Record<Kind, string>;
 
 const kinds = (outline: boolean): Kinds => {
-  const get = kind(outline);
+  const get = kindFactory(outline);
 
   return {
     primary: get('#1FB6FF', 'white'),
@@ -66,6 +66,6 @@ const ButtonStyled = styled('button')`
   border-radius: 3px;
 `;
 
-export const Button: SFC<ButtonProps> = ({ children, ...props }) => (
+export const Button: FunctionComponent<ButtonProps> = ({ children, ...props }) => (
   <ButtonStyled {...props}>{children}</ButtonStyled>
 );

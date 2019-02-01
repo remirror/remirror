@@ -1,6 +1,6 @@
 {
   "publish": {},
-  "packages": ["@remirror/*", "dependencies/*", "docz", "e2e"],
+  "packages": ["@remirror/*", "internal/*", "internal/dependencies/*", "docs"],
   "command": {
     "publish": {
       "message": "chore(release): publish %s",
@@ -15,12 +15,14 @@
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
   "useWorkspaces": true,
-  "npmClientArgs": ["--no-lockfile"],
   "ignoreChanges": [
     "**/__fixtures__/**",
     "**/__tests__/**",
     "**/__mocks__/**",
     "**/__stories__/**",
-    "**/*.md"
+    "/docs/**",
+    "**/*.md",
+    "**/*.mdx",
+    "/internal/**"
   ]
 }
