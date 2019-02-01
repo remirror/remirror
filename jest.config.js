@@ -11,6 +11,7 @@ const coverageThreshold = {
 
 module.exports = {
   cacheDirectory: '<rootDir>/.jest',
+  coverageReporters: ['json', 'html', 'text', 'text-summary'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   collectCoverage: true,
   projects: ['<rootDir>/@remirror/*', '<rootDir>/docz'], // Doesn't work with only one project https://github.com/facebook/jest/pull/7498

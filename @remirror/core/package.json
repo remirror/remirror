@@ -1,0 +1,42 @@
+{
+  "name": "@remirror/core",
+  "description": "Core utilities for remirror",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/core",
+  "version": "0.0.0",
+  "main": "lib/index.js",
+  "module": "lib/dist/core.esm.js",
+  "browser": "lib/dist/core.umd.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "prebuild": "run-s clean lint",
+    "build": "run-s build:declaration build:rollup build:babel",
+    "build-storybook": "build-storybook",
+    "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps true",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "build:rollup": "rollup -c",
+    "clean": "rimraf lib",
+    "dev": "run-p watch:*",
+    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "storybook": "start-storybook -p 6006",
+    "test": "jest",
+    "test:live": "cross-env TEST_ENV=live jest",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit",
+    "watch:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -w",
+    "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
+    "watch:rollup": "rollup -c -w"
+  },
+  "dependencies": {},
+  "peerDependencies": {},
+  "keywords": [
+    "prosemirror",
+    "react",
+    "ssr",
+    "text editor"
+  ],
+  "types": "lib/index.d.ts"
+}

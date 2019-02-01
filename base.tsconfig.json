@@ -19,7 +19,7 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
-      "@test-utils": ["@remirror/remirror/src/__tests__/test-utils.tsx"]
+      "@test-utils": ["@remirror/core/src/__tests__/test-utils.tsx"]
     }
   }
 }

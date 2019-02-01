@@ -35,6 +35,6 @@ module.exports = {
   cacheDirectory: '../../.jest/cache',
   testEnvironment: 'node',
   moduleNameMapper: {
-    '@test-utils$': baseDir('@remirror', 'remirror', 'src', '__tests__', 'test-utils.tsx'),
+    '@test-utils$': baseDir('@remirror', 'core', 'src', '__tests__', 'test-utils.tsx'),
   },
 };
