@@ -4,9 +4,9 @@
   "workspaces": {
     "packages": [
       "@remirror/*",
-      "dependencies/*",
-      "docz",
-      "e2e"
+      "internal/*",
+      "internal/dependencies/*",
+      "docs"
     ]
   },
   "scripts": {

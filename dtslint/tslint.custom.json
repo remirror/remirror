@@ -1,6 +1,0 @@
-{
-  "extends": "@kj/tslint-rules/main.json",
-  "rules": {
-    "custom-expect": true
-  }
-}

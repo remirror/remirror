@@ -4,11 +4,7 @@
     "lib": ["esnext", "dom"],
     "jsx": "react",
     "outDir": "lib",
-    "baseUrl": "src",
-    "types": ["jest", "jest-extended", "jest-axe", "jest-dom/extend-expect"],
-    "paths": {
-      "@test-utils": ["__tests__/test-utils.tsx"]
-    }
+    "types": ["jest", "jest-extended", "jest-axe", "jest-dom/extend-expect"]
   },
   "include": ["src", ".storybook"]
 }

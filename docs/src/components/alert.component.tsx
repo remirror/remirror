@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import React, { SFC } from 'react';
+import React, { FunctionComponent } from 'react';
 
 export type Kind = 'info' | 'positive' | 'negative' | 'warning';
 export type KindMap = Record<Kind, string>;
@@ -27,6 +27,6 @@ const AlertStyled = styled('div')`
   background: ${({ kind = 'info' }: AlertProps) => kinds[kind]};
 `;
 
-export const Alert: SFC<AlertProps> = ({ kind, ...props }) => (
+export const Alert: FunctionComponent<AlertProps> = ({ kind, ...props }) => (
   <AlertStyled {...props} kind={kind} />
 );

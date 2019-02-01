@@ -14,7 +14,7 @@ module.exports = {
   coverageReporters: ['json', 'html', 'text', 'text-summary'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   collectCoverage: true,
-  projects: ['<rootDir>/@remirror/*', '<rootDir>/docz'], // Doesn't work with only one project https://github.com/facebook/jest/pull/7498
+  projects: ['<rootDir>/@remirror/*', '<rootDir>/docs'], // Doesn't work with only one project https://github.com/facebook/jest/pull/7498
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
   ...(process.env.TEST_ENV ? coverageThreshold : {}),
 };
