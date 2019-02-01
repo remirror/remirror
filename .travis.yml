@@ -5,9 +5,13 @@ cache:
     - node_modules
 git:
   depth: 5
+
+addons:
+  chrome: stable
+
 node_js:
   - '10'
-  - '11'
+
 env:
   global:
     - PATH=$HOME/.yarn/bin:$HOME/bin:$PATH
@@ -32,3 +36,4 @@ notifications:
 branches:
   only:
     - master
+    - ci/*

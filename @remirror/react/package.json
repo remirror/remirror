@@ -6,8 +6,8 @@
   "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/react",
   "version": "0.0.0",
   "main": "lib/index.js",
-  "module": "lib/dist/remirror.esm.js",
-  "browser": "lib/dist/remirror.umd.js",
+  "module": "lib/dist/react.esm.js",
+  "browser": "lib/dist/react.umd.js",
   "files": [
     "lib",
     "src"

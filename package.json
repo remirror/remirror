@@ -25,7 +25,6 @@
     "integrity": "yarn check --integrity",
     "lint": "run-s lint:*",
     "lint:config": "tslint --project config/tsconfig.json --config tslint.json",
-    "lint:dts": "tslint -p dtslint/tsconfig.custom.json -c dtslint/tslint.custom.json dtslint/*.dts.ts",
     "lint:ts": "lerna run lint --parallel",
     "prepublish:alpha": "run-s ci:checks",
     "publish:alpha": "lerna publish prerelease --preid=alpha --exact --dist-tag=alpha",
@@ -45,11 +44,14 @@
     }
   },
   "lint-staged": {
-    "@remirror/**/*.{ts,tsx}": [
+    "{@remirror,internal,docs}/**/*.{ts,tsx}": [
       "tslint --fix",
       "git add"
     ],
     "@remirror/*/src/**/*.{ts,tsx}": [
+      "jest --coverage=false --bail --findRelatedTests"
+    ],
+    "docs/**/*.{ts,tsx}": [
       "jest --coverage=false --bail --findRelatedTests"
     ],
     "*.js": [

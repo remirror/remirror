@@ -19,7 +19,6 @@ module.exports = {
   },
   coveragePathIgnorePatterns: [
     '/node_modules/',
-    '/dtslint/',
     '\\.d.ts',
     '/__mocks__/',
     '/__tests__/',
