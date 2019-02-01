@@ -19,6 +19,7 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
+      "@remirror/*": ["@remirror/*"],
       "@test-utils": ["@remirror/core/src/__tests__/test-utils.tsx"]
     }
   }
