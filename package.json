@@ -36,6 +36,10 @@
     "test:watch": "jest  --watch --verbose=false --coverage=false",
     "typecheck": "lerna run typecheck"
   },
+  "engines": {
+    "node": ">=8",
+    "yarn": "^1.13.0"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
