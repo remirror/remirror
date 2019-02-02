@@ -5,16 +5,15 @@
   "version": "0.0.0",
   "scripts": {
     "prebuild": "run-s clean lint",
-    "build": "webpack --output-filename out.js --entry ./cypress/integration/start.e2e.ts",
+    "build:DEPRECATED": "webpack --output-filename out.js --entry ./cypress/integration/start.e2e.ts",
     "clean": "rimraf out.js",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "dev": "webpack --output-filename out.js --entry ./cypress/integration/start.e2e.ts --watch",
+    "dev:DEPRECATED": "webpack --output-filename out.js --entry ./cypress/integration/start.e2e.ts --watch",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
     "typecheck": "tsc --pretty --noEmit"
   },
   "dependencies": {
-    "@cypress/browserify-preprocessor": "1.1.2",
     "@cypress/webpack-preprocessor": "4.0.3",
     "cypress": "3.1.5",
     "cypress-pipe": "1.3.3",

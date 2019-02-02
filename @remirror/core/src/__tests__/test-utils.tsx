@@ -58,6 +58,22 @@ export function apply(
 
 export { pm };
 
+export const findTextElement = (node: Node, text: string): Node | null => {
+  if (node.nodeType === 3) {
+    if (node.nodeValue === text) {
+      return node;
+    }
+  } else if (node.nodeType === 1) {
+    for (let ch = node.firstChild; ch; ch = ch.nextSibling as ChildNode) {
+      const found = findTextElement(ch, text);
+      if (found) {
+        return found;
+      }
+    }
+  }
+  return null;
+};
+
 /**
  * Tests that a command run transform the nodes from one state to another.
  * The second state is optional if nothing has changed.

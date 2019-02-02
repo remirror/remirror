@@ -1,5 +1,3 @@
-import '../config/jest.framework';
-
 import { toHaveNoViolations } from 'jest-axe';
 import 'jest-dom/extend-expect';
 import 'react-testing-library/cleanup-after-each';

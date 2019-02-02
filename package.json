@@ -10,7 +10,9 @@
     ]
   },
   "scripts": {
-    "build": "lerna run build",
+    "build": "run-s build:*",
+    "build:modules": "lerna run build",
+    "build:rollup": "rollup --config ./support/rollup/rollup.config.js",
     "checks": "run-s integrity lint typecheck test",
     "checks:parallel": "run-p lint typecheck test",
     "ci:checks": "run-s integrity lint typecheck build test:ci",
