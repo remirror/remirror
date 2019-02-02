@@ -32,11 +32,5 @@
   },
   "dependencies": {},
   "peerDependencies": {},
-  "keywords": [
-    "prosemirror",
-    "react",
-    "ssr",
-    "text editor"
-  ],
   "types": "lib/index.d.ts"
 }

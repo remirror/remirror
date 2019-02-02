@@ -8,16 +8,16 @@ checks:
       threshold: 4
   file-lines:
     config:
-      threshold: 500
+      threshold: 750
   method-complexity:
     config:
       threshold: 5
   method-count:
     config:
-      threshold: 50
+      threshold: 25
   method-lines:
     config:
-      threshold: 50
+      threshold: 75
   nested-control-flow:
     config:
       threshold: 4
