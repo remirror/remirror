@@ -1,7 +1,7 @@
 const { join, resolve } = require('path');
 
-const baseDir = (...paths) => resolve(__dirname, '..', join(...paths));
-
+const baseDir = (...paths) => resolve(__dirname, '..', '..', join(...paths));
+const jestSupportDir = (...args) => baseDir(join('support', 'jest', ...args));
 const testRegex = process.env.TEST_ENV
   ? '/__tests__/.*\\.(spec|test)\\.tsx?$'
   : '/__tests__/.*\\.spec\\.tsx?$';
@@ -15,7 +15,7 @@ module.exports = {
     __TEST__: true,
   },
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': join(__dirname, './jest.transformer.js'),
+    '^.+\\.(js|jsx|ts|tsx)$': jestSupportDir('jest.transformer.js'),
   },
   coveragePathIgnorePatterns: [
     '/node_modules/',
@@ -30,10 +30,16 @@ module.exports = {
   moduleDirectories: ['node_modules'],
   testPathIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/node_modules/'],
   testRegex,
-  setupFilesAfterEnv: [join(__dirname, 'jest.framework.ts')],
+  setupFilesAfterEnv: [
+    jestSupportDir('jest.framework.ts'),
+    jestSupportDir('jest.framework.dom.ts'),
+  ],
   cacheDirectory: '../../.jest/cache',
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   moduleNameMapper: {
     '@test-utils$': baseDir('@remirror', 'core', 'src', '__tests__', 'test-utils.tsx'),
+    '@remirror/core$': baseDir('@remirror', 'core', 'src'),
+    '@remirror/core-extensions$': baseDir('@remirror', 'core-extensions'),
+    '@remirror/react$': baseDir('@remirror', 'react'),
   },
 };

@@ -1,24 +1,8 @@
 import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
-import { axe, fireEvent, render, renderString } from '@test-utils';
+import { axe, findTextElement, fireEvent, render, renderString } from '@test-utils';
 import { PlainObject } from 'simplytyped';
 import { InjectedRemirrorProps, Remirror } from '..';
-
-const findTextElement = (node: Node, text: string): Node | null => {
-  if (node.nodeType === 3) {
-    if (node.nodeValue === text) {
-      return node;
-    }
-  } else if (node.nodeType === 1) {
-    for (let ch = node.firstChild; ch; ch = ch.nextSibling as ChildNode) {
-      const found = findTextElement(ch, text);
-      if (found) {
-        return found;
-      }
-    }
-  }
-  return null;
-};
 
 describe('Remirror', () => {
   const textContent = `This is editor text`;

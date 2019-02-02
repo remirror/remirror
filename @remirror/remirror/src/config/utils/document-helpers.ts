@@ -49,5 +49,6 @@ export const getMarkAttrs = (type: MarkType, state: EditorState<EditorSchema>) =
 
 export const getPluginState = <GState>(plugin: Plugin, state: EditorState): GState =>
   plugin.getState(state);
+
 export const getPluginKeyState = <GState>(pluginKey: PluginKey, state: EditorState): GState =>
   pluginKey.getState(state);

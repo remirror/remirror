@@ -248,12 +248,6 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
             Escape: selectParentNode,
           }),
           keymap(baseKeymap),
-          // gapCursor(),
-          // new Plugin({
-          //   props: {
-          //     editable: () => this.props.editable,
-          //   },
-          // }),
         ],
       }),
     };
@@ -263,7 +257,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     if (isObjectNode(content)) {
       try {
         return this.schema.nodeFromJSON(content);
-      } catch (e) {
+      } catch {
         return this.schema.nodeFromJSON(content);
       }
     }

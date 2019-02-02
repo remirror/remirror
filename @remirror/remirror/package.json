@@ -14,11 +14,10 @@
   ],
   "scripts": {
     "prebuild": "run-s clean lint",
-    "build": "run-s build:declaration build:rollup build:babel",
+    "build": "run-s build:declaration build:babel",
     "build-storybook": "build-storybook",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps true",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "build:rollup": "rollup -c",
     "clean": "rimraf lib",
     "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
@@ -27,8 +26,7 @@
     "test:live": "cross-env TEST_ENV=live jest",
     "typecheck": "tsc -p ./tsconfig.json --noEmit",
     "watch:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -w",
-    "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
-    "watch:rollup": "rollup -c -w"
+    "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
   },
   "dependencies": {
     "@types/hoist-non-react-statics": "3.0.1",
@@ -79,5 +77,9 @@
     "ssr",
     "text editor"
   ],
-  "types": "lib/index.d.ts"
+  "types": "lib/index.d.ts",
+  "umdGlobals": {
+    "react": "React",
+    "react-dom": "ReactDOM"
+  }
 }

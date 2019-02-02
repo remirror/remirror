@@ -1,7 +1,7 @@
 {
   "extends": "@kj/tslint-rules/react",
   "rules": {
-    "custom-no-implicit-dependencies": [
+    "no-implicit-dependencies": [
       true,
       "dev",
       [
@@ -11,7 +11,8 @@
         "react-testing-library",
         "@test-utils",
         "@storybook",
-        "jest-extended"
+        "jest-extended",
+        "prosemirror-test-builder"
       ]
     ],
     "no-empty": false,
