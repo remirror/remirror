@@ -19,8 +19,11 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
-      "@remirror/*": ["@remirror/*"],
-      "@test-utils": ["@remirror/core/src/__tests__/test-utils.tsx"]
+      "@remirror/core": ["@remirror/core/src"],
+      "@remirror/core-extensions": ["@remirror/core-extensions/src"],
+      "@remirror/react": ["@remirror/react/src"],
+      "@test-utils": ["@remirror/core/src/__tests__/test-utils.tsx"],
+      "*": ["support/types/*"]
     }
   }
 }
