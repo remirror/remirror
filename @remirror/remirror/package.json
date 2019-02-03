@@ -22,6 +22,7 @@
     "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
     "storybook": "start-storybook -p 6006",
+    "storybook:ci": "start-storybook -p 6006 --ci",
     "test": "jest",
     "test:live": "cross-env TEST_ENV=live jest",
     "typecheck": "tsc -p ./tsconfig.json --noEmit",
