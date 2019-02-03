@@ -1,3 +1,5 @@
+// tslint:disable:no-implicit-dependencies
+
 import '@storybook/addon-console';
 import React from 'react';
 
@@ -9,7 +11,7 @@ const MainDecorator: StoryDecorator = story => (
   </>
 );
 
-const req = require.context('../src', true, /__stories__\/.*\.stories\.tsx$/);
+const req = require.context('../../', true, /__stories__\/.*\.stories\.tsx$/);
 function loadStories() {
   addDecorator(MainDecorator);
   req.keys().forEach(filename => req(filename));

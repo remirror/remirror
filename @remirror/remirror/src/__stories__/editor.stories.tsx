@@ -35,6 +35,7 @@ const EditorLayout: FunctionComponent = () => {
     >
       <div style={{ gridArea: 'editor' }}>
         <Remirror
+          attributes={{ 'data-test-id': 'editor-instance' }}
           onChange={onChange}
           placeholder='Start typing for magic...'
           autoFocus={true}

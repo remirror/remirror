@@ -16,5 +16,5 @@ module.exports = {
   collectCoverage: true,
   projects: ['<rootDir>/@remirror/*', '<rootDir>/docs'],
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
-  ...(process.env.TEST_ENV ? coverageThreshold : {}),
+  ...(process.env.TEST_ENV === false ? coverageThreshold : {}),
 };

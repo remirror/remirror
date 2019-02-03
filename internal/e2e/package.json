@@ -7,8 +7,9 @@
     "prebuild": "run-s clean lint",
     "build:DEPRECATED": "webpack --output-filename out.js --entry ./cypress/integration/start.e2e.ts",
     "clean": "rimraf out.js",
+    "coverage:report": "nyc report",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
+    "cypress:run": "cypress run --env coverage=open",
     "dev:DEPRECATED": "webpack --output-filename out.js --entry ./cypress/integration/start.e2e.ts --watch",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
     "typecheck": "tsc --pretty --noEmit"
@@ -18,5 +19,40 @@
     "cypress": "3.1.5",
     "cypress-pipe": "1.3.3",
     "cypress-plugin-snapshots": "1.2.5"
+  },
+  "nyc": {
+    "temp-dir": "coverage",
+    "report-dir": "coverage",
+    "extension": [
+      ".tsx",
+      ".ts",
+      ".jsx",
+      ".js",
+      ".mjs"
+    ],
+    "check-coverage": true,
+    "per-file": true,
+    "lines": 99,
+    "statements": 99,
+    "functions": 99,
+    "branches": 99,
+    "include": [
+      "../../@remirror/**/*.{ts,tsx}"
+    ],
+    "exclude": [
+      "../../@remirror/**/*.stories.tsx",
+      "../../@remirror/**/*.{spec,test}.ts(x)"
+    ],
+    "ignore-class-method": "methodToIgnore",
+    "reporter": [
+      "lcov",
+      "text-summary",
+      "html",
+      "text"
+    ],
+    "cache": true,
+    "all": true,
+    "sourceMap": true,
+    "instrument": true
   }
 }
