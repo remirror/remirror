@@ -16,7 +16,7 @@
     "checks": "run-s integrity lint typecheck test",
     "checks:parallel": "run-p lint typecheck test",
     "ci:checks": "run-s integrity lint typecheck build test:ci",
-    "clean": "run-p clean:*",
+    "clean": "run-p clean:modules clean:root",
     "clean:modules": "lerna clean --yes && lerna run --parallel clean",
     "clean:root": "rimraf node_modules .jest coverage",
     "cy:open": "cd internal/e2e && yarn cypress:open",
@@ -88,7 +88,7 @@
     ]
   },
   "resolutions": {
-    "babel-core": "7.0.0-bridge.0",
+    "terser": "3.14.1",
     "react": "16.8.0-alpha.1",
     "react-dom": "16.8.0-alpha.1",
     "jsdom": "13.2.0",
