@@ -4,8 +4,8 @@
   "license": "MIT",
   "version": "0.13.7",
   "scripts": {
-    "prebuild:docs": "run-s clean lint",
-    "build:docs": "docz build",
+    "prebuild": "run-s clean lint",
+    "build": "docz build",
     "clean": "rimraf .docz",
     "dev": "docz dev",
     "lint": "tslint --project tsconfig.json --config ../tslint.json",
