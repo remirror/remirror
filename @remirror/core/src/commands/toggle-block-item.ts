@@ -3,7 +3,7 @@ import { NodeType } from 'prosemirror-model';
 import { nodeActive } from '../document-helpers';
 import { CommandFunction } from '../types';
 
-export const toggleBlockListItem = (
+export const toggleBlockItem = (
   type: NodeType,
   toggleType: NodeType,
   attrs = {},

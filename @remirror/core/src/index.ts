@@ -5,3 +5,5 @@ export * from './mark-extension';
 export * from './types';
 export * from './commands';
 export * from './nodes';
+export * from './document-helpers';
+export * from './helpers';

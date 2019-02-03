@@ -1,9 +1,12 @@
+/* tslint:disable:no-implicit-dependencies */
+
 import React, { FunctionComponent, MouseEventHandler, useState } from 'react';
 
+import { Mentions } from '@remirror/mentions-extension';
+import { Remirror, RemirrorEventListener } from '@remirror/react';
+import { RenderTree } from '@remirror/renderer';
 import { storiesOf } from '@storybook/react';
 import { isEqual, memoize } from 'lodash';
-import { Remirror, RemirrorEventListener, RenderTree } from '../';
-import { Mention } from '../config/nodes';
 
 const EditorLayout: FunctionComponent = () => {
   const [json, setJson] = useState(JSON.stringify(initialJson, null, 2));
@@ -41,9 +44,9 @@ const EditorLayout: FunctionComponent = () => {
           autoFocus={true}
           initialContent={initialJson}
           extensions={[
-            new Mention({
+            new Mentions({
               onKeyDown: arg => {
-                console.log('Mention is being called', arg);
+                console.log('Mentions is being called', arg);
                 return false;
               },
             }),

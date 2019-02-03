@@ -26,7 +26,15 @@
     "watch:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -w",
     "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@remirror/core": "0.0.0",
+    "@types/prosemirror-model": "^1.7.0",
+    "@types/prosemirror-state": "^1.2.1",
+    "@types/prosemirror-view": "^1.3.0",
+    "prosemirror-model": "^1.7.0",
+    "prosemirror-state": "^1.2.2",
+    "prosemirror-view": "^1.7.0"
+  },
   "peerDependencies": {},
   "types": "lib/index.d.ts",
   "umdGlobals": {}

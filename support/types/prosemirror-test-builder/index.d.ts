@@ -1,10 +1,6 @@
 declare module 'prosemirror-test-builder' {
   import { Node as ProsemirrorNode, Schema } from 'prosemirror-model';
 
-  const prosemirrorTestBuilder: ProsemirrorTestBuilder;
-
-  export default prosemirrorTestBuilder;
-
   export interface NodeTypeAttributes extends Record<string, any> {
     nodeType: string;
   }
@@ -61,15 +57,22 @@ declare module 'prosemirror-test-builder' {
   }
 
   export type Builder = <
+    Obj extends Record<string, NodeTypeAttributes | MarkTypeAttributes> = Record<
+      string,
+      NodeTypeAttributes | MarkTypeAttributes
+    >,
     N extends string = string,
-    M extends string = string,
-    S = Schema<N, M>,
-    V = Record<N, NodeTypeAttributes> & Record<M, MarkTypeAttributes>,
-    T = Record<N, NodeBuilderMethod<S>> & Record<N, MarkBuilderMethod<S>>
+    M extends string = string
   >(
-    testSchema: S,
-    names: V,
-  ) => T;
+    testSchema: Schema<N, M>,
+    names: Obj,
+  ) => Record<N, NodeBuilderMethod<Schema<N, M>>> &
+    Record<M, MarkBuilderMethod<Schema<N, M>>> &
+    {
+      [P in keyof Obj]: Obj[P] extends NodeTypeAttributes
+        ? NodeBuilderMethod<Schema<N, M>>
+        : MarkBuilderMethod<Schema<N, M>>
+    };
 
   export interface ProsemirrorTestBuilder {
     schema: TestSchema;
@@ -108,4 +111,8 @@ declare module 'prosemirror-test-builder' {
     strong: MarkBuilderMethod<TestSchema>;
     code: MarkBuilderMethod<TestSchema>;
   }
+
+  declare const prosemirrorTestBuilder: ProsemirrorTestBuilder;
+
+  export default prosemirrorTestBuilder;
 }
