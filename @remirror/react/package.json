@@ -26,8 +26,35 @@
     "watch:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -w",
     "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
   },
-  "dependencies": {},
-  "peerDependencies": {},
+  "dependencies": {
+    "@remirror/core": "0.0.0",
+    "@remirror/core-extensions": "0.0.0",
+    "@remirror/mentions-extension": "0.0.0",
+    "@types/hoist-non-react-statics": "3.0.1",
+    "@types/prosemirror-keymap": "^1.0.1",
+    "@types/prosemirror-model": "^1.7.0",
+    "@types/prosemirror-state": "^1.2.1",
+    "@types/prosemirror-view": "^1.3.0",
+    "css-in-js-utils": "3.0.0",
+    "csstype": "2.6.2",
+    "hoist-non-react-statics": "3.3.0",
+    "lodash": "4.17.11",
+    "prosemirror-inputrules": "^1.0.1",
+    "prosemirror-keymap": "^1.0.1",
+    "prosemirror-model": "^1.7.0",
+    "prosemirror-state": "^1.2.2",
+    "prosemirror-view": "^1.7.0",
+    "simplytyped": "^1.7.0"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.8.1",
+    "@types/react-dom": "^16.0.11",
+    "react": "^16.8.0-alpha.1",
+    "react-dom": "^16.8.0-alpha.1"
+  },
   "types": "lib/index.d.ts",
-  "umdGlobals": {}
+  "umdGlobals": {
+    "react": "React",
+    "react-dom": "ReactDOM"
+  }
 }

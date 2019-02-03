@@ -30,7 +30,7 @@ export abstract class Extension<GOptions extends {} = {}> implements IExtension 
     this.init();
   }
 
-  private init() {
+  protected init() {
     this.pk = new PluginKey(this.name);
   }
 

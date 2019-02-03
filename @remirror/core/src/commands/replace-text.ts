@@ -1,11 +1,10 @@
 import { NodeType } from 'prosemirror-model';
-import { CommandFunction, SuggestionsRange } from '../types';
+import { CommandFunction, FromTo } from '../types';
 
-export const replaceText = (
-  range: SuggestionsRange | null,
-  type: NodeType,
-  attrs = {},
-): CommandFunction => (state, dispatch) => {
+export const replaceText = (range: FromTo | null, type: NodeType, attrs = {}): CommandFunction => (
+  state,
+  dispatch,
+) => {
   const { $from, $to } = state.selection;
   const index = $from.index();
   const from = range ? range.from : $from.pos;

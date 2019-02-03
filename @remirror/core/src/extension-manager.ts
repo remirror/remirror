@@ -14,8 +14,8 @@ import {
   ExtensionBooleanFunction,
   ExtensionCommandFunction,
   IExtension,
-  MarkExtensionSpecification,
-  NodeExtensionSpecification,
+  MarkExtensionSpec,
+  NodeExtensionSpec,
   ProsemirrorPlugin,
   RemirrorActions,
   SchemaParams,
@@ -31,7 +31,7 @@ export class ExtensionManager {
    * Filters through all provided extensions and picks the nodes
    */
   public get nodes() {
-    const initialEditorNodes: Record<string, NodeExtensionSpecification> = {};
+    const initialEditorNodes: Record<string, NodeExtensionSpec> = {};
     return this.extensions.filter(isNodeExtension).reduce(
       (nodes, { name, schema }) => ({
         ...nodes,
@@ -45,7 +45,7 @@ export class ExtensionManager {
    * Filters through all provided extensions and picks the marks
    */
   public get marks() {
-    const initialEditorMarks: Record<string, MarkExtensionSpecification> = {};
+    const initialEditorMarks: Record<string, MarkExtensionSpec> = {};
     return this.extensions.filter(isMarkExtension).reduce(
       (marks, { name, schema }) => ({
         ...marks,

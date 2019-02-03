@@ -19,9 +19,11 @@
     "resolveJsonModule": true,
     "baseUrl": "./",
     "paths": {
-      "@remirror/core": ["@remirror/core/src"],
-      "@remirror/core-extensions": ["@remirror/core-extensions/src"],
-      "@remirror/react": ["@remirror/react/src"],
+      "@remirror/core": ["@remirror/core/src/index.ts"],
+      "@remirror/core-extensions": ["@remirror/core-extensions/src/index.ts"],
+      "@remirror/react": ["@remirror/react/src/index.ts"],
+      "@remirror/mentions-extension": ["@remirror/mentions-extension/src/index.ts"],
+      "@remirror/renderer": ["@remirror/renderer/src/index.ts"],
       "@test-utils": ["@remirror/core/src/__tests__/test-utils.tsx"],
       "*": ["support/types/*"]
     }

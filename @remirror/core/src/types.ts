@@ -17,7 +17,7 @@ import {
   Transaction,
 } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-import { Omit, PlainObject } from 'simplytyped';
+import { Omit } from 'simplytyped';
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -60,11 +60,11 @@ export type DOMOutputSpec =
       DOMOutputSpecPosX?
     ];
 
-export type NodeExtensionSpecification = Omit<NodeSpec, 'toDOM'> & {
+export type NodeExtensionSpec = Omit<NodeSpec, 'toDOM'> & {
   toDOM?: ((node: ProsemirrorNode) => DOMOutputSpec) | null;
 };
 
-export type MarkExtensionSpecification = Omit<MarkSpec, 'toDOM'> & {
+export type MarkExtensionSpec = Omit<MarkSpec, 'toDOM'> & {
   toDOM?: ((mark: Mark) => DOMOutputSpec) | null;
 };
 
@@ -124,19 +124,12 @@ export interface ISharedExtension<GSchemaType extends NodeType | MarkType> exten
 
 export interface INodeExtension extends ISharedExtension<NodeType<EditorSchema>> {
   readonly type: ExtensionType.NODE;
-  schema: NodeExtensionSpecification;
+  schema: NodeExtensionSpec;
 }
 
 export interface IMarkExtension extends ISharedExtension<MarkType<EditorSchema>> {
   readonly type: ExtensionType.MARK;
-  schema: MarkExtensionSpecification;
-}
-
-// export interface ActiveDocumentElements {}
-
-export interface SuggestionsRange {
-  from: number;
-  to: number;
+  schema: MarkExtensionSpec;
 }
 
 export type Attrs = Record<string, string>;
@@ -208,58 +201,6 @@ export enum ExtensionType {
   EXTENSION = 'extension',
 }
 
-export interface GetMenuPropsConfig<GRefKey extends string = 'ref'>
-  extends BaseGetterConfig<GRefKey> {
-  offset?: OffsetCalculator;
-  shouldRender?: ShouldRenderMenu;
-  offscreenPosition?: Partial<Position>;
-  name: string;
-}
-
-export interface BaseGetterConfig<GRefKey extends string = 'ref'> {
-  refKey?: GRefKey;
-}
-
-export interface GetRootPropsConfig<GRefKey extends string = 'ref'>
-  extends BaseGetterConfig<GRefKey>,
-    PlainObject {}
-
-export interface InjectedRemirrorProps {
-  /**
-   * The prosemirror view
-   */
-  view: EditorView<EditorSchema>;
-  actions: RemirrorActions;
-  getMarkAttr(type: string): Record<string, string>;
-  clearContent(triggerOnChange?: boolean): void;
-  setContent(content: string | ObjectNode, triggerOnChange?: boolean): void;
-
-  getRootProps<GRefKey extends string = 'ref'>(
-    options?: GetRootPropsConfig<GRefKey>,
-  ): PlainObject & { [P in Exclude<GRefKey, 'children' | 'key'>]: React.Ref<any> };
-  getMenuProps<GRefKey extends string = 'ref'>(
-    options: GetMenuPropsConfig<GRefKey>,
-  ): { position: Position; rawData: RawMenuPositionData | null; offscreen: boolean } & {
-    [P in Exclude<GRefKey, 'children' | 'key' | 'position' | 'rawData' | 'offscreen'>]: React.Ref<
-      any
-    >
-  };
-}
-
-export type RenderPropFunction = (params: InjectedRemirrorProps) => JSX.Element;
-
-export interface RemirrorEventListenerParams {
-  state: EditorState<EditorSchema>;
-  view: EditorView<EditorSchema>;
-  getHTML(): string;
-  getText(lineBreakDivider?: string): string;
-  getJSON(): ObjectNode;
-  getDocJSON(): ObjectNode;
-}
-
-export type RemirrorEventListener = (params: RemirrorEventListenerParams) => void;
-export type AttributePropFunction = (params: RemirrorEventListenerParams) => Record<string, string>;
-
 export type Literal = string | number | boolean | undefined | null | void | {};
 
 export interface ObjectMark {
@@ -288,3 +229,8 @@ export type PluginCreator = (
   getAttrs?: Attrs | ((p: string[] | string) => Attrs | null | undefined),
   joinPredicate?: (p1: string[], p2: PMNode) => boolean,
 ) => Plugin;
+
+export interface FromTo {
+  from: number;
+  to: number;
+}

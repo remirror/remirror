@@ -39,7 +39,8 @@ module.exports = {
   moduleNameMapper: {
     '@test-utils$': baseDir('@remirror', 'core', 'src', '__tests__', 'test-utils.tsx'),
     '@remirror/core$': baseDir('@remirror', 'core', 'src'),
-    '@remirror/core-extensions$': baseDir('@remirror', 'core-extensions'),
-    '@remirror/react$': baseDir('@remirror', 'react'),
+    '@remirror/core-extensions$': baseDir('@remirror', 'core-extensions', 'src'),
+    '@remirror/react$': baseDir('@remirror', 'react', 'src'),
+    '@remirror/mentions-extension$': baseDir('@remirror', 'mentions-extension', 'src'),
   },
 };

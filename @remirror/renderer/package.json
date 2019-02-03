@@ -1,13 +1,13 @@
 {
-  "name": "remirror",
-  "description": "A text editor for react built with prosemirror",
+  "name": "@remirror/renderer",
+  "description": "renderer utilities for remirror",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "repository": "https://github.com/ifiokjr/remirror",
-  "version": "0.0.1-alpha.0",
+  "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/renderer",
+  "version": "0.0.0",
   "main": "lib/index.js",
-  "module": "lib/dist/remirror.esm.js",
-  "browser": "lib/dist/remirror.umd.js",
+  "module": "lib/dist/remirror-renderer.esm.js",
+  "browser": "lib/dist/remirror-renderer.umd.js",
   "files": [
     "lib",
     "src"
@@ -15,13 +15,11 @@
   "scripts": {
     "prebuild": "run-s clean lint",
     "build": "run-s build:declaration build:babel",
-    "build-storybook": "build-storybook",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" --source-maps true",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
     "clean": "rimraf lib",
     "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
-    "storybook": "start-storybook -p 6006",
     "test": "jest",
     "test:live": "cross-env TEST_ENV=live jest",
     "typecheck": "tsc -p ./tsconfig.json --noEmit",
@@ -30,23 +28,18 @@
   },
   "dependencies": {
     "@remirror/core": "0.0.0",
-    "@remirror/core-extensions": "0.0.0",
-    "@remirror/react": "0.0.0",
-    "@remirror/renderer": "0.0.0",
-    "@types/react-icons": "2.2.6"
+    "@types/prosemirror-state": "^1.2.1",
+    "@types/prosemirror-view": "^1.3.0",
+    "prosemirror-state": "^1.2.2",
+    "prosemirror-view": "^1.7.0",
+    "simplytyped": "^1.7.0"
   },
   "peerDependencies": {
-    "@types/react": "^16.7.18",
+    "@types/react": "^16.8.1",
     "@types/react-dom": "^16.0.11",
-    "react": "16.8.0-alpha.1",
-    "react-dom": "16.8.0-alpha.1"
+    "react": "^16.8.0-alpha.1",
+    "react-dom": "^16.8.0-alpha.1"
   },
-  "keywords": [
-    "prosemirror",
-    "react",
-    "ssr",
-    "text editor"
-  ],
   "types": "lib/index.d.ts",
   "umdGlobals": {
     "react": "React",
