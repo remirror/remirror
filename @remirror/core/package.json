@@ -7,7 +7,6 @@
   "version": "0.0.0",
   "main": "lib/index.js",
   "module": "lib/dist/core.esm.js",
-  "browser": "lib/dist/core.umd.js",
   "files": [
     "lib",
     "src"
@@ -49,5 +48,7 @@
   },
   "peerDependencies": {},
   "types": "lib/index.d.ts",
+  "umd": "lib/dist/core.umd.js",
+  "umd:min": "lib/dist/core.umd.min.js",
   "umdGlobals": {}
 }

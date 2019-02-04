@@ -1,4 +1,4 @@
 module.exports = {
   ...require('./support/babel/base.babel'),
-  babelrcRoots: ['.', '@remirror/*', 'docs'],
+  babelrcRoots: ['.', '@remirror/*', 'docs/.babelrc.js'],
 };
