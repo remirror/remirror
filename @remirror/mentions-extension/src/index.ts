@@ -20,15 +20,7 @@ export class Mentions<GItem extends {} = any> extends NodeExtension<MentionsNode
   /**
    * The name is dynamically generated based on the passed in type.
    */
-  public readonly name: string;
-
-  constructor(params?: MentionsNodeExtensionOptions) {
-    super(params);
-    this.name = this.generateName();
-    this.init(); // Must be called to overwrite the pk set in the initial constructor
-  }
-
-  private generateName() {
+  get name() {
     const { type } = this.options;
     return `mentions${type ? `_${type}` : ''}`;
   }

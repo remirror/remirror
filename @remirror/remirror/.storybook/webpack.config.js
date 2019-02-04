@@ -1,18 +1,19 @@
 const { resolve, join } = require('path');
 
 const defaultConfig = require('../../../support/babel/base.babel');
-const packagesDirectory = path => resolve(__dirname, '../../');
+
 const babelConfig = {
   presets: [
+    '@babel/preset-typescript',
     [
       '@babel/preset-env',
       {
+        modules: false,
         targets: {
           node: '8',
         },
       },
     ],
-    '@babel/preset-typescript',
     '@babel/preset-react',
   ],
   plugins: [

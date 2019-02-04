@@ -1,5 +1,6 @@
 module.exports = {
   presets: [
+    '@babel/preset-typescript',
     [
       '@babel/preset-env',
       {
@@ -11,16 +12,13 @@ module.exports = {
     '@babel/preset-react',
   ],
   plugins: [
-    '@babel/plugin-transform-typescript',
+    '@babel/plugin-transform-typescript', // This is need so that abstract classes are properly compiled
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-syntax-dynamic-import',
     'lodash',
   ],
   env: {
-    test: {
-      ignore: [],
-    },
     production: {
       ignore: [
         '**/__tests__',
