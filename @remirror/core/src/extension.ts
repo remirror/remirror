@@ -56,8 +56,24 @@ export abstract class Extension<GOptions extends {} = {}, GType = never> {
 }
 
 export interface Extension<GOptions extends {} = {}, GType = never> {
+  /**
+   * Determines whether this extension is currently active (only applies to Node Extensions and Mark Extensions)
+   * @param params
+   */
   active?(params: SchemaWithStateParams): FlexibleConfig<ExtensionBooleanFunction>;
+
+  /**
+   * Determines whether this extension is enabled. If an object is returned then it can define different node types and
+   * the criteria for checks.
+   *
+   * @param params
+   */
   enabled?(params: SchemaWithStateParams): FlexibleConfig<ExtensionBooleanFunction>;
+
+  /**
+   * Register commands for this extension. If an object returned the commands are
+   * @param params
+   */
   commands?(params: SchemaTypeParams<GType>): FlexibleConfig<ExtensionCommandFunction>;
   pasteRules?(params: SchemaTypeParams<GType>): ProsemirrorPlugin[];
   inputRules?(params: SchemaTypeParams<GType>): InputRule[];

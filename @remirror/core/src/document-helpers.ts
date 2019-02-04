@@ -1,7 +1,15 @@
 import { Mark, MarkType, NodeType, ResolvedPos } from 'prosemirror-model';
 import { EditorState, NodeSelection, Plugin, PluginKey } from 'prosemirror-state';
+import { Attrs } from './types';
 
-// Copied from tiptap
+/**
+ * Checks that a mark is active within the selected region, or the current selection point is within a
+ * region with the mark active. Used by extensions to implement their active methods.
+ * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
+ *
+ * @param state
+ * @param type
+ */
 export const markActive = (state: EditorState, type: MarkType) => {
   const { from, $from, to, empty } = state.selection;
   return Boolean(
@@ -11,16 +19,27 @@ export const markActive = (state: EditorState, type: MarkType) => {
   );
 };
 
-// Copied from tiptap
-export const nodeActive = (state: EditorState, type: NodeType, attrs = {}) => {
+/**
+ * Checks whether the node type passed in is active within the region.
+ * Used by extensions to implement the `#active` method.
+ *
+ * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
+ *
+ * @param state
+ * @param type
+ * @param attrs
+ */
+export const nodeActive = (state: EditorState, type: NodeType, attrs: Attrs = {}) => {
   const { $from, to, node } = state.selection as NodeSelection;
+  console.log(node);
   if (node) {
+    console.log();
     return node.hasMarkup(type, attrs);
   }
   return to <= $from.end() && $from.parent.hasMarkup(type, attrs);
 };
 
-// Copied from tiptap
+// "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
 export const canInsertNode = (state: EditorState, type: NodeType) => {
   const { $from } = state.selection;
   for (let d = $from.depth; d >= 0; d--) {
@@ -32,7 +51,7 @@ export const canInsertNode = (state: EditorState, type: NodeType) => {
   return false;
 };
 
-// Copied from tiptap
+// "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
 export const getMarkAttrs = (state: EditorState, type: MarkType) => {
   const { from, to } = state.selection;
   let marks: Mark[] = [];
@@ -50,7 +69,7 @@ export const getMarkAttrs = (state: EditorState, type: MarkType) => {
   return {};
 };
 
-// Copied from tiptap
+// "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
 export const getMarkRange = ($pos: ResolvedPos | null = null, type: MarkType | null = null) => {
   if (!$pos || !type) {
     return false;
@@ -79,8 +98,20 @@ export const getMarkRange = ($pos: ResolvedPos | null = null, type: MarkType | n
   return { from: startPos, to: endPos };
 };
 
+/**
+ * Retrieve plugin state
+ *
+ * @param plugin
+ * @param state
+ */
 export const getPluginState = <GState>(plugin: Plugin, state: EditorState): GState =>
   plugin.getState(state);
 
+/**
+ * Retrieve plugin state from the plugin key
+ *
+ * @param pluginKey
+ * @param state
+ */
 export const getPluginKeyState = <GState>(pluginKey: PluginKey, state: EditorState): GState =>
   pluginKey.getState(state);

@@ -147,13 +147,13 @@ export const extensionPropertyMapper = <
   property: GExtMethodProp,
   schema: Schema,
 ) => (extension: GExt) => {
-  const val = extension[property];
-  if (!val) {
+  const extensionMethod = extension[property];
+  if (!extensionMethod) {
     return {};
   }
   return isNodeExtension(extension)
-    ? val({ schema, type: schema.nodes[extension.name] })
+    ? extensionMethod({ schema, type: schema.nodes[extension.name] })
     : isMarkExtension(extension)
-    ? val!({ schema, type: schema.marks[extension.name] })
-    : val!({ schema });
+    ? extensionMethod!({ schema, type: schema.marks[extension.name] })
+    : extensionMethod!({ schema });
 };
