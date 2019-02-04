@@ -3,7 +3,9 @@ import { NodeExtension } from '../node-extension';
 import { SchemaNodeTypeParams } from '../types';
 
 export class Paragraph extends NodeExtension {
-  public readonly name = 'paragraph';
+  get name() {
+    return 'paragraph';
+  }
 
   get schema() {
     return {
