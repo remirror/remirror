@@ -259,7 +259,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       try {
         return this.schema.nodeFromJSON(content);
       } catch {
-        return this.schema.nodeFromJSON(content);
+        return this.schema.nodeFromJSON(defaultInitialContent);
       }
     }
     if (isString(content)) {

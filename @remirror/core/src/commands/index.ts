@@ -33,7 +33,10 @@ export {
   sinkListItem,
 } from 'prosemirror-schema-list';
 
-export { wrappingInputRule, textblockTypeInputRule } from 'prosemirror-inputrules';
+export {
+  wrappingInputRule,
+  textblockTypeInputRule as textBlockTypeInputRule,
+} from 'prosemirror-inputrules';
 
 export { insertText } from './insert-text';
 export { markInputRule } from './mark-input-rule';

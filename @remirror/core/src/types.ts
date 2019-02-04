@@ -8,14 +8,7 @@ import {
   NodeType,
   Schema,
 } from 'prosemirror-model';
-import {
-  EditorState,
-  Plugin,
-  Plugin as PMPlugin,
-  PluginKey,
-  Selection,
-  Transaction,
-} from 'prosemirror-state';
+import { EditorState, Plugin, Plugin as PMPlugin, Selection, Transaction } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { Omit } from 'simplytyped';
 
@@ -74,23 +67,10 @@ export type MarkExtensionSpec = Omit<MarkSpec, 'toDOM'> & {
 export type ProsemirrorNode = PMNode;
 export type ProsemirrorPlugin = PMPlugin;
 export type EditorSchema = Schema<string, string>;
-
-export interface IExtension {
-  readonly name: string;
-  readonly pluginKey: PluginKey;
-  readonly type: ExtensionType;
-  readonly defaultOptions?: Record<string, any>;
-  readonly plugins?: ProsemirrorPlugin[];
-  commands?(params: SchemaParams): FlexibleConfig<ExtensionCommandFunction>;
-  pasteRules(params: SchemaParams): ProsemirrorPlugin[];
-  inputRules(params: SchemaParams): InputRule[];
-  keys(params: SchemaParams): KeyboardBindings;
-  active(params: SchemaWithStateParams): FlexibleConfig<ExtensionBooleanFunction>;
-  enabled(params: SchemaWithStateParams): FlexibleConfig<ExtensionBooleanFunction>;
-}
+export { PMNode, PMPlugin };
 
 export interface SchemaParams {
-  schema: Schema;
+  schema: EditorSchema;
 }
 
 export interface SchemaWithStateParams extends SchemaParams {
@@ -102,9 +82,12 @@ export type FlexibleConfig<GFunc> = GFunc | GFunc[] | Record<string, GFunc | GFu
 export type ExtensionCommandFunction = (attrs?: Attrs) => CommandFunction;
 export type ExtensionBooleanFunction = (attrs?: Attrs) => boolean;
 
-export interface SchemaTypeParams<GSchemaType> extends SchemaParams {
-  type: GSchemaType;
-}
+// export interface SchemaTypeParams<GSchemaType = never> extends SchemaParams {
+//   type: GSchemaType;
+// }
+
+type InferredType<TT> = TT extends {} ? { type: TT } : {};
+export type SchemaTypeParams<TT> = SchemaParams & InferredType<TT>;
 
 export type SchemaNodeTypeParams = SchemaTypeParams<NodeType<EditorSchema>>;
 export type SchemaMarkTypeParams = SchemaTypeParams<MarkType<EditorSchema>>;
@@ -114,23 +97,16 @@ export interface CommandParams extends SchemaParams {
   isEditable: () => boolean;
 }
 
-export interface ISharedExtension<GSchemaType extends NodeType | MarkType> extends IExtension {
-  readonly view: any;
-  commands?(params: SchemaTypeParams<GSchemaType>): FlexibleConfig<ExtensionCommandFunction>;
-  pasteRules(params: SchemaTypeParams<GSchemaType>): ProsemirrorPlugin[];
-  inputRules(params: SchemaTypeParams<GSchemaType>): InputRule[];
-  keys(params: SchemaTypeParams<GSchemaType>): KeyboardBindings;
-}
-
-export interface INodeExtension extends ISharedExtension<NodeType<EditorSchema>> {
-  readonly type: ExtensionType.NODE;
-  schema: NodeExtensionSpec;
-}
-
-export interface IMarkExtension extends ISharedExtension<MarkType<EditorSchema>> {
-  readonly type: ExtensionType.MARK;
-  schema: MarkExtensionSpec;
-}
+// export interface ISharedExtension<
+//   GSchemaType extends NodeType | MarkType,
+//   T = GSchemaType extends NodeType ? NodeType : MarkType
+// > extends IExtension {
+//   readonly view: EditorView;
+//   commands?(params: SchemaTypeParams<T>): FlexibleConfig<ExtensionCommandFunction>;
+//   pasteRules(params: SchemaTypeParams<T>): ProsemirrorPlugin[];
+//   inputRules(params: SchemaTypeParams<T>): InputRule[];
+//   keys(params: SchemaTypeParams<T>): KeyboardBindings;
+// }
 
 export type Attrs = Record<string, string>;
 
@@ -216,17 +192,19 @@ export interface ObjectNode {
   attrs?: Record<string, Literal | object>;
 }
 
+export type GetAttrs = Attrs | ((p: string[] | string) => Attrs | null | undefined);
+
 export type InputRuleCreator = (
   regexp: RegExp,
   nodeType: NodeType,
-  getAttrs?: Attrs | ((p: string[] | string) => Attrs | null | undefined),
+  getAttrs?: GetAttrs,
   joinPredicate?: (p1: string[], p2: PMNode) => boolean,
 ) => InputRule;
 
-export type PluginCreator = (
+export type PluginCreator = <GType extends NodeType | MarkType>(
   regexp: RegExp,
-  nodeType: NodeType,
-  getAttrs?: Attrs | ((p: string[] | string) => Attrs | null | undefined),
+  nodeType: GType,
+  getAttrs?: GetAttrs,
   joinPredicate?: (p1: string[], p2: PMNode) => boolean,
 ) => Plugin;
 

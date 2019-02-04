@@ -2,19 +2,19 @@ import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
 import { Cast } from './helpers';
 import {
-  CommandFunction,
   ExtensionBooleanFunction,
+  ExtensionCommandFunction,
   ExtensionType,
   FlexibleConfig,
-  IExtension,
+  KeyboardBindings,
   ProsemirrorPlugin,
-  SchemaParams,
+  SchemaTypeParams,
   SchemaWithStateParams,
 } from './types';
 
-export abstract class Extension<GOptions extends {} = {}> implements IExtension {
+export abstract class Extension<GOptions extends {} = {}, GType = never> {
   public readonly options: GOptions;
-  public readonly type: ExtensionType = ExtensionType.EXTENSION;
+
   public abstract readonly name: string;
   private pk?: PluginKey;
 
@@ -34,6 +34,10 @@ export abstract class Extension<GOptions extends {} = {}> implements IExtension 
     this.pk = new PluginKey(this.name);
   }
 
+  get type() {
+    return ExtensionType.EXTENSION;
+  }
+
   public get pluginKey(): PluginKey {
     if (this.pk) {
       return this.pk;
@@ -49,24 +53,15 @@ export abstract class Extension<GOptions extends {} = {}> implements IExtension 
   get plugins() {
     return [] as ProsemirrorPlugin[];
   }
-
-  public inputRules(_: SchemaParams): InputRule[] {
-    return [];
-  }
-
-  public keys(_: SchemaParams): Record<string, CommandFunction> {
-    return {};
-  }
-
-  public pasteRules: IExtension['pasteRules'] = () => {
-    return [];
-  };
-
-  public active(_: SchemaWithStateParams): FlexibleConfig<ExtensionBooleanFunction> {
-    return () => false;
-  }
-
-  public enabled(_: SchemaWithStateParams) {
-    return () => true;
-  }
 }
+
+export interface Extension<GOptions extends {} = {}, GType = never> {
+  active?(params: SchemaWithStateParams): FlexibleConfig<ExtensionBooleanFunction>;
+  enabled?(params: SchemaWithStateParams): FlexibleConfig<ExtensionBooleanFunction>;
+  commands?(params: SchemaTypeParams<GType>): FlexibleConfig<ExtensionCommandFunction>;
+  pasteRules?(params: SchemaTypeParams<GType>): ProsemirrorPlugin[];
+  inputRules?(params: SchemaTypeParams<GType>): InputRule[];
+  keys?(params: SchemaTypeParams<GType>): KeyboardBindings;
+}
+
+export type AnyExtension = Extension<any, any>;

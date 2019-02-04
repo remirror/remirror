@@ -8,6 +8,7 @@
     "@types/jest": "23.3.13",
     "@types/jest-axe": "2.2.2",
     "@types/jest-cli": "23.6.0",
+    "@types/jest-matcher-utils": "21.0.1",
     "@types/react": "16.8.0",
     "@types/react-dom": "16.0.11",
     "@types/storybook__addon-actions": "3.4.1",

@@ -13,7 +13,9 @@
         "@test-utils",
         "@storybook",
         "jest-extended",
-        "prosemirror-test-builder"
+        "prosemirror-test-builder",
+        "jest-matcher-utils",
+        "chalk"
       ]
     ],
     "no-empty": false,
