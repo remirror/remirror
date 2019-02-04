@@ -477,7 +477,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     const pluginState = this.getPluginKeyState<PlaceholderPluginState>('placeholder');
     if (placeholder && !pluginState) {
       console.error(
-        'To use a placeholder you must provide a placeholder plugin (or set `props.useBuiltInExtensions` to true).',
+        'To use a placeholder you must provide a placeholder plugin (or set the prop `useBuiltInExtensions={true}`).',
       );
     }
     return placeholder && pluginState

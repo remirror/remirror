@@ -33,7 +33,7 @@
     "integrity": "yarn check --integrity",
     "lint": "run-s lint:*",
     "lint:babel": "eslint **/.babelrc.js",
-    "lint:js": "eslint support *.js @remirror docs internal scripts",
+    "lint:js": "eslint support *.js @remirror docs internal",
     "lint:support": "tslint --project support/tsconfig.json --config tslint.json",
     "lint:ts": "lerna run lint --parallel",
     "prepublish:alpha": "run-s ci:checks",
@@ -71,7 +71,7 @@
     "docs/**/*.{ts,tsx}": [
       "jest --coverage=false --bail --findRelatedTests"
     ],
-    "*.js": [
+    "**/*.js": [
       "eslint --fix",
       "git add"
     ],
@@ -93,7 +93,6 @@
     ]
   },
   "resolutions": {
-    "terser": "3.14.1",
     "react": "16.8.0-alpha.1",
     "react-dom": "16.8.0-alpha.1",
     "jsdom": "13.2.0",
