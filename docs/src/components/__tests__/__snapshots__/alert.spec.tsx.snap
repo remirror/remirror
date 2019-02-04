@@ -3,7 +3,7 @@
 exports[`docz setup 1`] = `
 <DocumentFragment>
   <div
-    class="css-slbem0"
+    class="css-10t5zsk-AlertStyled eto1ytx0"
     kind="info"
   />
 </DocumentFragment>
@@ -12,7 +12,7 @@ exports[`docz setup 1`] = `
 exports[`docz setup 2`] = `
 <DocumentFragment>
   <div
-    class="css-cll8dr"
+    class="css-1wbxlgv-AlertStyled eto1ytx0"
     kind="negative"
   />
 </DocumentFragment>

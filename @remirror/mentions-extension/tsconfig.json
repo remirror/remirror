@@ -5,5 +5,5 @@
     "outDir": "lib",
     "types": ["jest", "jest-extended", "jest-axe", "jest-dom/extend-expect"]
   },
-  "include": ["src", ".storybook"]
+  "include": ["src"]
 }
