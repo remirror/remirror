@@ -1,6 +1,6 @@
 {
   "publish": {},
-  "packages": ["@remirror/*", "internal/*", "internal/dependencies/*", "docs"],
+  "packages": ["@remirror/*", "internal/*", "docs"],
   "command": {
     "publish": {
       "message": "chore(release): publish %s",

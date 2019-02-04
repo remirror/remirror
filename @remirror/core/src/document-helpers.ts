@@ -31,9 +31,7 @@ export const markActive = (state: EditorState, type: MarkType) => {
  */
 export const nodeActive = (state: EditorState, type: NodeType, attrs: Attrs = {}) => {
   const { $from, to, node } = state.selection as NodeSelection;
-  console.log(node);
   if (node) {
-    console.log();
     return node.hasMarkup(type, attrs);
   }
   return to <= $from.end() && $from.parent.hasMarkup(type, attrs);

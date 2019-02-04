@@ -9,5 +9,5 @@ export const toggleWrap = (type: NodeType, attrs?: Attrs): CommandFunction => (s
   if (isActive) {
     return lift(state, dispatch);
   }
-  return wrapIn(type, attrs)(state, () => console.log('This has been applied'));
+  return wrapIn(type, attrs)(state, dispatch);
 };

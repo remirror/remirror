@@ -1,10 +1,11 @@
 {
   "private": true,
   "name": "@remirror/docz",
+  "description": "docs and examples for the remirror editor",
   "license": "MIT",
-  "version": "0.13.7",
+  "version": "0.0.0",
   "scripts": {
-    "prebuild": "run-s clean lint",
+    "prebuild": "run-s clean lint typecheck",
     "build": "docz build",
     "clean": "rimraf .docz",
     "dev": "docz dev",
@@ -17,6 +18,9 @@
     "@emotion/babel-preset-css-prop": "10.0.6",
     "@emotion/core": "^10.0.5",
     "@emotion/styled": "^10.0.5",
+    "@remirror/mentions-extension": "0.0.0",
+    "@remirror/react": "0.0.0",
+    "@remirror/renderer": "0.0.0",
     "docz": "^0.13.7",
     "docz-core": "^0.13.7",
     "docz-theme-default": "0.13.7",

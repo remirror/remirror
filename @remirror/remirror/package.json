@@ -14,14 +14,11 @@
   "scripts": {
     "prebuild": "run-s clean lint",
     "build": "run-s build:declaration build:babel",
-    "build-storybook": "build-storybook",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
     "clean": "rimraf lib",
     "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
-    "storybook": "start-storybook -p 6006",
-    "storybook:ci": "start-storybook -p 6006 --ci",
     "test": "jest",
     "test:live": "cross-env TEST_ENV=live jest",
     "typecheck": "tsc -p ./tsconfig.json --noEmit",
@@ -29,13 +26,13 @@
     "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
   },
   "dependencies": {
+    "@types/react-icons": "2.2.6"
+  },
+  "peerDependencies": {
     "@remirror/core": "0.0.0",
     "@remirror/core-extensions": "0.0.0",
     "@remirror/react": "0.0.0",
     "@remirror/renderer": "0.0.0",
-    "@types/react-icons": "2.2.6"
-  },
-  "peerDependencies": {
     "@types/react": "^16.7.18",
     "@types/react-dom": "^16.0.11",
     "react": "16.8.0-alpha.1",
@@ -52,6 +49,10 @@
   "umd:min": "lib/dist/remirror.umd.min.js",
   "umdGlobals": {
     "react": "React",
-    "react-dom": "ReactDOM"
+    "react-dom": "ReactDOM",
+    "@remirror/core": "RemirrorCore",
+    "@remirror/core-extensions": "RemirrorCoreExtensions",
+    "@remirror/renderer": "RemirrorRenderer",
+    "@remirror/mentions-extension": "RemirrorMentionsExtension"
   }
 }

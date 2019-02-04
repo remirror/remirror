@@ -14,13 +14,11 @@
   "scripts": {
     "prebuild": "run-s clean lint",
     "build": "run-s build:declaration build:babel",
-    "build-storybook": "build-storybook",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
     "clean": "rimraf lib",
     "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
-    "storybook": "start-storybook -p 6006",
     "test": "jest",
     "test:live": "cross-env TEST_ENV=live jest",
     "typecheck": "tsc -p ./tsconfig.json --noEmit",

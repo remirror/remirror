@@ -26,7 +26,6 @@
     "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
   },
   "dependencies": {
-    "@remirror/core": "0.0.0",
     "@types/prosemirror-history": "1.0.1",
     "@types/prosemirror-model": "^1.7.0",
     "@types/prosemirror-state": "^1.2.1",
@@ -36,9 +35,13 @@
     "prosemirror-state": "^1.2.2",
     "prosemirror-view": "^1.7.0"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "@remirror/core": "0.0.0"
+  },
   "types": "lib/index.d.ts",
   "umd": "lib/dist/core-extensions.umd.js",
   "umd:min": "lib/dist/core-extensions.umd.min.js",
-  "umdGlobals": {}
+  "umdGlobals": {
+    "@remirror/core": "RemirrorCore"
+  }
 }
