@@ -24,6 +24,7 @@
     "cy:open:docs": "start-server-and-test docs:ci http-get://localhost:3000 cy:open",
     "cy:run": "cd internal/e2e && yarn cypress:run",
     "cy:run:docs": "cross-env COVERAGE=true start-server-and-test docs:ci http-get://localhost:3000/ cy:run",
+    "cy:verify": "cypress verify",
     "dev": "lerna run dev --parallel",
     "docs:ci": "cd docs && yarn dev --debug=true",
     "fix": "run-s fix:lint:* fix:*",
