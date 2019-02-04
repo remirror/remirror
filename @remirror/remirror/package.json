@@ -7,7 +7,6 @@
   "version": "0.0.1-alpha.0",
   "main": "lib/index.js",
   "module": "lib/dist/remirror.esm.js",
-  "browser": "lib/dist/remirror.umd.js",
   "files": [
     "lib",
     "src"
@@ -49,6 +48,8 @@
     "text editor"
   ],
   "types": "lib/index.d.ts",
+  "umd": "lib/dist/remirror.umd.js",
+  "umd:min": "lib/dist/remirror.umd.min.js",
   "umdGlobals": {
     "react": "React",
     "react-dom": "ReactDOM"

@@ -2,31 +2,10 @@ const defaultConfig = require('../../support/babel/base.babel');
 
 module.exports = {
   ...defaultConfig,
-  presets: [
-    '@babel/preset-react',
-    [
-      '@babel/preset-env',
-      {
-        targets: {
-          node: '8',
-        },
-      },
-    ],
+  plugins: [
+    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-proposal-object-rest-spread',
+    '@babel/plugin-syntax-dynamic-import',
+    'lodash',
   ],
-  plugins: [...defaultConfig.plugins],
-  env: {
-    test: {
-      presets: [
-        '@babel/preset-react',
-        [
-          '@babel/preset-env',
-          {
-            targets: {
-              node: '8',
-            },
-          },
-        ],
-      ],
-    },
-  },
 };

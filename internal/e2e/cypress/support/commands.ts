@@ -42,7 +42,7 @@ declare namespace Cypress {
 
 if (Cypress.env('coverage')) {
   afterEach(() => {
-    const coverageFile = `${(Cypress.config() as any).coverageFolder}/out.json`;
+    const coverageFile = `${(Cypress.config() as any).coverageFolder}/coverage-final.json`;
 
     cy.window().then(win => {
       const coverage = (win as any).__coverage__; // Coverage is injected by nyc into the global scope

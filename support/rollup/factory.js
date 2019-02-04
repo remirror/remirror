@@ -8,6 +8,8 @@ import resolve from 'rollup-plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 import { startCase } from 'lodash';
 
+/* Copied from https://github.com/ianstormtaylor/slate/blob/6302b2d9d2d6a62ba32e6a7d987db5db8f846eef/support/rollup/factory.js#L1-L148 */
+
 /**
  * Return a Rollup configuration for a `pkg` with `env` and `target`.
  *
@@ -41,11 +43,12 @@ function configure(pkg, env, target) {
     // modules by default.
     isUmd &&
       commonjs({
-        exclude: [`@remirror/${folderName}/src/**`],
+        exclude: [`@remirror/${folderName}/src/**`, `@remirror/${folderName}/lib/**`],
         // HACK: Sometimes the CommonJS plugin can't identify named exports, so
         // we have to manually specify named exports here for them to work.
         // https://github.com/rollup/rollup-plugin-commonjs#custom-named-exports
         namedExports: {
+          '@remirror/core': ['Doc', 'Text'],
           'react-dom': ['findDOMNode'],
           'react-dom/server': ['renderToStaticMarkup'],
         },
@@ -84,7 +87,7 @@ function configure(pkg, env, target) {
       input,
       output: {
         format: 'umd',
-        file: `@remirror/${folderName}/${pkg.browser.replace('.js', isProd ? '.min.js' : '.js')}`,
+        file: `@remirror/${folderName}/${isProd ? pkg.umd : pkg['umd:min']}`,
         exports: 'named',
         name: startCase(pkg.name).replace(/ /g, ''),
         globals: pkg.umdGlobals,

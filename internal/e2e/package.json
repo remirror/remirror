@@ -46,9 +46,9 @@
     "ignore-class-method": "methodToIgnore",
     "reporter": [
       "lcov",
-      "text-summary",
       "html",
-      "text"
+      "text",
+      "text-summary"
     ],
     "cache": true,
     "all": true,

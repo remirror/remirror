@@ -10,8 +10,9 @@
     ]
   },
   "scripts": {
-    "build": "run-s build:*",
+    "build": "run-s build:rollup build:modules",
     "build:modules": "lerna run build",
+    "build:production": "cross-env NODE_ENV=production run-s build",
     "build:rollup": "rollup --config ./support/rollup/rollup.config.js",
     "checks": "run-s integrity lint typecheck test",
     "checks:parallel": "run-p lint typecheck test",
