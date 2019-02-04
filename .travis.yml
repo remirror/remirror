@@ -19,18 +19,18 @@ before_install:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
     > $HOME/bin/cc-test-reporter
   - chmod +x $HOME/bin/cc-test-reporter
-  # - cc-test-reporter before-build
+  - cc-test-reporter before-build
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$HOME/bin:$PATH
 install:
   - yarn install
 script:
   - yarn ci:checks
-after_success:
-  - cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.unit.json coverage/coverage-final.json # Format e2e coverage
-  - cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.e2e.json internal/e2e/coverage/out.json # Format unit coverage
-  - cc-test-reporter sum-coverage coverage/codeclimate.*.json -p 2 # Sum both coverage parts into coverage/codeclimate.json
-  - cc-test-reporter upload-coverage # Upload coverage/codeclimate.json
+after_script:
+  - cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.unit.json coverage/lcov.info # Format e2e coverage
+  - cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.e2e.json internal/e2e/coverage/lcov.info # Format unit coverage
+  - cc-test-reporter sum-coverage coverage/codeclimate.unit.json coverage/codeclimate.e2e.json -p 2 # Sum both coverage parts into coverage/codeclimate.json
+  - if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then cc-test-reporter upload-coverage; fi # Upload coverage/codeclimate.json
 notifications:
   slack:
     rooms:
