@@ -118,7 +118,9 @@ dependencies/**/yarn.lock
 
 # Cypress
 /e2e/**/videos
-*.mp4
+e2e/**/screenshots
+/e2e/**/*.mp4
+e2e/**/*.png
 
 
 #

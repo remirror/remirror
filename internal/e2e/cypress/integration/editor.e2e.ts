@@ -1,7 +1,7 @@
-describe('Visiting storybook', () => {
+describe('Visiting documentation', () => {
   it('A user can type', () => {
     user
-      .visit('http://localhost:6006/iframe.html?selectedKind=Editor&selectedStory=Basic')
+      .visit('http://localhost:3000/examples/basic')
       .get('[data-test-id=editor-instance]')
       .type('{selectall}')
       .type('{backspace}')

@@ -2,22 +2,15 @@
 
 import React, { FunctionComponent, MouseEventHandler, useState } from 'react';
 
-import { Mentions } from '@remirror/mentions-extension';
 import { Remirror, RemirrorEventListener } from '@remirror/react';
 import { RenderTree } from '@remirror/renderer';
-import { storiesOf } from '@storybook/react';
-import { isEqual, memoize } from 'lodash';
+import { memoize } from 'lodash';
 
 const EditorLayout: FunctionComponent = () => {
   const [json, setJson] = useState(JSON.stringify(initialJson, null, 2));
 
-  const onChange: RemirrorEventListener = ({ getJSON, view }) => {
+  const onChange: RemirrorEventListener = ({ getJSON }) => {
     const newJson = JSON.stringify(getJSON(), null, 2);
-    console.log(
-      'onChange has been called',
-      isEqual(json, newJson),
-      isEqual(view.state.doc.toJSON(), getJSON()),
-    );
     setJson(newJson);
   };
 
@@ -43,14 +36,6 @@ const EditorLayout: FunctionComponent = () => {
           placeholder='Start typing for magic...'
           autoFocus={true}
           initialContent={initialJson}
-          extensions={[
-            new Mentions({
-              onKeyDown: arg => {
-                console.log('Mentions is being called', arg);
-                return false;
-              },
-            }),
-          ]}
         >
           {({ getMenuProps, actions }) => {
             const menuProps = getMenuProps({
@@ -110,20 +95,8 @@ const EditorLayout: FunctionComponent = () => {
   );
 };
 
-storiesOf('Editor', module)
-  .add('Basic', () => <EditorLayout />)
-  .add('With Provider', () => <EditorLayout />)
-  .add('Rendered', () => <RenderTree json={initialJson} />);
-
-// const initialJson = {
-//   type: 'doc',
-//   content: [
-//     {
-//       type: 'paragraph',
-//       content: [],
-//     },
-//   ],
-// };
+export const BasicEditor: FunctionComponent = () => <EditorLayout />;
+export const BasicRenderer: FunctionComponent = () => <RenderTree json={initialJson} />;
 
 const initialJson = {
   type: 'doc',

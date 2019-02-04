@@ -38,7 +38,7 @@ declare namespace Cypress {
   }
 }
 
-// Sets up the ability to read coverage reports from storybook runs.
+// Sets up the ability to read coverage reports from the documenation examples.
 
 if (Cypress.env('coverage')) {
   afterEach(() => {
@@ -53,7 +53,6 @@ if (Cypress.env('coverage')) {
 
       cy.task('coverage', coverage).then(map => {
         cy.writeFile(coverageFile, map as any);
-        console.log(Cypress.env(), coverageFile);
 
         if (Cypress.env('coverage') === 'open') {
           cy.exec('nyc report');

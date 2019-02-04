@@ -11,7 +11,6 @@
         "jest-dom",
         "react-testing-library",
         "@test-utils",
-        "@storybook",
         "jest-extended",
         "prosemirror-test-builder",
         "jest-matcher-utils",
