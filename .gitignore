@@ -119,3 +119,7 @@ dependencies/**/yarn.lock
 # Cypress
 /e2e/**/videos
 *.mp4
+
+
+#
+.vscode

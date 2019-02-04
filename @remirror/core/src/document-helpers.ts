@@ -1,6 +1,7 @@
-import { Mark, MarkType, NodeType } from 'prosemirror-model';
+import { Mark, MarkType, NodeType, ResolvedPos } from 'prosemirror-model';
 import { EditorState, NodeSelection, Plugin, PluginKey } from 'prosemirror-state';
 
+// Copied from tiptap
 export const markActive = (state: EditorState, type: MarkType) => {
   const { from, $from, to, empty } = state.selection;
   return Boolean(
@@ -10,6 +11,7 @@ export const markActive = (state: EditorState, type: MarkType) => {
   );
 };
 
+// Copied from tiptap
 export const nodeActive = (state: EditorState, type: NodeType, attrs = {}) => {
   const { $from, to, node } = state.selection as NodeSelection;
   if (node) {
@@ -18,6 +20,7 @@ export const nodeActive = (state: EditorState, type: NodeType, attrs = {}) => {
   return to <= $from.end() && $from.parent.hasMarkup(type, attrs);
 };
 
+// Copied from tiptap
 export const canInsertNode = (state: EditorState, type: NodeType) => {
   const { $from } = state.selection;
   for (let d = $from.depth; d >= 0; d--) {
@@ -29,6 +32,7 @@ export const canInsertNode = (state: EditorState, type: NodeType) => {
   return false;
 };
 
+// Copied from tiptap
 export const getMarkAttrs = (state: EditorState, type: MarkType) => {
   const { from, to } = state.selection;
   let marks: Mark[] = [];
@@ -44,6 +48,35 @@ export const getMarkAttrs = (state: EditorState, type: MarkType) => {
   }
 
   return {};
+};
+
+// Copied from tiptap
+export const getMarkRange = ($pos: ResolvedPos | null = null, type: MarkType | null = null) => {
+  if (!$pos || !type) {
+    return false;
+  }
+
+  const start = $pos.parent.childAfter($pos.parentOffset);
+
+  if (!start.node) {
+    return false;
+  }
+
+  const link = start.node.marks.find(mark => mark.type === type);
+  if (!link) {
+    return false;
+  }
+
+  let startIndex = $pos.index();
+  let startPos = $pos.start() + start.offset;
+  while (startIndex > 0 && link.isInSet($pos.parent.child(startIndex - 1).marks)) {
+    startIndex -= 1;
+    startPos -= $pos.parent.child(startIndex).nodeSize;
+  }
+
+  const endPos = startPos + start.node.nodeSize;
+
+  return { from: startPos, to: endPos };
 };
 
 export const getPluginState = <GState>(plugin: Plugin, state: EditorState): GState =>

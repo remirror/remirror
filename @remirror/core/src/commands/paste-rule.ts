@@ -1,9 +1,9 @@
-import { Fragment, Mark, Node, NodeType, Slice } from 'prosemirror-model';
+import { Fragment, Mark, Node, Slice } from 'prosemirror-model';
 import { Plugin } from 'prosemirror-state';
 import { Cast } from '../helpers';
 import { PluginCreator } from '../types';
 
-export const pasteRule: PluginCreator = (regexp: RegExp, type: NodeType, getAttrs) => {
+export const pasteRule: PluginCreator = (regexp, type, getAttrs) => {
   const handler = (fragment: Fragment) => {
     const nodes: Node[] = [];
 

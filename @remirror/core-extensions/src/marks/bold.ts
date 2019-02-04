@@ -8,7 +8,9 @@ import {
 } from '@remirror/core';
 
 export class Bold extends MarkExtension {
-  public readonly name = 'bold';
+  get name() {
+    return 'bold';
+  }
 
   get schema(): MarkExtensionSpec {
     return {

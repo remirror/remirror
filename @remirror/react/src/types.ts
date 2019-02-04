@@ -1,6 +1,6 @@
 import {
+  AnyExtension,
   EditorSchema,
-  IExtension,
   ObjectNode,
   OffsetCalculator,
   Position,
@@ -82,6 +82,6 @@ export interface RemirrorProps {
   editable: boolean;
   label?: string;
   useBuiltInExtensions?: boolean;
-  extensions: IExtension[];
+  extensions: AnyExtension[];
   styles?: Partial<RemirrorCustomStyles> | null;
 }

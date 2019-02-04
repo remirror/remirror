@@ -1,6 +1,7 @@
 import { InputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { EditorState, PluginKey } from 'prosemirror-state';
+import { AnyExtension } from './extension';
 import {
   createFlexibleFunctionMap,
   extensionPropertyMapper,
@@ -13,7 +14,6 @@ import {
   CommandParams,
   ExtensionBooleanFunction,
   ExtensionCommandFunction,
-  IExtension,
   MarkExtensionSpec,
   NodeExtensionSpec,
   ProsemirrorPlugin,
@@ -23,7 +23,7 @@ import {
 
 export class ExtensionManager {
   constructor(
-    public readonly extensions: IExtension[],
+    public readonly extensions: AnyExtension[],
     public readonly getEditorState: () => EditorState,
   ) {}
 
