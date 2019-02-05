@@ -24,8 +24,6 @@
     "jest-cli": "24.0.0",
     "jest-dom": "3.0.1",
     "jest-extended": "0.11.1",
-    "jest-fetch-mock": "2.1.0",
-    "jest-styled-components": "6.3.1",
     "jest-watch-typeahead": "0.2.1",
     "jsdom": "13.2.0",
     "prettier": "1.16.2",
@@ -33,10 +31,6 @@
     "prosemirror-test-builder": "1.0.1",
     "react-addons-test-utils": "15.6.2",
     "react-testing-library": "5.4.4",
-    "start-server-and-test": "1.7.11",
-    "stylelint": "9.10.1",
-    "stylelint-config-recommended": "2.1.0",
-    "stylelint-config-styled-components": "0.1.1",
-    "stylelint-processor-styled-components": "1.5.2"
+    "start-server-and-test": "1.7.11"
   }
 }
