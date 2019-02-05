@@ -25,10 +25,4 @@ module.exports = {
       },
     ],
   ],
-  // overrides: [
-  //   {
-  //     test: '**/core/**/.ts',
-  //     plugins: ['@babel/plugin-transform-typescript'],
-  //   },
-  // ],
 };
