@@ -19,6 +19,10 @@ declare global {
   interface Window {
     user: Cypress.Chainable<undefined>;
   }
+
+  interface EventTarget {
+    __coverage__: any;
+  }
 }
 
 // This is an alias for the cy command

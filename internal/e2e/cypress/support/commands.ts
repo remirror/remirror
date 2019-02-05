@@ -37,27 +37,3 @@ declare namespace Cypress {
     foo: () => string;
   }
 }
-
-// Sets up the ability to read coverage reports from the documenation examples.
-
-if (Cypress.env('coverage')) {
-  afterEach(() => {
-    const coverageFile = `${(Cypress.config() as any).coverageFolder}/coverage-final.json`;
-
-    cy.window().then(win => {
-      const coverage = (win as any).__coverage__; // Coverage is injected by nyc into the global scope
-
-      if (!coverage) {
-        return;
-      }
-
-      cy.task('coverage', coverage).then(map => {
-        cy.writeFile(coverageFile, map as any);
-
-        if (Cypress.env('coverage') === 'open') {
-          cy.exec('nyc report');
-        }
-      });
-    });
-  });
-}

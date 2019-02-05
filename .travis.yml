@@ -29,10 +29,7 @@ before_install:
 script:
   - yarn ci:checks
 after_script:
-  - cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.unit.json coverage/lcov.info # Format e2e coverage
-  - cc-test-reporter format-coverage -t lcov -o coverage/codeclimate.e2e.json internal/e2e/coverage/lcov.info # Format unit coverage
-  - cc-test-reporter sum-coverage coverage/codeclimate.unit.json coverage/codeclimate.e2e.json -p 2 # Sum both coverage parts into coverage/codeclimate.json
-  - if [[ "$TRAVIS_TEST_RESULT" == 0 ]]; then cc-test-reporter upload-coverage; fi # Upload coverage/codeclimate.json
+  - cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 notifications:
   slack:
     rooms:
