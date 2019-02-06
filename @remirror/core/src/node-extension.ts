@@ -25,10 +25,7 @@ export abstract class NodeExtension<GOptions extends {} = {}> extends Extension<
     return {};
   }
 
-  public active({
-    getEditorState,
-    schema,
-  }: SchemaWithStateParams): FlexibleConfig<ExtensionBooleanFunction> {
+  public active({ getEditorState, schema }: SchemaWithStateParams): FlexibleConfig<ExtensionBooleanFunction> {
     return attrs => nodeActive(getEditorState(), schema.nodes.name, attrs);
   }
 }

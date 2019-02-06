@@ -1,9 +1,4 @@
-import {
-  CommandFunction,
-  NodeExtension,
-  nodeInputRule,
-  SchemaNodeTypeParams,
-} from '@remirror/core';
+import { CommandFunction, NodeExtension, nodeInputRule, SchemaNodeTypeParams } from '@remirror/core';
 
 export class HorizontalRule extends NodeExtension {
   get name() {

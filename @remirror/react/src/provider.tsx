@@ -7,9 +7,7 @@ import { Cast } from './helpers';
 import { Remirror } from './remirror';
 import { InjectedRemirrorProps, RemirrorProps } from './types';
 
-export const RemirrorContext = createContext<InjectedRemirrorProps>(
-  Cast<InjectedRemirrorProps>({}),
-);
+export const RemirrorContext = createContext<InjectedRemirrorProps>(Cast<InjectedRemirrorProps>({}));
 
 export const RemirrorProvider: FC<RemirrorProps> = ({ children, ...props }) => {
   return (
@@ -26,9 +24,7 @@ const checkValidRenderPropParams = (params: InjectedRemirrorProps) => {
   return true;
 };
 
-export const withRemirror = <GProps extends InjectedRemirrorProps>(
-  Wrapped: ComponentType<GProps>,
-) => {
+export const withRemirror = <GProps extends InjectedRemirrorProps>(Wrapped: ComponentType<GProps>) => {
   type EnhancedComponentProps = Omit<GProps, keyof InjectedRemirrorProps>;
   const EnhancedComponent: FunctionComponent<EnhancedComponentProps> = props => {
     return (

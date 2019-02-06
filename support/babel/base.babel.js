@@ -1,3 +1,13 @@
+const ignore = [
+  '**/__tests__',
+  '**/__mocks__',
+  '*.{test,spec}.{ts,tsx}',
+  '**/*.d.ts',
+  '*.d.ts',
+];
+
+const nonTestEnv = { ignore };
+
 module.exports = {
   presets: [
     '@babel/preset-typescript',
@@ -18,26 +28,5 @@ module.exports = {
     '@babel/plugin-syntax-dynamic-import',
     'lodash',
   ],
-  env: {
-    production: {
-      ignore: [
-        '**/__tests__',
-        '**/__mocks__',
-        '**/__stories__',
-        '*.{test,spec,stories}.{ts,tsx}',
-        '**/*.d.ts',
-        '*.d.ts',
-      ],
-    },
-    development: {
-      ignore: [
-        '**/__tests__',
-        '**/__mocks__',
-        '**/__stories__',
-        '*.{test,spec,stories}.{ts,tsx}',
-        '**/*.d.ts',
-        '*.d.ts',
-      ],
-    },
-  },
+  env: { production: nonTestEnv, development: nonTestEnv },
 };

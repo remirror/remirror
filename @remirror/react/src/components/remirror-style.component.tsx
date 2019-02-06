@@ -23,11 +23,7 @@ export interface RemirrorStyleProps {
   styles?: Partial<RemirrorCustomStyles> | null;
 }
 
-export const RemirrorStyle: FunctionComponent<RemirrorStyleProps> = ({
-  uid,
-  placeholder,
-  styles,
-}) => {
+export const RemirrorStyle: FunctionComponent<RemirrorStyleProps> = ({ uid, placeholder, styles }) => {
   let styleString = '';
   let placeholderStyle: CSSProperty = {};
   let placeholderSelector = '';

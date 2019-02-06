@@ -25,9 +25,7 @@ export class OrderedList extends NodeExtension {
         {
           tag: 'ol',
           getAttrs: dom => ({
-            order: Cast<Element>(dom).hasAttribute('start')
-              ? +Cast<Element>(dom).getAttribute('start')!
-              : 1,
+            order: Cast<Element>(dom).hasAttribute('start') ? +Cast<Element>(dom).getAttribute('start')! : 1,
           }),
         },
       ],

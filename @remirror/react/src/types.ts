@@ -13,8 +13,7 @@ import { EditorView } from 'prosemirror-view';
 import { PlainObject } from 'simplytyped';
 import { RemirrorCustomStyles } from './components';
 
-export interface GetMenuPropsConfig<GRefKey extends string = 'ref'>
-  extends BaseGetterConfig<GRefKey> {
+export interface GetMenuPropsConfig<GRefKey extends string = 'ref'> extends BaseGetterConfig<GRefKey> {
   offset?: OffsetCalculator;
   shouldRender?: ShouldRenderMenu;
   offscreenPosition?: Partial<Position>;
@@ -46,11 +45,7 @@ export interface InjectedRemirrorProps {
     position: Position;
     rawData: RawMenuPositionData | null;
     offscreen: boolean;
-  } & {
-    [P in Exclude<GRefKey, 'children' | 'key' | 'position' | 'rawData' | 'offscreen'>]: React.Ref<
-      any
-    >
-  };
+  } & { [P in Exclude<GRefKey, 'children' | 'key' | 'position' | 'rawData' | 'offscreen'>]: React.Ref<any> };
 }
 
 export type RenderPropFunction = (params: InjectedRemirrorProps) => JSX.Element;

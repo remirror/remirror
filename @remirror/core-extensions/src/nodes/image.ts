@@ -75,9 +75,7 @@ export class Image extends NodeExtension {
                 return false;
               }
 
-              const images = Array.from(event.dataTransfer!.files).filter(file =>
-                /image/i.test(file.type),
-              );
+              const images = Array.from(event.dataTransfer!.files).filter(file => /image/i.test(file.type));
 
               if (images.length === 0) {
                 return false;

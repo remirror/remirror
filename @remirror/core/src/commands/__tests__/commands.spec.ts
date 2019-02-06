@@ -17,9 +17,7 @@ test('insertText', () => {
 // ! This test does nothing right now. Need better understanding on how to test ProseMirror
 test('toggleWrap', () => {
   const type = h3().type;
-  const from = d(
-    p('This is<a>', hard_break(), p('This should be wrapped'), '<b> block based selection'),
-  );
+  const from = d(p('This is<a>', hard_break(), p('This should be wrapped'), '<b> block based selection'));
   const command = toggleWrap(type);
   expect(command).transformsNode({ from });
 });

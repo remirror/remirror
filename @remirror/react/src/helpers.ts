@@ -52,8 +52,7 @@ export const simpleOffsetCalculator: OffsetCalculator = {
   bottom: props => props.bottom,
 };
 
-export const defaultShouldRender: ShouldRenderMenu = props =>
-  props.selection && !props.selection.empty;
+export const defaultShouldRender: ShouldRenderMenu = props => props.selection && !props.selection.empty;
 export const defaultOffscreenPosition: Position = { left: -1000, top: 0, bottom: 0, right: 0 };
 
 /**
@@ -65,11 +64,7 @@ export const defaultOffscreenPosition: Position = { left: -1000, top: 0, bottom:
  * | {coordsAtPos} | [Cursor]   <- cursorHeight      |  |
  * |               | [FloatingToolbar]               |  |
  */
-export const getAbsoluteCoordinates = (
-  coords: Position,
-  offsetParent: Element,
-  cursorHeight: number,
-) => {
+export const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, cursorHeight: number) => {
   const {
     left: offsetParentLeft,
     top: offsetParentTop,
@@ -80,8 +75,7 @@ export const getAbsoluteCoordinates = (
     left: coords.left - offsetParentLeft,
     right: coords.right - offsetParentLeft,
     top: coords.top - (offsetParentTop - cursorHeight) + offsetParent.scrollTop,
-    bottom:
-      offsetParentHeight - (coords.top - (offsetParentTop - cursorHeight) - offsetParent.scrollTop),
+    bottom: offsetParentHeight - (coords.top - (offsetParentTop - cursorHeight) - offsetParent.scrollTop),
   };
 };
 

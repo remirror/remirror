@@ -86,9 +86,7 @@ const defaultTypeMap: MarkMap = {
   text: TextHandler,
 };
 
-const Underline: FunctionComponent = props => (
-  <div style={{ textDecoration: 'underline' }} {...props} />
-);
+const Underline: FunctionComponent = props => <div style={{ textDecoration: 'underline' }} {...props} />;
 
 const defaultMarkMap: MarkMap = {
   em: 'em',

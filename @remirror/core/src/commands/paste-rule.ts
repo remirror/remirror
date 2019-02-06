@@ -24,9 +24,7 @@ export const pasteRule: PluginCreator = (regexp, type, getAttrs) => {
               nodes.push(child.cut(pos, start));
             }
 
-            nodes.push(
-              child.cut(start, end).mark(Cast<Mark>(type.create(attrs!)).addToSet(child.marks)),
-            );
+            nodes.push(child.cut(start, end).mark(Cast<Mark>(type.create(attrs!)).addToSet(child.marks)));
 
             pos = end;
           }
