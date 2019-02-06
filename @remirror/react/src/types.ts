@@ -27,11 +27,19 @@ export interface BaseGetterConfig<GRefKey extends string = 'ref'> {
 export interface GetRootPropsConfig<GRefKey extends string = 'ref'>
   extends BaseGetterConfig<GRefKey>,
     PlainObject {}
+
+/**
+ * These are the props passed to the render function provided when setting up your editor.
+ */
 export interface InjectedRemirrorProps {
   /**
    * The prosemirror view
    */
   view: EditorView<EditorSchema>;
+
+  /**
+   * A map of actions available the
+   */
   actions: RemirrorActions;
   getMarkAttr(type: string): Record<string, string>;
   clearContent(triggerOnChange?: boolean): void;

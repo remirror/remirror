@@ -8,7 +8,7 @@ const babelConfig = {
 };
 
 module.exports = {
-  title: 'Docz Typescript',
+  title: 'Remirror Docs',
   typescript: true,
   modifyBabelRc(config) {
     return babelConfig;
