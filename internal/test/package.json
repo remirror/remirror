@@ -30,7 +30,7 @@
     "prettier-package-json": "2.0.1",
     "prosemirror-test-builder": "1.0.1",
     "react-addons-test-utils": "15.6.2",
-    "react-testing-library": "5.4.4",
+    "react-testing-library": "5.5.0",
     "start-server-and-test": "1.7.11"
   }
 }
