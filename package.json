@@ -15,6 +15,7 @@
     "build:rollup": "rollup --config ./support/rollup/rollup.config.js",
     "checks": "run-s integrity lint typecheck test",
     "checks:parallel": "run-p lint typecheck test",
+    "ci": "yarn --frozen-lockfile install",
     "ci:checks": "run-s integrity lint typecheck build test:ci",
     "clean": "run-s clean:modules clean:lerna clean:root",
     "clean:lerna": "lerna clean --yes",
@@ -33,6 +34,7 @@
     "fix:lint:ts": "lerna run lint --parallel -- --fix",
     "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md,mdx}\"",
     "fix:support": "tslint --project support/tsconfig.json --config tslint.json --fix",
+    "frozen": "run-s ci",
     "integrity": "yarn check --integrity",
     "lint": "run-s lint:*",
     "lint:babel": "eslint **/.babelrc.js",
@@ -93,10 +95,9 @@
     ]
   },
   "resolutions": {
-    "react": "16.8.0-alpha.1",
-    "react-dom": "16.8.0-alpha.1",
+    "react": "16.8.0",
+    "react-dom": "16.8.0",
     "jsdom": "13.2.0",
-    "@babel/parser": "7.3.1",
     "hoist-non-react-statics": "3.3.0"
   }
 }
