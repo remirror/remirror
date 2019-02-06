@@ -3,11 +3,19 @@
   "tabWidth": 2,
   "jsxBracketSameLine": false,
   "bracketSpacing": true,
-  "printWidth": 100,
+  "printWidth": 110,
   "semi": true,
   "singleQuote": true,
   "trailingComma": "all",
   "proseWrap": "preserve",
   "endOfLine": "lf",
-  "jsxSingleQuote": true
+  "jsxSingleQuote": true,
+  "overrides": [
+    {
+      "files": "*.js",
+      "options": {
+        "printWidth": 90
+      }
+    }
+  ]
 }
