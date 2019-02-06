@@ -48,8 +48,8 @@
     "@remirror/mentions-extension": "0.0.0",
     "@types/react": "^16.8.1",
     "@types/react-dom": "^16.0.11",
-    "react": "^16.8.0-alpha.1",
-    "react-dom": "^16.8.0-alpha.1"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "types": "lib/index.d.ts",
   "umd": "lib/dist/remirror-react.umd.js",
