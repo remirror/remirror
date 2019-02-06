@@ -1,7 +1,7 @@
 describe('Visiting documentation', () => {
   it('A user can type', () => {
     user
-      .visit('http://localhost:3000/examples/basic')
+      .visit('http://localhost:3000/editors/basic')
       .get('[data-test-id=editor-instance]')
       .type('{selectall}')
       .type('{backspace}')
