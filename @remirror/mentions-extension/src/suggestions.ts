@@ -136,11 +136,7 @@ export const SuggestionsPlugin = <GItem extends {} = any>({
 
           // See how the state changed
           const moved =
-            prev.active &&
-            next.active &&
-            prev.range &&
-            next.range &&
-            prev.range.from !== next.range.from;
+            prev.active && next.active && prev.range && next.range && prev.range.from !== next.range.from;
           const started = !prev.active && next.active;
           const stopped = prev.active && !next.active;
           const changed = !started && !stopped && prev.query !== next.query;
@@ -154,9 +150,7 @@ export const SuggestionsPlugin = <GItem extends {} = any>({
           }
 
           const state = handleExit ? prev : next;
-          const decorationNode = document.querySelector(
-            `[data-decoration-id="${state.decorationId}"]`,
-          );
+          const decorationNode = document.querySelector(`[data-decoration-id="${state.decorationId}"]`);
 
           const props: SuggestionsCallbackParams = {
             view,
@@ -252,10 +246,7 @@ export const SuggestionsPlugin = <GItem extends {} = any>({
 
       // Setup decorator on the currently active suggestion.
       decorations(editorState) {
-        const { active, range, decorationId } = getPluginState<SuggestionsPluginState>(
-          plugin,
-          editorState,
-        );
+        const { active, range, decorationId } = getPluginState<SuggestionsPluginState>(plugin, editorState);
 
         if (!active || !range) {
           return null;

@@ -25,18 +25,9 @@ export {
   macBaseKeymap,
 } from 'prosemirror-commands';
 
-export {
-  addListNodes,
-  wrapInList,
-  splitListItem,
-  liftListItem,
-  sinkListItem,
-} from 'prosemirror-schema-list';
+export { addListNodes, wrapInList, splitListItem, liftListItem, sinkListItem } from 'prosemirror-schema-list';
 
-export {
-  wrappingInputRule,
-  textblockTypeInputRule as textBlockTypeInputRule,
-} from 'prosemirror-inputrules';
+export { wrappingInputRule, textblockTypeInputRule as textBlockTypeInputRule } from 'prosemirror-inputrules';
 
 export { insertText } from './insert-text';
 export { markInputRule } from './mark-input-rule';

@@ -26,10 +26,7 @@ function selectionFor(docNode: TaggedProsemirrorNode) {
   if (aTag != null) {
     const $aTag = docNode.resolve(aTag);
     if ($aTag.parent.inlineContent) {
-      return new TextSelection(
-        $aTag,
-        docNode.tag.b != null ? docNode.resolve(docNode.tag.b) : undefined,
-      );
+      return new TextSelection($aTag, docNode.tag.b != null ? docNode.resolve(docNode.tag.b) : undefined);
     } else {
       return new NodeSelection($aTag);
     }
@@ -135,8 +132,7 @@ const matcher = {
 
     if (!from) {
       return {
-        message: () =>
-          `Please specify the 'from' node which this command: ${command.name} should transform`,
+        message: () => `Please specify the 'from' node which this command: ${command.name} should transform`,
         pass: false,
       };
     }

@@ -1,13 +1,5 @@
 import { InputRule } from 'prosemirror-inputrules';
-import {
-  Mark,
-  MarkSpec,
-  MarkType,
-  Node as PMNode,
-  NodeSpec,
-  NodeType,
-  Schema,
-} from 'prosemirror-model';
+import { Mark, MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType, Schema } from 'prosemirror-model';
 import { EditorState, Plugin, Plugin as PMPlugin, Selection, Transaction } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { Omit } from 'simplytyped';

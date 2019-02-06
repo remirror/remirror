@@ -20,12 +20,7 @@ interface IsNameUniqueParams {
  * Checks whether a given string is unique to the set.
  * Add the name if it doesn't already exist, or throw an error when `shouldThrow` is true.
  */
-export const isNameUnique = ({
-  name,
-  set,
-  shouldThrow = false,
-  type = 'extension',
-}: IsNameUniqueParams) => {
+export const isNameUnique = ({ name, set, shouldThrow = false, type = 'extension' }: IsNameUniqueParams) => {
   if (set.has(name)) {
     const message = `There is a naming conflict for the name: ${name} used in this type: ${type}. Please rename to avoid runtime errors.`;
     if (shouldThrow) {
@@ -130,10 +125,9 @@ export const isPlainExtension = (extension: AnyExtension): extension is Extensio
  * Checks to see if an optional property exists on an extension.
  * Used by the extension manager to build the plugins, keymaps etc...
  */
-export const hasExtensionProperty = <GExt extends AnyExtension, GKey extends keyof GExt>(
-  property: GKey,
-) => (extension: GExt): extension is GExt & Pick<Required<GExt>, GKey> =>
-  Boolean(extension[property]);
+export const hasExtensionProperty = <GExt extends AnyExtension, GKey extends keyof GExt>(property: GKey) => (
+  extension: GExt,
+): extension is GExt & Pick<Required<GExt>, GKey> => Boolean(extension[property]);
 
 type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys';
 

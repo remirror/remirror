@@ -90,12 +90,10 @@ describe('Remirror', () => {
 
   describe('getRootProps', () => {
     const mock = jest.fn();
-    const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef(
-      (props, ref) => {
-        mock(ref);
-        return <div {...props} ref={ref} />;
-      },
-    );
+    const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef((props, ref) => {
+      mock(ref);
+      return <div {...props} ref={ref} />;
+    });
     it('supports a custom root element', () => {
       render(
         <Remirror>
@@ -127,12 +125,10 @@ describe('Remirror', () => {
 
   describe('getMenuProps', () => {
     const mock = jest.fn();
-    const Menu: FunctionComponent<RefAttributes<HTMLDivElement> & PlainObject> = forwardRef(
-      (_, ref) => {
-        mock(ref);
-        return null;
-      },
-    );
+    const Menu: FunctionComponent<RefAttributes<HTMLDivElement> & PlainObject> = forwardRef((_, ref) => {
+      mock(ref);
+      return null;
+    });
     // TODO implement
     it('updates the offscreen attribute when a selection is active', () => {
       render(

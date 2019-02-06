@@ -36,8 +36,7 @@ export class Placeholder extends Extension<PlaceholderOptions> {
         props: {
           decorations: ({ doc }) => {
             const decorations: Decoration[] = [];
-            const completelyEmpty =
-              doc.textContent === '' && doc.childCount <= 1 && doc.content.size <= 2;
+            const completelyEmpty = doc.textContent === '' && doc.childCount <= 1 && doc.content.size <= 2;
 
             doc.descendants((node, pos) => {
               if (!completelyEmpty) {

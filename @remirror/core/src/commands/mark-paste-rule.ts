@@ -30,9 +30,7 @@ export const markPasteRule: PluginCreator = (regexp, type, getAttrs) => {
 
             // adding the markdown part to nodes
             nodes.push(
-              child
-                .cut(textStart, textEnd)
-                .mark(Cast<Mark>(type.create(attrs!)).addToSet(child.marks)),
+              child.cut(textStart, textEnd).mark(Cast<Mark>(type.create(attrs!)).addToSet(child.marks)),
             );
 
             pos = end;

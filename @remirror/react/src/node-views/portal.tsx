@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import {
-  createPortal,
-  unmountComponentAtNode,
-  unstable_renderSubtreeIntoContainer,
-} from 'react-dom';
+import { createPortal, unmountComponentAtNode, unstable_renderSubtreeIntoContainer } from 'react-dom';
 import { PlainObject } from 'simplytyped';
 
 export interface NodeViewPortalProps {
@@ -96,11 +92,7 @@ export class NodeViewPortalComponent extends React.Component<
   public render() {
     const { portals } = this.state;
     return (
-      <>
-        {Array.from(portals.entries()).map(([container, children]) =>
-          createPortal(children, container),
-        )}
-      </>
+      <>{Array.from(portals.entries()).map(([container, children]) => createPortal(children, container))}</>
     );
   }
 }

@@ -97,10 +97,7 @@ export class ExtensionManager {
       .filter(hasExtensionProperty('inputRules'))
       .map(extensionPropertyMapper('inputRules', schema)) as InputRule[][];
 
-    return extensionInputRules.reduce(
-      (allInputRules, inputRules) => [...allInputRules, ...inputRules],
-      [],
-    );
+    return extensionInputRules.reduce((allInputRules, inputRules) => [...allInputRules, ...inputRules], []);
   }
 
   /**
@@ -111,10 +108,7 @@ export class ExtensionManager {
       .filter(hasExtensionProperty('pasteRules'))
       .map(extensionPropertyMapper('pasteRules', schema)) as ProsemirrorPlugin[][];
 
-    return extensionPasteRules.reduce(
-      (allPasteRules, pasteRules) => [...allPasteRules, ...pasteRules],
-      [],
-    );
+    return extensionPasteRules.reduce((allPasteRules, pasteRules) => [...allPasteRules, ...pasteRules], []);
   }
 
   /**
@@ -191,10 +185,7 @@ export class ExtensionManager {
 /**
  * A helper specifically for generating RemirrorActions active and enabled methods
  */
-const booleanFlexibleFunctionMap = <GKey extends 'enabled' | 'active'>(
-  key: GKey,
-  ctx: ExtensionManager,
-) => {
+const booleanFlexibleFunctionMap = <GKey extends 'enabled' | 'active'>(key: GKey, ctx: ExtensionManager) => {
   return createFlexibleFunctionMap<GKey, () => boolean, ExtensionBooleanFunction>({
     ctx,
     key,

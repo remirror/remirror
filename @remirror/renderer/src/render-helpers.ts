@@ -13,9 +13,7 @@ export interface SelectionPosition {
   bottom: number;
   selection: Selection<EditorSchema>;
 }
-export const calculateSelectedPosition = ({
-  view,
-}: CalculatePositionParams): SelectionPosition | null => {
+export const calculateSelectedPosition = ({ view }: CalculatePositionParams): SelectionPosition | null => {
   const { selection } = view.state;
 
   if (!selection || selection.empty) {
@@ -47,10 +45,7 @@ export const calculateOffsetPosition = (params: CalculatePositionParams) => ({
   const { offsetWidth } = element;
 
   return {
-    left:
-      window.innerWidth - offsetWidth < position.left
-        ? position.left - offsetWidth + 20
-        : position.left,
+    left: window.innerWidth - offsetWidth < position.left ? position.left - offsetWidth + 20 : position.left,
     top: position.top - 40 > 0 ? position.top - 40 : position.top + 20,
   };
 };

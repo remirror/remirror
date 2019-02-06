@@ -13,9 +13,7 @@ import { Attrs } from './types';
 export const markActive = (state: EditorState, type: MarkType) => {
   const { from, $from, to, empty } = state.selection;
   return Boolean(
-    empty
-      ? type.isInSet(state.storedMarks || $from.marks())
-      : state.doc.rangeHasMark(from, to, type),
+    empty ? type.isInSet(state.storedMarks || $from.marks()) : state.doc.rangeHasMark(from, to, type),
   );
 };
 
@@ -102,8 +100,7 @@ export const getMarkRange = ($pos: ResolvedPos | null = null, type: MarkType | n
  * @param plugin
  * @param state
  */
-export const getPluginState = <GState>(plugin: Plugin, state: EditorState): GState =>
-  plugin.getState(state);
+export const getPluginState = <GState>(plugin: Plugin, state: EditorState): GState => plugin.getState(state);
 
 /**
  * Retrieve plugin state from the plugin key

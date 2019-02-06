@@ -342,9 +342,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
 
   private onRefLoad() {
     if (!this.editorRef) {
-      throw Error(
-        'Something went wrong when initializing the text editor. Please check your setup.',
-      );
+      throw Error('Something went wrong when initializing the text editor. Please check your setup.');
     }
     const { autoFocus, onFirstRender } = this.props;
     this.editorRef.appendChild(this.view.dom);
