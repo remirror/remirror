@@ -106,7 +106,7 @@ const initialJson = {
       content: [
         {
           type: 'text',
-          text: 'This a lot of text that can later be deleted.',
+          text: 'Better docs to come soon...',
         },
       ],
     },
@@ -118,7 +118,7 @@ const initialJson = {
       content: [
         {
           type: 'text',
-          text: 'However for now it is important. ',
+          text: 'However for now it is important that something is in place.',
         },
       ],
     },
