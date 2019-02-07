@@ -2,7 +2,7 @@
   "private": true,
   "name": "@remirror/e2e",
   "description": "E2E tests with cypress",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.1",
   "scripts": {
     "prebuild": "run-s clean lint",
     "clean": "rimraf out.js",

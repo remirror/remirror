@@ -11,7 +11,7 @@
       "allowBranch": ["master"]
     }
   },
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.1",
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
   "useWorkspaces": true,

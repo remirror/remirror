@@ -4,7 +4,7 @@
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/renderer",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.1",
   "main": "lib/index.js",
   "module": "lib/dist/remirror-renderer.esm.js",
   "files": [
