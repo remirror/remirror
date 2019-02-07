@@ -4,7 +4,7 @@
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/core",
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.2",
   "main": "lib/index.js",
   "module": "lib/dist/core.esm.js",
   "files": [
