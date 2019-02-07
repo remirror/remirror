@@ -44,6 +44,9 @@
     "prosemirror-view": "1.7.0",
     "simplytyped": "1.7.0"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "types": "lib/index.d.ts",
   "umd": "lib/dist/core.umd.js",
   "umd:min": "lib/dist/core.umd.min.js",

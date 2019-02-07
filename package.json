@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "run-s build:rollup build:modules",
-    "build:docs": "cd docs && yarn build",
+    "build:docs": "lerna run build:netlify",
     "build:modules": "lerna run build",
     "build:production": "cross-env NODE_ENV=production run-s build",
     "build:rollup": "rollup --config ./support/rollup/rollup.config.js",

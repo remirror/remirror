@@ -39,6 +39,9 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "types": "lib/index.d.ts",
   "umd": "lib/dist/remirror-renderer.umd.js",
   "umd:min": "lib/dist/remirror-renderer.umd.min.js",

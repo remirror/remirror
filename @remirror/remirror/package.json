@@ -44,6 +44,9 @@
     "ssr",
     "text editor"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "types": "lib/index.d.ts",
   "umd": "lib/dist/remirror.umd.js",
   "umd:min": "lib/dist/remirror.umd.min.js",

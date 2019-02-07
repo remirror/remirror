@@ -7,6 +7,7 @@
   "scripts": {
     "prebuild": "run-s clean lint typecheck",
     "build": "docz build",
+    "build:netlify": "docz build",
     "clean": "rimraf .docz",
     "dev": "docz dev",
     "lint": "tslint --project tsconfig.json --config ../tslint.json",
