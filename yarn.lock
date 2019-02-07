@@ -933,7 +933,7 @@
     "@emotion/utils" "0.11.1"
     "@emotion/weak-memoize" "0.2.2"
 
-"@emotion/core@^10.0.5":
+"@emotion/core@10.0.7", "@emotion/core@^10.0.5":
   version "10.0.7"
   resolved "https://registry.yarnpkg.com/@emotion/core/-/core-10.0.7.tgz#a894324b944cb06dcd36813afe35f07b0ed8d20d"
   integrity sha512-f5ZeA8R5mTiD2VDFCy6kRTXrQXN/1s79WPvEZZSwROJIyy9mHBB0/Lxg9BSIXfFdXryVw76kHNehTcBkgDYS7A==
@@ -996,7 +996,7 @@
     "@emotion/utils" "0.11.1"
     object-assign "^4.1.1"
 
-"@emotion/styled@^10.0.5":
+"@emotion/styled@10.0.7", "@emotion/styled@^10.0.5":
   version "10.0.7"
   resolved "https://registry.yarnpkg.com/@emotion/styled/-/styled-10.0.7.tgz#e36c84bf14435127481a1ea0b038d64a15c13995"
   integrity sha512-H/7wi2bFYl6GdxBPYef0FNYay1ay5iKFGYxmkuH8WJZnDc/bf1Bx+lH9IQ+QujAMgmAtUHwJsgO2vwj0LEIYcg==
@@ -5165,7 +5165,7 @@ doctrine@^2.0.0, doctrine@^2.1.0:
   dependencies:
     esutils "^2.0.2"
 
-docz-core@^0.13.7:
+docz-core@0.13.7, docz-core@^0.13.7:
   version "0.13.7"
   resolved "https://registry.yarnpkg.com/docz-core/-/docz-core-0.13.7.tgz#524239fc82abc6e2ac0111455fa047648ac61efd"
   integrity sha512-VPQJj8yKepZMCTX/u/dxq3iW/1i8WkKaY1Aiet4NGz/pcvRHFHu1Pcwsp/3QM1wGNqbXw+96DJBOO7OpRVECXg==
@@ -5292,7 +5292,7 @@ docz-utils@^0.13.6:
     unist-util-is "^2.1.2"
     unist-util-visit "^1.4.0"
 
-docz@^0.13.7:
+docz@0.13.7, docz@^0.13.7:
   version "0.13.7"
   resolved "https://registry.yarnpkg.com/docz/-/docz-0.13.7.tgz#dcf6bd4bcdec121cbd973a21da25eef2108a4ac3"
   integrity sha512-kxbluFEkkIZFC6P2AYNDCi2qQAyRXj6AL0z3mebptvctu0veuB1YqEL1GqTZ9DtuUr4ZLsqmg34MqJrJNzhlHw==
