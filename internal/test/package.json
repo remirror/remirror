@@ -22,7 +22,7 @@
     "jest": "24.1.0",
     "jest-axe": "3.1.1",
     "jest-cli": "24.1.0",
-    "jest-dom": "3.0.1",
+    "jest-dom": "3.0.2",
     "jest-extended": "0.11.1",
     "jest-watch-typeahead": "0.2.1",
     "jsdom": "13.2.0",
@@ -30,7 +30,7 @@
     "prettier-package-json": "2.0.1",
     "prosemirror-test-builder": "1.0.1",
     "react-addons-test-utils": "15.6.2",
-    "react-testing-library": "5.5.0",
+    "react-testing-library": "5.5.3",
     "start-server-and-test": "1.7.11"
   }
 }
