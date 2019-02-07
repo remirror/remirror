@@ -8,7 +8,7 @@
     "clean": "rimraf out.js",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "lint": "tslint --project tsconfig.json --config ../tslint.json",
     "typecheck": "tsc --pretty --noEmit"
   },
   "dependencies": {

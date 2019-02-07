@@ -1,6 +1,6 @@
 {
   "publish": {},
-  "packages": ["@remirror/*", "internal/*", "docs"],
+  "packages": ["@remirror/*", "support/dependencies", "docs", "e2e"],
   "command": {
     "publish": {
       "message": "chore(release): publish %s",
@@ -23,6 +23,7 @@
     "/docs/**",
     "**/*.md",
     "**/*.mdx",
-    "/internal/**"
+    "/support/**",
+    "/e2e/**"
   ]
 }
