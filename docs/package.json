@@ -16,15 +16,15 @@
   "dependencies": {
     "@babel/core": "7.2.2",
     "@emotion/babel-preset-css-prop": "10.0.7",
-    "@emotion/core": "^10.0.5",
-    "@emotion/styled": "^10.0.5",
+    "@emotion/core": "10.0.7",
+    "@emotion/styled": "10.0.7",
     "@remirror/mentions-extension": "0.0.0",
     "@remirror/react": "0.0.0",
     "@remirror/renderer": "0.0.0",
     "docz": "^0.13.7",
     "docz-core": "^0.13.7",
     "docz-theme-default": "0.13.7",
-    "react": "16.8.0",
-    "react-dom": "16.8.0"
+    "react": "16.8.1",
+    "react-dom": "16.8.1"
   }
 }
