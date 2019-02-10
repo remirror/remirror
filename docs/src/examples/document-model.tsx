@@ -2,7 +2,7 @@
 
 import React, { FunctionComponent, MouseEventHandler, useState } from 'react';
 
-import { Remirror, RemirrorEventListener } from '@remirror/react';
+import { Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react';
 import { RenderTree } from '@remirror/renderer';
 import { memoize } from 'lodash';
 
@@ -95,7 +95,7 @@ const EditorLayout: FunctionComponent = () => {
   );
 };
 
-export const BasicEditor: FunctionComponent = () => <EditorLayout />;
+export const DocumentModelEditor: FunctionComponent<RemirrorProps> = () => <EditorLayout />;
 export const BasicRenderer: FunctionComponent = () => <RenderTree json={initialJson} />;
 
 const initialJson = {

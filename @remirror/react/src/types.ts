@@ -72,7 +72,23 @@ export type RemirrorEventListener = (params: RemirrorEventListenerParams) => voi
 export type AttributePropFunction = (params: RemirrorEventListenerParams) => Record<string, string>;
 
 export interface RemirrorProps {
+  extensions: AnyExtension[];
+  initialContent: ObjectNode | string;
+  attributes: Record<string, string> | AttributePropFunction;
+  editable: boolean;
+
+  /**
+   * Set to true to force the focus on the editor when the editor first loads.
+   *
+   * @default false
+   */
   autoFocus?: boolean;
+
+  /**
+   * Sets the placeholder for the editor
+   *
+   * @default ''
+   */
   placeholder?: string;
   onChange?: RemirrorEventListener;
   onFocus?: RemirrorEventListener;
@@ -80,11 +96,7 @@ export interface RemirrorProps {
   onFirstRender?: RemirrorEventListener;
   children: RenderPropFunction;
   dispatchTransaction?: ((tr: Transaction<EditorSchema>) => void) | null;
-  initialContent: ObjectNode | string;
-  attributes: Record<string, string> | AttributePropFunction;
-  editable: boolean;
   label?: string;
   useBuiltInExtensions?: boolean;
-  extensions: AnyExtension[];
   styles?: Partial<RemirrorCustomStyles> | null;
 }
