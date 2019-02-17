@@ -26,7 +26,7 @@
     "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
   },
   "dependencies": {
-    "@types/react-icons": "2.2.6"
+    "@types/react-icons": "3.0.0"
   },
   "peerDependencies": {
     "@remirror/core": "0.0.0",

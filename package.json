@@ -52,8 +52,7 @@
     "typecheck": "lerna run typecheck"
   },
   "engines": {
-    "node": ">=8",
-    "yarn": "^1.13.0"
+    "node": ">=8"
   },
   "husky": {
     "hooks": {
