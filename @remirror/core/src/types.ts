@@ -1,6 +1,12 @@
 import { InputRule } from 'prosemirror-inputrules';
 import { Mark, MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType, Schema } from 'prosemirror-model';
-import { EditorState, Plugin, Plugin as PMPlugin, Selection, Transaction } from 'prosemirror-state';
+import {
+  EditorState as PMEditorState,
+  Plugin,
+  Plugin as PMPlugin,
+  Selection,
+  Transaction,
+} from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { Omit } from 'simplytyped';
 
@@ -17,7 +23,7 @@ export type DispatchFunction = (tr: Transaction) => void;
  * When no dispatch callback is passed, the command should do a 'dry run', determining whether it is applicable,
  * but not actually doing anything
  */
-export type CommandFunction = (state: EditorState<any>, dispatch?: DispatchFunction) => boolean;
+export type CommandFunction = (state: EditorState, dispatch?: DispatchFunction) => boolean;
 
 /**
  * A map of keyboard bindings and their corresponding command functions (a.k.a editing actions).
@@ -59,6 +65,7 @@ export type MarkExtensionSpec = Omit<MarkSpec, 'toDOM'> & {
 export type ProsemirrorNode = PMNode;
 export type ProsemirrorPlugin = PMPlugin;
 export type EditorSchema = Schema<string, string>;
+export type EditorState = PMEditorState<EditorSchema>;
 export { PMNode, PMPlugin };
 
 export interface SchemaParams {

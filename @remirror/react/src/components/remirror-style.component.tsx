@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import cssifyObject from 'css-in-js-utils/lib/cssifyObject';
 import * as CSS from 'csstype';
+import { defaultStyles } from '../styles';
 
 const wrapStyle = (uid: string, selector: string, style: CSSProperty) => {
   const styleString = cssifyObject(style);
@@ -29,7 +30,7 @@ export const RemirrorStyle: FunctionComponent<RemirrorStyleProps> = ({ uid, plac
   let placeholderSelector = '';
 
   if (placeholder) {
-    placeholderStyle = placeholder ? { content: `"${placeholder.text}"` } : {};
+    placeholderStyle = { ...defaultStyles.placeholder, content: `"${placeholder.text}"` };
     placeholderSelector = `p.${placeholder.className}:first-child::before`;
   }
 
@@ -39,7 +40,7 @@ export const RemirrorStyle: FunctionComponent<RemirrorStyleProps> = ({ uid, plac
       if (selector === 'placeholder') {
         return style ? acc + ' ' + wrapStyle(uid, placeholderSelector, style) : acc;
       } else if (selector === 'main') {
-        return style ? acc + ' ' + wrapStyle(uid, '', style) : acc;
+        return style ? acc + ' ' + wrapStyle(uid, '', { ...defaultStyles.main, ...style }) : acc;
       }
       return style ? acc + ' ' + wrapStyle(uid, selector, style) : acc;
     }, styleString);

@@ -2,9 +2,12 @@
 
 import React, { FunctionComponent, MouseEventHandler, useState } from 'react';
 
+import { Bold, Italic, Underline } from '@remirror/core-extensions';
 import { Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react';
 import { RenderTree } from '@remirror/renderer';
 import { memoize } from 'lodash';
+
+const extensions = [new Bold(), new Italic(), new Underline()];
 
 const EditorLayout: FunctionComponent = () => {
   const [json, setJson] = useState(JSON.stringify(initialJson, null, 2));
@@ -35,6 +38,7 @@ const EditorLayout: FunctionComponent = () => {
           onChange={onChange}
           placeholder='Start typing for magic...'
           autoFocus={true}
+          extensions={extensions}
           initialContent={initialJson}
         >
           {({ getMenuProps, actions }) => {
@@ -63,13 +67,23 @@ const EditorLayout: FunctionComponent = () => {
                   </button>
                   <button
                     style={{
-                      backgroundColor: actions.paragraph.isActive() ? 'white' : 'pink',
-                      fontWeight: actions.paragraph.isActive() ? 600 : 300,
+                      backgroundColor: actions.italic.isActive() ? 'white' : 'pink',
+                      fontWeight: actions.italic.isActive() ? 600 : 300,
                     }}
-                    disabled={!actions.paragraph.isEnabled()}
-                    onClick={runAction(actions.paragraph.run)}
+                    disabled={!actions.italic.isEnabled()}
+                    onClick={runAction(actions.italic.run)}
                   >
-                    #
+                    i
+                  </button>
+                  <button
+                    style={{
+                      backgroundColor: actions.underline.isActive() ? 'white' : 'pink',
+                      fontWeight: actions.underline.isActive() ? 600 : 300,
+                    }}
+                    disabled={!actions.underline.isEnabled()}
+                    onClick={runAction(actions.underline.run)}
+                  >
+                    u
                   </button>
                 </div>
               </div>

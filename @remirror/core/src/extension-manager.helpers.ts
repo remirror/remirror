@@ -146,8 +146,8 @@ export const extensionPropertyMapper = <
     return {};
   }
   return isNodeExtension(extension)
-    ? extensionMethod({ schema, type: schema.nodes[extension.name] })
+    ? extensionMethod.bind(extension)({ schema, type: schema.nodes[extension.name] })
     : isMarkExtension(extension)
-    ? extensionMethod!({ schema, type: schema.marks[extension.name] })
-    : extensionMethod!({ schema });
+    ? extensionMethod.bind(extension)!({ schema, type: schema.marks[extension.name] })
+    : extensionMethod.bind(extension)!({ schema });
 };

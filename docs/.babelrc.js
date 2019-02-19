@@ -20,6 +20,7 @@ module.exports = {
           '@remirror/mentions-extension': '../@remirror/mentions-extension/src',
           '@remirror/renderer': '../@remirror/renderer/src',
           '@remirror/remirror': '../@remirror/remirror/src',
+          '@remirror/twitter-ui': '../@remirror/twitter-ui/src',
         },
         cwd: path.resolve(__dirname),
       },

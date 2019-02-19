@@ -20,7 +20,7 @@ import {
   ShouldRenderMenu,
   Text,
 } from '@remirror/core';
-import { Bold, Placeholder, PlaceholderPluginState } from '@remirror/core-extensions';
+import { History, Placeholder, PlaceholderPluginState } from '@remirror/core-extensions';
 import { isString, memoize, pick, uniqueId } from 'lodash';
 import { InputRule, inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
@@ -46,7 +46,11 @@ import { InjectedRemirrorProps, RemirrorEventListenerParams, RemirrorProps } fro
 
 const defaultInitialContent: ObjectNode = {
   type: 'doc',
-  content: [],
+  content: [
+    {
+      type: 'paragraph',
+    },
+  ],
 };
 
 export class Remirror extends Component<RemirrorProps, { editorState: EditorState }> {
@@ -94,7 +98,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   private get builtInExtensions() {
     return !this.props.useBuiltInExtensions
       ? []
-      : [new Doc(), new Text(), new Paragraph(), new Bold(), new Placeholder()];
+      : [new Doc(), new Text(), new Paragraph(), new History(), new Placeholder()];
   }
 
   constructor(props: RemirrorProps) {
