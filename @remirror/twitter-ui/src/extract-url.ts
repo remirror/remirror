@@ -192,14 +192,6 @@ const validDomain = regexSupplant(
   { validDomainName, validSubdomain, validGTLD, validCCTLD, validPunycode },
 );
 
-const validUrlPrecedingChars = regexSupplant(
-  /(?:[^A-Za-z0-9@＠$#＃#{invalidCharsGroup}]|[#{directionalMarkersGroup}]|^)/,
-  {
-    invalidCharsGroup,
-    directionalMarkersGroup,
-  },
-);
-
 const latinAccentChars = /\xC0-\xD6\xD8-\xF6\xF8-\xFF\u0100-\u024F\u0253\u0254\u0256\u0257\u0259\u025B\u0263\u0268\u026F\u0272\u0289\u028B\u02BB\u0300-\u036F\u1E00-\u1EFF/;
 const validGeneralUrlPathChars = regexSupplant(
   /[a-z#{cyrillicLettersAndMarks}0-9!\*';:=\+,\.\$\/%#\[\]\-\u2013_~@\|&#{latinAccentChars}]/i,
@@ -255,7 +247,6 @@ const validUrlQueryEndingChars = /[a-z0-9\-_&=#\/]/i;
 
 export const extractUrl = regexSupplant(
   '(' + // $1 total match
-  '(#{validUrlPrecedingChars})' + // $2 Preceeding chracter
   '(' + // $3 URL
   '(https?:\\/\\/)?' + // $4 Protocol (optional)
   '(#{validDomain})' + // $5 Domain(s)
@@ -265,7 +256,6 @@ export const extractUrl = regexSupplant(
     ')' +
     ')$',
   {
-    validUrlPrecedingChars,
     validDomain,
     validPortNumber,
     validUrlPath,

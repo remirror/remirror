@@ -6,6 +6,7 @@ import {
   EditorSchema,
   getPluginKeyState,
   KeyboardBindings,
+  markActive,
   MarkExtension,
   MarkExtensionSpec,
   pasteRule,
@@ -73,7 +74,7 @@ export class TwitterLink extends MarkExtension {
   public keys({  }: SchemaMarkTypeParams): KeyboardBindings {
     console.log(this);
     return {
-      Backspace: onBackSpace(this.pluginKey),
+      // Backspace: onBackSpace(this.pluginKey),
     };
   }
 
@@ -110,29 +111,44 @@ export class TwitterLink extends MarkExtension {
           },
         },
         appendTransaction(transactions, oldState, newState) {
-          console.log(transactions, oldState, newState);
+          // console.log(transactions);
+          const a = markActive(newState, newState.schema.marks.twitterLink);
+          console.log(a);
         },
         props: {
           handleTextInput(view, from, to, text) {
             console.log(from, to, text);
             const state = view.state;
             const $from = state.doc.resolve(from);
+            const $to = state.doc.resolve(to);
             if ($from.parent.type.spec.code) {
               return false;
             }
 
-            // const textAfter =
+            const textAfter = $to.parent.textBetween(
+              $to.parentOffset,
+              $to.parent.content.size,
+              undefined,
+              '\ufffc',
+            );
+            console.log('TExtafter', textAfter);
+            const _start = Math.max(0, $from.parentOffset - MAX_MATCH);
+            const _end = Math.max($from.parentOffset, $from.parent.content.size);
+            console.log(_end, $from.parent.content.size);
+            const OBJECT_REPLACING_CHARACTER = '\ufffc';
             const textBefore =
-              $from.parent.textBetween(
-                Math.max(0, $from.parentOffset - MAX_MATCH),
-                $from.parentOffset,
-                undefined,
-                '\ufffc', // Object replacing character
-              ) + text;
+              $from.parent.textBetween(_start, $from.parentOffset, undefined, OBJECT_REPLACING_CHARACTER) +
+              text +
+              textAfter;
             console.log('Textbefore', textBefore);
             const match = textBefore.match(extractUrl);
-            console.log(match);
-            const tr = match && handler(state, match, from - (match[0].length - text.length), to);
+            const startIndex = textBefore.search(extractUrl);
+            console.log('index of text', startIndex);
+            const tr = match && handler(state, match, startIndex + 1, _end);
+            if (match) {
+              console.log('end', _end);
+              console.log('start', from - (match[0].length - text.length), _start);
+            }
             if (tr) {
               view.dispatch(tr.setMeta(pluginKey, { transform: tr, from, to, text }));
               return true;
@@ -158,7 +174,7 @@ const MAX_MATCH = 500;
 const handler = (state: EditorState<EditorSchema>, match: string[], start: number, end: number) => {
   const twitterLink = state.schema.marks.twitterLink.create({ href: extractHref(match[0]) });
   const displayUrl = match[0]; // Part of the url to display to the user
-  const tr = state.tr.insertText(displayUrl, start, start + displayUrl.length);
+  const tr = state.tr.insertText(displayUrl, start, start + end);
   // .delete(start + displayUrl.length - 1, end - 1)
   // .insertText(' ', start + displayUrl.length);
 
