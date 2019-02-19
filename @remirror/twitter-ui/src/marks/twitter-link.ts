@@ -14,7 +14,7 @@ import {
 
 import { Plugin, TextSelection, Transaction } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
-import { extractUrl } from '../extract-url';
+import { enhancedExtractUrl, extractUrl } from '../extract-url';
 
 const OBJECT_REPLACING_CHARACTER = '\ufffc';
 
@@ -62,11 +62,16 @@ export class TwitterLink extends MarkExtension {
 
   public pasteRules({ type }: SchemaMarkTypeParams) {
     return [
-      pasteRule(extractUrl, type, url => {
-        return {
-          href: extractHref(url as string),
-        };
-      }),
+      pasteRule(
+        // /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
+        enhancedExtractUrl,
+        type,
+        url => {
+          return {
+            href: extractHref(url as string),
+          };
+        },
+      ),
     ];
   }
 
@@ -157,6 +162,10 @@ interface TwitterLinkPluginState {
 const extractHref = (url: string) => (url.startsWith('http') || url.startsWith('//') ? url : `http://${url}`);
 
 const handler = (state: EditorState, match: string[], start: number, end: number, jump = true) => {
+  // const { from, to } = state.selection;
+  // if (from < start || to >= end) {
+  //   return;
+  // }
   const endPosition = state.selection.to + (jump ? 1 : 0);
   const twitterLink = state.schema.marks.twitterLink.create({ href: extractHref(match[0]) });
   const displayUrl = match[0]; // Part of the url to display to the user

@@ -246,14 +246,11 @@ const validUrlQueryEndingChars = /[a-z0-9\-_&=#\/]/i;
 /* Taken from https://github.com/twitter/twitter-text/blob/752b9476d5ed00c2ec60d0a6bb3b34bd5b19bcf9/js/src/regexp/extractUrl.js */
 
 export const extractUrl = regexSupplant(
-  '(' + // $1 total match
-  '(' + // $3 URL
-  '(https?:\\/\\/)?' + // $4 Protocol (optional)
-  '(#{validDomain})' + // $5 Domain(s)
-  '(?::(#{validPortNumber}))?' + // $6 Port number (optional)
-  '(\\/#{validUrlPath}*)?' + // $7 URL Path
-  '(\\?#{validUrlQueryChars}*#{validUrlQueryEndingChars})?' + // $8 Query String
-    ')' +
+  '((https?:\\/\\/)?' +
+    '(#{validDomain})' +
+    '(?::(#{validPortNumber}))?' +
+    '(\\/#{validUrlPath}*)?' +
+    '(\\?#{validUrlQueryChars}*#{validUrlQueryEndingChars})?' +
     ')$',
   {
     validDomain,
@@ -264,3 +261,21 @@ export const extractUrl = regexSupplant(
   },
   'gi',
 );
+
+export const enhancedExtractUrl = regexSupplant(
+  '((https?:\\/\\/)?' +
+    '(#{validDomain})' +
+    '(?::(#{validPortNumber}))?' +
+    '(\\/#{validUrlPath}*)?' +
+    '(\\?#{validUrlQueryChars}*#{validUrlQueryEndingChars})?)',
+  {
+    validDomain,
+    validPortNumber,
+    validUrlPath,
+    validUrlQueryChars,
+    validUrlQueryEndingChars,
+  },
+  'gi',
+);
+
+window.rgx = enhancedExtractUrl;
