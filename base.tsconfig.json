@@ -24,7 +24,7 @@
       "@remirror/react": ["@remirror/react/src/index.ts"],
       "@remirror/mentions-extension": ["@remirror/mentions-extension/src/index.ts"],
       "@remirror/renderer": ["@remirror/renderer/src/index.ts"],
-      "@remirror/twitter-ui": ["@remirror/twitter-ui/src/index.ts"],
+      "@remirror/twitter-ui": ["@remirror/twitter-ui/src"],
       "@test-utils": ["@remirror/core/src/__tests__/test-utils.tsx"],
       "*": ["support/types/*"]
     }

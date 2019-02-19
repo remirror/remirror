@@ -2,9 +2,7 @@ import {
   Attrs,
   Cast,
   // getMarkRange,
-  CommandFunction,
   EditorSchema,
-  getPluginKeyState,
   KeyboardBindings,
   markActive,
   MarkExtension,
@@ -15,8 +13,10 @@ import {
   updateMark,
 } from '@remirror/core';
 
-import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state';
+import { EditorState, Plugin, Transaction } from 'prosemirror-state';
 import { extractUrl } from './extract-url';
+
+const OBJECT_REPLACING_CHARACTER = '\ufffc';
 
 export class TwitterLink extends MarkExtension {
   get name() {
@@ -78,23 +78,23 @@ export class TwitterLink extends MarkExtension {
     };
   }
 
-  public inputRules({ type }: SchemaMarkTypeParams) {
-    return [
-      // markInputRule(extractUrl, type, (match: string[]) => {
-      //   console.log(match);
-      //   return { href: extractHref(match[0]) };
-      // }),
-      // new InputRule(extractUrl, (state, match, start, end) => {
-      //   const twitterLink = type.create({ href: extractHref(match[0]) });
-      //   console.log(match);
-      //   const displayUrl = match[1]; // Part of the url to display to the user
-      //   const tr = state.tr.insertText(displayUrl, start, start + displayUrl.length);
-      //   // .delete(start + displayUrl.length - 1, end - 1)
-      //   // .insertText(' ', start + displayUrl.length);
-      //   return tr.addMark(start, start + displayUrl.length, twitterLink);
-      // }),
-    ];
-  }
+  // public inputRules({ type }: SchemaMarkTypeParams) {
+  //   return [
+  //     // markInputRule(extractUrl, type, (match: string[]) => {
+  //     //   console.log(match);
+  //     //   return { href: extractHref(match[0]) };
+  //     // }),
+  //     // new InputRule(extractUrl, (state, match, start, end) => {
+  //     //   const twitterLink = type.create({ href: extractHref(match[0]) });
+  //     //   console.log(match);
+  //     //   const displayUrl = match[1]; // Part of the url to display to the user
+  //     //   const tr = state.tr.insertText(displayUrl, start, start + displayUrl.length);
+  //     //   // .delete(start + displayUrl.length - 1, end - 1)
+  //     //   // .insertText(' ', start + displayUrl.length);
+  //     //   return tr.addMark(start, start + displayUrl.length, twitterLink);
+  //     // }),
+  //   ];
+  // }
 
   get plugins() {
     const pluginKey = this.pluginKey;
@@ -110,7 +110,7 @@ export class TwitterLink extends MarkExtension {
             return stored ? stored : tr.selectionSet || tr.docChanged ? null : prev;
           },
         },
-        appendTransaction(transactions, oldState, newState) {
+        appendTransaction(_transactions, _oldState, newState) {
           // console.log(transactions);
           const a = markActive(newState, newState.schema.marks.twitterLink);
           console.log(a);
@@ -125,6 +125,9 @@ export class TwitterLink extends MarkExtension {
               return false;
             }
 
+            console.log('start of node', $from.start());
+            console.log('end of node', $from.end());
+
             const textAfter = $to.parent.textBetween(
               $to.parentOffset,
               $to.parent.content.size,
@@ -133,9 +136,9 @@ export class TwitterLink extends MarkExtension {
             );
             console.log('TExtafter', textAfter);
             const _start = Math.max(0, $from.parentOffset - MAX_MATCH);
-            const _end = Math.max($from.parentOffset, $from.parent.content.size);
+            const _end = Math.max($to.parentOffset, $from.parent.content.size);
             console.log(_end, $from.parent.content.size);
-            const OBJECT_REPLACING_CHARACTER = '\ufffc';
+
             const textBefore =
               $from.parent.textBetween(_start, $from.parentOffset, undefined, OBJECT_REPLACING_CHARACTER) +
               text +
@@ -143,8 +146,9 @@ export class TwitterLink extends MarkExtension {
             console.log('Textbefore', textBefore);
             const match = textBefore.match(extractUrl);
             const startIndex = textBefore.search(extractUrl);
-            console.log('index of text', startIndex);
-            const tr = match && handler(state, match, startIndex + 1, _end);
+            console.log('$from.pos', $from.pos, 'start index', startIndex, '$from.parent.resolve()');
+            const tr =
+              match && handler(state, match, from - (match[0].length - text.length), to + textAfter.length);
             if (match) {
               console.log('end', _end);
               console.log('start', from - (match[0].length - text.length), _start);
@@ -174,29 +178,9 @@ const MAX_MATCH = 500;
 const handler = (state: EditorState<EditorSchema>, match: string[], start: number, end: number) => {
   const twitterLink = state.schema.marks.twitterLink.create({ href: extractHref(match[0]) });
   const displayUrl = match[0]; // Part of the url to display to the user
-  const tr = state.tr.insertText(displayUrl, start, start + end);
+  const tr = state.tr.insertText(displayUrl, start, end);
   // .delete(start + displayUrl.length - 1, end - 1)
   // .insertText(' ', start + displayUrl.length);
 
   return tr.addMark(start, start + displayUrl.length, twitterLink);
-};
-
-const onBackSpace = (key: PluginKey): CommandFunction => (state, dispatch) => {
-  const undoable = getPluginKeyState<TwitterLinkPluginState>(key, state);
-  console.log(undoable);
-  const plugin = key.get(state);
-  if (!plugin || !undoable) {
-    return false;
-  }
-
-  if (dispatch) {
-    const tr = state.tr;
-    const toUndo = undoable.transform;
-    for (let j = toUndo.steps.length - 1; j >= 0; j--) {
-      tr.step(toUndo.steps[j].invert(toUndo.docs[j]));
-    }
-    const marks = tr.doc.resolve(undoable.from).marks();
-    dispatch(tr.replaceWith(undoable.from, undoable.to, state.schema.text(undoable.text, marks)));
-  }
-  return true;
 };

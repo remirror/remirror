@@ -10,7 +10,7 @@ import { TwitterLink } from './twitter-link';
 const extensions = [new TwitterLink()];
 
 export const TwitterUI: FunctionComponent = () => {
-  const onChange: RemirrorProps['onChange'] = val => undefined;
+  const onChange: RemirrorProps['onChange'] = () => undefined;
   return (
     <Remirror
       onChange={onChange}
