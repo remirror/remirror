@@ -4,8 +4,8 @@ import React, { FunctionComponent } from 'react';
 
 import { Remirror, RemirrorProps } from '@remirror/react';
 import { CharacterCountIndicator } from './character-count.component';
+import { TwitterLink } from './marks/twitter-link';
 import { defaultStyles } from './styles';
-import { TwitterLink } from './twitter-link';
 
 const extensions = [new TwitterLink()];
 

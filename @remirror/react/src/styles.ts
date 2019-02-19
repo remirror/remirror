@@ -3,6 +3,8 @@ import { RemirrorCustomStyles } from './components';
 export const defaultStyles: RemirrorCustomStyles = {
   main: {
     // caretColor: 'red',
+    wordWrap: 'break-word',
+    whiteSpace: 'pre-wrap',
   },
   ':focus': {
     outline: 'none',
