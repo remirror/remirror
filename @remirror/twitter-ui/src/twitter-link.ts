@@ -9,11 +9,13 @@ import {
   MarkExtensionSpec,
   pasteRule,
   removeMark,
+  replaceText,
   SchemaMarkTypeParams,
   updateMark,
 } from '@remirror/core';
 
-import { EditorState, Plugin, Transaction } from 'prosemirror-state';
+import { ResolvedPos } from 'prosemirror-model';
+import { EditorState, Plugin, Selection, TextSelection, Transaction } from 'prosemirror-state';
 import { extractUrl } from './extract-url';
 
 const OBJECT_REPLACING_CHARACTER = '\ufffc';
@@ -117,42 +119,21 @@ export class TwitterLink extends MarkExtension {
         },
         props: {
           handleTextInput(view, from, to, text) {
-            console.log(from, to, text);
             const state = view.state;
             const $from = state.doc.resolve(from);
-            const $to = state.doc.resolve(to);
             if ($from.parent.type.spec.code) {
               return false;
             }
 
-            console.log('start of node', $from.start());
-            console.log('end of node', $from.end());
-
-            const textAfter = $to.parent.textBetween(
-              $to.parentOffset,
-              $to.parent.content.size,
-              undefined,
-              '\ufffc',
-            );
-            console.log('TExtafter', textAfter);
-            const _start = Math.max(0, $from.parentOffset - MAX_MATCH);
-            const _end = Math.max($to.parentOffset, $from.parent.content.size);
-            console.log(_end, $from.parent.content.size);
-
-            const textBefore =
-              $from.parent.textBetween(_start, $from.parentOffset, undefined, OBJECT_REPLACING_CHARACTER) +
+            const searchText =
+              state.doc.textBetween($from.start(), from, undefined, OBJECT_REPLACING_CHARACTER) +
               text +
-              textAfter;
-            console.log('Textbefore', textBefore);
-            const match = textBefore.match(extractUrl);
-            const startIndex = textBefore.search(extractUrl);
-            console.log('$from.pos', $from.pos, 'start index', startIndex, '$from.parent.resolve()');
+              state.doc.textBetween(to, $from.end());
+            const match = searchText.match(extractUrl);
+            const startIndex = searchText.search(extractUrl);
             const tr =
-              match && handler(state, match, from - (match[0].length - text.length), to + textAfter.length);
-            if (match) {
-              console.log('end', _end);
-              console.log('start', from - (match[0].length - text.length), _start);
-            }
+              match &&
+              handler(state, match, $from.start() + startIndex, $from.start() + startIndex + match[0].length);
             if (tr) {
               view.dispatch(tr.setMeta(pluginKey, { transform: tr, from, to, text }));
               return true;
@@ -173,14 +154,15 @@ interface TwitterLinkPluginState {
 }
 
 const extractHref = (url: string) => (url.startsWith('http') || url.startsWith('//') ? url : `http://${url}`);
-const MAX_MATCH = 500;
 
 const handler = (state: EditorState<EditorSchema>, match: string[], start: number, end: number) => {
+  const endPosition = state.selection.to + 1;
   const twitterLink = state.schema.marks.twitterLink.create({ href: extractHref(match[0]) });
   const displayUrl = match[0]; // Part of the url to display to the user
-  const tr = state.tr.insertText(displayUrl, start, end);
-  // .delete(start + displayUrl.length - 1, end - 1)
-  // .insertText(' ', start + displayUrl.length);
-
-  return tr.addMark(start, start + displayUrl.length, twitterLink);
+  const tr = state.tr.replaceWith(start, end, state.schema.text(displayUrl, [twitterLink]));
+  if (endPosition < end) {
+    return tr.setSelection(TextSelection.create(state.doc, endPosition));
+  }
+  return tr;
+  // return tr.addMark(start, end, twitterLink);
 };
