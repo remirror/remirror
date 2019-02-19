@@ -1,21 +1,19 @@
 import {
   Attrs,
   Cast,
-  // getMarkRange,
-  EditorSchema,
-  KeyboardBindings,
+  EditorState,
+  getMarkRange,
   markActive,
   MarkExtension,
   MarkExtensionSpec,
   pasteRule,
   removeMark,
-  replaceText,
   SchemaMarkTypeParams,
   updateMark,
 } from '@remirror/core';
 
-import { ResolvedPos } from 'prosemirror-model';
-import { EditorState, Plugin, Selection, TextSelection, Transaction } from 'prosemirror-state';
+import { Plugin, TextSelection, Transaction } from 'prosemirror-state';
+import { ReplaceStep } from 'prosemirror-transform';
 import { extractUrl } from './extract-url';
 
 const OBJECT_REPLACING_CHARACTER = '\ufffc';
@@ -73,31 +71,6 @@ export class TwitterLink extends MarkExtension {
     ];
   }
 
-  public keys({  }: SchemaMarkTypeParams): KeyboardBindings {
-    console.log(this);
-    return {
-      // Backspace: onBackSpace(this.pluginKey),
-    };
-  }
-
-  // public inputRules({ type }: SchemaMarkTypeParams) {
-  //   return [
-  //     // markInputRule(extractUrl, type, (match: string[]) => {
-  //     //   console.log(match);
-  //     //   return { href: extractHref(match[0]) };
-  //     // }),
-  //     // new InputRule(extractUrl, (state, match, start, end) => {
-  //     //   const twitterLink = type.create({ href: extractHref(match[0]) });
-  //     //   console.log(match);
-  //     //   const displayUrl = match[1]; // Part of the url to display to the user
-  //     //   const tr = state.tr.insertText(displayUrl, start, start + displayUrl.length);
-  //     //   // .delete(start + displayUrl.length - 1, end - 1)
-  //     //   // .insertText(' ', start + displayUrl.length);
-  //     //   return tr.addMark(start, start + displayUrl.length, twitterLink);
-  //     // }),
-  //   ];
-  // }
-
   get plugins() {
     const pluginKey = this.pluginKey;
     return [
@@ -109,13 +82,42 @@ export class TwitterLink extends MarkExtension {
           },
           apply(tr, prev: TwitterLinkPluginState) {
             const stored = tr.getMeta(pluginKey);
+            console.log('meta stored??', stored);
             return stored ? stored : tr.selectionSet || tr.docChanged ? null : prev;
           },
         },
-        appendTransaction(_transactions, _oldState, newState) {
-          // console.log(transactions);
-          const a = markActive(newState, newState.schema.marks.twitterLink);
-          console.log(a);
+        appendTransaction(transactions, _oldState, newState: EditorState) {
+          const type = newState.schema.marks.twitterLink;
+          const active = markActive(newState, type);
+          const { $from, $to, from, to } = newState.selection;
+          const hasReplaceTransactions = transactions.some(({ steps }) =>
+            steps.some(step => step instanceof ReplaceStep),
+          );
+
+          if (active && hasReplaceTransactions) {
+            // Check that the mark should still be active
+            const searchText =
+              newState.doc.textBetween($from.start(), from, undefined, OBJECT_REPLACING_CHARACTER) +
+              newState.doc.textBetween(to, $to.end());
+            const match = searchText.match(extractUrl);
+            console.log('this is the search text', searchText);
+            console.log('this is the match', match);
+            if (!match) {
+              const range = getMarkRange($from, type);
+              const pos: [number, number] = [range ? range.from : from, range ? range.to : to];
+              console.log('no match removingmark', range, pos);
+              return newState.tr.removeMark(pos[0], pos[1], type);
+            }
+            const startIndex = searchText.search(extractUrl);
+            return handler(
+              newState,
+              match,
+              $from.start() + startIndex,
+              $from.start() + startIndex + match[0].length,
+              false,
+            );
+          }
+          return;
         },
         props: {
           handleTextInput(view, from, to, text) {
@@ -155,8 +157,8 @@ interface TwitterLinkPluginState {
 
 const extractHref = (url: string) => (url.startsWith('http') || url.startsWith('//') ? url : `http://${url}`);
 
-const handler = (state: EditorState<EditorSchema>, match: string[], start: number, end: number) => {
-  const endPosition = state.selection.to + 1;
+const handler = (state: EditorState, match: string[], start: number, end: number, jump = true) => {
+  const endPosition = state.selection.to + (jump ? 1 : 0);
   const twitterLink = state.schema.marks.twitterLink.create({ href: extractHref(match[0]) });
   const displayUrl = match[0]; // Part of the url to display to the user
   const tr = state.tr.replaceWith(start, end, state.schema.text(displayUrl, [twitterLink]));
