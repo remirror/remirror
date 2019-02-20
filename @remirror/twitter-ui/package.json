@@ -27,14 +27,14 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
+    "@remirror/core": "0.0.1-alpha.2",
+    "@remirror/mentions-extension": "0.0.1-alpha.1",
+    "@remirror/react": "0.0.1-alpha.2",
     "@types/prosemirror-state": "1.2.2",
     "@types/prosemirror-view": "1.3.0",
     "prosemirror-state": "1.2.2",
     "prosemirror-transform": "1.1.3",
-    "prosemirror-view": "1.7.1",
-    "@remirror/core": "0.0.1-alpha.2",
-    "@remirror/mentions-extension": "0.0.1-alpha.1",
-    "@remirror/react": "0.0.1-alpha.2",
+    "prosemirror-view": "1.7.2",
     "simplytyped": "1.7.0"
   },
   "peerDependencies": {

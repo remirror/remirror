@@ -25,6 +25,7 @@
     "watch:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -w",
     "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
   },
+  "types": "lib/index.d.ts",
   "dependencies": {
     "@types/hoist-non-react-statics": "3.0.1",
     "@types/prosemirror-keymap": "1.0.1",
@@ -39,7 +40,7 @@
     "prosemirror-keymap": "1.0.1",
     "prosemirror-model": "1.7.0",
     "prosemirror-state": "1.2.2",
-    "prosemirror-view": "1.7.1",
+    "prosemirror-view": "1.7.2",
     "simplytyped": "1.7.0"
   },
   "peerDependencies": {
@@ -54,7 +55,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "types": "lib/index.d.ts",
   "umd": "lib/dist/remirror-react.umd.js",
   "umd:min": "lib/dist/remirror-react.umd.min.js",
   "umdGlobals": {

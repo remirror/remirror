@@ -25,11 +25,12 @@
     "watch:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -w",
     "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
   },
+  "types": "lib/index.d.ts",
   "dependencies": {
     "@types/prosemirror-state": "1.2.2",
     "@types/prosemirror-view": "1.3.0",
     "prosemirror-state": "1.2.2",
-    "prosemirror-view": "1.7.1",
+    "prosemirror-view": "1.7.2",
     "simplytyped": "1.7.0"
   },
   "peerDependencies": {
@@ -42,7 +43,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "types": "lib/index.d.ts",
   "umd": "lib/dist/remirror-renderer.umd.js",
   "umd:min": "lib/dist/remirror-renderer.umd.min.js",
   "umdGlobals": {
