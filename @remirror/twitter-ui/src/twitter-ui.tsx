@@ -2,12 +2,13 @@
 
 import React, { FunctionComponent } from 'react';
 
+import { Mentions } from '@remirror/mentions-extension';
 import { Remirror, RemirrorProps } from '@remirror/react';
 import { CharacterCountIndicator } from './character-count.component';
 import { TwitterLink } from './marks/twitter-link';
 import { defaultStyles } from './styles';
 
-const extensions = [new TwitterLink()];
+const baseExtensions = [new TwitterLink()];
 
 export const TwitterUI: FunctionComponent = () => {
   const onChange: RemirrorProps['onChange'] = () => undefined;
@@ -16,7 +17,22 @@ export const TwitterUI: FunctionComponent = () => {
       onChange={onChange}
       placeholder="What's happening?"
       styles={defaultStyles}
-      extensions={extensions}
+      extensions={[
+        ...baseExtensions,
+        new Mentions({
+          type: 'user',
+          matcher: { char: '@' },
+          onKeyDown: arg => {
+            console.log('key down for user', arg);
+            return false;
+          },
+        }),
+        new Mentions({
+          type: 'tag',
+          matcher: { char: '#' },
+          onChange: arg => console.log(arg.query),
+        }),
+      ]}
     >
       {({ getRootProps, view }) => {
         const content = view.state.doc.textContent;

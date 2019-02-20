@@ -1,5 +1,12 @@
-import { CommandFunction, EditorSchema, FromTo, getPluginState, insertText } from '@remirror/core';
-import { curry } from 'lodash';
+import {
+  CommandFunction,
+  EditorSchema,
+  EditorState,
+  FromTo,
+  getPluginState,
+  insertText,
+  MakeRequired,
+} from '@remirror/core';
 import { ResolvedPos } from 'prosemirror-model';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view';
@@ -31,7 +38,7 @@ export interface SuggestionsCallbackParams extends SuggestionsPluginState {
 }
 
 export interface SuggestionsPluginProps<GItem extends {} = any> {
-  matcher?: SuggestionsMatcher;
+  matcher?: MakeRequired<Partial<SuggestionsMatcher>, 'char'>;
   appendText?: string | null;
   suggestionsClassName?: string;
   command?(params: SuggestionsCommandParams): CommandFunction;
@@ -58,66 +65,64 @@ const defaultSuggestionsPluginState: SuggestionsPluginState = {
 };
 
 // Create a matcher that matches when a specific character is typed. Useful for @mentions and #tags.
-const triggerCharacter = curry(
-  (
-    { char = '@', allowSpaces = false, startOfLine = false }: SuggestionsMatcher,
-    $position: ResolvedPos<EditorSchema>,
-  ): SuggestionsPluginState | undefined => {
-    // Matching expressions used for later
-    const escapedChar = `\\${char}`;
-    const suffix = new RegExp(`\\s${escapedChar}$`);
-    const prefix = startOfLine ? '^' : '';
-    const regexp = allowSpaces
-      ? new RegExp(`${prefix}${escapedChar}.*?(?=\\s${escapedChar}|$)`, 'gm')
-      : new RegExp(`${prefix}(?:^)?${escapedChar}[^\\s${escapedChar}]*`, 'gm');
+const triggerCharacter = (
+  { char = '@', allowSpaces = false, startOfLine = false }: SuggestionsMatcher,
+  $position: ResolvedPos<EditorSchema>,
+): SuggestionsPluginState | undefined => {
+  // Matching expressions used for later
+  const escapedChar = `\\${char}`;
+  const suffix = new RegExp(`\\s${escapedChar}$`);
+  const prefix = startOfLine ? '^' : '';
+  const regexp = allowSpaces
+    ? new RegExp(`${prefix}${escapedChar}.*?(?=\\s${escapedChar}|$)`, 'gm')
+    : new RegExp(`${prefix}(?:^)?${escapedChar}[^\\s${escapedChar}]*`, 'gm');
 
-    // Lookup the boundaries of the current node
-    const textFrom = $position.before();
-    const textTo = $position.end();
-    const text = $position.doc.textBetween(textFrom, textTo, '\0', '\0');
+  // Lookup the boundaries of the current node
+  const textFrom = $position.before();
+  const textTo = $position.end();
+  const text = $position.doc.textBetween(textFrom, textTo, '\0', '\0');
 
-    let match = regexp.exec(text);
-    let position: SuggestionsPluginState | undefined;
-    while (match !== null) {
-      // JavaScript doesn't have lookbehinds; this hacks a check that first character is " "
-      // or the line beginning
-      const matchPrefix = match.input.slice(Math.max(0, match.index - 1), match.index);
+  let match = regexp.exec(text);
+  let position: SuggestionsPluginState | undefined;
+  while (match !== null) {
+    // JavaScript doesn't have lookbehinds; this hacks a check that first character is " "
+    // or the line beginning
+    const matchPrefix = match.input.slice(Math.max(0, match.index - 1), match.index);
 
-      if (/^[\s\0]?$/.test(matchPrefix)) {
-        // The absolute position of the match in the document
-        const from = match.index + $position.start();
-        let to = from + match[0].length;
+    if (/^[\s\0]?$/.test(matchPrefix)) {
+      // The absolute position of the match in the document
+      const from = match.index + $position.start();
+      let to = from + match[0].length;
 
-        // Edge case handling; if spaces are allowed and we're directly in between
-        // two triggers
-        if (allowSpaces && suffix.test(text.slice(to - 1, to + 1))) {
-          match[0] += ' ';
-          to += 1;
-        }
-
-        // If the $position is located within the matched substring, return that range
-        if (from < $position.pos && to >= $position.pos) {
-          position = {
-            ...defaultSuggestionsPluginState,
-            range: {
-              from,
-              to,
-            },
-            query: match[0].slice(char.length),
-            text: match[0],
-          };
-        }
+      // Edge case handling; if spaces are allowed and we're directly in between
+      // two triggers
+      if (allowSpaces && suffix.test(text.slice(to - 1, to + 1))) {
+        match[0] += ' ';
+        to += 1;
       }
 
-      match = regexp.exec(text);
+      // If the $position is located within the matched substring, return that range
+      if (from < $position.pos && to >= $position.pos) {
+        position = {
+          ...defaultSuggestionsPluginState,
+          range: {
+            from,
+            to,
+          },
+          query: match[0].slice(char.length),
+          text: match[0],
+        };
+      }
     }
 
-    return position;
-  },
-);
+    match = regexp.exec(text);
+  }
+
+  return position;
+};
 
 export const SuggestionsPlugin = <GItem extends {} = any>({
-  matcher = defaultMatcher,
+  matcher: _matcher = defaultMatcher,
   appendText = null,
   suggestionsClassName = defaultSuggestionsClassName,
   command = () => defaultHandler,
@@ -126,11 +131,12 @@ export const SuggestionsPlugin = <GItem extends {} = any>({
   onExit = defaultHandler,
   onKeyDown = defaultHandler,
 }: SuggestionsPluginProps<GItem>) => {
+  const matcher = { ...defaultMatcher, ..._matcher };
   const plugin: Plugin = new Plugin({
-    key: new PluginKey('suggestions'),
+    key: new PluginKey<EditorSchema>('suggestions'),
     view() {
       return {
-        update(view, prevState) {
+        update(view, prevState: EditorState) {
           const prev = getPluginState<SuggestionsPluginState>(plugin, prevState);
           const next = getPluginState<SuggestionsPluginState>(plugin, view.state);
 
@@ -198,7 +204,7 @@ export const SuggestionsPlugin = <GItem extends {} = any>({
         let next = { ...prev };
 
         // We can only be suggesting if there is no selection
-        if (selection.from === selection.to) {
+        if (selection.from === selection.to || selection.empty) {
           // Reset active state if we just left the previous suggestion range
           if (prev.range && (selection.from < prev.range.from || selection.from > prev.range.to)) {
             next.active = false;
@@ -206,7 +212,7 @@ export const SuggestionsPlugin = <GItem extends {} = any>({
 
           // Try to match against where our cursor currently is
           const $position = selection.$from;
-          const match = triggerCharacter(matcher)($position);
+          const match = triggerCharacter(matcher, $position);
           const decorationId = (Math.random() + 1).toString(36).substr(2, 5);
 
           // If we found a match, update the current state to show it

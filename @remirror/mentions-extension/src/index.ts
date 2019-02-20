@@ -79,6 +79,7 @@ export class Mentions<GItem extends {} = any> extends NodeExtension<MentionsNode
     replaceText(null, schema.nodes[this.name], attrs);
 
   get plugins() {
+    console.log(this.options.matcher);
     return [
       SuggestionsPlugin<GItem>({
         command: ({ range, attrs, schema }) => replaceText(range, schema.nodes[this.name], attrs),

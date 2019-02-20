@@ -1,6 +1,6 @@
 import { PlainObject } from 'simplytyped';
 
-function regexSupplant(regex: RegExp | string, map: PlainObject = {}, flags = '') {
+function regexSupplant(regex: RegExp | string, map: Record<string, RegExp | string> = {}, flags = '') {
   let _flags = flags || '';
   let _regex = typeof regex === 'string' ? regex : '';
   if (typeof regex !== 'string') {
@@ -277,5 +277,3 @@ export const enhancedExtractUrl = regexSupplant(
   },
   'gi',
 );
-
-window.rgx = enhancedExtractUrl;

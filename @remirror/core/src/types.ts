@@ -211,3 +211,27 @@ export interface FromTo {
   from: number;
   to: number;
 }
+
+/**
+ * Makes specified keys of an interface optional while the rest stay the same.
+ */
+export type MakeOptional<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
+  { [P in GKeys]+?: GType[P] };
+
+/**
+ * Makes specified keys of an interface nullable while the rest stay the same.
+ */
+export type MakeNullable<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
+  { [P in GKeys]: GType[P] | null };
+
+/**
+ * Makes specified keys of an interface Required while the rest remain unchanged.
+ */
+export type MakeRequired<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
+  { [P in GKeys]-?: GType[P] };
+
+/**
+ * Makes specified keys of an interface readonly.
+ */
+export type MakeReadonly<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
+  { +readonly [P in GKeys]: GType[P] };
