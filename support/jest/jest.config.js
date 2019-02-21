@@ -42,5 +42,7 @@ module.exports = {
     '@remirror/core-extensions$': baseDir('@remirror', 'core-extensions', 'src'),
     '@remirror/react$': baseDir('@remirror', 'react', 'src'),
     '@remirror/mentions-extension$': baseDir('@remirror', 'mentions-extension', 'src'),
+    '@remirror/twitter-ui$': baseDir('@remirror', 'twitter-ui', 'src'),
+    '@remirror/renderer$': baseDir('@remirror', 'renderer', 'src'),
   },
 };

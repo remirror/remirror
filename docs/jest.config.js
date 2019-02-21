@@ -4,4 +4,5 @@ module.exports = {
   ...config,
   name: '@remirror/docz',
   displayName: 'docs',
+  preset: 'jest-puppeteer',
 };

@@ -5,6 +5,7 @@ import remirror from '../../@remirror/remirror/package.json';
 import renderer from '../../@remirror/renderer/package.json';
 import mentionsExtension from '../../@remirror/mentions-extension/package.json';
 import coreExtensions from '../../@remirror/core-extensions/package.json';
+import twitterUI from '../../@remirror/twitter-ui/package.json';
 
 const configurations = [
   ...factory(core),
@@ -13,6 +14,7 @@ const configurations = [
   ...factory(mentionsExtension),
   ...factory(renderer),
   ...factory(coreExtensions),
+  ...factory(twitterUI),
 ];
 
 export default configurations;
