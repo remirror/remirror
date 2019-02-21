@@ -1,7 +1,7 @@
 import 'jest-extended';
 
 if (process.env.TEST_ENV) {
-  jest.setTimeout(30000);
+  jest.setTimeout(60000);
 }
 
 /* Make unhandledRejection errors easier to debug */
