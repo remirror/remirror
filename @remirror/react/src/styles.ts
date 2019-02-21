@@ -1,10 +1,4 @@
-import * as CSS from 'csstype';
-
-export type CSSProperty = CSS.Properties<string | number>;
-export type CustomStyleProps = 'main' | 'placeholder';
-export interface RemirrorCustomStyles
-  extends Record<CustomStyleProps, CSSProperty>,
-    Record<string, CSSProperty> {}
+import { RemirrorCustomStyles } from './types';
 
 export const defaultStyles: RemirrorCustomStyles = {
   main: {

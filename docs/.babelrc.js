@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   ...defaultConfig,
-  presets: [['babel-preset-docz', {}], '@emotion/babel-preset-css-prop'],
+  presets: [['babel-preset-docz'], '@emotion/babel-preset-css-prop'],
   plugins: [
     '@babel/plugin-transform-typescript',
     '@babel/plugin-proposal-class-properties',

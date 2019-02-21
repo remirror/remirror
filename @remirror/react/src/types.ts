@@ -11,7 +11,6 @@ import {
 import { EditorState, Transaction } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { PlainObject } from 'simplytyped';
-import { RemirrorCustomStyles } from './styles';
 
 export interface GetMenuPropsConfig<GRefKey extends string = 'ref'> extends BaseGetterConfig<GRefKey> {
   offset?: OffsetCalculator;
@@ -100,3 +99,11 @@ export interface RemirrorProps {
   useBuiltInExtensions?: boolean;
   styles?: Partial<RemirrorCustomStyles> | null;
 }
+
+export type CSSProperty = CSS.Properties<string | number>;
+
+export type CustomStyleProps = 'main' | 'placeholder';
+
+export interface RemirrorCustomStyles
+  extends Record<CustomStyleProps, CSSProperty>,
+    Record<string, CSSProperty> {}

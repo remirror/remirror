@@ -5,13 +5,34 @@ const workingDir = (path = '') => resolve(__dirname, path);
 
 const babelConfig = {
   ...localConfig,
-  plugins: [...localConfig.plugins, process.env.COVERAGE ? 'istanbul' : false].filter(
-    Boolean,
-  ),
+  plugins: [
+    ...localConfig.plugins,
+    ...(process.env.COVERAGE
+      ? [
+          [
+            'istanbul',
+            {
+              exclude: [
+                '**/node_modules/**',
+                'node_modules/**',
+                'node_modules',
+                '**/*.d.ts',
+                '**/__mocks__',
+                '**/__tests__/',
+                '**/__fixtures__',
+                'jest\\.*\\.ts',
+                'live-test-helpers.ts',
+                'unit-test-helpers.ts',
+              ],
+            },
+          ],
+        ]
+      : []),
+  ],
 };
 
 module.exports = {
-  title: 'Remirror Docs',
+  title: 'Remirror',
   typescript: true,
   modifyBabelRc() {
     return babelConfig;

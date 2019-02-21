@@ -27,4 +27,5 @@ module.exports = {
   name: '@remirror/docz',
   displayName: 'docs',
   preset: 'jest-puppeteer',
+  setupFilesAfterEnv: ['expect-puppeteer', '<rootDir>/jest.framework.ts'],
 };

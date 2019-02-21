@@ -23,7 +23,7 @@
     "clean:modules": "git clean -fdx @remirror support docs",
     "dev": "lerna run dev --parallel",
     "dev:docs": "cd docs && yarn dev",
-    "docs:ci": "cd docs && yarn dev --debug=true",
+    "docs:ci": "cross-env COVERAGE=true lerna run launch:docs --scope=@remirror/docz --stream",
     "fix": "run-s fix:lint:* fix:*",
     "fix:lint:babel": "eslint **/.babelrc.js --fix",
     "fix:lint:js": "eslint support *.js @remirror docs --fix",

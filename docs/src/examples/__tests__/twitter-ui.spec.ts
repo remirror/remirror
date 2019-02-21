@@ -1,4 +1,5 @@
 // const selector = '[data-test-id=twitter-ui]';
+
 const selector = '.ProseMirror';
 
 describe('Twitter UI', () => {

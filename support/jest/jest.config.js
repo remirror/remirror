@@ -38,11 +38,12 @@ module.exports = {
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     '@test-utils$': baseDir('@remirror', 'core', 'src', '__tests__', 'test-utils.tsx'),
-    '@remirror/core$': baseDir('@remirror', 'core', 'src'),
-    '@remirror/core-extensions$': baseDir('@remirror', 'core-extensions', 'src'),
-    '@remirror/react$': baseDir('@remirror', 'react', 'src'),
-    '@remirror/mentions-extension$': baseDir('@remirror', 'mentions-extension', 'src'),
-    '@remirror/twitter-ui$': baseDir('@remirror', 'twitter-ui', 'src'),
-    '@remirror/renderer$': baseDir('@remirror', 'renderer', 'src'),
+    '@remirror\\/([a-z0-9-]+)$': baseDir('@remirror/$1/src'),
+    // '@remirror/core$': baseDir('@remirror', 'core', 'src'),
+    // '@remirror/core-extensions$': baseDir('@remirror', 'core-extensions', 'src'),
+    // '@remirror/react$': baseDir('@remirror', 'react', 'src'),
+    // '@remirror/mentions-extension$': baseDir('@remirror', 'mentions-extension', 'src'),
+    // '@remirror/twitter-ui$': baseDir('@remirror', 'twitter-ui', 'src'),
+    // '@remirror/renderer$': baseDir('@remirror', 'renderer', 'src'),
   },
 };

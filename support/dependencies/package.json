@@ -79,9 +79,11 @@
     "start-server-and-test": "1.7.11",
     "ts-loader": "5.3.3",
     "tslint": "5.12.1",
+    "live-server": "1.2.1",
     "typescript": "3.3.3",
     "typescript-styled-plugin": "0.13.0",
     "webpack": "4.29.5",
-    "webpack-cli": "3.2.3"
+    "webpack-cli": "3.2.3",
+    "puppeteer-to-istanbul": "1.2.2"
   }
 }

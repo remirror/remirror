@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react';
 
 import cssifyObject from 'css-in-js-utils/lib/cssifyObject';
-import { CSSProperty, defaultStyles, RemirrorCustomStyles } from '../styles';
+import { defaultStyles } from '../styles';
+import { CSSProperty, RemirrorCustomStyles } from '../types';
 
 const wrapStyle = (uid: string, selector: string, style: CSSProperty) => {
   const styleString = cssifyObject(style);
