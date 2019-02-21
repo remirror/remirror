@@ -82,7 +82,7 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
     ];
   }
 
-  public plugins = (_params: SchemaMarkTypeParams) => {
+  public plugins = ({ type }: SchemaMarkTypeParams) => {
     const pluginKey = this.pluginKey;
     const name = this.name;
     const onUrlsChange = this.options.onUrlsChange;
@@ -99,10 +99,8 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
           },
         },
         appendTransaction(transactions, _oldState, state: EditorState) {
-          const { $from, $to, from, to } = state.selection;
-          const type = state.schema.marks.twitterLink;
-          // const lastCharacter = from > 0 && from === $from.end();
-          // const active = lastCharacter ? state.doc.rangeHasMark(from - 1, to, type) : markActive(state, type);
+          const { selection } = state;
+          const { $from, $to, from, to } = selection;
           const hasReplaceTransactions = transactions.some(({ steps }) =>
             steps.some(step => step instanceof ReplaceStep),
           );
@@ -112,6 +110,7 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
           if (!hasReplaceTransactions || pluginState) {
             return;
           }
+
           // Check that the mark should still be active
           const searchText =
             state.doc.textBetween($from.start(), from, undefined, OBJECT_REPLACING_CHARACTER) +
@@ -120,6 +119,7 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
           let match = enhancedExtractUrl.exec(searchText);
           let tr = state.tr;
           const collectedParams: TwitterLinkHandlerProps[] = [];
+
           while (match !== null) {
             // console.log(`runs: ${runs++}`, match);
             const startIndex = match.index;
@@ -162,6 +162,48 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
           },
         }),
         props: {
+          // handleKeyDown(view, event) {
+          // if (event.keyCode !== 13) {
+          //   return false;
+          // }
+          // const state = view.state;
+          // // pressing enter
+          // const { $from, from } = view.state.selection;
+          // const startOfPrevNode = $from.nodeBefore ? $from.nodeBefore.resolve(0).start() : $from.start();
+          // const endOfNextNode = $from.nodeAfter ? $from.nodeAfter.resolve(0).end() : $from.end();
+
+          // // Check that the mark should still be active
+          // const searchText =
+          //   state.doc.textBetween(startOfPrevNode, from, undefined, OBJECT_REPLACING_CHARACTER) +
+          //   state.doc.textBetween(from, endOfNextNode);
+
+          // let match = enhancedExtractUrl.exec(searchText);
+          // let tr = state.tr;
+          // const collectedParams: TwitterLinkHandlerProps[] = [];
+          // while (match !== null) {
+          //   // console.log(`runs: ${runs++}`, match);
+          //   const startIndex = match.index;
+
+          //   const url = match[1];
+          //   const start = $from.start() + startIndex;
+          //   const end = $from.start() + startIndex + match[0].length;
+          //   collectedParams.push({ state, url, start, end, jump: false });
+          //   match = enhancedExtractUrl.exec(searchText);
+          // }
+          // // Remove all marks
+          // // const range = getMarkRange(lastCharacter ? state.doc.resolve(from - 1) : $from, type);
+          // // const pos: [number, number] = [range ? range.from : from, range ? range.to : to];
+          // tr = tr.removeMark(startOfPrevNode, endOfNextNode, type);
+
+          // // Add all marks again for the block
+          // collectedParams.forEach(params => {
+          //   tr = twitterLinkHandler({ ...params, transaction: tr });
+          // });
+
+          // view.dispatch(tr);
+
+          // return false;
+          // },
           handleTextInput(view, from, to, text) {
             const state = view.state;
             // const type = state.schema.marks.twitterLink;

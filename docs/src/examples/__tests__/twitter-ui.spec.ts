@@ -51,14 +51,17 @@ describe('Twitter UI', () => {
       await page.keyboard.type('..no .co more url please');
       await expect(page.$eval(selector, e => e.innerHTML)).resolves.not.toInclude('url.com');
     });
-
-    it('should handle the enter key', async () => {
+    it.skip('should handle the enter key', async () => {
       await page.type(selector, 'this is the first url.com');
       await page.keyboard.press('ArrowLeft');
       await page.keyboard.press('ArrowLeft');
       await page.keyboard.press('ArrowLeft');
       await page.keyboard.press('Enter');
 
+      await expect(page.$eval(selector, e => e.innerHTML)).resolves.not.toInclude('</a>');
+    });
+    it.skip('should not contain false positives', async () => {
+      await page.type(selector, 'http://localhost:3000/ahttps://meowni.ca');
       await expect(page.$eval(selector, e => e.innerHTML)).resolves.not.toInclude('</a>');
     });
   });
