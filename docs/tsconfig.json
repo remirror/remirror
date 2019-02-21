@@ -6,7 +6,7 @@
     "outDir": "lib",
     "declaration": true,
     "plugins": [{ "name": "typescript-styled-plugin" }],
-    "types": ["jest", "jest-environment-puppeteer", "expect-puppeteer"]
+    "types": ["jest", "jest-environment-puppeteer", "expect-puppeteer", "puppeteer", "jest-extended"]
   },
   "include": ["src"]
 }
