@@ -61,6 +61,7 @@
     "prettier": "1.16.4",
     "prettier-package-json": "2.1.0",
     "prosemirror-test-builder": "1.0.1",
+    "puppeteer": "1.12.2",
     "react": "16.8.2",
     "react-addons-test-utils": "15.6.2",
     "react-dom": "16.8.2",

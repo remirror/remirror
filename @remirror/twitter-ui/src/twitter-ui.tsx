@@ -8,12 +8,12 @@ import { CharacterCountIndicator } from './character-count.component';
 import { TwitterLink, TwitterLinkOptions } from './marks/twitter-link';
 import { defaultStyles } from './styles';
 
-export interface TwitterUIProps extends TwitterLinkOptions {
+export interface TwitterUIProps extends TwitterLinkOptions, Partial<RemirrorProps> {
   hashMention?: MentionsNodeExtensionOptions;
   atMention?: MentionsNodeExtensionOptions;
 }
 
-export const TwitterUI: FunctionComponent<TwitterUIProps> = ({ onUrlsChange }) => {
+export const TwitterUI: FunctionComponent<TwitterUIProps> = ({ onUrlsChange, attributes }) => {
   const onChange: RemirrorProps['onChange'] = () => undefined;
   const extensions = [
     new TwitterLink({ onUrlsChange }),
@@ -38,6 +38,7 @@ export const TwitterUI: FunctionComponent<TwitterUIProps> = ({ onUrlsChange }) =
       placeholder="What's happening?"
       styles={defaultStyles}
       extensions={extensions}
+      attributes={attributes}
     >
       {({ getRootProps, view }) => {
         const content = view.state.doc.textContent;

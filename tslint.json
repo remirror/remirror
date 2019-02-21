@@ -10,6 +10,7 @@
         "jest-cli",
         "jest-dom",
         "react-testing-library",
+        "puppeteer",
         "@test-utils",
         "jest-extended",
         "prosemirror-test-builder",

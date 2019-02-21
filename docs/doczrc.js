@@ -5,6 +5,9 @@ const workingDir = (path = '') => resolve(__dirname, path);
 
 const babelConfig = {
   ...localConfig,
+  plugins: [...localConfig.plugins, process.env.COVERAGE ? 'istanbul' : false].filter(
+    Boolean,
+  ),
 };
 
 module.exports = {
