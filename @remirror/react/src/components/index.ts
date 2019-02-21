@@ -1,1 +1,1 @@
-export { RemirrorCustomStyles, RemirrorStyle, RemirrorStyleProps } from './remirror-style.component';
+export { RemirrorStyle, RemirrorStyleProps } from './remirror-style.component';

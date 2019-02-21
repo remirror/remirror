@@ -33,7 +33,7 @@ export type KeyboardBindings = Record<string, CommandFunction>;
 /* The following is an alternative type definition for the built in Prosemirror definition
 The current Prosemirror types were causing me some problems */
 
-type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string };
+type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string } | DOMOutputSpecPosX[];
 type DOMOutputSpecPosX = string | 0 | Node;
 export type DOMOutputSpec =
   | DOMOutputSpecPosX

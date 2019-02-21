@@ -11,7 +11,7 @@ import {
 import { EditorState, Transaction } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { PlainObject } from 'simplytyped';
-import { RemirrorCustomStyles } from './components';
+import { RemirrorCustomStyles } from './styles';
 
 export interface GetMenuPropsConfig<GRefKey extends string = 'ref'> extends BaseGetterConfig<GRefKey> {
   offset?: OffsetCalculator;

@@ -1,22 +1,13 @@
 import React, { FunctionComponent } from 'react';
 
 import cssifyObject from 'css-in-js-utils/lib/cssifyObject';
-import * as CSS from 'csstype';
-import { defaultStyles } from '../styles';
+import { CSSProperty, defaultStyles, RemirrorCustomStyles } from '../styles';
 
 const wrapStyle = (uid: string, selector: string, style: CSSProperty) => {
   const styleString = cssifyObject(style);
   const space = selector && selector.startsWith(':') ? '' : ' ';
   return styleString ? `.${uid}${space}${selector}{${styleString}}` : '';
 };
-
-type CSSProperty = CSS.Properties<string | number>;
-
-type CustomStyleProps = 'main' | 'placeholder';
-
-export interface RemirrorCustomStyles
-  extends Record<CustomStyleProps, CSSProperty>,
-    Record<string, CSSProperty> {}
 
 export interface RemirrorStyleProps {
   uid: string;

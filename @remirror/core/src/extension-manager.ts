@@ -72,11 +72,12 @@ export class ExtensionManager {
   /**
    * Retrieve all plugins from the passed in extensions
    */
-  public get plugins() {
-    const initialPlugins: ProsemirrorPlugin[] = [];
-    return this.extensions
-      .filter(extension => extension.plugins)
-      .reduce((allPlugins, { plugins }) => [...allPlugins, ...(plugins || [])], initialPlugins);
+  public plugins({ schema }: SchemaParams): ProsemirrorPlugin[] {
+    const extensionPlugins = this.extensions
+      .filter(hasExtensionProperty('plugins'))
+      .map(extensionPropertyMapper('plugins', schema)) as ProsemirrorPlugin[][];
+
+    return extensionPlugins.reduce((allPlugins, plugins) => [...allPlugins, ...plugins], []);
   }
 
   /**

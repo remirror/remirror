@@ -6,6 +6,7 @@ import {
   ExtensionBooleanFunction,
   ExtensionType,
   FlexibleConfig,
+  NodeExtensionSpec,
   SchemaWithStateParams,
 } from './types';
 
@@ -17,13 +18,7 @@ export abstract class NodeExtension<GOptions extends {} = {}> extends Extension<
     return ExtensionType.NODE;
   }
 
-  get view() {
-    return undefined;
-  }
-
-  get schema() {
-    return {};
-  }
+  public abstract readonly schema: NodeExtensionSpec;
 
   public active({ getEditorState, schema }: SchemaWithStateParams): FlexibleConfig<ExtensionBooleanFunction> {
     return attrs => nodeActive(getEditorState(), schema.nodes.name, attrs);

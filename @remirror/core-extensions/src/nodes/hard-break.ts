@@ -1,11 +1,17 @@
-import { chainCommands, exitCode, NodeExtension, SchemaNodeTypeParams } from '@remirror/core';
+import {
+  chainCommands,
+  exitCode,
+  NodeExtension,
+  NodeExtensionSpec,
+  SchemaNodeTypeParams,
+} from '@remirror/core';
 
 export class HardBreak extends NodeExtension {
   get name() {
     return 'hard_break';
   }
 
-  get schema() {
+  get schema(): NodeExtensionSpec {
     return {
       inline: true,
       group: 'inline',

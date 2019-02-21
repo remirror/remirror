@@ -19,7 +19,7 @@ export class History extends Extension {
     return keymap;
   }
 
-  get plugins() {
+  public plugins() {
     return [history()];
   }
 

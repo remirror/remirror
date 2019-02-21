@@ -106,12 +106,15 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     this.extensionManager = this.createExtensions();
     this.nodes = this.extensionManager.nodes;
     this.marks = this.extensionManager.marks;
-    this.plugins = this.extensionManager.plugins;
     this.pluginKeys = this.extensionManager.pluginKeys;
     this.schema = this.createSchema();
-    this.keymaps = this.extensionManager.keymaps({ schema: this.schema });
-    this.inputRules = this.extensionManager.inputRules({ schema: this.schema });
-    this.pasteRules = this.extensionManager.pasteRules({ schema: this.schema });
+
+    const schemaParam = { schema: this.schema };
+    this.plugins = this.extensionManager.plugins(schemaParam);
+    this.keymaps = this.extensionManager.keymaps(schemaParam);
+    this.inputRules = this.extensionManager.inputRules(schemaParam);
+    this.pasteRules = this.extensionManager.pasteRules(schemaParam);
+
     this.state = this.createInitialState();
     this.view = this.createView();
     this.actions = this.extensionManager.actions({

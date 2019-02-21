@@ -1,6 +1,7 @@
 import { Schema } from 'prosemirror-model';
 import { AnyFunc } from 'simplytyped';
 import { AnyExtension, Extension } from './extension';
+import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
 import { CommandParams, ExtensionType, FlexibleConfig } from './types';
 
@@ -115,7 +116,7 @@ export const isNodeExtension = (extension: AnyExtension): extension is NodeExten
  * Determines if the passed in extension is a mark extension. Useful as a type guard where a particular type of extension is needed.
  * @param extension
  */
-export const isMarkExtension = (extension: AnyExtension): extension is NodeExtension<any> =>
+export const isMarkExtension = (extension: AnyExtension): extension is MarkExtension<any> =>
   extension.type === ExtensionType.MARK;
 
 export const isPlainExtension = (extension: AnyExtension): extension is Extension<any, never> =>
@@ -129,7 +130,7 @@ export const hasExtensionProperty = <GExt extends AnyExtension, GKey extends key
   extension: GExt,
 ): extension is GExt & Pick<Required<GExt>, GKey> => Boolean(extension[property]);
 
-type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys';
+type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys' | 'plugins';
 
 /**
  * Looks at the passed property and calls the extension with the required parameters.

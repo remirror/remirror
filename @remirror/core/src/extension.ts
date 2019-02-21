@@ -49,10 +49,6 @@ export abstract class Extension<GOptions extends {} = {}, GType = never> {
   get defaultOptions(): Partial<GOptions> {
     return {};
   }
-
-  get plugins() {
-    return [] as ProsemirrorPlugin[];
-  }
 }
 
 export interface Extension<GOptions extends {} = {}, GType = never> {
@@ -78,6 +74,9 @@ export interface Extension<GOptions extends {} = {}, GType = never> {
   pasteRules?(params: SchemaTypeParams<GType>): ProsemirrorPlugin[];
   inputRules?(params: SchemaTypeParams<GType>): InputRule[];
   keys?(params: SchemaTypeParams<GType>): KeyboardBindings;
+
+  /** Register a plugin for the extension */
+  plugins?(params: SchemaTypeParams<GType>): ProsemirrorPlugin[];
 }
 
 export type AnyExtension = Extension<any, any>;

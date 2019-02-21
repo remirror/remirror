@@ -1,11 +1,17 @@
-import { NodeExtension, SchemaNodeTypeParams, toggleList, wrappingInputRule } from '@remirror/core';
+import {
+  NodeExtension,
+  NodeExtensionSpec,
+  SchemaNodeTypeParams,
+  toggleList,
+  wrappingInputRule,
+} from '@remirror/core';
 
 export class Bullet extends NodeExtension {
   get name() {
     return 'bullet_list';
   }
 
-  get schema() {
+  get schema(): NodeExtensionSpec {
     return {
       content: 'list_item+',
       group: 'block',

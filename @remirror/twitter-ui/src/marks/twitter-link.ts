@@ -82,7 +82,7 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
     ];
   }
 
-  get plugins() {
+  public plugins = (_params: SchemaMarkTypeParams) => {
     const pluginKey = this.pluginKey;
     const name = this.name;
     const onUrlsChange = this.options.onUrlsChange;
@@ -222,7 +222,7 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
         },
       }),
     ];
-  }
+  };
 }
 
 interface TwitterLinkPluginState {

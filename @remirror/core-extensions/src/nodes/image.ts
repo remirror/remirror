@@ -61,7 +61,7 @@ export class Image extends NodeExtension {
     };
   }
 
-  get plugins() {
+  public plugins() {
     return [
       new Plugin<EditorSchema>({
         props: {

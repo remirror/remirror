@@ -1,5 +1,6 @@
 import {
   NodeExtension,
+  NodeExtensionSpec,
   SchemaNodeTypeParams,
   setBlockType,
   textBlockTypeInputRule,
@@ -11,7 +12,7 @@ export class CodeBlock extends NodeExtension {
     return 'code_block';
   }
 
-  get schema() {
+  get schema(): NodeExtensionSpec {
     return {
       content: 'text*',
       marks: '',

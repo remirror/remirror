@@ -1,11 +1,17 @@
-import { NodeExtension, SchemaNodeTypeParams, toggleWrap, wrappingInputRule } from '@remirror/core';
+import {
+  NodeExtension,
+  NodeExtensionSpec,
+  SchemaNodeTypeParams,
+  toggleWrap,
+  wrappingInputRule,
+} from '@remirror/core';
 
 export class Blockquote extends NodeExtension {
   get name() {
     return 'blockquote';
   }
 
-  get schema() {
+  get schema(): NodeExtensionSpec {
     return {
       content: 'block*',
       group: 'block',

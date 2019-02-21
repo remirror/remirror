@@ -78,7 +78,7 @@ export class Mentions<GItem extends {} = any> extends NodeExtension<MentionsNode
   public commands = ({ schema }: SchemaParams): ExtensionCommandFunction => attrs =>
     replaceText(null, schema.nodes[this.name], attrs);
 
-  get plugins() {
+  public plugins() {
     return [
       SuggestionsPlugin<GItem>({
         key: this.pluginKey,

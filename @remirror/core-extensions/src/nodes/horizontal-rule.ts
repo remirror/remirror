@@ -1,11 +1,17 @@
-import { CommandFunction, NodeExtension, nodeInputRule, SchemaNodeTypeParams } from '@remirror/core';
+import {
+  CommandFunction,
+  NodeExtension,
+  NodeExtensionSpec,
+  nodeInputRule,
+  SchemaNodeTypeParams,
+} from '@remirror/core';
 
 export class HorizontalRule extends NodeExtension {
   get name() {
     return 'horizontal_rule';
   }
 
-  get schema() {
+  get schema(): NodeExtensionSpec {
     return {
       group: 'block',
       parseDOM: [{ tag: 'hr' }],

@@ -63,7 +63,7 @@ export class Link extends MarkExtension {
     ];
   }
 
-  get plugins() {
+  public plugins() {
     return [
       new Plugin({
         props: {

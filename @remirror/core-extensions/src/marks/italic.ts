@@ -1,5 +1,6 @@
 import {
   MarkExtension,
+  MarkExtensionSpec,
   markInputRule,
   markPasteRule,
   SchemaMarkTypeParams,
@@ -11,7 +12,7 @@ export class Italic extends MarkExtension {
     return 'italic';
   }
 
-  get schema() {
+  get schema(): MarkExtensionSpec {
     return {
       parseDOM: [{ tag: 'i' }, { tag: 'em' }, { style: 'font-style=italic' }],
       toDOM: () => ['em', 0],

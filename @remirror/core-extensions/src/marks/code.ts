@@ -1,5 +1,6 @@
 import {
   MarkExtension,
+  MarkExtensionSpec,
   markInputRule,
   markPasteRule,
   SchemaMarkTypeParams,
@@ -11,7 +12,7 @@ export class Code<GOptions extends {} = {}> extends MarkExtension<GOptions> {
     return 'code';
   }
 
-  get schema() {
+  get schema(): MarkExtensionSpec {
     return {
       parseDOM: [{ tag: 'code' }],
       toDOM: () => ['code', 0],

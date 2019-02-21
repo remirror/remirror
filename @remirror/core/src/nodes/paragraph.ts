@@ -1,13 +1,13 @@
 import { setBlockType } from '../commands';
 import { NodeExtension } from '../node-extension';
-import { SchemaNodeTypeParams } from '../types';
+import { NodeExtensionSpec, SchemaNodeTypeParams } from '../types';
 
 export class Paragraph extends NodeExtension {
   get name() {
     return 'paragraph';
   }
 
-  get schema() {
+  get schema(): NodeExtensionSpec {
     return {
       content: 'inline*',
       group: 'block',

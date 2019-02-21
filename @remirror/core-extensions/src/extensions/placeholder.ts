@@ -20,7 +20,7 @@ export class Placeholder extends Extension<PlaceholderOptions> {
     };
   }
 
-  get plugins() {
+  public plugins() {
     const options = this.options;
     return [
       new Plugin({

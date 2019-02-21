@@ -1,6 +1,7 @@
 import {
   liftListItem,
   NodeExtension,
+  NodeExtensionSpec,
   SchemaNodeTypeParams,
   sinkListItem,
   splitListItem,
@@ -11,7 +12,7 @@ export class ListItem extends NodeExtension {
     return 'list_item';
   }
 
-  get schema() {
+  get schema(): NodeExtensionSpec {
     return {
       content: 'paragraph block*',
       defining: true,
