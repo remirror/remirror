@@ -99,35 +99,54 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
           },
         },
         appendTransaction(transactions, _oldState, state: EditorState) {
-          const { selection } = state;
+          const { selection, doc } = state;
           const { $from, $to, from, to } = selection;
           const hasReplaceTransactions = transactions.some(({ steps }) =>
             steps.some(step => step instanceof ReplaceStep),
           );
 
-          const pluginState = pluginKey.getState(state);
-
-          if (!hasReplaceTransactions || pluginState) {
+          if (!hasReplaceTransactions) {
             return;
           }
 
           // Check that the mark should still be active
           const searchText =
-            state.doc.textBetween($from.start(), from, undefined, OBJECT_REPLACING_CHARACTER) +
-            state.doc.textBetween(to, $to.end());
+            doc.textBetween($from.start(), from, undefined, OBJECT_REPLACING_CHARACTER) +
+            doc.textBetween(to, $to.end());
 
           let match = enhancedExtractUrl.exec(searchText);
           let tr = state.tr;
           const collectedParams: TwitterLinkHandlerProps[] = [];
 
+          // If at the start of a new line (i.e. new block added and not at the start of the document)
+          if (from === $from.start() && from >= 2) {
+            const $pos = doc.resolve(from - 2);
+            const prevSearchText = doc.textBetween($pos.start(), $pos.end());
+            let prevMatch = enhancedExtractUrl.exec(prevSearchText);
+            while (prevMatch !== null) {
+              const startIndex = prevMatch.index;
+
+              const url = prevMatch[1];
+              const start = $pos.start() + startIndex;
+              const end = $pos.start() + startIndex + prevMatch[0].length;
+              collectedParams.push({ state, url, start, end });
+              prevMatch = enhancedExtractUrl.exec(prevSearchText);
+            }
+            tr = tr.removeMark($pos.start(), $pos.end(), type);
+          }
+
           while (match !== null) {
-            // console.log(`runs: ${runs++}`, match);
             const startIndex = match.index;
 
             const url = match[1];
             const start = $from.start() + startIndex;
             const end = $from.start() + startIndex + match[0].length;
-            collectedParams.push({ state, url, start, end, jump: false });
+
+            const textBefore = doc.textBetween(start - 1, start); // The text directly before the match
+            if (!/[\w\d]/.test(textBefore)) {
+              collectedParams.push({ state, url, start, end });
+            }
+
             match = enhancedExtractUrl.exec(searchText);
           }
 
@@ -161,107 +180,6 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
             }
           },
         }),
-        props: {
-          // handleKeyDown(view, event) {
-          // if (event.keyCode !== 13) {
-          //   return false;
-          // }
-          // const state = view.state;
-          // // pressing enter
-          // const { $from, from } = view.state.selection;
-          // const startOfPrevNode = $from.nodeBefore ? $from.nodeBefore.resolve(0).start() : $from.start();
-          // const endOfNextNode = $from.nodeAfter ? $from.nodeAfter.resolve(0).end() : $from.end();
-
-          // // Check that the mark should still be active
-          // const searchText =
-          //   state.doc.textBetween(startOfPrevNode, from, undefined, OBJECT_REPLACING_CHARACTER) +
-          //   state.doc.textBetween(from, endOfNextNode);
-
-          // let match = enhancedExtractUrl.exec(searchText);
-          // let tr = state.tr;
-          // const collectedParams: TwitterLinkHandlerProps[] = [];
-          // while (match !== null) {
-          //   // console.log(`runs: ${runs++}`, match);
-          //   const startIndex = match.index;
-
-          //   const url = match[1];
-          //   const start = $from.start() + startIndex;
-          //   const end = $from.start() + startIndex + match[0].length;
-          //   collectedParams.push({ state, url, start, end, jump: false });
-          //   match = enhancedExtractUrl.exec(searchText);
-          // }
-          // // Remove all marks
-          // // const range = getMarkRange(lastCharacter ? state.doc.resolve(from - 1) : $from, type);
-          // // const pos: [number, number] = [range ? range.from : from, range ? range.to : to];
-          // tr = tr.removeMark(startOfPrevNode, endOfNextNode, type);
-
-          // // Add all marks again for the block
-          // collectedParams.forEach(params => {
-          //   tr = twitterLinkHandler({ ...params, transaction: tr });
-          // });
-
-          // view.dispatch(tr);
-
-          // return false;
-          // },
-          handleTextInput(view, from, to, text) {
-            const state = view.state;
-            // const type = state.schema.marks.twitterLink;
-            const $from = state.doc.resolve(from);
-            if ($from.parent.type.spec.code) {
-              return false;
-            }
-
-            const searchText =
-              state.doc.textBetween($from.start(), from, undefined, OBJECT_REPLACING_CHARACTER) +
-              text +
-              state.doc.textBetween(to, $from.end());
-
-            let match = enhancedExtractUrl.exec(searchText);
-            let returnValue = false;
-            let tr: Transaction | undefined;
-            // let ii = 0;
-            // runs++;
-
-            while (match !== null) {
-              const startIndex = match.index;
-              const start = $from.start() + startIndex;
-              let end = $from.start() + startIndex + match[0].length;
-              // console.log(`run: ${runs}.${ii++} || start: ${start} end: ${end} - from ${from} to: ${to}`);
-              if (
-                end <= to || // Text insert occurs after the match
-                start > from
-              ) {
-                // Find mark at this position
-                // const range = getMarkRange($from, type);
-                // const pos: [number, number] = [range ? range.from : from, range ? range.to : to];
-                // Remove the mark
-                // tr = state.tr.removeMark(pos[0], pos[1], type);
-                // Add the correct mark
-                // tr = twitterLinkHandler({ state, url: match[1], start, end, transaction: tr });
-                match = enhancedExtractUrl.exec(searchText);
-                continue;
-              }
-              // console.log(
-              //   `run: ${runs}.${ii} || start: ${start} end: ${end} - from ${from} to: ${to}`,
-              //   $from.end(),
-              //   match,
-              // );
-              if (end > to && to < $from.end() && text !== ' ') {
-                end -= 1;
-              }
-              tr = twitterLinkHandler({ state, url: match[1] || match[0], start, end, transaction: tr });
-              match = enhancedExtractUrl.exec(searchText);
-            }
-
-            // Allows for continued typing
-            if (tr) {
-              view.dispatch(tr.setMeta(pluginKey, { transform: tr, from, to, text, searchText }));
-              returnValue = true;
-            }
-            return returnValue;
-          },
-        },
       }),
     ];
   };
@@ -281,23 +199,11 @@ interface TwitterLinkHandlerProps {
   url: string;
   start: number;
   end: number;
-  jump?: boolean;
   transaction?: Transaction<EditorSchema>;
 }
 
-const twitterLinkHandler = ({
-  state,
-  url,
-  start,
-  end,
-  jump = true,
-  transaction,
-}: TwitterLinkHandlerProps) => {
-  // const { from, to } = state.selection;
-  // if (from < start || to >= end) {
-  //   return;
-  // }
-  const endPosition = state.selection.to + (jump ? 1 : 0);
+const twitterLinkHandler = ({ state, url, start, end, transaction }: TwitterLinkHandlerProps) => {
+  const endPosition = state.selection.to;
   const twitterLink = state.schema.marks.twitterLink.create({ href: extractHref(url) });
   // let tr = state.tr.insertText(displayUrl, start, end);
   // tr = tr.addMark(start, end, twitterLink);

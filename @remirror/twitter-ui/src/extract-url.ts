@@ -43,6 +43,14 @@ const validPunycode = /(?:xn--[\-0-9a-z]+)/;
 const validPortNumber = /[0-9]+/;
 const cyrillicLettersAndMarks = /\u0400-\u04FF/;
 
+const validUrlPrecedingChars = regexSupplant(
+  /(?:[^A-Za-z0-9@＠$#＃#{invalidCharsGroup}]|[#{directionalMarkersGroup}]|^)/,
+  {
+    invalidCharsGroup,
+    directionalMarkersGroup,
+  },
+);
+
 const validCCTLD = regexSupplant(
   RegExp(
     '(?:(?:' +
@@ -245,30 +253,16 @@ const validUrlQueryEndingChars = /[a-z0-9\-_&=#\/]/i;
 
 /* Taken from https://github.com/twitter/twitter-text/blob/752b9476d5ed00c2ec60d0a6bb3b34bd5b19bcf9/js/src/regexp/extractUrl.js */
 
-export const extractUrl = regexSupplant(
-  '((https?:\\/\\/)?' +
-    '(#{validDomain})' +
-    '(?::(#{validPortNumber}))?' +
-    '(\\/#{validUrlPath}*)?' +
-    '(\\?#{validUrlQueryChars}*#{validUrlQueryEndingChars})?' +
-    ')$',
-  {
-    validDomain,
-    validPortNumber,
-    validUrlPath,
-    validUrlQueryChars,
-    validUrlQueryEndingChars,
-  },
-  'gi',
-);
-
 export const enhancedExtractUrl = regexSupplant(
-  '((https?:\\/\\/)?' +
+  '(' +
+    // '#{validUrlPrecedingChars}' +
+    '(https?:\\/\\/)?' +
     '(#{validDomain})' +
     '(?::(#{validPortNumber}))?' +
     '(\\/#{validUrlPath}*)?' +
     '(\\?#{validUrlQueryChars}*#{validUrlQueryEndingChars})?)',
   {
+    validUrlPrecedingChars,
     validDomain,
     validPortNumber,
     validUrlPath,

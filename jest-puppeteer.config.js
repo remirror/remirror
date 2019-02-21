@@ -22,6 +22,7 @@ module.exports = {
           // headless: false,
           // slowMo: 50,
           // devtools: true,
+          // dumpio: true,
         },
       }),
 };
