@@ -5,12 +5,13 @@
   "license": "MIT",
   "version": "0.0.1-alpha.2",
   "scripts": {
+    "_build:test": "cross-env COVERAGE=true docz build -d ./.docz/dist-coverage",
     "prebuild": "run-s clean lint typecheck",
     "build": "run-p build:*",
     "build:netlify": "docz build",
     "clean": "rimraf .docz",
     "dev": "docz dev",
-    "build:test": "cross-env COVERAGE=true docz build -d ./.docz/dist-coverage",
+    "dev:test": "cross-env COVERAGE=true docz dev",
     "lint": "tslint --project tsconfig.json --config ../tslint.json",
     "test": "jest",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
