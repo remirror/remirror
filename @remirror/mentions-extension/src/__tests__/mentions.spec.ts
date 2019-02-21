@@ -1,4 +1,4 @@
-import { Mentions } from '..';
+import { Mentions } from '../mentions';
 
 describe('Mentions Extension', () => {
   it('is created with the correct options', () => {

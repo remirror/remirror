@@ -25,14 +25,14 @@
     "watch:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -w",
     "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
   },
+  "types": "lib/index.d.ts",
   "dependencies": {
-    "@types/react-icons": "3.0.0"
+    "@remirror/core": "0.0.1-alpha.2",
+    "@remirror/core-extensions": "0.0.1-alpha.2",
+    "@remirror/react": "0.0.1-alpha.2",
+    "@remirror/renderer": "0.0.1-alpha.2"
   },
   "peerDependencies": {
-    "@remirror/core": "0.0.0",
-    "@remirror/core-extensions": "0.0.0",
-    "@remirror/react": "0.0.0",
-    "@remirror/renderer": "0.0.0",
     "@types/react": "^16.7.18",
     "@types/react-dom": "^16.0.11",
     "react": "16.8.0",
@@ -47,7 +47,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "types": "lib/index.d.ts",
   "umd": "lib/dist/remirror.umd.js",
   "umd:min": "lib/dist/remirror.umd.min.js",
   "umdGlobals": {

@@ -10,9 +10,9 @@
     ]
   },
   "scripts": {
-    "build": "run-s build:rollup build:modules",
+    "build": "run-s build:modules build:rollup ",
     "build:docs": "lerna run build:netlify",
-    "build:modules": "lerna run build",
+    "build:modules": "lerna run build --stream",
     "build:production": "cross-env NODE_ENV=production run-s build",
     "build:rollup": "rollup --config ./support/rollup/rollup.config.js",
     "checks": "run-s integrity lint typecheck test",
@@ -90,6 +90,7 @@
   "resolutions": {
     "react": "16.8.2",
     "react-dom": "16.8.2",
+    "@babel/parser": "7.3.3",
     "jsdom": "13.2.0",
     "hoist-non-react-statics": "3.3.0"
   }

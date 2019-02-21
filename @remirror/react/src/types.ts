@@ -8,6 +8,7 @@ import {
   RemirrorActions,
   ShouldRenderMenu,
 } from '@remirror/core';
+import CSS from 'csstype';
 import { EditorState, Transaction } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { PlainObject } from 'simplytyped';
