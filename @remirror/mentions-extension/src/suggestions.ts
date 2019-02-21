@@ -130,10 +130,11 @@ export const SuggestionsPlugin = <GItem extends {} = any>({
   onChange = defaultHandler,
   onExit = defaultHandler,
   onKeyDown = defaultHandler,
-}: SuggestionsPluginProps<GItem>) => {
+  key,
+}: SuggestionsPluginProps<GItem> & { key: PluginKey<EditorSchema> }) => {
   const matcher = { ...defaultMatcher, ..._matcher };
   const plugin: Plugin = new Plugin({
-    key: new PluginKey<EditorSchema>('suggestions'),
+    key,
     view() {
       return {
         update(view, prevState: EditorState) {

@@ -1,13 +1,14 @@
 import {
   ExtensionCommandFunction,
-  NodeExtension,
+  MarkExtension,
+  MarkExtensionSpec,
   NodeExtensionSpec,
   replaceText,
   SchemaParams,
 } from '@remirror/core';
-import { SuggestionsPlugin, SuggestionsPluginProps } from './suggestions';
+import { SuggestionsPlugin, SuggestionsPluginProps } from '@remirror/mentions-extension';
 
-export interface MentionsNodeExtensionOptions extends SuggestionsPluginProps {
+export interface TwitterMentionOptions extends SuggestionsPluginProps {
   mentionClassName?: string;
   /**
    * Allows for multiple mentions extensions to be registered for one editor.
@@ -16,7 +17,7 @@ export interface MentionsNodeExtensionOptions extends SuggestionsPluginProps {
   type?: string;
 }
 
-export class Mentions<GItem extends {} = any> extends NodeExtension<MentionsNodeExtensionOptions> {
+export class Mentions<GItem extends {} = any> extends MarkExtension<TwitterMentionOptions> {
   /**
    * The name is dynamically generated based on the passed in type.
    */
@@ -37,7 +38,7 @@ export class Mentions<GItem extends {} = any> extends NodeExtension<MentionsNode
     };
   }
 
-  get schema(): NodeExtensionSpec {
+  get schema(): MarkExtensionSpec {
     const {
       mentionClassName = this.defaultOptions.mentionClassName,
       matcher = this.defaultOptions.matcher,
@@ -48,11 +49,9 @@ export class Mentions<GItem extends {} = any> extends NodeExtension<MentionsNode
         label: {},
       },
       group: 'inline',
-      inline: true,
-      selectable: false,
-      atom: true,
+      inclusive: false,
       toDOM: node => [
-        'span',
+        'a',
         {
           class: mentionClassName,
           'data-mention-id': node.attrs.id,
@@ -95,5 +94,3 @@ export class Mentions<GItem extends {} = any> extends NodeExtension<MentionsNode
     ];
   }
 }
-
-export { SuggestionsPlugin, SuggestionsPluginProps };

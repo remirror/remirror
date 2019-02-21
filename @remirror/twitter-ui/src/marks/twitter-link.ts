@@ -3,8 +3,6 @@ import {
   Cast,
   EditorSchema,
   EditorState,
-  getMarkRange,
-  markActive,
   MarkExtension,
   MarkExtensionSpec,
   pasteRule,
@@ -13,15 +11,21 @@ import {
   updateMark,
 } from '@remirror/core';
 
+import { isEqual } from 'lodash';
+import { Mark } from 'prosemirror-model';
 import { Plugin, TextSelection, Transaction } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
+import { EditorView } from 'prosemirror-view';
 import { enhancedExtractUrl } from '../extract-url';
 
-let runs = 0;
 const OBJECT_REPLACING_CHARACTER = '\ufffc';
 
+export interface TwitterLinkOptions {
+  onUrlsChange?(params: { set: Set<string>; urls: string[] }): void;
+}
+
 // TODO Fix bug with URL regex and how the matches are sourced
-export class TwitterLink extends MarkExtension {
+export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
   get name() {
     return 'twitterLink';
   }
@@ -80,6 +84,8 @@ export class TwitterLink extends MarkExtension {
 
   get plugins() {
     const pluginKey = this.pluginKey;
+    const name = this.name;
+    const onUrlsChange = this.options.onUrlsChange;
     return [
       new Plugin({
         key: pluginKey,
@@ -93,7 +99,6 @@ export class TwitterLink extends MarkExtension {
           },
         },
         appendTransaction(transactions, _oldState, state: EditorState) {
-          console.log(transactions);
           const { $from, $to, from, to } = state.selection;
           const type = state.schema.marks.twitterLink;
           // const lastCharacter = from > 0 && from === $from.end();
@@ -116,7 +121,7 @@ export class TwitterLink extends MarkExtension {
           let tr = state.tr;
           const collectedParams: TwitterLinkHandlerProps[] = [];
           while (match !== null) {
-            console.log(`runs: ${runs++}`, match);
+            // console.log(`runs: ${runs++}`, match);
             const startIndex = match.index;
 
             const url = match[1];
@@ -143,6 +148,19 @@ export class TwitterLink extends MarkExtension {
           // }
           return tr;
         },
+        view: () => ({
+          update(view: EditorView, prevState: EditorState) {
+            if (!onUrlsChange) {
+              return;
+            }
+            const next = getUrlsFromState(view.state, name);
+            const prev = getUrlsFromState(prevState, name);
+
+            if (!isEqual(next.set, prev.set)) {
+              onUrlsChange(next);
+            }
+          },
+        }),
         props: {
           handleTextInput(view, from, to, text) {
             const state = view.state;
@@ -248,4 +266,16 @@ const twitterLinkHandler = ({
   }
 
   return tr;
+};
+
+const getUrlsFromState = (state: EditorState, markName: string) => {
+  const $pos = state.doc.resolve(0);
+  let marks: Mark[] = [];
+
+  state.doc.nodesBetween($pos.start(), $pos.end(), node => {
+    marks = [...marks, ...node.marks];
+  });
+
+  const urls = marks.filter(markItem => markItem.type.name === markName).map(mark => mark.attrs.href);
+  return { set: new Set(urls), urls };
 };
