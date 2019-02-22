@@ -36,7 +36,7 @@
     "lodash": "4.17.11",
     "prosemirror-model": "1.7.0",
     "prosemirror-state": "1.2.2",
-    "prosemirror-view": "1.7.3"
+    "prosemirror-view": "1.8.1"
   },
   "umd": "lib/dist/mentions-extension.umd.js",
   "umd:min": "lib/dist/mentions-extension.umd.min.js",

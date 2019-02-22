@@ -4,6 +4,7 @@ import {
   NodeExtensionSpec,
   replaceText,
   SchemaParams,
+  SchemaNodeTypeParams,
 } from '@remirror/core';
 import { startCase } from 'lodash';
 import { SuggestionsPlugin, SuggestionsPluginProps } from './suggestions';
@@ -15,9 +16,12 @@ export interface MentionsNodeExtensionOptions extends SuggestionsPluginProps {
    * The name becomes mention_${type}. If left blank then no type is used.
    */
   type?: string;
+  tag?: keyof HTMLElementTagNameMap;
+  editable?: boolean;
+  selectable?: boolean;
 }
 
-export class Mentions<GItem extends {} = any> extends NodeExtension<MentionsNodeExtensionOptions> {
+export class Mentions extends NodeExtension<MentionsNodeExtensionOptions> {
   /**
    * The name is dynamically generated based on the passed in type.
    */
@@ -33,8 +37,11 @@ export class Mentions<GItem extends {} = any> extends NodeExtension<MentionsNode
         allowSpaces: false,
         startOfLine: false,
       },
+      appendText: ' ',
       mentionClassName: 'mention',
-      suggestionsClassName: 'mention-suggestion',
+      tag: 'a' as 'a',
+      editable: true,
+      selectable: true,
     };
   }
 
@@ -50,10 +57,10 @@ export class Mentions<GItem extends {} = any> extends NodeExtension<MentionsNode
       },
       group: 'inline',
       inline: true,
-      selectable: false,
-      atom: true,
+      selectable: this.options.selectable,
+      atom: !this.options.editable,
       toDOM: node => [
-        'span',
+        this.options.tag,
         {
           class: mentionClassName,
           'data-mention-id': node.attrs.id,
@@ -62,7 +69,7 @@ export class Mentions<GItem extends {} = any> extends NodeExtension<MentionsNode
       ],
       parseDOM: [
         {
-          tag: 'span[data-mention-id]',
+          tag: `${this.options.tag}[data-mention-id]`,
           getAttrs: dom => {
             if (typeof dom === 'string') {
               return false; // string only received when type is a style
@@ -79,14 +86,13 @@ export class Mentions<GItem extends {} = any> extends NodeExtension<MentionsNode
   public commands = ({ schema }: SchemaParams): ExtensionCommandFunction => attrs =>
     replaceText(null, schema.nodes[this.name], attrs);
 
-  public plugins() {
+  public plugins({ type }: SchemaNodeTypeParams) {
     return [
-      SuggestionsPlugin<GItem>({
+      SuggestionsPlugin({
         key: this.pluginKey,
-        command: ({ range, attrs, schema }) => replaceText(range, schema.nodes[this.name], attrs),
-        appendText: ' ',
+        command: ({ range, attrs }) => replaceText(range, type, attrs),
+        appendText: this.options.appendText,
         matcher: this.options.matcher,
-        items: this.options.items,
         onEnter: this.options.onEnter,
         onChange: this.options.onChange,
         onExit: this.options.onExit,

@@ -13,19 +13,19 @@ import {
 } from './types';
 
 export abstract class Extension<GOptions extends {} = {}, GType = never> {
-  public readonly options: GOptions;
+  public readonly options: Required<GOptions>;
 
   public abstract readonly name: string;
   private pk?: PluginKey;
 
   constructor(...args: keyof GOptions extends never ? [] : [GOptions?]) {
     if (args[0]) {
-      this.options = {
+      this.options = Cast<Required<GOptions>>({
         ...this.defaultOptions,
         ...args[0],
-      };
+      });
     } else {
-      this.options = Cast<GOptions>(this.defaultOptions);
+      this.options = Cast<Required<GOptions>>(this.defaultOptions);
     }
     this.init();
   }

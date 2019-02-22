@@ -74,9 +74,9 @@ describe('Twitter UI', () => {
     });
   });
 
-  describe.skip('Mentions', () => {
+  describe('Mentions', () => {
     it('should be able to create simple mentions', async () => {
-      await page.type(editorSelector, '@jonathan');
+      await page.type(editorSelector, '@jonathan ');
       await expect(page.$eval(editorSelector, e => e.innerHTML)).resolves.toInclude(
         '<a data-type="@mention">@jonathan</a>',
       );

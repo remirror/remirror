@@ -1,4 +1,5 @@
 import {
+  Attrs,
   CommandFunction,
   EditorSchema,
   EditorState,
@@ -10,6 +11,22 @@ import {
 import { ResolvedPos } from 'prosemirror-model';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
+
+/**
+ * The attrs that will be added to the node.
+ * ID and label are plucked and used while attributes like href and role can be assigned as desired.
+ */
+export interface NodeAttrs extends Attrs {
+  /**
+   * A unique identifier for the suggestions node
+   */
+  id: string;
+
+  /**
+   * The text to be placed within the suggestions node
+   */
+  label: string;
+}
 
 export interface SuggestionsMatcher {
   char: string;
@@ -26,23 +43,22 @@ export interface SuggestionsPluginState {
 }
 
 export interface SuggestionsCommandParams {
-  attrs?: Record<string, string>;
-  range: FromTo;
+  attrs?: Attrs;
+  range: FromTo | null;
   schema: EditorSchema;
 }
 
 export interface SuggestionsCallbackParams extends SuggestionsPluginState {
   view: EditorView;
   decorationNode: Element | null;
-  command: (params: Pick<SuggestionsCommandParams, 'attrs' | 'range'>) => void;
+  command: (attrs: Attrs) => void;
 }
 
-export interface SuggestionsPluginProps<GItem extends {} = any> {
+export interface SuggestionsPluginProps {
   matcher?: MakeRequired<Partial<SuggestionsMatcher>, 'char'>;
   appendText?: string | null;
   suggestionsClassName?: string;
   command?(params: SuggestionsCommandParams): CommandFunction;
-  items?: GItem[] | (() => GItem[]);
   onEnter?(params: SuggestionsCallbackParams): void;
   onChange?(params: SuggestionsCallbackParams): void;
   onExit?(params: SuggestionsCallbackParams): void;
@@ -120,7 +136,7 @@ const triggerCharacter = (
   return position;
 };
 
-export const SuggestionsPlugin = <GItem extends {} = any>({
+export const SuggestionsPlugin = ({
   matcher: _matcher = defaultMatcher,
   appendText = null,
   command = () => defaultHandler,
@@ -129,7 +145,7 @@ export const SuggestionsPlugin = <GItem extends {} = any>({
   onExit = defaultHandler,
   onKeyDown = defaultHandler,
   key,
-}: SuggestionsPluginProps<GItem> & { key: PluginKey<EditorSchema> }) => {
+}: SuggestionsPluginProps & { key: PluginKey<EditorSchema> }) => {
   const matcher = { ...defaultMatcher, ..._matcher };
   const plugin: Plugin = new Plugin({
     key,
@@ -162,9 +178,9 @@ export const SuggestionsPlugin = <GItem extends {} = any>({
             decorationNode,
             ...state,
             text: state.text,
-            command: ({ range, attrs }: Pick<SuggestionsCommandParams, 'attrs' | 'range'>) => {
+            command: (attrs: Attrs) => {
               command({
-                range,
+                range: state.range,
                 attrs,
                 schema: view.state.schema,
               })(view.state, view.dispatch);

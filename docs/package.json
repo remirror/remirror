@@ -28,7 +28,7 @@
     "docz": "0.13.7",
     "docz-core": "0.13.7",
     "docz-theme-default": "0.13.7",
-    "react": "16.8.2",
-    "react-dom": "16.8.2"
+    "react": "16.8.3",
+    "react-dom": "16.8.3"
   }
 }
