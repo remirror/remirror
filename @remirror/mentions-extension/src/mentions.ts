@@ -5,6 +5,7 @@ import {
   replaceText,
   SchemaParams,
 } from '@remirror/core';
+import { startCase } from 'lodash';
 import { SuggestionsPlugin, SuggestionsPluginProps } from './suggestions';
 
 export interface MentionsNodeExtensionOptions extends SuggestionsPluginProps {
@@ -22,7 +23,7 @@ export class Mentions<GItem extends {} = any> extends NodeExtension<MentionsNode
    */
   get name() {
     const { type } = this.options;
-    return `mentions${type ? `_${type}` : ''}`;
+    return `mentions${type ? `${startCase(type)}` : ''}`;
   }
 
   get defaultOptions() {

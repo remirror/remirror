@@ -98,6 +98,7 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
             return stored ? stored : tr.selectionSet || tr.docChanged ? null : prev;
           },
         },
+        /** Runs through the current line (and previous line if it exists) to reapply twitter link marks to the relevant parts of text */
         appendTransaction(transactions, _oldState, state: EditorState) {
           const { selection, doc } = state;
           const { $from, $to, from, to } = selection;
@@ -151,20 +152,13 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
           }
 
           // Remove all marks
-          // const range = getMarkRange(lastCharacter ? state.doc.resolve(from - 1) : $from, type);
-          // const pos: [number, number] = [range ? range.from : from, range ? range.to : to];
           tr = tr.removeMark($from.start(), $from.end(), type);
 
-          // Add all marks again for the block
+          // Add all marks again for the nodes
           collectedParams.forEach(params => {
             tr = twitterLinkHandler({ ...params, transaction: tr });
           });
 
-          // if (!matchFound) {
-          //   const range = getMarkRange(lastCharacter ? state.doc.resolve(from - 1) : $from, type);
-          //   const pos: [number, number] = [range ? range.from : from, range ? range.to : to];
-          //   return tr.removeMark(pos[0], pos[1], type);
-          // }
           return tr;
         },
         view: () => ({

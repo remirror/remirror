@@ -17,9 +17,10 @@ describe('Mentions Extension', () => {
   });
   it('uses dynamic naming', () => {
     const mentionOne = new Mentions({
-      type: 'simple',
+      type: 'hash',
+      matcher: { char: '#' },
     });
 
-    expect(mentionOne.name).toBe('mentions_simple');
+    expect(mentionOne.name).toBe('mentionsHash');
   });
 });

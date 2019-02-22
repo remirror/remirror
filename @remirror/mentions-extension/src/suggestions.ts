@@ -9,7 +9,7 @@ import {
 } from '@remirror/core';
 import { ResolvedPos } from 'prosemirror-model';
 import { Plugin, PluginKey } from 'prosemirror-state';
-import { Decoration, DecorationSet, EditorView } from 'prosemirror-view';
+import { EditorView } from 'prosemirror-view';
 
 export interface SuggestionsMatcher {
   char: string;
@@ -54,7 +54,6 @@ const defaultMatcher = {
   allowSpaces: false,
   startOfLine: false,
 };
-const defaultSuggestionsClassName = 'suggestion';
 const defaultHandler = () => false;
 const defaultSuggestionsPluginState: SuggestionsPluginState = {
   active: false,
@@ -124,7 +123,6 @@ const triggerCharacter = (
 export const SuggestionsPlugin = <GItem extends {} = any>({
   matcher: _matcher = defaultMatcher,
   appendText = null,
-  suggestionsClassName = defaultSuggestionsClassName,
   command = () => defaultHandler,
   onEnter = defaultHandler,
   onChange = defaultHandler,
@@ -199,7 +197,7 @@ export const SuggestionsPlugin = <GItem extends {} = any>({
         return defaultSuggestionsPluginState;
       },
 
-      // Apply changes to the plugin state from a view transaction.
+      // Apply changes to the plugin state.
       apply(tr, prev: SuggestionsPluginState) {
         const { selection } = tr;
         let next = { ...prev };
@@ -249,24 +247,6 @@ export const SuggestionsPlugin = <GItem extends {} = any>({
         }
 
         return onKeyDown({ view, event, range });
-      },
-
-      // Setup decorator on the currently active suggestion.
-      decorations(editorState) {
-        const { active, range, decorationId } = getPluginState<SuggestionsPluginState>(plugin, editorState);
-
-        if (!active || !range) {
-          return null;
-        }
-
-        return DecorationSet.create(editorState.doc, [
-          Decoration.inline(range.from, range.to, {
-            nodeName: 'span',
-            class: suggestionsClassName,
-            // @ts-ignore
-            'data-decoration-id': decorationId,
-          }),
-        ]);
       },
     },
   });
