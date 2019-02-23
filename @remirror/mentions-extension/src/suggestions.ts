@@ -10,7 +10,7 @@ import {
 } from '@remirror/core';
 import { ResolvedPos } from 'prosemirror-model';
 import { Plugin, PluginKey } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
+import { Decoration, DecorationSet, EditorView } from 'prosemirror-view';
 
 /**
  * The attrs that will be added to the node.
@@ -37,7 +37,6 @@ export interface SuggestionsMatcher {
 export interface SuggestionsPluginState {
   active: boolean;
   range: FromTo | null;
-  decorationId: string | null;
   query: string | null;
   text: string | null;
 }
@@ -50,19 +49,25 @@ export interface SuggestionsCommandParams {
 
 export interface SuggestionsCallbackParams extends SuggestionsPluginState {
   view: EditorView;
-  decorationNode: Element | null;
-  command: (attrs: Attrs) => void;
+  command(attrs: NodeAttrs): void;
+}
+
+export interface OnKeyDownParams {
+  view: EditorView;
+  event: KeyboardEvent;
+  range: FromTo | null;
 }
 
 export interface SuggestionsPluginProps {
   matcher?: MakeRequired<Partial<SuggestionsMatcher>, 'char'>;
   appendText?: string | null;
-  suggestionsClassName?: string;
-  command?(params: SuggestionsCommandParams): CommandFunction;
+  suggestionClassName?: string;
+  decorationsTag: keyof HTMLElementTagNameMap;
+  command(params: SuggestionsCommandParams): CommandFunction;
   onEnter?(params: SuggestionsCallbackParams): void;
   onChange?(params: SuggestionsCallbackParams): void;
   onExit?(params: SuggestionsCallbackParams): void;
-  onKeyDown?(params: { view: EditorView; event: KeyboardEvent; range: FromTo | null }): boolean;
+  onKeyDown?(params: OnKeyDownParams): boolean;
 }
 
 const defaultMatcher = {
@@ -76,13 +81,12 @@ const defaultSuggestionsPluginState: SuggestionsPluginState = {
   range: null,
   query: null,
   text: null,
-  decorationId: null,
 };
 
 // Create a matcher that matches when a specific character is typed. Useful for @mentions and #tags.
 const triggerCharacter = (
   { char = '@', allowSpaces = false, startOfLine = false }: SuggestionsMatcher,
-  $position: ResolvedPos<EditorSchema>,
+  $pos: ResolvedPos<EditorSchema>,
 ): SuggestionsPluginState | undefined => {
   // Matching expressions used for later
   const escapedChar = `\\${char}`;
@@ -93,20 +97,21 @@ const triggerCharacter = (
     : new RegExp(`${prefix}(?:^)?${escapedChar}[^\\s${escapedChar}]*`, 'gm');
 
   // Lookup the boundaries of the current node
-  const textFrom = $position.before();
-  const textTo = $position.end();
-  const text = $position.doc.textBetween(textFrom, textTo, '\0', '\0');
+  const textFrom = $pos.before();
+  const textTo = $pos.end();
+  const text = $pos.doc.textBetween(textFrom, textTo, '\0', '\0');
+  console.log(textFrom, textTo);
 
-  let match = regexp.exec(text);
   let position: SuggestionsPluginState | undefined;
-  while (match !== null) {
+
+  for (let match = regexp.exec(text); match !== null; match = regexp.exec(text)) {
     // JavaScript doesn't have lookbehinds; this hacks a check that first character is " "
     // or the line beginning
     const matchPrefix = match.input.slice(Math.max(0, match.index - 1), match.index);
 
     if (/^[\s\0]?$/.test(matchPrefix)) {
       // The absolute position of the match in the document
-      const from = match.index + $position.start();
+      const from = match.index + $pos.start();
       let to = from + match[0].length;
 
       // Edge case handling; if spaces are allowed and we're directly in between
@@ -117,7 +122,7 @@ const triggerCharacter = (
       }
 
       // If the $position is located within the matched substring, return that range
-      if (from < $position.pos && to >= $position.pos) {
+      if (from < $pos.pos && to >= $pos.pos) {
         position = {
           ...defaultSuggestionsPluginState,
           range: {
@@ -129,8 +134,6 @@ const triggerCharacter = (
         };
       }
     }
-
-    match = regexp.exec(text);
   }
 
   return position;
@@ -144,6 +147,8 @@ export const SuggestionsPlugin = ({
   onChange = defaultHandler,
   onExit = defaultHandler,
   onKeyDown = defaultHandler,
+  suggestionClassName,
+  decorationsTag,
   key,
 }: SuggestionsPluginProps & { key: PluginKey<EditorSchema> }) => {
   const matcher = { ...defaultMatcher, ..._matcher };
@@ -171,14 +176,12 @@ export const SuggestionsPlugin = ({
           }
 
           const state = handleExit ? prev : next;
-          const decorationNode = document.querySelector(`[data-decoration-id="${state.decorationId}"]`);
 
           const props: SuggestionsCallbackParams = {
             view,
-            decorationNode,
             ...state,
             text: state.text,
-            command: (attrs: Attrs) => {
+            command: (attrs: NodeAttrs) => {
               command({
                 range: state.range,
                 attrs,
@@ -219,7 +222,7 @@ export const SuggestionsPlugin = ({
         let next = { ...prev };
 
         // We can only be suggesting if there is no selection
-        if (selection.from === selection.to || selection.empty) {
+        if (selection.from === selection.to) {
           // Reset active state if we just left the previous suggestion range
           if (prev.range && (selection.from < prev.range.from || selection.from > prev.range.to)) {
             next.active = false;
@@ -228,12 +231,11 @@ export const SuggestionsPlugin = ({
           // Try to match against where our cursor currently is
           const $position = selection.$from;
           const match = triggerCharacter(matcher, $position);
-          const decorationId = (Math.random() + 1).toString(36).substr(2, 5);
 
           // If we found a match, update the current state to show it
+          console.log(match);
           if (match) {
             next.active = true;
-            next.decorationId = prev.decorationId ? prev.decorationId : decorationId;
             next.range = match.range;
             next.query = match.query;
             next.text = match.text;
@@ -255,14 +257,32 @@ export const SuggestionsPlugin = ({
 
     props: {
       // Call the keydown hook if suggestion is active.
-      handleKeyDown(view, event) {
+      handleKeyPress(view, event) {
         const { active, range } = getPluginState<SuggestionsPluginState>(plugin, view.state);
-
         if (!active) {
           return false;
         }
-
+        console.log('ACTIVE - calling onKeyDown');
         return onKeyDown({ view, event, range });
+      },
+
+      /**
+       * Sets up a decoration (styling options) on the currently active decoration
+       * @param editorState
+       */
+      decorations(editorState) {
+        const { active, range, query } = getPluginState<SuggestionsPluginState>(plugin, editorState);
+
+        if (!active || !range || !(query && query.length)) {
+          return null;
+        }
+
+        return DecorationSet.create(editorState.doc, [
+          Decoration.inline(range.from, range.to, {
+            nodeName: decorationsTag,
+            class: suggestionClassName,
+          }),
+        ]);
       },
     },
   });

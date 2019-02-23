@@ -40,6 +40,7 @@ import {
   isObjectNode,
   isRenderProp,
   simpleOffsetCalculator,
+  uniqueClass,
 } from './helpers';
 import { defaultStyles } from './styles';
 import { InjectedRemirrorProps, RemirrorEventListenerParams, RemirrorProps } from './types';
@@ -61,6 +62,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     useBuiltInExtensions: true,
     attributes: {},
     styles: defaultStyles,
+    extraClasses: [],
   };
 
   public schema: EditorSchema;
@@ -82,7 +84,13 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     },
   );
 
-  private uid = uniqueId('remirror-');
+  /**
+   * The uid for this instance.
+   */
+  private uid = uniqueId();
+  /**
+   * A unique class added to every instance of the remirror editor. This allows for non global styling.
+   */
   private view: EditorView<EditorSchema>;
   private extensionManager: ExtensionManager;
   private nodes: Record<string, NodeExtensionSpec>;
@@ -305,7 +313,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       'aria-placeholder': this.props.placeholder || '',
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label || '',
-      class: this.uid,
+      class: uniqueClass(this.uid, 'remirror'),
     };
 
     return { ...defaultAttributes, ...propAttributes };
@@ -439,6 +447,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       getMarkAttr: this.getMarkAttr,
       clearContent: this.clearContent,
       setContent: this.setContent,
+      uid: this.uid,
 
       /* Getters */
       getRootProps: this.getRootProps,
@@ -516,11 +525,14 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
 
     return element ? (
       <>
-        <RemirrorStyle uid={this.uid} placeholder={this.placeholder} styles={this.props.styles} />
+        <RemirrorStyle
+          uid={this.uid}
+          placeholder={this.placeholder}
+          styles={this.props.styles}
+          extraClasses={this.props.extraClasses}
+        />
         {element}
       </>
-    ) : (
-      element
-    );
+    ) : null;
   }
 }

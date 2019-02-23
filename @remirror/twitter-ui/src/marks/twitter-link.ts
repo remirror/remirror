@@ -115,7 +115,6 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
             doc.textBetween($from.start(), from, undefined, OBJECT_REPLACING_CHARACTER) +
             doc.textBetween(to, $to.end());
 
-          let match = enhancedExtractUrl.exec(searchText);
           let tr = state.tr;
           const collectedParams: TwitterLinkHandlerProps[] = [];
 
@@ -123,20 +122,26 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
           if (from === $from.start() && from >= 2) {
             const $pos = doc.resolve(from - 2);
             const prevSearchText = doc.textBetween($pos.start(), $pos.end());
-            let prevMatch = enhancedExtractUrl.exec(prevSearchText);
-            while (prevMatch !== null) {
+            for (
+              let prevMatch = enhancedExtractUrl.exec(prevSearchText);
+              prevMatch !== null;
+              prevMatch = enhancedExtractUrl.exec(prevSearchText)
+            ) {
               const startIndex = prevMatch.index;
 
               const url = prevMatch[1];
               const start = $pos.start() + startIndex;
               const end = $pos.start() + startIndex + prevMatch[0].length;
               collectedParams.push({ state, url, start, end });
-              prevMatch = enhancedExtractUrl.exec(prevSearchText);
             }
             tr = tr.removeMark($pos.start(), $pos.end(), type);
           }
 
-          while (match !== null) {
+          for (
+            let match = enhancedExtractUrl.exec(searchText);
+            match !== null;
+            match = enhancedExtractUrl.exec(searchText)
+          ) {
             const startIndex = match.index;
 
             const url = match[1];
@@ -147,8 +152,6 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
             if (!/[\w\d]/.test(textBefore)) {
               collectedParams.push({ state, url, start, end });
             }
-
-            match = enhancedExtractUrl.exec(searchText);
           }
 
           // Remove all marks

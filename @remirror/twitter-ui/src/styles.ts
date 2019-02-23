@@ -39,4 +39,23 @@ export const defaultStyles: RemirrorCustomStyles = {
     textDecoration: 'none !important',
     color: '#1DA1F2',
   },
+  '.suggestions-dropdown': {
+    alignItems: 'stretch',
+    display: 'flex',
+    flexDirection: 'column',
+    flexBasis: 'auto',
+    flexShrink: 0,
+    margin: 0,
+    overflow: 'hidden',
+    listStyle: 'none',
+    padding: 0,
+  },
+  '.suggestions-item': {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  '.suggestions-item.active': {
+    backgroundColor: 'rgb(245, 248, 250)',
+    borderBottom: '1px solid rgb(230, 236, 240)',
+  },
 };

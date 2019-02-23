@@ -8,7 +8,6 @@ import {
   Transaction,
 } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-import { Omit } from 'simplytyped';
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -235,3 +234,8 @@ export type MakeRequired<GType extends {}, GKeys extends keyof GType> = Omit<GTy
  */
 export type MakeReadonly<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
   { +readonly [P in GKeys]: GType[P] };
+
+/**
+ * Remove keys from an interface
+ */
+export type Omit<GType, GKeys extends keyof GType> = Pick<GType, Exclude<keyof GType, GKeys>>;

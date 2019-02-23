@@ -41,6 +41,11 @@ export interface InjectedRemirrorProps {
    * A map of actions available the
    */
   actions: RemirrorActions;
+
+  /**
+   * A unique id for the editor instance. Useful for styling with the format `.remirror-{NUM}`
+   */
+  uid: string;
   getMarkAttr(type: string): Record<string, string>;
   clearContent(triggerOnChange?: boolean): void;
   setContent(content: string | ObjectNode, triggerOnChange?: boolean): void;
@@ -99,6 +104,7 @@ export interface RemirrorProps {
   label?: string;
   useBuiltInExtensions?: boolean;
   styles?: Partial<RemirrorCustomStyles> | null;
+  extraClasses: string[];
 }
 
 export type CSSProperty = CSS.Properties<string | number>;

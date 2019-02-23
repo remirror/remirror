@@ -2,21 +2,23 @@ import {
   ExtensionCommandFunction,
   NodeExtension,
   NodeExtensionSpec,
+  Omit,
   replaceText,
-  SchemaParams,
   SchemaNodeTypeParams,
+  SchemaParams,
 } from '@remirror/core';
 import { startCase } from 'lodash';
 import { SuggestionsPlugin, SuggestionsPluginProps } from './suggestions';
 
-export interface MentionsNodeExtensionOptions extends SuggestionsPluginProps {
+export interface MentionsNodeExtensionOptions
+  extends Omit<SuggestionsPluginProps, 'command' | 'decorationsTag'> {
   mentionClassName?: string;
   /**
    * Allows for multiple mentions extensions to be registered for one editor.
    * The name becomes mention_${type}. If left blank then no type is used.
    */
   type?: string;
-  tag?: keyof HTMLElementTagNameMap;
+  readonly tag?: keyof HTMLElementTagNameMap;
   editable?: boolean;
   selectable?: boolean;
 }
@@ -39,10 +41,15 @@ export class Mentions extends NodeExtension<MentionsNodeExtensionOptions> {
       },
       appendText: ' ',
       mentionClassName: 'mention',
+
       tag: 'a' as 'a',
       editable: true,
       selectable: true,
     };
+  }
+
+  public init() {
+    this.options.suggestionClassName = `suggestion suggestion-${this.options.type}`;
   }
 
   get schema(): NodeExtensionSpec {
@@ -74,6 +81,7 @@ export class Mentions extends NodeExtension<MentionsNodeExtensionOptions> {
             if (typeof dom === 'string') {
               return false; // string only received when type is a style
             }
+
             const id = (dom as Element).getAttribute('data-mention-id');
             const label = (dom as HTMLElement).innerText.split(matcher.char).join('');
             return { id, label };
@@ -97,7 +105,8 @@ export class Mentions extends NodeExtension<MentionsNodeExtensionOptions> {
         onChange: this.options.onChange,
         onExit: this.options.onExit,
         onKeyDown: this.options.onKeyDown,
-        suggestionsClassName: this.options.suggestionsClassName,
+        suggestionClassName: this.options.suggestionClassName,
+        decorationsTag: this.options.tag,
       }),
     ];
   }

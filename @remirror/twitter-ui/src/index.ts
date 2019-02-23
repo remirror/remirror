@@ -1,1 +1,2 @@
-export * from './twitter-ui';
+export * from './twitter-ui.component';
+export * from './types';

@@ -1,9 +1,8 @@
 import React, { ComponentType, createContext, FC, FunctionComponent } from 'react';
 
+import { Cast, Omit } from '@remirror/core';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { isEmpty } from 'lodash';
-import { Omit } from 'simplytyped';
-import { Cast } from './helpers';
 import { Remirror } from './remirror';
 import { InjectedRemirrorProps, RemirrorProps } from './types';
 

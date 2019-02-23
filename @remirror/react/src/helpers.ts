@@ -1,14 +1,8 @@
-import { Literal, ObjectNode, OffsetCalculator, Position, ShouldRenderMenu } from '@remirror/core';
+import { Cast, Literal, ObjectNode, OffsetCalculator, Position, ShouldRenderMenu } from '@remirror/core';
 import { isFunction, isPlainObject, isString } from 'lodash';
 import { ReactNode } from 'react';
 import { PlainObject } from 'simplytyped';
 import { AttributePropFunction, RenderPropFunction } from './types';
-
-/**
- * Type cast an argument
- * @param arg
- */
-export const Cast = <GType = any>(arg: any): GType => arg;
 
 /**
  * Use this to create a Tuple with args that can be used as a type
@@ -81,3 +75,5 @@ export const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, 
 
 export const getNearestNonTextNode = (node: Node) =>
   node.nodeType === Node.TEXT_NODE ? (node.parentNode as HTMLElement) : (node as HTMLElement);
+
+export const uniqueClass = (uid: string, className: string) => `${className}-${uid}`;
