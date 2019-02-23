@@ -95,7 +95,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   private extensionManager: ExtensionManager;
   private nodes: Record<string, NodeExtensionSpec>;
   private marks: Record<string, MarkExtensionSpec>;
-  private plugins: ProsemirrorPlugin[];
+  private extensionPlugins: ProsemirrorPlugin[];
   private keymaps: ProsemirrorPlugin[];
   private inputRules: InputRule[];
   private pasteRules: ProsemirrorPlugin[];
@@ -109,6 +109,22 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       : [new Doc(), new Text(), new Paragraph(), new History(), new Placeholder()];
   }
 
+  private get plugins(): ProsemirrorPlugin[] {
+    return [
+      ...this.extensionPlugins,
+      inputRules({
+        rules: this.inputRules,
+      }),
+      ...this.pasteRules,
+      ...this.keymaps,
+      keymap({
+        Backspace: undoInputRule,
+        Escape: selectParentNode,
+      }),
+      keymap(baseKeymap),
+    ];
+  }
+
   constructor(props: RemirrorProps) {
     super(props);
     this.extensionManager = this.createExtensions();
@@ -118,12 +134,13 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     this.schema = this.createSchema();
 
     const schemaParam = { schema: this.schema };
-    this.plugins = this.extensionManager.plugins(schemaParam);
+    this.extensionPlugins = this.extensionManager.plugins(schemaParam);
     this.keymaps = this.extensionManager.keymaps(schemaParam);
     this.inputRules = this.extensionManager.inputRules(schemaParam);
     this.pasteRules = this.extensionManager.pasteRules(schemaParam);
 
     this.state = this.createInitialState();
+    console.log(this.state.editorState.plugins);
     this.view = this.createView();
     this.actions = this.extensionManager.actions({
       schema: this.schema,
@@ -252,19 +269,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     return {
       editorState: EditorState.create({
         doc: this.createDocument(this.props.initialContent),
-        plugins: [
-          ...this.plugins,
-          inputRules({
-            rules: this.inputRules,
-          }),
-          ...this.pasteRules,
-          ...this.keymaps,
-          keymap({
-            Backspace: undoInputRule,
-            Escape: selectParentNode,
-          }),
-          keymap(baseKeymap),
-        ],
+        plugins: this.plugins,
       }),
     };
   }

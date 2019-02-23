@@ -100,7 +100,6 @@ const triggerCharacter = (
   const textFrom = $pos.before();
   const textTo = $pos.end();
   const text = $pos.doc.textBetween(textFrom, textTo, '\0', '\0');
-  console.log(textFrom, textTo);
 
   let position: SuggestionsPluginState | undefined;
 
@@ -233,7 +232,6 @@ export const SuggestionsPlugin = ({
           const match = triggerCharacter(matcher, $position);
 
           // If we found a match, update the current state to show it
-          console.log(match);
           if (match) {
             next.active = true;
             next.range = match.range;
@@ -257,12 +255,11 @@ export const SuggestionsPlugin = ({
 
     props: {
       // Call the keydown hook if suggestion is active.
-      handleKeyPress(view, event) {
-        const { active, range } = getPluginState<SuggestionsPluginState>(plugin, view.state);
-        if (!active) {
+      handleKeyDown(view, event) {
+        const { active, range, query } = getPluginState<SuggestionsPluginState>(plugin, view.state);
+        if (!active || !(query && query.length)) {
           return false;
         }
-        console.log('ACTIVE - calling onKeyDown');
         return onKeyDown({ view, event, range });
       },
 
