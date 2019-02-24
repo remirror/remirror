@@ -1,12 +1,12 @@
 {
-  "name": "@remirror/renderer",
-  "description": "renderer utilities for remirror",
+  "name": "@remirror/ui-twitter",
+  "description": "Twitter UI built with remirror",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/renderer",
-  "version": "0.0.1-alpha.2",
+  "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/ui-twitter",
+  "version": "0.0.0",
   "main": "lib/index.js",
-  "module": "lib/dist/remirror-renderer.esm.js",
+  "module": "lib/dist/remirror-ui-twitter.esm.js",
   "files": [
     "lib",
     "src"
@@ -28,9 +28,14 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@remirror/core": "0.0.1-alpha.2",
+    "@remirror/extension-mention": "0.0.1-alpha.1",
+    "@remirror/react": "0.0.1-alpha.2",
     "@types/prosemirror-state": "1.2.2",
     "@types/prosemirror-view": "1.3.0",
+    "lodash": "4.17.11",
+    "prosemirror-model": "1.7.0",
     "prosemirror-state": "1.2.2",
+    "prosemirror-transform": "1.1.3",
     "prosemirror-view": "1.8.1",
     "simplytyped": "1.7.0"
   },
@@ -43,8 +48,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "umd": "lib/dist/remirror-renderer.umd.js",
-  "umd:min": "lib/dist/remirror-renderer.umd.min.js",
+  "umd": "lib/dist/remirror-ui-twitter.umd.js",
+  "umd:min": "lib/dist/remirror-ui-twitter.umd.min.js",
   "umdGlobals": {
     "react": "React",
     "@remirror/core": "RemirrorCore",

@@ -1,4 +1,4 @@
-import { Mentions } from '../mentions';
+import { MentionNode } from '../mention-node';
 
 describe('Mentions Extension', () => {
   it('is created with the correct options', () => {
@@ -7,7 +7,7 @@ describe('Mentions Extension', () => {
       allowSpaces: false,
       startOfLine: false,
     };
-    const mentions = new Mentions({
+    const mentions = new MentionNode({
       matcher,
     });
 
@@ -15,7 +15,7 @@ describe('Mentions Extension', () => {
     expect(mentions.name).toEqual('mentions');
   });
   it('uses dynamic naming', () => {
-    const mentionOne = new Mentions({
+    const mentionOne = new MentionNode({
       type: 'hash',
       matcher: { char: '#' },
     });

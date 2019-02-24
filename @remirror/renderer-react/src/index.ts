@@ -1,2 +1,2 @@
 export * from './render-helpers';
-export * from './renderer';
+export * from './renderer-react';

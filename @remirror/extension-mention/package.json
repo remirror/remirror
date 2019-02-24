@@ -1,13 +1,13 @@
 {
   "private": true,
-  "name": "@remirror/mentions-extension",
+  "name": "@remirror/extension-mention",
   "description": "mention extension for the remirror editor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/mentions-extension",
+  "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/extension-mention",
   "version": "0.0.1-alpha.1",
   "main": "lib/index.js",
-  "module": "lib/dist/mentions-extension.esm.js",
+  "module": "lib/dist/extension-mention.esm.js",
   "files": [
     "lib",
     "src"
@@ -30,17 +30,17 @@
   "dependencies": {
     "@remirror/core": "0.0.1-alpha.2",
     "@types/lodash": "4.14.121",
-    "simplytyped": "1.7.0",
     "@types/prosemirror-model": "1.7.0",
     "@types/prosemirror-state": "1.2.2",
     "@types/prosemirror-view": "1.3.0",
     "lodash": "4.17.11",
     "prosemirror-model": "1.7.0",
     "prosemirror-state": "1.2.2",
-    "prosemirror-view": "1.8.1"
+    "prosemirror-view": "1.8.1",
+    "simplytyped": "1.7.0"
   },
-  "umd": "lib/dist/mentions-extension.umd.js",
-  "umd:min": "lib/dist/mentions-extension.umd.min.js",
+  "umd": "lib/dist/extension-mention.umd.js",
+  "umd:min": "lib/dist/extension-mention.umd.min.js",
   "umdGlobals": {
     "@remirror/core": "RemirrorCore"
   }

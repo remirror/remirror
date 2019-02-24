@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 
 import { AnyExtension, EditorSchema, Omit } from '@remirror/core';
-import { Mentions, NodeAttrs, OnKeyDownParams } from '@remirror/mentions-extension';
+import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
 import { Remirror, RemirrorProps } from '@remirror/react';
 import { EditorView } from 'prosemirror-view';
 import { CharacterCountIndicator } from './character-count.component';
@@ -51,7 +51,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
 
   private createExtensions() {
     return [
-      new Mentions({
+      new MentionNode({
         type: 'at',
         extraAttrs: ['href', 'role'],
         matcher: { char: '@' },
@@ -87,7 +87,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
           this.props.onMentionStateChange(undefined);
         },
       }),
-      new Mentions({
+      new MentionNode({
         type: 'hash',
         matcher: { char: '#' },
         onKeyDown: this.keyDownHandler,

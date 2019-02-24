@@ -20,7 +20,7 @@ import {
   ShouldRenderMenu,
   Text,
 } from '@remirror/core';
-import { History, Placeholder, PlaceholderPluginState } from '@remirror/core-extensions';
+import { History, Placeholder, PlaceholderPluginState } from '@remirror/extensions-core';
 import { isString, memoize, pick, uniqueId } from 'lodash';
 import { InputRule, inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
@@ -140,7 +140,6 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     this.pasteRules = this.extensionManager.pasteRules(schemaParam);
 
     this.state = this.createInitialState();
-    console.log(this.state.editorState.plugins);
     this.view = this.createView();
     this.actions = this.extensionManager.actions({
       schema: this.schema,

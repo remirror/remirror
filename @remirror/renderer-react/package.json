@@ -1,12 +1,12 @@
 {
-  "name": "@remirror/core-extensions",
-  "description": "core-extensions utilities for remirror",
+  "name": "@remirror/renderer-react",
+  "description": "renderer-react utilities for remirror",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/core-extensions",
+  "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/renderer-react",
   "version": "0.0.1-alpha.2",
   "main": "lib/index.js",
-  "module": "lib/dist/core-extensions.esm.js",
+  "module": "lib/dist/remirror-renderer-react.esm.js",
   "files": [
     "lib",
     "src"
@@ -28,21 +28,26 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@remirror/core": "0.0.1-alpha.2",
-    "@types/prosemirror-history": "1.0.1",
-    "@types/prosemirror-model": "1.7.0",
     "@types/prosemirror-state": "1.2.2",
     "@types/prosemirror-view": "1.3.0",
-    "prosemirror-history": "1.0.4",
-    "prosemirror-model": "1.7.0",
     "prosemirror-state": "1.2.2",
-    "prosemirror-view": "1.8.1"
+    "prosemirror-view": "1.8.1",
+    "simplytyped": "1.7.0"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.8.1",
+    "@types/react-dom": "^16.0.11",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "umd": "lib/dist/core-extensions.umd.js",
-  "umd:min": "lib/dist/core-extensions.umd.min.js",
+  "umd": "lib/dist/remirror-renderer-react.umd.js",
+  "umd:min": "lib/dist/remirror-renderer-react.umd.min.js",
   "umdGlobals": {
-    "@remirror/core": "RemirrorCore"
+    "react": "React",
+    "@remirror/core": "RemirrorCore",
+    "react-dom": "ReactDOM"
   }
 }

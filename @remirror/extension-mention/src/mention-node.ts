@@ -10,7 +10,7 @@ import {
 import { startCase } from 'lodash';
 import { SuggestionsPlugin, SuggestionsPluginProps } from './suggestions';
 
-export interface MentionsNodeExtensionOptions
+export interface MentionNodeExtensionOptions
   extends Omit<SuggestionsPluginProps, 'command' | 'decorationsTag'> {
   mentionClassName?: string;
   /**
@@ -27,7 +27,7 @@ export interface MentionsNodeExtensionOptions
   extraAttrs?: Array<string | [string, unknown]>;
 }
 
-export class Mentions extends NodeExtension<MentionsNodeExtensionOptions> {
+export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
   /**
    * The name is dynamically generated based on the passed in type.
    */
@@ -55,7 +55,6 @@ export class Mentions extends NodeExtension<MentionsNodeExtensionOptions> {
   protected init() {
     super.init();
     this.options.suggestionClassName = `suggestion suggestion-${this.options.type}`;
-    console.log(this.options);
   }
 
   /**

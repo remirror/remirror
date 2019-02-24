@@ -12,7 +12,7 @@ describe('Twitter UI', () => {
   beforeEach(async () => {
     await jestPuppeteer.resetPage();
     // page.on('console', msg => console.log('PAGE LOG:', msg.text()));
-    await page.goto('http://localhost:3000/editors/twitter-ui');
+    await page.goto('http://localhost:3000/editors/ui-twitter');
   });
 
   describe('Links', () => {

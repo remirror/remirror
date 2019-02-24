@@ -6,7 +6,7 @@ import {
   OnQueryChangeParams,
   TwitterUI,
   TwitterUserData,
-} from '@remirror/twitter-ui';
+} from '@remirror/ui-twitter';
 import { take } from 'lodash';
 
 import matchSorter from 'match-sorter';
@@ -48,7 +48,7 @@ export const ExampleTwitterUI = () => {
 
   return (
     <TwitterUI
-      attributes={{ 'data-test-id': 'twitter-ui' }}
+      attributes={{ 'data-test-id': 'ui-twitter' }}
       userData={userMatches}
       tagData={tagMatches}
       onMentionStateChange={onMentionStateChange}

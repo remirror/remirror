@@ -1,3 +1,3 @@
-# @remirror/mentions-extension
+# @remirror/extension-mention
 
 Supports mentions for remirror.

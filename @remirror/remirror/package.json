@@ -28,9 +28,9 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@remirror/core": "0.0.1-alpha.2",
-    "@remirror/core-extensions": "0.0.1-alpha.2",
+    "@remirror/extensions-core": "0.0.1-alpha.2",
     "@remirror/react": "0.0.1-alpha.2",
-    "@remirror/renderer": "0.0.1-alpha.2"
+    "@remirror/renderer-react": "0.0.1-alpha.2"
   },
   "peerDependencies": {
     "@types/react": "^16.7.18",
@@ -53,8 +53,8 @@
     "react": "React",
     "react-dom": "ReactDOM",
     "@remirror/core": "RemirrorCore",
-    "@remirror/core-extensions": "RemirrorCoreExtensions",
-    "@remirror/renderer": "RemirrorRenderer",
-    "@remirror/mentions-extension": "RemirrorMentionsExtension"
+    "@remirror/extensions-core": "RemirrorCoreExtensions",
+    "@remirror/renderer-react": "RemirrorRendererReact",
+    "@remirror/extension-mention": "RemirrorMentionsExtension"
   }
 }

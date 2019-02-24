@@ -20,11 +20,11 @@
     "baseUrl": "./",
     "paths": {
       "@remirror/core": ["@remirror/core/src/index.ts"],
-      "@remirror/core-extensions": ["@remirror/core-extensions/src/index.ts"],
+      "@remirror/extensions-core": ["@remirror/extensions-core/src/index.ts"],
       "@remirror/react": ["@remirror/react/src/index.ts"],
-      "@remirror/mentions-extension": ["@remirror/mentions-extension/src/index.ts"],
-      "@remirror/renderer": ["@remirror/renderer/src/index.ts"],
-      "@remirror/twitter-ui": ["@remirror/twitter-ui/src"],
+      "@remirror/extension-mention": ["@remirror/extension-mention/src/index.ts"],
+      "@remirror/renderer-react": ["@remirror/renderer-react/src/index.ts"],
+      "@remirror/ui-twitter": ["@remirror/ui-twitter/src"],
       "@test-utils": ["@remirror/core/src/__tests__/test-utils.tsx"],
       "*": ["support/types/*"]
     }

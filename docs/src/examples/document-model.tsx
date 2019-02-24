@@ -2,9 +2,9 @@
 
 import React, { FunctionComponent, MouseEventHandler, useState } from 'react';
 
-import { Bold, Italic, Underline } from '@remirror/core-extensions';
+import { Bold, Italic, Underline } from '@remirror/extensions-core';
 import { Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react';
-import { RenderTree } from '@remirror/renderer';
+import { RenderTree } from '@remirror/renderer-react';
 import { memoize } from 'lodash';
 
 const extensions = [new Bold(), new Italic(), new Underline()];
@@ -110,7 +110,7 @@ const EditorLayout: FunctionComponent = () => {
 };
 
 export const DocumentModelEditor: FunctionComponent<RemirrorProps> = () => <EditorLayout />;
-export const BasicRenderer: FunctionComponent = () => <RenderTree json={initialJson} />;
+export const BasicRendererReact: FunctionComponent = () => <RenderTree json={initialJson} />;
 
 const initialJson = {
   type: 'doc',
