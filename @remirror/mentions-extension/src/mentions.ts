@@ -21,6 +21,10 @@ export interface MentionsNodeExtensionOptions
   readonly tag?: keyof HTMLElementTagNameMap;
   editable?: boolean;
   selectable?: boolean;
+  /**
+   * Inject additional attributes.
+   */
+  extraAttrs?: Array<string | [string, unknown]>;
 }
 
 export class Mentions extends NodeExtension<MentionsNodeExtensionOptions> {
@@ -41,15 +45,32 @@ export class Mentions extends NodeExtension<MentionsNodeExtensionOptions> {
       },
       appendText: ' ',
       mentionClassName: 'mention',
-
+      extraAttrs: [],
       tag: 'a' as 'a',
       editable: true,
       selectable: true,
     };
   }
 
-  public init() {
+  protected init() {
+    super.init();
     this.options.suggestionClassName = `suggestion suggestion-${this.options.type}`;
+    console.log(this.options);
+  }
+
+  /**
+   * Add the attributes provided in the extraAttrs option to the accepted properties for the mentions node.
+   */
+  private extraAttrs() {
+    const attrs: Record<string, { default?: unknown }> = {};
+    for (const item of this.options.extraAttrs) {
+      if (Array.isArray(item)) {
+        attrs[item[0]] = { default: attrs[1] };
+      } else {
+        attrs[item] = {};
+      }
+    }
+    return attrs;
   }
 
   get schema(): NodeExtensionSpec {
@@ -61,19 +82,25 @@ export class Mentions extends NodeExtension<MentionsNodeExtensionOptions> {
       attrs: {
         id: {},
         label: {},
+        ...this.extraAttrs(),
       },
       group: 'inline',
       inline: true,
       selectable: this.options.selectable,
       atom: !this.options.editable,
-      toDOM: node => [
-        this.options.tag,
-        {
-          class: mentionClassName,
-          'data-mention-id': node.attrs.id,
-        },
-        `${matcher.char}${node.attrs.label}`,
-      ],
+      toDOM: node => {
+        console.log(node);
+        const { id, label, ...attrs } = node.attrs;
+        return [
+          this.options.tag,
+          {
+            ...attrs,
+            class: mentionClassName,
+            'data-mention-id': id,
+          },
+          `${matcher.char}${label}`,
+        ];
+      },
       parseDOM: [
         {
           tag: `${this.options.tag}[data-mention-id]`,

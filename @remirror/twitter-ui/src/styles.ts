@@ -39,6 +39,10 @@ export const defaultStyles: RemirrorCustomStyles = {
     textDecoration: 'none !important',
     color: '#1DA1F2',
   },
+  'a.mention': {
+    pointerEvents: 'none',
+    cursor: 'default',
+  },
   '.suggestions-dropdown': {
     alignItems: 'stretch',
     display: 'flex',
@@ -57,5 +61,8 @@ export const defaultStyles: RemirrorCustomStyles = {
   '.suggestions-item.active': {
     backgroundColor: 'rgb(245, 248, 250)',
     borderBottom: '1px solid rgb(230, 236, 240)',
+  },
+  '.ProseMirror-selectednode': {
+    backgroundColor: 'rgb(245, 248, 250)',
   },
 };

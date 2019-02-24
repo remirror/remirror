@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
 
-import { ActiveTwitterUserData, OnQueryChangeParams, TwitterUI, TwitterUserData } from '@remirror/twitter-ui';
+import {
+  ActiveTwitterTagData,
+  ActiveTwitterUserData,
+  OnQueryChangeParams,
+  TwitterUI,
+  TwitterUserData,
+} from '@remirror/twitter-ui';
 import { take } from 'lodash';
 
 import matchSorter from 'match-sorter';
 import { fakeUsers } from '../data/fake-users';
 
-const data: TwitterUserData[] = fakeUsers.results.map(
+const fakeTags = ['Tags', 'Fake', 'Help', 'TypingByHand', 'DontDoThisAgain'];
+
+const userData: TwitterUserData[] = fakeUsers.results.map(
   (user): TwitterUserData => ({
     avatarUrl: user.picture.thumbnail,
     displayName: `${user.name.first} ${user.name.last}`,
@@ -23,17 +31,26 @@ export const ExampleTwitterUI = () => {
     setMention(params);
   };
 
-  const matches: ActiveTwitterUserData[] =
-    mention && mention.query.length
-      ? take(matchSorter(data, mention.query || '', { keys: ['username', 'displayName'] }), 6).map(
+  const userMatches: ActiveTwitterUserData[] =
+    mention && mention.type === 'at' && mention.query.length
+      ? take(matchSorter(userData, mention.query, { keys: ['username', 'displayName'] }), 6).map(
           (user, index) => ({ ...user, active: index === mention.activeIndex }),
         )
+      : [];
+
+  const tagMatches: ActiveTwitterTagData[] =
+    mention && mention.type === 'hash' && mention.query.length
+      ? take(matchSorter(fakeTags, mention.query), 6).map((tag, index) => ({
+          tag,
+          active: index === mention.activeIndex,
+        }))
       : [];
 
   return (
     <TwitterUI
       attributes={{ 'data-test-id': 'twitter-ui' }}
-      data={matches}
+      userData={userMatches}
+      tagData={tagMatches}
       onMentionStateChange={onMentionStateChange}
     />
   );

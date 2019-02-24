@@ -1,21 +1,8 @@
-import { Cast, Literal, ObjectNode, OffsetCalculator, Position, ShouldRenderMenu } from '@remirror/core';
+import { Cast, ObjectNode, OffsetCalculator, Position, ShouldRenderMenu } from '@remirror/core';
 import { isFunction, isPlainObject, isString } from 'lodash';
 import { ReactNode } from 'react';
 import { PlainObject } from 'simplytyped';
 import { AttributePropFunction, RenderPropFunction } from './types';
-
-/**
- * Use this to create a Tuple with args that can be used as a type
- *
- * @example
- * ```
- * const ALL_SUITS = tuple('hearts', 'diamonds', 'spades', 'clubs');
- * type SuitTuple = typeof ALL_SUITS;
- * type Suit = SuitTuple[number]; // union type
- * ```
- * @param args
- */
-export const tuple = <GType extends Literal[]>(...args: GType) => args;
 
 export const isAttributeFunction = (arg: unknown): arg is AttributePropFunction => isFunction(arg);
 export const isRenderProp = (arg: unknown): arg is RenderPropFunction => isFunction(arg);

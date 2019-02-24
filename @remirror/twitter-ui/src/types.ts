@@ -7,9 +7,15 @@ export interface TwitterUserData {
   avatarUrl: string;
 }
 
-export interface TwitterTagData {}
+export interface TwitterTagData {
+  tag: string;
+}
 
 export interface ActiveTwitterUserData extends TwitterUserData {
+  active: boolean;
+}
+
+export interface ActiveTwitterTagData extends TwitterTagData {
   active: boolean;
 }
 
@@ -21,4 +27,14 @@ export interface TwitterAtSuggestionsProp {
   submitFactory(user: TwitterUserData): () => void;
 
   data: ActiveTwitterUserData[];
+}
+
+export interface TwitterHashSuggestionsProp {
+  /**
+   * A factory function called with the current tag to be used as the onClick callback
+   * @param attrs
+   */
+  submitFactory(data: TwitterTagData): () => void;
+
+  data: ActiveTwitterTagData[];
 }

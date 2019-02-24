@@ -8,7 +8,6 @@ describe('Mentions Extension', () => {
       startOfLine: false,
     };
     const mentions = new Mentions({
-      items: [{ username: 'Bob' }],
       matcher,
     });
 
