@@ -82,7 +82,8 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
           });
           this.setActiveIndex(0);
         },
-        onExit: () => {
+        onExit: params => {
+          console.log('exiting', params);
           this.setMention(undefined);
           this.props.onMentionStateChange(undefined);
         },
@@ -206,10 +207,11 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     }
 
     const { type, query } = mention;
+    const matches = type === 'at' ? this.userMatches : this.tagMatches;
 
     // pressing up arrow
     if (up) {
-      const newIndex = activeIndex - 1 < 0 ? this.userMatches.length - 1 : activeIndex - 1;
+      const newIndex = activeIndex - 1 < 0 ? matches.length - 1 : activeIndex - 1;
       this.setActiveIndex(newIndex);
       onMentionStateChange({ type, query, activeIndex: newIndex });
       return true;
@@ -217,7 +219,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
 
     // pressing down arrow
     if (down) {
-      const newIndex = activeIndex + 1 > this.userMatches.length - 1 ? 0 : activeIndex + 1;
+      const newIndex = activeIndex + 1 > matches.length - 1 ? 0 : activeIndex + 1;
       this.setActiveIndex(newIndex);
       onMentionStateChange({ type, query, activeIndex: newIndex });
       return true;

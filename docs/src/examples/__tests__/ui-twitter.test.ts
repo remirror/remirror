@@ -1,7 +1,9 @@
 const editorSelector = '.ProseMirror';
 const emojiButtonSelector = '.EmojiPicker';
+const sel = (...selectors: string[]) => selectors.join(' ');
 
 const innerHtml = async (selector: string) => page.$eval(selector, e => e.innerHTML);
+const outerHTML = async (selector: string) => page.$eval(selector, e => e.outerHTML);
 
 const clearEditor = async (selector: string) => {
   await page.click(selector, { clickCount: 3 });
@@ -77,18 +79,52 @@ describe('Twitter UI', () => {
   });
 
   describe('Mentions', () => {
-    it('should wrap in progress mentions in a-tag decorations', async () => {
-      await page.type(editorSelector, 'Hello @jonathan');
-      await expect(innerHtml(editorSelector)).resolves.toInclude(
-        '<a class="suggestion suggestion-at">@jonathan</a>',
-      );
+    it.skip('should not allow mixing the tags', async () => {
+      await page.type(editorSelector, '@#ab');
+      await expect(outerHTML(sel(editorSelector, 'a'))).rejects.toThrow();
+    });
 
-      await clearEditor(editorSelector);
+    describe('@', () => {
+      it('should wrap in progress mentions in a-tag decorations', async () => {
+        await page.type(editorSelector, 'Hello @jonathan');
+        await expect(innerHtml(editorSelector)).resolves.toInclude(
+          '<a class="suggestion suggestion-at">@jonathan</a>',
+        );
+      });
 
-      await page.type(editorSelector, 'My tag is #Topic');
-      await expect(innerHtml(editorSelector)).resolves.toInclude(
-        '<a class="suggestion suggestion-hash">#Topic</a>',
-      );
+      it('should accept selections onEnter', async () => {
+        await page.type(editorSelector, 'hello @ab');
+        await page.keyboard.press('Enter');
+        await expect(innerHtml(editorSelector)).resolves.toMatchInlineSnapshot(
+          `"<p class=\\"\\">hello <a href=\\"/orangefish879\\" role=\\"presentation\\" class=\\"mention\\" data-mention-id=\\"orangefish879\\" contenteditable=\\"false\\">@orangefish879</a> </p>"`,
+        );
+      });
+
+      it.skip('should still wrap selections when exiting without selections', async () => {
+        await page.type(editorSelector, 'hello @ab ');
+        await expect(outerHTML(sel(editorSelector, 'a'))).resolves.toMatchInlineSnapshot();
+      });
+    });
+    describe('#', () => {
+      it('should wrap in progress mentions in a-tag decorations', async () => {
+        await page.type(editorSelector, 'My tag is #Topic');
+        await expect(innerHtml(editorSelector)).resolves.toInclude(
+          '<a class="suggestion suggestion-hash">#Topic</a>',
+        );
+      });
+
+      it('should accept selections onEnter', async () => {
+        await page.type(editorSelector, 'hello #T');
+        await page.keyboard.press('Enter');
+        await expect(innerHtml(editorSelector)).resolves.toMatchInlineSnapshot(
+          `"<p class=\\"\\">hello <a class=\\"mention\\" data-mention-id=\\"Tags\\" contenteditable=\\"false\\">#Tags</a> </p>"`,
+        );
+      });
+
+      it.skip('should still wrap selections when exiting without selections', async () => {
+        await page.type(editorSelector, 'hello #T ');
+        await expect(outerHTML(sel(editorSelector, 'a'))).resolves.toMatchInlineSnapshot();
+      });
     });
   });
 

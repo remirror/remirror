@@ -12,7 +12,18 @@ import { take } from 'lodash';
 import matchSorter from 'match-sorter';
 import { fakeUsers } from '../data/fake-users';
 
-const fakeTags = ['Tags', 'Fake', 'Help', 'TypingByHand', 'DontDoThisAgain'];
+const fakeTags = [
+  'Tags',
+  'Fake',
+  'Help',
+  'TypingByHand',
+  'DontDoThisAgain',
+  'ZoroIsAwesome',
+  'ThisIsATagList',
+  'NeedsStylingSoon',
+  'LondonHits',
+  'MCM',
+];
 
 const userData: TwitterUserData[] = fakeUsers.results.map(
   (user): TwitterUserData => ({
@@ -27,7 +38,6 @@ export const ExampleTwitterUI = () => {
   const [mention, setMention] = useState<OnQueryChangeParams>();
 
   const onMentionStateChange = (params: OnQueryChangeParams) => {
-    console.log(params);
     setMention(params);
   };
 
