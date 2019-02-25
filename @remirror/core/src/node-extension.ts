@@ -10,12 +10,33 @@ import {
   SchemaWithStateParams,
 } from './types';
 
-export abstract class NodeExtension<GOptions extends {} = {}> extends Extension<
-  GOptions,
-  NodeType<EditorSchema>
-> {
+export type ExtraAttrs = Array<string | [string, string]>;
+
+export abstract class NodeExtension<
+  GOptions extends { extraAttrs?: ExtraAttrs } = { extraAttrs?: ExtraAttrs }
+> extends Extension<GOptions, NodeType<EditorSchema>> {
   get type() {
     return ExtensionType.NODE;
+  }
+
+  /**
+   * Allows for the
+   */
+  protected extraAttrs() {
+    const extraAttrs = this.options.extraAttrs!;
+    const attrs: Record<string, { default?: unknown }> = {};
+    if (!extraAttrs) {
+      return attrs;
+    }
+
+    for (const item of extraAttrs) {
+      if (Array.isArray(item)) {
+        attrs[item[0]] = { default: attrs[1] };
+      } else {
+        attrs[item] = {};
+      }
+    }
+    return attrs;
   }
 
   public abstract readonly schema: NodeExtensionSpec;

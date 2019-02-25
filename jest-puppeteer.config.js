@@ -5,7 +5,7 @@ module.exports = {
           command: 'yarn launch:docs',
           port: 3000,
           host: 'localhost',
-          launchTimeout: 30000,
+          launchTimeout: 60000,
         },
       }
     : {}),

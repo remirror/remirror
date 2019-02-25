@@ -2,6 +2,6 @@ const config = require('../../support/jest/jest.config');
 
 module.exports = {
   ...config,
-  name: '@remirror/extension-mention',
-  displayName: 'extension-mention',
+  name: '@remirror/extension-emoji',
+  displayName: 'extension-emoji',
 };
