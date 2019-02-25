@@ -17,7 +17,7 @@
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@babel/core": "7.3.3",
+    "@babel/core": "7.3.4",
     "@emotion/babel-preset-css-prop": "10.0.7",
     "@emotion/core": "10.0.7",
     "@emotion/styled": "10.0.7",
