@@ -13,6 +13,7 @@ const clearEditor = async (selector: string) => {
 describe('Twitter UI', () => {
   beforeEach(async () => {
     await jestPuppeteer.resetPage();
+    page.setDefaultNavigationTimeout(60000);
     await page.goto('http://localhost:3000/editors/ui-twitter');
   });
 
@@ -128,16 +129,6 @@ describe('Twitter UI', () => {
   });
 
   describe.skip('Emoji', () => {
-    it('should be able to add emoji', async () => {
-      // await page.click(editorSelector, '@jonathan');
-      // await expect(innerHtml(editorSelector)).resolves.toInclude(
-      //   '<a data-type="@mention">@jonathan</a>',
-      // );
-      // await clearEditor(editorSelector);
-      // await page.type(editorSelector, '#Topic');
-      // await expect(innerHtml(editorSelector)).resolves.toInclude(
-      //   '<a data-type="#mention">#Topic</a>',
-      // );
-    });
+    it.todo('should be able to add emoji');
   });
 });

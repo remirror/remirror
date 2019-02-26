@@ -41,7 +41,7 @@
     "prepublish:alpha": "run-s ci:checks",
     "publish:alpha": "lerna publish prerelease --preid=alpha --exact --dist-tag=alpha",
     "test": "jest",
-    "test:ci": "cross-env TEST_ENV=live jest --maxWorkers=2",
+    "test:ci": "cross-env TEST_ENV=live jest",
     "test:ci:watch": "cross-env TEST_ENV=live yarn test:watch",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
     "typecheck": "lerna run typecheck"
