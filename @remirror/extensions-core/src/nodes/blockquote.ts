@@ -13,6 +13,7 @@ export class Blockquote extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
+      attrs: this.extraAttrs(),
       content: 'block*',
       group: 'block',
       defining: true,

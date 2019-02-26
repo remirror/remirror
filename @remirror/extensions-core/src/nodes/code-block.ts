@@ -14,6 +14,7 @@ export class CodeBlock extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
+      attrs: this.extraAttrs(),
       content: 'text*',
       marks: '',
       group: 'block',

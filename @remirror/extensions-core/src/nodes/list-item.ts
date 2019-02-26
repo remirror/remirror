@@ -14,6 +14,7 @@ export class ListItem extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
+      attrs: this.extraAttrs(),
       content: 'paragraph block*',
       defining: true,
       draggable: false,

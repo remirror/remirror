@@ -3,7 +3,7 @@ import { createPortal, unmountComponentAtNode, unstable_renderSubtreeIntoContain
 import { PlainObject } from 'simplytyped';
 
 export interface NodeViewPortalProps {
-  render: (nodeViewPortalContainer: NodeViewPortalContainer) => React.ReactChild | null;
+  children: (nodeViewPortalContainer: NodeViewPortalContainer) => React.ReactChild | null;
 }
 
 export interface PortalRendererState {
@@ -64,7 +64,7 @@ export class NodeViewPortal extends React.Component<NodeViewPortalProps> {
   }
 
   public render() {
-    return this.props.render(this.nodeViewPortalContainer);
+    return this.props.children(this.nodeViewPortalContainer);
   }
 
   public componentDidUpdate() {

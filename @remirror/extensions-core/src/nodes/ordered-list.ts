@@ -18,6 +18,7 @@ export class OrderedList extends NodeExtension {
         order: {
           default: 1,
         },
+        ...this.extraAttrs(),
       },
       content: 'list_item+',
       group: 'block',

@@ -1,6 +1,7 @@
 import {
   Attrs,
   NodeExtension,
+  NodeExtensionProps,
   NodeExtensionSpec,
   PMNode,
   SchemaNodeTypeParams,
@@ -9,7 +10,7 @@ import {
   toggleBlockItem,
 } from '@remirror/core';
 
-export interface HeadingOptions {
+export interface HeadingOptions extends NodeExtensionProps {
   levels: number[];
 }
 
@@ -30,6 +31,7 @@ export class Heading extends NodeExtension<HeadingOptions> {
         level: {
           default: 1,
         },
+        ...this.extraAttrs(),
       },
       content: 'inline*',
       group: 'block',

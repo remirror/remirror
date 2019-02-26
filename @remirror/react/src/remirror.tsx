@@ -42,6 +42,7 @@ import {
   simpleOffsetCalculator,
   uniqueClass,
 } from './helpers';
+import { NodeViewPortal, NodeViewPortalComponent } from './node-views/portal';
 import { defaultStyles } from './styles';
 import { InjectedRemirrorProps, RemirrorEventListenerParams, RemirrorProps } from './types';
 
@@ -528,15 +529,20 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     }
 
     return element ? (
-      <>
-        <RemirrorStyle
-          uid={this.uid}
-          placeholder={this.placeholder}
-          styles={this.props.styles}
-          extraClasses={this.props.extraClasses}
-        />
-        {element}
-      </>
+      <NodeViewPortal>
+        {portalContainer => (
+          <>
+            <RemirrorStyle
+              uid={this.uid}
+              placeholder={this.placeholder}
+              styles={this.props.styles}
+              extraClasses={this.props.extraClasses}
+            />
+            {element}
+            <NodeViewPortalComponent nodeViewPortalContainer={portalContainer} />
+          </>
+        )}
+      </NodeViewPortal>
     ) : null;
   }
 }

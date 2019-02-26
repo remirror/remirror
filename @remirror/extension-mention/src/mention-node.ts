@@ -1,6 +1,7 @@
 import {
   ExtensionCommandFunction,
   NodeExtension,
+  NodeExtensionProps,
   NodeExtensionSpec,
   Omit,
   replaceText,
@@ -11,7 +12,8 @@ import { startCase } from 'lodash';
 import { SuggestionsPlugin, SuggestionsPluginProps } from './suggestions';
 
 export interface MentionNodeExtensionOptions
-  extends Omit<SuggestionsPluginProps, 'command' | 'decorationsTag'> {
+  extends Omit<SuggestionsPluginProps, 'command' | 'decorationsTag'>,
+    NodeExtensionProps {
   mentionClassName?: string;
   /**
    * Allows for multiple mentions extensions to be registered for one editor.
@@ -21,10 +23,6 @@ export interface MentionNodeExtensionOptions
   readonly tag?: keyof HTMLElementTagNameMap;
   editable?: boolean;
   selectable?: boolean;
-  /**
-   * Inject additional attributes.
-   */
-  extraAttrs?: Array<string | [string, unknown]>;
 }
 
 export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
@@ -55,21 +53,6 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
   protected init() {
     super.init();
     this.options.suggestionClassName = `suggestion suggestion-${this.options.type}`;
-  }
-
-  /**
-   * Add the attributes provided in the extraAttrs option to the accepted properties for the mentions node.
-   */
-  private extraAttrs() {
-    const attrs: Record<string, { default?: unknown }> = {};
-    for (const item of this.options.extraAttrs) {
-      if (Array.isArray(item)) {
-        attrs[item[0]] = { default: attrs[1] };
-      } else {
-        attrs[item] = {};
-      }
-    }
-    return attrs;
   }
 
   get schema(): NodeExtensionSpec {

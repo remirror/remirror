@@ -30,6 +30,7 @@ export class Image extends NodeExtension {
         title: {
           default: null,
         },
+        ...this.extraAttrs(),
       },
       group: 'inline',
       draggable: true,

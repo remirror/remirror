@@ -13,6 +13,7 @@ export class HorizontalRule extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
+      attrs: this.extraAttrs(),
       group: 'block',
       parseDOM: [{ tag: 'hr' }],
       toDOM: () => ['hr'],

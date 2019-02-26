@@ -13,6 +13,7 @@ export class Bullet extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
+      attrs: this.extraAttrs(),
       content: 'list_item+',
       group: 'block',
       parseDOM: [{ tag: 'ul' }],

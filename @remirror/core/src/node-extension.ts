@@ -12,8 +12,15 @@ import {
 
 export type ExtraAttrs = Array<string | [string, string]>;
 
+export interface NodeExtensionProps {
+  /**
+   * Inject additional attributes.
+   */
+  extraAttrs?: ExtraAttrs;
+}
+
 export abstract class NodeExtension<
-  GOptions extends { extraAttrs?: ExtraAttrs } = { extraAttrs?: ExtraAttrs }
+  GOptions extends NodeExtensionProps = NodeExtensionProps
 > extends Extension<GOptions, NodeType<EditorSchema>> {
   get type() {
     return ExtensionType.NODE;

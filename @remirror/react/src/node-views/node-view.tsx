@@ -25,37 +25,21 @@ export class ReactNodeView implements NodeView {
 
   private domRef?: HTMLElement;
   private contentDOMWrapper: Node | null = null;
-  private Component?: React.ComponentType<any>;
-  private portalProviderContainer: NodeViewPortalContainer;
-  private hasContext: boolean;
-
-  public reactComponentProps: PlainObject = {};
-  public view: EditorView;
-  private getPosition: GetPosition;
   public contentDOM: Node | undefined;
-  public node: ProsemirrorNode;
 
   constructor(
-    node: ProsemirrorNode,
-    view: EditorView,
-    getPosition: GetPosition,
-    portalProviderContainer: NodeViewPortalContainer,
-    reactComponentProps: PlainObject = {},
-    Component?: React.ComponentType<any>,
-    hasContext: boolean = false,
-  ) {
-    this.node = node;
-    this.view = view;
-    this.getPosition = getPosition;
-    this.portalProviderContainer = portalProviderContainer;
-    this.reactComponentProps = reactComponentProps;
-    this.Component = Component;
-    this.hasContext = hasContext;
-  }
+    public node: ProsemirrorNode,
+    public view: EditorView,
+    private getPosition: GetPosition,
+    private portalProviderContainer: NodeViewPortalContainer,
+    public props: PlainObject = {},
+    private Component?: React.ComponentType<any>,
+    private hasContext: boolean = false,
+  ) {}
 
   /**
    * This method exists to move initialization logic out of the constructor,
-   * so object can be initialized properly before calling render first time.
+   * so the object can be initialized properly before calling render first time.
    *
    * Example:
    * Instance properties get added to an object only after super call in
@@ -83,7 +67,7 @@ export class ReactNodeView implements NodeView {
     difference between them and it kills the nodeView */
     this.domRef.className = `${this.node.type.name}View-content-wrap`;
 
-    this.renderReactComponent(() => this.render(this.reactComponentProps, this.handleRef));
+    this.renderReactComponent(() => this.render(this.props, this.handleRef));
     return this;
   }
 
@@ -145,7 +129,7 @@ export class ReactNodeView implements NodeView {
 
     this.node = node;
 
-    this.renderReactComponent(() => this.render(this.reactComponentProps, this.handleRef));
+    this.renderReactComponent(() => this.render(this.props, this.handleRef));
 
     return true;
   }

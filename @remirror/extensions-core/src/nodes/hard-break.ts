@@ -13,6 +13,7 @@ export class HardBreak extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
+      attrs: this.extraAttrs(),
       inline: true,
       group: 'inline',
       selectable: false,
