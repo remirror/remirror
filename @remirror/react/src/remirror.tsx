@@ -1,4 +1,4 @@
-import React, { cloneElement, Component, Ref } from 'react';
+import React, { Component, Ref } from 'react';
 
 import { css, Interpolation } from '@emotion/core';
 import {
@@ -31,6 +31,7 @@ import { EditorView } from 'prosemirror-view';
 import {
   asDefaultProps,
   baseOffsetCalculator,
+  cloneElement,
   defaultOffscreenPosition,
   defaultShouldRender,
   getAbsoluteCoordinates,
@@ -193,7 +194,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     const placeholder = this.placeholder;
     const placeholderConfig = placeholder
       ? {
-          selector: `p.${placeholder.className}:first-child::before`,
+          selector: `p.${placeholder.className}:first-of-type::before`,
           content: `"${placeholder.text}"`,
           style: placeholder.style,
         }

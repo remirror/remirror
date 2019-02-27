@@ -197,10 +197,6 @@ export interface RemirrorProps {
 
 export type CSSProperty = CSS.Properties<string | number>;
 
-export interface RemirrorCustomStyles extends Record<string, CSSProperty> {
-  placeholder: CSSProperty;
-}
-
 export interface PlaceholderConfig {
   text: string;
   className: string;

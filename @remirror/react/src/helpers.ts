@@ -1,3 +1,4 @@
+import { jsx } from '@emotion/core';
 import { Cast, ObjectNode, OffsetCalculator, Position, ShouldRenderMenu } from '@remirror/core';
 import { isFunction, isPlainObject, isString } from 'lodash';
 import { ReactNode } from 'react';
@@ -68,3 +69,11 @@ export const uniqueClass = (uid: string, className: string) => `${className}-${u
 export const asDefaultProps = <GProps extends {}>() => <GDefaultProps extends Partial<GProps>>(
   defaultProps: GDefaultProps,
 ): GDefaultProps => defaultProps;
+
+export const cloneElement = (element: JSX.Element, props: PlainObject) =>
+  jsx(element.type, {
+    key: element.key,
+    ref: Cast(element).ref,
+    ...element.props,
+    ...props,
+  });

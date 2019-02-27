@@ -605,14 +605,14 @@
     "@babel/helper-annotate-as-pure" "^7.0.0"
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-transform-react-display-name@^7.0.0":
+"@babel/plugin-transform-react-display-name@7.2.0", "@babel/plugin-transform-react-display-name@^7.0.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-react-display-name/-/plugin-transform-react-display-name-7.2.0.tgz#ebfaed87834ce8dc4279609a4f0c324c156e3eb0"
   integrity sha512-Htf/tPa5haZvRMiNSQSFifK12gtr/8vwfr+A9y69uF0QcU77AVu4K7MiHEkTxF7lQoHOL0F9ErqgfNEAKgXj7A==
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-transform-react-jsx-self@^7.0.0":
+"@babel/plugin-transform-react-jsx-self@7.2.0", "@babel/plugin-transform-react-jsx-self@^7.0.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-react-jsx-self/-/plugin-transform-react-jsx-self-7.2.0.tgz#461e21ad9478f1031dd5e276108d027f1b5240ba"
   integrity sha512-v6S5L/myicZEy+jr6ielB0OR8h+EH/1QFx/YJ7c7Ua+7lqsjj/vW6fD5FR9hB/6y7mGbfT4vAURn3xqBxsUcdg==
@@ -620,7 +620,7 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/plugin-syntax-jsx" "^7.2.0"
 
-"@babel/plugin-transform-react-jsx-source@^7.0.0":
+"@babel/plugin-transform-react-jsx-source@7.2.0", "@babel/plugin-transform-react-jsx-source@^7.0.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-react-jsx-source/-/plugin-transform-react-jsx-source-7.2.0.tgz#20c8c60f0140f5dd3cd63418d452801cf3f7180f"
   integrity sha512-A32OkKTp4i5U6aE88GwwcuV4HAprUgHcTq0sSafLxjr6AW0QahrCRCjxogkbbcdtpbXkuTOlgpjophCxb6sh5g==
@@ -1965,10 +1965,10 @@
   resolved "https://registry.yarnpkg.com/@types/jest-diff/-/jest-diff-20.0.1.tgz#35cc15b9c4f30a18ef21852e255fdb02f6d59b89"
   integrity sha512-yALhelO3i0hqZwhjtcr6dYyaLoCHbAMshwtj6cGxTvHZAKXHsYGdff6E8EPw3xLKY0ELUTQ69Q1rQiJENnccMA==
 
-"@types/jest-environment-puppeteer@2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@types/jest-environment-puppeteer/-/jest-environment-puppeteer-2.2.1.tgz#ececed13f3950ea6a7f8846537d3a1f6fc598646"
-  integrity sha512-jY3BOc+oAMls2Yl0HSXulCoqQoDgHBIgshulIcKwl9ZS+rlIdDPwfdN1Mvl973D2sl7FgwCfjI+pVkiaZBCqcw==
+"@types/jest-environment-puppeteer@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@types/jest-environment-puppeteer/-/jest-environment-puppeteer-4.0.0.tgz#0e696618965e7472471e4f1ae25adb72bcf38433"
+  integrity sha512-On6C1NKiruviCSUaZgNW4yR0J05rLZTgOyIFMiT9F66rR8zwCQu1Wj9+c50+f5r6m207+hjxtPy1Tgrr+nkfkw==
   dependencies:
     "@types/puppeteer" "*"
 
@@ -5025,7 +5025,7 @@ emojis-list@^2.0.0:
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
   integrity sha1-TapNnbAPmBmIDHn6RXrlsJof04k=
 
-emotion-theming@^10.0.5:
+emotion-theming@10.0.7, emotion-theming@^10.0.5:
   version "10.0.7"
   resolved "https://registry.yarnpkg.com/emotion-theming/-/emotion-theming-10.0.7.tgz#0629740840f2ff6b929a7c3d52811187768e91c9"
   integrity sha512-/dqXTvPA8pRQJRrW6/wpGqu0s0tmtwC27Pk0IOrxDV2F/knbKcd7J/G3T2385NjE+aJO4XJJ7JCNWQkwcjuX0Q==
@@ -8224,6 +8224,11 @@ jsx-ast-utils@^2.0.1:
   integrity sha1-6AGxs5mF4g//yHtA43SAgOLcrH8=
   dependencies:
     array-includes "^3.0.3"
+
+keycode@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/keycode/-/keycode-2.2.0.tgz#3d0af56dc7b8b8e5cba8d0a97f107204eec22b04"
+  integrity sha1-PQr1bce4uOXLqNCpfxByBO7CKwQ=
 
 killable@^1.0.0:
   version "1.0.1"
@@ -11910,10 +11915,10 @@ rollup-pluginutils@^2.0.1, rollup-pluginutils@^2.3.0, rollup-pluginutils@^2.3.1,
     estree-walker "^0.6.0"
     micromatch "^3.1.10"
 
-rollup@1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.3.0.tgz#0ec4b14b3260142e7ec6968c8e0011415d50c2ae"
-  integrity sha512-QiT0wFmu0IzkGgT5LvzRK5hezHcJW8T9MQdvdC+FylrNpsprpz0gTOpcyY9iM6Sda1fD1SatwNutCxcQd3Y/Lg==
+rollup@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.3.1.tgz#cf3bad0ba38ee4534e3057cc6b7e662b6db83d78"
+  integrity sha512-XaVp/ggPVQ3zD4wktUzJo0XGbsnRHsGWk4B4497hE35emWods/WkrIEVgoLRSvMSxCpklLPBfWZAiTs/VeFSNg==
   dependencies:
     "@types/estree" "0.0.39"
     "@types/node" "^11.9.5"

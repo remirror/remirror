@@ -1,4 +1,6 @@
+import { withTheme } from 'emotion-theming';
 import React, { FC } from 'react';
+import { UITwitterTheme } from '../theme';
 
 export interface CharacterCountIndicatorProps {
   /** An object describing the total characters and characters remaining */
@@ -7,18 +9,21 @@ export interface CharacterCountIndicatorProps {
   strokeWidth?: number;
   /** The number of characters remaining at which to display a warning */
   warningThreshold?: number;
+  theme: UITwitterTheme;
 }
 
-export const CharacterCountIndicator: FC<CharacterCountIndicatorProps> = ({
+const CharacterCountIndicatorComponent: FC<CharacterCountIndicatorProps> = ({
   characters = { total: 280, used: 290 },
   size = 20,
   strokeWidth = 2,
   warningThreshold = 18,
+  theme,
 }) => {
+  const { colors } = theme;
   const remainingCharacters = characters.total - characters.used;
   const warn = remainingCharacters <= warningThreshold;
   const ratio = characters.used / characters.total;
-  const strokeColor = remainingCharacters < 0 ? '#e0245e' : warn ? '#ffad1f' : '#1da1f2';
+  const strokeColor = remainingCharacters < 0 ? colors.error : warn ? colors.warn : colors.primary;
 
   // SVG centers the stroke width on the radius, subtract out so circle fits in square
   const radius = (size - strokeWidth) / 2;
@@ -34,7 +39,7 @@ export const CharacterCountIndicator: FC<CharacterCountIndicatorProps> = ({
       {warn && (
         <div
           style={{
-            color: remainingCharacters < 0 ? '#e0245e' : '#657786',
+            color: remainingCharacters < 0 ? colors.error : colors.plain,
             marginRight: 4,
             paddingBottom: 0,
             backgroundColor: 'transparent',
@@ -94,8 +99,6 @@ const CharacterCountCircle: FC<CharacterCountCircleProps> = ({
       cy={size / 2}
       r={radius}
       strokeWidth={`${strokeWidth}px`}
-      // Start progress marker at 12 O'Clock
-      // transform={`rotate(-90 ${size / 2} ${size / 2})`}
       style={{
         strokeDasharray: dashArray,
         strokeDashoffset: dashOffset,
@@ -105,3 +108,5 @@ const CharacterCountCircle: FC<CharacterCountCircleProps> = ({
     />
   </svg>
 );
+
+export const CharacterCountIndicator = withTheme(CharacterCountIndicatorComponent);

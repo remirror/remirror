@@ -34,6 +34,7 @@ module.exports = {
     jestSupportDir('jest.framework.ts'),
     jestSupportDir('jest.framework.dom.ts'),
   ],
+  snapshotSerializers: ['jest-emotion'],
   cacheDirectory: '../../.jest/cache',
   testEnvironment: 'jsdom',
   moduleNameMapper: {

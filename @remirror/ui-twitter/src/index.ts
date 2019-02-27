@@ -1,2 +1,2 @@
-export * from './ui-twitter.component';
+export * from './components/ui-twitter';
 export * from './types';

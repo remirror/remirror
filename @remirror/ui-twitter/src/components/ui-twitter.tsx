@@ -3,12 +3,15 @@ import React, { PureComponent } from 'react';
 import { AnyExtension, EditorSchema, Omit } from '@remirror/core';
 import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
 import { Remirror, RemirrorProps } from '@remirror/react';
+import { ThemeProvider } from 'emotion-theming';
+import { isEventKey } from 'keycode';
+import { omit } from 'lodash';
 import { EditorView } from 'prosemirror-view';
-import { CharacterCountIndicator } from './character-count.component';
-import { TwitterLink, TwitterLinkOptions } from './marks/twitter-link';
-import { defaultStyles } from './styles';
-import { AtSuggestions, HashSuggestions } from './suggestions.component';
-import { ActiveTwitterTagData, ActiveTwitterUserData, TwitterTagData, TwitterUserData } from './types';
+import { TwitterLink, TwitterLinkOptions } from '../marks/twitter-link';
+import { styled, UITwitterTheme, uiTwitterTheme } from '../theme';
+import { ActiveTwitterTagData, ActiveTwitterUserData, TwitterTagData, TwitterUserData } from '../types';
+import { CharacterCountIndicator } from './character-count';
+import { AtSuggestions, HashSuggestions } from './suggestions';
 
 export type OnQueryChangeParams = Omit<MentionState, 'submitFactory'> & { activeIndex: number };
 
@@ -19,6 +22,7 @@ export interface TwitterUIProps extends TwitterLinkOptions, Partial<RemirrorProp
   userData: TwitterUserData[];
   tagData: TwitterTagData[];
   onMentionStateChange(params?: OnQueryChangeParams): void;
+  theme: UITwitterTheme;
 }
 
 interface AtMentionState {
@@ -40,6 +44,10 @@ interface State {
 }
 
 export class TwitterUI extends PureComponent<TwitterUIProps, State> {
+  public static defaultProps = {
+    theme: { colors: {} },
+  };
+
   public readonly state: State = { activeIndex: 0 };
   private readonly extensions: AnyExtension[];
   private view?: EditorView;
@@ -194,10 +202,10 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   }
 
   private keyDownHandler = ({ event }: OnKeyDownParams) => {
-    const enter = event.keyCode === 13;
-    const down = event.keyCode === 40;
-    const up = event.keyCode === 38;
-    const esc = event.keyCode === 27;
+    const enter = isEventKey(event, 'enter');
+    const down = isEventKey(event, 'down');
+    const up = isEventKey(event, 'up');
+    const esc = isEventKey(event, 'esc');
 
     const { mention, activeIndex } = this.state;
     const { onMentionStateChange } = this.props;
@@ -209,23 +217,25 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     const { type, query } = mention;
     const matches = type === 'at' ? this.userMatches : this.tagMatches;
 
-    // pressing up arrow
+    // pressed up arrow
     if (up) {
+      console.log('up pressed');
       const newIndex = activeIndex - 1 < 0 ? matches.length - 1 : activeIndex - 1;
       this.setActiveIndex(newIndex);
       onMentionStateChange({ type, query, activeIndex: newIndex });
       return true;
     }
 
-    // pressing down arrow
+    // pressed down arrow
     if (down) {
+      console.log('down pressed');
       const newIndex = activeIndex + 1 > matches.length - 1 ? 0 : activeIndex + 1;
       this.setActiveIndex(newIndex);
       onMentionStateChange({ type, query, activeIndex: newIndex });
       return true;
     }
 
-    // pressing enter
+    // pressed enter
     if (enter) {
       if (mention.type === 'at') {
         mention.submitFactory(this.userMatches[activeIndex])();
@@ -237,57 +247,121 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     }
 
     if (esc) {
-      // Perhaps add a remove text action for esc - for now do nothing;
+      // ? Perhaps add a remove text action for esc - for now nothing happens
     }
 
     return false;
   };
 
+  private get theme(): UITwitterTheme {
+    const { theme: propTheme = { colors: {} } } = this.props;
+    return { ...uiTwitterTheme, ...propTheme, colors: { ...uiTwitterTheme.colors, ...propTheme.colors } };
+  }
+
+  private get remirrorProps(): Partial<RemirrorProps> {
+    return omit(this.props, ['userData', 'tagData', 'onMentionStateChange', 'theme']);
+  }
+
   public render() {
     const { mention } = this.state;
     return (
-      <Remirror
-        placeholder="What's happening?"
-        styles={defaultStyles}
-        {...this.props}
-        extensions={this.extensions}
-        onChange={this.onChange}
-      >
-        {({ getRootProps, view }) => {
-          const content = view.state.doc.textContent;
-          this.storeView(view);
+      <ThemeProvider theme={this.theme}>
+        <Remirror
+          placeholder={[
+            "What's happening?",
+            {
+              color: '#aab8c2',
+              fontStyle: 'normal',
+              position: 'absolute',
+              fontWeight: 300,
+              letterSpacing: '0.5px',
+            },
+          ]}
+          {...this.remirrorProps}
+          extensions={this.extensions}
+          onChange={this.onChange}
+        >
+          {({ getRootProps, view }) => {
+            const content = view.state.doc.textContent;
+            this.storeView(view);
 
-          return (
-            <div>
-              <div {...getRootProps()} style={{ position: 'relative' }}>
-                <div
-                  style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    right: 0,
-                    margin: '0 8px 4px 4px',
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    alignItems: 'center',
-                  }}
-                >
-                  <CharacterCountIndicator characters={{ total: 140, used: content.length }} />
+            return (
+              <div>
+                <RemirrorWrapper {...getRootProps()} style={{ position: 'relative' }}>
+                  <CharacterCountWrapper>
+                    <CharacterCountIndicator characters={{ total: 140, used: content.length }} />
+                  </CharacterCountWrapper>
+                </RemirrorWrapper>
+                <div>
+                  {!mention ? null : mention.type === 'at' ? (
+                    <AtSuggestions data={this.userMatches} submitFactory={mention.submitFactory} />
+                  ) : (
+                    <HashSuggestions data={this.tagMatches} submitFactory={mention.submitFactory} />
+                  )}
                 </div>
               </div>
-              <div>
-                {!mention ? null : mention.type === 'at' ? (
-                  <AtSuggestions data={this.userMatches} submitFactory={mention.submitFactory} />
-                ) : (
-                  <HashSuggestions data={this.tagMatches} submitFactory={mention.submitFactory} />
-                )}
-              </div>
-            </div>
-          );
-        }}
-      </Remirror>
+            );
+          }}
+        </Remirror>
+      </ThemeProvider>
     );
   }
 }
+
+/* Styled Components */
+
+const CharacterCountWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0 8px 4px 4px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;
+
+const RemirrorWrapper = styled.div`
+  .remirror-editor:focus {
+    outline: none;
+  }
+
+  .remirror-editor p {
+    margin: 0;
+    letter-spacing: 0.6px;
+    color: black;
+  }
+
+  .remirror-editor {
+    box-sizing: border-box;
+    position: relative;
+    border: 1px solid ${({ theme }) => theme.colors.border};
+    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.border};
+    line-height: 20px;
+    border-radius: 8px;
+    width: 100%;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    max-height: calc(90vh - 124px);
+    min-height: 142px;
+    padding: 8px;
+    padding-right: 31px;
+    font-weight: 400;
+  }
+
+  .remirror-editor a {
+    text-decoration: none !important;
+    color: ${props => props.theme.colors.primary};
+  }
+
+  .remirror-editor a.mention {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .remirror-editor .ProseMirror-selectednode {
+    background-color: rgb(245, 248, 250);
+  }
+`;
 
 /* Character count -
 - emoji 2

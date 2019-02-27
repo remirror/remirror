@@ -69,16 +69,11 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
 
   public pasteRules({ type }: SchemaMarkTypeParams) {
     return [
-      pasteRule(
-        // /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
-        enhancedExtractUrl,
-        type,
-        url => {
-          return {
-            href: extractHref(url as string),
-          };
-        },
-      ),
+      pasteRule(enhancedExtractUrl, type, url => {
+        return {
+          href: extractHref(url as string),
+        };
+      }),
     ];
   }
 

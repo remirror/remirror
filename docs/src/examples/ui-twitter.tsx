@@ -7,7 +7,7 @@ import {
   TwitterUI,
   TwitterUserData,
 } from '@remirror/ui-twitter';
-import { take } from 'lodash';
+import { startCase, take } from 'lodash';
 
 import matchSorter from 'match-sorter';
 import { fakeUsers } from '../data/fake-users';
@@ -28,7 +28,7 @@ const fakeTags = [
 const userData: TwitterUserData[] = fakeUsers.results.map(
   (user): TwitterUserData => ({
     avatarUrl: user.picture.thumbnail,
-    displayName: `${user.name.first} ${user.name.last}`,
+    displayName: startCase(`${user.name.first} ${user.name.last}`),
     uid: user.login.uuid,
     username: user.login.username,
   }),
