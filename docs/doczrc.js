@@ -32,6 +32,7 @@ const babelConfig = {
 };
 
 module.exports = {
+  ignore: [],
   title: 'Remirror',
   typescript: true,
   modifyBabelRc() {
