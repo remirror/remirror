@@ -4,7 +4,7 @@ import { AnyExtension, EditorSchema, Omit } from '@remirror/core';
 import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
 import { Remirror, RemirrorProps } from '@remirror/react';
 import { ThemeProvider } from 'emotion-theming';
-import { isEventKey } from 'keycode';
+import keyCode from 'keycode';
 import { omit } from 'lodash';
 import { EditorView } from 'prosemirror-view';
 import { TwitterLink, TwitterLinkOptions } from '../marks/twitter-link';
@@ -202,10 +202,10 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   }
 
   private keyDownHandler = ({ event }: OnKeyDownParams) => {
-    const enter = isEventKey(event, 'enter');
-    const down = isEventKey(event, 'down');
-    const up = isEventKey(event, 'up');
-    const esc = isEventKey(event, 'esc');
+    const enter = keyCode.isEventKey(event, 'enter');
+    const down = keyCode.isEventKey(event, 'down');
+    const up = keyCode.isEventKey(event, 'up');
+    const esc = keyCode.isEventKey(event, 'esc');
 
     const { mention, activeIndex } = this.state;
     const { onMentionStateChange } = this.props;

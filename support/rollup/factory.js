@@ -87,7 +87,7 @@ function configure(pkg, env, target) {
       input,
       output: {
         format: 'umd',
-        file: `@remirror/${folderName}/${isProd ? pkg.umd : pkg['umd:min']}`,
+        file: `@remirror/${folderName}/${!isProd ? pkg.umd : pkg['umd:min']}`,
         exports: 'named',
         name: startCase(pkg.name).replace(/ /g, ''),
         globals: pkg.umdGlobals,
@@ -130,11 +130,10 @@ function configure(pkg, env, target) {
  */
 
 function factory(pkg) {
-  const isProd = process.env.NODE_ENV === 'production';
   return [
     configure(pkg, 'development', 'module'),
-    isProd && configure(pkg, 'development', 'umd'),
-    isProd && configure(pkg, 'production', 'umd'),
+    configure(pkg, 'development', 'umd'),
+    configure(pkg, 'production', 'umd'),
   ].filter(Boolean);
 }
 
