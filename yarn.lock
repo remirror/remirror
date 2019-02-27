@@ -12264,6 +12264,11 @@ simplytyped@1.7.0:
   resolved "https://registry.yarnpkg.com/simplytyped/-/simplytyped-1.7.0.tgz#555025c4f66d40bade83b58e28f9b515f0ecefc4"
   integrity sha512-Ib9mIWgCrOlYdlhlnpI5e2PavilexbHY3CMwwpgko3Ia9hHfNANOGu5wxckvpYTkpzF7K8M3UjawIN6rvIvAcA==
 
+simplytyped@1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/simplytyped/-/simplytyped-1.8.0.tgz#c3d1e9556651d72f8b20a68f9f234806af77ea3f"
+  integrity sha512-CVWB3P/pju6B9RNNc7CfdvwPiArAk2oeKs4KlJeSa+359wdglXtLL0YDRiv2H9tk9QcOqhrn2PhJK5Rm2HUNfw==
+
 sisteransi@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/sisteransi/-/sisteransi-1.0.0.tgz#77d9622ff909080f1c19e5f4a1df0c1b0a27b88c"

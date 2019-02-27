@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 
 import { AnyExtension, EditorSchema, Omit } from '@remirror/core';
+import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
 import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
 import { Remirror, RemirrorProps } from '@remirror/react';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
 import { omit } from 'lodash';
 import { EditorView } from 'prosemirror-view';
-import { TwitterLink, TwitterLinkOptions } from '../marks/twitter-link';
 import { styled, UITwitterTheme, uiTwitterTheme } from '../theme';
 import { ActiveTwitterTagData, ActiveTwitterUserData, TwitterTagData, TwitterUserData } from '../types';
 import { CharacterCountIndicator } from './character-count';
@@ -15,7 +15,7 @@ import { AtSuggestions, HashSuggestions } from './suggestions';
 
 export type OnQueryChangeParams = Omit<MentionState, 'submitFactory'> & { activeIndex: number };
 
-export interface TwitterUIProps extends TwitterLinkOptions, Partial<RemirrorProps> {
+export interface TwitterUIProps extends EnhancedLinkOptions, Partial<RemirrorProps> {
   /**
    * The number of matches to display
    */
@@ -131,7 +131,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
           this.props.onMentionStateChange(undefined);
         },
       }),
-      new TwitterLink({ onUrlsChange: this.props.onUrlsChange }),
+      new EnhancedLink({ onUrlsChange: this.props.onUrlsChange }),
     ];
   }
 

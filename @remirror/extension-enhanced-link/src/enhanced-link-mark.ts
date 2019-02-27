@@ -16,18 +16,18 @@ import { Mark } from 'prosemirror-model';
 import { Plugin, TextSelection, Transaction } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
 import { EditorView } from 'prosemirror-view';
-import { enhancedExtractUrl } from '../extract-url';
+import { extractUrl } from './extract-url';
 
 const OBJECT_REPLACING_CHARACTER = '\ufffc';
 
-export interface TwitterLinkOptions {
+export interface EnhancedLinkOptions {
   onUrlsChange?(params: { set: Set<string>; urls: string[] }): void;
 }
 
 // TODO Fix bug with URL regex and how the matches are sourced
-export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
+export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
   get name() {
-    return 'twitterLink';
+    return 'enhancedLink';
   }
 
   get schema(): MarkExtensionSpec {
@@ -69,7 +69,7 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
 
   public pasteRules({ type }: SchemaMarkTypeParams) {
     return [
-      pasteRule(enhancedExtractUrl, type, url => {
+      pasteRule(extractUrl, type, url => {
         return {
           href: extractHref(url as string),
         };
@@ -88,7 +88,7 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
           init() {
             return null;
           },
-          apply(tr, prev: TwitterLinkPluginState) {
+          apply(tr, prev: EnhancedLinkPluginState) {
             const stored = tr.getMeta(pluginKey);
             return stored ? stored : tr.selectionSet || tr.docChanged ? null : prev;
           },
@@ -111,16 +111,16 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
             doc.textBetween(to, $to.end());
 
           let tr = state.tr;
-          const collectedParams: TwitterLinkHandlerProps[] = [];
+          const collectedParams: EnhancedLinkHandlerProps[] = [];
 
           // If at the start of a new line (i.e. new block added and not at the start of the document)
           if (from === $from.start() && from >= 2) {
             const $pos = doc.resolve(from - 2);
             const prevSearchText = doc.textBetween($pos.start(), $pos.end());
             for (
-              let prevMatch = enhancedExtractUrl.exec(prevSearchText);
+              let prevMatch = extractUrl.exec(prevSearchText);
               prevMatch !== null;
-              prevMatch = enhancedExtractUrl.exec(prevSearchText)
+              prevMatch = extractUrl.exec(prevSearchText)
             ) {
               const startIndex = prevMatch.index;
 
@@ -132,11 +132,7 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
             tr = tr.removeMark($pos.start(), $pos.end(), type);
           }
 
-          for (
-            let match = enhancedExtractUrl.exec(searchText);
-            match !== null;
-            match = enhancedExtractUrl.exec(searchText)
-          ) {
+          for (let match = extractUrl.exec(searchText); match !== null; match = extractUrl.exec(searchText)) {
             const startIndex = match.index;
 
             const url = match[1];
@@ -154,7 +150,7 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
 
           // Add all marks again for the nodes
           collectedParams.forEach(params => {
-            tr = twitterLinkHandler({ ...params, transaction: tr });
+            tr = enhancedLinkHandler({ ...params, transaction: tr });
           });
 
           return tr;
@@ -177,7 +173,7 @@ export class TwitterLink extends MarkExtension<TwitterLinkOptions> {
   };
 }
 
-interface TwitterLinkPluginState {
+interface EnhancedLinkPluginState {
   transform: Transaction;
   from: number;
   to: number;
@@ -186,7 +182,7 @@ interface TwitterLinkPluginState {
 
 const extractHref = (url: string) => (url.startsWith('http') || url.startsWith('//') ? url : `http://${url}`);
 
-interface TwitterLinkHandlerProps {
+interface EnhancedLinkHandlerProps {
   state: EditorState;
   url: string;
   start: number;
@@ -194,12 +190,12 @@ interface TwitterLinkHandlerProps {
   transaction?: Transaction<EditorSchema>;
 }
 
-const twitterLinkHandler = ({ state, url, start, end, transaction }: TwitterLinkHandlerProps) => {
+const enhancedLinkHandler = ({ state, url, start, end, transaction }: EnhancedLinkHandlerProps) => {
   const endPosition = state.selection.to;
-  const twitterLink = state.schema.marks.twitterLink.create({ href: extractHref(url) });
+  const enhancedLink = state.schema.marks.enhancedLink.create({ href: extractHref(url) });
   // let tr = state.tr.insertText(displayUrl, start, end);
-  // tr = tr.addMark(start, end, twitterLink);
-  const tr = (transaction || state.tr).replaceWith(start, end, state.schema.text(url, [twitterLink]));
+  // tr = tr.addMark(start, end, enhancedLink);
+  const tr = (transaction || state.tr).replaceWith(start, end, state.schema.text(url, [enhancedLink]));
 
   if (endPosition < end) {
     return tr.setSelection(TextSelection.create(state.doc, endPosition));

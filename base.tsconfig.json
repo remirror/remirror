@@ -21,8 +21,10 @@
     "paths": {
       "@remirror/core": ["@remirror/core/src/index.ts"],
       "@remirror/core-extensions": ["@remirror/core-extensions/src/index.ts"],
-      "@remirror/react": ["@remirror/react/src/index.ts"],
+      "@remirror/extension-emoji": ["@remirror/extension-emoji/src/index.ts"],
+      "@remirror/extension-enhanced-link": ["@remirror/extension-enhanced-link/src/index.ts"],
       "@remirror/extension-mention": ["@remirror/extension-mention/src/index.ts"],
+      "@remirror/react": ["@remirror/react/src/index.ts"],
       "@remirror/renderer-react": ["@remirror/renderer-react/src/index.ts"],
       "@remirror/ui-twitter": ["@remirror/ui-twitter/src"],
       "@test-utils": ["@remirror/core/src/__tests__/test-utils.tsx"],

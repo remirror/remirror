@@ -253,7 +253,7 @@ const validUrlQueryEndingChars = /[a-z0-9\-_&=#\/]/i;
 
 /* Taken from https://github.com/twitter/twitter-text/blob/752b9476d5ed00c2ec60d0a6bb3b34bd5b19bcf9/js/src/regexp/extractUrl.js */
 
-export const enhancedExtractUrl = regexSupplant(
+export const extractUrl = regexSupplant(
   '(' +
     // '#{validUrlPrecedingChars}' +
     '(https?:\\/\\/)?' +

@@ -1,12 +1,13 @@
 {
-  "name": "@remirror/ui-twitter",
-  "description": "Twitter UI built with remirror",
+  "private": true,
+  "name": "@remirror/extension-enhanced-link",
+  "description": "mention extension for the remirror editor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/ui-twitter",
-  "version": "0.0.0",
+  "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/extension-enhanced-link",
+  "version": "0.0.1-alpha.1",
   "main": "lib/index.js",
-  "module": "lib/dist/remirror-ui-twitter.esm.js",
+  "module": "lib/dist/extension-enhanced-link.esm.js",
   "files": [
     "lib",
     "src"
@@ -27,37 +28,23 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@emotion/core": "10.0.7",
-    "@emotion/styled": "10.0.7",
     "@remirror/core": "0.0.1-alpha.2",
-    "@remirror/extension-enhanced-link": "0.0.1-alpha.1",
-    "@remirror/extension-mention": "0.0.1-alpha.1",
-    "@remirror/react": "0.0.1-alpha.2",
+    "@types/emoji-mart": "2.8.2",
+    "@types/lodash": "4.14.121",
+    "@types/prosemirror-model": "1.7.0",
     "@types/prosemirror-state": "1.2.3",
+    "@types/prosemirror-transform": "1.1.0",
     "@types/prosemirror-view": "1.3.1",
-    "emotion-theming": "10.0.7",
-    "keycode": "2.2.0",
     "lodash": "4.17.11",
     "prosemirror-model": "1.7.0",
     "prosemirror-state": "1.2.2",
     "prosemirror-transform": "1.1.3",
     "prosemirror-view": "1.8.1",
-    "simplytyped": "1.7.0"
+    "simplytyped": "1.8.0"
   },
-  "peerDependencies": {
-    "@types/react": "^16.8.1",
-    "@types/react-dom": "^16.0.11",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "umd": "lib/dist/remirror-ui-twitter.umd.js",
-  "umd:min": "lib/dist/remirror-ui-twitter.umd.min.js",
+  "umd": "lib/dist/extension-enhanced-link.umd.js",
+  "umd:min": "lib/dist/extension-enhanced-link.umd.min.js",
   "umdGlobals": {
-    "react": "React",
-    "@remirror/core": "RemirrorCore",
-    "react-dom": "ReactDOM"
+    "@remirror/core": "RemirrorCore"
   }
 }
