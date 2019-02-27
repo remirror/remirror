@@ -40,11 +40,6 @@ module.exports = {
   moduleNameMapper: {
     '@test-utils$': baseDir('@remirror', 'core', 'src', '__tests__', 'test-utils.tsx'),
     '@remirror\\/([a-z0-9-]+)$': baseDir('@remirror/$1/src'),
-    // '@remirror/core$': baseDir('@remirror', 'core', 'src'),
-    // '@remirror/extensions-core$': baseDir('@remirror', 'extensions-core', 'src'),
-    // '@remirror/react$': baseDir('@remirror', 'react', 'src'),
-    // '@remirror/extension-mention$': baseDir('@remirror', 'extension-mention', 'src'),
-    // '@remirror/ui-twitter$': baseDir('@remirror', 'ui-twitter', 'src'),
-    // '@remirror/renderer-react$': baseDir('@remirror', 'renderer-react', 'src'),
+    // 'jest-remirror$': baseDir('@remirror', 'jest-remirror', 'src'),
   },
 };

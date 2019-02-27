@@ -1,12 +1,12 @@
 {
-  "name": "@remirror/extensions-core",
-  "description": "extensions-core utilities for remirror",
+  "name": "@remirror/core-extensions",
+  "description": "core-extensions utilities for remirror",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/extensions-core",
+  "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/core-extensions",
   "version": "0.0.1-alpha.2",
   "main": "lib/index.js",
-  "module": "lib/dist/extensions-core.esm.js",
+  "module": "lib/dist/core-extensions.esm.js",
   "files": [
     "lib",
     "src"
@@ -40,8 +40,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "umd": "lib/dist/extensions-core.umd.js",
-  "umd:min": "lib/dist/extensions-core.umd.min.js",
+  "umd": "lib/dist/core-extensions.umd.js",
+  "umd:min": "lib/dist/core-extensions.umd.min.js",
   "umdGlobals": {
     "@remirror/core": "RemirrorCore"
   }

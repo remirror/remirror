@@ -20,7 +20,7 @@
     "baseUrl": "./",
     "paths": {
       "@remirror/core": ["@remirror/core/src/index.ts"],
-      "@remirror/extensions-core": ["@remirror/extensions-core/src/index.ts"],
+      "@remirror/core-extensions": ["@remirror/core-extensions/src/index.ts"],
       "@remirror/react": ["@remirror/react/src/index.ts"],
       "@remirror/extension-mention": ["@remirror/extension-mention/src/index.ts"],
       "@remirror/renderer-react": ["@remirror/renderer-react/src/index.ts"],

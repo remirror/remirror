@@ -21,7 +21,7 @@ import {
   ShouldRenderMenu,
   Text,
 } from '@remirror/core';
-import { History, Placeholder, PlaceholderPluginState } from '@remirror/extensions-core';
+import { History, Placeholder, PlaceholderPluginState } from '@remirror/core-extensions';
 import { isString, memoize, pick, uniqueId } from 'lodash';
 import { InputRule, inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';

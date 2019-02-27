@@ -1,3 +1,3 @@
-# @remirror/extensions-core
+# @remirror/core-extensions
 
 Core extensions for remirror.

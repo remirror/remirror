@@ -15,7 +15,7 @@ module.exports = {
       {
         alias: {
           '@remirror/core': '../@remirror/core/src',
-          '@remirror/extensions-core': '../@remirror/extensions-core/src',
+          '@remirror/core-extensions': '../@remirror/core-extensions/src',
           '@remirror/react': '../@remirror/react/src',
           '@remirror/extension-mention': '../@remirror/extension-mention/src',
           '@remirror/renderer-react': '../@remirror/renderer-react/src',

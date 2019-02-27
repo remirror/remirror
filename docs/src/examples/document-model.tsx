@@ -2,7 +2,7 @@
 
 import React, { FunctionComponent, MouseEventHandler, useState } from 'react';
 
-import { Bold, Italic, Underline } from '@remirror/extensions-core';
+import { Bold, Italic, Underline } from '@remirror/core-extensions';
 import { Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react';
 import { RenderTree } from '@remirror/renderer-react';
 import { memoize } from 'lodash';
