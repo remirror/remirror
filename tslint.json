@@ -16,6 +16,7 @@
         "jest-extended",
         "prosemirror-test-builder",
         "jest-matcher-utils",
+        "jest-image-snapshot",
         "chalk"
       ]
     ],
