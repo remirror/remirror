@@ -64,3 +64,7 @@ export const getNearestNonTextNode = (node: Node) =>
   node.nodeType === Node.TEXT_NODE ? (node.parentNode as HTMLElement) : (node as HTMLElement);
 
 export const uniqueClass = (uid: string, className: string) => `${className}-${uid}`;
+
+export const asDefaultProps = <GProps extends {}>() => <GDefaultProps extends Partial<GProps>>(
+  defaultProps: GDefaultProps,
+): GDefaultProps => defaultProps;

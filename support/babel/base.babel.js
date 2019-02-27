@@ -10,7 +10,6 @@ const nonTestEnv = { ignore };
 
 module.exports = {
   presets: [
-    '@babel/preset-typescript',
     [
       '@babel/preset-env',
       {
@@ -19,7 +18,9 @@ module.exports = {
         },
       },
     ],
-    '@babel/preset-react',
+    '@emotion/babel-preset-css-prop',
+    '@babel/preset-typescript',
+    // '@babel/preset-react',
   ],
   plugins: [
     '@babel/plugin-transform-typescript', // This is need so that abstract classes are properly compiled

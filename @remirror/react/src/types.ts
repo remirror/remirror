@@ -1,3 +1,4 @@
+import { Interpolation, ObjectInterpolation } from '@emotion/core';
 import {
   AnyExtension,
   EditorSchema,
@@ -26,7 +27,13 @@ export interface BaseGetterConfig<GRefKey extends string = 'ref'> {
 
 export interface GetRootPropsConfig<GRefKey extends string = 'ref'>
   extends BaseGetterConfig<GRefKey>,
-    PlainObject {}
+    PlainObject {
+  editorStyles?: Interpolation<RemirrorProps>;
+}
+
+export type RefKeyRootProps<GRefKey extends string = 'ref'> = {
+  [P in Exclude<GRefKey, 'children' | 'key'>]: React.Ref<any>
+} & { css: Interpolation[] } & PlainObject;
 
 /**
  * These are the props passed to the render function provided when setting up your editor.
@@ -51,7 +58,7 @@ export interface InjectedRemirrorProps {
   setContent(content: string | ObjectNode, triggerOnChange?: boolean): void;
   getRootProps<GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,
-  ): PlainObject & { [P in Exclude<GRefKey, 'children' | 'key'>]: React.Ref<any> };
+  ): RefKeyRootProps<GRefKey>;
   getMenuProps<GRefKey extends string = 'ref'>(
     options: GetMenuPropsConfig<GRefKey>,
   ): {
@@ -77,9 +84,35 @@ export type RemirrorEventListener = (params: RemirrorEventListenerParams) => voi
 export type AttributePropFunction = (params: RemirrorEventListenerParams) => Record<string, string>;
 
 export interface RemirrorProps {
+  /**
+   * Pass in extension instances which determine the behaviour of the editor.
+   *
+   * @default []
+   */
   extensions: AnyExtension[];
+
+  /**
+   * Set the starting value object of the editor.
+   *
+   * Remirror exports an uncontrolled component. Value changes are passed back out of the editor and there is now way to
+   * set the value via props. As a result this is the only opportunity to directly control the rendered text.
+   *
+   * @default "{ type: 'doc', content: [{ type: 'paragraph' }] }"
+   */
   initialContent: ObjectNode | string;
+
+  /**
+   * Adds attributes directly to the prosemirror html element.
+   *
+   * @default {}
+   */
   attributes: Record<string, string> | AttributePropFunction;
+
+  /**
+   * Determines whether this editor is editable or not.
+   *
+   * @default true
+   */
   editable: boolean;
 
   /**
@@ -90,27 +123,86 @@ export interface RemirrorProps {
   autoFocus?: boolean;
 
   /**
-   * Sets the placeholder for the editor
+   * Sets the placeholder for the editor. Can pass in a tuple to set the text of the placeholder and the styles at the same time.
+   * ```tsx
+   * <Remirror placeholder={['Please enter your message', { color: 'red' }]} {...props} />
+   * ```
+   *
+   * @default undefined
+   */
+  placeholder?: string | [string, ObjectInterpolation<undefined>];
+  /**
+   * Called on every change in the Prosemirror state
+   */
+  onChange?: RemirrorEventListener;
+
+  /**
+   * Method called onFocus
+   */
+  onFocus?: RemirrorEventListener;
+
+  /**
+   * Method called onBlur
+   */
+  onBlur?: RemirrorEventListener;
+
+  /**
+   * Called on the first render when the prosemirror instance first becomes available
+   */
+  onFirstRender?: RemirrorEventListener;
+
+  /**
+   * Render function.
+   */
+  children: RenderPropFunction;
+  /**
+   * Hook called when the editor is dispatching an actions. Use this to attach additional actions or to update outside state
+   * based on what's changed within the editor component.
+   */
+  dispatchTransaction?: ((tr: Transaction<EditorSchema>) => void) | null;
+
+  /**
+   * Sets the accessibility label for the editor instance.
    *
    * @default ''
    */
-  placeholder?: string;
-  onChange?: RemirrorEventListener;
-  onFocus?: RemirrorEventListener;
-  onBlur?: RemirrorEventListener;
-  onFirstRender?: RemirrorEventListener;
-  children: RenderPropFunction;
-  dispatchTransaction?: ((tr: Transaction<EditorSchema>) => void) | null;
-  label?: string;
-  useBuiltInExtensions?: boolean;
-  styles?: Partial<RemirrorCustomStyles> | null;
-  extraClasses: string[];
+  label: string;
+
+  /**
+   * Determines whether or not to use the built in extensions.
+   * ```ts
+   * const builtInExtensions = [new Placeholder(), new Doc(), new Text(), new Paragraph()]
+   * ```
+   * Use this only if you would like to take full control of all your extensions and if you know what you're doing.
+   *
+   * @default true
+   */
+  usesBuiltInExtensions: boolean;
+
+  /**
+   * Determine whether the editor should use default styles.
+   *
+   * @default true
+   */
+  usesDefaultStyles: boolean;
+
+  /**
+   * Additional editor styles passed into prosemirror. Used to provide styles for the text, nodes and marks
+   * rendered in the editor.
+   *
+   * @default {}
+   */
+  editorStyles: Interpolation;
 }
 
 export type CSSProperty = CSS.Properties<string | number>;
 
-export type CustomStyleProps = 'main' | 'placeholder';
+export interface RemirrorCustomStyles extends Record<string, CSSProperty> {
+  placeholder: CSSProperty;
+}
 
-export interface RemirrorCustomStyles
-  extends Record<CustomStyleProps, CSSProperty>,
-    Record<string, CSSProperty> {}
+export interface PlaceholderConfig {
+  text: string;
+  className: string;
+  style: ObjectInterpolation<undefined>;
+}

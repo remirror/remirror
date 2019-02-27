@@ -149,9 +149,9 @@ export const SuggestionsPlugin = ({
   suggestionClassName,
   decorationsTag,
   key,
-}: SuggestionsPluginProps & { key: PluginKey<EditorSchema> }) => {
+}: SuggestionsPluginProps & { key: PluginKey<SuggestionsPluginState, EditorSchema> }) => {
   const matcher = { ...defaultMatcher, ..._matcher };
-  const plugin: Plugin = new Plugin({
+  const plugin: Plugin = new Plugin<SuggestionsPluginState, EditorSchema>({
     key,
     view() {
       return {
