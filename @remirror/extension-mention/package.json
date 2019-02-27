@@ -37,7 +37,7 @@
     "prosemirror-model": "1.7.0",
     "prosemirror-state": "1.2.2",
     "prosemirror-view": "1.8.1",
-    "simplytyped": "1.7.0"
+    "simplytyped": "1.8.0"
   },
   "umd": "lib/dist/extension-mention.umd.js",
   "umd:min": "lib/dist/extension-mention.umd.min.js",
