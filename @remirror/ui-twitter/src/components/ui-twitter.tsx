@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 
+import { css, Interpolation } from '@emotion/core';
 import { AnyExtension, EditorSchema, Omit } from '@remirror/core';
 import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
 import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
@@ -285,10 +286,10 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
             const content = view.state.doc.textContent;
             this.storeView(view);
 
-            const rootProps = getRootProps();
+            const { css: extra, ...rest } = getRootProps();
             return (
               <div>
-                <RemirrorWrapper {...rootProps}>
+                <RemirrorWrapper {...rest} extra={extra}>
                   <CharacterCountWrapper>
                     <CharacterCountIndicator characters={{ total: 140, used: content.length }} />
                   </CharacterCountWrapper>
@@ -321,7 +322,9 @@ const CharacterCountWrapper = styled.div`
   align-items: center;
 `;
 
-const RemirrorWrapper = styled.div`
+const RemirrorWrapper = styled.div<{ extra: Interpolation[] }>`
+  ${props => css(props.extra)};
+
   position: relative;
 
   .remirror-editor:focus {
