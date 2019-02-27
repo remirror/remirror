@@ -14,7 +14,7 @@ You can use either npm or yarn for managing packages. This project has been buil
 
 #### TypeScript Users
 
-This project is built with and should work with version `>=3.0`.
+This project is built with and should work with versions `>=3.3`.
 
 ### Installing
 

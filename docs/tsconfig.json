@@ -8,5 +8,5 @@
     "plugins": [{ "name": "typescript-styled-plugin" }],
     "types": ["jest", "jest-environment-puppeteer", "expect-puppeteer", "puppeteer", "jest-extended"]
   },
-  "include": ["src"]
+  "include": ["./", "patches.d.ts"]
 }

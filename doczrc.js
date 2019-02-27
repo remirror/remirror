@@ -1,5 +1,5 @@
 const { resolve } = require('path');
-const localConfig = require('./.babelrc');
+const localConfig = require('./docs/.babelrc');
 
 const workingDir = (path = '') => resolve(__dirname, path);
 
@@ -45,7 +45,7 @@ module.exports = {
           ...loader,
           options: {
             propFilter: prop => !prop.parent.fileName.includes('node_modules'),
-            tsconfigPath: workingDir('../base.tsconfig.json'),
+            tsconfigPath: workingDir('./base.tsconfig.json'),
           },
         };
       }
@@ -58,7 +58,7 @@ module.exports = {
       test: /\.tsx?$/,
       loader: 'babel-loader',
       options: babelConfig,
-      include: [workingDir('../@remirror'), /@remirror/],
+      include: [workingDir('./@remirror'), /@remirror/],
     });
 
     return config;

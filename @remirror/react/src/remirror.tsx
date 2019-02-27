@@ -194,21 +194,22 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     const placeholder = this.placeholder;
     const placeholderConfig = placeholder
       ? {
-          selector: `p.${placeholder.className}:first-of-type::before`,
+          selector: `.remirror-editor p.${placeholder.className}:first-of-type::before`,
           content: `"${placeholder.text}"`,
           style: placeholder.style,
         }
       : undefined;
-    if (this.props.usesDefaultStyles) {
-      styles.unshift(css(defaultStyles(placeholderConfig)));
-    }
 
     if (placeholderConfig) {
-      styles.push(
+      styles.unshift(
         css({
           [placeholderConfig.selector]: { ...placeholderConfig.style, content: placeholderConfig.content },
         }),
       );
+    }
+
+    if (this.props.usesDefaultStyles) {
+      styles.unshift(css(defaultStyles(placeholderConfig)));
     }
 
     return styles;
