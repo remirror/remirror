@@ -118,22 +118,20 @@ export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
           if (from === $from.start() && from >= 2) {
             const $pos = doc.resolve(from - 2);
             const prevSearchText = doc.textBetween($pos.start(), $pos.end());
-            for (
-              let prevMatch = extractUrl.exec(prevSearchText);
-              prevMatch !== null;
-              prevMatch = extractUrl.exec(prevSearchText)
-            ) {
-              const startIndex = prevMatch.index;
+            findMatches(prevSearchText, extractUrl).forEach(match => {
+              const startIndex = match.index;
 
-              const url = prevMatch[1];
+              const url = match[1];
               const start = $pos.start() + startIndex;
-              const end = $pos.start() + startIndex + prevMatch[0].length;
+              const end = $pos.start() + startIndex + match[0].length;
               collectedParams.push({ state, url, start, end });
-            }
+            });
+
             tr = tr.removeMark($pos.start(), $pos.end(), type);
           }
 
-          for (let match = extractUrl.exec(searchText); match !== null; match = extractUrl.exec(searchText)) {
+          // Finds matches within the current node when in the middle of a node
+          findMatches(searchText, extractUrl).forEach(match => {
             const startIndex = match.index;
 
             const url = match[1];
@@ -144,8 +142,7 @@ export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
             if (!/[\w\d]/.test(textBefore)) {
               collectedParams.push({ state, url, start, end });
             }
-          }
-
+          });
           // Remove all marks
           tr = tr.removeMark($from.start(), $from.end(), type);
 
