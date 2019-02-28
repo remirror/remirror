@@ -8,7 +8,7 @@ import {
 } from '@remirror/core';
 
 export class Italic extends MarkExtension {
-  get name() {
+  get name(): 'italic' {
     return 'italic';
   }
 

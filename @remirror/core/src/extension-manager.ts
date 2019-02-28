@@ -1,5 +1,6 @@
 import { InputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
+import { Schema } from 'prosemirror-model';
 import { EditorState, PluginKey } from 'prosemirror-state';
 import { AnyExtension } from './extension';
 import {
@@ -12,6 +13,7 @@ import {
 import {
   ActionMethods,
   CommandParams,
+  EditorSchema,
   ExtensionBooleanFunction,
   ExtensionCommandFunction,
   MarkExtensionSpec,
@@ -53,6 +55,13 @@ export class ExtensionManager {
       }),
       initialEditorMarks,
     );
+  }
+
+  /**
+   * Dynamically create the editor schema based on the extensions that have been passed in.
+   */
+  public createSchema(): EditorSchema {
+    return new Schema({ nodes: this.nodes, marks: this.marks });
   }
 
   /**

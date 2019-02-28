@@ -8,8 +8,8 @@ import {
 } from '@remirror/core';
 
 export class OrderedList extends NodeExtension {
-  get name() {
-    return 'ordered_list';
+  get name(): 'orderedList' {
+    return 'orderedList';
   }
 
   get schema(): NodeExtensionSpec {

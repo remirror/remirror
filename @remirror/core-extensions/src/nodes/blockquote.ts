@@ -7,7 +7,7 @@ import {
 } from '@remirror/core';
 
 export class Blockquote extends NodeExtension {
-  get name() {
+  get name(): 'blockquote' {
     return 'blockquote';
   }
 

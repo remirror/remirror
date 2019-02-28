@@ -8,7 +8,7 @@ import {
 } from '@remirror/core';
 
 export class Code<GOptions extends {} = {}> extends MarkExtension<GOptions> {
-  get name() {
+  get name(): 'code' {
     return 'code';
   }
 

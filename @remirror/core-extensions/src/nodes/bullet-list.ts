@@ -7,8 +7,8 @@ import {
 } from '@remirror/core';
 
 export class Bullet extends NodeExtension {
-  get name() {
-    return 'bullet_list';
+  get name(): 'bulletList' {
+    return 'bulletList';
   }
 
   get schema(): NodeExtensionSpec {

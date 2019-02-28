@@ -8,8 +8,8 @@ import {
 } from '@remirror/core';
 
 export class CodeBlock extends NodeExtension {
-  get name() {
-    return 'code_block';
+  get name(): 'codeBlock' {
+    return 'codeBlock';
   }
 
   get schema(): NodeExtensionSpec {

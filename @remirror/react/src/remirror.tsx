@@ -8,8 +8,6 @@ import {
   ExtensionManager,
   getMarkAttrs,
   getPluginKeyState,
-  MarkExtensionSpec,
-  NodeExtensionSpec,
   ObjectNode,
   OffsetCalculator,
   Paragraph,
@@ -104,8 +102,6 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
    */
   private view: EditorView<EditorSchema>;
   private extensionManager: ExtensionManager;
-  private nodes: Record<string, NodeExtensionSpec>;
-  private marks: Record<string, MarkExtensionSpec>;
   private extensionPlugins: ProsemirrorPlugin[];
   private keymaps: ProsemirrorPlugin[];
   private inputRules: InputRule[];
@@ -139,10 +135,8 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   constructor(props: RemirrorProps) {
     super(props);
     this.extensionManager = this.createExtensions();
-    this.nodes = this.extensionManager.nodes;
-    this.marks = this.extensionManager.marks;
     this.pluginKeys = this.extensionManager.pluginKeys;
-    this.schema = this.createSchema();
+    this.schema = this.extensionManager.createSchema();
 
     const schemaParam = { schema: this.schema };
     this.extensionPlugins = this.extensionManager.plugins(schemaParam);
@@ -168,16 +162,6 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       [...this.builtInExtensions, ...this.props.extensions],
       () => this.state.editorState,
     );
-  }
-
-  /**
-   * Dynamically create the editor schema based on the extensions that have been passed in.
-   */
-  private createSchema() {
-    return new Schema({
-      nodes: this.nodes,
-      marks: this.marks,
-    });
   }
 
   private rootPropsConfig = {

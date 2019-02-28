@@ -8,8 +8,8 @@ import {
 } from '@remirror/core';
 
 export class ListItem extends NodeExtension {
-  get name() {
-    return 'list_item';
+  get name(): 'listItem' {
+    return 'listItem';
   }
 
   get schema(): NodeExtensionSpec {

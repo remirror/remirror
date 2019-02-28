@@ -1,7 +1,7 @@
 import { NodeExtension } from '../node-extension';
 
 export class Doc extends NodeExtension {
-  get name() {
+  get name(): 'doc' {
     return 'doc';
   }
 

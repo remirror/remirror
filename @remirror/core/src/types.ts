@@ -63,8 +63,11 @@ export type MarkExtensionSpec = Omit<MarkSpec, 'toDOM'> & {
  */
 export type ProsemirrorNode = PMNode;
 export type ProsemirrorPlugin = PMPlugin;
-export type EditorSchema = Schema<string, string>;
-export type EditorState = PMEditorState<EditorSchema>;
+export type EditorSchema<GNodes extends string = string, GMarks extends string = string> = Schema<
+  GNodes,
+  GMarks
+>;
+export type EditorState<GSchema extends EditorSchema = EditorSchema> = PMEditorState<GSchema>;
 export { PMNode, PMPlugin };
 
 export interface SchemaParams {

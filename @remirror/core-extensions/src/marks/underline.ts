@@ -1,7 +1,7 @@
 import { MarkExtension, MarkExtensionSpec, SchemaMarkTypeParams, toggleMark } from '@remirror/core';
 
 export class Underline extends MarkExtension {
-  get name() {
+  get name(): 'underline' {
     return 'underline';
   }
 

@@ -15,7 +15,7 @@ export interface HeadingOptions extends NodeExtensionProps {
 }
 
 export class Heading extends NodeExtension<HeadingOptions> {
-  get name() {
+  get name(): 'heading' {
     return 'heading';
   }
 

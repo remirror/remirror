@@ -7,8 +7,8 @@ import {
 } from '@remirror/core';
 
 export class HardBreak extends NodeExtension {
-  get name() {
-    return 'hard_break';
+  get name(): 'hardBreak' {
+    return 'hardBreak';
   }
 
   get schema(): NodeExtensionSpec {

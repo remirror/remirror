@@ -1,7 +1,7 @@
 import { NodeExtension } from '../node-extension';
 
 export class Text extends NodeExtension {
-  get name() {
+  get name(): 'text' {
     return 'text';
   }
 

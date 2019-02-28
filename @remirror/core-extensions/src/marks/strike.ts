@@ -8,7 +8,7 @@ import {
 } from '@remirror/core';
 
 export class Strike extends MarkExtension {
-  get name() {
+  get name(): 'strike' {
     return 'strike';
   }
 
