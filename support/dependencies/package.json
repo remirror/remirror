@@ -55,6 +55,7 @@
     "jest-axe": "3.1.1",
     "jest-circus": "24.1.0",
     "jest-cli": "24.1.0",
+    "@types/yargs": "12.0.9",
     "jest-dom": "3.1.2",
     "jest-emotion": "10.0.7",
     "jest-extended": "0.11.1",

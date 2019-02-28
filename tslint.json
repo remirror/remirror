@@ -17,13 +17,17 @@
         "prosemirror-test-builder",
         "jest-matcher-utils",
         "jest-image-snapshot",
-        "chalk"
+        "chalk",
+        "yargs"
       ]
     ],
     "no-empty": false,
     "no-any": false,
     "no-object-literal-type-assertion": false,
     "no-console": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "no-invalid-this": false,
+    "no-parameter-reassignment": false,
+    "no-this-assignment": [true, { "allowed-names": ["^self$"], "allow-destructuring": true }]
   }
 }

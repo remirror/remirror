@@ -3,7 +3,7 @@ import 'jest-extended';
 import { configureToMatchImageSnapshot } from 'jest-image-snapshot';
 
 if (process.env.TEST_ENV) {
-  jest.setTimeout(600000);
+  jest.setTimeout(90000);
 
   // A failureThreshold of 1 will pass tests that have > 2 percent failing pixels
   const customConfig = { threshold: 0.3 };

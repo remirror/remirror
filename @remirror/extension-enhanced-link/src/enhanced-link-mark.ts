@@ -3,6 +3,7 @@ import {
   Cast,
   EditorSchema,
   EditorState,
+  findMatches,
   MarkExtension,
   MarkExtensionSpec,
   pasteRule,

@@ -13,7 +13,7 @@ const clearEditor = async (selector: string) => {
 describe('Twitter UI', () => {
   beforeEach(async () => {
     await jestPuppeteer.resetPage();
-    page.setDefaultNavigationTimeout(60000);
+    page.setDefaultNavigationTimeout(90000);
     await page.goto('http://localhost:3000/editors/ui-twitter');
   });
 
