@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "jest-remirror",
   "description": "A text editor for react built with prosemirror",
   "license": "MIT",

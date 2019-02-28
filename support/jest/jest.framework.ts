@@ -4,7 +4,6 @@ import { configureToMatchImageSnapshot } from 'jest-image-snapshot';
 
 if (process.env.TEST_ENV) {
   jest.setTimeout(600000);
-  jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000;
 
   // A failureThreshold of 1 will pass tests that have > 2 percent failing pixels
   const customConfig = { threshold: 0.3 };
@@ -24,6 +23,8 @@ process.on('unhandledRejection', reason => {
 });
 
 if (process.env.CI) {
+  jest.retryTimes(3);
+
   const consoleError = console.error;
   const consoleWarn = console.warn;
   const consoleLog = console.log;
