@@ -1,6 +1,9 @@
 import {
   Attrs,
+  Cast,
+  enhancedNodeInputRule,
   ExtensionCommandFunction,
+  getMatchString,
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
@@ -8,13 +11,16 @@ import {
   replaceText,
   SchemaNodeTypeParams,
 } from '@remirror/core';
+import emojiRegex from 'emoji-regex';
+import { isNumber } from 'lodash';
 import { createEmojiPlugin, CreateEmojiPluginParams } from './create-emoji-plugin';
+import { getEmojiDataByNativeString } from './helpers';
 import { EmojiNodeAttrs } from './types';
-
 export interface EmojiNodeOptions
   extends NodeExtensionOptions,
     Pick<CreateEmojiPluginParams, 'set' | 'size'> {
   transformAttrs?(attrs: EmojiNodeAttrs): Attrs;
+  className?: string;
 }
 
 export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
@@ -31,7 +37,10 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
       transformAttrs: (attrs: EmojiNodeAttrs) => ({
         'aria-label': `Emoji: ${attrs.name}`,
         title: `Emoji: ${attrs.name}`,
+        class: `remirror-editor-emoji-node${this.options.className ? ' ' + this.options.className : ''}`,
       }),
+      className: '',
+      size: '1em',
     };
   }
 
@@ -41,11 +50,15 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
       inline: true,
       group: 'inline',
       selectable: false,
-      atom: true,
       attrs: {
         id: { default: '' },
         native: { default: '' },
         name: { default: '' },
+        colons: { default: '' },
+        skin: { default: '' },
+        'aria-label': { default: '' },
+        title: { default: '' },
+        class: { default: '' },
         ...this.extraAttrs(),
       },
       parseDOM: [
@@ -53,34 +66,52 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
           tag: 'span[data-emoji-id]',
           getAttrs: domNode => {
             const dom = domNode as HTMLElement;
+            const skin = dom.getAttribute('data-emoji-skin');
             return {
               id: dom.getAttribute('data-emoji-id') || '',
               native: dom.getAttribute('data-emoji-native') || '',
               name: dom.getAttribute('data-emoji-name') || '',
+              colons: dom.getAttribute('data-emoji-colons') || '',
+              skin: skin ? Number(skin) : null,
             };
           },
         },
       ],
       toDOM(node: PMNode) {
-        const { id, name, native } = node.attrs as EmojiNodeAttrs;
+        const { id, name, native, colons, skin } = node.attrs as EmojiNodeAttrs;
         const attrs = {
           'data-emoji-id': id,
+          'data-emoji-colons': colons,
           'data-emoji-native': native,
           'data-emoji-name': name,
-          ...transformAttrs({ id, name, native }),
-          contenteditable: 'false',
+          'data-emoji-skin': isNumber(skin) ? String(skin) : '',
+          ...transformAttrs({ id, name, native, colons, skin }),
         };
-        console.log(attrs);
-        return ['span', attrs, native];
+        return ['span', attrs];
       },
     };
   }
 
   public commands = ({ type }: SchemaNodeTypeParams): ExtensionCommandFunction => attrs => {
-    console.log(attrs);
-    attrs = { ...attrs, ...this.options.transformAttrs(attrs as EmojiNodeAttrs) };
+    attrs = { ...attrs, ...this.options.transformAttrs(Cast<EmojiNodeAttrs>(attrs)) };
     return replaceText(null, type, attrs);
   };
+
+  public inputRules({ type }: SchemaNodeTypeParams) {
+    return [
+      enhancedNodeInputRule(emojiRegex(), type, match => {
+        const native = getMatchString(match);
+        const data = getEmojiDataByNativeString(native);
+        return data
+          ? Cast<Attrs>({ ...data, ...this.options.transformAttrs(data) })
+          : Cast<Attrs>({
+              useNative: true,
+              native,
+              ...this.options.transformAttrs(Cast({ name: 'unknown native' })),
+            });
+      }),
+    ];
+  }
 
   public plugins({ getPortalContainer }: SchemaNodeTypeParams) {
     const { set, size } = this.options;

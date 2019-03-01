@@ -134,7 +134,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
         },
       }),
       new EnhancedLink({ onUrlsChange: this.props.onUrlsChange }),
-      new EmojiNode({ set: 'twitter', size: 14 }),
+      new EmojiNode({ set: 'twitter', size: '1.1em' }),
     ];
   }
 
@@ -270,6 +270,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
       id: 'smiley',
       name: 'Smiling Face with Open Mouth',
       native: '😃',
+      colons: ':smiley:',
     };
     method(emoji);
   };
@@ -336,6 +337,9 @@ const CharacterCountWrapper = styled.div`
 
 const RemirrorWrapper = styled.div<{ extra: Interpolation[] }>`
   position: relative;
+  & * {
+    box-sizing: border-box;
+  }
 
   .remirror-editor:focus {
     outline: none;
@@ -376,6 +380,21 @@ const RemirrorWrapper = styled.div<{ extra: Interpolation[] }>`
 
   .remirror-editor .ProseMirror-selectednode {
     background-color: rgb(245, 248, 250);
+  }
+
+  .remirror-editor-emoji-node {
+    user-select: all;
+    padding: 0 0.15em;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .remirror-editor-emoji-node span {
+    display: inline-block;
+  }
+
+  .remirror-editor-emoji-node > span {
+    vertical-align: text-top;
   }
 
   ${props => css(props.extra)};

@@ -30,6 +30,7 @@ export const getEmojiDataByNativeString = (nativeString: string) => {
       skin = skinTones.indexOf(skinTone) + 1;
     }
   });
+  console.log('skin is', skin);
 
   // For some reason the gender string for ball players causes problems on macOS.
   if (baseNativeString === '⛹‍♀️') {
@@ -45,6 +46,8 @@ export const getEmojiDataByNativeString = (nativeString: string) => {
   if (emojiData) {
     emojiData.skin = skin;
   }
+
+  console.log(emojiData);
 
   return emojiData;
 };

@@ -15,10 +15,15 @@ export interface CreateEmojiPluginParams {
    * Set the size of the image used. Once I find a way to use SVG it would be awesome to allow ems that match
    * up with the font size.
    */
-  size?: number;
+  size?: number | string;
 }
 
-export const createEmojiPlugin = ({ key, getPortalContainer, set, size = 16 }: CreateEmojiPluginParams) => {
+export const createEmojiPlugin = ({
+  key,
+  getPortalContainer,
+  set,
+  size = '1em',
+}: CreateEmojiPluginParams) => {
   return new Plugin({
     key,
     props: {

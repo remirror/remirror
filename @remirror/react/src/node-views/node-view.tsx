@@ -66,7 +66,9 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     something gets messed up during mutation processing inside of a
     nodeView if DOM structure has nested plain "div"s, it doesn't see the
     difference between them and it kills the nodeView */
-    this.domRef.className = `${this.node.type.name}View-content-wrap`;
+    if (!this.domRef.className) {
+      this.domRef.className = `remirror-editor-${this.node.type.name}-node`;
+    }
 
     this.renderReactComponent(() => this.render(this.props, this.handleRef));
     return this;
@@ -81,6 +83,11 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
   }
 
   public createDomRef(): HTMLElement {
+    // let el: HTMLElement;
+    // if (this.node.isInline) {
+    //   el = document.createElement('span');
+    //   el.style.dis
+    // }
     return this.node.isInline ? document.createElement('span') : document.createElement('div');
   }
 
