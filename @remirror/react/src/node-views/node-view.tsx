@@ -7,15 +7,15 @@ import { PlainObject } from 'simplytyped';
 
 export type GetPosition = () => number;
 
-export interface NodeViewProps extends PlainObject {
-  node: ProsemirrorNode;
+export interface NodeViewComponentProps<GAttrs = any> extends PlainObject {
+  node: ProsemirrorNode & { attrs: GAttrs };
   view: EditorView;
   getPosition: GetPosition;
 }
 
 export class ReactNodeView implements NodeView {
   public static createNodeView(
-    component: React.ComponentType<any>,
+    component: React.ComponentType<NodeViewComponentProps>,
     portalProviderContainer: NodeViewPortalContainer,
     props?: PlainObject,
   ) {
@@ -33,7 +33,7 @@ export class ReactNodeView implements NodeView {
     private getPosition: GetPosition,
     private portalProviderContainer: NodeViewPortalContainer,
     public props: PlainObject = {},
-    private Component?: React.ComponentType<any>,
+    private Component?: React.ComponentType<NodeViewComponentProps>,
     private hasContext: boolean = false,
   ) {}
 

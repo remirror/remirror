@@ -7,9 +7,9 @@ import {
   SchemaNodeTypeParams,
   SchemaParams,
 } from '@remirror/core';
-import { BaseEmoji } from 'emoji-mart/dist-es/utils/emoji-index/nimble-emoji-index';
+import { EmojiNodeAttrs } from './types';
 
-export class Emoji extends NodeExtension {
+export class EmojiNode extends NodeExtension {
   /**
    * The name is dynamically generated based on the passed in type.
    */
@@ -32,6 +32,7 @@ export class Emoji extends NodeExtension {
         id: { default: '' },
         native: { default: '' },
         name: { default: '' },
+        object: { default: JSON.stringify({}) },
         ...this.extraAttrs(),
       },
       parseDOM: [
@@ -48,7 +49,7 @@ export class Emoji extends NodeExtension {
         },
       ],
       toDOM(node: PMNode) {
-        const { id, name, native } = node.attrs as BaseEmoji;
+        const { id, name, native } = node.attrs as EmojiNodeAttrs;
         const attrs = {
           'data-emoji-id': id,
           'data-emoji-native': native,

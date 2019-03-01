@@ -4,9 +4,10 @@ import {
   EditorSchema,
   EditorState,
   findMatches,
+  getMatchString,
   MarkExtension,
   MarkExtensionSpec,
-  pasteRule,
+  markPasteRule,
   removeMark,
   SchemaMarkTypeParams,
   updateMark,
@@ -70,9 +71,9 @@ export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
 
   public pasteRules({ type }: SchemaMarkTypeParams) {
     return [
-      pasteRule(extractUrl, type, url => {
+      markPasteRule(extractUrl, type, url => {
         return {
-          href: extractHref(url as string),
+          href: extractHref(getMatchString(url)),
         };
       }),
     ];

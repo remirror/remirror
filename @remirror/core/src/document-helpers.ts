@@ -111,3 +111,15 @@ export const getPluginState = <GState>(plugin: Plugin, state: EditorState): GSta
  */
 export const getPluginKeyState = <GState>(pluginKey: PluginKey, state: EditorState): GState =>
   pluginKey.getState(state);
+
+/**
+ * Get attrs can be called with a direct match -string or array of string matches.
+ * This can be used to retrieve the required string.
+ *
+ * The index of the matched array used defaults to 0 but can be updated via the second parameter.
+ *
+ * @param match
+ * @param [index]
+ */
+export const getMatchString = (match: string | string[], index = 0) =>
+  Array.isArray(match) ? match[index] : match;

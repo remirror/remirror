@@ -60,3 +60,14 @@ export const getEmojiDataByEmoticon = (emoticon: string) => {
 
   return emojiData;
 };
+
+/**
+ * Identify the emoji
+ *
+ * @param id the string identifier for the emoji
+ */
+export const getEmojiDataById = (id: string) => {
+  return Object.values(emojiIndex.emojis)
+    .filter(isBaseEmoji)
+    .find(item => item.id === id);
+};

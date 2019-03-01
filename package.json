@@ -40,17 +40,22 @@
     "lint:ts": "lerna run lint --parallel",
     "prepublish:alpha": "run-s ci:checks",
     "publish:alpha": "lerna publish prerelease --preid=alpha --exact --dist-tag=alpha",
+    "size": "size-limit",
+    "size:ci": "bundlesize",
     "test": "jest",
     "test:ci": "cross-env TEST_ENV=live jest",
     "test:ci:watch": "cross-env TEST_ENV=live yarn test:watch",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
-    "size:ci": "bundlesize",
-    "size": "size-limit",
     "typecheck": "lerna run typecheck"
   },
   "engines": {
     "node": ">=8"
   },
+  "bundlesize": [
+    {
+      "path": "@remirror/*/lib/index.js"
+    }
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
@@ -99,12 +104,31 @@
   },
   "size-limit": [
     {
-      "path": "@remirror/*/lib/index.js"
-    }
-  ],
-  "bundlesize": [
+      "path": "@remirror/core/lib/index.js"
+    },
     {
-      "path": "@remirror/*/lib/index.js"
+      "path": "@remirror/core-extensions/lib/index.js"
+    },
+    {
+      "path": "@remirror/extension-emoji/lib/index.js"
+    },
+    {
+      "path": "@remirror/extension-enhanced-link/lib/index.js"
+    },
+    {
+      "path": "@remirror/extension-mention/lib/index.js"
+    },
+    {
+      "path": "@remirror/react/lib/index.js"
+    },
+    {
+      "path": "@remirror/remirror/lib/index.js"
+    },
+    {
+      "path": "@remirror/renderer-react/lib/index.js"
+    },
+    {
+      "path": "@remirror/ui-twitter/lib/index.js"
     }
   ]
 }
