@@ -1,4 +1,4 @@
-/* Customised from https://github.com/tommoor/react-emoji-render/blob/bb67d5e344bb2b91a010461d84184052b1eb4212/data/asciiAliases.js  and emojiIndex.emoticons */
+/* Taken from https://github.com/tommoor/react-emoji-render/blob/bb67d5e344bb2b91a010461d84184052b1eb4212/data/asciiAliases.js  and emojiIndex.emoticons */
 
 export const emoticonMap: Record<string, string[]> = {
   angry: ['>:(', '>:-('],

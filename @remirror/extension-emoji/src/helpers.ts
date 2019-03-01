@@ -3,6 +3,12 @@ import { emojiIndex } from 'emoji-mart';
 import { BaseEmoji, CustomEmoji } from 'emoji-mart/dist-es/utils/emoji-index/nimble-emoji-index';
 import { emoticonMap } from './emoticons';
 
+/**
+ * Checks that the emoji received was an actual base emoji and not custom.
+ * Currently custom emoji are not supported.
+ *
+ * @param emoji
+ */
 export const isBaseEmoji = (emoji: BaseEmoji | CustomEmoji | undefined): emoji is BaseEmoji => {
   return Boolean(emoji && Cast(emoji).native);
 };
@@ -10,7 +16,7 @@ export const isBaseEmoji = (emoji: BaseEmoji | CustomEmoji | undefined): emoji i
 /**
  * Retrieve the EmojiData from a native emoji string
  *
- * @param nativeString
+ * @param nativeString the native emoji utf8 string
  */
 export const getEmojiDataByNativeString = (nativeString: string) => {
   const skinTones = ['', '🏻', '🏼', '🏽', '🏾', '🏿'];
@@ -25,7 +31,7 @@ export const getEmojiDataByNativeString = (nativeString: string) => {
     }
   });
 
-  // For some reason the gender string for this ball players is broken.
+  // For some reason the gender string for ball players causes problems on macOS.
   if (baseNativeString === '⛹‍♀️') {
     baseNativeString = '⛹️‍♀️';
   } else if (baseNativeString === '⛹‍️♂️') {
@@ -62,7 +68,7 @@ export const getEmojiDataByEmoticon = (emoticon: string) => {
 };
 
 /**
- * Identify the emoji
+ * Retrieve emoji data from id
  *
  * @param id the string identifier for the emoji
  */

@@ -7,20 +7,21 @@ import { PlainObject } from 'simplytyped';
 
 export type GetPosition = () => number;
 
-export interface NodeViewComponentProps<GAttrs = any> extends PlainObject {
+export interface NodeViewComponentProps<GAttrs = any> {
   node: ProsemirrorNode & { attrs: GAttrs };
   view: EditorView;
   getPosition: GetPosition;
+  forwardRef?: (node: HTMLElement) => void | undefined;
 }
 
-export class ReactNodeView implements NodeView {
-  public static createNodeView(
-    component: React.ComponentType<NodeViewComponentProps>,
+export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView {
+  public static createNodeView<GProps extends PlainObject = {}>(
+    Component: React.ComponentType<NodeViewComponentProps & GProps>,
     portalProviderContainer: NodeViewPortalContainer,
-    props?: PlainObject,
+    props: GProps,
   ) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
-      new ReactNodeView(node, view, getPosition, portalProviderContainer, props, component).init();
+      new ReactNodeView(node, view, getPosition, portalProviderContainer, props, Component).init();
   }
 
   private domRef?: HTMLElement;
@@ -32,8 +33,8 @@ export class ReactNodeView implements NodeView {
     public view: EditorView,
     private getPosition: GetPosition,
     private portalProviderContainer: NodeViewPortalContainer,
-    public props: PlainObject = {},
-    private Component?: React.ComponentType<NodeViewComponentProps>,
+    public props: GProps = {} as GProps,
+    private Component: React.ComponentType<NodeViewComponentProps & GProps>,
     private hasContext: boolean = false,
   ) {}
 
@@ -96,10 +97,7 @@ export class ReactNodeView implements NodeView {
     }
   };
 
-  public render(
-    props: PlainObject,
-    forwardRef?: (node: HTMLElement) => void,
-  ): React.ReactElement<any> | null {
+  public render(props: GProps, forwardRef?: (node: HTMLElement) => void): React.ReactElement<any> | null {
     const Component = this.Component;
     return Component ? (
       <Component

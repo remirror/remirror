@@ -1,15 +1,17 @@
 import {
   ExtensionCommandFunction,
   NodeExtension,
+  NodeExtensionOptions,
   NodeExtensionSpec,
   PMNode,
   replaceText,
   SchemaNodeTypeParams,
-  SchemaParams,
 } from '@remirror/core';
 import { EmojiNodeAttrs } from './types';
 
-export class EmojiNode extends NodeExtension {
+export interface EmojiNodeOptions extends NodeExtensionOptions {}
+
+export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
   /**
    * The name is dynamically generated based on the passed in type.
    */
@@ -32,7 +34,6 @@ export class EmojiNode extends NodeExtension {
         id: { default: '' },
         native: { default: '' },
         name: { default: '' },
-        object: { default: JSON.stringify({}) },
         ...this.extraAttrs(),
       },
       parseDOM: [
@@ -54,6 +55,8 @@ export class EmojiNode extends NodeExtension {
           'data-emoji-id': id,
           'data-emoji-native': native,
           'data-emoji-name': name,
+          'aria-label': `Emoji: ${node.attrs.name}`,
+          title: `Emoji: ${node.attrs.name}`,
           contenteditable: 'false',
         };
         return ['span', attrs, native];
@@ -61,8 +64,8 @@ export class EmojiNode extends NodeExtension {
     };
   }
 
-  public commands = ({ schema }: SchemaParams): ExtensionCommandFunction => attrs =>
-    replaceText(null, schema.nodes[this.name], attrs);
+  public commands = ({ type }: SchemaNodeTypeParams): ExtensionCommandFunction => attrs =>
+    replaceText(null, type, attrs);
 
   public plugins({  }: SchemaNodeTypeParams) {
     return [];

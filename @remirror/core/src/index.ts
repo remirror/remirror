@@ -8,3 +8,4 @@ export * from './nodes';
 export * from './document-helpers';
 export * from './helpers';
 export * from './portal-container';
+export * from './constants';

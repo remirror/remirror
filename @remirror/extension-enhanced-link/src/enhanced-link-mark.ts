@@ -5,6 +5,7 @@ import {
   EditorState,
   findMatches,
   getMatchString,
+  LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
   MarkExtensionSpec,
   markPasteRule,
@@ -19,8 +20,6 @@ import { Plugin, TextSelection, Transaction } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
 import { EditorView } from 'prosemirror-view';
 import { extractUrl } from './extract-url';
-
-const OBJECT_REPLACING_CHARACTER = '\ufffc';
 
 export interface EnhancedLinkOptions {
   onUrlsChange?(params: { set: Set<string>; urls: string[] }): void;
@@ -109,7 +108,7 @@ export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
 
           // Check that the mark should still be active
           const searchText =
-            doc.textBetween($from.start(), from, undefined, OBJECT_REPLACING_CHARACTER) +
+            doc.textBetween($from.start(), from, undefined, LEAF_NODE_REPLACING_CHARACTER) +
             doc.textBetween(to, $to.end());
 
           let tr = state.tr;

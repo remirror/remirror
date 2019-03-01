@@ -12,7 +12,7 @@ import {
 
 export type ExtraAttrs = Array<string | [string, string]>;
 
-export interface NodeExtensionProps {
+export interface NodeExtensionOptions {
   /**
    * Inject additional attributes.
    */
@@ -20,7 +20,7 @@ export interface NodeExtensionProps {
 }
 
 export abstract class NodeExtension<
-  GOptions extends NodeExtensionProps = NodeExtensionProps
+  GOptions extends NodeExtensionOptions = NodeExtensionOptions
 > extends Extension<GOptions, NodeType<EditorSchema>> {
   get type() {
     return ExtensionType.NODE;

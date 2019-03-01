@@ -13,6 +13,7 @@ import {
 import { NodeViewPortalContainer } from './portal-container';
 import {
   ActionMethods,
+  Attrs,
   CommandParams,
   EditorSchema,
   ExtensionBooleanFunction,
@@ -156,32 +157,34 @@ export class ExtensionManager {
    * Typically actions are used to create interactive menus.
    * For example a menu can use a command to toggle bold.
    */
-  private commands = createFlexibleFunctionMap<'commands', () => void, ExtensionCommandFunction>({
-    ctx: this,
-    key: 'commands',
-    methodFactory: (params, method) => () => {
-      if (!params.isEditable()) {
-        return false;
-      }
-      params.view.focus();
-      return method()(params.view.state, params.view.dispatch);
+  private commands = createFlexibleFunctionMap<'commands', (attrs?: Attrs) => void, ExtensionCommandFunction>(
+    {
+      ctx: this,
+      key: 'commands',
+      methodFactory: (params, method) => (attrs?: Attrs) => {
+        if (!params.isEditable()) {
+          return false;
+        }
+        params.view.focus();
+        return method(attrs)(params.view.state, params.view.dispatch);
+      },
+      checkUniqueness: true,
+      arrayTransformer: (fns, params, methodFactory) => () => {
+        fns.forEach(callback => {
+          methodFactory(params, callback);
+        });
+      },
+      getItemParams: (ext, params) =>
+        ext.commands({
+          schema: params.schema,
+          ...(isMarkExtension(ext)
+            ? { type: params.schema.marks[ext.name] }
+            : isNodeExtension(ext)
+            ? { type: params.schema.nodes[ext.name] }
+            : {}),
+        }),
     },
-    checkUniqueness: true,
-    arrayTransformer: (fns, params, methodFactory) => () => {
-      fns.forEach(callback => {
-        methodFactory(params, callback);
-      });
-    },
-    getItemParams: (ext, params) =>
-      ext.commands({
-        schema: params.schema,
-        ...(isMarkExtension(ext)
-          ? { type: params.schema.marks[ext.name] }
-          : isNodeExtension(ext)
-          ? { type: params.schema.nodes[ext.name] }
-          : {}),
-      }),
-  });
+  );
 
   /**
    * Creates methods determining whether a node is active or inactive

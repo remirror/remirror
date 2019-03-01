@@ -1,7 +1,7 @@
 import {
   Attrs,
   NodeExtension,
-  NodeExtensionProps,
+  NodeExtensionOptions,
   NodeExtensionSpec,
   PMNode,
   SchemaNodeTypeParams,
@@ -10,7 +10,7 @@ import {
   toggleBlockItem,
 } from '@remirror/core';
 
-export interface HeadingOptions extends NodeExtensionProps {
+export interface HeadingOptions extends NodeExtensionOptions {
   levels: number[];
 }
 
