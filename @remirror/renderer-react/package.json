@@ -6,17 +6,15 @@
   "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/renderer-react",
   "version": "0.0.1-alpha.2",
   "main": "lib/index.js",
-  "module": "lib/dist/remirror-renderer-react.esm.js",
+  "module": "lib/dist/renderer-react.esm.js",
   "files": [
     "lib",
     "src"
   ],
   "scripts": {
-
     "build": "run-s build:declaration build:babel",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-
     "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
     "test": "jest",
@@ -43,8 +41,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "umd": "lib/dist/remirror-renderer-react.umd.js",
-  "umd:min": "lib/dist/remirror-renderer-react.umd.min.js",
+  "umd": "lib/dist/renderer-react.umd.js",
+  "umd:min": "lib/dist/renderer-react.umd.min.js",
   "umdGlobals": {
     "react": "React",
     "@remirror/core": "RemirrorCore",

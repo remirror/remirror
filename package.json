@@ -10,7 +10,6 @@
     ]
   },
   "scripts": {
-    "_launch:docs": "node support/scripts/live-server.js",
     "build": "run-s build:modules build:rollup build:docs",
     "build:docs": "docz build",
     "build:modules": "lerna run build --stream",
@@ -19,7 +18,7 @@
     "checks": "run-s integrity lint typecheck test",
     "checks:parallel": "run-p lint typecheck test",
     "ci": "yarn clean; yarn frozen;",
-    "ci:checks": "run-s integrity lint typecheck build test:ci",
+    "ci:checks": "run-s integrity lint typecheck build test:ci size:ci",
     "clean": "git clean -fdx",
     "clean:modules": "git clean -fdx @remirror support docs",
     "dev": "lerna run dev --parallel",
@@ -32,7 +31,7 @@
     "fix:support": "tslint --project support/tsconfig.json --config tslint.json --fix",
     "frozen": "yarn --frozen-lockfile install",
     "integrity": "yarn check --integrity",
-    "launch:docs": "cross-env COVERAGE=true docz dev",
+    "launch:docs": "cross-env COVERAGE=true echo \"Launching...\" && docz dev --debug > /dev/null && echo \"Done 😀\"",
     "lint": "run-s lint:*",
     "lint:babel": "eslint **/.babelrc.js",
     "lint:js": "eslint support *.js @remirror docs",
@@ -43,7 +42,7 @@
     "size": "size-limit",
     "size:ci": "bundlesize",
     "test": "jest",
-    "test:ci": "cross-env TEST_ENV=live jest",
+    "test:ci": "cross-env TEST_ENV=live start-server-and-test launch:docs http-get://localhost:3000 test",
     "test:ci:watch": "cross-env TEST_ENV=live yarn test:watch",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
     "typecheck": "lerna run typecheck"
@@ -53,7 +52,31 @@
   },
   "bundlesize": [
     {
-      "path": "@remirror/*/lib/index.js"
+      "path": "@remirror/core/lib/dist/core.umd.min.js"
+    },
+    {
+      "path": "@remirror/core-extensions/lib/dist/core-extensions.umd.min.js"
+    },
+    {
+      "path": "@remirror/extension-emoji/lib/dist/extension-emoji.umd.min.js"
+    },
+    {
+      "path": "@remirror/extension-enhanced-link/lib/dist/extension-enhanced-link.umd.min.js"
+    },
+    {
+      "path": "@remirror/extension-mention/lib/dist/extension-mention.umd.min.js"
+    },
+    {
+      "path": "@remirror/react/lib/dist/react.umd.min.js"
+    },
+    {
+      "path": "@remirror/remirror/lib/dist/remirror.umd.min.js"
+    },
+    {
+      "path": "@remirror/renderer-react/lib/dist/renderer-react.umd.min.js"
+    },
+    {
+      "path": "@remirror/ui-twitter/lib/dist/ui-twitter.umd.min.js"
     }
   ],
   "husky": {

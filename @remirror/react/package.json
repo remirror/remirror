@@ -12,11 +12,9 @@
     "src"
   ],
   "scripts": {
-
     "build": "run-s build:declaration build:babel",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-
     "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
     "test": "jest",
@@ -56,8 +54,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "umd": "lib/dist/remirror-react.umd.js",
-  "umd:min": "lib/dist/remirror-react.umd.min.js",
+  "umd": "lib/dist/react.umd.js",
+  "umd:min": "lib/dist/react.umd.min.js",
   "umdGlobals": {
     "react": "React",
     "react-dom": "ReactDOM",

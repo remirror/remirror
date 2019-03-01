@@ -39,6 +39,9 @@ function configure(pkg, env, target) {
       extensions,
     }),
 
+    // Convert JSON imports to ES6 modules.
+    json(),
+
     // Allow Rollup to resolve CommonJS modules, since it only resolves ES2015
     // modules by default.
     isUmd &&
@@ -59,9 +62,6 @@ function configure(pkg, env, target) {
         extensions,
       }),
 
-    // Convert JSON imports to ES6 modules.
-    json(),
-
     // Replace `process.env.NODE_ENV` with its value, which enables some modules
     // like React and Remirror to use their production variant.
     replace({
@@ -75,6 +75,7 @@ function configure(pkg, env, target) {
     babel({
       include: [`@remirror/${folderName}/src/**`],
       extensions,
+      exclude: ['node_modules/**', '*.json'],
     }),
 
     // Register Node.js globals for browserify compatibility.
