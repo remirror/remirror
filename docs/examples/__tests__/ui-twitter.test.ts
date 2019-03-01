@@ -131,4 +131,20 @@ describe('Twitter UI', () => {
   describe.skip('Emoji', () => {
     it.todo('should be able to add emoji');
   });
+
+  describe('Combined', () => {
+    it.skip('should combine mentions emoji and links', async () => {
+      await page.type(editorSelector, 'hello @ab 😀 google.com');
+      await page.keyboard.press('Enter');
+      // ! When pressing enter the url mark overwrites other code
+      await expect(outerHTML(sel(editorSelector, 'a'))).resolves.toMatchInlineSnapshot();
+    });
+
+    it.skip('should not replace emoji with link when no space imbetween', async () => {
+      await page.type(editorSelector, '😀 google.com');
+      await expect(
+        innerHtml(sel(editorSelector, 'span.remirror-editor-emoji-node')),
+      ).resolves.toMatchInlineSnapshot();
+    });
+  });
 });
