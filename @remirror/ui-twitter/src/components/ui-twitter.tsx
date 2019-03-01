@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 
 import { css, Interpolation } from '@emotion/core';
-import { AnyExtension, EditorSchema, Omit } from '@remirror/core';
+import { AnyExtension, Attrs, EditorSchema, Omit } from '@remirror/core';
+import { EmojiNode } from '@remirror/extension-emoji';
 import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
 import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
 import { Remirror, RemirrorProps } from '@remirror/react';
@@ -133,6 +134,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
         },
       }),
       new EnhancedLink({ onUrlsChange: this.props.onUrlsChange }),
+      new EmojiNode({ set: 'twitter', size: 14 }),
     ];
   }
 
@@ -263,6 +265,15 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     return omit(this.props, ['userData', 'tagData', 'onMentionStateChange', 'theme']);
   }
 
+  private addEmoji = (method: (attrs: Attrs) => void) => () => {
+    const emoji = {
+      id: 'smiley',
+      name: 'Smiling Face with Open Mouth',
+      native: '😃',
+    };
+    method(emoji);
+  };
+
   public render() {
     const { mention } = this.state;
     return (
@@ -282,14 +293,14 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
           extensions={this.extensions}
           onChange={this.onChange}
         >
-          {({ getRootProps, view }) => {
+          {({ getRootProps, view, actions }) => {
             const content = view.state.doc.textContent;
             this.storeView(view);
 
             const { css: extra, ...rest } = getRootProps();
             return (
               <div>
-                <RemirrorWrapper {...rest} extra={extra}>
+                <RemirrorWrapper {...rest} extra={[extra]}>
                   <CharacterCountWrapper>
                     <CharacterCountIndicator characters={{ total: 140, used: content.length }} />
                   </CharacterCountWrapper>
@@ -301,6 +312,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
                     <HashSuggestions data={this.tagMatches} submitFactory={mention.submitFactory} />
                   )}
                 </div>
+                <button onClick={this.addEmoji(actions.emoji.run)}>Add Emoji</button>
               </div>
             );
           }}
@@ -323,8 +335,6 @@ const CharacterCountWrapper = styled.div`
 `;
 
 const RemirrorWrapper = styled.div<{ extra: Interpolation[] }>`
-  ${props => css(props.extra)};
-
   position: relative;
 
   .remirror-editor:focus {
@@ -367,6 +377,8 @@ const RemirrorWrapper = styled.div<{ extra: Interpolation[] }>`
   .remirror-editor .ProseMirror-selectednode {
     background-color: rgb(245, 248, 250);
   }
+
+  ${props => css(props.extra)};
 `;
 
 /* Character count -

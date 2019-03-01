@@ -1,9 +1,8 @@
-import { Schema } from 'prosemirror-model';
 import { AnyFunc } from 'simplytyped';
 import { AnyExtension, Extension } from './extension';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
-import { CommandParams, ExtensionType, FlexibleConfig } from './types';
+import { CommandParams, ExtensionType, FlexibleConfig, SchemaParams } from './types';
 
 type MethodFactory<GMappedFunc extends AnyFunc, GFunc extends AnyFunc> = (
   params: CommandParams,
@@ -140,15 +139,15 @@ export const extensionPropertyMapper = <
   GExtMethodProp extends ExtensionMethodProperties
 >(
   property: GExtMethodProp,
-  schema: Schema,
+  params: SchemaParams,
 ) => (extension: GExt) => {
   const extensionMethod = extension[property];
   if (!extensionMethod) {
     return {};
   }
   return isNodeExtension(extension)
-    ? extensionMethod.bind(extension)({ schema, type: schema.nodes[extension.name] })
+    ? extensionMethod.bind(extension)({ ...params, type: params.schema.nodes[extension.name] })
     : isMarkExtension(extension)
-    ? extensionMethod.bind(extension)!({ schema, type: schema.marks[extension.name] })
-    : extensionMethod.bind(extension)!({ schema });
+    ? extensionMethod.bind(extension)!({ ...params, type: params.schema.marks[extension.name] })
+    : extensionMethod.bind(extension)!(params);
 };

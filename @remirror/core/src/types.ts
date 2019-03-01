@@ -8,6 +8,7 @@ import {
   Transaction,
 } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
+import { NodeViewPortalContainer } from './portal-container';
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -72,6 +73,8 @@ export { PMNode, PMPlugin };
 
 export interface SchemaParams {
   schema: EditorSchema;
+  getPortalContainer: () => NodeViewPortalContainer;
+  getEditorState: () => EditorState;
 }
 
 export interface SchemaWithStateParams extends SchemaParams {

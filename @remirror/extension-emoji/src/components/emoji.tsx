@@ -8,12 +8,19 @@ import { EmojiNodeAttrs } from '../types';
 
 export interface EmojiProps extends NodeViewComponentProps<EmojiNodeAttrs> {
   set: EmojiSet;
+  size: number;
 }
 
-export const Emoji: FC<EmojiProps> = ({ node, set }) => {
+export const Emoji: FC<EmojiProps> = ({ node, set, size }) => {
   const { id } = node.attrs;
   const emojiData = getEmojiDataById(id);
   return emojiData ? (
-    <EmojiComponent size={64} emoji={emojiData} skin={emojiData.skin || undefined} tooltip={true} set={set} />
+    <EmojiComponent
+      emoji={emojiData}
+      skin={emojiData.skin || undefined}
+      tooltip={true}
+      set={set}
+      size={size}
+    />
   ) : null;
 };

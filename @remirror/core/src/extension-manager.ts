@@ -84,10 +84,10 @@ export class ExtensionManager {
   /**
    * Retrieve all plugins from the passed in extensions
    */
-  public plugins({ schema }: SchemaParams): ProsemirrorPlugin[] {
+  public plugins(params: SchemaParams): ProsemirrorPlugin[] {
     const extensionPlugins = this.extensions
       .filter(hasExtensionProperty('plugins'))
-      .map(extensionPropertyMapper('plugins', schema)) as ProsemirrorPlugin[][];
+      .map(extensionPropertyMapper('plugins', params)) as ProsemirrorPlugin[][];
 
     return extensionPlugins.reduce((allPlugins, plugins) => [...allPlugins, ...plugins], []);
   }
@@ -95,20 +95,20 @@ export class ExtensionManager {
   /**
    * Retrieve all keymaps (how the editor responds to keyboard commands).
    */
-  public keymaps({ schema }: SchemaParams): ProsemirrorPlugin[] {
+  public keymaps(params: SchemaParams): ProsemirrorPlugin[] {
     const extensionKeymaps = this.extensions
       .filter(hasExtensionProperty('keys'))
-      .map(extensionPropertyMapper('keys', schema));
+      .map(extensionPropertyMapper('keys', params));
     return extensionKeymaps.map(keys => keymap(keys));
   }
 
   /**
    * Retrieve all inputRules (how the editor responds to text matching certain rules).
    */
-  public inputRules({ schema }: SchemaParams) {
+  public inputRules(params: SchemaParams) {
     const extensionInputRules = this.extensions
       .filter(hasExtensionProperty('inputRules'))
-      .map(extensionPropertyMapper('inputRules', schema)) as InputRule[][];
+      .map(extensionPropertyMapper('inputRules', params)) as InputRule[][];
 
     return extensionInputRules.reduce((allInputRules, inputRules) => [...allInputRules, ...inputRules], []);
   }
@@ -116,10 +116,10 @@ export class ExtensionManager {
   /**
    * Retrieve all pasteRules (rules for how the editor responds to pastedText).
    */
-  public pasteRules({ schema }: SchemaParams): ProsemirrorPlugin[] {
+  public pasteRules(params: SchemaParams): ProsemirrorPlugin[] {
     const extensionPasteRules = this.extensions
       .filter(hasExtensionProperty('pasteRules'))
-      .map(extensionPropertyMapper('pasteRules', schema)) as ProsemirrorPlugin[][];
+      .map(extensionPropertyMapper('pasteRules', params)) as ProsemirrorPlugin[][];
 
     return extensionPasteRules.reduce((allPasteRules, pasteRules) => [...allPasteRules, ...pasteRules], []);
   }
@@ -177,6 +177,8 @@ export class ExtensionManager {
       getItemParams: (ext, params) =>
         ext.commands({
           schema: params.schema,
+          getEditorState: this.getEditorState,
+          getPortalContainer: this.getPortalContainer,
           ...(isMarkExtension(ext)
             ? { type: params.schema.marks[ext.name] }
             : isNodeExtension(ext)
@@ -219,6 +221,7 @@ const booleanFlexibleFunctionMap = <GKey extends 'enabled' | 'active'>(key: GKey
       extension[key]({
         schema: params.schema,
         getEditorState: ctx.getEditorState,
+        getPortalContainer: ctx.getPortalContainer,
       }),
   });
 };

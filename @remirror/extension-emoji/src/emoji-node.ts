@@ -1,4 +1,5 @@
 import {
+  Attrs,
   ExtensionCommandFunction,
   NodeExtension,
   NodeExtensionOptions,
@@ -7,9 +8,14 @@ import {
   replaceText,
   SchemaNodeTypeParams,
 } from '@remirror/core';
+import { createEmojiPlugin, CreateEmojiPluginParams } from './create-emoji-plugin';
 import { EmojiNodeAttrs } from './types';
 
-export interface EmojiNodeOptions extends NodeExtensionOptions {}
+export interface EmojiNodeOptions
+  extends NodeExtensionOptions,
+    Pick<CreateEmojiPluginParams, 'set' | 'size'> {
+  transformAttrs?(attrs: EmojiNodeAttrs): Attrs;
+}
 
 export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
   /**
@@ -22,14 +28,20 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
   get defaultOptions() {
     return {
       extraAttrs: [],
+      transformAttrs: (attrs: EmojiNodeAttrs) => ({
+        'aria-label': `Emoji: ${attrs.name}`,
+        title: `Emoji: ${attrs.name}`,
+      }),
     };
   }
 
   get schema(): NodeExtensionSpec {
+    const { transformAttrs } = this.options;
     return {
       inline: true,
       group: 'inline',
       selectable: false,
+      atom: true,
       attrs: {
         id: { default: '' },
         native: { default: '' },
@@ -55,19 +67,23 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
           'data-emoji-id': id,
           'data-emoji-native': native,
           'data-emoji-name': name,
-          'aria-label': `Emoji: ${node.attrs.name}`,
-          title: `Emoji: ${node.attrs.name}`,
+          ...transformAttrs({ id, name, native }),
           contenteditable: 'false',
         };
+        console.log(attrs);
         return ['span', attrs, native];
       },
     };
   }
 
-  public commands = ({ type }: SchemaNodeTypeParams): ExtensionCommandFunction => attrs =>
-    replaceText(null, type, attrs);
+  public commands = ({ type }: SchemaNodeTypeParams): ExtensionCommandFunction => attrs => {
+    console.log(attrs);
+    attrs = { ...attrs, ...this.options.transformAttrs(attrs as EmojiNodeAttrs) };
+    return replaceText(null, type, attrs);
+  };
 
-  public plugins({  }: SchemaNodeTypeParams) {
-    return [];
+  public plugins({ getPortalContainer }: SchemaNodeTypeParams) {
+    const { set, size } = this.options;
+    return [createEmojiPlugin({ key: this.pluginKey, getPortalContainer, set, size })];
   }
 }

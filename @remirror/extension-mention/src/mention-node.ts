@@ -1,7 +1,7 @@
 import {
   ExtensionCommandFunction,
   NodeExtension,
-  NodeExtensionProps,
+  NodeExtensionOptions,
   NodeExtensionSpec,
   Omit,
   replaceText,
@@ -13,7 +13,7 @@ import { createSuggestionsPlugin, SuggestionsPluginProps } from './create-sugges
 
 export interface MentionNodeExtensionOptions
   extends Omit<SuggestionsPluginProps, 'command' | 'decorationsTag'>,
-    NodeExtensionProps {
+    NodeExtensionOptions {
   mentionClassName?: string;
   /**
    * Allows for multiple mentions extensions to be registered for one editor.

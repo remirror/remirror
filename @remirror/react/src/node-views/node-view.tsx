@@ -17,11 +17,11 @@ export interface NodeViewComponentProps<GAttrs = any> {
 export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView {
   public static createNodeView<GProps extends PlainObject = {}>(
     Component: React.ComponentType<NodeViewComponentProps & GProps>,
-    portalProviderContainer: NodeViewPortalContainer,
+    getPortalContainer: () => NodeViewPortalContainer,
     props: GProps,
   ) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
-      new ReactNodeView(node, view, getPosition, portalProviderContainer, props, Component).init();
+      new ReactNodeView(node, view, getPosition, getPortalContainer, props, Component).init();
   }
 
   private domRef?: HTMLElement;
@@ -32,7 +32,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     public node: ProsemirrorNode,
     public view: EditorView,
     private getPosition: GetPosition,
-    private portalProviderContainer: NodeViewPortalContainer,
+    private getPortalContainer: () => NodeViewPortalContainer,
     public props: GProps = {} as GProps,
     private Component: React.ComponentType<NodeViewComponentProps & GProps>,
     private hasContext: boolean = false,
@@ -77,7 +77,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
       return;
     }
 
-    this.portalProviderContainer.render(component, this.domRef!, this.hasContext);
+    this.getPortalContainer().render(component, this.domRef!, this.hasContext);
   }
 
   public createDomRef(): HTMLElement {
@@ -152,7 +152,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
       return;
     }
 
-    this.portalProviderContainer.remove(this.domRef);
+    this.getPortalContainer().remove(this.domRef);
     this.domRef = undefined;
     this.contentDOM = undefined;
   }

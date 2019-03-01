@@ -12,11 +12,9 @@
     "src"
   ],
   "scripts": {
-
     "build": "run-s build:declaration build:babel",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-
     "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
     "test": "jest",
@@ -28,8 +26,8 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@remirror/core": "0.0.1-alpha.2",
-    "@remirror/react": "0.0.1-alpha.2",
     "@remirror/core-extensions": "0.0.1-alpha.2",
+    "@remirror/react": "0.0.1-alpha.2",
     "@types/emoji-mart": "2.8.2",
     "@types/lodash": "4.14.121",
     "@types/prosemirror-model": "1.7.0",
@@ -37,6 +35,7 @@
     "@types/prosemirror-view": "1.3.1",
     "emoji-mart": "2.9.2",
     "emoji-regex": "7.0.3",
+    "emotion": "10.0.7",
     "lodash": "4.17.11",
     "prosemirror-model": "1.7.0",
     "prosemirror-state": "1.2.2",
@@ -46,8 +45,8 @@
   "peerDependencies": {
     "@types/react": "^16.8.6",
     "@types/react-dom": "^16.8.2",
-    "react-dom": "^16.8.3",
-    "react": "^16.8.3"
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
   },
   "devDependencies": {
     "jest-remirror": "0.0.1-alpha.2"

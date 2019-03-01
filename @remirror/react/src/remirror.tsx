@@ -16,6 +16,7 @@ import {
   ProsemirrorPlugin,
   RawMenuPositionData,
   RemirrorActions,
+  SchemaParams,
   selectParentNode,
   ShouldRenderMenu,
   Text,
@@ -140,16 +141,15 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     this.pluginKeys = this.extensionManager.pluginKeys;
     this.schema = this.extensionManager.createSchema();
 
-    const schemaParam = { schema: this.schema };
-    this.extensionPlugins = this.extensionManager.plugins(schemaParam);
-    this.keymaps = this.extensionManager.keymaps(schemaParam);
-    this.inputRules = this.extensionManager.inputRules(schemaParam);
-    this.pasteRules = this.extensionManager.pasteRules(schemaParam);
+    this.extensionPlugins = this.extensionManager.plugins(this.schemaParams);
+    this.keymaps = this.extensionManager.keymaps(this.schemaParams);
+    this.inputRules = this.extensionManager.inputRules(this.schemaParams);
+    this.pasteRules = this.extensionManager.pasteRules(this.schemaParams);
 
     this.state = this.createInitialState();
     this.view = this.createView();
     this.actions = this.extensionManager.actions({
-      schema: this.schema,
+      ...this.schemaParams,
       view: this.view,
       isEditable: () => this.props.editable,
     });
@@ -157,13 +157,37 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   }
 
   /**
+   * Utility getter for accessing the schema params
+   *
+   * @readonly
+   * @private
+   */
+  private get schemaParams(): SchemaParams {
+    return {
+      schema: this.schema,
+      getEditorState: this.getEditorState,
+      getPortalContainer: this.getPortalContainer,
+    };
+  }
+
+  /**
+   * Retrieve the editor state. This is passed through to the extension manager
+   */
+  private getEditorState = () => this.state.editorState;
+
+  /**
+   * Retrieve the portal container which used for managing node views which contain react components via the portal api.
+   */
+  private getPortalContainer = () => this.portalContainer;
+
+  /**
    * Create the extensions configuration through the extension manager
    */
   private createExtensions() {
     return new ExtensionManager(
       [...this.builtInExtensions, ...this.props.extensions],
-      () => this.state.editorState,
-      () => this.portalContainer,
+      this.getEditorState,
+      this.getPortalContainer,
     );
   }
 
