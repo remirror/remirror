@@ -101,6 +101,8 @@ export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
           const hasReplaceTransactions = transactions.some(({ steps }) =>
             steps.some(step => step instanceof ReplaceStep),
           );
+          const char = LEAF_NODE_REPLACING_CHARACTER;
+          const leafChar = ' '; // Used to represent leaf nodes as text otherwise they just get replaced
 
           if (!hasReplaceTransactions) {
             return;
@@ -108,8 +110,8 @@ export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
 
           // Check that the mark should still be active
           const searchText =
-            doc.textBetween($from.start(), from, undefined, LEAF_NODE_REPLACING_CHARACTER) +
-            doc.textBetween(to, $to.end());
+            doc.textBetween($from.start(), from, char, leafChar) +
+            doc.textBetween(to, $to.end(), char, leafChar);
 
           let tr = state.tr;
           const collectedParams: EnhancedLinkHandlerProps[] = [];
@@ -117,7 +119,7 @@ export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
           // If at the start of a new line (i.e. new block added and not at the start of the document)
           if (from === $from.start() && from >= 2) {
             const $pos = doc.resolve(from - 2);
-            const prevSearchText = doc.textBetween($pos.start(), $pos.end());
+            const prevSearchText = doc.textBetween($pos.start(), $pos.end(), char, leafChar);
             findMatches(prevSearchText, extractUrl).forEach(match => {
               const startIndex = match.index;
 
@@ -137,8 +139,7 @@ export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
             const url = match[1];
             const start = $from.start() + startIndex;
             const end = $from.start() + startIndex + match[0].length;
-
-            const textBefore = doc.textBetween(start - 1, start); // The text directly before the match
+            const textBefore = doc.textBetween(start - 1, start, char, leafChar); // The text directly before the match
             if (!/[\w\d]/.test(textBefore)) {
               collectedParams.push({ state, url, start, end });
             }
