@@ -10,6 +10,7 @@ import {
   isMarkExtension,
   isNodeExtension,
 } from './extension-manager.helpers';
+import { NodeViewPortalContainer } from './portal-container';
 import {
   ActionMethods,
   CommandParams,
@@ -27,6 +28,7 @@ export class ExtensionManager {
   constructor(
     public readonly extensions: AnyExtension[],
     public readonly getEditorState: () => EditorState,
+    public readonly getPortalContainer: () => NodeViewPortalContainer,
   ) {}
 
   /**

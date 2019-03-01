@@ -9,7 +9,7 @@ import {
   SchemaParams,
 } from '@remirror/core';
 import { startCase } from 'lodash';
-import { SuggestionsPlugin, SuggestionsPluginProps } from './suggestions';
+import { createSuggestionsPlugin, SuggestionsPluginProps } from './create-suggestions-plugin';
 
 export interface MentionNodeExtensionOptions
   extends Omit<SuggestionsPluginProps, 'command' | 'decorationsTag'>,
@@ -105,7 +105,7 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
 
   public plugins({ type }: SchemaNodeTypeParams) {
     return [
-      SuggestionsPlugin({
+      createSuggestionsPlugin({
         key: this.pluginKey,
         command: ({ range, attrs }) => replaceText(range, type, attrs),
         appendText: this.options.appendText,

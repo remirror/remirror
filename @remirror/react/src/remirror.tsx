@@ -8,6 +8,7 @@ import {
   ExtensionManager,
   getMarkAttrs,
   getPluginKeyState,
+  NodeViewPortalContainer,
   ObjectNode,
   OffsetCalculator,
   Paragraph,
@@ -23,7 +24,7 @@ import { History, Placeholder, PlaceholderPluginState } from '@remirror/core-ext
 import { isString, memoize, pick, uniqueId } from 'lodash';
 import { InputRule, inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
-import { DOMParser, DOMSerializer, Schema } from 'prosemirror-model';
+import { DOMParser, DOMSerializer } from 'prosemirror-model';
 import { EditorState, PluginKey, Transaction } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import {
@@ -42,7 +43,7 @@ import {
   simpleOffsetCalculator,
   uniqueClass,
 } from './helpers';
-import { NodeViewPortal, NodeViewPortalComponent } from './node-views/portal';
+import { NodeViewPortal, NodeViewPortalComponent } from './node-views';
 import { defaultStyles } from './styles';
 import {
   GetRootPropsConfig,
@@ -109,6 +110,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   private actions: RemirrorActions;
   private markAttrs: Record<string, Record<string, string>>;
   private pluginKeys: Record<string, PluginKey>;
+  private portalContainer!: NodeViewPortalContainer;
 
   private get builtInExtensions() {
     return !this.props.usesBuiltInExtensions
@@ -161,6 +163,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     return new ExtensionManager(
       [...this.builtInExtensions, ...this.props.extensions],
       () => this.state.editorState,
+      () => this.portalContainer,
     );
   }
 
@@ -541,6 +544,17 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       : undefined;
   }
 
+  /**
+   * Stores the portal container which is passed through to plugins and their node views
+   *
+   * @param container
+   */
+  private setPortalContainer(container: NodeViewPortalContainer) {
+    if (!this.portalContainer) {
+      this.portalContainer = container;
+    }
+  }
+
   public render() {
     const { children } = this.props;
     if (!isRenderProp(children)) {
@@ -565,12 +579,15 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
 
     return element ? (
       <NodeViewPortal>
-        {portalContainer => (
-          <>
-            {element}
-            <NodeViewPortalComponent nodeViewPortalContainer={portalContainer} />
-          </>
-        )}
+        {portalContainer => {
+          this.setPortalContainer(portalContainer);
+          return (
+            <>
+              {element}
+              <NodeViewPortalComponent nodeViewPortalContainer={portalContainer} />
+            </>
+          );
+        }}
       </NodeViewPortal>
     ) : null;
   }

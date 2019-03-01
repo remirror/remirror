@@ -24,7 +24,7 @@ const text = new Text();
 const paragraph = new Paragraph();
 const dummy = new DummyMark();
 
-const em = new ExtensionManager([doc, text, paragraph, dummy], () => state.editorState);
+const em = new ExtensionManager([doc, text, paragraph, dummy], () => state.editorState, () => Cast({}));
 test('-properties', () => {
   expect(em).toBeInstanceOf(ExtensionManager);
   expect(em.extensions).toHaveLength(4);

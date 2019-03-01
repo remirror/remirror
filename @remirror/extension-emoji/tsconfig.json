@@ -2,8 +2,9 @@
   "extends": "../../base.tsconfig.json",
   "compilerOptions": {
     "lib": ["esnext", "dom"],
+    "jsx": "react",
     "outDir": "lib",
     "types": ["jest", "jest-extended", "jest-axe", "jest-dom/extend-expect"]
   },
-  "include": ["src"]
+  "include": ["src", "../jest-remirror/src/builder.ts"]
 }

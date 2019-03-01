@@ -12,11 +12,11 @@
     "src"
   ],
   "scripts": {
-    "prebuild": "run-s clean lint",
+
     "build": "run-s build:declaration build:babel",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "clean": "rimraf lib",
+
     "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
     "test": "jest",
@@ -35,7 +35,7 @@
     "prosemirror-history": "1.0.4",
     "prosemirror-model": "1.7.0",
     "prosemirror-state": "1.2.2",
-    "prosemirror-view": "1.8.1"
+    "prosemirror-view": "1.8.2"
   },
   "publishConfig": {
     "access": "public"

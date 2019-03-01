@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@remirror/docz",
+  "name": "docs",
   "description": "docs and examples for the remirror editor",
   "license": "MIT",
   "version": "0.0.1-alpha.2",

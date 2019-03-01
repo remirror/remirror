@@ -16,7 +16,7 @@ import {
 } from '@remirror/core-extensions';
 
 /** All the required and core extensions for testing */
-const extensions = [
+export const baseExtensions = [
   new Doc(),
   new Text(),
   new Paragraph(),
@@ -35,6 +35,6 @@ const extensions = [
   new OrderedList(),
 ];
 
-const extensionManager = new ExtensionManager(extensions, () => Cast({}));
+const extensionManager = new ExtensionManager(baseExtensions, () => Cast({}), () => Cast({}));
 
-export const schema = extensionManager.createSchema();
+export const testSchema = extensionManager.createSchema();

@@ -138,7 +138,7 @@ const triggerCharacter = (
   return position;
 };
 
-export const SuggestionsPlugin = ({
+export const createSuggestionsPlugin = ({
   matcher: _matcher = defaultMatcher,
   appendText = null,
   command = () => defaultHandler,

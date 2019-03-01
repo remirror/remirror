@@ -12,11 +12,11 @@
     "src"
   ],
   "scripts": {
-    "prebuild": "run-s clean lint",
+
     "build": "run-s build:declaration build:babel",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "clean": "rimraf lib",
+
     "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
     "test": "jest",
@@ -27,16 +27,18 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "jest-snapshot": "24.1.0",
     "@remirror/core": "0.0.1-alpha.2",
     "@remirror/core-extensions": "0.0.1-alpha.2",
     "@remirror/react": "0.0.1-alpha.2",
     "@remirror/renderer-react": "0.0.1-alpha.2",
+    "@types/lodash": "4.14.121",
     "@types/prosemirror-model": "1.7.0",
-    "prosemirror-model": "1.7.0",
-    "keycode": "2.2.0",
     "@types/prosemirror-view": "1.3.1",
-    "prosemirror-view": "1.8.1"
+    "jest-snapshot": "24.1.0",
+    "keycode": "2.2.0",
+    "lodash": "4.17.11",
+    "prosemirror-model": "1.7.0",
+    "prosemirror-view": "1.8.2"
   },
   "peerDependencies": {
     "@types/react": "^16.7.18",

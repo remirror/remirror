@@ -1,12 +1,12 @@
 import { findMatches } from '@remirror/core';
 import { flatten } from 'lodash';
 import { Fragment, Mark, MarkType, Node, NodeType, Schema, Slice } from 'prosemirror-model';
-import testSchema from './test-schema';
+import { testSchema } from './test-schema';
 
 /**
  * Represents a ProseMirror "position" in a document.
  */
-// type Position = number;
+export type RefPosition = number;
 
 /**
  * A useful feature of the builder is being able to declaratively mark positions
@@ -16,7 +16,7 @@ import testSchema from './test-schema';
  * every node in the tree that has a ref on any of its descendants.
  */
 export interface Refs {
-  [name: string]: position;
+  [name: string]: RefPosition;
 }
 
 /**
@@ -226,7 +226,7 @@ export function markFactory(type: MarkType, attrs = {}, allowDupes = false) {
 
 export const fragment = (...content: BuilderContent[]) => flatten<BuilderContent>(content);
 export const slice = (...content: BuilderContent[]) =>
-  new Slice(Fragment.from(coerce(content, sampleSchema).nodes), 0, 0);
+  new Slice(Fragment.from(coerce(content, testSchema).nodes), 0, 0);
 
 /**
  * Builds a 'clean' version of the nodes, without Refs or RefTrackers

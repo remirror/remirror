@@ -1,2 +1,2 @@
 export * from './mention-node';
-export * from './suggestions';
+export * from './create-suggestions-plugin';

@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@remirror/build",
+  "name": "dependencies",
   "description": "A collection of the build dependencies needed. Helps clear up the root package.json",
   "version": "0.0.1-alpha.1",
   "dependencies": {
@@ -32,6 +32,7 @@
     "@types/puppeteer": "1.12.1",
     "@types/react": "16.8.5",
     "@types/react-dom": "16.8.2",
+    "@types/yargs": "12.0.9",
     "awesome-typescript-loader": "5.2.1",
     "babel-jest": "24.1.0",
     "babel-loader": "8.0.5",
@@ -55,7 +56,10 @@
     "jest-axe": "3.1.1",
     "jest-circus": "24.1.0",
     "jest-cli": "24.1.0",
-    "@types/yargs": "12.0.9",
+    "ts-node": "8.0.2",
+    "tsconfig-paths": "3.8.0",
+    "bundlesize": "0.17.1",
+    "size-limit": "0.21.1",
     "jest-dom": "3.1.2",
     "jest-emotion": "10.0.7",
     "jest-extended": "0.11.1",
@@ -70,6 +74,7 @@
     "npm-run-all": "4.1.5",
     "prettier": "1.16.4",
     "prettier-package-json": "2.1.0",
+    "@types/prosemirror-test-builder": "1.0.0",
     "prosemirror-test-builder": "1.0.1",
     "puppeteer": "1.12.2",
     "puppeteer-to-istanbul": "https://github.com/ifiokjr/puppeteer-to-istanbul",
@@ -91,7 +96,7 @@
     "tslint": "5.13.0",
     "typescript": "3.3.3333",
     "typescript-styled-plugin": "0.14.0",
-    "webpack": "4.29.5",
+    "webpack": "4.29.6",
     "webpack-cli": "3.2.3"
   }
 }

@@ -1,17 +1,15 @@
 import {
   ExtensionCommandFunction,
   NodeExtension,
-  NodeExtensionProps,
   NodeExtensionSpec,
   PMNode,
   replaceText,
   SchemaNodeTypeParams,
   SchemaParams,
 } from '@remirror/core';
+import { BaseEmoji } from 'emoji-mart/dist-es/utils/emoji-index/nimble-emoji-index';
 
-export interface EmojiNodeExtensionOptions extends NodeExtensionProps {}
-
-export class EmojiNode extends NodeExtension<EmojiNodeExtensionOptions> {
+export class Emoji extends NodeExtension {
   /**
    * The name is dynamically generated based on the passed in type.
    */
@@ -26,41 +24,40 @@ export class EmojiNode extends NodeExtension<EmojiNodeExtensionOptions> {
   }
 
   get schema(): NodeExtensionSpec {
-    const schema: NodeExtensionSpec = {
+    return {
       inline: true,
       group: 'inline',
       selectable: false,
       attrs: {
-        shortName: { default: '' },
         id: { default: '' },
-        text: { default: '' },
+        native: { default: '' },
+        name: { default: '' },
         ...this.extraAttrs(),
       },
       parseDOM: [
         {
-          tag: 'span[data-emoji-short-name]',
+          tag: 'span[data-emoji-id]',
           getAttrs: domNode => {
             const dom = domNode as HTMLElement;
             return {
-              shortName: dom.getAttribute('data-emoji-short-name') || schema.attrs!.shortName.default,
-              id: dom.getAttribute('data-emoji-id') || schema.attrs!.id.default,
-              text: dom.getAttribute('data-emoji-text') || schema.attrs!.text.default,
+              id: dom.getAttribute('data-emoji-id') || '',
+              native: dom.getAttribute('data-emoji-native') || '',
+              name: dom.getAttribute('data-emoji-name') || '',
             };
           },
         },
       ],
       toDOM(node: PMNode) {
-        const { shortName, id, text } = node.attrs;
+        const { id, name, native } = node.attrs as BaseEmoji;
         const attrs = {
-          'data-emoji-short-name': shortName,
           'data-emoji-id': id,
-          'data-emoji-text': text,
+          'data-emoji-native': native,
+          'data-emoji-name': name,
           contenteditable: 'false',
         };
-        return ['span', attrs, text];
+        return ['span', attrs, native];
       },
     };
-    return schema;
   }
 
   public commands = ({ schema }: SchemaParams): ExtensionCommandFunction => attrs =>

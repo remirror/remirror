@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import { createPortal, unmountComponentAtNode, unstable_renderSubtreeIntoContainer } from 'react-dom';
-import { PlainObject } from 'simplytyped';
+import React from 'react';
+import { createPortal } from 'react-dom';
+
+import { NodeViewPortalContainer } from '@remirror/core';
 
 export interface NodeViewPortalProps {
   children: (nodeViewPortalContainer: NodeViewPortalContainer) => React.ReactChild | null;
@@ -8,51 +9,6 @@ export interface NodeViewPortalProps {
 
 export interface PortalRendererState {
   portals: Map<HTMLElement, React.ReactChild>;
-}
-
-interface MountedPortal {
-  children: () => React.ReactChild | null;
-  hasReactContext: boolean;
-}
-
-export class NodeViewPortalContainer {
-  public portals: Map<HTMLElement, MountedPortal> = new Map();
-  public context: any;
-
-  public setContext = <GContext extends Component<PlainObject>>(context: GContext) => {
-    this.context = context;
-  };
-
-  public render(
-    children: () => React.ReactChild | null,
-    container: HTMLElement,
-    hasReactContext: boolean = false,
-  ) {
-    this.portals.set(container, { children, hasReactContext });
-    unstable_renderSubtreeIntoContainer(this.context, children() as JSX.Element, container);
-  }
-
-  // TODO: Improve this code.
-  // we (unfortunately) need to re-render to pass down any updated context.
-  // selectively do this for nodeviews that opt-in via `hasReactContext`
-  public forceUpdate() {
-    this.portals.forEach((portal, container) => {
-      if (!portal.hasReactContext) {
-        return;
-      }
-
-      unstable_renderSubtreeIntoContainer(
-        this.context,
-        portal.children() as React.ReactElement<any>,
-        container,
-      );
-    });
-  }
-
-  public remove(container: HTMLElement) {
-    this.portals.delete(container);
-    unmountComponentAtNode(container);
-  }
 }
 
 export class NodeViewPortal extends React.Component<NodeViewPortalProps> {

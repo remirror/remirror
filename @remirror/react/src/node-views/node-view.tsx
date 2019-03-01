@@ -1,9 +1,9 @@
 import React from 'react';
 
+import { NodeViewPortalContainer } from '@remirror/core';
 import { Node as ProsemirrorNode } from 'prosemirror-model';
 import { Decoration, EditorView, NodeView } from 'prosemirror-view';
 import { PlainObject } from 'simplytyped';
-import { NodeViewPortalContainer } from './portal';
 
 export type GetPosition = () => number;
 
@@ -100,8 +100,9 @@ export class ReactNodeView implements NodeView {
     props: PlainObject,
     forwardRef?: (node: HTMLElement) => void,
   ): React.ReactElement<any> | null {
-    return this.Component ? (
-      <this.Component
+    const Component = this.Component;
+    return Component ? (
+      <Component
         view={this.view}
         getPosition={this.getPosition}
         node={this.node}

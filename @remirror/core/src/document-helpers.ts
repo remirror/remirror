@@ -5,6 +5,7 @@ import { Attrs } from './types';
 /**
  * Checks that a mark is active within the selected region, or the current selection point is within a
  * region with the mark active. Used by extensions to implement their active methods.
+ *
  * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
  * @param state

@@ -44,6 +44,8 @@
     "test:ci": "cross-env TEST_ENV=live jest",
     "test:ci:watch": "cross-env TEST_ENV=live yarn test:watch",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
+    "size:ci": "bundlesize",
+    "size": "size-limit",
     "typecheck": "lerna run typecheck"
   },
   "engines": {
@@ -94,5 +96,15 @@
     "@babel/parser": "7.3.4",
     "jsdom": "13.2.0",
     "hoist-non-react-statics": "3.3.0"
-  }
+  },
+  "size-limit": [
+    {
+      "path": "@remirror/*/lib/index.js"
+    }
+  ],
+  "bundlesize": [
+    {
+      "path": "@remirror/*/lib/index.js"
+    }
+  ]
 }
