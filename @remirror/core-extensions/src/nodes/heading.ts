@@ -1,5 +1,6 @@
 import {
   Attrs,
+  KeyboardBindings,
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
@@ -50,15 +51,12 @@ export class Heading extends NodeExtension<HeadingOptions> {
   }
 
   public keys({ type }: SchemaNodeTypeParams) {
-    return this.options.levels.reduce(
-      (items, level) => ({
-        ...items,
-        ...{
-          [`Shift-Ctrl-${level}`]: setBlockType(type, { level }),
-        },
-      }),
-      {},
-    );
+    const keys: KeyboardBindings = {};
+
+    this.options.levels.forEach(level => {
+      keys[`Shift-Ctrl-${level}`] = setBlockType(type, { level });
+    });
+    return keys;
   }
 
   public inputRules({ type }: SchemaNodeTypeParams) {

@@ -153,7 +153,7 @@ export interface OffsetCalculator {
 export type ElementUnion = Value<HTMLElementTagNameMap>;
 
 export interface ActionMethods {
-  run(attrs?: Attrs): void;
+  command(attrs?: Attrs): void;
   isActive(): boolean;
   isEnabled(): boolean;
 }

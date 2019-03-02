@@ -61,7 +61,7 @@ const EditorLayout: FunctionComponent = () => {
                       fontWeight: actions.bold.isActive() ? 600 : 300,
                     }}
                     disabled={!actions.bold.isEnabled()}
-                    onClick={runAction(actions.bold.run)}
+                    onClick={runAction(actions.bold.command)}
                   >
                     B
                   </button>
@@ -71,7 +71,7 @@ const EditorLayout: FunctionComponent = () => {
                       fontWeight: actions.italic.isActive() ? 600 : 300,
                     }}
                     disabled={!actions.italic.isEnabled()}
-                    onClick={runAction(actions.italic.run)}
+                    onClick={runAction(actions.italic.command)}
                   >
                     i
                   </button>
@@ -81,7 +81,7 @@ const EditorLayout: FunctionComponent = () => {
                       fontWeight: actions.underline.isActive() ? 600 : 300,
                     }}
                     disabled={!actions.underline.isEnabled()}
-                    onClick={runAction(actions.underline.run)}
+                    onClick={runAction(actions.underline.command)}
                   >
                     u
                   </button>

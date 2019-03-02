@@ -102,18 +102,16 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
   //   return [nativeEmojiInputRule(emojiRegex(), type, this.options.emojiData)];
   // }
 
-  public plugins({ getPortalContainer, type }: SchemaNodeTypeParams) {
+  public plugin({ getPortalContainer, type }: SchemaNodeTypeParams) {
     const { set, size, emojiData, EmojiComponent } = this.options;
-    return [
-      createEmojiPlugin({
-        key: this.pluginKey,
-        getPortalContainer,
-        set,
-        size,
-        emojiData,
-        type,
-        EmojiComponent,
-      }),
-    ];
+    return createEmojiPlugin({
+      key: this.pluginKey,
+      getPortalContainer,
+      set,
+      size,
+      emojiData,
+      type,
+      EmojiComponent,
+    });
   }
 }

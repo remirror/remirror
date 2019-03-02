@@ -380,14 +380,12 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   };
 
   private setMarkAttrs() {
-    const initialActiveNodes: Record<string, Record<string, string>> = {};
-    return Object.entries(this.schema.marks).reduce(
-      (attrs, [name, attr]) => ({
-        ...attrs,
-        [name]: getMarkAttrs(this.state.editorState, attr),
-      }),
-      initialActiveNodes,
-    );
+    const markAttrs: Record<string, Record<string, string>> = {};
+    Object.entries(this.schema.marks).forEach(([name, attr]) => {
+      markAttrs[name] = getMarkAttrs(this.state.editorState, attr);
+    });
+
+    return markAttrs;
   }
 
   /**

@@ -100,20 +100,18 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
   public commands = ({ type }: SchemaNodeTypeParams): ExtensionCommandFunction => attrs =>
     replaceText(null, type, attrs);
 
-  public plugins({ type }: SchemaNodeTypeParams) {
-    return [
-      createSuggestionsPlugin({
-        key: this.pluginKey,
-        command: ({ range, attrs }) => replaceText(range, type, attrs),
-        appendText: this.options.appendText,
-        matcher: this.options.matcher,
-        onEnter: this.options.onEnter,
-        onChange: this.options.onChange,
-        onExit: this.options.onExit,
-        onKeyDown: this.options.onKeyDown,
-        suggestionClassName: this.options.suggestionClassName,
-        decorationsTag: this.options.tag,
-      }),
-    ];
+  public plugin({ type }: SchemaNodeTypeParams) {
+    return createSuggestionsPlugin({
+      key: this.pluginKey,
+      command: ({ range, attrs }) => replaceText(range, type, attrs),
+      appendText: this.options.appendText,
+      matcher: this.options.matcher,
+      onEnter: this.options.onEnter,
+      onChange: this.options.onChange,
+      onExit: this.options.onExit,
+      onKeyDown: this.options.onKeyDown,
+      suggestionClassName: this.options.suggestionClassName,
+      decorationsTag: this.options.tag,
+    });
   }
 }

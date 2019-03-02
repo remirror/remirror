@@ -9,7 +9,7 @@ export interface PlaceholderOptions {
 export interface PlaceholderPluginState extends Required<PlaceholderOptions> {}
 
 export class Placeholder extends Extension<PlaceholderOptions> {
-  get name() {
+  get name(): 'placeholder' {
     return 'placeholder';
   }
 
@@ -20,39 +20,32 @@ export class Placeholder extends Extension<PlaceholderOptions> {
     };
   }
 
-  public plugins() {
-    const options = this.options;
-    return [
-      new Plugin({
-        key: this.pluginKey,
-        state: {
-          init() {
-            return options;
-          },
-          apply() {
-            return options;
-          },
-        },
-        props: {
-          decorations: ({ doc }) => {
-            const decorations: Decoration[] = [];
-            const completelyEmpty = doc.textContent === '' && doc.childCount <= 1 && doc.content.size <= 2;
+  public plugin() {
+    return new Plugin({
+      key: this.pluginKey,
+      state: {
+        init: () => this.options,
+        apply: () => this.options,
+      },
+      props: {
+        decorations: ({ doc }) => {
+          const decorations: Decoration[] = [];
+          const completelyEmpty = doc.textContent === '' && doc.childCount <= 1 && doc.content.size <= 2;
 
-            doc.descendants((node, pos) => {
-              if (!completelyEmpty) {
-                return;
-              }
+          doc.descendants((node, pos) => {
+            if (!completelyEmpty) {
+              return;
+            }
 
-              const decoration = Decoration.node(pos, pos + node.nodeSize, {
-                class: this.options.emptyNodeClass,
-              });
-              decorations.push(decoration);
+            const decoration = Decoration.node(pos, pos + node.nodeSize, {
+              class: this.options.emptyNodeClass,
             });
+            decorations.push(decoration);
+          });
 
-            return DecorationSet.create(doc, decorations);
-          },
+          return DecorationSet.create(doc, decorations);
         },
-      }),
-    ];
+      },
+    });
   }
 }

@@ -79,97 +79,95 @@ export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
     ];
   }
 
-  public plugins = ({ type }: SchemaMarkTypeParams) => {
+  public plugin = ({ type }: SchemaMarkTypeParams) => {
     const pluginKey = this.pluginKey;
     const name = this.name;
     const onUrlsChange = this.options.onUrlsChange;
-    return [
-      new Plugin({
-        key: pluginKey,
-        state: {
-          init() {
-            return null;
-          },
-          apply(tr, prev: EnhancedLinkPluginState) {
-            const stored = tr.getMeta(pluginKey);
-            return stored ? stored : tr.selectionSet || tr.docChanged ? null : prev;
-          },
+    return new Plugin({
+      key: pluginKey,
+      state: {
+        init() {
+          return null;
         },
-        /** Runs through the current line (and previous line if it exists) to reapply twitter link marks to the relevant parts of text */
-        appendTransaction(transactions, _oldState, state: EditorState) {
-          const { selection, doc } = state;
-          const { $from, $to, from, to } = selection;
-          const hasReplaceTransactions = transactions.some(({ steps }) =>
-            steps.some(step => step instanceof ReplaceStep),
-          );
-          const char = LEAF_NODE_REPLACING_CHARACTER;
-          const leafChar = ' '; // Used to represent leaf nodes as text otherwise they just get replaced
+        apply(tr, prev: EnhancedLinkPluginState) {
+          const stored = tr.getMeta(pluginKey);
+          return stored ? stored : tr.selectionSet || tr.docChanged ? null : prev;
+        },
+      },
+      /** Runs through the current line (and previous line if it exists) to reapply twitter link marks to the relevant parts of text */
+      appendTransaction(transactions, _oldState, state: EditorState) {
+        const { selection, doc } = state;
+        const { $from, $to, from, to } = selection;
+        const hasReplaceTransactions = transactions.some(({ steps }) =>
+          steps.some(step => step instanceof ReplaceStep),
+        );
+        const char = LEAF_NODE_REPLACING_CHARACTER;
+        const leafChar = ' '; // Used to represent leaf nodes as text otherwise they just get replaced
 
-          if (!hasReplaceTransactions) {
-            return;
-          }
+        if (!hasReplaceTransactions) {
+          return;
+        }
 
-          // Check that the mark should still be active
-          const searchText =
-            doc.textBetween($from.start(), from, char, leafChar) +
-            doc.textBetween(to, $to.end(), char, leafChar);
+        // Check that the mark should still be active
+        const searchText =
+          doc.textBetween($from.start(), from, char, leafChar) +
+          doc.textBetween(to, $to.end(), char, leafChar);
 
-          let tr = state.tr;
-          const collectedParams: EnhancedLinkHandlerProps[] = [];
+        let tr = state.tr;
+        const collectedParams: EnhancedLinkHandlerProps[] = [];
 
-          // If at the start of a new line (i.e. new block added and not at the start of the document)
-          if (from === $from.start() && from >= 2) {
-            const $pos = doc.resolve(from - 2);
-            const prevSearchText = doc.textBetween($pos.start(), $pos.end(), char, leafChar);
-            findMatches(prevSearchText, extractUrl).forEach(match => {
-              const startIndex = match.index;
-
-              const url = match[1];
-              const start = $pos.start() + startIndex;
-              const end = $pos.start() + startIndex + match[0].length;
-              collectedParams.push({ state, url, start, end });
-            });
-
-            tr = tr.removeMark($pos.start(), $pos.end(), type);
-          }
-
-          // Finds matches within the current node when in the middle of a node
-          findMatches(searchText, extractUrl).forEach(match => {
+        // If at the start of a new line (i.e. new block added and not at the start of the document)
+        if (from === $from.start() && from >= 2) {
+          const $pos = doc.resolve(from - 2);
+          const prevSearchText = doc.textBetween($pos.start(), $pos.end(), char, leafChar);
+          findMatches(prevSearchText, extractUrl).forEach(match => {
             const startIndex = match.index;
 
             const url = match[1];
-            const start = $from.start() + startIndex;
-            const end = $from.start() + startIndex + match[0].length;
-            const textBefore = doc.textBetween(start - 1, start, char, leafChar); // The text directly before the match
-            if (!/[\w\d]/.test(textBefore)) {
-              collectedParams.push({ state, url, start, end });
-            }
-          });
-          // Remove all marks
-          tr = tr.removeMark($from.start(), $from.end(), type);
-
-          // Add all marks again for the nodes
-          collectedParams.forEach(params => {
-            tr = enhancedLinkHandler({ ...params, transaction: tr });
+            const start = $pos.start() + startIndex;
+            const end = $pos.start() + startIndex + match[0].length;
+            collectedParams.push({ state, url, start, end });
           });
 
-          return tr;
+          tr = tr.removeMark($pos.start(), $pos.end(), type);
+        }
+
+        // Finds matches within the current node when in the middle of a node
+        findMatches(searchText, extractUrl).forEach(match => {
+          const startIndex = match.index;
+
+          const url = match[1];
+          const start = $from.start() + startIndex;
+          const end = $from.start() + startIndex + match[0].length;
+          const textBefore = doc.textBetween(start - 1, start, char, leafChar); // The text directly before the match
+          if (!/[\w\d]/.test(textBefore)) {
+            collectedParams.push({ state, url, start, end });
+          }
+        });
+        // Remove all marks
+        tr = tr.removeMark($from.start(), $from.end(), type);
+
+        // Add all marks again for the nodes
+        collectedParams.forEach(params => {
+          tr = enhancedLinkHandler({ ...params, transaction: tr });
+        });
+
+        return tr;
+      },
+      view: () => ({
+        update(view: EditorView, prevState: EditorState) {
+          if (!onUrlsChange) {
+            return;
+          }
+          const next = getUrlsFromState(view.state, name);
+          const prev = getUrlsFromState(prevState, name);
+
+          if (!isEqual(next.set, prev.set)) {
+            onUrlsChange(next);
+          }
         },
-        view: () => ({
-          update(view: EditorView, prevState: EditorState) {
-            if (!onUrlsChange) {
-              return;
-            }
-            const next = getUrlsFromState(view.state, name);
-            const prev = getUrlsFromState(prevState, name);
-
-            if (!isEqual(next.set, prev.set)) {
-              onUrlsChange(next);
-            }
-          },
-        }),
       }),
-    ];
+    });
   };
 }
 

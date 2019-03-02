@@ -46,9 +46,9 @@ export class History extends Extension<HistoryOptions> {
     return keymap;
   }
 
-  public plugins() {
+  public plugin() {
     const { depth, newGroupDelay } = this.options;
-    return [history({ depth, newGroupDelay })];
+    return history({ depth, newGroupDelay });
   }
 
   public commands() {

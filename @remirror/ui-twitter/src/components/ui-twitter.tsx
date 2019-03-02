@@ -294,19 +294,15 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
    * @param mention
    */
   private handleEnterKeyPressed(mention: MentionState) {
-    console.log('handling enter key pressed', mention);
     const { activeIndex } = this.state;
     if (mention.type === 'at' && this.userMatches.length) {
       mention.submitFactory(this.userMatches[activeIndex])();
       return true;
     } else if (mention.type === 'hash' && this.tagMatches.length) {
-      console.log('submitting after enter key pressed');
       mention.submitFactory(this.tagMatches[activeIndex])();
       return true;
     }
     this.exitCommandEnabled = true;
-
-    console.log('skipping enter key press');
 
     return false;
   }
@@ -372,7 +368,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
                       <EmojiPicker
                         data={this.props.emojiData}
                         set={this.props.emojiSet}
-                        onSelection={this.onSelectEmoji(actions.emoji.run)}
+                        onSelection={this.onSelectEmoji(actions.emoji.command)}
                       />
                     </EmojiPickerWrapper>
                   )}

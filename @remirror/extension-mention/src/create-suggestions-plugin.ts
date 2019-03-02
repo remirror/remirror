@@ -181,17 +181,13 @@ export const createSuggestionsPlugin = ({
             ...state,
             text: state.text,
             command: (attrs: NodeAttrs) => {
-              console.log('command being called with', state.range);
               command({
                 range: state.range,
                 attrs,
                 schema: view.state.schema,
               })(view.state, view.dispatch);
-              console.log('command called with', 'success');
               if (attrs.hasOwnProperty('appendText')) {
-                console.log('has own property appendText');
                 if (attrs.appendText.length) {
-                  console.log('appending alternative text');
                   insertText(attrs.appendText)(view.state, view.dispatch);
                 }
               } else if (appendText) {

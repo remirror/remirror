@@ -76,7 +76,7 @@ export interface Extension<GOptions extends {} = {}, GType = never> {
   keys?(params: SchemaTypeParams<GType>): KeyboardBindings;
 
   /** Register a plugin for the extension */
-  plugins?(params: SchemaTypeParams<GType>): ProsemirrorPlugin[];
+  plugin?(params: SchemaTypeParams<GType>): ProsemirrorPlugin;
 }
 
 export type AnyExtension = Extension<any, any>;

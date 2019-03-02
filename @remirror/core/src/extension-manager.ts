@@ -36,28 +36,22 @@ export class ExtensionManager {
    * Filters through all provided extensions and picks the nodes
    */
   public get nodes() {
-    const initialEditorNodes: Record<string, NodeExtensionSpec> = {};
-    return this.extensions.filter(isNodeExtension).reduce(
-      (nodes, { name, schema }) => ({
-        ...nodes,
-        [name]: schema,
-      }),
-      initialEditorNodes,
-    );
+    const nodes: Record<string, NodeExtensionSpec> = {};
+    this.extensions.filter(isNodeExtension).forEach(({ name, schema }) => {
+      nodes[name] = schema;
+    });
+    return nodes;
   }
 
   /**
    * Filters through all provided extensions and picks the marks
    */
   public get marks() {
-    const initialEditorMarks: Record<string, MarkExtensionSpec> = {};
-    return this.extensions.filter(isMarkExtension).reduce(
-      (marks, { name, schema }) => ({
-        ...marks,
-        [name]: schema,
-      }),
-      initialEditorMarks,
-    );
+    const marks: Record<string, MarkExtensionSpec> = {};
+    this.extensions.filter(isMarkExtension).forEach(({ name, schema }) => {
+      marks[name] = schema;
+    });
+    return marks;
   }
 
   /**
@@ -69,27 +63,33 @@ export class ExtensionManager {
 
   /**
    * Currently an extension can have only one pluginKey but multiple plugins - which is a potential bug.
-   * TODO enhance pluginKey assignment check if name isn't in use
+   * TODO enhance pluginKey assignment to ensure name isn't already in use
    */
   public get pluginKeys() {
-    const initialPluginKeys: Record<string, PluginKey> = {};
-    return this.extensions
-      .filter(extension => extension.plugins)
-      .reduce(
-        (allPluginKeys, { pluginKey, name }) => ({ ...allPluginKeys, ...{ [name]: pluginKey } }),
-        initialPluginKeys,
-      );
+    const pluginKeys: Record<string, PluginKey> = {};
+    this.extensions
+      .filter(extension => extension.plugin)
+      .forEach(({ pluginKey, name }) => {
+        pluginKeys[name] = pluginKey;
+      });
+
+    return pluginKeys;
   }
 
   /**
    * Retrieve all plugins from the passed in extensions
    */
-  public plugins(params: SchemaParams): ProsemirrorPlugin[] {
+  public plugins(params: SchemaParams) {
+    const plugins: ProsemirrorPlugin[] = [];
     const extensionPlugins = this.extensions
-      .filter(hasExtensionProperty('plugins'))
-      .map(extensionPropertyMapper('plugins', params)) as ProsemirrorPlugin[][];
+      .filter(hasExtensionProperty('plugin'))
+      .map(extensionPropertyMapper('plugin', params)) as ProsemirrorPlugin[];
 
-    return extensionPlugins.reduce((allPlugins, plugins) => [...allPlugins, ...plugins], []);
+    extensionPlugins.forEach(plugin => {
+      plugins.push(plugin);
+    });
+
+    return plugins;
   }
 
   /**
@@ -106,22 +106,32 @@ export class ExtensionManager {
    * Retrieve all inputRules (how the editor responds to text matching certain rules).
    */
   public inputRules(params: SchemaParams) {
+    const inputRules: InputRule[] = [];
     const extensionInputRules = this.extensions
       .filter(hasExtensionProperty('inputRules'))
       .map(extensionPropertyMapper('inputRules', params)) as InputRule[][];
 
-    return extensionInputRules.reduce((allInputRules, inputRules) => [...allInputRules, ...inputRules], []);
+    extensionInputRules.forEach(rules => {
+      inputRules.push(...rules);
+    });
+
+    return inputRules;
   }
 
   /**
    * Retrieve all pasteRules (rules for how the editor responds to pastedText).
    */
   public pasteRules(params: SchemaParams): ProsemirrorPlugin[] {
+    const pasteRules: ProsemirrorPlugin[] = [];
     const extensionPasteRules = this.extensions
       .filter(hasExtensionProperty('pasteRules'))
       .map(extensionPropertyMapper('pasteRules', params)) as ProsemirrorPlugin[][];
 
-    return extensionPasteRules.reduce((allPasteRules, pasteRules) => [...allPasteRules, ...pasteRules], []);
+    extensionPasteRules.forEach(rules => {
+      pasteRules.push(...rules);
+    });
+
+    return pasteRules;
   }
 
   /**
@@ -133,22 +143,21 @@ export class ExtensionManager {
    * - `isEnabled` defaults to a function returning true
    */
   public actions(params: CommandParams): RemirrorActions {
-    const initialActions: RemirrorActions = {};
+    const actions: RemirrorActions = {};
     const commands = this.commands(params);
     const active = this.active(params);
     const enabled = this.enabled(params);
 
-    return Object.entries(commands).reduce((accumulatedActions, [name, command]) => {
+    Object.entries(commands).forEach(([name, command]) => {
       const action: ActionMethods = {
-        run: command,
+        command,
         isActive: active[name] ? active[name] : () => false,
         isEnabled: enabled[name] ? enabled[name] : () => true,
       };
-      return {
-        ...accumulatedActions,
-        [name]: action,
-      };
-    }, initialActions);
+      actions[name] = action;
+    });
+
+    return actions;
   }
 
   /**

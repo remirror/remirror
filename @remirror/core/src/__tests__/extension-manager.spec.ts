@@ -53,14 +53,14 @@ describe('#action', () => {
   };
   const remirrorActions = em.actions(Cast(params));
   it('calls the correct command', () => {
-    expect(remirrorActions.dummy).toContainAllKeys(['isActive', 'isEnabled', 'run']);
-    remirrorActions.dummy.run();
+    expect(remirrorActions.dummy).toContainAllKeys(['isActive', 'isEnabled', 'command']);
+    remirrorActions.dummy.command();
     expect(mock).toHaveBeenCalledWith(params.view.state, params.view.dispatch);
   });
 
   it('is not called when the editor is not editable', () => {
     params = { ...params, isEditable: () => false };
-    remirrorActions.dummy.run();
+    remirrorActions.dummy.command();
     expect(mock).toHaveBeenCalledTimes(1);
   });
 });

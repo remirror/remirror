@@ -74,14 +74,13 @@ export const createFlexibleFunctionMap = <
   ) => GMappedFunc;
   ctx: HasExtensions;
 }) => (params: CommandParams): Record<string, GMappedFunc> => {
-  const initialItems: Record<string, GMappedFunc> = {};
+  const items: Record<string, GMappedFunc> = {};
   const names = new Set<string>();
-  return ctx.extensions.filter(hasExtensionProperty(key)).reduce((prevItems, currentExtension) => {
+  ctx.extensions.filter(hasExtensionProperty(key)).forEach(currentExtension => {
     const { name } = currentExtension;
     if (checkUniqueness) {
       isNameUnique({ name, set: names, shouldThrow: true });
     }
-    const items: Record<string, GMappedFunc> = {};
     const item = getItemParams(currentExtension, params);
     if (Array.isArray(item)) {
       items[name] = arrayTransformer(item, params, methodFactory);
@@ -97,11 +96,9 @@ export const createFlexibleFunctionMap = <
           : methodFactory(params, commandValue);
       });
     }
-    return {
-      ...prevItems,
-      ...items,
-    };
-  }, initialItems);
+  });
+
+  return items;
 };
 
 /**
@@ -129,7 +126,7 @@ export const hasExtensionProperty = <GExt extends AnyExtension, GKey extends key
   extension: GExt,
 ): extension is GExt & Pick<Required<GExt>, GKey> => Boolean(extension[property]);
 
-type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys' | 'plugins';
+type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys' | 'plugin';
 
 /**
  * Looks at the passed property and calls the extension with the required parameters.
