@@ -79,7 +79,7 @@ describe('Twitter UI', () => {
   });
 
   describe('Mentions', () => {
-    it.skip('should not allow mixing the tags', async () => {
+    it('should not allow mixing the tags', async () => {
       await page.type(editorSelector, '@#ab');
       await expect(outerHTML(sel(editorSelector, 'a'))).rejects.toThrow();
     });
@@ -102,10 +102,13 @@ describe('Twitter UI', () => {
 
       it('should still wrap selections when exiting without selections', async () => {
         await page.type(editorSelector, 'hello @ab ');
-        await expect(outerHTML(sel(editorSelector, 'a'))).resolves.toMatchInlineSnapshot();
+        await expect(outerHTML(sel(editorSelector, 'a'))).resolves.toMatchInlineSnapshot(
+          `"<a href=\\"/ab\\" role=\\"presentation\\" class=\\"mention\\" data-mention-id=\\"ab\\" contenteditable=\\"false\\">@ab</a>"`,
+        );
       });
     });
-    describe.only('#', () => {
+
+    describe('#', () => {
       it('should wrap in progress mentions in a-tag decorations', async () => {
         await page.type(editorSelector, 'My tag is #Topic');
         await expect(innerHtml(editorSelector)).resolves.toInclude(
@@ -142,14 +145,16 @@ describe('Twitter UI', () => {
   });
 
   describe('Combined', () => {
-    it.skip('should combine mentions emoji and links', async () => {
+    it('should combine mentions emoji and links', async () => {
       await page.type(editorSelector, 'hello @ab 😀 google.com');
       await page.keyboard.press('Enter');
       // ! When pressing enter the url mark overwrites other code
-      await expect(outerHTML(sel(editorSelector, 'a'))).resolves.toMatchInlineSnapshot();
+      await expect(innerHtml(sel(editorSelector))).resolves.toMatchInlineSnapshot(
+        `"<p class=\\"\\">hello <a href=\\"/ab\\" role=\\"presentation\\" class=\\"mention\\" data-mention-id=\\"ab\\" contenteditable=\\"false\\">@ab</a> <span id=\\"grinning\\" native=\\"😀\\" name=\\"Grinning Face\\" colons=\\":grinning:\\" skin=\\"null\\" aria-label=\\"\\" title=\\"\\" class=\\"remirror-editor-emoji-node\\" usenative=\\"false\\" contenteditable=\\"false\\"><span title=\\"grinning\\" class=\\"emoji-mart-emoji\\"><span style=\\"width: 1.25em; height: 1.25em; display: inline-block; background-image: url(&quot;https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png&quot;); background-size: 5200% 5200%; background-position: 58.8235% 47.0588%;\\"></span></span></span> <a href=\\"http://google.com\\" role=\\"presentation\\">google.com</a></p><p><br></p>"`,
+      );
     });
 
-    it('should not replace emoji with link when no space imbetween', async () => {
+    it('should not replace emoji with link when no space between', async () => {
       await page.type(editorSelector, '😀google.com');
       await expect(innerHtml(sel(editorSelector))).resolves.toMatchInlineSnapshot(
         `"<p class=\\"\\"><span id=\\"grinning\\" native=\\"😀\\" name=\\"Grinning Face\\" colons=\\":grinning:\\" skin=\\"null\\" aria-label=\\"\\" title=\\"\\" class=\\"remirror-editor-emoji-node\\" usenative=\\"false\\" contenteditable=\\"false\\"><span title=\\"grinning\\" class=\\"emoji-mart-emoji\\"><span style=\\"width: 1.25em; height: 1.25em; display: inline-block; background-image: url(&quot;https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png&quot;); background-size: 5200% 5200%; background-position: 58.8235% 47.0588%;\\"></span></span></span><a href=\\"http://google.com\\" role=\\"presentation\\">google.com</a><span>﻿</span><br></p>"`,

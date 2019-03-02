@@ -39,6 +39,7 @@ export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
         },
       },
       inclusive: false,
+      spanning: false,
       parseDOM: [
         {
           tag: 'a[href]',

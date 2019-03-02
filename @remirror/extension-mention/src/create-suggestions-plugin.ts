@@ -31,7 +31,6 @@ export interface NodeAttrs extends Attrs {
 
 export interface SuggestionsMatcher {
   char: string;
-  allowSpaces: boolean;
   startOfLine: boolean;
   supportedCharacters: RegExp | string;
 }
@@ -74,7 +73,6 @@ export interface SuggestionsPluginProps {
 
 export const defaultMatcher: SuggestionsMatcher = {
   char: '@',
-  allowSpaces: false,
   startOfLine: false,
   supportedCharacters: /[\w\d_]+/,
 };
@@ -88,12 +86,7 @@ const defaultSuggestionsPluginState: SuggestionsPluginState = {
 
 // Create a matcher that matches when a specific character is typed. Useful for @mentions and #tags.
 const triggerCharacter = (
-  {
-    char = '@',
-    startOfLine = false,
-    supportedCharacters = /[\w\d_]+/gi,
-  }: // allowSpaces = false,
-  SuggestionsMatcher,
+  { char = '@', startOfLine = false, supportedCharacters = /[\w\d_]+/gi }: SuggestionsMatcher,
   $pos: ResolvedPos<EditorSchema>,
 ): SuggestionsPluginState | undefined => {
   // Matching expressions used for later
@@ -103,8 +96,6 @@ const triggerCharacter = (
   // const suffix = new RegExp(`\\s${escapedChar}$`);
   const prefix = startOfLine ? '^' : '';
   const regexp = new RegExp(`${prefix}${escapedChar}${supported}`, 'gm');
-  // ? new RegExp(`${prefix}${escapedChar}.*?(?=\\s${escapedChar}|$)`, 'gm')
-  // : new RegExp(`${prefix}(?:^)?${escapedChar}[^\\s${escapedChar}]*`, 'gm');
 
   // Lookup the boundaries of the current node
   const textFrom = $pos.before();

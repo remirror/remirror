@@ -77,7 +77,7 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
             class: mentionClassName,
             'data-mention-id': id,
           },
-          `${matcher.char}${label}`,
+          `${label}`,
         ];
       },
       parseDOM: [

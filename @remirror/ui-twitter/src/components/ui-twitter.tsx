@@ -103,19 +103,23 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
           this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
           this.setActiveIndex(0);
         },
-        onExit: ({ query }) => {
-          const params = {
-            type: 'at' as 'at',
-            action: 'exit' as 'exit',
-            query: query || '',
-          };
-          console.log('exiting', params);
+        onExit: ({ query, command }) => {
+          if (query && this.exitCommandEnabled) {
+            command({
+              id: query,
+              label: `@${query}`,
+              role: 'presentation',
+              href: `/${query}`,
+              appendText: '',
+            });
+          }
           this.setMention(undefined);
           this.props.onMentionStateChange(undefined);
         },
       }),
       new MentionNode({
         type: 'hash',
+        selectable: true,
         matcher: { char: '#' },
         extraAttrs: ['href', 'role'],
         onKeyDown: this.keyDownHandler,
@@ -140,20 +144,14 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
           this.setActiveIndex(0);
         },
         onExit: ({ query, command }) => {
-          // const { mention } = this.state;
-          // if (query && !this.tagMatches.length && mention && mention.type === 'hash') {
-          //   mention.submitFactory({ tag: query })();
-          // }
           if (query && this.exitCommandEnabled) {
-            console.log('on exit command being called', query);
             command({
               id: query,
-              label: query,
+              label: `#${query}`,
               role: 'presentation',
               href: `/search?query=${query}`,
               appendText: '',
             });
-            console.log('on exit command called', query);
           }
           this.setMention(undefined);
           this.props.onMentionStateChange(undefined);
@@ -196,7 +194,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     return (user: TwitterUserData) => () => {
       command({
         id: user.username,
-        label: user.username,
+        label: `@${user.username}`,
         role: 'presentation',
         href: `/${user.username}`,
       });
@@ -218,7 +216,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     return ({ tag }: TwitterTagData) => () => {
       command({
         id: tag,
-        label: tag,
+        label: `#${tag}`,
         role: 'presentation',
         href: `/search?query=${tag}`,
         ...(typeof appendText === 'string' ? { appendText } : {}),
