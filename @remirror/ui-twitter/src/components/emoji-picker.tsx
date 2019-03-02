@@ -29,11 +29,11 @@ export const EmojiSmiley: FC<EmojiSmileyProps> = ({ active }) => (
 
 export interface EmojiPickerProps {
   data: Data;
-  set?: EmojiSet;
+  set: EmojiSet;
   onSelection(emoji: EmojiData): void;
 }
 
-export const EmojiPicker: FC<EmojiPickerProps> = ({ data, set = 'twitter', onSelection }) => {
+export const EmojiPicker: FC<EmojiPickerProps> = ({ data, set, onSelection }) => {
   return (
     <StyledPickerWrapper>
       <NimblePicker
