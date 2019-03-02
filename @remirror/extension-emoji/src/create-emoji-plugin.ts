@@ -1,6 +1,6 @@
 import { NodeViewPortalContainer } from '@remirror/core';
 import { ReactNodeView } from '@remirror/react';
-import { Data } from 'emoji-mart';
+import { Data } from 'emoji-mart/dist-es/utils/data';
 import { EmojiSet } from 'emoji-mart/dist-es/utils/shared-props';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { DefaultEmoji } from './components/emoji';

@@ -193,6 +193,16 @@ export interface RemirrorProps {
    * @default {}
    */
   editorStyles: Interpolation;
+
+  /**
+   * Determine whether the Prosemirror view is inserted as first in the holding html element or last.
+   *
+   * Last means that any elements added to the holding react component will actually be inserted before and as a result would lose
+   * click access.
+   *
+   * @default last
+   */
+  insertPosition: 'first' | 'last';
 }
 
 export type CSSProperty = CSS.Properties<string | number>;

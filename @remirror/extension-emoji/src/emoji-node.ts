@@ -1,9 +1,7 @@
 import {
   Attrs,
   Cast,
-  enhancedNodeInputRule,
   ExtensionCommandFunction,
-  getMatchString,
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
@@ -14,7 +12,7 @@ import {
 import emojiRegex from 'emoji-regex';
 import { isNumber } from 'lodash';
 import { createEmojiPlugin, CreateEmojiPluginParams } from './create-emoji-plugin';
-import { getEmojiDataByNativeString } from './helpers';
+import { nativeEmojiInputRule } from './input-rules';
 import { EmojiNodeAttrs } from './types';
 export interface EmojiNodeOptions
   extends NodeExtensionOptions,
@@ -103,19 +101,7 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
   };
 
   public inputRules({ type }: SchemaNodeTypeParams) {
-    return [
-      enhancedNodeInputRule(emojiRegex(), type, match => {
-        const native = getMatchString(match);
-        const data = getEmojiDataByNativeString(native, this.options.data);
-        return data
-          ? Cast<Attrs>({ ...data, ...this.options.transformAttrs(data) })
-          : Cast<Attrs>({
-              useNative: true,
-              native,
-              ...this.options.transformAttrs(Cast({ name: 'unknown native' })),
-            });
-      }),
-    ];
+    return [nativeEmojiInputRule(emojiRegex(), type, this.options.data)];
   }
 
   public plugins({ getPortalContainer }: SchemaNodeTypeParams) {

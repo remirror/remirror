@@ -74,6 +74,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     usesDefaultStyles: true,
     label: '',
     editorStyles: {},
+    insertPosition: 'last',
   });
 
   public schema: EditorSchema;
@@ -414,12 +415,20 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     });
   };
 
+  private addProsemirrorViewToDom(reactRef: HTMLElement, viewDom: Element) {
+    if (this.props.insertPosition === 'first') {
+      reactRef.insertBefore(viewDom, reactRef.firstChild);
+    } else {
+      reactRef.appendChild(viewDom);
+    }
+  }
+
   private onRefLoad() {
     if (!this.editorRef) {
       throw Error('Something went wrong when initializing the text editor. Please check your setup.');
     }
     const { autoFocus, onFirstRender } = this.props;
-    this.editorRef.appendChild(this.view.dom);
+    this.addProsemirrorViewToDom(this.editorRef, this.view.dom);
     if (autoFocus) {
       this.view.focus();
     }

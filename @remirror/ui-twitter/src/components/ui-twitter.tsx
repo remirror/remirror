@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 
 import { css, Interpolation } from '@emotion/core';
 import { AnyExtension, Attrs, EditorSchema, Omit } from '@remirror/core';
-import { EmojiNode } from '@remirror/extension-emoji';
+import { EmojiNode, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
 import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
 import { Remirror, RemirrorProps } from '@remirror/react';
-import { Data } from 'emoji-mart';
+import { Data } from 'emoji-mart/dist-es/utils/data';
 import { EmojiSet } from 'emoji-mart/dist-es/utils/shared-props';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
@@ -15,6 +15,7 @@ import { EditorView } from 'prosemirror-view';
 import { styled, UITwitterTheme, uiTwitterTheme } from '../theme';
 import { ActiveTwitterTagData, ActiveTwitterUserData, TwitterTagData, TwitterUserData } from '../types';
 import { CharacterCountIndicator } from './character-count';
+import { EmojiPicker, EmojiPickerProps, EmojiSmiley } from './emoji-picker';
 import { AtSuggestions, HashSuggestions } from './suggestions';
 
 export type OnQueryChangeParams = Omit<MentionState, 'submitFactory'> & { activeIndex: number };
@@ -52,6 +53,7 @@ type MentionState = AtMentionState | HashMentionState;
 interface State {
   mention?: MentionState;
   activeIndex: number;
+  emojiPickerActive: boolean;
 }
 
 export class TwitterUI extends PureComponent<TwitterUIProps, State> {
@@ -60,7 +62,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     emojiSet: 'twitter',
   };
 
-  public readonly state: State = { activeIndex: 0 };
+  public readonly state: State = { activeIndex: 0, emojiPickerActive: false };
   private readonly extensions: AnyExtension[];
   private view?: EditorView;
 
@@ -273,18 +275,24 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     return omit(this.props, ['userData', 'tagData', 'onMentionStateChange', 'theme']);
   }
 
-  private addEmoji = (method: (attrs: Attrs) => void) => () => {
-    const emoji = {
-      id: 'smiley',
-      name: 'Smiling Face with Open Mouth',
-      native: '😃',
-      colons: ':smiley:',
-    };
-    method(emoji);
+  private onSelectEmoji = (method: (attrs: Attrs) => void): EmojiPickerProps['onSelection'] => emoji => {
+    if (isBaseEmoji(emoji)) {
+      method({
+        id: emoji.id,
+        name: emoji.name,
+        native: emoji.native,
+        colors: emoji.colons,
+        skin: emoji.skin,
+      });
+    }
+  };
+
+  public toggleEmojiPicker = () => {
+    this.setState(prevState => ({ emojiPickerActive: !prevState.emojiPickerActive }));
   };
 
   public render() {
-    const { mention } = this.state;
+    const { mention, emojiPickerActive } = this.state;
     return (
       <ThemeProvider theme={this.theme}>
         <Remirror
@@ -301,6 +309,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
           {...this.remirrorProps}
           extensions={this.extensions}
           onChange={this.onChange}
+          insertPosition='first'
         >
           {({ getRootProps, view, actions }) => {
             const content = view.state.doc.textContent;
@@ -313,6 +322,24 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
                   <CharacterCountWrapper>
                     <CharacterCountIndicator characters={{ total: 140, used: content.length }} />
                   </CharacterCountWrapper>
+                  {emojiPickerActive && (
+                    <EmojiPickerWrapper>
+                      <EmojiPicker
+                        data={this.props.emojiData}
+                        set={this.props.emojiSet}
+                        onSelection={this.onSelectEmoji(actions.emoji.run)}
+                      />
+                    </EmojiPickerWrapper>
+                  )}
+                  <EmojiSmileyWrapper>
+                    <span
+                      role='button'
+                      aria-pressed={emojiPickerActive ? 'true' : 'false'}
+                      onClick={this.toggleEmojiPicker}
+                    >
+                      <EmojiSmiley active={emojiPickerActive} />
+                    </span>
+                  </EmojiSmileyWrapper>
                 </RemirrorWrapper>
                 <div>
                   {!mention ? null : mention.type === 'at' ? (
@@ -321,7 +348,6 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
                     <HashSuggestions data={this.tagMatches} submitFactory={mention.submitFactory} />
                   )}
                 </div>
-                <button onClick={this.addEmoji(actions.emoji.run)}>Add Emoji</button>
               </div>
             );
           }}
@@ -338,6 +364,26 @@ const CharacterCountWrapper = styled.div`
   bottom: 0;
   right: 0;
   margin: 0 8px 10px 4px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;
+
+const EmojiSmileyWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px 8px 0 4px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;
+
+const EmojiPickerWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 40px 8px 0 4px;
   display: flex;
   justify-content: flex-end;
   align-items: center;

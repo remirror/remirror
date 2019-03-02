@@ -12,6 +12,7 @@ export const uiTwitterTheme = {
     border: '#99CFEB',
     plain: '#657786',
     primaryBackground: '#E8F5FD',
+    icon: '#aab8c2',
   },
   font: {
     family: '"Helvetica Neue", Helvetica, Arial, sans-serif',
