@@ -9,7 +9,7 @@ import {
   replaceText,
   SchemaNodeTypeParams,
 } from '@remirror/core';
-import emojiRegex from 'emoji-regex';
+import emojiRegex from 'emoji-regex/es2015/text';
 import { isNumber } from 'lodash';
 import { createEmojiPlugin, CreateEmojiPluginParams } from './create-emoji-plugin';
 import { nativeEmojiInputRule } from './input-rules';

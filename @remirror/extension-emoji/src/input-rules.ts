@@ -16,12 +16,12 @@ export const nativeEmojiInputRule = (
     console.log('match', match, start, end, regMatch.index, match[0].length);
     const str = match[0];
     if (!str) {
-      return tr;
+      return Cast(undefined);
     }
     const data = getEmojiDataByNativeString(str, emojiData);
     console.log(data);
     if (!data) {
-      return tr.insertText(str + ' ', start);
+      return Cast(undefined);
     }
     return tr.replaceWith(start, end, type.create(data));
   });

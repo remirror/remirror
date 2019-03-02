@@ -37,6 +37,10 @@ export const createEmojiPlugin = ({
       nodeViews: {
         emoji: ReactNodeView.createNodeView(DefaultEmoji, getPortalContainer, { set, size, data }),
       },
+      handleTextInput(_, from, to, text) {
+        console.log(from, to, text);
+        return false;
+      },
     },
   });
 };

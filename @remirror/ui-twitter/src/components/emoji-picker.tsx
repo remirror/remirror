@@ -37,11 +37,10 @@ export const EmojiPicker: FC<EmojiPickerProps> = ({ data, set = 'twitter', onSel
   return (
     <StyledPickerWrapper>
       <NimblePicker
-        perLine={6}
+        perLine={7}
         data={data}
         set={set}
         defaultSkin={6}
-        showPreview={false}
         showSkinTones={true}
         onSelect={onSelection}
       />
@@ -234,17 +233,56 @@ const StyledPickerWrapper = styled.div`
     content: none;
   }
 
+  .emoji-mart-preview {
+    position: relative;
+    height: 70px;
+  }
+
+  .emoji-mart-preview-emoji,
+  .emoji-mart-preview-data,
+  .emoji-mart-preview-skins {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   .emoji-mart-preview-emoji {
-    display: none;
+    left: 12px;
   }
 
   .emoji-mart-preview-data {
-    display: none;
+    left: 68px;
+    right: 12px;
+    word-break: break-all;
   }
 
   .emoji-mart-preview-skins {
-    /* left: 10px; */
-    /* text-align: right; */
+    right: 30px;
+    text-align: right;
+  }
+
+  .emoji-mart-preview-skins.custom {
+    right: 10px;
+    text-align: right;
+  }
+
+  .emoji-mart-preview-name {
+    font-size: 14px;
+  }
+
+  .emoji-mart-preview-shortname {
+    font-size: 12px;
+    color: #888;
+  }
+  .emoji-mart-preview-shortname + .emoji-mart-preview-shortname,
+  .emoji-mart-preview-shortname + .emoji-mart-preview-emoticon,
+  .emoji-mart-preview-emoticon + .emoji-mart-preview-emoticon {
+    margin-left: 0.5em;
+  }
+
+  .emoji-mart-preview-emoticon {
+    font-size: 11px;
+    color: #bbb;
   }
 
   .emoji-mart-title span {
@@ -264,8 +302,15 @@ const StyledPickerWrapper = styled.div`
 
   .emoji-mart-skin-swatches {
     font-size: 0;
-    padding: 2px 10px;
+    padding: 2px 0;
+    border: 1px solid #d9d9d9;
     border-radius: 12px;
+    background-color: #fff;
+  }
+
+  .emoji-mart-skin-swatches.custom {
+    font-size: 0;
+    border: none;
     background-color: #fff;
   }
 
