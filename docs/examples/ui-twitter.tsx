@@ -7,6 +7,7 @@ import {
   TwitterUI,
   TwitterUserData,
 } from '@remirror/ui-twitter';
+import emojiData from 'emoji-mart/data/all.json';
 import { startCase, take } from 'lodash';
 
 import matchSorter from 'match-sorter';
@@ -58,6 +59,7 @@ export const ExampleTwitterUI = () => {
 
   return (
     <TwitterUI
+      emojiData={emojiData}
       attributes={{ 'data-test-id': 'ui-twitter' }}
       userData={userMatches}
       tagData={tagMatches}

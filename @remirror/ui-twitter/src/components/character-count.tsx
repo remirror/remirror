@@ -14,12 +14,12 @@ export interface CharacterCountIndicatorProps {
 
 const CharacterCountIndicatorComponent: FC<CharacterCountIndicatorProps> = ({
   characters = { total: 280, used: 290 },
-  size = 20,
-  strokeWidth = 2,
+  size = 27,
+  strokeWidth = 3,
   warningThreshold = 18,
   theme,
 }) => {
-  const { colors } = theme;
+  const { colors, font } = theme;
   const remainingCharacters = characters.total - characters.used;
   const warn = remainingCharacters <= warningThreshold;
   const ratio = characters.used / characters.total;
@@ -35,7 +35,7 @@ const CharacterCountIndicatorComponent: FC<CharacterCountIndicatorProps> = ({
   const dashOffset = dashArray - dashArray * (ratio > 1 ? 1 : ratio);
 
   return (
-    <div style={{ marginLeft: 8, lineHeight: '20px' }}>
+    <div style={{ marginLeft: 8, lineHeight: size + 'px', display: 'flex' }}>
       {warn && (
         <div
           style={{
@@ -43,7 +43,7 @@ const CharacterCountIndicatorComponent: FC<CharacterCountIndicatorProps> = ({
             marginRight: 4,
             paddingBottom: 0,
             backgroundColor: 'transparent',
-            fontSize: 14,
+            fontSize: font.size,
             display: 'inline-block',
           }}
         >

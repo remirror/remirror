@@ -1,8 +1,9 @@
 import { NodeViewPortalContainer } from '@remirror/core';
 import { ReactNodeView } from '@remirror/react';
+import { Data } from 'emoji-mart';
 import { EmojiSet } from 'emoji-mart/dist-es/utils/shared-props';
 import { Plugin, PluginKey } from 'prosemirror-state';
-import { Emoji } from './components/emoji';
+import { DefaultEmoji } from './components/emoji';
 
 export interface CreateEmojiPluginParams {
   key: PluginKey;
@@ -16,6 +17,11 @@ export interface CreateEmojiPluginParams {
    * up with the font size.
    */
   size?: number | string;
+
+  /**
+   * The data used for emoji
+   */
+  data: Data;
 }
 
 export const createEmojiPlugin = ({
@@ -23,12 +29,13 @@ export const createEmojiPlugin = ({
   getPortalContainer,
   set,
   size = '1em',
+  data,
 }: CreateEmojiPluginParams) => {
   return new Plugin({
     key,
     props: {
       nodeViews: {
-        emoji: ReactNodeView.createNodeView(Emoji, getPortalContainer, { set, size }),
+        emoji: ReactNodeView.createNodeView(DefaultEmoji, getPortalContainer, { set, size, data }),
       },
     },
   });

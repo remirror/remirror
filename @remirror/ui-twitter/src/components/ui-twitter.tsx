@@ -6,6 +6,8 @@ import { EmojiNode } from '@remirror/extension-emoji';
 import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
 import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
 import { Remirror, RemirrorProps } from '@remirror/react';
+import { Data } from 'emoji-mart';
+import { EmojiSet } from 'emoji-mart/dist-es/utils/shared-props';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
 import { omit } from 'lodash';
@@ -25,6 +27,13 @@ export interface TwitterUIProps extends EnhancedLinkOptions, Partial<RemirrorPro
   tagData: TwitterTagData[];
   onMentionStateChange(params?: OnQueryChangeParams): void;
   theme: UITwitterTheme;
+
+  /**
+   * The data object used for emoji.
+   * The shape is taken from emoji-mart.
+   */
+  emojiData: Data;
+  emojiSet: EmojiSet;
 }
 
 interface AtMentionState {
@@ -47,7 +56,8 @@ interface State {
 
 export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   public static defaultProps = {
-    theme: { colors: {} },
+    theme: { colors: {}, font: {} },
+    emojiSet: 'twitter',
   };
 
   public readonly state: State = { activeIndex: 0 };
@@ -134,7 +144,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
         },
       }),
       new EnhancedLink({ onUrlsChange: this.props.onUrlsChange }),
-      new EmojiNode({ set: 'twitter', size: '1.1em' }),
+      new EmojiNode({ set: this.props.emojiSet, size: '1.25em', data: this.props.emojiData }),
     ];
   }
 
@@ -222,7 +232,6 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
 
     // pressed up arrow
     if (up) {
-      console.log('up pressed');
       const newIndex = activeIndex - 1 < 0 ? matches.length - 1 : activeIndex - 1;
       this.setActiveIndex(newIndex);
       onMentionStateChange({ type, query, activeIndex: newIndex });
@@ -231,7 +240,6 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
 
     // pressed down arrow
     if (down) {
-      console.log('down pressed');
       const newIndex = activeIndex + 1 > matches.length - 1 ? 0 : activeIndex + 1;
       this.setActiveIndex(newIndex);
       onMentionStateChange({ type, query, activeIndex: newIndex });
@@ -329,7 +337,7 @@ const CharacterCountWrapper = styled.div`
   position: absolute;
   bottom: 0;
   right: 0;
-  margin: 0 8px 4px 4px;
+  margin: 0 8px 10px 4px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -359,13 +367,13 @@ const RemirrorWrapper = styled.div<{ extra: Interpolation[] }>`
     line-height: 20px;
     border-radius: 8px;
     width: 100%;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-family: ${({ theme }) => theme.font.family};
+    font-size: ${({ theme }) => theme.font.size};
     max-height: calc(90vh - 124px);
     min-height: 142px;
     padding: 8px;
-    padding-right: 31px;
-    font-weight: 400;
+    padding-right: 40px;
+    font-weight: ${({ theme }) => theme.font.weight};
   }
 
   .remirror-editor a {

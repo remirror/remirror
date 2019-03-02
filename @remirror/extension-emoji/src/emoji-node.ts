@@ -18,7 +18,7 @@ import { getEmojiDataByNativeString } from './helpers';
 import { EmojiNodeAttrs } from './types';
 export interface EmojiNodeOptions
   extends NodeExtensionOptions,
-    Pick<CreateEmojiPluginParams, 'set' | 'size'> {
+    Pick<CreateEmojiPluginParams, 'set' | 'size' | 'data'> {
   transformAttrs?(attrs: EmojiNodeAttrs): Attrs;
   className?: string;
 }
@@ -50,6 +50,7 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
       inline: true,
       group: 'inline',
       selectable: false,
+      marks: '',
       attrs: {
         id: { default: '' },
         native: { default: '' },
@@ -59,6 +60,7 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
         'aria-label': { default: '' },
         title: { default: '' },
         class: { default: '' },
+        useNative: { default: false },
         ...this.extraAttrs(),
       },
       parseDOM: [
@@ -67,27 +69,30 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
           getAttrs: domNode => {
             const dom = domNode as HTMLElement;
             const skin = dom.getAttribute('data-emoji-skin');
+            const useNative = dom.getAttribute('data-emoji-use-native');
             return {
               id: dom.getAttribute('data-emoji-id') || '',
               native: dom.getAttribute('data-emoji-native') || '',
               name: dom.getAttribute('data-emoji-name') || '',
               colons: dom.getAttribute('data-emoji-colons') || '',
               skin: skin ? Number(skin) : null,
+              useNative: useNative === 'true',
             };
           },
         },
       ],
       toDOM(node: PMNode) {
-        const { id, name, native, colons, skin } = node.attrs as EmojiNodeAttrs;
+        const { id, name, native, colons, skin, useNative } = node.attrs as EmojiNodeAttrs;
         const attrs = {
           'data-emoji-id': id,
           'data-emoji-colons': colons,
           'data-emoji-native': native,
           'data-emoji-name': name,
           'data-emoji-skin': isNumber(skin) ? String(skin) : '',
+          'data-use-native': useNative ? 'true' : 'false',
           ...transformAttrs({ id, name, native, colons, skin }),
         };
-        return ['span', attrs];
+        return ['span', attrs, native];
       },
     };
   }
@@ -101,7 +106,7 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
     return [
       enhancedNodeInputRule(emojiRegex(), type, match => {
         const native = getMatchString(match);
-        const data = getEmojiDataByNativeString(native);
+        const data = getEmojiDataByNativeString(native, this.options.data);
         return data
           ? Cast<Attrs>({ ...data, ...this.options.transformAttrs(data) })
           : Cast<Attrs>({
@@ -114,7 +119,7 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
   }
 
   public plugins({ getPortalContainer }: SchemaNodeTypeParams) {
-    const { set, size } = this.options;
-    return [createEmojiPlugin({ key: this.pluginKey, getPortalContainer, set, size })];
+    const { set, size, data } = this.options;
+    return [createEmojiPlugin({ key: this.pluginKey, getPortalContainer, set, size, data })];
   }
 }

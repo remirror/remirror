@@ -1,6 +1,9 @@
 import { Cast } from '@remirror/core';
-import { emojiIndex } from 'emoji-mart';
-import { BaseEmoji, CustomEmoji } from 'emoji-mart/dist-es/utils/emoji-index/nimble-emoji-index';
+import { Data } from 'emoji-mart';
+import NimbleEmojiIndex, {
+  BaseEmoji,
+  CustomEmoji,
+} from 'emoji-mart/dist-es/utils/emoji-index/nimble-emoji-index';
 import { emoticonMap } from './emoticons';
 
 /**
@@ -18,7 +21,8 @@ export const isBaseEmoji = (emoji: BaseEmoji | CustomEmoji | undefined): emoji i
  *
  * @param nativeString the native emoji utf8 string
  */
-export const getEmojiDataByNativeString = (nativeString: string) => {
+export const getEmojiDataByNativeString = (nativeString: string, data: Data) => {
+  const emojiIndex = new NimbleEmojiIndex(data);
   const skinTones = ['', '🏻', '🏼', '🏽', '🏾', '🏿'];
 
   let skin = null;
@@ -30,7 +34,6 @@ export const getEmojiDataByNativeString = (nativeString: string) => {
       skin = skinTones.indexOf(skinTone) + 1;
     }
   });
-  console.log('skin is', skin);
 
   // For some reason the gender string for ball players causes problems on macOS.
   if (baseNativeString === '⛹‍♀️') {
@@ -47,8 +50,6 @@ export const getEmojiDataByNativeString = (nativeString: string) => {
     emojiData.skin = skin;
   }
 
-  console.log(emojiData);
-
   return emojiData;
 };
 
@@ -57,7 +58,8 @@ export const getEmojiDataByNativeString = (nativeString: string) => {
  *
  * @param emoticon e.g. `:-)`
  */
-export const getEmojiDataByEmoticon = (emoticon: string) => {
+export const getEmojiDataByEmoticon = (emoticon: string, data: Data) => {
+  const emojiIndex = new NimbleEmojiIndex(data);
   let emojiData: BaseEmoji | undefined;
   const emoticonName = Object.keys(emoticonMap).find(name => emoticonMap[name].includes(emoticon));
 
@@ -75,7 +77,8 @@ export const getEmojiDataByEmoticon = (emoticon: string) => {
  *
  * @param id the string identifier for the emoji
  */
-export const getEmojiDataById = (id: string) => {
+export const getEmojiDataById = (id: string, data: Data) => {
+  const emojiIndex = new NimbleEmojiIndex(data);
   return Object.values(emojiIndex.emojis)
     .filter(isBaseEmoji)
     .find(item => item.id === id);
