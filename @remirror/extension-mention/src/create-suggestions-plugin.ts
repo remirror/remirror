@@ -3,6 +3,7 @@ import {
   CommandFunction,
   EditorSchema,
   EditorState,
+  findMatches,
   FromTo,
   getPluginState,
   insertText,
@@ -32,6 +33,7 @@ export interface SuggestionsMatcher {
   char: string;
   allowSpaces: boolean;
   startOfLine: boolean;
+  supportedCharacters: RegExp | string;
 }
 
 export interface SuggestionsPluginState {
@@ -70,10 +72,11 @@ export interface SuggestionsPluginProps {
   onKeyDown?(params: OnKeyDownParams): boolean;
 }
 
-const defaultMatcher = {
+export const defaultMatcher: SuggestionsMatcher = {
   char: '@',
   allowSpaces: false,
   startOfLine: false,
+  supportedCharacters: /[\w\d_]+/,
 };
 const defaultHandler = () => false;
 const defaultSuggestionsPluginState: SuggestionsPluginState = {
@@ -85,16 +88,23 @@ const defaultSuggestionsPluginState: SuggestionsPluginState = {
 
 // Create a matcher that matches when a specific character is typed. Useful for @mentions and #tags.
 const triggerCharacter = (
-  { char = '@', allowSpaces = false, startOfLine = false }: SuggestionsMatcher,
+  {
+    char = '@',
+    startOfLine = false,
+    supportedCharacters = /[\w\d_]+/gi,
+  }: // allowSpaces = false,
+  SuggestionsMatcher,
   $pos: ResolvedPos<EditorSchema>,
 ): SuggestionsPluginState | undefined => {
   // Matching expressions used for later
   const escapedChar = `\\${char}`;
-  const suffix = new RegExp(`\\s${escapedChar}$`);
+  const supported =
+    typeof supportedCharacters === 'string' ? supportedCharacters : supportedCharacters.source;
+  // const suffix = new RegExp(`\\s${escapedChar}$`);
   const prefix = startOfLine ? '^' : '';
-  const regexp = allowSpaces
-    ? new RegExp(`${prefix}${escapedChar}.*?(?=\\s${escapedChar}|$)`, 'gm')
-    : new RegExp(`${prefix}(?:^)?${escapedChar}[^\\s${escapedChar}]*`, 'gm');
+  const regexp = new RegExp(`${prefix}${escapedChar}${supported}`, 'gm');
+  // ? new RegExp(`${prefix}${escapedChar}.*?(?=\\s${escapedChar}|$)`, 'gm')
+  // : new RegExp(`${prefix}(?:^)?${escapedChar}[^\\s${escapedChar}]*`, 'gm');
 
   // Lookup the boundaries of the current node
   const textFrom = $pos.before();
@@ -102,8 +112,7 @@ const triggerCharacter = (
   const text = $pos.doc.textBetween(textFrom, textTo, '\0', '\0');
 
   let position: SuggestionsPluginState | undefined;
-
-  for (let match = regexp.exec(text); match !== null; match = regexp.exec(text)) {
+  findMatches(text, regexp).forEach(match => {
     // JavaScript doesn't have lookbehinds; this hacks a check that first character is " "
     // or the line beginning
     const matchPrefix = match.input.slice(Math.max(0, match.index - 1), match.index);
@@ -111,14 +120,14 @@ const triggerCharacter = (
     if (/^[\s\0]?$/.test(matchPrefix)) {
       // The absolute position of the match in the document
       const from = match.index + $pos.start();
-      let to = from + match[0].length;
+      const to = from + match[0].length;
 
       // Edge case handling; if spaces are allowed and we're directly in between
       // two triggers
-      if (allowSpaces && suffix.test(text.slice(to - 1, to + 1))) {
-        match[0] += ' ';
-        to += 1;
-      }
+      // if (allowSpaces && suffix.test(text.slice(to - 1, to + 1))) {
+      //   match[0] += ' ';
+      //   to += 1;
+      // }
 
       // If the $position is located within the matched substring, return that range
       if (from < $pos.pos && to >= $pos.pos) {
@@ -133,7 +142,7 @@ const triggerCharacter = (
         };
       }
     }
-  }
+  });
 
   return position;
 };
@@ -150,7 +159,7 @@ export const createSuggestionsPlugin = ({
   decorationsTag,
   key,
 }: SuggestionsPluginProps & { key: PluginKey<SuggestionsPluginState, EditorSchema> }) => {
-  const matcher = { ...defaultMatcher, ..._matcher };
+  const matcher = { ...defaultMatcher, ..._matcher } as SuggestionsMatcher;
   const plugin: Plugin = new Plugin<SuggestionsPluginState, EditorSchema>({
     key,
     view() {
@@ -187,7 +196,11 @@ export const createSuggestionsPlugin = ({
                 schema: view.state.schema,
               })(view.state, view.dispatch);
 
-              if (appendText) {
+              if (attrs.hasOwnProperty('appendText')) {
+                if (attrs.appendText.length) {
+                  insertText(attrs.appendText)(view.state, view.dispatch);
+                }
+              } else if (appendText) {
                 insertText(appendText)(view.state, view.dispatch);
               }
             },

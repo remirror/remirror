@@ -44,7 +44,7 @@
     "bundlesize": "0.17.1",
     "chalk": "2.4.2",
     "cross-env": "5.2.0",
-    "eslint": "5.14.1",
+    "eslint": "5.15.0",
     "eslint-config-prettier": "4.1.0",
     "eslint-config-standard": "12.0.0",
     "eslint-plugin-import": "2.16.0",

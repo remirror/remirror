@@ -100,12 +100,12 @@ describe('Twitter UI', () => {
         );
       });
 
-      it.skip('should still wrap selections when exiting without selections', async () => {
+      it('should still wrap selections when exiting without selections', async () => {
         await page.type(editorSelector, 'hello @ab ');
         await expect(outerHTML(sel(editorSelector, 'a'))).resolves.toMatchInlineSnapshot();
       });
     });
-    describe('#', () => {
+    describe.only('#', () => {
       it('should wrap in progress mentions in a-tag decorations', async () => {
         await page.type(editorSelector, 'My tag is #Topic');
         await expect(innerHtml(editorSelector)).resolves.toInclude(
@@ -117,19 +117,28 @@ describe('Twitter UI', () => {
         await page.type(editorSelector, 'hello #T');
         await page.keyboard.press('Enter');
         await expect(innerHtml(editorSelector)).resolves.toMatchInlineSnapshot(
-          `"<p class=\\"\\">hello <a class=\\"mention\\" data-mention-id=\\"Tags\\" contenteditable=\\"false\\">#Tags</a> </p>"`,
+          `"<p class=\\"\\">hello <a href=\\"/search?query=Tags\\" role=\\"presentation\\" class=\\"mention\\" data-mention-id=\\"Tags\\" contenteditable=\\"false\\">#Tags</a> </p>"`,
         );
       });
 
-      it.skip('should still wrap selections when exiting without selections', async () => {
+      it('should still wrap selections when exiting without selections', async () => {
         await page.type(editorSelector, 'hello #T ');
-        await expect(outerHTML(sel(editorSelector, 'a'))).resolves.toMatchInlineSnapshot();
+        await expect(outerHTML(sel(editorSelector, 'a'))).resolves.toMatchInlineSnapshot(
+          `"<a href=\\"/search?query=T\\" role=\\"presentation\\" class=\\"mention\\" data-mention-id=\\"T\\" contenteditable=\\"false\\">#T</a>"`,
+        );
       });
     });
   });
 
-  describe.skip('Emoji', () => {
-    it.todo('should be able to add emoji');
+  describe('Emoji', () => {
+    it('should be able to add emoji', async () => {
+      await page.type(editorSelector, '😀');
+      await expect(
+        innerHtml(sel(editorSelector, 'span.remirror-editor-emoji-node')),
+      ).resolves.toMatchInlineSnapshot(
+        `"<span title=\\"grinning\\" class=\\"emoji-mart-emoji\\"><span style=\\"width: 1.25em; height: 1.25em; display: inline-block; background-image: url(&quot;https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png&quot;); background-size: 5200% 5200%; background-position: 58.8235% 47.0588%;\\"></span></span>"`,
+      );
+    });
   });
 
   describe('Combined', () => {
@@ -140,11 +149,11 @@ describe('Twitter UI', () => {
       await expect(outerHTML(sel(editorSelector, 'a'))).resolves.toMatchInlineSnapshot();
     });
 
-    it.skip('should not replace emoji with link when no space imbetween', async () => {
-      await page.type(editorSelector, '😀 google.com');
-      await expect(
-        innerHtml(sel(editorSelector, 'span.remirror-editor-emoji-node')),
-      ).resolves.toMatchInlineSnapshot();
+    it('should not replace emoji with link when no space imbetween', async () => {
+      await page.type(editorSelector, '😀google.com');
+      await expect(innerHtml(sel(editorSelector))).resolves.toMatchInlineSnapshot(
+        `"<p class=\\"\\"><span id=\\"grinning\\" native=\\"😀\\" name=\\"Grinning Face\\" colons=\\":grinning:\\" skin=\\"null\\" aria-label=\\"\\" title=\\"\\" class=\\"remirror-editor-emoji-node\\" usenative=\\"false\\" contenteditable=\\"false\\"><span title=\\"grinning\\" class=\\"emoji-mart-emoji\\"><span style=\\"width: 1.25em; height: 1.25em; display: inline-block; background-image: url(&quot;https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png&quot;); background-size: 5200% 5200%; background-position: 58.8235% 47.0588%;\\"></span></span></span><a href=\\"http://google.com\\" role=\\"presentation\\">google.com</a><span>﻿</span><br></p>"`,
+      );
     });
   });
 });

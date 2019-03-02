@@ -37,12 +37,16 @@ export interface TwitterUIProps extends EnhancedLinkOptions, Partial<RemirrorPro
   emojiSet: EmojiSet;
 }
 
-interface AtMentionState {
-  type: 'at';
+interface BaseMentionState {
   query: string;
+  action: 'enter' | 'change' | 'exit';
+}
+
+interface AtMentionState extends BaseMentionState {
+  type: 'at';
   submitFactory(user: TwitterUserData): () => void;
 }
-interface HashMentionState {
+interface HashMentionState extends BaseMentionState {
   type: 'hash';
   query: string;
   submitFactory(tag: TwitterTagData): () => void;
@@ -65,6 +69,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   public readonly state: State = { activeIndex: 0, emojiPickerActive: false };
   private readonly extensions: AnyExtension[];
   private view?: EditorView;
+  private exitCommandEnabled = false;
 
   constructor(props: TwitterUIProps) {
     super(props);
@@ -79,32 +84,31 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
         matcher: { char: '@' },
         onKeyDown: this.keyDownHandler,
         onEnter: ({ query, command }) => {
-          this.setMention({
-            type: 'at',
+          const params = {
+            type: 'at' as 'at',
+            action: 'enter' as 'enter',
             query: query || '',
-            submitFactory: this.atMentionSubmitFactory(command),
-          });
-          this.props.onMentionStateChange({
-            type: 'at',
-            query: query || '',
-            activeIndex: this.state.activeIndex,
-          });
+          };
+          this.setMention({ ...params, submitFactory: this.atMentionSubmitFactory(command) });
+          this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
           this.setActiveIndex(0);
         },
         onChange: ({ query, command }) => {
-          this.setMention({
-            type: 'at',
+          const params = {
+            type: 'at' as 'at',
+            action: 'change' as 'change',
             query: query || '',
-            submitFactory: this.atMentionSubmitFactory(command),
-          });
-          this.props.onMentionStateChange({
-            type: 'at',
-            query: query || '',
-            activeIndex: this.state.activeIndex,
-          });
+          };
+          this.setMention({ ...params, submitFactory: this.atMentionSubmitFactory(command) });
+          this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
           this.setActiveIndex(0);
         },
-        onExit: params => {
+        onExit: ({ query }) => {
+          const params = {
+            type: 'at' as 'at',
+            action: 'exit' as 'exit',
+            query: query || '',
+          };
           console.log('exiting', params);
           this.setMention(undefined);
           this.props.onMentionStateChange(undefined);
@@ -113,34 +117,43 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
       new MentionNode({
         type: 'hash',
         matcher: { char: '#' },
+        extraAttrs: ['href', 'role'],
         onKeyDown: this.keyDownHandler,
         onEnter: ({ query, command }) => {
-          this.setMention({
-            type: 'hash',
+          const params = {
+            type: 'hash' as 'hash',
+            action: 'enter' as 'enter',
             query: query || '',
-            submitFactory: this.hashMentionSubmitFactory(command),
-          });
-          this.props.onMentionStateChange({
-            type: 'hash',
-            query: query || '',
-            activeIndex: this.state.activeIndex,
-          });
+          };
+          this.setMention({ ...params, submitFactory: this.hashMentionSubmitFactory(command) });
+          this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
           this.setActiveIndex(0);
         },
         onChange: ({ query, command }) => {
-          this.setMention({
-            type: 'hash',
+          const params = {
+            type: 'hash' as 'hash',
+            action: 'change' as 'change',
             query: query || '',
-            submitFactory: this.hashMentionSubmitFactory(command),
-          });
-          this.props.onMentionStateChange({
-            type: 'hash',
-            query: query || '',
-            activeIndex: this.state.activeIndex,
-          });
+          };
+          this.setMention({ ...params, submitFactory: this.hashMentionSubmitFactory(command) });
+          this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
           this.setActiveIndex(0);
         },
-        onExit: () => {
+        onExit: ({ query, command }) => {
+          // const { mention } = this.state;
+          // if (query && !this.tagMatches.length && mention && mention.type === 'hash') {
+          //   mention.submitFactory({ tag: query })();
+          // }
+          if (query && this.exitCommandEnabled) {
+            command({
+              id: query,
+              label: query,
+              role: 'presentation',
+              href: `/search?query=${query}`,
+              appendText: '',
+            });
+            console.log('on exit command called', query);
+          }
           this.setMention(undefined);
           this.props.onMentionStateChange(undefined);
         },
@@ -193,13 +206,21 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     };
   }
 
-  private hashMentionSubmitFactory(command: (attrs: NodeAttrs) => void) {
+  /**
+   * Factory for creating hashes via the passed in command and the curried tag function which can be called within
+   * an onClick / eventHandler function
+   *
+   * @param command
+   * @param appendText
+   */
+  private hashMentionSubmitFactory(command: (attrs: NodeAttrs) => void, appendText?: string) {
     return ({ tag }: TwitterTagData) => () => {
       command({
         id: tag,
         label: tag,
         role: 'presentation',
         href: `/search?query=${tag}`,
+        ...(typeof appendText === 'string' ? { appendText } : {}),
       });
       // Refocus the editor
       if (this.view) {
@@ -212,7 +233,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     this.setState({ activeIndex });
   }
 
-  private setMention(mention?: MentionState) {
+  private setMention(mention: MentionState | undefined) {
     this.setState({ mention });
   }
 
@@ -221,22 +242,25 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     const down = keyCode.isEventKey(event, 'down');
     const up = keyCode.isEventKey(event, 'up');
     const esc = keyCode.isEventKey(event, 'esc');
+    const del = keyCode.isEventKey(event, 'delete');
+    const backspace = keyCode.isEventKey(event, 'backspace');
 
     const { mention, activeIndex } = this.state;
     const { onMentionStateChange } = this.props;
-
+    this.exitCommandEnabled = false;
+    console.log('key down handler');
     if (!mention) {
       return false;
     }
 
-    const { type, query } = mention;
+    const { type, query, action } = mention;
     const matches = type === 'at' ? this.userMatches : this.tagMatches;
 
     // pressed up arrow
     if (up) {
       const newIndex = activeIndex - 1 < 0 ? matches.length - 1 : activeIndex - 1;
       this.setActiveIndex(newIndex);
-      onMentionStateChange({ type, query, activeIndex: newIndex });
+      onMentionStateChange({ type, query, activeIndex: newIndex, action });
       return true;
     }
 
@@ -244,27 +268,50 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     if (down) {
       const newIndex = activeIndex + 1 > matches.length - 1 ? 0 : activeIndex + 1;
       this.setActiveIndex(newIndex);
-      onMentionStateChange({ type, query, activeIndex: newIndex });
+      onMentionStateChange({ type, query, activeIndex: newIndex, action });
       return true;
     }
 
     // pressed enter
     if (enter) {
-      if (mention.type === 'at') {
-        mention.submitFactory(this.userMatches[activeIndex])();
-      } else {
-        mention.submitFactory(this.tagMatches[activeIndex])();
-      }
-
-      return true;
+      return this.handleEnterKeyPressed(mention);
     }
 
     if (esc) {
-      // ? Perhaps add a remove text action for esc - for now nothing happens
+      // ? Perhaps add a cancel
     }
+
+    if (del || backspace) {
+      return false;
+    }
+
+    this.exitCommandEnabled = true;
 
     return false;
   };
+
+  /**
+   * Only intercept the enter key press when the number of matches has a length.
+   *
+   * @param mention
+   */
+  private handleEnterKeyPressed(mention: MentionState) {
+    console.log('handling enter key pressed', mention);
+    const { activeIndex } = this.state;
+    if (mention.type === 'at' && this.userMatches.length) {
+      mention.submitFactory(this.userMatches[activeIndex])();
+      return true;
+    } else if (mention.type === 'hash' && this.tagMatches.length) {
+      console.log('submitting after enter key pressed');
+      mention.submitFactory(this.tagMatches[activeIndex])();
+      return true;
+    }
+    this.exitCommandEnabled = true;
+
+    console.log('skipping enter key press');
+
+    return false;
+  }
 
   private get theme(): UITwitterTheme {
     const { theme: propTheme = { colors: {} } } = this.props;

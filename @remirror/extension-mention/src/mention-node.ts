@@ -9,7 +9,7 @@ import {
   SchemaParams,
 } from '@remirror/core';
 import { startCase } from 'lodash';
-import { createSuggestionsPlugin, SuggestionsPluginProps } from './create-suggestions-plugin';
+import { createSuggestionsPlugin, defaultMatcher, SuggestionsPluginProps } from './create-suggestions-plugin';
 
 export interface MentionNodeExtensionOptions
   extends Omit<SuggestionsPluginProps, 'command' | 'decorationsTag'>,
@@ -34,13 +34,12 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
     return `mentions${type ? `${startCase(type)}` : ''}`;
   }
 
+  /**
+   * Provide the default options for this extension
+   */
   get defaultOptions() {
     return {
-      matcher: {
-        char: '@',
-        allowSpaces: false,
-        startOfLine: false,
-      },
+      matcher: defaultMatcher,
       appendText: ' ',
       mentionClassName: 'mention',
       extraAttrs: [],
