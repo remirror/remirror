@@ -145,6 +145,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
           //   mention.submitFactory({ tag: query })();
           // }
           if (query && this.exitCommandEnabled) {
+            console.log('on exit command being called', query);
             command({
               id: query,
               label: query,
@@ -248,7 +249,6 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     const { mention, activeIndex } = this.state;
     const { onMentionStateChange } = this.props;
     this.exitCommandEnabled = false;
-    console.log('key down handler');
     if (!mention) {
       return false;
     }

@@ -6,7 +6,6 @@ import {
   Omit,
   replaceText,
   SchemaNodeTypeParams,
-  SchemaParams,
 } from '@remirror/core';
 import { startCase } from 'lodash';
 import { createSuggestionsPlugin, defaultMatcher, SuggestionsPluginProps } from './create-suggestions-plugin';
@@ -98,8 +97,8 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
     };
   }
 
-  public commands = ({ schema }: SchemaParams): ExtensionCommandFunction => attrs =>
-    replaceText(null, schema.nodes[this.name], attrs);
+  public commands = ({ type }: SchemaNodeTypeParams): ExtensionCommandFunction => attrs =>
+    replaceText(null, type, attrs);
 
   public plugins({ type }: SchemaNodeTypeParams) {
     return [

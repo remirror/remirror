@@ -407,8 +407,9 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       dispatchTransaction(transaction);
     }
     const { state, transactions } = this.view.state.applyTransaction(transaction);
-    this.view.updateState(state);
     this.setState({ editorState: state }, () => {
+      // For some reason moving the update state here fixes a bug
+      this.view.updateState(state);
       if (transactions.some(tr => tr.docChanged) && onChange) {
         onChange({ ...this.eventListenerParams, state });
       }
