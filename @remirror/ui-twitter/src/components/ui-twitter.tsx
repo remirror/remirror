@@ -146,7 +146,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
         },
       }),
       new EnhancedLink({ onUrlsChange: this.props.onUrlsChange }),
-      new EmojiNode({ set: this.props.emojiSet, size: '1.25em', data: this.props.emojiData }),
+      new EmojiNode({ set: this.props.emojiSet, size: '1.25em', emojiData: this.props.emojiData }),
     ];
   }
 
@@ -282,7 +282,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
         name: emoji.name,
         native: emoji.native,
         colors: emoji.colons,
-        skin: emoji.skin,
+        skin: String(emoji.skin || ''),
       });
     }
   };

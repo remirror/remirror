@@ -9,14 +9,12 @@ import {
   replaceText,
   SchemaNodeTypeParams,
 } from '@remirror/core';
-import emojiRegex from 'emoji-regex/es2015/text';
 import { isNumber } from 'lodash';
 import { createEmojiPlugin, CreateEmojiPluginParams } from './create-emoji-plugin';
-import { nativeEmojiInputRule } from './input-rules';
 import { EmojiNodeAttrs } from './types';
 export interface EmojiNodeOptions
   extends NodeExtensionOptions,
-    Pick<CreateEmojiPluginParams, 'set' | 'size' | 'data'> {
+    Pick<CreateEmojiPluginParams, 'set' | 'size' | 'emojiData' | 'EmojiComponent'> {
   transformAttrs?(attrs: EmojiNodeAttrs): Attrs;
   className?: string;
 }
@@ -100,12 +98,22 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
     return replaceText(null, type, attrs);
   };
 
-  public inputRules({ type }: SchemaNodeTypeParams) {
-    return [nativeEmojiInputRule(emojiRegex(), type, this.options.data)];
-  }
+  // public inputRules({ type }: SchemaNodeTypeParams) {
+  //   return [nativeEmojiInputRule(emojiRegex(), type, this.options.emojiData)];
+  // }
 
-  public plugins({ getPortalContainer }: SchemaNodeTypeParams) {
-    const { set, size, data } = this.options;
-    return [createEmojiPlugin({ key: this.pluginKey, getPortalContainer, set, size, data })];
+  public plugins({ getPortalContainer, type }: SchemaNodeTypeParams) {
+    const { set, size, emojiData, EmojiComponent } = this.options;
+    return [
+      createEmojiPlugin({
+        key: this.pluginKey,
+        getPortalContainer,
+        set,
+        size,
+        emojiData,
+        type,
+        EmojiComponent,
+      }),
+    ];
   }
 }
