@@ -18,9 +18,8 @@ module.exports = {
         },
       },
     ],
-    '@emotion/babel-preset-css-prop',
     '@babel/preset-typescript',
-    // '@babel/preset-react',
+    '@babel/preset-react',
   ],
   plugins: [
     '@babel/plugin-transform-typescript', // This is need so that abstract classes are properly compiled

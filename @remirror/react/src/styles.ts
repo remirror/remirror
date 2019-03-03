@@ -1,4 +1,4 @@
-import { ObjectInterpolation } from '@emotion/core';
+import { ObjectInterpolation } from 'emotion';
 
 export interface PlaceholderContent {
   selector: string;
@@ -7,7 +7,7 @@ export interface PlaceholderContent {
 
 export const defaultStyles = (placeholder?: PlaceholderContent): ObjectInterpolation<any> => ({
   '.remirror-editor': {
-    // caretColor: 'red',
+    caretColor: 'currentColor',
     wordWrap: 'break-word',
     whiteSpace: 'pre-wrap',
     overflowWrap: 'break-word',

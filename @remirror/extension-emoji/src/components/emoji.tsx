@@ -5,6 +5,7 @@ import { NodeViewComponentProps } from '@remirror/react';
 import NimbleEmoji from 'emoji-mart/dist-es/components/emoji/nimble-emoji';
 import { Data } from 'emoji-mart/dist-es/utils/data';
 import { EmojiSet } from 'emoji-mart/dist-es/utils/shared-props';
+import { ObjectInterpolation } from 'emotion';
 import { EmojiNodeAttrs } from '../types';
 
 export interface DefaultEmojiProps extends NodeViewComponentProps<EmojiNodeAttrs> {

@@ -9,12 +9,14 @@ import {
   SchemaNodeTypeParams,
 } from '@remirror/core';
 import { isNumber } from 'lodash';
+import { DefaultEmoji } from './components/emoji';
 import { createEmojiPlugin, CreateEmojiPluginParams } from './create-emoji-plugin';
 import { EmojiNodeAttrs } from './types';
 
 export interface EmojiNodeOptions
   extends NodeExtensionOptions,
-    Pick<CreateEmojiPluginParams, 'set' | 'size' | 'emojiData' | 'EmojiComponent'> {
+    Pick<CreateEmojiPluginParams, 'set' | 'emojiData'>,
+    Partial<Pick<CreateEmojiPluginParams, 'size' | 'EmojiComponent' | 'style'>> {
   transformAttrs?(attrs: Pick<EmojiNodeAttrs, 'name'>): Attrs;
   className?: string;
 }
@@ -36,7 +38,9 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
         class: `remirror-editor-emoji-node${this.options.className ? ' ' + this.options.className : ''}`,
       }),
       className: '',
-      size: '1em',
+      size: '1.1em',
+      styles: {},
+      EmojiComponent: DefaultEmoji,
     };
   }
 
@@ -46,6 +50,7 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
       inline: true,
       group: 'inline',
       selectable: false,
+      atom: true,
       attrs: {
         id: { default: '' },
         native: { default: '' },
@@ -109,9 +114,10 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
   // }
 
   public plugin({ getPortalContainer, type }: SchemaNodeTypeParams) {
-    const { set, size, emojiData, EmojiComponent } = this.options;
+    const { set, size, emojiData, EmojiComponent, style } = this.options;
     return createEmojiPlugin({
       key: this.pluginKey,
+      style,
       getPortalContainer,
       set,
       size,

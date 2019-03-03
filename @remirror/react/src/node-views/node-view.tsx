@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { NodeViewPortalContainer } from '@remirror/core';
+import { css, cx, Interpolation } from 'emotion';
 import { Node as ProsemirrorNode } from 'prosemirror-model';
 import { Decoration, EditorView, NodeView } from 'prosemirror-view';
 import { PlainObject } from 'simplytyped';
@@ -14,14 +15,22 @@ export interface NodeViewComponentProps<GAttrs = any> {
   forwardRef?: (node: HTMLElement) => void | undefined;
 }
 
+export interface CreateNodeViewParams<GProps extends PlainObject = {}> {
+  Component: React.ComponentType<NodeViewComponentProps & GProps>;
+  getPortalContainer: () => NodeViewPortalContainer;
+  props: GProps;
+  style?: Interpolation;
+}
+
 export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView {
-  public static createNodeView<GProps extends PlainObject = {}>(
-    Component: React.ComponentType<NodeViewComponentProps & GProps>,
-    getPortalContainer: () => NodeViewPortalContainer,
-    props: GProps,
-  ) {
+  public static createNodeView<GProps extends PlainObject>({
+    Component,
+    getPortalContainer,
+    props,
+    style,
+  }: CreateNodeViewParams<GProps>) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
-      new ReactNodeView(node, view, getPosition, getPortalContainer, props, Component).init();
+      new ReactNodeView(node, view, getPosition, getPortalContainer, props, Component, false, style).init();
   }
 
   private domRef?: HTMLElement;
@@ -36,6 +45,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     public props: GProps = {} as GProps,
     private Component: React.ComponentType<NodeViewComponentProps & GProps>,
     private hasContext: boolean = false,
+    private style: Interpolation = {},
   ) {}
 
   /**
@@ -62,13 +72,8 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
       this.contentDOMWrapper = contentDOMWrapper || contentDOM;
     }
 
-    /* Fix from atlassian
-    something gets messed up during mutation processing inside of a
-    nodeView if DOM structure has nested plain "div"s, it doesn't see the
-    difference between them and it kills the nodeView */
-    if (!this.domRef.className) {
-      this.domRef.className = `remirror-editor-${this.node.type.name}-node`;
-    }
+    // Add a fixed class and a dynamic clas to this node (allows for custom styles being added in configuration)
+    this.domRef.classList.add(`remirror-editor-${this.node.type.name}-node-view`, css(this.style));
 
     this.renderReactComponent(() => this.render(this.props, this.handleRef));
     return this;
@@ -79,7 +84,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
       return;
     }
 
-    this.getPortalContainer().render(component, this.domRef!, this.hasContext);
+    this.getPortalContainer().render(component, this.domRef, this.hasContext);
   }
 
   public createDomRef(): HTMLElement {

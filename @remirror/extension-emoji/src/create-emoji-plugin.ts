@@ -3,6 +3,7 @@ import { ReactNodeView } from '@remirror/react';
 import { Data } from 'emoji-mart/dist-es/utils/data';
 import { EmojiSet } from 'emoji-mart/dist-es/utils/shared-props';
 import emojiRegex from 'emoji-regex/es2015/text';
+import { css, Interpolation } from 'emotion';
 import { NodeType } from 'prosemirror-model';
 import { Plugin, PluginKey, Transaction } from 'prosemirror-state';
 import { ComponentType } from 'react';
@@ -20,25 +21,46 @@ export interface CreateEmojiPluginParams {
    * Set the size of the image used. Once I find a way to use SVG it would be awesome to allow ems that match
    * up with the font size.
    */
-  size?: number | string;
+  size: number | string;
 
   /**
    * The data used for emoji
    */
   emojiData: Data;
   type: NodeType;
-  EmojiComponent?: ComponentType<DefaultEmojiProps>;
+  EmojiComponent: ComponentType<DefaultEmojiProps>;
+
+  /**
+   * Allow customization of the styles passed through to the emoji component
+   */
+  style: Interpolation;
 }
+
+const defaultStyle = css`
+  user-select: all;
+  display: inline-block;
+
+  span {
+    display: inline-block;
+  }
+`;
 
 export const createEmojiPlugin = ({
   key,
   getPortalContainer,
   set,
-  size = '1em',
+  size,
   emojiData,
   EmojiComponent = DefaultEmoji,
   type,
+  style,
 }: CreateEmojiPluginParams) => {
+  const dynamicStyle = css`
+    span {
+      height: ${size};
+      width: ${size};
+    }
+  `;
   return new Plugin({
     key,
     // appendTransaction(_transaction, _prevState, state) {
@@ -47,7 +69,16 @@ export const createEmojiPlugin = ({
     // },
     props: {
       nodeViews: {
-        emoji: ReactNodeView.createNodeView(EmojiComponent, getPortalContainer, { set, size, emojiData }),
+        emoji: ReactNodeView.createNodeView({
+          Component: EmojiComponent,
+          getPortalContainer,
+          props: {
+            set,
+            size,
+            emojiData,
+          },
+          style: css([defaultStyle, dynamicStyle, style]),
+        }),
       },
       handleTextInput(view, from, to, text) {
         const { state } = view;

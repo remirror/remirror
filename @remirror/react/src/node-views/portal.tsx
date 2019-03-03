@@ -1,5 +1,5 @@
 import React from 'react';
-import { createPortal } from 'react-dom';
+import { createPortal, unmountComponentAtNode, unstable_renderSubtreeIntoContainer } from 'react-dom';
 
 import { NodeViewPortalContainer } from '@remirror/core';
 
@@ -16,7 +16,10 @@ export class NodeViewPortal extends React.Component<NodeViewPortalProps> {
 
   constructor(props: NodeViewPortalProps) {
     super(props);
-    this.nodeViewPortalContainer = new NodeViewPortalContainer();
+    this.nodeViewPortalContainer = new NodeViewPortalContainer(
+      unstable_renderSubtreeIntoContainer,
+      unmountComponentAtNode,
+    );
   }
 
   public render() {

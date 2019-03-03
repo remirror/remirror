@@ -6,15 +6,24 @@ interface MountedPortal {
   hasReactContext: boolean;
 }
 
+export type RenderSubtreeIntoContainer = typeof unstable_renderSubtreeIntoContainer;
+export type UnmountComponentAtNode = typeof unmountComponentAtNode;
+
 export class NodeViewPortalContainer {
   public portals: Map<HTMLElement, MountedPortal> = new Map();
   public context: any;
+
+  constructor(
+    private renderSubtreeIntoContainer: RenderSubtreeIntoContainer,
+    private unmountComponent: UnmountComponentAtNode,
+  ) {}
+
   public setContext = <GContext extends Component<PlainObject>>(context: GContext) => {
     this.context = context;
   };
   public render(children: () => ReactChild | null, container: HTMLElement, hasReactContext: boolean = false) {
     this.portals.set(container, { children, hasReactContext });
-    unstable_renderSubtreeIntoContainer(this.context, children() as JSX.Element, container);
+    this.renderSubtreeIntoContainer(this.context, children() as JSX.Element, container);
   }
   // TODO: Improve this code.
   // we (unfortunately) need to re-render to pass down any updated context.
@@ -24,11 +33,11 @@ export class NodeViewPortalContainer {
       if (!portal.hasReactContext) {
         return;
       }
-      unstable_renderSubtreeIntoContainer(this.context, portal.children() as ReactElement<any>, container);
+      this.renderSubtreeIntoContainer(this.context, portal.children() as ReactElement<any>, container);
     });
   }
   public remove(container: HTMLElement) {
     this.portals.delete(container);
-    unmountComponentAtNode(container);
+    this.unmountComponent(container);
   }
 }

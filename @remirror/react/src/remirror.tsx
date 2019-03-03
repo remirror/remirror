@@ -1,6 +1,5 @@
-import React, { Component, Ref } from 'react';
+import React, { cloneElement, Component, Ref } from 'react';
 
-import { css, Interpolation } from '@emotion/core';
 import {
   baseKeymap,
   Doc,
@@ -22,6 +21,7 @@ import {
   Text,
 } from '@remirror/core';
 import { History, Placeholder, PlaceholderPluginState } from '@remirror/core-extensions';
+import { css, Interpolation } from 'emotion';
 import { isString, memoize, pick, uniqueId } from 'lodash';
 import { InputRule, inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
@@ -31,7 +31,6 @@ import { EditorView } from 'prosemirror-view';
 import {
   asDefaultProps,
   baseOffsetCalculator,
-  cloneElement,
   defaultOffscreenPosition,
   defaultShouldRender,
   getAbsoluteCoordinates,
@@ -237,7 +236,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
 
     return {
       [refKey]: this.onRef,
-      css: this.editorStyles,
+      className: css(this.editorStyles),
       ...config,
     } as RefKeyRootProps<GRefKey>;
   };
@@ -463,6 +462,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   }
 
   private onBlur = () => {
+    console.log('blurring the editor');
     if (this.props.onBlur) {
       this.props.onBlur(this.eventListenerParams);
     }

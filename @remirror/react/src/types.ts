@@ -1,4 +1,3 @@
-import { Interpolation, ObjectInterpolation } from '@emotion/core';
 import {
   AnyExtension,
   EditorSchema,
@@ -10,6 +9,7 @@ import {
   ShouldRenderMenu,
 } from '@remirror/core';
 import CSS from 'csstype';
+import { Interpolation, ObjectInterpolation } from 'emotion';
 import { EditorState, Transaction } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { PlainObject } from 'simplytyped';
@@ -33,7 +33,7 @@ export interface GetRootPropsConfig<GRefKey extends string = 'ref'>
 
 export type RefKeyRootProps<GRefKey extends string = 'ref'> = {
   [P in Exclude<GRefKey, 'children' | 'key'>]: React.Ref<any>
-} & { css: Interpolation[] } & PlainObject;
+} & { className: string } & PlainObject;
 
 /**
  * These are the props passed to the render function provided when setting up your editor.

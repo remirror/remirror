@@ -486,19 +486,6 @@ const RemirrorWrapper = styled.div<{ extra: Interpolation[] }>`
     background-color: rgb(245, 248, 250);
   }
 
-  .remirror-editor-emoji-node {
-    user-select: all;
-    display: inline-block;
-  }
-
-  .remirror-editor-emoji-node span {
-    display: inline-block;
-  }
-
-  .remirror-editor-emoji-node > span {
-    vertical-align: middle;
-  }
-
   ${props => css(props.extra)};
 `;
 
