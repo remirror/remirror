@@ -3,7 +3,11 @@
   "description": "mention extension for the remirror editor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "repository": "https://github.com/ifiokjr/remirror/tree/@remirror/extension-emoji",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ifiokjr/remirror.git",
+    "directory": "@remirror/extension-emoji"
+  },
   "version": "0.0.1-alpha.1",
   "main": "lib/index.js",
   "module": "lib/dist/extension-emoji.esm.js",

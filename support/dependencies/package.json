@@ -67,6 +67,7 @@
     "jest-watch-typeahead": "0.2.1",
     "jsdom": "13.2.0",
     "lerna": "3.13.1",
+    "lerna-changelog": "0.8.2",
     "lint-staged": "8.1.5",
     "live-server": "1.2.1",
     "load-json-file": "5.2.0",
