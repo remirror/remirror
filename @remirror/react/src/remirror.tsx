@@ -462,7 +462,6 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   }
 
   private onBlur = () => {
-    console.log('blurring the editor');
     if (this.props.onBlur) {
       this.props.onBlur(this.eventListenerParams);
     }

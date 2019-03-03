@@ -27,6 +27,7 @@ module.exports = {
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-syntax-dynamic-import',
     'lodash',
+    'emotion',
   ],
   env: { production: nonTestEnv, development: nonTestEnv },
 };

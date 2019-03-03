@@ -12,11 +12,9 @@
     "src"
   ],
   "scripts": {
-
     "build": "run-s build:declaration build:babel",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-
     "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
     "test": "jest",
@@ -27,15 +25,15 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.2",
-    "@types/prosemirror-history": "1.0.1",
-    "@types/prosemirror-model": "1.7.0",
-    "@types/prosemirror-state": "1.2.3",
-    "@types/prosemirror-view": "1.3.1",
-    "prosemirror-history": "1.0.4",
-    "prosemirror-model": "1.7.0",
-    "prosemirror-state": "1.2.2",
-    "prosemirror-view": "1.8.2"
+    "@remirror/core": "^0.0.1-alpha.2",
+    "@types/prosemirror-history": "^1.0.1",
+    "@types/prosemirror-model": "^1.7.0",
+    "@types/prosemirror-state": "^1.2.3",
+    "@types/prosemirror-view": "^1.3.1",
+    "prosemirror-history": "^1.0.4",
+    "prosemirror-model": "^1.7.0",
+    "prosemirror-state": "^1.2.2",
+    "prosemirror-view": "^1.8.2"
   },
   "publishConfig": {
     "access": "public"

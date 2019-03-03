@@ -12,11 +12,9 @@
     "src"
   ],
   "scripts": {
-
     "build": "run-s build:declaration build:babel",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-
     "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
     "test": "jest",
@@ -27,25 +25,25 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.2",
-    "@types/emoji-mart": "2.8.2",
-    "@types/lodash": "4.14.121",
-    "@types/prosemirror-model": "1.7.0",
-    "@types/prosemirror-state": "1.2.3",
-    "@types/prosemirror-transform": "1.1.0",
-    "@types/prosemirror-view": "1.3.1",
-    "lodash": "4.17.11",
-    "prosemirror-model": "1.7.0",
-    "prosemirror-state": "1.2.2",
-    "prosemirror-transform": "1.1.3",
-    "prosemirror-view": "1.8.2",
-    "simplytyped": "1.8.0"
+    "@remirror/core": "^0.0.1-alpha.2",
+    "@types/emoji-mart": "^2.8.2",
+    "@types/lodash": "^4.14.121",
+    "@types/prosemirror-model": "^1.7.0",
+    "@types/prosemirror-state": "^1.2.3",
+    "@types/prosemirror-transform": "^1.1.0",
+    "@types/prosemirror-view": "^1.3.1",
+    "lodash": "^4.17.11",
+    "prosemirror-model": "^1.7.0",
+    "prosemirror-state": "^1.2.2",
+    "prosemirror-transform": "^1.1.3",
+    "prosemirror-view": "^1.8.2",
+    "simplytyped": "^1.8.0"
   },
-  "umd": "lib/dist/extension-enhanced-link.umd.js",
-  "umd:min": "lib/dist/extension-enhanced-link.umd.min.js",
   "publishConfig": {
     "access": "public"
   },
+  "umd": "lib/dist/extension-enhanced-link.umd.js",
+  "umd:min": "lib/dist/extension-enhanced-link.umd.min.js",
   "umdGlobals": {
     "@remirror/core": "RemirrorCore"
   }

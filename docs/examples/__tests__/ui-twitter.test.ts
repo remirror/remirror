@@ -136,13 +136,10 @@ describe('Twitter UI', () => {
   describe('Emoji', () => {
     it('should be able to add emoji', async () => {
       await page.type(editorSelector, '😀');
-      await expect(
-        innerHtml(sel(editorSelector, 'span.remirror-editor-emoji-node')),
-      ).resolves.toMatchInlineSnapshot(
-        `"<span title=\\"grinning\\" class=\\"emoji-mart-emoji\\"><span style=\\"width: 1.25em; height: 1.25em; display: inline-block; background-image: url(&quot;https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png&quot;); background-size: 5200% 5200%; background-position: 58.8235% 47.0588%;\\"></span></span>"`,
-      );
+      await expect(innerHtml(sel(editorSelector, 'span[title=grinning]'))).resolves.toBeTruthy();
     });
 
+    // ! BUG Multiple adjacent nodes (emoji) cause the editor to lose focus when moving between them
     it.skip('should handle multiple emoji with no spaces', async () => {
       const msg = '123abcXYZ';
       await page.type(editorSelector, '😀😀😀😀');
@@ -158,16 +155,15 @@ describe('Twitter UI', () => {
     it('should combine mentions emoji and links', async () => {
       await page.type(editorSelector, 'hello @ab 😀 google.com');
       await page.keyboard.press('Enter');
-      // ! When pressing enter the url mark overwrites other code
       await expect(innerHtml(sel(editorSelector))).resolves.toMatchInlineSnapshot(
-        `"<p class=\\"\\">hello <a href=\\"/ab\\" role=\\"presentation\\" class=\\"mention\\" data-mention-id=\\"ab\\" contenteditable=\\"false\\">@ab</a> <span id=\\"grinning\\" native=\\"😀\\" name=\\"Grinning Face\\" colons=\\":grinning:\\" skin=\\"null\\" aria-label=\\"\\" title=\\"\\" class=\\"remirror-editor-emoji-node\\" usenative=\\"false\\" contenteditable=\\"false\\"><span title=\\"grinning\\" class=\\"emoji-mart-emoji\\"><span style=\\"width: 1.25em; height: 1.25em; display: inline-block; background-image: url(&quot;https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png&quot;); background-size: 5200% 5200%; background-position: 58.8235% 47.0588%;\\"></span></span></span> <a href=\\"http://google.com\\" role=\\"presentation\\">google.com</a></p><p><br></p>"`,
+        `"<p class=\\"\\">hello <a href=\\"/ab\\" role=\\"presentation\\" class=\\"mention\\" data-mention-id=\\"ab\\" contenteditable=\\"false\\">@ab</a> <span id=\\"grinning\\" native=\\"😀\\" name=\\"Grinning Face\\" colons=\\":grinning:\\" skin=\\"null\\" aria-label=\\"\\" title=\\"\\" class=\\"remirror-editor-emoji-node-view css-2545h7-defaultStyle-defaultStyle-dynamicStyle-dynamicStyle-style-style-ReactNodeView-ReactNodeView\\" usenative=\\"false\\" contenteditable=\\"false\\"><span title=\\"grinning\\" class=\\"emoji-mart-emoji\\"><span style=\\"width: 1.1em; height: 1.1em; display: inline-block; background-image: url(&quot;https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png&quot;); background-size: 5200% 5200%; background-position: 58.8235% 47.0588%;\\">&nbsp;</span></span></span> <a href=\\"http://google.com\\" role=\\"presentation\\">google.com</a></p><p><br></p>"`,
       );
     });
 
     it('should not replace emoji with link when no space between', async () => {
       await page.type(editorSelector, '😀google.com');
       await expect(innerHtml(sel(editorSelector))).resolves.toMatchInlineSnapshot(
-        `"<p class=\\"\\"><span id=\\"grinning\\" native=\\"😀\\" name=\\"Grinning Face\\" colons=\\":grinning:\\" skin=\\"null\\" aria-label=\\"\\" title=\\"\\" class=\\"remirror-editor-emoji-node\\" usenative=\\"false\\" contenteditable=\\"false\\"><span title=\\"grinning\\" class=\\"emoji-mart-emoji\\"><span style=\\"width: 1.25em; height: 1.25em; display: inline-block; background-image: url(&quot;https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png&quot;); background-size: 5200% 5200%; background-position: 58.8235% 47.0588%;\\"></span></span></span><a href=\\"http://google.com\\" role=\\"presentation\\">google.com</a><span>﻿</span><br></p>"`,
+        `"<p class=\\"\\"><span id=\\"grinning\\" native=\\"😀\\" name=\\"Grinning Face\\" colons=\\":grinning:\\" skin=\\"null\\" aria-label=\\"\\" title=\\"\\" class=\\"remirror-editor-emoji-node-view css-2545h7-defaultStyle-defaultStyle-dynamicStyle-dynamicStyle-style-style-ReactNodeView-ReactNodeView\\" usenative=\\"false\\" contenteditable=\\"false\\"><span title=\\"grinning\\" class=\\"emoji-mart-emoji\\"><span style=\\"width: 1.1em; height: 1.1em; display: inline-block; background-image: url(&quot;https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png&quot;); background-size: 5200% 5200%; background-position: 58.8235% 47.0588%;\\">&nbsp;</span></span></span><a href=\\"http://google.com\\" role=\\"presentation\\">google.com</a><span>﻿</span><br></p>"`,
       );
     });
   });

@@ -5,7 +5,6 @@ import { NodeViewComponentProps } from '@remirror/react';
 import NimbleEmoji from 'emoji-mart/dist-es/components/emoji/nimble-emoji';
 import { Data } from 'emoji-mart/dist-es/utils/data';
 import { EmojiSet } from 'emoji-mart/dist-es/utils/shared-props';
-import { ObjectInterpolation } from 'emotion';
 import { EmojiNodeAttrs } from '../types';
 
 export interface DefaultEmojiProps extends NodeViewComponentProps<EmojiNodeAttrs> {
@@ -17,7 +16,9 @@ export interface DefaultEmojiProps extends NodeViewComponentProps<EmojiNodeAttrs
 export const DefaultEmoji: FC<DefaultEmojiProps> = ({ node, set, size, emojiData }) => {
   const { id, skin, useNative, native } = node.attrs;
   return useNative ? (
-    <span style={{ fontSize: size }}>{native}</span>
+    <span className='emoji-not-found' style={{ fontSize: size }}>
+      {native}
+    </span>
   ) : (
     <NimbleEmoji
       data={emojiData}
