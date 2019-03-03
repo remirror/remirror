@@ -25,6 +25,8 @@ export const DefaultEmoji: FC<DefaultEmojiProps> = ({ node, set, size, emojiData
       set={set}
       size={Cast(size)}
       skin={skin || undefined}
-    />
+    >
+      &nbsp;
+    </NimbleEmoji>
   );
 };

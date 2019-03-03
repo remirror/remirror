@@ -142,6 +142,16 @@ describe('Twitter UI', () => {
         `"<span title=\\"grinning\\" class=\\"emoji-mart-emoji\\"><span style=\\"width: 1.25em; height: 1.25em; display: inline-block; background-image: url(&quot;https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png&quot;); background-size: 5200% 5200%; background-position: 58.8235% 47.0588%;\\"></span></span>"`,
       );
     });
+
+    it.skip('should handle multiple emoji with no spaces', async () => {
+      const msg = '123abcXYZ';
+      await page.type(editorSelector, '😀😀😀😀');
+      await page.keyboard.press('ArrowLeft');
+      await page.keyboard.press('ArrowLeft');
+      await page.keyboard.press('ArrowRight');
+      await page.keyboard.type(msg);
+      await expect(innerHtml(sel(editorSelector))).resolves.toInclude(msg);
+    });
   });
 
   describe('Combined', () => {

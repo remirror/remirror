@@ -10,6 +10,7 @@ export const defaultStyles = (placeholder?: PlaceholderContent): ObjectInterpola
     // caretColor: 'red',
     wordWrap: 'break-word',
     whiteSpace: 'pre-wrap',
+    overflowWrap: 'break-word',
   },
   '.remirror-editor:focus': {
     outline: 'none',

@@ -5,17 +5,17 @@ import {
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
-  PMNode,
   replaceText,
   SchemaNodeTypeParams,
 } from '@remirror/core';
 import { isNumber } from 'lodash';
 import { createEmojiPlugin, CreateEmojiPluginParams } from './create-emoji-plugin';
 import { EmojiNodeAttrs } from './types';
+
 export interface EmojiNodeOptions
   extends NodeExtensionOptions,
     Pick<CreateEmojiPluginParams, 'set' | 'size' | 'emojiData' | 'EmojiComponent'> {
-  transformAttrs?(attrs: EmojiNodeAttrs): Attrs;
+  transformAttrs?(attrs: Pick<EmojiNodeAttrs, 'name'>): Attrs;
   className?: string;
 }
 
@@ -23,14 +23,14 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
   /**
    * The name is dynamically generated based on the passed in type.
    */
-  get name() {
-    return 'emoji' as 'emoji';
+  get name(): 'emoji' {
+    return 'emoji';
   }
 
   get defaultOptions() {
     return {
       extraAttrs: [],
-      transformAttrs: (attrs: EmojiNodeAttrs) => ({
+      transformAttrs: (attrs: Pick<EmojiNodeAttrs, 'name'>) => ({
         'aria-label': `Emoji: ${attrs.name}`,
         title: `Emoji: ${attrs.name}`,
         class: `remirror-editor-emoji-node${this.options.className ? ' ' + this.options.className : ''}`,
@@ -46,7 +46,6 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
       inline: true,
       group: 'inline',
       selectable: false,
-      marks: '',
       attrs: {
         id: { default: '' },
         native: { default: '' },
@@ -66,7 +65,8 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
             const dom = domNode as HTMLElement;
             const skin = dom.getAttribute('data-emoji-skin');
             const useNative = dom.getAttribute('data-emoji-use-native');
-            return {
+
+            const attrs = {
               id: dom.getAttribute('data-emoji-id') || '',
               native: dom.getAttribute('data-emoji-native') || '',
               name: dom.getAttribute('data-emoji-name') || '',
@@ -74,10 +74,14 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
               skin: skin ? Number(skin) : null,
               useNative: useNative === 'true',
             };
+
+            console.log('parsed attrs emoji node', attrs);
+            return attrs;
           },
         },
       ],
-      toDOM(node: PMNode) {
+      toDOM: node => {
+        console.log('inside toDOM', node);
         const { id, name, native, colons, skin, useNative } = node.attrs as EmojiNodeAttrs;
         const attrs = {
           'data-emoji-id': id,
@@ -86,8 +90,10 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
           'data-emoji-name': name,
           'data-emoji-skin': isNumber(skin) ? String(skin) : '',
           'data-use-native': useNative ? 'true' : 'false',
-          ...transformAttrs({ id, name, native, colons, skin }),
+          contenteditable: 'false',
+          ...transformAttrs({ name }),
         };
+        console.log('toDOM', attrs);
         return ['span', attrs, native];
       },
     };

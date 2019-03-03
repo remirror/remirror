@@ -2,7 +2,7 @@ import NimblePicker from 'emoji-mart/dist-es/components/picker/nimble-picker';
 import { Data } from 'emoji-mart/dist-es/utils/data';
 import { EmojiData } from 'emoji-mart/dist-es/utils/emoji-index/nimble-emoji-index';
 import { EmojiSet } from 'emoji-mart/dist-es/utils/shared-props';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { styled } from '../theme';
 
 export interface EmojiSmileyProps {
@@ -31,11 +31,39 @@ export interface EmojiPickerProps {
   data: Data;
   set: EmojiSet;
   onSelection(emoji: EmojiData): void;
+  onBlur(): void;
+  ignoredElements?: HTMLElement[];
 }
 
-export const EmojiPicker: FC<EmojiPickerProps> = ({ data, set, onSelection }) => {
+export const EmojiPicker: FC<EmojiPickerProps> = ({
+  data,
+  set,
+  onSelection,
+  onBlur,
+  ignoredElements = [],
+}) => {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClick, false);
+    return () => {
+      document.removeEventListener('mousedown', handleClick, false);
+    };
+  });
+
+  const handleClick = (event: MouseEvent) => {
+    if (
+      !wrapperRef.current ||
+      wrapperRef.current.contains(event.target as Node) ||
+      ignoredElements.some(el => el.contains(event.target as Node))
+    ) {
+      return;
+    }
+    onBlur();
+  };
+
   return (
-    <StyledPickerWrapper>
+    <StyledPickerWrapper ref={wrapperRef}>
       <NimblePicker
         perLine={7}
         data={data}
@@ -48,7 +76,7 @@ export const EmojiPicker: FC<EmojiPickerProps> = ({ data, set, onSelection }) =>
   );
 };
 
-const StyledPickerWrapper = styled.div`
+export const StyledPickerWrapper = styled.div`
   .emoji-mart,
   .emoji-mart * {
     box-sizing: border-box;

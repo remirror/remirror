@@ -158,7 +158,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
         },
       }),
       new EnhancedLink({ onUrlsChange: this.props.onUrlsChange }),
-      new EmojiNode({ set: this.props.emojiSet, size: '1.25em', emojiData: this.props.emojiData }),
+      new EmojiNode({ set: this.props.emojiSet, emojiData: this.props.emojiData }),
     ];
   }
 
@@ -328,8 +328,14 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     }
   };
 
-  public toggleEmojiPicker = () => {
+  private onClickEmojiSmiley = () => {
     this.setState(prevState => ({ emojiPickerActive: !prevState.emojiPickerActive }));
+  };
+
+  private toggleEmojiRef = React.createRef<HTMLElement>();
+
+  private onBlurEmojiPicker = () => {
+    this.setState({ emojiPickerActive: false });
   };
 
   public render() {
@@ -366,9 +372,11 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
                   {emojiPickerActive && (
                     <EmojiPickerWrapper>
                       <EmojiPicker
+                        onBlur={this.onBlurEmojiPicker}
                         data={this.props.emojiData}
                         set={this.props.emojiSet}
                         onSelection={this.onSelectEmoji(actions.emoji.command)}
+                        ignoredElements={[this.toggleEmojiRef.current!]}
                       />
                     </EmojiPickerWrapper>
                   )}
@@ -376,7 +384,8 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
                     <span
                       role='button'
                       aria-pressed={emojiPickerActive ? 'true' : 'false'}
-                      onClick={this.toggleEmojiPicker}
+                      onClick={this.onClickEmojiSmiley}
+                      ref={this.toggleEmojiRef}
                     >
                       <EmojiSmiley active={emojiPickerActive} />
                     </span>
@@ -479,9 +488,7 @@ const RemirrorWrapper = styled.div<{ extra: Interpolation[] }>`
 
   .remirror-editor-emoji-node {
     user-select: all;
-    padding: 0 0.15em;
     display: inline-block;
-    vertical-align: middle;
   }
 
   .remirror-editor-emoji-node span {
@@ -489,7 +496,7 @@ const RemirrorWrapper = styled.div<{ extra: Interpolation[] }>`
   }
 
   .remirror-editor-emoji-node > span {
-    vertical-align: text-top;
+    vertical-align: middle;
   }
 
   ${props => css(props.extra)};

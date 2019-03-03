@@ -69,6 +69,7 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
       selectable: this.options.selectable,
       atom: !this.options.editable,
       toDOM: node => {
+        console.log('inside mention node');
         const { id, label, ...attrs } = node.attrs;
         return [
           this.options.tag,
