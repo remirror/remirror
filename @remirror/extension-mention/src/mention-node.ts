@@ -55,9 +55,12 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
 
   get schema(): NodeExtensionSpec {
     const {
+      type,
       mentionClassName = this.defaultOptions.mentionClassName,
       matcher = this.defaultOptions.matcher,
     } = this.options;
+    const mentionClass = `${mentionClassName} ${mentionClassName}-${type}`;
+    const dataAttribute = `data-mention-${type}-id`;
     return {
       attrs: {
         id: {},
@@ -69,27 +72,26 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
       selectable: this.options.selectable,
       atom: !this.options.editable,
       toDOM: node => {
-        console.log('inside mention node');
         const { id, label, ...attrs } = node.attrs;
         return [
           this.options.tag,
           {
             ...attrs,
-            class: mentionClassName,
-            'data-mention-id': id,
+            class: mentionClass,
+            [dataAttribute]: id,
           },
           `${label}`,
         ];
       },
       parseDOM: [
         {
-          tag: `${this.options.tag}[data-mention-id]`,
+          tag: `${this.options.tag}[${dataAttribute}]`,
           getAttrs: dom => {
             if (typeof dom === 'string') {
               return false; // string only received when type is a style
             }
 
-            const id = (dom as Element).getAttribute('data-mention-id');
+            const id = (dom as Element).getAttribute(dataAttribute);
             const label = (dom as HTMLElement).innerText.split(matcher.char).join('');
             return { id, label };
           },

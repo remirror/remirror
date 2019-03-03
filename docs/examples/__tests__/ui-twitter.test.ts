@@ -3,6 +3,7 @@ const emojiButtonSelector = '.EmojiPicker';
 const sel = (...selectors: string[]) => selectors.join(' ');
 
 const innerHtml = async (selector: string) => page.$eval(selector, e => e.innerHTML);
+const textContent = async (selector: string) => page.$eval(selector, e => e.textContent);
 const outerHTML = async (selector: string) => page.$eval(selector, e => e.outerHTML);
 
 const clearEditor = async (selector: string) => {
@@ -80,55 +81,49 @@ describe('Twitter UI', () => {
 
   describe('Mentions', () => {
     it('should not allow mixing the tags', async () => {
-      await page.type(editorSelector, '@#ab');
+      await page.type(editorSelector, '@#ab #@simple ');
       await expect(outerHTML(sel(editorSelector, 'a'))).rejects.toThrow();
     });
 
     describe('@', () => {
       it('should wrap in progress mentions in a-tag decorations', async () => {
         await page.type(editorSelector, 'Hello @jonathan');
-        await expect(innerHtml(editorSelector)).resolves.toInclude(
-          '<a class="suggestion suggestion-at">@jonathan</a>',
-        );
+        await expect(textContent(sel(editorSelector, '.suggestion-at'))).resolves.toBe('@jonathan');
       });
 
       it('should accept selections onEnter', async () => {
+        const selector = sel(editorSelector, '.mention-at');
+
         await page.type(editorSelector, 'hello @ab');
         await page.keyboard.press('Enter');
-        await expect(innerHtml(editorSelector)).resolves.toMatchInlineSnapshot(
-          `"<p class=\\"\\">hello <a href=\\"/orangefish879\\" role=\\"presentation\\" class=\\"mention\\" data-mention-id=\\"orangefish879\\" contenteditable=\\"false\\">@orangefish879</a> </p>"`,
-        );
+        await expect(page.$$(selector)).resolves.toHaveLength(1);
+        await expect(textContent(selector)).resolves.toBe('@orangefish879'); // This might change if data changes
       });
 
       it('should still wrap selections when exiting without selections', async () => {
         await page.type(editorSelector, 'hello @ab ');
-        await expect(outerHTML(sel(editorSelector, 'a'))).resolves.toMatchInlineSnapshot(
-          `"<a href=\\"/ab\\" role=\\"presentation\\" class=\\"mention\\" data-mention-id=\\"ab\\" contenteditable=\\"false\\">@ab</a>"`,
-        );
+        await expect(textContent(sel(editorSelector, '.mention-at'))).resolves.toBe('@ab');
       });
     });
 
     describe('#', () => {
       it('should wrap in progress mentions in a-tag decorations', async () => {
         await page.type(editorSelector, 'My tag is #Topic');
-        await expect(innerHtml(editorSelector)).resolves.toInclude(
-          '<a class="suggestion suggestion-hash">#Topic</a>',
-        );
+        await expect(textContent(sel(editorSelector, '.suggestion-hash'))).resolves.toBe('#Topic');
       });
 
       it('should accept selections onEnter', async () => {
+        const selector = sel(editorSelector, '.mention-hash');
+
         await page.type(editorSelector, 'hello #T');
         await page.keyboard.press('Enter');
-        await expect(innerHtml(editorSelector)).resolves.toMatchInlineSnapshot(
-          `"<p class=\\"\\">hello <a href=\\"/search?query=Tags\\" role=\\"presentation\\" class=\\"mention\\" data-mention-id=\\"Tags\\" contenteditable=\\"false\\">#Tags</a> </p>"`,
-        );
+        await expect(page.$$(selector)).resolves.toHaveLength(1);
+        await expect(textContent(selector)).resolves.toBe('#Tags');
       });
 
       it('should still wrap selections when exiting without selections', async () => {
         await page.type(editorSelector, 'hello #T ');
-        await expect(outerHTML(sel(editorSelector, 'a'))).resolves.toMatchInlineSnapshot(
-          `"<a href=\\"/search?query=T\\" role=\\"presentation\\" class=\\"mention\\" data-mention-id=\\"T\\" contenteditable=\\"false\\">#T</a>"`,
-        );
+        await expect(textContent(sel(editorSelector, '.mention-hash'))).resolves.toBe('#T');
       });
     });
   });
@@ -153,18 +148,18 @@ describe('Twitter UI', () => {
 
   describe('Combined', () => {
     it('should combine mentions emoji and links', async () => {
-      await page.type(editorSelector, 'hello @ab 😀 google.com');
+      await page.type(editorSelector, 'hello @ab 😀 google.com #awesome ');
       await page.keyboard.press('Enter');
-      await expect(innerHtml(sel(editorSelector))).resolves.toMatchInlineSnapshot(
-        `"<p class=\\"\\">hello <a href=\\"/ab\\" role=\\"presentation\\" class=\\"mention\\" data-mention-id=\\"ab\\" contenteditable=\\"false\\">@ab</a> <span id=\\"grinning\\" native=\\"😀\\" name=\\"Grinning Face\\" colons=\\":grinning:\\" skin=\\"null\\" aria-label=\\"\\" title=\\"\\" class=\\"remirror-editor-emoji-node-view css-2545h7-defaultStyle-defaultStyle-dynamicStyle-dynamicStyle-style-style-ReactNodeView-ReactNodeView\\" usenative=\\"false\\" contenteditable=\\"false\\"><span title=\\"grinning\\" class=\\"emoji-mart-emoji\\"><span style=\\"width: 1.1em; height: 1.1em; display: inline-block; background-image: url(&quot;https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png&quot;); background-size: 5200% 5200%; background-position: 58.8235% 47.0588%;\\">&nbsp;</span></span></span> <a href=\\"http://google.com\\" role=\\"presentation\\">google.com</a></p><p><br></p>"`,
-      );
+      await expect(textContent(sel(editorSelector, '.mention-at'))).resolves.toBe('@ab');
+      await expect(textContent(sel(editorSelector, '.mention-hash'))).resolves.toBe('#awesome');
+      await expect(innerHtml(sel(editorSelector, 'span[title=grinning]'))).resolves.toBeTruthy();
     });
 
     it('should not replace emoji with link when no space between', async () => {
       await page.type(editorSelector, '😀google.com');
-      await expect(innerHtml(sel(editorSelector))).resolves.toMatchInlineSnapshot(
-        `"<p class=\\"\\"><span id=\\"grinning\\" native=\\"😀\\" name=\\"Grinning Face\\" colons=\\":grinning:\\" skin=\\"null\\" aria-label=\\"\\" title=\\"\\" class=\\"remirror-editor-emoji-node-view css-2545h7-defaultStyle-defaultStyle-dynamicStyle-dynamicStyle-style-style-ReactNodeView-ReactNodeView\\" usenative=\\"false\\" contenteditable=\\"false\\"><span title=\\"grinning\\" class=\\"emoji-mart-emoji\\"><span style=\\"width: 1.1em; height: 1.1em; display: inline-block; background-image: url(&quot;https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png&quot;); background-size: 5200% 5200%; background-position: 58.8235% 47.0588%;\\">&nbsp;</span></span></span><a href=\\"http://google.com\\" role=\\"presentation\\">google.com</a><span>﻿</span><br></p>"`,
-      );
+      await page.keyboard.press('Enter');
+      await expect(innerHtml(sel(editorSelector, 'span[title=grinning]'))).resolves.toBeTruthy();
+      await expect(textContent(sel(editorSelector, '[href]'))).resolves.toBe('google.com');
     });
   });
 });

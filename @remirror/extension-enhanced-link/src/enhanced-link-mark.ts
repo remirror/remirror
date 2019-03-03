@@ -27,7 +27,7 @@ export interface EnhancedLinkOptions {
 
 // TODO Fix bug with URL regex and how the matches are sourced
 export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
-  get name() {
+  get name(): 'enhancedLink' {
     return 'enhancedLink';
   }
 
