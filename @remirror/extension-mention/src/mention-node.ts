@@ -106,7 +106,7 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
   public plugin({ type }: SchemaNodeTypeParams) {
     return createSuggestionsPlugin({
       key: this.pluginKey,
-      command: ({ range, attrs }) => replaceText(range, type, attrs),
+      command: ({ range, attrs, appendText }) => replaceText(range, type, attrs, appendText),
       appendText: this.options.appendText,
       matcher: this.options.matcher,
       onEnter: this.options.onEnter,

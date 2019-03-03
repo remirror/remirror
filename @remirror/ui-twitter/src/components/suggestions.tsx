@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { styled } from '../theme';
 import { TwitterAtSuggestionsProp, TwitterHashSuggestionsProp } from '../types';
 
-const SuggestionsDropdown = styled.a`
+const SuggestionsDropdown = styled.div`
   align-items: stretch;
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@ const SuggestionsDropdown = styled.a`
   padding: 0;
 `;
 
-const ItemWrapper = styled.div<{ active: boolean }>`
+const ItemWrapper = styled.a<{ active: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -52,21 +52,23 @@ const AtUsername = styled.span`
 export const AtSuggestions: FunctionComponent<TwitterAtSuggestionsProp> = ({ submitFactory, data }) => {
   return (
     <SuggestionsDropdown role='presentation'>
-      {data.map(user => (
-        <ItemWrapper
-          active={user.active}
-          className={`suggestions-item${user.active ? ' active' : ''}`}
-          key={user.username}
-          aria-selected={user.active ? 'true' : 'false'}
-          aria-haspopup='false'
-          role='option'
-          onClick={submitFactory(user)}
-        >
-          <AtImage src={user.avatarUrl} />
-          <AtDisplayName className='display-name'>{user.displayName}</AtDisplayName>
-          <AtUsername className='username'>@{user.username}</AtUsername>
-        </ItemWrapper>
-      ))}
+      {data.map(user => {
+        return (
+          <ItemWrapper
+            active={user.active}
+            className={`suggestions-item${user.active ? ' active' : ''}`}
+            key={user.username}
+            aria-selected={user.active ? 'true' : 'false'}
+            aria-haspopup='false'
+            role='option'
+            onClick={submitFactory(user)}
+          >
+            <AtImage src={user.avatarUrl} />
+            <AtDisplayName className='display-name'>{user.displayName}</AtDisplayName>
+            <AtUsername className='username'>@{user.username}</AtUsername>
+          </ItemWrapper>
+        );
+      })}
     </SuggestionsDropdown>
   );
 };

@@ -6,7 +6,6 @@ import {
   findMatches,
   FromTo,
   getPluginState,
-  insertText,
   MakeRequired,
 } from '@remirror/core';
 import { ResolvedPos } from 'prosemirror-model';
@@ -46,6 +45,7 @@ export interface SuggestionsCommandParams {
   attrs?: Attrs;
   range: FromTo | null;
   schema: EditorSchema;
+  appendText?: string;
 }
 
 export interface SuggestionsCallbackParams extends SuggestionsPluginState {
@@ -61,7 +61,7 @@ export interface OnKeyDownParams {
 
 export interface SuggestionsPluginProps {
   matcher?: MakeRequired<Partial<SuggestionsMatcher>, 'char'>;
-  appendText?: string | null;
+  appendText?: string;
   suggestionClassName?: string;
   decorationsTag: keyof HTMLElementTagNameMap;
   command(params: SuggestionsCommandParams): CommandFunction;
@@ -140,7 +140,7 @@ const triggerCharacter = (
 
 export const createSuggestionsPlugin = ({
   matcher: _matcher = defaultMatcher,
-  appendText = null,
+  appendText,
   command = () => defaultHandler,
   onEnter = defaultHandler,
   onChange = defaultHandler,
@@ -181,18 +181,21 @@ export const createSuggestionsPlugin = ({
             ...state,
             text: state.text,
             command: (attrs: NodeAttrs) => {
+              console.log('about to dispatch command', state.range, attrs);
               command({
                 range: state.range,
                 attrs,
                 schema: view.state.schema,
+                appendText: attrs.hasOwnProperty('appendText') ? attrs.appendText : appendText,
               })(view.state, view.dispatch);
-              if (attrs.hasOwnProperty('appendText')) {
-                if (attrs.appendText.length) {
-                  insertText(attrs.appendText)(view.state, view.dispatch);
-                }
-              } else if (appendText) {
-                insertText(appendText)(view.state, view.dispatch);
-              }
+              // console.log('command dispatched', state.range, attrs);
+              // if (attrs.hasOwnProperty('appendText')) {
+              //   if (attrs.appendText.length) {
+              //     insertText(attrs.appendText)(view.state, view.dispatch);
+              //   }
+              // } else if (appendText) {
+              //   // insertText(appendText)(view.state, view.dispatch);
+              // }
             },
           };
 

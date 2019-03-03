@@ -104,6 +104,14 @@ describe('Twitter UI', () => {
         await page.type(editorSelector, 'hello @ab ');
         await expect(textContent(sel(editorSelector, '.mention-at'))).resolves.toBe('@ab');
       });
+
+      it('allows clicking on suggestions', async () => {
+        const selector = '.suggestions-item.active';
+        await page.type(editorSelector, 'hello @alex');
+        await page.click(selector);
+        await expect(textContent(sel(editorSelector, '.mention-at'))).resolves.toBe('@lazymeercat594');
+        await expect(textContent(editorSelector)).resolves.toBe('hello @lazymeercat594 ');
+      });
     });
 
     describe('#', () => {
@@ -124,6 +132,14 @@ describe('Twitter UI', () => {
       it('should still wrap selections when exiting without selections', async () => {
         await page.type(editorSelector, 'hello #T ');
         await expect(textContent(sel(editorSelector, '.mention-hash'))).resolves.toBe('#T');
+      });
+
+      it('allows clicking on suggestions', async () => {
+        const selector = '.suggestions-item.active';
+        await page.type(editorSelector, 'My #T');
+        await page.click(selector);
+        await expect(textContent(sel(editorSelector, '.mention-hash'))).resolves.toBe('#Tags');
+        await expect(textContent(editorSelector)).resolves.toBe('My #Tags ');
       });
     });
   });

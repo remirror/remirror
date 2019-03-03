@@ -192,12 +192,15 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
 
   private atMentionSubmitFactory(command: (attrs: NodeAttrs) => void) {
     return (user: TwitterUserData) => () => {
+      this.exitCommandEnabled = false; // Prevents exit command also being called after this
+
       command({
         id: user.username,
         label: `@${user.username}`,
         role: 'presentation',
         href: `/${user.username}`,
       });
+
       // Refocus the editor
       if (this.view) {
         this.view.focus();
@@ -212,15 +215,16 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
    * @param command
    * @param appendText
    */
-  private hashMentionSubmitFactory(command: (attrs: NodeAttrs) => void, appendText?: string) {
+  private hashMentionSubmitFactory(command: (attrs: NodeAttrs) => void) {
     return ({ tag }: TwitterTagData) => () => {
+      this.exitCommandEnabled = false; // Prevents exit command also being called after this
       command({
         id: tag,
         label: `#${tag}`,
         role: 'presentation',
         href: `/search?query=${tag}`,
-        ...(typeof appendText === 'string' ? { appendText } : {}),
       });
+
       // Refocus the editor
       if (this.view) {
         this.view.focus();
