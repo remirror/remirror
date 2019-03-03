@@ -18,3 +18,16 @@ export const Cast = <GType = any>(arg: any): GType => arg;
  * @param args
  */
 export const tuple = <GType extends Literal[]>(...args: GType) => args;
+
+/**
+ * Finds all the regex matches for a string
+ * @param text
+ * @param regexp
+ */
+export const findMatches = (text: string, regexp: RegExp) => {
+  const results: RegExpExecArray[] = [];
+  for (let match = regexp.exec(text); match !== null; match = regexp.exec(text)) {
+    results.push(match);
+  }
+  return results;
+};

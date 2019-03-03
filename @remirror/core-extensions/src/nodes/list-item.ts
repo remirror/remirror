@@ -1,18 +1,20 @@
 import {
   liftListItem,
   NodeExtension,
+  NodeExtensionSpec,
   SchemaNodeTypeParams,
   sinkListItem,
   splitListItem,
 } from '@remirror/core';
 
 export class ListItem extends NodeExtension {
-  get name() {
-    return 'list_item';
+  get name(): 'listItem' {
+    return 'listItem';
   }
 
-  get schema() {
+  get schema(): NodeExtensionSpec {
     return {
+      attrs: this.extraAttrs(),
       content: 'paragraph block*',
       defining: true,
       draggable: false,

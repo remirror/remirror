@@ -1,0 +1,72 @@
+{
+  "name": "@remirror/extension-emoji",
+  "description": "mention extension for the remirror editor",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ifiokjr/remirror.git",
+    "directory": "@remirror/extension-emoji"
+  },
+  "version": "0.0.1-alpha.1",
+  "main": "lib/index.js",
+  "module": "lib/dist/extension-emoji.esm.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "build": "run-s build:declaration build:babel",
+    "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "dev": "run-p watch:*",
+    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "test": "jest",
+    "test:live": "cross-env TEST_ENV=live jest",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit",
+    "watch:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -w",
+    "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
+  },
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@remirror/core": "^0.0.1-alpha.2",
+    "@remirror/core-extensions": "^0.0.1-alpha.2",
+    "@remirror/react": "^0.0.1-alpha.2",
+    "@types/emoji-mart": "^2.8.2",
+    "@types/lodash": "^4.14.121",
+    "@types/prosemirror-inputrules": "^1.0.2",
+    "@types/prosemirror-model": "^1.7.0",
+    "@types/prosemirror-state": "^1.2.3",
+    "@types/prosemirror-view": "^1.3.1",
+    "emoji-mart": "^2.9.2",
+    "emoji-regex": "^7.0.3",
+    "emotion": "^10.0.7",
+    "lodash": "^4.17.11",
+    "prosemirror-inputrules": "^1.0.1",
+    "prosemirror-model": "^1.7.0",
+    "prosemirror-state": "^1.2.2",
+    "prosemirror-view": "^1.8.2",
+    "simplytyped": "^1.8.0"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.8.6",
+    "@types/react-dom": "^16.8.2",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
+  },
+  "devDependencies": {
+    "jest-remirror": "0.0.1-alpha.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "umd": "lib/dist/extension-emoji.umd.js",
+  "umd:min": "lib/dist/extension-emoji.umd.min.js",
+  "umdGlobals": {
+    "react": "React",
+    "react-dom": "ReactDOM",
+    "@remirror/core": "RemirrorCore",
+    "@remirror/react": "RemirrorReact",
+    "@remirror/core-extensions": "RemirrorCoreExtensions"
+  }
+}

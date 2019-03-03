@@ -1,8 +1,8 @@
-import { Schema } from 'prosemirror-model';
 import { AnyFunc } from 'simplytyped';
 import { AnyExtension, Extension } from './extension';
+import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
-import { CommandParams, ExtensionType, FlexibleConfig } from './types';
+import { CommandParams, ExtensionType, FlexibleConfig, SchemaParams } from './types';
 
 type MethodFactory<GMappedFunc extends AnyFunc, GFunc extends AnyFunc> = (
   params: CommandParams,
@@ -74,14 +74,13 @@ export const createFlexibleFunctionMap = <
   ) => GMappedFunc;
   ctx: HasExtensions;
 }) => (params: CommandParams): Record<string, GMappedFunc> => {
-  const initialItems: Record<string, GMappedFunc> = {};
+  const items: Record<string, GMappedFunc> = {};
   const names = new Set<string>();
-  return ctx.extensions.filter(hasExtensionProperty(key)).reduce((prevItems, currentExtension) => {
+  ctx.extensions.filter(hasExtensionProperty(key)).forEach(currentExtension => {
     const { name } = currentExtension;
     if (checkUniqueness) {
       isNameUnique({ name, set: names, shouldThrow: true });
     }
-    const items: Record<string, GMappedFunc> = {};
     const item = getItemParams(currentExtension, params);
     if (Array.isArray(item)) {
       items[name] = arrayTransformer(item, params, methodFactory);
@@ -97,11 +96,9 @@ export const createFlexibleFunctionMap = <
           : methodFactory(params, commandValue);
       });
     }
-    return {
-      ...prevItems,
-      ...items,
-    };
-  }, initialItems);
+  });
+
+  return items;
 };
 
 /**
@@ -115,7 +112,7 @@ export const isNodeExtension = (extension: AnyExtension): extension is NodeExten
  * Determines if the passed in extension is a mark extension. Useful as a type guard where a particular type of extension is needed.
  * @param extension
  */
-export const isMarkExtension = (extension: AnyExtension): extension is NodeExtension<any> =>
+export const isMarkExtension = (extension: AnyExtension): extension is MarkExtension<any> =>
   extension.type === ExtensionType.MARK;
 
 export const isPlainExtension = (extension: AnyExtension): extension is Extension<any, never> =>
@@ -129,7 +126,7 @@ export const hasExtensionProperty = <GExt extends AnyExtension, GKey extends key
   extension: GExt,
 ): extension is GExt & Pick<Required<GExt>, GKey> => Boolean(extension[property]);
 
-type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys';
+type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys' | 'plugin';
 
 /**
  * Looks at the passed property and calls the extension with the required parameters.
@@ -139,15 +136,15 @@ export const extensionPropertyMapper = <
   GExtMethodProp extends ExtensionMethodProperties
 >(
   property: GExtMethodProp,
-  schema: Schema,
+  params: SchemaParams,
 ) => (extension: GExt) => {
   const extensionMethod = extension[property];
   if (!extensionMethod) {
     return {};
   }
   return isNodeExtension(extension)
-    ? extensionMethod({ schema, type: schema.nodes[extension.name] })
+    ? extensionMethod.bind(extension)({ ...params, type: params.schema.nodes[extension.name] })
     : isMarkExtension(extension)
-    ? extensionMethod!({ schema, type: schema.marks[extension.name] })
-    : extensionMethod!({ schema });
+    ? extensionMethod.bind(extension)!({ ...params, type: params.schema.marks[extension.name] })
+    : extensionMethod.bind(extension)!(params);
 };

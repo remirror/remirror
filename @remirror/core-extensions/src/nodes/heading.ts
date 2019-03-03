@@ -1,6 +1,8 @@
 import {
   Attrs,
+  KeyboardBindings,
   NodeExtension,
+  NodeExtensionOptions,
   NodeExtensionSpec,
   PMNode,
   SchemaNodeTypeParams,
@@ -9,12 +11,12 @@ import {
   toggleBlockItem,
 } from '@remirror/core';
 
-export interface HeadingOptions {
+export interface HeadingOptions extends NodeExtensionOptions {
   levels: number[];
 }
 
 export class Heading extends NodeExtension<HeadingOptions> {
-  get name() {
+  get name(): 'heading' {
     return 'heading';
   }
 
@@ -30,6 +32,7 @@ export class Heading extends NodeExtension<HeadingOptions> {
         level: {
           default: 1,
         },
+        ...this.extraAttrs(),
       },
       content: 'inline*',
       group: 'block',
@@ -48,15 +51,12 @@ export class Heading extends NodeExtension<HeadingOptions> {
   }
 
   public keys({ type }: SchemaNodeTypeParams) {
-    return this.options.levels.reduce(
-      (items, level) => ({
-        ...items,
-        ...{
-          [`Shift-Ctrl-${level}`]: setBlockType(type, { level }),
-        },
-      }),
-      {},
-    );
+    const keys: KeyboardBindings = {};
+
+    this.options.levels.forEach(level => {
+      keys[`Shift-Ctrl-${level}`] = setBlockType(type, { level });
+    });
+    return keys;
   }
 
   public inputRules({ type }: SchemaNodeTypeParams) {

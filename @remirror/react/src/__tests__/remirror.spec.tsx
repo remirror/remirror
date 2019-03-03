@@ -26,7 +26,6 @@ describe('Remirror', () => {
     expect(handlers.onFirstRender.mock.calls[0][0].getText()).toBe('');
     expect(handlers.onFirstRender.mock.calls[0][0].getJSON().doc.type).toBe('doc');
     expect(handlers.onFirstRender.mock.calls[0][0].getHTML().type).toBe(undefined);
-
     const editorNode = getByLabelText(label);
     expect(editorNode).toHaveAttribute('role', 'textbox');
   });

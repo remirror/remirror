@@ -1,6 +1,0 @@
-{
-  "supportFile": "cypress/support/index.ts",
-  "coverageFolder": "coverage",
-  "fileServerFolder": "dist",
-  "video": false
-}

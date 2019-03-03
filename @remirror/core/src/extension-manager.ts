@@ -1,5 +1,6 @@
 import { InputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
+import { Schema } from 'prosemirror-model';
 import { EditorState, PluginKey } from 'prosemirror-state';
 import { AnyExtension } from './extension';
 import {
@@ -9,9 +10,12 @@ import {
   isMarkExtension,
   isNodeExtension,
 } from './extension-manager.helpers';
+import { NodeViewPortalContainer } from './portal-container';
 import {
   ActionMethods,
+  Attrs,
   CommandParams,
+  EditorSchema,
   ExtensionBooleanFunction,
   ExtensionCommandFunction,
   MarkExtensionSpec,
@@ -25,90 +29,109 @@ export class ExtensionManager {
   constructor(
     public readonly extensions: AnyExtension[],
     public readonly getEditorState: () => EditorState,
+    public readonly getPortalContainer: () => NodeViewPortalContainer,
   ) {}
 
   /**
    * Filters through all provided extensions and picks the nodes
    */
   public get nodes() {
-    const initialEditorNodes: Record<string, NodeExtensionSpec> = {};
-    return this.extensions.filter(isNodeExtension).reduce(
-      (nodes, { name, schema }) => ({
-        ...nodes,
-        [name]: schema,
-      }),
-      initialEditorNodes,
-    );
+    const nodes: Record<string, NodeExtensionSpec> = {};
+    this.extensions.filter(isNodeExtension).forEach(({ name, schema }) => {
+      nodes[name] = schema;
+    });
+    return nodes;
   }
 
   /**
    * Filters through all provided extensions and picks the marks
    */
   public get marks() {
-    const initialEditorMarks: Record<string, MarkExtensionSpec> = {};
-    return this.extensions.filter(isMarkExtension).reduce(
-      (marks, { name, schema }) => ({
-        ...marks,
-        [name]: schema,
-      }),
-      initialEditorMarks,
-    );
+    const marks: Record<string, MarkExtensionSpec> = {};
+    this.extensions.filter(isMarkExtension).forEach(({ name, schema }) => {
+      marks[name] = schema;
+    });
+    return marks;
+  }
+
+  /**
+   * Dynamically create the editor schema based on the extensions that have been passed in.
+   */
+  public createSchema(): EditorSchema {
+    return new Schema({ nodes: this.nodes, marks: this.marks });
   }
 
   /**
    * Currently an extension can have only one pluginKey but multiple plugins - which is a potential bug.
-   * TODO enhance pluginKey assignment check if name isn't in use
+   * TODO enhance pluginKey assignment to ensure name isn't already in use
    */
   public get pluginKeys() {
-    const initialPluginKeys: Record<string, PluginKey> = {};
-    return this.extensions
-      .filter(extension => extension.plugins)
-      .reduce(
-        (allPluginKeys, { pluginKey, name }) => ({ ...allPluginKeys, ...{ [name]: pluginKey } }),
-        initialPluginKeys,
-      );
+    const pluginKeys: Record<string, PluginKey> = {};
+    this.extensions
+      .filter(extension => extension.plugin)
+      .forEach(({ pluginKey, name }) => {
+        pluginKeys[name] = pluginKey;
+      });
+
+    return pluginKeys;
   }
 
   /**
    * Retrieve all plugins from the passed in extensions
    */
-  public get plugins() {
-    const initialPlugins: ProsemirrorPlugin[] = [];
-    return this.extensions
-      .filter(extension => extension.plugins)
-      .reduce((allPlugins, { plugins }) => [...allPlugins, ...(plugins || [])], initialPlugins);
+  public plugins(params: SchemaParams) {
+    const plugins: ProsemirrorPlugin[] = [];
+    const extensionPlugins = this.extensions
+      .filter(hasExtensionProperty('plugin'))
+      .map(extensionPropertyMapper('plugin', params)) as ProsemirrorPlugin[];
+
+    extensionPlugins.forEach(plugin => {
+      plugins.push(plugin);
+    });
+
+    return plugins;
   }
 
   /**
    * Retrieve all keymaps (how the editor responds to keyboard commands).
    */
-  public keymaps({ schema }: SchemaParams): ProsemirrorPlugin[] {
+  public keymaps(params: SchemaParams): ProsemirrorPlugin[] {
     const extensionKeymaps = this.extensions
       .filter(hasExtensionProperty('keys'))
-      .map(extensionPropertyMapper('keys', schema));
+      .map(extensionPropertyMapper('keys', params));
     return extensionKeymaps.map(keys => keymap(keys));
   }
 
   /**
    * Retrieve all inputRules (how the editor responds to text matching certain rules).
    */
-  public inputRules({ schema }: SchemaParams) {
+  public inputRules(params: SchemaParams) {
+    const inputRules: InputRule[] = [];
     const extensionInputRules = this.extensions
       .filter(hasExtensionProperty('inputRules'))
-      .map(extensionPropertyMapper('inputRules', schema)) as InputRule[][];
+      .map(extensionPropertyMapper('inputRules', params)) as InputRule[][];
 
-    return extensionInputRules.reduce((allInputRules, inputRules) => [...allInputRules, ...inputRules], []);
+    extensionInputRules.forEach(rules => {
+      inputRules.push(...rules);
+    });
+
+    return inputRules;
   }
 
   /**
    * Retrieve all pasteRules (rules for how the editor responds to pastedText).
    */
-  public pasteRules({ schema }: SchemaParams): ProsemirrorPlugin[] {
+  public pasteRules(params: SchemaParams): ProsemirrorPlugin[] {
+    const pasteRules: ProsemirrorPlugin[] = [];
     const extensionPasteRules = this.extensions
       .filter(hasExtensionProperty('pasteRules'))
-      .map(extensionPropertyMapper('pasteRules', schema)) as ProsemirrorPlugin[][];
+      .map(extensionPropertyMapper('pasteRules', params)) as ProsemirrorPlugin[][];
 
-    return extensionPasteRules.reduce((allPasteRules, pasteRules) => [...allPasteRules, ...pasteRules], []);
+    extensionPasteRules.forEach(rules => {
+      pasteRules.push(...rules);
+    });
+
+    return pasteRules;
   }
 
   /**
@@ -120,22 +143,21 @@ export class ExtensionManager {
    * - `isEnabled` defaults to a function returning true
    */
   public actions(params: CommandParams): RemirrorActions {
-    const initialActions: RemirrorActions = {};
+    const actions: RemirrorActions = {};
     const commands = this.commands(params);
     const active = this.active(params);
     const enabled = this.enabled(params);
 
-    return Object.entries(commands).reduce((accumulatedActions, [name, command]) => {
+    Object.entries(commands).forEach(([name, command]) => {
       const action: ActionMethods = {
-        run: command,
+        command,
         isActive: active[name] ? active[name] : () => false,
         isEnabled: enabled[name] ? enabled[name] : () => true,
       };
-      return {
-        ...accumulatedActions,
-        [name]: action,
-      };
-    }, initialActions);
+      actions[name] = action;
+    });
+
+    return actions;
   }
 
   /**
@@ -144,32 +166,36 @@ export class ExtensionManager {
    * Typically actions are used to create interactive menus.
    * For example a menu can use a command to toggle bold.
    */
-  private commands = createFlexibleFunctionMap<'commands', () => void, ExtensionCommandFunction>({
-    ctx: this,
-    key: 'commands',
-    methodFactory: (params, method) => () => {
-      if (!params.isEditable()) {
-        return false;
-      }
-      params.view.focus();
-      return method()(params.view.state, params.view.dispatch);
+  private commands = createFlexibleFunctionMap<'commands', (attrs?: Attrs) => void, ExtensionCommandFunction>(
+    {
+      ctx: this,
+      key: 'commands',
+      methodFactory: (params, method) => (attrs?: Attrs) => {
+        if (!params.isEditable()) {
+          return false;
+        }
+        params.view.focus();
+        return method(attrs)(params.view.state, params.view.dispatch);
+      },
+      checkUniqueness: true,
+      arrayTransformer: (fns, params, methodFactory) => () => {
+        fns.forEach(callback => {
+          methodFactory(params, callback);
+        });
+      },
+      getItemParams: (ext, params) =>
+        ext.commands({
+          schema: params.schema,
+          getEditorState: this.getEditorState,
+          getPortalContainer: this.getPortalContainer,
+          ...(isMarkExtension(ext)
+            ? { type: params.schema.marks[ext.name] }
+            : isNodeExtension(ext)
+            ? { type: params.schema.nodes[ext.name] }
+            : {}),
+        }),
     },
-    checkUniqueness: true,
-    arrayTransformer: (fns, params, methodFactory) => () => {
-      fns.forEach(callback => {
-        methodFactory(params, callback);
-      });
-    },
-    getItemParams: (ext, params) =>
-      ext.commands({
-        schema: params.schema,
-        ...(isMarkExtension(ext)
-          ? { type: params.schema.marks[ext.name] }
-          : isNodeExtension(ext)
-          ? { type: params.schema.nodes[ext.name] }
-          : {}),
-      }),
-  });
+  );
 
   /**
    * Creates methods determining whether a node is active or inactive
@@ -204,6 +230,7 @@ const booleanFlexibleFunctionMap = <GKey extends 'enabled' | 'active'>(key: GKey
       extension[key]({
         schema: params.schema,
         getEditorState: ctx.getEditorState,
+        getPortalContainer: ctx.getPortalContainer,
       }),
   });
 };

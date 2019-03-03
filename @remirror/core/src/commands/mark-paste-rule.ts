@@ -1,6 +1,6 @@
 import { Fragment, Mark, Node as PMNode, Slice } from 'prosemirror-model';
 import { Plugin } from 'prosemirror-state';
-import { Cast } from '../helpers';
+import { Cast, findMatches } from '../helpers';
 import { PluginCreator } from '../types';
 
 export const markPasteRule: PluginCreator = (regexp, type, getAttrs) => {
@@ -9,13 +9,10 @@ export const markPasteRule: PluginCreator = (regexp, type, getAttrs) => {
 
     fragment.forEach(child => {
       if (child.isText) {
-        const { text } = child;
+        const text = child.text || '';
         let pos = 0;
-        let match: RegExpExecArray | null;
 
-        // tslint:disable-next-line:no-conditional-assignment
-        match = regexp.exec(text!);
-        while (match !== null) {
+        findMatches(text, regexp).forEach(match => {
           if (match[1]) {
             const start = match.index;
             const end = start + match[0].length;
@@ -35,8 +32,7 @@ export const markPasteRule: PluginCreator = (regexp, type, getAttrs) => {
 
             pos = end;
           }
-          match = regexp.exec(text!);
-        }
+        });
 
         // adding rest of text to nodes
         if (text && pos < text.length) {

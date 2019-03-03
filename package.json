@@ -10,24 +10,19 @@
     ]
   },
   "scripts": {
-    "build": "run-s build:rollup build:modules",
-    "build:docs": "lerna run build:netlify",
-    "build:modules": "lerna run build",
+    "build": "run-s build:modules build:rollup build:docs",
+    "build:docs": "docz build",
+    "build:modules": "lerna run build --stream",
     "build:production": "cross-env NODE_ENV=production run-s build",
     "build:rollup": "rollup --config ./support/rollup/rollup.config.js",
     "checks": "run-s integrity lint typecheck test",
     "checks:parallel": "run-p lint typecheck test",
     "ci": "yarn clean; yarn frozen;",
-    "ci:checks": "run-s integrity lint typecheck build test:ci",
+    "ci:checks": "run-s integrity lint typecheck build test:ci size:ci",
     "clean": "git clean -fdx",
     "clean:modules": "git clean -fdx @remirror support docs",
-    "cy:open": "cd e2e && yarn cypress:open",
-    "cy:open:docs": "start-server-and-test docs:ci http-get://localhost:3000 cy:open",
-    "cy:run": "cd e2e && yarn cypress:run",
-    "cy:run:docs": "start-server-and-test docs:ci http-get://localhost:3000/ cy:run",
-    "cy:verify": "cypress verify",
     "dev": "lerna run dev --parallel",
-    "docs:ci": "cd docs && yarn dev --debug=true",
+    "dev:docs": "docz dev",
     "fix": "run-s fix:lint:* fix:*",
     "fix:lint:babel": "eslint **/.babelrc.js --fix",
     "fix:lint:js": "eslint support *.js @remirror docs --fix",
@@ -36,6 +31,7 @@
     "fix:support": "tslint --project support/tsconfig.json --config tslint.json --fix",
     "frozen": "yarn --frozen-lockfile install",
     "integrity": "yarn check --integrity",
+    "launch:docs": "cross-env COVERAGE=true echo \"Launching...\" && docz dev --debug > /dev/null && echo \"Done 😀\"",
     "lint": "run-s lint:*",
     "lint:babel": "eslint **/.babelrc.js",
     "lint:js": "eslint support *.js @remirror docs",
@@ -43,17 +39,46 @@
     "lint:ts": "lerna run lint --parallel",
     "prepublish:alpha": "run-s ci:checks",
     "publish:alpha": "lerna publish prerelease --preid=alpha --exact --dist-tag=alpha",
+    "size": "size-limit",
+    "size:ci": "bundlesize",
     "test": "jest",
-    "test:ci": "run-s test:live test:e2e",
-    "test:e2e": "run-s cy:run:docs",
-    "test:e2e:watch": "cd e2e && cypress:open",
-    "test:live": "cross-env TEST_ENV=live jest",
+    "test:ci": "cross-env TEST_ENV=live start-server-and-test launch:docs http-get://localhost:3000 test",
+    "test:ci:watch": "cross-env TEST_ENV=live yarn test:watch",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
     "typecheck": "lerna run typecheck"
   },
   "engines": {
     "node": ">=8"
   },
+  "bundlesize": [
+    {
+      "path": "@remirror/core/lib/dist/core.umd.min.js"
+    },
+    {
+      "path": "@remirror/core-extensions/lib/dist/core-extensions.umd.min.js"
+    },
+    {
+      "path": "@remirror/extension-emoji/lib/dist/extension-emoji.umd.min.js"
+    },
+    {
+      "path": "@remirror/extension-enhanced-link/lib/dist/extension-enhanced-link.umd.min.js"
+    },
+    {
+      "path": "@remirror/extension-mention/lib/dist/extension-mention.umd.min.js"
+    },
+    {
+      "path": "@remirror/react/lib/dist/react.umd.min.js"
+    },
+    {
+      "path": "@remirror/remirror/lib/dist/remirror.umd.min.js"
+    },
+    {
+      "path": "@remirror/renderer-react/lib/dist/renderer-react.umd.min.js"
+    },
+    {
+      "path": "@remirror/ui-twitter/lib/dist/ui-twitter.umd.min.js"
+    }
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
@@ -94,9 +119,39 @@
     ]
   },
   "resolutions": {
-    "react": "16.8.1",
-    "react-dom": "16.8.1",
+    "react": "16.8.3",
+    "react-dom": "16.8.3",
+    "@babel/parser": "7.3.4",
     "jsdom": "13.2.0",
     "hoist-non-react-statics": "3.3.0"
-  }
+  },
+  "size-limit": [
+    {
+      "path": "@remirror/core/lib/index.js"
+    },
+    {
+      "path": "@remirror/core-extensions/lib/index.js"
+    },
+    {
+      "path": "@remirror/extension-emoji/lib/index.js"
+    },
+    {
+      "path": "@remirror/extension-enhanced-link/lib/index.js"
+    },
+    {
+      "path": "@remirror/extension-mention/lib/index.js"
+    },
+    {
+      "path": "@remirror/react/lib/index.js"
+    },
+    {
+      "path": "@remirror/remirror/lib/index.js"
+    },
+    {
+      "path": "@remirror/renderer-react/lib/index.js"
+    },
+    {
+      "path": "@remirror/ui-twitter/lib/index.js"
+    }
+  ]
 }

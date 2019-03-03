@@ -17,4 +17,5 @@ module.exports = {
   projects: ['<rootDir>/@remirror/*', '<rootDir>/docs'],
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
   ...(process.env.TEST_ENV === false ? coverageThreshold : {}),
+  testRunner: 'jest-circus/runner',
 };

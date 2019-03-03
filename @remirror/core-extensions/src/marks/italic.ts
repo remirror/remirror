@@ -1,5 +1,6 @@
 import {
   MarkExtension,
+  MarkExtensionSpec,
   markInputRule,
   markPasteRule,
   SchemaMarkTypeParams,
@@ -7,11 +8,11 @@ import {
 } from '@remirror/core';
 
 export class Italic extends MarkExtension {
-  get name() {
+  get name(): 'italic' {
     return 'italic';
   }
 
-  get schema() {
+  get schema(): MarkExtensionSpec {
     return {
       parseDOM: [{ tag: 'i' }, { tag: 'em' }, { style: 'font-style=italic' }],
       toDOM: () => ['em', 0],

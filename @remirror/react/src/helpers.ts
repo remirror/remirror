@@ -1,27 +1,8 @@
-import { Literal, ObjectNode, OffsetCalculator, Position, ShouldRenderMenu } from '@remirror/core';
+import { Cast, ObjectNode, OffsetCalculator, Position, ShouldRenderMenu } from '@remirror/core';
 import { isFunction, isPlainObject, isString } from 'lodash';
 import { ReactNode } from 'react';
 import { PlainObject } from 'simplytyped';
 import { AttributePropFunction, RenderPropFunction } from './types';
-
-/**
- * Type cast an argument
- * @param arg
- */
-export const Cast = <GType = any>(arg: any): GType => arg;
-
-/**
- * Use this to create a Tuple with args that can be used as a type
- *
- * @example
- * ```
- * const ALL_SUITS = tuple('hearts', 'diamonds', 'spades', 'clubs');
- * type SuitTuple = typeof ALL_SUITS;
- * type Suit = SuitTuple[number]; // union type
- * ```
- * @param args
- */
-export const tuple = <GType extends Literal[]>(...args: GType) => args;
 
 export const isAttributeFunction = (arg: unknown): arg is AttributePropFunction => isFunction(arg);
 export const isRenderProp = (arg: unknown): arg is RenderPropFunction => isFunction(arg);
@@ -81,3 +62,9 @@ export const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, 
 
 export const getNearestNonTextNode = (node: Node) =>
   node.nodeType === Node.TEXT_NODE ? (node.parentNode as HTMLElement) : (node as HTMLElement);
+
+export const uniqueClass = (uid: string, className: string) => `${className}-${uid}`;
+
+export const asDefaultProps = <GProps extends {}>() => <GDefaultProps extends Partial<GProps>>(
+  defaultProps: GDefaultProps,
+): GDefaultProps => defaultProps;

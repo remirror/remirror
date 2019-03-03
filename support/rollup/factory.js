@@ -39,6 +39,9 @@ function configure(pkg, env, target) {
       extensions,
     }),
 
+    // Convert JSON imports to ES6 modules.
+    json(),
+
     // Allow Rollup to resolve CommonJS modules, since it only resolves ES2015
     // modules by default.
     isUmd &&
@@ -49,14 +52,15 @@ function configure(pkg, env, target) {
         // https://github.com/rollup/rollup-plugin-commonjs#custom-named-exports
         namedExports: {
           '@remirror/core': ['Doc', 'Text'],
-          'react-dom': ['findDOMNode'],
+          'react-dom': [
+            'findDOMNode',
+            'unstable_renderSubtreeIntoContainer',
+            'unmountComponentAtNode',
+          ],
           'react-dom/server': ['renderToStaticMarkup'],
         },
         extensions,
       }),
-
-    // Convert JSON imports to ES6 modules.
-    json(),
 
     // Replace `process.env.NODE_ENV` with its value, which enables some modules
     // like React and Remirror to use their production variant.
@@ -71,6 +75,7 @@ function configure(pkg, env, target) {
     babel({
       include: [`@remirror/${folderName}/src/**`],
       extensions,
+      exclude: ['node_modules/**', '*.json'],
     }),
 
     // Register Node.js globals for browserify compatibility.
@@ -87,7 +92,7 @@ function configure(pkg, env, target) {
       input,
       output: {
         format: 'umd',
-        file: `@remirror/${folderName}/${isProd ? pkg.umd : pkg['umd:min']}`,
+        file: `@remirror/${folderName}/${!isProd ? pkg.umd : pkg['umd:min']}`,
         exports: 'named',
         name: startCase(pkg.name).replace(/ /g, ''),
         globals: pkg.umdGlobals,
@@ -130,11 +135,10 @@ function configure(pkg, env, target) {
  */
 
 function factory(pkg) {
-  const isProd = process.env.NODE_ENV === 'production';
   return [
     configure(pkg, 'development', 'module'),
-    isProd && configure(pkg, 'development', 'umd'),
-    isProd && configure(pkg, 'production', 'umd'),
+    configure(pkg, 'development', 'umd'),
+    configure(pkg, 'production', 'umd'),
   ].filter(Boolean);
 }
 

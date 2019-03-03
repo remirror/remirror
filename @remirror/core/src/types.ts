@@ -1,8 +1,14 @@
 import { InputRule } from 'prosemirror-inputrules';
 import { Mark, MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType, Schema } from 'prosemirror-model';
-import { EditorState, Plugin, Plugin as PMPlugin, Selection, Transaction } from 'prosemirror-state';
+import {
+  EditorState as PMEditorState,
+  Plugin,
+  Plugin as PMPlugin,
+  Selection,
+  Transaction,
+} from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-import { Omit } from 'simplytyped';
+import { NodeViewPortalContainer } from './portal-container';
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -17,7 +23,7 @@ export type DispatchFunction = (tr: Transaction) => void;
  * When no dispatch callback is passed, the command should do a 'dry run', determining whether it is applicable,
  * but not actually doing anything
  */
-export type CommandFunction = (state: EditorState<any>, dispatch?: DispatchFunction) => boolean;
+export type CommandFunction = (state: EditorState, dispatch?: DispatchFunction) => boolean;
 
 /**
  * A map of keyboard bindings and their corresponding command functions (a.k.a editing actions).
@@ -27,7 +33,7 @@ export type KeyboardBindings = Record<string, CommandFunction>;
 /* The following is an alternative type definition for the built in Prosemirror definition
 The current Prosemirror types were causing me some problems */
 
-type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string };
+type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string } | DOMOutputSpecPosX[];
 type DOMOutputSpecPosX = string | 0 | Node;
 export type DOMOutputSpec =
   | DOMOutputSpecPosX
@@ -58,11 +64,17 @@ export type MarkExtensionSpec = Omit<MarkSpec, 'toDOM'> & {
  */
 export type ProsemirrorNode = PMNode;
 export type ProsemirrorPlugin = PMPlugin;
-export type EditorSchema = Schema<string, string>;
+export type EditorSchema<GNodes extends string = string, GMarks extends string = string> = Schema<
+  GNodes,
+  GMarks
+>;
+export type EditorState<GSchema extends EditorSchema = EditorSchema> = PMEditorState<GSchema>;
 export { PMNode, PMPlugin };
 
 export interface SchemaParams {
   schema: EditorSchema;
+  getPortalContainer: () => NodeViewPortalContainer;
+  getEditorState: () => EditorState;
 }
 
 export interface SchemaWithStateParams extends SchemaParams {
@@ -141,7 +153,7 @@ export interface OffsetCalculator {
 export type ElementUnion = Value<HTMLElementTagNameMap>;
 
 export interface ActionMethods {
-  run(): void;
+  command(attrs?: Attrs): void;
   isActive(): boolean;
   isEnabled(): boolean;
 }
@@ -204,3 +216,32 @@ export interface FromTo {
   from: number;
   to: number;
 }
+
+/**
+ * Makes specified keys of an interface optional while the rest stay the same.
+ */
+export type MakeOptional<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
+  { [P in GKeys]+?: GType[P] };
+
+/**
+ * Makes specified keys of an interface nullable while the rest stay the same.
+ */
+export type MakeNullable<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
+  { [P in GKeys]: GType[P] | null };
+
+/**
+ * Makes specified keys of an interface Required while the rest remain unchanged.
+ */
+export type MakeRequired<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
+  { [P in GKeys]-?: GType[P] };
+
+/**
+ * Makes specified keys of an interface readonly.
+ */
+export type MakeReadonly<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
+  { +readonly [P in GKeys]: GType[P] };
+
+/**
+ * Remove keys from an interface
+ */
+export type Omit<GType, GKeys extends keyof GType> = Pick<GType, Exclude<keyof GType, GKeys>>;

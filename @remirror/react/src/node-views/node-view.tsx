@@ -1,61 +1,56 @@
 import React from 'react';
 
+import { NodeViewPortalContainer } from '@remirror/core';
+import { css, Interpolation } from 'emotion';
 import { Node as ProsemirrorNode } from 'prosemirror-model';
 import { Decoration, EditorView, NodeView } from 'prosemirror-view';
 import { PlainObject } from 'simplytyped';
-import { NodeViewPortalContainer } from './portal';
 
 export type GetPosition = () => number;
 
-export interface NodeViewProps extends PlainObject {
-  node: ProsemirrorNode;
+export interface NodeViewComponentProps<GAttrs = any> {
+  node: ProsemirrorNode & { attrs: GAttrs };
   view: EditorView;
   getPosition: GetPosition;
+  forwardRef?: (node: HTMLElement) => void | undefined;
 }
 
-export class ReactNodeView implements NodeView {
-  public static createNodeView(
-    component: React.ComponentType<any>,
-    portalProviderContainer: NodeViewPortalContainer,
-    props?: PlainObject,
-  ) {
+export interface CreateNodeViewParams<GProps extends PlainObject = {}> {
+  Component: React.ComponentType<NodeViewComponentProps & GProps>;
+  getPortalContainer: () => NodeViewPortalContainer;
+  props: GProps;
+  style?: Interpolation;
+}
+
+export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView {
+  public static createNodeView<GProps extends PlainObject>({
+    Component,
+    getPortalContainer,
+    props,
+    style,
+  }: CreateNodeViewParams<GProps>) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
-      new ReactNodeView(node, view, getPosition, portalProviderContainer, props, component).init();
+      new ReactNodeView(node, view, getPosition, getPortalContainer, props, Component, false, style).init();
   }
 
   private domRef?: HTMLElement;
   private contentDOMWrapper: Node | null = null;
-  private Component?: React.ComponentType<any>;
-  private portalProviderContainer: NodeViewPortalContainer;
-  private hasContext: boolean;
-
-  public reactComponentProps: PlainObject = {};
-  public view: EditorView;
-  private getPosition: GetPosition;
   public contentDOM: Node | undefined;
-  public node: ProsemirrorNode;
 
   constructor(
-    node: ProsemirrorNode,
-    view: EditorView,
-    getPosition: GetPosition,
-    portalProviderContainer: NodeViewPortalContainer,
-    reactComponentProps: PlainObject = {},
-    Component?: React.ComponentType<any>,
-    hasContext: boolean = false,
-  ) {
-    this.node = node;
-    this.view = view;
-    this.getPosition = getPosition;
-    this.portalProviderContainer = portalProviderContainer;
-    this.reactComponentProps = reactComponentProps;
-    this.Component = Component;
-    this.hasContext = hasContext;
-  }
+    public node: ProsemirrorNode,
+    public view: EditorView,
+    private getPosition: GetPosition,
+    private getPortalContainer: () => NodeViewPortalContainer,
+    public props: GProps = {} as GProps,
+    private Component: React.ComponentType<NodeViewComponentProps & GProps>,
+    private hasContext: boolean = false,
+    private style: Interpolation = {},
+  ) {}
 
   /**
    * This method exists to move initialization logic out of the constructor,
-   * so object can be initialized properly before calling render first time.
+   * so the object can be initialized properly before calling render first time.
    *
    * Example:
    * Instance properties get added to an object only after super call in
@@ -77,13 +72,10 @@ export class ReactNodeView implements NodeView {
       this.contentDOMWrapper = contentDOMWrapper || contentDOM;
     }
 
-    /* Fix from atlassian
-    something gets messed up during mutation processing inside of a
-    nodeView if DOM structure has nested plain "div"s, it doesn't see the
-    difference between them and it kills the nodeView */
-    this.domRef.className = `${this.node.type.name}View-content-wrap`;
+    // Add a fixed class and a dynamic clas to this node (allows for custom styles being added in configuration)
+    this.domRef.classList.add(`remirror-editor-${this.node.type.name}-node-view`, css(this.style));
 
-    this.renderReactComponent(() => this.render(this.reactComponentProps, this.handleRef));
+    this.renderReactComponent(() => this.render(this.props, this.handleRef));
     return this;
   }
 
@@ -92,10 +84,15 @@ export class ReactNodeView implements NodeView {
       return;
     }
 
-    this.portalProviderContainer.render(component, this.domRef!, this.hasContext);
+    this.getPortalContainer().render(component, this.domRef, this.hasContext);
   }
 
   public createDomRef(): HTMLElement {
+    // let el: HTMLElement;
+    // if (this.node.isInline) {
+    //   el = document.createElement('span');
+    //   el.style.dis
+    // }
     return this.node.isInline ? document.createElement('span') : document.createElement('div');
   }
 
@@ -112,12 +109,10 @@ export class ReactNodeView implements NodeView {
     }
   };
 
-  public render(
-    props: PlainObject,
-    forwardRef?: (node: HTMLElement) => void,
-  ): React.ReactElement<any> | null {
-    return this.Component ? (
-      <this.Component
+  public render(props: GProps, forwardRef?: (node: HTMLElement) => void): React.ReactElement<any> | null {
+    const Component = this.Component;
+    return Component ? (
+      <Component
         view={this.view}
         getPosition={this.getPosition}
         node={this.node}
@@ -145,7 +140,7 @@ export class ReactNodeView implements NodeView {
 
     this.node = node;
 
-    this.renderReactComponent(() => this.render(this.reactComponentProps, this.handleRef));
+    this.renderReactComponent(() => this.render(this.props, this.handleRef));
 
     return true;
   }
@@ -169,7 +164,7 @@ export class ReactNodeView implements NodeView {
       return;
     }
 
-    this.portalProviderContainer.remove(this.domRef);
+    this.getPortalContainer().remove(this.domRef);
     this.domRef = undefined;
     this.contentDOM = undefined;
   }

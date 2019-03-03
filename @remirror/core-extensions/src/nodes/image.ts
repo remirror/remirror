@@ -15,7 +15,7 @@ const hasCursor = <T extends {}>(arg: T): arg is T & { $cursor: ResolvedPos } =>
 };
 
 export class Image extends NodeExtension {
-  get name() {
+  get name(): 'image' {
     return 'image';
   }
 
@@ -30,6 +30,7 @@ export class Image extends NodeExtension {
         title: {
           default: null,
         },
+        ...this.extraAttrs(),
       },
       group: 'inline',
       draggable: true,
@@ -61,48 +62,46 @@ export class Image extends NodeExtension {
     };
   }
 
-  get plugins() {
-    return [
-      new Plugin<EditorSchema>({
-        props: {
-          handleDOMEvents: {
-            drop(view, e) {
-              const event = Cast<DragEvent>(e);
-              const hasFiles =
-                event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length;
+  public plugin() {
+    return new Plugin<EditorSchema>({
+      props: {
+        handleDOMEvents: {
+          drop(view, e) {
+            const event = Cast<DragEvent>(e);
+            const hasFiles =
+              event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length;
 
-              if (!hasFiles) {
-                return false;
-              }
+            if (!hasFiles) {
+              return false;
+            }
 
-              const images = Array.from(event.dataTransfer!.files).filter(file => /image/i.test(file.type));
+            const images = Array.from(event.dataTransfer!.files).filter(file => /image/i.test(file.type));
 
-              if (images.length === 0) {
-                return false;
-              }
+            if (images.length === 0) {
+              return false;
+            }
 
-              event.preventDefault();
+            event.preventDefault();
 
-              const { schema } = view.state;
-              const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY });
+            const { schema } = view.state;
+            const coordinates = view.posAtCoords({ left: event.clientX, top: event.clientY });
 
-              images.forEach(image => {
-                const reader = new FileReader();
+            images.forEach(image => {
+              const reader = new FileReader();
 
-                reader.onload = readerEvent => {
-                  const node = schema.nodes.image.create({
-                    src: readerEvent && readerEvent.target && Cast(readerEvent.target).result,
-                  });
-                  const transaction = view.state.tr.insert(coordinates!.pos, node);
-                  view.dispatch(transaction);
-                };
-                reader.readAsDataURL(image);
-              });
-              return true;
-            },
+              reader.onload = readerEvent => {
+                const node = schema.nodes.image.create({
+                  src: readerEvent && readerEvent.target && Cast(readerEvent.target).result,
+                });
+                const transaction = view.state.tr.insert(coordinates!.pos, node);
+                view.dispatch(transaction);
+              };
+              reader.readAsDataURL(image);
+            });
+            return true;
           },
         },
-      }),
-    ];
+      },
+    });
   }
 }

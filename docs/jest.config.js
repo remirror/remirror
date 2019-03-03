@@ -1,7 +1,31 @@
 const config = require('../support/jest/jest.config');
 
+const {
+  clearMocks,
+  verbose,
+  moduleFileExtensions,
+  globals,
+  transform,
+  coveragePathIgnorePatterns,
+  testPathIgnorePatterns,
+  testRegex,
+  cacheDirectory,
+  moduleNameMapper,
+} = config;
+
 module.exports = {
-  ...config,
+  clearMocks,
+  verbose,
+  moduleFileExtensions,
+  globals,
+  transform,
+  coveragePathIgnorePatterns,
+  testPathIgnorePatterns,
+  testRegex,
+  cacheDirectory,
+  moduleNameMapper,
   name: '@remirror/docz',
   displayName: 'docs',
+  preset: 'jest-puppeteer',
+  setupFilesAfterEnv: ['expect-puppeteer', '<rootDir>/jest.framework.ts'],
 };

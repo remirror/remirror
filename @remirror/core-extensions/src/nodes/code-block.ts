@@ -1,5 +1,6 @@
 import {
   NodeExtension,
+  NodeExtensionSpec,
   SchemaNodeTypeParams,
   setBlockType,
   textBlockTypeInputRule,
@@ -7,12 +8,13 @@ import {
 } from '@remirror/core';
 
 export class CodeBlock extends NodeExtension {
-  get name() {
-    return 'code_block';
+  get name(): 'codeBlock' {
+    return 'codeBlock';
   }
 
-  get schema() {
+  get schema(): NodeExtensionSpec {
     return {
+      attrs: this.extraAttrs(),
       content: 'text*',
       marks: '',
       group: 'block',

@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   ...defaultConfig,
-  presets: [['babel-preset-docz', {}], '@emotion/babel-preset-css-prop'],
+  presets: [['babel-preset-docz'], '@emotion/babel-preset-css-prop'],
   plugins: [
     '@babel/plugin-transform-typescript',
     '@babel/plugin-proposal-class-properties',
@@ -16,10 +16,14 @@ module.exports = {
         alias: {
           '@remirror/core': '../@remirror/core/src',
           '@remirror/core-extensions': '../@remirror/core-extensions/src',
+          '@remirror/extension-emoji': '../@remirror/extension-emoji/src',
+          '@remirror/extension-enhanced-link': '../@remirror/extension-enhanced-link/src',
+          '@remirror/extension-mention': '../@remirror/extension-mention/src',
           '@remirror/react': '../@remirror/react/src',
-          '@remirror/mentions-extension': '../@remirror/mentions-extension/src',
-          '@remirror/renderer': '../@remirror/renderer/src',
+          '@remirror/renderer-react': '../@remirror/renderer-react/src',
+          '@remirror/ui-twitter': '../@remirror/ui-twitter/src',
           '@remirror/remirror': '../@remirror/remirror/src',
+          '@root': '../',
         },
         cwd: path.resolve(__dirname),
       },

@@ -1,20 +1,29 @@
-import { RemirrorCustomStyles } from './components';
+import { ObjectInterpolation } from 'emotion';
 
-export const defaultStyles: RemirrorCustomStyles = {
-  main: {
-    padding: '10px',
-    background: '#fffeee',
-    minHeight: '200px',
-    // caretColor: 'red',
+export interface PlaceholderContent {
+  selector: string;
+  content: string;
+}
+
+export const defaultStyles = (placeholder?: PlaceholderContent): ObjectInterpolation<any> => ({
+  '.remirror-editor': {
+    caretColor: 'currentColor',
+    wordWrap: 'break-word',
+    whiteSpace: 'pre-wrap',
+    overflowWrap: 'break-word',
   },
-  ':focus': {
+  '.remirror-editor:focus': {
     outline: 'none',
   },
-  placeholder: {
-    float: 'left',
-    color: '#aaa',
-    pointerEvents: 'none',
-    height: 0,
-    fontStyle: 'italic',
-  },
-};
+  ...(placeholder
+    ? {
+        [placeholder.selector]: {
+          position: 'absolute',
+          color: '#aaa',
+          pointerEvents: 'none',
+          height: 0,
+          fontStyle: 'italic',
+        },
+      }
+    : {}),
+});

@@ -24,7 +24,7 @@ const text = new Text();
 const paragraph = new Paragraph();
 const dummy = new DummyMark();
 
-const em = new ExtensionManager([doc, text, paragraph, dummy], () => state.editorState);
+const em = new ExtensionManager([doc, text, paragraph, dummy], () => state.editorState, () => Cast({}));
 test('-properties', () => {
   expect(em).toBeInstanceOf(ExtensionManager);
   expect(em.extensions).toHaveLength(4);
@@ -53,14 +53,14 @@ describe('#action', () => {
   };
   const remirrorActions = em.actions(Cast(params));
   it('calls the correct command', () => {
-    expect(remirrorActions.dummy).toContainAllKeys(['isActive', 'isEnabled', 'run']);
-    remirrorActions.dummy.run();
+    expect(remirrorActions.dummy).toContainAllKeys(['isActive', 'isEnabled', 'command']);
+    remirrorActions.dummy.command();
     expect(mock).toHaveBeenCalledWith(params.view.state, params.view.dispatch);
   });
 
   it('is not called when the editor is not editable', () => {
     params = { ...params, isEditable: () => false };
-    remirrorActions.dummy.run();
+    remirrorActions.dummy.command();
     expect(mock).toHaveBeenCalledTimes(1);
   });
 });

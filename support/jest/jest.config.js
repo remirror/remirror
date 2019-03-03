@@ -34,13 +34,13 @@ module.exports = {
     jestSupportDir('jest.framework.ts'),
     jestSupportDir('jest.framework.dom.ts'),
   ],
+  snapshotSerializers: ['jest-emotion'],
   cacheDirectory: '../../.jest/cache',
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     '@test-utils$': baseDir('@remirror', 'core', 'src', '__tests__', 'test-utils.tsx'),
-    '@remirror/core$': baseDir('@remirror', 'core', 'src'),
-    '@remirror/core-extensions$': baseDir('@remirror', 'core-extensions', 'src'),
-    '@remirror/react$': baseDir('@remirror', 'react', 'src'),
-    '@remirror/mentions-extension$': baseDir('@remirror', 'mentions-extension', 'src'),
+    '@remirror\\/([a-z0-9-]+)$': baseDir('@remirror/$1/src'),
+    'jest-remirror$': baseDir('@remirror', 'jest-remirror', 'src'),
   },
+  testRunner: 'jest-circus/runner',
 };

@@ -8,8 +8,8 @@ import {
 } from '@remirror/core';
 
 export class OrderedList extends NodeExtension {
-  get name() {
-    return 'ordered_list';
+  get name(): 'orderedList' {
+    return 'orderedList';
   }
 
   get schema(): NodeExtensionSpec {
@@ -18,6 +18,7 @@ export class OrderedList extends NodeExtension {
         order: {
           default: 1,
         },
+        ...this.extraAttrs(),
       },
       content: 'list_item+',
       group: 'block',

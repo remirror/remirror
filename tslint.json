@@ -10,17 +10,24 @@
         "jest-cli",
         "jest-dom",
         "react-testing-library",
+        "puppeteer",
+        "puppeteer-to-istanbul",
         "@test-utils",
         "jest-extended",
         "prosemirror-test-builder",
         "jest-matcher-utils",
-        "chalk"
+        "jest-image-snapshot",
+        "chalk",
+        "yargs"
       ]
     ],
     "no-empty": false,
     "no-any": false,
     "no-object-literal-type-assertion": false,
     "no-console": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "no-invalid-this": false,
+    "no-parameter-reassignment": false,
+    "no-this-assignment": [true, { "allowed-names": ["^self$"], "allow-destructuring": true }]
   }
 }

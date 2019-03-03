@@ -1,5 +1,6 @@
 import {
   MarkExtension,
+  MarkExtensionSpec,
   markInputRule,
   markPasteRule,
   SchemaMarkTypeParams,
@@ -7,11 +8,11 @@ import {
 } from '@remirror/core';
 
 export class Code<GOptions extends {} = {}> extends MarkExtension<GOptions> {
-  get name() {
+  get name(): 'code' {
     return 'code';
   }
 
-  get schema() {
+  get schema(): MarkExtensionSpec {
     return {
       parseDOM: [{ tag: 'code' }],
       toDOM: () => ['code', 0],

@@ -13,3 +13,19 @@ export const nodeInputRule: InputRuleCreator = (regexp, type, getAttrs) => {
     return tr;
   });
 };
+
+export const enhancedNodeInputRule: InputRuleCreator = (regexp, type, getAttrs) => {
+  return new InputRule(regexp, (state, match, start, end) => {
+    end = start > end ? start : end;
+    const attrs = getAttrs instanceof Function ? getAttrs(match) : getAttrs;
+    const { tr } = state;
+
+    const str = match[0];
+
+    if (str) {
+      tr.replaceWith(start, end, type.create(attrs!));
+    }
+
+    return tr;
+  });
+};

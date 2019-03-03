@@ -8,7 +8,7 @@ import {
 } from '@remirror/core';
 
 export class Bold extends MarkExtension {
-  get name() {
+  get name(): 'bold' {
     return 'bold';
   }
 
