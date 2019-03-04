@@ -1,4 +1,4 @@
-import NimblePicker from 'emoji-mart/dist-es/components/picker/nimble-picker';
+import { NimblePicker } from 'emoji-mart';
 import { Data } from 'emoji-mart/dist-es/utils/data';
 import { EmojiData } from 'emoji-mart/dist-es/utils/emoji-index/nimble-emoji-index';
 import { EmojiSet } from 'emoji-mart/dist-es/utils/shared-props';

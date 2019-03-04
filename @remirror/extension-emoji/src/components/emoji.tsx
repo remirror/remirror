@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 import { Cast } from '@remirror/core';
 import { NodeViewComponentProps } from '@remirror/react';
-import NimbleEmoji from 'emoji-mart/dist-es/components/emoji/nimble-emoji';
+import { NimbleEmoji } from 'emoji-mart';
 import { Data } from 'emoji-mart/dist-es/utils/data';
 import { EmojiSet } from 'emoji-mart/dist-es/utils/shared-props';
 import { EmojiNodeAttrs } from '../types';
