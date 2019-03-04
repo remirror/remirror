@@ -8,7 +8,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/extension-emoji"
   },
-  "version": "0.0.1-alpha.1",
+  "version": "0.0.1-alpha.3",
   "main": "lib/index.js",
   "module": "lib/dist/extension-emoji.esm.js",
   "files": [
@@ -29,9 +29,9 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@remirror/core": "^0.0.1-alpha.2",
-    "@remirror/core-extensions": "^0.0.1-alpha.2",
-    "@remirror/react": "^0.0.1-alpha.2",
+    "@remirror/core": "0.0.1-alpha.3",
+    "@remirror/core-extensions": "0.0.1-alpha.3",
+    "@remirror/react": "0.0.1-alpha.3",
     "@types/emoji-mart": "^2.8.2",
     "@types/lodash": "^4.14.121",
     "@types/prosemirror-inputrules": "^1.0.2",
@@ -55,7 +55,7 @@
     "react-dom": "^16.8.3"
   },
   "devDependencies": {
-    "jest-remirror": "0.0.1-alpha.2"
+    "jest-remirror": "0.0.1-alpha.3"
   },
   "publishConfig": {
     "access": "public"

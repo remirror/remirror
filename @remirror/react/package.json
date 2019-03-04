@@ -8,7 +8,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/react"
   },
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.1-alpha.3",
   "main": "lib/index.js",
   "module": "lib/dist/remirror-react.esm.js",
   "files": [
@@ -29,8 +29,8 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@remirror/core": "^0.0.1-alpha.2",
-    "@remirror/core-extensions": "^0.0.1-alpha.2",
+    "@remirror/core": "0.0.1-alpha.3",
+    "@remirror/core-extensions": "0.0.1-alpha.3",
     "@types/hoist-non-react-statics": "^3.0.1",
     "@types/lodash": "^4.14.121",
     "@types/prosemirror-keymap": "^1.0.1",

@@ -8,7 +8,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/core-extensions"
   },
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.1-alpha.3",
   "main": "lib/index.js",
   "module": "lib/dist/core-extensions.esm.js",
   "files": [
@@ -29,7 +29,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@remirror/core": "^0.0.1-alpha.2",
+    "@remirror/core": "0.0.1-alpha.3",
     "@types/prosemirror-history": "^1.0.1",
     "@types/prosemirror-model": "^1.7.0",
     "@types/prosemirror-state": "^1.2.3",
