@@ -40,7 +40,7 @@
     "keycode": "^2.2.0",
     "lodash": "^4.17.11",
     "prosemirror-model": "^1.7.0",
-    "prosemirror-view": "^1.8.2"
+    "prosemirror-view": "^1.8.3"
   },
   "peerDependencies": {
     "@types/react": "^16.7.18",
