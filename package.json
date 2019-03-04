@@ -4,9 +4,9 @@
   "workspaces": {
     "packages": [
       "@remirror/*",
+      "packages/*",
       "support/dependencies",
-      "docs",
-      "e2e"
+      "docs"
     ]
   },
   "scripts": {
@@ -87,7 +87,7 @@
     }
   },
   "lint-staged": {
-    "{@remirror,e2e,docs,support}/**/*.{ts,tsx}": [
+    "{@remirror,packages,docs,support}/**/*.{ts,tsx}": [
       "tslint --fix",
       "git add"
     ],

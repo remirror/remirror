@@ -23,8 +23,7 @@ process.on('unhandledRejection', reason => {
 });
 
 if (process.env.CI) {
-  jest.retryTimes(3);
-
+  // jest.retryTimes(3);
   // const consoleError = console.error;
   // const consoleWarn = console.warn;
   // const consoleLog = console.log;
@@ -33,7 +32,6 @@ if (process.env.CI) {
   //   console.warn = jest.fn();
   //   console.log = jest.fn();
   // });
-
   // afterAll(() => {
   //   console.error = consoleError;
   //   console.warn = consoleWarn;

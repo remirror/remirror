@@ -40,7 +40,7 @@ module.exports = {
   moduleNameMapper: {
     '@test-utils$': baseDir('@remirror', 'core', 'src', '__tests__', 'test-utils.tsx'),
     '@remirror\\/([a-z0-9-]+)$': baseDir('@remirror/$1/src'),
-    'jest-remirror$': baseDir('@remirror', 'jest-remirror', 'src'),
+    'jest-remirror$': baseDir('packages', 'jest-remirror', 'src'),
   },
   testRunner: 'jest-circus/runner',
 };
