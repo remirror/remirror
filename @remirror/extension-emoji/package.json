@@ -6,7 +6,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/extension-emoji"
+    "directory": "master/@remirror/extension-emoji"
   },
   "version": "0.0.1-alpha.3",
   "main": "lib/index.js",
