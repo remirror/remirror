@@ -22,6 +22,7 @@ env:
     - YARN_CMD=test:integration
     - YARN_CMD=ci:checks # Run linting and typechecks
     - YARN_CMD=build:docs
+    - YARN_CMD=build:production
 
 before_install:
   - |
@@ -39,8 +40,7 @@ before_script:
   # When running e2e tests, build the dependencies so they can be resolved.
   - |
     set -e
-    if [[ $YARN_CMD == 'ci:test:e2e' ]]; then
-      yarn build:production;
+    if [[ $YARN_CMD == 'build:production' ]]; then
       yarn ci:size;
     fi
     set +e
