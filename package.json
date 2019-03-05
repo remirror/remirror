@@ -39,7 +39,7 @@
     "lint:support": "tslint --project support/tsconfig.json --config tslint.json",
     "lint:ts": "lerna run lint --parallel",
     "prepublish:alpha": "run-s ci:checks",
-    "publish:alpha": "lerna publish prerelease --preid=alpha --exact --dist-tag=alpha",
+    "publish:alpha": "lerna publish prerelease --preid=alpha --exact",
     "size": "size-limit",
     "size:ci": "bundlesize",
     "test": "jest",
