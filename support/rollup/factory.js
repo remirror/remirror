@@ -19,14 +19,14 @@ import { startCase } from 'lodash';
  * @return {Object}
  */
 
-function configure(pkg, env, target) {
+function configure(pkg, env, target, rootFolder = '@remirror') {
   const folderName = pkg.name.replace('@remirror/', '');
   const extensions = ['.mjs', '.json', '.ts', '.tsx', '.js'];
 
   const isProd = env === 'production';
   const isUmd = target === 'umd';
   const isModule = target === 'module';
-  const input = `@remirror/${folderName}/src/index.ts`;
+  const input = `${rootFolder}/${folderName}/src/index.ts`;
   const deps = []
     .concat(pkg.dependencies ? Object.keys(pkg.dependencies) : [])
     .concat(pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : []);
@@ -46,7 +46,10 @@ function configure(pkg, env, target) {
     // modules by default.
     isUmd &&
       commonjs({
-        exclude: [`@remirror/${folderName}/src/**`, `@remirror/${folderName}/lib/**`],
+        exclude: [
+          `${rootFolder}/${folderName}/src/**`,
+          `${rootFolder}/${folderName}/lib/**`,
+        ],
         // HACK: Sometimes the CommonJS plugin can't identify named exports, so
         // we have to manually specify named exports here for them to work.
         // https://github.com/rollup/rollup-plugin-commonjs#custom-named-exports
@@ -73,7 +76,7 @@ function configure(pkg, env, target) {
 
     // Use Babel to transpile the result, limiting it to the source code.
     babel({
-      include: [`@remirror/${folderName}/src/**`],
+      include: [`${rootFolder}/${folderName}/src/**`],
       extensions,
       exclude: ['node_modules/**', '*.json'],
     }),
@@ -92,7 +95,7 @@ function configure(pkg, env, target) {
       input,
       output: {
         format: 'umd',
-        file: `@remirror/${folderName}/${!isProd ? pkg.umd : pkg['umd:min']}`,
+        file: `${rootFolder}/${folderName}/${!isProd ? pkg.umd : pkg['umd:min']}`,
         exports: 'named',
         name: startCase(pkg.name).replace(/ /g, ''),
         globals: pkg.umdGlobals,
@@ -107,12 +110,12 @@ function configure(pkg, env, target) {
       input,
       output: [
         {
-          file: `@remirror/${folderName}/${pkg.module}`,
+          file: `${rootFolder}/${folderName}/${pkg.module}`,
           format: 'es',
           sourcemap: true,
         },
         {
-          file: `@remirror/${folderName}/lib/dist/${folderName}.js`,
+          file: `${rootFolder}/${folderName}/lib/dist/${folderName}.js`,
           format: 'cjs',
           exports: 'named',
           sourcemap: true,
@@ -134,11 +137,11 @@ function configure(pkg, env, target) {
  * @return {Array}
  */
 
-function factory(pkg) {
+function factory(pkg, rootFolder) {
   return [
-    configure(pkg, 'development', 'module'),
-    configure(pkg, 'development', 'umd'),
-    configure(pkg, 'production', 'umd'),
+    configure(pkg, 'development', 'module', rootFolder),
+    configure(pkg, 'development', 'umd', rootFolder),
+    configure(pkg, 'production', 'umd', rootFolder),
   ].filter(Boolean);
 }
 
