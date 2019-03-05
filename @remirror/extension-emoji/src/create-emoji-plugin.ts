@@ -1,7 +1,6 @@
 import { EditorSchema, NodeViewPortalContainer } from '@remirror/core';
 import { ReactNodeView } from '@remirror/react';
-import { Data } from 'emoji-mart/dist-es/utils/data';
-import { EmojiSet } from 'emoji-mart/dist-es/utils/shared-props';
+import { Data, EmojiSet } from 'emoji-mart';
 import emojiRegex from 'emoji-regex/es2015/text';
 import { css, Interpolation } from 'emotion';
 import { NodeType } from 'prosemirror-model';

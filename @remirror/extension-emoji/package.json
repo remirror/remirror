@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-emoji",
-  "description": "mention extension for the remirror editor",
+  "description": "emoji extension for the remirror editor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "repository": {
