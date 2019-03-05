@@ -114,12 +114,12 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
           format: 'es',
           sourcemap: true,
         },
-        {
-          file: `${rootFolder}/${folderName}/lib/dist/${folderName}.js`,
-          format: 'cjs',
-          exports: 'named',
-          sourcemap: true,
-        },
+        // {
+        //   file: `${rootFolder}/${folderName}/lib/dist/${folderName}.js`,
+        //   format: 'cjs',
+        //   exports: 'named',
+        //   sourcemap: true,
+        // },
       ],
       // We need to explicitly state which modules are external, meaning that
       // they are present at runtime. In the case of non-UMD configs, this means
