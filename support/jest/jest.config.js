@@ -2,9 +2,12 @@ const { join, resolve } = require('path');
 
 const baseDir = (...paths) => resolve(__dirname, '..', '..', join(...paths));
 const jestSupportDir = (...args) => baseDir(join('support', 'jest', ...args));
-const testRegex = process.env.TEST_ENV
-  ? '/__tests__/.*\\.(spec|test)\\.tsx?$'
-  : '/__tests__/.*\\.spec\\.tsx?$';
+const testRegex =
+  process.env.TEST_ENV === 'integration'
+    ? '/__tests__/.*\\.test\\.tsx?$'
+    : process.env.TEST_ENV === 'e2e'
+    ? '/__tests__/.*\\.e2e\\.tsx?$'
+    : '/__tests__/.*\\.spec\\.tsx?$';
 
 module.exports = {
   clearMocks: true,

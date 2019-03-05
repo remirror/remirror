@@ -10,7 +10,7 @@
   },
   "version": "0.0.1-alpha.3",
   "main": "lib/index.js",
-  "module": "lib/dist/remirror-react.esm.js",
+  "module": "lib/dist/react.esm.js",
   "files": [
     "lib",
     "src"
