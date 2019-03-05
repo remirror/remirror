@@ -79,6 +79,7 @@ jspm_packages/
 
 dist
 @remirror/**/lib
+packages/**/lib
 
 # We are using yarn
 package-lock.json
