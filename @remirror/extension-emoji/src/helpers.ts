@@ -1,9 +1,5 @@
 import { Cast } from '@remirror/core';
-import { Data } from 'emoji-mart/dist-es/utils/data';
-import NimbleEmojiIndex, {
-  BaseEmoji,
-  CustomEmoji,
-} from 'emoji-mart/dist-es/utils/emoji-index/nimble-emoji-index';
+import { BaseEmoji, CustomEmoji, Data, NimbleEmojiIndex } from 'emoji-mart';
 import { emoticonMap } from './emoticons';
 
 /**

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/ui-twitter",
-  "description": "Twitter UI built with remirror",
+  "description": "ui for a twitter like editing experience",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "repository": {

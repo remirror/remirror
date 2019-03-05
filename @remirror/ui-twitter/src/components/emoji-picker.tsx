@@ -1,7 +1,4 @@
-import { NimblePicker } from 'emoji-mart';
-import { Data } from 'emoji-mart/dist-es/utils/data';
-import { EmojiData } from 'emoji-mart/dist-es/utils/emoji-index/nimble-emoji-index';
-import { EmojiSet } from 'emoji-mart/dist-es/utils/shared-props';
+import { Data, EmojiData, EmojiSet, NimblePicker } from 'emoji-mart';
 import React, { FC, useEffect, useRef } from 'react';
 import { styled } from '../theme';
 
