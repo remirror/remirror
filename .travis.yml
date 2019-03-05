@@ -62,7 +62,8 @@ notifications:
   slack:
     rooms:
       secure: j2M2e9gEo/aSsywv3P7ccqVNmN7eVNK4zJoSJy1SOtVqcZtYQChxM4nkTha86PnhCzGlBMpFbL6jl0OeEWvQfeAk2GOvDwqMM4o0/Mi5twWJM8bXkGhIbvCswoHXbZOgdpa6jbwOufUGOzKS19YSkr+TDmhK1M5R0aXUASKprrwgT/rZ/yLrN0IbGVsYw2PpV3V3HRLTrWjguAiJqcIUD8/58mwjN6J163Z3e/2NWdFivzYyH9LTRgMShD2opvP89pp2GiSgOkfAMfv+AN4t8v877b2toRbdAJQvtNFaHTvcCuoXaOK9hAKXK3NrunR7XLQZCayywQI5dcrcKW+ad/KiM3y6NVZJYoqOSyVkv/QTJt0/LNUp/Llv3EfS654D1NEDj+9FhZSxJz3heV7RdOOVoTy6RiyA1VGd54ED5DZQ5NZE14uZY38/NuhawSMRkBYBrb0AiQez5pqQ3/Bbmkj8d9RjbMiJm9nhHcCiyXUz1wEB3v3HLmS2cyIAe1gNcuyw0MDp2MpMm9GQZCbbomQJItnQy2SZLco3ig1sUpZoyAlTPM8ANWN6hVpd7CEd75fXPThxadVdeQaZ7OtY11fkCeQxpASBRIliTY+ZrVe37uOBWrvbo8jg0vBUMhbn34ksYzfSq+fJ0DNCSAu1eRRQFuvFBVviDSaKce2XKqA=
-# branches:
-#   only:
-#     - master
-#     - ci/*
+
+branches:
+  only:
+    - master
+    - ci/*
