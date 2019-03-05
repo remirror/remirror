@@ -36,15 +36,6 @@ before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$HOME/bin:$PATH
 
-before_script:
-  # When running e2e tests, build the dependencies so they can be resolved.
-  - |
-    set -e
-    if [[ $YARN_CMD == 'build:production' ]]; then
-      yarn ci:size;
-    fi
-    set +e
-
 install:
   - yarn ci
 
@@ -56,6 +47,9 @@ after_script:
     set -e
     if [[ $YARN_CMD == 'test' ]]; then
       cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT;
+    fi
+    if [[ $YARN_CMD == 'build:production' ]]; then
+      yarn size:ci;
     fi
     set +e
 notifications:
