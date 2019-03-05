@@ -71,7 +71,7 @@
       "path": "@remirror/react/lib/dist/react.umd.min.js"
     },
     {
-      "path": "@remirror/remirror/lib/dist/remirror.umd.min.js"
+      "path": "packages/remirror/lib/dist/remirror.umd.min.js"
     },
     {
       "path": "@remirror/renderer-react/lib/dist/renderer-react.umd.min.js"
@@ -146,7 +146,7 @@
       "path": "@remirror/react/lib/index.js"
     },
     {
-      "path": "@remirror/remirror/lib/index.js"
+      "path": "packages/remirror/lib/index.js"
     },
     {
       "path": "@remirror/renderer-react/lib/index.js"
