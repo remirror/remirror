@@ -26,7 +26,7 @@ env:
 before_install:
   - |
     set -e
-    if [[ $YARN_CMD == 'ci:test' ]]; then
+    if [[ $YARN_CMD == 'test' ]]; then
       curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > $HOME/bin/cc-test-reporter;
       chmod +x $HOME/bin/cc-test-reporter;
       cc-test-reporter before-build;
@@ -54,7 +54,7 @@ script:
 after_script:
   - |
     set -e
-    if [[ $YARN_CMD == 'ci:test:unit' ]]; then
+    if [[ $YARN_CMD == 'test' ]]; then
       cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT;
     fi
     set +e
