@@ -1,0 +1,26 @@
+{
+  "extends": "../tslint.json",
+  "rules": {
+    "no-implicit-dependencies": [
+      true,
+      "dev",
+      [
+        "jest-axe",
+        "jest",
+        "jest-cli",
+        "jest-dom",
+        "react-testing-library",
+        "puppeteer",
+        "puppeteer-to-istanbul",
+        "@test-utils",
+        "jest-extended",
+        "prosemirror-test-builder",
+        "jest-matcher-utils",
+        "jest-image-snapshot",
+        "chalk",
+        "yargs",
+        "react"
+      ]
+    ]
+  }
+}
