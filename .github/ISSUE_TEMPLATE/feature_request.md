@@ -17,12 +17,3 @@ about: Suggest an idea for this project
 ## Possible Implementation
 
 <!--- Not obligatory, but suggest an idea for implementing addition or change -->
-
-## Enviroments Affected
-
-<!--- Include as many relevant details about the environment you experienced the bug in -->
-
-- [ ] Web
-- [ ] Native (Mobile)
-
-<!--- Describe how this affects the above environments -->

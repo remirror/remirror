@@ -26,11 +26,12 @@ checks:
       threshold: 6
 
 exclude_patterns:
-  - 'config/'
+  - 'support/'
   - 'features/'
   - '**/node_modules/'
   - 'script/'
   - '**/__tests__/'
+  - '**/__mocks__/'
   - '**/*.d.ts'
   - '**/*.dts.ts'
   - '**/jest.*'

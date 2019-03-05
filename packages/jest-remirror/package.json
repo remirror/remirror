@@ -40,7 +40,8 @@
     "keycode": "^2.2.0",
     "lodash": "^4.17.11",
     "prosemirror-model": "^1.7.0",
-    "prosemirror-view": "^1.8.3"
+    "prosemirror-view": "^1.8.3",
+    "react-testing-library": "6.0.0"
   },
   "peerDependencies": {
     "@types/react": "^16.7.18",

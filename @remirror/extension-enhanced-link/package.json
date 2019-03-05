@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-enhanced-link",
-  "description": "mention extension for the remirror editor",
+  "description": "enhanced link extension for the remirror editor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "repository": {
