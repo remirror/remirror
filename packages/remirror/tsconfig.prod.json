@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": { "baseUrl": "src", "paths": {} },
+  "compilerOptions": { "baseUrl": "src", "paths": { "*": ["../../../support/types/*"] } },
   "exclude": [
     "**/*.test.{ts,tsx}",
     "**/*.stories.{ts,tsx}",
