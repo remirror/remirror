@@ -16,19 +16,48 @@ node_js:
 env:
   global:
     - PATH=$HOME/.yarn/bin:$HOME/bin:$PATH
+  # Do multiple runs for testing and linting.
+  matrix:
+    - YARN_CMD=test
+    - YARN_CMD=test:integration
+    - YARN_CMD=ci:checks # Run linting and typechecks
+    - YARN_CMD=build:docs
+
 before_install:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
-    > $HOME/bin/cc-test-reporter
-  - chmod +x $HOME/bin/cc-test-reporter
-  - cc-test-reporter before-build
+  - |
+    set -e
+    if [[ $YARN_CMD == 'ci:test' ]]; then
+      curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > $HOME/bin/cc-test-reporter;
+      chmod +x $HOME/bin/cc-test-reporter;
+      cc-test-reporter before-build;
+    fi
+    set +e
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$HOME/bin:$PATH
+
+before_script:
+  # When running e2e tests, build the dependencies so they can be resolved.
+  - |
+    set -e
+    if [[ $YARN_CMD == 'ci:test:e2e' ]]; then
+      yarn build:production;
+      yarn ci:size;
+    fi
+    set +e
+
 install:
-  - yarn install
+  - yarn ci
+
 script:
-  - yarn ci:checks
+  - yarn $YARN_CMD
+
 after_script:
-  - cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - |
+    set -e
+    if [[ $YARN_CMD == 'ci:test:unit' ]]; then
+      cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT;
+    fi
+    set +e
 notifications:
   slack:
     rooms:
