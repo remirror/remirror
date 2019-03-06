@@ -3,10 +3,11 @@
   "description": "Core utilities for remirror",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core",
   "repository": {
     "type": "git",
     "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "master/@remirror/core"
+    "directory": "@remirror/core"
   },
   "version": "0.0.1-alpha.4",
   "main": "lib/index.js",
