@@ -149,7 +149,7 @@ From the root of this repository run the following to trigger a full typecheck, 
 yarn checks
 ```
 
-By default these checks are run on every push but eventually this will be configurable.
+By default these checks are run on every push. To prevent these hooks from running by default simply copy `.config.sample.json` to `.config.json`. This file is read before hooks are run and can cancel checks when configured.
 
 ## Built With
 

@@ -121,3 +121,5 @@ dependencies/**/yarn.lock
 .vscode
 
 /report.*.json
+
+.config.json
