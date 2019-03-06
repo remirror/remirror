@@ -32,7 +32,10 @@ const babelConfig = {
 };
 
 module.exports = {
-  ignore: [],
+  public: 'support/assets',
+  htmlContext: {
+    favicon: '/public/favicon.ico',
+  },
   title: 'Remirror',
   typescript: true,
   modifyBabelRc() {
