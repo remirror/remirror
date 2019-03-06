@@ -167,11 +167,12 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       schema: this.schema,
       getEditorState: this.getEditorState,
       getPortalContainer: this.getPortalContainer,
+      getEditorWrapper: this.getEditorWrapper,
     };
   }
 
   /**
-   * Retrieve the editor state. This is passed through to the extension manager
+   * Retrieve the editor state. This is passed through to the extension manager.
    */
   private getEditorState = () => this.state.editorState;
 
@@ -179,6 +180,11 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
    * Retrieve the portal container which used for managing node views which contain react components via the portal api.
    */
   private getPortalContainer = () => this.portalContainer;
+
+  /**
+   * Holds a reference to the dom element wrapping the editor
+   */
+  private getEditorWrapper = () => this.editorRef;
 
   /**
    * Create the extensions configuration through the extension manager

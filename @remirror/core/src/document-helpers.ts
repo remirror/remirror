@@ -101,10 +101,12 @@ export const getMarkRange = ($pos: ResolvedPos | null = null, type: MarkType | n
  * @param plugin
  * @param state
  */
-export const getPluginState = <GState>(plugin: Plugin, state: EditorState): GState => plugin.getState(state);
+export const getPluginState = <GState>(plugin: Plugin | PluginKey, state: EditorState): GState =>
+  plugin.getState(state);
 
 /**
  * Retrieve plugin state from the plugin key
+ * @deprecated use getPluginState instead
  *
  * @param pluginKey
  * @param state
