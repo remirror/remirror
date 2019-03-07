@@ -13,7 +13,7 @@ export interface Particle {
   x: number;
   y: number;
   alpha: number;
-  color: string;
+  color: string[] | number[];
   size: number;
   vx: number;
   vy: number;
@@ -30,15 +30,15 @@ export interface ParticleEffect {
    * @param y y coordinate
    * @param color color of particle
    */
-  createParticle(x: number, y: number, color: string): Particle;
+  createParticle(x: number, y: number, color: string[] | number[]): Particle;
 
   /**
-   * Update the created particle (mutate)
+   * Update the created particle (via mutation)
    *
    * @param particle
    * @param state
    */
-  updateParticle(particle: Particle, ctx: CanvasRenderingContext2D): Particle;
+  updateParticle(particle: Particle, ctx: CanvasRenderingContext2D): void;
 }
 
 export const defaultEffect: ParticleEffect = {
@@ -66,8 +66,6 @@ export const defaultEffect: ParticleEffect = {
 
     ctx.fillStyle = `rgba(${particle.color[0]},${particle.color[1]},${particle.color[2]},${particle.alpha})`;
     ctx.fillRect(Math.round(particle.x - 1), Math.round(particle.y - 1), particle.size, particle.size);
-
-    return particle;
   },
 };
 
@@ -100,7 +98,5 @@ export const spawningEffect: ParticleEffect = {
     ctx.beginPath();
     ctx.arc(Math.round(particle.x - 1), Math.round(particle.y - 1), particle.size, 0, 2 * Math.PI);
     ctx.fill();
-
-    return particle;
   },
 };
