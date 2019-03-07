@@ -17,8 +17,8 @@
 # [📖 Docs](https://docs.remirror.org)
 
 - [Introduction](https://docs.remirror.org)
-- [Install](https://docs.remirror.org/install)
-- [Walkthrough guide](https://docs.remirror.org/walekthroug)
+- [Installation](https://docs.remirror.org/install)
+- [Walkthrough guide](https://docs.remirror.org/walkthrough)
 
 ## Getting Started
 
@@ -140,6 +140,12 @@ class App extends Component {
   }
 }
 ```
+
+## Examples
+
+### Twitter
+
+![Twitter UI Example](/support/assets/ui-twitter-example.gif)
 
 ## Running the tests
 

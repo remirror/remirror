@@ -1,0 +1,64 @@
+---
+name: Installation
+route: /install
+---
+
+# Installation
+
+## Basic Installation
+
+```bash
+yarn add remirror
+```
+
+### Usage
+
+```ts
+import { Remirror } from 'remirror';
+
+const Editor = props => (
+  <Remirror
+    onChange={onChange}
+    placeholder='This is a placeholder'
+    autoFocus={true}
+    initialContent={initialJson}
+  >
+    {({ getMenuProps, actions }) => {
+      const menuProps = getMenuProps({
+        name: 'floating-menu',
+      });
+      return (
+        <div>
+          <div
+            style={{
+              position: 'absolute',
+              top: menuProps.position.top,
+              left: menuProps.position.left,
+            }}
+            ref={menuProps.ref}
+          >
+            <button
+              style={{
+                backgroundColor: actions.bold.isActive() ? 'white' : 'pink',
+                fontWeight: actions.bold.isActive() ? 600 : 300,
+              }}
+              disabled={!actions.bold.isEnabled()}
+              onClick={runAction(actions.bold.run)}
+            >
+              B
+            </button>
+          </div>
+        </div>
+      );
+    }}
+  </Remirror>
+);
+```
+
+## Advanced Installation
+
+```bash
+yarn add @remirror/core @remirror/react @remirror/core-extensions
+```
+
+Then see the [examples](https://github.com/ifiokjr/remirror/docs/examples) for some sample code.
