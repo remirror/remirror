@@ -1,18 +1,13 @@
 import { EditorSchema } from '@remirror/core';
 import { random, range, throttle } from 'lodash';
 import { EditorView } from 'prosemirror-view';
-import { MAX_PARTICLES, Particle, PARTICLE_NUM_RANGE, ParticleEffect } from './effects';
-
-export interface EpicModePluginStateParams {
-  particleEffect: ParticleEffect;
-}
+import { EpicModePluginStateParams, Particle, ParticleEffect, ParticleRange } from './types';
 
 export class EpicModePluginState {
-  public particleEffect: ParticleEffect;
-  public getEditorWrapper: () => HTMLElement | undefined;
-  public readonly canvas: HTMLCanvasElement;
-  public readonly ctx: CanvasRenderingContext2D;
-
+  private particleEffect: ParticleEffect;
+  private particleRange: ParticleRange;
+  private container: HTMLElement;
+  private colors: string[];
   private shakeTime = 0;
   private shakeTimeMax = 0;
   private shakeIntensity = 5;
@@ -21,10 +16,16 @@ export class EpicModePluginState {
   private isActive = false;
   private view!: EditorView<EditorSchema>;
 
-  constructor({ particleEffect }: EpicModePluginStateParams) {
+  public readonly canvas: HTMLCanvasElement;
+  public readonly ctx: CanvasRenderingContext2D;
+
+  constructor({ particleEffect, colors, particleRange, canvasHolder }: EpicModePluginStateParams) {
     this.particleEffect = particleEffect;
+    this.container = canvasHolder;
+    this.particleRange = particleRange;
+
     const canvas = document.createElement('canvas');
-    canvas.id = 'code-blast-canvas';
+    canvas.id = 'epic-mode-canvas';
     canvas.style.position = 'absolute';
     canvas.style.top = '0';
     canvas.style.left = '0';
@@ -34,22 +35,33 @@ export class EpicModePluginState {
     canvas.height = window.innerHeight;
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d')!;
+    this.colors = colors;
   }
 
   /**
-   * Store a reference to the view and add the canvas to the DOM
+   * Store a reference to the Prosemirror view and add the canvas to the DOM
    *
    * @param view
    */
-  public init(view: EditorView<EditorSchema>, container: HTMLElement) {
+  public init(view: EditorView<EditorSchema>) {
     this.view = view;
-    container.appendChild(this.canvas);
+    this.container.appendChild(this.canvas);
+
+    this.isActive = true;
+    this.loop();
+
     return this;
   }
 
   public destroy() {
-    this.isActive = false;
-    this.canvas.remove();
+    // Wrapped in try catch for support of hot module reloading during development
+    try {
+      this.isActive = false;
+      this.canvas.remove();
+      this.container.removeChild(this.canvas);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   public shake = throttle((time: number) => {
@@ -61,22 +73,25 @@ export class EpicModePluginState {
     const coords = this.view.coordsAtPos(selection.$anchor.pos);
     const node = document.elementFromPoint(coords.left - 5, coords.top + 5);
     if (!node) {
-      console.log('no node found for coords: ', coords);
       return;
     }
-    const numParticles = random(PARTICLE_NUM_RANGE.min, PARTICLE_NUM_RANGE.max);
-    const color = getRGBComponents(node);
-    let pointer = 0;
-    range(numParticles).forEach(() => {
-      this.particles[pointer] = this.particleEffect.createParticle(coords.left + 10, coords.top, color);
-      pointer = (pointer + 1) % MAX_PARTICLES;
+    const numParticles = random(this.particleRange.min, this.particleRange.max);
+    const textColor = getRGBComponents(node);
+    range(numParticles).forEach(ii => {
+      const colorCode = this.colors[ii % this.colors.length];
+      const r = parseInt(colorCode.slice(1, 3), 16);
+      const g = parseInt(colorCode.slice(3, 5), 16);
+      const b = parseInt(colorCode.slice(5, 7), 16);
+      const color = [r, g, b];
+
+      this.particles[ii] = this.particleEffect.createParticle(coords.left + 10, coords.top, color, textColor);
     });
   }, 100);
 
   /**
    * Runs through the animation loop
    */
-  public loop() {
+  public loop = () => {
     if (!this.isActive) {
       return;
     }
@@ -100,7 +115,7 @@ export class EpicModePluginState {
     }
     this.drawParticles();
     requestAnimationFrame(this.loop);
-  }
+  };
 
   private drawParticles() {
     for (const particle of this.particles) {

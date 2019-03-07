@@ -1,19 +1,8 @@
 import { EditorSchema, Extension, getPluginState } from '@remirror/core';
 import { Plugin, PluginKey } from 'prosemirror-state';
-import { defaultEffect, ParticleEffect } from './effects';
+import { COLORS, defaultEffect, PARTICLE_NUM_RANGE, spawningEffect } from './effects';
 import { EpicModePluginState } from './state';
-
-export interface EpicModeOptions {
-  /**
-   * The particle effect to use
-   */
-  particleEffect?: ParticleEffect;
-
-  /**
-   * Where in the dom the canvas element should be stored
-   */
-  canvasHolder?: HTMLElement;
-}
+import { EpicModeOptions, Particle, ParticleEffect, ParticleRange } from './types';
 
 export class EpicMode extends Extension<EpicModeOptions> {
   get name(): 'epicMode' {
@@ -24,38 +13,51 @@ export class EpicMode extends Extension<EpicModeOptions> {
     return {
       particleEffect: defaultEffect,
       canvasHolder: document.body,
+      colors: COLORS,
+      particleRange: PARTICLE_NUM_RANGE,
     };
   }
 
   public plugin() {
-    const { particleEffect, canvasHolder } = this.options;
-    return createEpicModePlugin({ key: this.pluginKey, particleEffect, canvasHolder });
+    const { particleEffect, canvasHolder, colors, particleRange } = this.options;
+    return createEpicModePlugin({ key: this.pluginKey, particleEffect, canvasHolder, colors, particleRange });
   }
 }
 
-interface CreateEpicModePluginParams {
+interface CreateEpicModePluginParams extends Required<EpicModeOptions> {
   key: PluginKey;
-  particleEffect: ParticleEffect;
-  canvasHolder: HTMLElement;
 }
 
-const createEpicModePlugin = ({ key, particleEffect, canvasHolder }: CreateEpicModePluginParams) => {
+const createEpicModePlugin = ({
+  key,
+  particleEffect,
+  canvasHolder,
+  colors,
+  particleRange,
+}: CreateEpicModePluginParams) => {
   const plugin = new Plugin<EpicModePluginState, EditorSchema>({
     key,
     state: {
       init() {
-        return new EpicModePluginState({ particleEffect });
+        return new EpicModePluginState({ particleEffect, colors, particleRange, canvasHolder });
       },
       apply(_tr, pluginState) {
         return pluginState;
       },
     },
+    props: {
+      handleKeyPress(view) {
+        const pluginState = getPluginState<EpicModePluginState>(key, view.state);
+        pluginState.shake(1);
+        pluginState.spawnParticles();
+        return false;
+      },
+    },
     view(view) {
-      const pluginState = getPluginState<EpicModePluginState>(key, view.state).init(view, canvasHolder);
+      const pluginState = getPluginState<EpicModePluginState>(key, view.state).init(view);
 
       return {
         destroy() {
-          canvasHolder.removeChild(pluginState.canvas);
           pluginState.destroy();
         },
       };
@@ -63,3 +65,6 @@ const createEpicModePlugin = ({ key, particleEffect, canvasHolder }: CreateEpicM
   });
   return plugin;
 };
+
+export { defaultEffect, spawningEffect, EpicModeOptions, ParticleEffect, Particle, ParticleRange };
+export type EpicModePluginState = typeof EpicModePluginState;

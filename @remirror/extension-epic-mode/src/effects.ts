@@ -1,4 +1,17 @@
 import { random } from 'lodash';
+import { ParticleEffect } from './types';
+
+export const COLORS = [
+  '#1f77b4',
+  '#ff7f0e',
+  '#2ca02c',
+  '#d62728',
+  '#9467bd',
+  '#8c564b',
+  '#e377c2',
+  '#bcbd22',
+  '#17becf',
+];
 
 export const MAX_PARTICLES = 500;
 export const PARTICLE_NUM_RANGE = { min: 5, max: 10 };
@@ -8,38 +21,6 @@ export const PARTICLE_VELOCITY_RANGE = {
   x: [-1, 1],
   y: [-3.5, -1.5],
 };
-
-export interface Particle {
-  x: number;
-  y: number;
-  alpha: number;
-  color: string[] | number[];
-  size: number;
-  vx: number;
-  vy: number;
-  drag?: number;
-  wander?: number;
-  theta?: number;
-}
-
-export interface ParticleEffect {
-  /**
-   * Create a particle
-   *
-   * @param x x coordinate
-   * @param y y coordinate
-   * @param color color of particle
-   */
-  createParticle(x: number, y: number, color: string[] | number[]): Particle;
-
-  /**
-   * Update the created particle (via mutation)
-   *
-   * @param particle
-   * @param state
-   */
-  updateParticle(particle: Particle, ctx: CanvasRenderingContext2D): void;
-}
 
 export const defaultEffect: ParticleEffect = {
   createParticle(x, y, color) {
