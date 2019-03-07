@@ -75,7 +75,6 @@ export interface SchemaParams {
   schema: EditorSchema;
   getPortalContainer: () => NodeViewPortalContainer;
   getEditorState: () => EditorState;
-  getEditorWrapper: () => HTMLElement | undefined;
 }
 
 export interface SchemaWithStateParams extends SchemaParams {
