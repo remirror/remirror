@@ -33,6 +33,7 @@ const babelConfig = {
 
 module.exports = {
   public: 'support/assets',
+  indexHtml: 'docs/index.html',
   htmlContext: {
     favicon: '/public/favicon.ico',
   },
