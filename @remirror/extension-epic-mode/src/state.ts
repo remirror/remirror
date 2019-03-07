@@ -58,9 +58,11 @@ export class EpicModePluginState {
     try {
       this.isActive = false;
       this.canvas.remove();
-      this.container.removeChild(this.canvas);
-    } catch (e) {
-      console.error(e);
+      if (this.container.contains(this.canvas)) {
+        this.container.removeChild(this.canvas);
+      }
+    } catch (error) {
+      console.warn(error);
     }
   }
 
