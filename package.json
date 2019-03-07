@@ -120,8 +120,8 @@
     ]
   },
   "resolutions": {
-    "react": "16.8.3",
-    "react-dom": "16.8.3",
+    "react": "16.8.4",
+    "react-dom": "16.8.4",
     "@babel/parser": "7.3.4",
     "jsdom": "13.2.0",
     "hoist-non-react-statics": "3.3.0"
