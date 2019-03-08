@@ -171,7 +171,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   }
 
   /**
-   * Retrieve the editor state. This is passed through to the extension manager
+   * Retrieve the editor state. This is passed through to the extension manager.
    */
   private getEditorState = () => this.state.editorState;
 

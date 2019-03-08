@@ -23,6 +23,7 @@
       "@remirror/core-extensions": ["@remirror/core-extensions/src/index.ts"],
       "@remirror/extension-emoji": ["@remirror/extension-emoji/src/index.ts"],
       "@remirror/extension-enhanced-link": ["@remirror/extension-enhanced-link/src/index.ts"],
+      "@remirror/extension-epic-mode": ["@remirror/extension-epic-mode/src/index.ts"],
       "@remirror/extension-mention": ["@remirror/extension-mention/src/index.ts"],
       "@remirror/react": ["@remirror/react/src/index.ts"],
       "@remirror/renderer-react": ["@remirror/renderer-react/src/index.ts"],

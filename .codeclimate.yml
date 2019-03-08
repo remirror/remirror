@@ -27,9 +27,8 @@ checks:
 
 exclude_patterns:
   - 'support/'
-  - 'features/'
+  - 'docs/'
   - '**/node_modules/'
-  - 'script/'
   - '**/__tests__/'
   - '**/__mocks__/'
   - '**/*.d.ts'

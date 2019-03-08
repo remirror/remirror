@@ -35,6 +35,26 @@
 - [Installation](https://docs.remirror.org/install)
 - [Walkthrough guide](https://docs.remirror.org/walkthrough)
 
+<br />
+
+## Quick Demos
+
+### Twitter
+
+![Twitter UI Example](/support/assets/ui-twitter-example.gif)
+
+### Epic Mode Extension
+
+#### Spawn Effect
+
+![Epic Mode Spawn Example](/support/assets/epic-typing-mode-example.gif)
+
+#### Heart Effect
+
+![Epic Mode Heart Example](/support/assets/heart-felt-epic-mode.gif)
+
+<br />
+
 ## Getting Started
 
 ### Prerequisites
@@ -151,12 +171,6 @@ class App extends Component {
   }
 }
 ```
-
-## Examples
-
-### Twitter
-
-![Twitter UI Example](/support/assets/ui-twitter-example.gif)
 
 ## Running the tests
 
