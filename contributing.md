@@ -1,22 +1,99 @@
 # Contributing
 
-When contributing to this repository, please first discuss the change you wish to make via issue,
-email, or any other method with the owners of this repository before making a change.
+<br />
 
-Please note we have a code of conduct, please follow it in all your interactions with the project.
+## Getting Started
 
-## Pull Request Process
+Fork [this respository](https://github.com/ifiokjr/remirror), clone your fork and add this repository as the upstream remote.
 
-1. Ensure any install or build dependencies are removed before the end of the layer when doing a
-   build.
-2. Update the README.md with details of changes to the interface, this includes new environment
-   variables, exposed ports, useful file locations and container parameters.
-3. Increase the version numbers in any examples files and the README.md to the new version that this
-   Pull Request would represent. The versioning scheme we use is [SemVer](http://semver.org/).
-4. You may merge the Pull Request in once you have the sign-off of two other developers, or if you
-   do not have permission to do that, you may request the second reviewer to merge it for you.
+```bash
+git clone <<FORKED_REPO_URL>>
+git remote add upstream https://github.com/ifiokjr/remirror
+
+yarn ## Install all dependencies
+
+git checkout -b BRANCH_NAME # Checkout a branch and start working on it
+```
+
+To work on examples or the documentation website run:
+
+```bash
+yarn dev:docs
+```
+
+Once the build completes (can take a minute the first time) navigate to http://localhost:3000 (or another port if that one is already being used).
+
+The documentation is written using [docz](https://docz.site) and all files and dependencies are available in the `/docs/` subdirectory. To add a new dependency, you will need to add it to `/docs/package.json` and not the top level package.json file.
+
+<br />
+
+## Testing
+
+Unit tests can be run with the following commands.
+
+```bash
+yarn test # Unit Test
+yarn test:integration # Unit + Integration Tests
+```
+
+Create tests inside of a `__tests__/` subfolder.
+
+**For naming conventions, use the following.**
+
+- Unit tests: `*.spec.ts(x)*`
+- Integration tests: `*.test.ts(x)*`
+- E2E tests: `*.e2e.ts(x)*` (although non currently exist)
+
+Integration testing uses puppeteer to run browser tests in chrome. See an example in `/docs/editors/__tests__/ui-twitter.test.ts`
+
+Currently the testing strategy for remirror is being worked out. The test coverage is a measly 30% and a lot of work needs to be done to bring this to an acceptable level.
+
+Despite this, I do recommend that you add integration testing using puppeteer to ensure that changes you made don't break the build.
+
+<br />
+
+## Gitflow
+
+I recommend that while working on your code you commit early and often. You won't be judged. All worked submitted in a pull request (see following section) will be squashed into one commit before merging.
+
+Remirror by default using [husky](https://github.com/typicode/husky) for git hooks which run
+
+- Before each commit (lint and test changed files)
+- Before each push (lint, typecheck and test)
+- After a merge (install)
+
+This can be annoying when attempting proof of concept work. If you'd like to turn it off just copy the file `/.config.json` to `/.config.json`. Now commits and pushes won't be checked.
+
+<br />
+
+## Pull Request (PR) Process
+
+Once your work is complete you'll want to create a Pull Request to share all that goodness with the rest of us.
+
+1. Create a [pull request](https://help.github.com/en/articles/creating-a-pull-request) using the github interface. The template will automatically populate for you.
+2. Add a description and reference the issue this pull request addresses where applicable. The description will be used as the body of the git commit message since all pull request are squashed down into one commit before merging.
+3. Tick off all relevant check boxes by placing an x between the square brackets i.e. `[ ]` to `[x]`.
+4. Please add a screenshot where the change is related to the user interface or design. It makes it so much easier to grasp the intentions of your work. You can use your favourite GIF screenshare tool for creating animated screenshots.
+5. Once submitted the PR will be addressed at our earliest convenience.
+
+<br />
+
+## Project Management
+
+When contributing to this repository, please first discuss the change you wish to make by opening a GitHub issue after checking whether a similar one already exists.
+
+Remirror is managed using [GitHub issues](https://github.com/ifiokjr/remirror/issues) and [zenhub](https://www.zenhub.com) which provides a layer of tooling built on GitHub issues. If you'd like an enhanced experience while working on this project you can install the [extension](https://www.zenhub.com/extension) and after that navigate to the [board](https://github.com/ifiokjr/remirror/issues#workspaces/remirror-5c7c72fbbb593f1d1bd53c39/boards?repos=166780923).
+
+A sample task board looks something like this.
+![Task Board](https://dxssrr2j0sq4w.cloudfront.net/3.2.0/img/slider/zenhub-task-board.jpg).
+
+You can follow what tasks are currently being worked on, who's picked up what, and the difficulty I feel is involved in any issue (story points).
+
+<br />
 
 ## Code of Conduct
+
+<br />
 
 ### Our Pledge
 
@@ -73,7 +150,7 @@ further defined and clarified by project maintainers.
 ### Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project team at [INSERT EMAIL ADDRESS]. All
+reported by contacting the project team at help@kickjump.co. All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
