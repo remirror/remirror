@@ -45,7 +45,13 @@
 
 ### Epic Mode Extension
 
-![Epic Mode Example](/support/assets/epic-typing-mode-example.gif)
+#### Spawn Effect
+
+![Epic Mode Spawn Example](/support/assets/epic-typing-mode-example.gif)
+
+#### Heart Effect
+
+![Epic Mode Heart Example](/support/assets/heart-felt-epic-mode.gif)
 
 <br />
 
