@@ -7,6 +7,7 @@ export class EpicModePluginState {
   private particleEffect: ParticleEffect;
   private particleRange: ParticleRange;
   private container: HTMLElement;
+  private shakeActive: boolean;
   private colors: string[];
   private shakeTime = 0;
   private shakeTimeMax = 0;
@@ -19,10 +20,11 @@ export class EpicModePluginState {
   public readonly canvas: HTMLCanvasElement;
   public readonly ctx: CanvasRenderingContext2D;
 
-  constructor({ particleEffect, colors, particleRange, canvasHolder }: EpicModePluginStateParams) {
+  constructor({ particleEffect, colors, particleRange, canvasHolder, shake }: EpicModePluginStateParams) {
     this.particleEffect = particleEffect;
     this.container = canvasHolder;
     this.particleRange = particleRange;
+    this.shakeActive = shake;
 
     const canvas = document.createElement('canvas');
     canvas.id = 'epic-mode-canvas';
@@ -67,7 +69,9 @@ export class EpicModePluginState {
   }
 
   public shake = throttle((time: number) => {
-    this.shakeTime = this.shakeTimeMax = time;
+    if (this.shakeActive) {
+      this.shakeTime = this.shakeTimeMax = time;
+    }
   }, 100);
 
   public spawnParticles = throttle(() => {
@@ -86,7 +90,14 @@ export class EpicModePluginState {
       const b = parseInt(colorCode.slice(5, 7), 16);
       const color = [r, g, b];
 
-      this.particles[ii] = this.particleEffect.createParticle(coords.left + 10, coords.top, color, textColor);
+      this.particles[ii] = this.particleEffect.createParticle({
+        x: coords.left + 10,
+        y: coords.top - 10,
+        color,
+        textColor,
+        ctx: this.ctx,
+        canvas: this.canvas,
+      });
     });
   }, 100);
 
@@ -125,7 +136,7 @@ export class EpicModePluginState {
         continue;
       }
 
-      this.particleEffect.updateParticle(particle, this.ctx);
+      this.particleEffect.updateParticle({ particle, ctx: this.ctx, canvas: this.canvas });
     }
   }
 }

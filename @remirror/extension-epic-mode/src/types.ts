@@ -25,6 +25,18 @@ export interface EpicModeOptions {
    * Range for the particles
    */
   particleRange?: ParticleRange;
+
+  /**
+   * Whether the editor should shake
+   * @default true
+   */
+  shake?: boolean;
+
+  /**
+   * How long the shaking should last for
+   * @default 0.3
+   */
+  shakeTime?: number;
 }
 
 export interface Particle {
@@ -40,22 +52,56 @@ export interface Particle {
   theta?: number;
 }
 
+export interface CreateParticleParams {
+  /**
+   * x coordinate
+   */
+  x: number;
+
+  /**
+   * y coordinate
+   */
+  y: number;
+
+  /**
+   * Suggested color of the particle
+   */
+  color: string[] | number[];
+
+  /**
+   * Current color of the font being typed
+   */
+  textColor: string[] | number[];
+
+  /**
+   * The ctx of the canvas
+   */
+  ctx: CanvasRenderingContext2D;
+
+  /**
+   * The canvas element
+   */
+  canvas: HTMLCanvasElement;
+}
+
+export interface UpdateParticleParams {
+  particle: Particle;
+  ctx: CanvasRenderingContext2D;
+  canvas: HTMLCanvasElement;
+}
+
 export interface ParticleEffect {
   /**
    * Create a particle
    *
-   * @param x x coordinate
-   * @param y y coordinate
-   * @param color suggested color of the particle
-   * @param textColor color of the font currently being written
+   * @param params
    */
-  createParticle(x: number, y: number, color: string[] | number[], textColor: string[] | number[]): Particle;
+  createParticle(params: CreateParticleParams): Particle;
 
   /**
    * Update the created particle (via mutation)
    *
-   * @param particle
-   * @param state
+   * @param params
    */
-  updateParticle(particle: Particle, ctx: CanvasRenderingContext2D): void;
+  updateParticle(params: UpdateParticleParams): void;
 }

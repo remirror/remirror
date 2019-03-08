@@ -23,7 +23,7 @@ export const PARTICLE_VELOCITY_RANGE = {
 };
 
 export const defaultEffect: ParticleEffect = {
-  createParticle(x, y, color) {
+  createParticle({ x, y, color }) {
     return {
       x,
       y: y + 10,
@@ -39,7 +39,7 @@ export const defaultEffect: ParticleEffect = {
     };
   },
 
-  updateParticle(particle, ctx) {
+  updateParticle({ particle, ctx }) {
     particle.vy += PARTICLE_GRAVITY;
     particle.x += particle.vx;
     particle.y += particle.vy;
@@ -51,7 +51,7 @@ export const defaultEffect: ParticleEffect = {
 };
 
 export const spawningEffect: ParticleEffect = {
-  createParticle(x, y, color) {
+  createParticle({ x, y, color }) {
     return {
       x,
       y: y + 10,
@@ -65,7 +65,7 @@ export const spawningEffect: ParticleEffect = {
       theta: (random(0, 360) * Math.PI) / 180,
     };
   },
-  updateParticle(particle, ctx) {
+  updateParticle({ particle, ctx }) {
     particle.x += particle.vx;
     particle.y += particle.vy;
     particle.vx *= particle.drag!;
@@ -79,5 +79,69 @@ export const spawningEffect: ParticleEffect = {
     ctx.beginPath();
     ctx.arc(Math.round(particle.x - 1), Math.round(particle.y - 1), particle.size, 0, 2 * Math.PI);
     ctx.fill();
+  },
+};
+
+// Borrowed from https://codepen.io/Guxthav/pen/EWdwEO
+export const heartEffect: ParticleEffect = {
+  createParticle({ x, y, color }) {
+    return {
+      x: x + 20,
+      y: y - 10,
+      alpha: 0.8,
+      color,
+      size: random(5, 10),
+      drag: 0.92,
+      vx: random(-3, 3),
+      vy: random(-3, 3),
+      wander: 0.15,
+      theta: (random(0, 360) * Math.PI) / 180,
+    };
+  },
+  updateParticle({ particle, ctx }) {
+    particle.x += particle.vx / 2;
+    particle.y += particle.vy / 2;
+    particle.alpha *= 0.98;
+
+    // if (particle.x < 0 || particle.x > canvas.width) {
+    //   particle.vx = -particle.vx;
+    // }
+
+    // if (particle.y < 0 || particle.y > canvas.height) {
+    //   particle.vy = -particle.vy;
+    // }
+
+    const baseLen = particle.size;
+
+    ctx.save();
+
+    // this moves origin 0,0 to our desired location
+    ctx.translate(particle.x, particle.y);
+
+    // optional: use context.rotate(0) to visualize
+    // how we're drawing the heart using a square
+    // and two half-circles
+    ctx.rotate(3.95);
+
+    // puts the 2d drawing context into drawing mode
+    ctx.beginPath();
+    ctx.moveTo(-baseLen, 0);
+    ctx.arc(0, 0, baseLen, 0, Math.PI, false);
+    ctx.lineTo(baseLen, 0);
+    ctx.arc(baseLen, -baseLen, baseLen, (Math.PI * 90) / 180, (Math.PI * 270) / 180, true);
+    ctx.lineTo(baseLen, -baseLen * 2);
+    ctx.lineTo(-baseLen, -baseLen * 2);
+    ctx.lineTo(-baseLen, 0);
+
+    // Fill the heart
+    const [r, g, b] = particle.color;
+    ctx.fillStyle = `rgba(${r},${g},${b},${particle.alpha})`;
+    ctx.fill();
+
+    // tells 2d drawing context we're done drawing
+    ctx.closePath();
+
+    // restores canvas state (e.g. origin and other settings)
+    ctx.restore();
   },
 };

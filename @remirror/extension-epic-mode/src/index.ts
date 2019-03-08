@@ -1,8 +1,16 @@
 import { EditorSchema, Extension, getPluginState } from '@remirror/core';
 import { Plugin, PluginKey } from 'prosemirror-state';
-import { COLORS, defaultEffect, PARTICLE_NUM_RANGE, spawningEffect } from './effects';
+import { COLORS, defaultEffect, heartEffect, PARTICLE_NUM_RANGE, spawningEffect } from './effects';
 import { EpicModePluginState } from './state';
-import { EpicModeOptions, Particle, ParticleEffect, ParticleRange } from './types';
+import {
+  CreateParticleParams,
+  EpicModeOptions,
+  EpicModePluginStateParams,
+  Particle,
+  ParticleEffect,
+  ParticleRange,
+  UpdateParticleParams,
+} from './types';
 
 export class EpicMode extends Extension<EpicModeOptions> {
   get name(): 'epicMode' {
@@ -15,12 +23,22 @@ export class EpicMode extends Extension<EpicModeOptions> {
       canvasHolder: document.body,
       colors: COLORS,
       particleRange: PARTICLE_NUM_RANGE,
+      shake: true,
+      shakeTime: 0.3,
     };
   }
 
   public plugin() {
-    const { particleEffect, canvasHolder, colors, particleRange } = this.options;
-    return createEpicModePlugin({ key: this.pluginKey, particleEffect, canvasHolder, colors, particleRange });
+    const { particleEffect, canvasHolder, colors, particleRange, shake, shakeTime } = this.options;
+    return createEpicModePlugin({
+      key: this.pluginKey,
+      particleEffect,
+      canvasHolder,
+      colors,
+      particleRange,
+      shake,
+      shakeTime,
+    });
   }
 }
 
@@ -28,18 +46,12 @@ interface CreateEpicModePluginParams extends Required<EpicModeOptions> {
   key: PluginKey;
 }
 
-const createEpicModePlugin = ({
-  key,
-  particleEffect,
-  canvasHolder,
-  colors,
-  particleRange,
-}: CreateEpicModePluginParams) => {
+const createEpicModePlugin = ({ key, ...rest }: CreateEpicModePluginParams) => {
   const plugin = new Plugin<EpicModePluginState, EditorSchema>({
     key,
     state: {
       init() {
-        return new EpicModePluginState({ particleEffect, colors, particleRange, canvasHolder });
+        return new EpicModePluginState(rest);
       },
       apply(_tr, pluginState) {
         return pluginState;
@@ -48,7 +60,7 @@ const createEpicModePlugin = ({
     props: {
       handleKeyPress(view) {
         const pluginState = getPluginState<EpicModePluginState>(key, view.state);
-        pluginState.shake(1);
+        pluginState.shake(rest.shakeTime);
         pluginState.spawnParticles();
         return false;
       },
@@ -66,5 +78,17 @@ const createEpicModePlugin = ({
   return plugin;
 };
 
-export { defaultEffect, spawningEffect, EpicModeOptions, ParticleEffect, Particle, ParticleRange };
 export type EpicModePluginState = typeof EpicModePluginState;
+
+export {
+  defaultEffect,
+  spawningEffect,
+  heartEffect,
+  EpicModeOptions,
+  ParticleEffect,
+  Particle,
+  ParticleRange,
+  UpdateParticleParams,
+  CreateParticleParams,
+  EpicModePluginStateParams,
+};
