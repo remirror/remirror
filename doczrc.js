@@ -35,7 +35,8 @@ module.exports = {
   public: workingDir('support/assets'),
   indexHtml: 'docs/index.html',
   htmlContext: {
-    favicon: '/public/favicon.ico',
+    favicon:
+      'https://raw.githubusercontent.com/ifiokjr/remirror/master/support/assets/favicon.ico',
   },
   title: 'Remirror',
   typescript: true,

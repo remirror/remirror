@@ -11,7 +11,7 @@ export const EpicModeDefault: FunctionComponent = () => {
     new Bold(),
     new Italic(),
     new Underline(),
-    new EpicMode({ particleEffect: defaultEffect, particleRange: { min: 1, max: 100 } }),
+    new EpicMode({ particleEffect: defaultEffect }),
   ];
   return (
     <div style={{ gridArea: 'editor' }}>
@@ -32,7 +32,7 @@ export const EpicModeSpawning: FunctionComponent = () => {
     new Bold(),
     new Italic(),
     new Underline(),
-    new EpicMode({ particleEffect: spawningEffect, particleRange: { min: 1, max: 30 } }),
+    new EpicMode({ particleEffect: spawningEffect }),
   ];
   return (
     <div style={{ gridArea: 'editor' }}>

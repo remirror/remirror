@@ -35,6 +35,20 @@
 - [Installation](https://docs.remirror.org/install)
 - [Walkthrough guide](https://docs.remirror.org/walkthrough)
 
+<br />
+
+## Quick Demos
+
+### Twitter
+
+![Twitter UI Example](/support/assets/ui-twitter-example.gif)
+
+### Epic Mode Extension
+
+![Epic Mode Example](/support/assets/epic-typing-mode-example.gif)
+
+<br />
+
 ## Getting Started
 
 ### Prerequisites
@@ -151,12 +165,6 @@ class App extends Component {
   }
 }
 ```
-
-## Examples
-
-### Twitter
-
-![Twitter UI Example](/support/assets/ui-twitter-example.gif)
 
 ## Running the tests
 
