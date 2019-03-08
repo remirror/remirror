@@ -7,9 +7,8 @@ import { Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react'
 import { RenderTree } from '@remirror/renderer-react';
 import { memoize } from 'lodash';
 
-const extensions = [new Bold(), new Italic(), new Underline()];
-
 const EditorLayout: FunctionComponent = () => {
+  const extensions = [new Bold(), new Italic(), new Underline()];
   const [json, setJson] = useState(JSON.stringify(initialJson, null, 2));
 
   const onChange: RemirrorEventListener = ({ getJSON }) => {

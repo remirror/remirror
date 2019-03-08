@@ -31,6 +31,7 @@
     "fix:support": "tslint --project support/tsconfig.json --config tslint.json --fix",
     "frozen": "yarn --frozen-lockfile install",
     "if-clean": "node support/scripts/run-if-clean.js",
+    "if-config": "node support/scripts/run-if-config.js",
     "integrity": "yarn check --integrity",
     "launch:docs": "cross-env COVERAGE=true echo \"Launching...\" && docz dev --debug > /dev/null && echo \"Done 😀\"",
     "lint": "run-s lint:*",
@@ -82,9 +83,9 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "yarn checks",
-      "post-merge": "lerna bootstrap"
+      "pre-commit": "yarn if-config ignoredHooks.preCommit lint-staged",
+      "pre-push": "yarn if-config ignoredHooks.prePush yarn checks",
+      "post-merge": "yarn if-config ignoredHooks.postMerge lerna bootstrap"
     }
   },
   "lint-staged": {

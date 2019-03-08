@@ -3,10 +3,11 @@
   "description": "An advanced text editor for react built with prosemirror",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/remirror",
   "repository": {
     "type": "git",
     "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "master/packages/remirror"
+    "directory": "packages/remirror"
   },
   "version": "0.0.1-alpha.4",
   "main": "lib/index.js",
@@ -49,6 +50,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "readme": "",
   "umd": "lib/dist/remirror.umd.js",
   "umd:min": "lib/dist/remirror.umd.min.js",
   "umdGlobals": {

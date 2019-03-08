@@ -1,0 +1,7 @@
+{
+  "ignoredHooks": {
+    "preCommit": true,
+    "prePush": true,
+    "postMerge": true
+  }
+}
