@@ -8,15 +8,9 @@
     "@babel/core": "7.3.4",
     "@babel/parser": "7.3.4",
     "@babel/plugin-proposal-class-properties": "7.3.4",
-    "@babel/plugin-proposal-decorators": "7.3.0",
     "@babel/plugin-proposal-object-rest-spread": "7.3.4",
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
-    "@babel/plugin-transform-modules-commonjs": "7.2.0",
-    "@babel/plugin-transform-react-display-name": "7.2.0",
-    "@babel/plugin-transform-react-jsx-self": "7.2.0",
-    "@babel/plugin-transform-react-jsx-source": "7.2.0",
     "@babel/plugin-transform-typescript": "7.3.2",
-    "@babel/polyfill": "7.2.5",
     "@babel/preset-env": "7.3.4",
     "@babel/preset-react": "7.0.0",
     "@babel/preset-typescript": "7.3.3",
@@ -93,13 +87,8 @@
     "rollup-plugin-terser": "4.0.4",
     "size-limit": "0.21.1",
     "start-server-and-test": "1.7.11",
-    "ts-loader": "5.3.3",
-    "ts-node": "8.0.3",
-    "tsconfig-paths": "3.8.0",
     "tslint": "5.13.1",
     "typescript": "3.3.3333",
-    "typescript-styled-plugin": "0.14.0",
-    "webpack": "4.29.6",
-    "webpack-cli": "3.2.3"
+    "typescript-styled-plugin": "0.14.0"
   }
 }
