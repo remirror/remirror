@@ -5,6 +5,16 @@ import React, { FunctionComponent } from 'react';
 import { Bold, Italic, Underline } from '@remirror/core-extensions';
 import { defaultEffect, EpicMode, heartEffect, spawningEffect } from '@remirror/extension-epic-mode';
 import { Remirror } from '@remirror/react';
+import { Interpolation } from 'emotion';
+
+const editorStyles: Interpolation = {
+  '.remirror-editor': {
+    border: '1px solid grey',
+    minHeight: '50px',
+    borderRadius: '10px',
+    padding: '10px',
+  },
+};
 
 export const EpicModeDefault: FunctionComponent = () => {
   const extensions = [
@@ -18,8 +28,9 @@ export const EpicModeDefault: FunctionComponent = () => {
       <Remirror
         autoFocus={true}
         attributes={{ 'data-test-id': 'editor-instance' }}
-        placeholder='Start typing for epicness...'
+        placeholder='Type for epic...'
         extensions={extensions}
+        editorStyles={editorStyles}
       >
         {() => <div />}
       </Remirror>
@@ -38,8 +49,9 @@ export const EpicModeSpawning: FunctionComponent = () => {
     <div style={{ gridArea: 'editor' }}>
       <Remirror
         attributes={{ 'data-test-id': 'editor-instance' }}
-        placeholder='Start typing for epicness...'
+        placeholder='Type for epic...'
         extensions={extensions}
+        editorStyles={editorStyles}
       >
         {() => <div />}
       </Remirror>
@@ -55,31 +67,15 @@ export const EpicModeHeart: FunctionComponent = () => {
     new EpicMode({
       particleEffect: heartEffect,
       shake: false,
-      // colors: [
-      //   '#DDA3AD',
-      //   '#CD7584',
-      //   '#CD7584',
-      //   '#C55E70',
-      //   '#BC475C',
-      //   '#B43047',
-      //   '#AC1933',
-      //   '#A4031F',
-      //   '#96031D',
-      //   '#87031A',
-      //   '#780317',
-      //   '#690214',
-      //   '#5A0211',
-      //   '#4B020F',
-      //   '#3C020C',
-      // ],
     }),
   ];
   return (
     <div style={{ gridArea: 'editor' }}>
       <Remirror
         attributes={{ 'data-test-id': 'editor-instance' }}
-        placeholder='A note to a lover...'
+        placeholder='Type for hearts'
         extensions={extensions}
+        editorStyles={editorStyles}
       >
         {() => <div />}
       </Remirror>

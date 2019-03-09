@@ -12,7 +12,7 @@
 <a href="https://codeclimate.com/github/ifiokjr/remirror/maintainability"><img src="https://img.shields.io/codeclimate/maintainability/ifiokjr/remirror.svg?style=for-the-badge&amp;&amp;logo=data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGl0bGU+Q29kZSBDbGltYXRlIGljb248L3RpdGxlPjxwYXRoIGQ9Ik0gMTYuMDQ2ODc1IDUuMDM5MDYyIEwgMjQgMTIuOTkyMTg4IEwgMjEuMjkyOTY5IDE1LjcwMzEyNSBMIDE2LjA0Njg3NSAxMC40NTcwMzEgTCAxNC4yMDMxMjUgMTIuMzA4NTk0IEwgMTEuNDg4MjgxIDkuNTk3NjU2IFogTSAxMC42NTIzNDQgMTAuNDM3NSBMIDEzLjM1OTM3NSAxMy4xNTIzNDQgTCAxNS45MDYyNSAxNS42OTE0MDYgTCAxMy4xOTE0MDYgMTguMzk4NDM4IEwgNy45NTMxMjUgMTMuMTYwMTU2IEwgMy43NzczNDQgMTcuMzM1OTM4IEwgMi43MDcwMzEgMTguMzk4NDM4IEwgMCAxNS42OTE0MDYgTCA3Ljk1MzEyNSA3LjczODI4MSBaIE0gMTAuNjUyMzQ0IDEwLjQzNzUgIi8+PC9zdmc+" alt="Code Climate maintainability" /></a>&nbsp;&nbsp;<a href="https://codeclimate.com/github/ifiokjr/remirror/issues"><img src="https://img.shields.io/codeclimate/tech-debt/ifiokjr/remirror.svg?style=for-the-badge&amp;&amp;logo=data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGl0bGU+Q29kZSBDbGltYXRlIGljb248L3RpdGxlPjxwYXRoIGQ9Ik0gMTYuMDQ2ODc1IDUuMDM5MDYyIEwgMjQgMTIuOTkyMTg4IEwgMjEuMjkyOTY5IDE1LjcwMzEyNSBMIDE2LjA0Njg3NSAxMC40NTcwMzEgTCAxNC4yMDMxMjUgMTIuMzA4NTk0IEwgMTEuNDg4MjgxIDkuNTk3NjU2IFogTSAxMC42NTIzNDQgMTAuNDM3NSBMIDEzLjM1OTM3NSAxMy4xNTIzNDQgTCAxNS45MDYyNSAxNS42OTE0MDYgTCAxMy4xOTE0MDYgMTguMzk4NDM4IEwgNy45NTMxMjUgMTMuMTYwMTU2IEwgMy43NzczNDQgMTcuMzM1OTM4IEwgMi43MDcwMzEgMTguMzk4NDM4IEwgMCAxNS42OTE0MDYgTCA3Ljk1MzEyNSA3LjczODI4MSBaIE0gMTAuNjUyMzQ0IDEwLjQzNzUgIi8+PC9zdmc+" alt="Code Climate technical debt" /></a>&nbsp;&nbsp;<a href="https://lgtm.com/projects/g/ifiokjr/remirror/alerts/"><img src="https://img.shields.io/lgtm/alerts/g/ifiokjr/remirror.svg?style=for-the-badge&amp;logo=lgtm" alt="LGTM Alerts" /></a>&nbsp;&nbsp;<a href="https://lgtm.com/projects/g/ifiokjr/remirror/context:javascript"><img src="https://img.shields.io/lgtm/grade/javascript/g/ifiokjr/remirror.svg?style=for-the-badge&amp;logo=lgtm" alt="LGTM Grade" /></a>
 <a href="https://github.com/ifiokjr/remirror/commits/master"><img src="https://img.shields.io/github/commit-activity/m/ifiokjr/remirror.svg?style=for-the-badge&amp;logo=github" alt="GitHub commit activity"></a>&nbsp;&nbsp;<a href="https://github.com/ifiokjr/remirror/commits/master"><img src="https://img.shields.io/github/last-commit/ifiokjr/remirror.svg?style=for-the-badge&amp;logo=github" alt="GitHub last commit" /></a>
 <a href="https://github.com/ifiokjr/remirror/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc"><img src="https://img.shields.io/github/issues-raw/ifiokjr/remirror.svg?style=for-the-badge&amp;logo=github" alt="GitHub issues" /></a>&nbsp;&nbsp;<a href="https://github.com/ifiokjr/remirror/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc"><img src="https://img.shields.io/github/issues-pr/ifiokjr/remirror.svg?style=for-the-badge&amp;logo=github" alt="GitHub pull requests" /></a>
-<a href="https://github.com/ifiokjr/remirror"><img src="https://img.shields.io/github/stars/ifiokjr/remirror.svg?style=for-the-badge&amp;logo=github" alt="GitHub stars" /></a>&nbsp;&nbsp;<a href="https://github.com/ifiokjr/remirror/tags"><img src="https://img.shields.io/github/tag/ifiokjr/remirror.svg?style=for-the-badge&amp;logo=github" alt="GitHub tag (latest SemVer)" /></a>&nbsp;&nbsp;<a href="https://github.com/ifiokjr/remirror/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/remirror.svg?style=for-the-badge" alt="LICENSE" /></a></p>
+<a href="https://github.com/ifiokjr/remirror"><img src="https://img.shields.io/github/stars/ifiokjr/remirror.svg?style=for-the-badge&amp;logo=github" alt="GitHub stars" /></a>&nbsp;&nbsp;<a href="https://github.com/ifiokjr/remirror/tags"><img src="https://img.shields.io/github/tag/ifiokjr/remirror.svg?style=for-the-badge&amp;logo=github" alt="GitHub tag (latest SemVer)" /></a>&nbsp;&nbsp;<a href="https://github.com/ifiokjr/remirror/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/remirror.svg?style=for-the-badge" alt="LICENSE" /></a>&nbsp;&nbsp;<a href="https://app.netlify.com/sites/remirror/deploys"><img src="https://api.netlify.com/api/v1/badges/f59cbf02-798f-45dd-a78c-93ec52b08d20/deploy-status" alt="Netlify Status" /></a></p>
 
 <!--
 [![Azure DevOps builds](https://img.shields.io/azure-devops/build/remirror/1b12c364-8c17-4f7a-a215-b8e0d2c9b253/1.svg?label=Azure%20Pipeline&style=for-the-badge&logo=azuredevops)](https://dev.azure.com/remirror/remirror/_build/latest?definitionId=1&branchName=master)&nbsp;&nbsp;[![Travis (.com)](https://img.shields.io/travis/com/ifiokjr/remirror.svg?label=Travis%20Build&style=for-the-badge&logo=travis)](https://travis-ci.com/ifiokjr/remirror)
@@ -34,24 +34,6 @@
 - [Introduction](https://docs.remirror.org)
 - [Installation](https://docs.remirror.org/install)
 - [Walkthrough guide](https://docs.remirror.org/walkthrough)
-
-<br />
-
-## Quick Demos
-
-### Twitter
-
-![Twitter UI Example](/support/assets/ui-twitter-example.gif)
-
-### Epic Mode Extension
-
-#### Spawn Effect
-
-![Epic Mode Spawn Example](/support/assets/epic-typing-mode-example.gif)
-
-#### Heart Effect
-
-![Epic Mode Heart Example](/support/assets/heart-felt-epic-mode.gif)
 
 <br />
 
@@ -172,7 +154,56 @@ class App extends Component {
 }
 ```
 
-## Running the tests
+## Quick Demos
+
+### Heart Effect
+
+```ts
+import React, { FunctionComponent } from 'react';
+
+import { defaultEffect, EpicMode, heartEffect } from '@remirror/extension-epic-mode';
+import { Remirror } from '@remirror/react';
+
+const editorStyles = {
+  '.remirror-editor': {
+    border: '1px solid grey',
+    minHeight: '50px',
+    borderRadius: '10px',
+    padding: '10px',
+  },
+};
+
+export const EpicModeHeart = () => {
+  const extensions = [
+    new EpicMode({
+      particleEffect: heartEffect,
+      shake: false,
+    }),
+  ];
+  return (
+    <div style={{ gridArea: 'editor' }}>
+      <Remirror
+        attributes={{ 'data-test-id': 'editor-instance' }}
+        placeholder='Type for hearts'
+        extensions={extensions}
+        editorStyles={editorStyles}
+      >
+        {() => <div />}
+      </Remirror>
+    </div>
+  );
+};
+```
+
+![Epic Mode Heart Example](/support/assets/01-hearts-are-lovely.gif)
+
+### Twitter
+
+![Twitter UI Example](/support/assets/ui-twitter-example.gif)
+
+<br />
+
+## Testing
 
 From the root of this repository run the following to trigger a full typecheck, linting and jest tests.
 

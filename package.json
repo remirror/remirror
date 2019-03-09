@@ -15,6 +15,7 @@
     "build:modules": "lerna run build --stream",
     "build:production": "cross-env NODE_ENV=production yarn build",
     "build:rollup": "rollup --config ./support/rollup/rollup.config.js",
+    "changelog": "lerna-changelog",
     "checks": "run-s integrity lint typecheck test",
     "checks:parallel": "run-p lint typecheck test",
     "ci": "yarn if-clean yarn clean; yarn frozen;",
