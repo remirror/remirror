@@ -37,24 +37,6 @@
 
 <br />
 
-## Quick Demos
-
-### Twitter
-
-![Twitter UI Example](/support/assets/ui-twitter-example.gif)
-
-### Epic Mode Extension
-
-#### Spawn Effect
-
-![Epic Mode Spawn Example](/support/assets/epic-typing-mode-example.gif)
-
-#### Heart Effect
-
-![Epic Mode Heart Example](/support/assets/heart-felt-epic-mode.gif)
-
-<br />
-
 ## Getting Started
 
 ### Prerequisites
@@ -172,7 +154,56 @@ class App extends Component {
 }
 ```
 
-## Running the tests
+## Quick Demos
+
+### Heart Effect
+
+```ts
+import React, { FunctionComponent } from 'react';
+
+import { defaultEffect, EpicMode, heartEffect } from '@remirror/extension-epic-mode';
+import { Remirror } from '@remirror/react';
+
+const editorStyles = {
+  '.remirror-editor': {
+    border: '1px solid grey',
+    minHeight: '50px',
+    borderRadius: '10px',
+    padding: '10px',
+  },
+};
+
+export const EpicModeHeart = () => {
+  const extensions = [
+    new EpicMode({
+      particleEffect: heartEffect,
+      shake: false,
+    }),
+  ];
+  return (
+    <div style={{ gridArea: 'editor' }}>
+      <Remirror
+        attributes={{ 'data-test-id': 'editor-instance' }}
+        placeholder='Type for hearts'
+        extensions={extensions}
+        editorStyles={editorStyles}
+      >
+        {() => <div />}
+      </Remirror>
+    </div>
+  );
+};
+```
+
+![Epic Mode Heart Example](/support/assets/01-hearts-are-lovely.gif)
+
+### Twitter
+
+![Twitter UI Example](/support/assets/ui-twitter-example.gif)
+
+<br />
+
+## Testing
 
 From the root of this repository run the following to trigger a full typecheck, linting and jest tests.
 
