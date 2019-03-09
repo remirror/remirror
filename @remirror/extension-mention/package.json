@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/extension-mention"
   },
-  "version": "0.0.1-alpha.4",
+  "version": "0.0.1-alpha.5",
   "main": "lib/index.js",
   "module": "lib/dist/extension-mention.esm.js",
   "files": [
@@ -30,7 +30,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.4",
+    "@remirror/core": "0.0.1-alpha.5",
     "@types/lodash": "^4.14.122",
     "lodash": "^4.17.11"
   },

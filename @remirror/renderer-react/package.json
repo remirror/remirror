@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/renderer-react"
   },
-  "version": "0.0.1-alpha.4",
+  "version": "0.0.1-alpha.5",
   "main": "lib/index.js",
   "module": "lib/dist/renderer-react.esm.js",
   "files": [
@@ -30,7 +30,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.4"
+    "@remirror/core": "0.0.1-alpha.5"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
