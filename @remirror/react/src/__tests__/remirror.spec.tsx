@@ -1,7 +1,7 @@
 import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
+import { PlainObject } from '@remirror/core';
 import { axe, findTextElement, fireEvent, render, renderString } from '@test-utils';
-import { PlainObject } from 'simplytyped';
 import { InjectedRemirrorProps, Remirror } from '..';
 
 describe('Remirror', () => {

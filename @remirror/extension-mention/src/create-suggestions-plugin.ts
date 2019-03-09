@@ -3,14 +3,16 @@ import {
   CommandFunction,
   EditorSchema,
   EditorState,
+  EditorView,
   findMatches,
   FromTo,
   getPluginState,
   MakeRequired,
+  PluginKey,
+  ResolvedPos,
 } from '@remirror/core';
-import { ResolvedPos } from 'prosemirror-model';
-import { Plugin, PluginKey } from 'prosemirror-state';
-import { Decoration, DecorationSet, EditorView } from 'prosemirror-view';
+import { Plugin } from 'prosemirror-state';
+import { Decoration, DecorationSet } from 'prosemirror-view';
 
 /**
  * The attrs that will be added to the node.
@@ -87,7 +89,7 @@ const defaultSuggestionsPluginState: SuggestionsPluginState = {
 // Create a matcher that matches when a specific character is typed. Useful for @mentions and #tags.
 const triggerCharacter = (
   { char = '@', startOfLine = false, supportedCharacters = /[\w\d_]+/gi }: SuggestionsMatcher,
-  $pos: ResolvedPos<EditorSchema>,
+  $pos: ResolvedPos,
 ): SuggestionsPluginState | undefined => {
   // Matching expressions used for later
   const escapedChar = `\\${char}`;
@@ -149,7 +151,7 @@ export const createSuggestionsPlugin = ({
   suggestionClassName,
   decorationsTag,
   key,
-}: SuggestionsPluginProps & { key: PluginKey<SuggestionsPluginState, EditorSchema> }) => {
+}: SuggestionsPluginProps & { key: PluginKey<SuggestionsPluginState> }) => {
   const matcher = { ...defaultMatcher, ..._matcher } as SuggestionsMatcher;
   const plugin: Plugin = new Plugin<SuggestionsPluginState, EditorSchema>({
     key,

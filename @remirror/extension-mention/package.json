@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-mention",
-  "description": "mention extension for the remirror editor",
+  "description": "Mention extension for the remirror wysiwyg editor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/extension-mention",
@@ -32,14 +32,13 @@
   "dependencies": {
     "@remirror/core": "0.0.1-alpha.4",
     "@types/lodash": "^4.14.122",
-    "@types/prosemirror-model": "^1.7.0",
+    "lodash": "^4.17.11"
+  },
+  "peerDependencies": {
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.3.1",
-    "lodash": "^4.17.11",
-    "prosemirror-model": "^1.7.0",
     "prosemirror-state": "^1.2.2",
-    "prosemirror-view": "^1.8.3",
-    "simplytyped": "^1.8.0"
+    "prosemirror-view": "^1.8.3"
   },
   "publishConfig": {
     "access": "public"

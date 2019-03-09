@@ -1,9 +1,3 @@
-declare module 'css-in-js-utils/lib/cssifyObject' {
-  import * as CSS from 'csstype';
-
-  export default function(obj: CSS.Properties<any>): string;
-}
-
 declare module 'prosemirror-dropcursor' {
   import { Plugin, Selection } from 'prosemirror-state';
 

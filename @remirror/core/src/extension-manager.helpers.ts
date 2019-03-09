@@ -1,10 +1,9 @@
-import { AnyFunc } from 'simplytyped';
 import { AnyExtension, Extension } from './extension';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
-import { CommandParams, ExtensionType, FlexibleConfig, SchemaParams } from './types';
+import { AnyFunction, CommandParams, ExtensionType, FlexibleConfig, SchemaParams } from './types';
 
-type MethodFactory<GMappedFunc extends AnyFunc, GFunc extends AnyFunc> = (
+type MethodFactory<GMappedFunc extends AnyFunction, GFunc extends AnyFunction> = (
   params: CommandParams,
   method: GFunc,
 ) => GMappedFunc;
@@ -50,8 +49,8 @@ export interface HasExtensions {
  */
 export const createFlexibleFunctionMap = <
   GKey extends keyof AnyExtension,
-  GMappedFunc extends AnyFunc,
-  GFunc extends AnyFunc
+  GMappedFunc extends AnyFunction,
+  GFunc extends AnyFunction
 >({
   key,
   checkUniqueness,

@@ -4,13 +4,17 @@ import {
   baseKeymap,
   Doc,
   EditorSchema,
+  EditorState as EditorStateType,
+  EditorView as EditorViewType,
   ExtensionManager,
   getMarkAttrs,
   getPluginKeyState,
+  InputRule,
   NodeViewPortalContainer,
   ObjectNode,
   OffsetCalculator,
   Paragraph,
+  PluginKey,
   Position,
   ProsemirrorPlugin,
   RawMenuPositionData,
@@ -19,14 +23,15 @@ import {
   selectParentNode,
   ShouldRenderMenu,
   Text,
+  Transaction,
 } from '@remirror/core';
 import { History, Placeholder, PlaceholderPluginState } from '@remirror/core-extensions';
 import { css, Interpolation } from 'emotion';
 import { isString, memoize, pick, uniqueId } from 'lodash';
-import { InputRule, inputRules, undoInputRule } from 'prosemirror-inputrules';
+import { inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { DOMParser, DOMSerializer } from 'prosemirror-model';
-import { EditorState, PluginKey, Transaction } from 'prosemirror-state';
+import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import {
   asDefaultProps,
@@ -63,7 +68,7 @@ const defaultInitialContent: ObjectNode = {
   ],
 };
 
-export class Remirror extends Component<RemirrorProps, { editorState: EditorState }> {
+export class Remirror extends Component<RemirrorProps, { editorState: EditorStateType }> {
   public static defaultProps = asDefaultProps<RemirrorProps>()({
     initialContent: defaultInitialContent,
     extensions: [],
@@ -102,7 +107,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   /**
    * A unique class added to every instance of the remirror editor. This allows for non global styling.
    */
-  private view: EditorView<EditorSchema>;
+  private view: EditorViewType;
   private extensionManager: ExtensionManager;
   private extensionPlugins: ProsemirrorPlugin[];
   private keymaps: ProsemirrorPlugin[];
@@ -360,7 +365,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
    * This sets the attributes that wrap the outer prosemirror node.
    * It is currently used for setting the aria attributes on the content-editable prosemirror div.
    */
-  private getAttributes = (state: EditorState<EditorSchema>) => {
+  private getAttributes = (state: EditorStateType) => {
     const { attributes } = this.props;
     const propAttributes = isAttributeFunction(attributes)
       ? attributes({ ...this.eventListenerParams, state })
@@ -398,7 +403,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   /**
    * Part of the Prosemirror API and is called whenever there is state change in the editor.
    */
-  private dispatchTransaction = (transaction: Transaction<EditorSchema>) => {
+  private dispatchTransaction = (transaction: Transaction) => {
     const { onChange, dispatchTransaction } = this.props;
     if (dispatchTransaction) {
       dispatchTransaction(transaction);

@@ -1,7 +1,6 @@
-import { Cast, ObjectNode, OffsetCalculator, Position, ShouldRenderMenu } from '@remirror/core';
+import { Cast, ObjectNode, OffsetCalculator, PlainObject, Position, ShouldRenderMenu } from '@remirror/core';
 import { isFunction, isPlainObject, isString } from 'lodash';
 import { ReactNode } from 'react';
-import { PlainObject } from 'simplytyped';
 import { AttributePropFunction, RenderPropFunction } from './types';
 
 export const isAttributeFunction = (arg: unknown): arg is AttributePropFunction => isFunction(arg);

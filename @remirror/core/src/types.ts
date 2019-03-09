@@ -1,14 +1,36 @@
-import { InputRule } from 'prosemirror-inputrules';
-import { Mark, MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType, Schema } from 'prosemirror-model';
+import { InputRule as PMInputRule } from 'prosemirror-inputrules';
+import {
+  Mark as PMMark,
+  MarkSpec,
+  MarkType,
+  Node as PMNode,
+  NodeSpec,
+  NodeType,
+  ResolvedPos as PMResolvedPos,
+  Schema,
+} from 'prosemirror-model';
 import {
   EditorState as PMEditorState,
-  Plugin,
   Plugin as PMPlugin,
-  Selection,
-  Transaction,
+  PluginKey as PMPluginKey,
+  Selection as PMSelection,
+  Transaction as PMTransaction,
 } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
+import { EditorView as PMEditorView } from 'prosemirror-view';
 import { NodeViewPortalContainer } from './portal-container';
+
+/**
+ * An object with string keys and values of type `any`
+ * Taken from `simplytyped`
+ */
+export type PlainObject = Record<string, any>;
+
+/**
+ * Concisely and cleanly define an arbitrary function.
+ * Taken from `simplytyped`
+ * Useful when designing many api's that don't care what function they take in, they just need to know what it returns.
+ */
+export type AnyFunction<R = any> = (...args: any[]) => R;
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -62,8 +84,8 @@ export type MarkExtensionSpec = Omit<MarkSpec, 'toDOM'> & {
 /**
  * Alias type for better readability throughout the codebase.
  */
-export type ProsemirrorNode = PMNode;
-export type ProsemirrorPlugin = PMPlugin;
+export type ProsemirrorNode = PMNode<EditorSchema>;
+export type ProsemirrorPlugin<GPluginState = any> = PMPlugin<GPluginState, EditorSchema>;
 export type EditorSchema<GNodes extends string = string, GMarks extends string = string> = Schema<
   GNodes,
   GMarks
@@ -100,17 +122,6 @@ export interface CommandParams extends SchemaParams {
   view: EditorView;
   isEditable: () => boolean;
 }
-
-// export interface ISharedExtension<
-//   GSchemaType extends NodeType | MarkType,
-//   T = GSchemaType extends NodeType ? NodeType : MarkType
-// > extends IExtension {
-//   readonly view: EditorView;
-//   commands?(params: SchemaTypeParams<T>): FlexibleConfig<ExtensionCommandFunction>;
-//   pasteRules(params: SchemaTypeParams<T>): ProsemirrorPlugin[];
-//   inputRules(params: SchemaTypeParams<T>): InputRule[];
-//   keys(params: SchemaTypeParams<T>): KeyboardBindings;
-// }
 
 export type Attrs = Record<string, string>;
 
@@ -210,7 +221,7 @@ export type PluginCreator = <GType extends NodeType | MarkType>(
   nodeType: GType,
   getAttrs?: GetAttrs,
   joinPredicate?: (p1: string[], p2: PMNode) => boolean,
-) => Plugin;
+) => PMPlugin;
 
 export interface FromTo {
   from: number;
@@ -245,3 +256,13 @@ export type MakeReadonly<GType extends {}, GKeys extends keyof GType> = Omit<GTy
  * Remove keys from an interface
  */
 export type Omit<GType, GKeys extends keyof GType> = Pick<GType, Exclude<keyof GType, GKeys>>;
+
+/* Type Aliases */
+
+export type EditorView = PMEditorView<EditorSchema>;
+export type Selection = PMSelection<EditorSchema>;
+export type Transaction = PMTransaction<EditorSchema>;
+export type PluginKey<GPluginState = any> = PMPluginKey<GPluginState, EditorSchema>;
+export type Mark = PMMark<EditorSchema>;
+export type ResolvedPos = PMResolvedPos<EditorSchema>;
+export type InputRule = PMInputRule<EditorSchema>;

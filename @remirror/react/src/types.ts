@@ -1,18 +1,18 @@
 import {
   AnyExtension,
   EditorSchema,
+  EditorState,
   ObjectNode,
   OffsetCalculator,
+  PlainObject,
   Position,
   RawMenuPositionData,
   RemirrorActions,
   ShouldRenderMenu,
+  Transaction,
 } from '@remirror/core';
-import CSS from 'csstype';
 import { Interpolation, ObjectInterpolation } from 'emotion';
-import { EditorState, Transaction } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-import { PlainObject } from 'simplytyped';
 
 export interface GetMenuPropsConfig<GRefKey extends string = 'ref'> extends BaseGetterConfig<GRefKey> {
   offset?: OffsetCalculator;
@@ -159,7 +159,7 @@ export interface RemirrorProps {
    * Hook called when the editor is dispatching an actions. Use this to attach additional actions or to update outside state
    * based on what's changed within the editor component.
    */
-  dispatchTransaction?: ((tr: Transaction<EditorSchema>) => void) | null;
+  dispatchTransaction?: ((tr: Transaction) => void) | null;
 
   /**
    * Sets the accessibility label for the editor instance.
@@ -204,8 +204,6 @@ export interface RemirrorProps {
    */
   insertPosition: 'first' | 'last';
 }
-
-export type CSSProperty = CSS.Properties<string | number>;
 
 export interface PlaceholderConfig {
   text: string;

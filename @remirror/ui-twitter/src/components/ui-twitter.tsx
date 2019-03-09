@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 
 import { css, Interpolation } from '@emotion/core';
-import { AnyExtension, Attrs, EditorSchema, Omit } from '@remirror/core';
+import { AnyExtension, Attrs, EditorView, Omit } from '@remirror/core';
 import { EmojiNode, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
 import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
@@ -10,7 +10,6 @@ import { Data, EmojiSet } from 'emoji-mart';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
 import { omit } from 'lodash';
-import { EditorView } from 'prosemirror-view';
 import { styled, UITwitterTheme, uiTwitterTheme } from '../theme';
 import { ActiveTwitterTagData, ActiveTwitterUserData, TwitterTagData, TwitterUserData } from '../types';
 import { CharacterCountIndicator } from './character-count';
@@ -165,7 +164,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
    * Keeps a copy of the editor view for commands
    * @param view
    */
-  private storeView(view: EditorView<EditorSchema>): void {
+  private storeView(view: EditorView): void {
     if (view !== this.view) {
       this.view = view;
     }

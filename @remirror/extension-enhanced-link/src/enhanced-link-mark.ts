@@ -1,24 +1,23 @@
 import {
   Attrs,
   Cast,
-  EditorSchema,
   EditorState,
+  EditorView,
   findMatches,
   getMatchString,
   LEAF_NODE_REPLACING_CHARACTER,
+  Mark,
   MarkExtension,
   MarkExtensionSpec,
   markPasteRule,
   removeMark,
   SchemaMarkTypeParams,
+  Transaction,
   updateMark,
 } from '@remirror/core';
 
-import { isEqual } from 'lodash';
-import { Mark } from 'prosemirror-model';
-import { Plugin, TextSelection, Transaction } from 'prosemirror-state';
+import { Plugin, TextSelection } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
-import { EditorView } from 'prosemirror-view';
 import { extractUrl } from './extract-url';
 
 export interface EnhancedLinkOptions {
@@ -162,7 +161,7 @@ export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
           const next = getUrlsFromState(view.state, name);
           const prev = getUrlsFromState(prevState, name);
 
-          if (!isEqual(next.set, prev.set)) {
+          if (!isSetEqual(next.set, prev.set)) {
             onUrlsChange(next);
           }
         },
@@ -185,7 +184,7 @@ interface EnhancedLinkHandlerProps {
   url: string;
   start: number;
   end: number;
-  transaction?: Transaction<EditorSchema>;
+  transaction?: Transaction;
 }
 
 const enhancedLinkHandler = ({ state, url, start, end, transaction }: EnhancedLinkHandlerProps) => {
@@ -212,4 +211,21 @@ const getUrlsFromState = (state: EditorState, markName: string) => {
 
   const urls = marks.filter(markItem => markItem.type.name === markName).map(mark => mark.attrs.href);
   return { set: new Set(urls), urls };
+};
+
+/**
+ * Checks whether two sets are equal
+ * @param setOne
+ * @param setTwo
+ */
+const isSetEqual = <GSetType>(setOne: Set<GSetType>, setTwo: Set<GSetType>) => {
+  if (setOne.size !== setTwo.size) {
+    return false;
+  }
+  for (const val of setOne) {
+    if (!setTwo.has(val)) {
+      return false;
+    }
+  }
+  return true;
 };

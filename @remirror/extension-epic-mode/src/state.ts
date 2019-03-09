@@ -1,6 +1,5 @@
-import { EditorSchema } from '@remirror/core';
+import { EditorView } from '@remirror/core';
 import { random, range, throttle } from 'lodash';
-import { EditorView } from 'prosemirror-view';
 import { EpicModePluginStateParams, Particle, ParticleEffect, ParticleRange } from './types';
 
 export class EpicModePluginState {
@@ -15,7 +14,7 @@ export class EpicModePluginState {
   private lastTime = 0;
   private particles: Particle[] = [];
   private isActive = false;
-  private view!: EditorView<EditorSchema>;
+  private view!: EditorView;
 
   public readonly canvas: HTMLCanvasElement;
   public readonly ctx: CanvasRenderingContext2D;
@@ -45,7 +44,7 @@ export class EpicModePluginState {
    *
    * @param view
    */
-  public init(view: EditorView<EditorSchema>) {
+  public init(view: EditorView) {
     this.view = view;
     this.container.appendChild(this.canvas);
 

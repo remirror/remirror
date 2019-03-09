@@ -19,6 +19,7 @@
     "checks:parallel": "run-p lint typecheck test",
     "ci": "yarn if-clean yarn clean; yarn frozen;",
     "ci:checks": "run-s integrity lint typecheck",
+    "ci:checks:all": "run-s integrity lint typecheck test test:integration build:production",
     "clean": "yarn if-clean git clean -fdx",
     "clean:modules": "yarn if-clean git clean -fdx @remirror support docs",
     "dev": "lerna run dev --parallel",
@@ -27,6 +28,7 @@
     "fix:lint:babel": "eslint **/.babelrc.js --fix",
     "fix:lint:js": "eslint support *.js @remirror docs --fix",
     "fix:lint:ts": "lerna run lint --parallel -- --fix",
+    "fix:pkgjson": "prettier-package-json --write package.json **/package.json",
     "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md,mdx}\"",
     "fix:support": "tslint --project support/tsconfig.json --config tslint.json --fix",
     "frozen": "yarn --frozen-lockfile install",
@@ -39,7 +41,7 @@
     "lint:js": "eslint support *.js @remirror docs",
     "lint:support": "tslint --project support/tsconfig.json --config tslint.json",
     "lint:ts": "lerna run lint --parallel",
-    "prepublish:alpha": "run-s ci:checks",
+    "prepublish:alpha": "run-s ci:checks:all",
     "publish:alpha": "lerna publish prerelease --preid=alpha --exact",
     "size": "size-limit",
     "size:ci": "bundlesize",
@@ -129,31 +131,31 @@
   },
   "size-limit": [
     {
-      "path": "@remirror/core/lib/index.js"
+      "path": "@remirror/core/lib/dist/core.esm.js"
     },
     {
-      "path": "@remirror/core-extensions/lib/index.js"
+      "path": "@remirror/core-extensions/lib/dist/core-extensions.esm.js"
     },
     {
-      "path": "@remirror/extension-emoji/lib/index.js"
+      "path": "@remirror/extension-emoji/lib/dist/extension-emoji.esm.js"
     },
     {
-      "path": "@remirror/extension-enhanced-link/lib/index.js"
+      "path": "@remirror/extension-enhanced-link/lib/dist/extension-enhanced-link.esm.js"
     },
     {
-      "path": "@remirror/extension-mention/lib/index.js"
+      "path": "@remirror/extension-mention/lib/dist/extension-mention.esm.js"
     },
     {
-      "path": "@remirror/react/lib/index.js"
+      "path": "@remirror/react/lib/dist/react.esm.js"
     },
     {
-      "path": "packages/remirror/lib/index.js"
+      "path": "packages/remirror/lib/dist/remirror.esm.js"
     },
     {
-      "path": "@remirror/renderer-react/lib/index.js"
+      "path": "@remirror/renderer-react/lib/dist/renderer-react.esm.js"
     },
     {
-      "path": "@remirror/ui-twitter/lib/index.js"
+      "path": "@remirror/ui-twitter/lib/dist/ui-twitter.esm.js"
     }
   ]
 }

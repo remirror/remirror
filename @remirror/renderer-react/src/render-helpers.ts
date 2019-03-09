@@ -1,9 +1,7 @@
-import { EditorSchema } from '@remirror/core';
-import { Selection } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
+import { EditorView, Selection } from '@remirror/core';
 
 interface CalculatePositionParams {
-  view: EditorView<EditorSchema>;
+  view: EditorView;
 }
 
 export interface SelectionPosition {
@@ -11,7 +9,7 @@ export interface SelectionPosition {
   right: number;
   top: number;
   bottom: number;
-  selection: Selection<EditorSchema>;
+  selection: Selection;
 }
 export const calculateSelectedPosition = ({ view }: CalculatePositionParams): SelectionPosition | null => {
   const { selection } = view.state;

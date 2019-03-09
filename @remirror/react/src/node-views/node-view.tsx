@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { NodeViewPortalContainer } from '@remirror/core';
+import { NodeViewPortalContainer, PlainObject, ProsemirrorNode } from '@remirror/core';
 import { css, Interpolation } from 'emotion';
-import { Node as ProsemirrorNode } from 'prosemirror-model';
 import { Decoration, EditorView, NodeView } from 'prosemirror-view';
-import { PlainObject } from 'simplytyped';
 
 export type GetPosition = () => number;
 

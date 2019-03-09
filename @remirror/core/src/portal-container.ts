@@ -1,6 +1,6 @@
 import { Component, ReactChild, ReactElement } from 'react';
 import { unmountComponentAtNode, unstable_renderSubtreeIntoContainer } from 'react-dom';
-import { PlainObject } from 'simplytyped';
+
 interface MountedPortal {
   children: () => ReactChild | null;
   hasReactContext: boolean;
@@ -18,7 +18,7 @@ export class NodeViewPortalContainer {
     private unmountComponent: UnmountComponentAtNode,
   ) {}
 
-  public setContext = <GContext extends Component<PlainObject>>(context: GContext) => {
+  public setContext = <GContext extends Component<Record<string, any>>>(context: GContext) => {
     this.context = context;
   };
   public render(children: () => ReactChild | null, container: HTMLElement, hasReactContext: boolean = false) {

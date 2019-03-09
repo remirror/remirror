@@ -1,4 +1,4 @@
-import { PlainObject } from 'simplytyped';
+import { PlainObject } from '@remirror/core';
 
 function regexSupplant(regex: RegExp | string, map: Record<string, RegExp | string> = {}, flags = '') {
   let _flags = flags || '';
