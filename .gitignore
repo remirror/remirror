@@ -123,3 +123,6 @@ dependencies/**/yarn.lock
 /report.*.json
 
 .config.json
+
+# Lerna changelog
+.changelog
