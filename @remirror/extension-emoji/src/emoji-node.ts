@@ -67,6 +67,7 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
         {
           tag: 'span[data-emoji-id]',
           getAttrs: domNode => {
+            console.log('inside getAttrs');
             const dom = domNode as HTMLElement;
             const skin = dom.getAttribute('data-emoji-skin');
             const useNative = dom.getAttribute('data-emoji-use-native');
@@ -86,7 +87,6 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
         },
       ],
       toDOM: node => {
-        console.log('inside toDOM', node);
         const { id, name, native, colons, skin, useNative } = node.attrs as EmojiNodeAttrs;
         const attrs = {
           'data-emoji-id': id,
@@ -98,7 +98,6 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
           contenteditable: 'false',
           ...transformAttrs({ name }),
         };
-        console.log('toDOM', attrs);
         return ['span', attrs, native];
       },
     };
@@ -108,10 +107,6 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
     attrs = { ...attrs, ...this.options.transformAttrs(Cast<EmojiNodeAttrs>(attrs)) };
     return replaceText(null, type, attrs);
   };
-
-  // public inputRules({ type }: SchemaNodeTypeParams) {
-  //   return [nativeEmojiInputRule(emojiRegex(), type, this.options.emojiData)];
-  // }
 
   public plugin({ getPortalContainer, type }: SchemaNodeTypeParams) {
     const { set, size, emojiData, EmojiComponent, style } = this.options;

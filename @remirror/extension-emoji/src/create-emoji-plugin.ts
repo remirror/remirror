@@ -62,10 +62,6 @@ export const createEmojiPlugin = ({
   `;
   return new Plugin({
     key,
-    // appendTransaction(_transaction, _prevState, state) {
-    //   const { from, to, $from } = state.selection;
-    //   console.log(from, to, $from.index());
-    // },
     props: {
       nodeViews: {
         emoji: ReactNodeView.createNodeView({

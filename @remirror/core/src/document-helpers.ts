@@ -1,5 +1,6 @@
 import { Mark, MarkType, NodeType, ResolvedPos } from 'prosemirror-model';
 import { EditorState, NodeSelection, Plugin, PluginKey } from 'prosemirror-state';
+import { Cast } from './helpers';
 import { Attrs, Position } from './types';
 
 /**
@@ -116,50 +117,63 @@ export const getPluginState = <GState>(plugin: Plugin | PluginKey, state: Editor
 export const getMatchString = (match: string | string[], index = 0) =>
   Array.isArray(match) ? match[index] : match;
 
+export const isDomNode = (node: unknown): node is Node => {
+  return typeof Node === 'object'
+    ? node instanceof Node
+    : node !== null &&
+        typeof node === 'object' &&
+        typeof Cast(node).nodeType === 'number' &&
+        typeof Cast(node).nodeName === 'string';
+};
+
 /**
  * An Element node like <p> or <div>.
  * nodeType === 1
  */
-export const isElementNode = (node: Node): node is HTMLElement => node.nodeType === Node.ELEMENT_NODE;
+export const isElementNode = (node: unknown): node is HTMLElement =>
+  isDomNode(node) && node.nodeType === Node.ELEMENT_NODE;
 /**
  * The actual Text inside an Element or Attr.
  * nodeType === 3
  */
-export const isTextNode = (node: Node): node is Text => node.nodeType === Node.TEXT_NODE;
+export const isTextNode = (node: unknown): node is Text =>
+  isDomNode(node) && node.nodeType === Node.TEXT_NODE;
 /**
  * A CDATASection, such as <!CDATA[[ … ]]>.
  * nodeType === 4
  */
-export const isCDATASectionNode = (node: Node): node is CDATASection =>
-  node.nodeType === Node.CDATA_SECTION_NODE;
+export const isCDATASectionNode = (node: unknown): node is CDATASection =>
+  isDomNode(node) && node.nodeType === Node.CDATA_SECTION_NODE;
 /**
  * A ProcessingInstruction of an XML document, such as <?xml-stylesheet … ?>.
  * nodeType === 7
  */
-export const isProcessingInstructionNode = (node: Node): node is ProcessingInstruction =>
-  node.nodeType === Node.PROCESSING_INSTRUCTION_NODE;
+export const isProcessingInstructionNode = (node: unknown): node is ProcessingInstruction =>
+  isDomNode(node) && node.nodeType === Node.PROCESSING_INSTRUCTION_NODE;
 /**
  * A Comment node, such as <!-- … -->.
  * nodeType === 8
  */
-export const isCommentNode = (node: Node): node is Comment => node.nodeType === Node.COMMENT_NODE;
+export const isCommentNode = (node: unknown): node is Comment =>
+  isDomNode(node) && node.nodeType === Node.COMMENT_NODE;
 /**
  * A Document node.
  * nodeType === 9
  */
-export const isDocumentNode = (node: Node): node is Document => node.nodeType === Node.DOCUMENT_NODE;
+export const isDocumentNode = (node: unknown): node is Document =>
+  isDomNode(node) && node.nodeType === Node.DOCUMENT_NODE;
 /**
  * 	A DocumentType node, such as <!DOCTYPE html>.
  * nodeType === 1
  */
-export const isDocumentTypeNode = (node: Node): node is DocumentType =>
-  node.nodeType === Node.DOCUMENT_TYPE_NODE;
+export const isDocumentTypeNode = (node: unknown): node is DocumentType =>
+  isDomNode(node) && node.nodeType === Node.DOCUMENT_TYPE_NODE;
 /**
  * 	A DocumentFragment node.
  * nodeType === 1
  */
-export const isDocumentFragmentNode = (node: Node): node is DocumentFragment =>
-  node.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
+export const isDocumentFragmentNode = (node: unknown): node is DocumentFragment =>
+  isDomNode(node) && node.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
 
 /**
  * We need to translate the co-ordinates because `coordsAtPos` returns co-ordinates
