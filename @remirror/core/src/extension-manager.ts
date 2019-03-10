@@ -2,6 +2,7 @@ import { InputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
 import { EditorState, PluginKey } from 'prosemirror-state';
+import { getPluginState } from './document-helpers';
 import { AnyExtension } from './extension';
 import {
   createFlexibleFunctionMap,
@@ -158,6 +159,17 @@ export class ExtensionManager {
     });
 
     return actions;
+  }
+
+  /**
+   * Retrieve the state for a given extension name. This will throw an error if the extension doesn't exist.
+   */
+  public getPluginState<GState>(name: string): GState {
+    const key = this.pluginKeys[name];
+    if (!key) {
+      throw new Error(`Cannot retrieve state for an extension: ${name} which doesn\'t exist`);
+    }
+    return getPluginState<GState>(key, this.getEditorState());
   }
 
   /**

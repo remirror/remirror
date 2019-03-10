@@ -7,14 +7,14 @@ import {
   EditorState as EditorStateType,
   EditorView as EditorViewType,
   ExtensionManager,
+  getAbsoluteCoordinates,
   getMarkAttrs,
-  getPluginKeyState,
+  getNearestNonTextNode,
   InputRule,
   NodeViewPortalContainer,
   ObjectNode,
   OffsetCalculator,
   Paragraph,
-  PluginKey,
   Position,
   ProsemirrorPlugin,
   RawMenuPositionData,
@@ -38,9 +38,7 @@ import {
   baseOffsetCalculator,
   defaultOffscreenPosition,
   defaultShouldRender,
-  getAbsoluteCoordinates,
   getElementProps,
-  getNearestNonTextNode,
   isAttributeFunction,
   isDOMElement,
   isObjectNode,
@@ -115,7 +113,6 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   private pasteRules: ProsemirrorPlugin[];
   private actions: RemirrorActions;
   private markAttrs: Record<string, Record<string, string>>;
-  private pluginKeys: Record<string, PluginKey>;
   private portalContainer!: NodeViewPortalContainer;
 
   private get builtInExtensions() {
@@ -143,7 +140,6 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   constructor(props: RemirrorProps) {
     super(props);
     this.extensionManager = this.createExtensions();
-    this.pluginKeys = this.extensionManager.pluginKeys;
     this.schema = this.extensionManager.createSchema();
 
     this.extensionPlugins = this.extensionManager.plugins(this.schemaParams);
@@ -296,6 +292,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       'offsetTop',
       'offsetWidth',
     ]);
+
     const absCoords = getAbsoluteCoordinates(coords, offsetParent!, offsetHeight);
 
     const rawData = {
@@ -550,15 +547,9 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     return this.state.editorState.doc.toJSON() as ObjectNode;
   };
 
-  private getPluginKeyState<GState>(name: string): GState | undefined {
-    return this.pluginKeys[name]
-      ? getPluginKeyState(this.pluginKeys[name], this.state.editorState)
-      : undefined;
-  }
-
   private get placeholder(): PlaceholderConfig | undefined {
     const { placeholder } = this.props;
-    const pluginState = this.getPluginKeyState<PlaceholderPluginState>('placeholder');
+    const pluginState = this.extensionManager.getPluginState<PlaceholderPluginState>('placeholder');
 
     if (!pluginState) {
       if (placeholder) {

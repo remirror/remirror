@@ -1,6 +1,6 @@
 import { Mark, MarkType, NodeType, ResolvedPos } from 'prosemirror-model';
 import { EditorState, NodeSelection, Plugin, PluginKey } from 'prosemirror-state';
-import { Attrs } from './types';
+import { Attrs, Position } from './types';
 
 /**
  * Checks that a mark is active within the selected region, or the current selection point is within a
@@ -105,16 +105,6 @@ export const getPluginState = <GState>(plugin: Plugin | PluginKey, state: Editor
   plugin.getState(state);
 
 /**
- * Retrieve plugin state from the plugin key
- * @deprecated use getPluginState instead
- *
- * @param pluginKey
- * @param state
- */
-export const getPluginKeyState = <GState>(pluginKey: PluginKey, state: EditorState): GState =>
-  pluginKey.getState(state);
-
-/**
  * Get attrs can be called with a direct match -string or array of string matches.
  * This can be used to retrieve the required string.
  *
@@ -130,7 +120,7 @@ export const getMatchString = (match: string | string[], index = 0) =>
  * An Element node like <p> or <div>.
  * nodeType === 1
  */
-export const isElementNode = (node: Node): node is Element => node.nodeType === Node.ELEMENT_NODE;
+export const isElementNode = (node: Node): node is HTMLElement => node.nodeType === Node.ELEMENT_NODE;
 /**
  * The actual Text inside an Element or Attr.
  * nodeType === 3
@@ -140,7 +130,7 @@ export const isTextNode = (node: Node): node is Text => node.nodeType === Node.T
  * A CDATASection, such as <!CDATA[[ … ]]>.
  * nodeType === 4
  */
-export const isCdataSectionNode = (node: Node): node is CDATASection =>
+export const isCDATASectionNode = (node: Node): node is CDATASection =>
   node.nodeType === Node.CDATA_SECTION_NODE;
 /**
  * A ProcessingInstruction of an XML document, such as <?xml-stylesheet … ?>.
@@ -170,3 +160,33 @@ export const isDocumentTypeNode = (node: Node): node is DocumentType =>
  */
 export const isDocumentFragmentNode = (node: Node): node is DocumentFragment =>
   node.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
+
+/**
+ * We need to translate the co-ordinates because `coordsAtPos` returns co-ordinates
+ * relative to `window`. And, also need to adjust the cursor container height.
+ * (0, 0)
+ * +--------------------- [window] ---------------------+
+ * |   (left, top) +-------- [Offset Parent] --------+  |
+ * | {coordsAtPos} | [Cursor]   <- cursorHeight      |  |
+ * |               | [FloatingToolbar]               |  |
+ */
+export const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, cursorHeight: number) => {
+  const {
+    left: offsetParentLeft,
+    top: offsetParentTop,
+    height: offsetParentHeight,
+  } = offsetParent.getBoundingClientRect();
+
+  return {
+    left: coords.left - offsetParentLeft,
+    right: coords.right - offsetParentLeft,
+    top: coords.top - (offsetParentTop - cursorHeight) + offsetParent.scrollTop,
+    bottom: offsetParentHeight - (coords.top - (offsetParentTop - cursorHeight) - offsetParent.scrollTop),
+  };
+};
+
+/**
+ * Retrieve the nearest non-text node
+ */
+export const getNearestNonTextNode = (node: Node) =>
+  isTextNode(node) ? (node.parentNode as HTMLElement) : (node as HTMLElement);

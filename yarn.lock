@@ -2168,6 +2168,18 @@
   resolved "https://registry.yarnpkg.com/@types/match-sorter/-/match-sorter-2.3.0.tgz#902b927bc9c7f10863a9973da8deab48787dfc91"
   integrity sha512-oNHiGln5wL4/K5uvfkn20ZXdoSH3DyG8aN7pVjtwjVTYdJDdedJD/gKg4qOBhVnLtiPlUy2H3i+OHjBQnpdf9Q==
 
+"@types/nanoevents@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/nanoevents/-/nanoevents-1.0.0.tgz#96844ed81742fd66153bd50c003057069605dd9d"
+  integrity sha512-58ZVTKTPAPNOHTFEJST1OlLGO1cVCphW9W+3iXm2MSW6lSByGSfT+4rE2dMJD10Vcp2sS3HZh8n5kZfmrBjhMw==
+
+"@types/nanoid@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@types/nanoid/-/nanoid-1.2.1.tgz#995bd0538ef04c4751d88d2fa15a97f0b85dd848"
+  integrity sha512-G3fQNcOYPHLXigI5nxpmSCCJIAEqgd+DP3p1IaxcdXJRJxdoeIZi/MGt58j/lI0AIsgajwG10Vs6J2xzkGZfEQ==
+  dependencies:
+    "@types/node" "*"
+
 "@types/node@*", "@types/node@^11.9.5":
   version "11.9.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.5.tgz#011eece9d3f839a806b63973e228f85967b79ed3"
@@ -10172,6 +10184,16 @@ nan@^2.6.2, nan@^2.9.2:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.12.1.tgz#7b1aa193e9aa86057e3c7bbd0ac448e770925552"
   integrity sha512-JY7V6lRkStKcKTvHO5NVSQRv+RV+FIL5pvDoLiAtSL9pKlC5x9PKQcZDsq7m4FO4d57mkhC6Z+QhAh3Jdk5JFw==
+
+nanoevents@1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/nanoevents/-/nanoevents-1.0.8.tgz#e96e256898cb04994a567153e20d62e3819a0391"
+  integrity sha512-ocw0BZNSEQfHYvAQinL71loxZcrDoDs3kOWYvF3vQHlvI0RTkP36L+JL1hqcen4sXljqAuD7xYl8tcaRWKMRNQ==
+
+nanoid@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-2.0.1.tgz#deb55cac196e3f138071911dabbc3726eb048864"
+  integrity sha512-k1u2uemjIGsn25zmujKnotgniC/gxQ9sdegdezeDiKdkDW56THUMqlz3urndKCXJxA6yPzSZbXx/QCMe/pxqsA==
 
 nanomatch@^1.2.9:
   version "1.2.13"

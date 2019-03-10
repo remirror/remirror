@@ -30,6 +30,8 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
+    "@types/nanoevents": "1.0.0",
+    "@types/nanoid": "1.2.1",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-keymap": "^1.0.1",
@@ -37,6 +39,8 @@
     "@types/prosemirror-schema-list": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-transform": "^1.1.0",
+    "nanoevents": "1.0.8",
+    "nanoid": "2.0.1",
     "prosemirror-commands": "^1.0.7",
     "prosemirror-inputrules": "^1.0.1",
     "prosemirror-keymap": "^1.0.1",
@@ -48,9 +52,7 @@
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
-    "@types/react-dom": "^16.8.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.8.0"
   },
   "publishConfig": {
     "access": "public"

@@ -70,14 +70,14 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
       this.contentDOMWrapper = contentDOMWrapper || contentDOM;
     }
 
-    // Add a fixed class and a dynamic clas to this node (allows for custom styles being added in configuration)
+    // Add a fixed class and a dynamic class to this node (allows for custom styles being added in configuration)
     this.domRef.classList.add(`remirror-editor-${this.node.type.name}-node-view`, css(this.style));
 
     this.renderReactComponent(() => this.render(this.props, this.handleRef));
     return this;
   }
 
-  private renderReactComponent(component: () => React.ReactElement<any> | null) {
+  private renderReactComponent(component: () => JSX.Element) {
     if (!this.domRef || !component) {
       return;
     }
@@ -86,11 +86,6 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
   }
 
   public createDomRef(): HTMLElement {
-    // let el: HTMLElement;
-    // if (this.node.isInline) {
-    //   el = document.createElement('span');
-    //   el.style.dis
-    // }
     return this.node.isInline ? document.createElement('span') : document.createElement('div');
   }
 
@@ -107,9 +102,9 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     }
   };
 
-  public render(props: GProps, forwardRef?: (node: HTMLElement) => void): React.ReactElement<any> | null {
+  public render(props: GProps, forwardRef?: (node: HTMLElement) => void): JSX.Element {
     const Component = this.Component;
-    return Component ? (
+    return (
       <Component
         view={this.view}
         getPosition={this.getPosition}
@@ -117,7 +112,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
         forwardRef={forwardRef}
         {...props}
       />
-    ) : null;
+    );
   }
 
   public update(
