@@ -125,3 +125,48 @@ export const getPluginKeyState = <GState>(pluginKey: PluginKey, state: EditorSta
  */
 export const getMatchString = (match: string | string[], index = 0) =>
   Array.isArray(match) ? match[index] : match;
+
+/**
+ * An Element node like <p> or <div>.
+ * nodeType === 1
+ */
+export const isElementNode = (node: Node): node is Element => node.nodeType === Node.ELEMENT_NODE;
+/**
+ * The actual Text inside an Element or Attr.
+ * nodeType === 3
+ */
+export const isTextNode = (node: Node): node is Text => node.nodeType === Node.TEXT_NODE;
+/**
+ * A CDATASection, such as <!CDATA[[ … ]]>.
+ * nodeType === 4
+ */
+export const isCdataSectionNode = (node: Node): node is CDATASection =>
+  node.nodeType === Node.CDATA_SECTION_NODE;
+/**
+ * A ProcessingInstruction of an XML document, such as <?xml-stylesheet … ?>.
+ * nodeType === 7
+ */
+export const isProcessingInstructionNode = (node: Node): node is ProcessingInstruction =>
+  node.nodeType === Node.PROCESSING_INSTRUCTION_NODE;
+/**
+ * A Comment node, such as <!-- … -->.
+ * nodeType === 8
+ */
+export const isCommentNode = (node: Node): node is Comment => node.nodeType === Node.COMMENT_NODE;
+/**
+ * A Document node.
+ * nodeType === 9
+ */
+export const isDocumentNode = (node: Node): node is Document => node.nodeType === Node.DOCUMENT_NODE;
+/**
+ * 	A DocumentType node, such as <!DOCTYPE html>.
+ * nodeType === 1
+ */
+export const isDocumentTypeNode = (node: Node): node is DocumentType =>
+  node.nodeType === Node.DOCUMENT_TYPE_NODE;
+/**
+ * 	A DocumentFragment node.
+ * nodeType === 1
+ */
+export const isDocumentFragmentNode = (node: Node): node is DocumentFragment =>
+  node.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
