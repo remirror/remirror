@@ -1,7 +1,7 @@
 import { Mark, MarkType, NodeType, ResolvedPos } from 'prosemirror-model';
-import { EditorState, NodeSelection, Plugin, PluginKey } from 'prosemirror-state';
+import { EditorState, NodeSelection, Plugin } from 'prosemirror-state';
 import { Cast } from './helpers';
-import { Attrs, Position } from './types';
+import { Attrs, PluginKey, Position, ProsemirrorNode, Transaction } from './types';
 
 /**
  * Checks that a mark is active within the selected region, or the current selection point is within a
@@ -47,6 +47,24 @@ export const canInsertNode = (state: EditorState, type: NodeType) => {
     }
   }
   return false;
+};
+
+/**
+ * Checks if a node looks like an empty document
+ */
+export const isDocNodeEmpty = (node: ProsemirrorNode) => {
+  const nodeChild = node.content.firstChild;
+
+  if (node.childCount !== 1 || !nodeChild) {
+    return false;
+  }
+
+  return (
+    nodeChild.type.name === 'paragraph' &&
+    !nodeChild.childCount &&
+    nodeChild.nodeSize === 2 &&
+    (!nodeChild.marks || nodeChild.marks.length === 0)
+  );
 };
 
 // "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
@@ -104,6 +122,26 @@ export const getMarkRange = ($pos: ResolvedPos | null = null, type: MarkType | n
  */
 export const getPluginState = <GState>(plugin: Plugin | PluginKey, state: EditorState): GState =>
   plugin.getState(state);
+
+/**
+ * Retrieve plugin meta data by key
+ * @param key
+ * @param tr
+ */
+export const getPluginMeta = <GMeta>(key: PluginKey | Plugin | string, tr: Transaction): GMeta =>
+  tr.getMeta(key);
+
+/**
+ * Set the plugin meta data by key
+ * @param key
+ * @param tr
+ * @param data
+ */
+export const setPluginMeta = <GMeta>(
+  key: PluginKey | Plugin | string,
+  tr: Transaction,
+  data: GMeta,
+): Transaction => tr.setMeta(key, data);
 
 /**
  * Get attrs can be called with a direct match -string or array of string matches.

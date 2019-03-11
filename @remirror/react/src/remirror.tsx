@@ -25,7 +25,7 @@ import {
   Text,
   Transaction,
 } from '@remirror/core';
-import { History, Placeholder, PlaceholderPluginState } from '@remirror/core-extensions';
+import { Composition, History, Placeholder, PlaceholderPluginState } from '@remirror/core-extensions';
 import { css, Interpolation } from 'emotion';
 import { isString, memoize, pick, uniqueId } from 'lodash';
 import { inputRules, undoInputRule } from 'prosemirror-inputrules';
@@ -118,7 +118,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   private get builtInExtensions() {
     return !this.props.usesBuiltInExtensions
       ? []
-      : [new Doc(), new Text(), new Paragraph(), new History(), new Placeholder()];
+      : [new Doc(), new Text(), new Paragraph(), new History(), new Placeholder(), new Composition()];
   }
 
   private get plugins(): ProsemirrorPlugin[] {
