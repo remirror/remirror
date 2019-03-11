@@ -16,6 +16,7 @@ import {
   Selection as PMSelection,
   Transaction as PMTransaction,
 } from 'prosemirror-state';
+import { Mapping as PMMapping } from 'prosemirror-transform';
 import { EditorView as PMEditorView } from 'prosemirror-view';
 import { NodeViewPortalContainer } from './portal-container';
 
@@ -269,3 +270,4 @@ export type PluginKey<GPluginState = any> = PMPluginKey<GPluginState, EditorSche
 export type Mark = PMMark<EditorSchema>;
 export type ResolvedPos = PMResolvedPos<EditorSchema>;
 export type InputRule = PMInputRule<EditorSchema>;
+export type Mapping = PMMapping;

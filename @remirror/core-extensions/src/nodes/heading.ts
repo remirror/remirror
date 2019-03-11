@@ -6,10 +6,10 @@ import {
   NodeExtensionSpec,
   PMNode,
   SchemaNodeTypeParams,
-  setBlockType,
-  textBlockTypeInputRule,
   toggleBlockItem,
 } from '@remirror/core';
+import { setBlockType } from 'prosemirror-commands';
+import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 export interface HeadingOptions extends NodeExtensionOptions {
   levels: number[];
@@ -61,7 +61,7 @@ export class Heading extends NodeExtension<HeadingOptions> {
 
   public inputRules({ type }: SchemaNodeTypeParams) {
     return this.options.levels.map(level =>
-      textBlockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), type, () => ({ level })),
+      textblockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), type, () => ({ level })),
     );
   }
 }

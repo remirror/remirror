@@ -11913,10 +11913,15 @@ prosemirror-transform@^1.0.0, prosemirror-transform@^1.1.0, prosemirror-transfor
   dependencies:
     prosemirror-model "^1.0.0"
 
-prosemirror-view@^1.8.3:
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/prosemirror-view/-/prosemirror-view-1.8.3.tgz#f8deff22c7d371f63db2686ac6f3661ded1b3ae3"
-  integrity sha512-CAW3SycaJgfPlWwYcDGiwNaCwcikBLSFAgLF+H+bTn0aCAUzcl2DXQdU9dMvK3HeWG+6Xn/QPQbhyyqCcV3ZBw==
+prosemirror-utils@^0.7.6:
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/prosemirror-utils/-/prosemirror-utils-0.7.6.tgz#c462ddfbf2452e56e4b25d1f02b34caccddb0f33"
+  integrity sha512-vzsCBTiJ56R3nRDpIJnKOJzsZP7KFO8BkXk7zvQgQiXpml2o/djPCRhuyaFc7VTqSHlLPQHVI1feTLAwHp+prQ==
+
+prosemirror-view@^1.9.0-prerelease:
+  version "1.9.0-prerelease"
+  resolved "https://registry.yarnpkg.com/prosemirror-view/-/prosemirror-view-1.9.0-prerelease.tgz#37e76ed5815ce8a0dd45dfcfefb471fb2a0a0a18"
+  integrity sha512-Bdlr0mi06xqYLboWgZW++Spq2t/+U8dUYZUzD006WLqt1THh0koo7YmMG186gEJQX1eGtHFIV59st8tFPCgJuw==
   dependencies:
     prosemirror-model "^1.1.0"
     prosemirror-state "^1.0.0"

@@ -1,11 +1,6 @@
-import {
-  NodeExtension,
-  NodeExtensionSpec,
-  SchemaNodeTypeParams,
-  setBlockType,
-  textBlockTypeInputRule,
-  toggleBlockItem,
-} from '@remirror/core';
+import { NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams, toggleBlockItem } from '@remirror/core';
+import { setBlockType } from 'prosemirror-commands';
+import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 export class CodeBlock extends NodeExtension {
   get name(): 'codeBlock' {
@@ -37,6 +32,6 @@ export class CodeBlock extends NodeExtension {
   }
 
   public inputRules({ type }: SchemaNodeTypeParams) {
-    return [textBlockTypeInputRule(/^```$/, type)];
+    return [textblockTypeInputRule(/^```$/, type)];
   }
 }

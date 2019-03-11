@@ -41,7 +41,7 @@
     "is-plain-object": "2.0.4",
     "lodash": "^4.17.11",
     "prosemirror-keymap": "^1.0.1",
-    "prosemirror-view": "^1.8.3"
+    "prosemirror-view": "^1.9.0-prerelease"
   },
   "peerDependencies": {
     "@types/prosemirror-inputrules": "^1.0.2",

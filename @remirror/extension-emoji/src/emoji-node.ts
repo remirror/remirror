@@ -50,7 +50,6 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
       inline: true,
       group: 'inline',
       selectable: false,
-      atom: true,
       attrs: {
         id: { default: '' },
         native: { default: '' },

@@ -1,10 +1,5 @@
-import {
-  NodeExtension,
-  NodeExtensionSpec,
-  SchemaNodeTypeParams,
-  toggleWrap,
-  wrappingInputRule,
-} from '@remirror/core';
+import { NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams, toggleWrap } from '@remirror/core';
+import { wrappingInputRule } from 'prosemirror-inputrules';
 
 export class Blockquote extends NodeExtension {
   get name(): 'blockquote' {

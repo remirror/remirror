@@ -1,11 +1,5 @@
-import {
-  Cast,
-  NodeExtension,
-  NodeExtensionSpec,
-  SchemaNodeTypeParams,
-  toggleList,
-  wrappingInputRule,
-} from '@remirror/core';
+import { Cast, NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams, toggleList } from '@remirror/core';
+import { wrappingInputRule } from 'prosemirror-inputrules';
 
 export class OrderedList extends NodeExtension {
   get name(): 'orderedList' {
