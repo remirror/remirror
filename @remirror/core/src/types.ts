@@ -53,10 +53,13 @@ export type CommandFunction = (state: EditorState, dispatch?: DispatchFunction) 
 export type KeyboardBindings = Record<string, CommandFunction>;
 
 /* The following is an alternative type definition for the built in Prosemirror definition
-The current Prosemirror types were causing me some problems */
+The current Prosemirror types were causing me some problems
+
+Also I want don't want to be able to use domNodes in the toDOM spec since this will create problems once SSR is enabled.
+*/
 
 type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string } | DOMOutputSpecPosX[];
-type DOMOutputSpecPosX = string | 0 | Node;
+type DOMOutputSpecPosX = string | 0;
 export type DOMOutputSpec =
   | DOMOutputSpecPosX
   | [
