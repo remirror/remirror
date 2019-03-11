@@ -148,6 +148,7 @@ describe('Twitter UI', () => {
     it('should be able to add emoji', async () => {
       await page.type(editorSelector, '😀');
       await expect(innerHtml(sel(editorSelector, 'span[title=grinning]'))).resolves.toBeTruthy();
+      await expect(innerHtml(sel(editorSelector, 'span[data-emoji-native=😀]'))).resolves.toBeTruthy();
     });
 
     // ! BUG Multiple adjacent nodes (emoji) cause the editor to lose focus when moving between them
