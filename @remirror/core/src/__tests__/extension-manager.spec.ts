@@ -55,7 +55,7 @@ describe('#action', () => {
   it('calls the correct command', () => {
     expect(remirrorActions.dummy).toContainAllKeys(['isActive', 'isEnabled', 'command']);
     remirrorActions.dummy.command();
-    expect(mock).toHaveBeenCalledWith(params.view.state, params.view.dispatch);
+    expect(mock).toHaveBeenCalledWith(params.view.state, params.view.dispatch, params.view);
   });
 
   it('is not called when the editor is not editable', () => {

@@ -7,7 +7,7 @@ import {
   ExtensionType,
   FlexibleConfig,
   NodeExtensionSpec,
-  SchemaWithStateParams,
+  SchemaParams,
 } from './types';
 
 export type ExtraAttrs = Array<string | [string, string]>;
@@ -48,7 +48,7 @@ export abstract class NodeExtension<
 
   public abstract readonly schema: NodeExtensionSpec;
 
-  public active({ getEditorState, schema }: SchemaWithStateParams): FlexibleConfig<ExtensionBooleanFunction> {
+  public active({ getEditorState, schema }: SchemaParams): FlexibleConfig<ExtensionBooleanFunction> {
     return attrs => nodeActive(getEditorState(), schema.nodes.name, attrs);
   }
 }

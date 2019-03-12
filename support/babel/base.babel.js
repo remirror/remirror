@@ -22,7 +22,7 @@ module.exports = {
     '@babel/preset-react',
   ],
   plugins: [
-    '@babel/plugin-transform-typescript', // This is need so that abstract classes are properly compiled
+    '@babel/plugin-transform-typescript', // This is needed so that abstract classes are properly compiled
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-syntax-dynamic-import',

@@ -1,6 +1,6 @@
 {
   "name": "@remirror/ui-twitter",
-  "description": "ui for a twitter like editing experience",
+  "description": "ui for a twitter-like editing experience",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-twitter",
@@ -30,10 +30,12 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
+    "@emotion/core": "^10.0.7",
     "@remirror/core": "0.0.1-alpha.5",
+    "@remirror/core-extensions": "0.0.1-alpha.5",
     "@remirror/extension-emoji": "0.0.1-alpha.5",
+    "@remirror/extension-gap-cursor": "0.0.1-alpha.5",
     "@remirror/extension-enhanced-link": "0.0.1-alpha.5",
     "@remirror/extension-mention": "0.0.1-alpha.5",
     "@remirror/react": "0.0.1-alpha.5",

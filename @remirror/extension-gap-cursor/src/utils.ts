@@ -1,44 +1,29 @@
+import {
+  closestElement,
+  findDomRefAtPos,
+  findPositionOfNodeBefore,
+  GapCursorSelection,
+  Side,
+} from '@remirror/core';
 import { Node as PMNode, ResolvedPos, Schema } from 'prosemirror-model';
-import { findDomRefAtPos, findPositionOfNodeBefore } from 'prosemirror-utils';
 import { EditorView } from 'prosemirror-view';
+import { GAP_CURSOR_CLASS_NAME } from './styles';
 
-import { closestElement } from '../../utils';
-import { TableCssClassName } from '../table/types';
-import { tableInsertColumnButtonSize } from '../table/ui/styles';
-import { GapCursorSelection, Side } from './selection';
-
-// we don't show gap cursor for those nodes
-const IGNORED_NODES = [
-  'paragraph',
-  'bulletList',
-  'orderedList',
-  'listItem',
-  'taskItem',
-  'decisionItem',
-  'heading',
-  'blockquote',
-];
+const TABLE_MARGIN_TOP = 24;
+const TABLE_INSERT_COLUMN_BUTTON_SIZE = 20;
 
 // Returns DOM node's vertical margin. It descents into the node and reads margins of nested DOM nodes
 const getDomNodeVerticalMargin = (ref: HTMLElement | null, side: 'top' | 'bottom'): number => {
   let margin = 0;
   while (ref && ref.nodeType === 1) {
     const css = window.getComputedStyle(ref);
-    const curMargin = parseInt(css[`margin-${side}`], 10);
+    const curMargin = parseInt(css[side === 'top' ? 'marginTop' : 'marginBottom']!, 10);
     if (curMargin > margin) {
       margin = curMargin;
     }
     ref = ref[side === 'top' ? 'firstChild' : 'lastChild'] as HTMLElement;
   }
   return margin;
-};
-
-export const isIgnored = (node?: PMNode | null): boolean => {
-  return !!node && IGNORED_NODES.indexOf(node.type.name) !== -1;
-};
-
-export const isValidTargetNode = (node?: PMNode | null): boolean => {
-  return !!node && !isIgnored(node);
 };
 
 export const isTextBlockNearPos = (doc: PMNode, schema: Schema, $pos: ResolvedPos, dir: number) => {
@@ -108,7 +93,6 @@ function getBreakoutModeFromTargetNode(node: PMNode): string {
   return '';
 }
 
-// incapsulated this hack into a separate util function
 export const fixCursorAlignment = (view: EditorView) => {
   const {
     state: { selection, schema },
@@ -128,7 +112,7 @@ export const fixCursorAlignment = (view: EditorView) => {
 
   let targetNodeRef = findDomRefAtPos(targetNodePos, domAtPos.bind(view)) as HTMLElement;
 
-  const gapCursorRef = view.dom.querySelector('.ProseMirror-gapcursor span') as HTMLElement;
+  const gapCursorRef = view.dom.querySelector(`.${GAP_CURSOR_CLASS_NAME} span`) as HTMLElement;
 
   const gapCursorParentNodeRef = gapCursorRef.parentNode! as HTMLElement;
   const previousSibling = gapCursorParentNodeRef.previousSibling as HTMLElement;
@@ -188,7 +172,7 @@ export const fixCursorAlignment = (view: EditorView) => {
 
   // table nodeView margin fix
   if (targetNode.type === schema.nodes.table) {
-    const tableFullMarginTop = tableMarginTop + tableInsertColumnButtonSize / 2;
+    const tableFullMarginTop = TABLE_MARGIN_TOP + TABLE_INSERT_COLUMN_BUTTON_SIZE / 2;
     height -= tableFullMarginTop;
     marginTop = tableFullMarginTop;
     gapCursorRef.style.paddingLeft = `${paddingLeft}px`;
@@ -213,29 +197,9 @@ export const fixCursorAlignment = (view: EditorView) => {
   gapCursorRef.style.width = `${breakoutWidth || width}px`;
 };
 
-export const isIgnoredClick = (elem: HTMLElement) => {
-  if (elem.nodeName === 'BUTTON' || closestElement(elem, 'button')) {
+export const isIgnoredClick = (element: HTMLElement) => {
+  if (element.nodeName === 'BUTTON' || closestElement(element, 'button')) {
     return true;
-  }
-
-  // check if target node has a parent table node
-  let tableWrap;
-  let node = elem;
-  while (node) {
-    if (
-      node.className &&
-      (node.getAttribute('class') || '').indexOf(TableCssClassName.TABLE_CONTAINER) > -1
-    ) {
-      tableWrap = node;
-      break;
-    }
-    node = node.parentNode as HTMLElement;
-  }
-
-  if (tableWrap) {
-    const rowControls = tableWrap.querySelector(`.${TableCssClassName.ROW_CONTROLS_WRAPPER}`);
-    const columnControls = tableWrap.querySelector(`.${TableCssClassName.COLUMN_CONTROLS_WRAPPER}`);
-    return (rowControls && rowControls.contains(elem)) || (columnControls && columnControls.contains(elem));
   }
 
   return false;

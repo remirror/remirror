@@ -1,6 +1,7 @@
 import { Extension, getPluginMeta, getPluginState, isDocNodeEmpty, setPluginMeta } from '@remirror/core';
 import { Plugin } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
+import { EMPTY_NODE_CLASS_NAME } from '../constants';
 
 export interface PlaceholderOptions {
   emptyNodeClass?: string;
@@ -23,7 +24,7 @@ export class Placeholder extends Extension<PlaceholderOptions> {
 
   get defaultOptions() {
     return {
-      emptyNodeClass: 'is-empty',
+      emptyNodeClass: EMPTY_NODE_CLASS_NAME,
       additionalStyles: {},
     };
   }

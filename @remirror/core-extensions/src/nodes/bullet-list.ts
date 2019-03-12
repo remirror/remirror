@@ -9,7 +9,7 @@ export class Bullet extends NodeExtension {
   get schema(): NodeExtensionSpec {
     return {
       attrs: this.extraAttrs(),
-      content: 'list_item+',
+      content: 'listItem+',
       group: 'block',
       parseDOM: [{ tag: 'ul' }],
       toDOM: () => ['ul', 0],
@@ -17,12 +17,12 @@ export class Bullet extends NodeExtension {
   }
 
   public commands({ type, schema }: SchemaNodeTypeParams) {
-    return () => toggleList(type, schema.nodes.list_item);
+    return () => toggleList(type, schema.nodes.listItem);
   }
 
   public keys({ type, schema }: SchemaNodeTypeParams) {
     return {
-      'Shift-Ctrl-8': toggleList(type, schema.nodes.list_item),
+      'Shift-Ctrl-8': toggleList(type, schema.nodes.listItem),
     };
   }
 

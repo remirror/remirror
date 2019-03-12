@@ -1,8 +1,9 @@
 import React, { cloneElement, Component, Ref } from 'react';
 
+import { ClassNames, ClassNamesContent, Interpolation } from '@emotion/core';
 import {
-  baseKeymap,
   Doc,
+  EDITOR_CLASS_NAME,
   EditorSchema,
   EditorState as EditorStateType,
   EditorView as EditorViewType,
@@ -11,6 +12,7 @@ import {
   getMarkAttrs,
   getNearestNonTextNode,
   InputRule,
+  isProsemirrorNode,
   NodeViewPortalContainer,
   ObjectNode,
   OffsetCalculator,
@@ -20,14 +22,13 @@ import {
   RawMenuPositionData,
   RemirrorActions,
   SchemaParams,
-  selectParentNode,
   ShouldRenderMenu,
   Text,
   Transaction,
 } from '@remirror/core';
 import { Composition, History, Placeholder, PlaceholderPluginState } from '@remirror/core-extensions';
-import { css, Interpolation } from 'emotion';
 import { isString, memoize, pick, uniqueId } from 'lodash';
+import { baseKeymap, selectParentNode } from 'prosemirror-commands';
 import { inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { DOMParser, DOMSerializer } from 'prosemirror-model';
@@ -53,6 +54,7 @@ import {
   InjectedRemirrorProps,
   PlaceholderConfig,
   RefKeyRootProps,
+  RemirrorContentType,
   RemirrorEventListenerParams,
   RemirrorProps,
 } from './types';
@@ -113,7 +115,9 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   private pasteRules: ProsemirrorPlugin[];
   private actions: RemirrorActions;
   private markAttrs: Record<string, Record<string, string>>;
+  private extensionStyles: Interpolation[];
   private portalContainer!: NodeViewPortalContainer;
+  private classNamesContent!: ClassNamesContent<any>;
 
   private get builtInExtensions() {
     return !this.props.usesBuiltInExtensions
@@ -142,6 +146,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     this.extensionManager = this.createExtensions();
     this.schema = this.extensionManager.createSchema();
 
+    this.extensionStyles = this.extensionManager.styles(this.schemaParams);
     this.extensionPlugins = this.extensionManager.plugins(this.schemaParams);
     this.keymaps = this.extensionManager.keymaps(this.schemaParams);
     this.inputRules = this.extensionManager.inputRules(this.schemaParams);
@@ -206,22 +211,23 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     const placeholder = this.placeholder;
     const placeholderConfig = placeholder
       ? {
-          selector: `.remirror-editor p.${placeholder.className}:first-of-type::before`,
+          selector: `.${EDITOR_CLASS_NAME} p.${placeholder.className}:first-of-type::before`,
           content: `"${placeholder.text}"`,
           style: placeholder.style,
         }
       : undefined;
 
     if (placeholderConfig) {
-      styles.unshift(
-        css({
-          [placeholderConfig.selector]: { ...placeholderConfig.style, content: placeholderConfig.content },
-        }),
-      );
+      styles.unshift({
+        [placeholderConfig.selector]: { ...placeholderConfig.style, content: placeholderConfig.content },
+      });
     }
 
+    /* Inject styles from any extensions */
+    styles.unshift(this.extensionStyles);
+
     if (this.props.usesDefaultStyles) {
-      styles.unshift(css(defaultStyles(placeholderConfig)));
+      styles.unshift(defaultStyles(placeholderConfig));
     }
 
     return styles;
@@ -237,7 +243,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
 
     return {
       [refKey]: this.onRef,
-      className: css(this.editorStyles),
+      className: this.classNamesContent.css(this.editorStyles),
       ...config,
     } as RefKeyRootProps<GRefKey>;
   };
@@ -330,7 +336,10 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     };
   }
 
-  private createDocument(content: string | ObjectNode) {
+  private createDocument(content: RemirrorContentType) {
+    if (isProsemirrorNode(content)) {
+      return content;
+    }
     if (isObjectNode(content)) {
       try {
         return this.schema.nodeFromJSON(content);
@@ -374,7 +383,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       ...(this.placeholder ? { 'aria-placeholder': this.placeholder.text } : {}),
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label || '',
-      class: `remirror-editor ${uniqueClass(this.uid, 'remirror')}`,
+      class: `${EDITOR_CLASS_NAME} ${uniqueClass(this.uid, 'remirror')}`,
     };
 
     return { ...defaultAttributes, ...propAttributes };
@@ -475,7 +484,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     }
   };
 
-  private setContent = (content: string | ObjectNode, triggerOnChange = false) => {
+  private setContent = (content: RemirrorContentType, triggerOnChange = false) => {
     const editorState = EditorState.create({
       schema: this.schema,
       doc: this.createDocument(content),
@@ -483,6 +492,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     });
 
     const afterUpdate = () => {
+      console.log('content updated');
       this.view.updateState(editorState);
 
       if (triggerOnChange && this.props.onChange) {
@@ -582,11 +592,20 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     }
   }
 
-  public render() {
+  private renderNodeViewPortal = (portalContainer: NodeViewPortalContainer) => {
+    this.setPortalContainer(portalContainer);
+    return <ClassNames>{this.renderProsemirrorElement(portalContainer)}</ClassNames>;
+  };
+
+  private renderProsemirrorElement = (portalContainer: NodeViewPortalContainer) => (
+    classNamesContent: ClassNamesContent<any>,
+  ) => {
     const { children } = this.props;
     if (!isRenderProp(children)) {
       throw new Error('The child argument to the Remirror component must be a function.');
     }
+
+    this.classNamesContent = classNamesContent;
 
     /* Reset the root props called status */
     this.rootPropsConfig.called = false;
@@ -603,19 +622,15 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
         <div {...this.getRootProps(getElementProps(element))}>{element}</div>
       );
     }
+    return (
+      <>
+        {element}
+        <NodeViewPortalComponent nodeViewPortalContainer={portalContainer} />
+      </>
+    );
+  };
 
-    return element ? (
-      <NodeViewPortal>
-        {portalContainer => {
-          this.setPortalContainer(portalContainer);
-          return (
-            <>
-              {element}
-              <NodeViewPortalComponent nodeViewPortalContainer={portalContainer} />
-            </>
-          );
-        }}
-      </NodeViewPortal>
-    ) : null;
+  public render() {
+    return <NodeViewPortal>{this.renderNodeViewPortal}</NodeViewPortal>;
   }
 }

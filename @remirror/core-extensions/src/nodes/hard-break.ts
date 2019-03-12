@@ -1,10 +1,5 @@
-import {
-  chainCommands,
-  exitCode,
-  NodeExtension,
-  NodeExtensionSpec,
-  SchemaNodeTypeParams,
-} from '@remirror/core';
+import { NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams } from '@remirror/core';
+import { chainCommands, exitCode } from 'prosemirror-commands';
 
 export class HardBreak extends NodeExtension {
   get name(): 'hardBreak' {

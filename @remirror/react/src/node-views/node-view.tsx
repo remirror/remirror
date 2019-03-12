@@ -3,6 +3,7 @@ import React from 'react';
 import {
   Attrs,
   Cast,
+  EDITOR_CLASS_NAME,
   isDomNode,
   isElementNode,
   NodeViewPortalContainer,
@@ -80,7 +81,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     }
 
     // Add a fixed class and a dynamic class to this node (allows for custom styles being added in configuration)
-    this.domRef.classList.add(`remirror-editor-${this.node.type.name}-node-view`, css(this.style));
+    this.domRef.classList.add(`${EDITOR_CLASS_NAME}-${this.node.type.name}-node-view`, css(this.style));
 
     this.renderReactComponent(() => this.render(this.props, this.handleRef));
     return this;

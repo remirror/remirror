@@ -2,13 +2,14 @@
 
 import React, { FunctionComponent } from 'react';
 
+import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { Bold, Italic, Underline } from '@remirror/core-extensions';
 import { defaultEffect, EpicMode, heartEffect, spawningEffect } from '@remirror/extension-epic-mode';
 import { Remirror } from '@remirror/react';
 import { Interpolation } from 'emotion';
 
 const editorStyles: Interpolation = {
-  '.remirror-editor': {
+  [`.${EDITOR_CLASS_NAME}`]: {
     border: '1px solid grey',
     minHeight: '50px',
     borderRadius: '10px',

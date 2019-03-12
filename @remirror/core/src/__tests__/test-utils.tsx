@@ -44,7 +44,7 @@ export function apply(
   result?: TaggedProsemirrorNode,
 ): [boolean, TaggedProsemirrorNode, EditorState] {
   let state = createEditorState(docNode);
-  command(state, tr => (state = state.apply(tr)));
+  command(state, tr => (state = state.apply(tr)), Cast({}));
 
   if (!pm.eq(state.doc, result || docNode)) {
     return [false, Cast<TaggedProsemirrorNode>(state.doc), state];

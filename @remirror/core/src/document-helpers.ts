@@ -1,7 +1,17 @@
-import { Mark, MarkType, NodeType, ResolvedPos } from 'prosemirror-model';
-import { EditorState, NodeSelection, Plugin } from 'prosemirror-state';
+import { Mark, MarkType, NodeType } from 'prosemirror-model';
+import { EditorState, NodeSelection, Plugin, TextSelection } from 'prosemirror-state';
 import { Cast } from './helpers';
-import { Attrs, PluginKey, Position, ProsemirrorNode, Transaction } from './types';
+import {
+  Attrs,
+  EditorSchema,
+  NodeMatch,
+  PluginKey,
+  Position,
+  ProsemirrorNode,
+  ResolvedPos,
+  Selection,
+  Transaction,
+} from './types';
 
 /**
  * Checks that a mark is active within the selected region, or the current selection point is within a
@@ -155,6 +165,9 @@ export const setPluginMeta = <GMeta>(
 export const getMatchString = (match: string | string[], index = 0) =>
   Array.isArray(match) ? match[index] : match;
 
+/**
+ * Checks whether the passed value is a valid dom node
+ */
 export const isDomNode = (node: unknown): node is Node => {
   return typeof Node === 'object'
     ? node instanceof Node
@@ -162,6 +175,24 @@ export const isDomNode = (node: unknown): node is Node => {
         typeof node === 'object' &&
         typeof Cast(node).nodeType === 'number' &&
         typeof Cast(node).nodeName === 'string';
+};
+
+export const closestElement = (node: HTMLElement | null | undefined, name: string): HTMLElement | null => {
+  if (!isElementNode(node)) {
+    return null;
+  }
+  if (!document.documentElement || !document.documentElement.contains(node)) {
+    return null;
+  }
+  const matches = node.matches ? 'matches' : Cast<'matches'>('msMatchesSelector');
+
+  do {
+    if (node[matches] && node[matches](name)) {
+      return node;
+    }
+    node = (node.parentElement || node.parentNode) as HTMLElement;
+  } while (node !== null && node.nodeType === 1);
+  return null;
 };
 
 /**
@@ -242,3 +273,52 @@ export const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, 
  */
 export const getNearestNonTextNode = (node: Node) =>
   isTextNode(node) ? (node.parentNode as HTMLElement) : (node as HTMLElement);
+
+/**
+ * Predicate checking whether the selection is a TextSelection
+ */
+export const isTextSelection = (selection: Selection): selection is TextSelection<EditorSchema> =>
+  selection instanceof TextSelection;
+
+/**
+ * Checks whether the cursor is at the end of the state.doc
+ */
+export function atTheEndOfDoc(state: EditorState): boolean {
+  const { selection, doc } = state;
+  return doc.nodeSize - selection.$to.pos - 2 === selection.$to.depth;
+}
+
+/**
+ * Checks whether the cursor is at the beginning of the state.doc
+ */
+export function atTheBeginningOfDoc(state: EditorState): boolean {
+  const { selection } = state;
+  return selection.$from.pos === selection.$from.depth;
+}
+
+export function startPositionOfParent(resolvedPos: ResolvedPos): number {
+  return resolvedPos.start(resolvedPos.depth);
+}
+
+export function endPositionOfParent(resolvedPos: ResolvedPos): number {
+  return resolvedPos.end(resolvedPos.depth) + 1;
+}
+
+export function getCursor(selection: Selection): ResolvedPos | null | undefined {
+  return isTextSelection(selection) ? selection.$cursor : undefined;
+}
+
+/**
+ * Checks to see whether the name of the passed node matches anything in the list provided.
+ */
+export const nodeNameMatchesList = (node: ProsemirrorNode, nodeMatches: NodeMatch[]) => {
+  const name = node.type.name;
+  let outcome = false;
+  for (const checker of nodeMatches) {
+    outcome = typeof checker === 'function' ? checker(name) : checker === name;
+    if (outcome) {
+      break;
+    }
+  }
+  return outcome;
+};

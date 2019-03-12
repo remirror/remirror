@@ -27,12 +27,11 @@
     "dev": "lerna run dev --parallel",
     "dev:docs": "docz dev",
     "fix": "run-s fix:lint:* fix:*",
-    "fix:lint:babel": "eslint **/.babelrc.js --fix",
-    "fix:lint:js": "eslint support *.js @remirror docs --fix",
+    "fix:lint:babel": "yarn lint:babel --fix",
+    "fix:lint:js": "yarn lint:js --fix",
     "fix:lint:ts": "lerna run lint --parallel -- --fix",
-    "fix:pkgjson": "prettier-package-json --write package.json **/package.json",
     "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md,mdx}\"",
-    "fix:support": "tslint --project support/tsconfig.json --config tslint.json --fix",
+    "fix:support": "yarn lint:support --fix",
     "frozen": "yarn --frozen-lockfile install",
     "if-clean": "node support/scripts/run-if-clean.js",
     "if-config": "node support/scripts/run-if-config.js",
@@ -41,7 +40,7 @@
     "lint": "run-s lint:*",
     "lint:babel": "eslint **/.babelrc.js",
     "lint:js": "eslint support *.js @remirror docs",
-    "lint:support": "tslint --project support/tsconfig.json --config tslint.json",
+    "lint:support": "tslint --project support/tsconfig.json --config support/tslint.json",
     "lint:ts": "lerna run lint --parallel",
     "prepublish:alpha": "run-s ci:checks:all",
     "publish:alpha": "lerna publish prerelease --preid=alpha --exact",
@@ -114,20 +113,22 @@
     "**/.babelrc.js": [
       "eslint --fix",
       "git add"
-    ],
-    "package.json": [
-      "prettier-package-json --write",
-      "git add"
-    ],
-    "**/package.json": [
-      "prettier-package-json --write",
-      "git add"
     ]
   },
   "resolutions": {
     "react": "16.8.4",
     "react-dom": "16.8.4",
     "@babel/parser": "7.3.4",
+    "@emotion/babel-preset-css-prop": "10.0.7",
+    "@emotion/css": "10.0.7",
+    "@emotion/cache": "10.0.7",
+    "@emotion/core": "10.0.7",
+    "@emotion/styled": "10.0.7",
+    "@emotion/styled-base": "10.0.7",
+    "babel-plugin-emotion": "10.0.7",
+    "create-emotion": "10.0.7",
+    "emotion": "10.0.7",
+    "emotion-theming": "10.0.7",
     "jsdom": "13.2.0",
     "hoist-non-react-statics": "3.3.0"
   },

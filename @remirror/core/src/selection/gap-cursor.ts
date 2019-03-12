@@ -1,14 +1,11 @@
-import { EditorSchema, Mapping, PMNode } from '@remirror/core';
 import { ResolvedPos, Schema, Slice } from 'prosemirror-model';
 import { Selection, SelectionBookmark } from 'prosemirror-state';
-import { isValidTargetNode } from './utils';
+import { GAP_CURSOR_IGNORED_NODE, Side } from '../constants';
+import { nodeNameMatchesList } from '../document-helpers';
+import { Mapping } from '../types/aliases';
+import { EditorSchema, NodeMatch, PMNode } from '../types/base';
 
-export enum Side {
-  LEFT = 'left',
-  RIGHT = 'right',
-}
-
-export const JSON_ID = 'gapcursor';
+export const GAP_CURSOR_ID = 'gapCursor';
 
 export class GapCursorSelection<GSchema extends Schema = EditorSchema> extends Selection<GSchema> {
   public readonly visible: boolean = false;
@@ -22,12 +19,30 @@ export class GapCursorSelection<GSchema extends Schema = EditorSchema> extends S
     super($pos, $pos);
   }
 
+  private static privateIgnoredNodes: NodeMatch[] = GAP_CURSOR_IGNORED_NODE;
+
+  static get ignoredNodes(): NodeMatch[] {
+    return GapCursorSelection.privateIgnoredNodes;
+  }
+
+  public static setIgnoredNodes(matchers: NodeMatch[]) {
+    GapCursorSelection.privateIgnoredNodes = matchers;
+  }
+
+  public static resetIgnoredNodes() {
+    GapCursorSelection.privateIgnoredNodes = GAP_CURSOR_IGNORED_NODE;
+  }
+
+  public static isValidTargetNode(node?: PMNode | null): boolean {
+    return !!node && !nodeNameMatchesList(node, GapCursorSelection.ignoredNodes);
+  }
+
   public static valid($pos: ResolvedPos) {
     const { parent, nodeBefore, nodeAfter } = $pos;
 
-    const targetNode = isValidTargetNode(nodeBefore)
+    const targetNode = GapCursorSelection.isValidTargetNode(nodeBefore)
       ? nodeBefore
-      : isValidTargetNode(nodeAfter)
+      : GapCursorSelection.isValidTargetNode(nodeAfter)
       ? nodeAfter
       : null;
 
@@ -52,7 +67,6 @@ export class GapCursorSelection<GSchema extends Schema = EditorSchema> extends S
 
     let pos = $pos.pos;
 
-    // TODO: Fix any, potential issue. ED-5048
     let next: any = null;
 
     // Scan up from this position
@@ -114,21 +128,21 @@ export class GapCursorSelection<GSchema extends Schema = EditorSchema> extends S
   }
 
   public getBookmark(): SelectionBookmark<GSchema> {
-    return new GapBookmark(this.anchor);
+    return new GapCursorBookmark(this.anchor);
   }
 
   public toJSON() {
-    return { pos: this.head, type: JSON_ID };
+    return { pos: this.head, type: GAP_CURSOR_ID };
   }
 }
 
-Selection.jsonID(JSON_ID, GapCursorSelection);
+Selection.jsonID(GAP_CURSOR_ID, GapCursorSelection);
 
-export class GapBookmark<GSchema extends Schema = EditorSchema> implements SelectionBookmark<GSchema> {
+export class GapCursorBookmark<GSchema extends Schema = EditorSchema> implements SelectionBookmark<GSchema> {
   constructor(private readonly pos: number) {}
 
   public map(mapping: Mapping): SelectionBookmark<GSchema> {
-    return new GapBookmark(mapping.map(this.pos));
+    return new GapCursorBookmark(mapping.map(this.pos));
   }
 
   public resolve(doc: PMNode<GSchema>): Selection<GSchema> {
@@ -136,3 +150,6 @@ export class GapBookmark<GSchema extends Schema = EditorSchema> implements Selec
     return GapCursorSelection.valid($pos) ? new GapCursorSelection($pos) : Selection.near($pos);
   }
 }
+
+export const isGapCursorSelection = (selection: Selection): selection is GapCursorSelection =>
+  selection instanceof GapCursorSelection;

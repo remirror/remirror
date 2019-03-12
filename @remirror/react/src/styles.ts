@@ -1,3 +1,4 @@
+import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { ObjectInterpolation } from 'emotion';
 
 export interface PlaceholderContent {
@@ -6,13 +7,13 @@ export interface PlaceholderContent {
 }
 
 export const defaultStyles = (placeholder?: PlaceholderContent): ObjectInterpolation<any> => ({
-  '.remirror-editor': {
+  [`.${EDITOR_CLASS_NAME}`]: {
     caretColor: 'currentColor',
     wordWrap: 'break-word',
     whiteSpace: 'pre-wrap',
     overflowWrap: 'break-word',
   },
-  '.remirror-editor:focus': {
+  [`.${EDITOR_CLASS_NAME}:focus`]: {
     outline: 'none',
   },
   ...(placeholder

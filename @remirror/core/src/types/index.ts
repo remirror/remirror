@@ -1,24 +1,8 @@
-import { InputRule as PMInputRule } from 'prosemirror-inputrules';
-import {
-  Mark as PMMark,
-  MarkSpec,
-  MarkType,
-  Node as PMNode,
-  NodeSpec,
-  NodeType,
-  ResolvedPos as PMResolvedPos,
-  Schema,
-} from 'prosemirror-model';
-import {
-  EditorState as PMEditorState,
-  Plugin as PMPlugin,
-  PluginKey as PMPluginKey,
-  Selection as PMSelection,
-  Transaction as PMTransaction,
-} from 'prosemirror-state';
-import { Mapping as PMMapping } from 'prosemirror-transform';
-import { EditorView as PMEditorView } from 'prosemirror-view';
-import { NodeViewPortalContainer } from './portal-container';
+import { MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType } from 'prosemirror-model';
+import { Plugin as PMPlugin } from 'prosemirror-state';
+import { NodeViewPortalContainer } from '../portal-container';
+import { EditorView, InputRule, Mark, Selection, Transaction } from './aliases';
+import { EditorSchema, EditorState, ProsemirrorNode } from './base';
 
 /**
  * An object with string keys and values of type `any`
@@ -46,7 +30,11 @@ export type DispatchFunction = (tr: Transaction) => void;
  * When no dispatch callback is passed, the command should do a 'dry run', determining whether it is applicable,
  * but not actually doing anything
  */
-export type CommandFunction = (state: EditorState, dispatch?: DispatchFunction) => boolean;
+export type CommandFunction = (
+  state: EditorState,
+  dispatch: DispatchFunction | undefined,
+  view: EditorView,
+) => boolean;
 
 /**
  * A map of keyboard bindings and their corresponding command functions (a.k.a editing actions).
@@ -85,25 +73,9 @@ export type MarkExtensionSpec = Omit<MarkSpec, 'toDOM'> & {
   toDOM?: ((mark: Mark) => DOMOutputSpec) | null;
 };
 
-/**
- * Alias type for better readability throughout the codebase.
- */
-export type ProsemirrorNode = PMNode<EditorSchema>;
-export type ProsemirrorPlugin<GPluginState = any> = PMPlugin<GPluginState, EditorSchema>;
-export type EditorSchema<GNodes extends string = string, GMarks extends string = string> = Schema<
-  GNodes,
-  GMarks
->;
-export type EditorState<GSchema extends EditorSchema = EditorSchema> = PMEditorState<GSchema>;
-export { PMNode, PMPlugin };
-
 export interface SchemaParams {
   schema: EditorSchema;
   getPortalContainer: () => NodeViewPortalContainer;
-  getEditorState: () => EditorState;
-}
-
-export interface SchemaWithStateParams extends SchemaParams {
   getEditorState: () => EditorState;
 }
 
@@ -261,13 +233,5 @@ export type MakeReadonly<GType extends {}, GKeys extends keyof GType> = Omit<GTy
  */
 export type Omit<GType, GKeys extends keyof GType> = Pick<GType, Exclude<keyof GType, GKeys>>;
 
-/* Type Aliases */
-
-export type EditorView = PMEditorView<EditorSchema>;
-export type Selection = PMSelection<EditorSchema>;
-export type Transaction = PMTransaction<EditorSchema>;
-export type PluginKey<GPluginState = any> = PMPluginKey<GPluginState, EditorSchema>;
-export type Mark = PMMark<EditorSchema>;
-export type ResolvedPos = PMResolvedPos<EditorSchema>;
-export type InputRule = PMInputRule<EditorSchema>;
-export type Mapping = PMMapping;
+export * from './aliases';
+export * from './base';

@@ -6,6 +6,7 @@ import {
   OffsetCalculator,
   PlainObject,
   Position,
+  ProsemirrorNode,
   RawMenuPositionData,
   RemirrorActions,
   ShouldRenderMenu,
@@ -210,3 +211,11 @@ export interface PlaceholderConfig {
   className: string;
   style: ObjectInterpolation<undefined>;
 }
+
+/**
+ * Content can either be
+ * - html string
+ * - JSON object matching Prosemirror expected shape
+ * - A top level ProsemirrorNode
+ */
+export type RemirrorContentType = string | ObjectNode | ProsemirrorNode;

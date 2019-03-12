@@ -1,17 +1,17 @@
 {
-  "name": "@remirror/core-extensions",
-  "description": "Core extensions for the remirror wysiwyg editor",
+  "name": "@remirror/extension-gap-cursor",
+  "description": "Mention extension for the remirror wysiwyg editor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-extensions",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/extension-gap-cursor",
   "repository": {
     "type": "git",
     "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/core-extensions"
+    "directory": "@remirror/extension-gap-cursor"
   },
   "version": "0.0.1-alpha.5",
   "main": "lib/index.js",
-  "module": "lib/dist/core-extensions.esm.js",
+  "module": "lib/dist/extension-gap-cursor.esm.js",
   "files": [
     "lib",
     "src"
@@ -31,29 +31,23 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@remirror/core": "0.0.1-alpha.5",
-    "@types/prosemirror-history": "^1.0.1",
-    "prosemirror-utils": "^0.7.6",
-    "prosemirror-history": "^1.0.4"
+    "@types/lodash": "^4.14.122",
+    "lodash": "^4.17.11"
   },
   "peerDependencies": {
-    "@types/prosemirror-inputrules": "^1.0.2",
-    "prosemirror-inputrules": "^1.0.1",
-    "@types/prosemirror-schema-list": "^1.0.1",
-    "prosemirror-schema-list": "^1.0.2",
-    "@types/prosemirror-model": "^1.7.0",
+    "emotion": "^10.0.7",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.3.1",
-    "prosemirror-model": "^1.7.0",
     "prosemirror-state": "^1.2.2",
-    "@types/prosemirror-commands": "^1.0.1",
-    "prosemirror-commands": "^1.0.7",
-    "prosemirror-view": "^1.8.3"
+    "prosemirror-view": "^1.8.3",
+    "@types/prosemirror-model": "^1.7.0",
+    "prosemirror-model": "^1.7.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "umd": "lib/dist/core-extensions.umd.js",
-  "umd:min": "lib/dist/core-extensions.umd.min.js",
+  "umd": "lib/dist/extension-gap-cursor.umd.js",
+  "umd:min": "lib/dist/extension-gap-cursor.umd.min.js",
   "umdGlobals": {
     "@remirror/core": "RemirrorCore"
   }

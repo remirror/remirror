@@ -74,6 +74,9 @@ export interface RefsNode extends Node {
   refs: Refs;
 }
 
+// Helpers
+const isEven = (n: number) => n % 2 === 0;
+
 /**
  * Create a text node.
  *
@@ -85,9 +88,6 @@ export function text(value: string, schema: Schema): RefsContentItem {
   let stripped = '';
   let textIndex = 0;
   const refs: Refs = {};
-
-  // Helpers
-  const isEven = (n: number) => n % 2 === 0;
 
   for (const match of findMatches(value, /([\\]+)?{(\w+|<|>|<>|<cell|cell>)}/g)) {
     const [refToken, skipChars, refName] = match;
@@ -131,6 +131,9 @@ export function offsetRefs(refs: Refs, offset: number): Refs {
   return result;
 }
 
+const isRefsTracker = (n: unknown): n is RefsTracker => typeof n === 'object' && n instanceof RefsTracker;
+const isRefsNode = (n: unknown): n is RefsNode => !isRefsTracker(n);
+
 /**
  * Given a collection of nodes, sequence them in an array and return the result
  * along with the updated refs.
@@ -139,11 +142,6 @@ export function sequence(...content: RefsContentItem[]) {
   let position = 0;
   let refs = {} as Refs;
   const nodes = [] as RefsNode[];
-
-  // It's bizarre that this is necessary. An if/else in the for...of should have
-  // sufficient but it did not work at the time of writing.
-  const isRefsTracker = (n: any): n is RefsTracker => n instanceof RefsTracker;
-  const isRefsNode = (n: any): n is RefsNode => !isRefsTracker(n);
 
   for (const node of content) {
     if (isRefsTracker(node)) {

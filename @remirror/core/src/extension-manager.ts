@@ -1,3 +1,4 @@
+import { Interpolation } from 'emotion';
 import { InputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
@@ -63,8 +64,7 @@ export class ExtensionManager {
   }
 
   /**
-   * Currently an extension can have only one pluginKey but multiple plugins - which is a potential bug.
-   * TODO enhance pluginKey assignment to ensure name isn't already in use
+   * Get all the extension plugin keys
    */
   public get pluginKeys() {
     const pluginKeys: Record<string, PluginKey> = {};
@@ -91,6 +91,14 @@ export class ExtensionManager {
     });
 
     return plugins;
+  }
+
+  public styles(params: SchemaParams): Interpolation[] {
+    const extensionStyles = this.extensions
+      .filter(hasExtensionProperty('styles'))
+      .map(extensionPropertyMapper('styles', params));
+
+    return extensionStyles;
   }
 
   /**
@@ -187,7 +195,7 @@ export class ExtensionManager {
           return false;
         }
         params.view.focus();
-        return method(attrs)(params.view.state, params.view.dispatch);
+        return method(attrs)(params.view.state, params.view.dispatch, params.view);
       },
       checkUniqueness: true,
       arrayTransformer: (fns, params, methodFactory) => () => {

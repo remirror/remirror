@@ -1,9 +1,10 @@
 import React, { PureComponent } from 'react';
 
 import { css, Interpolation } from '@emotion/core';
-import { AnyExtension, Attrs, EditorView, Omit } from '@remirror/core';
+import { AnyExtension, Attrs, EDITOR_CLASS_NAME, EditorView, Omit } from '@remirror/core';
 import { EmojiNode, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
+import { GapCursor } from '@remirror/extension-gap-cursor';
 import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
 import { Remirror, RemirrorProps } from '@remirror/react';
 import { Data, EmojiSet } from 'emoji-mart';
@@ -76,6 +77,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
 
   private createExtensions() {
     return [
+      new GapCursor(),
       new MentionNode({
         type: 'at',
         extraAttrs: ['href', 'role'],
@@ -441,23 +443,25 @@ const EmojiPickerWrapper = styled.div`
   align-items: center;
 `;
 
+const editorClass = `.${EDITOR_CLASS_NAME}`;
+
 const RemirrorWrapper = styled.div<{ extra: Interpolation[] }>`
   position: relative;
   & * {
     box-sizing: border-box;
   }
 
-  .remirror-editor:focus {
+  ${editorClass}:focus {
     outline: none;
   }
 
-  .remirror-editor p {
+  ${editorClass} p {
     margin: 0;
     letter-spacing: 0.6px;
     color: black;
   }
 
-  .remirror-editor {
+  ${editorClass} {
     box-sizing: border-box;
     position: relative;
     border: 1px solid ${({ theme }) => theme.colors.border};
@@ -474,17 +478,17 @@ const RemirrorWrapper = styled.div<{ extra: Interpolation[] }>`
     font-weight: ${({ theme }) => theme.font.weight};
   }
 
-  .remirror-editor a {
+  ${editorClass} a {
     text-decoration: none !important;
     color: ${props => props.theme.colors.primary};
   }
 
-  .remirror-editor a.mention {
+  ${editorClass} a.mention {
     pointer-events: none;
     cursor: default;
   }
 
-  .remirror-editor .ProseMirror-selectednode {
+  ${editorClass} .ProseMirror-selectednode {
     background-color: rgb(245, 248, 250);
   }
 

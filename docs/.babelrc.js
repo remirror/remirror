@@ -19,6 +19,7 @@ module.exports = {
           '@remirror/extension-emoji': '../@remirror/extension-emoji/src',
           '@remirror/extension-enhanced-link': '../@remirror/extension-enhanced-link/src',
           '@remirror/extension-epic-mode': '../@remirror/extension-epic-mode/src',
+          '@remirror/extension-gap-cursor': '../@remirror/extension-gap-cursor/src',
           '@remirror/extension-mention': '../@remirror/extension-mention/src',
           '@remirror/react': '../@remirror/react/src',
           '@remirror/renderer-react': '../@remirror/renderer-react/src',

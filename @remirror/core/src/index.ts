@@ -7,5 +7,7 @@ export * from './commands';
 export * from './nodes';
 export * from './document-helpers';
 export * from './helpers';
+export * from './utils';
 export * from './portal-container';
 export * from './constants';
+export * from './selection';

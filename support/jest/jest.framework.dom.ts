@@ -1,8 +1,12 @@
 import { toHaveNoViolations } from 'jest-axe';
 import 'jest-dom/extend-expect';
+import { createSerializer, matchers } from 'jest-emotion';
 import 'react-testing-library/cleanup-after-each';
 
+expect.addSnapshotSerializer(createSerializer({}));
+
 expect.extend(toHaveNoViolations);
+expect.extend(matchers);
 
 /* To fix Prosemirror tests in jsdom */
 document.getSelection = () => {
@@ -40,4 +44,16 @@ if (typeof document !== 'undefined') {
 if (typeof document !== 'undefined' && typeof window !== 'undefined') {
   (document.documentElement as any).clientWidth = window.innerWidth;
   (document.documentElement as any).clientHeight = window.innerHeight;
+}
+
+if (document) {
+  document.createRange = () =>
+    ({
+      setStart: () => {},
+      setEnd: () => {},
+      commonAncestorContainer: {
+        nodeName: 'BODY',
+        ownerDocument: document,
+      } as Node,
+    } as any);
 }

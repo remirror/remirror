@@ -1,4 +1,5 @@
 import { AnyExtension, Extension } from './extension';
+import { Cast } from './helpers';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
 import { AnyFunction, CommandParams, ExtensionType, FlexibleConfig, SchemaParams } from './types';
@@ -125,7 +126,7 @@ export const hasExtensionProperty = <GExt extends AnyExtension, GKey extends key
   extension: GExt,
 ): extension is GExt & Pick<Required<GExt>, GKey> => Boolean(extension[property]);
 
-type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys' | 'plugin';
+type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys' | 'plugin' | 'styles';
 
 /**
  * Looks at the passed property and calls the extension with the required parameters.
@@ -136,14 +137,16 @@ export const extensionPropertyMapper = <
 >(
   property: GExtMethodProp,
   params: SchemaParams,
-) => (extension: GExt) => {
+) => (extension: GExt): GExt[GExtMethodProp] extends AnyFunction ? ReturnType<GExt[GExtMethodProp]> : {} => {
   const extensionMethod = extension[property];
   if (!extensionMethod) {
-    return {};
+    return Cast({});
   }
-  return isNodeExtension(extension)
-    ? extensionMethod.bind(extension)({ ...params, type: params.schema.nodes[extension.name] })
-    : isMarkExtension(extension)
-    ? extensionMethod.bind(extension)!({ ...params, type: params.schema.marks[extension.name] })
-    : extensionMethod.bind(extension)!(params);
+  return Cast(
+    isNodeExtension(extension)
+      ? extensionMethod.bind(extension)({ ...params, type: params.schema.nodes[extension.name] })
+      : isMarkExtension(extension)
+      ? extensionMethod.bind(extension)!({ ...params, type: params.schema.marks[extension.name] })
+      : extensionMethod.bind(extension)!(params),
+  );
 };

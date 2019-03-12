@@ -1,12 +1,18 @@
-import { Extension } from '@remirror/core';
+import {
+  Extension,
+  findPositionOfNodeBefore,
+  GAP_CURSOR_ID,
+  GapCursorSelection,
+  isGapCursorSelection,
+  Side,
+} from '@remirror/core';
 import { GapCursorOptions } from './types';
 
 import { EditorState, Plugin } from 'prosemirror-state';
-import { findPositionOfNodeBefore } from 'prosemirror-utils';
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view';
 import { deleteNode, setGapCursorAtPos } from './actions';
 import { Direction } from './direction';
-import { GapCursorSelection, JSON_ID, Side } from './selection';
+import { GAP_CURSOR_CLASS_NAME } from './styles';
 import { fixCursorAlignment, isIgnoredClick } from './utils';
 
 interface CreateGapCursorParams {
@@ -21,7 +27,7 @@ export const createGapCursorPlugin = ({ ctx }: CreateGapCursorParams) => {
     view: () => {
       return {
         update(view: EditorView) {
-          if (view.state.selection instanceof GapCursorSelection) {
+          if (isGapCursorSelection(view.state.selection)) {
             fixCursorAlignment(view);
           }
         },
@@ -30,10 +36,10 @@ export const createGapCursorPlugin = ({ ctx }: CreateGapCursorParams) => {
 
     props: {
       decorations: ({ doc, selection }: EditorState) => {
-        if (selection instanceof GapCursorSelection) {
+        if (isGapCursorSelection(selection)) {
           const { $from, side } = selection;
           const node = document.createElement('span');
-          node.className = `ProseMirror-gapcursor ${side === Side.LEFT ? '-left' : '-right'}`;
+          node.className = `${GAP_CURSOR_CLASS_NAME} ${side === Side.LEFT ? '-left' : '-right'}`;
           node.appendChild(document.createElement('span'));
 
           // render decoration DOM node always to the left of the target node even if selection points to the right
@@ -47,7 +53,7 @@ export const createGapCursorPlugin = ({ ctx }: CreateGapCursorParams) => {
           }
 
           return DecorationSet.create(doc, [
-            Decoration.widget(position, node, { key: `${JSON_ID}`, side: -1 }),
+            Decoration.widget(position, node, { key: `${GAP_CURSOR_ID}`, side: -1 }),
           ]);
         }
 
@@ -77,7 +83,7 @@ export const createGapCursorPlugin = ({ ctx }: CreateGapCursorParams) => {
           // this ensures the correct side of the gap cursor in case of clicking in between two block nodes
           const leftSideOffsetX = 20;
           const side = event.offsetX > leftSideOffsetX ? Side.RIGHT : Side.LEFT;
-          return setGapCursorAtPos(position, side)(view.state, view.dispatch);
+          return setGapCursorAtPos(position, side)(view.state, view.dispatch, view);
         }
         return false;
       },
@@ -94,7 +100,7 @@ export const createGapCursorPlugin = ({ ctx }: CreateGapCursorParams) => {
             view.state.selection instanceof GapCursorSelection
           ) {
             event.preventDefault();
-            return deleteNode(Direction.BACKWARD)(view.state, view.dispatch);
+            return deleteNode(Direction.BACKWARD)(view.state, view.dispatch, view);
           }
 
           return false;

@@ -1,6 +1,7 @@
 import {
   Attrs,
   Cast,
+  EDITOR_CLASS_NAME,
   ExtensionCommandFunction,
   NodeExtension,
   NodeExtensionOptions,
@@ -35,7 +36,7 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
       transformAttrs: (attrs: Pick<EmojiNodeAttrs, 'name'>) => ({
         'aria-label': `Emoji: ${attrs.name}`,
         title: `Emoji: ${attrs.name}`,
-        class: `remirror-editor-emoji-node${this.options.className ? ' ' + this.options.className : ''}`,
+        class: `${EDITOR_CLASS_NAME}-emoji-node${this.options.className ? ' ' + this.options.className : ''}`,
       }),
       className: '',
       size: '1.1em',
