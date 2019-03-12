@@ -16,6 +16,7 @@ import { NodeViewPortalContainer } from './portal-container';
 import {
   ActionMethods,
   Attrs,
+  CommandFunction,
   CommandParams,
   EditorSchema,
   ExtensionBooleanFunction,
@@ -104,11 +105,32 @@ export class ExtensionManager {
   /**
    * Retrieve all keymaps (how the editor responds to keyboard commands).
    */
-  public keymaps(params: SchemaParams): ProsemirrorPlugin[] {
+  public keymaps(params: SchemaParams) {
     const extensionKeymaps = this.extensions
       .filter(hasExtensionProperty('keys'))
       .map(extensionPropertyMapper('keys', params));
-    return extensionKeymaps.map(keys => keymap(keys));
+
+    const mappedKeys: Record<string, CommandFunction> = {};
+
+    for (const extensionKeymap of extensionKeymaps) {
+      console.log(extensionKeymap);
+      for (const key in extensionKeymap) {
+        if (!extensionKeymap.hasOwnProperty(key)) {
+          continue;
+        }
+        const oldCmd = mappedKeys[key];
+        let newCmd = extensionKeymap[key];
+        if (oldCmd) {
+          newCmd = (state, dispatch, view) => {
+            return oldCmd(state, dispatch, view) || extensionKeymap[key](state, dispatch, view);
+          };
+        }
+        mappedKeys[key] = newCmd;
+      }
+    }
+    console.log(mappedKeys);
+    return [keymap(mappedKeys)];
+    // return extensionKeymaps.map(keys => keymap(keys));
   }
 
   /**

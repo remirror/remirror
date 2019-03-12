@@ -122,7 +122,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   private get builtInExtensions() {
     return !this.props.usesBuiltInExtensions
       ? []
-      : [new Doc(), new Text(), new Paragraph(), new History(), new Placeholder(), new Composition()];
+      : [new Composition(), new Doc(), new Text(), new Paragraph(), new History(), new Placeholder()];
   }
 
   private get plugins(): ProsemirrorPlugin[] {
@@ -414,11 +414,11 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     if (dispatchTransaction) {
       dispatchTransaction(transaction);
     }
-    const { state, transactions } = this.view.state.applyTransaction(transaction);
+    const { state, transactions } = this.state.editorState.applyTransaction(transaction);
     this.setState({ editorState: state }, () => {
       // For some reason moving the update state here fixes a bug
       this.view.updateState(state);
-      if (transactions.some(tr => tr.docChanged) && onChange) {
+      if (onChange && transactions.some(tr => tr.docChanged)) {
         onChange({ ...this.eventListenerParams, state });
       }
     });

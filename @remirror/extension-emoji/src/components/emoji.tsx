@@ -18,15 +18,17 @@ export const DefaultEmoji: FC<DefaultEmojiProps> = ({ node, set, size, emojiData
       {native}
     </span>
   ) : (
-    <NimbleEmoji
-      data={emojiData}
-      emoji={id}
-      tooltip={true}
-      set={set}
-      size={Cast(size)}
-      skin={skin || undefined}
-    >
-      &nbsp;
-    </NimbleEmoji>
+    <span contentEditable={false}>
+      <NimbleEmoji
+        data={emojiData}
+        emoji={id}
+        tooltip={true}
+        set={set}
+        size={Cast(size)}
+        skin={skin || undefined}
+      >
+        &nbsp;
+      </NimbleEmoji>
+    </span>
   );
 };

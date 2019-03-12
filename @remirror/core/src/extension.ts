@@ -47,7 +47,7 @@ export abstract class Extension<GOptions extends {} = {}, GType = never> {
     return this.pk;
   }
 
-  get defaultOptions(): Partial<GOptions> {
+  protected get defaultOptions(): Partial<GOptions> {
     return {};
   }
 }

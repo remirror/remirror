@@ -12,7 +12,9 @@ import {
   Cast,
   EditorView,
   Extension,
+  getPluginState,
   isTextSelection,
+  KeyboardBindings,
   NodeMatch,
   nodeNameMatchesList,
   SchemaParams,
@@ -27,6 +29,25 @@ export interface CompositionOptions {
   ensureNodeDeletion?: NodeMatch[];
 }
 
+class CompositionState {
+  private _deleteInProgress: boolean = false;
+
+  /** Keeps tracks of whether a composition action is happening now or not */
+  get deleteInProgress(): boolean {
+    return this._deleteInProgress;
+  }
+
+  public startDelete() {
+    console.log('starting delete');
+    this._deleteInProgress = true;
+  }
+
+  public endDelete() {
+    console.log('ending delete');
+    this._deleteInProgress = false;
+  }
+}
+
 export class Composition extends Extension {
   get name(): 'composition' {
     return 'composition';
@@ -38,10 +59,44 @@ export class Composition extends Extension {
     };
   }
 
+  // public keys(): KeyboardBindings {
+  //   return {
+  //     Backspace: (state, dispatch, view) => {
+  //       console.log('BACKSPACE HAPPENING');
+  //       const pluginState = getPluginState<CompositionState>(this.pluginKey, state);
+  //       if (pluginState.deleteInProgress) {
+  //         // pluginState.endDelete();
+  //         return true;
+  //       }
+  //       return false;
+  //     },
+  //   };
+  // }
+
   public plugin({  }: SchemaParams) {
     return new Plugin({
       key: this.pluginKey,
+      appendTransaction(_a, _b, state) {
+        const { from, to } = state.selection;
+        console.log('Current selection', from, to);
+      },
+      // state: {
+      //   init: () => new CompositionState(),
+      //   apply: (transaction, value: CompositionState, oldState, newState) => {
+      //     return value;
+      //   },
+      // },
       props: {
+        handleKeyDown: (view, event) => {
+          if (event.keyCode === 8) {
+            console.log('key down event happening');
+          }
+          return false;
+        },
+        handleKeyPress: (view, event) => {
+          console.log('key PRESS event happening');
+          return false;
+        },
         handleDOMEvents: {
           /**
            * Borrowed from https://bitbucket.org/atlassian/atlaskit-mk-2/src/14c0461025a93936d83117ccdd5b34e3623b7a16/packages/editor/editor-core/src/plugins/composition/index.ts?at=master&fileviewer=file-view-default
@@ -52,13 +107,24 @@ export class Composition extends Extension {
            * @see https://github.com/ProseMirror/prosemirror/issues/543
            */
           beforeinput: (view, ev: Event) => {
+            console.log('beforeinput running', ev);
             const event = Cast<InputEvent>(ev);
             if (event.inputType === 'deleteContentBackward') {
+              // const pluginState = getPluginState<CompositionState>(this.pluginKey, view.state);
+              // pluginState.startDelete();
               console.log('deleting content backwards');
               return patchDeleteContentBackward(this.options, view, event);
             }
 
             return true;
+          },
+          compositionstart: (view, event) => {
+            console.log('composition STARTED', event);
+            return false;
+          },
+          compositionend: (view, event) => {
+            console.log('composition ENDED', event);
+            return false;
           },
         },
       },
@@ -82,15 +148,17 @@ export const patchDeleteContentBackward = (
   event: InputEvent,
 ) => {
   const { state, dispatch } = view;
-  const { $from } = state.selection;
+  const { $from, from, to } = state.selection;
   const { ensureNodeDeletion } = options;
+  const { tr, selection } = state;
+
+  console.log('current selection', from, to);
 
   /**
    * If text contains marks, composition events won't delete any characters.
    */
   if ($from.nodeBefore && $from.nodeBefore.type.name === 'text' && $from.nodeBefore.marks.length) {
     event.preventDefault();
-    const tr = state.tr;
     dispatch(
       tr
         .delete($from.pos - 1, $from.pos)
@@ -106,24 +174,26 @@ export const patchDeleteContentBackward = (
    */
   if ($from.nodeBefore && nodeNameMatchesList($from.nodeBefore, ensureNodeDeletion)) {
     event.preventDefault();
-    const tr = state.tr;
-    dispatch(
-      tr
-        .delete($from.pos - $from.nodeBefore.nodeSize, $from.pos)
-        .setSelection(Selection.near(tr.doc.resolve(tr.mapping.map($from.pos - $from.nodeBefore.nodeSize)))),
+    console.log('node size', $from.nodeBefore.nodeSize);
+    // console.log('deleting position', $from.pos - $from.nodeBefore.nodeSize, $from.pos);
+    tr.delete($from.pos - $from.nodeBefore.nodeSize, $from.pos);
+    const newSelection = Selection.near(
+      tr.doc.resolve(tr.mapping.map($from.pos - $from.nodeBefore.nodeSize)),
     );
+    // console.log(newSelection, newSelection.from);
+    tr.setSelection(newSelection);
+    dispatch(tr);
     return true;
   }
 
   /**
    * This block caters for highlighting the defined nodes.
    */
-  const { selection } = state;
   if (
     isTextSelection(selection) &&
     selection.$cursor === null &&
     $from.nodeAfter &&
-    ensureNodeDeletion.indexOf($from.nodeAfter.type.name) !== -1
+    nodeNameMatchesList($from.nodeBefore, ensureNodeDeletion)
   ) {
     event.preventDefault();
     dispatch(state.tr.deleteSelection());
