@@ -30,8 +30,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "emotion": "^10.0.7",
-    "@emotion/core": "^10.0.7",
+    "@emotion/core": "^10.0.9",
     "@types/nanoevents": "1.0.0",
     "@types/nanoid": "1.2.1",
     "@types/prosemirror-commands": "^1.0.1",
@@ -41,6 +40,7 @@
     "@types/prosemirror-schema-list": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-transform": "^1.1.0",
+    "emotion": "^10.0.9",
     "nanoevents": "1.0.8",
     "nanoid": "2.0.1",
     "prosemirror-commands": "^1.0.7",

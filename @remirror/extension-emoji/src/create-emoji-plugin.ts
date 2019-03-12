@@ -2,7 +2,7 @@ import { EditorSchema, NodeViewPortalContainer } from '@remirror/core';
 import { ReactNodeView } from '@remirror/react';
 import { Data, EmojiSet } from 'emoji-mart';
 import emojiRegex from 'emoji-regex/es2015/text';
-import { css, Interpolation } from 'emotion';
+import { Interpolation } from 'emotion';
 import { NodeType } from 'prosemirror-model';
 import { Plugin, PluginKey, Transaction } from 'prosemirror-state';
 import { ComponentType } from 'react';
@@ -35,7 +35,7 @@ export interface CreateEmojiPluginParams {
   style: Interpolation;
 }
 
-const defaultStyle = css`
+const defaultStyle = `
   user-select: all;
   display: inline-block;
 
@@ -54,7 +54,7 @@ export const createEmojiPlugin = ({
   type,
   style,
 }: CreateEmojiPluginParams) => {
-  const dynamicStyle = css`
+  const dynamicStyle = `
     span {
       height: ${size};
       width: ${size};
@@ -72,7 +72,7 @@ export const createEmojiPlugin = ({
             size,
             emojiData,
           },
-          style: css([defaultStyle, dynamicStyle, style]),
+          style: [defaultStyle, dynamicStyle, style],
         }),
       },
       handleTextInput(view, from, to, text) {

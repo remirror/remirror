@@ -119,17 +119,7 @@
     "react": "16.8.4",
     "react-dom": "16.8.4",
     "@babel/parser": "7.3.4",
-    "@emotion/babel-preset-css-prop": "10.0.7",
-    "@emotion/css": "10.0.7",
-    "@emotion/cache": "10.0.7",
-    "@emotion/core": "10.0.7",
-    "@emotion/styled": "10.0.7",
-    "@emotion/styled-base": "10.0.7",
-    "babel-plugin-emotion": "10.0.7",
-    "create-emotion": "10.0.7",
-    "emotion": "10.0.7",
-    "emotion-theming": "10.0.7",
-    "jsdom": "13.2.0",
+    "jsdom": "14.0.0",
     "hoist-non-react-statics": "3.3.0"
   },
   "size-limit": [

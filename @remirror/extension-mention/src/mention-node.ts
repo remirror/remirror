@@ -70,6 +70,7 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
       group: 'inline',
       inline: true,
       selectable: this.options.selectable,
+      atom: !this.options.editable,
       parseDOM: [
         {
           tag: `${this.options.tag}[${dataAttribute}]`,
@@ -92,7 +93,7 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
             ...attrs,
             class: mentionClass,
             [dataAttribute]: id,
-            contenteditable: 'true',
+            // contenteditable: 'true',
           },
           `${label}`,
         ];

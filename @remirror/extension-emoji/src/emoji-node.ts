@@ -40,7 +40,7 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
       }),
       className: '',
       size: '1.1em',
-      styles: {},
+      style: {},
       EmojiComponent: DefaultEmoji,
     };
   }
@@ -51,6 +51,7 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
       inline: true,
       group: 'inline',
       selectable: false,
+      atom: false,
       attrs: {
         id: { default: '' },
         native: { default: '' },
