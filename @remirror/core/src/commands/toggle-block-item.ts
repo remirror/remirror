@@ -1,6 +1,6 @@
 import { setBlockType } from 'prosemirror-commands';
 import { NodeType } from 'prosemirror-model';
-import { nodeActive } from '../document-helpers';
+import { nodeActive } from '../helpers/document';
 import { CommandFunction } from '../types';
 
 export const toggleBlockItem = (type: NodeType, toggleType: NodeType, attrs = {}): CommandFunction => (

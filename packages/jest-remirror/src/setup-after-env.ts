@@ -97,7 +97,7 @@ expect.extend({
     const oldTestName = this.currentTestName;
     this.currentTestName = newTestName;
 
-    const ret = toMatchSnapshot.call(this, transformedDoc);
+    const ret = toMatchSnapshot.call(this as any, transformedDoc);
 
     this.currentTestName = oldTestName;
     return ret;

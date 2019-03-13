@@ -1,7 +1,17 @@
 import React from 'react';
 
-import { NodeViewPortalContainer, PlainObject, ProsemirrorNode } from '@remirror/core';
+import {
+  Attrs,
+  Cast,
+  EDITOR_CLASS_NAME,
+  isDomNode,
+  isElementNode,
+  NodeViewPortalContainer,
+  PlainObject,
+  ProsemirrorNode,
+} from '@remirror/core';
 import { css, Interpolation } from 'emotion';
+import isPlainObject from 'is-plain-object';
 import { Decoration, EditorView, NodeView } from 'prosemirror-view';
 
 export type GetPosition = () => number;
@@ -70,14 +80,14 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
       this.contentDOMWrapper = contentDOMWrapper || contentDOM;
     }
 
-    // Add a fixed class and a dynamic clas to this node (allows for custom styles being added in configuration)
-    this.domRef.classList.add(`remirror-editor-${this.node.type.name}-node-view`, css(this.style));
+    // Add a fixed class and a dynamic class to this node (allows for custom styles being added in configuration)
+    this.domRef.classList.add(`${EDITOR_CLASS_NAME}-${this.node.type.name}-node-view`, css(this.style));
 
     this.renderReactComponent(() => this.render(this.props, this.handleRef));
     return this;
   }
 
-  private renderReactComponent(component: () => React.ReactElement<any> | null) {
+  private renderReactComponent(component: () => JSX.Element) {
     if (!this.domRef || !component) {
       return;
     }
@@ -86,11 +96,22 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
   }
 
   public createDomRef(): HTMLElement {
-    // let el: HTMLElement;
-    // if (this.node.isInline) {
-    //   el = document.createElement('span');
-    //   el.style.dis
-    // }
+    const { toDOM } = this.node.type.spec;
+    if (toDOM) {
+      const domSpec = toDOM(this.node);
+      if (typeof domSpec === 'string') {
+        return document.createElement(domSpec);
+      }
+
+      if (isDomNode(domSpec)) {
+        if (!isElementNode(domSpec)) {
+          throw new Error('Invalid HTML Element provided in the DOM Spec');
+        }
+        return domSpec;
+      }
+
+      return document.createElement(domSpec[0]);
+    }
     return this.node.isInline ? document.createElement('span') : document.createElement('div');
   }
 
@@ -107,9 +128,9 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     }
   };
 
-  public render(props: GProps, forwardRef?: (node: HTMLElement) => void): React.ReactElement<any> | null {
+  public render(props: GProps, forwardRef?: (node: HTMLElement) => void): JSX.Element {
     const Component = this.Component;
-    return Component ? (
+    return (
       <Component
         view={this.view}
         getPosition={this.getPosition}
@@ -117,7 +138,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
         forwardRef={forwardRef}
         {...props}
       />
-    ) : null;
+    );
   }
 
   public update(
@@ -148,6 +169,22 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
    * @param node The Prosemirror Node from which to source the attributes
    */
   public setDomAttrs(node: ProsemirrorNode, element: HTMLElement) {
+    const { toDOM } = this.node.type.spec;
+    if (toDOM) {
+      const domSpec = toDOM(node);
+
+      if (typeof domSpec === 'string' || isDomNode(domSpec)) {
+        return;
+      }
+      const attrs = Cast<Attrs>(domSpec[1]);
+      if (isPlainObject(attrs)) {
+        Object.keys(attrs).forEach(attr => {
+          element.setAttribute(attr, attrs[attr]);
+        });
+
+        return;
+      }
+    }
     Object.keys(node.attrs || {}).forEach(attr => {
       element.setAttribute(attr, node.attrs[attr]);
     });

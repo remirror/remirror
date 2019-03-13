@@ -1,11 +1,5 @@
-import {
-  Cast,
-  MarkExtension,
-  MarkExtensionSpec,
-  markInputRule,
-  SchemaMarkTypeParams,
-  toggleMark,
-} from '@remirror/core';
+import { Cast, MarkExtension, MarkExtensionSpec, markInputRule, SchemaMarkTypeParams } from '@remirror/core';
+import { toggleMark } from 'prosemirror-commands';
 
 export class Bold extends MarkExtension {
   get name(): 'bold' {

@@ -35,35 +35,11 @@ export const simpleOffsetCalculator: OffsetCalculator = {
 export const defaultShouldRender: ShouldRenderMenu = props => props.selection && !props.selection.empty;
 export const defaultOffscreenPosition: Position = { left: -1000, top: 0, bottom: 0, right: 0 };
 
-/**
- * We need to translate the co-ordinates because `coordsAtPos` returns co-ordinates
- * relative to `window`. And, also need to adjust the cursor container height.
- * (0, 0)
- * +--------------------- [window] ---------------------+
- * |   (left, top) +-------- [Offset Parent] --------+  |
- * | {coordsAtPos} | [Cursor]   <- cursorHeight      |  |
- * |               | [FloatingToolbar]               |  |
- */
-export const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, cursorHeight: number) => {
-  const {
-    left: offsetParentLeft,
-    top: offsetParentTop,
-    height: offsetParentHeight,
-  } = offsetParent.getBoundingClientRect();
-
-  return {
-    left: coords.left - offsetParentLeft,
-    right: coords.right - offsetParentLeft,
-    top: coords.top - (offsetParentTop - cursorHeight) + offsetParent.scrollTop,
-    bottom: offsetParentHeight - (coords.top - (offsetParentTop - cursorHeight) - offsetParent.scrollTop),
-  };
-};
-
-export const getNearestNonTextNode = (node: Node) =>
-  node.nodeType === Node.TEXT_NODE ? (node.parentNode as HTMLElement) : (node as HTMLElement);
-
 export const uniqueClass = (uid: string, className: string) => `${className}-${uid}`;
 
+/**
+ * Utility for properly typechecking static defaultProps for a class component in react.
+ */
 export const asDefaultProps = <GProps extends {}>() => <GDefaultProps extends Partial<GProps>>(
   defaultProps: GDefaultProps,
 ): GDefaultProps => defaultProps;

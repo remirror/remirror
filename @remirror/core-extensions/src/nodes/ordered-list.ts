@@ -1,11 +1,5 @@
-import {
-  Cast,
-  NodeExtension,
-  NodeExtensionSpec,
-  SchemaNodeTypeParams,
-  toggleList,
-  wrappingInputRule,
-} from '@remirror/core';
+import { Cast, NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams, toggleList } from '@remirror/core';
+import { wrappingInputRule } from 'prosemirror-inputrules';
 
 export class OrderedList extends NodeExtension {
   get name(): 'orderedList' {
@@ -20,7 +14,7 @@ export class OrderedList extends NodeExtension {
         },
         ...this.extraAttrs(),
       },
-      content: 'list_item+',
+      content: 'listItem+',
       group: 'block',
       parseDOM: [
         {
@@ -35,12 +29,12 @@ export class OrderedList extends NodeExtension {
   }
 
   public commands({ type, schema }: SchemaNodeTypeParams) {
-    return () => toggleList(type, schema.nodes.list_item);
+    return () => toggleList(type, schema.nodes.listItem);
   }
 
   public keys({ type, schema }: SchemaNodeTypeParams) {
     return {
-      'Shift-Ctrl-9': toggleList(type, schema.nodes.list_item),
+      'Shift-Ctrl-9': toggleList(type, schema.nodes.listItem),
     };
   }
 

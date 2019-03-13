@@ -1,6 +1,6 @@
 import { Fragment, Mark, Node as PMNode, Slice } from 'prosemirror-model';
 import { Plugin } from 'prosemirror-state';
-import { Cast, findMatches } from '../helpers';
+import { Cast, findMatches } from '../helpers/base';
 import { PluginCreator } from '../types';
 
 export const markPasteRule: PluginCreator = (regexp, type, getAttrs) => {

@@ -1,7 +1,7 @@
 import { Schema } from 'prosemirror-model';
 import { Extension } from '../extension';
 import { ExtensionManager } from '../extension-manager';
-import { Cast } from '../helpers';
+import { Cast } from '../helpers/base';
 import { Doc, Paragraph, Text } from '../nodes';
 
 const state = {
@@ -55,7 +55,7 @@ describe('#action', () => {
   it('calls the correct command', () => {
     expect(remirrorActions.dummy).toContainAllKeys(['isActive', 'isEnabled', 'command']);
     remirrorActions.dummy.command();
-    expect(mock).toHaveBeenCalledWith(params.view.state, params.view.dispatch);
+    expect(mock).toHaveBeenCalledWith(params.view.state, params.view.dispatch, params.view);
   });
 
   it('is not called when the editor is not editable', () => {

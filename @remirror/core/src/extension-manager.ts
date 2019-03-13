@@ -1,3 +1,4 @@
+import { Interpolation } from 'emotion';
 import { InputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
@@ -10,10 +11,12 @@ import {
   isMarkExtension,
   isNodeExtension,
 } from './extension-manager.helpers';
+import { getPluginState } from './helpers/document';
 import { NodeViewPortalContainer } from './portal-container';
 import {
   ActionMethods,
   Attrs,
+  CommandFunction,
   CommandParams,
   EditorSchema,
   ExtensionBooleanFunction,
@@ -62,8 +65,7 @@ export class ExtensionManager {
   }
 
   /**
-   * Currently an extension can have only one pluginKey but multiple plugins - which is a potential bug.
-   * TODO enhance pluginKey assignment to ensure name isn't already in use
+   * Get all the extension plugin keys
    */
   public get pluginKeys() {
     const pluginKeys: Record<string, PluginKey> = {};
@@ -92,14 +94,40 @@ export class ExtensionManager {
     return plugins;
   }
 
+  public styles(params: SchemaParams): Interpolation[] {
+    const extensionStyles = this.extensions
+      .filter(hasExtensionProperty('styles'))
+      .map(extensionPropertyMapper('styles', params));
+
+    return extensionStyles;
+  }
+
   /**
    * Retrieve all keymaps (how the editor responds to keyboard commands).
    */
-  public keymaps(params: SchemaParams): ProsemirrorPlugin[] {
+  public keymaps(params: SchemaParams) {
     const extensionKeymaps = this.extensions
       .filter(hasExtensionProperty('keys'))
       .map(extensionPropertyMapper('keys', params));
-    return extensionKeymaps.map(keys => keymap(keys));
+
+    const mappedKeys: Record<string, CommandFunction> = {};
+
+    for (const extensionKeymap of extensionKeymaps) {
+      for (const key in extensionKeymap) {
+        if (!extensionKeymap.hasOwnProperty(key)) {
+          continue;
+        }
+        const oldCmd = mappedKeys[key];
+        let newCmd = extensionKeymap[key];
+        if (oldCmd) {
+          newCmd = (state, dispatch, view) => {
+            return oldCmd(state, dispatch, view) || extensionKeymap[key](state, dispatch, view);
+          };
+        }
+        mappedKeys[key] = newCmd;
+      }
+    }
+    return [keymap(mappedKeys)];
   }
 
   /**
@@ -161,6 +189,17 @@ export class ExtensionManager {
   }
 
   /**
+   * Retrieve the state for a given extension name. This will throw an error if the extension doesn't exist.
+   */
+  public getPluginState<GState>(name: string): GState {
+    const key = this.pluginKeys[name];
+    if (!key) {
+      throw new Error(`Cannot retrieve state for an extension: ${name} which doesn\'t exist`);
+    }
+    return getPluginState<GState>(key, this.getEditorState());
+  }
+
+  /**
    * Generate all the actions for usage within the UI.
    *
    * Typically actions are used to create interactive menus.
@@ -175,7 +214,7 @@ export class ExtensionManager {
           return false;
         }
         params.view.focus();
-        return method(attrs)(params.view.state, params.view.dispatch);
+        return method(attrs)(params.view.state, params.view.dispatch, params.view);
       },
       checkUniqueness: true,
       arrayTransformer: (fns, params, methodFactory) => () => {

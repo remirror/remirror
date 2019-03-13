@@ -4,8 +4,8 @@ import {
   markInputRule,
   markPasteRule,
   SchemaMarkTypeParams,
-  toggleMark,
 } from '@remirror/core';
+import { toggleMark } from 'prosemirror-commands';
 
 export class Italic extends MarkExtension {
   get name(): 'italic' {

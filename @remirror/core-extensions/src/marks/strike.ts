@@ -4,8 +4,8 @@ import {
   markInputRule,
   markPasteRule,
   SchemaMarkTypeParams,
-  toggleMark,
 } from '@remirror/core';
+import { toggleMark } from 'prosemirror-commands';
 
 export class Strike extends MarkExtension {
   get name(): 'strike' {

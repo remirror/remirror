@@ -6,7 +6,7 @@ import { EditorState, NodeSelection, Selection, TextSelection } from 'prosemirro
 import pm, { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 
 import { render } from 'react-testing-library';
-import { Cast } from '../helpers';
+import { Cast } from '../helpers/base';
 import { CommandFunction } from '../types';
 
 const renderString = (
@@ -44,7 +44,7 @@ export function apply(
   result?: TaggedProsemirrorNode,
 ): [boolean, TaggedProsemirrorNode, EditorState] {
   let state = createEditorState(docNode);
-  command(state, tr => (state = state.apply(tr)));
+  command(state, tr => (state = state.apply(tr)), Cast({}));
 
   if (!pm.eq(state.doc, result || docNode)) {
     return [false, Cast<TaggedProsemirrorNode>(state.doc), state];

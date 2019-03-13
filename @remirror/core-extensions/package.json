@@ -32,14 +32,21 @@
   "dependencies": {
     "@remirror/core": "0.0.1-alpha.5",
     "@types/prosemirror-history": "^1.0.1",
+    "prosemirror-utils": "^0.7.6",
     "prosemirror-history": "^1.0.4"
   },
   "peerDependencies": {
+    "@types/prosemirror-inputrules": "^1.0.2",
+    "prosemirror-inputrules": "^1.0.1",
+    "@types/prosemirror-schema-list": "^1.0.1",
+    "prosemirror-schema-list": "^1.0.2",
     "@types/prosemirror-model": "^1.7.0",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.3.1",
     "prosemirror-model": "^1.7.0",
     "prosemirror-state": "^1.2.2",
+    "@types/prosemirror-commands": "^1.0.1",
+    "prosemirror-commands": "^1.0.7",
     "prosemirror-view": "^1.8.3"
   },
   "publishConfig": {

@@ -44,7 +44,7 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
       extraAttrs: [],
       tag: 'a' as 'a',
       editable: true,
-      selectable: true,
+      selectable: false,
     };
   }
 
@@ -71,18 +71,6 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
       inline: true,
       selectable: this.options.selectable,
       atom: !this.options.editable,
-      toDOM: node => {
-        const { id, label, ...attrs } = node.attrs;
-        return [
-          this.options.tag,
-          {
-            ...attrs,
-            class: mentionClass,
-            [dataAttribute]: id,
-          },
-          `${label}`,
-        ];
-      },
       parseDOM: [
         {
           tag: `${this.options.tag}[${dataAttribute}]`,
@@ -97,6 +85,19 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
           },
         },
       ],
+      toDOM: node => {
+        const { id, label, ...attrs } = node.attrs;
+        return [
+          this.options.tag,
+          {
+            ...attrs,
+            class: mentionClass,
+            [dataAttribute]: id,
+            // contenteditable: 'true',
+          },
+          `${label}`,
+        ];
+      },
     };
   }
 

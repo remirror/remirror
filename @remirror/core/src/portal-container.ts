@@ -1,43 +1,61 @@
-import { Component, ReactChild, ReactElement } from 'react';
-import { unmountComponentAtNode, unstable_renderSubtreeIntoContainer } from 'react-dom';
+import { Component } from 'react';
 
-interface MountedPortal {
-  children: () => ReactChild | null;
+import NanoEvents from 'nanoevents';
+import nano from 'nanoid';
+
+export interface MountedPortal {
+  children: () => JSX.Element;
   hasReactContext: boolean;
+  key: string;
 }
 
-export type RenderSubtreeIntoContainer = typeof unstable_renderSubtreeIntoContainer;
-export type UnmountComponentAtNode = typeof unmountComponentAtNode;
+export interface NodeViewPortalComponentProps {
+  nodeViewPortalContainer: NodeViewPortalContainer;
+}
+
+interface Events {
+  update: PortalMap;
+}
+
+export type PortalList = ReadonlyArray<[HTMLElement, MountedPortal]>;
+export type PortalMap = Map<HTMLElement, MountedPortal>;
 
 export class NodeViewPortalContainer {
   public portals: Map<HTMLElement, MountedPortal> = new Map();
-  public context: any;
+  public context!: Component<NodeViewPortalComponentProps>;
+  public events = new NanoEvents<Events>();
 
-  constructor(
-    private renderSubtreeIntoContainer: RenderSubtreeIntoContainer,
-    private unmountComponent: UnmountComponentAtNode,
-  ) {}
+  public on = (callback: (map: PortalMap) => void) => {
+    return this.events.on('update', callback);
+  };
 
-  public setContext = <GContext extends Component<Record<string, any>>>(context: GContext) => {
+  private update(map: PortalMap) {
+    this.events.emit('update', map);
+  }
+
+  public setContext = (context: Component<NodeViewPortalComponentProps>) => {
     this.context = context;
   };
-  public render(children: () => ReactChild | null, container: HTMLElement, hasReactContext: boolean = false) {
-    this.portals.set(container, { children, hasReactContext });
-    this.renderSubtreeIntoContainer(this.context, children() as JSX.Element, container);
+
+  public render(children: () => JSX.Element, container: HTMLElement, hasReactContext: boolean = false) {
+    this.portals.set(container, { children, hasReactContext, key: nano() });
+    this.update(this.portals);
   }
-  // TODO: Improve this code.
-  // we (unfortunately) need to re-render to pass down any updated context.
-  // selectively do this for nodeviews that opt-in via `hasReactContext`
+
   public forceUpdate() {
-    this.portals.forEach((portal, container) => {
-      if (!portal.hasReactContext) {
+    this.portals.forEach(({ children, hasReactContext }, container) => {
+      if (!hasReactContext) {
         return;
       }
-      this.renderSubtreeIntoContainer(this.context, portal.children() as ReactElement<any>, container);
+
+      // Assign the portal a new key so it is re-rendered
+      this.portals.set(container, { children, hasReactContext, key: nano() });
     });
+    this.update(this.portals);
   }
+
   public remove(container: HTMLElement) {
     this.portals.delete(container);
-    this.unmountComponent(container);
+    this.update(this.portals);
   }
 }

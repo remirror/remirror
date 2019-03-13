@@ -1,6 +1,6 @@
 import { NodeType } from 'prosemirror-model';
 import { liftListItem, wrapInList } from 'prosemirror-schema-list';
-import { nodeActive } from '../document-helpers';
+import { nodeActive } from '../helpers/document';
 import { CommandFunction } from '../types';
 
 export const toggleList = (type: NodeType, itemType: NodeType): CommandFunction => (state, dispatch) => {

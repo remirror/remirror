@@ -1,6 +1,7 @@
+import { Interpolation } from 'emotion';
 import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
-import { Cast } from './helpers';
+import { Cast } from './helpers/base';
 import {
   ExtensionBooleanFunction,
   ExtensionCommandFunction,
@@ -8,8 +9,8 @@ import {
   FlexibleConfig,
   KeyboardBindings,
   ProsemirrorPlugin,
+  SchemaParams,
   SchemaTypeParams,
-  SchemaWithStateParams,
 } from './types';
 
 export abstract class Extension<GOptions extends {} = {}, GType = never> {
@@ -46,7 +47,7 @@ export abstract class Extension<GOptions extends {} = {}, GType = never> {
     return this.pk;
   }
 
-  get defaultOptions(): Partial<GOptions> {
+  protected get defaultOptions(): Partial<GOptions> {
     return {};
   }
 }
@@ -56,7 +57,7 @@ export interface Extension<GOptions extends {} = {}, GType = never> {
    * Determines whether this extension is currently active (only applies to Node Extensions and Mark Extensions)
    * @param params
    */
-  active?(params: SchemaWithStateParams): FlexibleConfig<ExtensionBooleanFunction>;
+  active?(params: SchemaParams): FlexibleConfig<ExtensionBooleanFunction>;
 
   /**
    * Determines whether this extension is enabled. If an object is returned then it can define different node types and
@@ -64,18 +65,39 @@ export interface Extension<GOptions extends {} = {}, GType = never> {
    *
    * @param params
    */
-  enabled?(params: SchemaWithStateParams): FlexibleConfig<ExtensionBooleanFunction>;
+  enabled?(params: SchemaParams): FlexibleConfig<ExtensionBooleanFunction>;
+
+  /**
+   * Allows extensions to register styles on the editor instance using emotion for dynamic styling
+   */
+  styles?(params: SchemaParams): Interpolation;
 
   /**
    * Register commands for this extension. If an object returned the commands are
    * @param params
    */
   commands?(params: SchemaTypeParams<GType>): FlexibleConfig<ExtensionCommandFunction>;
+
+  /**
+   * Register paste rules for this extension.
+   *
+   * Paste rules are activated when text is pasted into the editor.
+   */
   pasteRules?(params: SchemaTypeParams<GType>): ProsemirrorPlugin[];
+
+  /**
+   * Register input rules which are activated as a user is typing.
+   */
   inputRules?(params: SchemaTypeParams<GType>): InputRule[];
+
+  /**
+   * Add key mappings for the extension
+   */
   keys?(params: SchemaTypeParams<GType>): KeyboardBindings;
 
-  /** Register a plugin for the extension */
+  /**
+   * Register a plugin for the extension
+   */
   plugin?(params: SchemaTypeParams<GType>): ProsemirrorPlugin;
 }
 

@@ -1,4 +1,4 @@
-import { setBlockType } from '../commands';
+import { setBlockType } from 'prosemirror-commands';
 import { NodeExtension } from '../node-extension';
 import { NodeExtensionSpec, SchemaNodeTypeParams } from '../types';
 

@@ -9,6 +9,8 @@
         "jest",
         "jest-cli",
         "jest-dom",
+        "jest-emotion",
+        "emotion",
         "react-testing-library",
         "puppeteer",
         "puppeteer-to-istanbul",
