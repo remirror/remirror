@@ -3,6 +3,7 @@ import {
   EditorView,
   Extension,
   getPluginState,
+  isAndroidOS,
   isTextSelection,
   nodeNameMatchesList,
 } from '@remirror/core';
@@ -50,11 +51,11 @@ export const createCompositionPlugin = (ctx: Extension<CompositionOptions>) => {
       };
     },
     props: {
-      decorations: state => {
-        const compositionState = getPluginState<CompositionState>(ctx.pluginKey, state);
-        // console.log('inside decorations', compositionState);
-        return compositionState.decoration(state);
-      },
+      // decorations: state => {
+      //   const compositionState = getPluginState<CompositionState>(ctx.pluginKey, state);
+      //   // console.log('inside decorations', compositionState);
+      //   return compositionState.decoration(state);
+      // },
       handleDOMEvents: {
         /**
          * Borrowed from https://bitbucket.org/atlassian/atlaskit-mk-2/src/14c0461025a93936d83117ccdd5b34e3623b7a16/packages/editor/editor-core/src/plugins/composition/index.ts?at=master&fileviewer=file-view-default
@@ -65,9 +66,9 @@ export const createCompositionPlugin = (ctx: Extension<CompositionOptions>) => {
          * @see https://github.com/ProseMirror/prosemirror/issues/543
          */
         beforeinput: (view, ev: Event) => {
-          console.log('beforeinput running', ev);
+          // console.log('BEFORE_INPUT', ev);
           const event = Cast<InputEvent>(ev);
-          if (event.inputType === 'deleteContentBackward') {
+          if (event.inputType === 'deleteContentBackward' && isAndroidOS()) {
             const pluginState = getPluginState<CompositionState>(ctx.pluginKey, view.state);
             pluginState.startDelete();
             console.log('deleting content backwards');
@@ -75,6 +76,15 @@ export const createCompositionPlugin = (ctx: Extension<CompositionOptions>) => {
           }
           return true;
         },
+        // compositionstart: (view, event) => {
+        //   console.log('composition STARTED', event);
+        // },
+        // compositionupdate: (view, event) => {
+        //   console.log('composition UPDATED', event);
+        // },
+        // compositionend: (view, event) => {
+        //   console.log('composition ENDED', event);
+        // },
       },
     },
   });

@@ -32,7 +32,7 @@ export class CompositionState {
     return this;
   }
 
-  private resetState() {
+  public resetState() {
     // console.log('resetting the compositionState');
     this.active = false;
     this.deleteInProgress = false;

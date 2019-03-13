@@ -18,7 +18,6 @@ export class GapCursor extends Extension<GapCursorOptions> {
         return arrow(Direction.LEFT, endOfTextblock)(state, dispatch, view);
       },
       ArrowRight: (state, dispatch, view) => {
-        console.log('arrow right pressed');
         const endOfTextblock = view ? view.endOfTextblock.bind(view) : undefined;
         return arrow(Direction.RIGHT, endOfTextblock)(state, dispatch, view);
       },
@@ -31,7 +30,7 @@ export class GapCursor extends Extension<GapCursorOptions> {
         return arrow(Direction.DOWN, endOfTextblock)(state, dispatch, view);
       },
       // The default Prosemirror Backspace doesn't handle removing block nodes when cursor is after it
-      // Backspace: deleteNode(Direction.BACKWARD),
+      Backspace: deleteNode(Direction.BACKWARD),
       Delete: deleteNode(Direction.FORWARD),
     };
   }

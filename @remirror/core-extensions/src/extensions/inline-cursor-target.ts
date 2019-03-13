@@ -37,6 +37,7 @@ export class InlineCursorTarget extends Extension<InlineCursorTargetOptions> {
 
 export const findSpecialNodeAfter = ($pos: ResolvedPos, tr: Transaction, matchers: NodeMatch[]) => {
   if (nodeNameMatchesList($pos.nodeAfter, matchers)) {
+    console.log('findSpecialNodeAfter: Node AFTER matches', $pos.pos + 1);
     return $pos.pos + 1;
   }
 
@@ -46,6 +47,7 @@ export const findSpecialNodeAfter = ($pos: ResolvedPos, tr: Transaction, matcher
   if (parentOffset === parent.content.size && $pos.pos + 1 < docSize - 2) {
     const { nodeAfter } = tr.doc.resolve($pos.pos + 1);
     if (nodeAfter && nodeNameMatchesList(nodeAfter.firstChild, matchers)) {
+      console.log('findSpecialNodeAfter: PARENT AFTER matches', $pos.pos + 2);
       return $pos.pos + 2;
     }
   }
@@ -55,6 +57,7 @@ export const findSpecialNodeAfter = ($pos: ResolvedPos, tr: Transaction, matcher
 
 export const findSpecialNodeBefore = ($pos: ResolvedPos, tr: Transaction, matchers: NodeMatch[]) => {
   if (nodeNameMatchesList($pos.nodeBefore, matchers)) {
+    console.log('findSpecialNodeBefore: Node BEFORE matches', $pos.pos - 1);
     return $pos.pos - 1;
   }
 
@@ -67,6 +70,7 @@ export const findSpecialNodeBefore = ($pos: ResolvedPos, tr: Transaction, matche
   if (parentOffset === 0) {
     const { nodeBefore } = tr.doc.resolve($pos.pos - 1);
     if (nodeBefore && nodeNameMatchesList(nodeBefore.firstChild, matchers)) {
+      console.log('findSpecialNodeBefore: PARENT BEFORE matches', $pos.pos - 2);
       return $pos.pos - 2;
     }
   }
@@ -118,7 +122,7 @@ const createInlineCursorTargetPlugin = ({ ctx }: CreateInlineCursorTargetPluginP
               side: -1,
             } as any);
           });
-
+          console.log('These are the DECORATIONS', decorations);
           return DecorationSet.create(doc, decorations);
         }
 

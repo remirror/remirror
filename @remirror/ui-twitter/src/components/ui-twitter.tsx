@@ -7,7 +7,7 @@ import { EmojiNode, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
 import { GapCursor } from '@remirror/extension-gap-cursor';
 import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
-import { Remirror, RemirrorProps } from '@remirror/react';
+import { Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react';
 import { Data, EmojiSet } from 'emoji-mart';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
@@ -174,9 +174,9 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     }
   }
 
-  private onChange() {
-    //
-  }
+  private onChange: RemirrorEventListener = ({ getJSON }) => {
+    console.log(getJSON());
+  };
 
   get userMatches(): ActiveTwitterUserData[] {
     return this.props.userData.map((user, index) => ({

@@ -152,7 +152,7 @@ describe('Twitter UI', () => {
     });
 
     // ! BUG Multiple adjacent nodes (emoji) cause the editor to lose focus when moving between them
-    it.skip('should handle multiple emoji with no spaces', async () => {
+    it('should handle multiple emoji with no spaces', async () => {
       const msg = '123abcXYZ';
       await page.type(editorSelector, '😀😀😀😀');
       await page.keyboard.press('ArrowLeft');
@@ -176,7 +176,8 @@ describe('Twitter UI', () => {
       await page.type(editorSelector, '😀google.com');
       await page.keyboard.press('Enter');
       await expect(innerHtml(sel(editorSelector, 'span[title=grinning]'))).resolves.toBeTruthy();
-      await expect(textContent(sel(editorSelector, '[href]'))).resolves.toBe('google.com');
+      // Using include since decorations can inject a space here affecting the text
+      await expect(textContent(sel(editorSelector, '[href]'))).resolves.toInclude('google.com');
     });
   });
 });

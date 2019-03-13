@@ -311,12 +311,15 @@ export function getCursor(selection: Selection): ResolvedPos | null | undefined 
 /**
  * Checks to see whether the name of the passed node matches anything in the list provided.
  */
-export const nodeNameMatchesList = (node: ProsemirrorNode | null | undefined, nodeMatches: NodeMatch[]) => {
+export const nodeNameMatchesList = (
+  node: ProsemirrorNode | null | undefined,
+  nodeMatches: NodeMatch[],
+): node is ProsemirrorNode => {
+  let outcome = false;
   if (!node) {
-    return;
+    return outcome;
   }
   const name = node.type.name;
-  let outcome = false;
   for (const checker of nodeMatches) {
     outcome = typeof checker === 'function' ? checker(name) : checker === name;
     if (outcome) {

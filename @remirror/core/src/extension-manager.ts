@@ -113,7 +113,6 @@ export class ExtensionManager {
     const mappedKeys: Record<string, CommandFunction> = {};
 
     for (const extensionKeymap of extensionKeymaps) {
-      console.log(extensionKeymap);
       for (const key in extensionKeymap) {
         if (!extensionKeymap.hasOwnProperty(key)) {
           continue;
@@ -128,9 +127,7 @@ export class ExtensionManager {
         mappedKeys[key] = newCmd;
       }
     }
-    console.log(mappedKeys);
     return [keymap(mappedKeys)];
-    // return extensionKeymaps.map(keys => keymap(keys));
   }
 
   /**

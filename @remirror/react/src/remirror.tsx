@@ -492,7 +492,6 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     });
 
     const afterUpdate = () => {
-      console.log('content updated');
       this.view.updateState(editorState);
 
       if (triggerOnChange && this.props.onChange) {

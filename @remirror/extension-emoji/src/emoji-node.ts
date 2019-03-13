@@ -68,7 +68,6 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
         {
           tag: 'span[data-emoji-id]',
           getAttrs: domNode => {
-            console.log('inside getAttrs');
             const dom = domNode as HTMLElement;
             const skin = dom.getAttribute('data-emoji-skin');
             const useNative = dom.getAttribute('data-emoji-use-native');
@@ -82,7 +81,6 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
               useNative: useNative === 'true',
             };
 
-            console.log('parsed attrs emoji node', attrs);
             return attrs;
           },
         },

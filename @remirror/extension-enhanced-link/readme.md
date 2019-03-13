@@ -27,5 +27,5 @@ yarn add @remirror/extension-enhanced-link
 ```ts
 import { EnhancedLink } from '@remirror/extension-enhanced-link';
 
-new EnhancedLink({ onUrlsChange: (urls) => console.log('Changed urls', urls) }),
+new EnhancedLink({ onUrlsChange: (urls) => log('Changed urls', urls) }),
 ```

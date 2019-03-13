@@ -21,20 +21,3 @@ if (process.env.TEST_ENV) {
 process.on('unhandledRejection', reason => {
   console.error('REJECTION', reason);
 });
-
-if (process.env.CI) {
-  // jest.retryTimes(3);
-  // const consoleError = console.error;
-  // const consoleWarn = console.warn;
-  // const consoleLog = console.log;
-  // beforeAll(() => {
-  //   console.error = jest.fn();
-  //   console.warn = jest.fn();
-  //   console.log = jest.fn();
-  // });
-  // afterAll(() => {
-  //   console.error = consoleError;
-  //   console.warn = consoleWarn;
-  //   console.log = consoleLog;
-  // });
-}

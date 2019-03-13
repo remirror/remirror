@@ -106,7 +106,6 @@ export const arrow = (dir: Direction, endOfTextblock?: EditorView['endOfTextbloc
 
 export const deleteNode = (dir: Direction): CommandFunction => (state, dispatch) => {
   if (isGapCursorSelection(state.selection)) {
-    console.log('gap cursor selection');
     const { $from, $anchor } = state.selection;
     let { tr } = state;
     if (isBackward(dir)) {
