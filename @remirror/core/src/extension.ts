@@ -1,7 +1,7 @@
 import { Interpolation } from 'emotion';
 import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
-import { Cast } from './helpers';
+import { Cast } from './helpers/base';
 import {
   ExtensionBooleanFunction,
   ExtensionCommandFunction,

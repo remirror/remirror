@@ -1,5 +1,5 @@
 import { createEditorState, pm } from '@test-utils';
-import { markActive } from '../document-helpers';
+import { markActive } from '../document';
 const { p, doc, em, schema } = pm;
 
 describe('markActive', () => {

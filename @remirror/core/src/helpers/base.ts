@@ -1,4 +1,4 @@
-import { Literal } from './types';
+import { Literal } from '../types';
 
 /**
  * Type cast an argument

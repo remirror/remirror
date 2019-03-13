@@ -6,7 +6,7 @@ import { EditorState, NodeSelection, Selection, TextSelection } from 'prosemirro
 import pm, { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 
 import { render } from 'react-testing-library';
-import { Cast } from '../helpers';
+import { Cast } from '../helpers/base';
 import { CommandFunction } from '../types';
 
 const renderString = (

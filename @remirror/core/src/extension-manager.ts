@@ -3,7 +3,6 @@ import { InputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
 import { EditorState, PluginKey } from 'prosemirror-state';
-import { getPluginState } from './document-helpers';
 import { AnyExtension } from './extension';
 import {
   createFlexibleFunctionMap,
@@ -12,6 +11,7 @@ import {
   isMarkExtension,
   isNodeExtension,
 } from './extension-manager.helpers';
+import { getPluginState } from './helpers/document';
 import { NodeViewPortalContainer } from './portal-container';
 import {
   ActionMethods,

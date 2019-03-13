@@ -1,7 +1,7 @@
 import { Schema } from 'prosemirror-model';
 import { Extension } from '../extension';
 import { ExtensionManager } from '../extension-manager';
-import { Cast } from '../helpers';
+import { Cast } from '../helpers/base';
 import { Doc, Paragraph, Text } from '../nodes';
 
 const state = {

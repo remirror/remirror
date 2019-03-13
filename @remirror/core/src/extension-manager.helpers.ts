@@ -1,5 +1,5 @@
 import { AnyExtension, Extension } from './extension';
-import { Cast } from './helpers';
+import { Cast } from './helpers/base';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
 import { AnyFunction, CommandParams, ExtensionType, FlexibleConfig, SchemaParams } from './types';

@@ -1,6 +1,5 @@
 import { Mark, MarkType, NodeType } from 'prosemirror-model';
 import { EditorState, NodeSelection, Plugin, TextSelection } from 'prosemirror-state';
-import { Cast } from './helpers';
 import {
   Attrs,
   EditorSchema,
@@ -11,7 +10,8 @@ import {
   ResolvedPos,
   Selection,
   Transaction,
-} from './types';
+} from '../types';
+import { Cast } from './base';
 
 /**
  * Checks that a mark is active within the selected region, or the current selection point is within a

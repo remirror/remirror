@@ -1,6 +1,6 @@
 import { lift, wrapIn } from 'prosemirror-commands';
 import { NodeType } from 'prosemirror-model';
-import { nodeActive } from '../document-helpers';
+import { nodeActive } from '../helpers/document';
 import { Attrs, CommandFunction } from '../types';
 
 export const toggleWrap = (type: NodeType, attrs?: Attrs): CommandFunction => (state, dispatch) => {

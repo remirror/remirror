@@ -1,6 +1,6 @@
 import { MarkType } from 'prosemirror-model';
-import { markActive } from './document-helpers';
 import { Extension } from './extension';
+import { markActive } from './helpers/document';
 import { EditorSchema, ExtensionType, MarkExtensionSpec, SchemaParams } from './types';
 
 export abstract class MarkExtension<GOptions extends {} = {}> extends Extension<
