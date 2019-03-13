@@ -7,9 +7,6 @@ cache:
 git:
   depth: 5
 
-addons:
-  chrome: stable
-
 node_js:
   - '10'
 
@@ -18,10 +15,8 @@ env:
     - PATH=$HOME/.yarn/bin:$HOME/bin:$PATH
   # Do multiple runs for testing and linting.
   matrix:
-    - YARN_CMD=test
-    - YARN_CMD=test:integration
     - YARN_CMD=ci:checks # Run linting and typechecks
-    - YARN_CMD=build:docs
+    - YARN_CMD=test
     - YARN_CMD=build:production
 
 before_install:
