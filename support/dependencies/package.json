@@ -84,7 +84,7 @@
     "rollup-plugin-terser": "4.0.4",
     "size-limit": "0.21.1",
     "start-server-and-test": "1.7.11",
-    "tslint": "5.13.1",
+    "tslint": "5.14.0",
     "typescript": "3.3.3333",
     "typescript-styled-plugin": "0.14.0"
   }
