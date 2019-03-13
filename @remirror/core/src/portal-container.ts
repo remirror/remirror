@@ -1,7 +1,7 @@
 import { Component } from 'react';
 
 import NanoEvents from 'nanoevents';
-import nano from 'nanoid';
+import { uniqueId } from './helpers/base';
 
 export interface MountedPortal {
   children: () => JSX.Element;
@@ -38,7 +38,7 @@ export class NodeViewPortalContainer {
   };
 
   public render(children: () => JSX.Element, container: HTMLElement, hasReactContext: boolean = false) {
-    this.portals.set(container, { children, hasReactContext, key: nano() });
+    this.portals.set(container, { children, hasReactContext, key: uniqueId() });
     this.update(this.portals);
   }
 
@@ -49,7 +49,7 @@ export class NodeViewPortalContainer {
       }
 
       // Assign the portal a new key so it is re-rendered
-      this.portals.set(container, { children, hasReactContext, key: nano() });
+      this.portals.set(container, { children, hasReactContext, key: uniqueId() });
     });
     this.update(this.portals);
   }

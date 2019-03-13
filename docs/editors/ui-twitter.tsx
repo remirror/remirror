@@ -8,8 +8,8 @@ import {
   TwitterUserData,
 } from '@remirror/ui-twitter';
 import emojiData from 'emoji-mart/data/all.json';
-import { startCase, take } from 'lodash';
 
+import { startCase, take } from '@remirror/core';
 import matchSorter from 'match-sorter';
 import { fakeUsers } from '../data/fake-users';
 

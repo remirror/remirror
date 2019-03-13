@@ -1,7 +1,11 @@
-import { Literal } from '../types';
-
+import memoizeOne from 'memoize-one';
+import nano from 'nanoid';
+// import objectOmit from 'object.omit';
+import objectPick from 'object.pick';
+import { Literal } from '../types/base';
 /**
- * Type cast an argument
+ * Type cast an argument. If no type is provided it will default to any.
+ *
  * @param arg
  */
 export const Cast = <GType = any>(arg: any): GType => arg;
@@ -9,12 +13,12 @@ export const Cast = <GType = any>(arg: any): GType => arg;
 /**
  * Use this to create a Tuple with args that can be used as a type
  *
- * @example
  * ```
  * const ALL_SUITS = tuple('hearts', 'diamonds', 'spades', 'clubs');
  * type SuitTuple = typeof ALL_SUITS;
  * type Suit = SuitTuple[number]; // union type
  * ```
+ *
  * @param args
  */
 export const tuple = <GType extends Literal[]>(...args: GType) => args;
@@ -32,6 +36,9 @@ export const findMatches = (text: string, regexp: RegExp) => {
   return results;
 };
 
+/**
+ * A utility function to check whether the current browser is running on the android platform.
+ */
 export const isAndroidOS = () => {
   const ua = navigator.userAgent;
   const match = RegExp('\\b' + 'Android' + '(?:/[\\d.]+|[ \\w.]*)', 'i').exec(ua);
@@ -46,7 +53,6 @@ export const isAndroidOS = () => {
 /**
  * A utility function to clean up the OS name.
  *
- * @private
  * @param os The OS name to clean up.
  * @param [pattern] A `RegExp` pattern matching the OS name.
  * @param [label] A label for the OS.
@@ -79,7 +85,6 @@ export function cleanupOS(os: string, pattern?: string, label?: string) {
 /**
  * Trim and conditionally capitalize string values.
  *
- * @private
  * @param str The string to format.
  */
 export function format(str: string) {
@@ -90,7 +95,6 @@ export function format(str: string) {
 /**
  * Capitalizes a string value.
  *
- * @private
  * @param str The string to capitalize.
  */
 export function capitalize(str: string) {
@@ -100,9 +104,93 @@ export function capitalize(str: string) {
 /**
  * Removes leading and trailing whitespace from a string.
  *
- * @private
  * @param str The string to trim.
  */
 export function trim(str: string) {
   return str.replace(/^ +| +$/g, '');
 }
+
+/**
+ * Generate a random integer between min and max. If only one parameter is provided
+ * minimum is set to 0.
+ *
+ * @param min
+ * @param max
+ */
+export function randomInt(min: number, max?: number) {
+  return Math.floor(randomFloat(min, max));
+}
+
+/**
+ * Generate a random float between min and max. If only one parameter is provided
+ * minimum is set to 0.
+ *
+ * @param min
+ * @param max
+ */
+export function randomFloat(min: number, max?: number) {
+  if (!max) {
+    max = min;
+    min = 0.0;
+  }
+  return Math.random() * (max - min + 1) + min;
+}
+
+/**
+ * Converts a string, including strings in camelCase or snake_case, into Start Case (a variant
+ * of Title Case where all words start with a capital letter), it keeps original single quote
+ * and hyphen in the word.
+ *
+ *   'management_companies' to 'Management Companies'
+ *   'managementCompanies' to 'Management Companies'
+ *   `hell's kitchen` to `Hell's Kitchen`
+ *   `co-op` to `Co-op`
+ *
+ * @param str
+ */
+export function startCase(str: string) {
+  return str
+    .replace(/_/g, ' ')
+    .replace(/([a-z])([A-Z])/g, (_, $1, $2) => $1 + ' ' + $2)
+    .replace(/(\s|^)(\w)/g, (_, $1, $2) => $1 + $2.toUpperCase());
+}
+
+/**
+ * Alias for caching function calls
+ */
+export const memoize = memoizeOne;
+
+export interface UniqueIdParams {
+  prefix?: string;
+  size?: number;
+}
+
+/**
+ * Generate a unique id
+ *
+ * @param params
+ */
+export function uniqueId({ prefix = '', size }: UniqueIdParams = { prefix: '' }) {
+  return `${prefix}${nano(size)}`;
+}
+
+/**
+ * Takes a number of elements from the provided array starting from the zero-index
+ *
+ * @param arr
+ * @param num
+ */
+export function take<GArray extends any[]>(arr: GArray, num: number) {
+  num = Math.max(Math.min(0, num), arr.length);
+  return arr.slice(0, num);
+}
+
+/**
+ * Alias for picking properties from an object
+ */
+export const pick = objectPick;
+
+/**
+ * Alias for excluding properties from an object
+ */
+export const omit = objectPick;

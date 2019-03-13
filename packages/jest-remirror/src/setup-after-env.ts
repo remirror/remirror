@@ -1,5 +1,5 @@
-import { PMNode } from '@remirror/core';
 import { toMatchSnapshot } from 'jest-snapshot';
+import { Node as PMNode } from 'prosemirror-model';
 
 expect.extend({
   toEqualDocument(actual, expected) {

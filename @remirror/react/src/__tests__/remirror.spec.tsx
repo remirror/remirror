@@ -82,7 +82,7 @@ test('should render a unique class on the root document', () => {
     </Remirror>,
   );
   const editorNode = getByLabelText(label);
-  expect(editorNode.className).toMatch(/remirror-[0-9]+/);
+  expect(editorNode.className).toMatch(/remirror-[A-Za-z0-9_-]{5}/);
 });
 
 describe('getRootProps', () => {

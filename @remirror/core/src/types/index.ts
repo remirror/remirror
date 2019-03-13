@@ -2,20 +2,7 @@ import { MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType } from 'prosemir
 import { Plugin as PMPlugin } from 'prosemirror-state';
 import { NodeViewPortalContainer } from '../portal-container';
 import { EditorView, InputRule, Mark, Selection, Transaction } from './aliases';
-import { EditorSchema, EditorState, ProsemirrorNode } from './base';
-
-/**
- * An object with string keys and values of type `any`
- * Taken from `simplytyped`
- */
-export type PlainObject = Record<string, any>;
-
-/**
- * Concisely and cleanly define an arbitrary function.
- * Taken from `simplytyped`
- * Useful when designing many api's that don't care what function they take in, they just need to know what it returns.
- */
-export type AnyFunction<R = any> = (...args: any[]) => R;
+import { EditorSchema, EditorState, Literal, Omit, ProsemirrorNode } from './base';
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -168,8 +155,6 @@ export enum ExtensionType {
   EXTENSION = 'extension',
 }
 
-export type Literal = string | number | boolean | undefined | null | void | {};
-
 export interface ObjectMark {
   type: string;
   attrs?: Record<string, string | null>;
@@ -203,35 +188,6 @@ export interface FromTo {
   from: number;
   to: number;
 }
-
-/**
- * Makes specified keys of an interface optional while the rest stay the same.
- */
-export type MakeOptional<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
-  { [P in GKeys]+?: GType[P] };
-
-/**
- * Makes specified keys of an interface nullable while the rest stay the same.
- */
-export type MakeNullable<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
-  { [P in GKeys]: GType[P] | null };
-
-/**
- * Makes specified keys of an interface Required while the rest remain unchanged.
- */
-export type MakeRequired<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
-  { [P in GKeys]-?: GType[P] };
-
-/**
- * Makes specified keys of an interface readonly.
- */
-export type MakeReadonly<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
-  { +readonly [P in GKeys]: GType[P] };
-
-/**
- * Remove keys from an interface
- */
-export type Omit<GType, GKeys extends keyof GType> = Pick<GType, Exclude<keyof GType, GKeys>>;
 
 export * from './aliases';
 export * from './base';

@@ -30,9 +30,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.6",
-    "@types/lodash": "^4.14.122",
-    "lodash": "^4.17.11"
+    "@remirror/core": "0.0.1-alpha.6"
   },
   "peerDependencies": {
     "@types/prosemirror-model": "^1.7.0",

@@ -33,16 +33,14 @@
     "@remirror/core": "0.0.1-alpha.6",
     "@remirror/core-extensions": "0.0.1-alpha.6",
     "@types/hoist-non-react-statics": "^3.3.0",
-    "@types/lodash": "^4.14.122",
     "@types/prosemirror-keymap": "^1.0.1",
     "@types/prosemirror-view": "^1.3.1",
     "hoist-non-react-statics": "^3.3.0",
-    "is-plain-object": "2.0.4",
-    "lodash": "^4.17.11",
     "prosemirror-keymap": "^1.0.1",
     "prosemirror-view": "^1.8.3"
   },
   "peerDependencies": {
+    "@sindresorhus/is": "0.15.0",
     "@emotion/core": "^10.0.7",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",

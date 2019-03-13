@@ -1,4 +1,4 @@
-import { random } from 'lodash';
+import { randomInt } from '@remirror/core';
 import { ParticleEffect } from './types';
 
 export const COLORS = [
@@ -29,7 +29,7 @@ export const defaultEffect: ParticleEffect = {
       y: y + 10,
       alpha: 1,
       color,
-      size: random(2, 4),
+      size: randomInt(2, 4),
       vx:
         PARTICLE_VELOCITY_RANGE.x[0] +
         Math.random() * (PARTICLE_VELOCITY_RANGE.x[1] - PARTICLE_VELOCITY_RANGE.x[0]),
@@ -57,12 +57,12 @@ export const spawningEffect: ParticleEffect = {
       y: y + 10,
       alpha: 1,
       color,
-      size: random(2, 8),
+      size: randomInt(2, 8),
       drag: 0.92,
-      vx: random(-3, 3),
-      vy: random(-3, 3),
+      vx: randomInt(-3, 3),
+      vy: randomInt(-3, 3),
       wander: 0.15,
-      theta: (random(0, 360) * Math.PI) / 180,
+      theta: (randomInt(0, 360) * Math.PI) / 180,
     };
   },
   updateParticle({ particle, ctx }) {
@@ -70,7 +70,7 @@ export const spawningEffect: ParticleEffect = {
     particle.y += particle.vy;
     particle.vx *= particle.drag!;
     particle.vy *= particle.drag!;
-    particle.theta! += random(-0.5, 0.5);
+    particle.theta! += randomInt(-0.5, 0.5);
     particle.vx += Math.sin(particle.theta!) * 0.1;
     particle.vy += Math.cos(particle.theta!) * 0.1;
     particle.size *= 0.96;
@@ -90,12 +90,12 @@ export const heartEffect: ParticleEffect = {
       y: y - 10,
       alpha: 0.8,
       color,
-      size: random(5, 10),
+      size: randomInt(5, 10),
       drag: 0.92,
-      vx: random(-3, 3),
-      vy: random(-3, 3),
+      vx: randomInt(-3, 3),
+      vy: randomInt(-3, 3),
       wander: 0.15,
-      theta: (random(0, 360) * Math.PI) / 180,
+      theta: (randomInt(0, 360) * Math.PI) / 180,
     };
   },
   updateParticle({ particle, ctx }) {

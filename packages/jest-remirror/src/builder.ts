@@ -1,5 +1,5 @@
 import { findMatches } from '@remirror/core';
-import { flatten } from 'lodash';
+import flatten from 'flatten';
 import { Fragment, Mark, MarkType, Node, NodeType, Schema, Slice } from 'prosemirror-model';
 import { testSchema } from './test-schema';
 

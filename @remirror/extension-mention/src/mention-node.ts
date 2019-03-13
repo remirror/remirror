@@ -6,8 +6,8 @@ import {
   Omit,
   replaceText,
   SchemaNodeTypeParams,
+  startCase,
 } from '@remirror/core';
-import { startCase } from 'lodash';
 import { createSuggestionsPlugin, defaultMatcher, SuggestionsPluginProps } from './create-suggestions-plugin';
 
 export interface MentionNodeExtensionOptions
