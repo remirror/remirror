@@ -1,5 +1,5 @@
-import { EditorView } from '@remirror/core';
-import { random, range, throttle } from 'lodash';
+import { EditorView, randomInt } from '@remirror/core';
+import throttle from 'throttleit';
 import { EpicModePluginStateParams, Particle, ParticleEffect, ParticleRange } from './types';
 
 export class EpicModePluginState {
@@ -80,9 +80,9 @@ export class EpicModePluginState {
     if (!node) {
       return;
     }
-    const numParticles = random(this.particleRange.min, this.particleRange.max);
+    const numParticles = randomInt(this.particleRange.min, this.particleRange.max);
     const textColor = getRGBComponents(node);
-    range(numParticles).forEach(ii => {
+    for (let ii = 0; ii < numParticles; ii++) {
       const colorCode = this.colors[ii % this.colors.length];
       const r = parseInt(colorCode.slice(1, 3), 16);
       const g = parseInt(colorCode.slice(3, 5), 16);
@@ -97,7 +97,7 @@ export class EpicModePluginState {
         ctx: this.ctx,
         canvas: this.canvas,
       });
-    });
+    }
   }, 100);
 
   /**
@@ -121,8 +121,8 @@ export class EpicModePluginState {
     if (this.shakeTime > 0) {
       this.shakeTime -= dt;
       const magnitude = (this.shakeTime / this.shakeTimeMax) * this.shakeIntensity;
-      const shakeX = random(-magnitude, magnitude);
-      const shakeY = random(-magnitude, magnitude);
+      const shakeX = randomInt(-magnitude, magnitude);
+      const shakeY = randomInt(-magnitude, magnitude);
       (this.view.dom as HTMLElement).style.transform = `translate(${shakeX}px,${shakeY}px)`;
     }
     this.drawParticles();

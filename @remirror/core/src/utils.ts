@@ -1,6 +1,6 @@
-import { NodeType } from 'prosemirror-model';
+import { Node as PMNode, NodeType } from 'prosemirror-model';
 import { Selection } from 'prosemirror-state';
-import { EditorSchema, PMNode, ProsemirrorNode, Transaction } from './types';
+import { EditorSchema, ProsemirrorNode, Transaction } from './types';
 
 export const isProsemirrorNode = (val: unknown): val is ProsemirrorNode =>
   typeof val === 'object' && val instanceof PMNode;

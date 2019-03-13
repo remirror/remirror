@@ -9,7 +9,6 @@ import {
   replaceText,
   SchemaNodeTypeParams,
 } from '@remirror/core';
-import { isNumber } from 'lodash';
 import { DefaultEmoji } from './components/emoji';
 import { createEmojiPlugin, CreateEmojiPluginParams } from './create-emoji-plugin';
 import { EmojiNodeAttrs } from './types';
@@ -92,7 +91,7 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
           'data-emoji-colons': colons,
           'data-emoji-native': native,
           'data-emoji-name': name,
-          'data-emoji-skin': isNumber(skin) ? String(skin) : '',
+          'data-emoji-skin': !isNaN(Number(skin)) ? String(skin) : '',
           'data-use-native': useNative ? 'true' : 'false',
           contenteditable: 'false',
           ...transformAttrs({ name }),

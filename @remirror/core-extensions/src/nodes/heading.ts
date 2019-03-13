@@ -4,7 +4,7 @@ import {
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
-  PMNode,
+  ProsemirrorNode,
   SchemaNodeTypeParams,
   toggleBlockItem,
 } from '@remirror/core';
@@ -42,7 +42,7 @@ export class Heading extends NodeExtension<HeadingOptions> {
         tag: `h${level}`,
         attrs: { level },
       })),
-      toDOM: (node: PMNode) => [`h${node.attrs.level}`, 0],
+      toDOM: (node: ProsemirrorNode) => [`h${node.attrs.level}`, 0],
     };
   }
 

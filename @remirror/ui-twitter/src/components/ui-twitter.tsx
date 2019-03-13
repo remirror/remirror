@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 
 import { css, Interpolation } from '@emotion/core';
-import { AnyExtension, Attrs, EDITOR_CLASS_NAME, EditorView, Omit } from '@remirror/core';
+import { AnyExtension, Attrs, EDITOR_CLASS_NAME, EditorView, Omit, omit } from '@remirror/core';
 import { InlineCursorTarget } from '@remirror/core-extensions';
 import { EmojiNode, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
@@ -11,7 +11,6 @@ import { Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react'
 import { Data, EmojiSet } from 'emoji-mart';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
-import { omit } from 'lodash';
 import { styled, UITwitterTheme, uiTwitterTheme } from '../theme';
 import { ActiveTwitterTagData, ActiveTwitterUserData, TwitterTagData, TwitterUserData } from '../types';
 import { CharacterCountIndicator } from './character-count';
@@ -318,7 +317,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     return { ...uiTwitterTheme, ...propTheme, colors: { ...uiTwitterTheme.colors, ...propTheme.colors } };
   }
 
-  private get remirrorProps(): Partial<RemirrorProps> {
+  private get remirrorProps() {
     return omit(this.props, ['userData', 'tagData', 'onMentionStateChange', 'theme']);
   }
 

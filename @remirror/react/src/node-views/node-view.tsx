@@ -10,8 +10,8 @@ import {
   PlainObject,
   ProsemirrorNode,
 } from '@remirror/core';
+import is from '@sindresorhus/is';
 import { css, Interpolation } from 'emotion';
-import isPlainObject from 'is-plain-object';
 import { Decoration, EditorView, NodeView } from 'prosemirror-view';
 
 export type GetPosition = () => number;
@@ -177,7 +177,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
         return;
       }
       const attrs = Cast<Attrs>(domSpec[1]);
-      if (isPlainObject(attrs)) {
+      if (is.plainObject(attrs)) {
         Object.keys(attrs).forEach(attr => {
           element.setAttribute(attr, attrs[attr]);
         });

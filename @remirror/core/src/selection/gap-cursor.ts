@@ -1,9 +1,9 @@
-import { ResolvedPos, Schema, Slice } from 'prosemirror-model';
+import { Node as PMNode, ResolvedPos, Schema, Slice } from 'prosemirror-model';
 import { Selection, SelectionBookmark } from 'prosemirror-state';
 import { GAP_CURSOR_IGNORED_NODE, Side } from '../constants';
 import { nodeNameMatchesList } from '../helpers/document';
 import { Mapping } from '../types/aliases';
-import { EditorSchema, NodeMatch, PMNode } from '../types/base';
+import { EditorSchema, NodeMatch } from '../types/base';
 
 export const GAP_CURSOR_ID = 'gapCursor';
 

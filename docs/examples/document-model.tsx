@@ -2,10 +2,10 @@
 
 import React, { FunctionComponent, MouseEventHandler, useState } from 'react';
 
+import { memoize } from '@remirror/core';
 import { Bold, Italic, Underline } from '@remirror/core-extensions';
 import { Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react';
 import { RenderTree } from '@remirror/renderer-react';
-import { memoize } from 'lodash';
 
 const EditorLayout: FunctionComponent = () => {
   const extensions = [new Bold(), new Italic(), new Underline()];

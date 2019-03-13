@@ -13,10 +13,12 @@ import {
   getNearestNonTextNode,
   InputRule,
   isProsemirrorNode,
+  memoize,
   NodeViewPortalContainer,
   ObjectNode,
   OffsetCalculator,
   Paragraph,
+  pick,
   Position,
   ProsemirrorPlugin,
   RawMenuPositionData,
@@ -25,9 +27,10 @@ import {
   ShouldRenderMenu,
   Text,
   Transaction,
+  uniqueId,
 } from '@remirror/core';
 import { Composition, History, Placeholder, PlaceholderPluginState } from '@remirror/core-extensions';
-import { isString, memoize, pick, uniqueId } from 'lodash';
+import is from '@sindresorhus/is';
 import { baseKeymap, selectParentNode } from 'prosemirror-commands';
 import { inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
@@ -103,7 +106,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   /**
    * The uid for this instance.
    */
-  private uid = uniqueId();
+  private uid = uniqueId({ size: 5 });
   /**
    * A unique class added to every instance of the remirror editor. This allows for non global styling.
    */
@@ -347,7 +350,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
         return this.schema.nodeFromJSON(defaultInitialContent);
       }
     }
-    if (isString(content)) {
+    if (is.string(content)) {
       const element = document.createElement('div');
       element.innerHTML = content.trim();
 
@@ -569,13 +572,13 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       return undefined;
     }
 
-    return Array.isArray(placeholder)
+    return is.array(placeholder)
       ? {
           text: placeholder[0],
           className: pluginState.emptyNodeClass,
           style: placeholder[1],
         }
-      : isString(placeholder)
+      : is.string(placeholder)
       ? { text: placeholder, className: pluginState.emptyNodeClass, style: {} }
       : undefined;
   }
