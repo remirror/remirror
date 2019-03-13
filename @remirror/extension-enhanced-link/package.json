@@ -8,7 +8,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/extension-enhanced-link"
   },
-  "version": "0.0.1-alpha.5",
+  "version": "0.0.1-alpha.6",
   "main": "lib/index.js",
   "module": "lib/dist/extension-enhanced-link.esm.js",
   "files": [
@@ -29,7 +29,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.5"
+    "@remirror/core": "0.0.1-alpha.6"
   },
   "peerDependencies": {
     "@types/prosemirror-state": "^1.2.3",

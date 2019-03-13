@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "packages/remirror"
   },
-  "version": "0.0.1-alpha.5",
+  "version": "0.0.1-alpha.6",
   "main": "lib/index.js",
   "module": "lib/dist/remirror.esm.js",
   "files": [
@@ -30,10 +30,10 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.5",
-    "@remirror/core-extensions": "0.0.1-alpha.5",
-    "@remirror/react": "0.0.1-alpha.5",
-    "@remirror/renderer-react": "0.0.1-alpha.5"
+    "@remirror/core": "0.0.1-alpha.6",
+    "@remirror/core-extensions": "0.0.1-alpha.6",
+    "@remirror/react": "0.0.1-alpha.6",
+    "@remirror/renderer-react": "0.0.1-alpha.6"
   },
   "peerDependencies": {
     "@types/react": "^16.7.18",
