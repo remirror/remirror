@@ -190,8 +190,6 @@ interface EnhancedLinkHandlerProps {
 const enhancedLinkHandler = ({ state, url, start, end, transaction }: EnhancedLinkHandlerProps) => {
   const endPosition = state.selection.to;
   const enhancedLink = state.schema.marks.enhancedLink.create({ href: extractHref(url) });
-  // let tr = state.tr.insertText(displayUrl, start, end);
-  // tr = tr.addMark(start, end, enhancedLink);
   const tr = (transaction || state.tr).replaceWith(start, end, state.schema.text(url, [enhancedLink]));
 
   if (endPosition < end) {
