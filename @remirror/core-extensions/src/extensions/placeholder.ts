@@ -76,7 +76,7 @@ export class Placeholder extends Extension<PlaceholderOptions> {
 
         /**
          * Borrowed from `atlaskit`
-         * Workaround for ED-4063: On Mobile / Android, a user can start typing but it won't trigger
+         * Workaround: On Mobile / Android, a user can start typing but it won't trigger
          * an Editor state update so the placeholder will still be shown. We hook into the compositionstart
          * and compositionend events instead, to make sure we show/hide the placeholder for these devices.
          */

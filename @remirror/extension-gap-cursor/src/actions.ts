@@ -135,8 +135,8 @@ export const deleteNode = (dir: Direction): CommandFunction => (state, dispatch)
 export const setGapCursorAtPos = (position: number, side: Side = Side.LEFT): CommandFunction => (
   state,
   dispatch,
+  _,
 ) => {
-  // @see ED-6231
   if (position > state.doc.content.size) {
     return false;
   }
