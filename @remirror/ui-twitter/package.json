@@ -36,7 +36,6 @@
     "@remirror/core-extensions": "0.0.1-alpha.6",
     "@remirror/extension-emoji": "0.0.1-alpha.6",
     "@remirror/extension-enhanced-link": "0.0.1-alpha.6",
-    "@remirror/extension-gap-cursor": "0.0.1-alpha.6",
     "@remirror/extension-mention": "0.0.1-alpha.6",
     "@remirror/react": "0.0.1-alpha.6",
     "@types/emoji-mart": "^2.8.2",

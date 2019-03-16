@@ -24,25 +24,6 @@ export const LEAF_NODE_REPLACING_CHARACTER = '\ufffc';
 export const ZERO_WIDTH_SPACE_CHAR = '\u200b';
 
 /**
- * By default we don't show the gap-cursor for these nodes.
- *
- * This can be overridden via a gap cursor static method.
- * ```ts
- * GapCursorSelection.setIgnoredNodes = ['mention', 'etc...']
- * ```
- */
-export const GAP_CURSOR_IGNORED_NODE = [
-  'paragraph',
-  'bulletList',
-  'orderedList',
-  'listItem',
-  'taskItem',
-  'decisionItem',
-  'heading',
-  'blockquote',
-];
-
-/**
  * Used to determine the side where a gap-cursor is drawn
  */
 export enum Side {

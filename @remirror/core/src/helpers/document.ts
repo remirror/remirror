@@ -222,10 +222,7 @@ export const isDOMNode = (node: unknown): node is Node => {
  * @params node
  * @params selector
  */
-export const closestElement = (
-  domNode: HTMLElement | null | undefined,
-  selector: string,
-): HTMLElement | null => {
+export const closestElement = (domNode: Node | null | undefined, selector: string): HTMLElement | null => {
   if (!isElementNode(domNode)) {
     return null;
   }
@@ -356,7 +353,7 @@ export const isTextSelection = (selection: Selection): selection is TextSelectio
  *
  * @params state
  */
-export function atTheEndOfDoc(state: EditorState): boolean {
+export function atDocEnd(state: EditorState): boolean {
   const { selection, doc } = state;
   return doc.nodeSize - selection.$to.pos - 2 === selection.$to.depth;
 }
@@ -366,7 +363,7 @@ export function atTheEndOfDoc(state: EditorState): boolean {
  *
  * @params state
  */
-export function atTheBeginningOfDoc(state: EditorState): boolean {
+export function atDocStart(state: EditorState): boolean {
   const { selection } = state;
   return selection.$from.pos === selection.$from.depth;
 }
@@ -420,6 +417,10 @@ export const nodeNameMatchesList = (
     }
   }
   return outcome;
+};
+
+export const isDocNode = (node: ProsemirrorNode | null | undefined, schema: EditorSchema) => {
+  return isProsemirrorNode(node) && node.type === schema.nodes.doc;
 };
 
 /**

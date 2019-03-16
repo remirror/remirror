@@ -5,7 +5,6 @@ import { AnyExtension, Attrs, EDITOR_CLASS_NAME, EditorView, Omit, omit } from '
 import { InlineCursorTarget } from '@remirror/core-extensions';
 import { EmojiNode, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
-import { GapCursor } from '@remirror/extension-gap-cursor';
 import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
 import { Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react';
 import { Data, EmojiSet } from 'emoji-mart';
@@ -78,7 +77,6 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   private createExtensions() {
     return [
       new InlineCursorTarget(),
-      new GapCursor(),
       new MentionNode({
         type: 'at',
         extraAttrs: ['href', 'role'],
