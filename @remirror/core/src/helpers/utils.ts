@@ -1,24 +1,24 @@
-import { Node as PMNode, NodeType } from 'prosemirror-model';
+import { NodeType } from 'prosemirror-model';
 import { Selection } from 'prosemirror-state';
-import { EditorSchema, ProsemirrorNode, Transaction } from './types';
+import { EditorSchema, ProsemirrorNode, Transaction } from '../types';
+import { isTextNode } from './document';
 
-export const isProsemirrorNode = (val: unknown): val is ProsemirrorNode =>
-  typeof val === 'object' && val instanceof PMNode;
-
-/**
- * @module
- * "Borrowed" from prosemirror-utils in order to avoid requirement of `@prosemirror-tables`
- */
+/* "Borrowed" from prosemirror-utils in order to avoid requirement of `@prosemirror-tables`*/
 
 /**
  * Checks if the type a given `node` equals to a given `nodeType`.
+ *
+ * @params type
+ * @params node
  */
-export const equalNodeType = (nodeType: NodeType<EditorSchema>, node: ProsemirrorNode) => {
-  return (Array.isArray(nodeType) && nodeType.indexOf(node.type) > -1) || node.type === nodeType;
+export const equalNodeType = (type: NodeType<EditorSchema>, node: ProsemirrorNode) => {
+  return (Array.isArray(type) && type.indexOf(node.type) > -1) || node.type === type;
 };
 
 /**
  * Creates a new transaction object from a given transaction
+ *
+ * @params tr
  */
 export const cloneTr = (tr: Transaction) => {
   return Object.assign(Object.create(tr), tr).setTime(Date.now());
@@ -27,6 +27,8 @@ export const cloneTr = (tr: Transaction) => {
 /**
  * Returns a `delete` transaction that removes a node at a given position with the given `node`.
  * `position` should point at the position immediately before the node.
+ *
+ * @params position
  */
 export const removeNodeAtPos = (position: number) => (tr: Transaction) => {
   const node = tr.doc.nodeAt(position);
@@ -41,6 +43,9 @@ export const removeNodeAtPos = (position: number) => (tr: Transaction) => {
  *  const domAtPos = view.domAtPos.bind(view);
  *  const ref = findDomRefAtPos($from.pos, domAtPos);
  *  ```
+ *
+ * @params position
+ * @params domAtPos
  */
 export const findDomRefAtPos = (
   position: number,
@@ -49,11 +54,11 @@ export const findDomRefAtPos = (
   const dom = domAtPos(position);
   const node = dom.node.childNodes[dom.offset];
 
-  if (dom.node.nodeType === Node.TEXT_NODE) {
+  if (isTextNode(dom.node)) {
     return dom.node.parentNode;
   }
 
-  if (!node || node.nodeType === Node.TEXT_NODE) {
+  if (!node || isTextNode(node)) {
     return dom.node;
   }
 
@@ -68,6 +73,8 @@ export const findDomRefAtPos = (
  *    removeNodeBefore(state.tr)
  *  );
  *  ```
+ *
+ * @params tr
  */
 export const removeNodeBefore = (tr: Transaction): Transaction => {
   const position = findPositionOfNodeBefore(tr.selection);
@@ -90,6 +97,8 @@ interface FindParentNode {
  *  const predicate = node => node.type === schema.nodes.blockquote;
  *  const parent = findParentNode(predicate)(selection);
  *  ```
+ *
+ * @params predicate
  */
 export const findParentNode = (predicate: (node: ProsemirrorNode) => boolean) => (
   selection: Selection,
@@ -114,11 +123,13 @@ export const findParentNode = (predicate: (node: ProsemirrorNode) => boolean) =>
  * ```ts
  * const parent = findParentNodeOfType(schema.nodes.paragraph)(selection);
  * ```
+ *
+ * @params type
  */
-export const findParentNodeOfType = (nodeType: NodeType<EditorSchema>) => (
+export const findParentNodeOfType = (type: NodeType<EditorSchema>) => (
   selection: Selection,
 ): FindParentNode | undefined => {
-  return findParentNode(node => equalNodeType(nodeType, node))(selection);
+  return findParentNode(node => equalNodeType(type, node))(selection);
 };
 
 /**
@@ -127,6 +138,8 @@ export const findParentNodeOfType = (nodeType: NodeType<EditorSchema>) => (
  * ```ts
  * const pos = findPositionOfNodeBefore(tr.selection);
  * ```
+ *
+ * @params selection
  */
 export const findPositionOfNodeBefore = (selection: Selection<EditorSchema>): number | undefined => {
   const { nodeBefore } = selection.$from;

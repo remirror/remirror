@@ -37,6 +37,7 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
     resolve({
       browser: true,
       extensions,
+      preferBuiltins: false,
     }),
 
     // Convert JSON imports to ES6 modules.
@@ -55,11 +56,13 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
         // https://github.com/rollup/rollup-plugin-commonjs#custom-named-exports
         namedExports: {
           '@remirror/core': ['Doc', 'Text'],
+          '@remirror/renderer-react': ['ReactSerializer'],
           'react-dom': [
             'findDOMNode',
             'unstable_renderSubtreeIntoContainer',
             'unmountComponentAtNode',
           ],
+          nodom: ['Document'],
           'react-dom/server': ['renderToStaticMarkup'],
         },
         extensions,

@@ -1,8 +1,9 @@
+import { EditorSchema, isProsemirrorNode } from '@remirror/core';
 import { toMatchSnapshot } from 'jest-snapshot';
-import { Node as PMNode } from 'prosemirror-model';
+import { RefsNode } from './builder';
 
-expect.extend({
-  toEqualDocument(actual, expected) {
+export const remirrorMatchers: jest.ExpectExtendMap = {
+  toEqualDocument(actual, expected: ((schema: EditorSchema) => RefsNode) | RefsNode) {
     // Because schema is created dynamically, expected value is a function (schema) => PMNode;
     // That's why this magic is necessary. It simplifies writing assertions, so
     // instead of expect(doc).toEqualDocument(doc(p())(schema)) we can just do:
@@ -15,7 +16,7 @@ expect.extend({
         ? expected(actual.type.schema)
         : expected;
 
-    if (!(expected instanceof PMNode) || !(actual instanceof PMNode)) {
+    if (!isProsemirrorNode(expected) || !isProsemirrorNode(actual)) {
       return {
         pass: false,
         actual,
@@ -62,7 +63,7 @@ expect.extend({
     };
   },
 
-  toMatchDocSnapshot(actual) {
+  toMatchDocumentSnapshot(actual) {
     const { currentTestName, snapshotState } = this;
 
     const removeFirstWord = (sentence?: string) =>
@@ -102,13 +103,17 @@ expect.extend({
     this.currentTestName = oldTestName;
     return ret;
   },
-});
+};
 
 declare global {
   namespace jest {
     interface MatcherUtils {
       currentTestName?: string;
       snapshotState: any;
+    }
+    interface Matchers<R> {
+      toEqualDocument(builder: (schema: EditorSchema) => RefsNode): R;
+      toMatchDocumentSnapshot(builder: (schema: EditorSchema) => RefsNode): R;
     }
   }
 }

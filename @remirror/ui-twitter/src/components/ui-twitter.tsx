@@ -361,7 +361,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
           {...this.remirrorProps}
           extensions={this.extensions}
           onChange={this.onChange}
-          insertPosition='first'
+          insertPosition='start'
         >
           {({ getRootProps, view, actions }) => {
             const content = view.state.doc.textContent;

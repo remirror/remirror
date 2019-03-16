@@ -1,4 +1,4 @@
-import React, { ComponentType, FC, FunctionComponent } from 'react';
+import React, { ComponentType, FC } from 'react';
 
 import { ObjectMark, ObjectNode } from '@remirror/core';
 
@@ -86,14 +86,12 @@ const defaultTypeMap: MarkMap = {
   text: TextHandler,
 };
 
-const Underline: FunctionComponent = props => <div style={{ textDecoration: 'underline' }} {...props} />;
-
 const defaultMarkMap: MarkMap = {
   em: 'em',
   strong: 'strong',
   code: 'code',
   link: 'a',
-  underline: Underline,
+  underline: 'u',
 };
 
 export interface BaseRenderTreeProps {

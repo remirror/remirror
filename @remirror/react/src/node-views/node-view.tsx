@@ -4,7 +4,7 @@ import {
   Attrs,
   Cast,
   EDITOR_CLASS_NAME,
-  isDomNode,
+  isDOMNode,
   isElementNode,
   NodeViewPortalContainer,
   PlainObject,
@@ -103,7 +103,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
         return document.createElement(domSpec);
       }
 
-      if (isDomNode(domSpec)) {
+      if (isDOMNode(domSpec)) {
         if (!isElementNode(domSpec)) {
           throw new Error('Invalid HTML Element provided in the DOM Spec');
         }
@@ -173,7 +173,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     if (toDOM) {
       const domSpec = toDOM(node);
 
-      if (typeof domSpec === 'string' || isDomNode(domSpec)) {
+      if (typeof domSpec === 'string' || isDOMNode(domSpec)) {
         return;
       }
       const attrs = Cast<Attrs>(domSpec[1]);

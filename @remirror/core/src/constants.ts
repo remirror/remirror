@@ -49,3 +49,12 @@ export enum Side {
   LEFT = 'left',
   RIGHT = 'right',
 }
+
+export const EMPTY_OBJECT_NODE = {
+  type: 'doc',
+  content: [
+    {
+      type: 'paragraph',
+    },
+  ],
+};

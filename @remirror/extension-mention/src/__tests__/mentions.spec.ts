@@ -1,4 +1,4 @@
-import { MentionNode } from '../mention-node';
+import { MentionNode } from '../mention.extension';
 
 describe('Mentions Extension', () => {
   it('is created with the correct options', () => {

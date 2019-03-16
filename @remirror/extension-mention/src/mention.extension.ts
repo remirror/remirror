@@ -8,7 +8,7 @@ import {
   SchemaNodeTypeParams,
   startCase,
 } from '@remirror/core';
-import { createSuggestionsPlugin, defaultMatcher, SuggestionsPluginProps } from './create-suggestions-plugin';
+import { createSuggestionsPlugin, defaultMatcher, SuggestionsPluginProps } from './plugin';
 
 export interface MentionNodeExtensionOptions
   extends Omit<SuggestionsPluginProps, 'command' | 'decorationsTag'>,

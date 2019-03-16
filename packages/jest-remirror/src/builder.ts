@@ -244,3 +244,26 @@ export const clean = (content: BuilderContentFn) => (schema: Schema) => {
   }
   return node instanceof Node ? Node.fromJSON(schema, node.toJSON()) : undefined;
 };
+
+// Nodes
+export const doc = nodeFactory(testSchema.nodes.doc, {});
+export const p = nodeFactory(testSchema.nodes.paragraph, {});
+export const blockquote = nodeFactory(testSchema.nodes.blockquote, {});
+export const h1 = nodeFactory(testSchema.nodes.heading, { level: 1 });
+export const h2 = nodeFactory(testSchema.nodes.heading, { level: 2 });
+export const h3 = nodeFactory(testSchema.nodes.heading, { level: 3 });
+export const h4 = nodeFactory(testSchema.nodes.heading, { level: 4 });
+export const h5 = nodeFactory(testSchema.nodes.heading, { level: 5 });
+export const h6 = nodeFactory(testSchema.nodes.heading, { level: 6 });
+export const li = nodeFactory(testSchema.nodes.listItem, {});
+export const ul = nodeFactory(testSchema.nodes.bulletList, {});
+export const ol = nodeFactory(testSchema.nodes.orderedList, {});
+export const br = nodeFactory(testSchema.nodes.hardBreak, {});
+export const hr = nodeFactory(testSchema.nodes.rule, {});
+
+// Marks
+export const italic = markFactory(testSchema.marks.italic, {});
+export const underline = markFactory(testSchema.marks.underline, {});
+export const bold = markFactory(testSchema.marks.bold, {});
+export const code = markFactory(testSchema.marks.code, {});
+export const strike = markFactory(testSchema.marks.strike, {});

@@ -118,4 +118,27 @@ describe('getRootProps', () => {
     expect(mock.mock.calls[0][0].customRef).toBeFunction();
     expect(mock.mock.calls[0][0].testProp).toBe(testProp);
   });
+
+  it('supports nested getRootProps', () => {
+    const { baseElement, getByRole } = render(
+      <Remirror>
+        {({ getRootProps }) => {
+          return (
+            <div>
+              <div {...getRootProps()} id='nested'>
+                <div id='wrapped'>{label}</div>
+              </div>
+            </div>
+          );
+        }}
+      </Remirror>,
+    );
+
+    const wrapper = baseElement.querySelector('#nested');
+    const innerLabel = baseElement.querySelector('#wrapped') as HTMLElement;
+    expect(innerLabel).toBeVisible();
+    expect(wrapper!.childElementCount).toBe(2);
+    expect(wrapper).toContainElement(innerLabel);
+    expect(wrapper).toContainElement(getByRole('textbox'));
+  });
 });

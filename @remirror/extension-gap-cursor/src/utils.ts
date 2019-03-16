@@ -3,6 +3,7 @@ import {
   findDomRefAtPos,
   findPositionOfNodeBefore,
   GapCursorSelection,
+  isElementNode,
   Side,
 } from '@remirror/core';
 import { Node as PMNode, ResolvedPos, Schema } from 'prosemirror-model';
@@ -71,10 +72,7 @@ const isMediaSingle = (node?: HTMLElement | null): boolean => {
 };
 
 const isNodeViewWrapper = (node?: HTMLElement | null): boolean => {
-  if (!node) {
-    return false;
-  }
-  return !!node && node.nodeType === Node.ELEMENT_NODE && node.className.indexOf('-content-wrap') !== -1;
+  return isElementNode(node) && node.className.indexOf('-content-wrap') !== -1;
 };
 
 function getBreakoutModeFromTargetNode(node: PMNode): string {

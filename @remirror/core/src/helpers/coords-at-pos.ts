@@ -2,7 +2,7 @@ import { EditorView } from '../types';
 import { Cast } from './base';
 import { isElementNode, isTextNode } from './document';
 
-export const textRange = (node: Node, from?: number, to?: number) => {
+const textRange = (node: Node, from?: number, to?: number) => {
   const range = document.createRange();
   range.setEnd(node, to == null ? (node.nodeValue || '').length : to);
   range.setStart(node, from || 0);
@@ -15,8 +15,12 @@ function singleRect(object: Range | Element, bias?: number) {
 }
 
 /**
- * EditorView.cordsAtPos returns wrong coordinates when at a linebreak.
+ * EditorView.cordsAtPos returns wrong coordinates when at a line break.
  * @see https://github.com/scrumpy/tiptap/pull/228
+ *
+ * @params view
+ * @params pos
+ * @params [end]
  */
 export const coordsAtPos = (view: EditorView, pos: number, end = false) => {
   const { node, offset } = view.docView.domFromPos(pos);
