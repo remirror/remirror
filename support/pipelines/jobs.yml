@@ -1,40 +1,14 @@
 parameters:
   name: '' # defaults for any parameters that aren't specified
   vmImage: ''
+  scripts: []
 
 jobs:
-  - job: ${{ parameters.name }}Checks
-    pool:
-      vmImage: ${{ parameters.vmImage }}
-    steps:
-      - template: yarn-install.yml
-      - script: |
-          yarn ci:checks
-        displayName: 'Run all checks'
-
-  - job: ${{ parameters.name }}UnitTests
-    pool:
-      vmImage: ${{ parameters.vmImage }}
-    steps:
-      - template: yarn-install.yml
-      - script: |
-          yarn test
-        displayName: 'Run unit tests'
-
-  - job: ${{ parameters.name }}IntegrationTests
-    pool:
-      vmImage: ${{ parameters.vmImage }}
-    steps:
-      - template: yarn-install.yml
-      - script: |
-          yarn test:integration
-        displayName: 'Run integration tests'
-
-  - job: ${{ parameters.name }}ProductionBuild
-    pool:
-      vmImage: ${{ parameters.vmImage }}
-    steps:
-      - template: yarn-install.yml
-      - script: |
-          yarn build:production
-        displayName: 'Run production build'
+  - ${{ each script in parameters.scripts }}: # Each job
+      - ${{ each pair in script }}:
+          - job: ${{ format({0}{1}, parameters.name, pair.value.displayName) }}
+            pool:
+              vmImage: ${{ parameters.vmImage }}
+            steps:
+              - template: yarn-install.yml
+            ${{ pair.key }}: ${{ pair.value }}
