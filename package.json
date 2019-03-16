@@ -24,7 +24,6 @@
     "clean": "yarn if-clean git clean -fdx",
     "clean:force": "git clean -fdx",
     "clean:modules": "yarn if-clean git clean -fdx @remirror support docs",
-    "dev": "lerna run dev --parallel",
     "dev:docs": "docz dev",
     "fix": "run-s fix:lint:* fix:*",
     "fix:lint:babel": "yarn lint:babel --fix",
