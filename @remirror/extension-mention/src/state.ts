@@ -192,8 +192,6 @@ export class SuggestionState<GName extends string = string> {
       this.next = getSuggestionMatchState(this.extension.options.matcher, $position);
     }
 
-    this.viewHasUpdated = false;
-
     return this;
   }
 

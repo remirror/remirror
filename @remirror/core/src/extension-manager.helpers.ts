@@ -1,3 +1,4 @@
+import is from '@sindresorhus/is';
 import { AnyExtension, Extension } from './extension';
 import { bool, Cast } from './helpers/base';
 import { MarkExtension } from './mark-extension';
@@ -19,6 +20,12 @@ interface IsNameUniqueParams {
 /**
  * Checks whether a given string is unique to the set.
  * Add the name if it doesn't already exist, or throw an error when `shouldThrow` is true.
+ *
+ * @param params
+ * @param params.name
+ * @param params.set
+ * @param params.shouldThrow
+ * @param params.type
  */
 export const isNameUnique = ({ name, set, shouldThrow = false, type = 'extension' }: IsNameUniqueParams) => {
   if (set.has(name)) {
@@ -34,6 +41,7 @@ export const isNameUnique = ({ name, set, shouldThrow = false, type = 'extension
 };
 
 export interface HasExtensions {
+  /** A list of passed extensions */
   extensions: AnyExtension[];
 }
 
@@ -47,6 +55,14 @@ export interface HasExtensions {
  * ```
  *
  * This creates a function that is able to step through each possibility and perform the action required.
+ *
+ * @param param
+ * @param param.key
+ * @param param.checkUniqueness
+ * @param param.getItemParams
+ * @param param.methodFactory
+ * @param param.arrayTransformer
+ * @param param.ctx
  */
 export const createFlexibleFunctionMap = <
   GKey extends keyof AnyExtension,
@@ -103,20 +119,27 @@ export const createFlexibleFunctionMap = <
 
 /**
  * Determines if the passed in extension is a node extension. Useful as a type guard where a particular type of extension is needed.
+ *
  * @param extension
  */
-export const isNodeExtension = (extension: AnyExtension): extension is NodeExtension<any> =>
-  extension.type === ExtensionType.NODE;
+export const isNodeExtension = (extension: unknown): extension is NodeExtension<any> =>
+  is.object(extension) && extension instanceof NodeExtension;
 
 /**
  * Determines if the passed in extension is a mark extension. Useful as a type guard where a particular type of extension is needed.
+ *
  * @param extension
  */
-export const isMarkExtension = (extension: AnyExtension): extension is MarkExtension<any> =>
-  extension.type === ExtensionType.MARK;
+export const isMarkExtension = (extension: unknown): extension is MarkExtension<any> =>
+  is.object(extension) && extension instanceof MarkExtension;
 
-export const isPlainExtension = (extension: AnyExtension): extension is Extension<any, never> =>
-  extension.type === ExtensionType.EXTENSION;
+/**
+ * Checks whether the this is an extension and if it is a plain one
+ *
+ * @param extension
+ */
+export const isPlainExtension = (extension: unknown): extension is Extension<any, never> =>
+  is.object(extension) && extension instanceof Extension && extension.type === ExtensionType.EXTENSION;
 
 /**
  * Checks to see if an optional property exists on an extension.
@@ -126,10 +149,16 @@ export const hasExtensionProperty = <GExt extends AnyExtension, GKey extends key
   extension: GExt,
 ): extension is GExt & Pick<Required<GExt>, GKey> => bool(extension[property]);
 
+/**
+ * Keys for the methods available on an extension (useful for filtering)
+ */
 type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys' | 'plugin' | 'styles';
 
 /**
  * Looks at the passed property and calls the extension with the required parameters.
+ *
+ * @param property
+ * @param params
  */
 export const extensionPropertyMapper = <
   GExt extends AnyExtension,
