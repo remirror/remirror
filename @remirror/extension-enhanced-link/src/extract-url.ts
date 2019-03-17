@@ -271,3 +271,6 @@ export const extractUrl = regexSupplant(
   },
   'gi',
 );
+
+global.extractUrl = extractUrl;
+console.log(extractUrl);
