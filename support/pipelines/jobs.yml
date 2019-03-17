@@ -1,14 +1,43 @@
 parameters:
   name: '' # defaults for any parameters that aren't specified
   vmImage: ''
-  scripts: []
 
 jobs:
-  - ${{ each script in parameters.scripts }}: # Each job
-      - ${{ each pair in script }}:
-          - job: ${{ format({0}{1}, parameters.name, pair.value.displayName) }}
-            pool:
-              vmImage: ${{ parameters.vmImage }}
-            steps:
-              - template: yarn-install.yml
-            ${{ pair.key }}: ${{ pair.value }}
+  - ${{ if eq(parameters.name, 'Linux') }}:
+      - job: ${{ parameters.name }}Checks
+        pool:
+          vmImage: ${{ parameters.vmImage }}
+        steps:
+          - template: yarn-install.yml
+          - bash: |
+              yarn ci:checks
+            displayName: 'Run all checks'
+
+  - ${{ if eq(parameters.name, 'Linux') }}:
+      - job: ${{ parameters.name }}UnitTests
+        pool:
+          vmImage: ${{ parameters.vmImage }}
+        steps:
+          - template: yarn-install.yml
+          - bash: |
+              yarn test
+            displayName: 'Run unit tests'
+
+  - job: ${{ parameters.name }}IntegrationTests
+    pool:
+      vmImage: ${{ parameters.vmImage }}
+    steps:
+      - template: yarn-install.yml
+      - bash: |
+          yarn test:integration
+        displayName: 'Run integration tests'
+
+  - ${{ if in(parameters.name, 'Linux', 'macOS') }}:
+      - job: ${{ parameters.name }}ProductionBuild
+        pool:
+          vmImage: ${{ parameters.vmImage }}
+        steps:
+          - template: yarn-install.yml
+          - bash: |
+              yarn build:production
+            displayName: 'Run production build'

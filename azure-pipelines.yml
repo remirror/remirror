@@ -3,37 +3,13 @@ jobs:
     parameters:
       name: Linux
       vmImage: 'ubuntu-16.04'
-      scripts:
-        - bash: |
-            yarn ci:checks
-          displayName: 'Checks'
-        - bash: |
-            yarn test
-          displayName: 'UnitTests'
-        - bash: |
-            yarn test:integration
-          displayName: 'IntegrationTests'
-        - bash: |
-            yarn build:production
-          displayName: 'ProductionBuild'
 
   - template: support/pipelines/jobs.yml
     parameters:
       name: macOS
       vmImage: 'macOS-10.13'
-      scripts:
-        - bash: |
-            yarn test:integration
-          displayName: 'IntegrationTests'
-        - bash: |
-            yarn build:production
-          displayName: 'ProductionBuild'
 
   - template: support/pipelines/jobs.yml
     parameters:
       name: Windows
       vmImage: 'vs2017-win2016'
-      scripts:
-        - bash: |
-            yarn test:integration
-          displayName: 'IntegrationTests'
