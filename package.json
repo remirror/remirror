@@ -36,7 +36,7 @@
     "if-clean": "node support/scripts/run-if-clean.js",
     "if-config": "node support/scripts/run-if-config.js",
     "integrity": "yarn check --integrity",
-    "launch:docs": "cross-env COVERAGE=true echo \"Launching...\" && docz dev --debug > /dev/null && echo \"Done 😀\"",
+    "launch:docs": "cross-env COVERAGE=true echo \"Launching...\" && docz dev --debug",
     "lint": "run-s lint:*",
     "lint:babel": "eslint **/.babelrc.js",
     "lint:js": "eslint support *.js @remirror docs",
