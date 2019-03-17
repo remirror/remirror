@@ -1,32 +1,27 @@
 import {
   ExtensionCommandFunction,
   NodeExtension,
-  NodeExtensionOptions,
   NodeExtensionSpec,
-  Omit,
+  Plugin,
   replaceText,
   SchemaNodeTypeParams,
 } from '@remirror/core';
-import { createSuggestionsPlugin, defaultMatcher, SuggestionsPluginProps } from './plugin';
+import { createSuggestionsPlugin } from './plugin';
+import { SuggestionState } from './state';
+import { MentionOptions, SuggestionsCommandParams } from './types';
+import { DEFAULT_MATCHER } from './utils';
 
-export interface MentionOptions<GName extends string>
-  extends Omit<SuggestionsPluginProps, 'command' | 'decorationsTag'>,
-    NodeExtensionOptions {
-  /**
-   * Allows for multiple mentions extensions to be registered for one editor.
-   *
-   * The name must begin with 'mention' so as not to pollute the namespaces.
-   */
-  name: GName;
-  mentionClassName?: string;
-  readonly tag?: keyof HTMLElementTagNameMap;
-  editable?: boolean;
-  selectable?: boolean;
-}
-
+/**
+ * The mention extension manages suggestions through onChange, onKeyDown, onExit and onEnter callbacks.
+ * It also allows for configuration options to be passed into transforming suggestion queries into a mention
+ * node.
+ */
 export class Mention<GName extends string> extends NodeExtension<MentionOptions<GName>> {
   /**
-   * The name is dynamically generated based on the passed in type.
+   * The name is dynamically generated based on the passed in name.
+   * It must start with 'mention'
+   *
+   * @readonly
    */
   get name(): GName {
     const { name } = this.options;
@@ -38,22 +33,35 @@ export class Mention<GName extends string> extends NodeExtension<MentionOptions<
 
   /**
    * Provide the default options for this extension
+   *
+   * @readonly
    */
   get defaultOptions() {
     return {
-      matcher: defaultMatcher,
+      matcher: DEFAULT_MATCHER,
       appendText: ' ',
       mentionClassName: 'mention',
       extraAttrs: [],
       tag: 'a' as 'a',
+      decorationsTag: 'a' as 'a',
       editable: true,
       selectable: false,
+      onEnter: () => false,
+      onChange: () => false,
+      onExit: () => false,
+      onKeyDown: () => false,
+      command: ({ range, attrs, appendText, schema }: SuggestionsCommandParams) =>
+        replaceText(range, schema.nodes[this.name], attrs, appendText),
     };
+  }
+
+  get postFix() {
+    return this.options.name.replace('mention', '').toLowerCase();
   }
 
   protected init() {
     super.init();
-    this.options.suggestionClassName = `suggestion suggestion-${this.options.name}`;
+    this.options.suggestionClassName = `suggestion suggestion-${this.postFix}`;
   }
 
   get schema(): NodeExtensionSpec {
@@ -63,7 +71,7 @@ export class Mention<GName extends string> extends NodeExtension<MentionOptions<
       matcher = this.defaultOptions.matcher,
     } = this.options;
     const mentionClass = `${mentionClassName} ${mentionClassName}-${name}`;
-    const dataAttribute = `data-mention-${name.replace('mention', '').toLowerCase()}-id`;
+    const dataAttribute = `data-mention-${this.postFix}-id`;
     return {
       attrs: {
         id: {},
@@ -79,7 +87,7 @@ export class Mention<GName extends string> extends NodeExtension<MentionOptions<
           tag: `${this.options.tag}[${dataAttribute}]`,
           getAttrs: dom => {
             if (typeof dom === 'string') {
-              return false; // string only received when type is a style
+              return false;
             }
 
             const id = (dom as Element).getAttribute(dataAttribute);
@@ -103,21 +111,27 @@ export class Mention<GName extends string> extends NodeExtension<MentionOptions<
     };
   }
 
-  public commands = ({ type }: SchemaNodeTypeParams): ExtensionCommandFunction => attrs =>
-    replaceText(null, type, attrs);
+  public commands({ type }: SchemaNodeTypeParams): ExtensionCommandFunction {
+    return attrs => replaceText(null, type, attrs);
+  }
 
-  public plugin({ type }: SchemaNodeTypeParams) {
-    return createSuggestionsPlugin({
-      key: this.pluginKey,
-      command: ({ range, attrs, appendText }) => replaceText(range, type, attrs, appendText),
-      appendText: this.options.appendText,
-      matcher: this.options.matcher,
-      onEnter: this.options.onEnter,
-      onChange: this.options.onChange,
-      onExit: this.options.onExit,
-      onKeyDown: this.options.onKeyDown,
-      suggestionClassName: this.options.suggestionClassName,
-      decorationsTag: this.options.tag,
-    });
+  public styles({}) {
+    return `
+      span .${this.options.suggestionClassName.split(' ').join('.')} {
+        color: #1DA1F2;
+      }
+    `;
+  }
+
+  /**
+   * TODO: Implement a past rule using the markPaste rule for inspiration
+   * ? Also create a test that uses the Clipboard event api to simulate pasting text
+   */
+  public pasteRules() {
+    return [];
+  }
+
+  public plugin(): Plugin<SuggestionState<GName>> {
+    return createSuggestionsPlugin(this);
   }
 }

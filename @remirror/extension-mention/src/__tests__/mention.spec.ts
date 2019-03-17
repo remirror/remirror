@@ -53,7 +53,7 @@ test('Mention plugin', () => {
 
   const docContent = doc(p('{<>}'));
   const { start } = add(docContent);
-  insertText({ view, text: `This ${label} `, from: start });
+  insertText({ view, text: `This ${label} `, start });
   const { state } = view;
   expect(state.doc.content.child(0)).toEqualDocument(p('This ', mentionNode(), ' '));
   expect(onEnterMock).toHaveBeenCalledTimes(1);

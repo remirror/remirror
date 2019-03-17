@@ -9,7 +9,7 @@ interface InsertTextParams {
   /** Text to insert */
   text: string;
   /** The start point of text insertion */
-  from: number;
+  start: number;
 }
 
 /**
@@ -21,7 +21,7 @@ interface InsertTextParams {
  * @param params.text
  * @param params.from
  */
-export function insertText({ view, text, from }: InsertTextParams) {
+export function insertText({ view, text, start: from }: InsertTextParams) {
   text.split('').forEach((character, index) => {
     if (!view.someProp('handleTextInput', f => f(view, from + index, from + index, character))) {
       view.dispatch(view.state.tr.insertText(character, from + index, from + index));

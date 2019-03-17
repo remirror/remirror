@@ -23,7 +23,7 @@ import {
   Selection,
   Transaction,
 } from '../types';
-import { Cast } from './base';
+import { bool, Cast } from './base';
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
@@ -31,7 +31,7 @@ import { Cast } from './base';
  * @param val
  */
 export const isProsemirrorNode = (val: unknown): val is ProsemirrorNode =>
-  typeof val === 'object' && val instanceof PMNode;
+  is.object(val) && is.directInstanceOf(val, PMNode);
 
 /**
  * Checks that a mark is active within the selected region, or the current selection point is within a
@@ -44,7 +44,7 @@ export const isProsemirrorNode = (val: unknown): val is ProsemirrorNode =>
  */
 export const markActive = (state: EditorState, type: MarkType) => {
   const { from, $from, to, empty } = state.selection;
-  return Boolean(
+  return bool(
     empty ? type.isInSet(state.storedMarks || $from.marks()) : state.doc.rangeHasMark(from, to, type),
   );
 };
@@ -216,12 +216,12 @@ export const getMatchString = (match: string | string[], index = 0) =>
  * @param domNode
  */
 export const isDOMNode = (domNode: unknown): domNode is Node => {
-  return typeof Node === 'object'
-    ? domNode instanceof Node
-    : domNode !== null &&
-        typeof domNode === 'object' &&
-        typeof Cast(domNode).nodeType === 'number' &&
-        typeof Cast(domNode).nodeName === 'string';
+  return is.object(Node)
+    ? is.directInstanceOf(domNode, Node)
+    : !is.nullOrUndefined(domNode !== null) &&
+        is.nonEmptyObject(domNode) &&
+        is.number(domNode.nodeType) &&
+        is.string(domNode.nodeName);
 };
 
 /**
@@ -419,7 +419,7 @@ export const nodeNameMatchesList = (
   }
   const name = node.type.name;
   for (const checker of nodeMatches) {
-    outcome = typeof checker === 'function' ? checker(name) : checker === name;
+    outcome = is.function_(checker) ? checker(name) : checker === name;
     if (outcome) {
       break;
     }

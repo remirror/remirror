@@ -13,6 +13,13 @@ export const EDITOR_CLASS_NAME = 'remirror-editor';
 export const LEAF_NODE_REPLACING_CHARACTER = '\ufffc';
 
 /**
+ * The null character.
+ *
+ * @see https://stackoverflow.com/a/6380172
+ */
+export const NULL_CHARACTER = '\0';
+
+/**
  * A character useful for separating inline nodes. Typically used in decorations as follows.
  *
  * ```ts

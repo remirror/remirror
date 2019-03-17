@@ -7,7 +7,7 @@ import pm, { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 
 import { render } from 'react-testing-library';
 import { isElementDOMNode, isTextDOMNode } from '../helpers';
-import { Cast } from '../helpers/base';
+import { bool, Cast } from '../helpers/base';
 import { CommandFunction } from '../types';
 
 const renderString = (
@@ -138,7 +138,7 @@ const matcher = {
       };
     }
     const expected = to ? to : from;
-    const shouldChange = Boolean(to);
+    const shouldChange = bool(to);
 
     const [pass, actual] = apply(from, command, to);
     if (pass) {

@@ -1,5 +1,6 @@
 /// <reference types="node" />
 
+import is from '@sindresorhus/is';
 import memoizeOne from 'memoize-one';
 import nano from 'nanoid';
 import objectPick from 'object.pick';
@@ -27,6 +28,7 @@ export const tuple = <GType extends Literal[]>(...args: GType) => args;
 
 /**
  * Finds all the regex matches for a string
+ *
  * @param text
  * @param regexp
  */
@@ -203,8 +205,8 @@ export const environment = {
    */
   get isBrowser() {
     return (
-      typeof window !== 'undefined' &&
-      typeof window.document !== 'undefined' &&
+      !is.undefined(window) &&
+      !is.undefined(window.document) &&
       window.navigator &&
       window.navigator.userAgent
     );
@@ -223,4 +225,15 @@ export const environment = {
   get isNode() {
     return typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
   },
+
+  get isMac() {
+    return environment.isBrowser && /Mac/.test(navigator.platform);
+  },
 };
+
+/**
+ * Makes sure a value is either true or false
+ *
+ * @param val
+ */
+export const bool = (val: unknown) => Boolean(val);

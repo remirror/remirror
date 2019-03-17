@@ -1,6 +1,7 @@
+import is from '@sindresorhus/is';
 import { NodeType } from 'prosemirror-model';
-import { Selection } from 'prosemirror-state';
-import { EditorSchema, ProsemirrorNode, Transaction } from '../types';
+import { Selection as PMSelection } from 'prosemirror-state';
+import { EditorSchema, ProsemirrorNode, Selection, Transaction } from '../types';
 import { isTextDOMNode } from './document';
 
 /* "Borrowed" from prosemirror-utils in order to avoid requirement of `@prosemirror-tables`*/
@@ -78,7 +79,7 @@ export const findDomRefAtPos = (
  */
 export const removeNodeBefore = (tr: Transaction): Transaction => {
   const position = findPositionOfNodeBefore(tr.selection);
-  if (typeof position === 'number') {
+  if (is.number(position)) {
     return removeNodeAtPos(position)(tr);
   }
   return tr;
@@ -141,9 +142,9 @@ export const findParentNodeOfType = (type: NodeType<EditorSchema>) => (
  *
  * @param selection
  */
-export const findPositionOfNodeBefore = (selection: Selection<EditorSchema>): number | undefined => {
+export const findPositionOfNodeBefore = (selection: Selection): number | undefined => {
   const { nodeBefore } = selection.$from;
-  const maybeSelection = Selection.findFrom(selection.$from, -1);
+  const maybeSelection = PMSelection.findFrom(selection.$from, -1);
   if (maybeSelection && nodeBefore) {
     // leaf node
     const parent = findParentNodeOfType(nodeBefore.type)(maybeSelection);
@@ -155,3 +156,10 @@ export const findPositionOfNodeBefore = (selection: Selection<EditorSchema>): nu
 
   return;
 };
+
+/**
+ * Checks whether the selection is currently empty.
+ *
+ * @param selection
+ */
+export const selectionEmpty = (selection: Selection) => selection.empty || selection.to === selection.from;

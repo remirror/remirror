@@ -1,5 +1,5 @@
 import { AnyExtension, Extension } from './extension';
-import { Cast } from './helpers/base';
+import { bool, Cast } from './helpers/base';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
 import { AnyFunction, CommandParams, ExtensionType, FlexibleConfig, SchemaParams } from './types';
@@ -124,7 +124,7 @@ export const isPlainExtension = (extension: AnyExtension): extension is Extensio
  */
 export const hasExtensionProperty = <GExt extends AnyExtension, GKey extends keyof GExt>(property: GKey) => (
   extension: GExt,
-): extension is GExt & Pick<Required<GExt>, GKey> => Boolean(extension[property]);
+): extension is GExt & Pick<Required<GExt>, GKey> => bool(extension[property]);
 
 type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys' | 'plugin' | 'styles';
 
