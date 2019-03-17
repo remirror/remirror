@@ -1,5 +1,13 @@
 import is from '@sindresorhus/is';
-import { DOMParser, Mark, MarkType, Node as PMNode, NodeType } from 'prosemirror-model';
+import {
+  DOMParser,
+  DOMSerializer,
+  Fragment,
+  Mark,
+  MarkType,
+  Node as PMNode,
+  NodeType,
+} from 'prosemirror-model';
 import { EditorState, NodeSelection, Plugin, TextSelection } from 'prosemirror-state';
 import { EMPTY_OBJECT_NODE } from '../constants';
 import {
@@ -20,7 +28,7 @@ import { Cast } from './base';
 /**
  * Checks to see if the passed value is a ProsemirrorNode
  *
- * @params val
+ * @param val
  */
 export const isProsemirrorNode = (val: unknown): val is ProsemirrorNode =>
   typeof val === 'object' && val instanceof PMNode;
@@ -64,8 +72,8 @@ export const nodeActive = (state: EditorState, type: NodeType, attrs: Attrs = {}
  *
  * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
- * @params state
- * @params type
+ * @param state
+ * @param type
  */
 export const canInsertNode = (state: EditorState, type: NodeType) => {
   const { $from } = state.selection;
@@ -81,7 +89,7 @@ export const canInsertNode = (state: EditorState, type: NodeType) => {
 /**
  * Checks if a node looks like an empty document
  *
- * @params node
+ * @param node
  */
 export const isDocNodeEmpty = (node: ProsemirrorNode) => {
   const nodeChild = node.content.firstChild;
@@ -103,8 +111,8 @@ export const isDocNodeEmpty = (node: ProsemirrorNode) => {
  *
  * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
- * @params state
- * @params type
+ * @param state
+ * @param type
  */
 export const getMarkAttrs = (state: EditorState, type: MarkType) => {
   const { from, to } = state.selection;
@@ -128,8 +136,8 @@ export const getMarkAttrs = (state: EditorState, type: MarkType) => {
  *
  * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
- * @params $pos
- * @params type
+ * @param $pos
+ * @param type
  */
 export const getMarkRange = ($pos: ResolvedPos | null = null, type: MarkType | null = null) => {
   if (!$pos || !type) {
@@ -205,25 +213,25 @@ export const getMatchString = (match: string | string[], index = 0) =>
 /**
  * Checks whether the passed value is a valid dom node
  *
- * @params node
+ * @param domNode
  */
-export const isDOMNode = (node: unknown): node is Node => {
+export const isDOMNode = (domNode: unknown): domNode is Node => {
   return typeof Node === 'object'
-    ? node instanceof Node
-    : node !== null &&
-        typeof node === 'object' &&
-        typeof Cast(node).nodeType === 'number' &&
-        typeof Cast(node).nodeName === 'string';
+    ? domNode instanceof Node
+    : domNode !== null &&
+        typeof domNode === 'object' &&
+        typeof Cast(domNode).nodeType === 'number' &&
+        typeof Cast(domNode).nodeName === 'string';
 };
 
 /**
  * Finds the closest element which matches the passed selector
  *
- * @params node
- * @params selector
+ * @param node
+ * @param selector
  */
 export const closestElement = (domNode: Node | null | undefined, selector: string): HTMLElement | null => {
-  if (!isElementNode(domNode)) {
+  if (!isElementDOMNode(domNode)) {
     return null;
   }
   if (!document.documentElement || !document.documentElement.contains(domNode)) {
@@ -236,73 +244,73 @@ export const closestElement = (domNode: Node | null | undefined, selector: strin
       return domNode;
     }
     domNode = (domNode.parentElement || domNode.parentNode) as HTMLElement;
-  } while (isElementNode(domNode));
+  } while (isElementDOMNode(domNode));
   return null;
 };
 
 /**
  * Checks for an element node like <p> or <div>.
  *
- * @params node
+ * @param domNode
  */
-export const isElementNode = (node: unknown): node is HTMLElement =>
-  isDOMNode(node) && node.nodeType === Node.ELEMENT_NODE;
+export const isElementDOMNode = (domNode: unknown): domNode is HTMLElement =>
+  isDOMNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE;
 
 /**
  * Checks for a text node.
  *
- * @params node
+ * @param domNode
  */
-export const isTextNode = (node: unknown): node is Text =>
-  isDOMNode(node) && node.nodeType === Node.TEXT_NODE;
+export const isTextDOMNode = (domNode: unknown): domNode is Text =>
+  isDOMNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
 
 /**
  * Checks for a CDATASection Node, such as <!CDATA[[ … ]]>.
  *
- * @params node
+ * @param domNode
  */
-export const isCDATASectionNode = (node: unknown): node is CDATASection =>
-  isDOMNode(node) && node.nodeType === Node.CDATA_SECTION_NODE;
+export const isCDATASectionDOMNode = (domNode: unknown): domNode is CDATASection =>
+  isDOMNode(domNode) && domNode.nodeType === Node.CDATA_SECTION_NODE;
 
 /**
  * Checks for a processingInstruction of an XML document, such as <?xml-stylesheet … ?>.
  *
- * @params node
+ * @param domNode
  */
-export const isProcessingInstructionNode = (node: unknown): node is ProcessingInstruction =>
-  isDOMNode(node) && node.nodeType === Node.PROCESSING_INSTRUCTION_NODE;
+export const isProcessingInstructionDOMNode = (domNode: unknown): domNode is ProcessingInstruction =>
+  isDOMNode(domNode) && domNode.nodeType === Node.PROCESSING_INSTRUCTION_NODE;
 
 /**
  * Checks for a comment node, such as <!-- … -->.
  *
- * @params node
+ * @param domNode
  */
-export const isCommentNode = (node: unknown): node is Comment =>
-  isDOMNode(node) && node.nodeType === Node.COMMENT_NODE;
+export const isCommentDOMNode = (domNode: unknown): domNode is Comment =>
+  isDOMNode(domNode) && domNode.nodeType === Node.COMMENT_NODE;
 
 /**
  * Checks for a Document node.
  *
- * @params node
+ * @param domNode
  */
-export const isDocumentNode = (node: unknown): node is Document =>
-  isDOMNode(node) && node.nodeType === Node.DOCUMENT_NODE;
+export const isDocumentDOMNode = (domNode: unknown): domNode is Document =>
+  isDOMNode(domNode) && domNode.nodeType === Node.DOCUMENT_NODE;
 
 /**
  * Checks for a DocumentType node, such as <!DOCTYPE html>.
  *
- * @params node
+ * @param domNode
  */
-export const isDocumentTypeNode = (node: unknown): node is DocumentType =>
-  isDOMNode(node) && node.nodeType === Node.DOCUMENT_TYPE_NODE;
+export const isDocumentTypeDOMNode = (domNode: unknown): domNode is DocumentType =>
+  isDOMNode(domNode) && domNode.nodeType === Node.DOCUMENT_TYPE_NODE;
 
 /**
  * Checks for a DocumentFragment node.
  *
- * @params node
+ * @param domNode
  */
-export const isDocumentFragmentNode = (node: unknown): node is DocumentFragment =>
-  isDOMNode(node) && node.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
+export const isDocumentFragmentDOMNode = (domNode: unknown): domNode is DocumentFragment =>
+  isDOMNode(domNode) && domNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
 
 /**
  * We need to translate the co-ordinates because `coordsAtPos` returns co-ordinates
@@ -313,9 +321,9 @@ export const isDocumentFragmentNode = (node: unknown): node is DocumentFragment 
  * | {coordsAtPos} | [Cursor]   <- cursorHeight      |  |
  * |               | [FloatingToolbar]               |  |
  *
- * @params coords
- * @params offsetParent
- * @params cursorHeight
+ * @param coords
+ * @param offsetParent
+ * @param cursorHeight
  */
 export const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, cursorHeight: number) => {
   const {
@@ -335,15 +343,15 @@ export const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, 
 /**
  * Retrieve the nearest non-text node
  *
- * @params node
+ * @param node
  */
 export const getNearestNonTextNode = (node: Node) =>
-  isTextNode(node) ? (node.parentNode as HTMLElement) : (node as HTMLElement);
+  isTextDOMNode(node) ? (node.parentNode as HTMLElement) : (node as HTMLElement);
 
 /**
  * Predicate checking whether the selection is a TextSelection
  *
- * @params selection
+ * @param selection
  */
 export const isTextSelection = (selection: Selection): selection is TextSelection<EditorSchema> =>
   selection instanceof TextSelection;
@@ -351,7 +359,7 @@ export const isTextSelection = (selection: Selection): selection is TextSelectio
 /**
  * Checks whether the cursor is at the end of the state.doc
  *
- * @params state
+ * @param state
  */
 export function atDocEnd(state: EditorState): boolean {
   const { selection, doc } = state;
@@ -361,7 +369,7 @@ export function atDocEnd(state: EditorState): boolean {
 /**
  * Checks whether the cursor is at the beginning of the state.doc
  *
- * @params state
+ * @param state
  */
 export function atDocStart(state: EditorState): boolean {
   const { selection } = state;
@@ -371,7 +379,7 @@ export function atDocStart(state: EditorState): boolean {
 /**
  * Get the start position of the parent of the current resolve position
  *
- * @params pos
+ * @param pos
  */
 export function startPositionOfParent($pos: ResolvedPos): number {
   return $pos.start($pos.depth);
@@ -380,7 +388,7 @@ export function startPositionOfParent($pos: ResolvedPos): number {
 /**
  * Get the end position of the parent of the current resolve position
  *
- * @params $pos
+ * @param $pos
  */
 export function endPositionOfParent($pos: ResolvedPos): number {
   return $pos.end($pos.depth) + 1;
@@ -389,7 +397,7 @@ export function endPositionOfParent($pos: ResolvedPos): number {
 /**
  * Retrieve the current position of the cursor
  *
- * @params selection
+ * @param selection
  */
 export function getCursor(selection: Selection): ResolvedPos | null | undefined {
   return isTextSelection(selection) ? selection.$cursor : undefined;
@@ -398,8 +406,8 @@ export function getCursor(selection: Selection): ResolvedPos | null | undefined 
 /**
  * Checks to see whether the name of the passed node matches anything in the list provided.
  *
- * @params node
- * @params nodeMatches
+ * @param node
+ * @param nodeMatches
  */
 export const nodeNameMatchesList = (
   node: ProsemirrorNode | null | undefined,
@@ -426,7 +434,7 @@ export const isDocNode = (node: ProsemirrorNode | null | undefined, schema: Edit
 /**
  * Checks whether the passed in JSON is a valid object node
  *
- * @params arg
+ * @param arg
  */
 export const isObjectNode = (arg: unknown): arg is ObjectNode => {
   if (is.plainObject(arg) && arg.type === 'doc') {
@@ -449,7 +457,7 @@ export interface CreateDocumentNodeParams {
 /**
  * Creates a document node from the passed in content and schema.
  *
- * @params params.content
+ * @param params.content
  *         params.schema
  */
 export const createDocumentNode = ({ content, schema, doc }: CreateDocumentNodeParams) => {
@@ -470,4 +478,39 @@ export const createDocumentNode = ({ content, schema, doc }: CreateDocumentNodeP
     return DOMParser.fromSchema(schema).parse(element);
   }
   return null;
+};
+
+interface ToHTMLParams {
+  /** The prosemirror node */
+  node: ProsemirrorNode;
+  /** The prosemirror schema */
+  schema: EditorSchema;
+  /** An optional document to use (allows for ssr rendering) */
+  doc?: Document;
+}
+
+/**
+ * Convert a prosemirror node into it's HTML contents
+ *
+ * @param params.node
+ *         params.schema
+ *         params.doc
+ */
+export const toHTML = ({ node, schema, doc }: ToHTMLParams) => {
+  const element = (doc || document).createElement('div');
+  element.appendChild(toDOM({ node, schema, doc }));
+
+  return element.innerHTML;
+};
+
+/**
+ * Convert a node into its DOM representative
+ *
+ * @param params.node
+ *         params.schema
+ *         params.doc
+ */
+export const toDOM = ({ node, schema, doc }: ToHTMLParams): DocumentFragment => {
+  const fragment = isDocNode(node, schema) ? node.content : Fragment.from(node);
+  return DOMSerializer.fromSchema(schema).serializeFragment(fragment, { document: doc });
 };

@@ -1,3 +1,4 @@
-import { setupRemirrorEnvironment } from 'jest-remirror';
+import { ignoreJSDOMWarnings, setupRemirrorEnvironment } from 'jest-remirror';
 
 setupRemirrorEnvironment();
+ignoreJSDOMWarnings();

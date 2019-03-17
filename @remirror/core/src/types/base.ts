@@ -1,4 +1,4 @@
-import { Node as PMNode, Schema } from 'prosemirror-model';
+import { MarkType as PMMarkType, Node as PMNode, NodeType as PMNodeType, Schema } from 'prosemirror-model';
 import { EditorState as PMEditorState, Plugin as PMPlugin } from 'prosemirror-state';
 
 /* Alias types for better readability throughout the codebase. */
@@ -9,6 +9,8 @@ export type EditorSchema<GNodes extends string = string, GMarks extends string =
   GNodes,
   GMarks
 >;
+export type MarkType = PMMarkType<EditorSchema>;
+export type NodeType = PMNodeType<EditorSchema>;
 export type EditorState<GSchema extends EditorSchema = EditorSchema> = PMEditorState<GSchema>;
 
 /**

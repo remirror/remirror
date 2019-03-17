@@ -1,9 +1,9 @@
-import { EditorSchema, isProsemirrorNode } from '@remirror/core';
+import { isProsemirrorNode } from '@remirror/core';
 import { toMatchSnapshot } from 'jest-snapshot';
 import { RefsNode } from './builder';
 
 export const remirrorMatchers: jest.ExpectExtendMap = {
-  toEqualDocument(actual, expected: ((schema: EditorSchema) => RefsNode) | RefsNode) {
+  toEqualDocument(actual, expected: RefsNode) {
     // Because schema is created dynamically, expected value is a function (schema) => PMNode;
     // That's why this magic is necessary. It simplifies writing assertions, so
     // instead of expect(doc).toEqualDocument(doc(p())(schema)) we can just do:
@@ -11,10 +11,6 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
     //
     // Also it fixes issues that happens sometimes when actual schema and expected schema
     // are different objects, making this case impossible by always using actual schema to create expected node.
-    expected =
-      typeof expected === 'function' && actual.type && actual.type.schema
-        ? expected(actual.type.schema)
-        : expected;
 
     if (!isProsemirrorNode(expected) || !isProsemirrorNode(actual)) {
       return {
@@ -112,8 +108,8 @@ declare global {
       snapshotState: any;
     }
     interface Matchers<R> {
-      toEqualDocument(builder: (schema: EditorSchema) => RefsNode): R;
-      toMatchDocumentSnapshot(builder: (schema: EditorSchema) => RefsNode): R;
+      toEqualDocument(builder: RefsNode): R;
+      toMatchDocumentSnapshot(builder: RefsNode): R;
     }
   }
 }

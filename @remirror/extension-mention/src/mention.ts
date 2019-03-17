@@ -6,31 +6,34 @@ import {
   Omit,
   replaceText,
   SchemaNodeTypeParams,
-  startCase,
 } from '@remirror/core';
 import { createSuggestionsPlugin, defaultMatcher, SuggestionsPluginProps } from './plugin';
 
-export interface MentionNodeExtensionOptions
+export interface MentionOptions<GName extends string>
   extends Omit<SuggestionsPluginProps, 'command' | 'decorationsTag'>,
     NodeExtensionOptions {
-  mentionClassName?: string;
   /**
    * Allows for multiple mentions extensions to be registered for one editor.
-   * The name becomes mention_${type}. If left blank then no type is used.
+   *
+   * The name must begin with 'mention' so as not to pollute the namespaces.
    */
-  type?: string;
+  name: GName;
+  mentionClassName?: string;
   readonly tag?: keyof HTMLElementTagNameMap;
   editable?: boolean;
   selectable?: boolean;
 }
 
-export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
+export class Mention<GName extends string> extends NodeExtension<MentionOptions<GName>> {
   /**
    * The name is dynamically generated based on the passed in type.
    */
-  get name() {
-    const { type } = this.options;
-    return `mentions${type ? `${startCase(type)}` : ''}`;
+  get name(): GName {
+    const { name } = this.options;
+    if (!name.startsWith('mention')) {
+      throw new Error(`The mention plugin must begin start with the word 'mention' and not ${name}`);
+    }
+    return name;
   }
 
   /**
@@ -50,17 +53,17 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
 
   protected init() {
     super.init();
-    this.options.suggestionClassName = `suggestion suggestion-${this.options.type}`;
+    this.options.suggestionClassName = `suggestion suggestion-${this.options.name}`;
   }
 
   get schema(): NodeExtensionSpec {
     const {
-      type,
+      name,
       mentionClassName = this.defaultOptions.mentionClassName,
       matcher = this.defaultOptions.matcher,
     } = this.options;
-    const mentionClass = `${mentionClassName} ${mentionClassName}-${type}`;
-    const dataAttribute = `data-mention-${type}-id`;
+    const mentionClass = `${mentionClassName} ${mentionClassName}-${name}`;
+    const dataAttribute = `data-mention-${name.replace('mention', '').toLowerCase()}-id`;
     return {
       attrs: {
         id: {},
@@ -93,7 +96,6 @@ export class MentionNode extends NodeExtension<MentionNodeExtensionOptions> {
             ...attrs,
             class: mentionClass,
             [dataAttribute]: id,
-            // contenteditable: 'true',
           },
           `${label}`,
         ];

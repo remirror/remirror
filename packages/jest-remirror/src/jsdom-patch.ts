@@ -35,7 +35,7 @@ export class NullSelectionReader {
 export const jsdomSelectionPatch = (view: EditorView) => {
   const warnOnce = (() => {
     return () => {
-      if ((window as any).hasWarnedAboutJsdomFixtures) {
+      if (window.hasWarnedAboutJsdomFixtures || window.ignoreAllJSDOMWarnings) {
         return;
       }
 
@@ -43,26 +43,26 @@ export const jsdomSelectionPatch = (view: EditorView) => {
         'Warning! Test depends on DOM selection API which is not supported in JSDOM/Node environment.',
       );
 
-      Cast(window).hasWarnedAboutJsdomFixtures = true;
+      (window as any).hasWarnedAboutJsdomFixtures = true;
     };
   })();
 
   // Ignore all DOM document selection changes and do nothing to update it
-  Cast(view).selectionReader = new NullSelectionReader(warnOnce);
+  (view as any).selectionReader = new NullSelectionReader(warnOnce);
 
   // Make sure that we don't attempt to scroll down to selection when dispatching a transaction
-  Cast(view).updateState = function(state: EditorState) {
+  (view as any).updateState = function(state: EditorState) {
     warnOnce();
     Cast(state).scrollToSelection = 0;
     EditorView.prototype.updateState.apply(this, [state]);
   };
 
   // Do nothing to update selection
-  Cast(view).setSelection = () => {
+  (view as any).setSelection = () => {
     warnOnce();
   };
 
-  Cast(view).destroy = function() {
+  (view as any).destroy = function() {
     EditorView.prototype.destroy.apply(this);
   };
 };

@@ -1,6 +1,6 @@
 import { EditorView } from '../types';
 import { Cast } from './base';
-import { isElementNode, isTextNode } from './document';
+import { isElementDOMNode, isTextDOMNode } from './document';
 
 const textRange = (node: Node, from?: number, to?: number) => {
   const range = document.createRange();
@@ -18,15 +18,15 @@ function singleRect(object: Range | Element, bias?: number) {
  * EditorView.cordsAtPos returns wrong coordinates when at a line break.
  * @see https://github.com/scrumpy/tiptap/pull/228
  *
- * @params view
- * @params pos
- * @params [end]
+ * @param view
+ * @param pos
+ * @param [end]
  */
 export const coordsAtPos = (view: EditorView, pos: number, end = false) => {
   const { node, offset } = view.docView.domFromPos(pos);
   let side: 'left' | 'right' = 'left';
   let rect: ClientRect | undefined;
-  if (isTextNode(node) && node.nodeValue) {
+  if (isTextDOMNode(node) && node.nodeValue) {
     if (end && offset < node.nodeValue.length) {
       rect = singleRect(textRange(node, offset - 1, offset), -1);
       side = 'right';
@@ -37,18 +37,18 @@ export const coordsAtPos = (view: EditorView, pos: number, end = false) => {
   } else if (node.firstChild) {
     if (offset < node.childNodes.length) {
       const child = node.childNodes[offset];
-      rect = isTextNode(child)
+      rect = isTextDOMNode(child)
         ? singleRect(textRange(child), -1)
-        : isElementNode(child)
+        : isElementDOMNode(child)
         ? singleRect(child, -1)
         : rect;
       side = 'left';
     }
     if ((!rect || rect.top === rect.bottom) && offset) {
       const child = node.childNodes[offset - 1];
-      rect = isTextNode(child)
+      rect = isTextDOMNode(child)
         ? singleRect(textRange(child), 1)
-        : isElementNode(child)
+        : isElementDOMNode(child)
         ? singleRect(child, 1)
         : rect;
       side = 'right';

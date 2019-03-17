@@ -69,9 +69,9 @@ export type RenderEnvironment = 'ssr' | 'dom';
 /**
  * Creates a new editor view
  *
- * @params place
- * @params props
- * @params forceEnvironment
+ * @param place
+ * @param props
+ * @param forceEnvironment
  */
 export const createEditorView = (
   place: Node | ((p: Node) => void) | { mount: Node } | undefined,
@@ -95,7 +95,7 @@ export const shouldUseDOMEnvironment = (forceEnvironment?: RenderEnvironment) =>
 /**
  * Gets a document for the dom
  *
- * @params forceEnvironment
+ * @param forceEnvironment
  */
 export const getDoc = (forceEnvironment?: RenderEnvironment) => {
   return shouldUseDOMEnvironment(forceEnvironment) ? document : new Document();

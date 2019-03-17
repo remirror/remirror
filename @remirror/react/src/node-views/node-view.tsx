@@ -5,7 +5,7 @@ import {
   Cast,
   EDITOR_CLASS_NAME,
   isDOMNode,
-  isElementNode,
+  isElementDOMNode,
   NodeViewPortalContainer,
   PlainObject,
   ProsemirrorNode,
@@ -104,7 +104,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
       }
 
       if (isDOMNode(domSpec)) {
-        if (!isElementNode(domSpec)) {
+        if (!isElementDOMNode(domSpec)) {
           throw new Error('Invalid HTML Element provided in the DOM Spec');
         }
         return domSpec;

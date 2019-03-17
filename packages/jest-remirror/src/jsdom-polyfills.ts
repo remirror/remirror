@@ -1,4 +1,4 @@
-import { environment, isTextNode } from '@remirror/core';
+import { environment, isTextDOMNode } from '@remirror/core';
 
 /**
  * Polyfill DOMElement.innerText because JSDOM lacks support for it.
@@ -32,7 +32,7 @@ export const jsdomPolyfill = () => {
         return getInnerText(this);
       },
       set(text) {
-        const textNodes = Array.prototype.slice.call(this.childNodes).filter(node => isTextNode(node));
+        const textNodes = Array.prototype.slice.call(this.childNodes).filter(node => isTextDOMNode(node));
 
         // If there's only one child that is a text node, update it
         if (textNodes.length === 1) {
@@ -51,7 +51,7 @@ export const jsdomPolyfill = () => {
 
   if (!window.cancelAnimationFrame) {
     window.cancelAnimationFrame = () => {
-      if (!window.hasWarnedAboutCancelAnimationFramePolyfill) {
+      if (!window.ignoreAllJSDOMWarnings && !window.hasWarnedAboutCancelAnimationFramePolyfill) {
         window.hasWarnedAboutCancelAnimationFramePolyfill = true;
         console.warn(
           'Warning! Test uses DOM cancelAnimationFrame API which is not available in JSDOM/Node environment.',
@@ -112,8 +112,13 @@ export const jsdomExtras = () => {
     } as any);
 };
 
-declare global {
-  interface Window {
-    hasWarnedAboutCancelAnimationFramePolyfill?: boolean;
+/**
+ * There are a few warnings about unsupported JSDOM APIS. Calling this function with
+ * true turns them all off.
+ */
+export const ignoreJSDOMWarnings = (val = true) => {
+  if (!environment.isJSDOM) {
+    return;
   }
-}
+  window.ignoreAllJSDOMWarnings = val;
+};

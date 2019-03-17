@@ -27,6 +27,7 @@ import {
   SchemaParams,
   ShouldRenderMenu,
   Text,
+  toHTML,
   Transaction,
   uniqueId,
 } from '@remirror/core';
@@ -36,7 +37,6 @@ import is from '@sindresorhus/is';
 import { baseKeymap, selectParentNode } from 'prosemirror-commands';
 import { inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
-import { DOMSerializer } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
 import {
   asDefaultProps,
@@ -502,6 +502,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
 
   get renderParams(): InjectedRemirrorProps {
     return {
+      manager: this.extensionManager,
       view: this.view,
       actions: this.actions,
       getMarkAttr: this.getMarkAttr,
@@ -520,15 +521,11 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     return doc.textBetween(0, doc.content.size, lineBreakDivider);
   };
 
+  /**
+   * Retrieve the HTML from the `doc` prosemirror node
+   */
   private getHTML = () => {
-    const div = this.doc.createElement('div');
-    const fragment = DOMSerializer.fromSchema(this.schema).serializeFragment(
-      this.state.editorState.doc.content,
-    );
-
-    div.appendChild(fragment);
-
-    return div.innerHTML;
+    return toHTML({ node: this.state.editorState.doc, schema: this.schema, doc: this.doc });
   };
 
   private getJSON = (): ObjectNode => {
@@ -541,7 +538,13 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
 
   private get placeholder(): PlaceholderConfig | undefined {
     const { placeholder } = this.props;
-    const pluginState = this.extensionManager.getPluginState<PlaceholderPluginState>('placeholder');
+    let pluginState: PlaceholderPluginState;
+    try {
+      pluginState = this.extensionManager.getPluginState<PlaceholderPluginState>('placeholder');
+    } catch {
+      // console.error(e);
+      return undefined;
+    }
 
     if (!pluginState) {
       if (placeholder) {

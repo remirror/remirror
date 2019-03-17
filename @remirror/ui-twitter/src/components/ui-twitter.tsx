@@ -5,7 +5,7 @@ import { AnyExtension, Attrs, EDITOR_CLASS_NAME, EditorView, Omit, omit } from '
 import { InlineCursorTarget } from '@remirror/core-extensions';
 import { EmojiNode, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
-import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
+import { Mention, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
 import { Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react';
 import { Data, EmojiSet } from 'emoji-mart';
 import { ThemeProvider } from 'emotion-theming';
@@ -41,11 +41,11 @@ interface BaseMentionState {
 }
 
 interface AtMentionState extends BaseMentionState {
-  type: 'at';
+  type: 'mentionAt';
   submitFactory(user: TwitterUserData): () => void;
 }
 interface HashMentionState extends BaseMentionState {
-  type: 'hash';
+  type: 'mentionHash';
   query: string;
   submitFactory(tag: TwitterTagData): () => void;
 }
@@ -77,14 +77,14 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   private createExtensions() {
     return [
       new InlineCursorTarget(),
-      new MentionNode({
-        type: 'at',
+      new Mention({
+        name: 'mentionAt',
         extraAttrs: ['href', 'role'],
         matcher: { char: '@' },
         onKeyDown: this.keyDownHandler,
         onEnter: ({ query, command }) => {
           const params = {
-            type: 'at' as 'at',
+            type: 'mentionAt' as 'mentionAt',
             action: 'enter' as 'enter',
             query: query || '',
           };
@@ -94,7 +94,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
         },
         onChange: ({ query, command }) => {
           const params = {
-            type: 'at' as 'at',
+            type: 'mentionAt' as 'mentionAt',
             action: 'change' as 'change',
             query: query || '',
           };
@@ -116,15 +116,15 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
           this.props.onMentionStateChange(undefined);
         },
       }),
-      new MentionNode({
-        type: 'hash',
+      new Mention({
+        name: 'mentionHash',
         selectable: true,
         matcher: { char: '#' },
         extraAttrs: ['href', 'role'],
         onKeyDown: this.keyDownHandler,
         onEnter: ({ query, command }) => {
           const params = {
-            type: 'hash' as 'hash',
+            type: 'mentionHash' as 'mentionHash',
             action: 'enter' as 'enter',
             query: query || '',
           };
@@ -134,7 +134,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
         },
         onChange: ({ query, command }) => {
           const params = {
-            type: 'hash' as 'hash',
+            type: 'mentionHash' as 'mentionHash',
             action: 'change' as 'change',
             query: query || '',
           };
@@ -255,7 +255,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     }
 
     const { type, query, action } = mention;
-    const matches = type === 'at' ? this.userMatches : this.tagMatches;
+    const matches = type === 'mentionAt' ? this.userMatches : this.tagMatches;
 
     // pressed up arrow
     if (up) {
@@ -298,10 +298,10 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
    */
   private handleEnterKeyPressed(mention: MentionState) {
     const { activeIndex } = this.state;
-    if (mention.type === 'at' && this.userMatches.length) {
+    if (mention.type === 'mentionAt' && this.userMatches.length) {
       mention.submitFactory(this.userMatches[activeIndex])();
       return true;
-    } else if (mention.type === 'hash' && this.tagMatches.length) {
+    } else if (mention.type === 'mentionHash' && this.tagMatches.length) {
       mention.submitFactory(this.tagMatches[activeIndex])();
       return true;
     }
@@ -395,7 +395,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
                   </EmojiSmileyWrapper>
                 </RemirrorWrapper>
                 <div>
-                  {!mention ? null : mention.type === 'at' ? (
+                  {!mention ? null : mention.type === 'mentionAt' ? (
                     <AtSuggestions data={this.userMatches} submitFactory={mention.submitFactory} />
                   ) : (
                     <HashSuggestions data={this.tagMatches} submitFactory={mention.submitFactory} />

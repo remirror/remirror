@@ -1,2 +1,2 @@
-export * from './mention.extension';
+export * from './mention';
 export * from './plugin';

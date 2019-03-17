@@ -2,6 +2,7 @@ import {
   AnyExtension,
   EditorSchema,
   EditorState,
+  ExtensionManager,
   ObjectNode,
   OffsetCalculator,
   PlainObject,
@@ -41,6 +42,10 @@ export type RefKeyRootProps<GRefKey extends string = 'ref'> = {
  * These are the props passed to the render function provided when setting up your editor.
  */
 export interface InjectedRemirrorProps {
+  /**
+   * An instance of the extension manager
+   */
+  manager: ExtensionManager;
   /**
    * The prosemirror view
    */

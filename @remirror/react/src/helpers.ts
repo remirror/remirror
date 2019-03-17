@@ -45,8 +45,8 @@ export const asDefaultProps = <GProps extends {}>() => <GDefaultProps extends Pa
 /**
  * Finds a deeply nested child by the key provided.
  *
- * @params children
- * @params key
+ * @param children
+ * @param key
  */
 export const findChildWithKey = (children: ReactNode, key: string): ReactNode => {
   for (const child of Children.toArray(children)) {
@@ -70,9 +70,9 @@ export const findChildWithKey = (children: ReactNode, key: string): ReactNode =>
  * Searches the react tree for a child node with the requested key and updates
  * it using the updater function once found
  *
- * @params children
- * @params key
- * @params updateFunction
+ * @param children
+ * @param key
+ * @param updateFunction
  */
 export const updateChildWithKey = (
   children: ReactNode,
