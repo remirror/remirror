@@ -66,11 +66,10 @@ export class Mention<GName extends string> extends NodeExtension<MentionOptions<
 
   get schema(): NodeExtensionSpec {
     const {
-      name,
       mentionClassName = this.defaultOptions.mentionClassName,
       matcher = this.defaultOptions.matcher,
     } = this.options;
-    const mentionClass = `${mentionClassName} ${mentionClassName}-${name}`;
+    const mentionClass = `${mentionClassName} ${mentionClassName}-${this.postFix}`;
     const dataAttribute = `data-mention-${this.postFix}-id`;
     return {
       attrs: {

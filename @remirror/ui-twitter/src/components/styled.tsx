@@ -1,4 +1,3 @@
-import { css, Interpolation } from '@emotion/core';
 import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { styled } from '../theme';
 
@@ -36,11 +35,8 @@ export const EmojiPickerWrapper = styled.div`
 
 const editorClass = `.${EDITOR_CLASS_NAME}`;
 
-export interface RemirrorWrapperProps {
-  extra: Interpolation[];
-}
-export const RemirrorWrapper = styled.div<RemirrorWrapperProps>`
-  position: relative;
+export const RemirrorWrapper = styled.div`
+  height: 100%;
   & * {
     box-sizing: border-box;
   }
@@ -85,6 +81,4 @@ export const RemirrorWrapper = styled.div<RemirrorWrapperProps>`
   ${editorClass} .ProseMirror-selectednode {
     background-color: rgb(245, 248, 250);
   }
-
-  ${props => css(props.extra)};
 `;

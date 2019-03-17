@@ -1,6 +1,6 @@
-import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
+import React from 'react';
 
-import { findTextElement, fireEvent, render } from '@test-utils';
+import { axe, fireEvent, render, renderString } from '@test-utils';
 import { InjectedRemirrorProps, Remirror } from '..';
 
 const textContent = `This is editor text`;
@@ -26,6 +26,11 @@ test('should be called via a render prop', () => {
   expect(handlers.onFirstRender.mock.calls[0][0].getHTML().type).toBe(undefined);
   const editorNode = getByLabelText(label);
   expect(editorNode).toHaveAttribute('role', 'textbox');
+});
+
+test('TextEditor is accessible', async () => {
+  const results = await axe(renderString(<Remirror>{() => <div />}</Remirror>));
+  expect(results).toHaveNoViolations();
 });
 
 test('should not render the editor when no render prop available', () => {
@@ -58,7 +63,6 @@ test('should allow text input and fire all handlers', () => {
   expect(handlers.onBlur).toHaveBeenCalledTimes(1);
   fireEvent.focus(editorNode);
   expect(handlers.onFocus).toHaveBeenCalledTimes(1);
-  findTextElement(editorNode, textContent)!.nodeValue = 'New text';
 });
 
 test('can update contenteditable with props', () => {
@@ -83,62 +87,4 @@ test('should render a unique class on the root document', () => {
   );
   const editorNode = getByLabelText(label);
   expect(editorNode.className).toMatch(/remirror-[A-Za-z0-9_-]{5}/);
-});
-
-describe('getRootProps', () => {
-  const mock = jest.fn();
-  const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef((props, ref) => {
-    mock(ref);
-    return <div {...props} ref={ref} />;
-  });
-  it('supports a custom root element', () => {
-    render(
-      <Remirror>
-        {({ getRootProps }) => {
-          return <CustomRoot {...getRootProps()} />;
-        }}
-      </Remirror>,
-    );
-    expect(mock).toHaveBeenCalledWith(expect.any(Function));
-  });
-
-  it('supports a custom ref label and passed props through', () => {
-    function Cmp(props: { customRef: React.Ref<HTMLDivElement> }) {
-      mock(props);
-      return <div ref={props.customRef} />;
-    }
-    const testProp = 'test';
-    render(
-      <Remirror>
-        {({ getRootProps }) => {
-          return <Cmp {...getRootProps({ refKey: 'customRef', testProp })} />;
-        }}
-      </Remirror>,
-    );
-    expect(mock.mock.calls[0][0].customRef).toBeFunction();
-    expect(mock.mock.calls[0][0].testProp).toBe(testProp);
-  });
-
-  it('supports nested getRootProps', () => {
-    const { baseElement, getByRole } = render(
-      <Remirror>
-        {({ getRootProps }) => {
-          return (
-            <div>
-              <div {...getRootProps()} id='nested'>
-                <div id='wrapped'>{label}</div>
-              </div>
-            </div>
-          );
-        }}
-      </Remirror>,
-    );
-
-    const wrapper = baseElement.querySelector('#nested');
-    const innerLabel = baseElement.querySelector('#wrapped') as HTMLElement;
-    expect(innerLabel).toBeVisible();
-    expect(wrapper!.childElementCount).toBe(2);
-    expect(wrapper).toContainElement(innerLabel);
-    expect(wrapper).toContainElement(getByRole('textbox'));
-  });
 });

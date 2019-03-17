@@ -365,10 +365,9 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
             const content = view.state.doc.textContent;
             this.storeView(view);
 
-            const { css: extra, ...rest } = getRootProps();
             return (
               <div>
-                <RemirrorWrapper {...rest} extra={[extra]}>
+                <RemirrorWrapper {...getRootProps()} style={{ position: 'relative' }}>
                   <CharacterCountWrapper>
                     <CharacterCountIndicator characters={{ total: 140, used: content.length }} />
                   </CharacterCountWrapper>

@@ -622,7 +622,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       Fragment,
       {},
       ...updateChildWithKey(element, this.uid, ch => {
-        return cloneElement(ch, getElementProps(ch), ...this.injectSSRIntoElementChildren(ch));
+        return cloneElement(ch, getElementProps(ch), ...this.injectSSRIntoElementChildren(ch.props.children));
       }),
     );
   }

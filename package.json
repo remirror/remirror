@@ -46,7 +46,8 @@
     "size": "size-limit",
     "size:ci": "bundlesize",
     "test": "jest",
-    "test:integration": "cross-env TEST_ENV=integration start-server-and-test launch:docs http-get://localhost:3000 test",
+    "test:no-coverage": "jest --coverage=false",
+    "test:integration": "cross-env TEST_ENV=integration start-server-and-test launch:docs http-get://localhost:3000 test:no-coverage",
     "test:integration:watch": "cross-env TEST_ENV=integration yarn test:watch",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
     "typecheck": "lerna run typecheck"
