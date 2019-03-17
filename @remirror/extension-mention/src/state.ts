@@ -39,11 +39,6 @@ export class SuggestionState<GName extends string = string> {
   private view!: EditorView;
 
   /**
-   * Prevents multiple state updated (this.apply) being run before the view has updated
-   */
-  private viewHasUpdated: boolean = true;
-
-  /**
    * Returns the current active suggestion state field if one exists
    */
   get current(): SuggestionStateField | undefined {
@@ -105,7 +100,6 @@ export class SuggestionState<GName extends string = string> {
    * @param state
    */
   private onViewUpdate: (view: EditorView, prevState: EditorState) => void = () => {
-    this.viewHasUpdated = true; // Inform the state that a view update has run
     this.actions = actionsTaken(this.prev, this.next);
     const stateField = this.current;
     const { entered, changed, exited } = this;
@@ -176,7 +170,7 @@ export class SuggestionState<GName extends string = string> {
    * @param tr
    */
   public apply(tr: Transaction) {
-    if (!this.viewHasUpdated) {
+    if (!tr.docChanged) {
       return this;
     }
 

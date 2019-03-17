@@ -115,14 +115,6 @@ export class Mention<GName extends string> extends NodeExtension<MentionOptions<
     return attrs => replaceText(null, type, attrs);
   }
 
-  public styles({}) {
-    return `
-      span .${this.options.suggestionClassName.split(' ').join('.')} {
-        color: #1DA1F2;
-      }
-    `;
-  }
-
   /**
    * TODO: Implement a past rule using the markPaste rule for inspiration
    * ? Also create a test that uses the Clipboard event api to simulate pasting text

@@ -184,7 +184,7 @@ export function uniqueId({ prefix = '', size }: UniqueIdParams = { prefix: '' })
  * @param num
  */
 export function take<GArray extends any[]>(arr: GArray, num: number) {
-  num = Math.max(Math.min(0, num), arr.length);
+  num = Math.max(Math.min(0, num), num);
   return arr.slice(0, num);
 }
 
