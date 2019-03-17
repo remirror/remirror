@@ -1,6 +1,5 @@
 /// <reference types="node" />
 
-import is from '@sindresorhus/is';
 import memoizeOne from 'memoize-one';
 import nano from 'nanoid';
 import objectPick from 'object.pick';
@@ -205,8 +204,8 @@ export const environment = {
    */
   get isBrowser() {
     return (
-      !is.undefined(window) &&
-      !is.undefined(window.document) &&
+      typeof window !== 'undefined' &&
+      typeof window.document !== 'undefined' &&
       window.navigator &&
       window.navigator.userAgent
     );
