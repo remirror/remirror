@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/extension-mention"
   },
-  "version": "0.0.1-alpha.6",
+  "version": "0.0.1-alpha.7",
   "main": "lib/index.js",
   "module": "lib/dist/extension-mention.esm.js",
   "files": [
@@ -25,14 +25,14 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.6"
+    "@remirror/core": "0.0.1-alpha.7"
   },
   "peerDependencies": {
+    "@sindresorhus/is": "^0.15.0",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.3.1",
     "prosemirror-state": "^1.2.2",
-    "prosemirror-view": "^1.8.3",
-    "@sindresorhus/is": "^0.15.0"
+    "prosemirror-view": "^1.8.3"
   },
   "publishConfig": {
     "access": "public"

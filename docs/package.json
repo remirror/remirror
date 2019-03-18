@@ -3,7 +3,7 @@
   "name": "docs",
   "description": "docs and examples for the remirror editor",
   "license": "MIT",
-  "version": "0.0.1-alpha.6",
+  "version": "0.0.1-alpha.7",
   "scripts": {
     "prebuild": "run-s lint typecheck",
     "lint": "tslint --project tsconfig.json --config ../tslint.json",
@@ -15,20 +15,20 @@
     "@emotion/babel-preset-css-prop": "10.0.9",
     "@emotion/core": "10.0.9",
     "@emotion/styled": "10.0.9",
-    "@remirror/extension-mention": "0.0.1-alpha.6",
-    "@remirror/react": "0.0.1-alpha.6",
-    "@remirror/core": "0.0.1-alpha.6",
-    "@remirror/core-extensions": "0.0.1-alpha.6",
-    "@remirror/renderer-react": "0.0.1-alpha.6",
-    "@remirror/ui-twitter": "0.0.1-alpha.6",
+    "@remirror/core": "0.0.1-alpha.7",
+    "@remirror/core-extensions": "0.0.1-alpha.7",
+    "@remirror/extension-mention": "0.0.1-alpha.7",
+    "@remirror/react": "0.0.1-alpha.7",
+    "@remirror/renderer-react": "0.0.1-alpha.7",
+    "@remirror/ui-twitter": "0.0.1-alpha.7",
     "@types/match-sorter": "2.3.0",
     "docz": "0.13.7",
     "docz-core": "0.13.7",
     "docz-theme-default": "0.13.7",
     "emoji-mart": "2.9.2",
     "match-sorter": "2.3.0",
+    "nodom": "2.1.0",
     "react": "16.8.0",
-    "react-dom": "16.8.0",
-    "nodom": "2.1.0"
+    "react-dom": "16.8.0"
   }
 }

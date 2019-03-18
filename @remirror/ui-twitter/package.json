@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/ui-twitter"
   },
-  "version": "0.0.1-alpha.6",
+  "version": "0.0.1-alpha.7",
   "main": "lib/index.js",
   "module": "lib/dist/ui-twitter.esm.js",
   "files": [
@@ -27,12 +27,12 @@
   "dependencies": {
     "@emotion/core": "^10.0.9",
     "@emotion/styled": "^10.0.9",
-    "@remirror/core": "0.0.1-alpha.6",
-    "@remirror/core-extensions": "0.0.1-alpha.6",
-    "@remirror/extension-emoji": "0.0.1-alpha.6",
-    "@remirror/extension-enhanced-link": "0.0.1-alpha.6",
-    "@remirror/extension-mention": "0.0.1-alpha.6",
-    "@remirror/react": "0.0.1-alpha.6",
+    "@remirror/core": "0.0.1-alpha.7",
+    "@remirror/core-extensions": "0.0.1-alpha.7",
+    "@remirror/extension-emoji": "0.0.1-alpha.7",
+    "@remirror/extension-enhanced-link": "0.0.1-alpha.7",
+    "@remirror/extension-mention": "0.0.1-alpha.7",
+    "@remirror/react": "0.0.1-alpha.7",
     "@types/emoji-mart": "^2.8.2",
     "emoji-mart": "^2.9.2",
     "emotion-theming": "^10.0.9",
