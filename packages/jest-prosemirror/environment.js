@@ -1,1 +1,1 @@
-require('./lib/environment').setupEnvironment();
+require('./lib/environment').setupProsemirrorEnvironment();
