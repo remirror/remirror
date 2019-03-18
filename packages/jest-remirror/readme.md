@@ -14,13 +14,85 @@
 
 ## Installation
 
+Ensure the following is installed as it will be responsible for creating the test editor
+
+```bash
+yarn add react-testing-library
+```
+
 ```bash
 yarn add jest-remirror
 ```
 
 ## Getting started
 
-API and docs still being worked on.
+### Quick setup
+
+For a quick and simple setup add the following to your jest.config.js file.
+
+```js
+/* jest.config.js */
+
+module.exports = {
+  //...
+  setupFilesAfterEnv: ['jest-remirror/environment'],
+  testEnvironment: 'jsdom', // Required for dom manipulation
+};
+```
+
+This will automatically
+
+- inject the required JSDOM polyfills
+- ensure that `react-testing-library` cleans up the DOM after each test
+- Add the jest assertions `toEqualRemirrorDocument` and `toMatchRemirrorSnapshot`.
+
+If you are using typescript then add this to your `tsconfig.json` file for type support.
+
+```json
+{
+  "compilerOptions": {
+    "types": ["jest-remirror"]
+  }
+}
+```
+
+### Manual setup
+
+Create a `jest.framework.dom.ts` file and add the following
+
+```ts
+/* jest.framework.dom.ts */
+
+import { jsdomExtras, jsdomPolyfill, remirrorMatchers } from 'jest-remirror';
+
+/* Auto cleanup DOM after each test */
+require('react-testing-library/cleanup-after-each');
+
+/* Add jest-remirror assertions */
+expect.extend(remirrorMatchers);
+
+/* Polyfills for jsdom */
+jsdomPolyfill();
+
+/* Extras for prosemirror testing */
+jsdomExtras();
+```
+
+In your `jest.config.js` file add this to the configuration
+
+```js
+/* jest.config.js */
+
+module.exports = {
+  //...
+  setupFilesAfterEnv: ['<rootDir>/jest.framework.dom.ts'],
+  testEnvironment: 'jsdom', // Required for dom manipulation
+};
+```
+
+## Examples
+
+Examples coming soon.
 
 ## Acknowledgements
 

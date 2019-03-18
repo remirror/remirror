@@ -1,4 +1,4 @@
-import { createEditorState, pm } from '@test-utils';
+import { createEditorState, pm } from 'jest-prosemirror';
 import { markActive } from '../document';
 const { p, doc, em, schema } = pm;
 

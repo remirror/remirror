@@ -94,7 +94,8 @@
     "size-limit": "0.21.1",
     "start-server-and-test": "1.7.11",
     "tslint": "5.14.0",
-    "typescript": "3.3.3333",
+    "typescript-tslint-plugin": "0.3.1",
+    "typescript": "3.4.0-rc",
     "typescript-styled-plugin": "0.14.0"
   }
 }

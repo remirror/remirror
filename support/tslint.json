@@ -14,7 +14,6 @@
         "react-testing-library",
         "puppeteer",
         "puppeteer-to-istanbul",
-        "@test-utils",
         "jest-extended",
         "prosemirror-test-builder",
         "jest-matcher-utils",

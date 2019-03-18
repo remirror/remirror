@@ -1,6 +1,7 @@
 import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
-import { axe, render, RenderResult } from '@test-utils';
+import { axe } from 'jest-axe';
+import { render, RenderResult } from 'react-testing-library';
 import { Remirror } from '..';
 
 const mock = jest.fn();
@@ -72,6 +73,6 @@ describe('nestedRootProps', () => {
   });
 
   it('retains accessibility', async () => {
-    await expect(axe(result.container.innerHTML)).resolves.toHaveNoViolations();
+    await expect(axe(result.container.outerHTML)).resolves.toHaveNoViolations();
   });
 });

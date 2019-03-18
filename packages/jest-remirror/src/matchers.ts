@@ -3,11 +3,11 @@ import { toMatchSnapshot } from 'jest-snapshot';
 import { RefsNode } from './builder';
 
 export const remirrorMatchers: jest.ExpectExtendMap = {
-  toEqualDocument(actual, expected: RefsNode) {
+  toEqualRemirrorDocument(actual, expected: RefsNode) {
     // Because schema is created dynamically, expected value is a function (schema) => PMNode;
     // That's why this magic is necessary. It simplifies writing assertions, so
-    // instead of expect(doc).toEqualDocument(doc(p())(schema)) we can just do:
-    // expect(doc).toEqualDocument(doc(p())).
+    // instead of expect(doc).toEqualRemirrorDocument(doc(p())(schema)) we can just do:
+    // expect(doc).toEqualRemirrorDocument(doc(p())).
     //
     // Also it fixes issues that happens sometimes when actual schema and expected schema
     // are different objects, making this case impossible by always using actual schema to create expected node.
@@ -17,7 +17,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
         pass: false,
         actual,
         expected,
-        name: 'toEqualDocument',
+        name: 'toEqualRemirrorDocument',
         message: 'Expected both values to be instance of prosemirror-model Node.',
       };
     }
@@ -27,7 +27,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
         pass: false,
         actual,
         expected,
-        name: 'toEqualDocument',
+        name: 'toEqualRemirrorDocument',
         message: 'Expected both values to be using the same schema.',
       };
     }
@@ -35,7 +35,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
     const pass = this.equals(actual.toJSON(), expected.toJSON());
     const message = pass
       ? () =>
-          `${this.utils.matcherHint('.not.toEqualDocument')}\n\n` +
+          `${this.utils.matcherHint('.not.toEqualRemirrorDocument')}\n\n` +
           `Expected JSON value of document to not equal:\n  ${this.utils.printExpected(expected)}\n` +
           `Actual JSON:\n  ${this.utils.printReceived(actual)}`
       : () => {
@@ -43,7 +43,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
             expand: this.expand,
           });
           return (
-            `${this.utils.matcherHint('.toEqualDocument')}\n\n` +
+            `${this.utils.matcherHint('.toEqualRemirrorDocument')}\n\n` +
             `Expected JSON value of document to equal:\n${this.utils.printExpected(expected)}\n` +
             `Actual JSON:\n  ${this.utils.printReceived(actual)}` +
             `${diffString ? `\n\nDifference:\n\n${diffString}` : ''}`
@@ -55,11 +55,11 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
       actual,
       expected,
       message,
-      name: 'toEqualDocument',
+      name: 'toEqualRemirrorDocument',
     };
   },
 
-  toMatchDocumentSnapshot(actual) {
+  toMatchRemirrorSnapshot(actual) {
     const { currentTestName, snapshotState } = this;
 
     const removeFirstWord = (sentence?: string) =>
@@ -108,8 +108,8 @@ declare global {
       snapshotState: any;
     }
     interface Matchers<R> {
-      toEqualDocument(builder: RefsNode): R;
-      toMatchDocumentSnapshot(builder: RefsNode): R;
+      toEqualRemirrorDocument(builder: RefsNode): R;
+      toMatchRemirrorSnapshot(builder: RefsNode): R;
     }
   }
 }

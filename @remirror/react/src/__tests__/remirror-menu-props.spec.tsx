@@ -1,7 +1,7 @@
 import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
 import { PlainObject } from '@remirror/core';
-import { render } from '@test-utils';
+import { render } from 'react-testing-library';
 import { Remirror } from '..';
 
 const mock = jest.fn();

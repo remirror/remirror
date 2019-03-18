@@ -16,7 +16,6 @@
         "react-testing-library",
         "puppeteer",
         "puppeteer-to-istanbul",
-        "@test-utils",
         "jest-extended",
         "prosemirror-test-builder",
         "jest-matcher-utils",
@@ -25,7 +24,8 @@
         "chalk",
         "@test-fixtures",
         "yargs",
-        "jest-remirror"
+        "jest-remirror",
+        "jest-prosemirror"
       ]
     ],
     "no-empty": false,

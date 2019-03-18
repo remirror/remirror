@@ -1,13 +1,13 @@
 {
-  "name": "jest-remirror",
+  "name": "jest-prosemirror",
   "description": "A text editor for react built with prosemirror",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/jest-remirror",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/jest-prosemirror",
   "repository": {
     "type": "git",
     "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "packages/jest-remirror"
+    "directory": "packages/jest-prosemirror"
   },
   "version": "0.0.1-alpha.7",
   "main": "lib/index.js",
@@ -24,25 +24,19 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
+    "chalk": "2.4.2",
     "@remirror/core": "0.0.1-alpha.7",
-    "@remirror/core-extensions": "0.0.1-alpha.7",
-    "@remirror/react": "0.0.1-alpha.7",
-    "@remirror/renderer-react": "0.0.1-alpha.7",
     "@types/prosemirror-model": "^1.7.0",
     "@types/prosemirror-view": "^1.3.1",
-    "flatten": "^1.0.2",
-    "keycode": "^2.2.0",
+    "jest-snapshot": "^24.5.0",
+    "jest-matcher-utils": "^24.5.0",
+    "jest-diff": "^24.5.0",
     "prosemirror-model": "^1.7.0",
     "prosemirror-state": "^1.2.2",
     "prosemirror-view": "^1.8.3"
   },
   "peerDependencies": {
-    "react-testing-library": "6.0.0",
-    "jest-snapshot": "^24.5.0",
-    "@types/react": "^16.7.18",
-    "@types/react-dom": "^16.8.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "jest": "^24.5.0"
   },
   "keywords": [
     "prosemirror",
