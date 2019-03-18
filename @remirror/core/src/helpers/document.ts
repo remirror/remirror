@@ -1,4 +1,3 @@
-import is from '@sindresorhus/is';
 import {
   DOMParser,
   DOMSerializer,
@@ -13,11 +12,14 @@ import { EMPTY_OBJECT_NODE } from '../constants';
 import {
   Attrs,
   EditorSchema,
+  FromTo,
   NodeMatch,
   ObjectNode,
+  PlainObject,
   PluginKey,
   Position,
   ProsemirrorNode,
+  RegexTuple,
   RemirrorContentType,
   ResolvedPos,
   Selection,
@@ -31,7 +33,7 @@ import { bool, Cast } from './base';
  * @param val
  */
 export const isProsemirrorNode = (val: unknown): val is ProsemirrorNode =>
-  is.object(val) && is.directInstanceOf(val, PMNode);
+  typeof val === 'object' && val instanceof PMNode;
 
 /**
  * Checks that a mark is active within the selected region, or the current selection point is within a
@@ -79,8 +81,12 @@ export const canInsertNode = (state: EditorState, type: NodeType) => {
   const { $from } = state.selection;
   for (let d = $from.depth; d >= 0; d--) {
     const index = $from.index(d);
-    if ($from.node(d).canReplaceWith(index, index, type)) {
-      return true;
+    try {
+      if ($from.node(d).canReplaceWith(index, index, type)) {
+        return true;
+      }
+    } catch {
+      return false;
     }
   }
   return false;
@@ -139,7 +145,10 @@ export const getMarkAttrs = (state: EditorState, type: MarkType) => {
  * @param $pos
  * @param type
  */
-export const getMarkRange = ($pos: ResolvedPos | null = null, type: MarkType | null = null) => {
+export const getMarkRange = (
+  $pos: ResolvedPos | null = null,
+  type: MarkType | null | undefined = null,
+): FromTo | false => {
   if (!$pos || !type) {
     return false;
   }
@@ -215,14 +224,13 @@ export const getMatchString = (match: string | string[], index = 0) =>
  *
  * @param domNode
  */
-export const isDOMNode = (domNode: unknown): domNode is Node => {
-  return is.object(Node)
-    ? is.directInstanceOf(domNode, Node)
-    : !is.nullOrUndefined(domNode !== null) &&
-        is.nonEmptyObject(domNode) &&
-        is.number(domNode.nodeType) &&
-        is.string(domNode.nodeName);
-};
+export const isDOMNode = (domNode: unknown): domNode is Node =>
+  typeof Node === 'object'
+    ? domNode instanceof Node
+    : domNode !== null &&
+      typeof domNode === 'object' &&
+      typeof Cast(domNode).nodeType === 'number' &&
+      typeof Cast(domNode).nodeName === 'string';
 
 /**
  * Finds the closest element which matches the passed selector
@@ -261,32 +269,9 @@ export const isElementDOMNode = (domNode: unknown): domNode is HTMLElement =>
  *
  * @param domNode
  */
-export const isTextDOMNode = (domNode: unknown): domNode is Text =>
-  isDOMNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
-
-/**
- * Checks for a CDATASection Node, such as <!CDATA[[ … ]]>.
- *
- * @param domNode
- */
-export const isCDATASectionDOMNode = (domNode: unknown): domNode is CDATASection =>
-  isDOMNode(domNode) && domNode.nodeType === Node.CDATA_SECTION_NODE;
-
-/**
- * Checks for a processingInstruction of an XML document, such as <?xml-stylesheet … ?>.
- *
- * @param domNode
- */
-export const isProcessingInstructionDOMNode = (domNode: unknown): domNode is ProcessingInstruction =>
-  isDOMNode(domNode) && domNode.nodeType === Node.PROCESSING_INSTRUCTION_NODE;
-
-/**
- * Checks for a comment node, such as <!-- … -->.
- *
- * @param domNode
- */
-export const isCommentDOMNode = (domNode: unknown): domNode is Comment =>
-  isDOMNode(domNode) && domNode.nodeType === Node.COMMENT_NODE;
+export const isTextDOMNode = (domNode: unknown): domNode is Text => {
+  return isDOMNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
+};
 
 /**
  * Checks for a Document node.
@@ -295,14 +280,6 @@ export const isCommentDOMNode = (domNode: unknown): domNode is Comment =>
  */
 export const isDocumentDOMNode = (domNode: unknown): domNode is Document =>
   isDOMNode(domNode) && domNode.nodeType === Node.DOCUMENT_NODE;
-
-/**
- * Checks for a DocumentType node, such as <!DOCTYPE html>.
- *
- * @param domNode
- */
-export const isDocumentTypeDOMNode = (domNode: unknown): domNode is DocumentType =>
-  isDOMNode(domNode) && domNode.nodeType === Node.DOCUMENT_TYPE_NODE;
 
 /**
  * Checks for a DocumentFragment node.
@@ -343,18 +320,18 @@ export const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, 
 /**
  * Retrieve the nearest non-text node
  *
- * @param node
+ * @param domNode
  */
-export const getNearestNonTextNode = (node: Node) =>
-  isTextDOMNode(node) ? (node.parentNode as HTMLElement) : (node as HTMLElement);
+export const getNearestNonTextNode = (domNode: Node) =>
+  isTextDOMNode(domNode) ? (domNode.parentNode as HTMLElement) : (domNode as HTMLElement);
 
 /**
  * Predicate checking whether the selection is a TextSelection
  *
- * @param selection
+ * @param val
  */
-export const isTextSelection = (selection: Selection): selection is TextSelection<EditorSchema> =>
-  selection instanceof TextSelection;
+export const isTextSelection = (val: unknown): val is TextSelection<EditorSchema> =>
+  typeof val === 'object' && val instanceof TextSelection;
 
 /**
  * Checks whether the cursor is at the end of the state.doc
@@ -404,6 +381,25 @@ export function getCursor(selection: Selection): ResolvedPos | null | undefined 
 }
 
 /**
+ * Checks to see whether a nodeMatch checker is a tuple (used for regex) with length of 1 or 2
+ *
+ * @param nodeMatch
+ */
+const isRegexTuple = (nodeMatch: NodeMatch): nodeMatch is RegexTuple =>
+  Array.isArray(nodeMatch) && nodeMatch.length > 0 && nodeMatch.length <= 2;
+
+/**
+ * Test the passed in regexp tuple
+ *
+ * @param tuple
+ * @param name
+ */
+const regexTest = (tuple: RegexTuple, name: string) => {
+  const regex = new RegExp(...tuple);
+  return regex.test(name);
+};
+
+/**
  * Checks to see whether the name of the passed node matches anything in the list provided.
  *
  * @param node
@@ -419,7 +415,11 @@ export const nodeNameMatchesList = (
   }
   const name = node.type.name;
   for (const checker of nodeMatches) {
-    outcome = is.function_(checker) ? checker(name) : checker === name;
+    outcome = isRegexTuple(checker)
+      ? regexTest(checker, name)
+      : typeof checker === 'function'
+      ? checker(name, node)
+      : checker === name;
     if (outcome) {
       break;
     }
@@ -427,8 +427,14 @@ export const nodeNameMatchesList = (
   return outcome;
 };
 
-export const isDocNode = (node: ProsemirrorNode | null | undefined, schema: EditorSchema) => {
-  return isProsemirrorNode(node) && node.type === schema.nodes.doc;
+/**
+ * Checks whether a Prosemirror node is the top level `doc` node
+ *
+ * @param node
+ * @param [schema]
+ */
+export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: EditorSchema) => {
+  return isProsemirrorNode(node) && (schema ? node.type === schema.nodes.doc : node.type.name === 'doc');
 };
 
 /**
@@ -436,12 +442,10 @@ export const isDocNode = (node: ProsemirrorNode | null | undefined, schema: Edit
  *
  * @param arg
  */
-export const isObjectNode = (arg: unknown): arg is ObjectNode => {
-  if (is.plainObject(arg) && arg.type === 'doc') {
-    return true;
-  }
-  return false;
-};
+export const isObjectNode = (arg: unknown): arg is ObjectNode =>
+  typeof arg === 'object' &&
+  (arg as PlainObject).type === 'doc' &&
+  Array.isArray((arg as PlainObject).content);
 
 export interface CreateDocumentNodeParams {
   /** The content to render */
@@ -472,7 +476,7 @@ export const createDocumentNode = ({ content, schema, doc }: CreateDocumentNodeP
       return schema.nodeFromJSON(EMPTY_OBJECT_NODE);
     }
   }
-  if (is.string(content)) {
+  if (typeof content === 'string') {
     const element = (doc || document).createElement('div');
     element.innerHTML = content.trim();
     return DOMParser.fromSchema(schema).parse(element);
@@ -492,9 +496,10 @@ interface ToHTMLParams {
 /**
  * Convert a prosemirror node into it's HTML contents
  *
+ * @param params
  * @param params.node
- *         params.schema
- *         params.doc
+ * @param params.schema
+ * @param params.dpc
  */
 export const toHTML = ({ node, schema, doc }: ToHTMLParams) => {
   const element = (doc || document).createElement('div');
@@ -506,9 +511,10 @@ export const toHTML = ({ node, schema, doc }: ToHTMLParams) => {
 /**
  * Convert a node into its DOM representative
  *
+ * @param params
  * @param params.node
- *         params.schema
- *         params.doc
+ * @param params.schema
+ * @param params.doc
  */
 export const toDOM = ({ node, schema, doc }: ToHTMLParams): DocumentFragment => {
   const fragment = isDocNode(node, schema) ? node.content : Fragment.from(node);

@@ -1,10 +1,11 @@
 import { bool, Cast, CommandFunction, ProsemirrorNode } from '@remirror/core';
+import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { transformsNodeFailMessage, transformsNodePassMessage } from './messages';
 import { CommandTransformation } from './types';
 import { apply } from './utils';
 
 export const prosemirrorMatchers = {
-  transformsProsemirrorNode(
+  transformsPMNode(
     this: jest.MatcherUtils,
     command: CommandFunction,
     { from, to }: CommandTransformation = Cast({}),
@@ -24,7 +25,7 @@ export const prosemirrorMatchers = {
     const expected = to ? to : from;
     const shouldChange = bool(to);
     const [pass, actual] = apply(from, command, to);
-    const properties = { actual, expected, name: 'transformsProsemirrorNode' };
+    const properties = { actual, expected, name: 'transformsPMNode' };
 
     if (pass) {
       return { ...properties, pass, message: transformsNodePassMessage(actual, expected, shouldChange) };
@@ -33,11 +34,11 @@ export const prosemirrorMatchers = {
     }
   },
 
-  toEqualProsemirrorDocument(this: jest.MatcherUtils, actual: ProsemirrorNode, expected: ProsemirrorNode) {
+  toEqualPMNode(this: jest.MatcherUtils, actual: TaggedProsemirrorNode, expected: TaggedProsemirrorNode) {
     const pass = this.equals(actual.toJSON(), expected.toJSON());
     const message = pass
       ? () =>
-          `${this.utils.matcherHint('.not.toEqualProsemirrorDocument')}\n\n` +
+          `${this.utils.matcherHint('.not.toEqualPMNode')}\n\n` +
           `Expected JSON value of document to not equal:\n  ${this.utils.printExpected(expected)}\n` +
           `Actual JSON:\n  ${this.utils.printReceived(actual)}`
       : () => {
@@ -45,7 +46,7 @@ export const prosemirrorMatchers = {
             expand: this.expand,
           });
           return (
-            `${this.utils.matcherHint('.toEqualProsemirrorDocument')}\n\n` +
+            `${this.utils.matcherHint('.toEqualPMNode')}\n\n` +
             `Expected JSON value of document to equal:\n${this.utils.printExpected(expected)}\n` +
             `Actual JSON:\n  ${this.utils.printReceived(actual)}` +
             `${diffString ? `\n\nDifference:\n\n${diffString}` : ''}`
@@ -57,7 +58,7 @@ export const prosemirrorMatchers = {
       actual,
       expected,
       message,
-      name: 'toEqualProsemirrorDocument',
+      name: 'toEqualPMNode',
     };
   },
 };
@@ -68,8 +69,8 @@ declare global {
       /**
        * Test that the correct transformation happens
        */
-      transformsProsemirrorNode(params: CommandTransformation): R;
-      toEqualProsemirrorDocument(params: ProsemirrorNode): R;
+      transformsPMNode(params: CommandTransformation): R;
+      toEqualPMNode(params: ProsemirrorNode): R;
     }
   }
 }

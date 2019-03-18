@@ -1,14 +1,14 @@
 import chalk from 'chalk';
 import { matcherHint, printExpected, printReceived } from 'jest-matcher-utils';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
-import { selectionFor } from './utils';
+import { selectionFor } from './test-helpers';
 
 export const transformsNodePassMessage = (
   actual: TaggedProsemirrorNode,
   expected: TaggedProsemirrorNode,
   shouldChange: boolean,
 ) => () =>
-  matcherHint('.not.transformsProsemirrorNode') + '\n\n' + shouldChange
+  matcherHint('.not.transformsPMNode') + '\n\n' + shouldChange
     ? chalk`Expected the node {bold not} to be:\n` +
       `${printExpected(expected.toString())}\n` +
       `Position: { from: ${selectionFor(expected).from}, to: ${selectionFor(expected).to} }\n\n` +
@@ -27,7 +27,7 @@ export const transformsNodeFailMessage = (
   expected: TaggedProsemirrorNode,
   shouldChange: boolean,
 ) => () =>
-  matcherHint('.transformsProsemirrorNode') + '\n\n' + shouldChange
+  matcherHint('.transformsPMNode') + '\n\n' + shouldChange
     ? 'Expected the node to be transformed to:\n' +
       `${printExpected(expected.toString())}\n` +
       `Position: { from: ${selectionFor(expected).from}, to: ${selectionFor(expected).to} }\n\n` +

@@ -62,7 +62,6 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
             'unstable_renderSubtreeIntoContainer',
             'unmountComponentAtNode',
           ],
-          nodom: ['Document'],
           'react-dom/server': ['renderToStaticMarkup'],
         },
         extensions,

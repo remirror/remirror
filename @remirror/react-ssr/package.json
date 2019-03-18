@@ -27,7 +27,7 @@
   "dependencies": {
     "@remirror/core": "0.0.1-alpha.7",
     "@remirror/renderer-react": "0.0.1-alpha.7",
-    "nodom": "2.1.0"
+    "min-document": "^2.19.0"
   },
   "peerDependencies": {
     "@sindresorhus/is": "^0.15.0",

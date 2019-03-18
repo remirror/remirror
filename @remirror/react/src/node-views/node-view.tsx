@@ -166,6 +166,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
 
   /**
    * Copies the attributes from a ProseMirror Node to a DOM node.
+   *
    * @param node The Prosemirror Node from which to source the attributes
    */
   public setDomAttrs(node: ProsemirrorNode, element: HTMLElement) {
@@ -179,7 +180,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
       const attrs = Cast<Attrs>(domSpec[1]);
       if (is.plainObject(attrs)) {
         Object.keys(attrs).forEach(attr => {
-          element.setAttribute(attr, attrs[attr]);
+          element.setAttribute(attr, String(attrs[attr]));
         });
 
         return;

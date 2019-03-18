@@ -1,54 +1,37 @@
-import { Cast, CommandFunction, isElementDOMNode, isTextDOMNode } from '@remirror/core';
-import { EditorState, NodeSelection, Selection, TextSelection } from 'prosemirror-state';
-import pm, { TaggedProsemirrorNode } from 'prosemirror-test-builder';
+import { Cast, CommandFunction } from '@remirror/core';
+import { EditorState } from 'prosemirror-state';
+import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
+import { createEditor, pm, selectionFor, taggedDocHasSelection } from './test-helpers';
 
-export function selectionFor(docNode: TaggedProsemirrorNode) {
-  const aTag = docNode.tag.a;
-  if (aTag != null) {
-    const $aTag = docNode.resolve(aTag);
-    if ($aTag.parent.inlineContent) {
-      return new TextSelection($aTag, docNode.tag.b != null ? docNode.resolve(docNode.tag.b) : undefined);
-    } else {
-      return new NodeSelection($aTag);
-    }
-  }
-  return Selection.atStart(docNode);
-}
-
-export function createEditorState(d: TaggedProsemirrorNode) {
-  return EditorState.create({ doc: d, selection: selectionFor(d) });
-}
-
+/**
+ * Apply the command to the taggedDoc
+ *
+ * Returns a tuple matching the following structure
+ * [
+ *   bool => was the command successfully applied
+ *   taggedDoc => the new doc as a result of the command
+ *   state => The new editor state after applying the command
+ * ]
+ *
+ * @param taggedDoc
+ * @param command
+ * @param [result]
+ */
 export function apply(
-  docNode: TaggedProsemirrorNode,
+  taggedDoc: TaggedProsemirrorNode,
   command: CommandFunction,
   result?: TaggedProsemirrorNode,
 ): [boolean, TaggedProsemirrorNode, EditorState] {
-  let state = createEditorState(docNode);
-  command(state, tr => (state = state.apply(tr)), Cast({}));
-  if (!pm.eq(state.doc, result || docNode)) {
-    return [false, Cast<TaggedProsemirrorNode>(state.doc), state];
+  const { state, view } = createEditor(taggedDoc);
+  let newState = state;
+
+  command(state, tr => (newState = state.apply(tr)), view);
+
+  if (!pm.eq(newState.doc, result || taggedDoc)) {
+    return [false, Cast<TaggedProsemirrorNode>(newState.doc), newState];
   }
-  if (result && result.tag.a != null) {
-    return [pm.eq(state.selection, selectionFor(result)), result || docNode, state];
+  if (result && taggedDocHasSelection(result)) {
+    return [pm.eq(newState.selection, selectionFor(result)), result || taggedDoc, newState];
   }
-  return [true, Cast<TaggedProsemirrorNode>(state.doc), state];
+  return [true, Cast<TaggedProsemirrorNode>(newState.doc), newState];
 }
-
-export { pm };
-
-export const findTextElement = (node: Node, text: string): Node | null => {
-  if (isTextDOMNode(node)) {
-    if (node.nodeValue === text) {
-      return node;
-    }
-  } else if (isElementDOMNode(node)) {
-    for (let ch = node.firstChild; ch; ch = ch.nextSibling as ChildNode) {
-      const found = findTextElement(ch, text);
-      if (found) {
-        return found;
-      }
-    }
-  }
-  return null;
-};

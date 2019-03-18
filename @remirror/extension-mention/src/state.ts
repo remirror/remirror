@@ -119,7 +119,7 @@ export class SuggestionState<GName extends string = string> {
           range: stateField.range,
           attrs,
           schema: this.view.state.schema,
-          appendText: attrs.hasOwnProperty('appendText') ? attrs.appendText : appendText,
+          appendText: attrs.hasOwnProperty('appendText') ? String(attrs.appendText) : appendText,
         })(this.view.state, this.view.dispatch, this.view);
       },
     };

@@ -23,8 +23,9 @@
         "enzyme",
         "enzyme-adapter-react-16",
         "jest-remirror",
+        "jest-prosemirror",
         "react",
-        "nodom",
+        "min-document",
         "@remirror/core",
         "@remirror/core-extensions",
         "@remirror/react"

@@ -14,9 +14,20 @@ export type NodeType = PMNodeType<EditorSchema>;
 export type EditorState<GSchema extends EditorSchema = EditorSchema> = PMEditorState<GSchema>;
 
 /**
+ * A tuple for representing regex's
+ * Can be spread as parameters for the `RegExp` constructor
+ *
+ * ```ts
+ * const params: RegExpTuple = ['\\/awesome', 'gi']
+ * const regexp = new RegExp(...params);
+ * ```
+ */
+export type RegexTuple = [string, string?];
+
+/**
  * Utility type for matching the name of a node to via a string or function
  */
-export type NodeMatch = string | ((name: string) => boolean);
+export type NodeMatch = string | ((name: string, node: ProsemirrorNode) => boolean) | RegexTuple;
 
 /**
  * Creates a predicate type

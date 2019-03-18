@@ -9,7 +9,7 @@ const Menu: FunctionComponent<RefAttributes<HTMLDivElement> & PlainObject> = for
   mock(ref);
   return null;
 });
-// TODO implement
+
 test('updates the offscreen attribute when a selection is active', () => {
   render(
     <Remirror>
