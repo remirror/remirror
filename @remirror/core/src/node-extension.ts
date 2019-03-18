@@ -22,7 +22,7 @@ export interface NodeExtensionOptions {
 export abstract class NodeExtension<
   GOptions extends NodeExtensionOptions = NodeExtensionOptions
 > extends Extension<GOptions, NodeType<EditorSchema>> {
-  get type() {
+  get type(): ExtensionType.NODE {
     return ExtensionType.NODE;
   }
 

@@ -1,4 +1,4 @@
-import { Cast } from '@remirror/core';
+import { bool, Cast } from '@remirror/core';
 import { BaseEmoji, CustomEmoji, Data, NimbleEmojiIndex } from 'emoji-mart';
 import { emoticonMap } from './emoticons';
 
@@ -9,7 +9,7 @@ import { emoticonMap } from './emoticons';
  * @param emoji
  */
 export const isBaseEmoji = (emoji: BaseEmoji | CustomEmoji | undefined): emoji is BaseEmoji => {
-  return Boolean(emoji && Cast(emoji).native);
+  return bool(emoji && Cast(emoji).native);
 };
 
 /**

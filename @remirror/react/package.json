@@ -20,18 +20,15 @@
     "build": "run-s build:declaration build:babel",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
-    "test": "jest",
-    "test:live": "cross-env TEST_ENV=live jest",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit",
-    "watch:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -w",
-    "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "types": "lib/index.d.ts",
   "dependencies": {
     "@remirror/core": "0.0.1-alpha.6",
     "@remirror/core-extensions": "0.0.1-alpha.6",
+    "@remirror/react-ssr": "0.0.1-alpha.6",
+    "@remirror/renderer-react": "0.0.1-alpha.6",
     "@types/hoist-non-react-statics": "^3.3.0",
     "@types/prosemirror-keymap": "^1.0.1",
     "@types/prosemirror-view": "^1.3.1",

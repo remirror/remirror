@@ -1,2 +1,3 @@
-export * from './mention-node';
-export * from './create-suggestions-plugin';
+export * from './mention';
+export * from './plugin';
+export * from './types';

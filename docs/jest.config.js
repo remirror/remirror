@@ -1,4 +1,5 @@
 const config = require('../support/jest/jest.config');
+const { jestSupportDir } = require('../support/jest/helpers');
 
 const {
   clearMocks,
@@ -27,5 +28,5 @@ module.exports = {
   name: '@remirror/docz',
   displayName: 'docs',
   preset: 'jest-puppeteer',
-  setupFilesAfterEnv: ['expect-puppeteer', '<rootDir>/jest.framework.ts'],
+  setupFilesAfterEnv: ['expect-puppeteer', jestSupportDir('jest.framework.ts')],
 };

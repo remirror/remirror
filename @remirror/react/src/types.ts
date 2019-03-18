@@ -2,16 +2,18 @@ import {
   AnyExtension,
   EditorSchema,
   EditorState,
+  ExtensionManager,
   ObjectNode,
   OffsetCalculator,
   PlainObject,
   Position,
-  ProsemirrorNode,
   RawMenuPositionData,
   RemirrorActions,
+  RemirrorContentType,
   ShouldRenderMenu,
   Transaction,
 } from '@remirror/core';
+import { RenderEnvironment } from '@remirror/react-ssr';
 import { Interpolation, ObjectInterpolation } from 'emotion';
 import { EditorView } from 'prosemirror-view';
 
@@ -34,12 +36,16 @@ export interface GetRootPropsConfig<GRefKey extends string = 'ref'>
 
 export type RefKeyRootProps<GRefKey extends string = 'ref'> = {
   [P in Exclude<GRefKey, 'children' | 'key'>]: React.Ref<any>
-} & { className: string } & PlainObject;
+} & { className: string; key: string } & PlainObject;
 
 /**
  * These are the props passed to the render function provided when setting up your editor.
  */
 export interface InjectedRemirrorProps {
+  /**
+   * An instance of the extension manager
+   */
+  manager: ExtensionManager;
   /**
    * The prosemirror view
    */
@@ -56,7 +62,7 @@ export interface InjectedRemirrorProps {
   uid: string;
   getMarkAttr(type: string): Record<string, string>;
   clearContent(triggerOnChange?: boolean): void;
-  setContent(content: string | ObjectNode, triggerOnChange?: boolean): void;
+  setContent(content: RemirrorContentType, triggerOnChange?: boolean): void;
   getRootProps<GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,
   ): RefKeyRootProps<GRefKey>;
@@ -201,9 +207,15 @@ export interface RemirrorProps {
    * Last means that any elements added to the holding react component will actually be inserted before and as a result would lose
    * click access.
    *
-   * @default last
+   * @default end
    */
-  insertPosition: 'first' | 'last';
+  insertPosition: 'start' | 'end';
+
+  /**
+   * By default remirror will work out whether this is a dom environment or server environment for SSR rendering
+   * This can be overridden with this property
+   */
+  forceEnvironment?: RenderEnvironment;
 }
 
 export interface PlaceholderConfig {
@@ -211,11 +223,3 @@ export interface PlaceholderConfig {
   className: string;
   style: ObjectInterpolation<undefined>;
 }
-
-/**
- * Content can either be
- * - html string
- * - JSON object matching Prosemirror expected shape
- * - A top level ProsemirrorNode
- */
-export type RemirrorContentType = string | ObjectNode | ProsemirrorNode;

@@ -1,7 +1,5 @@
-const { join, resolve } = require('path');
+const { jestSupportDir, baseDir } = require('./helpers');
 
-const baseDir = (...paths) => resolve(__dirname, '..', '..', join(...paths));
-const jestSupportDir = (...args) => baseDir(join('support', 'jest', ...args));
 const testRegex =
   process.env.TEST_ENV === 'integration'
     ? '/__tests__/.*\\.test\\.tsx?$'
@@ -38,12 +36,13 @@ module.exports = {
     jestSupportDir('jest.framework.dom.ts'),
   ],
   snapshotSerializers: ['jest-emotion'],
-  cacheDirectory: '../../.jest/cache',
+  cacheDirectory: baseDir('.jest'),
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     '@test-utils$': baseDir('@remirror', 'core', 'src', '__tests__', 'test-utils.tsx'),
     '@remirror\\/([a-z0-9-]+)$': baseDir('@remirror/$1/src'),
     'jest-remirror$': baseDir('packages', 'jest-remirror', 'src'),
+    '@test-fixtures/(.*)$': baseDir('support/fixtures/$1'),
   },
   testRunner: 'jest-circus/runner',
 };

@@ -1,5 +1,8 @@
 {
   "extends": "@kj/tslint-rules/react",
+  "linterOptions": {
+    "exclude": ["./support/fixtures/*.ts"]
+  },
   "rules": {
     "no-implicit-dependencies": [
       true,
@@ -17,9 +20,12 @@
         "jest-extended",
         "prosemirror-test-builder",
         "jest-matcher-utils",
+        "enzyme",
         "jest-image-snapshot",
         "chalk",
-        "yargs"
+        "@test-fixtures",
+        "yargs",
+        "jest-remirror"
       ]
     ],
     "no-empty": false,

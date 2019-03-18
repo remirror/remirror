@@ -1,20 +1,19 @@
 import React, { PureComponent } from 'react';
 
-import { css, Interpolation } from '@emotion/core';
-import { AnyExtension, Attrs, EDITOR_CLASS_NAME, EditorView, Omit, omit } from '@remirror/core';
+import { AnyExtension, Attrs, EditorView, Omit, omit } from '@remirror/core';
 import { InlineCursorTarget } from '@remirror/core-extensions';
 import { EmojiNode, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
-import { GapCursor } from '@remirror/extension-gap-cursor';
-import { MentionNode, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
+import { Mention, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
 import { Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react';
 import { Data, EmojiSet } from 'emoji-mart';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
-import { styled, UITwitterTheme, uiTwitterTheme } from '../theme';
+import { UITwitterTheme, uiTwitterTheme } from '../theme';
 import { ActiveTwitterTagData, ActiveTwitterUserData, TwitterTagData, TwitterUserData } from '../types';
 import { CharacterCountIndicator } from './character-count';
 import { EmojiPicker, EmojiPickerProps, EmojiSmiley } from './emoji-picker';
+import { CharacterCountWrapper, EmojiPickerWrapper, EmojiSmileyWrapper, RemirrorWrapper } from './styled';
 import { AtSuggestions, HashSuggestions } from './suggestions';
 
 export type OnQueryChangeParams = Omit<MentionState, 'submitFactory'> & { activeIndex: number };
@@ -42,11 +41,11 @@ interface BaseMentionState {
 }
 
 interface AtMentionState extends BaseMentionState {
-  type: 'at';
+  type: 'mentionAt';
   submitFactory(user: TwitterUserData): () => void;
 }
 interface HashMentionState extends BaseMentionState {
-  type: 'hash';
+  type: 'mentionHash';
   query: string;
   submitFactory(tag: TwitterTagData): () => void;
 }
@@ -78,15 +77,14 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   private createExtensions() {
     return [
       new InlineCursorTarget(),
-      new GapCursor(),
-      new MentionNode({
-        type: 'at',
+      new Mention({
+        name: 'mentionAt',
         extraAttrs: ['href', 'role'],
         matcher: { char: '@' },
         onKeyDown: this.keyDownHandler,
         onEnter: ({ query, command }) => {
           const params = {
-            type: 'at' as 'at',
+            type: 'mentionAt' as 'mentionAt',
             action: 'enter' as 'enter',
             query: query || '',
           };
@@ -96,7 +94,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
         },
         onChange: ({ query, command }) => {
           const params = {
-            type: 'at' as 'at',
+            type: 'mentionAt' as 'mentionAt',
             action: 'change' as 'change',
             query: query || '',
           };
@@ -118,15 +116,15 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
           this.props.onMentionStateChange(undefined);
         },
       }),
-      new MentionNode({
-        type: 'hash',
+      new Mention({
+        name: 'mentionHash',
         selectable: true,
         matcher: { char: '#' },
         extraAttrs: ['href', 'role'],
         onKeyDown: this.keyDownHandler,
         onEnter: ({ query, command }) => {
           const params = {
-            type: 'hash' as 'hash',
+            type: 'mentionHash' as 'mentionHash',
             action: 'enter' as 'enter',
             query: query || '',
           };
@@ -136,7 +134,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
         },
         onChange: ({ query, command }) => {
           const params = {
-            type: 'hash' as 'hash',
+            type: 'mentionHash' as 'mentionHash',
             action: 'change' as 'change',
             query: query || '',
           };
@@ -173,8 +171,8 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     }
   }
 
-  private onChange: RemirrorEventListener = ({ getJSON }) => {
-    console.log(getJSON());
+  private onChange: RemirrorEventListener = ({}) => {
+    // console.log(getJSON());
   };
 
   get userMatches(): ActiveTwitterUserData[] {
@@ -257,7 +255,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     }
 
     const { type, query, action } = mention;
-    const matches = type === 'at' ? this.userMatches : this.tagMatches;
+    const matches = type === 'mentionAt' ? this.userMatches : this.tagMatches;
 
     // pressed up arrow
     if (up) {
@@ -300,10 +298,10 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
    */
   private handleEnterKeyPressed(mention: MentionState) {
     const { activeIndex } = this.state;
-    if (mention.type === 'at' && this.userMatches.length) {
+    if (mention.type === 'mentionAt' && this.userMatches.length) {
       mention.submitFactory(this.userMatches[activeIndex])();
       return true;
-    } else if (mention.type === 'hash' && this.tagMatches.length) {
+    } else if (mention.type === 'mentionHash' && this.tagMatches.length) {
       mention.submitFactory(this.tagMatches[activeIndex])();
       return true;
     }
@@ -361,16 +359,15 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
           {...this.remirrorProps}
           extensions={this.extensions}
           onChange={this.onChange}
-          insertPosition='first'
+          insertPosition='start'
         >
           {({ getRootProps, view, actions }) => {
             const content = view.state.doc.textContent;
             this.storeView(view);
 
-            const { css: extra, ...rest } = getRootProps();
             return (
               <div>
-                <RemirrorWrapper {...rest} extra={[extra]}>
+                <RemirrorWrapper {...getRootProps()} style={{ position: 'relative' }}>
                   <CharacterCountWrapper>
                     <CharacterCountIndicator characters={{ total: 140, used: content.length }} />
                   </CharacterCountWrapper>
@@ -397,7 +394,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
                   </EmojiSmileyWrapper>
                 </RemirrorWrapper>
                 <div>
-                  {!mention ? null : mention.type === 'at' ? (
+                  {!mention ? null : mention.type === 'mentionAt' ? (
                     <AtSuggestions data={this.userMatches} submitFactory={mention.submitFactory} />
                   ) : (
                     <HashSuggestions data={this.tagMatches} submitFactory={mention.submitFactory} />
@@ -411,93 +408,3 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     );
   }
 }
-
-/* Styled Components */
-
-const CharacterCountWrapper = styled.div`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin: 0 8px 10px 4px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-`;
-
-const EmojiSmileyWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 10px 8px 0 4px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-`;
-
-const EmojiPickerWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 40px 8px 0 4px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-`;
-
-const editorClass = `.${EDITOR_CLASS_NAME}`;
-
-const RemirrorWrapper = styled.div<{ extra: Interpolation[] }>`
-  position: relative;
-  & * {
-    box-sizing: border-box;
-  }
-
-  ${editorClass}:focus {
-    outline: none;
-  }
-
-  ${editorClass} p {
-    margin: 0;
-    letter-spacing: 0.6px;
-    color: black;
-  }
-
-  ${editorClass} {
-    box-sizing: border-box;
-    position: relative;
-    border: 1px solid ${({ theme }) => theme.colors.border};
-    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.border};
-    line-height: 20px;
-    border-radius: 8px;
-    width: 100%;
-    font-family: ${({ theme }) => theme.font.family};
-    font-size: ${({ theme }) => theme.font.size};
-    max-height: calc(90vh - 124px);
-    min-height: 142px;
-    padding: 8px;
-    padding-right: 40px;
-    font-weight: ${({ theme }) => theme.font.weight};
-  }
-
-  ${editorClass} a {
-    text-decoration: none !important;
-    color: ${props => props.theme.colors.primary};
-  }
-
-  ${editorClass} a.mention {
-    pointer-events: none;
-    cursor: default;
-  }
-
-  ${editorClass} .ProseMirror-selectednode {
-    background-color: rgb(245, 248, 250);
-  }
-
-  ${props => css(props.extra)};
-`;
-
-/* Character count -
-- emoji 2
-- url 20
-- character 1
-*/

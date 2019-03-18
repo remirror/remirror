@@ -102,3 +102,6 @@ export interface Extension<GOptions extends {} = {}, GType = never> {
 }
 
 export type AnyExtension = Extension<any, any>;
+export type ExtensionOptions<GExtension extends Extension> = GExtension extends Extension<infer P, any>
+  ? P
+  : never;

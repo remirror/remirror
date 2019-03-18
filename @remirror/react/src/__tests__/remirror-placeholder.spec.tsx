@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Doc, Paragraph, Text } from '@remirror/core';
 import { EMPTY_NODE_CLASS_NAME } from '@remirror/core-extensions';
 import { render } from '@test-utils';
 import { Remirror } from '..';
@@ -13,6 +14,21 @@ const handlers = {
   onFirstRender: jest.fn(),
 };
 const placeholderText = 'Start typing...';
+
+test('should not fail without the placeholder extension', () => {
+  expect(() =>
+    render(
+      <Remirror
+        {...handlers}
+        label={label}
+        usesBuiltInExtensions={false}
+        extensions={[new Doc(), new Paragraph(), new Text()]}
+      >
+        {() => <div />}
+      </Remirror>,
+    ),
+  ).not.toThrowError();
+});
 
 test('should display a placeholder when the content is empty', () => {
   const { baseElement, getByLabelText } = render(

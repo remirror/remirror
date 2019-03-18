@@ -13,6 +13,13 @@ export const EDITOR_CLASS_NAME = 'remirror-editor';
 export const LEAF_NODE_REPLACING_CHARACTER = '\ufffc';
 
 /**
+ * The null character.
+ *
+ * @see https://stackoverflow.com/a/6380172
+ */
+export const NULL_CHARACTER = '\0';
+
+/**
  * A character useful for separating inline nodes. Typically used in decorations as follows.
  *
  * ```ts
@@ -24,28 +31,18 @@ export const LEAF_NODE_REPLACING_CHARACTER = '\ufffc';
 export const ZERO_WIDTH_SPACE_CHAR = '\u200b';
 
 /**
- * By default we don't show the gap-cursor for these nodes.
- *
- * This can be overridden via a gap cursor static method.
- * ```ts
- * GapCursorSelection.setIgnoredNodes = ['mention', 'etc...']
- * ```
- */
-export const GAP_CURSOR_IGNORED_NODE = [
-  'paragraph',
-  'bulletList',
-  'orderedList',
-  'listItem',
-  'taskItem',
-  'decisionItem',
-  'heading',
-  'blockquote',
-];
-
-/**
  * Used to determine the side where a gap-cursor is drawn
  */
 export enum Side {
   LEFT = 'left',
   RIGHT = 'right',
 }
+
+export const EMPTY_OBJECT_NODE = {
+  type: 'doc',
+  content: [
+    {
+      type: 'paragraph',
+    },
+  ],
+};

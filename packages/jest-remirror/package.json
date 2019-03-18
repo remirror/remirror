@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "jest-remirror",
   "description": "A text editor for react built with prosemirror",
   "license": "MIT",
@@ -20,13 +19,8 @@
     "build": "run-s build:declaration build:babel",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
-    "test": "jest",
-    "test:live": "cross-env TEST_ENV=live jest",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit",
-    "watch:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -w",
-    "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "types": "lib/index.d.ts",
   "dependencies": {
@@ -41,6 +35,7 @@
     "flatten": "^1.0.2",
     "prosemirror-model": "^1.7.0",
     "prosemirror-view": "^1.8.3",
+    "prosemirror-state": "^1.2.2",
     "react-testing-library": "6.0.0"
   },
   "peerDependencies": {

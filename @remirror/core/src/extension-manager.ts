@@ -11,6 +11,7 @@ import {
   isMarkExtension,
   isNodeExtension,
 } from './extension-manager.helpers';
+import { bool } from './helpers';
 import { getPluginState } from './helpers/document';
 import { NodeViewPortalContainer } from './portal-container';
 import {
@@ -263,7 +264,7 @@ const booleanFlexibleFunctionMap = <GKey extends 'enabled' | 'active'>(key: GKey
         .map(callback => {
           methodFactory(params, callback);
         })
-        .every(Boolean);
+        .every(bool);
     },
     getItemParams: (extension, params) =>
       extension[key]({

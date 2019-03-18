@@ -43,14 +43,14 @@ export const ExampleTwitterUI = () => {
   };
 
   const userMatches: ActiveTwitterUserData[] =
-    mention && mention.type === 'at' && mention.query.length
+    mention && mention.type === 'mentionAt' && mention.query.length
       ? take(matchSorter(userData, mention.query, { keys: ['username', 'displayName'] }), 6).map(
           (user, index) => ({ ...user, active: index === mention.activeIndex }),
         )
       : [];
 
   const tagMatches: ActiveTwitterTagData[] =
-    mention && mention.type === 'hash' && mention.query.length
+    mention && mention.type === 'mentionHash' && mention.query.length
       ? take(matchSorter(fakeTags, mention.query), 6).map((tag, index) => ({
           tag,
           active: index === mention.activeIndex,

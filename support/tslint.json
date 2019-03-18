@@ -21,8 +21,16 @@
         "jest-image-snapshot",
         "chalk",
         "yargs",
-        "react"
+        "enzyme",
+        "enzyme-adapter-react-16",
+        "jest-remirror",
+        "react",
+        "nodom",
+        "@remirror/core",
+        "@remirror/core-extensions",
+        "@remirror/react"
       ]
-    ]
+    ],
+    "no-namespace": false
   }
 }

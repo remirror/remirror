@@ -1,33 +1,18 @@
-import {
-  Cast,
-  ObjectNode,
-  OffsetCalculator,
-  PlainObject,
-  Position,
-  Predicate,
-  ShouldRenderMenu,
-} from '@remirror/core';
+import { Cast, OffsetCalculator, PlainObject, Position, Predicate, ShouldRenderMenu } from '@remirror/core';
 import is from '@sindresorhus/is';
-import { ReactNode } from 'react';
+import { Children, isValidElement, ReactNode } from 'react';
 import { AttributePropFunction, RenderPropFunction } from './types';
 
 export const isAttributeFunction = Cast<Predicate<AttributePropFunction>>(is.function_);
 
 export const isRenderProp = Cast<Predicate<RenderPropFunction>>(is.function_);
 
-export const isObjectNode = (arg: unknown): arg is ObjectNode => {
-  if (is.plainObject(arg) && arg.type === 'doc') {
-    return true;
-  }
-  return false;
-};
-
 export const isDOMElement = (element: ReactNode) => {
-  return element && is.string(Cast<JSX.Element>(element).type);
+  return isValidElement(element) && is.string(element.type);
 };
 
-export const getElementProps = (element: JSX.Element): PlainObject => {
-  return element.props;
+export const getElementProps = (element: JSX.Element): PlainObject & { children: JSX.Element } => {
+  return element ? element.props : {};
 };
 
 export const baseOffsetCalculator: Required<OffsetCalculator> = {
@@ -56,3 +41,64 @@ export const uniqueClass = (uid: string, className: string) => `${className}-${u
 export const asDefaultProps = <GProps extends {}>() => <GDefaultProps extends Partial<GProps>>(
   defaultProps: GDefaultProps,
 ): GDefaultProps => defaultProps;
+
+/**
+ * Finds a deeply nested child by the key provided.
+ *
+ * @param children
+ * @param key
+ */
+export const findChildWithKey = (children: ReactNode, key: string): ReactNode => {
+  for (const child of Children.toArray(children)) {
+    if (!isValidElement(child)) {
+      continue;
+    }
+
+    if (child.key === key) {
+      return child;
+    }
+    const subChildren = child.props && Cast(child.props).children;
+
+    if (subChildren) {
+      return findChildWithKey(subChildren, key);
+    }
+  }
+  return null;
+};
+
+/**
+ * Searches the react tree for a child node with the requested key and updates
+ * it using the updater function once found
+ *
+ * @param children
+ * @param key
+ * @param updateFunction
+ */
+export const updateChildWithKey = (
+  children: ReactNode,
+  key: string,
+  updateFunction: (child: JSX.Element) => JSX.Element,
+): ReactNode[] => {
+  let keyFound = false;
+  return Children.map(children, child => {
+    if (keyFound) {
+      return child;
+    }
+
+    if (!isValidElement(child)) {
+      return child;
+    }
+
+    if (child.key === key) {
+      keyFound = true;
+      return updateFunction(child);
+    }
+
+    const subChildren = child.props && Cast(child.props).children;
+    if (subChildren) {
+      return updateChildWithKey(subChildren, key, updateFunction);
+    }
+
+    return child;
+  });
+};

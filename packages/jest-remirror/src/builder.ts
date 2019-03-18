@@ -1,6 +1,6 @@
-import { findMatches } from '@remirror/core';
+import { Attrs, EditorSchema, findMatches } from '@remirror/core';
 import flatten from 'flatten';
-import { Fragment, Mark, MarkType, Node, NodeType, Schema, Slice } from 'prosemirror-model';
+import { Fragment, Mark, Node, Schema, Slice } from 'prosemirror-model';
 import { testSchema } from './test-schema';
 
 /**
@@ -34,8 +34,7 @@ export type RefsContentItem = RefsNode | RefsTracker;
  *     builder(aRefsTracker);
  *     builder([aNode, aRefsNode, aRefsTracker]);
  */
-
-export type BuilderContentFn = (schema: Schema) => Node | RefsContentItem | Array<Node | RefsContentItem>;
+export type BuilderContentFn = RefsContentItem | Array<Node | RefsContentItem>;
 export type BuilderContent = string | BuilderContentFn;
 
 /**
@@ -83,6 +82,9 @@ const isEven = (n: number) => n % 2 === 0;
  * Special markers called "refs" can be put in the text. Refs provide a way to
  * declaratively describe a position within some text, and then access the
  * position in the resulting node.
+ *
+ * @param value
+ * @param schema
  */
 export function text(value: string, schema: Schema): RefsContentItem {
   let stripped = '';
@@ -120,6 +122,9 @@ export function text(value: string, schema: Schema): RefsContentItem {
 
 /**
  * Offset ref position values by some amount.
+ *
+ * @param refs
+ * @param offset
  */
 export function offsetRefs(refs: Refs, offset: number): Refs {
   const result = {} as Refs;
@@ -161,64 +166,56 @@ export function sequence(...content: RefsContentItem[]) {
  * Coerce builder content into ref nodes.
  */
 export function coerce(content: BuilderContent[], schema: Schema) {
-  const refsContent = content.map(item =>
-    typeof item === 'string' ? text(item, schema) : item(schema),
-  ) as Array<RefsContentItem | RefsContentItem[]>;
+  const refsContent = content.map(item => (typeof item === 'string' ? text(item, schema) : item)) as Array<
+    RefsContentItem | RefsContentItem[]
+  >;
   return sequence(...flatten<RefsContentItem>(refsContent));
 }
 
 /**
  * Create a factory for nodes.
  */
-export function nodeFactory(type: NodeType, attrs = {}, marks?: Mark[]) {
-  return (...content: BuilderContent[]): ((schema: Schema) => RefsNode) => {
-    return schema => {
-      const { nodes, refs } = coerce(content, schema);
-      const nodeBuilder = schema.nodes[type.name];
-      if (!nodeBuilder) {
-        throw new Error(
-          `Node: "${
-            type.name
-          }" doesn't exist in schema. It's usually caused by lacking of a plugin that contributes this node. Schema contains following nodes: ${Object.keys(
-            schema.nodes,
-          ).join(', ')}`,
-        );
-      }
-      const node = nodeBuilder.createChecked(attrs, nodes, marks) as RefsNode;
-      node.refs = refs;
-      return node;
-    };
+export function nodeFactory(name: string, schema: EditorSchema, attrs: Attrs = {}, marks?: Mark[]) {
+  const nodeBuilder = schema.nodes[name];
+  if (!nodeBuilder) {
+    throw new Error(
+      `Node: "${name}" doesn't exist in schema. It's usually caused by lacking of the extension that contributes this node. Schema contains following nodes: ${Object.keys(
+        schema.nodes,
+      ).join(', ')}`,
+    );
+  }
+  return (...content: BuilderContent[]): RefsNode => {
+    const { nodes, refs } = coerce(content, schema);
+    const node = nodeBuilder.createChecked(attrs, nodes, marks) as RefsNode;
+    node.refs = refs;
+    return node;
   };
 }
 
 /**
  * Create a factory for marks.
  */
-export function markFactory(type: MarkType, attrs = {}, allowDupes = false) {
-  return (...content: BuilderContent[]): ((schema: Schema) => RefsNode[]) => {
-    return schema => {
-      const markBuilder = schema.marks[type.name];
-      if (!markBuilder) {
-        throw new Error(
-          `Mark: "${
-            type.name
-          }" doesn't exist in schema. It's usually caused by lacking of a plugin that contributes this mark. Schema contains following marks: ${Object.keys(
-            schema.marks,
-          ).join(', ')}`,
-        );
+export function markFactory(name: string, schema: EditorSchema, attrs: Attrs = {}, allowDupes = false) {
+  const markBuilder = schema.marks[name];
+  if (!markBuilder) {
+    throw new Error(
+      `Mark: "${name}" doesn't exist in schema. It's usually caused by lacking of the extension that contributes this mark. Schema contains following marks: ${Object.keys(
+        schema.marks,
+      ).join(', ')}`,
+    );
+  }
+  return (...content: BuilderContent[]): RefsNode[] => {
+    const mark = markBuilder.create(attrs);
+    const { nodes } = coerce(content, schema);
+    return nodes.map(node => {
+      if (!allowDupes && mark.type.isInSet(node.marks)) {
+        return node;
+      } else {
+        const refNode = node.mark(mark.addToSet(node.marks)) as RefsNode;
+        refNode.refs = node.refs;
+        return refNode;
       }
-      const mark = markBuilder.create(attrs);
-      const { nodes } = coerce(content, schema);
-      return nodes.map(node => {
-        if (!allowDupes && mark.type.isInSet(node.marks)) {
-          return node;
-        } else {
-          const refNode = node.mark(mark.addToSet(node.marks)) as RefsNode;
-          refNode.refs = node.refs;
-          return refNode;
-        }
-      });
-    };
+    });
   };
 }
 
@@ -230,7 +227,7 @@ export const slice = (...content: BuilderContent[]) =>
  * Builds a 'clean' version of the nodes, without Refs or RefTrackers
  */
 export const clean = (content: BuilderContentFn) => (schema: Schema) => {
-  const node = content(schema);
+  const node = content;
   if (Array.isArray(node)) {
     return node.reduce(
       (acc, next) => {

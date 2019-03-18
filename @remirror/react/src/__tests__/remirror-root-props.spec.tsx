@@ -1,6 +1,6 @@
 import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
-import { render } from '@test-utils';
+import { axe, render, RenderResult } from '@test-utils';
 import { Remirror } from '..';
 
 const mock = jest.fn();
@@ -35,4 +35,43 @@ test('supports a custom ref label and passed props through', () => {
   );
   expect(mock.mock.calls[0][0].customRef).toBeFunction();
   expect(mock.mock.calls[0][0].testProp).toBe(testProp);
+});
+
+describe('nestedRootProps', () => {
+  let result: RenderResult;
+
+  beforeEach(() => {
+    result = render(
+      <Remirror>
+        {({ getRootProps }) => {
+          return (
+            <div>
+              <div {...getRootProps()} id='nested-div'>
+                <div id='wrapped-div'>Wrapped text</div>
+              </div>
+            </div>
+          );
+        }}
+      </Remirror>,
+    );
+  });
+
+  it('should not duplicate nodes', () => {
+    const { baseElement } = result;
+    expect(baseElement.querySelectorAll('#nested-div')).toHaveLength(1);
+  });
+
+  it('renders the nested elements', () => {
+    const { baseElement, getByRole } = result;
+    const innerLabel = baseElement.querySelector('#wrapped-div') as HTMLElement;
+    const wrapper = baseElement.querySelector('#nested-div');
+    expect(innerLabel).toBeVisible();
+    expect(wrapper!.childElementCount).toBe(2);
+    expect(wrapper).toContainElement(innerLabel);
+    expect(wrapper).toContainElement(getByRole('textbox'));
+  });
+
+  it('retains accessibility', async () => {
+    await expect(axe(result.container.innerHTML)).resolves.toHaveNoViolations();
+  });
 });

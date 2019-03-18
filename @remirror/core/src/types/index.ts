@@ -2,7 +2,7 @@ import { MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType } from 'prosemir
 import { Plugin as PMPlugin } from 'prosemirror-state';
 import { NodeViewPortalContainer } from '../portal-container';
 import { EditorView, InputRule, Mark, Selection, Transaction } from './aliases';
-import { EditorSchema, EditorState, Literal, Omit, ProsemirrorNode } from './base';
+import { EditorSchema, EditorState, Omit, ProsemirrorNode } from './base';
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -34,10 +34,11 @@ The current Prosemirror types were causing me some problems
 Also I want don't want to be able to use domNodes in the toDOM spec since this will create problems once SSR is enabled.
 */
 
-type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string } | DOMOutputSpecPosX[];
-type DOMOutputSpecPosX = string | 0;
+type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string };
+type DOMOutputSpecPosX = string | 0 | [string, 0];
 export type DOMOutputSpec =
-  | DOMOutputSpecPosX
+  | string
+  | [string, 0]
   | [
       string,
       DOMOutputSpecPos1?,
@@ -57,7 +58,7 @@ export type NodeExtensionSpec = Omit<NodeSpec, 'toDOM'> & {
 };
 
 export type MarkExtensionSpec = Omit<MarkSpec, 'toDOM'> & {
-  toDOM?: ((mark: Mark) => DOMOutputSpec) | null;
+  toDOM?: ((mark: Mark, inline: boolean) => DOMOutputSpec) | null;
 };
 
 export interface SchemaParams {
@@ -153,19 +154,6 @@ export enum ExtensionType {
   NODE = 'node',
   MARK = 'mark',
   EXTENSION = 'extension',
-}
-
-export interface ObjectMark {
-  type: string;
-  attrs?: Record<string, string | null>;
-}
-
-export interface ObjectNode {
-  type: string;
-  marks?: Array<ObjectMark | string>;
-  text?: string;
-  content?: ObjectNode[];
-  attrs?: Record<string, Literal | object>;
 }
 
 export type GetAttrs = Attrs | ((p: string[] | string) => Attrs | null | undefined);

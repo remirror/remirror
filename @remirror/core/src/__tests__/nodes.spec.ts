@@ -1,4 +1,5 @@
 import { Doc, Paragraph, Text } from '..';
+import { Cast } from '../helpers';
 
 // While these tests seem simple there is a reason for them.
 //
@@ -17,18 +18,18 @@ describe('nodes', () => {
   test('doc', () => {
     const doc = new Doc();
     expect(doc.name).toBe('doc');
-    expect(doc.pluginKey).toContainEntry(['key', 'doc$']);
+    expect(Cast(doc.pluginKey).key).toInclude('doc$');
   });
 
   test('paragraph', () => {
     const paragraph = new Paragraph();
     expect(paragraph.name).toBe('paragraph');
-    expect(paragraph.pluginKey).toContainEntry(['key', 'paragraph$']);
+    expect(Cast(paragraph.pluginKey).key).toInclude('paragraph$');
   });
 
   test('text', () => {
     const text = new Text();
     expect(text.name).toBe('text');
-    expect(text.pluginKey).toContainEntry(['key', 'text$']);
+    expect(Cast(text.pluginKey).key).toInclude('text$');
   });
 });

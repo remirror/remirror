@@ -6,7 +6,8 @@ import { EditorState, NodeSelection, Selection, TextSelection } from 'prosemirro
 import pm, { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 
 import { render } from 'react-testing-library';
-import { Cast } from '../helpers/base';
+import { isElementDOMNode, isTextDOMNode } from '../helpers';
+import { bool, Cast } from '../helpers/base';
 import { CommandFunction } from '../types';
 
 const renderString = (
@@ -59,11 +60,11 @@ export function apply(
 export { pm };
 
 export const findTextElement = (node: Node, text: string): Node | null => {
-  if (node.nodeType === 3) {
+  if (isTextDOMNode(node)) {
     if (node.nodeValue === text) {
       return node;
     }
-  } else if (node.nodeType === 1) {
+  } else if (isElementDOMNode(node)) {
     for (let ch = node.firstChild; ch; ch = ch.nextSibling as ChildNode) {
       const found = findTextElement(ch, text);
       if (found) {
@@ -137,7 +138,7 @@ const matcher = {
       };
     }
     const expected = to ? to : from;
-    const shouldChange = Boolean(to);
+    const shouldChange = bool(to);
 
     const [pass, actual] = apply(from, command, to);
     if (pass) {

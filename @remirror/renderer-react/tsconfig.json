@@ -4,7 +4,7 @@
     "lib": ["esnext", "dom"],
     "jsx": "react",
     "outDir": "lib",
-    "types": ["jest", "jest-extended", "jest-axe", "jest-dom/extend-expect"]
+    "types": ["jest", "jest-extended", "jest-enzyme", "jest-environment-enzyme"]
   },
   "include": ["src"]
 }

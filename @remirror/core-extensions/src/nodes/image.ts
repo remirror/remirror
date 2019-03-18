@@ -1,5 +1,6 @@
 import {
   Attrs,
+  bool,
   Cast,
   CommandFunction,
   EditorSchema,
@@ -11,7 +12,7 @@ import { ResolvedPos } from 'prosemirror-model';
 import { Plugin } from 'prosemirror-state';
 
 const hasCursor = <T extends {}>(arg: T): arg is T & { $cursor: ResolvedPos } => {
-  return Boolean(Cast(arg).$cursor);
+  return bool(Cast(arg).$cursor);
 };
 
 export class Image extends NodeExtension {

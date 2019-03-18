@@ -1,4 +1,4 @@
-import { CommandFunction, Extension } from '@remirror/core';
+import { CommandFunction, environment, Extension } from '@remirror/core';
 import { history, redo, undo } from 'prosemirror-history';
 
 export interface HistoryOptions {
@@ -32,14 +32,13 @@ export class History extends Extension<HistoryOptions> {
   }
 
   public keys() {
-    const isMac = typeof navigator !== 'undefined' ? /Mac/.test(navigator.platform) : false;
     const keymap: Record<'Mod-z' | 'Shift-Mod-z' | 'Mod-y', CommandFunction> = {
       'Mod-y': () => false,
       'Mod-z': undo,
       'Shift-Mod-z': redo,
     };
 
-    if (!isMac) {
+    if (!environment.isMac) {
       keymap['Mod-y'] = redo;
     }
 

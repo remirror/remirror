@@ -1,8 +1,10 @@
+/// <reference types="node" />
+
 import memoizeOne from 'memoize-one';
 import nano from 'nanoid';
-// import objectOmit from 'object.omit';
 import objectPick from 'object.pick';
 import { Literal } from '../types/base';
+
 /**
  * Type cast an argument. If no type is provided it will default to any.
  *
@@ -25,6 +27,7 @@ export const tuple = <GType extends Literal[]>(...args: GType) => args;
 
 /**
  * Finds all the regex matches for a string
+ *
  * @param text
  * @param regexp
  */
@@ -181,7 +184,7 @@ export function uniqueId({ prefix = '', size }: UniqueIdParams = { prefix: '' })
  * @param num
  */
 export function take<GArray extends any[]>(arr: GArray, num: number) {
-  num = Math.max(Math.min(0, num), arr.length);
+  num = Math.max(Math.min(0, num), num);
   return arr.slice(0, num);
 }
 
@@ -194,3 +197,42 @@ export const pick = objectPick;
  * Alias for excluding properties from an object
  */
 export const omit = objectPick;
+
+export const environment = {
+  /**
+   * Verifies that the environment has both a window and window.document
+   */
+  get isBrowser() {
+    return (
+      typeof window !== 'undefined' &&
+      typeof window.document !== 'undefined' &&
+      window.navigator &&
+      window.navigator.userAgent
+    );
+  },
+
+  /**
+   * Verifies that the environment is JSDOM
+   */
+  get isJSDOM() {
+    return environment.isBrowser && window.navigator.userAgent.includes('jsdom');
+  },
+
+  /**
+   * Verifies that the environment has a nodejs process and is therefore a node environment
+   */
+  get isNode() {
+    return typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
+  },
+
+  get isMac() {
+    return environment.isBrowser && /Mac/.test(navigator.platform);
+  },
+};
+
+/**
+ * Makes sure a value is either true or false
+ *
+ * @param val
+ */
+export const bool = (val: unknown) => Boolean(val);

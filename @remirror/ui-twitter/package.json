@@ -20,13 +20,8 @@
     "build": "run-s build:declaration build:babel",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "dev": "run-p watch:*",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
-    "test": "jest",
-    "test:live": "cross-env TEST_ENV=live jest",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit",
-    "watch:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -w",
-    "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "types": "lib/index.d.ts",
   "dependencies": {
@@ -36,7 +31,6 @@
     "@remirror/core-extensions": "0.0.1-alpha.6",
     "@remirror/extension-emoji": "0.0.1-alpha.6",
     "@remirror/extension-enhanced-link": "0.0.1-alpha.6",
-    "@remirror/extension-gap-cursor": "0.0.1-alpha.6",
     "@remirror/extension-mention": "0.0.1-alpha.6",
     "@remirror/react": "0.0.1-alpha.6",
     "@types/emoji-mart": "^2.8.2",

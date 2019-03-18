@@ -1,4 +1,4 @@
-import { Node as PMNode, Schema } from 'prosemirror-model';
+import { MarkType as PMMarkType, Node as PMNode, NodeType as PMNodeType, Schema } from 'prosemirror-model';
 import { EditorState as PMEditorState, Plugin as PMPlugin } from 'prosemirror-state';
 
 /* Alias types for better readability throughout the codebase. */
@@ -9,6 +9,8 @@ export type EditorSchema<GNodes extends string = string, GMarks extends string =
   GNodes,
   GMarks
 >;
+export type MarkType = PMMarkType<EditorSchema>;
+export type NodeType = PMNodeType<EditorSchema>;
 export type EditorState<GSchema extends EditorSchema = EditorSchema> = PMEditorState<GSchema>;
 
 /**
@@ -32,7 +34,12 @@ export type PlainObject = Record<string, any>;
  * Taken from `simplytyped`
  * Useful when designing many api's that don't care what function they take in, they just need to know what it returns.
  */
-export type AnyFunction<R = any> = (...args: any[]) => R;
+export type AnyFunction<GType = any> = (...args: any[]) => GType;
+
+/**
+ * Matches any constructor type
+ */
+export type AnyConstructor<GType = any> = new (...args: any[]) => GType;
 
 /**
  * Remove keys from an interface
@@ -67,3 +74,24 @@ export type MakeReadonly<GType extends {}, GKeys extends keyof GType> = Omit<GTy
  * Type literals
  */
 export type Literal = string | number | boolean | undefined | null | void | {};
+
+export interface ObjectMark {
+  type: string;
+  attrs?: Record<string, string | null>;
+}
+
+export interface ObjectNode {
+  type: string;
+  marks?: Array<ObjectMark | string>;
+  text?: string;
+  content?: ObjectNode[];
+  attrs?: Record<string, Literal | object>;
+}
+
+/**
+ * Content can either be
+ * - html string
+ * - JSON object matching Prosemirror expected shape
+ * - A top level ProsemirrorNode
+ */
+export type RemirrorContentType = string | ObjectNode | ProsemirrorNode;

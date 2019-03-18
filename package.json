@@ -24,7 +24,6 @@
     "clean": "yarn if-clean git clean -fdx",
     "clean:force": "git clean -fdx",
     "clean:modules": "yarn if-clean git clean -fdx @remirror support docs",
-    "dev": "lerna run dev --parallel",
     "dev:docs": "docz dev",
     "fix": "run-s fix:lint:* fix:*",
     "fix:lint:babel": "yarn lint:babel --fix",
@@ -47,7 +46,8 @@
     "size": "size-limit",
     "size:ci": "bundlesize",
     "test": "jest",
-    "test:integration": "cross-env TEST_ENV=integration start-server-and-test launch:docs http-get://localhost:3000 test",
+    "test:no-coverage": "jest --coverage=false",
+    "test:integration": "cross-env TEST_ENV=integration start-server-and-test launch:docs http-get://localhost:3000 test:no-coverage",
     "test:integration:watch": "cross-env TEST_ENV=integration yarn test:watch",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
     "typecheck": "lerna run typecheck"

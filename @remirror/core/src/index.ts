@@ -5,8 +5,6 @@ export * from './mark-extension';
 export * from './types';
 export * from './commands';
 export * from './nodes';
-export * from './utils';
 export * from './portal-container';
 export * from './constants';
-export * from './selection';
 export * from './helpers';

@@ -7,7 +7,7 @@ export abstract class MarkExtension<GOptions extends {} = {}> extends Extension<
   GOptions,
   MarkType<EditorSchema>
 > {
-  get type() {
+  get type(): ExtensionType.MARK {
     return ExtensionType.MARK;
   }
 
