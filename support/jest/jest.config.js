@@ -1,11 +1,10 @@
-const { jestSupportDir, baseDir } = require('./helpers');
+const { jestSupportDir, baseDir, environment } = require('./helpers');
 
-const testRegex =
-  process.env.TEST_ENV === 'integration'
-    ? '/__tests__/.*\\.test\\.tsx?$'
-    : process.env.TEST_ENV === 'e2e'
-    ? '/__tests__/.*\\.e2e\\.tsx?$'
-    : '/__tests__/.*\\.spec\\.tsx?$';
+const testRegex = environment.isIntegration
+  ? '/__tests__/.*\\.test\\.tsx?$'
+  : environment.isE2E
+  ? '/__tests__/.*\\.e2e\\.tsx?$'
+  : '/__tests__/.*\\.spec\\.tsx?$';
 
 module.exports = {
   clearMocks: true,
@@ -18,16 +17,6 @@ module.exports = {
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': jestSupportDir('jest.transformer.js'),
   },
-  coveragePathIgnorePatterns: [
-    '/node_modules/',
-    '\\.d.ts',
-    '/__mocks__/',
-    '/__tests__/',
-    '/__fixtures__/',
-    'jest\\.*\\.ts',
-    'live-test-helpers\\.ts',
-    'unit-test-helpers\\.ts',
-  ],
   moduleDirectories: ['node_modules'],
   testPathIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/node_modules/'],
   testRegex,
@@ -44,5 +33,4 @@ module.exports = {
     'jest-prosemirror$': baseDir('packages', 'jest-prosemirror', 'src'),
     '@test-fixtures/(.*)$': baseDir('support/fixtures/$1'),
   },
-  testRunner: 'jest-circus/runner',
 };
