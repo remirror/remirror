@@ -35,6 +35,14 @@
     "max-classes-per-file": false,
     "no-invalid-this": false,
     "no-parameter-reassignment": false,
-    "no-this-assignment": [true, { "allowed-names": ["^self$"], "allow-destructuring": true }]
+    "no-this-assignment": [true, { "allowed-names": ["^self$"], "allow-destructuring": true }],
+    "no-submodule-imports": [
+      true,
+      "react-testing-library",
+      "emoji-regex/es2015/text",
+      "react-dom/server",
+      "emoji-mart",
+      "jest-dom"
+    ]
   }
 }

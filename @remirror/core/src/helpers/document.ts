@@ -447,24 +447,20 @@ export const isObjectNode = (arg: unknown): arg is ObjectNode =>
   (arg as PlainObject).type === 'doc' &&
   Array.isArray((arg as PlainObject).content);
 
-export interface CreateDocumentNodeParams {
+export interface CreateDocumentNodeParams extends SchemaParams, Partial<CustomDocParams> {
   /** The content to render */
   content: RemirrorContentType;
-
-  /** A prosemirror schema */
-  schema: EditorSchema;
-
-  /** A custom document object (useful for non-dom environments) */
-  doc?: Document;
 }
 
 /**
  * Creates a document node from the passed in content and schema.
  *
+ * @param params
  * @param params.content
- *         params.schema
+ * @param params.schema
+ * @param params.doc
  */
-export const createDocumentNode = ({ content, schema, doc }: CreateDocumentNodeParams) => {
+export const createDocumentNode = ({ content, schema, doc = document }: CreateDocumentNodeParams) => {
   if (isProsemirrorNode(content)) {
     return content;
   }
@@ -476,22 +472,30 @@ export const createDocumentNode = ({ content, schema, doc }: CreateDocumentNodeP
       return schema.nodeFromJSON(EMPTY_OBJECT_NODE);
     }
   }
+
   if (typeof content === 'string') {
-    const element = (doc || document).createElement('div');
-    element.innerHTML = content.trim();
-    return DOMParser.fromSchema(schema).parse(element);
+    return fromHTML({ doc, content, schema });
   }
+
   return null;
 };
 
-interface ToHTMLParams {
-  /** The prosemirror node */
-  node: ProsemirrorNode;
+interface SchemaParams {
   /** The prosemirror schema */
   schema: EditorSchema;
-  /** An optional document to use (allows for ssr rendering) */
-  doc?: Document;
 }
+
+interface CustomDocParams {
+  /** The custom document to use (allows for ssr rendering) */
+  doc: Document;
+}
+
+interface ProsemirrorNodeParams {
+  /** The prosemirror node */
+  node: ProsemirrorNode;
+}
+
+interface ToHTMLParams extends SchemaParams, ProsemirrorNodeParams, Partial<CustomDocParams> {}
 
 /**
  * Convert a prosemirror node into it's HTML contents
@@ -519,4 +523,23 @@ export const toHTML = ({ node, schema, doc }: ToHTMLParams) => {
 export const toDOM = ({ node, schema, doc }: ToHTMLParams): DocumentFragment => {
   const fragment = isDocNode(node, schema) ? node.content : Fragment.from(node);
   return DOMSerializer.fromSchema(schema).serializeFragment(fragment, { document: doc });
+};
+
+interface FromHTMLParams extends Partial<CustomDocParams>, SchemaParams {
+  /** The content  passed in an a string */
+  content: string;
+}
+
+/**
+ * Convert a HTML string into Prosemirror node
+ *
+ * @param params
+ * @param params.content
+ * @param params.schema
+ * @param params.doc
+ */
+export const fromHTML = ({ content, schema, doc = document }: FromHTMLParams) => {
+  const element = doc.createElement('div');
+  element.innerHTML = content.trim();
+  return DOMParser.fromSchema(schema).parse(element);
 };

@@ -1,7 +1,15 @@
 /**
- * Taken from https://github.com/GoogleChrome/puppeteer/blob/07febb637c78cd59e22a15166f816d838a36e614/lib/USKeyboardLayout.js
+ * Predicate for checking if the passed char is a supported character for the US Keyboard
+ *
+ * @param char
  */
-export const usKeyboardLayout = {
+export const isUSKeyboardCharacter = (char: unknown): char is SupportCharacters =>
+  typeof char === 'string' && Object.keys(rawUSKeyboardLayout).includes(char);
+
+/**
+ * @see https://github.com/GoogleChrome/puppeteer/blob/07febb637c78cd59e22a15166f816d838a36e614/lib/USKeyboardLayout.js
+ */
+const rawUSKeyboardLayout = {
   '0': { keyCode: 48, key: '0', code: 'Digit0' },
   '1': { keyCode: 49, key: '1', code: 'Digit1' },
   '2': { keyCode: 50, key: '2', code: 'Digit2' },
@@ -53,6 +61,7 @@ export const usKeyboardLayout = {
   ArrowDown: { keyCode: 40, code: 'ArrowDown', key: 'ArrowDown' },
   Select: { keyCode: 41, code: 'Select', key: 'Select' },
   Open: { keyCode: 43, code: 'Open', key: 'Execute' },
+
   PrintScreen: { keyCode: 44, code: 'PrintScreen', key: 'PrintScreen' },
   Insert: { keyCode: 45, code: 'Insert', key: 'Insert' },
   Numpad0: { keyCode: 45, shiftKeyCode: 96, key: 'Insert', code: 'Numpad0', shiftKey: '0', location: 3 },
@@ -204,6 +213,7 @@ export const usKeyboardLayout = {
   '`': { keyCode: 192, key: '`', code: 'Backquote' },
   '[': { keyCode: 219, key: '[', code: 'BracketLeft' },
   '\\': { keyCode: 220, key: '\\', code: 'Backslash' },
+
   ']': { keyCode: 221, key: ']', code: 'BracketRight' },
   "'": { keyCode: 222, key: "'", code: 'Quote' },
   Attn: { keyCode: 246, key: 'Attn' },
@@ -258,3 +268,83 @@ export const usKeyboardLayout = {
   '}': { keyCode: 221, key: '}', code: 'BracketRight' },
   '"': { keyCode: 222, key: '"', code: 'Quote' },
 };
+
+export const noKeyPress = [
+  'Power',
+  'Eject',
+  'Abort',
+  'Help',
+  'Backspace',
+  'Tab',
+  'Numpad5',
+  'NumpadEnter',
+  'Enter',
+  'ShiftLeft',
+  'ShiftRight',
+  'ControlLeft',
+  'ControlRight',
+  'AltLeft',
+  'AltRight',
+  'Pause',
+  'CapsLock',
+  'Escape',
+  'Convert',
+  'NonConvert',
+  'Space',
+  'PageUp',
+  'PageDown',
+  'End',
+  'Home',
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowDown',
+  'Select',
+  'Open',
+  'PrintScreen',
+  'Delete',
+  'MetaLeft',
+  'MetaRight',
+  'ContextMenu',
+  'NumLock',
+  'ScrollLock',
+  'AudioVolumeMute',
+  'AudioVolumeDown',
+  'AudioVolumeUp',
+  'MediaTrackNext',
+  'MediaTrackPrevious',
+  'MediaStop',
+  'MediaPlayPause',
+  'AltGraph',
+  'Props',
+  'Cancel',
+  'Clear',
+  'Shift',
+  'Control',
+  'Alt',
+  'Accept',
+  'ModeChange',
+  'Print',
+  'Execute',
+  'Meta',
+  'Attn',
+  'CrSel',
+  'ExSel',
+  'EraseEof',
+  'Play',
+  'ZoomOut',
+];
+export const noKeyUp = ['CapsLock', 'NumLock', 'ScrollLock'];
+
+export const usKeyboardLayout = rawUSKeyboardLayout as Record<SupportCharacters, KeyDefinition>;
+
+export interface KeyDefinition {
+  keyCode?: number;
+  code?: string;
+  shiftKey?: string;
+  shiftKeyCode?: number;
+  key: string;
+  location?: number;
+  text?: string;
+}
+export type USKeyboardLayout = typeof rawUSKeyboardLayout;
+export type SupportCharacters = keyof USKeyboardLayout;

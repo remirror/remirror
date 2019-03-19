@@ -2,6 +2,7 @@
 
 import memoizeOne from 'memoize-one';
 import nano from 'nanoid';
+import objectOmit from 'object.omit';
 import objectPick from 'object.pick';
 import { Literal } from '../types/base';
 
@@ -196,7 +197,7 @@ export const pick = objectPick;
 /**
  * Alias for excluding properties from an object
  */
-export const omit = objectPick;
+export const omit = objectOmit;
 
 export const environment = {
   /**

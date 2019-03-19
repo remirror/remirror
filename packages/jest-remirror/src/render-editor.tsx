@@ -3,66 +3,34 @@ import React from 'react';
 import {
   Attrs,
   Cast,
-  EditorSchema,
-  EditorState,
   Extension,
+  isMarkExtension,
+  isNodeExtension,
   MarkExtension,
   NodeExtension,
   Omit,
 } from '@remirror/core';
-import { isMarkExtension, isNodeExtension } from '@remirror/core/src/extension-manager.helpers';
 import { InjectedRemirrorProps, Remirror, RemirrorProps } from '@remirror/react';
 import { render } from 'react-testing-library';
-import { markFactory, nodeFactory, Refs, RefsNode } from './builder';
+import { markFactory, nodeFactory, Refs } from './builder';
 import { jsdomSelectionPatch } from './jsdom-patch';
-import { testNodeExtensions } from './test-schema';
+import { BaseExtensionNodeNames, testNodeExtensions } from './test-schema';
 import { setTextSelection } from './transactions';
-
-type BaseExtensionNodeNames = (typeof testNodeExtensions)[number]['name'];
-
-type AddContent = (content: RefsNode) => { start: number; refs: Refs };
-type MarkWithAttrs<GNames extends string> = {
-  [P in GNames]: (attrs?: Attrs) => ReturnType<typeof markFactory>
-};
-type NodeWithAttrs<GNames extends string> = {
-  [P in GNames]: (attrs?: Attrs) => ReturnType<typeof nodeFactory>
-};
-type MarkWithoutAttrs<GNames extends string> = { [P in GNames]: ReturnType<typeof markFactory> };
-type NodeWithoutAttrs<GNames extends string> = { [P in GNames]: ReturnType<typeof nodeFactory> };
-
-type CreateTestEditorReturn<
-  GPlainMarkNames extends string,
-  GPlainNodeNames extends string,
-  GAttrMarkNames extends string,
-  GAttrNodeNames extends string
-> = InjectedRemirrorProps & {
-  add: AddContent;
-  nodes: NodeWithoutAttrs<GPlainNodeNames>;
-  marks: MarkWithoutAttrs<GPlainMarkNames>;
-  attrNodes: NodeWithAttrs<GAttrNodeNames>;
-  attrMarks: MarkWithAttrs<GAttrMarkNames>;
-  state: EditorState;
-  schema: EditorSchema;
-};
+import {
+  AddContent,
+  CreateTestEditorExtensions,
+  CreateTestEditorReturn,
+  MarkWithAttrs,
+  MarkWithoutAttrs,
+  NodeWithAttrs,
+  NodeWithoutAttrs,
+  TestEditorView,
+} from './types';
 
 /**
- * Plain items don't accept attributes as their first paramter
+ * Render the editor with the params passed in. Useful for testing.
  */
-interface CreateTestEditorExtensions<
-  GPlainMarks extends MarkExtension[],
-  GPlainNodes extends NodeExtension[],
-  GAttrMarks extends MarkExtension[],
-  GAttrNodes extends NodeExtension[],
-  GOthers extends Extension[]
-> {
-  plainMarks: GPlainMarks;
-  plainNodes: GPlainNodes;
-  attrMarks: GAttrMarks;
-  attrNodes: GAttrNodes;
-  others: GOthers;
-}
-
-export const createTestEditor = <
+export const renderEditor = <
   GPlainMarks extends MarkExtension[],
   GPlainNodes extends NodeExtension[],
   GAttrMarks extends MarkExtension[],
@@ -78,13 +46,6 @@ export const createTestEditor = <
     GAttrMarkNames,
     GAttrNodeNames
   > = CreateTestEditorReturn<GPlainMarkNames, GPlainNodeNames, GAttrMarkNames, GAttrNodeNames>
-  // GReturn extends InjectedRemirrorProps & {
-  //   add: AddContent;
-  //   nodes: NodeWithoutAttrs<GPlainNodeNames>;
-  //   marks: MarkWithoutAttrs<GPlainMarkNames>;
-  //   attrNodes: NodeWithAttrs<GAttrNodeNames>;
-  //   attrMarks: MarkWithAttrs<GAttrMarkNames>;
-  // }
 >(
   {
     plainMarks = Cast<GPlainMarks>([]),
@@ -117,7 +78,7 @@ export const createTestEditor = <
     </Remirror>,
   );
 
-  const { view } = returnedParams;
+  const view = returnedParams.view as TestEditorView;
 
   const add: AddContent = content => {
     // Work around JSDOM/Node not supporting DOM Selection API
@@ -183,6 +144,7 @@ export const createTestEditor = <
 
   return Cast<GReturn>({
     ...returnedParams,
+    view,
     schema,
     state: view.state,
     add,

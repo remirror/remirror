@@ -2,7 +2,6 @@ const { environment } = require('./support/jest/helpers');
 
 module.exports = {
   cacheDirectory: '<rootDir>/.jest',
-  coverageReporters: ['json', 'html', 'text', 'text-summary', 'lcov'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   collectCoverage: environment.isUnit,
   projects: ['<rootDir>/@remirror/*', '<rootDir>/docs', '<rootDir>/packages/*'],
@@ -15,6 +14,7 @@ module.exports = {
       statements: 40,
     },
   },
+  coverageReporters: ['json', 'lcov', 'text-summary', 'clover'],
   testRunner: 'jest-circus/runner',
   coveragePathIgnorePatterns: [
     '/node_modules/',
@@ -22,8 +22,8 @@ module.exports = {
     '/__mocks__/',
     '/__tests__/',
     '/__fixtures__/',
+    '/support/',
     'jest\\.*\\.ts',
-    'live-test-helpers\\.ts',
-    'unit-test-helpers\\.ts',
   ],
+  collectCoverageFrom: ['**/*.{ts,tsx}'],
 };
