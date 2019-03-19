@@ -43,9 +43,6 @@ after_script:
     if [[ $YARN_CMD == 'test' ]]; then
       cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT;
     fi
-    if [[ $YARN_CMD == 'build:production' ]]; then
-      yarn size:ci;
-    fi
     set +e
 notifications:
   slack:
