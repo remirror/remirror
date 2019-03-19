@@ -420,8 +420,9 @@ export const nodeNameMatchesList = (
       : typeof checker === 'function'
       ? checker(name, node)
       : checker === name;
+
     if (outcome) {
-      break;
+      return outcome;
     }
   }
   return outcome;

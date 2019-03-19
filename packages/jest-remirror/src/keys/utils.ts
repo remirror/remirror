@@ -12,7 +12,7 @@ export const createKeyboardEvent = (type: KeyboardEventName, options: KeyboardEv
   return new KeyboardEvent(type, options);
 };
 
-interface UpdateModifierInfoParams {
+interface GetModifierInformationParams {
   /** The modifier keys passed in */
   modifiers: string[];
   /**
@@ -30,7 +30,7 @@ interface UpdateModifierInfoParams {
  * @param params.modifiers
  * @param [params.isMac]
  */
-export const getModifierInformation = ({ modifiers, isMac = false }: UpdateModifierInfoParams) => {
+export const getModifierInformation = ({ modifiers, isMac = false }: GetModifierInformationParams) => {
   const info: ModifierInformation = {
     altKey: false,
     ctrlKey: false,
@@ -38,26 +38,7 @@ export const getModifierInformation = ({ modifiers, isMac = false }: UpdateModif
     metaKey: false,
   };
 
-  for (const modifier of modifiers) {
-    if (/^(cmd|meta|m)$/i.test(modifier)) {
-      info.metaKey = true;
-    } else if (/^a(lt)?$/i.test(modifier)) {
-      info.altKey = true;
-    } else if (/^(c|ctrl|control)$/i.test(modifier)) {
-      info.ctrlKey = true;
-    } else if (/^s(hift)?$/i.test(modifier)) {
-      info.shiftKey = true;
-    } else if (/^mod$/i.test(modifier)) {
-      if (isMac) {
-        info.metaKey = true;
-      } else {
-        info.ctrlKey = true;
-      }
-    } else {
-      throw new Error('Unrecognized modifier name: ' + modifier);
-    }
-  }
-  return info;
+  return updateModifierInformation({ modifiers, info, isMac });
 };
 
 /**
@@ -66,3 +47,36 @@ export const getModifierInformation = ({ modifiers, isMac = false }: UpdateModif
  * @param key
  */
 export const cleanKey = (key: SupportCharacters) => omit(usKeyboardLayout[key], ['shiftKey']);
+
+interface UpdateModifierInformationParams extends GetModifierInformationParams {
+  info: ModifierInformation;
+}
+
+/**
+ * Runs test on the modifiers and returns a new modifier object
+ */
+const updateModifierInformation = ({ modifiers, info, isMac = false }: UpdateModifierInformationParams) => {
+  const data = { ...info };
+
+  for (const modifier of modifiers) {
+    if (/^(cmd|meta|m)$/i.test(modifier)) {
+      data.metaKey = true;
+    } else if (/^a(lt)?$/i.test(modifier)) {
+      data.altKey = true;
+    } else if (/^(c|ctrl|control)$/i.test(modifier)) {
+      data.ctrlKey = true;
+    } else if (/^s(hift)?$/i.test(modifier)) {
+      data.shiftKey = true;
+    } else if (/^mod$/i.test(modifier)) {
+      if (isMac) {
+        data.metaKey = true;
+      } else {
+        data.ctrlKey = true;
+      }
+    } else {
+      throw new Error('Unrecognized modifier name: ' + modifier);
+    }
+  }
+
+  return data;
+};

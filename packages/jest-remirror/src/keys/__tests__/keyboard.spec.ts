@@ -119,7 +119,7 @@ describe('batching', () => {
 describe('mod', () => {
   it('can run modifiers', () => {
     const char = `R`;
-    const text = `Shift-Meta-${char}`;
+    const text = `Shift-Meta-Alt-Control-${char}`;
     let event: KeyboardEvent | undefined;
 
     const listener = (ev: KeyboardEvent) => {
@@ -134,6 +134,40 @@ describe('mod', () => {
 
     expect(event!.shiftKey).toBeTrue();
     expect(event!.metaKey).toBeTrue();
+    expect(event!.ctrlKey).toBeTrue();
+    expect(event!.altKey).toBeTrue();
+  });
+
+  it('runs modifier before and after event', () => {
+    const char = `R`;
+    const text = `Shift-${char}`;
+    let event: KeyboardEvent;
+    const events: Array<[string, string]> = [];
+
+    const listener = (ev: KeyboardEvent) => {
+      if (ev.key === char) {
+        event = ev;
+      }
+      events.push([ev.type, ev.key]);
+    };
+
+    target.addEventListener('keydown', listener);
+    target.addEventListener('keypress', listener);
+    target.addEventListener('keyup', listener);
+
+    keyboard.mod({ text });
+
+    expect(event!.shiftKey).toBeTrue();
+    expect(event!.metaKey).toBeFalse();
+
+    console.log(JSON.stringify(events));
+    expect(events).toEqual([
+      ['keydown', 'Shift'],
+      ['keydown', char],
+      ['keypress', char],
+      ['keyup', char],
+      ['keyup', 'Shift'],
+    ]);
   });
 });
 
