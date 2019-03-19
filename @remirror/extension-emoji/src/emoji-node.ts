@@ -10,8 +10,8 @@ import {
   SchemaNodeTypeParams,
 } from '@remirror/core';
 import { DefaultEmoji } from './components/emoji';
-import { createEmojiPlugin, CreateEmojiPluginParams } from './create-emoji-plugin';
-import { EmojiNodeAttrs } from './types';
+import { createEmojiPlugin } from './plugin';
+import { CreateEmojiPluginParams, EmojiNodeAttrs } from './types';
 
 export interface EmojiNodeOptions
   extends NodeExtensionOptions,

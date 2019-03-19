@@ -1,15 +1,8 @@
 import React, { FC } from 'react';
 
 import { Cast } from '@remirror/core';
-import { NodeViewComponentProps } from '@remirror/react';
-import { Data, EmojiSet, NimbleEmoji } from 'emoji-mart';
-import { EmojiNodeAttrs } from '../types';
-
-export interface DefaultEmojiProps extends NodeViewComponentProps<EmojiNodeAttrs> {
-  set: EmojiSet;
-  size: number | string;
-  emojiData: Data;
-}
+import { NimbleEmoji } from 'emoji-mart';
+import { DefaultEmojiProps } from '../types';
 
 export const DefaultEmoji: FC<DefaultEmojiProps> = ({ node, set, size, emojiData }) => {
   const { id, skin, useNative, native } = node.attrs;

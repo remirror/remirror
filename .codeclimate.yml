@@ -1,4 +1,4 @@
-version: '2' # required to adjust maintainability checks
+version: '2'
 checks:
   argument-count:
     config:
@@ -11,7 +11,7 @@ checks:
       threshold: 750
   method-complexity:
     config:
-      threshold: 8
+      threshold: 10
   method-count:
     config:
       threshold: 25

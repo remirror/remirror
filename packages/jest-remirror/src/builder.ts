@@ -1,6 +1,6 @@
-import { Attrs, EditorSchema, findMatches } from '@remirror/core';
+import { Attrs, EditorSchema, findMatches, isProsemirrorNode } from '@remirror/core';
 import flatten from 'flatten';
-import { Fragment, Mark, Node, Schema, Slice } from 'prosemirror-model';
+import { Fragment, Mark, Node as PMNode, Schema, Slice } from 'prosemirror-model';
 import { testSchema } from './test-schema';
 
 /**
@@ -34,7 +34,7 @@ export type RefsContentItem = RefsNode | RefsTracker;
  *     builder(aRefsTracker);
  *     builder([aNode, aRefsNode, aRefsTracker]);
  */
-export type BuilderContentFn = RefsContentItem | Array<Node | RefsContentItem>;
+export type BuilderContentFn = RefsContentItem | Array<PMNode | RefsContentItem>;
 export type BuilderContent = string | BuilderContentFn;
 
 /**
@@ -69,7 +69,7 @@ export class RefsTracker {
 /**
  * A standard ProseMirror Node that also tracks refs.
  */
-export interface RefsNode extends Node {
+export interface RefsNode extends PMNode {
   refs: Refs;
 }
 
@@ -86,7 +86,7 @@ const isEven = (n: number) => n % 2 === 0;
  * @param value
  * @param schema
  */
-export function text(value: string, schema: Schema): RefsContentItem {
+export const text = (value: string, schema: EditorSchema): RefsContentItem => {
   let stripped = '';
   let textIndex = 0;
   const refs: Refs = {};
@@ -118,7 +118,7 @@ export function text(value: string, schema: Schema): RefsContentItem {
 
   node.refs = refs;
   return node;
-}
+};
 
 /**
  * Offset ref position values by some amount.
@@ -136,8 +136,20 @@ export function offsetRefs(refs: Refs, offset: number): Refs {
   return result;
 }
 
-const isRefsTracker = (n: unknown): n is RefsTracker => typeof n === 'object' && n instanceof RefsTracker;
-const isRefsNode = (n: unknown): n is RefsNode => !isRefsTracker(n);
+/**
+ * Check if the value is an instance of the RefTracker class which is used for holding a position in the node
+ *
+ * @param val
+ */
+const isRefsTracker = (val: unknown): val is RefsTracker =>
+  typeof val === 'object' && val instanceof RefsTracker;
+
+/**
+ * Checks if the node is a RefNode (a normal ProsemirrorNode with a ref attribute)
+ *
+ * @param val
+ */
+const isRefsNode = (val: unknown): val is RefsNode => isProsemirrorNode(val) && !isRefsTracker(val);
 
 /**
  * Given a collection of nodes, sequence them in an array and return the result
@@ -145,8 +157,8 @@ const isRefsNode = (n: unknown): n is RefsNode => !isRefsTracker(n);
  */
 export function sequence(...content: RefsContentItem[]) {
   let position = 0;
-  let refs = {} as Refs;
-  const nodes = [] as RefsNode[];
+  let refs: Refs = {};
+  const nodes: RefsNode[] = [];
 
   for (const node of content) {
     if (isRefsTracker(node)) {
@@ -231,13 +243,13 @@ export const clean = (content: BuilderContentFn) => (schema: Schema) => {
   if (Array.isArray(node)) {
     return node.reduce(
       (acc, next) => {
-        if (next instanceof Node) {
-          acc.push(Node.fromJSON(schema, next.toJSON()));
+        if (next instanceof PMNode) {
+          acc.push(PMNode.fromJSON(schema, next.toJSON()));
         }
         return acc;
       },
-      [] as Node[],
+      [] as PMNode[],
     );
   }
-  return node instanceof Node ? Node.fromJSON(schema, node.toJSON()) : undefined;
+  return node instanceof PMNode ? PMNode.fromJSON(schema, node.toJSON()) : undefined;
 };

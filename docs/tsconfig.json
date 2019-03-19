@@ -1,11 +1,10 @@
 {
-  "extends": "../base.tsconfig.json",
+  "extends": "../support/tsconfig.base.json",
   "compilerOptions": {
     "lib": ["esnext", "dom"],
     "jsx": "react",
     "outDir": "lib",
     "declaration": true,
-    "plugins": [{ "name": "typescript-styled-plugin" }],
     "types": ["jest", "jest-environment-puppeteer", "expect-puppeteer", "puppeteer", "jest-extended"]
   },
   "include": ["./", "patches.d.ts"]

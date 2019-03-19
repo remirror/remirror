@@ -1,6 +1,8 @@
 import React from 'react';
+import { renderToString } from 'react-dom/server';
 
-import { axe, fireEvent, render, renderString } from '@test-utils';
+import { axe } from 'jest-axe';
+import { fireEvent, render } from 'react-testing-library';
 import { InjectedRemirrorProps, Remirror } from '..';
 
 const textContent = `This is editor text`;
@@ -29,7 +31,7 @@ test('should be called via a render prop', () => {
 });
 
 test('TextEditor is accessible', async () => {
-  const results = await axe(renderString(<Remirror>{() => <div />}</Remirror>));
+  const results = await axe(renderToString(<Remirror>{() => <div />}</Remirror>));
   expect(results).toHaveNoViolations();
 });
 

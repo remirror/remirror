@@ -87,7 +87,7 @@ export interface CommandParams extends SchemaParams {
   isEditable: () => boolean;
 }
 
-export type Attrs = Record<string, string>;
+export type Attrs = Record<string, string | number>;
 
 /* Utility Types */
 

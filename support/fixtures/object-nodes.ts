@@ -63,6 +63,16 @@ export const simpleJSON = {
   ],
 };
 
+export const basicJSON = {
+  type: 'paragraph',
+  content: [
+    {
+      type: 'text',
+      text: 'basic',
+    },
+  ],
+};
+
 export const docNodeSimpleJSON = {
   type: 'doc',
   content: [simpleJSON],
@@ -71,4 +81,9 @@ export const docNodeSimpleJSON = {
 export const docNodeTestJSON = {
   type: 'doc',
   content: [testJSON],
+};
+
+export const docNodeBasicJSON = {
+  type: 'doc',
+  content: [basicJSON],
 };

@@ -21,7 +21,7 @@
     "ci": "yarn clean && yarn frozen",
     "ci:checks": "run-s integrity lint typecheck",
     "ci:checks:all": "run-s integrity lint typecheck test test:integration build:production",
-    "clean": "yarn if-clean git clean -fdx",
+    "clean": "yarn if-clean git clean -fdx --exclude=.config.json",
     "clean:force": "git clean -fdx",
     "clean:modules": "yarn if-clean git clean -fdx @remirror support docs",
     "dev:docs": "docz dev",
@@ -43,11 +43,11 @@
     "lint:ts": "lerna run lint --parallel",
     "publish:alpha": "yarn if-clean run-s ci:checks:all lerna:publish:alpha",
     "lerna:publish:alpha": "lerna publish prerelease --preid=alpha --exact",
-    "size": "size-limit",
-    "size:ci": "bundlesize",
     "test": "jest",
-    "test:no-coverage": "jest --coverage=false",
-    "test:integration": "cross-env TEST_ENV=integration start-server-and-test launch:docs http-get://localhost:3000 test:no-coverage",
+    "stop:hooks": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
+    "start:hooks": "rimraf ./.config.json",
+    "test:integration:no-coverage": "cross-env TEST_ENV=integration jest --coverage=false",
+    "test:integration": "cross-env TEST_ENV=integration start-server-and-test launch:docs http-get://localhost:3000 test:integration:no-coverage",
     "test:integration:watch": "cross-env TEST_ENV=integration yarn test:watch",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
     "typecheck": "lerna run typecheck"
@@ -55,35 +55,6 @@
   "engines": {
     "node": ">=8"
   },
-  "bundlesize": [
-    {
-      "path": "@remirror/core/lib/dist/core.umd.min.js"
-    },
-    {
-      "path": "@remirror/core-extensions/lib/dist/core-extensions.umd.min.js"
-    },
-    {
-      "path": "@remirror/extension-emoji/lib/dist/extension-emoji.umd.min.js"
-    },
-    {
-      "path": "@remirror/extension-enhanced-link/lib/dist/extension-enhanced-link.umd.min.js"
-    },
-    {
-      "path": "@remirror/extension-mention/lib/dist/extension-mention.umd.min.js"
-    },
-    {
-      "path": "@remirror/react/lib/dist/react.umd.min.js"
-    },
-    {
-      "path": "packages/remirror/lib/dist/remirror.umd.min.js"
-    },
-    {
-      "path": "@remirror/renderer-react/lib/dist/renderer-react.umd.min.js"
-    },
-    {
-      "path": "@remirror/ui-twitter/lib/dist/ui-twitter.umd.min.js"
-    }
-  ],
   "husky": {
     "hooks": {
       "pre-commit": "yarn if-config ignoredHooks.preCommit lint-staged",
@@ -122,33 +93,79 @@
     "jsdom": "14.0.0",
     "hoist-non-react-statics": "3.3.0"
   },
-  "size-limit": [
-    {
-      "path": "@remirror/core/lib/dist/core.esm.js"
+  "prettier": {
+    "useTabs": false,
+    "tabWidth": 2,
+    "jsxBracketSameLine": false,
+    "bracketSpacing": true,
+    "printWidth": 110,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "proseWrap": "preserve",
+    "endOfLine": "lf",
+    "jsxSingleQuote": true,
+    "overrides": [
+      {
+        "files": "*.js",
+        "options": {
+          "printWidth": 90
+        }
+      }
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "prettier",
+      "plugin:prettier/recommended"
+    ]
+  },
+  "jest": {
+    "cacheDirectory": "<rootDir>/.jest",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "collectCoverage": true,
+    "projects": [
+      "<rootDir>/@remirror/*",
+      "<rootDir>/docs",
+      "<rootDir>/packages/*"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 40,
+        "functions": 40,
+        "lines": 40,
+        "statements": 40
+      }
     },
-    {
-      "path": "@remirror/core-extensions/lib/dist/core-extensions.esm.js"
-    },
-    {
-      "path": "@remirror/extension-emoji/lib/dist/extension-emoji.esm.js"
-    },
-    {
-      "path": "@remirror/extension-enhanced-link/lib/dist/extension-enhanced-link.esm.js"
-    },
-    {
-      "path": "@remirror/extension-mention/lib/dist/extension-mention.esm.js"
-    },
-    {
-      "path": "@remirror/react/lib/dist/react.esm.js"
-    },
-    {
-      "path": "packages/remirror/lib/dist/remirror.esm.js"
-    },
-    {
-      "path": "@remirror/renderer-react/lib/dist/renderer-react.esm.js"
-    },
-    {
-      "path": "@remirror/ui-twitter/lib/dist/ui-twitter.esm.js"
-    }
-  ]
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text-summary",
+      "clover"
+    ],
+    "testRunner": "jest-circus/runner",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "\\.d.ts",
+      "/__mocks__/",
+      "/__tests__/",
+      "/__fixtures__/",
+      "/support/",
+      "jest\\.*\\.ts"
+    ],
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx}"
+    ]
+  }
 }

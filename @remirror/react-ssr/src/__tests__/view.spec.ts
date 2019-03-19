@@ -35,5 +35,5 @@ test('createEditorView:forceEnvironment', () => {
       },
       'dom',
     ),
-  ).toThrowErrorMatchingInlineSnapshot(`"document is not defined"`);
+  ).toThrowErrorMatchingInlineSnapshot(`"Cannot read property 'add' of undefined"`);
 });

@@ -1,5 +1,5 @@
-import { Doc, Paragraph, Text } from '..';
-import { Cast } from '../helpers';
+import { Doc, Paragraph, Text } from '../..';
+import { Cast } from '../../helpers';
 
 // While these tests seem simple there is a reason for them.
 //

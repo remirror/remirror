@@ -29,7 +29,27 @@ import {
   SchemaParams,
 } from './types';
 
+interface ExtensionManagerConstructorParams {
+  /** The list of extensions to use */
+  extensions: AnyExtension[];
+  /** A shortcut to pulling the editor state */
+  getEditorState: () => EditorState;
+  /** A shortcut to pulling the portal container */
+  getPortalContainer: () => NodeViewPortalContainer;
+}
+
 export class ExtensionManager {
+  /**
+   * A helper static method for creating a new extension manager.
+   */
+  public static create({
+    extensions,
+    getEditorState,
+    getPortalContainer,
+  }: ExtensionManagerConstructorParams) {
+    return new ExtensionManager(extensions, getEditorState, getPortalContainer);
+  }
+
   constructor(
     public readonly extensions: AnyExtension[],
     public readonly getEditorState: () => EditorState,

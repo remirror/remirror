@@ -71,7 +71,7 @@
     "live-server": "1.2.1",
     "load-json-file": "5.2.0",
     "lodash": "4.17.11",
-    "nodom": "2.1.0",
+    "cpy-cli": "2.0.0",
     "npm-run-all": "4.1.5",
     "prettier": "1.16.4",
     "prosemirror-test-builder": "1.0.1",
@@ -94,7 +94,8 @@
     "size-limit": "0.21.1",
     "start-server-and-test": "1.7.11",
     "tslint": "5.14.0",
-    "typescript": "3.3.3333",
+    "typescript-tslint-plugin": "0.3.1",
+    "typescript": "3.4.0-rc",
     "typescript-styled-plugin": "0.14.0"
   }
 }

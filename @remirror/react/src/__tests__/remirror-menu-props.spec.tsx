@@ -1,7 +1,7 @@
 import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
 import { PlainObject } from '@remirror/core';
-import { render } from '@test-utils';
+import { render } from 'react-testing-library';
 import { Remirror } from '..';
 
 const mock = jest.fn();
@@ -9,7 +9,7 @@ const Menu: FunctionComponent<RefAttributes<HTMLDivElement> & PlainObject> = for
   mock(ref);
   return null;
 });
-// TODO implement
+
 test('updates the offscreen attribute when a selection is active', () => {
   render(
     <Remirror>

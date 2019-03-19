@@ -65,10 +65,7 @@ export class Mention<GName extends string> extends NodeExtension<MentionOptions<
   }
 
   get schema(): NodeExtensionSpec {
-    const {
-      mentionClassName = this.defaultOptions.mentionClassName,
-      matcher = this.defaultOptions.matcher,
-    } = this.options;
+    const { mentionClassName = this.defaultOptions.mentionClassName } = this.options;
     const mentionClass = `${mentionClassName} ${mentionClassName}-${this.postFix}`;
     const dataAttribute = `data-mention-${this.postFix}-id`;
     return {
@@ -90,7 +87,7 @@ export class Mention<GName extends string> extends NodeExtension<MentionOptions<
             }
 
             const id = (dom as Element).getAttribute(dataAttribute);
-            const label = (dom as HTMLElement).innerText.split(matcher.char).join('');
+            const label = (dom as HTMLElement).innerText;
             return { id, label };
           },
         },

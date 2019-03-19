@@ -50,7 +50,7 @@ module.exports = {
           ...loader,
           options: {
             propFilter: prop => !prop.parent.fileName.includes('node_modules'),
-            tsconfigPath: workingDir('./base.tsconfig.json'),
+            tsconfigPath: workingDir('./support/tsconfig.base.json'),
           },
         };
       }

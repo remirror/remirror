@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Doc, Paragraph, Text } from '@remirror/core';
 import { EMPTY_NODE_CLASS_NAME } from '@remirror/core-extensions';
-import { render } from '@test-utils';
+import { render } from 'react-testing-library';
 import { Remirror } from '..';
 import { InjectedRemirrorProps } from '../types';
 

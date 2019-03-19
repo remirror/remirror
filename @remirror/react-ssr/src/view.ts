@@ -1,5 +1,5 @@
 import { Cast, EditorSchema, EditorState, environment, Transaction } from '@remirror/core';
-import { Document } from 'nodom';
+import minDocument from 'min-document';
 import { DirectEditorProps as DEP, EditorView } from 'prosemirror-view';
 
 type DirectEditorProps = DEP<EditorSchema>;
@@ -57,7 +57,7 @@ export class EditorViewSSR {
     public place: Node | ((p: Node) => void) | { mount: Node } | undefined,
     public props: DirectEditorProps,
   ) {
-    const doc = new Document();
+    const doc = minDocument;
     this.root = doc;
     this.dom = doc.createElement('div');
     this.state = props.state;
@@ -98,5 +98,5 @@ export const shouldUseDOMEnvironment = (forceEnvironment?: RenderEnvironment) =>
  * @param forceEnvironment
  */
 export const getDoc = (forceEnvironment?: RenderEnvironment) => {
-  return shouldUseDOMEnvironment(forceEnvironment) ? document : new Document();
+  return shouldUseDOMEnvironment(forceEnvironment) ? document : minDocument;
 };

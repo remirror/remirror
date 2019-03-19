@@ -1,143 +1,328 @@
-// import { EditorView } from '@remirror/core';
+import { Omit, take } from '@remirror/core';
+import lolex from 'lolex';
+import {
+  KeyboardConstructorParams,
+  KeyboardEventName,
+  ModifierInformation,
+  OptionsParams,
+  OptionsWithTypingParams,
+  TextInputParams,
+} from './types';
+import {
+  isUSKeyboardCharacter,
+  noKeyPress,
+  noKeyUp,
+  SupportCharacters,
+  usKeyboardLayout,
+} from './us-keyboard-layout';
+import { cleanKey, createKeyboardEvent, getModifierInformation } from './utils';
 
-// export class Keyboard {
-//   private modifiers = 0;
-//   private pressedKeys = new Set();
+export class Keyboard {
+  public static create(params: KeyboardConstructorParams) {
+    return new Keyboard(params);
+  }
 
-//   constructor(private view: EditorView) {
-//     this.view = view;
-//   }
+  static get defaultOptions(): KeyboardEventInit {
+    return {
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+    };
+  }
 
-//   public down(key, options = { text: undefined }) {
-//     const description = this._keyDescriptionForString(key);
+  public status: 'started' | 'ended' | 'idle' = 'idle';
 
-//     const autoRepeat = this.pressedKeys.has(description.code);
-//     this.pressedKeys.add(description.code);
-//     this.modifiers |= this._modifierBit(description.key);
+  private readonly target: HTMLElement;
+  private readonly useFakeTimer: boolean;
+  private readonly startTime?: number | Date;
+  private readonly delay: number;
+  private readonly defaultOptions: KeyboardEventInit;
+  private readonly isMac: boolean;
+  private readonly batch: boolean;
+  private readonly onEventDispatch?: (event: KeyboardEvent) => void;
+  private actions: Array<() => void> = [];
+  private clock?: lolex.InstalledClock<lolex.Clock>;
 
-//     const text = options.text === undefined ? description.text : options.text;
-//     this._client.send('Input.dispatchKeyEvent', {
-//       type: text ? 'keyDown' : 'rawKeyDown',
-//       modifiers: this.modifiers,
-//       windowsVirtualKeyCode: description.keyCode,
-//       code: description.code,
-//       key: description.key,
-//       text,
-//       unmodifiedText: text,
-//       autoRepeat,
-//       location: description.location,
-//       isKeypad: description.location === 3,
-//     });
-//   }
+  private get started() {
+    return this.status === 'started';
+  }
 
-//   public _modifierBit(key: string) {
-//     if (key === 'Alt') {
-//       return 1;
-//     }
-//     if (key === 'Control') {
-//       return 2;
-//     }
-//     if (key === 'Meta') {
-//       return 4;
-//     }
-//     if (key === 'Shift') {
-//       return 8;
-//     }
-//     return 0;
-//   }
+  constructor({
+    target,
+    useFakeTimer = false,
+    startTime,
+    delay = 10,
+    defaultOptions = Keyboard.defaultOptions,
+    isMac = false,
+    batch = false,
+    onEventDispatch,
+  }: KeyboardConstructorParams) {
+    this.target = target as HTMLElement;
+    this.useFakeTimer = useFakeTimer;
+    this.startTime = startTime;
+    this.delay = delay;
+    this.defaultOptions = defaultOptions;
+    this.isMac = isMac;
+    this.batch = batch;
+    this.onEventDispatch = onEventDispatch;
+  }
 
-//   public _keyDescriptionForString(keyString: string) {
-//     const shift = this.modifiers & 8;
-//     const description = {
-//       key: '',
-//       keyCode: 0,
-//       code: '',
-//       text: '',
-//       location: 0,
-//     };
+  private tick() {
+    if (this.clock) {
+      this.clock.tick(this.delay);
+    }
+  }
 
-//     const definition = keyDefinitions[keyString];
-//     assert(definition, `Unknown key: "${keyString}"`);
+  /**
+   * Starts the fake timers and sets the keyboard status to 'started'
+   */
+  public start() {
+    if (this.started) {
+      return this;
+    }
 
-//     if (definition.key) {
-//       description.key = definition.key;
-//     }
-//     if (shift && definition.shiftKey) {
-//       description.key = definition.shiftKey;
-//     }
+    if (this.useFakeTimer) {
+      this.clock = lolex.install({ now: this.startTime });
+    }
 
-//     if (definition.keyCode) {
-//       description.keyCode = definition.keyCode;
-//     }
-//     if (shift && definition.shiftKeyCode) {
-//       description.keyCode = definition.shiftKeyCode;
-//     }
+    this.status = 'started';
 
-//     if (definition.code) {
-//       description.code = definition.code;
-//     }
+    return this;
+  }
 
-//     if (definition.location) {
-//       description.location = definition.location;
-//     }
+  /**
+   * Ends the fake timers and sets the keyboard status to 'ended'
+   */
+  public end() {
+    if (!this.started) {
+      return this;
+    }
 
-//     if (description.key.length === 1) {
-//       description.text = description.key;
-//     }
+    if (this.clock) {
+      this.clock.uninstall();
+    }
 
-//     if (definition.text) {
-//       description.text = definition.text;
-//     }
-//     if (shift && definition.shiftText) {
-//       description.text = definition.shiftText;
-//     }
+    if (this.batch) {
+      this.runBatchedEvents();
+      this.actions = [];
+    }
 
-//     // if any modifiers besides shift are pressed, no text should be sent
-//     if (this.modifiers & ~8) {
-//       description.text = '';
-//     }
+    this.status = 'ended';
 
-//     return description;
-//   }
+    return this;
+  }
 
-//   public up(key) {
-//     const description = this._keyDescriptionForString(key);
+  /**
+   * Runs all the batched events.
+   */
+  private runBatchedEvents() {
+    this.actions.forEach(action => {
+      action();
+    });
+  }
 
-//     this.modifiers &= ~this._modifierBit(description.key);
-//     this.pressedKeys.delete(description.code);
-//     this._client.send('Input.dispatchKeyEvent', {
-//       type: 'keyUp',
-//       modifiers: this.modifiers,
-//       key: description.key,
-//       windowsVirtualKeyCode: description.keyCode,
-//       code: description.code,
-//       location: description.location,
-//     });
-//   }
+  /**
+   * Like `this.char` but only supports US Keyboard Characters. This is mainly
+   * a utility for TypeScript and autocomplete support when typing characters.
+   *
+   * @param textInput
+   * @param textInput.text
+   * @param [textInput.options]
+   * @param [textInput.typing]
+   */
+  public usChar({ text, options = {}, typing = false }: TextInputParams<SupportCharacters>) {
+    if (!isUSKeyboardCharacter(text)) {
+      throw new Error(
+        'This is not a supported character. For generic characters use the `keyboard.char` method instead',
+      );
+    }
+    return this.char({ text, options, typing });
+  }
 
-//   public sendCharacter(char) {
-//     this._client.send('Input.insertText', { text: char });
-//   }
+  /**
+   * Dispatches an event for a keyboard character
+   *
+   * @param textInput
+   * @param textInput.text
+   * @param [textInput.options]
+   * @param [textInput.typing]
+   */
+  public char({ text, options, typing }: TextInputParams) {
+    options = {
+      ...options,
+      ...(isUSKeyboardCharacter(text) ? cleanKey(text) : { key: text }),
+    };
 
-//   public type(text, options) {
-//     let delay = 0;
-//     if (options && options.delay) {
-//       delay = options.delay;
-//     }
-//     for (const char of text) {
-//       if (keyDefinitions[char]) {
-//         this.press(char, { delay });
-//       } else {
-//         this.sendCharacter(char);
-//       }
-//       if (delay) {
-//         new Promise(f => setTimeout(f, delay));
-//       }
-//     }
-//   }
+    this.fireAllEvents({ options, typing });
 
-//   public press(key: string, options = {}) {
-//     this.down(key, options);
-//     this.up(key);
-//   }
-// }
+    return this;
+  }
+
+  /**
+   * Triggers a keydown event with provided options
+   *
+   * @param params
+   * @param params.options
+   */
+  public keyDown = ({ options }: OptionsParams) => {
+    return this.dispatchEvent('keydown', options);
+  };
+
+  /**
+   * Trigger a keypress event with the provided options
+   *
+   * @param params
+   * @param params.options
+   */
+  public keyPress = ({ options }: OptionsParams) => {
+    return this.dispatchEvent('keypress', options);
+  };
+
+  /**
+   * Trigger a keyup event with the provided options
+   *
+   * @param params
+   * @param params.options
+   */
+  public keyUp = ({ options }: OptionsParams) => {
+    return this.dispatchEvent('keyup', options);
+  };
+
+  /**
+   * Breaks a string into single characters and fires a keyboard into the target node
+   *
+   * @param textInput
+   * @param textInput.text
+   * @param [textInput.options]
+   */
+  public type({ text, options = {} }: Omit<TextInputParams, 'typing'>) {
+    for (const char of text) {
+      this.char({ text: char, options, typing: true });
+    }
+
+    return this;
+  }
+
+  /**
+   * Enables typing modifier commands
+   *
+   * ```ts
+   * const editor = document.getElementById('editor');
+   * const keyboard = new Keyboard({ target: editor });
+   * keyboard
+   *   .mod({text: 'Shift-Meta-A'})
+   *   .end();
+   * ```
+   *
+   * @param textInput
+   * @param textInput.text
+   * @param [textInput.options]
+   * @param [textInput.typing]
+   */
+  public mod({ text, options = {} }: TextInputParams) {
+    let modifiers = text.split(/-(?!$)/);
+    let result = modifiers[modifiers.length - 1];
+    modifiers = take(modifiers, modifiers.length - 1);
+
+    if (result === 'Space') {
+      result = ' ';
+    }
+
+    const info = getModifierInformation({ modifiers, isMac: this.isMac });
+
+    this.fireModifierEvents(info, 'keydown');
+    this.type({ text: result, options: { ...options, ...info } });
+    this.fireModifierEvents(info, 'keyup');
+
+    return this;
+  }
+
+  /**
+   * Fires events where valid
+   *
+   * @param params
+   * @param params.options
+   * @param [params.typing]
+   */
+  private fireAllEvents({ options, typing = false }: OptionsWithTypingParams) {
+    this.keyDown({ options });
+    if (
+      !noKeyPress.includes(options.key!) ||
+      (typing && isUSKeyboardCharacter(options.key) && usKeyboardLayout[options.key].text)
+    ) {
+      this.keyPress({ options });
+    }
+    if (!noKeyUp.includes(options.key!)) {
+      this.keyUp({ options });
+    }
+
+    return this;
+  }
+
+  /**
+   * Fires all modifier events
+   *
+   * @param info
+   * @param info.altKey
+   * @param info.ctrlKey
+   * @param info.shiftKey
+   * @param info.metaKey
+   * @param type
+   *
+   */
+  private fireModifierEvents(
+    { altKey, ctrlKey, metaKey, shiftKey }: ModifierInformation,
+    type: 'keydown' | 'keyup',
+  ) {
+    const event = type === 'keydown' ? this.keyDown : this.keyUp;
+    if (shiftKey) {
+      event({ options: { ...this.defaultOptions, ...cleanKey('Shift') } });
+    }
+
+    if (metaKey) {
+      if (this.isMac) {
+        event({ options: { ...this.defaultOptions, ...cleanKey('Meta') } });
+      } else {
+        event({ options: { ...this.defaultOptions, ...cleanKey('Control') } });
+      }
+    }
+
+    if (ctrlKey) {
+      event({ options: { ...this.defaultOptions, ...cleanKey('Control') } });
+    }
+
+    if (altKey) {
+      event({ options: { ...this.defaultOptions, ...cleanKey('Alt') } });
+    }
+  }
+
+  /**
+   * Dispatches the action or adds it to the queue when batching is enabled.
+   *
+   * @param type
+   * @param options
+   */
+  private dispatchEvent(type: KeyboardEventName, options: KeyboardEventInit) {
+    if (!this.started) {
+      this.start();
+    }
+    const event = createKeyboardEvent(type, { ...this.defaultOptions, ...options });
+    const dispatcher = () => {
+      this.target.dispatchEvent(event);
+
+      if (this.onEventDispatch) {
+        this.onEventDispatch(event);
+      }
+
+      this.tick();
+    };
+
+    if (this.batch) {
+      this.actions.push(dispatcher);
+    } else {
+      dispatcher();
+    }
+
+    return this;
+  }
+}
