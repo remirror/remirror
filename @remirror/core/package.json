@@ -1,7 +1,7 @@
 {
   "name": "@remirror/core",
   "description": "Core utilities for remirror",
-  "version": "0.0.1-alpha.7",
+  "version": "0.0.1-alpha.8",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "license": "MIT",
   "dependencies": {

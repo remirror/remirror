@@ -1,7 +1,7 @@
 {
   "name": "dependencies",
   "description": "A collection of the build dependencies needed. Helps clear up the root package.json",
-  "version": "0.0.1-alpha.7",
+  "version": "0.0.1-alpha.8",
   "dependencies": {
     "@babel/cli": "7.2.3",
     "@babel/core": "7.3.4",
