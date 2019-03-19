@@ -1,39 +1,12 @@
-import { EditorSchema, NodeViewPortalContainer } from '@remirror/core';
+import { EditorSchema } from '@remirror/core';
 import { ReactNodeView } from '@remirror/react';
-import { Data, EmojiSet } from 'emoji-mart';
+import { Data } from 'emoji-mart';
 import emojiRegex from 'emoji-regex/es2015/text';
-import { Interpolation } from 'emotion';
 import { NodeType } from 'prosemirror-model';
-import { Plugin, PluginKey, Transaction } from 'prosemirror-state';
-import { ComponentType } from 'react';
-import { DefaultEmoji, DefaultEmojiProps } from './components/emoji';
+import { Plugin, Transaction } from 'prosemirror-state';
+import { DefaultEmoji } from './components/emoji';
 import { getEmojiDataByNativeString } from './helpers';
-
-export interface CreateEmojiPluginParams {
-  key: PluginKey;
-  getPortalContainer(): NodeViewPortalContainer;
-  /**
-   * The emoji collection to use. See https://github.com/missive/emoji-mart#components
-   */
-  set: EmojiSet;
-  /**
-   * Set the size of the image used. Once I find a way to use SVG it would be awesome to allow ems that match
-   * up with the font size.
-   */
-  size: number | string;
-
-  /**
-   * The data used for emoji
-   */
-  emojiData: Data;
-  type: NodeType;
-  EmojiComponent: ComponentType<DefaultEmojiProps>;
-
-  /**
-   * Allow customization of the styles passed through to the emoji component
-   */
-  style: Interpolation;
-}
+import { CreateEmojiPluginParams } from './types';
 
 const defaultStyle = `
   user-select: all;

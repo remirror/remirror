@@ -18,7 +18,7 @@
     "strict": true,
     "alwaysStrict": true,
     "resolveJsonModule": true,
-    "baseUrl": "./",
+    "baseUrl": "../",
     "plugins": [{ "name": "typescript-styled-plugin" }, { "name": "typescript-tslint-plugin" }],
     "paths": {
       "@remirror/core": ["@remirror/core/src/index.ts"],
