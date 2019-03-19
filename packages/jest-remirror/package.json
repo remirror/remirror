@@ -1,28 +1,9 @@
 {
   "name": "jest-remirror",
   "description": "A text editor for react built with prosemirror",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/jest-remirror",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "packages/jest-remirror"
-  },
   "version": "0.0.1-alpha.7",
-  "main": "lib/index.js",
-  "files": [
-    "lib",
-    "src"
-  ],
-  "scripts": {
-    "build": "run-s build:declaration build:babel",
-    "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
-    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
-  },
-  "types": "lib/index.d.ts",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "@remirror/core": "0.0.1-alpha.7",
     "@remirror/core-extensions": "0.0.1-alpha.7",
@@ -37,18 +18,37 @@
     "prosemirror-state": "^1.2.2",
     "prosemirror-view": "^1.8.3"
   },
-  "peerDependencies": {
-    "react-testing-library": "6.0.0",
-    "jest-snapshot": "^24.5.0",
-    "@types/react": "^16.7.18",
-    "@types/react-dom": "^16.8.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
-  },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/jest-remirror",
   "keywords": [
     "prosemirror",
     "react",
     "ssr",
     "text editor"
-  ]
+  ],
+  "main": "lib/index.js",
+  "peerDependencies": {
+    "@types/react": "^16.7.18",
+    "@types/react-dom": "^16.8.0",
+    "jest-snapshot": "^24.5.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-testing-library": "6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ifiokjr/remirror.git",
+    "directory": "packages/jest-remirror"
+  },
+  "scripts": {
+    "build": "run-s build:declaration build:babel",
+    "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "types": "lib/index.d.ts"
 }

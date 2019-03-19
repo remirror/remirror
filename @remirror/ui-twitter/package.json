@@ -1,29 +1,9 @@
 {
   "name": "@remirror/ui-twitter",
   "description": "ui for a twitter-like editing experience",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-twitter",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/ui-twitter"
-  },
   "version": "0.0.1-alpha.7",
-  "main": "lib/index.js",
-  "module": "lib/dist/ui-twitter.esm.js",
-  "files": [
-    "lib",
-    "src"
-  ],
-  "scripts": {
-    "build": "run-s build:declaration build:babel",
-    "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
-    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
-  },
-  "types": "lib/index.d.ts",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "@emotion/core": "^10.0.9",
     "@emotion/styled": "^10.0.9",
@@ -38,6 +18,13 @@
     "emotion-theming": "^10.0.9",
     "keycode": "^2.2.0"
   },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-twitter",
+  "main": "lib/index.js",
+  "module": "lib/dist/ui-twitter.esm.js",
   "peerDependencies": {
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
@@ -47,6 +34,19 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ifiokjr/remirror.git",
+    "directory": "@remirror/ui-twitter"
+  },
+  "scripts": {
+    "build": "run-s build:declaration build:babel",
+    "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "types": "lib/index.d.ts",
   "umd": "lib/dist/ui-twitter.umd.js",
   "umd:min": "lib/dist/ui-twitter.umd.min.js",
   "umdGlobals": {

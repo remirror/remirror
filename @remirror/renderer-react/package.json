@@ -1,21 +1,38 @@
 {
   "name": "@remirror/renderer-react",
   "description": "renderer-react utilities for remirror",
-  "license": "MIT",
+  "version": "0.0.1-alpha.7",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@remirror/core": "0.0.1-alpha.7"
+  },
+  "devDependencies": {
+    "@remirror/core-extensions": "0.0.1-alpha.7",
+    "prosemirror-model": "1.7.0"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/renderer-react",
+  "main": "lib/index.js",
+  "module": "lib/dist/renderer-react.esm.js",
+  "peerDependencies": {
+    "@sindresorhus/is": "^0.15.0",
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/renderer-react"
   },
-  "version": "0.0.1-alpha.7",
-  "main": "lib/index.js",
-  "module": "lib/dist/renderer-react.esm.js",
-  "files": [
-    "lib",
-    "src"
-  ],
   "scripts": {
     "build": "run-s build:declaration build:babel",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
@@ -24,23 +41,6 @@
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "types": "lib/index.d.ts",
-  "dependencies": {
-    "@remirror/core": "0.0.1-alpha.7"
-  },
-  "peerDependencies": {
-    "@sindresorhus/is": "^0.15.0",
-    "@types/react": "^16.8.0",
-    "@types/react-dom": "^16.8.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
-  },
-  "devDependencies": {
-    "@remirror/core-extensions": "0.0.1-alpha.7",
-    "prosemirror-model": "1.7.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
   "umd": "lib/dist/renderer-react.umd.js",
   "umd:min": "lib/dist/renderer-react.umd.min.js",
   "umdGlobals": {

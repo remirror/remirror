@@ -1,118 +1,7 @@
 {
-  "private": true,
   "name": "root",
-  "workspaces": {
-    "packages": [
-      "@remirror/*",
-      "packages/*",
-      "support/dependencies",
-      "docs"
-    ]
-  },
-  "scripts": {
-    "build": "run-s build:modules build:rollup",
-    "build:docs": "docz build",
-    "build:modules": "lerna run build --stream",
-    "build:production": "cross-env NODE_ENV=production yarn build",
-    "build:rollup": "rollup --config ./support/rollup/rollup.config.js",
-    "changelog": "lerna-changelog",
-    "checks": "run-s integrity lint typecheck test",
-    "checks:parallel": "run-p lint typecheck test",
-    "ci": "yarn clean && yarn frozen",
-    "ci:checks": "run-s integrity lint typecheck",
-    "ci:checks:all": "run-s integrity lint typecheck test test:integration build:production",
-    "clean": "yarn if-clean git clean -fdx --exclude=.config.json",
-    "clean:force": "git clean -fdx",
-    "clean:modules": "yarn if-clean git clean -fdx @remirror support docs",
-    "dev:docs": "docz dev",
-    "fix": "run-s fix:lint:* fix:*",
-    "fix:lint:babel": "yarn lint:babel --fix",
-    "fix:lint:js": "yarn lint:js --fix",
-    "fix:lint:ts": "lerna run lint --parallel -- --fix",
-    "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md,mdx}\"",
-    "fix:support": "yarn lint:support --fix",
-    "frozen": "yarn --frozen-lockfile install",
-    "if-clean": "node support/scripts/run-if-clean.js",
-    "if-config": "node support/scripts/run-if-config.js",
-    "integrity": "yarn check --integrity",
-    "launch:docs": "cross-env COVERAGE=true echo \"Launching...\" && docz dev --debug",
-    "lint": "run-s lint:*",
-    "lint:babel": "eslint **/.babelrc.js",
-    "lint:js": "eslint support *.js @remirror docs",
-    "lint:support": "tslint --project support/tsconfig.json --config support/tslint.json",
-    "lint:ts": "lerna run lint --parallel",
-    "publish:alpha": "yarn if-clean run-s ci:checks:all lerna:publish:alpha",
-    "lerna:publish:alpha": "lerna publish prerelease --preid=alpha --exact",
-    "test": "jest",
-    "stop:hooks": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
-    "start:hooks": "rimraf ./.config.json",
-    "test:integration:no-coverage": "cross-env TEST_ENV=integration jest --coverage=false",
-    "test:integration": "cross-env TEST_ENV=integration start-server-and-test launch:docs http-get://localhost:3000 test:integration:no-coverage",
-    "test:integration:watch": "cross-env TEST_ENV=integration yarn test:watch",
-    "test:watch": "jest  --watch --verbose=false --coverage=false",
-    "typecheck": "lerna run typecheck"
-  },
   "engines": {
     "node": ">=8"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn if-config ignoredHooks.preCommit lint-staged",
-      "pre-push": "yarn if-config ignoredHooks.prePush yarn checks",
-      "post-merge": "yarn if-config ignoredHooks.postMerge lerna bootstrap"
-    }
-  },
-  "lint-staged": {
-    "{@remirror,packages,docs,support}/**/*.{ts,tsx}": [
-      "tslint --fix",
-      "git add"
-    ],
-    "@remirror/*/src/**/*.{ts,tsx}": [
-      "jest --coverage=false --bail --findRelatedTests"
-    ],
-    "docs/**/*.{ts,tsx}": [
-      "jest --coverage=false --bail --findRelatedTests"
-    ],
-    "**/*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.{json,yml,yaml,md,mdx}": [
-      "prettier --write",
-      "git add"
-    ],
-    "**/.babelrc.js": [
-      "eslint --fix",
-      "git add"
-    ]
-  },
-  "resolutions": {
-    "react": "16.8.4",
-    "react-dom": "16.8.4",
-    "@babel/parser": "7.3.4",
-    "jsdom": "14.0.0",
-    "hoist-non-react-statics": "3.3.0"
-  },
-  "prettier": {
-    "useTabs": false,
-    "tabWidth": 2,
-    "jsxBracketSameLine": false,
-    "bracketSpacing": true,
-    "printWidth": 110,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "all",
-    "proseWrap": "preserve",
-    "endOfLine": "lf",
-    "jsxSingleQuote": true,
-    "overrides": [
-      {
-        "files": "*.js",
-        "options": {
-          "printWidth": 90
-        }
-      }
-    ]
   },
   "eslintConfig": {
     "extends": [
@@ -120,6 +9,13 @@
       "prettier",
       "plugin:prettier/recommended"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn if-config ignoredHooks.preCommit lint-staged",
+      "pre-push": "yarn if-config ignoredHooks.prePush yarn checks",
+      "post-merge": "yarn if-config ignoredHooks.postMerge lerna bootstrap"
+    }
   },
   "jest": {
     "cacheDirectory": "<rootDir>/.jest",
@@ -166,6 +62,116 @@
     ],
     "collectCoverageFrom": [
       "**/*.{ts,tsx}"
+    ]
+  },
+  "lint-staged": {
+    "{@remirror,packages,docs,support}/**/*.{ts,tsx}": [
+      "tslint --fix",
+      "git add"
+    ],
+    "@remirror/*/src/**/*.{ts,tsx}": [
+      "jest --coverage=false --bail --findRelatedTests"
+    ],
+    "docs/**/*.{ts,tsx}": [
+      "jest --coverage=false --bail --findRelatedTests"
+    ],
+    "**/*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{json,yml,yaml,md,mdx}": [
+      "prettier --write",
+      "git add"
+    ],
+    "**/.babelrc.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "useTabs": false,
+    "tabWidth": 2,
+    "jsxBracketSameLine": false,
+    "bracketSpacing": true,
+    "printWidth": 110,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "proseWrap": "preserve",
+    "endOfLine": "lf",
+    "jsxSingleQuote": true,
+    "overrides": [
+      {
+        "files": "*.js",
+        "options": {
+          "printWidth": 90
+        }
+      },
+      {
+        "files": "**/package.json",
+        "options": {
+          "parser": "package-json"
+        }
+      }
+    ]
+  },
+  "private": true,
+  "resolutions": {
+    "react": "16.8.4",
+    "react-dom": "16.8.4",
+    "@babel/parser": "7.3.4",
+    "jsdom": "14.0.0",
+    "hoist-non-react-statics": "3.3.0"
+  },
+  "scripts": {
+    "build": "run-s build:modules build:rollup",
+    "build:docs": "docz build",
+    "build:modules": "lerna run build --stream",
+    "build:production": "cross-env NODE_ENV=production yarn build",
+    "build:rollup": "rollup --config ./support/rollup/rollup.config.js",
+    "changelog": "lerna-changelog",
+    "checks": "run-s integrity lint typecheck test",
+    "checks:parallel": "run-p lint typecheck test",
+    "ci": "yarn clean && yarn frozen",
+    "ci:checks": "run-s integrity lint typecheck",
+    "ci:checks:all": "run-s integrity lint typecheck test test:integration build:production",
+    "clean": "yarn if-clean git clean -fdx --exclude=.config.json",
+    "clean:force": "git clean -fdx",
+    "clean:modules": "yarn if-clean git clean -fdx @remirror support docs",
+    "dev:docs": "docz dev",
+    "fix": "run-s fix:lint:* fix:*",
+    "fix:lint:babel": "yarn lint:babel --fix",
+    "fix:lint:js": "yarn lint:js --fix",
+    "fix:lint:ts": "lerna run lint --parallel -- --fix",
+    "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md,mdx}\"",
+    "fix:support": "yarn lint:support --fix",
+    "frozen": "yarn --frozen-lockfile install",
+    "if-clean": "node support/scripts/run-if-clean.js",
+    "if-config": "node support/scripts/run-if-config.js",
+    "integrity": "yarn check --integrity",
+    "launch:docs": "cross-env COVERAGE=true echo \"Launching...\" && docz dev --debug",
+    "lint": "run-s lint:*",
+    "lint:babel": "eslint **/.babelrc.js",
+    "lint:js": "eslint support *.js @remirror docs",
+    "lint:support": "tslint --project support/tsconfig.json --config support/tslint.json",
+    "lint:ts": "lerna run lint --parallel",
+    "publish:alpha": "yarn if-clean run-s ci:checks:all lerna:publish:alpha",
+    "lerna:publish:alpha": "lerna publish prerelease --preid=alpha --exact",
+    "test": "jest",
+    "stop:hooks": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
+    "start:hooks": "rimraf ./.config.json",
+    "test:integration:no-coverage": "cross-env TEST_ENV=integration jest --coverage=false",
+    "test:integration": "cross-env TEST_ENV=integration start-server-and-test launch:docs http-get://localhost:3000 test:integration:no-coverage",
+    "test:integration:watch": "cross-env TEST_ENV=integration yarn test:watch",
+    "test:watch": "jest  --watch --verbose=false --coverage=false",
+    "typecheck": "lerna run typecheck"
+  },
+  "workspaces": {
+    "packages": [
+      "@remirror/*",
+      "packages/*",
+      "support/dependencies",
+      "docs"
     ]
   }
 }

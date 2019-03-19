@@ -1,31 +1,18 @@
 {
   "name": "@remirror/extension-enhanced-link",
   "description": "Enhanced link extension for the remirror wysiwyg editor",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/extension-enhanced-link"
-  },
   "version": "0.0.1-alpha.7",
-  "main": "lib/index.js",
-  "module": "lib/dist/extension-enhanced-link.esm.js",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@remirror/core": "0.0.1-alpha.7"
+  },
   "files": [
     "lib",
     "src"
   ],
-  "scripts": {
-    "build": "run-s build:declaration build:babel",
-    "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
-    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
-  },
-  "types": "lib/index.d.ts",
-  "dependencies": {
-    "@remirror/core": "0.0.1-alpha.7"
-  },
+  "main": "lib/index.js",
+  "module": "lib/dist/extension-enhanced-link.esm.js",
   "peerDependencies": {
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-transform": "^1.1.0",
@@ -35,6 +22,19 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ifiokjr/remirror.git",
+    "directory": "@remirror/extension-enhanced-link"
+  },
+  "scripts": {
+    "build": "run-s build:declaration build:babel",
+    "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "types": "lib/index.d.ts",
   "umd": "lib/dist/extension-enhanced-link.umd.js",
   "umd:min": "lib/dist/extension-enhanced-link.umd.min.js",
   "umdGlobals": {

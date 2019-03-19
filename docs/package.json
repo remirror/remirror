@@ -1,15 +1,8 @@
 {
-  "private": true,
   "name": "docs",
   "description": "docs and examples for the remirror editor",
-  "license": "MIT",
   "version": "0.0.1-alpha.7",
-  "scripts": {
-    "prebuild": "run-s lint typecheck",
-    "lint": "tslint --project tsconfig.json --config ../tslint.json",
-    "test": "jest",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
-  },
+  "license": "MIT",
   "dependencies": {
     "@babel/core": "7.3.4",
     "@emotion/babel-preset-css-prop": "10.0.9",
@@ -29,5 +22,12 @@
     "match-sorter": "2.3.0",
     "react": "16.8.0",
     "react-dom": "16.8.0"
+  },
+  "private": true,
+  "scripts": {
+    "prebuild": "run-s lint typecheck",
+    "lint": "tslint --project tsconfig.json --config ../tslint.json",
+    "test": "jest",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
   }
 }
