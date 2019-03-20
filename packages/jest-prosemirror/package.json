@@ -20,7 +20,7 @@
     "prosemirror-state": "^1.2.2",
     "prosemirror-tables": "^0.7.10",
     "prosemirror-test-builder": "^1.0.1",
-    "prosemirror-view": "^1.8.3"
+    "prosemirror-view": "^1.8.4"
   },
   "files": [
     "lib",
