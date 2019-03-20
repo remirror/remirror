@@ -1,6 +1,13 @@
 import { EditorSchema, Extension, getPluginState } from '@remirror/core';
 import { Plugin, PluginKey } from 'prosemirror-state';
-import { COLORS, defaultEffect, heartEffect, PARTICLE_NUM_RANGE, spawningEffect } from './effects';
+import {
+  COLORS,
+  defaultEffect,
+  heartEffect,
+  PARTICLE_NUM_RANGE,
+  spawningEffect,
+  VIBRANT_COLORS,
+} from './effects';
 import { EpicModePluginState } from './state';
 import {
   CreateParticleParams,
@@ -21,7 +28,7 @@ export class EpicMode extends Extension<EpicModeOptions> {
     return {
       particleEffect: defaultEffect,
       canvasHolder: document.body,
-      colors: COLORS,
+      colors: VIBRANT_COLORS,
       particleRange: PARTICLE_NUM_RANGE,
       shake: true,
       shakeTime: 0.3,
@@ -91,4 +98,6 @@ export {
   UpdateParticleParams,
   CreateParticleParams,
   EpicModePluginStateParams,
+  COLORS,
+  VIBRANT_COLORS,
 };
