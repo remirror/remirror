@@ -160,7 +160,6 @@ describe('mod', () => {
     expect(event!.shiftKey).toBeTrue();
     expect(event!.metaKey).toBeFalse();
 
-    console.log(JSON.stringify(events));
     expect(events).toEqual([
       ['keydown', 'Shift'],
       ['keydown', char],

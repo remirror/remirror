@@ -37,14 +37,7 @@ test('should display a placeholder when the content is empty', () => {
     </Remirror>,
   );
 
-  // console.log(document.documentElement.outerHTML);
-  // const target = `.${EDITOR_CLASS_NAME} p.${EMPTY_NODE_CLASS_NAME}:first-of-type::before`;
-  // expect(baseElement).toHaveStyleRule('content', placeholderText, {
-  //   target,
-  // });
-
   const emptyNode = baseElement.querySelector(`.${EMPTY_NODE_CLASS_NAME}`) as HTMLElement;
-  // console.log(window.getComputedStyle(emptyNode, ':before').content);
   expect(emptyNode).toBeVisible();
   expect(getByLabelText(label)).toHaveAttribute('aria-placeholder', placeholderText);
 });

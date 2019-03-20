@@ -55,9 +55,7 @@ export const isAndroidOS = () => {
   if (!match) {
     return false;
   }
-  const outcome = cleanupOS(match[0], 'Android', 'Android');
-  console.log('The outcome is', outcome);
-  return outcome.includes('Android');
+  return cleanupOS(match[0], 'Android', 'Android').includes('Android');
 };
 
 /**

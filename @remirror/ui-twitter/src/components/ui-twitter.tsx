@@ -171,9 +171,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     }
   }
 
-  private onChange: RemirrorEventListener = ({}) => {
-    // console.log(getJSON());
-  };
+  private onChange: RemirrorEventListener = ({}) => {};
 
   get userMatches(): ActiveTwitterUserData[] {
     return this.props.userData.map((user, index) => ({
