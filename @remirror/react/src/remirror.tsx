@@ -13,6 +13,8 @@ import {
   getMarkAttrs,
   getNearestNonTextNode,
   InputRule,
+  isArray,
+  isString,
   memoize,
   NodeViewPortalContainer,
   ObjectNode,
@@ -33,7 +35,6 @@ import {
 } from '@remirror/core';
 import { Composition, History, Placeholder, PlaceholderPluginState } from '@remirror/core-extensions';
 import { createEditorView, getDoc, RemirrorSSR, shouldUseDOMEnvironment } from '@remirror/react-ssr';
-import is from '@sindresorhus/is';
 import { baseKeymap, selectParentNode } from 'prosemirror-commands';
 import { inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
@@ -555,13 +556,13 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       return undefined;
     }
 
-    return is.array(placeholder)
+    return isArray(placeholder)
       ? {
           text: placeholder[0],
           className: pluginState.emptyNodeClass,
           style: placeholder[1],
         }
-      : is.string(placeholder)
+      : isString(placeholder)
       ? { text: placeholder, className: pluginState.emptyNodeClass, style: {} }
       : undefined;
   }

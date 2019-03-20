@@ -22,7 +22,7 @@
   "main": "lib/index.js",
   "module": "lib/dist/react-ssr.esm.js",
   "peerDependencies": {
-    "@sindresorhus/is": "^0.15.0",
+
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "prosemirror-view": "1.8.3",

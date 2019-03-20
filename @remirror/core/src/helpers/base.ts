@@ -240,9 +240,9 @@ export const environment = {
 /**
  * Makes sure a value is either true or false
  *
- * @param val
+ * @param value
  */
-export const bool = (val: unknown) => Boolean(val);
+export const bool = (value: unknown) => Boolean(value);
 
 /**
  * A type name matcher for object types
@@ -450,3 +450,23 @@ export const isMap = (value: unknown): value is Map<unknown, unknown> =>
  */
 export const isSet = (value: unknown): value is Set<unknown> =>
   isObjectOfType<Set<unknown>>(TypeName.Set)(value);
+
+/**
+ * Predicate check that value is an empty object
+ *
+ * @param value
+ */
+export const isEmptyObject = (value: unknown): value is { [key: string]: never } =>
+  isObject(value) && !isMap(value) && !isSet(value) && Object.keys(value).length === 0;
+
+/**
+ * Predicate check that value is an empty array
+ *
+ * @param value
+ */
+export const isEmptyArray = (value: unknown): value is never[] => isArray(value) && value.length === 0;
+
+/**
+ * Helpful alias
+ */
+export const isArray = Array.isArray;

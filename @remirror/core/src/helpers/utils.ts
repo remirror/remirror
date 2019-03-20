@@ -1,7 +1,5 @@
-import is from '@sindresorhus/is';
 import { Selection as PMSelection } from 'prosemirror-state';
-import { EditorView, NodeType, ProsemirrorNode, Selection, Transaction } from '../types';
-import { isTextDOMNode } from './document';
+import { isNumber } from './base';
 
 /* "Borrowed" from prosemirror-utils in order to avoid requirement of `@prosemirror-tables`*/
 
@@ -77,7 +75,7 @@ export const findDOMRefAtPos = (position: number, view: EditorView) => {
  */
 export const removeNodeBefore = (tr: Transaction): Transaction => {
   const position = findPositionOfNodeBefore(tr.selection);
-  if (is.number(position)) {
+  if (isNumber(position)) {
     return removeNodeAtPos(position)(tr);
   }
   return tr;

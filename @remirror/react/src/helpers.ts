@@ -1,14 +1,22 @@
-import { Cast, OffsetCalculator, PlainObject, Position, Predicate, ShouldRenderMenu } from '@remirror/core';
-import is from '@sindresorhus/is';
+import {
+  Cast,
+  isFunction,
+  isString,
+  OffsetCalculator,
+  PlainObject,
+  Position,
+  Predicate,
+  ShouldRenderMenu,
+} from '@remirror/core';
 import { Children, isValidElement, ReactNode } from 'react';
 import { AttributePropFunction, RenderPropFunction } from './types';
 
-export const isAttributeFunction = Cast<Predicate<AttributePropFunction>>(is.function_);
+export const isAttributeFunction = Cast<Predicate<AttributePropFunction>>(isFunction);
 
-export const isRenderProp = Cast<Predicate<RenderPropFunction>>(is.function_);
+export const isRenderProp = Cast<Predicate<RenderPropFunction>>(isFunction);
 
 export const isDOMElement = (element: ReactNode) => {
-  return isValidElement(element) && is.string(element.type);
+  return isValidElement(element) && isString(element.type);
 };
 
 export const getElementProps = (element: JSX.Element): PlainObject & { children: JSX.Element } => {

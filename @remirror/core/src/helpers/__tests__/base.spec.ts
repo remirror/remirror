@@ -6,6 +6,8 @@ import {
   isBoolean,
   isClass,
   isDate,
+  isEmptyArray,
+  isEmptyObject,
   isError,
   isFunction,
   isInteger,
@@ -223,5 +225,21 @@ describe('predicates', () => {
     const failValue = false;
     expect(isObject(passValue)).toBeTrue();
     expect(isObject(failValue)).toBeFalse();
+  });
+
+  it('isEmptyObject', () => {
+    const passValue = {};
+    const failValue = { oop: 'sie' };
+    const altPassValue = new class Simple {}();
+    expect(isEmptyObject(passValue)).toBeTrue();
+    expect(isEmptyObject(failValue)).toBeFalse();
+    expect(isEmptyObject(altPassValue)).toBeTrue();
+  });
+
+  it('isEmptyArray', () => {
+    const passValue: never[] = [];
+    const failValue = ['oop', 'sie'];
+    expect(isEmptyArray(passValue)).toBeTrue();
+    expect(isEmptyArray(failValue)).toBeFalse();
   });
 });

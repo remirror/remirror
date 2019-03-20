@@ -19,7 +19,7 @@
   "main": "lib/index.js",
   "module": "lib/dist/renderer-react.esm.js",
   "peerDependencies": {
-    "@sindresorhus/is": "^0.15.0",
+
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",
