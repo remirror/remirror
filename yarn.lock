@@ -1980,11 +1980,6 @@
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.2.tgz#8013f2af54a2b7d735f71560ff360d3a8176a87b"
   integrity sha512-vTCdPp/T/Q3oSqwHmZ5Kpa9oI7iLtGl3RQaA/NyLHikvcrPxACkkKVr/XzkSPJWXHRhKGzVvb0urJsbMlRxi1Q==
 
-"@sindresorhus/is@0.15.0":
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.15.0.tgz#96915baa05e6a6a1d137badf4984d3fc05820bb6"
-  integrity sha512-lu8BpxjAtRCAo5ifytTpCPCj99LF7o/2Myn+NXyNCBqvPYn7Pjd76AMmUB5l7XF1U6t0hcWrlEM5ESufW7wAeA==
-
 "@sindresorhus/slugify@^0.6.0":
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/slugify/-/slugify-0.6.0.tgz#21ea00f4abf43d13a4c39c8174f241ff9b5d12bc"

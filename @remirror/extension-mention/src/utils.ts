@@ -1,5 +1,4 @@
-import { findMatches, NULL_CHARACTER, ResolvedPos } from '@remirror/core';
-import is from '@sindresorhus/is';
+import { findMatches, isRegExp, NULL_CHARACTER, ResolvedPos } from '@remirror/core';
 import { ActionTaken, SuggestionsMatcher, SuggestionStateField } from './types';
 
 /**
@@ -24,7 +23,7 @@ const escapeChar = (char: string) => `\\${char}`;
  * @param regexpOrString
  */
 const regexToString = (regexpOrString: string | RegExp) =>
-  is.regExp(regexpOrString) ? regexpOrString.source : regexpOrString;
+  isRegExp(regexpOrString) ? regexpOrString.source : regexpOrString;
 
 /**
  * Find regex prefix when depending on whether the mention only supports the start of a line or not

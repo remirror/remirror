@@ -47,8 +47,8 @@ test('should not render the editor when no render prop available', () => {
 
 test('should allow text input and fire all handlers', () => {
   let setContent: InjectedRemirrorProps['setContent'] = jest.fn();
-  const mock = jest.fn((val: InjectedRemirrorProps) => {
-    setContent = val.setContent;
+  const mock = jest.fn((value: InjectedRemirrorProps) => {
+    setContent = value.setContent;
     return <div />;
   });
   const { getByLabelText } = render(

@@ -1,6 +1,5 @@
-import is from '@sindresorhus/is';
 import { AnyExtension, Extension } from './extension';
-import { bool, Cast } from './helpers/base';
+import { bool, Cast, isObject } from './helpers/base';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
 import { AnyFunction, CommandParams, ExtensionType, FlexibleConfig, SchemaParams } from './types';
@@ -123,7 +122,7 @@ export const createFlexibleFunctionMap = <
  * @param extension
  */
 export const isNodeExtension = (extension: unknown): extension is NodeExtension<any> =>
-  is.object(extension) && extension instanceof NodeExtension;
+  isObject(extension) && extension instanceof NodeExtension;
 
 /**
  * Determines if the passed in extension is a mark extension. Useful as a type guard where a particular type of extension is needed.
@@ -131,7 +130,7 @@ export const isNodeExtension = (extension: unknown): extension is NodeExtension<
  * @param extension
  */
 export const isMarkExtension = (extension: unknown): extension is MarkExtension<any> =>
-  is.object(extension) && extension instanceof MarkExtension;
+  isObject(extension) && extension instanceof MarkExtension;
 
 /**
  * Checks whether the this is an extension and if it is a plain one
@@ -139,7 +138,7 @@ export const isMarkExtension = (extension: unknown): extension is MarkExtension<
  * @param extension
  */
 export const isPlainExtension = (extension: unknown): extension is Extension<any, never> =>
-  is.object(extension) && extension instanceof Extension && extension.type === ExtensionType.EXTENSION;
+  isObject(extension) && extension instanceof Extension && extension.type === ExtensionType.EXTENSION;
 
 /**
  * Checks to see if an optional property exists on an extension.

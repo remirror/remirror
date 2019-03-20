@@ -4,7 +4,7 @@ import React, { FunctionComponent, MouseEventHandler, useState } from 'react';
 
 import { memoize } from '@remirror/core';
 import { Bold, Italic, Underline } from '@remirror/core-extensions';
-import { Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react';
+import { bubblePositioner, Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react';
 import { RenderTree } from '@remirror/renderer-react';
 
 const EditorLayout: FunctionComponent = () => {
@@ -40,19 +40,20 @@ const EditorLayout: FunctionComponent = () => {
           extensions={extensions}
           initialContent={initialJson}
         >
-          {({ getMenuProps, actions }) => {
-            const menuProps = getMenuProps({
-              name: 'floating-menu',
+          {({ getPositionerProps, actions }) => {
+            const props = getPositionerProps({
+              positionerId: 'bubble',
+              ...bubblePositioner,
             });
             return (
               <div>
                 <div
                   style={{
                     position: 'absolute',
-                    top: menuProps.position.top,
-                    left: menuProps.position.left,
+                    bottom: props.isActive ? props.bottom : -9999,
+                    left: props.isActive ? props.left : -9999,
                   }}
-                  ref={menuProps.ref}
+                  ref={props.ref}
                 >
                   <button
                     style={{

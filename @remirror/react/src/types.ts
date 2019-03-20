@@ -1,32 +1,60 @@
 import {
   AnyExtension,
+  CompareStateParams,
   EditorSchema,
   EditorState,
+  EditorViewParams,
+  ElementParams,
   ExtensionManager,
   ObjectNode,
-  OffsetCalculator,
+  Omit,
   PlainObject,
   Position,
-  RawMenuPositionData,
+  PositionParams,
   RemirrorActions,
   RemirrorContentType,
-  ShouldRenderMenu,
   Transaction,
 } from '@remirror/core';
 import { RenderEnvironment } from '@remirror/react-ssr';
 import { Interpolation, ObjectInterpolation } from 'emotion';
 import { EditorView } from 'prosemirror-view';
 
-export interface GetMenuPropsConfig<GRefKey extends string = 'ref'> extends BaseGetterConfig<GRefKey> {
-  offset?: OffsetCalculator;
-  shouldRender?: ShouldRenderMenu;
-  offscreenPosition?: Partial<Position>;
-  name: string;
+export interface Positioner {
+  /**
+   * The default and initial position value. This is used at the start and whenever isActive becomes false
+   */
+
+  initialPosition: Position;
+  /**
+   * Determines whether anything has changed and whether to continue with
+   * a recalculation
+   *
+   * @param params
+   */
+  hasChanged(params: CompareStateParams): boolean;
+
+  /**
+   * Determines whether the positioner should be active
+   */
+  isActive(params: GetPositionParams): boolean;
+
+  /**
+   * Calculate and return a new position (only called when `hasChanged` and `isActive` return true)
+   */
+  getPosition(params: GetPositionParams): Position;
 }
+
+export type CalculatePositionerParams = PositionerIdParams & Positioner;
+
+export type GetPositionerPropsConfig<GRefKey extends string = 'ref'> = BaseGetterConfig<GRefKey> &
+  Partial<Omit<CalculatePositionerParams, 'positionerId'>> &
+  PositionerIdParams;
 
 export interface BaseGetterConfig<GRefKey extends string = 'ref'> {
   refKey?: GRefKey;
 }
+
+export type PositionerProps = IsActiveParams & Position;
 
 export interface GetRootPropsConfig<GRefKey extends string = 'ref'>
   extends BaseGetterConfig<GRefKey>,
@@ -66,13 +94,16 @@ export interface InjectedRemirrorProps {
   getRootProps<GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,
   ): RefKeyRootProps<GRefKey>;
-  getMenuProps<GRefKey extends string = 'ref'>(
-    options: GetMenuPropsConfig<GRefKey>,
-  ): {
-    position: Position;
-    rawData: RawMenuPositionData | null;
-    offscreen: boolean;
-  } & { [P in Exclude<GRefKey, 'children' | 'key' | 'position' | 'rawData' | 'offscreen'>]: React.Ref<any> };
+
+  /**
+   * Attach these props to a component to inject it with position data. Typically this is used
+   * for creating menu components.
+   *
+   * A custom positioner can be passed in to update the method used to calculate the position.
+   */
+  getPositionerProps<GRefKey extends string = 'ref'>(
+    options: GetPositionerPropsConfig<GRefKey>,
+  ): PositionerProps & { [P in GRefKey]: React.Ref<any> };
 }
 
 export type RenderPropFunction = (params: InjectedRemirrorProps) => JSX.Element;
@@ -222,4 +253,28 @@ export interface PlaceholderConfig {
   text: string;
   className: string;
   style: ObjectInterpolation<undefined>;
+}
+
+export type PositionerMapValue = ElementParams & {
+  prev: PositionerProps;
+};
+
+export interface PositionerRefFactoryParams extends PositionerIdParams, PositionParams {}
+
+export interface GetPositionParams extends EditorViewParams, ElementParams {}
+export interface PositionerIdParams {
+  /**
+   * A unique id for the positioner.
+   *
+   * This is used to map the ref of the tracked component to a unique id and cant be updated without losing track of the
+   * component's reference element.
+   */
+  positionerId: string;
+}
+
+export interface IsActiveParams {
+  /**
+   * A boolean value determining whether the positioner should be active.
+   */
+  isActive: boolean;
 }

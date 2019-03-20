@@ -13,6 +13,23 @@ export const COLORS = [
   '#17becf',
 ];
 
+export const VIBRANT_COLORS = [
+  '#0078ff',
+  '#bd00ff',
+  '#ff9a00',
+  '#01ff1f',
+  '#e3ff00',
+  '#1f77b4',
+  '#ff7f0e',
+  '#2ca02c',
+  '#d62728',
+  '#9467bd',
+  '#8c564b',
+  '#e377c2',
+  '#bcbd22',
+  '#17becf',
+];
+
 export const MAX_PARTICLES = 500;
 export const PARTICLE_NUM_RANGE = { min: 5, max: 10 };
 export const PARTICLE_GRAVITY = 0.08;
@@ -88,28 +105,21 @@ export const heartEffect: ParticleEffect = {
     return {
       x: x + 20,
       y: y - 10,
-      alpha: 0.8,
+      alpha: 1,
       color,
-      size: randomInt(5, 10),
+      size: randomInt(5, 12),
       drag: 0.92,
-      vx: randomInt(-3, 3),
-      vy: randomInt(-3, 3),
+      vx: randomInt(-3, 5),
+      vy: randomInt(-3, 5),
       wander: 0.15,
       theta: (randomInt(0, 360) * Math.PI) / 180,
     };
   },
+
   updateParticle({ particle, ctx }) {
     particle.x += particle.vx / 2;
     particle.y += particle.vy / 2;
-    particle.alpha *= 0.98;
-
-    // if (particle.x < 0 || particle.x > canvas.width) {
-    //   particle.vx = -particle.vx;
-    // }
-
-    // if (particle.y < 0 || particle.y > canvas.height) {
-    //   particle.vy = -particle.vy;
-    // }
+    particle.alpha *= 0.985;
 
     const baseLen = particle.size;
 

@@ -154,9 +154,9 @@ describe('Twitter UI', () => {
     it('should handle multiple emoji with no spaces', async () => {
       const msg = '123abcXYZ';
       await page.type(editorSelector, '😀😀😀😀');
-      await page.keyboard.press('ArrowLeft');
-      await page.keyboard.press('ArrowLeft');
-      await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowLeft', { delay: 100 });
+      await page.keyboard.press('ArrowLeft', { delay: 100 });
+      await page.keyboard.press('ArrowRight', { delay: 100 });
       await page.keyboard.type(msg);
       await expect(innerHtml(sel(editorSelector))).resolves.toInclude(msg);
     });

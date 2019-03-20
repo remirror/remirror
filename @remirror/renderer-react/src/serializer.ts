@@ -5,13 +5,15 @@ import {
   DOMOutputSpec,
   ExtensionManager,
   Fragment as ProsemirrorFragment,
+  isArray,
+  isPlainObject,
+  isString,
   Mark,
   MarkExtensionSpec,
   NodeExtensionSpec,
   PlainObject,
   ProsemirrorNode,
 } from '@remirror/core';
-import is from '@sindresorhus/is';
 import { mapProps } from './utils';
 
 type NodeToDOM = NodeExtensionSpec['toDOM'];
@@ -96,7 +98,7 @@ export class ReactSerializer {
       ): ReturnType<typeof createElement> => createElement(type, domSpecProps, wraps, ...domSpecChildren);
     }
 
-    if (is.string(structure)) {
+    if (isString(structure)) {
       return structure;
     }
 
@@ -105,7 +107,7 @@ export class ReactSerializer {
     const attrs = structure[1];
     const children: ReactNode[] = [];
     let currentIndex = 1;
-    if (is.plainObject(attrs) && !is.array(attrs)) {
+    if (isPlainObject(attrs) && !isArray(attrs)) {
       currentIndex = 2;
       for (const name in attrs) {
         if (attrs[name] != null) {

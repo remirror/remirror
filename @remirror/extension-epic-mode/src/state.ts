@@ -76,10 +76,16 @@ export class EpicModePluginState {
   public spawnParticles = throttle(() => {
     const { selection } = this.view.state;
     const coords = this.view.coordsAtPos(selection.$anchor.pos);
+
+    // Move the canvas
+    this.canvas.style.top = `${window.scrollY}px`;
+    this.canvas.style.left = `${window.scrollX}px`;
+
     const node = document.elementFromPoint(coords.left - 5, coords.top + 5);
     if (!node) {
       return;
     }
+
     const numParticles = randomInt(this.particleRange.min, this.particleRange.max);
     const textColor = getRGBComponents(node);
     for (let ii = 0; ii < numParticles; ii++) {

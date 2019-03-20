@@ -61,7 +61,8 @@
       "jest\\.*\\.ts"
     ],
     "collectCoverageFrom": [
-      "**/*.{ts,tsx}"
+      "**/*.{ts,tsx}",
+      "!**/*.d.ts"
     ]
   },
   "lint-staged": {

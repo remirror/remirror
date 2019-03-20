@@ -1,7 +1,7 @@
 import { MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType } from 'prosemirror-model';
 import { Plugin as PMPlugin } from 'prosemirror-state';
 import { NodeViewPortalContainer } from '../portal-container';
-import { EditorView, InputRule, Mark, Selection, Transaction } from './aliases';
+import { EditorView, InputRule, Mark, Transaction } from './aliases';
 import { EditorSchema, EditorState, Omit, ProsemirrorNode } from './base';
 
 /**
@@ -94,37 +94,6 @@ export type Attrs = Record<string, string | number>;
 export type Key<GRecord> = keyof GRecord;
 export type Value<GRecord> = GRecord[Key<GRecord>];
 
-export interface Position {
-  top: number;
-  left: number;
-  bottom: number;
-  right: number;
-}
-
-export interface ShouldRenderMenuProps {
-  offsetWidth: number;
-  offsetHeight: number;
-  selection: Selection;
-  emptySelection: boolean;
-}
-
-export interface RawMenuPositionData extends Position, ShouldRenderMenuProps {
-  windowTop: number;
-  windowLeft: number;
-  windowBottom: number;
-  windowRight: number;
-  nonTextNode: Pick<HTMLElement, 'offsetWidth' | 'offsetHeight' | 'offsetLeft' | 'offsetTop'>;
-}
-
-export type OffsetCalculatorMethod = (props: RawMenuPositionData) => number;
-export type ShouldRenderMenu = (props: ShouldRenderMenuProps) => boolean;
-export interface OffsetCalculator {
-  top?: OffsetCalculatorMethod;
-  left?: OffsetCalculatorMethod;
-  right?: OffsetCalculatorMethod;
-  bottom?: OffsetCalculatorMethod;
-}
-
 export type ElementUnion = Value<HTMLElementTagNameMap>;
 
 export interface ActionMethods {
@@ -172,10 +141,6 @@ export type PluginCreator = <GType extends NodeType | MarkType>(
   joinPredicate?: (p1: string[], p2: PMNode) => boolean,
 ) => PMPlugin;
 
-export interface FromTo {
-  from: number;
-  to: number;
-}
-
 export * from './aliases';
 export * from './base';
+export * from './builders';

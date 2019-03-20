@@ -6,11 +6,11 @@ import {
   EDITOR_CLASS_NAME,
   isDOMNode,
   isElementDOMNode,
+  isPlainObject,
   NodeViewPortalContainer,
   PlainObject,
   ProsemirrorNode,
 } from '@remirror/core';
-import is from '@sindresorhus/is';
 import { css, Interpolation } from 'emotion';
 import { Decoration, EditorView, NodeView } from 'prosemirror-view';
 
@@ -178,7 +178,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
         return;
       }
       const attrs = Cast<Attrs>(domSpec[1]);
-      if (is.plainObject(attrs)) {
+      if (isPlainObject(attrs)) {
         Object.keys(attrs).forEach(attr => {
           element.setAttribute(attr, String(attrs[attr]));
         });

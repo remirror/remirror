@@ -1,5 +1,5 @@
 import { NodeType } from 'prosemirror-model';
-import { CommandFunction, FromTo } from '../types';
+import { CommandFunction, FromToParams } from '../types';
 
 /**
  * Replaces text with an optional appended string at the end
@@ -10,7 +10,7 @@ import { CommandFunction, FromTo } from '../types';
  * @param appendText
  */
 export const replaceText = (
-  range: FromTo | null,
+  range: FromToParams | null,
   type: NodeType,
   attrs = {},
   appendText = '',

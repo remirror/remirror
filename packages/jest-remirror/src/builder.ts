@@ -139,17 +139,17 @@ export function offsetRefs(refs: Refs, offset: number): Refs {
 /**
  * Check if the value is an instance of the RefTracker class which is used for holding a position in the node
  *
- * @param val
+ * @param value
  */
-const isRefsTracker = (val: unknown): val is RefsTracker =>
-  typeof val === 'object' && val instanceof RefsTracker;
+const isRefsTracker = (value: unknown): value is RefsTracker =>
+  typeof value === 'object' && value instanceof RefsTracker;
 
 /**
  * Checks if the node is a RefNode (a normal ProsemirrorNode with a ref attribute)
  *
- * @param val
+ * @param value
  */
-const isRefsNode = (val: unknown): val is RefsNode => isProsemirrorNode(val) && !isRefsTracker(val);
+const isRefsNode = (value: unknown): value is RefsNode => isProsemirrorNode(value) && !isRefsTracker(value);
 
 /**
  * Given a collection of nodes, sequence them in an array and return the result

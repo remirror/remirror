@@ -4,7 +4,7 @@ import memoizeOne from 'memoize-one';
 import nano from 'nanoid';
 import objectOmit from 'object.omit';
 import objectPick from 'object.pick';
-import { Literal } from '../types/base';
+import { AnyConstructor, AnyFunction, Literal, PlainObject } from '../types/base';
 
 /**
  * Type cast an argument. If no type is provided it will default to any.
@@ -34,9 +34,15 @@ export const tuple = <GType extends Literal[]>(...args: GType) => args;
  */
 export const findMatches = (text: string, regexp: RegExp) => {
   const results: RegExpExecArray[] = [];
+  const flags = regexp.flags;
+  if (!flags.includes('g')) {
+    regexp = new RegExp(regexp.source, `g${flags}`);
+  }
+
   for (let match = regexp.exec(text); match !== null; match = regexp.exec(text)) {
     results.push(match);
   }
+
   return results;
 };
 
@@ -204,11 +210,11 @@ export const environment = {
    * Verifies that the environment has both a window and window.document
    */
   get isBrowser() {
-    return (
+    return bool(
       typeof window !== 'undefined' &&
-      typeof window.document !== 'undefined' &&
-      window.navigator &&
-      window.navigator.userAgent
+        typeof window.document !== 'undefined' &&
+        window.navigator &&
+        window.navigator.userAgent,
     );
   },
 
@@ -234,6 +240,233 @@ export const environment = {
 /**
  * Makes sure a value is either true or false
  *
- * @param val
+ * @param value
  */
-export const bool = (val: unknown) => Boolean(val);
+export const bool = (value: unknown) => Boolean(value);
+
+/**
+ * A type name matcher for object types
+ */
+enum TypeName {
+  Object = 'Object',
+  RegExp = 'RegExp',
+  Date = 'Date',
+  Promise = 'Promise',
+  Error = 'Error',
+  Map = 'Map',
+  Set = 'Set',
+}
+
+/**
+ * Alias of toString for non-dom environments
+ */
+const toString = Object.prototype.toString;
+
+/**
+ * Retrieve the object type of a value via it's string reference. This is safer than
+ * relying on instanceof checks which fail on cross-frame values.
+ */
+const getObjectType = (value: unknown): TypeName | undefined => {
+  const objectName = toString.call(value).slice(8, -1);
+  return objectName as TypeName;
+};
+
+/**
+ * A helper for building type predicates
+ *
+ * @param type
+ */
+const isOfType = <GType>(type: string) => (value: unknown): value is GType => typeof value === type;
+
+/**
+ * Get the object type of passed in value. This avoids the reliance on `instanceof` checks
+ * which are subject to cross frame issues as outlined in this link https://bit.ly/1Qds27W
+ *
+ * @param type
+ */
+const isObjectOfType = <GType>(type: TypeName) => (value: unknown): value is GType =>
+  getObjectType(value) === type;
+
+/**
+ * Predicate check that value is undefined
+ *
+ * @param value
+ */
+export const isUndefined = isOfType<undefined>('undefined');
+
+/**
+ * Predicate check that value is a string
+ *
+ * @param value
+ */
+export const isString = isOfType<string>('string');
+
+/**
+ * Predicate check that value is a number
+ *
+ * @param value
+ */
+export const isNumber = isOfType<number>('number');
+
+/**
+ * Predicate check that value is a function
+ *
+ * @param value
+ */
+export const isFunction = isOfType<AnyFunction>('function');
+
+/**
+ * Predicate check that value is null
+ *
+ * @param value
+ */
+export const isNull = (value: unknown): value is null => value === null;
+
+/**
+ * Predicate check that value is a class
+ *
+ * @param value
+ */
+export const isClass = (value: unknown): value is AnyConstructor =>
+  isFunction(value) && value.toString().startsWith('class ');
+
+/**
+ * Predicate check that value is boolean
+ *
+ * @param value
+ */
+export const isBoolean = (value: unknown): value is boolean => value === true || value === false;
+
+/**
+ * Predicate check that value is a symbol
+ *
+ * @param value
+ */
+export const isSymbol = isOfType<symbol>('symbol');
+
+/**
+ * Helper function for Number.isInteger check allowing non numbers to be tested
+ *
+ * @param value
+ */
+export const isInteger = (value: unknown): value is number => Number.isInteger(value as number);
+
+/**
+ * Helper function for Number.isSafeInteger allowing for unknown values to be tested
+ *
+ * @param value
+ */
+export const isSafeInteger = (value: unknown): value is number => Number.isSafeInteger(value as number);
+
+/**
+ * Predicate check for whether passed in value is a plain object
+ *
+ * @param value
+ */
+export const isPlainObject = (value: unknown): value is PlainObject => {
+  if (getObjectType(value) !== TypeName.Object) {
+    return false;
+  }
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === null || prototype === Object.getPrototypeOf({});
+};
+
+/**
+ * Utility predicate check that value is either null or undefined
+ *
+ * @param value
+ */
+export const isNullOrUndefined = (value: unknown): value is null | undefined =>
+  isNull(value) || isUndefined(value);
+
+/**
+ * Predicate check that value is an object
+ *
+ * @param value
+ */
+export const isObject = (value: unknown): value is object =>
+  !isNullOrUndefined(value) && (isFunction(value) || isOfType('object')(value));
+
+/**
+ * Predicate check that value is a native promise
+ *
+ * @param value
+ */
+export const isNativePromise = (value: unknown): value is Promise<unknown> =>
+  isObjectOfType<Promise<unknown>>(TypeName.Promise)(value);
+
+/**
+ * Check to see if a value has the built in promise API.
+ *
+ * @param value
+ */
+const hasPromiseAPI = (value: unknown): value is Promise<unknown> =>
+  !isNull(value) &&
+  (isObject(value) as unknown) &&
+  isFunction((value as Promise<unknown>).then) &&
+  isFunction((value as Promise<unknown>).catch);
+
+/**
+ * Predicate check that value has the promise api implemented
+ *
+ * @param value
+ */
+export const isPromise = (value: unknown): value is Promise<unknown> =>
+  isNativePromise(value) || hasPromiseAPI(value);
+
+/**
+ * Predicate check that value is a RegExp
+ *
+ * @param value
+ */
+export const isRegExp = isObjectOfType<RegExp>(TypeName.RegExp);
+
+/**
+ * Predicate check that value is a date
+ *
+ * @param value
+ */
+export const isDate = isObjectOfType<Date>(TypeName.Date);
+
+/**
+ * Predicate check that value is an error
+ *
+ * @param value
+ */
+export const isError = isObjectOfType<Error>(TypeName.Error);
+
+/**
+ * Predicate check that value is a map
+ *
+ * @param value
+ */
+export const isMap = (value: unknown): value is Map<unknown, unknown> =>
+  isObjectOfType<Map<unknown, unknown>>(TypeName.Map)(value);
+
+/**
+ * Predicate check that value is a set
+ *
+ * @param value
+ */
+export const isSet = (value: unknown): value is Set<unknown> =>
+  isObjectOfType<Set<unknown>>(TypeName.Set)(value);
+
+/**
+ * Predicate check that value is an empty object
+ *
+ * @param value
+ */
+export const isEmptyObject = (value: unknown): value is { [key: string]: never } =>
+  isObject(value) && !isMap(value) && !isSet(value) && Object.keys(value).length === 0;
+
+/**
+ * Predicate check that value is an empty array
+ *
+ * @param value
+ */
+export const isEmptyArray = (value: unknown): value is never[] => isArray(value) && value.length === 0;
+
+/**
+ * Helpful alias
+ */
+export const isArray = Array.isArray;
