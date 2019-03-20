@@ -38,7 +38,9 @@ export type Predicate<A> = (u: unknown) => u is A;
  * An object with string keys and values of type `any`
  * Taken from `simplytyped`
  */
-export type PlainObject = Record<string, any>;
+export interface PlainObject {
+  [key: string]: unknown;
+}
 
 /**
  * Concisely and cleanly define an arbitrary function.
