@@ -7,6 +7,7 @@ import {
   isDOMNode,
   isElementDOMNode,
   isPlainObject,
+  isString,
   NodeViewPortalContainer,
   PlainObject,
   ProsemirrorNode,
@@ -99,7 +100,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     const { toDOM } = this.node.type.spec;
     if (toDOM) {
       const domSpec = toDOM(this.node);
-      if (typeof domSpec === 'string') {
+      if (isString(domSpec)) {
         return document.createElement(domSpec);
       }
 
@@ -174,7 +175,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     if (toDOM) {
       const domSpec = toDOM(node);
 
-      if (typeof domSpec === 'string' || isDOMNode(domSpec)) {
+      if (isString(domSpec) || isDOMNode(domSpec)) {
         return;
       }
       const attrs = Cast<Attrs>(domSpec[1]);

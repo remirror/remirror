@@ -34,7 +34,7 @@ import {
   Selection,
   Transaction,
 } from '../types';
-import { bool, Cast, isNumber, isObject, isString } from './base';
+import { bool, Cast, isFunction, isNumber, isObject, isString } from './base';
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
@@ -42,7 +42,7 @@ import { bool, Cast, isNumber, isObject, isString } from './base';
  * @param value
  */
 export const isProsemirrorNode = (value: unknown): value is ProsemirrorNode =>
-  typeof isObject(value) && value instanceof PMNode;
+  isObject(value) && value instanceof PMNode;
 
 /**
  * Checks to see if the passed value is a Prosemirror Editor State
@@ -50,7 +50,7 @@ export const isProsemirrorNode = (value: unknown): value is ProsemirrorNode =>
  * @param value
  */
 export const isEditorState = (value: unknown): value is EditorState =>
-  typeof isObject(value) && value instanceof PMEditorState;
+  isObject(value) && value instanceof PMEditorState;
 
 /**
  * Predicate checking whether the selection is a TextSelection
@@ -58,7 +58,7 @@ export const isEditorState = (value: unknown): value is EditorState =>
  * @param value
  */
 export const isTextSelection = (value: unknown): value is TextSelection<EditorSchema> =>
-  typeof isObject(value) && value instanceof TextSelection;
+  isObject(value) && value instanceof TextSelection;
 
 /**
  * Predicate checking whether the selection is a Selection
@@ -66,7 +66,7 @@ export const isTextSelection = (value: unknown): value is TextSelection<EditorSc
  * @param value
  */
 export const isSelection = (value: unknown): value is Selection =>
-  typeof isObject(value) && value instanceof PMSelection;
+  isObject(value) && value instanceof PMSelection;
 
 /**
  * Checks that a mark is active within the selected region, or the current selection point is within a
@@ -269,10 +269,10 @@ export const getMatchString = (match: string | string[], index = 0) =>
  * @param domNode
  */
 export const isDOMNode = (domNode: unknown): domNode is Node =>
-  typeof isObject(Node)
+  isObject(Node)
     ? domNode instanceof Node
     : domNode !== null &&
-      typeof isObject(domNode) &&
+      isObject(domNode) &&
       isNumber(Cast(domNode).nodeType) &&
       isString(Cast(domNode).nodeName);
 
@@ -478,7 +478,7 @@ export const nodeNameMatchesList = (
   for (const checker of nodeMatches) {
     outcome = isRegexTuple(checker)
       ? regexTest(checker, name)
-      : typeof checker === 'function'
+      : isFunction(checker)
       ? checker(name, node)
       : checker === name;
 
@@ -505,7 +505,7 @@ export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: Edi
  * @param arg
  */
 export const isObjectNode = (arg: unknown): arg is ObjectNode =>
-  typeof isObject(arg) && (arg as PlainObject).type === 'doc' && Array.isArray((arg as PlainObject).content);
+  isObject(arg) && (arg as PlainObject).type === 'doc' && Array.isArray((arg as PlainObject).content);
 
 export interface CreateDocumentNodeParams extends SchemaParams, Partial<CustomDocParams> {
   /** The content to render */
@@ -533,7 +533,7 @@ export const createDocumentNode = ({ content, schema, doc = document }: CreateDo
     }
   }
 
-  if (typeof content === 'string') {
+  if (isString(content)) {
     return fromHTML({ doc, content, schema });
   }
 

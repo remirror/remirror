@@ -1,6 +1,6 @@
 import React, { ComponentType, FC } from 'react';
 
-import { ObjectMark, ObjectNode } from '@remirror/core';
+import { isString, ObjectMark, ObjectNode } from '@remirror/core';
 
 /* Inspired by https://github.com/rexxars/react-prosemirror-document */
 
@@ -42,7 +42,7 @@ const TextHandler: FC<TextHandlerProps> = ({ node, ...props }) => {
 };
 
 const normalizeMark = (mark: ObjectMark | string) =>
-  typeof mark === 'string' ? { type: mark, attrs: {} } : { attrs: {}, ...mark };
+  isString(mark) ? { type: mark, attrs: {} } : { attrs: {}, ...mark };
 
 const CodeBlock: FC<{
   node: ObjectNode;
@@ -131,7 +131,7 @@ export const RenderTree: FC<RenderTreeProps> = ({
     return null;
   }
 
-  const props = typeof TypeHandler === 'string' ? json.attrs || {} : { ...rest, node: json };
+  const props = isString(TypeHandler) ? json.attrs || {} : { ...rest, node: json };
   const { content } = json;
   if (!content || !content.length) {
     return <TypeHandler {...props} />;

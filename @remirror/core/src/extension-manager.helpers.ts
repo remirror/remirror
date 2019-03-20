@@ -1,5 +1,5 @@
 import { AnyExtension, Extension } from './extension';
-import { bool, Cast, isObject } from './helpers/base';
+import { bool, Cast, isFunction, isObject } from './helpers/base';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
 import { AnyFunction, CommandParams, ExtensionType, FlexibleConfig, SchemaParams } from './types';
@@ -99,7 +99,7 @@ export const createFlexibleFunctionMap = <
     const item = getItemParams(currentExtension, params);
     if (Array.isArray(item)) {
       items[name] = arrayTransformer(item, params, methodFactory);
-    } else if (typeof item === 'function') {
+    } else if (isFunction(item)) {
       items[name] = methodFactory(params, item);
     } else {
       Object.entries(item).forEach(([commandName, commandValue]) => {

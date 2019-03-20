@@ -1,10 +1,12 @@
+import { isString } from '@remirror/core';
+
 /**
  * Predicate for checking if the passed char is a supported character for the US Keyboard
  *
  * @param char
  */
 export const isUSKeyboardCharacter = (char: unknown): char is SupportCharacters =>
-  typeof char === 'string' && Object.keys(rawUSKeyboardLayout).includes(char);
+  isString(char) && Object.keys(rawUSKeyboardLayout).includes(char);
 
 /**
  * @see https://github.com/GoogleChrome/puppeteer/blob/07febb637c78cd59e22a15166f816d838a36e614/lib/USKeyboardLayout.js

@@ -1,5 +1,6 @@
 import {
   ExtensionCommandFunction,
+  isString,
   NodeExtension,
   NodeExtensionSpec,
   Plugin,
@@ -82,7 +83,7 @@ export class Mention<GName extends string> extends NodeExtension<MentionOptions<
         {
           tag: `${this.options.tag}[${dataAttribute}]`,
           getAttrs: dom => {
-            if (typeof dom === 'string') {
+            if (isString(dom)) {
               return false;
             }
 

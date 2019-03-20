@@ -1,6 +1,7 @@
-import { Attrs, EditorSchema, findMatches, isProsemirrorNode } from '@remirror/core';
+import { Attrs, EditorSchema, findMatches, isProsemirrorNode, isString } from '@remirror/core';
 import flatten from 'flatten';
 import { Fragment, Mark, Node as PMNode, Schema, Slice } from 'prosemirror-model';
+import { isObject } from 'util';
 import { testSchema } from './test-schema';
 
 /**
@@ -142,7 +143,7 @@ export function offsetRefs(refs: Refs, offset: number): Refs {
  * @param value
  */
 const isRefsTracker = (value: unknown): value is RefsTracker =>
-  typeof value === 'object' && value instanceof RefsTracker;
+  isObject(value) && value instanceof RefsTracker;
 
 /**
  * Checks if the node is a RefNode (a normal ProsemirrorNode with a ref attribute)
@@ -178,7 +179,7 @@ export function sequence(...content: RefsContentItem[]) {
  * Coerce builder content into ref nodes.
  */
 export function coerce(content: BuilderContent[], schema: Schema) {
-  const refsContent = content.map(item => (typeof item === 'string' ? text(item, schema) : item)) as Array<
+  const refsContent = content.map(item => (isString(item) ? text(item, schema) : item)) as Array<
     RefsContentItem | RefsContentItem[]
   >;
   return sequence(...flatten<RefsContentItem>(refsContent));
