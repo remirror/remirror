@@ -1,5 +1,7 @@
 import { Selection as PMSelection } from 'prosemirror-state';
+import { EditorState, EditorView, NodeType, ProsemirrorNode, Selection, Transaction } from '../types';
 import { isNumber } from './base';
+import { isSelection, isTextDOMNode } from './document';
 
 /* "Borrowed" from prosemirror-utils in order to avoid requirement of `@prosemirror-tables`*/
 
@@ -154,8 +156,9 @@ export const findPositionOfNodeBefore = (selection: Selection): number | undefin
 };
 
 /**
- * Checks whether the selection is currently empty.
+ * Checks whether the selection  or state is currently empty.
  *
- * @param selection
+ * @param value
  */
-export const selectionEmpty = (selection: Selection) => selection.empty;
+export const selectionEmpty = (value: Selection | EditorState) =>
+  isSelection(value) ? value.empty : value.selection.empty;

@@ -34,8 +34,8 @@ const Editor = props => (
     autoFocus={true}
     initialContent={initialJson}
   >
-    {({ getMenuProps, actions }) => {
-      const menuProps = getMenuProps({
+    {({ getPositionerProps, actions }) => {
+      const menuProps = getPositionerProps({
         name: 'floating-menu',
       });
       return (

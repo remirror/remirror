@@ -7,17 +7,26 @@ import {
   Node as PMNode,
   NodeType,
 } from 'prosemirror-model';
-import { EditorState, NodeSelection, Plugin, TextSelection } from 'prosemirror-state';
+import {
+  EditorState as PMEditorState,
+  NodeSelection,
+  Plugin,
+  Selection as PMSelection,
+  TextSelection,
+} from 'prosemirror-state';
 import { EMPTY_OBJECT_NODE } from '../constants';
 import {
   Attrs,
   EditorSchema,
-  FromTo,
+  EditorState,
+  EditorViewParams,
+  ElementParams,
+  FixedCoordsParams,
+  FromToParams,
   NodeMatch,
   ObjectNode,
   PlainObject,
   PluginKey,
-  Position,
   ProsemirrorNode,
   RegexTuple,
   RemirrorContentType,
@@ -25,15 +34,39 @@ import {
   Selection,
   Transaction,
 } from '../types';
-import { bool, Cast } from './base';
+import { bool, Cast, isNumber, isObject, isString } from './base';
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
  *
- * @param val
+ * @param value
  */
-export const isProsemirrorNode = (val: unknown): val is ProsemirrorNode =>
-  typeof val === 'object' && val instanceof PMNode;
+export const isProsemirrorNode = (value: unknown): value is ProsemirrorNode =>
+  typeof isObject(value) && value instanceof PMNode;
+
+/**
+ * Checks to see if the passed value is a Prosemirror Editor State
+ *
+ * @param value
+ */
+export const isEditorState = (value: unknown): value is EditorState =>
+  typeof isObject(value) && value instanceof PMEditorState;
+
+/**
+ * Predicate checking whether the selection is a TextSelection
+ *
+ * @param value
+ */
+export const isTextSelection = (value: unknown): value is TextSelection<EditorSchema> =>
+  typeof isObject(value) && value instanceof TextSelection;
+
+/**
+ * Predicate checking whether the selection is a Selection
+ *
+ * @param value
+ */
+export const isSelection = (value: unknown): value is Selection =>
+  typeof isObject(value) && value instanceof PMSelection;
 
 /**
  * Checks that a mark is active within the selected region, or the current selection point is within a
@@ -113,6 +146,17 @@ export const isDocNodeEmpty = (node: ProsemirrorNode) => {
 };
 
 /**
+ * Checks if the current node a paragraph node and empty
+ *
+ * @param node
+ */
+export const isEmptyParagraphNode = (node: ProsemirrorNode | null | undefined) => {
+  return (
+    !isProsemirrorNode(node) || (node.type.name === 'paragraph' && !node.textContent && !node.childCount)
+  );
+};
+
+/**
  * Retrieve the attributes for a mark.
  *
  * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
@@ -148,7 +192,7 @@ export const getMarkAttrs = (state: EditorState, type: MarkType) => {
 export const getMarkRange = (
   $pos: ResolvedPos | null = null,
   type: MarkType | null | undefined = null,
-): FromTo | false => {
+): FromToParams | false => {
   if (!$pos || !type) {
     return false;
   }
@@ -225,12 +269,12 @@ export const getMatchString = (match: string | string[], index = 0) =>
  * @param domNode
  */
 export const isDOMNode = (domNode: unknown): domNode is Node =>
-  typeof Node === 'object'
+  typeof isObject(Node)
     ? domNode instanceof Node
     : domNode !== null &&
-      typeof domNode === 'object' &&
-      typeof Cast(domNode).nodeType === 'number' &&
-      typeof Cast(domNode).nodeName === 'string';
+      typeof isObject(domNode) &&
+      isNumber(Cast(domNode).nodeType) &&
+      isString(Cast(domNode).nodeName);
 
 /**
  * Finds the closest element which matches the passed selector
@@ -289,6 +333,27 @@ export const isDocumentDOMNode = (domNode: unknown): domNode is Document =>
 export const isDocumentFragmentDOMNode = (domNode: unknown): domNode is DocumentFragment =>
   isDOMNode(domNode) && domNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
 
+interface GetOffsetParentParams extends EditorViewParams, ElementParams {}
+
+export const getOffsetParent = ({ view, element }: GetOffsetParentParams): HTMLElement =>
+  element ? (element.offsetParent as HTMLElement) : ((view.dom as HTMLElement).offsetParent as HTMLElement);
+
+/**
+ * Retrieve the line height from a an element
+ *
+ * @param params
+ * @param params.element
+ */
+export const getLineHeight = ({ element }: ElementParams) =>
+  parseFloat(window.getComputedStyle(element, undefined).lineHeight || '');
+
+interface AbsoluteCoordinatesParams extends EditorViewParams, ElementParams, FixedCoordsParams {
+  /**
+   * The height offset of the parent
+   */
+  cursorHeight?: number;
+}
+
 /**
  * We need to translate the co-ordinates because `coordsAtPos` returns co-ordinates
  * relative to `window`. And, also need to adjust the cursor container height.
@@ -298,22 +363,26 @@ export const isDocumentFragmentDOMNode = (domNode: unknown): domNode is Document
  * | {coordsAtPos} | [Cursor]   <- cursorHeight      |  |
  * |               | [FloatingToolbar]               |  |
  *
- * @param coords
- * @param offsetParent
- * @param cursorHeight
+ * @param params
+ * @param params.view
+ * @param params.element The target element which coordinates will be relative to
+ * @param params.coords
+ * @param params.cursorHeight The desired cursor height
  */
-export const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, cursorHeight: number) => {
-  const {
-    left: offsetParentLeft,
-    top: offsetParentTop,
-    height: offsetParentHeight,
-  } = offsetParent.getBoundingClientRect();
+export const absoluteCoordinates = ({
+  view,
+  element,
+  coords,
+  cursorHeight = getLineHeight({ element }),
+}: AbsoluteCoordinatesParams) => {
+  const offsetParent = getOffsetParent({ view, element });
+  const box = offsetParent.getBoundingClientRect();
 
   return {
-    left: coords.left - offsetParentLeft,
-    right: coords.right - offsetParentLeft,
-    top: coords.top - (offsetParentTop - cursorHeight) + offsetParent.scrollTop,
-    bottom: offsetParentHeight - (coords.top - (offsetParentTop - cursorHeight) - offsetParent.scrollTop),
+    left: coords.left - box.left,
+    right: coords.right - box.left,
+    top: coords.top - (box.top - cursorHeight) + offsetParent.scrollTop,
+    bottom: box.height - (coords.top - (box.top - cursorHeight) - offsetParent.scrollTop),
   };
 };
 
@@ -324,14 +393,6 @@ export const getAbsoluteCoordinates = (coords: Position, offsetParent: Element, 
  */
 export const getNearestNonTextNode = (domNode: Node) =>
   isTextDOMNode(domNode) ? (domNode.parentNode as HTMLElement) : (domNode as HTMLElement);
-
-/**
- * Predicate checking whether the selection is a TextSelection
- *
- * @param val
- */
-export const isTextSelection = (val: unknown): val is TextSelection<EditorSchema> =>
-  typeof val === 'object' && val instanceof TextSelection;
 
 /**
  * Checks whether the cursor is at the end of the state.doc
@@ -444,9 +505,7 @@ export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: Edi
  * @param arg
  */
 export const isObjectNode = (arg: unknown): arg is ObjectNode =>
-  typeof arg === 'object' &&
-  (arg as PlainObject).type === 'doc' &&
-  Array.isArray((arg as PlainObject).content);
+  typeof isObject(arg) && (arg as PlainObject).type === 'doc' && Array.isArray((arg as PlainObject).content);
 
 export interface CreateDocumentNodeParams extends SchemaParams, Partial<CustomDocParams> {
   /** The content to render */

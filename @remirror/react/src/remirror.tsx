@@ -2,6 +2,7 @@ import React, { cloneElement, Component, createElement, Fragment, ReactNode, Ref
 
 import { ClassNames, ClassNamesContent, Interpolation } from '@emotion/core';
 import {
+  CompareStateParams,
   createDocumentNode,
   Doc,
   EDITOR_CLASS_NAME,
@@ -9,25 +10,19 @@ import {
   EditorView as EditorViewType,
   EMPTY_OBJECT_NODE,
   ExtensionManager,
-  getAbsoluteCoordinates,
   getMarkAttrs,
-  getNearestNonTextNode,
   InputRule,
   isArray,
   isString,
   memoize,
   NodeViewPortalContainer,
   ObjectNode,
-  OffsetCalculator,
   Paragraph,
-  pick,
   Position,
   ProsemirrorPlugin,
-  RawMenuPositionData,
   RemirrorActions,
   RemirrorContentType,
   SchemaParams,
-  ShouldRenderMenu,
   Text,
   toHTML,
   Transaction,
@@ -41,30 +36,31 @@ import { keymap } from 'prosemirror-keymap';
 import { EditorState } from 'prosemirror-state';
 import {
   asDefaultProps,
-  baseOffsetCalculator,
-  defaultOffscreenPosition,
-  defaultShouldRender,
   getElementProps,
   isAttributeFunction,
   isDOMElement,
   isRenderProp,
-  simpleOffsetCalculator,
   uniqueClass,
   updateChildWithKey,
 } from './helpers';
 import { NodeViewPortal, NodeViewPortalComponent } from './node-views';
+import { defaultPositioner } from './positioners';
 import { defaultStyles } from './styles';
 import {
+  CalculatePositionerParams,
   GetRootPropsConfig,
   InjectedRemirrorProps,
   PlaceholderConfig,
+  PositionerMapValue,
+  PositionerProps,
+  PositionerRefFactoryParams,
   RefKeyRootProps,
   RemirrorEventListenerParams,
   RemirrorProps,
   RenderPropFunction,
 } from './types';
 
-export class Remirror extends Component<RemirrorProps, { editorState: EditorState }> {
+export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   public static defaultProps = asDefaultProps<RemirrorProps>()({
     initialContent: EMPTY_OBJECT_NODE,
     extensions: [],
@@ -79,7 +75,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
 
   public schema: EditorSchema;
   private editorRef?: HTMLElement;
-  private menuRefMap = new Map<string, HTMLElement>();
+  private positionerMap = new Map<string, PositionerMapValue>();
 
   /**
    * The uid for this instance.
@@ -136,6 +132,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
 
     this.state = this.createInitialState();
     this.view = this.createView();
+
     this.actions = this.extensionManager.actions({
       ...this.schemaParams,
       view: this.view,
@@ -161,7 +158,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   /**
    * Retrieve the editor state. This is passed through to the extension manager.
    */
-  private getEditorState = () => this.state.editorState;
+  private getEditorState = () => this.state.newState;
 
   /**
    * Retrieve the portal container which used for managing node views which contain react components via the portal api.
@@ -169,13 +166,49 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   private getPortalContainer = () => this.portalContainer;
 
   /**
-   * Create the extensions configuration through the extension manager
+   * Create the extensions manager through the extension manager
    */
   private createExtensions() {
     return new ExtensionManager(
       [...this.builtInExtensions, ...this.props.extensions],
       this.getEditorState,
       this.getPortalContainer,
+    );
+  }
+
+  /**
+   * Create the initial React state which stores copies of the Prosemirror editor state.
+   * Our React state also keeps track of the previous active state.
+   *
+   * It this point both prevState and newState point to the same state object.
+   */
+  private createInitialState(): CompareStateParams {
+    const newState = EditorState.create({
+      doc: createDocumentNode({ content: this.props.initialContent, doc: this.doc, schema: this.schema }),
+      plugins: this.plugins,
+    });
+
+    return {
+      newState,
+      prevState: newState,
+    };
+  }
+
+  /**
+   * Create the Prosemirror editor view
+   */
+  private createView() {
+    return createEditorView(
+      undefined,
+      {
+        state: this.state.newState,
+        dispatchTransaction: this.dispatchTransaction,
+        attributes: this.getAttributes,
+        editable: () => {
+          return this.props.editable;
+        },
+      },
+      this.props.forceEnvironment,
     );
   }
 
@@ -237,18 +270,22 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     } as RefKeyRootProps<GRefKey>;
   }
 
-  private getMenuProps: InjectedRemirrorProps['getMenuProps'] = options => {
-    const { refKey = 'ref', ...config } = options || {};
-    const el = this.menuRefMap.get(config.name);
+  private getPositionerProps: InjectedRemirrorProps['getPositionerProps'] = options => {
+    const { refKey = 'ref', ...config } = { ...defaultPositioner, ...(options || {}) };
+
+    // Create the onRef handler which will store the ref to the positioner component
+    const ref = this.positionerRefFactory({
+      positionerId: config.positionerId,
+      position: config.initialPosition as Position,
+    });
+
+    // Calculate the props
+    const props = this.calculatePositionProps({ ...config });
+
     return {
-      ...this.calculateMenuPosition(
-        config ? config.offset || {} : {},
-        config.shouldRender,
-        config.offscreenPosition,
-        el,
-      ),
-      [refKey]: this.onMenuRefFactory(config.name),
-    } as ReturnType<InjectedRemirrorProps['getMenuProps']>;
+      ...props,
+      [refKey]: ref,
+    } as ReturnType<InjectedRemirrorProps['getPositionerProps']>;
   };
 
   private onRef: Ref<HTMLElement> = ref => {
@@ -258,101 +295,56 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     }
   };
 
-  private onMenuRefFactory = memoize(
-    (name: string): Ref<HTMLElement> => ref => {
-      if (ref && this.menuRefMap.get(name) !== ref) {
-        this.menuRefMap.set(name, ref);
+  private positionerRefFactory = memoize(
+    ({ positionerId, position }: PositionerRefFactoryParams): Ref<HTMLElement> => element => {
+      if (!element) {
+        return;
+      }
+
+      const current = this.positionerMap.get(positionerId);
+      if (!current || current.element !== element) {
+        this.positionerMap.set(positionerId, { element, prev: { ...position, isActive: false } });
       }
     },
   );
 
-  private calculateMenuPosition(
-    offset: OffsetCalculator,
-    shouldRender: ShouldRenderMenu = defaultShouldRender,
-    offscreenPosition: Partial<Position> = defaultOffscreenPosition,
-    el?: HTMLElement,
-  ): { position: Position; rawData: RawMenuPositionData | null; offscreen: boolean } {
-    const empty = {
-      position: { ...defaultOffscreenPosition, ...offscreenPosition },
-      rawData: null,
-      offscreen: true,
-    };
-    if (!this.view || !this.view.hasFocus() || !el) {
-      return empty;
+  private calculatePositionProps({
+    initialPosition,
+    getPosition,
+    hasChanged,
+    isActive,
+    positionerId,
+  }: CalculatePositionerParams): PositionerProps {
+    const positionerMapItem = this.positionerMap.get(positionerId);
+    let positionerProps = { isActive: false, ...initialPosition };
+
+    // No element exist yet - so we can return early
+    if (!positionerMapItem) {
+      return positionerProps;
     }
 
-    const { selection } = this.view.state;
-    const { offsetWidth, offsetHeight, offsetParent } = el;
-    const shouldRenderProps = {
-      selection,
-      offsetWidth,
-      offsetHeight,
-      emptySelection: selection.empty,
-    };
-
-    if (!shouldRender(shouldRenderProps)) {
-      return empty;
+    if (!hasChanged(this.state)) {
+      return positionerMapItem.prev;
     }
 
-    const coords = this.view.coordsAtPos(selection.$anchor.pos);
-    const nodeAtPosition = this.view.domAtPos(selection.anchor).node;
-    const nonTextNode = pick(getNearestNonTextNode(nodeAtPosition), [
-      'offsetHeight',
-      'offsetLeft',
-      'offsetTop',
-      'offsetWidth',
-    ]);
+    const { element, prev } = positionerMapItem;
+    const params = { element, view: this.view };
 
-    const absCoords = getAbsoluteCoordinates(coords, offsetParent!, offsetHeight);
+    positionerProps.isActive = isActive(params);
 
-    const rawData = {
-      ...shouldRenderProps,
-      ...absCoords,
-      nonTextNode,
-      windowTop: coords.top,
-      windowLeft: coords.left,
-      windowBottom: coords.bottom,
-      windowRight: coords.right,
-    };
+    if (!positionerProps.isActive) {
+      if (prev.isActive) {
+        // This has changed so store the new value
+        this.positionerMap.set(positionerId, { element, prev: positionerProps });
+        return positionerProps;
+      }
+      return prev;
+    }
 
-    const offsetCalculator = { ...baseOffsetCalculator, ...simpleOffsetCalculator, ...offset };
+    positionerProps = { ...positionerProps, ...getPosition(params) };
+    this.positionerMap.set(positionerId, { element, prev: positionerProps });
 
-    const position = {
-      top: offsetCalculator.top(rawData),
-      left: offsetCalculator.left(rawData),
-      right: offsetCalculator.right(rawData),
-      bottom: offsetCalculator.bottom(rawData),
-    };
-
-    return {
-      rawData,
-      position,
-      offscreen: false,
-    };
-  }
-
-  private createInitialState() {
-    return {
-      editorState: EditorState.create({
-        doc: createDocumentNode({ content: this.props.initialContent, doc: this.doc, schema: this.schema }),
-        plugins: this.plugins,
-      }),
-    };
-  }
-
-  private createView() {
-    return createEditorView(
-      undefined,
-      {
-        state: this.state.editorState,
-        dispatchTransaction: this.dispatchTransaction,
-        attributes: this.getAttributes,
-        editable: () => {
-          return this.props.editable;
-        },
-      },
-      this.props.forceEnvironment,
-    );
+    return positionerProps as PositionerProps;
   }
 
   /**
@@ -380,7 +372,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   private setMarkAttrs() {
     const markAttrs: Record<string, Record<string, string>> = {};
     Object.entries(this.schema.marks).forEach(([name, attr]) => {
-      markAttrs[name] = getMarkAttrs(this.state.editorState, attr);
+      markAttrs[name] = getMarkAttrs(this.state.newState, attr);
     });
 
     return markAttrs;
@@ -402,14 +394,17 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     if (dispatchTransaction) {
       dispatchTransaction(transaction);
     }
-    const { state } = this.state.editorState.applyTransaction(transaction);
-    this.setState({ editorState: state }, () => {
-      // For some reason moving the update state here fixes a bug
-      this.view.updateState(state);
-      if (onChange) {
-        onChange({ ...this.eventListenerParams, state });
-      }
-    });
+    const { state } = this.state.newState.applyTransaction(transaction);
+    this.setState(
+      ({ newState }) => ({ prevState: newState, newState: state }),
+      () => {
+        // For some reason moving the update state here fixes a bug
+        this.view.updateState(state);
+        if (onChange) {
+          onChange({ ...this.eventListenerParams, state });
+        }
+      },
+    );
   };
 
   private addProsemirrorViewToDom(reactRef: HTMLElement, viewDom: Element) {
@@ -483,7 +478,8 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
       }
     };
 
-    this.setState({ editorState }, afterUpdate);
+    // ? Unsure of whether to ignore the previous state at this point or not
+    this.setState(({ newState }) => ({ prevState: newState, newState: editorState }), afterUpdate);
   };
 
   private clearContent = (triggerOnChange = false) => {
@@ -492,7 +488,7 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
 
   get eventListenerParams(): RemirrorEventListenerParams {
     return {
-      state: this.state.editorState,
+      state: this.state.newState,
       view: this.view,
       getHTML: this.getHTML,
       getJSON: this.getJSON,
@@ -513,12 +509,12 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
 
       /* Getters */
       getRootProps: this.getRootProps,
-      getMenuProps: this.getMenuProps,
+      getPositionerProps: this.getPositionerProps,
     };
   }
 
   private getText = (lineBreakDivider = '\n\n') => {
-    const { doc } = this.state.editorState;
+    const { doc } = this.state.newState;
     return doc.textBetween(0, doc.content.size, lineBreakDivider);
   };
 
@@ -526,15 +522,15 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
    * Retrieve the HTML from the `doc` prosemirror node
    */
   private getHTML = () => {
-    return toHTML({ node: this.state.editorState.doc, schema: this.schema, doc: this.doc });
+    return toHTML({ node: this.state.newState.doc, schema: this.schema, doc: this.doc });
   };
 
   private getJSON = (): ObjectNode => {
-    return this.state.editorState.toJSON() as ObjectNode;
+    return this.state.newState.toJSON() as ObjectNode;
   };
 
   private getDocJSON = (): ObjectNode => {
-    return this.state.editorState.doc.toJSON() as ObjectNode;
+    return this.state.newState.doc.toJSON() as ObjectNode;
   };
 
   private get placeholder(): PlaceholderConfig | undefined {
@@ -578,6 +574,11 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
     }
   }
 
+  /**
+   * A helper function to render node view portal
+   *
+   * @param portalContainer
+   */
   private renderNodeViewPortal = (portalContainer: NodeViewPortalContainer) => {
     this.setPortalContainer(portalContainer);
     return <ClassNames>{this.renderProsemirrorElement(portalContainer)}</ClassNames>;
@@ -585,6 +586,8 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
 
   /**
    * Checks whether this is an SSR environment and returns a child array with the SSR component
+   *
+   * @param child
    */
   private injectSSRIntoElementChildren(child: ReactNode) {
     const { forceEnvironment, insertPosition } = this.props;
@@ -597,11 +600,11 @@ export class Remirror extends Component<RemirrorProps, { editorState: EditorStat
   }
 
   private renderSSR() {
-    const state = this.state.editorState;
+    const state = this.state.newState;
     return (
       <RemirrorSSR
         attributes={this.getAttributes(state)}
-        state={this.state.editorState}
+        state={this.state.newState}
         manager={this.extensionManager}
       />
     );

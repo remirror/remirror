@@ -13,8 +13,8 @@ const Menu: FunctionComponent<RefAttributes<HTMLDivElement> & PlainObject> = for
 test('updates the offscreen attribute when a selection is active', () => {
   render(
     <Remirror>
-      {({ getMenuProps }) => {
-        const { ref } = getMenuProps({ name: 'test' });
+      {({ getPositionerProps }) => {
+        const { ref } = getPositionerProps({ positionerId: 'test' });
         return (
           <div>
             <Menu ref={ref} />
@@ -29,11 +29,10 @@ test('updates the offscreen attribute when a selection is active', () => {
 test('provides correct menu props', () => {
   render(
     <Remirror>
-      {({ getMenuProps }) => {
-        const { ref, ...props } = getMenuProps({ name: 'test' });
+      {({ getPositionerProps }) => {
+        const { ref, ...props } = getPositionerProps({ positionerId: 'test' });
         expect(ref).toEqual(expect.any(Function));
-        expect(props).toContainAllKeys(['position', 'rawData', 'offscreen']);
-        expect(props.offscreen).toBe(true);
+        expect(props).toContainAllKeys(['top', 'left', 'bottom', 'right', 'isActive']);
         return <div />;
       }}
     </Remirror>,

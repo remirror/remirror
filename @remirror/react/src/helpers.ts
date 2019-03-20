@@ -1,13 +1,4 @@
-import {
-  Cast,
-  isFunction,
-  isString,
-  OffsetCalculator,
-  PlainObject,
-  Position,
-  Predicate,
-  ShouldRenderMenu,
-} from '@remirror/core';
+import { Cast, isFunction, isString, PlainObject, Predicate } from '@remirror/core';
 import { Children, isValidElement, ReactNode } from 'react';
 import { AttributePropFunction, RenderPropFunction } from './types';
 
@@ -22,24 +13,6 @@ export const isDOMElement = (element: ReactNode) => {
 export const getElementProps = (element: JSX.Element): PlainObject & { children: JSX.Element } => {
   return element ? element.props : {};
 };
-
-export const baseOffsetCalculator: Required<OffsetCalculator> = {
-  top: () => 0,
-  left: () => 0,
-  right: () => 0,
-  bottom: () => 0,
-};
-
-export const simpleOffsetCalculator: OffsetCalculator = {
-  left: props => props.left,
-  top: props => props.top,
-  right: props => props.right,
-  bottom: props => props.bottom,
-};
-
-export const defaultShouldRender: ShouldRenderMenu = props => props.selection && !props.selection.empty;
-
-export const defaultOffscreenPosition: Position = { left: -1000, top: 0, bottom: 0, right: 0 };
 
 export const uniqueClass = (uid: string, className: string) => `${className}-${uid}`;
 

@@ -3,7 +3,7 @@ import {
   CommandFunction,
   EditorSchema,
   EditorView,
-  FromTo,
+  FromToParams,
   MakeRequired,
   NodeExtensionOptions,
 } from '@remirror/core';
@@ -28,7 +28,7 @@ export interface SuggestionsMatcher {
 }
 export interface SuggestionStateField {
   /** Range of current match */
-  range: FromTo;
+  range: FromToParams;
   /** Current query of match which doesn't include the match character */
   query: string;
   /** Full string of match including the activation character e.g. `'@awesome'` */
@@ -36,7 +36,7 @@ export interface SuggestionStateField {
 }
 export interface SuggestionsCommandParams {
   attrs?: Attrs;
-  range: FromTo | null;
+  range: FromToParams | null;
   schema: EditorSchema;
   appendText?: string;
 }
@@ -47,7 +47,7 @@ export interface SuggestionsCallbackParams extends SuggestionStateField {
 export interface OnKeyDownParams {
   view: EditorView;
   event: KeyboardEvent;
-  range: FromTo | null;
+  range: FromToParams | null;
 }
 
 export interface MentionOptions<GName extends string> extends NodeExtensionOptions {

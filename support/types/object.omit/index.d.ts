@@ -15,13 +15,15 @@ declare function omit<GObject extends object, GKey extends keyof GObject>(
   object: GObject,
   keys: GKey[],
 ): Omit<GObject, GKey>;
+
 declare function omit<GObject extends object, GKey extends keyof GObject>(
   object: GObject,
   key: GKey,
 ): Omit<GObject, GKey>;
+
 declare function omit<GObject extends object, GKey extends keyof GObject>(
   object: GObject,
-  fn: (val: GObject[GKey], key: GKey, obj: GObject) => boolean,
-): object;
+  fn: (value: GObject[GKey], key: GKey, obj: GObject) => boolean,
+): { [key: string]: any };
 
 export = omit;

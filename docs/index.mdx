@@ -67,8 +67,8 @@ const Editor = props => (
     autoFocus={true}
     initialContent={initialJson}
   >
-    {({ getMenuProps, actions }) => {
-      const menuProps = getMenuProps({
+    {({ getPositionerProps, actions }) => {
+      const menuProps = getPositionerProps({
         name: 'floating-menu',
       });
       return (
@@ -108,10 +108,10 @@ import { RemirrorProvider, useRemirror } from 'remirror';
 
 function HooksComponent(props) {
   // This pull the remirror props out from the context.
-  const { getMenuProps } = useRemirror();
+  const { getPositionerProps } = useRemirror();
 
   // ...
-  return <Menu {...getMenuProps()} />;
+  return <Menu {...getPositionerProps()} />;
 }
 
 class App extends Component {
@@ -134,10 +134,10 @@ import { RemirrorProvider, withRemirror, InjectedRemirrorProps } from 'remirror'
 // ...
 
 function EditorComponent(props: InjectedRemirrorProps) {
-  const { getMenuProps } = props;
+  const { getPositionerProps } = props;
 
   // ...
-  return <Menu {...getMenuProps()} />;
+  return <Menu {...getPositionerProps()} />;
 }
 
 const WrappedEditorComponent = withRemirror(EditorComponent);
