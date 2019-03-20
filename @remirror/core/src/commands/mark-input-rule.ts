@@ -1,14 +1,20 @@
 import { InputRule } from 'prosemirror-inputrules';
 import { MarkType } from 'prosemirror-model';
+import { isFunction } from '../helpers';
 import { Attrs } from '../types';
 
+/**
+ * Creates an input rule based on the provided regex for the provided mark type
+ *
+ * @param param
+ */
 export const markInputRule = (
   regexp: RegExp,
   markType: MarkType,
   getAttrs?: ((attrs: string[]) => Attrs) | Attrs,
 ) => {
   return new InputRule(regexp, (state, match, start, end) => {
-    const attrs = getAttrs instanceof Function ? getAttrs(match) : getAttrs;
+    const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
     const { tr } = state;
     let markEnd = end;
 

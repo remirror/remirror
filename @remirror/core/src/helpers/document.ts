@@ -271,10 +271,7 @@ export const getMatchString = (match: string | string[], index = 0) =>
 export const isDOMNode = (domNode: unknown): domNode is Node =>
   isObject(Node)
     ? domNode instanceof Node
-    : domNode !== null &&
-      isObject(domNode) &&
-      isNumber(Cast(domNode).nodeType) &&
-      isString(Cast(domNode).nodeName);
+    : isObject(domNode) && isNumber(Cast(domNode).nodeType) && isString(Cast(domNode).nodeName);
 
 /**
  * Finds the closest element which matches the passed selector

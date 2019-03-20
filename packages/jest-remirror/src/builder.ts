@@ -1,7 +1,6 @@
-import { Attrs, EditorSchema, findMatches, isProsemirrorNode, isString } from '@remirror/core';
+import { Attrs, EditorSchema, findMatches, isObject, isProsemirrorNode, isString } from '@remirror/core';
 import flatten from 'flatten';
 import { Fragment, Mark, Node as PMNode, Schema, Slice } from 'prosemirror-model';
-import { isObject } from 'util';
 import { testSchema } from './test-schema';
 
 /**
@@ -75,7 +74,7 @@ export interface RefsNode extends PMNode {
 }
 
 // Helpers
-const isEven = (n: number) => n % 2 === 0;
+const isOdd = (n: number) => n % 2 === 1;
 
 /**
  * Create a text node.
@@ -98,14 +97,13 @@ export const text = (value: string, schema: EditorSchema): RefsContentItem => {
 
     const skipLen = skipChars && skipChars.length;
     if (skipLen) {
-      if (isEven(skipLen)) {
-        index += skipLen / 2;
-      } else {
+      if (isOdd(skipLen)) {
         stripped += value.slice(textIndex, index + (skipLen - 1) / 2);
         stripped += value.slice(index + skipLen, index + refToken.length);
         textIndex = index + refToken.length;
         continue;
       }
+      index += skipLen / 2;
     }
 
     stripped += value.slice(textIndex, index);
