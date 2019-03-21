@@ -1,7 +1,7 @@
 <div align="center">
 	<br />
 	<div>
-		<img width="300" src="../../support/assets/logo-icon.svg" alt="remirror" />
+		<img width="300" src="https://cdn.jsdelivr.net/gh/ifiokjr/remirror/support/assets/logo-icon.svg" alt="remirror" />
     <h1 align="center">react</h1>
 	</div>
     <br />

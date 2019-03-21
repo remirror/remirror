@@ -1,9 +1,66 @@
-import { isProsemirrorNode } from '@remirror/core';
+import { EditorState, isEditorState, isProsemirrorNode, ProsemirrorNode } from '@remirror/core';
 import { toMatchSnapshot } from 'jest-snapshot';
 import { TaggedProsemirrorNode } from './types';
 
 export const remirrorMatchers: jest.ExpectExtendMap = {
-  toEqualRemirrorDocument(actual, expected: TaggedProsemirrorNode) {
+  toContainRemirrorDocument(state: EditorState, expected: TaggedProsemirrorNode) {
+    if (!isProsemirrorNode(expected)) {
+      return {
+        pass: false,
+        actual: state,
+        expected,
+        name: 'toContainRemirrorDocument',
+        message: 'The expected value should be an instance of ProsemirrorNode.',
+      };
+    }
+
+    if (!isEditorState(state)) {
+      return {
+        pass: false,
+        actual: state,
+        expected,
+        name: 'toContainRemirrorDocument',
+        message: 'Expected the value passed in to be an EditorState',
+      };
+    }
+
+    if (expected.type.schema !== state.schema) {
+      return {
+        pass: false,
+        actual: state,
+        expected,
+        name: 'toContainRemirrorDocument',
+        message: 'Expected both values to be using the same schema.',
+      };
+    }
+
+    const pass = this.equals(state.doc.content.child(0).toJSON(), expected.toJSON());
+    const message = pass
+      ? () =>
+          `${this.utils.matcherHint('.not.toContainRemirrorDocument')}\n\n` +
+          `Expected JSON value of document to not equal:\n  ${this.utils.printExpected(expected)}\n` +
+          `Actual JSON:\n  ${this.utils.printReceived(state)}`
+      : () => {
+          const diffString = this.utils.diff(expected, state, {
+            expand: this.expand,
+          });
+          return (
+            `${this.utils.matcherHint('.toContainRemirrorDocument')}\n\n` +
+            `Expected JSON value of document to equal:\n${this.utils.printExpected(expected)}\n` +
+            `Actual JSON:\n  ${this.utils.printReceived(state)}` +
+            `${diffString ? `\n\nDifference:\n\n${diffString}` : ''}`
+          );
+        };
+
+    return {
+      pass,
+      actual: state,
+      expected,
+      message,
+      name: 'toContainRemirrorDocument',
+    };
+  },
+  toEqualRemirrorDocument(actual: ProsemirrorNode, expected: TaggedProsemirrorNode) {
     // Because schema is created dynamically, expected value is a function (schema) => PMNode;
     // That's why this magic is necessary. It simplifies writing assertions, so
     // instead of expect(doc).toEqualRemirrorDocument(doc(p())(schema)) we can just do:
@@ -108,6 +165,18 @@ declare global {
       snapshotState: any;
     }
     interface Matchers<R> {
+      /**
+       * Checks that EditorState passed in has this as it's top level parent node.
+       *
+       * ```ts
+       * expect(view.state).toContainRemirrorDocument(p(`This is SPARTA`));
+       * ```
+       */
+      toContainRemirrorDocument(builder: TaggedProsemirrorNode): R;
+      /**
+       * Checks that the nodes are equal.
+       *
+       */
       toEqualRemirrorDocument(builder: TaggedProsemirrorNode): R;
       toMatchRemirrorSnapshot(builder: TaggedProsemirrorNode): R;
     }

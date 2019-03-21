@@ -50,7 +50,7 @@ describe('plugin', () => {
     onExit: jest.fn(),
   };
 
-  it('does nothing without invoking the callbacks', () => {
+  it('uses default noop callbacks', () => {
     const id = 'mention';
     const label = `@${id}`;
     const {
@@ -62,7 +62,7 @@ describe('plugin', () => {
     });
 
     add(doc(p('<cursor>'))).insertText(`This ${label} `);
-    expect(view.state.doc.content.child(0)).toEqualRemirrorDocument(p(`This ${label} `));
+    expect(view.state).toContainRemirrorDocument(p(`This ${label} `));
   });
 
   it('injects the mention at the correct place', () => {
@@ -91,19 +91,19 @@ describe('plugin', () => {
     const mentionNode = mentionAt({ id, label });
 
     add(doc(p('<cursor>'))).insertText(`This ${label} `);
-    expect(view.state.doc.content.child(0)).toEqualRemirrorDocument(p('This ', mentionNode(), ' '));
+    expect(view.state).toContainRemirrorDocument(p('This ', mentionNode(), ' '));
     expect(mocks.onEnter).toHaveBeenCalledTimes(1);
     expect(mocks.onChange).toHaveBeenCalledTimes(id.length - 1);
     expect(mocks.onKeyDown).toHaveBeenCalledTimes(id.length);
   });
 });
 
-describe('command', () => {
-  const create = (params: MentionOptions<'mentionAt'> = { name: 'mentionAt' }) =>
-    renderEditor({
-      attrNodes: [new Mention({ name: 'mentionAt', mentionClassName: 'custom', ...params })],
-    });
+const create = (params: MentionOptions<'mentionAt'> = { name: 'mentionAt' }) =>
+  renderEditor({
+    attrNodes: [new Mention({ name: 'mentionAt', mentionClassName: 'custom', ...params })],
+  });
 
+describe('Mention#command', () => {
   let {
     nodes: { doc, paragraph },
     view,
@@ -125,9 +125,9 @@ describe('command', () => {
   it('replaces text at the current position', () => {
     add(doc(paragraph('This is ', '<cursor>')));
     const attrs = { id: 'test', label: '@test' };
+
     actions.mentionAt.command(attrs);
-    expect(view.state.doc.content.child(0)).toEqualRemirrorDocument(
-      paragraph('This is ', mentionAt(attrs)()),
-    );
+
+    expect(view.state).toContainRemirrorDocument(paragraph('This is ', mentionAt(attrs)()));
   });
 });
