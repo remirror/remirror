@@ -1,11 +1,11 @@
 {
   "name": "@remirror/core-extensions",
   "description": "Core extensions for the remirror wysiwyg editor",
-  "version": "0.0.1-alpha.8",
+  "version": "0.0.1-alpha.9",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.8",
+    "@remirror/core": "0.0.1-alpha.9",
     "@types/prosemirror-history": "^1.0.1",
     "prosemirror-history": "^1.0.4"
   },

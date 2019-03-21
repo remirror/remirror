@@ -1,16 +1,16 @@
 {
   "name": "@remirror/react-ssr",
   "description": "ssr utilities for remirror",
-  "version": "0.0.1-alpha.8",
+  "version": "0.0.1-alpha.9",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.8",
-    "@remirror/renderer-react": "0.0.1-alpha.8",
+    "@remirror/core": "0.0.1-alpha.9",
+    "@remirror/renderer-react": "0.0.1-alpha.9",
     "min-document": "^2.19.0"
   },
   "devDependencies": {
-    "@remirror/core-extensions": "0.0.1-alpha.8",
+    "@remirror/core-extensions": "0.0.1-alpha.9",
     "prosemirror-model": "1.7.0",
     "prosemirror-state": "1.2.2"
   },
