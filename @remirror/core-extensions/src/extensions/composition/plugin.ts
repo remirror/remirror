@@ -25,20 +25,11 @@ export const createCompositionPlugin = (ctx: Extension<CompositionOptions>) => {
   return new Plugin({
     key: ctx.pluginKey,
     appendTransaction: (transactions, _b, state) => {
-      // const { from, to } = state.selection;
-      // console.log('APPEND_TRANSACTION selection', from, to, transactions);
       return getPluginState<CompositionState>(ctx.pluginKey, state).appendTransaction(transactions);
-    },
-    filterTransaction: (_tr, _state) => {
-      // const { from, to } = state.selection;
-      // console.log('FILTER_TRANSACTION selection', from, to, tr);
-      // return getPluginState<CompositionState>(ctx.pluginKey, state).filterTransaction(tr);
-      return true;
     },
     state: {
       init: () => new CompositionState(),
       apply: (_, value: CompositionState) => {
-        // console.log('APPLY called on state', transaction);
         return value.apply();
       },
     },
@@ -51,11 +42,6 @@ export const createCompositionPlugin = (ctx: Extension<CompositionOptions>) => {
       };
     },
     props: {
-      // decorations: state => {
-      //   const compositionState = getPluginState<CompositionState>(ctx.pluginKey, state);
-      //   // console.log('inside decorations', compositionState);
-      //   return compositionState.decoration(state);
-      // },
       handleDOMEvents: {
         /**
          * Borrowed from https://bitbucket.org/atlassian/atlaskit-mk-2/src/14c0461025a93936d83117ccdd5b34e3623b7a16/packages/editor/editor-core/src/plugins/composition/index.ts?at=master&fileviewer=file-view-default
@@ -66,25 +52,14 @@ export const createCompositionPlugin = (ctx: Extension<CompositionOptions>) => {
          * @see https://github.com/ProseMirror/prosemirror/issues/543
          */
         beforeinput: (view, ev: Event) => {
-          // console.log('BEFORE_INPUT', ev);
           const event = Cast<InputEvent>(ev);
           if (event.inputType === 'deleteContentBackward' && isAndroidOS()) {
             const pluginState = getPluginState<CompositionState>(ctx.pluginKey, view.state);
             pluginState.startDelete();
-            console.log('deleting content backwards');
             return patchDeleteContentBackward(ctx.options, view, event, pluginState);
           }
           return true;
         },
-        // compositionstart: (view, event) => {
-        //   console.log('composition STARTED', event);
-        // },
-        // compositionupdate: (view, event) => {
-        //   console.log('composition UPDATED', event);
-        // },
-        // compositionend: (view, event) => {
-        //   console.log('composition ENDED', event);
-        // },
       },
     },
   });
@@ -110,7 +85,6 @@ export const patchDeleteContentBackward = (
   const { $from } = state.selection;
   const { ensureNodeDeletion } = options;
   const { tr, selection } = state;
-  // console.log('current selection', from, to);
 
   /**
    * If text contains marks, composition events won't delete any characters.
@@ -131,17 +105,13 @@ export const patchDeleteContentBackward = (
    */
   if ($from.nodeBefore && nodeNameMatchesList($from.nodeBefore, ensureNodeDeletion)) {
     event.preventDefault();
-    // console.log('node size', $from.nodeBefore.nodeSize);
-    // console.log('deleting position', $from.pos - $from.nodeBefore.nodeSize, $from.pos);
     tr.delete($from.pos - $from.nodeBefore.nodeSize, $from.pos);
     const newSelection = Selection.near(
       tr.doc.resolve(tr.mapping.map($from.pos - $from.nodeBefore.nodeSize)),
     );
-    // console.log(newSelection, newSelection.from);
     tr.setSelection(newSelection);
     dispatch(tr);
     pluginState.endDelete(newSelection);
-    // console.log('the event has been dispatched', newSelection.from, newSelection.to);
     return true;
   }
   /**
