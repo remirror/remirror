@@ -1,14 +1,10 @@
-import { Cast, Doc, ExtensionManager, Paragraph, Text } from '@remirror/core';
+import { Doc, Paragraph, Text } from '@remirror/core';
 
 /** All the required and core extensions for testing */
-export const testNodeExtensions = [new Doc(), new Text(), new Paragraph()];
-
-export const testExtensionManager = new ExtensionManager(testNodeExtensions, () => Cast({}), () => Cast({}));
-
-export const testSchema = testExtensionManager.createSchema();
+export const nodeExtensions = [new Doc(), new Text(), new Paragraph()];
 
 /** The types of the different nodes injected into every test setup */
-export type BaseExtensionNodes = (typeof testNodeExtensions)[number];
+export type BaseExtensionNodes = (typeof nodeExtensions)[number];
 
 /** The names of default nodes injected into every test setup */
-export type BaseExtensionNodeNames = BaseExtensionNodes['name'];
+export type BaseExtensionNodeNames = Exclude<BaseExtensionNodes['name'], 'text'>;

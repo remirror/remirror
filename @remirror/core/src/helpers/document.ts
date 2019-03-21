@@ -31,6 +31,7 @@ import {
   RegexTuple,
   RemirrorContentType,
   ResolvedPos,
+  SchemaParams,
   Selection,
   Transaction,
 } from '../types';
@@ -515,7 +516,7 @@ export interface CreateDocumentNodeParams extends SchemaParams, Partial<CustomDo
  * @param params
  * @param params.content
  * @param params.schema
- * @param params.doc
+ * @param [params.doc]
  */
 export const createDocumentNode = ({ content, schema, doc = document }: CreateDocumentNodeParams) => {
   if (isProsemirrorNode(content)) {
@@ -537,11 +538,6 @@ export const createDocumentNode = ({ content, schema, doc = document }: CreateDo
   return null;
 };
 
-interface SchemaParams {
-  /** The prosemirror schema */
-  schema: EditorSchema;
-}
-
 interface CustomDocParams {
   /** The custom document to use (allows for ssr rendering) */
   doc: Document;
@@ -560,7 +556,7 @@ interface ToHTMLParams extends SchemaParams, ProsemirrorNodeParams, Partial<Cust
  * @param params
  * @param params.node
  * @param params.schema
- * @param params.dpc
+ * @param [params.doc]
  */
 export const toHTML = ({ node, schema, doc }: ToHTMLParams) => {
   const element = (doc || document).createElement('div');
@@ -575,7 +571,7 @@ export const toHTML = ({ node, schema, doc }: ToHTMLParams) => {
  * @param params
  * @param params.node
  * @param params.schema
- * @param params.doc
+ * @param [params.doc]
  */
 export const toDOM = ({ node, schema, doc }: ToHTMLParams): DocumentFragment => {
   const fragment = isDocNode(node, schema) ? node.content : Fragment.from(node);
@@ -593,7 +589,7 @@ interface FromHTMLParams extends Partial<CustomDocParams>, SchemaParams {
  * @param params
  * @param params.content
  * @param params.schema
- * @param params.doc
+ * @param [params.doc]
  */
 export const fromHTML = ({ content, schema, doc = document }: FromHTMLParams) => {
   const element = doc.createElement('div');

@@ -2,7 +2,8 @@ import { MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType } from 'prosemir
 import { Plugin as PMPlugin } from 'prosemirror-state';
 import { NodeViewPortalContainer } from '../portal-container';
 import { EditorView, InputRule, Mark, Transaction } from './aliases';
-import { EditorSchema, EditorState, Omit, ProsemirrorNode } from './base';
+import { Attrs, EditorSchema, EditorState, Omit, ProsemirrorNode } from './base';
+import { SchemaParams } from './builders';
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -61,9 +62,14 @@ export type MarkExtensionSpec = Omit<MarkSpec, 'toDOM'> & {
   toDOM?: ((mark: Mark, inline: boolean) => DOMOutputSpec) | null;
 };
 
-export interface SchemaParams {
-  schema: EditorSchema;
+export interface ExtensionManagerParams extends SchemaParams {
+  /**
+   * Retrieve the portal container
+   */
   getPortalContainer: () => NodeViewPortalContainer;
+  /**
+   * Retrieve the editor state via a function call
+   */
   getEditorState: () => EditorState;
 }
 
@@ -77,17 +83,15 @@ export type ExtensionBooleanFunction = (attrs?: Attrs) => boolean;
 // }
 
 type InferredType<TT> = TT extends {} ? { type: TT } : {};
-export type SchemaTypeParams<TT> = SchemaParams & InferredType<TT>;
+export type SchemaTypeParams<TT> = ExtensionManagerParams & InferredType<TT>;
 
 export type SchemaNodeTypeParams = SchemaTypeParams<NodeType<EditorSchema>>;
 export type SchemaMarkTypeParams = SchemaTypeParams<MarkType<EditorSchema>>;
 
-export interface CommandParams extends SchemaParams {
+export interface CommandParams extends ExtensionManagerParams {
   view: EditorView;
   isEditable: () => boolean;
 }
-
-export type Attrs = Record<string, string | number>;
 
 /* Utility Types */
 

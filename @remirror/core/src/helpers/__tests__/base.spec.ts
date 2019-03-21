@@ -1,5 +1,6 @@
 import {
   capitalize,
+  clone,
   environment,
   findMatches,
   format,
@@ -242,4 +243,10 @@ describe('predicates', () => {
     expect(isEmptyArray(passValue)).toBeTrue();
     expect(isEmptyArray(failValue)).toBeFalse();
   });
+});
+
+test('clone', () => {
+  const simple = { a: 'a', b: 'b' };
+  expect(clone(simple)).not.toBe(simple);
+  expect(clone(simple)).toEqual(simple);
 });

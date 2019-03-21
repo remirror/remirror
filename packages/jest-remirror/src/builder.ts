@@ -1,192 +1,169 @@
-import { Attrs, EditorSchema, findMatches, isObject, isProsemirrorNode, isString } from '@remirror/core';
+import {
+  EditorSchema,
+  findMatches,
+  isObject,
+  isProsemirrorNode,
+  isString,
+  SchemaParams,
+} from '@remirror/core';
 import flatten from 'flatten';
-import { Fragment, Mark, Node as PMNode, Schema, Slice } from 'prosemirror-model';
-import { testSchema } from './test-schema';
+import { Fragment, Mark, Node as PMNode, Slice } from 'prosemirror-model';
+import {
+  BaseFactoryParams,
+  TaggedContent,
+  TaggedContentItem,
+  TaggedContentWithText,
+  TaggedProsemirrorNode,
+  Tags,
+  TagTracker,
+} from './types';
 
 /**
- * Represents a ProseMirror "position" in a document.
+ * Checks if a value is odd
+ *
+ * @param n
  */
-export type RefPosition = number;
-
-/**
- * A useful feature of the builder is being able to declaratively mark positions
- * in content using the curly braces e.g. `{<>}`.
- *
- * These positions are called "refs" (inspired by React), and are tracked on
- * every node in the tree that has a ref on any of its descendants.
- */
-export interface Refs {
-  [name: string]: RefPosition;
-}
-
-/**
- * Content that contains refs information.
- */
-export type RefsContentItem = RefsNode | RefsTracker;
-
-/**
- * Content node or mark builders can consume, e.g.
- *
- *     const builder = nodeFactory('p');
- *     builder('string');
- *     builder(aNode);
- *     builder(aRefsNode);
- *     builder(aRefsTracker);
- *     builder([aNode, aRefsNode, aRefsTracker]);
- */
-export type BuilderContentFn = RefsContentItem | Array<PMNode | RefsContentItem>;
-export type BuilderContent = string | BuilderContentFn;
-
-/**
- * ProseMirror doesn't support empty text nodes, which can be quite
- * inconvenient when you want to capture a position ref without introducing
- * text.
- *
- * Take a couple of examples:
- *
- *     p('{<>}')
- *     p('Hello ', '{<>}', 'world!')
- *
- * After the ref syntax is stripped you're left with:
- *
- *     p('')
- *     p('Hello ', '', 'world!')
- *
- * This violates the rule of text nodes being non-empty. This class solves the
- * problem by providing an alternative data structure that *only* stores refs,
- * and can be used in scenarios where an empty text would be forbidden.
- *
- * This is done under the hood when using `text()` factory, and instead of
- * always returning a text node, it'll instead return one of two things:
- *
- * - a text node -- when given a non-empty string
- * - a refs tracker -- when given a string that *only* contains refs.
- */
-export class RefsTracker {
-  public refs!: Refs;
-}
-
-/**
- * A standard ProseMirror Node that also tracks refs.
- */
-export interface RefsNode extends PMNode {
-  refs: Refs;
-}
-
-// Helpers
 const isOdd = (n: number) => n % 2 === 1;
 
 /**
  * Create a text node.
  *
- * Special markers called "refs" can be put in the text. Refs provide a way to
+ * Special markers called `tags` can be put in the text. Tags provide a way to
  * declaratively describe a position within some text, and then access the
  * position in the resulting node.
  *
  * @param value
  * @param schema
  */
-export const text = (value: string, schema: EditorSchema): RefsContentItem => {
+export const text = (value: string, schema: EditorSchema): TaggedContentItem => {
   let stripped = '';
   let textIndex = 0;
-  const refs: Refs = {};
+  const tags: Tags = {};
 
-  for (const match of findMatches(value, /([\\]+)?{(\w+|<|>|<>|<cell|cell>)}/g)) {
-    const [refToken, skipChars, refName] = match;
+  for (const match of findMatches(value, /([\\]+)?<(\w+)>/g)) {
+    const [taggedToken, escapeCharacters, tagName] = match;
     let { index } = match;
 
-    const skipLen = skipChars && skipChars.length;
+    const skipLen = escapeCharacters && escapeCharacters.length;
     if (skipLen) {
       if (isOdd(skipLen)) {
         stripped += value.slice(textIndex, index + (skipLen - 1) / 2);
-        stripped += value.slice(index + skipLen, index + refToken.length);
-        textIndex = index + refToken.length;
+        stripped += value.slice(index + skipLen, index + taggedToken.length);
+        textIndex = index + taggedToken.length;
         continue;
       }
       index += skipLen / 2;
     }
 
     stripped += value.slice(textIndex, index);
-    refs[refName] = stripped.length;
-    textIndex = match.index + refToken.length;
+    tags[tagName] = stripped.length;
+    textIndex = match.index + taggedToken.length;
   }
 
   stripped += value.slice(textIndex);
 
-  const node = stripped === '' ? new RefsTracker() : (schema.text(stripped) as RefsNode);
+  const node = stripped === '' ? new TagTracker() : (schema.text(stripped) as TaggedProsemirrorNode);
 
-  node.refs = refs;
+  node.tags = tags;
   return node;
 };
 
 /**
- * Offset ref position values by some amount.
+ * Offset tag position values by some amount.
  *
- * @param refs
+ * @param tags
  * @param offset
  */
-export function offsetRefs(refs: Refs, offset: number): Refs {
-  const result = {} as Refs;
-  for (const name in refs) {
-    if (refs.hasOwnProperty(name)) {
-      result[name] = refs[name] + offset;
+export const offsetTags = (tags: Tags, offset: number): Tags => {
+  const result: Tags = {};
+  for (const name in tags) {
+    if (tags.hasOwnProperty(name)) {
+      result[name] = tags[name] + offset;
     }
   }
   return result;
-}
+};
 
 /**
- * Check if the value is an instance of the RefTracker class which is used for holding a position in the node
+ * Check if the value is an instance of the TagTracker class which is used for holding a position in the node
  *
  * @param value
  */
-const isRefsTracker = (value: unknown): value is RefsTracker =>
-  isObject(value) && value instanceof RefsTracker;
+const isTagTracker = (value: unknown): value is TagTracker => isObject(value) && value instanceof TagTracker;
 
 /**
- * Checks if the node is a RefNode (a normal ProsemirrorNode with a ref attribute)
+ * Checks if the node is a TaggedProsemirrorNode (a normal ProsemirrorNode with a tag attribute)
  *
  * @param value
  */
-const isRefsNode = (value: unknown): value is RefsNode => isProsemirrorNode(value) && !isRefsTracker(value);
+const isTaggedProsemirrorNode = (value: unknown): value is TaggedProsemirrorNode =>
+  isProsemirrorNode(value) && !isTagTracker(value);
 
 /**
  * Given a collection of nodes, sequence them in an array and return the result
- * along with the updated refs.
+ * along with the updated tags.
+ *
+ * @param [...content]
  */
-export function sequence(...content: RefsContentItem[]) {
+export const sequence = (...content: TaggedContentItem[]) => {
   let position = 0;
-  let refs: Refs = {};
-  const nodes: RefsNode[] = [];
+  let tags: Tags = {};
+  const nodes: TaggedProsemirrorNode[] = [];
 
   for (const node of content) {
-    if (isRefsTracker(node)) {
-      refs = { ...refs, ...offsetRefs(node.refs, position) };
+    if (isTagTracker(node)) {
+      tags = { ...tags, ...offsetTags(node.tags, position) };
     }
-    if (isRefsNode(node)) {
+    if (isTaggedProsemirrorNode(node)) {
       const thickness = node.isText ? 0 : 1;
-      refs = { ...refs, ...offsetRefs(node.refs, position + thickness) };
+      tags = { ...tags, ...offsetTags(node.tags, position + thickness) };
       position += node.nodeSize;
-      nodes.push(node as RefsNode);
+      nodes.push(node as TaggedProsemirrorNode);
     }
   }
-  return { nodes, refs };
+  return { nodes, tags };
+};
+
+interface CoerceParams extends SchemaParams {
+  /**
+   * Content that will be transformed into taggedNodes
+   */
+  content: TaggedContentWithText[];
 }
 
 /**
- * Coerce builder content into ref nodes.
+ * Coerce builder content into tagged nodes.
+ *
+ * Checks if the content item is a string and runs the text transformer otherwise passes
+ * a flattened structure through to the `sequence` function
+ *
+ * @param content
+ * @param schema
  */
-export function coerce(content: BuilderContent[], schema: Schema) {
-  const refsContent = content.map(item => (isString(item) ? text(item, schema) : item)) as Array<
-    RefsContentItem | RefsContentItem[]
+export const coerce = ({ content, schema }: CoerceParams) => {
+  const taggedContent = content.map(item => (isString(item) ? text(item, schema) : item)) as Array<
+    TaggedContentItem | TaggedContentItem[]
   >;
-  return sequence(...flatten<RefsContentItem>(refsContent));
+  return sequence(...flatten<TaggedContentItem>(taggedContent));
+};
+
+interface NodeFactoryParams extends BaseFactoryParams {
+  /**
+   * The marks which wrap this node.
+   */
+  marks?: Mark[];
 }
 
 /**
- * Create a factory for nodes.
+ * Create a builder function for nodes.
+ *
+ * @param params
+ * @param params.name
+ * @param params.schema
+ * @param params.attrs
+ * @param params.marks
  */
-export function nodeFactory(name: string, schema: EditorSchema, attrs: Attrs = {}, marks?: Mark[]) {
+export const nodeFactory = ({ name, schema, attrs, marks }: NodeFactoryParams) => {
   const nodeBuilder = schema.nodes[name];
   if (!nodeBuilder) {
     throw new Error(
@@ -195,18 +172,28 @@ export function nodeFactory(name: string, schema: EditorSchema, attrs: Attrs = {
       ).join(', ')}`,
     );
   }
-  return (...content: BuilderContent[]): RefsNode => {
-    const { nodes, refs } = coerce(content, schema);
-    const node = nodeBuilder.createChecked(attrs, nodes, marks) as RefsNode;
-    node.refs = refs;
+  return (...content: TaggedContentWithText[]): TaggedProsemirrorNode => {
+    const { nodes, tags } = coerce({ content, schema });
+    const node = nodeBuilder.createChecked(attrs, nodes, marks) as TaggedProsemirrorNode;
+    node.tags = tags;
     return node;
   };
+};
+
+interface MarkFactoryParams extends BaseFactoryParams {
+  allowDupes?: boolean;
 }
 
 /**
- * Create a factory for marks.
+ * Create a builder function for marks.
+ *
+ * @param params
+ * @param params.name
+ * @param params.schema
+ * @param params.attrs
+ * @param params.allowDupes
  */
-export function markFactory(name: string, schema: EditorSchema, attrs: Attrs = {}, allowDupes = false) {
+export const markFactory = ({ name, schema, attrs, allowDupes = false }: MarkFactoryParams) => {
   const markBuilder = schema.marks[name];
   if (!markBuilder) {
     throw new Error(
@@ -215,34 +202,52 @@ export function markFactory(name: string, schema: EditorSchema, attrs: Attrs = {
       ).join(', ')}`,
     );
   }
-  return (...content: BuilderContent[]): RefsNode[] => {
+
+  return (...content: TaggedContentWithText[]): TaggedProsemirrorNode[] => {
     const mark = markBuilder.create(attrs);
-    const { nodes } = coerce(content, schema);
+    const { nodes } = coerce({ content, schema });
     return nodes.map(node => {
       if (!allowDupes && mark.type.isInSet(node.marks)) {
         return node;
       } else {
-        const refNode = node.mark(mark.addToSet(node.marks)) as RefsNode;
-        refNode.refs = node.refs;
-        return refNode;
+        const taggedNode = node.mark(mark.addToSet(node.marks)) as TaggedProsemirrorNode;
+        taggedNode.tags = node.tags;
+        return taggedNode;
       }
     });
   };
-}
-
-export const fragment = (...content: BuilderContent[]) => flatten<BuilderContent>(content);
-export const slice = (...content: BuilderContent[]) =>
-  new Slice(Fragment.from(coerce(content, testSchema).nodes), 0, 0);
+};
 
 /**
- * Builds a 'clean' version of the nodes, without Refs or RefTrackers
+ * Flatten all passed content.
+ *
+ * @param [...content]
  */
-export const clean = (content: BuilderContentFn) => (schema: Schema) => {
+export const fragment = (...content: TaggedContentWithText[]) => flatten<TaggedContentWithText>(content);
+
+export const slice = (schema: EditorSchema) => (...content: TaggedContentWithText[]) =>
+  new Slice(Fragment.from(coerce({ content, schema }).nodes), 0, 0);
+
+interface CleanParams extends SchemaParams {
+  /**
+   * The tagged content which will be replaced with a clean Prosemirror node
+   */
+  content: TaggedContent;
+}
+
+/**
+ * Builds a 'clean' version of the nodes, without Tags or TagTrackers
+ *
+ * @param params
+ * @param params.schema
+ * @param params.content
+ */
+export const clean = ({ schema, content }: CleanParams) => {
   const node = content;
   if (Array.isArray(node)) {
     return node.reduce(
       (acc, next) => {
-        if (next instanceof PMNode) {
+        if (isProsemirrorNode(next)) {
           acc.push(PMNode.fromJSON(schema, next.toJSON()));
         }
         return acc;

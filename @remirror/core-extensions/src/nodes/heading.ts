@@ -12,7 +12,7 @@ import { setBlockType } from 'prosemirror-commands';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 export interface HeadingOptions extends NodeExtensionOptions {
-  levels: number[];
+  levels?: number[];
 }
 
 export class Heading extends NodeExtension<HeadingOptions> {

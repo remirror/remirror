@@ -1,5 +1,5 @@
 import { EditorView } from './aliases';
-import { EditorSchema, EditorState, Position } from './base';
+import { Attrs, EditorSchema, EditorState, Position } from './base';
 
 /**
  * @module
@@ -71,4 +71,11 @@ export interface PositionParams {
    * Defines a generic position with coordinates
    */
   position: Position;
+}
+
+export interface AttrsParams {
+  /**
+   * An object describing the attrs for a prosemirror mark / node
+   */
+  attrs: Attrs;
 }

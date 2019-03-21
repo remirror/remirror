@@ -1,7 +1,7 @@
 import { MarkType } from 'prosemirror-model';
 import { Extension } from './extension';
 import { markActive } from './helpers/document';
-import { EditorSchema, ExtensionType, MarkExtensionSpec, SchemaParams } from './types';
+import { EditorSchema, ExtensionManagerParams, ExtensionType, MarkExtensionSpec } from './types';
 
 export abstract class MarkExtension<GOptions extends {} = {}> extends Extension<
   GOptions,
@@ -13,7 +13,7 @@ export abstract class MarkExtension<GOptions extends {} = {}> extends Extension<
 
   public abstract readonly schema: MarkExtensionSpec;
 
-  public active({ getEditorState, schema }: SchemaParams) {
+  public active({ getEditorState, schema }: ExtensionManagerParams) {
     return () => markActive(getEditorState(), schema.marks[this.name]);
   }
 }
