@@ -35,7 +35,7 @@ import { inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { EditorState } from 'prosemirror-state';
 import {
-  asDefaultProps,
+  defaultProps,
   getElementProps,
   isAttributeFunction,
   isDOMElement,
@@ -61,17 +61,7 @@ import {
 } from './types';
 
 export class Remirror extends Component<RemirrorProps, CompareStateParams> {
-  public static defaultProps = asDefaultProps<RemirrorProps>()({
-    initialContent: EMPTY_OBJECT_NODE,
-    extensions: [],
-    editable: true,
-    usesBuiltInExtensions: true,
-    attributes: {},
-    usesDefaultStyles: true,
-    label: '',
-    editorStyles: {},
-    insertPosition: 'end',
-  });
+  public static defaultProps = defaultProps;
 
   public schema: EditorSchema;
   private editorRef?: HTMLElement;

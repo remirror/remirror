@@ -255,5 +255,5 @@ export const clean = ({ schema, content }: CleanParams) => {
       [] as PMNode[],
     );
   }
-  return node instanceof PMNode ? PMNode.fromJSON(schema, node.toJSON()) : undefined;
+  return isProsemirrorNode(node) ? PMNode.fromJSON(schema, node.toJSON()) : undefined;
 };

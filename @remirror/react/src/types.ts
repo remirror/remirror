@@ -6,6 +6,7 @@ import {
   EditorViewParams,
   ElementParams,
   ExtensionManager,
+  MakeOptional,
   ObjectNode,
   Omit,
   PlainObject,
@@ -46,25 +47,31 @@ export interface Positioner {
 
 export type CalculatePositionerParams = PositionerIdParams & Positioner;
 
-export type GetPositionerPropsConfig<GRefKey extends string = 'ref'> = BaseGetterConfig<GRefKey> &
+export type GetPositionerPropsConfig<GRefKey extends string = 'ref'> = RefParams<GRefKey> &
   Partial<Omit<CalculatePositionerParams, 'positionerId'>> &
   PositionerIdParams;
 
-export interface BaseGetterConfig<GRefKey extends string = 'ref'> {
+export interface RefParams<GRefKey extends string = 'ref'> {
+  /**
+   * A custom ref key which allows a reference to be obtained from non standard components.
+   *
+   * @default 'ref'
+   */
   refKey?: GRefKey;
 }
 
 export type PositionerProps = IsActiveParams & Position;
 
-export interface GetRootPropsConfig<GRefKey extends string = 'ref'>
-  extends BaseGetterConfig<GRefKey>,
-    PlainObject {
+export interface GetRootPropsConfig<GRefKey extends string = 'ref'> extends RefParams<GRefKey>, PlainObject {
   editorStyles?: Interpolation<RemirrorProps>;
 }
 
 export type RefKeyRootProps<GRefKey extends string = 'ref'> = {
   [P in Exclude<GRefKey, 'children' | 'key'>]: React.Ref<any>
 } & { className: string; key: string } & PlainObject;
+
+export type GetPositionerReturn<GRefKey extends string = 'ref'> = PositionerProps &
+  { [P in GRefKey]: React.Ref<any> };
 
 /**
  * These are the props passed to the render function provided when setting up your editor.
@@ -103,7 +110,7 @@ export interface InjectedRemirrorProps {
    */
   getPositionerProps<GRefKey extends string = 'ref'>(
     options: GetPositionerPropsConfig<GRefKey>,
-  ): PositionerProps & { [P in GRefKey]: React.Ref<any> };
+  ): GetPositionerReturn<GRefKey>;
 }
 
 export type RenderPropFunction = (params: InjectedRemirrorProps) => JSX.Element;
@@ -278,3 +285,15 @@ export interface IsActiveParams {
    */
   isActive: boolean;
 }
+
+export interface PositionerParams {
+  /**
+   * The positioner object which determines how the changes in the view impact the calculated position.
+   */
+  positioner: Partial<Positioner>;
+}
+
+export interface UsePositionerParams<GRefKey extends string = 'ref'>
+  extends PositionerIdParams,
+    PositionerParams,
+    RefParams<GRefKey> {}
