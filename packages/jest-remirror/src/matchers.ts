@@ -1,9 +1,9 @@
 import { isProsemirrorNode } from '@remirror/core';
 import { toMatchSnapshot } from 'jest-snapshot';
-import { RefsNode } from './builder';
+import { TaggedProsemirrorNode } from './types';
 
 export const remirrorMatchers: jest.ExpectExtendMap = {
-  toEqualRemirrorDocument(actual, expected: RefsNode) {
+  toEqualRemirrorDocument(actual, expected: TaggedProsemirrorNode) {
     // Because schema is created dynamically, expected value is a function (schema) => PMNode;
     // That's why this magic is necessary. It simplifies writing assertions, so
     // instead of expect(doc).toEqualRemirrorDocument(doc(p())(schema)) we can just do:
@@ -108,8 +108,8 @@ declare global {
       snapshotState: any;
     }
     interface Matchers<R> {
-      toEqualRemirrorDocument(builder: RefsNode): R;
-      toMatchRemirrorSnapshot(builder: RefsNode): R;
+      toEqualRemirrorDocument(builder: TaggedProsemirrorNode): R;
+      toMatchRemirrorSnapshot(builder: TaggedProsemirrorNode): R;
     }
   }
 }

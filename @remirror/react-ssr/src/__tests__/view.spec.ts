@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { initialJson, plugins, schema, testDocument } from '@test-fixtures/ssr-helpers';
+import { initialJson, plugins, schema, testDocument } from '@test-fixtures/schema-helpers';
 import { EditorState } from 'prosemirror-state';
 import { createEditorView, EditorViewSSR } from '../view';
 

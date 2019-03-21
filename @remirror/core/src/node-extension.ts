@@ -4,10 +4,10 @@ import { nodeActive } from './helpers/document';
 import {
   EditorSchema,
   ExtensionBooleanFunction,
+  ExtensionManagerParams,
   ExtensionType,
   FlexibleConfig,
   NodeExtensionSpec,
-  SchemaParams,
 } from './types';
 
 export type ExtraAttrs = Array<string | [string, string]>;
@@ -48,7 +48,10 @@ export abstract class NodeExtension<
 
   public abstract readonly schema: NodeExtensionSpec;
 
-  public active({ getEditorState, schema }: SchemaParams): FlexibleConfig<ExtensionBooleanFunction> {
+  public active({
+    getEditorState,
+    schema,
+  }: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction> {
     return attrs => nodeActive(getEditorState(), schema.nodes.name, attrs);
   }
 }

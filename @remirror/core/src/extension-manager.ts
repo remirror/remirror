@@ -22,11 +22,11 @@ import {
   EditorSchema,
   ExtensionBooleanFunction,
   ExtensionCommandFunction,
+  ExtensionManagerParams,
   MarkExtensionSpec,
   NodeExtensionSpec,
   ProsemirrorPlugin,
   RemirrorActions,
-  SchemaParams,
 } from './types';
 
 interface ExtensionManagerConstructorParams {
@@ -102,7 +102,7 @@ export class ExtensionManager {
   /**
    * Retrieve all plugins from the passed in extensions
    */
-  public plugins(params: SchemaParams) {
+  public plugins(params: ExtensionManagerParams) {
     const plugins: ProsemirrorPlugin[] = [];
     const extensionPlugins = this.extensions
       .filter(hasExtensionProperty('plugin'))
@@ -115,7 +115,7 @@ export class ExtensionManager {
     return plugins;
   }
 
-  public styles(params: SchemaParams): Interpolation[] {
+  public styles(params: ExtensionManagerParams): Interpolation[] {
     const extensionStyles = this.extensions
       .filter(hasExtensionProperty('styles'))
       .map(extensionPropertyMapper('styles', params));
@@ -126,7 +126,7 @@ export class ExtensionManager {
   /**
    * Retrieve all keymaps (how the editor responds to keyboard commands).
    */
-  public keymaps(params: SchemaParams) {
+  public keymaps(params: ExtensionManagerParams) {
     const extensionKeymaps = this.extensions
       .filter(hasExtensionProperty('keys'))
       .map(extensionPropertyMapper('keys', params));
@@ -154,7 +154,7 @@ export class ExtensionManager {
   /**
    * Retrieve all inputRules (how the editor responds to text matching certain rules).
    */
-  public inputRules(params: SchemaParams) {
+  public inputRules(params: ExtensionManagerParams) {
     const inputRules: InputRule[] = [];
     const extensionInputRules = this.extensions
       .filter(hasExtensionProperty('inputRules'))
@@ -170,7 +170,7 @@ export class ExtensionManager {
   /**
    * Retrieve all pasteRules (rules for how the editor responds to pastedText).
    */
-  public pasteRules(params: SchemaParams): ProsemirrorPlugin[] {
+  public pasteRules(params: ExtensionManagerParams): ProsemirrorPlugin[] {
     const pasteRules: ProsemirrorPlugin[] = [];
     const extensionPasteRules = this.extensions
       .filter(hasExtensionProperty('pasteRules'))

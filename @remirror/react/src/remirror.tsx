@@ -10,6 +10,7 @@ import {
   EditorView as EditorViewType,
   EMPTY_OBJECT_NODE,
   ExtensionManager,
+  ExtensionManagerParams,
   getMarkAttrs,
   InputRule,
   isArray,
@@ -22,7 +23,6 @@ import {
   ProsemirrorPlugin,
   RemirrorActions,
   RemirrorContentType,
-  SchemaParams,
   Text,
   toHTML,
   Transaction,
@@ -147,7 +147,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    * @readonly
    * @private
    */
-  private get schemaParams(): SchemaParams {
+  private get schemaParams(): ExtensionManagerParams {
     return {
       schema: this.schema,
       getEditorState: this.getEditorState,

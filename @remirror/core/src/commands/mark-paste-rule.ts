@@ -1,6 +1,6 @@
 import { Fragment, Mark, Node as PMNode, Slice } from 'prosemirror-model';
 import { Plugin } from 'prosemirror-state';
-import { Cast, findMatches } from '../helpers/base';
+import { Cast, findMatches, isFunction } from '../helpers/base';
 import { PluginCreator } from '../types';
 
 export const markPasteRule: PluginCreator = (regexp, type, getAttrs) => {
@@ -18,7 +18,7 @@ export const markPasteRule: PluginCreator = (regexp, type, getAttrs) => {
             const end = start + match[0].length;
             const textStart = start + match[0].indexOf(match[1]);
             const textEnd = textStart + match[1].length;
-            const attrs = getAttrs instanceof Function ? getAttrs(match) : getAttrs;
+            const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
 
             // adding text before markdown to nodes
             if (start > 0) {

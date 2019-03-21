@@ -468,3 +468,15 @@ export const isEmptyArray = (value: unknown): value is never[] => isArray(value)
  * Helpful alias
  */
 export const isArray = Array.isArray;
+
+/**
+ * Clones a plain object using object spread notation
+ *
+ * @param value
+ */
+export const clone = <GObject extends {}>(value: GObject) => {
+  if (!isPlainObject(value)) {
+    throw new Error('An invalid value was passed into this clone utility. Expected a plain object');
+  }
+  return { ...value };
+};

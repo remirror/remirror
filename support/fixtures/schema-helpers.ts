@@ -1,5 +1,5 @@
 import { Doc, ExtensionManager, Paragraph, Text } from '@remirror/core';
-import { Bold, Italic, Placeholder, Underline } from '@remirror/core-extensions';
+import { Bold, Italic, Placeholder, Underline, Blockquote } from '@remirror/core-extensions';
 import minDocument from 'min-document';
 
 export const helpers = {
@@ -14,6 +14,7 @@ export const extensions = [
   new Italic(),
   new Underline(),
   new Placeholder(),
+  new Blockquote(),
 ];
 export const manager = new ExtensionManager(extensions, helpers.getEditorState, helpers.getPortalContainer);
 export const schema = manager.createSchema();

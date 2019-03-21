@@ -2,7 +2,7 @@ import { AnyExtension, Extension } from './extension';
 import { bool, Cast, isFunction, isObject } from './helpers/base';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
-import { AnyFunction, CommandParams, ExtensionType, FlexibleConfig, SchemaParams } from './types';
+import { AnyFunction, CommandParams, ExtensionManagerParams, ExtensionType, FlexibleConfig } from './types';
 
 type MethodFactory<GMappedFunc extends AnyFunction, GFunc extends AnyFunction> = (
   params: CommandParams,
@@ -164,7 +164,7 @@ export const extensionPropertyMapper = <
   GExtMethodProp extends ExtensionMethodProperties
 >(
   property: GExtMethodProp,
-  params: SchemaParams,
+  params: ExtensionManagerParams,
 ) => (extension: GExt): GExt[GExtMethodProp] extends AnyFunction ? ReturnType<GExt[GExtMethodProp]> : {} => {
   const extensionMethod = extension[property];
   if (!extensionMethod) {

@@ -13,7 +13,7 @@ import {
 import { Plugin, TextSelection } from 'prosemirror-state';
 
 export class Link extends MarkExtension {
-  get name() {
+  get name(): 'link' {
     return 'link';
   }
 

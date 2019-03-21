@@ -115,3 +115,5 @@ export interface Position {
   bottom: number;
   right: number;
 }
+
+export type Attrs = Record<string, string | number>;

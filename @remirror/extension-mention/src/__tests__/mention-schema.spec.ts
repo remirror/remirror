@@ -1,5 +1,5 @@
 import { ExtensionManager, fromHTML, toHTML } from '@remirror/core';
-import { extensions, helpers } from '@test-fixtures/ssr-helpers';
+import { extensions, helpers } from '@test-fixtures/schema-helpers';
 
 import { Mention } from '../';
 

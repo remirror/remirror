@@ -5,11 +5,11 @@ import { Cast } from './helpers/base';
 import {
   ExtensionBooleanFunction,
   ExtensionCommandFunction,
+  ExtensionManagerParams,
   ExtensionType,
   FlexibleConfig,
   KeyboardBindings,
   ProsemirrorPlugin,
-  SchemaParams,
   SchemaTypeParams,
 } from './types';
 
@@ -57,7 +57,7 @@ export interface Extension<GOptions extends {} = {}, GType = never> {
    * Determines whether this extension is currently active (only applies to Node Extensions and Mark Extensions)
    * @param params
    */
-  active?(params: SchemaParams): FlexibleConfig<ExtensionBooleanFunction>;
+  active?(params: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction>;
 
   /**
    * Determines whether this extension is enabled. If an object is returned then it can define different node types and
@@ -65,12 +65,12 @@ export interface Extension<GOptions extends {} = {}, GType = never> {
    *
    * @param params
    */
-  enabled?(params: SchemaParams): FlexibleConfig<ExtensionBooleanFunction>;
+  enabled?(params: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction>;
 
   /**
    * Allows extensions to register styles on the editor instance using emotion for dynamic styling
    */
-  styles?(params: SchemaParams): Interpolation;
+  styles?(params: ExtensionManagerParams): Interpolation;
 
   /**
    * Register commands for this extension. If an object returned the commands are

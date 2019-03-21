@@ -8,7 +8,7 @@ import { Remirror } from '..';
 
 import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { docNodeSimpleJSON } from '@test-fixtures/object-nodes';
-import { extensions } from '@test-fixtures/ssr-helpers';
+import { extensions } from '@test-fixtures/schema-helpers';
 
 // const textContent = `This is editor text`;
 const label = 'Remirror editor';
