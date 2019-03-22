@@ -17,6 +17,7 @@
   "main": "lib/index.js",
   "module": "lib/dist/core-extensions.esm.js",
   "peerDependencies": {
+    "@babel/runtime-corejs2": ">=7",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-model": "^1.7.0",

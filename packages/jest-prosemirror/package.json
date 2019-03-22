@@ -35,6 +35,7 @@
   ],
   "main": "lib/index.js",
   "peerDependencies": {
+    "@babel/runtime-corejs2": ">=7",
     "jest": "^24.5.0"
   },
   "repository": {
