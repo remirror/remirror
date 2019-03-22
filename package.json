@@ -1,5 +1,9 @@
 {
   "name": "root",
+  "browserslist": [
+    "> 1%",
+    "not dead"
+  ],
   "engines": {
     "node": ">=8"
   },
