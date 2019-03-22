@@ -5,7 +5,6 @@ import {
   findMatches,
   format,
   isBoolean,
-  isClass,
   isDate,
   isEmptyArray,
   isEmptyObject,
@@ -89,13 +88,6 @@ describe('predicates', () => {
     const failValue = 'true';
     expect(isBoolean(passValue)).toBeTrue();
     expect(isBoolean(failValue)).toBeFalse();
-  });
-
-  it('isClass', () => {
-    const passValue = class Simple {};
-    const failValue = Function;
-    expect(isClass(passValue)).toBeTrue();
-    expect(isClass(failValue)).toBeFalse();
   });
 
   it('isDate', () => {

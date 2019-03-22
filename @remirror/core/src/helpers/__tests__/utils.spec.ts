@@ -13,7 +13,7 @@ import {
   tdEmpty,
   tr as row,
 } from 'jest-prosemirror';
-import lolex from 'lolex';
+import { omit } from '../base';
 import {
   cloneTransaction,
   equalNodeType,
@@ -202,23 +202,27 @@ describe('selectionEmpty', () => {
 });
 
 describe('cloneTransaction', () => {
-  let clock: lolex.InstalledClock<lolex.Clock>;
   beforeEach(() => {
-    clock = lolex.install();
+    jest.useFakeTimers();
   });
 
   afterEach(() => {
-    clock.uninstall();
+    jest.useRealTimers();
   });
 
-  it('clones the transaction', () => {
+  it('clones the transaction', done => {
     const {
       state: { tr },
     } = createEditor(doc(p()));
-    const clonedTr = cloneTransaction(tr);
-    expect(tr).toEqual(clonedTr);
-    clock.tick(500);
-    expect(tr).not.toEqual(cloneTransaction(tr));
+
+    setTimeout(() => {
+      const clonedTr = cloneTransaction(tr);
+      expect(omit(tr, ['time'])).toEqual(omit(clonedTr, ['time']));
+      expect(tr).not.toEqual(clonedTr);
+      done();
+    }, 10);
+
+    jest.advanceTimersByTime(20);
   });
 });
 
