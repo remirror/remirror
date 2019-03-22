@@ -81,6 +81,7 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
       include: [`${rootFolder}/${folderName}/src/**`],
       extensions,
       exclude: ['node_modules/**', '*.json'],
+      runtimeHelpers: true,
     }),
 
     // Register Node.js globals for browserify compatibility.

@@ -321,6 +321,8 @@ export const isFunction = isOfType<AnyFunction>('function');
 export const isNull = (value: unknown): value is null => value === null;
 
 /**
+ * @deprecated Due to the current build process stripping out classes
+ *
  * Predicate check that value is a class
  *
  * @param value
