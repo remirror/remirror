@@ -1,18 +1,18 @@
 {
   "name": "@remirror/extension-emoji",
   "description": "Emoji extension for the remirror wysiwyg editor",
-  "version": "0.0.1-alpha.9",
+  "version": "0.0.1-alpha.10",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.9",
-    "@remirror/react": "0.0.1-alpha.9",
+    "@remirror/core": "0.0.1-alpha.10",
+    "@remirror/react": "0.0.1-alpha.10",
     "@types/emoji-mart": "^2.8.4",
     "emoji-mart": "^2.9.2",
     "emoji-regex": "^8.0.0"
   },
   "devDependencies": {
-    "jest-remirror": "0.0.1-alpha.9"
+    "jest-remirror": "0.0.1-alpha.10"
   },
   "files": [
     "lib",

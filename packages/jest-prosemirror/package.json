@@ -1,11 +1,11 @@
 {
   "name": "jest-prosemirror",
   "description": "A text editor for react built with prosemirror",
-  "version": "0.0.1-alpha.9",
+  "version": "0.0.1-alpha.10",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.9",
+    "@remirror/core": "0.0.1-alpha.10",
     "@types/prosemirror-model": "^1.7.0",
     "@types/prosemirror-schema-basic": "^1.0.1",
     "@types/prosemirror-tables": "^0.1.3",

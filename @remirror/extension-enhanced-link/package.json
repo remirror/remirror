@@ -1,11 +1,11 @@
 {
   "name": "@remirror/extension-enhanced-link",
   "description": "Enhanced link extension for the remirror wysiwyg editor",
-  "version": "0.0.1-alpha.9",
+  "version": "0.0.1-alpha.10",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.9"
+    "@remirror/core": "0.0.1-alpha.10"
   },
   "files": [
     "lib",
