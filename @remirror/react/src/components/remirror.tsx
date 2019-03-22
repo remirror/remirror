@@ -4,7 +4,6 @@ import { ClassNames, ClassNamesContent, Interpolation } from '@emotion/core';
 import {
   CompareStateParams,
   createDocumentNode,
-  Doc,
   EDITOR_CLASS_NAME,
   EditorSchema,
   EditorView as EditorViewType,
@@ -18,17 +17,15 @@ import {
   memoize,
   NodeViewPortalContainer,
   ObjectNode,
-  Paragraph,
   Position,
   ProsemirrorPlugin,
   RemirrorActions,
   RemirrorContentType,
-  Text,
   toHTML,
   Transaction,
   uniqueId,
 } from '@remirror/core';
-import { Composition, History, Placeholder, PlaceholderPluginState } from '@remirror/core-extensions';
+import { PlaceholderPluginState } from '@remirror/core-extensions';
 import { createEditorView, getDoc, RemirrorSSR, shouldUseDOMEnvironment } from '@remirror/react-ssr';
 import { baseKeymap, selectParentNode } from 'prosemirror-commands';
 import { inputRules, undoInputRule } from 'prosemirror-inputrules';
@@ -42,10 +39,10 @@ import {
   isRenderProp,
   uniqueClass,
   updateChildWithKey,
-} from './helpers';
-import { NodeViewPortal, NodeViewPortalComponent } from './node-views';
-import { defaultPositioner } from './positioners';
-import { defaultStyles } from './styles';
+} from '../helpers';
+import { NodeViewPortal, NodeViewPortalComponent } from '../node-views';
+import { defaultPositioner } from '../positioners';
+import { defaultStyles } from '../styles';
 import {
   CalculatePositionerParams,
   GetRootPropsConfig,
@@ -55,13 +52,15 @@ import {
   PositionerProps,
   PositionerRefFactoryParams,
   RefKeyRootProps,
+  RemirrorElementType,
   RemirrorEventListenerParams,
   RemirrorProps,
   RenderPropFunction,
-} from './types';
+} from '../types';
 
 export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   public static defaultProps = defaultProps;
+  public static $$remirrorType = RemirrorElementType.Editor;
 
   public schema: EditorSchema;
   private editorRef?: HTMLElement;
@@ -75,7 +74,6 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    * A unique class added to every instance of the remirror editor. This allows for non global styling.
    */
   private view: EditorViewType;
-  private extensionManager: ExtensionManager;
   private extensionPlugins: ProsemirrorPlugin[];
   private keymaps: ProsemirrorPlugin[];
   private inputRules: InputRule[];
@@ -87,10 +85,8 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   private emotionMethods!: ClassNamesContent<any>;
   private doc = getDoc();
 
-  private get builtInExtensions() {
-    return !this.props.usesBuiltInExtensions
-      ? []
-      : [new Composition(), new Doc(), new Text(), new Paragraph(), new History(), new Placeholder()];
+  private get manager(): ExtensionManager {
+    return this.props.manager;
   }
 
   private get plugins(): ProsemirrorPlugin[] {
@@ -111,19 +107,35 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
 
   constructor(props: RemirrorProps) {
     super(props);
-    this.extensionManager = this.createExtensions();
-    this.schema = this.extensionManager.createSchema();
+    this.manager.init({ getEditorState: this.getEditorState, getPortalContainer: this.getPortalContainer });
+    this.schema = this.manager.createSchema();
 
-    this.extensionStyles = this.extensionManager.styles(this.schemaParams);
-    this.extensionPlugins = this.extensionManager.plugins(this.schemaParams);
-    this.keymaps = this.extensionManager.keymaps(this.schemaParams);
-    this.inputRules = this.extensionManager.inputRules(this.schemaParams);
-    this.pasteRules = this.extensionManager.pasteRules(this.schemaParams);
+    this.extensionStyles = this.manager.styles(this.schemaParams);
+    this.extensionPlugins = this.manager.plugins(this.schemaParams);
+    this.keymaps = this.manager.keymaps(this.schemaParams);
+    this.inputRules = this.manager.inputRules(this.schemaParams);
+    this.pasteRules = this.manager.pasteRules(this.schemaParams);
 
     this.state = this.createInitialState();
     this.view = this.createView();
 
-    this.actions = this.extensionManager.actions({
+    this.actions = this.manager.actions({
+      ...this.schemaParams,
+      view: this.view,
+      isEditable: () => this.props.editable,
+    });
+    this.markAttrs = this.setMarkAttrs();
+  }
+
+  public updateManager(manager: ExtensionManager) {
+    this.schema = manager.createSchema();
+    this.extensionStyles = manager.styles(this.schemaParams);
+    this.extensionPlugins = manager.plugins(this.schemaParams);
+    this.keymaps = manager.keymaps(this.schemaParams);
+    this.inputRules = manager.inputRules(this.schemaParams);
+    this.pasteRules = manager.pasteRules(this.schemaParams);
+
+    this.actions = manager.actions({
       ...this.schemaParams,
       view: this.view,
       isEditable: () => this.props.editable,
@@ -154,17 +166,6 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    * Retrieve the portal container which used for managing node views which contain react components via the portal api.
    */
   private getPortalContainer = () => this.portalContainer;
-
-  /**
-   * Create the extensions manager through the extension manager
-   */
-  private createExtensions() {
-    return new ExtensionManager(
-      [...this.builtInExtensions, ...this.props.extensions],
-      this.getEditorState,
-      this.getPortalContainer,
-    );
-  }
 
   /**
    * Create the initial React state which stores copies of the Prosemirror editor state.
@@ -390,6 +391,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       () => {
         // For some reason moving the update state here fixes a bug
         this.view.updateState(state);
+
         if (onChange) {
           onChange({ ...this.eventListenerParams, state });
         }
@@ -422,9 +424,14 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     this.view.dom.addEventListener('focus', this.onFocus);
   }
 
-  public componentDidUpdate(prevProps: RemirrorProps) {
-    if (this.props.editable !== prevProps.editable && this.view && this.editorRef) {
+  public componentDidUpdate({ editable, manager }: RemirrorProps) {
+    if (this.props.editable !== editable && this.view && this.editorRef) {
       this.view.setProps({ ...this.view.props, editable: () => this.props.editable });
+    }
+
+    if (!manager.isEqual(this.props.manager)) {
+      this.updateManager(this.props.manager);
+      this.setContent(toHTML({ node: this.state.newState.doc, schema: this.schema }), true);
     }
   }
 
@@ -453,6 +460,12 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     }
   };
 
+  /**
+   * Sets the content of the editor.
+   *
+   * @param content
+   * @param triggerOnChange
+   */
   private setContent = (content: RemirrorContentType, triggerOnChange = false) => {
     const editorState = EditorState.create({
       schema: this.schema,
@@ -472,6 +485,11 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     this.setState(({ newState }) => ({ prevState: newState, newState: editorState }), afterUpdate);
   };
 
+  /**
+   * Clear the content of the editor (reset to the default empty node)
+   *
+   * @param triggerOnChange whether to notify the onChange handler that the content has been reset
+   */
   private clearContent = (triggerOnChange = false) => {
     this.setContent(EMPTY_OBJECT_NODE, triggerOnChange);
   };
@@ -489,7 +507,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
 
   get renderParams(): InjectedRemirrorProps {
     return {
-      manager: this.extensionManager,
+      manager: this.manager,
       view: this.view,
       actions: this.actions,
       getMarkAttr: this.getMarkAttr,
@@ -527,7 +545,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     const { placeholder } = this.props;
     let pluginState: PlaceholderPluginState;
     try {
-      pluginState = this.extensionManager.getPluginState<PlaceholderPluginState>('placeholder');
+      pluginState = this.manager.getPluginState<PlaceholderPluginState>('placeholder');
     } catch {
       // console.error(e);
       return undefined;
@@ -595,7 +613,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       <RemirrorSSR
         attributes={this.getAttributes(state)}
         state={this.state.newState}
-        manager={this.extensionManager}
+        manager={this.manager}
       />
     );
   }

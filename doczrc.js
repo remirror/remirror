@@ -32,6 +32,7 @@ const babelConfig = {
 };
 
 module.exports = {
+  propsParser: false,
   public: workingDir('support/assets'),
   indexHtml: 'docs/index.html',
   htmlContext: {
@@ -45,15 +46,15 @@ module.exports = {
   },
   modifyBundlerConfig: config => {
     const loaders = config.plugins[0].config.loaders.map(loader => {
-      if (loader.loader.includes('react-docgen-typescript-loader')) {
-        return {
-          ...loader,
-          options: {
-            propFilter: prop => !prop.parent.fileName.includes('node_modules'),
-            tsconfigPath: workingDir('./support/tsconfig.base.json'),
-          },
-        };
-      }
+      // if (loader.loader.includes('react-docgen-typescript-loader')) {
+      //   return {
+      //     ...loader,
+      //     options: {
+      //       propFilter: prop => !prop.parent.fileName.includes('node_modules'),
+      //       tsconfigPath: workingDir('./support/tsconfig.base.json'),
+      //     },
+      //   };
+      // }
       return loader;
     });
 

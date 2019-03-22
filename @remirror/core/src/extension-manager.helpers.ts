@@ -178,3 +178,20 @@ export const extensionPropertyMapper = <
       : extensionMethod.bind(extension)!(params),
   );
 };
+
+export interface ExtensionMapValue {
+  extension: AnyExtension;
+  priority: number;
+}
+
+export type ExtensionMap = Map<symbol, ExtensionMapValue>;
+
+/**
+ * Sorts and transforms extension map based on the provided priorities and outputs just the extensions
+ *
+ * Todo add a check for requiredExtensions and inject them automatically
+ *
+ * @param extensionMapValues
+ */
+export const transformExtensionMap = (extensionMapValues: ExtensionMapValue[]) =>
+  extensionMapValues.sort((a, b) => a.priority - b.priority).map(({ extension }) => extension);

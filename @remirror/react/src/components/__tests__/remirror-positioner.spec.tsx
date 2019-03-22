@@ -1,8 +1,9 @@
 import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
 import { PlainObject } from '@remirror/core';
+import { createTestManager } from '@test-fixtures/schema-helpers';
 import { render } from 'react-testing-library';
-import { Remirror } from '..';
+import { Remirror } from '../..';
 
 const mock = jest.fn();
 const Menu: FunctionComponent<RefAttributes<HTMLDivElement> & PlainObject> = forwardRef((_, ref) => {
@@ -12,7 +13,7 @@ const Menu: FunctionComponent<RefAttributes<HTMLDivElement> & PlainObject> = for
 
 test('updates the offscreen attribute when a selection is active', () => {
   render(
-    <Remirror>
+    <Remirror manager={createTestManager()}>
       {({ getPositionerProps }) => {
         const { ref } = getPositionerProps({ positionerId: 'test' });
         return (
@@ -28,7 +29,7 @@ test('updates the offscreen attribute when a selection is active', () => {
 
 test('provides correct menu props', () => {
   render(
-    <Remirror>
+    <Remirror manager={createTestManager()}>
       {({ getPositionerProps }) => {
         const { ref, ...props } = getPositionerProps({ positionerId: 'test' });
         expect(ref).toEqual(expect.any(Function));

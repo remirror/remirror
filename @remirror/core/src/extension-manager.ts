@@ -6,12 +6,14 @@ import { EditorState, PluginKey } from 'prosemirror-state';
 import { AnyExtension } from './extension';
 import {
   createFlexibleFunctionMap,
+  ExtensionMapValue,
   extensionPropertyMapper,
   hasExtensionProperty,
   isMarkExtension,
   isNodeExtension,
+  transformExtensionMap,
 } from './extension-manager.helpers';
-import { bool } from './helpers';
+import { bool, isEqual, isObject } from './helpers';
 import { getPluginState } from './helpers/document';
 import { NodeViewPortalContainer } from './portal-container';
 import {
@@ -29,9 +31,7 @@ import {
   RemirrorActions,
 } from './types';
 
-interface ExtensionManagerConstructorParams {
-  /** The list of extensions to use */
-  extensions: AnyExtension[];
+interface ExtensionManagerInitParams {
   /** A shortcut to pulling the editor state */
   getEditorState: () => EditorState;
   /** A shortcut to pulling the portal container */
@@ -42,19 +42,76 @@ export class ExtensionManager {
   /**
    * A helper static method for creating a new extension manager.
    */
-  public static create({
-    extensions,
-    getEditorState,
-    getPortalContainer,
-  }: ExtensionManagerConstructorParams) {
-    return new ExtensionManager(extensions, getEditorState, getPortalContainer);
+  public static create(extensions: ExtensionMapValue[]) {
+    return new ExtensionManager(extensions);
   }
 
-  constructor(
-    public readonly extensions: AnyExtension[],
-    public readonly getEditorState: () => EditorState,
-    public readonly getPortalContainer: () => NodeViewPortalContainer,
-  ) {}
+  public getEditorState!: () => EditorState;
+  public getPortalContainer!: () => NodeViewPortalContainer;
+  public readonly extensions: AnyExtension[];
+  private initialized = false;
+
+  constructor(extensionMapValues: ExtensionMapValue[]) {
+    this.extensions = transformExtensionMap(extensionMapValues);
+  }
+
+  /**
+   * Initialize the getters.
+   */
+  public init({ getEditorState, getPortalContainer }: ExtensionManagerInitParams) {
+    if (this.initialized) {
+      console.warn(
+        'This manager is already in use. Make sure not to use the same manager for more than one editor as this will cause problems with conflicting editor schema.',
+      );
+    }
+
+    this.getEditorState = getEditorState;
+    this.getPortalContainer = getPortalContainer;
+    this.initialized = true;
+    return this;
+  }
+
+  /**
+   * Checks whether two manager's are equal. Can be used to determine whether
+   * a change in props has caused anything to actually change and prevent a rerender.
+   *
+   * ExtensionManagers are equal when
+   * - They have the same number of extensions
+   * - Same order of extensions
+   * - Each extension has the same options
+   */
+  public isEqual(otherManager: unknown) {
+    if (!isExtensionManager(otherManager)) {
+      return false;
+    }
+
+    if (this.extensions.length !== otherManager.extensions.length) {
+      return false;
+    }
+
+    for (let ii = 0; ii <= this.extensions.length - 1; ii++) {
+      const ext = this.extensions[ii];
+      const otherExt = otherManager.extensions[ii];
+
+      if (ext.constructor === otherExt.constructor && isEqual(ext.options, otherExt.options)) {
+        continue;
+      }
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Checks to see if the extension manager has been initialized and throws if not
+   */
+  private checkInitialized() {
+    if (!this.initialized) {
+      throw new Error(
+        'Before using the extension manager it must be initialized with a getPortalContainer and editorState',
+      );
+    }
+  }
 
   /**
    * Filters through all provided extensions and picks the nodes
@@ -103,6 +160,7 @@ export class ExtensionManager {
    * Retrieve all plugins from the passed in extensions
    */
   public plugins(params: ExtensionManagerParams) {
+    this.checkInitialized();
     const plugins: ProsemirrorPlugin[] = [];
     const extensionPlugins = this.extensions
       .filter(hasExtensionProperty('plugin'))
@@ -192,6 +250,8 @@ export class ExtensionManager {
    * - `isEnabled` defaults to a function returning true
    */
   public actions(params: CommandParams): RemirrorActions {
+    this.checkInitialized();
+
     const actions: RemirrorActions = {};
     const commands = this.commands(params);
     const active = this.active(params);
@@ -213,6 +273,7 @@ export class ExtensionManager {
    * Retrieve the state for a given extension name. This will throw an error if the extension doesn't exist.
    */
   public getPluginState<GState>(name: string): GState {
+    this.checkInitialized();
     const key = this.pluginKeys[name];
     if (!key) {
       throw new Error(`Cannot retrieve state for an extension: ${name} which doesn\'t exist`);
@@ -293,4 +354,13 @@ const booleanFlexibleFunctionMap = <GKey extends 'enabled' | 'active'>(key: GKey
         getPortalContainer: ctx.getPortalContainer,
       }),
   });
+};
+
+/**
+ * Checks to see whether this is an extension manager
+ *
+ * @param value
+ */
+export const isExtensionManager = (value: unknown): value is ExtensionManager => {
+  return isObject(value) && value instanceof ExtensionManager;
 };

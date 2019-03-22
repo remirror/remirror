@@ -4,11 +4,11 @@
 
 import React, { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
-import { Remirror } from '..';
+import { Remirror } from '../..';
 
 import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { docNodeSimpleJSON } from '@test-fixtures/object-nodes';
-import { extensions } from '@test-fixtures/schema-helpers';
+import { createTestManager } from '@test-fixtures/schema-helpers';
 
 // const textContent = `This is editor text`;
 const label = 'Remirror editor';
@@ -23,13 +23,7 @@ test('can render in a node server environment', () => {
   const Component = 'span';
   const mock = jest.fn(() => <Component />);
   const reactString = renderToString(
-    <Remirror
-      {...handlers}
-      label={label}
-      initialContent={docNodeSimpleJSON}
-      extensions={extensions}
-      usesBuiltInExtensions={false}
-    >
+    <Remirror {...handlers} label={label} initialContent={docNodeSimpleJSON} manager={createTestManager()}>
       {mock}
     </Remirror>,
   );
@@ -42,19 +36,23 @@ test('can render in a node server environment', () => {
 
 test('can render with a non-dom top level node', () => {
   const reactString = renderToString(
-    <Remirror
-      {...handlers}
-      label={label}
-      initialContent={docNodeSimpleJSON}
-      extensions={extensions}
-      usesBuiltInExtensions={false}
-    >
+    <Remirror {...handlers} label={label} initialContent={docNodeSimpleJSON} manager={createTestManager()}>
       {() => <Fragment />}
     </Remirror>,
   );
 
   expect(reactString).toInclude('This is a node with');
   expect(reactString).toInclude('<div role="textbox"');
+});
+
+// ! Bug - Can't currently render html as initial content with SSR.
+test.skip('can render with html content', () => {
+  const reactString = renderToString(
+    <Remirror {...handlers} label={label} initialContent='<p>Hello</p>' manager={createTestManager()}>
+      {() => <Fragment />}
+    </Remirror>,
+  );
+  expect(reactString).toInclude('Hello');
 });
 
 describe('Position when getRootProps is used', () => {
@@ -64,13 +62,7 @@ describe('Position when getRootProps is used', () => {
 
   it('appends to the react element by default', () => {
     const reactString = renderToString(
-      <Remirror
-        {...handlers}
-        label={label}
-        initialContent={docNodeSimpleJSON}
-        extensions={extensions}
-        usesBuiltInExtensions={false}
-      >
+      <Remirror {...handlers} label={label} initialContent={docNodeSimpleJSON} manager={createTestManager()}>
         {({ getRootProps }) => (
           <div>
             <div id={outerId}>
@@ -102,8 +94,7 @@ describe('Position when getRootProps is used', () => {
         {...handlers}
         label={label}
         initialContent={docNodeSimpleJSON}
-        extensions={extensions}
-        usesBuiltInExtensions={false}
+        manager={createTestManager()}
         insertPosition='start'
       >
         {({ getRootProps }) => (

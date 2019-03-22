@@ -1,12 +1,11 @@
 import {
-  AnyExtension,
   CompareStateParams,
   EditorSchema,
   EditorState,
   EditorViewParams,
   ElementParams,
+  Extension,
   ExtensionManager,
-  MakeOptional,
   ObjectNode,
   Omit,
   PlainObject,
@@ -14,11 +13,13 @@ import {
   PositionParams,
   RemirrorActions,
   RemirrorContentType,
+  SimpleExtensionConstructor,
   Transaction,
 } from '@remirror/core';
 import { RenderEnvironment } from '@remirror/react-ssr';
 import { Interpolation, ObjectInterpolation } from 'emotion';
 import { EditorView } from 'prosemirror-view';
+import { ComponentClass, ComponentType, FC } from 'react';
 
 export interface Positioner {
   /**
@@ -130,11 +131,10 @@ export type AttributePropFunction = (params: RemirrorEventListenerParams) => Rec
 
 export interface RemirrorProps {
   /**
-   * Pass in extension instances which determine the behaviour of the editor.
+   * Pass in the extension manager.
    *
-   * @default []
    */
-  extensions: AnyExtension[];
+  manager: ExtensionManager;
 
   /**
    * Set the starting value object of the editor.
@@ -297,3 +297,87 @@ export interface UsePositionerParams<GRefKey extends string = 'ref'>
   extends PositionerIdParams,
     PositionerParams,
     RefParams<GRefKey> {}
+
+/**
+ * Used to mark a remirror specific component to determine it's behaviour.
+ */
+export enum RemirrorElementType {
+  Extension = 'extension',
+  SSR = 'ssr',
+  EditorProvider = 'editor-provider',
+  ManagedEditorProvider = 'managed-editor-provider',
+  Editor = 'editor',
+  Manager = 'manager',
+  ManagerProvider = 'manager-provider',
+}
+
+export type RemirrorExtensionProps<
+  GOptions extends {} = {},
+  GExtension extends Extension<GOptions, any> = Extension<GOptions, any>,
+  GConstructor extends SimpleExtensionConstructor<GOptions, GExtension> = SimpleExtensionConstructor<
+    GOptions,
+    GExtension
+  >
+> = GOptions & BaseExtensionComponentProps<GOptions, GExtension, GConstructor>;
+
+export interface BaseExtensionComponentProps<
+  GOptions extends {} = {},
+  GExtension extends Extension<GOptions, any> = Extension<GOptions, any>,
+  GConstructor extends SimpleExtensionConstructor<GOptions, GExtension> = SimpleExtensionConstructor<
+    GOptions,
+    GExtension
+  >
+> {
+  /**
+   * The constructor for the remirror extension.
+   * Will be instantiated with the options passed through as props.
+   */
+  Constructor: GConstructor;
+  /**
+   * Sets the priority for the extension. Lower number means the extension is loaded first and gives it priority.
+   * `-1` is loaded before `0` and will overwrite any conflicting configuration.
+   *
+   * Base extensions are loaded with a priority of 1.
+   *
+   * @default 2
+   */
+  priority?: number;
+  children?: never;
+}
+
+export interface RegisterExtensionParams<GOptions extends {}> {
+  /** The extension identifier */
+  id: symbol;
+  /** The instance of the extension with the options applied */
+  extension: Extension<GOptions, any>;
+  /**
+   * The priority index for the extension
+   * @default 2
+   */
+  priority: number;
+}
+
+/**
+ * An extension component registration function which returns a function for un-registering the component
+ */
+export type RegisterExtension<GOptions extends {}> = (
+  params: RegisterExtensionParams<GOptions>,
+) => () => void;
+
+export interface RemirrorComponentStaticProperties {
+  /**
+   * Identifies this as a remirror specific component
+   */
+  $$remirrorType: RemirrorElementType;
+}
+
+export type RemirrorComponentType<P extends {}> = ComponentType<P> & RemirrorComponentStaticProperties;
+export type RemirrorFC<P extends {}> = FC<P> & RemirrorComponentStaticProperties;
+export type RemirrorComponentClass<P extends {}> = ComponentClass<P> & RemirrorComponentStaticProperties;
+
+export interface RemirrorManagerProps {
+  /**
+   * Whether to use base extensions
+   */
+  useBaseExtensions?: boolean;
+}

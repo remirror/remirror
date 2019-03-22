@@ -2,9 +2,10 @@ import React from 'react';
 
 import { omit } from '@remirror/core';
 import { injectedPropsShape, positionerShape } from '@test-fixtures/object-shapes';
+import { createTestManager } from '@test-fixtures/schema-helpers';
 import { render } from 'react-testing-library';
-import { bubblePositioner } from '../positioners';
-import { RemirrorProvider, withPositioner, withRemirror } from '../provider';
+import { bubblePositioner } from '../../positioners';
+import { RemirrorEditor, withPositioner, withRemirror } from '../providers';
 
 test('withRemirror', () => {
   const mock = jest.fn();
@@ -14,9 +15,9 @@ test('withRemirror', () => {
   });
 
   render(
-    <RemirrorProvider extensions={[]}>
+    <RemirrorEditor manager={createTestManager()}>
       <Cmp />
-    </RemirrorProvider>,
+    </RemirrorEditor>,
   );
 
   expect(mock).toHaveBeenCalledWith(expect.objectContaining(injectedPropsShape));
@@ -32,9 +33,9 @@ test('withPositioner', () => {
   );
 
   render(
-    <RemirrorProvider extensions={[]}>
+    <RemirrorEditor manager={createTestManager()}>
       <Menu />
-    </RemirrorProvider>,
+    </RemirrorEditor>,
   );
 
   expect(mock).toHaveBeenCalledWith(

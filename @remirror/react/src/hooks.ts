@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { RemirrorContext } from './provider';
+import { RemirrorEditorContext, RemirrorManagerContext } from './contexts';
 import { UsePositionerParams } from './types';
 
 /**
@@ -31,7 +31,14 @@ import { UsePositionerParams } from './types';
  * ```
  */
 export const useRemirrorContext = () => {
-  return useContext(RemirrorContext);
+  return useContext(RemirrorEditorContext);
+};
+
+/**
+ * A low level context picker to obtain the manager from within a RemirrorManager context
+ */
+export const useRemirrorManagerContext = () => {
+  return useContext(RemirrorManagerContext);
 };
 
 /**

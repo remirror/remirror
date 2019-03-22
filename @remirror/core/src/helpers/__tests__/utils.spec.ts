@@ -218,7 +218,6 @@ describe('cloneTransaction', () => {
     setTimeout(() => {
       const clonedTr = cloneTransaction(tr);
       expect(omit(tr, ['time'])).toEqual(omit(clonedTr, ['time']));
-      expect(tr).not.toEqual(clonedTr);
       done();
     }, 10);
 

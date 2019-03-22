@@ -14,6 +14,7 @@ import {
   table,
   tableRow,
 } from 'jest-prosemirror';
+import { Node as PMNode } from 'prosemirror-model';
 import { TextSelection } from 'prosemirror-state';
 import { NodeMatch } from '../../types';
 import {
@@ -22,6 +23,7 @@ import {
   canInsertNode,
   createDocumentNode,
   endPositionOfParent,
+  fromHTML,
   getCursor,
   getMarkAttrs,
   getMarkRange,
@@ -357,5 +359,18 @@ describe('toDOM', () => {
 
   it('allows for custom document to be passed in', () => {
     expect(toDOM({ node, schema: testSchema, doc: domino.createDocument() })).toBeTruthy();
+  });
+});
+
+describe('fromHTML', () => {
+  const content = `<p>Hello</p>`;
+  it('transform html into a prosemirror node', () => {
+    expect(fromHTML({ content, schema: testSchema })).toEqualPMNode(doc(p('Hello')));
+  });
+
+  it('allows for custom document to be passed in', () => {
+    expect(fromHTML({ content, schema: testSchema, doc: domino.createDocument() })).toEqualPMNode(
+      doc(p('Hello')),
+    );
   });
 });

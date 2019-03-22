@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { AnyExtension, Attrs, EditorView, Omit, omit } from '@remirror/core';
+import { AnyExtension, Attrs, EditorView, ExtensionManager, Omit, omit } from '@remirror/core';
 import { InlineCursorTarget } from '@remirror/core-extensions';
 import { EmojiNode, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
@@ -355,7 +355,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
             },
           ]}
           {...this.remirrorProps}
-          extensions={this.extensions}
+          manager={ExtensionManager.create(this.extensions.map(extension => ({ extension, priority: 2 })))}
           onChange={this.onChange}
           insertPosition='start'
         >

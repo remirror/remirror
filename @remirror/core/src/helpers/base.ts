@@ -1,5 +1,6 @@
 /// <reference types="node" />
 
+import fastDeepEqual from 'fast-deep-equal';
 import memoizeOne from 'memoize-one';
 import nano from 'nanoid';
 import objectOmit from 'object.omit';
@@ -482,3 +483,8 @@ export const clone = <GObject extends {}>(value: GObject) => {
   }
   return { ...value };
 };
+
+/**
+ * Alias for fast deep equal
+ */
+export const isEqual = fastDeepEqual;

@@ -4,8 +4,9 @@ import { ExtensionManager } from '../extension-manager';
 import { Cast } from '../helpers/base';
 import { Doc, Paragraph, Text } from '../nodes';
 
-const state = {
-  editorState: Cast({}),
+export const helpers = {
+  getEditorState: Cast(jest.fn(() => 'state')),
+  getPortalContainer: Cast(jest.fn(() => 'portals')),
 };
 
 const mock = jest.fn();
@@ -24,11 +25,20 @@ const text = new Text();
 const paragraph = new Paragraph();
 const dummy = new DummyMark();
 
-const em = new ExtensionManager([doc, text, paragraph, dummy], () => state.editorState, () => Cast({}));
-test('-properties', () => {
+const em = ExtensionManager.create([
+  { extension: doc, priority: 2 },
+  { extension: text, priority: 2 },
+  { extension: paragraph, priority: 2 },
+  { extension: dummy, priority: 2 },
+]);
+
+em.init(helpers);
+
+test('ExtensionManager#properties', () => {
   expect(em).toBeInstanceOf(ExtensionManager);
   expect(em.extensions).toHaveLength(4);
-  expect(em.getEditorState()).toBe(state.editorState);
+  expect(em.getEditorState()).toBe('state');
+  expect(em.getPortalContainer()).toBe('portals');
 });
 
 const schema = new Schema({
@@ -36,7 +46,7 @@ const schema = new Schema({
   marks: em.marks,
 });
 
-test('-nodes', () => {
+test('ExtensionManager#nodes', () => {
   expect(schema.nodes.doc.spec).toEqual(doc.schema);
   expect(schema.nodes.text.spec).toEqual(text.schema);
 });

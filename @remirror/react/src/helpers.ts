@@ -1,6 +1,20 @@
-import { Cast, EMPTY_OBJECT_NODE, isFunction, isString, PlainObject, Predicate } from '@remirror/core';
-import { Children, isValidElement, ReactNode } from 'react';
-import { AttributePropFunction, RemirrorProps, RenderPropFunction } from './types';
+import {
+  Cast,
+  EMPTY_OBJECT_NODE,
+  isFunction,
+  isObject,
+  isString,
+  PlainObject,
+  Predicate,
+} from '@remirror/core';
+import { Children, isValidElement, ReactElement, ReactNode } from 'react';
+import {
+  AttributePropFunction,
+  RemirrorComponentType,
+  RemirrorElementType,
+  RemirrorProps,
+  RenderPropFunction,
+} from './types';
 
 /**
  * Alias for checking if a the attribute function is valid and also typecasting the return as a AttributePropFunction
@@ -40,6 +54,12 @@ export const uniqueClass = (uid: string, className: string) => `${className}-${u
 
 /**
  * Utility for properly typechecking static defaultProps for a class component in react.
+ *
+ * ```ts
+ * static defaultProps = asDefaultProps<RemirrorProps>()({
+ *   initialContent: EMPTY_OBJECT_NODE,
+ * });
+ * ```
  */
 export const asDefaultProps = <GProps extends {}>() => <GDefaultProps extends Partial<GProps>>(
   props: GDefaultProps,
@@ -108,7 +128,6 @@ export const updateChildWithKey = (
 
 export const defaultProps = asDefaultProps<RemirrorProps>()({
   initialContent: EMPTY_OBJECT_NODE,
-  extensions: [],
   editable: true,
   usesBuiltInExtensions: true,
   attributes: {},
@@ -117,3 +136,41 @@ export const defaultProps = asDefaultProps<RemirrorProps>()({
   editorStyles: {},
   insertPosition: 'end',
 });
+
+/**
+ * Finds if this is an extension component element type
+ *
+ * @param value
+ */
+export const isRemirrorExtensionComponent = <GOptions extends {} = any>(
+  value: unknown,
+): value is ReactElement<any> & { type: RemirrorComponentType<GOptions> } => {
+  return (
+    isObject(value) &&
+    isValidElement(value) &&
+    (value.type as RemirrorComponentType<GOptions>).$$remirrorType === RemirrorElementType.Extension
+  );
+};
+
+/**
+ * Finds if this is an extension component element type
+ *
+ * @param value
+ */
+export const isRemirrorEditorType = <GOptions extends {} = any>(
+  value: unknown,
+): value is ReactElement<any> & { type: RemirrorComponentType<GOptions> } =>
+  isObject(value) &&
+  isValidElement(value) &&
+  (value.type as RemirrorComponentType<GOptions>).$$remirrorType === RemirrorElementType.EditorProvider;
+
+/**
+ * Checks for whether the extension component
+ */
+export const isManagedEditorProvider = <GOptions extends {} = any>(
+  value: unknown,
+): value is ReactElement<any> & { type: RemirrorComponentType<GOptions> } =>
+  isObject(value) &&
+  isValidElement(value) &&
+  (value.type as RemirrorComponentType<GOptions>).$$remirrorType ===
+    RemirrorElementType.ManagedEditorProvider;

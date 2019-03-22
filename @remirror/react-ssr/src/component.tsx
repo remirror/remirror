@@ -8,6 +8,9 @@ export interface RemirrorSSRProps {
   manager: ExtensionManager;
 }
 
+/**
+ * Remirror SSR component used for rendering in non dom environments
+ */
 export const RemirrorSSR: FC<RemirrorSSRProps> = ({ attributes, manager, state }) => {
   const outerProps = mapProps(attributes);
   return (

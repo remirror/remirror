@@ -1,12 +1,13 @@
 import { ExtensionManager, fromHTML, toHTML } from '@remirror/core';
-import { extensions, helpers } from '@test-fixtures/schema-helpers';
+import { extensions } from '@test-fixtures/schema-helpers';
 
 import { Mention } from '../';
 
-const manager = ExtensionManager.create({
-  ...helpers,
-  extensions: [...extensions, new Mention({ name: 'mentionAt' })],
-});
+const manager = ExtensionManager.create([
+  ...extensions,
+  { extension: new Mention({ name: 'mentionAt' }), priority: 1 },
+]);
+
 const schema = manager.createSchema();
 
 const { paragraph, mentionAt, doc } = schema.nodes;

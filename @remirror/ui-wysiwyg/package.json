@@ -2,21 +2,41 @@
   "name": "@remirror/ui-wysiwyg",
   "private": true,
   "description": "ui for a what you see is what you get (wysiwyg) editing experience",
-  "license": "MIT",
+  "version": "0.0.1-alpha.10",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@emotion/core": "^10.0.9",
+    "@emotion/styled": "^10.0.9",
+    "@remirror/core": "0.0.1-alpha.10",
+    "@remirror/core-extensions": "0.0.1-alpha.10",
+    "@remirror/extension-emoji": "0.0.1-alpha.10",
+    "@remirror/extension-enhanced-link": "0.0.1-alpha.10",
+    "@remirror/extension-mention": "0.0.1-alpha.10",
+    "@remirror/react": "0.0.1-alpha.10",
+    "emotion-theming": "^10.0.9"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-wysiwyg",
+  "main": "lib/index.js",
+  "module": "lib/dist/ui-wysiwyg.esm.js",
+  "peerDependencies": {
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/ui-wysiwyg"
   },
-  "version": "0.0.1-alpha.9",
-  "main": "lib/index.js",
-  "module": "lib/dist/ui-wysiwyg.esm.js",
-  "files": [
-    "lib",
-    "src"
-  ],
   "scripts": {
     "build": "run-s build:declaration build:babel",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
@@ -30,26 +50,6 @@
     "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
   },
   "types": "lib/index.d.ts",
-  "dependencies": {
-    "@emotion/core": "^10.0.9",
-    "@emotion/styled": "^10.0.9",
-    "@remirror/core": "0.0.1-alpha.9",
-    "@remirror/core-extensions": "0.0.1-alpha.9",
-    "@remirror/extension-emoji": "0.0.1-alpha.9",
-    "@remirror/extension-enhanced-link": "0.0.1-alpha.9",
-    "@remirror/extension-mention": "0.0.1-alpha.9",
-    "@remirror/react": "0.0.1-alpha.9",
-    "emotion-theming": "^10.0.9"
-  },
-  "peerDependencies": {
-    "@types/react": "^16.8.0",
-    "@types/react-dom": "^16.8.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
   "umd": "lib/dist/ui-wysiwyg.umd.js",
   "umd:min": "lib/dist/ui-wysiwyg.umd.min.js",
   "umdGlobals": {

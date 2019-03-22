@@ -1,15 +1,19 @@
-import React, { ComponentType, createContext, FC, FunctionComponent } from 'react';
+import React, { ComponentType, FunctionComponent } from 'react';
 
 import { Cast, isEmptyObject, MakeOptional, Omit } from '@remirror/core';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import { defaultProps } from './helpers';
+import { RemirrorEditorContext } from '../contexts';
+import { defaultProps } from '../helpers';
+import { useRemirrorManagerContext } from '../hooks';
+import {
+  GetPositionerReturn,
+  InjectedRemirrorProps,
+  RemirrorElementType,
+  RemirrorFC,
+  RemirrorProps,
+  UsePositionerParams,
+} from '../types';
 import { Remirror } from './remirror';
-import { GetPositionerReturn, InjectedRemirrorProps, RemirrorProps, UsePositionerParams } from './types';
-
-/**
- * Creates a ReactContext for the Remirror component
- */
-export const RemirrorContext = createContext<InjectedRemirrorProps>(Cast<InjectedRemirrorProps>({}));
 
 export type RemirrorProviderProps = MakeOptional<Omit<RemirrorProps, 'children'>, keyof typeof defaultProps>;
 
@@ -20,17 +24,40 @@ export type RemirrorProviderProps = MakeOptional<Omit<RemirrorProps, 'children'>
  * - `useRemirrorContext`
  * - `usePositioner`
  *
- * Or the higher order component
+ * Or the higher order components
  * - `withRemirror`
  * - `withPositioner`
  */
-export const RemirrorProvider: FC<RemirrorProviderProps> = ({ children, ...props }) => {
+export const RemirrorEditor: RemirrorFC<RemirrorProviderProps> = ({ children, ...props }) => {
   return (
     <Remirror {...props}>
-      {value => <RemirrorContext.Provider value={value}>{children}</RemirrorContext.Provider>}
+      {value => <RemirrorEditorContext.Provider value={value}>{children}</RemirrorEditorContext.Provider>}
     </Remirror>
   );
 };
+
+RemirrorEditor.$$remirrorType = RemirrorElementType.EditorProvider;
+
+/**
+ * Renders the content while pulling the manager from the context and passing it on to the
+ * RemirrorProvider.
+ *
+ * If no manager exists the child components are not rendered.
+ */
+export const ManagedRemirrorEditor: RemirrorFC<Omit<RemirrorProviderProps, 'manager'>> = ({
+  children,
+  ...props
+}) => {
+  const manager = useRemirrorManagerContext();
+
+  return manager ? (
+    <RemirrorEditor {...props} manager={manager}>
+      {children}
+    </RemirrorEditor>
+  ) : null;
+};
+
+ManagedRemirrorEditor.$$remirrorType = RemirrorElementType.ManagedEditorProvider;
 
 const checkValidRenderPropParams = (params: InjectedRemirrorProps) => {
   if (isEmptyObject(params)) {
@@ -50,12 +77,12 @@ export const withRemirror = <GProps extends InjectedRemirrorProps>(
   type EnhancedComponentProps = Omit<GProps, keyof InjectedRemirrorProps>;
   const EnhancedComponent: FunctionComponent<EnhancedComponentProps> = props => {
     return (
-      <RemirrorContext.Consumer>
+      <RemirrorEditorContext.Consumer>
         {params => {
           checkValidRenderPropParams(params);
           return <WrappedComponent {...Cast<GProps>({ ...props, ...params })} />;
         }}
-      </RemirrorContext.Consumer>
+      </RemirrorEditorContext.Consumer>
     );
   };
 
@@ -77,16 +104,15 @@ export const withPositioner = <GRefKey extends string = 'ref'>({
   type EnhancedComponentProps = Omit<GProps, keyof GetPositionerReturn<GRefKey>>;
   const EnhancedComponent: FunctionComponent<EnhancedComponentProps> = props => {
     return (
-      <RemirrorContext.Consumer>
+      <RemirrorEditorContext.Consumer>
         {({ getPositionerProps }) => {
-          console.log(getPositionerProps({ ...positioner, ...rest }));
           return (
             <WrappedComponent
               {...Cast<GProps>({ ...props, ...getPositionerProps<GRefKey>({ ...positioner, ...rest }) })}
             />
           );
         }}
-      </RemirrorContext.Consumer>
+      </RemirrorEditorContext.Consumer>
     );
   };
 
