@@ -10,7 +10,7 @@
     "@types/memoize-one": "4.1.1",
     "@types/nanoevents": "1.0.0",
     "@types/nanoid": "1.2.1",
-    "@types/node": "^11.11.4",
+    "@types/node": "^11.11.5",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-keymap": "^1.0.1",

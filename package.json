@@ -124,7 +124,7 @@
   "resolutions": {
     "react": "16.8.4",
     "react-dom": "16.8.4",
-    "@babel/parser": "7.4.0",
+    "@babel/parser": "7.4.2",
     "jsdom": "14.0.0",
     "hoist-non-react-statics": "3.3.0"
   },
@@ -162,7 +162,7 @@
     "lint:ts": "lerna run lint --parallel",
     "publish:alpha": "yarn if-clean run-s ci:checks:all lerna:publish:alpha",
     "lerna:publish:alpha": "lerna publish prerelease --preid=alpha --exact",
-    "test": "jest",
+    "test": "jest --verbose",
     "stop:hooks": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
     "start:hooks": "rimraf ./.config.json",
     "test:integration:no-coverage": "cross-env TEST_ENV=integration jest --coverage=false",
