@@ -1,6 +1,6 @@
 <div align="center">
 	<br />
-	<div>
+	<div align="center">
 		<img width="300" height="300" src="support/assets/logo.svg" alt="remirror" />
 	</div>
     <br />

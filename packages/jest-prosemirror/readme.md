@@ -1,6 +1,6 @@
 <div align="center">
 	<br />
-	<div>
+	<div align="center">
 		<img width="300" src="https://cdn.jsdelivr.net/gh/ifiokjr/remirror/support/assets/logo-icon.svg" alt="remirror" />
     <h1 align="center">jest-prosemirror</h1>
 	</div>
