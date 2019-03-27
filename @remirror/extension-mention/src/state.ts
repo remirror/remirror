@@ -15,7 +15,7 @@ import {
   SuggestionsCallbackParams,
   SuggestionStateField,
 } from './types';
-import { actionsTaken, getSuggestionMatchState } from './utils';
+import { actionsTaken, getSuggestionMatchState, runSuggestionsCommand } from './utils';
 
 export class SuggestionState {
   /**
@@ -109,7 +109,7 @@ export class SuggestionState {
       return;
     }
 
-    const { command, appendText, onChange, onEnter, onExit } = this.extension.options;
+    const { appendText, onChange, onEnter, onExit } = this.extension.options;
 
     const props: SuggestionsCallbackParams = {
       view: this.view,
@@ -119,7 +119,8 @@ export class SuggestionState {
           attrs.name = stateField.name;
         }
 
-        command({
+        runSuggestionsCommand({
+          name: this.extension.name,
           range: stateField.range,
           attrs,
           schema: this.view.state.schema,

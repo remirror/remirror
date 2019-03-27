@@ -1,5 +1,5 @@
-import { findMatches, isRegExp, NULL_CHARACTER, ResolvedPos } from '@remirror/core';
-import { ActionTaken, SuggestionsMatcher, SuggestionStateField } from './types';
+import { findMatches, isRegExp, NULL_CHARACTER, replaceText, ResolvedPos } from '@remirror/core';
+import { ActionTaken, SuggestionsCommandParams, SuggestionsMatcher, SuggestionStateField } from './types';
 
 /**
  * The default matcher to use when none is provided in options
@@ -144,3 +144,11 @@ export const actionsTaken = (
 
   return actions;
 };
+
+/**
+ * Update the suggestion
+ *
+ * @param params
+ */
+export const runSuggestionsCommand = ({ range, attrs, appendText, schema, name }: SuggestionsCommandParams) =>
+  replaceText(range, schema.nodes[name], attrs, appendText);

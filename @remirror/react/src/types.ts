@@ -5,7 +5,11 @@ import {
   EditorViewParams,
   ElementParams,
   Extension,
+  ExtensionConstructor,
   ExtensionManager,
+  NodeExtension,
+  NodeExtensionConstructor,
+  NodeExtensionOptions,
   ObjectNode,
   Omit,
   PlainObject,
@@ -13,7 +17,6 @@ import {
   PositionParams,
   RemirrorActions,
   RemirrorContentType,
-  SimpleExtensionConstructor,
   Transaction,
 } from '@remirror/core';
 import { RenderEnvironment } from '@remirror/react-ssr';
@@ -69,7 +72,7 @@ export interface GetRootPropsConfig<GRefKey extends string = 'ref'> extends RefP
 
 export type RefKeyRootProps<GRefKey extends string = 'ref'> = {
   [P in Exclude<GRefKey, 'children' | 'key'>]: React.Ref<any>
-} & { className: string; key: string } & PlainObject;
+} & { css: Interpolation; key: string } & PlainObject;
 
 export type GetPositionerReturn<GRefKey extends string = 'ref'> = PositionerProps &
   { [P in GRefKey]: React.Ref<any> };
@@ -311,19 +314,16 @@ export enum RemirrorElementType {
   ManagerProvider = 'manager-provider',
 }
 
-export type RemirrorExtensionProps<
-  GOptions extends {} = {},
-  GExtension extends Extension<GOptions, any> = Extension<GOptions, any>,
-  GConstructor extends SimpleExtensionConstructor<GOptions, GExtension> = SimpleExtensionConstructor<
-    GOptions,
-    GExtension
-  >
-> = GOptions & BaseExtensionComponentProps<GOptions, GExtension, GConstructor>;
+export type RemirrorNodeExtensionProps<
+  GOptions extends NodeExtensionOptions = NodeExtensionOptions,
+  GExtension extends NodeExtension<GOptions> = NodeExtension<GOptions>,
+  GConstructor extends ExtensionConstructor<GOptions, GExtension> = ExtensionConstructor<GOptions, GExtension>
+> = GOptions & BaseExtensionProps & NodeExtensionConstructorProps<GOptions, GExtension, GConstructor>;
 
-export interface BaseExtensionComponentProps<
-  GOptions extends {} = {},
-  GExtension extends Extension<GOptions, any> = Extension<GOptions, any>,
-  GConstructor extends SimpleExtensionConstructor<GOptions, GExtension> = SimpleExtensionConstructor<
+export interface NodeExtensionConstructorProps<
+  GOptions extends NodeExtensionOptions = NodeExtensionOptions,
+  GExtension extends NodeExtension<GOptions> = NodeExtension<GOptions>,
+  GConstructor extends NodeExtensionConstructor<GOptions, GExtension> = NodeExtensionConstructor<
     GOptions,
     GExtension
   >
@@ -333,6 +333,27 @@ export interface BaseExtensionComponentProps<
    * Will be instantiated with the options passed through as props.
    */
   Constructor: GConstructor;
+}
+
+export type RemirrorExtensionProps<
+  GOptions extends {},
+  GExtension extends Extension<GOptions, any> = Extension<GOptions, any>,
+  GConstructor = ExtensionConstructor<GOptions, GExtension>
+> = GOptions & BaseExtensionProps & ExtensionConstructorProps<GOptions, GExtension, GConstructor>;
+
+export interface ExtensionConstructorProps<
+  GOptions extends {},
+  GExtension extends Extension<GOptions, any> = Extension<GOptions, any>,
+  GConstructor = ExtensionConstructor<GOptions, GExtension>
+> {
+  /**
+   * The constructor for the remirror extension.
+   * Will be instantiated with the options passed through as props.
+   */
+  Constructor: GConstructor;
+}
+
+export interface BaseExtensionProps {
   /**
    * Sets the priority for the extension. Lower number means the extension is loaded first and gives it priority.
    * `-1` is loaded before `0` and will overwrite any conflicting configuration.

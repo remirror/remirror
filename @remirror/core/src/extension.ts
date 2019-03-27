@@ -20,11 +20,11 @@ export abstract class Extension<GOptions extends {} = {}, GType = never> {
   public abstract readonly name: string;
   private pk?: PluginKey;
 
-  constructor(...args: keyof GOptions extends never ? [] : [GOptions?]) {
-    if (args[0]) {
+  constructor(options?: GOptions) {
+    if (options) {
       this.options = Cast<Required<GOptions>>({
         ...this.defaultOptions,
-        ...args[0],
+        ...options,
       });
     } else {
       this.options = Cast<Required<GOptions>>(this.defaultOptions);
@@ -117,16 +117,8 @@ export type ExtensionOptions<GExtension extends Extension> = GExtension extends 
   ? P
   : never;
 
-export interface ExtensionConstructor<
-  GExtension extends Extension,
-  GOpts extends ExtensionOptions<GExtension>
-> {
-  // tslint:disable-next-line: callable-types
-  new (options: GOpts): GExtension;
-}
-
 /** A simpler extension constructor */
-export interface SimpleExtensionConstructor<GOptions extends {}, GExtension extends Extension<GOptions>> {
+export interface ExtensionConstructor<GOptions extends {}, GExtension extends Extension<GOptions>> {
   // tslint:disable-next-line: callable-types
   new (options?: GOptions): GExtension;
 }

@@ -1,62 +1,44 @@
 import React, { PureComponent } from 'react';
 
-import { AnyExtension, Attrs, EditorView, ExtensionManager, Omit, omit } from '@remirror/core';
+import { Attrs, omit } from '@remirror/core';
 import { InlineCursorTarget } from '@remirror/core-extensions';
-import { EmojiNode, isBaseEmoji } from '@remirror/extension-emoji';
+import { EmojiNode, EmojiNodeOptions, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
-import { Mention, NodeAttrs, OnKeyDownParams } from '@remirror/extension-mention';
-import { Remirror, RemirrorEventListener, RemirrorProps } from '@remirror/react';
-import { Data, EmojiSet } from 'emoji-mart';
+import {
+  ActionTaken,
+  Mention,
+  MentionNodeAttrs,
+  MentionOptions,
+  OnKeyDownParams,
+} from '@remirror/extension-mention';
+import {
+  ManagedRemirrorEditor,
+  RemirrorEventListener,
+  RemirrorExtension,
+  RemirrorManager,
+} from '@remirror/react';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
 import { UITwitterTheme, uiTwitterTheme } from '../theme';
-import { ActiveTwitterTagData, ActiveTwitterUserData, TwitterTagData, TwitterUserData } from '../types';
-import { CharacterCountIndicator } from './character-count';
-import { EmojiPicker, EmojiPickerProps, EmojiSmiley } from './emoji-picker';
-import { CharacterCountWrapper, EmojiPickerWrapper, EmojiSmileyWrapper, RemirrorWrapper } from './styled';
-import { AtSuggestions, HashSuggestions } from './suggestions';
-
-export type OnQueryChangeParams = Omit<MentionState, 'submitFactory'> & { activeIndex: number };
-
-export interface TwitterUIProps extends EnhancedLinkOptions, Partial<RemirrorProps> {
-  /**
-   * The number of matches to display
-   */
-  userData: TwitterUserData[];
-  tagData: TwitterTagData[];
-  onMentionStateChange(params?: OnQueryChangeParams): void;
-  theme: UITwitterTheme;
-
-  /**
-   * The data object used for emoji.
-   * The shape is taken from emoji-mart.
-   */
-  emojiData: Data;
-  emojiSet: EmojiSet;
-}
-
-interface BaseMentionState {
-  query: string;
-  action: 'enter' | 'change' | 'exit';
-}
-
-interface AtMentionState extends BaseMentionState {
-  type: 'mentionAt';
-  submitFactory(user: TwitterUserData): () => void;
-}
-interface HashMentionState extends BaseMentionState {
-  type: 'mentionHash';
-  query: string;
-  submitFactory(tag: TwitterTagData): () => void;
-}
-
-type MentionState = AtMentionState | HashMentionState;
+import {
+  ActiveTwitterTagData,
+  ActiveTwitterUserData,
+  MentionState,
+  SubmitFactory,
+  TwitterTagData,
+  TwitterUIProps,
+  TwitterUserData,
+} from '../types';
+import { TwitterEditor } from './editor';
+import { EmojiPickerProps } from './emoji-picker';
 
 interface State {
   mention?: MentionState;
   activeIndex: number;
   emojiPickerActive: boolean;
 }
+
+const matchers = [{ name: 'at', char: '@' }, { name: 'tag', char: '#' }];
 
 export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   public static defaultProps = {
@@ -65,111 +47,65 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   };
 
   public readonly state: State = { activeIndex: 0, emojiPickerActive: false };
-  private readonly extensions: AnyExtension[];
-  private view?: EditorView;
   private exitCommandEnabled = false;
 
-  constructor(props: TwitterUIProps) {
-    super(props);
-    this.extensions = this.createExtensions();
-  }
-
-  private createExtensions() {
-    return [
-      new InlineCursorTarget(),
-      new Mention({
-        name: 'mentionAt',
-        extraAttrs: ['href', 'role'],
-        matcher: { char: '@' },
-        onKeyDown: this.keyDownHandler,
-        onEnter: ({ query, command }) => {
-          const params = {
-            type: 'mentionAt' as 'mentionAt',
-            action: 'enter' as 'enter',
-            query: query || '',
-          };
-          this.setMention({ ...params, submitFactory: this.atMentionSubmitFactory(command) });
-          this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
-          this.setActiveIndex(0);
-        },
-        onChange: ({ query, command }) => {
-          const params = {
-            type: 'mentionAt' as 'mentionAt',
-            action: 'change' as 'change',
-            query: query || '',
-          };
-          this.setMention({ ...params, submitFactory: this.atMentionSubmitFactory(command) });
-          this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
-          this.setActiveIndex(0);
-        },
-        onExit: ({ query, command }) => {
-          if (query && this.exitCommandEnabled) {
-            command({
-              id: query,
-              label: `@${query}`,
-              role: 'presentation',
-              href: `/${query}`,
-              appendText: '',
-            });
-          }
-          this.setMention(undefined);
-          this.props.onMentionStateChange(undefined);
-        },
-      }),
-      new Mention({
-        name: 'mentionHash',
-        selectable: true,
-        matcher: { char: '#' },
-        extraAttrs: ['href', 'role'],
-        onKeyDown: this.keyDownHandler,
-        onEnter: ({ query, command }) => {
-          const params = {
-            type: 'mentionHash' as 'mentionHash',
-            action: 'enter' as 'enter',
-            query: query || '',
-          };
-          this.setMention({ ...params, submitFactory: this.hashMentionSubmitFactory(command) });
-          this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
-          this.setActiveIndex(0);
-        },
-        onChange: ({ query, command }) => {
-          const params = {
-            type: 'mentionHash' as 'mentionHash',
-            action: 'change' as 'change',
-            query: query || '',
-          };
-          this.setMention({ ...params, submitFactory: this.hashMentionSubmitFactory(command) });
-          this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
-          this.setActiveIndex(0);
-        },
-        onExit: ({ query, command }) => {
-          if (query && this.exitCommandEnabled) {
-            command({
-              id: query,
-              label: `#${query}`,
-              role: 'presentation',
-              href: `/search?query=${query}`,
-              appendText: '',
-            });
-          }
-          this.setMention(undefined);
-          this.props.onMentionStateChange(undefined);
-        },
-      }),
-      new EnhancedLink({ onUrlsChange: this.props.onUrlsChange }),
-      new EmojiNode({ set: this.props.emojiSet, emojiData: this.props.emojiData }),
-    ];
-  }
-
-  /**
-   * Keeps a copy of the editor view for commands
-   * @param view
-   */
-  private storeView(view: EditorView): void {
-    if (view !== this.view) {
-      this.view = view;
+  private onMentionEnter: Required<MentionOptions>['onEnter'] = ({ query, command, name }) => {
+    if (name === 'at') {
+      const params = {
+        name: 'at' as 'at',
+        action: ActionTaken.Entered,
+        query: query || '',
+      };
+      this.setMention({ ...params, submitFactory: this.atMentionSubmitFactory(command) });
+      this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
+    } else {
+      const params = {
+        name: 'tag' as 'tag',
+        action: ActionTaken.Entered,
+        query: query || '',
+      };
+      this.setMention({ ...params, submitFactory: this.tagMentionSubmitFactory(command) });
+      this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
     }
-  }
+
+    this.setActiveIndex(0);
+  };
+
+  private onMentionChange: Required<MentionOptions>['onChange'] = ({ query, command, name }) => {
+    if (name === 'at') {
+      const params = {
+        name: 'at' as 'at',
+        action: ActionTaken.Changed,
+        query: query || '',
+      };
+      this.setMention({ ...params, submitFactory: this.atMentionSubmitFactory(command) });
+      this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
+    } else {
+      const params = {
+        name: 'tag' as 'tag',
+        action: ActionTaken.Changed,
+        query: query || '',
+      };
+      this.setMention({ ...params, submitFactory: this.tagMentionSubmitFactory(command) });
+      this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
+    }
+
+    this.setActiveIndex(0);
+  };
+
+  private onMentionExit: Required<MentionOptions>['onExit'] = ({ query, command, char }) => {
+    if (query && this.exitCommandEnabled) {
+      command({
+        id: query,
+        label: `${char}${query}`,
+        role: 'presentation',
+        href: `/${query}`,
+        appendText: '',
+      });
+    }
+    this.setMention(undefined);
+    this.props.onMentionStateChange(undefined);
+  };
 
   private onChange: RemirrorEventListener = ({}) => {};
 
@@ -187,8 +123,14 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     }));
   }
 
-  private atMentionSubmitFactory(command: (attrs: NodeAttrs) => void) {
-    return (user: TwitterUserData) => () => {
+  /**
+   * Factory for creating at's via the passed in command and the curried tag function which can be called within
+   * an onClick / eventHandler function
+   *
+   * @param command
+   */
+  private atMentionSubmitFactory(command: (attrs: MentionNodeAttrs) => void): SubmitFactory<TwitterUserData> {
+    return (user, fn) => () => {
       this.exitCommandEnabled = false; // Prevents exit command also being called after this
 
       command({
@@ -198,23 +140,22 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
         href: `/${user.username}`,
       });
 
-      // Refocus the editor
-      if (this.view) {
-        this.view.focus();
+      if (fn) {
+        fn();
       }
     };
   }
 
   /**
-   * Factory for creating hashes via the passed in command and the curried tag function which can be called within
+   * Factory for creating tags via the passed in command and the curried tag function which can be called within
    * an onClick / eventHandler function
    *
    * @param command
-   * @param appendText
    */
-  private hashMentionSubmitFactory(command: (attrs: NodeAttrs) => void) {
-    return ({ tag }: TwitterTagData) => () => {
+  private tagMentionSubmitFactory(command: (attrs: MentionNodeAttrs) => void): SubmitFactory<TwitterTagData> {
+    return ({ tag }, fn) => () => {
       this.exitCommandEnabled = false; // Prevents exit command also being called after this
+
       command({
         id: tag,
         label: `#${tag}`,
@@ -222,9 +163,8 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
         href: `/search?query=${tag}`,
       });
 
-      // Refocus the editor
-      if (this.view) {
-        this.view.focus();
+      if (fn) {
+        fn();
       }
     };
   }
@@ -237,7 +177,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     this.setState({ mention });
   }
 
-  private keyDownHandler = ({ event }: OnKeyDownParams) => {
+  private onMentionKeyDown = ({ event }: OnKeyDownParams) => {
     const enter = keyCode.isEventKey(event, 'enter');
     const down = keyCode.isEventKey(event, 'down');
     const up = keyCode.isEventKey(event, 'up');
@@ -252,14 +192,14 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
       return false;
     }
 
-    const { type, query, action } = mention;
-    const matches = type === 'mentionAt' ? this.userMatches : this.tagMatches;
+    const { name: type, query, action } = mention;
+    const matches = type === 'at' ? this.userMatches : this.tagMatches;
 
     // pressed up arrow
     if (up) {
       const newIndex = activeIndex - 1 < 0 ? matches.length - 1 : activeIndex - 1;
       this.setActiveIndex(newIndex);
-      onMentionStateChange({ type, query, activeIndex: newIndex, action });
+      onMentionStateChange({ name: type, query, activeIndex: newIndex, action });
       return true;
     }
 
@@ -267,7 +207,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     if (down) {
       const newIndex = activeIndex + 1 > matches.length - 1 ? 0 : activeIndex + 1;
       this.setActiveIndex(newIndex);
-      onMentionStateChange({ type, query, activeIndex: newIndex, action });
+      onMentionStateChange({ name: type, query, activeIndex: newIndex, action });
       return true;
     }
 
@@ -296,13 +236,14 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
    */
   private handleEnterKeyPressed(mention: MentionState) {
     const { activeIndex } = this.state;
-    if (mention.type === 'mentionAt' && this.userMatches.length) {
+    if (mention.name === 'at' && this.userMatches.length) {
       mention.submitFactory(this.userMatches[activeIndex])();
       return true;
-    } else if (mention.type === 'mentionHash' && this.tagMatches.length) {
+    } else if (mention.name === 'tag' && this.tagMatches.length) {
       mention.submitFactory(this.tagMatches[activeIndex])();
       return true;
     }
+
     this.exitCommandEnabled = true;
 
     return false;
@@ -343,65 +284,56 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     const { mention, emojiPickerActive } = this.state;
     return (
       <ThemeProvider theme={this.theme}>
-        <Remirror
-          placeholder={[
-            "What's happening?",
-            {
-              color: '#aab8c2',
-              fontStyle: 'normal',
-              position: 'absolute',
-              fontWeight: 300,
-              letterSpacing: '0.5px',
-            },
-          ]}
-          {...this.remirrorProps}
-          manager={ExtensionManager.create(this.extensions.map(extension => ({ extension, priority: 2 })))}
-          onChange={this.onChange}
-          insertPosition='start'
-        >
-          {({ getRootProps, view, actions }) => {
-            const content = view.state.doc.textContent;
-            this.storeView(view);
-
-            return (
-              <div>
-                <RemirrorWrapper {...getRootProps()} style={{ position: 'relative' }}>
-                  <CharacterCountWrapper>
-                    <CharacterCountIndicator characters={{ total: 140, used: content.length }} />
-                  </CharacterCountWrapper>
-                  {emojiPickerActive && (
-                    <EmojiPickerWrapper>
-                      <EmojiPicker
-                        onBlur={this.onBlurEmojiPicker}
-                        data={this.props.emojiData}
-                        set={this.props.emojiSet}
-                        onSelection={this.onSelectEmoji(actions.emoji.command)}
-                        ignoredElements={[this.toggleEmojiRef.current!]}
-                      />
-                    </EmojiPickerWrapper>
-                  )}
-                  <EmojiSmileyWrapper>
-                    <span
-                      role='button'
-                      aria-pressed={emojiPickerActive ? 'true' : 'false'}
-                      onClick={this.onClickEmojiSmiley}
-                      ref={this.toggleEmojiRef}
-                    >
-                      <EmojiSmiley active={emojiPickerActive} />
-                    </span>
-                  </EmojiSmileyWrapper>
-                </RemirrorWrapper>
-                <div>
-                  {!mention ? null : mention.type === 'mentionAt' ? (
-                    <AtSuggestions data={this.userMatches} submitFactory={mention.submitFactory} />
-                  ) : (
-                    <HashSuggestions data={this.tagMatches} submitFactory={mention.submitFactory} />
-                  )}
-                </div>
-              </div>
-            );
-          }}
-        </Remirror>
+        <RemirrorManager>
+          <RemirrorExtension<{}> Constructor={InlineCursorTarget} />
+          <RemirrorExtension<MentionOptions>
+            Constructor={Mention}
+            matchers={matchers}
+            extraAttrs={['href', 'role']}
+            onEnter={this.onMentionEnter}
+            onChange={this.onMentionChange}
+            onExit={this.onMentionExit}
+            onKeyDown={this.onMentionKeyDown}
+          />
+          <RemirrorExtension<EnhancedLinkOptions>
+            Constructor={EnhancedLink}
+            onUrlsChange={this.props.onUrlsChange}
+          />
+          <RemirrorExtension<EmojiNodeOptions>
+            Constructor={EmojiNode}
+            set={this.props.emojiSet}
+            emojiData={this.props.emojiData}
+          />
+          <ManagedRemirrorEditor
+            placeholder={[
+              "What's happening?",
+              {
+                color: '#aab8c2',
+                fontStyle: 'normal',
+                position: 'absolute',
+                fontWeight: 300,
+                letterSpacing: '0.5px',
+              },
+            ]}
+            {...this.remirrorProps}
+            onChange={this.onChange}
+            insertPosition='start'
+          >
+            <TwitterEditor
+              mention={mention}
+              emojiPickerActive={emojiPickerActive}
+              onBlurEmojiPicker={this.onBlurEmojiPicker}
+              emojiData={this.props.emojiData}
+              emojiSet={this.props.emojiSet}
+              ignoredElements={[this.toggleEmojiRef.current!]}
+              onClickEmojiSmiley={this.onClickEmojiSmiley}
+              toggleEmojiRef={this.toggleEmojiRef}
+              userMatches={this.userMatches}
+              tagMatches={this.tagMatches}
+              onSelectEmoji={this.onSelectEmoji}
+            />
+          </ManagedRemirrorEditor>
+        </RemirrorManager>
       </ThemeProvider>
     );
   }

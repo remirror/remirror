@@ -9,7 +9,7 @@ import {
 } from '@remirror/core';
 import { createSuggestionsPlugin } from './plugin';
 import { SuggestionState } from './state';
-import { MentionOptions, SuggestionsCommandParams } from './types';
+import { MentionOptions } from './types';
 import { DEFAULT_MATCHER } from './utils';
 
 /**
@@ -48,8 +48,6 @@ export class Mention extends NodeExtension<MentionOptions> {
       onChange: () => false,
       onExit: () => false,
       onKeyDown: () => false,
-      command: ({ range, attrs, appendText, schema }: SuggestionsCommandParams) =>
-        replaceText(range, schema.nodes[this.name], attrs, appendText),
     };
   }
 

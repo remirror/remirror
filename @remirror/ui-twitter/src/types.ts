@@ -1,3 +1,48 @@
+import { Omit } from '@remirror/core';
+import { EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
+import { ActionTaken } from '@remirror/extension-mention';
+import { RemirrorProps } from '@remirror/react';
+import { Data, EmojiSet } from 'emoji-mart';
+import { UITwitterTheme } from './theme';
+
+export type OnQueryChangeParams = Omit<MentionState, 'submitFactory'> & {
+  activeIndex: number;
+};
+
+export interface TwitterUIProps extends EnhancedLinkOptions, Partial<RemirrorProps> {
+  /**
+   * The number of matches to display
+   */
+  userData: TwitterUserData[];
+  tagData: TwitterTagData[];
+  onMentionStateChange(params?: OnQueryChangeParams): void;
+  theme: UITwitterTheme;
+  /**
+   * The data object used for emoji.
+   * The shape is taken from emoji-mart.
+   */
+  emojiData: Data;
+  emojiSet: EmojiSet;
+}
+
+interface BaseMentionState {
+  query: string;
+  action: ActionTaken;
+}
+
+export type SubmitFactory<GData extends {}> = (user: GData, fn?: () => void) => () => void;
+interface AtMentionState extends BaseMentionState {
+  name: 'at';
+  submitFactory: SubmitFactory<TwitterUserData>;
+}
+
+interface HashMentionState extends BaseMentionState {
+  name: 'tag';
+  submitFactory: SubmitFactory<TwitterTagData>;
+}
+
+export type MentionState = AtMentionState | HashMentionState;
+
 export type TwitterRelationship = 'following' | 'followed-by' | 'mutual' | null;
 
 export interface TwitterUserData {

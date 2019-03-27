@@ -122,8 +122,8 @@
   },
   "private": true,
   "resolutions": {
-    "react": "16.8.4",
-    "react-dom": "16.8.4",
+    "react": "16.8.5",
+    "react-dom": "16.8.5",
     "@babel/parser": "7.4.2",
     "jsdom": "14.0.0",
     "hoist-non-react-statics": "3.3.0"

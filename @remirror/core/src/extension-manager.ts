@@ -9,6 +9,7 @@ import {
   ExtensionMapValue,
   extensionPropertyMapper,
   hasExtensionProperty,
+  ignoreFunctions,
   isMarkExtension,
   isNodeExtension,
   transformExtensionMap,
@@ -93,7 +94,10 @@ export class ExtensionManager {
       const ext = this.extensions[ii];
       const otherExt = otherManager.extensions[ii];
 
-      if (ext.constructor === otherExt.constructor && isEqual(ext.options, otherExt.options)) {
+      if (
+        ext.constructor === otherExt.constructor &&
+        isEqual(ignoreFunctions(ext.options), ignoreFunctions(otherExt.options))
+      ) {
         continue;
       }
       return false;

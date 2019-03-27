@@ -20,6 +20,7 @@
   "module": "lib/dist/renderer-react.esm.js",
   "peerDependencies": {
     "@babel/runtime-corejs2": ">=7",
+    "@emotion/core": "^10.0.0",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",

@@ -195,3 +195,15 @@ export type ExtensionMap = Map<symbol, ExtensionMapValue>;
  */
 export const transformExtensionMap = (extensionMapValues: ExtensionMapValue[]) =>
   extensionMapValues.sort((a, b) => a.priority - b.priority).map(({ extension }) => extension);
+
+export const ignoreFunctions = (map: Record<string, unknown>) => {
+  const newMap: Record<string, unknown> = {};
+  for (const key of Object.keys(map)) {
+    if (isFunction(map[key])) {
+      continue;
+    }
+    newMap[key] = map[key];
+  }
+
+  return newMap;
+};

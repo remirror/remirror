@@ -5,8 +5,8 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@emotion/core": "^10.0.9",
-    "@emotion/styled": "^10.0.9",
+    "@emotion/core": "^10.0.10",
+    "@emotion/styled": "^10.0.10",
     "@remirror/core": "0.0.1-alpha.10",
     "@remirror/core-extensions": "0.0.1-alpha.10",
     "@remirror/extension-emoji": "0.0.1-alpha.10",
@@ -15,7 +15,7 @@
     "@remirror/react": "0.0.1-alpha.10",
     "@types/emoji-mart": "^2.8.4",
     "emoji-mart": "^2.9.2",
-    "emotion-theming": "^10.0.9",
+    "emotion-theming": "^10.0.10",
     "keycode": "^2.2.0"
   },
   "files": [

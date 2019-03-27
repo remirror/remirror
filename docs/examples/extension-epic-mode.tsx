@@ -11,7 +11,7 @@ import {
   ParticleEffect,
   spawningEffect,
 } from '@remirror/extension-epic-mode';
-import { RemirrorEditor, RemirrorExtension, RemirrorManager } from '@remirror/react';
+import { ManagedRemirrorEditor, RemirrorExtension, RemirrorManager } from '@remirror/react';
 import { Interpolation } from 'emotion';
 
 const editorStyles: Interpolation = {
@@ -41,7 +41,7 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({
         <RemirrorExtension Constructor={Italic} />
         <RemirrorExtension Constructor={Underline} />
         <RemirrorExtension Constructor={EpicMode} particleEffect={particleEffect} shake={shake} />
-        <RemirrorEditor
+        <ManagedRemirrorEditor
           autoFocus={true}
           attributes={{ 'data-test-id': 'editor-instance' }}
           placeholder={placeholder}

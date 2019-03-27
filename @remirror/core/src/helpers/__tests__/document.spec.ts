@@ -14,7 +14,6 @@ import {
   table,
   tableRow,
 } from 'jest-prosemirror';
-import { Node as PMNode } from 'prosemirror-model';
 import { TextSelection } from 'prosemirror-state';
 import { NodeMatch } from '../../types';
 import {

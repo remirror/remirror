@@ -1,7 +1,8 @@
-import React, { cloneElement, Component, createElement, Fragment, ReactNode, Ref } from 'react';
+import React, { Component, createElement, Fragment, ReactNode, Ref } from 'react';
 
-import { ClassNames, ClassNamesContent, Interpolation } from '@emotion/core';
+import { css, Interpolation } from '@emotion/core';
 import {
+  cloneElement,
   CompareStateParams,
   createDocumentNode,
   EDITOR_CLASS_NAME,
@@ -82,7 +83,6 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   private markAttrs: Record<string, Record<string, string>>;
   private extensionStyles: Interpolation[];
   private portalContainer!: NodeViewPortalContainer;
-  private emotionMethods!: ClassNamesContent<any>;
   private doc = getDoc();
 
   private get manager(): ExtensionManager {
@@ -250,13 +250,15 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     internal = true,
   ): RefKeyRootProps<GRefKey> {
     const { refKey = 'ref', ...config } = options || {};
+
     if (internal) {
       //
     }
+
     return {
       [refKey]: this.onRef,
       key: this.uid,
-      className: this.emotionMethods.css(this.editorStyles),
+      css: css(this.editorStyles),
       ...config,
     } as RefKeyRootProps<GRefKey>;
   }
@@ -589,7 +591,21 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    */
   private renderNodeViewPortal = (portalContainer: NodeViewPortalContainer) => {
     this.setPortalContainer(portalContainer);
-    return <ClassNames>{this.renderProsemirrorElement(portalContainer)}</ClassNames>;
+    const { children } = this.props;
+
+    if (!isRenderProp(children)) {
+      throw new Error('The child argument to the Remirror component must be a function.');
+    }
+
+    /* Reset the root props called status */
+    this.rootPropsConfig.called = false;
+
+    return (
+      <>
+        {this.renderReactElement(children)}
+        <NodeViewPortalComponent nodeViewPortalContainer={portalContainer} />
+      </>
+    );
   };
 
   /**
@@ -638,28 +654,6 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       }),
     );
   }
-
-  private renderProsemirrorElement = (portalContainer: NodeViewPortalContainer) => (
-    emotionMethods: ClassNamesContent<any>,
-  ) => {
-    const { children } = this.props;
-    if (!isRenderProp(children)) {
-      throw new Error('The child argument to the Remirror component must be a function.');
-    }
-
-    /* Cache the emotion methods */
-    this.emotionMethods = emotionMethods;
-
-    /* Reset the root props called status */
-    this.rootPropsConfig.called = false;
-
-    return (
-      <>
-        {this.renderReactElement(children)}
-        <NodeViewPortalComponent nodeViewPortalContainer={portalContainer} />
-      </>
-    );
-  };
 
   public render() {
     return <NodeViewPortal>{this.renderNodeViewPortal}</NodeViewPortal>;

@@ -6,7 +6,7 @@ import { memoize } from '@remirror/core';
 import { Bold, Italic, Underline } from '@remirror/core-extensions';
 import {
   bubblePositioner,
-  RemirrorEditor,
+  ManagedRemirrorEditor,
   RemirrorEventListener,
   RemirrorExtension,
   RemirrorManager,
@@ -95,7 +95,7 @@ const EditorLayout: FunctionComponent = () => {
           <RemirrorExtension Constructor={Bold} />
           <RemirrorExtension Constructor={Italic} />
           <RemirrorExtension Constructor={Underline} />
-          <RemirrorEditor
+          <ManagedRemirrorEditor
             attributes={{ 'data-test-id': 'editor-instance' }}
             onChange={onChange}
             placeholder='Start typing for magic...'
@@ -103,7 +103,7 @@ const EditorLayout: FunctionComponent = () => {
             initialContent={initialJson}
           >
             <SillyMenu />
-          </RemirrorEditor>
+          </ManagedRemirrorEditor>
         </RemirrorManager>
       </div>
       <div>
