@@ -3,10 +3,8 @@ import { Plugin } from 'prosemirror-state';
 import { SuggestionState } from './state';
 import { MentionOptions } from './types';
 
-export const createSuggestionsPlugin = <GName extends string>(
-  extension: Extension<MentionOptions<GName>>,
-) => {
-  type PluginState = SuggestionState<GName>;
+export const createSuggestionsPlugin = (extension: Extension<MentionOptions>) => {
+  type PluginState = SuggestionState;
 
   return new Plugin<PluginState, EditorSchema>({
     key: extension.pluginKey,

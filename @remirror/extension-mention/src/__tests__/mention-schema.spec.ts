@@ -3,36 +3,30 @@ import { extensions } from '@test-fixtures/schema-helpers';
 
 import { Mention } from '../';
 
-const manager = ExtensionManager.create([
-  ...extensions,
-  { extension: new Mention({ name: 'mentionAt' }), priority: 1 },
-]);
+const manager = ExtensionManager.create([...extensions, { extension: new Mention(), priority: 1 }]);
 
 const schema = manager.createSchema();
 
-const { paragraph, mentionAt, doc } = schema.nodes;
+const { paragraph, mention, doc } = schema.nodes;
 
 test('can create the required dom node', () => {
-  const node = mentionAt.create({ id: 'test', label: '@label' });
-  expect(toHTML({ node, schema })).toBe('<a class="mention mention-at" data-mention-at-id="test">@label</a>');
+  const node = mention.create({ id: 'test', label: '@label' });
+  expect(toHTML({ node, schema })).toBe('<a class="mention mention-at" data-mention-id="test">@label</a>');
 });
 
 test('can parse the dom structure and find itself', () => {
   const node = fromHTML({
     schema,
-    content: '<a class="mention mention-at" data-mention-at-id="awesome">@awesome</a>',
+    content: '<a class="mention mention-at" data-mention-id="awesome">@awesome</a>',
   });
-  const expected = doc.create(
-    {},
-    paragraph.create({}, mentionAt.create({ id: 'awesome', label: '@awesome' })),
-  );
+  const expected = doc.create({}, paragraph.create({}, mention.create({ id: 'awesome', label: '@awesome' })));
   expect(node).toEqualRemirrorDocument(expected as any);
 });
 
 test('does not support nested paragraph tags', () => {
-  const node = mentionAt.create(
+  const node = mention.create(
     { id: 'test', label: '@label' },
     paragraph.create({}, schema.text('Content here')),
   );
-  expect(toHTML({ node, schema })).toBe('<a class="mention mention-at" data-mention-at-id="test">@label</a>');
+  expect(toHTML({ node, schema })).toBe('<a class="mention mention-at" data-mention-id="test">@label</a>');
 });

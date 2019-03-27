@@ -17,19 +17,15 @@ import { DEFAULT_MATCHER } from './utils';
  * It also allows for configuration options to be passed into transforming suggestion queries into a mention
  * node.
  */
-export class Mention<GName extends string> extends NodeExtension<MentionOptions<GName>> {
+export class Mention extends NodeExtension<MentionOptions> {
   /**
    * The name is dynamically generated based on the passed in name.
    * It must start with 'mention'
    *
    * @readonly
    */
-  get name(): GName {
-    const { name } = this.options;
-    if (!name.startsWith('mention')) {
-      throw new Error(`The mention plugin must begin start with the word 'mention' and not ${name}`);
-    }
-    return name;
+  get name(): 'mention' {
+    return 'mention';
   }
 
   /**
@@ -39,12 +35,13 @@ export class Mention<GName extends string> extends NodeExtension<MentionOptions<
    */
   get defaultOptions() {
     return {
-      matcher: DEFAULT_MATCHER,
+      matchers: [DEFAULT_MATCHER],
       appendText: ' ',
       mentionClassName: 'mention',
       extraAttrs: [],
       tag: 'a' as 'a',
       decorationsTag: 'a' as 'a',
+      suggestionClassName: 'suggestion',
       editable: true,
       selectable: false,
       onEnter: () => false,
@@ -56,23 +53,14 @@ export class Mention<GName extends string> extends NodeExtension<MentionOptions<
     };
   }
 
-  get postFix() {
-    return this.options.name.replace('mention', '').toLowerCase();
-  }
-
-  protected init() {
-    super.init();
-    this.options.suggestionClassName = `suggestion suggestion-${this.postFix}`;
-  }
-
   get schema(): NodeExtensionSpec {
-    const { mentionClassName = this.defaultOptions.mentionClassName } = this.options;
-    const mentionClass = `${mentionClassName} ${mentionClassName}-${this.postFix}`;
-    const dataAttribute = `data-mention-${this.postFix}-id`;
+    const dataAttribute = 'data-mention-id';
+    const { mentionClassName } = this.options;
     return {
       attrs: {
         id: {},
         label: {},
+        name: { default: DEFAULT_MATCHER.name },
         ...this.extraAttrs(),
       },
       group: 'inline',
@@ -94,12 +82,12 @@ export class Mention<GName extends string> extends NodeExtension<MentionOptions<
         },
       ],
       toDOM: node => {
-        const { id, label, ...attrs } = node.attrs;
+        const { id, label, name, ...attrs } = node.attrs;
         return [
           this.options.tag,
           {
             ...attrs,
-            class: mentionClass,
+            class: name ? `${mentionClassName} ${mentionClassName}-${name}` : mentionClassName,
             [dataAttribute]: id,
           },
           `${label}`,
@@ -120,7 +108,7 @@ export class Mention<GName extends string> extends NodeExtension<MentionOptions<
     return [];
   }
 
-  public plugin(): Plugin<SuggestionState<GName>> {
+  public plugin(): Plugin<SuggestionState> {
     return createSuggestionsPlugin(this);
   }
 }

@@ -10,14 +10,14 @@ import {
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import {
   ActionTaken,
+  MentionNodeAttrs,
   MentionOptions,
-  NodeAttrs,
   SuggestionsCallbackParams,
   SuggestionStateField,
 } from './types';
 import { actionsTaken, getSuggestionMatchState } from './utils';
 
-export class SuggestionState<GName extends string = string> {
+export class SuggestionState {
   /**
    * Keeps track of the current state
    */
@@ -77,7 +77,7 @@ export class SuggestionState<GName extends string = string> {
     return this.actions.some(action => [ActionTaken.Exited, ActionTaken.Moved].includes(action));
   }
 
-  constructor(private extension: Extension<MentionOptions<GName>>) {}
+  constructor(private extension: Extension<MentionOptions>) {}
 
   public init(view: EditorView) {
     this.view = view;
@@ -114,7 +114,11 @@ export class SuggestionState<GName extends string = string> {
     const props: SuggestionsCallbackParams = {
       view: this.view,
       ...stateField,
-      command: (attrs: NodeAttrs) => {
+      command: (attrs: MentionNodeAttrs) => {
+        if (stateField.name) {
+          attrs.name = stateField.name;
+        }
+
         command({
           range: stateField.range,
           attrs,
@@ -189,7 +193,15 @@ export class SuggestionState<GName extends string = string> {
 
       // Match against the current selection position
       const $position = selection.$from;
-      this.next = getSuggestionMatchState(this.extension.options.matcher, $position);
+
+      // Find the first match and break when done
+      for (const matcher of this.extension.options.matchers) {
+        const match = getSuggestionMatchState(matcher, $position);
+        if (match) {
+          this.next = match;
+          break;
+        }
+      }
     }
 
     return this;
@@ -217,13 +229,14 @@ export class SuggestionState<GName extends string = string> {
       return;
     }
 
-    const { from, to } = this.current.range;
+    const { range, name } = this.current;
+    const { from, to } = range;
     const { decorationsTag, suggestionClassName } = this.extension.options;
 
     return DecorationSet.create(state.doc, [
       Decoration.inline(from, to, {
         nodeName: decorationsTag,
-        class: suggestionClassName,
+        class: name ? `${suggestionClassName} ${suggestionClassName}-${name}` : suggestionClassName,
       }),
     ]);
   }

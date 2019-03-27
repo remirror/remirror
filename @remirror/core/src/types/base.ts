@@ -116,4 +116,4 @@ export interface Position {
   right: number;
 }
 
-export type Attrs = Record<string, string | number>;
+export type Attrs = Record<string, string | number | undefined>;

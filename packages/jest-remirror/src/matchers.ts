@@ -175,7 +175,6 @@ declare global {
       toContainRemirrorDocument(builder: TaggedProsemirrorNode): R;
       /**
        * Checks that the nodes are equal.
-       *
        */
       toEqualRemirrorDocument(builder: TaggedProsemirrorNode): R;
       toMatchRemirrorSnapshot(builder: TaggedProsemirrorNode): R;

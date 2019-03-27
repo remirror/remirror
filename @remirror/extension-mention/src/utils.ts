@@ -4,10 +4,11 @@ import { ActionTaken, SuggestionsMatcher, SuggestionStateField } from './types';
 /**
  * The default matcher to use when none is provided in options
  */
-export const DEFAULT_MATCHER = {
+export const DEFAULT_MATCHER: SuggestionsMatcher = {
   char: '@',
   startOfLine: false,
   supportedCharacters: /[\w\d_]+/,
+  name: 'at',
 };
 
 /**
@@ -47,6 +48,7 @@ export const getSuggestionMatchState = (
     char = DEFAULT_MATCHER.char,
     startOfLine = DEFAULT_MATCHER.startOfLine,
     supportedCharacters = DEFAULT_MATCHER.supportedCharacters,
+    name = DEFAULT_MATCHER.name,
   }: Partial<SuggestionsMatcher>,
   $pos: ResolvedPos,
 ): SuggestionStateField | undefined => {
@@ -60,18 +62,16 @@ export const getSuggestionMatchState = (
   const text = $pos.doc.textBetween($pos.before(), $pos.end(), NULL_CHARACTER, NULL_CHARACTER);
 
   // Find the position and return it
-  return findPosition({ text, regexp, $pos, char });
+  return findPosition({ text, regexp, $pos, char, name });
 };
 
-interface FindMentionPositionParams {
+interface FindMentionPositionParams extends Pick<SuggestionsMatcher, 'name' | 'char'> {
   /** The text to match against */
   text: string;
   /** The regexp to use */
   regexp: RegExp;
   /** A resolved position for the current selection */
   $pos: ResolvedPos;
-  /** The char being matched (removed from the query when a match is found) */
-  char: string;
 }
 
 /**
@@ -79,7 +79,7 @@ interface FindMentionPositionParams {
  *
  * @param params
  */
-export function findPosition({ text, regexp, $pos, char }: FindMentionPositionParams) {
+export function findPosition({ text, regexp, $pos, char, name }: FindMentionPositionParams) {
   let position: SuggestionStateField | undefined;
 
   findMatches(text, regexp).forEach(match => {
@@ -95,6 +95,8 @@ export function findPosition({ text, regexp, $pos, char }: FindMentionPositionPa
       // If the $position is located within the matched substring, return that range
       if (from < $pos.pos && to >= $pos.pos) {
         position = {
+          name,
+          char,
           range: {
             from,
             to,
