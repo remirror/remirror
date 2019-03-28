@@ -16,11 +16,6 @@
     "prosemirror-keymap": "^1.0.1",
     "prosemirror-view": "^1.8.4"
   },
-  "devDependencies": {
-    "@babel/preset-typescript": "^7.3.3",
-    "jsdoc": "^3.5.5",
-    "jsdoc-babel": "^0.5.0"
-  },
   "files": [
     "lib",
     "src"
