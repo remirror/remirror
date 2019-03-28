@@ -31,7 +31,7 @@ const EditorLayout: FunctionComponent = () => {
         gridTemplateAreas: '"editor" "json"',
       }}
     >
-      <div style={{ gridArea: 'editor' }}>
+      <div style={{ gridArea: 'editor', position: 'relative' }}>
         <Remirror
           attributes={{ 'data-test-id': 'editor-instance' }}
           onChange={onChange}
@@ -45,6 +45,7 @@ const EditorLayout: FunctionComponent = () => {
               positionerId: 'bubble',
               ...bubblePositioner,
             });
+            console.dir(props);
             return (
               <div>
                 <div
@@ -56,6 +57,7 @@ const EditorLayout: FunctionComponent = () => {
                   ref={props.ref}
                 >
                   <button
+                    key='boldbutton'
                     style={{
                       backgroundColor: actions.bold.isActive() ? 'white' : 'pink',
                       fontWeight: actions.bold.isActive() ? 600 : 300,
@@ -66,6 +68,7 @@ const EditorLayout: FunctionComponent = () => {
                     B
                   </button>
                   <button
+                    key='italicbutton'
                     style={{
                       backgroundColor: actions.italic.isActive() ? 'white' : 'pink',
                       fontWeight: actions.italic.isActive() ? 600 : 300,
@@ -76,6 +79,7 @@ const EditorLayout: FunctionComponent = () => {
                     i
                   </button>
                   <button
+                    key='underlinebutton'
                     style={{
                       backgroundColor: actions.underline.isActive() ? 'white' : 'pink',
                       fontWeight: actions.underline.isActive() ? 600 : 300,

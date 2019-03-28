@@ -1,0 +1,17 @@
+{
+  "source": {
+    "includePattern": ".+.(j|t)s(doc|x)?$",
+    "include": ["src/"],
+    "exclude": ["__tests__/", "__mocks__/", "*.{test,spec}.{ts,tsx}", "*.d.ts"]
+  },
+  "plugins": ["node_modules/jsdoc-babel"],
+  "babel": {
+    "babelrc": false,
+    "extensions": ["js", "jsx", "ts", "tsx"],
+    "presets": ["@babel/preset-typescript"]
+  },
+  "opts": {
+    "destination": "./out/",
+    "recurse": true
+  }
+}

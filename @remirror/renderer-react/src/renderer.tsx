@@ -87,6 +87,7 @@ const defaultTypeMap: MarkMap = {
 };
 
 const defaultMarkMap: MarkMap = {
+  italic: 'em',
   em: 'em',
   strong: 'strong',
   code: 'code',
