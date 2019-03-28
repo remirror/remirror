@@ -49,8 +49,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   public readonly state: State = { activeIndex: 0, emojiPickerActive: false };
   private exitCommandEnabled = false;
 
-  private onMentionEnter: Required<MentionOptions>['onEnter'] = ({ query, command, name, char }) => {
-    console.log('entered', query, char);
+  private onMentionEnter: Required<MentionOptions>['onEnter'] = ({ query, command, name }) => {
     if (name === 'at') {
       const params = {
         name: 'at' as 'at',
@@ -72,8 +71,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     this.setActiveIndex(0);
   };
 
-  private onMentionChange: Required<MentionOptions>['onChange'] = ({ query, command, name, char }) => {
-    console.log('changed', query, char);
+  private onMentionChange: Required<MentionOptions>['onChange'] = ({ query, command, name }) => {
     if (name === 'at') {
       const params = {
         name: 'at' as 'at',
@@ -96,7 +94,6 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   };
 
   private onMentionExit: Required<MentionOptions>['onExit'] = ({ query, command, char }) => {
-    console.log('exiting mention', query);
     if (query && this.exitCommandEnabled) {
       command({
         id: query,
@@ -135,7 +132,6 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   private atMentionSubmitFactory(command: (attrs: MentionNodeAttrs) => void): SubmitFactory<TwitterUserData> {
     return (user, fn) => () => {
       this.exitCommandEnabled = false; // Prevents exit command also being called after this
-      console.log('exiting at');
       command({
         id: user.username,
         label: `@${user.username}`,
@@ -181,7 +177,6 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   }
 
   private onMentionKeyDown = ({ event }: OnKeyDownParams) => {
-    console.log('keypress', event);
     const enter = keyCode.isEventKey(event, 'enter');
     const down = keyCode.isEventKey(event, 'down');
     const up = keyCode.isEventKey(event, 'up');
@@ -193,7 +188,6 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     const { onMentionStateChange } = this.props;
     this.exitCommandEnabled = false;
     if (!mention) {
-      console.log('no mention active');
       return false;
     }
 
@@ -218,7 +212,6 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
 
     // pressed enter
     if (enter) {
-      console.log('enter key pressed');
       return this.handleEnterKeyPressed(mention);
     }
 
@@ -242,7 +235,6 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
    */
   private handleEnterKeyPressed(mention: MentionState) {
     const { activeIndex } = this.state;
-    console.log('handling enter key');
     if (mention.name === 'at' && this.userMatches.length) {
       mention.submitFactory(this.userMatches[activeIndex])();
       return true;

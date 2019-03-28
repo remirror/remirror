@@ -72,8 +72,9 @@ test('should allow text input and fire all handlers', () => {
 
 test('can update contenteditable with props', () => {
   const mock = jest.fn(() => <div />);
+  const manager = createTestManager();
   const El = ({ editable }: { editable: boolean }) => (
-    <Remirror editable={editable} label={label} manager={createTestManager()}>
+    <Remirror editable={editable} label={label} manager={manager}>
       {mock}
     </Remirror>
   );

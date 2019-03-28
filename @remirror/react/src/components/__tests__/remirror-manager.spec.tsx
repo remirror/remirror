@@ -1,8 +1,10 @@
 import { Extension, ExtensionManager } from '@remirror/core';
 import { Placeholder } from '@remirror/core-extensions';
+import { EditorView } from 'prosemirror-view';
 import React, { FC } from 'react';
-import { render } from 'react-testing-library';
+import { render, RenderResult } from 'react-testing-library';
 import { useRemirrorManagerContext } from '../../hooks';
+import { ManagedRemirrorEditor } from '../providers';
 import { RemirrorExtension } from '../remirror-extension';
 import { RemirrorManager } from '../remirror-manager';
 
@@ -21,36 +23,72 @@ test('a manager is created', () => {
   );
 });
 
-test('does not rerender the manager when nothing has changed', () => {
-  expect.assertions(1);
-  let manager: ExtensionManager;
+class NewExtension extends Extension<{ run: boolean }> {
+  get name() {
+    return 'new';
+  }
+
+  get defaultOptions() {
+    return {
+      run: true,
+    };
+  }
+}
+
+describe('manager prop', () => {
+  let manager!: ExtensionManager;
+  let rerender: RenderResult['rerender'];
   const Component: FC = () => {
     manager = useRemirrorManagerContext()!;
     return null;
   };
 
-  const { rerender } = render(
-    <RemirrorManager>
-      <Component />
-    </RemirrorManager>,
-  );
+  beforeEach(() => {
+    ({ rerender } = render(
+      <RemirrorManager>
+        <RemirrorExtension Constructor={NewExtension} />
+        <ManagedRemirrorEditor>
+          <Component />
+        </ManagedRemirrorEditor>
+      </RemirrorManager>,
+    ));
+  });
 
-  const firstManager = manager!;
+  it('does not rerender the manager when nothing has changed', () => {
+    const firstManager = manager;
 
-  rerender(
-    <RemirrorManager>
-      <Component />
-    </RemirrorManager>,
-  );
+    rerender(
+      <RemirrorManager>
+        <RemirrorExtension Constructor={NewExtension} />
+        <ManagedRemirrorEditor>
+          <Component />
+        </ManagedRemirrorEditor>
+      </RemirrorManager>,
+    );
 
-  expect(manager!).toBe(firstManager);
+    expect(manager).toBe(firstManager);
+  });
+
+  test('it supports reconfiguring extensions', () => {
+    const firstManager = manager;
+    const initSpy = jest.spyOn(ExtensionManager.prototype, 'init');
+    const initViewSpy = jest.spyOn(ExtensionManager.prototype, 'initView');
+    rerender(
+      <RemirrorManager>
+        <ManagedRemirrorEditor>
+          <Component />
+        </ManagedRemirrorEditor>
+        <RemirrorExtension Constructor={NewExtension} />
+        <RemirrorExtension Constructor={Placeholder} emptyNodeClass='empty' />
+      </RemirrorManager>,
+    );
+
+    expect(manager).not.toEqual(firstManager);
+    expect(manager.data.plugins).not.toEqual(firstManager.data.plugins);
+    expect(initSpy).toHaveBeenCalled();
+    expect(initViewSpy).toHaveBeenCalledWith(expect.any(EditorView));
+  });
 });
-
-class NewExtension extends Extension {
-  get name() {
-    return 'new';
-  }
-}
 
 test('it supports <RemirrorExtension />', () => {
   const Component: FC = () => {

@@ -46,7 +46,7 @@ test('should display a placeholder when the content is empty', () => {
 });
 
 test('should lose placeholder when content is entered', () => {
-  let updateContent: InjectedRemirrorProps['setContent'];
+  let updateContent!: InjectedRemirrorProps['setContent'];
 
   const { baseElement } = render(
     <Remirror {...handlers} label={label} placeholder={placeholderText} manager={createTestManager()}>
@@ -58,7 +58,7 @@ test('should lose placeholder when content is entered', () => {
     </Remirror>,
   );
 
-  updateContent!('<p>New content</p>');
+  updateContent('<p>New content</p>');
   const emptyNode = baseElement.querySelector(`.${EMPTY_NODE_CLASS_NAME}`) as HTMLElement;
   expect(emptyNode).toBeFalsy();
 });

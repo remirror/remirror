@@ -6,7 +6,6 @@ export const injectedPropsShape = {
   manager: expect.any(ExtensionManager),
   actions: expect.any(Object),
   uid: expect.any(String),
-  getMarkAttr: expect.any(Function),
   clearContent: expect.any(Function),
   setContent: expect.any(Function),
   getRootProps: expect.any(Function),

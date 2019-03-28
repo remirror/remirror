@@ -10,9 +10,28 @@ type MethodFactory<GMappedFunc extends AnyFunction, GFunc extends AnyFunction> =
 ) => GMappedFunc;
 
 interface IsNameUniqueParams {
+  /**
+   * The name to check against
+   */
   name: string;
+
+  /**
+   * The set to check within
+   */
   set: Set<string>;
+
+  /**
+   * Whether to throw when not unique
+   *
+   * @default false
+   */
   shouldThrow?: boolean;
+
+  /**
+   * The type of the unique check
+   *
+   * @default 'extension'
+   */
   type?: string;
 }
 
@@ -180,29 +199,43 @@ export const extensionPropertyMapper = <
 };
 
 export interface ExtensionMapValue {
+  /**
+   * The instantiated extension
+   */
   extension: AnyExtension;
+
+  /**
+   * A priority given to the extension.
+   * A lower number implies an earlier place in the extension list and hence more priority over the extensions that follow.
+   *
+   * @default 2
+   */
   priority: number;
 }
-
-export type ExtensionMap = Map<symbol, ExtensionMapValue>;
 
 /**
  * Sorts and transforms extension map based on the provided priorities and outputs just the extensions
  *
- * Todo add a check for requiredExtensions and inject them automatically
+ * TODO: Add a check for requiredExtensions and inject them automatically
  *
  * @param extensionMapValues
  */
 export const transformExtensionMap = (extensionMapValues: ExtensionMapValue[]) =>
   extensionMapValues.sort((a, b) => a.priority - b.priority).map(({ extension }) => extension);
 
-export const ignoreFunctions = (map: Record<string, unknown>) => {
+/**
+ * Takes in an object and removes all function values. Useful for deep equality checks where
+ * functions need to be ignored.
+ *
+ * @param obj
+ */
+export const ignoreFunctions = (obj: Record<string, unknown>) => {
   const newMap: Record<string, unknown> = {};
-  for (const key of Object.keys(map)) {
-    if (isFunction(map[key])) {
+  for (const key of Object.keys(obj)) {
+    if (isFunction(obj[key])) {
       continue;
     }
-    newMap[key] = map[key];
+    newMap[key] = obj[key];
   }
 
   return newMap;

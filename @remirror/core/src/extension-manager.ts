@@ -1,5 +1,5 @@
 import { Interpolation } from 'emotion';
-import { InputRule } from 'prosemirror-inputrules';
+import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
 import { EditorState, PluginKey } from 'prosemirror-state';
@@ -14,7 +14,7 @@ import {
   isNodeExtension,
   transformExtensionMap,
 } from './extension-manager.helpers';
-import { bool, isEqual, isObject } from './helpers';
+import { bool, Cast, isEqual, isFunction, isObject } from './helpers';
 import { getPluginState } from './helpers/document';
 import { NodeViewPortalContainer } from './portal-container';
 import {
@@ -23,6 +23,7 @@ import {
   CommandFunction,
   CommandParams,
   EditorSchema,
+  EditorView,
   ExtensionBooleanFunction,
   ExtensionCommandFunction,
   ExtensionManagerParams,
@@ -33,10 +34,27 @@ import {
 } from './types';
 
 interface ExtensionManagerInitParams {
-  /** A shortcut to pulling the editor state */
+  /**
+   *  A shortcut to pulling the editor state
+   */
   getEditorState: () => EditorState;
-  /** A shortcut to pulling the portal container */
+
+  /**
+   *  A shortcut to pulling the portal container
+   */
   getPortalContainer: () => NodeViewPortalContainer;
+}
+
+interface ExtensionManagerData {
+  schema: EditorSchema;
+  styles: Interpolation;
+  plugins: ProsemirrorPlugin[];
+  keymaps: ProsemirrorPlugin[];
+  inputRules: ProsemirrorPlugin;
+  pasteRules: ProsemirrorPlugin[];
+  actions: RemirrorActions;
+  markAttrs: Record<string, Record<string, string>>;
+  view: EditorView;
 }
 
 export class ExtensionManager {
@@ -51,13 +69,22 @@ export class ExtensionManager {
   public getPortalContainer!: () => NodeViewPortalContainer;
   public readonly extensions: AnyExtension[];
   private initialized = false;
+  private initData: ExtensionManagerData = Cast({});
+
+  get data() {
+    if (!this.initialized) {
+      throw new Error('Extension Manager must  be initialized before attempting to access the data');
+    }
+
+    return this.initData;
+  }
 
   constructor(extensionMapValues: ExtensionMapValue[]) {
     this.extensions = transformExtensionMap(extensionMapValues);
   }
 
   /**
-   * Initialize the getters.
+   * Initialize manager with all required initial data.
    */
   public init({ getEditorState, getPortalContainer }: ExtensionManagerInitParams) {
     if (this.initialized) {
@@ -69,7 +96,40 @@ export class ExtensionManager {
     this.getEditorState = getEditorState;
     this.getPortalContainer = getPortalContainer;
     this.initialized = true;
+
+    this.initData.schema = this.createSchema();
+    this.initData.styles = this.styles(this.schemaParams);
+    this.initData.plugins = this.plugins(this.schemaParams);
+    this.initData.keymaps = this.keymaps(this.schemaParams);
+    this.initData.inputRules = this.inputRules(this.schemaParams);
+    this.initData.pasteRules = this.pasteRules(this.schemaParams);
     return this;
+  }
+
+  public initView(view: EditorView) {
+    this.initData.view = view;
+    this.initData.actions = this.actions({
+      ...this.schemaParams,
+      view,
+      isEditable: () =>
+        bool(
+          isFunction(view.props.editable) ? view.props.editable(this.getEditorState()) : view.props.editable,
+        ),
+    });
+  }
+
+  /**
+   * Utility getter for accessing the schema params
+   *
+   * @readonly
+   * @private
+   */
+  private get schemaParams(): ExtensionManagerParams {
+    return {
+      schema: this.initData.schema,
+      getEditorState: this.getEditorState,
+      getPortalContainer: this.getPortalContainer,
+    };
   }
 
   /**
@@ -217,16 +277,16 @@ export class ExtensionManager {
    * Retrieve all inputRules (how the editor responds to text matching certain rules).
    */
   public inputRules(params: ExtensionManagerParams) {
-    const inputRules: InputRule[] = [];
+    const rules: InputRule[] = [];
     const extensionInputRules = this.extensions
       .filter(hasExtensionProperty('inputRules'))
       .map(extensionPropertyMapper('inputRules', params)) as InputRule[][];
 
-    extensionInputRules.forEach(rules => {
-      inputRules.push(...rules);
+    extensionInputRules.forEach(rule => {
+      rules.push(...rule);
     });
 
-    return inputRules;
+    return inputRules({ rules });
   }
 
   /**

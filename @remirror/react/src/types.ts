@@ -99,7 +99,6 @@ export interface InjectedRemirrorProps {
    * A unique id for the editor instance. Useful for styling with the format `.remirror-{NUM}`
    */
   uid: string;
-  getMarkAttr(type: string): Record<string, string>;
   clearContent(triggerOnChange?: boolean): void;
   setContent(content: RemirrorContentType, triggerOnChange?: boolean): void;
   getRootProps<GRefKey extends string = 'ref'>(

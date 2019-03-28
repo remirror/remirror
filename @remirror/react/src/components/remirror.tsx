@@ -5,13 +5,9 @@ import {
   CompareStateParams,
   createDocumentNode,
   EDITOR_CLASS_NAME,
-  EditorSchema,
   EditorView as EditorViewType,
   EMPTY_OBJECT_NODE,
   ExtensionManager,
-  ExtensionManagerParams,
-  getMarkAttrs,
-  InputRule,
   isArray,
   isString,
   memoize,
@@ -19,7 +15,6 @@ import {
   ObjectNode,
   Position,
   ProsemirrorPlugin,
-  RemirrorActions,
   RemirrorContentType,
   toHTML,
   Transaction,
@@ -27,9 +22,6 @@ import {
 } from '@remirror/core';
 import { PlaceholderPluginState } from '@remirror/core-extensions';
 import { createEditorView, getDoc, RemirrorSSR, shouldUseDOMEnvironment } from '@remirror/react-ssr';
-import { baseKeymap, selectParentNode } from 'prosemirror-commands';
-import { inputRules, undoInputRule } from 'prosemirror-inputrules';
-import { keymap } from 'prosemirror-keymap';
 import { EditorState } from 'prosemirror-state';
 import {
   cloneElement,
@@ -63,7 +55,6 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   public static defaultProps = defaultProps;
   public static $$remirrorType = RemirrorElementType.Editor;
 
-  public schema: EditorSchema;
   private editorRef?: HTMLElement;
   private positionerMap = new Map<string, PositionerMapValue>();
 
@@ -75,13 +66,6 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    * A unique class added to every instance of the remirror editor. This allows for non global styling.
    */
   private view: EditorViewType;
-  private extensionPlugins: ProsemirrorPlugin[];
-  private keymaps: ProsemirrorPlugin[];
-  private inputRules: InputRule[];
-  private pasteRules: ProsemirrorPlugin[];
-  private actions: RemirrorActions;
-  private markAttrs: Record<string, Record<string, string>>;
-  private extensionStyles: Interpolation[];
   private portalContainer!: NodeViewPortalContainer;
   private doc = getDoc();
 
@@ -90,71 +74,22 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   }
 
   private get plugins(): ProsemirrorPlugin[] {
-    return [
-      ...this.extensionPlugins,
-      inputRules({
-        rules: this.inputRules,
-      }),
-      ...this.pasteRules,
-      ...this.keymaps,
-      keymap({
-        Backspace: undoInputRule,
-        Escape: selectParentNode,
-      }),
-      keymap(baseKeymap),
-    ];
+    const { plugins, inputRules, pasteRules, keymaps } = this.manager.data;
+    return [...plugins, inputRules, ...pasteRules, ...keymaps];
   }
 
   constructor(props: RemirrorProps) {
     super(props);
     this.manager.init({ getEditorState: this.getEditorState, getPortalContainer: this.getPortalContainer });
-    this.schema = this.manager.createSchema();
-
-    this.extensionStyles = this.manager.styles(this.schemaParams);
-    this.extensionPlugins = this.manager.plugins(this.schemaParams);
-    this.keymaps = this.manager.keymaps(this.schemaParams);
-    this.inputRules = this.manager.inputRules(this.schemaParams);
-    this.pasteRules = this.manager.pasteRules(this.schemaParams);
-
     this.state = this.createInitialState();
     this.view = this.createView();
-
-    this.actions = this.manager.actions({
-      ...this.schemaParams,
-      view: this.view,
-      isEditable: () => this.props.editable,
-    });
-    this.markAttrs = this.setMarkAttrs();
+    this.manager.initView(this.view);
   }
 
-  public updateManager(manager: ExtensionManager) {
-    this.schema = manager.createSchema();
-    this.extensionStyles = manager.styles(this.schemaParams);
-    this.extensionPlugins = manager.plugins(this.schemaParams);
-    this.keymaps = manager.keymaps(this.schemaParams);
-    this.inputRules = manager.inputRules(this.schemaParams);
-    this.pasteRules = manager.pasteRules(this.schemaParams);
-
-    this.actions = manager.actions({
-      ...this.schemaParams,
-      view: this.view,
-      isEditable: () => this.props.editable,
-    });
-    this.markAttrs = this.setMarkAttrs();
-  }
-
-  /**
-   * Utility getter for accessing the schema params
-   *
-   * @readonly
-   * @private
-   */
-  private get schemaParams(): ExtensionManagerParams {
-    return {
-      schema: this.schema,
-      getEditorState: this.getEditorState,
-      getPortalContainer: this.getPortalContainer,
-    };
+  public updateManager() {
+    this.manager
+      .init({ getEditorState: this.getEditorState, getPortalContainer: this.getPortalContainer })
+      .initView(this.view);
   }
 
   /**
@@ -175,7 +110,11 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    */
   private createInitialState(): CompareStateParams {
     const newState = EditorState.create({
-      doc: createDocumentNode({ content: this.props.initialContent, doc: this.doc, schema: this.schema }),
+      doc: createDocumentNode({
+        content: this.props.initialContent,
+        doc: this.doc,
+        schema: this.manager.data.schema,
+      }),
       plugins: this.plugins,
     });
 
@@ -229,7 +168,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     }
 
     /* Inject styles from any extensions */
-    styles.unshift(this.extensionStyles);
+    styles.unshift(this.manager.data.styles);
 
     if (this.props.usesDefaultStyles) {
       styles.unshift(defaultStyles(placeholderConfig));
@@ -362,23 +301,6 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     return { ...defaultAttributes, ...propAttributes };
   };
 
-  private setMarkAttrs() {
-    const markAttrs: Record<string, Record<string, string>> = {};
-    Object.entries(this.schema.marks).forEach(([name, attr]) => {
-      markAttrs[name] = getMarkAttrs(this.state.newState, attr);
-    });
-
-    return markAttrs;
-  }
-
-  /**
-   * Retrieve the mark attributes.
-   * @param type
-   */
-  public getMarkAttr(type: string) {
-    return this.markAttrs[type];
-  }
-
   /**
    * Part of the Prosemirror API and is called whenever there is state change in the editor.
    */
@@ -433,8 +355,8 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     }
 
     if (!manager.isEqual(this.props.manager)) {
-      this.updateManager(this.props.manager);
-      this.setContent(toHTML({ node: this.state.newState.doc, schema: this.schema }), true);
+      this.updateManager();
+      this.setContent(toHTML({ node: this.state.newState.doc, schema: this.manager.data.schema }), true);
     }
   }
 
@@ -470,9 +392,10 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    * @param triggerOnChange
    */
   private setContent = (content: RemirrorContentType, triggerOnChange = false) => {
+    const { schema } = this.manager.data;
     const editorState = EditorState.create({
-      schema: this.schema,
-      doc: createDocumentNode({ content, schema: this.schema, doc: this.doc }),
+      schema,
+      doc: createDocumentNode({ content, schema, doc: this.doc }),
       plugins: this.plugins,
     });
 
@@ -512,8 +435,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     return {
       manager: this.manager,
       view: this.view,
-      actions: this.actions,
-      getMarkAttr: this.getMarkAttr,
+      actions: this.manager.data.actions,
       clearContent: this.clearContent,
       setContent: this.setContent,
       uid: this.uid,
@@ -534,7 +456,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    * Retrieve the HTML from the `doc` prosemirror node
    */
   private getHTML = () => {
-    return toHTML({ node: this.state.newState.doc, schema: this.schema, doc: this.doc });
+    return toHTML({ node: this.state.newState.doc, schema: this.manager.data.schema, doc: this.doc });
   };
 
   private getJSON = (): ObjectNode => {

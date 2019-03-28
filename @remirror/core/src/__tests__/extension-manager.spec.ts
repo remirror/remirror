@@ -1,6 +1,6 @@
 import { Schema } from 'prosemirror-model';
 import { Extension } from '../extension';
-import { ExtensionManager } from '../extension-manager';
+import { ExtensionManager, isExtensionManager } from '../extension-manager';
 import { Cast } from '../helpers/base';
 import { Doc, Paragraph, Text } from '../nodes';
 
@@ -73,4 +73,9 @@ describe('#action', () => {
     remirrorActions.dummy.command();
     expect(mock).toHaveBeenCalledTimes(1);
   });
+});
+
+test('isExtensionManager', () => {
+  expect(isExtensionManager(doc)).toBeFalse();
+  expect(isExtensionManager(em)).toBeTrue();
 });

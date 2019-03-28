@@ -1,7 +1,7 @@
 import React, { Children, Component } from 'react';
 
-import { Doc, ExtensionManager, ExtensionMapValue, Paragraph, Text } from '@remirror/core';
-import { Composition, History, Placeholder } from '@remirror/core-extensions';
+import { ExtensionManager, ExtensionMapValue } from '@remirror/core';
+import { baseExtensions } from '@remirror/core-extensions';
 import { RemirrorManagerContext } from '../contexts';
 import { asDefaultProps, isRemirrorExtensionComponent } from '../helpers';
 import { RemirrorManagerProps } from '../types';
@@ -50,12 +50,3 @@ export class RemirrorManager extends Component<RemirrorManagerProps> {
     );
   }
 }
-
-export const baseExtensions: ExtensionMapValue[] = [
-  { extension: new Composition(), priority: 2 },
-  { extension: new Doc(), priority: 2 },
-  { extension: new Text(), priority: 2 },
-  { extension: new Paragraph(), priority: 2 },
-  { extension: new History(), priority: 2 },
-  { extension: new Placeholder(), priority: 2 },
-];
