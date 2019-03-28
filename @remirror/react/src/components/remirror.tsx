@@ -1,6 +1,6 @@
-import React, { Component, createElement, Fragment, ReactNode, Ref } from 'react';
+import React, { Component, Fragment, ReactNode, Ref } from 'react';
 
-import { css, Interpolation } from '@emotion/core';
+import { css, Interpolation, jsx } from '@emotion/core';
 import {
   cloneElement,
   CompareStateParams,
@@ -644,9 +644,9 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     if (!this.rootPropsConfig.called) {
       return isDOMElement(element)
         ? cloneElement(element, this.internalGetRootProps(props), ...this.injectSSRIntoElementChildren(child))
-        : createElement('div', this.internalGetRootProps(), ...this.injectSSRIntoElementChildren(element));
+        : jsx('div', this.internalGetRootProps(), ...this.injectSSRIntoElementChildren(element));
     }
-    return createElement(
+    return jsx(
       Fragment,
       {},
       ...updateChildWithKey(element, this.uid, ch => {

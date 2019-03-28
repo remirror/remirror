@@ -1,5 +1,6 @@
-import { createElement, Fragment, ReactNode } from 'react';
+import { Fragment, ReactNode } from 'react';
 
+import { jsx } from '@emotion/core';
 import {
   AnyFunction,
   DOMOutputSpec,
@@ -49,7 +50,7 @@ export class ReactSerializer {
       children.push(child);
     });
 
-    return createElement(Fragment, {}, ...children);
+    return jsx(Fragment, {}, ...children);
   }
 
   /**
@@ -91,11 +92,10 @@ export class ReactSerializer {
    * @param wraps - passed through any elements that this component should be parent of.
    */
   public static renderSpec(structure: DOMOutputSpec, wraps?: ReactNode): ReactNode {
-    let fn: AnyFunction<JSX.Element> = createElement;
+    let fn: AnyFunction<JSX.Element> = jsx;
     if (wraps) {
-      fn = (
-        ...[type, domSpecProps, ...domSpecChildren]: Parameters<typeof createElement>
-      ): ReturnType<typeof createElement> => createElement(type, domSpecProps, wraps, ...domSpecChildren);
+      fn = (...[type, domSpecProps, ...domSpecChildren]: Parameters<typeof jsx>): ReturnType<typeof jsx> =>
+        jsx(type, domSpecProps, wraps, ...domSpecChildren);
     }
 
     if (isString(structure)) {
