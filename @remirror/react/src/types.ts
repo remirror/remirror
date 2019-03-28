@@ -7,9 +7,6 @@ import {
   Extension,
   ExtensionConstructor,
   ExtensionManager,
-  NodeExtension,
-  NodeExtensionConstructor,
-  NodeExtensionOptions,
   ObjectNode,
   Omit,
   PlainObject,
@@ -22,7 +19,7 @@ import {
 import { RenderEnvironment } from '@remirror/react-ssr';
 import { Interpolation, ObjectInterpolation } from 'emotion';
 import { EditorView } from 'prosemirror-view';
-import { ComponentClass, ComponentType, FC } from 'react';
+import { ComponentClass, ComponentType, FC, ReactElement } from 'react';
 
 export interface Positioner {
   /**
@@ -327,27 +324,6 @@ export enum RemirrorElementType {
   ManagerProvider = 'manager-provider',
 }
 
-export type RemirrorNodeExtensionProps<
-  GOptions extends NodeExtensionOptions = NodeExtensionOptions,
-  GExtension extends NodeExtension<GOptions> = NodeExtension<GOptions>,
-  GConstructor extends ExtensionConstructor<GOptions, GExtension> = ExtensionConstructor<GOptions, GExtension>
-> = GOptions & BaseExtensionProps & NodeExtensionConstructorProps<GOptions, GExtension, GConstructor>;
-
-export interface NodeExtensionConstructorProps<
-  GOptions extends NodeExtensionOptions = NodeExtensionOptions,
-  GExtension extends NodeExtension<GOptions> = NodeExtension<GOptions>,
-  GConstructor extends NodeExtensionConstructor<GOptions, GExtension> = NodeExtensionConstructor<
-    GOptions,
-    GExtension
-  >
-> {
-  /**
-   * The constructor for the remirror extension.
-   * Will be instantiated with the options passed through as props.
-   */
-  Constructor: GConstructor;
-}
-
 export type RemirrorExtensionProps<
   GOptions extends {},
   GExtension extends Extension<GOptions, any> = Extension<GOptions, any>,
@@ -408,6 +384,9 @@ export interface RemirrorComponentStaticProperties {
 export type RemirrorComponentType<P extends {}> = ComponentType<P> & RemirrorComponentStaticProperties;
 export type RemirrorFC<P extends {}> = FC<P> & RemirrorComponentStaticProperties;
 export type RemirrorComponentClass<P extends {}> = ComponentClass<P> & RemirrorComponentStaticProperties;
+export type RemirrorElement<GOptions extends {} = any> = ReactElement<any> & {
+  type: RemirrorComponentType<GOptions>;
+};
 
 export interface RemirrorManagerProps {
   /**

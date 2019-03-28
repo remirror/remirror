@@ -3,7 +3,7 @@ import React, { Children, Component } from 'react';
 import { ExtensionManager, ExtensionMapValue } from '@remirror/core';
 import { baseExtensions } from '@remirror/core-extensions';
 import { RemirrorManagerContext } from '../contexts';
-import { asDefaultProps, isRemirrorExtensionComponent } from '../helpers';
+import { asDefaultProps, isRemirrorExtension } from '../helpers';
 import { RemirrorManagerProps } from '../types';
 
 export class RemirrorManager extends Component<RemirrorManagerProps> {
@@ -23,7 +23,7 @@ export class RemirrorManager extends Component<RemirrorManagerProps> {
   public get manager(): ExtensionManager {
     const extensions: ExtensionMapValue[] = [...this.baseExtensions];
     Children.forEach(this.props.children, child => {
-      if (!isRemirrorExtensionComponent(child)) {
+      if (!isRemirrorExtension(child)) {
         return;
       }
 

@@ -1,5 +1,6 @@
 import { jsx } from '@emotion/core';
 import {
+  bool,
   Cast,
   EMPTY_OBJECT_NODE,
   isArray,
@@ -10,10 +11,11 @@ import {
   Predicate,
   uniqueArray,
 } from '@remirror/core';
-import { Children, isValidElement, ReactElement, ReactNode } from 'react';
+import { Children, isValidElement, ReactNode } from 'react';
 import {
   AttributePropFunction,
   RemirrorComponentType,
+  RemirrorElement,
   RemirrorElementType,
   RemirrorProps,
   RenderPropFunction,
@@ -142,42 +144,46 @@ export const defaultProps = asDefaultProps<RemirrorProps>()({
 });
 
 /**
- * Finds if this is an extension component element type
+ * Checks if this element has a type of any RemirrorComponent
  *
  * @param value
  */
-export const isRemirrorExtensionComponent = <GOptions extends {} = any>(
+export const isRemirrorElement = <GOptions extends {} = any>(
   value: unknown,
-): value is ReactElement<any> & { type: RemirrorComponentType<GOptions> } => {
-  return (
+): value is RemirrorElement<GOptions> => {
+  return bool(
     isObject(value) &&
-    isValidElement(value) &&
-    (value.type as RemirrorComponentType<GOptions>).$$remirrorType === RemirrorElementType.Extension
+      isValidElement(value) &&
+      (value.type as RemirrorComponentType<GOptions>).$$remirrorType,
   );
 };
 
+const isRemirrorElementOfType = (type: RemirrorElementType) => <GOptions extends {} = any>(
+  value: unknown,
+): value is RemirrorElement<GOptions> => isRemirrorElement(value) && value.type.$$remirrorType === type;
+
 /**
- * Finds if this is an extension component element type
+ * Finds if this is a RemirrorExtension type. These are used to configure the extensions that determine
+ * the underlying behaviour of the editor.
  *
  * @param value
  */
-export const isRemirrorEditorType = <GOptions extends {} = any>(
-  value: unknown,
-): value is ReactElement<any> & { type: RemirrorComponentType<GOptions> } =>
-  isObject(value) &&
-  isValidElement(value) &&
-  (value.type as RemirrorComponentType<GOptions>).$$remirrorType === RemirrorElementType.EditorProvider;
+export const isRemirrorExtension = isRemirrorElementOfType(RemirrorElementType.Extension);
 
 /**
- * Checks for whether the extension component
+ * Finds if this is a RemirrorEditor (which provides the RemirrorInjectedProps into the context);
+ *
+ * @param value
  */
-export const isManagedEditorProvider = <GOptions extends {} = any>(
-  value: unknown,
-): value is ReactElement<any> & { type: RemirrorComponentType<GOptions> } =>
-  isObject(value) &&
-  isValidElement(value) &&
-  (value.type as RemirrorComponentType<GOptions>).$$remirrorType ===
-    RemirrorElementType.ManagedEditorProvider;
+export const isRemirrorEditor = isRemirrorElementOfType(RemirrorElementType.EditorProvider);
+
+/**
+ * Checks if this is a ManagedRemirrorEditor which pulls in the manager from the context and places it's children
+ * inside the RemirrorEditor
+ *
+ * @param value
+ */
+export const isManagedRemirrorEditor = isRemirrorElementOfType(RemirrorElementType.ManagedEditorProvider);
 
 /**
  * Clones an element while also enabling the css prop on jsx elements at the same time

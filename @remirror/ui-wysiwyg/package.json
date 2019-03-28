@@ -1,6 +1,5 @@
 {
   "name": "@remirror/ui-wysiwyg",
-  "private": true,
   "description": "ui for a what you see is what you get (wysiwyg) editing experience",
   "version": "0.0.1-alpha.10",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
@@ -29,6 +28,7 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
+  "private": true,
   "publishConfig": {
     "access": "public"
   },
