@@ -40,7 +40,7 @@ script:
 after_script:
   - |
     set -e
-    if [[ $YARN_CMD == 'test' ]]; then
+    if [[ $YARN_CMD == 'test' ]] && [[ $TRAVIS_PULL_REQUEST == 'false' ]]; then
       cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT;
     fi
     set +e
