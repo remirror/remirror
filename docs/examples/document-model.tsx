@@ -26,12 +26,14 @@ const EditorLayout: FunctionComponent = () => {
   return (
     <div
       style={{
+        display: 'grid',
         gridTemplateColumns: '1fr',
         gridTemplateRows: 'auto 1fr',
         gridTemplateAreas: '"editor" "json"',
       }}
+      id='EditorLayout-grid'
     >
-      <div style={{ gridArea: 'editor', position: 'relative' }}>
+      <div id='EditorLayout-container' style={{ gridArea: 'editor', position: 'relative' }}>
         <Remirror
           attributes={{ 'data-test-id': 'editor-instance' }}
           onChange={onChange}
@@ -45,7 +47,6 @@ const EditorLayout: FunctionComponent = () => {
               positionerId: 'bubble',
               ...bubblePositioner,
             });
-            console.dir(props);
             return (
               <div>
                 <div
@@ -95,15 +96,25 @@ const EditorLayout: FunctionComponent = () => {
           }}
         </Remirror>
       </div>
-      <div>
+      <div
+        id='EditorLayout-json'
+        style={{
+          gridArea: 'json',
+          position: 'relative',
+          overflowX: 'auto',
+          background: 'black',
+        }}
+      >
         <pre
           style={{
-            width: '100%',
-            height: '50%',
-            overflowY: 'auto',
+            fontSize: '14px',
+            whiteSpace: 'pre-wrap',
             padding: '1em',
-            background: 'black',
             color: 'lawngreen',
+            fontFamily: `Consolas, ‘Andale Mono WT’, ‘Andale Mono’,
+              ‘Lucida Console’, ‘Lucida Sans Typewriter’, ‘DejaVu Sans Mono’,
+              ‘Bitstream Vera Sans Mono’, ‘Liberation Mono’, ‘Nimbus Mono L’,
+              Monaco, ‘Courier New’, Courier, monospace`,
           }}
         >
           {json}
@@ -113,8 +124,18 @@ const EditorLayout: FunctionComponent = () => {
   );
 };
 
+const markMap = {
+  bold: 'strong',
+  italic: 'em',
+  code: 'code',
+  link: 'a',
+  underline: 'u',
+};
+
 export const DocumentModelEditor: FunctionComponent<RemirrorProps> = () => <EditorLayout />;
-export const BasicRendererReact: FunctionComponent = () => <RenderTree json={initialJson} />;
+export const BasicRendererReact: FunctionComponent = () => (
+  <RenderTree json={initialJson} markMap={markMap} />
+);
 
 const initialJson = {
   type: 'doc',
@@ -130,6 +151,24 @@ const initialJson = {
     },
     {
       type: 'paragraph',
+      content: [
+        {
+          type: 'text',
+          text: "I'm ",
+        },
+        {
+          type: 'text',
+          marks: [
+            {
+              type: 'bold',
+            },
+            {
+              type: 'underline',
+            },
+          ],
+          text: 'Bold',
+        },
+      ],
     },
     {
       type: 'paragraph',
