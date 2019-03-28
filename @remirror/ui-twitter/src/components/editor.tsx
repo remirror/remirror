@@ -6,7 +6,7 @@ import { ActiveTwitterTagData, ActiveTwitterUserData, MentionState, TwitterUIPro
 import { CharacterCountIndicator } from './character-count';
 import { EmojiPicker, EmojiPickerProps, EmojiSmiley } from './emoji-picker';
 import { CharacterCountWrapper, EmojiPickerWrapper, EmojiSmileyWrapper, RemirrorWrapper } from './styled';
-import { AtSuggestions, HashSuggestions } from './suggestions';
+import { AtSuggestions, TagSuggestions } from './suggestions';
 
 interface TwitterEditorProps extends Pick<TwitterUIProps, 'emojiData' | 'emojiSet'> {
   mention?: MentionState;
@@ -33,11 +33,15 @@ export const TwitterEditor: FC<TwitterEditorProps> = ({
   tagMatches,
   onSelectEmoji,
 }) => {
-  const { getRootProps, view, actions } = useRemirrorContext();
-  const content = view.state.doc.textContent;
+  const {
+    getRootProps,
+    actions,
+    state: { newState },
+  } = useRemirrorContext();
+  const content = newState.doc.textContent;
   return (
     <div>
-      <RemirrorWrapper {...getRootProps()} style={{ position: 'relative' }}>
+      <RemirrorWrapper {...getRootProps()} style={{ position: 'relative' }} id='woah'>
         <CharacterCountWrapper>
           <CharacterCountIndicator characters={{ total: 140, used: content.length }} />
         </CharacterCountWrapper>
@@ -67,7 +71,7 @@ export const TwitterEditor: FC<TwitterEditorProps> = ({
         {!mention ? null : mention.name === 'at' ? (
           <AtSuggestions data={userMatches} submitFactory={mention.submitFactory} />
         ) : (
-          <HashSuggestions data={tagMatches} submitFactory={mention.submitFactory} />
+          <TagSuggestions data={tagMatches} submitFactory={mention.submitFactory} />
         )}
       </div>
     </div>

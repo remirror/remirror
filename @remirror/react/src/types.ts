@@ -115,6 +115,11 @@ export interface InjectedRemirrorProps {
   getPositionerProps<GRefKey extends string = 'ref'>(
     options: GetPositionerPropsConfig<GRefKey>,
   ): GetPositionerReturn<GRefKey>;
+
+  /**
+   * The previous and next state
+   */
+  state: CompareStateParams;
 }
 
 export type RenderPropFunction = (params: InjectedRemirrorProps) => JSX.Element;
@@ -257,6 +262,15 @@ export interface RemirrorProps {
    * This can be overridden with this property
    */
   forceEnvironment?: RenderEnvironment;
+
+  /**
+   * Let's the editor know that custom root props will be manually applied. This allows for the
+   * Providers which depend on this element to specify that the nested components will be responsible
+   * for calling `getRootProps()` on the root element.
+   *
+   * @default false
+   */
+  customRootProp: boolean;
 }
 
 export interface PlaceholderConfig {

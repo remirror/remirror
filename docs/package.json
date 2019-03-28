@@ -24,7 +24,7 @@
   "private": true,
   "scripts": {
     "prebuild": "run-s lint typecheck",
-    "lint": "tslint --project tsconfig.json --config ../tslint.json",
+    "lint": "tslint --project tsconfig.json --config ./tslint.json",
     "test": "jest",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   }

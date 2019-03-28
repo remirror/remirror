@@ -1,3 +1,4 @@
+import { useRemirrorContext } from '@remirror/react';
 import React, { FunctionComponent } from 'react';
 import { styled } from '../theme';
 import { TwitterAtSuggestionsProp, TwitterHashSuggestionsProp } from '../types';
@@ -50,6 +51,7 @@ const AtUsername = styled.span`
 `;
 
 export const AtSuggestions: FunctionComponent<TwitterAtSuggestionsProp> = ({ submitFactory, data }) => {
+  const { view } = useRemirrorContext();
   return (
     <SuggestionsDropdown role='presentation'>
       {data.map(user => {
@@ -61,7 +63,9 @@ export const AtSuggestions: FunctionComponent<TwitterAtSuggestionsProp> = ({ sub
             aria-selected={user.active ? 'true' : 'false'}
             aria-haspopup='false'
             role='option'
-            onClick={submitFactory(user)}
+            onClick={submitFactory(user, () => {
+              view.focus();
+            })}
           >
             <AtImage src={user.avatarUrl} />
             <AtDisplayName className='display-name'>{user.displayName}</AtDisplayName>
@@ -83,7 +87,9 @@ const HashTagText = styled.span`
   }
 `;
 
-export const HashSuggestions: FunctionComponent<TwitterHashSuggestionsProp> = ({ submitFactory, data }) => {
+export const TagSuggestions: FunctionComponent<TwitterHashSuggestionsProp> = ({ submitFactory, data }) => {
+  const { view } = useRemirrorContext();
+
   return (
     <SuggestionsDropdown role='presentation'>
       {data.map(({ tag, active }) => (
@@ -94,7 +100,9 @@ export const HashSuggestions: FunctionComponent<TwitterHashSuggestionsProp> = ({
           aria-selected={active ? 'true' : 'false'}
           aria-haspopup='false'
           role='option'
-          onClick={submitFactory({ tag })}
+          onClick={submitFactory({ tag }, () => {
+            view.focus();
+          })}
         >
           <HashTagText>#{tag}</HashTagText>
         </ItemWrapper>

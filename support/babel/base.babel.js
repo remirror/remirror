@@ -6,15 +6,17 @@ const ignore = [
   '*.d.ts',
 ];
 
-const nonTestEnv = { ignore };
+const presets = [
+  '@babel/preset-env',
+  '@babel/preset-typescript',
+  '@babel/preset-react',
+  '@emotion/babel-preset-css-prop',
+];
+
+const nonTestEnv = { ignore, presets };
 
 module.exports = {
-  presets: [
-    '@babel/preset-env',
-    '@babel/preset-typescript',
-    '@emotion/babel-preset-css-prop',
-    '@babel/preset-react',
-  ],
+  presets: ['@babel/preset-env', '@babel/preset-typescript', '@babel/preset-react'],
   plugins: [
     '@babel/plugin-transform-typescript', // This is needed so that abstract classes are properly compiled
     ['@babel/plugin-transform-runtime', { corejs: 2 }],

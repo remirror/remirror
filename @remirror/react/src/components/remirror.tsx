@@ -2,7 +2,6 @@ import React, { Component, Fragment, ReactNode, Ref } from 'react';
 
 import { css, Interpolation, jsx } from '@emotion/core';
 import {
-  cloneElement,
   CompareStateParams,
   createDocumentNode,
   EDITOR_CLASS_NAME,
@@ -33,6 +32,7 @@ import { inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { EditorState } from 'prosemirror-state';
 import {
+  cloneElement,
   defaultProps,
   getElementProps,
   isAttributeFunction,
@@ -389,11 +389,12 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     }
     const { state } = this.state.newState.applyTransaction(transaction);
     this.setState(
-      ({ newState }) => ({ prevState: newState, newState: state }),
+      ({ newState }) => {
+        return { prevState: newState, newState: state };
+      },
       () => {
         // For some reason moving the update state here fixes a bug
         this.view.updateState(state);
-
         if (onChange) {
           onChange({ ...this.eventListenerParams, state });
         }
@@ -520,6 +521,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       /* Getters */
       getRootProps: this.getRootProps,
       getPositionerProps: this.getPositionerProps,
+      state: this.state,
     };
   }
 
@@ -641,21 +643,31 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
 
     const { children: child, ...props } = getElementProps(element);
 
-    if (!this.rootPropsConfig.called) {
+    if (!this.rootPropsConfig.called && !this.props.customRootProp) {
       return isDOMElement(element)
         ? cloneElement(element, this.internalGetRootProps(props), ...this.injectSSRIntoElementChildren(child))
         : jsx('div', this.internalGetRootProps(), ...this.injectSSRIntoElementChildren(element));
     }
+
     return jsx(
       Fragment,
       {},
-      ...updateChildWithKey(element, this.uid, ch => {
-        return cloneElement(ch, getElementProps(ch), ...this.injectSSRIntoElementChildren(ch.props.children));
-      }),
+      cloneElement(
+        element,
+        {},
+        ...updateChildWithKey(element, this.uid, ch => {
+          return cloneElement(
+            ch,
+            getElementProps(ch),
+            ...this.injectSSRIntoElementChildren(ch.props.children),
+          );
+        }),
+      ),
     );
   }
 
   public render() {
-    return <NodeViewPortal>{this.renderNodeViewPortal}</NodeViewPortal>;
+    const ret = <NodeViewPortal>{this.renderNodeViewPortal}</NodeViewPortal>;
+    return ret;
   }
 }

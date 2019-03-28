@@ -1,44 +1,46 @@
-import React from 'react';
-
-import { omit } from '@remirror/core';
-import { injectedPropsShape, positionerShape } from '@test-fixtures/object-shapes';
-import { createTestManager } from '@test-fixtures/schema-helpers';
+import React, { FC } from 'react';
 import { render } from 'react-testing-library';
-import { bubblePositioner } from '../../positioners';
-import { RemirrorEditor, withPositioner, withRemirror } from '../providers';
+import { withRemirror } from '../../hocs';
+import { useRemirrorContext } from '../../hooks';
+import { InjectedRemirrorProps } from '../../types';
+import { ManagedRemirrorEditor } from '../providers';
+import { RemirrorManager } from '../remirror-manager';
 
-test('withRemirror', () => {
-  const mock = jest.fn();
-  const Cmp = withRemirror(props => {
-    mock(props);
-    return <div />;
+describe('ManagedRemirrorEditor', () => {
+  const TestComponent: FC = () => {
+    const { getRootProps } = useRemirrorContext();
+    return <div data-testid='target' {...getRootProps()} />;
+  };
+
+  const HOC: FC<InjectedRemirrorProps> = ({ getRootProps }) => {
+    return <div data-testid='target' {...getRootProps()} />;
+  };
+
+  const TestComponentHOC = withRemirror(HOC);
+
+  it('supports getRootProps via hooks', () => {
+    const { getByRole, getByTestId } = render(
+      <RemirrorManager>
+        <ManagedRemirrorEditor customRootProp={true}>
+          <TestComponent />
+        </ManagedRemirrorEditor>
+      </RemirrorManager>,
+    );
+    const target = getByTestId('target');
+    const editor = getByRole('textbox');
+    expect(target).toContainElement(editor);
   });
 
-  render(
-    <RemirrorEditor manager={createTestManager()}>
-      <Cmp />
-    </RemirrorEditor>,
-  );
-
-  expect(mock).toHaveBeenCalledWith(expect.objectContaining(injectedPropsShape));
-});
-
-test('withPositioner', () => {
-  const mock = jest.fn();
-  const Menu = withPositioner({ positioner: bubblePositioner, positionerId: 'bubble', refKey: 'altRef' })(
-    props => {
-      mock(props);
-      return <div />;
-    },
-  );
-
-  render(
-    <RemirrorEditor manager={createTestManager()}>
-      <Menu />
-    </RemirrorEditor>,
-  );
-
-  expect(mock).toHaveBeenCalledWith(
-    expect.objectContaining({ ...omit(positionerShape, ['ref']), altRef: expect.any(Function) }),
-  );
+  it('supports getRootProps via HOC', () => {
+    const { getByRole, getByTestId } = render(
+      <RemirrorManager>
+        <ManagedRemirrorEditor customRootProp={true}>
+          <TestComponentHOC />
+        </ManagedRemirrorEditor>
+      </RemirrorManager>,
+    );
+    const target = getByTestId('target');
+    const editor = getByRole('textbox');
+    expect(target).toContainElement(editor);
+  });
 });

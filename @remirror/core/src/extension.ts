@@ -118,7 +118,7 @@ export type ExtensionOptions<GExtension extends Extension> = GExtension extends 
   : never;
 
 /** A simpler extension constructor */
-export interface ExtensionConstructor<GOptions extends {}, GExtension extends Extension<GOptions>> {
+export interface ExtensionConstructor<GOptions extends {}, GExtension extends Extension<GOptions, any>> {
   // tslint:disable-next-line: callable-types
   new (options?: GOptions): GExtension;
 }

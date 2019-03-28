@@ -1,0 +1,37 @@
+{
+  "extends": "../tslint.json",
+  "rules": {
+    "no-implicit-dependencies": [
+      true,
+      "dev",
+      [
+        "jest-axe",
+        "jest",
+        "jest-cli",
+        "jest-dom",
+        "jest-emotion",
+        "emotion",
+        "react-testing-library",
+        "puppeteer",
+        "puppeteer-to-istanbul",
+        "jest-extended",
+        "prosemirror-test-builder",
+        "jest-matcher-utils",
+        "jest-image-snapshot",
+        "chalk",
+        "yargs",
+        "enzyme",
+        "enzyme-adapter-react-16",
+        "jest-remirror",
+        "jest-prosemirror",
+        "react",
+        "min-document",
+        "@remirror/core",
+        "@remirror/core-extensions",
+        "@remirror/react",
+        "@remirror/extension-epic-mode"
+      ]
+    ],
+    "no-namespace": false
+  }
+}

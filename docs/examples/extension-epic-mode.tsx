@@ -1,7 +1,6 @@
-/* tslint:disable:no-implicit-dependencies */
-
 import React, { FC, FunctionComponent } from 'react';
 
+import { Interpolation } from '@emotion/core';
 import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { Bold, Italic, Underline } from '@remirror/core-extensions';
 import {
@@ -12,7 +11,6 @@ import {
   spawningEffect,
 } from '@remirror/extension-epic-mode';
 import { ManagedRemirrorEditor, RemirrorExtension, RemirrorManager } from '@remirror/react';
-import { Interpolation } from 'emotion';
 
 const editorStyles: Interpolation = {
   [`.${EDITOR_CLASS_NAME}`]: {
@@ -52,9 +50,11 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({
   );
 };
 
-export const EpicModeDefault: FunctionComponent = () => <EpicModeComponent particleEffect={defaultEffect} />;
+export const EpicModeDefault: FunctionComponent = () => (
+  <EpicModeComponent particleEffect={defaultEffect} shake={true} />
+);
 export const EpicModeSpawning: FunctionComponent = () => (
-  <EpicModeComponent particleEffect={spawningEffect} />
+  <EpicModeComponent particleEffect={spawningEffect} shake={true} />
 );
 export const EpicModeHeart: FunctionComponent = () => (
   <EpicModeComponent particleEffect={heartEffect} shake={false} placeholder='Type for hearts' />

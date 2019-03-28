@@ -1,11 +1,14 @@
+import { jsx } from '@emotion/core';
 import {
   Cast,
   EMPTY_OBJECT_NODE,
+  isArray,
   isFunction,
   isObject,
   isString,
   PlainObject,
   Predicate,
+  uniqueArray,
 } from '@remirror/core';
 import { Children, isValidElement, ReactElement, ReactNode } from 'react';
 import {
@@ -135,6 +138,7 @@ export const defaultProps = asDefaultProps<RemirrorProps>()({
   label: '',
   editorStyles: {},
   insertPosition: 'end',
+  customRootProp: false,
 });
 
 /**
@@ -174,3 +178,30 @@ export const isManagedEditorProvider = <GOptions extends {} = any>(
   isValidElement(value) &&
   (value.type as RemirrorComponentType<GOptions>).$$remirrorType ===
     RemirrorElementType.ManagedEditorProvider;
+
+/**
+ * Clones an element while also enabling the css prop on jsx elements at the same time
+ *
+ * @param element
+ * @param props
+ * @param rest
+ *
+ * @returns a cloned react element with builtin support for the emotion `css` props
+ */
+export const cloneElement = (element: any, props: any, ...rest: ReactNode[]) => {
+  const children = uniqueArray([
+    ...(isArray(props.children) ? props.children : props.children ? [props.children] : []),
+    ...(isArray(rest) ? rest : rest ? [rest] : []),
+  ]);
+
+  return jsx(
+    element.type,
+    {
+      key: element.key,
+      ref: element.ref,
+      ...element.props,
+      ...props,
+    },
+    ...children,
+  );
+};

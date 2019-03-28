@@ -196,12 +196,18 @@ export class SuggestionState {
       const $position = selection.$from;
 
       // Find the first match and break when done
+      let matchFound = false;
       for (const matcher of this.extension.options.matchers) {
         const match = getSuggestionMatchState(matcher, $position);
         if (match) {
+          matchFound = true;
           this.next = match;
           break;
         }
+      }
+
+      if (!matchFound) {
+        this.next = undefined;
       }
     }
 
