@@ -27,7 +27,7 @@
 <br />
 <br />
 
-> Remirror is a a react based text-editor for building elegant editing experiences for web, mobile and desktop.
+> Remirror is your toolkit for building world-class text-editors which run on the web, mobile and desktop.
 
 <br />
 
@@ -41,117 +41,122 @@
 
 ### Prerequisites
 
-You can use either `npm` or `yarn` for managing packages. This project has been built with yarn workspaces so all further instructions will assume you're using `yarn`.
-
-For help translating commands refer to this helpful [document](https://yarnpkg.com/lang/en/docs/migrating-from-npm/#toc-cli-commands-comparison)
-
-#### TypeScript Users
-
-This project is built with and should work with versions `>=3.3`.
+- Typescript `>= 3.3` - Plans to use the latest `as const` syntax
+- React `>= 16.8` - This project relies on hooks
+- Yarn `>= 1.13` - It may work with previous versions as well
 
 ### Installation
 
 ```bash
-yarn add remirror
+yarn add @remirror/core @remirror/react @remirror/core-extensions
 ```
 
-Import and use the component with the child component as a render function.
+The following is a small example which renders a floating menu and enables the extensions `Bold`, `Italic` and `Underline`.
 
 ```ts
-import { Remirror } from 'remirror';
+import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
 
-const Editor = props => (
-  <Remirror
-    onChange={onChange}
-    placeholder='This is a placeholder'
-    autoFocus={true}
-    initialContent={initialJson}
-  >
-    {({ getPositionerProps, actions }) => {
-      const menuProps = getPositionerProps({
-        name: 'floating-menu',
-      });
-      return (
-        <div>
-          <div
-            style={{
-              position: 'absolute',
-              top: menuProps.position.top,
-              left: menuProps.position.left,
-            }}
-            ref={menuProps.ref}
-          >
-            <button
-              style={{
-                backgroundColor: actions.bold.isActive() ? 'white' : 'pink',
-                fontWeight: actions.bold.isActive() ? 600 : 300,
-              }}
-              disabled={!actions.bold.isEnabled()}
-              onClick={runAction(actions.bold.run)}
-            >
-              B
-            </button>
-          </div>
-        </div>
-      );
-    }}
-  </Remirror>
-);
+import { memoize, EMPTY_OBJECT_NODE } from '@remirror/core';
+import { Bold, Italic, Underline } from '@remirror/core-extensions';
+import {
+  bubblePositioner,
+  ManagedRemirrorEditor,
+  RemirrorEventListener,
+  RemirrorExtension,
+  RemirrorManager,
+  RemirrorProps,
+  useRemirrorContext,
+} from '@remirror/react';
+
+const runAction = (action: () => void): MouseEventHandler<HTMLElement> => e => {
+  e.preventDefault();
+  action();
+};
+
+const SimpleFloatingMenu: FC = () => {
+  const { getPositionerProps, actions } = useRemirrorContext(); // Pull in injected props from context
+
+  const props = getPositionerProps({
+    positionerId: 'bubble',
+    ...bubblePositioner,
+  });
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        bottom: props.isActive ? props.bottom : -9999,
+        left: props.isActive ? props.left : -9999,
+      }}
+      ref={props.ref}
+    >
+      <button
+        style={{
+          backgroundColor: actions.bold.isActive() ? 'white' : 'pink',
+          fontWeight: actions.bold.isActive() ? 600 : 300,
+        }}
+        disabled={!actions.bold.isEnabled()}
+        onClick={runAction(actions.bold.command)}
+      >
+        b
+      </button>
+      <button
+        style={{
+          backgroundColor: actions.italic.isActive() ? 'white' : 'pink',
+          fontWeight: actions.italic.isActive() ? 600 : 300,
+        }}
+        disabled={!actions.italic.isEnabled()}
+        onClick={runAction(actions.italic.command)}
+      >
+        i
+      </button>
+      <button
+        style={{
+          backgroundColor: actions.underline.isActive() ? 'white' : 'pink',
+          fontWeight: actions.underline.isActive() ? 600 : 300,
+        }}
+        disabled={!actions.underline.isEnabled()}
+        onClick={runAction(actions.underline.command)}
+      >
+        u
+      </button>
+    </div>
+  );
+};
+
+const EditorLayout: FunctionComponent = () => {
+  return (
+    <RemirrorManager>
+      <RemirrorExtension Constructor={Bold} />
+      <RemirrorExtension Constructor={Italic} />
+      <RemirrorExtension Constructor={Underline} />
+      <ManagedRemirrorEditor
+        attributes={{ 'data-test-id': 'editor-instance' }}
+        onChange={onChange}
+        placeholder='Start typing for magic...'
+        autoFocus={true}
+        initialContent={EMPTY_OBJECT_NODE}
+      >
+        <SimpleFloatingMenu />
+      </ManagedRemirrorEditor>
+    </RemirrorManager>
+  );
+};
 ```
 
-React hooks can also be used to pull the Remirror Context from a parent provider. This api relies on the new(ish) hooks specification and React Context.
-
-```ts
-import { RemirrorProvider, useRemirror } from 'remirror';
-
-// ...
-
-function HooksComponent(props) {
-  // This pull the remirror props out from the context.
-  const { getPositionerProps } = useRemirror();
-
-  // ...
-  return <Menu {...getPositionerProps()} />;
-}
-
-class App extends Component {
-  // ...
-  render() {
-    return (
-      <RemirrorProvider>
-        <HooksComponent />
-      </RemirrorProvider>
-    );
-  }
-}
-```
+The above example uses hooks but you can just as easily rely on Higher Order Components (HOC's) to wrap your component.
 
 In a similar fashion Higher Order Components (HOC's) can be used to wrap a component.
 
 ```ts
-import { RemirrorProvider, withRemirror, InjectedRemirrorProps } from 'remirror';
+import { withRemirror } from '@remirror/react';
 
 // ...
 
-function EditorComponent(props: InjectedRemirrorProps) {
-  const { getPositionerProps } = props;
-
-  // ...
+function SimpleMenu({ getPositionerProps }: InjectedRemirrorProps) {
   return <Menu {...getPositionerProps()} />;
 }
 
-const WrappedEditorComponent = withRemirror(EditorComponent);
-
-class App extends Component {
-  // ...
-  render() {
-    return (
-      <RemirrorProvider>
-        <WrappedEditorComponent />
-      </RemirrorProvider>
-    );
-  }
-}
+export const WrappedSimpleMenu = withRemirror(SimpleMenu);
 ```
 
 ## Quick Demos
@@ -159,40 +164,36 @@ class App extends Component {
 ### Heart Effect
 
 ```ts
-import React, { FunctionComponent } from 'react';
+import { EpicMode, heartEffect, ParticleEffect } from '@remirror/extension-epic-mode';
 
-import { defaultEffect, EpicMode, heartEffect } from '@remirror/extension-epic-mode';
-import { Remirror } from '@remirror/react';
+interface EpicModeComponentProps {
+  particleEffect: ParticleEffect;
+  placeholder: string;
+  shake?: boolean;
+}
 
-const editorStyles = {
-  '.remirror-editor': {
-    border: '1px solid grey',
-    minHeight: '50px',
-    borderRadius: '10px',
-    padding: '10px',
-  },
-};
-
-export const EpicModeHeart = () => {
-  const extensions = [
-    new EpicMode({
-      particleEffect: heartEffect,
-      shake: false,
-    }),
-  ];
+const EpicModeComponent: FC<EpicModeComponentProps> = ({ particleEffect, placeholder, shake }) => {
   return (
     <div style={{ gridArea: 'editor' }}>
-      <Remirror
-        attributes={{ 'data-test-id': 'editor-instance' }}
-        placeholder='Type for hearts'
-        extensions={extensions}
-        editorStyles={editorStyles}
-      >
-        {() => <div />}
-      </Remirror>
+      <RemirrorManager>
+        <RemirrorExtension Constructor={Bold} />
+        <RemirrorExtension Constructor={Italic} />
+        <RemirrorExtension Constructor={Underline} />
+        <RemirrorExtension Constructor={EpicMode} particleEffect={particleEffect} shake={shake} />
+        <ManagedRemirrorEditor
+          autoFocus={true}
+          attributes={{ 'data-test-id': 'editor-instance' }}
+          placeholder={placeholder}
+          editorStyles={editorStyles}
+        />
+      </RemirrorManager>
     </div>
   );
 };
+
+export const EpicModeHeart: FunctionComponent = () => (
+  <EpicModeComponent particleEffect={heartEffect} shake={false} placeholder='Type for hearts' />
+);
 ```
 
 ![Epic Mode Heart Example](/support/assets/01-hearts-are-lovely.gif)
@@ -211,7 +212,19 @@ From the root of this repository run the following to trigger a full typecheck, 
 yarn checks
 ```
 
-By default these checks are run on every push. To prevent these hooks from running by default simply copy `.config.sample.json` to `.config.json`. This file is read before hooks are run and can cancel checks when configured.
+By default these checks are run on every push. To prevent these hooks from running by default simply run:
+
+```bash
+yarn stop:hooks
+```
+
+This copies `.config.sample.json` to `.config.json`. This file is read before hooks are run and can cancel checks when configured.
+
+To resume per-commit / per-push checks run:
+
+```bash
+yarn start:hooks
+```
 
 ## Built With
 

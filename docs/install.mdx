@@ -3,62 +3,118 @@ name: Installation
 route: /install
 ---
 
-# Installation
-
-## Basic Installation
-
-```bash
-yarn add remirror
-```
-
-### Usage
-
-```ts
-import { Remirror } from 'remirror';
-
-const Editor = props => (
-  <Remirror
-    onChange={onChange}
-    placeholder='This is a placeholder'
-    autoFocus={true}
-    initialContent={initialJson}
-  >
-    {({ getPositionerProps, actions }) => {
-      const menuProps = getPositionerProps({
-        name: 'floating-menu',
-      });
-      return (
-        <div>
-          <div
-            style={{
-              position: 'absolute',
-              top: menuProps.position.top,
-              left: menuProps.position.left,
-            }}
-            ref={menuProps.ref}
-          >
-            <button
-              style={{
-                backgroundColor: actions.bold.isActive() ? 'white' : 'pink',
-                fontWeight: actions.bold.isActive() ? 600 : 300,
-              }}
-              disabled={!actions.bold.isEnabled()}
-              onClick={runAction(actions.bold.run)}
-            >
-              B
-            </button>
-          </div>
-        </div>
-      );
-    }}
-  </Remirror>
-);
-```
-
-## Advanced Installation
+### Installation
 
 ```bash
 yarn add @remirror/core @remirror/react @remirror/core-extensions
 ```
 
-Then see the [examples](https://github.com/ifiokjr/remirror/docs/examples) for some sample code.
+The following is a small example which renders a floating menu and enables the extensions `Bold`, `Italic` and `Underline`.
+
+```ts
+import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
+
+import { memoize, EMPTY_OBJECT_NODE } from '@remirror/core';
+import { Bold, Italic, Underline } from '@remirror/core-extensions';
+import {
+  bubblePositioner,
+  ManagedRemirrorEditor,
+  RemirrorEventListener,
+  RemirrorExtension,
+  RemirrorManager,
+  RemirrorProps,
+  useRemirrorContext,
+} from '@remirror/react';
+
+const runAction = (action: () => void): MouseEventHandler<HTMLElement> => e => {
+  e.preventDefault();
+  action();
+};
+
+const SimpleFloatingMenu: FC = () => {
+  const { getPositionerProps, actions } = useRemirrorContext(); // Pull in injected props from context
+
+  const props = getPositionerProps({
+    positionerId: 'bubble',
+    ...bubblePositioner,
+  });
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        bottom: props.isActive ? props.bottom : -9999,
+        left: props.isActive ? props.left : -9999,
+      }}
+      ref={props.ref}
+    >
+      <button
+        style={{
+          backgroundColor: actions.bold.isActive() ? 'white' : 'pink',
+          fontWeight: actions.bold.isActive() ? 600 : 300,
+        }}
+        disabled={!actions.bold.isEnabled()}
+        onClick={runAction(actions.bold.command)}
+      >
+        b
+      </button>
+      <button
+        style={{
+          backgroundColor: actions.italic.isActive() ? 'white' : 'pink',
+          fontWeight: actions.italic.isActive() ? 600 : 300,
+        }}
+        disabled={!actions.italic.isEnabled()}
+        onClick={runAction(actions.italic.command)}
+      >
+        i
+      </button>
+      <button
+        style={{
+          backgroundColor: actions.underline.isActive() ? 'white' : 'pink',
+          fontWeight: actions.underline.isActive() ? 600 : 300,
+        }}
+        disabled={!actions.underline.isEnabled()}
+        onClick={runAction(actions.underline.command)}
+      >
+        u
+      </button>
+    </div>
+  );
+};
+
+const EditorLayout: FunctionComponent = () => {
+  return (
+    <RemirrorManager>
+      <RemirrorExtension Constructor={Bold} />
+      <RemirrorExtension Constructor={Italic} />
+      <RemirrorExtension Constructor={Underline} />
+      <ManagedRemirrorEditor
+        attributes={{ 'data-test-id': 'editor-instance' }}
+        onChange={onChange}
+        placeholder='Start typing for magic...'
+        autoFocus={true}
+        initialContent={EMPTY_OBJECT_NODE}
+      >
+        <SimpleFloatingMenu />
+      </ManagedRemirrorEditor>
+    </RemirrorManager>
+  );
+};
+```
+
+The above example uses hooks but you can just as easily rely on Higher Order Components (HOC's) to wrap your component.
+
+In a similar fashion Higher Order Components (HOC's) can be used to wrap a component.
+
+```ts
+import { withRemirror } from '@remirror/react';
+
+// ...
+
+function SimpleMenu({ getPositionerProps }: InjectedRemirrorProps) {
+  return <Menu {...getPositionerProps()} />;
+}
+
+export const WrappedSimpleMenu = withRemirror(SimpleMenu);
+```
+
+Then see the [examples](https://github.com/ifiokjr/remirror/docs/examples) for more sample code.

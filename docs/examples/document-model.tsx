@@ -1,5 +1,3 @@
-/* tslint:disable:no-implicit-dependencies */
-
 import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
 
 import { memoize } from '@remirror/core';
