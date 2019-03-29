@@ -1,15 +1,14 @@
 import React from 'react';
 
-import { Cast, Doc, ExtensionManager, Paragraph, Text } from '@remirror/core';
-import { Bold, Italic, Underline } from '@remirror/core-extensions';
+import { Doc, ExtensionManager, Paragraph, Text } from '@remirror/core';
+import { Bold } from '@remirror/core-extensions';
 import { simpleJSON, testJSON } from '@test-fixtures/object-nodes';
+import { manager } from '@test-fixtures/schema-helpers';
 import { shallow } from 'enzyme';
 import { Node as PMNode } from 'prosemirror-model';
 
 import { ReactSerializer } from '../serializer';
 
-const extensions = [new Doc(), new Paragraph(), new Text(), new Bold(), new Italic(), new Underline()];
-const manager = new ExtensionManager(extensions, Cast(() => ({})), Cast(() => ({})));
 const schema = manager.createSchema();
 const serializer = ReactSerializer.fromExtensionManager(manager);
 
@@ -19,8 +18,13 @@ test('ReactSerializer.fromExtensionManager', () => {
   expect(serializer.marks.bold).toBeFunction();
 
   // fills in for a missing text
-  const altExtensions = [new Doc(), new Paragraph(), new Bold()];
-  const altManager = new ExtensionManager(altExtensions, Cast(() => ({})), Cast(() => ({})));
+  const altExtensions = [
+    { extension: new Doc(), priority: 2 },
+    { extension: new Paragraph(), priority: 2 },
+    { extension: new Text(), priority: 2 },
+    { extension: new Bold(), priority: 2 },
+  ];
+  const altManager = ExtensionManager.create(altExtensions);
   expect(ReactSerializer.fromExtensionManager(altManager).nodes.text).toBeFunction();
 });
 

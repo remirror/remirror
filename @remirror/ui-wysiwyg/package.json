@@ -1,0 +1,60 @@
+{
+  "name": "@remirror/ui-wysiwyg",
+  "description": "ui for a what you see is what you get (wysiwyg) editing experience",
+  "version": "0.0.1-alpha.10",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@emotion/core": "^10.0.10",
+    "@emotion/styled": "^10.0.10",
+    "@remirror/core": "0.0.1-alpha.10",
+    "@remirror/core-extensions": "0.0.1-alpha.10",
+    "@remirror/extension-emoji": "0.0.1-alpha.10",
+    "@remirror/extension-enhanced-link": "0.0.1-alpha.10",
+    "@remirror/extension-mention": "0.0.1-alpha.10",
+    "@remirror/react": "0.0.1-alpha.10",
+    "emotion-theming": "^10.0.10"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-wysiwyg",
+  "main": "lib/index.js",
+  "module": "lib/dist/ui-wysiwyg.esm.js",
+  "peerDependencies": {
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ifiokjr/remirror.git",
+    "directory": "@remirror/ui-wysiwyg"
+  },
+  "scripts": {
+    "build": "run-s build:declaration build:babel",
+    "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "dev": "run-p watch:*",
+    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "test": "jest",
+    "test:live": "cross-env TEST_ENV=live jest",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit",
+    "watch:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -w",
+    "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
+  },
+  "types": "lib/index.d.ts",
+  "umd": "lib/dist/ui-wysiwyg.umd.js",
+  "umd:min": "lib/dist/ui-wysiwyg.umd.min.js",
+  "umdGlobals": {
+    "react": "React",
+    "@remirror/core": "RemirrorCore",
+    "react-dom": "ReactDOM"
+  }
+}

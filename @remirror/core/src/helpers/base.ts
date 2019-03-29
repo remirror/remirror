@@ -1,5 +1,6 @@
 /// <reference types="node" />
 
+import fastDeepEqual from 'fast-deep-equal';
 import memoizeOne from 'memoize-one';
 import nano from 'nanoid';
 import objectOmit from 'object.omit';
@@ -481,4 +482,17 @@ export const clone = <GObject extends {}>(value: GObject) => {
     throw new Error('An invalid value was passed into this clone utility. Expected a plain object');
   }
   return { ...value };
+};
+
+/**
+ * Alias for fast deep equal
+ */
+export const isEqual = fastDeepEqual;
+
+/**
+ * Create a unique array
+ */
+export const uniqueArray = <GType>(array: GType[]) => {
+  const set = new Set(array);
+  return Array.from(set);
 };

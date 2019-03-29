@@ -1,9 +1,10 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
+import { createTestManager } from '@test-fixtures/schema-helpers';
 import { axe } from 'jest-axe';
 import { fireEvent, render } from 'react-testing-library';
-import { InjectedRemirrorProps, Remirror } from '..';
+import { InjectedRemirrorProps, Remirror } from '../..';
 
 const textContent = `This is editor text`;
 const label = 'Remirror editor';
@@ -17,7 +18,7 @@ const handlers = {
 test('should be called via a render prop', () => {
   const mock = jest.fn(() => <div />);
   const { getByLabelText } = render(
-    <Remirror {...handlers} label={label}>
+    <Remirror manager={createTestManager()} label={label} {...handlers}>
       {mock}
     </Remirror>,
   );
@@ -31,16 +32,18 @@ test('should be called via a render prop', () => {
 });
 
 test('TextEditor is accessible', async () => {
-  const results = await axe(renderToString(<Remirror>{() => <div />}</Remirror>));
+  const results = await axe(
+    renderToString(<Remirror manager={createTestManager()}>{() => <div />}</Remirror>),
+  );
   expect(results).toHaveNoViolations();
 });
 
 test('should not render the editor when no render prop available', () => {
   const spy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
-  // @ts-ignore
-  expect(() => render(<Remirror label={label} />)).toThrowErrorMatchingInlineSnapshot(
-    `"The child argument to the Remirror component must be a function."`,
-  );
+  expect(() =>
+    // @ts-ignore
+    render(<Remirror label={label} manager={createTestManager()} />),
+  ).toThrowErrorMatchingInlineSnapshot(`"The child argument to the Remirror component must be a function."`);
   expect(spy).toHaveBeenCalledTimes(2);
   spy.mockRestore();
 });
@@ -52,7 +55,7 @@ test('should allow text input and fire all handlers', () => {
     return <div />;
   });
   const { getByLabelText } = render(
-    <Remirror label={label} {...handlers}>
+    <Remirror label={label} {...handlers} manager={createTestManager()}>
       {mock}
     </Remirror>,
   );
@@ -69,8 +72,9 @@ test('should allow text input and fire all handlers', () => {
 
 test('can update contenteditable with props', () => {
   const mock = jest.fn(() => <div />);
+  const manager = createTestManager();
   const El = ({ editable }: { editable: boolean }) => (
-    <Remirror editable={editable} label={label}>
+    <Remirror editable={editable} label={label} manager={manager}>
       {mock}
     </Remirror>
   );
@@ -83,10 +87,45 @@ test('can update contenteditable with props', () => {
 test('should render a unique class on the root document', () => {
   const mock = jest.fn(() => <div />);
   const { getByLabelText } = render(
-    <Remirror label={label} {...handlers}>
+    <Remirror label={label} {...handlers} manager={createTestManager()}>
       {mock}
     </Remirror>,
   );
   const editorNode = getByLabelText(label);
   expect(editorNode.className).toMatch(/remirror-[A-Za-z0-9_-]{5}/);
+});
+
+describe('initialContent', () => {
+  it('should render with html content', () => {
+    const { container } = render(
+      <Remirror label={label} {...handlers} manager={createTestManager()} initialContent={'<p>Hello</p>'}>
+        {() => <div />}
+      </Remirror>,
+    );
+    expect(container.innerHTML).toInclude('Hello');
+  });
+
+  it('renders with json', () => {
+    const content = {
+      type: 'doc',
+      content: [
+        {
+          type: 'paragraph',
+          content: [
+            {
+              type: 'text',
+              text: 'Hello',
+            },
+          ],
+        },
+      ],
+    };
+
+    const { container } = render(
+      <Remirror label={label} {...handlers} manager={createTestManager()} initialContent={content}>
+        {() => <div />}
+      </Remirror>,
+    );
+    expect(container.innerHTML).toInclude('Hello');
+  });
 });

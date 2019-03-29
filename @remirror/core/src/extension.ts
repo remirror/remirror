@@ -14,16 +14,17 @@ import {
 } from './types';
 
 export abstract class Extension<GOptions extends {} = {}, GType = never> {
-  public readonly options: Required<GOptions>;
+  public static Component: any;
 
+  public readonly options: Required<GOptions>;
   public abstract readonly name: string;
   private pk?: PluginKey;
 
-  constructor(...args: keyof GOptions extends never ? [] : [GOptions?]) {
-    if (args[0]) {
+  constructor(options?: GOptions) {
+    if (options) {
       this.options = Cast<Required<GOptions>>({
         ...this.defaultOptions,
-        ...args[0],
+        ...options,
       });
     } else {
       this.options = Cast<Required<GOptions>>(this.defaultOptions);
@@ -53,6 +54,16 @@ export abstract class Extension<GOptions extends {} = {}, GType = never> {
 }
 
 export interface Extension<GOptions extends {} = {}, GType = never> {
+  /**
+   * An extension can declare the extensions it requires with options needed for instantiating them
+   *
+   * When creating the extension manager the extension will be checked for required extension as well as
+   * a quick check to see if the required extension is already included.
+   *
+   * TODO implement this functionality
+   */
+  readonly requiredExtensions?: RequiredExtension[];
+
   /**
    * Determines whether this extension is currently active (only applies to Node Extensions and Mark Extensions)
    * @param params
@@ -105,3 +116,14 @@ export type AnyExtension = Extension<any, any>;
 export type ExtensionOptions<GExtension extends Extension> = GExtension extends Extension<infer P, any>
   ? P
   : never;
+
+/** A simpler extension constructor */
+export interface ExtensionConstructor<GOptions extends {}, GExtension extends Extension<GOptions, any>> {
+  // tslint:disable-next-line: callable-types
+  new (options?: GOptions): GExtension;
+}
+
+export interface RequiredExtension {
+  extension: AnyExtension;
+  options: any;
+}

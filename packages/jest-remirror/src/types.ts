@@ -114,6 +114,7 @@ export interface AddContentReturn {
    * Text will be typed out with keys each firing a keyboard event.
    *
    * ! This doesn't currently support the use of tags and cursors.
+   * ! Also adding multiple strings which create nodes also creates an out of position error
    */
   insertText(text: string): AddContentReturn;
   /**

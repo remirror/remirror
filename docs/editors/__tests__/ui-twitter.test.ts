@@ -117,11 +117,11 @@ describe('Twitter UI', () => {
     describe('#', () => {
       it('should wrap in progress mentions in a-tag decorations', async () => {
         await page.type(editorSelector, 'My tag is #Topic');
-        await expect(textContent(sel(editorSelector, '.suggestion-hash'))).resolves.toBe('#Topic');
+        await expect(textContent(sel(editorSelector, '.suggestion-tag'))).resolves.toBe('#Topic');
       });
 
       it('should accept selections onEnter', async () => {
-        const selector = sel(editorSelector, '.mention-hash');
+        const selector = sel(editorSelector, '.mention-tag');
 
         await page.type(editorSelector, 'hello #T');
         await page.keyboard.press('Enter');
@@ -131,14 +131,14 @@ describe('Twitter UI', () => {
 
       it('should still wrap selections when exiting without selections', async () => {
         await page.type(editorSelector, 'hello #T ');
-        await expect(textContent(sel(editorSelector, '.mention-hash'))).resolves.toBe('#T');
+        await expect(textContent(sel(editorSelector, '.mention-tag'))).resolves.toBe('#T');
       });
 
       it('allows clicking on suggestions', async () => {
         const selector = '.suggestions-item.active';
         await page.type(editorSelector, 'My #T');
         await page.click(selector);
-        await expect(textContent(sel(editorSelector, '.mention-hash'))).resolves.toBe('#Tags');
+        await expect(textContent(sel(editorSelector, '.mention-tag'))).resolves.toBe('#Tags');
         await expect(textContent(editorSelector)).resolves.toBe('My #Tags ');
       });
     });
@@ -168,7 +168,7 @@ describe('Twitter UI', () => {
       await page.type(editorSelector, '#awesome hello @ab 😀 google.com');
       await page.keyboard.press('Enter');
       await expect(textContent(sel(editorSelector, '.mention-at'))).resolves.toBe('@ab');
-      await expect(textContent(sel(editorSelector, '.mention-hash'))).resolves.toBe('#awesome');
+      await expect(textContent(sel(editorSelector, '.mention-tag'))).resolves.toBe('#awesome');
       await expect(innerHtml(sel(editorSelector, 'span[title=grinning]'))).resolves.toBeTruthy();
     });
 

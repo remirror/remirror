@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Doc, Paragraph, Text } from '@remirror/core';
-import { EMPTY_NODE_CLASS_NAME } from '@remirror/core-extensions';
+import { Doc, ExtensionManager, Paragraph, Text } from '@remirror/core';
+import { EMPTY_NODE_CLASS_NAME, History } from '@remirror/core-extensions';
+import { createTestManager } from '@test-fixtures/schema-helpers';
 import { render } from 'react-testing-library';
-import { Remirror } from '..';
-import { InjectedRemirrorProps } from '../types';
+import { Remirror } from '../..';
+import { InjectedRemirrorProps } from '../../types';
 
 const label = 'Remirror editor';
 const handlers = {
@@ -14,16 +15,18 @@ const handlers = {
   onFirstRender: jest.fn(),
 };
 const placeholderText = 'Start typing...';
+const extensions = [
+  { extension: new Doc(), priority: 2 },
+  { extension: new Text(), priority: 2 },
+  { extension: new Paragraph(), priority: 2 },
+  { extension: new History(), priority: 2 },
+];
+// const placeholderExtension = { extension: new Placeholder(), priority: 2 }
 
 test('should not fail without the placeholder extension', () => {
   expect(() =>
     render(
-      <Remirror
-        {...handlers}
-        label={label}
-        usesBuiltInExtensions={false}
-        extensions={[new Doc(), new Paragraph(), new Text()]}
-      >
+      <Remirror {...handlers} label={label} manager={ExtensionManager.create(extensions)}>
         {() => <div />}
       </Remirror>,
     ),
@@ -32,7 +35,7 @@ test('should not fail without the placeholder extension', () => {
 
 test('should display a placeholder when the content is empty', () => {
   const { baseElement, getByLabelText } = render(
-    <Remirror {...handlers} label={label} placeholder={placeholderText}>
+    <Remirror {...handlers} label={label} placeholder={placeholderText} manager={createTestManager()}>
       {() => <div />}
     </Remirror>,
   );
@@ -43,10 +46,10 @@ test('should display a placeholder when the content is empty', () => {
 });
 
 test('should lose placeholder when content is entered', () => {
-  let updateContent: InjectedRemirrorProps['setContent'];
+  let updateContent!: InjectedRemirrorProps['setContent'];
 
   const { baseElement } = render(
-    <Remirror {...handlers} label={label} placeholder={placeholderText}>
+    <Remirror {...handlers} label={label} placeholder={placeholderText} manager={createTestManager()}>
       {({ setContent, view }) => {
         const {} = view.state.schema.nodes;
         updateContent = setContent;
@@ -55,7 +58,7 @@ test('should lose placeholder when content is entered', () => {
     </Remirror>,
   );
 
-  updateContent!('<p>New content</p>');
+  updateContent('<p>New content</p>');
   const emptyNode = baseElement.querySelector(`.${EMPTY_NODE_CLASS_NAME}`) as HTMLElement;
   expect(emptyNode).toBeFalsy();
 });

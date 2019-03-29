@@ -1,12 +1,16 @@
-/* tslint:disable:no-implicit-dependencies */
+import React, { FC, FunctionComponent } from 'react';
 
-import React, { FunctionComponent } from 'react';
-
+import { Interpolation } from '@emotion/core';
 import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { Bold, Italic, Underline } from '@remirror/core-extensions';
-import { defaultEffect, EpicMode, heartEffect, spawningEffect } from '@remirror/extension-epic-mode';
-import { Remirror } from '@remirror/react';
-import { Interpolation } from 'emotion';
+import {
+  defaultEffect,
+  EpicMode,
+  heartEffect,
+  ParticleEffect,
+  spawningEffect,
+} from '@remirror/extension-epic-mode';
+import { ManagedRemirrorEditor, RemirrorExtension, RemirrorManager } from '@remirror/react';
 
 const editorStyles: Interpolation = {
   [`.${EDITOR_CLASS_NAME}`]: {
@@ -17,69 +21,41 @@ const editorStyles: Interpolation = {
   },
 };
 
-export const EpicModeDefault: FunctionComponent = () => {
-  const extensions = [
-    new Bold(),
-    new Italic(),
-    new Underline(),
-    new EpicMode({ particleEffect: defaultEffect }),
-  ];
+interface EpicModeComponentProps {
+  particleEffect: ParticleEffect;
+  placeholder?: string;
+  shake?: boolean;
+}
+
+const EpicModeComponent: FC<EpicModeComponentProps> = ({
+  particleEffect,
+  placeholder = 'Type for epic...',
+  shake,
+}) => {
   return (
     <div style={{ gridArea: 'editor' }}>
-      <Remirror
-        autoFocus={true}
-        attributes={{ 'data-test-id': 'editor-instance' }}
-        placeholder='Type for epic...'
-        extensions={extensions}
-        editorStyles={editorStyles}
-      >
-        {() => <div />}
-      </Remirror>
+      <RemirrorManager>
+        <RemirrorExtension Constructor={Bold} />
+        <RemirrorExtension Constructor={Italic} />
+        <RemirrorExtension Constructor={Underline} />
+        <RemirrorExtension Constructor={EpicMode} particleEffect={particleEffect} shake={shake} />
+        <ManagedRemirrorEditor
+          autoFocus={true}
+          attributes={{ 'data-test-id': 'editor-instance' }}
+          placeholder={placeholder}
+          editorStyles={editorStyles}
+        />
+      </RemirrorManager>
     </div>
   );
 };
 
-export const EpicModeSpawning: FunctionComponent = () => {
-  const extensions = [
-    new Bold(),
-    new Italic(),
-    new Underline(),
-    new EpicMode({ particleEffect: spawningEffect }),
-  ];
-  return (
-    <div style={{ gridArea: 'editor' }}>
-      <Remirror
-        attributes={{ 'data-test-id': 'editor-instance' }}
-        placeholder='Type for epic...'
-        extensions={extensions}
-        editorStyles={editorStyles}
-      >
-        {() => <div />}
-      </Remirror>
-    </div>
-  );
-};
-
-export const EpicModeHeart: FunctionComponent = () => {
-  const extensions = [
-    new Bold(),
-    new Italic(),
-    new Underline(),
-    new EpicMode({
-      particleEffect: heartEffect,
-      shake: false,
-    }),
-  ];
-  return (
-    <div style={{ gridArea: 'editor' }}>
-      <Remirror
-        attributes={{ 'data-test-id': 'editor-instance' }}
-        placeholder='Type for hearts'
-        extensions={extensions}
-        editorStyles={editorStyles}
-      >
-        {() => <div />}
-      </Remirror>
-    </div>
-  );
-};
+export const EpicModeDefault: FunctionComponent = () => (
+  <EpicModeComponent particleEffect={defaultEffect} shake={true} />
+);
+export const EpicModeSpawning: FunctionComponent = () => (
+  <EpicModeComponent particleEffect={spawningEffect} shake={true} />
+);
+export const EpicModeHeart: FunctionComponent = () => (
+  <EpicModeComponent particleEffect={heartEffect} shake={false} placeholder='Type for hearts' />
+);

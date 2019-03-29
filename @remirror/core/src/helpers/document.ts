@@ -558,8 +558,8 @@ interface ToHTMLParams extends SchemaParams, ProsemirrorNodeParams, Partial<Cust
  * @param params.schema
  * @param [params.doc]
  */
-export const toHTML = ({ node, schema, doc }: ToHTMLParams) => {
-  const element = (doc || document).createElement('div');
+export const toHTML = ({ node, schema, doc = document }: ToHTMLParams) => {
+  const element = doc.createElement('div');
   element.appendChild(toDOM({ node, schema, doc }));
 
   return element.innerHTML;

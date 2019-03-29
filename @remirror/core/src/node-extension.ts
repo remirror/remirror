@@ -26,6 +26,10 @@ export abstract class NodeExtension<
     return ExtensionType.NODE;
   }
 
+  constructor(options?: GOptions) {
+    super(options);
+  }
+
   /**
    * Allows for the
    */
@@ -54,4 +58,12 @@ export abstract class NodeExtension<
   }: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction> {
     return attrs => nodeActive(getEditorState(), schema.nodes.name, attrs);
   }
+}
+
+export interface NodeExtensionConstructor<
+  GOptions extends NodeExtensionOptions,
+  GExtension extends NodeExtension<GOptions>
+> {
+  // tslint:disable-next-line: callable-types
+  new (options?: GOptions): GExtension;
 }

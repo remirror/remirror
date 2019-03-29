@@ -4,6 +4,7 @@ import {
   Attrs,
   Cast,
   Extension,
+  ExtensionManager,
   isMarkExtension,
   isNodeExtension,
   MarkExtension,
@@ -62,13 +63,20 @@ export const renderEditor = <
     attrNodes = Cast<GAttrNodes>([]),
     others = Cast<GOthers>([]),
   }: Partial<CreateTestEditorExtensions<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>> = {},
-  props: Partial<Omit<RemirrorProps, 'extensions'>> = {},
+  props: Partial<Omit<RemirrorProps, 'manager'>> = {},
 ): GReturn => {
-  const extensions = [...nodeExtensions, ...others, ...plainMarks, ...plainNodes, ...attrMarks, ...attrNodes];
-
+  const extensions = [
+    ...nodeExtensions,
+    ...others,
+    ...plainMarks,
+    ...plainNodes,
+    ...attrMarks,
+    ...attrNodes,
+  ].map(extension => ({ extension, priority: 2 }));
+  const manager = ExtensionManager.create(extensions);
   let returnedParams!: InjectedRemirrorProps;
   const utils = render(
-    <Remirror {...props} usesBuiltInExtensions={false} extensions={extensions}>
+    <Remirror {...props} manager={manager}>
       {params => {
         returnedParams = params;
         if (props.children) {

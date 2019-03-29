@@ -38,6 +38,9 @@ export enum Side {
   RIGHT = 'right',
 }
 
+/**
+ * A default empty object node. Useful for resetting the content of a prosemirror document.
+ */
 export const EMPTY_OBJECT_NODE = {
   type: 'doc',
   content: [

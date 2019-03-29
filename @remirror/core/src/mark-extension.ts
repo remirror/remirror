@@ -17,3 +17,8 @@ export abstract class MarkExtension<GOptions extends {} = {}> extends Extension<
     return () => markActive(getEditorState(), schema.marks[this.name]);
   }
 }
+
+export interface MarkExtensionConstructor<GOptions extends {}, GExtension extends MarkExtension<GOptions>> {
+  // tslint:disable-next-line: callable-types
+  new (options?: GOptions): GExtension;
+}

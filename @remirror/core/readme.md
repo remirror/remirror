@@ -1,6 +1,6 @@
 <div align="center">
 	<br />
-	<div>
+	<div align="center">
 		<img width="300" src="https://cdn.jsdelivr.net/gh/ifiokjr/remirror/support/assets/logo-icon.svg" alt="remirror" />
     <h1 align="center">core</h1>
 	</div>
@@ -107,7 +107,13 @@ The extension manager is used to manage the extensions passed into the editor. I
 import { ExtensionManager, Doc, Text, Paragraph } from '@remirror/core';
 import { Bold, Italic } from '@remirror/core-extensions';
 
-const extensions = [new Doc(), new Text(), new Paragraph(), new Bold(), new Italic()];
+const extensions = ExtensionManager.create([
+  { extension: new Doc(), priority: 2 },
+  { extension: new Text(), priority: 2 },
+  { extension: new Paragraph(), priority: 2 },
+  { extension: new Bold(), priority: 2 },
+  { extension: new Italic(), priority: 2 },
+]);
 
 console.log(extensions.nodes); // { doc: { ... }, paragraph: { ... }, text: { ... } }
 console.log(extension.marks); // { bold: { ... }, italic: { ... } }

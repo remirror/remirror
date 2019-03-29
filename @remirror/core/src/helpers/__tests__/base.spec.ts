@@ -29,6 +29,7 @@ import {
   startCase,
   take,
   trim,
+  uniqueArray,
   uniqueId,
 } from '../base';
 
@@ -241,4 +242,12 @@ test('clone', () => {
   const simple = { a: 'a', b: 'b' };
   expect(clone(simple)).not.toBe(simple);
   expect(clone(simple)).toEqual(simple);
+});
+
+test('uniqueArray', () => {
+  const arr = [1, 2, 3];
+  expect(uniqueArray(arr)).toEqual([1, 2, 3]);
+
+  const dup = ['a', 'a', 'a', 'a', 'b'];
+  expect(uniqueArray(dup)).toEqual(['a', 'b']);
 });

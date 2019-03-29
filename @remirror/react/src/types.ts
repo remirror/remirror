@@ -1,10 +1,11 @@
 import {
-  AnyExtension,
   CompareStateParams,
   EditorSchema,
   EditorState,
   EditorViewParams,
   ElementParams,
+  Extension,
+  ExtensionConstructor,
   ExtensionManager,
   ObjectNode,
   Omit,
@@ -18,6 +19,7 @@ import {
 import { RenderEnvironment } from '@remirror/react-ssr';
 import { Interpolation, ObjectInterpolation } from 'emotion';
 import { EditorView } from 'prosemirror-view';
+import { ComponentClass, ComponentType, FC, ReactElement } from 'react';
 
 export interface Positioner {
   /**
@@ -46,25 +48,31 @@ export interface Positioner {
 
 export type CalculatePositionerParams = PositionerIdParams & Positioner;
 
-export type GetPositionerPropsConfig<GRefKey extends string = 'ref'> = BaseGetterConfig<GRefKey> &
+export type GetPositionerPropsConfig<GRefKey extends string = 'ref'> = RefParams<GRefKey> &
   Partial<Omit<CalculatePositionerParams, 'positionerId'>> &
   PositionerIdParams;
 
-export interface BaseGetterConfig<GRefKey extends string = 'ref'> {
+export interface RefParams<GRefKey extends string = 'ref'> {
+  /**
+   * A custom ref key which allows a reference to be obtained from non standard components.
+   *
+   * @default 'ref'
+   */
   refKey?: GRefKey;
 }
 
 export type PositionerProps = IsActiveParams & Position;
 
-export interface GetRootPropsConfig<GRefKey extends string = 'ref'>
-  extends BaseGetterConfig<GRefKey>,
-    PlainObject {
+export interface GetRootPropsConfig<GRefKey extends string = 'ref'> extends RefParams<GRefKey>, PlainObject {
   editorStyles?: Interpolation<RemirrorProps>;
 }
 
 export type RefKeyRootProps<GRefKey extends string = 'ref'> = {
   [P in Exclude<GRefKey, 'children' | 'key'>]: React.Ref<any>
-} & { className: string; key: string } & PlainObject;
+} & { css: Interpolation; key: string } & PlainObject;
+
+export type GetPositionerReturn<GRefKey extends string = 'ref'> = PositionerProps &
+  { [P in GRefKey]: React.Ref<any> };
 
 /**
  * These are the props passed to the render function provided when setting up your editor.
@@ -88,7 +96,6 @@ export interface InjectedRemirrorProps {
    * A unique id for the editor instance. Useful for styling with the format `.remirror-{NUM}`
    */
   uid: string;
-  getMarkAttr(type: string): Record<string, string>;
   clearContent(triggerOnChange?: boolean): void;
   setContent(content: RemirrorContentType, triggerOnChange?: boolean): void;
   getRootProps<GRefKey extends string = 'ref'>(
@@ -103,7 +110,12 @@ export interface InjectedRemirrorProps {
    */
   getPositionerProps<GRefKey extends string = 'ref'>(
     options: GetPositionerPropsConfig<GRefKey>,
-  ): PositionerProps & { [P in GRefKey]: React.Ref<any> };
+  ): GetPositionerReturn<GRefKey>;
+
+  /**
+   * The previous and next state
+   */
+  state: CompareStateParams;
 }
 
 export type RenderPropFunction = (params: InjectedRemirrorProps) => JSX.Element;
@@ -123,11 +135,10 @@ export type AttributePropFunction = (params: RemirrorEventListenerParams) => Rec
 
 export interface RemirrorProps {
   /**
-   * Pass in extension instances which determine the behaviour of the editor.
+   * Pass in the extension manager.
    *
-   * @default []
    */
-  extensions: AnyExtension[];
+  manager: ExtensionManager;
 
   /**
    * Set the starting value object of the editor.
@@ -247,6 +258,15 @@ export interface RemirrorProps {
    * This can be overridden with this property
    */
   forceEnvironment?: RenderEnvironment;
+
+  /**
+   * Let's the editor know that custom root props will be manually applied. This allows for the
+   * Providers which depend on this element to specify that the nested components will be responsible
+   * for calling `getRootProps()` on the root element.
+   *
+   * @default false
+   */
+  customRootProp: boolean;
 }
 
 export interface PlaceholderConfig {
@@ -277,4 +297,100 @@ export interface IsActiveParams {
    * A boolean value determining whether the positioner should be active.
    */
   isActive: boolean;
+}
+
+export interface PositionerParams {
+  /**
+   * The positioner object which determines how the changes in the view impact the calculated position.
+   */
+  positioner: Partial<Positioner>;
+}
+
+export interface UsePositionerParams<GRefKey extends string = 'ref'>
+  extends PositionerIdParams,
+    PositionerParams,
+    RefParams<GRefKey> {}
+
+/**
+ * Used to mark a remirror specific component to determine it's behaviour.
+ */
+export enum RemirrorElementType {
+  Extension = 'extension',
+  SSR = 'ssr',
+  EditorProvider = 'editor-provider',
+  ManagedEditorProvider = 'managed-editor-provider',
+  Editor = 'editor',
+  Manager = 'manager',
+  ManagerProvider = 'manager-provider',
+}
+
+export type RemirrorExtensionProps<
+  GOptions extends {},
+  GExtension extends Extension<GOptions, any> = Extension<GOptions, any>,
+  GConstructor = ExtensionConstructor<GOptions, GExtension>
+> = GOptions & BaseExtensionProps & ExtensionConstructorProps<GOptions, GExtension, GConstructor>;
+
+export interface ExtensionConstructorProps<
+  GOptions extends {},
+  GExtension extends Extension<GOptions, any> = Extension<GOptions, any>,
+  GConstructor = ExtensionConstructor<GOptions, GExtension>
+> {
+  /**
+   * The constructor for the remirror extension.
+   * Will be instantiated with the options passed through as props.
+   */
+  Constructor: GConstructor;
+}
+
+export interface BaseExtensionProps {
+  /**
+   * Sets the priority for the extension. Lower number means the extension is loaded first and gives it priority.
+   * `-1` is loaded before `0` and will overwrite any conflicting configuration.
+   *
+   * Base extensions are loaded with a priority of 1.
+   *
+   * @default 2
+   */
+  priority?: number;
+  children?: never;
+}
+
+export interface RegisterExtensionParams<GOptions extends {}> {
+  /** The extension identifier */
+  id: symbol;
+  /** The instance of the extension with the options applied */
+  extension: Extension<GOptions, any>;
+  /**
+   * The priority index for the extension
+   * @default 2
+   */
+  priority: number;
+}
+
+/**
+ * An extension component registration function which returns a function for un-registering the component
+ */
+export type RegisterExtension<GOptions extends {}> = (
+  params: RegisterExtensionParams<GOptions>,
+) => () => void;
+
+export interface RemirrorComponentStaticProperties {
+  /**
+   * Identifies this as a remirror specific component
+   */
+  $$remirrorType: RemirrorElementType;
+}
+
+export type RemirrorComponentType<P extends {}> = ComponentType<P> & RemirrorComponentStaticProperties;
+export type RemirrorFC<P extends {}> = FC<P> & RemirrorComponentStaticProperties;
+export type RemirrorComponentClass<P extends {}> = ComponentClass<P> & RemirrorComponentStaticProperties;
+export type RemirrorElement<GOptions extends {} = any> = ReactElement<any> & {
+  type: RemirrorComponentType<GOptions>;
+};
+
+export interface RemirrorManagerProps {
+  /**
+   * Whether to use base extensions
+   */
+  useBaseExtensions?: boolean;
 }
