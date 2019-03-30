@@ -17,6 +17,7 @@ import {
   RemirrorExtension,
   RemirrorManager,
 } from '@remirror/react';
+import deepMerge from 'deepmerge';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
 import { UITwitterTheme, uiTwitterTheme } from '../theme';
@@ -249,8 +250,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   }
 
   private get theme(): UITwitterTheme {
-    const { theme: propTheme = { colors: {} } } = this.props;
-    return { ...uiTwitterTheme, ...propTheme, colors: { ...uiTwitterTheme.colors, ...propTheme.colors } };
+    return deepMerge(uiTwitterTheme, this.props.theme);
   }
 
   private get remirrorProps() {

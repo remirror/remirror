@@ -1,7 +1,7 @@
 import { NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams, toggleList } from '@remirror/core';
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
-export class Bullet extends NodeExtension {
+export class BulletList extends NodeExtension {
   get name(): 'bulletList' {
     return 'bulletList';
   }

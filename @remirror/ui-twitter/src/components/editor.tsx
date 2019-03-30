@@ -41,7 +41,7 @@ export const TwitterEditor: FC<TwitterEditorProps> = ({
   const content = newState.doc.textContent;
   return (
     <div>
-      <RemirrorWrapper {...getRootProps()} style={{ position: 'relative' }} id='woah'>
+      <RemirrorWrapper {...getRootProps()} style={{ position: 'relative' }}>
         <CharacterCountWrapper>
           <CharacterCountIndicator characters={{ total: 140, used: content.length }} />
         </CharacterCountWrapper>
