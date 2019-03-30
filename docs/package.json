@@ -18,8 +18,8 @@
     "docz-theme-default": "0.13.7",
     "emoji-mart": "2.9.2",
     "match-sorter": "2.3.0",
-    "react": "16.8.5",
-    "react-dom": "16.8.5"
+    "react": "16.8.6",
+    "react-dom": "16.8.6"
   },
   "private": true,
   "scripts": {
