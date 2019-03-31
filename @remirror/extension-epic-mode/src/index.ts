@@ -20,8 +20,8 @@ import {
 } from './types';
 
 export class EpicMode extends Extension<EpicModeOptions> {
-  get name(): 'epicMode' {
-    return 'epicMode';
+  get name() {
+    return 'epicMode' as const;
   }
 
   get defaultOptions() {

@@ -24,8 +24,8 @@ export class Mention extends NodeExtension<MentionOptions> {
    *
    * @readonly
    */
-  get name(): 'mention' {
-    return 'mention';
+  get name() {
+    return 'mention' as const;
   }
 
   /**

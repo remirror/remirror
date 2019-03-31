@@ -25,8 +25,8 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
   /**
    * The name is dynamically generated based on the passed in type.
    */
-  get name(): 'emoji' {
-    return 'emoji';
+  get name() {
+    return 'emoji' as const;
   }
 
   get defaultOptions() {

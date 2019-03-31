@@ -7,8 +7,8 @@ import {
 } from '@remirror/core';
 
 export class HorizontalRule extends NodeExtension {
-  get name(): 'horizontalRule' {
-    return 'horizontalRule';
+  get name() {
+    return 'horizontalRule' as const;
   }
 
   get schema(): NodeExtensionSpec {

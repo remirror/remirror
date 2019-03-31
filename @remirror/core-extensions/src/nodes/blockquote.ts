@@ -2,8 +2,8 @@ import { NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams, toggleWrap } fr
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
 export class Blockquote extends NodeExtension {
-  get name(): 'blockquote' {
-    return 'blockquote';
+  get name() {
+    return 'blockquote' as const;
   }
 
   get schema(): NodeExtensionSpec {

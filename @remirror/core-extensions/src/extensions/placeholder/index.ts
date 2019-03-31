@@ -4,8 +4,8 @@ import { PlaceholderOptions, PlaceholderPluginState } from '../types';
 import { createPlaceholderPlugin } from './plugin';
 
 export class Placeholder extends Extension<PlaceholderOptions> {
-  get name(): 'placeholder' {
-    return 'placeholder';
+  get name() {
+    return 'placeholder' as const;
   }
 
   get defaultOptions() {

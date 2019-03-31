@@ -1,8 +1,8 @@
 import { NodeExtension } from '../node-extension';
 
 export class Doc extends NodeExtension {
-  get name(): 'doc' {
-    return 'doc';
+  get name() {
+    return 'doc' as const;
   }
 
   get schema() {

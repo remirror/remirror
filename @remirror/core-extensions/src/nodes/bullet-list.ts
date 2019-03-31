@@ -2,8 +2,8 @@ import { NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams, toggleList } fr
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
 export class BulletList extends NodeExtension {
-  get name(): 'bulletList' {
-    return 'bulletList';
+  get name() {
+    return 'bulletList' as const;
   }
 
   get schema(): NodeExtensionSpec {

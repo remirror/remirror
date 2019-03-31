@@ -3,8 +3,8 @@ import { NodeExtension } from '../node-extension';
 import { NodeExtensionSpec, SchemaNodeTypeParams } from '../types';
 
 export class Paragraph extends NodeExtension {
-  get name(): 'paragraph' {
-    return 'paragraph';
+  get name() {
+    return 'paragraph' as const;
   }
 
   get schema(): NodeExtensionSpec {

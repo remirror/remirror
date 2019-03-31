@@ -8,8 +8,8 @@ import {
 import { toggleMark } from 'prosemirror-commands';
 
 export class Code<GOptions extends {} = {}> extends MarkExtension<GOptions> {
-  get name(): 'code' {
-    return 'code';
+  get name() {
+    return 'code' as const;
   }
 
   get schema(): MarkExtensionSpec {

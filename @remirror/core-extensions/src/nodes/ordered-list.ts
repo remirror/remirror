@@ -2,8 +2,8 @@ import { Cast, NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams, toggleLis
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
 export class OrderedList extends NodeExtension {
-  get name(): 'orderedList' {
-    return 'orderedList';
+  get name() {
+    return 'orderedList' as const;
   }
 
   get schema(): NodeExtensionSpec {

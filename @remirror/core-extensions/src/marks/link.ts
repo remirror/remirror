@@ -13,8 +13,8 @@ import {
 import { Plugin, TextSelection } from 'prosemirror-state';
 
 export class Link extends MarkExtension {
-  get name(): 'link' {
-    return 'link';
+  get name() {
+    return 'link' as const;
   }
 
   get schema(): MarkExtensionSpec {

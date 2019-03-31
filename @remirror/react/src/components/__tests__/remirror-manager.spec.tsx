@@ -25,7 +25,7 @@ test('a manager is created', () => {
 
 class NewExtension extends Extension<{ run: boolean }> {
   get name() {
-    return 'new';
+    return 'new' as const;
   }
 
   get defaultOptions() {

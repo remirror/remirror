@@ -20,8 +20,8 @@ export interface HistoryOptions {
   newGroupDelay?: number | null;
 }
 export class History extends Extension<HistoryOptions> {
-  get name(): 'history' {
-    return 'history';
+  get name() {
+    return 'history' as const;
   }
 
   get defaultOptions() {

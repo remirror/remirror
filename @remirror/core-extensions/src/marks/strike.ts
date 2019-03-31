@@ -8,8 +8,8 @@ import {
 import { toggleMark } from 'prosemirror-commands';
 
 export class Strike extends MarkExtension {
-  get name(): 'strike' {
-    return 'strike';
+  get name() {
+    return 'strike' as const;
   }
 
   get schema(): MarkExtensionSpec {

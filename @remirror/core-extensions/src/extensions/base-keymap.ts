@@ -19,8 +19,8 @@ export interface BaseKeymapOptions {
 }
 
 export class BaseKeymap extends Extension<BaseKeymapOptions> {
-  get name(): 'baseKeymap' {
-    return 'baseKeymap';
+  get name() {
+    return 'baseKeymap' as const;
   }
 
   get defaultOptions() {

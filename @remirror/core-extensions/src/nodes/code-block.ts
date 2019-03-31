@@ -3,8 +3,8 @@ import { setBlockType } from 'prosemirror-commands';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 export class CodeBlock extends NodeExtension {
-  get name(): 'codeBlock' {
-    return 'codeBlock';
+  get name() {
+    return 'codeBlock' as const;
   }
 
   get schema(): NodeExtensionSpec {

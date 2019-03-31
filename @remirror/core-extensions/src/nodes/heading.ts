@@ -16,8 +16,8 @@ export interface HeadingOptions extends NodeExtensionOptions {
 }
 
 export class Heading extends NodeExtension<HeadingOptions> {
-  get name(): 'heading' {
-    return 'heading';
+  get name() {
+    return 'heading' as const;
   }
 
   get defaultOptions() {
@@ -40,7 +40,7 @@ export class Heading extends NodeExtension<HeadingOptions> {
       draggable: false,
       parseDOM: this.options.levels.map(level => ({
         tag: `h${level}`,
-        attrs: { level },
+        // attrs: { level },
       })),
       toDOM: (node: ProsemirrorNode) => [`h${node.attrs.level}`, 0],
     };

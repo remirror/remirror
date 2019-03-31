@@ -8,8 +8,8 @@ import {
 import { toggleMark } from 'prosemirror-commands';
 
 export class Italic extends MarkExtension {
-  get name(): 'italic' {
-    return 'italic';
+  get name() {
+    return 'italic' as const;
   }
 
   get schema(): MarkExtensionSpec {

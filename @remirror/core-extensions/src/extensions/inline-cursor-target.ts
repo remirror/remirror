@@ -18,8 +18,8 @@ export interface InlineCursorTargetOptions {
 }
 
 export class InlineCursorTarget extends Extension<InlineCursorTargetOptions> {
-  get name(): 'inlineCursorTarget' {
-    return 'inlineCursorTarget';
+  get name() {
+    return 'inlineCursorTarget' as const;
   }
 
   get defaultOptions() {

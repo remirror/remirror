@@ -2,8 +2,8 @@ import { Cast, MarkExtension, MarkExtensionSpec, markInputRule, SchemaMarkTypePa
 import { toggleMark } from 'prosemirror-commands';
 
 export class Bold extends MarkExtension {
-  get name(): 'bold' {
-    return 'bold';
+  get name() {
+    return 'bold' as const;
   }
 
   get schema(): MarkExtensionSpec {

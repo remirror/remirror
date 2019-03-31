@@ -2,8 +2,8 @@ import { NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams } from '@remirro
 import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list';
 
 export class ListItem extends NodeExtension {
-  get name(): 'listItem' {
-    return 'listItem';
+  get name() {
+    return 'listItem' as const;
   }
 
   get schema(): NodeExtensionSpec {
