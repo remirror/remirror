@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` 1`] = `
+Object {
+  "content": Array [
+    Object {
+      "text": "simple",
+      "type": "text",
+    },
+  ],
+  "type": "paragraph",
+}
+`;

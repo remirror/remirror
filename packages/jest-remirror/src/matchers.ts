@@ -1,5 +1,5 @@
 import { EditorState, isEditorState, isProsemirrorNode, ProsemirrorNode } from '@remirror/core';
-import { toMatchSnapshot } from 'jest-snapshot';
+import { toMatchInlineSnapshot, toMatchSnapshot } from 'jest-snapshot';
 import { TaggedProsemirrorNode } from './types';
 
 export const remirrorMatchers: jest.ExpectExtendMap = {
@@ -177,7 +177,7 @@ declare global {
        * Checks that the nodes are equal.
        */
       toEqualRemirrorDocument(builder: TaggedProsemirrorNode): R;
-      toMatchRemirrorSnapshot(builder: TaggedProsemirrorNode): R;
+      toMatchRemirrorSnapshot(): R;
     }
   }
 }

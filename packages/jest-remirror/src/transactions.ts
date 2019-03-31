@@ -50,7 +50,6 @@ interface KeyboardShortcutParams extends TestEditorViewParams {
  * @param params
  * @param params.view
  * @param params.shortcut
- * @param params.from
  */
 export function keyboardShortcut({ view, shortcut }: KeyboardShortcutParams) {
   Keyboard.create({

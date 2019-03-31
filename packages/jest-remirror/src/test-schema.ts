@@ -7,4 +7,4 @@ export const nodeExtensions = [new Doc(), new Text(), new Paragraph()];
 export type BaseExtensionNodes = (typeof nodeExtensions)[number];
 
 /** The names of default nodes injected into every test setup */
-export type BaseExtensionNodeNames = Exclude<BaseExtensionNodes['name'], 'text'>;
+export type BaseExtensionNodeNames = Exclude<BaseExtensionNodes['name'], 'text'> | 'p';

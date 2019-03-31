@@ -11,13 +11,13 @@ test('renders an editor into the dom', () => {
 });
 
 test('allows for injection of basic content', () => {
-  const expected = 'This is a paragraph';
+  const expected = 'This is a p';
   const {
     view,
-    nodes: { doc, paragraph },
+    nodes: { doc, p },
     add,
   } = renderEditor({ plainNodes: [] }); // TODO for some reason typescript autocomplete on plain nodes doesn't work without at least an empty array
-  add(doc(paragraph(expected)));
+  add(doc(p(expected)));
   expect(view.dom).toHaveTextContent(expected);
 });
 
@@ -25,10 +25,10 @@ test('can be configured with plain node extensions', () => {
   const expected = 'A simple blockquote';
   const {
     view: { dom },
-    nodes: { blockquote, doc, paragraph },
+    nodes: { blockquote, doc, p },
     add,
   } = renderEditor({ plainNodes: [new Blockquote()] });
-  add(doc(blockquote(paragraph(expected)), paragraph('This is a paragraph')));
+  add(doc(blockquote(p(expected)), p('This is a p')));
   expect(dom).toHaveTextContent('A simple blockquote');
 });
 
@@ -36,10 +36,10 @@ test('can be configured with plain node extensions', () => {
   const expected = 'A simple blockquote';
   const {
     view: { dom },
-    nodes: { blockquote, doc, paragraph },
+    nodes: { blockquote, doc, p },
     add,
   } = renderEditor({ plainNodes: [new Blockquote()] });
-  add(doc(blockquote(paragraph(expected)), paragraph('This is a paragraph')));
+  add(doc(blockquote(p(expected)), p('This is a p')));
   expect(dom).toHaveTextContent('A simple blockquote');
 });
 
@@ -64,11 +64,11 @@ test('can be configured with plain mark extensions', () => {
   const expected = 'BOLD';
   const {
     view: { dom },
-    nodes: { doc, paragraph },
+    nodes: { doc, p },
     add,
     marks: { bold },
   } = renderEditor({ plainNodes: [], plainMarks: [new Bold()] });
-  add(doc(paragraph('Text is ', bold(expected))));
+  add(doc(p('Text is ', bold(expected))));
   expect(dom.querySelector('strong')!.innerText).toBe(expected);
 });
 
@@ -77,12 +77,12 @@ test('can be configured with attribute mark extensions', () => {
   const href = 'https://google.com';
   const {
     view: { dom },
-    nodes: { doc, paragraph },
+    nodes: { doc, p },
     add,
     attrMarks: { link },
   } = renderEditor({ attrMarks: [new Link()] });
   const googleLink = link({ href });
-  add(doc(paragraph('Link to ', googleLink(expected))));
+  add(doc(p('Link to ', googleLink(expected))));
 
   const linkElement = dom.querySelector('a');
   expect(linkElement).toHaveAttribute('href', href);
@@ -90,25 +90,28 @@ test('can be configured with attribute mark extensions', () => {
 });
 
 describe('add', () => {
+  const params = { plainMarks: [new Bold()], plainNodes: [] };
   let {
     view: { dom },
     schema,
-    nodes: { doc, paragraph },
+    nodes: { doc, p },
+    marks: { bold },
     add,
-  } = renderEditor({ plainNodes: [] });
+  } = renderEditor(params);
 
   beforeEach(() => {
     ({
       view: { dom },
       schema,
-      nodes: { doc, paragraph },
+      nodes: { doc, p },
+      marks: { bold },
       add,
-    } = renderEditor({ plainNodes: [] }));
+    } = renderEditor({ plainNodes: [], plainMarks: [new Bold()] }));
   });
 
   it('overwrites the whole doc on each call', () => {
-    const node = paragraph('Hello');
-    const nodeTwo = paragraph('Tolu');
+    const node = p('Hello');
+    const nodeTwo = p('Tolu');
     const expected = toHTML({ node, schema });
     const expectedTwo = toHTML({ node: nodeTwo, schema });
 
@@ -121,29 +124,35 @@ describe('add', () => {
   });
 
   it('can be chained', () => {
-    const node = paragraph('New me');
-    add(doc(paragraph('Hello'))).overwrite(doc(node));
+    const node = p('New me');
+    add(doc(p('Hello'))).overwrite(doc(node));
     expect(dom).toContainHTML(toHTML({ node, schema }));
   });
 
   it('can insert text', () => {
     const expected = 'Welcome friend';
-    add(doc(paragraph('Welcome <cursor>'))).insertText('friend');
+    add(doc(p('Welcome <cursor>'))).insertText('friend');
     expect(dom).toHaveTextContent(expected);
+  });
+
+  it('can fire a shortcut', () => {
+    const node = p(bold('Welcome'));
+    add(doc(p('<start>Welcome<end>'))).shortcut('Mod-b');
+    expect(dom).toContainHTML(toHTML({ node, schema }));
   });
 
   it('can replace text with text', () => {
     const expected = 'Today is a happy day';
-    add(doc(paragraph('Today is a <start>sad<end> day'))).replace('happy');
+    add(doc(p('Today is a <start>sad<end> day'))).replace('happy');
     expect(dom).toHaveTextContent(expected);
   });
 
   it('can replace text with nodes', () => {
-    const node = paragraph('Brilliant');
-    const nodeTwo = paragraph('Wonderful');
+    const node = p('Brilliant');
+    const nodeTwo = p('Wonderful');
     const expected = toHTML({ node, schema });
     const expectedTwo = toHTML({ node: nodeTwo, schema });
-    add(doc(paragraph('Today is a <start>sad<end> day'))).replace(node, nodeTwo);
+    add(doc(p('Today is a <start>sad<end> day'))).replace(node, nodeTwo);
     expect(dom).toContainHTML(expected);
     expect(dom).toContainHTML(expectedTwo);
   });
@@ -152,20 +161,20 @@ describe('add', () => {
 describe('tags', () => {
   let {
     view,
-    nodes: { doc, paragraph },
+    nodes: { doc, p },
     add,
   } = renderEditor({ plainNodes: [] });
 
   beforeEach(() => {
     ({
       view,
-      nodes: { doc, paragraph },
+      nodes: { doc, p },
       add,
     } = renderEditor({ plainNodes: [] }));
   });
 
   it('supports <cursor>', () => {
-    const { start, end } = add(doc(paragraph('This is a <cursor>position')));
+    const { start, end } = add(doc(p('This is a <cursor>position')));
     expect(start).toBe(11);
     expect(start).toBe(view.state.selection.from);
     expect(end).toBe(11);
@@ -173,7 +182,7 @@ describe('tags', () => {
   });
 
   it('supports <start>', () => {
-    const { start, end } = add(doc(paragraph('This is a <start>position')));
+    const { start, end } = add(doc(p('This is a <start>position')));
     expect(start).toBe(11);
     expect(start).toBe(view.state.selection.from);
     expect(end).toBe(19);
@@ -181,7 +190,7 @@ describe('tags', () => {
   });
 
   it('supports <start> / <end>', () => {
-    const { start, end } = add(doc(paragraph('This is a <start>pos<end>ition')));
+    const { start, end } = add(doc(p('This is a <start>pos<end>ition')));
     expect(start).toBe(11);
     expect(start).toBe(view.state.selection.from);
     expect(end).toBe(14);
@@ -189,7 +198,7 @@ describe('tags', () => {
   });
 
   it('supports <all>', () => {
-    const { start, end } = add(doc(paragraph('This is an <all>position')));
+    const { start, end } = add(doc(p('This is an <all>position')));
     expect(start).toBe(0);
     expect(start).toBe(view.state.selection.from);
     expect(end).toBe(21);
@@ -197,8 +206,8 @@ describe('tags', () => {
   });
 
   it('supports <node>', () => {
-    // ? Crashes if node is placed at the beginning of the paragraph
-    const { start, end } = add(doc(paragraph('Hello'), paragraph('T<node>ext here')));
+    // ? Crashes if node is placed at the beginning of the p
+    const { start, end } = add(doc(p('Hello'), p('T<node>ext here')));
     expect(start).toBe(9);
     expect(start).toBe(view.state.selection.from);
     expect(end).toBe(17);

@@ -155,7 +155,9 @@ export const renderEditor = <
     nodesWithAttrs[name as GAttrNodeNames] = (attrs: Attrs = {}) => nodeFactory({ name, schema, attrs });
   });
 
-  const nodesWithoutAttrs: NodeWithoutAttrs<GPlainNodeNames> = Cast({});
+  const nodesWithoutAttrs: NodeWithoutAttrs<GPlainNodeNames> = Cast({
+    p: nodeFactory({ name: 'paragraph', schema }),
+  });
   [...plainNodes, ...nodeExtensions].filter(isNodeExtension).forEach(({ name }) => {
     nodesWithoutAttrs[name as GPlainNodeNames] = nodeFactory({ name, schema });
   });

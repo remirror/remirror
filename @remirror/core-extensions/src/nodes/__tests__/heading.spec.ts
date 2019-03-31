@@ -67,7 +67,7 @@ describe('plugins', () => {
     const {
       attrNodes: { heading },
       add,
-      nodes: { doc, paragraph: p },
+      nodes: { doc, p },
     } = create();
     const h1 = heading({ level: 1 });
     const h3 = heading({ level: 3 });
