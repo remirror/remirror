@@ -64,12 +64,12 @@ export class Link extends MarkExtension {
     ];
   }
 
-  public plugin() {
+  public plugin({ type }: SchemaMarkTypeParams) {
     return new Plugin({
       props: {
         handleClick(view, pos) {
-          const { schema, doc, tr } = view.state;
-          const range = getMarkRange(doc.resolve(pos), schema.marks.link);
+          const { doc, tr } = view.state;
+          const range = getMarkRange(doc.resolve(pos), type);
 
           if (!range) {
             return false;

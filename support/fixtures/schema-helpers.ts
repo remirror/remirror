@@ -1,4 +1,4 @@
-import { Doc, ExtensionManager, Paragraph, Text, Cast } from '@remirror/core';
+import { Doc, ExtensionManager, Paragraph, Text, Cast, ExtensionMapValue } from '@remirror/core';
 import {
   Bold,
   Italic,
@@ -15,11 +15,14 @@ export const helpers = {
   getPortalContainer: Cast(jest.fn()),
 };
 
-export const extensions = [
-  { extension: new Composition(), priority: 2 },
+export const baseExtensions = [
   { extension: new Doc(), priority: 2 },
   { extension: new Text(), priority: 2 },
   { extension: new Paragraph(), priority: 2 },
+];
+export const extensions = [
+  ...baseExtensions,
+  { extension: new Composition(), priority: 2 },
   { extension: new History(), priority: 2 },
   { extension: new Placeholder(), priority: 2 },
   { extension: new Bold(), priority: 3 },
@@ -29,7 +32,11 @@ export const extensions = [
 ];
 export const manager = ExtensionManager.create(extensions).init(helpers);
 
-export const createTestManager = () => ExtensionManager.create(extensions);
+export const createBaseTestManager = (extra: ExtensionMapValue[] = []) =>
+  ExtensionManager.create([...baseExtensions, ...extra]);
+
+export const createTestManager = (extra: ExtensionMapValue[] = []) =>
+  ExtensionManager.create([...extensions, ...extra]);
 
 export const schema = manager.createSchema();
 export const plugins = manager.plugins({ schema, ...helpers });

@@ -1,8 +1,41 @@
+import { fromHTML, toHTML } from '@remirror/core';
+import { createBaseTestManager } from '@test-fixtures/schema-helpers';
+import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import { Mention, MentionOptions } from '../';
 import { MentionNodeAttrs } from '../types';
 
-describe('Base Mention', () => {
+describe('schema', () => {
+  const schema = createBaseTestManager([{ extension: new Mention(), priority: 1 }]).createSchema();
+  const attrs = { id: 'test', label: '@test' };
+
+  const { mention, p, doc } = pmBuild(schema, {
+    mention: { nodeType: 'mention', ...attrs },
+  });
+
+  it('creates the correct dom node', () => {
+    expect(toHTML({ node: mention(), schema })).toBe(
+      `<a class="mention mention-at" data-mention-id="${attrs.id}">${attrs.label}</a>`,
+    );
+  });
+
+  it('parses the dom structure and finds itself', () => {
+    const node = fromHTML({
+      schema,
+      content: `<a class="mention mention-at" data-mention-id="${attrs.id}">${attrs.label}</a>`,
+    });
+    const expected = doc(p(mention()));
+    expect(node).toEqualPMNode(expected);
+  });
+
+  it('does not support nested content tags', () => {
+    expect(toHTML({ node: mention(p('Content here')), schema })).toBe(
+      `<a class="mention mention-at" data-mention-id="${attrs.id}">${attrs.label}</a>`,
+    );
+  });
+});
+
+describe('constructor', () => {
   it('is created with the correct options', () => {
     const matcher = {
       char: '@',
@@ -109,7 +142,7 @@ describe('plugin', () => {
   });
 });
 
-describe('Mention#command', () => {
+describe('commands', () => {
   let {
     nodes: { doc, paragraph },
     view,

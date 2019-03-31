@@ -1,7 +1,8 @@
 import { Cast } from '@remirror/core';
+import { Schema } from 'prosemirror-model';
 import { AllSelection, EditorState, NodeSelection, Selection, TextSelection } from 'prosemirror-state';
 import { cellAround, CellSelection } from 'prosemirror-tables';
-import pm, { TaggedProsemirrorNode } from 'prosemirror-test-builder';
+import pm, { MarkTypeAttributes, NodeTypeAttributes, TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { EditorView } from 'prosemirror-view';
 import { schema } from './schema';
 
@@ -95,6 +96,34 @@ export const selectionFor = (taggedDoc: TaggedProsemirrorNode) => {
  */
 const createState = (taggedDoc: TaggedProsemirrorNode) => {
   return EditorState.create({ doc: taggedDoc, selection: initSelection(taggedDoc), schema });
+};
+
+/**
+ * A short hand way for building prosemirror test builders with the core nodes already provided
+ * - `doc`
+ * - `paragraph`
+ * - `text`
+ *
+ * @param testSchema - The schema to use which provided a doc, paragraph and text schema
+ * @param names - the extra marks and nodes to provide with their attributes
+ */
+export const pmBuild = <
+  GObj extends Record<string, NodeTypeAttributes | MarkTypeAttributes> = Record<
+    string,
+    NodeTypeAttributes | MarkTypeAttributes
+  >,
+  GNodes extends string = string,
+  GMarks extends string = string
+>(
+  testSchema: Schema<GNodes, GMarks>,
+  names: GObj,
+) => {
+  return pm.builders(testSchema, {
+    doc: { nodeType: 'doc' },
+    p: { nodeType: 'paragraph' },
+    text: { nodeType: 'text' },
+    ...names,
+  });
 };
 
 const built = pm.builders(schema, {

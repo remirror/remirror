@@ -17,7 +17,13 @@ import { render } from 'react-testing-library';
 import { markFactory, nodeFactory } from './builder';
 import { jsdomSelectionPatch } from './jsdom-patch';
 import { BaseExtensionNodeNames, nodeExtensions } from './test-schema';
-import { dispatchNodeSelection, dispatchTextSelection, insertText, replaceSelection } from './transactions';
+import {
+  dispatchNodeSelection,
+  dispatchTextSelection,
+  insertText,
+  keyboardShortcut,
+  replaceSelection,
+} from './transactions';
 import {
   AddContent,
   AddContentReturn,
@@ -131,6 +137,11 @@ export const renderEditor = <
           return createAddContentReturn();
         },
         overwrite: add,
+        state: view.state,
+        shortcut: shortcut => {
+          keyboardShortcut({ shortcut, view });
+          return createAddContentReturn();
+        },
       };
     };
 

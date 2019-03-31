@@ -28,7 +28,7 @@ export const InnerEditorWrapper = styled.div`
     width: 100%;
     font-family: ${({ theme }) => theme.font.family};
     font-size: ${({ theme }) => theme.font.size};
-    max-height: calc(90vh - 124px);
+    /* max-height: calc(90vh - 124px); */
     min-height: 142px;
     padding: 8px;
     padding-right: 40px;

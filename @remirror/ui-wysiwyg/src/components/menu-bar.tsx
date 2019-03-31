@@ -31,8 +31,8 @@ export const MenuBar = () => {
           <button
             key={index}
             style={{
-              backgroundColor: actions[name].isActive() ? 'white' : 'pink',
-              fontWeight: actions[name].isActive() ? 600 : 300,
+              backgroundColor: actions[name].isActive(attrs) ? 'white' : 'pink',
+              fontWeight: actions[name].isActive(attrs) ? 600 : 300,
             }}
             disabled={!actions[name].isEnabled()}
             onClick={runAction(actions[name].command, attrs)}
