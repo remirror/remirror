@@ -3,7 +3,7 @@
   "compilerOptions": {
     "lib": ["esnext", "dom"],
     "outDir": "lib",
-    "types": ["jest", "jest-extended", "jest-axe", "jest-dom/extend-expect"]
+    "types": ["jest", "jest-extended", "jest-axe", "jest-dom/extend-expect", "jest-prosemirror"]
   },
   "include": ["src"]
 }

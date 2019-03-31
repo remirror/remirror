@@ -90,6 +90,12 @@ describe('nodeActive', () => {
     expect(nodeActive(state, schema.nodes.heading, { level: 1 })).toBeFalse();
     expect(nodeActive(state, schema.nodes.heading, { level: 2 })).toBeTrue();
   });
+
+  it('matches nodes by specified attributes', () => {
+    const { state, schema } = createEditor(doc(p('Something', h2('is <cursor> heading'), 'here')));
+    expect(nodeActive(state, schema.nodes.heading, { level: 1 })).toBeFalse();
+    expect(nodeActive(state, schema.nodes.heading, { level: 2 })).toBeTrue();
+  });
 });
 
 describe('canInsertNode', () => {

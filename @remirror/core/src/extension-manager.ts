@@ -397,11 +397,11 @@ export class ExtensionManager {
  * A helper specifically for generating RemirrorActions active and enabled methods
  */
 const booleanFlexibleFunctionMap = <GKey extends 'enabled' | 'active'>(key: GKey, ctx: ExtensionManager) => {
-  return createFlexibleFunctionMap<GKey, () => boolean, ExtensionBooleanFunction>({
+  return createFlexibleFunctionMap<GKey, (attrs?: Attrs) => boolean, ExtensionBooleanFunction>({
     ctx,
     key,
-    methodFactory: (_, method) => () => {
-      return method();
+    methodFactory: (_, method) => (attrs?: Attrs) => {
+      return method(attrs);
     },
     checkUniqueness: false,
     arrayTransformer: (functions, params, methodFactory) => () => {

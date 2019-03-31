@@ -56,7 +56,9 @@ export abstract class NodeExtension<
     getEditorState,
     schema,
   }: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction> {
-    return attrs => nodeActive(getEditorState(), schema.nodes.name, attrs);
+    return attrs => {
+      return nodeActive(getEditorState(), schema.nodes[this.name], attrs);
+    };
   }
 }
 
