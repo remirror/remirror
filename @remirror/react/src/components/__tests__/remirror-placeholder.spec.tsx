@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Doc, ExtensionManager, Paragraph, Text } from '@remirror/core';
-import { EMPTY_NODE_CLASS_NAME, History } from '@remirror/core-extensions';
+import { EMPTY_NODE_CLASS_SELECTOR, History } from '@remirror/core-extensions';
 import { createTestManager } from '@test-fixtures/schema-helpers';
 import { render } from 'react-testing-library';
 import { Remirror } from '../..';
@@ -40,7 +40,7 @@ test('should display a placeholder when the content is empty', () => {
     </Remirror>,
   );
 
-  const emptyNode = baseElement.querySelector(`.${EMPTY_NODE_CLASS_NAME}`) as HTMLElement;
+  const emptyNode = baseElement.querySelector(EMPTY_NODE_CLASS_SELECTOR) as HTMLElement;
   expect(emptyNode).toBeVisible();
   expect(getByLabelText(label)).toHaveAttribute('aria-placeholder', placeholderText);
 });
@@ -59,6 +59,6 @@ test('should lose placeholder when content is entered', () => {
   );
 
   updateContent('<p>New content</p>');
-  const emptyNode = baseElement.querySelector(`.${EMPTY_NODE_CLASS_NAME}`) as HTMLElement;
+  const emptyNode = baseElement.querySelector(EMPTY_NODE_CLASS_SELECTOR) as HTMLElement;
   expect(emptyNode).toBeFalsy();
 });

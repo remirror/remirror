@@ -4,6 +4,11 @@
 export const EDITOR_CLASS_NAME = 'remirror-editor';
 
 /**
+ * The editor class selector
+ */
+export const EDITOR_CLASS_SELECTOR = `.${EDITOR_CLASS_NAME}`;
+
+/**
  * Explanation from `@atlaskit`
  * ProseMirror uses the Unicode Character 'OBJECT REPLACEMENT CHARACTER' (U+FFFC) as text representation for
  * leaf nodes, i.e. nodes that don't have any content or text property (e.g. hardBreak, emoji, mention, rule)

@@ -1,4 +1,4 @@
-import { EDITOR_CLASS_NAME } from '@remirror/core';
+import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
 import { styled } from '../theme';
 
 /* Styled Components */
@@ -33,25 +33,23 @@ export const EmojiPickerWrapper = styled.div`
   align-items: center;
 `;
 
-const editorClass = `.${EDITOR_CLASS_NAME}`;
-
 export const RemirrorWrapper = styled.div`
   height: 100%;
   & * {
     box-sizing: border-box;
   }
 
-  ${editorClass}:focus {
+  ${EDITOR_CLASS_SELECTOR}:focus {
     outline: none;
   }
 
-  ${editorClass} p {
+  ${EDITOR_CLASS_SELECTOR} p {
     margin: 0;
     letter-spacing: 0.6px;
     color: black;
   }
 
-  ${editorClass} {
+  ${EDITOR_CLASS_SELECTOR} {
     box-sizing: border-box;
     position: relative;
     border: 1px solid ${({ theme }) => theme.colors.border};
@@ -68,17 +66,17 @@ export const RemirrorWrapper = styled.div`
     font-weight: ${({ theme }) => theme.font.weight};
   }
 
-  ${editorClass} a {
+  ${EDITOR_CLASS_SELECTOR} a {
     text-decoration: none !important;
     color: ${props => props.theme.colors.primary};
   }
 
-  ${editorClass} a.mention {
+  ${EDITOR_CLASS_SELECTOR} a.mention {
     pointer-events: none;
     cursor: default;
   }
 
-  ${editorClass} .ProseMirror-selectednode {
+  ${EDITOR_CLASS_SELECTOR} .ProseMirror-selectednode {
     background-color: rgb(245, 248, 250);
   }
 `;

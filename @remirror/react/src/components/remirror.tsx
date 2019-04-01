@@ -5,6 +5,7 @@ import {
   CompareStateParams,
   createDocumentNode,
   EDITOR_CLASS_NAME,
+  EDITOR_CLASS_SELECTOR,
   EditorView as EditorViewType,
   EMPTY_OBJECT_NODE,
   ExtensionManager,
@@ -155,7 +156,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     const placeholder = this.placeholder;
     const placeholderConfig = placeholder
       ? {
-          selector: `.${EDITOR_CLASS_NAME} p.${placeholder.className}:first-of-type::before`,
+          selector: `${EDITOR_CLASS_SELECTOR} p.${placeholder.className}:first-of-type::before`,
           content: `"${placeholder.text}"`,
           style: placeholder.style,
         }
