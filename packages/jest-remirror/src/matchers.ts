@@ -1,5 +1,5 @@
 import { EditorState, isEditorState, isProsemirrorNode, ProsemirrorNode } from '@remirror/core';
-import { toMatchInlineSnapshot, toMatchSnapshot } from 'jest-snapshot';
+import { toMatchSnapshot } from 'jest-snapshot';
 import { TaggedProsemirrorNode } from './types';
 
 export const remirrorMatchers: jest.ExpectExtendMap = {

@@ -1,4 +1,10 @@
-import { NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams, toggleWrap } from '@remirror/core';
+import {
+  EDITOR_CLASS_SELECTOR,
+  NodeExtension,
+  NodeExtensionSpec,
+  SchemaNodeTypeParams,
+  toggleWrap,
+} from '@remirror/core';
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
 export class Blockquote extends NodeExtension {
@@ -20,6 +26,20 @@ export class Blockquote extends NodeExtension {
 
   public commands({ type }: SchemaNodeTypeParams) {
     return () => toggleWrap(type);
+  }
+
+  public styles() {
+    return `${EDITOR_CLASS_SELECTOR} blockquote {
+      border-left: 2px solid #ddd;
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 10px;
+      font-style: italic;
+    }
+    ${EDITOR_CLASS_SELECTOR} blockquote p {
+      color: #888;
+    }
+    `;
   }
 
   public keys({ type }: SchemaNodeTypeParams) {

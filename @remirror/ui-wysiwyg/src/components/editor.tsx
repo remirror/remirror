@@ -28,12 +28,12 @@ import React, { FC } from 'react';
 import { uiWysiwygTheme } from '../theme';
 import { WysiwygUIProps } from '../types';
 import { MenuBar } from './menu-bar';
-import { InnerEditorWrapper } from './styled';
+import { EditorWrapper, InnerEditorWrapper } from './styled';
 
 const defaultPlaceholder: RemirrorProps['placeholder'] = [
   'Start editing...',
   {
-    color: '#aab8c2',
+    color: '#aaa',
     fontStyle: 'normal',
     position: 'absolute',
     fontWeight: 300,
@@ -60,6 +60,7 @@ export const WysiwygUI: FC<WysiwygUIProps> = ({
         <RemirrorExtension Constructor={Code} />
         <RemirrorExtension Constructor={Heading} />
         <RemirrorExtension Constructor={HorizontalRule} />
+        <RemirrorExtension Constructor={Strike} />
         <RemirrorExtension Constructor={Image} />
         <RemirrorExtension Constructor={ListItem} />
         <RemirrorExtension Constructor={BulletList} />
@@ -78,9 +79,9 @@ const InnerEditor = () => {
   const { getRootProps } = useRemirrorContext();
 
   return (
-    <div>
+    <EditorWrapper>
       <MenuBar />
       <InnerEditorWrapper {...getRootProps()} />
-    </div>
+    </EditorWrapper>
   );
 };

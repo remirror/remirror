@@ -36,6 +36,7 @@ import {
   Transaction,
 } from '../types';
 import { bool, Cast, isFunction, isNumber, isObject, isString } from './base';
+import { findParentNode } from './utils';
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
@@ -96,11 +97,14 @@ export const markActive = (state: EditorState, type: MarkType) => {
  * @param attrs
  */
 export const nodeActive = (state: EditorState, type: NodeType, attrs: Attrs = {}) => {
-  const { $from, to, node } = state.selection as NodeSelection;
-  if (node) {
-    return node.hasMarkup(type, attrs);
+  const predicate = (node: ProsemirrorNode) => node.type === type;
+  const parent = findParentNode(predicate)(state.selection);
+
+  if (!Object.keys(attrs).length || !parent) {
+    return !!parent;
   }
-  return to <= $from.end() && $from.parent.hasMarkup(type, attrs);
+
+  return parent.node.hasMarkup(type, attrs);
 };
 
 /**

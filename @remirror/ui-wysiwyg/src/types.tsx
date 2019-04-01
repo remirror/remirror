@@ -1,5 +1,5 @@
 import { RemirrorProps } from '@remirror/react';
-import { UIWysiwygTheme } from './theme';
+import { ButtonState, UIWysiwygTheme } from './theme';
 export interface WysiwygUIProps
   extends Partial<
     Pick<
@@ -22,4 +22,8 @@ export interface WysiwygUIProps
     >
   > {
   theme?: Partial<UIWysiwygTheme>;
+}
+
+export interface ButtonProps {
+  state: ButtonState;
 }

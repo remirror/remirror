@@ -1,9 +1,9 @@
 import { lift, setBlockType, wrapIn } from 'prosemirror-commands';
 import { MarkType, NodeType } from 'prosemirror-model';
 import { liftListItem, wrapInList } from 'prosemirror-schema-list';
-import { nodeActive } from '../helpers/document';
 import { Attrs, AttrsParams, CommandFunction, FromToParams, NodeTypeParams } from '../types';
 import { isNumber } from './base';
+import { nodeActive } from './document';
 /**
  * Update the selection with the provided MarkType
  *

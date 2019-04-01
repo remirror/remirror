@@ -4,6 +4,15 @@ import { Cast } from '@remirror/core';
 export const styled = Cast<CreateStyled<UIWysiwygTheme>>(DefaultStyled);
 export type UIWysiwygTheme = typeof uiWysiwygTheme;
 
+export type ButtonState = 'default' | 'active-default' | 'inverse' | 'active-inverse';
+
+const buttonColors: Record<ButtonState, string> = {
+  default: '#aaa',
+  'active-default': 'black',
+  inverse: '#aaa',
+  'active-inverse': 'white',
+};
+
 export const uiWysiwygTheme = {
   colors: {
     primary: '#1DA1F2',
@@ -15,8 +24,10 @@ export const uiWysiwygTheme = {
     icon: '#aab8c2',
   },
   font: {
-    family: '"Helvetica Neue", Helvetica, Arial, sans-serif',
     size: '1em',
     weight: '400',
+  },
+  button: {
+    color: buttonColors,
   },
 };

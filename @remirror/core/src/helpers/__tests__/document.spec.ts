@@ -76,19 +76,13 @@ describe('nodeActive', () => {
   });
 
   it('returns true when node selection directly before node', () => {
-    const { state, schema } = createEditor(doc(p('Something<node>', blockquote('is italic'), 'here')));
+    const { state, schema } = createEditor(doc(p('Something', blockquote('<node>is italic'), 'here')));
     expect(nodeActive(state, schema.nodes.blockquote)).toBeTrue();
   });
 
   it('returns false nested within other nodes', () => {
     const { state, schema } = createEditor(doc(p('a<node>', p(p(blockquote('is italic')), 'here'))));
     expect(nodeActive(state, schema.nodes.blockquote)).toBeFalse();
-  });
-
-  it("returns false when attributes don't match", () => {
-    const { state, schema } = createEditor(doc(p('Something<node>', h2('is heading'), 'here')));
-    expect(nodeActive(state, schema.nodes.heading, { level: 1 })).toBeFalse();
-    expect(nodeActive(state, schema.nodes.heading, { level: 2 })).toBeTrue();
   });
 
   it('matches nodes by specified attributes', () => {
