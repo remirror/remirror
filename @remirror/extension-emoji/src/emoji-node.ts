@@ -103,7 +103,7 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
 
   public commands = ({ type }: SchemaNodeTypeParams): ExtensionCommandFunction => attrs => {
     attrs = { ...attrs, ...this.options.transformAttrs(Cast<EmojiNodeAttrs>(attrs)) };
-    return replaceText(null, type, attrs);
+    return replaceText({ type, attrs });
   };
 
   public plugin({ getPortalContainer, type }: SchemaNodeTypeParams) {

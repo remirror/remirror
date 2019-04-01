@@ -7,3 +7,10 @@ export interface CommandTransformation {
   to?: TaggedProsemirrorNode;
   from: TaggedProsemirrorNode;
 }
+
+export interface TaggedDocParams {
+  /**
+   * A tagged ProsemirrorNode which can hold cursor information from the passed in text.
+   */
+  taggedDoc: TaggedProsemirrorNode;
+}

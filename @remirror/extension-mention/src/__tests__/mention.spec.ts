@@ -82,7 +82,7 @@ describe('plugin', () => {
     const label = `@${id}`;
     const {
       add,
-      nodes: { doc, paragraph: p },
+      nodes: { doc, p },
       view,
     } = create(options);
 
@@ -95,7 +95,7 @@ describe('plugin', () => {
     const label = `@${id}`;
     const {
       add,
-      nodes: { doc, paragraph: p },
+      nodes: { doc, p },
       attrNodes: { mention },
       view,
     } = create({
@@ -120,7 +120,7 @@ describe('plugin', () => {
     const label = (char: string) => `${char}${id}`;
     const {
       add,
-      nodes: { doc, paragraph: p },
+      nodes: { doc, p },
       attrNodes: { mention },
       view,
     } = create({
@@ -144,7 +144,7 @@ describe('plugin', () => {
 
 describe('commands', () => {
   let {
-    nodes: { doc, paragraph },
+    nodes: { doc, p },
     view,
     attrNodes: { mention },
     actions,
@@ -155,7 +155,7 @@ describe('commands', () => {
 
   beforeEach(() => {
     ({
-      nodes: { doc, paragraph },
+      nodes: { doc, p },
       view,
       attrNodes: { mention },
       actions,
@@ -164,11 +164,11 @@ describe('commands', () => {
   });
 
   it('replaces text at the current position', () => {
-    add(doc(paragraph('This is ', '<cursor>')));
+    add(doc(p('This is ', '<cursor>')));
     const attrs: MentionNodeAttrs = { id: 'test', label: '@test', name: 'at' };
 
     actions.mention.command(attrs);
 
-    expect(view.state).toContainRemirrorDocument(paragraph('This is ', mention(attrs)()));
+    expect(view.state).toContainRemirrorDocument(p('This is ', mention(attrs)()));
   });
 });

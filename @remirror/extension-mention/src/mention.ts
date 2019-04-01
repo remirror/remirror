@@ -95,7 +95,7 @@ export class Mention extends NodeExtension<MentionOptions> {
   }
 
   public commands({ type }: SchemaNodeTypeParams): ExtensionCommandFunction {
-    return attrs => replaceText(null, type, attrs);
+    return attrs => replaceText({ type, attrs });
   }
 
   /**

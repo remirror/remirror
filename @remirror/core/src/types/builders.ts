@@ -1,5 +1,5 @@
 import { EditorView } from './aliases';
-import { Attrs, EditorSchema, EditorState, Position } from './base';
+import { Attrs, EditorSchema, EditorState, MarkType, NodeType, Position } from './base';
 
 /**
  * @module
@@ -78,4 +78,18 @@ export interface AttrsParams {
    * An object describing the attrs for a prosemirror mark / node
    */
   attrs: Attrs;
+}
+
+export interface NodeTypeParams {
+  /**
+   * The type of node in question
+   */
+  type: NodeType;
+}
+
+export interface MarkTypeParams {
+  /**
+   * The type of mark being used
+   */
+  type: MarkType;
 }

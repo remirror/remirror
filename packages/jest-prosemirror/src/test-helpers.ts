@@ -1,10 +1,12 @@
-import { Cast } from '@remirror/core';
+import { Cast, InputRule, Plugin } from '@remirror/core';
+import { inputRules } from 'prosemirror-inputrules';
 import { Schema } from 'prosemirror-model';
 import { AllSelection, EditorState, NodeSelection, Selection, TextSelection } from 'prosemirror-state';
 import { cellAround, CellSelection } from 'prosemirror-tables';
 import pm, { MarkTypeAttributes, NodeTypeAttributes, TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { EditorView } from 'prosemirror-view';
 import { schema } from './schema';
+import { TaggedDocParams } from './types';
 
 /**
  * Table specific cell resolution
@@ -19,8 +21,7 @@ const resolveCell = (taggedDoc: TaggedProsemirrorNode, tag?: number) => {
   return cellAround(taggedDoc.resolve(tag));
 };
 
-interface CreateTextSelectionParams {
-  taggedDoc: TaggedProsemirrorNode;
+interface CreateTextSelectionParams extends TaggedDocParams {
   start: number;
   end?: number;
 }
@@ -94,8 +95,8 @@ export const selectionFor = (taggedDoc: TaggedProsemirrorNode) => {
  *
  * @param taggedDoc
  */
-const createState = (taggedDoc: TaggedProsemirrorNode) => {
-  return EditorState.create({ doc: taggedDoc, selection: initSelection(taggedDoc), schema });
+const createState = (taggedDoc: TaggedProsemirrorNode, plugins: Plugin[] = []) => {
+  return EditorState.create({ doc: taggedDoc, selection: initSelection(taggedDoc), schema, plugins });
 };
 
 /**
@@ -133,6 +134,9 @@ const built = pm.builders(schema, {
   atomInline: { nodeType: 'atomInline' },
   atomBlock: { nodeType: 'atomBlock' },
   atomContainer: { nodeType: 'atomContainer' },
+  li: { nodeType: 'listItem' },
+  ul: { nodeType: 'bulletList' },
+  ol: { nodeType: 'orderedList' },
   table: { nodeType: 'table' },
   tr: { nodeType: 'table_row' },
   td: { nodeType: 'table_cell' },
@@ -152,6 +156,9 @@ const built = pm.builders(schema, {
 
 export const {
   a,
+  li,
+  ul,
+  ol,
   atomBlock,
   atomContainer,
   atomInline,
@@ -192,14 +199,22 @@ export const thCursor = th(p('<cursor>'));
 
 export { pm };
 
+interface CreateEditorOptions {
+  plugins?: Plugin[];
+  rules?: InputRule[];
+}
+
 /**
  * Create a test Prosemirror editor
  *
  * @param taggedDoc
  */
-export const createEditor = (taggedDoc: TaggedProsemirrorNode) => {
+export const createEditor = (
+  taggedDoc: TaggedProsemirrorNode,
+  { plugins = [], rules = [] }: CreateEditorOptions = {},
+) => {
   const place = document.body.appendChild(document.createElement('div'));
-  const state = createState(taggedDoc);
+  const state = createState(taggedDoc, [...plugins, inputRules({ rules })]);
   const sch = state.schema as typeof schema;
   const view = new EditorView(place, { state });
 

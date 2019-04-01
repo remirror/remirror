@@ -1,5 +1,10 @@
 import { NodeSpec, Schema } from 'prosemirror-model';
 import { marks, nodes } from 'prosemirror-schema-basic';
+import {
+  bulletList as baseBulletList,
+  listItem as baseListItem,
+  orderedList as baseOrderedList,
+} from 'prosemirror-schema-list';
 import { tableNodes } from 'prosemirror-tables';
 
 const {
@@ -21,6 +26,13 @@ const { table, table_cell, table_header, table_row } = tableNodes({
     ugly: { default: false },
   },
 });
+
+const listGroup = 'block';
+const itemContent = 'paragraph block*';
+
+const orderedList = { ...baseOrderedList, ...{ content: 'listItem+', group: listGroup } };
+const bulletList = { ...baseBulletList, ...{ content: 'listItem+', group: listGroup } };
+const listItem = { ...baseListItem, ...{ content: itemContent } };
 
 const atomInline: NodeSpec = {
   inline: true,
@@ -83,6 +95,9 @@ const containerWithRestrictedContent: NodeSpec = {
 export const schema = new Schema({
   nodes: {
     doc,
+    orderedList,
+    bulletList,
+    listItem,
     paragraph,
     text,
     horizontalRule,
