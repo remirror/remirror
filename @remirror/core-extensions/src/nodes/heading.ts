@@ -13,16 +13,18 @@ import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 export interface HeadingOptions extends NodeExtensionOptions {
   levels?: number[];
+  defaultLevel?: number;
 }
 
 export class Heading extends NodeExtension<HeadingOptions> {
-  get name(): 'heading' {
-    return 'heading';
+  get name() {
+    return 'heading' as const;
   }
 
   get defaultOptions() {
     return {
       levels: [1, 2, 3, 4, 5, 6],
+      defaultLevel: 1,
     };
   }
 
@@ -30,7 +32,7 @@ export class Heading extends NodeExtension<HeadingOptions> {
     return {
       attrs: {
         level: {
-          default: 1,
+          default: this.options.defaultLevel,
         },
         ...this.extraAttrs(),
       },
@@ -42,7 +44,14 @@ export class Heading extends NodeExtension<HeadingOptions> {
         tag: `h${level}`,
         attrs: { level },
       })),
-      toDOM: (node: ProsemirrorNode) => [`h${node.attrs.level}`, 0],
+      toDOM: (node: ProsemirrorNode) => {
+        if (!this.options.levels.includes(node.attrs.level)) {
+          // Use the first level available
+          return [`h${this.options.defaultLevel}`, 0];
+        }
+
+        return [`h${node.attrs.level}`, 0];
+      },
     };
   }
 

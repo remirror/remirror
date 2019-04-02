@@ -1,4 +1,4 @@
-import { Extension, ExtensionManager } from '@remirror/core';
+import { BaseExtensionOptions, Extension, ExtensionManager } from '@remirror/core';
 import { Placeholder } from '@remirror/core-extensions';
 import { EditorView } from 'prosemirror-view';
 import React, { FC } from 'react';
@@ -23,9 +23,9 @@ test('a manager is created', () => {
   );
 });
 
-class NewExtension extends Extension<{ run: boolean }> {
+class NewExtension extends Extension<{ run: boolean } & BaseExtensionOptions> {
   get name() {
-    return 'new';
+    return 'new' as const;
   }
 
   get defaultOptions() {

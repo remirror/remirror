@@ -1,13 +1,13 @@
-import { NodeMatch } from '@remirror/core';
+import { BaseExtensionOptions, NodeMatch } from '@remirror/core';
 
-export interface CompositionOptions {
+export interface CompositionOptions extends BaseExtensionOptions {
   /**
    * The nodes that need to be deleted when backspace is pressed
    */
   ensureNodeDeletion?: NodeMatch[];
 }
 
-export interface PlaceholderOptions {
+export interface PlaceholderOptions extends BaseExtensionOptions {
   emptyNodeClass?: string;
 }
 

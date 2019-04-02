@@ -49,8 +49,8 @@ import {
 } from '@remirror/core';
 
 export class Strike extends MarkExtension {
-  get name(): 'strike' {
-    return 'strike';
+  get name() {
+    return 'strike' as const;
   }
 
   // This is the prosemirror related schema information

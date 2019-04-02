@@ -1,5 +1,5 @@
 import { Selection as PMSelection } from 'prosemirror-state';
-import { EditorState, EditorView, NodeType, ProsemirrorNode, Selection, Transaction } from '../types';
+import { Attrs, EditorState, EditorView, NodeType, ProsemirrorNode, Selection, Transaction } from '../types';
 import { isNumber } from './base';
 import { isSelection, isTextDOMNode } from './document';
 
@@ -162,3 +162,24 @@ export const findPositionOfNodeBefore = (selection: Selection): number | undefin
  */
 export const selectionEmpty = (value: Selection | EditorState) =>
   isSelection(value) ? value.empty : value.selection.empty;
+
+/**
+ * Checks whether the node type passed in is active within the region.
+ * Used by extensions to implement the `#active` method.
+ *
+ * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
+ *
+ * @param state
+ * @param type
+ * @param attrs
+ */
+export const nodeActive = (state: EditorState, type: NodeType, attrs: Attrs = {}) => {
+  const predicate = (node: ProsemirrorNode) => node.type === type;
+  const parent = findParentNode(predicate)(state.selection);
+
+  if (!Object.keys(attrs).length || !parent) {
+    return !!parent;
+  }
+
+  return parent.node.hasMarkup(type, attrs);
+};

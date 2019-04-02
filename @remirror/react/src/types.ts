@@ -281,7 +281,7 @@ export type PositionerMapValue = ElementParams & {
 
 export interface PositionerRefFactoryParams extends PositionerIdParams, PositionParams {}
 
-export interface GetPositionParams extends EditorViewParams, ElementParams {}
+export interface GetPositionParams extends EditorViewParams, ElementParams, CompareStateParams {}
 export interface PositionerIdParams {
   /**
    * A unique id for the positioner.

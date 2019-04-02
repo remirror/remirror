@@ -17,7 +17,13 @@ import { render } from 'react-testing-library';
 import { markFactory, nodeFactory } from './builder';
 import { jsdomSelectionPatch } from './jsdom-patch';
 import { BaseExtensionNodeNames, nodeExtensions } from './test-schema';
-import { dispatchNodeSelection, dispatchTextSelection, insertText, replaceSelection } from './transactions';
+import {
+  dispatchNodeSelection,
+  dispatchTextSelection,
+  insertText,
+  keyboardShortcut,
+  replaceSelection,
+} from './transactions';
 import {
   AddContent,
   AddContentReturn,
@@ -131,6 +137,12 @@ export const renderEditor = <
           return createAddContentReturn();
         },
         overwrite: add,
+        state: view.state,
+        actions: returnedParams.actions,
+        shortcut: shortcut => {
+          keyboardShortcut({ shortcut, view });
+          return createAddContentReturn();
+        },
       };
     };
 
@@ -144,7 +156,9 @@ export const renderEditor = <
     nodesWithAttrs[name as GAttrNodeNames] = (attrs: Attrs = {}) => nodeFactory({ name, schema, attrs });
   });
 
-  const nodesWithoutAttrs: NodeWithoutAttrs<GPlainNodeNames> = Cast({});
+  const nodesWithoutAttrs: NodeWithoutAttrs<GPlainNodeNames> = Cast({
+    p: nodeFactory({ name: 'paragraph', schema }),
+  });
   [...plainNodes, ...nodeExtensions].filter(isNodeExtension).forEach(({ name }) => {
     nodesWithoutAttrs[name as GPlainNodeNames] = nodeFactory({ name, schema });
   });

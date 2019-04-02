@@ -1,5 +1,5 @@
-import { EditorSchema, Extension, getPluginState } from '@remirror/core';
-import { Plugin, PluginKey } from 'prosemirror-state';
+import { EditorSchema, Extension, getPluginState, ProsemirrorPlugin } from '@remirror/core';
+import { Plugin } from 'prosemirror-state';
 import {
   COLORS,
   defaultEffect,
@@ -20,8 +20,8 @@ import {
 } from './types';
 
 export class EpicMode extends Extension<EpicModeOptions> {
-  get name(): 'epicMode' {
-    return 'epicMode';
+  get name() {
+    return 'epicMode' as const;
   }
 
   get defaultOptions() {
@@ -35,30 +35,17 @@ export class EpicMode extends Extension<EpicModeOptions> {
     };
   }
 
-  public plugin() {
-    const { particleEffect, canvasHolder, colors, particleRange, shake, shakeTime } = this.options;
-    return createEpicModePlugin({
-      key: this.pluginKey,
-      particleEffect,
-      canvasHolder,
-      colors,
-      particleRange,
-      shake,
-      shakeTime,
-    });
+  public plugin(): ProsemirrorPlugin {
+    return createEpicModePlugin(this);
   }
 }
 
-interface CreateEpicModePluginParams extends Required<EpicModeOptions> {
-  key: PluginKey;
-}
-
-const createEpicModePlugin = ({ key, ...rest }: CreateEpicModePluginParams) => {
+const createEpicModePlugin = (ctx: Extension<EpicModeOptions>) => {
   const plugin = new Plugin<EpicModePluginState, EditorSchema>({
-    key,
+    key: ctx.pluginKey,
     state: {
       init() {
-        return new EpicModePluginState(rest);
+        return new EpicModePluginState(ctx.options);
       },
       apply(_tr, pluginState) {
         return pluginState;
@@ -66,14 +53,14 @@ const createEpicModePlugin = ({ key, ...rest }: CreateEpicModePluginParams) => {
     },
     props: {
       handleKeyPress(view) {
-        const pluginState = getPluginState<EpicModePluginState>(key, view.state);
-        pluginState.shake(rest.shakeTime);
+        const pluginState = getPluginState<EpicModePluginState>(ctx.pluginKey, view.state);
+        pluginState.shake(ctx.options.shakeTime);
         pluginState.spawnParticles();
         return false;
       },
     },
     view(view) {
-      const pluginState = getPluginState<EpicModePluginState>(key, view.state).init(view);
+      const pluginState = getPluginState<EpicModePluginState>(ctx.pluginKey, view.state).init(view);
 
       return {
         destroy() {

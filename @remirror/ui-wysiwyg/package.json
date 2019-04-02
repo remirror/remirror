@@ -5,15 +5,18 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@emotion/core": "^10.0.10",
-    "@emotion/styled": "^10.0.10",
+    "@emotion/core": "^10",
+    "@emotion/styled": "^10",
+    "@fortawesome/fontawesome-svg-core": "^1.2.17",
+    "@fortawesome/free-solid-svg-icons": "^5.8.1",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "@remirror/core": "0.0.1-alpha.10",
     "@remirror/core-extensions": "0.0.1-alpha.10",
     "@remirror/extension-emoji": "0.0.1-alpha.10",
-    "@remirror/extension-enhanced-link": "0.0.1-alpha.10",
-    "@remirror/extension-mention": "0.0.1-alpha.10",
     "@remirror/react": "0.0.1-alpha.10",
-    "emotion-theming": "^10.0.10"
+    "deepmerge": "^3.2.0",
+    "emotion-theming": "^10",
+    "keycode": "^2.2.0"
   },
   "files": [
     "lib",
@@ -23,12 +26,12 @@
   "main": "lib/index.js",
   "module": "lib/dist/ui-wysiwyg.esm.js",
   "peerDependencies": {
+    "@babel/runtime-corejs2": ">=7",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
-  "private": true,
   "publishConfig": {
     "access": "public"
   },

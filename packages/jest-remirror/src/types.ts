@@ -3,12 +3,14 @@ import {
   AttrsParams,
   EditorSchema,
   EditorState,
+  EditorStateParams,
   EditorView,
   Extension,
   MarkExtension,
   NodeExtension,
   Omit,
   ProsemirrorNode,
+  RemirrorActions,
   SchemaParams,
 } from '@remirror/core';
 import { InjectedRemirrorProps } from '@remirror/react';
@@ -82,15 +84,22 @@ export interface TaggedProsemirrorNode extends PMNode {
   tags: Tags;
 }
 
-export interface AddContentReturn {
+export interface AddContentReturn extends EditorStateParams {
+  /**
+   * A map of actions available the
+   */
+  actions: RemirrorActions;
+
   /**
    * The start of the current selection
    */
   start: number;
+
   /**
    * The end of the current selection. For a cursor selection this will be the same as the start.
    */
   end: number;
+
   /**
    * All custom tags that have been added  *not including* the following
    * - `<start>`
@@ -103,12 +112,14 @@ export interface AddContentReturn {
    * Which are all part of the formal cursor and selection API.
    */
   tags: Tags;
+
   /**
    * A function which replaces the current selection with the new content.
    *
    * This should be used to add new content to the dom.
    */
   replace(...content: string[] | TaggedProsemirrorNode[]): AddContentReturn;
+
   /**
    * Insert text at the current starting point for the cursor.
    * Text will be typed out with keys each firing a keyboard event.
@@ -117,6 +128,15 @@ export interface AddContentReturn {
    * ! Also adding multiple strings which create nodes also creates an out of position error
    */
   insertText(text: string): AddContentReturn;
+
+  /**
+   * Runs a keyboard shortcut.
+   * e.g. `Mod-X`
+   *
+   * @param shortcut
+   */
+  shortcut(shortcut: string): AddContentReturn;
+
   /**
    * Simply calls add again which overwrites the whole doc
    */

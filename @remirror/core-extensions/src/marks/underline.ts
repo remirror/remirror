@@ -2,8 +2,8 @@ import { MarkExtension, MarkExtensionSpec, SchemaMarkTypeParams } from '@remirro
 import { toggleMark } from 'prosemirror-commands';
 
 export class Underline extends MarkExtension {
-  get name(): 'underline' {
-    return 'underline';
+  get name() {
+    return 'underline' as const;
   }
 
   get schema(): MarkExtensionSpec {

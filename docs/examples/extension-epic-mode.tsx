@@ -1,7 +1,7 @@
 import React, { FC, FunctionComponent } from 'react';
 
 import { Interpolation } from '@emotion/core';
-import { EDITOR_CLASS_NAME } from '@remirror/core';
+import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
 import { Bold, Italic, Underline } from '@remirror/core-extensions';
 import {
   defaultEffect,
@@ -13,7 +13,7 @@ import {
 import { ManagedRemirrorEditor, RemirrorExtension, RemirrorManager } from '@remirror/react';
 
 const editorStyles: Interpolation = {
-  [`.${EDITOR_CLASS_NAME}`]: {
+  [EDITOR_CLASS_SELECTOR]: {
     border: '1px solid grey',
     minHeight: '50px',
     borderRadius: '10px',

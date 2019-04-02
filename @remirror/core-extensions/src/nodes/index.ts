@@ -6,3 +6,4 @@ export * from './heading';
 export * from './image';
 export * from './list-item';
 export * from './ordered-list';
+export * from './horizontal-rule';

@@ -30,6 +30,7 @@ module.exports = {
           '@remirror/react-ssr': '../@remirror/react-ssr/src',
           '@remirror/renderer-react': '../@remirror/renderer-react/src',
           '@remirror/ui-twitter': '../@remirror/ui-twitter/src',
+          '@remirror/ui-wysiwyg': '../@remirror/ui-wysiwyg/src',
           remirror: '../packages/remirror/src',
         },
         cwd: path.resolve(__dirname),

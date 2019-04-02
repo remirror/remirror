@@ -1,7 +1,7 @@
-import { CommandFunction, environment, Extension } from '@remirror/core';
+import { BaseExtensionOptions, CommandFunction, environment, Extension } from '@remirror/core';
 import { history, redo, undo } from 'prosemirror-history';
 
-export interface HistoryOptions {
+export interface HistoryOptions extends BaseExtensionOptions {
   /**
    * The amount of history events that are collected before the
    * oldest events are discarded.
@@ -20,8 +20,8 @@ export interface HistoryOptions {
   newGroupDelay?: number | null;
 }
 export class History extends Extension<HistoryOptions> {
-  get name(): 'history' {
-    return 'history';
+  get name() {
+    return 'history' as const;
   }
 
   get defaultOptions() {

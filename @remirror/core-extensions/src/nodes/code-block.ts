@@ -1,10 +1,16 @@
-import { NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams, toggleBlockItem } from '@remirror/core';
-import { setBlockType } from 'prosemirror-commands';
+import { Interpolation } from '@emotion/core';
+import {
+  EDITOR_CLASS_SELECTOR,
+  NodeExtension,
+  NodeExtensionSpec,
+  SchemaNodeTypeParams,
+  toggleBlockItem,
+} from '@remirror/core';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 export class CodeBlock extends NodeExtension {
-  get name(): 'codeBlock' {
-    return 'codeBlock';
+  get name() {
+    return 'codeBlock' as const;
   }
 
   get schema(): NodeExtensionSpec {
@@ -25,9 +31,25 @@ export class CodeBlock extends NodeExtension {
     return () => toggleBlockItem(type, schema.nodes.paragraph);
   }
 
-  public keys({ type }: SchemaNodeTypeParams) {
+  public keys({ type, schema }: SchemaNodeTypeParams) {
     return {
-      'Shift-Ctrl-\\': setBlockType(type),
+      'Shift-Ctrl-\\': toggleBlockItem(type, schema.nodes.paragraph),
+    };
+  }
+
+  public styles(): Interpolation {
+    return {
+      [`${EDITOR_CLASS_SELECTOR} pre`]: {
+        backgroundColor: '#000',
+        borderRadius: '5px',
+        padding: '.7rem 1rem',
+        color: '#fff',
+        fontSize: '.8rem',
+        overflowX: 'auto',
+      },
+      [`${EDITOR_CLASS_SELECTOR} pre code`]: {
+        display: 'block',
+      },
     };
   }
 

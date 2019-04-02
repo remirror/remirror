@@ -29,7 +29,8 @@
         "@remirror/core",
         "@remirror/core-extensions",
         "@remirror/react",
-        "@remirror/extension-epic-mode"
+        "@remirror/extension-epic-mode",
+        "@remirror/ui-wysiwyg"
       ]
     ],
     "no-namespace": false

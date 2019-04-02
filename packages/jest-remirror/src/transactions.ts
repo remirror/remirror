@@ -37,6 +37,31 @@ export function insertText({ view, text, start: from }: InsertTextParams) {
   keys.end();
 }
 
+interface KeyboardShortcutParams extends TestEditorViewParams {
+  /**
+   * The keyboard shortcut to run
+   */
+  shortcut: string;
+}
+
+/**
+ * Run a keyboard shortcut at the start point
+ *
+ * @param params
+ * @param params.view
+ * @param params.shortcut
+ */
+export function keyboardShortcut({ view, shortcut }: KeyboardShortcutParams) {
+  Keyboard.create({
+    target: view.dom,
+    useFakeTimer: true,
+    // onEventDispatch: event => {view.dispatchEvent(event)},
+  })
+    .start()
+    .mod({ text: shortcut })
+    .end();
+}
+
 interface ProcessTextParams extends SchemaParams {
   /**
    * The content to process text in

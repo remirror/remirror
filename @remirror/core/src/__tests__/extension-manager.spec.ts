@@ -25,25 +25,25 @@ const text = new Text();
 const paragraph = new Paragraph();
 const dummy = new DummyMark();
 
-const em = ExtensionManager.create([
+const manager = ExtensionManager.create([
   { extension: doc, priority: 2 },
   { extension: text, priority: 2 },
   { extension: paragraph, priority: 2 },
   { extension: dummy, priority: 2 },
 ]);
 
-em.init(helpers);
+manager.init(helpers);
 
 test('ExtensionManager#properties', () => {
-  expect(em).toBeInstanceOf(ExtensionManager);
-  expect(em.extensions).toHaveLength(4);
-  expect(em.getEditorState()).toBe('state');
-  expect(em.getPortalContainer()).toBe('portals');
+  expect(manager).toBeInstanceOf(ExtensionManager);
+  expect(manager.extensions).toHaveLength(4);
+  expect(manager.getEditorState()).toBe('state');
+  expect(manager.getPortalContainer()).toBe('portals');
 });
 
 const schema = new Schema({
-  nodes: em.nodes,
-  marks: em.marks,
+  nodes: manager.nodes,
+  marks: manager.marks,
 });
 
 test('ExtensionManager#nodes', () => {
@@ -54,18 +54,18 @@ test('ExtensionManager#nodes', () => {
 describe('#action', () => {
   let params = {
     schema,
+    getEditorState: jest.fn(() => ({})),
     isEditable: () => true,
     view: {
       focus: jest.fn(),
-      state: {},
       dispatch: jest.fn(),
     },
   };
-  const remirrorActions = em.actions(Cast(params));
+  const remirrorActions = manager.actions(Cast(params));
   it('calls the correct command', () => {
     expect(remirrorActions.dummy).toContainAllKeys(['isActive', 'isEnabled', 'command']);
     remirrorActions.dummy.command();
-    expect(mock).toHaveBeenCalledWith(params.view.state, params.view.dispatch, params.view);
+    expect(mock).toHaveBeenCalledWith({}, params.view.dispatch, params.view);
   });
 
   it('is not called when the editor is not editable', () => {
@@ -77,5 +77,5 @@ describe('#action', () => {
 
 test('isExtensionManager', () => {
   expect(isExtensionManager(doc)).toBeFalse();
-  expect(isExtensionManager(em)).toBeTrue();
+  expect(isExtensionManager(manager)).toBeTrue();
 });

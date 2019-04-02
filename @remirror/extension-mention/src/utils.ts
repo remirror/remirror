@@ -151,4 +151,4 @@ export const actionsTaken = (
  * @param params
  */
 export const runSuggestionsCommand = ({ range, attrs, appendText, schema, name }: SuggestionsCommandParams) =>
-  replaceText(range, schema.nodes[name], attrs, appendText);
+  replaceText({ ...range, type: schema.nodes[name], attrs, appendText });

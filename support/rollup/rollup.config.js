@@ -9,6 +9,7 @@ import reactSSR from '../../@remirror/react-ssr/package.json';
 import remirror from '../../packages/remirror/package.json';
 import rendererReact from '../../@remirror/renderer-react/package.json';
 import uiTwitter from '../../@remirror/ui-twitter/package.json';
+import uiYSIWYG from '../../@remirror/ui-wysiwyg/package.json';
 
 const configurations = [
   ...factory(core, '@remirror'),
@@ -21,6 +22,7 @@ const configurations = [
   ...factory(remirror, 'packages'),
   ...factory(rendererReact, '@remirror'),
   ...factory(uiTwitter, '@remirror'),
+  ...factory(uiYSIWYG, '@remirror'),
 ];
 
 export default configurations;

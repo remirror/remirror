@@ -25,8 +25,8 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
   /**
    * The name is dynamically generated based on the passed in type.
    */
-  get name(): 'emoji' {
-    return 'emoji';
+  get name() {
+    return 'emoji' as const;
   }
 
   get defaultOptions() {
@@ -103,7 +103,7 @@ export class EmojiNode extends NodeExtension<EmojiNodeOptions> {
 
   public commands = ({ type }: SchemaNodeTypeParams): ExtensionCommandFunction => attrs => {
     attrs = { ...attrs, ...this.options.transformAttrs(Cast<EmojiNodeAttrs>(attrs)) };
-    return replaceText(null, type, attrs);
+    return replaceText({ type, attrs });
   };
 
   public plugin({ getPortalContainer, type }: SchemaNodeTypeParams) {

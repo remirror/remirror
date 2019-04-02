@@ -1,8 +1,8 @@
-import { Extension, KeyboardBindings } from '@remirror/core';
+import { BaseExtensionOptions, Extension, KeyboardBindings } from '@remirror/core';
 import { baseKeymap, chainCommands, selectParentNode } from 'prosemirror-commands';
 import { undoInputRule } from 'prosemirror-inputrules';
 
-export interface BaseKeymapOptions {
+export interface BaseKeymapOptions extends BaseExtensionOptions {
   /**
    * Determines whether a backspace after an input rule has been applied undoes the input rule.
    *
@@ -19,8 +19,8 @@ export interface BaseKeymapOptions {
 }
 
 export class BaseKeymap extends Extension<BaseKeymapOptions> {
-  get name(): 'baseKeymap' {
-    return 'baseKeymap';
+  get name() {
+    return 'baseKeymap' as const;
   }
 
   get defaultOptions() {

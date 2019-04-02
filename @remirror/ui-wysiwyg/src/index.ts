@@ -1,1 +1,3 @@
-export const nothingToSeeHere = () => console.log('Nothing to see here');
+export * from './components/editor';
+export * from './types';
+export * from './theme';

@@ -82,8 +82,8 @@ export type ExtensionBooleanFunction = (attrs?: Attrs) => boolean;
 //   type: GSchemaType;
 // }
 
-type InferredType<TT> = TT extends {} ? { type: TT } : {};
-export type SchemaTypeParams<TT> = ExtensionManagerParams & InferredType<TT>;
+type InferredType<GType> = GType extends {} ? { type: GType } : {};
+export type SchemaTypeParams<GType> = ExtensionManagerParams & InferredType<GType>;
 
 export type SchemaNodeTypeParams = SchemaTypeParams<NodeType<EditorSchema>>;
 export type SchemaMarkTypeParams = SchemaTypeParams<MarkType<EditorSchema>>;
@@ -102,8 +102,8 @@ export type ElementUnion = Value<HTMLElementTagNameMap>;
 
 export interface ActionMethods {
   command(attrs?: Attrs): void;
-  isActive(): boolean;
-  isEnabled(): boolean;
+  isActive(attrs?: Attrs): boolean;
+  isEnabled(attrs?: Attrs): boolean;
 }
 
 export type RemirrorActions<GKeys extends string = string> = Record<GKeys, ActionMethods>;

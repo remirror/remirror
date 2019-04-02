@@ -6,7 +6,6 @@ import {
   createEditor,
   doc,
   em,
-  h2,
   hardBreak,
   p,
   pm,
@@ -27,6 +26,7 @@ import {
   getMarkAttrs,
   getMarkRange,
   getNearestNonTextNode,
+  getSelectedWord,
   isDocNode,
   isDocNodeEmpty,
   isElementDOMNode,
@@ -35,7 +35,6 @@ import {
   isTextDOMNode,
   isTextSelection,
   markActive,
-  nodeActive,
   nodeNameMatchesList,
   startPositionOfParent,
   toDOM,
@@ -56,39 +55,6 @@ describe('markActive', () => {
   it('returns true when surrounding an active region', () => {
     const { state, schema } = createEditor(doc(p('Something<start>', em('is italic'), '<end> here')));
     expect(markActive(state, schema.marks.em)).toBeTrue();
-  });
-});
-
-describe('nodeActive', () => {
-  it('shows active when within an active region', () => {
-    const { state, schema } = createEditor(doc(p('Something', blockquote('is <cursor>in blockquote'))));
-    expect(nodeActive(state, schema.nodes.blockquote)).toBeTrue();
-  });
-
-  it('returns false when not within the node', () => {
-    const { state, schema } = createEditor(doc(p('Something<cursor>', blockquote('hello'))));
-    expect(nodeActive(state, schema.nodes.blockquote)).toBeFalse();
-  });
-
-  it('returns false with text selection surrounds the node', () => {
-    const { state, schema } = createEditor(doc(p('Something<start>', blockquote('is italic'), '<end> here')));
-    expect(nodeActive(state, schema.nodes.blockquote)).toBeFalse();
-  });
-
-  it('returns true when node selection directly before node', () => {
-    const { state, schema } = createEditor(doc(p('Something<node>', blockquote('is italic'), 'here')));
-    expect(nodeActive(state, schema.nodes.blockquote)).toBeTrue();
-  });
-
-  it('returns false nested within other nodes', () => {
-    const { state, schema } = createEditor(doc(p('a<node>', p(p(blockquote('is italic')), 'here'))));
-    expect(nodeActive(state, schema.nodes.blockquote)).toBeFalse();
-  });
-
-  it("returns false when attributes don't match", () => {
-    const { state, schema } = createEditor(doc(p('Something<node>', h2('is heading'), 'here')));
-    expect(nodeActive(state, schema.nodes.heading, { level: 1 })).toBeFalse();
-    expect(nodeActive(state, schema.nodes.heading, { level: 2 })).toBeTrue();
   });
 });
 
@@ -215,6 +181,38 @@ describe('isTextSelection', () => {
   });
 });
 
+describe('getSelectedWord', () => {
+  it('should select the word the cursor is currently within', () => {
+    const { state } = createEditor(doc(p('Something thi<cursor>s is a word')));
+    expect(getSelectedWord(state)).toEqual({ from: 11, to: 15 });
+  });
+
+  it('should select the word the cursor is before', () => {
+    const { state } = createEditor(doc(p('Something <cursor>this is a word')));
+    expect(getSelectedWord(state)).toEqual({ from: 11, to: 15 });
+  });
+
+  it('should still select the word for partial selection is before', () => {
+    const { state } = createEditor(doc(p('Something <start>t<end>his is a word')));
+    expect(getSelectedWord(state)).toEqual({ from: 11, to: 15 });
+  });
+
+  it('should expand the selection', () => {
+    const { state } = createEditor(doc(p('Something th<start>is <end>is a word')));
+    expect(getSelectedWord(state)).toEqual({ from: 11, to: 18 });
+  });
+
+  it('should return false for ambiguous locations', () => {
+    const { state } = createEditor(doc(p('Something this <cursor> is a word')));
+    expect(getSelectedWord(state)).toBeFalse();
+  });
+
+  it('should return false for completely empty locations', () => {
+    const { state } = createEditor(doc(p('   <cursor>   ')));
+    expect(getSelectedWord(state)).toBeFalse();
+  });
+});
+
 describe('atDocEnd', () => {
   it('returns true at the end of the document', () => {
     const { state } = createEditor(doc(p('Something<cursor>')));
@@ -236,6 +234,7 @@ describe('atDocEnd', () => {
     expect(atDocEnd(state)).toBeTrue();
   });
 });
+
 describe('atDocStart', () => {
   it('returns true at the start of the document', () => {
     const { state } = createEditor(doc(p('<cursor>Something')));

@@ -3,6 +3,7 @@ import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
 import { Cast } from './helpers/base';
 import {
+  BaseExtensionOptions,
   ExtensionBooleanFunction,
   ExtensionCommandFunction,
   ExtensionManagerParams,
@@ -13,23 +14,56 @@ import {
   SchemaTypeParams,
 } from './types';
 
-export abstract class Extension<GOptions extends {} = {}, GType = never> {
+const defaultOptions: BaseExtensionOptions = {
+  extraStyles: '',
+  includeInputRules: true,
+  includeKeys: true,
+  includePasteRules: true,
+  includePlugin: true,
+  includeStyles: true,
+  extraAttrs: [],
+};
+
+export abstract class Extension<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GType = never> {
   public static Component: any;
 
   public readonly options: Required<GOptions>;
   public abstract readonly name: string;
   private pk?: PluginKey;
 
-  constructor(options?: GOptions) {
-    if (options) {
-      this.options = Cast<Required<GOptions>>({
-        ...this.defaultOptions,
-        ...options,
-      });
-    } else {
-      this.options = Cast<Required<GOptions>>(this.defaultOptions);
-    }
+  constructor(options: GOptions = Cast<GOptions>({})) {
+    this.options = Cast<Required<GOptions>>({
+      ...defaultOptions,
+      ...this.defaultOptions,
+      ...options,
+    });
+
     this.init();
+  }
+
+  /**
+   * Allows for the addition of attributes to the defined schema.
+   * This is only valid for
+   */
+  protected extraAttrs() {
+    if (this.type === ExtensionType.EXTENSION) {
+      throw new Error('Invalid use of extraAttrs within a plain extension.');
+    }
+
+    const extraAttrs = this.options.extraAttrs!;
+    const attrs: Record<string, { default?: unknown }> = {};
+    if (!extraAttrs) {
+      return attrs;
+    }
+
+    for (const item of extraAttrs) {
+      if (Array.isArray(item)) {
+        attrs[item[0]] = { default: attrs[1] };
+      } else {
+        attrs[item] = {};
+      }
+    }
+    return attrs;
   }
 
   protected init() {
@@ -53,7 +87,7 @@ export abstract class Extension<GOptions extends {} = {}, GType = never> {
   }
 }
 
-export interface Extension<GOptions extends {} = {}, GType = never> {
+export interface Extension<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GType = never> {
   /**
    * An extension can declare the extensions it requires with options needed for instantiating them
    *
@@ -61,6 +95,8 @@ export interface Extension<GOptions extends {} = {}, GType = never> {
    * a quick check to see if the required extension is already included.
    *
    * TODO implement this functionality
+   *
+   * @alpha
    */
   readonly requiredExtensions?: RequiredExtension[];
 
@@ -79,12 +115,31 @@ export interface Extension<GOptions extends {} = {}, GType = never> {
   enabled?(params: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction>;
 
   /**
-   * Allows extensions to register styles on the editor instance using emotion for dynamic styling
+   * Allows extensions to register styles on the editor instance using emotion for dynamic styling.
    */
   styles?(params: ExtensionManagerParams): Interpolation;
 
   /**
-   * Register commands for this extension. If an object returned the commands are
+   * Register commands for this extension.
+   *
+   * When an object is returned each key is first namespaced with the name of the extension before being added to the actions object
+   * used for running commands and checking if a current item is active
+   *
+   * e.g.
+   * ```ts
+   * class History extends Extension {
+   *   name = 'history';
+   *   commands() {
+   *     return {
+   *       undo: COMMAND_FN,
+   *       redo: COMMAND_FN,
+   *     }
+   *   }
+   * }
+   * ```
+   *
+   * The actions available in this case would be `historyUndo` and `historyRedo`.
+   *
    * @param params
    */
   commands?(params: SchemaTypeParams<GType>): FlexibleConfig<ExtensionCommandFunction>;
@@ -118,7 +173,10 @@ export type ExtensionOptions<GExtension extends Extension> = GExtension extends 
   : never;
 
 /** A simpler extension constructor */
-export interface ExtensionConstructor<GOptions extends {}, GExtension extends Extension<GOptions, any>> {
+export interface ExtensionConstructor<
+  GOptions extends BaseExtensionOptions,
+  GExtension extends Extension<GOptions, any>
+> {
   // tslint:disable-next-line: callable-types
   new (options?: GOptions): GExtension;
 }

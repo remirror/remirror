@@ -4,3 +4,4 @@
  * Currently used by the placeholder extension.
  */
 export const EMPTY_NODE_CLASS_NAME = 'is-empty';
+export const EMPTY_NODE_CLASS_SELECTOR = `.${EMPTY_NODE_CLASS_NAME}`;
