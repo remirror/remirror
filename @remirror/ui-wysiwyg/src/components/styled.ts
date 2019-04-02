@@ -29,9 +29,14 @@ const ResetButton = styled.button`
   cursor: pointer;
 `;
 
-export const IconButton = styled(ResetButton)<ButtonProps>`
+export interface WithPaddingProps {
+  withPadding: 'horizontal' | 'right';
+}
+
+export const IconButton = styled(ResetButton)<ButtonProps & Partial<WithPaddingProps>>`
   color: ${({ state, theme }) => theme.button.color[state]};
-  padding-right: 10px;
+  padding: ${({ withPadding }) =>
+    withPadding === 'horizontal' ? '0 10px' : withPadding === 'right' ? '0 10px 0 0' : 0};
 `;
 
 export const InnerEditorWrapper = styled.div`
@@ -86,4 +91,51 @@ export const InnerEditorWrapper = styled.div`
 
 export const EditorWrapper = styled.div`
   /* border: 1px solid grey; */
+  /* position: relative; */
+`;
+
+export const BubbleMenuWrapper = styled.span`
+  position: relative;
+`;
+
+export const BubbleMenuPositioner = styled.span<{ bottom: number; left: number }>`
+  position: absolute;
+  bottom: ${props => props.bottom}px;
+  left: ${props => props.left}px;
+`;
+
+export const BubbleMenuTooltip = styled.span<{}>`
+  /* min-width: 120px; */
+  /* max-width: 210px; */
+  position: absolute;
+  z-index: 10;
+  &::after {
+    content: '';
+    position: absolute;
+  }
+
+  bottom: 100%;
+  left: 50%;
+  padding-bottom: 9px;
+  transform: translateX(-50%);
+
+  &::after {
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 9px solid black;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+`;
+
+export const BubbleContent = styled.span`
+  background: black;
+  border-radius: 3px;
+  color: white;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  padding: 0.75em;
+  text-align: center;
+  display: flex;
 `;

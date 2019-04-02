@@ -6,10 +6,10 @@ import {
   MarkType,
   Node as PMNode,
   NodeType,
+  Slice,
 } from 'prosemirror-model';
 import {
   EditorState as PMEditorState,
-  NodeSelection,
   Plugin,
   Selection as PMSelection,
   TextSelection,
@@ -36,7 +36,7 @@ import {
   Transaction,
 } from '../types';
 import { bool, Cast, isFunction, isNumber, isObject, isString } from './base';
-import { findParentNode } from './utils';
+import { findParentNode, selectionEmpty } from './utils';
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
@@ -208,14 +208,14 @@ export const getMarkRange = (
     return false;
   }
 
-  const link = start.node.marks.find(mark => mark.type === type);
-  if (!link) {
+  const mark = start.node.marks.find(({ type: markType }) => markType === type);
+  if (!mark) {
     return false;
   }
 
   let startIndex = $pos.index();
   let startPos = $pos.start() + start.offset;
-  while (startIndex > 0 && link.isInSet($pos.parent.child(startIndex - 1).marks)) {
+  while (startIndex > 0 && mark.isInSet($pos.parent.child(startIndex - 1).marks)) {
     startIndex -= 1;
     startPos -= $pos.parent.child(startIndex).nodeSize;
   }
@@ -223,6 +223,50 @@ export const getMarkRange = (
   const endPos = startPos + start.node.nodeSize;
 
   return { from: startPos, to: endPos };
+};
+
+export const getTextContentFromSlice = (slice: Slice) => {
+  const node = slice.content.firstChild;
+  return node ? node.textContent : '';
+};
+
+/**
+ * Takes an empty selection and expands it out to the nearest group not matching the excluded characters.
+ *
+ * Can be used to find the nearest selected word. Will return false if not a text selection.
+ */
+export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToParams | false => {
+  if (!isTextSelection(state.selection)) {
+    return false;
+  }
+
+  let { from, to } = state.selection;
+
+  const createChar = (start: number, end: number) =>
+    getTextContentFromSlice(TextSelection.create(state.doc, start, end).content());
+
+  // Keep going until reaching first excluded character or empty text content.
+  for (
+    let char = createChar(from - 1, from);
+    char && !exclude.test(char);
+    from--, char = createChar(from - 1, from)
+  ) {}
+
+  for (let char = createChar(to, to + 1); char && !exclude.test(char); to++, char = createChar(to, to + 1)) {}
+
+  if (from === to) {
+    return false;
+  }
+
+  return { from, to };
+};
+
+/**
+ * Retrieves the nearest space separated word from the current selection.
+ * Always expands out.
+ */
+export const getSelectedWord = (state: EditorState) => {
+  return getSelectedGroup(state, /[\s\0]/);
 };
 
 /**

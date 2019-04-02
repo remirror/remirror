@@ -215,10 +215,12 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     // Calculate the props
     const props = this.calculatePositionProps({ ...config });
 
-    return {
+    const ret = {
       ...props,
       [refKey]: ref,
     } as ReturnType<InjectedRemirrorProps['getPositionerProps']>;
+
+    return ret;
   };
 
   private onRef: Ref<HTMLElement> = ref => {
@@ -228,18 +230,19 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     }
   };
 
-  private positionerRefFactory = memoize(
-    ({ positionerId, position }: PositionerRefFactoryParams): Ref<HTMLElement> => element => {
-      if (!element) {
-        return;
-      }
+  private positionerRefFactory = ({
+    positionerId,
+    position,
+  }: PositionerRefFactoryParams): Ref<HTMLElement> => element => {
+    if (!element) {
+      return;
+    }
 
-      const current = this.positionerMap.get(positionerId);
-      if (!current || current.element !== element) {
-        this.positionerMap.set(positionerId, { element, prev: { ...position, isActive: false } });
-      }
-    },
-  );
+    const current = this.positionerMap.get(positionerId);
+    if (!current || current.element !== element) {
+      this.positionerMap.set(positionerId, { element, prev: { ...position, isActive: false } });
+    }
+  };
 
   private calculatePositionProps({
     initialPosition,
@@ -261,7 +264,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     }
 
     const { element, prev } = positionerMapItem;
-    const params = { element, view: this.view };
+    const params = { element, view: this.view, ...this.state };
 
     positionerProps.isActive = isActive(params);
 
@@ -364,7 +367,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   public componentWillUnmount() {
     this.view.dom.removeEventListener('blur', this.onBlur);
     this.view.dom.removeEventListener('focus', this.onFocus);
-    const editorState = this.view.state;
+    const editorState = this.state.newState;
     this.view.state.plugins.forEach(plugin => {
       const state = plugin.getState(editorState);
       if (state && state.destroy) {

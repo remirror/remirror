@@ -1,0 +1,262 @@
+import React, {
+  ChangeEventHandler,
+  DOMAttributes,
+  FC,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  useState,
+} from 'react';
+
+import {
+  faBold,
+  faCode,
+  faGripLines,
+  faHeading,
+  faItalic,
+  faLink,
+  faList,
+  faListOl,
+  faQuoteRight,
+  faRedoAlt,
+  faStrikethrough,
+  faTimes,
+  faTrash,
+  faUnderline,
+  faUndoAlt,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import keyCode from 'keycode';
+
+import { Attrs, memoize } from '@remirror/core';
+import { bubblePositioner, useRemirrorContext } from '@remirror/react';
+import { ButtonState, styled } from '../theme';
+import {
+  BubbleContent,
+  BubbleMenuPositioner,
+  BubbleMenuTooltip,
+  BubbleMenuWrapper,
+  IconButton,
+  Toolbar,
+  WithPaddingProps,
+} from './styled';
+
+const menuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
+  ['bold', [faBold]],
+  ['italic', [faItalic]],
+  ['underline', [faUnderline]],
+  ['strike', [faStrikethrough]],
+  ['heading', [faHeading, '1'], { level: 1 }],
+  ['heading', [faHeading, '2'], { level: 2 }],
+  ['heading', [faHeading, '3'], { level: 3 }],
+  ['historyUndo', [faUndoAlt]],
+  ['historyRedo', [faRedoAlt]],
+  ['bulletList', [faList]],
+  ['orderedList', [faListOl]],
+  ['blockquote', [faQuoteRight]],
+  ['codeBlock', [faCode]],
+  ['horizontalRule', [faGripLines]],
+];
+
+const runAction = memoize(
+  (method: (attrs?: Attrs) => void, attrs?: Attrs): MouseEventHandler<HTMLElement> => e => {
+    e.preventDefault();
+    method(attrs);
+  },
+);
+
+const getButtonState = (active: boolean, inverse = false): ButtonState =>
+  active ? (inverse ? 'active-inverse' : 'active-default') : inverse ? 'inverse' : 'default';
+
+interface MenuBarProps extends Pick<BubbleMenuProps, 'activateLink'> {
+  inverse?: boolean;
+}
+
+export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
+  const { actions } = useRemirrorContext();
+
+  return (
+    <Toolbar>
+      {menuItems.map(([name, [icon, subText], attrs], index) => {
+        const buttonState = getButtonState(actions[name].isActive(attrs), inverse);
+
+        return (
+          <MenuItem
+            key={index}
+            icon={icon}
+            subText={subText}
+            state={buttonState}
+            disabled={!actions[name].isEnabled()}
+            onClick={runAction(actions[name].command, attrs)}
+            withPadding='right'
+          />
+        );
+      })}
+      <MenuItem
+        icon={faLink}
+        state={getButtonState(actions.linkUpdate.isActive(), inverse)}
+        disabled={!actions.linkUpdate.isEnabled()}
+        onClick={activateLink}
+        withPadding='right'
+      />
+    </Toolbar>
+  );
+};
+
+interface MenuItemProps extends Partial<WithPaddingProps> {
+  state: ButtonState;
+  onClick: DOMAttributes<HTMLButtonElement>['onClick'];
+  icon: IconDefinition;
+  inverse?: boolean;
+  disabled?: boolean;
+  subText?: string;
+}
+
+const MenuItem: FC<MenuItemProps> = ({
+  state,
+  onClick,
+  icon,
+  inverse = false,
+  disabled = false,
+  subText,
+  withPadding,
+}) => {
+  return (
+    <IconButton onClick={onClick} state={state} disabled={disabled} withPadding={withPadding}>
+      <FontAwesomeIcon icon={icon} inverse={inverse} />
+      {subText}
+    </IconButton>
+  );
+};
+
+export interface BubbleMenuProps {
+  linkActivated: boolean;
+  deactivateLink(): void;
+  activateLink(): void;
+}
+
+const bubbleMenuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
+  ['bold', [faBold]],
+  ['italic', [faItalic]],
+  ['underline', [faUnderline]],
+];
+
+export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
+  const { actions, getPositionerProps } = useRemirrorContext();
+  const { bottom, left, ref } = getPositionerProps({
+    ...bubblePositioner,
+    isActive: params => bubblePositioner.isActive(params) || linkActivated,
+    positionerId: 'bubbleMenu',
+  });
+
+  const updateLink = (href: string) => actions.linkUpdate.command({ href });
+  const removeLink = () => actions.linkRemove.command();
+  const canRemove = () => actions.linkRemove.isActive();
+
+  return (
+    <BubbleMenuPositioner bottom={bottom + 5} left={left} ref={ref}>
+      <BubbleMenuWrapper>
+        <BubbleMenuTooltip>
+          <BubbleContent>
+            {linkActivated ? (
+              <LinkInput {...{ deactivateLink, updateLink, removeLink, canRemove }} />
+            ) : (
+              <>
+                {bubbleMenuItems.map(([name, [icon, subText], attrs], index) => {
+                  const buttonState = getButtonState(actions[name].isActive(attrs), true);
+
+                  return (
+                    <MenuItem
+                      key={index}
+                      icon={icon}
+                      subText={subText}
+                      state={buttonState}
+                      disabled={!actions[name].isEnabled()}
+                      onClick={runAction(actions[name].command, attrs)}
+                      inverse={true}
+                      withPadding='horizontal'
+                    />
+                  );
+                })}
+                <MenuItem
+                  icon={faLink}
+                  state={getButtonState(actions.linkToggle.isActive(), true)}
+                  onClick={activateLink}
+                  inverse={true}
+                  withPadding='horizontal'
+                />
+              </>
+            )}
+          </BubbleContent>
+        </BubbleMenuTooltip>
+      </BubbleMenuWrapper>
+    </BubbleMenuPositioner>
+  );
+};
+
+const Input = styled.input`
+  border: none;
+  outline: none;
+  color: white;
+  background-color: transparent;
+  min-width: 150px;
+  padding: 0 10px;
+`;
+
+interface LinkInputProps extends Pick<BubbleMenuProps, 'deactivateLink'> {
+  updateLink(href: string): void;
+  removeLink(): void;
+  canRemove(): boolean;
+}
+
+const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink, canRemove }) => {
+  const [href, setHref] = useState('');
+
+  const onChange: ChangeEventHandler<HTMLInputElement> = event => {
+    setHref(event.target.value);
+  };
+
+  const submitLink = () => {
+    updateLink(href);
+    deactivateLink();
+  };
+
+  const onKeyPress: KeyboardEventHandler<HTMLInputElement> = event => {
+    if (keyCode.isEventKey(event.nativeEvent, 'esc')) {
+      event.preventDefault();
+      deactivateLink();
+    }
+
+    if (keyCode.isEventKey(event.nativeEvent, 'enter')) {
+      event.preventDefault();
+      submitLink();
+    }
+  };
+
+  const onClickRemoveLink: DOMAttributes<HTMLButtonElement>['onClick'] = event => {
+    event.preventDefault();
+    removeLink();
+  };
+
+  return (
+    <>
+      <Input
+        placeholder='Enter URL...'
+        autoFocus={true}
+        onChange={onChange}
+        onBlur={deactivateLink}
+        onSubmit={submitLink}
+        onKeyPress={onKeyPress}
+      />
+      {canRemove() && (
+        <MenuItem
+          icon={faTimes}
+          state='active-inverse'
+          onClick={onClickRemoveLink}
+          inverse={true}
+          withPadding='horizontal'
+        />
+      )}
+    </>
+  );
+};

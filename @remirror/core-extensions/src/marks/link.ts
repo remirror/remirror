@@ -1,9 +1,14 @@
 import {
   Attrs,
   Cast,
+  ExtensionManagerParams,
   getMarkRange,
   getMatchString,
+  getSelectedWord,
+  KeyboardBindings,
+  markActive,
   MarkExtension,
+  MarkExtensionOptions,
   MarkExtensionSpec,
   markPasteRule,
   removeMark,
@@ -12,9 +17,24 @@ import {
 } from '@remirror/core';
 import { Plugin, TextSelection } from 'prosemirror-state';
 
-export class Link extends MarkExtension {
+export type InvokedFromType = 'keyboard' | 'input-rule';
+
+export interface LinkOptions extends MarkExtensionOptions {
+  /**
+   * Return true to intercept the activation. This is useful for showing a dialog to replace the selected text.
+   */
+  activationHandler?(): void;
+}
+
+export class Link extends MarkExtension<LinkOptions> {
   get name() {
     return 'link' as const;
+  }
+
+  get defaultOptions() {
+    return {
+      activationHandler: () => false,
+    };
   }
 
   get schema(): MarkExtensionSpec {
@@ -44,13 +64,53 @@ export class Link extends MarkExtension {
     };
   }
 
-  public commands({ type }: SchemaMarkTypeParams) {
-    return (attrs?: Attrs) => {
-      if (attrs && attrs.href) {
-        return updateMark(type, attrs);
-      }
+  public keys(): KeyboardBindings {
+    return {
+      'Mod-k': (state, dispatch) => {
+        // Expand selection
+        const range = getSelectedWord(state);
+        if (!range) {
+          return false;
+        }
+        const { from, to } = range;
+        const tr = state.tr.setSelection(TextSelection.create(state.doc, from, to));
+        if (dispatch) {
+          dispatch(tr);
+        }
 
-      return removeMark(type);
+        this.options.activationHandler();
+
+        return true;
+      },
+    };
+  }
+
+  public active({ getEditorState, schema }: ExtensionManagerParams) {
+    const type = schema.marks[this.name];
+    const state = getEditorState();
+    return {
+      toggle: () => true, // Always active
+      update: () => markActive(state, type),
+      remove: () => {
+        console.log('checking for mark removal', type);
+        return !markActive(state, type);
+      },
+    };
+  }
+
+  public commands({ type }: SchemaMarkTypeParams) {
+    return {
+      toggle: (attrs?: Attrs) => {
+        if (attrs && attrs.href) {
+          return updateMark(type, attrs);
+        }
+        return removeMark(type);
+      },
+      update: (attrs?: Attrs) => updateMark(type, attrs),
+      remove: () => {
+        console.log('performing remove mark');
+        return removeMark(type);
+      },
     };
   }
 

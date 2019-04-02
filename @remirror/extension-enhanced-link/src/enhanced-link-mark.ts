@@ -8,6 +8,7 @@ import {
   LEAF_NODE_REPLACING_CHARACTER,
   Mark,
   MarkExtension,
+  MarkExtensionOptions,
   MarkExtensionSpec,
   markPasteRule,
   removeMark,
@@ -20,7 +21,7 @@ import { Plugin, TextSelection } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
 import { extractUrl } from './extract-url';
 
-export interface EnhancedLinkOptions {
+export interface EnhancedLinkOptions extends MarkExtensionOptions {
   onUrlsChange?(params: { set: Set<string>; urls: string[] }): void;
 }
 

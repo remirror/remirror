@@ -1,3 +1,4 @@
+import { Interpolation } from '@emotion/core';
 import { MarkType as PMMarkType, Node as PMNode, NodeType as PMNodeType, Schema } from 'prosemirror-model';
 import { EditorState as PMEditorState, Plugin as PMPlugin } from 'prosemirror-state';
 
@@ -117,3 +118,17 @@ export interface Position {
 }
 
 export type Attrs = Record<string, string | number | undefined>;
+
+export type ExtraAttrs = Array<string | [string, string]>;
+
+export interface BaseExtensionOptions {
+  useDefaultStyles?: boolean;
+  extraStyles?: Interpolation;
+  /**
+   * Inject additional attributes into the defined mark / node schema.
+   */
+  extraAttrs?: ExtraAttrs;
+}
+
+export type NodeExtensionOptions = BaseExtensionOptions;
+export type MarkExtensionOptions = BaseExtensionOptions;

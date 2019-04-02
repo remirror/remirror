@@ -1,5 +1,5 @@
 import { AnyExtension, Extension } from './extension';
-import { bool, Cast, isFunction, isObject } from './helpers/base';
+import { bool, capitalize, Cast, isFunction, isObject } from './helpers/base';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
 import { AnyFunction, CommandParams, ExtensionManagerParams, ExtensionType, FlexibleConfig } from './types';
@@ -122,10 +122,13 @@ export const createFlexibleFunctionMap = <
       items[name] = methodFactory(params, item);
     } else {
       Object.entries(item).forEach(([commandName, commandValue]) => {
+        // Namespace the actions created to minimise accidental naming collision
+        const namespacedName = `${name}${capitalize(commandName)}`;
+
         if (checkUniqueness) {
-          isNameUnique({ name: commandName, set: names, shouldThrow: true });
+          isNameUnique({ name: namespacedName, set: names, shouldThrow: true });
         }
-        items[commandName] = Array.isArray(commandValue)
+        items[namespacedName] = Array.isArray(commandValue)
           ? arrayTransformer(commandValue, params, methodFactory)
           : methodFactory(params, commandValue);
       });

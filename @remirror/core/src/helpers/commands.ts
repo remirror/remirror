@@ -134,6 +134,7 @@ export const replaceText = ({
  * @param type
  */
 export const removeMark = (type: MarkType): CommandFunction => (state, dispatch) => {
+  console.log('removing mark');
   const { from, to } = state.selection;
   if (!dispatch) {
     return false;

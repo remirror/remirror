@@ -27,6 +27,7 @@ import {
   getMarkAttrs,
   getMarkRange,
   getNearestNonTextNode,
+  getSelectedWord,
   isDocNode,
   isDocNodeEmpty,
   isElementDOMNode,
@@ -215,6 +216,38 @@ describe('isTextSelection', () => {
   });
 });
 
+describe('getSelectedWord', () => {
+  it('should select the word the cursor is currently within', () => {
+    const { state } = createEditor(doc(p('Something thi<cursor>s is a word')));
+    expect(getSelectedWord(state)).toEqual({ from: 11, to: 15 });
+  });
+
+  it('should select the word the cursor is before', () => {
+    const { state } = createEditor(doc(p('Something <cursor>this is a word')));
+    expect(getSelectedWord(state)).toEqual({ from: 11, to: 15 });
+  });
+
+  it('should still select the word for partial selection is before', () => {
+    const { state } = createEditor(doc(p('Something <start>t<end>his is a word')));
+    expect(getSelectedWord(state)).toEqual({ from: 11, to: 15 });
+  });
+
+  it('should expand the selection', () => {
+    const { state } = createEditor(doc(p('Something th<start>is <end>is a word')));
+    expect(getSelectedWord(state)).toEqual({ from: 11, to: 18 });
+  });
+
+  it('should return false for ambiguous locations', () => {
+    const { state } = createEditor(doc(p('Something this <cursor> is a word')));
+    expect(getSelectedWord(state)).toBeFalse();
+  });
+
+  it('should return false for completely empty locations', () => {
+    const { state } = createEditor(doc(p('   <cursor>   ')));
+    expect(getSelectedWord(state)).toBeFalse();
+  });
+});
+
 describe('atDocEnd', () => {
   it('returns true at the end of the document', () => {
     const { state } = createEditor(doc(p('Something<cursor>')));
@@ -236,6 +269,7 @@ describe('atDocEnd', () => {
     expect(atDocEnd(state)).toBeTrue();
   });
 });
+
 describe('atDocStart', () => {
   it('returns true at the start of the document', () => {
     const { state } = createEditor(doc(p('<cursor>Something')));
