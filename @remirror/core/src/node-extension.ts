@@ -1,6 +1,6 @@
 import { NodeType } from 'prosemirror-model';
 import { Extension } from './extension';
-import { nodeActive } from './helpers/document';
+import { nodeActive } from './helpers/utils';
 import {
   EditorSchema,
   ExtensionBooleanFunction,

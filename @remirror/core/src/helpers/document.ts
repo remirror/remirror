@@ -16,7 +16,6 @@ import {
 } from 'prosemirror-state';
 import { EMPTY_OBJECT_NODE } from '../constants';
 import {
-  Attrs,
   EditorSchema,
   EditorState,
   EditorViewParams,
@@ -36,7 +35,6 @@ import {
   Transaction,
 } from '../types';
 import { bool, Cast, isFunction, isNumber, isObject, isString } from './base';
-import { findParentNode, selectionEmpty } from './utils';
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
@@ -84,27 +82,6 @@ export const markActive = (state: EditorState, type: MarkType) => {
   return bool(
     empty ? type.isInSet(state.storedMarks || $from.marks()) : state.doc.rangeHasMark(from, to, type),
   );
-};
-
-/**
- * Checks whether the node type passed in is active within the region.
- * Used by extensions to implement the `#active` method.
- *
- * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
- *
- * @param state
- * @param type
- * @param attrs
- */
-export const nodeActive = (state: EditorState, type: NodeType, attrs: Attrs = {}) => {
-  const predicate = (node: ProsemirrorNode) => node.type === type;
-  const parent = findParentNode(predicate)(state.selection);
-
-  if (!Object.keys(attrs).length || !parent) {
-    return !!parent;
-  }
-
-  return parent.node.hasMarkup(type, attrs);
 };
 
 /**

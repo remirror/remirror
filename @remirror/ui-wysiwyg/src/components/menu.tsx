@@ -10,7 +10,6 @@ import React, {
 } from 'react';
 
 import {
-  faBackward,
   faBold,
   faCode,
   faGripLines,
@@ -23,7 +22,6 @@ import {
   faRedoAlt,
   faStrikethrough,
   faTimes,
-  faTrash,
   faUnderline,
   faUndoAlt,
   IconDefinition,

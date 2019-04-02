@@ -1,4 +1,5 @@
 import {
+  BaseExtensionOptions,
   Extension,
   getPluginState,
   NodeMatch,
@@ -13,7 +14,7 @@ export const inlineCursorTargetStateKey = new PluginKey('inlineCursorTargetPlugi
 
 export const INLINE_CURSOR_TARGETS: NodeMatch[] = ['emoji', (name: string) => name.includes('mentions')];
 
-export interface InlineCursorTargetOptions {
+export interface InlineCursorTargetOptions extends BaseExtensionOptions {
   targets?: NodeMatch[];
 }
 

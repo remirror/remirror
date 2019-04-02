@@ -3,7 +3,7 @@ import { MarkType, NodeType } from 'prosemirror-model';
 import { liftListItem, wrapInList } from 'prosemirror-schema-list';
 import { Attrs, AttrsParams, CommandFunction, FromToParams, NodeTypeParams } from '../types';
 import { isNumber } from './base';
-import { nodeActive } from './document';
+import { nodeActive } from './utils';
 /**
  * Update the selection with the provided MarkType
  *

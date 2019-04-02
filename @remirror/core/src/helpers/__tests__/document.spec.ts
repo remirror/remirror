@@ -6,7 +6,6 @@ import {
   createEditor,
   doc,
   em,
-  h2,
   hardBreak,
   p,
   pm,
@@ -36,7 +35,6 @@ import {
   isTextDOMNode,
   isTextSelection,
   markActive,
-  nodeActive,
   nodeNameMatchesList,
   startPositionOfParent,
   toDOM,
@@ -57,39 +55,6 @@ describe('markActive', () => {
   it('returns true when surrounding an active region', () => {
     const { state, schema } = createEditor(doc(p('Something<start>', em('is italic'), '<end> here')));
     expect(markActive(state, schema.marks.em)).toBeTrue();
-  });
-});
-
-describe('nodeActive', () => {
-  it('shows active when within an active region', () => {
-    const { state, schema } = createEditor(doc(p('Something', blockquote('is <cursor>in blockquote'))));
-    expect(nodeActive(state, schema.nodes.blockquote)).toBeTrue();
-  });
-
-  it('returns false when not within the node', () => {
-    const { state, schema } = createEditor(doc(p('Something<cursor>', blockquote('hello'))));
-    expect(nodeActive(state, schema.nodes.blockquote)).toBeFalse();
-  });
-
-  it('returns false with text selection surrounds the node', () => {
-    const { state, schema } = createEditor(doc(p('Something<start>', blockquote('is italic'), '<end> here')));
-    expect(nodeActive(state, schema.nodes.blockquote)).toBeFalse();
-  });
-
-  it('returns true when node selection directly before node', () => {
-    const { state, schema } = createEditor(doc(p('Something', blockquote('<node>is italic'), 'here')));
-    expect(nodeActive(state, schema.nodes.blockquote)).toBeTrue();
-  });
-
-  it('returns false nested within other nodes', () => {
-    const { state, schema } = createEditor(doc(p('a<node>', p(p(blockquote('is italic')), 'here'))));
-    expect(nodeActive(state, schema.nodes.blockquote)).toBeFalse();
-  });
-
-  it('matches nodes by specified attributes', () => {
-    const { state, schema } = createEditor(doc(p('Something', h2('is <cursor> heading'), 'here')));
-    expect(nodeActive(state, schema.nodes.heading, { level: 1 })).toBeFalse();
-    expect(nodeActive(state, schema.nodes.heading, { level: 2 })).toBeTrue();
   });
 });
 

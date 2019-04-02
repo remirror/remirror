@@ -11,7 +11,6 @@ import {
   ExtensionManager,
   isArray,
   isString,
-  memoize,
   NodeViewPortalContainer,
   ObjectNode,
   Position,
