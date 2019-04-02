@@ -1,7 +1,7 @@
 {
   "name": "@remirror/ui-wysiwyg",
   "description": "ui for a what you see is what you get (wysiwyg) editing experience",
-  "version": "0.0.1-alpha.10",
+  "version": "0.0.1-alpha.11",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -10,10 +10,10 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.17",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "@remirror/core": "0.0.1-alpha.10",
-    "@remirror/core-extensions": "0.0.1-alpha.10",
-    "@remirror/extension-emoji": "0.0.1-alpha.10",
-    "@remirror/react": "0.0.1-alpha.10",
+    "@remirror/core": "0.0.1-alpha.11",
+    "@remirror/core-extensions": "0.0.1-alpha.11",
+    "@remirror/extension-emoji": "0.0.1-alpha.11",
+    "@remirror/react": "0.0.1-alpha.11",
     "deepmerge": "^3.2.0",
     "emotion-theming": "^10",
     "keycode": "^2.2.0"

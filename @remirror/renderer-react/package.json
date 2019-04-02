@@ -1,14 +1,14 @@
 {
   "name": "@remirror/renderer-react",
   "description": "renderer-react utilities for remirror",
-  "version": "0.0.1-alpha.10",
+  "version": "0.0.1-alpha.11",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@remirror/core": "0.0.1-alpha.10"
+    "@remirror/core": "0.0.1-alpha.11"
   },
   "devDependencies": {
-    "@remirror/core-extensions": "0.0.1-alpha.10",
+    "@remirror/core-extensions": "0.0.1-alpha.11",
     "prosemirror-model": "1.7.0"
   },
   "files": [
