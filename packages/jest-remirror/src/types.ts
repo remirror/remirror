@@ -10,6 +10,7 @@ import {
   NodeExtension,
   Omit,
   ProsemirrorNode,
+  RemirrorActions,
   SchemaParams,
 } from '@remirror/core';
 import { InjectedRemirrorProps } from '@remirror/react';
@@ -84,6 +85,11 @@ export interface TaggedProsemirrorNode extends PMNode {
 }
 
 export interface AddContentReturn extends EditorStateParams {
+  /**
+   * A map of actions available the
+   */
+  actions: RemirrorActions;
+
   /**
    * The start of the current selection
    */

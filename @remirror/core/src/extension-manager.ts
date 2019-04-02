@@ -228,6 +228,7 @@ export class ExtensionManager {
     const plugins: ProsemirrorPlugin[] = [];
     const extensionPlugins = this.extensions
       .filter(hasExtensionProperty('plugin'))
+      .filter(extension => extension.options.includePlugin)
       .map(extensionPropertyMapper('plugin', params)) as ProsemirrorPlugin[];
 
     extensionPlugins.forEach(plugin => {
@@ -240,6 +241,7 @@ export class ExtensionManager {
   public styles(params: ExtensionManagerParams): Interpolation[] {
     const extensionStyles = this.extensions
       .filter(hasExtensionProperty('styles'))
+      .filter(extension => extension.options.includeStyles)
       .map(extensionPropertyMapper('styles', params));
 
     return extensionStyles;
@@ -280,6 +282,7 @@ export class ExtensionManager {
     const rules: InputRule[] = [];
     const extensionInputRules = this.extensions
       .filter(hasExtensionProperty('inputRules'))
+      .filter(extension => extension.options.includeInputRules)
       .map(extensionPropertyMapper('inputRules', params)) as InputRule[][];
 
     extensionInputRules.forEach(rule => {
@@ -296,6 +299,7 @@ export class ExtensionManager {
     const pasteRules: ProsemirrorPlugin[] = [];
     const extensionPasteRules = this.extensions
       .filter(hasExtensionProperty('pasteRules'))
+      .filter(extension => extension.options.includePasteRules)
       .map(extensionPropertyMapper('pasteRules', params)) as ProsemirrorPlugin[][];
 
     extensionPasteRules.forEach(rules => {
@@ -360,7 +364,7 @@ export class ExtensionManager {
           return false;
         }
         params.view.focus();
-        return method(attrs)(params.view.state, params.view.dispatch, params.view);
+        return method(attrs)(params.getEditorState(), params.view.dispatch, params.view);
       },
       checkUniqueness: true,
       arrayTransformer: (fns, params, methodFactory) => () => {

@@ -138,6 +138,7 @@ export const renderEditor = <
         },
         overwrite: add,
         state: view.state,
+        actions: returnedParams.actions,
         shortcut: shortcut => {
           keyboardShortcut({ shortcut, view });
           return createAddContentReturn();

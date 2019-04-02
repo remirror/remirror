@@ -16,7 +16,11 @@ import {
 
 const defaultOptions: BaseExtensionOptions = {
   extraStyles: '',
-  useDefaultStyles: true,
+  includeInputRules: true,
+  includeKeys: true,
+  includePasteRules: true,
+  includePlugin: true,
+  includeStyles: true,
   extraAttrs: [],
 };
 
@@ -91,6 +95,8 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * a quick check to see if the required extension is already included.
    *
    * TODO implement this functionality
+   *
+   * @alpha
    */
   readonly requiredExtensions?: RequiredExtension[];
 

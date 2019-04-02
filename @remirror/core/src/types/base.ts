@@ -122,12 +122,40 @@ export type Attrs = Record<string, string | number | undefined>;
 export type ExtraAttrs = Array<string | [string, string]>;
 
 export interface BaseExtensionOptions {
-  useDefaultStyles?: boolean;
+  /**
+   * Add extra styles to the extension.
+   */
   extraStyles?: Interpolation;
+
   /**
    * Inject additional attributes into the defined mark / node schema.
    */
   extraAttrs?: ExtraAttrs;
+
+  /**
+   * Whether to include the extension's styles.
+   */
+  includeStyles?: boolean;
+
+  /**
+   * Whether to include the extension's pasteRules
+   */
+  includePasteRules?: boolean;
+
+  /**
+   * Whether to include the extension's inputRules
+   */
+  includeInputRules?: boolean;
+
+  /**
+   * Whether to include the extension's keys
+   */
+  includeKeys?: boolean;
+
+  /**
+   * Whether to include the extension's plugin
+   */
+  includePlugin?: boolean;
 }
 
 export type NodeExtensionOptions = BaseExtensionOptions;

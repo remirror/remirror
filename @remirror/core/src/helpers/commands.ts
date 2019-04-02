@@ -14,9 +14,8 @@ export const updateMark = (type: MarkType, attrs: Attrs = {}): CommandFunction =
   const { from, to } = state.selection;
   if (dispatch) {
     dispatch(state.tr.addMark(from, to, type.create(attrs)));
-    return true;
   }
-  return false;
+  return true;
 };
 
 /**
@@ -134,12 +133,10 @@ export const replaceText = ({
  * @param type
  */
 export const removeMark = (type: MarkType): CommandFunction => (state, dispatch) => {
-  console.log('removing mark');
   const { from, to } = state.selection;
-  if (!dispatch) {
-    return false;
+  if (dispatch) {
+    dispatch(state.tr.removeMark(from, to, type));
   }
 
-  dispatch(state.tr.removeMark(from, to, type));
   return true;
 };

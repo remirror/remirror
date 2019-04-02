@@ -4,10 +4,13 @@ import React, {
   FC,
   KeyboardEventHandler,
   MouseEventHandler,
+  useEffect,
+  useRef,
   useState,
 } from 'react';
 
 import {
+  faBackward,
   faBold,
   faCode,
   faGripLines,
@@ -157,37 +160,35 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
     <BubbleMenuPositioner bottom={bottom + 5} left={left} ref={ref}>
       <BubbleMenuWrapper>
         <BubbleMenuTooltip>
-          <BubbleContent>
-            {linkActivated ? (
-              <LinkInput {...{ deactivateLink, updateLink, removeLink, canRemove }} />
-            ) : (
-              <>
-                {bubbleMenuItems.map(([name, [icon, subText], attrs], index) => {
-                  const buttonState = getButtonState(actions[name].isActive(attrs), true);
+          {linkActivated ? (
+            <LinkInput {...{ deactivateLink, updateLink, removeLink, canRemove }} />
+          ) : (
+            <BubbleContent>
+              {bubbleMenuItems.map(([name, [icon, subText], attrs], index) => {
+                const buttonState = getButtonState(actions[name].isActive(attrs), true);
 
-                  return (
-                    <MenuItem
-                      key={index}
-                      icon={icon}
-                      subText={subText}
-                      state={buttonState}
-                      disabled={!actions[name].isEnabled()}
-                      onClick={runAction(actions[name].command, attrs)}
-                      inverse={true}
-                      withPadding='horizontal'
-                    />
-                  );
-                })}
-                <MenuItem
-                  icon={faLink}
-                  state={getButtonState(actions.linkToggle.isActive(), true)}
-                  onClick={activateLink}
-                  inverse={true}
-                  withPadding='horizontal'
-                />
-              </>
-            )}
-          </BubbleContent>
+                return (
+                  <MenuItem
+                    key={index}
+                    icon={icon}
+                    subText={subText}
+                    state={buttonState}
+                    disabled={!actions[name].isEnabled()}
+                    onClick={runAction(actions[name].command, attrs)}
+                    inverse={true}
+                    withPadding='horizontal'
+                  />
+                );
+              })}
+              <MenuItem
+                icon={faLink}
+                state={getButtonState(actions.linkToggle.isActive(), true)}
+                onClick={activateLink}
+                inverse={true}
+                withPadding='horizontal'
+              />
+            </BubbleContent>
+          )}
         </BubbleMenuTooltip>
       </BubbleMenuWrapper>
     </BubbleMenuPositioner>
@@ -211,6 +212,7 @@ interface LinkInputProps extends Pick<BubbleMenuProps, 'deactivateLink'> {
 
 const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink, canRemove }) => {
   const [href, setHref] = useState('');
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = event => {
     setHref(event.target.value);
@@ -236,15 +238,30 @@ const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink,
   const onClickRemoveLink: DOMAttributes<HTMLButtonElement>['onClick'] = event => {
     event.preventDefault();
     removeLink();
+    deactivateLink();
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClick, false);
+    return () => {
+      document.removeEventListener('mousedown', handleClick, false);
+    };
+  });
+
+  const handleClick = (event: MouseEvent) => {
+    if (!wrapperRef.current || wrapperRef.current.contains(event.target as Node)) {
+      return;
+    }
+    deactivateLink();
   };
 
   return (
-    <>
+    <BubbleContent ref={wrapperRef}>
       <Input
         placeholder='Enter URL...'
         autoFocus={true}
         onChange={onChange}
-        onBlur={deactivateLink}
+        // onBlur={deactivateLink}
         onSubmit={submitLink}
         onKeyPress={onKeyPress}
       />
@@ -257,6 +274,6 @@ const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink,
           withPadding='horizontal'
         />
       )}
-    </>
+    </BubbleContent>
   );
 };

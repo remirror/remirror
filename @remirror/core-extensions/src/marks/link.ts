@@ -89,10 +89,7 @@ export class Link extends MarkExtension<LinkOptions> {
     const type = schema.marks[this.name];
     const state = getEditorState();
     return {
-      toggle: () => true, // Always active
-      update: () => markActive(state, type),
       remove: () => {
-        console.log('checking for mark removal', type);
         return !markActive(state, type);
       },
     };
@@ -108,7 +105,6 @@ export class Link extends MarkExtension<LinkOptions> {
       },
       update: (attrs?: Attrs) => updateMark(type, attrs),
       remove: () => {
-        console.log('performing remove mark');
         return removeMark(type);
       },
     };
