@@ -6,14 +6,14 @@ export interface BaseKeymapOptions extends BaseExtensionOptions {
   /**
    * Determines whether a backspace after an input rule has been applied undoes the input rule.
    *
-   * @default true
+   * @defaultValue true
    */
   undoInputRuleOnBackspace?: boolean;
 
   /**
    * Determines whether the escape key selects the current node.
    *
-   * @default false
+   * @defaultValue false
    */
   selectParentNodeOnEscape?: boolean;
 }

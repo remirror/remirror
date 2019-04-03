@@ -17,7 +17,7 @@
 Ensure the following is installed as it will be responsible for creating the test editor
 
 ```bash
-yarn add react-testing-library
+yarn add @testing-library/react
 ```
 
 ```bash
@@ -43,7 +43,7 @@ module.exports = {
 This will automatically
 
 - inject the required JSDOM polyfills
-- ensure that `react-testing-library` cleans up the DOM after each test
+- ensure that `@testing-library/react` cleans up the DOM after each test
 - Add the jest assertions `toEqualRemirrorDocument` and `toMatchRemirrorSnapshot`.
 
 If you are using typescript then add this to your `tsconfig.json` file for type support.
@@ -66,7 +66,7 @@ Create a `jest.framework.dom.ts` file and add the following
 import { jsdomExtras, jsdomPolyfill, remirrorMatchers } from 'jest-remirror';
 
 /* Auto cleanup DOM after each test */
-require('react-testing-library/cleanup-after-each');
+require('@testing-library/react/cleanup-after-each');
 
 /* Add jest-remirror assertions */
 expect.extend(remirrorMatchers);
@@ -98,7 +98,7 @@ Testing contenteditable is really difficult, especially with `jsdom`. There are 
 
 `jest-remirror` makes rendering the remirror editor painless so that you can test that your extensions with their nodes and plugins are having the intended effect on the HTML document shape and calling the correct callbacks.
 
-Under the hood `jest-remirror` leans heavily on `react-testing-library` to render an instance of your test editor to the dom and provide a number of utilities exposed when calling the `renderEditor` method.
+Under the hood `jest-remirror` leans heavily on `@testing-library/react` to render an instance of your test editor to the dom and provide a number of utilities exposed when calling the `renderEditor` method.
 
 ## Example
 

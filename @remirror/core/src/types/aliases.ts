@@ -7,7 +7,11 @@ import {
   Transaction as PMTransaction,
 } from 'prosemirror-state';
 import { Mapping as PMMapping } from 'prosemirror-transform';
-import { DecorationSet as PMDecorationSet, EditorView as PMEditorView } from 'prosemirror-view';
+import {
+  DecorationSet as PMDecorationSet,
+  EditorView as PMEditorView,
+  NodeView as PMNodeView,
+} from 'prosemirror-view';
 import { EditorSchema } from './base';
 
 /* Type Aliases */
@@ -23,3 +27,4 @@ export type ResolvedPos = PMResolvedPos<EditorSchema>;
 export type InputRule = PMInputRule<EditorSchema>;
 export type Mapping = PMMapping;
 export type Fragment = PMFragment<EditorSchema>;
+export type NodeView = PMNodeView<EditorSchema>;

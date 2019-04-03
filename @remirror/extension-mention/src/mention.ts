@@ -18,20 +18,12 @@ import { DEFAULT_MATCHER } from './utils';
  * node.
  */
 export class Mention extends NodeExtension<MentionOptions> {
-  /**
-   * The name is dynamically generated based on the passed in name.
-   * It must start with 'mention'
-   *
-   * @readonly
-   */
   get name() {
     return 'mention' as const;
   }
 
   /**
    * Provide the default options for this extension
-   *
-   * @readonly
    */
   get defaultOptions() {
     return {
@@ -99,7 +91,7 @@ export class Mention extends NodeExtension<MentionOptions> {
   }
 
   /**
-   * TODO: Implement a past rule using the markPaste rule for inspiration
+   * TODO: Implement a paste rule using the markPaste rule for inspiration
    * ? Also create a test that uses the Clipboard event api to simulate pasting text
    */
   public pasteRules() {

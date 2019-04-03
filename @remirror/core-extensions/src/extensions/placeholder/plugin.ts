@@ -69,10 +69,6 @@ interface ApplyStateParams extends SharedParams {
  * Apply state for managing the created placeholder plugin
  *
  * @param params
- * @param params.pluginState
- * @param params.extension
- * @param params.tr
- * @param params.state
  */
 const applyState = ({ pluginState, extension, tr, state }: ApplyStateParams) => {
   const meta = getPluginMeta<PlaceholderPluginMeta>(extension.pluginKey, tr);
@@ -102,6 +98,7 @@ const applyState = ({ pluginState, extension, tr, state }: ApplyStateParams) => 
  */
 const createDecorationSet = ({ extension, state }: SharedParams) => {
   const { empty } = getPluginState<PlaceholderPluginState>(extension.pluginKey, state);
+  const { emptyNodeClass, placeholder } = extension.options;
 
   if (!empty) {
     return;
@@ -109,7 +106,9 @@ const createDecorationSet = ({ extension, state }: SharedParams) => {
   const decorations: Decoration[] = [];
   state.doc.descendants((node, pos) => {
     const decoration = Decoration.node(pos, pos + node.nodeSize, {
-      class: extension.options.emptyNodeClass,
+      class: emptyNodeClass,
+      // @ts-ignore
+      'data-placeholder': placeholder,
     });
     decorations.push(decoration);
   });

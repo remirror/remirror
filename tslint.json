@@ -8,12 +8,16 @@
       true,
       "dev",
       [
+        "@storybook/react",
+        "@storybook/addon-actions",
+        "@storybook/addon-links",
         "jest-axe",
         "jest",
         "jest-cli",
         "jest-dom",
         "jest-emotion",
-        "react-testing-library",
+        "@testing-library/react",
+        "react-hooks-testing-library",
         "puppeteer",
         "puppeteer-to-istanbul",
         "jest-extended",
@@ -38,11 +42,24 @@
     "no-this-assignment": [true, { "allowed-names": ["^self$"], "allow-destructuring": true }],
     "no-submodule-imports": [
       true,
-      "react-testing-library",
-      "emoji-regex/es2015/text",
-      "react-dom/server",
+      "@testing-library/react",
+      "emoji-regex",
+      "react-dom",
       "emoji-mart",
-      "jest-dom"
+      "react-feather",
+      "prismjs",
+      "refractor",
+      "react-syntax-highlighter",
+      "@storybook/addon-links",
+      "@storybook/addon-actions",
+      "jest-dom",
+      "firebase",
+      "rxfire",
+      "lodash",
+      "date-fns",
+      "next",
+      "rxjs",
+      "mz"
     ]
   }
 }

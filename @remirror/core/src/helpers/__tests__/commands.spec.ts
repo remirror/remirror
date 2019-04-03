@@ -5,12 +5,12 @@ describe('removeMark', () => {
   it('should remove the mark when selected', () => {
     const from = doc(p(strong('<start>bold<end>')));
     const to = doc(p('bold'));
-    expect(removeMark(schema.marks.strong)).transformsPMNode({ from, to });
+    expect(removeMark({ type: schema.marks.strong })).transformsPMNode({ from, to });
   });
 
   it('should not remove when cursor is within the mark', () => {
     const from = doc(p(strong('bo<cursor>ld')));
-    expect(removeMark(schema.marks.strong)).transformsPMNode({ from });
+    expect(removeMark({ type: schema.marks.strong })).transformsPMNode({ from });
   });
 });
 
@@ -73,7 +73,13 @@ describe('toggleBlockItem', () => {
   it('toggles to the specified type', () => {
     const from = doc(p('toggled<cursor>'));
     const to = doc(h1('toggled'));
-    expect(toggleBlockItem(schema.nodes.heading, schema.nodes.paragraph, { level: 1 })).transformsPMNode({
+    expect(
+      toggleBlockItem({
+        type: schema.nodes.heading,
+        toggleType: schema.nodes.paragraph,
+        attrs: { level: 1 },
+      }),
+    ).transformsPMNode({
       from,
       to,
     });
@@ -82,7 +88,13 @@ describe('toggleBlockItem', () => {
   it('removes the toggled type', () => {
     const from = doc(h1('<cursor>toggled'));
     const to = doc(p('toggled'));
-    expect(toggleBlockItem(schema.nodes.heading, schema.nodes.paragraph, { level: 1 })).transformsPMNode({
+    expect(
+      toggleBlockItem({
+        type: schema.nodes.heading,
+        toggleType: schema.nodes.paragraph,
+        attrs: { level: 1 },
+      }),
+    ).transformsPMNode({
       from,
       to,
     });

@@ -100,7 +100,7 @@ describe('predicates', () => {
 
   it('isError', () => {
     const passValue = new Error('Pass');
-    const failValue = new class Simple {}();
+    const failValue = new (class Simple {})();
     expect(isError(passValue)).toBeTrue();
     expect(isError(failValue)).toBeFalse();
   });
@@ -149,9 +149,9 @@ describe('predicates', () => {
 
   it('isPlainObject', () => {
     const passValue = { a: 'a' };
-    const failValue = new class Simple {
+    const failValue = new (class Simple {
       public a = 'a';
-    }();
+    })();
     const simpleFailValue = undefined;
     expect(isPlainObject(passValue)).toBeTrue();
     expect(isPlainObject(failValue)).toBeFalse();
@@ -215,7 +215,7 @@ describe('predicates', () => {
   });
 
   it('isObject', () => {
-    const passValue = new class Simple {}();
+    const passValue = new (class Simple {})();
     const failValue = false;
     expect(isObject(passValue)).toBeTrue();
     expect(isObject(failValue)).toBeFalse();
@@ -224,7 +224,7 @@ describe('predicates', () => {
   it('isEmptyObject', () => {
     const passValue = {};
     const failValue = { oop: 'sie' };
-    const altPassValue = new class Simple {}();
+    const altPassValue = new (class Simple {})();
     expect(isEmptyObject(passValue)).toBeTrue();
     expect(isEmptyObject(failValue)).toBeFalse();
     expect(isEmptyObject(altPassValue)).toBeTrue();

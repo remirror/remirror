@@ -2,7 +2,7 @@ import { environment, isTextDOMNode } from '@remirror/core';
 
 /**
  * Polyfill DOMElement.innerText because JSDOM lacks support for it.
- * @link https://github.com/tmpvar/jsdom/issues/1245
+ * See {@link https://github.com/tmpvar/jsdom/issues/1245}
  */
 
 export const jsdomPolyfill = () => {

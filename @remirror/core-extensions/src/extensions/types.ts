@@ -1,3 +1,4 @@
+import { ObjectInterpolation } from '@emotion/core';
 import { BaseExtensionOptions, NodeMatch } from '@remirror/core';
 
 export interface CompositionOptions extends BaseExtensionOptions {
@@ -8,7 +9,20 @@ export interface CompositionOptions extends BaseExtensionOptions {
 }
 
 export interface PlaceholderOptions extends BaseExtensionOptions {
+  /**
+   * The placeholder text to use.
+   */
+  placeholder: string;
+
+  /**
+   * The class to decorate the empty top level node with.
+   */
   emptyNodeClass?: string;
+
+  /**
+   * Additional styles to inject
+   */
+  placeholderStyle?: ObjectInterpolation<undefined>;
 }
 
 export interface PlaceholderPluginState extends Required<PlaceholderOptions> {

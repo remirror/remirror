@@ -32,28 +32,28 @@ export interface SuggestionsMatcher {
   /**
    * The character to match against
    *
-   * @default '@'
+   * @defaultValue '@'
    */
   char: string;
 
   /**
    * Whether to only match from the start of the line
    *
-   * @default false
+   * @defaultValue false
    */
   startOfLine: boolean;
 
   /**
    * A regex containing all supported characters.
    *
-   * @default /[\w\d_]+/
+   * @defaultValue `/[\w\d_]+/`
    */
   supportedCharacters: RegExp | string;
 
   /**
    * Name of matching character - This will be appended to the classnames
    *
-   * @default 'at'
+   * @defaultValue 'at'
    */
   name: string;
 }
@@ -125,7 +125,7 @@ export interface MentionOptions extends NodeExtensionOptions {
   /**
    * Text to append after the mention has been added.
    *
-   * @default ' '
+   * @defaultValue ' '
    */
   appendText?: string;
 
@@ -142,14 +142,14 @@ export interface MentionOptions extends NodeExtensionOptions {
   /**
    * Called when a suggestion is entered for the first time.
    *
-   * @default () => void
+   * @defaultValue `() => void`
    */
   onEnter?(params: SuggestionsCallbackParams): void;
 
   /**
    * Called when a suggestion is active and has changed.
    *
-   * @default () => void
+   * @defaultValue `() => void`
    */
   onChange?(params: SuggestionsCallbackParams): void;
 
@@ -158,7 +158,7 @@ export interface MentionOptions extends NodeExtensionOptions {
    * Can be used to force the command to run e.g. when no match was found but a hash
    * should still be created this can be used to call the command parameter and trigger the mention being created.
    *
-   * @default () => void
+   * @defaultValue `() => void`
    */
   onExit?(params: SuggestionsCallbackParams): void;
 
@@ -168,7 +168,7 @@ export interface MentionOptions extends NodeExtensionOptions {
    *
    * Return to true to prevent the any further keydown actions and run what you'd like to run.
    *
-   * @default () => false
+   * @defaultValue `() => false`
    */
   onKeyDown?(params: OnKeyDownParams): boolean;
 }

@@ -9,7 +9,7 @@ export const isUSKeyboardCharacter = (char: unknown): char is SupportCharacters 
   isString(char) && Object.keys(rawUSKeyboardLayout).includes(char);
 
 /**
- * @see https://github.com/GoogleChrome/puppeteer/blob/07febb637c78cd59e22a15166f816d838a36e614/lib/USKeyboardLayout.js
+ * See {@link https://github.com/GoogleChrome/puppeteer/blob/07febb637c78cd59e22a15166f816d838a36e614/lib/USKeyboardLayout.js}
  */
 const rawUSKeyboardLayout = {
   '0': { keyCode: 48, key: '0', code: 'Digit0' },

@@ -1,5 +1,6 @@
-import { WysiwygUI } from '@remirror/ui-wysiwyg';
 import React from 'react';
+
+import { WysiwygUI } from '@remirror/ui-wysiwyg';
 
 export const ExampleWysiwygUI = () => {
   return <WysiwygUI initialContent={initialContent} />;

@@ -7,8 +7,10 @@ import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 import { startCase } from 'lodash';
+import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
+import { join } from 'path';
 
-/* Copied from https://github.com/ianstormtaylor/slate/blob/6302b2d9d2d6a62ba32e6a7d987db5db8f846eef/support/rollup/factory.js#L1-L148 */
+/* Inspired by https://github.com/ianstormtaylor/slate/blob/6302b2d9d2d6a62ba32e6a7d987db5db8f846eef/support/rollup/factory.js#L1-L148 */
 
 /**
  * Return a Rollup configuration for a `pkg` with `env` and `target`.
@@ -38,6 +40,11 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
       browser: true,
       extensions,
       preferBuiltins: false,
+    }),
+
+    // Automatically generate size snapshots
+    sizeSnapshot({
+      snapshotPath: join(process.cwd(), 'support/.size-snapshot.json'),
     }),
 
     // Convert JSON imports to ES6 modules.
@@ -117,12 +124,12 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
           format: 'es',
           sourcemap: true,
         },
-        // {
-        //   file: `${rootFolder}/${folderName}/lib/dist/${folderName}.js`,
-        //   format: 'cjs',
-        //   exports: 'named',
-        //   sourcemap: true,
-        // },
+        {
+          file: `${rootFolder}/${folderName}/${pkg.main}`,
+          format: 'cjs',
+          exports: 'named',
+          sourcemap: true,
+        },
       ],
       // We need to explicitly state which modules are external, meaning that
       // they are present at runtime. In the case of non-UMD configs, this means

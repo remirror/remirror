@@ -1,50 +1,52 @@
 {
   "name": "@remirror/react-ssr",
   "description": "ssr utilities for remirror",
-  "version": "0.0.1-alpha.11",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "@remirror/core": "0.0.1-alpha.11",
-    "@remirror/renderer-react": "0.0.1-alpha.11",
-    "min-document": "^2.19.0"
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/react-ssr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ifiokjr/remirror.git",
+    "directory": "@remirror/react-ssr"
   },
-  "devDependencies": {
-    "@remirror/core-extensions": "0.0.1-alpha.11",
-    "prosemirror-model": "1.7.0",
-    "prosemirror-state": "1.2.2"
-  },
+  "version": "0.0.1-alpha.11",
+  "main": "lib/index.js",
+  "module": "lib/dist/react-ssr.esm.js",
   "files": [
     "lib",
     "src"
   ],
-  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/react-ssr",
-  "main": "lib/index.js",
-  "module": "lib/dist/react-ssr.esm.js",
+  "scripts": {
+    "build": "run-p build:*",
+    "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "dev": "run-p dev:*",
+    "dev:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s --watch",
+    "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
+    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@babel/runtime": "^7.4.5",
+    "@remirror/core": "0.0.1-alpha.11",
+    "@remirror/renderer-react": "0.0.1-alpha.11",
+    "@types/min-document": "^2.19.0",
+    "@types/prosemirror-view": "1.3.2",
+    "min-document": "^2.19.0",
+    "prosemirror-state": "^1.2.3",
+    "prosemirror-view": "^1.9.8"
+  },
   "peerDependencies": {
-    "@babel/runtime-corejs2": ">=7",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
-    "prosemirror-view": "1.8.3",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/react-ssr"
-  },
-  "scripts": {
-    "build": "run-s build:declaration build:babel",
-    "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
-    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
-  },
-  "types": "lib/index.d.ts",
+  "cjs": "lib/dist/react-ssr.cjs.js",
   "umd": "lib/dist/react-ssr.umd.js",
   "umd:min": "lib/dist/react-ssr.umd.min.js",
   "umdGlobals": {

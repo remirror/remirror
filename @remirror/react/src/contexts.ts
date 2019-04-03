@@ -1,13 +1,14 @@
-import { Cast, ExtensionManager } from '@remirror/core';
 import { createContext } from 'react';
-import { InjectedRemirrorProps } from './types';
+
+import { ExtensionManager } from '@remirror/core';
+import { InjectedRemirrorProps } from '@remirror/react-utils';
 
 /**
  * Creates a ReactContext for the RemirrorEditor component
  */
-export const RemirrorEditorContext = createContext<InjectedRemirrorProps>(Cast<InjectedRemirrorProps>({}));
+export const RemirrorEditorContext = createContext<InjectedRemirrorProps | null>(null);
 
 /**
  * Creates a ReactContext for the RemirrorManager component
  */
-export const RemirrorManagerContext = createContext<ExtensionManager>(ExtensionManager.create([]));
+export const RemirrorManagerContext = createContext<ExtensionManager | null>(null);

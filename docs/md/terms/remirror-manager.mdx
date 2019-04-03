@@ -1,0 +1,21 @@
+### RemirrorManager
+
+This is a react component that Injects an ExtensionManager instance into the react context.
+
+```tsx
+import React, { FC } from 'react';
+import { Bold } from '@remirror/core-extensions';
+import { useRemirrorManager, RemirrorEditor } from '@remirror/react';
+
+const Editor: FC = ({ children }) => {
+  return (
+    <RemirrorManager>
+      <RemirrorExtension Constructor={Bold} />
+      {() => {
+        const manager = useRemirrorManager(); // Picked from the context
+        return <RemirrorEditor manager={manager}>{children}</RemirrorEditor>;
+      }}
+    </RemirrorManager>
+  );
+};
+```

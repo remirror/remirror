@@ -1,10 +1,13 @@
+import { fireEvent, render } from '@testing-library/react';
+import { axe } from 'jest-axe';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
+import { EditorState, fromHTML } from '@remirror/core';
+import { InjectedRemirrorProps, RemirrorEditorStateListenerParams } from '@remirror/react-utils';
 import { createTestManager } from '@test-fixtures/schema-helpers';
-import { axe } from 'jest-axe';
-import { fireEvent, render } from 'react-testing-library';
-import { InjectedRemirrorProps, Remirror } from '../..';
+import { Remirror } from '../';
+import { RemirrorEditorProps } from '../providers';
 
 const textContent = `This is editor text`;
 const label = 'Remirror editor';
@@ -55,7 +58,7 @@ test('should allow text input and fire all handlers', () => {
     return <div />;
   });
   const { getByLabelText } = render(
-    <Remirror label={label} {...handlers} manager={createTestManager()}>
+    <Remirror label={label} {...handlers} manager={createTestManager()} stringHandler={fromHTML}>
       {mock}
     </Remirror>,
   );
@@ -96,9 +99,15 @@ test('should render a unique class on the root document', () => {
 });
 
 describe('initialContent', () => {
-  it('should render with html content', () => {
+  it('should render with string content', () => {
     const { container } = render(
-      <Remirror label={label} {...handlers} manager={createTestManager()} initialContent={'<p>Hello</p>'}>
+      <Remirror
+        label={label}
+        {...handlers}
+        manager={createTestManager()}
+        initialContent={'<p>Hello</p>'}
+        stringHandler={fromHTML}
+      >
         {() => <div />}
       </Remirror>,
     );
@@ -127,5 +136,63 @@ describe('initialContent', () => {
       </Remirror>,
     );
     expect(container.innerHTML).toInclude('Hello');
+  });
+});
+
+describe('Remirror Controlled Component', () => {
+  const initialContent = `<p>Hello</p>`;
+  const expectedContent = `<p>World</p>`;
+  let props: RemirrorEditorProps;
+  beforeEach(() => {
+    props = {
+      label,
+      manager: createTestManager(),
+      initialContent,
+      stringHandler: fromHTML,
+    };
+  });
+
+  it('should call onStateChange', () => {
+    let value: EditorState | null = null;
+    const onStateChange = jest.fn<void, [RemirrorEditorStateListenerParams]>(params => {
+      value = params.newState;
+    });
+    render(
+      <Remirror {...props} value={value} onStateChange={onStateChange}>
+        {() => <div />}
+      </Remirror>,
+    );
+
+    expect(onStateChange).toHaveBeenCalled();
+    expect(value).not.toBeNull();
+    expect(value!.doc.toJSON()).toMatchSnapshot();
+  });
+
+  it('should only update the state when value changes', () => {
+    let testValue: EditorState | null = null;
+    let setContent: InjectedRemirrorProps['setContent'] = jest.fn();
+    const onStateChange = jest.fn<void, [RemirrorEditorStateListenerParams]>(params => {
+      testValue = params.newState;
+    });
+
+    const mock = jest.fn((params: InjectedRemirrorProps) => {
+      setContent = params.setContent;
+      return <div />;
+    });
+
+    const Cmp = ({ value }: { value?: EditorState | null }) => (
+      <Remirror {...props} onStateChange={onStateChange} value={value}>
+        {mock}
+      </Remirror>
+    );
+    const { rerender, getByRole } = render(<Cmp value={null} />);
+
+    setContent(expectedContent, true);
+    rerender(<Cmp value={null} />);
+    expect(getByRole('textbox')).toContainHTML(initialContent);
+
+    setContent(expectedContent, true);
+    rerender(<Cmp value={testValue} />);
+    expect(getByRole('textbox')).toContainHTML(expectedContent);
   });
 });

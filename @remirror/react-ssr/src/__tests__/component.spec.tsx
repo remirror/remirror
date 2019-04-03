@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { initialJson, manager, plugins, schema } from '@test-fixtures/schema-helpers';
+import { render } from '@testing-library/react';
 import { EditorState } from 'prosemirror-state';
-import { render } from 'react-testing-library';
 
 import { RemirrorSSR } from '..';
 

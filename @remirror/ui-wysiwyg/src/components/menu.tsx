@@ -30,7 +30,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import keyCode from 'keycode';
 
 import { Attrs, memoize } from '@remirror/core';
-import { bubblePositioner, useRemirrorContext } from '@remirror/react';
+import { bubblePositioner, useRemirror } from '@remirror/react';
 import { ButtonState, styled } from '../theme';
 import {
   BubbleContent,
@@ -66,6 +66,9 @@ const runAction = memoize(
   },
 );
 
+/**
+ * Retrieve the state for the button
+ */
 const getButtonState = (active: boolean, inverse = false): ButtonState =>
   active ? (inverse ? 'active-inverse' : 'active-default') : inverse ? 'inverse' : 'default';
 
@@ -74,7 +77,7 @@ interface MenuBarProps extends Pick<BubbleMenuProps, 'activateLink'> {
 }
 
 export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
-  const { actions } = useRemirrorContext();
+  const { actions } = useRemirror();
 
   return (
     <Toolbar>
@@ -143,12 +146,14 @@ const bubbleMenuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
 ];
 
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
-  const { actions, getPositionerProps } = useRemirrorContext();
+  const { actions, getPositionerProps } = useRemirror();
   const { bottom, left, ref } = getPositionerProps({
     ...bubblePositioner,
     isActive: params => bubblePositioner.isActive(params) || linkActivated,
     positionerId: 'bubbleMenu',
   });
+
+  console.log(bottom, left);
 
   const updateLink = (href: string) => actions.linkUpdate.command({ href });
   const removeLink = () => actions.linkRemove.command();
@@ -180,7 +185,7 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
               })}
               <MenuItem
                 icon={faLink}
-                state={getButtonState(actions.linkToggle.isActive(), true)}
+                state={getButtonState(actions.linkUpdate.isActive(), true)}
                 onClick={activateLink}
                 inverse={true}
                 withPadding='horizontal'

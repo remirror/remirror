@@ -16,14 +16,8 @@ import {
   Strike,
   Underline,
 } from '@remirror/core-extensions';
-import {
-  asDefaultProps,
-  ManagedRemirrorEditor,
-  RemirrorExtension,
-  RemirrorManager,
-  RemirrorProps,
-  useRemirrorContext,
-} from '@remirror/react';
+import { ManagedRemirrorEditor, RemirrorExtension, RemirrorManager, useRemirror } from '@remirror/react';
+import { asDefaultProps, RemirrorManagerProps } from '@remirror/react-utils';
 import deepMerge from 'deepmerge';
 import { ThemeProvider } from 'emotion-theming';
 import React, { FC, PureComponent } from 'react';
@@ -32,7 +26,7 @@ import { WysiwygUIProps } from '../types';
 import { BubbleMenu, BubbleMenuProps, MenuBar } from './menu';
 import { EditorWrapper, InnerEditorWrapper } from './styled';
 
-const defaultPlaceholder: RemirrorProps['placeholder'] = [
+const defaultPlaceholder: RemirrorManagerProps['placeholder'] = [
   'Start editing...',
   {
     color: '#aaa',
@@ -70,11 +64,11 @@ export class WysiwygUI extends PureComponent<WysiwygUIProps> {
   }
 
   public render() {
-    const { theme: _, ...props } = this.props;
+    const { theme: _, placeholder, ...props } = this.props;
 
     return (
       <ThemeProvider theme={this.editorTheme}>
-        <RemirrorManager>
+        <RemirrorManager placeholder={placeholder}>
           <RemirrorExtension Constructor={Bold} />
           <RemirrorExtension Constructor={Underline} />
           <RemirrorExtension Constructor={Italic} />
@@ -104,7 +98,7 @@ export class WysiwygUI extends PureComponent<WysiwygUIProps> {
 }
 
 const InnerEditor: FC<BubbleMenuProps> = ({ linkActivated, deactivateLink, activateLink }) => {
-  const { getRootProps } = useRemirrorContext();
+  const { getRootProps } = useRemirror();
 
   return (
     <EditorWrapper>

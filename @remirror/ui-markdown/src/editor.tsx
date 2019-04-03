@@ -1,0 +1,148 @@
+import {
+  createDocumentNode,
+  Doc,
+  EditorState,
+  ExtensionManager,
+  isObjectNode,
+  isProsemirrorNode,
+  isString,
+  ProsemirrorNode,
+  RemirrorContentType,
+  SchemaParams,
+  StringHandlerParams,
+  Text,
+} from '@remirror/core';
+import { baseExtensions, Composition, History, Placeholder } from '@remirror/core-extensions';
+import { CodeBlock } from '@remirror/extension-code-block';
+import { RemirrorEditor, RemirrorEditorProps, RemirrorEditorStateListenerParams } from '@remirror/react';
+import React, { FC, useMemo, useState } from 'react';
+import { fromMarkdown, toMarkdown } from './markdown';
+
+const useMarkdownManager = () => {
+  return useMemo(
+    () =>
+      ExtensionManager.create([
+        { priority: 1, extension: new Doc({ content: 'block' }) },
+        { priority: 1, extension: new CodeBlock({ defaultLanguage: 'markdown' }) },
+        new Text(),
+        new Composition(),
+        new History(),
+      ]),
+    [],
+  );
+};
+
+const MarkdownEditor: FC<RemirrorEditorProps> = props => {
+  return <RemirrorEditor {...props} />;
+};
+
+const useWysiwygManager = () => {
+  return useMemo(() => ExtensionManager.create([...baseExtensions, new CodeBlock(), new Placeholder()]), []);
+};
+
+const WysiwygEditor: FC<RemirrorEditorProps> = props => {
+  return (
+    <RemirrorEditor {...props}>
+      <div />
+    </RemirrorEditor>
+  );
+};
+
+interface CreateInitialContentParams extends SchemaParams {
+  /** The content to render */
+  content: RemirrorContentType;
+}
+
+const createInitialContent = ({ content, schema }: CreateInitialContentParams): Content => {
+  if (isString(content)) {
+    return {
+      markdown: content,
+      pmNode: fromMarkdown(content, schema),
+    };
+  }
+
+  if (isProsemirrorNode(content)) {
+    return {
+      markdown: toMarkdown(content),
+      pmNode: content,
+    };
+  }
+
+  if (!isObjectNode(content)) {
+    throw new Error('Invalid content passed into the editor');
+  }
+
+  const pmNode = createDocumentNode({ content, schema });
+
+  return {
+    markdown: toMarkdown(pmNode),
+    pmNode,
+  };
+};
+
+export interface EditorProps {
+  initialValue?: RemirrorContentType;
+  editor: 'markdown' | 'wysiwyg';
+}
+
+// const Loading = () => <p>Loading...</p>
+
+interface Content {
+  markdown: string;
+  pmNode: ProsemirrorNode;
+}
+
+/**
+ * Transform a markdown content string into a Prosemirror node within a codeBlock editor instance
+ */
+const markdownStringHandler: StringHandlerParams['stringHandler'] = ({
+  content: markdownContent,
+  schema,
+}) => {
+  return schema.nodes.doc.create(
+    {},
+    schema.nodes.codeBlock.create({ language: 'markdown' }, schema.text(markdownContent)),
+  );
+};
+
+export const Editor: FC<EditorProps> = ({ initialValue = '', editor }) => {
+  const wysiwygManager = useWysiwygManager();
+  const markdownManager = useMarkdownManager();
+  const initialContent = createInitialContent({ content: initialValue, schema: wysiwygManager.schema });
+  const [rawContent, setRawContent] = useState<Content>(initialContent);
+  const [markdownEditorState, setMarkdownEditorState] = useState<EditorState>();
+  const [wysiwygEditorState, setWysiwygEditorState] = useState<EditorState>();
+
+  const createWysiwygState = (content: ProsemirrorNode) => wysiwygManager.createState({ content });
+  const createMarkdownState = (content: string) =>
+    wysiwygManager.createState({ content, stringHandler: markdownStringHandler });
+
+  const onMarkdownStateChange = ({ newState, getText }: RemirrorEditorStateListenerParams) => {
+    setMarkdownEditorState(newState);
+    setRawContent({ ...rawContent, markdown: getText() });
+    setWysiwygEditorState(createWysiwygState(fromMarkdown(getText(), wysiwygManager.schema)));
+  };
+
+  const onWysiwygStateChange = ({ newState }: RemirrorEditorStateListenerParams) => {
+    setWysiwygEditorState(newState);
+    setRawContent({ ...rawContent, pmNode: newState.doc });
+    setMarkdownEditorState(createMarkdownState(toMarkdown(newState.doc)));
+  };
+
+  return editor === 'markdown' ? (
+    <MarkdownEditor
+      manager={markdownManager}
+      initialContent={rawContent.markdown}
+      stringHandler={markdownStringHandler}
+      value={markdownEditorState}
+      onStateChange={onMarkdownStateChange}
+    />
+  ) : (
+    <WysiwygEditor
+      manager={wysiwygManager}
+      initialContent={rawContent.pmNode}
+      value={wysiwygEditorState}
+      onStateChange={onWysiwygStateChange}
+    />
+  );
+};

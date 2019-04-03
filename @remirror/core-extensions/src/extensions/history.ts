@@ -6,7 +6,7 @@ export interface HistoryOptions extends BaseExtensionOptions {
    * The amount of history events that are collected before the
    * oldest events are discarded.
    *
-   * @default 100.
+   * @defaultValue `100`
    */
   depth?: number | null;
 
@@ -15,7 +15,7 @@ export interface HistoryOptions extends BaseExtensionOptions {
    * started. Note that when changes
    * aren't adjacent, a new group is always started.
    *
-   * @default 500
+   * @defaultValue `500`
    */
   newGroupDelay?: number | null;
 }

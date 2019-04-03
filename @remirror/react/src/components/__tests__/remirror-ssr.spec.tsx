@@ -4,7 +4,7 @@
 
 import React, { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
-import { Remirror } from '../..';
+import { Remirror } from '../';
 
 import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { docNodeSimpleJSON } from '@test-fixtures/object-nodes';

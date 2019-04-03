@@ -4,5 +4,5 @@
     "lib": ["esnext", "dom"],
     "types": ["jest", "node", "puppeteer"]
   },
-  "include": ["./**/*.ts"]
+  "include": ["./**/*.ts", "webpack/extension.config.mjs"]
 }

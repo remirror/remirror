@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import { Attrs } from '@remirror/core';
-import { useRemirrorContext } from '@remirror/react';
+import { useRemirror } from '@remirror/react';
 import { ActiveTwitterTagData, ActiveTwitterUserData, MentionState, TwitterUIProps } from '../types';
 import { CharacterCountIndicator } from './character-count';
 import { EmojiPicker, EmojiPickerProps, EmojiSmiley } from './emoji-picker';
@@ -37,7 +37,7 @@ export const TwitterEditor: FC<TwitterEditorProps> = ({
     getRootProps,
     actions,
     state: { newState },
-  } = useRemirrorContext();
+  } = useRemirror();
   const content = newState.doc.textContent;
   return (
     <div>

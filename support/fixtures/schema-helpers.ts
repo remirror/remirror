@@ -1,4 +1,4 @@
-import { Doc, ExtensionManager, Paragraph, Text, Cast, ExtensionMapValue } from '@remirror/core';
+import { Doc, ExtensionManager, Paragraph, Text, Cast, PrioritizedExtension } from '@remirror/core';
 import {
   Bold,
   Italic,
@@ -32,14 +32,14 @@ export const extensions = [
 ];
 export const manager = ExtensionManager.create(extensions).init(helpers);
 
-export const createBaseTestManager = (extra: ExtensionMapValue[] = []) =>
+export const createBaseTestManager = (extra: PrioritizedExtension[] = []) =>
   ExtensionManager.create([...baseExtensions, ...extra]);
 
-export const createTestManager = (extra: ExtensionMapValue[] = []) =>
+export const createTestManager = (extra: PrioritizedExtension[] = []) =>
   ExtensionManager.create([...extensions, ...extra]);
 
-export const schema = manager.createSchema();
-export const plugins = manager.plugins({ schema, ...helpers });
+export const schema = manager.schema;
+export const plugins = manager.plugins();
 export const testDocument = minDocument;
 export const initialJson = {
   type: 'doc',

@@ -1,40 +1,43 @@
 {
   "name": "@remirror/extension-epic-mode",
   "description": "Epic (power) mode extension for the remirror wysiwyg editor",
-  "version": "0.0.1-alpha.11",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "@remirror/core": "0.0.1-alpha.11",
-    "throttleit": "1.0.0"
-  },
-  "files": [
-    "lib",
-    "src"
-  ],
-  "main": "lib/index.js",
-  "module": "lib/dist/extension-epic-mode.esm.js",
-  "peerDependencies": {
-    "@babel/runtime-corejs2": ">=7",
-    "@types/prosemirror-state": "^1.2.3",
-    "prosemirror-state": "^1.2.2"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/extension-epic-mode"
   },
+  "version": "0.0.1-alpha.11",
+  "main": "lib/index.js",
+  "module": "lib/dist/extension-epic-mode.esm.js",
+  "files": [
+    "lib",
+    "src"
+  ],
   "scripts": {
-    "build": "run-s build:declaration build:babel",
+    "build": "run-p build:*",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "dev": "run-p dev:*",
+    "dev:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s --watch",
+    "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "types": "lib/index.d.ts",
+  "dependencies": {
+    "@babel/runtime": "^7.4.5",
+    "@remirror/core": "0.0.1-alpha.11",
+    "@types/prosemirror-state": "^1.2.3",
+    "@types/throttleit": "1.0.0",
+    "prosemirror-state": "^1.2.3",
+    "throttleit": "1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/extension-epic-mode.cjs.js",
   "umd": "lib/dist/extension-epic-mode.umd.js",
   "umd:min": "lib/dist/extension-epic-mode.umd.min.js",
   "umdGlobals": {

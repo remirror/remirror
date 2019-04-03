@@ -15,7 +15,10 @@ export type NodeType = PMNodeType<EditorSchema>;
 export type EditorState<GSchema extends EditorSchema = EditorSchema> = PMEditorState<GSchema>;
 
 /**
- * A tuple for representing regex's
+ * A tuple for use with the regex constructor.
+ *
+ * @remarks
+ *
  * Can be spread as parameters for the `RegExp` constructor
  *
  * ```ts
@@ -37,6 +40,8 @@ export type Predicate<A> = (u: unknown) => u is A;
 
 /**
  * An object with string keys and values of type `any`
+ *
+ * @remarks
  * Taken from `simplytyped`
  */
 export interface PlainObject {
@@ -45,6 +50,8 @@ export interface PlainObject {
 
 /**
  * Concisely and cleanly define an arbitrary function.
+ *
+ * @remarks
  * Taken from `simplytyped`
  * Useful when designing many api's that don't care what function they take in, they just need to know what it returns.
  */
@@ -72,7 +79,7 @@ export type MakeOptional<GType extends {}, GKeys extends keyof GType> = Omit<GTy
 export type MakeNullable<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
   { [P in GKeys]: GType[P] | null };
 
-/**
+/**W
  * Makes specified keys of an interface Required while the rest remain unchanged.
  */
 export type MakeRequired<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
@@ -85,15 +92,24 @@ export type MakeReadonly<GType extends {}, GKeys extends keyof GType> = Omit<GTy
   { +readonly [P in GKeys]: GType[P] };
 
 /**
- * Type literals
+ * All the literal types
  */
 export type Literal = string | number | boolean | undefined | null | void | {};
 
+/**
+ * A JSON representation of a prosemirror Mark
+ */
 export interface ObjectMark {
   type: string;
   attrs?: Record<string, string | null>;
 }
 
+/**
+ * A JSON representation of the prosemirror Node.
+ *
+ * @remarks
+ * This is used to represent the top level doc nodes content.
+ */
 export interface ObjectNode {
   type: string;
   marks?: Array<ObjectMark | string>;
@@ -108,8 +124,11 @@ export interface ObjectNode {
  * - JSON object matching Prosemirror expected shape
  * - A top level ProsemirrorNode
  */
-export type RemirrorContentType = string | ObjectNode | ProsemirrorNode;
+export type RemirrorContentType = string | ObjectNode | ProsemirrorNode | EditorState;
 
+/**
+ * Defines a position
+ */
 export interface Position {
   top: number;
   left: number;
@@ -117,10 +136,22 @@ export interface Position {
   right: number;
 }
 
+/**
+ * Used for attributes which can be added to prosemirror nodes and marks.
+ */
 export type Attrs = Record<string, string | number | undefined>;
 
+/**
+ * Data representation tuple used for injecting extra attributes into an extension.
+ */
 export type ExtraAttrs = Array<string | [string, string]>;
 
+/**
+ * Defines the options that every extension can accept at instantiation.
+ *
+ * @remarks
+ * Make sure to extend from this when defining custom options for your extension.
+ */
 export interface BaseExtensionOptions {
   /**
    * Add extra styles to the extension.
@@ -156,7 +187,21 @@ export interface BaseExtensionOptions {
    * Whether to include the extension's plugin
    */
   includePlugin?: boolean;
+
+  /**
+   * Whether to include the extension's nodeView
+   */
+  includeNodeView?: boolean;
+
+  /**
+   * Whether to use the attributes provided by this extension
+   */
+  includeAttributes?: boolean;
 }
 
-export type NodeExtensionOptions = BaseExtensionOptions;
-export type MarkExtensionOptions = BaseExtensionOptions;
+export interface NodeExtensionOptions<GComponent = any> extends BaseExtensionOptions {
+  SSRComponent?: GComponent;
+}
+export interface MarkExtensionOptions<GComponent = any> extends BaseExtensionOptions {
+  SSRComponent?: GComponent;
+}

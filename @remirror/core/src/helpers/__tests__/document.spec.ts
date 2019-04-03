@@ -52,6 +52,11 @@ describe('markActive', () => {
     expect(markActive(state, schema.marks.em)).toBeFalse();
   });
 
+  it('returns false with no selection', () => {
+    const { state, schema } = createEditor(doc(p(' ', em('italic'))));
+    expect(markActive(state, schema.marks.em)).toBeFalse();
+  });
+
   it('returns true when surrounding an active region', () => {
     const { state, schema } = createEditor(doc(p('Something<start>', em('is italic'), '<end> here')));
     expect(markActive(state, schema.marks.em)).toBeTrue();
@@ -331,10 +336,11 @@ describe('createDocumentNode', () => {
     );
   });
 
-  it('creates content via html', () => {
-    expect(createDocumentNode({ content: '<p>basic html</p>', schema: testSchema })!.textContent).toContain(
-      'basic html',
-    );
+  it('creates content via custom string handler', () => {
+    expect(
+      createDocumentNode({ content: '<p>basic html</p>', schema: testSchema, stringHandler: fromHTML })!
+        .textContent,
+    ).toContain('basic html');
   });
 });
 

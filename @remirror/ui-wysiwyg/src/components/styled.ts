@@ -91,7 +91,7 @@ export const InnerEditorWrapper = styled.div`
 
 export const EditorWrapper = styled.div`
   /* border: 1px solid grey; */
-  /* position: relative; */
+  position: relative;
 `;
 
 export const BubbleMenuWrapper = styled.span`

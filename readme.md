@@ -31,7 +31,6 @@
 
 Remirror is undergoing a lot of work behind the scenes for a release candidate. Documentation is being rewritten and reskinned. To follow the progress see updates in [this issue](https://github.com/ifiokjr/remirror/issues/80) and [this branch](https://github.com/ifiokjr/remirror/tree/v0.1-rc)
 
-
 ## Getting Started
 
 ⚠️**Warning**: This is still a prerelease library. The docs are poor and the API is subject to change. Over the next few months the quality will be bumped up and the use cases will grow.

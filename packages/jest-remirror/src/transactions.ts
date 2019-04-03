@@ -1,8 +1,10 @@
-import { SchemaParams } from '@remirror/core';
+import { findDOMRefAtPos, PosParams, SchemaParams } from '@remirror/core';
+import { fireEvent } from '@testing-library/react';
 import { AllSelection, NodeSelection, TextSelection } from 'prosemirror-state';
 import { coerce, offsetTags } from './builder';
+import { createEvents } from './events';
 import { Keyboard } from './keys';
-import { TaggedProsemirrorNode, Tags, TestEditorViewParams } from './types';
+import { FireParams, TaggedProsemirrorNode, Tags, TestEditorViewParams } from './types';
 
 interface InsertTextParams extends TestEditorViewParams {
   /** Text to insert */
@@ -60,6 +62,39 @@ export function keyboardShortcut({ view, shortcut }: KeyboardShortcutParams) {
     .start()
     .mod({ text: shortcut })
     .end();
+}
+
+interface FireEventAtPositionParams extends TestEditorViewParams, FireParams {}
+
+/**
+ * Fires an event at the provided position or the current selected position in the dom.
+ */
+export function fireEventAtPosition({
+  view,
+  event,
+  options = {},
+  position = view.state.selection.anchor,
+}: FireEventAtPositionParams) {
+  const element = findDOMRefAtPos(position, view)!;
+  const syntheticEvents = createEvents(event, options);
+
+  syntheticEvents.forEach(syntheticEvent => fireEvent(element, syntheticEvent));
+
+  if (
+    event === ('tripleClick' as any) &&
+    !view.someProp('handleTripleClick', f => f(view, position, syntheticEvents[2]))
+  ) {
+    syntheticEvents.forEach(syntheticEvent => view.dispatchEvent(syntheticEvent));
+  }
+  if (
+    event === 'dblClick' &&
+    !view.someProp('handleDoubleClick', f => f(view, position, syntheticEvents[0]))
+  ) {
+    syntheticEvents.forEach(syntheticEvent => view.dispatchEvent(syntheticEvent));
+  }
+  if (event === 'click' && !view.someProp('handleClick', f => f(view, position, syntheticEvents[0]))) {
+    syntheticEvents.forEach(syntheticEvent => view.dispatchEvent(syntheticEvent));
+  }
 }
 
 interface ProcessTextParams extends SchemaParams {
@@ -125,6 +160,7 @@ interface DispatchTextSelectionParams extends TestEditorViewParams {
 export const dispatchTextSelection = ({ view, start, end }: DispatchTextSelectionParams) => {
   const { state } = view;
   const tr = state.tr.setSelection(TextSelection.create(state.doc, start, end));
+
   view.dispatch(tr);
 };
 
@@ -143,12 +179,7 @@ export const dispatchAllSelection = ({ view, taggedDoc }: DispatchAllSelectionPa
   view.dispatch(view.state.tr.setSelection(new AllSelection(taggedDoc)));
 };
 
-interface DispatchNodeSelectionParams extends TestEditorViewParams {
-  /**
-   * The position of the cursor within the node which will be selected
-   */
-  pos: number;
-}
+interface DispatchNodeSelectionParams extends TestEditorViewParams, PosParams {}
 
 /**
  * Dispatch a text selection from start to end

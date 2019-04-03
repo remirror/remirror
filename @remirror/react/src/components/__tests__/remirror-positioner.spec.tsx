@@ -2,8 +2,8 @@ import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
 import { PlainObject } from '@remirror/core';
 import { createTestManager } from '@test-fixtures/schema-helpers';
-import { render } from 'react-testing-library';
-import { Remirror } from '../..';
+import { render } from '@testing-library/react';
+import { Remirror } from '../';
 
 const mock = jest.fn();
 const Menu: FunctionComponent<RefAttributes<HTMLDivElement> & PlainObject> = forwardRef((_, ref) => {

@@ -74,7 +74,7 @@ const Doc: FC<SubRenderTreeProps> = ({ node, ...props }) => {
     return <RenderTree json={child} {...props} key={ii} />;
   });
 
-  return <div {...node.attrs || {}}>{children}</div>;
+  return <div {...(node.attrs || {})}>{children}</div>;
 };
 
 const defaultTypeMap: MarkMap = {
