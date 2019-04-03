@@ -12,14 +12,15 @@ import {
   Omit,
 } from '@remirror/core';
 import { InjectedRemirrorProps, Remirror, RemirrorProps } from '@remirror/react';
+import { render } from '@testing-library/react';
 import { AllSelection } from 'prosemirror-state';
-import { render } from 'react-testing-library';
 import { markFactory, nodeFactory } from './builder';
 import { jsdomSelectionPatch } from './jsdom-patch';
 import { BaseExtensionNodeNames, nodeExtensions } from './test-schema';
 import {
   dispatchNodeSelection,
   dispatchTextSelection,
+  fireEventAtPosition,
   insertText,
   keyboardShortcut,
   replaceSelection,
@@ -143,6 +144,10 @@ export const renderEditor = <
           keyboardShortcut({ shortcut, view });
           return createAddContentReturn();
         },
+        fire: params => {
+          fireEventAtPosition({ view, ...params });
+          return createAddContentReturn();
+        },
       };
     };
 
@@ -178,7 +183,7 @@ export const renderEditor = <
     utils,
     view,
     schema,
-    state: view.state,
+    getState: returnedParams.manager.getEditorState,
     add,
     nodes: nodesWithoutAttrs,
     marks: marksWithoutAttrs,

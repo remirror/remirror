@@ -30,13 +30,13 @@ export interface EpicModeOptions extends BaseExtensionOptions {
 
   /**
    * Whether the editor should shake
-   * @default true
+   * @defaultValue true
    */
   shake?: boolean;
 
   /**
    * How long the shaking should last for
-   * @default 0.3
+   * @defaultValue 0.3
    */
   shakeTime?: number;
 }

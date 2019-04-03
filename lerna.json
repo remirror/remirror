@@ -1,5 +1,5 @@
 {
-  "packages": ["@remirror/*", "support/dependencies", "docs", "packages/*"],
+  "packages": ["@remirror/*", "docs", "packages/*", "apps/*"],
   "command": {
     "publish": {
       "message": "chore(release): publish %s",

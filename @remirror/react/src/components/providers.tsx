@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { MakeOptional, Omit } from '@remirror/core';
+import { RemirrorElementType, RemirrorFC, RemirrorProps } from '@remirror/react-utils';
+import { defaultProps } from '../constants';
 import { RemirrorEditorContext } from '../contexts';
-import { defaultProps } from '../helpers';
-import { useRemirrorManagerContext } from '../hooks';
-import { RemirrorElementType, RemirrorFC, RemirrorProps } from '../types';
+import { useRemirrorManager } from '../hooks';
 import { Remirror } from './remirror';
 
-export type RemirrorProviderProps = MakeOptional<Omit<RemirrorProps, 'children'>, keyof typeof defaultProps>;
+export type RemirrorEditorProps = MakeOptional<Omit<RemirrorProps, 'children'>, keyof typeof defaultProps>;
 
 /**
  * The RemirrorProvider which injects context into any of it child components.
@@ -20,7 +20,7 @@ export type RemirrorProviderProps = MakeOptional<Omit<RemirrorProps, 'children'>
  * - `withRemirror`
  * - `withPositioner`
  */
-export const RemirrorEditor: RemirrorFC<RemirrorProviderProps> = ({ children, ...props }) => {
+export const RemirrorEditor: RemirrorFC<RemirrorEditorProps> = ({ children, ...props }) => {
   return (
     <Remirror {...props}>
       {value => {
@@ -32,17 +32,16 @@ export const RemirrorEditor: RemirrorFC<RemirrorProviderProps> = ({ children, ..
 
 RemirrorEditor.$$remirrorType = RemirrorElementType.EditorProvider;
 
+export type ManagedRemirrorEditorProps = Omit<RemirrorEditorProps, 'manager'>;
+
 /**
  * Renders the content while pulling the manager from the context and passing it on to the
  * RemirrorProvider.
  *
  * If no manager exists the child components are not rendered.
  */
-export const ManagedRemirrorEditor: RemirrorFC<Omit<RemirrorProviderProps, 'manager'>> = ({
-  children,
-  ...props
-}) => {
-  const manager = useRemirrorManagerContext();
+export const ManagedRemirrorEditor: RemirrorFC<ManagedRemirrorEditorProps> = ({ children, ...props }) => {
+  const manager = useRemirrorManager();
 
   return manager ? (
     <RemirrorEditor {...props} manager={manager}>

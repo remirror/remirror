@@ -6,7 +6,7 @@ export interface PlaceholderContent {
   content: string;
 }
 
-export const defaultStyles = (placeholder?: PlaceholderContent): ObjectInterpolation<any> => ({
+export const defaultStyles = (): ObjectInterpolation<any> => ({
   [EDITOR_CLASS_SELECTOR]: {
     caretColor: 'currentColor',
     wordWrap: 'break-word',
@@ -16,15 +16,4 @@ export const defaultStyles = (placeholder?: PlaceholderContent): ObjectInterpola
   [`.${EDITOR_CLASS_SELECTOR}:focus`]: {
     outline: 'none',
   },
-  ...(placeholder
-    ? {
-        [placeholder.selector]: {
-          position: 'absolute',
-          color: '#aaa',
-          pointerEvents: 'none',
-          height: 0,
-          fontStyle: 'italic',
-        },
-      }
-    : {}),
 });

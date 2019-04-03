@@ -1,15 +1,8 @@
-import { Cast, isEmptyObject, Omit } from '@remirror/core';
+import { Cast, Omit } from '@remirror/core';
+import { GetPositionerReturn, InjectedRemirrorProps, UsePositionerParams } from '@remirror/react-utils';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import React, { ComponentType, FunctionComponent } from 'react';
 import { RemirrorEditorContext } from './contexts';
-import { GetPositionerReturn, InjectedRemirrorProps, UsePositionerParams } from './types';
-
-const checkValidRenderPropParams = (params: InjectedRemirrorProps) => {
-  if (isEmptyObject(params)) {
-    throw new Error('No props received for the RemirrorProvider component');
-  }
-  return true;
-};
 
 /**
  * A higher order component which passes the RemirrorContext to the component it wraps.
@@ -25,7 +18,9 @@ export const withRemirror = <GProps extends InjectedRemirrorProps>(
     return (
       <RemirrorEditorContext.Consumer>
         {params => {
-          checkValidRenderPropParams(params);
+          if (!params) {
+            throw new Error('No props received for the RemirrorProvider component');
+          }
           return <WrappedComponent {...Cast<GProps>({ ...props, ...params })} />;
         }}
       </RemirrorEditorContext.Consumer>
@@ -52,10 +47,16 @@ export const withPositioner = <GRefKey extends string = 'ref'>({
   const EnhancedComponent: FunctionComponent<EnhancedComponentProps> = props => {
     return (
       <RemirrorEditorContext.Consumer>
-        {({ getPositionerProps }) => {
+        {params => {
+          if (!params) {
+            throw new Error('No props received for the RemirrorProvider component');
+          }
           return (
             <WrappedComponent
-              {...Cast<GProps>({ ...props, ...getPositionerProps<GRefKey>({ ...positioner, ...rest }) })}
+              {...Cast<GProps>({
+                ...props,
+                ...params.getPositionerProps<GRefKey>({ ...positioner, ...rest }),
+              })}
             />
           );
         }}

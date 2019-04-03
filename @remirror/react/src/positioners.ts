@@ -1,5 +1,5 @@
 import { absoluteCoordinates, isEmptyParagraphNode, selectionEmpty } from '@remirror/core';
-import { Positioner } from './types';
+import { Positioner } from '@remirror/react-utils';
 
 export const defaultPositioner: Positioner = {
   initialPosition: { top: -9999, left: -9999, right: -9999, bottom: -9999 },
@@ -62,6 +62,7 @@ export const bubblePositioner: Positioner = {
 
     // The box in which the tooltip is positioned, to use as base
     const box = element.offsetParent!.getBoundingClientRect();
+    console.log(box, element);
 
     // Find a center-ish x position from the selection endpoints (when
     // crossing lines, end may be more to the left)

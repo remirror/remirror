@@ -287,34 +287,34 @@ describe('findParentNodeOfType', () => {
 describe('nodeActive', () => {
   it('shows active when within an active region', () => {
     const { state, schema: sch } = createEditor(doc(p('Something', blockquote('is <cursor>in blockquote'))));
-    expect(nodeActive(state, sch.nodes.blockquote)).toBeTrue();
+    expect(nodeActive({ state, type: sch.nodes.blockquote })).toBeTrue();
   });
 
   it('returns false when not within the node', () => {
     const { state, schema: sch } = createEditor(doc(p('Something<cursor>', blockquote('hello'))));
-    expect(nodeActive(state, sch.nodes.blockquote)).toBeFalse();
+    expect(nodeActive({ state, type: sch.nodes.blockquote })).toBeFalse();
   });
 
   it('returns false with text selection surrounds the node', () => {
     const { state, schema: sch } = createEditor(
       doc(p('Something<start>', blockquote('is italic'), '<end> here')),
     );
-    expect(nodeActive(state, sch.nodes.blockquote)).toBeFalse();
+    expect(nodeActive({ state, type: sch.nodes.blockquote })).toBeFalse();
   });
 
   it('returns true when node selection directly before node', () => {
     const { state, schema: sch } = createEditor(doc(p('Something', blockquote('<node>is italic'), 'here')));
-    expect(nodeActive(state, sch.nodes.blockquote)).toBeTrue();
+    expect(nodeActive({ state, type: sch.nodes.blockquote })).toBeTrue();
   });
 
   it('returns false nested within other nodes', () => {
     const { state, schema: sch } = createEditor(doc(p('a<node>', p(p(blockquote('is italic')), 'here'))));
-    expect(nodeActive(state, sch.nodes.blockquote)).toBeFalse();
+    expect(nodeActive({ state, type: sch.nodes.blockquote })).toBeFalse();
   });
 
   it('matches nodes by specified attributes', () => {
     const { state, schema: sch } = createEditor(doc(p('Something', h2('is <cursor> heading'), 'here')));
-    expect(nodeActive(state, sch.nodes.heading, { level: 1 })).toBeFalse();
-    expect(nodeActive(state, sch.nodes.heading, { level: 2 })).toBeTrue();
+    expect(nodeActive({ state, type: sch.nodes.heading, attrs: { level: 1 } })).toBeFalse();
+    expect(nodeActive({ state, type: sch.nodes.heading, attrs: { level: 2 } })).toBeTrue();
   });
 });

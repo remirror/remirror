@@ -56,7 +56,7 @@ export class Heading extends NodeExtension<HeadingOptions> {
   }
 
   public commands({ type, schema }: SchemaNodeTypeParams) {
-    return (attrs?: Attrs) => toggleBlockItem(type, schema.nodes.paragraph, attrs);
+    return (attrs?: Attrs) => toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs });
   }
 
   public keys({ type }: SchemaNodeTypeParams) {

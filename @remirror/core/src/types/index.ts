@@ -1,9 +1,10 @@
 import { MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType } from 'prosemirror-model';
 import { Plugin as PMPlugin } from 'prosemirror-state';
+import { Decoration } from 'prosemirror-view';
 import { NodeViewPortalContainer } from '../portal-container';
-import { EditorView, InputRule, Mark, Transaction } from './aliases';
-import { Attrs, EditorSchema, EditorState, Omit, ProsemirrorNode } from './base';
-import { SchemaParams } from './builders';
+import { EditorView, InputRule, Mark, NodeView, Transaction } from './aliases';
+import { AnyFunction, Attrs, EditorSchema, EditorState, Omit, ProsemirrorNode } from './base';
+import { EditorViewParams, SchemaParams } from './builders';
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -36,10 +37,11 @@ Also I want don't want to be able to use domNodes in the toDOM spec since this w
 */
 
 type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string };
-type DOMOutputSpecPosX = string | 0 | [string, 0];
+type DOMOutputSpecPosX = string | 0 | [string, 0] | [string, { [attr: string]: string }, 0];
 export type DOMOutputSpec =
   | string
   | [string, 0]
+  | [string, { [attr: string]: string }, 0]
   | [
       string,
       DOMOutputSpecPos1?,
@@ -51,7 +53,7 @@ export type DOMOutputSpec =
       DOMOutputSpecPosX?,
       DOMOutputSpecPosX?,
       DOMOutputSpecPosX?,
-      DOMOutputSpecPosX?
+      DOMOutputSpecPosX?,
     ];
 
 export type NodeExtensionSpec = Omit<NodeSpec, 'toDOM'> & {
@@ -73,14 +75,18 @@ export interface ExtensionManagerParams extends SchemaParams {
   getEditorState: () => EditorState;
 }
 
-export type FlexibleConfig<GFunc> = GFunc | GFunc[] | Record<string, GFunc | GFunc[]>;
+/**
+ * Inject a view into the params of the views.
+ */
+export interface ViewExtensionManagerParams extends EditorViewParams, ExtensionManagerParams {}
+
+export type FlexibleConfig<GFunc extends AnyFunction, GNames extends string = string> =
+  | GFunc
+  | GFunc[]
+  | Record<GNames, GFunc | GFunc[]>;
 
 export type ExtensionCommandFunction = (attrs?: Attrs) => CommandFunction;
 export type ExtensionBooleanFunction = (attrs?: Attrs) => boolean;
-
-// export interface SchemaTypeParams<GSchemaType = never> extends SchemaParams {
-//   type: GSchemaType;
-// }
 
 type InferredType<GType> = GType extends {} ? { type: GType } : {};
 export type SchemaTypeParams<GType> = ExtensionManagerParams & InferredType<GType>;
@@ -106,10 +112,17 @@ export interface ActionMethods {
   isEnabled(attrs?: Attrs): boolean;
 }
 
+export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (
+  node: ProsemirrorNode,
+  view: EditorView,
+  getPos: () => number,
+  decorations: Decoration[],
+) => GNodeView;
+
 export type RemirrorActions<GKeys extends string = string> = Record<GKeys, ActionMethods>;
 
 /**
- * Marks are categorised into different groups. One motivation for this was to allow the `code` mark
+ * Marks are categorized into different groups. One motivation for this was to allow the `code` mark
  * to exclude other marks, without needing to explicitly name them. Explicit naming requires the
  * named mark to exist in the schema. This is undesirable because we want to construct different
  * schemas that have different sets of nodes/marks.
@@ -123,6 +136,9 @@ export enum MarkGroup {
   INDENTATION = 'indentation',
 }
 
+/**
+ * Defines the type of the extension.
+ */
 export enum ExtensionType {
   NODE = 'node',
   MARK = 'mark',

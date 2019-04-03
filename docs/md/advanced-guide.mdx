@@ -1,0 +1,171 @@
+---
+name: Build my own advanced editor.
+route: /advanced-guide
+---
+
+One of the core goals of remirror is allowing developers to fully customise the editors they build.
+
+This is achieved through layered packages. Each layer building on the abstractions found in the lower level layers.
+
+If you've followed the [quickstart guide](/quickstart) you'll have seen how easy it can be to consume the finished editor.
+
+This guide aims to provide insights into how all the lower level layers can be composed together in order to achieve the same world class outcome.
+
+## Installation
+
+First we need to install the core libraries
+
+```bash
+yarn add @remirror/core @remirror/react @remirror/core-extensions
+```
+
+## The code
+
+So we want to build a simple editor with a floating menu and the ability to make text bold, italic, to add links and insert code blocks.
+
+To get started we need to import the right extensions and set up the editor as follows.
+
+```ts
+import {
+  Bold,
+  CodeBlock,
+  HardBreak,
+  Heading,
+  Italic,
+  Link,
+  LinkOptions,
+  Underline,
+} from '@remirror/core-extensions';
+import {
+  asDefaultProps,
+  ManagedRemirrorEditor,
+  RemirrorExtension,
+  RemirrorManager,
+  RemirrorProps,
+} from '@remirror/react';
+import React, { FC, PureComponent } from 'react';
+import { uiWysiwygTheme } from '../theme';
+
+interface State {
+  linkActivated: boolean;
+}
+
+export class MyAwesomeEditor extends PureComponent<{}, State> {
+  public state: State = {
+    linkActivated: false,
+  };
+
+  private activateLink = () => {
+    this.setState({ linkActivated: true });
+  };
+
+  private deactivateLink = () => {
+    this.setState({ linkActivated: false });
+  };
+
+  public render() {
+    return (
+      <RemirrorManager>
+        <RemirrorExtension Constructor={Bold} />
+        <RemirrorExtension Constructor={Underline} />
+        <RemirrorExtension Constructor={Italic} />
+        <RemirrorExtension<LinkOptions> Constructor={Link} activationHandler={this.activateLink} />
+        <RemirrorExtension Constructor={CodeBlock} />
+        <ManagedRemirrorEditor>
+          // Later we will create an inner component
+          <div />
+        </ManagedRemirrorEditor>
+      </RemirrorManager>
+    );
+  }
+}
+```
+
+Quite a lot has been introduced here.
+
+- `<RemirrorManager />` - Injects an ExtensionManager instance into the react context.
+- `<RemirrorExtension />` - Injects the extension (passed via the `Constructor` prop into the created extensionManager). These only activate if they are direct descendants of the `<RemirrorManager />
+- `<ManagedRemirrorEditor />` - This component automatically pulls the created extension manager instance from the context and passes it on to the underlying Remirror component. It also injects it's own context to all nested components as we shall see soon.
+
+Each extension is automatically injected into the context which is being picked up by the `ManagedRemirrorEditor`.
+
+Now we need to create our own internal editor. But before we do that there's just one small change to make the initial code.
+
+They underlying text editor is controlled by Prosemirror and unlike react it needs a DOM node to render itself into. To that end the Editor context provides a method called `getRootProps` which passes back a `ref` function that will be used to store the editor dom node.
+
+To allow this when using the context make sure to set the `customRootProp` to `true`.
+
+```tsx
+<ManagedRemirrorEditor customRootProp={true}>
+  <div />
+</ManagedRemirrorEditor>
+```
+
+Now let's create the inner editor.
+
+```tsx
+import { styled } from '@emotion/styled';
+import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
+
+// Add styles to the editor instance
+export const InnerEditorWrapper = styled.div`
+  height: 100%;
+  & * {
+    box-sizing: border-box;
+  }
+
+  ${EDITOR_CLASS_SELECTOR}:focus {
+    outline: none;
+  }
+
+  ${EDITOR_CLASS_SELECTOR} p {
+    margin: 0;
+    letter-spacing: 0.6px;
+    color: black;
+  }
+
+  p em {
+    letter-spacing: 1.2px;
+  }
+
+  ${EDITOR_CLASS_SELECTOR} {
+    box-sizing: border-box;
+    position: relative;
+    /* border: 0.1px solid ${({ theme }) => theme.colors.border}; */
+    /* box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.border}; */
+    line-height: 1.6em;
+    width: 100%;
+    font-size: ${({ theme }) => theme.font.size};
+    /* max-height: calc(90vh - 124px); */
+    min-height: 142px;
+    padding: 10px;
+    padding-right: 0;
+    font-weight: ${({ theme }) => theme.font.weight};
+  }
+
+  ${EDITOR_CLASS_SELECTOR} a {
+    text-decoration: none !important;
+    color: ${props => props.theme.colors.primary};
+  }
+
+  ${EDITOR_CLASS_SELECTOR} a.mention {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  ${EDITOR_CLASS_SELECTOR} .ProseMirror-selectednode {
+    background-color: rgb(245, 248, 250);
+  }
+`;
+
+const InnerEditor: FC<BubbleMenuProps> = ({ linkActivated, deactivateLink, activateLink }) => {
+  const { getRootProps } = useRemirror();
+
+  return (
+    <EditorWrapper>
+      <BubbleMenu linkActivated={linkActivated} deactivateLink={deactivateLink} activateLink={activateLink} />
+      <InnerEditorWrapper {...getRootProps()} />
+    </EditorWrapper>
+  );
+};
+```

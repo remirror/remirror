@@ -1,2 +1,3 @@
-export * from './emoji-node';
+export * from './extension';
 export * from './helpers';
+export * from './types';

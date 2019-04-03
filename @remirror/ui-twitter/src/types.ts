@@ -1,7 +1,7 @@
 import { Omit } from '@remirror/core';
 import { EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
 import { ActionTaken } from '@remirror/extension-mention';
-import { RemirrorProps } from '@remirror/react';
+import { RemirrorProps } from '@remirror/react-utils';
 import { Data, EmojiSet } from 'emoji-mart';
 import { UITwitterTheme } from './theme';
 

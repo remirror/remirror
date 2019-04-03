@@ -1,27 +1,30 @@
 const ignore = [
   '**/__tests__',
   '**/__mocks__',
+  '**/__fixtures__',
   '*.{test,spec}.{ts,tsx}',
   '**/*.d.ts',
   '*.d.ts',
 ];
 
 const presets = [
-  '@babel/preset-env',
+  ['@babel/preset-env', { loose: true }],
   '@babel/preset-typescript',
   '@babel/preset-react',
   '@emotion/babel-preset-css-prop',
 ];
 
+const testBabelPresetEnv = ['@babel/preset-env', { targets: { node: '8' }, loose: true }];
 const nonTestEnv = { ignore, presets };
 
 module.exports = {
-  presets: ['@babel/preset-env', '@babel/preset-typescript', '@babel/preset-react'],
+  presets: [testBabelPresetEnv, '@babel/preset-typescript', '@babel/preset-react'],
   plugins: [
-    '@babel/plugin-transform-typescript', // This is needed so that abstract classes are properly compiled
-    ['@babel/plugin-transform-runtime', { corejs: 2 }],
-    '@babel/plugin-proposal-class-properties',
-    '@babel/plugin-proposal-object-rest-spread',
+    // Required for the compilation of abstract classes
+    '@babel/plugin-transform-typescript',
+    ['@babel/plugin-transform-runtime'],
+    ['@babel/plugin-proposal-class-properties', { loose: true }],
+    ['@babel/plugin-proposal-object-rest-spread', { loose: true }],
     '@babel/plugin-syntax-dynamic-import',
     'lodash',
   ],

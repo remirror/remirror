@@ -3,7 +3,7 @@ import React from 'react';
 import { omit } from '@remirror/core';
 import { injectedPropsShape, positionerShape } from '@test-fixtures/object-shapes';
 import { createTestManager } from '@test-fixtures/schema-helpers';
-import { render } from 'react-testing-library';
+import { render } from '@testing-library/react';
 import { RemirrorEditor } from '../components/providers';
 import { withPositioner, withRemirror } from '../hocs';
 import { bubblePositioner } from '../positioners';

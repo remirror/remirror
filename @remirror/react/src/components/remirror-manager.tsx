@@ -1,18 +1,31 @@
 import React, { Children, Component } from 'react';
 
-import { ExtensionManager, ExtensionMapValue } from '@remirror/core';
-import { baseExtensions } from '@remirror/core-extensions';
+import { ExtensionManager, isString, PrioritizedExtension } from '@remirror/core';
+import { baseExtensions, Placeholder } from '@remirror/core-extensions';
+import { asDefaultProps, isRemirrorExtension, RemirrorManagerProps } from '@remirror/react-utils';
 import { RemirrorManagerContext } from '../contexts';
-import { asDefaultProps, isRemirrorExtension } from '../helpers';
-import { RemirrorManagerProps } from '../types';
 
 export class RemirrorManager extends Component<RemirrorManagerProps> {
   public static defaultProps = asDefaultProps<RemirrorManagerProps>()({
     useBaseExtensions: true,
   });
 
-  private get baseExtensions(): ExtensionMapValue[] {
-    return this.props.useBaseExtensions ? baseExtensions : [];
+  private get baseExtensions(): PrioritizedExtension[] {
+    const { placeholder, useBaseExtensions } = this.props;
+    const withPlaceholder: PrioritizedExtension[] = placeholder
+      ? [
+          {
+            extension: new Placeholder(
+              isString(placeholder)
+                ? { placeholder }
+                : { placeholder: placeholder[0], placeholderStyle: placeholder[1] },
+            ),
+            priority: 3,
+          },
+        ]
+      : [];
+
+    return useBaseExtensions ? baseExtensions.concat(withPlaceholder) : withPlaceholder;
   }
 
   private cachedManager: ExtensionManager = ExtensionManager.create(this.baseExtensions);
@@ -21,7 +34,7 @@ export class RemirrorManager extends Component<RemirrorManagerProps> {
    * Calculate the manager based on the baseExtension and passed in props.
    */
   public get manager(): ExtensionManager {
-    const extensions: ExtensionMapValue[] = [...this.baseExtensions];
+    const extensions: PrioritizedExtension[] = [...this.baseExtensions];
     Children.forEach(this.props.children, child => {
       if (!isRemirrorExtension(child)) {
         return;

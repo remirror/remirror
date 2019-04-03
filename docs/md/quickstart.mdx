@@ -1,0 +1,28 @@
+---
+name: Quick start
+route: /quickstart
+---
+
+Remirror is comprised of core librarys like `@remirror/core` and UI libraries like `@remirror/ui-twitter`.
+
+The easiest way to get started is by using a UI library and for the purposes of this demonstration we're going to use the package `@remirror/ui-wysiwyg`
+
+Firstly it needs to be installed.
+
+```bash
+yarn add @remirror/ui-wysiwyg
+```
+
+Then in your code use the following.
+
+```tsx
+import React from 'react';
+
+import { WysiwygUI } from '@remirror/ui-wysiwyg';
+
+export const MyWorldClassEditor = () => {
+  return <WysiwygUI />;
+};
+```
+
+My friend in just a few lines of code you've built a world class editor.

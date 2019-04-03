@@ -1,31 +1,45 @@
 {
+  "private": true,
   "name": "docs",
   "description": "docs and examples for the remirror editor",
-  "version": "0.0.1-alpha.11",
   "license": "MIT",
+  "version": "0.0.1-alpha.11",
+  "scripts": {
+    "build": "docz build",
+    "dev": "docz dev",
+    "lint": "tslint --project tsconfig.json --config ../tslint.json",
+    "test": "jest",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
   "dependencies": {
-    "@emotion/core": "10.0.10",
-    "@emotion/styled": "10.0.10",
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@loadable/component": "^5.10.1",
     "@remirror/core": "0.0.1-alpha.11",
     "@remirror/core-extensions": "0.0.1-alpha.11",
+    "@remirror/extension-epic-mode": "0.0.1-alpha.11",
     "@remirror/extension-mention": "0.0.1-alpha.11",
     "@remirror/react": "0.0.1-alpha.11",
     "@remirror/renderer-react": "0.0.1-alpha.11",
     "@remirror/ui-twitter": "0.0.1-alpha.11",
+    "@remirror/ui-wysiwyg": "0.0.1-alpha.11",
     "@types/match-sorter": "2.3.0",
-    "docz": "0.13.7",
-    "docz-core": "0.13.7",
-    "docz-theme-default": "0.13.7",
-    "emoji-mart": "2.9.2",
-    "match-sorter": "2.3.0",
+    "copy-text-to-clipboard": "^2.1.0",
+    "emoji-mart": "2.11.1",
+    "match-sorter": "3.1.0",
+    "prop-types": "15.7.2",
     "react": "16.8.6",
-    "react-dom": "16.8.6"
+    "react-dom": "16.8.6",
+    "react-use": "9.4.0"
   },
-  "private": true,
-  "scripts": {
-    "prebuild": "run-s lint typecheck",
-    "lint": "tslint --project tsconfig.json --config ./tslint.json",
-    "test": "jest",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  "devDependencies": {
+    "@types/lodash": "4.14.134",
+    "@types/reach__router": "1.2.4",
+    "acorn": "6.1.1",
+    "docz": "1.2.0",
+    "docz-core": "1.2.0",
+    "docz-theme-default": "1.2.0",
+    "remark-external-links": "4.0.0"
   }
 }

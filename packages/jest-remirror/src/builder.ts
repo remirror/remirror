@@ -1,12 +1,12 @@
 import {
   EditorSchema,
   findMatches,
+  flattenArray,
   isObject,
   isProsemirrorNode,
   isString,
   SchemaParams,
 } from '@remirror/core';
-import flatten from 'flatten';
 import { Fragment, Mark, Node as PMNode, Slice } from 'prosemirror-model';
 import {
   BaseFactoryParams,
@@ -144,7 +144,7 @@ export const coerce = ({ content, schema }: CoerceParams) => {
   const taggedContent = content.map(item => (isString(item) ? text(item, schema) : item)) as Array<
     TaggedContentItem | TaggedContentItem[]
   >;
-  return sequence(...flatten<TaggedContentItem>(taggedContent));
+  return sequence(...flattenArray<TaggedContentItem>(taggedContent));
 };
 
 interface NodeFactoryParams extends BaseFactoryParams {
@@ -223,7 +223,7 @@ export const markFactory = ({ name, schema, attrs, allowDupes = false }: MarkFac
  *
  * @param [...content]
  */
-export const fragment = (...content: TaggedContentWithText[]) => flatten<TaggedContentWithText>(content);
+export const fragment = (...content: TaggedContentWithText[]) => flattenArray<TaggedContentWithText>(content);
 
 export const slice = (schema: EditorSchema) => (...content: TaggedContentWithText[]) =>
   new Slice(Fragment.from(coerce({ content, schema }).nodes), 0, 0);

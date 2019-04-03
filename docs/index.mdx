@@ -1,11 +1,7 @@
 ---
 name: Introduction
-route: /
+route: /docs/introduction
 ---
-
-import { ExampleTwitterUI } from './editors/ui-twitter';
-import { EpicModeSpawning, EpicModeHeart } from './examples/extension-epic-mode';
-import { ExampleWysiwygUI } from './editors/ui-wysiwyg';
 
 <div align='center'>
   <br />
@@ -49,8 +45,6 @@ For now to learn and understand, the best way is via looking through the `@remir
 - Typescript `>= 3.4`
 - React `>= 16.8`
 - Yarn `>= 1.13`
-
-<ExampleWysiwygUI />
 
 ### Installation
 
@@ -165,22 +159,6 @@ function SimpleMenu({ getPositionerProps }: InjectedRemirrorProps) {
 
 export const WrappedSimpleMenu = withRemirror(SimpleMenu);
 ```
-
-## Examples
-
-### Twitter
-
-<ExampleTwitterUI />
-
-### Epic Mode Extension
-
-#### Spawn Effect
-
-<EpicModeSpawning />
-
-#### Heart Effect
-
-<EpicModeHeart />
 
 ## Running the tests
 

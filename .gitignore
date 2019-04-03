@@ -96,6 +96,7 @@ secrets/crypt.key
 
 tmp**
 **tmp**
+temp**
 
 @example/
 *.tar.gz
@@ -126,3 +127,11 @@ dependencies/**/yarn.lock
 
 # Lerna changelog
 .changelog
+
+
+key.json
+db.json
+secret.json
+
+.env
+*.env

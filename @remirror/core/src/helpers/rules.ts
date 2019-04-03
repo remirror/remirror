@@ -7,13 +7,15 @@ import { Cast, findMatches, isFunction } from './base';
 /**
  * Creates an input rule based on the provided regex for the provided mark type
  *
- * @param regex
- * @param markType
- * @param getAttrs
+ * @param regex - the regex matcher
+ * @param type - the mark type
+ * @param getAttrs - the attributes or attribute creating function
+ *
+ * @public
  */
 export const markInputRule = (
   regex: RegExp,
-  markType: MarkType,
+  type: MarkType,
   getAttrs?: ((attrs: string[]) => Attrs) | Attrs,
 ) => {
   return new InputRule(regex, (state, match, start, end) => {
@@ -34,12 +36,21 @@ export const markInputRule = (
       markEnd = start + startSpaces + match[1].length;
     }
 
-    tr.addMark(start, markEnd, markType.create(attrs));
-    tr.removeStoredMark(markType); // Do not continue with mark.
+    tr.addMark(start, markEnd, type.create(attrs));
+    tr.removeStoredMark(type); // Do not continue with mark.
     return tr;
   });
 };
 
+/**
+ * Creates a paste rule based on the provided regex for the provided mark type
+ *
+ * @param regex - the regex matcher
+ * @param type - the mark type
+ * @param getAttrs - the attributes or attribute creating function
+ *
+ * @public
+ */
 export const markPasteRule: PluginCreator = (regexp, type, getAttrs) => {
   const handler = (fragment: Fragment) => {
     const nodes: PMNode[] = [];
@@ -90,6 +101,15 @@ export const markPasteRule: PluginCreator = (regexp, type, getAttrs) => {
   });
 };
 
+/**
+ * Creates an node input rule based on the provided regex for the provided node type
+ *
+ * @param regex - the regex matcher
+ * @param type - the node type
+ * @param getAttrs - the attributes or attribute creating function
+ *
+ * @public
+ */
 export const nodeInputRule: InputRuleCreator = (regexp, type, getAttrs) => {
   return new InputRule(regexp, (state, match, start, end) => {
     const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
@@ -103,6 +123,19 @@ export const nodeInputRule: InputRuleCreator = (regexp, type, getAttrs) => {
   });
 };
 
+/**
+ * Creates an enhanced node input rule based on the provided regex for the provided node type.
+ *
+ * @remarks
+ * This is different from the node input rule in that it checks that the start end end are both
+ * valid and replaces from the start position.
+ *
+ * @param regex - the regex matcher
+ * @param type - the node type
+ * @param getAttrs - the attributes or attribute creating function
+ *
+ * @public
+ */
 export const enhancedNodeInputRule: InputRuleCreator = (regexp, type, getAttrs) => {
   return new InputRule(regexp, (state, match, start, end) => {
     end = start > end ? start : end;

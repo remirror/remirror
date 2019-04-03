@@ -1,4 +1,4 @@
-import { useRemirrorContext } from '@remirror/react';
+import { useRemirror } from '@remirror/react';
 import React, { FunctionComponent } from 'react';
 import { styled } from '../theme';
 import { TwitterAtSuggestionsProp, TwitterHashSuggestionsProp } from '../types';
@@ -51,7 +51,7 @@ const AtUsername = styled.span`
 `;
 
 export const AtSuggestions: FunctionComponent<TwitterAtSuggestionsProp> = ({ submitFactory, data }) => {
-  const { view } = useRemirrorContext();
+  const { view } = useRemirror();
   return (
     <SuggestionsDropdown role='presentation'>
       {data.map(user => {
@@ -88,7 +88,7 @@ const HashTagText = styled.span`
 `;
 
 export const TagSuggestions: FunctionComponent<TwitterHashSuggestionsProp> = ({ submitFactory, data }) => {
-  const { view } = useRemirrorContext();
+  const { view } = useRemirror();
 
   return (
     <SuggestionsDropdown role='presentation'>

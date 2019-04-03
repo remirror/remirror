@@ -20,18 +20,21 @@ export const LEAF_NODE_REPLACING_CHARACTER = '\ufffc';
 /**
  * The null character.
  *
- * @see https://stackoverflow.com/a/6380172
+ * See {@link https://stackoverflow.com/a/6380172}
  */
 export const NULL_CHARACTER = '\0';
 
 /**
- * A character useful for separating inline nodes. Typically used in decorations as follows.
+ * A character useful for separating inline nodes.
+ *
+ * @remarks
+ * Typically used in decorations as follows.
  *
  * ```ts
  * document.createTextNode(ZERO_WIDTH_SPACE_CHAR)
  * ```
  *
- * This produces the html entity `&#8203;`
+ * This produces the html entity '8203'
  */
 export const ZERO_WIDTH_SPACE_CHAR = '\u200b';
 
@@ -46,7 +49,7 @@ export enum Side {
 /**
  * A default empty object node. Useful for resetting the content of a prosemirror document.
  */
-export const EMPTY_OBJECT_NODE = {
+export const EMPTY_PARAGRAPH_NODE = {
   type: 'doc',
   content: [
     {
@@ -54,3 +57,8 @@ export const EMPTY_OBJECT_NODE = {
     },
   ],
 };
+
+/**
+ * The default extension priority level
+ */
+export const DEFAULT_EXTENSION_PRIORITY = 2;

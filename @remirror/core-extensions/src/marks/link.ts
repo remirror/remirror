@@ -1,10 +1,10 @@
 import {
   Attrs,
   Cast,
-  ExtensionManagerParams,
   getMarkRange,
   getMatchString,
   getSelectedWord,
+  isTextSelection,
   KeyboardBindings,
   markActive,
   MarkExtension,
@@ -13,6 +13,7 @@ import {
   markPasteRule,
   removeMark,
   SchemaMarkTypeParams,
+  selectionEmpty,
   updateMark,
 } from '@remirror/core';
 import { Plugin, TextSelection } from 'prosemirror-state';
@@ -85,27 +86,37 @@ export class Link extends MarkExtension<LinkOptions> {
     };
   }
 
-  public active({ getEditorState, schema }: ExtensionManagerParams) {
-    const type = schema.marks[this.name];
-    const state = getEditorState();
+  public active({ getEditorState, type }: SchemaMarkTypeParams) {
     return {
-      remove: () => {
-        return !markActive(state, type);
+      /**
+       * Returns true when the current selection has an active link present.
+       */
+      update: () => {
+        return markActive(getEditorState(), type);
       },
     };
   }
 
   public commands({ type }: SchemaMarkTypeParams) {
     return {
-      toggle: (attrs?: Attrs) => {
-        if (attrs && attrs.href) {
-          return updateMark(type, attrs);
-        }
-        return removeMark(type);
-      },
       update: (attrs?: Attrs) => updateMark(type, attrs),
       remove: () => {
-        return removeMark(type);
+        return removeMark({ type, expand: true });
+      },
+    };
+  }
+
+  public enabled({ getEditorState, type }: SchemaMarkTypeParams) {
+    return {
+      update: () => {
+        const { selection } = getEditorState();
+        if (selectionEmpty(selection) || !isTextSelection(selection)) {
+          return false;
+        }
+        return true;
+      },
+      remove: () => {
+        return markActive(getEditorState(), type);
       },
     };
   }
@@ -126,7 +137,6 @@ export class Link extends MarkExtension<LinkOptions> {
         handleClick(view, pos) {
           const { doc, tr } = view.state;
           const range = getMarkRange(doc.resolve(pos), type);
-
           if (!range) {
             return false;
           }

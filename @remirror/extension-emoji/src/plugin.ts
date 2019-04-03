@@ -1,53 +1,18 @@
+// tslint:disable-next-line: no-reference
+/// <reference path="./patches.d.ts" />
+
 import { EditorSchema } from '@remirror/core';
-import { ReactNodeView } from '@remirror/react';
 import { Data } from 'emoji-mart';
 import emojiRegex from 'emoji-regex/es2015/text';
 import { NodeType } from 'prosemirror-model';
 import { Plugin, Transaction } from 'prosemirror-state';
-import { DefaultEmoji } from './components/emoji';
 import { getEmojiDataByNativeString } from './helpers';
 import { CreateEmojiPluginParams } from './types';
 
-const defaultStyle = `
-  user-select: all;
-  display: inline-block;
-
-  span {
-    display: inline-block;
-  }
-`;
-
-export const createEmojiPlugin = ({
-  key,
-  getPortalContainer,
-  set,
-  size,
-  emojiData,
-  EmojiComponent = DefaultEmoji,
-  type,
-  style,
-}: CreateEmojiPluginParams) => {
-  const dynamicStyle = `
-    span {
-      height: ${size};
-      width: ${size};
-    }
-  `;
+export const createEmojiPlugin = ({ key, emojiData, type }: CreateEmojiPluginParams) => {
   return new Plugin({
     key,
     props: {
-      nodeViews: {
-        emoji: ReactNodeView.createNodeView({
-          Component: EmojiComponent,
-          getPortalContainer,
-          props: {
-            set,
-            size,
-            emojiData,
-          },
-          style: [defaultStyle, dynamicStyle, style],
-        }),
-      },
       handleTextInput(view, from, to, text) {
         const { state } = view;
         const originalTr = state.tr;

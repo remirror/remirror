@@ -28,12 +28,12 @@ export class CodeBlock extends NodeExtension {
   }
 
   public commands({ type, schema }: SchemaNodeTypeParams) {
-    return () => toggleBlockItem(type, schema.nodes.paragraph);
+    return () => toggleBlockItem({ type, toggleType: schema.nodes.paragraph });
   }
 
   public keys({ type, schema }: SchemaNodeTypeParams) {
     return {
-      'Shift-Ctrl-\\': toggleBlockItem(type, schema.nodes.paragraph),
+      'Shift-Ctrl-\\': toggleBlockItem({ type, toggleType: schema.nodes.paragraph }),
     };
   }
 

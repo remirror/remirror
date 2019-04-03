@@ -1,5 +1,17 @@
 import { Selection as PMSelection } from 'prosemirror-state';
-import { Attrs, EditorState, EditorView, NodeType, ProsemirrorNode, Selection, Transaction } from '../types';
+import {
+  AttrsParams,
+  EditorState,
+  EditorStateParams,
+  EditorView,
+  NodeType,
+  NodeTypeParams,
+  PMNodeParams,
+  PosParams,
+  ProsemirrorNode,
+  Selection,
+  Transaction,
+} from '../types';
 import { isNumber } from './base';
 import { isSelection, isTextDOMNode } from './document';
 
@@ -8,20 +20,21 @@ import { isSelection, isTextDOMNode } from './document';
 /**
  * Checks if the type a given `node` equals to a given `nodeType`.
  *
- * @param type
- * @param node
+ * @param type - the prosemirror node type(s)
+ * @param node - the prosemirror node
+ *
+ * @public
  */
-export const equalNodeType = (
-  type: NodeType | NodeType[] | NodeType[] | NodeType[],
-  node: ProsemirrorNode,
-) => {
-  return (Array.isArray(type) && type.indexOf(node.type) > -1) || node.type === type;
+export const equalNodeType = (type: NodeType | NodeType[], node: ProsemirrorNode) => {
+  return (Array.isArray(type) && type.includes(node.type)) || node.type === type;
 };
 
 /**
  * Creates a new transaction object from a given transaction
  *
- * @param tr
+ * @param tr - the prosemirror transaction
+ *
+ * @public
  */
 export const cloneTransaction = (tr: Transaction): Transaction => {
   return Object.assign(Object.create(tr), tr).setTime(Date.now());
@@ -31,7 +44,9 @@ export const cloneTransaction = (tr: Transaction): Transaction => {
  * Returns a `delete` transaction that removes a node at a given position with the given `node`.
  * `position` should point at the position immediately before the node.
  *
- * @param position
+ * @param position - the prosemirror position
+ *
+ * @public
  */
 export const removeNodeAtPos = (position: number) => (tr: Transaction) => {
   const node = tr.doc.nodeAt(position);
@@ -39,26 +54,33 @@ export const removeNodeAtPos = (position: number) => (tr: Transaction) => {
 };
 
 /**
- *  Returns DOM reference of a node at a given `position`.
+ * Returns DOM reference of a node at a given `position`.
+ *
+ * @remarks
  * If the node type is of type `TEXT_NODE` it will return the reference of the parent node.
  *
- *  ```ts
- *  const ref = findDOMRefAtPos($from.pos, view);
- *  ```
+ * @example
+ * A simple use case
  *
- * @param position
- * @param domAtPos
+ * ```ts
+ * const ref = findDOMRefAtPos($from.pos, view);
+ * ```
+ *
+ * @param position - the prosemirror position
+ * @param view - the editor view
+ *
+ * @public
  */
-export const findDOMRefAtPos = (position: number, view: EditorView) => {
+export const findDOMRefAtPos = (position: number, view: EditorView): HTMLElement => {
   const dom = view.domAtPos(position);
   const node = dom.node.childNodes[dom.offset];
 
   if (isTextDOMNode(dom.node)) {
-    return dom.node.parentNode;
+    return dom.node.parentNode as HTMLElement;
   }
 
   if (!node || isTextDOMNode(node)) {
-    return dom.node;
+    return dom.node as HTMLElement;
   }
 
   return node as HTMLElement;
@@ -67,13 +89,16 @@ export const findDOMRefAtPos = (position: number, view: EditorView) => {
 /**
  *  Returns a new transaction that deletes previous node.
  *
- *  ```ts
- *  dispatch(
+ * @example
+ * ```ts
+ * dispatch(
  *    removeNodeBefore(state.tr)
- *  );
- *  ```
+ * );
+ * ```
  *
  * @param tr
+ *
+ * @public
  */
 export const removeNodeBefore = (tr: Transaction): Transaction => {
   const position = findPositionOfNodeBefore(tr.selection);
@@ -83,32 +108,34 @@ export const removeNodeBefore = (tr: Transaction): Transaction => {
   return tr;
 };
 
-interface FindParentNode {
-  pos: number;
+interface FindParentNode extends PosParams, PMNodeParams {
   start: number;
-  node: ProsemirrorNode;
 }
 
 /**
- * Iterates over parent nodes, returning the closest node and its start position `predicate` returns truthy for. `start` points to the start position of the node, `pos` points directly before the node.
+ * Iterates over parent nodes, returning the closest node and its start position that the `predicate` returns truthy for.
+ * `start` points to the start position of the node, `pos` points directly before the node.
  *
- *  ```ts
- *  const predicate = node => node.type === schema.nodes.blockquote;
- *  const parent = findParentNode(predicate)(selection);
- *  ```
+ * @example
+ * ```ts
+ * const predicate = node => node.type === schema.nodes.blockquote;
+ * const parent = findParentNode(predicate)(selection);
+ * ```
  *
- * @param predicate
+ * @param predicate - the predicate checker
+ *
+ * @public
  */
 export const findParentNode = (predicate: (node: ProsemirrorNode) => boolean) => (
   selection: Selection,
 ): FindParentNode | undefined => {
   const { $from } = selection;
-  for (let i = $from.depth; i > 0; i--) {
-    const node = $from.node(i);
+  for (let currentDepth = $from.depth; currentDepth > 0; currentDepth--) {
+    const node = $from.node(currentDepth);
     if (predicate(node)) {
       return {
-        pos: i > 0 ? $from.before(i) : 0,
-        start: $from.start(i),
+        pos: currentDepth > 0 ? $from.before(currentDepth) : 0,
+        start: $from.start(currentDepth),
         node,
       };
     }
@@ -120,11 +147,14 @@ export const findParentNode = (predicate: (node: ProsemirrorNode) => boolean) =>
  *  Iterates over parent nodes, returning closest node of a given `nodeType`.
  * `start` points to the start position of the node, `pos` points directly before the node.
  *
+ * @example
  * ```ts
  * const parent = findParentNodeOfType(schema.nodes.paragraph)(selection);
  * ```
  *
- * @param type
+ * @param type - the node type(s)
+ *
+ * @public
  */
 export const findParentNodeOfType = (type: NodeType | NodeType[]) => (
   selection: Selection,
@@ -135,11 +165,14 @@ export const findParentNodeOfType = (type: NodeType | NodeType[]) => (
 /**
  * Returns position of the previous node.
  *
+ * @example
  * ```ts
  * const pos = findPositionOfNodeBefore(tr.selection);
  * ```
  *
- * @param selection
+ * @param selection - the prosemirror selection
+ *
+ * @public
  */
 export const findPositionOfNodeBefore = (selection: Selection): number | undefined => {
   const { nodeBefore } = selection.$from;
@@ -158,10 +191,14 @@ export const findPositionOfNodeBefore = (selection: Selection): number | undefin
 /**
  * Checks whether the selection  or state is currently empty.
  *
- * @param value
+ * @param value - the current selection or state
+ *
+ * @public
  */
 export const selectionEmpty = (value: Selection | EditorState) =>
   isSelection(value) ? value.empty : value.selection.empty;
+
+interface NodeActiveParams extends EditorStateParams, NodeTypeParams, Partial<AttrsParams> {}
 
 /**
  * Checks whether the node type passed in is active within the region.
@@ -169,11 +206,11 @@ export const selectionEmpty = (value: Selection | EditorState) =>
  *
  * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
- * @param state
- * @param type
- * @param attrs
+ * @param params - the destructured node active parameters
+ *
+ * @public
  */
-export const nodeActive = (state: EditorState, type: NodeType, attrs: Attrs = {}) => {
+export const nodeActive = ({ state, type, attrs = {} }: NodeActiveParams) => {
   const predicate = (node: ProsemirrorNode) => node.type === type;
   const parent = findParentNode(predicate)(state.selection);
 

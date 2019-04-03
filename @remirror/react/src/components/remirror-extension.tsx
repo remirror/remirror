@@ -1,5 +1,5 @@
 import { Extension, ExtensionConstructor } from '@remirror/core';
-import { RemirrorElementType, RemirrorExtensionProps, RemirrorFC } from '../types';
+import { RemirrorElementType, RemirrorExtensionProps, RemirrorFC } from '@remirror/react-utils';
 
 export const RemirrorExtension = <
   GOptions extends {},

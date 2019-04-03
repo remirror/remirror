@@ -14,7 +14,7 @@ import {
   Selection as PMSelection,
   TextSelection,
 } from 'prosemirror-state';
-import { EMPTY_OBJECT_NODE } from '../constants';
+import { EMPTY_PARAGRAPH_NODE } from '../constants';
 import {
   EditorSchema,
   EditorState,
@@ -39,7 +39,9 @@ import { bool, Cast, isFunction, isNumber, isObject, isString } from './base';
 /**
  * Checks to see if the passed value is a ProsemirrorNode
  *
- * @param value
+ * @param value - the value to check
+ *
+ * @public
  */
 export const isProsemirrorNode = (value: unknown): value is ProsemirrorNode =>
   isObject(value) && value instanceof PMNode;
@@ -47,7 +49,9 @@ export const isProsemirrorNode = (value: unknown): value is ProsemirrorNode =>
 /**
  * Checks to see if the passed value is a Prosemirror Editor State
  *
- * @param value
+ * @param value - the value to check
+ *
+ * @public
  */
 export const isEditorState = (value: unknown): value is EditorState =>
   isObject(value) && value instanceof PMEditorState;
@@ -55,7 +59,9 @@ export const isEditorState = (value: unknown): value is EditorState =>
 /**
  * Predicate checking whether the selection is a TextSelection
  *
- * @param value
+ * @param value - the value to check
+ *
+ * @public
  */
 export const isTextSelection = (value: unknown): value is TextSelection<EditorSchema> =>
   isObject(value) && value instanceof TextSelection;
@@ -63,7 +69,9 @@ export const isTextSelection = (value: unknown): value is TextSelection<EditorSc
 /**
  * Predicate checking whether the selection is a Selection
  *
- * @param value
+ * @param value - the value to check
+ *
+ * @public
  */
 export const isSelection = (value: unknown): value is Selection =>
   isObject(value) && value instanceof PMSelection;
@@ -72,10 +80,13 @@ export const isSelection = (value: unknown): value is Selection =>
  * Checks that a mark is active within the selected region, or the current selection point is within a
  * region with the mark active. Used by extensions to implement their active methods.
  *
+ * @remarks
  * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
- * @param state
- * @param type
+ * @param state - the editor state
+ * @param type - the mark type
+ *
+ * @public
  */
 export const markActive = (state: EditorState, type: MarkType) => {
   const { from, $from, to, empty } = state.selection;
@@ -87,10 +98,13 @@ export const markActive = (state: EditorState, type: MarkType) => {
 /**
  * Check if the specified type (NodeType) can be inserted at the current selection point.
  *
+ * @remarks
  * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
- * @param state
- * @param type
+ * @param state - the editor state
+ * @param type - the node type
+ *
+ * @public
  */
 export const canInsertNode = (state: EditorState, type: NodeType) => {
   const { $from } = state.selection;
@@ -110,7 +124,9 @@ export const canInsertNode = (state: EditorState, type: NodeType) => {
 /**
  * Checks if a node looks like an empty document
  *
- * @param node
+ * @param node - the prosemirror node
+ *
+ * @public
  */
 export const isDocNodeEmpty = (node: ProsemirrorNode) => {
   const nodeChild = node.content.firstChild;
@@ -120,7 +136,7 @@ export const isDocNodeEmpty = (node: ProsemirrorNode) => {
   }
 
   return (
-    nodeChild.type.name === 'paragraph' &&
+    nodeChild.type.isBlock &&
     !nodeChild.childCount &&
     nodeChild.nodeSize === 2 &&
     (!nodeChild.marks || nodeChild.marks.length === 0)
@@ -130,7 +146,9 @@ export const isDocNodeEmpty = (node: ProsemirrorNode) => {
 /**
  * Checks if the current node a paragraph node and empty
  *
- * @param node
+ * @param node - the prosemirror node
+ *
+ * @public
  */
 export const isEmptyParagraphNode = (node: ProsemirrorNode | null | undefined) => {
   return (
@@ -143,8 +161,8 @@ export const isEmptyParagraphNode = (node: ProsemirrorNode | null | undefined) =
  *
  * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
- * @param state
- * @param type
+ * @param state - the editor state
+ * @param type - the mark type
  */
 export const getMarkAttrs = (state: EditorState, type: MarkType) => {
   const { from, to } = state.selection;
@@ -166,20 +184,21 @@ export const getMarkAttrs = (state: EditorState, type: MarkType) => {
 /**
  * Retrieve the start and end position of a mark
  *
+ * @remarks
  * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
- * @param $pos
- * @param type
+ * @param pmPosition - the resolved prosemirror position
+ * @param type - the mark type
  */
 export const getMarkRange = (
-  $pos: ResolvedPos | null = null,
+  pmPosition: ResolvedPos | null = null,
   type: MarkType | null | undefined = null,
 ): FromToParams | false => {
-  if (!$pos || !type) {
+  if (!pmPosition || !type) {
     return false;
   }
 
-  const start = $pos.parent.childAfter($pos.parentOffset);
+  const start = pmPosition.parent.childAfter(pmPosition.parentOffset);
 
   if (!start.node) {
     return false;
@@ -190,11 +209,11 @@ export const getMarkRange = (
     return false;
   }
 
-  let startIndex = $pos.index();
-  let startPos = $pos.start() + start.offset;
-  while (startIndex > 0 && mark.isInSet($pos.parent.child(startIndex - 1).marks)) {
+  let startIndex = pmPosition.index();
+  let startPos = pmPosition.start() + start.offset;
+  while (startIndex > 0 && mark.isInSet(pmPosition.parent.child(startIndex - 1).marks)) {
     startIndex -= 1;
-    startPos -= $pos.parent.child(startIndex).nodeSize;
+    startPos -= pmPosition.parent.child(startIndex).nodeSize;
   }
 
   const endPos = startPos + start.node.nodeSize;
@@ -202,6 +221,16 @@ export const getMarkRange = (
   return { from: startPos, to: endPos };
 };
 
+/**
+ * Retrieves the text content from a slice
+ *
+ * @remarks
+ * A utility that's useful for pulling text content from a slice which is usually created via `selection.content()`
+ *
+ * @param slice - the prosemirror slice
+ *
+ * @public
+ */
 export const getTextContentFromSlice = (slice: Slice) => {
   const node = slice.content.firstChild;
   return node ? node.textContent : '';
@@ -210,7 +239,14 @@ export const getTextContentFromSlice = (slice: Slice) => {
 /**
  * Takes an empty selection and expands it out to the nearest group not matching the excluded characters.
  *
- * Can be used to find the nearest selected word. Will return false if not a text selection.
+ * @remarks
+ * Can be used to find the nearest selected word. See {@link getSelectedWord}
+ *
+ * @param state - the editor state
+ * @param exclude - the regex pattern to exclude
+ * @returns false if not a text selection or if no expansion available
+ *
+ * @public
  */
 export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToParams | false => {
   if (!isTextSelection(state.selection)) {
@@ -240,26 +276,41 @@ export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToPar
 
 /**
  * Retrieves the nearest space separated word from the current selection.
- * Always expands out.
+ *
+ * @remarks
+ * This always expands outward so that given:
+ * `The tw<start>o words<end>`
+ * The selection would become
+ * `The <start>two words<end>`
+ *
+ * In other words it expands until it meets an invalid character.
+ *
+ * @param state - the editor state
+ *
+ * @public
  */
 export const getSelectedWord = (state: EditorState) => {
   return getSelectedGroup(state, /[\s\0]/);
 };
 
 /**
- * Retrieve plugin state
+ * Retrieve plugin state of specified type
  *
- * @param plugin
- * @param state
+ * @param plugin - the plugin or plugin key
+ * @param state - the editor state
+ *
+ * @public
  */
 export const getPluginState = <GState>(plugin: Plugin | PluginKey, state: EditorState): GState =>
   plugin.getState(state);
 
 /**
- * Retrieve plugin meta data
+ * Retrieve plugin meta data of specified type
  *
- * @param key
- * @param tr
+ * @param key - the plugin key
+ * @param tr - the transaction to retrieve from
+ *
+ * @public
  */
 export const getPluginMeta = <GMeta>(key: PluginKey | Plugin | string, tr: Transaction): GMeta =>
   tr.getMeta(key);
@@ -267,9 +318,11 @@ export const getPluginMeta = <GMeta>(key: PluginKey | Plugin | string, tr: Trans
 /**
  * Set the plugin meta data
  *
- * @param key
- * @param tr
- * @param data
+ * @param key - the plugin key
+ * @param tr - the transaction
+ * @param data - the data to set
+ *
+ * @public
  */
 export const setPluginMeta = <GMeta>(
   key: PluginKey | Plugin | string,
@@ -278,13 +331,18 @@ export const setPluginMeta = <GMeta>(
 ): Transaction => tr.setMeta(key, data);
 
 /**
+ * Get matching string from a list or single value
+ *
+ * @remarks
  * Get attrs can be called with a direct match string or array of string matches.
- * This can be used to retrieve the required string.
+ * This method should be used to retrieve the required string.
  *
  * The index of the matched array used defaults to 0 but can be updated via the second parameter.
  *
- * @param match
- * @param [index]
+ * @param match - the match(es)
+ * @param index - the zero-index point from which to start
+ *
+ * @public
  */
 export const getMatchString = (match: string | string[], index = 0) =>
   Array.isArray(match) ? match[index] : match;
@@ -292,7 +350,9 @@ export const getMatchString = (match: string | string[], index = 0) =>
 /**
  * Checks whether the passed value is a valid dom node
  *
- * @param domNode
+ * @param domNode - the dom node
+ *
+ * @public
  */
 export const isDOMNode = (domNode: unknown): domNode is Node =>
   isObject(Node)
@@ -302,8 +362,10 @@ export const isDOMNode = (domNode: unknown): domNode is Node =>
 /**
  * Finds the closest element which matches the passed selector
  *
- * @param node
- * @param selector
+ * @param domNode - the dom node
+ * @param selector - the selector
+ *
+ * @public
  */
 export const closestElement = (domNode: Node | null | undefined, selector: string): HTMLElement | null => {
   if (!isElementDOMNode(domNode)) {
@@ -324,9 +386,11 @@ export const closestElement = (domNode: Node | null | undefined, selector: strin
 };
 
 /**
- * Checks for an element node like <p> or <div>.
+ * Checks for an element node like `<p>` or `<div>`.
  *
- * @param domNode
+ * @param domNode - the dom node
+ *
+ * @public
  */
 export const isElementDOMNode = (domNode: unknown): domNode is HTMLElement =>
   isDOMNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE;
@@ -334,27 +398,13 @@ export const isElementDOMNode = (domNode: unknown): domNode is HTMLElement =>
 /**
  * Checks for a text node.
  *
- * @param domNode
+ * @param domNode - the dom node
+ *
+ * @public
  */
 export const isTextDOMNode = (domNode: unknown): domNode is Text => {
   return isDOMNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
 };
-
-/**
- * Checks for a Document node.
- *
- * @param domNode
- */
-export const isDocumentDOMNode = (domNode: unknown): domNode is Document =>
-  isDOMNode(domNode) && domNode.nodeType === Node.DOCUMENT_NODE;
-
-/**
- * Checks for a DocumentFragment node.
- *
- * @param domNode
- */
-export const isDocumentFragmentDOMNode = (domNode: unknown): domNode is DocumentFragment =>
-  isDOMNode(domNode) && domNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
 
 interface GetOffsetParentParams extends EditorViewParams, ElementParams {}
 
@@ -364,8 +414,7 @@ export const getOffsetParent = ({ view, element }: GetOffsetParentParams): HTMLE
 /**
  * Retrieve the line height from a an element
  *
- * @param params
- * @param params.element
+ * @param params - the element params
  */
 export const getLineHeight = ({ element }: ElementParams) =>
   parseFloat(window.getComputedStyle(element, undefined).lineHeight || '');
@@ -378,6 +427,9 @@ interface AbsoluteCoordinatesParams extends EditorViewParams, ElementParams, Fix
 }
 
 /**
+ * Retrieve the absolute coordinates
+ *
+ * @remarks
  * We need to translate the co-ordinates because `coordsAtPos` returns co-ordinates
  * relative to `window`. And, also need to adjust the cursor container height.
  * (0, 0)
@@ -386,11 +438,7 @@ interface AbsoluteCoordinatesParams extends EditorViewParams, ElementParams, Fix
  * | {coordsAtPos} | [Cursor]   <- cursorHeight      |  |
  * |               | [FloatingToolbar]               |  |
  *
- * @param params
- * @param params.view
- * @param params.element The target element which coordinates will be relative to
- * @param params.coords
- * @param params.cursorHeight The desired cursor height
+ * @param params - the absolute coordinate parameters
  */
 export const absoluteCoordinates = ({
   view,
@@ -412,7 +460,7 @@ export const absoluteCoordinates = ({
 /**
  * Retrieve the nearest non-text node
  *
- * @param domNode
+ * @param domNode - the dom node
  */
 export const getNearestNonTextNode = (domNode: Node) =>
   isTextDOMNode(domNode) ? (domNode.parentNode as HTMLElement) : (domNode as HTMLElement);
@@ -420,7 +468,7 @@ export const getNearestNonTextNode = (domNode: Node) =>
 /**
  * Checks whether the cursor is at the end of the state.doc
  *
- * @param state
+ * @param state - the editor state
  */
 export function atDocEnd(state: EditorState): boolean {
   const { selection, doc } = state;
@@ -430,7 +478,7 @@ export function atDocEnd(state: EditorState): boolean {
 /**
  * Checks whether the cursor is at the beginning of the state.doc
  *
- * @param state
+ * @param state - the editor state
  */
 export function atDocStart(state: EditorState): boolean {
   const { selection } = state;
@@ -440,34 +488,44 @@ export function atDocStart(state: EditorState): boolean {
 /**
  * Get the start position of the parent of the current resolve position
  *
- * @param pos
+ * @param pmPosition - the resolved prosemirror position
  */
-export function startPositionOfParent($pos: ResolvedPos): number {
-  return $pos.start($pos.depth);
+export function startPositionOfParent(pmPosition: ResolvedPos): number {
+  return pmPosition.start(pmPosition.depth);
 }
 
 /**
  * Get the end position of the parent of the current resolve position
  *
- * @param $pos
+ * @param pmPosition - the resolved prosemirror position
+ *
+ * @public
  */
-export function endPositionOfParent($pos: ResolvedPos): number {
-  return $pos.end($pos.depth) + 1;
+export function endPositionOfParent(pmPosition: ResolvedPos): number {
+  return pmPosition.end(pmPosition.depth) + 1;
 }
 
 /**
  * Retrieve the current position of the cursor
  *
- * @param selection
+ * @param selection - the editor selection
+ * @returns a resolved position only when the selection is a text selection
+ *
+ * @public
  */
 export function getCursor(selection: Selection): ResolvedPos | null | undefined {
   return isTextSelection(selection) ? selection.$cursor : undefined;
 }
 
 /**
- * Checks to see whether a nodeMatch checker is a tuple (used for regex) with length of 1 or 2
+ * Checks to see whether a nodeMatch checker is a tuple
  *
- * @param nodeMatch
+ * @remarks
+ * A node matcher can either be a string, a function a regex or a regex tuple. This check for the latter two.
+ *
+ * @param nodeMatch - the node match
+ *
+ * @public
  */
 const isRegexTuple = (nodeMatch: NodeMatch): nodeMatch is RegexTuple =>
   Array.isArray(nodeMatch) && nodeMatch.length > 0 && nodeMatch.length <= 2;
@@ -475,19 +533,24 @@ const isRegexTuple = (nodeMatch: NodeMatch): nodeMatch is RegexTuple =>
 /**
  * Test the passed in regexp tuple
  *
- * @param tuple
- * @param name
+ * @param tuple - a regex tuple
+ * @param value - the string to test against
+ *
+ * @public
  */
-const regexTest = (tuple: RegexTuple, name: string) => {
+const regexTest = (tuple: RegexTuple, value: string) => {
   const regex = new RegExp(...tuple);
-  return regex.test(name);
+  return regex.test(value);
 };
 
 /**
  * Checks to see whether the name of the passed node matches anything in the list provided.
  *
- * @param node
- * @param nodeMatches
+ * @param node - the prosemirror node
+ * @param nodeMatches - the node matches array
+ * @returns true if the node name is a match to any of the items in the nodeMatches array
+ *
+ * @public
  */
 export const nodeNameMatchesList = (
   node: ProsemirrorNode | null | undefined,
@@ -515,8 +578,10 @@ export const nodeNameMatchesList = (
 /**
  * Checks whether a Prosemirror node is the top level `doc` node
  *
- * @param node
- * @param [schema]
+ * @param node - the prosemirror node
+ * @param schema - the prosemirror schema
+ *
+ * @public
  */
 export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: EditorSchema) => {
   return isProsemirrorNode(node) && (schema ? node.type === schema.nodes.doc : node.type.name === 'doc');
@@ -525,42 +590,64 @@ export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: Edi
 /**
  * Checks whether the passed in JSON is a valid object node
  *
- * @param arg
+ * @param value - the value to check
+ *
+ * @public
  */
-export const isObjectNode = (arg: unknown): arg is ObjectNode =>
-  isObject(arg) && (arg as PlainObject).type === 'doc' && Array.isArray((arg as PlainObject).content);
+export const isObjectNode = (value: unknown): value is ObjectNode =>
+  isObject(value) && (value as PlainObject).type === 'doc' && Array.isArray((value as PlainObject).content);
 
-export interface CreateDocumentNodeParams extends SchemaParams, Partial<CustomDocParams> {
+export interface CreateDocumentNodeParams
+  extends SchemaParams,
+    Partial<CustomDocParams>,
+    StringHandlerParams {
   /** The content to render */
   content: RemirrorContentType;
+}
+
+export interface StringHandlerParams {
+  /**
+   * String handler for transforming a string into a prosemirror node
+   */
+  stringHandler?(params: FromStringParams): ProsemirrorNode;
 }
 
 /**
  * Creates a document node from the passed in content and schema.
  *
- * @param params
- * @param params.content
- * @param params.schema
- * @param [params.doc]
+ * @param params - the destructured create document node params
+ *
+ * @public
  */
-export const createDocumentNode = ({ content, schema, doc = document }: CreateDocumentNodeParams) => {
+export const createDocumentNode = ({
+  content,
+  schema,
+  doc = document,
+  stringHandler,
+}: CreateDocumentNodeParams): ProsemirrorNode => {
+  // if (isEditorState(content)) {
+  //   return content.doc;
+  // }
+
   if (isProsemirrorNode(content)) {
     return content;
   }
+
   if (isObjectNode(content)) {
     try {
       return schema.nodeFromJSON(content);
     } catch (e) {
       console.error(e);
-      return schema.nodeFromJSON(EMPTY_OBJECT_NODE);
+      return schema.nodeFromJSON(EMPTY_PARAGRAPH_NODE);
     }
   }
 
-  if (isString(content)) {
-    return fromHTML({ doc, content, schema });
+  if (isString(content) && stringHandler) {
+    // TODO fix this in SSR
+    return stringHandler({ doc, content, schema });
   }
 
-  return null;
+  return schema.nodeFromJSON(EMPTY_PARAGRAPH_NODE);
 };
 
 interface CustomDocParams {
@@ -573,17 +660,16 @@ interface ProsemirrorNodeParams {
   node: ProsemirrorNode;
 }
 
-interface ToHTMLParams extends SchemaParams, ProsemirrorNodeParams, Partial<CustomDocParams> {}
+interface FromNodeParams extends SchemaParams, ProsemirrorNodeParams, Partial<CustomDocParams> {}
 
 /**
  * Convert a prosemirror node into it's HTML contents
  *
- * @param params
- * @param params.node
- * @param params.schema
- * @param [params.doc]
+ * @param params - the from node params
+ *
+ * @public
  */
-export const toHTML = ({ node, schema, doc = document }: ToHTMLParams) => {
+export const toHTML = ({ node, schema, doc = document }: FromNodeParams) => {
   const element = doc.createElement('div');
   element.appendChild(toDOM({ node, schema, doc }));
 
@@ -593,17 +679,16 @@ export const toHTML = ({ node, schema, doc = document }: ToHTMLParams) => {
 /**
  * Convert a node into its DOM representative
  *
- * @param params
- * @param params.node
- * @param params.schema
- * @param [params.doc]
+ * @param params - the from node params
+ *
+ * @public
  */
-export const toDOM = ({ node, schema, doc }: ToHTMLParams): DocumentFragment => {
+export const toDOM = ({ node, schema, doc }: FromNodeParams): DocumentFragment => {
   const fragment = isDocNode(node, schema) ? node.content : Fragment.from(node);
   return DOMSerializer.fromSchema(schema).serializeFragment(fragment, { document: doc });
 };
 
-interface FromHTMLParams extends Partial<CustomDocParams>, SchemaParams {
+interface FromStringParams extends Partial<CustomDocParams>, SchemaParams {
   /** The content  passed in an a string */
   content: string;
 }
@@ -611,12 +696,11 @@ interface FromHTMLParams extends Partial<CustomDocParams>, SchemaParams {
 /**
  * Convert a HTML string into Prosemirror node
  *
- * @param params
- * @param params.content
- * @param params.schema
- * @param [params.doc]
+ * @param params - the from html params
+ *
+ * @public
  */
-export const fromHTML = ({ content, schema, doc = document }: FromHTMLParams) => {
+export const fromHTML = ({ content, schema, doc = document }: FromStringParams): ProsemirrorNode => {
   const element = doc.createElement('div');
   element.innerHTML = content.trim();
   return DOMParser.fromSchema(schema).parse(element);

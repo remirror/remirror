@@ -1,6 +1,6 @@
 import { Fragment, ReactNode } from 'react';
 
-import { jsx } from '@emotion/core';
+import { jsx as createElement } from '@emotion/core';
 import {
   AnyFunction,
   DOMOutputSpec,
@@ -50,7 +50,7 @@ export class ReactSerializer {
       children.push(child);
     });
 
-    return jsx(Fragment, {}, ...children);
+    return createElement(Fragment, {}, ...children);
   }
 
   /**
@@ -88,14 +88,15 @@ export class ReactSerializer {
    * Receives the return value from toDOM defined in the node schema and transforms it
    * into JSX
    *
-   * @param structure
-   * @param wraps - passed through any elements that this component should be parent of.
+   * @param structure - The DOMOutput spec for the current node
+   * @param wraps - passed through any elements that this component should be parent of
    */
   public static renderSpec(structure: DOMOutputSpec, wraps?: ReactNode): ReactNode {
-    let fn: AnyFunction<JSX.Element> = jsx;
+    let fn: AnyFunction<JSX.Element> = createElement;
     if (wraps) {
-      fn = (...[type, domSpecProps, ...domSpecChildren]: Parameters<typeof jsx>): ReturnType<typeof jsx> =>
-        jsx(type, domSpecProps, wraps, ...domSpecChildren);
+      fn = (
+        ...[type, domSpecProps, ...domSpecChildren]: Parameters<typeof createElement>
+      ): ReturnType<typeof createElement> => createElement(type, domSpecProps, wraps, ...domSpecChildren);
     }
 
     if (isString(structure)) {
@@ -120,7 +121,7 @@ export class ReactSerializer {
       const child = structure[ii];
       if (child === 0) {
         if (ii < structure.length - 1 || ii > currentIndex) {
-          throw new RangeError('Content hole must be the only child of its parent node');
+          throw new RangeError('Content hole (0) must be the only child of its parent node');
         }
         return fn(Component, mapProps(props));
       }

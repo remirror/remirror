@@ -1,4 +1,4 @@
-import { Interpolation } from 'emotion';
+import { cx, Interpolation } from 'emotion';
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
@@ -6,16 +6,16 @@ import { EditorState, PluginKey } from 'prosemirror-state';
 import { AnyExtension } from './extension';
 import {
   createFlexibleFunctionMap,
-  ExtensionMapValue,
   extensionPropertyMapper,
+  FlexibleExtension,
   hasExtensionProperty,
   ignoreFunctions,
   isMarkExtension,
   isNodeExtension,
   transformExtensionMap,
 } from './extension-manager.helpers';
-import { bool, Cast, isEqual, isFunction, isObject } from './helpers';
-import { getPluginState } from './helpers/document';
+import { bool, isEqual, isFunction, isObject } from './helpers';
+import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from './helpers/document';
 import { NodeViewPortalContainer } from './portal-container';
 import {
   ActionMethods,
@@ -29,11 +29,13 @@ import {
   ExtensionManagerParams,
   MarkExtensionSpec,
   NodeExtensionSpec,
+  NodeViewMethod,
+  Omit,
   ProsemirrorPlugin,
   RemirrorActions,
 } from './types';
 
-interface ExtensionManagerInitParams {
+export interface ExtensionManagerInitParams {
   /**
    *  A shortcut to pulling the editor state
    */
@@ -45,23 +47,26 @@ interface ExtensionManagerInitParams {
   getPortalContainer: () => NodeViewPortalContainer;
 }
 
-interface ExtensionManagerData {
+export interface ExtensionManagerData {
   schema: EditorSchema;
   styles: Interpolation;
+  directPlugins: ProsemirrorPlugin[];
   plugins: ProsemirrorPlugin[];
+  nodeViews: Record<string, NodeViewMethod>;
   keymaps: ProsemirrorPlugin[];
   inputRules: ProsemirrorPlugin;
   pasteRules: ProsemirrorPlugin[];
   actions: RemirrorActions;
   markAttrs: Record<string, Record<string, string>>;
   view: EditorView;
+  attributes: Attrs;
 }
 
 export class ExtensionManager {
   /**
    * A helper static method for creating a new extension manager.
    */
-  public static create(extensions: ExtensionMapValue[]) {
+  public static create(extensions: FlexibleExtension[]) {
     return new ExtensionManager(extensions);
   }
 
@@ -69,7 +74,11 @@ export class ExtensionManager {
   public getPortalContainer!: () => NodeViewPortalContainer;
   public readonly extensions: AnyExtension[];
   private initialized = false;
-  private initData: ExtensionManagerData = Cast({});
+  private initData: ExtensionManagerData = {} as ExtensionManagerData;
+
+  get schema() {
+    return this.initData.schema;
+  }
 
   get data() {
     if (!this.initialized) {
@@ -79,8 +88,11 @@ export class ExtensionManager {
     return this.initData;
   }
 
-  constructor(extensionMapValues: ExtensionMapValue[]) {
+  constructor(extensionMapValues: FlexibleExtension[]) {
     this.extensions = transformExtensionMap(extensionMapValues);
+
+    // Initialize the schema immediately since this doesn't ever change.
+    this.initData.schema = this.createSchema();
   }
 
   /**
@@ -97,19 +109,28 @@ export class ExtensionManager {
     this.getPortalContainer = getPortalContainer;
     this.initialized = true;
 
-    this.initData.schema = this.createSchema();
-    this.initData.styles = this.styles(this.schemaParams);
-    this.initData.plugins = this.plugins(this.schemaParams);
-    this.initData.keymaps = this.keymaps(this.schemaParams);
-    this.initData.inputRules = this.inputRules(this.schemaParams);
-    this.initData.pasteRules = this.pasteRules(this.schemaParams);
+    this.initData.styles = this.styles();
+    this.initData.directPlugins = this.plugins();
+    this.initData.nodeViews = this.nodeViews();
+    this.initData.keymaps = this.keymaps();
+    this.initData.inputRules = this.inputRules();
+    this.initData.pasteRules = this.pasteRules();
+    this.initData.attributes = this.attributes();
+
+    this.initData.plugins = [
+      ...this.initData.directPlugins,
+      this.initData.inputRules,
+      ...this.initData.pasteRules,
+      ...this.initData.keymaps,
+    ];
+
     return this;
   }
 
   public initView(view: EditorView) {
     this.initData.view = view;
     this.initData.actions = this.actions({
-      ...this.schemaParams,
+      ...this.params,
       view,
       isEditable: () =>
         bool(
@@ -120,11 +141,8 @@ export class ExtensionManager {
 
   /**
    * Utility getter for accessing the schema params
-   *
-   * @readonly
-   * @private
    */
-  private get schemaParams(): ExtensionManagerParams {
+  private get params(): ExtensionManagerParams {
     return {
       schema: this.initData.schema,
       getEditorState: this.getEditorState,
@@ -206,6 +224,20 @@ export class ExtensionManager {
     return new Schema({ nodes: this.nodes, marks: this.marks });
   }
 
+  public createState({ content, doc, stringHandler }: Omit<CreateDocumentNodeParams, 'schema'>) {
+    const { schema, plugins } = this.data;
+    return EditorState.create({
+      schema,
+      doc: createDocumentNode({
+        content,
+        doc,
+        schema,
+        stringHandler,
+      }),
+      plugins,
+    });
+  }
+
   /**
    * Get all the extension plugin keys
    */
@@ -220,16 +252,34 @@ export class ExtensionManager {
     return pluginKeys;
   }
 
+  public attributes() {
+    let combinedAttributes: Attrs = {};
+    this.extensions
+      .filter(hasExtensionProperty('attributes'))
+      .filter(extension => extension.options.includeOnInitView)
+      .map(extension => extension.attributes(this.params))
+      .reverse()
+      .forEach(attrs => {
+        combinedAttributes = {
+          ...combinedAttributes,
+          ...attrs,
+          class: cx(combinedAttributes.class as string, attrs.class as string),
+        };
+      });
+
+    return combinedAttributes;
+  }
+
   /**
    * Retrieve all plugins from the passed in extensions
    */
-  public plugins(params: ExtensionManagerParams) {
+  public plugins() {
     this.checkInitialized();
     const plugins: ProsemirrorPlugin[] = [];
     const extensionPlugins = this.extensions
       .filter(hasExtensionProperty('plugin'))
       .filter(extension => extension.options.includePlugin)
-      .map(extensionPropertyMapper('plugin', params)) as ProsemirrorPlugin[];
+      .map(extensionPropertyMapper('plugin', this.params)) as ProsemirrorPlugin[];
 
     extensionPlugins.forEach(plugin => {
       plugins.push(plugin);
@@ -238,11 +288,32 @@ export class ExtensionManager {
     return plugins;
   }
 
-  public styles(params: ExtensionManagerParams): Interpolation[] {
+  /**
+   * Retrieve the nodeView created on the extensions for use within prosemirror state
+   */
+  public nodeViews() {
+    this.checkInitialized();
+    const nodeViews: Record<string, NodeViewMethod> = {};
+    return this.extensions
+      .filter(hasExtensionProperty('nodeView'))
+      .filter(extension => extension.options.includeNodeView)
+      .reduce(
+        (prevNodeViews, extension) => ({
+          ...prevNodeViews,
+          [extension.name]: extensionPropertyMapper('nodeView', this.params)(extension) as NodeViewMethod,
+        }),
+        nodeViews,
+      );
+  }
+
+  /**
+   * Extensions can register custom styles for the editor. This retrieves them.
+   */
+  public styles(): Interpolation[] {
     const extensionStyles = this.extensions
       .filter(hasExtensionProperty('styles'))
       .filter(extension => extension.options.includeStyles)
-      .map(extensionPropertyMapper('styles', params));
+      .map(extensionPropertyMapper('styles', this.params));
 
     return extensionStyles;
   }
@@ -250,10 +321,10 @@ export class ExtensionManager {
   /**
    * Retrieve all keymaps (how the editor responds to keyboard commands).
    */
-  public keymaps(params: ExtensionManagerParams) {
+  public keymaps() {
     const extensionKeymaps = this.extensions
       .filter(hasExtensionProperty('keys'))
-      .map(extensionPropertyMapper('keys', params));
+      .map(extensionPropertyMapper('keys', this.params));
 
     const mappedKeys: Record<string, CommandFunction> = {};
 
@@ -278,12 +349,12 @@ export class ExtensionManager {
   /**
    * Retrieve all inputRules (how the editor responds to text matching certain rules).
    */
-  public inputRules(params: ExtensionManagerParams) {
+  public inputRules() {
     const rules: InputRule[] = [];
     const extensionInputRules = this.extensions
       .filter(hasExtensionProperty('inputRules'))
       .filter(extension => extension.options.includeInputRules)
-      .map(extensionPropertyMapper('inputRules', params)) as InputRule[][];
+      .map(extensionPropertyMapper('inputRules', this.params)) as InputRule[][];
 
     extensionInputRules.forEach(rule => {
       rules.push(...rule);
@@ -295,12 +366,12 @@ export class ExtensionManager {
   /**
    * Retrieve all pasteRules (rules for how the editor responds to pastedText).
    */
-  public pasteRules(params: ExtensionManagerParams): ProsemirrorPlugin[] {
+  public pasteRules(): ProsemirrorPlugin[] {
     const pasteRules: ProsemirrorPlugin[] = [];
     const extensionPasteRules = this.extensions
       .filter(hasExtensionProperty('pasteRules'))
       .filter(extension => extension.options.includePasteRules)
-      .map(extensionPropertyMapper('pasteRules', params)) as ProsemirrorPlugin[][];
+      .map(extensionPropertyMapper('pasteRules', this.params)) as ProsemirrorPlugin[][];
 
     extensionPasteRules.forEach(rules => {
       pasteRules.push(...rules);
@@ -372,15 +443,15 @@ export class ExtensionManager {
           methodFactory(params, callback);
         });
       },
-      getItemParams: (ext, params) =>
-        ext.commands({
+      getItemParams: (extension, params) =>
+        extension.commands({
           schema: params.schema,
           getEditorState: this.getEditorState,
           getPortalContainer: this.getPortalContainer,
-          ...(isMarkExtension(ext)
-            ? { type: params.schema.marks[ext.name] }
-            : isNodeExtension(ext)
-            ? { type: params.schema.nodes[ext.name] }
+          ...(isMarkExtension(extension)
+            ? { type: params.schema.marks[extension.name] }
+            : isNodeExtension(extension)
+            ? { type: params.schema.nodes[extension.name] }
             : {}),
         }),
     },
@@ -420,6 +491,11 @@ const booleanFlexibleFunctionMap = <GKey extends 'enabled' | 'active'>(key: GKey
         schema: params.schema,
         getEditorState: ctx.getEditorState,
         getPortalContainer: ctx.getPortalContainer,
+        ...(isMarkExtension(extension)
+          ? { type: params.schema.marks[extension.name] }
+          : isNodeExtension(extension)
+          ? { type: params.schema.nodes[extension.name] }
+          : {}),
       }),
   });
 };
@@ -427,7 +503,7 @@ const booleanFlexibleFunctionMap = <GKey extends 'enabled' | 'active'>(key: GKey
 /**
  * Checks to see whether this is an extension manager
  *
- * @param value
+ * @param value - the value to check
  */
 export const isExtensionManager = (value: unknown): value is ExtensionManager => {
   return isObject(value) && value instanceof ExtensionManager;

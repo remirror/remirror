@@ -1,9 +1,9 @@
 import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
 import { createTestManager } from '@test-fixtures/schema-helpers';
+import { render, RenderResult } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import { render, RenderResult } from 'react-testing-library';
-import { Remirror } from '../..';
+import { Remirror } from '../';
 
 const mock = jest.fn();
 const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef((props, ref) => {

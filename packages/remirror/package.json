@@ -1,52 +1,52 @@
 {
   "name": "remirror",
   "description": "An advanced text editor for react built with prosemirror",
-  "version": "0.0.1-alpha.11",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "@remirror/core": "0.0.1-alpha.11",
-    "@remirror/core-extensions": "0.0.1-alpha.11",
-    "@remirror/react": "0.0.1-alpha.11",
-    "@remirror/renderer-react": "0.0.1-alpha.11"
-  },
-  "files": [
-    "lib",
-    "src"
-  ],
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/remirror",
-  "keywords": [
-    "prosemirror",
-    "react",
-    "ssr",
-    "text editor"
-  ],
-  "main": "lib/index.js",
-  "module": "lib/dist/remirror.esm.js",
-  "peerDependencies": {
-    "@babel/runtime-corejs2": ">=7",
-    "@types/react": "^16.7.18",
-    "@types/react-dom": "^16.8.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "readme": "",
   "repository": {
     "type": "git",
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "packages/remirror"
   },
+  "version": "0.0.1-alpha.11",
+  "main": "lib/index.js",
+  "module": "lib/dist/remirror.esm.js",
+  "files": [
+    "lib",
+    "src"
+  ],
   "scripts": {
-    "build": "run-s build:declaration build:babel",
+    "build": "run-p build:*",
     "build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "types": "lib/index.d.ts",
+  "dependencies": {
+    "@remirror/core": "0.0.1-alpha.11",
+    "@remirror/core-extensions": "0.0.1-alpha.11",
+    "@remirror/react": "0.0.1-alpha.11",
+    "@remirror/renderer-react": "0.0.1-alpha.11"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.7.18",
+    "@types/react-dom": "^16.8.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "keywords": [
+    "prosemirror",
+    "react",
+    "ssr",
+    "text editor"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/remirror.cjs.js",
+  "readme": "",
   "umd": "lib/dist/remirror.umd.js",
   "umd:min": "lib/dist/remirror.umd.min.js",
   "umdGlobals": {

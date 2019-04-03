@@ -1,6 +1,9 @@
 import { toHTML } from '@remirror/core';
 import { Blockquote, Bold, Heading, Link } from '@remirror/core-extensions';
+import { cleanup } from '@testing-library/react';
 import { renderEditor } from '../render-editor';
+
+beforeEach(cleanup);
 
 test('renders an editor into the dom', () => {
   const {
@@ -135,10 +138,17 @@ describe('add', () => {
     expect(dom).toHaveTextContent(expected);
   });
 
-  it('can fire a shortcut', () => {
+  it('can use keyboard shortcuts', () => {
     const node = p(bold('Welcome'));
     add(doc(p('<start>Welcome<end>'))).shortcut('Mod-b');
     expect(dom).toContainHTML(toHTML({ node, schema }));
+  });
+
+  it.skip('can fire custom events', () => {
+    const expected = { from: 1, to: 8 };
+    const { state } = add(doc(p('Wel<cursor>come'))).fire({ event: 'dblClick' });
+    const { from, to } = state.selection;
+    expect({ from, to }).toEqual(expected);
   });
 
   it('can replace text with text', () => {

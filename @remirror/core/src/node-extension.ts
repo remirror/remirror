@@ -4,36 +4,34 @@ import { nodeActive } from './helpers/utils';
 import {
   EditorSchema,
   ExtensionBooleanFunction,
-  ExtensionManagerParams,
   ExtensionType,
   FlexibleConfig,
   NodeExtensionOptions,
   NodeExtensionSpec,
+  SchemaNodeTypeParams,
 } from './types';
 
+/**
+ * Defines an abstract class for creating extensions which can place nodes into the prosemirror state.
+ */
 export abstract class NodeExtension<
   GOptions extends NodeExtensionOptions = NodeExtensionOptions
 > extends Extension<GOptions, NodeType<EditorSchema>> {
+  /**
+   * Identifies this extension as a **NODE** type from the prosemirror terminology.
+   *
+   * @remarks
+   * For more information see {@link https://prosemirror.net/docs/ref/#model.Node}
+   */
   get type(): ExtensionType.NODE {
     return ExtensionType.NODE;
   }
 
   public abstract readonly schema: NodeExtensionSpec;
 
-  public active({
-    getEditorState,
-    schema,
-  }: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction> {
+  public active({ getEditorState, type }: SchemaNodeTypeParams): FlexibleConfig<ExtensionBooleanFunction> {
     return attrs => {
-      return nodeActive(getEditorState(), schema.nodes[this.name], attrs);
+      return nodeActive({ state: getEditorState(), type, attrs });
     };
   }
-}
-
-export interface NodeExtensionConstructor<
-  GOptions extends NodeExtensionOptions,
-  GExtension extends NodeExtension<GOptions>
-> {
-  // tslint:disable-next-line: callable-types
-  new (options?: GOptions): GExtension;
 }
