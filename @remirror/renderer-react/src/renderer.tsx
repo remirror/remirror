@@ -125,7 +125,7 @@ export const RenderTree: FC<RenderTreeProps> = ({
 
   const TypeHandler = typeMap[json.type];
   if (!TypeHandler) {
-    if (skipUnknownTypes) {
+    if (!skipUnknownTypes) {
       throw new Error('No handler for node type `' + json.type + '` registered');
     }
     return null;
