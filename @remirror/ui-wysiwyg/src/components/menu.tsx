@@ -153,8 +153,6 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
     positionerId: 'bubbleMenu',
   });
 
-  console.log(bottom, left);
-
   const updateLink = (href: string) => actions.linkUpdate.command({ href });
   const removeLink = () => actions.linkRemove.command();
   const canRemove = () => actions.linkRemove.isActive();

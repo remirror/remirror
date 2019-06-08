@@ -8,13 +8,12 @@ const ignore = [
 ];
 
 const presets = [
-  ['@babel/preset-env', { loose: true }],
+  ['@babel/preset-env'],
   '@babel/preset-typescript',
-  '@babel/preset-react',
   '@emotion/babel-preset-css-prop',
 ];
 
-const testBabelPresetEnv = ['@babel/preset-env', { targets: { node: '8' }, loose: true }];
+const testBabelPresetEnv = ['@babel/preset-env', { targets: { node: '8' } }];
 const nonTestEnv = { ignore, presets };
 
 module.exports = {
@@ -23,8 +22,8 @@ module.exports = {
     // Required for the compilation of abstract classes
     '@babel/plugin-transform-typescript',
     ['@babel/plugin-transform-runtime'],
-    ['@babel/plugin-proposal-class-properties', { loose: true }],
-    ['@babel/plugin-proposal-object-rest-spread', { loose: true }],
+    ['@babel/plugin-proposal-class-properties'],
+    ['@babel/plugin-proposal-object-rest-spread'],
     '@babel/plugin-syntax-dynamic-import',
     'lodash',
   ],

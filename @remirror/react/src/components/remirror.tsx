@@ -39,9 +39,10 @@ import {
   uniqueClass,
   updateChildWithKey,
 } from '@remirror/react-utils';
+import { cx } from 'emotion';
 import { EditorState } from 'prosemirror-state';
 import { defaultProps } from '../constants';
-import { NodeViewPortal, NodeViewPortalComponent } from '../node-views';
+import { NodeViewPortalComponent } from '../node-views';
 import { defaultPositioner } from '../positioners';
 import { defaultStyles } from '../styles';
 
@@ -67,7 +68,14 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     return null;
   }
 
+  /**
+   * This method manages state updates only when the `onStateChange` is passed into the editor. Since it's up to the
+   * user to provide state updates to the editor this method is called when the value prop has changed.
+   */
   private controlledComponentUpdateHandler?: (state: EditorState) => void;
+  /**
+   * Stores the Prosemirror EditorView dom element
+   */
   private editorRef?: HTMLElement;
   private positionerMap = new Map<string, PositionerMapValue>();
 
@@ -79,7 +87,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    * A unique class added to every instance of the remirror editor. This allows for non global styling.
    */
   private view: EditorViewType;
-  private portalContainer!: NodeViewPortalContainer;
+  private portalContainer: NodeViewPortalContainer = new NodeViewPortalContainer();
   private doc = getDoc();
 
   private get manager(): ExtensionManager {
@@ -190,6 +198,10 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     } as RefKeyRootProps<GRefKey>;
   }
 
+  /**
+   * The method passed to the render props that can be used for passing the position and positioner
+   * information components that want to respond to the cursor position (e.g.) a floating / bubble menu.
+   */
   private getPositionerProps = <GRefKey extends string = 'ref'>(
     options: GetPositionerPropsConfig<GRefKey>,
   ) => {
@@ -212,6 +224,9 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     return ret;
   };
 
+  /**
+   * Stores the Prosemirror editor dom instance for this component using `refs`
+   */
   private onRef: Ref<HTMLElement> = ref => {
     if (ref) {
       this.editorRef = ref;
@@ -219,6 +234,13 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     }
   };
 
+  /**
+   * A curried function which holds the positionerId and position in a closure. It generate the method that is passed
+   * into a `ref` prop for any component to register dom element for the positioner.
+   *
+   * It works since each positioner is created with a distinct `positionerId` (a descriptive string) so that multiple
+   * positioners can be registered per editor.
+   */
   private positionerRefFactory = ({
     positionerId,
     position,
@@ -227,6 +249,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       return;
     }
 
+    // Retrieve the current
     const current = this.positionerMap.get(positionerId);
     if (!current || current.element !== element) {
       this.positionerMap.set(positionerId, { element, prev: { ...position, isActive: false } });
@@ -280,18 +303,15 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     const { attributes } = this.props;
     const propAttributes = isFunction(attributes) ? attributes(this.eventListenerParams()) : attributes;
 
-    const managerAttrs = this.manager.data.attributes;
+    const managerAttrs = this.manager.attributes;
 
     const defaultAttributes = {
       role: 'textbox',
       'aria-multiline': 'true',
-      // ...(this.placeholder ? { 'aria-placeholder': this.placeholder.text } : {}),
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label || '',
       ...managerAttrs,
-      class: `${EDITOR_CLASS_NAME} ${uniqueClass(this.uid, 'remirror')}${
-        managerAttrs.class ? ' ' + managerAttrs.class : ''
-      }`,
+      class: cx(EDITOR_CLASS_NAME, uniqueClass(this.uid, 'remirror'), managerAttrs.class),
     };
 
     return { ...defaultAttributes, ...propAttributes };
@@ -388,7 +408,6 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       this.controlledComponentUpdateHandler &&
       this.state.newState !== newState
     ) {
-      // TODO write test for potential infinite loop when value changes independent of onStateChange
       this.controlledComponentUpdateHandler(this.state.newState);
     }
   }
@@ -520,41 +539,6 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   }
 
   /**
-   * Stores the portal container which is passed through to plugins and their node views
-   *
-   * @param container
-   */
-  private setPortalContainer(container: NodeViewPortalContainer) {
-    if (!this.portalContainer) {
-      this.portalContainer = container;
-    }
-  }
-
-  /**
-   * A helper function to render node view portal
-   *
-   * @param portalContainer
-   */
-  private renderNodeViewPortal = (portalContainer: NodeViewPortalContainer) => {
-    this.setPortalContainer(portalContainer);
-    const { children } = this.props;
-
-    if (!isFunction(children)) {
-      throw new Error('The child argument to the Remirror component must be a function.');
-    }
-
-    /* Reset the root props called status */
-    this.rootPropsConfig.called = false;
-
-    return (
-      <>
-        {this.renderReactElement(children)}
-        <NodeViewPortalComponent nodeViewPortalContainer={portalContainer} />
-      </>
-    );
-  };
-
-  /**
    * Checks whether this is an SSR environment and returns a child array with the SSR component
    *
    * @param child
@@ -606,7 +590,20 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   }
 
   public render() {
-    const ret = <NodeViewPortal>{this.renderNodeViewPortal}</NodeViewPortal>;
-    return ret;
+    const { children } = this.props;
+
+    if (!isFunction(children)) {
+      throw new Error('The child argument to the Remirror component must be a function.');
+    }
+
+    /* Reset the root props called status */
+    this.rootPropsConfig.called = false;
+
+    return (
+      <>
+        {this.renderReactElement(children)}
+        <NodeViewPortalComponent nodeViewPortalContainer={this.portalContainer} />
+      </>
+    );
   }
 }

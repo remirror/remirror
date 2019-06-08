@@ -19,7 +19,8 @@ test('allows for injection of basic content', () => {
     view,
     nodes: { doc, p },
     add,
-  } = renderEditor({ plainNodes: [] }); // TODO for some reason typescript autocomplete on plain nodes doesn't work without at least an empty array
+    // TODO: Investigate why typescript autocomplete on plain nodes doesn't work without at least an empty array
+  } = renderEditor({ plainNodes: [] });
   add(doc(p(expected)));
   expect(view.dom).toHaveTextContent(expected);
 });

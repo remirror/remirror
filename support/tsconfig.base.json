@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
     "target": "esnext",
     "jsx": "react",
     "moduleResolution": "node",
@@ -13,7 +13,7 @@
     "noUnusedParameters": true,
     "pretty": true,
     "forceConsistentCasingInFileNames": true,
-    // "skipLibCheck": true,
+    "skipLibCheck": true,
     "experimentalDecorators": true,
     "strict": true,
     "alwaysStrict": true,

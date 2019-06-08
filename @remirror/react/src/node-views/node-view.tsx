@@ -4,6 +4,7 @@ import {
   Attrs,
   Cast,
   EDITOR_CLASS_NAME,
+  EditorViewParams,
   isDOMNode,
   isElementDOMNode,
   isPlainObject,
@@ -17,9 +18,8 @@ import { Decoration, EditorView, NodeView } from 'prosemirror-view';
 
 export type GetPosition = () => number;
 
-export interface NodeViewComponentProps<GAttrs = any> {
+export interface NodeViewComponentProps<GAttrs = any> extends EditorViewParams {
   node: ProsemirrorNode & { attrs: GAttrs };
-  view: EditorView;
   getPosition: GetPosition;
   forwardRef?: (node: HTMLElement) => void | undefined;
 }

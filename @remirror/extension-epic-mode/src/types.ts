@@ -1,4 +1,4 @@
-import { BaseExtensionOptions, Omit } from '@remirror/core';
+import { BaseExtensionOptions } from '@remirror/core';
 
 export type EpicModePluginStateParams = Required<Omit<EpicModeOptions, keyof BaseExtensionOptions>>;
 

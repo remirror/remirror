@@ -9,7 +9,6 @@ import {
   isNodeExtension,
   MarkExtension,
   NodeExtension,
-  Omit,
 } from '@remirror/core';
 import { InjectedRemirrorProps, Remirror, RemirrorProps } from '@remirror/react';
 import { render } from '@testing-library/react';

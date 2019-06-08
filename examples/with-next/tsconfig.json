@@ -1,0 +1,14 @@
+{
+  "extends": "../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["dom", "es2017"],
+    "declaration": false,
+    "noEmit": true,
+    "target": "esnext",
+    "allowJs": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "exclude": ["node_modules"],
+  "include": ["**/*.ts", "**/*.tsx"]
+}

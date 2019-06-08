@@ -48,7 +48,6 @@ export function createDecorations(blocks: NodeWithPosition[]) {
 
   blocks.forEach(block => {
     const positionedRefractorNodes = getPositionedRefractorNodes(block);
-    // console.log(positionedRefractorNodes);
     positionedRefractorNodes.forEach(positionedRefractorNode => {
       const decoration = Decoration.inline(positionedRefractorNode.from, positionedRefractorNode.to, {
         class: positionedRefractorNode.classes.join(' '),
@@ -57,7 +56,6 @@ export function createDecorations(blocks: NodeWithPosition[]) {
     });
   });
 
-  // console.log(decorations);
   return decorations;
 }
 
@@ -70,7 +68,6 @@ export function createDecorations(blocks: NodeWithPosition[]) {
 const getPositionedRefractorNodes = ({ node, pos }: NodeWithPosition) => {
   let startPos = pos + 1;
   const refractorNodes = refractor.highlight(node.textContent, node.attrs.language);
-  // console.log(JSON.stringify(refractorNodes, null, 2));
   function mapper(refractorNode: ParsedRefractorNode): PositionedRefractorNode {
     const from = startPos;
     const to = from + refractorNode.text.length;

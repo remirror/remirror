@@ -6,3 +6,4 @@ dist
 package.json
 **/package.json
 coverage/**
+**/.next

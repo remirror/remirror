@@ -607,7 +607,10 @@ export interface CreateDocumentNodeParams
 
 export interface StringHandlerParams {
   /**
-   * String handler for transforming a string into a prosemirror node
+   * A function which transforms a string into a prosemirror node.
+   * Can be used to transform markdown / html or any other string format.
+   *
+   * For an example {@link fromHTML}
    */
   stringHandler?(params: FromStringParams): ProsemirrorNode;
 }

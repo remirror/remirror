@@ -1,4 +1,4 @@
-import { Cast, Omit } from '@remirror/core';
+import { Cast } from '@remirror/core';
 import { GetPositionerReturn, InjectedRemirrorProps, UsePositionerParams } from '@remirror/react-utils';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import React, { ComponentType, FunctionComponent } from 'react';

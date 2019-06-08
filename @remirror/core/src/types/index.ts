@@ -3,7 +3,7 @@ import { Plugin as PMPlugin } from 'prosemirror-state';
 import { Decoration } from 'prosemirror-view';
 import { NodeViewPortalContainer } from '../portal-container';
 import { EditorView, InputRule, Mark, NodeView, Transaction } from './aliases';
-import { AnyFunction, Attrs, EditorSchema, EditorState, Omit, ProsemirrorNode } from './base';
+import { AnyFunction, Attrs, EditorSchema, EditorState, ProsemirrorNode } from './base';
 import { EditorViewParams, SchemaParams } from './builders';
 
 /**
@@ -30,14 +30,17 @@ export type CommandFunction = (
  */
 export type KeyboardBindings = Record<string, CommandFunction>;
 
-/* The following is an alternative type definition for the built in Prosemirror definition
-The current Prosemirror types were causing me some problems
-
-Also I want don't want to be able to use domNodes in the toDOM spec since this will create problems once SSR is enabled.
-*/
-
 type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string };
 type DOMOutputSpecPosX = string | 0 | [string, 0] | [string, { [attr: string]: string }, 0];
+
+/**
+ * Defines the return type of the toDom methods for both Nodes and marks
+ *
+ * @remarks
+ * This differs from the default Prosemirror type definition which seemed didn't work at the time of writing.
+ *
+ * Additionally we don't want to support domNodes in the toDOM spec since this will create problems once SSR is fully supported
+ */
 export type DOMOutputSpec =
   | string
   | [string, 0]
@@ -56,13 +59,32 @@ export type DOMOutputSpec =
       DOMOutputSpecPosX?,
     ];
 
-export type NodeExtensionSpec = Omit<NodeSpec, 'toDOM'> & {
-  toDOM?: ((node: ProsemirrorNode) => DOMOutputSpec) | null;
-};
+/**
+ * The schema spec definition for a node extension
+ */
+export interface NodeExtensionSpec extends Omit<NodeSpec, 'toDOM'> {
+  /**
+   * Defines the default way a node of this type should be serialized
+   * to DOM/HTML (as used by
+   * [`DOMSerializer.fromSchema`](#model.DOMSerializer^fromSchema)).
+   *
+   * Should return a {@link DOMOutputSpec} that describes a DOM node, with an
+   * optional number zero (“hole”) in it to indicate where the node's
+   * content should be inserted.
+   */
+  toDOM?: (node: ProsemirrorNode) => DOMOutputSpec;
+}
 
-export type MarkExtensionSpec = Omit<MarkSpec, 'toDOM'> & {
-  toDOM?: ((mark: Mark, inline: boolean) => DOMOutputSpec) | null;
-};
+/**
+ * The schema spec definition for a mark extension
+ */
+export interface MarkExtensionSpec extends Omit<MarkSpec, 'toDOM'> {
+  /**
+   * Defines the default way marks of this type should be serialized
+   * to DOM/HTML.
+   */
+  toDOM?: (mark: Mark, inline: boolean) => DOMOutputSpec;
+}
 
 export interface ExtensionManagerParams extends SchemaParams {
   /**
@@ -94,8 +116,13 @@ export type SchemaTypeParams<GType> = ExtensionManagerParams & InferredType<GTyp
 export type SchemaNodeTypeParams = SchemaTypeParams<NodeType<EditorSchema>>;
 export type SchemaMarkTypeParams = SchemaTypeParams<MarkType<EditorSchema>>;
 
-export interface CommandParams extends ExtensionManagerParams {
-  view: EditorView;
+export interface CommandParams extends ExtensionManagerParams, EditorViewParams {
+  /**
+   * Returns true when the editor can be edited and false when it cannot.
+   *
+   * This is useful for deciding whether or not to run a command especially if the command is
+   * resource intensive or slow.
+   */
   isEditable: () => boolean;
 }
 
@@ -107,11 +134,40 @@ export type Value<GRecord> = GRecord[Key<GRecord>];
 export type ElementUnion = Value<HTMLElementTagNameMap>;
 
 export interface ActionMethods {
+  /**
+   * Runs an action within the editor.
+   *
+   * @remarks
+   *
+   * ```ts
+   * actions.bold.command() // Make the currently selected text bold
+   * ```
+   *
+   * @param attrs - certain commands require attrs to run
+   */
   command(attrs?: Attrs): void;
+
+  /**
+   * Determines whether the command is currently in an active state.
+   *
+   * @remarks
+   * This could be used used for menu items to determine whether they should be highlighted as active or inactive.
+   */
   isActive(attrs?: Attrs): boolean;
+
+  /**
+   * Returns true when the command can be run and false when it can't be run.
+   *
+   * @remarks
+   * Some commands can have rules and restrictions. For example you may want to disable styling making text bold
+   * when within a codeBlock. In that case isEnabled would be false when within the codeBlock and true when outside.
+   */
   isEnabled(attrs?: Attrs): boolean;
 }
 
+/**
+ * The method signature used to call the Prosemirror `nodeViews`
+ */
 export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (
   node: ProsemirrorNode,
   view: EditorView,

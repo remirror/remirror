@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 
-import { Cast } from '@remirror/core';
 import { NimbleEmoji } from 'emoji-mart';
 import { DefaultEmojiProps } from '../types';
 
@@ -16,7 +15,7 @@ export const DefaultEmoji: FC<DefaultEmojiProps> = ({ node, set, size, emojiData
       emoji={id}
       tooltip={true}
       set={set}
-      size={Cast(size)}
+      size={size as any}
       skin={skin || undefined}
     >
       &nbsp;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MakeOptional, Omit } from '@remirror/core';
+import { MakeOptional } from '@remirror/core';
 import { RemirrorElementType, RemirrorFC, RemirrorProps } from '@remirror/react-utils';
 import { defaultProps } from '../constants';
 import { RemirrorEditorContext } from '../contexts';
