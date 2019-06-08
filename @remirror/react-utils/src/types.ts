@@ -9,7 +9,6 @@ import {
   ExtensionConstructor,
   ExtensionManager,
   ObjectNode,
-  Omit,
   PlainObject,
   Position,
   PositionParams,

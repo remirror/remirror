@@ -6,11 +6,11 @@
       "@remirror/*",
       "packages/*",
       "docs",
-      "apps/*"
+      "examples/*"
     ]
   },
   "scripts": {
-    "build": "run-s build:rollup build:modules",
+    "build": "run-p build:rollup build:modules",
     "build-storybook": "build-storybook",
     "build:docs": "cd docs && yarn build",
     "build:modules": "lerna run build --stream --no-private",
@@ -26,7 +26,6 @@
     "clean": "yarn if-clean git clean -fdx --exclude=.config.json",
     "clean:force": "git clean -fdx",
     "clean:modules": "yarn if-clean git clean -fdx @remirror support docs",
-    "dev": "npm-run-all build --parallel dev:rollup dev:modules",
     "dev:docs": "cd docs && yarn dev --debug",
     "dev:docs:ci": "run-s build dev:docs",
     "dev:modules": "lerna run --no-private dev --parallel",
@@ -125,7 +124,7 @@
     "jest-axe": "3.1.0",
     "jest-circus": "24.8.0",
     "jest-cli": "24.8.0",
-    "jest-dom": "3.4.0",
+    "jest-dom": "3.5.0",
     "jest-emotion": "10.0.11",
     "jest-environment-enzyme": "^7.0.2",
     "jest-enzyme": "^7.0.2",
@@ -141,7 +140,7 @@
     "lodash": "4.17.11",
     "mz": "2.7.0",
     "npm-run-all": "4.1.5",
-    "prettier": "1.18.1",
+    "prettier": "1.18.2",
     "prettier-package-json": "2.1.0",
     "prosemirror-test-builder": "1.0.1",
     "ps-tree": "1.2.0",
@@ -151,7 +150,7 @@
     "react-dom": "16.8.6",
     "react-hooks-testing-library": "0.5.1",
     "rimraf": "2.6.3",
-    "rollup": "1.14.3",
+    "rollup": "1.14.4",
     "rollup-plugin-babel": "4.3.2",
     "rollup-plugin-commonjs": "10.0.0",
     "rollup-plugin-json": "4.0.0",
@@ -243,7 +242,7 @@
       "tslint --fix",
       "git add"
     ],
-    "@remirror/*/src/**/*.{ts,tsx}": [
+    "{@remirror,packages}/*/src/**/*.{ts,tsx}": [
       "jest --coverage=false --bail --findRelatedTests"
     ],
     "docs/**/*.{ts,tsx}": [

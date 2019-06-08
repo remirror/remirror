@@ -11,23 +11,6 @@ export interface PortalRendererState {
   portals: PortalList;
 }
 
-export class NodeViewPortal extends React.Component<NodeViewPortalProps> {
-  public nodeViewPortalContainer: NodeViewPortalContainer;
-
-  constructor(props: NodeViewPortalProps) {
-    super(props);
-    this.nodeViewPortalContainer = new NodeViewPortalContainer();
-  }
-
-  public componentDidUpdate() {
-    this.nodeViewPortalContainer.forceUpdate();
-  }
-
-  public render() {
-    return this.props.children(this.nodeViewPortalContainer);
-  }
-}
-
 export class NodeViewPortalComponent extends React.Component<
   NodeViewPortalComponentProps,
   PortalRendererState
@@ -49,14 +32,13 @@ export class NodeViewPortalComponent extends React.Component<
     this.setState({ portals });
   };
 
-  public componentDidMount() {}
-
   public componentWillUnmount() {
     this.disposeListener();
   }
 
   public render() {
     const { portals } = this.state;
+
     return (
       <>
         {portals.map(([container, { children, key }]) => (

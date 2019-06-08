@@ -308,19 +308,22 @@ export const transformExtensionMap = (values: FlexibleExtension[]) =>
  * @remarks
  * This is useful for deep equality checks when functions need to be ignored.
  *
+ * A current limitation is that it only dives one level deep. So objects with nested object methods
+ * will retain those methods.
+ *
  * @param obj - an object which might contain methods
- * @returns a new object without any of the function defined
+ * @returns a new object without any of the functions defined
  *
  * @internal
  */
 export const ignoreFunctions = (obj: Record<string, unknown>) => {
-  const newMap: Record<string, unknown> = {};
+  const newObject: Record<string, unknown> = {};
   for (const key of Object.keys(obj)) {
     if (isFunction(obj[key])) {
       continue;
     }
-    newMap[key] = obj[key];
+    newObject[key] = obj[key];
   }
 
-  return newMap;
+  return newObject;
 };

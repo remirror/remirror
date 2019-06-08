@@ -247,3 +247,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 - The api and Many ideas were ~~stolen~~ borrowed from **[tiptap](https://github.com/heyscrumpy/tiptap)** which is a prosemirror editor for Vue. The concept of extensions and a lot of the early code was a direct port from this library.
 - At the time I started thinking about building an editor [Slate](https://github.com/ianstormtaylor) didn't have great support for Android devices (they've since addressed [this here](https://github.com/ianstormtaylor/slate/pull/2553))
+
+- How to run story boook and develop stuff!

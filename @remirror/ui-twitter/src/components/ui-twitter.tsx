@@ -12,7 +12,6 @@ import {
   OnKeyDownParams,
 } from '@remirror/extension-mention';
 import { ManagedRemirrorEditor, RemirrorExtension, RemirrorManager } from '@remirror/react';
-import { RemirrorEventListener } from '@remirror/react-utils';
 import deepMerge from 'deepmerge';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
@@ -104,8 +103,6 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     this.props.onMentionStateChange(undefined);
   };
 
-  private onChange: RemirrorEventListener = ({}) => {};
-
   get userMatches(): ActiveTwitterUserData[] {
     return this.props.userData.map((user, index) => ({
       ...user,
@@ -121,7 +118,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   }
 
   /**
-   * Factory for creating at's via the passed in command and the curried tag function which can be called within
+   * Factory for creating `at`'s via the passed in command and the curried tag function which can be called within
    * an onClick / eventHandler function
    *
    * @param command
@@ -277,6 +274,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
 
   public render() {
     const { mention, emojiPickerActive } = this.state;
+    console.log('rendering twitter');
     return (
       <ThemeProvider theme={this.theme}>
         <RemirrorManager
@@ -310,12 +308,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
             set={this.props.emojiSet}
             emojiData={this.props.emojiData}
           />
-          <ManagedRemirrorEditor
-            {...this.remirrorProps}
-            onChange={this.onChange}
-            insertPosition='start'
-            customRootProp={true}
-          >
+          <ManagedRemirrorEditor {...this.remirrorProps} insertPosition='start' customRootProp={true}>
             <TwitterEditor
               mention={mention}
               emojiPickerActive={emojiPickerActive}

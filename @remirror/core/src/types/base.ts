@@ -63,11 +63,6 @@ export type AnyFunction<GType = any> = (...args: any[]) => GType;
 export type AnyConstructor<GType = any> = new (...args: any[]) => GType;
 
 /**
- * Remove keys from an interface
- */
-export type Omit<GType, GKeys extends keyof GType> = Pick<GType, Exclude<keyof GType, GKeys>>;
-
-/**
  * Makes specified keys of an interface optional while the rest stay the same.
  */
 export type MakeOptional<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
@@ -141,6 +136,8 @@ export interface Position {
  */
 export type Attrs = Record<string, string | number | undefined>;
 
+export type AttrsWithClass = Attrs & { class?: string };
+
 /**
  * Data representation tuple used for injecting extra attributes into an extension.
  */
@@ -160,43 +157,66 @@ export interface BaseExtensionOptions {
 
   /**
    * Inject additional attributes into the defined mark / node schema.
+   *
+   * @default []
    */
   extraAttrs?: ExtraAttrs;
 
   /**
-   * Whether to include the extension's styles.
+   * Whether to exclude the extension's styles.
+   *
+   * @default false
    */
-  includeStyles?: boolean;
+  excludeStyles?: boolean;
 
   /**
-   * Whether to include the extension's pasteRules
+   * Whether to exclude the extension's pasteRules
+   *
+   * @default false
    */
-  includePasteRules?: boolean;
+  excludePasteRules?: boolean;
 
   /**
-   * Whether to include the extension's inputRules
+   * Whether to exclude the extension's inputRules
+   *
+   * @default false
    */
-  includeInputRules?: boolean;
+  excludeInputRules?: boolean;
 
   /**
-   * Whether to include the extension's keys
+   * Whether to exclude the extension's keys
+   *
+   * @default false
    */
-  includeKeys?: boolean;
+  excludeKeys?: boolean;
 
   /**
-   * Whether to include the extension's plugin
+   * Whether to exclude the extension's plugin
+   *
+   * @default false
    */
-  includePlugin?: boolean;
+  excludePlugin?: boolean;
 
   /**
-   * Whether to include the extension's nodeView
+   * Whether to exclude the extension's nodeView
+   *
+   * @default false
    */
-  includeNodeView?: boolean;
+  excludeNodeView?: boolean;
 
   /**
    * Whether to use the attributes provided by this extension
+   *
+   * @default false
    */
-  includeAttributes?: boolean;
+  excludeAttributes?: boolean;
+
+  /**
+   * Whether to use the SSR component when not in a DOM environment
+   *
+   * @default false
+   */
+  disableSSR?: boolean;
 }
 
 export interface NodeExtensionOptions<GComponent = any> extends BaseExtensionOptions {

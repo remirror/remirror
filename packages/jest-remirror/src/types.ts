@@ -8,7 +8,6 @@ import {
   Extension,
   MarkExtension,
   NodeExtension,
-  Omit,
   PlainObject,
   ProsemirrorNode,
   RemirrorActions,

@@ -145,7 +145,7 @@ describe('Twitter UI', () => {
   });
 
   describe('Emoji', () => {
-    it.skip('should be able to add emoji', async () => {
+    it('should be able to add emoji', async () => {
       await page.type(editorSelector, '😀');
       await expect(innerHtml(sel(editorSelector, 'span[title=grinning]'))).resolves.toBeTruthy();
       await expect(innerHtml(sel(editorSelector, 'span[data-emoji-native=😀]'))).resolves.toBeTruthy();
@@ -163,7 +163,7 @@ describe('Twitter UI', () => {
   });
 
   // TODO Fix Emoji Tests
-  describe.skip('Combined', () => {
+  describe('Combined', () => {
     it('should combine mentions emoji and links', async () => {
       // TODO fiddle with the order of this - for some reason when the mention is the last item it fails in the test but not when I'm playing with it
       await page.type(editorSelector, '#awesome hello @ab 😀 google.com');

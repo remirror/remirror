@@ -3,7 +3,6 @@ import builtins from 'rollup-plugin-node-builtins';
 import commonjs from 'rollup-plugin-commonjs';
 import globals from 'rollup-plugin-node-globals';
 import json from 'rollup-plugin-json';
-import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 import { startCase } from 'lodash';
@@ -76,9 +75,9 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
 
     // Replace `process.env.NODE_ENV` with its value, which enables some modules
     // like React and Remirror to use their production variant.
-    replace({
-      'process.env.NODE_ENV': JSON.stringify(env),
-    }),
+    // replace({
+    //   // 'process.env.NODE_ENV': JSON.stringify(env),
+    // }),
 
     // Register Node.js builtins for browserify compatibility.
     builtins(),
@@ -125,7 +124,7 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
           sourcemap: true,
         },
         {
-          file: `${rootFolder}/${folderName}/${pkg.main}`,
+          file: `${rootFolder}/${folderName}/${pkg.cjs}`,
           format: 'cjs',
           exports: 'named',
           sourcemap: true,

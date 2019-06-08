@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "name": "with-typescript",
+  "license": "ISC",
+  "version": "0.0.1-alpha.11",
+  "scripts": {
+    "build": "next build",
+    "dev": "next",
+    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "start": "next start",
+    "type-check": "tsc",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@remirror/core": "0.0.1-alpha.11",
+    "@remirror/react": "0.0.1-alpha.11",
+    "@remirror/ui-twitter": "0.0.1-alpha.11",
+    "@remirror/ui-wysiwyg": "0.0.1-alpha.11",
+    "emoji-mart": "2.11.1",
+    "lodash": "4.17.11",
+    "match-sorter": "3.1.0",
+    "next": "8.1.1-canary.47",
+    "react": "16.8.6",
+    "react-dom": "16.8.6"
+  }
+}

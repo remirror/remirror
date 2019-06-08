@@ -1,5 +1,5 @@
 {
-  "packages": ["@remirror/*", "docs", "packages/*", "apps/*"],
+  "packages": ["@remirror/*", "docs", "packages/*", "examples/*"],
   "command": {
     "publish": {
       "message": "chore(release): publish %s",
@@ -11,8 +11,6 @@
     }
   },
   "changelog": {
-    "repo": "ifiokjr/remirror",
-    "cacheDir": ".changelog",
     "labels": {
       "PR: Spec Compliance :eyeglasses:": ":eyeglasses: Spec Compliance",
       "PR: Breaking Change :boom:": ":boom: Breaking Change",

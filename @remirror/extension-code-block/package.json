@@ -37,7 +37,7 @@
     "@types/react-syntax-highlighter": "^10.2.1",
     "@types/refractor": "^2.8.0",
     "emotion": "^10",
-    "prettier": "^1.18.1",
+    "prettier": "^1.18.2",
     "prosemirror-state": "^1.2.3",
     "prosemirror-view": "^1.9.8",
     "react-syntax-highlighter": "^10.3.0",

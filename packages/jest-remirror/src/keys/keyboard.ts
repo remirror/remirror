@@ -1,4 +1,4 @@
-import { Omit, take } from '@remirror/core';
+import { take } from '@remirror/core';
 import lolex from 'lolex';
 import {
   KeyboardConstructorParams,

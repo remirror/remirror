@@ -3,7 +3,7 @@ import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
 import { Cast } from './helpers/base';
 import {
-  Attrs,
+  AttrsWithClass,
   BaseExtensionOptions,
   ExtensionBooleanFunction,
   ExtensionCommandFunction,
@@ -20,14 +20,16 @@ import {
  * These are the default options merged into every extension.
  * They can be overridden.
  */
-const defaultOptions: BaseExtensionOptions = {
+const defaultOptions: Required<BaseExtensionOptions> = {
   extraStyles: '',
-  includeInputRules: true,
-  includeKeys: true,
-  includePasteRules: true,
-  includePlugin: true,
-  includeStyles: true,
-  includeAttributes: true,
+  excludeInputRules: false,
+  excludeKeys: false,
+  excludePasteRules: false,
+  excludePlugin: false,
+  excludeStyles: false,
+  excludeAttributes: false,
+  excludeNodeView: false,
+  disableSSR: false,
   extraAttrs: [],
 };
 
@@ -115,7 +117,7 @@ export abstract class Extension<
 
   /**
    * Allows for the addition of attributes to the defined schema.
-   * This is only valid for node and mark extensions.
+   * This is only used in node and mark extensions.
    */
   protected extraAttrs() {
     if (this.type === ExtensionType.EXTENSION) {
@@ -174,7 +176,7 @@ export abstract class Extension<
    * This identifier is used in the extension manager to separate marks from nodes and to determine
    * the functionality of each extension.
    */
-  get type() {
+  get type(): ExtensionType {
     return ExtensionType.EXTENSION;
   }
 
@@ -304,17 +306,24 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * It allows for the registration of one nodeView which has the same name as the extension.
    *
    * @param params - schema params with type included
+   *
+   * @alpha
    */
   nodeView?(params: SchemaTypeParams<GType>): NodeViewMethod;
 
   /**
-   * Allows the extension to modify the default attributes.
+   * Allows the extension to modify the default attributes for the actual editor.
    *
-   * This is experimental.
+   * @remarks
+   * Sometimes an extension will need to make a change to the attributes of the editor itself. For example
+   * a placeholder may need to do some work to make the editor more accessible by setting the `aria-placeholder`
+   * value to match the value of the placeholder.
    *
    * @param params - extension manger params
+   *
+   * @alpha
    */
-  attributes?(params: ExtensionManagerParams): Attrs;
+  attributes?(params: ExtensionManagerParams): AttrsWithClass;
 }
 
 /**
