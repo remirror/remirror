@@ -32,15 +32,7 @@ import keyCode from 'keycode';
 import { Attrs, memoize } from '@remirror/core';
 import { bubblePositioner, useRemirror } from '@remirror/react';
 import { ButtonState, styled } from '../theme';
-import {
-  BubbleContent,
-  BubbleMenuPositioner,
-  BubbleMenuTooltip,
-  BubbleMenuWrapper,
-  IconButton,
-  Toolbar,
-  WithPaddingProps,
-} from './styled';
+import { BubbleContent, BubbleMenuTooltip, IconButton, Toolbar, WithPaddingProps } from './styled';
 
 const menuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
   ['bold', [faBold]],
@@ -158,41 +150,37 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
   const canRemove = () => actions.linkRemove.isActive();
 
   return (
-    <BubbleMenuPositioner bottom={bottom + 5} left={left} ref={ref}>
-      <BubbleMenuWrapper>
-        <BubbleMenuTooltip>
-          {linkActivated ? (
-            <LinkInput {...{ deactivateLink, updateLink, removeLink, canRemove }} />
-          ) : (
-            <BubbleContent>
-              {bubbleMenuItems.map(([name, [icon, subText], attrs], index) => {
-                const buttonState = getButtonState(actions[name].isActive(attrs), true);
+    <BubbleMenuTooltip ref={ref} bottom={bottom + 5} left={left}>
+      {linkActivated ? (
+        <LinkInput {...{ deactivateLink, updateLink, removeLink, canRemove }} />
+      ) : (
+        <BubbleContent>
+          {bubbleMenuItems.map(([name, [icon, subText], attrs], index) => {
+            const buttonState = getButtonState(actions[name].isActive(attrs), true);
 
-                return (
-                  <MenuItem
-                    key={index}
-                    icon={icon}
-                    subText={subText}
-                    state={buttonState}
-                    disabled={!actions[name].isEnabled()}
-                    onClick={runAction(actions[name].command, attrs)}
-                    inverse={true}
-                    withPadding='horizontal'
-                  />
-                );
-              })}
+            return (
               <MenuItem
-                icon={faLink}
-                state={getButtonState(actions.linkUpdate.isActive(), true)}
-                onClick={activateLink}
+                key={index}
+                icon={icon}
+                subText={subText}
+                state={buttonState}
+                disabled={!actions[name].isEnabled()}
+                onClick={runAction(actions[name].command, attrs)}
                 inverse={true}
                 withPadding='horizontal'
               />
-            </BubbleContent>
-          )}
-        </BubbleMenuTooltip>
-      </BubbleMenuWrapper>
-    </BubbleMenuPositioner>
+            );
+          })}
+          <MenuItem
+            icon={faLink}
+            state={getButtonState(actions.linkUpdate.isActive(), true)}
+            onClick={activateLink}
+            inverse={true}
+            withPadding='horizontal'
+          />
+        </BubbleContent>
+      )}
+    </BubbleMenuTooltip>
   );
 };
 

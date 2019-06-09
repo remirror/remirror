@@ -48,7 +48,7 @@ export const floatingPositioner: Positioner = {
  * Render a bubble menu which becomes active whenever a selection is made.
  *
  * The relevant positions are `bottom` and `left` which can be used to absolutely positioned your PositionerComponent
- * `top` and `right` aren't used and always equal `0`
+ * `top` and `right` aren't used and always equal the default off screen position
  */
 export const bubblePositioner: Positioner = {
   ...defaultPositioner,
@@ -61,16 +61,15 @@ export const bubblePositioner: Positioner = {
     const end = view.coordsAtPos(to);
 
     // The box in which the tooltip is positioned, to use as base
-    const box = element.offsetParent!.getBoundingClientRect();
+    const parentBox = element.offsetParent!.getBoundingClientRect();
+    const elementBox = element.getBoundingClientRect();
 
-    // Find a center-ish x position from the selection endpoints (when
-    // crossing lines, end may be more to the left)
-    const left = Math.max((start.left + end.left) / 2, start.left + 3);
+    const left = (start.left + end.left) / 2 - parentBox.left;
 
     return {
       ...bubblePositioner.initialPosition,
-      left: Math.trunc(left - box.left),
-      bottom: Math.trunc(box.bottom - start.top),
+      left: Math.min(parentBox.width - elementBox.width / 2, Math.max(left, elementBox.width / 2)),
+      bottom: Math.trunc(parentBox.bottom - start.top),
     };
   },
 };
