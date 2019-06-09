@@ -89,37 +89,26 @@ export const InnerEditorWrapper = styled.div`
   }
 `;
 
+/**
+ * Allows positioners to work.
+ */
 export const EditorWrapper = styled.div`
   /* border: 1px solid grey; */
   position: relative;
 `;
 
-export const BubbleMenuWrapper = styled.span`
-  position: relative;
-`;
-
-export const BubbleMenuPositioner = styled.span<{ bottom: number; left: number }>`
+export const BubbleMenuTooltip = styled.span<{ bottom: number; left: number }>`
+  /* Required to make the element clickable */
+  z-index: 10;
   position: absolute;
   bottom: ${props => props.bottom}px;
   left: ${props => props.left}px;
-`;
-
-export const BubbleMenuTooltip = styled.span<{}>`
-  /* min-width: 120px; */
-  /* max-width: 210px; */
-  position: absolute;
-  z-index: 10;
-  &::after {
-    content: '';
-    position: absolute;
-  }
-
-  bottom: 100%;
-  left: 50%;
   padding-bottom: 9px;
   transform: translateX(-50%);
 
   &::after {
+    content: '';
+    position: absolute;
     border-left: 9px solid transparent;
     border-right: 9px solid transparent;
     border-top: 9px solid black;
