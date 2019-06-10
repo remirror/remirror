@@ -2,6 +2,7 @@ const ignore = [
   '**/__tests__',
   '**/__mocks__',
   '**/__fixtures__',
+  '**/__stories__',
   '*.{test,spec}.{ts,tsx}',
   '**/*.d.ts',
   '*.d.ts',

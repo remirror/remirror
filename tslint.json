@@ -42,6 +42,7 @@
     "no-this-assignment": [true, { "allowed-names": ["^self$"], "allow-destructuring": true }],
     "no-submodule-imports": [
       true,
+      "@remirror/showcase",
       "@testing-library/react",
       "emoji-regex",
       "react-dom",

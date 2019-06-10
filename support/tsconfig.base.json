@@ -33,6 +33,8 @@
       "@remirror/react-ssr": ["@remirror/react-ssr/src/index.ts"],
       "@remirror/react-utils": ["@remirror/react-utils/src/index.ts"],
       "@remirror/renderer-react": ["@remirror/renderer-react/src/index.ts"],
+      "@remirror/showcase": ["@remirror/showcase/src/index.ts"],
+      "@remirror/showcase/lib/*": ["@remirror/showcase/src/*"],
       "@remirror/ui-twitter": ["@remirror/ui-twitter/src"],
       "@remirror/ui-wysiwyg": ["@remirror/ui-wysiwyg/src"],
       "jest-remirror": ["packages/jest-remirror/src"],
