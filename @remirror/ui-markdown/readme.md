@@ -12,7 +12,7 @@
 
 [![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/ui-markdown.svg?style=for-the-badge)](https://bundlephobia.com/result?p=@remirror/ui-markdown) [![npm](https://img.shields.io/npm/dm/@remirror/ui-markdown.svg?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/@remirror/ui-markdown) [![Dependencies (path)](https://img.shields.io/david/ifiokjr/remirror.svg?logo=npm&path=@remirror%2Fui-markdown&style=for-the-badge)](https://github.com/ifiokjr/remirror/blob/master/@remirror/ui-markdown/package.json) [![NPM](https://img.shields.io/npm/l/@remirror/ui-markdown.svg?style=for-the-badge)](https://github.com/ifiokjr/remirror/blob/master/LICENSE) [![GitHub issues by-label](https://img.shields.io/github/issues/ifiokjr/remirror/@remirror/ui-markdown.svg?label=Open%20Issues&logo=github&style=for-the-badge)](https://github.com/ifiokjr/remirror/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%40remirror%2Fui-markdown) [![GitHub pull requests by-label](https://img.shields.io/github/issues-pr/ifiokjr/remirror/@remirror/ui-markdown.svg?label=Open%20Pull%20Requests&logo=github&style=for-the-badge)](https://github.com/ifiokjr/remirror/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aopen+sort%3Aupdated-desc+label%3A%40remirror%2Fui-markdown)
 
-A configurable editor which provides the foundation for highclass What You See Is What You Get (wysiwyg) editing experience.
+Adds a markdown editor with support for switching between wysiwyg and syntax highlighed markdown editing.
 
 ## Installation
 

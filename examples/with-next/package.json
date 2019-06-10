@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@remirror/core": "0.0.1-alpha.11",
-    "@remirror/showcase": "0.0.1-alpha.11",
     "@remirror/react": "0.0.1-alpha.11",
+    "@remirror/showcase": "0.0.1-alpha.11",
     "@remirror/ui-twitter": "0.0.1-alpha.11",
     "@remirror/ui-wysiwyg": "0.0.1-alpha.11",
     "emoji-mart": "2.11.1",

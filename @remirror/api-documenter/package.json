@@ -13,8 +13,8 @@
     "api-documenter": "./bin/api-documenter"
   },
   "scripts": {
-    "_build:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s",
-    "_dev:babel": "babel src --out-dir lib --extensions \".ts,.tsx\" -s --watch",
+    "_build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
+    "_dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
     "build": "run-p build:*",
     "build:declaration": "tsc -p ./tsconfig.prod.json  --declarationMap",
     "dev": "run-p dev:*",
