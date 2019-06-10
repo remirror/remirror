@@ -17,15 +17,9 @@ Add code highlighting to your MultiCursors.
 ## Installation
 
 ```bash
-yarn add refractor @remirror/extension-multicursor
+yarn add @remirror/extension-multicursor
 ```
 
-Refractor is a peer dependency and is needed when adding extra language support.
+Enable the use of multiple cursors in the editor.
 
-```ts
-import jsx from 'refractor/lang/jsx';
-import typescript from 'refractor/lang/typescript';
-import { MultiCursor } from '@remirror/extension-multicursor';
-
-new MultiCursor({ supportedLanguages: [typescript, jsx] });
-```
+**WIP**
