@@ -22,7 +22,7 @@ export default {
     'API',
   ],
   typescript: true,
-  public: 'public/images/favicon.ico',
+  public: 'public',
   themeConfig: {
     repository: 'https://github.com/ifiokjr/remirror',
     colors: {
