@@ -29,7 +29,7 @@ jobs:
     steps:
       - template: yarn-install.yml
       - bash: |
-          yarn test:integration
+          yarn test:puppeteer
         displayName: 'Run integration tests'
 
   - ${{ if in(parameters.name, 'Linux', 'macOS') }}:

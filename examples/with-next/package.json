@@ -6,6 +6,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next",
+    "dev:ci": "next dev -p 3001",
     "lint": "tslint --project tsconfig.json --config ../../tslint.json",
     "start": "next start",
     "type-check": "tsc",

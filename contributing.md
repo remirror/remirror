@@ -33,7 +33,7 @@ Unit tests can be run with the following commands.
 
 ```bash
 yarn test # Unit Test
-yarn test:integration # Unit + Integration Tests
+yarn test:puppeteer # Unit + Integration Tests
 ```
 
 Create tests inside of a `__tests__/` subfolder.
