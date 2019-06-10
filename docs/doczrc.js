@@ -4,7 +4,7 @@ export default {
   title: 'Remirror',
   files: '**/*.{md,markdown,mdx}',
   description: 'A world class text editor for every JavaScript environment',
-  repository: 'https://github.com/smooth-code/smooth-ui',
+  repository: 'https://github.com/ifiokjr/remirror',
   propsParser: false,
   indexHtml: 'public/index.html',
   ordering: 'ascending',
@@ -16,6 +16,7 @@ export default {
   menu: [
     'Introduction',
     { name: 'Guides', menu: ['Quickstart Guide'] },
+    'Showcase',
     'Examples',
     'Terminology',
     'API',
