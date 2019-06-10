@@ -1,21 +1,13 @@
+import { URLDescriptor } from '@test-fixtures/test-urls';
+import { innerHtml, outerHTML, sel, textContent } from './helpers';
+
 const editorSelector = '.ProseMirror';
-const emojiButtonSelector = '.EmojiPicker';
-const sel = (...selectors: string[]) => selectors.join(' ');
 
-const innerHtml = async (selector: string) => page.$eval(selector, e => e.innerHTML);
-const textContent = async (selector: string) => page.$eval(selector, e => e.textContent);
-const outerHTML = async (selector: string) => page.$eval(selector, e => e.outerHTML);
-
-const clearEditor = async (selector: string) => {
-  await page.click(selector, { clickCount: 3 });
-  await page.keyboard.press('Backspace');
-};
-
-describe('Twitter UI', () => {
+describe.each(URLDescriptor.twitter)('%s: Twitter Showcase', (_, path) => {
   beforeEach(async () => {
     await jestPuppeteer.resetPage();
     page.setDefaultNavigationTimeout(120000);
-    await page.goto('http://localhost:6007/iframe.html?id=twitter-ui--basic');
+    await page.goto(path);
   });
 
   describe('Links', () => {
@@ -97,7 +89,7 @@ describe('Twitter UI', () => {
         await page.type(editorSelector, 'hello @ab');
         await page.keyboard.press('Enter');
         await expect(page.$$(selector)).resolves.toHaveLength(1);
-        await expect(textContent(selector)).resolves.toBe('@lazyzebra415'); // This might change if data changes
+        await expect(textContent(selector)).resolves.toBe('@orangefish879'); // This might change if data changes
       });
 
       it('should still wrap selections when exiting without selections', async () => {

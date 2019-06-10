@@ -13,6 +13,7 @@ module.exports = {
   globals: {
     __DEV__: true,
     __TEST__: true,
+    __E2E__: false,
   },
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': jestSupportDir('jest.transformer.js'),
