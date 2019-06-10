@@ -1,31 +1,37 @@
 import externalLinks from 'remark-external-links';
-import { resolve } from 'path';
-
-const PUBLIC = resolve(__dirname, 'public');
-const THEME = resolve(__dirname, 'theme');
 
 export default {
   title: 'Remirror',
   files: '**/*.{md,markdown,mdx}',
   description: 'A world class text editor for every JavaScript environment',
+  repository: 'https://github.com/smooth-code/smooth-ui',
   propsParser: false,
   indexHtml: 'public/index.html',
+  ordering: 'ascending',
   mdPlugins: [externalLinks],
   htmlContext: {
-    favicon: 'pubic/images/favicon.ico',
+    favicon:
+      'https://raw.githubusercontent.com/ifiokjr/remirror/master/support/assets/favicon.ico',
   },
+  menu: [
+    'Introduction',
+    { name: 'Guides', menu: ['Quickstart Guide'] },
+    'Examples',
+    'Terminology',
+    'API',
+  ],
   typescript: true,
-  ignore: ['theme/**'],
-  // public: workingDir('../support/assets'),
-
-  onCreateWebpackChain(config) {
-    config.resolve.alias
-      .set('@fonts', `${PUBLIC}/fonts`)
-      .set('@images', `${PUBLIC}/images`)
-      .set('@components', `${THEME}/components`)
-      .set('@styles', `${THEME}/styles`)
-      .set('@styled', `${THEME}/styled`);
-
-    return config;
+  public: 'public/images/favicon.ico',
+  themeConfig: {
+    repository: 'https://github.com/ifiokjr/remirror',
+    colors: {
+      primary: '#37393A',
+      link: '#77B6EA',
+    },
+    logo: {
+      src:
+        'https://raw.githubusercontent.com/ifiokjr/remirror/master/support/assets/logo.svg?sanitize=true',
+      width: 200,
+    },
   },
 };
