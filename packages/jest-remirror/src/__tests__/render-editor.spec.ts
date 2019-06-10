@@ -1,5 +1,10 @@
 import { toHTML } from '@remirror/core';
-import { Blockquote, Bold, Heading, Link } from '@remirror/core-extensions';
+import {
+  BlockquoteExtension,
+  BoldExtension,
+  HeadingExtension,
+  LinkExtension,
+} from '@remirror/core-extensions';
 import { cleanup } from '@testing-library/react';
 import { renderEditor } from '../render-editor';
 
@@ -31,7 +36,7 @@ test('can be configured with plain node extensions', () => {
     view: { dom },
     nodes: { blockquote, doc, p },
     add,
-  } = renderEditor({ plainNodes: [new Blockquote()] });
+  } = renderEditor({ plainNodes: [new BlockquoteExtension()] });
   add(doc(blockquote(p(expected)), p('This is a p')));
   expect(dom).toHaveTextContent('A simple blockquote');
 });
@@ -42,7 +47,7 @@ test('can be configured with plain node extensions', () => {
     view: { dom },
     nodes: { blockquote, doc, p },
     add,
-  } = renderEditor({ plainNodes: [new Blockquote()] });
+  } = renderEditor({ plainNodes: [new BlockquoteExtension()] });
   add(doc(blockquote(p(expected)), p('This is a p')));
   expect(dom).toHaveTextContent('A simple blockquote');
 });
@@ -55,7 +60,7 @@ test('can be configured with attribute node extensions', () => {
     nodes: { doc },
     attrNodes: { heading },
     add,
-  } = renderEditor({ attrNodes: [new Heading()] });
+  } = renderEditor({ attrNodes: [new HeadingExtension()] });
 
   const h3 = heading({ level: 3 });
   const h2 = heading({ level: 2 });
@@ -71,7 +76,7 @@ test('can be configured with plain mark extensions', () => {
     nodes: { doc, p },
     add,
     marks: { bold },
-  } = renderEditor({ plainNodes: [], plainMarks: [new Bold()] });
+  } = renderEditor({ plainNodes: [], plainMarks: [new BoldExtension()] });
   add(doc(p('Text is ', bold(expected))));
   expect(dom.querySelector('strong')!.innerText).toBe(expected);
 });
@@ -84,9 +89,9 @@ test('can be configured with attribute mark extensions', () => {
     nodes: { doc, p },
     add,
     attrMarks: { link },
-  } = renderEditor({ attrMarks: [new Link()] });
-  const googleLink = link({ href });
-  add(doc(p('Link to ', googleLink(expected))));
+  } = renderEditor({ attrMarks: [new LinkExtension()] });
+  const googleLinkExtension = link({ href });
+  add(doc(p('LinkExtension to ', googleLinkExtension(expected))));
 
   const linkElement = dom.querySelector('a');
   expect(linkElement).toHaveAttribute('href', href);
@@ -94,7 +99,7 @@ test('can be configured with attribute mark extensions', () => {
 });
 
 describe('add', () => {
-  const params = { plainMarks: [new Bold()], plainNodes: [] };
+  const params = { plainMarks: [new BoldExtension()], plainNodes: [] };
   let {
     view: { dom },
     schema,
@@ -110,7 +115,7 @@ describe('add', () => {
       nodes: { doc, p },
       marks: { bold },
       add,
-    } = renderEditor({ plainNodes: [], plainMarks: [new Bold()] }));
+    } = renderEditor({ plainNodes: [], plainMarks: [new BoldExtension()] }));
   });
 
   it('overwrites the whole doc on each call', () => {

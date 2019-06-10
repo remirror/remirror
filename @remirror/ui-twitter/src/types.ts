@@ -1,4 +1,4 @@
-import { EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
+import { EnhancedLinkExtensionOptions } from '@remirror/extension-enhanced-link';
 import { ActionTaken } from '@remirror/extension-mention';
 import { RemirrorProps } from '@remirror/react-utils';
 import { Data, EmojiSet } from 'emoji-mart';
@@ -8,7 +8,7 @@ export type OnQueryChangeParams = Omit<MentionState, 'submitFactory'> & {
   activeIndex: number;
 };
 
-export interface TwitterUIProps extends EnhancedLinkOptions, Partial<RemirrorProps> {
+export interface TwitterUIProps extends EnhancedLinkExtensionOptions, Partial<RemirrorProps> {
   /**
    * The number of matches to display
    */

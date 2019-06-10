@@ -7,7 +7,7 @@ import {
 } from '@remirror/core';
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
-export class Blockquote extends NodeExtension {
+export class BlockquoteExtension extends NodeExtension {
   get name() {
     return 'blockquote' as const;
   }

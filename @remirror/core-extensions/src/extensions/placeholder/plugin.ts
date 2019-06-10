@@ -10,14 +10,14 @@ import {
 } from '@remirror/core';
 import { EditorState, Plugin } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { PlaceholderOptions, PlaceholderPluginMeta, PlaceholderPluginState } from '../types';
+import { PlaceholderExtensionOptions, PlaceholderPluginMeta, PlaceholderPluginState } from '../types';
 
 /**
  * Create the placeholder plugin
  *
  * @param extension
  */
-export const createPlaceholderPlugin = (extension: Extension<PlaceholderOptions>) => {
+export const createPlaceholderPlugin = (extension: Extension<PlaceholderExtensionOptions>) => {
   return new Plugin<PlaceholderPluginState, EditorSchema>({
     key: extension.pluginKey,
     state: {
@@ -54,7 +54,7 @@ export const createPlaceholderPlugin = (extension: Extension<PlaceholderOptions>
 
 interface SharedParams {
   /** The placeholder extension */
-  extension: Extension<PlaceholderOptions>;
+  extension: Extension<PlaceholderExtensionOptions>;
   /** The editor state */
   state: EditorState;
 }

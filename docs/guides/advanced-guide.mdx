@@ -28,13 +28,13 @@ To get started we need to import the right extensions and set up the editor as f
 
 ```ts
 import {
-  Bold,
-  CodeBlock,
-  HardBreak,
-  Heading,
-  Italic,
-  Link,
-  LinkOptions,
+  BoldExtension,
+  CodeBlockExtension,
+  HardBreakExtension,
+  HeadingExtension,
+  ItalicExtension,
+  LinkExtension,
+  LinkExtensionOptions,
   Underline,
 } from '@remirror/core-extensions';
 import {
@@ -56,22 +56,25 @@ export class MyAwesomeEditor extends PureComponent<{}, State> {
     linkActivated: false,
   };
 
-  private activateLink = () => {
+  private activateLinkExtension = () => {
     this.setState({ linkActivated: true });
   };
 
-  private deactivateLink = () => {
+  private deactivateLinkExtension = () => {
     this.setState({ linkActivated: false });
   };
 
   public render() {
     return (
       <RemirrorManager>
-        <RemirrorExtension Constructor={Bold} />
+        <RemirrorExtension Constructor={BoldExtension} />
         <RemirrorExtension Constructor={Underline} />
-        <RemirrorExtension Constructor={Italic} />
-        <RemirrorExtension<LinkOptions> Constructor={Link} activationHandler={this.activateLink} />
-        <RemirrorExtension Constructor={CodeBlock} />
+        <RemirrorExtension Constructor={ItalicExtension} />
+        <RemirrorExtension<LinkExtensionOptions>
+          Constructor={LinkExtension}
+          activationHandler={this.activateLinkExtension}
+        />
+        <RemirrorExtension Constructor={CodeBlockExtension} />
         <ManagedRemirrorEditor>
           // Later we will create an inner component
           <div />
@@ -159,12 +162,20 @@ export const InnerEditorWrapper = styled.div`
   }
 `;
 
-const InnerEditor: FC<BubbleMenuProps> = ({ linkActivated, deactivateLink, activateLink }) => {
+const InnerEditor: FC<BubbleMenuProps> = ({
+  linkActivated,
+  deactivateLinkExtension,
+  activateLinkExtension,
+}) => {
   const { getRootProps } = useRemirror();
 
   return (
     <EditorWrapper>
-      <BubbleMenu linkActivated={linkActivated} deactivateLink={deactivateLink} activateLink={activateLink} />
+      <BubbleMenu
+        linkActivated={linkActivated}
+        deactivateLinkExtension={deactivateLinkExtension}
+        activateLinkExtension={activateLinkExtension}
+      />
       <InnerEditorWrapper {...getRootProps()} />
     </EditorWrapper>
   );

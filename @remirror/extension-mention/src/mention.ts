@@ -9,7 +9,7 @@ import {
 } from '@remirror/core';
 import { createSuggestionsPlugin } from './plugin';
 import { SuggestionState } from './state';
-import { MentionOptions } from './types';
+import { MentionExtensionOptions } from './types';
 import { DEFAULT_MATCHER } from './utils';
 
 /**
@@ -17,7 +17,7 @@ import { DEFAULT_MATCHER } from './utils';
  * It also allows for configuration options to be passed into transforming suggestion queries into a mention
  * node.
  */
-export class Mention extends NodeExtension<MentionOptions> {
+export class MentionExtension extends NodeExtension<MentionExtensionOptions> {
   get name() {
     return 'mention' as const;
   }

@@ -8,7 +8,7 @@ import {
 } from '@remirror/core';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
-export class CodeBlock extends NodeExtension {
+export class CodeBlockExtension extends NodeExtension {
   get name() {
     return 'codeBlock' as const;
   }

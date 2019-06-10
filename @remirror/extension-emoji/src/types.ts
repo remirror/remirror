@@ -8,7 +8,7 @@ export interface EmojiAttrs extends Pick<BaseEmoji, 'id' | 'name' | 'native' | '
   useNative?: boolean;
 }
 
-export interface CreateEmojiPluginParams extends Pick<EmojiOptions, 'emojiData'> {
+export interface CreateEmojiPluginParams extends Pick<EmojiExtensionOptions, 'emojiData'> {
   key: PluginKey;
   type: NodeType;
 }
@@ -19,7 +19,7 @@ export interface DefaultEmojiProps extends NodeViewComponentProps<EmojiAttrs> {
   emojiData: Data;
 }
 
-export interface EmojiOptions extends NodeExtensionOptions<ComponentType<EmojiAttrs>> {
+export interface EmojiExtensionOptions extends NodeExtensionOptions<ComponentType<EmojiAttrs>> {
   transformAttrs?(attrs: Pick<EmojiAttrs, 'name'>): Attrs;
 
   className?: string;

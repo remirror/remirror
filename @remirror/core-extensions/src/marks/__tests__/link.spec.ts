@@ -2,12 +2,12 @@ import { fromHTML, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@test-fixtures/schema-helpers';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
-import { Link, LinkOptions } from '../link';
+import { LinkExtension, LinkExtensionOptions } from '../link';
 
 const href = 'https://test.com';
 
 describe('schema', () => {
-  const schema = createBaseTestManager([{ extension: new Link(), priority: 1 }]).createSchema();
+  const schema = createBaseTestManager([{ extension: new LinkExtension(), priority: 1 }]).createSchema();
   const { a, doc, p } = pmBuild(schema, {
     a: { markType: 'link', href },
   });
@@ -28,9 +28,9 @@ describe('schema', () => {
   });
 });
 
-const create = (params: LinkOptions = {}) =>
+const create = (params: LinkExtensionOptions = {}) =>
   renderEditor({
-    attrMarks: [new Link({ ...params })],
+    attrMarks: [new LinkExtension({ ...params })],
     plainNodes: [],
   });
 

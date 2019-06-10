@@ -2,9 +2,9 @@ import { EditorSchema, Extension, getPluginState, ProsemirrorPlugin } from '@rem
 import { Plugin } from 'prosemirror-state';
 import { defaultEffect, PARTICLE_NUM_RANGE, VIBRANT_COLORS } from './effects';
 import { EpicModePluginState } from './state';
-import { EpicModeOptions } from './types';
+import { EpicModeExtensionOptions } from './types';
 
-export class EpicMode extends Extension<EpicModeOptions> {
+export class EpicModeExtension extends Extension<EpicModeExtensionOptions> {
   get name() {
     return 'epicMode' as const;
   }
@@ -25,7 +25,7 @@ export class EpicMode extends Extension<EpicModeOptions> {
   }
 }
 
-const createEpicModePlugin = (ctx: Extension<EpicModeOptions>) => {
+const createEpicModePlugin = (ctx: Extension<EpicModeExtensionOptions>) => {
   const plugin = new Plugin<EpicModePluginState, EditorSchema>({
     key: ctx.pluginKey,
     state: {

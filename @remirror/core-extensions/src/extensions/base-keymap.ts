@@ -2,7 +2,7 @@ import { BaseExtensionOptions, Extension, KeyboardBindings } from '@remirror/cor
 import { baseKeymap, chainCommands, selectParentNode } from 'prosemirror-commands';
 import { undoInputRule } from 'prosemirror-inputrules';
 
-export interface BaseKeymapOptions extends BaseExtensionOptions {
+export interface BaseKeymapExtensionOptions extends BaseExtensionOptions {
   /**
    * Determines whether a backspace after an input rule has been applied undoes the input rule.
    *
@@ -18,7 +18,7 @@ export interface BaseKeymapOptions extends BaseExtensionOptions {
   selectParentNodeOnEscape?: boolean;
 }
 
-export class BaseKeymap extends Extension<BaseKeymapOptions> {
+export class BaseKeymapExtension extends Extension<BaseKeymapExtensionOptions> {
   get name() {
     return 'baseKeymap' as const;
   }

@@ -1,7 +1,7 @@
 import { NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams } from '@remirror/core';
 import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list';
 
-export class ListItem extends NodeExtension {
+export class ListItemExtension extends NodeExtension {
   get name() {
     return 'listItem' as const;
   }

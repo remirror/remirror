@@ -1,6 +1,6 @@
 import { NodeExtension } from '../node-extension';
 
-export class Text extends NodeExtension {
+export class TextExtension extends NodeExtension {
   get name() {
     return 'text' as const;
   }

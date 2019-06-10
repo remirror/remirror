@@ -11,9 +11,9 @@ import { ReactNodeView } from '@remirror/react';
 import { ObjectInterpolation } from 'emotion';
 import { DefaultEmoji } from './components/emoji';
 import { createEmojiPlugin } from './plugin';
-import { EmojiAttrs, EmojiOptions } from './types';
+import { EmojiAttrs, EmojiExtensionOptions } from './types';
 
-export class Emoji extends NodeExtension<EmojiOptions> {
+export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
   /**
    * The name is dynamically generated based on the passed in type.
    */

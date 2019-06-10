@@ -96,7 +96,7 @@ export interface OnKeyDownParams {
 /**
  * The options passed into a mention
  */
-export interface MentionOptions extends NodeExtensionOptions {
+export interface MentionExtensionOptions extends NodeExtensionOptions {
   /**
    * Provide customs class names for the completed mention
    */

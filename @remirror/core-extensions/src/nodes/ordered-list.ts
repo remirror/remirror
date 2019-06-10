@@ -1,7 +1,7 @@
 import { Cast, NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams, toggleList } from '@remirror/core';
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
-export class OrderedList extends NodeExtension {
+export class OrderedListExtension extends NodeExtension {
   get name() {
     return 'orderedList' as const;
   }

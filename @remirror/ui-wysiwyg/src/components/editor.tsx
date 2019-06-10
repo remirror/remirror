@@ -1,20 +1,20 @@
 import {
-  Blockquote,
-  Bold,
-  BulletList,
-  Code,
-  CodeBlock,
-  HardBreak,
-  Heading,
-  HorizontalRule,
-  Image,
-  Italic,
-  Link,
-  LinkOptions,
-  ListItem,
-  OrderedList,
-  Strike,
-  Underline,
+  BlockquoteExtension,
+  BoldExtension,
+  BulletListExtension,
+  CodeBlockExtension,
+  CodeExtension,
+  HardBreakExtension,
+  HeadingExtension,
+  HorizontalRuleExtension,
+  ImageExtension,
+  ItalicExtension,
+  LinkExtension,
+  LinkExtensionOptions,
+  ListItemExtension,
+  OrderedListExtension,
+  StrikeExtension,
+  UnderlineExtension,
 } from '@remirror/core-extensions';
 import { ManagedRemirrorEditor, RemirrorExtension, RemirrorManager, useRemirror } from '@remirror/react';
 import { asDefaultProps, RemirrorManagerProps } from '@remirror/react-utils';
@@ -69,21 +69,24 @@ export class WysiwygUI extends PureComponent<WysiwygUIProps> {
     return (
       <ThemeProvider theme={this.editorTheme}>
         <RemirrorManager placeholder={placeholder}>
-          <RemirrorExtension Constructor={Bold} />
-          <RemirrorExtension Constructor={Underline} />
-          <RemirrorExtension Constructor={Italic} />
-          <RemirrorExtension Constructor={Blockquote} />
-          <RemirrorExtension<LinkOptions> Constructor={Link} activationHandler={this.activateLink} />
-          <RemirrorExtension Constructor={Strike} />
-          <RemirrorExtension Constructor={Code} />
-          <RemirrorExtension Constructor={Heading} />
-          <RemirrorExtension Constructor={HorizontalRule} />
-          <RemirrorExtension Constructor={Image} />
-          <RemirrorExtension Constructor={ListItem} />
-          <RemirrorExtension Constructor={BulletList} />
-          <RemirrorExtension Constructor={OrderedList} />
-          <RemirrorExtension Constructor={HardBreak} />
-          <RemirrorExtension Constructor={CodeBlock} />
+          <RemirrorExtension Constructor={BoldExtension} />
+          <RemirrorExtension Constructor={UnderlineExtension} />
+          <RemirrorExtension Constructor={ItalicExtension} />
+          <RemirrorExtension Constructor={BlockquoteExtension} />
+          <RemirrorExtension<LinkExtensionOptions>
+            Constructor={LinkExtension}
+            activationHandler={this.activateLink}
+          />
+          <RemirrorExtension Constructor={StrikeExtension} />
+          <RemirrorExtension Constructor={CodeExtension} />
+          <RemirrorExtension Constructor={HeadingExtension} />
+          <RemirrorExtension Constructor={HorizontalRuleExtension} />
+          <RemirrorExtension Constructor={ImageExtension} />
+          <RemirrorExtension Constructor={ListItemExtension} />
+          <RemirrorExtension Constructor={BulletListExtension} />
+          <RemirrorExtension Constructor={OrderedListExtension} />
+          <RemirrorExtension Constructor={HardBreakExtension} />
+          <RemirrorExtension Constructor={CodeBlockExtension} />
           <ManagedRemirrorEditor {...props} customRootProp={true}>
             <InnerEditor
               linkActivated={this.state.linkActivated}

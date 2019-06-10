@@ -1,1 +1,1 @@
-export * from './mark-extension';
+export * from './extension';

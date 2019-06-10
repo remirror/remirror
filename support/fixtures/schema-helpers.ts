@@ -1,12 +1,18 @@
-import { Doc, ExtensionManager, Paragraph, Text, Cast, PrioritizedExtension } from '@remirror/core';
 import {
-  Bold,
-  Italic,
-  Placeholder,
-  Underline,
-  Blockquote,
-  Composition,
-  History,
+  DocExtension,
+  ExtensionManager,
+  ParagraphExtension,
+  TextExtension,
+  Cast,
+  PrioritizedExtension,
+} from '@remirror/core';
+import {
+  BoldExtension,
+  ItalicExtension,
+  PlaceholderExtension,
+  UnderlineExtension,
+  BlockquoteExtension,
+  HistoryExtension,
 } from '@remirror/core-extensions';
 import minDocument from 'min-document';
 
@@ -16,19 +22,18 @@ export const helpers = {
 };
 
 export const baseExtensions = [
-  { extension: new Doc(), priority: 2 },
-  { extension: new Text(), priority: 2 },
-  { extension: new Paragraph(), priority: 2 },
+  { extension: new DocExtension(), priority: 2 },
+  { extension: new TextExtension(), priority: 2 },
+  { extension: new ParagraphExtension(), priority: 2 },
 ];
 export const extensions = [
   ...baseExtensions,
-  { extension: new Composition(), priority: 2 },
-  { extension: new History(), priority: 2 },
-  { extension: new Placeholder(), priority: 2 },
-  { extension: new Bold(), priority: 3 },
-  { extension: new Italic(), priority: 3 },
-  { extension: new Underline(), priority: 3 },
-  { extension: new Blockquote(), priority: 3 },
+  { extension: new HistoryExtension(), priority: 2 },
+  { extension: new PlaceholderExtension(), priority: 2 },
+  { extension: new BoldExtension(), priority: 3 },
+  { extension: new ItalicExtension(), priority: 3 },
+  { extension: new UnderlineExtension(), priority: 3 },
+  { extension: new BlockquoteExtension(), priority: 3 },
 ];
 export const manager = ExtensionManager.create(extensions).init(helpers);
 

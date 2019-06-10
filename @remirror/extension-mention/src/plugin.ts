@@ -1,9 +1,9 @@
 import { EditorSchema, Extension, getPluginState } from '@remirror/core';
 import { Plugin } from 'prosemirror-state';
 import { SuggestionState } from './state';
-import { MentionOptions } from './types';
+import { MentionExtensionOptions } from './types';
 
-export const createSuggestionsPlugin = (extension: Extension<MentionOptions>) => {
+export const createSuggestionsPlugin = (extension: Extension<MentionExtensionOptions>) => {
   type PluginState = SuggestionState;
 
   return new Plugin<PluginState, EditorSchema>({

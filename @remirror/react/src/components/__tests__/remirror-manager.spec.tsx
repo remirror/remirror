@@ -1,5 +1,5 @@
 import { BaseExtensionOptions, Extension, ExtensionManager } from '@remirror/core';
-import { Placeholder } from '@remirror/core-extensions';
+import { PlaceholderExtension } from '@remirror/core-extensions';
 import { render, RenderResult } from '@testing-library/react';
 import { EditorView } from 'prosemirror-view';
 import React, { FC } from 'react';
@@ -79,7 +79,7 @@ describe('manager prop', () => {
           <Component />
         </ManagedRemirrorEditor>
         <RemirrorExtension Constructor={NewExtension} />
-        <RemirrorExtension Constructor={Placeholder} emptyNodeClass='empty' />
+        <RemirrorExtension Constructor={PlaceholderExtension} emptyNodeClass='empty' />
       </RemirrorManager>,
     );
 
@@ -93,7 +93,10 @@ describe('manager prop', () => {
 test('it supports <RemirrorExtension />', () => {
   const Component: FC = () => {
     const manager = useRemirrorManager();
-    expect(manager.extensions).toContainAnyValues([expect.any(NewExtension), expect.any(Placeholder)]);
+    expect(manager.extensions).toContainAnyValues([
+      expect.any(NewExtension),
+      expect.any(PlaceholderExtension),
+    ]);
     return null;
   };
 
@@ -101,7 +104,7 @@ test('it supports <RemirrorExtension />', () => {
     <RemirrorManager>
       <Component />
       <RemirrorExtension Constructor={NewExtension} />
-      <RemirrorExtension Constructor={Placeholder} emptyNodeClass='empty' />
+      <RemirrorExtension Constructor={PlaceholderExtension} emptyNodeClass='empty' />
     </RemirrorManager>,
   );
 });
