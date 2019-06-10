@@ -1,8 +1,11 @@
 import { Extension, ProsemirrorPlugin } from '@remirror/core';
-import { CompositionOptions } from '../types';
+import { CompositionExtensionOptions } from '../types';
 import { createCompositionPlugin, patchDeleteContentBackward } from './plugin';
 
-export class Composition extends Extension<CompositionOptions> {
+/**
+ * @deprecated - Composition works much better in `prosemirror-view@1.9.x`
+ */
+export class CompositionExtension extends Extension<CompositionExtensionOptions> {
   get name() {
     return 'composition' as const;
   }

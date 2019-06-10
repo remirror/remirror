@@ -1,6 +1,6 @@
 import { BaseExtensionOptions } from '@remirror/core';
 
-export interface MulticursorOptions extends BaseExtensionOptions {
+export interface MulticursorExtensionOptions extends BaseExtensionOptions {
   /**
    * This determines the character that will be used to represent the cursor.
    *

@@ -1,11 +1,11 @@
 import { NodeExtension } from '../node-extension';
 import { NodeExtensionOptions, NodeExtensionSpec } from '../types';
 
-export interface DocOptions extends NodeExtensionOptions {
+export interface DocExtensionOptions extends NodeExtensionOptions {
   content?: string;
 }
 
-export class Doc extends NodeExtension<DocOptions> {
+export class DocExtension extends NodeExtension<DocExtensionOptions> {
   get name() {
     return 'doc' as const;
   }

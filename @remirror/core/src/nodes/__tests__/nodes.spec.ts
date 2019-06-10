@@ -1,4 +1,4 @@
-import { Doc, Paragraph, Text } from '../..';
+import { DocExtension, ParagraphExtension, TextExtension } from '../..';
 import { Cast } from '../../helpers';
 
 // While these tests seem simple there is a reason for them.
@@ -16,19 +16,19 @@ import { Cast } from '../../helpers';
 
 describe('nodes', () => {
   test('doc', () => {
-    const doc = new Doc();
+    const doc = new DocExtension();
     expect(doc.name).toBe('doc');
     expect(Cast(doc.pluginKey).key).toInclude('doc$');
   });
 
   test('paragraph', () => {
-    const paragraph = new Paragraph();
+    const paragraph = new ParagraphExtension();
     expect(paragraph.name).toBe('paragraph');
     expect(Cast(paragraph.pluginKey).key).toInclude('paragraph$');
   });
 
   test('text', () => {
-    const text = new Text();
+    const text = new TextExtension();
     expect(text.name).toBe('text');
     expect(Cast(text.pluginKey).key).toInclude('text$');
   });

@@ -1,5 +1,5 @@
 import { Cast } from '@remirror/core';
-import { Bold } from '@remirror/core-extensions';
+import { BoldExtension } from '@remirror/core-extensions';
 import { renderEditor } from '../render-editor';
 
 describe('toContainRemirrorDocument', () => {
@@ -44,7 +44,7 @@ describe('toContainRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor({ plainMarks: [new Bold()], plainNodes: [] });
+    } = renderEditor({ plainMarks: [new BoldExtension()], plainNodes: [] });
     const oldNode = pOld('simple');
     const newNode = p('simple');
     const { state: oldState } = addOld(docOld(oldNode));
@@ -95,7 +95,7 @@ describe('toContainRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor({ plainMarks: [new Bold()], plainNodes: [] });
+    } = renderEditor({ plainMarks: [new BoldExtension()], plainNodes: [] });
     const oldNode = pOld('simple');
     const newNode = p('simple');
     const { state: oldState } = addOld(docOld(oldNode));
@@ -147,7 +147,7 @@ describe('toEqualRemirrorDocument', () => {
     const {
       nodes: { doc, p },
       add,
-    } = renderEditor({ plainMarks: [new Bold()], plainNodes: [] });
+    } = renderEditor({ plainMarks: [new BoldExtension()], plainNodes: [] });
     const oldNode = pOld('simple');
     const newNode = p('simple');
     const { state: oldState } = addOld(docOld(oldNode));

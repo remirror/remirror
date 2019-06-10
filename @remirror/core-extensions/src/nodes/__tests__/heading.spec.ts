@@ -2,11 +2,11 @@ import { fromHTML, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@test-fixtures/schema-helpers';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
-import { Bold } from '../../marks';
-import { Heading, HeadingOptions } from '../heading';
+import { BoldExtension } from '../../marks';
+import { HeadingExtension, HeadingExtensionOptions } from '../heading';
 
 describe('schema', () => {
-  const schema = createBaseTestManager([{ extension: new Heading(), priority: 1 }]).createSchema();
+  const schema = createBaseTestManager([{ extension: new HeadingExtension(), priority: 1 }]).createSchema();
   const { h1, h2, h3, doc } = pmBuild(schema, {
     h1: { nodeType: 'heading' },
     h2: { nodeType: 'heading', level: 2 },
@@ -30,11 +30,11 @@ describe('schema', () => {
 });
 
 describe('plugins', () => {
-  const create = (params: HeadingOptions = {}) =>
+  const create = (params: HeadingExtensionOptions = {}) =>
     renderEditor({
-      attrNodes: [new Heading({ ...params })],
+      attrNodes: [new HeadingExtension({ ...params })],
       plainNodes: [],
-      plainMarks: [new Bold()],
+      plainMarks: [new BoldExtension()],
     });
 
   it('falls back to the default level when unsupported level passed through', () => {

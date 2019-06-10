@@ -2,7 +2,7 @@ import { Attrs, NodeExtensionOptions } from '@remirror/core';
 import { RefractorSyntax } from 'refractor/core';
 import { SyntaxTheme } from './themes';
 
-export interface CodeBlockOptions extends NodeExtensionOptions {
+export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
   /**
    * Import languages from refractor
    *
@@ -14,15 +14,15 @@ export interface CodeBlockOptions extends NodeExtensionOptions {
    *
    * And pass them into the config when initializing this extension.
    * ```ts
-   * import { CodeBlock } from '@remirror/extension-code-block';
+   * import { CodeBlockExtension } from '@remirror/extension-code-block';
    *
-   * new CodeBlock({ supportedLanguages: [typescript, jsx] })
+   * new CodeBlockExtension({ supportedLanguages: [typescript, jsx] })
    * ```
    *
    * Or as a component
    * ```tsx
    * <RemirrorManager>
-   *   <RemirrorExtension Constructor={CodeBlock} supportedLanguages={[typescript, jsx]} />
+   *   <RemirrorExtension Constructor={CodeBlockExtension} supportedLanguages={[typescript, jsx]} />
    * </RemirrorManager>
    * ```
    */

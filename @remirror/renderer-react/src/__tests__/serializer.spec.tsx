@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Doc, ExtensionManager, Paragraph, Text } from '@remirror/core';
-import { Bold } from '@remirror/core-extensions';
+import { DocExtension, ExtensionManager, ParagraphExtension, TextExtension } from '@remirror/core';
+import { BoldExtension } from '@remirror/core-extensions';
 import { simpleJSON, testJSON } from '@test-fixtures/object-nodes';
 import { manager } from '@test-fixtures/schema-helpers';
 import { shallow } from 'enzyme';
@@ -19,10 +19,10 @@ test('ReactSerializer.fromExtensionManager', () => {
 
   // fills in for a missing text
   const altExtensions = [
-    { extension: new Doc(), priority: 2 },
-    { extension: new Paragraph(), priority: 2 },
-    { extension: new Text(), priority: 2 },
-    { extension: new Bold(), priority: 2 },
+    { extension: new DocExtension(), priority: 2 },
+    { extension: new ParagraphExtension(), priority: 2 },
+    { extension: new TextExtension(), priority: 2 },
+    { extension: new BoldExtension(), priority: 2 },
   ];
   const altManager = ExtensionManager.create(altExtensions);
   expect(ReactSerializer.fromExtensionManager(altManager).nodes.text).toBeFunction();

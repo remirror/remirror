@@ -6,7 +6,7 @@ import {
   SchemaNodeTypeParams,
 } from '@remirror/core';
 
-export class HorizontalRule extends NodeExtension {
+export class HorizontalRuleExtension extends NodeExtension {
   get name() {
     return 'horizontalRule' as const;
   }

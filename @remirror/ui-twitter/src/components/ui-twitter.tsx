@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 
 import { Attrs, omit } from '@remirror/core';
-import { InlineCursorTarget } from '@remirror/core-extensions';
-import { Emoji, EmojiOptions, isBaseEmoji } from '@remirror/extension-emoji';
-import { EnhancedLink, EnhancedLinkOptions } from '@remirror/extension-enhanced-link';
+import { NodeCursorExtension } from '@remirror/core-extensions';
+import { EmojiExtension, EmojiExtensionOptions, isBaseEmoji } from '@remirror/extension-emoji';
+import { EnhancedLinkExtension, EnhancedLinkExtensionOptions } from '@remirror/extension-enhanced-link';
 import {
   ActionTaken,
-  Mention,
+  MentionExtension,
+  MentionExtensionOptions,
   MentionNodeAttrs,
-  MentionOptions,
   OnKeyDownParams,
 } from '@remirror/extension-mention';
 import { ManagedRemirrorEditor, RemirrorExtension, RemirrorManager } from '@remirror/react';
@@ -45,7 +45,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
   public readonly state: State = { activeIndex: 0, emojiPickerActive: false };
   private exitCommandEnabled = false;
 
-  private onMentionEnter: Required<MentionOptions>['onEnter'] = ({ query, command, name }) => {
+  private onMentionEnter: Required<MentionExtensionOptions>['onEnter'] = ({ query, command, name }) => {
     if (name === 'at') {
       const params = {
         name: 'at' as 'at',
@@ -67,7 +67,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     this.setActiveIndex(0);
   };
 
-  private onMentionChange: Required<MentionOptions>['onChange'] = ({ query, command, name }) => {
+  private onMentionChange: Required<MentionExtensionOptions>['onChange'] = ({ query, command, name }) => {
     if (name === 'at') {
       const params = {
         name: 'at' as 'at',
@@ -89,7 +89,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     this.setActiveIndex(0);
   };
 
-  private onMentionExit: Required<MentionOptions>['onExit'] = ({ query, command, char }) => {
+  private onMentionExit: Required<MentionExtensionOptions>['onExit'] = ({ query, command, char }) => {
     if (query && this.exitCommandEnabled) {
       command({
         id: query,
@@ -289,9 +289,9 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
             },
           ]}
         >
-          <RemirrorExtension Constructor={InlineCursorTarget} />
-          <RemirrorExtension<MentionOptions>
-            Constructor={Mention}
+          <RemirrorExtension Constructor={NodeCursorExtension} />
+          <RemirrorExtension<MentionExtensionOptions>
+            Constructor={MentionExtension}
             matchers={matchers}
             extraAttrs={['href', 'role']}
             onEnter={this.onMentionEnter}
@@ -299,12 +299,12 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
             onExit={this.onMentionExit}
             onKeyDown={this.onMentionKeyDown}
           />
-          <RemirrorExtension<EnhancedLinkOptions>
-            Constructor={EnhancedLink}
+          <RemirrorExtension<EnhancedLinkExtensionOptions>
+            Constructor={EnhancedLinkExtension}
             onUrlsChange={this.props.onUrlsChange}
           />
-          <RemirrorExtension<EmojiOptions>
-            Constructor={Emoji}
+          <RemirrorExtension<EmojiExtensionOptions>
+            Constructor={EmojiExtension}
             set={this.props.emojiSet}
             emojiData={this.props.emojiData}
           />

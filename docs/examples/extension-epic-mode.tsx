@@ -1,10 +1,10 @@
 import React, { FC, FunctionComponent } from 'react';
 
 import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
-import { Bold, Italic, Underline } from '@remirror/core-extensions';
+import { BoldExtension, ItalicExtension, UnderlineExtension } from '@remirror/core-extensions';
 import {
   defaultEffect,
-  EpicMode,
+  EpicModeExtension,
   heartEffect,
   ParticleEffect,
   spawningEffect,
@@ -20,13 +20,13 @@ const editorStyles = {
   },
 };
 
-interface EpicModeComponentProps {
+interface EpicModeExtensionComponentProps {
   particleEffect: ParticleEffect;
   placeholder?: string;
   shake?: boolean;
 }
 
-const EpicModeComponent: FC<EpicModeComponentProps> = ({
+const EpicModeExtensionComponent: FC<EpicModeExtensionComponentProps> = ({
   particleEffect,
   placeholder = 'Type for epic...',
   shake,
@@ -34,10 +34,10 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({
   return (
     <div style={{ gridArea: 'editor' }} placeholder={placeholder}>
       <RemirrorManager>
-        <RemirrorExtension Constructor={Bold} />
-        <RemirrorExtension Constructor={Italic} />
-        <RemirrorExtension Constructor={Underline} />
-        <RemirrorExtension Constructor={EpicMode} particleEffect={particleEffect} shake={shake} />
+        <RemirrorExtension Constructor={BoldExtension} />
+        <RemirrorExtension Constructor={ItalicExtension} />
+        <RemirrorExtension Constructor={UnderlineExtension} />
+        <RemirrorExtension Constructor={EpicModeExtension} particleEffect={particleEffect} shake={shake} />
         <ManagedRemirrorEditor
           autoFocus={true}
           attributes={{ 'data-test-id': 'editor-instance' }}
@@ -48,12 +48,12 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({
   );
 };
 
-export const EpicModeDefault: FunctionComponent = () => (
-  <EpicModeComponent particleEffect={defaultEffect} shake={true} />
+export const EpicModeExtensionDefault: FunctionComponent = () => (
+  <EpicModeExtensionComponent particleEffect={defaultEffect} shake={true} />
 );
-export const EpicModeSpawning: FunctionComponent = () => (
-  <EpicModeComponent particleEffect={spawningEffect} shake={true} />
+export const EpicModeExtensionSpawning: FunctionComponent = () => (
+  <EpicModeExtensionComponent particleEffect={spawningEffect} shake={true} />
 );
-export const EpicModeHeart: FunctionComponent = () => (
-  <EpicModeComponent particleEffect={heartEffect} shake={false} placeholder='Type for hearts' />
+export const EpicModeExtensionHeart: FunctionComponent = () => (
+  <EpicModeExtensionComponent particleEffect={heartEffect} shake={false} placeholder='Type for hearts' />
 );

@@ -10,9 +10,9 @@ import refractor from 'refractor/core';
 import createCodeBlockPlugin from './plugin';
 import { CodeBlockState } from './state';
 import { syntaxTheme, SyntaxTheme } from './themes';
-import { CodeBlockOptions } from './types';
+import { CodeBlockExtensionOptions } from './types';
 
-export class CodeBlock extends NodeExtension<CodeBlockOptions> {
+export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions> {
   get name() {
     return 'codeBlock' as const;
   }

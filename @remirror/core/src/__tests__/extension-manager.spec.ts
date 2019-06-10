@@ -2,7 +2,7 @@ import { Schema } from 'prosemirror-model';
 import { Extension } from '../extension';
 import { ExtensionManager, isExtensionManager } from '../extension-manager';
 import { Cast } from '../helpers/base';
-import { Doc, Paragraph, Text } from '../nodes';
+import { DocExtension, ParagraphExtension, TextExtension } from '../nodes';
 
 export const helpers = {
   getEditorState: Cast(jest.fn(() => 'state')),
@@ -20,9 +20,9 @@ class DummyMark extends Extension {
   }
 }
 
-const doc = new Doc();
-const text = new Text();
-const paragraph = new Paragraph();
+const doc = new DocExtension();
+const text = new TextExtension();
+const paragraph = new ParagraphExtension();
 const dummy = new DummyMark();
 
 const manager = ExtensionManager.create([

@@ -11,12 +11,12 @@ import {
 import { setBlockType } from 'prosemirror-commands';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
-export interface HeadingOptions extends NodeExtensionOptions {
+export interface HeadingExtensionOptions extends NodeExtensionOptions {
   levels?: number[];
   defaultLevel?: number;
 }
 
-export class Heading extends NodeExtension<HeadingOptions> {
+export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
   get name() {
     return 'heading' as const;
   }

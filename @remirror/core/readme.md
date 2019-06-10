@@ -48,7 +48,7 @@ import {
   toggleMark,
 } from '@remirror/core';
 
-export class Strike extends MarkExtension {
+export class StrikeExtension extends MarkExtension {
   get name() {
     return 'strike' as const;
   }
@@ -104,20 +104,20 @@ export class Strike extends MarkExtension {
 The extension manager is used to manage the extensions passed into the editor. It automatically creates the nodes and marks which are used for generating a schema.
 
 ```ts
-import { ExtensionManager, Doc, Text, Paragraph } from '@remirror/core';
-import { Bold, Italic } from '@remirror/core-extensions';
+import { ExtensionManager, DocExtension, TextExtension, ParagraphExtension } from '@remirror/core';
+import { BoldExtension, ItalicExtension } from '@remirror/core-extensions';
 
-const extensions = ExtensionManager.create([
-  { extension: new Doc(), priority: 2 },
-  { extension: new Text(), priority: 2 },
-  { extension: new Paragraph(), priority: 2 },
-  { extension: new Bold(), priority: 2 },
-  { extension: new Italic(), priority: 2 },
+const manager = ExtensionManager.create([
+  { extension: new DocExtension(), priority: 2 },
+  { extension: new TextExtension(), priority: 2 },
+  { extension: new ParagraphExtension(), priority: 2 },
+  { extension: new BoldExtension(), priority: 2 },
+  { extension: new ItalicExtension(), priority: 2 },
 ]);
 
-console.log(extensions.nodes); // { doc: { ... }, paragraph: { ... }, text: { ... } }
+console.log(manager.nodes); // { doc: { ... }, paragraph: { ... }, text: { ... } }
 console.log(extension.marks); // { bold: { ... }, italic: { ... } }
 
 // Can also create a schema for you
-extensions.createSchema(); // Returns a schema composed of nodes and marks in the extensions provided
+manager.createSchema(); // Returns a schema composed of nodes and marks in the extensions provided
 ```

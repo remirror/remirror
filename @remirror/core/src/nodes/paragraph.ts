@@ -2,7 +2,7 @@ import { setBlockType } from 'prosemirror-commands';
 import { NodeExtension } from '../node-extension';
 import { NodeExtensionSpec, SchemaNodeTypeParams } from '../types';
 
-export class Paragraph extends NodeExtension {
+export class ParagraphExtension extends NodeExtension {
   get name() {
     return 'paragraph' as const;
   }

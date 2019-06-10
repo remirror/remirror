@@ -1,6 +1,6 @@
 import {
   createDocumentNode,
-  Doc,
+  DocExtension,
   EditorState,
   ExtensionManager,
   isObjectNode,
@@ -10,10 +10,10 @@ import {
   RemirrorContentType,
   SchemaParams,
   StringHandlerParams,
-  Text,
+  TextExtension,
 } from '@remirror/core';
-import { baseExtensions, Composition, History, Placeholder } from '@remirror/core-extensions';
-import { CodeBlock } from '@remirror/extension-code-block';
+import { baseExtensions, HistoryExtension, PlaceholderExtension } from '@remirror/core-extensions';
+import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { RemirrorEditor, RemirrorEditorProps, RemirrorEditorStateListenerParams } from '@remirror/react';
 import React, { FC, useMemo, useState } from 'react';
 import { fromMarkdown, toMarkdown } from './markdown';
@@ -22,11 +22,10 @@ const useMarkdownManager = () => {
   return useMemo(
     () =>
       ExtensionManager.create([
-        { priority: 1, extension: new Doc({ content: 'block' }) },
-        { priority: 1, extension: new CodeBlock({ defaultLanguage: 'markdown' }) },
-        new Text(),
-        new Composition(),
-        new History(),
+        { priority: 1, extension: new DocExtension({ content: 'block' }) },
+        { priority: 1, extension: new CodeBlockExtension({ defaultLanguage: 'markdown' }) },
+        new TextExtension(),
+        new HistoryExtension(),
       ]),
     [],
   );
@@ -37,7 +36,10 @@ const MarkdownEditor: FC<RemirrorEditorProps> = props => {
 };
 
 const useWysiwygManager = () => {
-  return useMemo(() => ExtensionManager.create([...baseExtensions, new CodeBlock(), new Placeholder()]), []);
+  return useMemo(
+    () => ExtensionManager.create([...baseExtensions, new CodeBlockExtension(), new PlaceholderExtension()]),
+    [],
+  );
 };
 
 const WysiwygEditor: FC<RemirrorEditorProps> = props => {

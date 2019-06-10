@@ -10,8 +10,8 @@ import {
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import {
   ActionTaken,
+  MentionExtensionOptions,
   MentionNodeAttrs,
-  MentionOptions,
   SuggestionsCallbackParams,
   SuggestionStateField,
 } from './types';
@@ -77,7 +77,7 @@ export class SuggestionState {
     return this.actions.some(action => [ActionTaken.Exited, ActionTaken.Moved].includes(action));
   }
 
-  constructor(private extension: Extension<MentionOptions>) {}
+  constructor(private extension: Extension<MentionExtensionOptions>) {}
 
   public init(view: EditorView) {
     this.view = view;

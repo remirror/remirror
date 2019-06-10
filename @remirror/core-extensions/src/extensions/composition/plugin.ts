@@ -9,7 +9,7 @@ import {
 } from '@remirror/core';
 import { Plugin, Selection } from 'prosemirror-state';
 import { InputEvent } from '../../types';
-import { CompositionOptions } from '../types';
+import { CompositionExtensionOptions } from '../types';
 import { CompositionState } from './state';
 
 /**
@@ -20,8 +20,9 @@ import { CompositionState } from './state';
  * Ideally this plugin should be deleted once Composition events are handled correctly.
  *
  * @see https://www.w3.org/TR/input-events-2/
+ *
  */
-export const createCompositionPlugin = (ctx: Extension<CompositionOptions>) => {
+export const createCompositionPlugin = (ctx: Extension<CompositionExtensionOptions>) => {
   return new Plugin({
     key: ctx.pluginKey,
     appendTransaction: (transactions, _b, state) => {
@@ -76,7 +77,7 @@ export const createCompositionPlugin = (ctx: Extension<CompositionOptions>) => {
  * @see https://github.com/ProseMirror/prosemirror/issues/543
  */
 export const patchDeleteContentBackward = (
-  options: Required<CompositionOptions>,
+  options: Required<CompositionExtensionOptions>,
   view: EditorView,
   event: InputEvent,
   pluginState: CompositionState,

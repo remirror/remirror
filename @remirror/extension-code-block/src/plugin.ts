@@ -1,9 +1,9 @@
 import { getPluginState, NodeExtension, NodeType } from '@remirror/core';
 import { Plugin } from 'prosemirror-state';
 import { CodeBlockState } from './state';
-import { CodeBlockOptions } from './types';
+import { CodeBlockExtensionOptions } from './types';
 
-export default function createCodeBlockPlugin(ctx: NodeExtension<CodeBlockOptions>, type: NodeType) {
+export default function createCodeBlockPlugin(ctx: NodeExtension<CodeBlockExtensionOptions>, type: NodeType) {
   return new Plugin<CodeBlockState>({
     key: ctx.pluginKey,
     state: {

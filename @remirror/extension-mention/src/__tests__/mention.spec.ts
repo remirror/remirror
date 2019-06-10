@@ -2,11 +2,11 @@ import { fromHTML, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@test-fixtures/schema-helpers';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
-import { Mention, MentionOptions } from '../';
+import { MentionExtension, MentionExtensionOptions } from '../';
 import { MentionNodeAttrs } from '../types';
 
 describe('schema', () => {
-  const schema = createBaseTestManager([{ extension: new Mention(), priority: 1 }]).createSchema();
+  const schema = createBaseTestManager([{ extension: new MentionExtension(), priority: 1 }]).createSchema();
   const attrs = { id: 'test', label: '@test' };
 
   const { mention, p, doc } = pmBuild(schema, {
@@ -43,7 +43,7 @@ describe('constructor', () => {
       startOfLine: false,
       name: 'at',
     };
-    const mentions = new Mention({
+    const mentions = new MentionExtension({
       matchers: [matcher],
     });
 
@@ -52,16 +52,16 @@ describe('constructor', () => {
   });
 
   it('uses can be created with partial matchers', () => {
-    const mentionOne = new Mention({
+    const mentionOne = new MentionExtension({
       matchers: [{ char: '#', name: 'tag' }],
     });
     expect(mentionOne.options.matchers).toEqual([{ char: '#', name: 'tag' }]);
   });
 });
 
-const create = (params: MentionOptions = {}) =>
+const create = (params: MentionExtensionOptions = {}) =>
   renderEditor({
-    attrNodes: [new Mention({ mentionClassName: 'custom', ...params })],
+    attrNodes: [new MentionExtension({ mentionClassName: 'custom', ...params })],
   });
 
 describe('plugin', () => {

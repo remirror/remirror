@@ -3,10 +3,10 @@ import { createBaseTestManager } from '@test-fixtures/schema-helpers';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import typescript from 'refractor/lang/typescript';
-import { CodeBlock, CodeBlockOptions } from '../';
+import { CodeBlockExtension, CodeBlockExtensionOptions } from '../';
 
 describe('schema', () => {
-  const schema = createBaseTestManager([{ extension: new CodeBlock(), priority: 1 }]).createSchema();
+  const schema = createBaseTestManager([{ extension: new CodeBlockExtension(), priority: 1 }]).createSchema();
   const attrs = { language: 'typescript' };
   const content = 'unchanged without decorations';
 
@@ -32,7 +32,7 @@ describe('schema', () => {
 
 describe('constructor', () => {
   it('is created with the correct options', () => {
-    const codeBlock = new CodeBlock({
+    const codeBlock = new CodeBlockExtension({
       syntaxTheme: 'a11yDark',
     });
     expect(codeBlock.options.syntaxTheme).toEqual('a11yDark');
@@ -40,9 +40,9 @@ describe('constructor', () => {
   });
 });
 
-const create = (params: CodeBlockOptions = {}) =>
+const create = (params: CodeBlockExtensionOptions = {}) =>
   renderEditor({
-    attrNodes: [new CodeBlock({ ...params, supportedLanguages: [typescript] })],
+    attrNodes: [new CodeBlockExtension({ ...params, supportedLanguages: [typescript] })],
   });
 
 describe('plugin', () => {

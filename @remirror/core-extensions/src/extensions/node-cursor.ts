@@ -12,25 +12,30 @@ import { Decoration, DecorationSet } from 'prosemirror-view';
 
 export const inlineCursorTargetStateKey = new PluginKey('inlineCursorTargetPlugin');
 
-export const INLINE_CURSOR_TARGETS: NodeMatch[] = ['emoji', (name: string) => name.includes('mentions')];
+export const NODE_CURSOR_DEFAULTS: NodeMatch[] = ['emoji', (name: string) => name.includes('mentions')];
 
-export interface InlineCursorTargetOptions extends BaseExtensionOptions {
+export interface NodeCursorExtensionOptions extends BaseExtensionOptions {
   targets?: NodeMatch[];
 }
 
-export class InlineCursorTarget extends Extension<InlineCursorTargetOptions> {
+/**
+ * This extension makes it possible to navigate with the arrow keys between nodes like emoji.
+ *
+ * Without it the cursor sometimes gets lost and stops responding to keypresses.
+ */
+export class NodeCursorExtension extends Extension<NodeCursorExtensionOptions> {
   get name() {
-    return 'inlineCursorTarget' as const;
+    return 'nodeCursor' as const;
   }
 
   get defaultOptions() {
     return {
-      targets: INLINE_CURSOR_TARGETS,
+      targets: NODE_CURSOR_DEFAULTS,
     };
   }
 
   public plugin() {
-    return createInlineCursorTargetPlugin({ ctx: this });
+    return createNodeCursorExtensionPlugin(this);
   }
 }
 
@@ -73,11 +78,7 @@ export const findSpecialNodeBefore = ($pos: ResolvedPos, tr: Transaction, matche
   return;
 };
 
-interface CreateInlineCursorTargetPluginParams {
-  ctx: InlineCursorTarget;
-}
-
-const createInlineCursorTargetPlugin = ({ ctx }: CreateInlineCursorTargetPluginParams) => {
+const createNodeCursorExtensionPlugin = (ctx: NodeCursorExtension) => {
   return new Plugin({
     key: ctx.pluginKey,
 

@@ -1,7 +1,7 @@
 import { Cast, MarkExtension, MarkExtensionSpec, markInputRule, SchemaMarkTypeParams } from '@remirror/core';
 import { toggleMark } from 'prosemirror-commands';
 
-export class Bold extends MarkExtension {
+export class BoldExtension extends MarkExtension {
   get name() {
     return 'bold' as const;
   }

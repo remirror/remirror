@@ -21,11 +21,11 @@ import { Plugin, TextSelection } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
 import { extractUrl } from './extract-url';
 
-export interface EnhancedLinkOptions extends MarkExtensionOptions {
+export interface EnhancedLinkExtensionOptions extends MarkExtensionOptions {
   onUrlsChange?(params: { set: Set<string>; urls: string[] }): void;
 }
 
-export class EnhancedLink extends MarkExtension<EnhancedLinkOptions> {
+export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOptions> {
   get name() {
     return 'enhancedLink' as const;
   }

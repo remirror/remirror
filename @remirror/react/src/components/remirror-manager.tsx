@@ -1,7 +1,7 @@
 import React, { Children, Component } from 'react';
 
 import { ExtensionManager, isString, PrioritizedExtension } from '@remirror/core';
-import { baseExtensions, Placeholder } from '@remirror/core-extensions';
+import { baseExtensions, PlaceholderExtension } from '@remirror/core-extensions';
 import { asDefaultProps, isRemirrorExtension, RemirrorManagerProps } from '@remirror/react-utils';
 import { RemirrorManagerContext } from '../contexts';
 
@@ -15,7 +15,7 @@ export class RemirrorManager extends Component<RemirrorManagerProps> {
     const withPlaceholder: PrioritizedExtension[] = placeholder
       ? [
           {
-            extension: new Placeholder(
+            extension: new PlaceholderExtension(
               isString(placeholder)
                 ? { placeholder }
                 : { placeholder: placeholder[0], placeholderStyle: placeholder[1] },

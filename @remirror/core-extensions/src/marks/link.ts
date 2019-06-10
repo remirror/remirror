@@ -20,14 +20,14 @@ import { Plugin, TextSelection } from 'prosemirror-state';
 
 export type InvokedFromType = 'keyboard' | 'input-rule';
 
-export interface LinkOptions extends MarkExtensionOptions {
+export interface LinkExtensionOptions extends MarkExtensionOptions {
   /**
    * Return true to intercept the activation. This is useful for showing a dialog to replace the selected text.
    */
   activationHandler?(): void;
 }
 
-export class Link extends MarkExtension<LinkOptions> {
+export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
   get name() {
     return 'link' as const;
   }
