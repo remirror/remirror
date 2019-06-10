@@ -43,7 +43,7 @@
     "prosemirror-state": "^1.2.3",
     "prosemirror-tables": "^0.8.1",
     "prosemirror-test-builder": "^1.0.1",
-    "prosemirror-view": "^1.9.7"
+    "prosemirror-view": "^1.9.9"
   },
   "peerDependencies": {
     "jest": "^24.5.0"
