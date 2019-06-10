@@ -1,7 +1,6 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["esnext", "dom"],
     "types": ["jest", "node", "jest-environment-puppeteer", "expect-puppeteer", "puppeteer"]
   },
   "include": ["./**/*.ts", "webpack/extension.config.mjs"]
