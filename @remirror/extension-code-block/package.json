@@ -39,7 +39,7 @@
     "emotion": "^10",
     "prettier": "^1.18.2",
     "prosemirror-state": "^1.2.3",
-    "prosemirror-view": "^1.9.8",
+    "prosemirror-view": "^1.9.9",
     "react-syntax-highlighter": "^10.3.0",
     "refractor": "^2.9.0"
   },

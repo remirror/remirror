@@ -30,7 +30,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "@emotion/core": "^10.0.7",
-    "@emotion/styled": "^10.0.11",
+    "@emotion/styled": "^10.0.12",
     "@remirror/core": "0.0.1-alpha.11",
     "@remirror/core-extensions": "0.0.1-alpha.11",
     "@remirror/extension-emoji": "0.0.1-alpha.11",
