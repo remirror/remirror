@@ -1,11 +1,8 @@
 import babel from 'rollup-plugin-babel';
 import builtins from 'rollup-plugin-node-builtins';
-import commonjs from 'rollup-plugin-commonjs';
 import globals from 'rollup-plugin-node-globals';
 import json from 'rollup-plugin-json';
 import resolve from 'rollup-plugin-node-resolve';
-import { terser } from 'rollup-plugin-terser';
-import { startCase } from 'lodash';
 import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 import { join } from 'path';
 
@@ -24,8 +21,6 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
   const folderName = pkg.name.replace('@remirror/', '');
   const extensions = ['.mjs', '.json', '.ts', '.tsx', '.js'];
 
-  const isProd = env === 'production';
-  const isUmd = target === 'umd';
   const isModule = target === 'module';
   const input = `${rootFolder}/${folderName}/src/index.ts`;
   const deps = []
@@ -49,36 +44,6 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
     // Convert JSON imports to ES6 modules.
     json(),
 
-    // Allow Rollup to resolve CommonJS modules, since it only resolves ES2015
-    // modules by default.
-    isUmd &&
-      commonjs({
-        exclude: [
-          `${rootFolder}/${folderName}/src/**`,
-          `${rootFolder}/${folderName}/lib/**`,
-        ],
-        // HACK: Sometimes the CommonJS plugin can't identify named exports, so
-        // we have to manually specify named exports here for them to work.
-        // https://github.com/rollup/rollup-plugin-commonjs#custom-named-exports
-        namedExports: {
-          '@remirror/core': ['Doc', 'Text'],
-          '@remirror/renderer-react': ['ReactSerializer'],
-          'react-dom': [
-            'findDOMNode',
-            'unstable_renderSubtreeIntoContainer',
-            'unmountComponentAtNode',
-          ],
-          'react-dom/server': ['renderToStaticMarkup'],
-        },
-        extensions,
-      }),
-
-    // Replace `process.env.NODE_ENV` with its value, which enables some modules
-    // like React and Remirror to use their production variant.
-    // replace({
-    //   // 'process.env.NODE_ENV': JSON.stringify(env),
-    // }),
-
     // Register Node.js builtins for browserify compatibility.
     builtins(),
 
@@ -92,26 +57,7 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
 
     // Register Node.js globals for browserify compatibility.
     globals(),
-
-    // Only minify the output in production, since it is very slow. And only
-    // for UMD builds, since modules will be bundled by the consumer.
-    isUmd && isProd && terser(),
   ].filter(Boolean);
-
-  if (isUmd) {
-    return {
-      plugins,
-      input,
-      output: {
-        format: 'umd',
-        file: `${rootFolder}/${folderName}/${!isProd ? pkg.umd : pkg['umd:min']}`,
-        exports: 'named',
-        name: startCase(pkg.name).replace(/ /g, ''),
-        globals: pkg.umdGlobals,
-      },
-      external: Object.keys(pkg.umdGlobals || {}),
-    };
-  }
 
   if (isModule) {
     return {
@@ -147,11 +93,7 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
  */
 
 function factory(pkg, rootFolder) {
-  return [
-    configure(pkg, 'development', 'module', rootFolder),
-    configure(pkg, 'development', 'umd', rootFolder),
-    configure(pkg, 'production', 'umd', rootFolder),
-  ].filter(Boolean);
+  return [configure(pkg, 'development', 'module', rootFolder)].filter(Boolean);
 }
 
 /**
