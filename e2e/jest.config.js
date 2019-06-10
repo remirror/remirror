@@ -1,5 +1,5 @@
-const config = require('./jest.config');
-const { jestSupportDir, baseDir } = require('./helpers');
+const config = require('../support/jest/jest.config');
+const { jestSupportDir, baseDir } = require('../support/jest/helpers');
 
 const {
   clearMocks,
@@ -16,16 +16,16 @@ module.exports = {
   clearMocks,
   verbose,
   moduleFileExtensions,
-  globals,
+  globals: {
+    ...globals,
+    __E2E__: true,
+  },
   transform,
-  rootDir: baseDir('support/e2e'),
-  // coveragePathIgnorePatterns,
+  rootDir: baseDir('e2e'),
   testPathIgnorePatterns,
   testRegex: '/.*\\.puppeteer\\.ts$',
   cacheDirectory,
   moduleNameMapper,
-  name: '@remirror/docz',
-  displayName: 'docs',
   preset: 'jest-puppeteer',
   setupFilesAfterEnv: ['expect-puppeteer', jestSupportDir('jest.framework.ts')],
   globalSetup: jestSupportDir('jest.puppeteer.setup.ts'),

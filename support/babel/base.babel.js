@@ -2,7 +2,6 @@ const ignore = [
   '**/__tests__',
   '**/__mocks__',
   '**/__fixtures__',
-  '**/__stories__',
   '*.{test,spec}.{ts,tsx}',
   '**/*.d.ts',
   '*.d.ts',
@@ -11,6 +10,7 @@ const ignore = [
 const presets = [
   ['@babel/preset-env'],
   '@babel/preset-typescript',
+  '@babel/preset-react',
   '@emotion/babel-preset-css-prop',
 ];
 
