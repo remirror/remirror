@@ -1,7 +1,6 @@
 {
   "extends": "../../support/tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["esnext", "dom"],
     "jsx": "react",
     "outDir": "lib",
     "types": ["jest", "jest-extended", "jest-dom/extend-expect"]
