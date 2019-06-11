@@ -81,14 +81,14 @@ const defaultTypeMap: MarkMap = {
   doc: Doc,
   paragraph: 'p',
   image: 'img',
-  hard_break: 'br',
-  code_block: CodeBlock,
+  hardBreak: 'br',
+  codeBlock: CodeBlock,
   text: TextHandler,
 };
 
 const defaultMarkMap: MarkMap = {
-  em: 'em',
-  strong: 'strong',
+  italic: 'em',
+  bold: 'strong',
   code: 'code',
   link: 'a',
   underline: 'u',
