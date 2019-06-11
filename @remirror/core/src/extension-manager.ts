@@ -6,6 +6,7 @@ import { EditorState, PluginKey } from 'prosemirror-state';
 import { AnyExtension } from './extension';
 import {
   createFlexibleFunctionMap,
+  ExtensionManagerInitParams,
   extensionPropertyMapper,
   FlexibleExtension,
   hasExtensionProperty,
@@ -35,18 +36,6 @@ import {
   RemirrorActions,
 } from './types';
 
-export interface ExtensionManagerInitParams {
-  /**
-   *  A shortcut to pulling the editor state
-   */
-  getEditorState: () => EditorState;
-
-  /**
-   *  A shortcut to pulling the portal container
-   */
-  getPortalContainer: () => NodeViewPortalContainer;
-}
-
 export interface ExtensionManagerData {
   schema: EditorSchema;
   styles: Interpolation;
@@ -61,7 +50,7 @@ export interface ExtensionManagerData {
   view: EditorView;
 }
 
-export class ExtensionManager {
+export class ExtensionManager implements ExtensionManagerInitParams {
   /**
    * A helper static method for creating a new extension manager.
    */

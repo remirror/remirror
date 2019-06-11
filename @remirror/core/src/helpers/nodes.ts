@@ -85,6 +85,9 @@ export const findChildren = ({ node, predicate, descend }: FindChildrenParams) =
   return flatten({ node, descend }).filter(child => predicate(child.node));
 };
 
+const findNodeByPredicate = ({ predicate }: NodePredicateParams) => (params: FlattenParams) =>
+  findChildren({ ...params, predicate });
+
 /**
  * Returns text nodes of a given `node`.
  *
@@ -95,9 +98,7 @@ export const findChildren = ({ node, predicate, descend }: FindChildrenParams) =
  * const textNodes = findTextNodes(node);
  * ```
  */
-export const findTextNodes = ({ node, descend }: FlattenParams) => {
-  return findChildren({ node, predicate: child => child.isText, descend });
-};
+export const findTextNodes = findNodeByPredicate({ predicate: child => child.isText });
 
 /**
  * Returns inline nodes of a given `node`.
@@ -109,9 +110,7 @@ export const findTextNodes = ({ node, descend }: FlattenParams) => {
  * const inlineNodes = findInlineNodes(node);
  * ```
  */
-export const findInlineNodes = ({ node, descend }: FlattenParams) => {
-  return findChildren({ node, predicate: child => child.isInline, descend });
-};
+export const findInlineNodes = findNodeByPredicate({ predicate: child => child.isInline });
 
 /**
  * Returns block descendants of a given `node`.
@@ -123,9 +122,7 @@ export const findInlineNodes = ({ node, descend }: FlattenParams) => {
  * const blockNodes = findBlockNodes(node);
  * ```
  */
-export const findBlockNodes = ({ node, descend }: FlattenParams) => {
-  return findChildren({ node, predicate: child => child.isBlock, descend });
-};
+export const findBlockNodes = findNodeByPredicate({ predicate: child => child.isBlock });
 
 /** @internal */
 interface FindChildrenByAttrParams extends FlattenParams {

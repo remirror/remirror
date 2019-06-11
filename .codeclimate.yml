@@ -27,7 +27,10 @@ checks:
 
 exclude_patterns:
   - 'support/'
+  - '@remirror/api-documenter/' # TODO remove from exclude once package is completed
+  - 'e2e/'
   - 'docs/'
+  - '**/data/'
   - '**/node_modules/'
   - '**/__tests__/'
   - '**/__mocks__/'

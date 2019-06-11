@@ -3,7 +3,27 @@ import { AnyExtension, Extension } from './extension';
 import { bool, capitalize, Cast, isFunction, isObject } from './helpers/base';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
-import { AnyFunction, CommandParams, ExtensionManagerParams, ExtensionType, FlexibleConfig } from './types';
+import { NodeViewPortalContainer } from './portal-container';
+import {
+  AnyFunction,
+  CommandParams,
+  EditorState,
+  ExtensionManagerParams,
+  ExtensionType,
+  FlexibleConfig,
+} from './types';
+
+export interface ExtensionManagerInitParams {
+  /**
+   *  A shortcut to pulling the editor state
+   */
+  getEditorState: () => EditorState;
+
+  /**
+   *  A shortcut to pulling the portal container
+   */
+  getPortalContainer: () => NodeViewPortalContainer;
+}
 
 type MethodFactory<GMappedFunc extends AnyFunction, GFunc extends AnyFunction> = (
   params: CommandParams,
@@ -61,6 +81,14 @@ export interface HasExtensions {
 }
 
 /**
+ * A utility type for the property getItemParams.
+ */
+export type GetItemParamsMethod<GKey extends keyof AnyExtension, GFunc extends AnyFunction> = (
+  ext: AnyExtension & Pick<Required<AnyExtension>, GKey>,
+  params: CommandParams,
+) => FlexibleConfig<GFunc>;
+
+/**
  * Params used when creating the actions for an extension manager.
  */
 interface CreateFlexibleFunctionMapParams<
@@ -83,10 +111,7 @@ interface CreateFlexibleFunctionMapParams<
   /**
    * Provide the parameters which should be used for the extension method.
    */
-  getItemParams: (
-    ext: AnyExtension & Pick<Required<AnyExtension>, GKey>,
-    params: CommandParams,
-  ) => FlexibleConfig<GFunc>;
+  getItemParams: GetItemParamsMethod<GKey, GFunc>;
 
   /**
    * Transforms the entry into a callable method with attrs as the first optional parameter.
