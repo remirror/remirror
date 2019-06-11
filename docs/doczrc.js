@@ -15,11 +15,11 @@ export default {
   },
   menu: [
     'Introduction',
+    'Installation',
     { name: 'Guides', menu: ['Quickstart Guide'] },
     'Showcase',
     'Examples',
     'Terminology',
-    'API',
   ],
   typescript: true,
   public: 'public',

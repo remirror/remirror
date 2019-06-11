@@ -42,6 +42,7 @@
     "if-config": "node support/scripts/run-if-config.js",
     "integrity": "yarn check --integrity",
     "lerna:publish:alpha": "lerna publish prerelease --preid=alpha --exact",
+    "lerna:publish:minor": "lerna publish minor --exact",
     "lint": "run-s lint:*",
     "lint:babel": "eslint **/.babelrc.js",
     "lint:e2e": "tslint --project support/tsconfig.json --config ./tslint.json",

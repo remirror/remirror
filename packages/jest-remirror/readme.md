@@ -96,7 +96,10 @@ Testing contenteditable is really difficult, especially with `jsdom`. There are 
 
 ## A solution
 
-`jest-remirror` makes rendering the remirror editor painless so that you can test that your extensions with their nodes and plugins are having the intended effect on the HTML document shape and calling the correct callbacks.
+`jest-remirror` makes rendering the remirror editor painless so that you can test that your extensions are:
+
+- having the intended effect on the HTML output
+- calling the correct callbacks
 
 Under the hood `jest-remirror` leans heavily on `@testing-library/react` to render an instance of your test editor to the dom and provide a number of utilities exposed when calling the `renderEditor` method.
 
