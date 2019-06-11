@@ -29,7 +29,6 @@ jobs:
     steps:
       - template: yarn-install.yml
       - bash: |
-          yarn build:production
-          # TODO Currently jest-dev-server bugs out with more than one server.
-          yarn test:puppeteer:storybook
+          yarn build
+          yarn test:puppeteer
         displayName: 'Run integration tests'

@@ -17,7 +17,7 @@ env:
   matrix:
     - YARN_CMD=ci:checks # Run linting and typechecks
     - YARN_CMD=test
-    - YARN_CMD=build:production
+    - YARN_CMD=build
 
 before_install:
   - |
