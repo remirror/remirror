@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/ui-wysiwyg"
   },
-  "version": "0.0.1-alpha.11",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "module": "lib/dist/ui-wysiwyg.esm.js",
   "files": [
@@ -38,11 +38,11 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "@remirror/core": "0.0.1-alpha.11",
-    "@remirror/core-extensions": "0.0.1-alpha.11",
-    "@remirror/extension-emoji": "0.0.1-alpha.11",
-    "@remirror/react": "0.0.1-alpha.11",
-    "@remirror/react-utils": "0.0.1-alpha.11",
+    "@remirror/core": "0.1.0",
+    "@remirror/core-extensions": "0.1.0",
+    "@remirror/extension-emoji": "0.1.0",
+    "@remirror/react": "0.1.0",
+    "@remirror/react-utils": "0.1.0",
     "deepmerge": "^3.2.0",
     "emotion-theming": "^10",
     "keycode": "^2.2.0"

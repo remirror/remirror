@@ -8,7 +8,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/extension-epic-mode"
   },
-  "version": "0.0.1-alpha.11",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "module": "lib/dist/extension-epic-mode.esm.js",
   "files": [
@@ -28,7 +28,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@remirror/core": "0.0.1-alpha.11",
+    "@remirror/core": "0.1.0",
     "@types/prosemirror-state": "^1.2.3",
     "@types/throttleit": "1.0.0",
     "prosemirror-state": "^1.2.3",
