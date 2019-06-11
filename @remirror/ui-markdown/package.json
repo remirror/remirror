@@ -62,8 +62,6 @@
     "access": "public"
   },
   "cjs": "lib/dist/ui-markdown.cjs.js",
-  "umd": "lib/dist/ui-markdown.umd.js",
-  "umd:min": "lib/dist/ui-markdown.umd.min.js",
   "umdGlobals": {
     "react": "React",
     "@remirror/core": "RemirrorCore",

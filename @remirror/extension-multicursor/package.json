@@ -41,8 +41,6 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-multicursor.cjs.js",
-  "umd": "lib/dist/extension-multicursor.umd.js",
-  "umd:min": "lib/dist/extension-multicursor.umd.min.js",
   "umdGlobals": {
     "@remirror/core": "RemirrorCore"
   }

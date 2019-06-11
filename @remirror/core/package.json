@@ -76,7 +76,5 @@
     "access": "public"
   },
   "cjs": "lib/dist/core.cjs.js",
-  "umd": "lib/dist/core.umd.js",
-  "umd:min": "lib/dist/core.umd.min.js",
   "umdGlobals": {}
 }

@@ -54,8 +54,6 @@
     "access": "public"
   },
   "cjs": "lib/dist/ui-twitter.cjs.js",
-  "umd": "lib/dist/ui-twitter.umd.js",
-  "umd:min": "lib/dist/ui-twitter.umd.min.js",
   "umdGlobals": {
     "react": "React",
     "@remirror/core": "RemirrorCore",

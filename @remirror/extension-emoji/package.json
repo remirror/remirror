@@ -55,8 +55,6 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-emoji.cjs.js",
-  "umd": "lib/dist/extension-emoji.umd.js",
-  "umd:min": "lib/dist/extension-emoji.umd.min.js",
   "umdGlobals": {
     "react": "React",
     "react-dom": "ReactDOM",

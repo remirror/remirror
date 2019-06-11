@@ -57,8 +57,6 @@
     "access": "public"
   },
   "cjs": "lib/dist/react-components.cjs.js",
-  "umd": "lib/dist/react.umd.js",
-  "umd:min": "lib/dist/react.umd.min.js",
   "umdGlobals": {
     "react": "React",
     "react-dom": "ReactDOM",

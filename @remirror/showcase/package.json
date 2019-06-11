@@ -61,8 +61,6 @@
     "access": "public"
   },
   "cjs": "lib/dist/showcase.cjs.js",
-  "umd": "lib/dist/showcase.umd.js",
-  "umd:min": "lib/dist/showcase.umd.min.js",
   "umdGlobals": {
     "react": "React",
     "@remirror/core": "RemirrorCore",

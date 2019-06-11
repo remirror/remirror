@@ -38,8 +38,6 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-epic-mode.cjs.js",
-  "umd": "lib/dist/extension-epic-mode.umd.js",
-  "umd:min": "lib/dist/extension-epic-mode.umd.min.js",
   "umdGlobals": {
     "@remirror/core": "RemirrorCore"
   }

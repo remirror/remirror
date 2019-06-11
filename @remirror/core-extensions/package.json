@@ -54,8 +54,6 @@
     "access": "public"
   },
   "cjs": "lib/dist/core-extensions.cjs.js",
-  "umd": "lib/dist/core-extensions.umd.js",
-  "umd:min": "lib/dist/core-extensions.umd.min.js",
   "umdGlobals": {
     "@remirror/core": "RemirrorCore"
   }

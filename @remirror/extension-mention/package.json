@@ -39,8 +39,6 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-mention.cjs.js",
-  "umd": "lib/dist/extension-mention.umd.js",
-  "umd:min": "lib/dist/extension-mention.umd.min.js",
   "umdGlobals": {
     "@remirror/core": "RemirrorCore"
   }

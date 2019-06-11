@@ -38,8 +38,6 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-enhanced-link.cjs.js",
-  "umd": "lib/dist/extension-enhanced-link.umd.js",
-  "umd:min": "lib/dist/extension-enhanced-link.umd.min.js",
   "umdGlobals": {
     "@remirror/core": "RemirrorCore"
   }
