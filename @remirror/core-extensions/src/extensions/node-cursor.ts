@@ -9,10 +9,9 @@ import {
 } from '@remirror/core';
 import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
+import { NODE_CURSOR_DEFAULTS } from '../constants';
 
 export const inlineCursorTargetStateKey = new PluginKey('inlineCursorTargetPlugin');
-
-export const NODE_CURSOR_DEFAULTS: NodeMatch[] = ['emoji', (name: string) => name.includes('mentions')];
 
 export interface NodeCursorExtensionOptions extends BaseExtensionOptions {
   targets?: NodeMatch[];

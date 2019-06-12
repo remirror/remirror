@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 
 import { Attrs, omit } from '@remirror/core';
-import { NodeCursorExtension } from '@remirror/core-extensions';
+import { CompositionExtension, NodeCursorExtension } from '@remirror/core-extensions';
 import { EmojiExtension, EmojiExtensionOptions, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLinkExtension, EnhancedLinkExtensionOptions } from '@remirror/extension-enhanced-link';
 import {
@@ -290,6 +290,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
           ]}
         >
           <RemirrorExtension Constructor={NodeCursorExtension} />
+          <RemirrorExtension Constructor={CompositionExtension} />
           <RemirrorExtension<MentionExtensionOptions>
             Constructor={MentionExtension}
             matchers={matchers}

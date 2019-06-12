@@ -14,8 +14,8 @@ import { CompositionState } from './state';
 
 /**
  * "Borrowed" from `@atlaskit`
- * Please note that this is not a complete implementation of composition events
- * but merely a workaround, until ProseMirror has some proper support for these events.
+ *
+ * A workaround or composition events when using `gboard` on Android.
  *
  * Ideally this plugin should be deleted once Composition events are handled correctly.
  *
@@ -30,17 +30,13 @@ export const createCompositionPlugin = (ctx: Extension<CompositionExtensionOptio
     },
     state: {
       init: () => new CompositionState(),
-      apply: (_, value: CompositionState) => {
-        return value.apply();
+      apply: (_, pluginState: CompositionState) => {
+        return pluginState.apply();
       },
     },
     view: view => {
       getPluginState<CompositionState>(ctx.pluginKey, view.state).init(view);
-      return {
-        update: () => {
-          getPluginState<CompositionState>(ctx.pluginKey, view.state).viewUpdate();
-        },
-      };
+      return {};
     },
     props: {
       handleDOMEvents: {
@@ -74,7 +70,8 @@ export const createCompositionPlugin = (ctx: Extension<CompositionExtensionOptio
  * Android composition events aren't handled well by Prosemirror
  * We've added a couple of beforeinput hooks to help PM out when trying to delete
  * certain nodes. We can remove these when PM has better composition support.
- * @see https://github.com/ProseMirror/prosemirror/issues/543
+ * ~~@see https://github.com/ProseMirror/prosemirror/issues/543~~ **FIXED**
+ * @see https://github.com/ProseMirror/prosemirror/issues/837
  */
 export const patchDeleteContentBackward = (
   options: Required<CompositionExtensionOptions>,
@@ -115,8 +112,9 @@ export const patchDeleteContentBackward = (
     pluginState.endDelete(newSelection);
     return true;
   }
+
   /**
-   * This block caters for highlighting the defined nodes.
+   * This block caters for highlighting the defined nodes when a selection has been made
    */
   if (
     isTextSelection(selection) &&

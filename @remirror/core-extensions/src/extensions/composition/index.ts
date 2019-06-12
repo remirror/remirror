@@ -1,9 +1,10 @@
 import { Extension, ProsemirrorPlugin } from '@remirror/core';
+import { NODE_CURSOR_DEFAULTS } from '../../constants';
 import { CompositionExtensionOptions } from '../types';
-import { createCompositionPlugin, patchDeleteContentBackward } from './plugin';
+import { createCompositionPlugin } from './plugin';
 
 /**
- * @deprecated - Composition works much better in `prosemirror-view@1.9.x`
+ * This allow composition events to delete inline nodes using gboard on Android devices.
  */
 export class CompositionExtension extends Extension<CompositionExtensionOptions> {
   get name() {
@@ -12,7 +13,7 @@ export class CompositionExtension extends Extension<CompositionExtensionOptions>
 
   get defaultOptions() {
     return {
-      ensureNodeDeletion: ['emoji', (name: string) => name.includes('mentions')],
+      ensureNodeDeletion: NODE_CURSOR_DEFAULTS,
     };
   }
 
@@ -20,5 +21,3 @@ export class CompositionExtension extends Extension<CompositionExtensionOptions>
     return createCompositionPlugin(this);
   }
 }
-
-export { patchDeleteContentBackward };
