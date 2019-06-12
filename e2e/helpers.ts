@@ -24,4 +24,4 @@ export const textContent = async (selector: string) => page.$eval(selector, e =>
 /**
  * Retrieve the outerHTML from the editor
  */
-export const outerHTML = async (selector: string) => page.$eval(selector, e => e.outerHTML);
+export const outerHtml = async (selector: string) => page.$eval(selector, e => e.outerHTML);

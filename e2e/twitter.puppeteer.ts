@@ -1,12 +1,27 @@
-import { URLDescriptor } from '@test-fixtures/test-urls';
-import { innerHtml, outerHTML, sel, textContent } from './helpers';
+import { Deployment, URLDescriptor } from '@test-fixtures/test-urls';
+import { innerHtml, outerHtml, sel, textContent } from './helpers';
 
 const editorSelector = '.ProseMirror';
+
+// TODO Currently SSR is broken this may be down to the library, or the usage
+describe.skip('SSR Twitter Showcase', () => {
+  beforeEach(async () => {
+    await jestPuppeteer.resetPage();
+    // Set JavaScript to disabled to mimic server side rendering
+    await page.setJavaScriptEnabled(false);
+    await page.goto(URLDescriptor.twitter[Deployment.Next][1]);
+  });
+
+  it('should pre render the editor', async () => {
+    // This test checks that the ProsemirrorEditor exists and contains the expected html
+    await expect(outerHtml(editorSelector)).resolves.toBeTruthy();
+    await expect(outerHtml(editorSelector)).resolves.toMatchInlineSnapshot();
+  });
+});
 
 describe.each(URLDescriptor.twitter)('%s: Twitter Showcase', (_, path) => {
   beforeEach(async () => {
     await jestPuppeteer.resetPage();
-    page.setDefaultNavigationTimeout(120000);
     await page.goto(path);
   });
 
@@ -74,7 +89,7 @@ describe.each(URLDescriptor.twitter)('%s: Twitter Showcase', (_, path) => {
   describe('Mentions', () => {
     it('should not allow mixing the tags', async () => {
       await page.type(editorSelector, '@#ab #@simple ');
-      await expect(outerHTML(sel(editorSelector, 'a'))).rejects.toThrow();
+      await expect(outerHtml(sel(editorSelector, 'a'))).rejects.toThrow();
     });
 
     describe('@', () => {
