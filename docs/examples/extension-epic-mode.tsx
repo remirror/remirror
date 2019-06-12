@@ -20,13 +20,13 @@ const editorStyles = {
   },
 };
 
-interface EpicModeExtensionComponentProps {
+interface EpicModeComponentProps {
   particleEffect: ParticleEffect;
   placeholder?: string;
   shake?: boolean;
 }
 
-const EpicModeExtensionComponent: FC<EpicModeExtensionComponentProps> = ({
+const EpicModeComponent: FC<EpicModeComponentProps> = ({
   particleEffect,
   placeholder = 'Type for epic...',
   shake,
@@ -48,12 +48,12 @@ const EpicModeExtensionComponent: FC<EpicModeExtensionComponentProps> = ({
   );
 };
 
-export const EpicModeExtensionDefault: FunctionComponent = () => (
-  <EpicModeExtensionComponent particleEffect={defaultEffect} shake={true} />
+export const EpicModeDefault: FunctionComponent = () => (
+  <EpicModeComponent particleEffect={defaultEffect} shake={true} />
 );
-export const EpicModeExtensionSpawning: FunctionComponent = () => (
-  <EpicModeExtensionComponent particleEffect={spawningEffect} shake={true} />
+export const EpicModeSpawning: FunctionComponent = () => (
+  <EpicModeComponent particleEffect={spawningEffect} shake={true} />
 );
-export const EpicModeExtensionHeart: FunctionComponent = () => (
-  <EpicModeExtensionComponent particleEffect={heartEffect} shake={false} placeholder='Type for hearts' />
+export const EpicModeHeart: FunctionComponent = () => (
+  <EpicModeComponent particleEffect={heartEffect} shake={false} placeholder='Type for hearts' />
 );
