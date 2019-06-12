@@ -33,16 +33,15 @@ Unit tests can be run with the following commands.
 
 ```bash
 yarn test # Unit Test
-yarn test:puppeteer # Unit + Integration Tests
+yarn test:e2e # Unit + Integration Tests on chrome
 ```
 
 Create tests inside of a `__tests__/` subfolder.
 
 **For naming conventions, use the following.**
 
-- Unit tests: `*.spec.ts(x)*`
-- Integration tests: `*.test.ts(x)*`
-- E2E tests: `*.e2e.ts(x)*` (although non currently exist)
+- Unit tests: `*.spec.ts(x)`
+- Integration tests: `*.puppeteer.ts` within the e2e folder
 
 Integration testing uses puppeteer to run browser tests in chrome. See an example in `/docs/editors/__tests__/ui-twitter.test.ts`
 
