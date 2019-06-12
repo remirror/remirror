@@ -7,6 +7,7 @@ module.exports = {
   launch: {
     dumpio: debug,
     headless: !debug,
+    timeout: 120000,
   },
   browser,
 };
