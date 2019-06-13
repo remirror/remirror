@@ -30,7 +30,7 @@
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "react-use": "9.4.0"
+    "react-use": "9.4.1"
   },
   "devDependencies": {
     "@types/lodash": "4.14.134",
