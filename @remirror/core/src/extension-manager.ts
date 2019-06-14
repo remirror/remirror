@@ -109,7 +109,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   public init({ getEditorState, getPortalContainer }: ExtensionManagerInitParams) {
     if (this.initialized) {
       console.warn(
-        'This manager is already in use. Make sure not to use the same manager for more than one editor as this will cause problems with conflicting editor schema.',
+        'This manager is already in use. Avoid using the same manager for more than one editor as this will cause problems with conflicting editor schema.',
       );
     }
 

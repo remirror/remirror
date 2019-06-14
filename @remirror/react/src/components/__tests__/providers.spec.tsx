@@ -4,10 +4,10 @@ import React, { FC } from 'react';
 import { InjectedRemirrorProps } from '@remirror/react-utils';
 import { withRemirror } from '../../hocs';
 import { useRemirror } from '../../hooks';
-import { ManagedRemirrorEditor } from '../providers';
+import { ManagedRemirrorProvider } from '../providers';
 import { RemirrorManager } from '../remirror-manager';
 
-describe('ManagedRemirrorEditor', () => {
+describe('ManagedRemirrorProvider', () => {
   const TestComponent: FC = () => {
     const { getRootProps } = useRemirror();
     return <div data-testid='target' {...getRootProps()} />;
@@ -22,9 +22,9 @@ describe('ManagedRemirrorEditor', () => {
   it('supports getRootProps via hooks', () => {
     const { getByRole, getByTestId } = render(
       <RemirrorManager>
-        <ManagedRemirrorEditor customRootProp={true}>
+        <ManagedRemirrorProvider customRootProp={true}>
           <TestComponent />
-        </ManagedRemirrorEditor>
+        </ManagedRemirrorProvider>
       </RemirrorManager>,
     );
     const target = getByTestId('target');
@@ -35,9 +35,9 @@ describe('ManagedRemirrorEditor', () => {
   it('supports getRootProps via HOC', () => {
     const { getByRole, getByTestId } = render(
       <RemirrorManager>
-        <ManagedRemirrorEditor customRootProp={true}>
+        <ManagedRemirrorProvider customRootProp={true}>
           <TestComponentHOC />
-        </ManagedRemirrorEditor>
+        </ManagedRemirrorProvider>
       </RemirrorManager>,
     );
     const target = getByTestId('target');

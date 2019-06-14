@@ -1,4 +1,11 @@
-import { Cast, EditorSchema, EditorState, environment, Transaction } from '@remirror/core';
+import {
+  Cast,
+  EditorSchema,
+  EditorState,
+  RenderEnvironment,
+  shouldUseDOMEnvironment,
+  Transaction,
+} from '@remirror/core';
 import minDocument from 'min-document';
 import { DirectEditorProps as DEP, EditorView } from 'prosemirror-view';
 
@@ -64,8 +71,6 @@ export class EditorViewSSR {
   }
 }
 
-export type RenderEnvironment = 'ssr' | 'dom';
-
 /**
  * Creates a new editor view
  *
@@ -82,21 +87,4 @@ export const createEditorView = (
     ? EditorView
     : Cast<typeof EditorView>(EditorViewSSR);
   return new Constructor(place, props);
-};
-
-/**
- * Checks which environment should be used.
- *
- * @param forceEnvironment
- */
-export const shouldUseDOMEnvironment = (forceEnvironment?: RenderEnvironment) =>
-  forceEnvironment === 'dom' || (environment.isBrowser && !forceEnvironment);
-
-/**
- * Gets a document for the dom
- *
- * @param forceEnvironment
- */
-export const getDoc = (forceEnvironment?: RenderEnvironment) => {
-  return shouldUseDOMEnvironment(forceEnvironment) ? document : minDocument;
 };

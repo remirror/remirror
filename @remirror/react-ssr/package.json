@@ -12,6 +12,9 @@
   "version": "0.1.0",
   "main": "lib/index.js",
   "module": "lib/dist/react-ssr.esm.js",
+  "browser": {
+    "min-document": false
+  },
   "files": [
     "lib",
     "src"

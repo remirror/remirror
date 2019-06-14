@@ -16,7 +16,7 @@ import {
   StrikeExtension,
   UnderlineExtension,
 } from '@remirror/core-extensions';
-import { ManagedRemirrorEditor, RemirrorExtension, RemirrorManager, useRemirror } from '@remirror/react';
+import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager, useRemirror } from '@remirror/react';
 import { asDefaultProps, RemirrorManagerProps } from '@remirror/react-utils';
 import deepMerge from 'deepmerge';
 import { ThemeProvider } from 'emotion-theming';
@@ -87,13 +87,13 @@ export class WysiwygUI extends PureComponent<WysiwygUIProps> {
           <RemirrorExtension Constructor={OrderedListExtension} />
           <RemirrorExtension Constructor={HardBreakExtension} />
           <RemirrorExtension Constructor={CodeBlockExtension} />
-          <ManagedRemirrorEditor {...props} customRootProp={true}>
+          <ManagedRemirrorProvider {...props}>
             <InnerEditor
               linkActivated={this.state.linkActivated}
               deactivateLink={this.deactivateLink}
               activateLink={this.activateLink}
             />
-          </ManagedRemirrorEditor>
+          </ManagedRemirrorProvider>
         </RemirrorManager>
       </ThemeProvider>
     );

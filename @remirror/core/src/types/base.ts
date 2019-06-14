@@ -225,3 +225,10 @@ export interface NodeExtensionOptions<GComponent = any> extends BaseExtensionOpt
 export interface MarkExtensionOptions<GComponent = any> extends BaseExtensionOptions {
   SSRComponent?: GComponent;
 }
+
+/**
+ * The render environment which is either on the server (ssr) or in the dom.
+ *
+ * This is used to force a certain environment to override checks
+ */
+export type RenderEnvironment = 'ssr' | 'dom';

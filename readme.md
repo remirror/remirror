@@ -54,7 +54,7 @@ import { memoize, EMPTY_OBJECT_NODE } from '@remirror/core';
 import { Bold, Italic, Underline } from '@remirror/core-extensions';
 import {
   bubblePositioner,
-  ManagedRemirrorEditor,
+  ManagedRemirrorProvider,
   RemirrorEventListener,
   RemirrorExtension,
   RemirrorManager,
@@ -123,7 +123,7 @@ const EditorLayout: FunctionComponent = () => {
       <RemirrorExtension Constructor={Bold} />
       <RemirrorExtension Constructor={Italic} />
       <RemirrorExtension Constructor={Underline} />
-      <ManagedRemirrorEditor
+      <ManagedRemirrorProvider
         attributes={{ 'data-test-id': 'editor-instance' }}
         onChange={onChange}
         placeholder='Start typing for magic...'
@@ -131,7 +131,7 @@ const EditorLayout: FunctionComponent = () => {
         initialContent={EMPTY_OBJECT_NODE}
       >
         <SimpleFloatingMenu />
-      </ManagedRemirrorEditor>
+      </ManagedRemirrorProvider>
     </RemirrorManager>
   );
 };
@@ -174,7 +174,7 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({ particleEffect, placeho
         <RemirrorExtension Constructor={Italic} />
         <RemirrorExtension Constructor={Underline} />
         <RemirrorExtension Constructor={EpicMode} particleEffect={particleEffect} shake={shake} />
-        <ManagedRemirrorEditor
+        <ManagedRemirrorProvider
           autoFocus={true}
           attributes={{ 'data-test-id': 'editor-instance' }}
           placeholder={placeholder}

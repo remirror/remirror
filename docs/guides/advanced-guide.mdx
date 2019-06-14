@@ -39,7 +39,7 @@ import {
 } from '@remirror/core-extensions';
 import {
   asDefaultProps,
-  ManagedRemirrorEditor,
+  ManagedRemirrorProvider,
   RemirrorExtension,
   RemirrorManager,
   RemirrorProps,
@@ -75,10 +75,10 @@ export class MyAwesomeEditor extends PureComponent<{}, State> {
           activationHandler={this.activateLinkExtension}
         />
         <RemirrorExtension Constructor={CodeBlockExtension} />
-        <ManagedRemirrorEditor>
+        <ManagedRemirrorProvider>
           // Later we will create an inner component
           <div />
-        </ManagedRemirrorEditor>
+        </ManagedRemirrorProvider>
       </RemirrorManager>
     );
   }
@@ -89,9 +89,9 @@ Quite a lot has been introduced here.
 
 - `<RemirrorManager />` - Injects an ExtensionManager instance into the react context.
 - `<RemirrorExtension />` - Injects the extension (passed via the `Constructor` prop into the created extensionManager). These only activate if they are direct descendants of the `<RemirrorManager />
-- `<ManagedRemirrorEditor />` - This component automatically pulls the created extension manager instance from the context and passes it on to the underlying Remirror component. It also injects it's own context to all nested components as we shall see soon.
+- `<ManagedRemirrorProvider />` - This component automatically pulls the created extension manager instance from the context and passes it on to the underlying Remirror component. It also injects it's own context to all nested components as we shall see soon.
 
-Each extension is automatically injected into the context which is being picked up by the `ManagedRemirrorEditor`.
+Each extension is automatically injected into the context which is being picked up by the `ManagedRemirrorProvider`.
 
 Now we need to create our own internal editor. But before we do that there's just one small change to make the initial code.
 
@@ -100,9 +100,9 @@ They underlying text editor is controlled by Prosemirror and unlike react it nee
 To allow this when using the context make sure to set the `customRootProp` to `true`.
 
 ```tsx
-<ManagedRemirrorEditor customRootProp={true}>
+<ManagedRemirrorProvider customRootProp={true}>
   <div />
-</ManagedRemirrorEditor>
+</ManagedRemirrorProvider>
 ```
 
 Now let's create the inner editor.

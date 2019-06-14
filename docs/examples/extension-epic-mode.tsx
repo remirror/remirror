@@ -9,7 +9,7 @@ import {
   ParticleEffect,
   spawningEffect,
 } from '@remirror/extension-epic-mode';
-import { ManagedRemirrorEditor, RemirrorExtension, RemirrorManager } from '@remirror/react';
+import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
 
 const editorStyles = {
   [EDITOR_CLASS_SELECTOR]: {
@@ -38,7 +38,7 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({
         <RemirrorExtension Constructor={ItalicExtension} />
         <RemirrorExtension Constructor={UnderlineExtension} />
         <RemirrorExtension Constructor={EpicModeExtension} particleEffect={particleEffect} shake={shake} />
-        <ManagedRemirrorEditor
+        <ManagedRemirrorProvider
           autoFocus={true}
           attributes={{ 'data-test-id': 'editor-instance' }}
           editorStyles={editorStyles}

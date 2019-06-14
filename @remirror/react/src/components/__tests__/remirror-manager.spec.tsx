@@ -4,7 +4,7 @@ import { render, RenderResult } from '@testing-library/react';
 import { EditorView } from 'prosemirror-view';
 import React, { FC } from 'react';
 import { useRemirrorManager } from '../../hooks';
-import { ManagedRemirrorEditor } from '../providers';
+import { ManagedRemirrorProvider } from '../providers';
 import { RemirrorExtension } from '../remirror-extension';
 import { RemirrorManager } from '../remirror-manager';
 
@@ -47,9 +47,9 @@ describe('manager prop', () => {
     ({ rerender } = render(
       <RemirrorManager>
         <RemirrorExtension Constructor={NewExtension} />
-        <ManagedRemirrorEditor>
+        <ManagedRemirrorProvider>
           <Component />
-        </ManagedRemirrorEditor>
+        </ManagedRemirrorProvider>
       </RemirrorManager>,
     ));
   });
@@ -60,9 +60,9 @@ describe('manager prop', () => {
     rerender(
       <RemirrorManager>
         <RemirrorExtension Constructor={NewExtension} />
-        <ManagedRemirrorEditor>
+        <ManagedRemirrorProvider>
           <Component />
-        </ManagedRemirrorEditor>
+        </ManagedRemirrorProvider>
       </RemirrorManager>,
     );
 
@@ -75,9 +75,9 @@ describe('manager prop', () => {
     const initViewSpy = jest.spyOn(ExtensionManager.prototype, 'initView');
     rerender(
       <RemirrorManager>
-        <ManagedRemirrorEditor>
+        <ManagedRemirrorProvider>
           <Component />
-        </ManagedRemirrorEditor>
+        </ManagedRemirrorProvider>
         <RemirrorExtension Constructor={NewExtension} />
         <RemirrorExtension Constructor={PlaceholderExtension} emptyNodeClass='empty' />
       </RemirrorManager>,

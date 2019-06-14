@@ -14,10 +14,10 @@ import {
   PositionParams,
   RemirrorActions,
   RemirrorContentType,
+  RenderEnvironment,
   StringHandlerParams,
   Transaction,
 } from '@remirror/core';
-import { RenderEnvironment } from '@remirror/react-ssr';
 import { Interpolation, ObjectInterpolation } from 'emotion';
 import { EditorView } from 'prosemirror-view';
 import { ComponentClass, ComponentType, FC, ReactElement } from 'react';
@@ -94,11 +94,31 @@ export interface InjectedRemirrorProps {
   actions: RemirrorActions;
 
   /**
-   * A unique id for the editor instance. Useful for styling with the format `.remirror-{NUM}`
+   * The unique id for the editor instance
    */
   uid: string;
+
+  /**
+   * Clears all editor content
+   *
+   * @param triggerOnChange - whether onChange handlers should be triggered by the update
+   */
   clearContent(triggerOnChange?: boolean): void;
+
+  /**
+   * Replace all editor content with the new content.
+   *
+   * @remarks
+   *
+   * Allows for the editor content to be overridden by force.
+   *
+   * @param triggerOnChange - whether onChange handlers should be triggered by the update
+   */
   setContent(content: RemirrorContentType, triggerOnChange?: boolean): void;
+
+  /**
+   * The function returns props when called to spread on an element and make it the editor root.
+   */
   getRootProps<GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,
   ): RefKeyRootProps<GRefKey>;
@@ -149,7 +169,7 @@ export interface BaseListenerParams extends EditorViewParams, RemirrorGetterPara
 
 export interface RemirrorEventListenerParams extends EditorStateParams, BaseListenerParams {}
 
-export interface RemirrorEditorStateListenerParams extends CompareStateParams, BaseListenerParams {
+export interface RemirrorStateListenerParams extends CompareStateParams, BaseListenerParams {
   /**
    * Allows for the creation of a new state object with the desired content
    */
@@ -214,7 +234,7 @@ export interface RemirrorProps extends StringHandlerParams {
    *
    * @default undefined
    */
-  onStateChange?(params: RemirrorEditorStateListenerParams): void;
+  onStateChange?(params: RemirrorStateListenerParams): void;
 
   /**
    * When onStateChange is defined this prop is used to set the next state value of the remirror editor.

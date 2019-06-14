@@ -11,7 +11,7 @@ import {
   MentionNodeAttrs,
   OnKeyDownParams,
 } from '@remirror/extension-mention';
-import { ManagedRemirrorEditor, RemirrorExtension, RemirrorManager } from '@remirror/react';
+import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
 import deepMerge from 'deepmerge';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
@@ -274,7 +274,6 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
 
   public render() {
     const { mention, emojiPickerActive } = this.state;
-    console.log('rendering twitter');
     return (
       <ThemeProvider theme={this.theme}>
         <RemirrorManager
@@ -309,7 +308,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
             set={this.props.emojiSet}
             emojiData={this.props.emojiData}
           />
-          <ManagedRemirrorEditor {...this.remirrorProps} insertPosition='start' customRootProp={true}>
+          <ManagedRemirrorProvider {...this.remirrorProps}>
             <TwitterEditor
               mention={mention}
               emojiPickerActive={emojiPickerActive}
@@ -323,7 +322,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
               tagMatches={this.tagMatches}
               onSelectEmoji={this.onSelectEmoji}
             />
-          </ManagedRemirrorEditor>
+          </ManagedRemirrorProvider>
         </RemirrorManager>
       </ThemeProvider>
     );

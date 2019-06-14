@@ -7,19 +7,23 @@ import {
   EditorView as EditorViewType,
   EMPTY_PARAGRAPH_NODE,
   ExtensionManager,
+  fromHTML,
+  getDocument,
   isFunction,
   NodeViewPortalContainer,
   ObjectNode,
   Position,
   RemirrorContentType,
+  shouldUseDOMEnvironment,
   toHTML,
   Transaction,
   uniqueId,
 } from '@remirror/core';
-import { createEditorView, getDoc, RemirrorSSR, shouldUseDOMEnvironment } from '@remirror/react-ssr';
+import { createEditorView, RemirrorSSR } from '@remirror/react-ssr';
 import {
   BaseListenerParams,
   CalculatePositionerParams,
+  childIsFunction,
   cloneElement,
   getElementProps,
   GetPositionerPropsConfig,
@@ -31,12 +35,11 @@ import {
   PositionerProps,
   PositionerRefFactoryParams,
   RefKeyRootProps,
-  RemirrorEditorStateListenerParams,
   RemirrorElementType,
   RemirrorEventListenerParams,
   RemirrorProps,
+  RemirrorStateListenerParams,
   RenderPropFunction,
-  uniqueClass,
   updateChildWithKey,
 } from '@remirror/react-utils';
 import { cx } from 'emotion';
@@ -80,24 +83,45 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   private positionerMap = new Map<string, PositionerMapValue>();
 
   /**
-   * The uid for this instance.
-   */
-  private uid = uniqueId({ size: 5 });
-  /**
-   * A unique class added to every instance of the remirror editor. This allows for non global styling.
+   * The prosemirror EditorView.
    */
   private view: EditorViewType;
-  private portalContainer: NodeViewPortalContainer = new NodeViewPortalContainer();
-  private doc = getDoc();
 
+  /**
+   * A unique ID for the editor which is also used as a key to pass into `getRootProps`
+   */
+  private uid = uniqueId({ size: 10 });
+
+  /**
+   * The portal container which keeps track of all the React Portals containing custom prosemirror NodeViews
+   */
+  private readonly portalContainer: NodeViewPortalContainer = new NodeViewPortalContainer();
+
+  /**
+   * The document to use when rendering
+   */
+  private get doc() {
+    return getDocument(this.props.forceEnvironment);
+  }
+
+  /**
+   * A utility for quickly retrieving the extension manager
+   */
   private get manager(): ExtensionManager {
     return this.props.manager;
   }
 
   constructor(props: RemirrorProps) {
     super(props);
+
+    // Ensure that children is a render prop
+    childIsFunction(props.children);
+
+    // Initialize the manager and create the initial state
     this.manager.init({ getEditorState: this.getEditorState, getPortalContainer: this.getPortalContainer });
     this.state = this.createInitialState();
+
+    // Create the ProsemirrorView and initialize our extension manager with it
     this.view = this.createView();
     this.manager.initView(this.view);
   }
@@ -311,7 +335,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label || '',
       ...managerAttrs,
-      class: cx(EDITOR_CLASS_NAME, uniqueClass(this.uid, 'remirror'), managerAttrs.class),
+      class: cx(EDITOR_CLASS_NAME, managerAttrs.class),
     };
 
     return { ...defaultAttributes, ...propAttributes };
@@ -391,15 +415,28 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     this.view.dom.addEventListener('focus', this.onFocus);
   }
 
-  public componentDidUpdate({ editable, manager }: RemirrorProps, { newState }: CompareStateParams) {
+  public componentDidUpdate(
+    { editable, manager: prevManager }: RemirrorProps,
+    { newState }: CompareStateParams,
+  ) {
+    // Ensure that children is still a render prop
+    childIsFunction(this.props.children);
+
+    // Check whether the editable prop has been updated
     if (this.props.editable !== editable && this.view && this.editorRef) {
       this.view.setProps({ ...this.view.props, editable: () => this.props.editable });
     }
 
-    if (!manager.isEqual(this.props.manager)) {
+    // Check if the manager has changed
+    if (!prevManager.isEqual(this.props.manager)) {
       this.updateExtensionManager();
       this.view.setProps({ ...this.view.props, nodeViews: this.manager.data.nodeViews });
-      this.setContent(toHTML({ node: this.state.newState.doc, schema: this.manager.data.schema }), true);
+
+      // The following converts the current content to HTML and then uses the new manager schema to
+      // convert it back into a ProsemirrorNode for compatibility with the new manager.
+      const htmlString = toHTML({ node: this.state.newState.doc, schema: prevManager.schema });
+      const newContent = fromHTML({ schema: this.manager.schema, content: htmlString, doc: this.doc });
+      this.setContent(newContent, true);
     }
 
     // Handle controlled component post update handler
@@ -476,7 +513,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   private editorStateEventListenerParams({
     newState,
     prevState,
-  }: Partial<CompareStateParams> = {}): RemirrorEditorStateListenerParams {
+  }: Partial<CompareStateParams> = {}): RemirrorStateListenerParams {
     return {
       ...this.baseListenerParams(newState),
       newState: newState || this.state.newState,
@@ -592,11 +629,9 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   public render() {
     const { children } = this.props;
 
-    if (!isFunction(children)) {
-      throw new Error('The child argument to the Remirror component must be a function.');
-    }
+    childIsFunction(children);
 
-    /* Reset the root props called status */
+    // Reset the root props called status
     this.rootPropsConfig.called = false;
 
     return (

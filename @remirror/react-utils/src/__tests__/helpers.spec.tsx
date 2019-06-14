@@ -1,10 +1,10 @@
 import React from 'react';
 import {
   getElementProps,
-  isManagedRemirrorEditor,
+  isManagedRemirrorProvider,
   isReactDOMElement,
-  isRemirrorEditorProvider,
   isRemirrorExtension,
+  isRemirrorProvider,
   uniqueClass,
   updateChildWithKey,
 } from '../helpers';
@@ -49,14 +49,14 @@ test('isRemirrorExtension', () => {
   expect(isRemirrorExtension(<Custom />)).toBeTrue();
 });
 
-test('isRemirrorEditorProvider', () => {
+test('isRemirrorProvider', () => {
   const Custom: RemirrorFC = () => <div />;
   Custom.$$remirrorType = RemirrorElementType.EditorProvider;
-  expect(isRemirrorEditorProvider(<Custom />)).toBeTrue();
+  expect(isRemirrorProvider(<Custom />)).toBeTrue();
 });
 
-test('isManagedRemirrorEditor', () => {
+test('isManagedRemirrorProvider', () => {
   const Custom: RemirrorFC = () => <div />;
   Custom.$$remirrorType = RemirrorElementType.ManagedEditorProvider;
-  expect(isManagedRemirrorEditor(<Custom />)).toBeTrue();
+  expect(isManagedRemirrorProvider(<Custom />)).toBeTrue();
 });

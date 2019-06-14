@@ -14,7 +14,7 @@ import {
 } from '@remirror/core';
 import { baseExtensions, HistoryExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
-import { RemirrorEditor, RemirrorEditorProps, RemirrorEditorStateListenerParams } from '@remirror/react';
+import { RemirrorProvider, RemirrorProviderProps, RemirrorStateListenerParams } from '@remirror/react';
 import React, { FC, useMemo, useState } from 'react';
 import { fromMarkdown, toMarkdown } from './markdown';
 
@@ -31,8 +31,8 @@ const useMarkdownManager = () => {
   );
 };
 
-const MarkdownEditor: FC<RemirrorEditorProps> = props => {
-  return <RemirrorEditor {...props} />;
+const MarkdownEditor: FC<RemirrorProviderProps> = props => {
+  return <RemirrorProvider {...props} />;
 };
 
 const useWysiwygManager = () => {
@@ -42,11 +42,11 @@ const useWysiwygManager = () => {
   );
 };
 
-const WysiwygEditor: FC<RemirrorEditorProps> = props => {
+const WysiwygEditor: FC<RemirrorProviderProps> = props => {
   return (
-    <RemirrorEditor {...props}>
+    <RemirrorProvider {...props}>
       <div />
-    </RemirrorEditor>
+    </RemirrorProvider>
   );
 };
 
@@ -119,13 +119,13 @@ export const Editor: FC<EditorProps> = ({ initialValue = '', editor }) => {
   const createMarkdownState = (content: string) =>
     wysiwygManager.createState({ content, stringHandler: markdownStringHandler });
 
-  const onMarkdownStateChange = ({ newState, getText }: RemirrorEditorStateListenerParams) => {
+  const onMarkdownStateChange = ({ newState, getText }: RemirrorStateListenerParams) => {
     setMarkdownEditorState(newState);
     setRawContent({ ...rawContent, markdown: getText() });
     setWysiwygEditorState(createWysiwygState(fromMarkdown(getText(), wysiwygManager.schema)));
   };
 
-  const onWysiwygStateChange = ({ newState }: RemirrorEditorStateListenerParams) => {
+  const onWysiwygStateChange = ({ newState }: RemirrorStateListenerParams) => {
     setWysiwygEditorState(newState);
     setRawContent({ ...rawContent, pmNode: newState.doc });
     setMarkdownEditorState(createMarkdownState(toMarkdown(newState.doc)));

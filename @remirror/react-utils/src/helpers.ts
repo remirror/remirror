@@ -1,5 +1,14 @@
 import { jsx } from '@emotion/core';
-import { bool, Cast, isArray, isObject, isString, PlainObject, uniqueArray } from '@remirror/core';
+import {
+  bool,
+  Cast,
+  isArray,
+  isFunction,
+  isObject,
+  isString,
+  PlainObject,
+  uniqueArray,
+} from '@remirror/core';
 import { Children, isValidElement, ReactNode } from 'react';
 import { RemirrorComponentType, RemirrorElement, RemirrorElementType } from './types';
 
@@ -107,19 +116,19 @@ const isRemirrorElementOfType = (type: RemirrorElementType) => <GOptions extends
 export const isRemirrorExtension = isRemirrorElementOfType(RemirrorElementType.Extension);
 
 /**
- * Finds if this is a RemirrorEditor (which provides the RemirrorInjectedProps into the context);
+ * Finds if this is a RemirrorProvider (which provides the RemirrorInjectedProps into the context);
  *
  * @param value - the value to check
  */
-export const isRemirrorEditorProvider = isRemirrorElementOfType(RemirrorElementType.EditorProvider);
+export const isRemirrorProvider = isRemirrorElementOfType(RemirrorElementType.EditorProvider);
 
 /**
- * Checks if this is a ManagedRemirrorEditor which pulls in the manager from the context and places it's children
- * inside the RemirrorEditor
+ * Checks if this is a ManagedRemirrorProvider which pulls in the manager from the context and places it's children
+ * inside the RemirrorProvider
  *
  * @param value - the value to check
  */
-export const isManagedRemirrorEditor = isRemirrorElementOfType(RemirrorElementType.ManagedEditorProvider);
+export const isManagedRemirrorProvider = isRemirrorElementOfType(RemirrorElementType.ManagedEditorProvider);
 
 /**
  * Clones an element while also enabling the css prop on jsx elements at the same time.
@@ -148,3 +157,12 @@ export const cloneElement = (element: any, props: any, ...rest: ReactNode[]) => 
     ...children,
   );
 };
+
+/**
+ * Will throw an error if the child provided is not a function.
+ */
+export function childIsFunction(children: unknown) {
+  if (!isFunction(children)) {
+    throw new Error('The child argument to the Remirror component must be a function.');
+  }
+}

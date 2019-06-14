@@ -4,7 +4,7 @@ import { omit } from '@remirror/core';
 import { injectedPropsShape, positionerShape } from '@test-fixtures/object-shapes';
 import { createTestManager } from '@test-fixtures/schema-helpers';
 import { render } from '@testing-library/react';
-import { RemirrorEditor } from '../components/providers';
+import { RemirrorProvider } from '../components/providers';
 import { withPositioner, withRemirror } from '../hocs';
 import { bubblePositioner } from '../positioners';
 
@@ -16,9 +16,9 @@ test('withRemirror', () => {
   });
 
   render(
-    <RemirrorEditor manager={createTestManager()}>
+    <RemirrorProvider manager={createTestManager()}>
       <Cmp />
-    </RemirrorEditor>,
+    </RemirrorProvider>,
   );
 
   expect(mock).toHaveBeenCalledWith(expect.objectContaining(injectedPropsShape));
@@ -34,9 +34,9 @@ test('withPositioner', () => {
   );
 
   render(
-    <RemirrorEditor manager={createTestManager()}>
+    <RemirrorProvider manager={createTestManager()}>
       <Menu />
-    </RemirrorEditor>,
+    </RemirrorProvider>,
   );
 
   expect(mock).toHaveBeenCalledWith(

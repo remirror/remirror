@@ -1,4 +1,4 @@
-import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
+import React, { FC, MouseEventHandler, useState } from 'react';
 
 import { memoize } from '@remirror/core';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from '@remirror/core-extensions';
@@ -8,10 +8,8 @@ import {
   RemirrorEventListener,
   RemirrorExtension,
   RemirrorManager,
-  RemirrorProps,
   useRemirror,
 } from '@remirror/react';
-import { RenderTree } from '@remirror/renderer-react';
 
 const SillyMenu: FC = () => {
   const { getPositionerProps, actions } = useRemirror();
@@ -72,7 +70,7 @@ const SillyMenu: FC = () => {
   );
 };
 
-const EditorLayout: FunctionComponent = () => {
+export default () => {
   const [json, setJson] = useState(JSON.stringify(initialJson, null, 2));
 
   const onChange: RemirrorEventListener = ({ getJSON }) => {
@@ -120,9 +118,6 @@ const EditorLayout: FunctionComponent = () => {
     </div>
   );
 };
-
-export const DocumentModelEditor: FunctionComponent<RemirrorProps> = () => <EditorLayout />;
-export const BasicRendererReact: FunctionComponent = () => <RenderTree json={initialJson} />;
 
 const initialJson = {
   type: 'doc',

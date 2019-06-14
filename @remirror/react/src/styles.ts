@@ -13,7 +13,7 @@ export const defaultStyles = (): ObjectInterpolation<any> => ({
     whiteSpace: 'pre-wrap',
     overflowWrap: 'break-word',
   },
-  [`.${EDITOR_CLASS_SELECTOR}:focus`]: {
+  [`${EDITOR_CLASS_SELECTOR}:focus`]: {
     outline: 'none',
   },
 });

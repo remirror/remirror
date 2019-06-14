@@ -1,3 +1,4 @@
+import minDocument from 'min-document';
 import {
   DOMParser,
   DOMSerializer,
@@ -29,12 +30,13 @@ import {
   ProsemirrorNode,
   RegexTuple,
   RemirrorContentType,
+  RenderEnvironment,
   ResolvedPos,
   SchemaParams,
   Selection,
   Transaction,
 } from '../types';
-import { bool, Cast, isFunction, isNumber, isObject, isString } from './base';
+import { bool, Cast, environment, isFunction, isNumber, isObject, isString } from './base';
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
@@ -594,8 +596,11 @@ export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: Edi
  *
  * @public
  */
-export const isObjectNode = (value: unknown): value is ObjectNode =>
-  isObject(value) && (value as PlainObject).type === 'doc' && Array.isArray((value as PlainObject).content);
+export function isObjectNode(value: unknown): value is ObjectNode {
+  return (
+    isObject(value) && (value as PlainObject).type === 'doc' && Array.isArray((value as PlainObject).content)
+  );
+}
 
 export interface CreateDocumentNodeParams
   extends SchemaParams,
@@ -622,12 +627,12 @@ export interface StringHandlerParams {
  *
  * @public
  */
-export const createDocumentNode = ({
+export function createDocumentNode({
   content,
   schema,
-  doc = document,
+  doc,
   stringHandler,
-}: CreateDocumentNodeParams): ProsemirrorNode => {
+}: CreateDocumentNodeParams): ProsemirrorNode {
   // if (isEditorState(content)) {
   //   return content.doc;
   // }
@@ -651,7 +656,25 @@ export const createDocumentNode = ({
   }
 
   return schema.nodeFromJSON(EMPTY_PARAGRAPH_NODE);
-};
+}
+
+/**
+ * Checks which environment should be used.
+ *
+ * @param forceEnvironment - force a specific environment
+ */
+export function shouldUseDOMEnvironment(forceEnvironment?: RenderEnvironment) {
+  return forceEnvironment === 'dom' || (environment.isBrowser && !forceEnvironment);
+}
+
+/**
+ * Retrieves the document based on the environment we are currently in.
+ *
+ * @param forceEnvironment - force a specific environment
+ */
+export function getDocument(forceEnvironment?: RenderEnvironment) {
+  return shouldUseDOMEnvironment(forceEnvironment) ? document : minDocument;
+}
 
 interface CustomDocParams {
   /** The custom document to use (allows for ssr rendering) */
@@ -672,12 +695,12 @@ interface FromNodeParams extends SchemaParams, ProsemirrorNodeParams, Partial<Cu
  *
  * @public
  */
-export const toHTML = ({ node, schema, doc = document }: FromNodeParams) => {
+export function toHTML({ node, schema, doc = getDocument() }: FromNodeParams) {
   const element = doc.createElement('div');
   element.appendChild(toDOM({ node, schema, doc }));
 
   return element.innerHTML;
-};
+}
 
 /**
  * Convert a node into its DOM representative
@@ -686,10 +709,10 @@ export const toHTML = ({ node, schema, doc = document }: FromNodeParams) => {
  *
  * @public
  */
-export const toDOM = ({ node, schema, doc }: FromNodeParams): DocumentFragment => {
+export function toDOM({ node, schema, doc }: FromNodeParams): DocumentFragment {
   const fragment = isDocNode(node, schema) ? node.content : Fragment.from(node);
   return DOMSerializer.fromSchema(schema).serializeFragment(fragment, { document: doc });
-};
+}
 
 interface FromStringParams extends Partial<CustomDocParams>, SchemaParams {
   /** The content  passed in an a string */
@@ -703,8 +726,8 @@ interface FromStringParams extends Partial<CustomDocParams>, SchemaParams {
  *
  * @public
  */
-export const fromHTML = ({ content, schema, doc = document }: FromStringParams): ProsemirrorNode => {
+export function fromHTML({ content, schema, doc = getDocument() }: FromStringParams): ProsemirrorNode {
   const element = doc.createElement('div');
   element.innerHTML = content.trim();
   return DOMParser.fromSchema(schema).parse(element);
-};
+}
