@@ -43,7 +43,7 @@ function parseRefractorNodes(
 /**
  * Creates a decoration set for the provided blocks
  */
-export function createDecorations(blocks: NodeWithPosition[]) {
+export const createDecorations = (blocks: NodeWithPosition[]) => {
   const decorations: Decoration[] = [];
 
   blocks.forEach(block => {
@@ -57,7 +57,7 @@ export function createDecorations(blocks: NodeWithPosition[]) {
   });
 
   return decorations;
-}
+};
 
 /**
  * Retrieves positioned refractor nodes from the positionedNode

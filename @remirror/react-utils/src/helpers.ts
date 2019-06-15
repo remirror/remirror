@@ -161,8 +161,8 @@ export const cloneElement = (element: any, props: any, ...rest: ReactNode[]) => 
 /**
  * Will throw an error if the child provided is not a function.
  */
-export function childIsFunction(children: unknown) {
+export const childIsFunction = (children: unknown) => {
   if (!isFunction(children)) {
     throw new Error('The child argument to the Remirror component must be a function.');
   }
-}
+};

@@ -7,13 +7,11 @@ const ignore = [
   '*.d.ts',
 ];
 
-const basePreset = [
-  '@babel/preset-typescript',
-  '@babel/preset-react',
-  '@emotion/babel-preset-css-prop',
-];
+// ? Using `'@emotion/babel-preset-css-prop'` causes jest tests to fail
+// ? see https://github.com/emotion-js/emotion/issues/1234#issuecomment-502348554
+const basePreset = ['@babel/preset-typescript', '@babel/preset-react'];
 
-const presets = [['@babel/preset-env'], ...basePreset];
+const presets = [['@babel/preset-env'], ...basePreset, '@emotion/babel-preset-css-prop'];
 
 const testBabelPresetEnv = ['@babel/preset-env', { targets: { node: '8' } }];
 const nonTestEnv = { ignore, presets };

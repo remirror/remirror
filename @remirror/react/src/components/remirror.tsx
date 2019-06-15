@@ -629,8 +629,6 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   public render() {
     const { children } = this.props;
 
-    childIsFunction(children);
-
     // Reset the root props called status
     this.rootPropsConfig.called = false;
 

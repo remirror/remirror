@@ -11,7 +11,7 @@ const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef(
   return <div {...props} ref={ref} />;
 });
 
-test('supports a custom root element', () => {
+test.only('supports a custom root element', () => {
   render(
     <Remirror manager={createTestManager()}>
       {({ getRootProps }) => {
@@ -56,6 +56,7 @@ describe('nestedRootProps', () => {
         }}
       </Remirror>,
     );
+    console.log(result);
   });
 
   it('should not duplicate nodes', () => {
