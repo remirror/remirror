@@ -1,4 +1,4 @@
-import { cx, Interpolation } from 'emotion';
+import { Interpolation } from 'emotion';
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
@@ -283,7 +283,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
         combinedAttributes = {
           ...combinedAttributes,
           ...attrs,
-          class: cx(combinedAttributes.class, attrs.class),
+          class: (combinedAttributes.class || '') + bool(attrs.class) ? attrs.class : '',
         };
       });
 

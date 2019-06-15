@@ -16,21 +16,40 @@ test('getElementProps', () => {
   expect(getElementProps(Element)).toEqual(expected);
 });
 
-test('updateChildWithKey', () => {
-  expect.assertions(2);
-  const original = <div key='test' />;
-  const expected = <div key='test' id='updated' />;
-  const element = <div>{original}</div>;
-  const fn = (child: JSX.Element) => {
-    expect(child).toEqual(original);
-    return expected;
-  };
+describe('updateChildWithKey', () => {
+  it('handles simple use cases', () => {
+    expect.assertions(2);
+    const original = <div key='test' />;
+    const expected = <div key='test' id='updated' />;
+    const element = <div>{original}</div>;
+    const fn = (child: JSX.Element) => {
+      expect(child).toEqual(original);
+      return expected;
+    };
 
-  expect(updateChildWithKey(element, 'test', fn)[0]).toMatchInlineSnapshot(`
-    <div
-      id="updated"
-    />
-  `);
+    expect(updateChildWithKey(element, 'test', fn)[0]).toMatchInlineSnapshot(`
+      <div
+        id="updated"
+      />
+    `);
+  });
+
+  it('handles nested use cases', () => {
+    expect.assertions(2);
+    const original = <div key='test' />;
+    const expected = <div key='test' id='updated' />;
+    const element = <div>{original}</div>;
+    const fn = (child: JSX.Element) => {
+      expect(child).toEqual(original);
+      return expected;
+    };
+
+    expect(updateChildWithKey(element, 'test', fn)[0]).toMatchInlineSnapshot(`
+      <div
+        id="updated"
+      />
+    `);
+  });
 });
 
 test('isReactDOMElement', () => {
