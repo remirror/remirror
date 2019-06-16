@@ -10,7 +10,6 @@ import { RemirrorManager } from '../remirror-manager';
 
 describe('ManagedRemirrorProvider', () => {
   const TestComponent: FC = () => {
-    console.log('loading HOC');
     const { getRootProps } = useRemirror();
     return (
       <div>

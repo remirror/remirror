@@ -27,7 +27,6 @@ test('RemirrorProvider', () => {
 test('ManagedRemirrorProvider', () => {
   // global.render = renderToStaticMarkup;
   const TestComponent = () => {
-    console.log('loaded HOC');
     const { getRootProps } = useRemirror();
     const rootProps = getRootProps();
     return (
@@ -44,6 +43,5 @@ test('ManagedRemirrorProvider', () => {
       </ManagedRemirrorProvider>
     </RemirrorManager>,
   );
-  console.log(reactString);
   expect(reactString).toInclude('basic');
 });
