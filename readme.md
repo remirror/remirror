@@ -124,7 +124,7 @@ const EditorLayout: FunctionComponent = () => {
       <RemirrorExtension Constructor={Italic} />
       <RemirrorExtension Constructor={Underline} />
       <ManagedRemirrorProvider
-        attributes={{ 'data-test-id': 'editor-instance' }}
+        attributes={{ 'data-testid': 'editor-instance' }}
         onChange={onChange}
         placeholder='Start typing for magic...'
         autoFocus={true}
@@ -176,7 +176,7 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({ particleEffect, placeho
         <RemirrorExtension Constructor={EpicMode} particleEffect={particleEffect} shake={shake} />
         <ManagedRemirrorProvider
           autoFocus={true}
-          attributes={{ 'data-test-id': 'editor-instance' }}
+          attributes={{ 'data-testid': 'editor-instance' }}
           placeholder={placeholder}
           editorStyles={editorStyles}
         />

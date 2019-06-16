@@ -40,7 +40,7 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({
         <RemirrorExtension Constructor={EpicModeExtension} particleEffect={particleEffect} shake={shake} />
         <ManagedRemirrorProvider
           autoFocus={true}
-          attributes={{ 'data-test-id': 'editor-instance' }}
+          attributes={{ 'data-testid': 'editor-instance' }}
           editorStyles={editorStyles}
         />
       </RemirrorManager>

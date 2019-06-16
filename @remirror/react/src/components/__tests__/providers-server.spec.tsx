@@ -42,6 +42,5 @@ test('ManagedRemirrorProvider', () => {
       </ManagedRemirrorProvider>
     </RemirrorManager>,
   );
-  console.log(reactString);
   expect(reactString).toInclude('basic');
 });

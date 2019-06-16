@@ -1,5 +1,9 @@
-import { render } from '@testing-library/react';
+/**
+ * @jest-environment node
+ */
+
 import React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import {
   cloneElement,
   getElementProps,
@@ -11,12 +15,6 @@ import {
   updateChildWithKey,
 } from '../helpers';
 import { RemirrorElementType, RemirrorFC } from '../types';
-
-test('getElementProps', () => {
-  const expected = { id: 'test' };
-  const Element = <div {...expected} />;
-  expect(getElementProps(Element)).toEqual(expected);
-});
 
 describe('updateChildWithKey', () => {
   it('handles simple use cases', () => {
@@ -54,34 +52,6 @@ describe('updateChildWithKey', () => {
   });
 });
 
-test('isReactDOMElement', () => {
-  const Custom = () => <div />;
-  expect(isReactDOMElement(<div />)).toBeTrue();
-  expect(isReactDOMElement(<Custom />)).toBeFalse();
-});
-
-test('uniqueClass', () => {
-  expect(uniqueClass('1', '2')).toBe('2-1');
-});
-
-test('isRemirrorExtension', () => {
-  const Custom: RemirrorFC = () => <div />;
-  Custom.$$remirrorType = RemirrorElementType.Extension;
-  expect(isRemirrorExtension(<Custom />)).toBeTrue();
-});
-
-test('isRemirrorProvider', () => {
-  const Custom: RemirrorFC = () => <div />;
-  Custom.$$remirrorType = RemirrorElementType.EditorProvider;
-  expect(isRemirrorProvider(<Custom />)).toBeTrue();
-});
-
-test('isManagedRemirrorProvider', () => {
-  const Custom: RemirrorFC = () => <div />;
-  Custom.$$remirrorType = RemirrorElementType.ManagedEditorProvider;
-  expect(isManagedRemirrorProvider(<Custom />)).toBeTrue();
-});
-
 describe('cloneElement', () => {
   it('clones flat components', () => {
     const el = (
@@ -91,9 +61,9 @@ describe('cloneElement', () => {
       </div>
     );
     const cloned = cloneElement(el, el.props);
-    const elRender = render(el);
-    const clonedRender = render(cloned);
-    expect(elRender.baseElement.innerHTML).toEqual(clonedRender.baseElement.innerHTML);
+    const elString = renderToStaticMarkup(el);
+    const clonedString = renderToStaticMarkup(cloned);
+    expect(elString).toEqual(clonedString);
   });
 
   it('clones nested components', () => {
@@ -108,9 +78,9 @@ describe('cloneElement', () => {
       </div>
     );
     const cloned = cloneElement(el, el.props);
-    const elRender = render(el);
-    const clonedRender = render(cloned);
-    expect(elRender.baseElement.innerHTML).toEqual(clonedRender.baseElement.innerHTML);
+    const elString = renderToStaticMarkup(el);
+    const clonedString = renderToStaticMarkup(cloned);
+    expect(elString).toEqual(clonedString);
   });
 
   it('can add children', () => {
@@ -118,11 +88,11 @@ describe('cloneElement', () => {
     const propChild = <p>simple</p>;
     const el = <div className='children'>{propChild}</div>;
     const cloned = cloneElement(el, el.props, child);
-    const childRender = render(child);
-    const propChildRender = render(propChild);
-    const clonedRender = render(cloned);
-    expect(clonedRender.baseElement).toContainHTML(propChildRender.baseElement.innerHTML);
-    expect(clonedRender.baseElement).toContainHTML(childRender.baseElement.innerHTML);
+    const childString = renderToStaticMarkup(child);
+    const propChildString = renderToStaticMarkup(propChild);
+    const clonedString = renderToStaticMarkup(cloned);
+    expect(clonedString).toInclude(propChildString);
+    expect(clonedString).toInclude(childString);
   });
 
   it('can add children as arrays', () => {
@@ -130,10 +100,10 @@ describe('cloneElement', () => {
     const propChild = <p>simple</p>;
     const el = <div className='children'>{propChild}</div>;
     const cloned = cloneElement(el, el.props, children);
-    const childrenRender = render(<>{children}</>);
-    const propChildRender = render(propChild);
-    const clonedRender = render(cloned);
-    expect(clonedRender.baseElement).toContainHTML(propChildRender.baseElement.innerHTML);
-    expect(clonedRender.baseElement).toContainHTML(childrenRender.baseElement.innerHTML);
+    const childrenString = renderToStaticMarkup(<>{children}</>);
+    const propChildString = renderToStaticMarkup(propChild);
+    const clonedString = renderToStaticMarkup(cloned);
+    expect(clonedString).toInclude(propChildString);
+    expect(clonedString).toInclude(childrenString);
   });
 });

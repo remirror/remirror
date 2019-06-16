@@ -64,11 +64,11 @@ test('appends to the react element by default with getRootProps', () => {
     <Remirror {...handlers} label={label} initialContent={docNodeSimpleJSON} manager={createTestManager()}>
       {({ getRootProps }) => (
         <div>
-          <div id={outerId}>
+          <div data-testid={outerId}>
             <p>Awesome</p>
           </div>
-          <div {...getRootProps()} id={wrapperId}>
-            <div id={innerId}>
+          <div {...getRootProps()} data-testid={wrapperId}>
+            <div data-testid={innerId}>
               <p>inside the editor</p>
             </div>
           </div>
@@ -98,12 +98,12 @@ test('prepends to the react element when insertPosition=start with getRootProps'
     >
       {({ getRootProps }) => (
         <div>
-          <div {...getRootProps()} id={wrapperId}>
-            <div id={innerId}>
+          <div {...getRootProps()} data-testid={wrapperId}>
+            <div data-testid={innerId}>
               <p>inside the editor</p>
             </div>
           </div>
-          <div id={outerId} />
+          <div data-testid={outerId} />
         </div>
       )}
     </Remirror>,

@@ -60,7 +60,7 @@ export const ExampleTwitterUI = () => {
   return (
     <TwitterUI
       emojiData={emojiData}
-      attributes={{ 'data-test-id': 'ui-twitter' }}
+      attributes={{ 'data-testid': 'ui-twitter' }}
       userData={userMatches}
       tagData={tagMatches}
       onMentionStateChange={onMentionStateChange}

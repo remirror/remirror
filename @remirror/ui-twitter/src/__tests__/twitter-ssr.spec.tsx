@@ -19,6 +19,5 @@ test('it renders within an ssr environment', () => {
       emojiData={{} as any}
     />,
   );
-  console.log(reactString);
   expect(reactString).toInclude('basic');
 });

@@ -200,6 +200,11 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   private getRootProps = <GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,
   ): RefKeyRootProps<GRefKey> => {
+    if (this.rootPropsConfig.called) {
+      throw new Error(
+        '`getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.',
+      );
+    }
     this.rootPropsConfig.called = true;
     return this.internalGetRootProps(options, false);
   };
@@ -449,6 +454,15 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     }
   }
 
+  /**
+   * Called when the component unmounts and is responsible for cleanup
+   *
+   * @remarks
+   *
+   * - Removes listeners for the editor blur and focus events
+   * - Destroys the state for each plugin
+   * - Destroys the prosemirror view
+   */
   public componentWillUnmount() {
     this.view.dom.removeEventListener('blur', this.onBlur);
     this.view.dom.removeEventListener('focus', this.onFocus);
@@ -462,15 +476,21 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     this.view.destroy();
   }
 
-  private onBlur = () => {
+  /**
+   * Listener for editor 'blur' events
+   */
+  private onBlur = (event: Event) => {
     if (this.props.onBlur) {
-      this.props.onBlur(this.eventListenerParams());
+      this.props.onBlur(this.eventListenerParams(), event);
     }
   };
 
-  private onFocus = () => {
+  /**
+   * Listener for editor 'focus' events
+   */
+  private onFocus = (event: Event) => {
     if (this.props.onFocus) {
-      this.props.onFocus(this.eventListenerParams());
+      this.props.onFocus(this.eventListenerParams(), event);
     }
   };
 
@@ -498,7 +518,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       view: this.view,
       getHTML: this.getHTML(state),
       getJSON: this.getJSON(state),
-      getDocJSON: this.getDocJSON(state),
+      getObjectNode: this.getObjectNode(state),
       getText: this.getText(state),
     };
   }
@@ -524,17 +544,20 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
 
   get renderParams(): InjectedRemirrorProps {
     return {
+      /* Properties */
+      uid: this.uid,
       manager: this.manager,
       view: this.view,
+      state: this.state,
       actions: this.manager.data.actions,
-      clearContent: this.clearContent,
-      setContent: this.setContent,
-      uid: this.uid,
 
-      /* Getters */
+      /* Getter Methods */
       getRootProps: this.getRootProps,
       getPositionerProps: this.getPositionerProps,
-      state: this.state,
+
+      /* Setter Methods */
+      clearContent: this.clearContent,
+      setContent: this.setContent,
     };
   }
 
@@ -564,7 +587,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   /**
    * Return the json object for the prosemirror document.
    */
-  private getDocJSON = (state?: EditorState) => (): ObjectNode => {
+  private getObjectNode = (state?: EditorState) => (): ObjectNode => {
     return (state || this.state.newState).doc.toJSON() as ObjectNode;
   };
 
@@ -596,14 +619,15 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     );
   }
 
-  private renderReactElement(renderFunction: RenderPropFunction) {
-    const element: JSX.Element | null = renderFunction({
+  private renderReactElement() {
+    const { children: renderProp, customRootProp } = this.props;
+    const element: JSX.Element | null = renderProp({
       ...this.renderParams,
     });
 
     const { children: child, ...props } = getElementProps(element);
 
-    if (!this.rootPropsConfig.called && !this.props.customRootProp) {
+    if (!this.rootPropsConfig.called && !customRootProp) {
       return isReactDOMElement(element)
         ? cloneElement(element, this.internalGetRootProps(props), ...this.injectSSRIntoElementChildren(child))
         : jsx('div', this.internalGetRootProps(), ...this.injectSSRIntoElementChildren(element));
@@ -614,8 +638,8 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       {},
       cloneElement(
         element,
-        {},
-        ...updateChildWithKey(element, this.uid, ch => {
+        props,
+        updateChildWithKey(element, this.uid, ch => {
           return cloneElement(
             ch,
             getElementProps(ch),
@@ -627,14 +651,12 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   }
 
   public render() {
-    const { children } = this.props;
-
     // Reset the root props called status
     this.rootPropsConfig.called = false;
 
     return (
       <>
-        {this.renderReactElement(children)}
+        {this.renderReactElement()}
         <NodeViewPortalComponent nodeViewPortalContainer={this.portalContainer} />
       </>
     );

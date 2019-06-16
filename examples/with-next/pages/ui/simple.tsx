@@ -92,7 +92,7 @@ export default () => {
           <RemirrorExtension Constructor={ItalicExtension} />
           <RemirrorExtension Constructor={UnderlineExtension} />
           <ManagedRemirrorProvider
-            attributes={{ 'data-test-id': 'editor-instance' }}
+            attributes={{ 'data-testid': 'editor-instance' }}
             onChange={onChange}
             autoFocus={true}
             initialContent={initialJson}

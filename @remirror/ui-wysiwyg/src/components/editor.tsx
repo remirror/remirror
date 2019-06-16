@@ -107,7 +107,7 @@ const InnerEditor: FC<BubbleMenuProps> = ({ linkActivated, deactivateLink, activ
     <EditorWrapper>
       <MenuBar activateLink={activateLink} />
       <BubbleMenu linkActivated={linkActivated} deactivateLink={deactivateLink} activateLink={activateLink} />
-      <InnerEditorWrapper {...getRootProps()} />
+      <InnerEditorWrapper {...getRootProps()} data-testid='remirror-wysiwyg-editor' />
     </EditorWrapper>
   );
 };

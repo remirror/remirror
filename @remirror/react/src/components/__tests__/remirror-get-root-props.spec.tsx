@@ -11,7 +11,7 @@ const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef(
   return <div {...props} ref={ref} />;
 });
 
-test.only('supports a custom root element', () => {
+test('supports a custom root element', () => {
   render(
     <Remirror manager={createTestManager()}>
       {({ getRootProps }) => {
@@ -39,6 +39,21 @@ test('supports a custom ref label and passed props through', () => {
   expect(mock.mock.calls[0][0].testProp).toBe(testProp);
 });
 
+test('throws an error when called multiple times during render', () => {
+  expect.assertions(2);
+  render(
+    <Remirror manager={createTestManager()}>
+      {({ getRootProps }) => {
+        expect(() => getRootProps()).not.toThrow();
+        expect(() => getRootProps()).toThrowErrorMatchingInlineSnapshot(
+          `"\`getRootProps\` has been called MULTIPLE times. It should only be called ONCE during render."`,
+        );
+        return <div />;
+      }}
+    </Remirror>,
+  );
+});
+
 describe('nestedRootProps', () => {
   let result: RenderResult;
 
@@ -56,7 +71,6 @@ describe('nestedRootProps', () => {
         }}
       </Remirror>,
     );
-    console.log(result);
   });
 
   it('should not duplicate nodes', () => {
