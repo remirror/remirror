@@ -48,7 +48,7 @@
     "lint:js": "eslint support *.js @remirror docs",
     "lint:prettier": "prettier --check \"**/*.{json,yml,yaml,md,mdx}\"",
     "lint:support": "tslint --project support/tsconfig.json --config support/tslint.json",
-    "lint:ts": "lerna run lint --parallel",
+    "lint:ts": "lerna run lint --parallel --no-bail",
     "next:ci": "cd examples/with-next && yarn dev:ci",
     "publish:alpha": "yarn if-clean run-s ci:checks:all lerna:publish:alpha",
     "publish:minor": "yarn if-clean run-s ci:checks:all lerna:publish:minor",

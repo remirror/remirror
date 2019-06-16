@@ -7,13 +7,14 @@
     "build": "next build",
     "dev": "next",
     "dev:ci": "next dev -p 3001",
-    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
     "start": "next start",
     "type-check": "tsc",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
     "@remirror/core": "0.1.0",
+    "@remirror/core-extensions": "0.1.0",
     "@remirror/react": "0.1.0",
     "@remirror/showcase": "0.1.0",
     "@remirror/ui-twitter": "0.1.0",
