@@ -51,7 +51,7 @@
     "@types/prosemirror-schema-list": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-transform": "^1.1.0",
-    "deepmerge": "^3.2.0",
+    "deepmerge": "^3.2.1",
     "emotion": "^10.0.7",
     "fast-deep-equal": "^2.0.1",
     "memoize-one": "5.0.4",

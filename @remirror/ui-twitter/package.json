@@ -39,7 +39,7 @@
     "@remirror/react": "0.1.0",
     "@remirror/react-utils": "0.1.0",
     "@types/emoji-mart": "^2.8.4",
-    "deepmerge": "^3.2.0",
+    "deepmerge": "^3.2.1",
     "emoji-mart": "2.11.1",
     "emotion-theming": "^10",
     "keycode": "^2.2.0"
