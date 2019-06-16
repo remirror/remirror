@@ -1,4 +1,3 @@
-import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
 import { styled } from '../theme';
 
 /* Styled Components */

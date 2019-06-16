@@ -44,7 +44,7 @@ describe('ManagedRemirrorProvider', () => {
   });
 
   it('supports getRootProps via HOC', () => {
-    const { getByRole, getByTestId, debug } = render(
+    const { getByRole, getByTestId } = render(
       <RemirrorManager>
         <ManagedRemirrorProvider initialContent={docNodeBasicJSON}>
           <TestComponentHOC />
@@ -54,7 +54,6 @@ describe('ManagedRemirrorProvider', () => {
     const target = getByTestId('target');
     const editor = getByRole('textbox');
     expect(target).toContainElement(editor);
-    debug();
     expect(editor).toHaveTextContent('basic');
   });
 });

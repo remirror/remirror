@@ -125,6 +125,10 @@ export const StyledPickerWrapper = styled.div`
     padding: 12px 4px;
     overflow: hidden;
     transition: color 0.1s ease-out;
+    margin: 0;
+    box-shadow: none;
+    background: none;
+    border: none;
   }
   .emoji-mart-anchor:hover,
   .emoji-mart-anchor-selected {
@@ -152,7 +156,7 @@ export const StyledPickerWrapper = styled.div`
 
   .emoji-mart-anchors svg,
   .emoji-mart-anchors img {
-    fill: currentColor;
+    fill: #858585;
     height: 18px;
     width: 18px;
   }
@@ -180,12 +184,22 @@ export const StyledPickerWrapper = styled.div`
     outline: 0;
   }
 
+  .emoji-mart-search input,
+  .emoji-mart-search input::-webkit-search-decoration,
+  .emoji-mart-search input::-webkit-search-cancel-button,
+  .emoji-mart-search input::-webkit-search-results-button,
+  .emoji-mart-search input::-webkit-search-results-decoration {
+    /* remove webkit/blink styles for <input type="search">
+   * via https://stackoverflow.com/a/9422689 */
+    -webkit-appearance: none;
+  }
+
   .emoji-mart-search-icon {
     position: absolute;
-    top: 9px;
-    right: 16px;
+    top: 7px;
+    right: 11px;
     z-index: 2;
-    padding: 0;
+    padding: 2px 5px 1px;
     border: none;
     background: none;
   }
@@ -226,14 +240,32 @@ export const StyledPickerWrapper = styled.div`
     background-color: rgba(255, 255, 255, 0.95);
   }
 
+  .emoji-mart-category-list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .emoji-mart-category-list li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+  }
+
   .emoji-mart-emoji {
     position: relative;
     display: inline-block;
     font-size: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
   }
 
   .emoji-mart-emoji-native {
-    font-family: 'Segoe UI Emoji', 'Segoe UI Symbol', 'Segoe UI', 'Apple Color Emoji';
+    font-family: 'Segoe UI Emoji', 'Segoe UI Symbol', 'Segoe UI', 'Apple Color Emoji', 'Twemoji Mozilla',
+      'Noto Color Emoji', 'EmojiOne Color', 'Android Emoji';
   }
 
   .emoji-mart-no-results {
@@ -475,5 +507,17 @@ export const StyledPickerWrapper = styled.div`
   }
   .emoji-mart-skin-tone-6 {
     background-color: #594539;
+  }
+
+  /* For screenreaders only, via https://stackoverflow.com/a/19758620 */
+  .emoji-mart-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
   }
 `;

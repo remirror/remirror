@@ -201,7 +201,6 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   private getRootProps = <GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,
   ): RefKeyRootProps<GRefKey> => {
-    console.log('CALLING GET_ROOT_PROPS');
     if (this.rootPropsConfig.called) {
       throw new Error(
         '`getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.',
@@ -640,12 +639,10 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
         props,
         this.renderChildren(
           updateChildWithKey(children, this.uid, child => {
-            console.log('The child has been found');
             return cloneElement(child, getElementProps(child), ...this.renderChildren(child.props.children));
           }),
         ),
       );
-      console.log('Has getRootProps been called yet..?', this.rootPropsConfig.called);
       return clonedElement;
     } else {
       return isReactDOMElement(element) ? (

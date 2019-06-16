@@ -5,7 +5,7 @@ import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
 import { TwitterUI } from '../';
 
 test('should place the editor within the correct element', () => {
-  const { baseElement, debug, getByTestId, getByRole } = render(
+  const { getByTestId, getByRole } = render(
     <TwitterUI
       userData={[]}
       tagData={[]}
@@ -18,5 +18,4 @@ test('should place the editor within the correct element', () => {
   const editor = getByRole('textbox');
   const wrapper = getByTestId('remirror-editor');
   expect(wrapper).toContainElement(editor);
-  // expect(reactString).toInclude('basic');
 });

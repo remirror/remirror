@@ -18,7 +18,6 @@ export type RemirrorProviderProps = MakeOptional<Omit<RemirrorProps, 'children'>
  * the element is actually rendered that the getRootProp in any nested components is called.
  */
 const RemirrorContextProvider: RemirrorFC<ProviderProps<InjectedRemirrorProps>> = props => {
-  console.log('WRAPPED REMIRROR_CONTEXT_PROVIDER');
   return <RemirrorContext.Provider {...props} />;
 };
 
@@ -39,7 +38,6 @@ export const RemirrorProvider: RemirrorFC<RemirrorProviderProps> = ({ children, 
   return (
     <Remirror {...props}>
       {value => {
-        console.log('Within <RemirrorProvider />');
         return <RemirrorContextProvider value={value}>{children}</RemirrorContextProvider>;
       }}
     </Remirror>
