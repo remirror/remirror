@@ -1,4 +1,4 @@
-import React, { ProviderProps } from 'react';
+import React, { Children, ProviderProps } from 'react';
 
 import { MakeOptional } from '@remirror/core';
 import { InjectedRemirrorProps, RemirrorElementType, RemirrorFC, RemirrorProps } from '@remirror/react-utils';
@@ -7,7 +7,20 @@ import { RemirrorContext } from '../contexts';
 import { useRemirrorManager } from '../hooks';
 import { Remirror } from './remirror';
 
-export type RemirrorProviderProps = MakeOptional<Omit<RemirrorProps, 'children'>, keyof typeof defaultProps>;
+export interface RemirrorContextProviderProps extends ProviderProps<InjectedRemirrorProps> {
+  /**
+   * Whether to set the first child as a the root prop (where the editor is rendered).
+   *
+   * If this is set to true then the outer element must be able to receive a ref prop which will mount
+   * the editor to it. If not set then the children are responsible for calling `getRootProps`.
+   *
+   * @default false
+   */
+  setChildAsRoot?: boolean;
+}
+
+export type RemirrorProviderProps = MakeOptional<Omit<RemirrorProps, 'children'>, keyof typeof defaultProps> &
+  Pick<RemirrorContextProviderProps, 'setChildAsRoot'>;
 
 /**
  * This purely exists so that we know when the remirror editor has been called with a provider as opposed
@@ -17,14 +30,24 @@ export type RemirrorProviderProps = MakeOptional<Omit<RemirrorProps, 'children'>
  * is called. However when called via a Provider the render prop renders the context component and it's not until
  * the element is actually rendered that the getRootProp in any nested components is called.
  */
-const RemirrorContextProvider: RemirrorFC<ProviderProps<InjectedRemirrorProps>> = props => {
+const RemirrorContextProvider: RemirrorFC<RemirrorContextProviderProps> = ({
+  setChildAsRoot: _,
+  ...props
+}) => {
   return <RemirrorContext.Provider {...props} />;
 };
 
 RemirrorContextProvider.$$remirrorType = RemirrorElementType.ContextProvider;
+RemirrorContextProvider.defaultProps = {
+  setChildAsRoot: false,
+};
 
 /**
- * The RemirrorProvider which injects context into any of it child components.
+ * The RemirrorProvider which injects context into it's child component.
+ *
+ * @remarks
+ * This only supports one child. At the moment if that that child is an built in html string element
+ * then it is also treated as the
  *
  * These can either be consumed using React Hooks
  * - `useRemirrorContext`
@@ -34,11 +57,19 @@ RemirrorContextProvider.$$remirrorType = RemirrorElementType.ContextProvider;
  * - `withRemirror`
  * - `withPositioner`
  */
-export const RemirrorProvider: RemirrorFC<RemirrorProviderProps> = ({ children, ...props }) => {
+export const RemirrorProvider: RemirrorFC<RemirrorProviderProps> = ({
+  children,
+  setChildAsRoot,
+  ...props
+}) => {
   return (
     <Remirror {...props}>
       {value => {
-        return <RemirrorContextProvider value={value}>{children}</RemirrorContextProvider>;
+        return (
+          <RemirrorContextProvider value={value} setChildAsRoot={setChildAsRoot}>
+            {Children.only(children)}
+          </RemirrorContextProvider>
+        );
       }}
     </Remirror>
   );

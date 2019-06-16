@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { createPortal } from 'react-dom';
 
 import { NodeViewPortalComponentProps, NodeViewPortalContainer, PortalList, PortalMap } from '@remirror/core';
@@ -11,10 +11,7 @@ export interface PortalRendererState {
   portals: PortalList;
 }
 
-export class NodeViewPortalComponent extends React.Component<
-  NodeViewPortalComponentProps,
-  PortalRendererState
-> {
+export class NodeViewPortalComponent extends Component<NodeViewPortalComponentProps, PortalRendererState> {
   public state = {
     portals: Array.from(this.props.nodeViewPortalContainer.portals.entries()),
   };

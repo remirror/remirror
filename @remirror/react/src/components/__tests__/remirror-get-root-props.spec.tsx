@@ -1,4 +1,4 @@
-import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
+import React, { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';
 
 import { createTestManager } from '@test-fixtures/schema-helpers';
 import { render, RenderResult } from '@testing-library/react';
@@ -23,7 +23,7 @@ test('supports a custom root element', () => {
 });
 
 test('supports a custom ref label and passed props through', () => {
-  function Cmp(props: { customRef: React.Ref<HTMLDivElement> }) {
+  function Cmp(props: { customRef: Ref<HTMLDivElement> }) {
     mock(props);
     return <div ref={props.customRef} />;
   }

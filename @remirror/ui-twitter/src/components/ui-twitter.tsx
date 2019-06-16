@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { createRef, PureComponent } from 'react';
 
 import { Attrs, omit } from '@remirror/core';
 import { CompositionExtension, NodeCursorExtension } from '@remirror/core-extensions';
@@ -266,7 +266,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     this.setState(prevState => ({ emojiPickerActive: !prevState.emojiPickerActive }));
   };
 
-  private toggleEmojiRef = React.createRef<HTMLElement>();
+  private toggleEmojiRef = createRef<HTMLElement>();
 
   private onBlurEmojiPicker = () => {
     this.setState({ emojiPickerActive: false });

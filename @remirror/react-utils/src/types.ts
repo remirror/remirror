@@ -20,7 +20,7 @@ import {
 } from '@remirror/core';
 import { Interpolation, ObjectInterpolation } from 'emotion';
 import { EditorView } from 'prosemirror-view';
-import { ComponentClass, ComponentType, FC, ReactElement } from 'react';
+import { ComponentClass, ComponentType, FC, ReactElement, ReactNode, Ref } from 'react';
 
 export interface Positioner {
   /**
@@ -69,11 +69,11 @@ export interface GetRootPropsConfig<GRefKey extends string = 'ref'> extends RefP
 }
 
 export type RefKeyRootProps<GRefKey extends string = 'ref'> = {
-  [P in Exclude<GRefKey, 'children' | 'key'>]: React.Ref<any>;
-} & { css: Interpolation; key: string } & PlainObject;
+  [P in Exclude<GRefKey, 'key'>]: Ref<any>;
+} & { css: Interpolation; key: string; children: ReactNode } & PlainObject;
 
 export type GetPositionerReturn<GRefKey extends string = 'ref'> = PositionerProps &
-  { [P in GRefKey]: React.Ref<any> };
+  { [P in GRefKey]: Ref<any> };
 
 /**
  * These are the props passed to the render function provided when setting up your editor.
@@ -118,6 +118,25 @@ export interface InjectedRemirrorProps {
 
   /**
    * The function returns props when called to spread on an element and make it the editor root.
+   *
+   * @remarks
+   *
+   * In order to support SSR this should only be spread on a component with NO children.
+   *
+   * **Example with nested components**
+   * ```tsx
+   * import { ManagedRemirrorProvider, RemirrorManager } from '@remirror/react';
+   *
+   * const Editor = () => {
+   *   return (
+   *     <RemirrorManager>
+   *       <ManagedRemirrorProvider>
+   *         <div {...getRootProps()} />
+   *       </ManagedRemirrorProvider>
+   *     </RemirrorManager>
+   *   );
+   * }
+   * ```
    */
   getRootProps<GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,

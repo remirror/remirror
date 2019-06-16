@@ -41,7 +41,6 @@ import {
   RemirrorEventListenerParams,
   RemirrorProps,
   RemirrorStateListenerParams,
-  updateChildWithKey,
 } from '@remirror/react-utils';
 import { cx } from 'emotion';
 import { EditorState } from 'prosemirror-state';
@@ -225,6 +224,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       key: this.uid,
       css: css(this.editorStyles),
       ...config,
+      children: this.renderChildren(null),
     } as RefKeyRootProps<GRefKey>;
   }
 
@@ -628,29 +628,39 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     });
 
     const { children, ...props } = getElementProps(element);
-
     // When called by a provider `getRootProps` can't actually be called until the jsx is generated.
     // So an initial check in this instance would be useless.
 
-    // Check if this is being rendered via the remirror context provider. In this case getRootProp must be called.
-    if (isRemirrorContextProvider(element) || this.rootPropsConfig.called) {
-      const clonedElement = cloneElement(
-        element,
-        props,
-        this.renderChildren(
-          updateChildWithKey(children, this.uid, child => {
-            return cloneElement(child, getElementProps(child), ...this.renderChildren(child.props.children));
-          }),
-        ),
-      );
-      return clonedElement;
+    if (this.rootPropsConfig.called) {
+      // Simply return the element as this is never actually called within SSR (for some reason)
+      return element;
+    } else if (
+      // Check if this is being rendered via the remirror context provider.
+      // In this case `getRootProps` must be called.
+      isRemirrorContextProvider(element)
+    ) {
+      return element.props.setChildAsRoot
+        ? cloneElement(element, props, this.renderClonedElement(children))
+        : element;
     } else {
       return isReactDOMElement(element) ? (
-        cloneElement(element, this.internalGetRootProps(props), ...this.renderChildren(children))
+        this.renderClonedElement(element)
       ) : (
         <div {...this.internalGetRootProps()}>{this.renderChildren(element)}</div>
       );
     }
+  }
+
+  /**
+   * Clones the passed element when `getRootProps` hasn't yet been called.
+   *
+   * @remarks
+   *
+   * This is used to render the children as SSR when necessary.
+   */
+  private renderClonedElement(element: JSX.Element) {
+    const { children, ...props } = getElementProps(element);
+    return cloneElement(element, this.internalGetRootProps(props), ...this.renderChildren(children));
   }
 
   public render() {

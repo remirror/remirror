@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, RefObject } from 'react';
 
 import { Attrs } from '@remirror/core';
 import { useRemirror } from '@remirror/react';
@@ -20,7 +20,7 @@ interface TwitterEditorProps extends Pick<TwitterUIProps, 'emojiData' | 'emojiSe
   onBlurEmojiPicker: () => void;
   onClickEmojiSmiley: () => void;
   emojiPickerActive: boolean;
-  toggleEmojiRef: React.RefObject<HTMLElement>;
+  toggleEmojiRef: RefObject<HTMLElement>;
   userMatches: ActiveTwitterUserData[];
   tagMatches: ActiveTwitterTagData[];
   onSelectEmoji(method: (attrs: Attrs) => void): EmojiPickerProps['onSelection'];

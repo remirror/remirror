@@ -13,15 +13,27 @@ import { RemirrorManager } from '../remirror-manager';
 
 test('RemirrorProvider', () => {
   const TestComponent = () => {
-    return <div data-testid='target' />;
+    const { getRootProps } = useRemirror();
+    const rootProps = getRootProps();
+    return (
+      <div data-testid='1'>
+        <div data-testid='2'>
+          <div data-testid='target' {...rootProps} />
+        </div>
+      </div>
+    );
   };
 
-  const reactString = renderToStaticMarkup(
+  const element = (
     <RemirrorProvider initialContent={docNodeBasicJSON} manager={createTestManager()}>
       <TestComponent />
-    </RemirrorProvider>,
+    </RemirrorProvider>
   );
+  const reactString = renderToStaticMarkup(element);
   expect(reactString).toInclude('basic');
+  expect(reactString).toMatchInlineSnapshot(
+    `"<div data-testid=\\"1\\"><div data-testid=\\"2\\"><div data-testid=\\"target\\" css=\\"[object Object]\\"><div role=\\"textbox\\" aria-multiline=\\"true\\" aria-label=\\"\\" class=\\"remirror-editor\\"><p>basic</p></div></div></div></div>"`,
+  );
 });
 
 test('ManagedRemirrorProvider', () => {

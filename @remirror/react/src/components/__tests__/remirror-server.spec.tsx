@@ -10,7 +10,6 @@ import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { docNodeSimpleJSON } from '@test-fixtures/object-nodes';
 import { createTestManager } from '@test-fixtures/schema-helpers';
 
-// const textContent = `This is editor text`;
 const label = 'Remirror editor';
 const handlers = {
   onChange: jest.fn(),
@@ -56,10 +55,10 @@ test.skip('can render with html content', () => {
 });
 
 const wrapperId = 'ROOT';
-const innerId = 'INNER123';
+const finalId = 'INNER123';
 const outerId = 'OUTER123';
 
-test.only('appends to the react element by default with getRootProps', () => {
+test('appends to the react element by default with getRootProps', () => {
   const reactString = renderToString(
     <Remirror {...handlers} label={label} initialContent={docNodeSimpleJSON} manager={createTestManager()}>
       {({ getRootProps }) => (
@@ -67,10 +66,9 @@ test.only('appends to the react element by default with getRootProps', () => {
           <div data-testid={outerId}>
             <p>Awesome</p>
           </div>
-          <div {...getRootProps()} data-testid={wrapperId}>
-            <div data-testid={innerId}>
-              <p>inside the editor</p>
-            </div>
+          <div {...getRootProps()} data-testid={wrapperId} />
+          <div data-testid={finalId}>
+            <p>inside the editor</p>
           </div>
         </div>
       )}
@@ -79,7 +77,7 @@ test.only('appends to the react element by default with getRootProps', () => {
   expect(reactString).toInclude('This is a node with');
   const indexOfOuter = reactString.indexOf(outerId);
   const indexOfWrapper = reactString.indexOf(wrapperId);
-  const indexOfInnerDiv = reactString.indexOf(innerId);
+  const indexOfInnerDiv = reactString.indexOf(finalId);
   const indexOfInjectedSSRComponent = reactString.indexOf(EDITOR_CLASS_NAME);
   expect(indexOfOuter).toBeLessThan(indexOfWrapper);
   expect(
@@ -98,10 +96,9 @@ test('prepends to the react element when insertPosition=start with getRootProps'
     >
       {({ getRootProps }) => (
         <div>
-          <div {...getRootProps()} data-testid={wrapperId}>
-            <div data-testid={innerId}>
-              <p>inside the editor</p>
-            </div>
+          <div {...getRootProps()} data-testid={wrapperId} />
+          <div data-testid={finalId}>
+            <p>inside the editor</p>
           </div>
           <div data-testid={outerId} />
         </div>
@@ -110,12 +107,17 @@ test('prepends to the react element when insertPosition=start with getRootProps'
   );
 
   const indexOfOuter = reactString.indexOf(outerId);
-  const indexOfInnerDiv = reactString.indexOf(innerId);
+  const indexOfInnerDiv = reactString.indexOf(finalId);
   const indexOfInjectedSSRComponent = reactString.indexOf(EDITOR_CLASS_NAME);
   expect(isAscending([indexOfInjectedSSRComponent, indexOfInnerDiv, indexOfOuter])).toBeTrue();
 });
 
-function isAscending(numbers: number[], strict = false) {
+/**
+ * Check that the numbers passed in are of ascending order.
+ *
+ * @param numbers - the array of numbers to test
+ */
+export const isAscending = (numbers: number[], strict = false) => {
   let current: number | null = null;
   for (const num of numbers) {
     if (current === null) {
@@ -128,4 +130,4 @@ function isAscending(numbers: number[], strict = false) {
   }
 
   return true;
-}
+};

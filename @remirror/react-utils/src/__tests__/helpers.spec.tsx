@@ -8,7 +8,6 @@ import {
   isRemirrorExtension,
   isRemirrorProvider,
   uniqueClass,
-  updateChildWithKey,
 } from '../helpers';
 import { RemirrorElementType, RemirrorFC } from '../types';
 
@@ -16,42 +15,6 @@ test('getElementProps', () => {
   const expected = { id: 'test' };
   const Element = <div {...expected} />;
   expect(getElementProps(Element)).toEqual(expected);
-});
-
-describe('updateChildWithKey', () => {
-  it('handles simple use cases', () => {
-    expect.assertions(2);
-    const original = <div key='test' />;
-    const expected = <div key='test' id='updated' />;
-    const element = <div>{original}</div>;
-    const fn = (child: JSX.Element) => {
-      expect(child).toEqual(original);
-      return expected;
-    };
-
-    expect(updateChildWithKey(element, 'test', fn)[0]).toMatchInlineSnapshot(`
-      <div
-        id="updated"
-      />
-    `);
-  });
-
-  it('handles nested use cases', () => {
-    expect.assertions(2);
-    const original = <div key='test' />;
-    const expected = <div key='test' id='updated' />;
-    const element = <div>{original}</div>;
-    const fn = (child: JSX.Element) => {
-      expect(child).toEqual(original);
-      return expected;
-    };
-
-    expect(updateChildWithKey(element, 'test', fn)[0]).toMatchInlineSnapshot(`
-      <div
-        id="updated"
-      />
-    `);
-  });
 });
 
 test('isReactDOMElement', () => {

@@ -1,12 +1,13 @@
+import React, { FunctionComponent } from 'react';
+
 import Head from 'next/head';
 import Link from 'next/link';
-import * as React from 'react';
 
 interface Props {
   title?: string;
 }
 
-const Layout: React.FunctionComponent<Props> = ({ children, title = 'This is the default title' }) => {
+const Layout: FunctionComponent<Props> = ({ children, title = 'This is the default title' }) => {
   return (
     <div>
       <Head>
