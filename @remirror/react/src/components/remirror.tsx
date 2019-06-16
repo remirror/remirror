@@ -1,6 +1,6 @@
-import React, { Component, Fragment, ReactNode, Ref } from 'react';
+import React, { Component, ReactNode, Ref } from 'react';
 
-import { css, Interpolation, jsx } from '@emotion/core';
+import { css, Interpolation } from '@emotion/core';
 import {
   CompareStateParams,
   EDITOR_CLASS_NAME,
@@ -9,6 +9,7 @@ import {
   ExtensionManager,
   fromHTML,
   getDocument,
+  isArray,
   isFunction,
   NodeViewPortalContainer,
   ObjectNode,
@@ -31,6 +32,7 @@ import {
   GetRootPropsConfig,
   InjectedRemirrorProps,
   isReactDOMElement,
+  isRemirrorContextProvider,
   PositionerMapValue,
   PositionerProps,
   PositionerRefFactoryParams,
@@ -39,7 +41,6 @@ import {
   RemirrorEventListenerParams,
   RemirrorProps,
   RemirrorStateListenerParams,
-  RenderPropFunction,
   updateChildWithKey,
 } from '@remirror/react-utils';
 import { cx } from 'emotion';
@@ -200,6 +201,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   private getRootProps = <GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,
   ): RefKeyRootProps<GRefKey> => {
+    console.log('CALLING GET_ROOT_PROPS');
     if (this.rootPropsConfig.called) {
       throw new Error(
         '`getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.',
@@ -601,16 +603,18 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   /**
    * Checks whether this is an SSR environment and returns a child array with the SSR component
    *
-   * @param child
+   * @param children
    */
-  private injectSSRIntoElementChildren(child: ReactNode) {
+  private renderChildren(child: ReactNode) {
     const { forceEnvironment, insertPosition } = this.props;
+    const children = isArray(child) ? child : [child];
 
     if (shouldUseDOMEnvironment(forceEnvironment)) {
-      return [child];
+      return children;
     }
+
     const ssrElement = this.renderSSR();
-    return insertPosition === 'start' ? [ssrElement, child] : [child, ssrElement];
+    return insertPosition === 'start' ? [ssrElement, ...children] : [...children, ssrElement];
   }
 
   private renderSSR() {
@@ -620,34 +624,36 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   }
 
   private renderReactElement() {
-    const { children: renderProp, customRootProp } = this.props;
-    const element: JSX.Element | null = renderProp({
+    const element: JSX.Element | null = this.props.children({
       ...this.renderParams,
     });
 
-    const { children: child, ...props } = getElementProps(element);
+    const { children, ...props } = getElementProps(element);
 
-    if (!this.rootPropsConfig.called && !customRootProp) {
-      return isReactDOMElement(element)
-        ? cloneElement(element, this.internalGetRootProps(props), ...this.injectSSRIntoElementChildren(child))
-        : jsx('div', this.internalGetRootProps(), ...this.injectSSRIntoElementChildren(element));
-    }
+    // When called by a provider `getRootProps` can't actually be called until the jsx is generated.
+    // So an initial check in this instance would be useless.
 
-    return jsx(
-      Fragment,
-      {},
-      cloneElement(
+    // Check if this is being rendered via the remirror context provider. In this case getRootProp must be called.
+    if (isRemirrorContextProvider(element) || this.rootPropsConfig.called) {
+      const clonedElement = cloneElement(
         element,
         props,
-        updateChildWithKey(element, this.uid, ch => {
-          return cloneElement(
-            ch,
-            getElementProps(ch),
-            ...this.injectSSRIntoElementChildren(ch.props.children),
-          );
-        }),
-      ),
-    );
+        this.renderChildren(
+          updateChildWithKey(children, this.uid, child => {
+            console.log('The child has been found');
+            return cloneElement(child, getElementProps(child), ...this.renderChildren(child.props.children));
+          }),
+        ),
+      );
+      console.log('Has getRootProps been called yet..?', this.rootPropsConfig.called);
+      return clonedElement;
+    } else {
+      return isReactDOMElement(element) ? (
+        cloneElement(element, this.internalGetRootProps(props), ...this.renderChildren(children))
+      ) : (
+        <div {...this.internalGetRootProps()}>{this.renderChildren(element)}</div>
+      );
+    }
   }
 
   public render() {

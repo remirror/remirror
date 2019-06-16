@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { renderToString } from 'react-dom/server';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
 import { createTestManager } from '@test-fixtures/schema-helpers';
@@ -16,7 +16,7 @@ test('RemirrorProvider', () => {
     return <div data-testid='target' />;
   };
 
-  const reactString = renderToString(
+  const reactString = renderToStaticMarkup(
     <RemirrorProvider initialContent={docNodeBasicJSON} manager={createTestManager()}>
       <TestComponent />
     </RemirrorProvider>,
@@ -25,22 +25,25 @@ test('RemirrorProvider', () => {
 });
 
 test('ManagedRemirrorProvider', () => {
+  // global.render = renderToStaticMarkup;
   const TestComponent = () => {
+    console.log('loaded HOC');
     const { getRootProps } = useRemirror();
-
+    const rootProps = getRootProps();
     return (
       <div>
-        <div data-testid='target' {...getRootProps()} />
+        <div data-testid='target' {...rootProps} />
       </div>
     );
   };
 
-  const reactString = renderToString(
+  const reactString = renderToStaticMarkup(
     <RemirrorManager>
       <ManagedRemirrorProvider initialContent={docNodeBasicJSON}>
         <TestComponent />
       </ManagedRemirrorProvider>
     </RemirrorManager>,
   );
+  console.log(reactString);
   expect(reactString).toInclude('basic');
 });

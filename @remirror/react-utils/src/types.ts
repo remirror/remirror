@@ -395,6 +395,10 @@ export enum RemirrorElementType {
   Editor = 'editor',
   Manager = 'manager',
   ManagerProvider = 'manager-provider',
+  /**
+   * Used to identify the ContextProviderWrapper
+   */
+  ContextProvider = 'context-provider',
 }
 
 export type RemirrorExtensionProps<

@@ -55,11 +55,11 @@ test.skip('can render with html content', () => {
   expect(reactString).toInclude('Hello');
 });
 
-const wrapperId = 'ABC123';
+const wrapperId = 'ROOT';
 const innerId = 'INNER123';
 const outerId = 'OUTER123';
 
-test('appends to the react element by default with getRootProps', () => {
+test.only('appends to the react element by default with getRootProps', () => {
   const reactString = renderToString(
     <Remirror {...handlers} label={label} initialContent={docNodeSimpleJSON} manager={createTestManager()}>
       {({ getRootProps }) => (

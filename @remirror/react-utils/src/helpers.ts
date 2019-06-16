@@ -108,6 +108,16 @@ const isRemirrorElementOfType = (type: RemirrorElementType) => <GOptions extends
 ): value is RemirrorElement<GOptions> => isRemirrorElement(value) && value.type.$$remirrorType === type;
 
 /**
+ * Checks to see if this is the wrapper we've created around the RemirrorContent.Provider component.
+ *
+ * This is used to help determine how the Remirror component will be rendered. `getRootProps` is the main reason
+ * for this, and I'm not even sure the effort is worth it.
+ *
+ * @param value - the value to check
+ */
+export const isRemirrorContextProvider = isRemirrorElementOfType(RemirrorElementType.ContextProvider);
+
+/**
  * Checks if this is a RemirrorExtension type. These are used to configure the extensions that determine
  * the underlying behaviour of the editor.
  *
