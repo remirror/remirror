@@ -292,7 +292,7 @@ export const environment = {
    * True when running in PRODUCTION environment
    */
   get isProduction() {
-    return (process.env.NODE_ENV = 'production');
+    return process.env.NODE_ENV === 'production';
   },
 };
 
