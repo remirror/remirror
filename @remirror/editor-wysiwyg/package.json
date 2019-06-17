@@ -1,17 +1,17 @@
 {
-  "name": "@remirror/ui-wysiwyg",
+  "name": "@remirror/editor-wysiwyg",
   "description": "ui for a what you see is what you get (wysiwyg) editing experience",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-wysiwyg",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/editor-wysiwyg",
   "repository": {
     "type": "git",
     "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/ui-wysiwyg"
+    "directory": "@remirror/editor-wysiwyg"
   },
   "version": "0.1.0",
   "main": "lib/index.js",
-  "module": "lib/dist/ui-wysiwyg.esm.js",
+  "module": "lib/dist/editor-wysiwyg.esm.js",
   "files": [
     "lib",
     "src"
@@ -56,6 +56,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/ui-wysiwyg.cjs.js",
+  "cjs": "lib/dist/editor-wysiwyg.cjs.js",
   "sideEffects": false
 }

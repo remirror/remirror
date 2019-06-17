@@ -17,7 +17,7 @@ const moduleResolver = [
       '@remirror/renderer-react': '../../@remirror/renderer-react/src',
       '@remirror/showcase': '../../@remirror/showcase/src',
       '@remirror/editor-twitter': '../../@remirror/editor-twitter/src',
-      '@remirror/ui-wysiwyg': '../../@remirror/ui-wysiwyg/src',
+      '@remirror/editor-wysiwyg': '../../@remirror/editor-wysiwyg/src',
       remirror: '../../packages/remirror/src',
     },
     cwd: resolve(__dirname),

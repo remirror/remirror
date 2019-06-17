@@ -189,12 +189,12 @@
       }
     }
   },
-  "@remirror/ui-wysiwyg/lib/dist/ui-wysiwyg.cjs.js": {
+  "@remirror/editor-wysiwyg/lib/dist/editor-wysiwyg.cjs.js": {
     "bundled": 17864,
     "minified": 12373,
     "gzipped": 3528
   },
-  "@remirror/ui-wysiwyg/lib/dist/ui-wysiwyg.esm.js": {
+  "@remirror/editor-wysiwyg/lib/dist/editor-wysiwyg.esm.js": {
     "bundled": 16791,
     "minified": 11366,
     "gzipped": 3490,
@@ -474,12 +474,12 @@
       }
     }
   },
-  "../@remirror/ui-wysiwyg/lib/index.js": {
+  "../@remirror/editor-wysiwyg/lib/index.js": {
     "bundled": 17903,
     "minified": 12367,
     "gzipped": 3519
   },
-  "../@remirror/ui-wysiwyg/lib/dist/ui-wysiwyg.esm.js": {
+  "../@remirror/editor-wysiwyg/lib/dist/editor-wysiwyg.esm.js": {
     "bundled": 17509,
     "minified": 11943,
     "gzipped": 3655,
@@ -553,7 +553,7 @@
     "minified": 26806,
     "gzipped": 6649
   },
-  "../@remirror/ui-wysiwyg/lib/dist/ui-wysiwyg.cjs.js": {
+  "../@remirror/editor-wysiwyg/lib/dist/editor-wysiwyg.cjs.js": {
     "bundled": 18575,
     "minified": 12909,
     "gzipped": 3666

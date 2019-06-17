@@ -37,7 +37,7 @@
 - React `>= 16.8`
 - Yarn `>= 1.13`
 
-[![Epic Mode Heart Example](/support/assets/wysiwyg.png)](https://docs.remirror.org/editors/ui-wysiwyg)
+[![Epic Mode Heart Example](/support/assets/wysiwyg.png)](https://docs.remirror.org/editors/editor-wysiwyg)
 
 ### Installation
 

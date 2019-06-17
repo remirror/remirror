@@ -12,7 +12,7 @@ import remirror from '../../packages/remirror/package.json';
 import rendererReact from '../../@remirror/renderer-react/package.json';
 import showcase from '../../@remirror/showcase/package.json';
 import editorTwitter from '../../@remirror/editor-twitter/package.json';
-import uiWysiwyg from '../../@remirror/ui-wysiwyg/package.json';
+import editorWysiwyg from '../../@remirror/editor-wysiwyg/package.json';
 
 const configurations = [
   ...factory(core, '@remirror'),
@@ -28,7 +28,7 @@ const configurations = [
   ...factory(rendererReact, '@remirror'),
   ...factory(showcase, '@remirror'),
   ...factory(editorTwitter, '@remirror'),
-  ...factory(uiWysiwyg, '@remirror'),
+  ...factory(editorWysiwyg, '@remirror'),
 ];
 
 export default configurations;
