@@ -1,14 +1,21 @@
 import React from 'react';
 
-import { initialJson, manager, plugins, schema } from '@test-fixtures/schema-helpers';
+import { createTestManager, initialJson } from '@test-fixtures/schema-helpers';
 import { render } from '@testing-library/react';
-import { EditorState } from 'prosemirror-state';
 
+import { ExtensionManager, NodeViewPortalContainer } from '@remirror/core';
 import { RemirrorSSR } from '..';
 
-const state = EditorState.create({ doc: schema.nodeFromJSON(initialJson), schema, plugins });
+let manager: ExtensionManager;
+
+beforeEach(() => {
+  manager = createTestManager();
+});
 
 test('should render the ssr component', () => {
+  manager.init({ getEditorState: () => state, getPortalContainer: () => new NodeViewPortalContainer() });
+  const state = manager.createState({ content: initialJson });
+
   const { container } = render(
     <RemirrorSSR
       attributes={{

@@ -35,6 +35,10 @@ export const extensions = [
   { extension: new UnderlineExtension(), priority: 3 },
   { extension: new BlockquoteExtension(), priority: 3 },
 ];
+
+/**
+ * @deprecated Causes issues when multiple tests use this. Prefer {@link createTestManager}
+ */
 export const manager = ExtensionManager.create(extensions).init(helpers);
 
 export const createBaseTestManager = (extra: PrioritizedExtension[] = []) =>

@@ -4,14 +4,22 @@
 
 import React from 'react';
 
-import { initialJson, manager } from '@test-fixtures/schema-helpers';
+import { createTestManager, initialJson } from '@test-fixtures/schema-helpers';
 import { renderToString } from 'react-dom/server';
 
+import { ExtensionManager, NodeViewPortalContainer } from '@remirror/core';
 import { RemirrorSSR } from '..';
 
-const state = manager.createState({ content: initialJson });
+let manager: ExtensionManager;
+
+beforeEach(() => {
+  manager = createTestManager();
+});
 
 test('should render the ssr component', () => {
+  manager.init({ getEditorState: () => state, getPortalContainer: () => new NodeViewPortalContainer() });
+  const state = manager.createState({ content: initialJson });
+
   const htmlString = renderToString(
     <RemirrorSSR
       attributes={{

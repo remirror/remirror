@@ -135,7 +135,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   /**
    * Retrieve the editor state. This is passed through to the extension manager.
    */
-  private getEditorState = () => this.state.newState;
+  private getEditorState = () => this.props.value || this.state.newState;
 
   /**
    * Retrieve the portal container which used for managing node views which contain react components via the portal api.
