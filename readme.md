@@ -29,7 +29,7 @@
 
 ## Getting Started
 
-⚠️**Warning**: This is still a work in progress library. The docs are being worked on and the API is still subject to breaking changes for minor releases. For now to learn and understand, the best way is via looking through the `@remirror/ui-*` libraries.
+⚠️**Warning**: This is still a work in progress library. The docs are being worked on and the API is still subject to breaking changes for minor releases. For now to learn and understand, the best way is via looking through the `@remirror/editor-*` libraries.
 
 ### Prerequisites
 
