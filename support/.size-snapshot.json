@@ -252,9 +252,9 @@
     "gzipped": 9615
   },
   "../@remirror/core/lib/dist/core.esm.js": {
-    "bundled": 93661,
-    "minified": 32318,
-    "gzipped": 9362,
+    "bundled": 94985,
+    "minified": 32846,
+    "gzipped": 9439,
     "treeshaked": {
       "rollup": {
         "code": 2282,
@@ -271,16 +271,16 @@
     "gzipped": 5358
   },
   "../@remirror/core-extensions/lib/dist/core-extensions.esm.js": {
-    "bundled": 51125,
-    "minified": 24741,
-    "gzipped": 5359,
+    "bundled": 51962,
+    "minified": 25115,
+    "gzipped": 5472,
     "treeshaked": {
       "rollup": {
-        "code": 4570,
-        "import_statements": 980
+        "code": 4600,
+        "import_statements": 1010
       },
       "webpack": {
-        "code": 8562
+        "code": 8628
       }
     }
   },
@@ -385,9 +385,9 @@
     "gzipped": 9443
   },
   "../@remirror/react-ssr/lib/dist/react-ssr.esm.js": {
-    "bundled": 52595,
-    "minified": 25438,
-    "gzipped": 9384,
+    "bundled": 52697,
+    "minified": 25464,
+    "gzipped": 9399,
     "treeshaked": {
       "rollup": {
         "code": 18331,
@@ -442,9 +442,9 @@
     "gzipped": 5478
   },
   "../@remirror/renderer-react/lib/dist/renderer-react.esm.js": {
-    "bundled": 23037,
-    "minified": 15451,
-    "gzipped": 5464,
+    "bundled": 23363,
+    "minified": 15626,
+    "gzipped": 5514,
     "treeshaked": {
       "rollup": {
         "code": 335,
@@ -494,14 +494,14 @@
     }
   },
   "../@remirror/core/lib/dist/core.cjs.js": {
-    "bundled": 96412,
-    "minified": 36239,
-    "gzipped": 9914
+    "bundled": 97736,
+    "minified": 36767,
+    "gzipped": 9996
   },
   "../@remirror/core-extensions/lib/dist/core-extensions.cjs.js": {
-    "bundled": 52972,
-    "minified": 26520,
-    "gzipped": 5474
+    "bundled": 53816,
+    "minified": 26901,
+    "gzipped": 5588
   },
   "../@remirror/extension-emoji/lib/dist/extension-emoji.cjs.js": {
     "bundled": 61420,
@@ -529,9 +529,9 @@
     "gzipped": 18002
   },
   "../@remirror/react-ssr/lib/dist/react-ssr.cjs.js": {
-    "bundled": 53014,
-    "minified": 25784,
-    "gzipped": 9484
+    "bundled": 53116,
+    "minified": 25810,
+    "gzipped": 9498
   },
   "../@remirror/react-utils/lib/dist/react-utils.cjs.js": {
     "bundled": 5660,
@@ -544,9 +544,9 @@
     "gzipped": 242
   },
   "../@remirror/renderer-react/lib/dist/renderer-react.cjs.js": {
-    "bundled": 23577,
-    "minified": 15905,
-    "gzipped": 5568
+    "bundled": 23913,
+    "minified": 16090,
+    "gzipped": 5619
   },
   "../@remirror/ui-twitter/lib/dist/ui-twitter.cjs.js": {
     "bundled": 37469,
