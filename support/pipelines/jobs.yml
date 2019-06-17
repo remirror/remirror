@@ -28,9 +28,9 @@ jobs:
       vmImage: ${{ parameters.vmImage }}
     steps:
       - template: yarn-install.yml
-      - bash: |
-          yarn build
-          yarn test:puppeteer
-          # TODO: Firefox tests are currently failing for several reasons so the result is ignored
-          yarn test:puppeteer:firefox || true
+      - bash: yarn build
+      - bash: yarn test:puppeteer
+
+      # TODO: Firefox tests are currently failing for several reasons so the result is ignored
+      - bash: yarn test:puppeteer:firefox || true
         displayName: 'Run integration tests'
