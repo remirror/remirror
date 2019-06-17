@@ -14,7 +14,9 @@ describe('SSR Twitter Showcase', () => {
   it('should pre render the editor', async () => {
     // This test checks that the ProsemirrorEditor exists and contains the expected html
     await expect(outerHtml(editorSelector)).resolves.toBeTruthy();
-    await expect(outerHtml(editorSelector)).resolves.toMatchInlineSnapshot();
+    await expect(outerHtml(editorSelector)).resolves.toMatchInlineSnapshot(
+      `"<div role=\\"textbox\\" aria-multiline=\\"true\\" aria-label=\\"\\" class=\\"remirror-editor\\" data-testid=\\"editor-twitter\\"><p class=\\"is-empty\\" data-placeholder=\\"What's happening?\\"></p></div>"`,
+    );
   });
 });
 
