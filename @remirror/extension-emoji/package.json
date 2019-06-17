@@ -55,11 +55,5 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-emoji.cjs.js",
-  "umdGlobals": {
-    "react": "React",
-    "react-dom": "ReactDOM",
-    "@remirror/core": "RemirrorCore",
-    "@remirror/react": "RemirrorReact",
-    "@remirror/core-extensions": "RemirrorCoreExtensions"
-  }
+  "sideEffects": false
 }

@@ -38,7 +38,5 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-enhanced-link.cjs.js",
-  "umdGlobals": {
-    "@remirror/core": "RemirrorCore"
-  }
+  "sideEffects": false
 }

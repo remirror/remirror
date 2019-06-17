@@ -47,7 +47,5 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-code-block.cjs.js",
-  "umdGlobals": {
-    "@remirror/core": "RemirrorCore"
-  }
+  "sideEffects": false
 }

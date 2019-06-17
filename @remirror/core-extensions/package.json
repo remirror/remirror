@@ -31,6 +31,7 @@
     "@babel/runtime": "^7.4.5",
     "@emotion/core": "^10",
     "@remirror/core": "0.1.0",
+    "@remirror/react-utils": "0.1.0",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-history": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
@@ -54,7 +55,5 @@
     "access": "public"
   },
   "cjs": "lib/dist/core-extensions.cjs.js",
-  "umdGlobals": {
-    "@remirror/core": "RemirrorCore"
-  }
+  "sideEffects": false
 }

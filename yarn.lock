@@ -13999,10 +13999,10 @@ nested-object-assign@^1.0.3:
   resolved "https://registry.yarnpkg.com/nested-object-assign/-/nested-object-assign-1.0.3.tgz#5aca69390d9affe5a612152b5f0843ae399ac597"
   integrity sha512-kgq1CuvLyUcbcIuTiCA93cQ2IJFSlRwXcN+hLcb2qLJwC2qrePHGZZa7IipyWqaWF6tQjdax2pQnVxdq19Zzwg==
 
-next-server@8.1.1-canary.47:
-  version "8.1.1-canary.47"
-  resolved "https://registry.yarnpkg.com/next-server/-/next-server-8.1.1-canary.47.tgz#7beb485445c0b6b6688c189c69da8b471dff6afa"
-  integrity sha512-kDKf5DanGu0jtyDY+bplFnULvtZyOlzSVSLKuShl77AXDbrp7vMiZReY07WNwmk+X3GeIvuLQjmN8DyWCVY8kQ==
+next-server@8.1.1-canary.52:
+  version "8.1.1-canary.52"
+  resolved "https://registry.yarnpkg.com/next-server/-/next-server-8.1.1-canary.52.tgz#852d27b218963ac55989c2d45d3880048b148c0c"
+  integrity sha512-yti6FDOPhVDbVaeB9bKpXLYQu/Ig3b3/ZfQBVNnwNCW7L43uFGFQ8eGoD4D4PqBPvPn02UlW1dUOENRy/Rhlbw==
   dependencies:
     amp-toolbox-optimizer "1.2.0-alpha.1"
     content-type "1.0.4"
@@ -14022,10 +14022,10 @@ next-tick@^1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-next@8.1.1-canary.47:
-  version "8.1.1-canary.47"
-  resolved "https://registry.yarnpkg.com/next/-/next-8.1.1-canary.47.tgz#09399bf3060b235e8226793562519fbe6ea0d2b9"
-  integrity sha512-egCCcyjJSzGBByewNTpCC0EneSvt8qhVXVImcIgz+3an3LEISNIEBpvGZoHPnMWedTt6ymVfy5QKERh0XEBjKg==
+next@8.1.1-canary.52:
+  version "8.1.1-canary.52"
+  resolved "https://registry.yarnpkg.com/next/-/next-8.1.1-canary.52.tgz#27597c7bc74b40c119b79d1c0a89a756693644b5"
+  integrity sha512-hO6PTkrtFcmMZDJ+Mu3w8zDQhcLTBVJZh/pHe8IumM5y/tRhv1WLYJi6mIvFZHxoirRLzMGqQ+ULqrYf58I/NA==
   dependencies:
     "@babel/core" "7.4.5"
     "@babel/plugin-proposal-class-properties" "7.4.4"
@@ -14053,7 +14053,7 @@ next@8.1.1-canary.47:
     launch-editor "2.2.1"
     loader-utils "1.2.3"
     mkdirp "0.5.1"
-    next-server "8.1.1-canary.47"
+    next-server "8.1.1-canary.52"
     prop-types "15.7.2"
     prop-types-exact "1.2.0"
     react-error-overlay "5.1.6"

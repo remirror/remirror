@@ -38,7 +38,5 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-epic-mode.cjs.js",
-  "umdGlobals": {
-    "@remirror/core": "RemirrorCore"
-  }
+  "sideEffects": false
 }

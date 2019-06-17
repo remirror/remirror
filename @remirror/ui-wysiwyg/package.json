@@ -57,9 +57,5 @@
     "access": "public"
   },
   "cjs": "lib/dist/ui-wysiwyg.cjs.js",
-  "umdGlobals": {
-    "react": "React",
-    "@remirror/core": "RemirrorCore",
-    "react-dom": "ReactDOM"
-  }
+  "sideEffects": false
 }

@@ -46,14 +46,5 @@
     "access": "public"
   },
   "cjs": "lib/dist/remirror.cjs.js",
-  "readme": "",
-  "umdGlobals": {
-    "react": "React",
-    "react-dom": "ReactDOM",
-    "@remirror/core": "RemirrorCore",
-    "@remirror/core-extensions": "RemirrorCoreExtensions",
-    "@remirror/renderer-react": "RemirrorRendererReact",
-    "@remirror/react": "RemirrorReact",
-    "@remirror/extension-mention": "RemirrorMentionsExtension"
-  }
+  "sideEffects": false
 }
