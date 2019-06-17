@@ -65,6 +65,7 @@ interface ApplyStateParams extends SharedParams {
   /** A state transaction */
   tr: Transaction;
 }
+
 /**
  * Apply state for managing the created placeholder plugin
  *

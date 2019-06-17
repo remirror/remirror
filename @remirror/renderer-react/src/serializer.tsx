@@ -1,4 +1,4 @@
-import { Fragment, ReactNode } from 'react';
+import React, { ComponentType, Fragment, ReactNode } from 'react';
 
 import { jsx as createElement } from '@emotion/core';
 import {
@@ -24,7 +24,11 @@ type MarkToDOM = MarkExtensionSpec['toDOM'];
  * Serialize the extension provided schema into a JSX element that can be displayed node and non-dom environments.
  */
 export class ReactSerializer {
-  constructor(public nodes: Record<string, NodeToDOM>, public marks: Record<string, MarkToDOM>) {}
+  constructor(
+    public nodes: Record<string, NodeToDOM>,
+    public marks: Record<string, MarkToDOM>,
+    public components: Record<string, ComponentType<any>>,
+  ) {}
 
   /**
    * The main entry method on this class for traversing through a schema tree and creating JSx.
@@ -59,17 +63,19 @@ export class ReactSerializer {
    * @param node
    */
   public serializeNode(node: ProsemirrorNode): ReactNode {
+    const Component = this.components[node.type.name];
     const toDOM = this.nodes[node.type.name];
-    if (!toDOM) {
-      return null;
-    }
 
     let children: ReactNode;
 
     if (node.content.childCount > 0) {
       children = this.serializeFragment(node.content);
     }
-    return ReactSerializer.renderSpec(toDOM(node), children);
+    return Component ? (
+      <Component {...node.attrs} children={children} />
+    ) : (
+      toDOM && ReactSerializer.renderSpec(toDOM(node), children)
+    );
   }
 
   /**
@@ -81,7 +87,13 @@ export class ReactSerializer {
    */
   public serializeMark(mark: Mark, inline: boolean, wrappedElement: ReactNode): ReactNode {
     const toDOM = this.marks[mark.type.name];
-    return toDOM && ReactSerializer.renderSpec(toDOM(mark, inline), wrappedElement);
+    const Component = this.components[mark.type.name];
+
+    return Component ? (
+      <Component {...mark.attrs} children={wrappedElement} />
+    ) : (
+      toDOM && ReactSerializer.renderSpec(toDOM(mark, inline), wrappedElement)
+    );
   }
 
   /**
@@ -140,6 +152,7 @@ export class ReactSerializer {
     return new ReactSerializer(
       this.nodesFromExtensionManager(manager),
       this.marksFromExtensionManager(manager),
+      manager.components,
     );
   }
 

@@ -1,4 +1,7 @@
-import { Extension, Plugin } from '@remirror/core';
+import { Extension, ExtensionManagerParams, isDocNodeEmpty, Plugin } from '@remirror/core';
+import { cloneElement, getElementProps } from '@remirror/react-utils';
+
+import { Children } from 'react';
 import { EMPTY_NODE_CLASS_NAME } from '../../constants';
 import { PlaceholderExtensionOptions, PlaceholderPluginState } from '../types';
 import { createPlaceholderPlugin } from './plugin';
@@ -41,5 +44,28 @@ export class PlaceholderExtension extends Extension<PlaceholderExtensionOptions>
    */
   public attributes() {
     return { 'aria-placeholder': this.options.placeholder };
+  }
+
+  /**
+   * Add a class and props to the root element if the document is empty.
+   */
+  public ssrTransformer(element: JSX.Element, { getEditorState }: ExtensionManagerParams) {
+    const state = getEditorState();
+    const { emptyNodeClass, placeholder } = this.options;
+    const { children } = getElementProps(element);
+    if (Children.count(children) > 1 || !isDocNodeEmpty(state.doc)) {
+      return element;
+    }
+
+    const props = getElementProps(children);
+    return cloneElement(
+      element,
+      {},
+      cloneElement(children, {
+        ...props,
+        className: props.className ? `${props.className} ${emptyNodeClass}` : emptyNodeClass,
+        'data-placeholder': placeholder,
+      }),
+    );
   }
 }

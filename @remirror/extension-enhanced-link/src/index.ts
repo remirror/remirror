@@ -1,1 +1,1 @@
-export * from './extension';
+export * from './enhanced-link.extension';

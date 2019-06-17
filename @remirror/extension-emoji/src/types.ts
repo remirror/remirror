@@ -19,7 +19,7 @@ export interface DefaultEmojiProps extends NodeViewComponentProps<EmojiAttrs> {
   emojiData: Data;
 }
 
-export interface EmojiExtensionOptions extends NodeExtensionOptions<ComponentType<EmojiAttrs>> {
+export interface EmojiExtensionOptions extends NodeExtensionOptions {
   transformAttrs?(attrs: Pick<EmojiAttrs, 'name'>): Attrs;
 
   className?: string;

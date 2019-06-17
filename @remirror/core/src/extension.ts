@@ -23,7 +23,7 @@ import {
 const defaultOptions: Required<BaseExtensionOptions> = {
   extraStyles: '',
   excludeInputRules: false,
-  excludeKeys: false,
+  excludeKeymaps: false,
   excludePasteRules: false,
   excludePlugin: false,
   excludeStyles: false,
@@ -212,8 +212,6 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * @internalremarks
    * TODO implement this functionality
-   *
-   * @alpha
    */
   readonly requiredExtensions?: RequiredExtension[];
 
@@ -225,19 +223,18 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
   active?(params: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction>;
 
   /**
-   * Determines whether this extension is enabled. If an object is returned then it can define different node types and
-   * the criteria for checks.
+   * Allows the extension to modify the default attributes for the actual editor.
    *
-   * @param params - extension manager parameters
-   */
-  enabled?(params: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction>;
-
-  /**
-   * Allows extensions to register styles on the editor instance using emotion for dynamic styling.
+   * @remarks
+   * Sometimes an extension will need to make a change to the attributes of the editor itself. For example
+   * a placeholder may need to do some work to make the editor more accessible by setting the `aria-placeholder`
+   * value to match the value of the placeholder.
    *
-   * @param params - extension manager parameters
+   * @param params - extension manger params
+   *
+   * @alpha
    */
-  styles?(params: ExtensionManagerParams): Interpolation;
+  attributes?(params: ExtensionManagerParams): AttrsWithClass;
 
   /**
    * Register commands for the extension.
@@ -270,13 +267,12 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
   commands?(params: SchemaTypeParams<GType>): FlexibleConfig<ExtensionCommandFunction>;
 
   /**
-   * Register paste rules for this extension.
+   * Determines whether this extension is enabled. If an object is returned then it can define different node types and
+   * the criteria for checks.
    *
-   * Paste rules are activated when text is pasted into the editor.
-   *
-   * @param params - schema params with type included
+   * @param params - extension manager parameters
    */
-  pasteRules?(params: SchemaTypeParams<GType>): ProsemirrorPlugin[];
+  enabled?(params: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction>;
 
   /**
    * Register input rules which are activated if the regex matches as a user is typing.
@@ -293,13 +289,6 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
   keys?(params: SchemaTypeParams<GType>): KeyboardBindings;
 
   /**
-   * Register a plugin for the extension.
-   *
-   * @param params - schema params with type included
-   */
-  plugin?(params: SchemaTypeParams<GType>): ProsemirrorPlugin;
-
-  /**
    * Registers a node view for the extension.
    *
    * This is a shorthand way of registering a nodeView without going using a prosemirror plugin.
@@ -312,18 +301,38 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
   nodeView?(params: SchemaTypeParams<GType>): NodeViewMethod;
 
   /**
-   * Allows the extension to modify the default attributes for the actual editor.
+   * Register paste rules for this extension.
    *
-   * @remarks
-   * Sometimes an extension will need to make a change to the attributes of the editor itself. For example
-   * a placeholder may need to do some work to make the editor more accessible by setting the `aria-placeholder`
-   * value to match the value of the placeholder.
+   * Paste rules are activated when text is pasted into the editor.
    *
-   * @param params - extension manger params
-   *
-   * @alpha
+   * @param params - schema params with type included
    */
-  attributes?(params: ExtensionManagerParams): AttrsWithClass;
+  pasteRules?(params: SchemaTypeParams<GType>): ProsemirrorPlugin[];
+
+  /**
+   * Register a plugin for the extension.
+   *
+   * @param params - schema params with type included
+   */
+  plugin?(params: SchemaTypeParams<GType>): ProsemirrorPlugin;
+
+  /**
+   * A method for transforming the SSR JSX received by the extension. Some extensions add decorations
+   * to the ProsemirrorView based on their state. These decorations can touch any node or mark and it
+   * would be very difficult to model this without being able to take the completed JSX render and
+   * transforming it some way.
+   *
+   * An example use case is for placeholders which need to render a `data-placeholder` and `class` attribute so that
+   * the placeholder is shown by the styles. This method can be called to check if there is only one child of the parent
+   */
+  ssrTransformer?(element: JSX.Element, params: ExtensionManagerParams): JSX.Element;
+
+  /**
+   * Allows extensions to register styles on the editor instance using emotion for dynamic styling.
+   *
+   * @param params - extension manager parameters
+   */
+  styles?(params: ExtensionManagerParams): Interpolation;
 }
 
 /**

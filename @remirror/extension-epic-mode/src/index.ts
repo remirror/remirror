@@ -1,3 +1,3 @@
 export { COLORS, defaultEffect, heartEffect, spawningEffect } from './effects';
-export { EpicModeExtension } from './extension';
+export { EpicModeExtension } from './epic-mode.extension';
 export * from './types';

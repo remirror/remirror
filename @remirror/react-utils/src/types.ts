@@ -1,8 +1,9 @@
+import { Interpolation, ObjectInterpolation } from '@emotion/core';
 import {
   CompareStateParams,
-  EditorSchema,
   EditorState,
   EditorStateParams,
+  EditorView,
   EditorViewParams,
   ElementParams,
   Extension,
@@ -18,8 +19,6 @@ import {
   StringHandlerParams,
   Transaction,
 } from '@remirror/core';
-import { Interpolation, ObjectInterpolation } from 'emotion';
-import { EditorView } from 'prosemirror-view';
 import { ComponentClass, ComponentType, FC, ReactElement, ReactNode, Ref } from 'react';
 
 export interface Positioner {
@@ -86,7 +85,7 @@ export interface InjectedRemirrorProps {
   /**
    * The prosemirror view
    */
-  view: EditorView<EditorSchema>;
+  view: EditorView;
 
   /**
    * A map of actions available the

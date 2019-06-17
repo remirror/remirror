@@ -13,9 +13,7 @@ export interface RemirrorSSRProps {
  */
 export const RemirrorSSR: FC<RemirrorSSRProps> = ({ attributes, manager, state }) => {
   const outerProps = mapProps(attributes);
-  return (
-    <div {...outerProps}>
-      {ReactSerializer.fromExtensionManager(manager).serializeFragment(state.doc.content)}
-    </div>
-  );
+  const ssrElement = ReactSerializer.fromExtensionManager(manager).serializeFragment(state.doc.content);
+  const transformedElement = manager.ssrTransformer(ssrElement);
+  return <div {...outerProps}>{transformedElement}</div>;
 };

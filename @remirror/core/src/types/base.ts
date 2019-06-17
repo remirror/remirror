@@ -1,6 +1,7 @@
 import { Interpolation } from '@emotion/core';
 import { MarkType as PMMarkType, Node as PMNode, NodeType as PMNodeType, Schema } from 'prosemirror-model';
 import { EditorState as PMEditorState, Plugin as PMPlugin } from 'prosemirror-state';
+import { Component } from 'react';
 
 /* Alias types for better readability throughout the codebase. */
 
@@ -184,11 +185,11 @@ export interface BaseExtensionOptions {
   excludeInputRules?: boolean;
 
   /**
-   * Whether to exclude the extension's keys
+   * Whether to exclude the extension's keymaps
    *
    * @default false
    */
-  excludeKeys?: boolean;
+  excludeKeymaps?: boolean;
 
   /**
    * Whether to exclude the extension's plugin
@@ -219,12 +220,17 @@ export interface BaseExtensionOptions {
   disableSSR?: boolean;
 }
 
-export interface NodeExtensionOptions<GComponent = any> extends BaseExtensionOptions {
-  SSRComponent?: GComponent;
+export interface SSRComponentParams {
+  /**
+   * The component to render in SSR. The attrs are passed as props.
+   *
+   * Each node/mark extension can define it's own particular default component
+   */
+  SSRComponent?: Component<Attrs>;
 }
-export interface MarkExtensionOptions<GComponent = any> extends BaseExtensionOptions {
-  SSRComponent?: GComponent;
-}
+
+export interface NodeExtensionOptions extends BaseExtensionOptions, SSRComponentParams {}
+export interface MarkExtensionOptions extends BaseExtensionOptions, SSRComponentParams {}
 
 /**
  * The render environment which is either on the server (ssr) or in the dom.
