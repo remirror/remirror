@@ -194,7 +194,7 @@ export const EpicModeHeart: FunctionComponent = () => (
 
 ### Twitter
 
-![Twitter UI Example](/support/assets/ui-twitter-example.gif)
+![Twitter UI Example](/support/assets/editor-twitter-example.gif)
 
 <br />
 

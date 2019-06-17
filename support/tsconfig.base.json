@@ -35,7 +35,7 @@
       "@remirror/renderer-react": ["@remirror/renderer-react/src/index.ts"],
       "@remirror/showcase": ["@remirror/showcase/src/index.ts"],
       "@remirror/showcase/lib/*": ["@remirror/showcase/src/*"],
-      "@remirror/ui-twitter": ["@remirror/ui-twitter/src"],
+      "@remirror/editor-twitter": ["@remirror/editor-twitter/src"],
       "@remirror/ui-wysiwyg": ["@remirror/ui-wysiwyg/src"],
       "jest-remirror": ["packages/jest-remirror/src"],
       "jest-prosemirror": ["packages/jest-prosemirror/src"],

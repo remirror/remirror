@@ -1,17 +1,17 @@
 {
-  "name": "@remirror/ui-twitter",
+  "name": "@remirror/editor-twitter",
   "description": "ui for a twitter-like editing experience",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-twitter",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/editor-twitter",
   "repository": {
     "type": "git",
     "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/ui-twitter"
+    "directory": "@remirror/editor-twitter"
   },
   "version": "0.1.0",
   "main": "lib/index.js",
-  "module": "lib/dist/ui-twitter.esm.js",
+  "module": "lib/dist/editor-twitter.esm.js",
   "files": [
     "lib",
     "src"
@@ -53,6 +53,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/ui-twitter.cjs.js",
+  "cjs": "lib/dist/editor-twitter.cjs.js",
   "sideEffects": false
 }

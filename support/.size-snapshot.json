@@ -170,12 +170,12 @@
       }
     }
   },
-  "@remirror/ui-twitter/lib/dist/ui-twitter.cjs.js": {
+  "@remirror/editor-twitter/lib/dist/editor-twitter.cjs.js": {
     "bundled": 34948,
     "minified": 24590,
     "gzipped": 6281
   },
-  "@remirror/ui-twitter/lib/dist/ui-twitter.esm.js": {
+  "@remirror/editor-twitter/lib/dist/editor-twitter.esm.js": {
     "bundled": 34166,
     "minified": 23897,
     "gzipped": 6160,
@@ -455,12 +455,12 @@
       }
     }
   },
-  "../@remirror/ui-twitter/lib/index.js": {
+  "../@remirror/editor-twitter/lib/index.js": {
     "bundled": 34722,
     "minified": 24412,
     "gzipped": 6246
   },
-  "../@remirror/ui-twitter/lib/dist/ui-twitter.esm.js": {
+  "../@remirror/editor-twitter/lib/dist/editor-twitter.esm.js": {
     "bundled": 36612,
     "minified": 26061,
     "gzipped": 6527,
@@ -548,7 +548,7 @@
     "minified": 16090,
     "gzipped": 5619
   },
-  "../@remirror/ui-twitter/lib/dist/ui-twitter.cjs.js": {
+  "../@remirror/editor-twitter/lib/dist/editor-twitter.cjs.js": {
     "bundled": 37469,
     "minified": 26806,
     "gzipped": 6649

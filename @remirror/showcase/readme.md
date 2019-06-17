@@ -23,7 +23,7 @@ yarn add @remirror/showcase
 The recommendation is to import from the direct files.
 
 ```tsx
-import { UITwitterDemo, UITwitterDemoProps } from '@remirror/showcase/lib/ui-twitter';
+import { UITwitterDemo, UITwitterDemoProps } from '@remirror/showcase/lib/editor-twitter';
 
 const MyEditor = () => <UITwitterDemo />;
 ```

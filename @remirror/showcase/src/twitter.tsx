@@ -6,7 +6,7 @@ import {
   OnQueryChangeParams,
   TwitterUI,
   TwitterUserData,
-} from '@remirror/ui-twitter';
+} from '@remirror/editor-twitter';
 import emojiData from 'emoji-mart/data/all.json';
 
 import { startCase, take } from '@remirror/core';
@@ -60,7 +60,7 @@ export const ExampleTwitterUI = () => {
   return (
     <TwitterUI
       emojiData={emojiData}
-      attributes={{ 'data-testid': 'ui-twitter' }}
+      attributes={{ 'data-testid': 'editor-twitter' }}
       userData={userMatches}
       tagData={tagMatches}
       onMentionStateChange={onMentionStateChange}

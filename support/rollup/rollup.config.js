@@ -11,7 +11,7 @@ import reactUtils from '../../@remirror/react-utils/package.json';
 import remirror from '../../packages/remirror/package.json';
 import rendererReact from '../../@remirror/renderer-react/package.json';
 import showcase from '../../@remirror/showcase/package.json';
-import uiTwitter from '../../@remirror/ui-twitter/package.json';
+import editorTwitter from '../../@remirror/editor-twitter/package.json';
 import uiWysiwyg from '../../@remirror/ui-wysiwyg/package.json';
 
 const configurations = [
@@ -27,7 +27,7 @@ const configurations = [
   ...factory(remirror, 'packages'),
   ...factory(rendererReact, '@remirror'),
   ...factory(showcase, '@remirror'),
-  ...factory(uiTwitter, '@remirror'),
+  ...factory(editorTwitter, '@remirror'),
   ...factory(uiWysiwyg, '@remirror'),
 ];
 
