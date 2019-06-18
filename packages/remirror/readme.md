@@ -41,7 +41,7 @@ import {
   Italic,
   Underline,
   bubblePositioner,
-  ManagedRemirrorEditor,
+  ManagedRemirrorProvider,
   RemirrorEventListener,
   RemirrorExtension,
   RemirrorManager,
@@ -110,15 +110,15 @@ const EditorLayout: FunctionComponent = () => {
       <RemirrorExtension Constructor={Bold} />
       <RemirrorExtension Constructor={Italic} />
       <RemirrorExtension Constructor={Underline} />
-      <ManagedRemirrorEditor
-        attributes={{ 'data-test-id': 'editor-instance' }}
+      <ManagedRemirrorProvider
+        attributes={{ 'data-testid': 'editor-instance' }}
         onChange={onChange}
         placeholder='Start typing for magic...'
         autoFocus={true}
         initialContent={EMPTY_OBJECT_NODE}
       >
         <SimpleFloatingMenu />
-      </ManagedRemirrorEditor>
+      </ManagedRemirrorProvider>
     </RemirrorManager>
   );
 };

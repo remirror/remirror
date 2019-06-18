@@ -79,7 +79,7 @@ interface FindMentionPositionParams extends Pick<SuggestionsMatcher, 'name' | 'c
  *
  * @param params
  */
-export function findPosition({ text, regexp, $pos, char, name }: FindMentionPositionParams) {
+export const findPosition = ({ text, regexp, $pos, char, name }: FindMentionPositionParams) => {
   let position: SuggestionStateField | undefined;
 
   findMatches(text, regexp).forEach(match => {
@@ -108,7 +108,7 @@ export function findPosition({ text, regexp, $pos, char, name }: FindMentionPosi
     }
   });
   return position;
-}
+};
 
 /**
  * Creates an array of the actions taken based on the current prev and next state field

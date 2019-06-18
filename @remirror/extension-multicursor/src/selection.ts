@@ -1,6 +1,7 @@
 import { EditorSchema, isSelection } from '@remirror/core';
 import { TextSelection } from 'prosemirror-state';
 
+// TODO implement
 export class MulticursorSelection extends TextSelection<EditorSchema> {
   // private selections: TextSelection[] = [];
 }

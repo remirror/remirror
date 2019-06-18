@@ -1,0 +1,22 @@
+import DefaultStyled, { CreateStyled } from '@emotion/styled';
+import { Cast } from '@remirror/core';
+
+export const styled = Cast<CreateStyled<TwitterEditorTheme>>(DefaultStyled);
+export type TwitterEditorTheme = typeof uiTwitterTheme;
+
+export const uiTwitterTheme = {
+  colors: {
+    primary: '#1DA1F2',
+    warn: '#FFAD1F',
+    error: '#E0245E',
+    border: '#99CFEB',
+    plain: '#657786',
+    primaryBackground: '#E8F5FD',
+    icon: '#aab8c2',
+  },
+  font: {
+    family: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+    size: '1em',
+    weight: '400',
+  },
+};

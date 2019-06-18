@@ -7,7 +7,7 @@
   "scripts": {
     "build": "docz build",
     "dev": "docz dev",
-    "lint": "tslint --project tsconfig.json --config ../tslint.json",
+    "lint": "tslint --project tsconfig.lint.json --config ../tslint.json",
     "test": "jest",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
@@ -26,7 +26,7 @@
     "@types/match-sorter": "2.3.0",
     "copy-text-to-clipboard": "^2.1.0",
     "emoji-mart": "2.11.1",
-    "match-sorter": "3.1.0",
+    "match-sorter": "3.1.1",
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",

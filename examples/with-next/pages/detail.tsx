@@ -1,5 +1,5 @@
 import { NextPageContext } from 'next';
-import * as React from 'react';
+import React, { Component } from 'react';
 import Layout from '../components/layout';
 import ListDetail from '../components/list-detail';
 import { User } from '../interfaces';
@@ -10,7 +10,7 @@ interface Props {
   errors?: string;
 }
 
-class InitialPropsDetail extends React.Component<Props> {
+class InitialPropsDetail extends Component<Props> {
   public static getInitialProps = async ({ query }: NextPageContext) => {
     try {
       const { id } = query;

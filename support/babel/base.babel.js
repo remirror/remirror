@@ -7,18 +7,19 @@ const ignore = [
   '*.d.ts',
 ];
 
-const presets = [
-  ['@babel/preset-env'],
+const basePreset = [
   '@babel/preset-typescript',
   '@babel/preset-react',
   '@emotion/babel-preset-css-prop',
 ];
 
+const presets = [['@babel/preset-env'], ...basePreset];
+
 const testBabelPresetEnv = ['@babel/preset-env', { targets: { node: '8' } }];
 const nonTestEnv = { ignore, presets };
 
 module.exports = {
-  presets: [testBabelPresetEnv, '@babel/preset-typescript', '@babel/preset-react'],
+  presets: [testBabelPresetEnv, ...basePreset],
   plugins: [
     // Required for the compilation of abstract classes
     '@babel/plugin-transform-typescript',

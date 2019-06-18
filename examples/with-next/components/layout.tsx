@@ -1,12 +1,13 @@
+import React, { FunctionComponent } from 'react';
+
 import Head from 'next/head';
 import Link from 'next/link';
-import * as React from 'react';
 
 interface Props {
   title?: string;
 }
 
-const Layout: React.FunctionComponent<Props> = ({ children, title = 'This is the default title' }) => {
+const Layout: FunctionComponent<Props> = ({ children, title = 'This is the default title' }) => {
   return (
     <div>
       <Head>
@@ -20,11 +21,11 @@ const Layout: React.FunctionComponent<Props> = ({ children, title = 'This is the
             <a>Home</a>
           </Link>{' '}
           |{' '}
-          <Link href='/ui/twitter'>
+          <Link href='/editor/twitter'>
             <a>Twitter UI</a>
           </Link>{' '}
           |{' '}
-          <Link href='/ui/wysiwyg'>
+          <Link href='/editor/wysiwyg'>
             <a>Wysiwyg UI</a>
           </Link>{' '}
           |{' '}

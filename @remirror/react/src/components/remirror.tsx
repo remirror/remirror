@@ -1,25 +1,30 @@
-import React, { Component, Fragment, ReactNode, Ref } from 'react';
+import React, { Component, ReactNode, Ref } from 'react';
 
-import { css, Interpolation, jsx } from '@emotion/core';
+import { css, Interpolation } from '@emotion/core';
 import {
   CompareStateParams,
   EDITOR_CLASS_NAME,
   EditorView as EditorViewType,
   EMPTY_PARAGRAPH_NODE,
   ExtensionManager,
+  fromHTML,
+  getDocument,
+  isArray,
   isFunction,
   NodeViewPortalContainer,
   ObjectNode,
   Position,
   RemirrorContentType,
+  shouldUseDOMEnvironment,
   toHTML,
   Transaction,
   uniqueId,
 } from '@remirror/core';
-import { createEditorView, getDoc, RemirrorSSR, shouldUseDOMEnvironment } from '@remirror/react-ssr';
+import { createEditorView, RemirrorSSR } from '@remirror/react-ssr';
 import {
   BaseListenerParams,
   CalculatePositionerParams,
+  childIsFunction,
   cloneElement,
   getElementProps,
   GetPositionerPropsConfig,
@@ -27,17 +32,15 @@ import {
   GetRootPropsConfig,
   InjectedRemirrorProps,
   isReactDOMElement,
+  isRemirrorContextProvider,
   PositionerMapValue,
   PositionerProps,
   PositionerRefFactoryParams,
   RefKeyRootProps,
-  RemirrorEditorStateListenerParams,
   RemirrorElementType,
   RemirrorEventListenerParams,
   RemirrorProps,
-  RenderPropFunction,
-  uniqueClass,
-  updateChildWithKey,
+  RemirrorStateListenerParams,
 } from '@remirror/react-utils';
 import { cx } from 'emotion';
 import { EditorState } from 'prosemirror-state';
@@ -80,24 +83,45 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   private positionerMap = new Map<string, PositionerMapValue>();
 
   /**
-   * The uid for this instance.
-   */
-  private uid = uniqueId({ size: 5 });
-  /**
-   * A unique class added to every instance of the remirror editor. This allows for non global styling.
+   * The prosemirror EditorView.
    */
   private view: EditorViewType;
-  private portalContainer: NodeViewPortalContainer = new NodeViewPortalContainer();
-  private doc = getDoc();
 
+  /**
+   * A unique ID for the editor which is also used as a key to pass into `getRootProps`
+   */
+  private uid = uniqueId({ size: 10 });
+
+  /**
+   * The portal container which keeps track of all the React Portals containing custom prosemirror NodeViews
+   */
+  private readonly portalContainer: NodeViewPortalContainer = new NodeViewPortalContainer();
+
+  /**
+   * The document to use when rendering
+   */
+  private get doc() {
+    return getDocument(this.props.forceEnvironment);
+  }
+
+  /**
+   * A utility for quickly retrieving the extension manager
+   */
   private get manager(): ExtensionManager {
     return this.props.manager;
   }
 
   constructor(props: RemirrorProps) {
     super(props);
+
+    // Ensure that children is a render prop
+    childIsFunction(props.children);
+
+    // Initialize the manager and create the initial state
     this.manager.init({ getEditorState: this.getEditorState, getPortalContainer: this.getPortalContainer });
     this.state = this.createInitialState();
+
+    // Create the ProsemirrorView and initialize our extension manager with it
     this.view = this.createView();
     this.manager.initView(this.view);
   }
@@ -111,7 +135,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   /**
    * Retrieve the editor state. This is passed through to the extension manager.
    */
-  private getEditorState = () => this.state.newState;
+  private getEditorState = () => this.props.value || this.state.newState;
 
   /**
    * Retrieve the portal container which used for managing node views which contain react components via the portal api.
@@ -176,6 +200,11 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   private getRootProps = <GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,
   ): RefKeyRootProps<GRefKey> => {
+    if (this.rootPropsConfig.called) {
+      throw new Error(
+        '`getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.',
+      );
+    }
     this.rootPropsConfig.called = true;
     return this.internalGetRootProps(options, false);
   };
@@ -195,6 +224,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       key: this.uid,
       css: css(this.editorStyles),
       ...config,
+      children: this.renderChildren(null),
     } as RefKeyRootProps<GRefKey>;
   }
 
@@ -311,7 +341,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label || '',
       ...managerAttrs,
-      class: cx(EDITOR_CLASS_NAME, uniqueClass(this.uid, 'remirror'), managerAttrs.class),
+      class: cx(EDITOR_CLASS_NAME, managerAttrs.class),
     };
 
     return { ...defaultAttributes, ...propAttributes };
@@ -391,15 +421,28 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     this.view.dom.addEventListener('focus', this.onFocus);
   }
 
-  public componentDidUpdate({ editable, manager }: RemirrorProps, { newState }: CompareStateParams) {
+  public componentDidUpdate(
+    { editable, manager: prevManager }: RemirrorProps,
+    { newState }: CompareStateParams,
+  ) {
+    // Ensure that children is still a render prop
+    childIsFunction(this.props.children);
+
+    // Check whether the editable prop has been updated
     if (this.props.editable !== editable && this.view && this.editorRef) {
       this.view.setProps({ ...this.view.props, editable: () => this.props.editable });
     }
 
-    if (!manager.isEqual(this.props.manager)) {
+    // Check if the manager has changed
+    if (!prevManager.isEqual(this.props.manager)) {
       this.updateExtensionManager();
       this.view.setProps({ ...this.view.props, nodeViews: this.manager.data.nodeViews });
-      this.setContent(toHTML({ node: this.state.newState.doc, schema: this.manager.data.schema }), true);
+
+      // The following converts the current content to HTML and then uses the new manager schema to
+      // convert it back into a ProsemirrorNode for compatibility with the new manager.
+      const htmlString = toHTML({ node: this.state.newState.doc, schema: prevManager.schema });
+      const newContent = fromHTML({ schema: this.manager.schema, content: htmlString, doc: this.doc });
+      this.setContent(newContent, true);
     }
 
     // Handle controlled component post update handler
@@ -412,6 +455,15 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     }
   }
 
+  /**
+   * Called when the component unmounts and is responsible for cleanup
+   *
+   * @remarks
+   *
+   * - Removes listeners for the editor blur and focus events
+   * - Destroys the state for each plugin
+   * - Destroys the prosemirror view
+   */
   public componentWillUnmount() {
     this.view.dom.removeEventListener('blur', this.onBlur);
     this.view.dom.removeEventListener('focus', this.onFocus);
@@ -425,15 +477,21 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     this.view.destroy();
   }
 
-  private onBlur = () => {
+  /**
+   * Listener for editor 'blur' events
+   */
+  private onBlur = (event: Event) => {
     if (this.props.onBlur) {
-      this.props.onBlur(this.eventListenerParams());
+      this.props.onBlur(this.eventListenerParams(), event);
     }
   };
 
-  private onFocus = () => {
+  /**
+   * Listener for editor 'focus' events
+   */
+  private onFocus = (event: Event) => {
     if (this.props.onFocus) {
-      this.props.onFocus(this.eventListenerParams());
+      this.props.onFocus(this.eventListenerParams(), event);
     }
   };
 
@@ -461,7 +519,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       view: this.view,
       getHTML: this.getHTML(state),
       getJSON: this.getJSON(state),
-      getDocJSON: this.getDocJSON(state),
+      getObjectNode: this.getObjectNode(state),
       getText: this.getText(state),
     };
   }
@@ -476,7 +534,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   private editorStateEventListenerParams({
     newState,
     prevState,
-  }: Partial<CompareStateParams> = {}): RemirrorEditorStateListenerParams {
+  }: Partial<CompareStateParams> = {}): RemirrorStateListenerParams {
     return {
       ...this.baseListenerParams(newState),
       newState: newState || this.state.newState,
@@ -487,17 +545,20 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
 
   get renderParams(): InjectedRemirrorProps {
     return {
+      /* Properties */
+      uid: this.uid,
       manager: this.manager,
       view: this.view,
+      state: this.state,
       actions: this.manager.data.actions,
-      clearContent: this.clearContent,
-      setContent: this.setContent,
-      uid: this.uid,
 
-      /* Getters */
+      /* Getter Methods */
       getRootProps: this.getRootProps,
       getPositionerProps: this.getPositionerProps,
-      state: this.state,
+
+      /* Setter Methods */
+      clearContent: this.clearContent,
+      setContent: this.setContent,
     };
   }
 
@@ -527,7 +588,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   /**
    * Return the json object for the prosemirror document.
    */
-  private getDocJSON = (state?: EditorState) => (): ObjectNode => {
+  private getObjectNode = (state?: EditorState) => (): ObjectNode => {
     return (state || this.state.newState).doc.toJSON() as ObjectNode;
   };
 
@@ -541,16 +602,18 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   /**
    * Checks whether this is an SSR environment and returns a child array with the SSR component
    *
-   * @param child
+   * @param children
    */
-  private injectSSRIntoElementChildren(child: ReactNode) {
+  private renderChildren(child: ReactNode) {
     const { forceEnvironment, insertPosition } = this.props;
+    const children = isArray(child) ? child : [child];
 
     if (shouldUseDOMEnvironment(forceEnvironment)) {
-      return [child];
+      return children;
     }
+
     const ssrElement = this.renderSSR();
-    return insertPosition === 'start' ? [ssrElement, child] : [child, ssrElement];
+    return insertPosition === 'start' ? [ssrElement, ...children] : [...children, ssrElement];
   }
 
   private renderSSR() {
@@ -559,49 +622,54 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     );
   }
 
-  private renderReactElement(renderFunction: RenderPropFunction) {
-    const element: JSX.Element | null = renderFunction({
+  private renderReactElement() {
+    const element: JSX.Element | null = this.props.children({
       ...this.renderParams,
     });
 
-    const { children: child, ...props } = getElementProps(element);
+    const { children, ...props } = getElementProps(element);
+    // When called by a provider `getRootProps` can't actually be called until the jsx is generated.
+    // So an initial check in this instance would be useless.
 
-    if (!this.rootPropsConfig.called && !this.props.customRootProp) {
-      return isReactDOMElement(element)
-        ? cloneElement(element, this.internalGetRootProps(props), ...this.injectSSRIntoElementChildren(child))
-        : jsx('div', this.internalGetRootProps(), ...this.injectSSRIntoElementChildren(element));
+    if (this.rootPropsConfig.called) {
+      // Simply return the element as this is never actually called within SSR (for some reason)
+      return element;
+    } else if (
+      // Check if this is being rendered via the remirror context provider.
+      // In this case `getRootProps` must be called.
+      isRemirrorContextProvider(element)
+    ) {
+      return element.props.setChildAsRoot
+        ? cloneElement(element, props, this.renderClonedElement(children))
+        : element;
+    } else {
+      return isReactDOMElement(element) ? (
+        this.renderClonedElement(element)
+      ) : (
+        <div {...this.internalGetRootProps()}>{this.renderChildren(element)}</div>
+      );
     }
+  }
 
-    return jsx(
-      Fragment,
-      {},
-      cloneElement(
-        element,
-        {},
-        ...updateChildWithKey(element, this.uid, ch => {
-          return cloneElement(
-            ch,
-            getElementProps(ch),
-            ...this.injectSSRIntoElementChildren(ch.props.children),
-          );
-        }),
-      ),
-    );
+  /**
+   * Clones the passed element when `getRootProps` hasn't yet been called.
+   *
+   * @remarks
+   *
+   * This is used to render the children as SSR when necessary.
+   */
+  private renderClonedElement(element: JSX.Element) {
+    const { children, ...props } = getElementProps(element);
+    return cloneElement(element, this.internalGetRootProps(props), ...this.renderChildren(children));
   }
 
   public render() {
-    const { children } = this.props;
-
-    if (!isFunction(children)) {
-      throw new Error('The child argument to the Remirror component must be a function.');
-    }
-
-    /* Reset the root props called status */
+    // Reset the root props called status
     this.rootPropsConfig.called = false;
 
     return (
       <>
-        {this.renderReactElement(children)}
+        {this.renderReactElement()}
         <NodeViewPortalComponent nodeViewPortalContainer={this.portalContainer} />
       </>
     );

@@ -2,7 +2,7 @@ import { Cast } from '@remirror/core';
 import { GetPositionerReturn, InjectedRemirrorProps, UsePositionerParams } from '@remirror/react-utils';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import React, { ComponentType, FunctionComponent } from 'react';
-import { RemirrorEditorContext } from './contexts';
+import { RemirrorContext } from './contexts';
 
 /**
  * A higher order component which passes the RemirrorContext to the component it wraps.
@@ -16,14 +16,14 @@ export const withRemirror = <GProps extends InjectedRemirrorProps>(
 
   const EnhancedComponent: FunctionComponent<EnhancedComponentProps> = props => {
     return (
-      <RemirrorEditorContext.Consumer>
+      <RemirrorContext.Consumer>
         {params => {
           if (!params) {
             throw new Error('No props received for the RemirrorProvider component');
           }
           return <WrappedComponent {...Cast<GProps>({ ...props, ...params })} />;
         }}
-      </RemirrorEditorContext.Consumer>
+      </RemirrorContext.Consumer>
     );
   };
 
@@ -46,7 +46,7 @@ export const withPositioner = <GRefKey extends string = 'ref'>({
 
   const EnhancedComponent: FunctionComponent<EnhancedComponentProps> = props => {
     return (
-      <RemirrorEditorContext.Consumer>
+      <RemirrorContext.Consumer>
         {params => {
           if (!params) {
             throw new Error('No props received for the RemirrorProvider component');
@@ -60,7 +60,7 @@ export const withPositioner = <GRefKey extends string = 'ref'>({
             />
           );
         }}
-      </RemirrorEditorContext.Consumer>
+      </RemirrorContext.Consumer>
     );
   };
 

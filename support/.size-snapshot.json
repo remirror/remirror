@@ -170,12 +170,12 @@
       }
     }
   },
-  "@remirror/ui-twitter/lib/dist/ui-twitter.cjs.js": {
+  "@remirror/editor-twitter/lib/dist/editor-twitter.cjs.js": {
     "bundled": 34948,
     "minified": 24590,
     "gzipped": 6281
   },
-  "@remirror/ui-twitter/lib/dist/ui-twitter.esm.js": {
+  "@remirror/editor-twitter/lib/dist/editor-twitter.esm.js": {
     "bundled": 34166,
     "minified": 23897,
     "gzipped": 6160,
@@ -189,12 +189,12 @@
       }
     }
   },
-  "@remirror/ui-wysiwyg/lib/dist/ui-wysiwyg.cjs.js": {
+  "@remirror/editor-wysiwyg/lib/dist/editor-wysiwyg.cjs.js": {
     "bundled": 17864,
     "minified": 12373,
     "gzipped": 3528
   },
-  "@remirror/ui-wysiwyg/lib/dist/ui-wysiwyg.esm.js": {
+  "@remirror/editor-wysiwyg/lib/dist/editor-wysiwyg.esm.js": {
     "bundled": 16791,
     "minified": 11366,
     "gzipped": 3490,
@@ -252,16 +252,16 @@
     "gzipped": 9615
   },
   "../@remirror/core/lib/dist/core.esm.js": {
-    "bundled": 92835,
-    "minified": 31987,
-    "gzipped": 9262,
+    "bundled": 94948,
+    "minified": 32843,
+    "gzipped": 9435,
     "treeshaked": {
       "rollup": {
-        "code": 1394,
-        "import_statements": 800
+        "code": 2282,
+        "import_statements": 834
       },
       "webpack": {
-        "code": 3400
+        "code": 4232
       }
     }
   },
@@ -271,16 +271,16 @@
     "gzipped": 5358
   },
   "../@remirror/core-extensions/lib/dist/core-extensions.esm.js": {
-    "bundled": 51504,
-    "minified": 24940,
-    "gzipped": 5399,
+    "bundled": 56095,
+    "minified": 26491,
+    "gzipped": 5816,
     "treeshaked": {
       "rollup": {
-        "code": 1915,
-        "import_statements": 853
+        "code": 4634,
+        "import_statements": 1046
       },
       "webpack": {
-        "code": 7855
+        "code": 9341
       }
     }
   },
@@ -290,16 +290,16 @@
     "gzipped": 10965
   },
   "../@remirror/extension-emoji/lib/dist/extension-emoji.esm.js": {
-    "bundled": 60726,
-    "minified": 29561,
-    "gzipped": 10989,
+    "bundled": 60807,
+    "minified": 29635,
+    "gzipped": 11001,
     "treeshaked": {
       "rollup": {
-        "code": 18579,
+        "code": 18593,
         "import_statements": 572
       },
       "webpack": {
-        "code": 23804
+        "code": 23822
       }
     }
   },
@@ -330,7 +330,7 @@
   "../@remirror/extension-enhanced-link/lib/dist/extension-enhanced-link.esm.js": {
     "bundled": 22153,
     "minified": 17248,
-    "gzipped": 8084,
+    "gzipped": 8082,
     "treeshaked": {
       "rollup": {
         "code": 503,
@@ -347,16 +347,16 @@
     "gzipped": 2447
   },
   "../@remirror/extension-mention/lib/dist/extension-mention.esm.js": {
-    "bundled": 17949,
-    "minified": 7145,
-    "gzipped": 2512,
+    "bundled": 17969,
+    "minified": 7146,
+    "gzipped": 2511,
     "treeshaked": {
       "rollup": {
         "code": 556,
         "import_statements": 451
       },
       "webpack": {
-        "code": 5769
+        "code": 5773
       }
     }
   },
@@ -366,16 +366,16 @@
     "gzipped": 16694
   },
   "../@remirror/react/lib/dist/react.esm.js": {
-    "bundled": 75553,
-    "minified": 54911,
-    "gzipped": 16745,
+    "bundled": 81830,
+    "minified": 58453,
+    "gzipped": 17932,
     "treeshaked": {
       "rollup": {
-        "code": 13606,
-        "import_statements": 1582
+        "code": 14055,
+        "import_statements": 1625
       },
       "webpack": {
-        "code": 15946
+        "code": 16426
       }
     }
   },
@@ -385,16 +385,16 @@
     "gzipped": 9443
   },
   "../@remirror/react-ssr/lib/dist/react-ssr.esm.js": {
-    "bundled": 52986,
-    "minified": 25538,
-    "gzipped": 9424,
+    "bundled": 52697,
+    "minified": 25464,
+    "gzipped": 9399,
     "treeshaked": {
       "rollup": {
-        "code": 18317,
+        "code": 18331,
         "import_statements": 310
       },
       "webpack": {
-        "code": 21751
+        "code": 21768
       }
     }
   },
@@ -404,16 +404,16 @@
     "gzipped": 824
   },
   "../@remirror/react-utils/lib/dist/react-utils.esm.js": {
-    "bundled": 5189,
-    "minified": 2066,
-    "gzipped": 749,
+    "bundled": 5637,
+    "minified": 2247,
+    "gzipped": 753,
     "treeshaked": {
       "rollup": {
-        "code": 628,
+        "code": 686,
         "import_statements": 206
       },
       "webpack": {
-        "code": 1747
+        "code": 1805
       }
     }
   },
@@ -442,9 +442,9 @@
     "gzipped": 5478
   },
   "../@remirror/renderer-react/lib/dist/renderer-react.esm.js": {
-    "bundled": 23037,
-    "minified": 15451,
-    "gzipped": 5464,
+    "bundled": 23363,
+    "minified": 15626,
+    "gzipped": 5514,
     "treeshaked": {
       "rollup": {
         "code": 335,
@@ -455,58 +455,58 @@
       }
     }
   },
-  "../@remirror/ui-twitter/lib/index.js": {
+  "../@remirror/editor-twitter/lib/index.js": {
     "bundled": 34722,
     "minified": 24412,
     "gzipped": 6246
   },
-  "../@remirror/ui-twitter/lib/dist/ui-twitter.esm.js": {
-    "bundled": 35413,
-    "minified": 24893,
-    "gzipped": 6301,
+  "../@remirror/editor-twitter/lib/dist/editor-twitter.esm.js": {
+    "bundled": 36675,
+    "minified": 26091,
+    "gzipped": 6526,
     "treeshaked": {
       "rollup": {
-        "code": 22176,
-        "import_statements": 1311
+        "code": 23346,
+        "import_statements": 1324
       },
       "webpack": {
-        "code": 24721
+        "code": 25814
       }
     }
   },
-  "../@remirror/ui-wysiwyg/lib/index.js": {
+  "../@remirror/editor-wysiwyg/lib/index.js": {
     "bundled": 17903,
     "minified": 12367,
     "gzipped": 3519
   },
-  "../@remirror/ui-wysiwyg/lib/dist/ui-wysiwyg.esm.js": {
-    "bundled": 17493,
-    "minified": 11917,
-    "gzipped": 3644,
+  "../@remirror/editor-wysiwyg/lib/dist/editor-wysiwyg.esm.js": {
+    "bundled": 18593,
+    "minified": 12365,
+    "gzipped": 3817,
     "treeshaked": {
       "rollup": {
-        "code": 9499,
-        "import_statements": 1870
+        "code": 9893,
+        "import_statements": 1957
       },
       "webpack": {
-        "code": 12037
+        "code": 12492
       }
     }
   },
   "../@remirror/core/lib/dist/core.cjs.js": {
-    "bundled": 95522,
-    "minified": 35852,
-    "gzipped": 9800
+    "bundled": 97699,
+    "minified": 36764,
+    "gzipped": 9992
   },
   "../@remirror/core-extensions/lib/dist/core-extensions.cjs.js": {
-    "bundled": 53393,
-    "minified": 26759,
-    "gzipped": 5515
+    "bundled": 58163,
+    "minified": 28485,
+    "gzipped": 5955
   },
   "../@remirror/extension-emoji/lib/dist/extension-emoji.cjs.js": {
-    "bundled": 61339,
-    "minified": 30075,
-    "gzipped": 11091
+    "bundled": 61420,
+    "minified": 30149,
+    "gzipped": 11104
   },
   "../@remirror/extension-epic-mode/lib/dist/extension-epic-mode.cjs.js": {
     "bundled": 12917,
@@ -519,24 +519,24 @@
     "gzipped": 8159
   },
   "../@remirror/extension-mention/lib/dist/extension-mention.cjs.js": {
-    "bundled": 18347,
-    "minified": 7563,
+    "bundled": 18367,
+    "minified": 7564,
     "gzipped": 2589
   },
   "../@remirror/react/lib/dist/react.cjs.js": {
-    "bundled": 76658,
-    "minified": 55856,
-    "gzipped": 16877
+    "bundled": 82915,
+    "minified": 59381,
+    "gzipped": 18061
   },
   "../@remirror/react-ssr/lib/dist/react-ssr.cjs.js": {
-    "bundled": 53468,
-    "minified": 25943,
-    "gzipped": 9529
+    "bundled": 53116,
+    "minified": 25810,
+    "gzipped": 9498
   },
   "../@remirror/react-utils/lib/dist/react-utils.cjs.js": {
-    "bundled": 5614,
-    "minified": 2514,
-    "gzipped": 856
+    "bundled": 6003,
+    "minified": 2762,
+    "gzipped": 867
   },
   "../packages/remirror/lib/dist/remirror.cjs.js": {
     "bundled": 943,
@@ -544,36 +544,36 @@
     "gzipped": 242
   },
   "../@remirror/renderer-react/lib/dist/renderer-react.cjs.js": {
-    "bundled": 23577,
-    "minified": 15905,
-    "gzipped": 5568
+    "bundled": 23913,
+    "minified": 16090,
+    "gzipped": 5619
   },
-  "../@remirror/ui-twitter/lib/dist/ui-twitter.cjs.js": {
-    "bundled": 36267,
-    "minified": 25634,
-    "gzipped": 6426
+  "../@remirror/editor-twitter/lib/dist/editor-twitter.cjs.js": {
+    "bundled": 37536,
+    "minified": 26840,
+    "gzipped": 6648
   },
-  "../@remirror/ui-wysiwyg/lib/dist/ui-wysiwyg.cjs.js": {
-    "bundled": 18561,
-    "minified": 12885,
-    "gzipped": 3654
+  "../@remirror/editor-wysiwyg/lib/dist/editor-wysiwyg.cjs.js": {
+    "bundled": 19742,
+    "minified": 13414,
+    "gzipped": 3832
   },
   "../@remirror/showcase/lib/dist/showcase.cjs.js": {
-    "bundled": 131218,
-    "minified": 94347,
-    "gzipped": 29842
+    "bundled": 131285,
+    "minified": 94406,
+    "gzipped": 29847
   },
   "../@remirror/showcase/lib/dist/showcase.esm.js": {
-    "bundled": 130789,
-    "minified": 93995,
-    "gzipped": 29699,
+    "bundled": 130840,
+    "minified": 94038,
+    "gzipped": 29702,
     "treeshaked": {
       "rollup": {
-        "code": 91511,
-        "import_statements": 280
+        "code": 91519,
+        "import_statements": 288
       },
       "webpack": {
-        "code": 92763
+        "code": 92771
       }
     }
   }

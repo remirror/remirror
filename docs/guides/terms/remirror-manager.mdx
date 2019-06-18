@@ -11,7 +11,7 @@ This is a react component that Injects an ExtensionManager instance into the rea
 ```tsx
 import React, { FC } from 'react';
 import { Bold } from '@remirror/core-extensions';
-import { useRemirrorManager, RemirrorEditor } from '@remirror/react';
+import { useRemirrorManager, RemirrorProvider } from '@remirror/react';
 
 const Editor: FC = ({ children }) => {
   return (
@@ -19,7 +19,7 @@ const Editor: FC = ({ children }) => {
       <RemirrorExtension Constructor={Bold} />
       {() => {
         const manager = useRemirrorManager(); // Picked from the context
-        return <RemirrorEditor manager={manager}>{children}</RemirrorEditor>;
+        return <RemirrorProvider manager={manager}>{children}</RemirrorProvider>;
       }}
     </RemirrorManager>
   );

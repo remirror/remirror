@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { FunctionComponent } from 'react';
 import { User } from '../interfaces';
 import ListItem from './list-item';
 
@@ -6,7 +6,7 @@ interface Props {
   items: User[];
 }
 
-const List: React.FunctionComponent<Props> = ({ items }) => (
+const List: FunctionComponent<Props> = ({ items }) => (
   <ul>
     {items.map(item => (
       <li key={item.id}>

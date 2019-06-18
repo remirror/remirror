@@ -1,10 +1,9 @@
 import { Deployment, URLDescriptor } from '@test-fixtures/test-urls';
 import { innerHtml, outerHtml, sel, textContent } from './helpers';
 
-const editorSelector = '.ProseMirror';
+const editorSelector = '.remirror-editor';
 
-// TODO Currently SSR is broken this may be down to the library, or the usage
-describe.skip('SSR Twitter Showcase', () => {
+describe('SSR Twitter Showcase', () => {
   beforeEach(async () => {
     await jestPuppeteer.resetPage();
     // Set JavaScript to disabled to mimic server side rendering
@@ -15,7 +14,7 @@ describe.skip('SSR Twitter Showcase', () => {
   it('should pre render the editor', async () => {
     // This test checks that the ProsemirrorEditor exists and contains the expected html
     await expect(outerHtml(editorSelector)).resolves.toBeTruthy();
-    await expect(outerHtml(editorSelector)).resolves.toMatchInlineSnapshot();
+    await expect(outerHtml(editorSelector)).resolves.toMatchSnapshot();
   });
 });
 

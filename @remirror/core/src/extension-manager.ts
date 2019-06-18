@@ -1,8 +1,9 @@
-import { cx, Interpolation } from 'emotion';
+import { Interpolation } from 'emotion';
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
 import { EditorState, PluginKey } from 'prosemirror-state';
+import { ComponentType } from 'react';
 import { AnyExtension } from './extension';
 import {
   createFlexibleFunctionMap,
@@ -109,7 +110,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   public init({ getEditorState, getPortalContainer }: ExtensionManagerInitParams) {
     if (this.initialized) {
       console.warn(
-        'This manager is already in use. Make sure not to use the same manager for more than one editor as this will cause problems with conflicting editor schema.',
+        'This manager is already in use. Avoid using the same manager for more than one editor as this will cause problems with conflicting editor schema.',
       );
     }
 
@@ -232,6 +233,23 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
+   * Retrieve all the SSRComponent properties from the extensions.
+   * Used to render the initial SSR output.
+   */
+  public get components() {
+    const components: Record<string, ComponentType> = {};
+    this.extensions
+      .filter(extension => extension.options.SSRComponent)
+      // User can opt out of SSR rendering
+      .filter(extension => !extension.options.disableSSR)
+      .forEach(({ name, options: { SSRComponent } }) => {
+        components[name] = SSRComponent;
+      });
+
+    return components;
+  }
+
+  /**
    * Dynamically create the editor schema based on the extensions that have been passed in.
    */
   public createSchema(): EditorSchema {
@@ -256,6 +274,20 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
+   * Retrieve the state for a given extension name. This will throw an error if the extension doesn't exist.
+   *
+   * @param name - the name of the extension
+   */
+  public getPluginState<GState>(name: string): GState {
+    this.checkInitialized();
+    const key = this.pluginKeys[name];
+    if (!key) {
+      throw new Error(`Cannot retrieve state for an extension: ${name} which doesn\'t exist`);
+    }
+    return getPluginState<GState>(key, this.getEditorState());
+  }
+
+  /**
    * Retrieve all the extension plugin keys
    */
   public get pluginKeys() {
@@ -267,6 +299,34 @@ export class ExtensionManager implements ExtensionManagerInitParams {
       });
 
     return pluginKeys;
+  }
+
+  /**
+   * Create the actions which are passed into the render props.
+   *
+   * RemirrorActions allow for checking if a node / mark is active, enabled, and also running the command.
+   *
+   * - `isActive` defaults to a function returning false
+   * - `isEnabled` defaults to a function returning true
+   */
+  public actions(params: CommandParams): RemirrorActions {
+    this.checkInitialized();
+
+    const actions: RemirrorActions = {};
+    const commands = this.commands(params);
+    const active = this.active(params);
+    const enabled = this.enabled(params);
+
+    Object.entries(commands).forEach(([name, command]) => {
+      const action: ActionMethods = {
+        command,
+        isActive: active[name] ? active[name] : () => false,
+        isEnabled: enabled[name] ? enabled[name] : () => true,
+      };
+      actions[name] = action;
+    });
+
+    return actions;
   }
 
   /**
@@ -283,7 +343,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
         combinedAttributes = {
           ...combinedAttributes,
           ...attrs,
-          class: cx(combinedAttributes.class, attrs.class),
+          class: (combinedAttributes.class || '') + bool(attrs.class) ? attrs.class : '',
         };
       });
 
@@ -327,23 +387,12 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * Extensions can register custom styles for the editor. This retrieves them.
-   */
-  public styles(): Interpolation[] {
-    const extensionStyles = this.extensions
-      .filter(hasExtensionProperty('styles'))
-      .filter(extension => !extension.options.excludeStyles)
-      .map(extensionPropertyMapper('styles', this.params));
-
-    return extensionStyles;
-  }
-
-  /**
    * Retrieve all keymaps (how the editor responds to keyboard commands).
    */
   public keymaps() {
     const extensionKeymaps = this.extensions
       .filter(hasExtensionProperty('keys'))
+      .filter(extension => !extension.options.excludeKeymaps)
       .map(extensionPropertyMapper('keys', this.params));
 
     const mappedKeys: Record<string, CommandFunction> = {};
@@ -401,43 +450,27 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * Create the actions which are passed into the render props.
-   *
-   * RemirrorActions allow for checking if a node / mark is active, enabled, and also running the command.
-   *
-   * - `isActive` defaults to a function returning false
-   * - `isEnabled` defaults to a function returning true
+   * Adjusts the rendered element based on the extension transformers.
    */
-  public actions(params: CommandParams): RemirrorActions {
-    this.checkInitialized();
-
-    const actions: RemirrorActions = {};
-    const commands = this.commands(params);
-    const active = this.active(params);
-    const enabled = this.enabled(params);
-
-    Object.entries(commands).forEach(([name, command]) => {
-      const action: ActionMethods = {
-        command,
-        isActive: active[name] ? active[name] : () => false,
-        isEnabled: enabled[name] ? enabled[name] : () => true,
-      };
-      actions[name] = action;
-    });
-
-    return actions;
+  public ssrTransformer(element: JSX.Element): JSX.Element {
+    return this.extensions
+      .filter(hasExtensionProperty('ssrTransformer'))
+      .filter(extension => !extension.options.disableSSR)
+      .reduce((prevElement, extension) => {
+        return extension.ssrTransformer(prevElement, this.params);
+      }, element);
   }
 
   /**
-   * Retrieve the state for a given extension name. This will throw an error if the extension doesn't exist.
+   * Extensions can register custom styles for the editor. This retrieves them.
    */
-  public getPluginState<GState>(name: string): GState {
-    this.checkInitialized();
-    const key = this.pluginKeys[name];
-    if (!key) {
-      throw new Error(`Cannot retrieve state for an extension: ${name} which doesn\'t exist`);
-    }
-    return getPluginState<GState>(key, this.getEditorState());
+  public styles(): Interpolation[] {
+    const extensionStyles = this.extensions
+      .filter(hasExtensionProperty('styles'))
+      .filter(extension => !extension.options.excludeStyles)
+      .map(extensionPropertyMapper('styles', this.params));
+
+    return extensionStyles;
   }
 
   /**

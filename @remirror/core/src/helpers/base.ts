@@ -141,9 +141,7 @@ export const trim = (str: string) => {
  *
  * @public
  */
-export function randomInt(min: number, max?: number) {
-  return Math.floor(randomFloat(min, max));
-}
+export const randomInt = (min: number, max?: number) => Math.floor(randomFloat(min, max));
 
 /**
  * Generate a random float between min and max. If only one parameter is provided
@@ -154,13 +152,13 @@ export function randomInt(min: number, max?: number) {
  *
  * @public
  */
-export function randomFloat(min: number, max?: number) {
+export const randomFloat = (min: number, max?: number) => {
   if (!max) {
     max = min;
     min = 0.0;
   }
   return Math.random() * (max - min + 1) + min;
-}
+};
 
 /**
  * Converts a string, including strings in camelCase or snake_case, into Start Case (a variant
@@ -174,12 +172,12 @@ export function randomFloat(min: number, max?: number) {
  *
  * @param str - the string to examine
  */
-export function startCase(str: string) {
+export const startCase = (str: string) => {
   return str
     .replace(/_/g, ' ')
     .replace(/([a-z])([A-Z])/g, (_, $1, $2) => $1 + ' ' + $2)
     .replace(/(\s|^)(\w)/g, (_, $1, $2) => $1 + $2.toUpperCase());
-}
+};
 
 /**
  * Alias for caching function calls
@@ -269,19 +267,43 @@ export const environment = {
     return typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
   },
 
+  /**
+   * True when running on macOS
+   */
   get isMac() {
     return environment.isBrowser && /Mac/.test(navigator.platform);
+  },
+
+  /**
+   * True when running in DEVELOPMENT environment
+   */
+  get isDevelopment() {
+    return process.env.NODE_ENV === 'development';
+  },
+
+  /**
+   * True when running unit tests
+   */
+  get isTest() {
+    return process.env.NODE_ENV === 'test';
+  },
+
+  /**
+   * True when running in PRODUCTION environment
+   */
+  get isProduction() {
+    return process.env.NODE_ENV === 'production';
   },
 };
 
 /**
- * Makes sure a value is either true or false
+ * Shorthand for casting a value to it's boolean equivalent.
  *
  * @param value - the value to transform into a boolean
  *
  * @public
  */
-export const bool = (value: unknown) => Boolean(value);
+export const bool = (value: unknown) => !!value;
 
 /**
  * A type name matcher for object types
@@ -306,8 +328,6 @@ const toString = Object.prototype.toString;
  * relying on instanceof checks which fail on cross-frame values.
  *
  * @param value - the object to inspect
- *
- * @public
  */
 const getObjectType = (value: unknown): TypeName | undefined => {
   const objectName = toString.call(value).slice(8, -1);
@@ -319,8 +339,6 @@ const getObjectType = (value: unknown): TypeName | undefined => {
  *
  * @param type -  the name of the type to check for
  * @returns a predicate function for checking the value type
- *
- * @public
  */
 const isOfType = <GType>(type: string) => (value: unknown): value is GType => typeof value === type;
 
@@ -606,6 +624,5 @@ export const uniqueArray = <GType>(array: GType[]) => {
  *
  * @public
  */
-export function flattenArray<GType>(array: any[]): GType[] {
-  return array.reduce((a, b) => a.concat(Array.isArray(b) ? flattenArray(b) : b), []);
-}
+export const flattenArray = <GType>(array: any[]): GType[] =>
+  array.reduce((a, b) => a.concat(Array.isArray(b) ? flattenArray(b) : b), []);

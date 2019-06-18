@@ -43,7 +43,7 @@ Create tests inside of a `__tests__/` subfolder.
 - Unit tests: `*.spec.ts(x)`
 - Integration tests: `*.puppeteer.ts` within the e2e folder
 
-Integration testing uses puppeteer to run browser tests in chrome. See an example in `/docs/editors/__tests__/ui-twitter.test.ts`
+Integration testing uses puppeteer to run browser tests in chrome. See an example in `/docs/editors/__tests__/editor-twitter.test.ts`
 
 Currently the testing strategy for remirror is being worked out. The test coverage is a measly 30% and a lot of work needs to be done to bring this to an acceptable level.
 

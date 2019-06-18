@@ -1,16 +1,28 @@
 import { jsx } from '@emotion/core';
-import { bool, Cast, isArray, isObject, isString, PlainObject, uniqueArray } from '@remirror/core';
-import { Children, isValidElement, ReactNode } from 'react';
+import { bool, isArray, isFunction, isObject, isString, PlainObject, uniqueArray } from '@remirror/core';
+import { Fragment, isValidElement, LegacyRef, PropsWithChildren, ReactElement, ReactNode } from 'react';
 import { RemirrorComponentType, RemirrorElement, RemirrorElementType } from './types';
 
 /**
  * Check whether a react node is a built in dom element (i.e. `div`, `span`)
  *
- * @param element
+ * @param value - the value to check
  */
-export const isReactDOMElement = (element: ReactNode) => {
-  return isValidElement(element) && isString(element.type);
+export const isReactDOMElement = <GProps extends {} = any>(
+  value: unknown,
+): value is ReactElement<GProps> & { type: string } => {
+  return isObject(value) && isValidElement(value) && isString(value.type);
 };
+
+/**
+ * Checks whether the element is a react fragment
+ *
+ * @param value - the value to check
+ */
+export const isReactFragment = <GProps extends {} = any>(
+  value: unknown,
+): value is ReactElement<GProps> & { type: typeof Fragment } =>
+  isObject(value) && isValidElement(value) && value.type === Fragment;
 
 /**
  * Retrieve the element props for JSX Element
@@ -43,43 +55,6 @@ export const asDefaultProps = <GProps extends {}>() => <GDefaultProps extends Pa
 ): GDefaultProps => props;
 
 /**
- * Searches the react tree for a child node with the requested key and updates
- * it using the updater function once found
- *
- * @param children
- * @param key
- * @param updateFunction
- */
-export const updateChildWithKey = (
-  children: ReactNode,
-  key: string,
-  updateFunction: (child: JSX.Element) => JSX.Element,
-): ReactNode[] => {
-  let keyFound = false;
-  return Children.map(children, child => {
-    if (keyFound) {
-      return child;
-    }
-
-    if (!isValidElement(child)) {
-      return child;
-    }
-
-    if (child.key === key) {
-      keyFound = true;
-      return updateFunction(child);
-    }
-
-    const subChildren = child.props && Cast(child.props).children;
-    if (subChildren) {
-      return updateChildWithKey(subChildren, key, updateFunction);
-    }
-
-    return child;
-  });
-};
-
-/**
  * Checks if this element has a type of any RemirrorComponent
  *
  * @param value - the value to check
@@ -99,6 +74,16 @@ const isRemirrorElementOfType = (type: RemirrorElementType) => <GOptions extends
 ): value is RemirrorElement<GOptions> => isRemirrorElement(value) && value.type.$$remirrorType === type;
 
 /**
+ * Checks to see if this is the wrapper we've created around the RemirrorContent.Provider component.
+ *
+ * This is used to help determine how the Remirror component will be rendered. `getRootProps` is the main reason
+ * for this, and I'm not even sure the effort is worth it.
+ *
+ * @param value - the value to check
+ */
+export const isRemirrorContextProvider = isRemirrorElementOfType(RemirrorElementType.ContextProvider);
+
+/**
  * Checks if this is a RemirrorExtension type. These are used to configure the extensions that determine
  * the underlying behaviour of the editor.
  *
@@ -107,23 +92,23 @@ const isRemirrorElementOfType = (type: RemirrorElementType) => <GOptions extends
 export const isRemirrorExtension = isRemirrorElementOfType(RemirrorElementType.Extension);
 
 /**
- * Finds if this is a RemirrorEditor (which provides the RemirrorInjectedProps into the context);
+ * Finds if this is a RemirrorProvider (which provides the RemirrorInjectedProps into the context);
  *
  * @param value - the value to check
  */
-export const isRemirrorEditorProvider = isRemirrorElementOfType(RemirrorElementType.EditorProvider);
+export const isRemirrorProvider = isRemirrorElementOfType(RemirrorElementType.EditorProvider);
 
 /**
- * Checks if this is a ManagedRemirrorEditor which pulls in the manager from the context and places it's children
- * inside the RemirrorEditor
+ * Checks if this is a ManagedRemirrorProvider which pulls in the manager from the context and places it's children
+ * inside the RemirrorProvider
  *
  * @param value - the value to check
  */
-export const isManagedRemirrorEditor = isRemirrorElementOfType(RemirrorElementType.ManagedEditorProvider);
+export const isManagedRemirrorProvider = isRemirrorElementOfType(RemirrorElementType.ManagedEditorProvider);
 
 /**
  * Clones an element while also enabling the css prop on jsx elements at the same time.
- * This is used for emotion which needs to inject the css property which React.cloneElement doesn't do.
+ * This is used for emotion which needs to inject the css property which React.cloneElement doesn't support.
  *
  * @param element - the element to clone
  * @param props - the props to pass through to the cloned element
@@ -131,7 +116,11 @@ export const isManagedRemirrorEditor = isRemirrorElementOfType(RemirrorElementTy
  *
  * @returns a cloned react element with builtin support for the emotion `css` props
  */
-export const cloneElement = (element: any, props: any, ...rest: ReactNode[]) => {
+export const cloneElement = <GProps extends PropsWithChildren<{ ref?: LegacyRef<any> }> = any>(
+  element: ReactElement<GProps>,
+  props: GProps,
+  ...rest: ReactNode[]
+) => {
   const children = uniqueArray([
     ...(isArray(props.children) ? props.children : props.children ? [props.children] : []),
     ...(isArray(rest) ? rest : rest ? [rest] : []),
@@ -141,10 +130,19 @@ export const cloneElement = (element: any, props: any, ...rest: ReactNode[]) => 
     element.type,
     {
       key: element.key,
-      ref: element.ref,
+      ref: element.props.ref,
       ...element.props,
       ...props,
     },
     ...children,
   );
+};
+
+/**
+ * Will throw an error if the child provided is not a function.
+ */
+export const childIsFunction = (children: unknown) => {
+  if (!isFunction(children)) {
+    throw new Error('The child argument to the Remirror component must be a function.');
+  }
 };

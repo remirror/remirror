@@ -1,3 +1,4 @@
+import minDocument from 'min-document';
 import {
   DOMParser,
   DOMSerializer,
@@ -29,12 +30,13 @@ import {
   ProsemirrorNode,
   RegexTuple,
   RemirrorContentType,
+  RenderEnvironment,
   ResolvedPos,
   SchemaParams,
   Selection,
   Transaction,
 } from '../types';
-import { bool, Cast, isFunction, isNumber, isObject, isString } from './base';
+import { bool, Cast, environment, isFunction, isNumber, isObject, isString } from './base';
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
@@ -470,29 +472,23 @@ export const getNearestNonTextNode = (domNode: Node) =>
  *
  * @param state - the editor state
  */
-export function atDocEnd(state: EditorState): boolean {
-  const { selection, doc } = state;
-  return doc.nodeSize - selection.$to.pos - 2 === selection.$to.depth;
-}
+export const atDocEnd = (state: EditorState): boolean =>
+  state.doc.nodeSize - state.selection.$to.pos - 2 === state.selection.$to.depth;
 
 /**
  * Checks whether the cursor is at the beginning of the state.doc
  *
  * @param state - the editor state
  */
-export function atDocStart(state: EditorState): boolean {
-  const { selection } = state;
-  return selection.$from.pos === selection.$from.depth;
-}
+export const atDocStart = (state: EditorState): boolean =>
+  state.selection.$from.pos === state.selection.$from.depth;
 
 /**
  * Get the start position of the parent of the current resolve position
  *
  * @param pmPosition - the resolved prosemirror position
  */
-export function startPositionOfParent(pmPosition: ResolvedPos): number {
-  return pmPosition.start(pmPosition.depth);
-}
+export const startPositionOfParent = (pmPosition: ResolvedPos): number => pmPosition.start(pmPosition.depth);
 
 /**
  * Get the end position of the parent of the current resolve position
@@ -501,9 +497,7 @@ export function startPositionOfParent(pmPosition: ResolvedPos): number {
  *
  * @public
  */
-export function endPositionOfParent(pmPosition: ResolvedPos): number {
-  return pmPosition.end(pmPosition.depth) + 1;
-}
+export const endPositionOfParent = (pmPosition: ResolvedPos): number => pmPosition.end(pmPosition.depth) + 1;
 
 /**
  * Retrieve the current position of the cursor
@@ -513,9 +507,8 @@ export function endPositionOfParent(pmPosition: ResolvedPos): number {
  *
  * @public
  */
-export function getCursor(selection: Selection): ResolvedPos | null | undefined {
-  return isTextSelection(selection) ? selection.$cursor : undefined;
-}
+export const getCursor = (selection: Selection): ResolvedPos | null | undefined =>
+  isTextSelection(selection) ? selection.$cursor : undefined;
 
 /**
  * Checks to see whether a nodeMatch checker is a tuple
@@ -625,13 +618,9 @@ export interface StringHandlerParams {
 export const createDocumentNode = ({
   content,
   schema,
-  doc = document,
+  doc,
   stringHandler,
 }: CreateDocumentNodeParams): ProsemirrorNode => {
-  // if (isEditorState(content)) {
-  //   return content.doc;
-  // }
-
   if (isProsemirrorNode(content)) {
     return content;
   }
@@ -646,11 +635,28 @@ export const createDocumentNode = ({
   }
 
   if (isString(content) && stringHandler) {
-    // TODO fix this in SSR
     return stringHandler({ doc, content, schema });
   }
 
   return schema.nodeFromJSON(EMPTY_PARAGRAPH_NODE);
+};
+
+/**
+ * Checks which environment should be used.
+ *
+ * @param forceEnvironment - force a specific environment
+ */
+export const shouldUseDOMEnvironment = (forceEnvironment?: RenderEnvironment) => {
+  return forceEnvironment === 'dom' || (environment.isBrowser && !forceEnvironment);
+};
+
+/**
+ * Retrieves the document based on the environment we are currently in.
+ *
+ * @param forceEnvironment - force a specific environment
+ */
+export const getDocument = (forceEnvironment?: RenderEnvironment) => {
+  return shouldUseDOMEnvironment(forceEnvironment) ? document : minDocument;
 };
 
 interface CustomDocParams {
@@ -672,7 +678,7 @@ interface FromNodeParams extends SchemaParams, ProsemirrorNodeParams, Partial<Cu
  *
  * @public
  */
-export const toHTML = ({ node, schema, doc = document }: FromNodeParams) => {
+export const toHTML = ({ node, schema, doc = getDocument() }: FromNodeParams) => {
   const element = doc.createElement('div');
   element.appendChild(toDOM({ node, schema, doc }));
 
@@ -703,7 +709,7 @@ interface FromStringParams extends Partial<CustomDocParams>, SchemaParams {
  *
  * @public
  */
-export const fromHTML = ({ content, schema, doc = document }: FromStringParams): ProsemirrorNode => {
+export const fromHTML = ({ content, schema, doc = getDocument() }: FromStringParams): ProsemirrorNode => {
   const element = doc.createElement('div');
   element.innerHTML = content.trim();
   return DOMParser.fromSchema(schema).parse(element);

@@ -23,7 +23,7 @@
     "dev": "run-p watch:*",
     "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
     "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
-    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
     "test": "jest",
     "test:live": "cross-env TEST_ENV=live jest",
     "typecheck": "tsc -p ./tsconfig.json --noEmit",
@@ -40,16 +40,16 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@remirror/core": "0.1.0",
     "@remirror/core-extensions": "0.1.0",
+    "@remirror/editor-twitter": "0.1.0",
+    "@remirror/editor-wysiwyg": "0.1.0",
     "@remirror/extension-emoji": "0.1.0",
     "@remirror/react": "0.1.0",
     "@remirror/react-utils": "0.1.0",
-    "@remirror/ui-twitter": "0.1.0",
-    "@remirror/ui-wysiwyg": "0.1.0",
-    "deepmerge": "^3.2.0",
+    "deepmerge": "^3.2.1",
     "emoji-mart": "2.11.1",
     "emotion-theming": "^10",
     "keycode": "^2.2.0",
-    "match-sorter": "3.1.0"
+    "match-sorter": "3.1.1"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
@@ -61,9 +61,5 @@
     "access": "public"
   },
   "cjs": "lib/dist/showcase.cjs.js",
-  "umdGlobals": {
-    "react": "React",
-    "@remirror/core": "RemirrorCore",
-    "react-dom": "ReactDOM"
-  }
+  "sideEffects": false
 }

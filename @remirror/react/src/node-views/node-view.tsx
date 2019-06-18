@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentType } from 'react';
 
 import {
   Attrs,
@@ -25,7 +25,7 @@ export interface NodeViewComponentProps<GAttrs = any> extends EditorViewParams {
 }
 
 export interface CreateNodeViewParams<GProps extends PlainObject = {}> {
-  Component: React.ComponentType<NodeViewComponentProps & GProps>;
+  Component: ComponentType<NodeViewComponentProps & GProps>;
   getPortalContainer: () => NodeViewPortalContainer;
   props: GProps;
   style?: Interpolation;
@@ -52,7 +52,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     private getPosition: GetPosition,
     private getPortalContainer: () => NodeViewPortalContainer,
     public props: GProps = {} as GProps,
-    private Component: React.ComponentType<NodeViewComponentProps & GProps>,
+    private Component: ComponentType<NodeViewComponentProps & GProps>,
     private hasContext: boolean = false,
     private style: Interpolation = {},
   ) {}

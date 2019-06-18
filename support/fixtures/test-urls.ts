@@ -14,12 +14,12 @@ export enum Deployment {
 export const URLDescriptor = {
   twitter: [
     ['Storybook', 'http://localhost:3002/iframe.html?id=twitter-ui--basic'],
-    ['NextJS', 'http://localhost:3001/ui/twitter'],
+    ['NextJS', 'http://localhost:3001/editor/twitter'],
     ['Docz', 'http://localhost:3000/showcase/twitter'],
   ],
   wysiwyg: [
-    ['Storybook', 'http://localhost:3002/iframe.html?id=wysiwyg-ui--basic'],
-    ['NextJS', 'http://localhost:3001/ui/wysiwyg'],
+    ['Storybook', 'http://localhost:3002/iframe.html?id=wysiwyg-editor--basic'],
+    ['NextJS', 'http://localhost:3001/editor/wysiwyg'],
     ['Docz', 'http://localhost:3000/showcase/wysiwyg'],
   ],
 };

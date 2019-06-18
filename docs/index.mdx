@@ -38,7 +38,7 @@ route: /
 
 ⚠️**Warning**: This is still a prerelease library. The docs are poor and the API is subject to change. Over the next few months the quality will be bumped up and the use cases will grow.
 
-For now to learn and understand, the best way is via looking through the `@remirror/ui-*` libraries.
+For now to learn and understand, the best way is via looking through the `@remirror/editor-*` libraries.
 
 ### Prerequisites
 
@@ -61,7 +61,7 @@ import { memoize, EMPTY_OBJECT_NODE } from '@remirror/core';
 import { Bold, Italic, Underline } from '@remirror/core-extensions';
 import {
   bubblePositioner,
-  ManagedRemirrorEditor,
+  ManagedRemirrorProvider,
   RemirrorEventListener,
   RemirrorExtension,
   RemirrorManager,
@@ -130,15 +130,15 @@ const EditorLayout: FunctionComponent = () => {
       <RemirrorExtension Constructor={Bold} />
       <RemirrorExtension Constructor={Italic} />
       <RemirrorExtension Constructor={Underline} />
-      <ManagedRemirrorEditor
-        attributes={{ 'data-test-id': 'editor-instance' }}
+      <ManagedRemirrorProvider
+        attributes={{ 'data-testid': 'editor-instance' }}
         onChange={onChange}
         placeholder='Start typing for magic...'
         autoFocus={true}
         initialContent={EMPTY_OBJECT_NODE}
       >
         <SimpleFloatingMenu />
-      </ManagedRemirrorEditor>
+      </ManagedRemirrorProvider>
     </RemirrorManager>
   );
 };

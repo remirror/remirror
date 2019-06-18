@@ -29,7 +29,7 @@
 
 ## Getting Started
 
-⚠️**Warning**: This is still a work in progress library. The docs are being worked on and the API is still subject to breaking changes for minor releases. For now to learn and understand, the best way is via looking through the `@remirror/ui-*` libraries.
+⚠️**Warning**: This is still a work in progress library. The docs are being worked on and the API is still subject to breaking changes for minor releases. For now to learn and understand, the best way is via looking through the `@remirror/editor-*` libraries.
 
 ### Prerequisites
 
@@ -37,7 +37,7 @@
 - React `>= 16.8`
 - Yarn `>= 1.13`
 
-[![Epic Mode Heart Example](/support/assets/wysiwyg.png)](https://docs.remirror.org/editors/ui-wysiwyg)
+[![Epic Mode Heart Example](/support/assets/wysiwyg.png)](https://docs.remirror.org/editors/editor-wysiwyg)
 
 ### Installation
 
@@ -54,7 +54,7 @@ import { memoize, EMPTY_OBJECT_NODE } from '@remirror/core';
 import { Bold, Italic, Underline } from '@remirror/core-extensions';
 import {
   bubblePositioner,
-  ManagedRemirrorEditor,
+  ManagedRemirrorProvider,
   RemirrorEventListener,
   RemirrorExtension,
   RemirrorManager,
@@ -123,15 +123,15 @@ const EditorLayout: FunctionComponent = () => {
       <RemirrorExtension Constructor={Bold} />
       <RemirrorExtension Constructor={Italic} />
       <RemirrorExtension Constructor={Underline} />
-      <ManagedRemirrorEditor
-        attributes={{ 'data-test-id': 'editor-instance' }}
+      <ManagedRemirrorProvider
+        attributes={{ 'data-testid': 'editor-instance' }}
         onChange={onChange}
         placeholder='Start typing for magic...'
         autoFocus={true}
         initialContent={EMPTY_OBJECT_NODE}
       >
         <SimpleFloatingMenu />
-      </ManagedRemirrorEditor>
+      </ManagedRemirrorProvider>
     </RemirrorManager>
   );
 };
@@ -174,9 +174,9 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({ particleEffect, placeho
         <RemirrorExtension Constructor={Italic} />
         <RemirrorExtension Constructor={Underline} />
         <RemirrorExtension Constructor={EpicMode} particleEffect={particleEffect} shake={shake} />
-        <ManagedRemirrorEditor
+        <ManagedRemirrorProvider
           autoFocus={true}
-          attributes={{ 'data-test-id': 'editor-instance' }}
+          attributes={{ 'data-testid': 'editor-instance' }}
           placeholder={placeholder}
           editorStyles={editorStyles}
         />
@@ -194,7 +194,7 @@ export const EpicModeHeart: FunctionComponent = () => (
 
 ### Twitter
 
-![Twitter UI Example](/support/assets/ui-twitter-example.gif)
+![Twitter UI Example](/support/assets/editor-twitter-example.gif)
 
 <br />
 

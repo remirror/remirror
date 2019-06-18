@@ -160,8 +160,8 @@ declare module 'signal-exit' {
 
     /**
      * The exit
-     * @params code - the exitCode number or null if artifically induced
-     * @params signal - the string signal which triggered the exit or null when artificially triggered
+     * @param code - the exitCode number or null if artifically induced
+     * @param signal - the string signal which triggered the exit or null when artificially triggered
      */
     type ExitListener = (code: number | null, signal: string | null) => void;
   }

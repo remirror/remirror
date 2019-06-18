@@ -23,7 +23,7 @@
     "dev": "run-p dev:*",
     "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
     "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
-    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "types": "lib/index.d.ts",
@@ -31,6 +31,7 @@
     "@babel/runtime": "^7.4.5",
     "@emotion/core": "^10",
     "@remirror/core": "0.1.0",
+    "@remirror/react-utils": "0.1.0",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-history": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
@@ -54,7 +55,5 @@
     "access": "public"
   },
   "cjs": "lib/dist/core-extensions.cjs.js",
-  "umdGlobals": {
-    "@remirror/core": "RemirrorCore"
-  }
+  "sideEffects": false
 }

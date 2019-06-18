@@ -20,7 +20,7 @@
     "build": "run-p build:*",
     "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
     "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "types": "lib/index.d.ts",
@@ -46,14 +46,5 @@
     "access": "public"
   },
   "cjs": "lib/dist/remirror.cjs.js",
-  "readme": "",
-  "umdGlobals": {
-    "react": "React",
-    "react-dom": "ReactDOM",
-    "@remirror/core": "RemirrorCore",
-    "@remirror/core-extensions": "RemirrorCoreExtensions",
-    "@remirror/renderer-react": "RemirrorRendererReact",
-    "@remirror/react": "RemirrorReact",
-    "@remirror/extension-mention": "RemirrorMentionsExtension"
-  }
+  "sideEffects": false
 }

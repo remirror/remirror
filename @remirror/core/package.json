@@ -12,6 +12,9 @@
   "version": "0.1.0",
   "main": "lib/index.js",
   "module": "lib/dist/core.esm.js",
+  "browser": {
+    "min-document": false
+  },
   "files": [
     "internal",
     "lib",
@@ -27,7 +30,7 @@
     "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
     "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
     "document": "node ../api-documenter/lib/start.js markdown --input-folder temp --output-folder ../../docs/api/@remirror",
-    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "types": "lib/index.d.ts",
@@ -48,10 +51,11 @@
     "@types/prosemirror-schema-list": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-transform": "^1.1.0",
-    "deepmerge": "^3.2.0",
+    "deepmerge": "^3.2.1",
     "emotion": "^10.0.7",
     "fast-deep-equal": "^2.0.1",
     "memoize-one": "5.0.4",
+    "min-document": "2.19.0",
     "nanoevents": "2.0.0",
     "nanoid": "2.0.3",
     "object.omit": "3.0.0",
@@ -76,5 +80,5 @@
     "access": "public"
   },
   "cjs": "lib/dist/core.cjs.js",
-  "umdGlobals": {}
+  "sideEffects": false
 }

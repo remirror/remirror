@@ -24,7 +24,7 @@
     "dev": "run-p dev:*",
     "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
     "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
-    "lint": "tslint --project tsconfig.json --config ../../tslint.json",
+    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "types": "lib/index.d.ts",
@@ -41,7 +41,5 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-multicursor.cjs.js",
-  "umdGlobals": {
-    "@remirror/core": "RemirrorCore"
-  }
+  "sideEffects": false
 }

@@ -1,9 +1,7 @@
 {
   "extends": "../../support/tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "react",
-    "outDir": "lib",
-    "types": ["jest", "jest-extended", "jest-axe", "jest-dom/extend-expect", "jest-emotion"]
+    "outDir": "lib"
   },
   "include": ["src"]
 }

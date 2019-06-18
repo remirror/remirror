@@ -1,7 +1,6 @@
 {
   "extends": "../../support/tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "react",
     "outDir": "lib",
     "types": ["jest", "jest-extended", "jest-enzyme", "jest-environment-enzyme"]
   },

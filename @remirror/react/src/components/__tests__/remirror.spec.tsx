@@ -4,10 +4,10 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { EditorState, fromHTML } from '@remirror/core';
-import { InjectedRemirrorProps, RemirrorEditorStateListenerParams } from '@remirror/react-utils';
+import { InjectedRemirrorProps, RemirrorStateListenerParams } from '@remirror/react-utils';
 import { createTestManager } from '@test-fixtures/schema-helpers';
 import { Remirror } from '../';
-import { RemirrorEditorProps } from '../providers';
+import { RemirrorProviderProps } from '../providers';
 
 const textContent = `This is editor text`;
 const label = 'Remirror editor';
@@ -41,6 +41,7 @@ test('TextEditor is accessible', async () => {
   expect(results).toHaveNoViolations();
 });
 
+// Something
 test('should not render the editor when no render prop available', () => {
   const spy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
   expect(() =>
@@ -87,17 +88,6 @@ test('can update contenteditable with props', () => {
   expect(getByLabelText(label)).toHaveAttribute('contenteditable', 'false');
 });
 
-test('should render a unique class on the root document', () => {
-  const mock = jest.fn(() => <div />);
-  const { getByLabelText } = render(
-    <Remirror label={label} {...handlers} manager={createTestManager()}>
-      {mock}
-    </Remirror>,
-  );
-  const editorNode = getByLabelText(label);
-  expect(editorNode.className).toMatch(/remirror-[A-Za-z0-9_-]{5}/);
-});
-
 describe('initialContent', () => {
   it('should render with string content', () => {
     const { container } = render(
@@ -142,7 +132,7 @@ describe('initialContent', () => {
 describe('Remirror Controlled Component', () => {
   const initialContent = `<p>Hello</p>`;
   const expectedContent = `<p>World</p>`;
-  let props: RemirrorEditorProps;
+  let props: RemirrorProviderProps;
   beforeEach(() => {
     props = {
       label,
@@ -154,7 +144,7 @@ describe('Remirror Controlled Component', () => {
 
   it('should call onStateChange', () => {
     let value: EditorState | null = null;
-    const onStateChange = jest.fn<void, [RemirrorEditorStateListenerParams]>(params => {
+    const onStateChange = jest.fn<void, [RemirrorStateListenerParams]>(params => {
       value = params.newState;
     });
     render(
@@ -171,7 +161,7 @@ describe('Remirror Controlled Component', () => {
   it('should only update the state when value changes', () => {
     let testValue: EditorState | null = null;
     let setContent: InjectedRemirrorProps['setContent'] = jest.fn();
-    const onStateChange = jest.fn<void, [RemirrorEditorStateListenerParams]>(params => {
+    const onStateChange = jest.fn<void, [RemirrorStateListenerParams]>(params => {
       testValue = params.newState;
     });
 

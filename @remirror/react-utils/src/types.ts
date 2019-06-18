@@ -1,8 +1,9 @@
+import { Interpolation, ObjectInterpolation } from '@emotion/core';
 import {
   CompareStateParams,
-  EditorSchema,
   EditorState,
   EditorStateParams,
+  EditorView,
   EditorViewParams,
   ElementParams,
   Extension,
@@ -14,13 +15,11 @@ import {
   PositionParams,
   RemirrorActions,
   RemirrorContentType,
+  RenderEnvironment,
   StringHandlerParams,
   Transaction,
 } from '@remirror/core';
-import { RenderEnvironment } from '@remirror/react-ssr';
-import { Interpolation, ObjectInterpolation } from 'emotion';
-import { EditorView } from 'prosemirror-view';
-import { ComponentClass, ComponentType, FC, ReactElement } from 'react';
+import { ComponentClass, ComponentType, FC, ReactElement, ReactNode, Ref } from 'react';
 
 export interface Positioner {
   /**
@@ -69,11 +68,11 @@ export interface GetRootPropsConfig<GRefKey extends string = 'ref'> extends RefP
 }
 
 export type RefKeyRootProps<GRefKey extends string = 'ref'> = {
-  [P in Exclude<GRefKey, 'children' | 'key'>]: React.Ref<any>;
-} & { css: Interpolation; key: string } & PlainObject;
+  [P in Exclude<GRefKey, 'key'>]: Ref<any>;
+} & { css: Interpolation; key: string; children: ReactNode } & PlainObject;
 
 export type GetPositionerReturn<GRefKey extends string = 'ref'> = PositionerProps &
-  { [P in GRefKey]: React.Ref<any> };
+  { [P in GRefKey]: Ref<any> };
 
 /**
  * These are the props passed to the render function provided when setting up your editor.
@@ -86,7 +85,7 @@ export interface InjectedRemirrorProps {
   /**
    * The prosemirror view
    */
-  view: EditorView<EditorSchema>;
+  view: EditorView;
 
   /**
    * A map of actions available the
@@ -94,11 +93,50 @@ export interface InjectedRemirrorProps {
   actions: RemirrorActions;
 
   /**
-   * A unique id for the editor instance. Useful for styling with the format `.remirror-{NUM}`
+   * The unique id for the editor instance
    */
   uid: string;
+
+  /**
+   * Clears all editor content
+   *
+   * @param triggerOnChange - whether onChange handlers should be triggered by the update
+   */
   clearContent(triggerOnChange?: boolean): void;
+
+  /**
+   * Replace all editor content with the new content.
+   *
+   * @remarks
+   *
+   * Allows for the editor content to be overridden by force.
+   *
+   * @param triggerOnChange - whether onChange handlers should be triggered by the update
+   */
   setContent(content: RemirrorContentType, triggerOnChange?: boolean): void;
+
+  /**
+   * The function returns props when called to spread on an element and make it the editor root.
+   *
+   * @remarks
+   *
+   * In order to support SSR this should only be spread on a component with NO children.
+   *
+   * **Example with nested components**
+   * ```tsx
+   * import { ManagedRemirrorProvider, RemirrorManager } from '@remirror/react';
+   *
+   * const Editor = () => {
+   *   return (
+   *     <RemirrorManager>
+   *       <ManagedRemirrorProvider>
+   *         <div {...getRootProps()} />
+   *       </ManagedRemirrorProvider>
+   *     </RemirrorManager>
+   *   );
+   * }
+   * ```
+   */
   getRootProps<GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,
   ): RefKeyRootProps<GRefKey>;
@@ -119,6 +157,11 @@ export interface InjectedRemirrorProps {
   state: CompareStateParams;
 }
 
+/**
+ * A function that takes the injected remirror params and returns JSX to render.
+ *
+ * @param - injected remirror params
+ */
 export type RenderPropFunction = (params: InjectedRemirrorProps) => JSX.Element;
 
 export interface RemirrorGetterParams {
@@ -140,16 +183,17 @@ export interface RemirrorGetterParams {
   getJSON(): ObjectNode;
 
   /**
-   * Get the full JSON of the root node. This should be used when storing the JSON data in a database.
+   * Get a representation of the editor content as an ObjectNode which can be used to set content for
+   * and editor.
    */
-  getDocJSON(): ObjectNode;
+  getObjectNode(): ObjectNode;
 }
 
 export interface BaseListenerParams extends EditorViewParams, RemirrorGetterParams {}
 
 export interface RemirrorEventListenerParams extends EditorStateParams, BaseListenerParams {}
 
-export interface RemirrorEditorStateListenerParams extends CompareStateParams, BaseListenerParams {
+export interface RemirrorStateListenerParams extends CompareStateParams, BaseListenerParams {
   /**
    * Allows for the creation of a new state object with the desired content
    */
@@ -179,6 +223,21 @@ export interface RemirrorProps extends StringHandlerParams {
   initialContent: RemirrorContentType;
 
   /**
+   * If this exists the editor becomes a controlled component. Nothing will be updated unless you explicitly
+   * set the value prop to the updated state.
+   *
+   * Without a deep understanding of Prosemirror this is not recommended.
+   *
+   * @default undefined
+   */
+  onStateChange?(params: RemirrorStateListenerParams): void;
+
+  /**
+   * When onStateChange is defined this prop is used to set the next state value of the remirror editor.
+   */
+  value?: EditorState | null;
+
+  /**
    * Adds attributes directly to the prosemirror html element.
    *
    * @defaultValue `{}`
@@ -200,36 +259,14 @@ export interface RemirrorProps extends StringHandlerParams {
   autoFocus?: boolean;
 
   /**
-   * Called on every change in the Prosemirror state
+   * Event listener called whenever the editor gains focus
    */
-  onChange?: RemirrorEventListener;
-
-  // Controlled Remirror Components
+  onFocus?: (params: RemirrorEventListenerParams, event: Event) => void;
 
   /**
-   * If this exists the editor becomes a controlled component. Nothing will be updated unless you explicitly
-   * set the value prop to the updated state.
-   *
-   * Without a deep understanding of Prosemirror this is not recommended.
-   *
-   * @default undefined
+   * Event listener called whenever the editor is blurred
    */
-  onStateChange?(params: RemirrorEditorStateListenerParams): void;
-
-  /**
-   * When onStateChange is defined this prop is used to set the next state value of the remirror editor.
-   */
-  value?: EditorState | null;
-
-  /**
-   * Method called onFocus
-   */
-  onFocus?: RemirrorEventListener;
-
-  /**
-   * Method called onBlur
-   */
-  onBlur?: RemirrorEventListener;
+  onBlur?: (params: RemirrorEventListenerParams, event: Event) => void;
 
   /**
    * Called on the first render when the prosemirror instance first becomes available
@@ -237,12 +274,22 @@ export interface RemirrorProps extends StringHandlerParams {
   onFirstRender?: RemirrorEventListener;
 
   /**
-   * Render function.
+   * Called on every change to the Prosemirror state
+   */
+  onChange?: RemirrorEventListener;
+
+  /**
+   * The render prop that takes the injected remirror params an returns an element to render. The editor view is automatically
+   * attached to the DOM.
    */
   children: RenderPropFunction;
+
   /**
-   * Hook called when the editor is dispatching an actions. Use this to attach additional actions or to update outside state
-   * based on what's changed within the editor component.
+   * A method called when the editor is dispatching actions.
+   *
+   * @remarks
+   * Use this to attach additional actions or to update outside state based on what's changed
+   * within the editor component.
    */
   dispatchTransaction?: ((tr: Transaction) => void) | null;
 
@@ -366,6 +413,10 @@ export enum RemirrorElementType {
   Editor = 'editor',
   Manager = 'manager',
   ManagerProvider = 'manager-provider',
+  /**
+   * Used to identify the ContextProviderWrapper
+   */
+  ContextProvider = 'context-provider',
 }
 
 export type RemirrorExtensionProps<

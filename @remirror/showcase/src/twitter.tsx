@@ -4,9 +4,9 @@ import {
   ActiveTwitterTagData,
   ActiveTwitterUserData,
   OnQueryChangeParams,
-  TwitterUI,
+  TwitterEditor,
   TwitterUserData,
-} from '@remirror/ui-twitter';
+} from '@remirror/editor-twitter';
 import emojiData from 'emoji-mart/data/all.json';
 
 import { startCase, take } from '@remirror/core';
@@ -35,7 +35,7 @@ const userData: TwitterUserData[] = fakeUsers.results.map(
   }),
 );
 
-export const ExampleTwitterUI = () => {
+export const ExampleTwitterEditor = () => {
   const [mention, setMention] = useState<OnQueryChangeParams>();
 
   const onMentionStateChange = (params: OnQueryChangeParams) => {
@@ -58,9 +58,9 @@ export const ExampleTwitterUI = () => {
       : [];
 
   return (
-    <TwitterUI
+    <TwitterEditor
       emojiData={emojiData}
-      attributes={{ 'data-test-id': 'ui-twitter' }}
+      attributes={{ 'data-testid': 'editor-twitter' }}
       userData={userMatches}
       tagData={tagMatches}
       onMentionStateChange={onMentionStateChange}

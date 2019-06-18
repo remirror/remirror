@@ -22,7 +22,7 @@ interface InsertTextParams extends TestEditorViewParams {
  * @param params.text
  * @param params.from
  */
-export function insertText({ view, text, start: from }: InsertTextParams) {
+export const insertText = ({ view, text, start: from }: InsertTextParams) => {
   const keys = Keyboard.create({
     target: view.dom,
     useFakeTimer: true,
@@ -37,7 +37,7 @@ export function insertText({ view, text, start: from }: InsertTextParams) {
   });
 
   keys.end();
-}
+};
 
 interface KeyboardShortcutParams extends TestEditorViewParams {
   /**
@@ -53,7 +53,7 @@ interface KeyboardShortcutParams extends TestEditorViewParams {
  * @param params.view
  * @param params.shortcut
  */
-export function keyboardShortcut({ view, shortcut }: KeyboardShortcutParams) {
+export const keyboardShortcut = ({ view, shortcut }: KeyboardShortcutParams) => {
   Keyboard.create({
     target: view.dom,
     useFakeTimer: true,
@@ -62,19 +62,19 @@ export function keyboardShortcut({ view, shortcut }: KeyboardShortcutParams) {
     .start()
     .mod({ text: shortcut })
     .end();
-}
+};
 
 interface FireEventAtPositionParams extends TestEditorViewParams, FireParams {}
 
 /**
  * Fires an event at the provided position or the current selected position in the dom.
  */
-export function fireEventAtPosition({
+export const fireEventAtPosition = ({
   view,
   event,
   options = {},
   position = view.state.selection.anchor,
-}: FireEventAtPositionParams) {
+}: FireEventAtPositionParams) => {
   const element = findDOMRefAtPos(position, view)!;
   const syntheticEvents = createEvents(event, options);
 
@@ -95,7 +95,7 @@ export function fireEventAtPosition({
   if (event === 'click' && !view.someProp('handleClick', f => f(view, position, syntheticEvents[0]))) {
     syntheticEvents.forEach(syntheticEvent => view.dispatchEvent(syntheticEvent));
   }
-}
+};
 
 interface ProcessTextParams extends SchemaParams {
   /**
@@ -133,7 +133,7 @@ interface InsertParams extends TestEditorViewParams {
  * @param params.view
  * @param params.content
  */
-export function replaceSelection({ view, content }: InsertParams): Tags {
+export const replaceSelection = ({ view, content }: InsertParams): Tags => {
   const { state } = view;
   const { from, to } = state.selection;
   const { nodes, tags } = Array.isArray(content)
@@ -142,7 +142,7 @@ export function replaceSelection({ view, content }: InsertParams): Tags {
   const tr = state.tr.replaceWith(from, to, nodes);
   view.dispatch(tr);
   return offsetTags(tags, from);
-}
+};
 
 interface DispatchTextSelectionParams extends TestEditorViewParams {
   start: number;

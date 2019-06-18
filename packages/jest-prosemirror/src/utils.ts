@@ -17,11 +17,11 @@ import { createEditor, pm, selectionFor, taggedDocHasSelection } from './test-he
  * @param command
  * @param [result]
  */
-export function apply(
+export const apply = (
   taggedDoc: TaggedProsemirrorNode,
   command: CommandFunction,
   result?: TaggedProsemirrorNode,
-): [boolean, TaggedProsemirrorNode, EditorState] {
+): [boolean, TaggedProsemirrorNode, EditorState] => {
   const { state, view } = createEditor(taggedDoc);
   let newState = state;
 
@@ -34,4 +34,4 @@ export function apply(
     return [pm.eq(newState.selection, selectionFor(result)), result || taggedDoc, newState];
   }
   return [true, Cast<TaggedProsemirrorNode>(newState.doc), newState];
-}
+};

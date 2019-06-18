@@ -2,19 +2,29 @@ import { render } from '@testing-library/react';
 import React, { FC } from 'react';
 
 import { InjectedRemirrorProps } from '@remirror/react-utils';
+import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
 import { withRemirror } from '../../hocs';
 import { useRemirror } from '../../hooks';
-import { ManagedRemirrorEditor } from '../providers';
+import { ManagedRemirrorProvider } from '../providers';
 import { RemirrorManager } from '../remirror-manager';
 
-describe('ManagedRemirrorEditor', () => {
+describe('ManagedRemirrorProvider', () => {
   const TestComponent: FC = () => {
     const { getRootProps } = useRemirror();
-    return <div data-testid='target' {...getRootProps()} />;
+    return (
+      <div>
+        <div data-testid='target' {...getRootProps()} />
+      </div>
+    );
   };
 
   const HOC: FC<InjectedRemirrorProps> = ({ getRootProps }) => {
-    return <div data-testid='target' {...getRootProps()} />;
+    const rootProps = getRootProps({ 'data-testid': 'target' });
+    return (
+      <div>
+        <div {...rootProps} />
+      </div>
+    );
   };
 
   const TestComponentHOC = withRemirror(HOC);
@@ -22,9 +32,9 @@ describe('ManagedRemirrorEditor', () => {
   it('supports getRootProps via hooks', () => {
     const { getByRole, getByTestId } = render(
       <RemirrorManager>
-        <ManagedRemirrorEditor customRootProp={true}>
+        <ManagedRemirrorProvider initialContent={docNodeBasicJSON}>
           <TestComponent />
-        </ManagedRemirrorEditor>
+        </ManagedRemirrorProvider>
       </RemirrorManager>,
     );
     const target = getByTestId('target');
@@ -35,13 +45,14 @@ describe('ManagedRemirrorEditor', () => {
   it('supports getRootProps via HOC', () => {
     const { getByRole, getByTestId } = render(
       <RemirrorManager>
-        <ManagedRemirrorEditor customRootProp={true}>
+        <ManagedRemirrorProvider initialContent={docNodeBasicJSON}>
           <TestComponentHOC />
-        </ManagedRemirrorEditor>
+        </ManagedRemirrorProvider>
       </RemirrorManager>,
     );
     const target = getByTestId('target');
     const editor = getByRole('textbox');
     expect(target).toContainElement(editor);
+    expect(editor).toHaveTextContent('basic');
   });
 });

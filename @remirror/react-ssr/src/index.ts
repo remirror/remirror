@@ -1,2 +1,2 @@
-export * from './view';
-export * from './component';
+export * from './view-ssr';
+export * from './remirror-ssr';

@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 import { UsePositionerParams } from '@remirror/react-utils';
-import { RemirrorEditorContext, RemirrorManagerContext } from './contexts';
+import { RemirrorContext, RemirrorManagerContext } from './contexts';
 
 /**
  * This provides access to the Remirror Editor context using hooks.
@@ -32,7 +32,7 @@ import { RemirrorEditorContext, RemirrorManagerContext } from './contexts';
  * ```
  */
 export const useRemirror = () => {
-  const params = useContext(RemirrorEditorContext);
+  const params = useContext(RemirrorContext);
   if (!params) {
     throw new Error('There is no remirror context defined.');
   }
