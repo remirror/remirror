@@ -6,10 +6,5 @@ jobs:
 
   - template: support/pipelines/jobs.yml
     parameters:
-      name: macOS
-      vmImage: 'macOS-10.13'
-
-  - template: support/pipelines/jobs.yml
-    parameters:
       name: Windows
       vmImage: 'vs2017-win2016'
