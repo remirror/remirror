@@ -21,7 +21,7 @@
     "ci": "yarn clean && yarn frozen",
     "ci:audit": "audit-ci --high",
     "ci:checks": "run-s ci:audit integrity lint typecheck",
-    "ci:checks:all": "run-s integrity lint typecheck test build test:puppeteer:dev",
+    "ci:checks:all": "run-s integrity lint typecheck test build test:puppeteer",
     "clean": "yarn if-clean git clean -fdx --exclude=.config.json",
     "clean:force": "git clean -fdx",
     "clean:modules": "yarn if-clean git clean -fdx @remirror support docs",
