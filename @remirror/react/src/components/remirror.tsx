@@ -24,7 +24,6 @@ import { createEditorView, RemirrorSSR } from '@remirror/react-ssr';
 import {
   BaseListenerParams,
   CalculatePositionerParams,
-  childIsFunction,
   cloneElement,
   getElementProps,
   GetPositionerPropsConfig,
@@ -36,6 +35,7 @@ import {
   PositionerMapValue,
   PositionerProps,
   PositionerRefFactoryParams,
+  propIsFunction,
   RefKeyRootProps,
   RemirrorElementType,
   RemirrorEventListenerParams,
@@ -115,7 +115,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     super(props);
 
     // Ensure that children is a render prop
-    childIsFunction(props.children);
+    propIsFunction(props.children);
 
     // Initialize the manager and create the initial state
     this.manager.init({ getEditorState: this.getEditorState, getPortalContainer: this.getPortalContainer });
@@ -426,7 +426,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     { newState }: CompareStateParams,
   ) {
     // Ensure that children is still a render prop
-    childIsFunction(this.props.children);
+    propIsFunction(this.props.children);
 
     // Check whether the editable prop has been updated
     if (this.props.editable !== editable && this.view && this.editorRef) {

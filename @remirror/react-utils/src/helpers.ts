@@ -1,5 +1,14 @@
 import { jsx } from '@emotion/core';
-import { bool, isArray, isFunction, isObject, isString, PlainObject, uniqueArray } from '@remirror/core';
+import {
+  AnyFunction,
+  bool,
+  isArray,
+  isFunction,
+  isObject,
+  isString,
+  PlainObject,
+  uniqueArray,
+} from '@remirror/core';
 import { Fragment, isValidElement, LegacyRef, PropsWithChildren, ReactElement, ReactNode } from 'react';
 import { RemirrorComponentType, RemirrorElement, RemirrorElementType } from './types';
 
@@ -140,9 +149,16 @@ export const cloneElement = <GProps extends PropsWithChildren<{ ref?: LegacyRef<
 
 /**
  * Will throw an error if the child provided is not a function.
+ *
+ * @remarks
+ * This is currently used in the remirror component to throw an error when the element children
+ * are not a render prop. It should be called outside of render for class Components.
+ *
+ * @param prop - the prop to test
  */
-export const childIsFunction = (children: unknown) => {
-  if (!isFunction(children)) {
+export const propIsFunction = (prop: unknown): prop is AnyFunction => {
+  if (!isFunction(prop)) {
     throw new Error('The child argument to the Remirror component must be a function.');
   }
+  return true;
 };
