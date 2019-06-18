@@ -2,20 +2,20 @@ import { EnhancedLinkExtensionOptions } from '@remirror/extension-enhanced-link'
 import { ActionTaken } from '@remirror/extension-mention';
 import { RemirrorProps } from '@remirror/react-utils';
 import { Data, EmojiSet } from 'emoji-mart';
-import { UITwitterTheme } from './theme';
+import { TwitterEditorTheme } from './theme';
 
 export type OnQueryChangeParams = Omit<MentionState, 'submitFactory'> & {
   activeIndex: number;
 };
 
-export interface TwitterUIProps extends EnhancedLinkExtensionOptions, Partial<RemirrorProps> {
+export interface TwitterEditorProps extends EnhancedLinkExtensionOptions, Partial<RemirrorProps> {
   /**
    * The number of matches to display
    */
   userData: TwitterUserData[];
   tagData: TwitterTagData[];
   onMentionStateChange(params?: OnQueryChangeParams): void;
-  theme: UITwitterTheme;
+  theme: TwitterEditorTheme;
   /**
    * The data object used for emoji.
    * The shape is taken from emoji-mart.

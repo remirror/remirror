@@ -2,11 +2,11 @@ import { render } from '@testing-library/react';
 import React from 'react';
 
 import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
-import { TwitterUI } from '../';
+import { TwitterEditor } from '../';
 
 test('should place the editor within the correct element', () => {
   const { getByTestId, getByRole } = render(
-    <TwitterUI
+    <TwitterEditor
       userData={[]}
       tagData={[]}
       onMentionStateChange={console.log}

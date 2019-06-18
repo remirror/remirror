@@ -2,7 +2,7 @@ import React, { FC, RefObject } from 'react';
 
 import { Attrs } from '@remirror/core';
 import { useRemirror } from '@remirror/react';
-import { ActiveTwitterTagData, ActiveTwitterUserData, MentionState, TwitterUIProps } from '../types';
+import { ActiveTwitterTagData, ActiveTwitterUserData, MentionState, TwitterEditorProps } from '../types';
 import { CharacterCountIndicator } from './character-count';
 import { EmojiPicker, EmojiPickerProps, EmojiSmiley } from './emoji-picker';
 import {
@@ -14,7 +14,7 @@ import {
 } from './styled';
 import { AtSuggestions, TagSuggestions } from './suggestions';
 
-interface TwitterEditorProps extends Pick<TwitterUIProps, 'emojiData' | 'emojiSet'> {
+interface TwitterEditorComponentProps extends Pick<TwitterEditorProps, 'emojiData' | 'emojiSet'> {
   mention?: MentionState;
   ignoredElements: HTMLElement[];
   onBlurEmojiPicker: () => void;
@@ -26,7 +26,7 @@ interface TwitterEditorProps extends Pick<TwitterUIProps, 'emojiData' | 'emojiSe
   onSelectEmoji(method: (attrs: Attrs) => void): EmojiPickerProps['onSelection'];
 }
 
-export const TwitterEditor: FC<TwitterEditorProps> = ({
+export const TwitterEditorComponent: FC<TwitterEditorComponentProps> = ({
   mention,
   emojiPickerActive,
   onBlurEmojiPicker,

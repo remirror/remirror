@@ -1,6 +1,6 @@
 import { RemirrorProps } from '@remirror/react';
-import { ButtonState, UIMarkdownTheme } from './theme';
-export interface MarkdownUIProps
+import { ButtonState, MarkdownEditorTheme } from './theme';
+export interface MarkdownEditorProps
   extends Partial<
     Pick<
       RemirrorProps,
@@ -20,7 +20,7 @@ export interface MarkdownUIProps
       | 'customRootProp'
     >
   > {
-  theme?: Partial<UIMarkdownTheme>;
+  theme?: Partial<MarkdownEditorTheme>;
 }
 
 export interface ButtonProps {

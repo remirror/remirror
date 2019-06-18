@@ -1,5 +1,5 @@
 import React from 'react';
 
-import { ExampleTwitterUI } from '@remirror/showcase/lib/twitter';
+import { ExampleTwitterEditor } from '@remirror/showcase/lib/twitter';
 
-export default () => <ExampleTwitterUI />;
+export default () => <ExampleTwitterEditor />;

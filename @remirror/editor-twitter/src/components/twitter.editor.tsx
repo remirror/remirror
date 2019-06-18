@@ -15,17 +15,17 @@ import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@re
 import deepMerge from 'deepmerge';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
-import { UITwitterTheme, uiTwitterTheme } from '../theme';
+import { TwitterEditorTheme, uiTwitterTheme } from '../theme';
 import {
   ActiveTwitterTagData,
   ActiveTwitterUserData,
   MentionState,
   SubmitFactory,
+  TwitterEditorProps,
   TwitterTagData,
-  TwitterUIProps,
   TwitterUserData,
 } from '../types';
-import { TwitterEditor } from './editor';
+import { TwitterEditorComponent } from './editor';
 import { EmojiPickerProps } from './emoji-picker';
 
 interface State {
@@ -36,7 +36,7 @@ interface State {
 
 const matchers = [{ name: 'at', char: '@' }, { name: 'tag', char: '#' }];
 
-export class TwitterUI extends PureComponent<TwitterUIProps, State> {
+export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
   public static defaultProps = {
     theme: { colors: {}, font: {} },
     emojiSet: 'twitter',
@@ -242,7 +242,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
     return false;
   }
 
-  private get theme(): UITwitterTheme {
+  private get theme(): TwitterEditorTheme {
     return deepMerge(uiTwitterTheme, this.props.theme);
   }
 
@@ -309,7 +309,7 @@ export class TwitterUI extends PureComponent<TwitterUIProps, State> {
             emojiData={this.props.emojiData}
           />
           <ManagedRemirrorProvider {...this.remirrorProps}>
-            <TwitterEditor
+            <TwitterEditorComponent
               mention={mention}
               emojiPickerActive={emojiPickerActive}
               onBlurEmojiPicker={this.onBlurEmojiPicker}

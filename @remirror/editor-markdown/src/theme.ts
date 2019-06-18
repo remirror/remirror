@@ -1,8 +1,8 @@
 import DefaultStyled, { CreateStyled } from '@emotion/styled';
 import { Cast } from '@remirror/core';
 
-export const styled = Cast<CreateStyled<UIMarkdownTheme>>(DefaultStyled);
-export type UIMarkdownTheme = typeof uiMarkdownTheme;
+export const styled = Cast<CreateStyled<MarkdownEditorTheme>>(DefaultStyled);
+export type MarkdownEditorTheme = typeof uiMarkdownTheme;
 
 export type ButtonState = 'default' | 'active-default' | 'inverse' | 'active-inverse';
 

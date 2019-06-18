@@ -1,6 +1,6 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { ExampleTwitterUI } from '../twitter';
+import { ExampleTwitterEditor } from '../twitter';
 
-storiesOf('Twitter UI', module).add('Basic', () => <ExampleTwitterUI />);
+storiesOf('Twitter UI', module).add('Basic', () => <ExampleTwitterEditor />);

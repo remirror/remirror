@@ -6,12 +6,12 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
-import { TwitterUI } from '../';
+import { TwitterEditor } from '../';
 
 test('it renders within an ssr environment', () => {
   // global.renderToString = renderToString;
   const reactString = renderToString(
-    <TwitterUI
+    <TwitterEditor
       userData={[]}
       tagData={[]}
       onMentionStateChange={console.log}

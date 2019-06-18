@@ -1,8 +1,8 @@
 import DefaultStyled, { CreateStyled } from '@emotion/styled';
 import { Cast } from '@remirror/core';
 
-export const styled = Cast<CreateStyled<UITwitterTheme>>(DefaultStyled);
-export type UITwitterTheme = typeof uiTwitterTheme;
+export const styled = Cast<CreateStyled<TwitterEditorTheme>>(DefaultStyled);
+export type TwitterEditorTheme = typeof uiTwitterTheme;
 
 export const uiTwitterTheme = {
   colors: {

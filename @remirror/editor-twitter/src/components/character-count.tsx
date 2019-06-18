@@ -1,6 +1,6 @@
 import { withTheme } from 'emotion-theming';
 import React, { FC } from 'react';
-import { UITwitterTheme } from '../theme';
+import { TwitterEditorTheme } from '../theme';
 
 export interface CharacterCountIndicatorProps {
   /** An object describing the total characters and characters remaining */
@@ -9,7 +9,7 @@ export interface CharacterCountIndicatorProps {
   strokeWidth?: number;
   /** The number of characters remaining at which to display a warning */
   warningThreshold?: number;
-  theme: UITwitterTheme;
+  theme: TwitterEditorTheme;
 }
 
 const CharacterCountIndicatorComponent: FC<CharacterCountIndicatorProps> = ({
