@@ -3,12 +3,13 @@ import React from 'react';
 import { DocExtension, ExtensionManager, ParagraphExtension, TextExtension } from '@remirror/core';
 import { BoldExtension } from '@remirror/core-extensions';
 import { simpleJSON, testJSON } from '@test-fixtures/object-nodes';
-import { manager } from '@test-fixtures/schema-helpers';
+import { createTestManager } from '@test-fixtures/schema-helpers';
 import { shallow } from 'enzyme';
 import { Node as PMNode } from 'prosemirror-model';
 
 import { ReactSerializer } from '../serializer';
 
+const manager = createTestManager();
 const schema = manager.createSchema();
 const serializer = ReactSerializer.fromExtensionManager(manager);
 

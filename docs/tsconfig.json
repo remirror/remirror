@@ -1,7 +1,6 @@
 {
   "extends": "../support/tsconfig.base.json",
   "compilerOptions": {
-    "jsx": "react",
     "declaration": false,
     "baseUrl": "./",
     "paths": {
