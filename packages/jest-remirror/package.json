@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "packages/jest-remirror"
   },
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "lib/index.js",
   "files": [
     "lib",
@@ -24,10 +24,10 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@remirror/core": "0.1.0",
-    "@remirror/core-extensions": "0.1.0",
-    "@remirror/react": "0.1.0",
-    "@remirror/renderer-react": "0.1.0",
+    "@remirror/core": "0.2.0",
+    "@remirror/core-extensions": "0.2.0",
+    "@remirror/react": "0.2.0",
+    "@remirror/renderer-react": "0.2.0",
     "@testing-library/react": "8.0.1",
     "@types/lolex": "^3.1.1",
     "@types/prosemirror-model": "^1.7.1",

@@ -22,7 +22,7 @@
       "PR: Internal :house:": ":house: Internal"
     }
   },
-  "version": "0.1.0",
+  "version": "0.2.0",
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
   "useWorkspaces": true,
