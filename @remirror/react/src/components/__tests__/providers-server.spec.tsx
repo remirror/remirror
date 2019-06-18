@@ -31,9 +31,7 @@ test('RemirrorProvider', () => {
   );
   const reactString = renderToStaticMarkup(element);
   expect(reactString).toInclude('basic');
-  expect(reactString).toMatchInlineSnapshot(
-    `"<div data-testid=\\"1\\"><div data-testid=\\"2\\"><div data-testid=\\"target\\" css=\\"[object Object]\\"><div role=\\"textbox\\" aria-multiline=\\"true\\" aria-label=\\"\\" class=\\"remirror-editor\\"><p>basic</p></div></div></div></div>"`,
-  );
+  expect(reactString).toMatchSnapshot();
 });
 
 test('ManagedRemirrorProvider', () => {

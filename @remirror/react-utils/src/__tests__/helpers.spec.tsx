@@ -5,6 +5,7 @@ import {
   getElementProps,
   isManagedRemirrorProvider,
   isReactDOMElement,
+  isReactFragment,
   isRemirrorExtension,
   isRemirrorProvider,
   uniqueClass,
@@ -21,6 +22,19 @@ test('isReactDOMElement', () => {
   const Custom = () => <div />;
   expect(isReactDOMElement(<div />)).toBeTrue();
   expect(isReactDOMElement(<Custom />)).toBeFalse();
+});
+
+test('isReactFragment', () => {
+  const Custom = () => <div />;
+  expect(isReactFragment(<></>)).toBeTrue();
+  expect(
+    isReactFragment(
+      <>
+        <Custom />
+      </>,
+    ),
+  ).toBeTrue();
+  expect(isReactFragment(<Custom />)).toBeFalse();
 });
 
 test('uniqueClass', () => {

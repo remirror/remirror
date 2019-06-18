@@ -1,16 +1,28 @@
 import { jsx } from '@emotion/core';
 import { bool, isArray, isFunction, isObject, isString, PlainObject, uniqueArray } from '@remirror/core';
-import { isValidElement, ReactNode } from 'react';
+import { Fragment, isValidElement, LegacyRef, PropsWithChildren, ReactElement, ReactNode } from 'react';
 import { RemirrorComponentType, RemirrorElement, RemirrorElementType } from './types';
 
 /**
  * Check whether a react node is a built in dom element (i.e. `div`, `span`)
  *
- * @param element
+ * @param value - the value to check
  */
-export const isReactDOMElement = (element: ReactNode) => {
-  return isValidElement(element) && isString(element.type);
+export const isReactDOMElement = <GProps extends {} = any>(
+  value: unknown,
+): value is ReactElement<GProps> & { type: string } => {
+  return isObject(value) && isValidElement(value) && isString(value.type);
 };
+
+/**
+ * Checks whether the element is a react fragment
+ *
+ * @param value - the value to check
+ */
+export const isReactFragment = <GProps extends {} = any>(
+  value: unknown,
+): value is ReactElement<GProps> & { type: typeof Fragment } =>
+  isObject(value) && isValidElement(value) && value.type === Fragment;
 
 /**
  * Retrieve the element props for JSX Element
@@ -104,7 +116,11 @@ export const isManagedRemirrorProvider = isRemirrorElementOfType(RemirrorElement
  *
  * @returns a cloned react element with builtin support for the emotion `css` props
  */
-export const cloneElement = (element: any, props: any, ...rest: ReactNode[]) => {
+export const cloneElement = <GProps extends PropsWithChildren<{ ref?: LegacyRef<any> }> = any>(
+  element: ReactElement<GProps>,
+  props: GProps,
+  ...rest: ReactNode[]
+) => {
   const children = uniqueArray([
     ...(isArray(props.children) ? props.children : props.children ? [props.children] : []),
     ...(isArray(rest) ? rest : rest ? [rest] : []),
@@ -114,7 +130,7 @@ export const cloneElement = (element: any, props: any, ...rest: ReactNode[]) => 
     element.type,
     {
       key: element.key,
-      ref: element.ref,
+      ref: element.props.ref,
       ...element.props,
       ...props,
     },

@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 
-import { WysiwygUI, WysiwygUIProps } from '@remirror/editor-wysiwyg';
+import { WysiwygEditor, WysiwygEditorProps } from '@remirror/editor-wysiwyg';
 
-export const ExampleWysiwygUI: FC<WysiwygUIProps> = props => {
-  return <WysiwygUI {...props} />;
+export const ExampleWysiwygEditor: FC<WysiwygEditorProps> = props => {
+  return <WysiwygEditor {...props} />;
 };
 
 export const initialContent = {

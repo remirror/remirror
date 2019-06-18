@@ -3,11 +3,8 @@ import { styled } from '../theme';
 import { ButtonProps } from '../types';
 
 export const Menu = styled.div`
-  & > * {
+  & > button {
     display: inline-block;
-  }
-  & > * + * {
-    margin-left: 15px;
   }
 `;
 
@@ -33,17 +30,20 @@ export interface WithPaddingProps {
   withPadding: 'horizontal' | 'right';
 }
 
-export const IconButton = styled(ResetButton)<ButtonProps & Partial<WithPaddingProps>>`
+interface IconButtonProps extends ButtonProps, Partial<WithPaddingProps> {
+  /** The position in the menu */
+  index?: number;
+}
+
+export const IconButton = styled(ResetButton)<IconButtonProps>`
   color: ${({ state, theme }) => theme.button.color[state]};
+  margin-left: ${props => (props.index !== 0 ? '15px' : null)};
   padding: ${({ withPadding }) =>
     withPadding === 'horizontal' ? '0 10px' : withPadding === 'right' ? '0 10px 0 0' : 0};
 `;
 
 export const InnerEditorWrapper = styled.div`
   height: 100%;
-  & * {
-    box-sizing: border-box;
-  }
 
   ${EDITOR_CLASS_SELECTOR}:focus {
     outline: none;

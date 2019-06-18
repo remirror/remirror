@@ -1,8 +1,8 @@
 import DefaultStyled, { CreateStyled } from '@emotion/styled';
 import { Cast } from '@remirror/core';
 
-export const styled = Cast<CreateStyled<UIWysiwygTheme>>(DefaultStyled);
-export type UIWysiwygTheme = typeof uiWysiwygTheme;
+export const styled = Cast<CreateStyled<WysiwygEditorTheme>>(DefaultStyled);
+export type WysiwygEditorTheme = typeof wysiwygEditorTheme;
 
 export type ButtonState = 'default' | 'active-default' | 'inverse' | 'active-inverse';
 
@@ -13,7 +13,7 @@ const buttonColors: Record<ButtonState, string> = {
   'active-inverse': 'white',
 };
 
-export const uiWysiwygTheme = {
+export const wysiwygEditorTheme = {
   colors: {
     primary: '#1DA1F2',
     warn: '#FFAD1F',

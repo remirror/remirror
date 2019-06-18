@@ -68,6 +68,9 @@ interface MenuBarProps extends Pick<BubbleMenuProps, 'activateLink'> {
   inverse?: boolean;
 }
 
+/**
+ * The MenuBar component which renders the actions that can be taken on the text within the editor.
+ */
 export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
   const { actions } = useRemirror();
 
@@ -78,6 +81,7 @@ export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
 
         return (
           <MenuItem
+            index={index}
             key={index}
             icon={icon}
             subText={subText}
@@ -106,8 +110,12 @@ interface MenuItemProps extends Partial<WithPaddingProps> {
   inverse?: boolean;
   disabled?: boolean;
   subText?: string;
+  index?: number;
 }
 
+/**
+ * A single clickable menu item for editing the styling and format of the text.
+ */
 const MenuItem: FC<MenuItemProps> = ({
   state,
   onClick,
@@ -116,10 +124,11 @@ const MenuItem: FC<MenuItemProps> = ({
   disabled = false,
   subText,
   withPadding,
+  index,
 }) => {
   return (
-    <IconButton onClick={onClick} state={state} disabled={disabled} withPadding={withPadding}>
-      <FontAwesomeIcon icon={icon} inverse={inverse} />
+    <IconButton onClick={onClick} state={state} disabled={disabled} withPadding={withPadding} index={index}>
+      <FontAwesomeIcon icon={icon} inverse={inverse} size='1x' />
       {subText}
     </IconButton>
   );

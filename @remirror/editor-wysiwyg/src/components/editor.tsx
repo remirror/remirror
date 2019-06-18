@@ -1,3 +1,6 @@
+import React, { FC, PureComponent } from 'react';
+
+import { config } from '@fortawesome/fontawesome-svg-core';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -13,6 +16,7 @@ import {
   LinkExtensionOptions,
   ListItemExtension,
   OrderedListExtension,
+  SSRHelperExtension,
   StrikeExtension,
   UnderlineExtension,
 } from '@remirror/core-extensions';
@@ -20,14 +24,13 @@ import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager, useRemirro
 import { asDefaultProps, RemirrorManagerProps } from '@remirror/react-utils';
 import deepMerge from 'deepmerge';
 import { ThemeProvider } from 'emotion-theming';
-import React, { FC, PureComponent } from 'react';
-import { uiWysiwygTheme } from '../theme';
-import { WysiwygUIProps } from '../types';
+import { wysiwygEditorTheme } from '../theme';
+import { WysiwygEditorProps } from '../types';
 import { BubbleMenu, BubbleMenuProps, MenuBar } from './menu';
 import { EditorWrapper, InnerEditorWrapper } from './styled';
 
 const defaultPlaceholder: RemirrorManagerProps['placeholder'] = [
-  'Start editing...',
+  'Start typing...',
   {
     color: '#aaa',
     fontStyle: 'normal',
@@ -41,10 +44,16 @@ interface State {
   linkActivated: boolean;
 }
 
-export class WysiwygUI extends PureComponent<WysiwygUIProps> {
-  public static defaultProps = asDefaultProps<WysiwygUIProps>()({
+// This is need to support FontAwesome in server side rendering
+// TODO Refactor to use built in react svg icons
+// @see https://github.com/FortAwesome/react-fontawesome/issues/134#issuecomment-486052785
+config.autoAddCss = false;
+
+export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
+  public static defaultProps = asDefaultProps<WysiwygEditorProps>()({
     placeholder: defaultPlaceholder,
     theme: {},
+    removeFontAwesomeCSS: false,
   });
 
   public state: State = {
@@ -60,11 +69,11 @@ export class WysiwygUI extends PureComponent<WysiwygUIProps> {
   };
 
   get editorTheme() {
-    return deepMerge(uiWysiwygTheme, this.props.theme || {});
+    return deepMerge(wysiwygEditorTheme, this.props.theme || {});
   }
 
   public render() {
-    const { theme: _, placeholder, ...props } = this.props;
+    const { theme: _, placeholder, removeFontAwesomeCSS, ...props } = this.props;
 
     return (
       <ThemeProvider theme={this.editorTheme}>
@@ -87,8 +96,10 @@ export class WysiwygUI extends PureComponent<WysiwygUIProps> {
           <RemirrorExtension Constructor={OrderedListExtension} />
           <RemirrorExtension Constructor={HardBreakExtension} />
           <RemirrorExtension Constructor={CodeBlockExtension} />
+          <RemirrorExtension Constructor={SSRHelperExtension} />
           <ManagedRemirrorProvider {...props}>
             <InnerEditor
+              injectFontAwesome={!removeFontAwesomeCSS}
               linkActivated={this.state.linkActivated}
               deactivateLink={this.deactivateLink}
               activateLink={this.activateLink}
@@ -100,11 +111,28 @@ export class WysiwygUI extends PureComponent<WysiwygUIProps> {
   }
 }
 
-const InnerEditor: FC<BubbleMenuProps> = ({ linkActivated, deactivateLink, activateLink }) => {
+interface InnerEditorProps extends BubbleMenuProps {
+  /**
+   * Whether to inject the font awesome styles.
+   *
+   * @default true
+   */
+  injectFontAwesome: boolean;
+}
+
+const InnerEditor: FC<InnerEditorProps> = ({
+  linkActivated,
+  deactivateLink,
+  activateLink,
+  injectFontAwesome,
+}) => {
   const { getRootProps } = useRemirror();
 
   return (
     <EditorWrapper>
+      {injectFontAwesome && (
+        <link rel='stylesheet' href='https://unpkg.com/@fortawesome/fontawesome-svg-core@1.2.19/styles.css' />
+      )}
       <MenuBar activateLink={activateLink} />
       <BubbleMenu linkActivated={linkActivated} deactivateLink={deactivateLink} activateLink={activateLink} />
       <InnerEditorWrapper {...getRootProps()} data-testid='remirror-wysiwyg-editor' />
