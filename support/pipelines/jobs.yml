@@ -29,8 +29,9 @@ jobs:
     steps:
       - template: yarn-install.yml
       - bash: yarn build
+        displayName: 'Build project'
       - bash: yarn test:puppeteer
-
+        displayName: 'Run integration tests on chrome'
       # TODO: Firefox tests are currently failing for several reasons so the result is ignored
       - bash: yarn test:puppeteer:firefox || true
-        displayName: 'Run integration tests'
+        displayName: 'Run integration tests on firefox'
