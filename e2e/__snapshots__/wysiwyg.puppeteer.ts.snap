@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SSR Twitter Showcase should pre render the editor 1`] = `
+"<div role=\\"textbox\\" aria-multiline=\\"true\\" aria-label=\\"\\" class=\\"remirror-editor\\"><h1>A WYSIWYG Editor</h1><p><br></p><p>With <strong><em>formatting </em></strong>and other <u>enhancements</u>.</p><p><br></p><pre>Simple Code Blocks
+echo \\"fun times\\"
+Use Shift-Enter or Mod-Enter to hard break out of the code block<code></code></pre><p><br></p><ul><li><p>List support</p><ul><li><p>With nesting</p></li></ul></li><li><p>Built in.</p></li></ul><p><br></p><blockquote><p>Block quotes</p><h3>With support for headers</h3></blockquote><p><br></p><p>And <a href=\\"https://google.com\\" rel=\\"noopener noreferrer nofollow\\">urls</a> with support for <code>Cmd-k</code> shortcut to enter a link manually.</p><p><br></p><p><br></p></div>"
+`;
