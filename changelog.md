@@ -9,7 +9,8 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ### Changed
 
-- **BREAKING `remirror/react-utils`:** Rename `childIsFunction` to `propIsFunction` and make it a pseudo predicate function (returns true when it doesn't throw an error).
+- **BREAKING `remirror/react-utils`:** Rename `childIsFunction` to `propIsFunction` and make it a _pseudo_ predicate function (returns true when it doesn't throw an error).
+- Add support for [Git Large File Storage (LFS)](https://git-lfs.github.com/)
 
 ## [0.2.0] - 2019-06-18
 
