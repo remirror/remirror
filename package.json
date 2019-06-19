@@ -202,9 +202,11 @@
   },
   "husky": {
     "hooks": {
+      "post-checkout": "echo $HUSKY_GIT_STDIN | support/hooks/post-checkout-lfs $HUSKY_GIT_PARAMS",
+      "post-commit": "echo $HUSKY_GIT_STDIN | support/hooks/post-commit-lfs $HUSKY_GIT_PARAMS",
+      "post-merge": "echo $HUSKY_GIT_STDIN | support/hooks/post-merge-lfs $HUSKY_GIT_PARAMS && yarn if-config ignoredHooks.postMerge yarn",
       "pre-commit": "yarn if-config ignoredHooks.preCommit lint-staged",
-      "pre-push": "yarn if-config ignoredHooks.prePush yarn checks",
-      "post-merge": "yarn if-config ignoredHooks.postMerge yarn"
+      "pre-push": "echo $HUSKY_GIT_STDIN | support/hooks/pre-push-lfs $HUSKY_GIT_PARAMS && yarn if-config ignoredHooks.prePush yarn checks"
     }
   },
   "jest": {
