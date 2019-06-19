@@ -16291,10 +16291,10 @@ react-textarea-autosize@^7.1.0:
     "@babel/runtime" "^7.1.2"
     prop-types "^15.6.0"
 
-react-use@9.4.1:
-  version "9.4.1"
-  resolved "https://registry.yarnpkg.com/react-use/-/react-use-9.4.1.tgz#876f96811b177d305a8db14e59fc31e17e5b11b2"
-  integrity sha512-6rI4zOQSoRuWgXkv2Aaj9+YPjnYn/aS+n6NcJGqQdqROe2MOEcsgfFS6euf1y6pfhvhmtyvWX8mPe7H+S9GFmw==
+react-use@9.6.0:
+  version "9.6.0"
+  resolved "https://registry.yarnpkg.com/react-use/-/react-use-9.6.0.tgz#703609c844f008fac6d728faafec91b549b71669"
+  integrity sha512-GlptVsO2QdEeB89yDWQJgnaCidZoh7KRtkqTIT0ow5G486X1+GOLsJ+H34dRquWZK2xlyZE7lmf/eO/qzS5bOQ==
   dependencies:
     copy-to-clipboard "^3.1.0"
     nano-css "^5.1.0"
@@ -17114,10 +17114,10 @@ rollup-plugin-node-globals@1.4.0:
     process-es6 "^0.11.6"
     rollup-pluginutils "^2.3.1"
 
-rollup-plugin-node-resolve@5.0.2:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-node-resolve/-/rollup-plugin-node-resolve-5.0.2.tgz#6475dc689934a2f85bb5c5867d03d8bd1bf859c1"
-  integrity sha512-/KMxyYDSMoeE+06CwbbPD8gwYcU9uwyOgMjfw2MJPDmwzEw24HIur9TR80SMsUjP2QCLSZ9othB65xNHN3e0gw==
+rollup-plugin-node-resolve@5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-node-resolve/-/rollup-plugin-node-resolve-5.0.3.tgz#5e90fbd04a33fa1e4e1ed6d9b54afbe45af944f1"
+  integrity sha512-Mhhmf0x493xgUPEsRELnU1VM+4+WO82knWkAbZ0d2DvZQZJMbhzyQK/hqtpVscoRru1EqlK3TM1kK9ro469wPw==
   dependencies:
     "@types/resolve" "0.0.8"
     builtin-modules "^3.1.0"
