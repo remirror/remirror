@@ -4,3 +4,4 @@ steps:
       versionSpec: '10.x'
     displayName: 'Install Node.js'
   - bash: yarn ci
+    displayName: 'Install dependencies'

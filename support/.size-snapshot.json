@@ -366,16 +366,16 @@
     "gzipped": 16694
   },
   "../@remirror/react/lib/dist/react.esm.js": {
-    "bundled": 81830,
-    "minified": 58453,
-    "gzipped": 17932,
+    "bundled": 81823,
+    "minified": 58446,
+    "gzipped": 17900,
     "treeshaked": {
       "rollup": {
-        "code": 14055,
-        "import_statements": 1625
+        "code": 14054,
+        "import_statements": 1624
       },
       "webpack": {
-        "code": 16426
+        "code": 16424
       }
     }
   },
@@ -404,9 +404,9 @@
     "gzipped": 824
   },
   "../@remirror/react-utils/lib/dist/react-utils.esm.js": {
-    "bundled": 5637,
-    "minified": 2247,
-    "gzipped": 753,
+    "bundled": 5876,
+    "minified": 2254,
+    "gzipped": 756,
     "treeshaked": {
       "rollup": {
         "code": 686,
@@ -524,9 +524,9 @@
     "gzipped": 2589
   },
   "../@remirror/react/lib/dist/react.cjs.js": {
-    "bundled": 82915,
-    "minified": 59381,
-    "gzipped": 18061
+    "bundled": 82909,
+    "minified": 59375,
+    "gzipped": 18027
   },
   "../@remirror/react-ssr/lib/dist/react-ssr.cjs.js": {
     "bundled": 53116,
@@ -534,9 +534,9 @@
     "gzipped": 9498
   },
   "../@remirror/react-utils/lib/dist/react-utils.cjs.js": {
-    "bundled": 6003,
-    "minified": 2762,
-    "gzipped": 867
+    "bundled": 6241,
+    "minified": 2768,
+    "gzipped": 872
   },
   "../packages/remirror/lib/dist/remirror.cjs.js": {
     "bundled": 943,
