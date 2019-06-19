@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SSR Twitter Showcase should pre render the editor 1`] = `"<div role=\\"textbox\\" aria-multiline=\\"true\\" aria-label=\\"\\" class=\\"remirror-editor\\" data-testid=\\"editor-twitter\\"><p class=\\"is-empty\\" data-placeholder=\\"What's happening?\\"></p></div>"`;
+exports[`Twitter Editor Snapshots SSR should pre render the editor with consistent html 1`] = `"<div role=\\"textbox\\" aria-multiline=\\"true\\" aria-label=\\"\\" class=\\"remirror-editor\\" data-testid=\\"editor-twitter\\"><p class=\\"is-empty\\" data-placeholder=\\"What's happening?\\"></p></div>"`;
