@@ -139,8 +139,6 @@ const EditorLayout: FunctionComponent = () => {
 
 The above example uses hooks but you can just as easily rely on Higher Order Components (HOC's) to wrap your component.
 
-In a similar fashion Higher Order Components (HOC's) can be used to wrap a component.
-
 ```ts
 import { withRemirror } from '@remirror/react';
 
@@ -159,6 +157,7 @@ export const WrappedSimpleMenu = withRemirror(SimpleMenu);
 
 ```ts
 import { EpicMode, heartEffect, ParticleEffect } from '@remirror/extension-epic-mode';
+import { RemirrorManager, RemirrorExtension, ManagedRemirrorProvider } from '@remirror/react';
 
 interface EpicModeComponentProps {
   particleEffect: ParticleEffect;
@@ -168,7 +167,7 @@ interface EpicModeComponentProps {
 
 const EpicModeComponent: FC<EpicModeComponentProps> = ({ particleEffect, placeholder, shake }) => {
   return (
-    <div style={{ gridArea: 'editor' }}>
+    <div>
       <RemirrorManager>
         <RemirrorExtension Constructor={Bold} />
         <RemirrorExtension Constructor={Italic} />
@@ -186,7 +185,7 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({ particleEffect, placeho
 };
 
 export const EpicModeHeart: FunctionComponent = () => (
-  <EpicModeComponent particleEffect={heartEffect} shake={false} placeholder='Type for hearts' />
+  <EpicModeComponent particleEffect={heartEffect} shake={false} placeholder='Type for hearts...' />
 );
 ```
 
@@ -206,10 +205,10 @@ From the root of this repository run the following to trigger a full typecheck, 
 yarn checks
 ```
 
-By default these checks are run on every push. To prevent these hooks from running by default simply run:
+By default these checks are run on every push. To prevent these hooks from running by default simply type:
 
 ```bash
-yarn stop:hooks
+yarn husky:stop
 ```
 
 This copies `.config.sample.json` to `.config.json`. This file is read before hooks are run and can cancel checks when configured.
@@ -217,7 +216,7 @@ This copies `.config.sample.json` to `.config.json`. This file is read before ho
 To resume per-commit / per-push checks run:
 
 ```bash
-yarn start:hooks
+yarn husky:start
 ```
 
 ## Built With

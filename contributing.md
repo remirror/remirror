@@ -64,7 +64,7 @@ Remirror by default using [husky](https://github.com/typicode/husky) for git hoo
 This can be annoying when attempting proof of concept work. If you'd like to turn it off run the following command.
 
 ```bash
-yarn stop:hooks
+yarn husky:stop
 ```
 
 This copies the `support/.config.sample.json` to `.config.json`. After this change your git commits and git pushes won't be checked for errors.
@@ -72,7 +72,7 @@ This copies the `support/.config.sample.json` to `.config.json`. After this chan
 If you would like to resume per-commit and per-push checking simply run
 
 ```bash
-yarn start:hooks
+yarn husky:start
 ```
 
 <br />
