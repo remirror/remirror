@@ -1,8 +1,13 @@
-import React, { Children, Component } from 'react';
+import React, { Children, Component, ReactNode } from 'react';
 
 import { ExtensionManager, isString, PrioritizedExtension } from '@remirror/core';
 import { baseExtensions, PlaceholderExtension } from '@remirror/core-extensions';
-import { asDefaultProps, isRemirrorExtension, RemirrorManagerProps } from '@remirror/react-utils';
+import {
+  asDefaultProps,
+  isReactFragment,
+  isRemirrorExtension,
+  RemirrorManagerProps,
+} from '@remirror/react-utils';
 import { RemirrorManagerContext } from '../contexts';
 
 export class RemirrorManager extends Component<RemirrorManagerProps> {
@@ -35,7 +40,18 @@ export class RemirrorManager extends Component<RemirrorManagerProps> {
    */
   public get manager(): ExtensionManager {
     const extensions: PrioritizedExtension[] = [...this.baseExtensions];
-    Children.forEach(this.props.children, child => {
+
+    const { children } = this.props;
+
+    const resolvedChildren = Children.toArray(children).reduce((acc: ReactNode[], child: ReactNode) => {
+      if (isReactFragment(child)) {
+        return [...acc, ...Children.toArray(child.props.children)];
+      } else {
+        return [...acc, child];
+      }
+    }, []);
+
+    resolvedChildren.forEach(child => {
       if (!isRemirrorExtension(child)) {
         return;
       }
