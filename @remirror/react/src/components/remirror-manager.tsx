@@ -1,4 +1,4 @@
-import React, { Children, Component, Fragment, ReactNode } from 'react';
+import React, { Children, Component, ReactNode } from 'react';
 
 import { ExtensionManager, isString, PrioritizedExtension } from '@remirror/core';
 import { baseExtensions, PlaceholderExtension } from '@remirror/core-extensions';
@@ -9,7 +9,6 @@ import {
   isReactFragment,
 } from '@remirror/react-utils';
 import { RemirrorManagerContext } from '../contexts';
-import { accessSync } from 'fs';
 
 export class RemirrorManager extends Component<RemirrorManagerProps> {
   public static defaultProps = asDefaultProps<RemirrorManagerProps>()({
