@@ -353,18 +353,6 @@ export interface RemirrorProps extends StringHandlerParams {
    * This can be overridden with this property
    */
   forceEnvironment?: RenderEnvironment;
-
-  /**
-   * Whether to use custom root props within a context provider
-   *
-   * @remarks
-   * Let's the editor know that custom root props will be manually applied. This allows for the
-   * Providers which depend on this element to specify that the nested components will be responsible
-   * for calling `getRootProps()` on the root element.
-   *
-   * @defaultValue false
-   */
-  customRootProp: boolean;
 }
 
 export interface PlaceholderConfig {
