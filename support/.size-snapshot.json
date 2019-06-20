@@ -366,16 +366,16 @@
     "gzipped": 16694
   },
   "../@remirror/react/lib/dist/react.esm.js": {
-    "bundled": 81823,
-    "minified": 58446,
-    "gzipped": 17900,
+    "bundled": 82187,
+    "minified": 58816,
+    "gzipped": 18056,
     "treeshaked": {
       "rollup": {
-        "code": 14054,
-        "import_statements": 1624
+        "code": 14092,
+        "import_statements": 1698
       },
       "webpack": {
-        "code": 16424
+        "code": 16465
       }
     }
   },
@@ -461,16 +461,16 @@
     "gzipped": 6246
   },
   "../@remirror/editor-twitter/lib/dist/editor-twitter.esm.js": {
-    "bundled": 36675,
-    "minified": 26091,
-    "gzipped": 6526,
+    "bundled": 37154,
+    "minified": 26403,
+    "gzipped": 6629,
     "treeshaked": {
       "rollup": {
-        "code": 23346,
-        "import_statements": 1324
+        "code": 23580,
+        "import_statements": 1413
       },
       "webpack": {
-        "code": 25814
+        "code": 26089
       }
     }
   },
@@ -524,9 +524,9 @@
     "gzipped": 2589
   },
   "../@remirror/react/lib/dist/react.cjs.js": {
-    "bundled": 82909,
-    "minified": 59375,
-    "gzipped": 18027
+    "bundled": 83255,
+    "minified": 59729,
+    "gzipped": 18166
   },
   "../@remirror/react-ssr/lib/dist/react-ssr.cjs.js": {
     "bundled": 53116,
@@ -549,9 +549,9 @@
     "gzipped": 5619
   },
   "../@remirror/editor-twitter/lib/dist/editor-twitter.cjs.js": {
-    "bundled": 37536,
-    "minified": 26840,
-    "gzipped": 6648
+    "bundled": 38019,
+    "minified": 27152,
+    "gzipped": 6753
   },
   "../@remirror/editor-wysiwyg/lib/dist/editor-wysiwyg.cjs.js": {
     "bundled": 19742,
