@@ -116,21 +116,28 @@ export interface InjectedRemirrorProps {
   setContent(content: RemirrorContentType, triggerOnChange?: boolean): void;
 
   /**
-   * The function returns props when called to spread on an element and make it the editor root.
+   * A function that returns props which should be spread on a react element and declare it the editor root.
    *
    * @remarks
+   * By default remirror will add the prosemirror editor instance directly into the first child element it holds.
    *
-   * In order to support SSR this should only be spread on a component with NO children.
+   * **IMPORTANT** In order to support pre-rendering this should only be spread on a component with NO children.
    *
-   * **Example with nested components**
+   * **Example with indirectly nested components**
+   *
    * ```tsx
-   * import { ManagedRemirrorProvider, RemirrorManager } from '@remirror/react';
+   * import { ManagedRemirrorProvider, RemirrorManager, useRemirror } from '@remirror/react';
+   *
+   * const InnerEditor = () => {
+   *   const { getRootProps } = useRemirror();
+   *   return <div {...getRootProps()} />;
+   * }
    *
    * const Editor = () => {
    *   return (
    *     <RemirrorManager>
    *       <ManagedRemirrorProvider>
-   *         <div {...getRootProps()} />
+   *         <InnerEditor />
    *       </ManagedRemirrorProvider>
    *     </RemirrorManager>
    *   );

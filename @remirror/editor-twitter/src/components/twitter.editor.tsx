@@ -15,7 +15,7 @@ import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@re
 import deepMerge from 'deepmerge';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
-import { TwitterEditorTheme, uiTwitterTheme } from '../theme';
+import { twitterEditorTheme, TwitterEditorTheme } from '../theme';
 import {
   ActiveTwitterTagData,
   ActiveTwitterUserData,
@@ -243,7 +243,7 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
   }
 
   private get theme(): TwitterEditorTheme {
-    return deepMerge(uiTwitterTheme, this.props.theme);
+    return deepMerge(twitterEditorTheme, this.props.theme);
   }
 
   private get remirrorProps() {
@@ -274,6 +274,7 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
 
   public render() {
     const { mention, emojiPickerActive } = this.state;
+    const { editorStyles, ...rest } = this.remirrorProps;
     return (
       <ThemeProvider theme={this.theme}>
         <RemirrorManager
@@ -308,7 +309,7 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
             set={this.props.emojiSet}
             emojiData={this.props.emojiData}
           />
-          <ManagedRemirrorProvider {...this.remirrorProps}>
+          <ManagedRemirrorProvider editorStyles={[this.theme.editorStyles, editorStyles]} {...rest}>
             <TwitterEditorComponent
               mention={mention}
               emojiPickerActive={emojiPickerActive}

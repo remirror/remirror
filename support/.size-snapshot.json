@@ -366,16 +366,16 @@
     "gzipped": 16694
   },
   "../@remirror/react/lib/dist/react.esm.js": {
-    "bundled": 81830,
-    "minified": 58453,
-    "gzipped": 17932,
+    "bundled": 82187,
+    "minified": 58816,
+    "gzipped": 18056,
     "treeshaked": {
       "rollup": {
-        "code": 14055,
-        "import_statements": 1625
+        "code": 14092,
+        "import_statements": 1698
       },
       "webpack": {
-        "code": 16426
+        "code": 16465
       }
     }
   },
@@ -404,9 +404,9 @@
     "gzipped": 824
   },
   "../@remirror/react-utils/lib/dist/react-utils.esm.js": {
-    "bundled": 5637,
-    "minified": 2247,
-    "gzipped": 753,
+    "bundled": 5876,
+    "minified": 2254,
+    "gzipped": 756,
     "treeshaked": {
       "rollup": {
         "code": 686,
@@ -461,16 +461,16 @@
     "gzipped": 6246
   },
   "../@remirror/editor-twitter/lib/dist/editor-twitter.esm.js": {
-    "bundled": 36675,
-    "minified": 26091,
-    "gzipped": 6526,
+    "bundled": 37154,
+    "minified": 26403,
+    "gzipped": 6629,
     "treeshaked": {
       "rollup": {
-        "code": 23346,
-        "import_statements": 1324
+        "code": 23580,
+        "import_statements": 1413
       },
       "webpack": {
-        "code": 25814
+        "code": 26089
       }
     }
   },
@@ -524,9 +524,9 @@
     "gzipped": 2589
   },
   "../@remirror/react/lib/dist/react.cjs.js": {
-    "bundled": 82915,
-    "minified": 59381,
-    "gzipped": 18061
+    "bundled": 83255,
+    "minified": 59729,
+    "gzipped": 18166
   },
   "../@remirror/react-ssr/lib/dist/react-ssr.cjs.js": {
     "bundled": 53116,
@@ -534,9 +534,9 @@
     "gzipped": 9498
   },
   "../@remirror/react-utils/lib/dist/react-utils.cjs.js": {
-    "bundled": 6003,
-    "minified": 2762,
-    "gzipped": 867
+    "bundled": 6241,
+    "minified": 2768,
+    "gzipped": 872
   },
   "../packages/remirror/lib/dist/remirror.cjs.js": {
     "bundled": 943,
@@ -549,9 +549,9 @@
     "gzipped": 5619
   },
   "../@remirror/editor-twitter/lib/dist/editor-twitter.cjs.js": {
-    "bundled": 37536,
-    "minified": 26840,
-    "gzipped": 6648
+    "bundled": 38019,
+    "minified": 27152,
+    "gzipped": 6753
   },
   "../@remirror/editor-wysiwyg/lib/dist/editor-wysiwyg.cjs.js": {
     "bundled": 19742,

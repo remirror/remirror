@@ -32,6 +32,18 @@ if (STORYBOOK_ONLY) {
   });
 }
 
+export type BrowserName = 'firefox' | 'chromium';
+
+/**
+ * Retrieve the browser name from the environment
+ */
+export const getBrowserName = (): BrowserName => process.env.PUPPETEER_BROWSER || 'chromium';
+
+/**
+ * Prefix the browser name to the passed in string
+ */
+export const prefixBrowserName = (value: string) => `${getBrowserName()}-${value}`;
+
 /**
  * Declare the globals used throughout tests
  */
@@ -39,4 +51,10 @@ declare global {
   const __DEV__: boolean;
   const __TEST__: boolean;
   const __E2E__: boolean;
+
+  namespace NodeJS {
+    interface ProcessEnv {
+      PUPPETEER_BROWSER?: BrowserName;
+    }
+  }
 }

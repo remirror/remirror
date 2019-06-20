@@ -2,7 +2,7 @@ import DefaultStyled, { CreateStyled } from '@emotion/styled';
 import { Cast } from '@remirror/core';
 
 export const styled = Cast<CreateStyled<MarkdownEditorTheme>>(DefaultStyled);
-export type MarkdownEditorTheme = typeof uiMarkdownTheme;
+export type MarkdownEditorTheme = typeof markdownEditorTheme;
 
 export type ButtonState = 'default' | 'active-default' | 'inverse' | 'active-inverse';
 
@@ -13,7 +13,7 @@ const buttonColors: Record<ButtonState, string> = {
   'active-inverse': 'white',
 };
 
-export const uiMarkdownTheme = {
+export const markdownEditorTheme = {
   colors: {
     primary: '#1DA1F2',
     warn: '#FFAD1F',

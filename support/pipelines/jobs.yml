@@ -27,11 +27,14 @@ jobs:
     pool:
       vmImage: ${{ parameters.vmImage }}
     steps:
+      - checkout: self
+        lfs: true
       - template: yarn-install.yml
       - bash: yarn build
         displayName: 'Build project'
       - bash: yarn test:puppeteer
         displayName: 'Run integration tests on chrome'
-      # TODO: Firefox tests are currently failing for several reasons so the result is ignored
+
+      # Todo: Firefox tests are currently failing for several reasons so the result is ignored
       - bash: yarn test:puppeteer:firefox || true
         displayName: 'Run integration tests on firefox'

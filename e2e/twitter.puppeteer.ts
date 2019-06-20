@@ -1,12 +1,12 @@
-import { Deployment, URLDescriptor } from '@test-fixtures/test-urls';
-import { innerHtml, outerHtml, sel, textContent } from './helpers';
+import { Deployment, prefixBrowserName, URLDescriptor } from '@test-fixtures/test-urls';
+import { innerHtml, outerHtml, sel, skipTestOnFirefox, textContent } from './helpers';
 
 const editorSelector = '.remirror-editor';
 
 describe('Twitter Editor Snapshots', () => {
   const url = URLDescriptor.twitter[Deployment.Next][1];
-  const ssrIdentifier = 'twitter-editor-ssr';
-  const domIdentifier = 'twitter-editor-dom';
+  const ssrIdentifier = prefixBrowserName('twitter-editor-ssr');
+  const domIdentifier = prefixBrowserName('twitter-editor-dom');
 
   beforeEach(async () => {
     await jestPuppeteer.resetPage();
@@ -86,11 +86,12 @@ describe.each(URLDescriptor.twitter)('%s: Twitter Showcase', (_, path) => {
       );
     });
 
-    it('can handle more complex interactions', async () => {
+    // TODO The 'Home' key press doesn't work on Firefox
+    skipTestOnFirefox('can handle more complex interactions', async () => {
       await page.type(editorSelector, 'this is the first url.com');
       await page.keyboard.press('Enter');
       await page.type(editorSelector, 'this.com is test.com');
-      await page.keyboard.press('Home');
+      await page.keyboard.press('Home'); // ? This does nothing on Firefox
       await page.keyboard.type('split.com ');
       await expect(innerHtml(editorSelector)).resolves.toIncludeMultiple([
         '<a href="http://split.com" role="presentation">split.com</a>',
@@ -104,6 +105,7 @@ describe.each(URLDescriptor.twitter)('%s: Twitter Showcase', (_, path) => {
       await page.keyboard.type('..no .co more url please');
       await expect(innerHtml(editorSelector)).resolves.not.toInclude('url.com');
     });
+
     it('should handle the enter key', async () => {
       await page.type(editorSelector, 'this is the first url.com');
       await page.keyboard.press('ArrowLeft');

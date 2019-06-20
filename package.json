@@ -37,6 +37,8 @@
     "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md,mdx}\"",
     "fix:support": "yarn lint:support --fix",
     "frozen": "yarn --frozen-lockfile install",
+    "husky:start": "rimraf ./.config.json",
+    "husky:stop": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
     "if-clean": "node support/scripts/run-if-clean.js",
     "if-config": "node support/scripts/run-if-config.js",
     "integrity": "yarn check --integrity",
@@ -52,8 +54,6 @@
     "next:ci": "cd examples/with-next && yarn dev:ci",
     "publish:alpha": "yarn if-clean run-s ci:checks:all lerna:publish:alpha",
     "publish:minor": "yarn if-clean run-s ci:checks:all lerna:publish:minor",
-    "start:hooks": "rimraf ./.config.json",
-    "stop:hooks": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
     "storybook": "start-storybook -p 6006 -c support/storybook",
     "storybook:ci": "start-storybook -p 3002 -c support/storybook --quiet --ci",
     "test": "jest --verbose",
@@ -153,6 +153,7 @@
     "lodash": "4.17.11",
     "mz": "2.7.0",
     "npm-run-all": "4.1.5",
+    "p-series": "^2.1.0",
     "prettier": "1.18.2",
     "prettier-package-json": "2.1.0",
     "pretty-format": "^24.8.0",
@@ -180,6 +181,7 @@
     "tslint": "5.17.0",
     "typescript": "3.5.2",
     "typescript-styled-plugin": "0.14.0",
+    "typescript-tslint-plugin": "^0.5.0",
     "wait-on": "^3.2.0"
   },
   "engines": {
