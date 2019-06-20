@@ -21,7 +21,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 - Add support for [Git Large File Storage (LFS)](https://git-lfs.github.com/)
 - `remirror/editor-twitter`, `remirror/editor-wysiwyg` : Use image-snapshot testing to ensure SSR and DOM rendered editors are identical
-- Update husky command from `yarn stop:hooks` to `yarn husky:stop` and `yarn husky:start`
+- Update husky command from ~~`yarn stop:hooks`~~ and ~~`yarn start:hooks`~~ to `yarn husky:stop` and `yarn husky:start`
 
 ## [0.2.0] - 2019-06-18
 

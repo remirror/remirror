@@ -68,8 +68,10 @@ test('should allow text input and fire all handlers', () => {
   const editorNode = getByLabelText(label);
   expect(handlers.onChange).toHaveBeenCalledTimes(1);
   expect(handlers.onFirstRender.mock.calls[0][0].getText()).toBe(textContent);
+
   fireEvent.blur(editorNode);
   expect(handlers.onBlur).toHaveBeenCalledTimes(1);
+
   fireEvent.focus(editorNode);
   expect(handlers.onFocus).toHaveBeenCalledTimes(1);
 });
@@ -107,17 +109,7 @@ describe('initialContent', () => {
   it('renders with json', () => {
     const content = {
       type: 'doc',
-      content: [
-        {
-          type: 'paragraph',
-          content: [
-            {
-              type: 'text',
-              text: 'Hello',
-            },
-          ],
-        },
-      ],
+      content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Hello' }] }],
     };
 
     const { container } = render(

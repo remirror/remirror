@@ -11,6 +11,9 @@ export interface PortalRendererState {
   portals: PortalList;
 }
 
+/**
+ * The component that places all the portals into the DOM.
+ */
 export class NodeViewPortalComponent extends Component<NodeViewPortalComponentProps, PortalRendererState> {
   public state = {
     portals: Array.from(this.props.nodeViewPortalContainer.portals.entries()),
@@ -20,7 +23,7 @@ export class NodeViewPortalComponent extends Component<NodeViewPortalComponentPr
 
   constructor(props: NodeViewPortalComponentProps) {
     super(props);
-    // props.nodeViewPortalContainer.setContext(this);
+    props.nodeViewPortalContainer.setContext(this);
     this.disposeListener = this.props.nodeViewPortalContainer.on(this.onPortalChange);
   }
 

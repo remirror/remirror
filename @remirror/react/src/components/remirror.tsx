@@ -58,7 +58,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   public static $$remirrorType = RemirrorElementType.Editor;
 
   /**
-   * Used to manage the controlled component value prop and pass it on to the state for internal usage
+   * This is needed to manage the controlled component `value` prop and copy it to the components state for internal usage.
    */
   public static getDerivedStateFromProps(
     props: RemirrorProps,
@@ -288,6 +288,9 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     }
   };
 
+  /**
+   * Returns the positioner props for a given positionerId.
+   */
   private calculatePositionProps({
     initialPosition,
     getPosition,
@@ -303,6 +306,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       return positionerProps;
     }
 
+    // Nothing has changed so return the prev value
     if (!hasChanged(this.state)) {
       return positionerMapItem.prev;
     }

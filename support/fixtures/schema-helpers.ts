@@ -52,15 +52,5 @@ export const plugins = manager.plugins();
 export const testDocument = minDocument;
 export const initialJson = {
   type: 'doc',
-  content: [
-    {
-      type: 'paragraph',
-      content: [
-        {
-          type: 'text',
-          text: 'Better docs to come soon...',
-        },
-      ],
-    },
-  ],
+  content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Better docs to come soon...' }] }],
 };

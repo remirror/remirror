@@ -17,6 +17,9 @@ import { RemirrorProps } from '@remirror/react-utils';
 import { css, Interpolation } from 'emotion';
 import { Decoration, EditorView, NodeView } from 'prosemirror-view';
 
+/**
+ * Retrieve the position of the current nodeView
+ */
 export type GetPosition = () => number;
 
 /**
