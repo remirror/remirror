@@ -11,6 +11,7 @@ import {
   getDocument,
   isArray,
   isFunction,
+  isPlainObject,
   NodeViewPortalContainer,
   ObjectNode,
   Position,
@@ -30,8 +31,10 @@ import {
   GetPositionerReturn,
   GetRootPropsConfig,
   InjectedRemirrorProps,
+  isManagedRemirrorProvider,
   isReactDOMElement,
   isRemirrorContextProvider,
+  isRemirrorProvider,
   PositionerMapValue,
   PositionerProps,
   PositionerRefFactoryParams,
@@ -197,27 +200,21 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     return styles;
   }
 
+  /**
+   * Creates the props that should be spread on the root element inside which the prosemirror instance will be rendered.
+   */
   private getRootProps = <GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,
   ): RefKeyRootProps<GRefKey> => {
+    // Ensure that this is the first time `getRootProps` is being called during this render.
     if (this.rootPropsConfig.called) {
       throw new Error(
         '`getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.',
       );
     }
     this.rootPropsConfig.called = true;
-    return this.internalGetRootProps(options, false);
-  };
 
-  private internalGetRootProps<GRefKey extends string = 'ref'>(
-    options?: GetRootPropsConfig<GRefKey>,
-    internal = true,
-  ): RefKeyRootProps<GRefKey> {
     const { refKey = 'ref', ...config } = options || {};
-
-    if (internal) {
-      //
-    }
 
     return {
       [refKey]: this.onRef,
@@ -226,7 +223,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       ...config,
       children: this.renderChildren(null),
     } as RefKeyRootProps<GRefKey>;
-  }
+  };
 
   /**
    * The method passed to the render props that can be used for passing the position and positioner
@@ -628,25 +625,27 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     });
 
     const { children, ...props } = getElementProps(element);
-    // When called by a provider `getRootProps` can't actually be called until the jsx is generated.
-    // So an initial check in this instance would be useless.
 
     if (this.rootPropsConfig.called) {
       // Simply return the element as this is never actually called within SSR (for some reason)
       return element;
     } else if (
-      // Check if this is being rendered via the remirror context provider.
-      // In this case `getRootProps` must be called.
-      isRemirrorContextProvider(element)
+      // When called by a provider `getRootProps` can't actually be called until the jsx is generated.
+      // Check if this is being rendered via any remirror context provider.
+      // In this case `getRootProps` **must** be called.
+      isRemirrorContextProvider(element) ||
+      isRemirrorProvider(element) ||
+      isManagedRemirrorProvider(element)
     ) {
-      return element.props.setChildAsRoot
-        ? cloneElement(element, props, this.renderClonedElement(children))
+      const { childRootProps } = element.props;
+      return childRootProps
+        ? cloneElement(element, props, this.renderClonedElement(children, childRootProps))
         : element;
     } else {
       return isReactDOMElement(element) ? (
         this.renderClonedElement(element)
       ) : (
-        <div {...this.internalGetRootProps()}>{this.renderChildren(element)}</div>
+        <div {...this.getRootProps()}>{this.renderChildren(element)}</div>
       );
     }
   }
@@ -658,9 +657,10 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    *
    * This is used to render the children as SSR when necessary.
    */
-  private renderClonedElement(element: JSX.Element) {
-    const { children, ...props } = getElementProps(element);
-    return cloneElement(element, this.internalGetRootProps(props), ...this.renderChildren(children));
+  private renderClonedElement(element: JSX.Element, rootProps?: GetRootPropsConfig<string> | boolean) {
+    const { children, ...rest } = getElementProps(element);
+    const props = isPlainObject(rootProps) ? { ...rootProps, ...rest } : rest;
+    return cloneElement(element, this.getRootProps(props), ...this.renderChildren(children));
   }
 
   public render() {

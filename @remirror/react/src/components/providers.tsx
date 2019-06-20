@@ -1,7 +1,13 @@
 import React, { Children, ProviderProps } from 'react';
 
 import { MakeOptional } from '@remirror/core';
-import { InjectedRemirrorProps, RemirrorElementType, RemirrorFC, RemirrorProps } from '@remirror/react-utils';
+import {
+  GetRootPropsConfig,
+  InjectedRemirrorProps,
+  RemirrorElementType,
+  RemirrorFC,
+  RemirrorProps,
+} from '@remirror/react-utils';
 import { defaultProps } from '../constants';
 import { RemirrorContext } from '../contexts';
 import { useRemirrorManager } from '../hooks';
@@ -9,18 +15,39 @@ import { Remirror } from './remirror';
 
 export interface RemirrorContextProviderProps extends ProviderProps<InjectedRemirrorProps> {
   /**
-   * Whether to set the first child as a the root prop (where the editor is rendered).
+   * Sets the first child element as a the root (where the prosemirror editor instance will be rendered).
    *
-   * If this is set to true then the outer element must be able to receive a ref prop which will mount
-   * the editor to it. If not set then the children are responsible for calling `getRootProps`.
+   * @remarks
    *
-   * @default false
+   * **Example with directly nested components**
+   *
+   * When using a remirror provider calling `getRootProps` is mandatory.
+   * By setting `childRootProps` to an object Remirror will inject these props into the first child element.
+   *
+   * ```tsx
+   * import { ManagedRemirrorProvider, RemirrorManager } from '@remirror/react';
+   *
+   * const Editor = () => {
+   *   return (
+   *     <RemirrorManager>
+   *       <ManagedRemirrorProvider childRootProps={{ refKey: 'ref' }}>
+   *         <div />
+   *       </ManagedRemirrorProvider>
+   *     </RemirrorManager>
+   *   );
+   * }
+   * ```
+   *
+   * If this is set to an empty object then the outer element must be able to receive a default ref prop which will mount
+   * the editor to it. If left undefined then the children components are responsible for calling `getRootProps`.
+   *
+   * @default undefined
    */
-  setChildAsRoot?: boolean;
+  childRootProps?: GetRootPropsConfig<string> | boolean;
 }
 
 export type RemirrorProviderProps = MakeOptional<Omit<RemirrorProps, 'children'>, keyof typeof defaultProps> &
-  Pick<RemirrorContextProviderProps, 'setChildAsRoot'>;
+  Pick<RemirrorContextProviderProps, 'childRootProps'>;
 
 /**
  * This purely exists so that we know when the remirror editor has been called with a provider as opposed
@@ -31,7 +58,7 @@ export type RemirrorProviderProps = MakeOptional<Omit<RemirrorProps, 'children'>
  * the element is actually rendered that the getRootProp in any nested components is called.
  */
 const RemirrorContextProvider: RemirrorFC<RemirrorContextProviderProps> = ({
-  setChildAsRoot: _,
+  childRootProps: _,
   ...props
 }) => {
   return <RemirrorContext.Provider {...props} />;
@@ -39,7 +66,7 @@ const RemirrorContextProvider: RemirrorFC<RemirrorContextProviderProps> = ({
 
 RemirrorContextProvider.$$remirrorType = RemirrorElementType.ContextProvider;
 RemirrorContextProvider.defaultProps = {
-  setChildAsRoot: false,
+  childRootProps: false,
 };
 
 /**
@@ -59,14 +86,14 @@ RemirrorContextProvider.defaultProps = {
  */
 export const RemirrorProvider: RemirrorFC<RemirrorProviderProps> = ({
   children,
-  setChildAsRoot,
+  childRootProps,
   ...props
 }) => {
   return (
     <Remirror {...props}>
       {value => {
         return (
-          <RemirrorContextProvider value={value} setChildAsRoot={setChildAsRoot}>
+          <RemirrorContextProvider value={value} childRootProps={childRootProps}>
             {Children.only(children)}
           </RemirrorContextProvider>
         );

@@ -35,11 +35,10 @@ test('it supports <RemirrorExtension />', () => {
     ]);
 
     return (
-      <ManagedRemirrorProvider initialContent={docNodeBasicJSON} setChildAsRoot={true}>
+      <ManagedRemirrorProvider initialContent={docNodeBasicJSON} childRootProps={true}>
         <div>I am alive</div>
       </ManagedRemirrorProvider>
     );
-    // return <div>I am alive</div>;
   };
 
   const htmlString = renderToString(
