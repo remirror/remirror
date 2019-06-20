@@ -274,6 +274,7 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
 
   public render() {
     const { mention, emojiPickerActive } = this.state;
+    const { editorStyles, ...rest } = this.remirrorProps;
     return (
       <ThemeProvider theme={this.theme}>
         <RemirrorManager
@@ -308,7 +309,7 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
             set={this.props.emojiSet}
             emojiData={this.props.emojiData}
           />
-          <ManagedRemirrorProvider {...this.remirrorProps}>
+          <ManagedRemirrorProvider editorStyles={[this.theme.editorStyles, editorStyles]} {...rest}>
             <TwitterEditorComponent
               mention={mention}
               emojiPickerActive={emojiPickerActive}

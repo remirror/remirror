@@ -1,5 +1,5 @@
 import DefaultStyled, { CreateStyled } from '@emotion/styled';
-import { Cast } from '@remirror/core';
+import { Cast, EDITOR_CLASS_SELECTOR } from '@remirror/core';
 
 export const styled = Cast<CreateStyled<TwitterEditorTheme>>(DefaultStyled);
 export type TwitterEditorTheme = typeof uiTwitterTheme;
@@ -18,5 +18,11 @@ export const uiTwitterTheme = {
     family: '"Helvetica Neue", Helvetica, Arial, sans-serif',
     size: '1em',
     weight: '400',
+  },
+  editorStyles: {
+    [EDITOR_CLASS_SELECTOR]: {
+      width: '100%',
+      height: '100%',
+    },
   },
 };
