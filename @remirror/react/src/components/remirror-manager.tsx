@@ -4,9 +4,9 @@ import { ExtensionManager, isString, PrioritizedExtension } from '@remirror/core
 import { baseExtensions, PlaceholderExtension } from '@remirror/core-extensions';
 import {
   asDefaultProps,
+  isReactFragment,
   isRemirrorExtension,
   RemirrorManagerProps,
-  isReactFragment,
 } from '@remirror/react-utils';
 import { RemirrorManagerContext } from '../contexts';
 
