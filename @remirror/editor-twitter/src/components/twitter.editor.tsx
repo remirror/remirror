@@ -15,7 +15,7 @@ import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@re
 import deepMerge from 'deepmerge';
 import { ThemeProvider } from 'emotion-theming';
 import keyCode from 'keycode';
-import { TwitterEditorTheme, uiTwitterTheme } from '../theme';
+import { twitterEditorTheme, TwitterEditorTheme } from '../theme';
 import {
   ActiveTwitterTagData,
   ActiveTwitterUserData,
@@ -243,7 +243,7 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
   }
 
   private get theme(): TwitterEditorTheme {
-    return deepMerge(uiTwitterTheme, this.props.theme);
+    return deepMerge(twitterEditorTheme, this.props.theme);
   }
 
   private get remirrorProps() {
