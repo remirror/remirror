@@ -1,12 +1,12 @@
-import { Deployment, URLDescriptor } from '@test-fixtures/test-urls';
+import { Deployment, prefixBrowserName, URLDescriptor } from '@test-fixtures/test-urls';
 import { outerHtml } from './helpers';
 
 const editorSelector = '.remirror-editor';
 
 describe('Wysiwyg Editor Snapshots', () => {
   const url = URLDescriptor.wysiwyg[Deployment.Next][1];
-  const ssrIdentifier = 'wysiwyg-editor-ssr';
-  const domIdentifier = 'wysiwyg-editor-dom';
+  const ssrIdentifier = prefixBrowserName('wysiwyg-editor-ssr');
+  const domIdentifier = prefixBrowserName('wysiwyg-editor-dom');
 
   beforeEach(async () => {
     await jestPuppeteer.resetPage();
