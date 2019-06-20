@@ -21,7 +21,7 @@
     "alwaysStrict": true,
     "resolveJsonModule": true,
     "baseUrl": "../",
-    "plugins": [{ "name": "typescript-styled-plugin" }],
+    "plugins": [{ "name": "typescript-styled-plugin" }, { "name": "typescript-tslint-plugin" }],
     "paths": {
       "@remirror/core": ["@remirror/core/src/index.ts"],
       "@remirror/core-extensions": ["@remirror/core-extensions/src/index.ts"],
