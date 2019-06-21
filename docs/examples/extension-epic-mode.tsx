@@ -42,7 +42,10 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({
           autoFocus={true}
           attributes={{ 'data-testid': 'editor-instance' }}
           editorStyles={editorStyles}
-        />
+          childAsRoot={true} // To support SSR
+        >
+          <div />
+        </ManagedRemirrorProvider>
       </RemirrorManager>
     </div>
   );
@@ -51,9 +54,11 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({
 export const EpicModeDefault: FunctionComponent = () => (
   <EpicModeComponent particleEffect={defaultEffect} shake={true} />
 );
+
 export const EpicModeSpawning: FunctionComponent = () => (
   <EpicModeComponent particleEffect={spawningEffect} shake={true} />
 );
+
 export const EpicModeHeart: FunctionComponent = () => (
   <EpicModeComponent particleEffect={heartEffect} shake={false} placeholder='Type for hearts' />
 );

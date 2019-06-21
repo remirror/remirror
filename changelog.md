@@ -7,16 +7,23 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+### Added
+
+- `@remirror/react`: Add `withoutEmotion` which, when set to `true`, removes emotion (css-in-js) from the `Remirror` component. This is for those who don't like css-in-js and would like to work directly with the raw editor without random styles injected. Consuming the `@remirror/react-components` or any of the `@remirror/editor-*` packages will require the use of emotion.
+- `@remirror/react-utils`: Add `oneChildOnly` export which throws readable errors for invalid children props.
+
 ### Changed
 
 - **BREAKING `remirror/react-utils`:** Rename `childIsFunction` to `propIsFunction` and make it a _pseudo_ predicate function (returns true when it doesn't throw an error).
-- **BREAKING `remirror/react`:** Rename `setChildAsRoot` to `childRootProps` on `RemirrorContextProviderProps` and all it consumers. This affects the `RemirrorContextProvider`, `RemirrorProvider` and `ManagedRemirrorProvider` exports. The prop now can take a boolean or the object with props to inject into the root.
+- **BREAKING `remirror/react`:** Rename `setChildAsRoot` to `childAsRoot` on `RemirrorContextProviderProps` and all it consumers. This affects the `RemirrorContextProvider`, `RemirrorProvider` and `ManagedRemirrorProvider` exports. The prop now can take a boolean or the object with props to inject into the root.
 - **BREAKING `remirror/editor-twitter`:** Rename `uiTwitterTheme` to `TwitterEditorTheme`
+- **BREAKING `@remirror/react-utils` `@remirror/react` `@remirror/editor-markdown` `@remirror/editor-wysiwyg`:** Remove customRootProp from `RemirrorProps`
+- **BREAKING `@remirror/react`:** All RemirrorProviders now require a `children` prop. This prevents a bug when rendering in non-dom environments.
 - `remirror/editor-twitter`: Fix bug where text area didn't expand to full height of editor container
 
 - Add support for [Git Large File Storage (LFS)](https://git-lfs.github.com/)
 - `remirror/editor-twitter`, `remirror/editor-wysiwyg` : Use image-snapshot testing to ensure SSR and DOM rendered editors are identical
-- Update husky command from `yarn stop:hooks` to `yarn husky:stop` and `yarn husky:start`
+- Update husky command from ~~`yarn stop:hooks`~~ and ~~`yarn start:hooks`~~ to `yarn husky:stop` and `yarn husky:start`
 
 ## [0.2.0] - 2019-06-18
 

@@ -355,16 +355,14 @@ export interface RemirrorProps extends StringHandlerParams {
   forceEnvironment?: RenderEnvironment;
 
   /**
-   * Whether to use custom root props within a context provider
+   * Removes the emotion injected styles from the component.
    *
    * @remarks
-   * Let's the editor know that custom root props will be manually applied. This allows for the
-   * Providers which depend on this element to specify that the nested components will be responsible
-   * for calling `getRootProps()` on the root element.
+   * This is accomplished by making the `css` function a noop.
    *
-   * @defaultValue false
+   * @default false
    */
-  customRootProp: boolean;
+  withoutEmotion: boolean;
 }
 
 export interface PlaceholderConfig {

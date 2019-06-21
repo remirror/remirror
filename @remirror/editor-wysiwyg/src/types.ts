@@ -17,7 +17,6 @@ export interface WysiwygEditorProps
         | 'label'
         | 'editorStyles'
         | 'forceEnvironment'
-        | 'customRootProp'
       >
     >,
     Pick<RemirrorManagerProps, 'placeholder'> {

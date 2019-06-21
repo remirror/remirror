@@ -1,4 +1,4 @@
-import { jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
 import {
   AnyFunction,
   bool,
@@ -9,8 +9,24 @@ import {
   PlainObject,
   uniqueArray,
 } from '@remirror/core';
-import { Fragment, isValidElement, LegacyRef, PropsWithChildren, ReactElement, ReactNode } from 'react';
+import {
+  Children,
+  Fragment,
+  isValidElement as reactIsValidElement,
+  LegacyRef,
+  PropsWithChildren,
+  ReactElement,
+  ReactNode,
+} from 'react';
 import { RemirrorComponentType, RemirrorElement, RemirrorElementType } from './types';
+
+/**
+ * A drop in replacement for built in React.isValidElement which accepts a test value of any type
+ *
+ * @param value - the value to check
+ */
+export const isValidElement = <GProps extends {} = any>(value: unknown): value is ReactElement<GProps> =>
+  isObject(value) && reactIsValidElement(value);
 
 /**
  * Check whether a react node is a built in dom element (i.e. `div`, `span`)
@@ -20,7 +36,7 @@ import { RemirrorComponentType, RemirrorElement, RemirrorElementType } from './t
 export const isReactDOMElement = <GProps extends {} = any>(
   value: unknown,
 ): value is ReactElement<GProps> & { type: string } => {
-  return isObject(value) && isValidElement(value) && isString(value.type);
+  return isValidElement(value) && isString(value.type);
 };
 
 /**
@@ -161,4 +177,28 @@ export const propIsFunction = (prop: unknown): prop is AnyFunction => {
     throw new Error('The child argument to the Remirror component must be a function.');
   }
   return true;
+};
+
+/**
+ * A noop function that mimics the css emotion call but renders no output.
+ *
+ * @remarks
+ * This is useful for enabling the library user to switch of emotion for core react elements.
+ */
+export const cssNoOp: typeof css = () => undefined as any;
+
+/**
+ * A drop in replacement for React.Children.only which provides more readable errors
+ * when the child is not a react element or undefined.
+ */
+export const oneChildOnly = <GProps extends {} = any>(value: unknown): ReactElement<GProps> => {
+  if (!value) {
+    throw new Error('This component requires ONE child component - Nothing was provided');
+  }
+
+  if (!isValidElement(value)) {
+    throw new Error('This component requires ONE child component - An invalid element was provided');
+  }
+
+  return Children.only(value);
 };

@@ -17,7 +17,6 @@ export interface MarkdownEditorProps
       | 'label'
       | 'editorStyles'
       | 'forceEnvironment'
-      | 'customRootProp'
     >
   > {
   theme?: Partial<MarkdownEditorTheme>;

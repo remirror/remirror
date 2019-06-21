@@ -68,8 +68,10 @@ test('should allow text input and fire all handlers', () => {
   const editorNode = getByLabelText(label);
   expect(handlers.onChange).toHaveBeenCalledTimes(1);
   expect(handlers.onFirstRender.mock.calls[0][0].getText()).toBe(textContent);
+
   fireEvent.blur(editorNode);
   expect(handlers.onBlur).toHaveBeenCalledTimes(1);
+
   fireEvent.focus(editorNode);
   expect(handlers.onFocus).toHaveBeenCalledTimes(1);
 });
@@ -107,17 +109,7 @@ describe('initialContent', () => {
   it('renders with json', () => {
     const content = {
       type: 'doc',
-      content: [
-        {
-          type: 'paragraph',
-          content: [
-            {
-              type: 'text',
-              text: 'Hello',
-            },
-          ],
-        },
-      ],
+      content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Hello' }] }],
     };
 
     const { container } = render(
@@ -132,7 +124,7 @@ describe('initialContent', () => {
 describe('Remirror Controlled Component', () => {
   const initialContent = `<p>Hello</p>`;
   const expectedContent = `<p>World</p>`;
-  let props: RemirrorProviderProps;
+  let props: Omit<RemirrorProviderProps, 'children'>;
   beforeEach(() => {
     props = {
       label,
@@ -184,5 +176,21 @@ describe('Remirror Controlled Component', () => {
     setContent(expectedContent, true);
     rerender(<Cmp value={testValue} />);
     expect(getByRole('textbox')).toContainHTML(expectedContent);
+  });
+});
+
+describe('withoutEmotion', () => {
+  it('should not render extra class names when true', () => {
+    const manager = createTestManager();
+    const child = () => <div data-testid='test' />;
+    const { getByTestId, rerender } = render(<Remirror manager={manager}>{child}</Remirror>);
+    expect(getByTestId('test')).toHaveAttribute('class');
+
+    rerender(
+      <Remirror manager={manager} withoutEmotion={true}>
+        {child}
+      </Remirror>,
+    );
+    expect(getByTestId('test')).not.toHaveAttribute('class');
   });
 });

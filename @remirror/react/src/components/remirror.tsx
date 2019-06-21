@@ -26,6 +26,7 @@ import {
   BaseListenerParams,
   CalculatePositionerParams,
   cloneElement,
+  cssNoOp,
   getElementProps,
   GetPositionerPropsConfig,
   GetPositionerReturn,
@@ -57,7 +58,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   public static $$remirrorType = RemirrorElementType.Editor;
 
   /**
-   * Used to manage the controlled component value prop and pass it on to the state for internal usage
+   * This is needed to manage the controlled component `value` prop and copy it to the components state for internal usage.
    */
   public static getDerivedStateFromProps(
     props: RemirrorProps,
@@ -112,6 +113,10 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    */
   private get manager(): ExtensionManager {
     return this.props.manager;
+  }
+
+  private get css(): typeof css {
+    return this.props.withoutEmotion ? cssNoOp : css;
   }
 
   constructor(props: RemirrorProps) {
@@ -219,7 +224,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     return {
       [refKey]: this.onRef,
       key: this.uid,
-      css: css(this.editorStyles),
+      css: this.css(this.editorStyles),
       ...config,
       children: this.renderChildren(null),
     } as RefKeyRootProps<GRefKey>;
@@ -283,6 +288,9 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     }
   };
 
+  /**
+   * Returns the positioner props for a given positionerId.
+   */
   private calculatePositionProps({
     initialPosition,
     getPosition,
@@ -298,6 +306,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       return positionerProps;
     }
 
+    // Nothing has changed so return the prev value
     if (!hasChanged(this.state)) {
       return positionerMapItem.prev;
     }
@@ -637,9 +646,9 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       isRemirrorProvider(element) ||
       isManagedRemirrorProvider(element)
     ) {
-      const { childRootProps } = element.props;
-      return childRootProps
-        ? cloneElement(element, props, this.renderClonedElement(children, childRootProps))
+      const { childAsRoot } = element.props;
+      return childAsRoot
+        ? cloneElement(element, props, this.renderClonedElement(children, childAsRoot))
         : element;
     } else {
       return isReactDOMElement(element) ? (

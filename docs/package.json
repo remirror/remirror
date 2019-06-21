@@ -30,7 +30,7 @@
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "react-use": "9.6.0"
+    "react-use": "9.7.0"
   },
   "devDependencies": {
     "@types/lodash": "4.14.134",
@@ -39,6 +39,6 @@
     "docz": "1.2.0",
     "docz-core": "1.2.0",
     "docz-theme-default": "1.2.0",
-    "remark-external-links": "4.0.0"
+    "remark-external-links": "5.0.0"
   }
 }
