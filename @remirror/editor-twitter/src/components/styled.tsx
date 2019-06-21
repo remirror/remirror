@@ -41,6 +41,10 @@ export const EditorWrapper = styled.div`
 `;
 
 export const RemirrorRoot = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+
   :focus {
     outline: none;
   }

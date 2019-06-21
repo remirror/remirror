@@ -21,8 +21,7 @@ export const twitterEditorTheme = {
   },
   editorStyles: {
     [EDITOR_CLASS_SELECTOR]: {
-      width: '100%',
-      height: '100%',
+      flexGrow: 1,
     },
   },
 };
