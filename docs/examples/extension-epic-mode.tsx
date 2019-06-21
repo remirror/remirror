@@ -42,7 +42,7 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({
           autoFocus={true}
           attributes={{ 'data-testid': 'editor-instance' }}
           editorStyles={editorStyles}
-          childRootProps={true} // To support SSR
+          childAsRoot={true} // To support SSR
         >
           <div />
         </ManagedRemirrorProvider>

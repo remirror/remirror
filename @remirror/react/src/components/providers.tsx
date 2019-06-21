@@ -23,7 +23,7 @@ export interface RemirrorContextProviderProps extends ProviderProps<InjectedRemi
    * **Example with directly nested components**
    *
    * When using a remirror provider calling `getRootProps` is mandatory.
-   * By setting `childRootProps` to an object Remirror will inject these props into the first child element.
+   * By setting `childAsRoot` to an object Remirror will inject these props into the first child element.
    *
    * ```tsx
    * import { ManagedRemirrorProvider, RemirrorManager } from '@remirror/react';
@@ -31,7 +31,7 @@ export interface RemirrorContextProviderProps extends ProviderProps<InjectedRemi
    * const Editor = () => {
    *   return (
    *     <RemirrorManager>
-   *       <ManagedRemirrorProvider childRootProps={{ refKey: 'ref' }}>
+   *       <ManagedRemirrorProvider childAsRoot={{ refKey: 'ref' }}>
    *         <div />
    *       </ManagedRemirrorProvider>
    *     </RemirrorManager>
@@ -44,12 +44,12 @@ export interface RemirrorContextProviderProps extends ProviderProps<InjectedRemi
    *
    * @default undefined
    */
-  childRootProps?: GetRootPropsConfig<string> | boolean;
+  childAsRoot?: GetRootPropsConfig<string> | boolean;
 }
 
 export interface RemirrorProviderProps
   extends MakeOptional<Omit<RemirrorProps, 'children'>, keyof typeof defaultProps>,
-    Pick<RemirrorContextProviderProps, 'childRootProps'> {
+    Pick<RemirrorContextProviderProps, 'childAsRoot'> {
   /**
    * All providers must have ONE child element.
    */
@@ -64,16 +64,13 @@ export interface RemirrorProviderProps
  * is called. However when called via a Provider the render prop renders the context component and it's not until
  * the element is actually rendered that the getRootProp in any nested components is called.
  */
-const RemirrorContextProvider: RemirrorFC<RemirrorContextProviderProps> = ({
-  childRootProps: _,
-  ...props
-}) => {
+const RemirrorContextProvider: RemirrorFC<RemirrorContextProviderProps> = ({ childAsRoot: _, ...props }) => {
   return <RemirrorContext.Provider {...props} />;
 };
 
 RemirrorContextProvider.$$remirrorType = RemirrorElementType.ContextProvider;
 RemirrorContextProvider.defaultProps = {
-  childRootProps: false,
+  childAsRoot: false,
 };
 
 /**
@@ -91,16 +88,12 @@ RemirrorContextProvider.defaultProps = {
  * - `withRemirror`
  * - `withPositioner`
  */
-export const RemirrorProvider: RemirrorFC<RemirrorProviderProps> = ({
-  children,
-  childRootProps,
-  ...props
-}) => {
+export const RemirrorProvider: RemirrorFC<RemirrorProviderProps> = ({ children, childAsRoot, ...props }) => {
   return (
     <Remirror {...props}>
       {value => {
         return (
-          <RemirrorContextProvider value={value} childRootProps={childRootProps}>
+          <RemirrorContextProvider value={value} childAsRoot={childAsRoot}>
             {oneChildOnly(children)}
           </RemirrorContextProvider>
         );

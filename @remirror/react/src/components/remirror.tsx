@@ -646,9 +646,9 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       isRemirrorProvider(element) ||
       isManagedRemirrorProvider(element)
     ) {
-      const { childRootProps } = element.props;
-      return childRootProps
-        ? cloneElement(element, props, this.renderClonedElement(children, childRootProps))
+      const { childAsRoot } = element.props;
+      return childAsRoot
+        ? cloneElement(element, props, this.renderClonedElement(children, childAsRoot))
         : element;
     } else {
       return isReactDOMElement(element) ? (

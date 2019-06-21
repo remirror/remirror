@@ -21,7 +21,7 @@ import { fromMarkdown, toMarkdown } from './markdown';
 /**
  * The props which are passed to the internal RemirrorProvider
  */
-export type InternalEditorProps = Omit<RemirrorProviderProps, 'childRootProps' | 'children'>;
+export type InternalEditorProps = Omit<RemirrorProviderProps, 'childAsRoot' | 'children'>;
 
 const useMarkdownManager = () => {
   return useMemo(
@@ -38,7 +38,7 @@ const useMarkdownManager = () => {
 
 const MarkdownEditor: FC<InternalEditorProps> = props => {
   return (
-    <RemirrorProvider {...props} childRootProps={true}>
+    <RemirrorProvider {...props} childAsRoot={true}>
       <div />
     </RemirrorProvider>
   );
@@ -53,7 +53,7 @@ const useWysiwygManager = () => {
 
 const WysiwygEditor: FC<InternalEditorProps> = props => {
   return (
-    <RemirrorProvider {...props} childRootProps={true}>
+    <RemirrorProvider {...props} childAsRoot={true}>
       <div />
     </RemirrorProvider>
   );
