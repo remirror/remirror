@@ -114,13 +114,12 @@ test('prepends to the react element when insertPosition=start with getRootProps'
 
 describe('withoutEmotion', () => {
   it('should not render extra class names when true', () => {
-    const manager = createTestManager();
     const child = () => <div data-testid='test' />;
-    const withEmotionString = renderToString(<Remirror manager={manager}>{child}</Remirror>);
+    const withEmotionString = renderToString(<Remirror manager={createTestManager()}>{child}</Remirror>);
     expect(withEmotionString).toInclude('css-');
 
     const withoutEmotionString = renderToString(
-      <Remirror manager={manager} withoutEmotion={true}>
+      <Remirror manager={createTestManager()} withoutEmotion={true}>
         {child}
       </Remirror>,
     );

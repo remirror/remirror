@@ -124,7 +124,7 @@ describe('initialContent', () => {
 describe('Remirror Controlled Component', () => {
   const initialContent = `<p>Hello</p>`;
   const expectedContent = `<p>World</p>`;
-  let props: RemirrorProviderProps;
+  let props: Omit<RemirrorProviderProps, 'children'>;
   beforeEach(() => {
     props = {
       label,

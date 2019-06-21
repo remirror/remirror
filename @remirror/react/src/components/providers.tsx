@@ -1,9 +1,10 @@
-import React, { Children, ProviderProps } from 'react';
+import React, { ProviderProps, ReactElement } from 'react';
 
 import { MakeOptional } from '@remirror/core';
 import {
   GetRootPropsConfig,
   InjectedRemirrorProps,
+  oneChildOnly,
   RemirrorElementType,
   RemirrorFC,
   RemirrorProps,
@@ -46,8 +47,14 @@ export interface RemirrorContextProviderProps extends ProviderProps<InjectedRemi
   childRootProps?: GetRootPropsConfig<string> | boolean;
 }
 
-export type RemirrorProviderProps = MakeOptional<Omit<RemirrorProps, 'children'>, keyof typeof defaultProps> &
-  Pick<RemirrorContextProviderProps, 'childRootProps'>;
+export interface RemirrorProviderProps
+  extends MakeOptional<Omit<RemirrorProps, 'children'>, keyof typeof defaultProps>,
+    Pick<RemirrorContextProviderProps, 'childRootProps'> {
+  /**
+   * All providers must have ONE child element.
+   */
+  children: ReactElement;
+}
 
 /**
  * This purely exists so that we know when the remirror editor has been called with a provider as opposed
@@ -94,7 +101,7 @@ export const RemirrorProvider: RemirrorFC<RemirrorProviderProps> = ({
       {value => {
         return (
           <RemirrorContextProvider value={value} childRootProps={childRootProps}>
-            {Children.only(children)}
+            {oneChildOnly(children)}
           </RemirrorContextProvider>
         );
       }}

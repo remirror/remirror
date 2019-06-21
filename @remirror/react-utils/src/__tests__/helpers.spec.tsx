@@ -8,6 +8,7 @@ import {
   isReactFragment,
   isRemirrorExtension,
   isRemirrorProvider,
+  oneChildOnly,
   uniqueClass,
 } from '../helpers';
 import { RemirrorElementType, RemirrorFC } from '../types';
@@ -113,4 +114,19 @@ describe('cloneElement', () => {
     expect(clonedRender.baseElement).toContainHTML(propChildRender.baseElement.innerHTML);
     expect(clonedRender.baseElement).toContainHTML(childrenRender.baseElement.innerHTML);
   });
+});
+
+test('oneChildOnly', () => {
+  expect(() => oneChildOnly(undefined)).toThrowErrorMatchingInlineSnapshot(
+    `"This component requires ONE child component - Nothing was provided"`,
+  );
+  expect(() => oneChildOnly('string')).toThrowErrorMatchingInlineSnapshot(
+    `"This component requires ONE child component - An invalid element was provided"`,
+  );
+  expect(() => oneChildOnly([<div key={1} />, <div key={2} />])).toThrowErrorMatchingInlineSnapshot(
+    `"This component requires ONE child component - An invalid element was provided"`,
+  );
+
+  const expected = <div />;
+  expect(oneChildOnly(expected)).toBe(expected);
 });
