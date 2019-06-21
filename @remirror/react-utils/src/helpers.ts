@@ -1,4 +1,4 @@
-import { jsx } from '@emotion/core';
+import { css, jsx } from '@emotion/core';
 import {
   AnyFunction,
   bool,
@@ -162,3 +162,11 @@ export const propIsFunction = (prop: unknown): prop is AnyFunction => {
   }
   return true;
 };
+
+/**
+ * A noop function that mimics the css emotion call but renders no output.
+ *
+ * @remarks
+ * This is useful for enabling the library user to switch of emotion for core react elements.
+ */
+export const cssNoOp: typeof css = () => undefined as any;

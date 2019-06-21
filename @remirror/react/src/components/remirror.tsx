@@ -26,6 +26,7 @@ import {
   BaseListenerParams,
   CalculatePositionerParams,
   cloneElement,
+  cssNoOp,
   getElementProps,
   GetPositionerPropsConfig,
   GetPositionerReturn,
@@ -112,6 +113,10 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    */
   private get manager(): ExtensionManager {
     return this.props.manager;
+  }
+
+  private get css(): typeof css {
+    return this.props.withoutEmotion ? cssNoOp : css;
   }
 
   constructor(props: RemirrorProps) {
@@ -219,7 +224,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     return {
       [refKey]: this.onRef,
       key: this.uid,
-      css: css(this.editorStyles),
+      css: this.css(this.editorStyles),
       ...config,
       children: this.renderChildren(null),
     } as RefKeyRootProps<GRefKey>;

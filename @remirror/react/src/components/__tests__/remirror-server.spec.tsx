@@ -112,6 +112,22 @@ test('prepends to the react element when insertPosition=start with getRootProps'
   expect(isAscending([indexOfInjectedSSRComponent, indexOfInnerDiv, indexOfOuter])).toBeTrue();
 });
 
+describe('withoutEmotion', () => {
+  it('should not render extra class names when true', () => {
+    const manager = createTestManager();
+    const child = () => <div data-testid='test' />;
+    const withEmotionString = renderToString(<Remirror manager={manager}>{child}</Remirror>);
+    expect(withEmotionString).toInclude('css-');
+
+    const withoutEmotionString = renderToString(
+      <Remirror manager={manager} withoutEmotion={true}>
+        {child}
+      </Remirror>,
+    );
+    expect(withoutEmotionString).not.toInclude('css-');
+  });
+});
+
 /**
  * Check that the numbers passed in are of ascending order.
  *

@@ -7,6 +7,10 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+### Added
+
+- `@remirror/react`: Add `withoutEmotion` which, when set to `true`, removes emotion (css-in-js) from the `Remirror` component. This is for those who don't like css-in-js and would like to work directly with the raw editor without random styles injected. Consuming the `@remirror/react-components` or any of the `@remirror/editor-*` packages will require the use of emotion.
+
 ### Changed
 
 - **BREAKING `remirror/react-utils`:** Rename `childIsFunction` to `propIsFunction` and make it a _pseudo_ predicate function (returns true when it doesn't throw an error).

@@ -10,6 +10,7 @@ export const defaultProps = asDefaultProps<RemirrorProps>()({
   label: '',
   editorStyles: {},
   insertPosition: 'end',
+  withoutEmotion: false,
   stringHandler: () => {
     throw new Error(
       'No valid string handler. In order to pass in `string` as `initialContent` to the remirror editor you must provide a valid stringHandler prop',

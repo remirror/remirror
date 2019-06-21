@@ -13,10 +13,19 @@ import {
   PlainObject,
   ProsemirrorNode,
 } from '@remirror/core';
+import { RemirrorProps } from '@remirror/react-utils';
 import { css, Interpolation } from 'emotion';
 import { Decoration, EditorView, NodeView } from 'prosemirror-view';
 
 export type GetPosition = () => number;
+
+/**
+ * A mimic of the css method except that this one does nothing but return an empty string.
+ *
+ * @remark
+ * Used to switch off emotion css injection
+ */
+const cssNoOp: typeof css = () => '';
 
 export interface NodeViewComponentProps<GAttrs = any> extends EditorViewParams {
   node: ProsemirrorNode & { attrs: GAttrs };
@@ -24,7 +33,8 @@ export interface NodeViewComponentProps<GAttrs = any> extends EditorViewParams {
   forwardRef?: (node: HTMLElement) => void | undefined;
 }
 
-export interface CreateNodeViewParams<GProps extends PlainObject = {}> {
+export interface CreateNodeViewParams<GProps extends PlainObject = {}>
+  extends Partial<Pick<RemirrorProps, 'withoutEmotion'>> {
   Component: ComponentType<NodeViewComponentProps & GProps>;
   getPortalContainer: () => NodeViewPortalContainer;
   props: GProps;
@@ -37,9 +47,20 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     getPortalContainer,
     props,
     style,
+    withoutEmotion,
   }: CreateNodeViewParams<GProps>) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
-      new ReactNodeView(node, view, getPosition, getPortalContainer, props, Component, false, style).init();
+      new ReactNodeView(
+        node,
+        view,
+        getPosition,
+        getPortalContainer,
+        props,
+        Component,
+        false,
+        style,
+        withoutEmotion,
+      ).init();
   }
 
   private domRef?: HTMLElement;
@@ -55,7 +76,15 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     private Component: ComponentType<NodeViewComponentProps & GProps>,
     private hasContext: boolean = false,
     private style: Interpolation = {},
+    private withoutEmotion: boolean = false,
   ) {}
+
+  /**
+   * The CSS transformation property depending on whether the emotion is being used or not.
+   */
+  private get css(): typeof css {
+    return this.withoutEmotion ? cssNoOp : css;
+  }
 
   /**
    * This method exists to move initialization logic out of the constructor,
@@ -82,7 +111,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     }
 
     // Add a fixed class and a dynamic class to this node (allows for custom styles being added in configuration)
-    this.domRef.classList.add(`${EDITOR_CLASS_NAME}-${this.node.type.name}-node-view`, css(this.style));
+    this.domRef.classList.add(`${EDITOR_CLASS_NAME}-${this.node.type.name}-node-view`, this.css(this.style));
 
     this.renderReactComponent(() => this.render(this.props, this.handleRef));
     return this;

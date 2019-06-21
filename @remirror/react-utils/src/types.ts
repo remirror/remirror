@@ -353,6 +353,16 @@ export interface RemirrorProps extends StringHandlerParams {
    * This can be overridden with this property
    */
   forceEnvironment?: RenderEnvironment;
+
+  /**
+   * Removes the emotion injected styles from the component.
+   *
+   * @remarks
+   * This is accomplished by making the `css` function a noop.
+   *
+   * @default false
+   */
+  withoutEmotion: boolean;
 }
 
 export interface PlaceholderConfig {
