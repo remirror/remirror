@@ -7,7 +7,6 @@ import { ComponentType } from 'react';
 import { AnyExtension } from './extension';
 import {
   createFlexibleFunctionMap,
-  ExtensionManagerInitParams,
   extensionPropertyMapper,
   FlexibleExtension,
   hasExtensionProperty,
@@ -16,7 +15,7 @@ import {
   isNodeExtension,
   transformExtensionMap,
 } from './extension-manager.helpers';
-import { bool, isEqual, isFunction, isObject } from './helpers';
+import { bool, isEqual, isFunction, isObject, uniqueArray } from './helpers';
 import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from './helpers/document';
 import { NodeViewPortalContainer } from './portal-container';
 import {
@@ -26,15 +25,18 @@ import {
   CommandFunction,
   CommandParams,
   EditorSchema,
+  EditorStateParams,
   EditorView,
   ExtensionBooleanFunction,
   ExtensionCommandFunction,
+  ExtensionManagerInitParams,
   ExtensionManagerParams,
   MarkExtensionSpec,
   NodeExtensionSpec,
   NodeViewMethod,
   ProsemirrorPlugin,
   RemirrorActions,
+  TransactionParams,
 } from './types';
 
 export interface ExtensionManagerData {
@@ -85,18 +87,10 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    */
   private initData: ExtensionManagerData = {} as ExtensionManagerData;
 
-  get schema() {
-    return this.initData.schema;
-  }
-
-  get data() {
-    if (!this.initialized) {
-      throw new Error('Extension Manager must  be initialized before attempting to access the data');
-    }
-
-    return this.initData;
-  }
-
+  /**
+   * Creates the extension manager which is used to simplify the management of the different
+   * facets of building an editor with
+   */
   constructor(extensionMapValues: FlexibleExtension[]) {
     this.extensions = transformExtensionMap(extensionMapValues);
 
@@ -104,8 +98,108 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     this.initData.schema = this.createSchema();
   }
 
+  /* Public Get Properties
+
   /**
-   * Initialize manager with all required initial data.
+   * All the dynamically generated attributes provided by each extension. Earlier extensions are
+   * override later extensions. class names
+   */
+  public get attributes() {
+    let combinedAttributes: AttrsWithClass = {};
+    this.extensions
+      .filter(hasExtensionProperty('attributes'))
+      .filter(extension => extension.options.excludeAttributes)
+      .map(extension => extension.attributes(this.params))
+      .reverse()
+      .forEach(attrs => {
+        combinedAttributes = {
+          ...combinedAttributes,
+          ...attrs,
+          class: uniqueArray(
+            (((combinedAttributes.class || '') + bool(attrs.class) ? attrs.class : '') || '').split(' '),
+          ).join(' '),
+        };
+      });
+
+    return combinedAttributes;
+  }
+
+  /**
+   * Retrieve all the SSRComponent properties from the extensions.
+   * Used to render the initial SSR output.
+   */
+  public get components() {
+    const components: Record<string, ComponentType> = {};
+    this.extensions
+      .filter(extension => extension.options.SSRComponent)
+      // User can opt out of SSR rendering
+      .filter(extension => !extension.options.disableSSR)
+      .forEach(({ name, options: { SSRComponent } }) => {
+        components[name] = SSRComponent;
+      });
+
+    return components;
+  }
+
+  /**
+   * Get the extension manager data which is storred after initializing.
+   */
+  public get data() {
+    if (!this.initialized) {
+      throw new Error('Extension Manager must  be initialized before attempting to access the data');
+    }
+
+    return this.initData;
+  }
+
+  /**
+   * Filters through all provided extensions and picks the nodes
+   */
+  public get nodes() {
+    const nodes: Record<string, NodeExtensionSpec> = {};
+    this.extensions.filter(isNodeExtension).forEach(({ name, schema }) => {
+      nodes[name] = schema;
+    });
+    return nodes;
+  }
+
+  /**
+   * Filters through all provided extensions and picks the marks
+   */
+  public get marks() {
+    const marks: Record<string, MarkExtensionSpec> = {};
+    this.extensions.filter(isMarkExtension).forEach(({ name, schema }) => {
+      marks[name] = schema;
+    });
+    return marks;
+  }
+
+  /**
+   * A shorthand method for retrieving the schema for this extension manager from the data.
+   */
+  public get schema() {
+    return this.initData.schema;
+  }
+
+  /* Private Get Properties */
+
+  /**
+   * Utility getter for accessing the schema params
+   */
+  private get params(): ExtensionManagerParams {
+    return {
+      schema: this.initData.schema,
+      getEditorState: this.getEditorState,
+      getPortalContainer: this.getPortalContainer,
+    };
+  }
+
+  /* Public Methods */
+
+  /**
+   * Initialize the extension manager with important data.
+   *
+   * This is called by the view layer and provides
    */
   public init({ getEditorState, getPortalContainer }: ExtensionManagerInitParams) {
     if (this.initialized) {
@@ -146,21 +240,25 @@ export class ExtensionManager implements ExtensionManagerInitParams {
       ...this.params,
       view,
       isEditable: () =>
-        bool(
-          isFunction(view.props.editable) ? view.props.editable(this.getEditorState()) : view.props.editable,
-        ),
+        isFunction(view.props.editable) ? view.props.editable(this.getEditorState()) : false,
     });
   }
 
   /**
-   * Utility getter for accessing the schema params
+   * Create the editor state from content passed to this extension manager.
    */
-  private get params(): ExtensionManagerParams {
-    return {
-      schema: this.initData.schema,
-      getEditorState: this.getEditorState,
-      getPortalContainer: this.getPortalContainer,
-    };
+  public createState({ content, doc, stringHandler }: Omit<CreateDocumentNodeParams, 'schema'>) {
+    const { schema, plugins } = this.data;
+    return EditorState.create({
+      schema,
+      doc: createDocumentNode({
+        content,
+        doc,
+        schema,
+        stringHandler,
+      }),
+      plugins,
+    });
   }
 
   /**
@@ -200,76 +298,13 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * Checks to see if the extension manager has been initialized and throws if not
+   * A handler which allows the extension to respond to each transaction without needing to register a plugin.
+   *
+   * This is currently used in the collaboration plugin.
    */
-  private checkInitialized() {
-    if (!this.initialized) {
-      throw new Error(
-        'Before using the extension manager it must be initialized with a getPortalContainer and editorState',
-      );
-    }
-  }
-
-  /**
-   * Filters through all provided extensions and picks the nodes
-   */
-  public get nodes() {
-    const nodes: Record<string, NodeExtensionSpec> = {};
-    this.extensions.filter(isNodeExtension).forEach(({ name, schema }) => {
-      nodes[name] = schema;
-    });
-    return nodes;
-  }
-
-  /**
-   * Filters through all provided extensions and picks the marks
-   */
-  public get marks() {
-    const marks: Record<string, MarkExtensionSpec> = {};
-    this.extensions.filter(isMarkExtension).forEach(({ name, schema }) => {
-      marks[name] = schema;
-    });
-    return marks;
-  }
-
-  /**
-   * Retrieve all the SSRComponent properties from the extensions.
-   * Used to render the initial SSR output.
-   */
-  public get components() {
-    const components: Record<string, ComponentType> = {};
-    this.extensions
-      .filter(extension => extension.options.SSRComponent)
-      // User can opt out of SSR rendering
-      .filter(extension => !extension.options.disableSSR)
-      .forEach(({ name, options: { SSRComponent } }) => {
-        components[name] = SSRComponent;
-      });
-
-    return components;
-  }
-
-  /**
-   * Dynamically create the editor schema based on the extensions that have been passed in.
-   */
-  public createSchema(): EditorSchema {
-    return new Schema({ nodes: this.nodes, marks: this.marks });
-  }
-
-  /**
-   * Create the editor state from this extension manager, making the manager a source of truth for all things prosemirror.
-   */
-  public createState({ content, doc, stringHandler }: Omit<CreateDocumentNodeParams, 'schema'>) {
-    const { schema, plugins } = this.data;
-    return EditorState.create({
-      schema,
-      doc: createDocumentNode({
-        content,
-        doc,
-        schema,
-        stringHandler,
-      }),
-      plugins,
+  public onTransaction(params: OnTransactionManagerParams) {
+    this.extensions.filter(hasExtensionProperty('onTransaction')).forEach(({ onTransaction }) => {
+      onTransaction({ ...params, ...this.params, view: this.data.view });
     });
   }
 
@@ -288,9 +323,43 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
+   * Adjusts the rendered element based on the extension transformers.
+   */
+  public ssrTransformer(element: JSX.Element): JSX.Element {
+    return this.extensions
+      .filter(hasExtensionProperty('ssrTransformer'))
+      .filter(extension => !extension.options.disableSSR)
+      .reduce((prevElement, extension) => {
+        return extension.ssrTransformer(prevElement, this.params);
+      }, element);
+  }
+
+  /* Private Methods */
+
+  /**
+   * Checks to see if the extension manager has been initialized and throws if not
+   */
+  private checkInitialized() {
+    if (!this.initialized) {
+      throw new Error(
+        'Before using the extension manager it must be initialized with a getPortalContainer and editorState',
+      );
+    }
+  }
+
+  /**
+   * Dynamically create the editor schema based on the extensions that have been passed in.
+   *
+   * This is called as soon as the ExtensionManager is created.
+   */
+  private createSchema(): EditorSchema {
+    return new Schema({ nodes: this.nodes, marks: this.marks });
+  }
+
+  /**
    * Retrieve all the extension plugin keys
    */
-  public get pluginKeys() {
+  private get pluginKeys() {
     const pluginKeys: Record<string, PluginKey> = {};
     this.extensions
       .filter(extension => extension.plugin)
@@ -309,7 +378,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * - `isActive` defaults to a function returning false
    * - `isEnabled` defaults to a function returning true
    */
-  public actions(params: CommandParams): RemirrorActions {
+  private actions(params: CommandParams): RemirrorActions {
     this.checkInitialized();
 
     const actions: RemirrorActions = {};
@@ -330,30 +399,9 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * All the dynamically generated attributes for each extension
-   */
-  public get attributes() {
-    let combinedAttributes: AttrsWithClass = {};
-    this.extensions
-      .filter(hasExtensionProperty('attributes'))
-      .filter(extension => extension.options.excludeAttributes)
-      .map(extension => extension.attributes(this.params))
-      .reverse()
-      .forEach(attrs => {
-        combinedAttributes = {
-          ...combinedAttributes,
-          ...attrs,
-          class: (combinedAttributes.class || '') + bool(attrs.class) ? attrs.class : '',
-        };
-      });
-
-    return combinedAttributes;
-  }
-
-  /**
    * Retrieve all plugins from the passed in extensions
    */
-  public plugins() {
+  private plugins() {
     this.checkInitialized();
     const plugins: ProsemirrorPlugin[] = [];
     const extensionPlugins = this.extensions
@@ -371,7 +419,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   /**
    * Retrieve the nodeViews created on the extensions for use within prosemirror state
    */
-  public nodeViews() {
+  private nodeViews() {
     this.checkInitialized();
     const nodeViews: Record<string, NodeViewMethod> = {};
     return this.extensions
@@ -389,7 +437,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   /**
    * Retrieve all keymaps (how the editor responds to keyboard commands).
    */
-  public keymaps() {
+  private keymaps() {
     const extensionKeymaps = this.extensions
       .filter(hasExtensionProperty('keys'))
       .filter(extension => !extension.options.excludeKeymaps)
@@ -418,7 +466,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   /**
    * Retrieve all inputRules (how the editor responds to text matching certain rules).
    */
-  public inputRules() {
+  private inputRules() {
     const rules: InputRule[] = [];
     const extensionInputRules = this.extensions
       .filter(hasExtensionProperty('inputRules'))
@@ -435,7 +483,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   /**
    * Retrieve all pasteRules (rules for how the editor responds to pastedText).
    */
-  public pasteRules(): ProsemirrorPlugin[] {
+  private pasteRules(): ProsemirrorPlugin[] {
     const pasteRules: ProsemirrorPlugin[] = [];
     const extensionPasteRules = this.extensions
       .filter(hasExtensionProperty('pasteRules'))
@@ -450,21 +498,9 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * Adjusts the rendered element based on the extension transformers.
-   */
-  public ssrTransformer(element: JSX.Element): JSX.Element {
-    return this.extensions
-      .filter(hasExtensionProperty('ssrTransformer'))
-      .filter(extension => !extension.options.disableSSR)
-      .reduce((prevElement, extension) => {
-        return extension.ssrTransformer(prevElement, this.params);
-      }, element);
-  }
-
-  /**
    * Extensions can register custom styles for the editor. This retrieves them.
    */
-  public styles(): Interpolation[] {
+  private styles(): Interpolation[] {
     const extensionStyles = this.extensions
       .filter(hasExtensionProperty('styles'))
       .filter(extension => !extension.options.excludeStyles)
@@ -481,14 +517,16 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    */
   private commands = createFlexibleFunctionMap<'commands', (attrs?: Attrs) => void, ExtensionCommandFunction>(
     {
-      ctx: this,
+      context: this,
       key: 'commands',
-      methodFactory: (params, method) => (attrs?: Attrs) => {
-        if (!params.isEditable()) {
+      methodFactory: ({ view, isEditable, getEditorState }, method) => (attrs?: Attrs) => {
+        // TODO this might not be what we want? When not editable by the user no commands can be run
+        // ? What about in collaborative mode - changes from others should still be reflected.
+        if (!isEditable()) {
           return false;
         }
-        params.view.focus();
-        return method(attrs)(params.getEditorState(), params.view.dispatch, params.view);
+        view.focus();
+        return method(attrs)(getEditorState(), view.dispatch, view);
       },
       checkUniqueness: true,
       arrayTransformer: (fns, params, methodFactory) => () => {
@@ -526,7 +564,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
  */
 const booleanFlexibleFunctionMap = <GKey extends 'enabled' | 'active'>(key: GKey, ctx: ExtensionManager) => {
   return createFlexibleFunctionMap<GKey, (attrs?: Attrs) => boolean, ExtensionBooleanFunction>({
-    ctx,
+    context: ctx,
     key,
     methodFactory: (_, method) => (attrs?: Attrs) => {
       return method(attrs);
@@ -568,3 +606,5 @@ export interface ManagerParams {
    */
   manager: ExtensionManager;
 }
+
+export interface OnTransactionManagerParams extends TransactionParams, EditorStateParams {}

@@ -286,8 +286,8 @@ export interface RemirrorProps extends StringHandlerParams {
   onChange?: RemirrorEventListener;
 
   /**
-   * The render prop that takes the injected remirror params an returns an element to render. The editor view is automatically
-   * attached to the DOM.
+   * The render prop that takes the injected remirror params and returns an element to render.
+   * The editor view is automatically attached to the DOM.
    */
   children: RenderPropFunction;
 
@@ -298,7 +298,7 @@ export interface RemirrorProps extends StringHandlerParams {
    * Use this to attach additional actions or to update outside state based on what's changed
    * within the editor component.
    */
-  dispatchTransaction?: ((tr: Transaction) => void) | null;
+  dispatchTransaction?: (tr: Transaction) => void;
 
   /**
    * Sets the accessibility label for the editor instance.

@@ -3,27 +3,7 @@ import { AnyExtension, Extension } from './extension';
 import { bool, capitalize, Cast, isFunction, isObject } from './helpers/base';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
-import { NodeViewPortalContainer } from './portal-container';
-import {
-  AnyFunction,
-  CommandParams,
-  EditorState,
-  ExtensionManagerParams,
-  ExtensionType,
-  FlexibleConfig,
-} from './types';
-
-export interface ExtensionManagerInitParams {
-  /**
-   *  A shortcut to pulling the editor state
-   */
-  getEditorState: () => EditorState;
-
-  /**
-   *  A shortcut to pulling the portal container
-   */
-  getPortalContainer: () => NodeViewPortalContainer;
-}
+import { AnyFunction, CommandParams, ExtensionManagerParams, ExtensionType, FlexibleConfig } from './types';
 
 type MethodFactory<GMappedFunc extends AnyFunction, GFunc extends AnyFunction> = (
   params: CommandParams,
@@ -62,7 +42,7 @@ interface IsNameUniqueParams {
  *
  * @param params - destructured params
  */
-export const isNameUnique = ({ name, set, shouldThrow = false, type = 'extension' }: IsNameUniqueParams) => {
+const isNameUnique = ({ name, set, shouldThrow = false, type = 'extension' }: IsNameUniqueParams) => {
   if (set.has(name)) {
     const message = `There is a naming conflict for the name: ${name} used in this type: ${type}. Please rename to avoid runtime errors.`;
     if (shouldThrow) {
@@ -102,7 +82,7 @@ interface CreateFlexibleFunctionMapParams<
   key: GKey;
 
   /**
-   * Whether or not to check for uniqueness.
+   * When true a command name that is not unique will cause an error.
    *
    * @defaultValue true
    */
@@ -120,7 +100,7 @@ interface CreateFlexibleFunctionMapParams<
   methodFactory: MethodFactory<GMappedFunc, GFunc>;
 
   /**
-   * Transform an array of items in a method that can be called.
+   * Transform an array of methods into a single method that can be called.
    */
   arrayTransformer: (
     fns: GFunc[],
@@ -131,7 +111,7 @@ interface CreateFlexibleFunctionMapParams<
   /**
    * Passes the context (usually the extension manager) which has an instance property `.extensions`
    */
-  ctx: HasExtensions;
+  context: HasExtensions;
 }
 
 /**
@@ -145,7 +125,7 @@ interface CreateFlexibleFunctionMapParams<
  * type FlexibleConfig<Func> = Func | Func[] | Record<string, Func | Func[]>
  * ```
  *
- * This creates a function that is able to step through each possibility and perform the action required.
+ * This creates a function that is able to step through each possibility and call the required method.
  *
  * @param param - destructured parameters
  *
@@ -161,13 +141,13 @@ export const createFlexibleFunctionMap = <
   getItemParams,
   methodFactory,
   arrayTransformer,
-  ctx,
+  context,
 }: CreateFlexibleFunctionMapParams<GKey, GMappedFunc, GFunc>) => (
   params: CommandParams,
 ): Record<string, GMappedFunc> => {
   const items: Record<string, GMappedFunc> = {};
   const names = new Set<string>();
-  ctx.extensions.filter(hasExtensionProperty(key)).forEach(currentExtension => {
+  context.extensions.filter(hasExtensionProperty(key)).forEach(currentExtension => {
     const { name } = currentExtension;
     if (checkUniqueness) {
       isNameUnique({ name, set: names, shouldThrow: true });
@@ -180,11 +160,13 @@ export const createFlexibleFunctionMap = <
     } else {
       Object.entries(item).forEach(([commandName, commandValue]) => {
         // Namespace the actions created to minimise accidental naming collision
+        // TODO this is too magical and needs to change!
         const namespacedName = `${name}${capitalize(commandName)}`;
 
         if (checkUniqueness) {
           isNameUnique({ name: namespacedName, set: names, shouldThrow: true });
         }
+
         items[namespacedName] = Array.isArray(commandValue)
           ? arrayTransformer(commandValue, params, methodFactory)
           : methodFactory(params, commandValue);

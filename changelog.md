@@ -11,16 +11,17 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ### Added
 
+- 🚀 `@remirror/extension-collaboration`: Collaboration library added based on the brilliant example available in [tiptap](https://github.com/scrumpy/tiptap).
 - `@remirror/react`: Add `withoutEmotion` which, when set to `true`, removes emotion (css-in-js) from the `Remirror` component. This is for those who don't like css-in-js and would like to work directly with the raw editor without random styles injected. Consuming the `@remirror/react-components` or any of the `@remirror/editor-*` packages will require the use of emotion.
 - `@remirror/react-utils`: Add `oneChildOnly` export which throws readable errors for invalid children props.
 
 ### Changed
 
-- **BREAKING `remirror/react-utils`:** Rename `childIsFunction` to `propIsFunction` and make it a _pseudo_ predicate function (returns true when it doesn't throw an error).
-- **BREAKING `remirror/react`:** Rename `setChildAsRoot` to `childAsRoot` on `RemirrorContextProviderProps` and all it consumers. This affects the `RemirrorContextProvider`, `RemirrorProvider` and `ManagedRemirrorProvider` exports. The prop now can take a boolean or the object with props to inject into the root.
-- **BREAKING `remirror/editor-twitter`:** Rename `uiTwitterTheme` to `TwitterEditorTheme`
-- **BREAKING `@remirror/react-utils` `@remirror/react` `@remirror/editor-markdown` `@remirror/editor-wysiwyg`:** Remove customRootProp from `RemirrorProps`
-- **BREAKING `@remirror/react`:** All RemirrorProviders now require a `children` prop. This prevents a bug when rendering in non-dom environments.
+- 💥 **BREAKING `remirror/react-utils`:** Rename `childIsFunction` to `propIsFunction` and make it a _pseudo_ predicate function (returns true when it doesn't throw an error).
+- 💥 **BREAKING `remirror/react`:** Rename `setChildAsRoot` to `childAsRoot` on `RemirrorContextProviderProps` and all it consumers. This affects the `RemirrorContextProvider`, `RemirrorProvider` and `ManagedRemirrorProvider` exports. The prop now can take a boolean or the object with props to inject into the root.
+- 💥 **BREAKING `remirror/editor-twitter`:** Rename `uiTwitterTheme` to `TwitterEditorTheme`
+- 💥 **BREAKING `@remirror/react-utils` `@remirror/react` `@remirror/editor-markdown` `@remirror/editor-wysiwyg`:** Remove customRootProp from `RemirrorProps`
+- 💥 **BREAKING `@remirror/react`:** All RemirrorProviders now require a `children` prop. This prevents a bug when rendering in non-dom environments.
 - `remirror/editor-twitter`: Fix bug where text area didn't expand to full height of editor container
 
 - Add support for [Git Large File Storage (LFS)](https://git-lfs.github.com/)
@@ -43,17 +44,17 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ### Changed
 
-- **BREAKING:** Rename `@remirror/ui-*` packages to `@remirror/editor-*` for example @remirror/ui-twitter is .now called `@remirror/editor-twitter`.
-- **BREAKING `remirror/editor-twitter`:** Rename `UITwitter` and `TwitterUI` to `TwitterEditor`
-- **BREAKING `remirror/editor-markdown`:** Rename `UIMarkdown` and `MarkdownUI` to `MarkdownEditor`
-- **BREAKING `remirror/editor-wysiwyg`:** Rename `UIWysiwyg` and `WysiwygUI` to `WysiwygEditor`
+- 💥 **BREAKING:** Rename `@remirror/ui-*` packages to `@remirror/editor-*` for example @remirror/ui-twitter is .now called `@remirror/editor-twitter`.
+- 💥 **BREAKING `remirror/editor-twitter`:** Rename `UITwitter` and `TwitterUI` to `TwitterEditor`
+- 💥 **BREAKING `remirror/editor-markdown`:** Rename `UIMarkdown` and `MarkdownUI` to `MarkdownEditor`
+- 💥 **BREAKING `remirror/editor-wysiwyg`:** Rename `UIWysiwyg` and `WysiwygUI` to `WysiwygEditor`
 - Speed up tslint by enforcing linting on individual modules (new `tsconfig.lint.json` files).
 - Remove `cx` import from `emotion` library in from `@remirror/core` to reduce the bundle size.
 - Set `@emotion/core` and `@emotion/styled` as peer dependencies.
 
 ### Remove
 
-- **BREAKING:** `@remirror/ui-*` packages.
+- 💥 **BREAKING:** `@remirror/ui-*` packages.
 
 ## [0.1.0] - 2019-06-10
 

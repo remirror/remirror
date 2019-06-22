@@ -5,6 +5,7 @@ import { Cast } from './helpers/base';
 import {
   AttrsWithClass,
   BaseExtensionOptions,
+  EditorStateParams,
   ExtensionBooleanFunction,
   ExtensionCommandFunction,
   ExtensionManagerParams,
@@ -14,6 +15,8 @@ import {
   NodeViewMethod,
   ProsemirrorPlugin,
   SchemaTypeParams,
+  TransactionParams,
+  ViewExtensionManagerParams,
 } from './types';
 
 /**
@@ -197,7 +200,7 @@ export abstract class Extension<
    * @remarks
    * All non-required options that an extension uses should have a default options defined here.
    */
-  get defaultOptions(): Partial<GOptions> {
+  protected get defaultOptions(): Partial<GOptions> {
     return {};
   }
 }
@@ -291,7 +294,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
   /**
    * Registers a node view for the extension.
    *
-   * This is a shorthand way of registering a nodeView without going using a prosemirror plugin.
+   * This is a shorthand way of registering a nodeView without the need to create a prosemirror plugin.
    * It allows for the registration of one nodeView which has the same name as the extension.
    *
    * @param params - schema params with type included
@@ -299,6 +302,11 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * @alpha
    */
   nodeView?(params: SchemaTypeParams<GType>): NodeViewMethod;
+
+  /**
+   * Called whenever a transaction successfully updates the editor state.
+   */
+  onTransaction?(params: OnTransactionParams): void;
 
   /**
    * Register paste rules for this extension.
@@ -368,3 +376,11 @@ export interface RequiredExtension {
   extension: AnyExtension;
   options: any;
 }
+
+/**
+ * The params object received by the onTransaction handler.
+ */
+export interface OnTransactionParams
+  extends ViewExtensionManagerParams,
+    TransactionParams,
+    EditorStateParams {}

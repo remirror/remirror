@@ -2,8 +2,10 @@ import React, { Component, ReactNode, Ref } from 'react';
 
 import { css, Interpolation } from '@emotion/core';
 import {
+  CallbackParams,
   CompareStateParams,
   EDITOR_CLASS_NAME,
+  EditorStateParams,
   EditorView as EditorViewType,
   EMPTY_PARAGRAPH_NODE,
   ExtensionManager,
@@ -53,8 +55,21 @@ import { NodeViewPortalComponent } from '../node-views';
 import { defaultPositioner } from '../positioners';
 import { defaultStyles } from '../styles';
 
+interface UpdateStateParams extends EditorStateParams, Partial<CallbackParams> {
+  /**
+   * Whether or not to trigger this as a change and call any handlers.
+   *
+   * @default true
+   */
+  triggerOnChange?: boolean;
+}
+
 export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   public static defaultProps = defaultProps;
+
+  /**
+   * Sets a flag to be a static remirror
+   */
   public static $$remirrorType = RemirrorElementType.Editor;
 
   /**
@@ -355,26 +370,50 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
 
   /**
    * Part of the Prosemirror API and is called whenever there is state change in the editor.
+   *
+   * @internal How does it work when transactions are dispatched one after the other.
    */
-  private dispatchTransaction = (transaction: Transaction) => {
-    const { dispatchTransaction } = this.props;
-    if (dispatchTransaction) {
-      dispatchTransaction(transaction);
-    }
-    const { state } = this.state.newState.applyTransaction(transaction);
-    this.updateState(state);
+  private dispatchTransaction = (tr: Transaction) => {
+    const { state } = this.state.newState.applyTransaction(tr);
+
+    /**
+     * A callback which is called like the callback to setState when the state has been updated.
+     */
+    const callback = () => {
+      this.manager.onTransaction({ tr, state });
+      const { dispatchTransaction } = this.props;
+      if (dispatchTransaction) {
+        dispatchTransaction(tr);
+      }
+    };
+
+    this.updateState({ state, callback });
   };
 
   /**
-   * Updates the state either by calling onStateChange when it exists or directly setting the state
+   * Updates the state either by calling onStateChange when it exists or directly setting
+   * the internal state via a `setState` call
    */
-  private updateState(state: EditorState, triggerOnChange = true) {
+  private updateState({ state, triggerOnChange = true, callback }: UpdateStateParams) {
     const { onChange, onStateChange } = this.props;
 
+    /**
+     * The callback passed to the setState handler.
+     */
     const updateHandler = (updatedState?: EditorState) => {
-      // For some reason moving the view.updateState here fixes a bug
+      // The view state should only be updated once the react setState call has updated the state value.
       this.view.updateState(updatedState || state);
-      if (onChange && triggerOnChange) {
+
+      // No need to continue if triggerOnChange is `false`
+      if (!triggerOnChange) {
+        return;
+      }
+
+      if (callback) {
+        callback();
+      }
+
+      if (onChange) {
         onChange(this.eventListenerParams(updatedState || state));
       }
     };
@@ -396,6 +435,9 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     }
   }
 
+  /**
+   * Adds the prosemirror view to the dom in the position specified via the component props.
+   */
   private addProsemirrorViewToDom(reactRef: HTMLElement, viewDom: Element) {
     if (this.props.insertPosition === 'start') {
       reactRef.insertBefore(viewDom, reactRef.firstChild);
@@ -404,6 +446,11 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     }
   }
 
+  /**
+   * Called once the container dom node (`this.editorRef`) has been initialized after the component mounts.
+   *
+   * This method handles the cases where the dom is not focused.
+   */
   private onRefLoad() {
     if (!this.editorRef) {
       throw Error('Something went wrong when initializing the text editor. Please check your setup.');
@@ -508,7 +555,8 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    * @param triggerOnChange
    */
   private setContent = (content: RemirrorContentType, triggerOnChange = false) => {
-    this.updateState(this.createStateFromContent(content), triggerOnChange);
+    const state = this.createStateFromContent(content);
+    this.updateState({ state, triggerOnChange });
   };
 
   /**

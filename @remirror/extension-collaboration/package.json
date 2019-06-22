@@ -1,0 +1,45 @@
+{
+  "name": "@remirror/extension-collaboration",
+  "description": "MultiCursor extension for the remirror wysiwyg editor",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/extension-collaboration",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ifiokjr/remirror.git",
+    "directory": "@remirror/extension-collaboration"
+  },
+  "version": "0.3.0",
+  "main": "lib/index.js",
+  "module": "lib/dist/extension-collaboration.esm.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "build": "run-p build:*",
+    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "dev": "run-p dev:*",
+    "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
+    "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
+    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@babel/runtime": "^7.4.5",
+    "@remirror/core": "0.3.0",
+    "@types/debounce": "^1.2.0",
+    "@types/prosemirror-collab": "^1.0.2",
+    "@types/prosemirror-transform": "^1.1.0",
+    "debounce": "^1.2.0",
+    "prosemirror-collab": "^1.1.2",
+    "prosemirror-transform": "^1.1.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/extension-collaboration.cjs.js",
+  "sideEffects": false
+}

@@ -86,7 +86,7 @@ export interface MarkExtensionSpec extends Omit<MarkSpec, 'toDOM'> {
   toDOM?: (mark: Mark, inline: boolean) => DOMOutputSpec;
 }
 
-export interface ExtensionManagerParams extends SchemaParams {
+export interface ExtensionManagerInitParams {
   /**
    * Retrieve the portal container
    */
@@ -96,6 +96,11 @@ export interface ExtensionManagerParams extends SchemaParams {
    */
   getEditorState: () => EditorState;
 }
+
+/**
+ * Parameters passed into many of the extension methods.
+ */
+export interface ExtensionManagerParams extends SchemaParams, ExtensionManagerInitParams {}
 
 /**
  * Inject a view into the params of the views.

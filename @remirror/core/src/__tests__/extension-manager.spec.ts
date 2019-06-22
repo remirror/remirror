@@ -1,81 +1,66 @@
-import { Schema } from 'prosemirror-model';
+import { createTestManager, extensions } from '@test-fixtures/schema-helpers';
+import { EditorView } from 'prosemirror-view';
+import { EMPTY_PARAGRAPH_NODE } from '../constants';
 import { Extension } from '../extension';
 import { ExtensionManager, isExtensionManager } from '../extension-manager';
 import { Cast } from '../helpers/base';
-import { DocExtension, ParagraphExtension, TextExtension } from '../nodes';
+import { NodeViewPortalContainer } from '../portal-container';
+import { EditorState } from '../types';
 
 export const helpers = {
-  getEditorState: Cast(jest.fn(() => 'state')),
-  getPortalContainer: Cast(jest.fn(() => 'portals')),
+  getEditorState: Cast(jest.fn(() => state)),
+  getPortalContainer: Cast(jest.fn(() => portalContainer)),
 };
 
-const mock = jest.fn();
+const innerMock = jest.fn();
+const mock = jest.fn(() => innerMock);
 
 class DummyMark extends Extension {
   public name = 'dummy';
   public commands() {
-    return () => {
-      return mock;
-    };
+    // console.log('commands being called', params);
+    return mock;
   }
 }
 
-const doc = new DocExtension();
-const text = new TextExtension();
-const paragraph = new ParagraphExtension();
-const dummy = new DummyMark();
+let dummy: DummyMark;
+let manager: ExtensionManager;
+let state: EditorState;
+let view: EditorView;
+let portalContainer: NodeViewPortalContainer;
 
-const manager = ExtensionManager.create([
-  { extension: doc, priority: 2 },
-  { extension: text, priority: 2 },
-  { extension: paragraph, priority: 2 },
-  { extension: dummy, priority: 2 },
-]);
-
-manager.init(helpers);
-
-test('ExtensionManager#properties', () => {
-  expect(manager).toBeInstanceOf(ExtensionManager);
-  expect(manager.extensions).toHaveLength(4);
-  expect(manager.getEditorState()).toBe('state');
-  expect(manager.getPortalContainer()).toBe('portals');
+beforeEach(() => {
+  portalContainer = new NodeViewPortalContainer();
+  dummy = new DummyMark();
+  manager = ExtensionManager.create([...extensions, { extension: dummy, priority: 1 }]);
+  manager.init(helpers);
+  state = manager.createState({ content: EMPTY_PARAGRAPH_NODE });
+  view = new EditorView(document.createElement('div'), {
+    state,
+    editable: () => true,
+  });
+  manager.initView(view);
 });
 
-const schema = new Schema({
-  nodes: manager.nodes,
-  marks: manager.marks,
+test('commands', () => {
+  const attrs = { a: 'a' };
+  manager.data.actions.dummy.command(attrs);
+  expect(mock).toHaveBeenCalledWith(attrs);
+  expect(innerMock).toHaveBeenCalledWith(state, view.dispatch, view);
 });
 
-test('ExtensionManager#nodes', () => {
-  expect(schema.nodes.doc.spec).toEqual(doc.schema);
-  expect(schema.nodes.text.spec).toEqual(text.schema);
-});
-
-describe('#action', () => {
-  let params = {
-    schema,
-    getEditorState: jest.fn(() => ({})),
-    isEditable: () => true,
-    view: {
-      focus: jest.fn(),
-      dispatch: jest.fn(),
-    },
-  };
-  const remirrorActions = manager.actions(Cast(params));
-  it('calls the correct command', () => {
-    expect(remirrorActions.dummy).toContainAllKeys(['isActive', 'isEnabled', 'command']);
-    remirrorActions.dummy.command();
-    expect(mock).toHaveBeenCalledWith({}, params.view.dispatch, params.view);
+describe('#properties', () => {
+  it('should sort extensions by priority', () => {
+    expect(manager.extensions).toHaveLength(10);
+    expect(manager.extensions[0]).toEqual(dummy);
   });
 
-  it('is not called when the editor is not editable', () => {
-    params = { ...params, isEditable: () => false };
-    remirrorActions.dummy.command();
-    expect(mock).toHaveBeenCalledTimes(1);
+  it('should throw if data accessed without init', () => {
+    createTestManager();
   });
 });
 
 test('isExtensionManager', () => {
-  expect(isExtensionManager(doc)).toBeFalse();
+  expect(isExtensionManager({})).toBeFalse();
   expect(isExtensionManager(manager)).toBeTrue();
 });

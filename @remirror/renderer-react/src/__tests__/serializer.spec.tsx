@@ -10,7 +10,7 @@ import { Node as PMNode } from 'prosemirror-model';
 import { ReactSerializer } from '../serializer';
 
 const manager = createTestManager();
-const schema = manager.createSchema();
+const { schema } = manager;
 const serializer = ReactSerializer.fromExtensionManager(manager);
 
 test('ReactSerializer.fromExtensionManager', () => {

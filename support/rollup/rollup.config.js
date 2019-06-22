@@ -1,6 +1,8 @@
 import factory from './factory';
 import core from '../../@remirror/core/package.json';
 import coreExtensions from '../../@remirror/core-extensions/package.json';
+import extensionCodeBlock from '../../@remirror/extension-code-block/package.json';
+import extensionCollaboration from '../../@remirror/extension-collaboration/package.json';
 import extensionEmoji from '../../@remirror/extension-emoji/package.json';
 import extensionEpicMode from '../../@remirror/extension-epic-mode/package.json';
 import extensionEnhancedLink from '../../@remirror/extension-enhanced-link/package.json';
@@ -17,6 +19,8 @@ import editorWysiwyg from '../../@remirror/editor-wysiwyg/package.json';
 const configurations = [
   ...factory(core, '@remirror'),
   ...factory(coreExtensions, '@remirror'),
+  ...factory(extensionCodeBlock, '@remirror'),
+  ...factory(extensionCollaboration, '@remirror'),
   ...factory(extensionEmoji, '@remirror'),
   ...factory(extensionEpicMode, '@remirror'),
   ...factory(extensionEnhancedLink, '@remirror'),
