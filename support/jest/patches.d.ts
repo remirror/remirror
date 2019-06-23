@@ -1,4 +1,5 @@
 declare module 'jest-dev-server' {
+  import { ChildProcess } from 'child_process';
   import { WaitOnOptions } from 'wait-on';
 
   export interface JestDevServerOptions {
@@ -124,19 +125,27 @@ declare module 'jest-dev-server' {
 }
 
 declare module 'signal-exit' {
-  namespace signalExit {
-    interface Options {
-      /**
-       * Whether the listener should run after the exit.
-       */
-      alwaysLast?: boolean;
-    }
+  export interface Options {
+    /**
+     * Whether the listener should run after the exit.
+     */
+    alwaysLast?: boolean;
+  }
 
-    function load(): void;
-    function unload(): void;
+  /**
+   * The exit
+   * @param code - the exitCode number or null if artifically induced
+   * @param signal - the string signal which triggered the exit or null when artificially triggered
+   */
+  type ExitListener = (code: number | null, signal: string | null) => void;
+
+  export interface SignalExit {
+    (listener: ExitListener, options?: Options): void;
+    load(): void;
+    unload(): void;
 
     /**
-     * A function which returns the possible signals for this platform
+     * A method which returns the possible signals for this platform
      *
      * @remarks
      * This is not the set of all possible signals.
@@ -156,18 +165,9 @@ declare module 'signal-exit' {
      * state from which it is not safe to try and enter JS
      * listeners.
      */
-    function signals(): string[];
-
-    /**
-     * The exit
-     * @param code - the exitCode number or null if artifically induced
-     * @param signal - the string signal which triggered the exit or null when artificially triggered
-     */
-    type ExitListener = (code: number | null, signal: string | null) => void;
+    signals(): string[];
   }
 
-  declare function signalExit(listener: ExitListener, options?: signalExit.Options);
-
-  export = signalExit;
-  export as namespace signalExit;
+  const signalExit: SignalExit;
+  export default signalExit;
 }
