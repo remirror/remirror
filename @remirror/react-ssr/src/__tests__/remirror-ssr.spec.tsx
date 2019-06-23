@@ -13,7 +13,7 @@ beforeEach(() => {
 });
 
 test('should render the ssr component', () => {
-  manager.init({ getState: () => state, getPortalContainer: () => new NodeViewPortalContainer() });
+  manager.init({ getState: () => state, getPortals: () => new NodeViewPortalContainer() });
   const state = manager.createState({ content: initialJson });
 
   const { container } = render(

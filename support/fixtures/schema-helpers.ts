@@ -18,7 +18,7 @@ import minDocument from 'min-document';
 
 export const helpers = {
   getState: Cast(jest.fn()),
-  getPortalContainer: Cast(jest.fn()),
+  getPortals: Cast(jest.fn()),
 };
 
 export const baseExtensions = [

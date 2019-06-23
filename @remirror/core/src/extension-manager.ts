@@ -62,11 +62,11 @@ export interface ExtensionManagerData {
  * ```
  *
  * - Initialize Getters - This connects the extension manager to its init params include a
- *   lazily evaluated getState command and getPortalContainer. Once these are
+ *   lazily evaluated getState command and getPortals. Once these are
  *   creates and allows access to its data.
  *
  * ```ts
- * manager.init({ getState: () => state, getPortalContainer: () => portalContainer })
+ * manager.init({ getState: () => state, getPortals: () => portalContainer })
  *
  * manager.data.
  * ```
@@ -97,7 +97,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * Retrieve the portal container for any custom nodeViews. This is only available after
    * the first initialization.
    */
-  public getPortalContainer!: () => NodeViewPortalContainer;
+  public getPortals!: () => NodeViewPortalContainer;
 
   /**
    * The extensions stored by this manager
@@ -121,7 +121,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    *
    * This is called by the view layer and provides
    */
-  public init({ getState, getPortalContainer }: ExtensionManagerInitParams) {
+  public init({ getState, getPortals }: ExtensionManagerInitParams) {
     if (this.initialized) {
       console.warn(
         'This manager is already in use. Avoid using the same manager for more than one editor as this may cause problems.',
@@ -129,7 +129,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     }
 
     this.getState = getState;
-    this.getPortalContainer = getPortalContainer;
+    this.getPortals = getPortals;
     this.initialized = true;
 
     this.initData.styles = this.styles();
@@ -272,7 +272,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     return {
       schema: this.initData.schema,
       getState: this.getState,
-      getPortalContainer: this.getPortalContainer,
+      getPortals: this.getPortals,
     };
   }
 
@@ -376,7 +376,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   private checkInitialized() {
     if (!this.initialized) {
       throw new Error(
-        'Before using the extension manager it must be initialized with a getPortalContainer and editorState',
+        'Before using the extension manager it must be initialized with a getPortals and editorState',
       );
     }
   }

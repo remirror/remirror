@@ -39,7 +39,7 @@ export interface NodeViewComponentProps<GAttrs = any> extends EditorViewParams {
 export interface CreateNodeViewParams<GProps extends PlainObject = {}>
   extends Partial<Pick<RemirrorProps, 'withoutEmotion'>> {
   Component: ComponentType<NodeViewComponentProps & GProps>;
-  getPortalContainer: () => NodeViewPortalContainer;
+  getPortals: () => NodeViewPortalContainer;
   props: GProps;
   style?: Interpolation;
 }
@@ -47,7 +47,7 @@ export interface CreateNodeViewParams<GProps extends PlainObject = {}>
 export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView {
   public static createNodeView<GProps extends PlainObject>({
     Component,
-    getPortalContainer,
+    getPortals,
     props,
     style,
     withoutEmotion,
@@ -57,7 +57,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
         node,
         view,
         getPosition,
-        getPortalContainer,
+        getPortals,
         props,
         Component,
         false,
@@ -74,7 +74,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     public node: ProsemirrorNode,
     public view: EditorView,
     private getPosition: GetPosition,
-    private getPortalContainer: () => NodeViewPortalContainer,
+    private getPortals: () => NodeViewPortalContainer,
     public props: GProps = {} as GProps,
     private Component: ComponentType<NodeViewComponentProps & GProps>,
     private hasContext: boolean = false,
@@ -125,7 +125,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
       return;
     }
 
-    this.getPortalContainer().render(component, this.domRef, this.hasContext);
+    this.getPortals().render(component, this.domRef, this.hasContext);
   }
 
   public createDomRef(): HTMLElement {
@@ -233,7 +233,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
       return;
     }
 
-    this.getPortalContainer().remove(this.domRef);
+    this.getPortals().remove(this.domRef);
     this.domRef = undefined;
     this.contentDOM = undefined;
   }

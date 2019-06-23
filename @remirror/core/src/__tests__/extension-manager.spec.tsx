@@ -11,7 +11,7 @@ import { Attrs, EditorState, NodeExtensionSpec } from '../types';
 
 export const helpers = {
   getState: Cast(jest.fn(() => state)),
-  getPortalContainer: Cast(jest.fn(() => portalContainer)),
+  getPortals: Cast(jest.fn(() => portalContainer)),
 };
 
 const innerMock = jest.fn();

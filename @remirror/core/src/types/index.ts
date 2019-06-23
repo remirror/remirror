@@ -90,7 +90,7 @@ export interface ExtensionManagerInitParams {
   /**
    * Retrieve the portal container
    */
-  getPortalContainer: () => NodeViewPortalContainer;
+  getPortals: () => NodeViewPortalContainer;
   /**
    * Retrieve the editor state via a function call
    */

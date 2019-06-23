@@ -25,6 +25,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - 💥 **BREAKING `remirror/core`:** It is now up to extensions to decide whether commands should be active when the editor is editable. `isEditable` method is now passed into the `commands` method as a means of checking.
 - 💥 **BREAKING `@remirror/react`:** All RemirrorProviders now require a `children` prop. This prevents a bug when rendering in non-dom environments.
 - 💥 **BREAKING `remirror/core`:** Rename `getEditorState` to `getState`
+- 💥 **BREAKING `remirror/core`:** Rename `getPortalContainer` to `getPortals`
 
 - 🐛 `remirror/core`: Fix bug with extension manager failing to provide attributes from the extensions
 - 🐛 `remirror/core`: Fix TypeScript type of SSRComponent. Change from `Component` to `ComponentType`

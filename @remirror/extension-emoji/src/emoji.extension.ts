@@ -108,7 +108,7 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
     });
   }
 
-  public nodeView({ getPortalContainer }: SchemaNodeTypeParams) {
+  public nodeView({ getPortals }: SchemaNodeTypeParams) {
     const { set, size, emojiData, EmojiComponent, style } = this.options;
 
     const defaultStyle: ObjectInterpolation<undefined> = {
@@ -123,7 +123,7 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
 
     return ReactNodeView.createNodeView({
       Component: EmojiComponent,
-      getPortalContainer,
+      getPortals,
       props: {
         set,
         size,
