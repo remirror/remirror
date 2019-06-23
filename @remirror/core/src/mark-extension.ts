@@ -33,11 +33,8 @@ export abstract class MarkExtension<
 
   public abstract readonly schema: MarkExtensionSpec;
 
-  public active({
-    getEditorState,
-    schema,
-  }: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction> {
-    return () => markActive(getEditorState(), schema.marks[this.name]);
+  public active({ getState, schema }: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction> {
+    return () => markActive(getState(), schema.marks[this.name]);
   }
 }
 

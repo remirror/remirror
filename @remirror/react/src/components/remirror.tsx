@@ -141,7 +141,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     propIsFunction(props.children);
 
     // Initialize the manager and create the initial state
-    this.manager.init({ getEditorState: this.getEditorState, getPortalContainer: this.getPortalContainer });
+    this.manager.init({ getState: this.getState, getPortalContainer: this.getPortalContainer });
     this.state = this.createInitialState();
 
     // Create the ProsemirrorView and initialize our extension manager with it
@@ -151,14 +151,14 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
 
   public updateExtensionManager() {
     this.manager
-      .init({ getEditorState: this.getEditorState, getPortalContainer: this.getPortalContainer })
+      .init({ getState: this.getState, getPortalContainer: this.getPortalContainer })
       .initView(this.view);
   }
 
   /**
    * Retrieve the editor state. This is passed through to the extension manager.
    */
-  private getEditorState = () => this.props.value || this.state.newState;
+  private getState = () => this.props.value || this.state.newState;
 
   /**
    * Retrieve the portal container which used for managing node views which contain react components via the portal api.

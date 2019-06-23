@@ -49,8 +49,8 @@ export class PlaceholderExtension extends Extension<PlaceholderExtensionOptions>
   /**
    * Add a class and props to the root element if the document is empty.
    */
-  public ssrTransformer(element: JSX.Element, { getEditorState }: ExtensionManagerParams) {
-    const state = getEditorState();
+  public ssrTransformer(element: JSX.Element, { getState }: ExtensionManagerParams) {
+    const state = getState();
     const { emptyNodeClass, placeholder } = this.options;
     const { children } = getElementProps(element);
     if (Children.count(children) > 1 || !isDocNodeEmpty(state.doc)) {

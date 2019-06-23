@@ -199,9 +199,9 @@ export const commandFlexibleFunctionMap = ({ extensions, params }: CommandFlexib
     extensions,
     key: 'commands',
     methodFactory: method => (attrs?: Attrs) => {
-      const { view, getEditorState } = params;
+      const { view, getState } = params;
       view.focus();
-      return method(attrs)(getEditorState(), view.dispatch, view);
+      return method(attrs)(getState(), view.dispatch, view);
     },
     checkUniqueness: true,
     arrayTransformer: (fns, methodFactory) => () => {

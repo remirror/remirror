@@ -32,9 +32,9 @@ export abstract class NodeExtension<
    */
   public abstract readonly schema: NodeExtensionSpec;
 
-  public active({ getEditorState, type }: SchemaNodeTypeParams): FlexibleConfig<ExtensionBooleanFunction> {
+  public active({ getState, type }: SchemaNodeTypeParams): FlexibleConfig<ExtensionBooleanFunction> {
     return attrs => {
-      return nodeActive({ state: getEditorState(), type, attrs });
+      return nodeActive({ state: getState(), type, attrs });
     };
   }
 }

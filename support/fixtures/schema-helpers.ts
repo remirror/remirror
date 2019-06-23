@@ -17,7 +17,7 @@ import {
 import minDocument from 'min-document';
 
 export const helpers = {
-  getEditorState: Cast(jest.fn()),
+  getState: Cast(jest.fn()),
   getPortalContainer: Cast(jest.fn()),
 };
 

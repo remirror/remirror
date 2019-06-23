@@ -62,11 +62,11 @@ export interface ExtensionManagerData {
  * ```
  *
  * - Initialize Getters - This connects the extension manager to its init params include a
- *   lazily evaluated getEditorState command and getPortalContainer. Once these are
+ *   lazily evaluated getState command and getPortalContainer. Once these are
  *   creates and allows access to its data.
  *
  * ```ts
- * manager.init({ getEditorState: () => state, getPortalContainer: () => portalContainer })
+ * manager.init({ getState: () => state, getPortalContainer: () => portalContainer })
  *
  * manager.data.
  * ```
@@ -91,7 +91,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * Retrieve the latest state of the editor this manager is responsible for. This is only
    * available after the first initialization.
    */
-  public getEditorState!: () => EditorState;
+  public getState!: () => EditorState;
 
   /**
    * Retrieve the portal container for any custom nodeViews. This is only available after
@@ -121,14 +121,14 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    *
    * This is called by the view layer and provides
    */
-  public init({ getEditorState, getPortalContainer }: ExtensionManagerInitParams) {
+  public init({ getState, getPortalContainer }: ExtensionManagerInitParams) {
     if (this.initialized) {
       console.warn(
         'This manager is already in use. Avoid using the same manager for more than one editor as this may cause problems.',
       );
     }
 
-    this.getEditorState = getEditorState;
+    this.getState = getState;
     this.getPortalContainer = getPortalContainer;
     this.initialized = true;
 
@@ -159,8 +159,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     this.initData.actions = this.actions({
       ...this.params,
       view,
-      isEditable: () =>
-        isFunction(view.props.editable) ? view.props.editable(this.getEditorState()) : false,
+      isEditable: () => (isFunction(view.props.editable) ? view.props.editable(this.getState()) : false),
     });
   }
 
@@ -272,7 +271,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   private get params(): ExtensionManagerParams {
     return {
       schema: this.initData.schema,
-      getEditorState: this.getEditorState,
+      getState: this.getState,
       getPortalContainer: this.getPortalContainer,
     };
   }
@@ -354,7 +353,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     if (!key) {
       throw new Error(`Cannot retrieve state for an extension: ${name} which doesn\'t exist`);
     }
-    return getPluginState<GState>(key, this.getEditorState());
+    return getPluginState<GState>(key, this.getState());
   }
 
   /**

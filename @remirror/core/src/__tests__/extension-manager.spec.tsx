@@ -10,7 +10,7 @@ import { NodeViewPortalContainer } from '../portal-container';
 import { Attrs, EditorState, NodeExtensionSpec } from '../types';
 
 export const helpers = {
-  getEditorState: Cast(jest.fn(() => state)),
+  getState: Cast(jest.fn(() => state)),
   getPortalContainer: Cast(jest.fn(() => portalContainer)),
 };
 

@@ -24,14 +24,15 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - 💥 **BREAKING `remirror/core`:** Rename `HasExtensions` to `ExtensionListParams`
 - 💥 **BREAKING `remirror/core`:** It is now up to extensions to decide whether commands should be active when the editor is editable. `isEditable` method is now passed into the `commands` method as a means of checking.
 - 💥 **BREAKING `@remirror/react`:** All RemirrorProviders now require a `children` prop. This prevents a bug when rendering in non-dom environments.
+- 💥 **BREAKING `remirror/core`:** Rename `getEditorState` to `getState`
 
-* 🐛 `remirror/core`: Fix bug with extension manager failing to provide attributes from the extensions
-* 🐛 `remirror/core`: Fix TypeScript type of SSRComponent. Change from `Component` to `ComponentType`
-* 🐛 `remirror/editor-twitter`: Fix bug where text area didn't expand to full height of editor container
+- 🐛 `remirror/core`: Fix bug with extension manager failing to provide attributes from the extensions
+- 🐛 `remirror/core`: Fix TypeScript type of SSRComponent. Change from `Component` to `ComponentType`
+- 🐛 `remirror/editor-twitter`: Fix bug where text area didn't expand to full height of editor container
 
-* Add support for [Git Large File Storage (LFS)](https://git-lfs.github.com/)
-* `remirror/editor-twitter`, `remirror/editor-wysiwyg` : Use image-snapshot testing to ensure SSR and DOM rendered editors are identical
-* Update husky command from ~~`yarn stop:hooks`~~ and ~~`yarn start:hooks`~~ to `yarn husky:stop` and `yarn husky:start`
+- Add support for [Git Large File Storage (LFS)](https://git-lfs.github.com/)
+- `remirror/editor-twitter`, `remirror/editor-wysiwyg` : Use image-snapshot testing to ensure SSR and DOM rendered editors are identical
+- Update husky command from ~~`yarn stop:hooks`~~ and ~~`yarn start:hooks`~~ to `yarn husky:stop` and `yarn husky:start`
 
 ### Remove
 

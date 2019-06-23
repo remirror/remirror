@@ -42,14 +42,14 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
   /**
    * This provides one command for issuing updates .
    */
-  public commands({ getEditorState, schema }: CommandParams) {
+  public commands({ getState, schema }: CommandParams) {
     return (attrs?: Attrs): CommandFunction => (_, dispatch) => {
       if (!isValidCollaborationAttrs(attrs)) {
         throw new Error('Invalid attributes passed to the collaboration command.');
       }
 
       const { version, steps } = attrs;
-      const state = getEditorState();
+      const state = getState();
 
       if (getVersion(state) > version) {
         return false;
@@ -85,8 +85,8 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
   /**
    * Called whenever a transaction occurs.
    */
-  public onTransaction({ getEditorState }: OnTransactionParams) {
-    this.getSendableSteps(getEditorState());
+  public onTransaction({ getState }: OnTransactionParams) {
+    this.getSendableSteps(getState());
   }
 
   /**

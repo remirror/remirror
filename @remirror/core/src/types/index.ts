@@ -94,7 +94,7 @@ export interface ExtensionManagerInitParams {
   /**
    * Retrieve the editor state via a function call
    */
-  getEditorState: () => EditorState;
+  getState: () => EditorState;
 }
 
 /**
