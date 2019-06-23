@@ -14,7 +14,7 @@ checks:
       threshold: 10
   method-count:
     config:
-      threshold: 25
+      threshold: 40
   method-lines:
     config:
       threshold: 75
