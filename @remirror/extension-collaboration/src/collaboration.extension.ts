@@ -1,9 +1,9 @@
 import {
   Attrs,
   CommandFunction,
+  CommandParams,
   EditorState,
   Extension,
-  ExtensionManagerParams,
   isArray,
   isNumber,
   OnTransactionParams,
@@ -42,7 +42,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
   /**
    * This provides one command for issuing updates .
    */
-  public commands({ getEditorState, schema }: ExtensionManagerParams) {
+  public commands({ getEditorState, schema }: CommandParams) {
     return (attrs?: Attrs): CommandFunction => (_, dispatch) => {
       if (!isValidCollaborationAttrs(attrs)) {
         throw new Error('Invalid attributes passed to the collaboration command.');

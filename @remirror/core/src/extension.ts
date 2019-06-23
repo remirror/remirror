@@ -1,10 +1,11 @@
 import { Interpolation } from 'emotion';
 import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
-import { Cast } from './helpers/base';
+import { Cast, isObject } from './helpers/base';
 import {
   AttrsWithClass,
   BaseExtensionOptions,
+  CommandTypeParams,
   EditorStateParams,
   ExtensionBooleanFunction,
   ExtensionCommandFunction,
@@ -267,7 +268,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * @param params - schema params with type included
    */
-  commands?(params: SchemaTypeParams<GType>): FlexibleConfig<ExtensionCommandFunction>;
+  commands?(params: CommandTypeParams<GType>): FlexibleConfig<ExtensionCommandFunction>;
 
   /**
    * Determines whether this extension is enabled. If an object is returned then it can define different node types and
@@ -384,3 +385,57 @@ export interface OnTransactionParams
   extends ViewExtensionManagerParams,
     TransactionParams,
     EditorStateParams {}
+
+/**
+ * Provides a priority value to the extension which determines the priority.
+ *
+ * @remarks
+ * A lower value for priority means a higher priority. Think of it as an index and position in array
+ * except that it can also support negative values.
+ */
+export interface PrioritizedExtension {
+  /**
+   * The instantiated extension
+   */
+  extension: AnyExtension;
+
+  /**
+   * A priority given to the extension.
+   *
+   * @remarks
+   * A lower number implies an earlier place in the extension list and hence more priority over the extensions that follow.
+   *
+   * @defaultValue 2
+   */
+  priority: number;
+}
+
+/**
+ * Either a PrioritizedExtension or the actual Extension.
+ *
+ * @remarks
+ *
+ * This is used by the extension manager to allow for a more flexible initialization.
+ */
+export type FlexibleExtension = PrioritizedExtension | AnyExtension;
+
+export interface ExtensionListParams {
+  /** A list of passed extensions */
+  extensions: AnyExtension[];
+}
+
+/**
+ * Determines if the passed in extension is a any type of extension.
+ *
+ * @param extension - the extension to check
+ */
+export const isExtension = (extension: unknown): extension is AnyExtension =>
+  isObject(extension) && extension instanceof Extension;
+
+/**
+ * Checks whether the this is an extension and if it is a plain one
+ *
+ * @param extension - the extension to check
+ */
+export const isPlainExtension = (extension: unknown): extension is Extension<any, never> =>
+  isExtension(extension) && extension.type === ExtensionType.EXTENSION;

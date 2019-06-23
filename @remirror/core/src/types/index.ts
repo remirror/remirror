@@ -121,7 +121,7 @@ export type SchemaTypeParams<GType> = ExtensionManagerParams & InferredType<GTyp
 export type SchemaNodeTypeParams = SchemaTypeParams<NodeType<EditorSchema>>;
 export type SchemaMarkTypeParams = SchemaTypeParams<MarkType<EditorSchema>>;
 
-export interface CommandParams extends ExtensionManagerParams, EditorViewParams {
+export interface CommandParams extends ViewExtensionManagerParams {
   /**
    * Returns true when the editor can be edited and false when it cannot.
    *
@@ -130,6 +130,11 @@ export interface CommandParams extends ExtensionManagerParams, EditorViewParams 
    */
   isEditable: () => boolean;
 }
+
+export type CommandTypeParams<GType> = CommandParams & InferredType<GType>;
+
+export type CommandNodeTypeParams = CommandTypeParams<NodeType<EditorSchema>>;
+export type CommandMarkTypeParams = CommandTypeParams<MarkType<EditorSchema>>;
 
 /* Utility Types */
 

@@ -1,6 +1,6 @@
 import { setBlockType } from 'prosemirror-commands';
 import { NodeExtension } from '../node-extension';
-import { NodeExtensionSpec, SchemaNodeTypeParams } from '../types';
+import { CommandNodeTypeParams, NodeExtensionSpec } from '../types';
 
 export class ParagraphExtension extends NodeExtension {
   get name() {
@@ -21,7 +21,7 @@ export class ParagraphExtension extends NodeExtension {
     };
   }
 
-  public commands({ type }: SchemaNodeTypeParams) {
+  public commands({ type }: CommandNodeTypeParams) {
     return () => {
       return setBlockType(type);
     };

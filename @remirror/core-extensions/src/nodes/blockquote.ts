@@ -1,4 +1,5 @@
 import {
+  CommandNodeTypeParams,
   EDITOR_CLASS_SELECTOR,
   NodeExtension,
   NodeExtensionSpec,
@@ -24,7 +25,7 @@ export class BlockquoteExtension extends NodeExtension {
     };
   }
 
-  public commands({ type }: SchemaNodeTypeParams) {
+  public commands({ type }: CommandNodeTypeParams) {
     return () => toggleWrap(type);
   }
 

@@ -1,4 +1,11 @@
-import { Cast, NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams, toggleList } from '@remirror/core';
+import {
+  Cast,
+  CommandNodeTypeParams,
+  NodeExtension,
+  NodeExtensionSpec,
+  SchemaNodeTypeParams,
+  toggleList,
+} from '@remirror/core';
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
 export class OrderedListExtension extends NodeExtension {
@@ -28,7 +35,7 @@ export class OrderedListExtension extends NodeExtension {
     };
   }
 
-  public commands({ type, schema }: SchemaNodeTypeParams) {
+  public commands({ type, schema }: CommandNodeTypeParams) {
     return () => toggleList(type, schema.nodes.listItem);
   }
 

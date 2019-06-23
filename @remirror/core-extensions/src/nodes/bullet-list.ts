@@ -1,4 +1,10 @@
-import { NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams, toggleList } from '@remirror/core';
+import {
+  CommandNodeTypeParams,
+  NodeExtension,
+  NodeExtensionSpec,
+  SchemaNodeTypeParams,
+  toggleList,
+} from '@remirror/core';
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
 export class BulletListExtension extends NodeExtension {
@@ -16,7 +22,7 @@ export class BulletListExtension extends NodeExtension {
     };
   }
 
-  public commands({ type, schema }: SchemaNodeTypeParams) {
+  public commands({ type, schema }: CommandNodeTypeParams) {
     return () => toggleList(type, schema.nodes.listItem);
   }
 

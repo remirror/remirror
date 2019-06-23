@@ -1,5 +1,6 @@
 import {
   Cast,
+  CommandNodeTypeParams,
   EDITOR_CLASS_NAME,
   ExtensionCommandFunction,
   NodeExtension,
@@ -93,7 +94,7 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
     };
   }
 
-  public commands = ({ type }: SchemaNodeTypeParams): ExtensionCommandFunction => attrs => {
+  public commands = ({ type }: CommandNodeTypeParams): ExtensionCommandFunction => attrs => {
     attrs = { ...attrs, ...this.options.transformAttrs(Cast<EmojiAttrs>(attrs)) };
     return replaceText({ type, attrs });
   };

@@ -1,5 +1,6 @@
 import {
   CommandFunction,
+  CommandNodeTypeParams,
   NodeExtension,
   NodeExtensionSpec,
   nodeInputRule,
@@ -20,7 +21,7 @@ export class HorizontalRuleExtension extends NodeExtension {
     };
   }
 
-  public commands({ type }: SchemaNodeTypeParams) {
+  public commands({ type }: CommandNodeTypeParams) {
     return (): CommandFunction => (state, dispatch) => {
       if (!dispatch) {
         return false;

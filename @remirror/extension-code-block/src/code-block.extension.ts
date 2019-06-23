@@ -1,4 +1,5 @@
 import {
+  CommandNodeTypeParams,
   isElementDOMNode,
   NodeExtension,
   NodeExtensionSpec,
@@ -94,7 +95,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
     return;
   }
 
-  public commands({ type, schema }: SchemaNodeTypeParams) {
+  public commands({ type, schema }: CommandNodeTypeParams) {
     return { toggle: () => toggleBlockItem({ type, toggleType: schema.nodes.paragraph }) };
   }
 

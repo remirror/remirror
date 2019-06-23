@@ -1,6 +1,7 @@
 import {
   Attrs,
   Cast,
+  CommandMarkTypeParams,
   getMarkRange,
   getMatchString,
   getSelectedWord,
@@ -97,7 +98,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public commands({ type }: SchemaMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParams) {
     return {
       update: (attrs?: Attrs) => updateMark(type, attrs),
       remove: () => {

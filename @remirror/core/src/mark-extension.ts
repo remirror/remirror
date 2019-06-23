@@ -1,5 +1,5 @@
 import { MarkType } from 'prosemirror-model';
-import { Extension } from './extension';
+import { Extension, isExtension } from './extension';
 import { markActive } from './helpers/document';
 import {
   EditorSchema,
@@ -40,3 +40,11 @@ export abstract class MarkExtension<
     return () => markActive(getEditorState(), schema.marks[this.name]);
   }
 }
+
+/**
+ * Determines if the passed in extension is a mark extension. Useful as a type guard where a particular type of extension is needed.
+ *
+ * @param extension - the extension to check
+ */
+export const isMarkExtension = (extension: unknown): extension is MarkExtension<any> =>
+  isExtension(extension) && extension instanceof MarkExtension;

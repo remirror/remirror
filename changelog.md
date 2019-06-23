@@ -14,19 +14,31 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - 🚀 `@remirror/extension-collaboration`: Collaboration library added based on the brilliant example available in [tiptap](https://github.com/scrumpy/tiptap).
 - `@remirror/react`: Add `withoutEmotion` which, when set to `true`, removes emotion (css-in-js) from the `Remirror` component. This is for those who don't like css-in-js and would like to work directly with the raw editor without random styles injected. Consuming the `@remirror/react-components` or any of the `@remirror/editor-*` packages will require the use of emotion.
 - `@remirror/react-utils`: Add `oneChildOnly` export which throws readable errors for invalid children props.
+- `@remirror/core`: Add `CommandNodeTypeParams`, `CommandMarkTypeParams`, `CommandTypeParams` which is now passed to the `commands` method for extensions
 
 ### Changed
 
 - 💥 **BREAKING `remirror/react-utils`:** Rename `childIsFunction` to `propIsFunction` and make it a _pseudo_ predicate function (returns true when it doesn't throw an error).
 - 💥 **BREAKING `remirror/react`:** Rename `setChildAsRoot` to `childAsRoot` on `RemirrorContextProviderProps` and all it consumers. This affects the `RemirrorContextProvider`, `RemirrorProvider` and `ManagedRemirrorProvider` exports. The prop now can take a boolean or the object with props to inject into the root.
 - 💥 **BREAKING `remirror/editor-twitter`:** Rename `uiTwitterTheme` to `TwitterEditorTheme`
-- 💥 **BREAKING `@remirror/react-utils` `@remirror/react` `@remirror/editor-markdown` `@remirror/editor-wysiwyg`:** Remove customRootProp from `RemirrorProps`
+- 💥 **BREAKING `remirror/core`:** Rename `HasExtensions` to `ExtensionListParams`
+- 💥 **BREAKING `remirror/core`:** It is now up to extensions to decide whether commands should be active when the editor is editable. `isEditable` method is now passed into the `commands` method as a means of checking.
 - 💥 **BREAKING `@remirror/react`:** All RemirrorProviders now require a `children` prop. This prevents a bug when rendering in non-dom environments.
-- `remirror/editor-twitter`: Fix bug where text area didn't expand to full height of editor container
 
-- Add support for [Git Large File Storage (LFS)](https://git-lfs.github.com/)
-- `remirror/editor-twitter`, `remirror/editor-wysiwyg` : Use image-snapshot testing to ensure SSR and DOM rendered editors are identical
-- Update husky command from ~~`yarn stop:hooks`~~ and ~~`yarn start:hooks`~~ to `yarn husky:stop` and `yarn husky:start`
+* 🐛 `remirror/core`: Fix bug with extension manager failing to provide attributes from the extensions
+* 🐛 `remirror/core`: Fix TypeScript type of SSRComponent. Change from `Component` to `ComponentType`
+* 🐛 `remirror/editor-twitter`: Fix bug where text area didn't expand to full height of editor container
+
+* Add support for [Git Large File Storage (LFS)](https://git-lfs.github.com/)
+* `remirror/editor-twitter`, `remirror/editor-wysiwyg` : Use image-snapshot testing to ensure SSR and DOM rendered editors are identical
+* Update husky command from ~~`yarn stop:hooks`~~ and ~~`yarn start:hooks`~~ to `yarn husky:stop` and `yarn husky:start`
+
+### Remove
+
+- 💥 **BREAKING `@remirror/react-utils` `@remirror/react` `@remirror/editor-markdown` `@remirror/editor-wysiwyg`:** Remove customRootProp from `RemirrorProps`
+- 💥 **BREAKING `@remirror/core`:** Remove `isEditable` guard from command functions. It is now up to the command or the caller to decide if it should run when the editor is not editable. To help with this command params with the method `isEditable` are passed to the `commands` method of the extension.
+- 💥 **BREAKING `@remirror/core`:** Remove exports `GetItemParamsMethod`
+  `createFlexibleFunctionMap` `hasExtensionProperty` `extensionPropertyMapper` `transformExtensionMap` `ignoreFunctions`
 
 ## [0.2.0] - 2019-06-18
 

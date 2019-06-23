@@ -1,5 +1,5 @@
 import { NodeType } from 'prosemirror-model';
-import { Extension } from './extension';
+import { Extension, isExtension } from './extension';
 import { nodeActive } from './helpers/utils';
 import {
   EditorSchema,
@@ -38,3 +38,11 @@ export abstract class NodeExtension<
     };
   }
 }
+
+/**
+ * Determines if the passed in extension is a node extension. Useful as a type guard where a particular type of extension is needed.
+ *
+ * @param extension - the extension to check
+ */
+export const isNodeExtension = (extension: unknown): extension is NodeExtension<any> =>
+  isExtension(extension) && extension instanceof NodeExtension;

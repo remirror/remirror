@@ -1,6 +1,7 @@
 import {
   Attrs,
   Cast,
+  CommandMarkTypeParams,
   EditorState,
   EditorView,
   findMatches,
@@ -58,7 +59,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
     };
   }
 
-  public commands({ type }: SchemaMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParams) {
     return (attrs?: Attrs) => {
       if (attrs && attrs.href) {
         return updateMark(type, attrs);
