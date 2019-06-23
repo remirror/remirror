@@ -3,8 +3,6 @@ import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
 import json from 'rollup-plugin-json';
 import resolve from 'rollup-plugin-node-resolve';
-import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
-import { join } from 'path';
 
 /* Inspired by https://github.com/ianstormtaylor/slate/blob/6302b2d9d2d6a62ba32e6a7d987db5db8f846eef/support/rollup/factory.js#L1-L148 */
 
@@ -34,11 +32,6 @@ function configure(pkg, env, target, rootFolder = '@remirror') {
       browser: true,
       extensions,
       preferBuiltins: false,
-    }),
-
-    // Automatically generate size snapshots
-    sizeSnapshot({
-      snapshotPath: join(process.cwd(), 'support/.size-snapshot.json'),
     }),
 
     // Convert JSON imports to ES6 modules.
