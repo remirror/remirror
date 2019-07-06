@@ -7,6 +7,8 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+## [0.3.0] - 2019-07-06
+
 ### Added
 
 - `@remirror/react`: Add `withoutEmotion` which, when set to `true`, removes emotion (css-in-js) from the `Remirror` component. This is for those who don't like css-in-js and would like to work directly with the raw editor without random styles injected. Consuming the `@remirror/react-components` or any of the `@remirror/editor-*` packages will require the use of emotion.
@@ -71,6 +73,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - Fixes missing TypeScript definitions #77.
 - Fixes crash when rendering a ReactNodeView in NextJS #75.
 
-[unreleased]: https://github.com/ifiokjr/remirror/compare/v0.2.0...HEAD
+[unreleased]: https://github.com/ifiokjr/remirror/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/ifiokjr/remirror/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/ifiokjr/remirror/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/ifiokjr/remirror/releases/tag/v0.1.0
