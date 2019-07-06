@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/renderer-react"
   },
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "lib/index.js",
   "module": "lib/dist/renderer-react.esm.js",
   "files": [
@@ -30,7 +30,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "@emotion/core": "^10",
-    "@remirror/core": "0.2.0"
+    "@remirror/core": "0.3.0"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
@@ -39,7 +39,7 @@
     "react-dom": "^16.8.0"
   },
   "devDependencies": {
-    "@remirror/core-extensions": "0.2.0",
+    "@remirror/core-extensions": "0.3.0",
     "prosemirror-model": "^1.7.1"
   },
   "publishConfig": {

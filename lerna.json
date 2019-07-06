@@ -1,5 +1,10 @@
 {
-  "packages": ["@remirror/*", "docs", "packages/*", "examples/*"],
+  "packages": [
+    "@remirror/*",
+    "docs",
+    "packages/*",
+    "examples/*"
+  ],
   "command": {
     "publish": {
       "message": "chore(release): publish %s",
@@ -7,7 +12,9 @@
       "npmClient": "npm",
       "signGitCommit": true,
       "signGitTag": true,
-      "allowBranch": ["master"]
+      "allowBranch": [
+        "master"
+      ]
     }
   },
   "changelog": {
@@ -22,7 +29,7 @@
       "PR: Internal :house:": ":house: Internal"
     }
   },
-  "version": "0.2.0",
+  "version": "0.3.0",
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
   "useWorkspaces": true,

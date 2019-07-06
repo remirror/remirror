@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/react-utils"
   },
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "lib/index.js",
   "module": "lib/dist/react-utils.esm.js",
   "files": [
@@ -30,7 +30,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.5",
     "@emotion/core": "^10.0.7",
-    "@remirror/core": "0.2.0"
+    "@remirror/core": "0.3.0"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",

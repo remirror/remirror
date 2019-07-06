@@ -8,7 +8,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/extension-enhanced-link"
   },
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "lib/index.js",
   "module": "lib/dist/extension-enhanced-link.esm.js",
   "files": [
@@ -28,7 +28,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@remirror/core": "0.2.0",
+    "@remirror/core": "0.3.0",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-transform": "^1.1.0",
     "prosemirror-state": "^1.2.3",

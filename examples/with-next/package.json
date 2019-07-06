@@ -2,7 +2,7 @@
   "private": true,
   "name": "with-typescript",
   "license": "ISC",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "build": "next build",
     "dev": "next",
@@ -13,12 +13,12 @@
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@remirror/core": "0.2.0",
-    "@remirror/core-extensions": "0.2.0",
-    "@remirror/editor-twitter": "0.2.0",
-    "@remirror/editor-wysiwyg": "0.2.0",
-    "@remirror/react": "0.2.0",
-    "@remirror/showcase": "0.2.0",
+    "@remirror/core": "0.3.0",
+    "@remirror/core-extensions": "0.3.0",
+    "@remirror/editor-twitter": "0.3.0",
+    "@remirror/editor-wysiwyg": "0.3.0",
+    "@remirror/react": "0.3.0",
+    "@remirror/showcase": "0.3.0",
     "emoji-mart": "2.11.1",
     "lodash": "4.17.11",
     "match-sorter": "3.1.1",
