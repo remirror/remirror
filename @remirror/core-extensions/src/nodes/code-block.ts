@@ -1,5 +1,6 @@
 import { Interpolation } from '@emotion/core';
 import {
+  CommandNodeTypeParams,
   EDITOR_CLASS_SELECTOR,
   NodeExtension,
   NodeExtensionSpec,
@@ -27,7 +28,7 @@ export class CodeBlockExtension extends NodeExtension {
     };
   }
 
-  public commands({ type, schema }: SchemaNodeTypeParams) {
+  public commands({ type, schema }: CommandNodeTypeParams) {
     return () => toggleBlockItem({ type, toggleType: schema.nodes.paragraph });
   }
 

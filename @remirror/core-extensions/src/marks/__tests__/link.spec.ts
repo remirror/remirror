@@ -7,7 +7,7 @@ import { LinkExtension, LinkExtensionOptions } from '../link';
 const href = 'https://test.com';
 
 describe('schema', () => {
-  const schema = createBaseTestManager([{ extension: new LinkExtension(), priority: 1 }]).createSchema();
+  const { schema } = createBaseTestManager([{ extension: new LinkExtension(), priority: 1 }]);
   const { a, doc, p } = pmBuild(schema, {
     a: { markType: 'link', href },
   });

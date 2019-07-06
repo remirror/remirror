@@ -1,4 +1,5 @@
 import {
+  CommandMarkTypeParams,
   MarkExtension,
   MarkExtensionSpec,
   markInputRule,
@@ -39,7 +40,7 @@ export class StrikeExtension extends MarkExtension {
     };
   }
 
-  public commands({ type }: SchemaMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParams) {
     return () => toggleMark(type);
   }
 

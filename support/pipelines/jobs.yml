@@ -32,9 +32,12 @@ jobs:
       - template: yarn-install.yml
       - bash: yarn build
         displayName: 'Build project'
+      - bash: yarn size
+        displayName: 'Size limit check'
       - bash: yarn test:puppeteer
         displayName: 'Run integration tests on chrome'
 
-      # Todo: Firefox tests are currently failing for several reasons so the result is ignored
+      # Firefox tests are currently failing because image snapshots aren't consistent on linux
+      # Use a docker image to generate snapshots so that they can run across environments
       - bash: yarn test:puppeteer:firefox || true
         displayName: 'Run integration tests on firefox'

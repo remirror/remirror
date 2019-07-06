@@ -17,8 +17,8 @@ import {
 import minDocument from 'min-document';
 
 export const helpers = {
-  getEditorState: Cast(jest.fn()),
-  getPortalContainer: Cast(jest.fn()),
+  getState: Cast(jest.fn()),
+  getPortals: Cast(jest.fn()),
 };
 
 export const baseExtensions = [
@@ -47,8 +47,7 @@ export const createBaseTestManager = (extra: PrioritizedExtension[] = []) =>
 export const createTestManager = (extra: PrioritizedExtension[] = []) =>
   ExtensionManager.create([...extensions, ...extra]);
 
-export const schema = manager.schema;
-export const plugins = manager.plugins();
+export const { schema, plugins } = manager.data;
 export const testDocument = minDocument;
 export const initialJson = {
   type: 'doc',

@@ -1,4 +1,5 @@
 import {
+  CommandMarkTypeParams,
   MarkExtension,
   MarkExtensionSpec,
   markInputRule,
@@ -25,7 +26,7 @@ export class CodeExtension extends MarkExtension {
     };
   }
 
-  public commands({ type }: SchemaMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParams) {
     return () => toggleMark(type);
   }
 

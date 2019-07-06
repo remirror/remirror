@@ -6,7 +6,7 @@ import typescript from 'refractor/lang/typescript';
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '../';
 
 describe('schema', () => {
-  const schema = createBaseTestManager([{ extension: new CodeBlockExtension(), priority: 1 }]).createSchema();
+  const { schema } = createBaseTestManager([{ extension: new CodeBlockExtension(), priority: 1 }]);
   const attrs = { language: 'typescript' };
   const content = 'unchanged without decorations';
 

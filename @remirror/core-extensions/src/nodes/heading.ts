@@ -1,5 +1,6 @@
 import {
   Attrs,
+  CommandNodeTypeParams,
   KeyboardBindings,
   NodeExtension,
   NodeExtensionOptions,
@@ -55,7 +56,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
     };
   }
 
-  public commands({ type, schema }: SchemaNodeTypeParams) {
+  public commands({ type, schema }: CommandNodeTypeParams) {
     return (attrs?: Attrs) => toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs });
   }
 

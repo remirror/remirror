@@ -6,7 +6,7 @@ import { MentionExtension, MentionExtensionOptions } from '../';
 import { MentionNodeAttrs } from '../types';
 
 describe('schema', () => {
-  const schema = createBaseTestManager([{ extension: new MentionExtension(), priority: 1 }]).createSchema();
+  const { schema } = createBaseTestManager([{ extension: new MentionExtension(), priority: 1 }]);
   const attrs = { id: 'test', label: '@test' };
 
   const { mention, p, doc } = pmBuild(schema, {

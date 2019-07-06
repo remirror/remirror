@@ -1,5 +1,5 @@
 import { NodeType } from 'prosemirror-model';
-import { Extension } from './extension';
+import { Extension, isExtension } from './extension';
 import { nodeActive } from './helpers/utils';
 import {
   EditorSchema,
@@ -32,9 +32,17 @@ export abstract class NodeExtension<
    */
   public abstract readonly schema: NodeExtensionSpec;
 
-  public active({ getEditorState, type }: SchemaNodeTypeParams): FlexibleConfig<ExtensionBooleanFunction> {
+  public active({ getState, type }: SchemaNodeTypeParams): FlexibleConfig<ExtensionBooleanFunction> {
     return attrs => {
-      return nodeActive({ state: getEditorState(), type, attrs });
+      return nodeActive({ state: getState(), type, attrs });
     };
   }
 }
+
+/**
+ * Determines if the passed in extension is a node extension. Useful as a type guard where a particular type of extension is needed.
+ *
+ * @param extension - the extension to check
+ */
+export const isNodeExtension = (extension: unknown): extension is NodeExtension<any> =>
+  isExtension(extension) && extension instanceof NodeExtension;

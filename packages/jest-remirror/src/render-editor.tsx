@@ -182,7 +182,7 @@ export const renderEditor = <
     utils,
     view,
     schema,
-    getState: returnedParams.manager.getEditorState,
+    getState: returnedParams.manager.getState,
     add,
     nodes: nodesWithoutAttrs,
     marks: marksWithoutAttrs,

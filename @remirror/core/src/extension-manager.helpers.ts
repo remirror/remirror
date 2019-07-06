@@ -1,32 +1,25 @@
 import { DEFAULT_EXTENSION_PRIORITY } from './constants';
-import { AnyExtension, Extension } from './extension';
-import { bool, capitalize, Cast, isFunction, isObject } from './helpers/base';
-import { MarkExtension } from './mark-extension';
-import { NodeExtension } from './node-extension';
-import { NodeViewPortalContainer } from './portal-container';
+import {
+  AnyExtension,
+  ExtensionListParams,
+  FlexibleExtension,
+  isExtension,
+  PrioritizedExtension,
+} from './extension';
+import { bool, capitalize, Cast, isFunction } from './helpers/base';
+import { isMarkExtension } from './mark-extension';
+import { isNodeExtension } from './node-extension';
 import {
   AnyFunction,
+  Attrs,
   CommandParams,
-  EditorState,
+  ExtensionBooleanFunction,
+  ExtensionCommandFunction,
   ExtensionManagerParams,
-  ExtensionType,
   FlexibleConfig,
 } from './types';
 
-export interface ExtensionManagerInitParams {
-  /**
-   *  A shortcut to pulling the editor state
-   */
-  getEditorState: () => EditorState;
-
-  /**
-   *  A shortcut to pulling the portal container
-   */
-  getPortalContainer: () => NodeViewPortalContainer;
-}
-
 type MethodFactory<GMappedFunc extends AnyFunction, GFunc extends AnyFunction> = (
-  params: CommandParams,
   method: GFunc,
 ) => GMappedFunc;
 
@@ -62,7 +55,7 @@ interface IsNameUniqueParams {
  *
  * @param params - destructured params
  */
-export const isNameUnique = ({ name, set, shouldThrow = false, type = 'extension' }: IsNameUniqueParams) => {
+const isNameUnique = ({ name, set, shouldThrow = false, type = 'extension' }: IsNameUniqueParams) => {
   if (set.has(name)) {
     const message = `There is a naming conflict for the name: ${name} used in this type: ${type}. Please rename to avoid runtime errors.`;
     if (shouldThrow) {
@@ -75,17 +68,11 @@ export const isNameUnique = ({ name, set, shouldThrow = false, type = 'extension
   }
 };
 
-export interface HasExtensions {
-  /** A list of passed extensions */
-  extensions: AnyExtension[];
-}
-
 /**
  * A utility type for the property getItemParams.
  */
 export type GetItemParamsMethod<GKey extends keyof AnyExtension, GFunc extends AnyFunction> = (
   ext: AnyExtension & Pick<Required<AnyExtension>, GKey>,
-  params: CommandParams,
 ) => FlexibleConfig<GFunc>;
 
 /**
@@ -102,7 +89,7 @@ interface CreateFlexibleFunctionMapParams<
   key: GKey;
 
   /**
-   * Whether or not to check for uniqueness.
+   * When true a command name that is not unique will cause an error.
    *
    * @defaultValue true
    */
@@ -120,18 +107,14 @@ interface CreateFlexibleFunctionMapParams<
   methodFactory: MethodFactory<GMappedFunc, GFunc>;
 
   /**
-   * Transform an array of items in a method that can be called.
+   * Transform an array of methods into a single method that can be called.
    */
-  arrayTransformer: (
-    fns: GFunc[],
-    params: CommandParams,
-    methodFactory: MethodFactory<GMappedFunc, GFunc>,
-  ) => GMappedFunc;
+  arrayTransformer: (fns: GFunc[], methodFactory: MethodFactory<GMappedFunc, GFunc>) => GMappedFunc;
 
   /**
    * Passes the context (usually the extension manager) which has an instance property `.extensions`
    */
-  ctx: HasExtensions;
+  extensions: AnyExtension[];
 }
 
 /**
@@ -145,7 +128,7 @@ interface CreateFlexibleFunctionMapParams<
  * type FlexibleConfig<Func> = Func | Func[] | Record<string, Func | Func[]>
  * ```
  *
- * This creates a function that is able to step through each possibility and perform the action required.
+ * This creates a function that is able to step through each possibility and call the required method.
  *
  * @param param - destructured parameters
  *
@@ -161,33 +144,36 @@ export const createFlexibleFunctionMap = <
   getItemParams,
   methodFactory,
   arrayTransformer,
-  ctx,
-}: CreateFlexibleFunctionMapParams<GKey, GMappedFunc, GFunc>) => (
-  params: CommandParams,
-): Record<string, GMappedFunc> => {
+  extensions,
+}: CreateFlexibleFunctionMapParams<GKey, GMappedFunc, GFunc>): Record<string, GMappedFunc> => {
   const items: Record<string, GMappedFunc> = {};
   const names = new Set<string>();
-  ctx.extensions.filter(hasExtensionProperty(key)).forEach(currentExtension => {
+  extensions.filter(hasExtensionProperty(key)).forEach(currentExtension => {
     const { name } = currentExtension;
+
     if (checkUniqueness) {
       isNameUnique({ name, set: names, shouldThrow: true });
     }
-    const item = getItemParams(currentExtension, params);
+
+    const item = getItemParams(currentExtension);
+
     if (Array.isArray(item)) {
-      items[name] = arrayTransformer(item, params, methodFactory);
+      items[name] = arrayTransformer(item, methodFactory);
     } else if (isFunction(item)) {
-      items[name] = methodFactory(params, item);
+      items[name] = methodFactory(item);
     } else {
       Object.entries(item).forEach(([commandName, commandValue]) => {
         // Namespace the actions created to minimise accidental naming collision
+        // TODO this is too magical and needs to change!
         const namespacedName = `${name}${capitalize(commandName)}`;
 
         if (checkUniqueness) {
           isNameUnique({ name: namespacedName, set: names, shouldThrow: true });
         }
+
         items[namespacedName] = Array.isArray(commandValue)
-          ? arrayTransformer(commandValue, params, methodFactory)
-          : methodFactory(params, commandValue);
+          ? arrayTransformer(commandValue, methodFactory)
+          : methodFactory(commandValue);
       });
     }
   });
@@ -195,37 +181,81 @@ export const createFlexibleFunctionMap = <
   return items;
 };
 
-/**
- * Determines if the passed in extension is a any type of extension.
- *
- * @param extension - the extension to check
- */
-export const isExtension = (extension: unknown): extension is AnyExtension =>
-  isObject(extension) && extension instanceof Extension;
+interface CommandFlexibleFunctionMapParams extends ExtensionListParams {
+  /**
+   * The command params which are passed to each extensions `commands` method.
+   */
+  params: CommandParams;
+}
 
 /**
- * Determines if the passed in extension is a node extension. Useful as a type guard where a particular type of extension is needed.
+ * Generate all the action commands for usage within the UI.
  *
- * @param extension - the extension to check
+ * Typically actions are used to create interactive menus.
+ * For example a menu can use a command to toggle bold.
  */
-export const isNodeExtension = (extension: unknown): extension is NodeExtension<any> =>
-  isExtension(extension) && extension instanceof NodeExtension;
+export const commandFlexibleFunctionMap = ({ extensions, params }: CommandFlexibleFunctionMapParams) =>
+  createFlexibleFunctionMap<'commands', (attrs?: Attrs) => void, ExtensionCommandFunction>({
+    extensions,
+    key: 'commands',
+    methodFactory: method => (attrs?: Attrs) => {
+      const { view, getState } = params;
+      view.focus();
+      return method(attrs)(getState(), view.dispatch, view);
+    },
+    checkUniqueness: true,
+    arrayTransformer: (fns, methodFactory) => () => {
+      fns.forEach(callback => {
+        methodFactory(callback);
+      });
+    },
+    getItemParams: extension =>
+      extension.commands({
+        ...params,
+        ...(isMarkExtension(extension)
+          ? { type: params.schema.marks[extension.name] }
+          : isNodeExtension(extension)
+          ? { type: params.schema.nodes[extension.name] }
+          : {}),
+      }),
+  });
 
+interface BooleanFlexibleFunctionMapParams<GKey extends 'enabled' | 'active'>
+  extends CommandFlexibleFunctionMapParams {
+  key: GKey;
+}
 /**
- * Determines if the passed in extension is a mark extension. Useful as a type guard where a particular type of extension is needed.
- *
- * @param extension - the extension to check
+ * A helper specifically for generating the RemirrorAction's active and enabled methods
  */
-export const isMarkExtension = (extension: unknown): extension is MarkExtension<any> =>
-  isExtension(extension) && extension instanceof MarkExtension;
-
-/**
- * Checks whether the this is an extension and if it is a plain one
- *
- * @param extension - the extension to check
- */
-export const isPlainExtension = (extension: unknown): extension is Extension<any, never> =>
-  isExtension(extension) && extension.type === ExtensionType.EXTENSION;
+export const booleanFlexibleFunctionMap = <GKey extends 'enabled' | 'active'>({
+  key,
+  extensions,
+  params,
+}: BooleanFlexibleFunctionMapParams<GKey>) =>
+  createFlexibleFunctionMap<GKey, (attrs?: Attrs) => boolean, ExtensionBooleanFunction>({
+    extensions,
+    key,
+    methodFactory: method => (attrs?: Attrs) => {
+      return method(attrs);
+    },
+    checkUniqueness: false,
+    arrayTransformer: (functions, methodFactory) => () => {
+      return functions
+        .map(callback => {
+          methodFactory(callback);
+        })
+        .every(bool);
+    },
+    getItemParams: extension =>
+      extension[key]({
+        ...params,
+        ...(isMarkExtension(extension)
+          ? { type: params.schema.marks[extension.name] }
+          : isNodeExtension(extension)
+          ? { type: params.schema.nodes[extension.name] }
+          : {}),
+      }),
+  });
 
 /**
  * Checks to see if an optional property exists on an extension.
@@ -274,35 +304,6 @@ export const extensionPropertyMapper = <
       : extensionMethod.bind(extension)!(params),
   );
 };
-
-/**
- * Provides a priority value to the extension which determines the priority.
- *
- * @remarks
- * A lower value for priority means a higher priority. Think of it as an index and position in array
- * except that it can also support negative values.
- */
-export interface PrioritizedExtension {
-  /**
-   * The instantiated extension
-   */
-  extension: AnyExtension;
-
-  /**
-   * A priority given to the extension.
-   *
-   * @remarks
-   * A lower number implies an earlier place in the extension list and hence more priority over the extensions that follow.
-   *
-   * @defaultValue 2
-   */
-  priority: number;
-}
-
-/**
- * Either a PrioritizedExtension or the actual Extension
- */
-export type FlexibleExtension = PrioritizedExtension | AnyExtension;
 
 /**
  * Converts an extension to its mapped value

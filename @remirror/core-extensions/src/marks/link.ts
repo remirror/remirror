@@ -1,6 +1,7 @@
 import {
   Attrs,
   Cast,
+  CommandMarkTypeParams,
   getMarkRange,
   getMatchString,
   getSelectedWord,
@@ -86,18 +87,18 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public active({ getEditorState, type }: SchemaMarkTypeParams) {
+  public active({ getState, type }: SchemaMarkTypeParams) {
     return {
       /**
        * Returns true when the current selection has an active link present.
        */
       update: () => {
-        return markActive(getEditorState(), type);
+        return markActive(getState(), type);
       },
     };
   }
 
-  public commands({ type }: SchemaMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParams) {
     return {
       update: (attrs?: Attrs) => updateMark(type, attrs),
       remove: () => {
@@ -106,17 +107,17 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public enabled({ getEditorState, type }: SchemaMarkTypeParams) {
+  public enabled({ getState, type }: SchemaMarkTypeParams) {
     return {
       update: () => {
-        const { selection } = getEditorState();
+        const { selection } = getState();
         if (selectionEmpty(selection) || !isTextSelection(selection)) {
           return false;
         }
         return true;
       },
       remove: () => {
-        return markActive(getEditorState(), type);
+        return markActive(getState(), type);
       },
     };
   }

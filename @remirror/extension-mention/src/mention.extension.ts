@@ -1,11 +1,11 @@
 import {
+  CommandNodeTypeParams,
   ExtensionCommandFunction,
   isString,
   NodeExtension,
   NodeExtensionSpec,
   Plugin,
   replaceText,
-  SchemaNodeTypeParams,
 } from '@remirror/core';
 import { createSuggestionsPlugin } from './plugin';
 import { SuggestionState } from './state';
@@ -86,7 +86,7 @@ export class MentionExtension extends NodeExtension<MentionExtensionOptions> {
     };
   }
 
-  public commands({ type }: SchemaNodeTypeParams): ExtensionCommandFunction {
+  public commands({ type }: CommandNodeTypeParams): ExtensionCommandFunction {
     return attrs => replaceText({ type, attrs });
   }
 

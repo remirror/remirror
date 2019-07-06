@@ -158,3 +158,10 @@ export interface TransactionParams {
    */
   tr: Transaction;
 }
+
+export interface CallbackParams {
+  /**
+   * A simple callback to run.
+   */
+  callback(): void;
+}

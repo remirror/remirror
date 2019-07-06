@@ -1,8 +1,3 @@
-declare module 'react-feather/dist/icons/github';
-declare module 'react-feather/dist/icons/zoom-in';
-
-declare module 'webfontloader';
-
 declare module 'react-wait' {
   import { ComponentType, FunctionComponent } from 'react';
   export const Waiter: FunctionComponent<{}>;

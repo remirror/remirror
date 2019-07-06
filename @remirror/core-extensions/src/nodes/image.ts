@@ -3,10 +3,10 @@ import {
   bool,
   Cast,
   CommandFunction,
+  CommandNodeTypeParams,
   EditorSchema,
   NodeExtension,
   NodeExtensionSpec,
-  SchemaNodeTypeParams,
 } from '@remirror/core';
 import { ResolvedPos } from 'prosemirror-model';
 import { Plugin } from 'prosemirror-state';
@@ -49,7 +49,7 @@ export class ImageExtension extends NodeExtension {
     };
   }
 
-  public commands({ type }: SchemaNodeTypeParams) {
+  public commands({ type }: CommandNodeTypeParams) {
     return (attrs?: Attrs): CommandFunction => (state, dispatch) => {
       if (!dispatch) {
         return false;

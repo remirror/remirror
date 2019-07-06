@@ -83,7 +83,7 @@ export class StrikeExtension extends MarkExtension {
   }
 
   // Defines commands that can be used to build menu UI's
-  public commands({ type }: SchemaMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParams) {
     return () => toggleMark(type);
   }
 

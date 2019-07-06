@@ -1,7 +1,7 @@
 import { Interpolation } from '@emotion/core';
 import { MarkType as PMMarkType, Node as PMNode, NodeType as PMNodeType, Schema } from 'prosemirror-model';
 import { EditorState as PMEditorState, Plugin as PMPlugin } from 'prosemirror-state';
-import { Component } from 'react';
+import { ComponentType } from 'react';
 
 /* Alias types for better readability throughout the codebase. */
 
@@ -226,7 +226,7 @@ export interface SSRComponentParams {
    *
    * Each node/mark extension can define it's own particular default component
    */
-  SSRComponent?: Component<Attrs>;
+  SSRComponent?: ComponentType<Attrs>;
 }
 
 export interface NodeExtensionOptions extends BaseExtensionOptions, SSRComponentParams {}
