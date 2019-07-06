@@ -1,10 +1,5 @@
 {
-  "packages": [
-    "@remirror/*",
-    "docs",
-    "packages/*",
-    "examples/*"
-  ],
+  "packages": ["@remirror/*", "docs", "packages/*", "examples/*"],
   "command": {
     "publish": {
       "message": "chore(release): publish %s",
@@ -12,9 +7,7 @@
       "npmClient": "npm",
       "signGitCommit": true,
       "signGitTag": true,
-      "allowBranch": [
-        "master"
-      ]
+      "allowBranch": ["master"]
     }
   },
   "changelog": {
