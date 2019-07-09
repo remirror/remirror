@@ -14,8 +14,11 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - `@remirror/core`: Add `CommandNodeTypeParams`, `CommandMarkTypeParams`, `CommandTypeParams` which is now passed to the `commands` method for extensions.
 - `@remirror/core`: Add `getActions` to the params of all extension manager methods. This will throw an error if called before and during initialization.
 - `jest-prosemirror`: Enable editorViewOptions for the `createEditor` method. For example, now it is possible to intercept transactions with the `dispatchTransaction` hook.
+- 🚀 `@remirror/cli`: A command line interface for remirror which currently only supports bundling an editor for use in the react-native WebView.
+- 🚀 `@remirror/native`: New package with experimental support for react-native.
+- 🚀 `@remirror/native-bridge`: New package for bridging the DOM libraries with the native webview.
 
-### Changes
+### Changed
 
 - 💥 **BREAKING `@remirror/core`:** Rename `getEditorState` to `getState`.
 - 💥 **BREAKING `@remirror/core`:** Change method `getPortalContainer` to property `portalContainer` on the extension manager.
@@ -28,6 +31,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - 🐛 `@remirror/core`: Fix bug with extension manager failing to provide attributes from the extensions.
 - 🐛 `@remirror/core`: Fix TypeScript type of SSRComponent. Change from `Component` to `ComponentType`.
 - 🐛 `@remirror/editor-twitter`: Fix bug where text area didn't expand to full height of editor container.
+- 🐛 `@remirror/react`: Fix a bug with the positioner when used at the end of the document.
 
 ## [0.3.0] - 2019-07-06
 
@@ -39,12 +43,13 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 ### Changed
 
 - 💥 **BREAKING `@remirror/react-utils`:** Rename `childIsFunction` to `propIsFunction` and make it a _pseudo_ predicate function (returns true when it doesn't throw an error).
-- 💥 **BREAKING `@remirror/react`:** Rename `setChildAsRoot` to `childAsRoot` on `RemirrorContextProviderProps` and all it consumers. This affects the `RemirrorContextProvider`, `RemirrorProvider` and `ManagedRemirrorProvider` exports. The prop now can take a boolean or the object with props to inject into the root.
 - 💥 **BREAKING `@remirror/editor-twitter`:** Rename `uiTwitterTheme` to `TwitterEditorTheme`.
 - 💥 **BREAKING `@remirror/core`:** Rename `HasExtensions` to `ExtensionListParams`.
+- 💥 **BREAKING `@remirror/core`:** Rename `markActive` to `isMarkActive` use a destructured parameters object instead of positional arguments.
 - 💥 **BREAKING `@remirror/core`:** It is now up to extensions to decide whether commands should be active when the editor is editable. `isEditable` method is now passed into the `commands` method as a means of checking.
 - 💥 **BREAKING `@remirror/react`:** All RemirrorProviders now require a `children` prop. This prevents a bug when rendering in non-dom environments.
 
+- `@remirror/react`: `view.updateState` is now called before `Remirror.setState`.
 - Add support for [Git Large File Storage (LFS)](https://git-lfs.github.com/)
 - `@remirror/editor-twitter`, `@remirror/editor-wysiwyg` : Use image-snapshot testing to ensure SSR and DOM rendered editors are identical.
 - Update husky command from ~~`yarn stop:hooks`~~ and ~~`yarn start:hooks`~~ to `yarn husky:stop` and `yarn husky:start`.

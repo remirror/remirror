@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "lib": ["esnext"],
+    "declaration": false,
+    "types": ["node", "detox", "jest", "jasmine"],
+    "resolveJsonModule": true,
+    "module": "esnext",
+    "target": "esnext",
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "noImplicitReturns": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "pretty": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "alwaysStrict": true
+  },
+  "include": ["./**/*.ts", "./init.ts"],
+  "exclude": ["../node_modules"]
+}

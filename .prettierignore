@@ -9,3 +9,8 @@ coverage/**
 **/.next
 .out
 storybook-static
+**/Pods
+**/ios
+**/android
+vendor
+**/.cache

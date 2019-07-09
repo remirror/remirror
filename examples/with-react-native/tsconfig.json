@@ -1,0 +1,10 @@
+{
+  "extends": "../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["esnext"],
+    "declaration": false,
+    "allowJs": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", ".babelrc.js", "metro.config.js", "jest.config.js", "e2e"]
+}

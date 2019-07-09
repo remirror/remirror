@@ -1,0 +1,15 @@
+diff --git a/node_modules/detox/android/detox/build.gradle b/node_modules/detox/android/detox/build.gradle
+index 91d3d70..bb0d889 100644
+--- a/node_modules/detox/android/detox/build.gradle
++++ b/node_modules/detox/android/detox/build.gradle
+@@ -56,6 +56,10 @@ android {
+     lintOptions {
+         abortOnError false
+     }
++
++    configurations.all {
++        resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.2'
++    }
+ }
+ 
+ dependencies {

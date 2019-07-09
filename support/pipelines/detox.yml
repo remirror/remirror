@@ -1,0 +1,5 @@
+steps:
+  - bash: |
+      brew tap wix/brew
+      brew install applesimutils
+    displayName: 'Install Homebrew Dependencies'

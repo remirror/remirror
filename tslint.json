@@ -41,9 +41,7 @@
       "next",
       "prismjs",
       "react-dom",
-      "emoji-mart",
-      "prismjs",
-      "refractor",
+      "react-native-webview",
       "react-syntax-highlighter",
       "refractor"
     ]

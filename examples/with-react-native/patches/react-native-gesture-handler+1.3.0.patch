@@ -1,0 +1,365 @@
+diff --git a/node_modules/react-native-gesture-handler/android/.DS_Store b/node_modules/react-native-gesture-handler/android/.DS_Store
+new file mode 100644
+index 0000000..f93ad88
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/.DS_Store differ
+diff --git a/node_modules/react-native-gesture-handler/android/.classpath b/node_modules/react-native-gesture-handler/android/.classpath
+new file mode 100644
+index 0000000..eb19361
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/.classpath
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<classpath>
++	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/"/>
++	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
++	<classpathentry kind="output" path="bin/default"/>
++</classpath>
+diff --git a/node_modules/react-native-gesture-handler/android/.project b/node_modules/react-native-gesture-handler/android/.project
+new file mode 100644
+index 0000000..ab9d507
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/.project
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<projectDescription>
++	<name>react-native-gesture-handler</name>
++	<comment>Project react-native-gesture-handler created by Buildship.</comment>
++	<projects>
++	</projects>
++	<buildSpec>
++		<buildCommand>
++			<name>org.eclipse.jdt.core.javabuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++		<buildCommand>
++			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++	</buildSpec>
++	<natures>
++		<nature>org.eclipse.jdt.core.javanature</nature>
++		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
++	</natures>
++</projectDescription>
+diff --git a/node_modules/react-native-gesture-handler/android/.settings/org.eclipse.buildship.core.prefs b/node_modules/react-native-gesture-handler/android/.settings/org.eclipse.buildship.core.prefs
+new file mode 100644
+index 0000000..1675490
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/.settings/org.eclipse.buildship.core.prefs
+@@ -0,0 +1,2 @@
++connection.project.dir=../../../android
++eclipse.preferences.version=1
+diff --git a/node_modules/react-native-gesture-handler/android/build.gradle b/node_modules/react-native-gesture-handler/android/build.gradle
+index a23be0e..8f612e4 100644
+--- a/node_modules/react-native-gesture-handler/android/build.gradle
++++ b/node_modules/react-native-gesture-handler/android/build.gradle
+@@ -5,12 +5,12 @@ def safeExtGet(prop, fallback) {
+ }
+ 
+ android {
+-    compileSdkVersion safeExtGet("compileSdkVersion", 25)
+-    buildToolsVersion safeExtGet("buildToolsVersion", '25.0.2')
++    compileSdkVersion safeExtGet("compileSdkVersion", 28)
++    buildToolsVersion safeExtGet("buildToolsVersion", '28.0.2')
+ 
+     defaultConfig {
+-        minSdkVersion safeExtGet('minSdkVersion', 16)
+-        targetSdkVersion safeExtGet('targetSdkVersion', 25)
++        minSdkVersion safeExtGet('minSdkVersion', 18)
++        targetSdkVersion safeExtGet('targetSdkVersion', 28)
+         versionCode 1
+         versionName "1.0"
+         ndk {
+diff --git a/node_modules/react-native-gesture-handler/android/build/generated/source/buildConfig/debug/com/swmansion/gesturehandler/react/BuildConfig.java b/node_modules/react-native-gesture-handler/android/build/generated/source/buildConfig/debug/com/swmansion/gesturehandler/react/BuildConfig.java
+new file mode 100644
+index 0000000..5eedac7
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/generated/source/buildConfig/debug/com/swmansion/gesturehandler/react/BuildConfig.java
+@@ -0,0 +1,13 @@
++/**
++ * Automatically generated file. DO NOT MODIFY
++ */
++package com.swmansion.gesturehandler.react;
++
++public final class BuildConfig {
++  public static final boolean DEBUG = Boolean.parseBoolean("true");
++  public static final String APPLICATION_ID = "com.swmansion.gesturehandler.react";
++  public static final String BUILD_TYPE = "debug";
++  public static final String FLAVOR = "";
++  public static final int VERSION_CODE = 1;
++  public static final String VERSION_NAME = "1.0";
++}
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml b/node_modules/react-native-gesture-handler/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml
+new file mode 100644
+index 0000000..f2c5f89
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/AndroidManifest.xml
+@@ -0,0 +1,11 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.swmansion.gesturehandler.react"
++    android:versionCode="1"
++    android:versionName="1.0" >
++
++    <uses-sdk
++        android:minSdkVersion="18"
++        android:targetSdkVersion="28" />
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/output.json b/node_modules/react-native-gesture-handler/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/output.json
+new file mode 100644
+index 0000000..b5c89ae
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/aapt_friendly_merged_manifests/debug/aapt/output.json
+@@ -0,0 +1 @@
++[{"outputType":{"type":"AAPT_FRIENDLY_MERGED_MANIFESTS"},"apkData":{"type":"MAIN","splits":[],"versionCode":1,"versionName":"1.0","enabled":true,"outputFile":"react-native-gesture-handler-debug.aar","fullName":"debug","baseName":"debug"},"path":"AndroidManifest.xml","properties":{"packageId":"com.swmansion.gesturehandler.react","split":""}}]
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json b/node_modules/react-native-gesture-handler/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json
+new file mode 100644
+index 0000000..9e26dfe
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/annotation_processor_list/debug/annotationProcessors.json
+@@ -0,0 +1 @@
++{}
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/generateDebugRFile/R.jar b/node_modules/react-native-gesture-handler/android/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/generateDebugRFile/R.jar
+new file mode 100644
+index 0000000..821f9ab
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/compile_only_not_namespaced_r_class_jar/debug/generateDebugRFile/R.jar differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/debug-mergeJniLibs/merge-state b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/debug-mergeJniLibs/merge-state
+new file mode 100644
+index 0000000..3ba841d
+Binary files /dev/null and b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/debug-mergeJniLibs/merge-state differ
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
+new file mode 100644
+index 0000000..d7ebec5
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/jniLibs"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/debug/jniLibs"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/mergeDebugShaders/merger.xml b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
+new file mode 100644
+index 0000000..c41b91d
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/debug/shaders"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugAssets/merger.xml b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugAssets/merger.xml
+new file mode 100644
+index 0000000..83c0b36
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugAssets/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/assets"/><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/build/intermediates/shader_assets/debug/compileDebugShaders/out"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/debug/assets"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
+new file mode 100644
+index 0000000..e2561f5
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugResources/compile-file-map.properties
+@@ -0,0 +1 @@
++#Sun Jun 23 16:30:32 BST 2019
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugResources/merger.xml b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugResources/merger.xml
+new file mode 100644
+index 0000000..b6ccc82
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/incremental/packageDebugResources/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/res"/><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/build/generated/res/rs/debug"/><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/res"/><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/build/generated/res/rs/debug"/><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/debug/res"/></dataSet><mergedItems/></merger>
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml b/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml
+new file mode 100644
+index 0000000..f2c5f89
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml
+@@ -0,0 +1,11 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.swmansion.gesturehandler.react"
++    android:versionCode="1"
++    android:versionName="1.0" >
++
++    <uses-sdk
++        android:minSdkVersion="18"
++        android:targetSdkVersion="28" />
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifests/debug/output.json b/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifests/debug/output.json
+new file mode 100644
+index 0000000..0fb7bd7
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/merged_manifests/debug/output.json
+@@ -0,0 +1 @@
++[{"outputType":{"type":"MERGED_MANIFESTS"},"apkData":{"type":"MAIN","splits":[],"versionCode":1,"versionName":"1.0","enabled":true,"outputFile":"react-native-gesture-handler-debug.aar","fullName":"debug","baseName":"debug"},"path":"../../library_manifest/debug/AndroidManifest.xml","properties":{"packageId":"com.swmansion.gesturehandler.react","split":""}}]
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt b/node_modules/react-native-gesture-handler/android/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt
+new file mode 100644
+index 0000000..369dc84
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt
+@@ -0,0 +1 @@
++com.swmansion.gesturehandler.react
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/symbols/debug/R.txt b/node_modules/react-native-gesture-handler/android/build/intermediates/symbols/debug/R.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/transforms/mergeJniLibs/debug/__content__.json b/node_modules/react-native-gesture-handler/android/build/intermediates/transforms/mergeJniLibs/debug/__content__.json
+new file mode 100644
+index 0000000..49b1382
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/transforms/mergeJniLibs/debug/__content__.json
+@@ -0,0 +1 @@
++[{"name":"resources","index":0,"scopes":["PROJECT"],"types":["NATIVE_LIBS"],"format":"DIRECTORY","present":false}]
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/intermediates/transforms/stripDebugSymbol/debug/__content__.json b/node_modules/react-native-gesture-handler/android/build/intermediates/transforms/stripDebugSymbol/debug/__content__.json
+new file mode 100644
+index 0000000..0637a08
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/intermediates/transforms/stripDebugSymbol/debug/__content__.json
+@@ -0,0 +1 @@
++[]
+\ No newline at end of file
+diff --git a/node_modules/react-native-gesture-handler/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/react-native-gesture-handler/android/build/outputs/logs/manifest-merger-debug-report.txt
+new file mode 100644
+index 0000000..b722cc8
+--- /dev/null
++++ b/node_modules/react-native-gesture-handler/android/build/outputs/logs/manifest-merger-debug-report.txt
+@@ -0,0 +1,37 @@
++-- Merging decision tree log ---
++manifest
++ADDED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++	package
++		ADDED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:2:5-49
++		INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++	android:versionName
++		INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		ADDED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++		INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++	android:versionCode
++		INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		ADDED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:1-3:12
++		INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++	xmlns:android
++		ADDED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml:1:11-69
++uses-sdk
++INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++	android:targetSdkVersion
++		INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		ADDED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++	android:minSdkVersion
++		INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		ADDED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
++		INJECTED from /Users/ifiokjr/Coding/kickjump/remirror/examples/with-react-native/node_modules/react-native-gesture-handler/android/src/main/AndroidManifest.xml
+diff --git a/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerEvent.java b/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerEvent.java
+index 85dca41..8ff019b 100644
+--- a/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerEvent.java
++++ b/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerEvent.java
+@@ -1,6 +1,6 @@
+ package com.swmansion.gesturehandler.react;
+ 
+-import android.support.v4.util.Pools;
++import androidx.core.util.Pools;
+ 
+ import com.facebook.react.bridge.Arguments;
+ import com.facebook.react.bridge.WritableMap;
+@@ -16,12 +16,11 @@ public class RNGestureHandlerEvent extends Event<RNGestureHandlerEvent> {
+ 
+   private static final int TOUCH_EVENTS_POOL_SIZE = 7; // magic
+ 
+-  private static final Pools.SynchronizedPool<RNGestureHandlerEvent> EVENTS_POOL =
+-          new Pools.SynchronizedPool<>(TOUCH_EVENTS_POOL_SIZE);
++  private static final Pools.SynchronizedPool<RNGestureHandlerEvent> EVENTS_POOL = new Pools.SynchronizedPool<>(
++      TOUCH_EVENTS_POOL_SIZE);
+ 
+-  public static RNGestureHandlerEvent obtain(
+-          GestureHandler handler,
+-          @Nullable RNGestureHandlerEventDataExtractor dataExtractor) {
++  public static RNGestureHandlerEvent obtain(GestureHandler handler,
++      @Nullable RNGestureHandlerEventDataExtractor dataExtractor) {
+     RNGestureHandlerEvent event = EVENTS_POOL.acquire();
+     if (event == null) {
+       event = new RNGestureHandlerEvent();
+@@ -35,9 +34,7 @@ public class RNGestureHandlerEvent extends Event<RNGestureHandlerEvent> {
+   private RNGestureHandlerEvent() {
+   }
+ 
+-  private void init(
+-          GestureHandler handler,
+-          @Nullable RNGestureHandlerEventDataExtractor dataExtractor) {
++  private void init(GestureHandler handler, @Nullable RNGestureHandlerEventDataExtractor dataExtractor) {
+     super.init(handler.getView().getId());
+     mExtraData = Arguments.createMap();
+     if (dataExtractor != null) {
+diff --git a/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerStateChangeEvent.java b/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerStateChangeEvent.java
+index 5912a45..70b3ae5 100644
+--- a/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerStateChangeEvent.java
++++ b/node_modules/react-native-gesture-handler/android/src/main/java/com/swmansion/gesturehandler/react/RNGestureHandlerStateChangeEvent.java
+@@ -1,6 +1,6 @@
+ package com.swmansion.gesturehandler.react;
+ 
+-import android.support.v4.util.Pools;
++import androidx.core.util.Pools;
+ 
+ import com.facebook.react.bridge.Arguments;
+ import com.facebook.react.bridge.WritableMap;
+@@ -10,20 +10,17 @@ import com.swmansion.gesturehandler.GestureHandler;
+ 
+ import javax.annotation.Nullable;
+ 
+-public class RNGestureHandlerStateChangeEvent extends Event<RNGestureHandlerStateChangeEvent>{
++public class RNGestureHandlerStateChangeEvent extends Event<RNGestureHandlerStateChangeEvent> {
+ 
+   public static final String EVENT_NAME = "onGestureHandlerStateChange";
+ 
+   private static final int TOUCH_EVENTS_POOL_SIZE = 7; // magic
+ 
+-  private static final Pools.SynchronizedPool<RNGestureHandlerStateChangeEvent> EVENTS_POOL =
+-          new Pools.SynchronizedPool<>(TOUCH_EVENTS_POOL_SIZE);
++  private static final Pools.SynchronizedPool<RNGestureHandlerStateChangeEvent> EVENTS_POOL = new Pools.SynchronizedPool<>(
++      TOUCH_EVENTS_POOL_SIZE);
+ 
+-  public static RNGestureHandlerStateChangeEvent obtain(
+-          GestureHandler handler,
+-          int newState,
+-          int oldState,
+-          @Nullable RNGestureHandlerEventDataExtractor dataExtractor) {
++  public static RNGestureHandlerStateChangeEvent obtain(GestureHandler handler, int newState, int oldState,
++      @Nullable RNGestureHandlerEventDataExtractor dataExtractor) {
+     RNGestureHandlerStateChangeEvent event = EVENTS_POOL.acquire();
+     if (event == null) {
+       event = new RNGestureHandlerStateChangeEvent();
+@@ -37,11 +34,8 @@ public class RNGestureHandlerStateChangeEvent extends Event<RNGestureHandlerStat
+   private RNGestureHandlerStateChangeEvent() {
+   }
+ 
+-  private void init(
+-          GestureHandler handler,
+-          int newState,
+-          int oldState,
+-          @Nullable RNGestureHandlerEventDataExtractor dataExtractor) {
++  private void init(GestureHandler handler, int newState, int oldState,
++      @Nullable RNGestureHandlerEventDataExtractor dataExtractor) {
+     super.init(handler.getView().getId());
+     mExtraData = Arguments.createMap();
+     if (dataExtractor != null) {

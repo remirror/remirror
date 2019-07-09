@@ -1,0 +1,13 @@
+diff --git a/node_modules/@react-native-community/cli-platform-android/native_modules.gradle b/node_modules/@react-native-community/cli-platform-android/native_modules.gradle
+index 3f6bdea..7aa0e05 100644
+--- a/node_modules/@react-native-community/cli-platform-android/native_modules.gradle
++++ b/node_modules/@react-native-community/cli-platform-android/native_modules.gradle
+@@ -181,7 +181,7 @@ class ReactNativeModules {
+         // Check if project uses Yarn
+         def isYarnProject = Runtime.getRuntime().exec("node -e console.log(require.resolve('./yarn.lock'))", null, root)
+         isYarnProject.waitFor()
+-        command = REACT_NATIVE_CONFIG_CMD
++        command = REACT_NATIVE_CONFIG_CMD_FALLBACK
+       } catch(Exception exception) {}
+       cmdProcess = Runtime.getRuntime().exec(command, null, root)
+       cmdProcess.waitFor()
