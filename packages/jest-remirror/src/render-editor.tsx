@@ -12,6 +12,7 @@ import {
 } from '@remirror/core';
 import { InjectedRemirrorProps, Remirror, RemirrorProps } from '@remirror/react';
 import { render } from '@testing-library/react';
+import { TestEditorView } from 'jest-prosemirror';
 import { AllSelection } from 'prosemirror-state';
 import { markFactory, nodeFactory } from './builder';
 import { jsdomSelectionPatch } from './jsdom-patch';
@@ -34,7 +35,6 @@ import {
   NodeWithAttrs,
   NodeWithoutAttrs,
   Tags,
-  TestEditorView,
 } from './types';
 
 /**

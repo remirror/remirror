@@ -42,14 +42,14 @@ export const DEFAULT_MATCHER: SuggestionMatcher = {
  *
  * @param char The character to escape
  */
-const escapeChar = (char: string) => `\\${char}`;
+export const escapeChar = (char: string) => `\\${char}`;
 
 /**
  * Convert a RegExp into a string
  *
  * @param regexpOrString
  */
-const regexToString = (regexpOrString: string | RegExp) =>
+export const regexToString = (regexpOrString: string | RegExp) =>
   isRegExp(regexpOrString) ? regexpOrString.source : regexpOrString;
 
 /**
@@ -57,7 +57,7 @@ const regexToString = (regexpOrString: string | RegExp) =>
  *
  * @param onlyStartOfLine
  */
-const regexPrefix = (onlyStartOfLine: boolean) => (onlyStartOfLine ? '^' : '');
+export const getRegexPrefix = (onlyStartOfLine: boolean) => (onlyStartOfLine ? '^' : '');
 
 interface FindFromMatchersParams extends ResolvedPosParams {
   /**
@@ -75,11 +75,12 @@ export const findFromMatchers = ({
 }: FindFromMatchersParams): SuggestionStateMatch | undefined => {
   // Find the first match and break when done
   for (const matcher of matchers) {
-    const match = findMatch({ matcher, $pos });
-
-    if (match) {
-      return match;
-    }
+    try {
+      const match = findMatch({ matcher, $pos });
+      if (match) {
+        return match;
+      }
+    } catch {}
   }
 
   return undefined;
@@ -101,7 +102,7 @@ const findMatch = ({ $pos, matcher }: FindMatchParams): SuggestionStateMatch | u
 
   // Create the regular expression to match the text against
   const regexp = new RegExp(
-    `${regexPrefix(startOfLine)}${escapeChar(char)}${regexToString(supportedCharacters)}`,
+    `${getRegexPrefix(startOfLine)}${escapeChar(char)}${regexToString(supportedCharacters)}`,
     'gm',
   );
 

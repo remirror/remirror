@@ -1,5 +1,4 @@
 import { MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType } from 'prosemirror-model';
-import { Plugin as PMPlugin } from 'prosemirror-state';
 import { Decoration } from 'prosemirror-view';
 import { NodeViewPortalContainer } from '../portal-container';
 import { EditorView, InputRule, Mark, NodeView, Transaction } from './aliases';
@@ -230,7 +229,7 @@ export enum ExtensionType {
   EXTENSION = 'extension',
 }
 
-export type GetAttrs = Attrs | ((p: string[] | string) => Attrs | null | undefined);
+export type GetAttrs = Attrs | ((p: string[] | string) => Attrs | undefined);
 
 export type InputRuleCreator = (
   regexp: RegExp,
@@ -238,13 +237,6 @@ export type InputRuleCreator = (
   getAttrs?: GetAttrs,
   joinPredicate?: (p1: string[], p2: PMNode) => boolean,
 ) => InputRule;
-
-export type PluginCreator = <GType extends NodeType | MarkType>(
-  regexp: RegExp,
-  nodeType: GType,
-  getAttrs?: GetAttrs,
-  joinPredicate?: (p1: string[], p2: PMNode) => boolean,
-) => PMPlugin;
 
 export * from './aliases';
 export * from './base';

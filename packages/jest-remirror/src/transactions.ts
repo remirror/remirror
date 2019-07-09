@@ -1,5 +1,6 @@
 import { findDOMRefAtPos, PosParams, SchemaParams, TextParams } from '@remirror/core';
 import { fireEvent } from '@testing-library/react';
+import { flush } from 'jest-prosemirror';
 import { AllSelection, NodeSelection, TextSelection } from 'prosemirror-state';
 import { coerce, offsetTags } from './builder';
 import { createEvents } from './events';
@@ -50,9 +51,8 @@ export const press = ({ view, shortcut }: KeyboardShortcutParams) => {
     .forEach(({ event, dispatch }) => {
       dispatch();
 
-      if (!view.someProp('handleKeyDown', fn => fn(view, event))) {
-        view.dispatchEvent(event);
-      }
+      view.dispatchEvent(event);
+      flush(view);
     });
 };
 
@@ -107,6 +107,8 @@ export const fireEventAtPosition = ({
   if (event === 'click' && !view.someProp('handleClick', f => f(view, position, syntheticEvents[0]))) {
     syntheticEvents.forEach(syntheticEvent => view.dispatchEvent(syntheticEvent));
   }
+
+  flush(view);
 };
 
 interface ProcessTextParams extends SchemaParams {

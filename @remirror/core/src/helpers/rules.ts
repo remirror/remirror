@@ -1,8 +1,8 @@
 import { InputRule } from 'prosemirror-inputrules';
-import { Fragment, Mark, MarkType, Node as PMNode, Slice } from 'prosemirror-model';
+import { Fragment, MarkType, Node as PMNode, Slice } from 'prosemirror-model';
 import { Plugin } from 'prosemirror-state';
-import { Attrs, InputRuleCreator, PluginCreator } from '../types';
-import { Cast, findMatches, isFunction } from './base';
+import { Attrs, GetAttrs, InputRuleCreator } from '../types';
+import { findMatches, isFunction } from './base';
 
 /**
  * Creates an input rule based on the provided regex for the provided mark type
@@ -51,7 +51,7 @@ export const markInputRule = (
  *
  * @public
  */
-export const markPasteRule: PluginCreator = (regexp, type, getAttrs) => {
+export const markPasteRule = (regexp: RegExp, type: MarkType, getAttrs?: GetAttrs) => {
   const handler = (fragment: Fragment) => {
     const nodes: PMNode[] = [];
 
@@ -60,29 +60,23 @@ export const markPasteRule: PluginCreator = (regexp, type, getAttrs) => {
         const text = child.text || '';
         let pos = 0;
 
-        findMatches(text, regexp).forEach(match => {
+        // ? For some reason including the index param makes this work. I'm not sure why...?
+        findMatches(text, regexp).forEach((match, _) => {
           if (match[1]) {
             const start = match.index;
             const end = start + match[0].length;
-            const textStart = start + match[0].indexOf(match[1]);
-            const textEnd = textStart + match[1].length;
             const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
 
-            // adding text before markdown to nodes
             if (start > 0) {
               nodes.push(child.cut(pos, start));
             }
 
-            // adding the markdown part to nodes
-            nodes.push(
-              child.cut(textStart, textEnd).mark(Cast<Mark>(type.create(attrs!)).addToSet(child.marks)),
-            );
+            nodes.push(child.cut(start, end).mark(type.create(attrs).addToSet(child.marks)));
 
             pos = end;
           }
         });
 
-        // adding rest of text to nodes
         if (text && pos < text.length) {
           nodes.push(child.cut(pos));
         }

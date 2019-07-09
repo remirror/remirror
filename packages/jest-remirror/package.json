@@ -32,6 +32,7 @@
     "@types/lolex": "^3.1.1",
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-view": "^1.3.2",
+    "jest-prosemirror": "0.3.0",
     "jest-snapshot": "^24.8.0",
     "lolex": "^4.1.0",
     "prosemirror-model": "^1.7.1",

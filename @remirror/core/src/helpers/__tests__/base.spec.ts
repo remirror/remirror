@@ -34,13 +34,32 @@ import {
 } from '../base';
 
 describe('findMatches', () => {
+  const regex = /(@[0-9]+)/g;
+  const str = '@12 @34 #12';
   it('finds the correct number of matches', () => {
-    expect(findMatches('1234', /[13]/g)).toHaveLength(2);
+    const matches = findMatches(str, regex);
+    expect(matches).toHaveLength(2);
+    expect(matches[0][1]).toBe('@12');
+    expect(matches[0].index).toBe(0);
+    expect(matches[1][1]).toBe('@34');
+    expect(matches[1].index).toBe(4);
   });
 
   it('does not crash when no `g` flag added', () => {
     expect(findMatches('ababab', /a/)).toHaveLength(3);
   });
+
+  it('should be not retain regex state', () => {
+    expect(findMatches(str, regex)).toHaveLength(2);
+    expect(findMatches(str, regex)).toHaveLength(2);
+  });
+
+  // it.only('should worl', () => {
+  //   const text = 'this is some @awesome text and #should @work';
+  //   const reg = /(\@[\w\d_]+)/;
+  //   const matches = findMatches(text, reg);
+  //   expect(matches).toHaveLength(2);
+  // });
 });
 
 test('format', () => {

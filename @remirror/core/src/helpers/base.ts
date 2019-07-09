@@ -40,14 +40,20 @@ export const callIfDefined = <GFunc extends AnyFunction>(fn: GFunc | unknown, ..
 export const findMatches = (text: string, regexp: RegExp) => {
   const results: RegExpExecArray[] = [];
   const flags = regexp.flags;
+  let match: RegExpExecArray | null;
+
   if (!flags.includes('g')) {
     regexp = new RegExp(regexp.source, `g${flags}`);
   }
 
-  for (let match = regexp.exec(text); match !== null; match = regexp.exec(text)) {
-    results.push(match);
-  }
+  do {
+    match = regexp.exec(text);
+    if (match) {
+      results.push(match);
+    }
+  } while (match);
 
+  regexp.lastIndex = 0;
   return results;
 };
 

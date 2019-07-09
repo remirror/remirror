@@ -27,6 +27,11 @@ export interface BatchedKeyboardAction {
    * The event that will be dispatched.
    */
   event: KeyboardEvent;
+
+  /**
+   * The type of the event.
+   */
+  type: KeyboardEventName;
 }
 
 /**
@@ -137,11 +142,18 @@ export class Keyboard {
    * When batched is true the user can run through each event and fire as they please.
    */
   public forEach(fn: BatchedCallback) {
+    if (!this.started) {
+      return this;
+    }
+
     if (!this.batch) {
       throw new Error(`'forEach' is only available when 'batched' is set to 'true'.`);
     }
 
     this.actions.forEach(fn);
+    this.actions = [];
+    this.status = 'ended';
+    return this;
   }
 
   /**
@@ -351,7 +363,7 @@ export class Keyboard {
     };
 
     if (this.batch) {
-      this.actions.push({ dispatch, event });
+      this.actions.push({ dispatch, event, type });
     } else {
       dispatch();
     }

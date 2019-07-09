@@ -1,14 +1,17 @@
 import {
   Attrs,
+  bool,
   CommandMarkTypeParams,
   EditorState,
   getMarkRange,
+  getMatchString,
   isElementDOMNode,
   isNullOrUndefined,
   isObject,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
+  markPasteRule,
   MarkType,
   Plugin,
   RangeParams,
@@ -18,7 +21,7 @@ import {
   TransactionTransformer,
 } from '@remirror/core';
 import { MentionExtensionAttrs, MentionExtensionOptions } from './mention-types';
-import { DEFAULT_MATCHER } from './mention-utils';
+import { DEFAULT_MATCHER, escapeChar, getRegexPrefix, regexToString } from './mention-utils';
 import { createSuggestionPlugin, SuggestionState } from './suggestion-plugin';
 
 const defaultHandler = () => false;
@@ -166,8 +169,20 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     };
   }
 
-  public pasteRules() {
-    return [];
+  // this is some @awesome text and #should @work
+  public pasteRules({ type }: SchemaMarkTypeParams) {
+    return this.options.matchers.map(matcher => {
+      const { startOfLine, char, supportedCharacters } = { ...DEFAULT_MATCHER, ...matcher };
+      const regex = new RegExp(
+        `(${getRegexPrefix(startOfLine)}${escapeChar(char)}${regexToString(supportedCharacters)})`,
+        'g',
+      );
+
+      return markPasteRule(regex, type, str => ({
+        id: getMatchString(str.slice(char.length, str.length)),
+        label: getMatchString(str),
+      }));
+    });
   }
 
   public plugin(params: SchemaMarkTypeParams): Plugin<SuggestionState> {
@@ -179,11 +194,5 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
  * Check that the attributes exist and are valid for the collaboration update
  * command method.
  */
-const isValidCreateAttrs = (attrs?: Attrs): attrs is MentionExtensionAttrs => {
-  if (!attrs || !isObject(attrs) || !attrs.id || !attrs.label) {
-    // if (!attrs || !isObject(attrs) || !attrs.id || !attrs.label || !isNumber(attrs.from) || !isNumber(attrs.to) || !(isNumber(attrs.end))) {
-    return false;
-  }
-
-  return true;
-};
+const isValidCreateAttrs = (attrs?: Attrs): attrs is MentionExtensionAttrs =>
+  bool(attrs && isObject(attrs) && attrs.id && attrs.label);

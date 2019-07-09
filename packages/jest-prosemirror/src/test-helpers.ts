@@ -6,7 +6,7 @@ import { cellAround, CellSelection } from 'prosemirror-tables';
 import pm, { MarkTypeAttributes, NodeTypeAttributes, TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { DirectEditorProps, EditorView } from 'prosemirror-view';
 import { schema } from './schema';
-import { TaggedDocParams } from './types';
+import { TaggedDocParams, TestEditorView } from './types';
 
 /**
  * Table specific cell resolution
@@ -212,6 +212,10 @@ interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
 }
 
 /**
+ * Editor View for testing
+ */
+
+/**
  * Create a test Prosemirror editor
  *
  * @param taggedDoc - the tagged prosemirror node to inject into the editor.
@@ -224,7 +228,7 @@ export const createEditor = (
   const place = document.body.appendChild(document.createElement('div'));
   const state = createState(taggedDoc, [...plugins, inputRules({ rules })]);
   const sch = state.schema as typeof schema;
-  const view = new EditorView(place, { state, ...editorOptions });
+  const view = new EditorView(place, { state, ...editorOptions }) as TestEditorView;
 
   afterEach(() => {
     view.destroy();
