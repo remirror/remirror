@@ -1,8 +1,5 @@
-import React, { Component, ReactNode, Ref } from 'react';
-
 import { css, Interpolation } from '@emotion/core';
 import {
-  CallbackParams,
   CompareStateParams,
   EDITOR_CLASS_NAME,
   EditorStateParams,
@@ -50,12 +47,18 @@ import {
 } from '@remirror/react-utils';
 import { cx } from 'emotion';
 import { EditorState } from 'prosemirror-state';
+import React, { Component, ReactNode, Ref } from 'react';
 import { defaultProps } from '../constants';
 import { NodeViewPortalComponent } from '../node-views';
 import { defaultPositioner } from '../positioners';
 import { defaultStyles } from '../styles';
 
-interface UpdateStateParams extends EditorStateParams, Partial<CallbackParams> {
+interface UpdateStateParams extends EditorStateParams {
+  /**
+   * Called after the state has updated.
+   */
+  onUpdate?(): void;
+
   /**
    * Whether or not to trigger this as a change and call any handlers.
    *
@@ -130,6 +133,10 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     return this.props.manager;
   }
 
+  /**
+   * A utility for retrieving the correct css function. Returns a noop when the user has
+   * set `withoutEmotion` to true and requested emotion be removed.
+   */
   private get css(): typeof css {
     return this.props.withoutEmotion ? cssNoOp : css;
   }
@@ -141,7 +148,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     propIsFunction(props.children);
 
     // Initialize the manager and create the initial state
-    this.manager.init({ getState: this.getState, getPortals: this.getPortals });
+    this.manager.init({ getState: this.getState, portalContainer: this.portalContainer });
     this.state = this.createInitialState();
 
     // Create the ProsemirrorView and initialize our extension manager with it
@@ -150,18 +157,14 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   }
 
   public updateExtensionManager() {
-    this.manager.init({ getState: this.getState, getPortals: this.getPortals }).initView(this.view);
+    this.manager.init({ getState: this.getState, portalContainer: this.portalContainer }).initView(this.view);
   }
 
   /**
    * Retrieve the editor state. This is passed through to the extension manager.
    */
-  private getState = () => this.props.value || this.state.newState;
-
-  /**
-   * Retrieve the portal container which used for managing node views which contain react components via the portal api.
-   */
-  private getPortals = () => this.portalContainer;
+  private getState = () =>
+    this.props.onStateChange && this.props.value ? this.props.value : this.view.state;
 
   /**
    * Create the initial React state which stores copies of the Prosemirror editor state.
@@ -188,6 +191,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
         state: this.state.newState,
         nodeViews: this.manager.data.nodeViews,
         dispatchTransaction: this.dispatchTransaction,
+
         attributes: this.getAttributes,
         editable: () => {
           return this.props.editable;
@@ -346,7 +350,6 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
 
   /**
    * This sets the attributes that wrap the outer prosemirror node.
-   * It is currently used for setting the aria attributes on the content-editable prosemirror div.
    */
   private getAttributes = () => {
     const { attributes } = this.props;
@@ -372,43 +375,34 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    * @internal How does it work when transactions are dispatched one after the other.
    */
   private dispatchTransaction = (tr: Transaction) => {
-    const { state } = this.state.newState.applyTransaction(tr);
+    const state = this.getState().apply(this.props.onDispatchTransaction(tr, this.getState()));
 
-    /**
-     * A callback which is called like the callback to setState when the state has been updated.
-     */
-    const callback = () => {
-      this.manager.onTransaction({ tr, state });
-      const { dispatchTransaction } = this.props;
-      if (dispatchTransaction) {
-        dispatchTransaction(tr);
-      }
-    };
-
-    this.updateState({ state, callback });
+    this.updateState({
+      state,
+      onUpdate: () => {
+        this.manager.onTransaction({ tr, state });
+      },
+    });
   };
 
   /**
    * Updates the state either by calling onStateChange when it exists or directly setting
-   * the internal state via a `setState` call
+   * the internal state via a `setState` call.
    */
-  private updateState({ state, triggerOnChange = true, callback }: UpdateStateParams) {
+  private updateState({ state, triggerOnChange = true, onUpdate }: UpdateStateParams) {
     const { onChange, onStateChange } = this.props;
 
     /**
      * The callback passed to the setState handler.
      */
     const updateHandler = (updatedState?: EditorState) => {
-      // The view state should only be updated once the react setState call has updated the state value.
-      this.view.updateState(updatedState || state);
-
       // No need to continue if triggerOnChange is `false`
       if (!triggerOnChange) {
         return;
       }
 
-      if (callback) {
-        callback();
+      if (onUpdate) {
+        onUpdate();
       }
 
       if (onChange) {
@@ -420,12 +414,16 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     if (onStateChange) {
       // This is a controlled component
       this.controlledComponentUpdateHandler = (updatedState: EditorState) => {
+        this.view.updateState(state);
         updateHandler(updatedState);
         this.controlledComponentUpdateHandler = undefined;
       };
 
       onStateChange(this.editorStateEventListenerParams({ prevState: this.state.newState, newState: state }));
     } else {
+      // Update the internal prosemirror state. This happens before we update the component's copy of the state.
+      this.view.updateState(state);
+
       // This is not a controlled component so we need to manage firing of setState
       this.setState(({ newState }) => {
         return { prevState: newState, newState: state };

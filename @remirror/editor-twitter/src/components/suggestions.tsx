@@ -1,7 +1,8 @@
+import { MentionExtensionAttrs } from '@remirror/extension-mention';
 import { useRemirror } from '@remirror/react';
 import React, { FunctionComponent } from 'react';
-import { styled } from '../theme';
-import { TwitterAtSuggestionsProp, TwitterHashSuggestionsProp } from '../types';
+import { styled } from '../twitter-theme';
+import { TagSuggestionsProps, UserSuggestionsProps } from '../twitter-types';
 
 const SuggestionsDropdown = styled.div`
   align-items: stretch;
@@ -50,8 +51,35 @@ const AtUsername = styled.span`
   color: #657786;
 `;
 
-export const AtSuggestions: FunctionComponent<TwitterAtSuggestionsProp> = ({ submitFactory, data }) => {
-  const { view } = useRemirror();
+export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
+  getMention,
+  data,
+  setExitTriggeredInternally,
+}) => {
+  const { view, actions } = useRemirror();
+
+  /**
+   * Click handler for accepting a user suggestion
+   */
+  const onClickFactory = (username: string) => () => {
+    const params: MentionExtensionAttrs = {
+      id: username,
+      label: `@${username}`,
+      name: 'at',
+      replacementType: 'full',
+      range: getMention().range,
+      role: 'presentation',
+      href: `/${username}`,
+    };
+
+    setExitTriggeredInternally(); // Prevents further `onExit` calls
+    actions.mentionUpdate.command(params);
+
+    if (!view.hasFocus()) {
+      view.focus();
+    }
+  };
+
   return (
     <SuggestionsDropdown role='presentation'>
       {data.map(user => {
@@ -63,9 +91,7 @@ export const AtSuggestions: FunctionComponent<TwitterAtSuggestionsProp> = ({ sub
             aria-selected={user.active ? 'true' : 'false'}
             aria-haspopup='false'
             role='option'
-            onClick={submitFactory(user, () => {
-              view.focus();
-            })}
+            onClick={onClickFactory(user.username)}
           >
             <AtImage src={user.avatarUrl} />
             <AtDisplayName className='display-name'>{user.displayName}</AtDisplayName>
@@ -87,8 +113,34 @@ const HashTagText = styled.span`
   }
 `;
 
-export const TagSuggestions: FunctionComponent<TwitterHashSuggestionsProp> = ({ submitFactory, data }) => {
-  const { view } = useRemirror();
+export const TagSuggestions: FunctionComponent<TagSuggestionsProps> = ({
+  getMention,
+  data,
+  setExitTriggeredInternally,
+}) => {
+  const { view, actions } = useRemirror();
+
+  /**
+   * Click handler for accepting a tag suggestion
+   */
+  const onClickFactory = (tag: string) => () => {
+    const params: MentionExtensionAttrs = {
+      id: tag,
+      label: `#${tag}`,
+      name: 'tag',
+      replacementType: 'full',
+      range: getMention().range,
+      role: 'presentation',
+      href: `/search?query=${tag}`,
+    };
+
+    setExitTriggeredInternally(); // Prevents futher `onExit` calls
+    actions.mentionUpdate.command(params);
+
+    if (!view.hasFocus()) {
+      view.focus();
+    }
+  };
 
   return (
     <SuggestionsDropdown role='presentation'>
@@ -100,9 +152,7 @@ export const TagSuggestions: FunctionComponent<TwitterHashSuggestionsProp> = ({ 
           aria-selected={active ? 'true' : 'false'}
           aria-haspopup='false'
           role='option'
-          onClick={submitFactory({ tag }, () => {
-            view.focus();
-          })}
+          onClick={onClickFactory(tag)}
         >
           <HashTagText>#{tag}</HashTagText>
         </ItemWrapper>

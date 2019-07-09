@@ -1,7 +1,7 @@
 // tslint:disable-next-line: no-reference
 /// <reference path="./patches.d.ts" />
 
-import { EditorSchema } from '@remirror/core';
+import { EditorSchema, TextParams } from '@remirror/core';
 import { Data } from 'emoji-mart';
 import emojiRegex from 'emoji-regex/es2015/text';
 import { NodeType } from 'prosemirror-model';
@@ -31,8 +31,7 @@ export const createEmojiPlugin = ({ key, emojiData, type }: CreateEmojiPluginPar
   });
 };
 
-interface ReplaceNativeEmojiParams {
-  text: string;
+interface ReplaceNativeEmojiParams extends TextParams {
   from: number;
   to: number;
   emojiData: Data;

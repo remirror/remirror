@@ -1,8 +1,7 @@
-import React, { FC } from 'react';
-
 import { injectedPropsShape, positionerShape } from '@test-fixtures/object-shapes';
 import { createTestManager } from '@test-fixtures/schema-helpers';
 import { render } from '@testing-library/react';
+import React, { FC } from 'react';
 import { RemirrorProvider } from '../components/providers';
 import { usePositioner, useRemirror } from '../hooks';
 import { bubblePositioner } from '../positioners';

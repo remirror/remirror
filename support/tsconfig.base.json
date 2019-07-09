@@ -4,7 +4,7 @@
     "target": "esnext",
     "lib": ["esnext", "dom"],
     "jsx": "preserve",
-    "types": ["jest", "jest-extended", "jest-axe", "jest-dom/extend-expect", "jest-emotion"],
+    "types": ["jest", "jest-extended", "jest-axe", "@testing-library/jest-dom/extend-expect", "jest-emotion"],
     "moduleResolution": "node",
     "noImplicitReturns": true,
     "sourceMap": true,

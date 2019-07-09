@@ -30,16 +30,16 @@ exports.readConfigFile = () => {
 };
 
 exports.readProperty = ({ property = '', config = exports.readConfigFile() }) => {
-  let obj = config;
+  let item = config;
   if (!property || !config) return undefined;
   const keys = property.split('.');
   for (const key of keys) {
-    if (key in obj) {
-      obj = obj[key];
+    if (key in item) {
+      item = item[key];
     } else {
-      break;
+      return undefined;
     }
   }
 
-  return obj;
+  return item;
 };

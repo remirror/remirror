@@ -7,11 +7,9 @@ import {
   ResolvedPos,
   ZERO_WIDTH_SPACE_CHAR,
 } from '@remirror/core';
-import { EditorState, Plugin, PluginKey, Transaction } from 'prosemirror-state';
+import { EditorState, Plugin, Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { NODE_CURSOR_DEFAULTS } from '../constants';
-
-export const inlineCursorTargetStateKey = new PluginKey('inlineCursorTargetPlugin');
 
 export interface NodeCursorExtensionOptions extends BaseExtensionOptions {
   targets?: NodeMatch[];

@@ -1,22 +1,23 @@
-import { Deployment, prefixBrowserName, URLDescriptor } from '@test-fixtures/test-urls';
-import { outerHtml } from './helpers';
+import { getUrl, prefixBrowserName } from '@test-fixtures/test-urls';
+import { describeServer, outerHtml } from './helpers';
 
 const editorSelector = '.remirror-editor';
 
 describe('Wysiwyg Editor Snapshots', () => {
-  const url = URLDescriptor.wysiwyg[Deployment.Next][1];
+  let url: string;
   const ssrIdentifier = prefixBrowserName('wysiwyg-editor-ssr');
   const domIdentifier = prefixBrowserName('wysiwyg-editor-dom');
 
   beforeEach(async () => {
+    url = getUrl('wysiwyg', 'next');
     await jestPuppeteer.resetPage();
   });
 
-  describe('SSR', () => {
+  describeServer(['next'])('SSR', () => {
     beforeEach(async () => {
       // Set JavaScript to disabled to mimic server side rendering
       await page.setJavaScriptEnabled(false);
-      await page.goto(URLDescriptor.wysiwyg[Deployment.Next][1]);
+      await page.goto(url);
     });
 
     it('should pre render the editor', async () => {
@@ -36,7 +37,7 @@ describe('Wysiwyg Editor Snapshots', () => {
     });
   });
 
-  describe('DOM', () => {
+  describeServer(['next'])('DOM', () => {
     beforeEach(async () => {
       await page.goto(url);
     });

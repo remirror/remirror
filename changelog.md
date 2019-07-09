@@ -11,11 +11,18 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 - 🚀 `@remirror/extension-collaboration`: Collaboration library added based on the brilliant example available in [tiptap](https://github.com/scrumpy/tiptap).
 - `@remirror/core`: Add `CommandNodeTypeParams`, `CommandMarkTypeParams`, `CommandTypeParams` which is now passed to the `commands` method for extensions.
+- `@remirror/core`: Add `getActions` to the params of all extension manager methods. This will throw an error if called before and during initialization.
+- `jest-prosemirror`: Enable editorViewOptions for the `createEditor` method. For example, now it is possible to intercept transactions with the `dispatchTransaction` hook.
 
 ### Changes
 
 - 💥 **BREAKING `@remirror/core`:** Rename `getEditorState` to `getState`.
-- 💥 **BREAKING `@remirror/core`:** Rename `getPortalContainer` to `getPortals`.
+- 💥 **BREAKING `@remirror/core`:** Change method `getPortalContainer` to property `portalContainer` on the extension manager.
+- 💥 **BREAKING `@remirror/extension-mention`:** Complete rewrite of internals and public API with better tests and more robust editing.
+- 💥 **BREAKING `@remirror/extension-mention`:** Change `MentionExtension` from `NodeType` to `MarkType`. Text is now editable after a mention is created.
+- 💥 **BREAKING `@remirror/react`:** Rename `setChildAsRoot` to `childAsRoot` on `RemirrorContextProviderProps` and all it consumers. This affects the `RemirrorContextProvider`, `RemirrorProvider` and `ManagedRemirrorProvider` exports. The prop now can take a boolean or the object with props to inject into the root.
+- 💥 **BREAKING `@remirror/react`:** All RemirrorProviders now require a `children` prop. This prevents a bug when rendering in non-dom environments.
+- 💥 **BREAKING `@remirror/react`:** `dispatchTransaction` has been renamed to `onDispatchTransaction`. It now must return a `transaction` and can be used to edit the transaction that will be used to create a new state.
 
 - 🐛 `@remirror/core`: Fix bug with extension manager failing to provide attributes from the extensions.
 - 🐛 `@remirror/core`: Fix TypeScript type of SSRComponent. Change from `Component` to `ComponentType`.

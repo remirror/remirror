@@ -1,13 +1,8 @@
-import { flattenArray, FromToParams, NodeWithPosition } from '@remirror/core';
+import { flattenArray, FromToParams, NodeWithPosition, TextParams } from '@remirror/core';
 import { Decoration } from 'prosemirror-view';
 import refractor, { RefractorNode } from 'refractor/core';
 
-interface ParsedRefractorNode {
-  /**
-   * The text to be wrapped
-   */
-  text: string;
-
+interface ParsedRefractorNode extends TextParams {
   /**
    * The classes that will wrap the node
    */

@@ -27,4 +27,5 @@ const moduleResolver = [
 module.exports = {
   ...baseBabel,
   plugins: [...baseBabel.plugins, moduleResolver],
+  sourceType: 'unambiguous',
 };

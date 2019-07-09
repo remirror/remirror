@@ -1,5 +1,6 @@
-import { BaseExtensionOptions, Extension, ExtensionManager } from '@remirror/core';
+import { ExtensionManager } from '@remirror/core';
 import { PlaceholderExtension } from '@remirror/core-extensions';
+import { TestExtension } from '@test-fixtures/schema-helpers';
 import { render, RenderResult } from '@testing-library/react';
 import { EditorView } from 'prosemirror-view';
 import React, { FC } from 'react';
@@ -23,18 +24,6 @@ test('a manager is created', () => {
   );
 });
 
-class NewExtension extends Extension<{ run: boolean } & BaseExtensionOptions> {
-  get name() {
-    return 'new' as const;
-  }
-
-  get defaultOptions() {
-    return {
-      run: true,
-    };
-  }
-}
-
 describe('manager prop', () => {
   let manager!: ExtensionManager;
   let rerender: RenderResult['rerender'];
@@ -46,7 +35,7 @@ describe('manager prop', () => {
   beforeEach(() => {
     ({ rerender } = render(
       <RemirrorManager>
-        <RemirrorExtension Constructor={NewExtension} />
+        <RemirrorExtension Constructor={TestExtension} />
         <ManagedRemirrorProvider>
           <Component />
         </ManagedRemirrorProvider>
@@ -59,7 +48,7 @@ describe('manager prop', () => {
 
     rerender(
       <RemirrorManager>
-        <RemirrorExtension Constructor={NewExtension} />
+        <RemirrorExtension Constructor={TestExtension} />
         <ManagedRemirrorProvider>
           <Component />
         </ManagedRemirrorProvider>
@@ -78,7 +67,7 @@ describe('manager prop', () => {
         <ManagedRemirrorProvider>
           <Component />
         </ManagedRemirrorProvider>
-        <RemirrorExtension Constructor={NewExtension} />
+        <RemirrorExtension Constructor={TestExtension} />
         <RemirrorExtension Constructor={PlaceholderExtension} emptyNodeClass='empty' />
       </RemirrorManager>,
     );
@@ -93,14 +82,14 @@ describe('manager prop', () => {
 test('it supports <RemirrorExtension />', () => {
   const Component: FC = () => {
     const manager = useRemirrorManager();
-    expect(manager.extensions).toContainValues([expect.any(NewExtension), expect.any(PlaceholderExtension)]);
+    expect(manager.extensions).toContainValues([expect.any(TestExtension), expect.any(PlaceholderExtension)]);
     return null;
   };
 
   render(
     <RemirrorManager>
       <Component />
-      <RemirrorExtension Constructor={NewExtension} />
+      <RemirrorExtension Constructor={TestExtension} />
       <RemirrorExtension Constructor={PlaceholderExtension} emptyNodeClass='empty' />
     </RemirrorManager>,
   );
@@ -109,7 +98,7 @@ test('it supports <RemirrorExtension />', () => {
 test('it supports <RemirrorExtension /> in child fragments', () => {
   const Component: FC = () => {
     const manager = useRemirrorManager();
-    expect(manager.extensions).toContainValues([expect.any(NewExtension), expect.any(PlaceholderExtension)]);
+    expect(manager.extensions).toContainValues([expect.any(TestExtension), expect.any(PlaceholderExtension)]);
     return null;
   };
 
@@ -117,7 +106,7 @@ test('it supports <RemirrorExtension /> in child fragments', () => {
     <RemirrorManager>
       <Component />
       <>
-        <RemirrorExtension Constructor={NewExtension} />
+        <RemirrorExtension Constructor={TestExtension} />
       </>
       <RemirrorExtension Constructor={PlaceholderExtension} emptyNodeClass='empty' />
     </RemirrorManager>,

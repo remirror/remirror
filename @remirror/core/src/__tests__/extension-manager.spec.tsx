@@ -11,7 +11,7 @@ import { Attrs, EditorState, NodeExtensionSpec } from '../types';
 
 export const helpers = {
   getState: Cast(jest.fn(() => state)),
-  getPortals: Cast(jest.fn(() => portalContainer)),
+  portalContainer: new NodeViewPortalContainer(),
 };
 
 const innerMock = jest.fn();
@@ -51,10 +51,8 @@ let big: BigExtension;
 let manager: ExtensionManager;
 let state: EditorState;
 let view: EditorView;
-let portalContainer: NodeViewPortalContainer;
 
 beforeEach(() => {
-  portalContainer = new NodeViewPortalContainer();
   dummy = new DummyExtension();
   big = new BigExtension();
 

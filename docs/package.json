@@ -12,10 +12,11 @@
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.19",
-    "@fortawesome/free-solid-svg-icons": "^5.9.0",
-    "@fortawesome/react-fontawesome": "^0.1.4",
-    "@loadable/component": "^5.10.1",
+    "@babel/runtime": "^7.5.2",
+    "@fortawesome/fontawesome-svg-core": "1.2.19",
+    "@fortawesome/free-solid-svg-icons": "5.9.0",
+    "@fortawesome/react-fontawesome": "0.1.4",
+    "@loadable/component": "5.10.1",
     "@remirror/core": "0.3.0",
     "@remirror/core-extensions": "0.3.0",
     "@remirror/extension-epic-mode": "0.3.0",
@@ -24,18 +25,15 @@
     "@remirror/renderer-react": "0.3.0",
     "@remirror/showcase": "0.3.0",
     "@types/match-sorter": "2.3.0",
-    "copy-text-to-clipboard": "^2.1.0",
+    "copy-text-to-clipboard": "2.1.0",
     "emoji-mart": "2.11.1",
     "match-sorter": "3.1.1",
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "react-use": "9.7.0"
+    "react-use": "9.8.2"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.134",
-    "@types/reach__router": "1.2.4",
-    "acorn": "6.1.1",
     "docz": "1.2.0",
     "docz-core": "1.2.0",
     "docz-theme-default": "1.2.0",

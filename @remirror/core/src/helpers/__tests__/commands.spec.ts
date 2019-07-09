@@ -30,7 +30,12 @@ describe('replaceText', () => {
     const from = doc(p('Ignore'), '<cursor>');
     const to = doc(p('Ignore'), h1('Content'));
     expect(
-      replaceText({ appendText: '', type: schema.nodes.heading, content: 'Content', from: 8, to: 8 }),
+      replaceText({
+        appendText: '',
+        type: schema.nodes.heading,
+        content: 'Content',
+        range: { from: 8, to: 8 },
+      }),
     ).transformsPMNode({
       from,
       to,
@@ -39,7 +44,7 @@ describe('replaceText', () => {
 
   it('can append text', () => {
     const from = doc(p('Ignore'), '<cursor>');
-    const to = doc(p('Ignore'), p('Content'), p(' '));
+    const to = doc(p('Ignore'), p('Content '));
     expect(
       replaceText({ appendText: ' ', type: schema.nodes.paragraph, content: 'Content' }),
     ).transformsPMNode({
@@ -52,7 +57,7 @@ describe('replaceText', () => {
 test('updateMark', () => {
   const from = doc(p('Make <start>bold<end>'));
   const to = doc(p('Make ', strong('bold')));
-  expect(updateMark(schema.marks.strong)).transformsPMNode({ from, to });
+  expect(updateMark({ type: schema.marks.strong })).transformsPMNode({ from, to });
 });
 
 describe('toggleWrap', () => {

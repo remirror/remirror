@@ -2,13 +2,12 @@
  * @jest-environment node
  */
 
-import React, { Fragment } from 'react';
-import { renderToString } from 'react-dom/server';
-import { Remirror } from '..';
-
 import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { docNodeSimpleJSON } from '@test-fixtures/object-nodes';
 import { createTestManager } from '@test-fixtures/schema-helpers';
+import React, { Fragment } from 'react';
+import { renderToString } from 'react-dom/server';
+import { Remirror } from '..';
 
 const label = 'Remirror editor';
 const handlers = {

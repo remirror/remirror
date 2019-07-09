@@ -1,8 +1,7 @@
-import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
-
 import { PlainObject } from '@remirror/core';
 import { createTestManager } from '@test-fixtures/schema-helpers';
 import { render } from '@testing-library/react';
+import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 import { Remirror } from '..';
 
 const mock = jest.fn();

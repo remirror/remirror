@@ -1,10 +1,4 @@
-const { jestSupportDir, baseDir, environment } = require('./helpers');
-
-const testRegex = environment.isIntegration
-  ? '/__tests__/.*\\.test\\.tsx?$'
-  : environment.isE2E
-  ? '/__tests__/.*\\.e2e\\.tsx?$'
-  : '/__tests__/.*\\.spec\\.tsx?$';
+const { jestSupportDir, baseDir } = require('./helpers');
 
 module.exports = {
   clearMocks: true,
@@ -20,7 +14,7 @@ module.exports = {
   },
   moduleDirectories: ['node_modules'],
   testPathIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/node_modules/'],
-  testRegex,
+  testRegex: '/__tests__/.*\\.spec\\.tsx?$',
   setupFilesAfterEnv: [
     jestSupportDir('jest.framework.ts'),
     jestSupportDir('jest.framework.dom.ts'),

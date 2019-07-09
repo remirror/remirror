@@ -12,6 +12,12 @@ const {
   moduleNameMapper,
 } = config;
 
+const { PUPPETEER_SERVERS } = process.env;
+
+const __SERVERS__ = PUPPETEER_SERVERS
+  ? PUPPETEER_SERVERS.split(',')
+  : ['next', 'storybook', 'docz'];
+
 module.exports = {
   clearMocks,
   verbose,
@@ -19,6 +25,7 @@ module.exports = {
   globals: {
     ...globals,
     __E2E__: true,
+    __SERVERS__,
   },
   transform,
   rootDir: baseDir('e2e'),

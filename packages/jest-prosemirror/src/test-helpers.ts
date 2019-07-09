@@ -4,7 +4,7 @@ import { Schema } from 'prosemirror-model';
 import { AllSelection, EditorState, NodeSelection, Selection, TextSelection } from 'prosemirror-state';
 import { cellAround, CellSelection } from 'prosemirror-tables';
 import pm, { MarkTypeAttributes, NodeTypeAttributes, TaggedProsemirrorNode } from 'prosemirror-test-builder';
-import { EditorView } from 'prosemirror-view';
+import { DirectEditorProps, EditorView } from 'prosemirror-view';
 import { schema } from './schema';
 import { TaggedDocParams } from './types';
 
@@ -199,24 +199,32 @@ export const thCursor = th(p('<cursor>'));
 
 export { pm };
 
-interface CreateEditorOptions {
+interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
+  /**
+   * The plugins that the test editor should use.
+   */
   plugins?: Plugin[];
+
+  /**
+   * The input rules that the test editor should use.
+   */
   rules?: InputRule[];
 }
 
 /**
  * Create a test Prosemirror editor
  *
- * @param taggedDoc
+ * @param taggedDoc - the tagged prosemirror node to inject into the editor.
+ * @param options - the CreateEditorOptions object which includes plugins, inputRules and configuration for the view.
  */
 export const createEditor = (
   taggedDoc: TaggedProsemirrorNode,
-  { plugins = [], rules = [] }: CreateEditorOptions = {},
+  { plugins = [], rules = [], ...editorOptions }: CreateEditorOptions = {},
 ) => {
   const place = document.body.appendChild(document.createElement('div'));
   const state = createState(taggedDoc, [...plugins, inputRules({ rules })]);
   const sch = state.schema as typeof schema;
-  const view = new EditorView(place, { state });
+  const view = new EditorView(place, { state, ...editorOptions });
 
   afterEach(() => {
     view.destroy();

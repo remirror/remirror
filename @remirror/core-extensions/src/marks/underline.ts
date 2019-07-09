@@ -19,7 +19,7 @@ export class UnderlineExtension extends MarkExtension {
         },
         {
           style: 'text-decoration',
-          getAttrs: value => (value === 'underline' ? {} : false),
+          getAttrs: node => (node === 'underline' ? {} : false),
         },
       ],
       toDOM: () => ['u', 0],

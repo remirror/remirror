@@ -1,19 +1,19 @@
 import { Config } from '@jest/types';
+import { SupportedServers } from '@test-fixtures/test-urls';
 import { JestDevServerOptions, setup, teardown } from 'jest-dev-server';
 import onExit from 'signal-exit';
 
 const { teardown: teardownPuppeteer } = require('jest-environment-puppeteer');
 
 const { setup: setupPuppeteer } = require('jest-environment-puppeteer');
+
 const { PUPPETEER_SERVERS } = process.env;
 
-type Server = 'next' | 'storybook' | 'docz';
+const __SERVERS__: SupportedServers[] = PUPPETEER_SERVERS
+  ? (PUPPETEER_SERVERS.split(',') as SupportedServers[])
+  : ['next', 'storybook', 'docz'];
 
-const servers: Server[] = (PUPPETEER_SERVERS
-  ? PUPPETEER_SERVERS.split(',')
-  : ['next', 'storybook', 'docz']) as any;
-
-const serverConfig: Record<Server, JestDevServerOptions> = {
+const serverConfig: Record<SupportedServers, JestDevServerOptions> = {
   storybook: {
     command: 'yarn storybook:ci',
     port: 3002,
@@ -37,7 +37,7 @@ const serverConfig: Record<Server, JestDevServerOptions> = {
 let serverSetupPromise: Promise<void> | undefined;
 
 export async function setupServer(globalConfig: Config.GlobalConfig) {
-  await setup(servers.map(server => serverConfig[server]));
+  await setup(__SERVERS__.map(server => serverConfig[server]));
 
   onExit(() =>
     Promise.all([teardown(), teardownPuppeteer()]).then(() => {

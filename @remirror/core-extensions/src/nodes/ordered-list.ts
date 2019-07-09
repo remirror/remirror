@@ -26,8 +26,10 @@ export class OrderedListExtension extends NodeExtension {
       parseDOM: [
         {
           tag: 'ol',
-          getAttrs: dom => ({
-            order: Cast<Element>(dom).hasAttribute('start') ? +Cast<Element>(dom).getAttribute('start')! : 1,
+          getAttrs: node => ({
+            order: Cast<Element>(node).hasAttribute('start')
+              ? +Cast<Element>(node).getAttribute('start')!
+              : 1,
           }),
         },
       ],

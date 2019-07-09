@@ -14,7 +14,7 @@ test('it renders within an ssr environment', () => {
     <TwitterEditor
       userData={[]}
       tagData={[]}
-      onMentionStateChange={console.log}
+      onMentionChange={console.log}
       initialContent={docNodeBasicJSON}
       emojiData={{} as any}
     />,

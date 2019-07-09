@@ -1,7 +1,6 @@
-import { createContext } from 'react';
-
 import { ExtensionManager } from '@remirror/core';
 import { InjectedRemirrorProps } from '@remirror/react-utils';
+import { createContext } from 'react';
 
 /**
  * Creates a ReactContext for the Remirror editor

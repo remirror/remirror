@@ -1,6 +1,6 @@
 import { withTheme } from 'emotion-theming';
 import React, { FC } from 'react';
-import { TwitterEditorTheme } from '../theme';
+import { TwitterEditorTheme } from '../twitter-theme';
 
 export interface CharacterCountIndicatorProps {
   /** An object describing the total characters and characters remaining */

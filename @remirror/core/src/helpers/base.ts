@@ -354,6 +354,12 @@ const isObjectOfType = <GType>(type: TypeName) => (value: unknown): value is GTy
   getObjectType(value) === type;
 
 /**
+ * A shorthand method for creating instance of checks.
+ */
+export const isInstanceOf = <GConstructor>(Constructor: any) => (value: unknown): value is GConstructor =>
+  isObject(value) && value instanceof Constructor;
+
+/**
  * Predicate check that value is undefined
  *
  * @param value - the value to check
@@ -626,3 +632,8 @@ export const uniqueArray = <GType>(array: GType[]) => {
  */
 export const flattenArray = <GType>(array: any[]): GType[] =>
   array.reduce((a, b) => a.concat(Array.isArray(b) ? flattenArray(b) : b), []);
+
+/**
+ * Sometimes doing nothing is the best policy.
+ */
+export const noop = () => {};

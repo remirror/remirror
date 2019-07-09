@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 import {
-  ActiveTwitterTagData,
-  ActiveTwitterUserData,
-  OnQueryChangeParams,
+  ActiveTagData,
+  ActiveUserData,
+  OnMentionChangeParams,
   TwitterEditor,
-  TwitterUserData,
+  UserData,
 } from '@remirror/editor-twitter';
 import emojiData from 'emoji-mart/data/all.json';
 
@@ -26,8 +26,8 @@ const fakeTags = [
   'MCM',
 ];
 
-const userData: TwitterUserData[] = fakeUsers.results.map(
-  (user): TwitterUserData => ({
+const userData: UserData[] = fakeUsers.results.map(
+  (user): UserData => ({
     avatarUrl: user.picture.thumbnail,
     displayName: startCase(`${user.name.first} ${user.name.last}`),
     uid: user.login.uuid,
@@ -36,20 +36,20 @@ const userData: TwitterUserData[] = fakeUsers.results.map(
 );
 
 export const ExampleTwitterEditor = () => {
-  const [mention, setMention] = useState<OnQueryChangeParams>();
+  const [mention, setMention] = useState<OnMentionChangeParams>();
 
-  const onMentionStateChange = (params: OnQueryChangeParams) => {
+  const onChange = (params: OnMentionChangeParams) => {
     setMention(params);
   };
 
-  const userMatches: ActiveTwitterUserData[] =
+  const userMatches: ActiveUserData[] =
     mention && mention.name === 'at' && mention.query.length
       ? take(matchSorter(userData, mention.query, { keys: ['username', 'displayName'] }), 6).map(
           (user, index) => ({ ...user, active: index === mention.activeIndex }),
         )
       : [];
 
-  const tagMatches: ActiveTwitterTagData[] =
+  const tagMatches: ActiveTagData[] =
     mention && mention.name === 'tag' && mention.query.length
       ? take(matchSorter(fakeTags, mention.query), 6).map((tag, index) => ({
           tag,
@@ -63,7 +63,7 @@ export const ExampleTwitterEditor = () => {
       attributes={{ 'data-testid': 'editor-twitter' }}
       userData={userMatches}
       tagData={tagMatches}
-      onMentionStateChange={onMentionStateChange}
+      onMentionChange={onChange}
     />
   );
 };

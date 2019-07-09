@@ -5,6 +5,7 @@ import {
   EditorState,
   EditorView,
   findMatches,
+  FromToParams,
   getMatchString,
   LEAF_NODE_REPLACING_CHARACTER,
   Mark,
@@ -14,6 +15,7 @@ import {
   markPasteRule,
   removeMark,
   SchemaMarkTypeParams,
+  TextParams,
   Transaction,
   updateMark,
 } from '@remirror/core';
@@ -43,8 +45,8 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
       parseDOM: [
         {
           tag: 'a[href]',
-          getAttrs: dom => ({
-            href: Cast<Element>(dom).getAttribute('href'),
+          getAttrs: node => ({
+            href: Cast<Element>(node).getAttribute('href'),
           }),
         },
       ],
@@ -62,7 +64,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
   public commands({ type }: CommandMarkTypeParams) {
     return (attrs?: Attrs) => {
       if (attrs && attrs.href) {
-        return updateMark(type, attrs);
+        return updateMark({ type, attrs });
       }
 
       return removeMark({ type });
@@ -171,11 +173,8 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
   };
 }
 
-interface EnhancedLinkPluginState {
+interface EnhancedLinkPluginState extends TextParams, FromToParams {
   transform: Transaction;
-  from: number;
-  to: number;
-  text: string;
 }
 
 const extractHref = (url: string) => (url.startsWith('http') || url.startsWith('//') ? url : `http://${url}`);

@@ -11,6 +11,7 @@ import {
   ProsemirrorNode,
   Selection,
   Transaction,
+  TransactionParams,
 } from '../types';
 import { isNumber } from './base';
 import { isSelection, isTextDOMNode } from './document';
@@ -197,6 +198,17 @@ export const findPositionOfNodeBefore = (selection: Selection): number | undefin
  */
 export const selectionEmpty = (value: Selection | EditorState) =>
   isSelection(value) ? value.empty : value.selection.empty;
+
+interface TransactionChangedParams extends TransactionParams, EditorStateParams {}
+/**
+ * Check to see if a transaction has changed either the document or the current selection.
+ *
+ * @param params - the TransactionChangeParams object
+ */
+export const transactionChanged = ({ tr, state }: TransactionChangedParams) => {
+  const { from, to } = state.selection;
+  return tr.docChanged || tr.selection.from !== from || tr.selection.to !== to;
+};
 
 interface NodeActiveParams extends EditorStateParams, NodeTypeParams, Partial<AttrsParams> {}
 

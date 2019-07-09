@@ -1,3 +1,3 @@
-export * from './mention.extension';
-export * from './plugin';
-export * from './types';
+export * from './mention-extension';
+export * from './suggestion-plugin';
+export * from './mention-types';

@@ -5,9 +5,9 @@ import {
   getMarkRange,
   getMatchString,
   getSelectedWord,
+  isMarkActive,
   isTextSelection,
   KeyboardBindings,
-  markActive,
   MarkExtension,
   MarkExtensionOptions,
   MarkExtensionSpec,
@@ -50,8 +50,8 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
       parseDOM: [
         {
           tag: 'a[href]',
-          getAttrs: dom => ({
-            href: Cast<Element>(dom).getAttribute('href'),
+          getAttrs: node => ({
+            href: Cast<Element>(node).getAttribute('href'),
           }),
         },
       ],
@@ -93,14 +93,14 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
        * Returns true when the current selection has an active link present.
        */
       update: () => {
-        return markActive(getState(), type);
+        return isMarkActive({ state: getState(), type });
       },
     };
   }
 
   public commands({ type }: CommandMarkTypeParams) {
     return {
-      update: (attrs?: Attrs) => updateMark(type, attrs),
+      update: (attrs?: Attrs) => updateMark({ type, attrs }),
       remove: () => {
         return removeMark({ type, expand: true });
       },
@@ -117,7 +117,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
         return true;
       },
       remove: () => {
-        return markActive(getState(), type);
+        return isMarkActive({ state: getState(), type });
       },
     };
   }

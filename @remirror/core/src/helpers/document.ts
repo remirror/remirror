@@ -19,10 +19,12 @@ import { EMPTY_PARAGRAPH_NODE } from '../constants';
 import {
   EditorSchema,
   EditorState,
+  EditorStateParams,
   EditorViewParams,
   ElementParams,
   FixedCoordsParams,
   FromToParams,
+  MarkTypeParams,
   NodeMatch,
   ObjectNode,
   PlainObject,
@@ -36,7 +38,25 @@ import {
   Selection,
   Transaction,
 } from '../types';
-import { bool, Cast, environment, isFunction, isNumber, isObject, isString } from './base';
+import { bool, Cast, environment, isFunction, isInstanceOf, isNumber, isObject, isString } from './base';
+
+/**
+ * Check to see if the passed value is a NodeType.
+ *
+ * @param value - the value to check
+ *
+ * @public
+ */
+export const isNodeType = isInstanceOf<NodeType<EditorSchema>>(NodeType);
+
+/**
+ * Check to see if the passed value is a MarkType.
+ *
+ * @param value - the value to check
+ *
+ * @public
+ */
+export const isMarkType = isInstanceOf<MarkType<EditorSchema>>(MarkType);
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
@@ -45,8 +65,7 @@ import { bool, Cast, environment, isFunction, isNumber, isObject, isString } fro
  *
  * @public
  */
-export const isProsemirrorNode = (value: unknown): value is ProsemirrorNode =>
-  isObject(value) && value instanceof PMNode;
+export const isProsemirrorNode = isInstanceOf<ProsemirrorNode>(PMNode);
 
 /**
  * Checks to see if the passed value is a Prosemirror Editor State
@@ -55,8 +74,7 @@ export const isProsemirrorNode = (value: unknown): value is ProsemirrorNode =>
  *
  * @public
  */
-export const isEditorState = (value: unknown): value is EditorState =>
-  isObject(value) && value instanceof PMEditorState;
+export const isEditorState = isInstanceOf<EditorState>(PMEditorState);
 
 /**
  * Predicate checking whether the selection is a TextSelection
@@ -65,8 +83,7 @@ export const isEditorState = (value: unknown): value is EditorState =>
  *
  * @public
  */
-export const isTextSelection = (value: unknown): value is TextSelection<EditorSchema> =>
-  isObject(value) && value instanceof TextSelection;
+export const isTextSelection = isInstanceOf<TextSelection<EditorSchema>>(TextSelection);
 
 /**
  * Predicate checking whether the selection is a Selection
@@ -75,8 +92,9 @@ export const isTextSelection = (value: unknown): value is TextSelection<EditorSc
  *
  * @public
  */
-export const isSelection = (value: unknown): value is Selection =>
-  isObject(value) && value instanceof PMSelection;
+export const isSelection = isInstanceOf<Selection>(PMSelection);
+
+interface IsMarkActiveParams extends MarkTypeParams, EditorStateParams, Partial<FromToParams> {}
 
 /**
  * Checks that a mark is active within the selected region, or the current selection point is within a
@@ -90,10 +108,15 @@ export const isSelection = (value: unknown): value is Selection =>
  *
  * @public
  */
-export const markActive = (state: EditorState, type: MarkType) => {
-  const { from, $from, to, empty } = state.selection;
+export const isMarkActive = ({ state, type, from, to }: IsMarkActiveParams) => {
+  const { selection, doc, storedMarks } = state;
+  const { $from, empty } = selection;
   return bool(
-    empty ? type.isInSet(state.storedMarks || $from.marks()) : state.doc.rangeHasMark(from, to, type),
+    from && to
+      ? Math.max(from, to) < doc.nodeSize && doc.rangeHasMark(from, to, type)
+      : empty
+      ? type.isInSet(storedMarks || $from.marks())
+      : doc.rangeHasMark(selection.from, selection.to, type),
   );
 };
 

@@ -4,7 +4,6 @@ export interface WysiwygEditorProps
   extends Partial<
       Pick<
         RemirrorProps,
-        | 'autoFocus'
         | 'initialContent'
         | 'attributes'
         | 'editable'
@@ -13,7 +12,7 @@ export interface WysiwygEditorProps
         | 'onFocus'
         | 'onBlur'
         | 'onFirstRender'
-        | 'dispatchTransaction'
+        | 'onDispatchTransaction'
         | 'label'
         | 'editorStyles'
         | 'forceEnvironment'
