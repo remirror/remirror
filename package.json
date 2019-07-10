@@ -21,7 +21,7 @@
     "changelog": "lerna-changelog",
     "checks": "run-s ci:audit integrity lint typecheck test",
     "checks:parallel": "run-p lint typecheck test",
-    "ci": "yarn clean && yarn frozen",
+    "ci": "yarn clean && yarn",
     "ci:audit": "audit-ci --high",
     "ci:checks": "run-s ci:audit integrity lint typecheck",
     "ci:checks:all": "run-s integrity lint typecheck test build test:puppeteer",
