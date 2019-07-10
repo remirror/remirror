@@ -8,6 +8,7 @@ import {
   OptionalSuggestionMatcher,
   SuggestionCallback,
   SuggestionKeyBindingMap,
+  SuggestionKeyBindingParams,
   SuggestionStateMatch,
 } from '@remirror/extension-mention';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
@@ -19,9 +20,11 @@ import {
   ActiveTagData,
   ActiveUserData,
   MatchName,
+  MentionState,
   OnMentionChangeParams,
   TwitterEditorProps,
 } from '../twitter-types';
+import { calculateNewIndexFromArrowPress, mapToActiveIndex } from '../twitter-utils';
 import { TwitterEditorComponent } from './editor';
 import { EmojiPickerProps } from './emoji-picker';
 
@@ -68,93 +71,75 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
   private exitTriggeredInternally = false;
 
   /**
+   * Create the arrow bindings.
+   */
+  private createArrowBindings = (direction: 'up' | 'down') => ({
+    query,
+    name,
+  }: SuggestionKeyBindingParams) => {
+    const { activeIndex: prevIndex, hideSuggestions } = this.state;
+    const { onMentionChange: onMentionStateChange } = this.props;
+
+    const matches = name === 'at' ? this.users : this.tags;
+
+    if (hideSuggestions || !matches.length) {
+      return false;
+    }
+
+    // pressed up arrow
+    const activeIndex = calculateNewIndexFromArrowPress({
+      direction,
+      matchLength: matches.length,
+      prevIndex,
+    });
+
+    this.setState({ activeIndex, activeMatcher: name as MatchName });
+    onMentionStateChange({ name, query: query.full, activeIndex } as OnMentionChangeParams);
+
+    return true;
+  };
+
+  /**
    * These are the keyBindings for mentions extension. This allows for overriding
    */
   private keyBindings: SuggestionKeyBindingMap = {
     /**
      * Handle the enter key being pressed
      */
-    Enter: ({ name, command }) => {
+    Enter: ({ name, command, char }) => {
       const { activeIndex, hideSuggestions } = this.state;
 
       if (hideSuggestions) {
         return false;
       }
 
-      if (name === 'at' && this.users.length) {
-        const { username } = this.users[activeIndex];
-        this.setExitTriggeredInternally();
-        command({
-          replacementType: 'full',
-          id: username,
-          label: `@${username}`,
-          role: 'presentation',
-          href: `/${username}`,
-        });
+      const id =
+        name === 'at' && this.users.length
+          ? this.users[activeIndex].username
+          : name === 'tag' && this.tags.length
+          ? this.tags[activeIndex].tag
+          : undefined;
 
-        return true;
-      }
-
-      if (name === 'tag' && this.tags.length) {
-        const { tag } = this.tags[activeIndex];
-
-        this.setExitTriggeredInternally();
-        command({
-          replacementType: 'full',
-          id: tag,
-          label: `#${tag}`,
-          role: 'presentation',
-          href: `/search?query=${tag}`,
-        });
-
-        return true;
-      }
-
-      return false;
-    },
-
-    /**
-     * Handle the up arrow being pressed
-     */
-    ArrowUp: ({ query, name }) => {
-      const { activeIndex: prevIndex, hideSuggestions } = this.state;
-      const { onMentionChange: onMentionStateChange } = this.props;
-
-      const matches = name === 'at' ? this.users : this.tags;
-
-      if (hideSuggestions || !matches.length) {
+      // Check if a matching id exists because the user has selected something.
+      if (!id) {
         return false;
       }
 
-      // pressed up arrow
-      const activeIndex = prevIndex - 1 < 0 ? matches.length - 1 : prevIndex - 1;
-
-      this.setState({ activeIndex, activeMatcher: name as MatchName });
-      onMentionStateChange({ name, query: query.full, activeIndex } as OnMentionChangeParams);
+      this.setExitTriggeredInternally();
+      command({
+        replacementType: 'full',
+        id,
+        label: `${char}${id}`,
+        role: 'presentation',
+        href: `/${id}`,
+      });
 
       return true;
     },
 
     /**
-     * Handle the down arrow being pressed
+     * Hide the suggestions when the escape key is pressed.
      */
-    ArrowDown: ({ query, name }) => {
-      const { activeIndex: prevIndex, hideSuggestions } = this.state;
-      const { onMentionChange: onMentionStateChange } = this.props;
-      const matches = name === 'at' ? this.users : this.tags;
-
-      if (hideSuggestions || !matches.length) {
-        return false;
-      }
-
-      const activeIndex = prevIndex + 1 > matches.length - 1 ? 0 : prevIndex + 1;
-
-      this.setState({ activeIndex, activeMatcher: name as MatchName });
-      onMentionStateChange({ name, query: query.full, activeIndex } as OnMentionChangeParams);
-
-      return true;
-    },
-
     Escape: ({ name }) => {
       const matches = name === 'at' ? this.users : this.tags;
 
@@ -165,26 +150,30 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
       this.setState({ hideSuggestions: true });
       return true;
     },
+
+    /**
+     * Handle the up arrow being pressed
+     */
+    ArrowUp: this.createArrowBindings('up'),
+
+    /**
+     * Handle the down arrow being pressed
+     */
+    ArrowDown: this.createArrowBindings('down'),
   };
 
   /**
    * The list of users that match the current query
    */
   private get users(): ActiveUserData[] {
-    return this.props.userData.map((user, index) => ({
-      ...user,
-      active: index === this.state.activeIndex,
-    }));
+    return mapToActiveIndex(this.props.userData, this.state.activeIndex);
   }
 
   /**
    * The list of tags which match the current query
    */
   private get tags(): ActiveTagData[] {
-    return this.props.tagData.map((data, index) => ({
-      ...data,
-      active: index === this.state.activeIndex,
-    }));
+    return mapToActiveIndex(this.props.tagData, this.state.activeIndex);
   }
 
   /**
@@ -221,19 +210,11 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
   private onChange: SuggestionCallback = params => {
     const { query, name } = params;
 
-    if (name === 'at') {
+    if (name) {
       const props = {
-        name: 'at' as 'at',
+        name,
         query: query.full,
-      };
-      this.props.onMentionChange({ ...props, activeIndex: this.state.activeIndex });
-    }
-
-    if (name === 'tag') {
-      const props = {
-        name: 'tag' as 'tag',
-        query: query.full,
-      };
+      } as MentionState;
       this.props.onMentionChange({ ...props, activeIndex: this.state.activeIndex });
     }
 

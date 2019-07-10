@@ -1,4 +1,5 @@
-import { MentionExtensionAttrs } from '@remirror/extension-mention';
+import { Attrs, EditorView } from '@remirror/core';
+import { MentionExtensionAttrs, SuggestionStateMatch } from '@remirror/extension-mention';
 import { useRemirror } from '@remirror/react';
 import React, { FunctionComponent } from 'react';
 import { styled } from '../twitter-theme';
@@ -51,6 +52,45 @@ const AtUsername = styled.span`
   color: #657786;
 `;
 
+interface CreateOnClickMethodFactoryParams {
+  getMention: () => SuggestionStateMatch;
+  setExitTriggeredInternally: () => void;
+  view: EditorView;
+  command(attrs: Attrs): void;
+}
+
+/**
+ * This method helps create the onclick factory method used by both types of suggestions supported
+ */
+const createOnClickMethodFactory = ({
+  getMention,
+  setExitTriggeredInternally,
+  view,
+  command,
+}: CreateOnClickMethodFactoryParams) => (id: string) => () => {
+  const { char, name, range } = getMention();
+
+  const params: MentionExtensionAttrs = {
+    id,
+    label: `${char}${id}`,
+    name,
+    replacementType: 'full',
+    range,
+    role: 'presentation',
+    href: `/${id}`,
+  };
+
+  setExitTriggeredInternally(); // Prevents further `onExit` calls
+  command(params);
+
+  if (!view.hasFocus()) {
+    view.focus();
+  }
+};
+
+/**
+ * Render the suggestions for mentioning a user.
+ */
 export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
   getMention,
   data,
@@ -61,24 +101,12 @@ export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
   /**
    * Click handler for accepting a user suggestion
    */
-  const onClickFactory = (username: string) => () => {
-    const params: MentionExtensionAttrs = {
-      id: username,
-      label: `@${username}`,
-      name: 'at',
-      replacementType: 'full',
-      range: getMention().range,
-      role: 'presentation',
-      href: `/${username}`,
-    };
-
-    setExitTriggeredInternally(); // Prevents further `onExit` calls
-    actions.mentionUpdate.command(params);
-
-    if (!view.hasFocus()) {
-      view.focus();
-    }
-  };
+  const onClickFactory = createOnClickMethodFactory({
+    command: actions.mentionUpdate.command,
+    getMention,
+    setExitTriggeredInternally,
+    view,
+  });
 
   return (
     <SuggestionsDropdown role='presentation'>
@@ -113,6 +141,9 @@ const HashTagText = styled.span`
   }
 `;
 
+/**
+ * Render the suggestions for tagging.
+ */
 export const TagSuggestions: FunctionComponent<TagSuggestionsProps> = ({
   getMention,
   data,
@@ -123,24 +154,12 @@ export const TagSuggestions: FunctionComponent<TagSuggestionsProps> = ({
   /**
    * Click handler for accepting a tag suggestion
    */
-  const onClickFactory = (tag: string) => () => {
-    const params: MentionExtensionAttrs = {
-      id: tag,
-      label: `#${tag}`,
-      name: 'tag',
-      replacementType: 'full',
-      range: getMention().range,
-      role: 'presentation',
-      href: `/search?query=${tag}`,
-    };
-
-    setExitTriggeredInternally(); // Prevents futher `onExit` calls
-    actions.mentionUpdate.command(params);
-
-    if (!view.hasFocus()) {
-      view.focus();
-    }
-  };
+  const onClickFactory = createOnClickMethodFactory({
+    command: actions.mentionUpdate.command,
+    getMention,
+    setExitTriggeredInternally,
+    view,
+  });
 
   return (
     <SuggestionsDropdown role='presentation'>
