@@ -33,7 +33,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.2",
+    "@babel/runtime": "^7.5.4",
     "@emotion/core": "^10.0.14",
     "@emotion/styled": "^10.0.14",
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
