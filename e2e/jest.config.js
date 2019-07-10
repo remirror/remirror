@@ -16,7 +16,7 @@ const { PUPPETEER_SERVERS } = process.env;
 
 const __SERVERS__ = PUPPETEER_SERVERS
   ? PUPPETEER_SERVERS.split(',')
-  : ['next', 'storybook', 'docz'];
+  : ['next', 'docz', 'storybook'];
 
 module.exports = {
   clearMocks,
@@ -33,6 +33,7 @@ module.exports = {
   testRegex: '/.*\\.puppeteer\\.ts$',
   cacheDirectory,
   moduleNameMapper,
+  modulePathIgnorePatterns: ['node_modules'],
   preset: 'jest-puppeteer',
   setupFilesAfterEnv: ['expect-puppeteer', jestSupportDir('jest.framework.ts')],
   globalSetup: jestSupportDir('jest.puppeteer.setup.ts'),

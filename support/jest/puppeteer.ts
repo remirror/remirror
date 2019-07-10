@@ -4,18 +4,15 @@ import { JestDevServerOptions, setup, teardown } from 'jest-dev-server';
 import onExit from 'signal-exit';
 
 const { teardown: teardownPuppeteer } = require('jest-environment-puppeteer');
-
 const { setup: setupPuppeteer } = require('jest-environment-puppeteer');
-
-const { PUPPETEER_SERVERS } = process.env;
-
+const { PUPPETEER_SERVERS, CI } = process.env;
 const __SERVERS__: SupportedServers[] = PUPPETEER_SERVERS
   ? (PUPPETEER_SERVERS.split(',') as SupportedServers[])
-  : ['next', 'storybook', 'docz'];
+  : ['next', 'docz', 'storybook'];
 
 const serverConfig: Record<SupportedServers, JestDevServerOptions> = {
   storybook: {
-    command: 'yarn storybook:ci',
+    command: `yarn storybook:${CI ? 'ci' : 'test'}`,
     port: 3002,
     usedPortAction: 'kill',
     launchTimeout: 60000,
