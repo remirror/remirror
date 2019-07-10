@@ -326,7 +326,7 @@ export class SuggestionState {
    */
   public decorations(state: EditorState) {
     const match = this.match;
-    if (!isValidMatch(match) || this.stage === 'edit') {
+    if (!isValidMatch(match)) {
       return;
     }
 
