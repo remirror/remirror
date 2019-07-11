@@ -1,50 +1,35 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { NodeViewPortalComponentProps, NodeViewPortalContainer, PortalList, PortalMap } from '@remirror/core';
+import { NodeViewPortalContainer, PortalMap } from '@remirror/core';
 
-export interface NodeViewPortalProps {
-  children: (nodeViewPortalContainer: NodeViewPortalContainer) => JSX.Element;
-}
-
-export interface PortalRendererState {
-  portals: PortalList;
+export interface NodeViewPortalComponentProps {
+  portalContainer: NodeViewPortalContainer;
 }
 
 /**
  * The component that places all the portals into the DOM.
  */
-export class NodeViewPortalComponent extends Component<NodeViewPortalComponentProps, PortalRendererState> {
-  public state = {
-    portals: Array.from(this.props.nodeViewPortalContainer.portals.entries()),
+export const NodeViewPortalComponent = ({ portalContainer }: NodeViewPortalComponentProps) => {
+  const [state, setState] = useState(Array.from(portalContainer.portals.entries()));
+
+  /**
+   * Update the state whenever the portal is updated.
+   */
+  const onPortalChange = (portalMap: PortalMap) => {
+    setState(Array.from(portalMap.entries()));
   };
 
-  private disposeListener!: () => void;
+  useEffect(() => {
+    // Auto disposed when the component un-mounts
+    return portalContainer.on(onPortalChange);
+  }, []);
 
-  constructor(props: NodeViewPortalComponentProps) {
-    super(props);
-    props.nodeViewPortalContainer.setContext(this);
-    this.disposeListener = this.props.nodeViewPortalContainer.on(this.onPortalChange);
-  }
-
-  private onPortalChange = (portalMap: PortalMap) => {
-    const portals = Array.from(portalMap.entries());
-    this.setState({ portals });
-  };
-
-  public componentWillUnmount() {
-    this.disposeListener();
-  }
-
-  public render() {
-    const { portals } = this.state;
-
-    return (
-      <>
-        {portals.map(([container, { children, key }]) => (
-          <Fragment key={key}>{createPortal(children(), container)}</Fragment>
-        ))}
-      </>
-    );
-  }
-}
+  return (
+    <>
+      {state.map(([container, { render: renderFunction, key }]) => (
+        <Fragment key={key}>{createPortal(renderFunction(), container)}</Fragment>
+      ))}
+    </>
+  );
+};

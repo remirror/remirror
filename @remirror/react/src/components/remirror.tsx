@@ -723,7 +723,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     return (
       <>
         {this.renderReactElement()}
-        <NodeViewPortalComponent nodeViewPortalContainer={this.portalContainer} />
+        <NodeViewPortalComponent portalContainer={this.portalContainer} />
       </>
     );
   }
