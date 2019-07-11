@@ -38,10 +38,10 @@ export class ImageExtension extends NodeExtension {
       parseDOM: [
         {
           tag: 'img[src]',
-          getAttrs: dom => ({
-            src: Cast<Element>(dom).getAttribute('src'),
-            title: Cast<Element>(dom).getAttribute('title'),
-            alt: Cast<Element>(dom).getAttribute('alt'),
+          getAttrs: node => ({
+            src: Cast<Element>(node).getAttribute('src'),
+            title: Cast<Element>(node).getAttribute('title'),
+            alt: Cast<Element>(node).getAttribute('alt'),
           }),
         },
       ],

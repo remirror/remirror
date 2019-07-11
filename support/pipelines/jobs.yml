@@ -29,6 +29,9 @@ jobs:
     steps:
       - checkout: self
         lfs: true
+      - ${{ if eq(parameters.name, 'Linux') }}:
+          - bash: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+            displayName: 'Increase file watch limit for Linux only'
       - template: yarn-install.yml
       - bash: yarn build
         displayName: 'Build project'

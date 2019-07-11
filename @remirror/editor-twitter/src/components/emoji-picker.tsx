@@ -1,6 +1,6 @@
 import { Data, EmojiData, EmojiSet, NimblePicker } from 'emoji-mart';
 import React, { FC, useEffect, useRef } from 'react';
-import { styled } from '../theme';
+import { styled } from '../twitter-theme';
 
 export interface EmojiSmileyProps {
   active?: boolean;

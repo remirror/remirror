@@ -1,4 +1,4 @@
-import { EMPTY_PARAGRAPH_NODE } from '@remirror/core';
+import { EMPTY_PARAGRAPH_NODE, Transaction } from '@remirror/core';
 import { asDefaultProps, RemirrorProps } from '@remirror/react-utils';
 
 export const defaultProps = asDefaultProps<RemirrorProps>()({
@@ -11,6 +11,7 @@ export const defaultProps = asDefaultProps<RemirrorProps>()({
   editorStyles: {},
   insertPosition: 'end',
   withoutEmotion: false,
+  onDispatchTransaction: (tr: Transaction) => tr,
   stringHandler: () => {
     throw new Error(
       'No valid string handler. In order to pass in `string` as `initialContent` to the remirror editor you must provide a valid stringHandler prop',

@@ -1,7 +1,11 @@
 {
   "extends": "../tslint.json",
   "rules": {
-    "no-implicit-dependencies": [true, "dev", ["jest-remirror", "jest-prosemirror"]],
+    "no-implicit-dependencies": [
+      true,
+      "dev",
+      ["jest-remirror", "jest-prosemirror", "@test-fixtures", "@remirror"]
+    ],
     "no-namespace": false
   }
 }

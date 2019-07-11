@@ -27,7 +27,7 @@ export class StrikeExtension extends MarkExtension {
         },
         {
           style: 'text-decoration',
-          getAttrs: value => (value === 'line-through' ? {} : false),
+          getAttrs: node => (node === 'line-through' ? {} : false),
         },
       ],
       toDOM: () => ['s', 0],

@@ -30,11 +30,11 @@ import {
   isDocNode,
   isDocNodeEmpty,
   isElementDOMNode,
+  isMarkActive,
   isObjectNode,
   isProsemirrorNode,
   isTextDOMNode,
   isTextSelection,
-  markActive,
   nodeNameMatchesList,
   startPositionOfParent,
   toDOM,
@@ -44,22 +44,36 @@ import {
 describe('markActive', () => {
   it('shows active when within an active region', () => {
     const { state, schema } = createEditor(doc(p('Something', em('is <cursor>italic'), ' here')));
-    expect(markActive(state, schema.marks.em)).toBeTrue();
+    expect(isMarkActive({ state, type: schema.marks.em })).toBeTrue();
   });
 
   it('returns false when not within an active region', () => {
     const { state, schema } = createEditor(doc(p('Something<cursor>', em('is italic'), ' here')));
-    expect(markActive(state, schema.marks.em)).toBeFalse();
+    expect(isMarkActive({ state, type: schema.marks.em })).toBeFalse();
   });
 
   it('returns false with no selection', () => {
     const { state, schema } = createEditor(doc(p(' ', em('italic'))));
-    expect(markActive(state, schema.marks.em)).toBeFalse();
+    expect(isMarkActive({ state, type: schema.marks.em })).toBeFalse();
   });
 
   it('returns true when surrounding an active region', () => {
     const { state, schema } = createEditor(doc(p('Something<start>', em('is italic'), '<end> here')));
-    expect(markActive(state, schema.marks.em)).toBeTrue();
+    expect(isMarkActive({ state, type: schema.marks.em })).toBeTrue();
+  });
+
+  it('can override from and to', () => {
+    const { state, schema } = createEditor(doc(p('<start>Something<end>', em('is italic'), ' here')));
+    expect(isMarkActive({ state, type: schema.marks.em, from: 11, to: 20 })).toBeTrue();
+  });
+
+  it('is false when empty document with from and to specified', () => {
+    const { state, schema } = createEditor(doc(p('')));
+    expect(isMarkActive({ state, type: schema.marks.em, from: 11, to: 20 })).toBeFalse();
+  });
+  it('is false when from and to specified in empty node', () => {
+    const { state, schema } = createEditor(doc(p(em('is italic')), p('')));
+    expect(isMarkActive({ state, type: schema.marks.em, from: 11, to: 20 })).toBeFalse();
   });
 });
 

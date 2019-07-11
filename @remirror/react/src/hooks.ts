@@ -1,6 +1,5 @@
-import { useContext } from 'react';
-
 import { UsePositionerParams } from '@remirror/react-utils';
+import { useContext } from 'react';
 import { RemirrorContext, RemirrorManagerContext } from './contexts';
 
 /**

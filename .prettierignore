@@ -7,3 +7,5 @@ package.json
 **/package.json
 coverage/**
 **/.next
+.out
+storybook-static

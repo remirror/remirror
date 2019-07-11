@@ -3,36 +3,34 @@ import { MarkType as PMMarkType, Node as PMNode, NodeType as PMNodeType, Schema 
 import { EditorState as PMEditorState, Plugin as PMPlugin } from 'prosemirror-state';
 import { ComponentType } from 'react';
 
-/* Alias types for better readability throughout the codebase. */
-
-export type ProsemirrorNode = PMNode<EditorSchema>;
-export type ProsemirrorPlugin<GPluginState = any> = PMPlugin<GPluginState, EditorSchema>;
-export type EditorSchema<GNodes extends string = string, GMarks extends string = string> = Schema<
-  GNodes,
-  GMarks
->;
-export type MarkType = PMMarkType<EditorSchema>;
-export type NodeType = PMNodeType<EditorSchema>;
-export type EditorState<GSchema extends EditorSchema = EditorSchema> = PMEditorState<GSchema>;
+/* Utility Types */
 
 /**
- * A tuple for use with the regex constructor.
- *
- * @remarks
- *
- * Can be spread as parameters for the `RegExp` constructor
+ * Alternative to builtin `keyof` operator.
+ */
+export type Key<GRecord> = keyof GRecord;
+
+/**
+ * Extract the values of an object as a union type.
  *
  * ```ts
- * const params: RegExpTuple = ['\\/awesome', 'gi']
- * const regexp = new RegExp(...params);
+ * const myRecord = { A: 'a', B: 'b', C: 'c' } as const;
+ *
+ * type MyRecord = Value<typeof myRecord>; // 'a' | 'b' | 'c'
  * ```
  */
-export type RegexTuple = [string, string?];
+export type Value<GRecord> = GRecord[Key<GRecord>];
 
 /**
- * Utility type for matching the name of a node to via a string or function
+ * Extract the values of a tuple as a union type.
+ *
+ * ```ts
+ * const myTuple = ['a', 'b', 'c'] as const;
+ *
+ * type MyTuple = TupleValue<typeof myTuple>; // 'a' | 'b' | 'c'
+ * ```
  */
-export type NodeMatch = string | ((name: string, node: ProsemirrorNode) => boolean) | RegexTuple;
+export type TupleValue<GTuple extends readonly unknown[]> = GTuple[number];
 
 /**
  * Creates a predicate type
@@ -92,6 +90,37 @@ export type MakeReadonly<GType extends {}, GKeys extends keyof GType> = Omit<GTy
  */
 export type Literal = string | number | boolean | undefined | null | void | {};
 
+/* Alias Types */
+
+export type ProsemirrorNode = PMNode<EditorSchema>;
+export type ProsemirrorPlugin<GPluginState = any> = PMPlugin<GPluginState, EditorSchema>;
+export type EditorSchema<GNodes extends string = string, GMarks extends string = string> = Schema<
+  GNodes,
+  GMarks
+>;
+export type MarkType = PMMarkType<EditorSchema>;
+export type NodeType = PMNodeType<EditorSchema>;
+export type EditorState<GSchema extends EditorSchema = EditorSchema> = PMEditorState<GSchema>;
+
+/**
+ * A tuple for use with the regex constructor.
+ *
+ * @remarks
+ *
+ * Can be spread as parameters for the `RegExp` constructor
+ *
+ * ```ts
+ * const params: RegExpTuple = ['\\/awesome', 'gi']
+ * const regexp = new RegExp(...params);
+ * ```
+ */
+export type RegexTuple = [string, string?];
+
+/**
+ * Utility type for matching the name of a node to via a string or function
+ */
+export type NodeMatch = string | ((name: string, node: ProsemirrorNode) => boolean) | RegexTuple;
+
 /**
  * A JSON representation of a prosemirror Mark
  */
@@ -135,7 +164,7 @@ export interface Position {
 /**
  * Used for attributes which can be added to prosemirror nodes and marks.
  */
-export type Attrs = Record<string, string | number | undefined>;
+export type Attrs<GExtra extends {} = {}> = Record<string, unknown> & GExtra;
 
 export type AttrsWithClass = Attrs & { class?: string };
 
@@ -158,6 +187,7 @@ export interface BaseExtensionOptions {
 
   /**
    * Inject additional attributes into the defined mark / node schema.
+   * This can only be used for `NodeExtensions` and `MarkExtensions`.
    *
    * @default []
    */

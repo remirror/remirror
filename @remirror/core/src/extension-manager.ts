@@ -19,6 +19,8 @@ import { isMarkExtension } from './mark-extension';
 import { isNodeExtension } from './node-extension';
 import { NodeViewPortalContainer } from './portal-container';
 import {
+  ActionGetter,
+  ActionMethods,
   AttrsWithClass,
   CommandFunction,
   CommandParams,
@@ -61,12 +63,12 @@ export interface ExtensionManagerData {
  * const manager = new ExtensionManager([ new DocExtension(), new TextExtension(), new ParagraphExtension()])
  * ```
  *
- * - Initialize Getters - This connects the extension manager to its init params include a
- *   lazily evaluated getState command and getPortals. Once these are
- *   creates and allows access to its data.
+ * - Initialize Getters - This connects the extension manager to the
+ *   lazily evaluated `getState` method and the `portalContainer`. Once these are
+ *   created and allows access to its data.
  *
  * ```ts
- * manager.init({ getState: () => state, getPortals: () => portalContainer })
+ * manager.init({ getState: () => state, portalContainer: new NodeViewPortalContainer })
  *
  * manager.data.
  * ```
@@ -97,7 +99,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * Retrieve the portal container for any custom nodeViews. This is only available after
    * the first initialization.
    */
-  public getPortals!: () => NodeViewPortalContainer;
+  public portalContainer!: NodeViewPortalContainer;
 
   /**
    * The extensions stored by this manager
@@ -114,6 +116,23 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    */
   private initData: ExtensionManagerData = {} as ExtensionManagerData;
 
+  /**
+   * Retrieve the actions for a specified extension.
+   */
+  private getActions: ActionGetter = <GAttrs>(name: string) =>
+    this.initData.actions[name] as ActionMethods<GAttrs>;
+
+  /**
+   * Creates the extension manager which is used to simplify the management of the
+   * different facets of building an editor with
+   */
+  constructor(extensionMapValues: FlexibleExtension[]) {
+    this.extensions = transformExtensionMap(extensionMapValues);
+
+    // Initialize the schema immediately since this doesn't ever change.
+    this.initData.schema = this.createSchema();
+  }
+
   /** Initialization */
 
   /**
@@ -121,7 +140,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    *
    * This is called by the view layer and provides
    */
-  public init({ getState, getPortals }: ExtensionManagerInitParams) {
+  public init({ getState, portalContainer }: ExtensionManagerInitParams) {
     if (this.initialized) {
       console.warn(
         'This manager is already in use. Avoid using the same manager for more than one editor as this may cause problems.',
@@ -129,7 +148,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     }
 
     this.getState = getState;
-    this.getPortals = getPortals;
+    this.portalContainer = portalContainer;
     this.initialized = true;
 
     this.initData.styles = this.styles();
@@ -161,17 +180,6 @@ export class ExtensionManager implements ExtensionManagerInitParams {
       view,
       isEditable: () => (isFunction(view.props.editable) ? view.props.editable(this.getState()) : false),
     });
-  }
-
-  /**
-   * Creates the extension manager which is used to simplify the management of the
-   * different facets of building an editor with
-   */
-  constructor(extensionMapValues: FlexibleExtension[]) {
-    this.extensions = transformExtensionMap(extensionMapValues);
-
-    // Initialize the schema immediately since this doesn't ever change.
-    this.initData.schema = this.createSchema();
   }
 
   /* Public Get Properties */
@@ -272,7 +280,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     return {
       schema: this.initData.schema,
       getState: this.getState,
-      getPortals: this.getPortals,
+      portalContainer: this.portalContainer,
+      getActions: this.getActions,
     };
   }
 
@@ -376,7 +385,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   private checkInitialized() {
     if (!this.initialized) {
       throw new Error(
-        'Before using the extension manager it must be initialized with a getPortals and editorState',
+        'Before using the extension manager it must be initialized with a portalContainer and getState',
       );
     }
   }

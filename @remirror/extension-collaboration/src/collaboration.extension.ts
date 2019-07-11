@@ -18,7 +18,7 @@ import { CollaborationAttrs, CollaborationExtensionOptions } from './types';
 /**
  * The collaboration extension adds collaborative functionality to your editor.
  *
- * Once a central server is created the collaboration extension allos
+ * Once a central server is created the collaboration extension is good.
  */
 export class CollaborationExtension extends Extension<CollaborationExtensionOptions, never> {
   /**
@@ -71,7 +71,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
   }
 
   /**
-   * This simply returns the magical collab plugin provided by prosemirror-collab
+   * This simply returns the collab plugin provided by `prosemirror-collab`.
    */
   public plugin(): Plugin {
     const { version, clientID } = this.options;

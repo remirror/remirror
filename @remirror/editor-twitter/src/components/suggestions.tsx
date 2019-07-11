@@ -1,7 +1,9 @@
+import { Attrs, EditorView } from '@remirror/core';
+import { MentionExtensionAttrs, SuggestionStateMatch } from '@remirror/extension-mention';
 import { useRemirror } from '@remirror/react';
 import React, { FunctionComponent } from 'react';
-import { styled } from '../theme';
-import { TwitterAtSuggestionsProp, TwitterHashSuggestionsProp } from '../types';
+import { styled } from '../twitter-theme';
+import { TagSuggestionsProps, UserSuggestionsProps } from '../twitter-types';
 
 const SuggestionsDropdown = styled.div`
   align-items: stretch;
@@ -50,8 +52,62 @@ const AtUsername = styled.span`
   color: #657786;
 `;
 
-export const AtSuggestions: FunctionComponent<TwitterAtSuggestionsProp> = ({ submitFactory, data }) => {
-  const { view } = useRemirror();
+interface CreateOnClickMethodFactoryParams {
+  getMention: () => SuggestionStateMatch;
+  setExitTriggeredInternally: () => void;
+  view: EditorView;
+  command(attrs: Attrs): void;
+}
+
+/**
+ * This method helps create the onclick factory method used by both types of suggestions supported
+ */
+const createOnClickMethodFactory = ({
+  getMention,
+  setExitTriggeredInternally,
+  view,
+  command,
+}: CreateOnClickMethodFactoryParams) => (id: string) => () => {
+  const { char, name, range } = getMention();
+
+  const params: MentionExtensionAttrs = {
+    id,
+    label: `${char}${id}`,
+    name,
+    replacementType: 'full',
+    range,
+    role: 'presentation',
+    href: `/${id}`,
+  };
+
+  setExitTriggeredInternally(); // Prevents further `onExit` calls
+  command(params);
+
+  if (!view.hasFocus()) {
+    view.focus();
+  }
+};
+
+/**
+ * Render the suggestions for mentioning a user.
+ */
+export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
+  getMention,
+  data,
+  setExitTriggeredInternally,
+}) => {
+  const { view, actions } = useRemirror();
+
+  /**
+   * Click handler for accepting a user suggestion
+   */
+  const onClickFactory = createOnClickMethodFactory({
+    command: actions.mentionUpdate.command,
+    getMention,
+    setExitTriggeredInternally,
+    view,
+  });
+
   return (
     <SuggestionsDropdown role='presentation'>
       {data.map(user => {
@@ -63,9 +119,7 @@ export const AtSuggestions: FunctionComponent<TwitterAtSuggestionsProp> = ({ sub
             aria-selected={user.active ? 'true' : 'false'}
             aria-haspopup='false'
             role='option'
-            onClick={submitFactory(user, () => {
-              view.focus();
-            })}
+            onClick={onClickFactory(user.username)}
           >
             <AtImage src={user.avatarUrl} />
             <AtDisplayName className='display-name'>{user.displayName}</AtDisplayName>
@@ -87,8 +141,25 @@ const HashTagText = styled.span`
   }
 `;
 
-export const TagSuggestions: FunctionComponent<TwitterHashSuggestionsProp> = ({ submitFactory, data }) => {
-  const { view } = useRemirror();
+/**
+ * Render the suggestions for tagging.
+ */
+export const TagSuggestions: FunctionComponent<TagSuggestionsProps> = ({
+  getMention,
+  data,
+  setExitTriggeredInternally,
+}) => {
+  const { view, actions } = useRemirror();
+
+  /**
+   * Click handler for accepting a tag suggestion
+   */
+  const onClickFactory = createOnClickMethodFactory({
+    command: actions.mentionUpdate.command,
+    getMention,
+    setExitTriggeredInternally,
+    view,
+  });
 
   return (
     <SuggestionsDropdown role='presentation'>
@@ -100,9 +171,7 @@ export const TagSuggestions: FunctionComponent<TwitterHashSuggestionsProp> = ({ 
           aria-selected={active ? 'true' : 'false'}
           aria-haspopup='false'
           role='option'
-          onClick={submitFactory({ tag }, () => {
-            view.focus();
-          })}
+          onClick={onClickFactory(tag)}
         >
           <HashTagText>#{tag}</HashTagText>
         </ItemWrapper>

@@ -3,6 +3,7 @@ import {
   CommandNodeTypeParams,
   EDITOR_CLASS_NAME,
   ExtensionCommandFunction,
+  isElementDOMNode,
   NodeExtension,
   NodeExtensionSpec,
   replaceText,
@@ -59,16 +60,19 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
       parseDOM: [
         {
           tag: 'span[data-emoji-id]',
-          getAttrs: domNode => {
-            const dom = domNode as HTMLElement;
-            const skin = dom.getAttribute('data-emoji-skin');
-            const useNative = dom.getAttribute('data-emoji-use-native');
+          getAttrs: node => {
+            if (!isElementDOMNode(node)) {
+              return false;
+            }
+
+            const skin = node.getAttribute('data-emoji-skin');
+            const useNative = node.getAttribute('data-emoji-use-native');
 
             const attrs = {
-              id: dom.getAttribute('data-emoji-id') || '',
-              native: dom.getAttribute('data-emoji-native') || '',
-              name: dom.getAttribute('data-emoji-name') || '',
-              colons: dom.getAttribute('data-emoji-colons') || '',
+              id: node.getAttribute('data-emoji-id') || '',
+              native: node.getAttribute('data-emoji-native') || '',
+              name: node.getAttribute('data-emoji-name') || '',
+              colons: node.getAttribute('data-emoji-colons') || '',
               skin: skin ? Number(skin) : null,
               useNative: useNative === 'true',
             };
@@ -108,7 +112,7 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
     });
   }
 
-  public nodeView({ getPortals }: SchemaNodeTypeParams) {
+  public nodeView({ portalContainer }: SchemaNodeTypeParams) {
     const { set, size, emojiData, EmojiComponent, style } = this.options;
 
     const defaultStyle: ObjectInterpolation<undefined> = {
@@ -123,7 +127,7 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
 
     return ReactNodeView.createNodeView({
       Component: EmojiComponent,
-      getPortals,
+      portalContainer,
       props: {
         set,
         size,

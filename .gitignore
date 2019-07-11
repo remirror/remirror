@@ -135,3 +135,6 @@ secret.json
 
 .env
 *.env
+
+.out
+storybook-static

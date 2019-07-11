@@ -8,9 +8,8 @@ import { SupportCharacters, usKeyboardLayout } from './us-keyboard-layout';
  * @param type
  * @param options
  */
-export const createKeyboardEvent = (type: KeyboardEventName, options: KeyboardEventInit & PlainObject) => {
-  return new KeyboardEvent(type, options);
-};
+export const createKeyboardEvent = (type: KeyboardEventName, options: KeyboardEventInit & PlainObject) =>
+  new KeyboardEvent(type, { ...options, bubbles: true });
 
 interface GetModifierInformationParams {
   /** The modifier keys passed in */

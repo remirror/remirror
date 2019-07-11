@@ -1,7 +1,8 @@
-import { Cast, CommandFunction } from '@remirror/core';
+import { Cast, CommandFunction, isElementDOMNode, isTextDOMNode } from '@remirror/core';
 import { EditorState } from 'prosemirror-state';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { createEditor, pm, selectionFor, taggedDocHasSelection } from './test-helpers';
+import { TestEditorView } from './types';
 
 /**
  * Apply the command to the taggedDoc
@@ -34,4 +35,28 @@ export const apply = (
     return [pm.eq(newState.selection, selectionFor(result)), result || taggedDoc, newState];
   }
   return [true, Cast<TaggedProsemirrorNode>(newState.doc), newState];
+};
+
+/**
+ * Find the first text node with the provided string.
+ */
+export const findTextNode = (node: Node, text: string): Node | undefined => {
+  if (isTextDOMNode(node)) {
+    return node;
+  } else if (isElementDOMNode(node)) {
+    for (let ch = node.firstChild; ch; ch = ch.nextSibling) {
+      const found = findTextNode(ch, text);
+      if (found) {
+        return found;
+      }
+    }
+  }
+  return undefined;
+};
+
+/**
+ * Flushes the dom
+ */
+export const flush = (view: TestEditorView) => {
+  view.domObserver.flush();
 };

@@ -17,6 +17,32 @@ import {
 } from './us-keyboard-layout';
 import { cleanKey, createKeyboardEvent, getModifierInformation } from './utils';
 
+export interface BatchedKeyboardAction {
+  /**
+   * When called will dispatched the stored event.
+   */
+  dispatch: () => void;
+
+  /**
+   * The event that will be dispatched.
+   */
+  event: KeyboardEvent;
+
+  /**
+   * The type of the event.
+   */
+  type: KeyboardEventName;
+}
+
+/**
+ * The callback function signature for the `eachEvent` which is available when `batch` is true.
+ */
+export type BatchedCallback = (
+  action: BatchedKeyboardAction,
+  index: number,
+  actions: BatchedKeyboardAction[],
+) => void;
+
 export class Keyboard {
   public static create(params: KeyboardConstructorParams) {
     return new Keyboard(params);
@@ -40,7 +66,7 @@ export class Keyboard {
   private readonly isMac: boolean;
   private readonly batch: boolean;
   private readonly onEventDispatch?: (event: KeyboardEvent) => void;
-  private actions: Array<() => void> = [];
+  private actions: BatchedKeyboardAction[] = [];
   private clock?: lolex.InstalledClock<lolex.Clock>;
 
   private get started() {
@@ -113,11 +139,29 @@ export class Keyboard {
   }
 
   /**
+   * When batched is true the user can run through each event and fire as they please.
+   */
+  public forEach(fn: BatchedCallback) {
+    if (!this.started) {
+      return this;
+    }
+
+    if (!this.batch) {
+      throw new Error(`'forEach' is only available when 'batched' is set to 'true'.`);
+    }
+
+    this.actions.forEach(fn);
+    this.actions = [];
+    this.status = 'ended';
+    return this;
+  }
+
+  /**
    * Runs all the batched events.
    */
   private runBatchedEvents() {
     this.actions.forEach(action => {
-      action();
+      action.dispatch();
     });
   }
 
@@ -307,7 +351,8 @@ export class Keyboard {
       this.start();
     }
     const event = createKeyboardEvent(type, { ...this.defaultOptions, ...options });
-    const dispatcher = () => {
+
+    const dispatch = () => {
       this.target.dispatchEvent(event);
 
       if (this.onEventDispatch) {
@@ -318,9 +363,9 @@ export class Keyboard {
     };
 
     if (this.batch) {
-      this.actions.push(dispatcher);
+      this.actions.push({ dispatch, event, type });
     } else {
-      dispatcher();
+      dispatch();
     }
 
     return this;

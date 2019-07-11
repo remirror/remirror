@@ -1,9 +1,8 @@
 import { MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType } from 'prosemirror-model';
-import { Plugin as PMPlugin } from 'prosemirror-state';
 import { Decoration } from 'prosemirror-view';
 import { NodeViewPortalContainer } from '../portal-container';
 import { EditorView, InputRule, Mark, NodeView, Transaction } from './aliases';
-import { AnyFunction, Attrs, EditorSchema, EditorState, ProsemirrorNode } from './base';
+import { AnyFunction, Attrs, EditorSchema, EditorState, ProsemirrorNode, Value } from './base';
 import { EditorViewParams, SchemaParams } from './builders';
 
 /**
@@ -62,7 +61,23 @@ export type DOMOutputSpec =
 /**
  * The schema spec definition for a node extension
  */
-export interface NodeExtensionSpec extends Omit<NodeSpec, 'toDOM'> {
+export interface NodeExtensionSpec
+  extends Pick<
+    NodeSpec,
+    | 'content'
+    | 'marks'
+    | 'group'
+    | 'inline'
+    | 'atom'
+    | 'attrs'
+    | 'selectable'
+    | 'draggable'
+    | 'code'
+    | 'defining'
+    | 'isolating'
+    | 'parseDOM'
+    | 'toDebugString'
+  > {
   /**
    * Defines the default way a node of this type should be serialized
    * to DOM/HTML (as used by
@@ -78,7 +93,8 @@ export interface NodeExtensionSpec extends Omit<NodeSpec, 'toDOM'> {
 /**
  * The schema spec definition for a mark extension
  */
-export interface MarkExtensionSpec extends Omit<MarkSpec, 'toDOM'> {
+export interface MarkExtensionSpec
+  extends Pick<MarkSpec, 'attrs' | 'inclusive' | 'excludes' | 'group' | 'spanning' | 'parseDOM'> {
   /**
    * Defines the default way marks of this type should be serialized
    * to DOM/HTML.
@@ -90,17 +106,23 @@ export interface ExtensionManagerInitParams {
   /**
    * Retrieve the portal container
    */
-  getPortals: () => NodeViewPortalContainer;
+  portalContainer: NodeViewPortalContainer;
   /**
    * Retrieve the editor state via a function call
    */
   getState: () => EditorState;
 }
 
+export type ActionGetter = <GAttrs = Attrs>(name: string) => ActionMethods<GAttrs>;
 /**
  * Parameters passed into many of the extension methods.
  */
-export interface ExtensionManagerParams extends SchemaParams, ExtensionManagerInitParams {}
+export interface ExtensionManagerParams extends SchemaParams, ExtensionManagerInitParams {
+  /**
+   * A helper method to provide access to all actions for easy access to commands from within extensions
+   */
+  getActions: ActionGetter;
+}
 
 /**
  * Inject a view into the params of the views.
@@ -136,14 +158,9 @@ export type CommandTypeParams<GType> = CommandParams & InferredType<GType>;
 export type CommandNodeTypeParams = CommandTypeParams<NodeType<EditorSchema>>;
 export type CommandMarkTypeParams = CommandTypeParams<MarkType<EditorSchema>>;
 
-/* Utility Types */
-
-export type Key<GRecord> = keyof GRecord;
-export type Value<GRecord> = GRecord[Key<GRecord>];
-
 export type ElementUnion = Value<HTMLElementTagNameMap>;
 
-export interface ActionMethods {
+export interface ActionMethods<GAttrs = Attrs> {
   /**
    * Runs an action within the editor.
    *
@@ -155,7 +172,7 @@ export interface ActionMethods {
    *
    * @param attrs - certain commands require attrs to run
    */
-  command(attrs?: Attrs): void;
+  command(attrs?: GAttrs): void;
 
   /**
    * Determines whether the command is currently in an active state.
@@ -163,7 +180,7 @@ export interface ActionMethods {
    * @remarks
    * This could be used used for menu items to determine whether they should be highlighted as active or inactive.
    */
-  isActive(attrs?: Attrs): boolean;
+  isActive(attrs?: GAttrs): boolean;
 
   /**
    * Returns true when the command can be run and false when it can't be run.
@@ -172,7 +189,7 @@ export interface ActionMethods {
    * Some commands can have rules and restrictions. For example you may want to disable styling making text bold
    * when within a codeBlock. In that case isEnabled would be false when within the codeBlock and true when outside.
    */
-  isEnabled(attrs?: Attrs): boolean;
+  isEnabled(attrs?: GAttrs): boolean;
 }
 
 /**
@@ -200,6 +217,7 @@ export enum MarkGroup {
   COLOR = 'color',
   ALIGNMENT = 'alignment',
   INDENTATION = 'indentation',
+  BEHAVIOR = 'behavior',
 }
 
 /**
@@ -211,7 +229,7 @@ export enum ExtensionType {
   EXTENSION = 'extension',
 }
 
-export type GetAttrs = Attrs | ((p: string[] | string) => Attrs | null | undefined);
+export type GetAttrs = Attrs | ((p: string[] | string) => Attrs | undefined);
 
 export type InputRuleCreator = (
   regexp: RegExp,
@@ -219,13 +237,6 @@ export type InputRuleCreator = (
   getAttrs?: GetAttrs,
   joinPredicate?: (p1: string[], p2: PMNode) => boolean,
 ) => InputRule;
-
-export type PluginCreator = <GType extends NodeType | MarkType>(
-  regexp: RegExp,
-  nodeType: GType,
-  getAttrs?: GetAttrs,
-  joinPredicate?: (p1: string[], p2: PMNode) => boolean,
-) => PMPlugin;
 
 export * from './aliases';
 export * from './base';

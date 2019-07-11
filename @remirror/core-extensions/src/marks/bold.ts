@@ -1,6 +1,7 @@
 import {
-  Cast,
   CommandMarkTypeParams,
+  isElementDOMNode,
+  isString,
   MarkExtension,
   MarkExtensionSpec,
   markInputRule,
@@ -24,27 +25,22 @@ export class BoldExtension extends MarkExtension {
         // tags with a font-weight normal.
         {
           tag: 'b',
-          getAttrs(node) {
-            const element = Cast<HTMLElement>(node);
-            return element.style.fontWeight !== 'normal' && null;
-          },
+          getAttrs: node => (isElementDOMNode(node) && node.style.fontWeight !== 'normal' ? null : false),
         },
         {
           style: 'font-weight',
-          getAttrs(value) {
-            return value === 'string' && /^(bold(er)?|[5-9]\d{2,})$/.test(value) && null;
-          },
+          getAttrs: node => (isString(node) && /^(bold(er)?|[5-9]\d{2,})$/.test(node) ? null : false),
         },
       ],
       toDOM: () => ['strong', 0],
     };
   }
 
-  public keys = ({ type }: SchemaMarkTypeParams) => {
+  public keys({ type }: SchemaMarkTypeParams) {
     return {
       'Mod-b': toggleMark(type),
     };
-  };
+  }
 
   public commands({ type }: CommandMarkTypeParams) {
     return () => {

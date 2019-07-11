@@ -14,6 +14,7 @@ import {
   tdEmpty,
   tr as row,
 } from 'jest-prosemirror';
+import { TextSelection } from 'prosemirror-state';
 import { omit } from '../base';
 import {
   cloneTransaction,
@@ -26,6 +27,7 @@ import {
   removeNodeAtPos,
   removeNodeBefore,
   selectionEmpty,
+  transactionChanged,
 } from '../utils';
 
 describe('equalNodeType', () => {
@@ -200,6 +202,33 @@ describe('selectionEmpty', () => {
       state: { selection },
     } = createEditor(doc(p('inline'), p('aba')));
     expect(selectionEmpty(selection)).toBeTrue();
+  });
+});
+
+describe('transactionChanged', () => {
+  it('returns false when neither text nor state has change', () => {
+    const {
+      state: { tr },
+      view,
+    } = createEditor(doc(p('inline'), p('<start>aba<end>', 'awesome')));
+    view.dispatch(tr);
+    expect(transactionChanged({ state: view.state, tr })).toBeFalse();
+  });
+
+  it('returns true when the doc has changed', () => {
+    const {
+      state: { tr },
+      view,
+    } = createEditor(doc(p('inline'), p('<start>aba<end>', 'awesome')));
+    const newTr = tr.deleteSelection();
+    view.dispatch(newTr);
+    expect(transactionChanged({ state: view.state, tr: newTr })).toBeTrue();
+  });
+
+  it('returns true when cursor changes', () => {
+    const { state } = createEditor(doc(p('inline'), p('aba<cursor>')));
+    const newTr = state.tr.setSelection(TextSelection.atStart(state.doc));
+    expect(transactionChanged({ state, tr: newTr })).toBeTrue();
   });
 });
 

@@ -301,16 +301,56 @@ const rawEventMap = {
     Constructor: 'TransitionEvent',
     defaultProperties: { bubbles: true, cancelable: true },
   },
+  // Pointer events
+  pointerOver: {
+    Constructor: 'PointerEvent',
+    defaultProperties: { bubbles: true, cancelable: true },
+  },
+  pointerEnter: {
+    Constructor: 'PointerEvent',
+    defaultProperties: { bubbles: false, cancelable: false },
+  },
+  pointerDown: {
+    Constructor: 'PointerEvent',
+    defaultProperties: { bubbles: true, cancelable: true },
+  },
+  pointerMove: {
+    Constructor: 'PointerEvent',
+    defaultProperties: { bubbles: true, cancelable: true },
+  },
+  pointerUp: {
+    Constructor: 'PointerEvent',
+    defaultProperties: { bubbles: true, cancelable: true },
+  },
+  pointerCancel: {
+    Constructor: 'PointerEvent',
+    defaultProperties: { bubbles: true, cancelable: false },
+  },
+  pointerOut: {
+    Constructor: 'PointerEvent',
+    defaultProperties: { bubbles: true, cancelable: true },
+  },
+  pointerLeave: {
+    Constructor: 'PointerEvent',
+    defaultProperties: { bubbles: false, cancelable: false },
+  },
+  gotPointerCapture: {
+    Constructor: 'PointerEvent',
+    defaultProperties: { bubbles: false, cancelable: false },
+  },
+  lostPointerCapture: {
+    Constructor: 'PointerEvent',
+    defaultProperties: { bubbles: false, cancelable: false },
+  },
 };
 
 export type EventType = keyof typeof rawEventMap | 'doubleClick' | 'tripleClick';
-const eventMap = rawEventMap as Record<
-  EventType,
-  {
-    Constructor: string;
-    defaultProperties: { bubbles: boolean; cancelable: boolean; button?: number; charCode?: number };
-  }
->;
+interface EventProperties {
+  Constructor: string;
+  defaultProperties: { bubbles: boolean; cancelable: boolean; button?: number; charCode?: number };
+}
+type EventMap = Record<EventType, EventProperties>;
+const eventMap: EventMap = rawEventMap as EventMap;
 
 export const createEvents = <GEvent extends Event>(event: EventType, options: PlainObject): GEvent[] => {
   const { Constructor, defaultProperties } = eventMap[event];

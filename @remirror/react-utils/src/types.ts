@@ -17,7 +17,8 @@ import {
   RemirrorContentType,
   RenderEnvironment,
   StringHandlerParams,
-  Transaction,
+  TextParams,
+  TransactionTransformer,
 } from '@remirror/core';
 import { ComponentClass, ComponentType, FC, ReactElement, ReactNode, Ref } from 'react';
 
@@ -292,13 +293,12 @@ export interface RemirrorProps extends StringHandlerParams {
   children: RenderPropFunction;
 
   /**
-   * A method called when the editor is dispatching actions.
+   * A method called when the editor is dispatching the transaction.
    *
    * @remarks
-   * Use this to attach additional actions or to update outside state based on what's changed
-   * within the editor component.
+   * Use this to update the transaction which will be used to update the editor state.
    */
-  dispatchTransaction?: (tr: Transaction) => void;
+  onDispatchTransaction: TransactionTransformer;
 
   /**
    * Sets the accessibility label for the editor instance.
@@ -365,8 +365,7 @@ export interface RemirrorProps extends StringHandlerParams {
   withoutEmotion: boolean;
 }
 
-export interface PlaceholderConfig {
-  text: string;
+export interface PlaceholderConfig extends TextParams {
   className: string;
   style: ObjectInterpolation<undefined>;
 }

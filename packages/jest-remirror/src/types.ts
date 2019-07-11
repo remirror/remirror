@@ -4,7 +4,6 @@ import {
   EditorSchema,
   EditorState,
   EditorStateParams,
-  EditorView,
   Extension,
   MarkExtension,
   NodeExtension,
@@ -15,6 +14,7 @@ import {
 } from '@remirror/core';
 import { InjectedRemirrorProps } from '@remirror/react';
 import { EventType, RenderResult } from '@testing-library/react';
+import { TestEditorView } from 'jest-prosemirror';
 import { Node as PMNode } from 'prosemirror-model';
 
 export interface FireParams {
@@ -216,10 +216,6 @@ export interface CreateTestEditorExtensions<
   attrMarks: GAttrMarks;
   attrNodes: GAttrNodes;
   others: GOthers;
-}
-
-export interface TestEditorView extends EditorView {
-  dispatchEvent(event: string | CustomEvent | { type: string }): void;
 }
 
 export interface TestEditorViewParams {

@@ -2,6 +2,7 @@
   "ignoredHooks": {
     "preCommit": true,
     "prePush": true,
-    "postMerge": true
+    "postMerge": true,
+    "macPostInstall": false
   }
 }

@@ -1,5 +1,3 @@
-import React, { ProviderProps, ReactElement } from 'react';
-
 import { MakeOptional } from '@remirror/core';
 import {
   GetRootPropsConfig,
@@ -9,6 +7,7 @@ import {
   RemirrorFC,
   RemirrorProps,
 } from '@remirror/react-utils';
+import React, { ProviderProps, ReactElement } from 'react';
 import { defaultProps } from '../constants';
 import { RemirrorContext } from '../contexts';
 import { useRemirrorManager } from '../hooks';
@@ -104,7 +103,7 @@ export const RemirrorProvider: RemirrorFC<RemirrorProviderProps> = ({ children, 
 
 RemirrorProvider.$$remirrorType = RemirrorElementType.EditorProvider;
 
-export type ManagedRemirrorProviderProps = Omit<RemirrorProviderProps, 'manager'>;
+export interface ManagedRemirrorProviderProps extends Omit<RemirrorProviderProps, 'manager'> {}
 
 /**
  * Renders the content while pulling the manager from the context and passing it on to the

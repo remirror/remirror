@@ -1,2 +1,2 @@
 export * from './components/twitter.editor';
-export * from './types';
+export * from './twitter-types';

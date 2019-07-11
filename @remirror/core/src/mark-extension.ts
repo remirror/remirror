@@ -1,14 +1,14 @@
 import { MarkType } from 'prosemirror-model';
 import { Extension, isExtension } from './extension';
-import { markActive } from './helpers/document';
+import { isMarkActive } from './helpers/document';
 import {
   EditorSchema,
   ExtensionBooleanFunction,
-  ExtensionManagerParams,
   ExtensionType,
   FlexibleConfig,
   MarkExtensionOptions,
   MarkExtensionSpec,
+  SchemaMarkTypeParams,
 } from './types';
 
 /**
@@ -33,8 +33,8 @@ export abstract class MarkExtension<
 
   public abstract readonly schema: MarkExtensionSpec;
 
-  public active({ getState, schema }: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction> {
-    return () => markActive(getState(), schema.marks[this.name]);
+  public active({ getState, type }: SchemaMarkTypeParams): FlexibleConfig<ExtensionBooleanFunction> {
+    return () => isMarkActive({ state: getState(), type });
   }
 }
 

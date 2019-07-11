@@ -1,5 +1,3 @@
-import React, { Children, Component, ReactNode } from 'react';
-
 import { ExtensionManager, isString, PrioritizedExtension } from '@remirror/core';
 import { baseExtensions, PlaceholderExtension } from '@remirror/core-extensions';
 import {
@@ -8,8 +6,15 @@ import {
   isRemirrorExtension,
   RemirrorManagerProps,
 } from '@remirror/react-utils';
+import React, { Children, Component, ReactNode } from 'react';
 import { RemirrorManagerContext } from '../contexts';
 
+/**
+ * This component consumes any directly nested RemirrorExtension components and creates a
+ * manager instance which is passed into the created context for any children to consume.
+ *
+ * It allows for a more React-ish way of managing Prosemirror.
+ */
 export class RemirrorManager extends Component<RemirrorManagerProps> {
   public static defaultProps = asDefaultProps<RemirrorManagerProps>()({
     useBaseExtensions: true,

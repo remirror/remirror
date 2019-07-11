@@ -4,12 +4,9 @@
  * parameter interface.
  */
 
-import { EditorView, Transaction } from './aliases';
+import { EditorView, ResolvedPos, Selection, Transaction } from './aliases';
 import { Attrs, EditorSchema, EditorState, MarkType, NodeType, Position, ProsemirrorNode } from './base';
 
-/**
- * @internal
- */
 export interface EditorViewParams {
   /**
    * An instance of the Prosemirror editor view.
@@ -17,9 +14,6 @@ export interface EditorViewParams {
   view: EditorView;
 }
 
-/**
- * @internal
- */
 export interface SchemaParams {
   /**
    * Tbe Prosemirror schema being used for the current interface
@@ -27,9 +21,6 @@ export interface SchemaParams {
   schema: EditorSchema;
 }
 
-/**
- * @internal
- */
 export interface EditorStateParams {
   /**
    * An snapshot of the prosemirror editor state
@@ -37,9 +28,6 @@ export interface EditorStateParams {
   state: EditorState;
 }
 
-/**
- * @internal
- */
 export interface CompareStateParams {
   /**
    * The previous snapshot of the Prosemirror editor state.
@@ -51,9 +39,6 @@ export interface CompareStateParams {
   newState: EditorState;
 }
 
-/**
- * @internal
- */
 export interface ElementParams {
   /**
    * The target HTML element
@@ -61,9 +46,6 @@ export interface ElementParams {
   element: HTMLElement;
 }
 
-/**
- * @internal
- */
 export interface FromToParams {
   /** The starting point */
   from: number;
@@ -71,9 +53,6 @@ export interface FromToParams {
   to: number;
 }
 
-/**
- * @internal
- */
 export interface FixedCoordsParams {
   /**
    * Position or coordinates relative to the window.
@@ -88,9 +67,6 @@ export interface FixedCoordsParams {
   coords: Position;
 }
 
-/**
- * @internal
- */
 export interface PositionParams {
   /**
    * Defines a generic position with coordinates
@@ -98,9 +74,6 @@ export interface PositionParams {
   position: Position;
 }
 
-/**
- * @internal
- */
 export interface AttrsParams {
   /**
    * An object describing the attrs for a prosemirror mark / node
@@ -108,9 +81,6 @@ export interface AttrsParams {
   attrs: Attrs;
 }
 
-/**
- * @internal
- */
 export interface NodeTypeParams {
   /**
    * The type of node in question
@@ -118,9 +88,6 @@ export interface NodeTypeParams {
   type: NodeType;
 }
 
-/**
- * @internal
- */
 export interface MarkTypeParams {
   /**
    * The type of mark being used
@@ -128,9 +95,6 @@ export interface MarkTypeParams {
   type: MarkType;
 }
 
-/**
- * @internal
- */
 export interface PMNodeParams {
   /**
    * The prosemirror node
@@ -164,4 +128,59 @@ export interface CallbackParams {
    * A simple callback to run.
    */
   callback(): void;
+}
+
+/**
+ * Receives a transaction and returns an new transaction.
+ *
+ * Can be used to update the transaction and customise commands.
+ */
+export type TransactionTransformer = (tr: Transaction, state: EditorState) => Transaction;
+
+/**
+ * Perform transformations on the transaction before
+ */
+export interface TransformTransactionParams {
+  /**
+   * Transforms the transaction before any other actions are done to it.
+   *
+   * This is useful for updating the transaction value before a command does it's work and helps prevent multiple
+   * dispatches.
+   */
+  startTransaction?: TransactionTransformer;
+  /**
+   * Transforms the transaction before after all other actions are performed.
+   *
+   * This is called immediately before the dispatch.
+   */
+  endTransaction?: TransactionTransformer;
+}
+
+export interface RangeParams {
+  /**
+   * The from/to interface.
+   */
+  range: FromToParams;
+}
+
+export interface ResolvedPosParams {
+  /**
+   * A prosemirror resolved pos with provides helpful context methods when working with
+   * a position in the editor.
+   */
+  $pos: ResolvedPos;
+}
+
+export interface TextParams {
+  /**
+   * The text to insert or work with.
+   */
+  text: string;
+}
+
+export interface SelectionParams<GSelection extends Selection = Selection> {
+  /**
+   * The text editor selection
+   */
+  selection: GSelection;
 }

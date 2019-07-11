@@ -1,4 +1,4 @@
-import { styled } from '../theme';
+import { styled } from '../twitter-theme';
 
 /* Styled Components */
 

@@ -122,8 +122,10 @@ export abstract class Extension<
   /**
    * Allows for the addition of attributes to the defined schema.
    * This is only used in node and mark extensions.
+   *
+   * For now extraAttrs can only be optional
    */
-  protected extraAttrs() {
+  protected extraAttrs(fallback: string = '') {
     if (this.type === ExtensionType.EXTENSION) {
       throw new Error('Invalid use of extraAttrs within a plain extension.');
     }
@@ -138,7 +140,7 @@ export abstract class Extension<
       if (Array.isArray(item)) {
         attrs[item[0]] = { default: attrs[1] };
       } else {
-        attrs[item] = {};
+        attrs[item] = { default: fallback };
       }
     }
     return attrs;

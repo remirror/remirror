@@ -38,16 +38,16 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
     const message = pass
       ? () =>
           `${this.utils.matcherHint('.not.toContainRemirrorDocument')}\n\n` +
-          `Expected JSON value of document to not equal:\n  ${this.utils.printExpected(expected)}\n` +
-          `Actual JSON:\n  ${this.utils.printReceived(state)}`
+          `Expected JSON value of document to not contain:\n  ${this.utils.printExpected(expected)}\n` +
+          `Actual JSON:\n  ${this.utils.printReceived(state.doc.content.child(0))}`
       : () => {
-          const diffString = this.utils.diff(expected, state, {
+          const diffString = this.utils.diff(expected, state.doc.content.child(0), {
             expand: this.expand,
           });
           return (
             `${this.utils.matcherHint('.toContainRemirrorDocument')}\n\n` +
-            `Expected JSON value of document to equal:\n${this.utils.printExpected(expected)}\n` +
-            `Actual JSON:\n  ${this.utils.printReceived(state)}` +
+            `Expected JSON value of document to contain:\n${this.utils.printExpected(expected)}\n` +
+            `Actual JSON:\n  ${this.utils.printReceived(state.doc.content.child(0))}` +
             `${diffString ? `\n\nDifference:\n\n${diffString}` : ''}`
           );
         };
@@ -65,7 +65,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
     // That's why this magic is necessary. It simplifies writing assertions, so
     // instead of expect(doc).toEqualRemirrorDocument(doc(p())(schema)) we can just do:
     // expect(doc).toEqualRemirrorDocument(doc(p())).
-    //
+
     // Also it fixes issues that happens sometimes when actual schema and expected schema
     // are different objects, making this case impossible by always using actual schema to create expected node.
 

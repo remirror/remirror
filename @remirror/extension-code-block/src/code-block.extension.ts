@@ -59,12 +59,12 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
         {
           tag: 'pre',
           preserveWhitespace: 'full',
-          getAttrs: dom => {
-            if (!isElementDOMNode(dom)) {
+          getAttrs: node => {
+            if (!isElementDOMNode(node)) {
               return false;
             }
 
-            const codeElement = dom.querySelector('code');
+            const codeElement = node.querySelector('code');
 
             if (!isElementDOMNode(codeElement)) {
               return false;

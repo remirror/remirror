@@ -1,11 +1,34 @@
 import { lift, setBlockType, wrapIn } from 'prosemirror-commands';
-import { MarkType, NodeType } from 'prosemirror-model';
 import { liftListItem, wrapInList } from 'prosemirror-schema-list';
-import { Attrs, AttrsParams, CommandFunction, FromToParams, MarkTypeParams, NodeTypeParams } from '../types';
-import { isNumber } from './base';
-import { getMarkRange } from './document';
+import {
+  AnyFunction,
+  Attrs,
+  AttrsParams,
+  CommandFunction,
+  MarkType,
+  MarkTypeParams,
+  NodeType,
+  NodeTypeParams,
+  RangeParams,
+  TransformTransactionParams,
+} from '../types';
+import { isFunction } from './base';
+import { getMarkRange, isNodeType } from './document';
 import { nodeActive, selectionEmpty } from './utils';
 
+interface UpdateMarkParams extends Partial<RangeParams>, Partial<AttrsParams>, TransformTransactionParams {
+  /**
+   * The text to append.
+   *
+   * @default '''
+   */
+  appendText?: string;
+
+  /**
+   * The type of the
+   */
+  type: MarkType;
+}
 /**
  * Update the selection with the provided MarkType
  *
@@ -14,11 +37,24 @@ import { nodeActive, selectionEmpty } from './utils';
  *
  * @public
  */
-export const updateMark = (type: MarkType, attrs: Attrs = {}): CommandFunction => (state, dispatch) => {
-  const { from, to } = state.selection;
-  if (dispatch) {
-    dispatch(state.tr.addMark(from, to, type.create(attrs)));
+export const updateMark = ({ type, attrs = {}, appendText, range }: UpdateMarkParams): CommandFunction => (
+  state,
+  dispatch,
+) => {
+  const { selection } = state;
+  let { tr } = state;
+  const { from, to } = range || selection;
+
+  tr = tr.addMark(from, to, type.create(attrs));
+
+  if (appendText) {
+    tr.insertText(appendText);
   }
+
+  if (dispatch) {
+    dispatch(tr);
+  }
+
   return true;
 };
 
@@ -89,16 +125,40 @@ export const toggleBlockItem = ({ type, toggleType, attrs = {} }: ToggleBlockIte
   return setBlockType(type, attrs)(state, dispatch);
 };
 
-interface ReplaceTextParams extends Partial<FromToParams>, NodeTypeParams, Partial<AttrsParams> {
+interface ReplaceTextParams extends Partial<RangeParams>, Partial<AttrsParams>, TransformTransactionParams {
   /**
-   * The text to append
+   * The text to append.
+   *
+   * @default '''
    */
   appendText?: string;
   /**
    * Optional text content to include.
    */
   content?: string;
+
+  /**
+   * The type of the
+   */
+  type: NodeType | MarkType;
 }
+
+interface CallMethodParams<GFunction extends AnyFunction, GReturn extends ReturnType<GFunction>> {
+  fn: GFunction | unknown;
+  defaultReturn: GReturn;
+}
+
+/**
+ * A utility for calling option functions that may not exist
+ */
+const callMethod = <
+  GFunction extends AnyFunction,
+  GReturn extends ReturnType<GFunction>,
+  GParams extends Parameters<GFunction>
+>(
+  { fn, defaultReturn }: CallMethodParams<GFunction, GReturn>,
+  args: GParams,
+): GReturn => (isFunction(fn) ? fn(...args) : defaultReturn);
 
 /**
  * Replaces text with an optional appended string at the end
@@ -108,41 +168,54 @@ interface ReplaceTextParams extends Partial<FromToParams>, NodeTypeParams, Parti
  * @public
  */
 export const replaceText = ({
-  from,
-  to,
+  range,
   type,
   attrs = {},
   appendText = '',
   content = '',
+  startTransaction,
+  endTransaction,
 }: ReplaceTextParams): CommandFunction => (state, dispatch) => {
   const { schema, selection } = state;
-  let { tr } = state;
-  const { $from, $to } = selection;
-  const index = $from.index();
-  const start = isNumber(from) ? from : $from.pos;
-  const end = isNumber(to) ? to : $to.pos;
+  // const { $from, $to } = selection;
+  const index = selection.$from.index();
+  const { from, to } = range || selection;
 
-  if (!$from.parent.canReplaceWith(index, index, type)) {
-    return false;
+  let tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
+
+  if (isNodeType(type)) {
+    if (!selection.$from.parent.canReplaceWith(index, index, type)) {
+      return false;
+    }
+
+    tr = tr.replaceWith(from, to, type.create(attrs, content ? schema.text(content) : undefined));
+  } else {
+    if (!content) {
+      throw new Error('`replaceText` cannot be called without content when using a mark type');
+    }
+
+    tr = tr.replaceWith(from, to, schema.text(content, [type.create(attrs)]));
   }
-
-  const replacement = [type.create(attrs, content ? schema.text(content) : undefined)];
 
   /** Only append the text if when text is provided. */
   if (appendText) {
-    replacement.push(schema.text(appendText));
+    tr = tr.insertText(appendText);
   }
 
-  tr = tr.replaceWith(start, end, replacement);
-
   if (dispatch) {
+    tr = callMethod({ fn: endTransaction, defaultReturn: tr }, [tr, state]);
+    if (isChrome(60)) {
+      // A workaround for a chrome bug
+      // https://github.com/ProseMirror/prosemirror/issues/710#issuecomment-338047650
+      document.getSelection()!.empty();
+    }
     dispatch(tr);
   }
 
   return true;
 };
 
-interface RemoveMarkParams extends MarkTypeParams {
+interface RemoveMarkParams extends MarkTypeParams, Partial<RangeParams>, TransformTransactionParams {
   /**
    * Whether to expand empty selections to the current mark range
    *
@@ -152,25 +225,44 @@ interface RemoveMarkParams extends MarkTypeParams {
 }
 
 /**
- * Removes a mark from the current selection
+ * Removes a mark from the current selection or provided from to
  *
  * @param params - the destructured params
  *
  * @public
  */
-export const removeMark = ({ type, expand = false }: RemoveMarkParams): CommandFunction => (
-  state,
-  dispatch,
-) => {
-  let { from, to } = state.selection;
+export const removeMark = ({
+  type,
+  expand = false,
+  range,
+  endTransaction,
+  startTransaction,
+}: RemoveMarkParams): CommandFunction => (state, dispatch) => {
+  const { selection } = state;
+  let tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
+  let { from, to } = range || selection;
 
   if (expand && selectionEmpty(state)) {
     ({ from, to } = getMarkRange(state.selection.$anchor, type) || { from, to });
   }
 
+  tr = tr.removeMark(from, to, type);
+
   if (dispatch) {
-    dispatch(state.tr.removeMark(from, to, type));
+    tr = callMethod({ fn: endTransaction, defaultReturn: tr }, [tr, state]);
+    dispatch(tr);
   }
 
   return true;
+};
+
+/**
+ * Taken from https://stackoverflow.com/a/4900484
+ *
+ * Check that the browser is chrome. Supports passing a minimum version to check that it is a greater than or equal version.
+ */
+const isChrome = (minVersion = 0): boolean => {
+  const parsedAgent = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+
+  return parsedAgent ? parseInt(parsedAgent[2], 10) >= minVersion : false;
 };

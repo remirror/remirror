@@ -5,6 +5,9 @@ import {
   TextExtension,
   Cast,
   PrioritizedExtension,
+  Extension,
+  BaseExtensionOptions,
+  NodeViewPortalContainer,
 } from '@remirror/core';
 import {
   BoldExtension,
@@ -18,7 +21,7 @@ import minDocument from 'min-document';
 
 export const helpers = {
   getState: Cast(jest.fn()),
-  getPortals: Cast(jest.fn()),
+  portalContainer: new NodeViewPortalContainer(),
 };
 
 export const baseExtensions = [
@@ -53,3 +56,15 @@ export const initialJson = {
   type: 'doc',
   content: [{ type: 'paragraph', content: [{ type: 'text', text: 'Better docs to come soon...' }] }],
 };
+
+export class TestExtension extends Extension<{ run: boolean } & BaseExtensionOptions> {
+  get name() {
+    return 'test' as const;
+  }
+
+  get defaultOptions() {
+    return {
+      run: true,
+    };
+  }
+}

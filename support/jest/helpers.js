@@ -7,11 +7,21 @@ const environment = {
   get isUnit() {
     return !environment.isE2E && !environment.isIntegration;
   },
+
   get isIntegration() {
     return process.env.TEST_ENV === 'integration';
   },
+
   get isE2E() {
     return process.env.TEST_ENV === 'e2e';
+  },
+
+  get isCI() {
+    return Boolean(process.env.CI);
+  },
+
+  get isMacOS() {
+    return process.platform === 'darwin';
   },
 };
 

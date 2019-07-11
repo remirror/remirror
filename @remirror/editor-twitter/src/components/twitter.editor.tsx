@@ -1,40 +1,44 @@
-import React, { createRef, PureComponent } from 'react';
-
 import { Attrs, omit } from '@remirror/core';
 import { CompositionExtension, NodeCursorExtension } from '@remirror/core-extensions';
 import { EmojiExtension, EmojiExtensionOptions, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLinkExtension, EnhancedLinkExtensionOptions } from '@remirror/extension-enhanced-link';
 import {
-  ActionTaken,
   MentionExtension,
   MentionExtensionOptions,
-  MentionNodeAttrs,
-  OnKeyDownParams,
+  OptionalSuggestionMatcher,
+  SuggestionCallback,
+  SuggestionKeyBindingMap,
+  SuggestionKeyBindingParams,
+  SuggestionStateMatch,
 } from '@remirror/extension-mention';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
 import deepMerge from 'deepmerge';
 import { ThemeProvider } from 'emotion-theming';
-import keyCode from 'keycode';
-import { twitterEditorTheme, TwitterEditorTheme } from '../theme';
+import React, { createRef, PureComponent } from 'react';
+import { twitterEditorTheme, TwitterEditorTheme } from '../twitter-theme';
 import {
-  ActiveTwitterTagData,
-  ActiveTwitterUserData,
+  ActiveTagData,
+  ActiveUserData,
+  MatchName,
   MentionState,
-  SubmitFactory,
+  OnMentionChangeParams,
   TwitterEditorProps,
-  TwitterTagData,
-  TwitterUserData,
-} from '../types';
+} from '../twitter-types';
+import { calculateNewIndexFromArrowPress, mapToActiveIndex } from '../twitter-utils';
 import { TwitterEditorComponent } from './editor';
 import { EmojiPickerProps } from './emoji-picker';
 
 interface State {
-  mention?: MentionState;
+  activeMatcher: MatchName | undefined;
   activeIndex: number;
   emojiPickerActive: boolean;
+  hideSuggestions: boolean;
 }
 
-const matchers = [{ name: 'at', char: '@' }, { name: 'tag', char: '#' }];
+/**
+ * These are the matchers
+ */
+const matchers: OptionalSuggestionMatcher[] = [{ name: 'at', char: '@' }, { name: 'tag', char: '#' }];
 
 export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
   public static defaultProps = {
@@ -42,217 +46,208 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
     emojiSet: 'twitter',
   };
 
-  public readonly state: State = { activeIndex: 0, emojiPickerActive: false };
-  private exitCommandEnabled = false;
-
-  private onMentionEnter: Required<MentionExtensionOptions>['onEnter'] = ({ query, command, name }) => {
-    if (name === 'at') {
-      const params = {
-        name: 'at' as 'at',
-        action: ActionTaken.Entered,
-        query: query || '',
-      };
-      this.setMention({ ...params, submitFactory: this.atMentionSubmitFactory(command) });
-      this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
-    } else {
-      const params = {
-        name: 'tag' as 'tag',
-        action: ActionTaken.Entered,
-        query: query || '',
-      };
-      this.setMention({ ...params, submitFactory: this.tagMentionSubmitFactory(command) });
-      this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
-    }
-
-    this.setActiveIndex(0);
+  public readonly state: State = {
+    activeIndex: 0,
+    emojiPickerActive: false,
+    activeMatcher: undefined,
+    hideSuggestions: false,
   };
-
-  private onMentionChange: Required<MentionExtensionOptions>['onChange'] = ({ query, command, name }) => {
-    if (name === 'at') {
-      const params = {
-        name: 'at' as 'at',
-        action: ActionTaken.Changed,
-        query: query || '',
-      };
-      this.setMention({ ...params, submitFactory: this.atMentionSubmitFactory(command) });
-      this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
-    } else {
-      const params = {
-        name: 'tag' as 'tag',
-        action: ActionTaken.Changed,
-        query: query || '',
-      };
-      this.setMention({ ...params, submitFactory: this.tagMentionSubmitFactory(command) });
-      this.props.onMentionStateChange({ ...params, activeIndex: this.state.activeIndex });
-    }
-
-    this.setActiveIndex(0);
-  };
-
-  private onMentionExit: Required<MentionExtensionOptions>['onExit'] = ({ query, command, char }) => {
-    if (query && this.exitCommandEnabled) {
-      command({
-        id: query,
-        label: `${char}${query}`,
-        role: 'presentation',
-        href: `/${query}`,
-        appendText: '',
-      });
-    }
-    this.setMention(undefined);
-    this.props.onMentionStateChange(undefined);
-  };
-
-  get userMatches(): ActiveTwitterUserData[] {
-    return this.props.userData.map((user, index) => ({
-      ...user,
-      active: index === this.state.activeIndex,
-    }));
-  }
-
-  get tagMatches(): ActiveTwitterTagData[] {
-    return this.props.tagData.map((data, index) => ({
-      ...data,
-      active: index === this.state.activeIndex,
-    }));
-  }
 
   /**
-   * Factory for creating `at`'s via the passed in command and the curried tag function which can be called within
-   * an onClick / eventHandler function
-   *
-   * @param command
+   * The ref for the element that toggles the emoji picker display.
    */
-  private atMentionSubmitFactory(command: (attrs: MentionNodeAttrs) => void): SubmitFactory<TwitterUserData> {
-    return (user, fn) => () => {
-      this.exitCommandEnabled = false; // Prevents exit command also being called after this
-      command({
-        id: user.username,
-        label: `@${user.username}`,
-        role: 'presentation',
-        href: `/${user.username}`,
-      });
-
-      if (fn) {
-        fn();
-      }
-    };
-  }
+  private toggleEmojiRef = createRef<HTMLElement>();
 
   /**
-   * Factory for creating tags via the passed in command and the curried tag function which can be called within
-   * an onClick / eventHandler function
-   *
-   * @param command
+   * The mention information
    */
-  private tagMentionSubmitFactory(command: (attrs: MentionNodeAttrs) => void): SubmitFactory<TwitterTagData> {
-    return ({ tag }, fn) => () => {
-      this.exitCommandEnabled = false; // Prevents exit command also being called after this
+  private mention: SuggestionStateMatch | undefined;
 
-      command({
-        id: tag,
-        label: `#${tag}`,
-        role: 'presentation',
-        href: `/search?query=${tag}`,
-      });
+  /**
+   * This keeps track of when an exit was triggered by an internal command.
+   * For example when the enter key is pressed to select a suggestion this should be set to
+   * true so that the subsequent `onExit` call can be ignored.
+   */
+  private exitTriggeredInternally = false;
 
-      if (fn) {
-        fn();
-      }
-    };
-  }
+  /**
+   * Create the arrow bindings.
+   */
+  private createArrowBindings = (direction: 'up' | 'down') => ({
+    query,
+    name,
+  }: SuggestionKeyBindingParams) => {
+    const { activeIndex: prevIndex, hideSuggestions } = this.state;
+    const { onMentionChange: onMentionStateChange } = this.props;
 
-  private setActiveIndex(activeIndex: number) {
-    this.setState({ activeIndex });
-  }
+    const matches = name === 'at' ? this.users : this.tags;
 
-  private setMention(mention: MentionState | undefined) {
-    this.setState({ mention });
-  }
-
-  private onMentionKeyDown = ({ event }: OnKeyDownParams) => {
-    const enter = keyCode.isEventKey(event, 'enter');
-    const down = keyCode.isEventKey(event, 'down');
-    const up = keyCode.isEventKey(event, 'up');
-    const esc = keyCode.isEventKey(event, 'esc');
-    const del = keyCode.isEventKey(event, 'delete');
-    const backspace = keyCode.isEventKey(event, 'backspace');
-
-    const { mention, activeIndex } = this.state;
-    const { onMentionStateChange } = this.props;
-    this.exitCommandEnabled = false;
-    if (!mention) {
+    if (hideSuggestions || !matches.length) {
       return false;
     }
-
-    const { name: type, query, action } = mention;
-    const matches = type === 'at' ? this.userMatches : this.tagMatches;
 
     // pressed up arrow
-    if (up) {
-      const newIndex = activeIndex - 1 < 0 ? matches.length - 1 : activeIndex - 1;
-      this.setActiveIndex(newIndex);
-      onMentionStateChange({ name: type, query, activeIndex: newIndex, action });
-      return true;
-    }
+    const activeIndex = calculateNewIndexFromArrowPress({
+      direction,
+      matchLength: matches.length,
+      prevIndex,
+    });
 
-    // pressed down arrow
-    if (down) {
-      const newIndex = activeIndex + 1 > matches.length - 1 ? 0 : activeIndex + 1;
-      this.setActiveIndex(newIndex);
-      onMentionStateChange({ name: type, query, activeIndex: newIndex, action });
-      return true;
-    }
+    this.setState({ activeIndex, activeMatcher: name as MatchName });
+    onMentionStateChange({ name, query: query.full, activeIndex } as OnMentionChangeParams);
 
-    // pressed enter
-    if (enter) {
-      return this.handleEnterKeyPressed(mention);
-    }
-
-    if (esc) {
-      // ? Perhaps add a cancel
-    }
-
-    if (del || backspace) {
-      return false;
-    }
-
-    this.exitCommandEnabled = true;
-
-    return false;
+    return true;
   };
 
   /**
-   * Only intercept the enter key press when the number of matches has a length.
-   *
-   * @param mention
+   * These are the keyBindings for mentions extension. This allows for overriding
    */
-  private handleEnterKeyPressed(mention: MentionState) {
-    const { activeIndex } = this.state;
-    if (mention.name === 'at' && this.userMatches.length) {
-      mention.submitFactory(this.userMatches[activeIndex])();
-      return true;
-    } else if (mention.name === 'tag' && this.tagMatches.length) {
-      mention.submitFactory(this.tagMatches[activeIndex])();
-      return true;
-    }
+  private keyBindings: SuggestionKeyBindingMap = {
+    /**
+     * Handle the enter key being pressed
+     */
+    Enter: ({ name, command, char }) => {
+      const { activeIndex, hideSuggestions } = this.state;
 
-    this.exitCommandEnabled = true;
+      if (hideSuggestions) {
+        return false;
+      }
 
-    return false;
+      const id =
+        name === 'at' && this.users.length
+          ? this.users[activeIndex].username
+          : name === 'tag' && this.tags.length
+          ? this.tags[activeIndex].tag
+          : undefined;
+
+      // Check if a matching id exists because the user has selected something.
+      if (!id) {
+        return false;
+      }
+
+      this.setExitTriggeredInternally();
+      command({
+        replacementType: 'full',
+        id,
+        label: `${char}${id}`,
+        role: 'presentation',
+        href: `/${id}`,
+      });
+
+      return true;
+    },
+
+    /**
+     * Hide the suggestions when the escape key is pressed.
+     */
+    Escape: ({ name }) => {
+      const matches = name === 'at' ? this.users : this.tags;
+
+      if (!matches.length) {
+        return false;
+      }
+
+      this.setState({ hideSuggestions: true });
+      return true;
+    },
+
+    /**
+     * Handle the up arrow being pressed
+     */
+    ArrowUp: this.createArrowBindings('up'),
+
+    /**
+     * Handle the down arrow being pressed
+     */
+    ArrowDown: this.createArrowBindings('down'),
+  };
+
+  /**
+   * The list of users that match the current query
+   */
+  private get users(): ActiveUserData[] {
+    return mapToActiveIndex(this.props.userData, this.state.activeIndex);
   }
 
+  /**
+   * The list of tags which match the current query
+   */
+  private get tags(): ActiveTagData[] {
+    return mapToActiveIndex(this.props.tagData, this.state.activeIndex);
+  }
+
+  /**
+   * A simple getter for the editor theme.
+   */
   private get theme(): TwitterEditorTheme {
     return deepMerge(twitterEditorTheme, this.props.theme);
   }
 
+  /**
+   * The props which are passed down into the internal remirror editor.
+   */
   private get remirrorProps() {
-    return omit(this.props, ['userData', 'tagData', 'onMentionStateChange', 'theme']);
+    return omit(this.props, ['userData', 'tagData', 'onMentionChange', 'theme']);
   }
 
-  private onSelectEmoji = (method: (attrs: Attrs) => void): EmojiPickerProps['onSelection'] => emoji => {
+  /**
+   * Retrieves the mention property and can be passed down into child components.
+   *
+   * This is defined here and now as a part of state because we don't actually need to rerender the component
+   * when the query or suggestion state changes. We only need this in children components when clicking on the
+   * suggestion so that
+   */
+  private getMention = () => {
+    if (!this.mention) {
+      throw new Error('There is currently no mention data available');
+    }
+    return this.mention;
+  };
+
+  /**
+   * The is the callback for when a suggestion is changed.
+   */
+  private onChange: SuggestionCallback = params => {
+    const { query, name } = params;
+
+    if (name) {
+      const props = {
+        name,
+        query: query.full,
+      } as MentionState;
+      this.props.onMentionChange({ ...props, activeIndex: this.state.activeIndex });
+    }
+
+    // Reset the active index so that the dropdown is back to the top.
+    this.setState({ activeIndex: 0, activeMatcher: name as MatchName, hideSuggestions: false });
+    this.mention = params;
+  };
+
+  /**
+   * Called when the none of our configured matchers match
+   */
+  private onExit: Required<MentionExtensionOptions>['onExit'] = ({ query, command }) => {
+    // Check whether we've manually caused this exit. If not, trigger the command.
+    if (!this.exitTriggeredInternally) {
+      command({
+        role: 'presentation',
+        href: `/${query.full}`,
+        appendText: '',
+      });
+    }
+
+    this.props.onMentionChange(undefined);
+    this.setState({ activeIndex: 0, activeMatcher: undefined });
+    this.mention = undefined;
+    this.exitTriggeredInternally = false;
+  };
+
+  /**
+   * Called when an emoji is selected in order to insert the emoji at the current cursor position.
+   */
+  private onSelectEmoji = (command: (attrs: Attrs) => void): EmojiPickerProps['onSelection'] => emoji => {
     if (isBaseEmoji(emoji)) {
-      method({
+      command({
         id: emoji.id,
         name: emoji.name,
         native: emoji.native,
@@ -262,18 +257,29 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
     }
   };
 
+  /**
+   * Called when the smiley emoji is clicked ans toggles the activity status of the emoji picker.
+   */
   private onClickEmojiSmiley = () => {
     this.setState(prevState => ({ emojiPickerActive: !prevState.emojiPickerActive }));
   };
 
-  private toggleEmojiRef = createRef<HTMLElement>();
-
+  /**
+   * Called when the emoji picker loses focus so that it can hidden.
+   */
   private onBlurEmojiPicker = () => {
     this.setState({ emojiPickerActive: false });
   };
 
+  /**
+   * Identifies the next exit as one which can be ignored.
+   */
+  private setExitTriggeredInternally = () => {
+    this.exitTriggeredInternally = true;
+  };
+
   public render() {
-    const { mention, emojiPickerActive } = this.state;
+    const { emojiPickerActive, activeMatcher, hideSuggestions } = this.state;
     const { editorStyles, ...rest } = this.remirrorProps;
     return (
       <ThemeProvider theme={this.theme}>
@@ -294,11 +300,10 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
           <RemirrorExtension<MentionExtensionOptions>
             Constructor={MentionExtension}
             matchers={matchers}
-            extraAttrs={['href', 'role']}
-            onEnter={this.onMentionEnter}
-            onChange={this.onMentionChange}
-            onExit={this.onMentionExit}
-            onKeyDown={this.onMentionKeyDown}
+            extraAttrs={['href', ['role', 'presentation']]}
+            onChange={this.onChange}
+            onExit={this.onExit}
+            keyBindings={this.keyBindings}
           />
           <RemirrorExtension<EnhancedLinkExtensionOptions>
             Constructor={EnhancedLinkExtension}
@@ -311,7 +316,10 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
           />
           <ManagedRemirrorProvider editorStyles={[this.theme.editorStyles, editorStyles]} {...rest}>
             <TwitterEditorComponent
-              mention={mention}
+              hideSuggestions={hideSuggestions}
+              activeMatcher={activeMatcher}
+              setExitTriggeredInternally={this.setExitTriggeredInternally}
+              getMention={this.getMention}
               emojiPickerActive={emojiPickerActive}
               onBlurEmojiPicker={this.onBlurEmojiPicker}
               emojiData={this.props.emojiData}
@@ -319,8 +327,8 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
               ignoredElements={[this.toggleEmojiRef.current!]}
               onClickEmojiSmiley={this.onClickEmojiSmiley}
               toggleEmojiRef={this.toggleEmojiRef}
-              userMatches={this.userMatches}
-              tagMatches={this.tagMatches}
+              users={this.users}
+              tags={this.tags}
               onSelectEmoji={this.onSelectEmoji}
             />
           </ManagedRemirrorProvider>
