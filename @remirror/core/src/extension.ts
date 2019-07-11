@@ -5,13 +5,12 @@ import { Cast, isObject } from './helpers/base';
 import {
   AttrsWithClass,
   BaseExtensionOptions,
+  BooleanFlexibleConfig,
+  CommandFlexibleConfig,
   CommandTypeParams,
   EditorStateParams,
-  ExtensionBooleanFunction,
-  ExtensionCommandFunction,
   ExtensionManagerParams,
   ExtensionType,
-  FlexibleConfig,
   KeyboardBindings,
   NodeViewMethod,
   ProsemirrorPlugin,
@@ -75,6 +74,7 @@ export abstract class Extension<
   // tslint:disable-next-line: no-unused
   GCommands extends string = string
 > {
+  public readonly VERSION = '0.3.0';
   /**
    * The options of this extension
    *
@@ -226,7 +226,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * @param params - extension manager params
    */
-  active?(params: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction>;
+  active?(params: ExtensionManagerParams): BooleanFlexibleConfig;
 
   /**
    * Allows the extension to modify the default attributes for the actual editor.
@@ -270,7 +270,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * @param params - schema params with type included
    */
-  commands?(params: CommandTypeParams<GType>): FlexibleConfig<ExtensionCommandFunction>;
+  commands?(params: CommandTypeParams<GType>): CommandFlexibleConfig;
 
   /**
    * Determines whether this extension is enabled. If an object is returned then it can define different node types and
@@ -278,7 +278,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * @param params - extension manager parameters
    */
-  enabled?(params: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction>;
+  enabled?(params: ExtensionManagerParams): BooleanFlexibleConfig;
 
   /**
    * Register input rules which are activated if the regex matches as a user is typing.

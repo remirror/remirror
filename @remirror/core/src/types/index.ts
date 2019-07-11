@@ -137,6 +137,9 @@ export type FlexibleConfig<GFunc extends AnyFunction, GNames extends string = st
 export type ExtensionCommandFunction = (attrs?: Attrs) => CommandFunction;
 export type ExtensionBooleanFunction = (attrs?: Attrs) => boolean;
 
+export type BooleanFlexibleConfig = FlexibleConfig<ExtensionBooleanFunction>;
+export type CommandFlexibleConfig = FlexibleConfig<ExtensionCommandFunction>;
+
 type InferredType<GType> = GType extends {} ? { type: GType } : {};
 export type SchemaTypeParams<GType> = ExtensionManagerParams & InferredType<GType>;
 

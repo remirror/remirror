@@ -59,7 +59,7 @@ export type AnyFunction<GType = any> = (...args: any[]) => GType;
 /**
  * Matches any constructor type
  */
-export type AnyConstructor<GType = any> = new (...args: any[]) => GType;
+export type AnyConstructor<GType = unknown> = new (...args: any[]) => GType;
 
 /**
  * Makes specified keys of an interface optional while the rest stay the same.

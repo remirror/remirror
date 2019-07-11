@@ -222,7 +222,7 @@ interface NodeActiveParams extends EditorStateParams, NodeTypeParams, Partial<At
  *
  * @public
  */
-export const nodeActive = ({ state, type, attrs = {} }: NodeActiveParams) => {
+export const isNodeActive = ({ state, type, attrs = {} }: NodeActiveParams) => {
   const predicate = (node: ProsemirrorNode) => node.type === type;
   const parent = findParentNode(predicate)(state.selection);
 

@@ -5,7 +5,6 @@ import {
   BlockquoteExtension,
   BoldExtension,
   BulletListExtension,
-  CodeBlockExtension,
   CodeExtension,
   HardBreakExtension,
   HeadingExtension,
@@ -20,6 +19,7 @@ import {
   StrikeExtension,
   UnderlineExtension,
 } from '@remirror/core-extensions';
+import { CodeBlockExtension, CodeBlockExtensionOptions } from '@remirror/extension-code-block';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager, useRemirror } from '@remirror/react';
 import { asDefaultProps, RemirrorManagerProps } from '@remirror/react-utils';
 import deepMerge from 'deepmerge';
@@ -95,7 +95,7 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
           <RemirrorExtension Constructor={BulletListExtension} />
           <RemirrorExtension Constructor={OrderedListExtension} />
           <RemirrorExtension Constructor={HardBreakExtension} />
-          <RemirrorExtension Constructor={CodeBlockExtension} />
+          <RemirrorExtension<CodeBlockExtensionOptions> Constructor={CodeBlockExtension} />
           <RemirrorExtension Constructor={SSRHelperExtension} />
           <ManagedRemirrorProvider {...props}>
             <InnerEditor

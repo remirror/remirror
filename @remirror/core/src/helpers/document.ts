@@ -47,7 +47,7 @@ import { bool, Cast, environment, isFunction, isInstanceOf, isNumber, isObject, 
  *
  * @public
  */
-export const isNodeType = isInstanceOf<NodeType<EditorSchema>>(NodeType);
+export const isNodeType = isInstanceOf(NodeType);
 
 /**
  * Check to see if the passed value is a MarkType.
@@ -56,7 +56,7 @@ export const isNodeType = isInstanceOf<NodeType<EditorSchema>>(NodeType);
  *
  * @public
  */
-export const isMarkType = isInstanceOf<MarkType<EditorSchema>>(MarkType);
+export const isMarkType = isInstanceOf(MarkType);
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
@@ -65,7 +65,7 @@ export const isMarkType = isInstanceOf<MarkType<EditorSchema>>(MarkType);
  *
  * @public
  */
-export const isProsemirrorNode = isInstanceOf<ProsemirrorNode>(PMNode);
+export const isProsemirrorNode = isInstanceOf(PMNode);
 
 /**
  * Checks to see if the passed value is a Prosemirror Editor State
@@ -74,7 +74,7 @@ export const isProsemirrorNode = isInstanceOf<ProsemirrorNode>(PMNode);
  *
  * @public
  */
-export const isEditorState = isInstanceOf<EditorState>(PMEditorState);
+export const isEditorState = isInstanceOf(PMEditorState);
 
 /**
  * Predicate checking whether the selection is a TextSelection
@@ -83,7 +83,7 @@ export const isEditorState = isInstanceOf<EditorState>(PMEditorState);
  *
  * @public
  */
-export const isTextSelection = isInstanceOf<TextSelection<EditorSchema>>(TextSelection);
+export const isTextSelection = isInstanceOf(TextSelection);
 
 /**
  * Predicate checking whether the selection is a Selection
@@ -92,7 +92,7 @@ export const isTextSelection = isInstanceOf<TextSelection<EditorSchema>>(TextSel
  *
  * @public
  */
-export const isSelection = isInstanceOf<Selection>(PMSelection);
+export const isSelection = isInstanceOf(PMSelection);
 
 interface IsMarkActiveParams extends MarkTypeParams, EditorStateParams, Partial<FromToParams> {}
 

@@ -12,7 +12,7 @@ import {
   TransactionParams,
 } from '@remirror/core';
 import { DecorationSet } from 'prosemirror-view';
-import { createDecorations } from './utils';
+import { createDecorations } from './code-block-utils';
 
 export class CodeBlockState {
   /**
@@ -62,10 +62,12 @@ export class CodeBlockState {
    */
   public apply({ tr, prevState, newState }: ApplyParams) {
     if (!tr.docChanged) {
+      console.log('nothing changed');
       return this;
     }
 
     if (!this.updateBlocks({ state: newState, tr })) {
+      console.log('nothing to change');
       return this;
     }
 
@@ -106,6 +108,7 @@ interface RefreshDecorationSetParams extends PMNodeParams {
    */
   blocks: NodeWithPosition[];
 }
+
 interface ManageDecorationSetParams extends TransactionParams {
   previous: NodeInformation;
   current: NodeInformation;

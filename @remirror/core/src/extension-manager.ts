@@ -13,7 +13,7 @@ import {
   ignoreFunctions,
   transformExtensionMap,
 } from './extension-manager.helpers';
-import { bool, isEqual, isFunction, isObject } from './helpers';
+import { bool, isEqual, isFunction, isInstanceOf } from './helpers';
 import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from './helpers/document';
 import { isMarkExtension } from './mark-extension';
 import { isNodeExtension } from './node-extension';
@@ -564,9 +564,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
  *
  * @param value - the value to check
  */
-export const isExtensionManager = (value: unknown): value is ExtensionManager => {
-  return isObject(value) && value instanceof ExtensionManager;
-};
+export const isExtensionManager = isInstanceOf(ExtensionManager);
 
 export interface ManagerParams {
   /**

@@ -14,7 +14,7 @@ import {
 } from '../types';
 import { isFunction } from './base';
 import { getMarkRange, isNodeType } from './document';
-import { nodeActive, selectionEmpty } from './utils';
+import { isNodeActive, selectionEmpty } from './utils';
 
 interface UpdateMarkParams extends Partial<RangeParams>, Partial<AttrsParams>, TransformTransactionParams {
   /**
@@ -67,7 +67,7 @@ export const updateMark = ({ type, attrs = {}, appendText, range }: UpdateMarkPa
  * @public
  */
 export const toggleWrap = (type: NodeType, attrs?: Attrs): CommandFunction => (state, dispatch) => {
-  const isActive = nodeActive({ state, type });
+  const isActive = isNodeActive({ state, type });
 
   if (isActive) {
     return lift(state, dispatch);
@@ -89,7 +89,7 @@ export const toggleWrap = (type: NodeType, attrs?: Attrs): CommandFunction => (s
  * @public
  */
 export const toggleList = (type: NodeType, itemType: NodeType): CommandFunction => (state, dispatch) => {
-  const isActive = nodeActive({ state, type });
+  const isActive = isNodeActive({ state, type });
 
   if (isActive) {
     return liftListItem(itemType)(state, dispatch);
@@ -116,7 +116,7 @@ export const toggleBlockItem = ({ type, toggleType, attrs = {} }: ToggleBlockIte
   state,
   dispatch,
 ) => {
-  const isActive = nodeActive({ state, type, attrs });
+  const isActive = isNodeActive({ state, type, attrs });
 
   if (isActive) {
     return setBlockType(toggleType)(state, dispatch);

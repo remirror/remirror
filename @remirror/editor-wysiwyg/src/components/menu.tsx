@@ -47,7 +47,7 @@ const menuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
   ['bulletList', [faList]],
   ['orderedList', [faListOl]],
   ['blockquote', [faQuoteRight]],
-  ['codeBlock', [faCode]],
+  ['codeBlockToggle', [faCode]],
   ['horizontalRule', [faGripLines]],
 ];
 
@@ -73,7 +73,6 @@ interface MenuBarProps extends Pick<BubbleMenuProps, 'activateLink'> {
  */
 export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
   const { actions } = useRemirror();
-
   return (
     <Toolbar>
       {menuItems.map(([name, [icon, subText], attrs], index) => {
@@ -148,9 +147,11 @@ const bubbleMenuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
 
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
   const { actions, getPositionerProps } = useRemirror();
+  console.log(actions.codeBlockToggle.isActive());
   const { bottom, left, ref } = getPositionerProps({
     ...bubblePositioner,
-    isActive: params => bubblePositioner.isActive(params) || linkActivated,
+    isActive: params =>
+      (bubblePositioner.isActive(params) || linkActivated) && !actions.codeBlockToggle.isActive(),
     positionerId: 'bubbleMenu',
   });
 

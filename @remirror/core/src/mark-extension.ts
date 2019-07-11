@@ -3,9 +3,7 @@ import { Extension, isExtension } from './extension';
 import { isMarkActive } from './helpers/document';
 import {
   EditorSchema,
-  ExtensionBooleanFunction,
   ExtensionType,
-  FlexibleConfig,
   MarkExtensionOptions,
   MarkExtensionSpec,
   SchemaMarkTypeParams,
@@ -33,7 +31,7 @@ export abstract class MarkExtension<
 
   public abstract readonly schema: MarkExtensionSpec;
 
-  public active({ getState, type }: SchemaMarkTypeParams): FlexibleConfig<ExtensionBooleanFunction> {
+  public active({ getState, type }: SchemaMarkTypeParams): BooleanFlexibleConfig {
     return () => isMarkActive({ state: getState(), type });
   }
 }
@@ -44,4 +42,4 @@ export abstract class MarkExtension<
  * @param extension - the extension to check
  */
 export const isMarkExtension = (extension: unknown): extension is MarkExtension<any> =>
-  isExtension(extension) && extension instanceof MarkExtension;
+  isExtension(extension) && extension.type === ExtensionType.MARK;

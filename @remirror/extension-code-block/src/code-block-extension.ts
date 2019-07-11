@@ -1,6 +1,9 @@
 import {
+  BooleanFlexibleConfig,
+  CommandFlexibleConfig,
   CommandNodeTypeParams,
   isElementDOMNode,
+  isNodeActive,
   NodeExtension,
   NodeExtensionSpec,
   Plugin,
@@ -8,10 +11,10 @@ import {
   toggleBlockItem,
 } from '@remirror/core';
 import refractor from 'refractor/core';
-import createCodeBlockPlugin from './plugin';
-import { CodeBlockState } from './state';
+import createCodeBlockPlugin from './code-block-plugin';
+import { CodeBlockState } from './code-block-state';
+import { CodeBlockExtensionOptions } from './code-block-types';
 import { syntaxTheme, SyntaxTheme } from './themes';
-import { CodeBlockExtensionOptions } from './types';
 
 export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions> {
   get name() {
@@ -95,8 +98,12 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
     return;
   }
 
-  public commands({ type, schema }: CommandNodeTypeParams) {
+  public commands({ type, schema }: CommandNodeTypeParams): CommandFlexibleConfig {
     return { toggle: () => toggleBlockItem({ type, toggleType: schema.nodes.paragraph }) };
+  }
+
+  public active({ type, getState }: CommandNodeTypeParams): BooleanFlexibleConfig {
+    return { toggle: attrs => isNodeActive({ state: getState(), type, attrs }) };
   }
 
   public plugin({ type }: SchemaNodeTypeParams): Plugin<CodeBlockState> {

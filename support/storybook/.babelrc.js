@@ -7,6 +7,7 @@ const moduleResolver = [
     alias: {
       '@remirror/core': '../../@remirror/core/src',
       '@remirror/core-extensions': '../../@remirror/core-extensions/src',
+      '@remirror/extension-code-block': '../../@remirror/extension-code-block/src',
       '@remirror/extension-emoji': '../../@remirror/extension-emoji/src',
       '@remirror/extension-enhanced-link': '../../@remirror/extension-enhanced-link/src',
       '@remirror/extension-epic-mode': '../../@remirror/extension-epic-mode/src',
@@ -16,6 +17,7 @@ const moduleResolver = [
       '@remirror/react-ssr': '../../@remirror/react-ssr/src',
       '@remirror/renderer-react': '../../@remirror/renderer-react/src',
       '@remirror/showcase': '../../@remirror/showcase/src',
+      '@remirror/editor-markdown': '../../@remirror/editor-markdown/src',
       '@remirror/editor-twitter': '../../@remirror/editor-twitter/src',
       '@remirror/editor-wysiwyg': '../../@remirror/editor-wysiwyg/src',
       remirror: '../../packages/remirror/src',

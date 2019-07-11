@@ -1,11 +1,10 @@
 import { NodeType } from 'prosemirror-model';
 import { Extension, isExtension } from './extension';
-import { nodeActive } from './helpers/utils';
+import { isNodeActive } from './helpers/utils';
 import {
+  BooleanFlexibleConfig,
   EditorSchema,
-  ExtensionBooleanFunction,
   ExtensionType,
-  FlexibleConfig,
   NodeExtensionOptions,
   NodeExtensionSpec,
   SchemaNodeTypeParams,
@@ -32,9 +31,9 @@ export abstract class NodeExtension<
    */
   public abstract readonly schema: NodeExtensionSpec;
 
-  public active({ getState, type }: SchemaNodeTypeParams): FlexibleConfig<ExtensionBooleanFunction> {
+  public active({ getState, type }: SchemaNodeTypeParams): BooleanFlexibleConfig {
     return attrs => {
-      return nodeActive({ state: getState(), type, attrs });
+      return isNodeActive({ state: getState(), type, attrs });
     };
   }
 }
@@ -45,4 +44,4 @@ export abstract class NodeExtension<
  * @param extension - the extension to check
  */
 export const isNodeExtension = (extension: unknown): extension is NodeExtension<any> =>
-  isExtension(extension) && extension instanceof NodeExtension;
+  isExtension(extension) && extension.type === ExtensionType.NODE;
