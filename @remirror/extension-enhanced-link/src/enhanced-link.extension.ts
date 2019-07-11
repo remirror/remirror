@@ -115,7 +115,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
           doc.textBetween($from.start(), from, char, leafChar) +
           doc.textBetween(to, $to.end(), char, leafChar);
 
-        let tr = state.tr;
+        const tr = state.tr;
         const collectedParams: EnhancedLinkHandlerProps[] = [];
 
         // If at the start of a new line (i.e. new block added and not at the start of the document)
@@ -131,7 +131,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
             collectedParams.push({ state, url, start, end });
           });
 
-          tr = tr.removeMark($pos.start(), $pos.end(), type);
+          tr.removeMark($pos.start(), $pos.end(), type);
         }
 
         // Finds matches within the current node when in the middle of a node
@@ -147,11 +147,11 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
           }
         });
         // Remove all marks
-        tr = tr.removeMark($from.start(), $from.end(), type);
+        tr.removeMark($from.start(), $from.end(), type);
 
         // Add all marks again for the nodes
         collectedParams.forEach(params => {
-          tr = enhancedLinkHandler({ ...params, transaction: tr });
+          enhancedLinkHandler({ ...params, transaction: tr });
         });
 
         return tr;

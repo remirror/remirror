@@ -135,8 +135,8 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
         let { oldFrom, oldTo } = { oldFrom: from, oldTo: range ? range.end : to };
         const $oldTo = state.doc.resolve(oldTo);
         ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, type) || { from: oldFrom, to: oldTo });
-        tr = tr.removeMark(oldFrom, oldTo, type);
-        tr = tr.setMeta('addToHistory', false);
+        tr.removeMark(oldFrom, oldTo, type);
+        tr.setMeta('addToHistory', false);
 
         // Remove mark at current position
         const $newTo = tr.selection.$from;
@@ -144,7 +144,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
           from: $newTo.pos,
           to: $newTo.pos,
         };
-        tr = tr.removeMark(newFrom, newTo, type);
+        tr.removeMark(newFrom, newTo, type);
         return tr.setMeta('addToHistory', false);
       };
     }

@@ -42,10 +42,10 @@ export const updateMark = ({ type, attrs = {}, appendText, range }: UpdateMarkPa
   dispatch,
 ) => {
   const { selection } = state;
-  let { tr } = state;
+  const { tr } = state;
   const { from, to } = range || selection;
 
-  tr = tr.addMark(from, to, type.create(attrs));
+  tr.addMark(from, to, type.create(attrs));
 
   if (appendText) {
     tr.insertText(appendText);
@@ -181,35 +181,35 @@ export const replaceText = ({
   const index = selection.$from.index();
   const { from, to } = range || selection;
 
-  let tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
+  // Run the pre transaction hook
+  const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
 
   if (isNodeType(type)) {
     if (!selection.$from.parent.canReplaceWith(index, index, type)) {
       return false;
     }
 
-    tr = tr.replaceWith(from, to, type.create(attrs, content ? schema.text(content) : undefined));
+    tr.replaceWith(from, to, type.create(attrs, content ? schema.text(content) : undefined));
   } else {
     if (!content) {
       throw new Error('`replaceText` cannot be called without content when using a mark type');
     }
 
-    tr = tr.replaceWith(from, to, schema.text(content, [type.create(attrs)]));
+    tr.replaceWith(from, to, schema.text(content, [type.create(attrs)]));
   }
 
   /** Only append the text if when text is provided. */
   if (appendText) {
-    tr = tr.insertText(appendText);
+    tr.insertText(appendText);
   }
 
   if (dispatch) {
-    tr = callMethod({ fn: endTransaction, defaultReturn: tr }, [tr, state]);
     if (isChrome(60)) {
       // A workaround for a chrome bug
       // https://github.com/ProseMirror/prosemirror/issues/710#issuecomment-338047650
       document.getSelection()!.empty();
     }
-    dispatch(tr);
+    dispatch(callMethod({ fn: endTransaction, defaultReturn: tr }, [tr, state]));
   }
 
   return true;
@@ -239,18 +239,17 @@ export const removeMark = ({
   startTransaction,
 }: RemoveMarkParams): CommandFunction => (state, dispatch) => {
   const { selection } = state;
-  let tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
+  const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
   let { from, to } = range || selection;
 
   if (expand && selectionEmpty(state)) {
     ({ from, to } = getMarkRange(state.selection.$anchor, type) || { from, to });
   }
 
-  tr = tr.removeMark(from, to, type);
+  tr.removeMark(from, to, type);
 
   if (dispatch) {
-    tr = callMethod({ fn: endTransaction, defaultReturn: tr }, [tr, state]);
-    dispatch(tr);
+    dispatch(callMethod({ fn: endTransaction, defaultReturn: tr }, [tr, state]));
   }
 
   return true;
