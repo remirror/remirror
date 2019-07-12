@@ -1,4 +1,4 @@
-import { flattenArray, FromToParams, NodeWithPosition, TextParams } from '@remirror/core';
+import { flattenArray, FromToParams, NodeWithPosition, PosParams, TextParams } from '@remirror/core';
 import { Decoration } from 'prosemirror-view';
 import refractor, { RefractorNode } from 'refractor/core';
 
@@ -78,3 +78,10 @@ const getPositionedRefractorNodes = ({ node, pos }: NodeWithPosition) => {
 
   return flattenArray<ParsedRefractorNode>(parsedRefractorNodes).map(mapper);
 };
+
+interface PosWithinRangeParams extends PosParams, FromToParams {}
+
+/**
+ * Check if the position is within the range.
+ */
+export const posWithinRange = ({ from, to, pos }: PosWithinRangeParams) => from <= pos && to >= pos;

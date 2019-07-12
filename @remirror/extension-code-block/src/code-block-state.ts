@@ -11,8 +11,9 @@ import {
   PosParams,
   TransactionParams,
 } from '@remirror/core';
+import { Step } from 'prosemirror-transform';
 import { DecorationSet } from 'prosemirror-view';
-import { createDecorations } from './code-block-utils';
+import { createDecorations, posWithinRange } from './code-block-utils';
 
 export class CodeBlockState {
   /**
@@ -37,6 +38,9 @@ export class CodeBlockState {
     return this;
   }
 
+  /**
+   * Recreate all the decorations again
+   */
   private refreshDecorationSet({ blocks, node }: RefreshDecorationSetParams) {
     const decorations = createDecorations(blocks);
     this.decorationSet = DecorationSet.create(node, decorations);
@@ -44,12 +48,47 @@ export class CodeBlockState {
   }
 
   /**
-   * Currently this is very primitive and simply re-renders all the blocks if more than one block has changed.
-   * Or if the length of the blocks has changed.
+   * Run through each step in the transaction and check whether the change
+   * occurred within one of the active code blocks.
+   */
+  private hasChangedBlocks(steps: Step[], threshold = 2) {
+    let changes = 0;
+
+    // Urm yeah this is a loop within a loop within a loop and it makes me head hurt.
+    for (const { node, pos: from } of this.blocks) {
+      let hasChanged = false;
+      for (const step of steps) {
+        step.getMap().forEach((oldStart, oldEnd) => {
+          const to = from + node.nodeSize;
+          if (posWithinRange({ from, to, pos: oldStart }) || posWithinRange({ from, to, pos: oldEnd })) {
+            hasChanged = true;
+          }
+        });
+
+        if (hasChanged) {
+          break;
+        }
+      }
+
+      if (hasChanged) {
+        changes++;
+      }
+
+      if (changes >= threshold) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Check that either a new block has been added or more than one block has changed.
+   * This is very simplistic and in the future should only update the changed blocks.
    */
   private updateBlocks({ tr }: EditorStateParams & TransactionParams) {
     const blocks = findChildrenByNode({ node: tr.doc, type: this.type });
-    if (blocks.length !== this.blocks.length) {
+    if (blocks.length !== this.blocks.length || (blocks.length > 1 && this.hasChangedBlocks(tr.steps))) {
       this.refreshDecorationSet({ blocks, node: tr.doc });
       return false;
     }
@@ -62,12 +101,11 @@ export class CodeBlockState {
    */
   public apply({ tr, prevState, newState }: ApplyParams) {
     if (!tr.docChanged) {
-      console.log('nothing changed');
       return this;
     }
 
+    // Check for multi block changes, if so refresh every codeBlock
     if (!this.updateBlocks({ state: newState, tr })) {
-      console.log('nothing to change');
       return this;
     }
 
@@ -75,7 +113,6 @@ export class CodeBlockState {
 
     const current = getNodeInformationFromState(newState);
     const previous = getNodeInformationFromState(prevState);
-
     this.manageDecorationSet({ current, previous, tr });
 
     return this;

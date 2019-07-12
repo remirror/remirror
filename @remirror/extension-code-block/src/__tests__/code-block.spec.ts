@@ -80,7 +80,7 @@ describe('plugin', () => {
   });
 
   // TODO implement the functionality to update multiple codeBlocks at once.
-  it.only('updates when multiple changes occur', () => {
+  it('updates when multiple changes occur', () => {
     const tsBlock = codeBlock({ language: 'typescript' });
     const { overwrite } = add(doc(tsBlock(`const a = 'test';`), tsBlock(`let b;`)));
     expect(dom.innerHTML).toMatchSnapshot();

@@ -1,2 +1,2 @@
-export * from './collaboration.extension';
-export * from './types';
+export * from './collaboration-extension';
+export * from './collaboration-types';
