@@ -61,6 +61,11 @@ const times = <GType = number>(length: number, fn?: (index: number) => GType): G
 const promiseSequence = async (sequence: Array<() => Promise<void>>) =>
   sequence.reduce((current, next) => current.then(next), Promise.resolve());
 
+interface KeyPressOptions {
+  text?: string;
+  delay?: number;
+}
+
 /**
  * Presses the given keyboard key a number of times in sequence.
  *
@@ -69,8 +74,5 @@ const promiseSequence = async (sequence: Array<() => Promise<void>>) =>
  *
  * @return Promise resolving when key presses complete.
  */
-export const pressKeyTimes = async (
-  key: string,
-  count: number,
-  options: { text?: string; delay?: number } = {},
-) => promiseSequence(times(count, () => () => page.keyboard.press(key, options)));
+export const pressKeyTimes = async (key: string, count: number, { text, delay = 50 }: KeyPressOptions = {}) =>
+  promiseSequence(times(count, () => () => page.keyboard.press(key, { text, delay })));
