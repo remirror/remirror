@@ -1,8 +1,8 @@
 import {
+  Attrs,
   Cast,
   CommandNodeTypeParams,
   EDITOR_CLASS_NAME,
-  ExtensionCommandFunction,
   isElementDOMNode,
   NodeExtension,
   NodeExtensionSpec,
@@ -15,7 +15,7 @@ import { DefaultEmoji } from './components/emoji';
 import { createEmojiPlugin } from './plugin';
 import { EmojiAttrs, EmojiExtensionOptions } from './types';
 
-export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
+export class EmojiExtension extends NodeExtension<EmojiExtensionOptions, 'emoji', {}> {
   /**
    * The name is dynamically generated based on the passed in type.
    */
@@ -98,10 +98,14 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
     };
   }
 
-  public commands = ({ type }: CommandNodeTypeParams): ExtensionCommandFunction => attrs => {
-    attrs = { ...attrs, ...this.options.transformAttrs(Cast<EmojiAttrs>(attrs)) };
-    return replaceText({ type, attrs });
-  };
+  public commands({ type }: CommandNodeTypeParams) {
+    return {
+      emoji: (attrs?: Attrs) => {
+        attrs = { ...attrs, ...this.options.transformAttrs(Cast<EmojiAttrs>(attrs)) };
+        return replaceText({ type, attrs });
+      },
+    };
+  }
 
   public plugin({ type }: SchemaNodeTypeParams) {
     const { emojiData } = this.options;

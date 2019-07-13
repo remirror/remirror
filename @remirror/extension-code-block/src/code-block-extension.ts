@@ -1,6 +1,6 @@
 import {
-  BooleanFlexibleConfig,
-  CommandFlexibleConfig,
+  Attrs,
+  BooleanExtensionCheck,
   CommandNodeTypeParams,
   GetAttrs,
   getMatchString,
@@ -20,11 +20,15 @@ import { setBlockType } from 'prosemirror-commands';
 import { TextSelection } from 'prosemirror-state';
 import refractor from 'refractor/core';
 import createCodeBlockPlugin from './code-block-plugin';
-import { CodeBlockExtensionOptions } from './code-block-types';
-import { isSupportedLanguage, updateNodeAttrs } from './code-block-utils';
+import { CodeBlockExtensionCommands, CodeBlockExtensionOptions } from './code-block-types';
+import { getSupportedLanguagesMap, isSupportedLanguage, updateNodeAttrs } from './code-block-utils';
 import { syntaxTheme, SyntaxTheme } from './themes';
 
-export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions> {
+export class CodeBlockExtension extends NodeExtension<
+  CodeBlockExtensionOptions,
+  CodeBlockExtensionCommands,
+  {}
+> {
   get name() {
     return 'codeBlock' as const;
   }
@@ -38,6 +42,13 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
       syntaxTheme: 'atomDark' as SyntaxTheme,
       defaultLanguage: 'markup',
     };
+  }
+
+  /**
+   * Gets the supported languages
+   */
+  get supportedLanguageMap() {
+    return getSupportedLanguagesMap(this.options.supportedLanguages);
   }
 
   /**
@@ -106,31 +117,45 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
     return;
   }
 
-  public commands({ type, schema }: CommandNodeTypeParams): CommandFlexibleConfig {
+  public commands({ type, schema }: CommandNodeTypeParams) {
     return {
-      toggle: attrs => toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs }),
-      create: attrs => setBlockType(type, attrs),
-      updateAttrs: updateNodeAttrs(type),
+      toggleCodeBlock: (attrs?: Attrs) =>
+        toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs }),
+      createCodeBlock: (attrs?: Attrs) => setBlockType(type, attrs),
+      updateCodeBlock: updateNodeAttrs(type),
     };
   }
 
-  public active({ type, getState }: CommandNodeTypeParams): BooleanFlexibleConfig {
-    return {
-      // Here active just reflects whether the node is active.
-      toggle: () => isNodeActive({ state: getState(), type }),
+  public active({
+    type,
+    getState,
+  }: CommandNodeTypeParams): BooleanExtensionCheck<CodeBlockExtensionCommands> {
+    return ({ command }) => {
+      switch (command) {
+        case 'toggleCodeBlock':
+        case 'createCodeBlock':
+          return isNodeActive({ state: getState(), type });
 
-      // Create is active when the current selection is within a code block.
-      create: () => isNodeActive({ state: getState(), type }),
+        default:
+          return false;
+      }
     };
   }
 
-  public enabled({ type, getState }: CommandNodeTypeParams): BooleanFlexibleConfig {
-    return {
-      // Toggle is always enabled
-      toggle: () => true,
+  public enabled({
+    type,
+    getState,
+  }: CommandNodeTypeParams): BooleanExtensionCheck<CodeBlockExtensionCommands> {
+    return ({ command }) => {
+      switch (command) {
+        case 'toggleCodeBlock':
+          return true;
+        case 'createCodeBlock':
+          return !isNodeActive({ state: getState(), type });
 
-      // Create is only enabled when the current selection is not active.
-      create: () => !isNodeActive({ state: getState(), type }),
+        default:
+          return true;
+      }
     };
   }
 
@@ -139,7 +164,15 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
    */
   public inputRules({ type }: SchemaNodeTypeParams) {
     const regexp = /^```([a-zA-Z]*)? $/;
-    const getAttrs: GetAttrs = match => ({ language: getMatchString(match, 1) });
+    const getAttrs: GetAttrs = match => {
+      let lang = getMatchString(match, 1);
+      if (!isSupportedLanguage(lang, this.options.supportedLanguages)) {
+        lang = this.options.defaultLanguage;
+      }
+
+      const language = this.supportedLanguageMap[lang];
+      return { language };
+    };
     return [
       nodeInputRule({
         regexp,
@@ -178,12 +211,14 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
           return false;
         }
 
-        let [, language] = matches;
+        let [, lang] = matches;
         // create the node with the language, etc. & set the selection inside it
         // you may also want to assert a depth in the document, etc. if you have blockquotes, etc as otherwise this would get triggered in there too
-        if (!isSupportedLanguage(language, this.options.supportedLanguages)) {
-          language = this.options.defaultLanguage;
+        if (!isSupportedLanguage(lang, this.options.supportedLanguages)) {
+          lang = this.options.defaultLanguage;
         }
+
+        const language = this.supportedLanguageMap[lang];
 
         const pos = selection.$from.before();
         const end = pos + nodeBefore.nodeSize + 1; // +1 to account for the extra pos a node takes up

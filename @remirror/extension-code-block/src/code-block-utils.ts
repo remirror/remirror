@@ -160,12 +160,12 @@ export const updateNodeAttrs = (type: NodeType) => (attrs?: Attrs): CommandFunct
   }
 
   tr.setNodeMarkup(parent.pos, type, attrs);
+
   if (!dispatch) {
     return true;
   }
 
   dispatch(tr);
-
   return true;
 };
 
@@ -175,13 +175,20 @@ export const updateNodeAttrs = (type: NodeType) => (attrs?: Attrs): CommandFunct
 export const isValidCodeBlockAttrs = (attrs?: Attrs): attrs is CodeBlockAttrs =>
   bool(attrs && isObject(attrs) && isString(attrs.language) && attrs.language.length);
 
-const AUTO_LOADED_LANGUAGES = [clike, css, js, markup];
+const AUTO_LOADED_LANGUAGES = [markup, clike, css, js];
 
 /**
  * Retrieve the supported language names based on configuration.
  */
-export const getSupportedLanguages = (supportedLanguages: RefractorSyntax[]) => {
-  return [...AUTO_LOADED_LANGUAGES, ...supportedLanguages].map(({ name }) => name);
+export const getSupportedLanguagesMap = (supportedLanguages: RefractorSyntax[]) => {
+  const obj: Record<string, string> = {};
+  for (const { name, aliases } of [...AUTO_LOADED_LANGUAGES, ...supportedLanguages]) {
+    obj[name] = name;
+    aliases.forEach(alias => {
+      obj[alias] = name;
+    });
+  }
+  return obj;
 };
 
 /**

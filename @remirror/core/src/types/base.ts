@@ -62,6 +62,12 @@ export type AnyFunction<GType = any> = (...args: any[]) => GType;
 export type AnyConstructor<GType = unknown> = new (...args: any[]) => GType;
 
 /**
+ * Abstract classes don't support the builtin `InstanceType` helper. This is an alternative
+ * which allows us to pull out the type of the prototype.
+ */
+export type AbstractInstanceType<GConstructor extends { prototype: any }> = GConstructor['prototype'];
+
+/**
  * Makes specified keys of an interface optional while the rest stay the same.
  */
 export type MakeOptional<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &

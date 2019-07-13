@@ -30,7 +30,7 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
    * ```
    *
    * By default refractor bundles the following languages: `markup`, `css`, `clike`, `js`
-
+   *
    * @default []
    */
   supportedLanguages?: RefractorSyntax[];
@@ -65,7 +65,7 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
   /**
    * Provides information on the specific block that was hovered over as well as the hover event.
    */
-  onHover?({ block, event, view }: any): void;
+  onHover?(params: any): void;
 }
 
 export interface CodeBlockAttrs extends Attrs {
@@ -74,3 +74,5 @@ export interface CodeBlockAttrs extends Attrs {
    */
   language: string;
 }
+
+export type CodeBlockExtensionCommands = 'toggleCodeBlock' | 'updateCodeBlock' | 'createCodeBlock';

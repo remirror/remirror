@@ -18,7 +18,7 @@ describe('schema', () => {
 
   it('creates the correct dom node', () => {
     expect(toHTML({ node: codeBlock(content), schema })).toBe(
-      `<pre><code class="language-${attrs.language}" data-code-block-language="${attrs.language}">${content}</code></pre>`,
+      `<pre class="language-${attrs.language}"><code data-code-block-language="${attrs.language}">${content}</code></pre>`,
     );
   });
 
@@ -73,16 +73,16 @@ describe('plugin', () => {
   it('renders the correct decorations', () => {
     add(doc(tsBlock(`const a = 'test';`)));
 
-    expect(dom.querySelector('.language-typescript')!.innerHTML).toMatchSnapshot();
+    expect(dom.querySelector('.language-typescript code')!.innerHTML).toMatchSnapshot();
   });
 
   it('can be updated', () => {
     const plainBlock = codeBlock({});
     const adder = add(doc(tsBlock(`const a = 'test';<cursor>`), plainBlock('Nothing to see here')));
 
-    expect(dom.querySelector('.language-typescript')!.innerHTML).toMatchSnapshot();
+    expect(dom.querySelector('.language-typescript code')!.innerHTML).toMatchSnapshot();
     adder.insertText('\n\nconsole.log(a);');
-    expect(dom.querySelector('.language-typescript')!.innerHTML).toMatchSnapshot();
+    expect(dom.querySelector('.language-typescript code')!.innerHTML).toMatchSnapshot();
   });
 
   it('updates when multiple changes occur', () => {
@@ -97,11 +97,12 @@ describe('plugin', () => {
     const markupBlock = codeBlock();
     const content = `const a = 'test';`;
     const { overwrite } = add(doc(markupBlock(content)));
-    const initialHtml = dom.querySelector('.language-markup')!.innerHTML;
+    const initialHtml = dom.querySelector('.language-markup code')!.innerHTML;
 
     overwrite(doc(tsBlock(content)));
-    const newHtml = dom.querySelector('.language-typescript')!.innerHTML;
+    const newHtml = dom.querySelector('.language-typescript code')!.innerHTML;
     expect(newHtml).not.toBe(initialHtml);
+    expect(newHtml).toMatchSnapshot();
   });
 
   describe('Space', () => {
@@ -120,6 +121,17 @@ describe('plugin', () => {
       const { state } = add(doc(p('<cursor>'))).insertText('```123-__ ');
       expect(state.doc).toEqualRemirrorDocument(doc(p('```123-__ ')));
     });
+
+    it('use default markup for non existent language', () => {
+      const markupBlock = codeBlock({ language: 'markup' });
+      const { state } = add(doc(p('<cursor>'))).insertText('```abcde abc');
+      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
+    });
+
+    it('sets alias language inputs as the official language name', () => {
+      const { state } = add(doc(p('<cursor>'))).insertText('```ts abc');
+      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('abc'), p()));
+    });
   });
 
   describe('Enter', () => {
@@ -131,7 +143,7 @@ describe('plugin', () => {
       expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('abc'), p()));
     });
 
-    it('responds to enter key press with empty language', () => {
+    it('uses default language when no language provided', () => {
       const markupBlock = codeBlock({ language: 'markup' });
       const { state } = add(doc(p('<cursor>')))
         .insertText('```')
@@ -147,6 +159,14 @@ describe('plugin', () => {
         .press('Enter')
         .insertText('abc');
       expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
+    });
+
+    it('sets alias language inputs as the official language name', () => {
+      const { state } = add(doc(p('<cursor>')))
+        .insertText('```ts')
+        .press('Enter')
+        .insertText('abc');
+      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('abc'), p()));
     });
   });
 });
@@ -173,12 +193,12 @@ describe('commands', () => {
       const markupBlock = codeBlock({ language: 'markup' });
       const { actions } = add(doc(markupBlock(`const a = 'test';<cursor>`)));
 
-      expect(view.dom.querySelector('.language-markup')).toBeTruthy();
+      expect(view.dom.querySelector('.language-markup code')).toBeTruthy();
 
-      actions.codeBlockUpdateAttrs.command({ language: 'javascript' });
+      actions.updateCodeBlock({ language: 'javascript' });
 
-      expect(view.dom.querySelector('.language-markup')).toBeFalsy();
-      expect(view.dom.querySelector('.language-javascript')!.outerHTML).toMatchSnapshot();
+      expect(view.dom.querySelector('.language-markup code')).toBeFalsy();
+      expect(view.dom.querySelector('.language-javascript code')!.outerHTML).toMatchSnapshot();
     });
   });
 });

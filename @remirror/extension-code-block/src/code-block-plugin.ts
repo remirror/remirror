@@ -13,7 +13,7 @@ import {
 import { Plugin } from 'prosemirror-state';
 import { Step } from 'prosemirror-transform';
 import { DecorationSet } from 'prosemirror-view';
-import { CodeBlockExtensionOptions } from './code-block-types';
+import { CodeBlockExtensionCommands, CodeBlockExtensionOptions } from './code-block-types';
 import {
   createDecorations,
   getNodeInformationFromState,
@@ -172,13 +172,13 @@ interface UpdateDecorationSetParams extends TransactionParams {
 }
 
 interface CreateCodeBlockPluginParams extends SchemaNodeTypeParams {
-  extension: NodeExtension<CodeBlockExtensionOptions>;
+  extension: NodeExtension<CodeBlockExtensionOptions, CodeBlockExtensionCommands, {}>;
 }
 
 /**
  * Create a codeBlock plugin to manage the internal prosemirror functionality
  */
-export default function createCodeBlockPlugin({ extension, type, getActions }: CreateCodeBlockPluginParams) {
+export default function createCodeBlockPlugin({ extension, type }: CreateCodeBlockPluginParams) {
   const pluginState = new CodeBlockState(type);
   return new Plugin<CodeBlockState>({
     key: extension.pluginKey,

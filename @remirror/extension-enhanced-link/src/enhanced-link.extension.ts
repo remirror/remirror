@@ -28,7 +28,14 @@ export interface EnhancedLinkExtensionOptions extends MarkExtensionOptions {
   onUrlsChange?(params: { set: Set<string>; urls: string[] }): void;
 }
 
-export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOptions> {
+/**
+ * An auto complete auto decorated linker.
+ *
+ * There's nothing enhanced about it.
+ *
+ * TODO Consider renaming this extension
+ */
+export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOptions, 'enhancedLink'> {
   get name() {
     return 'enhancedLink' as const;
   }
@@ -62,12 +69,14 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
   }
 
   public commands({ type }: CommandMarkTypeParams) {
-    return (attrs?: Attrs) => {
-      if (attrs && attrs.href) {
-        return updateMark({ type, attrs });
-      }
+    return {
+      enhancedLink: (attrs?: Attrs) => {
+        if (attrs && attrs.href) {
+          return updateMark({ type, attrs });
+        }
 
-      return removeMark({ type });
+        return removeMark({ type });
+      },
     };
   }
 

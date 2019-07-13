@@ -1,6 +1,7 @@
 import {
   CommandMarkTypeParams,
   MarkExtension,
+  MarkExtensionOptions,
   MarkExtensionSpec,
   markInputRule,
   markPasteRule,
@@ -8,7 +9,7 @@ import {
 } from '@remirror/core';
 import { toggleMark } from 'prosemirror-commands';
 
-export class CodeExtension extends MarkExtension {
+export class CodeExtension extends MarkExtension<MarkExtensionOptions, 'code', {}> {
   get name() {
     return 'code' as const;
   }
@@ -27,7 +28,7 @@ export class CodeExtension extends MarkExtension {
   }
 
   public commands({ type }: CommandMarkTypeParams) {
-    return () => toggleMark(type);
+    return { code: () => toggleMark(type) };
   }
 
   public inputRules({ type }: SchemaMarkTypeParams) {

@@ -3,13 +3,14 @@ import {
   CommandNodeTypeParams,
   EDITOR_CLASS_SELECTOR,
   NodeExtension,
+  NodeExtensionOptions,
   NodeExtensionSpec,
   SchemaNodeTypeParams,
   toggleBlockItem,
 } from '@remirror/core';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
-export class CodeBlockExtension extends NodeExtension {
+export class CodeBlockExtension extends NodeExtension<NodeExtensionOptions, 'toggleCodeBlock', {}> {
   get name() {
     return 'codeBlock' as const;
   }
@@ -29,7 +30,7 @@ export class CodeBlockExtension extends NodeExtension {
   }
 
   public commands({ type, schema }: CommandNodeTypeParams) {
-    return () => toggleBlockItem({ type, toggleType: schema.nodes.paragraph });
+    return { toggleCodeBlock: () => toggleBlockItem({ type, toggleType: schema.nodes.paragraph }) };
   }
 
   public keys({ type, schema }: SchemaNodeTypeParams) {

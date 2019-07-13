@@ -29,3 +29,4 @@ export interface MulticursorExtensionOptions extends BaseExtensionOptions {
    */
   clickActivationKey?: 'altKey' | 'metaKey' | 'ctrlKey';
 }
+export type MulticursorExtensionCommands = 'addMulticursor' | 'toggleMulticursor';

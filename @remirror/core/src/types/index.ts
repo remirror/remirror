@@ -1,9 +1,9 @@
-import { MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType } from 'prosemirror-model';
+import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
 import { NodeViewPortalContainer } from '../portal-container';
-import { EditorView, InputRule, Mark, NodeView, Transaction } from './aliases';
+import { EditorView, Mark, NodeView, Transaction } from './aliases';
 import { AnyFunction, Attrs, EditorSchema, EditorState, ProsemirrorNode, Value } from './base';
-import { EditorViewParams, SchemaParams } from './builders';
+import { AttrsParams, EditorViewParams, SchemaParams } from './builders';
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -129,16 +129,32 @@ export interface ExtensionManagerParams extends SchemaParams, ExtensionManagerIn
  */
 export interface ViewExtensionManagerParams extends EditorViewParams, ExtensionManagerParams {}
 
-export type FlexibleConfig<GFunc extends AnyFunction, GNames extends string = string> =
-  | GFunc
-  | GFunc[]
-  | Record<GNames, GFunc | GFunc[]>;
+export type FlexibleConfig<GFunc extends AnyFunction, GNames extends string = string> = Record<
+  GNames,
+  GFunc | GFunc[]
+>;
 
 export type ExtensionCommandFunction = (attrs?: Attrs) => CommandFunction;
-export type ExtensionBooleanFunction = (attrs?: Attrs) => boolean;
 
-export type BooleanFlexibleConfig = FlexibleConfig<ExtensionBooleanFunction>;
-export type CommandFlexibleConfig = FlexibleConfig<ExtensionCommandFunction>;
+export interface ExtensionBooleanFunctionParams<GCommand extends string> extends Partial<AttrsParams> {
+  /**
+   * When provided check the status of this particular command
+   */
+  command?: GCommand;
+}
+export type ExtensionBooleanFunction<GCommand extends string> = (
+  params: ExtensionBooleanFunctionParams<GCommand>,
+) => boolean;
+
+/**
+ * The return signature for an extension's `isActive` and `isEnabled` method
+ */
+export type BooleanExtensionCheck<GCommand extends string> = ExtensionBooleanFunction<GCommand>;
+
+/**
+ * The return signature for an extensions command method.
+ */
+export type ExtensionCommands<GCommands extends string> = FlexibleConfig<ExtensionCommandFunction, GCommands>;
 
 type InferredType<GType> = GType extends {} ? { type: GType } : {};
 export type SchemaTypeParams<GType> = ExtensionManagerParams & InferredType<GType>;
@@ -170,12 +186,12 @@ export interface ActionMethods<GAttrs = Attrs> {
    * @remarks
    *
    * ```ts
-   * actions.bold.command() // Make the currently selected text bold
+   * actions.bold() // Make the currently selected text bold
    * ```
    *
    * @param attrs - certain commands require attrs to run
    */
-  command(attrs?: GAttrs): void;
+  (attrs?: GAttrs): void;
 
   /**
    * Determines whether the command is currently in an active state.

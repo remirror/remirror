@@ -6,14 +6,13 @@ import {
   isExtension,
   PrioritizedExtension,
 } from './extension';
-import { bool, capitalize, Cast, isFunction } from './helpers/base';
+import { bool, Cast, isFunction } from './helpers/base';
 import { isMarkExtension } from './mark-extension';
 import { isNodeExtension } from './node-extension';
 import {
   AnyFunction,
   Attrs,
   CommandParams,
-  ExtensionBooleanFunction,
   ExtensionCommandFunction,
   ExtensionManagerParams,
   FlexibleConfig,
@@ -102,7 +101,7 @@ interface CreateFlexibleFunctionMapParams<
 
   /**
    * Transforms the entry into a callable method with attrs as the first optional parameter.
-   * Something like `actions[name].command()`
+   * Something like `actions[name]()`
    */
   methodFactory: MethodFactory<GMappedFunc, GFunc>;
 
@@ -125,7 +124,7 @@ interface CreateFlexibleFunctionMapParams<
  * The reason is that extensions can have commands / enabled / active methods that return a very complex type signature
  *
  * ```ts
- * type FlexibleConfig<Func> = Func | Func[] | Record<string, Func | Func[]>
+ * type FlexibleConfig<Func> = Record<string, Func | Func[]>
  * ```
  *
  * This creates a function that is able to step through each possibility and call the required method.
@@ -143,37 +142,24 @@ export const createFlexibleFunctionMap = <
   methodFactory,
   arrayTransformer,
   extensions,
-}: CreateFlexibleFunctionMapParams<GKey, GMappedFunc, GFunc>): Record<string, GMappedFunc> => {
-  const items: Record<string, GMappedFunc> = {};
+}: CreateFlexibleFunctionMapParams<GKey, GMappedFunc, GFunc>): Record<
+  string,
+  { command: GMappedFunc; name: string }
+> => {
+  const items: Record<string, { command: GMappedFunc; name: string }> = {};
   const names = new Set<string>();
   extensions.filter(hasExtensionProperty(key)).forEach(currentExtension => {
-    const { name } = currentExtension;
-
-    if (checkUniqueness) {
-      isNameUnique({ name, set: names, shouldThrow: true });
-    }
-
     const item = getItemParams(currentExtension);
 
-    if (Array.isArray(item)) {
-      items[name] = arrayTransformer(item, methodFactory);
-    } else if (isFunction(item)) {
-      items[name] = methodFactory(item);
-    } else {
-      Object.entries(item).forEach(([commandName, commandValue]) => {
-        // Namespace the actions created to minimise accidental naming collision
-        // TODO this is too magical and needs to change!
-        const namespacedName = `${name}${capitalize(commandName)}`;
+    Object.entries(item).forEach(([name, command]) => {
+      if (checkUniqueness) {
+        isNameUnique({ name, set: names, shouldThrow: true });
+      }
 
-        if (checkUniqueness) {
-          isNameUnique({ name: namespacedName, set: names, shouldThrow: true });
-        }
-
-        items[namespacedName] = Array.isArray(commandValue)
-          ? arrayTransformer(commandValue, methodFactory)
-          : methodFactory(commandValue);
-      });
-    }
+      items[name] = Array.isArray(command)
+        ? { command: arrayTransformer(command, methodFactory), name: currentExtension.name }
+        : { command: methodFactory(command), name: currentExtension.name };
+    });
   });
 
   return items;
@@ -192,7 +178,7 @@ interface CommandFlexibleFunctionMapParams extends ExtensionListParams {
  * Typically actions are used to create interactive menus.
  * For example a menu can use a command to toggle bold.
  */
-export const commandFlexibleFunctionMap = ({ extensions, params }: CommandFlexibleFunctionMapParams) =>
+export const createCommands = ({ extensions, params }: CommandFlexibleFunctionMapParams) =>
   createFlexibleFunctionMap<'commands', (attrs?: Attrs) => void, ExtensionCommandFunction>({
     extensions,
     key: 'commands',
@@ -209,43 +195,6 @@ export const commandFlexibleFunctionMap = ({ extensions, params }: CommandFlexib
     },
     getItemParams: extension =>
       extension.commands({
-        ...params,
-        ...(isMarkExtension(extension)
-          ? { type: params.schema.marks[extension.name] }
-          : isNodeExtension(extension)
-          ? { type: params.schema.nodes[extension.name] }
-          : {}),
-      }),
-  });
-
-interface BooleanFlexibleFunctionMapParams<GKey extends 'enabled' | 'active'>
-  extends CommandFlexibleFunctionMapParams {
-  key: GKey;
-}
-/**
- * A helper specifically for generating the RemirrorAction's active and enabled methods
- */
-export const booleanFlexibleFunctionMap = <GKey extends 'enabled' | 'active'>({
-  key,
-  extensions,
-  params,
-}: BooleanFlexibleFunctionMapParams<GKey>) =>
-  createFlexibleFunctionMap<GKey, (attrs?: Attrs) => boolean, ExtensionBooleanFunction>({
-    extensions,
-    key,
-    methodFactory: method => (attrs?: Attrs) => {
-      return method(attrs);
-    },
-    checkUniqueness: false,
-    arrayTransformer: (functions, methodFactory) => () => {
-      return functions
-        .map(callback => {
-          methodFactory(callback);
-        })
-        .every(bool);
-    },
-    getItemParams: extension =>
-      extension[key]({
         ...params,
         ...(isMarkExtension(extension)
           ? { type: params.schema.marks[extension.name] }
@@ -275,7 +224,16 @@ export const hasExtensionProperty = <GExt extends AnyExtension, GKey extends key
 /**
  * Keys for the methods available on an extension (useful for filtering)
  */
-type ExtensionMethodProperties = 'inputRules' | 'pasteRules' | 'keys' | 'plugin' | 'styles' | 'nodeView';
+type ExtensionMethodProperties =
+  | 'inputRules'
+  | 'pasteRules'
+  | 'keys'
+  | 'plugin'
+  | 'styles'
+  | 'nodeView'
+  | 'extensionData'
+  | 'isActive'
+  | 'isEnabled';
 
 /**
  * Looks at the passed property and calls the extension with the required parameters.
@@ -313,7 +271,7 @@ function convertToExtensionMapValue(extension: FlexibleExtension): PrioritizedEx
 /**
  * Sorts and transforms extension map based on the provided priorities and outputs just the extensions
  *
- * TODO: Add a check for requiredExtensions and inject them automatically
+ * TODO Add a check for requiredExtensions and inject them automatically
  *
  * @param values - the extensions to transform as well as their priorities
  * @returns the list of extension instances sorted by priority

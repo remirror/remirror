@@ -47,7 +47,7 @@ const menuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
   ['bulletList', [faList]],
   ['orderedList', [faListOl]],
   ['blockquote', [faQuoteRight]],
-  ['codeBlockToggle', [faCode]],
+  ['toggleCodeBlock', [faCode]],
   ['horizontalRule', [faGripLines]],
 ];
 
@@ -86,15 +86,15 @@ export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
             subText={subText}
             state={buttonState}
             disabled={!actions[name].isEnabled()}
-            onClick={runAction(actions[name].command, attrs)}
+            onClick={runAction(actions[name], attrs)}
             withPadding='right'
           />
         );
       })}
       <MenuItem
         icon={faLink}
-        state={getButtonState(actions.linkUpdate.isActive(), inverse)}
-        disabled={!actions.linkUpdate.isEnabled()}
+        state={getButtonState(actions.updateLink.isActive(), inverse)}
+        disabled={!actions.updateLink.isEnabled()}
         onClick={activateLink}
         withPadding='right'
       />
@@ -147,17 +147,17 @@ const bubbleMenuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
 
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
   const { actions, getPositionerProps } = useRemirror();
-  console.log(actions.codeBlockToggle.isActive());
+  console.log(actions.toggleCodeBlock.isActive());
   const { bottom, left, ref } = getPositionerProps({
     ...bubblePositioner,
     isActive: params =>
-      (bubblePositioner.isActive(params) || linkActivated) && !actions.codeBlockToggle.isActive(),
+      (bubblePositioner.isActive(params) || linkActivated) && !actions.toggleCodeBlock.isActive(),
     positionerId: 'bubbleMenu',
   });
 
-  const updateLink = (href: string) => actions.linkUpdate.command({ href });
-  const removeLink = () => actions.linkRemove.command();
-  const canRemove = () => actions.linkRemove.isActive();
+  const updateLink = (href: string) => actions.updateLink({ href });
+  const removeLink = () => actions.removeLink();
+  const canRemove = () => actions.removeLink.isActive();
 
   return (
     <BubbleMenuTooltip ref={ref} bottom={bottom + 5} left={left}>
@@ -175,7 +175,7 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
                 subText={subText}
                 state={buttonState}
                 disabled={!actions[name].isEnabled()}
-                onClick={runAction(actions[name].command, attrs)}
+                onClick={runAction(actions[name], attrs)}
                 inverse={true}
                 withPadding='horizontal'
               />
@@ -183,7 +183,7 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
           })}
           <MenuItem
             icon={faLink}
-            state={getButtonState(actions.linkUpdate.isActive(), true)}
+            state={getButtonState(actions.updateLink.isActive(), true)}
             onClick={activateLink}
             inverse={true}
             withPadding='horizontal'

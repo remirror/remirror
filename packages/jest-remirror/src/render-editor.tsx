@@ -42,11 +42,11 @@ import {
  * Render the editor with the params passed in. Useful for testing.
  */
 export const renderEditor = <
-  GPlainMarks extends Array<MarkExtension<any>>,
-  GPlainNodes extends Array<NodeExtension<any>>,
-  GAttrMarks extends Array<MarkExtension<any>>,
-  GAttrNodes extends Array<NodeExtension<any>>,
-  GOthers extends Array<Extension<any>>,
+  GPlainMarks extends Array<MarkExtension<any, any, any>>,
+  GPlainNodes extends Array<NodeExtension<any, any, any>>,
+  GAttrMarks extends Array<MarkExtension<any, any, any>>,
+  GAttrNodes extends Array<NodeExtension<any, any, any>>,
+  GOthers extends Array<Extension<any, any, any, never>>,
   GPlainMarkNames extends GPlainMarks[number]['name'],
   GAttrMarkNames extends GAttrMarks[number]['name'],
   GAttrNodeNames extends GAttrNodes[number]['name'],

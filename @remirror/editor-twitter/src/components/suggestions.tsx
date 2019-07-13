@@ -102,7 +102,7 @@ export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
    * Click handler for accepting a user suggestion
    */
   const onClickFactory = createOnClickMethodFactory({
-    command: actions.mentionUpdate.command,
+    command: actions.updateMention,
     getMention,
     setExitTriggeredInternally,
     view,
@@ -155,7 +155,7 @@ export const TagSuggestions: FunctionComponent<TagSuggestionsProps> = ({
    * Click handler for accepting a tag suggestion
    */
   const onClickFactory = createOnClickMethodFactory({
-    command: actions.mentionUpdate.command,
+    command: actions.updateMention,
     getMention,
     setExitTriggeredInternally,
     view,

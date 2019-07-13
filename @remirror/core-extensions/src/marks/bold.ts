@@ -3,13 +3,14 @@ import {
   isElementDOMNode,
   isString,
   MarkExtension,
+  MarkExtensionOptions,
   MarkExtensionSpec,
   markInputRule,
   SchemaMarkTypeParams,
 } from '@remirror/core';
 import { toggleMark } from 'prosemirror-commands';
 
-export class BoldExtension extends MarkExtension {
+export class BoldExtension extends MarkExtension<MarkExtensionOptions, 'bold', {}> {
   get name() {
     return 'bold' as const;
   }
@@ -43,8 +44,10 @@ export class BoldExtension extends MarkExtension {
   }
 
   public commands({ type }: CommandMarkTypeParams) {
-    return () => {
-      return toggleMark(type);
+    return {
+      bold: () => {
+        return toggleMark(type);
+      },
     };
   }
 

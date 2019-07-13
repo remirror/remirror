@@ -20,7 +20,11 @@ import {
   SchemaMarkTypeParams,
   TransactionTransformer,
 } from '@remirror/core';
-import { MentionExtensionAttrs as MentionAttrs, MentionExtensionOptions } from './mention-types';
+import {
+  MentionExtensionAttrs as MentionAttrs,
+  MentionExtensionCommands,
+  MentionExtensionOptions,
+} from './mention-types';
 import { DEFAULT_MATCHER, escapeChar, getRegexPrefix, regexToString } from './mention-utils';
 import { createSuggestionPlugin, SuggestionState } from './suggestion-plugin';
 
@@ -31,7 +35,7 @@ const defaultHandler = () => false;
  * It also allows for configuration options to be passed into transforming suggestion queries into a mention
  * node.
  */
-export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
+export class MentionExtension extends MarkExtension<MentionExtensionOptions, MentionExtensionCommands, {}> {
   get name() {
     return 'mention' as const;
   }
@@ -161,9 +165,9 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
 
   public commands({ type, getState }: CommandMarkTypeParams) {
     return {
-      create: this.createMention(type, getState),
-      update: this.createMention(type, getState, true),
-      remove: ({ range }: Partial<RangeParams> = {}) => {
+      createMention: this.createMention(type, getState),
+      updateMention: this.createMention(type, getState, true),
+      removeMention: ({ range }: Partial<RangeParams> = {}) => {
         return removeMark({ type, expand: true, range });
       },
     };

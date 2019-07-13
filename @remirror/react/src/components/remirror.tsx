@@ -25,6 +25,7 @@ import {
   CalculatePositionerParams,
   cloneElement,
   cssNoOp,
+  defaultPositioner,
   getElementProps,
   GetPositionerPropsConfig,
   GetPositionerReturn,
@@ -49,7 +50,6 @@ import { EditorState } from 'prosemirror-state';
 import React, { Component, ReactNode, Ref } from 'react';
 import { defaultProps } from '../constants';
 import { NodeViewPortalComponent } from '../node-views';
-import { defaultPositioner } from '../positioners';
 import { defaultStyles } from '../styles';
 
 interface UpdateStateParams extends EditorStateParams {
@@ -427,6 +427,8 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       // This is not a controlled component so we need to manage firing of setState
       this.setState(({ newState }) => {
         return { prevState: newState, newState: state };
+        // Move update handler out from callback and directly after this.setState
+        // To prevent updates from only happening with stale data.
       }, updateHandler);
     }
   }

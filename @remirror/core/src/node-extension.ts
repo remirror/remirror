@@ -2,11 +2,12 @@ import { NodeType } from 'prosemirror-model';
 import { Extension, isExtension } from './extension';
 import { isNodeActive } from './helpers/utils';
 import {
-  BooleanFlexibleConfig,
+  BooleanExtensionCheck,
   EditorSchema,
   ExtensionType,
   NodeExtensionOptions,
   NodeExtensionSpec,
+  PlainObject,
   SchemaNodeTypeParams,
 } from './types';
 
@@ -17,8 +18,10 @@ import {
  * For more information see {@link https://prosemirror.net/docs/ref/#model.Node}
  */
 export abstract class NodeExtension<
-  GOptions extends NodeExtensionOptions = NodeExtensionOptions
-> extends Extension<GOptions, NodeType<EditorSchema>> {
+  GOptions extends NodeExtensionOptions = NodeExtensionOptions,
+  GCommands extends string = string,
+  GExtensionData extends {} = PlainObject
+> extends Extension<GOptions, GCommands, GExtensionData, NodeType<EditorSchema>> {
   /**
    * Identifies this extension as a **NODE** type from the prosemirror terminology.
    */
@@ -27,14 +30,23 @@ export abstract class NodeExtension<
   }
 
   /**
-   * Define the schema for the prosemirror node.
+   * The prosemirror specification which sets up the node in the schema.
+   *
+   * The main difference between this and Prosemirror `NodeSpec` is that that the `toDOM` method doesn't
+   * allow dom manipulation. You can only return an array or string.
+   *
+   * For more advanced configurations, where dom manipulation is required, it is advisable to set up a nodeView.
    */
   public abstract readonly schema: NodeExtensionSpec;
 
-  public active({ getState, type }: SchemaNodeTypeParams): BooleanFlexibleConfig {
-    return attrs => {
+  public isActive({ getState, type }: SchemaNodeTypeParams): BooleanExtensionCheck<GCommands> {
+    return ({ attrs }) => {
       return isNodeActive({ state: getState(), type, attrs });
     };
+  }
+
+  public isEnabled({  }: SchemaNodeTypeParams): BooleanExtensionCheck<GCommands> {
+    return () => true;
   }
 }
 

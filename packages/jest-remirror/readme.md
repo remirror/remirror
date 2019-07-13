@@ -137,15 +137,13 @@ describe('Mention#command', () => {
   });
 
   it('replaces text at the current position', () => {
-    add(doc(paragraph('This is ', '<cursor>')));
-    const attrs = { id: 'test', label: '@test' };
-
-    const at = mentionAt(attrs);
+    const { actions } = add(doc(paragraph('This is ', '<cursor>')));
+    const atMention = mentionAt({ id: 'test', label: '@test' });
 
     // Run the command the command
-    actions.mentionAt.command(attrs);
+    actions.createMention(attrs);
 
-    expect(view.state).toContainRemirrorDocument(paragraph('This is ', at()));
+    expect(view.state).toContainRemirrorDocument(paragraph('This is an ', atMention()));
   });
 });
 

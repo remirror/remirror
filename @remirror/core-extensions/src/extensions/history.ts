@@ -1,5 +1,13 @@
-import { BaseExtensionOptions, CommandFunction, environment, Extension } from '@remirror/core';
-import { history, redo, undo } from 'prosemirror-history';
+import {
+  BaseExtensionOptions,
+  BooleanExtensionCheck,
+  CommandFunction,
+  CommandParams,
+  environment,
+  Extension,
+  ExtensionManagerParams,
+} from '@remirror/core';
+import { history, redo, redoDepth, undo, undoDepth } from 'prosemirror-history';
 
 export interface HistoryExtensionOptions extends BaseExtensionOptions {
   /**
@@ -19,7 +27,10 @@ export interface HistoryExtensionOptions extends BaseExtensionOptions {
    */
   newGroupDelay?: number | null;
 }
-export class HistoryExtension extends Extension<HistoryExtensionOptions> {
+
+type HistoryExtensionCommands = 'undo' | 'redo';
+
+export class HistoryExtension extends Extension<HistoryExtensionOptions, HistoryExtensionCommands, {}> {
   get name() {
     return 'history' as const;
   }
@@ -48,6 +59,26 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
   public plugin() {
     const { depth, newGroupDelay } = this.options;
     return history({ depth, newGroupDelay });
+  }
+
+  public isEnabled({ getState }: ExtensionManagerParams): BooleanExtensionCheck<HistoryExtensionCommands> {
+    return ({ command }) => {
+      switch (command) {
+        case 'undo':
+          return undoDepth(getState()) > 0;
+        case 'redo':
+          return redoDepth(getState()) > 0;
+        default:
+          return false;
+      }
+    };
+  }
+
+  /**
+   * The history plugin doesn't really have an active state.
+   */
+  public isActive() {
+    return () => false;
   }
 
   public commands() {

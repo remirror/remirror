@@ -1,5 +1,6 @@
 import {
   Attrs,
+  BooleanExtensionCheck,
   Cast,
   CommandMarkTypeParams,
   getMarkRange,
@@ -28,7 +29,9 @@ export interface LinkExtensionOptions extends MarkExtensionOptions {
   activationHandler?(): void;
 }
 
-export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
+export type LinkExtensionCommands = 'updateLink' | 'removeLink';
+
+export class LinkExtension extends MarkExtension<LinkExtensionOptions, LinkExtensionCommands, {}> {
   get name() {
     return 'link' as const;
   }
@@ -87,38 +90,29 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public active({ getState, type }: SchemaMarkTypeParams) {
-    return {
-      /**
-       * Returns true when the current selection has an active link present.
-       */
-      update: () => {
-        return isMarkActive({ state: getState(), type });
-      },
-    };
-  }
-
   public commands({ type }: CommandMarkTypeParams) {
     return {
-      update: (attrs?: Attrs) => updateMark({ type, attrs }),
-      remove: () => {
+      updateLink: (attrs?: Attrs) => updateMark({ type, attrs }),
+      removeLink: () => {
         return removeMark({ type, expand: true });
       },
     };
   }
 
-  public enabled({ getState, type }: SchemaMarkTypeParams) {
-    return {
-      update: () => {
-        const { selection } = getState();
-        if (selectionEmpty(selection) || !isTextSelection(selection)) {
-          return false;
-        }
-        return true;
-      },
-      remove: () => {
-        return isMarkActive({ state: getState(), type });
-      },
+  public isEnabled({ getState, type }: SchemaMarkTypeParams): BooleanExtensionCheck<this['_GCommands']> {
+    return ({ command }) => {
+      switch (command) {
+        case 'removeLink':
+          return isMarkActive({ state: getState(), type });
+        case 'updateLink':
+          const { selection } = getState();
+          if (selectionEmpty(selection) || !isTextSelection(selection)) {
+            return false;
+          }
+          return true;
+        default:
+          return true;
+      }
     };
   }
 

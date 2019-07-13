@@ -118,7 +118,7 @@ export const TwitterEditorComponent: FC<TwitterEditorComponentProps> = ({
               onBlur={onBlurEmojiPicker}
               data={emojiData}
               set={emojiSet}
-              onSelection={onSelectEmoji(actions.emoji.command)}
+              onSelection={onSelectEmoji(actions.emoji)}
               ignoredElements={ignoredElements}
             />
           </EmojiPickerWrapper>

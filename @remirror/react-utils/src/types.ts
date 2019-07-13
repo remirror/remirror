@@ -78,7 +78,10 @@ export type GetPositionerReturn<GRefKey extends string = 'ref'> = PositionerProp
 /**
  * These are the props passed to the render function provided when setting up your editor.
  */
-export interface InjectedRemirrorProps {
+export interface InjectedRemirrorProps<
+  GCommands extends string = string,
+  GExtensionData extends {} = PlainObject
+> {
   /**
    * An instance of the extension manager
    */
@@ -91,7 +94,7 @@ export interface InjectedRemirrorProps {
   /**
    * A map of actions available the
    */
-  actions: RemirrorActions;
+  actions: RemirrorActions<GCommands>;
 
   /**
    * The unique id for the editor instance

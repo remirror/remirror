@@ -6,8 +6,7 @@ import { EditorState, PluginKey } from 'prosemirror-state';
 import { ComponentType } from 'react';
 import { AnyExtension, FlexibleExtension } from './extension';
 import {
-  booleanFlexibleFunctionMap,
-  commandFlexibleFunctionMap,
+  createCommands,
   extensionPropertyMapper,
   hasExtensionProperty,
   ignoreFunctions,
@@ -21,7 +20,9 @@ import { NodeViewPortalContainer } from './portal-container';
 import {
   ActionGetter,
   ActionMethods,
+  Attrs,
   AttrsWithClass,
+  BooleanExtensionCheck,
   CommandFunction,
   CommandParams,
   EditorSchema,
@@ -32,6 +33,7 @@ import {
   MarkExtensionSpec,
   NodeExtensionSpec,
   NodeViewMethod,
+  PlainObject,
   ProsemirrorPlugin,
   RemirrorActions,
   TransactionParams,
@@ -48,6 +50,8 @@ export interface ExtensionManagerData {
   pasteRules: ProsemirrorPlugin[];
   actions: RemirrorActions;
   view: EditorView;
+  isActive: Record<string, BooleanExtensionCheck<string>>;
+  isEnabled: Record<string, BooleanExtensionCheck<string>>;
 }
 
 /**
@@ -157,6 +161,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     this.initData.keymaps = this.keymaps();
     this.initData.inputRules = this.inputRules();
     this.initData.pasteRules = this.pasteRules();
+    this.initData.isActive = this.booleanCheck('isActive');
+    this.initData.isEnabled = this.booleanCheck('isEnabled');
 
     this.initData.plugins = [
       ...this.initData.directPlugins,
@@ -305,6 +311,22 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
+   * Collect data from all the extensions. This will be made available to the consuming react component
+   * within the context data and also the child renderProp function parameters.
+   */
+  public extensionData() {
+    const data: Record<string, PlainObject> = {};
+
+    for (const extension of this.extensions) {
+      data[extension.name] = extension.extensionData
+        ? extensionPropertyMapper('extensionData', this.params)(extension)
+        : {};
+    }
+
+    return data;
+  }
+
+  /**
    * Checks whether two manager's are equal. Can be used to determine whether
    * a change in props has caused anything to actually change and prevent a rerender.
    *
@@ -429,23 +451,39 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     const actions: RemirrorActions = {};
 
     // Creates the methods that take in attrs and dispatch an action into the editor
-    const commands = commandFlexibleFunctionMap({ extensions, params });
+    const commands = createCommands({ extensions, params });
 
-    // Creates methods determining whether a node is active or inactive
-    const active = booleanFlexibleFunctionMap({ key: 'active', extensions, params });
-
-    // Creates methods determining whether a node / mark is enabled
-    const enabled = booleanFlexibleFunctionMap({ key: 'enabled', extensions, params });
-
-    Object.entries(commands).forEach(([name, command]) => {
-      actions[name] = {
-        command,
-        isActive: active[name] ? active[name] : () => false,
-        isEnabled: enabled[name] ? enabled[name] : () => true,
-      };
+    Object.entries(commands).forEach(([commandName, { command, name }]) => {
+      actions[commandName] = command as ActionMethods;
+      actions[commandName].isActive = (attrs?: Attrs) =>
+        this.initData.isActive[name]({ attrs, command: commandName });
+      actions[commandName].isEnabled = (attrs?: Attrs) =>
+        this.initData.isEnabled[name]({ attrs, command: commandName });
     });
 
     return actions;
+  }
+
+  /**
+   * Return the object of a boolean helper.
+   *
+   * This can be `isActive` or `isEnabled`.
+   */
+  private booleanCheck(method: 'isEnabled' | 'isActive') {
+    this.checkInitialized();
+    const isActiveMethods: Record<string, BooleanExtensionCheck<string>> = {};
+
+    this.extensions.filter(hasExtensionProperty(method)).reduce(
+      (acc, extension) => ({
+        ...acc,
+        [extension.name]: extensionPropertyMapper(method, this.params)(extension) as BooleanExtensionCheck<
+          typeof extension['_GCommands']
+        >,
+      }),
+      isActiveMethods,
+    );
+
+    return isActiveMethods;
   }
 
   /**
@@ -488,6 +526,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * Retrieve all keymaps (how the editor responds to keyboard commands).
    */
   private keymaps() {
+    this.checkInitialized();
     const extensionKeymaps = this.extensions
       .filter(hasExtensionProperty('keys'))
       .filter(extension => !extension.options.excludeKeymaps)
@@ -517,6 +556,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * Retrieve all inputRules (how the editor responds to text matching certain rules).
    */
   private inputRules() {
+    this.checkInitialized();
     const rules: InputRule[] = [];
     const extensionInputRules = this.extensions
       .filter(hasExtensionProperty('inputRules'))
@@ -534,6 +574,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * Retrieve all pasteRules (rules for how the editor responds to pastedText).
    */
   private pasteRules(): ProsemirrorPlugin[] {
+    this.checkInitialized();
     const pasteRules: ProsemirrorPlugin[] = [];
     const extensionPasteRules = this.extensions
       .filter(hasExtensionProperty('pasteRules'))
@@ -551,6 +592,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * Extensions can register custom styles for the editor. This retrieves them.
    */
   private styles(): Interpolation[] {
+    this.checkInitialized();
     const extensionStyles = this.extensions
       .filter(hasExtensionProperty('styles'))
       .filter(extension => !extension.options.excludeStyles)

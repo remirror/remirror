@@ -1,3 +1,3 @@
-export * from './extension.multicursor';
-export * from './selection';
-export * from './types';
+export * from './multicursor-extension';
+export * from './multicursor-selection';
+export * from './multicursor-types';

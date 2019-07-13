@@ -2,12 +2,13 @@ import {
   CommandFunction,
   CommandNodeTypeParams,
   NodeExtension,
+  NodeExtensionOptions,
   NodeExtensionSpec,
   nodeInputRule,
   SchemaNodeTypeParams,
 } from '@remirror/core';
 
-export class HorizontalRuleExtension extends NodeExtension {
+export class HorizontalRuleExtension extends NodeExtension<NodeExtensionOptions, 'horizontalRule', {}> {
   get name() {
     return 'horizontalRule' as const;
   }
@@ -22,12 +23,14 @@ export class HorizontalRuleExtension extends NodeExtension {
   }
 
   public commands({ type }: CommandNodeTypeParams) {
-    return (): CommandFunction => (state, dispatch) => {
-      if (!dispatch) {
-        return false;
-      }
-      dispatch(state.tr.replaceSelectionWith(type.create()));
-      return true;
+    return {
+      horizontalRule: (): CommandFunction => (state, dispatch) => {
+        if (!dispatch) {
+          return false;
+        }
+        dispatch(state.tr.replaceSelectionWith(type.create()));
+        return true;
+      },
     };
   }
 

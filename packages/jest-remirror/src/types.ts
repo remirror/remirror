@@ -214,11 +214,11 @@ export type CreateTestEditorReturn<
 };
 
 export interface CreateTestEditorExtensions<
-  GPlainMarks extends Array<MarkExtension<any>>,
-  GPlainNodes extends Array<NodeExtension<any>>,
-  GAttrMarks extends Array<MarkExtension<any>>,
-  GAttrNodes extends Array<NodeExtension<any>>,
-  GOthers extends Array<Extension<any>>
+  GPlainMarks extends Array<MarkExtension<any, any, any>>,
+  GPlainNodes extends Array<NodeExtension<any, any, any>>,
+  GAttrMarks extends Array<MarkExtension<any, any, any>>,
+  GAttrNodes extends Array<NodeExtension<any, any, any>>,
+  GOthers extends Array<Extension<any, any, any>>
 > {
   plainMarks: GPlainMarks;
   plainNodes: GPlainNodes;
