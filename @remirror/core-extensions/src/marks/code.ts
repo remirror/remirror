@@ -31,10 +31,10 @@ export class CodeExtension extends MarkExtension {
   }
 
   public inputRules({ type }: SchemaMarkTypeParams) {
-    return [markInputRule(/(?:`)([^`]+)(?:`)$/, type)];
+    return [markInputRule({ regexp: /(?:`)([^`]+)(?:`)$/, type })];
   }
 
   public pasteRules({ type }: SchemaMarkTypeParams) {
-    return [markPasteRule(/(?:`)([^`]+)(?:`)/g, type)];
+    return [markPasteRule({ regexp: /(?:`)([^`]+)(?:`)/g, type })];
   }
 }

@@ -1,5 +1,5 @@
+import { CodeBlockExtensionOptions } from '@remirror/extension-code-block';
 import { RemirrorManagerProps, RemirrorProps } from '@remirror/react-utils';
-import { RefractorNode } from 'refractor/core';
 import { ButtonState, WysiwygEditorTheme } from './theme';
 export interface WysiwygEditorProps
   extends Partial<
@@ -19,7 +19,8 @@ export interface WysiwygEditorProps
         | 'forceEnvironment'
       >
     >,
-    Pick<RemirrorManagerProps, 'placeholder'> {
+    Pick<RemirrorManagerProps, 'placeholder'>,
+    Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme'> {
   /**
    * Extend the theme with your own styles
    */
@@ -38,15 +39,6 @@ export interface WysiwygEditorProps
    * @default false
    */
   removeFontAwesomeCSS?: boolean;
-
-  /**
-   * Supported code block languages.
-   *
-   * Set to an empty array to remove any code highlighting of any kind.
-   *
-   * @default `[js, jsx, ts, tsx, html, markdown]`
-   */
-  languages?: RefractorNode[];
 }
 
 export interface ButtonProps {

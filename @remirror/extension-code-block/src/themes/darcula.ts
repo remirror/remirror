@@ -8,7 +8,7 @@
  * @version 1.0
  */
 
-import { css } from 'emotion';
+import { css } from '@remirror/react-utils';
 
 export default css`
   code[class*='language-'],

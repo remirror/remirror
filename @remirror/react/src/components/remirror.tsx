@@ -13,7 +13,6 @@ import {
   isPlainObject,
   NodeViewPortalContainer,
   ObjectNode,
-  Position,
   RemirrorContentType,
   shouldUseDOMEnvironment,
   toHTML,
@@ -259,7 +258,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
     // Create the onRef handler which will store the ref to the positioner component
     const ref = this.positionerRefFactory({
       positionerId: config.positionerId,
-      position: config.initialPosition as Position,
+      position: config.initialPosition,
     });
 
     // Calculate the props

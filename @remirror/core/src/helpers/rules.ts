@@ -1,24 +1,14 @@
 import { InputRule } from 'prosemirror-inputrules';
-import { Fragment, MarkType, Node as PMNode, Slice } from 'prosemirror-model';
-import { Plugin } from 'prosemirror-state';
-import { Attrs, GetAttrs, InputRuleCreator } from '../types';
+import { Fragment, Node as PMNode, Slice } from 'prosemirror-model';
+import { NodeSelection, Plugin, Selection, TextSelection } from 'prosemirror-state';
+import { GetAttrsParams, MarkTypeParams, NodeTypeParams, RegExpParams } from '../types';
 import { findMatches, isFunction } from './base';
 
 /**
  * Creates an input rule based on the provided regex for the provided mark type
- *
- * @param regex - the regex matcher
- * @param type - the mark type
- * @param getAttrs - the attributes or attribute creating function
- *
- * @public
  */
-export const markInputRule = (
-  regex: RegExp,
-  type: MarkType,
-  getAttrs?: ((attrs: string | string[]) => Attrs) | Attrs,
-) => {
-  return new InputRule(regex, (state, match, start, end) => {
+export const markInputRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) => {
+  return new InputRule(regexp, (state, match, start, end) => {
     const { tr } = state;
     const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
 
@@ -51,14 +41,8 @@ export const markInputRule = (
 
 /**
  * Creates a paste rule based on the provided regex for the provided mark type
- *
- * @param regex - the regex matcher
- * @param type - the mark type
- * @param getAttrs - the attributes or attribute creating function
- *
- * @public
  */
-export const markPasteRule = (regexp: RegExp, type: MarkType, getAttrs?: GetAttrs) => {
+export const markPasteRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) => {
   const handler = (fragment: Fragment) => {
     const nodes: PMNode[] = [];
 
@@ -106,18 +90,27 @@ export const markPasteRule = (regexp: RegExp, type: MarkType, getAttrs?: GetAttr
 
 /**
  * Creates an node input rule based on the provided regex for the provided node type
- *
- * @param regex - the regex matcher
- * @param type - the node type
- * @param getAttrs - the attributes or attribute creating function
- *
- * @public
  */
-export const nodeInputRule: InputRuleCreator = (regexp, type, getAttrs) => {
+export const nodeInputRule = ({ regexp, type, getAttrs, updateSelection = false }: NodeInputRuleParams) => {
   return new InputRule(regexp, (state, match, start, end) => {
     const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
     const { tr } = state;
 
-    return tr.replaceWith(start - 1, end, type.create(attrs!));
+    tr.replaceWith(start - 1, end, type.create(attrs!));
+
+    if (updateSelection) {
+      const $pos = tr.doc.resolve(start);
+      tr.setSelection(new TextSelection($pos));
+    }
+    return tr;
   });
 };
+
+interface NodeInputRuleParams extends Partial<GetAttrsParams>, RegExpParams, NodeTypeParams {
+  /**
+   * Allows for setting a text selection at the start of the newly created node.
+   * Leave blank or set to false to ignore.
+   */
+  updateSelection?: boolean;
+}
+interface MarkInputRuleParams extends Partial<GetAttrsParams>, RegExpParams, MarkTypeParams {}

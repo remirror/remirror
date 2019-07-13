@@ -6,7 +6,6 @@ import javascript from 'refractor/lang/javascript';
 import markdown from 'refractor/lang/markdown';
 import typescript from 'refractor/lang/typescript';
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '../';
-import { getLanguageNamesAndAliases, getSupportedLanguages } from '../code-block-utils';
 
 describe('schema', () => {
   const { schema } = createBaseTestManager([{ extension: new CodeBlockExtension(), priority: 1 }]);
@@ -94,20 +93,61 @@ describe('plugin', () => {
     expect(dom.innerHTML).toMatchSnapshot();
   });
 
-  it('responds to space input rule', () => {
-    const { state } = add(doc(p('<cursor>'))).insertText('```typescript ');
-    expect(state).toContainRemirrorDocument(tsBlock());
+  it('changes markup when the language changes', () => {
+    const markupBlock = codeBlock();
+    const content = `const a = 'test';`;
+    const { overwrite } = add(doc(markupBlock(content)));
+    const initialHtml = dom.querySelector('.language-markup')!.innerHTML;
+
+    overwrite(doc(tsBlock(content)));
+    const newHtml = dom.querySelector('.language-typescript')!.innerHTML;
+    expect(newHtml).not.toBe(initialHtml);
   });
 
-  it('responds to empty space input rule using the default language', () => {
-    const markupBlock = codeBlock({ language: 'markup' });
-    const { state } = add(doc(p('<cursor>'))).insertText('``` ');
-    expect(state).toContainRemirrorDocument(markupBlock());
+  describe('Space', () => {
+    it('responds to space input rule', () => {
+      const { state } = add(doc(p('<cursor>'))).insertText('```typescript abc');
+      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('abc'), p()));
+    });
+
+    it('responds to empty space input rule using the default language', () => {
+      const markupBlock = codeBlock({ language: 'markup' });
+      const { state } = add(doc(p('<cursor>'))).insertText('``` abc');
+      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
+    });
+
+    it('does not match invalid regex', () => {
+      const { state } = add(doc(p('<cursor>'))).insertText('```123-__ ');
+      expect(state.doc).toEqualRemirrorDocument(doc(p('```123-__ ')));
+    });
   });
 
-  it.only('responds to enter key press', () => {
-    const { state } = add(doc(p('<cursor>'))).insertText('```typescript\n');
-    expect(state).toContainRemirrorDocument(tsBlock());
+  describe('Enter', () => {
+    it('responds to enter key press', () => {
+      const { state } = add(doc(p('<cursor>')))
+        .insertText('```typescript')
+        .press('Enter')
+        .insertText('abc');
+      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('abc'), p()));
+    });
+
+    it('responds to enter key press with empty language', () => {
+      const markupBlock = codeBlock({ language: 'markup' });
+      const { state } = add(doc(p('<cursor>')))
+        .insertText('```')
+        .press('Enter')
+        .insertText('abc');
+      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
+    });
+
+    it('uses default language when given an invalid language', () => {
+      const markupBlock = codeBlock({ language: 'markup' });
+      const { state } = add(doc(p('<cursor>')))
+        .insertText('```invalidlang')
+        .press('Enter')
+        .insertText('abc');
+      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
+    });
   });
 });
 
@@ -130,11 +170,14 @@ describe('commands', () => {
 
   describe('updateAttrs ', () => {
     it('updates the language', () => {
-      const tsBlock = codeBlock({ language: 'typescript' });
-      const { actions } = add(doc(tsBlock(`const a = 'test';<cursor>`)));
-      expect(view.dom.querySelector('.language-typescript')).toBeTruthy();
+      const markupBlock = codeBlock({ language: 'markup' });
+      const { actions } = add(doc(markupBlock(`const a = 'test';<cursor>`)));
+
+      expect(view.dom.querySelector('.language-markup')).toBeTruthy();
+
       actions.codeBlockUpdateAttrs.command({ language: 'javascript' });
-      expect(view.dom.querySelector('.language-typescript')).toBeFalsy();
+
+      expect(view.dom.querySelector('.language-markup')).toBeFalsy();
       expect(view.dom.querySelector('.language-javascript')!.outerHTML).toMatchSnapshot();
     });
   });

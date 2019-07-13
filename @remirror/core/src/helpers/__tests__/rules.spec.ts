@@ -4,7 +4,7 @@ import { markInputRule, markPasteRule, nodeInputRule } from '../rules';
 
 describe('markPasteRule', () => {
   it('should transform simple content', () => {
-    const plugin = markPasteRule(/(Hello)/, testSchema.marks.strong);
+    const plugin = markPasteRule({ regexp: /(Hello)/, type: testSchema.marks.strong });
     const {
       state: { tr },
       view,
@@ -19,7 +19,7 @@ describe('markPasteRule', () => {
   });
 
   it('should transform complex content', () => {
-    const plugin = markPasteRule(/(@[a-z]+)/, testSchema.marks.strong);
+    const plugin = markPasteRule({ regexp: /(@[a-z]+)/, type: testSchema.marks.strong });
     const {
       state: { tr },
       view,
@@ -42,7 +42,7 @@ describe('markPasteRule', () => {
   });
 
   it('should not transform when no match found', () => {
-    const plugin = markPasteRule(/(Hello)/, testSchema.marks.strong);
+    const plugin = markPasteRule({ regexp: /(Hello)/, type: testSchema.marks.strong });
     const {
       state: { tr },
       view,
@@ -64,7 +64,7 @@ describe('markPasteRule', () => {
 describe('markInputRule', () => {
   it('should wrap matched content with the specified mark type', () => {
     const getAttrs = jest.fn(() => ({ 'data-testid': 'awesome' }));
-    const rule = markInputRule(/~([^~]+)~$/, testSchema.marks.strong, getAttrs);
+    const rule = markInputRule({ regexp: /~([^~]+)~$/, type: testSchema.marks.strong, getAttrs });
     const {
       state: { selection },
       view,
@@ -81,7 +81,7 @@ describe('markInputRule', () => {
   });
 
   it('should not give false positives', () => {
-    const rule = markInputRule(/~([^~]+)~$/, testSchema.marks.strong);
+    const rule = markInputRule({ regexp: /~([^~]+)~$/, type: testSchema.marks.strong });
     const {
       state: { selection },
       view,
@@ -101,7 +101,7 @@ describe('markInputRule', () => {
 describe('nodeInputRule', () => {
   it('should wrap matched content with the specified mark type', () => {
     const getAttrs = jest.fn(() => ({ 'data-testid': 'awesome' }));
-    const rule = nodeInputRule(/~([^~]+)~$/, testSchema.nodes.horizontalRule, getAttrs);
+    const rule = nodeInputRule({ regexp: /~([^~]+)~$/, type: testSchema.nodes.horizontalRule, getAttrs });
     const {
       state: { selection },
       view,
@@ -118,7 +118,7 @@ describe('nodeInputRule', () => {
   });
 
   it('should not give false positives', () => {
-    const rule = nodeInputRule(/~([^~]+)~$/, testSchema.nodes.horizontalRule);
+    const rule = nodeInputRule({ regexp: /~([^~]+)~$/, type: testSchema.nodes.horizontalRule });
     const {
       state: { selection },
       view,

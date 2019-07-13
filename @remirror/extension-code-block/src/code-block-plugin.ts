@@ -1,25 +1,22 @@
 import {
   CompareStateParams,
-  DispatchFunction,
   EditorState,
   findChildrenByNode,
-  isTextSelection,
   NodeExtension,
   NodeType,
   NodeWithPosition,
   PMNodeParams,
   SchemaNodeTypeParams,
+  Transaction,
   TransactionParams,
 } from '@remirror/core';
-import { keydownHandler } from 'prosemirror-keymap';
-import { Plugin, Transaction } from 'prosemirror-state';
+import { Plugin } from 'prosemirror-state';
 import { Step } from 'prosemirror-transform';
 import { DecorationSet } from 'prosemirror-view';
 import { CodeBlockExtensionOptions } from './code-block-types';
 import {
   createDecorations,
   getNodeInformationFromState,
-  isSupportedLanguage,
   lengthHasChanged,
   NodeInformation,
   posWithinRange,
@@ -60,6 +57,8 @@ export class CodeBlockState {
   /**
    * Run through each step in the transaction and check whether the change
    * occurred within one of the active code blocks.
+   *
+   * TODO this should actually be used to update the decorations for the blocks.
    */
   private numberOfChangedBlocks(steps: Step[]) {
     let changes = 0;
@@ -110,6 +109,8 @@ export class CodeBlockState {
       return this;
     }
 
+    // console.log(JSON.stringify(tr.steps, null, 2));
+
     // Get all the codeBlocks in the document
     const blocks = findChildrenByNode({ node: tr.doc, type: this.type });
 
@@ -138,16 +139,17 @@ export class CodeBlockState {
    */
   private updateDecorationSet({ nodeInfo: { from, to, node, pos }, tr }: UpdateDecorationSetParams) {
     const decorationSet = this.decorationSet.remove(this.decorationSet.find(from, to));
-
     this.decorationSet = decorationSet.add(tr.doc, createDecorations([{ node, pos }]));
   }
 
   private manageDecorationSet({ previous, current, tr }: ManageDecorationSetParams) {
-    if (current.type === this.type) {
-      this.updateDecorationSet({ nodeInfo: current, tr });
-    }
+    // Update the previous first although this could be buggy when deleting (possibly)
     if (previous.type === this.type && !previous.node.eq(current.node)) {
       this.updateDecorationSet({ nodeInfo: previous, tr });
+    }
+
+    if (current.type === this.type) {
+      this.updateDecorationSet({ nodeInfo: current, tr });
     }
   }
 }

@@ -201,3 +201,10 @@ export interface PredicateParams<GParams> {
    */
   predicate(params: GParams): boolean;
 }
+
+export interface RegExpParams {
+  /**
+   * The regular expression to test against.
+   */
+  regexp: RegExp;
+}

@@ -7,7 +7,7 @@ exports[`plugin can be updated 1`] = `"<span class=\\"token keyword\\">const</sp
 exports[`plugin can be updated 2`] = `
 "<span class=\\"token keyword\\">const</span><span> a </span><span class=\\"token operator\\">=</span><span> </span><span class=\\"token string\\">'test'</span><span class=\\"token punctuation\\">;</span><span>
 
-</span><span class=\\"token builtin\\">console</span><span class=\\"token punctuation\\">.</span><span class=\\"token function\\">log</span><span class=\\"token punctuation\\">(</span><span>a</span><span class=\\"token punctuation\\">)</span>;"
+</span><span class=\\"token builtin\\">console</span><span class=\\"token punctuation\\">.</span><span class=\\"token function\\">log</span><span class=\\"token punctuation\\">(</span><span>a</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span>"
 `;
 
 exports[`plugin renders the correct decorations 1`] = `"<span class=\\"token keyword\\">const</span><span> a </span><span class=\\"token operator\\">=</span><span> </span><span class=\\"token string\\">'test'</span><span class=\\"token punctuation\\">;</span>"`;

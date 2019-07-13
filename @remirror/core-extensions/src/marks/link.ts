@@ -124,11 +124,11 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
 
   public pasteRules({ type }: SchemaMarkTypeParams) {
     return [
-      markPasteRule(
-        /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
+      markPasteRule({
+        regexp: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
         type,
-        url => ({ href: getMatchString(url) }),
-      ),
+        getAttrs: url => ({ href: getMatchString(url) }),
+      }),
     ];
   }
 

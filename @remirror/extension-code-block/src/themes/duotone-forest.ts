@@ -6,7 +6,7 @@ Conversion: Bram de Haan (http://atelierbram.github.io/Base2Tone-prism/output/pr
 Generated with Base16 Builder (https://github.com/base16-builder/base16-builder)
 */
 
-import { css } from 'emotion';
+import { css } from '@remirror/react-utils';
 
 export default css`
   code[class*='language-'],

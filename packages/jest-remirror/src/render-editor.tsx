@@ -22,9 +22,9 @@ import {
   dispatchTextSelection,
   fireEventAtPosition,
   insertText,
-  keyboardShortcut,
   press,
   replaceSelection,
+  shortcut,
 } from './transactions';
 import {
   AddContent,
@@ -140,12 +140,12 @@ export const renderEditor = <
         overwrite: add,
         state: view.state,
         actions: returnedParams.actions,
-        shortcut: shortcut => {
-          keyboardShortcut({ shortcut, view });
+        shortcut: text => {
+          shortcut({ shortcut: text, view });
           return createAddContentReturn();
         },
-        press: shortcut => {
-          press({ shortcut, view });
+        press: char => {
+          press({ char, view });
           return createAddContentReturn();
         },
         fire: params => {

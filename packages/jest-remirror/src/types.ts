@@ -103,7 +103,8 @@ export interface TaggedProsemirrorNode extends PMNode {
 
 export interface AddContentReturn extends EditorStateParams {
   /**
-   * A map of actions available the
+   * The actions available in the editor. When updating the content of the TestEditor make sure not to
+   * use a stale copy of the actions otherwise it will throw errors due to using an outdated state.
    */
   actions: RemirrorActions;
 

@@ -7,7 +7,7 @@ Prism template by Bram de Haan (http://atelierbram.github.io/syntax-highlighting
 Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
 */
 
-import { css } from 'emotion';
+import { css } from '@remirror/react-utils';
 
 export default css`
   code[class*='language-'],

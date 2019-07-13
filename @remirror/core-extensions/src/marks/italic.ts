@@ -31,10 +31,10 @@ export class ItalicExtension extends MarkExtension {
   }
 
   public inputRules({ type }: SchemaMarkTypeParams) {
-    return [markInputRule(/(?:^|[^*_])(?:\*|_)([^*_]+)(?:\*|_)$/, type)];
+    return [markInputRule({ regexp: /(?:^|[^*_])(?:\*|_)([^*_]+)(?:\*|_)$/, type })];
   }
 
   public pasteRules({ type }: SchemaMarkTypeParams) {
-    return [markPasteRule(/(?:^|[^*_])(?:\*|_)([^*_]+)(?:\*|_)/g, type)];
+    return [markPasteRule({ regexp: /(?:^|[^*_])(?:\*|_)([^*_]+)(?:\*|_)/g, type })];
   }
 }

@@ -46,14 +46,26 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
    * The theme to use for the codeBlocks.
    *
    * @remarks
-   * Currently only one theme can be set per document.
+   * Currently only one theme can be set per editor.
    *
-   * Set this to false if you don't want to manage the syntax styles by yourself.
+   * Set this to false if you want to manage the syntax styles by yourself.
    * For some tips on how this could be accomplished see {@link https://prismjs.com}
    *
    * @default 'atomDark'
    */
   syntaxTheme?: SyntaxTheme | false;
+
+  /**
+   * A handler called whenever any code block in the document has changed.
+   *
+   * Returns a list of all codeBlocks, whether they are active, their prosemirror node
+   */
+  onUpdate?(blocks: any[]): void;
+
+  /**
+   * Provides information on the specific block that was hovered over as well as the hover event.
+   */
+  onHover?({ block, event, view }: any): void;
 }
 
 export interface CodeBlockAttrs extends Attrs {

@@ -234,12 +234,12 @@ export enum ExtensionType {
 
 export type GetAttrs = Attrs | ((p: string[] | string) => Attrs | undefined);
 
-export type InputRuleCreator = (
-  regexp: RegExp,
-  nodeType: NodeType,
-  getAttrs?: GetAttrs,
-  joinPredicate?: (p1: string[], p2: PMNode) => boolean,
-) => InputRule;
+export interface GetAttrsParams {
+  /**
+   * A helper function for setting receiving a match array / string and setting the attributes for a node.
+   */
+  getAttrs: GetAttrs;
+}
 
 export * from './aliases';
 export * from './base';

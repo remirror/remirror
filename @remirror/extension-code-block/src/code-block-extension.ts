@@ -2,10 +2,9 @@ import {
   BooleanFlexibleConfig,
   CommandFlexibleConfig,
   CommandNodeTypeParams,
-  findParentNodeOfType,
+  GetAttrs,
   getMatchString,
   isElementDOMNode,
-  isEqual,
   isNodeActive,
   isTextSelection,
   KeyboardBindings,
@@ -17,6 +16,8 @@ import {
   toggleBlockItem,
 } from '@remirror/core';
 import { setBlockType } from 'prosemirror-commands';
+// import { wrappingInputRule } from 'prosemirror-inputrules';
+import { TextSelection } from 'prosemirror-state';
 import refractor from 'refractor/core';
 import createCodeBlockPlugin from './code-block-plugin';
 import { CodeBlockExtensionOptions } from './code-block-types';
@@ -87,9 +88,9 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
       ],
       toDOM: node => {
         const { language, ...rest } = node.attrs;
-        const attrs = { ...rest, class: `language-${language}`, [dataAttribute]: language };
+        const attrs = { ...rest, class: `language-${language}` };
 
-        return ['pre', ['code', attrs, 0]];
+        return ['pre', attrs, ['code', { [dataAttribute]: language }, 0]];
       },
     };
   }
@@ -137,13 +138,22 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
    * Create an input rule that listens converts the code fence into a code block with space.
    */
   public inputRules({ type }: SchemaNodeTypeParams) {
-    return [nodeInputRule(/^```([a-zA-Z]*)? $/, type, match => ({ language: getMatchString(match, 1) }))];
+    const regexp = /^```([a-zA-Z]*)? $/;
+    const getAttrs: GetAttrs = match => ({ language: getMatchString(match, 1) });
+    return [
+      nodeInputRule({
+        regexp,
+        type,
+        updateSelection: true,
+        getAttrs,
+      }),
+      // wrappingInputRule(/^```(?:[a-zA-Z]*)? $/, type, getAttrs),
+    ];
   }
 
   public keys({ type }: SchemaNodeTypeParams): KeyboardBindings {
     return {
       Enter: (state, dispatch) => {
-        console.log('enter key pressed');
         const { selection, tr } = state;
         if (!isTextSelection(selection) || !selection.$cursor) {
           return false;
@@ -168,17 +178,20 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
           return false;
         }
 
-        const [, language] = matches;
+        let [, language] = matches;
         // create the node with the language, etc. & set the selection inside it
         // you may also want to assert a depth in the document, etc. if you have blockquotes, etc as otherwise this would get triggered in there too
         if (!isSupportedLanguage(language, this.options.supportedLanguages)) {
-          return false;
+          language = this.options.defaultLanguage;
         }
 
-        console.log({ before: selection.$from.before(), start: selection.$from.start() });
         const pos = selection.$from.before();
-        const end = selection.$from.after();
-        // tr.replaceWith(pos, end, type.create({ language }));
+        const end = pos + nodeBefore.nodeSize + 1; // +1 to account for the extra pos a node takes up
+        tr.replaceWith(pos, end, type.create({ language }));
+
+        // Set the selection to within the codeBlock
+        const $pos = tr.doc.resolve(pos + 1);
+        tr.setSelection(new TextSelection($pos));
 
         if (!dispatch) {
           return false;

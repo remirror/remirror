@@ -173,15 +173,19 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
   public pasteRules({ type }: SchemaMarkTypeParams) {
     return this.options.matchers.map(matcher => {
       const { startOfLine, char, supportedCharacters } = { ...DEFAULT_MATCHER, ...matcher };
-      const regex = new RegExp(
+      const regexp = new RegExp(
         `(${getRegexPrefix(startOfLine)}${escapeChar(char)}${regexToString(supportedCharacters)})`,
         'g',
       );
 
-      return markPasteRule(regex, type, str => ({
-        id: getMatchString(str.slice(char.length, str.length)),
-        label: getMatchString(str),
-      }));
+      return markPasteRule({
+        regexp,
+        type,
+        getAttrs: str => ({
+          id: getMatchString(str.slice(char.length, str.length)),
+          label: getMatchString(str),
+        }),
+      });
     });
   }
 

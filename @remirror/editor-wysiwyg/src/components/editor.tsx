@@ -29,6 +29,10 @@ import { WysiwygEditorProps } from '../types';
 import { BubbleMenu, BubbleMenuProps, MenuBar } from './menu';
 import { EditorWrapper, InnerEditorWrapper } from './styled';
 
+import markdown from 'refractor/lang/markdown';
+import tsx from 'refractor/lang/tsx';
+import typescript from 'refractor/lang/typescript';
+
 const defaultPlaceholder: RemirrorManagerProps['placeholder'] = [
   'Start typing...',
   {
@@ -48,6 +52,8 @@ interface State {
 // TODO Refactor to use built in react svg icons
 // @see https://github.com/FortAwesome/react-fontawesome/issues/134#issuecomment-486052785
 config.autoAddCss = false;
+
+const DEFAULT_LANGUAGES = [markdown, typescript, tsx];
 
 export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
   public static defaultProps = asDefaultProps<WysiwygEditorProps>()({
@@ -70,6 +76,10 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
 
   get editorTheme() {
     return deepMerge(wysiwygEditorTheme, this.props.theme || {});
+  }
+
+  get supportedLanguages() {
+    return [...DEFAULT_LANGUAGES, ...(this.props.supportedLanguages || [])];
   }
 
   public render() {
@@ -95,7 +105,10 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
           <RemirrorExtension Constructor={BulletListExtension} />
           <RemirrorExtension Constructor={OrderedListExtension} />
           <RemirrorExtension Constructor={HardBreakExtension} />
-          <RemirrorExtension<CodeBlockExtensionOptions> Constructor={CodeBlockExtension} />
+          <RemirrorExtension<CodeBlockExtensionOptions>
+            Constructor={CodeBlockExtension}
+            supportedLanguages={this.supportedLanguages}
+          />
           <RemirrorExtension Constructor={SSRHelperExtension} />
           <ManagedRemirrorProvider {...props}>
             <InnerEditor

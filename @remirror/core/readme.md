@@ -89,12 +89,12 @@ export class StrikeExtension extends MarkExtension {
 
   // Input rules happen as code is being typed
   public inputRules({ type }: SchemaMarkTypeParams) {
-    return [markInputRule(/~([^~]+)~$/, type)];
+    return [markInputRule({ regexp: /~([^~]+)~$/, type })];
   }
 
   // Paste rules are activated when code is pasted into the editor
   public pasteRules({ type }: SchemaMarkTypeParams) {
-    return [markPasteRule(/~([^~]+)~/g, type)];
+    return [markPasteRule({ regexp: /~([^~]+)~/g, type })];
   }
 }
 ```

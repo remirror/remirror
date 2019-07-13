@@ -49,6 +49,6 @@ export class BoldExtension extends MarkExtension {
   }
 
   public inputRules({ type }: SchemaMarkTypeParams) {
-    return [markInputRule(/(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type)];
+    return [markInputRule({ regexp: /(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type })];
   }
 }

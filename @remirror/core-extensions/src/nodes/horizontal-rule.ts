@@ -32,6 +32,6 @@ export class HorizontalRuleExtension extends NodeExtension {
   }
 
   public inputRules({ type }: SchemaNodeTypeParams) {
-    return [nodeInputRule(/^(?:---|___\s|\*\*\*\s)$/, type)];
+    return [nodeInputRule({ regexp: /^(?:---|___\s|\*\*\*\s)$/, type })];
   }
 }

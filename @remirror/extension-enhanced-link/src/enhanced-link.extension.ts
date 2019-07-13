@@ -73,10 +73,14 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
 
   public pasteRules({ type }: SchemaMarkTypeParams) {
     return [
-      markPasteRule(extractUrl, type, url => {
-        return {
-          href: extractHref(getMatchString(url)),
-        };
+      markPasteRule({
+        regexp: extractUrl,
+        type,
+        getAttrs: url => {
+          return {
+            href: extractHref(getMatchString(url)),
+          };
+        },
       }),
     ];
   }

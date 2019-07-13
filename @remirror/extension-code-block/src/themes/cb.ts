@@ -7,7 +7,7 @@
  * Author URI: http://bavotasan.comhttp://wp.tutsplus.com/tutorials/plugins/adding-a-syntax-highlighter-shortcode-using-prism-js/ */
 /* http://cbavota.bitbucket.org/syntax-highlighter/  */
 
-import { css } from 'emotion';
+import { css } from '@remirror/react-utils';
 
 export default css`
   code[class*='language-'],
