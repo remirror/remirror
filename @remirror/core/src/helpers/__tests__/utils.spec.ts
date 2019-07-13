@@ -14,30 +14,31 @@ import {
   tdEmpty,
   tr as row,
 } from 'jest-prosemirror';
-import { TextSelection } from 'prosemirror-state';
+import { NodeSelection, TextSelection } from 'prosemirror-state';
 import { omit } from '../base';
 import {
   cloneTransaction,
-  equalNodeType,
   findDOMRefAtPos,
   findParentNode,
   findParentNodeOfType,
   findPositionOfNodeBefore,
+  findSelectedNodeOfType,
   isNodeActive,
+  nodeEqualsType,
   removeNodeAtPos,
   removeNodeBefore,
   selectionEmpty,
   transactionChanged,
 } from '../utils';
 
-describe('equalNodeType', () => {
+describe('nodeEqualsType', () => {
   it('matches with a singular nodeType', () => {
-    expect(equalNodeType(schema.nodes.paragraph, p())).toBeTrue();
+    expect(nodeEqualsType({ types: schema.nodes.paragraph, node: p() })).toBeTrue();
   });
 
   it('matches with an array of nodeTypes', () => {
     const { paragraph, blockquote: bq } = schema.nodes;
-    expect(equalNodeType([paragraph, bq], blockquote())).toBeTrue();
+    expect(nodeEqualsType({ types: [paragraph, bq], node: blockquote() })).toBeTrue();
   });
 });
 
@@ -212,7 +213,7 @@ describe('transactionChanged', () => {
       view,
     } = createEditor(doc(p('inline'), p('<start>aba<end>', 'awesome')));
     view.dispatch(tr);
-    expect(transactionChanged({ state: view.state, tr })).toBeFalse();
+    expect(transactionChanged(tr)).toBeFalse();
   });
 
   it('returns true when the doc has changed', () => {
@@ -222,13 +223,13 @@ describe('transactionChanged', () => {
     } = createEditor(doc(p('inline'), p('<start>aba<end>', 'awesome')));
     const newTr = tr.deleteSelection();
     view.dispatch(newTr);
-    expect(transactionChanged({ state: view.state, tr: newTr })).toBeTrue();
+    expect(transactionChanged(tr)).toBeTrue();
   });
 
   it('returns true when cursor changes', () => {
     const { state } = createEditor(doc(p('inline'), p('aba<cursor>')));
-    const newTr = state.tr.setSelection(TextSelection.atStart(state.doc));
-    expect(transactionChanged({ state, tr: newTr })).toBeTrue();
+    const tr = state.tr.setSelection(TextSelection.atStart(state.doc));
+    expect(transactionChanged(tr)).toBeTrue();
   });
 });
 
@@ -261,7 +262,10 @@ describe('findParentNode', () => {
     const {
       state: { selection },
     } = createEditor(doc(p('hello <cursor>')));
-    const { node } = findParentNode(pmNode => pmNode.type === schema.nodes.paragraph)(selection)!;
+    const { node } = findParentNode({
+      predicate: pmNode => pmNode.type === schema.nodes.paragraph,
+      selection,
+    })!;
     expect(node.type.name).toEqual('paragraph');
   });
 
@@ -269,7 +273,7 @@ describe('findParentNode', () => {
     const {
       state: { selection },
     } = createEditor(doc(table(row(tdCursor))));
-    const { node } = findParentNode(pmNode => pmNode.type === schema.nodes.table)(selection)!;
+    const { node } = findParentNode({ predicate: pmNode => pmNode.type === schema.nodes.table, selection })!;
     expect(node.type.name).toEqual('table');
   });
 
@@ -277,7 +281,10 @@ describe('findParentNode', () => {
     const {
       state: { selection },
     } = createEditor(doc(table(row(tdCursor))));
-    const result = findParentNode(pmNode => pmNode.type === schema.nodes.table_header)(selection);
+    const result = findParentNode({
+      predicate: pmNode => pmNode.type === schema.nodes.table_header,
+      selection,
+    });
     expect(result).toBeUndefined();
   });
 });
@@ -287,7 +294,7 @@ describe('findParentNodeOfType', () => {
     const {
       state: { selection },
     } = createEditor(doc(p('hello <cursor>')));
-    const { node } = findParentNodeOfType(schema.nodes.paragraph)(selection)!;
+    const { node } = findParentNodeOfType({ types: schema.nodes.paragraph, selection })!;
     expect(node.type.name).toEqual('paragraph');
   });
 
@@ -295,7 +302,7 @@ describe('findParentNodeOfType', () => {
     const {
       state: { selection },
     } = createEditor(doc(p('hello <cursor>')));
-    const result = findParentNodeOfType(schema.nodes.table)(selection);
+    const result = findParentNodeOfType({ types: schema.nodes.table, selection });
     expect(result).toBeUndefined();
   });
 
@@ -308,7 +315,7 @@ describe('findParentNodeOfType', () => {
         selection,
       },
     } = createEditor(doc(p('hello <cursor>')));
-    const { node } = findParentNodeOfType([tbl, bq, paragraph])(selection)!;
+    const { node } = findParentNodeOfType({ types: [tbl, bq, paragraph], selection })!;
     expect(node.type.name).toEqual('paragraph');
   });
 });
@@ -345,5 +352,36 @@ describe('nodeActive', () => {
     const { state, schema: sch } = createEditor(doc(p('Something', h2('is <cursor> heading'), 'here')));
     expect(isNodeActive({ state, type: sch.nodes.heading, attrs: { level: 1 } })).toBeFalse();
     expect(isNodeActive({ state, type: sch.nodes.heading, attrs: { level: 2 } })).toBeTrue();
+  });
+});
+
+describe('findSelectedNodeOfType', () => {
+  it('should return `undefined` if selection is not a NodeSelection', () => {
+    const {
+      state: { selection },
+    } = createEditor(doc(p('<cursor>')));
+    const node = findSelectedNodeOfType({ types: schema.nodes.paragraph, selection });
+
+    expect(node).toBeUndefined();
+  });
+
+  it('should return selected node of a given `nodeType`', () => {
+    const { state } = createEditor(doc(p('<cursor>one')));
+    const tr = state.tr.setSelection(NodeSelection.create(state.doc, 0));
+    const selectedNode = findSelectedNodeOfType({
+      types: state.schema.nodes.paragraph,
+      selection: tr.selection,
+    });
+
+    expect(selectedNode!.node.type.name).toEqual('paragraph');
+  });
+
+  it('should return selected node of one of the given `nodeType`s', () => {
+    const { state } = createEditor(doc(p('<cursor>one')));
+    const { paragraph } = state.schema.nodes;
+    const tr = state.tr.setSelection(NodeSelection.create(state.doc, 0));
+    const selectedNode = findSelectedNodeOfType({ types: [paragraph, table], selection: tr.selection });
+
+    expect(selectedNode!.node.type.name).toEqual('paragraph');
   });
 });

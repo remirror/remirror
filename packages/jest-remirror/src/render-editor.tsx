@@ -23,6 +23,7 @@ import {
   fireEventAtPosition,
   insertText,
   keyboardShortcut,
+  press,
   replaceSelection,
 } from './transactions';
 import {
@@ -141,6 +142,10 @@ export const renderEditor = <
         actions: returnedParams.actions,
         shortcut: shortcut => {
           keyboardShortcut({ shortcut, view });
+          return createAddContentReturn();
+        },
+        press: shortcut => {
+          press({ shortcut, view });
           return createAddContentReturn();
         },
         fire: params => {

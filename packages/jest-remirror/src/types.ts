@@ -155,6 +155,14 @@ export interface AddContentReturn extends EditorStateParams {
   shortcut(shortcut: string): AddContentReturn;
 
   /**
+   * Presses a key on the keyboard.
+   * e.g. `Mod-X`
+   *
+   * @param key
+   */
+  press(key: string): AddContentReturn;
+
+  /**
    * Fires a custom event at the specified dom node.
    * e.g. `click`
    *

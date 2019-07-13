@@ -11,6 +11,7 @@ import {
 } from 'prosemirror-model';
 import {
   EditorState as PMEditorState,
+  NodeSelection,
   Plugin,
   Selection as PMSelection,
   TextSelection,
@@ -93,6 +94,15 @@ export const isTextSelection = isInstanceOf(TextSelection);
  * @public
  */
 export const isSelection = isInstanceOf(PMSelection);
+
+/**
+ * Predicate checking whether the selection is a NodeSelection
+ *
+ * @param value - the value to check
+ *
+ * @public
+ */
+export const isNodeSelection = isInstanceOf(NodeSelection);
 
 interface IsMarkActiveParams extends MarkTypeParams, EditorStateParams, Partial<FromToParams> {}
 

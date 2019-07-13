@@ -28,6 +28,10 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
    *   <RemirrorExtension Constructor={CodeBlockExtension} supportedLanguages={[typescript, jsx]} />
    * </RemirrorManager>
    * ```
+   *
+   * By default refractor bundles the following languages: `markup`, `css`, `clike`, `js`
+
+   * @default []
    */
   supportedLanguages?: RefractorSyntax[];
 

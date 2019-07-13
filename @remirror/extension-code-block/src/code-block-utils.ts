@@ -1,6 +1,31 @@
-import { flattenArray, FromToParams, NodeWithPosition, PosParams, TextParams } from '@remirror/core';
+import {
+  Attrs,
+  bool,
+  CommandFunction,
+  EditorState,
+  findParentNodeOfType,
+  flattenArray,
+  FromToParams,
+  isEqual,
+  isObject,
+  isString,
+  NodeType,
+  NodeTypeParams,
+  NodeWithPosition,
+  PMNodeParams,
+  PosParams,
+  TextParams,
+  uniqueArray,
+} from '@remirror/core';
 import { Decoration } from 'prosemirror-view';
-import refractor, { RefractorNode } from 'refractor/core';
+import refractor, { RefractorNode, RefractorSyntax } from 'refractor/core';
+import { CodeBlockAttrs } from './code-block-types';
+
+// Refractor languages
+import clike from 'refractor/lang/clike';
+import css from 'refractor/lang/css';
+import js from 'refractor/lang/javascript';
+import markup from 'refractor/lang/markup';
 
 interface ParsedRefractorNode extends TextParams {
   /**
@@ -85,3 +110,95 @@ interface PosWithinRangeParams extends PosParams, FromToParams {}
  * Check if the position is within the range.
  */
 export const posWithinRange = ({ from, to, pos }: PosWithinRangeParams) => from <= pos && to >= pos;
+
+/**
+ * Check whether the length of an array has changed
+ */
+export const lengthHasChanged = <GType>(prev: ArrayLike<GType>, next: ArrayLike<GType>) =>
+  next.length !== prev.length;
+
+export interface NodeInformation extends NodeTypeParams, FromToParams, PMNodeParams, PosParams {}
+
+/**
+ * Retrieves helpful node information from the current state.
+ */
+export const getNodeInformationFromState = (state: EditorState): NodeInformation => {
+  const { $head } = state.selection;
+  const depth = $head.depth;
+  const from = $head.start(depth);
+  const to = $head.end(depth);
+  const node = $head.parent;
+  const type = node.type;
+  const pos = depth > 0 ? $head.before(depth) : 0;
+  return {
+    from,
+    to,
+    type,
+    node,
+    pos,
+  };
+};
+
+/**
+ * Updates the node attrs.
+ *
+ * Is used to update the language for the codeBlock.
+ */
+export const updateNodeAttrs = (type: NodeType) => (attrs?: Attrs): CommandFunction => (
+  { tr, selection },
+  dispatch,
+) => {
+  if (!isValidCodeBlockAttrs(attrs)) {
+    throw new Error('Invalid attrs passed to the updateAttrs method');
+  }
+
+  const parent = findParentNodeOfType({ types: type, selection })!;
+
+  if (!parent || isEqual(attrs, parent.node.attrs)) {
+    // Do nothing since the attrs are the same
+    return false;
+  }
+
+  tr.setNodeMarkup(parent.pos, type, attrs);
+  if (!dispatch) {
+    return true;
+  }
+
+  dispatch(tr);
+
+  return true;
+};
+
+/**
+ * Check that the attributes exist and are valid for the codeBlock updateAttrs.
+ */
+export const isValidCodeBlockAttrs = (attrs?: Attrs): attrs is CodeBlockAttrs =>
+  bool(attrs && isObject(attrs) && isString(attrs.language) && attrs.language.length);
+
+const AUTO_LOADED_LANGUAGES = [clike, css, js, markup];
+
+/**
+ * Retrieve the supported language names based on configuration.
+ */
+export const getSupportedLanguages = (supportedLanguages: RefractorSyntax[]) => {
+  return [...AUTO_LOADED_LANGUAGES, ...supportedLanguages].map(({ name }) => name);
+};
+
+/**
+ * The list of strings that are recognised language names based on the the configured
+ * supported languages
+ */
+export const getLanguageNamesAndAliases = (supportedLanguages: RefractorSyntax[]) => {
+  return uniqueArray(
+    flattenArray(
+      [...AUTO_LOADED_LANGUAGES, ...supportedLanguages].map(({ name, aliases }) => [name, ...aliases]),
+    ),
+  );
+};
+
+/**
+ * Returns true if the language is supported.
+ */
+export const isSupportedLanguage = (language: string, supportedLanguages: RefractorSyntax[]) => {
+  return getLanguageNamesAndAliases(supportedLanguages).includes(language);
+};

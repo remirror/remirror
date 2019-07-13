@@ -20,7 +20,7 @@ import {
   SchemaMarkTypeParams,
   TransactionTransformer,
 } from '@remirror/core';
-import { MentionExtensionAttrs, MentionExtensionOptions } from './mention-types';
+import { MentionExtensionAttrs as MentionAttrs, MentionExtensionOptions } from './mention-types';
 import { DEFAULT_MATCHER, escapeChar, getRegexPrefix, regexToString } from './mention-utils';
 import { createSuggestionPlugin, SuggestionState } from './suggestion-plugin';
 
@@ -103,7 +103,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
   private createMention = (type: MarkType, getState: () => EditorState, shouldUpdate = false) => (
     config?: Attrs,
   ) => {
-    if (!isValidCreateAttrs(config)) {
+    if (!isValidMentionAttrs(config)) {
       throw new Error('Invalid configuration attributes passed to the MentionExtension command.');
     }
 
@@ -191,8 +191,8 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
 }
 
 /**
- * Check that the attributes exist and are valid for the collaboration update
+ * Check that the attributes exist and are valid for the mention update
  * command method.
  */
-const isValidCreateAttrs = (attrs?: Attrs): attrs is MentionExtensionAttrs =>
+const isValidMentionAttrs = (attrs?: Attrs): attrs is MentionAttrs =>
   bool(attrs && isObject(attrs) && attrs.id && attrs.label);

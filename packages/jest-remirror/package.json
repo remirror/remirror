@@ -24,6 +24,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
+    "mutationobserver-shim": "0.3.3",
     "@remirror/core": "0.3.0",
     "@remirror/core-extensions": "0.3.0",
     "@remirror/react": "0.3.0",

@@ -254,10 +254,10 @@ export class SuggestionState {
   /**
    * Applies updates to the state to be used within the plugins apply method.
    */
-  public apply({ tr, prevState, newState }: TransactionParams & CompareStateParams) {
+  public apply({ tr, newState }: TransactionParams & CompareStateParams) {
     const { exit } = this.handlerMatches;
 
-    if (!transactionChanged({ tr, state: prevState }) && !this.removed) {
+    if (!transactionChanged(tr) && !this.removed) {
       return this;
     }
 

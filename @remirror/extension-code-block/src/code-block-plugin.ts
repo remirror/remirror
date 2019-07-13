@@ -1,12 +1,185 @@
-import { NodeExtension, NodeType } from '@remirror/core';
-import { Plugin } from 'prosemirror-state';
-import { CodeBlockState } from './code-block-state';
+import {
+  CompareStateParams,
+  DispatchFunction,
+  EditorState,
+  findChildrenByNode,
+  isTextSelection,
+  NodeExtension,
+  NodeType,
+  NodeWithPosition,
+  PMNodeParams,
+  SchemaNodeTypeParams,
+  TransactionParams,
+} from '@remirror/core';
+import { keydownHandler } from 'prosemirror-keymap';
+import { Plugin, Transaction } from 'prosemirror-state';
+import { Step } from 'prosemirror-transform';
+import { DecorationSet } from 'prosemirror-view';
 import { CodeBlockExtensionOptions } from './code-block-types';
+import {
+  createDecorations,
+  getNodeInformationFromState,
+  isSupportedLanguage,
+  lengthHasChanged,
+  NodeInformation,
+  posWithinRange,
+} from './code-block-utils';
 
-export default function createCodeBlockPlugin(ctx: NodeExtension<CodeBlockExtensionOptions>, type: NodeType) {
+export class CodeBlockState {
+  /**
+   * Keep track of all document codeBlocks
+   */
+  private blocks: NodeWithPosition[] = [];
+
+  /**
+   * The set of cached decorations to minimise dom updates
+   */
+  public decorationSet!: DecorationSet;
+
+  constructor(private type: NodeType) {}
+
+  /**
+   * Creates the initial set of decorations
+   */
+  public init(state: EditorState) {
+    const blocks = findChildrenByNode({ node: state.doc, type: this.type });
+    this.refreshDecorationSet({ blocks, node: state.doc });
+
+    return this;
+  }
+
+  /**
+   * Recreate all the decorations again for all the provided blocks.
+   */
+  private refreshDecorationSet({ blocks, node }: RefreshDecorationSetParams) {
+    const decorations = createDecorations(blocks);
+    this.decorationSet = DecorationSet.create(node, decorations);
+    this.blocks = blocks;
+  }
+
+  /**
+   * Run through each step in the transaction and check whether the change
+   * occurred within one of the active code blocks.
+   */
+  private numberOfChangedBlocks(steps: Step[]) {
+    let changes = 0;
+
+    // Urm yeah this is a loop within a loop within a loop and it makes me head hurt.
+    for (const { node, pos: from } of this.blocks) {
+      let hasChanged = false;
+      for (const step of steps) {
+        step.getMap().forEach((oldStart, oldEnd) => {
+          const to = from + node.nodeSize;
+          if (posWithinRange({ from, to, pos: oldStart }) || posWithinRange({ from, to, pos: oldEnd })) {
+            hasChanged = true;
+          }
+        });
+
+        if (hasChanged) {
+          break;
+        }
+      }
+
+      if (hasChanged) {
+        changes++;
+      }
+    }
+
+    return changes;
+  }
+
+  /**
+   * True when number of blocks in the document has changed.
+   */
+  private sizeHasChanged(blocks: NodeWithPosition[]) {
+    return lengthHasChanged(blocks, this.blocks);
+  }
+
+  /**
+   * True when more than one codeBlock has changed content.
+   */
+  private multipleChangesToBlock(blocks: NodeWithPosition[], tr: Transaction) {
+    return blocks.length > 1 && this.numberOfChangedBlocks(tr.steps) > 1;
+  }
+
+  /**
+   * Apply the state and update decorations when something has changed.
+   */
+  public apply({ tr, prevState, newState }: ApplyParams): this {
+    if (!tr.docChanged) {
+      return this;
+    }
+
+    // Get all the codeBlocks in the document
+    const blocks = findChildrenByNode({ node: tr.doc, type: this.type });
+
+    if (
+      // When the number of blocks has changed since the last content update
+      this.sizeHasChanged(blocks) ||
+      // When there are multiple blocks and 2 or more blocks have changed
+      this.multipleChangesToBlock(blocks, tr)
+    ) {
+      this.refreshDecorationSet({ blocks, node: tr.doc });
+      return this;
+    }
+
+    this.decorationSet = this.decorationSet.map(tr.mapping, tr.doc);
+
+    const current = getNodeInformationFromState(newState);
+    const previous = getNodeInformationFromState(prevState);
+    this.manageDecorationSet({ current, previous, tr });
+
+    return this;
+  }
+
+  /**
+   * Removes all decorations which relate to the changed block node before creating new decorations
+   * and adding them to the decorationSet.
+   */
+  private updateDecorationSet({ nodeInfo: { from, to, node, pos }, tr }: UpdateDecorationSetParams) {
+    const decorationSet = this.decorationSet.remove(this.decorationSet.find(from, to));
+
+    this.decorationSet = decorationSet.add(tr.doc, createDecorations([{ node, pos }]));
+  }
+
+  private manageDecorationSet({ previous, current, tr }: ManageDecorationSetParams) {
+    if (current.type === this.type) {
+      this.updateDecorationSet({ nodeInfo: current, tr });
+    }
+    if (previous.type === this.type && !previous.node.eq(current.node)) {
+      this.updateDecorationSet({ nodeInfo: previous, tr });
+    }
+  }
+}
+
+interface ApplyParams extends TransactionParams, CompareStateParams {}
+interface RefreshDecorationSetParams extends PMNodeParams {
+  /**
+   * The positioned nodes
+   */
+  blocks: NodeWithPosition[];
+}
+
+interface ManageDecorationSetParams extends TransactionParams {
+  previous: NodeInformation;
+  current: NodeInformation;
+}
+
+interface UpdateDecorationSetParams extends TransactionParams {
+  nodeInfo: NodeInformation;
+}
+
+interface CreateCodeBlockPluginParams extends SchemaNodeTypeParams {
+  extension: NodeExtension<CodeBlockExtensionOptions>;
+}
+
+/**
+ * Create a codeBlock plugin to manage the internal prosemirror functionality
+ */
+export default function createCodeBlockPlugin({ extension, type, getActions }: CreateCodeBlockPluginParams) {
   const pluginState = new CodeBlockState(type);
   return new Plugin<CodeBlockState>({
-    key: ctx.pluginKey,
+    key: extension.pluginKey,
     state: {
       init(_, state) {
         return pluginState.init(state);
@@ -16,6 +189,7 @@ export default function createCodeBlockPlugin(ctx: NodeExtension<CodeBlockExtens
       },
     },
     props: {
+      // handleDOMEvents:
       decorations() {
         return pluginState.decorationSet;
       },

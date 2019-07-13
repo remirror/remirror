@@ -50,9 +50,10 @@ export const press = ({ view, shortcut }: KeyboardShortcutParams) => {
     .mod({ text: shortcut })
     .forEach(({ event, dispatch }) => {
       dispatch();
-
-      view.dispatchEvent(event);
-      flush(view);
+      if (!view.someProp('handleKeyDown', f => f(view, event))) {
+        view.dispatchEvent(event);
+        flush(view);
+      }
     });
 };
 

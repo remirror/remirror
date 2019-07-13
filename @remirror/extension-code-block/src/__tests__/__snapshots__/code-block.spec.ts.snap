@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`commands updateAttrs  updates the language 1`] = `"<code class=\\"language-javascript\\" data-code-block-language=\\"javascript\\"><span class=\\"token keyword\\">const</span><span> a </span><span class=\\"token operator\\">=</span><span> </span><span class=\\"token string\\">'test'</span><span class=\\"token punctuation\\">;</span></code>"`;
+
 exports[`plugin can be updated 1`] = `"<span class=\\"token keyword\\">const</span><span> a </span><span class=\\"token operator\\">=</span><span> </span><span class=\\"token string\\">'test'</span><span class=\\"token punctuation\\">;</span>"`;
 
 exports[`plugin can be updated 2`] = `

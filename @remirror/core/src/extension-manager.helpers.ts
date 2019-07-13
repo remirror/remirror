@@ -131,8 +131,6 @@ interface CreateFlexibleFunctionMapParams<
  * This creates a function that is able to step through each possibility and call the required method.
  *
  * @param param - destructured parameters
- *
- * @internal
  */
 export const createFlexibleFunctionMap = <
   GKey extends keyof AnyExtension,
@@ -319,8 +317,6 @@ function convertToExtensionMapValue(extension: FlexibleExtension): PrioritizedEx
  *
  * @param values - the extensions to transform as well as their priorities
  * @returns the list of extension instances sorted by priority
- *
- * @internal
  */
 export const transformExtensionMap = (values: FlexibleExtension[]) =>
   values
@@ -339,8 +335,6 @@ export const transformExtensionMap = (values: FlexibleExtension[]) =>
  *
  * @param obj - an object which might contain methods
  * @returns a new object without any of the functions defined
- *
- * @internal
  */
 export const ignoreFunctions = (obj: Record<string, unknown>) => {
   const newObject: Record<string, unknown> = {};

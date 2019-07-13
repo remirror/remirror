@@ -56,11 +56,11 @@ export interface CollaborationExtensionOptions extends BaseExtensionOptions {
   onSendableReceived(params: OnSendableReceivedParams): void;
 }
 
-export type CollaborationAttrs = {
+export type CollaborationAttrs = Attrs<{
   /**
-   * @internal
+   * @internalremarks
    * TODO give this some better types
    */
   steps: any[];
   version: number;
-} & Attrs;
+}>;

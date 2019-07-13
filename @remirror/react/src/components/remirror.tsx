@@ -372,7 +372,8 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   /**
    * Part of the Prosemirror API and is called whenever there is state change in the editor.
    *
-   * @internal How does it work when transactions are dispatched one after the other.
+   * @internalremarks
+   * How does it work when transactions are dispatched one after the other.
    */
   private dispatchTransaction = (tr: Transaction) => {
     const state = this.getState().apply(this.props.onDispatchTransaction(tr, this.getState()));

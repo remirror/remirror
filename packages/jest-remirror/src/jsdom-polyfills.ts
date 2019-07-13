@@ -1,4 +1,6 @@
 import { environment, isTextDOMNode } from '@remirror/core';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 /**
  * Polyfill DOMElement.innerText because JSDOM lacks support for it.
@@ -110,6 +112,13 @@ export const jsdomExtras = () => {
         ownerDocument: document,
       } as Node,
     } as any);
+
+  // Taken from https://github.com/jsdom/jsdom/issues/639#issuecomment-371278152
+  const mutationObserver = readFileSync(require.resolve('mutationobserver-shim'), { encoding: 'utf-8' });
+  const mutationObserverScript = window.document.createElement('script');
+  mutationObserverScript.textContent = mutationObserver;
+
+  window.document.body.appendChild(mutationObserverScript);
 };
 
 /**
