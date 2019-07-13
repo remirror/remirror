@@ -71,7 +71,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
   }
 
   /**
-   * This simply returns the collab plugin provided by `prosemirror-collab`.
+   * This returns the collab plugin provided by `prosemirror-collab`.
    */
   public plugin(): Plugin {
     const { version, clientID } = this.options;

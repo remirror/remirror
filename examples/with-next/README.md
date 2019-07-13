@@ -1,6 +1,6 @@
 # TypeScript Next.js example
 
-This is a really simple project that show the usage of Next.js with TypeScript.
+This is a small project demonstrating the usage of Next.js with TypeScript.
 
 ## How to use it?
 

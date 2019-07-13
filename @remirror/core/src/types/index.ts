@@ -119,7 +119,7 @@ export type ActionGetter = <GAttrs = Attrs>(name: string) => ActionMethods<GAttr
  */
 export interface ExtensionManagerParams extends SchemaParams, ExtensionManagerInitParams {
   /**
-   * A helper method to provide access to all actions for easy access to commands from within extensions
+   * A helper method to provide access to all actions for access to commands from within extensions
    */
   getActions: ActionGetter;
 }

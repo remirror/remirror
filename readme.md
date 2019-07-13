@@ -205,7 +205,7 @@ From the root of this repository run the following to trigger a full typecheck, 
 yarn checks
 ```
 
-By default these checks are run on every push. To prevent these hooks from running by default simply type:
+By default these checks are run on every push. To prevent these hooks from running by default type:
 
 ```bash
 yarn husky:stop
