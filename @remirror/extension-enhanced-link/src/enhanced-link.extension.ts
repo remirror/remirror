@@ -35,7 +35,7 @@ export interface EnhancedLinkExtensionOptions extends MarkExtensionOptions {
  *
  * TODO Consider renaming this extension
  */
-export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOptions, 'enhancedLink'> {
+export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOptions, 'enhancedLink', {}> {
   get name() {
     return 'enhancedLink' as const;
   }

@@ -1,5 +1,8 @@
 import { Interpolation, ObjectInterpolation } from '@emotion/core';
 import {
+  AbstractInstanceType,
+  AnyConstructor,
+  AnyExtension,
   CompareStateParams,
   EditorState,
   EditorStateParams,
@@ -427,15 +430,15 @@ export enum RemirrorElementType {
 }
 
 export type RemirrorExtensionProps<
-  GOptions extends {},
-  GExtension extends Extension<GOptions, any> = Extension<GOptions, any>,
-  GConstructor = ExtensionConstructor<GOptions, GExtension>
-> = GOptions & BaseExtensionProps & ExtensionConstructorProps<GOptions, GExtension, GConstructor>;
+  GConstructor extends { prototype: AnyExtension },
+  GExtension extends AbstractInstanceType<GConstructor>,
+  GOptions extends GExtension['_GOptions']
+> = GOptions & BaseExtensionProps & ExtensionConstructorProps<GConstructor>;
 
 export interface ExtensionConstructorProps<
-  GOptions extends {},
-  GExtension extends Extension<GOptions, any> = Extension<GOptions, any>,
-  GConstructor = ExtensionConstructor<GOptions, GExtension>
+  GConstructor extends { prototype: AnyExtension }
+  // GExtension extends AbstractInstanceType<GConstructor>
+  // GOptions extends GExtension['_GOptions']
 > {
   /**
    * The constructor for the remirror extension.
