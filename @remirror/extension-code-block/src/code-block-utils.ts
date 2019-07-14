@@ -209,3 +209,33 @@ export const getLanguageNamesAndAliases = (supportedLanguages: RefractorSyntax[]
 export const isSupportedLanguage = (language: string, supportedLanguages: RefractorSyntax[]) => {
   return getLanguageNamesAndAliases(supportedLanguages).includes(language);
 };
+
+interface GetLanguageParams {
+  /**
+   * The language input from the user;
+   */
+  language: string;
+
+  /**
+   * The languages supported by the editor.
+   */
+  supportedLanguages: RefractorSyntax[];
+
+  /**
+   * The default language to use if none found.
+   */
+  fallback: string;
+}
+
+/**
+ * Get the language from user input.
+ */
+export const getLanguage = ({ language, supportedLanguages, fallback }: GetLanguageParams) => {
+  let lang = language;
+
+  if (!isSupportedLanguage(lang, supportedLanguages)) {
+    lang = fallback;
+  }
+
+  return getSupportedLanguagesMap(supportedLanguages)[lang];
+};

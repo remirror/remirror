@@ -54,6 +54,7 @@ export interface ExtensionManagerData {
   view: EditorView;
   isActive: Record<string, BooleanExtensionCheck<string>>;
   isEnabled: Record<string, BooleanExtensionCheck<string>>;
+  options: Record<string, PlainObject>;
 }
 
 /**
@@ -137,6 +138,9 @@ export class ExtensionManager implements ExtensionManagerInitParams {
 
     // Initialize the schema immediately since this doesn't ever change.
     this.initData.schema = this.createSchema();
+
+    // Options are cached here.
+    this.initData.options = this.extensionOptions();
   }
 
   /** Initialization */
@@ -240,6 +244,10 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     }
 
     return this.initData;
+  }
+
+  get options() {
+    return this.initData.options;
   }
 
   /**
@@ -569,6 +577,18 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     });
 
     return inputRules({ rules });
+  }
+
+  /**
+   * Retrieve all the options passed in for the extension manager
+   */
+  private extensionOptions(): Record<string, PlainObject> {
+    const options: Record<string, PlainObject> = {};
+    for (const extension of this.extensions) {
+      options[extension.name] = extension.options;
+    }
+
+    return options;
   }
 
   /**

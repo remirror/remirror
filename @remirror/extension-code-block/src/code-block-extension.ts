@@ -11,19 +11,17 @@ import {
   NodeExtension,
   NodeExtensionSpec,
   nodeInputRule,
-  NodeViewMethod,
   Plugin,
   SchemaNodeTypeParams,
   toggleBlockItem,
 } from '@remirror/core';
-import { ReactNodeView } from '@remirror/react';
 import { setBlockType } from 'prosemirror-commands';
 import { TextSelection } from 'prosemirror-state';
 import refractor from 'refractor/core';
 import { CodeBlockComponent } from './code-block-component';
 import createCodeBlockPlugin from './code-block-plugin';
 import { CodeBlockExtensionCommands, CodeBlockExtensionOptions } from './code-block-types';
-import { getSupportedLanguagesMap, isSupportedLanguage, updateNodeAttrs } from './code-block-utils';
+import { getLanguage, updateNodeAttrs } from './code-block-utils';
 import { syntaxTheme, SyntaxTheme } from './themes';
 
 export class CodeBlockExtension extends NodeExtension<
@@ -40,17 +38,11 @@ export class CodeBlockExtension extends NodeExtension<
    */
   get defaultOptions() {
     return {
+      SSRComponent: CodeBlockComponent,
       supportedLanguages: [],
       syntaxTheme: 'atomDark' as SyntaxTheme,
       defaultLanguage: 'markup',
     };
-  }
-
-  /**
-   * Gets the supported languages
-   */
-  get supportedLanguageMap() {
-    return getSupportedLanguagesMap(this.options.supportedLanguages);
   }
 
   /**
@@ -63,9 +55,9 @@ export class CodeBlockExtension extends NodeExtension<
     }
   }
 
-  public nodeView({ portalContainer }: SchemaNodeTypeParams): NodeViewMethod {
-    return ReactNodeView.createNodeView({ Component: CodeBlockComponent, portalContainer, props: {} });
-  }
+  // public nodeView({ portalContainer }: SchemaNodeTypeParams): NodeViewMethod {
+  //   return ReactNodeView.createNodeView({ Component: CodeBlockComponent, portalContainer, props: {} });
+  // }
 
   /**
    * Provides the codeBlock schema.
@@ -171,12 +163,11 @@ export class CodeBlockExtension extends NodeExtension<
   public inputRules({ type }: SchemaNodeTypeParams) {
     const regexp = /^```([a-zA-Z]*)? $/;
     const getAttrs: GetAttrs = match => {
-      let lang = getMatchString(match, 1);
-      if (!isSupportedLanguage(lang, this.options.supportedLanguages)) {
-        lang = this.options.defaultLanguage;
-      }
-
-      const language = this.supportedLanguageMap[lang];
+      const language = getLanguage({
+        language: getMatchString(match, 1),
+        fallback: this.options.defaultLanguage,
+        supportedLanguages: this.options.supportedLanguages,
+      });
       return { language };
     };
     return [
@@ -217,14 +208,13 @@ export class CodeBlockExtension extends NodeExtension<
           return false;
         }
 
-        let [, lang] = matches;
-        // create the node with the language, etc. & set the selection inside it
-        // you may also want to assert a depth in the document, etc. if you have blockquotes, etc as otherwise this would get triggered in there too
-        if (!isSupportedLanguage(lang, this.options.supportedLanguages)) {
-          lang = this.options.defaultLanguage;
-        }
+        const [, lang] = matches;
 
-        const language = this.supportedLanguageMap[lang];
+        const language = getLanguage({
+          language: lang,
+          fallback: this.options.defaultLanguage,
+          supportedLanguages: this.options.supportedLanguages,
+        });
 
         const pos = selection.$from.before();
         const end = pos + nodeBefore.nodeSize + 1; // +1 to account for the extra pos a node takes up

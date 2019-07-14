@@ -145,11 +145,13 @@ export class CodeBlockState {
   private manageDecorationSet({ previous, current, tr }: ManageDecorationSetParams) {
     // Update the previous first although this could be buggy when deleting (possibly)
     if (previous.type === this.type && !previous.node.eq(current.node)) {
+      console.log('previous triggered');
       this.updateDecorationSet({ nodeInfo: previous, tr });
     }
 
     if (current.type === this.type) {
-      this.updateDecorationSet({ nodeInfo: current, tr });
+      console.log('current triggered');
+      // this.updateDecorationSet({ nodeInfo: current, tr });
     }
   }
 }

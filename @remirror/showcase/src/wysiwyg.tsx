@@ -24,11 +24,12 @@ export const initialContent = {
     { type: 'paragraph' },
     {
       type: 'codeBlock',
+      attrs: { language: 'markdown' },
       content: [
         {
           type: 'text',
           text:
-            'Simple Code Blocks\necho "fun times"\nUse Shift-Enter or Mod-Enter to hard break out of the code block',
+            '## Simple Code Blocks\n\n```js\nconsole.log("with code fence support");\n```\n\n```bash\necho "fun times"\n```\n\nUse Shift-Enter or Mod-Enter to hard break out of the code block',
         },
       ],
     },

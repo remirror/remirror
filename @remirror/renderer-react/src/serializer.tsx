@@ -24,11 +24,17 @@ type MarkToDOM = MarkExtensionSpec['toDOM'];
  * Serialize the extension provided schema into a JSX element that can be displayed node and non-dom environments.
  */
 export class ReactSerializer {
-  constructor(
-    public nodes: Record<string, NodeToDOM>,
-    public marks: Record<string, MarkToDOM>,
-    public components: Record<string, ComponentType<any>>,
-  ) {}
+  public nodes: Record<string, NodeToDOM>;
+  public marks: Record<string, MarkToDOM>;
+  private components: Record<string, ComponentType<any>>;
+  private options: Record<string, PlainObject>;
+
+  constructor(nodes: Record<string, NodeToDOM>, marks: Record<string, MarkToDOM>, manager: ExtensionManager) {
+    this.nodes = nodes;
+    this.marks = marks;
+    this.components = manager.components;
+    this.options = manager.options;
+  }
 
   /**
    * The main entry method on this class for traversing through a schema tree and creating JSx.
@@ -64,6 +70,7 @@ export class ReactSerializer {
    */
   public serializeNode(node: ProsemirrorNode): ReactNode {
     const Component = this.components[node.type.name];
+    const options = this.options[node.type.name];
     const toDOM = this.nodes[node.type.name];
 
     let children: ReactNode;
@@ -72,7 +79,9 @@ export class ReactSerializer {
       children = this.serializeFragment(node.content);
     }
     return Component ? (
-      <Component {...node.attrs} children={children} />
+      <Component {...node.attrs} options={options}>
+        {children}
+      </Component>
     ) : (
       toDOM && ReactSerializer.renderSpec(toDOM(node), children)
     );
@@ -88,9 +97,12 @@ export class ReactSerializer {
   public serializeMark(mark: Mark, inline: boolean, wrappedElement: ReactNode): ReactNode {
     const toDOM = this.marks[mark.type.name];
     const Component = this.components[mark.type.name];
+    const options = this.options[mark.type.name];
 
     return Component ? (
-      <Component {...mark.attrs} children={wrappedElement} />
+      <Component {...mark.attrs} options={options}>
+        {wrappedElement}
+      </Component>
     ) : (
       toDOM && ReactSerializer.renderSpec(toDOM(mark, inline), wrappedElement)
     );
@@ -152,7 +164,7 @@ export class ReactSerializer {
     return new ReactSerializer(
       this.nodesFromExtensionManager(manager),
       this.marksFromExtensionManager(manager),
-      manager.components,
+      manager,
     );
   }
 

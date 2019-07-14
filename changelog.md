@@ -16,6 +16,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - `@remirror/core`: Add `getActions` to the params of all extension manager methods. This will throw an error if called before initialization.
 - `jest-prosemirror`: Enable editorViewOptions for the `createEditor` method. For example, now it is possible to intercept transactions with the `dispatchTransaction` hook.
 - `@remirror/extension-code-block`: Add functionality to make ready for general usage.
+- `@remirror/renderer-react`: Pass extension options through to SSR components as a prop.
 
 ### Changes
 

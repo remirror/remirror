@@ -29,6 +29,7 @@ import { BubbleMenu, BubbleMenuProps, MenuBar } from './menu';
 import { EditorWrapper, InnerEditorWrapper } from './styled';
 
 import markdown from 'refractor/lang/markdown';
+import bash from 'refractor/lang/bash';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 
@@ -52,7 +53,7 @@ interface State {
 // @see https://github.com/FortAwesome/react-fontawesome/issues/134#issuecomment-486052785
 config.autoAddCss = false;
 
-const DEFAULT_LANGUAGES = [markdown, typescript, tsx];
+const DEFAULT_LANGUAGES = [markdown, typescript, tsx, bash];
 
 export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
   public static defaultProps = asDefaultProps<WysiwygEditorProps>()({

@@ -256,13 +256,21 @@ export interface BaseExtensionOptions {
   disableSSR?: boolean;
 }
 
+/**
+ * A helper for creating SSR Component Props
+ */
+export type SSRComponentProps<
+  GAttrs extends Attrs = any,
+  GOptions extends BaseExtensionOptions = any
+> = GAttrs & { options: Required<GOptions> };
+
 export interface SSRComponentParams {
   /**
    * The component to render in SSR. The attrs are passed as props.
    *
    * Each node/mark extension can define it's own particular default component
    */
-  SSRComponent?: ComponentType<Attrs>;
+  SSRComponent?: ComponentType<any>;
 }
 
 export interface NodeExtensionOptions extends BaseExtensionOptions, SSRComponentParams {}
