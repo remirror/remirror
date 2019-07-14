@@ -49,8 +49,8 @@ import { cx } from 'emotion';
 import { EditorState } from 'prosemirror-state';
 import React, { Component, ReactNode, Ref } from 'react';
 import { defaultProps } from '../constants';
-import { NodeViewPortalComponent } from '../node-views';
 import { defaultStyles } from '../styles';
+import { NodeViewPortalComponent } from './node-view-portal';
 
 interface UpdateStateParams extends EditorStateParams {
   /**

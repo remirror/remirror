@@ -154,7 +154,10 @@ export type BooleanExtensionCheck<GCommand extends string> = ExtensionBooleanFun
 /**
  * The return signature for an extensions command method.
  */
-export type ExtensionCommands<GCommands extends string> = FlexibleConfig<ExtensionCommandFunction, GCommands>;
+export type ExtensionCommandReturn<GCommands extends string> = FlexibleConfig<
+  ExtensionCommandFunction,
+  GCommands
+>;
 
 type InferredType<GType> = GType extends {} ? { type: GType } : {};
 export type SchemaTypeParams<GType> = ExtensionManagerParams & InferredType<GType>;

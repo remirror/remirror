@@ -2,7 +2,6 @@ import {
   BaseExtensionOptions,
   BooleanExtensionCheck,
   CommandFunction,
-  CommandParams,
   environment,
   Extension,
   ExtensionManagerParams,

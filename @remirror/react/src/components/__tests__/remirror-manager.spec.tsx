@@ -35,7 +35,7 @@ describe('manager prop', () => {
   beforeEach(() => {
     ({ rerender } = render(
       <RemirrorManager>
-        <RemirrorExtension Constructor={TestExtension} />
+        <RemirrorExtension Constructor={TestExtension} run={true} />
         <ManagedRemirrorProvider>
           <Component />
         </ManagedRemirrorProvider>
@@ -48,7 +48,7 @@ describe('manager prop', () => {
 
     rerender(
       <RemirrorManager>
-        <RemirrorExtension Constructor={TestExtension} />
+        <RemirrorExtension Constructor={TestExtension} run={true} />
         <ManagedRemirrorProvider>
           <Component />
         </ManagedRemirrorProvider>
@@ -67,8 +67,12 @@ describe('manager prop', () => {
         <ManagedRemirrorProvider>
           <Component />
         </ManagedRemirrorProvider>
-        <RemirrorExtension Constructor={TestExtension} />
-        <RemirrorExtension Constructor={PlaceholderExtension} emptyNodeClass='empty' />
+        <RemirrorExtension Constructor={TestExtension} run={true} />
+        <RemirrorExtension
+          Constructor={PlaceholderExtension}
+          emptyNodeClass='empty'
+          placeholder='Type here'
+        />
       </RemirrorManager>,
     );
 
@@ -89,8 +93,12 @@ test('it supports <RemirrorExtension />', () => {
   render(
     <RemirrorManager>
       <Component />
-      <RemirrorExtension Constructor={TestExtension} />
-      <RemirrorExtension Constructor={PlaceholderExtension} emptyNodeClass='empty' />
+      <RemirrorExtension Constructor={TestExtension} run={true} />
+      <RemirrorExtension
+        Constructor={PlaceholderExtension}
+        emptyNodeClass='empty'
+        placeholder='Type here...'
+      />
     </RemirrorManager>,
   );
 });
@@ -106,9 +114,13 @@ test('it supports <RemirrorExtension /> in child fragments', () => {
     <RemirrorManager>
       <Component />
       <>
-        <RemirrorExtension Constructor={TestExtension} />
+        <RemirrorExtension Constructor={TestExtension} run={true} />
       </>
-      <RemirrorExtension Constructor={PlaceholderExtension} emptyNodeClass='empty' />
+      <RemirrorExtension
+        Constructor={PlaceholderExtension}
+        emptyNodeClass='empty'
+        placeholder='Type here...'
+      />
     </RemirrorManager>,
   );
 });

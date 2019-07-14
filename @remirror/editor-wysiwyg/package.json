@@ -35,7 +35,6 @@
     "@babel/runtime": "^7.5.4",
     "@emotion/core": "^10.0.14",
     "@emotion/styled": "^10.0.14",
-    "refractor": "^2.9.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
@@ -46,7 +45,8 @@
     "@remirror/react-utils": "0.3.0",
     "deepmerge": "^4.0.0",
     "emotion-theming": "^10.0.14",
-    "keycode": "^2.2.0"
+    "keycode": "^2.2.0",
+    "refractor": "^2.9.0"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",

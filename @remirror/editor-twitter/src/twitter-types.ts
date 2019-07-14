@@ -1,4 +1,3 @@
-import { EnhancedLinkExtensionOptions } from '@remirror/extension-enhanced-link';
 import { SuggestionStateMatch } from '@remirror/extension-mention';
 import { RemirrorProps } from '@remirror/react-utils';
 import { Data, EmojiSet } from 'emoji-mart';
@@ -11,7 +10,12 @@ export type OnMentionChangeParams = MentionState & {
   activeIndex: number;
 };
 
-export interface TwitterEditorProps extends EnhancedLinkExtensionOptions, Partial<RemirrorProps> {
+export interface TwitterEditorProps extends Partial<RemirrorProps> {
+  /**
+   * onUrlChange
+   */
+  onUrlsChange?(params: { set: Set<string>; urls: string[] }): void;
+
   /**
    * List of users
    */

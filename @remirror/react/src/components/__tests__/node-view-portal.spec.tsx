@@ -1,6 +1,6 @@
 import { NodeViewPortalContainer } from '@remirror/core';
 import { act, render } from '@testing-library/react';
-import { NodeViewPortalComponent } from '../portal';
+import { NodeViewPortalComponent } from '../node-view-portal';
 
 describe('NodeViewPortalComponent', () => {
   it('should update on render', () => {

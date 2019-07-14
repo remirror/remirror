@@ -7,6 +7,8 @@ import { ComponentType } from 'react';
 import { AnyExtension, FlexibleExtension } from './extension';
 import {
   createCommands,
+  defaultIsActive,
+  defaultIsEnabled,
   extensionPropertyMapper,
   hasExtensionProperty,
   ignoreFunctions,
@@ -454,11 +456,12 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     const commands = createCommands({ extensions, params });
 
     Object.entries(commands).forEach(([commandName, { command, name }]) => {
+      const isActive = this.initData.isActive[name] || defaultIsActive;
+      const isEnabled = this.initData.isEnabled[name] || defaultIsEnabled;
+
       actions[commandName] = command as ActionMethods;
-      actions[commandName].isActive = (attrs?: Attrs) =>
-        this.initData.isActive[name]({ attrs, command: commandName });
-      actions[commandName].isEnabled = (attrs?: Attrs) =>
-        this.initData.isEnabled[name]({ attrs, command: commandName });
+      actions[commandName].isActive = (attrs?: Attrs) => isActive({ attrs, command: commandName });
+      actions[commandName].isEnabled = (attrs?: Attrs) => isEnabled({ attrs, command: commandName });
     });
 
     return actions;
@@ -473,7 +476,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     this.checkInitialized();
     const isActiveMethods: Record<string, BooleanExtensionCheck<string>> = {};
 
-    this.extensions.filter(hasExtensionProperty(method)).reduce(
+    return this.extensions.filter(hasExtensionProperty(method)).reduce(
       (acc, extension) => ({
         ...acc,
         [extension.name]: extensionPropertyMapper(method, this.params)(extension) as BooleanExtensionCheck<
@@ -482,8 +485,6 @@ export class ExtensionManager implements ExtensionManagerInitParams {
       }),
       isActiveMethods,
     );
-
-    return isActiveMethods;
   }
 
   /**

@@ -3,19 +3,21 @@ import React, { ComponentType } from 'react';
 import {
   Attrs,
   Cast,
+  Decoration,
   EDITOR_CLASS_NAME,
+  EditorView,
   EditorViewParams,
   isDOMNode,
   isElementDOMNode,
   isPlainObject,
   isString,
+  NodeView,
   NodeViewPortalContainer,
   PlainObject,
   ProsemirrorNode,
 } from '@remirror/core';
-import { RemirrorProps } from '@remirror/react-utils';
 import { css, Interpolation } from 'emotion';
-import { Decoration, EditorView, NodeView } from 'prosemirror-view';
+import { RemirrorProps } from './types';
 
 /**
  * Retrieve the position of the current nodeView
@@ -30,11 +32,11 @@ export type GetPosition = () => number;
  */
 const cssNoOp: typeof css = () => '';
 
-export interface NodeViewComponentProps<GAttrs = any> extends EditorViewParams {
+export type NodeViewComponentProps<GAttrs = any> = EditorViewParams & {
   node: ProsemirrorNode & { attrs: GAttrs };
   getPosition: GetPosition;
   forwardRef?: (node: HTMLElement) => void | undefined;
-}
+};
 
 export interface CreateNodeViewParams<GProps extends PlainObject = {}>
   extends Partial<Pick<RemirrorProps, 'withoutEmotion'>> {

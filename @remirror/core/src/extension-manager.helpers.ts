@@ -305,3 +305,13 @@ export const ignoreFunctions = (obj: Record<string, unknown>) => {
 
   return newObject;
 };
+
+/**
+ * By default isActive should return false when no method specified.
+ */
+export const defaultIsActive = () => false;
+
+/**
+ * By default isEnabled should return true to let the code know that the commands are available
+ */
+export const defaultIsEnabled = () => true;

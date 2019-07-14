@@ -13,11 +13,11 @@ export interface CreateEmojiPluginParams extends Pick<EmojiExtensionOptions, 'em
   type: NodeType;
 }
 
-export interface DefaultEmojiProps extends NodeViewComponentProps<EmojiAttrs> {
+export type DefaultEmojiProps = NodeViewComponentProps<EmojiAttrs> & {
   set: EmojiSet;
   size: number | string;
   emojiData: Data;
-}
+};
 
 export interface EmojiExtensionOptions extends NodeExtensionOptions {
   transformAttrs?(attrs: Pick<EmojiAttrs, 'name'>): Attrs;

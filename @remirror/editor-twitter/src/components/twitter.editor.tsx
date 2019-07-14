@@ -1,7 +1,7 @@
-import { AbstractInstanceType, Attrs, omit } from '@remirror/core';
+import { Attrs, omit } from '@remirror/core';
 import { CompositionExtension, NodeCursorExtension } from '@remirror/core-extensions';
-import { EmojiExtension, EmojiExtensionOptions, isBaseEmoji } from '@remirror/extension-emoji';
-import { EnhancedLinkExtension, EnhancedLinkExtensionOptions } from '@remirror/extension-enhanced-link';
+import { EmojiExtension, isBaseEmoji } from '@remirror/extension-emoji';
+import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
 import {
   MentionExtension,
   MentionExtensionOptions,

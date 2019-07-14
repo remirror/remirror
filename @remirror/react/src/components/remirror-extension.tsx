@@ -1,10 +1,4 @@
-import {
-  AbstractInstanceType,
-  AnyExtension,
-  BaseExtensionOptions,
-  Extension,
-  ExtensionConstructor,
-} from '@remirror/core';
+import { AbstractInstanceType, AnyExtension, ExtensionOptions } from '@remirror/core';
 import { RemirrorElementType, RemirrorExtensionProps, RemirrorFC } from '@remirror/react-utils';
 
 /**
@@ -60,7 +54,7 @@ import { RemirrorElementType, RemirrorExtensionProps, RemirrorFC } from '@remirr
 export const RemirrorExtension = <
   GConstructor extends { prototype: AnyExtension },
   GExtension extends AbstractInstanceType<GConstructor>,
-  GOptions extends GExtension['_GOptions']
+  GOptions extends ExtensionOptions<GExtension>
 >(
   _props: RemirrorExtensionProps<GConstructor, GExtension, GOptions>,
 ) => {

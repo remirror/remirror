@@ -12,14 +12,13 @@ import {
   ImageExtension,
   ItalicExtension,
   LinkExtension,
-  LinkExtensionOptions,
   ListItemExtension,
   OrderedListExtension,
   SSRHelperExtension,
   StrikeExtension,
   UnderlineExtension,
 } from '@remirror/core-extensions';
-import { CodeBlockExtension, CodeBlockExtensionOptions } from '@remirror/extension-code-block';
+import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager, useRemirror } from '@remirror/react';
 import { asDefaultProps, RemirrorManagerProps } from '@remirror/react-utils';
 import deepMerge from 'deepmerge';
@@ -92,10 +91,7 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
           <RemirrorExtension Constructor={UnderlineExtension} />
           <RemirrorExtension Constructor={ItalicExtension} />
           <RemirrorExtension Constructor={BlockquoteExtension} />
-          <RemirrorExtension<LinkExtensionOptions>
-            Constructor={LinkExtension}
-            activationHandler={this.activateLink}
-          />
+          <RemirrorExtension Constructor={LinkExtension} activationHandler={this.activateLink} />
           <RemirrorExtension Constructor={StrikeExtension} />
           <RemirrorExtension Constructor={CodeExtension} />
           <RemirrorExtension Constructor={HeadingExtension} />
@@ -105,10 +101,7 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
           <RemirrorExtension Constructor={BulletListExtension} />
           <RemirrorExtension Constructor={OrderedListExtension} />
           <RemirrorExtension Constructor={HardBreakExtension} />
-          <RemirrorExtension<CodeBlockExtensionOptions>
-            Constructor={CodeBlockExtension}
-            supportedLanguages={this.supportedLanguages}
-          />
+          <RemirrorExtension Constructor={CodeBlockExtension} supportedLanguages={this.supportedLanguages} />
           <RemirrorExtension Constructor={SSRHelperExtension} />
           <ManagedRemirrorProvider {...props}>
             <InnerEditor

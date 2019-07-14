@@ -11,14 +11,16 @@ import {
   NodeExtension,
   NodeExtensionSpec,
   nodeInputRule,
+  NodeViewMethod,
   Plugin,
   SchemaNodeTypeParams,
   toggleBlockItem,
 } from '@remirror/core';
+import { ReactNodeView } from '@remirror/react';
 import { setBlockType } from 'prosemirror-commands';
-// import { wrappingInputRule } from 'prosemirror-inputrules';
 import { TextSelection } from 'prosemirror-state';
 import refractor from 'refractor/core';
+import { CodeBlockComponent } from './code-block-component';
 import createCodeBlockPlugin from './code-block-plugin';
 import { CodeBlockExtensionCommands, CodeBlockExtensionOptions } from './code-block-types';
 import { getSupportedLanguagesMap, isSupportedLanguage, updateNodeAttrs } from './code-block-utils';
@@ -59,6 +61,10 @@ export class CodeBlockExtension extends NodeExtension<
     for (const language of this.options.supportedLanguages) {
       refractor.register(language);
     }
+  }
+
+  public nodeView({ portalContainer }: SchemaNodeTypeParams): NodeViewMethod {
+    return ReactNodeView.createNodeView({ Component: CodeBlockComponent, portalContainer, props: {} });
   }
 
   /**

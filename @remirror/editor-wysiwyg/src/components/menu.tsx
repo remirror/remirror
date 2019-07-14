@@ -39,13 +39,13 @@ const menuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
   ['italic', [faItalic]],
   ['underline', [faUnderline]],
   ['strike', [faStrikethrough]],
-  ['heading', [faHeading, '1'], { level: 1 }],
-  ['heading', [faHeading, '2'], { level: 2 }],
-  ['heading', [faHeading, '3'], { level: 3 }],
-  ['historyUndo', [faUndoAlt]],
-  ['historyRedo', [faRedoAlt]],
-  ['bulletList', [faList]],
-  ['orderedList', [faListOl]],
+  ['toggleHeading', [faHeading, '1'], { level: 1 }],
+  ['toggleHeading', [faHeading, '2'], { level: 2 }],
+  ['toggleHeading', [faHeading, '3'], { level: 3 }],
+  ['undo', [faUndoAlt]],
+  ['redo', [faRedoAlt]],
+  ['toggleBulletList', [faList]],
+  ['toggleOrderedList', [faListOl]],
   ['blockquote', [faQuoteRight]],
   ['toggleCodeBlock', [faCode]],
   ['horizontalRule', [faGripLines]],
@@ -147,7 +147,6 @@ const bubbleMenuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
 
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
   const { actions, getPositionerProps } = useRemirror();
-  console.log(actions.toggleCodeBlock.isActive());
   const { bottom, left, ref } = getPositionerProps({
     ...bubblePositioner,
     isActive: params =>

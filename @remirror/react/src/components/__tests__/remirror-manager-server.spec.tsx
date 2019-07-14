@@ -32,8 +32,12 @@ test('it supports <RemirrorExtension />', () => {
   const htmlString = renderToString(
     <RemirrorManager>
       <Component />
-      <RemirrorExtension Constructor={TestExtension} />
-      <RemirrorExtension Constructor={PlaceholderExtension} emptyNodeClass='empty' />
+      <RemirrorExtension Constructor={TestExtension} run={true} />
+      <RemirrorExtension
+        Constructor={PlaceholderExtension}
+        emptyNodeClass='empty'
+        placeholder='Type here...'
+      />
     </RemirrorManager>,
   );
 

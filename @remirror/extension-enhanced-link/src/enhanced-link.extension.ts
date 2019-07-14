@@ -25,8 +25,13 @@ import { ReplaceStep } from 'prosemirror-transform';
 import { extractUrl } from './extract-url';
 
 export interface EnhancedLinkExtensionOptions extends MarkExtensionOptions {
+  /**
+   * This handler is called every time the matched urls are updated.
+   */
   onUrlsChange?(params: { set: Set<string>; urls: string[] }): void;
 }
+
+export type EnhancedLinkExtensionCommands = 'enhancedLink';
 
 /**
  * An auto complete auto decorated linker.
@@ -35,7 +40,11 @@ export interface EnhancedLinkExtensionOptions extends MarkExtensionOptions {
  *
  * TODO Consider renaming this extension
  */
-export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOptions, 'enhancedLink', {}> {
+export class EnhancedLinkExtension extends MarkExtension<
+  EnhancedLinkExtensionOptions,
+  EnhancedLinkExtensionCommands,
+  {}
+> {
   get name() {
     return 'enhancedLink' as const;
   }

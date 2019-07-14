@@ -1,7 +1,6 @@
 import { Interpolation, ObjectInterpolation } from '@emotion/core';
 import {
   AbstractInstanceType,
-  AnyConstructor,
   AnyExtension,
   CompareStateParams,
   EditorState,
@@ -10,8 +9,8 @@ import {
   EditorViewParams,
   ElementParams,
   Extension,
-  ExtensionConstructor,
   ExtensionManager,
+  ExtensionOptions,
   ObjectNode,
   PlainObject,
   Position,
@@ -81,10 +80,7 @@ export type GetPositionerReturn<GRefKey extends string = 'ref'> = PositionerProp
 /**
  * These are the props passed to the render function provided when setting up your editor.
  */
-export interface InjectedRemirrorProps<
-  GCommands extends string = string,
-  GExtensionData extends {} = PlainObject
-> {
+export interface InjectedRemirrorProps<GCommands extends string = string> {
   /**
    * An instance of the extension manager
    */
@@ -432,20 +428,20 @@ export enum RemirrorElementType {
 export type RemirrorExtensionProps<
   GConstructor extends { prototype: AnyExtension },
   GExtension extends AbstractInstanceType<GConstructor>,
-  GOptions extends GExtension['_GOptions']
-> = GOptions & BaseExtensionProps & ExtensionConstructorProps<GConstructor>;
+  GOptions extends ExtensionOptions<GExtension>
+> = GOptions & BaseExtensionProps & ExtensionConstructorProps<GConstructor, GExtension, GOptions>;
 
-export interface ExtensionConstructorProps<
-  GConstructor extends { prototype: AnyExtension }
-  // GExtension extends AbstractInstanceType<GConstructor>
-  // GOptions extends GExtension['_GOptions']
-> {
+export type ExtensionConstructorProps<
+  GConstructor extends { prototype: AnyExtension },
+  GExtension extends AbstractInstanceType<GConstructor>,
+  GOptions extends ExtensionOptions<GExtension>
+> = {
   /**
    * The constructor for the remirror extension.
    * Will be instantiated with the options passed through as props.
    */
   Constructor: GConstructor;
-}
+} & GOptions;
 
 export interface BaseExtensionProps {
   /**

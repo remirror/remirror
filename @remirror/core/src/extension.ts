@@ -8,7 +8,7 @@ import {
   BooleanExtensionCheck,
   CommandTypeParams,
   EditorStateParams,
-  ExtensionCommands,
+  ExtensionCommandReturn,
   ExtensionManagerParams,
   ExtensionType,
   KeyboardBindings,
@@ -296,7 +296,7 @@ export interface Extension<
    *
    * @param params - schema params with type included
    */
-  commands?(params: CommandTypeParams<GType>): ExtensionCommands<GCommands>;
+  commands?(params: CommandTypeParams<GType>): ExtensionCommandReturn<GCommands>;
 
   /**
    * Determines whether this extension is enabled. If a command name is provided then it should return a value
@@ -393,9 +393,22 @@ export type AnyExtension = Extension<any, any, any, any>;
 /**
  * Utility type for retrieving the extension options from an extension.
  */
-export type ExtensionOptions<GExtension extends Extension> = GExtension extends Extension<infer P, any>
-  ? P
-  : never;
+export type ExtensionOptions<GExtension extends AnyExtension> = GExtension['_GOptions'];
+
+/**
+ * Utility type for retrieving the commands provided by an extension.
+ */
+export type ExtensionCommands<GExtension extends AnyExtension> = GExtension['_GCommands'];
+
+/**
+ * Utility type for retrieving the extension data object made available from the extension.
+ */
+export type ExtensionExtensionData<GExtension extends AnyExtension> = GExtension['_GExtensionData'];
+
+/**
+ * Utility type for retrieving the prosemirror type of the extension.
+ */
+export type ExtensionProsemirrorType<GExtension extends AnyExtension> = GExtension['_GType'];
 
 /** An extension constructor */
 export interface ExtensionConstructor<

@@ -11,8 +11,12 @@ describe('getManagerFromComponentTree', () => {
     return (
       <RemirrorManager>
         {children}
-        <RemirrorExtension Constructor={TestExtension} />
-        <RemirrorExtension Constructor={PlaceholderExtension} emptyNodeClass='empty' />
+        <RemirrorExtension Constructor={TestExtension} run={true} />
+        <RemirrorExtension
+          Constructor={PlaceholderExtension}
+          emptyNodeClass='empty'
+          placeholder='Type here...'
+        />
       </RemirrorManager>
     );
   };
@@ -35,8 +39,12 @@ describe('getManagerFromComponentTree', () => {
     const DifferentProp: FC<{ renderSpot: JSX.Element }> = ({ renderSpot }) => {
       return (
         <RemirrorManager>
-          <RemirrorExtension Constructor={TestExtension} />
-          <RemirrorExtension Constructor={PlaceholderExtension} emptyNodeClass='empty' />
+          <RemirrorExtension Constructor={TestExtension} run={true} />
+          <RemirrorExtension
+            Constructor={PlaceholderExtension}
+            emptyNodeClass='empty'
+            placeholder='Type here...'
+          />
           <>{renderSpot}</>
         </RemirrorManager>
       );
@@ -51,8 +59,12 @@ describe('getManagerFromComponentTree', () => {
     const NoChildren: FC = () => {
       return (
         <RemirrorManager>
-          <RemirrorExtension Constructor={TestExtension} />
-          <RemirrorExtension Constructor={PlaceholderExtension} emptyNodeClass='empty' />
+          <RemirrorExtension Constructor={TestExtension} run={true} />
+          <RemirrorExtension
+            Constructor={PlaceholderExtension}
+            emptyNodeClass='empty'
+            placeholder='Type here...'
+          />
         </RemirrorManager>
       );
     };

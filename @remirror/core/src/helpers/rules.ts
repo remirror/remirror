@@ -1,6 +1,6 @@
 import { InputRule } from 'prosemirror-inputrules';
 import { Fragment, Node as PMNode, Slice } from 'prosemirror-model';
-import { NodeSelection, Plugin, Selection, TextSelection } from 'prosemirror-state';
+import { Plugin, TextSelection } from 'prosemirror-state';
 import { GetAttrsParams, MarkTypeParams, NodeTypeParams, RegExpParams } from '../types';
 import { findMatches, isFunction } from './base';
 

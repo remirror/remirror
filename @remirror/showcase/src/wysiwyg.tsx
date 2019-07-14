@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { WysiwygEditor, WysiwygEditorProps } from '@remirror/editor-wysiwyg';
 
 export const ExampleWysiwygEditor: FC<WysiwygEditorProps> = props => {
-  return <WysiwygEditor {...props} />;
+  return <WysiwygEditor {...props} onChange={params => console.log(params.getObjectNode())} />;
 };
 
 export const initialContent = {

@@ -60,7 +60,7 @@ describe('plugins', () => {
     const h5 = heading({ level: 5 });
     add(doc(h5('<cursor>Heading')));
 
-    expect(actions.heading.isActive({ level: 5 })).toBeTrue();
+    expect(actions.toggleHeading.isActive({ level: 5 })).toBeTrue();
   });
 
   it('responds to keyboard shortcuts', () => {

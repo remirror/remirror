@@ -12,11 +12,22 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - 🚀 `@remirror/extension-collaboration`: Collaboration library added based on the brilliant example available in [tiptap](https://github.com/scrumpy/tiptap).
 - 🚀 `@remirror/extension-mention`: Mentions can now be picked up from pasting data.
 - `@remirror/core`: Add `CommandNodeTypeParams`, `CommandMarkTypeParams`, `CommandTypeParams` which is now passed to the `commands` method for extensions.
-- `@remirror/core`: Add `getActions` to the params of all extension manager methods. This will throw an error if called before and during initialization.
+- `@remirror/core`: Add new `extensionData` method which allows extension to provide data on every transaction which will be available for consumption in the renderProp, React Context hooks and HOC's.
+- `@remirror/core`: Add `getActions` to the params of all extension manager methods. This will throw an error if called before initialization.
 - `jest-prosemirror`: Enable editorViewOptions for the `createEditor` method. For example, now it is possible to intercept transactions with the `dispatchTransaction` hook.
 - `@remirror/extension-code-block`: Add functionality to make ready for general usage.
 
 ### Changes
+
+- 💥 **BREAKING `@remirror/core`:** Change the way commands are configured. The command function on extensions now only accepts an object with the command names being globally unique. For example the heading extension use to just return a function now it returns an object with the following signature.
+
+```ts
+{
+  toggleHeading(attrs?: Attrs): CommandFunction;
+}
+```
+
+This is a large breaking change and will cause a lot of existing code to stop working 😢. However, it paves the way for a better development experience, a simpler to manage library and some exciting features using type inference. Please do bear with me as I make these changes. I truly believe they'll be worthwhile.
 
 - 💥 **BREAKING `@remirror/core`:** Rename `getEditorState` to `getState`.
 - 💥 **BREAKING `@remirror/core`:** Change method `getPortalContainer` to property `portalContainer` on the extension manager.

@@ -24,7 +24,6 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "mutationobserver-shim": "0.3.3",
     "@remirror/core": "0.3.0",
     "@remirror/core-extensions": "0.3.0",
     "@remirror/react": "0.3.0",
@@ -36,6 +35,7 @@
     "jest-prosemirror": "0.3.0",
     "jest-snapshot": "^24.8.0",
     "lolex": "^4.1.0",
+    "mutationobserver-shim": "0.3.3",
     "prosemirror-model": "^1.7.1",
     "prosemirror-state": "^1.2.3",
     "prosemirror-view": "^1.9.11"

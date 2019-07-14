@@ -22,7 +22,7 @@ const SSRComponent: FC<Attrs> = () => <div />;
 class DummyExtension extends Extension {
   public name = 'dummy';
   public commands() {
-    return mock;
+    return { dummy: mock };
   }
 
   public attributes() {
