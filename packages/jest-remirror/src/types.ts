@@ -1,6 +1,7 @@
 import {
   Attrs,
   AttrsParams,
+  CommandFunction,
   EditorSchema,
   EditorState,
   EditorStateParams,
@@ -159,15 +160,22 @@ export interface AddContentReturn extends EditorStateParams {
    * Presses a key on the keyboard.
    * e.g. `Mod-X`
    *
-   * @param key
+   * @param key - the key to press (or string representing a key)
    */
   press(key: string): AddContentReturn;
+
+  /**
+   * Takes any command as an input and dispatches it within the document context.
+   *
+   * @param command - the command function to run with the current state and view
+   */
+  dispatchCommand(command: CommandFunction): AddContentReturn;
 
   /**
    * Fires a custom event at the specified dom node.
    * e.g. `click`
    *
-   * @param shortcut
+   * @param shortcut - the shortcut to type
    */
   fire(params: FireParams): AddContentReturn;
 

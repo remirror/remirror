@@ -52,22 +52,25 @@ const create = (params: CodeBlockExtensionOptions = {}) =>
 
 describe('plugin', () => {
   let {
-    view: { dom },
+    view,
     add,
     attrNodes: { codeBlock },
     nodes: { doc, p },
   } = create();
 
+  let { dom } = view;
+
   let tsBlock = codeBlock({ language: 'typescript' });
 
   beforeEach(() => {
     ({
-      view: { dom },
+      view,
       add,
       attrNodes: { codeBlock },
       nodes: { doc, p },
     } = create());
     tsBlock = codeBlock({ language: 'typescript' });
+    ({ dom } = view);
   });
 
   it('renders the correct decorations', () => {

@@ -2,6 +2,7 @@ import {
   CompareStateParams,
   EditorState,
   findChildrenByNode,
+  nodeEqualsType,
   NodeExtension,
   NodeType,
   NodeWithPosition,
@@ -10,6 +11,7 @@ import {
   Transaction,
   TransactionParams,
 } from '@remirror/core';
+import { keydownHandler } from 'prosemirror-keymap';
 import { Plugin } from 'prosemirror-state';
 import { Step } from 'prosemirror-transform';
 import { DecorationSet } from 'prosemirror-view';
@@ -33,6 +35,8 @@ export class CodeBlockState {
    */
   public decorationSet!: DecorationSet;
 
+  private deleted = false;
+
   constructor(private type: NodeType) {}
 
   /**
@@ -49,7 +53,7 @@ export class CodeBlockState {
    * Recreate all the decorations again for all the provided blocks.
    */
   private refreshDecorationSet({ blocks, node }: RefreshDecorationSetParams) {
-    const decorations = createDecorations(blocks);
+    const decorations = createDecorations(blocks, this.deleted);
     this.decorationSet = DecorationSet.create(node, decorations);
     this.blocks = blocks;
   }
@@ -97,8 +101,8 @@ export class CodeBlockState {
   /**
    * True when more than one codeBlock has changed content.
    */
-  private multipleChangesToBlock(blocks: NodeWithPosition[], tr: Transaction) {
-    return blocks.length > 1 && this.numberOfChangedBlocks(tr.steps) > 1;
+  private multipleChangesToBlocks(blocks: NodeWithPosition[], tr: Transaction) {
+    return blocks.length > 1 && this.numberOfChangedBlocks(tr.steps) >= 2;
   }
 
   /**
@@ -109,26 +113,23 @@ export class CodeBlockState {
       return this;
     }
 
-    // console.log(JSON.stringify(tr.steps, null, 2));
-
     // Get all the codeBlocks in the document
     const blocks = findChildrenByNode({ node: tr.doc, type: this.type });
+
+    this.decorationSet = this.decorationSet.map(tr.mapping, tr.doc);
 
     if (
       // When the number of blocks has changed since the last content update
       this.sizeHasChanged(blocks) ||
       // When there are multiple blocks and 2 or more blocks have changed
-      this.multipleChangesToBlock(blocks, tr)
+      this.multipleChangesToBlocks(blocks, tr)
     ) {
       this.refreshDecorationSet({ blocks, node: tr.doc });
-      return this;
+    } else {
+      const current = getNodeInformationFromState(newState);
+      const previous = getNodeInformationFromState(prevState);
+      this.manageDecorationSet({ current, previous, tr });
     }
-
-    this.decorationSet = this.decorationSet.map(tr.mapping, tr.doc);
-
-    const current = getNodeInformationFromState(newState);
-    const previous = getNodeInformationFromState(prevState);
-    this.manageDecorationSet({ current, previous, tr });
 
     return this;
   }
@@ -139,20 +140,23 @@ export class CodeBlockState {
    */
   private updateDecorationSet({ nodeInfo: { from, to, node, pos }, tr }: UpdateDecorationSetParams) {
     const decorationSet = this.decorationSet.remove(this.decorationSet.find(from, to));
-    this.decorationSet = decorationSet.add(tr.doc, createDecorations([{ node, pos }]));
+    this.decorationSet = decorationSet.add(tr.doc, createDecorations([{ node, pos }], this.deleted));
   }
 
   private manageDecorationSet({ previous, current, tr }: ManageDecorationSetParams) {
     // Update the previous first although this could be buggy when deleting (possibly)
-    if (previous.type === this.type && !previous.node.eq(current.node)) {
-      console.log('previous triggered');
+    if (nodeEqualsType({ types: this.type, node: previous.node }) && !previous.node.eq(current.node)) {
       this.updateDecorationSet({ nodeInfo: previous, tr });
     }
 
     if (current.type === this.type) {
-      console.log('current triggered');
-      // this.updateDecorationSet({ nodeInfo: current, tr });
+      this.updateDecorationSet({ nodeInfo: current, tr });
     }
+  }
+
+  public setDeleted(deleted: boolean) {
+    // this._deleted = deleted ? DELETED_THRESHOLD : this._deleted <= 0 ? 0 : this._deleted - 1;
+    this.deleted = deleted;
   }
 }
 
@@ -182,6 +186,10 @@ interface CreateCodeBlockPluginParams extends SchemaNodeTypeParams {
  */
 export default function createCodeBlockPlugin({ extension, type }: CreateCodeBlockPluginParams) {
   const pluginState = new CodeBlockState(type);
+  const handler = () => {
+    pluginState.setDeleted(true);
+    return false;
+  };
   return new Plugin<CodeBlockState>({
     key: extension.pluginKey,
     state: {
@@ -193,8 +201,21 @@ export default function createCodeBlockPlugin({ extension, type }: CreateCodeBlo
       },
     },
     props: {
+      handleKeyDown: keydownHandler({
+        Backspace: handler,
+        'Mod-Backspace': handler,
+        Delete: handler,
+        'Mod-Delete': handler,
+        'Ctrl-h': handler,
+        'Alt-Backspace': handler,
+        'Ctrl-d': handler,
+        'Ctrl-Alt-Backspace': handler,
+        'Alt-Delete': handler,
+        'Alt-d': handler,
+      }),
       // handleDOMEvents:
       decorations() {
+        pluginState.setDeleted(false);
         return pluginState.decorationSet;
       },
     },

@@ -57,7 +57,7 @@ export const press = ({ view, char }: PressParams) => {
     useFakeTimer: true,
   })
     .start()
-    .char({ text: char, typing: true })
+    .char({ text: char })
     .forEach(({ event }) => {
       view.dispatchEvent(event);
       flush(view);

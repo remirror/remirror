@@ -1,5 +1,5 @@
 import React from 'react';
 
-import { ExampleWysiwygEditor, initialContent } from '@remirror/showcase/lib/wysiwyg';
+import { ExampleWysiwygEditor, WYSIWYG_SHOWCASE_CONTENT } from '@remirror/showcase/lib/wysiwyg';
 
-export default () => <ExampleWysiwygEditor initialContent={initialContent} />;
+export default () => <ExampleWysiwygEditor initialContent={WYSIWYG_SHOWCASE_CONTENT} />;

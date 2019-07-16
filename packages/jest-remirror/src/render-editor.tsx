@@ -124,38 +124,42 @@ export const renderEditor = <
       });
     }
 
-    const createAddContentReturn = (newTags?: Tags): AddContentReturn => {
+    const updateContent = (newTags?: Tags): AddContentReturn => {
       const { from, to } = view.state.selection;
       return {
         tags: newTags ? { ...tags, ...newTags } : tags,
         start: from,
         end: to,
         replace: (...replacement) => {
-          return createAddContentReturn(replaceSelection({ view, content: replacement }));
+          return updateContent(replaceSelection({ view, content: replacement }));
         },
         insertText: text => {
           insertText({ start: from, text, view });
-          return createAddContentReturn();
+          return updateContent();
         },
         overwrite: add,
         state: view.state,
         actions: returnedParams.actions,
         shortcut: text => {
           shortcut({ shortcut: text, view });
-          return createAddContentReturn();
+          return updateContent();
         },
         press: char => {
           press({ char, view });
-          return createAddContentReturn();
+          return updateContent();
+        },
+        dispatchCommand: command => {
+          command(view.state, view.dispatch, view);
+          return updateContent();
         },
         fire: params => {
           fireEventAtPosition({ view, ...params });
-          return createAddContentReturn();
+          return updateContent();
         },
       };
     };
 
-    return createAddContentReturn();
+    return updateContent();
   };
 
   const { schema } = view.state;

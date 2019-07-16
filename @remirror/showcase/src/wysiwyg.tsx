@@ -1,12 +1,16 @@
 import React, { FC } from 'react';
 
+import { EMPTY_PARAGRAPH_NODE } from '@remirror/core';
 import { WysiwygEditor, WysiwygEditorProps } from '@remirror/editor-wysiwyg';
 
-export const ExampleWysiwygEditor: FC<WysiwygEditorProps> = props => {
-  return <WysiwygEditor {...props} onChange={params => console.log(params.getObjectNode())} />;
+export const ExampleWysiwygEditor: FC<WysiwygEditorProps> = ({
+  initialContent = EMPTY_PARAGRAPH_NODE,
+  ...props
+}) => {
+  return <WysiwygEditor {...props} initialContent={initialContent} />;
 };
 
-export const initialContent = {
+export const WYSIWYG_SHOWCASE_CONTENT = {
   type: 'doc',
   content: [
     { type: 'heading', attrs: { level: 1 }, content: [{ type: 'text', text: 'A WYSIWYG Editor' }] },

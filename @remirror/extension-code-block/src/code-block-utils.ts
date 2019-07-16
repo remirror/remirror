@@ -63,17 +63,25 @@ function parseRefractorNodes(
 /**
  * Creates a decoration set for the provided blocks
  */
-export const createDecorations = (blocks: NodeWithPosition[]) => {
+export const createDecorations = (blocks: NodeWithPosition[], skipLast: boolean) => {
   const decorations: Decoration[] = [];
-
   blocks.forEach(block => {
     const positionedRefractorNodes = getPositionedRefractorNodes(block);
-    positionedRefractorNodes.forEach(positionedRefractorNode => {
+    // console.log(JSON.stringify(positionedRefractorNodes));
+    const lastBlockLength = skipLast ? positionedRefractorNodes.length - 1 : positionedRefractorNodes.length;
+    for (let ii = 0; ii < lastBlockLength; ii++) {
+      const positionedRefractorNode = positionedRefractorNodes[ii];
       const decoration = Decoration.inline(positionedRefractorNode.from, positionedRefractorNode.to, {
         class: positionedRefractorNode.classes.join(' '),
       });
       decorations.push(decoration);
-    });
+    }
+    // positionedRefractorNodes.forEach(positionedRefractorNode => {
+    //   const decoration = Decoration.inline(positionedRefractorNode.from, positionedRefractorNode.to, {
+    //     class: positionedRefractorNode.classes.join(' '),
+    //   });
+    //   decorations.push(decoration);
+    // });
   });
 
   return decorations;

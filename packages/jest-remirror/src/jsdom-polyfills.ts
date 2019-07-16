@@ -76,6 +76,13 @@ export const jsdomExtras = () => {
     } as Selection;
   };
 
+  window.getSelection = () => {
+    return {
+      addRange: _ => {},
+      removeAllRanges: () => {},
+    } as Selection;
+  };
+
   // Copied from react-beautiful-dnd/test/setup.js
   // overriding these properties in jsdom to allow them to be controlled
   Object.defineProperties(document.documentElement, {

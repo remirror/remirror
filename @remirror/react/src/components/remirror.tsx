@@ -373,8 +373,9 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
    * @internalremarks
    * How does it work when transactions are dispatched one after the other.
    */
-  private dispatchTransaction = (tr: Transaction) => {
-    const state = this.getState().apply(this.props.onDispatchTransaction(tr, this.getState()));
+  private dispatchTransaction = (transaction: Transaction) => {
+    const tr = this.props.onDispatchTransaction(transaction, this.getState()) || transaction;
+    const state = this.getState().apply(tr);
 
     this.updateState({
       state,
