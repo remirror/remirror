@@ -305,7 +305,7 @@
     ]
   },
   "resolutions": {
-    "lodash": ">=4.17.13",
+    "lodash": ">=4.17.14",
     "@babel/runtime": "7.5.4",
     "**/@babel/runtime": "7.5.4",
     "react": "16.8.6",
