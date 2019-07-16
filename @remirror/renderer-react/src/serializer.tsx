@@ -2,7 +2,6 @@ import React, { ComponentType, Fragment, ReactNode } from 'react';
 
 import { jsx as createElement } from '@emotion/core';
 import {
-  AnyFunction,
   DOMOutputSpec,
   ExtensionManager,
   Fragment as ProsemirrorFragment,
@@ -116,13 +115,6 @@ export class ReactSerializer {
    * @param wraps - passed through any elements that this component should be parent of
    */
   public static renderSpec(structure: DOMOutputSpec, wraps?: ReactNode): ReactNode {
-    let fn: AnyFunction<JSX.Element> = createElement;
-    if (wraps) {
-      fn = (
-        ...[type, domSpecProps, ...domSpecChildren]: Parameters<typeof createElement>
-      ): ReturnType<typeof createElement> => createElement(type, domSpecProps, wraps, ...domSpecChildren);
-    }
-
     if (isString(structure)) {
       return structure;
     }
@@ -147,12 +139,12 @@ export class ReactSerializer {
         if (ii < structure.length - 1 || ii > currentIndex) {
           throw new RangeError('Content hole (0) must be the only child of its parent node');
         }
-        return fn(Component, mapProps(props));
+        return createElement(Component, mapProps(props), wraps);
       }
-      children.push(ReactSerializer.renderSpec(child as DOMOutputSpec, undefined));
+      children.push(ReactSerializer.renderSpec(child as DOMOutputSpec, wraps));
     }
 
-    return fn(Component, mapProps(props), ...children);
+    return createElement(Component, mapProps(props), ...children);
   }
 
   /**

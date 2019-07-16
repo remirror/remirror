@@ -45,7 +45,6 @@ import {
   RemirrorProps,
   RemirrorStateListenerParams,
 } from '@remirror/react-utils';
-import { cx } from 'emotion';
 import { EditorState } from 'prosemirror-state';
 import React, { Component, ReactNode, Ref } from 'react';
 import { defaultProps } from '../constants';
@@ -191,7 +190,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
         nodeViews: this.manager.data.nodeViews,
         dispatchTransaction: this.dispatchTransaction,
 
-        attributes: this.getAttributes,
+        attributes: () => this.getAttributes(),
         editable: () => {
           return this.props.editable;
         },
@@ -350,7 +349,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   /**
    * This sets the attributes that wrap the outer prosemirror node.
    */
-  private getAttributes = () => {
+  private getAttributes = (ssr = false) => {
     const { attributes } = this.props;
     const propAttributes = isFunction(attributes) ? attributes(this.eventListenerParams()) : attributes;
 
@@ -362,7 +361,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label || '',
       ...managerAttrs,
-      class: cx(EDITOR_CLASS_NAME, managerAttrs.class),
+      class: `${ssr ? 'Prosemirror ' : ''}${EDITOR_CLASS_NAME} ${managerAttrs.class}`.trim(),
     };
 
     return { ...defaultAttributes, ...propAttributes };
@@ -670,7 +669,12 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
 
   private renderSSR() {
     return (
-      <RemirrorSSR attributes={this.getAttributes()} state={this.state.newState} manager={this.manager} />
+      <RemirrorSSR
+        attributes={this.getAttributes(true)}
+        state={this.state.newState}
+        manager={this.manager}
+        editable={this.props.editable}
+      />
     );
   }
 
