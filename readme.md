@@ -27,9 +27,23 @@
 
 <br />
 
-## Getting Started
+## Features
 
-⚠️**Warning**: This is still a work in progress library. The docs are being worked on and the API is still subject to breaking changes for minor releases. For now to learn and understand, the best way is via looking through the `@remirror/editor-*` libraries.
+- Full support for **Server Side Rendering (SSR)** with **zero config**.
+- **Top quality** prebuilt editors for immediate use in your next application.
+- Almost 30 ready-made extensions for adding your own flavour and functionality to build your dream editor.
+- CSS-in-JS support (can be switched off).
+
+**_Coming soon_**
+
+- [ ] React Native support
+- [ ] Tables support via an extension
+- [ ] Iframe support
+- [ ] Markdown editor
+- [ ] Multicursor editing via an extension
+- [ ] CSS class support
+
+## Getting Started
 
 ### Prerequisites
 
@@ -45,7 +59,7 @@
 yarn add @remirror/core @remirror/react @remirror/core-extensions
 ```
 
-The following is a small example which renders a floating menu and enables the extensions `Bold`, `Italic` and `Underline`.
+The following is an example editor which renders a floating menu and enables the extensions `Bold`, `Italic` and `Underline`.
 
 ```ts
 import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
