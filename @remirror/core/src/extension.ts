@@ -76,13 +76,13 @@ export abstract class Extension<
   GType = never
 > {
   /** Purely for TypeScript inference */
-  public readonly _GOptions!: GOptions;
+  public readonly _O!: GOptions;
   /** Purely for TypeScript inference */
-  public readonly _GType!: GType;
+  public readonly _T!: GType;
   /** Purely for TypeScript inference */
-  public readonly _GCommands!: GCommands;
+  public readonly _C!: GCommands;
   /** Purely for TypeScript inference */
-  public readonly _GExtensionData!: GExtensionData;
+  public readonly _E!: GExtensionData;
 
   /**
    * The options of this extension
@@ -393,22 +393,22 @@ export type AnyExtension = Extension<any, any, any, any>;
 /**
  * Utility type for retrieving the extension options from an extension.
  */
-export type ExtensionOptions<GExtension extends AnyExtension> = GExtension['_GOptions'];
+export type ExtensionOptions<GExtension extends AnyExtension> = GExtension['_O'];
 
 /**
  * Utility type for retrieving the commands provided by an extension.
  */
-export type ExtensionCommands<GExtension extends AnyExtension> = GExtension['_GCommands'];
+export type ExtensionCommands<GExtension extends AnyExtension> = GExtension['_C'];
 
 /**
  * Utility type for retrieving the extension data object made available from the extension.
  */
-export type ExtensionExtensionData<GExtension extends AnyExtension> = GExtension['_GExtensionData'];
+export type ExtensionExtensionData<GExtension extends AnyExtension> = GExtension['_E'];
 
 /**
  * Utility type for retrieving the prosemirror type of the extension.
  */
-export type ExtensionProsemirrorType<GExtension extends AnyExtension> = GExtension['_GType'];
+export type ExtensionProsemirrorType<GExtension extends AnyExtension> = GExtension['_T'];
 
 /** An extension constructor */
 export interface ExtensionConstructor<

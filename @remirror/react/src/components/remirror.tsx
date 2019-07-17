@@ -361,7 +361,9 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label || '',
       ...managerAttrs,
-      class: `${ssr ? 'Prosemirror ' : ''}${EDITOR_CLASS_NAME} ${managerAttrs.class}`.trim(),
+      class: `${ssr ? 'Prosemirror ' : ''}${EDITOR_CLASS_NAME} ${
+        managerAttrs.class ? managerAttrs.class : ''
+      }`.trim(),
     };
 
     return { ...defaultAttributes, ...propAttributes };

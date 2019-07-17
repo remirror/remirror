@@ -9,10 +9,13 @@ import { getLanguage } from './code-block-utils';
 
 export interface CodeBlockComponentProps extends NodeViewComponentProps<CodeBlockAttrs> {}
 
+/**
+ * Renders the codeBlock for use in an SSR Environment
+ */
 export const CodeBlockComponent: FC<SSRComponentProps<CodeBlockAttrs, CodeBlockExtensionOptions>> = ({
   language: lang,
-  children,
   options,
+  node,
 }) => {
   const language = getLanguage({
     language: lang,
@@ -23,11 +26,11 @@ export const CodeBlockComponent: FC<SSRComponentProps<CodeBlockAttrs, CodeBlockE
   return (
     <SyntaxHighlighter
       language={language}
-      // Needed to remove inline styles
+      // The following is the only way to remove inline styles
       customStyle={{ backgroundColor: null }}
       className={`language-${language}`}
     >
-      {children}
+      {node.textContent}
     </SyntaxHighlighter>
   );
 };

@@ -2,8 +2,16 @@ import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
 import { NodeViewPortalContainer } from '../portal-container';
 import { EditorView, Mark, NodeView, Transaction } from './aliases';
-import { AnyFunction, Attrs, EditorSchema, EditorState, ProsemirrorNode, Value } from './base';
-import { AttrsParams, EditorViewParams, SchemaParams } from './builders';
+import {
+  AnyFunction,
+  Attrs,
+  BaseExtensionOptions,
+  EditorSchema,
+  EditorState,
+  ProsemirrorNode,
+  Value,
+} from './base';
+import { AttrsParams, EditorViewParams, PMNodeParams, SchemaParams } from './builders';
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -259,6 +267,14 @@ export interface GetAttrsParams {
    */
   getAttrs: GetAttrs;
 }
+
+/**
+ * A helper for creating SSR Component Props
+ */
+export type SSRComponentProps<
+  GAttrs extends Attrs = any,
+  GOptions extends BaseExtensionOptions = any
+> = GAttrs & PMNodeParams & { options: Required<GOptions> };
 
 export * from './aliases';
 export * from './base';

@@ -49,7 +49,7 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
    * Currently only one theme can be set per editor.
    *
    * Set this to false if you want to manage the syntax styles by yourself.
-   * For some tips on how this could be accomplished see {@link https://prismjs.com}
+   * For tips on how this could be accomplished see {@link https://prismjs.com}
    *
    * @default 'atomDark'
    */

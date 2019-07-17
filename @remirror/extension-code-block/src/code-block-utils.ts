@@ -76,12 +76,6 @@ export const createDecorations = (blocks: NodeWithPosition[], skipLast: boolean)
       });
       decorations.push(decoration);
     }
-    // positionedRefractorNodes.forEach(positionedRefractorNode => {
-    //   const decoration = Decoration.inline(positionedRefractorNode.from, positionedRefractorNode.to, {
-    //     class: positionedRefractorNode.classes.join(' '),
-    //   });
-    //   decorations.push(decoration);
-    // });
   });
 
   return decorations;

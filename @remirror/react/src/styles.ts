@@ -1,5 +1,5 @@
+import { ObjectInterpolation } from '@emotion/core';
 import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
-import { ObjectInterpolation } from 'emotion';
 
 export interface PlaceholderContent {
   selector: string;

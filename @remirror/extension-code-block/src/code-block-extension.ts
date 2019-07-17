@@ -72,7 +72,6 @@ export class CodeBlockExtension extends NodeExtension<
       content: 'text*',
       marks: '',
       group: 'block',
-      // isolating: true,
       code: true,
       defining: true,
       draggable: false,

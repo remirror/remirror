@@ -56,6 +56,7 @@ export class ReactSerializer {
         }
         child = this.serializeMark(mark, node.isInline, child);
       });
+
       children.push(child);
     });
 
@@ -78,7 +79,7 @@ export class ReactSerializer {
       children = this.serializeFragment(node.content);
     }
     return Component ? (
-      <Component {...node.attrs} options={options}>
+      <Component {...node.attrs} options={options} node={node}>
         {children}
       </Component>
     ) : (

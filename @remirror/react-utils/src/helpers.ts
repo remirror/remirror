@@ -209,3 +209,16 @@ export const oneChildOnly = <GProps extends {} = any>(value: unknown): ReactElem
 
   return Children.only(value);
 };
+
+/**
+ * Add the specified key to an element when it is a valid react element.
+ *
+ * This is useful when returning an array of components because a fragment isn't sufficient.
+ */
+export const addKeyToElement = (element: ReactNode, key: string | number) => {
+  if (!isValidElement(element)) {
+    return element;
+  }
+
+  return cloneElement(element, { ...element.props, key });
+};

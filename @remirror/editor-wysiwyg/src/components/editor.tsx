@@ -28,8 +28,8 @@ import { WysiwygEditorProps } from '../types';
 import { BubbleMenu, BubbleMenuProps, MenuBar } from './menu';
 import { EditorWrapper, InnerEditorWrapper } from './styled';
 
-import markdown from 'refractor/lang/markdown';
 import bash from 'refractor/lang/bash';
+import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 

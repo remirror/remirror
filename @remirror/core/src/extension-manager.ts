@@ -4,7 +4,7 @@ import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
 import { EditorState, PluginKey } from 'prosemirror-state';
 import { ComponentType } from 'react';
-import { AnyExtension, FlexibleExtension } from './extension';
+import { AnyExtension, ExtensionCommands, FlexibleExtension } from './extension';
 import {
   createCommands,
   defaultIsActive,
@@ -488,7 +488,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
       (acc, extension) => ({
         ...acc,
         [extension.name]: extensionPropertyMapper(method, this.params)(extension) as BooleanExtensionCheck<
-          typeof extension['_GCommands']
+          ExtensionCommands<typeof extension>
         >,
       }),
       isActiveMethods,

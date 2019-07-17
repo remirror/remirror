@@ -10,7 +10,7 @@ if (__E2E__) {
   const customConfig = { threshold: 0.3 };
   const toMatchImageSnapshot = configureToMatchImageSnapshot({
     customDiffConfig: customConfig,
-    failureThreshold: 3800,
+    failureThreshold: 1000,
     failureThresholdType: 'pixel',
   });
 

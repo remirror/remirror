@@ -3,6 +3,7 @@ import {
   BooleanExtensionCheck,
   Cast,
   CommandMarkTypeParams,
+  ExtensionCommands,
   getMarkRange,
   getMatchString,
   getSelectedWord,
@@ -99,7 +100,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions, LinkExten
     };
   }
 
-  public isEnabled({ getState, type }: SchemaMarkTypeParams): BooleanExtensionCheck<this['_GCommands']> {
+  public isEnabled({ getState, type }: SchemaMarkTypeParams): BooleanExtensionCheck<ExtensionCommands<this>> {
     return ({ command }) => {
       switch (command) {
         case 'removeLink':
