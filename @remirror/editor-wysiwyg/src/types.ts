@@ -17,6 +17,7 @@ export interface WysiwygEditorProps
         | 'label'
         | 'editorStyles'
         | 'forceEnvironment'
+        | 'suppressHydrationWarning'
       >
     >,
     Pick<RemirrorManagerProps, 'placeholder'>,

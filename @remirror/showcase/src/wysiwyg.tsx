@@ -7,7 +7,7 @@ export const ExampleWysiwygEditor: FC<WysiwygEditorProps> = ({
   initialContent = EMPTY_PARAGRAPH_NODE,
   ...props
 }) => {
-  return <WysiwygEditor {...props} initialContent={initialContent} />;
+  return <WysiwygEditor {...props} initialContent={initialContent} suppressHydrationWarning={false} />;
 };
 
 export const WYSIWYG_SHOWCASE_CONTENT = {

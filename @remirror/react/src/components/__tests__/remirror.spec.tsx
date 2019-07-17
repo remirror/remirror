@@ -34,6 +34,22 @@ test('should be called via a render prop', () => {
   expect(editorNode).toHaveAttribute('role', 'textbox');
 });
 
+test('can suppressHydrationWarning without breaking', () => {
+  const mock = jest.fn(() => <div />);
+  const { getByLabelText } = render(
+    <Remirror manager={createTestManager()} label={label} {...handlers} suppressHydrationWarning={true}>
+      {mock}
+    </Remirror>,
+  );
+  expect(mock).toHaveBeenCalledWith(expect.any(Object));
+  expect(handlers.onFirstRender).toHaveBeenCalledWith(expect.any(Object));
+  expect(handlers.onFirstRender.mock.calls[0][0].getText()).toBe('');
+  expect(handlers.onFirstRender.mock.calls[0][0].getJSON().doc.type).toBe('doc');
+  expect(handlers.onFirstRender.mock.calls[0][0].getHTML().type).toBe(undefined);
+  const editorNode = getByLabelText(label);
+  expect(editorNode).toHaveAttribute('role', 'textbox');
+});
+
 test('TextEditor is accessible', async () => {
   const results = await axe(
     renderToString(<Remirror manager={createTestManager()}>{() => <div />}</Remirror>),

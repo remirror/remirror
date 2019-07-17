@@ -675,9 +675,9 @@ export const createDocumentNode = ({
 };
 
 /**
- * Checks which environment should be used.
+ * Checks which environment should be used. Returns true when we are in the dom environment.
  *
- * @param forceEnvironment - force a specific environment
+ * @param forceEnvironment - force a specific environment to override the outcome
  */
 export const shouldUseDOMEnvironment = (forceEnvironment?: RenderEnvironment) => {
   return forceEnvironment === 'dom' || (environment.isBrowser && !forceEnvironment);
