@@ -56,6 +56,13 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
   syntaxTheme?: SyntaxTheme | false;
 
   /**
+   * Provide a formatter which can format the provided source code.
+   *
+   * @returns an object when formatting was successful and false when the code could not be formatted (a noop).
+   */
+  formatter?: CodeBlockFormatter;
+
+  /**
    * A handler called whenever any code block in the document has changed.
    *
    * Returns a list of all codeBlocks, whether they are active, their prosemirror node
@@ -68,6 +75,40 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
   onHover?(params: any): void;
 }
 
+export type CodeBlockFormatter = (params: FormatterParams) => FormatterReturn | false;
+
+export interface FormatterParams {
+  /**
+   * The code to be formatted
+   */
+  source: string;
+
+  /**
+   * Specify where the cursor is. This option cannot be used with rangeStart and rangeEnd.
+   * This allows the command to both formats the code, and translates a cursor position from unformatted code to formatted code.
+   */
+  cursorOffset: number;
+
+  /**
+   * The language of the code block. Should be used to determine whether the formatter can support the transformation.
+   *
+   * Possible languages are available here https://github.com/wooorm/refractor/tree/716fe904c37cd7ebfde53ac5157e7d6c323a3986/lang
+   */
+  language: string;
+}
+
+export interface FormatterReturn {
+  /**
+   * The transformed source.
+   */
+  output: string;
+
+  /**
+   * The new cursor position after formatting
+   */
+  cursorOffset: number;
+}
+
 export interface CodeBlockAttrs extends Attrs {
   /**
    * The language attribute
@@ -75,4 +116,8 @@ export interface CodeBlockAttrs extends Attrs {
   language: string;
 }
 
-export type CodeBlockExtensionCommands = 'toggleCodeBlock' | 'updateCodeBlock' | 'createCodeBlock';
+export type CodeBlockExtensionCommands =
+  | 'toggleCodeBlock'
+  | 'updateCodeBlock'
+  | 'createCodeBlock'
+  | 'formatCodeBlock';

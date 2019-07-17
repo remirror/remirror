@@ -21,8 +21,16 @@ import refractor from 'refractor/core';
 import { CodeBlockComponent } from './code-block-component';
 import createCodeBlockPlugin from './code-block-plugin';
 import { CodeBlockExtensionCommands, CodeBlockExtensionOptions } from './code-block-types';
-import { getLanguage, updateNodeAttrs } from './code-block-utils';
+import { formatCodeBlockFactory, getLanguage, updateNodeAttrs } from './code-block-utils';
 import { syntaxTheme, SyntaxTheme } from './themes';
+
+export const codeBlockDefaultOptions: CodeBlockExtensionOptions = {
+  SSRComponent: CodeBlockComponent,
+  supportedLanguages: [],
+  syntaxTheme: 'atomDark' as SyntaxTheme,
+  defaultLanguage: 'markup',
+  formatter: () => false,
+};
 
 export class CodeBlockExtension extends NodeExtension<
   CodeBlockExtensionOptions,
@@ -37,12 +45,7 @@ export class CodeBlockExtension extends NodeExtension<
    * Provide the default options for this extension
    */
   get defaultOptions() {
-    return {
-      SSRComponent: CodeBlockComponent,
-      supportedLanguages: [],
-      syntaxTheme: 'atomDark' as SyntaxTheme,
-      defaultLanguage: 'markup',
-    };
+    return codeBlockDefaultOptions;
   }
 
   /**
@@ -121,6 +124,7 @@ export class CodeBlockExtension extends NodeExtension<
         toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs }),
       createCodeBlock: (attrs?: Attrs) => setBlockType(type, attrs),
       updateCodeBlock: updateNodeAttrs(type),
+      formatCodeBlock: formatCodeBlockFactory(type, this.options.formatter),
     };
   }
 

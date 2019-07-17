@@ -19,7 +19,7 @@ import {
 } from '@remirror/core';
 import { Decoration } from 'prosemirror-view';
 import refractor, { RefractorNode, RefractorSyntax } from 'refractor/core';
-import { CodeBlockAttrs } from './code-block-types';
+import { CodeBlockAttrs, CodeBlockFormatter } from './code-block-types';
 
 // Refractor languages
 import clike from 'refractor/lang/clike';
@@ -65,6 +65,7 @@ function parseRefractorNodes(
  */
 export const createDecorations = (blocks: NodeWithPosition[], skipLast: boolean) => {
   const decorations: Decoration[] = [];
+
   blocks.forEach(block => {
     const positionedRefractorNodes = getPositionedRefractorNodes(block);
     const lastBlockLength = skipLast ? positionedRefractorNodes.length - 1 : positionedRefractorNodes.length;
@@ -143,7 +144,7 @@ export const getNodeInformationFromState = (state: EditorState): NodeInformation
 /**
  * Updates the node attrs.
  *
- * Is used to update the language for the codeBlock.
+ * This is used to update the language for the codeBlock.
  */
 export const updateNodeAttrs = (type: NodeType) => (attrs?: Attrs): CommandFunction => (
   { tr, selection },
@@ -167,6 +168,27 @@ export const updateNodeAttrs = (type: NodeType) => (attrs?: Attrs): CommandFunct
   }
 
   dispatch(tr);
+  return true;
+};
+
+export const formatCodeBlockFactory = (
+  _type: NodeType,
+  formatter: CodeBlockFormatter,
+) => (): CommandFunction => state => {
+  // Check if block is type is active, if not return false
+
+  // Get the `language`, `source` and `cursorOffset` for the block
+  // For cursor position it might be okay to just use the current position.
+  const format = formatter({ source: '', language: '', cursorOffset: state.selection.from });
+  if (!format) {
+    return false;
+  }
+
+  // const { cursorOffset, output } = format;
+
+  // Replace the node content with the transformed text.
+
+  // Set the new selection
   return true;
 };
 

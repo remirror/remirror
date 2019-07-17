@@ -69,14 +69,7 @@ export const jsdomExtras = () => {
     return;
   }
 
-  document.getSelection = () => {
-    return {
-      addRange: _ => {},
-      removeAllRanges: () => {},
-    } as Selection;
-  };
-
-  window.getSelection = () => {
+  document.getSelection = window.getSelection = () => {
     return {
       addRange: _ => {},
       removeAllRanges: () => {},
