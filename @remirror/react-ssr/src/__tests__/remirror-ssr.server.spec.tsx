@@ -22,11 +22,10 @@ test('should render the ssr component', () => {
 
   const htmlString = renderToString(
     <RemirrorSSR
+      editable={true}
       attributes={{
         class: 'remirror',
-        suppressContentEditableWarning: true,
       }}
-      editable={false}
       manager={manager}
       state={state}
     />,

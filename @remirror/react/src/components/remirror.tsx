@@ -25,6 +25,7 @@ import {
   CalculatePositionerParams,
   cloneElement,
   cssNoOp,
+  cx,
   defaultPositioner,
   getElementProps,
   GetPositionerPropsConfig,
@@ -361,9 +362,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label || '',
       ...managerAttrs,
-      class: `${ssr ? 'Prosemirror ' : ''}${EDITOR_CLASS_NAME} ${
-        managerAttrs.class ? managerAttrs.class : ''
-      }`.trim(),
+      class: cx(ssr && 'Prosemirror', EDITOR_CLASS_NAME, managerAttrs.class),
     };
 
     return { ...defaultAttributes, ...propAttributes };
@@ -726,7 +725,7 @@ export class Remirror extends Component<RemirrorProps, CompareStateParams> {
   }
 
   public render() {
-    // Reset the root props called status
+    // Reset the status of roots props being called
     this.rootPropsConfig.called = false;
 
     return (

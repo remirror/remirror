@@ -222,3 +222,5 @@ export const addKeyToElement = (element: ReactNode, key: string | number) => {
 
   return cloneElement(element, { ...element.props, key });
 };
+
+export { cx } from 'emotion';

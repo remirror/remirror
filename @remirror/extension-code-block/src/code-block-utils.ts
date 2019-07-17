@@ -67,7 +67,6 @@ export const createDecorations = (blocks: NodeWithPosition[], skipLast: boolean)
   const decorations: Decoration[] = [];
   blocks.forEach(block => {
     const positionedRefractorNodes = getPositionedRefractorNodes(block);
-    // console.log(JSON.stringify(positionedRefractorNodes));
     const lastBlockLength = skipLast ? positionedRefractorNodes.length - 1 : positionedRefractorNodes.length;
     for (let ii = 0; ii < lastBlockLength; ii++) {
       const positionedRefractorNode = positionedRefractorNodes[ii];
