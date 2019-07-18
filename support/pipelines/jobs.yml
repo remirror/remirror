@@ -10,13 +10,13 @@ jobs:
         steps:
           - template: yarn-install.yml
           - bash: yarn integrity
-            displayName: 'Dependency integrity'
+            displayName: 'Check yarn lock file is up to date'
           - bash: yarn ci:audit
-            displayName: 'Security audit'
+            displayName: 'Check for security audit flags in dependencies'
           - bash: yarn lint
-            displayName: 'Linter'
+            displayName: 'Check all lint rules'
           - bash: yarn typecheck
-            displayName: 'Typecheck'
+            displayName: 'Typecheck code and tests'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
       - job: ${{ parameters.name }}UnitTests
@@ -26,7 +26,7 @@ jobs:
           - template: yarn-install.yml
           - bash: |
               yarn test
-            displayName: 'Run unit tests'
+            displayName: 'Run unit tests across project'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
       - job: ${{ parameters.name }}SizeChecks
@@ -37,7 +37,7 @@ jobs:
           - bash: yarn build
             displayName: 'Build project'
           - bash: yarn size
-            displayName: 'Size limit check'
+            displayName: 'Check size limits'
 
   - job: ${{ parameters.name }}IntegrationTests
     pool:
@@ -54,8 +54,16 @@ jobs:
 
       - bash: yarn test:puppeteer
         displayName: 'Run integration tests on chrome'
+        env:
+          CI: 'true'
 
       # Firefox tests are currently failing because image snapshots aren't consistent on linux
       # Use a docker image to generate snapshots so that they can run across environments
       - bash: yarn test:puppeteer:firefox || true
         displayName: 'Run integration tests on firefox'
+        env:
+          CI: 'true'
+
+      - publish: $(System.DefaultWorkingDirectory)/e2e/__image_snapshots__
+        condition: always()
+        artifact: ImageSnapshots

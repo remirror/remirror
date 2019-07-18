@@ -33,7 +33,6 @@ test('ReactSerializer.fromExtensionManager', () => {
 describe('ReactSerializer', () => {
   describe('#serializeNode', () => {
     it('serializes the node', () => {
-      // TODO add marks to the jest-remirror library
       const node = PMNode.fromJSON(schema, simpleJSON);
       expect(shallow(serializer.serializeNode(node) as JSX.Element)).toMatchElement(
         <p>
@@ -62,7 +61,6 @@ describe('ReactSerializer', () => {
     });
 
     it('serializes the node with nested data', () => {
-      // TODO add marks to the jest-remirror library
       const node = PMNode.fromJSON(schema, testJSON);
       expect(shallow(serializer.serializeNode(node) as JSX.Element)).toMatchElement(
         <p>

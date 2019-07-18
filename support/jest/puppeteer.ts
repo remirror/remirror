@@ -15,19 +15,19 @@ const serverConfig: Record<SupportedServers, JestDevServerOptions> = {
     command: `yarn storybook:${CI ? 'ci' : 'test'}`,
     port: 3002,
     usedPortAction: 'kill',
-    launchTimeout: 60000,
+    launchTimeout: 120000,
   },
   next: {
     command: 'yarn next:ci',
     port: 3001,
     usedPortAction: 'kill',
-    launchTimeout: 60000,
+    launchTimeout: 120000,
   },
   docz: {
     command: 'yarn dev:docs',
     port: 3000,
     usedPortAction: 'kill',
-    launchTimeout: 60000,
+    launchTimeout: 120000,
   },
 };
 
