@@ -3,8 +3,8 @@ import { Positioner } from './types';
 
 export const defaultPositioner: Positioner = {
   initialPosition: { top: -9999, left: -9999, right: -9999, bottom: -9999 },
-  hasChanged({ prevState, newState }) {
-    return !(prevState && prevState.doc.eq(newState.doc) && prevState.selection.eq(newState.selection));
+  hasChanged({ oldState, newState }) {
+    return !(oldState && oldState.doc.eq(newState.doc) && oldState.selection.eq(newState.selection));
   },
 
   isActive({ newState }) {

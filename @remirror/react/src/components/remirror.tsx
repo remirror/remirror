@@ -97,7 +97,7 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
     } = state;
     if (newState && onStateChange && value && value !== newState) {
       return {
-        editor: { newState: value, prevState: newState },
+        editor: { newState: value, oldState: newState },
         ...rest,
       };
     }
@@ -190,7 +190,7 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
    * Create the initial React state which stores copies of the Prosemirror editor state.
    * Our React state also keeps track of the previous active state.
    *
-   * It this point both prevState and newState point to the same state object.
+   * It this point both oldState and newState point to the same state object.
    */
   private createInitialState(): RemirrorState {
     const { suppressHydrationWarning } = this.props;
@@ -200,7 +200,7 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
     return {
       editor: {
         newState,
-        prevState: newState,
+        oldState: newState,
       },
       shouldRenderClient: suppressHydrationWarning ? false : undefined,
     };
@@ -451,7 +451,7 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
       };
 
       onStateChange(
-        this.editorStateEventListenerParams({ prevState: this.state.editor.newState, newState: state }),
+        this.editorStateEventListenerParams({ oldState: this.state.editor.newState, newState: state }),
       );
     } else {
       // Update the internal prosemirror state. This happens before we update the component's copy of the state.
@@ -459,7 +459,7 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
 
       // This is not a controlled component so we need to manage firing of setState
       this.setState(({ editor: { newState } }) => {
-        return { editor: { prevState: newState, newState: state } };
+        return { editor: { oldState: newState, newState: state } };
         // Move update handler out from callback and directly after this.setState
         // To prevent updates from only happening with stale data.
       }, updateHandler);
@@ -617,6 +617,10 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
     };
   }
 
+  /**
+   * Creates the parameters passed into all event listener handlers.
+   * e.g. `onChange`
+   */
   private eventListenerParams(state?: EditorState): RemirrorEventListenerParams {
     return {
       ...this.baseListenerParams(),
@@ -624,14 +628,17 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
     };
   }
 
+  /**
+   * The params passed into onStateChange (within controlled components)
+   */
   private editorStateEventListenerParams({
     newState,
-    prevState,
+    oldState,
   }: Partial<CompareStateParams> = {}): RemirrorStateListenerParams {
     return {
       ...this.baseListenerParams(newState),
       newState: newState || this.state.editor.newState,
-      prevState: prevState || this.state.editor.prevState,
+      oldState: oldState || this.state.editor.oldState,
       createStateFromContent: this.createStateFromContent,
     };
   }
@@ -713,6 +720,9 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
     );
   }
 
+  /**
+   * Return a JSX Element to be used within the domless environment.
+   */
   private renderSSR() {
     return (
       <RemirrorSSR

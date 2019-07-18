@@ -32,7 +32,7 @@ export interface CompareStateParams {
   /**
    * The previous snapshot of the Prosemirror editor state.
    */
-  prevState: EditorState;
+  oldState: EditorState;
   /**
    * The latest snapshot of the Prosemirror editor state.
    */
