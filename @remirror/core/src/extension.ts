@@ -26,15 +26,17 @@ import {
  */
 const defaultOptions: Required<BaseExtensionOptions> = {
   extraStyles: '',
-  excludeInputRules: false,
-  excludeKeymaps: false,
-  excludePasteRules: false,
-  excludePlugin: false,
-  excludeStyles: false,
-  excludeAttributes: false,
-  excludeNodeView: false,
-  disableSSR: false,
   extraAttrs: [],
+  exclude: {
+    inputRules: false,
+    keymaps: false,
+    pasteRules: false,
+    plugin: false,
+    styles: false,
+    attributes: false,
+    nodeView: false,
+    ssr: false,
+  },
 };
 
 /**
