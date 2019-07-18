@@ -1,2 +1,2 @@
-export * from './code-block.extension';
-export * from './types';
+export * from './code-block-extension';
+export * from './code-block-types';

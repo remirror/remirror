@@ -13,7 +13,7 @@ import {
 import debounce from 'debounce';
 import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirror-collab';
 import { Step } from 'prosemirror-transform';
-import { CollaborationAttrs, CollaborationExtensionOptions } from './types';
+import { CollaborationAttrs, CollaborationExtensionOptions } from './collaboration-types';
 
 /**
  * The collaboration extension adds collaborative functionality to your editor.
@@ -71,7 +71,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
   }
 
   /**
-   * This simply returns the collab plugin provided by `prosemirror-collab`.
+   * This returns the collab plugin provided by `prosemirror-collab`.
    */
   public plugin(): Plugin {
     const { version, clientID } = this.options;

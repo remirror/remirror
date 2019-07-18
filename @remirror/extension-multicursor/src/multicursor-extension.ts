@@ -1,12 +1,13 @@
 import { Extension, Plugin } from '@remirror/core';
 import { css } from 'emotion';
-import { createMulticursorPlugin } from './plugin';
-import { MulticursorExtensionOptions } from './types';
-import { blink } from './utils';
+import { createMulticursorPlugin } from './multicursor-plugin';
+import { MulticursorExtensionCommands, MulticursorExtensionOptions } from './multicursor-types';
+import { blink } from './multicursor-utils';
 
-type Commands = 'multicursorAdd' | 'multicursorToggle';
-
-export class MulticursorExtension extends Extension<MulticursorExtensionOptions, never, Commands> {
+export class MulticursorExtension extends Extension<
+  MulticursorExtensionOptions,
+  MulticursorExtensionCommands
+> {
   get name() {
     return 'multicursor' as const;
   }
@@ -51,8 +52,8 @@ export class MulticursorExtension extends Extension<MulticursorExtensionOptions,
 
   public commands() {
     return {
-      add: () => () => true,
-      toggle: () => () => true,
+      addMulticursor: () => () => true,
+      toggleMulticursor: () => () => true,
     };
   }
 

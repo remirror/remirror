@@ -5,15 +5,15 @@ import { Cast, isObject } from './helpers/base';
 import {
   AttrsWithClass,
   BaseExtensionOptions,
+  BooleanExtensionCheck,
   CommandTypeParams,
   EditorStateParams,
-  ExtensionBooleanFunction,
-  ExtensionCommandFunction,
+  ExtensionCommandReturn,
   ExtensionManagerParams,
   ExtensionType,
-  FlexibleConfig,
   KeyboardBindings,
   NodeViewMethod,
+  PlainObject,
   ProsemirrorPlugin,
   SchemaTypeParams,
   TransactionParams,
@@ -44,7 +44,7 @@ const defaultOptions: Required<BaseExtensionOptions> = {
  * They allows for grouping items that affect editor functionality.
  *
  * - How the editor displays certain content, i.e. **bold**, _italic_, **underline**.
- * - Which commands should be made available e.g. `actions.bold.command()` to make selected text bold.
+ * - Which commands should be made available e.g. `actions.bold()` to make selected text bold.
  * - Check if a command is currently active or enabled e.g. `actions.bold.isActive()`.
  * - Register Prosemirror plugins, keymaps, input rules paste rules and custom nodeViews which affect the behaviour of the editor.
  *
@@ -71,10 +71,19 @@ const defaultOptions: Required<BaseExtensionOptions> = {
  */
 export abstract class Extension<
   GOptions extends BaseExtensionOptions = BaseExtensionOptions,
-  GType = never,
-  // tslint:disable-next-line: no-unused
-  GCommands extends string = string
+  GCommands extends string = string,
+  GExtensionData extends {} = PlainObject,
+  GType = never
 > {
+  /** Purely for TypeScript inference */
+  public readonly _O!: GOptions;
+  /** Purely for TypeScript inference */
+  public readonly _T!: GType;
+  /** Purely for TypeScript inference */
+  public readonly _C!: GCommands;
+  /** Purely for TypeScript inference */
+  public readonly _E!: GExtensionData;
+
   /**
    * The options of this extension
    *
@@ -208,11 +217,17 @@ export abstract class Extension<
   }
 }
 
-export interface Extension<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GType = never> {
+export interface Extension<
+  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
+  GCommands extends string = string,
+  GExtensionData extends {} = PlainObject,
+  GType = never
+> {
   /**
    * An extension can declare the extensions it requires with options needed for instantiating them.
    *
    * @remarks
+   *
    * When creating the extension manager the extension will be checked for required extension as well as
    * a quick check to see if the required extension is already included.
    *
@@ -222,16 +237,21 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
   readonly requiredExtensions?: RequiredExtension[];
 
   /**
-   * Determines whether this extension is currently active (only applies to Node Extensions and Mark Extensions)
+   * Determines whether this extension is currently active (only applies to Node Extensions and Mark Extensions).
+   *
+   * If a command name is provided (to the return function) then this method should return true if that command
+   * is currently active. Conceptually this doesn't always make sense and in those cases it should be save to just
+   * return false.
    *
    * @param params - extension manager params
    */
-  active?(params: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction>;
+  isActive?(params: ExtensionManagerParams): BooleanExtensionCheck<GCommands>;
 
   /**
-   * Allows the extension to modify the default attributes for the actual editor.
+   * Allows the extension to modify the attributes for the Prosemirror editor dom element.
    *
    * @remarks
+   *
    * Sometimes an extension will need to make a change to the attributes of the editor itself. For example
    * a placeholder may need to do some work to make the editor more accessible by setting the `aria-placeholder`
    * value to match the value of the placeholder.
@@ -245,40 +265,55 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
   /**
    * Register commands for the extension.
    *
-   * @remarks
-   * These are typically used to create menu's actions and as direct response
+   * These are typically used to create menu's actions and as a direct response
    * to user actions.
    *
-   * Commands can either return an object or
-   * When an object is returned each key is first namespaced with the name of the extension before being added to the actions object
-   * used for running commands and checking if a current item is active
+   * @remarks
+   *
+   * The commands function should return an object with each key being unique within the editor. To ensure
+   * that this is the case it is recommended that the keys of the command are namespaced with the name of the
+   * extension.
    *
    * e.g.
+   *
    * ```ts
    * class History extends Extension {
    *   name = 'history';
    *   commands() {
    *     return {
-   *       undo: COMMAND_FN,
-   *       redo: COMMAND_FN,
+   *       undoHistory: COMMAND_FN,
+   *       redoHistory: COMMAND_FN,
    *     }
    *   }
    * }
    * ```
    *
-   * The actions available in this case would be `historyUndo` and `historyRedo`.
+   * The actions available in this case would be `undoHistory` and `redoHistory`. It is unlikely
+   * that any other extension would override these commands.
+   *
+   * Another benefit of commands is that they are picked up by typescript and can provide code completion
+   * for consumers of the extension.
    *
    * @param params - schema params with type included
    */
-  commands?(params: CommandTypeParams<GType>): FlexibleConfig<ExtensionCommandFunction>;
+  commands?(params: CommandTypeParams<GType>): ExtensionCommandReturn<GCommands>;
 
   /**
-   * Determines whether this extension is enabled. If an object is returned then it can define different node types and
-   * the criteria for checks.
+   * Determines whether this extension is enabled. If a command name is provided then it should return a value
+   * determining whether that command is able to be run.
    *
    * @param params - extension manager parameters
    */
-  enabled?(params: ExtensionManagerParams): FlexibleConfig<ExtensionBooleanFunction>;
+  isEnabled?(params: ExtensionManagerParams): BooleanExtensionCheck<GCommands>;
+
+  /**
+   * Each extension can make extension data available which is updated on each render. Think of it like the
+   * prosemirror plugins state.
+   *
+   * Within React this data is passed back into Remirror render prop and also the Remirror context and can be retrieved
+   * with a `hook` or `HOC`
+   */
+  extensionData(params: SchemaTypeParams<GType>): GExtensionData;
 
   /**
    * Register input rules which are activated if the regex matches as a user is typing.
@@ -288,7 +323,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
   inputRules?(params: SchemaTypeParams<GType>): InputRule[];
 
   /**
-   * Add key mappings for the extension.
+   * Add key bindings for this extension.
    *
    * @param params - schema params with type included
    */
@@ -300,6 +335,8 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * This is a shorthand way of registering a nodeView without the need to create a prosemirror plugin.
    * It allows for the registration of one nodeView which has the same name as the extension.
    *
+   * To register more than one you would need to use a custom plugin returned from the `plugin` method.
+   *
    * @param params - schema params with type included
    *
    * @alpha
@@ -308,6 +345,8 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
 
   /**
    * Called whenever a transaction successfully updates the editor state.
+   *
+   * Changes to the transaction will have no impact at this point and are purely f
    */
   onTransaction?(params: OnTransactionParams): void;
 
@@ -349,14 +388,27 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
 /**
  * Provides a type annotation which is applicable to any extension type.
  */
-export type AnyExtension = Extension<any, any, string>;
+export type AnyExtension = Extension<any, any, any, any>;
 
 /**
  * Utility type for retrieving the extension options from an extension.
  */
-export type ExtensionOptions<GExtension extends Extension> = GExtension extends Extension<infer P, any>
-  ? P
-  : never;
+export type ExtensionOptions<GExtension extends AnyExtension> = GExtension['_O'];
+
+/**
+ * Utility type for retrieving the commands provided by an extension.
+ */
+export type ExtensionCommands<GExtension extends AnyExtension> = GExtension['_C'];
+
+/**
+ * Utility type for retrieving the extension data object made available from the extension.
+ */
+export type ExtensionExtensionData<GExtension extends AnyExtension> = GExtension['_E'];
+
+/**
+ * Utility type for retrieving the prosemirror type of the extension.
+ */
+export type ExtensionProsemirrorType<GExtension extends AnyExtension> = GExtension['_T'];
 
 /** An extension constructor */
 export interface ExtensionConstructor<

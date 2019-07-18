@@ -4,7 +4,7 @@
  * license: MIT; http://moox.mit-license.org/
  */
 
-import { css } from 'emotion';
+import { css } from '@remirror/react-utils';
 
 export default css`
   code[class*='language-'],

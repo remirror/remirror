@@ -1,4 +1,4 @@
-import { EditorSchema, isSelection } from '@remirror/core';
+import { EditorSchema, isInstanceOf } from '@remirror/core';
 import { TextSelection } from 'prosemirror-state';
 
 // TODO implement
@@ -11,5 +11,4 @@ export class MulticursorSelection extends TextSelection<EditorSchema> {
  *
  * @param val - the value to check
  */
-export const isMulticursorSelection = (val: unknown): val is MulticursorSelection =>
-  isSelection(val) && val instanceof MulticursorSelection;
+export const isMulticursorSelection = isInstanceOf(MulticursorSelection);

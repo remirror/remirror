@@ -1,9 +1,17 @@
-import { MarkSpec, MarkType, Node as PMNode, NodeSpec, NodeType } from 'prosemirror-model';
+import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
 import { NodeViewPortalContainer } from '../portal-container';
-import { EditorView, InputRule, Mark, NodeView, Transaction } from './aliases';
-import { AnyFunction, Attrs, EditorSchema, EditorState, ProsemirrorNode, Value } from './base';
-import { EditorViewParams, SchemaParams } from './builders';
+import { EditorView, Mark, NodeView, Transaction } from './aliases';
+import {
+  AnyFunction,
+  Attrs,
+  BaseExtensionOptions,
+  EditorSchema,
+  EditorState,
+  ProsemirrorNode,
+  Value,
+} from './base';
+import { AttrsParams, EditorViewParams, PMNodeParams, SchemaParams } from './builders';
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -119,7 +127,7 @@ export type ActionGetter = <GAttrs = Attrs>(name: string) => ActionMethods<GAttr
  */
 export interface ExtensionManagerParams extends SchemaParams, ExtensionManagerInitParams {
   /**
-   * A helper method to provide access to all actions for easy access to commands from within extensions
+   * A helper method to provide access to all actions for access to commands from within extensions
    */
   getActions: ActionGetter;
 }
@@ -129,13 +137,35 @@ export interface ExtensionManagerParams extends SchemaParams, ExtensionManagerIn
  */
 export interface ViewExtensionManagerParams extends EditorViewParams, ExtensionManagerParams {}
 
-export type FlexibleConfig<GFunc extends AnyFunction, GNames extends string = string> =
-  | GFunc
-  | GFunc[]
-  | Record<GNames, GFunc | GFunc[]>;
+export type FlexibleConfig<GFunc extends AnyFunction, GNames extends string = string> = Record<
+  GNames,
+  GFunc | GFunc[]
+>;
 
 export type ExtensionCommandFunction = (attrs?: Attrs) => CommandFunction;
-export type ExtensionBooleanFunction = (attrs?: Attrs) => boolean;
+
+export interface ExtensionBooleanFunctionParams<GCommand extends string> extends Partial<AttrsParams> {
+  /**
+   * When provided check the status of this particular command
+   */
+  command?: GCommand;
+}
+export type ExtensionBooleanFunction<GCommand extends string> = (
+  params: ExtensionBooleanFunctionParams<GCommand>,
+) => boolean;
+
+/**
+ * The return signature for an extension's `isActive` and `isEnabled` method
+ */
+export type BooleanExtensionCheck<GCommand extends string> = ExtensionBooleanFunction<GCommand>;
+
+/**
+ * The return signature for an extensions command method.
+ */
+export type ExtensionCommandReturn<GCommands extends string> = FlexibleConfig<
+  ExtensionCommandFunction,
+  GCommands
+>;
 
 type InferredType<GType> = GType extends {} ? { type: GType } : {};
 export type SchemaTypeParams<GType> = ExtensionManagerParams & InferredType<GType>;
@@ -167,12 +197,12 @@ export interface ActionMethods<GAttrs = Attrs> {
    * @remarks
    *
    * ```ts
-   * actions.bold.command() // Make the currently selected text bold
+   * actions.bold() // Make the currently selected text bold
    * ```
    *
    * @param attrs - certain commands require attrs to run
    */
-  command(attrs?: GAttrs): void;
+  (attrs?: GAttrs): void;
 
   /**
    * Determines whether the command is currently in an active state.
@@ -231,12 +261,20 @@ export enum ExtensionType {
 
 export type GetAttrs = Attrs | ((p: string[] | string) => Attrs | undefined);
 
-export type InputRuleCreator = (
-  regexp: RegExp,
-  nodeType: NodeType,
-  getAttrs?: GetAttrs,
-  joinPredicate?: (p1: string[], p2: PMNode) => boolean,
-) => InputRule;
+export interface GetAttrsParams {
+  /**
+   * A helper function for setting receiving a match array / string and setting the attributes for a node.
+   */
+  getAttrs: GetAttrs;
+}
+
+/**
+ * A helper for creating SSR Component Props
+ */
+export type SSRComponentProps<
+  GAttrs extends Attrs = any,
+  GOptions extends BaseExtensionOptions = any
+> = GAttrs & PMNodeParams & { options: Required<GOptions> };
 
 export * from './aliases';
 export * from './base';

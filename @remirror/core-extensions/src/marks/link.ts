@@ -1,7 +1,9 @@
 import {
   Attrs,
+  BooleanExtensionCheck,
   Cast,
   CommandMarkTypeParams,
+  ExtensionCommands,
   getMarkRange,
   getMatchString,
   getSelectedWord,
@@ -28,7 +30,9 @@ export interface LinkExtensionOptions extends MarkExtensionOptions {
   activationHandler?(): void;
 }
 
-export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
+export type LinkExtensionCommands = 'updateLink' | 'removeLink';
+
+export class LinkExtension extends MarkExtension<LinkExtensionOptions, LinkExtensionCommands, {}> {
   get name() {
     return 'link' as const;
   }
@@ -87,48 +91,39 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public active({ getState, type }: SchemaMarkTypeParams) {
-    return {
-      /**
-       * Returns true when the current selection has an active link present.
-       */
-      update: () => {
-        return isMarkActive({ state: getState(), type });
-      },
-    };
-  }
-
   public commands({ type }: CommandMarkTypeParams) {
     return {
-      update: (attrs?: Attrs) => updateMark({ type, attrs }),
-      remove: () => {
+      updateLink: (attrs?: Attrs) => updateMark({ type, attrs }),
+      removeLink: () => {
         return removeMark({ type, expand: true });
       },
     };
   }
 
-  public enabled({ getState, type }: SchemaMarkTypeParams) {
-    return {
-      update: () => {
-        const { selection } = getState();
-        if (selectionEmpty(selection) || !isTextSelection(selection)) {
-          return false;
-        }
-        return true;
-      },
-      remove: () => {
-        return isMarkActive({ state: getState(), type });
-      },
+  public isEnabled({ getState, type }: SchemaMarkTypeParams): BooleanExtensionCheck<ExtensionCommands<this>> {
+    return ({ command }) => {
+      switch (command) {
+        case 'removeLink':
+          return isMarkActive({ state: getState(), type });
+        case 'updateLink':
+          const { selection } = getState();
+          if (selectionEmpty(selection) || !isTextSelection(selection)) {
+            return false;
+          }
+          return true;
+        default:
+          return true;
+      }
     };
   }
 
   public pasteRules({ type }: SchemaMarkTypeParams) {
     return [
-      markPasteRule(
-        /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
+      markPasteRule({
+        regexp: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
         type,
-        url => ({ href: getMatchString(url) }),
-      ),
+        getAttrs: url => ({ href: getMatchString(url) }),
+      }),
     ];
   }
 

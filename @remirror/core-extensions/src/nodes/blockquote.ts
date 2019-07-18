@@ -2,13 +2,14 @@ import {
   CommandNodeTypeParams,
   EDITOR_CLASS_SELECTOR,
   NodeExtension,
+  NodeExtensionOptions,
   NodeExtensionSpec,
   SchemaNodeTypeParams,
   toggleWrap,
 } from '@remirror/core';
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
-export class BlockquoteExtension extends NodeExtension {
+export class BlockquoteExtension extends NodeExtension<NodeExtensionOptions, 'blockquote', {}> {
   get name() {
     return 'blockquote' as const;
   }
@@ -26,7 +27,7 @@ export class BlockquoteExtension extends NodeExtension {
   }
 
   public commands({ type }: CommandNodeTypeParams) {
-    return () => toggleWrap(type);
+    return { blockquote: () => toggleWrap(type) };
   }
 
   public styles() {

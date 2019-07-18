@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": "../",
+    "paths": {
+      "@remirror/core": ["@remirror/core/src/index.ts"],
+      "@remirror/core-extensions": ["@remirror/core-extensions/src/index.ts"],
+      "@remirror/extension-code-block": ["@remirror/extension-code-block/src/index.ts"],
+      "@remirror/extension-collaboration": ["@remirror/extension-collaboration/src/index.ts"],
+      "@remirror/extension-emoji": ["@remirror/extension-emoji/src/index.ts"],
+      "@remirror/extension-enhanced-link": ["@remirror/extension-enhanced-link/src/index.ts"],
+      "@remirror/extension-epic-mode": ["@remirror/extension-epic-mode/src/index.ts"],
+      "@remirror/extension-mention": ["@remirror/extension-mention/src/index.ts"],
+      "@remirror/react": ["@remirror/react/src/index.ts"],
+      "@remirror/react-ssr": ["@remirror/react-ssr/src/index.ts"],
+      "@remirror/react-utils": ["@remirror/react-utils/src/index.ts"],
+      "@remirror/renderer-react": ["@remirror/renderer-react/src/index.ts"],
+      "@remirror/showcase": ["@remirror/showcase/src/index.ts"],
+      "@remirror/showcase/lib/*": ["@remirror/showcase/src/*"],
+      "@remirror/editor-twitter": ["@remirror/editor-twitter/src"],
+      "@remirror/editor-wysiwyg": ["@remirror/editor-wysiwyg/src"],
+      "jest-remirror": ["packages/jest-remirror/src"],
+      "jest-prosemirror": ["packages/jest-prosemirror/src"],
+      "@test-fixtures/*": ["support/fixtures/*"]
+    }
+  }
+}

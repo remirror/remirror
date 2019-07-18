@@ -1,12 +1,13 @@
 import {
   CommandMarkTypeParams,
   MarkExtension,
+  MarkExtensionOptions,
   MarkExtensionSpec,
   SchemaMarkTypeParams,
 } from '@remirror/core';
 import { toggleMark } from 'prosemirror-commands';
 
-export class UnderlineExtension extends MarkExtension {
+export class UnderlineExtension extends MarkExtension<MarkExtensionOptions, 'underline', {}> {
   get name() {
     return 'underline' as const;
   }
@@ -33,6 +34,6 @@ export class UnderlineExtension extends MarkExtension {
   }
 
   public commands({ type }: CommandMarkTypeParams) {
-    return () => toggleMark(type);
+    return { underline: () => toggleMark(type) };
   }
 }

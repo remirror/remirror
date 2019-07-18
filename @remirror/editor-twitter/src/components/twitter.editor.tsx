@@ -1,7 +1,7 @@
 import { Attrs, omit } from '@remirror/core';
 import { CompositionExtension, NodeCursorExtension } from '@remirror/core-extensions';
-import { EmojiExtension, EmojiExtensionOptions, isBaseEmoji } from '@remirror/extension-emoji';
-import { EnhancedLinkExtension, EnhancedLinkExtensionOptions } from '@remirror/extension-enhanced-link';
+import { EmojiExtension, isBaseEmoji } from '@remirror/extension-emoji';
+import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
 import {
   MentionExtension,
   MentionExtensionOptions,
@@ -297,7 +297,7 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
         >
           <RemirrorExtension Constructor={NodeCursorExtension} />
           <RemirrorExtension Constructor={CompositionExtension} />
-          <RemirrorExtension<MentionExtensionOptions>
+          <RemirrorExtension
             Constructor={MentionExtension}
             matchers={matchers}
             extraAttrs={['href', ['role', 'presentation']]}
@@ -305,11 +305,8 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
             onExit={this.onExit}
             keyBindings={this.keyBindings}
           />
-          <RemirrorExtension<EnhancedLinkExtensionOptions>
-            Constructor={EnhancedLinkExtension}
-            onUrlsChange={this.props.onUrlsChange}
-          />
-          <RemirrorExtension<EmojiExtensionOptions>
+          <RemirrorExtension Constructor={EnhancedLinkExtension} onUrlsChange={this.props.onUrlsChange} />
+          <RemirrorExtension
             Constructor={EmojiExtension}
             set={this.props.emojiSet}
             emojiData={this.props.emojiData}

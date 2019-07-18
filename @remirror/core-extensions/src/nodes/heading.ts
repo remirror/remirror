@@ -17,7 +17,7 @@ export interface HeadingExtensionOptions extends NodeExtensionOptions {
   defaultLevel?: number;
 }
 
-export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
+export class HeadingExtension extends NodeExtension<HeadingExtensionOptions, 'toggleHeading'> {
   get name() {
     return 'heading' as const;
   }
@@ -57,7 +57,9 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
   }
 
   public commands({ type, schema }: CommandNodeTypeParams) {
-    return (attrs?: Attrs) => toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs });
+    return {
+      toggleHeading: (attrs?: Attrs) => toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs }),
+    };
   }
 
   public keys({ type }: SchemaNodeTypeParams) {

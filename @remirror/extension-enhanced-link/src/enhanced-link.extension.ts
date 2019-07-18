@@ -25,10 +25,26 @@ import { ReplaceStep } from 'prosemirror-transform';
 import { extractUrl } from './extract-url';
 
 export interface EnhancedLinkExtensionOptions extends MarkExtensionOptions {
+  /**
+   * This handler is called every time the matched urls are updated.
+   */
   onUrlsChange?(params: { set: Set<string>; urls: string[] }): void;
 }
 
-export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOptions> {
+export type EnhancedLinkExtensionCommands = 'enhancedLink';
+
+/**
+ * An auto complete auto decorated linker.
+ *
+ * There's nothing enhanced about it.
+ *
+ * TODO Consider renaming this extension
+ */
+export class EnhancedLinkExtension extends MarkExtension<
+  EnhancedLinkExtensionOptions,
+  EnhancedLinkExtensionCommands,
+  {}
+> {
   get name() {
     return 'enhancedLink' as const;
   }
@@ -62,21 +78,27 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
   }
 
   public commands({ type }: CommandMarkTypeParams) {
-    return (attrs?: Attrs) => {
-      if (attrs && attrs.href) {
-        return updateMark({ type, attrs });
-      }
+    return {
+      enhancedLink: (attrs?: Attrs) => {
+        if (attrs && attrs.href) {
+          return updateMark({ type, attrs });
+        }
 
-      return removeMark({ type });
+        return removeMark({ type });
+      },
     };
   }
 
   public pasteRules({ type }: SchemaMarkTypeParams) {
     return [
-      markPasteRule(extractUrl, type, url => {
-        return {
-          href: extractHref(getMatchString(url)),
-        };
+      markPasteRule({
+        regexp: extractUrl,
+        type,
+        getAttrs: url => {
+          return {
+            href: extractHref(getMatchString(url)),
+          };
+        },
       }),
     ];
   }
@@ -115,7 +137,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
           doc.textBetween($from.start(), from, char, leafChar) +
           doc.textBetween(to, $to.end(), char, leafChar);
 
-        let tr = state.tr;
+        const tr = state.tr;
         const collectedParams: EnhancedLinkHandlerProps[] = [];
 
         // If at the start of a new line (i.e. new block added and not at the start of the document)
@@ -131,7 +153,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
             collectedParams.push({ state, url, start, end });
           });
 
-          tr = tr.removeMark($pos.start(), $pos.end(), type);
+          tr.removeMark($pos.start(), $pos.end(), type);
         }
 
         // Finds matches within the current node when in the middle of a node
@@ -147,11 +169,11 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
           }
         });
         // Remove all marks
-        tr = tr.removeMark($from.start(), $from.end(), type);
+        tr.removeMark($from.start(), $from.end(), type);
 
         // Add all marks again for the nodes
         collectedParams.forEach(params => {
-          tr = enhancedLinkHandler({ ...params, transaction: tr });
+          enhancedLinkHandler({ ...params, transaction: tr });
         });
 
         return tr;

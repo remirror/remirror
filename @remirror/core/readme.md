@@ -32,8 +32,8 @@ Extensions are the building blocks of the editing experience in remirror. They p
 
 Extension can be `Extension`, `MarkExtension` or `NodeExtension`.
 
-- `Extension` Pure extensions only concern themselves with the behaviour of the editor. For example the extension called `History` is a pure extension and it simply tracks all the actions and provides undo and redo commands to your configured editor.
-- `MarkExtension` These are used to add extra styling or other information to inline content. Marks are used for adding links to content, bold stying, italic and other changes which affect the content in a simple way.
+- `Extension` Pure extensions only concern themselves with the behaviour of the editor. For example the extension called `History` is a pure extension and it tracks all the actions and provides undo and redo commands to your configured editor.
+- `MarkExtension` These are used to add extra styling or other information to inline content. Marks are used for adding links to content, bold stying, italic and other changes which affect the content in a standard way.
 - `NodeExtension` These add make nodes available to the content of the editor. Examples include [`@remirror/extension-emoji`](../extension-emoji) and [`@remirror/extension-mention`](../extension-mention)
 
 To create an extension extend from the class provided from the core library. The following example is taken from the Strikethrough extension in the [`@remirror/core-extensions`](../core-extensions) library.
@@ -89,12 +89,12 @@ export class StrikeExtension extends MarkExtension {
 
   // Input rules happen as code is being typed
   public inputRules({ type }: SchemaMarkTypeParams) {
-    return [markInputRule(/~([^~]+)~$/, type)];
+    return [markInputRule({ regexp: /~([^~]+)~$/, type })];
   }
 
   // Paste rules are activated when code is pasted into the editor
   public pasteRules({ type }: SchemaMarkTypeParams) {
-    return [markPasteRule(/~([^~]+)~/g, type)];
+    return [markPasteRule({ regexp: /~([^~]+)~/g, type })];
   }
 }
 ```

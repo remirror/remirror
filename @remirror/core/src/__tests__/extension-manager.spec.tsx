@@ -22,7 +22,7 @@ const SSRComponent: FC<Attrs> = () => <div />;
 class DummyExtension extends Extension {
   public name = 'dummy';
   public commands() {
-    return mock;
+    return { dummy: mock };
   }
 
   public attributes() {
@@ -72,7 +72,7 @@ beforeEach(() => {
 
 test('commands', () => {
   const attrs = { a: 'a' };
-  manager.data.actions.dummy.command(attrs);
+  manager.data.actions.dummy(attrs);
   expect(mock).toHaveBeenCalledWith(attrs);
   expect(innerMock).toHaveBeenCalledWith(state, view.dispatch, view);
 });

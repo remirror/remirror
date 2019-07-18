@@ -4,19 +4,22 @@ import {
   EditorState,
   EditorStateParams,
   EditorView,
-  NodeType,
   NodeTypeParams,
+  NodeTypesParams,
   PMNodeParams,
   PosParams,
+  PredicateParams,
   ProsemirrorNode,
   Selection,
+  SelectionParams,
   Transaction,
-  TransactionParams,
 } from '../types';
-import { isNumber } from './base';
-import { isSelection, isTextDOMNode } from './document';
+import { bool, isNumber } from './base';
+import { isNodeSelection, isSelection, isTextDOMNode } from './document';
 
 /* "Borrowed" from prosemirror-utils in order to avoid requirement of `@prosemirror-tables`*/
+
+interface NodeEqualsTypeParams extends NodeTypesParams, PMNodeParams {}
 
 /**
  * Checks if the type a given `node` equals to a given `nodeType`.
@@ -26,8 +29,8 @@ import { isSelection, isTextDOMNode } from './document';
  *
  * @public
  */
-export const equalNodeType = (type: NodeType | NodeType[], node: ProsemirrorNode) => {
-  return (Array.isArray(type) && type.includes(node.type)) || node.type === type;
+export const nodeEqualsType = ({ types, node }: NodeEqualsTypeParams) => {
+  return (Array.isArray(types) && types.includes(node.type)) || node.type === types;
 };
 
 /**
@@ -58,9 +61,9 @@ export const removeNodeAtPos = (position: number) => (tr: Transaction) => {
  * Returns DOM reference of a node at a given `position`.
  *
  * @remarks
+ *
  * If the node type is of type `TEXT_NODE` it will return the reference of the parent node.
  *
- * @example
  * A simple use case
  *
  * ```ts
@@ -88,9 +91,8 @@ export const findDOMRefAtPos = (position: number, view: EditorView): HTMLElement
 };
 
 /**
- *  Returns a new transaction that deletes previous node.
+ * Returns a new transaction that deletes previous node.
  *
- * @example
  * ```ts
  * dispatch(
  *    removeNodeBefore(state.tr)
@@ -109,9 +111,52 @@ export const removeNodeBefore = (tr: Transaction): Transaction => {
   return tr;
 };
 
-interface FindParentNode extends PosParams, PMNodeParams {
-  start: number;
+interface FindSelectedNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
+export interface FindSelectedNodeOfType extends FindParentNode {
+  /**
+   * The depth of the returned node.
+   */
+  depth: number;
 }
+
+/**
+ * Returns a node of a given `nodeType` if it is selected. `start` points to the start position of the node, `pos` points directly before the node.
+ *
+ * ```ts
+ * const { extension, inlineExtension, bodiedExtension } = schema.nodes;
+ *
+ * const selectedNode = findSelectedNodeOfType({
+ *   types: [extension, inlineExtension, bodiedExtension],
+ *   selection,
+ * });
+ * ```
+ */
+export const findSelectedNodeOfType = ({
+  types,
+  selection,
+}: FindSelectedNodeOfTypeParams): FindSelectedNodeOfType | undefined => {
+  if (isNodeSelection(selection)) {
+    const { node, $from } = selection;
+    if (nodeEqualsType({ types, node })) {
+      return { node, pos: $from.pos, depth: $from.depth, start: $from.start() };
+    }
+  }
+  return undefined;
+};
+
+export interface FindParentNode extends PosParams, PMNodeParams {
+  /**
+   * The start position of the node.
+   */
+  start: number;
+
+  /**
+   * Points to directly before the node.
+   */
+  pos: number;
+}
+
+interface FindParentNodeParams extends SelectionParams, PredicateParams<ProsemirrorNode> {}
 
 /**
  * Iterates over parent nodes, returning the closest node and its start position that the `predicate` returns truthy for.
@@ -122,14 +167,11 @@ interface FindParentNode extends PosParams, PMNodeParams {
  * const predicate = node => node.type === schema.nodes.blockquote;
  * const parent = findParentNode(predicate)(selection);
  * ```
- *
- * @param predicate - the predicate checker
- *
- * @public
  */
-export const findParentNode = (predicate: (node: ProsemirrorNode) => boolean) => (
-  selection: Selection,
-): FindParentNode | undefined => {
+export const findParentNode = ({
+  predicate,
+  selection,
+}: FindParentNodeParams): FindParentNode | undefined => {
   const { $from } = selection;
   for (let currentDepth = $from.depth; currentDepth > 0; currentDepth--) {
     const node = $from.node(currentDepth);
@@ -144,6 +186,8 @@ export const findParentNode = (predicate: (node: ProsemirrorNode) => boolean) =>
   return;
 };
 
+interface FindParentNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
+
 /**
  *  Iterates over parent nodes, returning closest node of a given `nodeType`.
  * `start` points to the start position of the node, `pos` points directly before the node.
@@ -152,15 +196,12 @@ export const findParentNode = (predicate: (node: ProsemirrorNode) => boolean) =>
  * ```ts
  * const parent = findParentNodeOfType(schema.nodes.paragraph)(selection);
  * ```
- *
- * @param type - the node type(s)
- *
- * @public
  */
-export const findParentNodeOfType = (type: NodeType | NodeType[]) => (
-  selection: Selection,
-): FindParentNode | undefined => {
-  return findParentNode(node => equalNodeType(type, node))(selection);
+export const findParentNodeOfType = ({
+  types,
+  selection,
+}: FindParentNodeOfTypeParams): FindParentNode | undefined => {
+  return findParentNode({ predicate: node => nodeEqualsType({ types, node }), selection });
 };
 
 /**
@@ -172,14 +213,12 @@ export const findParentNodeOfType = (type: NodeType | NodeType[]) => (
  * ```
  *
  * @param selection - the prosemirror selection
- *
- * @public
  */
 export const findPositionOfNodeBefore = (selection: Selection): number | undefined => {
   const { nodeBefore } = selection.$from;
   const maybeSelection = PMSelection.findFrom(selection.$from, -1);
   if (maybeSelection && nodeBefore) {
-    const parent = findParentNodeOfType(nodeBefore.type)(maybeSelection);
+    const parent = findParentNodeOfType({ types: nodeBefore.type, selection: maybeSelection });
     if (parent) {
       return parent.pos;
     }
@@ -193,41 +232,39 @@ export const findPositionOfNodeBefore = (selection: Selection): number | undefin
  * Checks whether the selection  or state is currently empty.
  *
  * @param value - the current selection or state
- *
- * @public
  */
 export const selectionEmpty = (value: Selection | EditorState) =>
   isSelection(value) ? value.empty : value.selection.empty;
 
-interface TransactionChangedParams extends TransactionParams, EditorStateParams {}
 /**
  * Check to see if a transaction has changed either the document or the current selection.
  *
  * @param params - the TransactionChangeParams object
  */
-export const transactionChanged = ({ tr, state }: TransactionChangedParams) => {
-  const { from, to } = state.selection;
-  return tr.docChanged || tr.selection.from !== from || tr.selection.to !== to;
+export const transactionChanged = (tr: Transaction) => {
+  return tr.docChanged || tr.selectionSet;
 };
 
-interface NodeActiveParams extends EditorStateParams, NodeTypeParams, Partial<AttrsParams> {}
+interface IsNodeActiveParams extends EditorStateParams, NodeTypeParams, Partial<AttrsParams> {}
 
 /**
  * Checks whether the node type passed in is active within the region.
  * Used by extensions to implement the `#active` method.
  *
+ * To ignore attrs just leave the attrs object empty or undefined.
+ *
  * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
  * @param params - the destructured node active parameters
- *
- * @public
  */
-export const nodeActive = ({ state, type, attrs = {} }: NodeActiveParams) => {
+export const isNodeActive = ({ state, type, attrs = {} }: IsNodeActiveParams) => {
+  const { selection } = state;
   const predicate = (node: ProsemirrorNode) => node.type === type;
-  const parent = findParentNode(predicate)(state.selection);
+  const parent =
+    findSelectedNodeOfType({ selection, types: type }) || findParentNode({ predicate, selection });
 
   if (!Object.keys(attrs).length || !parent) {
-    return !!parent;
+    return bool(parent);
   }
 
   return parent.node.hasMarkup(type, attrs);

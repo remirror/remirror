@@ -20,7 +20,11 @@ import {
   SchemaMarkTypeParams,
   TransactionTransformer,
 } from '@remirror/core';
-import { MentionExtensionAttrs, MentionExtensionOptions } from './mention-types';
+import {
+  MentionExtensionAttrs as MentionAttrs,
+  MentionExtensionCommands,
+  MentionExtensionOptions,
+} from './mention-types';
 import { DEFAULT_MATCHER, escapeChar, getRegexPrefix, regexToString } from './mention-utils';
 import { createSuggestionPlugin, SuggestionState } from './suggestion-plugin';
 
@@ -31,7 +35,7 @@ const defaultHandler = () => false;
  * It also allows for configuration options to be passed into transforming suggestion queries into a mention
  * node.
  */
-export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
+export class MentionExtension extends MarkExtension<MentionExtensionOptions, MentionExtensionCommands, {}> {
   get name() {
     return 'mention' as const;
   }
@@ -103,7 +107,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
   private createMention = (type: MarkType, getState: () => EditorState, shouldUpdate = false) => (
     config?: Attrs,
   ) => {
-    if (!isValidCreateAttrs(config)) {
+    if (!isValidMentionAttrs(config)) {
       throw new Error('Invalid configuration attributes passed to the MentionExtension command.');
     }
 
@@ -135,8 +139,8 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
         let { oldFrom, oldTo } = { oldFrom: from, oldTo: range ? range.end : to };
         const $oldTo = state.doc.resolve(oldTo);
         ({ from: oldFrom, to: oldTo } = getMarkRange($oldTo, type) || { from: oldFrom, to: oldTo });
-        tr = tr.removeMark(oldFrom, oldTo, type);
-        tr = tr.setMeta('addToHistory', false);
+        tr.removeMark(oldFrom, oldTo, type);
+        tr.setMeta('addToHistory', false);
 
         // Remove mark at current position
         const $newTo = tr.selection.$from;
@@ -144,7 +148,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
           from: $newTo.pos,
           to: $newTo.pos,
         };
-        tr = tr.removeMark(newFrom, newTo, type);
+        tr.removeMark(newFrom, newTo, type);
         return tr.setMeta('addToHistory', false);
       };
     }
@@ -161,9 +165,9 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
 
   public commands({ type, getState }: CommandMarkTypeParams) {
     return {
-      create: this.createMention(type, getState),
-      update: this.createMention(type, getState, true),
-      remove: ({ range }: Partial<RangeParams> = {}) => {
+      createMention: this.createMention(type, getState),
+      updateMention: this.createMention(type, getState, true),
+      removeMention: ({ range }: Partial<RangeParams> = {}) => {
         return removeMark({ type, expand: true, range });
       },
     };
@@ -173,15 +177,19 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
   public pasteRules({ type }: SchemaMarkTypeParams) {
     return this.options.matchers.map(matcher => {
       const { startOfLine, char, supportedCharacters } = { ...DEFAULT_MATCHER, ...matcher };
-      const regex = new RegExp(
+      const regexp = new RegExp(
         `(${getRegexPrefix(startOfLine)}${escapeChar(char)}${regexToString(supportedCharacters)})`,
         'g',
       );
 
-      return markPasteRule(regex, type, str => ({
-        id: getMatchString(str.slice(char.length, str.length)),
-        label: getMatchString(str),
-      }));
+      return markPasteRule({
+        regexp,
+        type,
+        getAttrs: str => ({
+          id: getMatchString(str.slice(char.length, str.length)),
+          label: getMatchString(str),
+        }),
+      });
     });
   }
 
@@ -191,8 +199,8 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
 }
 
 /**
- * Check that the attributes exist and are valid for the collaboration update
+ * Check that the attributes exist and are valid for the mention update
  * command method.
  */
-const isValidCreateAttrs = (attrs?: Attrs): attrs is MentionExtensionAttrs =>
+const isValidMentionAttrs = (attrs?: Attrs): attrs is MentionAttrs =>
   bool(attrs && isObject(attrs) && attrs.id && attrs.label);

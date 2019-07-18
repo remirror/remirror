@@ -1,4 +1,4 @@
-import { css, jsx } from '@emotion/core';
+import { css as emotionCss, jsx } from '@emotion/core';
 import {
   AnyFunction,
   bool,
@@ -185,7 +185,14 @@ export const propIsFunction = (prop: unknown): prop is AnyFunction => {
  * @remarks
  * This is useful for enabling the library user to switch of emotion for core react elements.
  */
-export const cssNoOp: typeof css = () => undefined as any;
+export const cssNoOp: typeof emotionCss = () => undefined as any;
+
+/**
+ * A css function that just returns the string.
+ * This is typically used for css syntax highlighting of plain strings in editors
+ * Can be used as a replacement for emotion when emotion has been disabled but we still want the
+ */
+export const css = String.raw || ((template: TemplateStringsArray) => template[0]);
 
 /**
  * A drop in replacement for React.Children.only which provides more readable errors
@@ -202,3 +209,18 @@ export const oneChildOnly = <GProps extends {} = any>(value: unknown): ReactElem
 
   return Children.only(value);
 };
+
+/**
+ * Add the specified key to an element when it is a valid react element.
+ *
+ * This is useful when returning an array of components because a fragment isn't sufficient.
+ */
+export const addKeyToElement = (element: ReactNode, key: string | number) => {
+  if (!isValidElement(element)) {
+    return element;
+  }
+
+  return cloneElement(element, { ...element.props, key });
+};
+
+export { cx } from 'emotion';

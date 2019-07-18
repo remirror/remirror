@@ -8,6 +8,7 @@ import {
 } from 'prosemirror-state';
 import { Mapping as PMMapping } from 'prosemirror-transform';
 import {
+  Decoration as PMDecoration,
   DecorationSet as PMDecorationSet,
   EditorView as PMEditorView,
   NodeView as PMNodeView,
@@ -19,6 +20,7 @@ import { EditorSchema } from './base';
 export type EditorView = PMEditorView<EditorSchema>;
 export type Selection = PMSelection<EditorSchema>;
 export type DecorationSet = PMDecorationSet<EditorSchema>;
+export type Decoration = PMDecoration;
 export type Transaction = PMTransaction<EditorSchema>;
 export type PluginKey<GPluginState = any> = PMPluginKey<GPluginState, EditorSchema>;
 export type Plugin<GPluginState = any> = PMPlugin<GPluginState, EditorSchema>;

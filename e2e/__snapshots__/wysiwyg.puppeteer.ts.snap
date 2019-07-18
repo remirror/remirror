@@ -1,7 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Wysiwyg Editor Snapshots SSR should pre render the editor 1`] = `
-"<div role=\\"textbox\\" aria-multiline=\\"true\\" aria-label=\\"\\" aria-placeholder=\\"Start typing...\\" class=\\"remirror-editor\\"><h1>A WYSIWYG Editor</h1><p><br></p><p>With <strong><em>formatting </em></strong>and other <u>enhancements</u>.</p><p><br></p><pre>Simple Code Blocks
-echo \\"fun times\\"
-Use Shift-Enter or Mod-Enter to hard break out of the code block<code></code></pre><p><br></p><ul><li><p>List support</p><ul><li><p>With nesting</p></li></ul></li><li><p>Built in.</p></li></ul><p><br></p><blockquote><p>Block quotes</p><h3>With support for headers</h3></blockquote><p><br></p><p>And <a href=\\"https://google.com\\" rel=\\"noopener noreferrer nofollow\\">urls</a> with support for <code>Cmd-k</code> shortcut to enter a link manually.</p><p><br></p><p><br></p></div>"
+"<div role=\\"textbox\\" aria-multiline=\\"true\\" aria-label=\\"\\" aria-placeholder=\\"Start typing...\\" class=\\"Prosemirror remirror-editor\\" contenteditable=\\"true\\"><h1>A WYSIWYG Editor</h1><p><br></p><p>With <strong><em>formatting </em></strong>and other <u>enhancements</u>.</p><p><br></p><pre class=\\"language-markdown\\"><code><span class=\\"token title important\\"><span class=\\"token punctuation\\">##</span> Simple Code Blocks</span>
+
+<span class=\\"token code\\"><span class=\\"token punctuation\\">\`\`\`</span><span class=\\"token code-language\\">js</span>
+<span class=\\"token code-block language-js\\">console<span class=\\"token punctuation\\">.</span><span class=\\"token function\\">log</span><span class=\\"token punctuation\\">(</span><span class=\\"token string\\">\\"with code fence support\\"</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span></span>
+<span class=\\"token punctuation\\">\`\`\`</span></span>
+
+<span class=\\"token code\\"><span class=\\"token punctuation\\">\`\`\`</span><span class=\\"token code-language\\">bash</span>
+<span class=\\"token code-block language-bash\\"><span class=\\"token keyword\\">echo</span> <span class=\\"token string\\">\\"fun times\\"</span></span>
+<span class=\\"token punctuation\\">\`\`\`</span></span>
+
+Use Shift-Enter or Mod-Enter to hard break out of the code block</code></pre><p><br></p><ul><li><p>List support</p><ul><li><p>With nesting</p></li></ul></li><li><p>Built in.</p></li></ul><p><br></p><blockquote><p>Block quotes</p><h3>With support for headers</h3></blockquote><p><br></p><p>And <a href=\\"https://google.com\\" rel=\\"noopener noreferrer nofollow\\">urls</a> with support for <code>Cmd-k</code> shortcut to enter a link manually.</p><p><br></p><p><br></p></div>"
 `;

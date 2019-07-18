@@ -2,7 +2,7 @@ import {
   EditorSchema,
   findMatches,
   flattenArray,
-  isObject,
+  isInstanceOf,
   isProsemirrorNode,
   isString,
   SchemaParams,
@@ -89,7 +89,7 @@ export const offsetTags = (tags: Tags, offset: number): Tags => {
  *
  * @param value
  */
-const isTagTracker = (value: unknown): value is TagTracker => isObject(value) && value instanceof TagTracker;
+const isTagTracker = isInstanceOf(TagTracker);
 
 /**
  * Checks if the node is a TaggedProsemirrorNode (a normal ProsemirrorNode with a tag attribute)

@@ -5,9 +5,9 @@ import {
   EditorState,
   EditorStateParams,
   EditorView,
-  Extension,
   FromToParams,
   isMarkActive,
+  MarkExtension,
   MarkType,
   noop,
   ResolvedPosParams,
@@ -23,6 +23,7 @@ import {
   CompareMatchParams,
   ExitReason,
   MentionExtensionAttrs,
+  MentionExtensionCommands,
   MentionExtensionOptions,
   SuggestionActions,
   SuggestionCallbackParams,
@@ -45,7 +46,7 @@ import {
 } from './mention-utils';
 
 export interface SuggestionStateCreateParams extends SchemaMarkTypeParams {
-  extension: Extension<MentionExtensionOptions>;
+  extension: MarkExtension<MentionExtensionOptions, MentionExtensionCommands, {}>;
 }
 
 export class SuggestionState {
@@ -89,9 +90,9 @@ export class SuggestionState {
    */
   private getCommands(match: SuggestionStateMatch, reason?: ExitReason | ChangeReason): SuggestionActions {
     const { name, range } = match;
-    const create = this.getActions<MentionExtensionAttrs>('mentionCreate').command;
-    const update = this.getActions<MentionExtensionAttrs>('mentionUpdate').command;
-    const remove = this.getActions('mentionRemove').command;
+    const create = this.getActions<MentionExtensionAttrs>('createMention');
+    const update = this.getActions<MentionExtensionAttrs>('updateMention');
+    const remove = this.getActions('removeMention');
     const stage = this.stage;
 
     const fn = stage === 'new' ? create : update;
@@ -150,7 +151,7 @@ export class SuggestionState {
   }
 
   constructor(
-    private extension: Extension<MentionExtensionOptions>,
+    private extension: MarkExtension<MentionExtensionOptions, MentionExtensionCommands, {}>,
     private type: MarkType,
     private getActions: ActionGetter,
   ) {}
@@ -254,10 +255,10 @@ export class SuggestionState {
   /**
    * Applies updates to the state to be used within the plugins apply method.
    */
-  public apply({ tr, prevState, newState }: TransactionParams & CompareStateParams) {
+  public apply({ tr, newState }: TransactionParams & CompareStateParams) {
     const { exit } = this.handlerMatches;
 
-    if (!transactionChanged({ tr, state: prevState }) && !this.removed) {
+    if (!transactionChanged(tr) && !this.removed) {
       return this;
     }
 

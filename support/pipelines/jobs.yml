@@ -9,9 +9,14 @@ jobs:
           vmImage: ${{ parameters.vmImage }}
         steps:
           - template: yarn-install.yml
-          - bash: |
-              yarn ci:checks
-            displayName: 'Run all checks'
+          - bash: yarn integrity
+            displayName: 'Check yarn lock file is up to date'
+          - bash: yarn ci:audit
+            displayName: 'Check for security audit flags in dependencies'
+          - bash: yarn lint
+            displayName: 'Check all lint rules'
+          - bash: yarn typecheck
+            displayName: 'Typecheck code and tests'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
       - job: ${{ parameters.name }}UnitTests
@@ -21,7 +26,18 @@ jobs:
           - template: yarn-install.yml
           - bash: |
               yarn test
-            displayName: 'Run unit tests'
+            displayName: 'Run unit tests across project'
+
+  - ${{ if eq(parameters.name, 'Linux') }}:
+      - job: ${{ parameters.name }}SizeChecks
+        pool:
+          vmImage: ${{ parameters.vmImage }}
+        steps:
+          - template: yarn-install.yml
+          - bash: yarn build
+            displayName: 'Build project'
+          - bash: yarn size
+            displayName: 'Check size limits'
 
   - job: ${{ parameters.name }}IntegrationTests
     pool:
@@ -35,12 +51,19 @@ jobs:
       - template: yarn-install.yml
       - bash: yarn build
         displayName: 'Build project'
-      - bash: yarn size
-        displayName: 'Size limit check'
+
       - bash: yarn test:puppeteer
         displayName: 'Run integration tests on chrome'
+        env:
+          CI: 'true'
 
       # Firefox tests are currently failing because image snapshots aren't consistent on linux
       # Use a docker image to generate snapshots so that they can run across environments
       - bash: yarn test:puppeteer:firefox || true
         displayName: 'Run integration tests on firefox'
+        env:
+          CI: 'true'
+
+      - publish: $(System.DefaultWorkingDirectory)/e2e/__image_snapshots__
+        condition: always()
+        artifact: ImageSnapshots

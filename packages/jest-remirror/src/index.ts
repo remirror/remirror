@@ -1,11 +1,12 @@
 export * from './builder';
-export * from './transactions';
-export * from './matchers';
 export * from './jsdom-polyfills';
-export * from './test-schema';
-export * from './render-editor';
-export * from './setup-environment';
 export * from './keys';
+export * from './matchers';
+export * from './render-editor';
+export * from './render-ssr-editor';
+export * from './setup-environment';
+export * from './test-schema';
+export * from './transactions';
 export * from './types';
 
 declare global {

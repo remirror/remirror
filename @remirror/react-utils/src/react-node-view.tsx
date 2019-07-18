@@ -3,19 +3,21 @@ import React, { ComponentType } from 'react';
 import {
   Attrs,
   Cast,
+  Decoration,
   EDITOR_CLASS_NAME,
+  EditorView,
   EditorViewParams,
   isDOMNode,
   isElementDOMNode,
   isPlainObject,
   isString,
+  NodeView,
   NodeViewPortalContainer,
   PlainObject,
   ProsemirrorNode,
 } from '@remirror/core';
-import { RemirrorProps } from '@remirror/react-utils';
 import { css, Interpolation } from 'emotion';
-import { Decoration, EditorView, NodeView } from 'prosemirror-view';
+import { RemirrorProps } from './types';
 
 /**
  * Retrieve the position of the current nodeView
@@ -30,11 +32,11 @@ export type GetPosition = () => number;
  */
 const cssNoOp: typeof css = () => '';
 
-export interface NodeViewComponentProps<GAttrs = any> extends EditorViewParams {
+export type NodeViewComponentProps<GAttrs = any> = EditorViewParams & {
   node: ProsemirrorNode & { attrs: GAttrs };
   getPosition: GetPosition;
   forwardRef?: (node: HTMLElement) => void | undefined;
-}
+};
 
 export interface CreateNodeViewParams<GProps extends PlainObject = {}>
   extends Partial<Pick<RemirrorProps, 'withoutEmotion'>> {
@@ -60,7 +62,6 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
         portalContainer,
         props,
         Component,
-        false,
         style,
         withoutEmotion,
       ).init();
@@ -70,6 +71,13 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
   private contentDOMWrapper: Node | null = null;
   public contentDOM: Node | undefined;
 
+  /**
+   * The CSS transformation property depending on whether the emotion is being used or not.
+   */
+  private get css(): typeof css {
+    return this.withoutEmotion ? cssNoOp : css;
+  }
+
   constructor(
     public node: ProsemirrorNode,
     public view: EditorView,
@@ -77,17 +85,9 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     private portalContainer: NodeViewPortalContainer,
     public props: GProps = {} as GProps,
     private Component: ComponentType<NodeViewComponentProps & GProps>,
-    private hasContext: boolean = false,
     private style: Interpolation = {},
     private withoutEmotion: boolean = false,
   ) {}
-
-  /**
-   * The CSS transformation property depending on whether the emotion is being used or not.
-   */
-  private get css(): typeof css {
-    return this.withoutEmotion ? cssNoOp : css;
-  }
 
   /**
    * This method exists to move initialization logic out of the constructor,
@@ -120,16 +120,20 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     return this;
   }
 
-  private renderReactComponent(component: () => JSX.Element) {
-    if (!this.domRef || !component) {
+  private renderReactComponent(render: () => JSX.Element) {
+    if (!this.domRef || !render) {
       return;
     }
 
-    this.portalContainer.render(component, this.domRef, this.hasContext);
+    this.portalContainer.render({ render, container: this.domRef });
   }
 
+  /**
+   * Create a dom ref
+   */
   public createDomRef(): HTMLElement {
     const { toDOM } = this.node.type.spec;
+
     if (toDOM) {
       const domSpec = toDOM(this.node);
       if (isString(domSpec)) {
@@ -143,6 +147,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
         return domSpec;
       }
 
+      // Use the outer element string to render the dom node
       return document.createElement(domSpec[0]);
     }
     return this.node.isInline ? document.createElement('span') : document.createElement('div');

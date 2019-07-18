@@ -41,7 +41,7 @@ export const getBrowserName = (): BrowserName => process.env.PUPPETEER_BROWSER |
 /**
  * Prefix the browser name to the passed in string
  */
-export const prefixBrowserName = (value: string) => `${getBrowserName()}-${value}`;
+export const prefixBrowserName = (value: string) => `${getBrowserName()}-${process.platform}-${value}`;
 
 /**
  * Declare the globals used throughout tests

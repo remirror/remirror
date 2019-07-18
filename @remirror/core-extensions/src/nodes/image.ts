@@ -6,6 +6,7 @@ import {
   CommandNodeTypeParams,
   EditorSchema,
   NodeExtension,
+  NodeExtensionOptions,
   NodeExtensionSpec,
 } from '@remirror/core';
 import { ResolvedPos } from 'prosemirror-model';
@@ -15,7 +16,7 @@ const hasCursor = <T extends {}>(arg: T): arg is T & { $cursor: ResolvedPos } =>
   return bool(Cast(arg).$cursor);
 };
 
-export class ImageExtension extends NodeExtension {
+export class ImageExtension extends NodeExtension<NodeExtensionOptions, 'image', {}> {
   get name() {
     return 'image' as const;
   }
@@ -50,16 +51,18 @@ export class ImageExtension extends NodeExtension {
   }
 
   public commands({ type }: CommandNodeTypeParams) {
-    return (attrs?: Attrs): CommandFunction => (state, dispatch) => {
-      if (!dispatch) {
-        return false;
-      }
-      const { selection } = state;
-      const position = hasCursor(selection) ? selection.$cursor.pos : selection.$to.pos;
-      const node = type.create(attrs);
-      const transaction = state.tr.insert(position, node);
-      dispatch(transaction);
-      return true;
+    return {
+      image: (attrs?: Attrs): CommandFunction => (state, dispatch) => {
+        if (!dispatch) {
+          return false;
+        }
+        const { selection } = state;
+        const position = hasCursor(selection) ? selection.$cursor.pos : selection.$to.pos;
+        const node = type.create(attrs);
+        const transaction = state.tr.insert(position, node);
+        dispatch(transaction);
+        return true;
+      },
     };
   }
 

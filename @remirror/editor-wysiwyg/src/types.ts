@@ -1,3 +1,4 @@
+import { CodeBlockExtensionOptions } from '@remirror/extension-code-block';
 import { RemirrorManagerProps, RemirrorProps } from '@remirror/react-utils';
 import { ButtonState, WysiwygEditorTheme } from './theme';
 export interface WysiwygEditorProps
@@ -16,9 +17,11 @@ export interface WysiwygEditorProps
         | 'label'
         | 'editorStyles'
         | 'forceEnvironment'
+        | 'suppressHydrationWarning'
       >
     >,
-    Pick<RemirrorManagerProps, 'placeholder'> {
+    Pick<RemirrorManagerProps, 'placeholder'>,
+    Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme'> {
   /**
    * Extend the theme with your own styles
    */

@@ -4,16 +4,17 @@ import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
 import { EditorState, PluginKey } from 'prosemirror-state';
 import { ComponentType } from 'react';
-import { AnyExtension, FlexibleExtension } from './extension';
+import { AnyExtension, ExtensionCommands, FlexibleExtension } from './extension';
 import {
-  booleanFlexibleFunctionMap,
-  commandFlexibleFunctionMap,
+  createCommands,
+  defaultIsActive,
+  defaultIsEnabled,
   extensionPropertyMapper,
   hasExtensionProperty,
   ignoreFunctions,
   transformExtensionMap,
 } from './extension-manager.helpers';
-import { bool, isEqual, isFunction, isObject } from './helpers';
+import { bool, isEqual, isFunction, isInstanceOf } from './helpers';
 import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from './helpers/document';
 import { isMarkExtension } from './mark-extension';
 import { isNodeExtension } from './node-extension';
@@ -21,7 +22,9 @@ import { NodeViewPortalContainer } from './portal-container';
 import {
   ActionGetter,
   ActionMethods,
+  Attrs,
   AttrsWithClass,
+  BooleanExtensionCheck,
   CommandFunction,
   CommandParams,
   EditorSchema,
@@ -32,6 +35,7 @@ import {
   MarkExtensionSpec,
   NodeExtensionSpec,
   NodeViewMethod,
+  PlainObject,
   ProsemirrorPlugin,
   RemirrorActions,
   TransactionParams,
@@ -48,6 +52,9 @@ export interface ExtensionManagerData {
   pasteRules: ProsemirrorPlugin[];
   actions: RemirrorActions;
   view: EditorView;
+  isActive: Record<string, BooleanExtensionCheck<string>>;
+  isEnabled: Record<string, BooleanExtensionCheck<string>>;
+  options: Record<string, PlainObject>;
 }
 
 /**
@@ -131,6 +138,9 @@ export class ExtensionManager implements ExtensionManagerInitParams {
 
     // Initialize the schema immediately since this doesn't ever change.
     this.initData.schema = this.createSchema();
+
+    // Options are cached here.
+    this.initData.options = this.extensionOptions();
   }
 
   /** Initialization */
@@ -157,6 +167,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     this.initData.keymaps = this.keymaps();
     this.initData.inputRules = this.inputRules();
     this.initData.pasteRules = this.pasteRules();
+    this.initData.isActive = this.booleanCheck('isActive');
+    this.initData.isEnabled = this.booleanCheck('isEnabled');
 
     this.initData.plugins = [
       ...this.initData.directPlugins,
@@ -234,6 +246,10 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     return this.initData;
   }
 
+  get options() {
+    return this.initData.options;
+  }
+
   /**
    * Filters through all provided extensions and picks the nodes
    */
@@ -302,6 +318,22 @@ export class ExtensionManager implements ExtensionManagerInitParams {
       }),
       plugins,
     });
+  }
+
+  /**
+   * Collect data from all the extensions. This will be made available to the consuming react component
+   * within the context data and also the child renderProp function parameters.
+   */
+  public extensionData() {
+    const data: Record<string, PlainObject> = {};
+
+    for (const extension of this.extensions) {
+      data[extension.name] = extension.extensionData
+        ? extensionPropertyMapper('extensionData', this.params)(extension)
+        : {};
+    }
+
+    return data;
   }
 
   /**
@@ -429,23 +461,38 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     const actions: RemirrorActions = {};
 
     // Creates the methods that take in attrs and dispatch an action into the editor
-    const commands = commandFlexibleFunctionMap({ extensions, params });
+    const commands = createCommands({ extensions, params });
 
-    // Creates methods determining whether a node is active or inactive
-    const active = booleanFlexibleFunctionMap({ key: 'active', extensions, params });
+    Object.entries(commands).forEach(([commandName, { command, name }]) => {
+      const isActive = this.initData.isActive[name] || defaultIsActive;
+      const isEnabled = this.initData.isEnabled[name] || defaultIsEnabled;
 
-    // Creates methods determining whether a node / mark is enabled
-    const enabled = booleanFlexibleFunctionMap({ key: 'enabled', extensions, params });
-
-    Object.entries(commands).forEach(([name, command]) => {
-      actions[name] = {
-        command,
-        isActive: active[name] ? active[name] : () => false,
-        isEnabled: enabled[name] ? enabled[name] : () => true,
-      };
+      actions[commandName] = command as ActionMethods;
+      actions[commandName].isActive = (attrs?: Attrs) => isActive({ attrs, command: commandName });
+      actions[commandName].isEnabled = (attrs?: Attrs) => isEnabled({ attrs, command: commandName });
     });
 
     return actions;
+  }
+
+  /**
+   * Return the object of a boolean helper.
+   *
+   * This can be `isActive` or `isEnabled`.
+   */
+  private booleanCheck(method: 'isEnabled' | 'isActive') {
+    this.checkInitialized();
+    const isActiveMethods: Record<string, BooleanExtensionCheck<string>> = {};
+
+    return this.extensions.filter(hasExtensionProperty(method)).reduce(
+      (acc, extension) => ({
+        ...acc,
+        [extension.name]: extensionPropertyMapper(method, this.params)(extension) as BooleanExtensionCheck<
+          ExtensionCommands<typeof extension>
+        >,
+      }),
+      isActiveMethods,
+    );
   }
 
   /**
@@ -488,6 +535,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * Retrieve all keymaps (how the editor responds to keyboard commands).
    */
   private keymaps() {
+    this.checkInitialized();
     const extensionKeymaps = this.extensions
       .filter(hasExtensionProperty('keys'))
       .filter(extension => !extension.options.excludeKeymaps)
@@ -517,6 +565,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * Retrieve all inputRules (how the editor responds to text matching certain rules).
    */
   private inputRules() {
+    this.checkInitialized();
     const rules: InputRule[] = [];
     const extensionInputRules = this.extensions
       .filter(hasExtensionProperty('inputRules'))
@@ -531,9 +580,22 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
+   * Retrieve all the options passed in for the extension manager
+   */
+  private extensionOptions(): Record<string, PlainObject> {
+    const options: Record<string, PlainObject> = {};
+    for (const extension of this.extensions) {
+      options[extension.name] = extension.options;
+    }
+
+    return options;
+  }
+
+  /**
    * Retrieve all pasteRules (rules for how the editor responds to pastedText).
    */
   private pasteRules(): ProsemirrorPlugin[] {
+    this.checkInitialized();
     const pasteRules: ProsemirrorPlugin[] = [];
     const extensionPasteRules = this.extensions
       .filter(hasExtensionProperty('pasteRules'))
@@ -551,6 +613,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * Extensions can register custom styles for the editor. This retrieves them.
    */
   private styles(): Interpolation[] {
+    this.checkInitialized();
     const extensionStyles = this.extensions
       .filter(hasExtensionProperty('styles'))
       .filter(extension => !extension.options.excludeStyles)
@@ -564,9 +627,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
  *
  * @param value - the value to check
  */
-export const isExtensionManager = (value: unknown): value is ExtensionManager => {
-  return isObject(value) && value instanceof ExtensionManager;
-};
+export const isExtensionManager = isInstanceOf(ExtensionManager);
 
 export interface ManagerParams {
   /**

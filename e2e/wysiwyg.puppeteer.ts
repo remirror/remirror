@@ -8,9 +8,8 @@ describe('Wysiwyg Editor Snapshots', () => {
   const ssrIdentifier = prefixBrowserName('wysiwyg-editor-ssr');
   const domIdentifier = prefixBrowserName('wysiwyg-editor-dom');
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     url = getUrl('wysiwyg', 'next');
-    await jestPuppeteer.resetPage();
   });
 
   describeServer(['next'])('SSR', () => {

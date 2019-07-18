@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  puppeteer-linux:
+    environment:
+      PUPPETEER_DOCKER: 'true'
+    build:
+      dockerfile: ./support/docker/puppeteer-linux-dev.Dockerfile
+      context: ../../
+    volumes:
+      - type: bind
+        source: ../../e2e
+        target: /remirror/e2e
+        volume:
+          nocopy: false
+    command: 'yarn test:puppeteer'
+
+  puppeteer-windows:
+    environment:
+      PUPPETEER_DOCKER: 'true'
+    build:
+      dockerfile: ./support/docker/puppeteer-windows.Dockerfile
+      context: ../../
+    volumes:
+      - type: bind
+        source: ../../e2e
+        target: /remirror/e2e
+        volume:
+          nocopy: false
+    command: 'yarn test:puppeteer'

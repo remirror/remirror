@@ -22,8 +22,9 @@ import {
   dispatchTextSelection,
   fireEventAtPosition,
   insertText,
-  keyboardShortcut,
+  press,
   replaceSelection,
+  shortcut,
 } from './transactions';
 import {
   AddContent,
@@ -41,11 +42,11 @@ import {
  * Render the editor with the params passed in. Useful for testing.
  */
 export const renderEditor = <
-  GPlainMarks extends Array<MarkExtension<any>>,
-  GPlainNodes extends Array<NodeExtension<any>>,
-  GAttrMarks extends Array<MarkExtension<any>>,
-  GAttrNodes extends Array<NodeExtension<any>>,
-  GOthers extends Array<Extension<any>>,
+  GPlainMarks extends Array<MarkExtension<any, any, any>>,
+  GPlainNodes extends Array<NodeExtension<any, any, any>>,
+  GAttrMarks extends Array<MarkExtension<any, any, any>>,
+  GAttrNodes extends Array<NodeExtension<any, any, any>>,
+  GOthers extends Array<Extension<any, any, any, never>>,
   GPlainMarkNames extends GPlainMarks[number]['name'],
   GAttrMarkNames extends GAttrMarks[number]['name'],
   GAttrNodeNames extends GAttrNodes[number]['name'],
@@ -123,34 +124,42 @@ export const renderEditor = <
       });
     }
 
-    const createAddContentReturn = (newTags?: Tags): AddContentReturn => {
+    const updateContent = (newTags?: Tags): AddContentReturn => {
       const { from, to } = view.state.selection;
       return {
         tags: newTags ? { ...tags, ...newTags } : tags,
         start: from,
         end: to,
         replace: (...replacement) => {
-          return createAddContentReturn(replaceSelection({ view, content: replacement }));
+          return updateContent(replaceSelection({ view, content: replacement }));
         },
         insertText: text => {
           insertText({ start: from, text, view });
-          return createAddContentReturn();
+          return updateContent();
         },
         overwrite: add,
         state: view.state,
         actions: returnedParams.actions,
-        shortcut: shortcut => {
-          keyboardShortcut({ shortcut, view });
-          return createAddContentReturn();
+        shortcut: text => {
+          shortcut({ shortcut: text, view });
+          return updateContent();
+        },
+        press: char => {
+          press({ char, view });
+          return updateContent();
+        },
+        dispatchCommand: command => {
+          command(view.state, view.dispatch, view);
+          return updateContent();
         },
         fire: params => {
           fireEventAtPosition({ view, ...params });
-          return createAddContentReturn();
+          return updateContent();
         },
       };
     };
 
-    return createAddContentReturn();
+    return updateContent();
   };
 
   const { schema } = view.state;

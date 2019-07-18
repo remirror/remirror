@@ -1,15 +1,10 @@
 import { absoluteCoordinates, isEmptyParagraphNode, selectionEmpty } from '@remirror/core';
-import { Positioner } from '@remirror/react-utils';
+import { Positioner } from './types';
 
 export const defaultPositioner: Positioner = {
   initialPosition: { top: -9999, left: -9999, right: -9999, bottom: -9999 },
   hasChanged({ prevState, newState }) {
-    const hasChanged = !(
-      prevState &&
-      prevState.doc.eq(newState.doc) &&
-      prevState.selection.eq(newState.selection)
-    );
-    return hasChanged;
+    return !(prevState && prevState.doc.eq(newState.doc) && prevState.selection.eq(newState.selection));
   },
 
   isActive({ newState }) {

@@ -1,6 +1,7 @@
 import {
   CommandMarkTypeParams,
   MarkExtension,
+  MarkExtensionOptions,
   MarkExtensionSpec,
   markInputRule,
   markPasteRule,
@@ -8,7 +9,7 @@ import {
 } from '@remirror/core';
 import { toggleMark } from 'prosemirror-commands';
 
-export class ItalicExtension extends MarkExtension {
+export class ItalicExtension extends MarkExtension<MarkExtensionOptions, 'italic', {}> {
   get name() {
     return 'italic' as const;
   }
@@ -27,14 +28,14 @@ export class ItalicExtension extends MarkExtension {
   }
 
   public commands({ type }: CommandMarkTypeParams) {
-    return () => toggleMark(type);
+    return { italic: () => toggleMark(type) };
   }
 
   public inputRules({ type }: SchemaMarkTypeParams) {
-    return [markInputRule(/(?:^|[^*_])(?:\*|_)([^*_]+)(?:\*|_)$/, type)];
+    return [markInputRule({ regexp: /(?:^|[^*_])(?:\*|_)([^*_]+)(?:\*|_)$/, type })];
   }
 
   public pasteRules({ type }: SchemaMarkTypeParams) {
-    return [markPasteRule(/(?:^|[^*_])(?:\*|_)([^*_]+)(?:\*|_)/g, type)];
+    return [markPasteRule({ regexp: /(?:^|[^*_])(?:\*|_)([^*_]+)(?:\*|_)/g, type })];
   }
 }

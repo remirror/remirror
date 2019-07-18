@@ -88,6 +88,16 @@ export interface NodeTypeParams {
   type: NodeType;
 }
 
+/**
+ * Accepts a single node type or multiple node types.
+ */
+export interface NodeTypesParams {
+  /**
+   * A type(s) of prosemirror node to use.
+   */
+  types: NodeType | NodeType[];
+}
+
 export interface MarkTypeParams {
   /**
    * The type of mark being used
@@ -183,4 +193,18 @@ export interface SelectionParams<GSelection extends Selection = Selection> {
    * The text editor selection
    */
   selection: GSelection;
+}
+
+export interface PredicateParams<GParams> {
+  /**
+   * The predicate function
+   */
+  predicate(params: GParams): boolean;
+}
+
+export interface RegExpParams {
+  /**
+   * The regular expression to test against.
+   */
+  regexp: RegExp;
 }

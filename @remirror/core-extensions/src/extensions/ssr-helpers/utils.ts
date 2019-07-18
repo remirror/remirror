@@ -66,10 +66,12 @@ export const injectBrIntoEmptyParagraphs: SSRTransformer = element => {
     if (!isArray(children)) {
       return children;
     }
+
     return Children.map(children, child => {
       if (!(isReactDOMElement(child) && elementIsEmpty(child) && elementIsOfType(child, 'p'))) {
         return child;
       }
+
       const props = getElementProps(child);
       return cloneElement(child, props, jsx('br'));
     });

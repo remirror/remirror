@@ -31,8 +31,10 @@ import {
   isDocNodeEmpty,
   isElementDOMNode,
   isMarkActive,
+  isNodeSelection,
   isObjectNode,
   isProsemirrorNode,
+  isSelection,
   isTextDOMNode,
   isTextSelection,
   nodeNameMatchesList,
@@ -184,19 +186,24 @@ test('getNearestNonTextNode', () => {
   expect(getNearestNonTextNode(div)).toBe(div);
 });
 
-describe('isTextSelection', () => {
+describe('selections', () => {
   it('returns true for a valid text selection', () => {
     const { state } = createEditor(doc(p('Some<start>thing<end>')));
     expect(isTextSelection(state.selection)).toBeTrue();
+    expect(isSelection(state.selection)).toBeTrue();
+    expect(isNodeSelection(state.selection)).toBeFalse();
   });
 
   it('returns false for a node selection', () => {
     const { state } = createEditor(doc(p('Some<node>thing')));
     expect(isTextSelection(state.selection)).toBeFalse();
+    expect(isNodeSelection(state.selection)).toBeTrue();
   });
 
   it('returns false for `undefined`', () => {
     expect(isTextSelection(undefined)).toBeFalse();
+    expect(isNodeSelection(undefined)).toBeFalse();
+    expect(isSelection(undefined)).toBeFalse();
   });
 });
 

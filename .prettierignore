@@ -9,3 +9,4 @@ coverage/**
 **/.next
 .out
 storybook-static
+lerna.json

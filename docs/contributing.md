@@ -74,7 +74,7 @@ yarn husky:stop
 
 This copies the `support/.config.sample.json` to `.config.json`. After this change your git commits and git pushes won't be checked for errors.
 
-If you would like to resume per-commit and per-push checking simply run
+If you would like to resume per-commit and per-push checking run
 
 ```bash
 yarn husky:start

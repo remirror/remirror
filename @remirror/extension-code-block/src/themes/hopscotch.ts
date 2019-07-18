@@ -6,7 +6,7 @@
  * This work is licensed under the Creative Commons CC0 1.0 Universal License
  */
 
-import { css } from 'emotion';
+import { css } from '@remirror/react-utils';
 
 export default css`
   @import url(https://fonts.googleapis.com/css?family=Fira+Mono);

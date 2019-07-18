@@ -16,9 +16,8 @@ describe('Twitter Editor Snapshots', () => {
   const ssrIdentifier = prefixBrowserName('twitter-editor-ssr');
   const domIdentifier = prefixBrowserName('twitter-editor-dom');
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     url = getUrl('twitter', 'next');
-    await jestPuppeteer.resetPage();
   });
 
   describeServer(['next'])('SSR', () => {
@@ -63,6 +62,10 @@ describe('Twitter Editor Snapshots', () => {
 });
 
 describe.each(URLDescriptor.twitter)('%s: Twitter Showcase', (_, path) => {
+  beforeAll(async () => {
+    await jestPuppeteer.resetPage();
+  });
+
   beforeEach(async () => {
     await page.goto(path);
   });

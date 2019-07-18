@@ -503,3 +503,5 @@ export interface CompareMatchParams {
    */
   next: SuggestionStateMatch;
 }
+
+export type MentionExtensionCommands = 'createMention' | 'updateMention' | 'removeMention';

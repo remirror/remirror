@@ -360,10 +360,17 @@ const isObjectOfType = <GType>(type: TypeName) => (value: unknown): value is GTy
   getObjectType(value) === type;
 
 /**
+ * Check if an instance is the direct instance of the provided class.
+ */
+export const isDirectInstanceOf = <T>(instance: unknown, Constructor: AnyConstructor<T>): instance is T =>
+  Object.getPrototypeOf(instance) === Constructor.prototype;
+
+/**
  * A shorthand method for creating instance of checks.
  */
-export const isInstanceOf = <GConstructor>(Constructor: any) => (value: unknown): value is GConstructor =>
-  isObject(value) && value instanceof Constructor;
+export const isInstanceOf = <GConstructor extends AnyConstructor>(Constructor: GConstructor) => (
+  value: unknown,
+): value is InstanceType<GConstructor> => isObject(value) && value instanceof Constructor;
 
 /**
  * Predicate check that value is undefined

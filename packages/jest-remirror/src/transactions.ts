@@ -24,33 +24,41 @@ export const insertText = ({ view, text, start: from }: InsertTextParams) => {
     useFakeTimer: true,
     // onEventDispatch: event => {view.dispatchEvent(event)},
   }).start();
-
-  text.split('').forEach((character, index) => {
+  let pos = from;
+  text.split('').forEach(character => {
     keys.char({ text: character, typing: true });
-    if (!view.someProp('handleTextInput', f => f(view, from + index, from + index, character))) {
-      view.dispatch(view.state.tr.insertText(character, from + index, from + index));
+
+    if (!view.someProp('handleTextInput', f => f(view, pos, pos, character))) {
+      view.dispatch(view.state.tr.insertText(character, pos, pos));
     }
+
+    // Update the position based on the current state selection. This allows plugins and commands to make changes to the
+    // size of the editor while typing and as long as there is a selection position this function won't fail.
+    pos = view.state.selection.anchor;
   });
 
   keys.end();
 };
 
+interface PressParams extends TestEditorViewParams {
+  /**
+   * The keyboard shortcut to run
+   */
+  char: string;
+}
+
 /**
- * Run a keyboard shortcut at current text entry.
- *
- * TODO this currently doesn't work.
+ * Press a key.
  */
-export const press = ({ view, shortcut }: KeyboardShortcutParams) => {
+export const press = ({ view, char }: PressParams) => {
   Keyboard.create({
     target: view.dom,
     batch: true,
     useFakeTimer: true,
   })
     .start()
-    .mod({ text: shortcut })
-    .forEach(({ event, dispatch }) => {
-      dispatch();
-
+    .char({ text: char })
+    .forEach(({ event }) => {
       view.dispatchEvent(event);
       flush(view);
     });
@@ -64,16 +72,20 @@ interface KeyboardShortcutParams extends TestEditorViewParams {
 }
 
 /**
- * Run a keyboard shortcut at the start point
+ * Run a keyboard shortcut.
  */
-export const keyboardShortcut = ({ view, shortcut }: KeyboardShortcutParams) => {
+export const shortcut = ({ view, shortcut: text }: KeyboardShortcutParams) => {
   Keyboard.create({
     target: view.dom,
     useFakeTimer: true,
+    batch: true,
   })
     .start()
-    .mod({ text: shortcut })
-    .end();
+    .mod({ text })
+    .forEach(({ event }) => {
+      view.dispatchEvent(event);
+      flush(view);
+    });
 };
 
 interface FireEventAtPositionParams extends TestEditorViewParams, FireParams {}

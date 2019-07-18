@@ -43,7 +43,7 @@ const SillyMenu: FC = () => {
             fontWeight: actions.bold.isActive() ? 600 : 300,
           }}
           disabled={!actions.bold.isEnabled()}
-          onClick={runAction(actions.bold.command)}
+          onClick={runAction(actions.bold)}
         >
           b
         </button>
@@ -53,7 +53,7 @@ const SillyMenu: FC = () => {
             fontWeight: actions.italic.isActive() ? 600 : 300,
           }}
           disabled={!actions.italic.isEnabled()}
-          onClick={runAction(actions.italic.command)}
+          onClick={runAction(actions.italic)}
         >
           i
         </button>
@@ -63,7 +63,7 @@ const SillyMenu: FC = () => {
             fontWeight: actions.underline.isActive() ? 600 : 300,
           }}
           disabled={!actions.underline.isEnabled()}
-          onClick={runAction(actions.underline.command)}
+          onClick={runAction(actions.underline)}
         >
           u
         </button>

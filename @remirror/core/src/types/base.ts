@@ -59,7 +59,13 @@ export type AnyFunction<GType = any> = (...args: any[]) => GType;
 /**
  * Matches any constructor type
  */
-export type AnyConstructor<GType = any> = new (...args: any[]) => GType;
+export type AnyConstructor<GType = unknown> = new (...args: any[]) => GType;
+
+/**
+ * Abstract classes don't support the builtin `InstanceType` helper. This is an alternative
+ * which allows us to pull out the type of the prototype.
+ */
+export type AbstractInstanceType<GConstructor extends { prototype: any }> = GConstructor['prototype'];
 
 /**
  * Makes specified keys of an interface optional while the rest stay the same.
@@ -256,7 +262,7 @@ export interface SSRComponentParams {
    *
    * Each node/mark extension can define it's own particular default component
    */
-  SSRComponent?: ComponentType<Attrs>;
+  SSRComponent?: ComponentType<any>;
 }
 
 export interface NodeExtensionOptions extends BaseExtensionOptions, SSRComponentParams {}

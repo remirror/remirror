@@ -5,7 +5,6 @@ import {
   BlockquoteExtension,
   BoldExtension,
   BulletListExtension,
-  CodeBlockExtension,
   CodeExtension,
   HardBreakExtension,
   HeadingExtension,
@@ -13,13 +12,13 @@ import {
   ImageExtension,
   ItalicExtension,
   LinkExtension,
-  LinkExtensionOptions,
   ListItemExtension,
   OrderedListExtension,
   SSRHelperExtension,
   StrikeExtension,
   UnderlineExtension,
 } from '@remirror/core-extensions';
+import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager, useRemirror } from '@remirror/react';
 import { asDefaultProps, RemirrorManagerProps } from '@remirror/react-utils';
 import deepMerge from 'deepmerge';
@@ -28,6 +27,11 @@ import { wysiwygEditorTheme } from '../theme';
 import { WysiwygEditorProps } from '../types';
 import { BubbleMenu, BubbleMenuProps, MenuBar } from './menu';
 import { EditorWrapper, InnerEditorWrapper } from './styled';
+
+import bash from 'refractor/lang/bash';
+import markdown from 'refractor/lang/markdown';
+import tsx from 'refractor/lang/tsx';
+import typescript from 'refractor/lang/typescript';
 
 const defaultPlaceholder: RemirrorManagerProps['placeholder'] = [
   'Start typing...',
@@ -48,6 +52,8 @@ interface State {
 // TODO Refactor to use built in react svg icons
 // @see https://github.com/FortAwesome/react-fontawesome/issues/134#issuecomment-486052785
 config.autoAddCss = false;
+
+const DEFAULT_LANGUAGES = [markdown, typescript, tsx, bash];
 
 export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
   public static defaultProps = asDefaultProps<WysiwygEditorProps>()({
@@ -72,6 +78,10 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
     return deepMerge(wysiwygEditorTheme, this.props.theme || {});
   }
 
+  get supportedLanguages() {
+    return [...DEFAULT_LANGUAGES, ...(this.props.supportedLanguages || [])];
+  }
+
   public render() {
     const { theme: _, placeholder, removeFontAwesomeCSS, ...props } = this.props;
 
@@ -82,10 +92,7 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
           <RemirrorExtension Constructor={UnderlineExtension} />
           <RemirrorExtension Constructor={ItalicExtension} />
           <RemirrorExtension Constructor={BlockquoteExtension} />
-          <RemirrorExtension<LinkExtensionOptions>
-            Constructor={LinkExtension}
-            activationHandler={this.activateLink}
-          />
+          <RemirrorExtension Constructor={LinkExtension} activationHandler={this.activateLink} />
           <RemirrorExtension Constructor={StrikeExtension} />
           <RemirrorExtension Constructor={CodeExtension} />
           <RemirrorExtension Constructor={HeadingExtension} />
@@ -95,7 +102,7 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
           <RemirrorExtension Constructor={BulletListExtension} />
           <RemirrorExtension Constructor={OrderedListExtension} />
           <RemirrorExtension Constructor={HardBreakExtension} />
-          <RemirrorExtension Constructor={CodeBlockExtension} />
+          <RemirrorExtension Constructor={CodeBlockExtension} supportedLanguages={this.supportedLanguages} />
           <RemirrorExtension Constructor={SSRHelperExtension} />
           <ManagedRemirrorProvider {...props}>
             <InnerEditor

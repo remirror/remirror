@@ -185,17 +185,17 @@ describe('commands', () => {
     } = create(options));
   });
 
-  describe('mentionCreate', () => {
+  describe('createMention', () => {
     it('replaces text at the current position by default', () => {
       add(doc(p('This is ', '<cursor>')));
-      actions.mentionCreate.command(attrs);
+      actions.createMention(attrs);
 
       expect(view.state).toContainRemirrorDocument(p('This is ', mention(attrs)(attrs.label)));
     });
 
     it('replaces text at the specified position', () => {
       add(doc(p('This is ', '<cursor>')));
-      actions.mentionCreate.command({ ...attrs, range: { from: 1, to: 1, end: 1 } });
+      actions.createMention({ ...attrs, range: { from: 1, to: 1, end: 1 } });
 
       expect(view.state).toContainRemirrorDocument(p(mention(attrs)(attrs.label), 'This is '));
     });
@@ -203,26 +203,22 @@ describe('commands', () => {
     it('throws when invalid config passed into the command', () => {
       add(doc(p('This is ', '<cursor>')));
 
-      expect(() => actions.mentionCreate.command()).toThrowErrorMatchingInlineSnapshot(
+      expect(() => actions.createMention()).toThrowErrorMatchingInlineSnapshot(
         `"Invalid configuration attributes passed to the MentionExtension command."`,
       );
-      expect(() => actions.mentionCreate.command({})).toThrowErrorMatchingInlineSnapshot(
+      expect(() => actions.createMention({})).toThrowErrorMatchingInlineSnapshot(
         `"Invalid configuration attributes passed to the MentionExtension command."`,
       );
-      expect(() => actions.mentionCreate.command({ ...attrs, id: '' })).toThrowErrorMatchingInlineSnapshot(
+      expect(() => actions.createMention({ ...attrs, id: '' })).toThrowErrorMatchingInlineSnapshot(
         `"Invalid configuration attributes passed to the MentionExtension command."`,
       );
-      expect(() => actions.mentionCreate.command({ ...attrs, label: '' })).toThrowErrorMatchingInlineSnapshot(
+      expect(() => actions.createMention({ ...attrs, label: '' })).toThrowErrorMatchingInlineSnapshot(
         `"Invalid configuration attributes passed to the MentionExtension command."`,
       );
-      expect(() =>
-        actions.mentionCreate.command({ ...attrs, name: 'invalid' }),
-      ).toThrowErrorMatchingInlineSnapshot(
+      expect(() => actions.createMention({ ...attrs, name: 'invalid' })).toThrowErrorMatchingInlineSnapshot(
         `"The name 'invalid' specified for this command is invalid. Please choose from: [\\"tag\\",\\"at\\",\\"plus\\"]."`,
       );
-      expect(() =>
-        actions.mentionCreate.command({ ...attrs, name: undefined }),
-      ).toThrowErrorMatchingInlineSnapshot(
+      expect(() => actions.createMention({ ...attrs, name: undefined })).toThrowErrorMatchingInlineSnapshot(
         `"The MentionExtension command must specify a name since there are multiple matchers configured"`,
       );
     });

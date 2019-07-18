@@ -97,7 +97,7 @@ export const StyledPickerWrapper = styled.div`
   .emoji-mart-bar {
     border: 0 solid #d9d9d9;
   }
-  .emoji-mart-bar:first-child {
+  .emoji-mart-bar:first-of-type {
     border-bottom-width: 1px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;

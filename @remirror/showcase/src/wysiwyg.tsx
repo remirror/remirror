@@ -1,12 +1,16 @@
 import React, { FC } from 'react';
 
+import { EMPTY_PARAGRAPH_NODE } from '@remirror/core';
 import { WysiwygEditor, WysiwygEditorProps } from '@remirror/editor-wysiwyg';
 
-export const ExampleWysiwygEditor: FC<WysiwygEditorProps> = props => {
-  return <WysiwygEditor {...props} />;
+export const ExampleWysiwygEditor: FC<WysiwygEditorProps> = ({
+  initialContent = EMPTY_PARAGRAPH_NODE,
+  ...props
+}) => {
+  return <WysiwygEditor {...props} initialContent={initialContent} suppressHydrationWarning={false} />;
 };
 
-export const initialContent = {
+export const WYSIWYG_SHOWCASE_CONTENT = {
   type: 'doc',
   content: [
     { type: 'heading', attrs: { level: 1 }, content: [{ type: 'text', text: 'A WYSIWYG Editor' }] },
@@ -24,11 +28,12 @@ export const initialContent = {
     { type: 'paragraph' },
     {
       type: 'codeBlock',
+      attrs: { language: 'markdown' },
       content: [
         {
           type: 'text',
           text:
-            'Simple Code Blocks\necho "fun times"\nUse Shift-Enter or Mod-Enter to hard break out of the code block',
+            '## Simple Code Blocks\n\n```js\nconsole.log("with code fence support");\n```\n\n```bash\necho "fun times"\n```\n\nUse Shift-Enter or Mod-Enter to hard break out of the code block',
         },
       ],
     },

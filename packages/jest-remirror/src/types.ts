@@ -1,6 +1,7 @@
 import {
   Attrs,
   AttrsParams,
+  CommandFunction,
   EditorSchema,
   EditorState,
   EditorStateParams,
@@ -103,7 +104,8 @@ export interface TaggedProsemirrorNode extends PMNode {
 
 export interface AddContentReturn extends EditorStateParams {
   /**
-   * A map of actions available the
+   * The actions available in the editor. When updating the content of the TestEditor make sure not to
+   * use a stale copy of the actions otherwise it will throw errors due to using an outdated state.
    */
   actions: RemirrorActions;
 
@@ -155,10 +157,25 @@ export interface AddContentReturn extends EditorStateParams {
   shortcut(shortcut: string): AddContentReturn;
 
   /**
+   * Presses a key on the keyboard.
+   * e.g. `Mod-X`
+   *
+   * @param key - the key to press (or string representing a key)
+   */
+  press(key: string): AddContentReturn;
+
+  /**
+   * Takes any command as an input and dispatches it within the document context.
+   *
+   * @param command - the command function to run with the current state and view
+   */
+  dispatchCommand(command: CommandFunction): AddContentReturn;
+
+  /**
    * Fires a custom event at the specified dom node.
    * e.g. `click`
    *
-   * @param shortcut
+   * @param shortcut - the shortcut to type
    */
   fire(params: FireParams): AddContentReturn;
 
@@ -205,11 +222,11 @@ export type CreateTestEditorReturn<
 };
 
 export interface CreateTestEditorExtensions<
-  GPlainMarks extends Array<MarkExtension<any>>,
-  GPlainNodes extends Array<NodeExtension<any>>,
-  GAttrMarks extends Array<MarkExtension<any>>,
-  GAttrNodes extends Array<NodeExtension<any>>,
-  GOthers extends Array<Extension<any>>
+  GPlainMarks extends Array<MarkExtension<any, any, any>>,
+  GPlainNodes extends Array<NodeExtension<any, any, any>>,
+  GAttrMarks extends Array<MarkExtension<any, any, any>>,
+  GAttrNodes extends Array<NodeExtension<any, any, any>>,
+  GOthers extends Array<Extension<any, any, any>>
 > {
   plainMarks: GPlainMarks;
   plainNodes: GPlainNodes;

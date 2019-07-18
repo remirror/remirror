@@ -1,5 +1,7 @@
 import { Interpolation, ObjectInterpolation } from '@emotion/core';
 import {
+  AbstractInstanceType,
+  AnyExtension,
   CompareStateParams,
   EditorState,
   EditorStateParams,
@@ -7,8 +9,8 @@ import {
   EditorViewParams,
   ElementParams,
   Extension,
-  ExtensionConstructor,
   ExtensionManager,
+  ExtensionOptions,
   ObjectNode,
   PlainObject,
   Position,
@@ -78,7 +80,7 @@ export type GetPositionerReturn<GRefKey extends string = 'ref'> = PositionerProp
 /**
  * These are the props passed to the render function provided when setting up your editor.
  */
-export interface InjectedRemirrorProps {
+export interface InjectedRemirrorProps<GCommands extends string = string> {
   /**
    * An instance of the extension manager
    */
@@ -91,7 +93,7 @@ export interface InjectedRemirrorProps {
   /**
    * A map of actions available the
    */
-  actions: RemirrorActions;
+  actions: RemirrorActions<GCommands>;
 
   /**
    * The unique id for the editor instance
@@ -216,6 +218,7 @@ export interface RemirrorProps extends StringHandlerParams {
   /**
    * Pass in the extension manager.
    *
+   * The manager is responsible for handling all Prosemirror related functionality.
    */
   manager: ExtensionManager;
 
@@ -260,19 +263,19 @@ export interface RemirrorProps extends StringHandlerParams {
   editable: boolean;
 
   /**
-   * Set to true to force the focus on the editor when the editor first loads.
+   * When set to true focus will be place on the editor as soon as it first loads.
    *
    * @defaultValue false
    */
   autoFocus?: boolean;
 
   /**
-   * Event listener called whenever the editor gains focus
+   * An event listener which is called whenever the editor gains focus.
    */
   onFocus?: (params: RemirrorEventListenerParams, event: Event) => void;
 
   /**
-   * Event listener called whenever the editor is blurred
+   * An event listener which is called whenever the editor is blurred.
    */
   onBlur?: (params: RemirrorEventListenerParams, event: Event) => void;
 
@@ -282,7 +285,7 @@ export interface RemirrorProps extends StringHandlerParams {
   onFirstRender?: RemirrorEventListener;
 
   /**
-   * Called on every change to the Prosemirror state
+   * Called on every change to the Prosemirror state.
    */
   onChange?: RemirrorEventListener;
 
@@ -311,10 +314,12 @@ export interface RemirrorProps extends StringHandlerParams {
    * Determines whether or not to use the built in extensions.
    *
    * @remarks
-   * Use this only if you would like to take full control of all your extensions and if you know what you're doing.
+   *
+   * Use this if you would like to take full control of all your extensions and have some understanding of the underlying
+   * Prosemirror internals.
    *
    * ```ts
-   * const builtInExtensions = [new Placeholder(), new Doc(), new Text(), new Paragraph()]
+   * const builtInExtensions = [new PlaceholderExtension(), new DocExtension(), new TextExtension(), new ParagraphExtension()]
    * ```
    *
    * @defaultValue true
@@ -337,20 +342,15 @@ export interface RemirrorProps extends StringHandlerParams {
   editorStyles: Interpolation;
 
   /**
-   * Determine whether the Prosemirror view is inserted as first in the holding html element or last.
-   *
-   * @remarks
-   *
-   * Last means that any elements added to the holding react component will actually be inserted before and as a result would lose
-   * click access.
+   * Determine whether the Prosemirror view is inserted at the `start` or `end` of it's container DOM element.
    *
    * @defaultValue 'end'
    */
   insertPosition: 'start' | 'end';
 
   /**
-   * By default remirror will work out whether this is a dom environment or server environment for SSR rendering
-   * This can be overridden with this property
+   * By default remirror will work out whether this is a dom environment or server environment for SSR rendering.
+   * You can override this behaviour here when required.
    */
   forceEnvironment?: RenderEnvironment;
 
@@ -358,11 +358,34 @@ export interface RemirrorProps extends StringHandlerParams {
    * Removes the emotion injected styles from the component.
    *
    * @remarks
-   * This is accomplished by making the `css` function a noop.
+   *
+   * This is accomplished by making the `css` function a noop. It is useful for those who would prefer not to use
+   * a CSS-in-JS solution. Emotion classes are very hard to override once in place. By setting this to true, it should
+   * be much easier to configure your own styles without the burden of overriding existing styles.
    *
    * @default false
    */
   withoutEmotion: boolean;
+
+  /**
+   * Set to true to ignore the hydration warning for a mismatch between the rendered server and client content.
+   *
+   * @remarks
+   *
+   * This is a potential solution for those who require server side rendering.
+   *
+   * While on the server the prosemirror document is transformed into a react component so that it can be rendered.
+   * The moment it enters the DOM environment prosemirror takes over control of the root element. The problem is that
+   * this will always see this hydration warning on the client:
+   *
+   * `Warning: Did not expect server HTML to contain a <div> in <div>.`
+   *
+   * Setting this to true removes the warning at the cost of a slightly slower start up time. It uses the
+   * two pass solution mentioned in the react docs. See {@link https://reactjs.org/docs/react-dom.html#hydrate}.
+   *
+   * The props also takes it's name from a similar API used by react for DOM Elements. See {@link https://reactjs.org/docs/dom-elements.html#suppresshydrationwarning.
+   */
+  suppressHydrationWarning?: boolean;
 }
 
 export interface PlaceholderConfig extends TextParams {
@@ -424,22 +447,22 @@ export enum RemirrorElementType {
 }
 
 export type RemirrorExtensionProps<
-  GOptions extends {},
-  GExtension extends Extension<GOptions, any> = Extension<GOptions, any>,
-  GConstructor = ExtensionConstructor<GOptions, GExtension>
-> = GOptions & BaseExtensionProps & ExtensionConstructorProps<GOptions, GExtension, GConstructor>;
+  GConstructor extends { prototype: AnyExtension },
+  GExtension extends AbstractInstanceType<GConstructor>,
+  GOptions extends ExtensionOptions<GExtension>
+> = GOptions & BaseExtensionProps & ExtensionConstructorProps<GConstructor, GExtension, GOptions>;
 
-export interface ExtensionConstructorProps<
-  GOptions extends {},
-  GExtension extends Extension<GOptions, any> = Extension<GOptions, any>,
-  GConstructor = ExtensionConstructor<GOptions, GExtension>
-> {
+export type ExtensionConstructorProps<
+  GConstructor extends { prototype: AnyExtension },
+  GExtension extends AbstractInstanceType<GConstructor>,
+  GOptions extends ExtensionOptions<GExtension>
+> = {
   /**
    * The constructor for the remirror extension.
    * Will be instantiated with the options passed through as props.
    */
   Constructor: GConstructor;
-}
+} & GOptions;
 
 export interface BaseExtensionProps {
   /**

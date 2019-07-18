@@ -53,26 +53,26 @@ describe('actions', () => {
     } = create());
   });
 
-  describe('.linkRemove', () => {
-    describe('.command()', () => {
+  describe('.removeLink', () => {
+    describe('command', () => {
       it('removes links when selection is wrapped', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
-        actions.linkRemove.command();
+        actions.removeLink();
         expect(getState()).toContainRemirrorDocument(p('Paragraph A link'));
       });
 
       it('removes the link cursor is within', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('A <cursor>link'))));
-        actions.linkRemove.command();
+        actions.removeLink();
         expect(getState()).toContainRemirrorDocument(p('Paragraph A link'));
       });
 
       it('removes all links when selection contains multiples', () => {
         const testLink = link({ href });
         add(doc(p('<all>', testLink('1'), ' ', testLink('2'), ' ', testLink('3'))));
-        actions.linkRemove.command();
+        actions.removeLink();
         expect(getState()).toContainRemirrorDocument(p('1 2 3'));
       });
     });
@@ -81,41 +81,41 @@ describe('actions', () => {
       it('is not enabled when not selected', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph<cursor> ', testLink('A link'))));
-        expect(actions.linkRemove.isEnabled()).toBeFalse();
+        expect(actions.removeLink.isEnabled()).toBeFalse();
       });
 
       it('is enabled with selection wrapped', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
-        expect(actions.linkRemove.isEnabled()).toBeTrue();
+        expect(actions.removeLink.isEnabled()).toBeTrue();
       });
 
       it('is enabled with cursor within link', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('A <cursor>link'))));
-        expect(actions.linkRemove.isEnabled()).toBeTrue();
+        expect(actions.removeLink.isEnabled()).toBeTrue();
       });
 
       it('is enabled with selection of multiple nodes', () => {
         const testLink = link({ href });
         add(doc(p('<all>Paragraph ', testLink('A link'))));
-        expect(actions.linkRemove.isEnabled()).toBeTrue();
+        expect(actions.removeLink.isEnabled()).toBeTrue();
       });
     });
   });
 
-  describe('.linkUpdate', () => {
-    describe('.command()', () => {
+  describe('.updateLink', () => {
+    describe('command', () => {
       it('creates a link for the selection', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph <start>A link<end>')));
-        actions.linkUpdate.command({ href });
+        actions.updateLink({ href });
         expect(getState()).toContainRemirrorDocument(p('Paragraph ', testLink('<start>A link<end>')));
       });
 
       it('does nothing for an empty selection', () => {
         add(doc(p('Paragraph <cursor>A link')));
-        actions.linkUpdate.command({ href });
+        actions.updateLink({ href });
         expect(getState()).toContainRemirrorDocument(p('Paragraph A link'));
       });
 
@@ -124,14 +124,14 @@ describe('actions', () => {
         const attrs = { href: 'https://alt.com' };
         const altLink = link(attrs);
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
-        actions.linkUpdate.command(attrs);
+        actions.updateLink(attrs);
         expect(getState()).toContainRemirrorDocument(p('Paragraph ', altLink('<start>A link<end>')));
       });
 
       it('overwrites multiple existing links', () => {
         const testLink = link({ href });
         add(doc(p('<all>', testLink('1'), ' ', testLink('2'), ' ', testLink('3'))));
-        actions.linkUpdate.command({ href });
+        actions.updateLink({ href });
         expect(getState()).toContainRemirrorDocument(p(testLink('1 2 3')));
       });
     });
@@ -140,42 +140,42 @@ describe('actions', () => {
       it('is not active when not selected', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph<cursor> ', testLink('A link'))));
-        expect(actions.linkUpdate.isActive()).toBeFalse();
+        expect(actions.updateLink.isActive()).toBeFalse();
       });
 
       it('is active with selection wrapped', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
-        expect(actions.linkUpdate.isActive()).toBeTrue();
+        expect(actions.updateLink.isActive()).toBeTrue();
       });
 
       it('is active with cursor within link', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('A <cursor>link'))));
-        expect(actions.linkUpdate.isActive()).toBeTrue();
+        expect(actions.updateLink.isActive()).toBeTrue();
       });
 
       it('is active with selection of multiple nodes', () => {
         const testLink = link({ href });
         add(doc(p('<all>Paragraph ', testLink('A link'))));
-        expect(actions.linkUpdate.isActive()).toBeTrue();
+        expect(actions.updateLink.isActive()).toBeTrue();
       });
     });
 
     describe('.isEnabled()', () => {
       it('is enabled when text is selected', () => {
         add(doc(p('Paragraph <start>A<end> link')));
-        expect(actions.linkUpdate.isEnabled()).toBeTrue();
+        expect(actions.updateLink.isEnabled()).toBeTrue();
       });
 
       it('is not enabled for empty selections', () => {
         add(doc(p('Paragraph <cursor>A link')));
-        expect(actions.linkUpdate.isEnabled()).toBeFalse();
+        expect(actions.updateLink.isEnabled()).toBeFalse();
       });
 
       it('is not enabled for node selections', () => {
         add(doc(p('Paragraph <node>A link')));
-        expect(actions.linkUpdate.isEnabled()).toBeFalse();
+        expect(actions.updateLink.isEnabled()).toBeFalse();
       });
     });
   });
