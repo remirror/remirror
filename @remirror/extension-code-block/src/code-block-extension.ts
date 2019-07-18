@@ -58,10 +58,6 @@ export class CodeBlockExtension extends NodeExtension<
     }
   }
 
-  // public nodeView({ portalContainer }: SchemaNodeTypeParams): NodeViewMethod {
-  //   return ReactNodeView.createNodeView({ Component: CodeBlockComponent, portalContainer, props: {} });
-  // }
-
   /**
    * Provides the codeBlock schema.
    */
@@ -77,6 +73,7 @@ export class CodeBlockExtension extends NodeExtension<
       group: 'block',
       code: true,
       defining: true,
+      isolating: true,
       draggable: false,
       parseDOM: [
         {
@@ -241,3 +238,5 @@ export class CodeBlockExtension extends NodeExtension<
     return createCodeBlockPlugin({ extension: this, ...params });
   }
 }
+
+export { getLanguage };
