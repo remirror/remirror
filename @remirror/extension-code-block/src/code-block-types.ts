@@ -75,7 +75,7 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
   onHover?(params: any): void;
 }
 
-export type CodeBlockFormatter = (params: FormatterParams) => FormatterReturn | false;
+export type CodeBlockFormatter = (params: FormatterParams) => FormatterReturn | undefined;
 
 export interface FormatterParams {
   /**
@@ -101,7 +101,7 @@ export interface FormatterReturn {
   /**
    * The transformed source.
    */
-  output: string;
+  formatted: string;
 
   /**
    * The new cursor position after formatting

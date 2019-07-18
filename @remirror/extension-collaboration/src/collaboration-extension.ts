@@ -55,17 +55,16 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
         return false;
       }
 
-      if (!dispatch) {
-        return true;
+      if (dispatch) {
+        dispatch(
+          receiveTransaction(
+            state,
+            steps.map(item => Step.fromJSON(schema, item.step)),
+            steps.map(item => item.clientID),
+          ),
+        );
       }
 
-      dispatch(
-        receiveTransaction(
-          state,
-          steps.map(item => Step.fromJSON(schema, item.step)),
-          steps.map(item => item.clientID),
-        ),
-      );
       return true;
     };
   }

@@ -2,10 +2,14 @@ import { fromHTML, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@test-fixtures/schema-helpers';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
+import typescriptPlugin from 'prettier/parser-typescript';
+import { formatWithCursor } from 'prettier/standalone';
 import javascript from 'refractor/lang/javascript';
 import markdown from 'refractor/lang/markdown';
 import typescript from 'refractor/lang/typescript';
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '../';
+import { CodeBlockFormatter } from '../code-block-types';
+import { getLanguage } from '../code-block-utils';
 
 describe('schema', () => {
   const { schema } = createBaseTestManager([{ extension: new CodeBlockExtension(), priority: 1 }]);
@@ -182,6 +186,8 @@ describe('commands', () => {
     nodes: { doc },
   } = create();
 
+  let tsBlock = codeBlock({ language: 'typescript' });
+
   beforeEach(() => {
     ({
       view,
@@ -191,7 +197,7 @@ describe('commands', () => {
     } = create());
   });
 
-  describe('updateAttrs ', () => {
+  describe('updateCodeBlock ', () => {
     it('updates the language', () => {
       const markupBlock = codeBlock({ language: 'markup' });
       const { actions } = add(doc(markupBlock(`const a = 'test';<cursor>`)));
@@ -202,6 +208,52 @@ describe('commands', () => {
 
       expect(view.dom.querySelector('.language-markup code')).toBeFalsy();
       expect(view.dom.querySelector('.language-javascript code')!.outerHTML).toMatchSnapshot();
+    });
+  });
+
+  describe('formatCodeBlock', () => {
+    const formatter: CodeBlockFormatter = ({ cursorOffset, language, source }) => {
+      if (getLanguage({ fallback: 'text', language, supportedLanguages }) === 'typescript') {
+        return formatWithCursor(source, {
+          cursorOffset,
+          plugins: [typescriptPlugin],
+          parser: 'typescript',
+          singleQuote: true,
+        });
+      }
+      return;
+    };
+
+    beforeEach(() => {
+      ({
+        view,
+        add,
+        attrNodes: { codeBlock },
+        nodes: { doc },
+      } = create({ formatter }));
+
+      tsBlock = codeBlock({ language: 'typescript' });
+    });
+
+    it('can format the codebase', () => {
+      const { actions } = add(
+        doc(tsBlock(`const a: string\n = 'test'  ;\n\n\nconsole.log("welcome friends")<cursor>`)),
+      );
+      actions.formatCodeBlock();
+      expect(view.state.doc).toEqualRemirrorDocument(
+        doc(tsBlock(`const a: string = 'test';\n\nconsole.log('welcome friends');\n`)),
+      );
+    });
+
+    it('maintains cursor position after formatting', () => {
+      const { actions, insertText } = add(
+        doc(tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nconsole.log("welcome friends")`)),
+      );
+      actions.formatCodeBlock();
+      insertText('ing');
+      expect(view.state.doc).toEqualRemirrorDocument(
+        doc(tsBlock(`const a: string = 'testing';\n\nconsole.log('welcome friends');\n`)),
+      );
     });
   });
 });

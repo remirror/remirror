@@ -133,6 +133,11 @@ export interface AddContentReturn extends EditorStateParams {
   tags: Tags;
 
   /**
+   * Allows for the chaining of action calls.
+   */
+  actionsCallback(callback: (actions: RemirrorActions) => void): AddContentReturn;
+
+  /**
    * A function which replaces the current selection with the new content.
    *
    * This should be used to add new content to the dom.

@@ -29,7 +29,7 @@ export const codeBlockDefaultOptions: CodeBlockExtensionOptions = {
   supportedLanguages: [],
   syntaxTheme: 'atomDark' as SyntaxTheme,
   defaultLanguage: 'markup',
-  formatter: () => false,
+  formatter: () => undefined,
 };
 
 export class CodeBlockExtension extends NodeExtension<
@@ -119,12 +119,13 @@ export class CodeBlockExtension extends NodeExtension<
   }
 
   public commands({ type, schema }: CommandNodeTypeParams) {
+    const { defaultLanguage, supportedLanguages, formatter } = this.options;
     return {
       toggleCodeBlock: (attrs?: Attrs) =>
         toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs }),
       createCodeBlock: (attrs?: Attrs) => setBlockType(type, attrs),
       updateCodeBlock: updateNodeAttrs(type),
-      formatCodeBlock: formatCodeBlockFactory(type, this.options.formatter),
+      formatCodeBlock: formatCodeBlockFactory({ type, formatter, defaultLanguage, supportedLanguages }),
     };
   }
 
@@ -225,14 +226,11 @@ export class CodeBlockExtension extends NodeExtension<
         tr.replaceWith(pos, end, type.create({ language }));
 
         // Set the selection to within the codeBlock
-        const $pos = tr.doc.resolve(pos + 1);
-        tr.setSelection(new TextSelection($pos));
+        tr.setSelection(TextSelection.create(tr.doc, pos + 1));
 
-        if (!dispatch) {
-          return false;
+        if (dispatch) {
+          dispatch(tr);
         }
-
-        dispatch(tr);
 
         return true;
       },

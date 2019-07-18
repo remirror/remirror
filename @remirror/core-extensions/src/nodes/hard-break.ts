@@ -19,10 +19,10 @@ export class HardBreakExtension extends NodeExtension {
 
   public keys({ type }: SchemaNodeTypeParams) {
     const command = chainCommands(exitCode, (state, dispatch) => {
-      if (!dispatch) {
-        return true;
+      if (dispatch) {
+        dispatch(state.tr.replaceSelectionWith(type.create()).scrollIntoView());
       }
-      dispatch(state.tr.replaceSelectionWith(type.create()).scrollIntoView());
+
       return true;
     });
     return {

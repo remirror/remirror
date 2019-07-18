@@ -53,14 +53,15 @@ export class ImageExtension extends NodeExtension<NodeExtensionOptions, 'image',
   public commands({ type }: CommandNodeTypeParams) {
     return {
       image: (attrs?: Attrs): CommandFunction => (state, dispatch) => {
-        if (!dispatch) {
-          return false;
-        }
         const { selection } = state;
         const position = hasCursor(selection) ? selection.$cursor.pos : selection.$to.pos;
         const node = type.create(attrs);
         const transaction = state.tr.insert(position, node);
-        dispatch(transaction);
+
+        if (dispatch) {
+          dispatch(transaction);
+        }
+
         return true;
       },
     };
