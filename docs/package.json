@@ -12,7 +12,7 @@
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@babel/runtime": "^7.5.4",
+    "@babel/runtime": "^7.5.5",
     "@fortawesome/fontawesome-svg-core": "1.2.19",
     "@fortawesome/free-solid-svg-icons": "5.9.0",
     "@fortawesome/react-fontawesome": "0.1.4",
@@ -31,7 +31,7 @@
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "react-use": "9.11.2"
+    "react-use": "10.1.0"
   },
   "devDependencies": {
     "docz": "1.2.0",

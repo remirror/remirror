@@ -23,7 +23,7 @@
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@babel/runtime": "^7.5.4",
+    "@babel/runtime": "^7.5.5",
     "@microsoft/api-extractor-model": "7.2.0",
     "@microsoft/node-core-library": "3.13.0",
     "@microsoft/ts-command-line": "4.2.6",

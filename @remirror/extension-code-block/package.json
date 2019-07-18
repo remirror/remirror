@@ -29,7 +29,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.4",
+    "@babel/runtime": "^7.5.5",
     "@remirror/core": "0.3.0",
     "@remirror/react-utils": "0.3.0",
     "@types/prismjs": "^1.16.0",
