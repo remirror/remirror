@@ -59,7 +59,7 @@
 yarn add @remirror/core @remirror/react @remirror/core-extensions
 ```
 
-The following is an example editor which renders a floating menu and enables the extensions `Bold`, `Italic` and `Underline`.
+The following is an example editor which renders a floating menu and enables the extensions `BoldExtension`, `ItalicExtension` and `UnderlineExtension`.
 
 ```ts
 import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
@@ -134,9 +134,9 @@ const SimpleFloatingMenu: FC = () => {
 const EditorLayout: FunctionComponent = () => {
   return (
     <RemirrorManager>
-      <RemirrorExtension Constructor={Bold} />
-      <RemirrorExtension Constructor={Italic} />
-      <RemirrorExtension Constructor={Underline} />
+      <RemirrorExtension Constructor={BoldExtension} />
+      <RemirrorExtension Constructor={ItalicExtension} />
+      <RemirrorExtension Constructor={UnderlineExtension} />
       <ManagedRemirrorProvider
         attributes={{ 'data-testid': 'editor-instance' }}
         onChange={onChange}
@@ -183,9 +183,9 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({ particleEffect, placeho
   return (
     <div>
       <RemirrorManager>
-        <RemirrorExtension Constructor={Bold} />
-        <RemirrorExtension Constructor={Italic} />
-        <RemirrorExtension Constructor={Underline} />
+        <RemirrorExtension Constructor={BoldExtension} />
+        <RemirrorExtension Constructor={ItalicExtension} />
+        <RemirrorExtension Constructor={UnderlineExtension} />
         <RemirrorExtension Constructor={EpicMode} particleEffect={particleEffect} shake={shake} />
         <ManagedRemirrorProvider
           autoFocus={true}
