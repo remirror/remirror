@@ -240,7 +240,7 @@ yarn husky:start
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/ifiokjr/remirror/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
+Please read [contributing.md](https://github.com/ifiokjr/remirror/blob/master/docs/contributing.md) for details on our code of conduct, and the process for submitting pull requests.
 
 ## Versioning
 
