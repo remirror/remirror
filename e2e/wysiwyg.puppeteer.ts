@@ -15,7 +15,7 @@ const { getByRole } = queries;
 
 const editorSelector = '.remirror-editor';
 
-describe('Wysiwyg Editor Snapshots', () => {
+describe.skip('Wysiwyg Editor Snapshots', () => {
   let url: string;
   const ssrIdentifier = prefixBrowserName('wysiwyg-editor-ssr');
   const domIdentifier = prefixBrowserName('wysiwyg-editor-dom');
@@ -26,13 +26,11 @@ describe('Wysiwyg Editor Snapshots', () => {
 
   describeServer(['next'])('SSR', () => {
     beforeEach(async () => {
-      // Set JavaScript to disabled to mimic server side rendering
       await page.setJavaScriptEnabled(false);
       await page.goto(url);
     });
 
     it('should pre render the editor', async () => {
-      // This test checks that the ProsemirrorEditor exists and contains the expected html
       await expect(outerHtml(editorSelector)).resolves.toBeTruthy();
       await expect(outerHtml(editorSelector)).resolves.toMatchSnapshot();
     });
@@ -68,10 +66,6 @@ describe('Wysiwyg Editor Snapshots', () => {
 describe.each(TestLinks.wysiwyg)('%s: Wysiwyg Showcase', (_, path) => {
   let $document: ElementHandle;
   let $editor: ElementHandle;
-
-  beforeAll(async () => {
-    await jestPuppeteer.resetPage();
-  });
 
   beforeEach(async () => {
     await page.goto(path);

@@ -16,7 +16,7 @@ const { getByRole } = queries;
 
 const editorSelector = '.remirror-editor';
 
-describe('Twitter Editor Snapshots', () => {
+describe.skip('Twitter Editor Snapshots', () => {
   let url: string;
   const ssrIdentifier = prefixBrowserName('twitter-editor-ssr');
   const domIdentifier = prefixBrowserName('twitter-editor-dom');
@@ -27,13 +27,11 @@ describe('Twitter Editor Snapshots', () => {
 
   describeServer(['next'])('SSR', () => {
     beforeEach(async () => {
-      // Set JavaScript to disabled to mimic server side rendering
       await page.setJavaScriptEnabled(false);
       await page.goto(url);
     });
 
     it('should pre render the editor with consistent html', async () => {
-      // This test checks that the ProsemirrorEditor exists and contains the expected html
       await expect(outerHtml(editorSelector)).resolves.toBeTruthy();
       await expect(outerHtml(editorSelector)).resolves.toMatchSnapshot();
     });
@@ -69,9 +67,6 @@ describe('Twitter Editor Snapshots', () => {
 describe.each(TestLinks.twitter)('%s: Twitter Showcase', (_, path) => {
   let $document: ElementHandle;
   let $editor: ElementHandle;
-  beforeAll(async () => {
-    await jestPuppeteer.resetPage();
-  });
 
   beforeEach(async () => {
     await page.goto(path);
