@@ -65,7 +65,7 @@ The following is an example editor which renders a floating menu and enables the
 import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
 
 import { memoize, EMPTY_OBJECT_NODE } from '@remirror/core';
-import { Bold, Italic, Underline } from '@remirror/core-extensions';
+import { BoldExtension, ItalicExtension, UnderlineExtension } from '@remirror/core-extensions';
 import {
   bubblePositioner,
   ManagedRemirrorProvider,
