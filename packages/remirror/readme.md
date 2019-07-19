@@ -36,7 +36,7 @@ The following is a small example which renders a floating menu and enables the e
 import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
 
 import {
-  EMPTY_OBJECT_NODE,
+  EMPTY_PARAGRAPH_NODE,
   Bold,
   Italic,
   Underline,
@@ -115,7 +115,7 @@ const EditorLayout: FunctionComponent = () => {
         onChange={onChange}
         placeholder='Start typing for magic...'
         autoFocus={true}
-        initialContent={EMPTY_OBJECT_NODE}
+        initialContent={EMPTY_PARAGRAPH_NODE}
       >
         <SimpleFloatingMenu />
       </ManagedRemirrorProvider>
