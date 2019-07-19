@@ -34,6 +34,7 @@
       "@storybook/addon-actions",
       "@testing-library/react",
       "@testing-library/jest-dom",
+      "pptr-testing-library",
       "detox",
       "emoji-regex",
       "jest-dom",

@@ -46,7 +46,6 @@
     "@remirror/react": "0.3.0",
     "@types/markdown-it": "^0.0.8",
     "@types/prosemirror-markdown": "^1.0.2",
-    "deepmerge": "^4.0.0",
     "emotion-theming": "^10.0.14",
     "keycode": "^2.2.0",
     "markdown-it": "^9.0.1",
