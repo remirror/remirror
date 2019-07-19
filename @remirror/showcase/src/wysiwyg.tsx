@@ -1,29 +1,21 @@
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core';
 import { WysiwygEditor, WysiwygEditorProps } from '@remirror/editor-wysiwyg';
-import { CodeBlockFormatter, getLanguage } from '@remirror/extension-code-block';
-import babelPlugin from 'prettier/parser-babel';
-import htmlPlugin from 'prettier/parser-html';
-import typescriptPlugin from 'prettier/parser-typescript';
-import { formatWithCursor } from 'prettier/standalone';
 import React, { FC } from 'react';
-
-const formatter: CodeBlockFormatter = ({ cursorOffset, language, source }) => {
-  if () {
-    return formatWithCursor(source, {
-      cursorOffset,
-      plugins: [typescriptPlugin],
-      parser: 'typescript',
-      singleQuote: true,
-    });
-  }
-  return;
-};
+import { formatter } from './code-formatter';
 
 export const ExampleWysiwygEditor: FC<WysiwygEditorProps> = ({
   initialContent = EMPTY_PARAGRAPH_NODE,
   ...props
 }) => {
-  return <WysiwygEditor {...props} initialContent={initialContent} suppressHydrationWarning={false} />;
+  return (
+    <WysiwygEditor
+      {...props}
+      initialContent={initialContent}
+      suppressHydrationWarning={false}
+      autoFocus={true}
+      formatter={formatter}
+    />
+  );
 };
 
 export const WYSIWYG_SHOWCASE_CONTENT = {

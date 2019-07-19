@@ -63,19 +63,14 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
   formatter?: CodeBlockFormatter;
 
   /**
-   * A handler called whenever any code block in the document has changed.
+   * A keyboard shortcut to trigger formatting the current block.
    *
-   * Returns a list of all codeBlocks, whether they are active, their prosemirror node
+   * @default `Alt-Shift-F` (Mac) `Shift-Ctrl-F` (PC)
    */
-  onUpdate?(blocks: any[]): void;
-
-  /**
-   * Provides information on the specific block that was hovered over as well as the hover event.
-   */
-  onHover?(params: any): void;
+  keyboardShortcut?: string;
 }
 
-export type CodeBlockFormatter = (params: FormatterParams) => FormatterReturn | undefined;
+export type CodeBlockFormatter = (params: FormatterParams) => FormattedContent | undefined;
 
 export interface FormatterParams {
   /**
@@ -97,7 +92,10 @@ export interface FormatterParams {
   language: string;
 }
 
-export interface FormatterReturn {
+/**
+ * Data returned from a code formatter.
+ */
+export interface FormattedContent {
   /**
    * The transformed source.
    */

@@ -8,6 +8,7 @@ import {
   isNodeActive,
   isTextSelection,
   KeyboardBindings,
+  mod,
   NodeExtension,
   NodeExtensionSpec,
   nodeInputRule,
@@ -30,6 +31,7 @@ export const codeBlockDefaultOptions: CodeBlockExtensionOptions = {
   syntaxTheme: 'atomDark' as SyntaxTheme,
   defaultLanguage: 'markup',
   formatter: () => undefined,
+  keyboardShortcut: mod('ShiftAlt', 'f'),
 };
 
 export class CodeBlockExtension extends NodeExtension<
@@ -183,7 +185,9 @@ export class CodeBlockExtension extends NodeExtension<
     ];
   }
 
-  public keys({ type }: SchemaNodeTypeParams): KeyboardBindings {
+  public keys({ type, getActions }: SchemaNodeTypeParams): KeyboardBindings {
+    const { keyboardShortcut = mod('ShiftAlt', 'f') } = this.options;
+
     return {
       Enter: (state, dispatch) => {
         const { selection, tr } = state;
@@ -229,6 +233,16 @@ export class CodeBlockExtension extends NodeExtension<
           dispatch(tr);
         }
 
+        return true;
+      },
+      [keyboardShortcut]: state => {
+        const command = getActions('formatCodeBlock');
+
+        if (!isNodeActive({ type, state }) || !command) {
+          return false;
+        }
+
+        command();
         return true;
       },
     };

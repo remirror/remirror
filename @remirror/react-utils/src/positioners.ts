@@ -1,4 +1,13 @@
-import { absoluteCoordinates, isEmptyParagraphNode, selectionEmpty } from '@remirror/core';
+import {
+  absoluteCoordinates,
+  EditorStateParams,
+  findElementAtPosition,
+  isEmptyParagraphNode,
+  isNodeActive,
+  isString,
+  NodeType,
+  selectionEmpty,
+} from '@remirror/core';
 import { Positioner } from './types';
 
 export const defaultPositioner: Positioner = {
@@ -67,4 +76,34 @@ export const bubblePositioner: Positioner = {
       bottom: Math.trunc(parentBox.bottom - start.top),
     };
   },
+};
+
+interface GetNodeTypeParams extends EditorStateParams {
+  type: NodeType | string;
+}
+
+const getNodeType = ({ state, type }: GetNodeTypeParams) =>
+  isString(type) ? state.schema.nodes[type] : type;
+
+/**
+ * Creates a positioner for the provided node.
+ *
+ * TODO this currently is just a placeholder and doesn't actually work.
+ */
+export const createNodeTypePositioner = (nodeType: string | NodeType): Positioner => {
+  return {
+    ...defaultPositioner,
+    isActive({ newState: state }) {
+      const type = getNodeType({ state, type: nodeType });
+      return isNodeActive({ state, type });
+    },
+    getPosition({ newState, view }) {
+      findElementAtPosition(newState.selection.from, view);
+      return absoluteCoordinates({
+        view,
+        element: findElementAtPosition(newState.selection.from, view),
+        coords: view.coordsAtPos(newState.selection.$anchor.pos),
+      });
+    },
+  };
 };

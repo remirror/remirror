@@ -18,11 +18,12 @@ RUN  apt-get update \
 RUN yarn add puppeteer && yarn add puppeteer-firefox
 
 # Add user so we don't need --no-sandbox.
-# RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
-#   && mkdir -p /home/pptruser/Downloads /app \
-#   && chown -R pptruser:pptruser /home/pptruser \
-#   && chown -R pptruser:pptruser /node_modules \
-#   && chown -R pptruser:pptruser /app
+RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
+  && mkdir -p /home/pptruser/Downloads /app \
+  && chown -R pptruser:pptruser /home/pptruser \
+  && chown -R pptruser:pptruser /node_modules \
+  && chown -R pptruser:pptruser /app
+
 
 # Run everything after as non-privileged user.
-# USER pptruser
+USER pptruser

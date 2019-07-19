@@ -19,7 +19,7 @@ import {
 } from '@remirror/core';
 import { Decoration } from 'prosemirror-view';
 import refractor, { RefractorNode, RefractorSyntax } from 'refractor/core';
-import { CodeBlockAttrs, CodeBlockExtensionOptions } from './code-block-types';
+import { CodeBlockAttrs, CodeBlockExtensionOptions, FormattedContent } from './code-block-types';
 
 // Refractor languages
 import { TextSelection } from 'prosemirror-state';
@@ -171,17 +171,36 @@ export const updateNodeAttrs = (type: NodeType) => (attrs?: Attrs): CommandFunct
   return true;
 };
 
+// interface FormatCodeBlockTransactionParams extends FormatCodeBlockFactoryParams, RangeParams, TransactionParams {}
+// /**
+//  * Updates the provided Transaction with a transformed codeBlock
+//  *
+//  * The transaction is mutated if there is a change and the function returns true to indicate
+//  * that it should be dispatched and false to suggest otherwise.
+//  */
+// const formatCodeBlockTransaction = ({}: FormatCodeBlockTransactionParams): boolean => {
+
+// }
+
 interface FormatCodeBlockFactoryParams
   extends NodeTypeParams,
     Required<Pick<CodeBlockExtensionOptions, 'formatter' | 'supportedLanguages' | 'defaultLanguage'>> {}
 
+/**
+ * A factory for creating a command which can format a selected codeBlock (or one located at the provided position).
+ */
 export const formatCodeBlockFactory = ({
   type,
   formatter,
   supportedLanguages,
   defaultLanguage: fallback,
-}: FormatCodeBlockFactoryParams) => (): CommandFunction => (state, dispatch) => {
+}: FormatCodeBlockFactoryParams) => ({ pos }: Partial<PosParams> = {}): CommandFunction => (
+  state,
+  dispatch,
+) => {
   const { tr, selection } = state;
+
+  const { from, to } = pos ? { from: pos, to: pos } : selection;
 
   // Find the current codeBlock the cursor is positioned in.
   const codeBlock = findParentNodeOfType({ types: type, selection });
@@ -192,23 +211,42 @@ export const formatCodeBlockFactory = ({
 
   // Get the `language`, `source` and `cursorOffset` for the block and run the formatter
   const {
-    node: { attrs, textContent, nodeSize },
+    node: { attrs, textContent },
     start,
   } = codeBlock;
-  const language = getLanguage({ language: attrs.language, fallback, supportedLanguages });
-  const format = formatter({ source: textContent, language, cursorOffset: selection.from });
 
-  if (!format) {
+  const offsetStart = from - start;
+  const offsetEnd = to - start;
+  const language = getLanguage({ language: attrs.language, fallback, supportedLanguages });
+  const formatStart = formatter({ source: textContent, language, cursorOffset: offsetStart });
+  let formatEnd: FormattedContent | undefined;
+
+  // When the user has a selection
+  if (offsetStart !== offsetEnd) {
+    formatEnd = formatter({ source: textContent, language, cursorOffset: offsetEnd });
+  }
+
+  if (!formatStart) {
     return false;
   }
 
-  const { cursorOffset, formatted } = format;
+  const { cursorOffset, formatted } = formatStart;
+
+  // Do nothing if nothing has changed
+  if (formatted === textContent) {
+    return false;
+  }
+
+  const end = start + textContent.length;
 
   // Replace the codeBlock content with the transformed text.
-  tr.insertText(formatted, start, start + nodeSize - 2);
+  tr.insertText(formatted, start, end);
 
   // Set the new selection
-  tr.setSelection(TextSelection.create(tr.doc, cursorOffset));
+  const anchor = start + cursorOffset;
+  const head = formatEnd ? start + formatEnd.cursorOffset : undefined;
+
+  tr.setSelection(TextSelection.create(tr.doc, anchor, head));
 
   if (dispatch) {
     dispatch(tr);
@@ -278,12 +316,5 @@ interface GetLanguageParams {
 /**
  * Get the language from user input.
  */
-export const getLanguage = ({ language, supportedLanguages, fallback }: GetLanguageParams) => {
-  let lang = language;
-
-  if (!isSupportedLanguage(lang, supportedLanguages)) {
-    lang = fallback;
-  }
-
-  return getSupportedLanguagesMap(supportedLanguages)[lang];
-};
+export const getLanguage = ({ language, supportedLanguages, fallback }: GetLanguageParams) =>
+  !isSupportedLanguage(language, supportedLanguages) ? fallback : language;

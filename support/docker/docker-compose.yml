@@ -3,6 +3,7 @@ services:
   puppeteer-linux:
     environment:
       PUPPETEER_DOCKER: 'true'
+      CI: 'true'
     build:
       dockerfile: ./support/docker/puppeteer-linux-dev.Dockerfile
       context: ../../

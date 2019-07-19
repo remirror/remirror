@@ -1,5 +1,5 @@
 import { Config } from '@jest/types';
-import { SupportedServers } from '@test-fixtures/test-urls';
+import { SupportedServers } from '@test-fixtures/test-links';
 import { JestDevServerOptions, setup, teardown } from 'jest-dev-server';
 import onExit from 'signal-exit';
 

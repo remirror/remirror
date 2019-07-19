@@ -6,6 +6,7 @@ import typescriptPlugin from 'prettier/parser-typescript';
 import { formatWithCursor } from 'prettier/standalone';
 import javascript from 'refractor/lang/javascript';
 import markdown from 'refractor/lang/markdown';
+import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '../';
 import { CodeBlockFormatter } from '../code-block-types';
@@ -46,7 +47,7 @@ describe('constructor', () => {
   });
 });
 
-const supportedLanguages = [typescript, javascript, markdown];
+const supportedLanguages = [typescript, javascript, markdown, tsx];
 
 const create = (params: CodeBlockExtensionOptions = {}) =>
   renderEditor({
@@ -135,9 +136,10 @@ describe('plugin', () => {
       expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
     });
 
-    it('sets alias language inputs as the official language name', () => {
-      const { state } = add(doc(p('<cursor>'))).insertText('```ts abc');
-      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('abc'), p()));
+    it('keeps alias language name when supported', () => {
+      const htmlBlock = codeBlock({ language: 'html' });
+      const { state } = add(doc(p('<cursor>'))).insertText('```html abc');
+      expect(state.doc).toEqualRemirrorDocument(doc(htmlBlock('abc'), p()));
     });
   });
 
@@ -168,12 +170,13 @@ describe('plugin', () => {
       expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
     });
 
-    it('sets alias language inputs as the official language name', () => {
+    it('keeps alias language name when supported', () => {
+      const htmlBlock = codeBlock({ language: 'html' });
       const { state } = add(doc(p('<cursor>')))
-        .insertText('```ts')
+        .insertText('```html')
         .press('Enter')
         .insertText('abc');
-      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('abc'), p()));
+      expect(state.doc).toEqualRemirrorDocument(doc(htmlBlock('abc'), p()));
     });
   });
 });
@@ -183,7 +186,7 @@ describe('commands', () => {
     view,
     add,
     attrNodes: { codeBlock },
-    nodes: { doc },
+    nodes: { doc, p },
   } = create();
 
   let tsBlock = codeBlock({ language: 'typescript' });
@@ -229,30 +232,70 @@ describe('commands', () => {
         view,
         add,
         attrNodes: { codeBlock },
-        nodes: { doc },
+        nodes: { doc, p },
       } = create({ formatter }));
 
       tsBlock = codeBlock({ language: 'typescript' });
     });
 
     it('can format the codebase', () => {
-      const { actions } = add(
+      const { state } = add(
         doc(tsBlock(`const a: string\n = 'test'  ;\n\n\nconsole.log("welcome friends")<cursor>`)),
-      );
-      actions.formatCodeBlock();
-      expect(view.state.doc).toEqualRemirrorDocument(
+      ).actionsCallback(actions => actions.formatCodeBlock());
+
+      expect(state.doc).toEqualRemirrorDocument(
         doc(tsBlock(`const a: string = 'test';\n\nconsole.log('welcome friends');\n`)),
       );
     });
 
     it('maintains cursor position after formatting', () => {
-      const { actions, insertText } = add(
+      const { state } = add(
         doc(tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nconsole.log("welcome friends")`)),
-      );
-      actions.formatCodeBlock();
-      insertText('ing');
-      expect(view.state.doc).toEqualRemirrorDocument(
+      )
+        .actionsCallback(actions => actions.formatCodeBlock())
+        .insertText('ing');
+
+      expect(state.doc).toEqualRemirrorDocument(
         doc(tsBlock(`const a: string = 'testing';\n\nconsole.log('welcome friends');\n`)),
+      );
+    });
+
+    it('formats text selections', () => {
+      const { state, start, end } = add(
+        doc(tsBlock(`<start>const a: string\n = 'test'  ;<end>\n\n\nconsole.log("welcome friends")`)),
+      ).actionsCallback(actions => actions.formatCodeBlock());
+
+      expect(state.doc).toEqualRemirrorDocument(
+        doc(tsBlock(`const a: string = 'test';\n\nconsole.log('welcome friends');\n`)),
+      );
+      expect([start, end]).toEqual([1, 26]);
+    });
+
+    it('can format complex scenarios', () => {
+      const content = p('Hello darkness, my old friend.');
+      const otherCode = tsBlock(`document.addEventListener("click",  console.log)`);
+      const { state } = add(
+        doc(
+          content,
+          content,
+          tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nconsole.log("welcome friends")`),
+          content,
+          content,
+          otherCode,
+        ),
+      )
+        .actionsCallback(actions => actions.formatCodeBlock())
+        .insertText('ing');
+
+      expect(state.doc).toEqualRemirrorDocument(
+        doc(
+          content,
+          content,
+          tsBlock(`const a: string = 'testing';\n\nconsole.log('welcome friends');\n`),
+          content,
+          content,
+          otherCode,
+        ),
       );
     });
   });

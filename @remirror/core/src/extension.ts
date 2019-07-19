@@ -1,7 +1,7 @@
 import { Interpolation } from 'emotion';
 import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
-import { Cast, isObject } from './helpers/base';
+import { Cast, deepMerge, isObject } from './helpers/base';
 import {
   AttrsWithClass,
   BaseExtensionOptions,
@@ -77,13 +77,28 @@ export abstract class Extension<
   GExtensionData extends {} = PlainObject,
   GType = never
 > {
-  /** Purely for TypeScript inference */
+  /**
+   * This pseudo property makes it easier to infer Generic types of this class.
+   * @private
+   */
   public readonly _O!: GOptions;
-  /** Purely for TypeScript inference */
+
+  /**
+   * This pseudo property makes it easier to infer Generic types of this class.
+   * @private
+   */
   public readonly _T!: GType;
-  /** Purely for TypeScript inference */
+
+  /**
+   * This pseudo property makes it easier to infer Generic types of this class.
+   * @private
+   */
   public readonly _C!: GCommands;
-  /** Purely for TypeScript inference */
+
+  /**
+   * This pseudo property makes it easier to infer Generic types of this class.
+   * @private
+   */
   public readonly _E!: GExtensionData;
 
   /**
@@ -121,11 +136,9 @@ export abstract class Extension<
   private pk?: PluginKey;
 
   constructor(options: GOptions = Cast<GOptions>({})) {
-    this.options = Cast<Required<GOptions>>({
-      ...defaultOptions,
-      ...this.defaultOptions,
-      ...options,
-    });
+    this.options = Cast<Required<GOptions>>(
+      deepMerge([defaultOptions, { ...this.defaultOptions, ...options }]),
+    );
 
     this.init();
   }
