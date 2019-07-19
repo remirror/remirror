@@ -71,7 +71,7 @@ The following is a small example which renders a floating menu and enables the e
 ```ts
 import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
 
-import { memoize, EMPTY_OBJECT_NODE } from '@remirror/core';
+import { memoize, EMPTY_PARAGRAPH_NODE } from '@remirror/core';
 import { Bold, Italic, Underline } from '@remirror/core-extensions';
 import {
   bubblePositioner,
@@ -149,7 +149,7 @@ const EditorLayout: FunctionComponent = () => {
         onChange={onChange}
         placeholder='Start typing for magic...'
         autoFocus={true}
-        initialContent={EMPTY_OBJECT_NODE}
+        initialContent={EMPTY_PARAGRAPH_NODE}
       >
         <SimpleFloatingMenu />
       </ManagedRemirrorProvider>

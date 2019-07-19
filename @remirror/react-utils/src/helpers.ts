@@ -71,7 +71,7 @@ export const uniqueClass = (uid: string, className: string) => `${className}-${u
  *
  * ```ts
  * static defaultProps = asDefaultProps<RemirrorProps>()({
- *   initialContent: EMPTY_OBJECT_NODE,
+ *   initialContent: EMPTY_PARAGRAPH_NODE,
  * });
  * ```
  */
