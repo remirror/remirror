@@ -27,7 +27,7 @@ import { WysiwygEditorProps } from '../types';
 import { BubbleMenu, BubbleMenuProps, MenuBar } from './menu';
 import { EditorWrapper, InnerEditorWrapper } from './styled';
 
-import { deepMerge } from '@remirror/core';
+import { deepMerge, ParagraphExtension } from '@remirror/core';
 import bash from 'refractor/lang/bash';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
@@ -97,6 +97,7 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
     return (
       <ThemeProvider theme={this.editorTheme}>
         <RemirrorManager placeholder={placeholder}>
+          <RemirrorExtension Constructor={ParagraphExtension} ensureTrailingParagraph={true} />
           <RemirrorExtension Constructor={BoldExtension} />
           <RemirrorExtension Constructor={UnderlineExtension} />
           <RemirrorExtension Constructor={ItalicExtension} />

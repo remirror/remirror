@@ -11,7 +11,7 @@ import {
   ProsemirrorNode,
   Value,
 } from './base';
-import { AttrsParams, EditorViewParams, PMNodeParams, SchemaParams } from './builders';
+import { AttrsParams, EditorViewParams, ProsemirrorNodeParams, SchemaParams } from './builders';
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -274,7 +274,7 @@ export interface GetAttrsParams {
 export type SSRComponentProps<
   GAttrs extends Attrs = any,
   GOptions extends BaseExtensionOptions = any
-> = GAttrs & PMNodeParams & { options: Required<GOptions> };
+> = GAttrs & ProsemirrorNodeParams & { options: Required<GOptions> };
 
 export * from './aliases';
 export * from './base';

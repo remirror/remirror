@@ -123,14 +123,22 @@ export interface MarkTypeParams {
   type: MarkType;
 }
 
-export interface PMNodeParams {
+export interface ProsemirrorNodeParams {
   /**
    * The prosemirror node
    */
   node: ProsemirrorNode;
 }
 
-export interface NullablePMNodeParams {
+export interface DocParams {
+  /**
+   * The parent doc node of the editor which contains all the other nodes.
+   * This is also a ProsemirrorNode
+   */
+  doc: ProsemirrorNode;
+}
+
+export interface OptionalProsemirrorNodeParams {
   /**
    * The nullable prosemirror node which may or may not exist.
    */

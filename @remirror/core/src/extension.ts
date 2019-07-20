@@ -489,8 +489,17 @@ export interface PrioritizedExtension {
 export type FlexibleExtension = PrioritizedExtension | AnyExtension;
 
 export interface ExtensionListParams {
-  /** A list of passed extensions */
+  /**
+   * A list of passed extensions
+   */
   extensions: AnyExtension[];
+}
+
+export interface ExtensionParams<GExtension extends AnyExtension = AnyExtension> {
+  /**
+   * An extension
+   */
+  extension: GExtension;
 }
 
 /**

@@ -73,7 +73,8 @@ export const renderEditor = <
   props: Partial<Omit<RemirrorProps, 'manager'>> = {},
 ): GReturn => {
   const extensions = [
-    ...nodeExtensions,
+    // Allow testing the paragraph, text and doc extensions by filtering them out when they've been passed in
+    ...nodeExtensions.filter(({ name }) => !plainNodes.some(ext => ext.name === name)),
     ...others,
     ...plainMarks,
     ...plainNodes,

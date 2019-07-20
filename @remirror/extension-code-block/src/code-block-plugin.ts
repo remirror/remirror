@@ -6,7 +6,7 @@ import {
   NodeExtension,
   NodeType,
   NodeWithPosition,
-  PMNodeParams,
+  ProsemirrorNodeParams,
   SchemaNodeTypeParams,
   Transaction,
   TransactionParams,
@@ -164,7 +164,7 @@ export class CodeBlockState {
 }
 
 interface ApplyParams extends TransactionParams, CompareStateParams {}
-interface RefreshDecorationSetParams extends PMNodeParams {
+interface RefreshDecorationSetParams extends ProsemirrorNodeParams {
   /**
    * The positioned nodes
    */

@@ -12,8 +12,8 @@ import {
   NodeType,
   NodeTypeParams,
   NodeWithPosition,
-  PMNodeParams,
   PosParams,
+  ProsemirrorNodeParams,
   TextParams,
   uniqueArray,
 } from '@remirror/core';
@@ -134,7 +134,7 @@ export const posWithinRange = ({ from, to, pos }: PosWithinRangeParams) => from 
 export const lengthHasChanged = <GType>(prev: ArrayLike<GType>, next: ArrayLike<GType>) =>
   next.length !== prev.length;
 
-export interface NodeInformation extends NodeTypeParams, FromToParams, PMNodeParams, PosParams {}
+export interface NodeInformation extends NodeTypeParams, FromToParams, ProsemirrorNodeParams, PosParams {}
 
 /**
  * Retrieves helpful node information from the current state.
