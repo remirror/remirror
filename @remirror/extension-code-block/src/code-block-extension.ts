@@ -121,8 +121,12 @@ export class CodeBlockExtension extends NodeExtension<
     const { defaultLanguage, supportedLanguages, formatter } = this.options;
     return {
       toggleCodeBlock: (attrs?: Attrs) =>
-        toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs }),
-      createCodeBlock: (attrs?: Attrs) => setBlockType(type, attrs),
+        toggleBlockItem({
+          type,
+          toggleType: schema.nodes.paragraph,
+          attrs: { language: defaultLanguage, ...attrs },
+        }),
+      createCodeBlock: (attrs?: Attrs) => setBlockType(type, { language: defaultLanguage, ...attrs }),
       updateCodeBlock: updateNodeAttrs(type),
       formatCodeBlock: formatCodeBlockFactory({ type, formatter, defaultLanguage, supportedLanguages }),
     };

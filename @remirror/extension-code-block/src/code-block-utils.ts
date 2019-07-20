@@ -61,10 +61,24 @@ function parseRefractorNodes(
   });
 }
 
+interface CreateDecorationsParams extends Pick<CodeBlockExtensionOptions, 'defaultLanguage'> {
+  /**
+   * The list of codeBlocks and their positions which we would like to update.
+   */
+  blocks: NodeWithPosition[];
+
+  /**
+   * When a delete happens within the last valid decoration in a block it causes the editor to jump. This skipLast
+   * should be set to true immediately after a delete which then allows for createDecorations to skip updating the decoration
+   * for the last refactor node, and hence preventing the jumpy bug.
+   */
+  skipLast: boolean;
+}
+
 /**
  * Creates a decoration set for the provided blocks
  */
-export const createDecorations = (blocks: NodeWithPosition[], skipLast: boolean) => {
+export const createDecorations = ({ blocks, skipLast }: CreateDecorationsParams) => {
   const decorations: Decoration[] = [];
 
   blocks.forEach(block => {
@@ -90,7 +104,7 @@ export const createDecorations = (blocks: NodeWithPosition[], skipLast: boolean)
  */
 const getPositionedRefractorNodes = ({ node, pos }: NodeWithPosition) => {
   let startPos = pos + 1;
-  const refractorNodes = refractor.highlight(node.textContent, node.attrs.language);
+  const refractorNodes = refractor.highlight(node.textContent || '', node.attrs.language || 'markup');
   function mapper(refractorNode: ParsedRefractorNode): PositionedRefractorNode {
     const from = startPos;
     const to = from + refractorNode.text.length;

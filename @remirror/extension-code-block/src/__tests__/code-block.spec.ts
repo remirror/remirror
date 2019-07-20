@@ -196,8 +196,9 @@ describe('commands', () => {
       view,
       add,
       attrNodes: { codeBlock },
-      nodes: { doc },
+      nodes: { doc, p },
     } = create());
+    tsBlock = codeBlock({ language: 'typescript' });
   });
 
   describe('updateCodeBlock ', () => {
@@ -211,6 +212,52 @@ describe('commands', () => {
 
       expect(view.dom.querySelector('.language-markup code')).toBeFalsy();
       expect(view.dom.querySelector('.language-javascript code')!.outerHTML).toMatchSnapshot();
+    });
+  });
+
+  describe('createCodeBlock ', () => {
+    it('creates the codeBlock', () => {
+      const { state } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
+        actions.createCodeBlock({ language: 'typescript' });
+      });
+
+      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('')));
+    });
+
+    it('creates the default codeBlock when no language is provided', () => {
+      const markupBlock = codeBlock({ language: 'markup' });
+      const { state } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
+        actions.createCodeBlock();
+      });
+
+      expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('')));
+    });
+  });
+
+  describe('toggleCodeBlock ', () => {
+    it('toggles the codeBlock', () => {
+      const { state, actionsCallback } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
+        actions.toggleCodeBlock({ language: 'typescript' });
+      });
+
+      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('')));
+
+      const { state: stateTwo } = actionsCallback(actions =>
+        actions.toggleCodeBlock({ language: 'typescript' }),
+      );
+      expect(stateTwo.doc).toEqualRemirrorDocument(doc(p('')));
+    });
+
+    it('toggles the default codeBlock when no language is provided', () => {
+      const markupBlock = codeBlock({ language: 'markup' });
+      const { state: stateOne, actionsCallback } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
+        actions.toggleCodeBlock();
+      });
+
+      expect(stateOne.doc).toEqualRemirrorDocument(doc(markupBlock('')));
+
+      const { state: stateTwo } = actionsCallback(actions => actions.toggleCodeBlock());
+      expect(stateTwo.doc).toEqualRemirrorDocument(doc(p('')));
     });
   });
 
