@@ -21,7 +21,7 @@ export interface WysiwygEditorProps
       >
     >,
     Pick<RemirrorManagerProps, 'placeholder'>,
-    Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme'> {
+    Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'> {
   /**
    * Extend the theme with your own styles
    */

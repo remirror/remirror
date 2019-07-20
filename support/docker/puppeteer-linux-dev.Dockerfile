@@ -1,7 +1,7 @@
-FROM remirror/puppeteer-linux:0.0.2
+FROM remirror/puppeteer-linux:0.0.5
 
 RUN mkdir /remirror
 WORKDIR /remirror
-COPY ./package.json yarn.lock ./
 COPY . .
+
 RUN yarn

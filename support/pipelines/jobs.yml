@@ -52,17 +52,11 @@ jobs:
       - bash: yarn build
         displayName: 'Build project'
 
-      - bash: yarn test:puppeteer
-        displayName: 'Run integration tests on chrome'
-        env:
-          CI: 'true'
+      - bash: yarn test:puppeteer:storybook || true
+        displayName: 'Run chrome integration tests'
 
-      # Firefox tests are currently failing because image snapshots aren't consistent on linux
-      # Use a docker image to generate snapshots so that they can run across environments
-      - bash: yarn test:puppeteer:firefox || true
-        displayName: 'Run integration tests on firefox'
-        env:
-          CI: 'true'
+      - bash: yarn test:puppeteer:storybook:firefox || true
+        displayName: 'Run firefox integration tests'
 
       - publish: $(System.DefaultWorkingDirectory)/e2e/__image_snapshots__
         condition: always()

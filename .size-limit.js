@@ -14,7 +14,6 @@ const react = require('./@remirror/react/package.json');
 const reactSSR = require('./@remirror/react-ssr/package.json');
 const reactUtils = require('./@remirror/react-utils/package.json');
 const rendererReact = require('./@remirror/renderer-react/package.json');
-const showcase = require('./@remirror/showcase/package.json');
 
 const limits = {
   '@remirror/core': '60 KB',
@@ -31,7 +30,6 @@ const limits = {
   '@remirror/react-ssr': '90 KB',
   '@remirror/react-utils': '60 KB',
   '@remirror/renderer-react': '70 KB',
-  '@remirror/showcase': '400 KB',
 };
 
 module.exports = [
@@ -47,7 +45,6 @@ module.exports = [
   reactSSR,
   reactUtils,
   rendererReact,
-  showcase,
   editorTwitter,
   editorWysiwyg,
 ].map(json => ({

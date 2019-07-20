@@ -21,13 +21,13 @@ import {
 import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager, useRemirror } from '@remirror/react';
 import { asDefaultProps, RemirrorManagerProps } from '@remirror/react-utils';
-import deepMerge from 'deepmerge';
 import { ThemeProvider } from 'emotion-theming';
 import { wysiwygEditorTheme } from '../theme';
 import { WysiwygEditorProps } from '../types';
 import { BubbleMenu, BubbleMenuProps, MenuBar } from './menu';
 import { EditorWrapper, InnerEditorWrapper } from './styled';
 
+import { deepMerge } from '@remirror/core';
 import bash from 'refractor/lang/bash';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
@@ -75,7 +75,7 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
   };
 
   get editorTheme() {
-    return deepMerge(wysiwygEditorTheme, this.props.theme || {});
+    return deepMerge([wysiwygEditorTheme, this.props.theme || {}]);
   }
 
   get supportedLanguages() {
@@ -83,7 +83,16 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
   }
 
   public render() {
-    const { theme: _, placeholder, removeFontAwesomeCSS, ...props } = this.props;
+    const {
+      theme: _,
+      supportedLanguages: _s,
+      placeholder,
+      removeFontAwesomeCSS,
+      defaultLanguage,
+      syntaxTheme = 'atomDark',
+      formatter,
+      ...props
+    } = this.props;
 
     return (
       <ThemeProvider theme={this.editorTheme}>
@@ -102,7 +111,13 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
           <RemirrorExtension Constructor={BulletListExtension} />
           <RemirrorExtension Constructor={OrderedListExtension} />
           <RemirrorExtension Constructor={HardBreakExtension} />
-          <RemirrorExtension Constructor={CodeBlockExtension} supportedLanguages={this.supportedLanguages} />
+          <RemirrorExtension
+            Constructor={CodeBlockExtension}
+            supportedLanguages={this.supportedLanguages}
+            formatter={formatter}
+            syntaxTheme={syntaxTheme}
+            defaultLanguage={defaultLanguage}
+          />
           <RemirrorExtension Constructor={SSRHelperExtension} />
           <ManagedRemirrorProvider {...props}>
             <InnerEditor

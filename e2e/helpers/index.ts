@@ -1,4 +1,6 @@
-import { getBrowserName, SupportedServers } from '@test-fixtures/test-urls';
+import { MakeOptional } from '@remirror/core';
+import { getBrowserName, SupportedServers } from '@test-fixtures/test-links';
+import { SupportedCharacters } from 'jest-remirror';
 
 /**
  * Clear the editor via triple click and delete
@@ -61,18 +63,45 @@ const times = <GType = number>(length: number, fn?: (index: number) => GType): G
 const promiseSequence = async (sequence: Array<() => Promise<void>>) =>
   sequence.reduce((current, next) => current.then(next), Promise.resolve());
 
-interface KeyPressOptions {
-  text?: string;
+export interface TypeParams {
+  /**
+   * The text to type.
+   */
+  text: string;
+
+  /**
+   * The delay between each key press. Setting this higher can sometimes solve fix flakey tests.
+   */
   delay?: number;
 }
 
+export interface PressParams extends MakeOptional<TypeParams, 'text'> {
+  /**
+   * The key to press.
+   */
+  key: SupportedCharacters;
+
+  /**
+   * The number of times the key should be pressed.
+   *
+   * @default 1
+   */
+  count?: number;
+}
 /**
  * Presses the given keyboard key a number of times in sequence.
  *
- * @param key - Key to press.
- * @param count - Number of times to press.
+ * @param key - the key to press.
+ * @param count - the number of times to press it.
  *
  * @return Promise resolving when key presses complete.
  */
-export const pressKeyTimes = async (key: string, count: number, { text, delay = 50 }: KeyPressOptions = {}) =>
+export const press = async ({ key, count = 1, delay = 50, text }: PressParams) =>
   promiseSequence(times(count, () => () => page.keyboard.press(key, { text, delay })));
+
+/**
+ * Wrapper around `page.keyboard.type` with default typing delay.
+ */
+export const type = async ({ text, delay = 10 }: TypeParams) => page.keyboard.type(text, { delay });
+
+export * from './modifier-keys';

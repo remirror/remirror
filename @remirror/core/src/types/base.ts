@@ -200,60 +200,67 @@ export interface BaseExtensionOptions {
   extraAttrs?: ExtraAttrs;
 
   /**
+   * a configuration object which allows for excluding certain functionality from an extension.
+   */
+  exclude?: ExcludeOptions;
+}
+
+export interface ExcludeOptions {
+  /**
    * Whether to exclude the extension's styles.
    *
    * @default false
    */
-  excludeStyles?: boolean;
+  styles?: boolean;
 
   /**
    * Whether to exclude the extension's pasteRules
    *
    * @default false
    */
-  excludePasteRules?: boolean;
+  pasteRules?: boolean;
 
   /**
    * Whether to exclude the extension's inputRules
    *
    * @default false
    */
-  excludeInputRules?: boolean;
+  inputRules?: boolean;
 
   /**
    * Whether to exclude the extension's keymaps
    *
    * @default false
    */
-  excludeKeymaps?: boolean;
+  keymaps?: boolean;
 
   /**
    * Whether to exclude the extension's plugin
    *
    * @default false
    */
-  excludePlugin?: boolean;
+  plugin?: boolean;
 
   /**
    * Whether to exclude the extension's nodeView
    *
    * @default false
    */
-  excludeNodeView?: boolean;
+  nodeView?: boolean;
 
   /**
    * Whether to use the attributes provided by this extension
    *
    * @default false
    */
-  excludeAttributes?: boolean;
+  attributes?: boolean;
 
   /**
    * Whether to use the SSR component when not in a DOM environment
    *
    * @default false
    */
-  disableSSR?: boolean;
+  ssr?: boolean;
 }
 
 export interface SSRComponentParams {

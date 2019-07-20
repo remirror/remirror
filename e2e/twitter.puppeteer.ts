@@ -1,13 +1,18 @@
-import { getUrl, prefixBrowserName, URLDescriptor } from '@test-fixtures/test-urls';
+import { getTestLink, prefixBrowserName, TestLinks } from '@test-fixtures/test-links';
+import { getDocument, queries } from 'pptr-testing-library';
+import { ElementHandle } from 'puppeteer';
 import {
   describeServer,
   innerHtml,
   outerHtml,
-  pressKeyTimes,
+  press,
   sel,
   skipTestOnFirefox,
   textContent,
+  type,
 } from './helpers';
+
+const { getByRole } = queries;
 
 const editorSelector = '.remirror-editor';
 
@@ -17,18 +22,16 @@ describe('Twitter Editor Snapshots', () => {
   const domIdentifier = prefixBrowserName('twitter-editor-dom');
 
   beforeAll(async () => {
-    url = getUrl('twitter', 'next');
+    url = getTestLink('twitter', 'next', true);
   });
 
   describeServer(['next'])('SSR', () => {
     beforeEach(async () => {
-      // Set JavaScript to disabled to mimic server side rendering
       await page.setJavaScriptEnabled(false);
       await page.goto(url);
     });
 
     it('should pre render the editor with consistent html', async () => {
-      // This test checks that the ProsemirrorEditor exists and contains the expected html
       await expect(outerHtml(editorSelector)).resolves.toBeTruthy();
       await expect(outerHtml(editorSelector)).resolves.toMatchSnapshot();
     });
@@ -61,37 +64,38 @@ describe('Twitter Editor Snapshots', () => {
   });
 });
 
-describe.each(URLDescriptor.twitter)('%s: Twitter Showcase', (_, path) => {
-  beforeAll(async () => {
-    await jestPuppeteer.resetPage();
-  });
+describe.each(TestLinks.twitter)('%s: Twitter Showcase', (_, path) => {
+  let $document: ElementHandle;
+  let $editor: ElementHandle;
 
   beforeEach(async () => {
     await page.goto(path);
+    $document = await getDocument(page);
+    $editor = await getByRole($document, 'textbox');
   });
 
   describe('Links', () => {
     it('should have a twitter editor', async () => {
-      await page.focus(editorSelector);
-      await page.type(editorSelector, 'This is text https://url.com');
+      await $editor.focus();
+      await $editor.type('This is text https://url.com');
       await expect(innerHtml(editorSelector)).resolves.toInclude(
         '<a href="https://url.com" role="presentation">https://url.com</a>',
       );
     });
 
     it('should parse simple urls', async () => {
-      await page.type(editorSelector, 'url.com');
+      await $editor.type('url.com');
       await expect(innerHtml(editorSelector)).resolves.toContain(
         '<a href="http://url.com" role="presentation">url.com</a>',
       );
-      await page.keyboard.press('Backspace');
+      await press({ key: 'Backspace' });
       await expect(innerHtml(editorSelector)).resolves.toContain(
         '<a href="http://url.co" role="presentation">url.co</a>',
       );
-      await page.keyboard.press('Backspace');
+      await press({ key: 'Backspace' });
       await expect(innerHtml(editorSelector)).resolves.toEqual('<p class="">url.c</p>');
 
-      await page.keyboard.type('o.uk');
+      await type({ text: 'o.uk' });
       await expect(innerHtml(editorSelector)).resolves.toContain(
         '<a href="http://url.co.uk" role="presentation">url.co.uk</a>',
       );
@@ -99,98 +103,97 @@ describe.each(URLDescriptor.twitter)('%s: Twitter Showcase', (_, path) => {
 
     // TODO The 'Home' key press doesn't work on Firefox
     skipTestOnFirefox('can handle more complex interactions', async () => {
-      await page.type(editorSelector, 'this is the first url.com');
-      await page.keyboard.press('Enter');
-      await page.type(editorSelector, 'this.com is test.com');
-      await page.keyboard.press('Home'); // ? This does nothing on Firefox
-      await page.keyboard.type('split.com ');
+      await $editor.type('this is the first url.com');
+      await press({ key: 'Enter' });
+      await $editor.type('this.com is test.com');
+      await press({ key: 'Home' }); // ? This does nothing on Firefox
+      await type({ text: 'split.com ' });
       await expect(innerHtml(editorSelector)).resolves.toIncludeMultiple([
         '<a href="http://split.com" role="presentation">split.com</a>',
         '<a href="http://this.com" role="presentation">this.com</a>',
       ]);
 
-      await page.keyboard.press('ArrowUp');
-      await page.keyboard.press('End');
-      await page.keyboard.press('Backspace');
-      await page.keyboard.press('Backspace');
-      await page.keyboard.type('..no .co more url please');
+      await press({ key: 'ArrowUp' });
+      await press({ key: 'End' });
+      await press({ key: 'Backspace', count: 2 });
+      await type({ text: '..no .co more url please' });
       await expect(innerHtml(editorSelector)).resolves.not.toInclude('url.com');
     });
 
     it('should handle the enter key', async () => {
-      await page.type(editorSelector, 'this is the first url.com');
-      await pressKeyTimes('ArrowLeft', 3);
-      await page.keyboard.press('Enter');
+      await $editor.type('this is the first url.com');
+      await press({ key: 'ArrowLeft', count: 3 });
+      await press({ key: 'Enter' });
 
       await expect(innerHtml(editorSelector)).resolves.not.toInclude('</a>');
     });
 
     it('should not contain false positives', async () => {
-      await page.type(editorSelector, 'http://localhost:3000/ahttps://meowni.ca');
+      await $editor.type('http://localhost:3000/ahttps://meowni.ca');
       await expect(innerHtml(editorSelector)).resolves.not.toInclude('</a>');
     });
   });
 
   describe('Mentions', () => {
     it('should not allow mixing the tags', async () => {
-      await page.type(editorSelector, '@#ab #@simple ');
+      await $editor.type('@#ab #@simple ');
       await expect(outerHtml(sel(editorSelector, 'a'))).rejects.toThrow();
     });
 
     describe('@', () => {
       it('should wrap in progress mentions in a-tag decorations', async () => {
-        await page.type(editorSelector, 'Hello @jonathan');
+        await $editor.type('Hello @jonathan');
         await expect(textContent(sel(editorSelector, '.suggestion-at'))).resolves.toBe('@jonathan');
       });
 
       it('should accept selections onEnter', async () => {
         const selector = sel(editorSelector, '.mention-at');
 
-        await page.type(editorSelector, 'hello @ab');
-        await page.keyboard.press('Enter');
+        await $editor.type('hello @ab');
+        await press({ key: 'Enter' });
         await expect(page.$$(selector)).resolves.toHaveLength(1);
         await expect(textContent(selector)).resolves.toBe('@orangefish879'); // This might change if data changes
       });
 
       it('should still wrap selections when exiting without selections', async () => {
-        await page.type(editorSelector, 'hello @ab ');
+        await $editor.type('hello @ab ');
         await expect(textContent(sel(editorSelector, '.mention-at'))).resolves.toBe('@ab');
       });
 
       it('allows clicking on suggestions', async () => {
         const selector = '.suggestions-item.active';
-        await page.type(editorSelector, 'hello @alex');
+        await $editor.type('hello @alex');
         await page.click(selector);
         await expect(textContent(sel(editorSelector, '.mention-at'))).resolves.toBe('@lazymeercat594');
         await expect(textContent(editorSelector)).resolves.toBe('hello @lazymeercat594 ');
       });
 
       it('allows arrowing between suggestions', async () => {
-        await page.type(editorSelector, 'hello  1');
-        await pressKeyTimes('ArrowLeft', 2);
-        await page.type(editorSelector, '@ab');
-        await page.keyboard.press('ArrowRight');
+        await $editor.type('hello  1');
+        await press({ key: 'ArrowLeft', count: 2 });
+        await $editor.type('@ab');
+        await press({ key: 'ArrowRight' });
         await expect(textContent(sel(editorSelector, '.mention-at'))).resolves.toBe('@ab');
       });
 
       it('allows arrowing between suggestions and breaking up the suggestion', async () => {
-        await page.type(editorSelector, 'hello  1');
-        await page.keyboard.press('ArrowLeft');
-        await page.type(editorSelector, '@ab ');
+        await $editor.type('hello  1');
+        await press({ key: 'ArrowLeft' });
+        await $editor.type('@ab ');
         await expect(textContent(sel(editorSelector, '.mention-at'))).resolves.toBe('@ab');
       });
 
       it('handles arrowing between arrowing back into mention without errors', async () => {
-        await page.type(editorSelector, '@ab ');
-        await pressKeyTimes('ArrowLeft', 4);
-        await page.keyboard.press('ArrowRight');
+        await $editor.type('@ab ');
+        await press({ key: 'ArrowLeft', count: 4 });
+        await press({ key: 'ArrowRight' });
         await expect(textContent(sel(editorSelector, '.mention-at'))).resolves.toBe('@ab');
       });
 
       it('removes mark when no partial query', async () => {
-        await page.type(editorSelector, '@abc ');
-        await pressKeyTimes('ArrowLeft', 4);
-        await page.type(editorSelector, ' ');
+        await $editor.type('@abc ');
+        await press({ key: 'ArrowLeft', count: 4 });
+        await $editor.type(' ');
         await expect(
           textContent(sel(editorSelector, '.mention-at')),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
@@ -200,43 +203,43 @@ describe.each(URLDescriptor.twitter)('%s: Twitter Showcase', (_, path) => {
 
       it('adds the mark when enter is pressed', async () => {
         const username = '@abcd1234';
-        await page.type(editorSelector, username);
-        await page.keyboard.press('Enter');
+        await $editor.type(username);
+        await press({ key: 'Enter' });
         await expect(textContent(sel(editorSelector, '.mention-at'))).resolves.toBe(username);
       });
 
       it('splits up the mark when enter is pressed', async () => {
         const username = '@abcd1234 ';
-        await page.type(editorSelector, username);
-        await pressKeyTimes('ArrowLeft', 3);
-        await page.keyboard.press('Enter');
+        await $editor.type(username);
+        await press({ key: 'ArrowLeft', count: 3 });
+        await press({ key: 'Enter' });
         await expect(textContent(sel(editorSelector, '.mention-at'))).resolves.toBe('@abcd12');
       });
     });
 
     describe('#', () => {
       it('should wrap in progress mentions in a-tag decorations', async () => {
-        await page.type(editorSelector, 'My tag is #Topic');
+        await $editor.type('My tag is #Topic');
         await expect(textContent(sel(editorSelector, '.suggestion-tag'))).resolves.toBe('#Topic');
       });
 
       it('should accept selections onEnter', async () => {
         const selector = sel(editorSelector, '.mention-tag');
 
-        await page.type(editorSelector, 'hello #T');
-        await page.keyboard.press('Enter');
+        await $editor.type('hello #T');
+        await press({ key: 'Enter' });
         await expect(page.$$(selector)).resolves.toHaveLength(1);
         await expect(textContent(selector)).resolves.toBe('#Tags');
       });
 
       it('should still wrap selections when exiting without selections', async () => {
-        await page.type(editorSelector, 'hello #T ');
+        await $editor.type('hello #T ');
         await expect(textContent(sel(editorSelector, '.mention-tag'))).resolves.toBe('#T');
       });
 
       it('allows clicking on suggestions', async () => {
         const selector = '.suggestions-item.active';
-        await page.type(editorSelector, 'My #T');
+        await $editor.type('My #T');
         await page.click(selector);
         await expect(textContent(sel(editorSelector, '.mention-tag'))).resolves.toBe('#Tags');
         await expect(textContent(editorSelector)).resolves.toBe('My #Tags ');
@@ -246,33 +249,33 @@ describe.each(URLDescriptor.twitter)('%s: Twitter Showcase', (_, path) => {
 
   describe('Emoji', () => {
     it('should be able to add emoji', async () => {
-      await page.type(editorSelector, '😀');
+      await $editor.type('😀');
       await expect(innerHtml(sel(editorSelector, 'span[title=grinning]'))).resolves.toBeTruthy();
       await expect(innerHtml(sel(editorSelector, 'span[data-emoji-native=😀]'))).resolves.toBeTruthy();
     });
 
     it('should handle multiple emoji with no spaces', async () => {
-      const msg = '123abcXYZ';
-      await page.type(editorSelector, '😀😀😀😀');
-      await pressKeyTimes('ArrowLeft', 2, { delay: 100 });
-      await page.keyboard.press('ArrowRight', { delay: 100 });
-      await page.keyboard.type(msg);
-      await expect(innerHtml(sel(editorSelector))).resolves.toInclude(msg);
+      const text = '123abcXYZ';
+      await $editor.type('😀😀😀😀');
+      await press({ key: 'ArrowLeft', count: 2 });
+      await press({ key: 'ArrowRight' });
+      await type({ text });
+      await expect(innerHtml(sel(editorSelector))).resolves.toInclude(text);
     });
   });
 
   describe('Combined', () => {
     it('should combine mentions emoji and links', async () => {
-      await page.type(editorSelector, '#awesome hello @ab 😀 google.com');
-      await page.keyboard.press('Enter');
+      await $editor.type('#awesome hello @ab 😀 google.com');
+      await press({ key: 'Enter' });
       await expect(textContent(sel(editorSelector, '.mention-at'))).resolves.toBe('@ab');
       await expect(textContent(sel(editorSelector, '.mention-tag'))).resolves.toBe('#awesome');
       await expect(innerHtml(sel(editorSelector, 'span[title=grinning]'))).resolves.toBeTruthy();
     });
 
     it('should not replace emoji with link when no space between', async () => {
-      await page.type(editorSelector, '😀google.com');
-      await page.keyboard.press('Enter');
+      await $editor.type('😀google.com');
+      await press({ key: 'Enter' });
       await expect(innerHtml(sel(editorSelector, 'span[title=grinning]'))).resolves.toBeTruthy();
       // Using include since decorations can inject a space here affecting the text
       await expect(textContent(sel(editorSelector, '[href]'))).resolves.toInclude('google.com');

@@ -14,7 +14,8 @@
         "@test-fixtures",
         "jest-remirror",
         "jest-prosemirror",
-        "@storybook/react"
+        "@storybook/react",
+        "prettier"
       ]
     ],
     "no-empty": false,
@@ -33,19 +34,18 @@
       "@storybook/addon-actions",
       "@testing-library/react",
       "@testing-library/jest-dom",
+      "pptr-testing-library",
       "detox",
-      "emoji-mart",
       "emoji-regex",
       "jest-dom",
       "nanoid",
       "next",
-      "prismjs",
+      "prettier",
       "react-dom",
       "emoji-mart",
       "prismjs",
       "refractor",
-      "react-syntax-highlighter",
-      "refractor"
+      "react-syntax-highlighter"
     ]
   }
 }

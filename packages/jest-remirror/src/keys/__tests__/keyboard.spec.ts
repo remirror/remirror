@@ -1,6 +1,6 @@
 import { Keyboard } from '../keyboard';
 import { KeyboardEventName } from '../types';
-import { SupportCharacters } from '../us-keyboard-layout';
+import { SupportedCharacters } from '../us-keyboard-layout';
 
 let target: HTMLDivElement;
 let keyboard: Keyboard;
@@ -54,7 +54,7 @@ describe('char', () => {
 
   it('it should only fire keydown for Lock keys', () => {
     const events: KeyboardEventName[] = [];
-    const text: SupportCharacters = 'CapsLock';
+    const text: SupportedCharacters = 'CapsLock';
 
     const listener = (event: KeyboardEvent) => {
       expect(event.key).toBe(text);
@@ -98,7 +98,7 @@ describe('batching', () => {
   });
 
   it('will not run until end is called', () => {
-    const text: SupportCharacters = 'R';
+    const text: SupportedCharacters = 'R';
     let hasRun = false;
 
     const listener = (event: KeyboardEvent) => {
