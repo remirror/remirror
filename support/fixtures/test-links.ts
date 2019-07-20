@@ -8,7 +8,7 @@ export const TestLinks = {
       'http://localhost:3002/iframe.html?id=twitter-editor--with-content',
     ],
     ['Next', 'http://localhost:3001/editor/twitter', 'http://localhost:3001/editor/twitter/content'],
-    ['Docz', 'http://localhost:3000/showcase/twitter'],
+    ['Docz', 'http://localhost:3003/showcase/twitter'],
   ],
   wysiwyg: [
     [
@@ -17,7 +17,7 @@ export const TestLinks = {
       'http://localhost:3002/iframe.html?id=wysiwyg-editor--with-content',
     ],
     ['Next', 'http://localhost:3001/editor/wysiwyg', 'http://localhost:3001/editor/wysiwyg/content'],
-    ['Docz', 'http://localhost:3000/showcase/wysiwyg'],
+    ['Docz', 'http://localhost:3003/showcase/wysiwyg'],
   ],
 };
 

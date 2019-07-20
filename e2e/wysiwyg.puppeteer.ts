@@ -15,7 +15,7 @@ const { getByRole } = queries;
 
 const editorSelector = '.remirror-editor';
 
-describe.skip('Wysiwyg Editor Snapshots', () => {
+describe('Wysiwyg Editor Snapshots', () => {
   let url: string;
   const ssrIdentifier = prefixBrowserName('wysiwyg-editor-ssr');
   const domIdentifier = prefixBrowserName('wysiwyg-editor-dom');

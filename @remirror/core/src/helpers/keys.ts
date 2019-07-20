@@ -33,7 +33,7 @@ export const Modifier = {
   Alt: () => [ALT],
   CtrlShift: () => [CTRL, SHIFT],
   Shift: () => [SHIFT],
-  ShiftAlt: (isMac?: boolean) => (isMac ? [SHIFT, ALT] : [SHIFT, CTRL]),
+  ShiftAlt: () => [SHIFT, ALT],
 };
 
 /**
@@ -83,7 +83,7 @@ export const mod = (modifier: ModifierKeys, key: string, isMacFn = isApple) => {
     case 'Shift':
       return `${Modifier[modifier]().join('-')}-${key}`;
     case 'ShiftAlt':
-      return `${Modifier[modifier](isMacFn()).join('-')}-${key}`;
+      return `${Modifier[modifier]().join('-')}-${key}`;
 
     default:
       throw new Error('Invalid modifier name passed in');

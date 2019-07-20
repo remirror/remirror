@@ -12,7 +12,7 @@ describe('mod', () => {
     expect(mod('Alt', 'Enter', isMac)).toBe('Alt-Enter');
     expect(mod('CtrlShift', 'Enter', isMac)).toBe('Control-Shift-Enter');
     expect(mod('Shift', 'Enter', isMac)).toBe('Shift-Enter');
-    expect(mod('ShiftAlt', 'Enter', isMac)).toBe('Shift-Control-Enter');
+    expect(mod('ShiftAlt', 'Enter', isMac)).toBe('Shift-Alt-Enter');
   });
 
   it('should run on Mac', () => {

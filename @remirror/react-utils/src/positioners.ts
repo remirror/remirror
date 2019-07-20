@@ -11,7 +11,7 @@ import {
 import { Positioner } from './types';
 
 export const defaultPositioner: Positioner = {
-  initialPosition: { top: -9999, left: -9999, right: -9999, bottom: -9999 },
+  initialPosition: { top: -9999, left: -9999, right: 99999, bottom: 99999 },
   hasChanged({ oldState, newState }) {
     return !(oldState && oldState.doc.eq(newState.doc) && oldState.selection.eq(newState.selection));
   },

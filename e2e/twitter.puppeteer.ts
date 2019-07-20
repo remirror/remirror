@@ -16,7 +16,7 @@ const { getByRole } = queries;
 
 const editorSelector = '.remirror-editor';
 
-describe.skip('Twitter Editor Snapshots', () => {
+describe('Twitter Editor Snapshots', () => {
   let url: string;
   const ssrIdentifier = prefixBrowserName('twitter-editor-ssr');
   const domIdentifier = prefixBrowserName('twitter-editor-dom');
