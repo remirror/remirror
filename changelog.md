@@ -16,6 +16,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - `@remirror/react-utils`, `@remirror/react`: Add `suppressHydrationWarning` prop to `Remirror` component. Set to true to ignore the hydration warning for a mismatch between the server and client content.
 - `@remirror/core`: Add new `extensionData` method to the `ExtensionManager` which allows extension to provide data on every transaction which will be available for consumption in the renderProp, React Context hooks and HOC's.
 - `@remirror/core`: Add `getActions` to the params of all extension manager methods. This will throw an error if called before initialization.
+- `@remirror/core`: Allow extensions to override `baseExtension` in the `RemirrorManager` component.
 - `@remirror/core`: Add `ensureTrailingParagraph` as a configuration option for the paragraph node. In some scenarios it is difficult to place a cursor after the last element. This ensures there's always space to select the position afterward and fixes a whole range of issues. It defaults to false otherwise it breaks a lot of tests.
 - `jest-prosemirror`: Enable editorViewOptions for the `createEditor` method. For example, now it is possible to intercept transactions with the `dispatchTransaction` hook.
 - `@remirror/renderer-react`: Pass extension options through to SSR components as a prop.
