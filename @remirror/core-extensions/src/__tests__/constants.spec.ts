@@ -5,11 +5,7 @@ import {
   ALL_NODE_EXTENSIONS,
 } from '../constants';
 
-describe('constants', () => {
-  it('has correctly exported _all_ extensions', () => {
-    expect(ALL_EXTENSIONS).toHaveLength(6);
-  });
-
+describe('extensions exports', () => {
   it('has correctly exported _generic_ extensions', () => {
     expect(ALL_GENERIC_EXTENSIONS).toHaveLength(6);
   });
@@ -19,6 +15,10 @@ describe('constants', () => {
   });
 
   it('has correctly exported _node_ extensions', () => {
-    expect(ALL_NODE_EXTENSIONS).toHaveLength(6);
+    expect(ALL_NODE_EXTENSIONS).toHaveLength(9);
+  });
+
+  it('has correctly exported _all_ extensions', () => {
+    expect(ALL_EXTENSIONS).toHaveLength(21);
   });
 });
