@@ -1,9 +1,4 @@
-import {
-  ALL_EXTENSIONS,
-  ALL_GENERIC_EXTENSIONS,
-  ALL_MARK_EXTENSIONS,
-  ALL_NODE_EXTENSIONS,
-} from '../constants';
+import { ALL_EXTENSIONS, ALL_GENERIC_EXTENSIONS, ALL_MARK_EXTENSIONS, ALL_NODE_EXTENSIONS } from '../all';
 
 describe('extensions exports', () => {
   it('has correctly exported _generic_ extensions', () => {
