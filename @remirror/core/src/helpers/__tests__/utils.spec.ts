@@ -25,7 +25,7 @@ import {
   findSelectedNodeOfType,
   isNodeActive,
   nodeEqualsType,
-  removeNodeAtPos,
+  removeNodeAtPosition,
   removeNodeBefore,
   selectionEmpty,
   transactionChanged,
@@ -42,12 +42,12 @@ describe('nodeEqualsType', () => {
   });
 });
 
-describe('removeNodeAtPos', () => {
+describe('removeNodeAtPosition', () => {
   it('removes block top level nodes at specified position', () => {
     const {
       state: { tr },
     } = createEditor(doc(p('x'), p('one')));
-    const newTr = removeNodeAtPos(3)(tr);
+    const newTr = removeNodeAtPosition({ pos: 3, tr });
     expect(newTr).not.toBe(tr);
     expect(newTr.doc).toEqualPMNode(doc(p('x')));
   });
@@ -56,7 +56,7 @@ describe('removeNodeAtPos', () => {
     const {
       state: { tr },
     } = createEditor(doc(p('one', atomInline())));
-    const newTr = removeNodeAtPos(4)(tr);
+    const newTr = removeNodeAtPosition({ pos: 4, tr });
     expect(newTr).not.toBe(tr);
     expect(newTr.doc).toEqualPMNode(doc(p('one')));
   });

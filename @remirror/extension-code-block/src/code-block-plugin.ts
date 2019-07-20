@@ -193,6 +193,7 @@ export default function createCodeBlockPlugin({ extension, type }: CreateCodeBlo
     pluginState.setDeleted(true);
     return false;
   };
+
   return new Plugin<CodeBlockState>({
     key: extension.pluginKey,
     state: {

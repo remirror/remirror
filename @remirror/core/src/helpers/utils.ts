@@ -7,11 +7,13 @@ import {
   NodeTypeParams,
   NodeTypesParams,
   PMNodeParams,
+  PosParams,
   PredicateParams,
   ProsemirrorNode,
   Selection,
   SelectionParams,
   Transaction,
+  TransactionParams,
 } from '../types';
 import { bool, isNumber } from './base';
 import { isNodeSelection, isSelection, isTextDOMNode } from './document';
@@ -43,6 +45,7 @@ export const cloneTransaction = (tr: Transaction): Transaction => {
   return Object.assign(Object.create(tr), tr).setTime(Date.now());
 };
 
+interface RemoveNodeAtPositionParams extends TransactionParams, PosParams {}
 /**
  * Returns a `delete` transaction that removes a node at a given position with the given `node`.
  * `position` should point at the position immediately before the node.
@@ -51,9 +54,14 @@ export const cloneTransaction = (tr: Transaction): Transaction => {
  *
  * @public
  */
-export const removeNodeAtPos = (position: number) => (tr: Transaction) => {
-  const node = tr.doc.nodeAt(position);
-  return cloneTransaction(tr.delete(position, position + node!.nodeSize));
+export const removeNodeAtPosition = ({ pos, tr }: RemoveNodeAtPositionParams) => {
+  const node = tr.doc.nodeAt(pos);
+
+  if (!node) {
+    return tr;
+  }
+
+  return cloneTransaction(tr.delete(pos, pos + node.nodeSize));
 };
 
 /**
@@ -103,9 +111,9 @@ export const findElementAtPosition = (position: number, view: EditorView): HTMLE
  * @public
  */
 export const removeNodeBefore = (tr: Transaction): Transaction => {
-  const position = findPositionOfNodeBefore(tr.selection);
-  if (isNumber(position)) {
-    return removeNodeAtPos(position)(tr);
+  const pos = findPositionOfNodeBefore(tr.selection);
+  if (isNumber(pos)) {
+    return removeNodeAtPosition({ pos, tr });
   }
   return tr;
 };

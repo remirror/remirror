@@ -185,17 +185,6 @@ export const updateNodeAttrs = (type: NodeType) => (attrs?: Attrs): CommandFunct
   return true;
 };
 
-// interface FormatCodeBlockTransactionParams extends FormatCodeBlockFactoryParams, RangeParams, TransactionParams {}
-// /**
-//  * Updates the provided Transaction with a transformed codeBlock
-//  *
-//  * The transaction is mutated if there is a change and the function returns true to indicate
-//  * that it should be dispatched and false to suggest otherwise.
-//  */
-// const formatCodeBlockTransaction = ({}: FormatCodeBlockTransactionParams): boolean => {
-
-// }
-
 interface FormatCodeBlockFactoryParams
   extends NodeTypeParams,
     Required<Pick<CodeBlockExtensionOptions, 'formatter' | 'supportedLanguages' | 'defaultLanguage'>> {}

@@ -113,6 +113,32 @@ describe('plugin', () => {
     expect(newHtml).toMatchSnapshot();
   });
 
+  describe('Backspace', () => {
+    it('can be deleted', () => {
+      const { state } = add(doc(tsBlock('<cursor>'))).press('Backspace');
+      expect(state.doc).toEqualRemirrorDocument(doc(p()));
+    });
+
+    it('is still deleted when all that remains is whitespace', () => {
+      const { state } = add(doc(tsBlock('<cursor>          '))).press('Backspace');
+      expect(state.doc).toEqualRemirrorDocument(doc(p()));
+    });
+
+    it('steps into the previous node when content', () => {
+      const { state } = add(doc(p(), tsBlock('<cursor>content')))
+        .press('Backspace')
+        .insertText('abc');
+      expect(state.doc).toEqualRemirrorDocument(doc(p('abc'), tsBlock('content')));
+    });
+
+    it('creates a paragraph node when content', () => {
+      const { state } = add(doc(tsBlock('<cursor>content')))
+        .press('Backspace')
+        .insertText('abc');
+      expect(state.doc).toEqualRemirrorDocument(doc(p('abc'), tsBlock('content')));
+    });
+  });
+
   describe('Space', () => {
     it('responds to space input rule', () => {
       const { state } = add(doc(p('<cursor>'))).insertText('```typescript abc');
