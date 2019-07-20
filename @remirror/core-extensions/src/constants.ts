@@ -52,7 +52,7 @@ export const ALL_NODE_EXTENSIONS = [
   OrderedListExtension,
 ];
 
-export const ALL_STYLE_EXTENSIONS = [
+export const ALL_MARK_EXTENSIONS = [
   BoldExtension,
   CodeExtension,
   ItalicExtension,
