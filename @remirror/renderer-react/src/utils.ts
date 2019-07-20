@@ -8,13 +8,23 @@ export const getPossibleStandardName = (key: string): string => {
   return possibleStandardNames[key] || key;
 };
 
+/**
+ * Map standard html attribute names to their react equivalents.
+ */
 export const mapProps = (props: PlainObject) => {
   const transformedProps: PlainObject = {};
   for (const key in props) {
     if (!props.hasOwnProperty(key)) {
       continue;
     }
-    transformedProps[getPossibleStandardName(key)] = props[key];
+
+    const name = getPossibleStandardName(key);
+    transformedProps[name] = props[key];
+
+    if (name === 'contentEditable') {
+      console.log('contentEditable found', name);
+      transformedProps.suppressContentEditableWarning = true;
+    }
   }
   return transformedProps;
 };

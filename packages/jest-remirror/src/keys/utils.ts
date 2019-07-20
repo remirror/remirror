@@ -1,6 +1,6 @@
 import { omit, PlainObject } from '@remirror/core';
 import { KeyboardEventName, ModifierInformation } from './types';
-import { SupportCharacters, usKeyboardLayout } from './us-keyboard-layout';
+import { SupportedCharacters, usKeyboardLayout } from './us-keyboard-layout';
 
 /**
  * Creates a keyboard event which can be dispatched into the DOM
@@ -65,4 +65,4 @@ export const getModifierInformation = ({ modifiers, isMac = false }: GetModifier
  *
  * @param key
  */
-export const cleanKey = (key: SupportCharacters) => omit(usKeyboardLayout[key], ['shiftKey']);
+export const cleanKey = (key: SupportedCharacters) => omit(usKeyboardLayout[key], ['shiftKey']);

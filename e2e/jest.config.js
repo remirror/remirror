@@ -35,6 +35,7 @@ module.exports = {
   moduleNameMapper,
   modulePathIgnorePatterns: ['node_modules'],
   preset: 'jest-puppeteer',
+  watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
   setupFilesAfterEnv: ['expect-puppeteer', jestSupportDir('jest.framework.ts')],
   globalSetup: jestSupportDir('jest.puppeteer.setup.ts'),
   globalTeardown: jestSupportDir('jest.puppeteer.teardown.ts'),

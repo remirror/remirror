@@ -125,21 +125,27 @@ export const renderEditor = <
     }
 
     const updateContent = (newTags?: Tags): AddContentReturn => {
-      const { from, to } = view.state.selection;
+      const { selection } = view.state;
       return {
         tags: newTags ? { ...tags, ...newTags } : tags,
-        start: from,
-        end: to,
+        start: selection.from,
+        end: selection.to,
+
+        overwrite: add,
+        state: view.state,
+        actions: returnedParams.actions,
         replace: (...replacement) => {
           return updateContent(replaceSelection({ view, content: replacement }));
         },
         insertText: text => {
+          const { from } = view.state.selection;
           insertText({ start: from, text, view });
           return updateContent();
         },
-        overwrite: add,
-        state: view.state,
-        actions: returnedParams.actions,
+        actionsCallback: callback => {
+          callback(returnedParams.actions);
+          return updateContent();
+        },
         shortcut: text => {
           shortcut({ shortcut: text, view });
           return updateContent();

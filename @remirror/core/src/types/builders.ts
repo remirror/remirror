@@ -5,7 +5,16 @@
  */
 
 import { EditorView, ResolvedPos, Selection, Transaction } from './aliases';
-import { Attrs, EditorSchema, EditorState, MarkType, NodeType, Position, ProsemirrorNode } from './base';
+import {
+  Attrs,
+  EditorSchema,
+  EditorState,
+  MakeOptional,
+  MarkType,
+  NodeType,
+  Position,
+  ProsemirrorNode,
+} from './base';
 
 export interface EditorViewParams {
   /**
@@ -32,7 +41,7 @@ export interface CompareStateParams {
   /**
    * The previous snapshot of the Prosemirror editor state.
    */
-  prevState: EditorState;
+  oldState: EditorState;
   /**
    * The latest snapshot of the Prosemirror editor state.
    */
@@ -47,11 +56,20 @@ export interface ElementParams {
 }
 
 export interface FromToParams {
-  /** The starting point */
+  /**
+   * The starting point
+   */
   from: number;
-  /** The ending point */
+  /**
+   * The ending point
+   */
   to: number;
 }
+
+/**
+ * FromToParams where from or to, or both can be set as optional
+ */
+export type OptionalFromToParams<GKey extends keyof FromToParams> = MakeOptional<FromToParams, GKey>;
 
 export interface FixedCoordsParams {
   /**
@@ -166,11 +184,11 @@ export interface TransformTransactionParams {
   endTransaction?: TransactionTransformer;
 }
 
-export interface RangeParams {
+export interface RangeParams<GKey extends keyof FromToParams = never> {
   /**
    * The from/to interface.
    */
-  range: FromToParams;
+  range: OptionalFromToParams<GKey>;
 }
 
 export interface ResolvedPosParams {

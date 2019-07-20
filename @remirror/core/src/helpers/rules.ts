@@ -113,4 +113,5 @@ interface NodeInputRuleParams extends Partial<GetAttrsParams>, RegExpParams, Nod
    */
   updateSelection?: boolean;
 }
+
 interface MarkInputRuleParams extends Partial<GetAttrsParams>, RegExpParams, MarkTypeParams {}

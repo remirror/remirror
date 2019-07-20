@@ -1,4 +1,4 @@
-import { findDOMRefAtPos, PosParams, SchemaParams, TextParams } from '@remirror/core';
+import { findElementAtPosition, PosParams, SchemaParams, TextParams } from '@remirror/core';
 import { fireEvent } from '@testing-library/react';
 import { flush } from 'jest-prosemirror';
 import { AllSelection, NodeSelection, TextSelection } from 'prosemirror-state';
@@ -99,7 +99,7 @@ export const fireEventAtPosition = ({
   options = {},
   position = view.state.selection.anchor,
 }: FireEventAtPositionParams) => {
-  const element = findDOMRefAtPos(position, view)!;
+  const element = findElementAtPosition(position, view)!;
   const syntheticEvents = createEvents(event, options);
 
   syntheticEvents.forEach(syntheticEvent => fireEvent(element, syntheticEvent));

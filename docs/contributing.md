@@ -23,7 +23,7 @@ git checkout -b BRANCH_NAME # Checkout a branch and start working on it
 To work on examples or the documentation website run:
 
 ```bash
-yarn dev:docs
+yarn docs
 ```
 
 Once the build completes (can take a minute the first time) navigate to http://localhost:3000 (or another port if that one is already being used).

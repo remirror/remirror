@@ -1,13 +1,21 @@
-import React, { FC } from 'react';
-
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core';
 import { WysiwygEditor, WysiwygEditorProps } from '@remirror/editor-wysiwyg';
+import React, { FC } from 'react';
+import { formatter } from './code-formatter';
 
 export const ExampleWysiwygEditor: FC<WysiwygEditorProps> = ({
   initialContent = EMPTY_PARAGRAPH_NODE,
   ...props
 }) => {
-  return <WysiwygEditor {...props} initialContent={initialContent} suppressHydrationWarning={false} />;
+  return (
+    <WysiwygEditor
+      {...props}
+      initialContent={initialContent}
+      suppressHydrationWarning={false}
+      autoFocus={true}
+      formatter={formatter}
+    />
+  );
 };
 
 export const WYSIWYG_SHOWCASE_CONTENT = {

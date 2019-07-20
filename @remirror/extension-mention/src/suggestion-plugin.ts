@@ -365,8 +365,8 @@ export const createSuggestionPlugin = ({ extension, ...params }: SuggestionState
       },
 
       // Apply changes to the state
-      apply(tr, _, prevState, newState) {
-        return pluginState.apply({ tr, prevState, newState });
+      apply(tr, _, oldState, newState) {
+        return pluginState.apply({ tr, oldState, newState });
       },
     },
 
