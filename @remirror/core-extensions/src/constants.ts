@@ -1,3 +1,31 @@
+import {
+  BaseKeymapExtension,
+  CompositionExtension,
+  HistoryExtension,
+  NodeCursorExtension,
+  PlaceholderExtension,
+  SSRHelperExtension,
+} from './extensions';
+import {
+  BoldExtension,
+  CodeExtension,
+  ItalicExtension,
+  LinkExtension,
+  StrikeExtension,
+  UnderlineExtension,
+} from './marks';
+import {
+  BlockquoteExtension,
+  BulletListExtension,
+  CodeBlockExtension,
+  HardBreakExtension,
+  HeadingExtension,
+  HorizontalRuleExtension,
+  ImageExtension,
+  ListItemExtension,
+  OrderedListExtension,
+} from './nodes';
+
 /**
  * Used to denote a node is empty.
  *
@@ -11,3 +39,35 @@ export const EMPTY_NODE_CLASS_SELECTOR = `.${EMPTY_NODE_CLASS_NAME}`;
  * arrow key presses between items in general. Used by both the CompositionExtension and NodeCursorExtension
  */
 export const NODE_CURSOR_DEFAULTS = ['emoji'];
+
+export const ALL_NODE_EXTENSIONS = [
+  BlockquoteExtension,
+  BulletListExtension,
+  CodeBlockExtension,
+  HardBreakExtension,
+  HeadingExtension,
+  HorizontalRuleExtension,
+  ImageExtension,
+  ListItemExtension,
+  OrderedListExtension,
+];
+
+export const ALL_STYLE_EXTENSIONS = [
+  BoldExtension,
+  CodeExtension,
+  ItalicExtension,
+  LinkExtension,
+  StrikeExtension,
+  UnderlineExtension,
+];
+
+export const ALL_GENERIC_EXTENSIONS = [
+  BaseKeymapExtension,
+  CompositionExtension,
+  HistoryExtension,
+  NodeCursorExtension,
+  PlaceholderExtension,
+  SSRHelperExtension,
+];
+
+export const ALL_EXTENSIONS = [...ALL_NODE_EXTENSIONS, ...ALL_STYLE_EXTENSIONS, ...ALL_GENERIC_EXTENSIONS];
