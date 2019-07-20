@@ -52,10 +52,11 @@ jobs:
       - bash: yarn build
         displayName: 'Build project'
 
-      - bash: yarn test:puppeteer
+      - bash: yarn test:puppeteer:storybook || true
         displayName: 'Run chrome integration tests'
-        env:
-          CI: 'true'
+
+      - bash: yarn test:puppeteer:storybook:firefox || true
+        displayName: 'Run firefox integration tests'
 
       - publish: $(System.DefaultWorkingDirectory)/e2e/__image_snapshots__
         condition: always()

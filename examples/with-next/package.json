@@ -5,8 +5,8 @@
   "version": "0.3.0",
   "scripts": {
     "build": "next build",
+    "build:ci": "next -p 3001",
     "dev": "next",
-    "dev:ci": "next dev -p 3001",
     "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
     "start": "next start",
     "type-check": "tsc",
