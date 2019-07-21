@@ -1,69 +1,11 @@
-import { getTestLink, prefixBrowserName, TestLinks } from '@test-fixtures/test-links';
 import { getDocument, queries } from 'pptr-testing-library';
 import { ElementHandle } from 'puppeteer';
-import {
-  describeServer,
-  mod,
-  outerHtml,
-  press,
-  pressKeyWithModifier,
-  selectAll,
-  textContent,
-} from './helpers';
+import { mod, press, pressKeyWithModifier, selectAll, textContent } from './helpers';
 
 const { getByRole } = queries;
+const path = __SERVER__.urls.wysiwyg.empty;
 
-const editorSelector = '.remirror-editor';
-
-describe('Wysiwyg Editor Snapshots', () => {
-  let url: string;
-  const ssrIdentifier = prefixBrowserName('wysiwyg-editor-ssr');
-  const domIdentifier = prefixBrowserName('wysiwyg-editor-dom');
-
-  beforeEach(async () => {
-    url = getTestLink('wysiwyg', 'next', true);
-  });
-
-  describeServer(['next'])('SSR', () => {
-    beforeEach(async () => {
-      await page.setJavaScriptEnabled(false);
-      await page.goto(url);
-    });
-
-    it('should pre render the editor', async () => {
-      await expect(outerHtml(editorSelector)).resolves.toBeTruthy();
-      await expect(outerHtml(editorSelector)).resolves.toMatchSnapshot();
-    });
-
-    it('should match its own snapshot', async () => {
-      const image = await page.screenshot();
-      expect(image).toMatchImageSnapshot({ customSnapshotIdentifier: ssrIdentifier });
-    });
-
-    it('should match the dom image snapshot', async () => {
-      const image = await page.screenshot();
-      expect(image).toMatchImageSnapshot({ customSnapshotIdentifier: domIdentifier });
-    });
-  });
-
-  describeServer(['next'])('DOM', () => {
-    beforeEach(async () => {
-      await page.goto(url);
-    });
-
-    it('should match its own snapshot', async () => {
-      const image = await page.screenshot();
-      expect(image).toMatchImageSnapshot({ customSnapshotIdentifier: domIdentifier });
-    });
-
-    it('should match the ssr image snapshot', async () => {
-      const image = await page.screenshot();
-      expect(image).toMatchImageSnapshot({ customSnapshotIdentifier: ssrIdentifier });
-    });
-  });
-});
-
-describe.each(TestLinks.wysiwyg)('%s: Wysiwyg Showcase', (_, path) => {
+describe('Wysiwyg Showcase', () => {
   let $document: ElementHandle;
   let $editor: ElementHandle;
 
@@ -165,7 +107,7 @@ describe.each(TestLinks.wysiwyg)('%s: Wysiwyg Showcase', (_, path) => {
   });
 
   describe('top menu', () => {
-    it.todo('top men tests');
+    it.todo('top menu tests');
   });
 
   describe('floating menu', () => {

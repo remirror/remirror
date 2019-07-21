@@ -1,10 +1,12 @@
-const { PUPPETEER_DEBUG, PUPPETEER_BROWSER, PUPPETEER_DOCKER } = process.env;
+const {
+  REMIRROR_E2E_DEBUG,
+  REMIRROR_E2E_BROWSER = 'chromium',
+  REMIRROR_E2E_DOCKER,
+} = process.env;
 
-const debug = PUPPETEER_DEBUG === 'true';
-const browser = PUPPETEER_BROWSER || 'chromium';
-
+const debug = REMIRROR_E2E_DEBUG === 'true';
 const extraLaunchConfig =
-  PUPPETEER_DOCKER && browser === 'chromium'
+  REMIRROR_E2E_DOCKER && REMIRROR_E2E_BROWSER === 'chromium'
     ? { args: ['--no-sandbox', '--disable-dev-shm-usage'] }
     : {};
 
@@ -15,5 +17,5 @@ module.exports = {
     slowMo: debug ? 10 : undefined,
     ...extraLaunchConfig,
   },
-  browser,
+  browser: REMIRROR_E2E_BROWSER,
 };

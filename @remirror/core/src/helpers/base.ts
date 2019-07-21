@@ -1,5 +1,6 @@
 /// <reference types="node" />
 
+import { all as merge } from 'deepmerge';
 import fastDeepEqual from 'fast-deep-equal';
 import memoizeOne from 'memoize-one';
 import nano from 'nanoid';
@@ -662,4 +663,9 @@ export const flattenArray = <GType>(array: any[]): GType[] =>
  */
 export const noop = () => {};
 
-export { all as deepMerge } from 'deepmerge';
+/**
+ * A customise deep merge which only merges plain object and Arrays
+ */
+export const deepMerge = <GType>(objects: Array<Partial<GType>>) => {
+  return merge<GType>(objects, { isMergeableObject: isPlainObject });
+};

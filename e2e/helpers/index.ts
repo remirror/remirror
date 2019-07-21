@@ -1,6 +1,6 @@
 import { MakeOptional } from '@remirror/core';
-import { getBrowserName, SupportedServers } from '@test-fixtures/test-links';
 import { SupportedCharacters } from 'jest-remirror';
+import { getBrowserName } from './test-environment';
 
 /**
  * Clear the editor via triple click and delete
@@ -18,28 +18,22 @@ export const sel = (...selectors: string[]) => selectors.join(' ');
 /**
  * Obtain the inner HTML
  */
-export const innerHtml = async (selector: string) => page.$eval(selector, e => e.innerHTML);
+export const innerHtml = async (selector: string) => page.$eval(selector, element => element.innerHTML);
 
 /**
  * Retrieve the text content from the editor
  */
-export const textContent = async (selector: string) => page.$eval(selector, e => e.textContent);
+export const textContent = async (selector: string) => page.$eval(selector, element => element.textContent);
 
 /**
  * Retrieve the outerHTML from the editor
  */
-export const outerHtml = async (selector: string) => page.$eval(selector, e => e.outerHTML);
+export const outerHtml = async (selector: string) => page.$eval(selector, element => element.outerHTML);
 
 /**
  * Skips the test on Firefox.
  */
 export const skipTestOnFirefox = getBrowserName() === 'firefox' ? test.skip : test;
-
-/**
- * Runs describe block only on provided servers
- */
-export const describeServer = (servers: SupportedServers[]): jest.Describe =>
-  servers.some(server => __SERVERS__.includes(server)) ? describe : describe.skip;
 
 /**
  * Creates an array of length `length` `and transforms each index value with the provided function.

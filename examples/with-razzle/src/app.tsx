@@ -1,8 +1,8 @@
 import { css, Global } from '@emotion/core';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import TwitterEditor from './editors/twitter';
-import WysiwygEditor from './editors/wysiwyg';
+import { TwitterEditor, TwitterEditorWithContent } from './editors/twitter';
+import { WysiwygEditor, WysiwygEditorWithContent } from './editors/wysiwyg';
 import Home from './home';
 
 const AppWrapper = () => (
@@ -24,6 +24,8 @@ const App = () => (
       <Route exact={true} path='/' component={Home} />
       <Route exact={true} path='/editors/wysiwyg' component={WysiwygEditor} />
       <Route exact={true} path='/editors/twitter' component={TwitterEditor} />
+      <Route exact={true} path='/editors/wysiwyg/content' component={WysiwygEditorWithContent} />
+      <Route exact={true} path='/editors/twitter/content' component={TwitterEditorWithContent} />
     </Switch>
   </>
 );
