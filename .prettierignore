@@ -10,3 +10,4 @@ coverage/**
 .out
 storybook-static
 lerna.json
+examples/with-razzle/build/**
