@@ -165,6 +165,7 @@
     "react-dom": "16.8.6",
     "rimraf": "2.6.3",
     "rollup": "1.17.0",
+    "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-commonjs": "10.0.1",
     "rollup-plugin-json": "4.0.0",
