@@ -8,17 +8,8 @@
     "target": "es2016",
     "allowJs": true,
     "isolatedModules": true,
-    "skipLibCheck": true,
     "types": ["node", "webpack-env"],
     "downlevelIteration": true
   },
-  "exclude": [
-    "node_modules/**",
-    "build",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "razzle.config.js"
-  ]
+  "include": ["src"]
 }
