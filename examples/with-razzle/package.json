@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@remirror/showcase": "0.3.0",
+    "@emotion/core": "10.0.14",
+    "@emotion/styled": "10.0.14",
     "express": "4.17.1",
     "react": "16.8.6",
     "react-dom": "16.8.6",
