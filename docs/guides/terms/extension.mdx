@@ -18,3 +18,41 @@ There are three types of `Extension`.
 - `NodeExtension` - For creating Prosemirror nodes in the editor
 - `MarkExtension` - For creating Prosemirror marks in the editor
 - `Extension` - For behaviour which doesn't need to be displayed in the dom.
+
+#### Available extensions
+
+Import any single extension with:
+
+```
+import { FooBarExtension } from '@remirror/core-extensions';
+```
+
+##### Node extensions
+
+- BlockquoteExtension
+- BulletListExtension
+- CodeBlockExtension
+- HardBreakExtension
+- HeadingExtension
+- HorizontalRuleExtension
+- ImageExtension
+- ListItemExtension
+- OrderedListExtension
+
+##### Mark extensions
+
+- BoldExtension
+- CodeExtension
+- ItalicExtension
+- LinkExtension
+- StrikeExtension
+- UnderlineExtension
+
+##### Generic extensions
+
+- BaseKeymapExtension
+- CompositionExtension
+- HistoryExtension
+- NodeCursorExtension
+- PlaceholderExtension
+- SSRHelperExtension
