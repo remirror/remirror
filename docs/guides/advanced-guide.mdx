@@ -97,13 +97,7 @@ Now we need to create our own internal editor. But before we do that there's jus
 
 They underlying text editor is controlled by Prosemirror and unlike react it needs a DOM node to render itself into. To that end the Editor context provides a method called `getRootProps` which passes back a `ref` function that will be used to store the editor dom node.
 
-To allow this when using the context make sure to set the `customRootProp` to `true`.
-
-```tsx
-<ManagedRemirrorProvider customRootProp={true}>
-  <div />
-</ManagedRemirrorProvider>
-```
+<hr />
 
 Now let's create the inner editor.
 
