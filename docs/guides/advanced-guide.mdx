@@ -192,14 +192,28 @@ Example:
 
 Option 2: Pass all of the props from `getRootProps()` (get this from the `useRemirror` context consumer hook).
 
-Note the example above. More trivial example:
+Note the example above, or:
 
 ```tsx
-<ManagedRemirrorProvider>
-  <div>
-    <div>My menu</div>
-    <div {...getRootProps()} />
-    <div>My footer</div>
-  </div>
-</ManagedRemirrorProvider>
+import { useRemirror, ManagedRemirrorProvider } from '@remirror/react';
+
+const MyEditor = () => (
+  <ManagedRemirrorProvider>
+    <h1>My Editor</h1>
+    <MyInnerEditor />
+  </ManagedRemirrorProvider>
+);
+
+/**
+ * Inject the editor here using `getRootProps`
+ */
+const MyInnerEditor = () => {
+  const { getRootProps } = useRemirror();
+
+  return (
+    <div>
+      <div {...getRootProps()} />
+    </div>
+  );
+};
 ```
