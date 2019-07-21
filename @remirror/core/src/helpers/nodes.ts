@@ -2,11 +2,11 @@ import {
   Attrs,
   MarkTypeParams,
   NodeTypeParams,
-  NullablePMNodeParams,
-  PMNodeParams,
+  OptionalProsemirrorNodeParams,
   PosParams,
   PredicateParams,
   ProsemirrorNode,
+  ProsemirrorNodeParams,
 } from '../types';
 import { bool } from './base';
 import { isProsemirrorNode } from './document';
@@ -27,9 +27,9 @@ type NodePredicateParams = PredicateParams<ProsemirrorNode>;
  *
  * @public
  */
-export interface NodeWithPosition extends PMNodeParams, PosParams {}
+export interface NodeWithPosition extends ProsemirrorNodeParams, PosParams {}
 
-interface FlattenParams extends NullablePMNodeParams, Partial<DescendParams> {}
+interface FlattenParams extends OptionalProsemirrorNodeParams, Partial<DescendParams> {}
 
 /**
  * Flattens descendants of a given `node`.
@@ -166,7 +166,7 @@ interface FindChildrenByMarkParams extends FlattenParams, MarkTypeParams {}
 export const findChildrenByMark = ({ node, type, descend }: FindChildrenByMarkParams) =>
   findChildren({ node, predicate: child => bool(type.isInSet(child.marks)), descend });
 
-interface ContainsParams extends PMNodeParams, NodeTypeParams {}
+interface ContainsParams extends ProsemirrorNodeParams, NodeTypeParams {}
 
 /**
  * Returns `true` if a given node contains nodes of a given `nodeType`

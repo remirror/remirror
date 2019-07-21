@@ -11,11 +11,13 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 - 🚀 `@remirror/extension-collaboration`: Collaboration library added based on the brilliant example available in [tiptap](https://github.com/scrumpy/tiptap).
 - 🚀 `@remirror/extension-mention`: Mentions can now be picked up from pasting data.
-- 🚀 `@remirror/extension-code-block`: Add commands `toggleCodeBlock`, `createCodeBlock`, `updateCodeBlock` and `formatCodeBlock` also add keymap support for formatting and other features.
+- 🚀 `@remirror/extension-code-block`: Add commands `toggleCodeBlock`, `createCodeBlock`, `updateCodeBlock` and `formatCodeBlock`, add keymap support for formatting, add backspace support for better navigation and other features.
 - `@remirror/core`: Add `CommandNodeTypeParams`, `CommandMarkTypeParams`, `CommandTypeParams` which is now passed to the `commands` method for extensions.
 - `@remirror/react-utils`, `@remirror/react`: Add `suppressHydrationWarning` prop to `Remirror` component. Set to true to ignore the hydration warning for a mismatch between the server and client content.
 - `@remirror/core`: Add new `extensionData` method to the `ExtensionManager` which allows extension to provide data on every transaction which will be available for consumption in the renderProp, React Context hooks and HOC's.
 - `@remirror/core`: Add `getActions` to the params of all extension manager methods. This will throw an error if called before initialization.
+- `@remirror/core`: Allow extensions to override `baseExtension` in the `RemirrorManager` component.
+- `@remirror/core`: Add `ensureTrailingParagraph` as a configuration option for the paragraph node. In some scenarios it is difficult to place a cursor after the last element. This ensures there's always space to select the position afterward and fixes a whole range of issues. It defaults to false otherwise it breaks a lot of tests.
 - `jest-prosemirror`: Enable editorViewOptions for the `createEditor` method. For example, now it is possible to intercept transactions with the `dispatchTransaction` hook.
 - `@remirror/renderer-react`: Pass extension options through to SSR components as a prop.
 

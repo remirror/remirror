@@ -20,7 +20,10 @@ export class RemirrorManager extends Component<RemirrorManagerProps> {
     useBaseExtensions: true,
   });
 
-  private get baseExtensions(): PrioritizedExtension[] {
+  /**
+   * Prepends the base extensions to the configured extensions where applicable.
+   */
+  private withBaseExtensions(extensions: PrioritizedExtension[]): PrioritizedExtension[] {
     const { placeholder, useBaseExtensions } = this.props;
     const withPlaceholder: PrioritizedExtension[] = placeholder
       ? [
@@ -35,16 +38,21 @@ export class RemirrorManager extends Component<RemirrorManagerProps> {
         ]
       : [];
 
-    return useBaseExtensions ? baseExtensions.concat(withPlaceholder) : withPlaceholder;
+    // TODO remove performance bottleneck
+    const base = (useBaseExtensions ? baseExtensions.concat(withPlaceholder) : withPlaceholder).filter(
+      ({ extension: { name } }) => !extensions.some(({ extension }) => extension.name === name),
+    );
+
+    return [...base, ...extensions];
   }
 
-  private cachedManager: ExtensionManager = ExtensionManager.create(this.baseExtensions);
+  private cachedManager: ExtensionManager = ExtensionManager.create(this.withBaseExtensions([]));
 
   /**
    * Calculate the manager based on the baseExtension and passed in props.
    */
   public get manager(): ExtensionManager {
-    const extensions: PrioritizedExtension[] = [...this.baseExtensions];
+    const extensions: PrioritizedExtension[] = [];
 
     const { children } = this.props;
 
@@ -65,7 +73,7 @@ export class RemirrorManager extends Component<RemirrorManagerProps> {
       extensions.push({ extension: new Constructor(options), priority });
     });
 
-    const newManager = ExtensionManager.create(extensions);
+    const newManager = ExtensionManager.create(this.withBaseExtensions(extensions));
 
     // Only update the manager when it has changed to prevent unnecessary re-rendering
     if (newManager.isEqual(this.cachedManager)) {

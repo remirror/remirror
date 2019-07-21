@@ -68,8 +68,20 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
    * @default `Alt-Shift-F` (Mac) `Shift-Ctrl-F` (PC)
    */
   keyboardShortcut?: string;
+
+  /**
+   * The name of the node that the code block should toggle back and forth from.
+   *
+   * @default 'paragraph'
+   */
+  toggleType?: string;
 }
 
+/**
+ * A function which takes code and formats the code.
+ *
+ * TODO - possibly allow error management if failure is because of invalid syntax
+ */
 export type CodeBlockFormatter = (params: FormatterParams) => FormattedContent | undefined;
 
 export interface FormatterParams {

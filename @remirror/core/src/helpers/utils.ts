@@ -6,27 +6,25 @@ import {
   EditorView,
   NodeTypeParams,
   NodeTypesParams,
-  PMNodeParams,
+  PosParams,
   PredicateParams,
   ProsemirrorNode,
+  ProsemirrorNodeParams,
+  ResolvedPos,
   Selection,
   SelectionParams,
   Transaction,
+  TransactionParams,
 } from '../types';
 import { bool, isNumber } from './base';
 import { isNodeSelection, isSelection, isTextDOMNode } from './document';
 
 /* "Borrowed" from prosemirror-utils in order to avoid requirement of `@prosemirror-tables`*/
 
-interface NodeEqualsTypeParams extends NodeTypesParams, PMNodeParams {}
+interface NodeEqualsTypeParams extends NodeTypesParams, ProsemirrorNodeParams {}
 
 /**
  * Checks if the type a given `node` equals to a given `nodeType`.
- *
- * @param type - the prosemirror node type(s)
- * @param node - the prosemirror node
- *
- * @public
  */
 export const nodeEqualsType = ({ types, node }: NodeEqualsTypeParams) => {
   return (Array.isArray(types) && types.includes(node.type)) || node.type === types;
@@ -43,6 +41,7 @@ export const cloneTransaction = (tr: Transaction): Transaction => {
   return Object.assign(Object.create(tr), tr).setTime(Date.now());
 };
 
+interface RemoveNodeAtPositionParams extends TransactionParams, PosParams {}
 /**
  * Returns a `delete` transaction that removes a node at a given position with the given `node`.
  * `position` should point at the position immediately before the node.
@@ -51,9 +50,14 @@ export const cloneTransaction = (tr: Transaction): Transaction => {
  *
  * @public
  */
-export const removeNodeAtPos = (position: number) => (tr: Transaction) => {
-  const node = tr.doc.nodeAt(position);
-  return cloneTransaction(tr.delete(position, position + node!.nodeSize));
+export const removeNodeAtPosition = ({ pos, tr }: RemoveNodeAtPositionParams) => {
+  const node = tr.doc.nodeAt(pos);
+
+  if (!node) {
+    return tr;
+  }
+
+  return cloneTransaction(tr.delete(pos, pos + node.nodeSize));
 };
 
 /**
@@ -103,15 +107,15 @@ export const findElementAtPosition = (position: number, view: EditorView): HTMLE
  * @public
  */
 export const removeNodeBefore = (tr: Transaction): Transaction => {
-  const position = findPositionOfNodeBefore(tr.selection);
-  if (isNumber(position)) {
-    return removeNodeAtPos(position)(tr);
+  const pos = findPositionOfNodeBefore(tr.selection);
+  if (isNumber(pos)) {
+    return removeNodeAtPosition({ pos, tr });
   }
   return tr;
 };
 
 interface FindSelectedNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
-export interface FindSelectedNodeOfType extends FindParentNode {
+export interface FindSelectedNodeOfType extends FindParentNodeResult {
   /**
    * The depth of the returned node.
    */
@@ -143,7 +147,7 @@ export const findSelectedNodeOfType = ({
   return undefined;
 };
 
-export interface FindParentNode extends PMNodeParams {
+export interface FindParentNodeResult extends ProsemirrorNodeParams {
   /**
    * The start position of the node.
    */
@@ -170,7 +174,7 @@ interface FindParentNodeParams extends SelectionParams, PredicateParams<Prosemir
 export const findParentNode = ({
   predicate,
   selection,
-}: FindParentNodeParams): FindParentNode | undefined => {
+}: FindParentNodeParams): FindParentNodeResult | undefined => {
   const { $from } = selection;
   for (let currentDepth = $from.depth; currentDepth > 0; currentDepth--) {
     const node = $from.node(currentDepth);
@@ -183,6 +187,44 @@ export const findParentNode = ({
     }
   }
   return;
+};
+
+/**
+ * Finds the node at the passed selection.
+ */
+export const findNodeAtSelection = (selection: Selection): FindParentNodeResult => {
+  return findParentNode({ predicate: () => true, selection })!;
+};
+
+/**
+ * Finds the node at the end of the Prosemirror document.
+ *
+ * @param doc - the parent doc node of the editor which contains all the other nodes.
+ */
+export const findNodeAtEndOfDoc = (doc: ProsemirrorNode) => findNodeAtPosition(PMSelection.atEnd(doc).$from);
+
+/**
+ * Finds the node at the start of the prosemirror.
+ *
+ * @param doc - the parent doc node of the editor which contains all the other nodes.
+ */
+export const findNodeAtStartOfDoc = (doc: ProsemirrorNode) =>
+  findNodeAtPosition(PMSelection.atStart(doc).$from);
+
+/**
+ * Finds the node at the resolved position.
+ *
+ * @param $pos - the resolve position in the document
+ */
+export const findNodeAtPosition = ($pos: ResolvedPos): FindParentNodeResult => {
+  const { depth } = $pos;
+  const node = $pos.node(depth);
+
+  return {
+    pos: depth > 0 ? $pos.before(depth) : 0,
+    start: $pos.start(depth),
+    node,
+  };
 };
 
 interface FindParentNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
@@ -199,7 +241,7 @@ interface FindParentNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
 export const findParentNodeOfType = ({
   types,
   selection,
-}: FindParentNodeOfTypeParams): FindParentNode | undefined => {
+}: FindParentNodeOfTypeParams): FindParentNodeResult | undefined => {
   return findParentNode({ predicate: node => nodeEqualsType({ types, node }), selection });
 };
 

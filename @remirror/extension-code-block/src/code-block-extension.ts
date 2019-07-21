@@ -2,6 +2,7 @@ import {
   Attrs,
   BooleanExtensionCheck,
   CommandNodeTypeParams,
+  findParentNodeOfType,
   GetAttrs,
   getMatchString,
   isElementDOMNode,
@@ -13,6 +14,7 @@ import {
   NodeExtensionSpec,
   nodeInputRule,
   Plugin,
+  removeNodeAtPosition,
   SchemaNodeTypeParams,
   toggleBlockItem,
 } from '@remirror/core';
@@ -32,6 +34,7 @@ export const codeBlockDefaultOptions: CodeBlockExtensionOptions = {
   defaultLanguage: 'markup',
   formatter: () => undefined,
   keyboardShortcut: mod('ShiftAlt', 'f'),
+  toggleType: 'paragraph',
 };
 
 export class CodeBlockExtension extends NodeExtension<
@@ -118,12 +121,12 @@ export class CodeBlockExtension extends NodeExtension<
   }
 
   public commands({ type, schema }: CommandNodeTypeParams) {
-    const { defaultLanguage, supportedLanguages, formatter } = this.options;
+    const { defaultLanguage, supportedLanguages, formatter, toggleType = 'paragraph' } = this.options;
     return {
       toggleCodeBlock: (attrs?: Attrs) =>
         toggleBlockItem({
           type,
-          toggleType: schema.nodes.paragraph,
+          toggleType: schema.nodes[toggleType],
           attrs: { language: defaultLanguage, ...attrs },
         }),
       createCodeBlock: (attrs?: Attrs) => setBlockType(type, { language: defaultLanguage, ...attrs }),
@@ -190,9 +193,35 @@ export class CodeBlockExtension extends NodeExtension<
   }
 
   public keys({ type, getActions }: SchemaNodeTypeParams): KeyboardBindings {
-    const { keyboardShortcut = mod('ShiftAlt', 'f') } = this.options;
+    const { keyboardShortcut, toggleType } = this.options;
 
     return {
+      Backspace: (state, dispatch) => {
+        const { selection } = state;
+        let tr = state.tr;
+        const parent = findParentNodeOfType({ types: type, selection })!;
+
+        if (!parent || parent.start !== selection.from) {
+          return false;
+        }
+
+        const { pos, node, start } = parent;
+
+        if (node.textContent.trim() === '') {
+          tr = removeNodeAtPosition({ pos, tr });
+        } else if (start - 2 > 0) {
+          tr.setSelection(TextSelection.create(tr.doc, start - 2));
+        } else {
+          // There is no content before the codeBlock so simply create a new block and jump into it.
+          tr.insert(0, state.schema.nodes[toggleType].create());
+          tr.setSelection(TextSelection.create(tr.doc, 1));
+        }
+
+        if (dispatch) {
+          dispatch(tr);
+        }
+        return true;
+      },
       Enter: (state, dispatch) => {
         const { selection, tr } = state;
         if (!isTextSelection(selection) || !selection.$cursor) {

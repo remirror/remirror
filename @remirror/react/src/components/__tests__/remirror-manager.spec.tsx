@@ -1,5 +1,5 @@
-import { ExtensionManager } from '@remirror/core';
-import { PlaceholderExtension } from '@remirror/core-extensions';
+import { ExtensionManager, ParagraphExtension } from '@remirror/core';
+import { baseExtensions, PlaceholderExtension } from '@remirror/core-extensions';
 import { TestExtension } from '@test-fixtures/schema-helpers';
 import { render, RenderResult } from '@testing-library/react';
 import { EditorView } from 'prosemirror-view';
@@ -121,6 +121,24 @@ test('it supports <RemirrorExtension /> in child fragments', () => {
         emptyNodeClass='empty'
         placeholder='Type here...'
       />
+    </RemirrorManager>,
+  );
+});
+
+test('it supports overriding base extensions', () => {
+  const originalParagraph = baseExtensions.find(({ extension: { name } }) => name === 'paragraph');
+
+  const Component: FC = () => {
+    const manager = useRemirrorManager();
+    expect(manager.extensions).not.toContain([originalParagraph]);
+    expect(manager.extensions.find(({ options }) => options.ensureTrailingParagraph === true)).toBeTruthy();
+    return null;
+  };
+
+  render(
+    <RemirrorManager>
+      <Component />
+      <RemirrorExtension Constructor={ParagraphExtension} ensureTrailingParagraph={true} />
     </RemirrorManager>,
   );
 });

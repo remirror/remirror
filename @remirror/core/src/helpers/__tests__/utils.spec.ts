@@ -14,18 +14,21 @@ import {
   tdEmpty,
   tr as row,
 } from 'jest-prosemirror';
-import { NodeSelection, TextSelection } from 'prosemirror-state';
+import { NodeSelection, Selection, TextSelection } from 'prosemirror-state';
 import { omit } from '../base';
 import {
   cloneTransaction,
   findElementAtPosition,
+  findNodeAtEndOfDoc,
+  findNodeAtSelection,
+  findNodeAtStartOfDoc,
   findParentNode,
   findParentNodeOfType,
   findPositionOfNodeBefore,
   findSelectedNodeOfType,
   isNodeActive,
   nodeEqualsType,
-  removeNodeAtPos,
+  removeNodeAtPosition,
   removeNodeBefore,
   selectionEmpty,
   transactionChanged,
@@ -42,12 +45,12 @@ describe('nodeEqualsType', () => {
   });
 });
 
-describe('removeNodeAtPos', () => {
+describe('removeNodeAtPosition', () => {
   it('removes block top level nodes at specified position', () => {
     const {
       state: { tr },
     } = createEditor(doc(p('x'), p('one')));
-    const newTr = removeNodeAtPos(3)(tr);
+    const newTr = removeNodeAtPosition({ pos: 3, tr });
     expect(newTr).not.toBe(tr);
     expect(newTr.doc).toEqualPMNode(doc(p('x')));
   });
@@ -56,7 +59,7 @@ describe('removeNodeAtPos', () => {
     const {
       state: { tr },
     } = createEditor(doc(p('one', atomInline())));
-    const newTr = removeNodeAtPos(4)(tr);
+    const newTr = removeNodeAtPosition({ pos: 4, tr });
     expect(newTr).not.toBe(tr);
     expect(newTr.doc).toEqualPMNode(doc(p('one')));
   });
@@ -383,5 +386,29 @@ describe('findSelectedNodeOfType', () => {
     const selectedNode = findSelectedNodeOfType({ types: [paragraph, table], selection: tr.selection });
 
     expect(selectedNode!.node.type.name).toEqual('paragraph');
+  });
+});
+
+describe('findNodeAt...', () => {
+  const expectedEnd = h2('Heading here');
+  const expectedStart = p('<cursor> I am champion');
+  const pmDoc = doc(expectedStart, expectedEnd);
+
+  test('findNodeAtSelection', () => {
+    const selection = Selection.atEnd(pmDoc);
+    const { node, pos, start } = findNodeAtSelection(selection);
+    expect(node).toBe(expectedEnd);
+    expect(pos).toBe(16);
+    expect(start).toBe(17);
+  });
+
+  test('findNodeAtEndOfDoc', () => {
+    const { node } = findNodeAtEndOfDoc(pmDoc);
+    expect(node).toBe(expectedEnd);
+  });
+
+  test('findNodeAtStartOfDoc', () => {
+    const { node } = findNodeAtStartOfDoc(pmDoc);
+    expect(node).toBe(expectedStart);
   });
 });

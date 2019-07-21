@@ -16,6 +16,7 @@ import {
   UnderlineExtension,
   BlockquoteExtension,
   HistoryExtension,
+  HeadingExtension,
 } from '@remirror/core-extensions';
 import minDocument from 'min-document';
 
@@ -38,6 +39,21 @@ export const extensions = [
   { extension: new UnderlineExtension(), priority: 3 },
   { extension: new BlockquoteExtension(), priority: 3 },
 ];
+
+/**
+ * Useful for testing
+ */
+export const ExtensionMap = {
+  nodes: {
+    blockquote: new BlockquoteExtension(),
+    heading: new HeadingExtension(),
+  },
+  marks: {
+    bold: new BoldExtension(),
+    italic: new ItalicExtension(),
+    underline: new UnderlineExtension(),
+  },
+};
 
 /**
  * @deprecated Causes issues when multiple tests use this. Prefer {@link createTestManager}
