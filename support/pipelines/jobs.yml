@@ -66,15 +66,10 @@ jobs:
               REMIRROR_E2E_BASIC: 'true'
 
           - bash: yarn test:e2e
-            displayName: 'Docz integration tests'
-            env:
-              REMIRROR_E2E_SERVER: docz
-              REMIRROR_E2E_BASIC: 'true'
-
-          - bash: yarn test:e2e
             displayName: 'Storybook integration tests'
             env:
               REMIRROR_E2E_SERVER: storybook
+              EMIRROR_E2E_BASIC: 'true'
 
           - publish: $(System.DefaultWorkingDirectory)/e2e/__image_snapshots__
             condition: failed()
