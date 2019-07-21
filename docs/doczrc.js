@@ -18,7 +18,6 @@ export default {
     'Installation',
     { name: 'Guides', menu: ['Quickstart Guide'] },
     'Showcase',
-    'Examples',
     'Terminology',
   ],
   typescript: true,

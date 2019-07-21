@@ -46,3 +46,12 @@ export const logElement = (element: Node) => console.log(prettyDOM(element as HT
  * @param jsx - the jsx to print
  */
 export const logJSX = (jsx: JSX.Element) => console.log(format(jsx));
+
+declare global {
+  const __DEV__: boolean;
+  const __TEST__: boolean;
+  /**
+   * Identifies whether this is an e2e test
+   */
+  const __E2E__: boolean;
+}
