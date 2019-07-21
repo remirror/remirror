@@ -1,6 +1,6 @@
 import { EditorView, randomInt } from '@remirror/core';
 import throttle from 'throttleit';
-import { EpicModePluginStateParams, Particle, ParticleEffect, ParticleRange } from './types';
+import { EpicModePluginStateParams, Particle, ParticleEffect, ParticleRange } from './epic-mode-types';
 
 export class EpicModePluginState {
   private particleEffect: ParticleEffect;
@@ -21,7 +21,7 @@ export class EpicModePluginState {
 
   constructor({ particleEffect, colors, particleRange, canvasHolder, shake }: EpicModePluginStateParams) {
     this.particleEffect = particleEffect;
-    this.container = canvasHolder;
+    this.container = canvasHolder || document.body;
     this.particleRange = particleRange;
     this.shakeActive = shake;
 

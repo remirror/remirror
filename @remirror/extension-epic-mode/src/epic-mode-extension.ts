@@ -1,8 +1,17 @@
 import { EditorSchema, Extension, getPluginState, ProsemirrorPlugin } from '@remirror/core';
 import { Plugin } from 'prosemirror-state';
-import { defaultEffect, PARTICLE_NUM_RANGE, VIBRANT_COLORS } from './effects';
-import { EpicModePluginState } from './state';
-import { EpicModeExtensionOptions } from './types';
+import { defaultEffect, PARTICLE_NUM_RANGE, VIBRANT_COLORS } from './epic-mode-effects';
+import { EpicModePluginState } from './epic-mode-state';
+import { EpicModeExtensionOptions } from './epic-mode-types';
+
+export const defaultEpicModeExtensionOptions: EpicModeExtensionOptions = {
+  particleEffect: defaultEffect,
+  canvasHolder: document.body,
+  colors: VIBRANT_COLORS,
+  particleRange: PARTICLE_NUM_RANGE,
+  shake: true,
+  shakeTime: 0.3,
+};
 
 export class EpicModeExtension extends Extension<EpicModeExtensionOptions> {
   get name() {
@@ -10,14 +19,7 @@ export class EpicModeExtension extends Extension<EpicModeExtensionOptions> {
   }
 
   get defaultOptions() {
-    return {
-      particleEffect: defaultEffect,
-      canvasHolder: document.body,
-      colors: VIBRANT_COLORS,
-      particleRange: PARTICLE_NUM_RANGE,
-      shake: true,
-      shakeTime: 0.3,
-    };
+    return defaultEpicModeExtensionOptions;
   }
 
   public plugin(): ProsemirrorPlugin {
@@ -25,6 +27,9 @@ export class EpicModeExtension extends Extension<EpicModeExtensionOptions> {
   }
 }
 
+/**
+ * Create the epic mode plugin responsible for unleashing the epic-ness!
+ */
 const createEpicModePlugin = (ctx: Extension<EpicModeExtensionOptions>) => {
   const plugin = new Plugin<EpicModePluginState, EditorSchema>({
     key: ctx.pluginKey,
