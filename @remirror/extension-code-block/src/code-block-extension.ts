@@ -8,6 +8,7 @@ import {
   isNodeActive,
   isTextSelection,
   KeyboardBindings,
+  mod,
   NodeExtension,
   NodeExtensionSpec,
   nodeInputRule,
@@ -29,7 +30,8 @@ export const codeBlockDefaultOptions: CodeBlockExtensionOptions = {
   supportedLanguages: [],
   syntaxTheme: 'atomDark' as SyntaxTheme,
   defaultLanguage: 'markup',
-  formatter: () => false,
+  formatter: () => undefined,
+  keyboardShortcut: mod('ShiftAlt', 'f'),
 };
 
 export class CodeBlockExtension extends NodeExtension<
@@ -58,10 +60,6 @@ export class CodeBlockExtension extends NodeExtension<
     }
   }
 
-  // public nodeView({ portalContainer }: SchemaNodeTypeParams): NodeViewMethod {
-  //   return ReactNodeView.createNodeView({ Component: CodeBlockComponent, portalContainer, props: {} });
-  // }
-
   /**
    * Provides the codeBlock schema.
    */
@@ -77,6 +75,7 @@ export class CodeBlockExtension extends NodeExtension<
       group: 'block',
       code: true,
       defining: true,
+      isolating: true,
       draggable: false,
       parseDOM: [
         {
@@ -119,12 +118,17 @@ export class CodeBlockExtension extends NodeExtension<
   }
 
   public commands({ type, schema }: CommandNodeTypeParams) {
+    const { defaultLanguage, supportedLanguages, formatter } = this.options;
     return {
       toggleCodeBlock: (attrs?: Attrs) =>
-        toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs }),
-      createCodeBlock: (attrs?: Attrs) => setBlockType(type, attrs),
+        toggleBlockItem({
+          type,
+          toggleType: schema.nodes.paragraph,
+          attrs: { language: defaultLanguage, ...attrs },
+        }),
+      createCodeBlock: (attrs?: Attrs) => setBlockType(type, { language: defaultLanguage, ...attrs }),
       updateCodeBlock: updateNodeAttrs(type),
-      formatCodeBlock: formatCodeBlockFactory(type, this.options.formatter),
+      formatCodeBlock: formatCodeBlockFactory({ type, formatter, defaultLanguage, supportedLanguages }),
     };
   }
 
@@ -185,7 +189,9 @@ export class CodeBlockExtension extends NodeExtension<
     ];
   }
 
-  public keys({ type }: SchemaNodeTypeParams): KeyboardBindings {
+  public keys({ type, getActions }: SchemaNodeTypeParams): KeyboardBindings {
+    const { keyboardShortcut = mod('ShiftAlt', 'f') } = this.options;
+
     return {
       Enter: (state, dispatch) => {
         const { selection, tr } = state;
@@ -225,15 +231,22 @@ export class CodeBlockExtension extends NodeExtension<
         tr.replaceWith(pos, end, type.create({ language }));
 
         // Set the selection to within the codeBlock
-        const $pos = tr.doc.resolve(pos + 1);
-        tr.setSelection(new TextSelection($pos));
+        tr.setSelection(TextSelection.create(tr.doc, pos + 1));
 
-        if (!dispatch) {
+        if (dispatch) {
+          dispatch(tr);
+        }
+
+        return true;
+      },
+      [keyboardShortcut]: state => {
+        const command = getActions('formatCodeBlock');
+
+        if (!isNodeActive({ type, state }) || !command) {
           return false;
         }
 
-        dispatch(tr);
-
+        command();
         return true;
       },
     };
@@ -243,3 +256,5 @@ export class CodeBlockExtension extends NodeExtension<
     return createCodeBlockPlugin({ extension: this, ...params });
   }
 }
+
+export { getLanguage };

@@ -7,7 +7,6 @@ import {
   NodeTypeParams,
   NodeTypesParams,
   PMNodeParams,
-  PosParams,
   PredicateParams,
   ProsemirrorNode,
   Selection,
@@ -67,7 +66,7 @@ export const removeNodeAtPos = (position: number) => (tr: Transaction) => {
  * A simple use case
  *
  * ```ts
- * const ref = findDOMRefAtPos($from.pos, view);
+ * const element = findElementAtPosition($from.pos, view);
  * ```
  *
  * @param position - the prosemirror position
@@ -75,7 +74,7 @@ export const removeNodeAtPos = (position: number) => (tr: Transaction) => {
  *
  * @public
  */
-export const findDOMRefAtPos = (position: number, view: EditorView): HTMLElement => {
+export const findElementAtPosition = (position: number, view: EditorView): HTMLElement => {
   const dom = view.domAtPos(position);
   const node = dom.node.childNodes[dom.offset];
 
@@ -144,14 +143,14 @@ export const findSelectedNodeOfType = ({
   return undefined;
 };
 
-export interface FindParentNode extends PosParams, PMNodeParams {
+export interface FindParentNode extends PMNodeParams {
   /**
    * The start position of the node.
    */
   start: number;
 
   /**
-   * Points to directly before the node.
+   * Points to position directly before the node.
    */
   pos: number;
 }

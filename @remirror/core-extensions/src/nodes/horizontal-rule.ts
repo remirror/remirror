@@ -25,10 +25,10 @@ export class HorizontalRuleExtension extends NodeExtension<NodeExtensionOptions,
   public commands({ type }: CommandNodeTypeParams) {
     return {
       horizontalRule: (): CommandFunction => (state, dispatch) => {
-        if (!dispatch) {
-          return false;
+        if (dispatch) {
+          dispatch(state.tr.replaceSelectionWith(type.create()));
         }
-        dispatch(state.tr.replaceSelectionWith(type.create()));
+
         return true;
       },
     };

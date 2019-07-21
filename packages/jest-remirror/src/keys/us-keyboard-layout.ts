@@ -5,7 +5,7 @@ import { isString } from '@remirror/core';
  *
  * @param char
  */
-export const isUSKeyboardCharacter = (char: unknown): char is SupportCharacters =>
+export const isUSKeyboardCharacter = (char: unknown): char is SupportedCharacters =>
   isString(char) && Object.keys(rawUSKeyboardLayout).includes(char);
 
 /**
@@ -337,7 +337,7 @@ export const noKeyPress = [
 ];
 export const noKeyUp = ['CapsLock', 'NumLock', 'ScrollLock'];
 
-export const usKeyboardLayout = rawUSKeyboardLayout as Record<SupportCharacters, KeyDefinition>;
+export const usKeyboardLayout = rawUSKeyboardLayout as Record<SupportedCharacters, KeyDefinition>;
 
 export interface KeyDefinition {
   keyCode?: number;
@@ -349,4 +349,4 @@ export interface KeyDefinition {
   text?: string;
 }
 export type USKeyboardLayout = typeof rawUSKeyboardLayout;
-export type SupportCharacters = keyof USKeyboardLayout;
+export type SupportedCharacters = keyof USKeyboardLayout;

@@ -1,4 +1,4 @@
-import { Attrs, omit } from '@remirror/core';
+import { Attrs, deepMerge, omit } from '@remirror/core';
 import { CompositionExtension, NodeCursorExtension } from '@remirror/core-extensions';
 import { EmojiExtension, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
@@ -12,7 +12,6 @@ import {
   SuggestionStateMatch,
 } from '@remirror/extension-mention';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
-import deepMerge from 'deepmerge';
 import { ThemeProvider } from 'emotion-theming';
 import React, { createRef, PureComponent } from 'react';
 import { twitterEditorTheme, TwitterEditorTheme } from '../twitter-theme';
@@ -180,7 +179,7 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
    * A simple getter for the editor theme.
    */
   private get theme(): TwitterEditorTheme {
-    return deepMerge(twitterEditorTheme, this.props.theme);
+    return deepMerge<TwitterEditorTheme>([twitterEditorTheme, this.props.theme]);
   }
 
   /**

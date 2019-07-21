@@ -5,6 +5,7 @@ import {
   ActiveUserData,
   OnMentionChangeParams,
   TwitterEditor,
+  TwitterEditorProps,
   UserData,
 } from '@remirror/editor-twitter';
 import emojiData from 'emoji-mart/data/all.json';
@@ -35,7 +36,7 @@ const userData: UserData[] = fakeUsers.results.map(
   }),
 );
 
-export const ExampleTwitterEditor = () => {
+export const ShowcaseTwitterEditor = (props: Partial<TwitterEditorProps>) => {
   const [mention, setMention] = useState<OnMentionChangeParams>();
 
   const onChange = (params: OnMentionChangeParams) => {
@@ -59,6 +60,7 @@ export const ExampleTwitterEditor = () => {
 
   return (
     <TwitterEditor
+      {...props}
       emojiData={emojiData}
       attributes={{ 'data-testid': 'editor-twitter' }}
       userData={userMatches}
@@ -66,4 +68,97 @@ export const ExampleTwitterEditor = () => {
       onMentionChange={onChange}
     />
   );
+};
+
+export const TWITTER_SHOWCASE_CONTENT = {
+  type: 'doc',
+  content: [
+    {
+      type: 'paragraph',
+      content: [
+        {
+          type: 'text',
+          marks: [
+            {
+              type: 'mention',
+              attrs: {
+                id: 'blueladybug185',
+                label: '@blueladybug185',
+                name: 'at',
+                href: '/blueladybug185',
+                role: 'presentation',
+              },
+            },
+          ],
+          text: '@blueladybug185',
+        },
+        {
+          type: 'text',
+          text: ' has proven to me most helpful!',
+        },
+      ],
+    },
+    {
+      type: 'paragraph',
+      content: [
+        {
+          type: 'text',
+          marks: [
+            {
+              type: 'enhancedLink',
+              attrs: {
+                href: 'http://Random.com',
+              },
+            },
+          ],
+          text: 'Random.com',
+        },
+        {
+          type: 'text',
+          text: ' on the other hand has not.',
+        },
+      ],
+    },
+    {
+      type: 'paragraph',
+      content: [
+        {
+          type: 'text',
+          text: 'Emojis still make me smile ',
+        },
+        {
+          type: 'emoji',
+          attrs: {
+            id: 'yum',
+            native: '😋',
+            name: 'Face Savouring Delicious Food',
+            colons: '',
+            skin: '',
+            'aria-label': 'Emoji: Face Savouring Delicious Food',
+            title: 'Emoji: Face Savouring Delicious Food',
+            class: 'remirror-editor-emoji-node',
+            useNative: false,
+          },
+        },
+        {
+          type: 'emoji',
+          attrs: {
+            id: 'see_no_evil',
+            native: '🙈',
+            name: 'See-No-Evil Monkey',
+            colons: '',
+            skin: '',
+            'aria-label': 'Emoji: See-No-Evil Monkey',
+            title: 'Emoji: See-No-Evil Monkey',
+            class: 'remirror-editor-emoji-node',
+            useNative: false,
+          },
+        },
+        {
+          type: 'text',
+          text: " and I'm here for that.",
+        },
+      ],
+    },
+  ],
 };

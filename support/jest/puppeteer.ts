@@ -1,31 +1,31 @@
 import { Config } from '@jest/types';
-import { SupportedServers } from '@test-fixtures/test-urls';
+import { SupportedServers } from '@test-fixtures/test-links';
 import { JestDevServerOptions, setup, teardown } from 'jest-dev-server';
 import onExit from 'signal-exit';
 
 const { teardown: teardownPuppeteer } = require('jest-environment-puppeteer');
 const { setup: setupPuppeteer } = require('jest-environment-puppeteer');
-const { PUPPETEER_SERVERS, CI } = process.env;
+const { PUPPETEER_SERVERS } = process.env;
 const __SERVERS__: SupportedServers[] = PUPPETEER_SERVERS
   ? (PUPPETEER_SERVERS.split(',') as SupportedServers[])
   : ['next', 'docz', 'storybook'];
 
 const serverConfig: Record<SupportedServers, JestDevServerOptions> = {
-  storybook: {
-    command: `yarn storybook:${CI ? 'ci' : 'test'}`,
-    port: 3002,
-    usedPortAction: 'kill',
-    launchTimeout: 120000,
-  },
   next: {
-    command: 'yarn next:ci',
+    command: 'yarn with:next',
     port: 3001,
     usedPortAction: 'kill',
     launchTimeout: 120000,
   },
+  storybook: {
+    command: 'yarn storybook:test',
+    port: 3002,
+    usedPortAction: 'kill',
+    launchTimeout: 120000,
+  },
   docz: {
-    command: 'yarn dev:docs',
-    port: 3000,
+    command: 'yarn docs',
+    port: 3003,
     usedPortAction: 'kill',
     launchTimeout: 120000,
   },

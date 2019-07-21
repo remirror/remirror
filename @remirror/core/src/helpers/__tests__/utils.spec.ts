@@ -18,7 +18,7 @@ import { NodeSelection, TextSelection } from 'prosemirror-state';
 import { omit } from '../base';
 import {
   cloneTransaction,
-  findDOMRefAtPos,
+  findElementAtPosition,
   findParentNode,
   findParentNodeOfType,
   findPositionOfNodeBefore,
@@ -149,36 +149,36 @@ describe('findPositionOfNodeBefore', () => {
   });
 });
 
-describe('findDomRefAtPos', () => {
+describe('findElementAtPosition', () => {
   it('should return DOM reference of a top level block leaf node', () => {
     const { view } = createEditor(doc(p('text'), atomBlock()));
-    const ref = findDOMRefAtPos(6, view);
+    const ref = findElementAtPosition(6, view);
     expect(ref instanceof HTMLDivElement).toBe(true);
     expect((ref as HTMLElement).getAttribute('data-node-type')).toEqual('atomBlock');
   });
 
   it('should return DOM reference of a nested inline leaf node', () => {
     const { view } = createEditor(doc(p('one', atomInline(), 'two')));
-    const ref = findDOMRefAtPos(4, view);
+    const ref = findElementAtPosition(4, view);
     expect(ref instanceof HTMLSpanElement).toBe(true);
     expect((ref as HTMLElement).getAttribute('data-node-type')).toEqual('atomInline');
   });
 
   it('should return DOM reference of a content block node', () => {
     const { view } = createEditor(doc(p('one'), blockquote(p('two'))));
-    const ref = findDOMRefAtPos(5, view);
+    const ref = findElementAtPosition(5, view);
     expect(ref instanceof HTMLQuoteElement).toBe(true);
   });
 
   it('should return DOM reference of a text node when offset=0', () => {
     const { view } = createEditor(doc(p('text')));
-    const ref = findDOMRefAtPos(1, view);
+    const ref = findElementAtPosition(1, view);
     expect(ref instanceof HTMLParagraphElement).toBe(true);
   });
 
   it('should return DOM reference of a paragraph if cursor is inside of a text node', () => {
     const { view } = createEditor(doc(p(atomInline(), 'text')));
-    const ref = findDOMRefAtPos(3, view);
+    const ref = findElementAtPosition(3, view);
     expect(ref instanceof HTMLParagraphElement).toBe(true);
   });
 });

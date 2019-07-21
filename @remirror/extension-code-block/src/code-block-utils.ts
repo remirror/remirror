@@ -19,9 +19,10 @@ import {
 } from '@remirror/core';
 import { Decoration } from 'prosemirror-view';
 import refractor, { RefractorNode, RefractorSyntax } from 'refractor/core';
-import { CodeBlockAttrs, CodeBlockFormatter } from './code-block-types';
+import { CodeBlockAttrs, CodeBlockExtensionOptions, FormattedContent } from './code-block-types';
 
 // Refractor languages
+import { TextSelection } from 'prosemirror-state';
 import clike from 'refractor/lang/clike';
 import css from 'refractor/lang/css';
 import js from 'refractor/lang/javascript';
@@ -60,10 +61,24 @@ function parseRefractorNodes(
   });
 }
 
+interface CreateDecorationsParams extends Pick<CodeBlockExtensionOptions, 'defaultLanguage'> {
+  /**
+   * The list of codeBlocks and their positions which we would like to update.
+   */
+  blocks: NodeWithPosition[];
+
+  /**
+   * When a delete happens within the last valid decoration in a block it causes the editor to jump. This skipLast
+   * should be set to true immediately after a delete which then allows for createDecorations to skip updating the decoration
+   * for the last refactor node, and hence preventing the jumpy bug.
+   */
+  skipLast: boolean;
+}
+
 /**
  * Creates a decoration set for the provided blocks
  */
-export const createDecorations = (blocks: NodeWithPosition[], skipLast: boolean) => {
+export const createDecorations = ({ blocks, skipLast }: CreateDecorationsParams) => {
   const decorations: Decoration[] = [];
 
   blocks.forEach(block => {
@@ -89,7 +104,7 @@ export const createDecorations = (blocks: NodeWithPosition[], skipLast: boolean)
  */
 const getPositionedRefractorNodes = ({ node, pos }: NodeWithPosition) => {
   let startPos = pos + 1;
-  const refractorNodes = refractor.highlight(node.textContent, node.attrs.language);
+  const refractorNodes = refractor.highlight(node.textContent || '', node.attrs.language || 'markup');
   function mapper(refractorNode: ParsedRefractorNode): PositionedRefractorNode {
     const from = startPos;
     const to = from + refractorNode.text.length;
@@ -163,32 +178,94 @@ export const updateNodeAttrs = (type: NodeType) => (attrs?: Attrs): CommandFunct
 
   tr.setNodeMarkup(parent.pos, type, attrs);
 
-  if (!dispatch) {
-    return true;
+  if (dispatch) {
+    dispatch(tr);
   }
 
-  dispatch(tr);
   return true;
 };
 
-export const formatCodeBlockFactory = (
-  _type: NodeType,
-  formatter: CodeBlockFormatter,
-) => (): CommandFunction => state => {
-  // Check if block is type is active, if not return false
+// interface FormatCodeBlockTransactionParams extends FormatCodeBlockFactoryParams, RangeParams, TransactionParams {}
+// /**
+//  * Updates the provided Transaction with a transformed codeBlock
+//  *
+//  * The transaction is mutated if there is a change and the function returns true to indicate
+//  * that it should be dispatched and false to suggest otherwise.
+//  */
+// const formatCodeBlockTransaction = ({}: FormatCodeBlockTransactionParams): boolean => {
 
-  // Get the `language`, `source` and `cursorOffset` for the block
-  // For cursor position it might be okay to just use the current position.
-  const format = formatter({ source: '', language: '', cursorOffset: state.selection.from });
-  if (!format) {
+// }
+
+interface FormatCodeBlockFactoryParams
+  extends NodeTypeParams,
+    Required<Pick<CodeBlockExtensionOptions, 'formatter' | 'supportedLanguages' | 'defaultLanguage'>> {}
+
+/**
+ * A factory for creating a command which can format a selected codeBlock (or one located at the provided position).
+ */
+export const formatCodeBlockFactory = ({
+  type,
+  formatter,
+  supportedLanguages,
+  defaultLanguage: fallback,
+}: FormatCodeBlockFactoryParams) => ({ pos }: Partial<PosParams> = {}): CommandFunction => (
+  state,
+  dispatch,
+) => {
+  const { tr, selection } = state;
+
+  const { from, to } = pos ? { from: pos, to: pos } : selection;
+
+  // Find the current codeBlock the cursor is positioned in.
+  const codeBlock = findParentNodeOfType({ types: type, selection });
+
+  if (!codeBlock) {
     return false;
   }
 
-  // const { cursorOffset, output } = format;
+  // Get the `language`, `source` and `cursorOffset` for the block and run the formatter
+  const {
+    node: { attrs, textContent },
+    start,
+  } = codeBlock;
 
-  // Replace the node content with the transformed text.
+  const offsetStart = from - start;
+  const offsetEnd = to - start;
+  const language = getLanguage({ language: attrs.language, fallback, supportedLanguages });
+  const formatStart = formatter({ source: textContent, language, cursorOffset: offsetStart });
+  let formatEnd: FormattedContent | undefined;
+
+  // When the user has a selection
+  if (offsetStart !== offsetEnd) {
+    formatEnd = formatter({ source: textContent, language, cursorOffset: offsetEnd });
+  }
+
+  if (!formatStart) {
+    return false;
+  }
+
+  const { cursorOffset, formatted } = formatStart;
+
+  // Do nothing if nothing has changed
+  if (formatted === textContent) {
+    return false;
+  }
+
+  const end = start + textContent.length;
+
+  // Replace the codeBlock content with the transformed text.
+  tr.insertText(formatted, start, end);
 
   // Set the new selection
+  const anchor = start + cursorOffset;
+  const head = formatEnd ? start + formatEnd.cursorOffset : undefined;
+
+  tr.setSelection(TextSelection.create(tr.doc, anchor, head));
+
+  if (dispatch) {
+    dispatch(tr);
+  }
+
   return true;
 };
 
@@ -253,12 +330,5 @@ interface GetLanguageParams {
 /**
  * Get the language from user input.
  */
-export const getLanguage = ({ language, supportedLanguages, fallback }: GetLanguageParams) => {
-  let lang = language;
-
-  if (!isSupportedLanguage(lang, supportedLanguages)) {
-    lang = fallback;
-  }
-
-  return getSupportedLanguagesMap(supportedLanguages)[lang];
-};
+export const getLanguage = ({ language, supportedLanguages, fallback }: GetLanguageParams) =>
+  !isSupportedLanguage(language, supportedLanguages) ? fallback : language;

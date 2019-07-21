@@ -204,7 +204,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     let combinedAttributes: AttrsWithClass = {};
     this.extensions
       .filter(hasExtensionProperty('attributes'))
-      .filter(extension => !extension.options.excludeAttributes)
+      .filter(extension => !extension.options.exclude.attributes)
       .map(extension => extension.attributes(this.params))
       .reverse()
       .forEach(attrs => {
@@ -227,7 +227,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     this.extensions
       .filter(extension => extension.options.SSRComponent)
       // User can opt out of SSR rendering
-      .filter(extension => !extension.options.disableSSR)
+      .filter(extension => !extension.options.exclude.ssr)
       .forEach(({ name, options: { SSRComponent } }) => {
         components[name] = SSRComponent;
       });
@@ -403,7 +403,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   public ssrTransformer(element: JSX.Element): JSX.Element {
     return this.extensions
       .filter(hasExtensionProperty('ssrTransformer'))
-      .filter(extension => !extension.options.disableSSR)
+      .filter(extension => !extension.options.exclude.ssr)
       .reduce((prevElement, extension) => {
         return extension.ssrTransformer(prevElement, this.params);
       }, element);
@@ -503,7 +503,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     const plugins: ProsemirrorPlugin[] = [];
     const extensionPlugins = this.extensions
       .filter(hasExtensionProperty('plugin'))
-      .filter(extension => !extension.options.excludePlugin)
+      .filter(extension => !extension.options.exclude.plugin)
       .map(extensionPropertyMapper('plugin', this.params)) as ProsemirrorPlugin[];
 
     extensionPlugins.forEach(plugin => {
@@ -521,7 +521,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     const nodeViews: Record<string, NodeViewMethod> = {};
     return this.extensions
       .filter(hasExtensionProperty('nodeView'))
-      .filter(extension => !extension.options.excludeNodeView)
+      .filter(extension => !extension.options.exclude.nodeView)
       .reduce(
         (prevNodeViews, extension) => ({
           ...prevNodeViews,
@@ -538,7 +538,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     this.checkInitialized();
     const extensionKeymaps = this.extensions
       .filter(hasExtensionProperty('keys'))
-      .filter(extension => !extension.options.excludeKeymaps)
+      .filter(extension => !extension.options.exclude.keymaps)
       .map(extensionPropertyMapper('keys', this.params));
 
     const mappedKeys: Record<string, CommandFunction> = {};
@@ -569,7 +569,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     const rules: InputRule[] = [];
     const extensionInputRules = this.extensions
       .filter(hasExtensionProperty('inputRules'))
-      .filter(extension => !extension.options.excludeInputRules)
+      .filter(extension => !extension.options.exclude.inputRules)
       .map(extensionPropertyMapper('inputRules', this.params)) as InputRule[][];
 
     extensionInputRules.forEach(rule => {
@@ -599,7 +599,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     const pasteRules: ProsemirrorPlugin[] = [];
     const extensionPasteRules = this.extensions
       .filter(hasExtensionProperty('pasteRules'))
-      .filter(extension => !extension.options.excludePasteRules)
+      .filter(extension => !extension.options.exclude.pasteRules)
       .map(extensionPropertyMapper('pasteRules', this.params)) as ProsemirrorPlugin[][];
 
     extensionPasteRules.forEach(rules => {
@@ -616,7 +616,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     this.checkInitialized();
     const extensionStyles = this.extensions
       .filter(hasExtensionProperty('styles'))
-      .filter(extension => !extension.options.excludeStyles)
+      .filter(extension => !extension.options.exclude.styles)
       .map(extensionPropertyMapper('styles', this.params));
 
     return extensionStyles;

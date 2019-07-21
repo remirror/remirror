@@ -53,7 +53,7 @@ export class CodeBlockState {
    * Recreate all the decorations again for all the provided blocks.
    */
   private refreshDecorationSet({ blocks, node }: RefreshDecorationSetParams) {
-    const decorations = createDecorations(blocks, this.deleted);
+    const decorations = createDecorations({ blocks, skipLast: this.deleted });
     this.decorationSet = DecorationSet.create(node, decorations);
     this.blocks = blocks;
   }
@@ -108,7 +108,7 @@ export class CodeBlockState {
   /**
    * Apply the state and update decorations when something has changed.
    */
-  public apply({ tr, prevState, newState }: ApplyParams): this {
+  public apply({ tr, oldState, newState }: ApplyParams): this {
     if (!tr.docChanged) {
       return this;
     }
@@ -127,7 +127,7 @@ export class CodeBlockState {
       this.refreshDecorationSet({ blocks, node: tr.doc });
     } else {
       const current = getNodeInformationFromState(newState);
-      const previous = getNodeInformationFromState(prevState);
+      const previous = getNodeInformationFromState(oldState);
       this.manageDecorationSet({ current, previous, tr });
     }
 
@@ -140,7 +140,10 @@ export class CodeBlockState {
    */
   private updateDecorationSet({ nodeInfo: { from, to, node, pos }, tr }: UpdateDecorationSetParams) {
     const decorationSet = this.decorationSet.remove(this.decorationSet.find(from, to));
-    this.decorationSet = decorationSet.add(tr.doc, createDecorations([{ node, pos }], this.deleted));
+    this.decorationSet = decorationSet.add(
+      tr.doc,
+      createDecorations({ blocks: [{ node, pos }], skipLast: this.deleted }),
+    );
   }
 
   private manageDecorationSet({ previous, current, tr }: ManageDecorationSetParams) {
@@ -196,8 +199,8 @@ export default function createCodeBlockPlugin({ extension, type }: CreateCodeBlo
       init(_, state) {
         return pluginState.init(state);
       },
-      apply(tr, _, prevState, newState) {
-        return pluginState.apply({ tr, prevState, newState });
+      apply(tr, _, oldState, newState) {
+        return pluginState.apply({ tr, oldState, newState });
       },
     },
     props: {

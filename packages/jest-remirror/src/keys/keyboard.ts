@@ -12,7 +12,7 @@ import {
   isUSKeyboardCharacter,
   noKeyPress,
   noKeyUp,
-  SupportCharacters,
+  SupportedCharacters,
   usKeyboardLayout,
 } from './us-keyboard-layout';
 import { cleanKey, createKeyboardEvent, getModifierInformation } from './utils';
@@ -174,7 +174,7 @@ export class Keyboard {
    * @param [textInput.options]
    * @param [textInput.typing]
    */
-  public usChar({ text, options = {}, typing = false }: TextInputParams<SupportCharacters>) {
+  public usChar({ text, options = {}, typing = false }: TextInputParams<SupportedCharacters>) {
     if (!isUSKeyboardCharacter(text)) {
       throw new Error(
         'This is not a supported character. For generic characters use the `keyboard.char` method instead',
