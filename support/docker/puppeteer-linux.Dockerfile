@@ -13,5 +13,5 @@ RUN apt-get update && \
 RUN sudo yarn add puppeteer puppeteer-firefox
 
 # Add environment variable so that our code knows we're in DOCKER
-ENV PUPPETEER_DOCKER true
+ENV REMIRROR_E2E_DOCKER true
 ENV CI true

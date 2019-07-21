@@ -8,13 +8,12 @@
     "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
     "start": "razzle start",
     "start:prod": "NODE_ENV=production node build/server.js",
-    "test": "razzle test --env=jsdom",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@remirror/showcase": "0.3.0",
     "@emotion/core": "10.0.14",
     "@emotion/styled": "10.0.14",
+    "@remirror/showcase": "0.3.0",
     "express": "4.17.1",
     "react": "16.8.6",
     "react-dom": "16.8.6",

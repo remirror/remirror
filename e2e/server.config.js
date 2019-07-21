@@ -1,0 +1,110 @@
+const {
+  REMIRROR_E2E_BROWSER = 'chromium',
+  REMIRROR_E2E_SERVER = 'storybook',
+  REMIRROR_E2E_BASIC,
+} = process.env;
+
+const basicRegex = 'basic\\.e2e\\.test\\.ts$';
+
+const noSSRRegex = REMIRROR_E2E_BASIC
+  ? basicRegex
+  : `.*\\.(e2e|${REMIRROR_E2E_SERVER})\\.test\\.ts$`;
+
+const allTestRegex = REMIRROR_E2E_BASIC
+  ? basicRegex
+  : REMIRROR_E2E_BROWSER === 'firefox'
+  ? noSSRRegex
+  : `.*\\.(e2e|ssr|${REMIRROR_E2E_SERVER})\\.test\\.ts$`;
+
+const servers = (exports.servers = {
+  next: {
+    server: {
+      command: 'cd examples/with-next && yarn build && yarn start -p 3030',
+      port: 3030,
+      usedPortAction: 'kill',
+      launchTimeout: 120000,
+    },
+    regex: allTestRegex,
+    home: 'http://localhost:3030',
+  },
+  storybook: {
+    server: {
+      command: 'yarn start-storybook -p 3030 -c support/storybook --quiet --ci',
+      port: 3030,
+      usedPortAction: 'kill',
+      launchTimeout: 120000,
+    },
+    regex: noSSRRegex,
+    home: 'http://localhost:3030',
+  },
+  docz: {
+    server: {
+      command: 'cd docs && yarn docz dev --debug -p 3030',
+      port: 3030,
+      usedPortAction: 'kill',
+      launchTimeout: 120000,
+    },
+    regex: noSSRRegex,
+    home: 'http://localhost:3030',
+  },
+  razzle: {
+    server: {
+      command: 'cd examples/with-razzle && PORT=3030 yarn start',
+      port: 3030,
+      usedPortAction: 'kill',
+      launchTimeout: 120000,
+    },
+    regex: allTestRegex,
+    home: 'http://localhost:3030',
+  },
+});
+
+const editors = (exports.editors = {
+  twitter: {
+    storybook: {
+      empty: 'http://localhost:3030/iframe.html?id=twitter-editor--basic',
+      content: 'http://localhost:3030/iframe.html?id=twitter-editor--with-content',
+    },
+    next: {
+      empty: 'http://localhost:3030/editor/twitter',
+      content: 'http://localhost:3030/editor/twitter/content',
+    },
+    docz: {
+      empty: 'http://localhost:3030/showcase/twitter',
+      content: '',
+    },
+    razzle: {
+      empty: 'http://localhost:3030/editors/twitter',
+      content: 'http://localhost:3030/editors/twitter/content',
+    },
+  },
+  wysiwyg: {
+    storybook: {
+      empty: 'http://localhost:3030/iframe.html?id=wysiwyg-editor--basic',
+      content: 'http://localhost:3030/iframe.html?id=wysiwyg-editor--with-content',
+    },
+    next: {
+      empty: 'http://localhost:3030/editor/wysiwyg',
+      content: 'http://localhost:3030/editor/wysiwyg/content',
+    },
+    docz: {
+      empty: 'http://localhost:3030/showcase/wysiwyg',
+      content: '',
+    },
+    razzle: {
+      empty: 'http://localhost:3030/editors/wysiwyg',
+      content: 'http://localhost:3030/editors/wysiwyg/content',
+    },
+  },
+});
+
+exports.server = {
+  ...servers[REMIRROR_E2E_SERVER],
+  name: REMIRROR_E2E_SERVER,
+  urls: Object.keys(editors).reduce((acc, key) => {
+    return {
+      ...acc,
+      [key]: editors[key][REMIRROR_E2E_SERVER],
+    };
+  }, {}),
+};

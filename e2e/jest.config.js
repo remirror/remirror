@@ -1,5 +1,6 @@
 const config = require('../support/jest/jest.config');
 const { jestSupportDir, baseDir } = require('../support/jest/helpers');
+const { server: __SERVER__ } = require('./server.config');
 
 const {
   clearMocks,
@@ -12,12 +13,6 @@ const {
   moduleNameMapper,
 } = config;
 
-const { PUPPETEER_SERVERS } = process.env;
-
-const __SERVERS__ = PUPPETEER_SERVERS
-  ? PUPPETEER_SERVERS.split(',')
-  : ['next', 'docz', 'storybook'];
-
 module.exports = {
   clearMocks,
   verbose,
@@ -25,12 +20,12 @@ module.exports = {
   globals: {
     ...globals,
     __E2E__: true,
-    __SERVERS__,
+    __SERVER__,
   },
   transform,
   rootDir: baseDir('e2e'),
   testPathIgnorePatterns,
-  testRegex: '/.*\\.puppeteer\\.ts$',
+  testRegex: __SERVER__.regex,
   cacheDirectory,
   moduleNameMapper,
   modulePathIgnorePatterns: ['node_modules'],
