@@ -16,6 +16,7 @@
     "noUnusedParameters": true,
     "pretty": true,
     "forceConsistentCasingInFileNames": true,
+    "allowUnreachableCode": false,
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "strict": true,
