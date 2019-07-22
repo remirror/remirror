@@ -1,4 +1,4 @@
-import { ShowcaseTwitterEditor } from '@remirror/showcase/lib/twitter';
+import { ExampleTwitterEditor } from '@remirror/showcase/lib/twitter';
 import React from 'react';
 
-export default () => <ShowcaseTwitterEditor suppressHydrationWarning={true} />;
+export default () => <ExampleTwitterEditor suppressHydrationWarning={true} />;

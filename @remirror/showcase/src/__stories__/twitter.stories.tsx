@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { storiesOf } from '@storybook/react';
-import { ShowcaseTwitterEditor, TWITTER_SHOWCASE_CONTENT } from '../twitter';
+import { ExampleTwitterEditor, TWITTER_SHOWCASE_CONTENT } from '../twitter';
 
-storiesOf('Twitter Editor', module).add('Basic', () => <ShowcaseTwitterEditor />);
+storiesOf('Twitter Editor', module).add('Basic', () => <ExampleTwitterEditor />);
 
 storiesOf('Twitter Editor', module).add('With Content', () => (
-  <ShowcaseTwitterEditor initialContent={TWITTER_SHOWCASE_CONTENT} />
+  <ExampleTwitterEditor initialContent={TWITTER_SHOWCASE_CONTENT} />
 ));

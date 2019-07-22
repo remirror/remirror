@@ -10,6 +10,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 ### Changes
 
 - `@remirror/editor-wysiwyg`: Allow the wysiwyg to use prop `suppressHydrationWarning` for SSR rendering.
+- `@remirror/showcase`: Revert unintended renaming of `ExampleTwitterEditor` to `ShowcaseTwitterEditor`.
 
 ## [0.4.0] - 2019-07-22
 

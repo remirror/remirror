@@ -1,7 +1,7 @@
-import { ShowcaseTwitterEditor, TWITTER_SHOWCASE_CONTENT } from '@remirror/showcase/lib/twitter';
+import { ExampleTwitterEditor, TWITTER_SHOWCASE_CONTENT } from '@remirror/showcase/lib/twitter';
 import React from 'react';
 
-export const TwitterEditor = () => <ShowcaseTwitterEditor suppressHydrationWarning={true} />;
+export const TwitterEditor = () => <ExampleTwitterEditor suppressHydrationWarning={true} />;
 export const TwitterEditorWithContent = () => (
-  <ShowcaseTwitterEditor suppressHydrationWarning={true} initialContent={TWITTER_SHOWCASE_CONTENT} />
+  <ExampleTwitterEditor suppressHydrationWarning={true} initialContent={TWITTER_SHOWCASE_CONTENT} />
 );

@@ -36,7 +36,7 @@ const userData: UserData[] = fakeUsers.results.map(
   }),
 );
 
-export const ShowcaseTwitterEditor = (props: Partial<TwitterEditorProps>) => {
+export const ExampleTwitterEditor = (props: Partial<TwitterEditorProps>) => {
   const [mention, setMention] = useState<OnMentionChangeParams>();
 
   const onChange = (params: OnMentionChangeParams) => {
