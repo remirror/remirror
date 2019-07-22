@@ -7,15 +7,7 @@ export const ExampleWysiwygEditor: FC<WysiwygEditorProps> = ({
   initialContent = EMPTY_PARAGRAPH_NODE,
   ...props
 }) => {
-  return (
-    <WysiwygEditor
-      {...props}
-      initialContent={initialContent}
-      suppressHydrationWarning={false}
-      autoFocus={true}
-      formatter={formatter}
-    />
-  );
+  return <WysiwygEditor {...props} initialContent={initialContent} autoFocus={true} formatter={formatter} />;
 };
 
 export const WYSIWYG_SHOWCASE_CONTENT = {

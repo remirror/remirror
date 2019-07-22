@@ -7,6 +7,10 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+### Changes
+
+- `@remirror/editor-wysiwyg`: Allow the wysiwyg to use prop `suppressHydrationWarning` for SSR rendering.
+
 ## [0.4.0] - 2019-07-22
 
 ### Added
@@ -53,6 +57,7 @@ This is a large breaking change and may cause a lot of your existing code to sto
 - 🐛 `@remirror/core`: Fix bug with extension manager failing to provide attributes from the extensions.
 - 🐛 `@remirror/core`: Fix TypeScript type of SSRComponent. Change from `Component` to `ComponentType`.
 - 🐛 `@remirror/editor-twitter`: Fix bug where text area didn't expand to the full height of editor container.
+- 🐛 `@remirror/editor-wysiwyg`: Fix bug where positioner was causing the editor to take up 10000 px in height.
 
 ## [0.3.0] - 2019-07-06
 
