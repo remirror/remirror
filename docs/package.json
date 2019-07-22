@@ -3,7 +3,7 @@
   "name": "docs",
   "description": "docs and examples for the remirror editor",
   "license": "MIT",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "scripts": {
     "build": "docz build",
     "dev": "docz dev",
@@ -23,7 +23,7 @@
     "@remirror/extension-mention": "0.4.0",
     "@remirror/react": "0.4.0",
     "@remirror/renderer-react": "0.4.0",
-    "@remirror/showcase": "0.4.0",
+    "@remirror/showcase": "0.4.1",
     "copy-text-to-clipboard": "2.1.0",
     "emoji-mart": "2.11.1",
     "prop-types": "15.7.2",
