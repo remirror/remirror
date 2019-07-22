@@ -1,5 +1,10 @@
 {
-  "packages": ["@remirror/*", "docs", "packages/*", "examples/*"],
+  "packages": [
+    "@remirror/*",
+    "docs",
+    "packages/*",
+    "examples/*"
+  ],
   "command": {
     "publish": {
       "message": "chore(release): publish %s",
@@ -7,10 +12,12 @@
       "npmClient": "npm",
       "signGitCommit": true,
       "signGitTag": true,
-      "allowBranch": ["master"]
+      "allowBranch": [
+        "master"
+      ]
     }
   },
-  "version": "0.3.0",
+  "version": "0.4.0",
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
   "useWorkspaces": true,
