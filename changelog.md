@@ -7,9 +7,11 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+## [0.4.1] - 2019-07-22
+
 ### Changes
 
-- `@remirror/editor-wysiwyg`: Allow the wysiwyg to use prop `suppressHydrationWarning` for SSR rendering.
+- `@remirror/showcase`: Allow the `ExampleWysiwygEditor` to use prop `suppressHydrationWarning` for SSR rendering.
 - `@remirror/showcase`: Revert unintended renaming of `ExampleTwitterEditor` to `ShowcaseTwitterEditor`.
 
 ## [0.4.0] - 2019-07-22
@@ -133,7 +135,8 @@ This is a large breaking change and may cause a lot of your existing code to sto
 - Fixes missing TypeScript definitions #77.
 - Fixes crash when rendering a ReactNodeView in NextJS #75.
 
-[unreleased]: https://github.com/ifiokjr/remirror/compare/v0.4.0...HEAD
+[unreleased]: https://github.com/ifiokjr/remirror/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/ifiokjr/remirror/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/ifiokjr/remirror/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/ifiokjr/remirror/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/ifiokjr/remirror/compare/v0.1.0...v0.2.0
