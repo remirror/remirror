@@ -13,7 +13,7 @@ services:
         target: /remirror/e2e
         volume:
           nocopy: false
-    command: 'yarn test:puppeteer'
+    command: 'yarn test:e2e'
 
   puppeteer-windows:
     environment:
@@ -27,4 +27,4 @@ services:
         target: /remirror/e2e
         volume:
           nocopy: false
-    command: 'yarn test:puppeteer'
+    command: 'yarn test:e2e'
