@@ -7,6 +7,8 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+## [0.4.0] - 2019-07-22
+
 ### Added
 
 - 🚀 `@remirror/extension-collaboration`: Collaboration library added based on the brilliant example available in [tiptap](https://github.com/scrumpy/tiptap).
@@ -14,28 +16,32 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - 🚀 `@remirror/extension-code-block`: Add commands `toggleCodeBlock`, `createCodeBlock`, `updateCodeBlock` and `formatCodeBlock`, add keymap support for formatting, add backspace support for better navigation and other features.
 - `@remirror/core`: Add `CommandNodeTypeParams`, `CommandMarkTypeParams`, `CommandTypeParams` which is now passed to the `commands` method for extensions.
 - `@remirror/react-utils`, `@remirror/react`: Add `suppressHydrationWarning` prop to `Remirror` component. Set to true to ignore the hydration warning for a mismatch between the server and client content.
-- `@remirror/core`: Add new `extensionData` method to the `ExtensionManager` which allows extension to provide data on every transaction which will be available for consumption in the renderProp, React Context hooks and HOC's.
+- `@remirror/core`: Add new `extensionData` method to the `ExtensionManager` which allows the extension to provide data on every transaction which will be available for consumption in the renderProp, React Context hooks and HOC's.
 - `@remirror/core`: Add `getActions` to the params of all extension manager methods. This will throw an error if called before initialization.
 - `@remirror/core`: Allow extensions to override `baseExtension` in the `RemirrorManager` component.
-- `@remirror/core`: Add `ensureTrailingParagraph` as a configuration option for the paragraph node. In some scenarios it is difficult to place a cursor after the last element. This ensures there's always space to select the position afterward and fixes a whole range of issues. It defaults to false otherwise it breaks a lot of tests.
+- `@remirror/core`: Add `ensureTrailingParagraph` as a configuration option for the paragraph node. In some scenarios, it is difficult to place a cursor after the last element. This ensures there's always space to select the position afterwards and fixes a whole range of issues. It defaults to false otherwise it breaks a lot of tests.
 - `jest-prosemirror`: Enable editorViewOptions for the `createEditor` method. For example, now it is possible to intercept transactions with the `dispatchTransaction` hook.
 - `@remirror/renderer-react`: Pass extension options through to SSR components as a prop.
 
 - Add internal modifier key functions for puppeteer testing.
-- Add integration editor tests for the `wysiwyg` editor.
+- Add integration editor tests for the `Wysiwyg` editor.
 
 ### Changes
 
-- 💥 **BREAKING `@remirror/core`:** Change the way commands are configured. The command function on extensions now only accepts an object with the command names being globally unique. For example the heading extension use to just return a function now it returns an object with the following signature.
+- 💥 **BREAKING `@remirror/core`:** Change the way commands are configured. The command function on extensions now only accepts an object with the command names being globally unique. For example, the heading extension used to return a function now it returns an object with the following signature.
 
 ```ts
 {
-  toggleHeading(attrs?: Attrs): CommandFunction;
+  toggleHeading(attrs?: Attrs<{level: number}>): CommandFunction;
 }
 ```
 
-This is a large breaking change and will cause a lot of existing code to stop working 😢. However, it paves the way for a better development experience, a simpler to manage library and some exciting features using type inference. Please do bear with me as I make these changes. I truly believe they'll be worthwhile.
+This command can now be accessed via `actions.toggleHeading({ level: 2 })`
 
+This is a large breaking change and may cause a lot of your existing code to stop working 😢. However, it paves the way for a better development experience, a simpler to manage library and some exciting features using type inference. Please do bear with me as I make these changes. I truly believe they'll be worthwhile.
+
+- 💥 **BREAKING `@remirror/core`:** Change usage `isEnabled` and `isActive` which are now methods on the command. e.g. `actions.toggleHeading.isEnabled()` would check whether the toggle heading button can be used at this moment.
+- 💥 **BREAKING `@remirror/core`:** Change Extension function signature actions of `active` and `enabled`.
 - 💥 **BREAKING `@remirror/core`:** Rename `getEditorState` to `getState`.
 - 💥 **BREAKING `@remirror/core`:** Change method `getPortalContainer` to property `portalContainer` on the extension manager.
 - 💥 **BREAKING `@remirror/extension-mention`:** Complete rewrite of internals and public API with better tests and more robust editing.
@@ -46,7 +52,7 @@ This is a large breaking change and will cause a lot of existing code to stop wo
 
 - 🐛 `@remirror/core`: Fix bug with extension manager failing to provide attributes from the extensions.
 - 🐛 `@remirror/core`: Fix TypeScript type of SSRComponent. Change from `Component` to `ComponentType`.
-- 🐛 `@remirror/editor-twitter`: Fix bug where text area didn't expand to full height of editor container.
+- 🐛 `@remirror/editor-twitter`: Fix bug where text area didn't expand to the full height of editor container.
 
 ## [0.3.0] - 2019-07-06
 
@@ -121,7 +127,8 @@ This is a large breaking change and will cause a lot of existing code to stop wo
 - Fixes missing TypeScript definitions #77.
 - Fixes crash when rendering a ReactNodeView in NextJS #75.
 
-[unreleased]: https://github.com/ifiokjr/remirror/compare/v0.3.0...HEAD
+[unreleased]: https://github.com/ifiokjr/remirror/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/ifiokjr/remirror/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/ifiokjr/remirror/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/ifiokjr/remirror/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/ifiokjr/remirror/releases/tag/v0.1.0
