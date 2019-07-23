@@ -1,6 +1,27 @@
-import { ExtensionMap } from '@test-fixtures/schema-helpers';
+import { createBaseTestManager, ExtensionMap } from '@test-fixtures/schema-helpers';
+import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
+import { fromHTML } from '../../helpers';
 import { ParagraphExtension, ParagraphExtensionOptions } from '../paragraph';
+
+describe('schema', () => {
+  let { schema } = createBaseTestManager([{ extension: new ParagraphExtension(), priority: 1 }]);
+  let { doc, p } = pmBuild(schema, {});
+
+  beforeEach(() => {
+    ({ schema } = createBaseTestManager([{ extension: new ParagraphExtension(), priority: 1 }]));
+    ({ doc, p } = pmBuild(schema, {}));
+  });
+
+  it('it can parse content', () => {
+    const node = fromHTML({
+      content: `<p>hello</p>`,
+      schema,
+    });
+    const expected = doc(p('hello'));
+    expect(node).toEqualPMNode(expected);
+  });
+});
 
 const { heading } = ExtensionMap.nodes;
 const create = (params: ParagraphExtensionOptions = { ensureTrailingParagraph: true }) =>

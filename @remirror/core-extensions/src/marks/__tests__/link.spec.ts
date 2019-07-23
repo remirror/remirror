@@ -1,3 +1,5 @@
+// tslint:disable: no-shadowed-variable
+
 import { fromHTML, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@test-fixtures/schema-helpers';
 import { pmBuild } from 'jest-prosemirror';
@@ -7,9 +9,16 @@ import { LinkExtension, LinkExtensionOptions } from '../link';
 const href = 'https://test.com';
 
 describe('schema', () => {
-  const { schema } = createBaseTestManager([{ extension: new LinkExtension(), priority: 1 }]);
-  const { a, doc, p } = pmBuild(schema, {
+  let { schema } = createBaseTestManager([{ extension: new LinkExtension(), priority: 1 }]);
+  let { a, doc, p } = pmBuild(schema, {
     a: { markType: 'link', href },
+  });
+
+  beforeEach(() => {
+    ({ schema } = createBaseTestManager([{ extension: new LinkExtension(), priority: 1 }]));
+    ({ a, doc, p } = pmBuild(schema, {
+      a: { markType: 'link', href },
+    }));
   });
 
   it('uses the href', () => {
@@ -25,6 +34,53 @@ describe('schema', () => {
     });
     const expected = doc(p(a('link')));
     expect(node).toEqualPMNode(expected);
+  });
+
+  describe('extraAttrs', () => {
+    const custom = 'true';
+    const title = 'awesome';
+
+    const { schema } = createBaseTestManager([
+      {
+        extension: new LinkExtension({ extraAttrs: ['title', ['custom', 'failure', 'data-custom']] }),
+        priority: 1,
+      },
+    ]);
+
+    it('sets the extra attributes', () => {
+      expect(schema.marks.link.spec.attrs).toEqual({
+        href: { default: null },
+        title: { default: null },
+        custom: { default: 'failure' },
+      });
+    });
+
+    it('does not override the href', () => {
+      const { schema } = createBaseTestManager([
+        {
+          extension: new LinkExtension({ extraAttrs: [['href', 'should not appear', 'data-custom']] }),
+          priority: 1,
+        },
+      ]);
+
+      expect(schema.marks.link.spec.attrs).toEqual({
+        href: { default: null },
+      });
+    });
+
+    it('parses extra attributes', () => {
+      const { a, doc, p } = pmBuild(schema, {
+        a: { markType: 'link', href, custom, title },
+      });
+
+      const node = fromHTML({
+        content: `<p><a href="${href}" title="${title}" data-custom="${custom}">link</a></p>`,
+        schema,
+      });
+
+      const expected = doc(p(a('link')));
+      expect(node).toEqualPMNode(expected);
+    });
   });
 });
 

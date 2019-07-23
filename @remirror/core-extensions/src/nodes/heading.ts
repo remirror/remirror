@@ -17,25 +17,27 @@ export interface HeadingExtensionOptions extends NodeExtensionOptions {
   defaultLevel?: number;
 }
 
+export const defaultHeadingExtensionOptions = {
+  levels: [1, 2, 3, 4, 5, 6],
+  defaultLevel: 1,
+};
+
 export class HeadingExtension extends NodeExtension<HeadingExtensionOptions, 'toggleHeading'> {
   get name() {
     return 'heading' as const;
   }
 
   get defaultOptions() {
-    return {
-      levels: [1, 2, 3, 4, 5, 6],
-      defaultLevel: 1,
-    };
+    return defaultHeadingExtensionOptions;
   }
 
   get schema(): NodeExtensionSpec {
     return {
       attrs: {
+        ...this.extraAttrs(null),
         level: {
           default: this.options.defaultLevel,
         },
-        ...this.extraAttrs(),
       },
       content: 'inline*',
       group: 'block',

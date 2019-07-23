@@ -1,3 +1,5 @@
+/* tslint:disable: no-shadowed-variable */
+
 import { fromHTML, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@test-fixtures/schema-helpers';
 import { pmBuild } from 'jest-prosemirror';
@@ -26,6 +28,36 @@ describe('schema', () => {
     const node = fromHTML({ content: '<h2>Hello</h2>', schema });
     const expected = doc(h2('Hello'));
     expect(node).toEqualPMNode(expected);
+  });
+
+  describe('extraAttrs', () => {
+    const { schema } = createBaseTestManager([
+      {
+        extension: new HeadingExtension({ extraAttrs: ['title', ['custom', 'failure', 'data-custom']] }),
+        priority: 1,
+      },
+    ]);
+
+    it('sets the extra attributes', () => {
+      expect(schema.nodes.heading.spec.attrs).toEqual({
+        level: { default: 1 },
+        title: { default: null },
+        custom: { default: 'failure' },
+      });
+    });
+
+    it('does not override the built in attributes', () => {
+      const { schema } = createBaseTestManager([
+        {
+          extension: new HeadingExtension({ extraAttrs: [['level', 'should not appear']] }),
+          priority: 1,
+        },
+      ]);
+
+      expect(schema.nodes.heading.spec.attrs).toEqual({
+        level: { default: 1 },
+      });
+    });
   });
 });
 

@@ -14,6 +14,8 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 ### Changes
 
 - `@remirror/core`: Update `extraAttrs` configuration to enable parsing the dom.
+- `@remirror/core-extensions`: Add `extraAttrs` to the following extensions:
+  `LinkExtension`, `ParagraphExtension`, `HeadingExtension`.
 
 ## [0.4.1] - 2019-07-22
 
