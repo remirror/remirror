@@ -669,3 +669,20 @@ export const noop = () => {};
 export const deepMerge = <GType>(objects: Array<Partial<GType>>) => {
   return merge<GType>(objects, { isMergeableObject: isPlainObject });
 };
+
+interface ClampParams {
+  min: number;
+  max: number;
+  value: number;
+}
+
+/**
+ * Clamps the value to the provided range.
+ */
+export const clamp = ({ min, max, value }: ClampParams): number =>
+  value < min ? min : value > max ? max : value;
+
+/**
+ * Get the last element of the array
+ */
+export const last = <GType>(array: GType[]) => array[array.length - 1];
