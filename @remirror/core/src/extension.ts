@@ -1,8 +1,9 @@
 import { Interpolation } from 'emotion';
 import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
-import { Cast, deepMerge, isObject } from './helpers/base';
+import { Cast, deepMerge, isObject, isString } from './helpers/base';
 import {
+  Attrs,
   AttrsWithClass,
   BaseExtensionOptions,
   BooleanExtensionCheck,
@@ -149,7 +150,7 @@ export abstract class Extension<
    *
    * For now extraAttrs can only be optional
    */
-  protected extraAttrs(fallback: string = '') {
+  protected extraAttrs(fallback: string | null = '') {
     if (this.type === ExtensionType.EXTENSION) {
       throw new Error('Invalid use of extraAttrs within a plain extension.');
     }
@@ -162,9 +163,42 @@ export abstract class Extension<
 
     for (const item of extraAttrs) {
       if (Array.isArray(item)) {
-        attrs[item[0]] = { default: attrs[1] };
-      } else {
+        attrs[item[0]] = { default: item[1] };
+      } else if (isString(item)) {
         attrs[item] = { default: fallback };
+      } else {
+        const { name, default: def } = item;
+        attrs[name] = def ? { default: def } : {};
+      }
+    }
+    return attrs;
+  }
+
+  /**
+   * Runs through the extraAttrs and retrieves the
+   */
+  protected getExtraAttrs(domNode: Node) {
+    if (this.type === ExtensionType.EXTENSION) {
+      throw new Error('Invalid use of extraAttrs within a plain extension.');
+    }
+
+    const extraAttrs = this.options.extraAttrs!;
+    const attrs: Attrs = {};
+    if (!extraAttrs) {
+      return attrs;
+    }
+
+    for (const item of extraAttrs) {
+      if (Array.isArray(item)) {
+        // Use the default
+        const [name, , attributeName] = item;
+        attrs[name] = attributeName ? (domNode as Element).getAttribute(attributeName) : undefined;
+      } else if (isString(item)) {
+        // Assume the name is the same
+        attrs[item] = (domNode as Element).getAttribute(item);
+      } else {
+        const { name, getAttrs, default: fallback } = item;
+        attrs[name] = getAttrs ? getAttrs(domNode) || fallback : fallback;
       }
     }
     return attrs;

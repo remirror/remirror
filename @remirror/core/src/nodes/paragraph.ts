@@ -38,10 +38,12 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions,
     return {
       content: 'inline*',
       group: 'block',
+      attrs: this.extraAttrs(),
       draggable: false,
       parseDOM: [
         {
           tag: 'p',
+          getAttrs: node => this.getExtraAttrs(node as Element),
         },
       ],
       toDOM: () => ['p', 0],

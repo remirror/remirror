@@ -46,6 +46,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions, LinkExten
   get schema(): MarkExtensionSpec {
     return {
       attrs: {
+        ...this.extraAttrs(null),
         href: {
           default: null,
         },
@@ -56,6 +57,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions, LinkExten
           tag: 'a[href]',
           getAttrs: node => ({
             href: Cast<Element>(node).getAttribute('href'),
+            ...this.getExtraAttrs(Cast<Element>(node)),
           }),
         },
       ],
