@@ -319,7 +319,7 @@ export interface RemirrorProps extends StringHandlerParams {
    * Prosemirror internals.
    *
    * ```ts
-   * const builtInExtensions = [new PlaceholderExtension(), new DocExtension(), new TextExtension(), new ParagraphExtension()]
+   * const builtInExtensions = [new DocExtension(), new TextExtension(), new ParagraphExtension()]
    * ```
    *
    * @defaultValue true

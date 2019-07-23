@@ -1,7 +1,11 @@
+import {
+  ExtensionParams,
+  findNodeAtEndOfDoc,
+  getPluginState,
+  nodeEqualsType,
+  NodeTypeParams,
+} from '@remirror/core';
 import { Plugin } from 'prosemirror-state';
-import { ExtensionParams } from '../../extension';
-import { findNodeAtEndOfDoc, getPluginState, nodeEqualsType } from '../../helpers';
-import { NodeTypeParams } from '../../types';
 import { ShouldInsertParagraphAtEnd } from './paragraph-types';
 
 interface CreateParagraphPluginParams extends NodeTypeParams, ExtensionParams {}

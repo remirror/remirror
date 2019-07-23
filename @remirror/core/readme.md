@@ -104,8 +104,8 @@ export class StrikeExtension extends MarkExtension {
 The extension manager is used to manage the extensions passed into the editor. It automatically creates the nodes and marks which are used for generating a schema.
 
 ```ts
-import { ExtensionManager, DocExtension, TextExtension, ParagraphExtension } from '@remirror/core';
-import { BoldExtension, ItalicExtension } from '@remirror/core-extensions';
+import { ExtensionManager, DocExtension, TextExtension } from '@remirror/core';
+import { BoldExtension, ItalicExtension, ParagraphExtension } from '@remirror/core-extensions';
 
 const manager = ExtensionManager.create([
   { extension: new DocExtension(), priority: 2 },

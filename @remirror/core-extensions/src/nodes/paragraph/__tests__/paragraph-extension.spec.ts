@@ -1,7 +1,7 @@
+import { fromHTML } from '@remirror/core';
 import { createBaseTestManager, ExtensionMap } from '@test-fixtures/schema-helpers';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
-import { fromHTML } from '../../../helpers';
 import { ParagraphExtension } from '../paragraph-extension';
 
 describe('schema', () => {

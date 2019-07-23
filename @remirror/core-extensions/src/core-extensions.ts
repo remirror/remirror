@@ -1,4 +1,4 @@
-import { DocExtension, ParagraphExtension, PrioritizedExtension, TextExtension } from '@remirror/core';
+import { DocExtension, PrioritizedExtension, TextExtension } from '@remirror/core';
 import {
   BaseKeymapExtension,
   CompositionExtension,
@@ -6,6 +6,7 @@ import {
   GapCursorExtension,
   HistoryExtension,
 } from './extensions';
+import { ParagraphExtension } from './nodes';
 
 /**
  * Base extensions are automatically injected into the default RemirrorEditor.

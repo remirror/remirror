@@ -18,6 +18,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ### Changes
 
+- 💥 **BREAKING `@remirror/core` `@remirror/core-extensions`:** Move `ParagraphExtension` from core to core-extensions. The reason is to not pollute the core library with formatting methods which are primarily just for extensions.
 - `@remirror/core`: Update `extraAttrs` configuration to enable parsing the dom.
 - `@remirror/core-extensions`: Add `extraAttrs` to the following extensions:
   `LinkExtension`, `ParagraphExtension`, `HeadingExtension`.

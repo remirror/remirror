@@ -4,6 +4,13 @@ exports[`Remirror Controlled Component should call onStateChange 1`] = `
 Object {
   "content": Array [
     Object {
+      "attrs": Object {
+        "align": null,
+        "color": null,
+        "id": null,
+        "indent": 0,
+        "lineSpacing": null,
+      },
       "content": Array [
         Object {
           "text": "Hello",

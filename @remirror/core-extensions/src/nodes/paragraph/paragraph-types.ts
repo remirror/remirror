@@ -1,5 +1,4 @@
-import { FindParentNodeResult } from '../../helpers';
-import { Attrs, NodeExtensionOptions } from '../../types';
+import { Attrs, FindParentNodeResult, NodeExtensionOptions } from '@remirror/core';
 
 /**
  * False when there is already a paragraph at the end of the document.
@@ -44,30 +43,20 @@ export type ParagraphExtensionAttrs = Attrs<{
   /**
    * The alignment of the text
    */
-  align?: TextAlignment;
+  align?: TextAlignment | null;
 
   /**
    * The indentation number.
    */
-  indent?: number;
+  indent?: number | null;
 
   /**
    * The line spacing for the paragraph.
    */
-  lineSpacing?: string;
-
-  /**
-   * The top padding for the paragraph.
-   */
-  paddingTop?: string;
-
-  /**
-   * The bottom padding for the paragraph.
-   */
-  paddingBottom?: string;
+  lineSpacing?: string | null;
 
   /**
    * The element id (rarely used).
    */
-  id?: string;
+  id?: string | null;
 }>;

@@ -1,7 +1,6 @@
 import {
   DocExtension,
   ExtensionManager,
-  ParagraphExtension,
   TextExtension,
   Cast,
   PrioritizedExtension,
@@ -10,6 +9,7 @@ import {
   NodeViewPortalContainer,
 } from '@remirror/core';
 import {
+  ParagraphExtension,
   BoldExtension,
   ItalicExtension,
   PlaceholderExtension,

@@ -1,5 +1,5 @@
-import { ExtensionManager, ParagraphExtension } from '@remirror/core';
-import { baseExtensions, PlaceholderExtension } from '@remirror/core-extensions';
+import { ExtensionManager } from '@remirror/core';
+import { baseExtensions, ParagraphExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import { TestExtension } from '@test-fixtures/schema-helpers';
 import { render, RenderResult } from '@testing-library/react';
 import { EditorView } from 'prosemirror-view';

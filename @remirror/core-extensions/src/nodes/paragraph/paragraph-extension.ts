@@ -1,7 +1,11 @@
+import {
+  CommandNodeTypeParams,
+  NodeExtension,
+  NodeExtensionSpec,
+  SchemaNodeTypeParams,
+} from '@remirror/core';
 import { setBlockType } from 'prosemirror-commands';
 import { Plugin } from 'prosemirror-state';
-import { NodeExtension } from '../../node-extension';
-import { CommandNodeTypeParams, NodeExtensionSpec, SchemaNodeTypeParams } from '../../types';
 import { ALIGN_PATTERN, EMPTY_CSS_VALUE, INDENT_ATTRIBUTE, INDENT_LEVELS } from '../node-constants';
 import { marginToIndent } from '../node-utils';
 import { createParagraphPlugin } from './paragraph-plugin';
@@ -35,10 +39,8 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions,
         align: { default: null },
         color: { default: null },
         id: { default: null },
-        indent: { default: null },
+        indent: { default: 0 },
         lineSpacing: { default: null },
-        paddingBottom: { default: null },
-        paddingTop: { default: null },
       },
       draggable: false,
       parseDOM: [
@@ -51,14 +53,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions,
         },
       ],
       toDOM: node => {
-        const {
-          align,
-          indent,
-          lineSpacing,
-          paddingTop,
-          paddingBottom,
-          id,
-        } = node.attrs as ParagraphExtensionAttrs;
+        const { align, indent, lineSpacing, id } = node.attrs as ParagraphExtensionAttrs;
         const attrs: Record<string, string> = {};
         let style = '';
 
@@ -68,14 +63,6 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions,
 
         if (lineSpacing) {
           style += `line-height: ${lineSpacing};`;
-        }
-
-        if (paddingTop && !EMPTY_CSS_VALUE.has(paddingTop)) {
-          style += `padding-top: ${paddingTop};`;
-        }
-
-        if (paddingBottom && !EMPTY_CSS_VALUE.has(paddingBottom)) {
-          style += `padding-bottom: ${paddingBottom};`;
         }
 
         if (style) {
@@ -123,7 +110,7 @@ const getAttrs = (
   { indentAttribute, indentLevels }: Required<ParagraphExtensionOptions>,
   dom: HTMLElement,
 ) => {
-  const { lineHeight, textAlign, marginLeft, paddingTop, paddingBottom } = dom.style;
+  const { lineHeight, textAlign, marginLeft } = dom.style;
   let align: string | undefined = dom.getAttribute('align') || textAlign || '';
   let indent = parseInt(dom.getAttribute(indentAttribute) || '0', 10);
 
@@ -136,7 +123,7 @@ const getAttrs = (
   indent = indent || indentLevels[0];
 
   const lineSpacing = lineHeight ? lineHeight : undefined;
-  const id = dom.getAttribute('id') || '';
+  const id = dom.getAttribute('id') || undefined;
 
-  return { align, indent, lineSpacing, paddingTop, paddingBottom, id } as ParagraphExtensionAttrs;
+  return { align, indent, lineSpacing, id } as ParagraphExtensionAttrs;
 };

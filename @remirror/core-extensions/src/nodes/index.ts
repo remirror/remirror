@@ -7,3 +7,6 @@ export * from './image-extension';
 export * from './list-item-extension';
 export * from './ordered-list-extension';
 export * from './horizontal-rule-extension';
+export * from './node-constants';
+export * from './node-utils';
+export * from './paragraph';

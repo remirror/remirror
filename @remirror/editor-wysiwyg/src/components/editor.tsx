@@ -1,6 +1,5 @@
-import React, { FC, PureComponent } from 'react';
-
 import { config } from '@fortawesome/fontawesome-svg-core';
+import { deepMerge } from '@remirror/core';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -14,6 +13,7 @@ import {
   LinkExtension,
   ListItemExtension,
   OrderedListExtension,
+  ParagraphExtension,
   SSRHelperExtension,
   StrikeExtension,
   UnderlineExtension,
@@ -22,12 +22,12 @@ import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager, useRemirror } from '@remirror/react';
 import { asDefaultProps, RemirrorManagerProps } from '@remirror/react-utils';
 import { ThemeProvider } from 'emotion-theming';
+import React, { FC, PureComponent } from 'react';
 import { wysiwygEditorTheme } from '../theme';
 import { WysiwygEditorProps } from '../types';
 import { BubbleMenu, BubbleMenuProps, MenuBar } from './menu';
 import { EditorWrapper, InnerEditorWrapper } from './styled';
 
-import { deepMerge, ParagraphExtension } from '@remirror/core';
 import bash from 'refractor/lang/bash';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';

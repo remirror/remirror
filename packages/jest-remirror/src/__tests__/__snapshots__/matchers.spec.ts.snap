@@ -2,6 +2,13 @@
 
 exports[` 1`] = `
 Object {
+  "attrs": Object {
+    "align": null,
+    "color": null,
+    "id": null,
+    "indent": 0,
+    "lineSpacing": null,
+  },
   "content": Array [
     Object {
       "text": "simple",
