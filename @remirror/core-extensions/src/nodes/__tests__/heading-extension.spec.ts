@@ -5,7 +5,7 @@ import { createBaseTestManager } from '@test-fixtures/schema-helpers';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import { BoldExtension } from '../../marks';
-import { HeadingExtension, HeadingExtensionOptions } from '../heading';
+import { HeadingExtension, HeadingExtensionOptions } from '../heading-extension';
 
 describe('schema', () => {
   const { schema } = createBaseTestManager([{ extension: new HeadingExtension(), priority: 1 }]);

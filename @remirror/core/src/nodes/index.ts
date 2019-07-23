@@ -1,3 +1,3 @@
-export * from './doc';
-export * from './paragraph';
-export * from './text';
+export * from './doc-extension';
+export * from './paragraph-extension';
+export * from './text-extension';

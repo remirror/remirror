@@ -1,11 +1,6 @@
 import { BaseExtensionOptions, Extension } from '@remirror/core';
 import { dropCursor } from 'prosemirror-dropcursor';
 
-/**
- * Create a plugin that, when added to a ProseMirror instance,
- * causes a decoration to show up at the drop position when something
- * is dragged over the editor.
- */
 export interface DropCursorExtensionOptions extends BaseExtensionOptions {
   /**
    * Set the color of the cursor.
@@ -27,6 +22,13 @@ export const defaultDropCursorExtensionOptions: DropCursorExtensionOptions = {
   width: 1,
 };
 
+/**
+ * Create a plugin that, when added to a ProseMirror instance,
+ * causes a decoration to show up at the drop position when something
+ * is dragged over the editor.
+ *
+ * @builtin
+ */
 export class DropCursorExtension extends Extension<DropCursorExtensionOptions> {
   get name() {
     return 'dropCursor' as const;

@@ -9,7 +9,7 @@ import { gapCursor, GapCursor } from 'prosemirror-gapcursor';
  * them. The cursor is drawn as an element with class
  * `ProseMirror-gapcursor`.
  *
- * @defaultextension
+ * @builtin
  */
 export class GapCursorExtension extends Extension {
   get name() {

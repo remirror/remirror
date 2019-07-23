@@ -1,5 +1,5 @@
 export * from './marks';
 export * from './extensions';
 export * from './nodes';
-export * from './constants';
-export * from './base';
+export * from './core-extension-constants';
+export * from './core-extensions';
