@@ -353,7 +353,10 @@ type EventMap = Record<EventType, EventProperties>;
 const eventMap: EventMap = rawEventMap as EventMap;
 
 export const createEvents = <GEvent extends Event>(event: EventType, options: PlainObject): GEvent[] => {
-  const { Constructor, defaultProperties } = eventMap[event];
+  const { Constructor, defaultProperties } = eventMap[event] || {
+    Constructor: 'Event',
+    defaultProperties: { bubbles: true, cancelable: true },
+  };
   let eventName = event.toLowerCase();
   const properties: PlainObject = { ...defaultProperties, ...options };
   type GEventConstructor = new (type: string, eventInitDict?: EventInit) => GEvent;

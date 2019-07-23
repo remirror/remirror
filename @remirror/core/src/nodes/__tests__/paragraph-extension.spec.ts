@@ -2,7 +2,7 @@ import { createBaseTestManager, ExtensionMap } from '@test-fixtures/schema-helpe
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import { fromHTML } from '../../helpers';
-import { ParagraphExtension, ParagraphExtensionOptions } from '../paragraph';
+import { ParagraphExtension, ParagraphExtensionOptions } from '../paragraph-extension';
 
 describe('schema', () => {
   let { schema } = createBaseTestManager([{ extension: new ParagraphExtension(), priority: 1 }]);

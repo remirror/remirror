@@ -10,6 +10,11 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 ### Added
 
 - `@remirror/core`: Add `getExtraAttrs` method to the extension which can be used in the `(Mark/Node)Extension`.
+- `@remirror/core`: Add `DropCursorExtension` for a cursor to show up at the exact location an item will be dropped.
+- `@remirror/core`: Add `GapCursorExtension` for support of tricky to select locations.
+
+- Introduce new `@builtin` annotation to show when an extension is included by default.
+- Introduce new `@schema` annotation for extension options to indicated that an option should not be updated after creating or it will change the schema.
 
 ### Changes
 

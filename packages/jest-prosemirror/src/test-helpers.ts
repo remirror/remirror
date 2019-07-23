@@ -1,4 +1,5 @@
 import { Cast, InputRule, Plugin } from '@remirror/core';
+import { GapCursor } from 'prosemirror-gapcursor';
 import { inputRules } from 'prosemirror-inputrules';
 import { Schema } from 'prosemirror-model';
 import { AllSelection, EditorState, NodeSelection, Selection, TextSelection } from 'prosemirror-state';
@@ -40,7 +41,7 @@ const createTextSelection = ({ taggedDoc, start, end }: CreateTextSelectionParam
   return new TextSelection($start, $end);
 };
 
-const supportedTags = ['cursor', 'node', 'start', 'end', 'anchor', 'all'];
+const supportedTags = ['cursor', 'node', 'start', 'end', 'anchor', 'all', 'gap'];
 
 /**
  * Checks that the tagged doc has a selection
@@ -58,16 +59,24 @@ export const taggedDocHasSelection = (taggedDoc: TaggedProsemirrorNode) =>
  * @param taggedDoc
  */
 export const initSelection = (taggedDoc: TaggedProsemirrorNode) => {
-  const { cursor, node, start, end, anchor, all } = taggedDoc.tag;
+  const { cursor, node, start, end, anchor, all, gap } = taggedDoc.tag;
   if (all) {
     return new AllSelection(taggedDoc);
   }
+
   if (node) {
     return new NodeSelection(taggedDoc.resolve(node));
   }
+
   if (cursor) {
     return new TextSelection(taggedDoc.resolve(cursor));
   }
+
+  if (gap) {
+    const $pos = taggedDoc.resolve(gap);
+    return new GapCursor($pos, $pos);
+  }
+
   if (start) {
     return createTextSelection({ taggedDoc, start, end });
   }

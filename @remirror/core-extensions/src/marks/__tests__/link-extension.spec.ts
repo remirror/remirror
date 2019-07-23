@@ -4,7 +4,7 @@ import { fromHTML, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@test-fixtures/schema-helpers';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
-import { LinkExtension, LinkExtensionOptions } from '../link';
+import { LinkExtension, LinkExtensionOptions } from '../link-extension';
 
 const href = 'https://test.com';
 

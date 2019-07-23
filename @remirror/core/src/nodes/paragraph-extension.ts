@@ -23,6 +23,12 @@ export interface ParagraphExtensionOptions extends NodeExtensionOptions {
   ensureTrailingParagraph?: boolean;
 }
 
+/**
+ * The paragraph is one of the essential building blocks for a prosemirror editor
+ * and by default it is provided to all editors.
+ *
+ * @builtin
+ */
 export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions, 'createParagraph', {}> {
   get name() {
     return 'paragraph' as const;
