@@ -7,6 +7,14 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+### Added
+
+- `@remirror/core`: Add `getExtraAttrs` method to the extension which can be used in the `(Mark/Node)Extension`.
+
+### Changes
+
+- `@remirror/core`: Update `extraAttrs` configuration to enable parsing the dom.
+
 ## [0.4.1] - 2019-07-22
 
 ### Changes

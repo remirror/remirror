@@ -174,10 +174,35 @@ export type Attrs<GExtra extends {} = {}> = Record<string, unknown> & GExtra;
 
 export type AttrsWithClass = Attrs & { class?: string };
 
+export interface ExtraAttrsObject {
+  /**
+   * The name of the attribute
+   */
+  name: string;
+
+  /**
+   * The default value for the attr, if left undefined then this becomes a required.
+   * and must be provided whenever a node or mark of a type that has them is
+   * created.
+   */
+  default?: string | null;
+
+  /**
+   * A function used to extract the attribute from the dom.
+   */
+  getAttrs?: (domNode: Node) => unknown;
+}
+
+/**
+ * The first value is the name of the attribute the second value is the default and the third
+ * is the optional parse name from the dom via `node.getAttribute()`.
+ */
+export type ExtraAttrsTuple = [string, string, string?];
+
 /**
  * Data representation tuple used for injecting extra attributes into an extension.
  */
-export type ExtraAttrs = Array<string | [string, string]>;
+export type ExtraAttrs = string | ExtraAttrsTuple | ExtraAttrsObject;
 
 /**
  * Defines the options that every extension can accept at instantiation.
@@ -195,9 +220,18 @@ export interface BaseExtensionOptions {
    * Inject additional attributes into the defined mark / node schema.
    * This can only be used for `NodeExtensions` and `MarkExtensions`.
    *
+   * @remarks
+   *
+   * Sometimes you need to add additional attributes to a node or mark. This property
+   * enables this without needing to create a new extension.
+   *
+   * - `extraAttrs: ['title']` Create an attribute with name `title`.When parsing the dom it will look for the attribute `title`
+   * - `extraAttrs: [['custom', 'false', 'data-custom'],'title']` - Creates an attribute with name `custom` and default value `false`.
+   * When parsing the dom it will look for the attribute `data-custom`
+   *
    * @default []
    */
-  extraAttrs?: ExtraAttrs;
+  extraAttrs?: ExtraAttrs[];
 
   /**
    * a configuration object which allows for excluding certain functionality from an extension.
