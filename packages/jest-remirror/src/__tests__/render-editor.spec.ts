@@ -1,4 +1,4 @@
-import { toHTML } from '@remirror/core';
+import { Extension, toHTML } from '@remirror/core';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -6,6 +6,7 @@ import {
   LinkExtension,
 } from '@remirror/core-extensions';
 import { cleanup } from '@testing-library/react';
+import { Plugin } from 'prosemirror-state';
 import { renderEditor } from '../render-editor';
 
 beforeEach(cleanup);
@@ -24,7 +25,7 @@ test('allows for injection of basic content', () => {
     view,
     nodes: { doc, p },
     add,
-    // TODO: Investigate why typescript autocomplete on plain nodes doesn't work without at least an empty array
+    // TODO Investigate why typescript autocomplete on plain nodes doesn't work without at least an empty array
   } = renderEditor({ plainNodes: [] });
   add(doc(p(expected)));
   expect(view.dom).toHaveTextContent(expected);
@@ -98,8 +99,29 @@ test('can be configured with attribute mark extensions', () => {
   expect(linkElement).toHaveTextContent(expected);
 });
 
+const tripleClickMock = jest.fn(() => false);
+const doubleClickMock = jest.fn(() => false);
+const clickMock = jest.fn(() => false);
+
+class CustomExtension extends Extension {
+  get name() {
+    return 'custom' as const;
+  }
+
+  public plugin() {
+    return new Plugin({
+      key: this.pluginKey,
+      props: {
+        handleTripleClick: tripleClickMock,
+        handleDoubleClick: doubleClickMock,
+        handleClick: clickMock,
+      },
+    });
+  }
+}
+
 describe('add', () => {
-  const params = { plainMarks: [new BoldExtension()], plainNodes: [] };
+  const params = { plainMarks: [new BoldExtension()], plainNodes: [], others: [new CustomExtension()] };
   let {
     view: { dom },
     schema,
@@ -115,7 +137,7 @@ describe('add', () => {
       nodes: { doc, p },
       marks: { bold },
       add,
-    } = renderEditor({ plainNodes: [], plainMarks: [new BoldExtension()] }));
+    } = renderEditor(params));
   });
 
   it('overwrites the whole doc on each call', () => {
@@ -150,11 +172,13 @@ describe('add', () => {
     expect(dom).toContainHTML(toHTML({ node, schema }));
   });
 
-  it.skip('can fire custom events', () => {
-    const expected = { from: 1, to: 8 };
-    const { state } = add(doc(p('Wel<cursor>come'))).fire({ event: 'dblClick' });
-    const { from, to } = state.selection;
-    expect({ from, to }).toEqual(expected);
+  it('can fire custom events', () => {
+    add(doc(p('Simple'))).fire({ event: 'dblClick' });
+    expect(doubleClickMock).toHaveBeenCalled();
+    add(doc(p('Simple'))).fire({ event: 'click' });
+    expect(clickMock).toHaveBeenCalled();
+    add(doc(p('Simple'))).fire({ event: 'tripleClick' as any });
+    expect(tripleClickMock).toHaveBeenCalled();
   });
 
   it('can replace text with text', () => {
