@@ -187,14 +187,14 @@ test('getNearestNonTextNode', () => {
 });
 
 describe('selections', () => {
-  it('returns true for a valid text selection', () => {
+  it('recognises a valid text selection', () => {
     const { state } = createEditor(doc(p('Some<start>thing<end>')));
     expect(isTextSelection(state.selection)).toBeTrue();
     expect(isSelection(state.selection)).toBeTrue();
     expect(isNodeSelection(state.selection)).toBeFalse();
   });
 
-  it('returns false for a node selection', () => {
+  it('recognises a node selection', () => {
     const { state } = createEditor(doc(p('Some<node>thing')));
     expect(isTextSelection(state.selection)).toBeFalse();
     expect(isNodeSelection(state.selection)).toBeTrue();
