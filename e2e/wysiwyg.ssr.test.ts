@@ -23,7 +23,7 @@ describe('Wysiwyg Editor Snapshots', () => {
               <span class=\\"token punctuation\\">\`\`\`</span></span>
 
               <span class=\\"token code\\"><span class=\\"token punctuation\\">\`\`\`</span><span class=\\"token code-language\\">bash</span>
-              <span class=\\"token code-block language-bash\\"><span class=\\"token keyword\\">echo</span> <span class=\\"token string\\">\\"fun times\\"</span></span>
+              <span class=\\"token code-block language-bash\\"><span class=\\"token builtin class-name\\">echo</span> <span class=\\"token string\\">\\"fun times\\"</span></span>
               <span class=\\"token punctuation\\">\`\`\`</span></span>
 
               Use Shift-Enter or Mod-Enter to hard break out of the code block</code></pre><p><br></p><ul><li><p>List support</p><ul><li><p>With nesting</p></li></ul></li><li><p>Built in.</p></li></ul><p><br></p><blockquote><p>Block quotes</p><h3>With support for headers</h3></blockquote><p><br></p><p>And <a href=\\"https://google.com\\" rel=\\"noopener noreferrer nofollow\\">urls</a> with support for <code>Cmd-k</code> shortcut to enter a link manually.</p><p><br></p><p><br></p></div>"
