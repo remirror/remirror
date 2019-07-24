@@ -13,7 +13,8 @@
       "signGitCommit": true,
       "signGitTag": true,
       "allowBranch": [
-        "master"
+        "master",
+        "canary"
       ]
     }
   },
