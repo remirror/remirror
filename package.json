@@ -47,7 +47,7 @@
     "if-clean": "node support/scripts/run-if-clean.js",
     "if-config": "node support/scripts/run-if-config.js",
     "integrity": "yarn check --integrity",
-    "lerna:publish:canary": "lerna publish prerelease --preid=canary --exact --force-publish && release --pre",
+    "lerna:publish:canary": "lerna publish prerelease --preid=canary --dist-tag next --exact --force-publish && release --pre",
     "lerna:publish:minor": "lerna publish minor --exact --force-publish",
     "lerna:publish:patch": "lerna publish patch --exact --force-publish",
     "lint": "run-s lint:*",
