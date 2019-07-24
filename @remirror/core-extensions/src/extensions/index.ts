@@ -7,3 +7,4 @@ export * from './drop-cursor-extension';
 export * from './placeholder';
 export * from './ssr-helpers';
 export * from '../core-extension-types';
+export * from './trailing-node-extension';

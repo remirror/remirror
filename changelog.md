@@ -9,6 +9,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ### Added
 
+- `@remirror/core-extensions`: Add `TrailingNodeExtension` to always append a specified node to the end of the dom.
 - `@remirror/core`: Add `getExtraAttrs` method to the extension which can be used in the `(Mark/Node)Extension`.
 - `@remirror/core`: Add `DropCursorExtension` for a cursor to show up at the exact location an item will be dropped.
 - `@remirror/core`: Add `GapCursorExtension` for support of tricky to select locations.
