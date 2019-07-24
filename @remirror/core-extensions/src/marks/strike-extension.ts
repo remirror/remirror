@@ -3,6 +3,7 @@ import {
   MarkExtension,
   MarkExtensionOptions,
   MarkExtensionSpec,
+  MarkGroup,
   markInputRule,
   markPasteRule,
   SchemaMarkTypeParams,
@@ -16,6 +17,7 @@ export class StrikeExtension extends MarkExtension<MarkExtensionOptions, 'strike
 
   get schema(): MarkExtensionSpec {
     return {
+      group: MarkGroup.FontStyle,
       parseDOM: [
         {
           tag: 's',

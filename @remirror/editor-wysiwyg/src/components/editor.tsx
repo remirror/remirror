@@ -16,6 +16,7 @@ import {
   ParagraphExtension,
   SSRHelperExtension,
   StrikeExtension,
+  TrailingNodeExtension,
   UnderlineExtension,
 } from '@remirror/core-extensions';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
@@ -97,7 +98,7 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
     return (
       <ThemeProvider theme={this.editorTheme}>
         <RemirrorManager placeholder={placeholder}>
-          <RemirrorExtension Constructor={ParagraphExtension} ensureTrailingParagraph={true} />
+          <RemirrorExtension Constructor={ParagraphExtension} />
           <RemirrorExtension Constructor={BoldExtension} />
           <RemirrorExtension Constructor={UnderlineExtension} />
           <RemirrorExtension Constructor={ItalicExtension} />
@@ -112,6 +113,7 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
           <RemirrorExtension Constructor={BulletListExtension} />
           <RemirrorExtension Constructor={OrderedListExtension} />
           <RemirrorExtension Constructor={HardBreakExtension} />
+          <RemirrorExtension Constructor={TrailingNodeExtension} />
           <RemirrorExtension
             Constructor={CodeBlockExtension}
             supportedLanguages={this.supportedLanguages}

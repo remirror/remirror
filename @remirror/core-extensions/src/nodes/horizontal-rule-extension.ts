@@ -4,6 +4,7 @@ import {
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
+  NodeGroup,
   nodeInputRule,
   SchemaNodeTypeParams,
 } from '@remirror/core';
@@ -16,7 +17,7 @@ export class HorizontalRuleExtension extends NodeExtension<NodeExtensionOptions,
   get schema(): NodeExtensionSpec {
     return {
       attrs: this.extraAttrs(),
-      group: 'block',
+      group: NodeGroup.Block,
       parseDOM: [{ tag: 'hr' }],
       toDOM: () => ['hr'],
     };

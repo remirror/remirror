@@ -5,6 +5,7 @@ import {
   MarkExtension,
   MarkExtensionOptions,
   MarkExtensionSpec,
+  MarkGroup,
   markInputRule,
   SchemaMarkTypeParams,
 } from '@remirror/core';
@@ -17,6 +18,7 @@ export class BoldExtension extends MarkExtension<MarkExtensionOptions, 'bold', {
 
   get schema(): MarkExtensionSpec {
     return {
+      group: MarkGroup.FontStyle,
       parseDOM: [
         {
           tag: 'strong',

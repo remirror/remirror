@@ -3,6 +3,7 @@ import {
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
+  NodeGroup,
   SchemaNodeTypeParams,
   toggleList,
 } from '@remirror/core';
@@ -17,7 +18,7 @@ export class BulletListExtension extends NodeExtension<NodeExtensionOptions, 'to
     return {
       attrs: this.extraAttrs(),
       content: 'listItem+',
-      group: 'block',
+      group: NodeGroup.Block,
       parseDOM: [{ tag: 'ul' }],
       toDOM: () => ['ul', 0],
     };

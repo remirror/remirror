@@ -1,5 +1,6 @@
 import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
+import { MarkGroup, NodeGroup, Tags } from '../constants';
 import { NodeViewPortalContainer } from '../portal-container';
 import { EditorView, Mark, NodeView, Transaction } from './aliases';
 import {
@@ -125,7 +126,7 @@ export type ActionGetter = <GAttrs = Attrs>(name: string) => ActionMethods<GAttr
 /**
  * Parameters passed into many of the extension methods.
  */
-export interface ExtensionManagerParams extends SchemaParams, ExtensionManagerInitParams {
+export interface ExtensionManagerParams extends SchemaParams, ExtensionManagerInitParams, ExtensionTagParams {
   /**
    * A helper method to provide access to all actions for access to commands from within extensions
    */
@@ -234,31 +235,6 @@ export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (
 
 export type RemirrorActions<GKeys extends string = string> = Record<GKeys, ActionMethods>;
 
-/**
- * Marks are categorized into different groups. One motivation for this was to allow the `code` mark
- * to exclude other marks, without needing to explicitly name them. Explicit naming requires the
- * named mark to exist in the schema. This is undesirable because we want to construct different
- * schemas that have different sets of nodes/marks.
- */
-export enum MarkGroup {
-  FONT_STYLE = 'fontStyle',
-  SEARCH_QUERY = 'searchQuery',
-  LINK = 'link',
-  COLOR = 'color',
-  ALIGNMENT = 'alignment',
-  INDENTATION = 'indentation',
-  BEHAVIOR = 'behavior',
-}
-
-/**
- * Defines the type of the extension.
- */
-export enum ExtensionType {
-  NODE = 'node',
-  MARK = 'mark',
-  EXTENSION = 'extension',
-}
-
 export type GetAttrs = Attrs | ((p: string[] | string) => Attrs | undefined);
 
 export interface GetAttrsParams {
@@ -275,6 +251,32 @@ export type SSRComponentProps<
   GAttrs extends Attrs = any,
   GOptions extends BaseExtensionOptions = any
 > = GAttrs & ProsemirrorNodeParams & { options: Required<GOptions> };
+
+export type GeneralExtensionTags<GNames extends string = string> = Record<Tags, GNames[]> &
+  Record<string, undefined | GNames[]>;
+export type MarkExtensionTags<GNames extends string = string> = Record<MarkGroup, GNames[]> &
+  Record<string, undefined | GNames[]>;
+export type NodeExtensionTags<GNames extends string = string> = Record<NodeGroup, GNames[]> &
+  Record<string, undefined | GNames[]>;
+
+/**
+ * The shape of the tag data stored by the extension manager.
+ *
+ * This data can be used by other extensions to dynamically determine which
+ * nodes should affected by commands / plugins / keys etc...
+ */
+export interface ExtensionTags<GNames extends string = string> {
+  node: NodeExtensionTags<GNames>;
+  mark: MarkExtensionTags<GNames>;
+  general: GeneralExtensionTags<GNames>;
+}
+
+export interface ExtensionTagParams<GNames extends string = string> {
+  /**
+   * The tags provided by the configured extensions.
+   */
+  tags: ExtensionTags<GNames>;
+}
 
 export * from './aliases';
 export * from './base';

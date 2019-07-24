@@ -6,6 +6,7 @@ import {
   EditorView,
   NodeTypeParams,
   NodeTypesParams,
+  OptionalProsemirrorNodeParams,
   PosParams,
   PredicateParams,
   ProsemirrorNode,
@@ -19,15 +20,16 @@ import {
 import { bool, isNumber } from './base';
 import { isNodeSelection, isSelection, isTextDOMNode } from './document';
 
-/* "Borrowed" from prosemirror-utils in order to avoid requirement of `@prosemirror-tables`*/
+/* "Borrowed" from prosemirror-utils in order to avoid requirement of
+`@prosemirror-tables`*/
 
-interface NodeEqualsTypeParams extends NodeTypesParams, ProsemirrorNodeParams {}
+interface NodeEqualsTypeParams extends NodeTypesParams, OptionalProsemirrorNodeParams {}
 
 /**
  * Checks if the type a given `node` equals to a given `nodeType`.
  */
 export const nodeEqualsType = ({ types, node }: NodeEqualsTypeParams) => {
-  return (Array.isArray(types) && types.includes(node.type)) || node.type === types;
+  return node ? (Array.isArray(types) && types.includes(node.type)) || node.type === types : false;
 };
 
 /**
@@ -43,8 +45,9 @@ export const cloneTransaction = (tr: Transaction): Transaction => {
 
 interface RemoveNodeAtPositionParams extends TransactionParams, PosParams {}
 /**
- * Returns a `delete` transaction that removes a node at a given position with the given `node`.
- * `position` should point at the position immediately before the node.
+ * Returns a `delete` transaction that removes a node at a given position with
+ * the given `node`. `position` should point at the position immediately before
+ * the node.
  *
  * @param position - the prosemirror position
  *
@@ -65,7 +68,8 @@ export const removeNodeAtPosition = ({ pos, tr }: RemoveNodeAtPositionParams) =>
  *
  * @remarks
  *
- * If the node type is of type `TEXT_NODE` it will return the reference of the parent node.
+ * If the node type is of type `TEXT_NODE` it will return the reference of the
+ * parent node.
  *
  * A simple use case
  *
@@ -123,7 +127,8 @@ export interface FindSelectedNodeOfType extends FindParentNodeResult {
 }
 
 /**
- * Returns a node of a given `nodeType` if it is selected. `start` points to the start position of the node, `pos` points directly before the node.
+ * Returns a node of a given `nodeType` if it is selected. `start` points to the
+ * start position of the node, `pos` points directly before the node.
  *
  * ```ts
  * const { extension, inlineExtension, bodiedExtension } = schema.nodes;
@@ -162,8 +167,9 @@ export interface FindParentNodeResult extends ProsemirrorNodeParams {
 interface FindParentNodeParams extends SelectionParams, PredicateParams<ProsemirrorNode> {}
 
 /**
- * Iterates over parent nodes, returning the closest node and its start position that the `predicate` returns truthy for.
- * `start` points to the start position of the node, `pos` points directly before the node.
+ * Iterates over parent nodes, returning the closest node and its start position
+ * that the `predicate` returns truthy for. `start` points to the start position
+ * of the node, `pos` points directly before the node.
  *
  * @example
  * ```ts
@@ -199,14 +205,20 @@ export const findNodeAtSelection = (selection: Selection): FindParentNodeResult 
 /**
  * Finds the node at the end of the Prosemirror document.
  *
- * @param doc - the parent doc node of the editor which contains all the other nodes.
+ * @param doc - the parent doc node of the editor which contains all the other
+ * nodes.
+ *
+ * @deprecated use `doc.lastChild` instead 🤦🏿‍♂️
  */
 export const findNodeAtEndOfDoc = (doc: ProsemirrorNode) => findNodeAtPosition(PMSelection.atEnd(doc).$from);
 
 /**
  * Finds the node at the start of the prosemirror.
  *
- * @param doc - the parent doc node of the editor which contains all the other nodes.
+ * @param doc - the parent doc node of the editor which contains all the other
+ * nodes.
+ *
+ * @deprecated use `doc.firstChild` instead 🤦🏿‍♂️
  */
 export const findNodeAtStartOfDoc = (doc: ProsemirrorNode) =>
   findNodeAtPosition(PMSelection.atStart(doc).$from);
@@ -231,12 +243,13 @@ interface FindParentNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
 
 /**
  *  Iterates over parent nodes, returning closest node of a given `nodeType`.
- * `start` points to the start position of the node, `pos` points directly before the node.
+ *  `start` points to the start position of the node, `pos` points directly
+ *  before the node.
  *
- * @example
- * ```ts
- * const parent = findParentNodeOfType(schema.nodes.paragraph)(selection);
- * ```
+ *  @example
+ *  ```ts
+ *  const parent = findParentNodeOfType(schema.nodes.paragraph)(selection);
+ *  ```
  */
 export const findParentNodeOfType = ({
   types,
@@ -278,7 +291,8 @@ export const selectionEmpty = (value: Selection | EditorState) =>
   isSelection(value) ? value.empty : value.selection.empty;
 
 /**
- * Check to see if a transaction has changed either the document or the current selection.
+ * Check to see if a transaction has changed either the document or the current
+ * selection.
  *
  * @param params - the TransactionChangeParams object
  */
@@ -289,8 +303,8 @@ export const transactionChanged = (tr: Transaction) => {
 interface IsNodeActiveParams extends EditorStateParams, NodeTypeParams, Partial<AttrsParams> {}
 
 /**
- * Checks whether the node type passed in is active within the region.
- * Used by extensions to implement the `#active` method.
+ * Checks whether the node type passed in is active within the region. Used by
+ * extensions to implement the `#active` method.
  *
  * To ignore attrs just leave the attrs object empty or undefined.
  *

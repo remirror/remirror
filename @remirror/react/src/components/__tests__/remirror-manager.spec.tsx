@@ -131,14 +131,18 @@ test('it supports overriding base extensions', () => {
   const Component: FC = () => {
     const manager = useRemirrorManager();
     expect(manager.extensions).not.toContain([originalParagraph]);
-    expect(manager.extensions.find(({ options }) => options.ensureTrailingParagraph === true)).toBeTruthy();
+    expect(
+      manager.extensions.find(({ options }) => {
+        return options.indentLevels && options.indentLevels[1] === 1;
+      }),
+    ).toBeTruthy();
     return null;
   };
 
   render(
     <RemirrorManager>
       <Component />
-      <RemirrorExtension Constructor={ParagraphExtension} ensureTrailingParagraph={true} />
+      <RemirrorExtension Constructor={ParagraphExtension} indentLevels={[0, 1]} />
     </RemirrorManager>,
   );
 });

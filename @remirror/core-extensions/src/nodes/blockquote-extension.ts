@@ -4,6 +4,7 @@ import {
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
+  NodeGroup,
   SchemaNodeTypeParams,
   toggleWrap,
 } from '@remirror/core';
@@ -18,7 +19,7 @@ export class BlockquoteExtension extends NodeExtension<NodeExtensionOptions, 'bl
     return {
       attrs: this.extraAttrs(),
       content: 'block*',
-      group: 'block',
+      group: NodeGroup.Block,
       defining: true,
       draggable: false,
       parseDOM: [{ tag: 'blockquote' }],

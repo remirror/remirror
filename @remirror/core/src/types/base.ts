@@ -51,8 +51,8 @@ export interface PlainObject {
  * Concisely and cleanly define an arbitrary function.
  *
  * @remarks
- * Taken from `simplytyped`
- * Useful when designing many api's that don't care what function they take in, they just need to know what it returns.
+ * Taken from `simplytyped` Useful when designing many api's that don't care
+ * what function they take in, they just need to know what it returns.
  */
 export type AnyFunction<GType = any> = (...args: any[]) => GType;
 
@@ -62,8 +62,8 @@ export type AnyFunction<GType = any> = (...args: any[]) => GType;
 export type AnyConstructor<GType = unknown> = new (...args: any[]) => GType;
 
 /**
- * Abstract classes don't support the builtin `InstanceType` helper. This is an alternative
- * which allows us to pull out the type of the prototype.
+ * Abstract classes don't support the builtin `InstanceType` helper. This is an
+ * alternative which allows us to pull out the type of the prototype.
  */
 export type AbstractInstanceType<GConstructor extends { prototype: any }> = GConstructor['prototype'];
 
@@ -79,8 +79,9 @@ export type MakeOptional<GType extends {}, GKeys extends keyof GType> = Omit<GTy
 export type MakeNullable<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
   { [P in GKeys]: GType[P] | null };
 
-/**W
- * Makes specified keys of an interface Required while the rest remain unchanged.
+/**
+ * Makes specified keys of an interface Required while the rest remain
+ * unchanged.
  */
 export type MakeRequired<GType extends {}, GKeys extends keyof GType> = Omit<GType, GKeys> &
   { [P in GKeys]-?: GType[P] };
@@ -181,9 +182,9 @@ export interface ExtraAttrsObject {
   name: string;
 
   /**
-   * The default value for the attr, if left undefined then this becomes a required.
-   * and must be provided whenever a node or mark of a type that has them is
-   * created.
+   * The default value for the attr, if left undefined then this becomes a
+   * required. and must be provided whenever a node or mark of a type that has
+   * them is created.
    */
   default?: string | null;
 
@@ -194,13 +195,15 @@ export interface ExtraAttrsObject {
 }
 
 /**
- * The first value is the name of the attribute the second value is the default and the third
- * is the optional parse name from the dom via `node.getAttribute()`.
+ * The first value is the name of the attribute the second value is the default
+ * and the third is the optional parse name from the dom via
+ * `node.getAttribute()`.
  */
 export type ExtraAttrsTuple = [string, string, string?];
 
 /**
- * Data representation tuple used for injecting extra attributes into an extension.
+ * Data representation tuple used for injecting extra attributes into an
+ * extension.
  */
 export type ExtraAttrs = string | ExtraAttrsTuple | ExtraAttrsObject;
 
@@ -208,7 +211,8 @@ export type ExtraAttrs = string | ExtraAttrsTuple | ExtraAttrsObject;
  * Defines the options that every extension can accept at instantiation.
  *
  * @remarks
- * Make sure to extend from this when defining custom options for your extension.
+ * Make sure to extend from this when defining custom options for your
+ * extension.
  */
 export interface BaseExtensionOptions {
   /**
@@ -217,24 +221,27 @@ export interface BaseExtensionOptions {
   extraStyles?: Interpolation;
 
   /**
-   * Inject additional attributes into the defined mark / node schema.
-   * This can only be used for `NodeExtensions` and `MarkExtensions`.
+   * Inject additional attributes into the defined mark / node schema. This can
+   * only be used for `NodeExtensions` and `MarkExtensions`.
    *
    * @remarks
    *
-   * Sometimes you need to add additional attributes to a node or mark. This property
-   * enables this without needing to create a new extension.
+   * Sometimes you need to add additional attributes to a node or mark. This
+   * property enables this without needing to create a new extension.
    *
-   * - `extraAttrs: ['title']` Create an attribute with name `title`.When parsing the dom it will look for the attribute `title`
-   * - `extraAttrs: [['custom', 'false', 'data-custom'],'title']` - Creates an attribute with name `custom` and default value `false`.
-   * When parsing the dom it will look for the attribute `data-custom`
+   * - `extraAttrs: ['title']` Create an attribute with name `title`.When
+   *   parsing the dom it will look for the attribute `title`
+   * - `extraAttrs: [['custom', 'false', 'data-custom'],'title']` - Creates an
+   *   attribute with name `custom` and default value `false`. When parsing the
+   *   dom it will look for the attribute `data-custom`
    *
    * @default []
    */
   extraAttrs?: ExtraAttrs[];
 
   /**
-   * a configuration object which allows for excluding certain functionality from an extension.
+   * A configuration object which allows for excluding certain functionality
+   * from an extension.
    */
   exclude?: ExcludeOptions;
 }

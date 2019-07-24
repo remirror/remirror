@@ -1,10 +1,10 @@
 import { NodeType } from 'prosemirror-model';
+import { ExtensionType } from './constants';
 import { Extension, isExtension } from './extension';
 import { isNodeActive } from './helpers/utils';
 import {
   BooleanExtensionCheck,
   EditorSchema,
-  ExtensionType,
   NodeExtensionOptions,
   NodeExtensionSpec,
   PlainObject,
@@ -25,8 +25,8 @@ export abstract class NodeExtension<
   /**
    * Identifies this extension as a **NODE** type from the prosemirror terminology.
    */
-  get type(): ExtensionType.NODE {
-    return ExtensionType.NODE;
+  get type(): ExtensionType.Node {
+    return ExtensionType.Node;
   }
 
   /**
@@ -56,4 +56,4 @@ export abstract class NodeExtension<
  * @param extension - the extension to check
  */
 export const isNodeExtension = (extension: unknown): extension is NodeExtension<any> =>
-  isExtension(extension) && extension.type === ExtensionType.NODE;
+  isExtension(extension) && extension.type === ExtensionType.Node;

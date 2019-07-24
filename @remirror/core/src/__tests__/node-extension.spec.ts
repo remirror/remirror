@@ -1,6 +1,7 @@
 import { createBaseTestManager } from '@test-fixtures/schema-helpers';
 import { pmBuild } from 'jest-prosemirror';
 import { NodeExtension } from '../';
+import { NodeGroup } from '../constants';
 import { fromHTML } from '../helpers';
 import { NodeExtensionSpec } from '../types';
 
@@ -12,7 +13,7 @@ class CustomExtension extends NodeExtension {
   get schema(): NodeExtensionSpec {
     return {
       content: 'inline*',
-      group: 'block',
+      group: NodeGroup.Block,
       attrs: this.extraAttrs(),
       draggable: false,
       parseDOM: [

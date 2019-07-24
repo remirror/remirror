@@ -5,6 +5,7 @@ import {
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
+  NodeGroup,
   SchemaNodeTypeParams,
   toggleBlockItem,
 } from '@remirror/core';
@@ -20,7 +21,7 @@ export class CodeBlockExtension extends NodeExtension<NodeExtensionOptions, 'tog
       attrs: this.extraAttrs(),
       content: 'text*',
       marks: '',
-      group: 'block',
+      group: NodeGroup.Block,
       code: true,
       defining: true,
       draggable: false,

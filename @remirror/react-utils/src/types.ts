@@ -471,7 +471,7 @@ export interface BaseExtensionProps {
    *
    * Base extensions are loaded with a priority of 1.
    *
-   * @defaultValue 2
+   * @default 2
    */
   priority?: number;
   children?: never;

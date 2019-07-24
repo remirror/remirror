@@ -1,4 +1,4 @@
-import { DEFAULT_EXTENSION_PRIORITY } from './constants';
+import { DEFAULT_EXTENSION_PRIORITY, MarkGroup, NodeGroup, Tags } from './constants';
 import {
   AnyExtension,
   ExtensionListParams,
@@ -15,7 +15,11 @@ import {
   CommandParams,
   ExtensionCommandFunction,
   ExtensionManagerParams,
+  ExtensionTags,
   FlexibleConfig,
+  GeneralExtensionTags,
+  MarkExtensionTags,
+  NodeExtensionTags,
 } from './types';
 
 type MethodFactory<GMappedFunc extends AnyFunction, GFunc extends AnyFunction> = (
@@ -49,8 +53,8 @@ interface IsNameUniqueParams {
 }
 
 /**
- * Checks whether a given string is unique to the set.
- * Add the name if it doesn't already exist, or throw an error when `shouldThrow` is true.
+ * Checks whether a given string is unique to the set. Add the name if it
+ * doesn't already exist, or throw an error when `shouldThrow` is true.
  *
  * @param params - destructured params
  */
@@ -100,8 +104,8 @@ interface CreateFlexibleFunctionMapParams<
   getItemParams: GetItemParamsMethod<GKey, GFunc>;
 
   /**
-   * Transforms the entry into a callable method with attrs as the first optional parameter.
-   * Something like `actions[name]()`
+   * Transforms the entry into a callable method with attrs as the first
+   * optional parameter. Something like `actions[name]()`
    */
   methodFactory: MethodFactory<GMappedFunc, GFunc>;
 
@@ -111,7 +115,8 @@ interface CreateFlexibleFunctionMapParams<
   arrayTransformer: (fns: GFunc[], methodFactory: MethodFactory<GMappedFunc, GFunc>) => GMappedFunc;
 
   /**
-   * Passes the context (usually the extension manager) which has an instance property `.extensions`
+   * Passes the context (usually the extension manager) which has an instance
+   * property `.extensions`
    */
   extensions: AnyExtension[];
 }
@@ -121,13 +126,15 @@ interface CreateFlexibleFunctionMapParams<
  *
  * @remarks
  *
- * The reason is that extensions can have commands / enabled / active methods that return a very complex type signature
+ * The reason is that extensions can have commands / enabled / active methods
+ * that return a very complex type signature
  *
  * ```ts
  * type FlexibleConfig<Func> = Record<string, Func | Func[]>
  * ```
  *
- * This creates a function that is able to step through each possibility and call the required method.
+ * This creates a function that is able to step through each possibility and
+ * call the required method.
  *
  * @param param - destructured parameters
  */
@@ -175,8 +182,8 @@ interface CommandFlexibleFunctionMapParams extends ExtensionListParams {
 /**
  * Generate all the action commands for usage within the UI.
  *
- * Typically actions are used to create interactive menus.
- * For example a menu can use a command to toggle bold.
+ * Typically actions are used to create interactive menus. For example a menu
+ * can use a command to toggle bold.
  */
 export const createCommands = ({ extensions, params }: CommandFlexibleFunctionMapParams) =>
   createFlexibleFunctionMap<'commands', (attrs?: Attrs) => void, ExtensionCommandFunction>({
@@ -236,7 +243,8 @@ type ExtensionMethodProperties =
   | 'isEnabled';
 
 /**
- * Looks at the passed property and calls the extension with the required parameters.
+ * Looks at the passed property and calls the extension with the required
+ * parameters.
  *
  * @param property - the extension method to map
  * @param params - the params the method will be called with
@@ -269,7 +277,8 @@ function convertToExtensionMapValue(extension: FlexibleExtension): PrioritizedEx
 }
 
 /**
- * Sorts and transforms extension map based on the provided priorities and outputs just the extensions
+ * Sorts and transforms extension map based on the provided priorities and
+ * outputs just the extensions
  *
  * TODO Add a check for requiredExtensions and inject them automatically
  *
@@ -288,8 +297,8 @@ export const transformExtensionMap = (values: FlexibleExtension[]) =>
  * @remarks
  * This is useful for deep equality checks when functions need to be ignored.
  *
- * A current limitation is that it only dives one level deep. So objects with nested object methods
- * will retain those methods.
+ * A current limitation is that it only dives one level deep. So objects with
+ * nested object methods will retain those methods.
  *
  * @param obj - an object which might contain methods
  * @returns a new object without any of the functions defined
@@ -312,6 +321,51 @@ export const ignoreFunctions = (obj: Record<string, unknown>) => {
 export const defaultIsActive = () => false;
 
 /**
- * By default isEnabled should return true to let the code know that the commands are available
+ * By default isEnabled should return true to let the code know that the
+ * commands are available.
  */
 export const defaultIsEnabled = () => true;
+
+/**
+ * Create the extension tags which are passed into each extensions method to
+ * enable dynamically generated rules and commands.
+ */
+export const createExtensionTags = (extensions: AnyExtension[]): ExtensionTags => {
+  const general: GeneralExtensionTags = {
+    [Tags.FormattingMark]: [],
+    [Tags.FormattingNode]: [],
+    [Tags.LastNodeCompatible]: [],
+  };
+
+  const mark: MarkExtensionTags = {
+    [MarkGroup.Alignment]: [],
+    [MarkGroup.Behavior]: [],
+    [MarkGroup.Color]: [],
+    [MarkGroup.FontStyle]: [],
+    [MarkGroup.Indentation]: [],
+    [MarkGroup.Link]: [],
+    [MarkGroup.Code]: [],
+  };
+
+  const node: NodeExtensionTags = { [NodeGroup.Block]: [], [NodeGroup.Inline]: [] };
+
+  for (const extension of extensions) {
+    if (isNodeExtension(extension)) {
+      const group = extension.schema.group as NodeGroup;
+      node[group] = node[group] ? [...node[group], extension.name] : [extension.name];
+    } else if (isMarkExtension(extension)) {
+      const group = extension.schema.group as MarkGroup;
+      mark[group] = mark[group] ? [...mark[group], extension.name] : [extension.name];
+    }
+
+    (extension.tags as Tags[]).forEach(tag => {
+      general[tag] = general[tag] ? [...general[tag], extension.name] : [extension.name];
+    });
+  }
+
+  return {
+    general,
+    mark,
+    node,
+  };
+};

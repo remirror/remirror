@@ -88,6 +88,13 @@ describe('Wysiwyg Showcase', () => {
         `function concatAwesome(str: string) {\n  return 'Oops ' + str;\n}\n`,
       );
     });
+
+    it('can immediately leave the code area with arrow key', async () => {
+      await $editor.type('```ts ' + unformatted);
+      await press({ key: 'ArrowRight' });
+      await $editor.type('Outside of the codeblock');
+      await expect($editor).toMatchElement('p', { text: 'Outside of the codeblock' });
+    });
   });
 
   describe('bold', () => {

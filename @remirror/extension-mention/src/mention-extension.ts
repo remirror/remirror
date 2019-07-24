@@ -69,7 +69,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions, Men
         name: { default: DEFAULT_MATCHER.name },
         ...this.extraAttrs(),
       },
-      group: MarkGroup.BEHAVIOR,
+      group: MarkGroup.Behavior,
       excludes: '_',
       inclusive: false,
       parseDOM: [

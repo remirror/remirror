@@ -1,10 +1,10 @@
 import { MarkType } from 'prosemirror-model';
+import { ExtensionType } from './constants';
 import { Extension, isExtension } from './extension';
 import { isMarkActive } from './helpers/document';
 import {
   BooleanExtensionCheck,
   EditorSchema,
-  ExtensionType,
   MarkExtensionOptions,
   MarkExtensionSpec,
   PlainObject,
@@ -29,8 +29,8 @@ export abstract class MarkExtension<
    * Set's the type of this extension to beDo not override.
    *
    */
-  get type(): ExtensionType.MARK {
-    return ExtensionType.MARK;
+  get type(): ExtensionType.Mark {
+    return ExtensionType.Mark;
   }
 
   /**
@@ -58,4 +58,4 @@ export abstract class MarkExtension<
  * @param extension - the extension to check
  */
 export const isMarkExtension = (extension: unknown): extension is MarkExtension<any> =>
-  isExtension(extension) && extension.type === ExtensionType.MARK;
+  isExtension(extension) && extension.type === ExtensionType.Mark;

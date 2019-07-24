@@ -1,7 +1,7 @@
 import { createTestManager, extensions } from '@test-fixtures/schema-helpers';
 import { EditorView } from 'prosemirror-view';
 import React, { FC } from 'react';
-import { EMPTY_PARAGRAPH_NODE } from '../constants';
+import { EMPTY_PARAGRAPH_NODE, Tags } from '../constants';
 import { Extension } from '../extension';
 import { ExtensionManager, isExtensionManager } from '../extension-manager';
 import { Cast } from '../helpers/base';
@@ -21,6 +21,7 @@ const SSRComponent: FC<Attrs> = () => <div />;
 
 class DummyExtension extends Extension {
   public name = 'dummy';
+  public tags = ['simple', Tags.LastNodeCompatible];
   public commands() {
     return { dummy: mock };
   }

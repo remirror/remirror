@@ -13,6 +13,7 @@ import {
   MarkExtension,
   MarkExtensionOptions,
   MarkExtensionSpec,
+  MarkGroup,
   markPasteRule,
   removeMark,
   SchemaMarkTypeParams,
@@ -45,6 +46,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions, LinkExten
 
   get schema(): MarkExtensionSpec {
     return {
+      group: MarkGroup.Link,
       attrs: {
         ...this.extraAttrs(null),
         href: {

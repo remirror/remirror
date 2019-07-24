@@ -9,6 +9,8 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ### Added
 
+- 🚀 `@remirror/core`: Introduce the concept of meta tags for extensions. These allow an extension to tag itself and
+  these tags are made available through the tag object which is passed to all extension methods.
 - `@remirror/core-extensions`: Add `TrailingNodeExtension` to always append a specified node to the end of the dom.
 - `@remirror/core`: Add `getExtraAttrs` method to the extension which can be used in the `(Mark/Node)Extension`.
 - `@remirror/core`: Add `DropCursorExtension` for a cursor to show up at the exact location an item will be dropped.
@@ -20,6 +22,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 ### Changes
 
 - 💥 **BREAKING `@remirror/core` `@remirror/core-extensions`:** Move `ParagraphExtension` from core to core-extensions. The reason is to not pollute the core library with formatting methods which are primarily just for extensions.
+- 💥 **BREAKING `@remirror/core`:** Rename `ExtensionType.EXTENSION = 'extension'` to `ExtensionType.Plain = 'plain'`.
 - `@remirror/core`: Update `extraAttrs` configuration to enable parsing the dom.
 - `@remirror/core-extensions`: Add `extraAttrs` to the following extensions:
   `LinkExtension`, `ParagraphExtension`, `HeadingExtension`.

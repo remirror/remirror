@@ -7,6 +7,7 @@ import { ComponentType } from 'react';
 import { AnyExtension, ExtensionCommands, FlexibleExtension } from './extension';
 import {
   createCommands,
+  createExtensionTags,
   defaultIsActive,
   defaultIsEnabled,
   extensionPropertyMapper,
@@ -32,6 +33,7 @@ import {
   EditorView,
   ExtensionManagerInitParams,
   ExtensionManagerParams,
+  ExtensionTags,
   MarkExtensionSpec,
   NodeExtensionSpec,
   NodeViewMethod,
@@ -55,6 +57,7 @@ export interface ExtensionManagerData {
   isActive: Record<string, BooleanExtensionCheck<string>>;
   isEnabled: Record<string, BooleanExtensionCheck<string>>;
   options: Record<string, PlainObject>;
+  tags: ExtensionTags;
 }
 
 /**
@@ -70,8 +73,8 @@ export interface ExtensionManagerData {
  * const manager = new ExtensionManager([ new DocExtension(), new TextExtension(), new ParagraphExtension()])
  * ```
  *
- * - Initialize Getters - This connects the extension manager to the
- *   lazily evaluated `getState` method and the `portalContainer`. Once these are
+ * - Initialize Getters - This connects the extension manager to the lazily
+ *   evaluated `getState` method and the `portalContainer`. Once these are
  *   created and allows access to its data.
  *
  * ```ts
@@ -80,8 +83,8 @@ export interface ExtensionManagerData {
  * manager.data.
  * ```
  *
- * - Initialize View - This connects the extension manager to the EditorView and creates
- *   the actions (which need access to the view).
+ * - Initialize View - This connects the extension manager to the EditorView and
+ *   creates the actions (which need access to the view).
  *
  * ```ts
  * manager.initView(new EditorView(...))
@@ -97,14 +100,14 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * Retrieve the latest state of the editor this manager is responsible for. This is only
-   * available after the first initialization.
+   * Retrieve the latest state of the editor this manager is responsible for.
+   * This is only available after the first initialization.
    */
   public getState!: () => EditorState;
 
   /**
-   * Retrieve the portal container for any custom nodeViews. This is only available after
-   * the first initialization.
+   * Retrieve the portal container for any custom nodeViews. This is only
+   * available after the first initialization.
    */
   public portalContainer!: NodeViewPortalContainer;
 
@@ -114,7 +117,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   public readonly extensions: AnyExtension[];
 
   /**
-   * Whether or not the manager has been initialized. This happens after init is called.
+   * Whether or not the manager has been initialized. This happens after init is
+   * called.
    */
   private initialized = false;
 
@@ -130,8 +134,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     this.initData.actions[name] as ActionMethods<GAttrs>;
 
   /**
-   * Creates the extension manager which is used to simplify the management of the
-   * different facets of building an editor with
+   * Creates the extension manager which is used to simplify the management of
+   * the different facets of building an editor with
    */
   constructor(extensionMapValues: FlexibleExtension[]) {
     this.extensions = transformExtensionMap(extensionMapValues);
@@ -141,6 +145,9 @@ export class ExtensionManager implements ExtensionManagerInitParams {
 
     // Options are cached here.
     this.initData.options = this.extensionOptions();
+
+    // Tags are stored here.
+    this.initData.tags = createExtensionTags(this.extensions);
   }
 
   /** Initialization */
@@ -197,8 +204,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   /* Public Get Properties */
 
   /**
-   * All the dynamically generated attributes provided by each extension. High priority
-   * extensions have preference over the lower priority extensions.
+   * All the dynamically generated attributes provided by each extension. High
+   * priority extensions have preference over the lower priority extensions.
    */
   get attributes() {
     let combinedAttributes: AttrsWithClass = {};
@@ -220,7 +227,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
 
   /**
    * Retrieve all the SSRComponent properties from the extensions.
-   * Used to render the initial SSR output.
+   * This is used to render the initial SSR output.
    */
   get components() {
     const components: Record<string, ComponentType> = {};
@@ -273,11 +280,18 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * A shorthand method for retrieving the schema for this extension manager from the
-   * data.
+   * A shorthand method for retrieving the schema for this extension manager
+   * from the data.
    */
   get schema() {
     return this.initData.schema;
+  }
+
+  /**
+   * A shorthand getter for retrieving the tags from the extension manager.
+   */
+  get tags() {
+    return this.initData.tags;
   }
 
   /**
@@ -294,7 +308,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    */
   private get params(): ExtensionManagerParams {
     return {
-      schema: this.initData.schema,
+      tags: this.tags,
+      schema: this.schema,
       getState: this.getState,
       portalContainer: this.portalContainer,
       getActions: this.getActions,
@@ -321,8 +336,9 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * Collect data from all the extensions. This will be made available to the consuming react component
-   * within the context data and also the child renderProp function parameters.
+   * Collect data from all the extensions. This will be made available to the
+   * consuming react component within the context data and also the child
+   * renderProp function parameters.
    */
   public extensionData() {
     const data: Record<string, PlainObject> = {};
@@ -337,8 +353,9 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * Checks whether two manager's are equal. Can be used to determine whether
-   * a change in props has caused anything to actually change and prevent a rerender.
+   * Checks whether two manager's are equal. Can be used to determine whether a
+   * change in props has caused anything to actually change and prevent a
+   * rerender.
    *
    * ExtensionManagers are equal when
    * - They have the same number of extensions
@@ -373,7 +390,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * A handler which allows the extension to respond to each transaction without needing to register a plugin.
+   * A handler which allows the extension to respond to each transaction without
+   * needing to register a plugin.
    *
    * This is currently used in the collaboration plugin.
    */
@@ -384,7 +402,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * Retrieve the state for a given extension name. This will throw an error if the extension doesn't exist.
+   * Retrieve the state for a given extension name. This will throw an error if
+   * the extension doesn't exist.
    *
    * @param name - the name of the extension
    */
@@ -412,7 +431,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   /* Private Methods */
 
   /**
-   * Checks to see if the extension manager has been initialized and throws if not
+   * Checks to see if the extension manager has been initialized and throws if
+   * not
    */
   private checkInitialized() {
     if (!this.initialized) {
@@ -423,7 +443,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * Dynamically create the editor schema based on the extensions that have been passed in.
+   * Dynamically create the editor schema based on the extensions that have been
+   * passed in.
    *
    * This is called as soon as the ExtensionManager is created.
    */
@@ -448,7 +469,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   /**
    * Create the actions which are passed into the render props.
    *
-   * RemirrorActions allow for checking if a node / mark is active, enabled, and also running the command.
+   * RemirrorActions allow for checking if a node / mark is active, enabled, and
+   * also running the command.
    *
    * - `isActive` defaults to a function returning false
    * - `isEnabled` defaults to a function returning true
@@ -514,7 +536,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * Retrieve the nodeViews created on the extensions for use within prosemirror state
+   * Retrieve the nodeViews created on the extensions for use within prosemirror
+   * state
    */
   private nodeViews() {
     this.checkInitialized();
@@ -562,7 +585,8 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   }
 
   /**
-   * Retrieve all inputRules (how the editor responds to text matching certain rules).
+   * Retrieve all inputRules (how the editor responds to text matching certain
+   * rules).
    */
   private inputRules() {
     this.checkInitialized();

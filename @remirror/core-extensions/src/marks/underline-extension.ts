@@ -3,6 +3,7 @@ import {
   MarkExtension,
   MarkExtensionOptions,
   MarkExtensionSpec,
+  MarkGroup,
   SchemaMarkTypeParams,
 } from '@remirror/core';
 import { toggleMark } from 'prosemirror-commands';
@@ -14,6 +15,7 @@ export class UnderlineExtension extends MarkExtension<MarkExtensionOptions, 'und
 
   get schema(): MarkExtensionSpec {
     return {
+      group: MarkGroup.FontStyle,
       parseDOM: [
         {
           tag: 'u',

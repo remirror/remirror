@@ -12,6 +12,7 @@ import {
   mod,
   NodeExtension,
   NodeExtensionSpec,
+  NodeGroup,
   nodeInputRule,
   Plugin,
   removeNodeAtPosition,
@@ -75,7 +76,7 @@ export class CodeBlockExtension extends NodeExtension<
       },
       content: 'text*',
       marks: '',
-      group: 'block',
+      group: NodeGroup.Block,
       code: true,
       defining: true,
       isolating: true,
@@ -181,6 +182,7 @@ export class CodeBlockExtension extends NodeExtension<
       });
       return { language };
     };
+
     return [
       nodeInputRule({
         regexp,
@@ -188,7 +190,6 @@ export class CodeBlockExtension extends NodeExtension<
         updateSelection: true,
         getAttrs,
       }),
-      // wrappingInputRule(/^```(?:[a-zA-Z]*)? $/, type, getAttrs),
     ];
   }
 

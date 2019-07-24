@@ -4,6 +4,7 @@ import {
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
+  NodeGroup,
   SchemaNodeTypeParams,
   toggleList,
 } from '@remirror/core';
@@ -23,7 +24,7 @@ export class OrderedListExtension extends NodeExtension<NodeExtensionOptions, 't
         ...this.extraAttrs(),
       },
       content: 'listItem+',
-      group: 'block',
+      group: NodeGroup.Block,
       parseDOM: [
         {
           tag: 'ol',

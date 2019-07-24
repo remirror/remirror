@@ -5,6 +5,7 @@ import {
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
+  NodeGroup,
   ProsemirrorNode,
   SchemaNodeTypeParams,
   toggleBlockItem,
@@ -40,7 +41,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions, 'to
         },
       },
       content: 'inline*',
-      group: 'block',
+      group: NodeGroup.Block,
       defining: true,
       draggable: false,
       parseDOM: this.options.levels.map(level => ({

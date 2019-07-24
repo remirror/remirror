@@ -3,6 +3,7 @@ import {
   MarkExtension,
   MarkExtensionOptions,
   MarkExtensionSpec,
+  MarkGroup,
   markInputRule,
   markPasteRule,
   SchemaMarkTypeParams,
@@ -16,6 +17,7 @@ export class CodeExtension extends MarkExtension<MarkExtensionOptions, 'code', {
 
   get schema(): MarkExtensionSpec {
     return {
+      group: MarkGroup.Code,
       parseDOM: [{ tag: 'code' }],
       toDOM: () => ['code', 0],
     };

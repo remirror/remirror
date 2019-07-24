@@ -1,3 +1,4 @@
+import { NodeGroup } from '@remirror/core';
 import { NodeSpec, Schema } from 'prosemirror-model';
 import { marks, nodes } from 'prosemirror-schema-basic';
 import {
@@ -51,7 +52,7 @@ const atomInline: NodeSpec = {
 
 const atomBlock: NodeSpec = {
   inline: false,
-  group: 'block',
+  group: NodeGroup.Block,
   atom: true,
   selectable: true,
   parseDOM: [
@@ -66,7 +67,7 @@ const atomBlock: NodeSpec = {
 
 const atomContainer: NodeSpec = {
   inline: false,
-  group: 'block',
+  group: NodeGroup.Block,
   content: 'atomBlock+',
   parseDOM: [
     {
@@ -80,7 +81,7 @@ const atomContainer: NodeSpec = {
 
 const containerWithRestrictedContent: NodeSpec = {
   inline: false,
-  group: 'block',
+  group: NodeGroup.Block,
   content: 'paragraph+',
   parseDOM: [
     {

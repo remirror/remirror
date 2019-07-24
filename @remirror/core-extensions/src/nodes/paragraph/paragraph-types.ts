@@ -1,23 +1,6 @@
-import { Attrs, FindParentNodeResult, NodeExtensionOptions } from '@remirror/core';
-
-/**
- * False when there is already a paragraph at the end of the document.
- *
- * The result of the find node when the node needs to be replaced.
- */
-export type ShouldInsertParagraphAtEnd = false | FindParentNodeResult;
+import { Attrs, NodeExtensionOptions } from '@remirror/core';
 
 export interface ParagraphExtensionOptions extends NodeExtensionOptions {
-  /**
-   * Ensure that there's always a trailing paragraph at the end of the document.
-   *
-   * Why? In some scenarios it is difficult to place a cursor after the last element.
-   * This ensures there's always space to select the position afterward.
-   *
-   * @default false
-   */
-  ensureTrailingParagraph?: boolean;
-
   /**
    * The attribute to use to store the value of the current indentation level.
    */

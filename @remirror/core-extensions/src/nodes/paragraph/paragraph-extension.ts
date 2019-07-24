@@ -1,19 +1,12 @@
-import {
-  CommandNodeTypeParams,
-  NodeExtension,
-  NodeExtensionSpec,
-  SchemaNodeTypeParams,
-} from '@remirror/core';
+import { CommandNodeTypeParams, NodeExtension, NodeExtensionSpec, NodeGroup, Tags } from '@remirror/core';
 import { setBlockType } from 'prosemirror-commands';
-import { Plugin } from 'prosemirror-state';
-import { ALIGN_PATTERN, EMPTY_CSS_VALUE, INDENT_ATTRIBUTE, INDENT_LEVELS } from '../node-constants';
+import { ALIGN_PATTERN, INDENT_ATTRIBUTE, INDENT_LEVELS } from '../node-constants';
 import { marginToIndent } from '../node-utils';
-import { createParagraphPlugin } from './paragraph-plugin';
 import { ParagraphExtensionAttrs, ParagraphExtensionOptions } from './paragraph-types';
 
 /**
- * The paragraph is one of the essential building blocks for a prosemirror editor
- * and by default it is provided to all editors.
+ * The paragraph is one of the essential building blocks for a prosemirror
+ * editor and by default it is provided to all editors.
  *
  * @builtin
  */
@@ -22,9 +15,12 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions,
     return 'paragraph' as const;
   }
 
+  get tags() {
+    return [Tags.LastNodeCompatible];
+  }
+
   get defaultOptions() {
     return {
-      ensureTrailingParagraph: false,
       indentAttribute: INDENT_ATTRIBUTE,
       indentLevels: INDENT_LEVELS,
     };
@@ -33,11 +29,10 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions,
   get schema(): NodeExtensionSpec {
     return {
       content: 'inline*',
-      group: 'block',
+      group: NodeGroup.Block,
       attrs: {
         ...this.extraAttrs(),
         align: { default: null },
-        color: { default: null },
         id: { default: null },
         indent: { default: 0 },
         lineSpacing: { default: null },
@@ -91,15 +86,6 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions,
         return setBlockType(type, attrs);
       },
     };
-  }
-
-  /**
-   * Create the plugin that adds the configurable functionality.
-   *
-   * - Ensure the last node in the document is a paragraph
-   */
-  public plugin({ type }: SchemaNodeTypeParams): Plugin {
-    return createParagraphPlugin({ extension: this, type });
   }
 }
 

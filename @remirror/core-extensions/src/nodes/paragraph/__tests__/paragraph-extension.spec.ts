@@ -1,69 +1,34 @@
-import { fromHTML } from '@remirror/core';
-import { createBaseTestManager, ExtensionMap } from '@test-fixtures/schema-helpers';
+import { fromHTML, toHTML } from '@remirror/core';
+import { createBaseTestManager } from '@test-fixtures/schema-helpers';
 import { pmBuild } from 'jest-prosemirror';
-import { renderEditor } from 'jest-remirror';
 import { ParagraphExtension } from '../paragraph-extension';
 
 describe('schema', () => {
   let { schema } = createBaseTestManager([{ extension: new ParagraphExtension(), priority: 1 }]);
   let { doc, p } = pmBuild(schema, {});
 
-  beforeEach(() => {
-    ({ schema } = createBaseTestManager([{ extension: new ParagraphExtension(), priority: 1 }]));
-    ({ doc, p } = pmBuild(schema, {}));
-  });
-
   it('it can parse content', () => {
+    ({ schema } = createBaseTestManager([{ extension: new ParagraphExtension(), priority: 1 }]));
+    ({ doc, p } = pmBuild(schema, {
+      p: { nodeType: 'paragraph', indent: 1, align: 'right', lineSpacing: '100%', id: 'never' },
+    }));
     const node = fromHTML({
-      content: `<p>hello</p>`,
+      content: `<p data-indent="1" style="text-align: right; line-height: 100%;" id="never">hello</p>`,
       schema,
     });
     const expected = doc(p('hello'));
     expect(node).toEqualPMNode(expected);
   });
-});
 
-const { heading } = ExtensionMap.nodes;
-const create = (params = { ensureTrailingParagraph: true }) =>
-  renderEditor({
-    plainNodes: [new ParagraphExtension({ ...params }), heading],
-  });
-
-describe('plugin', () => {
-  let {
-    add,
-    nodes: { doc, p, heading: h },
-  } = create();
-
-  beforeEach(() => {
-    ({
-      add,
-      nodes: { doc, p, heading: h },
-    } = create());
-  });
-
-  it('adds a new paragraph when needed', () => {
-    const { state } = add(doc(h('Yo')));
-    expect(state.doc).toEqualRemirrorDocument(doc(h('Yo'), p()));
-  });
-
-  it('does not add multiple paragraphs', () => {
-    const { state } = add(doc(p('Yo')));
-    expect(state.doc).toEqualRemirrorDocument(doc(p('Yo')));
-  });
-
-  it('dynamically appends paragraphs', () => {
-    const { state } = add(doc(p('Yo'), p('<cursor>'))).insertText('# Greatness');
-    expect(state.doc).toEqualRemirrorDocument(doc(p('Yo'), h('Greatness'), p()));
-  });
-
-  it('does nothing when `ensureTrailingParagraph` is false', () => {
-    ({
-      add,
-      nodes: { doc, p, heading: h },
-    } = create({ ensureTrailingParagraph: false }));
-
-    const { state } = add(doc(p('Yo'), p('<cursor>'))).insertText('# Greatness');
-    expect(state.doc).toEqualRemirrorDocument(doc(p('Yo'), h('Greatness')));
+  it('it produces valid html', () => {
+    ({ schema } = createBaseTestManager([{ extension: new ParagraphExtension(), priority: 1 }]));
+    ({ doc, p } = pmBuild(schema, {
+      p: { nodeType: 'paragraph', indent: 1, align: 'right', lineSpacing: '100%', id: 'never' },
+    }));
+    const html = toHTML({
+      node: p('hello'),
+      schema,
+    });
+    expect(html).toBe(`<p style="text-align: right;line-height: 100%;" data-indent="1" id="never">hello</p>`);
   });
 });
