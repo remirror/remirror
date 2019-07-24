@@ -2,7 +2,7 @@
   "private": true,
   "name": "with-razzle",
   "license": "MIT",
-  "version": "0.4.1",
+  "version": "0.4.2-canary.0",
   "scripts": {
     "build": "razzle build",
     "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
@@ -13,7 +13,7 @@
   "dependencies": {
     "@emotion/core": "10.0.14",
     "@emotion/styled": "10.0.14",
-    "@remirror/showcase": "0.4.1",
+    "@remirror/showcase": "0.4.2-canary.0",
     "express": "4.17.1",
     "react": "16.8.6",
     "react-dom": "16.8.6",

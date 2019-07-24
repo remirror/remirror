@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/extension-emoji"
   },
-  "version": "0.4.0",
+  "version": "0.4.2-canary.0",
   "main": "lib/index.js",
   "module": "lib/dist/extension-emoji.esm.js",
   "files": [
@@ -30,8 +30,8 @@
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "@emotion/core": "^10.0.14",
-    "@remirror/core": "0.4.0",
-    "@remirror/react": "0.4.0",
+    "@remirror/core": "0.4.2-canary.0",
+    "@remirror/react": "0.4.2-canary.0",
     "@types/emoji-mart": "^2.8.4",
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-state": "^1.2.3",
@@ -50,7 +50,7 @@
     "react-dom": "^16.8.0"
   },
   "devDependencies": {
-    "jest-remirror": "0.4.0"
+    "jest-remirror": "0.4.2-canary.0"
   },
   "publishConfig": {
     "access": "public"

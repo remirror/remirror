@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/extension-code-block"
   },
-  "version": "0.4.0",
+  "version": "0.4.2-canary.0",
   "main": "lib/index.js",
   "module": "lib/dist/extension-code-block.esm.js",
   "files": [
@@ -31,8 +31,8 @@
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "@emotion/core": "^10.0.14",
-    "@remirror/core": "0.4.0",
-    "@remirror/react-utils": "0.4.0",
+    "@remirror/core": "0.4.2-canary.0",
+    "@remirror/react-utils": "0.4.2-canary.0",
     "@types/prismjs": "^1.16.0",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",

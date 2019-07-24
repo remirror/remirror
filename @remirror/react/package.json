@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/react"
   },
-  "version": "0.4.0",
+  "version": "0.4.2-canary.0",
   "main": "lib/index.js",
   "module": "lib/dist/react.esm.js",
   "files": [
@@ -30,11 +30,11 @@
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "@emotion/core": "^10.0.14",
-    "@remirror/core": "0.4.0",
-    "@remirror/core-extensions": "0.4.0",
-    "@remirror/react-ssr": "0.4.0",
-    "@remirror/react-utils": "0.4.0",
-    "@remirror/renderer-react": "0.4.0",
+    "@remirror/core": "0.4.2-canary.0",
+    "@remirror/core-extensions": "0.4.2-canary.0",
+    "@remirror/react-ssr": "0.4.2-canary.0",
+    "@remirror/react-utils": "0.4.2-canary.0",
+    "@remirror/renderer-react": "0.4.2-canary.0",
     "@types/hoist-non-react-statics": "^3.3.0",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-model": "^1.7.2",

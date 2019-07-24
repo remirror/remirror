@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/react-ssr"
   },
-  "version": "0.4.0",
+  "version": "0.4.2-canary.0",
   "main": "lib/index.js",
   "module": "lib/dist/react-ssr.esm.js",
   "browser": {
@@ -33,8 +33,8 @@
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "@emotion/core": "^10.0.14",
-    "@remirror/core": "0.4.0",
-    "@remirror/renderer-react": "0.4.0",
+    "@remirror/core": "0.4.2-canary.0",
+    "@remirror/renderer-react": "0.4.2-canary.0",
     "@types/min-document": "^2.19.0",
     "@types/prosemirror-view": "1.9.0",
     "min-document": "^2.19.0",
