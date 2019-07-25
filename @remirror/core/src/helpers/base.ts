@@ -683,6 +683,28 @@ export const clamp = ({ min, max, value }: ClampParams): number =>
   value < min ? min : value > max ? max : value;
 
 /**
- * Get the last element of the array
+ * Get the last element of the array.
  */
 export const last = <GType>(array: GType[]) => array[array.length - 1];
+
+/**
+ * Sorts an array while retaining the original order when the compare method
+ * identifies the items as equal.
+ *
+ * `Array.prototype.sort()` is unstable and so values that are the same
+ * will jump around in a non deterministic manner. Here I'm using the index
+ * as a fallback. If two elements have the same priority the element with
+ * the lower index is placed first hence retaining the original order.
+ *
+ * @param array - the array to sort
+ * @param compareFn - compare the two value arguments `a` and `b`
+ *                  - return 0 for equal
+ *                  - return number > 0 for a > b
+ *                  - return number < 0 for b > a
+ */
+export const sort = <GType>(array: GType[], compareFn: (a: GType, b: GType) => number) => {
+  return array
+    .map((value, index) => ({ value, index }))
+    .sort((a, b) => compareFn(a.value, b.value) || a.index - b.index)
+    .map(({ value }) => value);
+};

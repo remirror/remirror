@@ -6,7 +6,7 @@ import {
   isExtension,
   PrioritizedExtension,
 } from './extension';
-import { bool, Cast, isFunction } from './helpers/base';
+import { bool, Cast, isFunction, sort } from './helpers/base';
 import { isMarkExtension } from './mark-extension';
 import { isNodeExtension } from './node-extension';
 import {
@@ -273,7 +273,7 @@ export const extensionPropertyMapper = <
  * Converts an extension to its mapped value
  */
 function convertToExtensionMapValue(extension: FlexibleExtension): PrioritizedExtension {
-  return isExtension(extension) ? { priority: DEFAULT_EXTENSION_PRIORITY, extension } : extension;
+  return isExtension(extension) ? { priority: DEFAULT_EXTENSION_PRIORITY, extension } : { ...extension };
 }
 
 /**
@@ -286,10 +286,9 @@ function convertToExtensionMapValue(extension: FlexibleExtension): PrioritizedEx
  * @returns the list of extension instances sorted by priority
  */
 export const transformExtensionMap = (values: FlexibleExtension[]) =>
-  values
-    .map(convertToExtensionMapValue)
-    .sort((a, b) => a.priority - b.priority)
-    .map(({ extension }) => extension);
+  sort(values.map(convertToExtensionMapValue), (a, b) => a.priority - b.priority).map(
+    ({ extension }) => extension,
+  );
 
 /**
  * Takes in an object and removes all function values.
