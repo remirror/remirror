@@ -53,4 +53,5 @@ notifications:
 branches:
   only:
     - master
+    - canary
     - ci/*
