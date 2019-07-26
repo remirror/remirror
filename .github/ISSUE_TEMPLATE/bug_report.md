@@ -10,3 +10,7 @@ about: Create a report to help us improve
 ## Possible Fix
 
 <!--- Not obligatory, but suggest a fix or reason for the bug -->
+
+## Checklist
+
+- [ ] I have read the [**contributing**][contributing] document.

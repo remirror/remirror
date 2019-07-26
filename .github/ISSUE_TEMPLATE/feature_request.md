@@ -10,3 +10,7 @@ about: Suggest an idea for this project
 ## Possible Implementation
 
 <!--- Not obligatory, but suggest an idea for implementing addition or change -->
+
+## Checklist
+
+- [ ] I have read the [**contributing**][contributing] document.

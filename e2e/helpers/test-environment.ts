@@ -22,7 +22,6 @@ declare global {
 
   /**
    * Lists the servers running for end to end test.
-   * Currently this supports ['next', 'storybook', 'docz']
    */
   const __SERVER__: {
     config: {
@@ -50,7 +49,7 @@ declare global {
     }
   }
 
-  type RemirrorTestServers = 'storybook' | 'next' | 'docz' | 'razzle';
+  type RemirrorTestServers = 'storybook' | 'next' | 'docs' | 'razzle';
   type RemirrorTestEditors = 'twitter' | 'wysiwyg' | 'epic';
   type SupportedBrowserName = 'firefox' | 'chromium';
 }

@@ -6,7 +6,7 @@
 
 <!-- Go over all the following points, and put an `x` in all the boxes that apply. -->
 
-- [ ] I have read the [**CONTRIBUTING**](https://github.com/ifiokjr/remirror/blob/master/docs/contributing.md) document.
+- [ ] I have read the [**contributing**][contributing] document.
 - [ ] My code follows the code style of this project and `yarn fix` runs successfully.
 - [ ] I have updated the documentation where necessary.
 - [ ] New code is unit tested and all current tests pass when running `yarn test` .
@@ -14,3 +14,5 @@
 ## Screenshots
 
 <!-- Delete this section if not applicable -->
+
+[contributing]: https://github.com/ifiokjr/remirror/blob/master/docs/pages/contributing.md

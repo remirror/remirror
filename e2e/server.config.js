@@ -37,9 +37,9 @@ const servers = (exports.servers = {
     regex: noSSRRegex,
     home: 'http://localhost:3030',
   },
-  docz: {
+  docs: {
     server: {
-      command: 'cd docs && yarn docz dev --debug -p 3030',
+      command: 'cd docs && yarn start -p 3030',
       port: 3030,
       usedPortAction: 'kill',
       launchTimeout: 120000,
@@ -69,7 +69,7 @@ const editors = (exports.editors = {
       empty: 'http://localhost:3030/editor/twitter',
       content: 'http://localhost:3030/editor/twitter/content',
     },
-    docz: {
+    docs: {
       empty: 'http://localhost:3030/showcase/twitter',
       content: '',
     },
@@ -87,7 +87,7 @@ const editors = (exports.editors = {
       empty: 'http://localhost:3030/editor/wysiwyg',
       content: 'http://localhost:3030/editor/wysiwyg/content',
     },
-    docz: {
+    docs: {
       empty: 'http://localhost:3030/showcase/wysiwyg',
       content: '',
     },

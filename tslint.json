@@ -18,6 +18,7 @@
         "prettier"
       ]
     ],
+    "no-unused": false,
     "no-empty": false,
     "no-any": false,
     "no-object-literal-type-assertion": false,
@@ -29,6 +30,7 @@
     "no-submodule-imports": [
       true,
       "react-use",
+      "theme-ui",
       "@remirror/showcase",
       "@storybook/addon-links",
       "@storybook/addon-actions",
@@ -45,7 +47,8 @@
       "emoji-mart",
       "prismjs",
       "refractor",
-      "react-syntax-highlighter"
+      "react-syntax-highlighter",
+      "typings"
     ]
   }
 }
