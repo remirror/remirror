@@ -26,6 +26,7 @@ import {
   isSymbol,
   isUndefined,
   randomInt,
+  sort,
   startCase,
   take,
   trim,
@@ -269,4 +270,20 @@ test('uniqueArray', () => {
 
   const dup = ['a', 'a', 'a', 'a', 'b'];
   expect(uniqueArray(dup)).toEqual(['a', 'b']);
+});
+
+test('sort', () => {
+  const arr = [...Array(100), 11, 9, 12].map((value, index) => ({ value: value || 10, index }));
+  // expect(arr.sort((a, b) => a.value - b.value)).toEqual([
+  //   { value: 9, index: 101 },
+  //   ...take(arr, 100),
+  //   { value: 11, index: 100 },
+  //   { value: 12, index: 102 },
+  // ]);
+  expect(sort(arr, (a, b) => a.value - b.value)).toEqual([
+    { value: 9, index: 101 },
+    ...take(arr, 100),
+    { value: 11, index: 100 },
+    { value: 12, index: 102 },
+  ]);
 });

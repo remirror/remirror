@@ -6,8 +6,13 @@ describe('transformExtensionMap', () => {
   it('maps the extensions', () => {
     const doc = new DocExtension();
     const p = new TestExtension();
-    const extensions = [{ extension: doc, priority: 2 }, { extension: p, priority: 2 }];
-    expect(transformExtensionMap(extensions)).toEqual([doc, p]);
+    const text = new TextExtension();
+    const extensions = [
+      { extension: doc, priority: 2 },
+      { extension: p, priority: 2 },
+      { extension: text, priority: 2 },
+    ];
+    expect(transformExtensionMap(extensions)).toEqual([doc, p, text]);
   });
 
   it('sorts the extensions by priority', () => {

@@ -1,6 +1,13 @@
 import React from 'react';
 
-import { DocExtension, ExtensionManager, TextExtension } from '@remirror/core';
+import {
+  DocExtension,
+  ExtensionManager,
+  NodeExtension,
+  NodeExtensionSpec,
+  NodeGroup,
+  TextExtension,
+} from '@remirror/core';
 import { BoldExtension, CodeBlockExtension, ParagraphExtension } from '@remirror/core-extensions';
 import { simpleJSON, testJSON } from '@test-fixtures/object-nodes';
 import { createTestManager } from '@test-fixtures/schema-helpers';
@@ -9,10 +16,27 @@ import { Node as PMNode } from 'prosemirror-model';
 
 import { ReactSerializer } from '../serializer';
 
-const manager = createTestManager([{ extension: new CodeBlockExtension(), priority: 2 }]);
+class FooExtension extends NodeExtension {
+  public name = 'foo';
+  public schema: NodeExtensionSpec = {
+    content: 'block*',
+    group: NodeGroup.Block,
+
+    toDOM() {
+      const attrs = {
+        'data-foo-type': 'true',
+      };
+      return ['div', attrs, ['div', { class: 'inside' }, 0]];
+    },
+  };
+}
+
+const manager = createTestManager([
+  { extension: new CodeBlockExtension(), priority: 2 },
+  { extension: new FooExtension(), priority: 3 },
+]);
 const { schema } = manager;
 const serializer = ReactSerializer.fromExtensionManager(manager);
-
 test('ReactSerializer.fromExtensionManager', () => {
   expect(serializer).toBeInstanceOf(ReactSerializer);
   expect(serializer.nodes.paragraph).toBeFunction();
@@ -76,6 +100,21 @@ describe('ReactSerializer', () => {
         </p>,
       );
     });
+
+    it('serializes a deeply nested custom node', () => {
+      const node = PMNode.fromJSON(schema, {
+        type: 'foo',
+        content: [{ type: 'paragraph', content: [{ type: 'text', text: 'This is the foo thing' }] }],
+      });
+
+      expect(shallow(serializer.serializeNode(node) as JSX.Element)).toMatchElement(
+        <div data-foo-type='true'>
+          <div className='inside'>
+            <p>This is the foo thing</p>
+          </div>
+        </div>,
+      );
+    });
   });
 });
 
@@ -101,6 +140,19 @@ describe('ReactSerializer.renderSpec', () => {
       <div {...attrs}>
         <p />
         message
+      </div>,
+    );
+  });
+
+  it('supports deep nesting', () => {
+    expect(
+      shallow(ReactSerializer.renderSpec(
+        ['div', attrs, ['div', { class: 'inside' }, 0]],
+        'message',
+      ) as JSX.Element),
+    ).toMatchElement(
+      <div {...attrs}>
+        <div>message</div>
       </div>,
     );
   });
