@@ -171,7 +171,6 @@ interface FindParentNodeParams extends SelectionParams, PredicateParams<Prosemir
  * that the `predicate` returns truthy for. `start` points to the start position
  * of the node, `pos` points directly before the node.
  *
- * @example
  * ```ts
  * const predicate = node => node.type === schema.nodes.blockquote;
  * const parent = findParentNode(predicate)(selection);
@@ -246,7 +245,6 @@ interface FindParentNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
  *  `start` points to the start position of the node, `pos` points directly
  *  before the node.
  *
- *  @example
  *  ```ts
  *  const parent = findParentNodeOfType(schema.nodes.paragraph)(selection);
  *  ```
@@ -261,7 +259,6 @@ export const findParentNodeOfType = ({
 /**
  * Returns position of the previous node.
  *
- * @example
  * ```ts
  * const pos = findPositionOfNodeBefore(tr.selection);
  * ```

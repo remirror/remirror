@@ -115,8 +115,6 @@ dependencies/**/yarn.lock
 
 ./**/.vscode
 
-# Docz
-.docz
 
 #
 .vscode
@@ -138,3 +136,5 @@ secret.json
 
 .out
 storybook-static
+
+docs/public/**

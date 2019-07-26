@@ -150,8 +150,6 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     this.initData.tags = createExtensionTags(this.extensions);
   }
 
-  /** Initialization */
-
   /**
    * Initialize the extension manager with important data.
    *

@@ -73,7 +73,8 @@ interface RemirrorState {
    */
   editor: CompareStateParams;
   /**
-   * Used when suppressHydrationWarning is true to determine when it's okay to render the client content.
+   * Used when suppressHydrationWarning is true to determine when it's okay to
+   * render the client content.
    */
   shouldRenderClient?: boolean;
 }
@@ -87,7 +88,8 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   public static $$remirrorType = RemirrorElementType.Editor;
 
   /**
-   * This is needed to manage the controlled component `value` prop and copy it to the components state for internal usage.
+   * This is needed to manage the controlled component `value` prop and copy it
+   * to the components state for internal usage.
    */
   public static getDerivedStateFromProps(props: RemirrorProps, state: RemirrorState): RemirrorState | null {
     const { onStateChange, value } = props;
@@ -95,18 +97,21 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
       editor: { newState },
       ...rest
     } = state;
+
     if (newState && onStateChange && value && value !== newState) {
       return {
         editor: { newState: value, oldState: newState },
         ...rest,
       };
     }
+
     return null;
   }
 
   /**
-   * This method manages state updates only when the `onStateChange` is passed into the editor. Since it's up to the
-   * user to provide state updates to the editor this method is called when the value prop has changed.
+   * This method manages state updates only when the `onStateChange` is passed
+   * into the editor. Since it's up to the user to provide state updates to the
+   * editor this method is called when the value prop has changed.
    */
   private controlledComponentUpdateHandler?: (state: EditorState) => void;
   /**
@@ -125,12 +130,14 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   private view: EditorViewType;
 
   /**
-   * A unique ID for the editor which is also used as a key to pass into `getRootProps`.
+   * A unique ID for the editor which is also used as a key to pass into
+   * `getRootProps`.
    */
   private uid = uniqueId({ size: 10 });
 
   /**
-   * The portal container which keeps track of all the React Portals containing custom prosemirror NodeViews.
+   * The portal container which keeps track of all the React Portals containing
+   * custom prosemirror NodeViews.
    */
   private readonly portalContainer: NodeViewPortalContainer = new NodeViewPortalContainer();
 
@@ -149,8 +156,8 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   }
 
   /**
-   * A utility for retrieving the correct css function. Returns a noop when the user has
-   * set `withoutEmotion` to true and requested emotion be removed.
+   * A utility for retrieving the correct css function. Returns a noop when the
+   * user has set `withoutEmotion` to true and requested emotion be removed.
    */
   private get css(): typeof css {
     return this.props.withoutEmotion ? cssNoOp : css;
@@ -174,7 +181,8 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   /**
    * Reinitialize the Editor's manager when a new one is passed in via props.
    *
-   * TODO check whether or not the schema has changed and log a warning. Schema shouldn't change.
+   * TODO check whether or not the schema has changed and log a warning. Schema
+   * shouldn't change.
    */
   public updateExtensionManager() {
     this.manager.init({ getState: this.getState, portalContainer: this.portalContainer }).initView(this.view);
@@ -187,10 +195,11 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
     this.props.onStateChange && this.props.value ? this.props.value : this.view.state;
 
   /**
-   * Create the initial React state which stores copies of the Prosemirror editor state.
-   * Our React state also keeps track of the previous active state.
+   * Create the initial React state which stores copies of the Prosemirror
+   * editor state. Our React state also keeps track of the previous active
+   * state.
    *
-   * It this point both oldState and newState point to the same state object.
+   * At this point both oldState and newState point to the same state object.
    */
   private createInitialState(): RemirrorState {
     const { suppressHydrationWarning } = this.props;
@@ -207,7 +216,7 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   }
 
   /**
-   * Create the Prosemirror editor view.
+   * Create the prosemirror editor view.
    */
   private createView() {
     return createEditorView(
@@ -247,17 +256,24 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
     return styles;
   }
 
+  /**
+   * The external `getRootProps` that is used to spread props onto a desired
+   * holder element for the prosemirror view.
+   */
   private getRootProps = <GRefKey extends string = 'ref'>(options?: GetRootPropsConfig<GRefKey>) => {
     return this.internalGetRootProps(options, null);
   };
+
   /**
-   * Creates the props that should be spread on the root element inside which the prosemirror instance will be rendered.
+   * Creates the props that should be spread on the root element inside which
+   * the prosemirror instance will be rendered.
    */
   private internalGetRootProps = <GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,
     children?: ReactNode,
   ): RefKeyRootProps<GRefKey> => {
-    // Ensure that this is the first time `getRootProps` is being called during this render.
+    // Ensure that this is the first time `getRootProps` is being called during
+    // this render.
     if (this.rootPropsConfig.called) {
       throw new Error(
         '`getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.',
@@ -277,15 +293,17 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   };
 
   /**
-   * The method passed to the render props that can be used for passing the position and positioner
-   * information components that want to respond to the cursor position (e.g.) a floating / bubble menu.
+   * The method passed to the render props that can be used for passing the
+   * position and positioner information components that want to respond to the
+   * cursor position (e.g.) a floating / bubble menu.
    */
   private getPositionerProps = <GRefKey extends string = 'ref'>(
     options: GetPositionerPropsConfig<GRefKey>,
   ) => {
     const { refKey = 'ref', ...config } = { ...defaultPositioner, ...(options || {}) };
 
-    // Create the onRef handler which will store the ref to the positioner component
+    // Create the onRef handler which will store the ref to the positioner
+    // component
     const ref = this.positionerRefFactory({
       positionerId: config.positionerId,
       position: config.initialPosition,
@@ -313,11 +331,13 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   };
 
   /**
-   * A curried function which holds the positionerId and position in a closure. It generate the method that is passed
-   * into a `ref` prop for any component to register dom element for the positioner.
+   * A curried function which holds the positionerId and position in a closure.
+   * It generate the method that is passed into a `ref` prop for any component
+   * to register dom element for the positioner.
    *
-   * It works since each positioner is created with a distinct `positionerId` (a descriptive string) so that multiple
-   * positioners can be registered per editor.
+   * It works since each positioner is created with a distinct `positionerId` (a
+   * descriptive string) so that multiple positioners can be registered per
+   * editor.
    */
   private positionerRefFactory = ({
     positionerId,
@@ -399,7 +419,8 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   };
 
   /**
-   * Part of the Prosemirror API and is called whenever there is state change in the editor.
+   * Part of the Prosemirror API and is called whenever there is state change in
+   * the editor.
    *
    * @internalremarks
    * How does it work when transactions are dispatched one after the other.
@@ -417,8 +438,8 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   };
 
   /**
-   * Updates the state either by calling onStateChange when it exists or directly setting
-   * the internal state via a `setState` call.
+   * Updates the state either by calling onStateChange when it exists or
+   * directly setting the internal state via a `setState` call.
    */
   private updateState({ state, triggerOnChange = true, onUpdate }: UpdateStateParams) {
     const { onChange, onStateChange } = this.props;
@@ -454,20 +475,23 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
         this.editorStateEventListenerParams({ oldState: this.state.editor.newState, newState: state }),
       );
     } else {
-      // Update the internal prosemirror state. This happens before we update the component's copy of the state.
+      // Update the internal prosemirror state. This happens before we update
+      // the component's copy of the state.
       this.view.updateState(state);
 
-      // This is not a controlled component so we need to manage firing of setState
+      // This is not a controlled component so we need to manage firing of
+      // setState
       this.setState(({ editor: { newState } }) => {
         return { editor: { oldState: newState, newState: state } };
-        // Move update handler out from callback and directly after this.setState
-        // To prevent updates from only happening with stale data.
+        // Move update handler out from callback and directly after
+        // this.setState To prevent updates from only happening with stale data.
       }, updateHandler);
     }
   }
 
   /**
-   * Adds the prosemirror view to the dom in the position specified via the component props.
+   * Adds the prosemirror view to the dom in the position specified via the
+   * component props.
    */
   private addProsemirrorViewToDom(reactRef: HTMLElement, viewDom: Element) {
     if (this.props.insertPosition === 'start') {
@@ -478,7 +502,8 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   }
 
   /**
-   * Called once the container dom node (`this.editorRef`) has been initialized after the component mounts.
+   * Called once the container dom node (`this.editorRef`) has been initialized
+   * after the component mounts.
    *
    * This method handles the cases where the dom is not focused.
    */
@@ -505,6 +530,10 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
     this.view.dom.addEventListener('focus', this.onFocus);
   }
 
+  /**
+   * This is purely used to indeicate to the component that this is a client
+   * environment when using the `suppressHydrationWarning` prop.
+   */
   public componentDidMount() {
     const { suppressHydrationWarning } = this.props;
 
@@ -530,8 +559,9 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
       this.updateExtensionManager();
       this.view.setProps({ ...this.view.props, nodeViews: this.manager.data.nodeViews });
 
-      // The following converts the current content to HTML and then uses the new manager schema to
-      // convert it back into a ProsemirrorNode for compatibility with the new manager.
+      // The following converts the current content to HTML and then uses the
+      // new manager schema to convert it back into a ProsemirrorNode for
+      // compatibility with the new manager.
       const htmlString = toHTML({ node: this.state.editor.newState.doc, schema: prevManager.schema });
       const newContent = fromHTML({ schema: this.manager.schema, content: htmlString, doc: this.doc });
       this.setContent(newContent, true);
@@ -601,12 +631,16 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   /**
    * Clear the content of the editor (reset to the default empty node)
    *
-   * @param triggerOnChange whether to notify the onChange handler that the content has been reset
+   * @param triggerOnChange - whether to notify the onChange handler that the
+   * content has been reset
    */
   private clearContent = (triggerOnChange = false) => {
     this.setContent(EMPTY_PARAGRAPH_NODE, triggerOnChange);
   };
 
+  /**
+   * The params used in the event listeners and the state listener
+   */
   private baseListenerParams(state?: EditorState): BaseListenerParams {
     return {
       view: this.view,
@@ -700,7 +734,8 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   }
 
   /**
-   * Checks whether this is an SSR environment and returns a child array with the SSR component
+   * Checks whether this is an SSR environment and returns a child array with
+   * the SSR component
    *
    * @param children
    */
@@ -742,12 +777,14 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
     const { children, ...props } = getElementProps(element);
 
     if (this.rootPropsConfig.called) {
-      // Simply return the element as this is never actually called within a domless environment
+      // Simply return the element as this method can never actually be called
+      // within a domless environment
       return element;
     } else if (
-      // When called by a provider `getRootProps` can't actually be called until the jsx is generated.
-      // Check if this is being rendered via any remirror context provider.
-      // In this case `getRootProps` **must** be called by the consumer.
+      // When called by a provider `getRootProps` can't actually be called until
+      // the jsx is generated. Check if this is being rendered via any remirror
+      // context provider. In this case `getRootProps` **must** be called by the
+      // consumer.
       isRemirrorContextProvider(element) ||
       isRemirrorProvider(element) ||
       isManagedRemirrorProvider(element)

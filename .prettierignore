@@ -2,7 +2,8 @@ lib
 **/lib
 dist
 **/dist
-.docz
+.cache
+public
 package.json
 **/package.json
 coverage/**
