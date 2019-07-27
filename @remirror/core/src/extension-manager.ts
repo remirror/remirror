@@ -66,7 +66,7 @@ export interface ExtensionManagerData<
   inputRules: ProsemirrorPlugin;
   pasteRules: ProsemirrorPlugin[];
   actions: GActions;
-  view: EditorView;
+  view: EditorView<EditorSchema<GNodes, GMarks>>;
   isActive: Record<GNames, BooleanExtensionCheck>;
   isEnabled: Record<GNames, BooleanExtensionCheck>;
   options: Record<GNames, PlainObject>;

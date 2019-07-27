@@ -11,7 +11,7 @@ import {
   oneChildOnly,
   uniqueClass,
 } from '../helpers';
-import { RemirrorElementType, RemirrorFC } from '../types';
+import { RemirrorElementType, RemirrorFC } from '../react-types';
 
 test('getElementProps', () => {
   const expected = { id: 'test' };

@@ -78,7 +78,8 @@ interface MenuBarProps extends Pick<BubbleMenuProps, 'activateLink'> {
  * The MenuBar component which renders the actions that can be taken on the text within the editor.
  */
 export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
-  const { actions } = useRemirror();
+  const { actions } = useRemirror<WysiwygExtensionList>();
+
   return (
     <Toolbar>
       {menuItems.map(([name, [icon, subText], attrs], index) => {

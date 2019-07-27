@@ -6,6 +6,7 @@ import {
   AnyConstructor,
   AnyFunction,
   BaseExtensionOptions,
+  EditorSchema,
   ExtensionCommandReturn,
   UnionToIntersection,
 } from './types';
@@ -237,3 +238,11 @@ export type NodeName<GExtension extends AnyExtension> = GExtension extends NodeE
  * This is used to define the schema node types available on the extension manager.
  */
 export type NodeNames<GExtensions extends AnyExtension[]> = NodeName<GExtensions[number]>;
+
+/**
+ * Gets the schema from a list of extensions
+ */
+export type SchemaFromExtensionList<GExtensions extends AnyExtension[] = AnyExtension[]> = EditorSchema<
+  NodeNames<GExtensions>,
+  MarkNames<GExtensions>
+>;

@@ -1,5 +1,3 @@
-
-
 import DefaultStyled, { CreateStyled } from '@emotion/styled';
 import { Cast } from '@remirror/core';
 

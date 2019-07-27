@@ -17,7 +17,7 @@ import {
   ProsemirrorNode,
 } from '@remirror/core';
 import { css, Interpolation } from 'emotion';
-import { RemirrorProps } from './types';
+import { RemirrorProps } from './react-types';
 
 /**
  * Retrieve the position of the current nodeView

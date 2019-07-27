@@ -18,7 +18,7 @@ import {
   ReactElement,
   ReactNode,
 } from 'react';
-import { RemirrorComponentType, RemirrorElement, RemirrorElementType } from './types';
+import { RemirrorComponentType, RemirrorElement, RemirrorElementType } from './react-types';
 
 /**
  * A drop in replacement for built in React.isValidElement which accepts a test value of any type
