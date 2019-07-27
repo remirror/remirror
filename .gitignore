@@ -101,8 +101,6 @@ temp**
 @example/
 *.tar.gz
 
-.npmrc
-
 # CI caching folder
 .ci
 .local.env
