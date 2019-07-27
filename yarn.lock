@@ -3150,15 +3150,7 @@
     pretty-format "^24.0.0"
     redent "^3.0.0"
 
-"@testing-library/react@8.0.6":
-  version "8.0.6"
-  resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-8.0.6.tgz#614340646f32027426377dc6e5895a566eeb61b5"
-  integrity sha512-/4oeS0eatnHvAf9yuxIg1/8pjl1OrtWN7SLpDFEdxFjllIAEL09xXhA88C93vvlN+8enZa+xlXJ8ecohECT6Yg==
-  dependencies:
-    "@babel/runtime" "^7.5.4"
-    "@testing-library/dom" "^5.5.4"
-
-"@testing-library/react@^8.0.6":
+"@testing-library/react@8.0.7", "@testing-library/react@^8.0.6":
   version "8.0.7"
   resolved "https://registry.yarnpkg.com/@testing-library/react/-/react-8.0.7.tgz#b5992c9156e926850a0e3a7c882ae1aed83b1c77"
   integrity sha512-6XoeWSr3UCdxMswbkW0BmuXYw8a6w+stt+5gg4D4zAcljfhXETQ5o28bjJFwNab4OPg8gBNK8KIVot86L4Q8Vg==
@@ -3178,28 +3170,28 @@
   dependencies:
     prism-react-renderer "^0.1.7"
 
-"@theme-ui/sidenav@0.2.18":
-  version "0.2.18"
-  resolved "https://registry.yarnpkg.com/@theme-ui/sidenav/-/sidenav-0.2.18.tgz#3683a232f01dd9247f5ab2d549f7d808d166e28f"
-  integrity sha512-RxT+8qT27AzAQLk2yEvVh8BqIDFnyRHVw1hWDTamqs5SHaJxf/nc6wfc5PrWXFlZNbjB3Mol+ytAn0M9Mk8Hjg==
+"@theme-ui/sidenav@0.2.21":
+  version "0.2.21"
+  resolved "https://registry.yarnpkg.com/@theme-ui/sidenav/-/sidenav-0.2.21.tgz#25636f8be47bd9275781103e80310af97124fe3a"
+  integrity sha512-aFhTZXa8Im/8ld2Nqm/uyQbd5CzdksLea93J6z6aqalmxZReoREFSZ6WUGhzyUJ9Hr9/PWPPvzJown4dYiiYCQ==
   dependencies:
     "@emotion/core" "^10.0.14"
     "@mdx-js/react" "^1.0.21"
     deepmerge "^3.3.0"
     react "^16.8.6"
-    theme-ui "^0.2.18"
+    theme-ui "^0.2.21"
 
-"@theme-ui/style-guide@0.2.18":
-  version "0.2.18"
-  resolved "https://registry.yarnpkg.com/@theme-ui/style-guide/-/style-guide-0.2.18.tgz#652d3429d540a2a9ae7d49040b83a53f17656d36"
-  integrity sha512-tp77YJLJi8SaB2kDVjCdRgnm5cTiMFLE09wI+/r1RKRKFk2Rum6L35VHV/QhtMLBx+uXDid3Me3ZFKmJIaDQxQ==
+"@theme-ui/style-guide@0.2.21":
+  version "0.2.21"
+  resolved "https://registry.yarnpkg.com/@theme-ui/style-guide/-/style-guide-0.2.21.tgz#424f1f60aed7a322ed64508384bc6fe77d8eceaa"
+  integrity sha512-nbPt/vXUDJZUl35s2NbUF+PVcy1i7fhkoFLobYD0uo6gz6aNe6Dn3OtzGyWx9IlFNRwqKgzl4KqXA63hKjbxZQ==
   dependencies:
     "@emotion/core" "^10.0.10"
     "@theme-ui/presets" "^0.2.15"
     color "^3.1.2"
     lodash.get "^4.4.2"
     react "^16.8.6"
-    theme-ui "^0.2.18"
+    theme-ui "^0.2.21"
 
 "@theme-ui/typography@0.2.5":
   version "0.2.5"
@@ -20990,10 +20982,10 @@ react-textarea-autosize@^7.1.0:
     "@babel/runtime" "^7.1.2"
     prop-types "^15.6.0"
 
-react-use@10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/react-use/-/react-use-10.2.0.tgz#1854402983b3f00796d4f4ba21e506d89c7ec4c1"
-  integrity sha512-tAjDZxXMgvsb3G0m4lg4lWMFbo0KPV1cmdM6oZN2CSMenLdJAvlwBu3A8Tog7rF+LEwT12QgongaWo3K0FWjtQ==
+react-use@10.3.0:
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/react-use/-/react-use-10.3.0.tgz#51eb6aeebb88c066b91ccd59f49004b4c6410108"
+  integrity sha512-wsPivRxg5x2q9RvW7hQyHgUs24syxx/9kZd9uonlLpbXftsd6rjpecEMDq6oE8anROzyArlv1cO9Pcb4muIEOA==
   dependencies:
     "@types/react-wait" "^0.3.0"
     copy-to-clipboard "^3.1.0"
@@ -23981,17 +23973,7 @@ tfunk@^3.0.1:
     chalk "^1.1.1"
     object-path "^0.9.0"
 
-theme-ui@0.2.18:
-  version "0.2.18"
-  resolved "https://registry.yarnpkg.com/theme-ui/-/theme-ui-0.2.18.tgz#2389c3b020aea6a86409469ac3887749d32a5cd3"
-  integrity sha512-RTtiVI8DKavChIVojwXcgcjiSBq3As4vlqyP5Uv8I3f5GkFtjL6lmSeHXJX0pOWElQcuu2NXhCOQAhmGXL+tVA==
-  dependencies:
-    "@emotion/is-prop-valid" "^0.8.1"
-    "@styled-system/css" "^5.0.16"
-    deepmerge "^3.2.0"
-    react "^16.8.0"
-
-theme-ui@^0.2.18:
+theme-ui@0.2.21, theme-ui@^0.2.21:
   version "0.2.21"
   resolved "https://registry.yarnpkg.com/theme-ui/-/theme-ui-0.2.21.tgz#05b41b5adc772f0d5d468eeb456977c04eb06849"
   integrity sha512-n9QnUKNrQC12a4sv01/ihM34EE89wJJqsyULXRIQ65T7nHNDSlO4RD7tOmBoXGkZtYfZaoLIBuf8UxAhotJsoQ==
