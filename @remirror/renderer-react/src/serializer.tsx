@@ -2,6 +2,7 @@ import React, { ComponentType, Fragment, ReactNode } from 'react';
 
 import { jsx as createElement } from '@emotion/core';
 import {
+  AnyExtension,
   DOMOutputSpec,
   ExtensionManager,
   Fragment as ProsemirrorFragment,
@@ -22,13 +23,17 @@ type MarkToDOM = MarkExtensionSpec['toDOM'];
 /**
  * Serialize the extension provided schema into a JSX element that can be displayed node and non-dom environments.
  */
-export class ReactSerializer {
+export class ReactSerializer<GExtensions extends AnyExtension[] = AnyExtension[]> {
   public nodes: Record<string, NodeToDOM>;
   public marks: Record<string, MarkToDOM>;
   private components: Record<string, ComponentType<any>>;
   private options: Record<string, PlainObject>;
 
-  constructor(nodes: Record<string, NodeToDOM>, marks: Record<string, MarkToDOM>, manager: ExtensionManager) {
+  constructor(
+    nodes: Record<string, NodeToDOM>,
+    marks: Record<string, MarkToDOM>,
+    manager: ExtensionManager<GExtensions>,
+  ) {
     this.nodes = nodes;
     this.marks = marks;
     this.components = manager.components;
@@ -153,7 +158,9 @@ export class ReactSerializer {
    *
    * @param manager
    */
-  public static fromExtensionManager(manager: ExtensionManager) {
+  public static fromExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[]>(
+    manager: ExtensionManager<GExtensions>,
+  ) {
     return new ReactSerializer(
       this.nodesFromExtensionManager(manager),
       this.marksFromExtensionManager(manager),
@@ -166,7 +173,9 @@ export class ReactSerializer {
    *
    * @param manager
    */
-  private static nodesFromExtensionManager(manager: ExtensionManager) {
+  private static nodesFromExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[]>(
+    manager: ExtensionManager<GExtensions>,
+  ) {
     const result = gatherToDOM(manager.nodes);
     if (!result.text) {
       result.text = node => node.text!;
@@ -179,7 +188,9 @@ export class ReactSerializer {
    *
    * @param manager
    */
-  private static marksFromExtensionManager(manager: ExtensionManager) {
+  private static marksFromExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[]>(
+    manager: ExtensionManager<GExtensions>,
+  ) {
     return gatherToDOM(manager.marks);
   }
 }

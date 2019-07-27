@@ -2,23 +2,22 @@ import { Interpolation } from 'emotion';
 import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
 import { ExtensionType, Tags } from './constants';
-import { Cast, deepMerge, isObject, isString } from './helpers/base';
+import { Cast, deepMerge, isString } from './helpers/base';
 import {
+  AnyFunction,
   Attrs,
   AttrsWithClass,
   BaseExtensionOptions,
   BooleanExtensionCheck,
   CommandTypeParams,
-  EditorStateParams,
   ExtensionCommandReturn,
   ExtensionManagerParams,
+  ExtensionManagerTypeParams,
   KeyboardBindings,
   NodeViewMethod,
+  OnTransactionParams,
   PlainObject,
   ProsemirrorPlugin,
-  SchemaTypeParams,
-  TransactionParams,
-  ViewExtensionManagerParams,
 } from './types';
 
 /**
@@ -79,12 +78,7 @@ const defaultOptions: Required<BaseExtensionOptions> = {
  * }
  * ```
  */
-export abstract class Extension<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
-  GCommands extends string = string,
-  GExtensionData extends {} = PlainObject,
-  GType = never
-> {
+export abstract class Extension<GOptions extends BaseExtensionOptions, GType = never> {
   /**
    * The options of this extension
    *
@@ -266,13 +260,17 @@ export abstract class Extension<
   }
 
   /**
-   * This pseudo property makes it easier to infer Generic types of this class.
+   * `ExtensionOptions`
+   *
+   * This pseudo property makes it easier to infer generic types of this class.
    * @private
    */
   public readonly _O!: GOptions;
 
   /**
-   * This pseudo property makes it easier to infer Generic types of this class.
+   * `ProsemirrorType`
+   *
+   * This pseudo property makes it easier to infer generic types from this class.
    * @private
    */
   public readonly _T!: GType;
@@ -281,21 +279,10 @@ export abstract class Extension<
    * This pseudo property makes it easier to infer Generic types of this class.
    * @private
    */
-  public readonly _C!: GCommands;
-
-  /**
-   * This pseudo property makes it easier to infer Generic types of this class.
-   * @private
-   */
-  public readonly _E!: GExtensionData;
+  public readonly _C!: this['commands'] extends AnyFunction ? ReturnType<this['commands']> : {};
 }
 
-export interface Extension<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
-  GCommands extends string = string,
-  GExtensionData extends {} = PlainObject,
-  GType = never
-> {
+export interface Extension<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GType = never> {
   /**
    * An extension can declare the extensions it requires with options needed for
    * instantiating them.
@@ -309,7 +296,7 @@ export interface Extension<
    * @internalremarks
    * TODO implement this functionality
    */
-  readonly requiredExtensions?: RequiredExtension[];
+  readonly requiredExtensions?: string[];
 
   /**
    * Determines whether this extension is currently active (only applies to Node
@@ -322,7 +309,7 @@ export interface Extension<
    *
    * @param params - extension manager params
    */
-  isActive?(params: ExtensionManagerParams): BooleanExtensionCheck<GCommands>;
+  isActive?(params: ExtensionManagerParams): BooleanExtensionCheck<string>;
 
   /**
    * Allows the extension to modify the attributes for the Prosemirror editor
@@ -376,7 +363,7 @@ export interface Extension<
    *
    * @param params - schema params with type included
    */
-  commands?(params: CommandTypeParams<GType>): ExtensionCommandReturn<GCommands>;
+  commands?(params: CommandTypeParams<GType>): ExtensionCommandReturn;
 
   /**
    * Determines whether this extension is enabled. If a command name is provided
@@ -385,7 +372,7 @@ export interface Extension<
    *
    * @param params - extension manager parameters
    */
-  isEnabled?(params: ExtensionManagerParams): BooleanExtensionCheck<GCommands>;
+  isEnabled?(params: ExtensionManagerParams): BooleanExtensionCheck<string>;
 
   /**
    * Each extension can make extension data available which is updated on each
@@ -394,7 +381,7 @@ export interface Extension<
    * Within React this data is passed back into Remirror render prop and also
    * the Remirror context and can be retrieved with a `hook` or `HOC`
    */
-  extensionData(params: SchemaTypeParams<GType>): GExtensionData;
+  extensionData(params: ExtensionManagerTypeParams<GType>): PlainObject;
 
   /**
    * Register input rules which are activated if the regex matches as a user is
@@ -402,14 +389,14 @@ export interface Extension<
    *
    * @param params - schema params with type included
    */
-  inputRules?(params: SchemaTypeParams<GType>): InputRule[];
+  inputRules?(params: ExtensionManagerTypeParams<GType>): InputRule[];
 
   /**
    * Add key bindings for this extension.
    *
    * @param params - schema params with type included
    */
-  keys?(params: SchemaTypeParams<GType>): KeyboardBindings;
+  keys?(params: ExtensionManagerTypeParams<GType>): KeyboardBindings;
 
   /**
    * Registers a node view for the extension.
@@ -425,7 +412,7 @@ export interface Extension<
    *
    * @alpha
    */
-  nodeView?(params: SchemaTypeParams<GType>): NodeViewMethod;
+  nodeView?(params: ExtensionManagerTypeParams<GType>): NodeViewMethod;
 
   /**
    * Called whenever a transaction successfully updates the editor state.
@@ -442,14 +429,14 @@ export interface Extension<
    *
    * @param params - schema params with type included
    */
-  pasteRules?(params: SchemaTypeParams<GType>): ProsemirrorPlugin[];
+  pasteRules?(params: ExtensionManagerTypeParams<GType>): ProsemirrorPlugin[];
 
   /**
    * Register a plugin for the extension.
    *
    * @param params - schema params with type included
    */
-  plugin?(params: SchemaTypeParams<GType>): ProsemirrorPlugin;
+  plugin?(params: ExtensionManagerTypeParams<GType>): ProsemirrorPlugin;
 
   /**
    * A method for transforming the SSR JSX received by the extension. Some
@@ -473,126 +460,3 @@ export interface Extension<
    */
   styles?(params: ExtensionManagerParams): Interpolation;
 }
-
-/**
- * Provides a type annotation which is applicable to any extension type.
- */
-export type AnyExtension = Extension<any, any, any, any>;
-
-/**
- * Utility type for retrieving the extension options from an extension.
- */
-export type ExtensionOptions<GExtension extends AnyExtension> = GExtension['_O'];
-
-/**
- * Utility type for retrieving the commands provided by an extension.
- */
-export type ExtensionCommands<GExtension extends AnyExtension> = GExtension['_C'];
-
-/**
- * Utility type for retrieving the extension data object made available from the
- * extension.
- */
-export type ExtensionExtensionData<GExtension extends AnyExtension> = GExtension['_E'];
-
-/**
- * Utility type for retrieving the prosemirror type of the extension.
- */
-export type ExtensionProsemirrorType<GExtension extends AnyExtension> = GExtension['_T'];
-
-/** An extension constructor */
-export interface ExtensionConstructor<
-  GOptions extends BaseExtensionOptions,
-  GExtension extends Extension<GOptions, any, string>
-> {
-  // tslint:disable-next-line: callable-types
-  new (options?: GOptions): GExtension;
-}
-
-/**
- * The API for required extensions.
- *
- * @internalremarks
- * This is still very much WIP and has no implementation.
- *
- * @alpha
- */
-export interface RequiredExtension {
-  extension: AnyExtension;
-  options: any;
-}
-
-/**
- * The params object received by the onTransaction handler.
- */
-export interface OnTransactionParams
-  extends ViewExtensionManagerParams,
-    TransactionParams,
-    EditorStateParams {}
-
-/**
- * Provides a priority value to the extension which determines the priority.
- *
- * @remarks
- *
- * A lower value for priority means a higher priority. Think of it as an index
- * and position in array except that it can also support negative values.
- */
-export interface PrioritizedExtension {
-  /**
-   * The instantiated extension
-   */
-  extension: AnyExtension;
-
-  /**
-   * A priority given to the extension.
-   *
-   * @remarks
-   *
-   * A lower number implies an earlier place in the extension list and hence
-   * more priority over the extensions that follow.
-   *
-   * @defaultValue 2
-   */
-  priority: number;
-}
-
-/**
- * Either a PrioritizedExtension or the actual Extension.
- *
- * @remarks
- *
- * This is used by the extension manager to allow for a more flexible
- * initialization.
- */
-export type FlexibleExtension = PrioritizedExtension | AnyExtension;
-
-export interface ExtensionListParams {
-  /**
-   * A list of passed extensions
-   */
-  extensions: AnyExtension[];
-}
-
-export interface ExtensionParams<GExtension extends AnyExtension = AnyExtension> {
-  /**
-   * An extension
-   */
-  extension: GExtension;
-}
-
-/**
- * Determines if the passed in extension is a any type of extension.
- *
- * @param extension - the extension to check
- */
-export const isExtension = (extension: unknown): extension is AnyExtension =>
-  isObject(extension) && extension instanceof Extension;
-
-/**
- * Checks whether the this is an extension and if it is a plain one
- *
- * @param extension - the extension to check
- */
-export const isPlainExtension = (extension: unknown): extension is Extension<any, never> =>
-  isExtension(extension) && extension.type === ExtensionType.Plain;

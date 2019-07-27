@@ -20,7 +20,7 @@ import { CollaborationAttrs, CollaborationExtensionOptions } from './collaborati
  *
  * Once a central server is created the collaboration extension is good.
  */
-export class CollaborationExtension extends Extension<CollaborationExtensionOptions, never> {
+export class CollaborationExtension extends Extension<CollaborationExtensionOptions> {
   /**
    * Provides the name of this extension.
    */
@@ -43,29 +43,31 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
    * This provides one command for issuing updates .
    */
   public commands({ getState, schema }: CommandParams) {
-    return (attrs?: Attrs): CommandFunction => (_, dispatch) => {
-      if (!isValidCollaborationAttrs(attrs)) {
-        throw new Error('Invalid attributes passed to the collaboration command.');
-      }
+    return {
+      collaborationUpdate: (attrs: CollaborationAttrs): CommandFunction => (_, dispatch) => {
+        if (!isValidCollaborationAttrs(attrs)) {
+          throw new Error('Invalid attributes passed to the collaboration command.');
+        }
 
-      const { version, steps } = attrs;
-      const state = getState();
+        const { version, steps } = attrs;
+        const state = getState();
 
-      if (getVersion(state) > version) {
-        return false;
-      }
+        if (getVersion(state) > version) {
+          return false;
+        }
 
-      if (dispatch) {
-        dispatch(
-          receiveTransaction(
-            state,
-            steps.map(item => Step.fromJSON(schema, item.step)),
-            steps.map(item => item.clientID),
-          ),
-        );
-      }
+        if (dispatch) {
+          dispatch(
+            receiveTransaction(
+              state,
+              steps.map(item => Step.fromJSON(schema, item.step)),
+              steps.map(item => item.clientID),
+            ),
+          );
+        }
 
-      return true;
+        return true;
+      },
     };
   }
 

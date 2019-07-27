@@ -1,30 +1,23 @@
 import { DEFAULT_EXTENSION_PRIORITY, MarkGroup, NodeGroup, Tags } from './constants';
+import { isExtension, isMarkExtension, isNodeExtension } from './extension-helpers';
 import {
   AnyExtension,
   ExtensionListParams,
+  ExtensionOf,
   FlexibleExtension,
-  isExtension,
   PrioritizedExtension,
-} from './extension';
+} from './extension-types';
 import { bool, Cast, isFunction, sort } from './helpers/base';
-import { isMarkExtension } from './mark-extension';
-import { isNodeExtension } from './node-extension';
 import {
   AnyFunction,
   Attrs,
   CommandParams,
-  ExtensionCommandFunction,
   ExtensionManagerParams,
   ExtensionTags,
-  FlexibleConfig,
   GeneralExtensionTags,
   MarkExtensionTags,
   NodeExtensionTags,
 } from './types';
-
-type MethodFactory<GMappedFunc extends AnyFunction, GFunc extends AnyFunction> = (
-  method: GFunc,
-) => GMappedFunc;
 
 interface IsNameUniqueParams {
   /**
@@ -71,108 +64,7 @@ const isNameUnique = ({ name, set, shouldThrow = false, type = 'extension' }: Is
   }
 };
 
-/**
- * A utility type for the property getItemParams.
- */
-export type GetItemParamsMethod<GKey extends keyof AnyExtension, GFunc extends AnyFunction> = (
-  ext: AnyExtension & Pick<Required<AnyExtension>, GKey>,
-) => FlexibleConfig<GFunc>;
-
-/**
- * Params used when creating the actions for an extension manager.
- */
-interface CreateFlexibleFunctionMapParams<
-  GKey extends keyof AnyExtension,
-  GMappedFunc extends AnyFunction,
-  GFunc extends AnyFunction
-> {
-  /**
-   * The key of the method on the extension. For example 'commands', 'active'.
-   */
-  key: GKey;
-
-  /**
-   * When true a command name that is not unique will cause an error.
-   *
-   * @defaultValue true
-   */
-  checkUniqueness?: boolean;
-
-  /**
-   * Provide the parameters which should be used for the extension method.
-   */
-  getItemParams: GetItemParamsMethod<GKey, GFunc>;
-
-  /**
-   * Transforms the entry into a callable method with attrs as the first
-   * optional parameter. Something like `actions[name]()`
-   */
-  methodFactory: MethodFactory<GMappedFunc, GFunc>;
-
-  /**
-   * Transform an array of methods into a single method that can be called.
-   */
-  arrayTransformer: (fns: GFunc[], methodFactory: MethodFactory<GMappedFunc, GFunc>) => GMappedFunc;
-
-  /**
-   * Passes the context (usually the extension manager) which has an instance
-   * property `.extensions`
-   */
-  extensions: AnyExtension[];
-}
-
-/**
- * This creates a flexible function mapper.
- *
- * @remarks
- *
- * The reason is that extensions can have commands / enabled / active methods
- * that return a very complex type signature
- *
- * ```ts
- * type FlexibleConfig<Func> = Record<string, Func | Func[]>
- * ```
- *
- * This creates a function that is able to step through each possibility and
- * call the required method.
- *
- * @param param - destructured parameters
- */
-export const createFlexibleFunctionMap = <
-  GKey extends keyof AnyExtension,
-  GMappedFunc extends AnyFunction,
-  GFunc extends AnyFunction
->({
-  key,
-  checkUniqueness = true,
-  getItemParams,
-  methodFactory,
-  arrayTransformer,
-  extensions,
-}: CreateFlexibleFunctionMapParams<GKey, GMappedFunc, GFunc>): Record<
-  string,
-  { command: GMappedFunc; name: string }
-> => {
-  const items: Record<string, { command: GMappedFunc; name: string }> = {};
-  const names = new Set<string>();
-  extensions.filter(hasExtensionProperty(key)).forEach(currentExtension => {
-    const item = getItemParams(currentExtension);
-
-    Object.entries(item).forEach(([name, command]) => {
-      if (checkUniqueness) {
-        isNameUnique({ name, set: names, shouldThrow: true });
-      }
-
-      items[name] = Array.isArray(command)
-        ? { command: arrayTransformer(command, methodFactory), name: currentExtension.name }
-        : { command: methodFactory(command), name: currentExtension.name };
-    });
-  });
-
-  return items;
-};
-
-interface CommandFlexibleFunctionMapParams extends ExtensionListParams {
+interface CreateCommandsParams extends ExtensionListParams {
   /**
    * The command params which are passed to each extensions `commands` method.
    */
@@ -185,31 +77,37 @@ interface CommandFlexibleFunctionMapParams extends ExtensionListParams {
  * Typically actions are used to create interactive menus. For example a menu
  * can use a command to toggle bold.
  */
-export const createCommands = ({ extensions, params }: CommandFlexibleFunctionMapParams) =>
-  createFlexibleFunctionMap<'commands', (attrs?: Attrs) => void, ExtensionCommandFunction>({
-    extensions,
-    key: 'commands',
-    methodFactory: method => (attrs?: Attrs) => {
-      const { view, getState } = params;
-      view.focus();
-      return method(attrs)(getState(), view.dispatch, view);
-    },
-    checkUniqueness: true,
-    arrayTransformer: (fns, methodFactory) => () => {
-      fns.forEach(callback => {
-        methodFactory(callback);
-      });
-    },
-    getItemParams: extension =>
-      extension.commands({
-        ...params,
-        ...(isMarkExtension(extension)
-          ? { type: params.schema.marks[extension.name] }
-          : isNodeExtension(extension)
-          ? { type: params.schema.nodes[extension.name] }
-          : {}),
-      }),
+export const createCommands = ({ extensions, params }: CreateCommandsParams) => {
+  const getItemParams = (extension: Required<Pick<AnyExtension, 'commands'>>) =>
+    extension.commands({
+      ...params,
+      ...(isMarkExtension(extension)
+        ? { type: params.schema.marks[extension.name] }
+        : isNodeExtension(extension)
+        ? { type: params.schema.nodes[extension.name] }
+        : ({} as any)),
+    });
+
+  const methodFactory = (method: any) => (attrs?: Attrs) => {
+    const { view, getState } = params;
+    view.focus();
+    return method(attrs)(getState(), view.dispatch, view);
+  };
+  const items: Record<string, { command: AnyFunction; name: string }> = {};
+  const names = new Set<string>();
+
+  extensions.filter(hasExtensionProperty('commands')).forEach(currentExtension => {
+    const item = getItemParams(currentExtension);
+
+    Object.entries(item).forEach(([name, command]) => {
+      isNameUnique({ name, set: names, shouldThrow: true });
+
+      items[name] = { command: methodFactory(command), name: currentExtension.name };
+    });
   });
+
+  return items;
+};
 
 /**
  * Checks to see if an optional property exists on an extension.
@@ -224,9 +122,10 @@ export const createCommands = ({ extensions, params }: CommandFlexibleFunctionMa
  *
  * @param property - the extension property / method name
  */
-export const hasExtensionProperty = <GExt extends AnyExtension, GKey extends keyof GExt>(property: GKey) => (
+export const hasExtensionProperty = <GExt extends {}, GKey extends keyof GExt>(property: GKey) => (
   extension: GExt,
-): extension is GExt & Pick<Required<GExt>, GKey> => bool(extension[property]);
+): extension is GExt extends undefined ? never : GExt & Pick<Required<GExt>, GKey> =>
+  bool(extension[property]);
 
 /**
  * Keys for the methods available on an extension (useful for filtering)
@@ -258,14 +157,18 @@ export const extensionPropertyMapper = <
 ) => (extension: GExt): GExt[GExtMethodProp] extends AnyFunction ? ReturnType<GExt[GExtMethodProp]> : {} => {
   const extensionMethod = extension[property];
   if (!extensionMethod) {
-    return {} as any;
+    throw new Error('Invalid extension passed into the extension manager');
   }
+
   return Cast(
     isNodeExtension(extension)
-      ? extensionMethod.bind(extension)({ ...params, type: params.schema.nodes[extension.name] })
+      ? extensionMethod.bind(extension)({
+          ...params,
+          type: Cast(params.schema.nodes[extension.name]),
+        })
       : isMarkExtension(extension)
-      ? extensionMethod.bind(extension)!({ ...params, type: params.schema.marks[extension.name] })
-      : extensionMethod.bind(extension)!(params),
+      ? extensionMethod.bind(extension)!({ ...params, type: Cast(params.schema.marks[extension.name]) })
+      : extensionMethod.bind(extension)!(Cast(params)),
   );
 };
 
@@ -285,10 +188,12 @@ function convertToExtensionMapValue(extension: FlexibleExtension): PrioritizedEx
  * @param values - the extensions to transform as well as their priorities
  * @returns the list of extension instances sorted by priority
  */
-export const transformExtensionMap = (values: FlexibleExtension[]) =>
+export const transformExtensionMap = <GFlexibleExtensions extends FlexibleExtension[]>(
+  values: GFlexibleExtensions,
+): Array<ExtensionOf<GFlexibleExtensions[number]>> =>
   sort(values.map(convertToExtensionMapValue), (a, b) => a.priority - b.priority).map(
     ({ extension }) => extension,
-  );
+  ) as any;
 
 /**
  * Takes in an object and removes all function values.
@@ -329,14 +234,21 @@ export const defaultIsEnabled = () => true;
  * Create the extension tags which are passed into each extensions method to
  * enable dynamically generated rules and commands.
  */
-export const createExtensionTags = (extensions: AnyExtension[]): ExtensionTags => {
-  const general: GeneralExtensionTags = {
+export const createExtensionTags = <
+  GNodes extends string = string,
+  GMarks extends string = string,
+  GPlain extends string = string,
+  GNames extends string = GNodes | GMarks | GPlain
+>(
+  extensions: AnyExtension[],
+): ExtensionTags<GNodes, GMarks, GPlain> => {
+  const general: GeneralExtensionTags<GNames> = {
     [Tags.FormattingMark]: [],
     [Tags.FormattingNode]: [],
     [Tags.LastNodeCompatible]: [],
   };
 
-  const mark: MarkExtensionTags = {
+  const mark: MarkExtensionTags<GMarks> = {
     [MarkGroup.Alignment]: [],
     [MarkGroup.Behavior]: [],
     [MarkGroup.Color]: [],
@@ -346,19 +258,19 @@ export const createExtensionTags = (extensions: AnyExtension[]): ExtensionTags =
     [MarkGroup.Code]: [],
   };
 
-  const node: NodeExtensionTags = { [NodeGroup.Block]: [], [NodeGroup.Inline]: [] };
+  const node: NodeExtensionTags<GNodes> = { [NodeGroup.Block]: [], [NodeGroup.Inline]: [] };
 
   for (const extension of extensions) {
     if (isNodeExtension(extension)) {
       const group = extension.schema.group as NodeGroup;
-      node[group] = node[group] ? [...node[group], extension.name] : [extension.name];
+      node[group] = node[group] ? [...node[group], extension.name as GNodes] : [extension.name as GNodes];
     } else if (isMarkExtension(extension)) {
       const group = extension.schema.group as MarkGroup;
-      mark[group] = mark[group] ? [...mark[group], extension.name] : [extension.name];
+      mark[group] = mark[group] ? [...mark[group], extension.name as GMarks] : [extension.name as GMarks];
     }
 
     (extension.tags as Tags[]).forEach(tag => {
-      general[tag] = general[tag] ? [...general[tag], extension.name] : [extension.name];
+      general[tag] = general[tag] ? [...general[tag], extension.name as GNames] : [extension.name as GNames];
     });
   }
 
@@ -366,5 +278,5 @@ export const createExtensionTags = (extensions: AnyExtension[]): ExtensionTags =
     general,
     mark,
     node,
-  };
+  } as any;
 };

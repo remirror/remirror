@@ -1,14 +1,3 @@
-import React, {
-  ChangeEventHandler,
-  DOMAttributes,
-  FC,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-
 import {
   faBold,
   faCode,
@@ -28,13 +17,30 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import keyCode from 'keycode';
+import React, {
+  ChangeEventHandler,
+  DOMAttributes,
+  FC,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
-import { Attrs, memoize } from '@remirror/core';
+import { ActionNames, Attrs, memoize } from '@remirror/core';
 import { bubblePositioner, useRemirror } from '@remirror/react';
-import { ButtonState, styled } from '../theme';
-import { BubbleContent, BubbleMenuTooltip, IconButton, Toolbar, WithPaddingProps } from './styled';
+import { ButtonState, styled } from '../wysiwyg-theme';
+import { WysiwygExtensionList } from '../wysiwyg-types';
+import {
+  BubbleContent,
+  BubbleMenuTooltip,
+  IconButton,
+  Toolbar,
+  WithPaddingProps,
+} from './wysiwyg-components';
 
-const menuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
+const menuItems: Array<[ActionNames<WysiwygExtensionList>, [IconDefinition, string?], Attrs?]> = [
   ['bold', [faBold]],
   ['italic', [faItalic]],
   ['underline', [faUnderline]],
@@ -72,7 +78,8 @@ interface MenuBarProps extends Pick<BubbleMenuProps, 'activateLink'> {
  * The MenuBar component which renders the actions that can be taken on the text within the editor.
  */
 export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
-  const { actions } = useRemirror();
+  const { actions } = useRemirror<WysiwygExtensionList>();
+
   return (
     <Toolbar>
       {menuItems.map(([name, [icon, subText], attrs], index) => {
@@ -146,7 +153,7 @@ const bubbleMenuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
 ];
 
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
-  const { actions, getPositionerProps } = useRemirror();
+  const { actions, getPositionerProps } = useRemirror<WysiwygExtensionList>();
   const { bottom, left, ref } = getPositionerProps({
     ...bubblePositioner,
     isActive: params =>

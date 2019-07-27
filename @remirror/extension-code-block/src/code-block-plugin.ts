@@ -1,13 +1,13 @@
 import {
   CompareStateParams,
   EditorState,
+  ExtensionManagerNodeTypeParams,
   findChildrenByNode,
   nodeEqualsType,
   NodeExtension,
   NodeType,
   NodeWithPosition,
   ProsemirrorNodeParams,
-  SchemaNodeTypeParams,
   Transaction,
   TransactionParams,
 } from '@remirror/core';
@@ -15,7 +15,7 @@ import { keydownHandler } from 'prosemirror-keymap';
 import { Plugin } from 'prosemirror-state';
 import { Step } from 'prosemirror-transform';
 import { DecorationSet } from 'prosemirror-view';
-import { CodeBlockExtensionCommands, CodeBlockExtensionOptions } from './code-block-types';
+import { CodeBlockExtensionOptions } from './code-block-types';
 import {
   createDecorations,
   getNodeInformationFromState,
@@ -180,8 +180,8 @@ interface UpdateDecorationSetParams extends TransactionParams {
   nodeInfo: NodeInformation;
 }
 
-interface CreateCodeBlockPluginParams extends SchemaNodeTypeParams {
-  extension: NodeExtension<CodeBlockExtensionOptions, CodeBlockExtensionCommands, {}>;
+interface CreateCodeBlockPluginParams extends ExtensionManagerNodeTypeParams {
+  extension: NodeExtension<CodeBlockExtensionOptions>;
 }
 
 /**

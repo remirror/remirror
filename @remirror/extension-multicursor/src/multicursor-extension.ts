@@ -1,13 +1,10 @@
 import { Extension, Plugin } from '@remirror/core';
 import { css } from 'emotion';
 import { createMulticursorPlugin } from './multicursor-plugin';
-import { MulticursorExtensionCommands, MulticursorExtensionOptions } from './multicursor-types';
+import { MulticursorExtensionOptions } from './multicursor-types';
 import { blink } from './multicursor-utils';
 
-export class MulticursorExtension extends Extension<
-  MulticursorExtensionOptions,
-  MulticursorExtensionCommands
-> {
+export class MulticursorExtension extends Extension<MulticursorExtensionOptions> {
   get name() {
     return 'multicursor' as const;
   }
@@ -32,6 +29,7 @@ export class MulticursorExtension extends Extension<
         animation: ${blink(this.options.cursorColor)} 1s step-end infinite;
       }
       .multicursor-selection {
+        display: inherit; /* FIXME me! */
       }
     `;
   }

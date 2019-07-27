@@ -1,14 +1,13 @@
 import { NodeType } from 'prosemirror-model';
 import { ExtensionType } from './constants';
-import { Extension, isExtension } from './extension';
+import { Extension } from './extension';
 import { isNodeActive } from './helpers/utils';
 import {
   BooleanExtensionCheck,
   EditorSchema,
+  ExtensionManagerNodeTypeParams,
   NodeExtensionOptions,
   NodeExtensionSpec,
-  PlainObject,
-  SchemaNodeTypeParams,
 } from './types';
 
 /**
@@ -18,10 +17,8 @@ import {
  * For more information see {@link https://prosemirror.net/docs/ref/#model.Node}
  */
 export abstract class NodeExtension<
-  GOptions extends NodeExtensionOptions = NodeExtensionOptions,
-  GCommands extends string = string,
-  GExtensionData extends {} = PlainObject
-> extends Extension<GOptions, GCommands, GExtensionData, NodeType<EditorSchema>> {
+  GOptions extends NodeExtensionOptions = NodeExtensionOptions
+> extends Extension<GOptions, NodeType<EditorSchema>> {
   /**
    * Identifies this extension as a **NODE** type from the prosemirror terminology.
    */
@@ -39,21 +36,13 @@ export abstract class NodeExtension<
    */
   public abstract readonly schema: NodeExtensionSpec;
 
-  public isActive({ getState, type }: SchemaNodeTypeParams): BooleanExtensionCheck<GCommands> {
+  public isActive({ getState, type }: ExtensionManagerNodeTypeParams): BooleanExtensionCheck {
     return ({ attrs }) => {
       return isNodeActive({ state: getState(), type, attrs });
     };
   }
 
-  public isEnabled({  }: SchemaNodeTypeParams): BooleanExtensionCheck<GCommands> {
+  public isEnabled(_: ExtensionManagerNodeTypeParams): BooleanExtensionCheck {
     return () => true;
   }
 }
-
-/**
- * Determines if the passed in extension is a node extension. Useful as a type guard where a particular type of extension is needed.
- *
- * @param extension - the extension to check
- */
-export const isNodeExtension = (extension: unknown): extension is NodeExtension<any> =>
-  isExtension(extension) && extension.type === ExtensionType.Node;

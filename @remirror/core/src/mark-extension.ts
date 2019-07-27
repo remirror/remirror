@@ -1,14 +1,13 @@
 import { MarkType } from 'prosemirror-model';
 import { ExtensionType } from './constants';
-import { Extension, isExtension } from './extension';
+import { Extension } from './extension';
 import { isMarkActive } from './helpers/document';
 import {
   BooleanExtensionCheck,
   EditorSchema,
+  ExtensionManagerMarkTypeParams,
   MarkExtensionOptions,
   MarkExtensionSpec,
-  PlainObject,
-  SchemaMarkTypeParams,
 } from './types';
 
 /**
@@ -21,10 +20,8 @@ import {
  * Mark types are objects much like node types, used to tag mark objects and provide additional information about them.
  */
 export abstract class MarkExtension<
-  GOptions extends MarkExtensionOptions = MarkExtensionOptions,
-  GCommands extends string = string,
-  GExtensionData extends {} = PlainObject
-> extends Extension<GOptions, GCommands, GExtensionData, MarkType<EditorSchema>> {
+  GOptions extends MarkExtensionOptions = MarkExtensionOptions
+> extends Extension<GOptions, MarkType<EditorSchema>> {
   /**
    * Set's the type of this extension to beDo not override.
    *
@@ -43,19 +40,11 @@ export abstract class MarkExtension<
    */
   public abstract readonly schema: MarkExtensionSpec;
 
-  public isActive({ getState, type }: SchemaMarkTypeParams): BooleanExtensionCheck<GCommands> {
+  public isActive({ getState, type }: ExtensionManagerMarkTypeParams): BooleanExtensionCheck {
     return () => isMarkActive({ state: getState(), type });
   }
 
-  public isEnabled(_: SchemaMarkTypeParams): BooleanExtensionCheck<GCommands> {
+  public isEnabled(_: ExtensionManagerMarkTypeParams): BooleanExtensionCheck {
     return () => true;
   }
 }
-
-/**
- * Determines if the passed in extension is a mark extension. Useful as a type guard where a particular type of extension is needed.
- *
- * @param extension - the extension to check
- */
-export const isMarkExtension = (extension: unknown): extension is MarkExtension<any> =>
-  isExtension(extension) && extension.type === ExtensionType.Mark;

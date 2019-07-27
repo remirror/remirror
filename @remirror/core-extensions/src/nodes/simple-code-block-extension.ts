@@ -2,16 +2,16 @@ import { Interpolation } from '@emotion/core';
 import {
   CommandNodeTypeParams,
   EDITOR_CLASS_SELECTOR,
+  ExtensionManagerNodeTypeParams,
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
   NodeGroup,
-  SchemaNodeTypeParams,
   toggleBlockItem,
 } from '@remirror/core';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
-export class CodeBlockExtension extends NodeExtension<NodeExtensionOptions, 'toggleCodeBlock', {}> {
+export class CodeBlockExtension extends NodeExtension<NodeExtensionOptions> {
   get name() {
     return 'codeBlock' as const;
   }
@@ -34,7 +34,7 @@ export class CodeBlockExtension extends NodeExtension<NodeExtensionOptions, 'tog
     return { toggleCodeBlock: () => toggleBlockItem({ type, toggleType: schema.nodes.paragraph }) };
   }
 
-  public keys({ type, schema }: SchemaNodeTypeParams) {
+  public keys({ type, schema }: ExtensionManagerNodeTypeParams) {
     return {
       'Shift-Ctrl-\\': toggleBlockItem({ type, toggleType: schema.nodes.paragraph }),
     };
@@ -56,7 +56,7 @@ export class CodeBlockExtension extends NodeExtension<NodeExtensionOptions, 'tog
     };
   }
 
-  public inputRules({ type }: SchemaNodeTypeParams) {
+  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
     return [textblockTypeInputRule(/^```$/, type)];
   }
 }

@@ -12,7 +12,14 @@ import {
   ProsemirrorNode,
   Value,
 } from './base';
-import { AttrsParams, EditorViewParams, ProsemirrorNodeParams, SchemaParams } from './builders';
+import {
+  AttrsParams,
+  EditorStateParams,
+  EditorViewParams,
+  ProsemirrorNodeParams,
+  SchemaParams,
+  TransactionParams,
+} from './builders';
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -122,15 +129,19 @@ export interface ExtensionManagerInitParams {
   getState: () => EditorState;
 }
 
-export type ActionGetter = <GAttrs = Attrs>(name: string) => ActionMethods<GAttrs>;
+export type ActionGetter<GActions extends string = string> = (name: GActions) => ActionMethod<any[]>;
+
 /**
  * Parameters passed into many of the extension methods.
  */
-export interface ExtensionManagerParams extends SchemaParams, ExtensionManagerInitParams, ExtensionTagParams {
+export interface ExtensionManagerParams<GActions extends string = string>
+  extends SchemaParams,
+    ExtensionManagerInitParams,
+    ExtensionTagParams {
   /**
    * A helper method to provide access to all actions for access to commands from within extensions
    */
-  getActions: ActionGetter;
+  getActions: ActionGetter<GActions>;
 }
 
 /**
@@ -138,12 +149,11 @@ export interface ExtensionManagerParams extends SchemaParams, ExtensionManagerIn
  */
 export interface ViewExtensionManagerParams extends EditorViewParams, ExtensionManagerParams {}
 
-export type FlexibleConfig<GFunc extends AnyFunction, GNames extends string = string> = Record<
-  GNames,
-  GFunc | GFunc[]
->;
+export interface FlexibleConfig<GFunc extends AnyFunction> {
+  [command: string]: GFunc;
+}
 
-export type ExtensionCommandFunction = (attrs?: Attrs) => CommandFunction;
+export type ExtensionCommandFunction = (...args: any[]) => CommandFunction;
 
 export interface ExtensionBooleanFunctionParams<GCommand extends string> extends Partial<AttrsParams> {
   /**
@@ -158,21 +168,34 @@ export type ExtensionBooleanFunction<GCommand extends string> = (
 /**
  * The return signature for an extension's `isActive` and `isEnabled` method
  */
-export type BooleanExtensionCheck<GCommand extends string> = ExtensionBooleanFunction<GCommand>;
+export type BooleanExtensionCheck<GCommand extends string = string> = ExtensionBooleanFunction<GCommand>;
 
 /**
  * The return signature for an extensions command method.
  */
-export type ExtensionCommandReturn<GCommands extends string> = FlexibleConfig<
-  ExtensionCommandFunction,
-  GCommands
->;
+export type ExtensionCommandReturn = FlexibleConfig<ExtensionCommandFunction>;
 
+/**
+ * A utility type used to create the generic prosemirror typescript types.
+ */
 type InferredType<GType> = GType extends {} ? { type: GType } : {};
-export type SchemaTypeParams<GType> = ExtensionManagerParams & InferredType<GType>;
 
-export type SchemaNodeTypeParams = SchemaTypeParams<NodeType<EditorSchema>>;
-export type SchemaMarkTypeParams = SchemaTypeParams<MarkType<EditorSchema>>;
+/**
+ * Generic extension manager type params for methods which require a prosemirror NodeType.
+ *
+ * This is used to generate the specific types for Marks and Nodes.
+ */
+export type ExtensionManagerTypeParams<GType> = ExtensionManagerParams & InferredType<GType>;
+
+/**
+ * The extension manager type params for a prosemirror `NodeType` extension
+ */
+export type ExtensionManagerNodeTypeParams = ExtensionManagerTypeParams<NodeType<EditorSchema>>;
+
+/**
+ * The extension manager type params for a prosemirror `NodeType` extension
+ */
+export type ExtensionManagerMarkTypeParams = ExtensionManagerTypeParams<MarkType<EditorSchema>>;
 
 export interface CommandParams extends ViewExtensionManagerParams {
   /**
@@ -191,27 +214,18 @@ export type CommandMarkTypeParams = CommandTypeParams<MarkType<EditorSchema>>;
 
 export type ElementUnion = Value<HTMLElementTagNameMap>;
 
-export interface ActionMethods<GAttrs = Attrs> {
-  /**
-   * Runs an action within the editor.
-   *
-   * @remarks
-   *
-   * ```ts
-   * actions.bold() // Make the currently selected text bold
-   * ```
-   *
-   * @param attrs - certain commands require attrs to run
-   */
-  (attrs?: GAttrs): void;
+export interface ActionMethod<GParams extends any[] = []> {
+  (...args: GParams): void;
 
   /**
    * Determines whether the command is currently in an active state.
    *
    * @remarks
    * This could be used used for menu items to determine whether they should be highlighted as active or inactive.
+   *
+   * @param attrs - certain commands require attrs to run
    */
-  isActive(attrs?: GAttrs): boolean;
+  isActive(attrs?: Attrs): boolean;
 
   /**
    * Returns true when the command can be run and false when it can't be run.
@@ -219,12 +233,19 @@ export interface ActionMethods<GAttrs = Attrs> {
    * @remarks
    * Some commands can have rules and restrictions. For example you may want to disable styling making text bold
    * when within a codeBlock. In that case isEnabled would be false when within the codeBlock and true when outside.
+   *
+   * @param attrs - certain commands require attrs to run
    */
-  isEnabled(attrs?: GAttrs): boolean;
+  isEnabled(attrs?: Attrs): boolean;
 }
 
 /**
  * The method signature used to call the Prosemirror `nodeViews`
+ *
+ * @param node - the node which uses this nodeView
+ * @param view - the editor view used by this nodeView
+ * @param getPos - a utility method to get the absolute cursor position of the node.
+ * @param decorations - a list of the decorations affecting this node view (in case the node view needs to update it's presentation)
  */
 export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (
   node: ProsemirrorNode,
@@ -233,8 +254,14 @@ export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (
   decorations: Decoration[],
 ) => GNodeView;
 
-export type RemirrorActions<GKeys extends string = string> = Record<GKeys, ActionMethods>;
+export interface AnyActions {
+  [action: string]: ActionMethod<any>;
+}
 
+/**
+ * A function which takes a regex match array (strings) or a single string match and transforms
+ * it into an `Attrs` object.
+ */
 export type GetAttrs = Attrs | ((p: string[] | string) => Attrs | undefined);
 
 export interface GetAttrsParams {
@@ -252,12 +279,24 @@ export type SSRComponentProps<
   GOptions extends BaseExtensionOptions = any
 > = GAttrs & ProsemirrorNodeParams & { options: Required<GOptions> };
 
+/**
+ * The tag names that apply to any extension whether plain, node or mark. These are mostly used for nodes and marks
+ * the main difference is they are added to the `tags` parameter of the extension rather than within the schema.
+ */
 export type GeneralExtensionTags<GNames extends string = string> = Record<Tags, GNames[]> &
   Record<string, undefined | GNames[]>;
-export type MarkExtensionTags<GNames extends string = string> = Record<MarkGroup, GNames[]> &
-  Record<string, undefined | GNames[]>;
-export type NodeExtensionTags<GNames extends string = string> = Record<NodeGroup, GNames[]> &
-  Record<string, undefined | GNames[]>;
+
+/**
+ * Provides the different mark groups which are defined in the mark extension specification.
+ */
+export type MarkExtensionTags<GMarks extends string = string> = Record<MarkGroup, GMarks[]> &
+  Record<string, undefined | GMarks[]>;
+
+/**
+ * Provides an object of the different node groups `block` and `inline` which are defined in the node extension specification.
+ */
+export type NodeExtensionTags<GNodes extends string = string> = Record<NodeGroup, GNodes[]> &
+  Record<string, undefined | GNodes[]>;
 
 /**
  * The shape of the tag data stored by the extension manager.
@@ -265,18 +304,37 @@ export type NodeExtensionTags<GNames extends string = string> = Record<NodeGroup
  * This data can be used by other extensions to dynamically determine which
  * nodes should affected by commands / plugins / keys etc...
  */
-export interface ExtensionTags<GNames extends string = string> {
-  node: NodeExtensionTags<GNames>;
-  mark: MarkExtensionTags<GNames>;
-  general: GeneralExtensionTags<GNames>;
+export interface ExtensionTags<
+  GNodes extends string = string,
+  GMarks extends string = string,
+  GPlain extends string = string
+> {
+  node: NodeExtensionTags<GNodes>;
+  mark: MarkExtensionTags<GMarks>;
+  general: GeneralExtensionTags<GPlain | GNodes | GMarks>;
 }
 
-export interface ExtensionTagParams<GNames extends string = string> {
+/**
+ * An interface with a `tags` parameter useful as a builder for parameter objects.
+ */
+export interface ExtensionTagParams<
+  GNodes extends string = string,
+  GMarks extends string = string,
+  GPlain extends string = string
+> {
   /**
    * The tags provided by the configured extensions.
    */
-  tags: ExtensionTags<GNames>;
+  tags: ExtensionTags<GNodes, GMarks, GPlain>;
 }
+
+/**
+ * The params object received by the onTransaction handler.
+ */
+export interface OnTransactionParams
+  extends ViewExtensionManagerParams,
+    TransactionParams,
+    EditorStateParams {}
 
 export * from './aliases';
 export * from './base';

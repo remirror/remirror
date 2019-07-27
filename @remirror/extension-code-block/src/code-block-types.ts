@@ -125,9 +125,3 @@ export interface CodeBlockAttrs extends Attrs {
    */
   language: string;
 }
-
-export type CodeBlockExtensionCommands =
-  | 'toggleCodeBlock'
-  | 'updateCodeBlock'
-  | 'createCodeBlock'
-  | 'formatCodeBlock';

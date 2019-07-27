@@ -1,10 +1,9 @@
-import { MakeOptional } from '@remirror/core';
+import { AnyExtension, MakeOptional } from '@remirror/core';
 import {
   GetRootPropsConfig,
   InjectedRemirrorProps,
   oneChildOnly,
   RemirrorElementType,
-  RemirrorFC,
   RemirrorProps,
 } from '@remirror/react-utils';
 import React, { ProviderProps, ReactElement } from 'react';
@@ -13,7 +12,8 @@ import { RemirrorContext } from '../contexts';
 import { useRemirrorManager } from '../hooks';
 import { Remirror } from './remirror';
 
-export interface RemirrorContextProviderProps extends ProviderProps<InjectedRemirrorProps> {
+export interface RemirrorContextProviderProps<GExtensions extends AnyExtension[] = AnyExtension[]>
+  extends ProviderProps<InjectedRemirrorProps<GExtensions>> {
   /**
    * Sets the first child element as a the root (where the prosemirror editor instance will be rendered).
    *
@@ -46,9 +46,9 @@ export interface RemirrorContextProviderProps extends ProviderProps<InjectedRemi
   childAsRoot?: GetRootPropsConfig<string> | boolean;
 }
 
-export interface RemirrorProviderProps
-  extends MakeOptional<Omit<RemirrorProps, 'children'>, keyof typeof defaultProps>,
-    Pick<RemirrorContextProviderProps, 'childAsRoot'> {
+export interface RemirrorProviderProps<GExtensions extends AnyExtension[] = AnyExtension[]>
+  extends MakeOptional<Omit<RemirrorProps<GExtensions>, 'children'>, keyof typeof defaultProps>,
+    Pick<RemirrorContextProviderProps<GExtensions>, 'childAsRoot'> {
   /**
    * All providers must have ONE child element.
    */
@@ -63,8 +63,12 @@ export interface RemirrorProviderProps
  * is called. However when called via a Provider the render prop renders the context component and it's not until
  * the element is actually rendered that the getRootProp in any nested components is called.
  */
-const RemirrorContextProvider: RemirrorFC<RemirrorContextProviderProps> = ({ childAsRoot: _, ...props }) => {
-  return <RemirrorContext.Provider {...props} />;
+const RemirrorContextProvider = <GExtensions extends AnyExtension[] = AnyExtension[]>({
+  childAsRoot: _,
+  ...props
+}: RemirrorContextProviderProps<GExtensions>) => {
+  const Component = RemirrorContext.Provider as any;
+  return <Component {...props} />;
 };
 
 RemirrorContextProvider.$$remirrorType = RemirrorElementType.ContextProvider;
@@ -87,7 +91,11 @@ RemirrorContextProvider.defaultProps = {
  * - `withRemirror`
  * - `withPositioner`
  */
-export const RemirrorProvider: RemirrorFC<RemirrorProviderProps> = ({ children, childAsRoot, ...props }) => {
+export const RemirrorProvider = <GExtensions extends AnyExtension[] = AnyExtension[]>({
+  children,
+  childAsRoot,
+  ...props
+}: RemirrorProviderProps<GExtensions>) => {
   return (
     <Remirror {...props}>
       {value => {
@@ -103,7 +111,8 @@ export const RemirrorProvider: RemirrorFC<RemirrorProviderProps> = ({ children, 
 
 RemirrorProvider.$$remirrorType = RemirrorElementType.EditorProvider;
 
-export interface ManagedRemirrorProviderProps extends Omit<RemirrorProviderProps, 'manager'> {}
+export interface ManagedRemirrorProviderProps<GExtensions extends AnyExtension[] = AnyExtension[]>
+  extends Omit<RemirrorProviderProps<GExtensions>, 'manager'> {}
 
 /**
  * Renders the content while pulling the manager from the context and passing it on to the
@@ -111,8 +120,11 @@ export interface ManagedRemirrorProviderProps extends Omit<RemirrorProviderProps
  *
  * If no manager exists the child components are not rendered.
  */
-export const ManagedRemirrorProvider: RemirrorFC<ManagedRemirrorProviderProps> = ({ children, ...props }) => {
-  const manager = useRemirrorManager();
+export const ManagedRemirrorProvider = <GExtensions extends AnyExtension[] = AnyExtension[]>({
+  children,
+  ...props
+}: ManagedRemirrorProviderProps<GExtensions>) => {
+  const manager = useRemirrorManager<GExtensions>();
 
   return manager ? (
     <RemirrorProvider {...props} manager={manager}>

@@ -16,36 +16,36 @@ import {
   ProsemirrorNode,
 } from './base';
 
-export interface EditorViewParams {
+export interface EditorViewParams<GSchema extends EditorSchema = EditorSchema> {
   /**
    * An instance of the Prosemirror editor view.
    */
-  view: EditorView;
+  view: EditorView<GSchema>;
 }
 
-export interface SchemaParams {
+export interface SchemaParams<GNodes extends string = string, GMarks extends string = string> {
   /**
    * Tbe Prosemirror schema being used for the current interface
    */
-  schema: EditorSchema;
+  schema: EditorSchema<GNodes, GMarks>;
 }
 
-export interface EditorStateParams {
+export interface EditorStateParams<GSchema extends EditorSchema = EditorSchema> {
   /**
    * An snapshot of the prosemirror editor state
    */
-  state: EditorState;
+  state: EditorState<GSchema>;
 }
 
-export interface CompareStateParams {
+export interface CompareStateParams<GSchema extends EditorSchema = EditorSchema> {
   /**
    * The previous snapshot of the Prosemirror editor state.
    */
-  oldState: EditorState;
+  oldState: EditorState<GSchema>;
   /**
    * The latest snapshot of the Prosemirror editor state.
    */
-  newState: EditorState;
+  newState: EditorState<GSchema>;
 }
 
 export interface ElementParams {
@@ -171,25 +171,28 @@ export interface CallbackParams {
  *
  * Can be used to update the transaction and customise commands.
  */
-export type TransactionTransformer = (tr: Transaction, state: EditorState) => Transaction;
+export type TransactionTransformer<GSchema extends EditorSchema = EditorSchema> = (
+  tr: Transaction<GSchema>,
+  state: EditorState<GSchema>,
+) => Transaction<GSchema>;
 
 /**
  * Perform transformations on the transaction before
  */
-export interface TransformTransactionParams {
+export interface TransformTransactionParams<GSchema extends EditorSchema = EditorSchema> {
   /**
    * Transforms the transaction before any other actions are done to it.
    *
    * This is useful for updating the transaction value before a command does it's work and helps prevent multiple
    * dispatches.
    */
-  startTransaction?: TransactionTransformer;
+  startTransaction?: TransactionTransformer<GSchema>;
   /**
    * Transforms the transaction before after all other actions are performed.
    *
    * This is called immediately before the dispatch.
    */
-  endTransaction?: TransactionTransformer;
+  endTransaction?: TransactionTransformer<GSchema>;
 }
 
 export interface RangeParams<GKey extends keyof FromToParams = never> {
@@ -199,12 +202,12 @@ export interface RangeParams<GKey extends keyof FromToParams = never> {
   range: OptionalFromToParams<GKey>;
 }
 
-export interface ResolvedPosParams {
+export interface ResolvedPosParams<GSchema extends EditorSchema = EditorSchema> {
   /**
    * A prosemirror resolved pos with provides helpful context methods when working with
    * a position in the editor.
    */
-  $pos: ResolvedPos;
+  $pos: ResolvedPos<GSchema>;
 }
 
 export interface TextParams {

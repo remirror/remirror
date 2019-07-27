@@ -1,4 +1,5 @@
 import {
+  AnyActions,
   Attrs,
   AttrsParams,
   CommandFunction,
@@ -10,7 +11,6 @@ import {
   NodeExtension,
   PlainObject,
   ProsemirrorNode,
-  RemirrorActions,
   SchemaParams,
 } from '@remirror/core';
 import { InjectedRemirrorProps } from '@remirror/react';
@@ -107,7 +107,7 @@ export interface AddContentReturn extends EditorStateParams {
    * The actions available in the editor. When updating the content of the TestEditor make sure not to
    * use a stale copy of the actions otherwise it will throw errors due to using an outdated state.
    */
-  actions: RemirrorActions;
+  actions: AnyActions;
 
   /**
    * The start of the current selection
@@ -135,7 +135,7 @@ export interface AddContentReturn extends EditorStateParams {
   /**
    * Allows for the chaining of action calls.
    */
-  actionsCallback(callback: (actions: RemirrorActions) => void): AddContentReturn;
+  actionsCallback(callback: (actions: AnyActions) => void): AddContentReturn;
 
   /**
    * A function which replaces the current selection with the new content.
@@ -227,11 +227,11 @@ export type CreateTestEditorReturn<
 };
 
 export interface CreateTestEditorExtensions<
-  GPlainMarks extends Array<MarkExtension<any, any, any>>,
-  GPlainNodes extends Array<NodeExtension<any, any, any>>,
-  GAttrMarks extends Array<MarkExtension<any, any, any>>,
-  GAttrNodes extends Array<NodeExtension<any, any, any>>,
-  GOthers extends Array<Extension<any, any, any>>
+  GPlainMarks extends Array<MarkExtension<any>>,
+  GPlainNodes extends Array<NodeExtension<any>>,
+  GAttrMarks extends Array<MarkExtension<any>>,
+  GAttrNodes extends Array<NodeExtension<any>>,
+  GOthers extends Array<Extension<any>>
 > {
   plainMarks: GPlainMarks;
   plainNodes: GPlainNodes;

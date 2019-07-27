@@ -24,3 +24,18 @@ export const baseExtensions: PrioritizedExtension[] = [
   { extension: new DropCursorExtension(), priority: 10 },
   { extension: new BaseKeymapExtension(), priority: 10 },
 ];
+
+/**
+ * The BaseExtensions union type shows the extension provided by default in a remirror editor.
+ * This union is useful for extending with your own types to provide better typechecking
+ * throughout your codebase
+ */
+export type BaseExtensions =
+  | DocExtension
+  | TextExtension
+  | ParagraphExtension
+  | CompositionExtension
+  | HistoryExtension
+  | GapCursorExtension
+  | DropCursorExtension
+  | BaseKeymapExtension;

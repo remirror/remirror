@@ -9,9 +9,6 @@ export const setupRemirrorEnvironment = () => {
     return;
   }
 
-  /* Auto cleanup DOM after each test */
-  require('@testing-library/react/cleanup-after-each');
-
   /* Add matchers to jest */
   expect.extend(remirrorMatchers);
 

@@ -161,7 +161,7 @@ export const getNodeInformationFromState = (state: EditorState): NodeInformation
  *
  * This is used to update the language for the codeBlock.
  */
-export const updateNodeAttrs = (type: NodeType) => (attrs?: Attrs): CommandFunction => (
+export const updateNodeAttrs = (type: NodeType) => (attrs: CodeBlockAttrs): CommandFunction => (
   { tr, selection },
   dispatch,
 ) => {

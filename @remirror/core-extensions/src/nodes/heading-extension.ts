@@ -1,13 +1,13 @@
 import {
   Attrs,
   CommandNodeTypeParams,
+  ExtensionManagerNodeTypeParams,
   KeyboardBindings,
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
   NodeGroup,
   ProsemirrorNode,
-  SchemaNodeTypeParams,
   toggleBlockItem,
 } from '@remirror/core';
 import { setBlockType } from 'prosemirror-commands';
@@ -23,7 +23,7 @@ export const defaultHeadingExtensionOptions = {
   defaultLevel: 1,
 };
 
-export class HeadingExtension extends NodeExtension<HeadingExtensionOptions, 'toggleHeading'> {
+export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
   get name() {
     return 'heading' as const;
   }
@@ -65,7 +65,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions, 'to
     };
   }
 
-  public keys({ type }: SchemaNodeTypeParams) {
+  public keys({ type }: ExtensionManagerNodeTypeParams) {
     const keys: KeyboardBindings = {};
 
     this.options.levels.forEach(level => {
@@ -74,7 +74,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions, 'to
     return keys;
   }
 
-  public inputRules({ type }: SchemaNodeTypeParams) {
+  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
     return this.options.levels.map(level =>
       textblockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), type, () => ({ level })),
     );

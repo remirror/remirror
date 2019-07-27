@@ -3,6 +3,7 @@ import {
   bool,
   CommandMarkTypeParams,
   EditorState,
+  ExtensionManagerMarkTypeParams,
   getMarkRange,
   getMatchString,
   isElementDOMNode,
@@ -17,14 +18,9 @@ import {
   RangeParams,
   removeMark,
   replaceText,
-  SchemaMarkTypeParams,
   TransactionTransformer,
 } from '@remirror/core';
-import {
-  MentionExtensionAttrs as MentionAttrs,
-  MentionExtensionCommands,
-  MentionExtensionOptions,
-} from './mention-types';
+import { MentionExtensionAttrs as MentionAttrs, MentionExtensionOptions } from './mention-types';
 import { DEFAULT_MATCHER, escapeChar, getRegexPrefix, regexToString } from './mention-utils';
 import { createSuggestionPlugin, SuggestionState } from './suggestion-plugin';
 
@@ -35,7 +31,7 @@ const defaultHandler = () => false;
  * It also allows for configuration options to be passed into transforming suggestion queries into a mention
  * node.
  */
-export class MentionExtension extends MarkExtension<MentionExtensionOptions, MentionExtensionCommands, {}> {
+export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
   get name() {
     return 'mention' as const;
   }
@@ -174,7 +170,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions, Men
   }
 
   // this is some @awesome text and #should @work
-  public pasteRules({ type }: SchemaMarkTypeParams) {
+  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
     return this.options.matchers.map(matcher => {
       const { startOfLine, char, supportedCharacters } = { ...DEFAULT_MATCHER, ...matcher };
       const regexp = new RegExp(
@@ -193,7 +189,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions, Men
     });
   }
 
-  public plugin(params: SchemaMarkTypeParams): Plugin<SuggestionState> {
+  public plugin(params: ExtensionManagerMarkTypeParams): Plugin<SuggestionState> {
     return createSuggestionPlugin({ extension: this, ...params });
   }
 }

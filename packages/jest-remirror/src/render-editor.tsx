@@ -42,11 +42,11 @@ import {
  * Render the editor with the params passed in. Useful for testing.
  */
 export const renderEditor = <
-  GPlainMarks extends Array<MarkExtension<any, any, any>>,
-  GPlainNodes extends Array<NodeExtension<any, any, any>>,
-  GAttrMarks extends Array<MarkExtension<any, any, any>>,
-  GAttrNodes extends Array<NodeExtension<any, any, any>>,
-  GOthers extends Array<Extension<any, any, any, never>>,
+  GPlainMarks extends Array<MarkExtension<any>>,
+  GPlainNodes extends Array<NodeExtension<any>>,
+  GAttrMarks extends Array<MarkExtension<any>>,
+  GAttrNodes extends Array<NodeExtension<any>>,
+  GOthers extends Array<Extension<any>>,
   GPlainMarkNames extends GPlainMarks[number]['name'],
   GAttrMarkNames extends GAttrMarks[number]['name'],
   GAttrNodeNames extends GAttrNodes[number]['name'],
@@ -72,9 +72,10 @@ export const renderEditor = <
   }: Partial<CreateTestEditorExtensions<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>> = {},
   props: Partial<Omit<RemirrorProps, 'manager'>> = {},
 ): GReturn => {
+  const innerNodeExtensions = nodeExtensions.filter(({ name }) => !plainNodes.some(ext => ext.name === name));
   const extensions = [
     // Allow testing the paragraph, text and doc extensions by filtering them out when they've been passed in
-    ...nodeExtensions.filter(({ name }) => !plainNodes.some(ext => ext.name === name)),
+    ...innerNodeExtensions,
     ...others,
     ...plainMarks,
     ...plainNodes,
@@ -179,7 +180,7 @@ export const renderEditor = <
   const nodesWithoutAttrs: NodeWithoutAttrs<GPlainNodeNames> = Cast({
     p: nodeFactory({ name: 'paragraph', schema }),
   });
-  [...plainNodes, ...nodeExtensions].filter(isNodeExtension).forEach(({ name }) => {
+  [...plainNodes, ...innerNodeExtensions].filter(isNodeExtension).forEach(({ name }) => {
     nodesWithoutAttrs[name as GPlainNodeNames] = nodeFactory({ name, schema });
   });
 

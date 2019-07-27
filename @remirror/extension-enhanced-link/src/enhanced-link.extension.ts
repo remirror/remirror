@@ -4,6 +4,7 @@ import {
   CommandMarkTypeParams,
   EditorState,
   EditorView,
+  ExtensionManagerMarkTypeParams,
   findMatches,
   FromToParams,
   getMatchString,
@@ -14,7 +15,6 @@ import {
   MarkExtensionSpec,
   markPasteRule,
   removeMark,
-  SchemaMarkTypeParams,
   TextParams,
   Transaction,
   updateMark,
@@ -31,8 +31,6 @@ export interface EnhancedLinkExtensionOptions extends MarkExtensionOptions {
   onUrlsChange?(params: { set: Set<string>; urls: string[] }): void;
 }
 
-export type EnhancedLinkExtensionCommands = 'enhancedLink';
-
 /**
  * An auto complete auto decorated linker.
  *
@@ -40,11 +38,7 @@ export type EnhancedLinkExtensionCommands = 'enhancedLink';
  *
  * TODO Consider renaming this extension
  */
-export class EnhancedLinkExtension extends MarkExtension<
-  EnhancedLinkExtensionOptions,
-  EnhancedLinkExtensionCommands,
-  {}
-> {
+export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOptions> {
   get name() {
     return 'enhancedLink' as const;
   }
@@ -89,7 +83,7 @@ export class EnhancedLinkExtension extends MarkExtension<
     };
   }
 
-  public pasteRules({ type }: SchemaMarkTypeParams) {
+  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
     return [
       markPasteRule({
         regexp: extractUrl,
@@ -103,7 +97,7 @@ export class EnhancedLinkExtension extends MarkExtension<
     ];
   }
 
-  public plugin = ({ type }: SchemaMarkTypeParams) => {
+  public plugin = ({ type }: ExtensionManagerMarkTypeParams) => {
     const pluginKey = this.pluginKey;
     const name = this.name;
     const onUrlsChange = this.options.onUrlsChange;

@@ -17,16 +17,17 @@ import { EditorSchema } from './base';
 
 /* Type Aliases */
 
-export type EditorView = PMEditorView<EditorSchema>;
-export type Selection = PMSelection<EditorSchema>;
-export type DecorationSet = PMDecorationSet<EditorSchema>;
-export type Decoration = PMDecoration;
-export type Transaction = PMTransaction<EditorSchema>;
+export type EditorView<GSchema extends EditorSchema = EditorSchema> = PMEditorView<GSchema>;
+export type Selection<GSchema extends EditorSchema = EditorSchema> = PMSelection<GSchema>;
+export type DecorationSet<GSchema extends EditorSchema = EditorSchema> = PMDecorationSet<GSchema>;
+export type Transaction<GSchema extends EditorSchema = EditorSchema> = PMTransaction<GSchema>;
 export type PluginKey<GPluginState = any> = PMPluginKey<GPluginState, EditorSchema>;
 export type Plugin<GPluginState = any> = PMPlugin<GPluginState, EditorSchema>;
-export type Mark = PMMark<EditorSchema>;
-export type ResolvedPos = PMResolvedPos<EditorSchema>;
-export type InputRule = PMInputRule<EditorSchema>;
+export type Mark<GSchema extends EditorSchema = EditorSchema> = PMMark<GSchema>;
+export type ResolvedPos<GSchema extends EditorSchema = EditorSchema> = PMResolvedPos<GSchema>;
+export type InputRule<GSchema extends EditorSchema = EditorSchema> = PMInputRule<GSchema>;
+export type Fragment<GSchema extends EditorSchema = EditorSchema> = PMFragment<GSchema>;
+export type NodeView<GSchema extends EditorSchema = EditorSchema> = PMNodeView<GSchema>;
+
+export type Decoration = PMDecoration;
 export type Mapping = PMMapping;
-export type Fragment = PMFragment<EditorSchema>;
-export type NodeView = PMNodeView<EditorSchema>;

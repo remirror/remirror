@@ -703,7 +703,7 @@ export const last = <GType>(array: GType[]) => array[array.length - 1];
  *                  - return number < 0 for b > a
  */
 export const sort = <GType>(array: GType[], compareFn: (a: GType, b: GType) => number) => {
-  return array
+  return [...array]
     .map((value, index) => ({ value, index }))
     .sort((a, b) => compareFn(a.value, b.value) || a.index - b.index)
     .map(({ value }) => value);

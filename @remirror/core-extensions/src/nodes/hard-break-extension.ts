@@ -1,4 +1,4 @@
-import { NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams } from '@remirror/core';
+import { ExtensionManagerNodeTypeParams, NodeExtension, NodeExtensionSpec } from '@remirror/core';
 import { chainCommands, exitCode } from 'prosemirror-commands';
 
 export class HardBreakExtension extends NodeExtension {
@@ -17,7 +17,7 @@ export class HardBreakExtension extends NodeExtension {
     };
   }
 
-  public keys({ type }: SchemaNodeTypeParams) {
+  public keys({ type }: ExtensionManagerNodeTypeParams) {
     const command = chainCommands(exitCode, (state, dispatch) => {
       if (dispatch) {
         dispatch(state.tr.replaceSelectionWith(type.create()).scrollIntoView());

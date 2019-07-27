@@ -1,16 +1,16 @@
 import {
   Cast,
   CommandNodeTypeParams,
+  ExtensionManagerNodeTypeParams,
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
   NodeGroup,
-  SchemaNodeTypeParams,
   toggleList,
 } from '@remirror/core';
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
-export class OrderedListExtension extends NodeExtension<NodeExtensionOptions, 'toggleOrderedList', {}> {
+export class OrderedListExtension extends NodeExtension<NodeExtensionOptions> {
   get name() {
     return 'orderedList' as const;
   }
@@ -43,13 +43,13 @@ export class OrderedListExtension extends NodeExtension<NodeExtensionOptions, 't
     return { toggleOrderedList: () => toggleList(type, schema.nodes.listItem) };
   }
 
-  public keys({ type, schema }: SchemaNodeTypeParams) {
+  public keys({ type, schema }: ExtensionManagerNodeTypeParams) {
     return {
       'Shift-Ctrl-9': toggleList(type, schema.nodes.listItem),
     };
   }
 
-  public inputRules({ type }: SchemaNodeTypeParams) {
+  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
     return [
       wrappingInputRule(
         /^(\d+)\.\s$/,

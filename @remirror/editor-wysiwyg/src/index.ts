@@ -1,3 +1,3 @@
-export * from './components/editor';
-export * from './types';
-export * from './theme';
+export * from './components/wysiwyg-editor';
+export * from './wysiwyg-types';
+export * from './wysiwyg-theme';

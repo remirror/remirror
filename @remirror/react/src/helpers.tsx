@@ -64,7 +64,7 @@ export interface GetManagerFromComponentTreeParams {
  *
  * ```
  *
- * This is useful in domless environments.
+ * This is useful in server side rendered environments.
  */
 export const getManagerFromComponentTree = ({
   Component,

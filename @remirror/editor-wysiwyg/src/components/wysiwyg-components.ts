@@ -1,6 +1,6 @@
 import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
-import { styled } from '../theme';
-import { ButtonProps } from '../types';
+import { styled } from '../wysiwyg-theme';
+import { ButtonProps } from '../wysiwyg-types';
 
 export const Menu = styled.div`
   & > button {
