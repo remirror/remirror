@@ -15,6 +15,7 @@ import {
   isPlainObject,
   NodeViewPortalContainer,
   ObjectNode,
+  pick,
   RemirrorContentType,
   SchemaFromExtensionList,
   shouldUseDOMEnvironment,
@@ -843,7 +844,10 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
     return (
       <>
         {this.renderReactElement()}
-        <NodeViewPortalComponent portalContainer={this.portalContainer} />
+        <NodeViewPortalComponent
+          portalContainer={this.portalContainer}
+          {...pick(this.renderParams, ['actions', 'getPositionerProps', 'manager', 'view', 'state'])}
+        />
       </>
     );
   }

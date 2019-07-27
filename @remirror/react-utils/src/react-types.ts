@@ -528,3 +528,13 @@ export interface RemirrorManagerProps {
    */
   useBaseExtensions?: boolean;
 }
+
+/**
+ * These are the parameters which are injected in to the NodeViewPortal context
+ * and can be accessed by all nodeViews via the `usePortalContext` hook.
+ */
+export interface InjectedPortalContextProps<GExtensions extends AnyExtension[] = AnyExtension[]>
+  extends Pick<
+    InjectedRemirrorProps<GExtensions>,
+    'manager' | 'view' | 'actions' | 'state' | 'getPositionerProps'
+  > {}

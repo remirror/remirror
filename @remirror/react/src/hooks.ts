@@ -1,7 +1,11 @@
 import { AnyExtension, ExtensionManager } from '@remirror/core';
-import { InjectedRemirrorProps, UsePositionerParams } from '@remirror/react-utils';
+import {
+  InjectedPortalContextProps,
+  InjectedRemirrorProps,
+  UsePositionerParams,
+} from '@remirror/react-utils';
 import { useContext } from 'react';
-import { RemirrorContext, RemirrorManagerContext } from './contexts';
+import { NodeViewPortalContext, RemirrorContext, RemirrorManagerContext } from './contexts';
 
 /**
  * This provides access to the Remirror Editor context using hooks.
@@ -52,6 +56,33 @@ export const useRemirrorManager = <GExtensions extends AnyExtension[] = AnyExten
   }
 
   return manager;
+};
+
+/**
+ * This provides access to the Remirror Editor context using hooks.
+ *
+ * ```ts
+ * import { RemirrorProvider, usePortalContext } from 'remirror';
+ *
+ * // ...
+ *
+ * function NodeViewComponent(props) {
+ *   // This pull the remirror props out from the context.
+ *   const { getPositionerProps } = usePortalContext();
+ *
+ *   // ...
+ *   return <Emoji content={props.node.content} />;
+ * }
+ * ```
+ */
+export const usePortalContext = <GExtensions extends AnyExtension[] = AnyExtension[]>() => {
+  const params = useContext<InjectedPortalContextProps<GExtensions>>(NodeViewPortalContext as any);
+
+  if (!params) {
+    throw new Error('There is NO portal context defined.');
+  }
+
+  return params;
 };
 
 /**

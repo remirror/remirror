@@ -1,5 +1,5 @@
 import { ExtensionManager } from '@remirror/core';
-import { InjectedRemirrorProps } from '@remirror/react-utils';
+import { InjectedPortalContextProps, InjectedRemirrorProps } from '@remirror/react-utils';
 import { createContext } from 'react';
 
 /**
@@ -11,3 +11,8 @@ export const RemirrorContext = createContext<InjectedRemirrorProps | null>(null)
  * Creates a ReactContext for the RemirrorManager component
  */
 export const RemirrorManagerContext = createContext<ExtensionManager | null>(null);
+
+/**
+ * Creates the context that is available to all NodeView Components.
+ */
+export const NodeViewPortalContext = createContext<InjectedPortalContextProps | null>(null);

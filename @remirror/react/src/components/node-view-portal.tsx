@@ -1,16 +1,22 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { NodeViewPortalContainer, PortalMap } from '@remirror/core';
+import { AnyExtension, NodeViewPortalContainer, PortalMap } from '@remirror/core';
+import { InjectedPortalContextProps } from '@remirror/react-utils';
+import { NodeViewPortalContext } from '../contexts';
 
-export interface NodeViewPortalComponentProps {
+export interface NodeViewPortalComponentProps<GExtensions extends AnyExtension[] = AnyExtension[]>
+  extends InjectedPortalContextProps<GExtensions> {
   portalContainer: NodeViewPortalContainer;
 }
 
 /**
  * The component that places all the portals into the DOM.
  */
-export const NodeViewPortalComponent = ({ portalContainer }: NodeViewPortalComponentProps) => {
+export const NodeViewPortalComponent = <GExtensions extends AnyExtension[] = AnyExtension[]>({
+  portalContainer,
+  ...props
+}: NodeViewPortalComponentProps<GExtensions>) => {
   const [state, setState] = useState(Array.from(portalContainer.portals.entries()));
 
   /**
@@ -26,10 +32,10 @@ export const NodeViewPortalComponent = ({ portalContainer }: NodeViewPortalCompo
   }, []);
 
   return (
-    <>
+    <NodeViewPortalContext.Provider value={props as any}>
       {state.map(([container, { render: renderFunction, key }]) => (
         <Fragment key={key}>{createPortal(renderFunction(), container)}</Fragment>
       ))}
-    </>
+    </NodeViewPortalContext.Provider>
   );
 };

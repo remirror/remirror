@@ -67,8 +67,8 @@ const RemirrorContextProvider = <GExtensions extends AnyExtension[] = AnyExtensi
   childAsRoot: _,
   ...props
 }: RemirrorContextProviderProps<GExtensions>) => {
-  const Component = RemirrorContext.Provider as any;
-  return <Component {...props} />;
+  const Provider = RemirrorContext.Provider as any;
+  return <Provider {...props} />;
 };
 
 RemirrorContextProvider.$$remirrorType = RemirrorElementType.ContextProvider;
