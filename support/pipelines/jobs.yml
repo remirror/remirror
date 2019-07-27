@@ -74,3 +74,23 @@ jobs:
           - publish: $(System.DefaultWorkingDirectory)/e2e/__image_snapshots__
             condition: failed()
             artifact: ImageSnapshots
+
+  - ${{ if eq(parameters.name, 'Linux') }}:
+      - job: ${{ parameters.name }}PublishCIBuildToNpm
+        dependsOn:
+          - ${{ parameters.name }}Checks
+          - ${{ parameters.name }}UnitTests
+          - ${{ parameters.name }}SizeChecks
+          - macOSChromeIntegrationTests
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/canary')) # Only run on canary
+        pool:
+          vmImage: ${{ parameters.vmImage }}
+        steps:
+          - template: yarn-install.yml
+          - bash: yarn build
+            displayName: 'Build project'
+          - task: npmAuthenticate@0
+            inputs:
+              customEndpoint: 'NPM Registry Publish Token'
+          - bash: yarn lerna:publish:ci
+            displayName: Publish canary build to NPM
