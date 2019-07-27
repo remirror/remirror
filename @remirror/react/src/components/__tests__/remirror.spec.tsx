@@ -1,11 +1,10 @@
+import { EditorState, fromHTML } from '@remirror/core';
+import { InjectedRemirrorProps, RemirrorStateListenerParams } from '@remirror/react-utils';
+import { createTestManager } from '@test-fixtures/schema-helpers';
 import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-
-import { EditorState, fromHTML } from '@remirror/core';
-import { InjectedRemirrorProps, RemirrorStateListenerParams } from '@remirror/react-utils';
-import { createTestManager } from '@test-fixtures/schema-helpers';
 import { Remirror } from '../';
 import { RemirrorProviderProps } from '../providers';
 

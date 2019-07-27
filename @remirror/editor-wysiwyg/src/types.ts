@@ -1,10 +1,52 @@
-import { CodeBlockExtensionOptions } from '@remirror/extension-code-block';
+import {
+  BaseExtensionList,
+  BlockquoteExtension,
+  BoldExtension,
+  BulletListExtension,
+  CodeExtension,
+  HardBreakExtension,
+  HeadingExtension,
+  HorizontalRuleExtension,
+  ImageExtension,
+  ItalicExtension,
+  LinkExtension,
+  ListItemExtension,
+  OrderedListExtension,
+  ParagraphExtension,
+  SSRHelperExtension,
+  StrikeExtension,
+  TrailingNodeExtension,
+  UnderlineExtension,
+} from '@remirror/core-extensions';
+import { CodeBlockExtension, CodeBlockExtensionOptions } from '@remirror/extension-code-block';
 import { RemirrorManagerProps, RemirrorProps } from '@remirror/react-utils';
 import { ButtonState, WysiwygEditorTheme } from './theme';
+
+export type WysiwygExtensionList = Array<
+  | BaseExtensionList[number]
+  | BlockquoteExtension
+  | BoldExtension
+  | BulletListExtension
+  | CodeExtension
+  | HardBreakExtension
+  | HeadingExtension
+  | HorizontalRuleExtension
+  | ImageExtension
+  | ItalicExtension
+  | LinkExtension
+  | ListItemExtension
+  | OrderedListExtension
+  | ParagraphExtension
+  | SSRHelperExtension
+  | StrikeExtension
+  | TrailingNodeExtension
+  | UnderlineExtension
+  | CodeBlockExtension
+>;
 export interface WysiwygEditorProps
   extends Partial<
       Pick<
-        RemirrorProps,
+        RemirrorProps<WysiwygExtensionList>,
         | 'initialContent'
         | 'attributes'
         | 'editable'

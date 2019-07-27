@@ -1,14 +1,3 @@
-import React, {
-  ChangeEventHandler,
-  DOMAttributes,
-  FC,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-
 import {
   faBold,
   faCode,
@@ -28,13 +17,24 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import keyCode from 'keycode';
+import React, {
+  ChangeEventHandler,
+  DOMAttributes,
+  FC,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
-import { Attrs, memoize } from '@remirror/core';
+import { ActionNames, Attrs, memoize } from '@remirror/core';
 import { bubblePositioner, useRemirror } from '@remirror/react';
 import { ButtonState, styled } from '../theme';
+import { WysiwygExtensionList } from '../types';
 import { BubbleContent, BubbleMenuTooltip, IconButton, Toolbar, WithPaddingProps } from './styled';
 
-const menuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
+const menuItems: Array<[ActionNames<WysiwygExtensionList>, [IconDefinition, string?], Attrs?]> = [
   ['bold', [faBold]],
   ['italic', [faItalic]],
   ['underline', [faUnderline]],
@@ -146,7 +146,7 @@ const bubbleMenuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
 ];
 
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
-  const { actions, getPositionerProps } = useRemirror();
+  const { actions, getPositionerProps } = useRemirror<WysiwygExtensionList>();
   const { bottom, left, ref } = getPositionerProps({
     ...bubblePositioner,
     isActive: params =>

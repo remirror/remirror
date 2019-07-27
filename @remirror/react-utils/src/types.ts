@@ -1,6 +1,7 @@
 import { Interpolation, ObjectInterpolation } from '@emotion/core';
 import {
   AbstractInstanceType,
+  ActionsFromExtensionList,
   AnyExtension,
   CompareStateParams,
   EditorState,
@@ -10,12 +11,11 @@ import {
   ElementParams,
   Extension,
   ExtensionManager,
-  ExtensionOptions,
   ObjectNode,
+  OptionsOfExtension,
   PlainObject,
   Position,
   PositionParams,
-  RemirrorActions,
   RemirrorContentType,
   RenderEnvironment,
   StringHandlerParams,
@@ -80,11 +80,11 @@ export type GetPositionerReturn<GRefKey extends string = 'ref'> = PositionerProp
 /**
  * These are the props passed to the render function provided when setting up your editor.
  */
-export interface InjectedRemirrorProps<GCommands extends string = string> {
+export interface InjectedRemirrorProps<GExtensions extends AnyExtension[] = AnyExtension[]> {
   /**
    * An instance of the extension manager
    */
-  manager: ExtensionManager;
+  manager: ExtensionManager<GExtensions>;
   /**
    * The prosemirror view
    */
@@ -93,7 +93,7 @@ export interface InjectedRemirrorProps<GCommands extends string = string> {
   /**
    * A map of actions available the
    */
-  actions: RemirrorActions<GCommands>;
+  actions: ActionsFromExtensionList<GExtensions>;
 
   /**
    * The unique id for the editor instance
@@ -172,7 +172,9 @@ export interface InjectedRemirrorProps<GCommands extends string = string> {
  *
  * @param - injected remirror params
  */
-export type RenderPropFunction = (params: InjectedRemirrorProps) => JSX.Element;
+export type RenderPropFunction<GExtensions extends AnyExtension[] = AnyExtension[]> = (
+  params: InjectedRemirrorProps<GExtensions>,
+) => JSX.Element;
 
 export interface RemirrorGetterParams {
   /**
@@ -214,13 +216,14 @@ export type RemirrorEventListener = (params: RemirrorEventListenerParams) => voi
 
 export type AttributePropFunction = (params: RemirrorEventListenerParams) => Record<string, string>;
 
-export interface RemirrorProps extends StringHandlerParams {
+export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension[]>
+  extends StringHandlerParams {
   /**
    * Pass in the extension manager.
    *
    * The manager is responsible for handling all Prosemirror related functionality.
    */
-  manager: ExtensionManager;
+  manager: ExtensionManager<GExtensions>;
 
   /**
    * Set the starting value object of the editor.
@@ -293,7 +296,7 @@ export interface RemirrorProps extends StringHandlerParams {
    * The render prop that takes the injected remirror params and returns an element to render.
    * The editor view is automatically attached to the DOM.
    */
-  children: RenderPropFunction;
+  children: RenderPropFunction<GExtensions>;
 
   /**
    * A method called when the editor is dispatching the transaction.
@@ -449,13 +452,13 @@ export enum RemirrorElementType {
 export type RemirrorExtensionProps<
   GConstructor extends { prototype: AnyExtension },
   GExtension extends AbstractInstanceType<GConstructor>,
-  GOptions extends ExtensionOptions<GExtension>
+  GOptions extends OptionsOfExtension<GExtension>
 > = GOptions & BaseExtensionProps & ExtensionConstructorProps<GConstructor, GExtension, GOptions>;
 
 export type ExtensionConstructorProps<
   GConstructor extends { prototype: AnyExtension },
   GExtension extends AbstractInstanceType<GConstructor>,
-  GOptions extends ExtensionOptions<GExtension>
+  GOptions extends OptionsOfExtension<GExtension>
 > = {
   /**
    * The constructor for the remirror extension.

@@ -1,4 +1,4 @@
-import { MakeOptional } from '@remirror/core';
+import { AnyExtension, MakeOptional } from '@remirror/core';
 import {
   GetRootPropsConfig,
   InjectedRemirrorProps,
@@ -13,7 +13,8 @@ import { RemirrorContext } from '../contexts';
 import { useRemirrorManager } from '../hooks';
 import { Remirror } from './remirror';
 
-export interface RemirrorContextProviderProps extends ProviderProps<InjectedRemirrorProps> {
+export interface RemirrorContextProviderProps<GExtensions extends AnyExtension[] = AnyExtension[]>
+  extends ProviderProps<InjectedRemirrorProps<GExtensions>> {
   /**
    * Sets the first child element as a the root (where the prosemirror editor instance will be rendered).
    *
@@ -46,9 +47,9 @@ export interface RemirrorContextProviderProps extends ProviderProps<InjectedRemi
   childAsRoot?: GetRootPropsConfig<string> | boolean;
 }
 
-export interface RemirrorProviderProps
-  extends MakeOptional<Omit<RemirrorProps, 'children'>, keyof typeof defaultProps>,
-    Pick<RemirrorContextProviderProps, 'childAsRoot'> {
+export interface RemirrorProviderProps<GExtensions extends AnyExtension[] = AnyExtension[]>
+  extends MakeOptional<Omit<RemirrorProps<GExtensions>, 'children'>, keyof typeof defaultProps>,
+    Pick<RemirrorContextProviderProps<GExtensions>, 'childAsRoot'> {
   /**
    * All providers must have ONE child element.
    */

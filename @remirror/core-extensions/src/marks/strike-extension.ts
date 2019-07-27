@@ -1,16 +1,16 @@
 import {
   CommandMarkTypeParams,
+  ExtensionManagerMarkTypeParams,
   MarkExtension,
   MarkExtensionOptions,
   MarkExtensionSpec,
   MarkGroup,
   markInputRule,
   markPasteRule,
-  SchemaMarkTypeParams,
 } from '@remirror/core';
 import { toggleMark } from 'prosemirror-commands';
 
-export class StrikeExtension extends MarkExtension<MarkExtensionOptions, 'strike'> {
+export class StrikeExtension extends MarkExtension<MarkExtensionOptions> {
   get name() {
     return 'strike' as const;
   }
@@ -37,7 +37,7 @@ export class StrikeExtension extends MarkExtension<MarkExtensionOptions, 'strike
     };
   }
 
-  public keys({ type }: SchemaMarkTypeParams) {
+  public keys({ type }: ExtensionManagerMarkTypeParams) {
     return {
       'Mod-d': toggleMark(type),
     };
@@ -47,11 +47,11 @@ export class StrikeExtension extends MarkExtension<MarkExtensionOptions, 'strike
     return { strike: () => toggleMark(type) };
   }
 
-  public inputRules({ type }: SchemaMarkTypeParams) {
+  public inputRules({ type }: ExtensionManagerMarkTypeParams) {
     return [markInputRule({ regexp: /~([^~]+)~$/, type })];
   }
 
-  public pasteRules({ type }: SchemaMarkTypeParams) {
+  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
     return [markPasteRule({ regexp: /~([^~]+)~/g, type })];
   }
 }

@@ -1,7 +1,7 @@
 import {
-  Attrs,
   BooleanExtensionCheck,
   CommandNodeTypeParams,
+  ExtensionManagerNodeTypeParams,
   findParentNodeOfType,
   GetAttrs,
   getMatchString,
@@ -16,7 +16,6 @@ import {
   nodeInputRule,
   Plugin,
   removeNodeAtPosition,
-  SchemaNodeTypeParams,
   toggleBlockItem,
 } from '@remirror/core';
 import { setBlockType } from 'prosemirror-commands';
@@ -24,7 +23,7 @@ import { TextSelection } from 'prosemirror-state';
 import refractor from 'refractor/core';
 import { CodeBlockComponent } from './code-block-component';
 import createCodeBlockPlugin from './code-block-plugin';
-import { CodeBlockExtensionCommands, CodeBlockExtensionOptions } from './code-block-types';
+import { CodeBlockAttrs, CodeBlockExtensionOptions } from './code-block-types';
 import { formatCodeBlockFactory, getLanguage, updateNodeAttrs } from './code-block-utils';
 import { syntaxTheme, SyntaxTheme } from './themes';
 
@@ -38,11 +37,7 @@ export const codeBlockDefaultOptions: CodeBlockExtensionOptions = {
   toggleType: 'paragraph',
 };
 
-export class CodeBlockExtension extends NodeExtension<
-  CodeBlockExtensionOptions,
-  CodeBlockExtensionCommands,
-  {}
-> {
+export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions> {
   get name() {
     return 'codeBlock' as const;
   }
@@ -124,26 +119,67 @@ export class CodeBlockExtension extends NodeExtension<
   public commands({ type, schema }: CommandNodeTypeParams) {
     const { defaultLanguage, supportedLanguages, formatter, toggleType = 'paragraph' } = this.options;
     return {
-      toggleCodeBlock: (attrs?: Attrs) =>
+      /**
+       * Call this method to toggle the code block.
+       *
+       * ```ts
+       * actions.toggleCodeBlock({ language: 'ts' });
+       * ```
+       *
+       * The above makes the current node a codeBlock with the language ts or remove the
+       * code block altogether.
+       */
+      toggleCodeBlock: (attrs?: Partial<CodeBlockAttrs>) =>
         toggleBlockItem({
           type,
           toggleType: schema.nodes[toggleType],
           attrs: { language: defaultLanguage, ...attrs },
         }),
-      createCodeBlock: (attrs?: Attrs) => setBlockType(type, { language: defaultLanguage, ...attrs }),
+
+      /**
+       * Creates a code at the current position.
+       *
+       * ```ts
+       * actions.createCodeBlock({ language: 'js' });
+       * ```
+       */
+      createCodeBlock: (attrs: CodeBlockAttrs) => setBlockType(type, { language: defaultLanguage, ...attrs }),
+
+      /**
+       * Update the code block at the current position. Primarily this is used to change the language.
+       *
+       * ```ts
+       * if (actions.updateCodeBlock.isActive()) {
+       *   actions.updateCodeBlock({ language: 'markdown' });
+       * }
+       * ```
+       */
       updateCodeBlock: updateNodeAttrs(type),
+
+      /**
+       * Format the code block with the code formatting function passed as an option.
+       *
+       * Code formatters (like prettier) add a lot to the bundle size and hence it is up to you
+       * to provide a formatter which will be run on the entire code block when this method is used.
+       *
+       * ```ts
+       * if (actions.formatCodeBlock.isActive()) {
+       *   actions.formatCodeBlockFactory();
+       *   // Or with a specific position
+       *   actions.formatCodeBlock({ pos: 100 }) // to format a seperate code block
+       * }
+       * ```
+       */
       formatCodeBlock: formatCodeBlockFactory({ type, formatter, defaultLanguage, supportedLanguages }),
     };
   }
 
-  public active({
-    type,
-    getState,
-  }: CommandNodeTypeParams): BooleanExtensionCheck<CodeBlockExtensionCommands> {
+  public active({ type, getState }: CommandNodeTypeParams): BooleanExtensionCheck {
     return ({ command }) => {
       switch (command) {
-        case 'toggleCodeBlock':
+        case 'updateCodeBlock':
         case 'createCodeBlock':
+        case 'formatCodeBlock': // The formatter could be run to check but this seems expensive
           return isNodeActive({ state: getState(), type });
 
         default:
@@ -152,10 +188,7 @@ export class CodeBlockExtension extends NodeExtension<
     };
   }
 
-  public enabled({
-    type,
-    getState,
-  }: CommandNodeTypeParams): BooleanExtensionCheck<CodeBlockExtensionCommands> {
+  public enabled({ type, getState }: CommandNodeTypeParams): BooleanExtensionCheck {
     return ({ command }) => {
       switch (command) {
         case 'toggleCodeBlock':
@@ -172,7 +205,7 @@ export class CodeBlockExtension extends NodeExtension<
   /**
    * Create an input rule that listens converts the code fence into a code block with space.
    */
-  public inputRules({ type }: SchemaNodeTypeParams) {
+  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
     const regexp = /^```([a-zA-Z]*)? $/;
     const getAttrs: GetAttrs = match => {
       const language = getLanguage({
@@ -193,7 +226,7 @@ export class CodeBlockExtension extends NodeExtension<
     ];
   }
 
-  public keys({ type, getActions }: SchemaNodeTypeParams): KeyboardBindings {
+  public keys({ type, getActions }: ExtensionManagerNodeTypeParams): KeyboardBindings {
     const { keyboardShortcut, toggleType } = this.options;
 
     return {
@@ -282,7 +315,7 @@ export class CodeBlockExtension extends NodeExtension<
     };
   }
 
-  public plugin(params: SchemaNodeTypeParams): Plugin {
+  public plugin(params: ExtensionManagerNodeTypeParams): Plugin {
     return createCodeBlockPlugin({ extension: this, ...params });
   }
 }

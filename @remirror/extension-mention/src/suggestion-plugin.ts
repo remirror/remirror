@@ -5,13 +5,13 @@ import {
   EditorState,
   EditorStateParams,
   EditorView,
+  ExtensionManagerMarkTypeParams,
   FromToParams,
   isMarkActive,
   MarkExtension,
   MarkType,
   noop,
   ResolvedPosParams,
-  SchemaMarkTypeParams,
   TextParams,
   transactionChanged,
   TransactionParams,
@@ -22,8 +22,6 @@ import {
   ChangeReason,
   CompareMatchParams,
   ExitReason,
-  MentionExtensionAttrs,
-  MentionExtensionCommands,
   MentionExtensionOptions,
   SuggestionActions,
   SuggestionCallbackParams,
@@ -45,8 +43,8 @@ import {
   runKeyBindings,
 } from './mention-utils';
 
-export interface SuggestionStateCreateParams extends SchemaMarkTypeParams {
-  extension: MarkExtension<MentionExtensionOptions, MentionExtensionCommands, {}>;
+export interface SuggestionStateCreateParams extends ExtensionManagerMarkTypeParams {
+  extension: MarkExtension<MentionExtensionOptions>;
 }
 
 export class SuggestionState {
@@ -90,8 +88,8 @@ export class SuggestionState {
    */
   private getCommands(match: SuggestionStateMatch, reason?: ExitReason | ChangeReason): SuggestionActions {
     const { name, range } = match;
-    const create = this.getActions<MentionExtensionAttrs>('createMention');
-    const update = this.getActions<MentionExtensionAttrs>('updateMention');
+    const create = this.getActions('createMention');
+    const update = this.getActions('updateMention');
     const remove = this.getActions('removeMention');
     const stage = this.stage;
 
@@ -151,7 +149,7 @@ export class SuggestionState {
   }
 
   constructor(
-    private extension: MarkExtension<MentionExtensionOptions, MentionExtensionCommands, {}>,
+    private extension: MarkExtension<MentionExtensionOptions>,
     private type: MarkType,
     private getActions: ActionGetter,
   ) {}

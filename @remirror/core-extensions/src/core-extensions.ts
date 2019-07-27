@@ -24,3 +24,18 @@ export const baseExtensions: PrioritizedExtension[] = [
   { extension: new DropCursorExtension(), priority: 10 },
   { extension: new BaseKeymapExtension(), priority: 10 },
 ];
+
+/**
+ * The list of extensions provided by default in a remirror editor. This is useful for extending with your own types
+ * to provide automated typechecking.
+ */
+export type BaseExtensionList = [
+  DocExtension,
+  TextExtension,
+  ParagraphExtension,
+  CompositionExtension,
+  HistoryExtension,
+  GapCursorExtension,
+  DropCursorExtension,
+  BaseKeymapExtension,
+];

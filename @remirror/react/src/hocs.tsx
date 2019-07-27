@@ -1,4 +1,4 @@
-import { Cast } from '@remirror/core';
+import { AnyExtension, Cast } from '@remirror/core';
 import { GetPositionerReturn, InjectedRemirrorProps, UsePositionerParams } from '@remirror/react-utils';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import React, { ComponentType, FunctionComponent } from 'react';
@@ -9,7 +9,10 @@ import { RemirrorContext } from './contexts';
  *
  * @param WrappedComponent
  */
-export const withRemirror = <GProps extends InjectedRemirrorProps>(
+export const withRemirror = <
+  GExtensions extends AnyExtension[],
+  GProps extends InjectedRemirrorProps<GExtensions>
+>(
   WrappedComponent: ComponentType<GProps>,
 ) => {
   type EnhancedComponentProps = Omit<GProps, keyof InjectedRemirrorProps>;

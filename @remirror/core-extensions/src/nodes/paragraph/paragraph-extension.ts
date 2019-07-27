@@ -10,7 +10,7 @@ import { ParagraphExtensionAttrs, ParagraphExtensionOptions } from './paragraph-
  *
  * @builtin
  */
-export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions, 'createParagraph', {}> {
+export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions> {
   get name() {
     return 'paragraph' as const;
   }

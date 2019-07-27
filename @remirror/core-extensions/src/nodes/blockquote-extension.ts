@@ -1,16 +1,16 @@
 import {
   CommandNodeTypeParams,
   EDITOR_CLASS_SELECTOR,
+  ExtensionManagerNodeTypeParams,
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
   NodeGroup,
-  SchemaNodeTypeParams,
   toggleWrap,
 } from '@remirror/core';
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
-export class BlockquoteExtension extends NodeExtension<NodeExtensionOptions, 'blockquote', {}> {
+export class BlockquoteExtension extends NodeExtension<NodeExtensionOptions> {
   get name() {
     return 'blockquote' as const;
   }
@@ -45,13 +45,13 @@ export class BlockquoteExtension extends NodeExtension<NodeExtensionOptions, 'bl
     `;
   }
 
-  public keys({ type }: SchemaNodeTypeParams) {
+  public keys({ type }: ExtensionManagerNodeTypeParams) {
     return {
       'Ctrl->': toggleWrap(type),
     };
   }
 
-  public inputRules({ type }: SchemaNodeTypeParams) {
+  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
     return [wrappingInputRule(/^\s*>\s$/, type)];
   }
 }

@@ -11,6 +11,11 @@ import { ComponentType } from 'react';
 export type Key<GRecord> = keyof GRecord;
 
 /**
+ * An alternative to keyof that only extracts the string keys.
+ */
+export type StringKey<GRecord> = Extract<keyof GRecord, string>;
+
+/**
  * Extract the values of an object as a union type.
  *
  * ```ts
@@ -57,7 +62,7 @@ export interface PlainObject {
 export type AnyFunction<GType = any> = (...args: any[]) => GType;
 
 /**
- * Matches any constructor type
+ * Matches any constructor type (but not of abstract classes).
  */
 export type AnyConstructor<GType = unknown> = new (...args: any[]) => GType;
 
@@ -66,6 +71,14 @@ export type AnyConstructor<GType = unknown> = new (...args: any[]) => GType;
  * alternative which allows us to pull out the type of the prototype.
  */
 export type AbstractInstanceType<GConstructor extends { prototype: any }> = GConstructor['prototype'];
+
+/**
+ * A magical utility which maps a union type to an intersection type using TypeScript KungFu
+ * Taken from https://stackoverflow.com/a/50375286/2172153
+ */
+export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void)
+  ? I
+  : never;
 
 /**
  * Makes specified keys of an interface optional while the rest stay the same.

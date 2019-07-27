@@ -63,7 +63,6 @@
     "@types/reach__router": "1.2.4",
     "@types/react-helmet": "5.0.8",
     "@types/styled-system": "5.0.0",
-    "@types/styled-system__css": "5.0.2",
-    "repng": "3.2.0"
+    "@types/styled-system__css": "5.0.2"
   }
 }

@@ -4,7 +4,7 @@ import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
 import { EditorState, PluginKey } from 'prosemirror-state';
 import { ComponentType } from 'react';
-import { AnyExtension, ExtensionCommands, FlexibleExtension } from './extension';
+import { isMarkExtension, isNodeExtension } from './extension-helpers';
 import {
   createCommands,
   createExtensionTags,
@@ -15,14 +15,22 @@ import {
   ignoreFunctions,
   transformExtensionMap,
 } from './extension-manager.helpers';
+import {
+  ActionsFromExtensionList,
+  ExtensionOf,
+  FlexibleExtension,
+  MarkNames,
+  NodeNames,
+  PlainNames,
+} from './extension-types';
 import { bool, isEqual, isFunction, isInstanceOf } from './helpers';
 import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from './helpers/document';
-import { isMarkExtension } from './mark-extension';
-import { isNodeExtension } from './node-extension';
+import { MarkExtension } from './mark-extension';
+import { NodeExtension } from './node-extension';
 import { NodeViewPortalContainer } from './portal-container';
 import {
-  ActionGetter,
-  ActionMethods,
+  ActionMethod,
+  AnyActions,
   Attrs,
   AttrsWithClass,
   BooleanExtensionCheck,
@@ -39,12 +47,17 @@ import {
   NodeViewMethod,
   PlainObject,
   ProsemirrorPlugin,
-  RemirrorActions,
   TransactionParams,
 } from './types';
 
-export interface ExtensionManagerData {
-  schema: EditorSchema;
+export interface ExtensionManagerData<
+  GActions extends any,
+  GNodes extends string,
+  GMarks extends string,
+  GPlain extends string,
+  GNames extends string = GNodes | GMarks | GPlain
+> {
+  schema: EditorSchema<GNodes, GMarks>;
   styles: Interpolation;
   directPlugins: ProsemirrorPlugin[];
   plugins: ProsemirrorPlugin[];
@@ -52,12 +65,12 @@ export interface ExtensionManagerData {
   keymaps: ProsemirrorPlugin[];
   inputRules: ProsemirrorPlugin;
   pasteRules: ProsemirrorPlugin[];
-  actions: RemirrorActions;
+  actions: GActions;
   view: EditorView;
-  isActive: Record<string, BooleanExtensionCheck<string>>;
-  isEnabled: Record<string, BooleanExtensionCheck<string>>;
-  options: Record<string, PlainObject>;
-  tags: ExtensionTags;
+  isActive: Record<GNames, BooleanExtensionCheck>;
+  isEnabled: Record<GNames, BooleanExtensionCheck>;
+  options: Record<GNames, PlainObject>;
+  tags: ExtensionTags<GNodes, GMarks, GPlain>;
 }
 
 /**
@@ -65,7 +78,7 @@ export interface ExtensionManagerData {
  *
  * @remarks
  *
- * The extension manager has three phases of initialization:
+ * The extension manager has three phases of Initialization:
  *
  * - Construction - This takes in all the extensions and creates the schema.
  *
@@ -91,7 +104,8 @@ export interface ExtensionManagerData {
  * manager.data.actions
  * ```
  */
-export class ExtensionManager implements ExtensionManagerInitParams {
+export class ExtensionManager<GFlexibleExtensions extends FlexibleExtension[] = FlexibleExtension[]>
+  implements ExtensionManagerInitParams {
   /**
    * A static method for creating a new extension manager.
    */
@@ -101,20 +115,20 @@ export class ExtensionManager implements ExtensionManagerInitParams {
 
   /**
    * Retrieve the latest state of the editor this manager is responsible for.
-   * This is only available after the first initialization.
+   * This is only available after the first Initialization.
    */
   public getState!: () => EditorState;
 
   /**
    * Retrieve the portal container for any custom nodeViews. This is only
-   * available after the first initialization.
+   * available after the first Initialization.
    */
   public portalContainer!: NodeViewPortalContainer;
 
   /**
    * The extensions stored by this manager
    */
-  public readonly extensions: AnyExtension[];
+  public readonly extensions: Array<ExtensionOf<GFlexibleExtensions[number]>>;
 
   /**
    * Whether or not the manager has been initialized. This happens after init is
@@ -123,21 +137,20 @@ export class ExtensionManager implements ExtensionManagerInitParams {
   private initialized = false;
 
   /**
-   * The extension manager data which is stored after initialization
+   * The extension manager data which is stored after Initialization
    */
-  private initData: ExtensionManagerData = {} as ExtensionManagerData;
+  private initData: this['_D'] = {} as this['_D'];
 
   /**
    * Retrieve the actions for a specified extension.
    */
-  private getActions: ActionGetter = <GAttrs>(name: string) =>
-    this.initData.actions[name] as ActionMethods<GAttrs>;
+  private getActions = (name: keyof this['_A']) => this.initData.actions[name];
 
   /**
    * Creates the extension manager which is used to simplify the management of
    * the different facets of building an editor with
    */
-  constructor(extensionMapValues: FlexibleExtension[]) {
+  constructor(extensionMapValues: GFlexibleExtensions) {
     this.extensions = transformExtensionMap(extensionMapValues);
 
     // Initialize the schema immediately since this doesn't ever change.
@@ -210,7 +223,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
     this.extensions
       .filter(hasExtensionProperty('attributes'))
       .filter(extension => !extension.options.exclude.attributes)
-      .map(extension => extension.attributes(this.params))
+      .map(extension => extension.attributes!(this.params))
       .reverse()
       .forEach(attrs => {
         combinedAttributes = {
@@ -259,10 +272,13 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * Filters through all provided extensions and picks the nodes
    */
   get nodes() {
-    const nodes: Record<string, NodeExtensionSpec> = {};
-    this.extensions.filter(isNodeExtension).forEach(({ name, schema }) => {
-      nodes[name] = schema;
+    const nodes: Record<this['_N'], NodeExtensionSpec> = {} as any;
+
+    this.extensions.filter(isNodeExtension).forEach(extension => {
+      const { name, schema } = extension as NodeExtension;
+      nodes[name as this['_N']] = schema;
     });
+
     return nodes;
   }
 
@@ -270,10 +286,13 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * Filters through all provided extensions and picks the marks
    */
   get marks() {
-    const marks: Record<string, MarkExtensionSpec> = {};
-    this.extensions.filter(isMarkExtension).forEach(({ name, schema }) => {
-      marks[name] = schema;
+    const marks: Record<this['_M'], MarkExtensionSpec> = {} as any;
+
+    this.extensions.filter(isMarkExtension).forEach(extension => {
+      const { name, schema } = extension as MarkExtension;
+      marks[name as this['_M']] = schema;
     });
+
     return marks;
   }
 
@@ -310,7 +329,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
       schema: this.schema,
       getState: this.getState,
       portalContainer: this.portalContainer,
-      getActions: this.getActions,
+      getActions: this.getActions as any,
     };
   }
 
@@ -395,7 +414,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    */
   public onTransaction(params: OnTransactionManagerParams) {
     this.extensions.filter(hasExtensionProperty('onTransaction')).forEach(({ onTransaction }) => {
-      onTransaction({ ...params, ...this.params, view: this.data.view });
+      onTransaction!({ ...params, ...this.params, view: this.data.view });
     });
   }
 
@@ -422,7 +441,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
       .filter(hasExtensionProperty('ssrTransformer'))
       .filter(extension => !extension.options.exclude.ssr)
       .reduce((prevElement, extension) => {
-        return extension.ssrTransformer(prevElement, this.params);
+        return extension.ssrTransformer!(prevElement, this.params) as JSX.Element;
       }, element);
   }
 
@@ -446,7 +465,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    *
    * This is called as soon as the ExtensionManager is created.
    */
-  private createSchema(): EditorSchema {
+  private createSchema(): EditorSchema<this['_N'], this['_M']> {
     return new Schema({ nodes: this.nodes, marks: this.marks });
   }
 
@@ -473,26 +492,26 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * - `isActive` defaults to a function returning false
    * - `isEnabled` defaults to a function returning true
    */
-  private actions(params: CommandParams): RemirrorActions {
+  private actions(params: CommandParams): this['_A'] {
     // Will throw if not initialized
     this.checkInitialized();
 
     const extensions = this.extensions;
-    const actions: RemirrorActions = {};
+    const actions: AnyActions = {};
 
     // Creates the methods that take in attrs and dispatch an action into the editor
     const commands = createCommands({ extensions, params });
 
     Object.entries(commands).forEach(([commandName, { command, name }]) => {
-      const isActive = this.initData.isActive[name] || defaultIsActive;
-      const isEnabled = this.initData.isEnabled[name] || defaultIsEnabled;
+      const isActive = this.initData.isActive[name as this['_Names']] || defaultIsActive;
+      const isEnabled = this.initData.isEnabled[name as this['_Names']] || defaultIsEnabled;
 
-      actions[commandName] = command as ActionMethods;
+      actions[commandName] = command as ActionMethod;
       actions[commandName].isActive = (attrs?: Attrs) => isActive({ attrs, command: commandName });
       actions[commandName].isEnabled = (attrs?: Attrs) => isEnabled({ attrs, command: commandName });
     });
 
-    return actions;
+    return actions as any;
   }
 
   /**
@@ -501,15 +520,15 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    * This can be `isActive` or `isEnabled`.
    */
   private booleanCheck(method: 'isEnabled' | 'isActive') {
+    // Will throw if not initialized
     this.checkInitialized();
-    const isActiveMethods: Record<string, BooleanExtensionCheck<string>> = {};
+
+    const isActiveMethods: Record<this['_Names'], BooleanExtensionCheck> = {} as any;
 
     return this.extensions.filter(hasExtensionProperty(method)).reduce(
       (acc, extension) => ({
         ...acc,
-        [extension.name]: extensionPropertyMapper(method, this.params)(extension) as BooleanExtensionCheck<
-          ExtensionCommands<typeof extension>
-        >,
+        [extension.name]: extensionPropertyMapper(method, this.params)(extension),
       }),
       isActiveMethods,
     );
@@ -557,7 +576,7 @@ export class ExtensionManager implements ExtensionManagerInitParams {
    */
   private keymaps() {
     this.checkInitialized();
-    const extensionKeymaps = this.extensions
+    const extensionKeymaps: Array<Record<string, CommandFunction>> = this.extensions
       .filter(hasExtensionProperty('keys'))
       .filter(extension => !extension.options.exclude.keymaps)
       .map(extensionPropertyMapper('keys', this.params));
@@ -643,6 +662,70 @@ export class ExtensionManager implements ExtensionManagerInitParams {
 
     return extensionStyles;
   }
+
+  /* The following are placed at the bottom to prevent them from appearing at the top
+  of autosuggestions when accessing the manger. The names are prefixed with `z` to place them at the
+  bottom of alphabetical suggestion lists. */
+
+  /**
+   * `NodeNames`
+   *
+   * Type inference hack for node extension names.
+   * Also provides a shorthand way for accessing types on a class.
+   *
+   * DO NOT USE (on penalty of intense confusion)
+   */
+  public readonly _N!: NodeNames<this['extensions']>;
+
+  /**
+   * `MarkNames`
+   *
+   * Type inference hack for mark extension names.
+   * Also provides a shorthand way for accessing types on a class.
+   *
+   * DO NOT USE (on penalty of intense confusion)
+   */
+  public readonly _M!: MarkNames<this['extensions']>;
+
+  /**
+   * `PlainNames`
+   *
+   * Type inference hack for plain extension names.
+   * Also provides a shorthand way for accessing types on a class.
+   *
+   * DO NOT USE (on penalty of intense confusion)
+   */
+  public readonly _P!: PlainNames<this['extensions']>;
+
+  /**
+   * `AllNames`
+   *
+   * Type inference hack for all extension names.
+   * Also provides a shorthand way for accessing types on a class.
+   *
+   * DO NOT USE (on penalty of intense confusion)
+   */
+  public readonly _Names!: this['_P'] | this['_N'] | this['_M'];
+
+  /**
+   * `Actions`
+   *
+   * Type inference hack for all the actions this manager provides.
+   * Also provides a shorthand way for accessing types on a class.
+   *
+   * DO NOT USE (on penalty of intense confusion)
+   */
+  public readonly _A!: ActionsFromExtensionList<this['extensions']>;
+
+  /**
+   * `ExtensionData`
+   *
+   * Type inference hack for all the extensionData that this manager provides.
+   * Also provides a shorthand way for accessing types on a class.
+   *
+   * DO NOT USE (on penalty of intense confusion)
+   */
+  public readonly _D!: ExtensionManagerData<this['_A'], this['_N'], this['_M'], this['_P']>;
 }
 /**
  * Checks to see whether this is an extension manager
@@ -651,11 +734,11 @@ export class ExtensionManager implements ExtensionManagerInitParams {
  */
 export const isExtensionManager = isInstanceOf(ExtensionManager);
 
-export interface ManagerParams {
+export interface ManagerParams<GFlexibleExtensions extends FlexibleExtension[] = FlexibleExtension[]> {
   /**
    * The extension manager
    */
-  manager: ExtensionManager;
+  manager: ExtensionManager<GFlexibleExtensions>;
 }
 
 export interface OnTransactionManagerParams extends TransactionParams, EditorStateParams {}

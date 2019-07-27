@@ -1,4 +1,4 @@
-import { NodeExtension, NodeExtensionSpec, SchemaNodeTypeParams } from '@remirror/core';
+import { ExtensionManagerNodeTypeParams, NodeExtension, NodeExtensionSpec } from '@remirror/core';
 import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list';
 
 export class ListItemExtension extends NodeExtension {
@@ -17,7 +17,7 @@ export class ListItemExtension extends NodeExtension {
     };
   }
 
-  public keys({ type }: SchemaNodeTypeParams) {
+  public keys({ type }: ExtensionManagerNodeTypeParams) {
     return {
       Enter: splitListItem(type),
       Tab: sinkListItem(type),

@@ -3,7 +3,7 @@ import {
   BooleanExtensionCheck,
   Cast,
   CommandMarkTypeParams,
-  ExtensionCommands,
+  ExtensionManagerMarkTypeParams,
   getMarkRange,
   getMatchString,
   getSelectedWord,
@@ -16,13 +16,10 @@ import {
   MarkGroup,
   markPasteRule,
   removeMark,
-  SchemaMarkTypeParams,
   selectionEmpty,
   updateMark,
 } from '@remirror/core';
 import { Plugin, TextSelection } from 'prosemirror-state';
-
-export type InvokedFromType = 'keyboard' | 'input-rule';
 
 export interface LinkExtensionOptions extends MarkExtensionOptions {
   /**
@@ -33,7 +30,7 @@ export interface LinkExtensionOptions extends MarkExtensionOptions {
 
 export type LinkExtensionCommands = 'updateLink' | 'removeLink';
 
-export class LinkExtension extends MarkExtension<LinkExtensionOptions, LinkExtensionCommands, {}> {
+export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
   get name() {
     return 'link' as const;
   }
@@ -97,14 +94,20 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions, LinkExten
 
   public commands({ type }: CommandMarkTypeParams) {
     return {
+      /**
+       * A command to update the selected link
+       */
       updateLink: (attrs?: Attrs) => updateMark({ type, attrs }),
+      /**
+       * Remove the link at the current position
+       */
       removeLink: () => {
         return removeMark({ type, expand: true });
       },
     };
   }
 
-  public isEnabled({ getState, type }: SchemaMarkTypeParams): BooleanExtensionCheck<ExtensionCommands<this>> {
+  public isEnabled({ getState, type }: ExtensionManagerMarkTypeParams): BooleanExtensionCheck {
     return ({ command }) => {
       switch (command) {
         case 'removeLink':
@@ -121,7 +124,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions, LinkExten
     };
   }
 
-  public pasteRules({ type }: SchemaMarkTypeParams) {
+  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
     return [
       markPasteRule({
         regexp: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
@@ -131,7 +134,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions, LinkExten
     ];
   }
 
-  public plugin({ type }: SchemaMarkTypeParams) {
+  public plugin({ type }: ExtensionManagerMarkTypeParams) {
     return new Plugin({
       props: {
         handleClick(view, pos) {

@@ -1,5 +1,6 @@
 import { css, Interpolation } from '@emotion/core';
 import {
+  AnyExtension,
   CompareStateParams,
   EDITOR_CLASS_NAME,
   EditorStateParams,
@@ -79,7 +80,10 @@ interface RemirrorState {
   shouldRenderClient?: boolean;
 }
 
-export class Remirror extends Component<RemirrorProps, RemirrorState> {
+export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> extends Component<
+  RemirrorProps<GExtensions>,
+  RemirrorState
+> {
   public static defaultProps = defaultProps;
 
   /**
@@ -151,7 +155,7 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   /**
    * A utility for quickly retrieving the extension manager.
    */
-  private get manager(): ExtensionManager {
+  private get manager(): ExtensionManager<GExtensions> {
     return this.props.manager;
   }
 
@@ -163,7 +167,7 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
     return this.props.withoutEmotion ? cssNoOp : css;
   }
 
-  constructor(props: RemirrorProps) {
+  constructor(props: RemirrorProps<GExtensions>) {
     super(props);
 
     // Ensure that children is a render prop.
@@ -543,7 +547,7 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
   }
 
   public componentDidUpdate(
-    { editable, manager: prevManager }: RemirrorProps,
+    { editable, manager: prevManager }: RemirrorProps<GExtensions>,
     { editor: { newState } }: RemirrorState,
   ) {
     // Ensure that children is still a render prop
@@ -677,7 +681,7 @@ export class Remirror extends Component<RemirrorProps, RemirrorState> {
     };
   }
 
-  get renderParams(): InjectedRemirrorProps {
+  get renderParams(): InjectedRemirrorProps<GExtensions> {
     return {
       /* Properties */
       uid: this.uid,

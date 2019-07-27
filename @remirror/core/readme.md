@@ -44,7 +44,7 @@ import {
   MarkExtensionSpec,
   markInputRule,
   markPasteRule,
-  SchemaMarkTypeParams,
+  ExtensionManagerMarkTypeParams,
   toggleMark,
 } from '@remirror/core';
 
@@ -76,7 +76,7 @@ export class StrikeExtension extends MarkExtension {
   }
 
   // Defines keymaps for this extension
-  public keys({ type }: SchemaMarkTypeParams) {
+  public keys({ type }: ExtensionManagerMarkTypeParams) {
     return {
       'Mod-d': toggleMark(type),
     };
@@ -88,12 +88,12 @@ export class StrikeExtension extends MarkExtension {
   }
 
   // Input rules happen as code is being typed
-  public inputRules({ type }: SchemaMarkTypeParams) {
+  public inputRules({ type }: ExtensionManagerMarkTypeParams) {
     return [markInputRule({ regexp: /~([^~]+)~$/, type })];
   }
 
   // Paste rules are activated when code is pasted into the editor
-  public pasteRules({ type }: SchemaMarkTypeParams) {
+  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
     return [markPasteRule({ regexp: /~([^~]+)~/g, type })];
   }
 }

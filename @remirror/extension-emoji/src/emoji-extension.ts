@@ -3,11 +3,11 @@ import {
   Cast,
   CommandNodeTypeParams,
   EDITOR_CLASS_NAME,
+  ExtensionManagerNodeTypeParams,
   isElementDOMNode,
   NodeExtension,
   NodeExtensionSpec,
   replaceText,
-  SchemaNodeTypeParams,
 } from '@remirror/core';
 import { ReactNodeView } from '@remirror/react';
 import { ObjectInterpolation } from 'emotion';
@@ -15,7 +15,7 @@ import { DefaultEmoji } from './components/emoji';
 import { createEmojiPlugin } from './plugin';
 import { EmojiAttrs, EmojiExtensionOptions } from './types';
 
-export class EmojiExtension extends NodeExtension<EmojiExtensionOptions, 'emoji', {}> {
+export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
   /**
    * The name is dynamically generated based on the passed in type.
    */
@@ -107,7 +107,7 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions, 'emoji'
     };
   }
 
-  public plugin({ type }: SchemaNodeTypeParams) {
+  public plugin({ type }: ExtensionManagerNodeTypeParams) {
     const { emojiData } = this.options;
     return createEmojiPlugin({
       key: this.pluginKey,
@@ -116,7 +116,7 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions, 'emoji'
     });
   }
 
-  public nodeView({ portalContainer }: SchemaNodeTypeParams) {
+  public nodeView({ portalContainer }: ExtensionManagerNodeTypeParams) {
     const { set, size, emojiData, EmojiComponent, style } = this.options;
 
     const defaultStyle: ObjectInterpolation<undefined> = {

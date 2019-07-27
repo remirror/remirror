@@ -1,6 +1,5 @@
 import {
   BaseExtensionOptions,
-  BooleanExtensionCheck,
   CommandFunction,
   environment,
   Extension,
@@ -27,15 +26,13 @@ export interface HistoryExtensionOptions extends BaseExtensionOptions {
   newGroupDelay?: number | null;
 }
 
-type HistoryExtensionCommands = 'undo' | 'redo';
-
 /**
  * This extension provides undo and redo commands and inserts a plugin which
  * handles history related actions.
  *
  * @builtin
  */
-export class HistoryExtension extends Extension<HistoryExtensionOptions, HistoryExtensionCommands, {}> {
+export class HistoryExtension extends Extension<HistoryExtensionOptions> {
   get name() {
     return 'history' as const;
   }
@@ -80,8 +77,8 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions, History
    * - Redo is not enabled when at the end of the history and there is nothing left to redo.
    * - Undo is not enabled when at the beginning of the history and there is nothing left to undo.
    */
-  public isEnabled({ getState }: ExtensionManagerParams): BooleanExtensionCheck<HistoryExtensionCommands> {
-    return ({ command }) => {
+  public isEnabled({ getState }: ExtensionManagerParams) {
+    return ({ command }: { command?: string }) => {
       switch (command) {
         case 'undo':
           return undoDepth(getState()) > 0;
@@ -105,7 +102,27 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions, History
    */
   public commands() {
     return {
+      /**
+       * Undo the last action that occurred. This can be overriden by
+       * setting an `"addToHistory"` [metadata property](#state.Transaction.setMeta) of `false` on a transaction
+       * to prevent it from being rolled back by undo.
+       *
+       * ```ts
+       * actions.undo()
+       *
+       * // To prevent this use
+       * tr.setMeta(pluginKey, { addToHistory: false })
+       * ```
+       */
       undo: () => undo,
+
+      /**
+       * Redo an action that was in the undo stack.
+       *
+       * ```ts
+       * actions.redo()
+       * ```
+       */
       redo: () => redo,
     };
   }

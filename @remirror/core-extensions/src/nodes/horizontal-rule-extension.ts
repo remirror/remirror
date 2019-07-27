@@ -1,15 +1,15 @@
 import {
   CommandFunction,
   CommandNodeTypeParams,
+  ExtensionManagerNodeTypeParams,
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
   NodeGroup,
   nodeInputRule,
-  SchemaNodeTypeParams,
 } from '@remirror/core';
 
-export class HorizontalRuleExtension extends NodeExtension<NodeExtensionOptions, 'horizontalRule', {}> {
+export class HorizontalRuleExtension extends NodeExtension<NodeExtensionOptions> {
   get name() {
     return 'horizontalRule' as const;
   }
@@ -35,7 +35,7 @@ export class HorizontalRuleExtension extends NodeExtension<NodeExtensionOptions,
     };
   }
 
-  public inputRules({ type }: SchemaNodeTypeParams) {
+  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
     return [nodeInputRule({ regexp: /^(?:---|___\s|\*\*\*\s)$/, type })];
   }
 }

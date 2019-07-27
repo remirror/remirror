@@ -25,7 +25,7 @@ import { asDefaultProps, RemirrorManagerProps } from '@remirror/react-utils';
 import { ThemeProvider } from 'emotion-theming';
 import React, { FC, PureComponent } from 'react';
 import { wysiwygEditorTheme } from '../theme';
-import { WysiwygEditorProps } from '../types';
+import { WysiwygEditorProps, WysiwygExtensionList } from '../types';
 import { BubbleMenu, BubbleMenuProps, MenuBar } from './menu';
 import { EditorWrapper, InnerEditorWrapper } from './styled';
 
@@ -151,7 +151,7 @@ const InnerEditor: FC<InnerEditorProps> = ({
   activateLink,
   injectFontAwesome,
 }) => {
-  const { getRootProps } = useRemirror();
+  const { getRootProps } = useRemirror<WysiwygExtensionList>();
 
   return (
     <EditorWrapper>

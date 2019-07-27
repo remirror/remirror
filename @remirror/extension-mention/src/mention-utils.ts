@@ -404,10 +404,10 @@ const isJump = (compare: Partial<CompareMatchParams>): compare is CompareMatchPa
  * Check that the passed in value is an ExitReason
  */
 export const isExitReason = (value: unknown): value is ExitReason =>
-  isString(value) && Object.values(ExitReason).includes(value);
+  isString(value) && Object.values(ExitReason).includes(value as ExitReason);
 
 export const isChangeReason = (value: unknown): value is ChangeReason =>
-  isString(value) && Object.values(ChangeReason).includes(value);
+  isString(value) && Object.values(ChangeReason).includes(value as ChangeReason);
 
 /**
  * Checks that the reason passed is a split reason. This typically means that we should default to a partial
