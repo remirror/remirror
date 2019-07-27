@@ -2,3 +2,4 @@ lib
 **/lib/**
 dist
 node_modules
+public

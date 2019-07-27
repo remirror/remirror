@@ -91,6 +91,7 @@ jobs:
             displayName: 'Build project'
           - task: npmAuthenticate@0
             inputs:
+              workingFile: '.npmrc'
               customEndpoint: 'NPM Registry Publish Token'
           - bash: yarn lerna:publish:ci
             displayName: Publish canary build to NPM
