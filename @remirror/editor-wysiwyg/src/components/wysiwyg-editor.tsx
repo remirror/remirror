@@ -24,10 +24,10 @@ import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager, useRemirro
 import { asDefaultProps, RemirrorManagerProps } from '@remirror/react-utils';
 import { ThemeProvider } from 'emotion-theming';
 import React, { FC, PureComponent } from 'react';
-import { wysiwygEditorTheme } from '../theme';
-import { WysiwygEditorProps, WysiwygExtensionList } from '../types';
-import { BubbleMenu, BubbleMenuProps, MenuBar } from './menu';
-import { EditorWrapper, InnerEditorWrapper } from './styled';
+import { wysiwygEditorTheme } from '../wysiwyg-theme';
+import { WysiwygEditorProps, WysiwygExtensionList } from '../wysiwyg-types';
+import { EditorWrapper, InnerEditorWrapper } from './wysiwyg-components';
+import { BubbleMenu, BubbleMenuProps, MenuBar } from './wysiwyg-menu';
 
 import bash from 'refractor/lang/bash';
 import markdown from 'refractor/lang/markdown';

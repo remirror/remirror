@@ -26,16 +26,16 @@ export const baseExtensions: PrioritizedExtension[] = [
 ];
 
 /**
- * The list of extensions provided by default in a remirror editor. This is useful for extending with your own types
- * to provide automated typechecking.
+ * The BaseExtensions union type shows the extension provided by default in a remirror editor.
+ * This union is useful for extending with your own types to provide better typechecking
+ * throughout your codebase
  */
-export type BaseExtensionList = [
-  DocExtension,
-  TextExtension,
-  ParagraphExtension,
-  CompositionExtension,
-  HistoryExtension,
-  GapCursorExtension,
-  DropCursorExtension,
-  BaseKeymapExtension,
-];
+export type BaseExtensions =
+  | DocExtension
+  | TextExtension
+  | ParagraphExtension
+  | CompositionExtension
+  | HistoryExtension
+  | GapCursorExtension
+  | DropCursorExtension
+  | BaseKeymapExtension;

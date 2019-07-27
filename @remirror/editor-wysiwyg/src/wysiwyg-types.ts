@@ -1,5 +1,5 @@
 import {
-  BaseExtensionList,
+  BaseExtensions,
   BlockquoteExtension,
   BoldExtension,
   BulletListExtension,
@@ -20,10 +20,20 @@ import {
 } from '@remirror/core-extensions';
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '@remirror/extension-code-block';
 import { RemirrorManagerProps, RemirrorProps } from '@remirror/react-utils';
-import { ButtonState, WysiwygEditorTheme } from './theme';
+import { ButtonState, WysiwygEditorTheme } from './wysiwyg-theme';
 
-export type WysiwygExtensionList = Array<
-  | BaseExtensionList[number]
+/**
+ * The union type of all the extension used within the Wysiwyg Editor.
+ *
+ * Placing this as a generic in the props and other places will provide you with
+ * better typechecking and inference.
+ *
+ * ```ts
+ * const { actions } = useRemirror<WysiwygExtensions[]>();
+ * const actions.updateLink() // => full type checking
+ */
+export type WysiwygExtensions =
+  | BaseExtensions
   | BlockquoteExtension
   | BoldExtension
   | BulletListExtension
@@ -41,8 +51,10 @@ export type WysiwygExtensionList = Array<
   | StrikeExtension
   | TrailingNodeExtension
   | UnderlineExtension
-  | CodeBlockExtension
->;
+  | CodeBlockExtension;
+
+export type WysiwygExtensionList = WysiwygExtensions[];
+
 export interface WysiwygEditorProps
   extends Partial<
       Pick<

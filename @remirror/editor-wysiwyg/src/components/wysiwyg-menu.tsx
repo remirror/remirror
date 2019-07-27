@@ -30,9 +30,15 @@ import React, {
 
 import { ActionNames, Attrs, memoize } from '@remirror/core';
 import { bubblePositioner, useRemirror } from '@remirror/react';
-import { ButtonState, styled } from '../theme';
-import { WysiwygExtensionList } from '../types';
-import { BubbleContent, BubbleMenuTooltip, IconButton, Toolbar, WithPaddingProps } from './styled';
+import { ButtonState, styled } from '../wysiwyg-theme';
+import { WysiwygExtensionList } from '../wysiwyg-types';
+import {
+  BubbleContent,
+  BubbleMenuTooltip,
+  IconButton,
+  Toolbar,
+  WithPaddingProps,
+} from './wysiwyg-components';
 
 const menuItems: Array<[ActionNames<WysiwygExtensionList>, [IconDefinition, string?], Attrs?]> = [
   ['bold', [faBold]],
