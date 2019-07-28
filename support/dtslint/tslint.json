@@ -1,0 +1,3 @@
+{
+  "extends": ["../tslint.json", "dtslint/dtslint-expect-only.json"]
+}

@@ -3,15 +3,7 @@ import { Decoration } from 'prosemirror-view';
 import { MarkGroup, NodeGroup, Tags } from '../constants';
 import { NodeViewPortalContainer } from '../portal-container';
 import { EditorView, Mark, NodeView, Transaction } from './aliases';
-import {
-  AnyFunction,
-  Attrs,
-  BaseExtensionOptions,
-  EditorSchema,
-  EditorState,
-  ProsemirrorNode,
-  Value,
-} from './base';
+import { Attrs, BaseExtensionOptions, EditorSchema, EditorState, ProsemirrorNode, Value } from './base';
 import {
   AttrsParams,
   EditorStateParams,
@@ -149,10 +141,6 @@ export interface ExtensionManagerParams<GActions extends string = string>
  */
 export interface ViewExtensionManagerParams extends EditorViewParams, ExtensionManagerParams {}
 
-export interface FlexibleConfig<GFunc extends AnyFunction> {
-  [command: string]: GFunc;
-}
-
 export type ExtensionCommandFunction = (...args: any[]) => CommandFunction;
 
 export interface ExtensionBooleanFunctionParams<GCommand extends string> extends Partial<AttrsParams> {
@@ -173,7 +161,9 @@ export type BooleanExtensionCheck<GCommand extends string = string> = ExtensionB
 /**
  * The return signature for an extensions command method.
  */
-export type ExtensionCommandReturn = FlexibleConfig<ExtensionCommandFunction>;
+export interface ExtensionCommandReturn {
+  [command: string]: ExtensionCommandFunction;
+}
 
 /**
  * A utility type used to create the generic prosemirror typescript types.
