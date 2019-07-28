@@ -4,8 +4,8 @@ import { flush } from 'jest-prosemirror';
 import { AllSelection, NodeSelection, TextSelection } from 'prosemirror-state';
 import { coerce, offsetTags } from './builder';
 import { createEvents } from './events';
+import { FireParams, TaggedProsemirrorNode, Tags, TestEditorViewParams } from './jest-remirror-types';
 import { Keyboard } from './keys';
-import { FireParams, TaggedProsemirrorNode, Tags, TestEditorViewParams } from './types';
 
 interface InsertTextParams extends TestEditorViewParams, TextParams {
   /**

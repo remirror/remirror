@@ -183,14 +183,13 @@ export const propIsFunction = (prop: unknown): prop is AnyFunction => {
  * A noop function that mimics the css emotion call but renders no output.
  *
  * @remarks
- * This is useful for enabling the library user to switch of emotion for core react elements.
+ * This is useful for enabling the library user to switch off emotion for core react elements.
  */
 export const cssNoOp: typeof emotionCss = () => undefined as any;
 
 /**
  * A css function that just returns the string.
- * This is typically used for css syntax highlighting of plain strings in editors
- * Can be used as a replacement for emotion when emotion has been disabled but we still want the
+ * This is typically used for css syntax highlighting of plain strings in editors.
  */
 export const css = String.raw || ((template: TemplateStringsArray) => template[0]);
 

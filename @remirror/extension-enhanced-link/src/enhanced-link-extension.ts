@@ -115,7 +115,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
       },
 
       // Runs through the current line (and previous line if it exists) to reapply
-      // twitter link marks to the relevant parts of text.
+      // social link marks to the relevant parts of text.
       // TODO extract this as a standalone prosemirror plugin
       appendTransaction(transactions, _oldState, state: EditorState) {
         // Used to represent leaf nodes as text otherwise they just get replaced

@@ -99,3 +99,5 @@ export const press = async ({ key, count = 1, delay = 50, text }: PressParams) =
 export const type = async ({ text, delay = 10 }: TypeParams) => page.keyboard.type(text, { delay });
 
 export * from './modifier-keys';
+
+export * from './images';

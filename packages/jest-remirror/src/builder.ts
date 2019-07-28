@@ -16,7 +16,7 @@ import {
   TaggedProsemirrorNode,
   Tags,
   TagTracker,
-} from './types';
+} from './jest-remirror-types';
 
 /**
  * Checks if a value is odd

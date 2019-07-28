@@ -25,14 +25,14 @@
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/showcase": "0.4.2-canary.2",
     "@styled-system/edit": "5.0.15",
-    "@theme-ui/presets": "0.2.25",
-    "@theme-ui/prism": "^0.2.25",
-    "@theme-ui/sidenav": "0.2.26",
-    "@theme-ui/style-guide": "0.2.26",
-    "@theme-ui/typography": "0.2.25",
+    "@theme-ui/presets": "0.2.29",
+    "@theme-ui/prism": "^0.2.29",
+    "@theme-ui/sidenav": "0.2.29",
+    "@theme-ui/style-guide": "0.2.29",
+    "@theme-ui/typography": "0.2.29",
     "copy-text-to-clipboard": "2.1.0",
     "emotion-theming": "10.0.14",
-    "gatsby": "2.13.50",
+    "gatsby": "2.13.51",
     "gatsby-plugin-catch-links": "2.1.2",
     "gatsby-plugin-emotion": "4.1.2",
     "gatsby-plugin-google-analytics": "2.1.6",
@@ -44,7 +44,7 @@
     "gatsby-plugin-react-helmet": "3.1.3",
     "gatsby-plugin-remove-trailing-slashes": "2.1.2",
     "gatsby-plugin-sitemap": "2.2.5",
-    "gatsby-plugin-theme-ui": "0.2.26",
+    "gatsby-plugin-theme-ui": "0.2.29",
     "gatsby-plugin-typescript": "2.1.2",
     "is-absolute-url": "3.0.0",
     "prismjs": "1.17.1",
@@ -57,12 +57,13 @@
     "remark-slug": "5.1.2",
     "remirror": "0.4.2-canary.2",
     "test-theme": "1.0.0",
-    "theme-ui": "0.2.26"
+    "theme-ui": "0.2.29"
   },
   "devDependencies": {
     "@types/reach__router": "1.2.4",
-    "@types/react-helmet": "5.0.8",
+    "@types/react-helmet": "5.0.9",
     "@types/styled-system": "5.0.1",
-    "@types/styled-system__css": "5.0.2"
+    "@types/styled-system__css": "5.0.2",
+    "@types/theme-ui": "^0.2.0"
   }
 }

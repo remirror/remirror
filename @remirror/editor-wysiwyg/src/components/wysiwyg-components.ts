@@ -31,7 +31,9 @@ export interface WithPaddingProps {
 }
 
 interface IconButtonProps extends ButtonProps, Partial<WithPaddingProps> {
-  /** The position in the menu */
+  /**
+   * The position in the menu
+   */
   index?: number;
 }
 

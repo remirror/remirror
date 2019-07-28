@@ -35,6 +35,7 @@
     "@remirror/react-ssr": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2",
     "@remirror/renderer-react": "0.4.2-canary.2",
+    "@remirror/ui": "0.4.2-canary.2",
     "@types/hoist-non-react-statics": "^3.3.0",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-model": "^1.7.2",

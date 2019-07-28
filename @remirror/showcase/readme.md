@@ -23,7 +23,7 @@ yarn add @remirror/showcase
 The recommendation is to import from the direct files.
 
 ```tsx
-import { TwitterEditorDemo, TwitterEditorDemoProps } from '@remirror/showcase/lib/editor-twitter';
+import { SocialEditorDemo, SocialEditorDemoProps } from '@remirror/showcase/lib/editor-social';
 
-const MyEditor = () => <TwitterEditorDemo />;
+const MyEditor = () => <SocialEditorDemo />;
 ```

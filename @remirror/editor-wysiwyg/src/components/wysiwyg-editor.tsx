@@ -8,7 +8,6 @@ import {
   HardBreakExtension,
   HeadingExtension,
   HorizontalRuleExtension,
-  ImageExtension,
   ItalicExtension,
   LinkExtension,
   ListItemExtension,
@@ -21,6 +20,7 @@ import {
   UnderlineExtension,
 } from '@remirror/core-extensions';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
+import { ImageExtension } from '@remirror/extension-image';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager, useRemirror } from '@remirror/react';
 import { asDefaultProps } from '@remirror/react-utils';
 import { ThemeProvider } from 'emotion-theming';
@@ -68,7 +68,7 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
   };
 
   get editorTheme() {
-    return deepMerge([wysiwygEditorTheme, this.props.theme || {}]);
+    return deepMerge(wysiwygEditorTheme, this.props.theme || {});
   }
 
   get supportedLanguages() {

@@ -9,6 +9,8 @@ import {
   EditorSchema,
   ExtensionCommandReturn,
   ExtensionHelperReturn,
+  Key,
+  StringKey,
   UnionToIntersection,
 } from './types';
 
@@ -175,6 +177,17 @@ export type ExtensionsFromFlexibleList<
  */
 type ExtensionCommandMethodSignature = (...args: any[]) => ExtensionCommandReturn;
 
+type MapCommandToActionNames<GCommand extends AnyFunction> = StringKey<ReturnType<GCommand>>;
+
+export type ActionNamesFromExtension<
+  GExtension extends AnyExtension,
+  GCommands extends CommandsOfExtension<GExtension> = CommandsOfExtension<GExtension>
+> = GCommands extends AnyFunction ? MapCommandToActionNames<GCommands> : never;
+
+export type ActionNamesFromExtensionList<GExtensions extends AnyExtension[]> = ActionNamesFromExtension<
+  GExtensions[number]
+>;
+
 /**
  * A utility type which maps the passed in extension command in an action that is called via
  * `manager.data.actions.commandName()`.
@@ -183,7 +196,7 @@ type MapCommandToAction<
   GCommand extends AnyFunction,
   GCommandReturn extends ReturnType<GCommand> = ReturnType<GCommand>
 > = {
-  [P in keyof GCommandReturn]: ActionMethod<Parameters<GCommandReturn[P]>>;
+  [P in Key<GCommandReturn>]: ActionMethod<Parameters<GCommandReturn[P]>>;
 };
 
 /**
@@ -207,7 +220,9 @@ export type ActionsFromExtensionList<
 /**
  * Utility type for pulling all the action names from a list
  */
-export type ActionNames<GExtensions extends AnyExtension[]> = keyof (ActionsFromExtensionList<GExtensions>);
+export type ActionNames<GExtensions extends AnyExtension[]> = StringKey<
+  ActionsFromExtensionList<GExtensions>
+>;
 
 /**
  * The type signature of the extension helper method. It is used in determining whether
@@ -223,7 +238,7 @@ type MapHelpers<
   GHelper extends AnyFunction,
   GHelperReturn extends ReturnType<GHelper> = ReturnType<GHelper>
 > = {
-  [P in keyof GHelperReturn]: (...args: Parameters<GHelperReturn[P]>) => ReturnType<GHelperReturn[P]>;
+  [P in Key<GHelperReturn>]: (...args: Parameters<GHelperReturn[P]>) => ReturnType<GHelperReturn[P]>;
 };
 
 /**
@@ -247,9 +262,9 @@ export type MappedHelpersFromExtensionList<
 /**
  * Utility type for pulling all the action names from a list
  */
-export type MappedHelperNames<GExtensions extends AnyExtension[]> = keyof (MappedHelpersFromExtensionList<
-  GExtensions
->);
+export type MappedHelperNames<GExtensions extends AnyExtension[]> = StringKey<
+  MappedHelpersFromExtensionList<GExtensions>
+>;
 
 /**
  * Retrieve the instance type from an ExtensionClass.

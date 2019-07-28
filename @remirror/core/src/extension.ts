@@ -118,7 +118,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
 
   constructor(options: GOptions = Cast<GOptions>({})) {
     this.options = Cast<Required<GOptions>>(
-      deepMerge([defaultOptions, { ...this.defaultOptions, ...options }]),
+      deepMerge(defaultOptions, { ...this.defaultOptions, ...options }),
     );
 
     this.init();

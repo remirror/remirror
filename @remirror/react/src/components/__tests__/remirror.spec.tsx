@@ -193,19 +193,3 @@ describe('Remirror Controlled Component', () => {
     expect(getByRole('textbox')).toContainHTML(expectedContent);
   });
 });
-
-describe('withoutEmotion', () => {
-  it('should not render extra class names when true', () => {
-    const manager = createTestManager();
-    const child = () => <div data-testid='test' />;
-    const { getByTestId, rerender } = render(<Remirror manager={manager}>{child}</Remirror>);
-    expect(getByTestId('test')).toHaveAttribute('class');
-
-    rerender(
-      <Remirror manager={manager} withoutEmotion={true}>
-        {child}
-      </Remirror>,
-    );
-    expect(getByTestId('test')).not.toHaveAttribute('class');
-  });
-});

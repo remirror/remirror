@@ -1,5 +1,6 @@
 import { EMPTY_PARAGRAPH_NODE, Transaction } from '@remirror/core';
-import { asDefaultProps, RemirrorProps } from '@remirror/react-utils';
+import { asDefaultProps } from '@remirror/react-utils';
+import { RemirrorProps } from './components';
 
 export const defaultProps = asDefaultProps<RemirrorProps>()({
   initialContent: EMPTY_PARAGRAPH_NODE,
@@ -8,9 +9,9 @@ export const defaultProps = asDefaultProps<RemirrorProps>()({
   attributes: {},
   usesDefaultStyles: true,
   label: '',
+  styles: {},
   editorStyles: {},
   insertPosition: 'end',
-  withoutEmotion: false,
   onDispatchTransaction: (tr: Transaction) => tr,
   stringHandler: () => {
     throw new Error(

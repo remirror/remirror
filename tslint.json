@@ -11,6 +11,7 @@
         "jest-axe",
         "@testing-library/react",
         "enzyme",
+        "react-test-renderer",
         "@test-fixtures",
         "jest-remirror",
         "jest-prosemirror",
@@ -18,6 +19,7 @@
         "prettier"
       ]
     ],
+    "jsx-no-lambda": false,
     "no-unused": false,
     "no-empty": false,
     "no-any": false,

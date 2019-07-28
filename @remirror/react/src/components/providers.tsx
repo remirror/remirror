@@ -4,13 +4,13 @@ import {
   InjectedRemirrorProps,
   oneChildOnly,
   RemirrorElementType,
-  RemirrorProps,
 } from '@remirror/react-utils';
 import React, { ProviderProps, ReactElement } from 'react';
 import { defaultProps } from '../constants';
 import { RemirrorContext } from '../contexts';
 import { useRemirrorManager } from '../hooks';
 import { Remirror } from './remirror';
+import { RemirrorProps } from './remirror-types';
 
 export interface RemirrorContextProviderProps<GExtensions extends AnyExtension[] = AnyExtension[]>
   extends ProviderProps<InjectedRemirrorProps<GExtensions>> {

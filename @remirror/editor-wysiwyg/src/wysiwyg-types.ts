@@ -7,7 +7,6 @@ import {
   HardBreakExtension,
   HeadingExtension,
   HorizontalRuleExtension,
-  ImageExtension,
   ItalicExtension,
   LinkExtension,
   ListItemExtension,
@@ -19,7 +18,8 @@ import {
   UnderlineExtension,
 } from '@remirror/core-extensions';
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '@remirror/extension-code-block';
-import { RemirrorProps } from '@remirror/react-utils';
+import { ImageExtension } from '@remirror/extension-image';
+import { RemirrorProps } from '@remirror/react';
 import { ButtonState, WysiwygEditorTheme } from './wysiwyg-theme';
 
 /**

@@ -1,7 +1,7 @@
 /**
  * The editor class name
  */
-export const EDITOR_CLASS_NAME = 'remirror-editor';
+export const EDITOR_CLASS_NAME = 'remirror-editor' as const;
 
 /**
  * The editor class selector

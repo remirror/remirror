@@ -1,4 +1,3 @@
-import { css, Interpolation } from '@emotion/core';
 import {
   AnyExtension,
   bool,
@@ -29,7 +28,6 @@ import {
   BaseListenerParams,
   CalculatePositionerParams,
   cloneElement,
-  cssNoOp,
   defaultPositioner,
   getElementProps,
   GetPositionerPropsConfig,
@@ -47,14 +45,14 @@ import {
   RefKeyRootProps,
   RemirrorElementType,
   RemirrorEventListenerParams,
-  RemirrorProps,
   RemirrorStateListenerParams,
 } from '@remirror/react-utils';
+import { RemirrorInterpolation, RemirrorThemeContext, RemirrorThemeContextType } from '@remirror/ui';
 import { EditorState } from 'prosemirror-state';
 import React, { Component, ReactNode, Ref } from 'react';
 import { defaultProps } from '../constants';
-import { defaultStyles } from '../styles';
 import { RemirrorPortals } from './remirror-portals';
+import { RemirrorProps } from './remirror-types';
 
 interface UpdateStateParams<GSchema extends EditorSchema = EditorSchema> extends EditorStateParams<GSchema> {
   /**
@@ -87,6 +85,11 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
   RemirrorState<SchemaFromExtensionList<GExtensions>>
 > {
   public static defaultProps = defaultProps;
+
+  /**
+   * Allow the component to pull in context from the the `RemirrorThemeContext`
+   */
+  public static contextType = RemirrorThemeContext;
 
   /**
    * Sets a flag to be a static remirror
@@ -162,12 +165,9 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
   }
 
   /**
-   * A utility for retrieving the correct css function. Returns a noop when the
-   * user has set `withoutEmotion` to true and requested emotion be removed.
+   * The Remirror Theme context which is made available to all components.
    */
-  private get css(): typeof css {
-    return this.props.withoutEmotion ? cssNoOp : css;
-  }
+  public context!: RemirrorThemeContextType;
 
   constructor(props: RemirrorProps<GExtensions>) {
     super(props);
@@ -249,14 +249,14 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
   /**
    * The dynamically generated editor styles for the editor.
    */
-  private get editorStyles() {
-    const styles: Interpolation[] = [this.props.editorStyles];
+  private get editorStyles(): RemirrorInterpolation[] {
+    const styles = [this.props.editorStyles, this.props.css as RemirrorInterpolation, this.props.styles];
 
-    /* Inject styles from any extensions */
-    styles.unshift(this.manager.data.styles);
+    // Inject the styles from extensions
+    styles.unshift(this.manager.data.styles as RemirrorInterpolation);
 
     if (this.props.usesDefaultStyles) {
-      styles.unshift(defaultStyles);
+      styles.unshift({ variant: 'styles.remirror:editor' });
     }
 
     return styles;
@@ -288,11 +288,12 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
     this.rootPropsConfig.called = true;
 
     const { refKey = 'ref', ...config } = options || {};
+    const { sx } = this.context;
 
     return {
       [refKey]: this.onRef,
       key: this.uid,
-      css: this.css(this.editorStyles),
+      css: sx(this.editorStyles),
       ...config,
       children: children || this.renderChildren(null),
     } as RefKeyRootProps<GRefKey>;
@@ -541,7 +542,7 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
   }
 
   /**
-   * This is purely used to indeicate to the component that this is a client
+   * This is purely used to indicate to the component that this is a client
    * environment when using the `suppressHydrationWarning` prop.
    */
   public componentDidMount() {
@@ -773,6 +774,7 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
     }
 
     const ssrElement = this.renderSSR();
+
     return (insertPosition === 'start' ? [ssrElement, ...children] : [...children, ssrElement]).map(
       addKeyToElement,
     );
@@ -828,9 +830,7 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
   /**
    * Clones the passed element when `getRootProps` hasn't yet been called.
    *
-   * @remarks
-   *
-   * This is used to render the children as SSR when necessary.
+   * This method also supports rendering the children within a domless environment where necessary.
    */
   private renderClonedElement(element: JSX.Element, rootProps?: GetRootPropsConfig<string> | boolean) {
     const { children, ...rest } = getElementProps(element);

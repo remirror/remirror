@@ -60,22 +60,22 @@ const servers = (exports.servers = {
 });
 
 const editors = (exports.editors = {
-  twitter: {
+  social: {
     storybook: {
-      empty: 'http://localhost:3030/iframe.html?id=twitter-editor--basic',
-      content: 'http://localhost:3030/iframe.html?id=twitter-editor--with-content',
+      empty: 'http://localhost:3030/iframe.html?id=social-editor--basic',
+      content: 'http://localhost:3030/iframe.html?id=social-editor--with-content',
     },
     next: {
-      empty: 'http://localhost:3030/editor/twitter',
-      content: 'http://localhost:3030/editor/twitter/content',
+      empty: 'http://localhost:3030/editor/social',
+      content: 'http://localhost:3030/editor/social/content',
     },
     docs: {
-      empty: 'http://localhost:3030/showcase/twitter',
+      empty: 'http://localhost:3030/showcase/social',
       content: '',
     },
     razzle: {
-      empty: 'http://localhost:3030/editors/twitter',
-      content: 'http://localhost:3030/editors/twitter/content',
+      empty: 'http://localhost:3030/editors/social',
+      content: 'http://localhost:3030/editors/social/content',
     },
   },
   wysiwyg: {

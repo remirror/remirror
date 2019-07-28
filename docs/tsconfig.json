@@ -17,7 +17,7 @@
       "@remirror/renderer-react": ["../../@remirror/renderer-react/src/index.ts"],
       "@remirror/showcase": ["../../@remirror/showcase/src/index.ts"],
       "@remirror/showcase/lib/*": ["../../@remirror/showcase/src/*"],
-      "@remirror/editor-twitter": ["../../@remirror/editor-twitter/src"],
+      "@remirror/editor-social": ["../../@remirror/editor-social/src"],
       "@remirror/editor-wysiwyg": ["../../@remirror/editor-wysiwyg/src"],
       "jest-remirror": ["../packages/jest-remirror/src"],
       "jest-prosemirror": ["../packages/jest-prosemirror/src"],

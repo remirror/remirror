@@ -1,10 +1,17 @@
-import { configure } from '@storybook/react';
+import { addDecorator, configure } from '@storybook/react';
+import { ThemeDecorator } from './decorators';
 
 // automatically import all files ending in *.stories.tsx
-const req = require.context('../../@remirror/showcase', true, /__stories__\/.*.stories.tsx$/);
+const showcase = require.context('../../@remirror/showcase', true, /__stories__\/.*.stories.tsx$/);
+const ui = require.context('../../@remirror/ui', true, /__stories__\/.*.stories.tsx$/);
+const uiIcons = require.context('../../@remirror/ui-icons', true, /__stories__\/.*.stories.tsx$/);
 
-function loadStories() {
-  req.keys().forEach(req);
-}
+const loadStories = () => {
+  showcase.keys().forEach(showcase);
+  ui.keys().forEach(ui);
+  uiIcons.keys().forEach(uiIcons);
+};
 
 configure(loadStories, module);
+
+[ThemeDecorator].forEach(addDecorator);

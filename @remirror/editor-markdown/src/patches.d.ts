@@ -107,7 +107,7 @@ declare module 'prosemirror-markdown' {
      * this parser. Can be useful to copy and modify to base other
      * parsers on.
      */
-    public tokens: { [key: string]: any };
+    public tokens: { [key: string]: Token };
     /**
      * Parse a string as [CommonMark](http://commonmark.org/) markup,
      * and create a ProseMirror document as prescribed by this parser's

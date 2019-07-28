@@ -32,7 +32,7 @@ import {
   StringBuilder,
   TSDocConfiguration,
 } from '@microsoft/tsdoc';
-import kebabCase from 'lodash.kebabcase';
+import { kebabCase } from '@remirror/core';
 import path from 'path';
 
 import { CustomMarkdownEmitter } from '../markdown/custom-markdown-emitter';

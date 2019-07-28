@@ -14,6 +14,7 @@ import {
   ExtensionManagerParams,
   ExtensionTags,
   GeneralExtensionTags,
+  Key,
   MarkExtensionTags,
   NodeExtensionTags,
 } from './types';
@@ -160,7 +161,7 @@ export const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
  *
  * @param property - the extension property / method name
  */
-export const hasExtensionProperty = <GExt extends {}, GKey extends keyof GExt>(property: GKey) => (
+export const hasExtensionProperty = <GExt extends {}, GKey extends Key<GExt>>(property: GKey) => (
   extension: GExt,
 ): extension is GExt extends undefined ? never : GExt & Pick<Required<GExt>, GKey> =>
   bool(extension[property]);

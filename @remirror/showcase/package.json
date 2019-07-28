@@ -37,7 +37,7 @@
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
     "@remirror/dev": "0.4.2-canary.2",
-    "@remirror/editor-twitter": "0.4.2-canary.2",
+    "@remirror/editor-social": "0.4.2-canary.2",
     "@remirror/editor-wysiwyg": "0.4.2-canary.2",
     "@remirror/extension-code-block": "0.4.2-canary.2",
     "@remirror/extension-epic-mode": "0.4.2-canary.2",

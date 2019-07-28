@@ -1,0 +1,56 @@
+{
+  "name": "@remirror/ui",
+  "description": "ui utilities for remirror",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ifiokjr/remirror.git",
+    "directory": "@remirror/ui"
+  },
+  "version": "0.4.2-canary.2",
+  "main": "lib/index.js",
+  "module": "lib/dist/ui.esm.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "build": "run-p build:*",
+    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "dev": "run-p dev:*",
+    "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
+    "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
+    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@babel/runtime": "^7.5.5",
+    "@emotion/core": "^10.0.15",
+    "@emotion/serialize": "^0.11.9",
+    "@reach/visually-hidden": "^0.1.4",
+    "@remirror/core": "0.4.2-canary.2",
+    "@remirror/react-utils": "0.4.2-canary.2",
+    "@styled-system/css": "^5.0.19",
+    "@types/reach__visually-hidden": "^0.2.0",
+    "@types/react-icon-base": "^2.1.3",
+    "@types/styled-system__css": "^5.0.2",
+    "csstype": "^2.6.6",
+    "emotion-theming": "^10.0.14",
+    "react-icon-base": "^2.1.2"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.8.22",
+    "@types/react-dom": "^16.8.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/ui.cjs.js",
+  "sideEffects": false
+}

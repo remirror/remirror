@@ -1,6 +1,7 @@
 import {
   capitalize,
   clone,
+  deepMerge,
   environment,
   findMatches,
   format,
@@ -26,6 +27,8 @@ import {
   isString,
   isSymbol,
   isUndefined,
+  kebabCase,
+  Merge,
   randomInt,
   sort,
   startCase,
@@ -297,4 +300,40 @@ test('get', () => {
   expect(get(['a'], obj)).toBe('a');
   expect(get(['nested', 0, 'awesome'], obj)).toBe(true);
   expect(get(['nested', 0, 'fake'], obj)).toBe(undefined);
+
+  expect(get(['nested', 0, 'fake'], obj, 'fallback')).toBe('fallback');
+});
+
+describe('kebabCase', () => {
+  it('handles string with spaces', () => {
+    expect(kebabCase('the quick brown fox')).toBe('the-quick-brown-fox');
+    expect(kebabCase('the quick     brownfox')).toBe('the-quick-brownfox');
+  });
+
+  it('handles string with punctuation', () => {
+    expect(kebabCase('the_quick_brown_fox')).toBe('the-quick-brown-fox');
+    expect(kebabCase('the_quick_brown_fox')).toBe('the-quick-brown-fox');
+    expect(kebabCase('the*quick-brown_fox')).toBe('the-quick-brown-fox');
+    expect(kebabCase('the****quick-_-brown_:fox')).toBe('the-quick-brown-fox');
+  });
+
+  it('handles string with mixed spaces and punctuation', () => {
+    expect(kebabCase('the_quick_brown_   fox')).toBe('the-quick-brown-fox');
+    expect(kebabCase('the** **quick-_-brown_:fox')).toBe('the-quick-brown-fox');
+  });
+
+  it('handles string with capitalization', () => {
+    expect(kebabCase('theQuickBrownFox')).toBe('the-quick-brown-fox');
+    expect(kebabCase('the QuickBrown Fox')).toBe('the-quick-brown-fox');
+    expect(kebabCase('The quick brown FOX')).toBe('the-quick-brown-f-o-x');
+  });
+});
+
+test('deepMerge', () => {
+  expect(deepMerge({ a: 'a', c: 2 }, { b: 'b', c: 'c' })).toEqual({ a: 'a', b: 'b', c: 'c' });
+  expect(deepMerge({ a: 'a', c: 2 }, Merge.overwrite({ b: 'b', c: 'c', a: Merge.delete() }))).toEqual({
+    b: 'b',
+    c: 'c',
+  });
+  expect(deepMerge({ a: { b: 'b ' } }, { a: Merge.overwrite({ c: 'c' }) })).toEqual({ a: { c: 'c' } });
 });

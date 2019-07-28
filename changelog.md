@@ -16,18 +16,21 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - `@remirror/core`: Add `getExtraAttrs` method to the extension which can be used in the `(Mark/Node)Extension`.
 - 🚀 `@remirror/core`: Add `DropCursorExtension` for a cursor to show up at the exact location an item will be dropped.
 - 🚀 `@remirror/core`: Add `GapCursorExtension` for support of tricky to select locations.
+- 🚀 `@remirror/ui`: Add several utilities for managing the ui of a remirror editor.
 
 - Introduce new `@builtin` annotation to show when an extension is included by default.
 - Introduce new `@schema` annotation for extension options to indicated that an option should not be updated after creating or it will change the schema.
 
 ### Changes
 
+- 💥 **BREAKING `@remirror/core`:** `deepMerge` now takes multiple parameters instead of one array of objects to merge.
 - 💥 **BREAKING `@remirror/core` `@remirror/core-extensions` and all extensions:** Refactor ExtensionTypes with a whole set of helpers for better type checking and self documenting types. Now the remirror component can receive the List of Extensions and from this infer the nodes, marks and actions available on any editor. Currently this inference has only been added to the Wysiwyg editor but will be added to the Twitter editor and all future editors.
 - 💥 **BREAKING `@remirror/core` `@remirror/core-extensions`:** Move `ParagraphExtension` from core to core-extensions. The reason is to not pollute the core library with formatting methods which are primarily just for extensions.
 - 💥 **BREAKING `@remirror/core`:** Rename `ExtensionType.EXTENSION = 'extension'` to `ExtensionType.Plain = 'plain'`.
 - 💥 **BREAKING `@remirror/ui`:** Rename `@remirror/react-components` to `@remirror/ui`. It is now the base component that will be used for all ui related functionality.
 - 💥 **BREAKING `@remirror/react-utils`:** Refactor the type signature of node views and improve their design. Now node view takes attrs and options.
 - 💥 **BREAKING `@remirror/react`:** Rename `NodeViewPortalComponent` to `RemirrorPortals` since it now supports decorations.
+- 💥 **BREAKING `@remirror/editor-social`:** Rename `@remirror/editor-twitter` to `@remirror/editor-social` for branding reasons.
 - 💥 **BREAKING `@remirror/core`:** Rename `NodeViewPortalContainer` to `PortalContainer`.
 - 💥 **BREAKING `@remirror/core`:** Refactor the type signature of SSRComponents to only take a node and options `extraAttrs` configuration to enable parsing the dom.
 
@@ -38,6 +41,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 ### Remove
 
 - 💥 **BREAKING `@remirror/react-utils`:** Remove placeholder prop from the `RemirrorManager`.
+- 💥 **BREAKING `@remirror/react`:** Remove `withoutEmotion` prop. This should now be configured via the `RemirrorThemeProvider` component.
 
 ## [0.4.1] - 2019-07-22
 

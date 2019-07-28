@@ -10,11 +10,23 @@ import {
   MarkExtension,
   NodeExtension,
 } from '@remirror/core';
-import { InjectedRemirrorProps, Remirror, RemirrorProps } from '@remirror/react';
+import { Remirror, RemirrorProps } from '@remirror/react';
+import { InjectedRemirrorProps } from '@remirror/react-utils';
 import { render } from '@testing-library/react';
 import { TestEditorView } from 'jest-prosemirror';
 import { AllSelection } from 'prosemirror-state';
 import { markFactory, nodeFactory } from './builder';
+import {
+  AddContent,
+  AddContentReturn,
+  CreateTestEditorExtensions,
+  CreateTestEditorReturn,
+  MarkWithAttrs,
+  MarkWithoutAttrs,
+  NodeWithAttrs,
+  NodeWithoutAttrs,
+  Tags,
+} from './jest-remirror-types';
 import { jsdomSelectionPatch } from './jsdom-patch';
 import { BaseExtensionNodeNames, nodeExtensions } from './test-schema';
 import {
@@ -26,17 +38,6 @@ import {
   replaceSelection,
   shortcut,
 } from './transactions';
-import {
-  AddContent,
-  AddContentReturn,
-  CreateTestEditorExtensions,
-  CreateTestEditorReturn,
-  MarkWithAttrs,
-  MarkWithoutAttrs,
-  NodeWithAttrs,
-  NodeWithoutAttrs,
-  Tags,
-} from './types';
 
 /**
  * Render the editor with the params passed in. Useful for testing.

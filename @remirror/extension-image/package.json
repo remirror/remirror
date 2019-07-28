@@ -1,0 +1,61 @@
+{
+  "name": "@remirror/extension-image",
+  "description": "CodeBlock extension for the remirror wysiwyg editor",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/extension-image",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ifiokjr/remirror.git",
+    "directory": "@remirror/extension-image"
+  },
+  "version": "0.4.2-canary.2",
+  "main": "lib/index.js",
+  "module": "lib/dist/extension-image.esm.js",
+  "files": [
+    "internal",
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "build": "run-p build:*",
+    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "dev": "run-p dev:*",
+    "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
+    "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
+    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@babel/runtime": "^7.5.5",
+    "@emotion/core": "^10.0.14",
+    "@remirror/core": "0.4.2-canary.2",
+    "@remirror/core-extensions": "0.4.2-canary.2",
+    "@remirror/react-utils": "0.4.2-canary.2",
+    "@types/prosemirror-commands": "^1.0.1",
+    "@types/prosemirror-inputrules": "^1.0.2",
+    "@types/prosemirror-keymap": "^1.0.1",
+    "@types/prosemirror-model": "^1.7.2",
+    "@types/prosemirror-state": "^1.2.3",
+    "@types/prosemirror-transform": "^1.1.0",
+    "@types/prosemirror-view": "^1.9.0",
+    "prosemirror-commands": "^1.0.8",
+    "prosemirror-inputrules": "^1.0.4",
+    "prosemirror-keymap": "^1.0.1",
+    "prosemirror-model": "^1.7.1",
+    "prosemirror-state": "^1.2.3",
+    "prosemirror-transform": "^1.1.3",
+    "prosemirror-view": "^1.9.13"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.8.0",
+    "react": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/extension-image.cjs.js",
+  "sideEffects": false
+}

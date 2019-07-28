@@ -186,6 +186,33 @@ export const startCase = (str: string) => {
     .replace(/(\s|^)(\w)/g, (_, $1, $2) => $1 + $2.toUpperCase());
 };
 
+const wordSeparators = /[\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]+/;
+const capitals = /[A-Z\u00C0-\u00D6\u00D9-\u00DD]/g;
+
+/**
+ * Returns the kebab cased form of a string.
+ *
+ * Taken from https://github.com/angus-c/just/blob/master/packages/string-kebab-case/index.js
+ * kebabCase('the quick brown fox'); // 'the-quick-brown-fox'
+ * kebabCase('the-quick-brown-fox'); // 'the-quick-brown-fox'
+ * kebabCase('the_quick_brown_fox'); // 'the-quick-brown-fox'
+ * kebabCase('theQuickBrownFox'); // 'the-quick-brown-fox'
+ * kebabCase('theQuickBrown Fox'); // 'the-quick-brown-fox'
+ * kebabCase('thequickbrownfox'); // 'thequickbrownfox'
+ * kebabCase('the - quick * brown# fox'); // 'the-quick-brown-fox'
+ * kebabCase('theQUICKBrownFox'); // 'the-q-u-i-c-k-brown-fox'
+ */
+export const kebabCase = (str: string) => {
+  // replace capitals with space + lower case equivalent for later parsing
+  return str
+    .replace(capitals, match => {
+      return ' ' + (match.toLowerCase() || match);
+    })
+    .trim()
+    .split(wordSeparators)
+    .join('-');
+};
+
 /**
  * Alias for caching function calls
  */
@@ -664,10 +691,56 @@ export const flattenArray = <GType>(array: any[]): GType[] =>
 export const noop = () => {};
 
 /**
- * A customise deep merge which only merges plain object and Arrays
+ * Use this to completely overwrite an object when merging.
+ *
+ * ```ts
+ * const source = { awesome: { a: 'a' } }
+ * const target = { awesome: { b: 'b' } }
+ * const result = deepMerge(source, target) // => { awesome: { a: 'a', b: 'b' } }
+ *
+ * const overwriteTarget = { awesome: Merge.overwrite({ b: 'b' }) }
+ * const overwriteResult = deepMerge(source, overwriteTarget) // => { awesome: { b: 'b' } }
+ * ```
+ *
  */
-export const deepMerge = <GType>(objects: Array<Partial<GType>>) => {
-  return merge<GType>(objects, { isMergeableObject: isPlainObject });
+export class Merge {
+  /**
+   * Create an object that will completely replace the key when merging.
+   *
+   * @param [obj] - the object to replace the key with. If blank an empty object is use.
+   */
+  public static overwrite(obj: PlainObject = {}) {
+    return new Merge(obj);
+  }
+
+  /**
+   * Sets the key to undefined thus fully deleting the key.
+   */
+  public static delete() {
+    return undefined as any;
+  }
+
+  /**
+   * This can be create any kind of object
+   */
+  [key: string]: any;
+
+  private constructor(obj: PlainObject = {}) {
+    Object.keys(obj).forEach(key => {
+      this[key] = obj[key];
+    });
+  }
+}
+
+/**
+ * A deep merge which only merges plain objects and Arrays. It clones the object
+ * before the merge so will not mutate any of the passed in values.
+ *
+ * To completely remove a key you can use the `Merge` helper class which replaces
+ * it's key with a completely new object
+ */
+export const deepMerge = <GType = any>(...objects: Array<PlainObject | unknown[]>): GType => {
+  return merge<GType>(objects as any, { isMergeableObject: isPlainObject });
 };
 
 interface ClampParams {
@@ -715,9 +788,13 @@ export const sort = <GType>(array: GType[], compareFn: (a: GType, b: GType) => n
  * @param path - path to property
  * @param obj - object to retrieve property from
  */
-export const get = <GReturn>(path: string | Array<string | number>, obj: any): GReturn | undefined => {
+export const get = <GReturn = any>(
+  path: string | Array<string | number>,
+  obj: any,
+  fallback?: any,
+): GReturn => {
   if (!path || !path.length) {
-    return obj;
+    return isUndefined(obj) ? fallback : obj;
   }
 
   if (isString(path)) {
@@ -726,11 +803,11 @@ export const get = <GReturn>(path: string | Array<string | number>, obj: any): G
 
   for (let ii = 0, len = path.length; ii < len && obj; ++ii) {
     if (!isPlainObject(obj) && !isArray(obj)) {
-      return undefined;
+      return fallback;
     }
 
     obj = (obj as any)[path[ii]];
   }
 
-  return obj;
+  return isUndefined(obj) ? fallback : obj;
 };

@@ -14,7 +14,7 @@
   "dependencies": {
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
-    "@remirror/editor-twitter": "0.4.2-canary.2",
+    "@remirror/editor-social": "0.4.2-canary.2",
     "@remirror/editor-wysiwyg": "0.4.2-canary.2",
     "@remirror/react": "0.4.2-canary.2",
     "@remirror/showcase": "0.4.2-canary.2",

@@ -59,13 +59,20 @@ export const bubblePositioner: Positioner = {
 
   getPosition({ view, element, newState }) {
     const { from, to } = newState.selection;
+    const parent = element.offsetParent;
+
+    if (!parent) {
+      return bubblePositioner.initialPosition;
+    }
 
     // These are in screen coordinates
     const start = view.coordsAtPos(from);
     const end = view.coordsAtPos(to);
 
-    // The box in which the tooltip is positioned, to use as base
-    const parentBox = element.offsetParent!.getBoundingClientRect();
+    // The box in which the bubble menu is positioned, to use as an anchor
+    const parentBox = parent.getBoundingClientRect();
+
+    // The bubble menu element
     const elementBox = element.getBoundingClientRect();
 
     const left = (start.left + end.left) / 2 - parentBox.left;

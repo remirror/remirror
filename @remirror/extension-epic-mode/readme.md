@@ -14,7 +14,7 @@
 
 Adds better support for links to the editor and should be used in place of the more basic `Link` extension provided in the [`@remirror/core-extensions`](../core-extensions) library.
 
-The regex matcher has been pulled from the [twitter-text](https://github.com/twitter/twitter-text/blob/752b9476d5ed00c2ec60d0a6bb3b34bd5b19bcf9/js/src/regexp/extractUrl.js) library.
+The regex matcher has been pulled from the [social-text](https://github.com/social/social-text/blob/752b9476d5ed00c2ec60d0a6bb3b34bd5b19bcf9/js/src/regexp/extractUrl.js) library.
 
 ## Installation
 

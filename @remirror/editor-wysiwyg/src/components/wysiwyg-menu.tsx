@@ -28,7 +28,7 @@ import React, {
   useState,
 } from 'react';
 
-import { ActionNames, Attrs, memoize } from '@remirror/core';
+import { ActionNames, ActionNamesFromExtensionList, Attrs, memoize } from '@remirror/core';
 import { bubblePositioner, useRemirror } from '@remirror/react';
 import { ButtonState, styled } from '../wysiwyg-theme';
 import { WysiwygExtensionList } from '../wysiwyg-types';

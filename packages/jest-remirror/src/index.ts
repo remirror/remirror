@@ -7,7 +7,7 @@ export * from './render-ssr-editor';
 export * from './setup-environment';
 export * from './test-schema';
 export * from './transactions';
-export * from './types';
+export * from './jest-remirror-types';
 
 declare global {
   interface Window {

@@ -50,6 +50,6 @@ declare global {
   }
 
   type RemirrorTestServers = 'storybook' | 'next' | 'docs' | 'razzle';
-  type RemirrorTestEditors = 'twitter' | 'wysiwyg' | 'epic';
+  type RemirrorTestEditors = 'social' | 'wysiwyg' | 'epic';
   type SupportedBrowserName = 'firefox' | 'chromium';
 }

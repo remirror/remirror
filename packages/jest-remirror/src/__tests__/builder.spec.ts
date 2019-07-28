@@ -1,7 +1,7 @@
 import { clone } from '@remirror/core';
 import { schema } from '@test-fixtures/schema-helpers';
 import { markFactory, nodeFactory, sequence, text } from '../builder';
-import { TagTracker } from '../types';
+import { TagTracker } from '../jest-remirror-types';
 
 describe('text', () => {
   it('returns tracker for empty string', () => {

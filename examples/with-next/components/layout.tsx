@@ -21,8 +21,8 @@ const Layout: FunctionComponent<Props> = ({ children, title = 'This is the defau
             <a>Home</a>
           </Link>{' '}
           |{' '}
-          <Link href='/editor/twitter'>
-            <a>Twitter UI</a>
+          <Link href='/editor/social'>
+            <a>Social UI</a>
           </Link>{' '}
           |{' '}
           <Link href='/editor/wysiwyg'>

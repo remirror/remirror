@@ -1,7 +1,16 @@
+// Taken from https://github.com/chanzuckerberg/czi-prosemirror/blob/52e34840d73fccc46637314bf4b4be71147112d4/src/ui/SelectionObserver.js
+
 import { FromToParams } from '@remirror/core';
 
 interface SelectionEntry {
+  /**
+   * The element to observe selections for.
+   */
   target: Element;
+
+  /**
+   * The browser selection range within the element
+   */
   selection: FromToParams;
 }
 
@@ -9,7 +18,11 @@ export type SelectionObserverCallback = (entries: SelectionEntry[], observer: Se
 
 const EMPTY_SELECTION_VALUE = Object.freeze({ from: 0, to: 0 });
 
-function resolveSelectionValue(el: Element): FromToParams {
+/**
+ * Takes the current window selection when the window has a selection
+ * which includes the provided element.
+ */
+const resolveSelectionValue = (el: Element): FromToParams => {
   if (!window.getSelection) {
     console.warn('window.getSelection() is not supported');
     return EMPTY_SELECTION_VALUE;
@@ -52,7 +65,7 @@ function resolveSelectionValue(el: Element): FromToParams {
   }
 
   return EMPTY_SELECTION_VALUE;
-}
+};
 
 /**
  * This class adds extra selection functionality to nodeViews helping to trigger
