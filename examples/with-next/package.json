@@ -2,7 +2,7 @@
   "private": true,
   "name": "with-next",
   "license": "ISC",
-  "version": "0.4.2-canary.0",
+  "version": "0.4.2-canary.1",
   "scripts": {
     "build": "next build",
     "dev": "next",
@@ -12,12 +12,12 @@
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@remirror/core": "0.4.2-canary.0",
-    "@remirror/core-extensions": "0.4.2-canary.0",
-    "@remirror/editor-twitter": "0.4.2-canary.0",
-    "@remirror/editor-wysiwyg": "0.4.2-canary.0",
-    "@remirror/react": "0.4.2-canary.0",
-    "@remirror/showcase": "0.4.2-canary.0",
+    "@remirror/core": "0.4.2-canary.1",
+    "@remirror/core-extensions": "0.4.2-canary.1",
+    "@remirror/editor-twitter": "0.4.2-canary.1",
+    "@remirror/editor-wysiwyg": "0.4.2-canary.1",
+    "@remirror/react": "0.4.2-canary.1",
+    "@remirror/showcase": "0.4.2-canary.1",
     "emoji-mart": "2.11.1",
     "next": "9.0.2",
     "react": "16.8.6",

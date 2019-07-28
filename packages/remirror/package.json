@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "packages/remirror"
   },
-  "version": "0.4.2-canary.0",
+  "version": "0.4.2-canary.1",
   "main": "lib/index.js",
   "module": "lib/dist/remirror.esm.js",
   "files": [
@@ -25,10 +25,10 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@remirror/core": "0.4.2-canary.0",
-    "@remirror/core-extensions": "0.4.2-canary.0",
-    "@remirror/react": "0.4.2-canary.0",
-    "@remirror/renderer-react": "0.4.2-canary.0"
+    "@remirror/core": "0.4.2-canary.1",
+    "@remirror/core-extensions": "0.4.2-canary.1",
+    "@remirror/react": "0.4.2-canary.1",
+    "@remirror/renderer-react": "0.4.2-canary.1"
   },
   "peerDependencies": {
     "@types/react": "^16.7.18",
