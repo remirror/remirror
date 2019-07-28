@@ -14,7 +14,7 @@ import {
 /**
  * Provides a type annotation which is applicable to any extension type.
  */
-export type AnyExtension = Extension<any, any> | MarkExtension<any> | NodeExtension<any>;
+export type AnyExtension = Extension<any, any>;
 
 /**
  * Utility type for retrieving the extension options from an extension.
