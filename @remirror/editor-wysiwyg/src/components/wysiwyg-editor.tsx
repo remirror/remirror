@@ -104,7 +104,7 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
           <RemirrorExtension Constructor={UnderlineExtension} />
           <RemirrorExtension Constructor={ItalicExtension} />
           <RemirrorExtension Constructor={BlockquoteExtension} />
-          <RemirrorExtension Constructor={LinkExtension} activationHandler={this.activateLink} />
+          <RemirrorExtension Constructor={LinkExtension} activationHandler={this.activateLink} priority={1} />
           <RemirrorExtension Constructor={StrikeExtension} />
           <RemirrorExtension Constructor={CodeExtension} />
           <RemirrorExtension Constructor={HeadingExtension} />
