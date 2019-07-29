@@ -1,5 +1,5 @@
 import { SuggestionStateMatch } from '@remirror/extension-mention';
-import { RemirrorProps } from '@remirror/react-utils';
+import { ManagedRemirrorProviderProps } from '@remirror/react';
 import { Data, EmojiSet } from 'emoji-mart';
 import { TwitterEditorTheme } from './twitter-theme';
 
@@ -10,7 +10,7 @@ export type OnMentionChangeParams = MentionState & {
   activeIndex: number;
 };
 
-export interface TwitterEditorProps extends Partial<RemirrorProps> {
+export interface TwitterEditorProps extends Partial<ManagedRemirrorProviderProps> {
   /**
    * onUrlChange
    */

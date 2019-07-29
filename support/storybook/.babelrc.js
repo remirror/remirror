@@ -5,6 +5,7 @@ const moduleResolver = [
   'module-resolver',
   {
     alias: {
+      '@remirror/dev': '../../@remirror/dev/src',
       '@remirror/core': '../../@remirror/core/src',
       '@remirror/core-extensions': '../../@remirror/core-extensions/src',
       '@remirror/extension-code-block': '../../@remirror/extension-code-block/src',
