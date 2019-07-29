@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": "../",
     "paths": {
+      "@remirror/dev": ["@remirror/dev/src/index.ts"],
       "@remirror/core": ["@remirror/core/src/index.ts"],
       "@remirror/core-extensions": ["@remirror/core-extensions/src/index.ts"],
       "@remirror/extension-code-block": ["@remirror/extension-code-block/src/index.ts"],

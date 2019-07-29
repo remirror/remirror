@@ -1,4 +1,5 @@
 import factory from './factory';
+import dev from '../../@remirror/dev/package.json';
 import core from '../../@remirror/core/package.json';
 import coreExtensions from '../../@remirror/core-extensions/package.json';
 import extensionCodeBlock from '../../@remirror/extension-code-block/package.json';
@@ -17,6 +18,7 @@ import editorTwitter from '../../@remirror/editor-twitter/package.json';
 import editorWysiwyg from '../../@remirror/editor-wysiwyg/package.json';
 
 const configurations = [
+  ...factory(dev, '@remirror'),
   ...factory(core, '@remirror'),
   ...factory(coreExtensions, '@remirror'),
   ...factory(extensionCodeBlock, '@remirror'),

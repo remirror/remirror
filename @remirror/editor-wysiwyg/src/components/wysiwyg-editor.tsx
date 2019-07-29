@@ -92,6 +92,7 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
       defaultLanguage,
       syntaxTheme = 'atomDark',
       formatter,
+      children,
       ...props
     } = this.props;
 
@@ -123,12 +124,15 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
           />
           <RemirrorExtension Constructor={SSRHelperExtension} />
           <ManagedRemirrorProvider {...props}>
-            <InnerEditor
-              injectFontAwesome={!removeFontAwesomeCSS}
-              linkActivated={this.state.linkActivated}
-              deactivateLink={this.deactivateLink}
-              activateLink={this.activateLink}
-            />
+            <>
+              <InnerEditor
+                injectFontAwesome={!removeFontAwesomeCSS}
+                linkActivated={this.state.linkActivated}
+                deactivateLink={this.deactivateLink}
+                activateLink={this.activateLink}
+              />
+              {children}
+            </>
           </ManagedRemirrorProvider>
         </RemirrorManager>
       </ThemeProvider>

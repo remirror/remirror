@@ -279,7 +279,7 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
 
   public render() {
     const { emojiPickerActive, activeMatcher, hideSuggestions } = this.state;
-    const { editorStyles, ...rest } = this.remirrorProps;
+    const { editorStyles, children, ...rest } = this.remirrorProps;
     return (
       <ThemeProvider theme={this.theme}>
         <RemirrorManager
@@ -311,22 +311,25 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
             emojiData={this.props.emojiData}
           />
           <ManagedRemirrorProvider editorStyles={[this.theme.editorStyles, editorStyles]} {...rest}>
-            <TwitterEditorComponent
-              hideSuggestions={hideSuggestions}
-              activeMatcher={activeMatcher}
-              setExitTriggeredInternally={this.setExitTriggeredInternally}
-              getMention={this.getMention}
-              emojiPickerActive={emojiPickerActive}
-              onBlurEmojiPicker={this.onBlurEmojiPicker}
-              emojiData={this.props.emojiData}
-              emojiSet={this.props.emojiSet}
-              ignoredElements={[this.toggleEmojiRef.current!]}
-              onClickEmojiSmiley={this.onClickEmojiSmiley}
-              toggleEmojiRef={this.toggleEmojiRef}
-              users={this.users}
-              tags={this.tags}
-              onSelectEmoji={this.onSelectEmoji}
-            />
+            <>
+              <TwitterEditorComponent
+                hideSuggestions={hideSuggestions}
+                activeMatcher={activeMatcher}
+                setExitTriggeredInternally={this.setExitTriggeredInternally}
+                getMention={this.getMention}
+                emojiPickerActive={emojiPickerActive}
+                onBlurEmojiPicker={this.onBlurEmojiPicker}
+                emojiData={this.props.emojiData}
+                emojiSet={this.props.emojiSet}
+                ignoredElements={[this.toggleEmojiRef.current!]}
+                onClickEmojiSmiley={this.onClickEmojiSmiley}
+                toggleEmojiRef={this.toggleEmojiRef}
+                users={this.users}
+                tags={this.tags}
+                onSelectEmoji={this.onSelectEmoji}
+              />
+              {children}
+            </>
           </ManagedRemirrorProvider>
         </RemirrorManager>
       </ThemeProvider>
