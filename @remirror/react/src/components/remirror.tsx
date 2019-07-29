@@ -256,7 +256,7 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
     styles.unshift(this.manager.data.styles);
 
     if (this.props.usesDefaultStyles) {
-      styles.unshift(defaultStyles());
+      styles.unshift(defaultStyles);
     }
 
     return styles;
