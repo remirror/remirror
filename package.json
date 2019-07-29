@@ -49,7 +49,7 @@
     "if-config": "node support/scripts/run-if-config.js",
     "integrity": "yarn check --integrity",
     "lerna:publish:canary": "lerna publish prerelease --preid=canary --dist-tag next --exact --force-publish && release --pre",
-    "lerna:publish:ci": "lerna publish -y --canary --preid ci --npm-tag ci --npm-client npm",
+    "lerna:publish:ci": "lerna publish -y --canary=Z$(date +%s) --preid ci --npm-tag ci --npm-client npm",
     "lerna:publish:minor": "lerna publish minor --exact --force-publish",
     "lerna:publish:patch": "lerna publish patch --exact --force-publish",
     "lint": "run-s lint:*",

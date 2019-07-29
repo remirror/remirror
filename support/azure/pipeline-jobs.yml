@@ -8,7 +8,7 @@ jobs:
         pool:
           vmImage: ${{ parameters.vmImage }}
         steps:
-          - template: yarn-install.yml
+          - template: pipeline-yarn-install.yml
           - bash: yarn integrity
             displayName: 'Check yarn lock file is up to date'
           - bash: yarn ci:audit
@@ -25,7 +25,7 @@ jobs:
         pool:
           vmImage: ${{ parameters.vmImage }}
         steps:
-          - template: yarn-install.yml
+          - template: pipeline-yarn-install.yml
           - bash: |
               yarn test
             displayName: 'Run unit tests across project'
@@ -35,7 +35,7 @@ jobs:
         pool:
           vmImage: ${{ parameters.vmImage }}
         steps:
-          - template: yarn-install.yml
+          - template: pipeline-yarn-install.yml
           - bash: yarn build
             displayName: 'Build project'
           - bash: yarn size
@@ -51,7 +51,7 @@ jobs:
           - ${{ if eq(parameters.name, 'Linux') }}:
               - bash: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
                 displayName: 'Increase file watch limit for Linux only'
-          - template: yarn-install.yml
+          - template: pipeline-yarn-install.yml
 
           - bash: yarn build
             displayName: 'Build project'
@@ -79,6 +79,8 @@ jobs:
 
   - ${{ if eq(parameters.name, 'Linux') }}:
       - job: ${{ parameters.name }}PublishCIBuildToNpm
+        variables:
+          - group: remirror-secrets
         dependsOn:
           - ${{ parameters.name }}Checks
           - ${{ parameters.name }}UnitTests
@@ -88,12 +90,14 @@ jobs:
         pool:
           vmImage: ${{ parameters.vmImage }}
         steps:
-          - template: yarn-install.yml
+          - template: pipeline-yarn-install.yml
           - bash: yarn build
             displayName: 'Build project'
-          - task: npmAuthenticate@0
-            inputs:
-              workingFile: '.npmrc'
-              customEndpoint: 'NPM Registry Publish Token'
+          - bash: echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN}" > .npmrc 2> /dev/null
+            displayName: Authenticate npm for lerna
+            env:
+              NPM_AUTH_TOKEN: $(npmAuthToken)
           - bash: yarn lerna:publish:ci
             displayName: Publish canary build to NPM
+            env:
+              NPM_AUTH_TOKEN: $(npmAuthToken)

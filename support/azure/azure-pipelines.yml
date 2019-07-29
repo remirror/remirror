@@ -1,0 +1,30 @@
+jobs:
+  - template: pipeline-jobs.yml
+    parameters:
+      name: Linux
+      vmImage: 'ubuntu-16.04'
+
+  - template: pipeline-jobs.yml
+    parameters:
+      name: macOS
+      vmImage: 'macOS-10.14'
+
+# Cron jobs for scheduling builds
+schedules:
+  - cron: '0 0 * * *'
+    displayName: Daily midnight build
+    branches:
+      include:
+        - master
+        - canary
+    always: true
+
+# What triggers a new build
+trigger:
+  - master
+  - canary
+
+# The branches which cause a PR to trigger a new build
+pr:
+  - master
+  - canary
