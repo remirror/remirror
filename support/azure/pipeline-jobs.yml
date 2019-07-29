@@ -101,3 +101,4 @@ jobs:
             displayName: Publish canary build to NPM
             env:
               NPM_AUTH_TOKEN: $(npmAuthToken)
+              CI: 'true'
