@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
 
-type AProps = JSX.IntrinsicElements['a'];
+type AnchorProps = JSX.IntrinsicElements['a'];
 
-export const SkipLink = (props: AProps) => (
+export const SkipLink = (props: AnchorProps) => (
   <a
     children='Skip to content'
     {...props}
@@ -14,7 +14,7 @@ export const SkipLink = (props: AProps) => (
       width: 1,
       m: -1,
       p: 0,
-      overrflow: 'hidden',
+      overflow: 'hidden',
       position: 'absolute',
       top: -9999,
       ':focus': {

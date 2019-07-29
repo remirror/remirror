@@ -57,7 +57,7 @@ export const Layout: FC<RootLayoutProps> = ({ children, ...props }) => {
                 ref={nav}
                 open={menuOpen}
                 sx={{
-                  display: [null, fullWidth ? 'none' : 'block'],
+                  display: ['none', fullWidth ? 'none' : 'block'],
                 }}
                 onFocus={onSidebarFocus}
                 onBlur={onSidebarBlur}
