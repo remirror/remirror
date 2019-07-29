@@ -39,7 +39,7 @@
     "@types/prosemirror-view": "1.9.0",
     "min-document": "^2.19.0",
     "prosemirror-state": "^1.2.3",
-    "prosemirror-view": "^1.9.12"
+    "prosemirror-view": "^1.9.13"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
