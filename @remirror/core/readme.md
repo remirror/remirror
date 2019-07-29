@@ -32,7 +32,7 @@ Extensions are the building blocks of the editing experience in remirror. They p
 
 Extension can be `Extension`, `MarkExtension` or `NodeExtension`.
 
-- `Extension` Pure extensions only concern themselves with the behaviour of the editor. For example the extension called `History` is a pure extension and it tracks all the actions and provides undo and redo commands to your configured editor.
+- `Extension` Pure extensions only concern themselves with the behaviour of the editor. For example the extension called `History` is a plain extension and it tracks all the actions and provides undo and redo commands to your configured editor.
 - `MarkExtension` These are used to add extra styling or other information to inline content. Marks are used for adding links to content, bold stying, italic and other changes which affect the content in a standard way.
 - `NodeExtension` These add make nodes available to the content of the editor. Examples include [`@remirror/extension-emoji`](../extension-emoji) and [`@remirror/extension-mention`](../extension-mention)
 

@@ -26,13 +26,14 @@ import { ComponentClass, ComponentType, FC, ReactElement, ReactNode, Ref } from 
 
 export interface Positioner<GExtensions extends AnyExtension[] = AnyExtension[]> {
   /**
-   * The default and initial position value. This is used at the start and whenever isActive becomes false
+   * The default and initial position value. This is used at the start and
+   * whenever isActive becomes false
    */
 
   initialPosition: Position;
   /**
-   * Determines whether anything has changed and whether to continue with
-   * a recalculation
+   * Determines whether anything has changed and whether to continue with a
+   * recalculation
    *
    * @param params
    */
@@ -44,7 +45,8 @@ export interface Positioner<GExtensions extends AnyExtension[] = AnyExtension[]>
   isActive(params: GetPositionParams<GExtensions>): boolean;
 
   /**
-   * Calculate and return a new position (only called when `hasChanged` and `isActive` return true)
+   * Calculate and return a new position (only called when `hasChanged` and
+   * `isActive` return true)
    */
   getPosition(params: GetPositionParams<GExtensions>): Position;
 }
@@ -62,7 +64,8 @@ export type GetPositionerPropsConfig<
 
 export interface RefParams<GRefKey extends string = 'ref'> {
   /**
-   * A custom ref key which allows a reference to be obtained from non standard components.
+   * A custom ref key which allows a reference to be obtained from non standard
+   * components.
    *
    * @defaultValue 'ref'
    */
@@ -83,7 +86,8 @@ export type GetPositionerReturn<GRefKey extends string = 'ref'> = PositionerProp
   { [P in GRefKey]: Ref<any> };
 
 /**
- * These are the props passed to the render function provided when setting up your editor.
+ * These are the props passed to the render function provided when setting up
+ * your editor.
  */
 export interface InjectedRemirrorProps<GExtensions extends AnyExtension[] = AnyExtension[]> {
   /**
@@ -108,7 +112,8 @@ export interface InjectedRemirrorProps<GExtensions extends AnyExtension[] = AnyE
   /**
    * Clears all editor content
    *
-   * @param triggerOnChange - whether onChange handlers should be triggered by the update
+   * @param triggerOnChange - whether onChange handlers should be triggered by
+   * the update
    */
   clearContent(triggerOnChange?: boolean): void;
 
@@ -119,17 +124,21 @@ export interface InjectedRemirrorProps<GExtensions extends AnyExtension[] = AnyE
    *
    * Allows for the editor content to be overridden by force.
    *
-   * @param triggerOnChange - whether onChange handlers should be triggered by the update
+   * @param triggerOnChange - whether onChange handlers should be triggered by
+   * the update
    */
   setContent(content: RemirrorContentType, triggerOnChange?: boolean): void;
 
   /**
-   * A function that returns props which should be spread on a react element and declare it the editor root.
+   * A function that returns props which should be spread on a react element and
+   * declare it the editor root.
    *
    * @remarks
-   * By default remirror will add the prosemirror editor instance directly into the first child element it holds.
+   * By default remirror will add the prosemirror editor instance directly into
+   * the first child element it holds.
    *
-   * **IMPORTANT** In order to support pre-rendering this should only be spread on a component with NO children.
+   * **IMPORTANT** In order to support pre-rendering this should only be spread
+   * on a component with NO children.
    *
    * **Example with indirectly nested components**
    *
@@ -157,10 +166,11 @@ export interface InjectedRemirrorProps<GExtensions extends AnyExtension[] = AnyE
   ): RefKeyRootProps<GRefKey>;
 
   /**
-   * Attach these props to a component to inject it with position data. Typically this is used
-   * for creating menu components.
+   * Attach these props to a component to inject it with position data.
+   * Typically this is used for creating menu components.
    *
-   * A custom positioner can be passed in to update the method used to calculate the position.
+   * A custom positioner can be passed in to update the method used to calculate
+   * the position.
    */
   getPositionerProps<GRefKey extends string = 'ref'>(
     options: GetPositionerPropsConfig<GExtensions, GRefKey>,
@@ -190,18 +200,20 @@ export interface RemirrorGetterParams {
   /**
    * Get the current raw text from the latest editor state.
    *
-   * @param lineBreakDivider - the divider to use for new lines defaults to '\n\n'
+   * @param lineBreakDivider - the divider to use for new lines defaults to
+   * '\n\n'
    */
   getText(lineBreakDivider?: string): string;
 
   /**
-   * Get the full JSON representation of the state (including the selection information)
+   * Get the full JSON representation of the state (including the selection
+   * information)
    */
   getJSON(): ObjectNode;
 
   /**
-   * Get a representation of the editor content as an ObjectNode which can be used to set content for
-   * and editor.
+   * Get a representation of the editor content as an ObjectNode which can be
+   * used to set content for and editor.
    */
   getObjectNode(): ObjectNode;
 }
@@ -236,24 +248,26 @@ export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension
   /**
    * Pass in the extension manager.
    *
-   * The manager is responsible for handling all Prosemirror related functionality.
+   * The manager is responsible for handling all Prosemirror related
+   * functionality.
    */
   manager: ExtensionManager<GExtensions>;
 
   /**
    * Set the starting value object of the editor.
    *
-   * Without setting onStateChange remirror renders as an uncontrolled component.
-   * Value changes are passed back out of the editor and there is now way to set the value via props.
-   * As a result this is the only opportunity to directly control the rendered text.
+   * Without setting onStateChange remirror renders as an uncontrolled
+   * component. Value changes are passed back out of the editor and there is now
+   * way to set the value via props. As a result this is the only opportunity to
+   * directly control the rendered text.
    *
    * @defaultValue `{ type: 'doc', content: [{ type: 'paragraph' }] }`
    */
   initialContent: RemirrorContentType;
 
   /**
-   * If this exists the editor becomes a controlled component. Nothing will be updated unless you explicitly
-   * set the value prop to the updated state.
+   * If this exists the editor becomes a controlled component. Nothing will be
+   * updated unless you explicitly set the value prop to the updated state.
    *
    * Without a deep understanding of Prosemirror this is not recommended.
    *
@@ -262,7 +276,8 @@ export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension
   onStateChange?(params: RemirrorStateListenerParams<GExtensions>): void;
 
   /**
-   * When onStateChange is defined this prop is used to set the next state value of the remirror editor.
+   * When onStateChange is defined this prop is used to set the next state value
+   * of the remirror editor.
    */
   value?: EditorState<SchemaFromExtensionList<GExtensions>> | null;
 
@@ -281,7 +296,8 @@ export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension
   editable: boolean;
 
   /**
-   * When set to true focus will be place on the editor as soon as it first loads.
+   * When set to true focus will be place on the editor as soon as it first
+   * loads.
    *
    * @defaultValue false
    */
@@ -298,7 +314,8 @@ export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension
   onBlur?: (params: RemirrorEventListenerParams<GExtensions>, event: Event) => void;
 
   /**
-   * Called on the first render when the prosemirror instance first becomes available
+   * Called on the first render when the prosemirror instance first becomes
+   * available
    */
   onFirstRender?: RemirrorEventListener<GExtensions>;
 
@@ -308,8 +325,8 @@ export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension
   onChange?: RemirrorEventListener<GExtensions>;
 
   /**
-   * The render prop that takes the injected remirror params and returns an element to render.
-   * The editor view is automatically attached to the DOM.
+   * The render prop that takes the injected remirror params and returns an
+   * element to render. The editor view is automatically attached to the DOM.
    */
   children: RenderPropFunction<GExtensions>;
 
@@ -317,7 +334,8 @@ export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension
    * A method called when the editor is dispatching the transaction.
    *
    * @remarks
-   * Use this to update the transaction which will be used to update the editor state.
+   * Use this to update the transaction which will be used to update the editor
+   * state.
    */
   onDispatchTransaction: TransactionTransformer<SchemaFromExtensionList<GExtensions>>;
 
@@ -333,8 +351,8 @@ export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension
    *
    * @remarks
    *
-   * Use this if you would like to take full control of all your extensions and have some understanding of the underlying
-   * Prosemirror internals.
+   * Use this if you would like to take full control of all your extensions and
+   * have some understanding of the underlying Prosemirror internals.
    *
    * ```ts
    * const builtInExtensions = [new DocExtension(), new TextExtension(), new ParagraphExtension()]
@@ -352,23 +370,25 @@ export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension
   usesDefaultStyles: boolean;
 
   /**
-   * Additional editor styles passed into prosemirror. Used to provide styles for the text, nodes and marks
-   * rendered in the editor.
+   * Additional editor styles passed into prosemirror. Used to provide styles
+   * for the text, nodes and marks rendered in the editor.
    *
    * @defaultValue `{}`
    */
   editorStyles: Interpolation;
 
   /**
-   * Determine whether the Prosemirror view is inserted at the `start` or `end` of it's container DOM element.
+   * Determine whether the Prosemirror view is inserted at the `start` or `end`
+   * of it's container DOM element.
    *
    * @defaultValue 'end'
    */
   insertPosition: 'start' | 'end';
 
   /**
-   * By default remirror will work out whether this is a dom environment or server environment for SSR rendering.
-   * You can override this behaviour here when required.
+   * By default remirror will work out whether this is a dom environment or
+   * server environment for SSR rendering. You can override this behaviour here
+   * when required.
    */
   forceEnvironment?: RenderEnvironment;
 
@@ -377,31 +397,38 @@ export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension
    *
    * @remarks
    *
-   * This is accomplished by making the `css` function a noop. It is useful for those who would prefer not to use
-   * a CSS-in-JS solution. Emotion classes are very hard to override once in place. By setting this to true, it should
-   * be much easier to configure your own styles without the burden of overriding existing styles.
+   * This is accomplished by making the `css` function a noop. It is useful for
+   * those who would prefer not to use a CSS-in-JS solution. Emotion classes are
+   * very hard to override once in place. By setting this to true, it should be
+   * much easier to configure your own styles without the burden of overriding
+   * existing styles.
    *
    * @default false
    */
   withoutEmotion: boolean;
 
   /**
-   * Set to true to ignore the hydration warning for a mismatch between the rendered server and client content.
+   * Set to true to ignore the hydration warning for a mismatch between the
+   * rendered server and client content.
    *
    * @remarks
    *
    * This is a potential solution for those who require server side rendering.
    *
-   * While on the server the prosemirror document is transformed into a react component so that it can be rendered.
-   * The moment it enters the DOM environment prosemirror takes over control of the root element. The problem is that
-   * this will always see this hydration warning on the client:
+   * While on the server the prosemirror document is transformed into a react
+   * component so that it can be rendered. The moment it enters the DOM
+   * environment prosemirror takes over control of the root element. The problem
+   * is that this will always see this hydration warning on the client:
    *
    * `Warning: Did not expect server HTML to contain a <div> in <div>.`
    *
-   * Setting this to true removes the warning at the cost of a slightly slower start up time. It uses the
-   * two pass solution mentioned in the react docs. See {@link https://reactjs.org/docs/react-dom.html#hydrate}.
+   * Setting this to true removes the warning at the cost of a slightly slower
+   * start up time. It uses the two pass solution mentioned in the react docs.
+   * See {@link https://reactjs.org/docs/react-dom.html#hydrate}.
    *
-   * The props also takes it's name from a similar API used by react for DOM Elements. See {@link https://reactjs.org/docs/dom-elements.html#suppresshydrationwarning.
+   * The props also takes it's name from a similar API used by react for DOM
+   * Elements. See {@link
+   * https://reactjs.org/docs/dom-elements.html#suppresshydrationwarning.
    */
   suppressHydrationWarning?: boolean;
 }
@@ -426,8 +453,8 @@ export interface PositionerIdParams {
   /**
    * A unique id for the positioner.
    *
-   * This is used to map the ref of the tracked component to a unique id and cant be updated without losing track of the
-   * component's reference element.
+   * This is used to map the ref of the tracked component to a unique id and
+   * cant be updated without losing track of the component's reference element.
    */
   positionerId: string;
 }
@@ -441,7 +468,8 @@ export interface IsActiveParams {
 
 export interface PositionerParams {
   /**
-   * The positioner object which determines how the changes in the view impact the calculated position.
+   * The positioner object which determines how the changes in the view impact
+   * the calculated position.
    */
   positioner: Partial<Positioner>;
 }
@@ -488,8 +516,9 @@ export type ExtensionConstructorProps<
 
 export interface BaseExtensionProps {
   /**
-   * Sets the priority for the extension. Lower number means the extension is loaded first and gives it priority.
-   * `-1` is loaded before `0` and will overwrite any conflicting configuration.
+   * Sets the priority for the extension. Lower number means the extension is
+   * loaded first and gives it priority. `-1` is loaded before `0` and will
+   * overwrite any conflicting configuration.
    *
    * Base extensions are loaded with a priority of 1.
    *
@@ -515,7 +544,9 @@ export type RemirrorElement<GOptions extends {} = any> = ReactElement<any> & {
 
 export interface RemirrorManagerProps {
   /**
-   * Sets the placeholder for the editor. Can pass in a tuple to set the text of the placeholder and the styles at the same time.
+   * Sets the placeholder for the editor. Can pass in a tuple to set the text of
+   * the placeholder and the styles at the same time.
+   *
    * ```tsx
    * <Remirror placeholder={['Please enter your message', { color: 'red' }]} {...props} />
    * ```
