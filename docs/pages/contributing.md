@@ -8,7 +8,7 @@ title: Contributing
 
 ## Getting Started
 
-Fork [this respository](https://github.com/ifiokjr/remirror), clone your fork and add this repository as the upstream remote.
+Fork [this respository][repo], clone your fork and add this repository as the upstream remote.
 
 ```bash
 git clone <<FORKED_REPO_URL>>
@@ -54,24 +54,22 @@ Create tests inside of a `__tests__/` subfolder.
 
 I recommend that while working on your code you commit early and often. You won't be judged. All worked submitted in a pull request (see following section) will be squashed into one commit before merging.
 
-Remirror by default using [husky](https://github.com/typicode/husky) for git hooks which run
+`remirror` has built in [husky] support for git hooks
 
 - Before each commit (lint and test changed files)
 - Before each push (lint, typecheck and test)
-- After a merge (install)
 
-This can be annoying when attempting proof of concept work. If you'd like to turn it off run the following command.
+By default these checks are **not** run automatically. To enable automatic pre-commit and
+pre-push hooks use the following command:
 
 ```bash
-yarn husky:stop
+yarn start:checks
 ```
 
-This copies the `support/.config.sample.json` to `.config.json`. After this change your git commits and git pushes won't be checked for errors.
-
-If you would like to resume per-commit and per-push checking run
+To stop per-commit / per-push checks run:
 
 ```bash
-yarn husky:start
+yarn stop:checks
 ```
 
 <br />
@@ -161,9 +159,11 @@ members of the project's leadership.
 
 ### Attribution
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
+This Code of Conduct is adapted from the [Contributor Covenant], version 1.4,
 available at [http://contributor-covenant.org/version/1/4][version]
 
-[homepage]: http://contributor-covenant.org
+[contributor covenant]: http://contributor-covenant.org
 [version]: http://contributor-covenant.org/version/1/4/
 [gatsby]: https://www.gatsbyjs.org/
+[repo]: https://github.com/ifiokjr/remirror
+[husky]: https://github.com/typicode/husky

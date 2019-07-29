@@ -43,8 +43,6 @@
     "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md,mdx}\"",
     "fix:support": "yarn lint:support --fix",
     "frozen": "yarn --frozen-lockfile install",
-    "husky:start": "rimraf ./.config.json",
-    "husky:stop": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
     "if-clean": "node support/scripts/run-if-clean.js",
     "if-config": "node support/scripts/run-if-config.js",
     "integrity": "yarn check --integrity",
@@ -63,6 +61,8 @@
     "publish:minor": "yarn if-clean run-s checks:publish lerna:publish:minor",
     "publish:patch": "yarn if-clean run-s checks:publish lerna:publish:patch",
     "size": "size-limit",
+    "start:checks": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
+    "stop:checks": "rimraf ./.config.json",
     "storybook": "start-storybook -p 6006 -c support/storybook",
     "test": "jest --verbose",
     "test:e2e": "jest --verbose --runInBand --config e2e/jest.config.js",
@@ -204,8 +204,8 @@
       "post-checkout": "echo $HUSKY_GIT_STDIN | support/hooks/post-checkout-lfs $HUSKY_GIT_PARAMS",
       "post-commit": "echo $HUSKY_GIT_STDIN | support/hooks/post-commit-lfs $HUSKY_GIT_PARAMS",
       "post-merge": "echo $HUSKY_GIT_STDIN | support/hooks/post-merge-lfs $HUSKY_GIT_PARAMS",
-      "pre-commit": "yarn if-config ignoredHooks.preCommit lint-staged",
-      "pre-push": "echo $HUSKY_GIT_STDIN | support/hooks/pre-push-lfs $HUSKY_GIT_PARAMS && yarn if-config ignoredHooks.prePush yarn checks"
+      "pre-commit": "yarn if-config hooks.preCommit lint-staged",
+      "pre-push": "echo $HUSKY_GIT_STDIN | support/hooks/pre-push-lfs $HUSKY_GIT_PARAMS && yarn if-config hooks.prePush yarn checks"
     }
   },
   "jest": {

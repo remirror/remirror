@@ -2,7 +2,7 @@ const { execSync } = require('child_process');
 const { environment } = require('../jest/helpers');
 const { readProperty } = require('./helpers/read-config');
 
-const ignorePostInstall = readProperty({ property: 'ignoredHooks.macPostInstall' });
+const shouldRunMacPostInstall = readProperty({ property: 'hooks.macPostInstall' });
 
 const [, , ...args] = process.argv;
 const command = args.join(' ');
@@ -12,10 +12,10 @@ if (!environment.isMacOS || environment.isCI) {
   process.exit(0);
 }
 
-if (ignorePostInstall) {
+if (!shouldRunMacPostInstall) {
   console.log(
     'Mac specific commands are being ignored.\n' +
-      'Set `ignoredHooks.macPostInstall` to `false`\n' +
+      'Set `hooks.macPostInstall` to `true`\n' +
       'in `.config.json` if you want to reactivate.',
   );
   process.exit(0);

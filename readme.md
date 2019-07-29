@@ -58,18 +58,17 @@ From the root of this repository run the following to trigger a full typecheck, 
 yarn checks
 ```
 
-By default these checks are run on every push. To prevent these hooks from running by default type:
+By default these checks are not run automatically. To enable automatic precommit and
+prepush hooks use the following command:
 
 ```bash
-yarn husky:stop
+yarn start:checks
 ```
 
-This copies `.config.sample.json` to `.config.json`. This file is read before hooks are run and can cancel checks when configured.
-
-To resume per-commit / per-push checks run:
+To stop per-commit / per-push checks run:
 
 ```bash
-yarn husky:start
+yarn stop:checks
 ```
 
 ### Built With
@@ -77,6 +76,7 @@ yarn husky:start
 - [Typescript]
 - [React]
 - [Prosemirror]
+- [Theme UI]
 
 ### Contributing
 
@@ -90,34 +90,10 @@ This project uses [SemVer](http://semver.org/) for versioning. For the versions 
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-[introduction]: https://remirror.io
-[installation]: https://remirror.io/docs/installation
-[getting started]: https://remirror.io/guides/quickstart
+[introduction]: https://docs.remirror.org
+[installation]: https://docs.remirror.org/installation
+[getting started]: https://docs.remirror.org/guides/quickstart
 [typescript]: https://github.com/microsoft/Typescript
 [react]: https://github.com/facebook/react
 [prosemirror]: https://prosemirror.net
-[azure-badge]: https://img.shields.io/azure-devops/build/remirror/1b12c364-8c17-4f7a-a215-b8e0d2c9b253/1.svg?label=Azure%20Pipeline&logo=azuredevops
-[azure]: https://dev.azure.com/remirror/remirror/_build/latest?definitionId=1&branchName=master
-[travis-badge]: https://img.shields.io/travis/com/ifiokjr/remirror.svg?label=Travis%20Build&logo=travis
-[travis]: https://travis-ci.com/ifiokjr/remirror
-[coverage-badge]: https://img.shields.io/codeclimate/coverage/ifiokjr/remirror.svg?logoColor=https%3A%2F%2Fimg.shields.io%2Fcodeclimate%2Fcoverage%2Fifiokjr%2Fremirror.svg%3Fstyle%3Dflat-square&logo=data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGl0bGU+Q29kZSBDbGltYXRlIGljb248L3RpdGxlPjxwYXRoIGQ9Ik0gMTYuMDQ2ODc1IDUuMDM5MDYyIEwgMjQgMTIuOTkyMTg4IEwgMjEuMjkyOTY5IDE1LjcwMzEyNSBMIDE2LjA0Njg3NSAxMC40NTcwMzEgTCAxNC4yMDMxMjUgMTIuMzA4NTk0IEwgMTEuNDg4MjgxIDkuNTk3NjU2IFogTSAxMC42NTIzNDQgMTAuNDM3NSBMIDEzLjM1OTM3NSAxMy4xNTIzNDQgTCAxNS45MDYyNSAxNS42OTE0MDYgTCAxMy4xOTE0MDYgMTguMzk4NDM4IEwgNy45NTMxMjUgMTMuMTYwMTU2IEwgMy43NzczNDQgMTcuMzM1OTM4IEwgMi43MDcwMzEgMTguMzk4NDM4IEwgMCAxNS42OTE0MDYgTCA3Ljk1MzEyNSA3LjczODI4MSBaIE0gMTAuNjUyMzQ0IDEwLjQzNzUgIi8+PC9zdmc+
-[code-coverage]: https://codeclimate.com/github/ifiokjr/remirror/-badge
-[maintainability-badge]: https://img.shields.io/codeclimate/maintainability/ifiokjr/remirror.svg?logo=data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGl0bGU+Q29kZSBDbGltYXRlIGljb248L3RpdGxlPjxwYXRoIGQ9Ik0gMTYuMDQ2ODc1IDUuMDM5MDYyIEwgMjQgMTIuOTkyMTg4IEwgMjEuMjkyOTY5IDE1LjcwMzEyNSBMIDE2LjA0Njg3NSAxMC40NTcwMzEgTCAxNC4yMDMxMjUgMTIuMzA4NTk0IEwgMTEuNDg4MjgxIDkuNTk3NjU2IFogTSAxMC42NTIzNDQgMTAuNDM3NSBMIDEzLjM1OTM3NSAxMy4xNTIzNDQgTCAxNS45MDYyNSAxNS42OTE0MDYgTCAxMy4xOTE0MDYgMTguMzk4NDM4IEwgNy45NTMxMjUgMTMuMTYwMTU2IEwgMy43NzczNDQgMTcuMzM1OTM4IEwgMi43MDcwMzEgMTguMzk4NDM4IEwgMCAxNS42OTE0MDYgTCA3Ljk1MzEyNSA3LjczODI4MSBaIE0gMTAuNjUyMzQ0IDEwLjQzNzUgIi8+PC9zdmc+
-[issues-badge]: https://img.shields.io/codeclimate/tech-debt/ifiokjr/remirror.svg?&logo=data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDI0IDI0Ij48dGl0bGU+Q29kZSBDbGltYXRlIGljb248L3RpdGxlPjxwYXRoIGQ9Ik0gMTYuMDQ2ODc1IDUuMDM5MDYyIEwgMjQgMTIuOTkyMTg4IEwgMjEuMjkyOTY5IDE1LjcwMzEyNSBMIDE2LjA0Njg3NSAxMC40NTcwMzEgTCAxNC4yMDMxMjUgMTIuMzA4NTk0IEwgMTEuNDg4MjgxIDkuNTk3NjU2IFogTSAxMC42NTIzNDQgMTAuNDM3NSBMIDEzLjM1OTM3NSAxMy4xNTIzNDQgTCAxNS45MDYyNSAxNS42OTE0MDYgTCAxMy4xOTE0MDYgMTguMzk4NDM4IEwgNy45NTMxMjUgMTMuMTYwMTU2IEwgMy43NzczNDQgMTcuMzM1OTM4IEwgMi43MDcwMzEgMTguMzk4NDM4IEwgMCAxNS42OTE0MDYgTCA3Ljk1MzEyNSA3LjczODI4MSBaIE0gMTAuNjUyMzQ0IDEwLjQzNzUgIi8+PC9zdmc+
-[issues]: https://codeclimate.com/github/ifiokjr/remirror/issues
-[activity-badge]: https://img.shields.io/github/commit-activity/m/ifiokjr/remirror.svg?logo=github
-[commits]: https://github.com/ifiokjr/remirror/commits/master
-[last-commit-badge]: https://img.shields.io/github/last-commit/ifiokjr/remirror.svg?logo=github
-[last-commit]: https://github.com/ifiokjr/remirror/commits/master
-[github-issues-badge]: https://img.shields.io/github/issues-raw/ifiokjr/remirror.svg?logo=github
-[github-issues]: https://github.com/ifiokjr/remirror/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc
-[github-pull-requests-badge]: https://img.shields.io/github/issues-pr/ifiokjr/remirror.svg?logo=github
-[github-pull-requests]: https://github.com/ifiokjr/remirror/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc
-[github-stars-badge]: https://img.shields.io/github/stars/ifiokjr/remirror.svg?logo=github
-[github-stars]: https://github.com/ifiokjr/remirror
-[github-tags-badge]: https://img.shields.io/github/tag-date/ifiokjr/remirror.svg?logo=github
-[github-tags]: https://github.com/ifiokjr/remirror/tags
-[license-badge]: https://img.shields.io/npm/l/remirror.svg
-[license]: https://github.com/ifiokjr/remirror/blob/master/LICENSE
-[netlify]: https://app.netlify.com/sites/remirror/deploys
-[netlify-badge]: https://api.netlify.com/api/v1/badges/f59cbf02-798f-45dd-a78c-93ec52b08d20/deploy-status
+[theme ui]: https://github.com/system-ui/theme-ui
