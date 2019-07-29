@@ -9,7 +9,8 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ### Added
 
-- 🚀 `@remirror/dev`: New package for aiding in developing new extensions and components.
+- 🚀 `@remirror/dev`: New package for aiding in developing new extensions and
+  components.
 - 🚀 `@remirror/core`: Introduce the concept of meta tags for extensions. These
   allow an extension to tag itself and these tags are made available through the
   tag object which is passed to all extension methods.
@@ -33,6 +34,9 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - 💥 **BREAKING `@remirror/core` `@remirror/core-extensions`:** Move `ParagraphExtension` from core to core-extensions. The reason is to not pollute the core library with formatting methods which are primarily just for extensions.
 - 💥 **BREAKING `@remirror/core`:** Rename `ExtensionType.EXTENSION = 'extension'` to `ExtensionType.Plain = 'plain'`.
 - `@remirror/core`: Update `extraAttrs` configuration to enable parsing the dom.
+- `@remirror/core`: Make default priority level for extensions `3` instead of
+  `2`. A lower number means the extension is deemed more important and ordered
+  earlier in lists.
 - `@remirror/core-extensions`: Add `extraAttrs` to the following extensions:
   `LinkExtension`, `ParagraphExtension`, `HeadingExtension`.
 

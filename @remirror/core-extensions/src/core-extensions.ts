@@ -17,7 +17,7 @@ import { ParagraphExtension } from './nodes';
 export const baseExtensions: PrioritizedExtension[] = [
   { extension: new DocExtension(), priority: 1 },
   { extension: new TextExtension(), priority: 1 },
-  { extension: new ParagraphExtension(), priority: 1 },
+  { extension: new ParagraphExtension(), priority: 2 },
   { extension: new CompositionExtension(), priority: 3 },
   { extension: new HistoryExtension(), priority: 3 },
   { extension: new GapCursorExtension(), priority: 10 },
