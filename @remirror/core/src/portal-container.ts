@@ -34,7 +34,15 @@ export type PortalMap = Map<HTMLElement, MountedPortal>;
  * the node views in the editor.
  */
 export class NodeViewPortalContainer {
+  /**
+   * A map of all the active portals.
+   */
   public portals: Map<HTMLElement, MountedPortal> = new Map();
+
+  /**
+   * The event listener which allows consumers to subscribe to when a new portal
+   * is added / deleted via the updated event.
+   */
   public events = new NanoEvents<Events>();
 
   /**

@@ -1,25 +1,27 @@
 import {
+  Attrs,
+  BaseExtensionOptions,
   Decoration,
   EDITOR_CLASS_NAME,
   EditorView,
-  EditorViewParams,
   isDOMNode,
   isElementDOMNode,
   isPlainObject,
   isString,
   NodeView,
   NodeViewPortalContainer,
-  PlainObject,
   ProsemirrorNode,
+  SELECTED_NODE_CLASS_NAME,
 } from '@remirror/core';
 import { css, Interpolation } from 'emotion';
 import React, { ComponentType } from 'react';
-import { RemirrorProps } from './react-types';
-
-/**
- * Retrieve the position of the current nodeView
- */
-export type GetPosition = () => number;
+import {
+  CreateNodeViewParams,
+  GetPosition,
+  NodeViewComponentProps,
+  NodeWithAttrs,
+  ReactNodeViewParams,
+} from './node-view-types';
 
 /**
  * A mimic of the css method except that this one does nothing but return an empty string.
@@ -29,44 +31,10 @@ export type GetPosition = () => number;
  */
 const cssNoOp: typeof css = () => '';
 
-export type NodeViewComponentProps<GAttrs = any> = EditorViewParams & {
-  node: ProsemirrorNode & { attrs: GAttrs };
-  getPosition: GetPosition;
-  forwardRef?: (node: HTMLElement) => void | undefined;
-};
-
-export interface CreateNodeViewParams<GProps extends PlainObject = {}>
-  extends Partial<Pick<RemirrorProps, 'withoutEmotion'>> {
-  Component: ComponentType<NodeViewComponentProps & GProps>;
-  portalContainer: NodeViewPortalContainer;
-  props: GProps;
-  style?: Interpolation;
-}
-
-export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView {
-  /**
-   * A shorthand method for creating the ReactNodeView
-   */
-  public static createNodeView<GProps extends PlainObject>({
-    Component,
-    portalContainer,
-    props,
-    style,
-    withoutEmotion,
-  }: CreateNodeViewParams<GProps>) {
-    return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
-      new ReactNodeView(
-        node,
-        view,
-        getPosition,
-        portalContainer,
-        props,
-        Component,
-        style,
-        withoutEmotion,
-      ).init();
-  }
-
+export class ReactNodeView<
+  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
+  GAttrs extends Attrs = Attrs
+> implements NodeView {
   /**
    * The outer element exposed to the editor.
    */
@@ -88,16 +56,72 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     return this.domRef;
   }
 
-  constructor(
-    public node: ProsemirrorNode,
-    public view: EditorView,
-    private getPosition: GetPosition,
-    private portalContainer: NodeViewPortalContainer,
-    public props: GProps = {} as GProps,
-    private Component: ComponentType<NodeViewComponentProps & GProps>,
-    private style: Interpolation = {},
-    private withoutEmotion: boolean = false,
-  ) {}
+  /**
+   * The ProsemirrorNode that this nodeView is responsible for rendering.
+   */
+  public node: NodeWithAttrs<GAttrs>;
+
+  /**
+   * The editor this nodeView belongs to.
+   */
+  public view: EditorView;
+
+  /**
+   * Method for retrieving the position of the current nodeView
+   */
+  private getPosition: GetPosition;
+
+  /**
+   * A container and event dispatcher which keeps track of all dom elements that
+   * hold node views
+   */
+  private portalContainer: NodeViewPortalContainer;
+
+  /**
+   * The component responsible for rendering the dom via React.
+   */
+  private Component: ComponentType<NodeViewComponentProps<GOptions, GAttrs>>;
+
+  /**
+   * The styles to be rendered with emotion.
+   */
+  private style: Interpolation;
+
+  /**
+   * Whether or not this nodeView uses emotion for rendering styled.
+   * If true emotion will be removed.
+   */
+  private withoutEmotion: boolean;
+
+  /**
+   * Whether or not the node is currently selected.
+   */
+  private selected = false;
+
+  /**
+   * The options that were passed into the extension that created this nodeView
+   */
+  private options: GOptions;
+
+  constructor({
+    Component,
+    getPosition,
+    node,
+    portalContainer,
+    style = [],
+    view,
+    withoutEmotion = false,
+    options,
+  }: ReactNodeViewParams<GOptions, GAttrs>) {
+    this.node = node;
+    this.view = view;
+    this.getPosition = getPosition;
+    this.portalContainer = portalContainer;
+    this.Component = Component;
+    this.style = style;
+    this.withoutEmotion = withoutEmotion;
+    this.options = options;
+  }
 
   /**
    * This method exists to move initialization logic out of the constructor,
@@ -126,12 +150,12 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     // Add a fixed class and a dynamic class to this node (allows for custom styles being added in configuration)
     this.domRef.classList.add(`${EDITOR_CLASS_NAME}-${this.node.type.name}-node-view`, this.css(this.style));
 
-    this.renderReactComponent(() => this.render(this.props, this.handleRef));
+    this.renderReactComponent(() => this.render(this.handleRef));
     return this;
   }
 
-  private renderReactComponent(render: () => JSX.Element) {
-    if (!this.domRef || !render) {
+  private renderReactComponent(render = () => this.render(this.handleRef)) {
+    if (!this.domRef) {
       return;
     }
 
@@ -179,16 +203,17 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     }
   };
 
-  public render(props: GProps, forwardRef?: (node: HTMLElement) => void): JSX.Element {
-    const Component = this.Component;
+  public render(forwardRef?: (node: HTMLElement) => void): JSX.Element {
+    const { Component, getPosition, node, options, view, selected } = this;
 
     return (
       <Component
-        view={this.view}
-        getPosition={this.getPosition}
-        node={this.node}
+        selected={selected}
+        view={view}
+        getPosition={getPosition}
+        node={node}
         forwardRef={forwardRef}
-        {...props}
+        options={options}
       />
     );
   }
@@ -209,8 +234,8 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
       this.setDomAttrs(node, this.domRef);
     }
 
-    this.node = node;
-    this.renderReactComponent(() => this.render(this.props, this.handleRef));
+    this.node = node as NodeWithAttrs<GAttrs>;
+    this.renderReactComponent(() => this.render(this.handleRef));
 
     return true;
   }
@@ -246,6 +271,30 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
   }
 
   /**
+   * Marks the node as being selected
+   */
+  public selectNode() {
+    this.selected = true;
+
+    if (this.domRef) {
+      this.domRef.classList.add(SELECTED_NODE_CLASS_NAME);
+    }
+
+    this.renderReactComponent();
+  }
+
+  // Remove selected node marking from this node.
+  public deselectNode() {
+    this.selected = false;
+
+    if (this.domRef) {
+      this.domRef.classList.remove(SELECTED_NODE_CLASS_NAME);
+    }
+
+    this.renderReactComponent();
+  }
+
+  /**
    * This is called whenever the node is being destroyed.
    */
   public destroy() {
@@ -256,5 +305,25 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     this.portalContainer.remove(this.domRef);
     this.domRef = undefined;
     this.contentDOM = undefined;
+  }
+
+  /**
+   * A shorthand method for creating the ReactNodeView
+   */
+  public static createNodeView<
+    GOptions extends BaseExtensionOptions = BaseExtensionOptions,
+    GAttrs extends Attrs = Attrs
+  >({ Component, portalContainer, style, withoutEmotion, options }: CreateNodeViewParams<GOptions, GAttrs>) {
+    return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
+      new ReactNodeView<GOptions, GAttrs>({
+        node: node as NodeWithAttrs<GAttrs>,
+        view,
+        getPosition,
+        portalContainer,
+        Component,
+        style,
+        options,
+        withoutEmotion,
+      }).init();
   }
 }

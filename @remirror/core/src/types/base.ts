@@ -1,6 +1,4 @@
 import { Interpolation } from '@emotion/core';
-import { MarkType as PMMarkType, Node as PMNode, NodeType as PMNodeType, Schema } from 'prosemirror-model';
-import { EditorState as PMEditorState, Plugin as PMPlugin } from 'prosemirror-state';
 import { ComponentType } from 'react';
 
 /* Utility Types */
@@ -110,18 +108,6 @@ export type MakeReadonly<GType extends {}, GKeys extends keyof GType> = Omit<GTy
  */
 export type Literal = string | number | boolean | undefined | null | void | {};
 
-/* Alias Types */
-
-export type ProsemirrorNode = PMNode<EditorSchema>;
-export type ProsemirrorPlugin<GPluginState = any> = PMPlugin<GPluginState, EditorSchema>;
-export type EditorSchema<GNodes extends string = string, GMarks extends string = string> = Schema<
-  GNodes,
-  GMarks
->;
-export type MarkType = PMMarkType<EditorSchema>;
-export type NodeType = PMNodeType<EditorSchema>;
-export type EditorState<GSchema extends EditorSchema = EditorSchema> = PMEditorState<GSchema>;
-
 /**
  * A tuple for use with the regex constructor.
  *
@@ -135,11 +121,6 @@ export type EditorState<GSchema extends EditorSchema = EditorSchema> = PMEditorS
  * ```
  */
 export type RegexTuple = [string, string?];
-
-/**
- * Utility type for matching the name of a node to via a string or function
- */
-export type NodeMatch = string | ((name: string, node: ProsemirrorNode) => boolean) | RegexTuple;
 
 /**
  * A JSON representation of a prosemirror Mark
@@ -162,14 +143,6 @@ export interface ObjectNode {
   content?: ObjectNode[];
   attrs?: Record<string, Literal | object>;
 }
-
-/**
- * Content can either be
- * - html string
- * - JSON object matching Prosemirror expected shape
- * - A top level ProsemirrorNode
- */
-export type RemirrorContentType = string | ObjectNode | ProsemirrorNode | EditorState;
 
 /**
  * Defines a position

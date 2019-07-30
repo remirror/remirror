@@ -117,27 +117,23 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
   }
 
   public nodeView({ portalContainer }: ExtensionManagerNodeTypeParams) {
-    const { set, size, emojiData, EmojiComponent, style } = this.options;
+    const { EmojiComponent, ...options } = this.options;
 
     const defaultStyle: ObjectInterpolation<undefined> = {
       userSelect: 'all',
       display: 'inline-block',
       span: {
         display: 'inline-block',
-        height: size,
-        width: size,
+        height: options.size,
+        width: options.size,
       },
     };
 
     return ReactNodeView.createNodeView({
       Component: EmojiComponent,
       portalContainer,
-      props: {
-        set,
-        size,
-        emojiData,
-      },
-      style: [defaultStyle, style],
+      options,
+      style: [defaultStyle, options.style],
     });
   }
 }

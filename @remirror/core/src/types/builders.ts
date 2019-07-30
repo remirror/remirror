@@ -4,17 +4,18 @@
  * parameter interface.
  */
 
-import { EditorView, ResolvedPos, Selection, Transaction } from './aliases';
 import {
-  Attrs,
   EditorSchema,
   EditorState,
-  MakeOptional,
+  EditorView,
   MarkType,
   NodeType,
-  Position,
   ProsemirrorNode,
-} from './base';
+  ResolvedPos,
+  Selection,
+  Transaction,
+} from './aliases';
+import { Attrs, BaseExtensionOptions, MakeOptional, Position } from './base';
 
 export interface EditorViewParams<GSchema extends EditorSchema = EditorSchema> {
   /**
@@ -123,11 +124,27 @@ export interface MarkTypeParams {
   type: MarkType;
 }
 
-export interface ProsemirrorNodeParams {
+export interface ProsemirrorNodeParams<GSchema extends EditorSchema = EditorSchema> {
   /**
    * The prosemirror node
    */
-  node: ProsemirrorNode;
+  node: ProsemirrorNode<GSchema>;
+}
+
+export type NodeWithAttrs<GAttrs extends Attrs = Attrs> = ProsemirrorNode & { attrs: GAttrs };
+
+export interface NodeWithAttrsParams<GAttrs extends Attrs = Attrs> {
+  /**
+   * A prosemirror node with a specific shape for `node.attrs`
+   */
+  node: NodeWithAttrs<GAttrs>;
+}
+
+export interface BaseExtensionOptionsParams<GOptions extends BaseExtensionOptions = BaseExtensionOptions> {
+  /**
+   * The options that were passed into the extension that created this nodeView
+   */
+  options: GOptions;
 }
 
 export interface DocParams {

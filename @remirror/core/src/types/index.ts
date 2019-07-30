@@ -2,16 +2,39 @@ import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
 import { MarkGroup, NodeGroup, Tags } from '../constants';
 import { NodeViewPortalContainer } from '../portal-container';
-import { EditorView, Mark, NodeView, Transaction } from './aliases';
-import { Attrs, BaseExtensionOptions, EditorSchema, EditorState, ProsemirrorNode, Value } from './base';
+import {
+  EditorSchema,
+  EditorState,
+  EditorView,
+  Mark,
+  NodeView,
+  ProsemirrorNode,
+  Transaction,
+} from './aliases';
+import { Attrs, BaseExtensionOptions, ObjectNode, RegexTuple, Value } from './base';
 import {
   AttrsParams,
+  BaseExtensionOptionsParams,
   EditorStateParams,
   EditorViewParams,
+  NodeWithAttrsParams,
   ProsemirrorNodeParams,
   SchemaParams,
   TransactionParams,
 } from './builders';
+
+/**
+ * Content can either be
+ * - html string
+ * - JSON object matching Prosemirror expected shape
+ * - A top level ProsemirrorNode
+ */
+export type RemirrorContentType = string | ObjectNode | ProsemirrorNode | EditorState;
+
+/**
+ * Utility type for matching the name of a node to via a string or function
+ */
+export type NodeMatch = string | ((name: string, node: ProsemirrorNode) => boolean) | RegexTuple;
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -262,12 +285,12 @@ export interface GetAttrsParams {
 }
 
 /**
- * A helper for creating SSR Component Props
+ * The interface for SSR Component Props
  */
-export type SSRComponentProps<
-  GAttrs extends Attrs = any,
-  GOptions extends BaseExtensionOptions = any
-> = GAttrs & ProsemirrorNodeParams & { options: Required<GOptions> };
+export interface SSRComponentProps<
+  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
+  GAttrs extends Attrs = Attrs
+> extends NodeWithAttrsParams<GAttrs>, BaseExtensionOptionsParams<Required<GOptions>> {}
 
 /**
  * The tag names that apply to any extension whether plain, node or mark. These are mostly used for nodes and marks

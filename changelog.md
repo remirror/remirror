@@ -9,36 +9,28 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ### Added
 
-- 🚀 `@remirror/dev`: New package for aiding in developing new extensions and
-  components.
-- 🚀 `@remirror/core`: Introduce the concept of meta tags for extensions. These
-  allow an extension to tag itself and these tags are made available through the
-  tag object which is passed to all extension methods.
-- 🚀 `@remirror/core-extensions`: Add `TrailingNodeExtension` to always append a
-  specified node to the end of the dom.
-- `@remirror/core`: Add `getExtraAttrs` method to the extension which can be
-  used in the `(Mark/Node)Extension`.
-- 🚀 `@remirror/core`: Add `DropCursorExtension` for a cursor to show up at the
-  exact location an item will be dropped.
-- 🚀 `@remirror/core`: Add `GapCursorExtension` for support of tricky to select
-  locations.
+- 🚀 `@remirror/dev`: New package for aiding in developing new extensions and components.
+- 🚀 `@remirror/core`: Introduce the concept of meta tags for extensions. These allow an extension to tag itself and these tags are made available through the tag object which is passed to all extension methods.
+- 🚀 `@remirror/core-extensions`: Add `TrailingNodeExtension` to always append a specified node to the end of the dom.
+- `@remirror/core`: Add `getExtraAttrs` method to the extension which can be used in the `(Mark/Node)Extension`.
+- 🚀 `@remirror/core`: Add `DropCursorExtension` for a cursor to show up at the exact location an item will be dropped.
+- 🚀 `@remirror/core`: Add `GapCursorExtension` for support of tricky to select locations.
 
-- Introduce new `@builtin` annotation to show when an extension is included by
-  default.
-- Introduce new `@schema` annotation for extension options to indicated that an
-  option should not be updated after creating or it will change the schema.
+- Introduce new `@builtin` annotation to show when an extension is included by default.
+- Introduce new `@schema` annotation for extension options to indicated that an option should not be updated after creating or it will change the schema.
 
 ### Changes
 
-- 💥 **BREAKING `@remirror/core` `@remirror/core-extensions` and all extension:** Refactor ExtensionTypes with a whole set of helpers for better type checking and self documenting types. Now the remirror component can receive the List of Extensions and from this infer the nodes, marks and actions available on any editor. Currently this inference has only been added to the Wysiwyg editor but will be added to the Twitter editor and all future editors.
+- 💥 **BREAKING `@remirror/core` `@remirror/core-extensions` and all extensions:** Refactor ExtensionTypes with a whole set of helpers for better type checking and self documenting types. Now the remirror component can receive the List of Extensions and from this infer the nodes, marks and actions available on any editor. Currently this inference has only been added to the Wysiwyg editor but will be added to the Twitter editor and all future editors.
 - 💥 **BREAKING `@remirror/core` `@remirror/core-extensions`:** Move `ParagraphExtension` from core to core-extensions. The reason is to not pollute the core library with formatting methods which are primarily just for extensions.
 - 💥 **BREAKING `@remirror/core`:** Rename `ExtensionType.EXTENSION = 'extension'` to `ExtensionType.Plain = 'plain'`.
+- 💥 **BREAKING `@remirror/ui`:** Rename `@remirror/react-components` to `@remirror/ui`. It is now the base component that will be used for all ui related functionality.
+- 💥 **BREAKING `@remirror/react-utils`:** Refactor the type signature of node views and improve their design. Now node view takes attrs and options.
+- 💥 **BREAKING `@remirror/core`:** Refactor the type signature of SSRComponents to only take a node and options `extraAttrs` configuration to enable parsing the dom.
+
 - `@remirror/core`: Update `extraAttrs` configuration to enable parsing the dom.
-- `@remirror/core`: Make default priority level for extensions `3` instead of
-  `2`. A lower number means the extension is deemed more important and ordered
-  earlier in lists.
-- `@remirror/core-extensions`: Add `extraAttrs` to the following extensions:
-  `LinkExtension`, `ParagraphExtension`, `HeadingExtension`.
+- `@remirror/core`: Make default priority level for extensions `3` instead of `2`. A lower number means the extension is deemed more important and ordered earlier in lists.
+- `@remirror/core-extensions`: Add `extraAttrs` to the following extensions: `LinkExtension`, `ParagraphExtension`, `HeadingExtension`.
 
 ## [0.4.1] - 2019-07-22
 

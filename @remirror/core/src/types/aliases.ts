@@ -1,6 +1,15 @@
 import { InputRule as PMInputRule } from 'prosemirror-inputrules';
-import { Fragment as PMFragment, Mark as PMMark, ResolvedPos as PMResolvedPos } from 'prosemirror-model';
 import {
+  Fragment as PMFragment,
+  Mark as PMMark,
+  MarkType as PMMarkType,
+  Node as PMNode,
+  NodeType as PMNodeType,
+  ResolvedPos as PMResolvedPos,
+  Schema,
+} from 'prosemirror-model';
+import {
+  EditorState as PMEditorState,
   Plugin as PMPlugin,
   PluginKey as PMPluginKey,
   Selection as PMSelection,
@@ -13,10 +22,13 @@ import {
   EditorView as PMEditorView,
   NodeView as PMNodeView,
 } from 'prosemirror-view';
-import { EditorSchema } from './base';
 
-/* Type Aliases */
+/* Alias Types */
 
+export type EditorSchema<GNodes extends string = string, GMarks extends string = string> = Schema<
+  GNodes,
+  GMarks
+>;
 export type EditorView<GSchema extends EditorSchema = EditorSchema> = PMEditorView<GSchema>;
 export type Selection<GSchema extends EditorSchema = EditorSchema> = PMSelection<GSchema>;
 export type DecorationSet<GSchema extends EditorSchema = EditorSchema> = PMDecorationSet<GSchema>;
@@ -28,6 +40,10 @@ export type ResolvedPos<GSchema extends EditorSchema = EditorSchema> = PMResolve
 export type InputRule<GSchema extends EditorSchema = EditorSchema> = PMInputRule<GSchema>;
 export type Fragment<GSchema extends EditorSchema = EditorSchema> = PMFragment<GSchema>;
 export type NodeView<GSchema extends EditorSchema = EditorSchema> = PMNodeView<GSchema>;
-
+export type ProsemirrorNode<GSchema extends EditorSchema = EditorSchema> = PMNode<GSchema>;
+export type ProsemirrorPlugin<GPluginState = any> = PMPlugin<GPluginState, EditorSchema>;
+export type MarkType<GSchema extends EditorSchema = EditorSchema> = PMMarkType<GSchema>;
+export type NodeType<GSchema extends EditorSchema = EditorSchema> = PMNodeType<GSchema>;
+export type EditorState<GSchema extends EditorSchema = EditorSchema> = PMEditorState<GSchema>;
 export type Decoration = PMDecoration;
 export type Mapping = PMMapping;

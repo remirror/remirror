@@ -97,6 +97,9 @@ export class SelectionObserver {
     this.observables.push(observable);
   }
 
+  /**
+   * Copy the currently observed selections to be sent out to all subscribers.
+   */
   public takeRecords(): SelectionEntry[] {
     return this.observables.slice(0);
   }
