@@ -3,8 +3,8 @@ import {
   BaseExtensionOptions,
   BaseExtensionOptionsParams,
   EditorViewParams,
-  PortalContainer,
   NodeWithAttrsParams,
+  PortalContainer,
   SSRComponentProps,
 } from '@remirror/core';
 import { Interpolation } from 'emotion';
@@ -23,7 +23,7 @@ export interface NodeViewComponentProps<
    * A ref method which should be used by the component to pass the dom
    * reference of the react element back to the node view
    */
-  forwardRef: (node: HTMLElement) => void | undefined;
+  forwardRef: (node: HTMLElement) => void;
 
   /**
    * This is true when the component is selected.

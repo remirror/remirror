@@ -18,7 +18,6 @@ import {
   EditorStateParams,
   EditorViewParams,
   NodeWithAttrsParams,
-  ProsemirrorNodeParams,
   SchemaParams,
   TransactionParams,
 } from './builders';
@@ -290,7 +289,7 @@ export interface GetAttrsParams {
 export interface SSRComponentProps<
   GOptions extends BaseExtensionOptions = BaseExtensionOptions,
   GAttrs extends Attrs = Attrs
-> extends NodeWithAttrsParams<GAttrs>, BaseExtensionOptionsParams<Required<GOptions>> {}
+> extends NodeWithAttrsParams<GAttrs>, BaseExtensionOptionsParams<GOptions> {}
 
 /**
  * The tag names that apply to any extension whether plain, node or mark. These are mostly used for nodes and marks

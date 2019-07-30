@@ -144,11 +144,20 @@ export interface ExtensionParams<GExtension extends AnyExtension = AnyExtension>
 /**
  * Get the extension from a PrioritizedExtension.
  */
-export type ExtensionOf<GType extends FlexibleExtension<any>> = GType extends PrioritizedExtension<any>
-  ? GType['extension']
-  : GType extends AnyExtension
-  ? GType
+export type ExtensionFromFlexible<
+  GFlexible extends FlexibleExtension<any>
+> = GFlexible extends PrioritizedExtension<any>
+  ? GFlexible['extension']
+  : GFlexible extends AnyExtension
+  ? GFlexible
   : never;
+
+/**
+ * Get the extension types from a list of PrioritizedExtensions.
+ */
+export type ExtensionsFromFlexibleList<
+  GFlexibleList extends Array<FlexibleExtension<any>>
+> = ExtensionFromFlexible<GFlexibleList[number]>;
 
 /**
  * The type signature of the extension command method. It is used in determining whether

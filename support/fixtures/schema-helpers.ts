@@ -30,6 +30,7 @@ export const baseExtensions = [
   { extension: new TextExtension(), priority: 2 },
   { extension: new ParagraphExtension(), priority: 2 },
 ];
+
 export const extensions = [
   ...baseExtensions,
   { extension: new HistoryExtension(), priority: 2 },

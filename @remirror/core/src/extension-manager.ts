@@ -17,7 +17,7 @@ import {
 } from './extension-manager.helpers';
 import {
   ActionsFromExtensionList,
-  ExtensionOf,
+  AnyExtension,
   FlexibleExtension,
   MarkNames,
   NodeNames,
@@ -104,13 +104,15 @@ export interface ExtensionManagerData<
  * manager.data.actions
  * ```
  */
-export class ExtensionManager<GFlexibleExtensions extends FlexibleExtension[] = FlexibleExtension[]>
+export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[]>
   implements ExtensionManagerInitParams {
   /**
    * A static method for creating a new extension manager.
    */
-  public static create(extensions: FlexibleExtension[]) {
-    return new ExtensionManager(extensions);
+  public static create<GExtensions extends AnyExtension[] = AnyExtension[]>(
+    extensions: Array<FlexibleExtension<GExtensions[number]>>,
+  ) {
+    return new ExtensionManager<GExtensions>(extensions);
   }
 
   /**
@@ -128,7 +130,7 @@ export class ExtensionManager<GFlexibleExtensions extends FlexibleExtension[] = 
   /**
    * The extensions stored by this manager
    */
-  public readonly extensions: Array<ExtensionOf<GFlexibleExtensions[number]>>;
+  public readonly extensions: GExtensions;
 
   /**
    * Whether or not the manager has been initialized. This happens after init is
@@ -150,7 +152,7 @@ export class ExtensionManager<GFlexibleExtensions extends FlexibleExtension[] = 
    * Creates the extension manager which is used to simplify the management of
    * the different facets of building an editor with
    */
-  constructor(extensionMapValues: GFlexibleExtensions) {
+  constructor(extensionMapValues: Array<FlexibleExtension<GExtensions[number]>>) {
     this.extensions = transformExtensionMap(extensionMapValues);
 
     // Initialize the schema immediately since this doesn't ever change.
@@ -734,11 +736,11 @@ export class ExtensionManager<GFlexibleExtensions extends FlexibleExtension[] = 
  */
 export const isExtensionManager = isInstanceOf(ExtensionManager);
 
-export interface ManagerParams<GFlexibleExtensions extends FlexibleExtension[] = FlexibleExtension[]> {
+export interface ManagerParams<GExtensions extends AnyExtension[] = AnyExtension[]> {
   /**
    * The extension manager
    */
-  manager: ExtensionManager<GFlexibleExtensions>;
+  manager: ExtensionManager<GExtensions>;
 }
 
 export interface OnTransactionManagerParams extends TransactionParams, EditorStateParams {}

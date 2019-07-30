@@ -111,6 +111,8 @@ declare module 'theme-ui' {
     styles?: {
       [P in StyledTags]: SystemStyleObject;
     };
+
+    typography?: any;
   }
 
   /**

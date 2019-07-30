@@ -3,7 +3,6 @@ import { isExtension, isMarkExtension, isNodeExtension } from './extension-helpe
 import {
   AnyExtension,
   ExtensionListParams,
-  ExtensionOf,
   FlexibleExtension,
   PrioritizedExtension,
 } from './extension-types';
@@ -188,9 +187,9 @@ function convertToExtensionMapValue(extension: FlexibleExtension): PrioritizedEx
  * @param values - the extensions to transform as well as their priorities
  * @returns the list of extension instances sorted by priority
  */
-export const transformExtensionMap = <GFlexibleExtensions extends FlexibleExtension[]>(
-  values: GFlexibleExtensions,
-): Array<ExtensionOf<GFlexibleExtensions[number]>> =>
+export const transformExtensionMap = <GExtensions extends AnyExtension[]>(
+  values: Array<FlexibleExtension<GExtensions[number]>>,
+): GExtensions =>
   sort(values.map(convertToExtensionMapValue), (a, b) => a.priority - b.priority).map(
     ({ extension }) => extension,
   ) as any;

@@ -9,6 +9,7 @@ import {
   isPlainObject,
   isString,
   NodeView,
+  NodeWithAttrs,
   PortalContainer,
   ProsemirrorNode,
   SELECTED_NODE_CLASS_NAME,
@@ -19,7 +20,6 @@ import {
   CreateNodeViewParams,
   GetPosition,
   NodeViewComponentProps,
-  NodeWithAttrs,
   ReactNodeViewParams,
 } from './node-view-types';
 
@@ -203,7 +203,7 @@ export class ReactNodeView<
     }
   };
 
-  public render(forwardRef?: (node: HTMLElement) => void): JSX.Element {
+  public render(forwardRef: (node: HTMLElement) => void): JSX.Element {
     const { Component, getPosition, node, options, view, selected } = this;
 
     return (
