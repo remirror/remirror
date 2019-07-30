@@ -26,6 +26,8 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - 💥 **BREAKING `@remirror/core`:** Rename `ExtensionType.EXTENSION = 'extension'` to `ExtensionType.Plain = 'plain'`.
 - 💥 **BREAKING `@remirror/ui`:** Rename `@remirror/react-components` to `@remirror/ui`. It is now the base component that will be used for all ui related functionality.
 - 💥 **BREAKING `@remirror/react-utils`:** Refactor the type signature of node views and improve their design. Now node view takes attrs and options.
+- 💥 **BREAKING `@remirror/react`:** Rename `NodeViewPortalComponent` to `RemirrorPortals` since it now supports decorations.
+- 💥 **BREAKING `@remirror/core`:** Rename `NodeViewPortalContainer` to `PortalContainer`.
 - 💥 **BREAKING `@remirror/core`:** Refactor the type signature of SSRComponents to only take a node and options `extraAttrs` configuration to enable parsing the dom.
 
 - `@remirror/core`: Update `extraAttrs` configuration to enable parsing the dom.

@@ -1,7 +1,7 @@
 import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
 import { MarkGroup, NodeGroup, Tags } from '../constants';
-import { NodeViewPortalContainer } from '../portal-container';
+import { PortalContainer } from '../portal-container';
 import {
   EditorSchema,
   EditorState,
@@ -137,7 +137,7 @@ export interface ExtensionManagerInitParams {
   /**
    * Retrieve the portal container
    */
-  portalContainer: NodeViewPortalContainer;
+  portalContainer: PortalContainer;
   /**
    * Retrieve the editor state via a function call
    */

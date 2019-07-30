@@ -27,7 +27,7 @@ import { bool, isEqual, isFunction, isInstanceOf } from './helpers';
 import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from './helpers/document';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
-import { NodeViewPortalContainer } from './portal-container';
+import { PortalContainer } from './portal-container';
 import {
   ActionMethod,
   AnyActions,
@@ -91,7 +91,7 @@ export interface ExtensionManagerData<
  *   created and allows access to its data.
  *
  * ```ts
- * manager.init({ getState: () => state, portalContainer: new NodeViewPortalContainer })
+ * manager.init({ getState: () => state, portalContainer: new PortalContainer })
  *
  * manager.data.
  * ```
@@ -123,7 +123,7 @@ export class ExtensionManager<GFlexibleExtensions extends FlexibleExtension[] = 
    * Retrieve the portal container for any custom nodeViews. This is only
    * available after the first Initialization.
    */
-  public portalContainer!: NodeViewPortalContainer;
+  public portalContainer!: PortalContainer;
 
   /**
    * The extensions stored by this manager

@@ -1,16 +1,19 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { NodeViewPortalContainer, PortalMap } from '@remirror/core';
+import { PortalContainer, PortalMap } from '@remirror/core';
 
-export interface NodeViewPortalComponentProps {
-  portalContainer: NodeViewPortalContainer;
+export interface RemirrorPortalsProps {
+  /**
+   * Holds all the portals currently being rendered by the application.
+   */
+  portalContainer: PortalContainer;
 }
 
 /**
  * The component that places all the portals into the DOM.
  */
-export const NodeViewPortalComponent = ({ portalContainer }: NodeViewPortalComponentProps) => {
+export const RemirrorPortals = ({ portalContainer }: RemirrorPortalsProps) => {
   const [state, setState] = useState(Array.from(portalContainer.portals.entries()));
 
   /**

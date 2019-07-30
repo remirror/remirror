@@ -3,7 +3,7 @@ import {
   BaseExtensionOptions,
   BaseExtensionOptionsParams,
   EditorViewParams,
-  NodeViewPortalContainer,
+  PortalContainer,
   NodeWithAttrsParams,
   SSRComponentProps,
 } from '@remirror/core';
@@ -53,7 +53,7 @@ export interface ReactNodeViewParams<
    * A container and event dispatcher which keeps track of all dom elements that
    * hold node views
    */
-  portalContainer: NodeViewPortalContainer;
+  portalContainer: PortalContainer;
 
   /**
    * The emotion styles which render with this node view.

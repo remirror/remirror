@@ -33,7 +33,7 @@ export type PortalMap = Map<HTMLElement, MountedPortal>;
  * The node view portal container keeps track of all the portals which have been added by react to render
  * the node views in the editor.
  */
-export class NodeViewPortalContainer {
+export class PortalContainer {
   /**
    * A map of all the active portals.
    */

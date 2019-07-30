@@ -6,7 +6,7 @@ import {
   PrioritizedExtension,
   Extension,
   BaseExtensionOptions,
-  NodeViewPortalContainer,
+  PortalContainer,
 } from '@remirror/core';
 import {
   ParagraphExtension,
@@ -22,7 +22,7 @@ import minDocument from 'min-document';
 
 export const helpers = {
   getState: Cast(jest.fn()),
-  portalContainer: new NodeViewPortalContainer(),
+  portalContainer: new PortalContainer(),
 };
 
 export const baseExtensions = [

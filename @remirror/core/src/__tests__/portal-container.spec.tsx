@@ -1,7 +1,7 @@
-import { NodeViewPortalContainer } from '../portal-container';
+import { PortalContainer } from '../portal-container';
 
-test('NodeViewPortalContainer', () => {
-  const portalContainer = new NodeViewPortalContainer();
+test('PortalContainer', () => {
+  const portalContainer = new PortalContainer();
 
   const mockListener = jest.fn();
   portalContainer.on(mockListener);

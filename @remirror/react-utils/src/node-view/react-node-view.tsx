@@ -9,7 +9,7 @@ import {
   isPlainObject,
   isString,
   NodeView,
-  NodeViewPortalContainer,
+  PortalContainer,
   ProsemirrorNode,
   SELECTED_NODE_CLASS_NAME,
 } from '@remirror/core';
@@ -75,7 +75,7 @@ export class ReactNodeView<
    * A container and event dispatcher which keeps track of all dom elements that
    * hold node views
    */
-  private portalContainer: NodeViewPortalContainer;
+  private portalContainer: PortalContainer;
 
   /**
    * The component responsible for rendering the dom via React.

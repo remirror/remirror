@@ -13,7 +13,7 @@ import {
   isArray,
   isFunction,
   isPlainObject,
-  NodeViewPortalContainer,
+  PortalContainer,
   ObjectNode,
   RemirrorContentType,
   SchemaFromExtensionList,
@@ -54,7 +54,7 @@ import { EditorState } from 'prosemirror-state';
 import React, { Component, ReactNode, Ref } from 'react';
 import { defaultProps } from '../constants';
 import { defaultStyles } from '../styles';
-import { NodeViewPortalComponent } from './node-view-portal';
+import { RemirrorPortals } from './remirror-portals';
 
 interface UpdateStateParams<GSchema extends EditorSchema = EditorSchema> extends EditorStateParams<GSchema> {
   /**
@@ -145,7 +145,7 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
    * The portal container which keeps track of all the React Portals containing
    * custom prosemirror NodeViews.
    */
-  private readonly portalContainer: NodeViewPortalContainer = new NodeViewPortalContainer();
+  private readonly portalContainer: PortalContainer = new PortalContainer();
 
   /**
    * The document to use when rendering.
@@ -843,7 +843,7 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
     return (
       <>
         {this.renderReactElement()}
-        <NodeViewPortalComponent portalContainer={this.portalContainer} />
+        <RemirrorPortals portalContainer={this.portalContainer} />
       </>
     );
   }
