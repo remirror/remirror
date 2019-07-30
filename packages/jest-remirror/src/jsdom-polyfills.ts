@@ -117,7 +117,7 @@ export const jsdomExtras = () => {
   const mutationObserverScript = window.document.createElement('script');
   mutationObserverScript.textContent = mutationObserver;
 
-  window.document.body.appendChild(mutationObserverScript);
+  window.document.head.appendChild(mutationObserverScript);
 };
 
 /**
