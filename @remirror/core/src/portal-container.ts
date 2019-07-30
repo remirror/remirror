@@ -55,8 +55,8 @@ export class PortalContainer {
   /**
    * Trigger an update in all subscribers.
    */
-  private update(map: PortalMap) {
-    this.events.emit('update', map);
+  private update() {
+    this.events.emit('update', this.portals);
   }
 
   /**
@@ -64,14 +64,14 @@ export class PortalContainer {
    */
   public render({ render, container }: RenderMethodParams) {
     this.portals.set(container, { render, key: uniqueId() });
-    this.update(this.portals);
+    this.update();
   }
 
   /**
-   * Force an update in all the portals by setting new keys for every portal which doesn't
-   * have a react context.
+   * Force an update in all the portals by setting new keys for every portal.
    *
-   * TODO is this even needed (currently it's never used)
+   * Delete all orphaned containers (deleted from the DOM). This is useful for
+   * Decoration where there is no destroy method.
    */
   public forceUpdate() {
     this.portals.forEach(({ render }, container) => {
@@ -79,7 +79,7 @@ export class PortalContainer {
       this.portals.set(container, { render, key: uniqueId() });
     });
 
-    this.update(this.portals);
+    this.update();
   }
 
   /**
@@ -87,6 +87,6 @@ export class PortalContainer {
    */
   public remove(container: HTMLElement) {
     this.portals.delete(container);
-    this.update(this.portals);
+    this.update();
   }
 }
