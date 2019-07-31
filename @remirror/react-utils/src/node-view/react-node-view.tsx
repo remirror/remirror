@@ -14,7 +14,6 @@ import {
   ProsemirrorNode,
   SELECTED_NODE_CLASS_NAME,
 } from '@remirror/core';
-import { css, Interpolation } from 'emotion';
 import React, { ComponentType } from 'react';
 import {
   CreateNodeViewParams,
@@ -22,14 +21,6 @@ import {
   NodeViewComponentProps,
   ReactNodeViewParams,
 } from './node-view-types';
-
-/**
- * A mimic of the css method except that this one does nothing but return an empty string.
- *
- * @remark
- * Used to switch off emotion css injection
- */
-const cssNoOp: typeof css = () => '';
 
 export class ReactNodeView<
   GOptions extends BaseExtensionOptions = BaseExtensionOptions,
@@ -41,13 +32,6 @@ export class ReactNodeView<
   private domRef?: HTMLElement;
   private contentDOMWrapper: Node | null = null;
   public contentDOM: Node | undefined;
-
-  /**
-   * The CSS transformation property depending on whether the emotion is being used or not.
-   */
-  private get css(): typeof css {
-    return this.withoutEmotion ? cssNoOp : css;
-  }
 
   /**
    * Provides readonly access to the dom element
@@ -83,17 +67,6 @@ export class ReactNodeView<
   private Component: ComponentType<NodeViewComponentProps<GOptions, GAttrs>>;
 
   /**
-   * The styles to be rendered with emotion.
-   */
-  private style: Interpolation;
-
-  /**
-   * Whether or not this nodeView uses emotion for rendering styled.
-   * If true emotion will be removed.
-   */
-  private withoutEmotion: boolean;
-
-  /**
    * Whether or not the node is currently selected.
    */
   private selected = false;
@@ -108,9 +81,7 @@ export class ReactNodeView<
     getPosition,
     node,
     portalContainer,
-    style = [],
     view,
-    withoutEmotion = false,
     options,
   }: ReactNodeViewParams<GOptions, GAttrs>) {
     this.node = node;
@@ -118,8 +89,6 @@ export class ReactNodeView<
     this.getPosition = getPosition;
     this.portalContainer = portalContainer;
     this.Component = Component;
-    this.style = style;
-    this.withoutEmotion = withoutEmotion;
     this.options = options;
   }
 
@@ -148,7 +117,7 @@ export class ReactNodeView<
     }
 
     // Add a fixed class and a dynamic class to this node (allows for custom styles being added in configuration)
-    this.domRef.classList.add(`${EDITOR_CLASS_NAME}-${this.node.type.name}-node-view`, this.css(this.style));
+    this.domRef.classList.add(`${EDITOR_CLASS_NAME}-${this.node.type.name}-node-view`);
 
     this.renderReactComponent(() => this.render(this.handleRef));
     return this;
@@ -313,7 +282,7 @@ export class ReactNodeView<
   public static createNodeView<
     GOptions extends BaseExtensionOptions = BaseExtensionOptions,
     GAttrs extends Attrs = Attrs
-  >({ Component, portalContainer, style, withoutEmotion, options }: CreateNodeViewParams<GOptions, GAttrs>) {
+  >({ Component, portalContainer, options }: CreateNodeViewParams<GOptions, GAttrs>) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
       new ReactNodeView<GOptions, GAttrs>({
         node: node as NodeWithAttrs<GAttrs>,
@@ -321,9 +290,7 @@ export class ReactNodeView<
         getPosition,
         portalContainer,
         Component,
-        style,
         options,
-        withoutEmotion,
       }).init();
   }
 }

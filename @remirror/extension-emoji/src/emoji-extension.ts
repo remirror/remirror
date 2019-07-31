@@ -1,3 +1,4 @@
+import { ObjectInterpolation } from '@emotion/core';
 import {
   Attrs,
   Cast,
@@ -10,7 +11,6 @@ import {
   replaceText,
 } from '@remirror/core';
 import { ReactNodeView } from '@remirror/react';
-import { ObjectInterpolation } from 'emotion';
 import { DefaultEmoji } from './components/emoji';
 import { createEmojiPlugin } from './plugin';
 import { EmojiAttrs, EmojiExtensionOptions } from './types';

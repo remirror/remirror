@@ -52,7 +52,6 @@
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-transform": "^1.1.0",
     "deepmerge": "^4.0.0",
-    "emotion": "^10.0.14",
     "fast-deep-equal": "^2.0.1",
     "memoize-one": "5.0.5",
     "min-document": "2.19.0",

@@ -29,22 +29,22 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@remirror/react": "0.4.2-canary.2",
     "@types/prosemirror-dev-tools": "^2.1.0",
-    "@types/prosemirror-state": "^1.2.3",
-    "@types/prosemirror-view": "^1.9.0",
-    "prosemirror-dev-tools": "^2.1.1",
-    "prosemirror-state": "^1.2.3",
-    "prosemirror-view": "^1.9.13"
+    "prosemirror-dev-tools": "^2.1.1"
   },
   "peerDependencies": {
+    "@remirror/react": "0.4.2-canary.2",
+    "@types/prosemirror-state": "^1.2.3",
+    "@types/prosemirror-view": "^1.9.0",
     "@types/react": "^16.8.22",
     "@types/react-dom": "^16.8.0",
+    "prosemirror-state": "^1.2.3",
+    "prosemirror-view": "^1.9.13",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
   "devDependencies": {
-    "@remirror/react": "0.4.2-canary.1"
+    "@remirror/react": "0.4.2-canary.2"
   },
   "publishConfig": {
     "access": "public"

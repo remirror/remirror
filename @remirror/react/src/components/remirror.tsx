@@ -1,6 +1,7 @@
 import { css, Interpolation } from '@emotion/core';
 import {
   AnyExtension,
+  bool,
   CompareStateParams,
   EDITOR_CLASS_NAME,
   EditorSchema,
@@ -29,7 +30,6 @@ import {
   CalculatePositionerParams,
   cloneElement,
   cssNoOp,
-  cx,
   defaultPositioner,
   getElementProps,
   GetPositionerPropsConfig,
@@ -418,7 +418,7 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label || '',
       ...managerAttrs,
-      class: cx(ssr && 'Prosemirror', EDITOR_CLASS_NAME, managerAttrs.class),
+      class: [ssr && 'Prosemirror', EDITOR_CLASS_NAME, managerAttrs.class].filter(bool).join(' '),
     };
 
     return { ...defaultAttributes, ...propAttributes };

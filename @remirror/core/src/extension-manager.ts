@@ -1,4 +1,4 @@
-import { Interpolation } from 'emotion';
+import { Interpolation } from '@emotion/core';
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';

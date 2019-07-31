@@ -1,4 +1,4 @@
-import { Interpolation } from 'emotion';
+import { Interpolation } from '@emotion/core';
 import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
 import { ExtensionType, Tags } from './constants';
