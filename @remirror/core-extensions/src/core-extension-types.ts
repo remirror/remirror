@@ -12,7 +12,7 @@ export interface PlaceholderExtensionOptions extends BaseExtensionOptions {
   /**
    * The placeholder text to use.
    */
-  placeholder: string;
+  placeholder?: string;
 
   /**
    * The class to decorate the empty top level node with.

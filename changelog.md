@@ -35,6 +35,10 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - `@remirror/core`: Make default priority level for extensions `3` instead of `2`. A lower number means the extension is deemed more important and ordered earlier in lists.
 - `@remirror/core-extensions`: Add `extraAttrs` to the following extensions: `LinkExtension`, `ParagraphExtension`, `HeadingExtension`.
 
+### Remove
+
+- 💥 **BREAKING `@remirror/react-utils`:** Remove placeholder prop from the `RemirrorManager`.
+
 ## [0.4.1] - 2019-07-22
 
 ### Changes

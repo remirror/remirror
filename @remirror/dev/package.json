@@ -32,9 +32,6 @@
     "@types/prosemirror-dev-tools": "^2.1.0",
     "prosemirror-dev-tools": "^2.1.1"
   },
-  "devDependencies": {
-    "@remirror/react": "0.4.2-canary.1"
-  },
   "peerDependencies": {
     "@remirror/react": "0.4.2-canary.1",
     "@types/prosemirror-state": "^1.2.3",
@@ -45,6 +42,9 @@
     "prosemirror-view": "^1.9.12",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
+  },
+  "devDependencies": {
+    "@remirror/react": "0.4.2-canary.1"
   },
   "publishConfig": {
     "access": "public"

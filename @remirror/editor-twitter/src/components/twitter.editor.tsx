@@ -1,5 +1,5 @@
 import { Attrs, deepMerge, omit } from '@remirror/core';
-import { CompositionExtension, NodeCursorExtension } from '@remirror/core-extensions';
+import { CompositionExtension, NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import { EmojiExtension, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
 import {
@@ -43,6 +43,7 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
   public static defaultProps = {
     theme: { colors: {}, font: {} },
     emojiSet: 'twitter',
+    placeholder: "What's happening?",
   };
 
   public readonly state: State = {
@@ -279,21 +280,21 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
 
   public render() {
     const { emojiPickerActive, activeMatcher, hideSuggestions } = this.state;
-    const { editorStyles, children, ...rest } = this.remirrorProps;
+    const { editorStyles, children, placeholder, ...rest } = this.remirrorProps;
     return (
       <ThemeProvider theme={this.theme}>
-        <RemirrorManager
-          placeholder={[
-            "What's happening?",
-            {
+        <RemirrorManager>
+          <RemirrorExtension
+            Constructor={PlaceholderExtension}
+            placeholderStyle={{
               color: '#aab8c2',
               fontStyle: 'normal',
               position: 'absolute',
               fontWeight: 300,
               letterSpacing: '0.5px',
-            },
-          ]}
-        >
+            }}
+            placeholder={placeholder}
+          />
           <RemirrorExtension Constructor={NodeCursorExtension} />
           <RemirrorExtension Constructor={CompositionExtension} />
           <RemirrorExtension

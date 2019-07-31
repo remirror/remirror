@@ -550,17 +550,6 @@ export type RemirrorElement<GOptions extends {} = any> = ReactElement<any> & {
 
 export interface RemirrorManagerProps {
   /**
-   * Sets the placeholder for the editor. Can pass in a tuple to set the text of
-   * the placeholder and the styles at the same time.
-   *
-   * ```tsx
-   * <Remirror placeholder={['Please enter your message', { color: 'red' }]} {...props} />
-   * ```
-   *
-   * @defaultValue undefined
-   */
-  placeholder?: string | [string, ObjectInterpolation<undefined>];
-  /**
    * Whether to use base extensions
    */
   useBaseExtensions?: boolean;

@@ -12,6 +12,11 @@ export type OnMentionChangeParams = MentionState & {
 
 export interface TwitterEditorProps extends Partial<ManagedRemirrorProviderProps> {
   /**
+   * The message to show when the editor is empty.
+   */
+  placeholder?: string;
+
+  /**
    * onUrlChange
    */
   onUrlsChange?(params: { set: Set<string>; urls: string[] }): void;
