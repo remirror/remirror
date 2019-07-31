@@ -8,6 +8,7 @@ import {
   BaseExtensionOptions,
   EditorSchema,
   ExtensionCommandReturn,
+  ExtensionHelperReturn,
   UnionToIntersection,
 } from './types';
 
@@ -33,6 +34,15 @@ export type CommandsOfExtension<
     commands?: any;
   }
 > = GExtension['commands'];
+
+/**
+ * Utility type for retrieving the helpers provided by an extension.
+ */
+export type HelpersOfExtension<
+  GExtension extends {
+    helpers?: any;
+  }
+> = GExtension['helpers'];
 
 /**
  * Utility type for retrieving the extension data object made available from the
@@ -198,6 +208,48 @@ export type ActionsFromExtensionList<
  * Utility type for pulling all the action names from a list
  */
 export type ActionNames<GExtensions extends AnyExtension[]> = keyof (ActionsFromExtensionList<GExtensions>);
+
+/**
+ * The type signature of the extension helper method. It is used in determining whether
+ * or not a helper has been defined on the extension in order to infer it's return type.
+ */
+type ExtensionHelperMethodSignature = (...args: any[]) => ExtensionHelperReturn;
+
+/**
+ * A utility type which maps the passed in extension helpers to a method called with
+ * `manager.data.helpers.helperName()`.
+ */
+type MapHelpers<
+  GHelper extends AnyFunction,
+  GHelperReturn extends ReturnType<GHelper> = ReturnType<GHelper>
+> = {
+  [P in keyof GHelperReturn]: (...args: Parameters<GHelperReturn[P]>) => ReturnType<GHelperReturn[P]>;
+};
+
+/**
+ * Utility type which receives an extension and provides the type of actions it makes available.
+ */
+export type MappedHelpersFromExtension<
+  GExtension extends AnyExtension,
+  GHelpers extends HelpersOfExtension<GExtension> = HelpersOfExtension<GExtension>
+> = GHelpers extends ExtensionHelperMethodSignature ? MapHelpers<GHelpers> : {};
+
+/**
+ * Creates an actions intersection object from a list of provided extensions.
+ */
+export type MappedHelpersFromExtensionList<
+  GExtensions extends AnyExtension[],
+  GIntersection extends UnionToIntersection<
+    MappedHelpersFromExtension<GExtensions[number]>
+  > = UnionToIntersection<MappedHelpersFromExtension<GExtensions[number]>>
+> = GIntersection;
+
+/**
+ * Utility type for pulling all the action names from a list
+ */
+export type MappedHelperNames<GExtensions extends AnyExtension[]> = keyof (MappedHelpersFromExtensionList<
+  GExtensions
+>);
 
 /**
  * Retrieve the instance type from an ExtensionClass.

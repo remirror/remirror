@@ -10,6 +10,7 @@ import {
   EditorViewParams,
   ElementParams,
   ExtensionManager,
+  MappedHelpersFromExtensionList,
   ObjectNode,
   OptionsOfExtension,
   PlainObject,
@@ -100,12 +101,17 @@ export interface InjectedRemirrorProps<GExtensions extends AnyExtension[] = AnyE
   view: EditorView<SchemaFromExtensionList<GExtensions>>;
 
   /**
-   * A map of actions available the
+   * A map of all actions made available by the configured extensions.
    */
   actions: ActionsFromExtensionList<GExtensions>;
 
   /**
-   * The unique id for the editor instance
+   * A map of all helpers made available by the configured extensions.
+   */
+  helpers: MappedHelpersFromExtensionList<GExtensions>;
+
+  /**
+   * The unique id for the editor instance.
    */
   uid: string;
 
@@ -113,7 +119,7 @@ export interface InjectedRemirrorProps<GExtensions extends AnyExtension[] = AnyE
    * Clears all editor content
    *
    * @param triggerOnChange - whether onChange handlers should be triggered by
-   * the update
+   * the update.
    */
   clearContent(triggerOnChange?: boolean): void;
 
@@ -125,7 +131,7 @@ export interface InjectedRemirrorProps<GExtensions extends AnyExtension[] = AnyE
    * Allows for the editor content to be overridden by force.
    *
    * @param triggerOnChange - whether onChange handlers should be triggered by
-   * the update
+   * the update.
    */
   setContent(content: RemirrorContentType, triggerOnChange?: boolean): void;
 

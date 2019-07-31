@@ -8,6 +8,7 @@ import { isMarkExtension, isNodeExtension } from './extension-helpers';
 import {
   createCommands,
   createExtensionTags,
+  createHelpers,
   defaultIsActive,
   defaultIsEnabled,
   extensionPropertyMapper,
@@ -19,6 +20,7 @@ import {
   ActionsFromExtensionList,
   AnyExtension,
   FlexibleExtension,
+  MappedHelpersFromExtensionList,
   MarkNames,
   NodeNames,
   PlainNames,
@@ -31,6 +33,7 @@ import { PortalContainer } from './portal-container';
 import {
   ActionMethod,
   AnyActions,
+  AnyHelpers,
   Attrs,
   AttrsWithClass,
   BooleanExtensionCheck,
@@ -51,10 +54,11 @@ import {
 } from './types';
 
 export interface ExtensionManagerData<
-  GActions extends any,
-  GNodes extends string,
-  GMarks extends string,
-  GPlain extends string,
+  GActions = AnyActions,
+  GHelpers = AnyHelpers,
+  GNodes extends string = string,
+  GMarks extends string = string,
+  GPlain extends string = string,
   GNames extends string = GNodes | GMarks | GPlain
 > {
   schema: EditorSchema<GNodes, GMarks>;
@@ -66,6 +70,7 @@ export interface ExtensionManagerData<
   inputRules: ProsemirrorPlugin;
   pasteRules: ProsemirrorPlugin[];
   actions: GActions;
+  helpers: GHelpers;
   view: EditorView<EditorSchema<GNodes, GMarks>>;
   isActive: Record<GNames, BooleanExtensionCheck>;
   isEnabled: Record<GNames, BooleanExtensionCheck>;
@@ -144,9 +149,14 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   private initData: this['_D'] = {} as this['_D'];
 
   /**
-   * Retrieve the actions for a specified extension.
+   * Retrieve the specified action.
    */
   private getActions = (name: keyof this['_A']) => this.initData.actions[name];
+
+  /**
+   * Retrieve the specified helper.
+   */
+  private getHelpers = (name: keyof this['_H']) => this.initData.helpers[name];
 
   /**
    * Creates the extension manager which is used to simplify the management of
@@ -196,6 +206,8 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
       ...this.initData.pasteRules,
       ...this.initData.keymaps,
     ];
+
+    this.initData.helpers = this.helpers();
 
     return this;
   }
@@ -329,9 +341,10 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
     return {
       tags: this.tags,
       schema: this.schema,
-      getState: this.getState,
       portalContainer: this.portalContainer,
+      getState: this.getState,
       getActions: this.getActions as any,
+      getHelpers: this.getHelpers as any,
     };
   }
 
@@ -426,7 +439,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    *
    * @param name - the name of the extension
    */
-  public getPluginState<GState>(name: string): GState {
+  public getPluginState<GState>(name: this['_N']): GState {
     this.checkInitialized();
     const key = this.pluginKeys[name];
     if (!key) {
@@ -475,11 +488,11 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * Retrieve all the extension plugin keys
    */
   private get pluginKeys() {
-    const pluginKeys: Record<string, PluginKey> = {};
+    const pluginKeys: Record<this['_N'], PluginKey> = {} as any;
     this.extensions
       .filter(extension => extension.plugin)
       .forEach(({ pluginKey, name }) => {
-        pluginKeys[name] = pluginKey;
+        pluginKeys[name as this['_N']] = pluginKey;
       });
 
     return pluginKeys;
@@ -514,6 +527,17 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
     });
 
     return actions as any;
+  }
+
+  private helpers(): this['_H'] {
+    const helpers = {} as AnyHelpers;
+    const methods = createHelpers({ extensions: this.extensions, params: this.params });
+
+    Object.entries(methods).forEach(([helperName, helper]) => {
+      helpers[helperName] = helper;
+    });
+
+    return helpers as any;
   }
 
   /**
@@ -720,6 +744,16 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   public readonly _A!: ActionsFromExtensionList<this['extensions']>;
 
   /**
+   * `Helpers`
+   *
+   * Type inference hack for all the helpers this manager provides.
+   * Also provides a shorthand way for accessing types on a class.
+   *
+   * DO NOT USE (on penalty of intense confusion)
+   */
+  public readonly _H!: MappedHelpersFromExtensionList<this['extensions']>;
+
+  /**
    * `ExtensionData`
    *
    * Type inference hack for all the extensionData that this manager provides.
@@ -727,7 +761,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    *
    * DO NOT USE (on penalty of intense confusion)
    */
-  public readonly _D!: ExtensionManagerData<this['_A'], this['_N'], this['_M'], this['_P']>;
+  public readonly _D!: ExtensionManagerData<this['_A'], this['_H'], this['_N'], this['_M'], this['_P']>;
 }
 /**
  * Checks to see whether this is an extension manager

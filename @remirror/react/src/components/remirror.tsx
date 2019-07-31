@@ -13,8 +13,8 @@ import {
   isArray,
   isFunction,
   isPlainObject,
-  PortalContainer,
   ObjectNode,
+  PortalContainer,
   RemirrorContentType,
   SchemaFromExtensionList,
   shouldUseDOMEnvironment,
@@ -700,7 +700,10 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
       manager: this.manager,
       view: this.view,
       state: this.state.editor,
+
+      /* Mapped methods */
       actions: this.manager.data.actions,
+      helpers: this.manager.data.helpers,
 
       /* Getter Methods */
       getRootProps: this.getRootProps,

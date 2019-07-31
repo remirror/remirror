@@ -15,7 +15,8 @@ export const helpers = {
 };
 
 const innerMock = jest.fn();
-const mock = jest.fn(() => innerMock);
+const mock = jest.fn((_: Attrs) => innerMock);
+const getInformation = jest.fn(() => 'information');
 
 const SSRComponent: FC<Attrs> = () => <div />;
 
@@ -24,6 +25,12 @@ class DummyExtension extends Extension {
   public tags = ['simple', Tags.LastNodeCompatible];
   public commands() {
     return { dummy: mock };
+  }
+
+  public helpers() {
+    return {
+      getInformation,
+    };
   }
 
   public attributes() {
@@ -47,16 +54,18 @@ class BigExtension extends NodeExtension {
   }
 }
 
-let dummy: DummyExtension;
-let big: BigExtension;
-let manager: ExtensionManager;
+const dummy = new DummyExtension();
+const big = new BigExtension();
+let manager = ExtensionManager.create([
+  ...extensions,
+  { extension: dummy, priority: 1 },
+  { extension: big, priority: 10 },
+]);
+
 let state: EditorState;
 let view: EditorView;
 
 beforeEach(() => {
-  dummy = new DummyExtension();
-  big = new BigExtension();
-
   manager = ExtensionManager.create([
     ...extensions,
     { extension: dummy, priority: 1 },
@@ -76,6 +85,12 @@ test('commands', () => {
   manager.data.actions.dummy(attrs);
   expect(mock).toHaveBeenCalledWith(attrs);
   expect(innerMock).toHaveBeenCalledWith(state, view.dispatch, view);
+});
+
+test('helpers', () => {
+  const val = manager.data.helpers.getInformation();
+  expect(val).toBe('information');
+  expect(getInformation).toHaveBeenCalled();
 });
 
 describe('#properties', () => {

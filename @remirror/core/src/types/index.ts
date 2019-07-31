@@ -11,7 +11,7 @@ import {
   ProsemirrorNode,
   Transaction,
 } from './aliases';
-import { Attrs, BaseExtensionOptions, ObjectNode, RegexTuple, Value } from './base';
+import { AnyFunction, Attrs, BaseExtensionOptions, ObjectNode, RegexTuple, Value } from './base';
 import {
   AttrsParams,
   BaseExtensionOptionsParams,
@@ -143,19 +143,22 @@ export interface ExtensionManagerInitParams {
   getState: () => EditorState;
 }
 
-export type ActionGetter<GActions extends string = string> = (name: GActions) => ActionMethod<any[]>;
+export type ActionGetter = (name: string) => ActionMethod<any[]>;
+export type HelperGetter = (name: string) => AnyFunction;
 
 /**
  * Parameters passed into many of the extension methods.
  */
-export interface ExtensionManagerParams<GActions extends string = string>
-  extends SchemaParams,
-    ExtensionManagerInitParams,
-    ExtensionTagParams {
+export interface ExtensionManagerParams extends SchemaParams, ExtensionManagerInitParams, ExtensionTagParams {
   /**
-   * A helper method to provide access to all actions for access to commands from within extensions
+   * A helper method to provide access to all the editor actions from within an extension.
    */
-  getActions: ActionGetter<GActions>;
+  getActions: ActionGetter;
+
+  /**
+   * A helper method to provide access to all the helper methods from within an extension.
+   */
+  getHelpers: HelperGetter;
 }
 
 /**
@@ -185,6 +188,12 @@ export type BooleanExtensionCheck<GCommand extends string = string> = ExtensionB
  */
 export interface ExtensionCommandReturn {
   [command: string]: ExtensionCommandFunction;
+}
+/**
+ * The return signature for an extensions helper method.
+ */
+export interface ExtensionHelperReturn {
+  [helper: string]: AnyFunction;
 }
 
 /**
@@ -266,8 +275,18 @@ export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (
   decorations: Decoration[],
 ) => GNodeView;
 
+/**
+ * The type signature for all actions.
+ */
 export interface AnyActions {
   [action: string]: ActionMethod<any>;
+}
+
+/**
+ * The type signature for all helpers.
+ */
+export interface AnyHelpers {
+  [helper: string]: AnyFunction;
 }
 
 /**

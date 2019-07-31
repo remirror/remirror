@@ -11,6 +11,7 @@ import {
   BooleanExtensionCheck,
   CommandTypeParams,
   ExtensionCommandReturn,
+  ExtensionHelperReturn,
   ExtensionManagerParams,
   ExtensionManagerTypeParams,
   KeyboardBindings,
@@ -284,34 +285,6 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
 
 export interface Extension<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GType = never> {
   /**
-   * An extension can declare the extensions it requires with options needed for
-   * instantiating them.
-   *
-   * @remarks
-   *
-   * When creating the extension manager the extension will be checked for
-   * required extension as well as a quick check to see if the required
-   * extension is already included.
-   *
-   * @internalremarks
-   * TODO implement this functionality
-   */
-  readonly requiredExtensions?: string[];
-
-  /**
-   * Determines whether this extension is currently active (only applies to Node
-   * Extensions and Mark Extensions).
-   *
-   * If a command name is provided (to the return function) then this method
-   * should return true if that command is currently active. Conceptually this
-   * doesn't always make sense and in those cases it should be save to just
-   * return false.
-   *
-   * @param params - extension manager params
-   */
-  isActive?(params: ExtensionManagerParams): BooleanExtensionCheck<string>;
-
-  /**
    * Allows the extension to modify the attributes for the Prosemirror editor
    * dom element.
    *
@@ -366,22 +339,23 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
   commands?(params: CommandTypeParams<GType>): ExtensionCommandReturn;
 
   /**
-   * Determines whether this extension is enabled. If a command name is provided
-   * then it should return a value determining whether that command is able to
-   * be run.
-   *
-   * @param params - extension manager parameters
-   */
-  isEnabled?(params: ExtensionManagerParams): BooleanExtensionCheck<string>;
-
-  /**
    * Each extension can make extension data available which is updated on each
    * render. Think of it like the prosemirror plugins state.
    *
    * Within React this data is passed back into Remirror render prop and also
    * the Remirror context and can be retrieved with a `hook` or `HOC`
    */
-  extensionData(params: ExtensionManagerTypeParams<GType>): PlainObject;
+  extensionData?(params: ExtensionManagerTypeParams<GType>): PlainObject;
+
+  /**
+   * A helper method is a function that takes in arguments and returns
+   * a value depicting the state of the editor specific to this extension.
+   *
+   * Unlike commands they can return anything and they do not effect the editor in anyway.
+   *
+   * They are general versions of the `isActive` and `isEnabled` methods.
+   */
+  helpers?(params: ExtensionManagerTypeParams<GType>): ExtensionHelperReturn;
 
   /**
    * Register input rules which are activated if the regex matches as a user is
@@ -390,6 +364,28 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * @param params - schema params with type included
    */
   inputRules?(params: ExtensionManagerTypeParams<GType>): InputRule[];
+
+  /**
+   * Determines whether this extension is currently active (only applies to Node
+   * Extensions and Mark Extensions).
+   *
+   * If a command name is provided (to the return function) then this method
+   * should return true if that command is currently active. Conceptually this
+   * doesn't always make sense and in those cases it should be save to just
+   * return false.
+   *
+   * @param params - extension manager params
+   */
+  isActive?(params: ExtensionManagerParams): BooleanExtensionCheck<string>;
+
+  /**
+   * Determines whether this extension is enabled. If a command name is provided
+   * then it should return a value determining whether that command is able to
+   * be run.
+   *
+   * @param params - extension manager parameters
+   */
+  isEnabled?(params: ExtensionManagerParams): BooleanExtensionCheck<string>;
 
   /**
    * Add key bindings for this extension.
@@ -437,6 +433,21 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * @param params - schema params with type included
    */
   plugin?(params: ExtensionManagerTypeParams<GType>): ProsemirrorPlugin;
+
+  /**
+   * An extension can declare the extensions it requires with options needed for
+   * instantiating them.
+   *
+   * @remarks
+   *
+   * When creating the extension manager the extension will be checked for
+   * required extension as well as a quick check to see if the required
+   * extension is already included.
+   *
+   * @internalremarks
+   * TODO implement this functionality
+   */
+  readonly requiredExtensions?: string[];
 
   /**
    * A method for transforming the SSR JSX received by the extension. Some
