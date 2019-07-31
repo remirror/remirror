@@ -1,4 +1,4 @@
 export * from './helpers';
 export * from './react-types';
 export * from './positioners';
-export * from './react-node-view';
+export * from './node-view';

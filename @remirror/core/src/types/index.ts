@@ -1,17 +1,39 @@
 import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
 import { MarkGroup, NodeGroup, Tags } from '../constants';
-import { NodeViewPortalContainer } from '../portal-container';
-import { EditorView, Mark, NodeView, Transaction } from './aliases';
-import { Attrs, BaseExtensionOptions, EditorSchema, EditorState, ProsemirrorNode, Value } from './base';
+import { PortalContainer } from '../portal-container';
+import {
+  EditorSchema,
+  EditorState,
+  EditorView,
+  Mark,
+  NodeView,
+  ProsemirrorNode,
+  Transaction,
+} from './aliases';
+import { AnyFunction, Attrs, BaseExtensionOptions, ObjectNode, RegexTuple, Value } from './base';
 import {
   AttrsParams,
+  BaseExtensionOptionsParams,
   EditorStateParams,
   EditorViewParams,
-  ProsemirrorNodeParams,
+  NodeWithAttrsParams,
   SchemaParams,
   TransactionParams,
 } from './builders';
+
+/**
+ * Content can either be
+ * - html string
+ * - JSON object matching Prosemirror expected shape
+ * - A top level ProsemirrorNode
+ */
+export type RemirrorContentType = string | ObjectNode | ProsemirrorNode | EditorState;
+
+/**
+ * Utility type for matching the name of a node to via a string or function
+ */
+export type NodeMatch = string | ((name: string, node: ProsemirrorNode) => boolean) | RegexTuple;
 
 /**
  * Used to apply the Prosemirror transaction to the current EditorState.
@@ -114,26 +136,29 @@ export interface ExtensionManagerInitParams {
   /**
    * Retrieve the portal container
    */
-  portalContainer: NodeViewPortalContainer;
+  portalContainer: PortalContainer;
   /**
    * Retrieve the editor state via a function call
    */
   getState: () => EditorState;
 }
 
-export type ActionGetter<GActions extends string = string> = (name: GActions) => ActionMethod<any[]>;
+export type ActionGetter = (name: string) => ActionMethod<any[]>;
+export type HelperGetter = (name: string) => AnyFunction;
 
 /**
  * Parameters passed into many of the extension methods.
  */
-export interface ExtensionManagerParams<GActions extends string = string>
-  extends SchemaParams,
-    ExtensionManagerInitParams,
-    ExtensionTagParams {
+export interface ExtensionManagerParams extends SchemaParams, ExtensionManagerInitParams, ExtensionTagParams {
   /**
-   * A helper method to provide access to all actions for access to commands from within extensions
+   * A helper method to provide access to all the editor actions from within an extension.
    */
-  getActions: ActionGetter<GActions>;
+  getActions: ActionGetter;
+
+  /**
+   * A helper method to provide access to all the helper methods from within an extension.
+   */
+  getHelpers: HelperGetter;
 }
 
 /**
@@ -163,6 +188,12 @@ export type BooleanExtensionCheck<GCommand extends string = string> = ExtensionB
  */
 export interface ExtensionCommandReturn {
   [command: string]: ExtensionCommandFunction;
+}
+/**
+ * The return signature for an extensions helper method.
+ */
+export interface ExtensionHelperReturn {
+  [helper: string]: AnyFunction;
 }
 
 /**
@@ -244,8 +275,18 @@ export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (
   decorations: Decoration[],
 ) => GNodeView;
 
+/**
+ * The type signature for all actions.
+ */
 export interface AnyActions {
   [action: string]: ActionMethod<any>;
+}
+
+/**
+ * The type signature for all helpers.
+ */
+export interface AnyHelpers {
+  [helper: string]: AnyFunction;
 }
 
 /**
@@ -262,12 +303,12 @@ export interface GetAttrsParams {
 }
 
 /**
- * A helper for creating SSR Component Props
+ * The interface for SSR Component Props
  */
-export type SSRComponentProps<
-  GAttrs extends Attrs = any,
-  GOptions extends BaseExtensionOptions = any
-> = GAttrs & ProsemirrorNodeParams & { options: Required<GOptions> };
+export interface SSRComponentProps<
+  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
+  GAttrs extends Attrs = Attrs
+> extends NodeWithAttrsParams<GAttrs>, BaseExtensionOptionsParams<GOptions> {}
 
 /**
  * The tag names that apply to any extension whether plain, node or mark. These are mostly used for nodes and marks

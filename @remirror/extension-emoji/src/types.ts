@@ -4,20 +4,21 @@ import { BaseEmoji, Data, EmojiSet } from 'emoji-mart';
 import { Interpolation } from 'emotion';
 import { ComponentType } from 'react';
 
-export interface EmojiAttrs extends Pick<BaseEmoji, 'id' | 'name' | 'native' | 'colons' | 'skin'> {
-  useNative?: boolean;
-}
+export type EmojiAttrs = Attrs<
+  Pick<BaseEmoji, 'id' | 'name' | 'native' | 'colons' | 'skin'> & {
+    useNative?: boolean;
+  }
+>;
 
 export interface CreateEmojiPluginParams extends Pick<EmojiExtensionOptions, 'emojiData'> {
   key: PluginKey;
   type: NodeType;
 }
 
-export type DefaultEmojiProps = NodeViewComponentProps<EmojiAttrs> & {
-  set: EmojiSet;
-  size: number | string;
-  emojiData: Data;
-};
+export type DefaultEmojiProps = NodeViewComponentProps<
+  Omit<EmojiExtensionOptions, 'EmojiComponent'>,
+  EmojiAttrs
+>;
 
 export interface EmojiExtensionOptions extends NodeExtensionOptions {
   transformAttrs?(attrs: Pick<EmojiAttrs, 'name'>): Attrs;

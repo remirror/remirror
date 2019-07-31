@@ -15,6 +15,7 @@ export class PlaceholderExtension extends Extension<PlaceholderExtensionOptions>
     return {
       emptyNodeClass: EMPTY_NODE_CLASS_NAME,
       placeholderStyles: {},
+      placeholder: '',
     };
   }
 

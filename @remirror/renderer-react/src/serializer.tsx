@@ -84,7 +84,7 @@ export class ReactSerializer<GExtensions extends AnyExtension[] = AnyExtension[]
       children = this.serializeFragment(node.content);
     }
     return Component ? (
-      <Component {...node.attrs} options={options} node={node}>
+      <Component options={options} node={node}>
         {children}
       </Component>
     ) : (
@@ -105,7 +105,7 @@ export class ReactSerializer<GExtensions extends AnyExtension[] = AnyExtension[]
     const options = this.options[mark.type.name];
 
     return Component ? (
-      <Component {...mark.attrs} options={options}>
+      <Component options={options} mark={mark}>
         {wrappedElement}
       </Component>
     ) : (

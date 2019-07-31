@@ -3,7 +3,6 @@ import { isExtension, isMarkExtension, isNodeExtension } from './extension-helpe
 import {
   AnyExtension,
   ExtensionListParams,
-  ExtensionOf,
   FlexibleExtension,
   PrioritizedExtension,
 } from './extension-types';
@@ -108,6 +107,45 @@ export const createCommands = ({ extensions, params }: CreateCommandsParams) => 
 
   return items;
 };
+interface CreateHelpersParams extends ExtensionListParams {
+  /**
+   * The params which are passed to each extensions `helpers` method.
+   */
+  params: ExtensionManagerParams;
+}
+
+/**
+ * Generate all the helpers from the extension list.
+ *
+ * Helpers are functions which enable extensions to provide useful
+ * information or transformations to their consumers and other extensions.
+ */
+export const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
+  const getItemParams = (extension: Required<Pick<AnyExtension, 'helpers'>>) =>
+    extension.helpers({
+      ...params,
+      ...(isMarkExtension(extension)
+        ? { type: params.schema.marks[extension.name] }
+        : isNodeExtension(extension)
+        ? { type: params.schema.nodes[extension.name] }
+        : ({} as any)),
+    });
+
+  const items: Record<string, AnyFunction> = {};
+  const names = new Set<string>();
+
+  extensions.filter(hasExtensionProperty('helpers')).forEach(currentExtension => {
+    const item = getItemParams(currentExtension);
+
+    Object.entries(item).forEach(([name, helper]) => {
+      isNameUnique({ name, set: names, shouldThrow: true });
+
+      items[name] = helper;
+    });
+  });
+
+  return items;
+};
 
 /**
  * Checks to see if an optional property exists on an extension.
@@ -188,9 +226,9 @@ function convertToExtensionMapValue(extension: FlexibleExtension): PrioritizedEx
  * @param values - the extensions to transform as well as their priorities
  * @returns the list of extension instances sorted by priority
  */
-export const transformExtensionMap = <GFlexibleExtensions extends FlexibleExtension[]>(
-  values: GFlexibleExtensions,
-): Array<ExtensionOf<GFlexibleExtensions[number]>> =>
+export const transformExtensionMap = <GExtensions extends AnyExtension[]>(
+  values: Array<FlexibleExtension<GExtensions[number]>>,
+): GExtensions =>
   sort(values.map(convertToExtensionMapValue), (a, b) => a.priority - b.priority).map(
     ({ extension }) => extension,
   ) as any;

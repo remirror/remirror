@@ -14,6 +14,7 @@ import {
   ListItemExtension,
   OrderedListExtension,
   ParagraphExtension,
+  PlaceholderExtension,
   SSRHelperExtension,
   StrikeExtension,
   TrailingNodeExtension,
@@ -21,7 +22,7 @@ import {
 } from '@remirror/core-extensions';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager, useRemirror } from '@remirror/react';
-import { asDefaultProps, RemirrorManagerProps } from '@remirror/react-utils';
+import { asDefaultProps } from '@remirror/react-utils';
 import { ThemeProvider } from 'emotion-theming';
 import React, { FC, PureComponent } from 'react';
 import { wysiwygEditorTheme } from '../wysiwyg-theme';
@@ -34,16 +35,7 @@ import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 
-const defaultPlaceholder: RemirrorManagerProps['placeholder'] = [
-  'Start typing...',
-  {
-    color: '#aaa',
-    fontStyle: 'normal',
-    position: 'absolute',
-    fontWeight: 300,
-    letterSpacing: '0.5px',
-  },
-];
+const defaultPlaceholder = 'Start typing...';
 
 interface State {
   linkActivated: boolean;
@@ -98,13 +90,24 @@ export class WysiwygEditor extends PureComponent<WysiwygEditorProps> {
 
     return (
       <ThemeProvider theme={this.editorTheme}>
-        <RemirrorManager placeholder={placeholder}>
+        <RemirrorManager>
+          <RemirrorExtension
+            Constructor={PlaceholderExtension}
+            placeholderStyle={{
+              color: '#aaa',
+              fontStyle: 'normal',
+              position: 'absolute',
+              fontWeight: 300,
+              letterSpacing: '0.5px',
+            }}
+            placeholder={placeholder}
+          />
           <RemirrorExtension Constructor={ParagraphExtension} />
           <RemirrorExtension Constructor={BoldExtension} />
           <RemirrorExtension Constructor={UnderlineExtension} />
           <RemirrorExtension Constructor={ItalicExtension} />
           <RemirrorExtension Constructor={BlockquoteExtension} />
-          <RemirrorExtension Constructor={LinkExtension} activationHandler={this.activateLink} />
+          <RemirrorExtension Constructor={LinkExtension} activationHandler={this.activateLink} priority={1} />
           <RemirrorExtension Constructor={StrikeExtension} />
           <RemirrorExtension Constructor={CodeExtension} />
           <RemirrorExtension Constructor={HeadingExtension} />

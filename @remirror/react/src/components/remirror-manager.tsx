@@ -1,5 +1,5 @@
-import { ExtensionManager, isString, PrioritizedExtension } from '@remirror/core';
-import { baseExtensions, PlaceholderExtension } from '@remirror/core-extensions';
+import { ExtensionManager, PrioritizedExtension } from '@remirror/core';
+import { baseExtensions } from '@remirror/core-extensions';
 import {
   asDefaultProps,
   isReactFragment,
@@ -24,22 +24,8 @@ export class RemirrorManager extends Component<RemirrorManagerProps> {
    * Prepends the base extensions to the configured extensions where applicable.
    */
   private withBaseExtensions(extensions: PrioritizedExtension[]): PrioritizedExtension[] {
-    const { placeholder, useBaseExtensions } = this.props;
-    const withPlaceholder: PrioritizedExtension[] = placeholder
-      ? [
-          {
-            extension: new PlaceholderExtension(
-              isString(placeholder)
-                ? { placeholder }
-                : { placeholder: placeholder[0], placeholderStyle: placeholder[1] },
-            ),
-            priority: 3,
-          },
-        ]
-      : [];
-
-    // TODO remove performance bottleneck
-    const base = (useBaseExtensions ? baseExtensions.concat(withPlaceholder) : withPlaceholder).filter(
+    const { useBaseExtensions } = this.props;
+    const base = (useBaseExtensions ? baseExtensions : []).filter(
       ({ extension: { name } }) => !extensions.some(({ extension }) => extension.name === name),
     );
 

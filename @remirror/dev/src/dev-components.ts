@@ -37,3 +37,5 @@ export const ProsemirrorDevTools = () => {
 
   return null;
 };
+
+export default ProsemirrorDevTools;

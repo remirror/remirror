@@ -20,6 +20,9 @@ export interface RenderMethodParams extends RenderParams {
 }
 
 interface Events {
+  /**
+   * Trigger an update in all subscribers
+   */
   update: PortalMap;
 }
 
@@ -30,8 +33,16 @@ export type PortalMap = Map<HTMLElement, MountedPortal>;
  * The node view portal container keeps track of all the portals which have been added by react to render
  * the node views in the editor.
  */
-export class NodeViewPortalContainer {
+export class PortalContainer {
+  /**
+   * A map of all the active portals.
+   */
   public portals: Map<HTMLElement, MountedPortal> = new Map();
+
+  /**
+   * The event listener which allows consumers to subscribe to when a new portal
+   * is added / deleted via the updated event.
+   */
   public events = new NanoEvents<Events>();
 
   /**
@@ -44,8 +55,8 @@ export class NodeViewPortalContainer {
   /**
    * Trigger an update in all subscribers.
    */
-  private update(map: PortalMap) {
-    this.events.emit('update', map);
+  private update() {
+    this.events.emit('update', this.portals);
   }
 
   /**
@@ -53,14 +64,14 @@ export class NodeViewPortalContainer {
    */
   public render({ render, container }: RenderMethodParams) {
     this.portals.set(container, { render, key: uniqueId() });
-    this.update(this.portals);
+    this.update();
   }
 
   /**
-   * Force an update in all the portals by setting new keys for every portal which doesn't
-   * have a react context.
+   * Force an update in all the portals by setting new keys for every portal.
    *
-   * TODO is this even needed (currently it's never used)
+   * Delete all orphaned containers (deleted from the DOM). This is useful for
+   * Decoration where there is no destroy method.
    */
   public forceUpdate() {
     this.portals.forEach(({ render }, container) => {
@@ -68,7 +79,7 @@ export class NodeViewPortalContainer {
       this.portals.set(container, { render, key: uniqueId() });
     });
 
-    this.update(this.portals);
+    this.update();
   }
 
   /**
@@ -76,6 +87,6 @@ export class NodeViewPortalContainer {
    */
   public remove(container: HTMLElement) {
     this.portals.delete(container);
-    this.update(this.portals);
+    this.update();
   }
 }

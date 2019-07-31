@@ -85,7 +85,7 @@ export const renderEditor = <
   const manager = ExtensionManager.create(extensions);
   let returnedParams!: InjectedRemirrorProps;
   const utils = render(
-    <Remirror {...props} manager={manager}>
+    <Remirror {...props} manager={manager as any}>
       {params => {
         returnedParams = params;
         if (props.children) {

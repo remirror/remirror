@@ -1,16 +1,17 @@
 declare module 'theme-ui' {
-  // TypeScript Version: 3.1
   // Type definitions for theme-ui 0.2
   // Project: https://github.com/system-ui/theme-ui#readme
   // Definitions by: Erik Stockmeier <https://github.com/erikdstock>
+  //                 Ifiok Jr. <https://github.com/ifiokjr>
   // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+  // TypeScript Version: 3.1
 
-  import { ThemeContext } from '@emotion/core';
-  import { SystemStyleObject } from '@styled-system/css';
+  import { ResponsiveStyleValue, SystemStyleObject } from '@styled-system/css';
   import * as CSS from 'csstype';
-  import { ThemeProvider } from 'emotion-theming';
   import * as React from 'react';
   import { lineHeight, Theme as StyledSystemTheme } from 'styled-system';
+
+  export {};
 
   type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
   type ObjectOrArray<T> = T[] | { [K: string]: T | ObjectOrArray<T> };
@@ -19,16 +20,39 @@ declare module 'theme-ui' {
     [k: string]: T | Object<T>;
   }
 
-  export const ThemeProvider: typeof ThemeProvider;
-
-  type SSColors = StyledSystemTheme['colors'];
-  interface ColorModes {
-    [k: string]: Partial<Omit<Theme['colors'], 'modes'>>;
+  export interface ThemeProviderProps<Theme> {
+    theme: Partial<Theme> | ((outerTheme: Theme) => Theme);
+    children?: React.ReactNode;
   }
 
-  export const Context: React.Context;
+  // tslint:disable-next-line: no-unnecessary-generics
+  export function ThemeProvider<Theme>(props: ThemeProviderProps<Theme>): React.ReactElement;
 
-  // TODO: Are Theme.colors.background, text, etc really required?
+  type SSColors = StyledSystemTheme['colors'];
+
+  /**
+   * To use Theme UI color modes, color scales should include at least a text
+   * and background color. These values are used in the ColorMode component to
+   * set body foreground and background colors. Color modes should be defined as
+   * nested objects within a theme.colors.modes object. Each key in this object
+   * should correspond to a color mode name, where the name can be anything, but
+   * typically light and dark are used for applications with a dark mode. The
+   * initialColorMode key is required to enable color modes and will be used as
+   * the name for the root color palette.
+   */
+  export interface ColorModes {
+    /**
+     * This is required for a color mode.
+     */
+    text: string;
+
+    /**
+     * This is required for the color mode.
+     */
+    background: string;
+    [k: string]: Partial<Omit<StyledSystemTheme['colors'], 'modes'>>;
+  }
+
   export interface Theme extends StyledSystemTheme {
     /**
      * Provide a value here to enable color modes
@@ -42,12 +66,12 @@ declare module 'theme-ui' {
       /**
        * Body background color
        */
-      background?: CSS.ColorProperty;
+      background: CSS.ColorProperty;
 
       /**
        * Body foreground color
        */
-      text?: CSS.ColorProperty;
+      text: CSS.ColorProperty;
 
       /**
        * Primary brand color for links, buttons, etc.
@@ -60,7 +84,8 @@ declare module 'theme-ui' {
       secondary?: CSS.ColorProperty;
 
       /**
-       * A faint color for backgrounds, borders, and accents that do not require high contrast with the background color
+       * A faint color for backgrounds, borders, and accents that do not require
+       * high contrast with the background color
        */
       muted?: CSS.ColorProperty;
 
@@ -70,20 +95,24 @@ declare module 'theme-ui' {
       accent?: CSS.ColorProperty;
 
       /**
-       * Nested color modes can provide overrides when used in conjunction with `Theme.initialColorMode and `useColorMode()`
+       * Nested color modes can provide overrides when used in conjunction with
+       * `Theme.initialColorMode and `useColorMode()`
        */
       modes?: ColorModes;
     };
 
     /**
-     * Styles for elements rendered in MDX can be added to the theme.styles object.
-     * This is the primary, low-level way to control typographic and other styles in markdown content.
-     * Styles within this object are processed with @styled-system/css
-     * and have access to base theme values like colors, fonts, etc.
+     * Styles for elements rendered in MDX can be added to the theme.styles
+     * object. This is the primary, low-level way to control typographic and
+     * other styles in markdown content. Styles within this object are processed
+     * with @styled-system/css and have access to base theme values like colors,
+     * fonts, etc.
      */
     styles?: {
-      [k: string]: SystemStyleObject;
+      [P in StyledTags]: SystemStyleObject;
     };
+
+    typography?: any;
   }
 
   /**
@@ -93,11 +122,31 @@ declare module 'theme-ui' {
    */
   export const jsx: typeof React.createElement;
 
-  interface SxProps {
-    sx?: SystemStyleObject;
+  /**
+   * The `SxStyleProp` extension `SystemStyleObject` and `Emotion` [style props](https://emotion.sh/docs/object-styles)
+   * such that properties that are part of the `Theme` will be transformed to
+   * their corresponding values. Other valid CSS properties are also allowed.
+   */
+  export type SxStyleProp = SystemStyleObject &
+    Record<string, SystemStyleObject | ResponsiveStyleValue<number | string>>;
+
+  export interface SxProps {
+    /**
+     * The sx prop lets you style elements inline, using values from your
+     * theme. To use the sx prop, add the custom pragma as a comment to the
+     * top of your module and import the jsx function.
+     *
+     * ```ts
+     * // @jsx jsx
+     *
+     * import { jsx } from 'theme-ui'
+     * ```
+     */
+    sx?: SxStyleProp;
   }
 
   type SxComponent = React.ComponentClass<SxProps>;
+
   export const Box: SxComponent;
   export const Container: SxComponent;
   export const Flex: SxComponent;
@@ -105,7 +154,8 @@ declare module 'theme-ui' {
   export const Footer: SxComponent;
   export const Layout: SxComponent;
   export const Main: SxComponent;
-  type StyledTags =
+
+  export type StyledTags =
     | 'p'
     | 'b'
     | 'i'
@@ -136,24 +186,20 @@ declare module 'theme-ui' {
     | 'thematicBreak'
     | 'div'
     | 'root';
-  export const Styled: Record<StyledTags, SxComponent>;
 
-  // TODO: ??? maybe this extra type isn't needed? Maybe SystemStyleObject is enough?
-  /** [this doc from styled-system__css]
-   * The `SystemStyleObject` extends [style props](https://emotion.sh/docs/object-styles)
-   * such that properties that are part of the `Theme` will be transformed to
-   * their corresponding values. Other valid CSS properties are also allowed.
-   *
+  export const Styled: Record<StyledTags, SxComponent> & SxComponent;
+
+  interface ThemeUIContext {
+    theme: Theme;
+    components: Record<StyledTags, SxComponent>;
+  }
+
+  export const Context: React.Context<ThemeUIContext>;
+
+  /**
+   * A hook for retrieving the ThemeUI Context.
    */
-  // export interface SxObject extends SystemStyleObject {}
-
-  // // TODO: Verify
-  // interface ThemeUIContext {theme: Theme, components: any}
-
-  // // TODO: Verify
-  // export const Context: React.Context<ThemeUIContext>
-
-  export const useThemeUI: typeof React.useContext;
+  export function useThemeUI(): ThemeUIContext;
 
   /**
    * A hook retrieving the current color mode and a setter for a new color mode
@@ -161,26 +207,19 @@ declare module 'theme-ui' {
    *
    * @param initialMode - the default color mode to use
    */
-  export const useColorMode: <GModes extends string>(
-    initialMode?: GModes,
-  ) => [GModes, React.Dispatch<React.SetStateAction<GModes>>];
+  export function useColorMode<Modes extends string>(
+    initialMode?: Modes,
+  ): [Modes, React.Dispatch<React.SetStateAction<Modes>>];
 
   declare module 'react' {
-    interface DOMAttributes<T> {
-      sx?: SystemStyleObject & Record<string, SystemStyleObject | unknown> | unknown;
-    }
+    // tslint:disable-next-line: no-empty-interface
+    interface DOMAttributes<T> extends SxProps {}
   }
 
   declare global {
     namespace JSX {
-      /**
-       * Do we need to modify `LibraryManagedAttributes` too,
-       * to make `className` props optional when `css` props is specified?
-       */
-
-      interface IntrinsicAttributes {
-        sx?: SystemStyleObject & Record<string, SystemStyleObject | unknown> | unknown;
-      }
+      // tslint:disable-next-line: no-empty-interface
+      interface IntrinsicAttributes extends SxProps {}
     }
   }
 }

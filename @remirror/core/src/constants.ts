@@ -9,6 +9,16 @@ export const EDITOR_CLASS_NAME = 'remirror-editor';
 export const EDITOR_CLASS_SELECTOR = `.${EDITOR_CLASS_NAME}`;
 
 /**
+ * The css class added to a node that is selected.
+ */
+export const SELECTED_NODE_CLASS_NAME = 'ProseMirror-selectednode';
+
+/**
+ * The css selector for a selected node.
+ */
+export const SELECTED_NODE_CLASS_SELECTOR = `.${SELECTED_NODE_CLASS_NAME}`;
+
+/**
  * Explanation from `@atlaskit` ProseMirror uses the Unicode Character 'OBJECT
  * REPLACEMENT CHARACTER' (U+FFFC) as text representation for leaf nodes, i.e.
  * nodes that don't have any content or text property (e.g. hardBreak, emoji,
@@ -63,7 +73,7 @@ export const EMPTY_PARAGRAPH_NODE = {
 /**
  * The default extension priority level
  */
-export const DEFAULT_EXTENSION_PRIORITY = 2;
+export const DEFAULT_EXTENSION_PRIORITY = 3;
 
 /**
  * Marks are categorized into different groups. One motivation for this was to

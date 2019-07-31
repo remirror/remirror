@@ -1,22 +1,18 @@
-import React, { FC } from 'react';
-
 import { SSRComponentProps } from '@remirror/core';
-import { NodeViewComponentProps } from '@remirror/react-utils';
+import React from 'react';
 // @ts-ignore
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-light';
 import { CodeBlockAttrs, CodeBlockExtensionOptions } from './code-block-types';
 import { getLanguage } from './code-block-utils';
 
-export interface CodeBlockComponentProps extends NodeViewComponentProps<CodeBlockAttrs> {}
-
 /**
  * Renders the codeBlock for use in an SSR Environment
  */
-export const CodeBlockComponent: FC<SSRComponentProps<CodeBlockAttrs, CodeBlockExtensionOptions>> = ({
-  language: lang,
+export const CodeBlockComponent = ({
   options,
   node,
-}) => {
+}: SSRComponentProps<Required<CodeBlockExtensionOptions>, CodeBlockAttrs>) => {
+  const { language: lang } = node.attrs;
   const language = getLanguage({
     language: lang,
     fallback: options.defaultLanguage,

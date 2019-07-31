@@ -1,7 +1,12 @@
 import React, { FC, MouseEventHandler, useState } from 'react';
 
 import { memoize } from '@remirror/core';
-import { BoldExtension, ItalicExtension, UnderlineExtension } from '@remirror/core-extensions';
+import {
+  BoldExtension,
+  ItalicExtension,
+  PlaceholderExtension,
+  UnderlineExtension,
+} from '@remirror/core-extensions';
 import {
   bubblePositioner,
   ManagedRemirrorProvider,
@@ -87,8 +92,9 @@ export default () => {
       }}
     >
       <div style={{ gridArea: 'editor' }}>
-        <RemirrorManager placeholder='Start typing for magic...'>
+        <RemirrorManager>
           <RemirrorExtension Constructor={BoldExtension} />
+          <RemirrorExtension Constructor={PlaceholderExtension} placeholder='Start typing for magic...' />
           <RemirrorExtension Constructor={ItalicExtension} />
           <RemirrorExtension Constructor={UnderlineExtension} />
           <ManagedRemirrorProvider

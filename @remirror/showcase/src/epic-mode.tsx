@@ -30,7 +30,6 @@ const EpicModeComponent: FC<EpicModeComponentProps> = ({
   placeholder = 'Type for epic...',
   shake,
 }) => {
-  console.log(document.body);
   return (
     <div style={{ gridArea: 'editor' }} placeholder={placeholder}>
       <RemirrorManager>

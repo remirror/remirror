@@ -1,7 +1,7 @@
 import { ManagedRemirrorProvider, RemirrorManager } from '@remirror/react';
 import { render } from '@testing-library/react';
 import React from 'react';
-import { ProsemirrorDevTools } from '../prosemirror-dev-tools';
+import { ProsemirrorDevTools } from '../dev-components';
 
 test('it supports <ProsemirrorDevTools />', () => {
   const { baseElement } = render(

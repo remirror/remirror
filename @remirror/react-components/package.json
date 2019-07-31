@@ -31,21 +31,7 @@
     "@babel/runtime": "^7.5.5",
     "@emotion/core": "^10.0.14",
     "@emotion/styled": "^10.0.14",
-    "@remirror/core": "0.4.2-canary.1",
-    "@remirror/core-extensions": "0.4.2-canary.1",
-    "@remirror/react-ssr": "0.4.2-canary.1",
-    "@remirror/renderer-react": "0.4.2-canary.1",
-    "@types/hoist-non-react-statics": "^3.3.1",
-    "@types/prosemirror-commands": "^1.0.1",
-    "@types/prosemirror-model": "^1.7.2",
-    "@types/prosemirror-state": "^1.2.3",
-    "@types/prosemirror-view": "^1.9.0",
-    "emotion": "^10.0.14",
-    "hoist-non-react-statics": "^3.3.0",
-    "prosemirror-commands": "^1.0.8",
-    "prosemirror-model": "^1.7.1",
-    "prosemirror-state": "^1.2.3",
-    "prosemirror-view": "^1.9.12"
+    "@remirror/core": "0.4.2-canary.1"
   },
   "peerDependencies": {
     "@types/react": "^16.8.22",

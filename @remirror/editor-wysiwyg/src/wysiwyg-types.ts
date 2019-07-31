@@ -19,7 +19,7 @@ import {
   UnderlineExtension,
 } from '@remirror/core-extensions';
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '@remirror/extension-code-block';
-import { RemirrorManagerProps, RemirrorProps } from '@remirror/react-utils';
+import { RemirrorProps } from '@remirror/react-utils';
 import { ButtonState, WysiwygEditorTheme } from './wysiwyg-theme';
 
 /**
@@ -74,8 +74,12 @@ export interface WysiwygEditorProps
         | 'suppressHydrationWarning'
       >
     >,
-    Pick<RemirrorManagerProps, 'placeholder'>,
     Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'> {
+  /**
+   * The message to show when the editor is empty.
+   */
+  placeholder?: string;
+
   /**
    * Extend the theme with your own styles
    */

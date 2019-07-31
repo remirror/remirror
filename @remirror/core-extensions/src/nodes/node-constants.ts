@@ -66,3 +66,5 @@ export const PT_TO_PIXEL_RATIO = 1.33;
  * The default font sizes for the editor.
  */
 export const FONT_PT_SIZES = [8, 9, 10, 11, 12, 14, 18, 24, 30, 36, 48, 60, 72, 90];
+
+export const CSS_ROTATE_PATTERN = /rotate\(([0-9\.]+)rad\)/i;

@@ -22,18 +22,19 @@ export interface GetManagerFromComponentTreeParams {
 }
 
 /**
- * Retrieves the extension manager from a component tree.
+ * Retrieve the extension manager from your remirror component tree.
  *
  * @remarks
- * When building your multiplatform editor you will want to only use once schema across
- * all your environments. Since Prosemirror only renders in the DOM it makes sense to set
+ * When building your multi-platform editor you will want to use **one** schema across
+ * all your environments. Since Prosemirror renders in the DOM it makes sense to set
  * up the schema in your DOM based react code.
  *
- * But how to use that same schema across your platforms?
+ * But how to then use that same schema across your platforms?
  *
- * This function provides a way of doing just that. It just requires that you set up your
- * editor with with a wrapper component that uses the `RemirrorManager` and then provides
- * a prop (`children` by default) to place a component within the `RemirrorManager`.
+ * This function provides a way of doing just that. It requires that you set up your
+ * editor with with a wrapper component that uses the `RemirrorManager` and then provide
+ * an _insertion point_ prop (`children` by default) to place a component within the
+ * `RemirrorManager`.
  *
  * This function uses the `prop` you provide to insert a component whose sole purpose is
  * to pull the extension manager from the React context and pass it back to the consumer
@@ -61,10 +62,9 @@ export interface GetManagerFromComponentTreeParams {
  *
  * // For example now you have access to the schema
  * const { schema } =  manager;
- *
  * ```
  *
- * This is useful in server side rendered environments.
+ * This is useful in DOM-less (server-side rendered) environments.
  */
 export const getManagerFromComponentTree = ({
   Component,
@@ -78,7 +78,9 @@ export const getManagerFromComponentTree = ({
       return <></>;
     };
     const props = { ...extraProps, [prop]: <MangerRetriever /> };
+
     renderToString(<Component {...props} />);
+
     reject(
       new Error(
         `The manager was not found. Please check that \`${Component.displayName ||

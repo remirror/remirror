@@ -708,3 +708,29 @@ export const sort = <GType>(array: GType[], compareFn: (a: GType, b: GType) => n
     .sort((a, b) => compareFn(a.value, b.value) || a.index - b.index)
     .map(({ value }) => value);
 };
+
+/**
+ * Get a property from an object or array.
+ *
+ * @param path - path to property
+ * @param obj - object to retrieve property from
+ */
+export const get = <GReturn>(path: string | Array<string | number>, obj: any): GReturn | undefined => {
+  if (!path || !path.length) {
+    return obj;
+  }
+
+  if (isString(path)) {
+    path = path.split('.');
+  }
+
+  for (let ii = 0, len = path.length; ii < len && obj; ++ii) {
+    if (!isPlainObject(obj) && !isArray(obj)) {
+      return undefined;
+    }
+
+    obj = (obj as any)[path[ii]];
+  }
+
+  return obj;
+};

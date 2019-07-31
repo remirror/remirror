@@ -13,8 +13,8 @@ import {
   isArray,
   isFunction,
   isPlainObject,
-  NodeViewPortalContainer,
   ObjectNode,
+  PortalContainer,
   RemirrorContentType,
   SchemaFromExtensionList,
   shouldUseDOMEnvironment,
@@ -54,7 +54,7 @@ import { EditorState } from 'prosemirror-state';
 import React, { Component, ReactNode, Ref } from 'react';
 import { defaultProps } from '../constants';
 import { defaultStyles } from '../styles';
-import { NodeViewPortalComponent } from './node-view-portal';
+import { RemirrorPortals } from './remirror-portals';
 
 interface UpdateStateParams<GSchema extends EditorSchema = EditorSchema> extends EditorStateParams<GSchema> {
   /**
@@ -145,7 +145,7 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
    * The portal container which keeps track of all the React Portals containing
    * custom prosemirror NodeViews.
    */
-  private readonly portalContainer: NodeViewPortalContainer = new NodeViewPortalContainer();
+  private readonly portalContainer: PortalContainer = new PortalContainer();
 
   /**
    * The document to use when rendering.
@@ -256,7 +256,7 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
     styles.unshift(this.manager.data.styles);
 
     if (this.props.usesDefaultStyles) {
-      styles.unshift(defaultStyles());
+      styles.unshift(defaultStyles);
     }
 
     return styles;
@@ -700,7 +700,10 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
       manager: this.manager,
       view: this.view,
       state: this.state.editor,
+
+      /* Mapped methods */
       actions: this.manager.data.actions,
+      helpers: this.manager.data.helpers,
 
       /* Getter Methods */
       getRootProps: this.getRootProps,
@@ -843,7 +846,7 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
     return (
       <>
         {this.renderReactElement()}
-        <NodeViewPortalComponent portalContainer={this.portalContainer} />
+        <RemirrorPortals portalContainer={this.portalContainer} />
       </>
     );
   }

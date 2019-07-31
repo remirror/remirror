@@ -1,4 +1,4 @@
-import { DocExtension, PrioritizedExtension, TextExtension } from '@remirror/core';
+import { DocExtension, ExtensionsFromFlexibleList, TextExtension } from '@remirror/core';
 import {
   BaseKeymapExtension,
   CompositionExtension,
@@ -14,10 +14,10 @@ import { ParagraphExtension } from './nodes';
  * To override them, you can either add your own extension with the same extensionName
  * or you can turn off all of the base extensions.
  */
-export const baseExtensions: PrioritizedExtension[] = [
+export const baseExtensions = [
   { extension: new DocExtension(), priority: 1 },
   { extension: new TextExtension(), priority: 1 },
-  { extension: new ParagraphExtension(), priority: 1 },
+  { extension: new ParagraphExtension(), priority: 2 },
   { extension: new CompositionExtension(), priority: 3 },
   { extension: new HistoryExtension(), priority: 3 },
   { extension: new GapCursorExtension(), priority: 10 },
@@ -26,16 +26,9 @@ export const baseExtensions: PrioritizedExtension[] = [
 ];
 
 /**
- * The BaseExtensions union type shows the extension provided by default in a remirror editor.
- * This union is useful for extending with your own types to provide better typechecking
- * throughout your codebase
+ * The BaseExtensions union type shows the extension types available as base extensions.
+ *
+ * This union type is useful when paired with your own types to provide better typechecking
+ * throughout your codebase.
  */
-export type BaseExtensions =
-  | DocExtension
-  | TextExtension
-  | ParagraphExtension
-  | CompositionExtension
-  | HistoryExtension
-  | GapCursorExtension
-  | DropCursorExtension
-  | BaseKeymapExtension;
+export type BaseExtensions = ExtensionsFromFlexibleList<typeof baseExtensions>;
