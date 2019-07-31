@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/core"
   },
-  "version": "0.4.2-canary.1",
+  "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/core.esm.js",
   "browser": {

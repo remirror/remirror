@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/Microsoft/web-build-tools/tree/master/apps/api-documenter"
   },
-  "version": "0.4.2-canary.1",
+  "version": "0.4.2-canary.2",
   "bin": {
     "api-documenter": "./bin/api-documenter"
   },

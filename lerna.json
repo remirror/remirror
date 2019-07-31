@@ -18,7 +18,7 @@
       ]
     }
   },
-  "version": "0.4.2-canary.1",
+  "version": "0.4.2-canary.2",
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
   "useWorkspaces": true,

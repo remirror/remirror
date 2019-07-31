@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/dev"
   },
-  "version": "0.4.2-canary.1",
+  "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/dev.esm.js",
   "files": [
@@ -29,7 +29,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@remirror/react": "0.4.2-canary.1",
+    "@remirror/react": "0.4.2-canary.2",
     "@types/prosemirror-dev-tools": "^2.1.0",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.9.0",

@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/editor-wysiwyg"
   },
-  "version": "0.4.2-canary.1",
+  "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/editor-wysiwyg.esm.js",
   "files": [
@@ -38,11 +38,11 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.20",
     "@fortawesome/free-solid-svg-icons": "^5.10.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "@remirror/core": "0.4.2-canary.1",
-    "@remirror/core-extensions": "0.4.2-canary.1",
-    "@remirror/extension-code-block": "0.4.2-canary.1",
-    "@remirror/react": "0.4.2-canary.1",
-    "@remirror/react-utils": "0.4.2-canary.1",
+    "@remirror/core": "0.4.2-canary.2",
+    "@remirror/core-extensions": "0.4.2-canary.2",
+    "@remirror/extension-code-block": "0.4.2-canary.2",
+    "@remirror/react": "0.4.2-canary.2",
+    "@remirror/react-utils": "0.4.2-canary.2",
     "emotion-theming": "^10.0.14",
     "keycode": "^2.2.0",
     "refractor": "^2.10.0"

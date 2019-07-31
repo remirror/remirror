@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/react-components"
   },
-  "version": "0.4.2-canary.1",
+  "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/react-components.esm.js",
   "files": [
@@ -31,7 +31,7 @@
     "@babel/runtime": "^7.5.5",
     "@emotion/core": "^10.0.14",
     "@emotion/styled": "^10.0.14",
-    "@remirror/core": "0.4.2-canary.1"
+    "@remirror/core": "0.4.2-canary.2"
   },
   "peerDependencies": {
     "@types/react": "^16.8.22",
