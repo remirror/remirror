@@ -4,6 +4,7 @@ import {
   environment,
   findMatches,
   format,
+  get,
   isBoolean,
   isDate,
   isEmptyArray,
@@ -274,16 +275,26 @@ test('uniqueArray', () => {
 
 test('sort', () => {
   const arr = [...Array(100), 11, 9, 12].map((value, index) => ({ value: value || 10, index }));
-  // expect(arr.sort((a, b) => a.value - b.value)).toEqual([
-  //   { value: 9, index: 101 },
-  //   ...take(arr, 100),
-  //   { value: 11, index: 100 },
-  //   { value: 12, index: 102 },
-  // ]);
   expect(sort(arr, (a, b) => a.value - b.value)).toEqual([
     { value: 9, index: 101 },
     ...take(arr, 100),
     { value: 11, index: 100 },
     { value: 12, index: 102 },
   ]);
+});
+
+test('get', () => {
+  const obj = { a: 'a', b: 'b', nested: [{ awesome: true }] };
+
+  expect(get('', obj)).toBe(obj);
+  expect(get('a', 1)).toBe(undefined);
+  expect(get('a', obj)).toBe('a');
+  expect(get('nested.0.awesome', obj)).toBe(true);
+  expect(get('nested.0.fake', obj)).toBe(undefined);
+
+  expect(get([], obj)).toBe(obj);
+  expect(get(['a'], 1)).toBe(undefined);
+  expect(get(['a'], obj)).toBe('a');
+  expect(get(['nested', 0, 'awesome'], obj)).toBe(true);
+  expect(get(['nested', 0, 'fake'], obj)).toBe(undefined);
 });
