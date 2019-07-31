@@ -20,6 +20,9 @@ export interface RenderMethodParams extends RenderParams {
 }
 
 interface Events {
+  /**
+   * Trigger an update in all subscribers
+   */
   update: PortalMap;
 }
 

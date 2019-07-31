@@ -1,8 +1,4 @@
-import React, { ComponentType } from 'react';
-
 import {
-  Attrs,
-  Cast,
   Decoration,
   EDITOR_CLASS_NAME,
   EditorView,
@@ -17,6 +13,7 @@ import {
   ProsemirrorNode,
 } from '@remirror/core';
 import { css, Interpolation } from 'emotion';
+import React, { ComponentType } from 'react';
 import { RemirrorProps } from './react-types';
 
 /**
@@ -47,6 +44,9 @@ export interface CreateNodeViewParams<GProps extends PlainObject = {}>
 }
 
 export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView {
+  /**
+   * A shorthand method for creating the ReactNodeView
+   */
   public static createNodeView<GProps extends PlainObject>({
     Component,
     portalContainer,
@@ -67,6 +67,9 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
       ).init();
   }
 
+  /**
+   * The outer element exposed to the editor.
+   */
   private domRef?: HTMLElement;
   private contentDOMWrapper: Node | null = null;
   public contentDOM: Node | undefined;
@@ -76,6 +79,13 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
    */
   private get css(): typeof css {
     return this.withoutEmotion ? cssNoOp : css;
+  }
+
+  /**
+   * Provides readonly access to the dom element
+   */
+  get dom() {
+    return this.domRef;
   }
 
   constructor(
@@ -153,6 +163,9 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     return this.node.isInline ? document.createElement('span') : document.createElement('div');
   }
 
+  /**
+   * Override this method in order to return a content dom which allow
+   */
   public getContentDOM(): { dom: Node; contentDOM?: Node | null | undefined } | undefined {
     return undefined;
   }
@@ -168,6 +181,7 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
 
   public render(props: GProps, forwardRef?: (node: HTMLElement) => void): JSX.Element {
     const Component = this.Component;
+
     return (
       <Component
         view={this.view}
@@ -196,7 +210,6 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
     }
 
     this.node = node;
-
     this.renderReactComponent(() => this.render(this.props, this.handleRef));
 
     return true;
@@ -215,7 +228,9 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
       if (isString(domSpec) || isDOMNode(domSpec)) {
         return;
       }
-      const attrs = Cast<Attrs>(domSpec[1]);
+
+      const attrs = domSpec[1];
+
       if (isPlainObject(attrs)) {
         Object.keys(attrs).forEach(attr => {
           element.setAttribute(attr, String(attrs[attr]));
@@ -224,15 +239,15 @@ export class ReactNodeView<GProps extends PlainObject = {}> implements NodeView 
         return;
       }
     }
+
     Object.keys(node.attrs || {}).forEach(attr => {
       element.setAttribute(attr, node.attrs[attr]);
     });
   }
 
-  get dom() {
-    return this.domRef;
-  }
-
+  /**
+   * This is called whenever the node is being destroyed.
+   */
   public destroy() {
     if (!this.domRef) {
       return;

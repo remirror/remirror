@@ -23,7 +23,7 @@ export const NodeViewPortalComponent = ({ portalContainer }: NodeViewPortalCompo
   useEffect(() => {
     // Auto disposed when the component un-mounts
     return portalContainer.on(onPortalChange);
-  }, []);
+  }, [portalContainer]);
 
   return (
     <>
