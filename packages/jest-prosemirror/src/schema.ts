@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import { NodeGroup } from '@remirror/core';
 import { NodeSpec, Schema } from 'prosemirror-model';
 import { marks, nodes } from 'prosemirror-schema-basic';
