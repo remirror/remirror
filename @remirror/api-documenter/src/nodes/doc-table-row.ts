@@ -1,4 +1,4 @@
-// tslint:disable:no-empty-interface
+/* eslint-disable @typescript-eslint/no-empty-interface */
 import { DocNode, DocPlainText, IDocNodeParameters } from '@microsoft/tsdoc';
 import { CustomDocNodeKind } from './doc-enum';
 import { DocTableCell } from './doc-table-cell';

@@ -18,7 +18,7 @@ import {
 
 import { IndentedWriter } from '../utils/indented-writer';
 
-// tslint:disable-next-line:no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IMarkdownEmitterOptions {}
 
 export interface IMarkdownEmitterContext<TOptions = IMarkdownEmitterOptions> {

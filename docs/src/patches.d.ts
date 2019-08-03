@@ -212,14 +212,16 @@ declare module 'theme-ui' {
   ): [Modes, React.Dispatch<React.SetStateAction<Modes>>];
 
   declare module 'react' {
-    // tslint:disable-next-line: no-empty-interface
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface 
+    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
     interface DOMAttributes<T> extends SxProps {}
   }
 
   declare global {
     namespace JSX {
-      // tslint:disable-next-line: no-empty-interface
-      interface IntrinsicAttributes extends SxProps {}
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface 
+    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
+    interface IntrinsicAttributes extends SxProps {}
     }
   }
 }
