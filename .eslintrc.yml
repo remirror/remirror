@@ -1,0 +1,41 @@
+plugins:
+  - react
+  - '@typescript-eslint'
+extends: 
+  - 'plugin:@typescript-eslint/recommended'
+  - 'prettier'
+  - 'prettier/@typescript-eslint'
+  - 'plugin:react/recommended'
+# rules:
+#   'react/display-name':
+#     - off
+#   '@typescript-eslint/no-unused-vars':
+#     - error
+#   'no-trailing-spaces':
+#     - error
+#   '@typescript-eslint/camelcase': # TODO: Turn this on
+#     - off 
+#   'react/prop-types': # https://github.com/yannickcr/eslint-plugin-react/issues/1461
+#     - off
+#   '@typescript-eslint/no-explicit-any': # TODO: Turn this on, or at least to warning level
+#     - off
+#   '@typescript-eslint/explicit-member-accessibility': # TODO: Turn this on
+#     - off
+#   '@typescript-eslint/explicit-function-return-type':
+#     - off
+#   '@typescript-eslint/no-parameter-properties':
+#     - off
+#   '@typescript-eslint/interface-name-prefix':
+#     - 2
+#     - always
+parser: '@typescript-eslint/parser'
+parserOptions: 
+  ecmaVersion: 6
+  sourceType: module
+  ecmaFeatures: 
+    jsx: true #false is the default
+    useJSXTextNode: true # true is the default
+    project: './tsconfig.json'
+settings:
+  react: # https://github.com/yannickcr/eslint-plugin-react#configuration
+    version: detect
