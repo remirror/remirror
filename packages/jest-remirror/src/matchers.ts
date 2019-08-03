@@ -159,6 +159,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
 };
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace jest {
     interface MatcherUtils {
       currentTestName?: string;

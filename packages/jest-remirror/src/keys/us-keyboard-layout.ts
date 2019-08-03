@@ -1,14 +1,6 @@
 import { isString } from '@remirror/core';
 
 /**
- * Predicate for checking if the passed char is a supported character for the US Keyboard
- *
- * @param char
- */
-export const isUSKeyboardCharacter = (char: unknown): char is SupportedCharacters =>
-  isString(char) && Object.keys(rawUSKeyboardLayout).includes(char);
-
-/**
  * See {@link https://github.com/GoogleChrome/puppeteer/blob/07febb637c78cd59e22a15166f816d838a36e614/lib/USKeyboardLayout.js}
  */
 const rawUSKeyboardLayout = {
@@ -270,6 +262,14 @@ const rawUSKeyboardLayout = {
   '}': { keyCode: 221, key: '}', code: 'BracketRight' },
   '"': { keyCode: 222, key: '"', code: 'Quote' },
 };
+
+/**
+ * Predicate for checking if the passed char is a supported character for the US Keyboard
+ *
+ * @param char
+ */
+export const isUSKeyboardCharacter = (char: unknown): char is SupportedCharacters =>
+  isString(char) && Object.keys(rawUSKeyboardLayout).includes(char);
 
 export const noKeyPress = [
   'Power',

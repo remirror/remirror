@@ -7,3 +7,5 @@ rules:
     - off
   '@typescript-eslint/no-object-literal-type-assertion':
     - off
+  '@typescript-eslint/no-parameter-properties':
+    - off
