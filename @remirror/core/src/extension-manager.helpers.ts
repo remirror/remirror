@@ -227,7 +227,7 @@ function convertToExtensionMapValue(extension: FlexibleExtension): PrioritizedEx
  * @returns the list of extension instances sorted by priority
  */
 export const transformExtensionMap = <GExtensions extends AnyExtension[]>(
-  values: Array<FlexibleExtension<GExtensions[number]>>,
+  values: FlexibleExtension<GExtensions[number]>[],
 ): GExtensions =>
   sort(values.map(convertToExtensionMapValue), (a, b) => a.priority - b.priority).map(
     ({ extension }) => extension,

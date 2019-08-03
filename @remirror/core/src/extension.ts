@@ -234,7 +234,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
    * There are internally defined tags but it's also possible to define any
    * custom string as a tag. See {@link Tags}
    */
-  get tags(): Array<Tags | string> {
+  get tags(): (Tags | string)[] {
     return [];
   }
 

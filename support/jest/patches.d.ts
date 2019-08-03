@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/interface-name-prefix */
 declare module 'jest-dev-server' {
   import { ChildProcess } from 'child_process';
   import { WaitOnOptions } from 'wait-on';

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable @typescript-eslint/interface-name-prefix */
+
 declare module 'theme-ui' {
   // Type definitions for theme-ui 0.2
   // Project: https://github.com/system-ui/theme-ui#readme
@@ -17,6 +20,7 @@ declare module 'theme-ui' {
   type ObjectOrArray<T> = T[] | { [K: string]: T | ObjectOrArray<T> };
 
   interface Object<T> {
+    // eslint-disable-next-line @typescript-eslint/ban-types
     [k: string]: T | Object<T>;
   }
 
@@ -212,16 +216,12 @@ declare module 'theme-ui' {
   ): [Modes, React.Dispatch<React.SetStateAction<Modes>>];
 
   declare module 'react' {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface 
-    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
     interface DOMAttributes<T> extends SxProps {}
   }
 
   declare global {
     namespace JSX {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface 
-    // eslint-disable-next-line @typescript-eslint/interface-name-prefix
-    interface IntrinsicAttributes extends SxProps {}
+      interface IntrinsicAttributes extends SxProps {}
     }
   }
 }

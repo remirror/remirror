@@ -141,9 +141,9 @@ interface CoerceParams extends SchemaParams {
  * @param schema
  */
 export const coerce = ({ content, schema }: CoerceParams) => {
-  const taggedContent = content.map(item => (isString(item) ? text(item, schema) : item)) as Array<
-    TaggedContentItem | TaggedContentItem[]
-  >;
+  const taggedContent = content.map(item => (isString(item) ? text(item, schema) : item)) as (
+    | TaggedContentItem
+    | TaggedContentItem[])[];
   return sequence(...flattenArray<TaggedContentItem>(taggedContent));
 };
 

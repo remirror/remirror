@@ -138,7 +138,7 @@ export interface ObjectMark {
  */
 export interface ObjectNode {
   type: string;
-  marks?: Array<ObjectMark | string>;
+  marks?: (ObjectMark | string)[];
   text?: string;
   content?: ObjectNode[];
   attrs?: Record<string, Literal | object>;

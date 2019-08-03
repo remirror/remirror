@@ -666,7 +666,7 @@ export const noop = () => {};
 /**
  * A customise deep merge which only merges plain object and Arrays
  */
-export const deepMerge = <GType>(objects: Array<Partial<GType>>) => {
+export const deepMerge = <GType>(objects: Partial<GType>[]) => {
   return merge<GType>(objects, { isMergeableObject: isPlainObject });
 };
 
@@ -715,7 +715,7 @@ export const sort = <GType>(array: GType[], compareFn: (a: GType, b: GType) => n
  * @param path - path to property
  * @param obj - object to retrieve property from
  */
-export const get = <GReturn>(path: string | Array<string | number>, obj: any): GReturn | undefined => {
+export const get = <GReturn>(path: string | (string | number)[], obj: any): GReturn | undefined => {
   if (!path || !path.length) {
     return obj;
   }

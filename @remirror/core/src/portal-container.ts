@@ -26,7 +26,7 @@ interface Events {
   update: PortalMap;
 }
 
-export type PortalList = ReadonlyArray<[HTMLElement, MountedPortal]>;
+export type PortalList = readonly [HTMLElement, MountedPortal][];
 export type PortalMap = Map<HTMLElement, MountedPortal>;
 
 /**

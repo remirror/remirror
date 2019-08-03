@@ -54,7 +54,7 @@ const times = <GType = number>(length: number, fn?: (index: number) => GType): G
  *
  * @return Promise resolving once all in the sequence complete.
  */
-const promiseSequence = async (sequence: Array<() => Promise<void>>) =>
+const promiseSequence = async (sequence: (() => Promise<void>)[]) =>
   sequence.reduce((current, next) => current.then(next), Promise.resolve());
 
 export interface TypeParams {

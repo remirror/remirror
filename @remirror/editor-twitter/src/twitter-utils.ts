@@ -4,7 +4,7 @@
 export const mapToActiveIndex = <GItem extends {}>(
   items: GItem[],
   activeIndex: number,
-): Array<GItem & { active: boolean }> => {
+): (GItem & { active: boolean })[] => {
   return items.map((item, index) => ({
     ...item,
     active: index === activeIndex,

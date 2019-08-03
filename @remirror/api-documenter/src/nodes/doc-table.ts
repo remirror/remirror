@@ -7,7 +7,7 @@ import { DocTableRow } from './doc-table-row';
  * Constructor parameters for {@link DocTable}.
  */
 export interface IDocTableParameters extends IDocNodeParameters {
-  headerCells?: ReadonlyArray<DocTableCell>;
+  headerCells?: readonly DocTableCell[];
   headerTitles?: string[];
 }
 
@@ -19,7 +19,7 @@ export class DocTable extends DocNode {
 
   private _rows: DocTableRow[];
 
-  public constructor(parameters: IDocTableParameters, rows?: ReadonlyArray<DocTableRow>) {
+  public constructor(parameters: IDocTableParameters, rows?: readonly DocTableRow[]) {
     super(parameters);
 
     this.header = new DocTableRow({ configuration: this.configuration });
@@ -55,7 +55,7 @@ export class DocTable extends DocNode {
     return CustomDocNodeKind.Table;
   }
 
-  public get rows(): ReadonlyArray<DocTableRow> {
+  public get rows(): readonly DocTableRow[] {
     return this._rows;
   }
 
@@ -70,7 +70,7 @@ export class DocTable extends DocNode {
   }
 
   /** @override */
-  protected onGetChildNodes(): ReadonlyArray<DocNode | undefined> {
+  protected onGetChildNodes(): readonly (DocNode | undefined)[] {
     return [this.header, ...this._rows];
   }
 }

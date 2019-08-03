@@ -284,7 +284,7 @@ export class MarkdownDocumenter {
       headerTitles: ['Type Alias', 'Description'],
     });
 
-    const apiMembers: ReadonlyArray<ApiItem> =
+    const apiMembers: readonly ApiItem[] =
       apiContainer.kind === ApiItemKind.Package
         ? (apiContainer as ApiPackage).entryPoints[0].members
         : (apiContainer as ApiNamespace).members;

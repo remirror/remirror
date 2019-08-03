@@ -142,7 +142,7 @@ describe('mod', () => {
     const char = `R`;
     const text = `Shift-${char}`;
     let event: KeyboardEvent;
-    const events: Array<[string, string]> = [];
+    const events: [string, string][] = [];
 
     const listener = (ev: KeyboardEvent) => {
       if (ev.key === char) {

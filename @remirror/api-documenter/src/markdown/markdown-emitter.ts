@@ -261,7 +261,7 @@ export class MarkdownEmitter {
     writer.write(parts[3]); // write trailing whitespace
   }
 
-  protected writeNodes(docNodes: ReadonlyArray<DocNode>, context: IMarkdownEmitterContext): void {
+  protected writeNodes(docNodes: readonly DocNode[], context: IMarkdownEmitterContext): void {
     for (const docNode of docNodes) {
       this.writeNode(docNode, context, docNodes.length > 1);
     }

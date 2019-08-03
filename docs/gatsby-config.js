@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const pkg = require('./package.json');
 const remarkPlugins = [require('remark-slug'), require('remark-emoji')];
 

@@ -63,7 +63,7 @@ interface FindFromMatchersParams extends ResolvedPosParams {
   /**
    * The matchers to search through.
    */
-  matchers: Array<Partial<SuggestionMatcher>>;
+  matchers: Partial<SuggestionMatcher>[];
 }
 
 /**
@@ -495,7 +495,7 @@ export const runKeyBindings = (bindings: SuggestionKeyBindingMap, params: Sugges
 /**
  * Runs through a list of functions and stops as soon as one returns a truthy value.
  */
-export const runWhileFalsy = (methods: Array<() => unknown>) => {
+export const runWhileFalsy = (methods: (() => unknown)[]) => {
   for (const method of methods) {
     if (method()) {
       return true;

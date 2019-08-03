@@ -58,7 +58,7 @@ const offsetIncrement = (
   initialCursor: number,
   formatted: string,
   endCursor: number,
-  replacementPairs: Array<[string, string]>,
+  replacementPairs: [string, string][],
 ): 0 | 1 => {
   const beforeCursorSource = source.substr(initialCursor - 1, 1);
   const afterCursorFormatted = formatted.substr(endCursor, 1);
@@ -75,7 +75,7 @@ const offsetIncrement = (
  * A prettier based code formatter which can be dropped in for use within the CodeBlockExtension
  */
 export const formatter: CodeBlockFormatter = ({ cursorOffset, language, source }) => {
-  const fn = (result: CursorResult, pairs: Array<[string, string]> = [['"', "'"], ["'", '"']]) => {
+  const fn = (result: CursorResult, pairs: [string, string][] = [['"', "'"], ["'", '"']]) => {
     const increment = offsetIncrement(source, cursorOffset, result.formatted, result.cursorOffset, pairs);
     return { ...result, cursorOffset: result.cursorOffset + increment };
   };

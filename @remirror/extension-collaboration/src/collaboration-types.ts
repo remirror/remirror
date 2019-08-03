@@ -3,7 +3,7 @@ import { Step } from 'prosemirror-transform';
 
 export interface Sendable {
   version: number;
-  steps: Array<Step<EditorSchema>>;
+  steps: Step<EditorSchema>[];
   clientID: number | string;
   origins: Transaction[];
 }

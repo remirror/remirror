@@ -10,6 +10,14 @@ rules:
   '@typescript-eslint/interface-name-prefix':
     - 2
     - always
+  '@typescript-eslint/explicit-function-return-type':
+    - off
+  '@typescript-eslint/explicit-member-accessibility': # TODO: Turn this on
+    - off
+  '@typescript-eslint/no-non-null-assertion':
+    - off
+  'react/prop-types':
+    - off
 #   'react/display-name':
 #     - off
 #   '@typescript-eslint/no-unused-vars':
@@ -21,8 +29,6 @@ rules:
 #   'react/prop-types': # https://github.com/yannickcr/eslint-plugin-react/issues/1461
 #     - off
 #   '@typescript-eslint/no-explicit-any': # TODO: Turn this on, or at least to warning level
-#     - off
-#   '@typescript-eslint/explicit-member-accessibility': # TODO: Turn this on
 #     - off
 #   '@typescript-eslint/explicit-function-return-type':
 #     - off

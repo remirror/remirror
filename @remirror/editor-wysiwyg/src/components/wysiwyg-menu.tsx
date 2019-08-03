@@ -40,7 +40,7 @@ import {
   WithPaddingProps,
 } from './wysiwyg-components';
 
-const menuItems: Array<[ActionNames<WysiwygExtensionList>, [IconDefinition, string?], Attrs?]> = [
+const menuItems: [ActionNames<WysiwygExtensionList>, [IconDefinition, string?], Attrs?][] = [
   ['bold', [faBold]],
   ['italic', [faItalic]],
   ['underline', [faUnderline]],
@@ -146,7 +146,7 @@ export interface BubbleMenuProps {
   activateLink(): void;
 }
 
-const bubbleMenuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
+const bubbleMenuItems: [string, [IconDefinition, string?], Attrs?][] = [
   ['bold', [faBold]],
   ['italic', [faItalic]],
   ['underline', [faUnderline]],

@@ -14,7 +14,7 @@ export interface IDocTableRowParameters extends IDocNodeParameters {}
 export class DocTableRow extends DocNode {
   private readonly _cells: DocTableCell[];
 
-  public constructor(parameters: IDocTableRowParameters, cells?: ReadonlyArray<DocTableCell>) {
+  public constructor(parameters: IDocTableRowParameters, cells?: readonly DocTableCell[]) {
     super(parameters);
 
     this._cells = [];
@@ -30,7 +30,7 @@ export class DocTableRow extends DocNode {
     return CustomDocNodeKind.TableRow;
   }
 
-  public get cells(): ReadonlyArray<DocTableCell> {
+  public get cells(): readonly DocTableCell[] {
     return this._cells;
   }
 
@@ -56,7 +56,7 @@ export class DocTableRow extends DocNode {
   }
 
   /** @override */
-  protected onGetChildNodes(): ReadonlyArray<DocNode | undefined> {
+  protected onGetChildNodes(): readonly (DocNode | undefined)[] {
     return this._cells;
   }
 }

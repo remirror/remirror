@@ -115,7 +115,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * A static method for creating a new extension manager.
    */
   public static create<GExtensions extends AnyExtension[] = AnyExtension[]>(
-    extensions: Array<FlexibleExtension<GExtensions[number]>>,
+    extensions: FlexibleExtension<GExtensions[number]>[],
   ) {
     return new ExtensionManager<GExtensions>(extensions);
   }
@@ -162,7 +162,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * Creates the extension manager which is used to simplify the management of
    * the different facets of building an editor with
    */
-  constructor(extensionMapValues: Array<FlexibleExtension<GExtensions[number]>>) {
+  constructor(extensionMapValues: FlexibleExtension<GExtensions[number]>[]) {
     this.extensions = transformExtensionMap(extensionMapValues);
 
     // Initialize the schema immediately since this doesn't ever change.
@@ -602,7 +602,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    */
   private keymaps() {
     this.checkInitialized();
-    const extensionKeymaps: Array<Record<string, CommandFunction>> = this.extensions
+    const extensionKeymaps: Record<string, CommandFunction>[] = this.extensions
       .filter(hasExtensionProperty('keys'))
       .filter(extension => !extension.options.exclude.keymaps)
       .map(extensionPropertyMapper('keys', this.params));

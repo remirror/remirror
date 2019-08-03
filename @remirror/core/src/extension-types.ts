@@ -166,7 +166,7 @@ export type ExtensionFromFlexible<
  * Get the extension types from a list of PrioritizedExtensions.
  */
 export type ExtensionsFromFlexibleList<
-  GFlexibleList extends Array<FlexibleExtension<any>>
+  GFlexibleList extends FlexibleExtension<any>[]
 > = ExtensionFromFlexible<GFlexibleList[number]>;
 
 /**

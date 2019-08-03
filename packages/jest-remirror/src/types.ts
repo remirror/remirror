@@ -60,7 +60,7 @@ export type TaggedContentItem = TaggedProsemirrorNode | TagTracker;
 /**
  * The data structures of the tagged content
  */
-export type TaggedContent = TaggedContentItem | Array<ProsemirrorNode | TaggedContentItem>;
+export type TaggedContent = TaggedContentItem | (ProsemirrorNode | TaggedContentItem)[];
 
 /**
  * Tagged content with text as well
@@ -227,11 +227,11 @@ export type CreateTestEditorReturn<
 };
 
 export interface CreateTestEditorExtensions<
-  GPlainMarks extends Array<MarkExtension<any>>,
-  GPlainNodes extends Array<NodeExtension<any>>,
-  GAttrMarks extends Array<MarkExtension<any>>,
-  GAttrNodes extends Array<NodeExtension<any>>,
-  GOthers extends Array<Extension<any>>
+  GPlainMarks extends MarkExtension<any>[],
+  GPlainNodes extends NodeExtension<any>[],
+  GAttrMarks extends MarkExtension<any>[],
+  GAttrNodes extends NodeExtension<any>[],
+  GOthers extends Extension<any>[]
 > {
   plainMarks: GPlainMarks;
   plainNodes: GPlainNodes;
