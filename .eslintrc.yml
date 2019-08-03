@@ -6,7 +6,10 @@ extends:
   - 'prettier'
   - 'prettier/@typescript-eslint'
   - 'plugin:react/recommended'
-# rules:
+rules:
+  '@typescript-eslint/interface-name-prefix':
+    - 2
+    - always
 #   'react/display-name':
 #     - off
 #   '@typescript-eslint/no-unused-vars':
@@ -25,9 +28,6 @@ extends:
 #     - off
 #   '@typescript-eslint/no-parameter-properties':
 #     - off
-#   '@typescript-eslint/interface-name-prefix':
-#     - 2
-#     - always
 parser: '@typescript-eslint/parser'
 parserOptions: 
   ecmaVersion: 6
