@@ -50,7 +50,7 @@
     "lerna:publish:ci": "lerna publish -y --canary --preid=ci.$(date +%s) --dist-tag ci",
     "lerna:publish:minor": "lerna publish minor --exact --force-publish",
     "lerna:publish:patch": "lerna publish patch --exact --force-publish",
-    "lint": "run-s lint:*",
+    "lint": "eslint --ext js,jsx,ts,tsx .",
     "lint:babel": "eslint **/.babelrc.js",
     "lint:e2e": "tslint --project support/tsconfig.json --config ./tslint.json",
     "lint:js": "eslint support '*.js' @remirror docs e2e examples",
