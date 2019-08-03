@@ -1,0 +1,5 @@
+extends:
+  - ../../.eslintrc.yml
+rules:
+  '@typescript-eslint/no-var-requires':
+    - off

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const baseBabel = require('../babel/base.babel');
 const { resolve } = require('path');
 
