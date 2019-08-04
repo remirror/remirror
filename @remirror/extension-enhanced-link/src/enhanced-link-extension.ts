@@ -3,6 +3,7 @@ import {
   Cast,
   CommandMarkTypeParams,
   EditorState,
+  EditorStateParams,
   EditorView,
   ExtensionManagerMarkTypeParams,
   findMatches,
@@ -14,12 +15,11 @@ import {
   MarkExtensionOptions,
   MarkExtensionSpec,
   markPasteRule,
+  MarkTypeParams,
   removeMark,
-  TextParams,
-  Transaction,
+  TransactionParams,
   updateMark,
 } from '@remirror/core';
-
 import { Plugin, TextSelection } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
 import { extractUrl } from './extract-url';
@@ -98,29 +98,33 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
   }
 
   public plugin = ({ type }: ExtensionManagerMarkTypeParams) => {
-    const pluginKey = this.pluginKey;
+    const key = this.pluginKey;
     const name = this.name;
     const onUrlsChange = this.options.onUrlsChange;
+
     return new Plugin({
-      key: pluginKey,
+      key,
       state: {
         init() {
           return null;
         },
-        apply(tr, prev: EnhancedLinkPluginState) {
-          const stored = tr.getMeta(pluginKey);
+        apply(tr, prev) {
+          const stored = tr.getMeta(key);
           return stored ? stored : tr.selectionSet || tr.docChanged ? null : prev;
         },
       },
-      /** Runs through the current line (and previous line if it exists) to reapply twitter link marks to the relevant parts of text */
+
+      // Runs through the current line (and previous line if it exists) to reapply
+      // twitter link marks to the relevant parts of text.
+      // TODO extract this as a standalone prosemirror plugin
       appendTransaction(transactions, _oldState, state: EditorState) {
+        // Used to represent leaf nodes as text otherwise they just get replaced
+        const leafChar = ' ';
         const { selection, doc } = state;
         const { $from, $to, from, to } = selection;
         const hasReplaceTransactions = transactions.some(({ steps }) =>
           steps.some(step => step instanceof ReplaceStep),
         );
-        const char = LEAF_NODE_REPLACING_CHARACTER;
-        const leafChar = ' '; // Used to represent leaf nodes as text otherwise they just get replaced
 
         if (!hasReplaceTransactions) {
           return;
@@ -128,23 +132,27 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
 
         // Check that the mark should still be active
         const searchText =
-          doc.textBetween($from.start(), from, char, leafChar) +
-          doc.textBetween(to, $to.end(), char, leafChar);
-
+          doc.textBetween($from.start(), from, LEAF_NODE_REPLACING_CHARACTER, leafChar) +
+          doc.textBetween(to, $to.end(), LEAF_NODE_REPLACING_CHARACTER, leafChar);
         const tr = state.tr;
         const collectedParams: EnhancedLinkHandlerProps[] = [];
 
         // If at the start of a new line (i.e. new block added and not at the start of the document)
         if (from === $from.start() && from >= 2) {
           const $pos = doc.resolve(from - 2);
-          const prevSearchText = doc.textBetween($pos.start(), $pos.end(), char, leafChar);
+          const prevSearchText = doc.textBetween(
+            $pos.start(),
+            $pos.end(),
+            LEAF_NODE_REPLACING_CHARACTER,
+            leafChar,
+          );
           findMatches(prevSearchText, extractUrl).forEach(match => {
             const startIndex = match.index;
-
             const url = match[1];
             const start = $pos.start() + startIndex;
             const end = $pos.start() + startIndex + match[0].length;
-            collectedParams.push({ state, url, start, end });
+
+            collectedParams.push({ state, url, from: start, to: end, type });
           });
 
           tr.removeMark($pos.start(), $pos.end(), type);
@@ -153,21 +161,23 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
         // Finds matches within the current node when in the middle of a node
         findMatches(searchText, extractUrl).forEach(match => {
           const startIndex = match.index;
-
           const url = match[1];
           const start = $from.start() + startIndex;
           const end = $from.start() + startIndex + match[0].length;
-          const textBefore = doc.textBetween(start - 1, start, char, leafChar); // The text directly before the match
+          // The text directly before the match
+          const textBefore = doc.textBetween(start - 1, start, LEAF_NODE_REPLACING_CHARACTER, leafChar);
+
           if (!/[\w\d]/.test(textBefore)) {
-            collectedParams.push({ state, url, start, end });
+            collectedParams.push({ state, url, from: start, to: end, type });
           }
         });
-        // Remove all marks
+
+        // Remove all marks within the current block
         tr.removeMark($from.start(), $from.end(), type);
 
         // Add all marks again for the nodes
         collectedParams.forEach(params => {
-          enhancedLinkHandler({ ...params, transaction: tr });
+          enhancedLinkHandler({ ...params, tr });
         });
 
         return tr;
@@ -177,6 +187,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
           if (!onUrlsChange) {
             return;
           }
+
           const next = getUrlsFromState(view.state, name);
           const prev = getUrlsFromState(prevState, name);
 
@@ -189,32 +200,39 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
   };
 }
 
-interface EnhancedLinkPluginState extends TextParams, FromToParams {
-  transform: Transaction;
-}
-
 const extractHref = (url: string) => (url.startsWith('http') || url.startsWith('//') ? url : `http://${url}`);
 
-interface EnhancedLinkHandlerProps {
-  state: EditorState;
+interface EnhancedLinkHandlerProps
+  extends EditorStateParams,
+    FromToParams,
+    Partial<TransactionParams>,
+    MarkTypeParams {
+  /**
+   * The url to add as a mark to the range provided.
+   */
   url: string;
-  start: number;
-  end: number;
-  transaction?: Transaction;
 }
 
-const enhancedLinkHandler = ({ state, url, start, end, transaction }: EnhancedLinkHandlerProps) => {
+/**
+ * Add the provided URL as a mark to the text range provided
+ */
+const enhancedLinkHandler = ({ state, url, from, to, tr, type }: EnhancedLinkHandlerProps) => {
   const endPosition = state.selection.to;
-  const enhancedLink = state.schema.marks.enhancedLink.create({ href: extractHref(url) });
-  const tr = (transaction || state.tr).replaceWith(start, end, state.schema.text(url, [enhancedLink]));
+  const enhancedLink = type.create({ href: extractHref(url) });
 
-  if (endPosition < end) {
+  tr = (tr || state.tr).replaceWith(from, to, state.schema.text(url, [enhancedLink]));
+
+  // Ensure that the selection doesn't jump when the the current selection is within the range
+  if (endPosition < to) {
     return tr.setSelection(TextSelection.create(state.doc, endPosition));
   }
 
   return tr;
 };
 
+/**
+ * Retrieves all the automatically applied URLs from the state.
+ */
 const getUrlsFromState = (state: EditorState, markName: string) => {
   const $pos = state.doc.resolve(0);
   let marks: Mark[] = [];
@@ -236,10 +254,12 @@ const isSetEqual = <GSetType>(setOne: Set<GSetType>, setTwo: Set<GSetType>) => {
   if (setOne.size !== setTwo.size) {
     return false;
   }
+
   for (const val of setOne) {
     if (!setTwo.has(val)) {
       return false;
     }
   }
+
   return true;
 };
