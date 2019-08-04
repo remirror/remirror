@@ -1,17 +1,17 @@
 plugins:
   - react
   - '@typescript-eslint'
-extends: 
+extends:
   - 'prettier'
   # - 'plugin:react/recommended'
 # rules:
 #   'react/prop-types':
 #     - off
 parser: '@typescript-eslint/parser'
-parserOptions: 
+parserOptions:
   ecmaVersion: 6
   sourceType: module
-  ecmaFeatures: 
+  ecmaFeatures:
     jsx: true #false is the default
     useJSXTextNode: true # true is the default
     project: './tsconfig.json'
