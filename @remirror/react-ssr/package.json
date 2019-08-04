@@ -32,7 +32,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@emotion/core": "^10.0.14",
+    "@emotion/core": "^10.0.15",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/renderer-react": "0.4.2-canary.2",
     "@types/min-document": "^2.19.0",

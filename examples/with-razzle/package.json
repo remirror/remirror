@@ -11,8 +11,8 @@
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@emotion/core": "10.0.14",
-    "@emotion/styled": "10.0.14",
+    "@emotion/core": "10.0.15",
+    "@emotion/styled": "10.0.15",
     "@remirror/showcase": "0.4.2-canary.2",
     "express": "4.17.1",
     "react": "16.8.6",

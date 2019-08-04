@@ -17,8 +17,8 @@
   },
   "dependencies": {
     "@babel/runtime": "7.5.5",
-    "@emotion/core": "10.0.14",
-    "@emotion/styled": "10.0.14",
+    "@emotion/core": "10.0.15",
+    "@emotion/styled": "10.0.15",
     "@mdx-js/mdx": "1.1.1",
     "@mdx-js/react": "1.1.1",
     "@reach/router": "1.2.1",
