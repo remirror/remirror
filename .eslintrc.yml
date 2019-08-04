@@ -1,0 +1,20 @@
+plugins:
+  - react
+  - '@typescript-eslint'
+extends: 
+  - 'prettier'
+  # - 'plugin:react/recommended'
+# rules:
+#   'react/prop-types':
+#     - off
+parser: '@typescript-eslint/parser'
+parserOptions: 
+  ecmaVersion: 6
+  sourceType: module
+  ecmaFeatures: 
+    jsx: true #false is the default
+    useJSXTextNode: true # true is the default
+    project: './tsconfig.json'
+settings:
+  react: # https://github.com/yannickcr/eslint-plugin-react#configuration
+    version: detect
