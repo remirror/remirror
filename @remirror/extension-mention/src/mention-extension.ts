@@ -169,7 +169,6 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     };
   }
 
-  // this is some @awesome text and #should @work
   public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
     return this.options.matchers.map(matcher => {
       const { startOfLine, char, supportedCharacters } = { ...DEFAULT_MATCHER, ...matcher };

@@ -1,9 +1,7 @@
-import { ObjectInterpolation } from '@emotion/core';
 import {
   Attrs,
   Cast,
   CommandNodeTypeParams,
-  EDITOR_CLASS_NAME,
   ExtensionManagerNodeTypeParams,
   isElementDOMNode,
   NodeExtension,
@@ -11,9 +9,9 @@ import {
   replaceText,
 } from '@remirror/core';
 import { ReactNodeView } from '@remirror/react';
-import { DefaultEmoji } from './components/emoji';
-import { createEmojiPlugin } from './plugin';
-import { EmojiAttrs, EmojiExtensionOptions } from './types';
+import { DefaultEmoji } from './components/emoji-component';
+import { createEmojiPlugin } from './emoji-plugin';
+import { EmojiAttrs, EmojiExtensionOptions } from './emoji-types';
 
 export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
   /**
@@ -25,11 +23,10 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
 
   get defaultOptions() {
     return {
-      extraAttrs: [],
       transformAttrs: (attrs: Pick<EmojiAttrs, 'name'>) => ({
         'aria-label': `Emoji: ${attrs.name}`,
         title: `Emoji: ${attrs.name}`,
-        class: `${EDITOR_CLASS_NAME}-emoji-node${this.options.className ? ' ' + this.options.className : ''}`,
+        class: this.options.className,
       }),
       className: '',
       size: '1.1em',
@@ -44,7 +41,6 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
       inline: true,
       group: 'inline',
       selectable: false,
-      atom: false,
       attrs: {
         id: { default: '' },
         native: { default: '' },
@@ -83,6 +79,7 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
       ],
       toDOM: node => {
         const { id, name, native, colons, skin, useNative } = node.attrs as EmojiAttrs;
+        console.log(transformAttrs({ name }));
         const attrs = {
           'data-emoji-id': id,
           'data-emoji-colons': colons,
@@ -90,7 +87,6 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
           'data-emoji-name': name,
           'data-emoji-skin': !isNaN(Number(skin)) ? String(skin) : '',
           'data-use-native': useNative ? 'true' : 'false',
-          contenteditable: 'false',
           ...transformAttrs({ name }),
         };
         return ['span', attrs, native];
@@ -119,21 +115,10 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
   public nodeView({ portalContainer }: ExtensionManagerNodeTypeParams) {
     const { EmojiComponent, ...options } = this.options;
 
-    const defaultStyle: ObjectInterpolation<undefined> = {
-      userSelect: 'all',
-      display: 'inline-block',
-      span: {
-        display: 'inline-block',
-        height: options.size,
-        width: options.size,
-      },
-    };
-
     return ReactNodeView.createNodeView({
       Component: EmojiComponent,
       portalContainer,
       options,
-      style: [defaultStyle, options.style],
     });
   }
 }

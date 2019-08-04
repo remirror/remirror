@@ -116,7 +116,6 @@ export class ReactNodeView<
       this.contentDOMWrapper = contentDOMWrapper || contentDOM;
     }
 
-    // Add a fixed class and a dynamic class to this node (allows for custom styles being added in configuration)
     this.domRef.classList.add(`${EDITOR_CLASS_NAME}-${this.node.type.name}-node-view`);
 
     this.renderReactComponent(() => this.render(this.handleRef));
@@ -267,6 +266,7 @@ export class ReactNodeView<
    * This is called whenever the node is being destroyed.
    */
   public destroy() {
+    console.log('destroy being called!');
     if (!this.domRef) {
       return;
     }

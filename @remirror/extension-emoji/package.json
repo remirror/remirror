@@ -33,6 +33,7 @@
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/react": "0.4.2-canary.2",
     "@types/emoji-mart": "^2.8.4",
+    "@types/emoji-regex": "^8.0.0",
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.9.0",

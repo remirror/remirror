@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { PortalContainer, PortalMap } from '@remirror/core';
@@ -22,9 +22,13 @@ export const RemirrorPortals = ({ portalContainer }: RemirrorPortalsProps) => {
   /**
    * Update the state whenever the portal is updated.
    */
-  const onPortalChange = (portalMap: PortalMap) => {
-    setState(Array.from(portalMap.entries()));
-  };
+  const onPortalChange = useCallback(
+    (portalMap: PortalMap) => {
+      setState(Array.from(portalMap.entries()));
+      // console.log(Array.from(portalMap.entries()));
+    },
+    [state],
+  );
 
   useEffect(() => {
     // Auto disposed when the component un-mounts
@@ -33,13 +37,14 @@ export const RemirrorPortals = ({ portalContainer }: RemirrorPortalsProps) => {
 
   return (
     <>
-      {state.map(([container, { render: Component, key }]) =>
-        createPortal(
-          <Portal container={container} Component={Component} portalContainer={portalContainer} />,
-          container,
-          key,
-        ),
-      )}
+      {state.map(([container, { render: Component, key }]) => (
+        <Fragment key={key}>
+          {createPortal(
+            <Portal container={container} Component={Component} portalContainer={portalContainer} />,
+            container,
+          )}
+        </Fragment>
+      ))}
     </>
   );
 };
@@ -68,6 +73,7 @@ const Portal = ({ portalContainer, container, Component }: PortalProps) => {
      * Portals are unmounted when their host container is removed from the dom.
      */
     return () => {
+      console.log('about to delete a portal');
       portalContainer.remove(container);
     };
   }, [portalContainer]);

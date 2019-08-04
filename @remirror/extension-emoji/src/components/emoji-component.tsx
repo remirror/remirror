@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 
 import { NimbleEmoji } from 'emoji-mart';
-import { DefaultEmojiProps } from '../types';
+import { DefaultEmojiProps } from '../emoji-types';
 
 export const DefaultEmoji: FC<DefaultEmojiProps> = ({ node, options }) => {
   const { set, size, emojiData } = options;
@@ -20,7 +20,7 @@ export const DefaultEmoji: FC<DefaultEmojiProps> = ({ node, options }) => {
       size={size as any}
       skin={skin || undefined}
     >
-      &nbsp;
+      <span style={{ visibility: 'hidden' }}>{native}</span>
     </NimbleEmoji>
   );
 };
