@@ -13,7 +13,6 @@ import SkipLink from '../components/skip-link';
 import { RootLayoutProps } from '../typings';
 
 export const Layout: FC<RootLayoutProps> = ({ children, ...props }) => {
-  console.log(props);
   const { frontmatter } = props.pageContext;
   const { fullWidth = false } = frontmatter ? frontmatter : {};
   const [menuOpen, setMenuOpen] = useState(false);

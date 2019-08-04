@@ -266,7 +266,6 @@ export class ReactNodeView<
    * This is called whenever the node is being destroyed.
    */
   public destroy() {
-    console.log('destroy being called!');
     if (!this.domRef) {
       return;
     }

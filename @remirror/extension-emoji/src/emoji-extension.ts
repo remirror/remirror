@@ -79,7 +79,6 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
       ],
       toDOM: node => {
         const { id, name, native, colons, skin, useNative } = node.attrs as EmojiAttrs;
-        console.log(transformAttrs({ name }));
         const attrs = {
           'data-emoji-id': id,
           'data-emoji-colons': colons,

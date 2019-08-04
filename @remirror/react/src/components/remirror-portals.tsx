@@ -73,7 +73,6 @@ const Portal = ({ portalContainer, container, Component }: PortalProps) => {
      * Portals are unmounted when their host container is removed from the dom.
      */
     return () => {
-      console.log('about to delete a portal');
       portalContainer.remove(container);
     };
   }, [portalContainer]);
