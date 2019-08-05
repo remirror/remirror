@@ -7,7 +7,6 @@ import {
   PortalContainer,
   SSRComponentProps,
 } from '@remirror/core';
-import { Interpolation } from 'emotion';
 import { ComponentType } from 'react';
 
 export interface NodeViewComponentProps<
@@ -54,23 +53,13 @@ export interface ReactNodeViewParams<
    * hold node views
    */
   portalContainer: PortalContainer;
-
-  /**
-   * The emotion styles which render with this node view.
-   */
-  style?: Interpolation;
-
-  /**
-   * Set to true to remove emotion styling from this nodeView.
-   */
-  withoutEmotion?: boolean;
 }
 
 export interface CreateNodeViewParams<
   GOptions extends BaseExtensionOptions = BaseExtensionOptions,
   GAttrs extends Attrs = Attrs
 >
-  extends Pick<ReactNodeViewParams, 'withoutEmotion' | 'style' | 'portalContainer'>,
+  extends Pick<ReactNodeViewParams, 'portalContainer'>,
     ComponentParams<GOptions, GAttrs>,
     BaseExtensionOptionsParams<GOptions> {}
 

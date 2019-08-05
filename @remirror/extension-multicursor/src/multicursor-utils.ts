@@ -1,4 +1,4 @@
-import { keyframes } from 'emotion';
+import { keyframes } from '@emotion/core';
 
 export const blink = (color: string) => keyframes`
   from, to {

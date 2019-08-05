@@ -63,7 +63,10 @@ export class PortalContainer {
    * Responsible for registering a new portal by rendering the react element into the provided container.
    */
   public render({ render, container }: RenderMethodParams) {
-    this.portals.set(container, { render, key: uniqueId() });
+    const portal = this.portals.get(container);
+    const key = portal ? portal.key : uniqueId();
+
+    this.portals.set(container, { render, key });
     this.update();
   }
 

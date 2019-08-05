@@ -30,7 +30,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@emotion/core": "^10.0.14",
+    "@emotion/core": "^10.0.15",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2",
     "@types/prismjs": "^1.16.0",
@@ -42,7 +42,6 @@
     "@types/prosemirror-view": "^1.9.0",
     "@types/react-syntax-highlighter": "^10.2.1",
     "@types/refractor": "^2.8.0",
-    "emotion": "^10.0.14",
     "prosemirror-commands": "^1.0.8",
     "prosemirror-inputrules": "^1.0.4",
     "prosemirror-keymap": "^1.0.1",

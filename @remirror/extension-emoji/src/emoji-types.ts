@@ -1,7 +1,7 @@
+import { Interpolation } from '@emotion/core';
 import { Attrs, NodeExtensionOptions, NodeType, PluginKey } from '@remirror/core';
 import { NodeViewComponentProps } from '@remirror/react';
 import { BaseEmoji, Data, EmojiSet } from 'emoji-mart';
-import { Interpolation } from 'emotion';
 import { ComponentType } from 'react';
 
 export type EmojiAttrs = Attrs<

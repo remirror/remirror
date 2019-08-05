@@ -1,13 +1,10 @@
-// tslint:disable-next-line: no-reference
-/// <reference path="./patches.d.ts" />
-
 import { EditorSchema, TextParams } from '@remirror/core';
 import { Data } from 'emoji-mart';
 import emojiRegex from 'emoji-regex/es2015/text';
 import { NodeType } from 'prosemirror-model';
 import { Plugin, Transaction } from 'prosemirror-state';
-import { getEmojiDataByNativeString } from './helpers';
-import { CreateEmojiPluginParams } from './types';
+import { getEmojiDataByNativeString } from './emoji-helpers';
+import { CreateEmojiPluginParams } from './emoji-types';
 
 export const createEmojiPlugin = ({ key, emojiData, type }: CreateEmojiPluginParams) => {
   return new Plugin({

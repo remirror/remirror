@@ -36,7 +36,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@emotion/core": "^10.0.14",
+    "@emotion/core": "^10.0.15",
     "@types/memoize-one": "4.1.1",
     "@types/min-document": "^2.19.0",
     "@types/nanoevents": "1.0.0",
@@ -52,7 +52,6 @@
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-transform": "^1.1.0",
     "deepmerge": "^4.0.0",
-    "emotion": "^10.0.14",
     "fast-deep-equal": "^2.0.1",
     "memoize-one": "5.0.5",
     "min-document": "2.19.0",

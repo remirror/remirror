@@ -1,5 +1,5 @@
 import { Attrs, deepMerge, omit } from '@remirror/core';
-import { CompositionExtension, NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
+import { NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import { EmojiExtension, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
 import {
@@ -295,8 +295,8 @@ export class TwitterEditor extends PureComponent<TwitterEditorProps, State> {
             }}
             placeholder={placeholder}
           />
+
           <RemirrorExtension Constructor={NodeCursorExtension} />
-          <RemirrorExtension Constructor={CompositionExtension} />
           <RemirrorExtension
             Constructor={MentionExtension}
             matchers={matchers}

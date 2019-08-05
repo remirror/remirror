@@ -1,5 +1,5 @@
+import { css } from '@emotion/core';
 import { Extension, Plugin } from '@remirror/core';
-import { css } from 'emotion';
 import { createMulticursorPlugin } from './multicursor-plugin';
 import { MulticursorExtensionOptions } from './multicursor-types';
 import { blink } from './multicursor-utils';
