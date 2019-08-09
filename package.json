@@ -23,7 +23,7 @@
     "checks:publish": "run-s checks build test:e2e",
     "ci": "yarn clean && yarn",
     "ci:audit": "audit-ci --high",
-    "clean": "yarn if-clean git clean -fdx --exclude=.config.json",
+    "clean": "yarn if-clean git clean -fdx --exclude=.config.json --exclude=node_modules",
     "clean:force": "git clean -fdx",
     "clean:modules": "yarn if-clean git clean -fdx @remirror support docs",
     "dev:modules": "lerna run --no-private dev --parallel",
