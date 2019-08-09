@@ -80,7 +80,7 @@ yarn stop:checks
 
 ### Contributing
 
-Please read [contributing.md](https://github.com/ifiokjr/remirror/blob/master/docs/pages/contributing.md) for details on our code of conduct, and the process for submitting pull requests.
+Please read [contributing.md](docs/pages/contributing.md) for details on our code of conduct, and the process for submitting pull requests.
 
 ### Versioning
 
