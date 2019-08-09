@@ -76,9 +76,10 @@ yarn stop:checks
 
 ## Development
 
-First, run `yarn build` so the initial version of everything is built. After
-that, you can run `yarn dev:modules` to watch for changes and recompile as
-necessary.
+First, run `yarn build` so the initial version of everything is built.
+
+After your first build, you can run `yarn dev:modules` to watch for changes
+and recompile as necessary.
 
 <br />
 
