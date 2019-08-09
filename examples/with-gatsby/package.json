@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "name": "with-gatsby",
+  "license": "MIT",
+  "version": "0.4.2-canary.2",
+  "scripts": {
+    "start": "gatsby develop",
+    "develop": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@remirror/core": "0.4.2-canary.2",
+    "@remirror/core-extensions": "0.4.2-canary.2",
+    "@remirror/editor-twitter": "0.4.2-canary.2",
+    "@remirror/editor-wysiwyg": "0.4.2-canary.2",
+    "@remirror/react": "0.4.2-canary.2",
+    "@remirror/showcase": "0.4.2-canary.2",
+    "gatsby": "2.13.54",
+    "gatsby-plugin-typescript": "2.1.2",
+    "react": "16.9.0",
+    "react-dom": "16.9.0"
+  }
+}
