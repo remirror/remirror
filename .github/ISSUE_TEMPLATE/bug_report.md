@@ -15,4 +15,4 @@ about: Create a report to help us improve
 
 - [ ] I have read the [**contributing**][contributing] document.
 
-[contributing]: https://github.com/ifiokjr/remirror/blob/master/docs/pages/contributing.md
+[contributing]: https://github.com/ifiokjr/remirror/blob/canary/docs/pages/contributing.md
