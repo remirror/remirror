@@ -74,6 +74,14 @@ yarn stop:checks
 
 <br />
 
+## Development
+
+First, run `yarn build` so the initial version of everything is built. After
+that, you can run `yarn dev:modules` to watch for changes and recompile as
+necessary.
+
+<br />
+
 ## Pull Request (PR) Process
 
 Once your work is complete you'll want to create a Pull Request to share all that goodness with the rest of us.
