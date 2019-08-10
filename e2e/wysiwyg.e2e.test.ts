@@ -58,14 +58,14 @@ describe('Wysiwyg Showcase', () => {
     const formatted = `function concatAwesome(str: string) {\n  return 'Awesome ' + str;\n}\n`;
     it('supports formatting', async () => {
       await $editor.type('```ts ' + unformatted);
-      await pressKeyWithModifier(mod('ShiftAlt', 'f'));
+      await pressKeyWithModifier(mod('ShiftAlt', 'KeyF'));
       await expect(textContent('pre.language-ts > code')).resolves.toBe(formatted);
     });
 
     it('preserves position while formatting', async () => {
       await $editor.type('```ts ' + unformatted);
       await press({ key: 'ArrowLeft', count: 9 });
-      await pressKeyWithModifier(mod('ShiftAlt', 'f'));
+      await pressKeyWithModifier(mod('ShiftAlt', 'KeyF'));
       await $editor.type(' World');
       await expect(textContent('pre.language-ts > code')).resolves.toBe(
         `function concatAwesome(str: string) {\n  return 'Awesome World ' + str;\n}\n`,
@@ -81,7 +81,7 @@ describe('Wysiwyg Showcase', () => {
       await press({ key: 'ArrowRight', count: 7 });
       await page.keyboard.up('Shift');
 
-      await pressKeyWithModifier(mod('ShiftAlt', 'f'));
+      await pressKeyWithModifier(mod('ShiftAlt', 'KeyF'));
       await $editor.type('Oops');
 
       await expect(textContent('pre.language-ts > code')).resolves.toBe(
