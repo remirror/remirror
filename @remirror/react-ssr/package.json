@@ -38,8 +38,8 @@
     "@types/min-document": "^2.19.0",
     "@types/prosemirror-view": "1.9.0",
     "min-document": "^2.19.0",
-    "prosemirror-state": "^1.2.3",
-    "prosemirror-view": "^1.9.13"
+    "prosemirror-state": "^1.2.4",
+    "prosemirror-view": "^1.10.0"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",

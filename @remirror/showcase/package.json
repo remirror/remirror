@@ -43,7 +43,7 @@
     "@remirror/extension-epic-mode": "0.4.2-canary.2",
     "@remirror/react": "0.4.2-canary.2",
     "@types/match-sorter": "2.3.0",
-    "@types/prettier": "^1.18.1",
+    "@types/prettier": "^1.18.2",
     "emoji-mart": "^2.11.1",
     "match-sorter": "^4.0.0",
     "prettier": "^1.18.2"

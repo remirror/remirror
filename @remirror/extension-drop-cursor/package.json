@@ -46,9 +46,9 @@
     "prosemirror-commands": "^1.0.8",
     "prosemirror-inputrules": "^1.0.4",
     "prosemirror-keymap": "^1.0.1",
-    "prosemirror-state": "^1.2.3",
+    "prosemirror-state": "^1.2.4",
     "prosemirror-transform": "^1.1.3",
-    "prosemirror-view": "^1.9.13"
+    "prosemirror-view": "^1.10.0"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",

@@ -44,8 +44,8 @@
     "hoist-non-react-statics": "^3.3.0",
     "prosemirror-commands": "^1.0.8",
     "prosemirror-model": "^1.7.1",
-    "prosemirror-state": "^1.2.3",
-    "prosemirror-view": "^1.9.13"
+    "prosemirror-state": "^1.2.4",
+    "prosemirror-view": "^1.10.0"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",

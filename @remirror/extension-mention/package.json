@@ -35,8 +35,8 @@
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.9.0",
     "prosemirror-keymap": "^1.0.1",
-    "prosemirror-state": "^1.2.3",
-    "prosemirror-view": "^1.9.13"
+    "prosemirror-state": "^1.2.4",
+    "prosemirror-view": "^1.10.0"
   },
   "publishConfig": {
     "access": "public"

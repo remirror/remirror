@@ -40,8 +40,8 @@
     "emoji-mart": "2.11.1",
     "emoji-regex": "^8.0.0",
     "prosemirror-model": "^1.7.1",
-    "prosemirror-state": "^1.2.3",
-    "prosemirror-view": "^1.9.13"
+    "prosemirror-state": "^1.2.4",
+    "prosemirror-view": "^1.10.0"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
