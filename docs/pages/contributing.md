@@ -25,7 +25,7 @@ To work on examples or the documentation website run:
 yarn docs
 ```
 
-Once the build completes (can take a minute the first time) navigate to http://localhost:3000 (or another port if that one is already being used).
+Once the build completes (can take a minute the first time) navigate to http://localhost:8000 (or another port if that one is already being used).
 
 The documentation is written using [gatsby] and all files and dependencies are available in the `/docs/` subdirectory. To add a new dependency, you will need to add it to `/docs/package.json` and not the top level package.json file.
 
@@ -71,6 +71,15 @@ To stop per-commit / per-push checks run:
 ```bash
 yarn stop:checks
 ```
+
+<br />
+
+## Development
+
+First, run `yarn build` so the initial version of everything is built.
+
+After your first build, you can run `yarn dev:modules` to watch for changes
+and recompile as necessary.
 
 <br />
 
