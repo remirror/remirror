@@ -6,9 +6,9 @@ import {
   RemirrorElementType,
 } from '@remirror/react-utils';
 import React, { ProviderProps, ReactElement } from 'react';
-import { defaultProps } from '../constants';
-import { RemirrorContext } from '../contexts';
-import { useRemirrorManager } from '../hooks';
+import { defaultProps } from '../react-constants';
+import { RemirrorContext } from '../react-contexts';
+import { useRemirrorManager } from '../react-hooks';
 import { Remirror } from './remirror';
 import { RemirrorProps } from './remirror-types';
 

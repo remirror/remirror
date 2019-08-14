@@ -1,0 +1,44 @@
+{
+  "name": "@remirror/react-node-view",
+  "description": "Create your prosemirror node views with react",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/react-node-view",
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/react-node-view",
+  "version": "0.4.2-canary.2",
+  "main": "lib/index.js",
+  "module": "lib/dist/react-node-view.esm.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "build": "run-p build:*",
+    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "dev": "run-p dev:*",
+    "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
+    "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
+    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@babel/runtime": "^7.5.5",
+    "@emotion/core": "^10.0.15",
+    "@remirror/core-constants": "0.4.2-canary.2",
+    "@remirror/core-helpers": "0.4.2-canary.2",
+    "@remirror/core-types": "0.4.2-canary.2",
+    "@remirror/core-utils": "0.4.2-canary.2",
+    "@remirror/react-portals": "0.4.2-canary.2"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.8.0",
+    "react": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/react-node-view.cjs.js",
+  "sideEffects": false
+}

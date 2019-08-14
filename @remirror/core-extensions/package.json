@@ -1,14 +1,10 @@
 {
   "name": "@remirror/core-extensions",
-  "description": "Core extensions for the remirror wysiwyg editor",
+  "description": "Provides the core extensions for your remirror editor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-extensions",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/core-extensions"
-  },
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-extensions",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/core-extensions.esm.js",
@@ -31,6 +27,10 @@
     "@babel/runtime": "^7.5.5",
     "@emotion/core": "^10.0.15",
     "@remirror/core": "0.4.2-canary.2",
+    "@remirror/core-constants": "0.4.2-canary.2",
+    "@remirror/core-helpers": "0.4.2-canary.2",
+    "@remirror/core-types": "0.4.2-canary.2",
+    "@remirror/core-utils": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-dropcursor": "^1.0.0",

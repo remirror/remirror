@@ -1,12 +1,12 @@
+import { Extension } from '@remirror/core';
 import {
   BaseExtensionOptions,
   CommandFunction,
   DispatchFunction,
   EditorState,
-  environment,
-  Extension,
   ExtensionManagerParams,
-} from '@remirror/core';
+} from '@remirror/core-types';
+import { environment } from '@remirror/core-utils';
 import { history, redo, redoDepth, undo, undoDepth } from 'prosemirror-history';
 
 export interface HistoryExtensionOptions extends BaseExtensionOptions {

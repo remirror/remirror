@@ -1,6 +1,6 @@
+import { RemirrorTheme } from '@remirror/core';
 import { SuggestionStateMatch } from '@remirror/extension-mention';
 import { ManagedRemirrorProviderProps } from '@remirror/react';
-import { RemirrorTheme } from '@remirror/ui';
 import { Data, EmojiSet } from 'emoji-mart';
 
 export type OnMentionChangeParams = MentionState & {

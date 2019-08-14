@@ -1,4 +1,4 @@
-import { Attrs, deepMerge, omit } from '@remirror/core';
+import { Attrs, deepMerge, omit, RemirrorTheme } from '@remirror/core';
 import { NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import { EmojiExtension, isBaseEmoji } from '@remirror/extension-emoji';
 import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
@@ -12,7 +12,7 @@ import {
   SuggestionStateMatch,
 } from '@remirror/extension-mention';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
-import { RemirrorTheme, RemirrorThemeProvider } from '@remirror/ui';
+import { RemirrorThemeProvider } from '@remirror/ui';
 import React, { createRef, PureComponent } from 'react';
 import { socialEditorTheme } from '../social-theme';
 import {
@@ -56,7 +56,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * The ref for the element that toggles the emoji picker display.
    */
-  private toggleEmojiRef = createRef<HTMLElement>();
+  private toggleEmojiRef = createRef<HTMLButtonElement>();
 
   /**
    * The mention information

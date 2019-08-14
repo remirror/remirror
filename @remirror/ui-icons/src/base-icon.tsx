@@ -1,7 +1,7 @@
 import { SerializedStyles } from '@emotion/core';
 import VisuallyHidden from '@reach/visually-hidden';
-import { uniqueId } from '@remirror/core';
-import { SxThemeProp, useRemirrorTheme, WithVariants } from '@remirror/ui';
+import { RemirrorInterpolation, SxThemeProp, uniqueId, WithVariants } from '@remirror/core';
+import { useRemirrorTheme } from '@remirror/ui';
 import React, { forwardRef, useMemo } from 'react';
 
 export interface IconProps {
@@ -13,7 +13,7 @@ export interface IconProps {
   /**
    * Custom styles to add to the icon
    */
-  style?: null | undefined | string | SerializedStyles | WithVariants<SxThemeProp>;
+  style?: RemirrorInterpolation;
 
   /**
    * The color to set the icon

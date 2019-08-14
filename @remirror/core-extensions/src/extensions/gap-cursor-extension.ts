@@ -1,4 +1,5 @@
-import { Extension, isInstanceOf } from '@remirror/core';
+import { Extension } from '@remirror/core';
+import { isInstanceOf } from '@remirror/core-helpers';
 import { css } from '@remirror/react-utils';
 import { gapCursor, GapCursor } from 'prosemirror-gapcursor';
 

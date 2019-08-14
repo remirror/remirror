@@ -6,7 +6,7 @@ import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
 import { createTestManager } from '@test-fixtures/schema-helpers';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { useRemirror } from '../../hooks';
+import { useRemirror } from '../../react-hooks';
 import { ManagedRemirrorProvider, RemirrorProvider } from '../providers';
 import { RemirrorManager } from '../remirror-manager';
 

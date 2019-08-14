@@ -4,11 +4,7 @@
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-icons",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/ui-icons"
-  },
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-icons",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/ui-icons.esm.js",
@@ -30,16 +26,14 @@
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "@emotion/core": "^10.0.15",
-    "@remirror/core": "0.4.2-canary.2",
     "@reach/visually-hidden": "^0.1.4",
-    "@remirror/ui": "0.4.2-canary.2",
-    "@remirror/react-utils": "0.4.2-canary.2"
+    "@types/reach__visually-hidden": "^0.2.0",
+    "@remirror/core": "0.4.2-canary.2",
+    "@remirror/ui": "0.4.2-canary.2"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
-    "@types/react-dom": "^16.8.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.8.0"
   },
   "devDependencies": {
     "@remirror/core-extensions": "0.4.2-canary.2",

@@ -4,11 +4,7 @@
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/dev",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/dev"
-  },
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/dev",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/dev.esm.js",
@@ -36,7 +32,7 @@
     "@remirror/react": "0.4.2-canary.2",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.9.0",
-    "@types/react": "^16.8.22",
+    "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "prosemirror-state": "^1.2.3",
     "prosemirror-view": "^1.9.13",

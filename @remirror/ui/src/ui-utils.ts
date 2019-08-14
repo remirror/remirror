@@ -1,15 +1,19 @@
 import { css as serializeStyles, SerializedStyles } from '@emotion/core';
-import { deepMerge, get, isArray, isFunction, isPlainObject, isString, Key } from '@remirror/core';
-import { css } from '@styled-system/css';
 import {
+  deepMerge,
+  get,
+  isArray,
+  isFunction,
+  isPlainObject,
+  isString,
   RemirrorTheme,
   RemirrorThemeColorModes,
   RemirrorThemeContextType,
-  RemirrorThemeStyles,
   SxThemeProp,
-  ThemedProps,
+  ThemeParams,
   WithVariants,
-} from './ui-types';
+} from '@remirror/core';
+import { css } from '@styled-system/css';
 
 /**
  * Applies the selected color mode to the theme.
@@ -43,13 +47,6 @@ export const getFactory = (theme: RemirrorTheme) => <GReturn = any>(
 ): GReturn => get(path, theme, fallback);
 
 /**
- * Get the specific style key from the theme.
- */
-export const getStyleFactory = (theme: RemirrorTheme) => (
-  name: Key<RemirrorThemeStyles>,
-): WithVariants<SxThemeProp> | undefined => get(['styles', name], theme);
-
-/**
  * Checks whether an object passed is a serialized style
  */
 export const isSerializedStyle = (val: unknown): val is SerializedStyles =>
@@ -58,7 +55,7 @@ export const isSerializedStyle = (val: unknown): val is SerializedStyles =>
 /**
  * Return true when a theme prop exists on the value passed in.
  */
-export const isThemedProps = (val: unknown): val is ThemedProps =>
+export const hasThemeProp = (val: unknown): val is ThemeParams =>
   isPlainObject(val) && isPlainObject(val.theme);
 
 /**
@@ -77,7 +74,7 @@ export const isThemedProps = (val: unknown): val is ThemedProps =>
  * ```
  */
 export const sx: RemirrorThemeContextType['sx'] = (...styles) => props => {
-  const theme = isThemedProps(props) ? props.theme : props;
+  const theme = hasThemeProp(props) ? props.theme : props;
 
   return serializeStyles(
     styles.map(style =>

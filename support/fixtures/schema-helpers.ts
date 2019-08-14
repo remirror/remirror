@@ -6,7 +6,6 @@ import {
   PrioritizedExtension,
   Extension,
   BaseExtensionOptions,
-  PortalContainer,
 } from '@remirror/core';
 import {
   ParagraphExtension,
@@ -19,10 +18,13 @@ import {
   HeadingExtension,
 } from '@remirror/core-extensions';
 import minDocument from 'min-document';
+import { PortalContainer } from '@remirror/react-portals';
+import { defaultRemirrorThemeValue } from '@remirror/ui';
 
 export const helpers = {
   getState: Cast(jest.fn()),
   portalContainer: new PortalContainer(),
+  getTheme: () => defaultRemirrorThemeValue,
 };
 
 export const baseExtensions = [

@@ -7,7 +7,7 @@ import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
 import { TestExtension } from '@test-fixtures/schema-helpers';
 import React, { FC } from 'react';
 import { renderToString } from 'react-dom/server';
-import { useRemirrorManager } from '../../hooks';
+import { useRemirrorManager } from '../../react-hooks';
 import { ManagedRemirrorProvider } from '../providers';
 import { RemirrorExtension } from '../remirror-extension';
 import { RemirrorManager } from '../remirror-manager';

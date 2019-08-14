@@ -1,8 +1,8 @@
 import { css, ThemeContext } from '@emotion/core';
+import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core';
 import { Context, createContext } from 'react';
 import { baseTheme } from './ui-theme';
-import { RemirrorTheme, RemirrorThemeContextType } from './ui-types';
-import { getColorModes, getFactory, getStyleFactory, sx } from './ui-utils';
+import { getColorModes, getFactory, sx } from './ui-utils';
 
 /**
  * A noop function that mimics the css emotion call but renders no output.
@@ -24,18 +24,16 @@ const sxNoOp: typeof sx = () => undefined as any;
 export const EmotionThemeContext = ThemeContext as Context<RemirrorTheme>;
 
 export const defaultRemirrorThemeValue: RemirrorThemeContextType = {
-  __REMIRROR_THEME_ACTIVE__: false,
   theme: baseTheme,
   css,
   sx,
   get: getFactory(baseTheme),
-  getStyle: getStyleFactory(baseTheme),
   colorMode: baseTheme.initialColorMode,
   colorModes: getColorModes(baseTheme),
   setColorMode: () => {},
 };
 
-export const withoutEmotionProps = {
+export const withoutEmotionProps: Pick<RemirrorThemeContextType, 'css' | 'sx'> = {
   css: cssNoOp,
   sx: sxNoOp,
 };

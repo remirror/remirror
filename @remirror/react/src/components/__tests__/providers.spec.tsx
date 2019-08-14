@@ -2,8 +2,8 @@ import { InjectedRemirrorProps } from '@remirror/react-utils';
 import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
 import { render } from '@testing-library/react';
 import React, { FC } from 'react';
-import { withRemirror } from '../../hocs';
-import { useRemirror } from '../../hooks';
+import { withRemirror } from '../../react-hocs';
+import { useRemirror } from '../../react-hooks';
 import { ManagedRemirrorProvider } from '../providers';
 import { RemirrorManager } from '../remirror-manager';
 

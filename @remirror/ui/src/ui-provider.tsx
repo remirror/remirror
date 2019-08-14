@@ -1,11 +1,9 @@
-import { bool, deepMerge, isFunction } from '@remirror/core';
+import { bool, deepMerge, isFunction, RemirrorTheme, RemirrorThemeContextType } from '@remirror/core';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import { FC, ReactElement, useMemo, useState } from 'react';
 import { defaultRemirrorThemeValue, RemirrorThemeContext, withoutEmotionProps } from './ui-context';
 import { useEmotionTheme, useRemirrorTheme } from './ui-hooks';
-import { RemirrorTheme, RemirrorThemeContextType } from './ui-types';
-import { applyColorMode, getColorModes, getFactory, getStyleFactory } from './ui-utils';
-
+import { applyColorMode, getColorModes, getFactory } from './ui-utils';
 type DisableMerge = 'parent' | 'base' | 'emotion';
 
 export interface RemirrorThemeProviderProps {
@@ -106,19 +104,14 @@ export const RemirrorThemeProvider: FC<RemirrorThemeProviderProps> = ({
   );
   const theme = applyColorMode(themeWithoutColorMode, colorMode);
 
-  const [get, getStyle, colorModes] = useMemo(
-    () => [getFactory(theme), getStyleFactory(theme), getColorModes(theme)],
-    [theme],
-  );
+  const [get, colorModes] = useMemo(() => [getFactory(theme), getColorModes(theme)], [theme]);
 
   const value = {
     ...defaultRemirrorThemeValue,
     ...(withoutEmotion ? withoutEmotionProps : {}),
-    __REMIRROR_THEME_ACTIVE__: true,
     parent,
     theme,
     get,
-    getStyle,
     colorMode,
     colorModes,
     setColorMode,

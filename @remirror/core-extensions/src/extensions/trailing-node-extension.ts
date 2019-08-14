@@ -1,14 +1,12 @@
+import { Extension, ExtensionParams } from '@remirror/core';
+import { uniqueArray } from '@remirror/core-helpers';
 import {
   BaseExtensionOptions,
-  Extension,
   ExtensionManagerParams,
-  ExtensionParams,
   ExtensionTagParams,
-  getPluginState,
-  nodeEqualsType,
   SchemaParams,
-  uniqueArray,
-} from '@remirror/core';
+} from '@remirror/core-types';
+import { getPluginState, nodeEqualsType } from '@remirror/core-utils';
 import { Plugin } from 'prosemirror-state';
 
 export interface TrailingNodeExtensionOptions extends BaseExtensionOptions {

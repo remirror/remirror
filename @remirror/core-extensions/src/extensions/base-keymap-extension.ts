@@ -1,4 +1,5 @@
-import { BaseExtensionOptions, Extension, KeyboardBindings } from '@remirror/core';
+import { Extension } from '@remirror/core';
+import { BaseExtensionOptions, KeyboardBindings } from '@remirror/core-types';
 import { baseKeymap, chainCommands, selectParentNode } from 'prosemirror-commands';
 import { undoInputRule } from 'prosemirror-inputrules';
 

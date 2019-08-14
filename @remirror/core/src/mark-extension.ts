@@ -1,14 +1,14 @@
-import { MarkType } from 'prosemirror-model';
-import { ExtensionType } from './constants';
-import { Extension } from './extension';
-import { isMarkActive } from './helpers/document';
+import { ExtensionType } from '@remirror/core-constants';
 import {
   BooleanExtensionCheck,
   EditorSchema,
   ExtensionManagerMarkTypeParams,
   MarkExtensionOptions,
   MarkExtensionSpec,
-} from './types';
+  MarkType,
+} from '@remirror/core-types';
+import { isMarkActive } from '@remirror/core-utils';
+import { Extension } from './extension';
 
 /**
  * All mark extensions should be created from here.

@@ -26,6 +26,8 @@ module.exports = {
     '@remirror\\/([a-z0-9-]+)$': baseDir('@remirror/$1/src'),
     'jest-remirror$': baseDir('packages', 'jest-remirror', 'src'),
     'jest-prosemirror$': baseDir('packages', 'jest-prosemirror', 'src'),
+    '@remirror/react-portals$': baseDir('packages', '@remirror/react-portals', 'src'),
+    remirror$: baseDir('packages', 'remirror', 'src'),
     '@test-fixtures/(.*)$': baseDir('support/fixtures/$1'),
   },
 };

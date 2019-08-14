@@ -1,5 +1,4 @@
-import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
-import { RemirrorTheme } from './ui-types';
+import { EDITOR_CLASS_SELECTOR, RemirrorTheme } from '@remirror/core';
 
 /**
  * This is the default theme used throughout the built in ui-components.

@@ -4,6 +4,7 @@ import {
   EditorState,
   ExtensionManager,
   RemirrorContentType,
+  RemirrorInterpolation,
   RenderEnvironment,
   SchemaFromExtensionList,
   StringHandlerParams,
@@ -16,7 +17,6 @@ import {
   RemirrorStateListenerParams,
   RenderPropFunction,
 } from '@remirror/react-utils';
-import { RemirrorInterpolation } from '@remirror/ui';
 
 export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension[]>
   extends StringHandlerParams {

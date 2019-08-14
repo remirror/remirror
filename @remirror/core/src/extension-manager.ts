@@ -1,8 +1,35 @@
 import { Interpolation } from '@emotion/core';
+import { bool, isEqual, isFunction, isInstanceOf } from '@remirror/core-helpers';
+import {
+  ActionMethod,
+  AnyActions,
+  AnyHelpers,
+  Attrs,
+  AttrsWithClass,
+  BooleanExtensionCheck,
+  CommandFunction,
+  CommandParams,
+  EditorSchema,
+  EditorStateParams,
+  EditorView,
+  ExtensionManagerInitParams,
+  ExtensionManagerParams,
+  ExtensionTags,
+  MarkExtensionSpec,
+  NodeExtensionSpec,
+  NodeViewMethod,
+  PlainObject,
+  PluginKey,
+  ProsemirrorPlugin,
+  RemirrorThemeContextType,
+  TransactionParams,
+} from '@remirror/core-types';
+import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from '@remirror/core-utils';
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
-import { EditorState, PluginKey } from 'prosemirror-state';
+import { PortalContainer } from '@remirror/react-portals';
+import { EditorState } from 'prosemirror-state';
 import { ComponentType } from 'react';
 import { isMarkExtension, isNodeExtension } from './extension-helpers';
 import {
@@ -25,33 +52,8 @@ import {
   NodeNames,
   PlainNames,
 } from './extension-types';
-import { bool, isEqual, isFunction, isInstanceOf } from './helpers';
-import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from './helpers/document';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
-import { PortalContainer } from './portal-container';
-import {
-  ActionMethod,
-  AnyActions,
-  AnyHelpers,
-  Attrs,
-  AttrsWithClass,
-  BooleanExtensionCheck,
-  CommandFunction,
-  CommandParams,
-  EditorSchema,
-  EditorStateParams,
-  EditorView,
-  ExtensionManagerInitParams,
-  ExtensionManagerParams,
-  ExtensionTags,
-  MarkExtensionSpec,
-  NodeExtensionSpec,
-  NodeViewMethod,
-  PlainObject,
-  ProsemirrorPlugin,
-  TransactionParams,
-} from './types';
 
 export interface ExtensionManagerData<
   GActions = AnyActions,
@@ -127,6 +129,11 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   public getState!: () => EditorState;
 
   /**
+   * Provides access to the theme and helpers from the RemirrorThemeContext
+   */
+  public getTheme!: () => RemirrorThemeContextType;
+
+  /**
    * Retrieve the portal container for any custom nodeViews. This is only
    * available after the first Initialization.
    */
@@ -180,7 +187,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    *
    * This is called by the view layer and provides
    */
-  public init({ getState, portalContainer }: ExtensionManagerInitParams) {
+  public init({ getState, portalContainer, getTheme }: ExtensionManagerInitParams) {
     if (this.initialized) {
       console.warn(
         'This manager is already in use. Avoid using the same manager for more than one editor as this may cause problems.',
@@ -188,6 +195,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
     }
 
     this.getState = getState;
+    this.getTheme = getTheme;
     this.portalContainer = portalContainer;
     this.initialized = true;
 
@@ -343,6 +351,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
       schema: this.schema,
       portalContainer: this.portalContainer,
       getState: this.getState,
+      getTheme: this.getTheme,
       getActions: this.getActions as any,
       getHelpers: this.getHelpers as any,
     };
@@ -699,7 +708,8 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * Type inference hack for node extension names.
    * Also provides a shorthand way for accessing types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
   public readonly _N!: NodeNames<this['extensions']>;
 
@@ -709,7 +719,8 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * Type inference hack for mark extension names.
    * Also provides a shorthand way for accessing types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
   public readonly _M!: MarkNames<this['extensions']>;
 
@@ -719,7 +730,8 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * Type inference hack for plain extension names.
    * Also provides a shorthand way for accessing types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
   public readonly _P!: PlainNames<this['extensions']>;
 
@@ -729,7 +741,8 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * Type inference hack for all extension names.
    * Also provides a shorthand way for accessing types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
   public readonly _Names!: this['_P'] | this['_N'] | this['_M'];
 
@@ -739,7 +752,8 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * Type inference hack for all the actions this manager provides.
    * Also provides a shorthand way for accessing types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
   public readonly _A!: ActionsFromExtensionList<this['extensions']>;
 
@@ -749,7 +763,8 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * Type inference hack for all the helpers this manager provides.
    * Also provides a shorthand way for accessing types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
   public readonly _H!: MappedHelpersFromExtensionList<this['extensions']>;
 
@@ -759,7 +774,8 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * Type inference hack for all the extensionData that this manager provides.
    * Also provides a shorthand way for accessing types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
   public readonly _D!: ExtensionManagerData<this['_A'], this['_H'], this['_N'], this['_M'], this['_P']>;
 }

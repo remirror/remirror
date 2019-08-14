@@ -1,4 +1,4 @@
-import { PortalContainer } from '../portal-container';
+import { PortalContainer } from '@remirror/react-portals';
 
 test('PortalContainer', () => {
   const portalContainer = new PortalContainer();

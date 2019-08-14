@@ -1,5 +1,6 @@
 import { Attrs } from '@remirror/core';
 import { useRemirror } from '@remirror/react';
+import { ResetButton } from '@remirror/ui-buttons';
 import React, { FC, RefObject } from 'react';
 import {
   ActiveTagData,
@@ -48,7 +49,7 @@ interface SocialEditorComponentProps
    * The ref for the toggle emoji button is passed through so that it can be used
    * in the parent component.
    */
-  toggleEmojiRef: RefObject<HTMLElement>;
+  toggleEmojiRef: RefObject<HTMLButtonElement>;
 
   /**
    * The current matching users.
@@ -122,14 +123,13 @@ export const SocialEditorComponent: FC<SocialEditorComponentProps> = ({
           </EmojiPickerWrapper>
         )}
         <EmojiSmileyWrapper>
-          <span
-            role='button'
+          <ResetButton
             aria-pressed={emojiPickerActive ? 'true' : 'false'}
             onClick={onClickEmojiSmiley}
             ref={toggleEmojiRef}
           >
             <EmojiSmiley active={emojiPickerActive} />
-          </span>
+          </ResetButton>
         </EmojiSmileyWrapper>
       </EditorWrapper>
       <div>

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { createTestManager, initialJson } from '@test-fixtures/schema-helpers';
+import { createTestManager, helpers, initialJson } from '@test-fixtures/schema-helpers';
 import { render } from '@testing-library/react';
 
-import { ExtensionManager, PortalContainer } from '@remirror/core';
+import { ExtensionManager } from '@remirror/core';
 import { RemirrorSSR } from '..';
 
 let manager: ExtensionManager;
@@ -13,7 +13,7 @@ beforeEach(() => {
 });
 
 test('should render the ssr component', () => {
-  manager.init({ getState: () => state, portalContainer: new PortalContainer() });
+  manager.init({ ...helpers, getState: () => state });
   const state = manager.createState({ content: initialJson });
 
   const { container } = render(

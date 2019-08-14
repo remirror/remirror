@@ -8,7 +8,7 @@ import {
   NodeExtensionSpec,
   replaceText,
 } from '@remirror/core';
-import { ReactNodeView } from '@remirror/react-utils';
+import { ReactNodeView } from '@remirror/react-node-view';
 import { DefaultEmoji } from './components/emoji-component';
 import { createEmojiPlugin } from './emoji-plugin';
 import { EmojiAttrs, EmojiExtensionOptions } from './emoji-types';

@@ -1,5 +1,5 @@
+import { Cast } from '@remirror/core-helpers';
 import { DocExtension, TextExtension } from '../..';
-import { Cast } from '../../helpers';
 
 // While these tests seem simple there is a reason for them.
 //

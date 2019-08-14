@@ -1,0 +1,44 @@
+{
+  "name": "@remirror/core-helpers",
+  "description": "Provide helper functions for the remirror codebase, kinda like lodash but smaller",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-helpers",
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-helpers",
+  "version": "0.4.2-canary.2",
+  "main": "lib/index.js",
+  "module": "lib/dist/core-helpers.esm.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "build": "run-p build:*",
+    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "dev": "run-p dev:*",
+    "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
+    "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
+    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@remirror/core-constants": "0.4.2-canary.2",
+    "@remirror/core-types": "0.4.2-canary.2",
+    "@types/memoize-one": "4.1.1",
+    "@types/object.omit": "^3.0.0",
+    "@types/object.pick": "^1.3.0",
+    "deepmerge": "^4.0.0",
+    "fast-deep-equal": "^2.0.1",
+    "memoize-one": "5.0.5",
+    "nanoid": "2.0.3",
+    "object.omit": "3.0.0",
+    "object.pick": "1.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/core-helpers.cjs.js",
+  "sideEffects": false
+}

@@ -4,11 +4,7 @@
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/remirror",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "packages/remirror"
-  },
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/packages/remirror",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/remirror.esm.js",
@@ -31,7 +27,7 @@
     "@remirror/renderer-react": "0.4.2-canary.2"
   },
   "peerDependencies": {
-    "@types/react": "^16.7.18",
+    "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"

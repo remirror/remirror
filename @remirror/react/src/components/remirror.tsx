@@ -14,8 +14,9 @@ import {
   isFunction,
   isPlainObject,
   ObjectNode,
-  PortalContainer,
   RemirrorContentType,
+  RemirrorInterpolation,
+  RemirrorThemeContextType,
   SchemaFromExtensionList,
   shouldUseDOMEnvironment,
   toHTML,
@@ -47,11 +48,11 @@ import {
   RemirrorEventListenerParams,
   RemirrorStateListenerParams,
 } from '@remirror/react-utils';
-import { RemirrorInterpolation, RemirrorThemeContext, RemirrorThemeContextType } from '@remirror/ui';
+import { RemirrorThemeContext } from '@remirror/ui';
+import { PortalContainer, RemirrorPortals } from '@remirror/react-portals';
 import { EditorState } from 'prosemirror-state';
 import React, { Component, ReactNode, Ref } from 'react';
-import { defaultProps } from '../constants';
-import { RemirrorPortals } from './remirror-portals';
+import { defaultProps } from '../react-constants';
 import { RemirrorProps } from './remirror-types';
 
 interface UpdateStateParams<GSchema extends EditorSchema = EditorSchema> extends EditorStateParams<GSchema> {
@@ -176,7 +177,11 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
     propIsFunction(props.children);
 
     // Initialize the manager and create the initial state.
-    this.manager.init({ getState: this.getState, portalContainer: this.portalContainer });
+    this.manager.init({
+      getState: this.getState,
+      getTheme: this.getTheme,
+      portalContainer: this.portalContainer,
+    });
     this.state = this.createInitialState();
 
     // Create the ProsemirrorView and initialize our extension manager with it.
@@ -191,7 +196,9 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
    * shouldn't change.
    */
   public updateExtensionManager() {
-    this.manager.init({ getState: this.getState, portalContainer: this.portalContainer }).initView(this.view);
+    this.manager
+      .init({ getState: this.getState, getTheme: this.getTheme, portalContainer: this.portalContainer })
+      .initView(this.view);
   }
 
   /**
@@ -199,6 +206,11 @@ export class Remirror<GExtensions extends AnyExtension[] = AnyExtension[]> exten
    */
   private getState = () =>
     this.props.onStateChange && this.props.value ? this.props.value : this.view.state;
+
+  /**
+   * Retrieve the them from the context and pass it to the ExtensionManager
+   */
+  private getTheme = () => this.context;
 
   /**
    * Create the initial React state which stores copies of the Prosemirror

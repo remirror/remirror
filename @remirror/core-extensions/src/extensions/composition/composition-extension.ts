@@ -1,4 +1,5 @@
-import { Extension, ProsemirrorPlugin } from '@remirror/core';
+import { Extension } from '@remirror/core';
+import { ProsemirrorPlugin } from '@remirror/core-types';
 import { NODE_CURSOR_DEFAULTS } from '../../core-extension-constants';
 import { CompositionExtensionOptions } from '../../core-extension-types';
 import { createCompositionPlugin } from './composition-plugin';

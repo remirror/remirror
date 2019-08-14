@@ -1,24 +1,30 @@
+import { ActionNames, AnyFunction, Attrs, memoize } from '@remirror/core';
+import { useRemirror } from '@remirror/react';
+import { bubblePositioner } from '@remirror/react-utils';
+import { useRemirrorTheme } from '@remirror/ui';
 import {
-  faBold,
-  faCode,
-  faGripLines,
-  faHeading,
-  faItalic,
-  faLink,
-  faList,
-  faListOl,
-  faQuoteRight,
-  faRedoAlt,
-  faStrikethrough,
-  faTimes,
-  faUnderline,
-  faUndoAlt,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+  BoldIcon,
+  CodeIcon,
+  H1Icon,
+  H2Icon,
+  H3Icon,
+  IconProps,
+  ItalicIcon,
+  LinkIcon,
+  ListOlIcon,
+  ListUlIcon,
+  QuoteRightIcon,
+  RedoAltIcon,
+  RulerHorizontalIcon,
+  StrikethroughIcon,
+  TimesIcon,
+  UnderlineIcon,
+  UndoAltIcon,
+} from '@remirror/ui-icons';
 import keyCode from 'keycode';
 import React, {
   ChangeEventHandler,
+  ComponentType,
   DOMAttributes,
   FC,
   KeyboardEventHandler,
@@ -27,10 +33,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-
-import { ActionNames, ActionNamesFromExtensionList, Attrs, memoize } from '@remirror/core';
-import { bubblePositioner, useRemirror } from '@remirror/react';
-import { ButtonState, styled } from '../wysiwyg-theme';
+import { ButtonState } from '../wysiwyg-theme';
 import { WysiwygExtensionList } from '../wysiwyg-types';
 import {
   BubbleContent,
@@ -40,25 +43,25 @@ import {
   WithPaddingProps,
 } from './wysiwyg-components';
 
-const menuItems: Array<[ActionNames<WysiwygExtensionList>, [IconDefinition, string?], Attrs?]> = [
-  ['bold', [faBold]],
-  ['italic', [faItalic]],
-  ['underline', [faUnderline]],
-  ['strike', [faStrikethrough]],
-  ['toggleHeading', [faHeading, '1'], { level: 1 }],
-  ['toggleHeading', [faHeading, '2'], { level: 2 }],
-  ['toggleHeading', [faHeading, '3'], { level: 3 }],
-  ['undo', [faUndoAlt]],
-  ['redo', [faRedoAlt]],
-  ['toggleBulletList', [faList]],
-  ['toggleOrderedList', [faListOl]],
-  ['blockquote', [faQuoteRight]],
-  ['toggleCodeBlock', [faCode]],
-  ['horizontalRule', [faGripLines]],
+const menuItems: Array<[ActionNames<WysiwygExtensionList>, [ComponentType<IconProps>, string?], Attrs?]> = [
+  ['bold', [BoldIcon]],
+  ['italic', [ItalicIcon]],
+  ['underline', [UnderlineIcon]],
+  ['strike', [StrikethroughIcon]],
+  ['toggleHeading', [H1Icon, '1'], { level: 1 }],
+  ['toggleHeading', [H2Icon, '2'], { level: 2 }],
+  ['toggleHeading', [H3Icon, '3'], { level: 3 }],
+  ['undo', [UndoAltIcon]],
+  ['redo', [RedoAltIcon]],
+  ['toggleBulletList', [ListUlIcon]],
+  ['toggleOrderedList', [ListOlIcon]],
+  ['blockquote', [QuoteRightIcon]],
+  ['toggleCodeBlock', [CodeIcon]],
+  ['horizontalRule', [RulerHorizontalIcon]],
 ];
 
 const runAction = memoize(
-  (method: (attrs?: Attrs) => void, attrs?: Attrs): MouseEventHandler<HTMLElement> => e => {
+  (method: AnyFunction, attrs?: Attrs): MouseEventHandler<HTMLElement> => e => {
     e.preventDefault();
     method(attrs);
   },
@@ -82,14 +85,14 @@ export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
 
   return (
     <Toolbar>
-      {menuItems.map(([name, [icon, subText], attrs], index) => {
+      {menuItems.map(([name, [Icon, subText], attrs], index) => {
         const buttonState = getButtonState(actions[name].isActive(attrs), inverse);
 
         return (
           <MenuItem
             index={index}
             key={index}
-            icon={icon}
+            Icon={Icon}
             subText={subText}
             state={buttonState}
             disabled={!actions[name].isEnabled()}
@@ -99,7 +102,7 @@ export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
         );
       })}
       <MenuItem
-        icon={faLink}
+        Icon={LinkIcon}
         state={getButtonState(actions.updateLink.isActive(), inverse)}
         disabled={!actions.updateLink.isEnabled()}
         onClick={activateLink}
@@ -112,7 +115,7 @@ export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
 interface MenuItemProps extends Partial<WithPaddingProps> {
   state: ButtonState;
   onClick: DOMAttributes<HTMLButtonElement>['onClick'];
-  icon: IconDefinition;
+  Icon: ComponentType<IconProps>;
   inverse?: boolean;
   disabled?: boolean;
   subText?: string;
@@ -125,17 +128,15 @@ interface MenuItemProps extends Partial<WithPaddingProps> {
 const MenuItem: FC<MenuItemProps> = ({
   state,
   onClick,
-  icon,
+  Icon,
   inverse = false,
   disabled = false,
-  subText,
   withPadding,
   index,
 }) => {
   return (
     <IconButton onClick={onClick} state={state} disabled={disabled} withPadding={withPadding} index={index}>
-      <FontAwesomeIcon icon={icon} inverse={inverse} size='1x' />
-      {subText}
+      <Icon inverse={inverse} />
     </IconButton>
   );
 };
@@ -146,11 +147,9 @@ export interface BubbleMenuProps {
   activateLink(): void;
 }
 
-const bubbleMenuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
-  ['bold', [faBold]],
-  ['italic', [faItalic]],
-  ['underline', [faUnderline]],
-];
+const bubbleMenuItems: Array<
+  [ActionNames<WysiwygExtensionList>, [ComponentType<IconProps>, string?], Attrs?]
+> = [['bold', [BoldIcon]], ['italic', [ItalicIcon]], ['underline', [UnderlineIcon]]];
 
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
   const { actions, getPositionerProps } = useRemirror<WysiwygExtensionList>();
@@ -171,13 +170,13 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
         <LinkInput {...{ deactivateLink, updateLink, removeLink, canRemove }} />
       ) : (
         <BubbleContent>
-          {bubbleMenuItems.map(([name, [icon, subText], attrs], index) => {
+          {bubbleMenuItems.map(([name, [Icon, subText], attrs], index) => {
             const buttonState = getButtonState(actions[name].isActive(attrs), true);
 
             return (
               <MenuItem
                 key={index}
-                icon={icon}
+                Icon={Icon}
                 subText={subText}
                 state={buttonState}
                 disabled={!actions[name].isEnabled()}
@@ -188,7 +187,7 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
             );
           })}
           <MenuItem
-            icon={faLink}
+            Icon={LinkIcon}
             state={getButtonState(actions.updateLink.isActive(), true)}
             onClick={activateLink}
             inverse={true}
@@ -200,15 +199,6 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
   );
 };
 
-const Input = styled.input`
-  border: none;
-  outline: none;
-  color: white;
-  background-color: transparent;
-  min-width: 150px;
-  padding: 0 10px;
-`;
-
 interface LinkInputProps extends Pick<BubbleMenuProps, 'deactivateLink'> {
   updateLink(href: string): void;
   removeLink(): void;
@@ -217,6 +207,7 @@ interface LinkInputProps extends Pick<BubbleMenuProps, 'deactivateLink'> {
 
 const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink, canRemove }) => {
   const [href, setHref] = useState('');
+  const { css } = useRemirrorTheme();
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = event => {
@@ -262,17 +253,25 @@ const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink,
 
   return (
     <BubbleContent ref={wrapperRef}>
-      <Input
+      <input
         placeholder='Enter URL...'
         autoFocus={true}
         onChange={onChange}
         // onBlur={deactivateLink}
         onSubmit={submitLink}
         onKeyPress={onKeyPress}
+        css={css`
+          border: none;
+          outline: none;
+          color: white;
+          background-color: transparent;
+          min-width: 150px;
+          padding: 0 10px;
+        `}
       />
       {canRemove() && (
         <MenuItem
-          icon={faTimes}
+          Icon={TimesIcon}
           state='active-inverse'
           onClick={onClickRemoveLink}
           inverse={true}

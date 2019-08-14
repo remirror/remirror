@@ -1,8 +1,6 @@
 import { Interpolation } from '@emotion/core';
-import { InputRule } from 'prosemirror-inputrules';
-import { PluginKey } from 'prosemirror-state';
-import { ExtensionType, Tags } from './constants';
-import { Cast, deepMerge, isString } from './helpers/base';
+import { ExtensionType, Tags } from '@remirror/core-constants';
+import { Cast, deepMerge, isString } from '@remirror/core-helpers';
 import {
   AnyFunction,
   Attrs,
@@ -19,7 +17,9 @@ import {
   OnTransactionParams,
   PlainObject,
   ProsemirrorPlugin,
-} from './types';
+} from '@remirror/core-types';
+import { InputRule } from 'prosemirror-inputrules';
+import { PluginKey } from 'prosemirror-state';
 
 /**
  * These are the default options merged into every extension.
@@ -277,10 +277,20 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
   public readonly _T!: GType;
 
   /**
+   * `ExtensionCommands`
+   *
    * This pseudo property makes it easier to infer Generic types of this class.
    * @private
    */
   public readonly _C!: this['commands'] extends AnyFunction ? ReturnType<this['commands']> : {};
+
+  /**
+   * `ExtensionHelpers`
+   *
+   * This pseudo property makes it easier to infer Generic types of this class.
+   * @private
+   */
+  public readonly _H!: this['helpers'] extends AnyFunction ? ReturnType<this['helpers']> : {};
 }
 
 export interface Extension<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GType = never> {

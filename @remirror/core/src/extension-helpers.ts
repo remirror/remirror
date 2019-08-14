@@ -1,7 +1,7 @@
-import { ExtensionType } from './constants';
+import { ExtensionType } from '@remirror/core-constants';
+import { isObject } from '@remirror/core-helpers';
 import { Extension } from './extension';
 import { AnyExtension } from './extension-types';
-import { isObject } from './helpers/base';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
 

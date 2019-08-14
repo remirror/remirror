@@ -1,4 +1,5 @@
-import { BaseExtensionOptions, Extension } from '@remirror/core';
+import { Extension } from '@remirror/core';
+import { BaseExtensionOptions } from '@remirror/core-types';
 import { dropCursor } from 'prosemirror-dropcursor';
 
 export interface DropCursorExtensionOptions extends BaseExtensionOptions {

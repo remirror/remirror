@@ -1,18 +1,17 @@
-import { Extension } from './extension';
-import { MarkExtension } from './mark-extension';
-import { NodeExtension } from './node-extension';
 import {
   ActionMethod,
   AnyConstructor,
   AnyFunction,
   BaseExtensionOptions,
   EditorSchema,
-  ExtensionCommandReturn,
   ExtensionHelperReturn,
   Key,
   StringKey,
   UnionToIntersection,
-} from './types';
+} from '@remirror/core-types';
+import { Extension } from './extension';
+import { MarkExtension } from './mark-extension';
+import { NodeExtension } from './node-extension';
 
 /**
  * Provides a type annotation which is applicable to any extension type.
@@ -172,50 +171,26 @@ export type ExtensionsFromFlexibleList<
 > = ExtensionFromFlexible<GFlexibleList[number]>;
 
 /**
- * The type signature of the extension command method. It is used in determining whether
- * or not a command has been defined on the extension in order to infer it's return type.
- */
-type ExtensionCommandMethodSignature = (...args: any[]) => ExtensionCommandReturn;
-
-type MapCommandToActionNames<GCommand extends AnyFunction> = StringKey<ReturnType<GCommand>>;
-
-export type ActionNamesFromExtension<
-  GExtension extends AnyExtension,
-  GCommands extends CommandsOfExtension<GExtension> = CommandsOfExtension<GExtension>
-> = GCommands extends AnyFunction ? MapCommandToActionNames<GCommands> : never;
-
-export type ActionNamesFromExtensionList<GExtensions extends AnyExtension[]> = ActionNamesFromExtension<
-  GExtensions[number]
->;
-
-/**
  * A utility type which maps the passed in extension command in an action that is called via
  * `manager.data.actions.commandName()`.
  */
-type MapCommandToAction<
-  GCommand extends AnyFunction,
-  GCommandReturn extends ReturnType<GCommand> = ReturnType<GCommand>
-> = {
-  [P in Key<GCommandReturn>]: ActionMethod<Parameters<GCommandReturn[P]>>;
+type MapCommandToAction<GCommands extends Record<string, AnyFunction>> = {
+  [P in Key<GCommands>]: ActionMethod<Parameters<GCommands[P]>>;
 };
 
 /**
  * Utility type which receives an extension and provides the type of actions it makes available.
  */
-export type ActionsFromExtension<
-  GExtension extends AnyExtension,
-  GCommands extends CommandsOfExtension<GExtension> = CommandsOfExtension<GExtension>
-> = GCommands extends ExtensionCommandMethodSignature ? MapCommandToAction<GCommands> : {};
+export type ActionsFromExtension<GExtension extends AnyExtension> = UnionToIntersection<
+  MapCommandToAction<GExtension['_C']>
+>;
 
 /**
  * Creates an actions intersection object from a list of provided extensions.
  */
-export type ActionsFromExtensionList<
-  GExtensions extends AnyExtension[],
-  GIntersection extends UnionToIntersection<ActionsFromExtension<GExtensions[number]>> = UnionToIntersection<
-    ActionsFromExtension<GExtensions[number]>
-  >
-> = GIntersection;
+export type ActionsFromExtensionList<GExtensions extends AnyExtension[]> = UnionToIntersection<
+  MapCommandToAction<GExtensions[number]['_C']>
+>;
 
 /**
  * Utility type for pulling all the action names from a list

@@ -1,12 +1,5 @@
-import { DEFAULT_EXTENSION_PRIORITY, MarkGroup, NodeGroup, Tags } from './constants';
-import { isExtension, isMarkExtension, isNodeExtension } from './extension-helpers';
-import {
-  AnyExtension,
-  ExtensionListParams,
-  FlexibleExtension,
-  PrioritizedExtension,
-} from './extension-types';
-import { bool, Cast, isFunction, sort } from './helpers/base';
+import { DEFAULT_EXTENSION_PRIORITY, MarkGroup, NodeGroup, Tags } from '@remirror/core-constants';
+import { bool, Cast, isFunction, sort } from '@remirror/core-helpers';
 import {
   AnyFunction,
   Attrs,
@@ -17,7 +10,14 @@ import {
   Key,
   MarkExtensionTags,
   NodeExtensionTags,
-} from './types';
+} from '@remirror/core-types';
+import { isExtension, isMarkExtension, isNodeExtension } from './extension-helpers';
+import {
+  AnyExtension,
+  ExtensionListParams,
+  FlexibleExtension,
+  PrioritizedExtension,
+} from './extension-types';
 
 interface IsNameUniqueParams {
   /**
@@ -75,7 +75,7 @@ interface CreateCommandsParams extends ExtensionListParams {
  * Generate all the action commands for usage within the UI.
  *
  * Typically actions are used to create interactive menus. For example a menu
- * can use a command to toggle bold.
+ * can use a command to toggle bold formatting or to undo the last action.
  */
 export const createCommands = ({ extensions, params }: CreateCommandsParams) => {
   const getItemParams = (extension: Required<Pick<AnyExtension, 'commands'>>) =>

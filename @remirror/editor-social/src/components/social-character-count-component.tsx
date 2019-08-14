@@ -2,7 +2,9 @@ import { useRemirrorTheme } from '@remirror/ui';
 import React, { FC } from 'react';
 
 export interface CharacterCountIndicatorProps {
-  /** An object describing the total characters and characters remaining */
+  /**
+   * An object describing the total characters and characters remaining
+   */
   characters?: { total: number; used: number };
   size?: number;
   strokeWidth?: number;

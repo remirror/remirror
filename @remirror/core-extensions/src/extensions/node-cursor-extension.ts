@@ -1,12 +1,7 @@
-import {
-  BaseExtensionOptions,
-  Extension,
-  getPluginState,
-  NodeMatch,
-  nodeNameMatchesList,
-  ResolvedPos,
-  ZERO_WIDTH_SPACE_CHAR,
-} from '@remirror/core';
+import { Extension } from '@remirror/core';
+import { ZERO_WIDTH_SPACE_CHAR } from '@remirror/core-constants';
+import { BaseExtensionOptions, NodeMatch, ResolvedPos } from '@remirror/core-types';
+import { getPluginState, nodeNameMatchesList } from '@remirror/core-utils';
 import { EditorState, Plugin, Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { NODE_CURSOR_DEFAULTS } from '../core-extension-constants';

@@ -1,14 +1,10 @@
 {
   "name": "@remirror/core",
-  "description": "Core utilities for remirror",
+  "description": "Provides the core abstractions for managing your remirror editor functionality",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/core"
-  },
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/core.esm.js",
@@ -37,43 +33,23 @@
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "@emotion/core": "^10.0.15",
-    "@types/memoize-one": "4.1.1",
-    "@types/min-document": "^2.19.0",
-    "@types/nanoevents": "1.0.0",
-    "@types/nanoid": "2.0.0",
-    "@types/node": "^10",
-    "@types/object.omit": "^3.0.0",
-    "@types/object.pick": "^1.3.0",
-    "@types/prosemirror-commands": "^1.0.1",
+    "@remirror/core-constants": "0.4.2-canary.2",
+    "@remirror/core-helpers": "0.4.2-canary.2",
+    "@remirror/core-types": "0.4.2-canary.2",
+    "@remirror/core-utils": "0.4.2-canary.2",
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-keymap": "^1.0.1",
     "@types/prosemirror-model": "^1.7.2",
-    "@types/prosemirror-schema-list": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
-    "@types/prosemirror-transform": "^1.1.0",
-    "deepmerge": "^4.0.0",
-    "fast-deep-equal": "^2.0.1",
-    "memoize-one": "5.0.5",
-    "min-document": "2.19.0",
-    "nanoevents": "2.0.0",
-    "nanoid": "2.0.3",
-    "object.omit": "3.0.0",
-    "object.pick": "1.3.0",
-    "prosemirror-commands": "^1.0.8",
     "prosemirror-inputrules": "^1.0.4",
     "prosemirror-keymap": "^1.0.1",
     "prosemirror-model": "^1.7.1",
-    "prosemirror-schema-list": "^1.0.3",
-    "prosemirror-state": "^1.2.4",
-    "prosemirror-transform": "^1.1.3",
-    "prosemirror-view": "^1.10.0"
+    "@remirror/react-portals": "0.4.2-canary.2",
+    "prosemirror-state": "^1.2.4"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
     "react": "^16.8.0"
-  },
-  "devDependencies": {
-    "domino": "2.1.3"
   },
   "publishConfig": {
     "access": "public"

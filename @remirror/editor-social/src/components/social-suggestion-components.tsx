@@ -1,7 +1,7 @@
-import { Attrs, EditorView } from '@remirror/core';
+import { Attrs, EditorView, RemirrorTheme } from '@remirror/core';
 import { MentionExtensionAttrs, SuggestionStateMatch } from '@remirror/extension-mention';
 import { useRemirror } from '@remirror/react';
-import { RemirrorTheme, useRemirrorTheme } from '@remirror/ui';
+import { useRemirrorTheme } from '@remirror/ui';
 import React, { forwardRef, FunctionComponent } from 'react';
 import { DivProps, ImgProps, SpanProps, TagSuggestionsProps, UserSuggestionsProps } from '../social-types';
 

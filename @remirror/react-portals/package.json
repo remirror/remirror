@@ -1,0 +1,46 @@
+{
+  "name": "@remirror/react-portals",
+  "description": "Enables using react portals to render prosemirror nodes",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/canary/@remirror/react-portals",
+  "repository": "https://github.com/ifiokjr/remirror/tree/canary/@remirror/react-portals",
+  "version": "0.4.2-canary.2",
+  "main": "lib/index.js",
+  "module": "lib/dist/@remirror/react-portals.esm.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "build": "run-p build:*",
+    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@types/nanoevents": "1.0.0",
+    "@types/nanoid": "2.0.0",
+    "nanoevents": "2.0.0",
+    "nanoid": "2.0.3"
+  },
+  "peerDependencies": {
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "keywords": [
+    "prosemirror",
+    "react",
+    "ssr",
+    "text editor"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/@remirror/react-portals.cjs.js",
+  "sideEffects": false
+}

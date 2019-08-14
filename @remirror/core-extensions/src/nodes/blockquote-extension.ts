@@ -28,7 +28,19 @@ export class BlockquoteExtension extends NodeExtension<NodeExtensionOptions> {
   }
 
   public commands({ type }: CommandNodeTypeParams) {
-    return { blockquote: () => toggleWrap(type) };
+    return {
+      /**
+       * Toggle the blockquote at the current selection.
+       *
+       * If none exists one will be created or the existing blockquote content will be
+       * lifted out of the blockquote node.
+       *
+       * ```ts
+       * actions.blockquote();
+       * ```
+       */
+      blockquote: () => toggleWrap(type),
+    };
   }
 
   public styles() {

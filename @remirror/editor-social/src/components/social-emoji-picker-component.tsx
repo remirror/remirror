@@ -1,38 +1,38 @@
 import { useRemirrorTheme } from '@remirror/ui';
+import { Icon } from '@remirror/ui-icons';
 import { Data, EmojiData, EmojiSet, NimblePicker } from 'emoji-mart';
 import React, { FC, forwardRef, useEffect, useRef } from 'react';
 import { DivProps } from '../social-types';
 
 export interface EmojiSmileyProps {
+  /**
+   * Whether the emoji smiley is currently active.
+   */
   active?: boolean;
 }
 
-const Svg = forwardRef<SVGSVGElement, JSX.IntrinsicElements['svg'] & EmojiSmileyProps>(
-  ({ active, ...props }, ref) => {
-    const { css } = useRemirrorTheme();
-    return (
-      <svg
-        {...props}
-        ref={ref}
-        css={theme => css`
-          fill: ${active ? theme.colors.primary : theme.colors.icon};
-          stroke-width: 1px;
+export const EmojiSmiley: FC<EmojiSmileyProps> = ({ active }) => {
+  const { css, theme } = useRemirrorTheme();
+  const { primary, icon } = theme.colors;
 
-          &:hover {
-            fill: ${theme.colors.primary};
-          }
-        `}
-      />
-    );
-  },
-);
-
-export const EmojiSmiley: FC<EmojiSmileyProps> = ({ active }) => (
-  <Svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='27px' height='27px' active={active}>
-    <path d='M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0m0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10' />
-    <path d='M8 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 8 7M16 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 16 7M15.232 15c-.693 1.195-1.87 2-3.349 2-1.477 0-2.655-.805-3.347-2H15m3-2H6a6 6 0 1 0 12 0' />
-  </Svg>
-);
+  return (
+    <Icon
+      viewBox='0 0 24 24'
+      size='27px'
+      name='emoji smiley icon'
+      color={active ? primary : icon}
+      css={css`
+        stroke-width: 1px;
+        &:hover {
+          color: ${primary};
+        }
+      `}
+    >
+      <path d='M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0m0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10' />
+      <path d='M8 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 8 7M16 7a2 2 0 1 0-.001 3.999A2 2 0 0 0 16 7M15.232 15c-.693 1.195-1.87 2-3.349 2-1.477 0-2.655-.805-3.347-2H15m3-2H6a6 6 0 1 0 12 0' />
+    </Icon>
+  );
+};
 
 export interface EmojiPickerProps {
   data: Data;

@@ -4,11 +4,7 @@
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/editor-social",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/editor-social"
-  },
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/editor-social",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/editor-social.esm.js",
@@ -39,6 +35,8 @@
     "@remirror/react": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2",
     "@remirror/ui": "0.4.2-canary.2",
+    "@remirror/ui-buttons": "0.4.2-canary.2",
+    "@remirror/ui-icons": "0.4.2-canary.2",
     "@types/emoji-mart": "^2.8.4",
     "emoji-mart": "2.11.1",
     "emotion-theming": "^10.0.14",

@@ -1,16 +1,14 @@
+import { Extension } from '@remirror/core';
+import { isNumber, isString } from '@remirror/core-helpers';
 import {
   BaseExtensionOptions,
   CommandFunction,
   CommandParams,
-  Extension,
   ExtensionManagerParams,
-  getPluginMeta,
-  getPluginState,
-  isNumber,
-  isString,
   PosParams,
   Transaction,
-} from '@remirror/core';
+} from '@remirror/core-types';
+import { getPluginMeta, getPluginState } from '@remirror/core-utils';
 import { Plugin } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 

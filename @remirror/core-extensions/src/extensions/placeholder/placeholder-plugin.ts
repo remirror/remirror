@@ -1,13 +1,6 @@
-import {
-  EditorSchema,
-  EditorView,
-  Extension,
-  getPluginMeta,
-  getPluginState,
-  isDocNodeEmpty,
-  setPluginMeta,
-  Transaction,
-} from '@remirror/core';
+import { Extension } from '@remirror/core';
+import { EditorSchema, EditorView, Transaction } from '@remirror/core-types';
+import { getPluginMeta, getPluginState, isDocNodeEmpty, setPluginMeta } from '@remirror/core-utils';
 import { EditorState, Plugin } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import {

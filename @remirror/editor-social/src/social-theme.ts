@@ -1,5 +1,4 @@
-import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
-import { RemirrorTheme } from '@remirror/ui';
+import { EDITOR_CLASS_SELECTOR, RemirrorTheme } from '@remirror/core';
 
 const colors = {
   background: '#fff',

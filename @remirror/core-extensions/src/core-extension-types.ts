@@ -1,5 +1,5 @@
 import { ObjectInterpolation } from '@emotion/core';
-import { BaseExtensionOptions, NodeMatch } from '@remirror/core';
+import { BaseExtensionOptions, NodeMatch } from '@remirror/core-types';
 
 export interface CompositionExtensionOptions extends BaseExtensionOptions {
   /**
