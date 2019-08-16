@@ -214,7 +214,7 @@ export const extensionPropertyMapper = <
 /**
  * Converts an extension to its mapped value
  */
-function convertToExtensionMapValue(extension: FlexibleExtension): PrioritizedExtension {
+function convertToExtensionMapValue(extension: FlexibleExtension<any>): PrioritizedExtension {
   return isExtension(extension) ? { priority: DEFAULT_EXTENSION_PRIORITY, extension } : { ...extension };
 }
 
@@ -227,9 +227,9 @@ function convertToExtensionMapValue(extension: FlexibleExtension): PrioritizedEx
  * @param values - the extensions to transform as well as their priorities
  * @returns the list of extension instances sorted by priority
  */
-export const transformExtensionMap = <GExtensions extends AnyExtension[]>(
-  values: Array<FlexibleExtension<GExtensions[number]>>,
-): GExtensions =>
+export const transformExtensionMap = <GExtension extends AnyExtension>(
+  values: Array<FlexibleExtension<GExtension>>,
+): GExtension[] =>
   sort(values.map(convertToExtensionMapValue), (a, b) => a.priority - b.priority).map(
     ({ extension }) => extension,
   ) as any;

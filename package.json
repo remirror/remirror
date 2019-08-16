@@ -322,6 +322,7 @@
     "react": "16.9.0",
     "semver": "6.3.0",
     "tar": "4.4.10",
+    "tslint": "5.18.0",
     "typescript": "3.6.0-beta"
   }
 }

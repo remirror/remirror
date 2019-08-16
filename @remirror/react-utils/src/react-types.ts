@@ -1,7 +1,7 @@
 import { Interpolation, ObjectInterpolation } from '@emotion/core';
 import {
   AbstractInstanceType,
-  ActionsFromExtensionList,
+  ActionsFromExtensions,
   AnyExtension,
   CompareStateParams,
   EditorState,
@@ -10,7 +10,7 @@ import {
   EditorViewParams,
   ElementParams,
   ExtensionManager,
-  HelpersFromExtensionList,
+  HelpersFromExtensions,
   ObjectNode,
   OptionsOfExtension,
   PlainObject,
@@ -22,7 +22,7 @@ import {
 } from '@remirror/core';
 import { ComponentClass, ComponentType, FC, ReactElement, ReactNode, Ref } from 'react';
 
-export interface Positioner<GExtensions extends AnyExtension[] = AnyExtension[]> {
+export interface Positioner<GExtension extends AnyExtension = AnyExtension> {
   /**
    * The default and initial position value. This is used at the start and
    * whenever isActive becomes false
@@ -35,29 +35,28 @@ export interface Positioner<GExtensions extends AnyExtension[] = AnyExtension[]>
    *
    * @param params
    */
-  hasChanged(params: CompareStateParams<SchemaFromExtensionList<GExtensions>>): boolean;
+  hasChanged(params: CompareStateParams<SchemaFromExtensionList<GExtension>>): boolean;
 
   /**
    * Determines whether the positioner should be active
    */
-  isActive(params: GetPositionParams<GExtensions>): boolean;
+  isActive(params: GetPositionParams<GExtension>): boolean;
 
   /**
    * Calculate and return a new position (only called when `hasChanged` and
    * `isActive` return true)
    */
-  getPosition(params: GetPositionParams<GExtensions>): Position;
+  getPosition(params: GetPositionParams<GExtension>): Position;
 }
 
-export type CalculatePositionerParams<
-  GExtensions extends AnyExtension[] = AnyExtension[]
-> = PositionerIdParams & Positioner<GExtensions>;
+export type CalculatePositionerParams<GExtension extends AnyExtension = AnyExtension> = PositionerIdParams &
+  Positioner<GExtension>;
 
 export type GetPositionerPropsConfig<
-  GExtensions extends AnyExtension[] = AnyExtension[],
+  GExtension extends AnyExtension = AnyExtension,
   GRefKey extends string = 'ref'
 > = RefParams<GRefKey> &
-  Partial<Omit<CalculatePositionerParams<GExtensions>, 'positionerId'>> &
+  Partial<Omit<CalculatePositionerParams<GExtension>, 'positionerId'>> &
   PositionerIdParams;
 
 export interface RefParams<GRefKey extends string = 'ref'> {
@@ -87,25 +86,25 @@ export type GetPositionerReturn<GRefKey extends string = 'ref'> = PositionerProp
  * These are the props passed to the render function provided when setting up
  * your editor.
  */
-export interface InjectedRemirrorProps<GExtensions extends AnyExtension[] = AnyExtension[]> {
+export interface InjectedRemirrorProps<GExtension extends AnyExtension = AnyExtension> {
   /**
    * An instance of the extension manager
    */
-  manager: ExtensionManager<GExtensions>;
+  manager: ExtensionManager<GExtension>;
   /**
    * The prosemirror view
    */
-  view: EditorView<SchemaFromExtensionList<GExtensions>>;
+  view: EditorView<SchemaFromExtensionList<GExtension>>;
 
   /**
    * A map of all actions made available by the configured extensions.
    */
-  actions: ActionsFromExtensionList<GExtensions>;
+  actions: ActionsFromExtensions<GExtension>;
 
   /**
    * A map of all helpers made available by the configured extensions.
    */
-  helpers: HelpersFromExtensionList<GExtensions>;
+  helpers: HelpersFromExtensions<GExtension>;
 
   /**
    * The unique id for the editor instance.
@@ -176,13 +175,13 @@ export interface InjectedRemirrorProps<GExtensions extends AnyExtension[] = AnyE
    * the position.
    */
   getPositionerProps<GRefKey extends string = 'ref'>(
-    options: GetPositionerPropsConfig<GExtensions, GRefKey>,
+    options: GetPositionerPropsConfig<GExtension, GRefKey>,
   ): GetPositionerReturn<GRefKey>;
 
   /**
    * The previous and next state
    */
-  state: CompareStateParams<SchemaFromExtensionList<GExtensions>>;
+  state: CompareStateParams<SchemaFromExtensionList<GExtension>>;
 }
 
 /**
@@ -190,8 +189,8 @@ export interface InjectedRemirrorProps<GExtensions extends AnyExtension[] = AnyE
  *
  * @param - injected remirror params
  */
-export type RenderPropFunction<GExtensions extends AnyExtension[] = AnyExtension[]> = (
-  params: InjectedRemirrorProps<GExtensions>,
+export type RenderPropFunction<GExtension extends AnyExtension = AnyExtension> = (
+  params: InjectedRemirrorProps<GExtension>,
 ) => JSX.Element;
 
 export interface RemirrorGetterParams {
@@ -221,29 +220,29 @@ export interface RemirrorGetterParams {
   getObjectNode(): ObjectNode;
 }
 
-export interface BaseListenerParams<GExtensions extends AnyExtension[] = AnyExtension[]>
-  extends EditorViewParams<SchemaFromExtensionList<GExtensions>>,
+export interface BaseListenerParams<GExtension extends AnyExtension = AnyExtension>
+  extends EditorViewParams<SchemaFromExtensionList<GExtension>>,
     RemirrorGetterParams {}
 
-export interface RemirrorEventListenerParams<GExtensions extends AnyExtension[] = AnyExtension[]>
-  extends EditorStateParams<SchemaFromExtensionList<GExtensions>>,
+export interface RemirrorEventListenerParams<GExtension extends AnyExtension = AnyExtension>
+  extends EditorStateParams<SchemaFromExtensionList<GExtension>>,
     BaseListenerParams {}
 
-export interface RemirrorStateListenerParams<GExtensions extends AnyExtension[] = AnyExtension[]>
-  extends CompareStateParams<SchemaFromExtensionList<GExtensions>>,
-    BaseListenerParams<GExtensions> {
+export interface RemirrorStateListenerParams<GExtension extends AnyExtension = AnyExtension>
+  extends CompareStateParams<SchemaFromExtensionList<GExtension>>,
+    BaseListenerParams<GExtension> {
   /**
    * Allows for the creation of a new state object with the desired content
    */
-  createStateFromContent(content: RemirrorContentType): EditorState<SchemaFromExtensionList<GExtensions>>;
+  createStateFromContent(content: RemirrorContentType): EditorState<SchemaFromExtensionList<GExtension>>;
 }
 
-export type RemirrorEventListener<GExtensions extends AnyExtension[] = AnyExtension[]> = (
-  params: RemirrorEventListenerParams<GExtensions>,
+export type RemirrorEventListener<GExtension extends AnyExtension = AnyExtension> = (
+  params: RemirrorEventListenerParams<GExtension>,
 ) => void;
 
-export type AttributePropFunction<GExtensions extends AnyExtension[] = AnyExtension[]> = (
-  params: RemirrorEventListenerParams<GExtensions>,
+export type AttributePropFunction<GExtension extends AnyExtension = AnyExtension> = (
+  params: RemirrorEventListenerParams<GExtension>,
 ) => Record<string, string>;
 
 export interface PlaceholderConfig extends TextParams {
@@ -257,10 +256,10 @@ export type PositionerMapValue = ElementParams & {
 
 export interface PositionerRefFactoryParams extends PositionerIdParams, PositionParams {}
 
-export interface GetPositionParams<GExtensions extends AnyExtension[] = AnyExtension[]>
-  extends EditorViewParams<SchemaFromExtensionList<GExtensions>>,
+export interface GetPositionParams<GExtension extends AnyExtension = AnyExtension>
+  extends EditorViewParams<SchemaFromExtensionList<GExtension>>,
     ElementParams,
-    CompareStateParams<SchemaFromExtensionList<GExtensions>> {}
+    CompareStateParams<SchemaFromExtensionList<GExtension>> {}
 
 export interface PositionerIdParams {
   /**

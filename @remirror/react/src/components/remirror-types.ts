@@ -18,15 +18,14 @@ import {
   RenderPropFunction,
 } from '@remirror/react-utils';
 
-export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension[]>
-  extends StringHandlerParams {
+export interface RemirrorProps<GExtension extends AnyExtension = AnyExtension> extends StringHandlerParams {
   /**
    * Pass in the extension manager.
    *
    * The manager is responsible for handling all Prosemirror related
    * functionality.
    */
-  manager: ExtensionManager<GExtensions>;
+  manager: ExtensionManager<GExtension>;
 
   /**
    * Set the starting value object of the editor.
@@ -48,13 +47,13 @@ export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension
    *
    * @default undefined
    */
-  onStateChange?(params: RemirrorStateListenerParams<GExtensions>): void;
+  onStateChange?(params: RemirrorStateListenerParams<GExtension>): void;
 
   /**
    * When onStateChange is defined this prop is used to set the next state value
    * of the remirror editor.
    */
-  value?: EditorState<SchemaFromExtensionList<GExtensions>> | null;
+  value?: EditorState<SchemaFromExtensionList<GExtension>> | null;
 
   /**
    * Adds attributes directly to the prosemirror html element.
@@ -81,29 +80,29 @@ export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension
   /**
    * An event listener which is called whenever the editor gains focus.
    */
-  onFocus?: (params: RemirrorEventListenerParams<GExtensions>, event: Event) => void;
+  onFocus?: (params: RemirrorEventListenerParams<GExtension>, event: Event) => void;
 
   /**
    * An event listener which is called whenever the editor is blurred.
    */
-  onBlur?: (params: RemirrorEventListenerParams<GExtensions>, event: Event) => void;
+  onBlur?: (params: RemirrorEventListenerParams<GExtension>, event: Event) => void;
 
   /**
    * Called on the first render when the prosemirror instance first becomes
    * available
    */
-  onFirstRender?: RemirrorEventListener<GExtensions>;
+  onFirstRender?: RemirrorEventListener<GExtension>;
 
   /**
    * Called on every change to the Prosemirror state.
    */
-  onChange?: RemirrorEventListener<GExtensions>;
+  onChange?: RemirrorEventListener<GExtension>;
 
   /**
    * The render prop that takes the injected remirror params and returns an
    * element to render. The editor view is automatically attached to the DOM.
    */
-  children: RenderPropFunction<GExtensions>;
+  children: RenderPropFunction<GExtension>;
 
   /**
    * A method called when the editor is dispatching the transaction.
@@ -112,7 +111,7 @@ export interface RemirrorProps<GExtensions extends AnyExtension[] = AnyExtension
    * Use this to update the transaction which will be used to update the editor
    * state.
    */
-  onDispatchTransaction: TransactionTransformer<SchemaFromExtensionList<GExtensions>>;
+  onDispatchTransaction: TransactionTransformer<SchemaFromExtensionList<GExtension>>;
 
   /**
    * Sets the accessibility label for the editor instance.

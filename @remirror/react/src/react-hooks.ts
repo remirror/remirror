@@ -31,8 +31,8 @@ import { RemirrorContext, RemirrorManagerContext } from './react-contexts';
  * }
  * ```
  */
-export const useRemirror = <GExtensions extends AnyExtension[] = AnyExtension[]>() => {
-  const params = useContext<InjectedRemirrorProps<GExtensions>>(RemirrorContext as any);
+export const useRemirror = <GExtension extends AnyExtension = AnyExtension>() => {
+  const params = useContext<InjectedRemirrorProps<GExtension>>(RemirrorContext as any);
 
   if (!params) {
     throw new Error('There is no remirror context defined.');
@@ -44,8 +44,8 @@ export const useRemirror = <GExtensions extends AnyExtension[] = AnyExtension[]>
 /**
  * A low level context picker to obtain the manager from within a RemirrorManager context
  */
-export const useRemirrorManager = <GExtensions extends AnyExtension[] = AnyExtension[]>() => {
-  const manager = useContext<ExtensionManager<GExtensions>>(RemirrorManagerContext as any);
+export const useRemirrorManager = <GExtension extends AnyExtension = AnyExtension>() => {
+  const manager = useContext<ExtensionManager<GExtension>>(RemirrorManagerContext as any);
 
   if (!manager) {
     throw new Error('There is no manager defined within the context.');

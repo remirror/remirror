@@ -1,3 +1,5 @@
+import { AnyExtension, DocExtension, TextExtension } from '@remirror/core';
+import { HistoryExtension } from '@remirror/core-extensions';
 import { RemirrorProps } from '@remirror/react';
 
 export interface MarkdownEditorProps
@@ -18,3 +20,10 @@ export interface MarkdownEditorProps
       | 'forceEnvironment'
     >
   > {}
+
+type A<E extends AnyExtension> = E;
+
+const B: Array<A<TextExtension | DocExtension | HistoryExtension>> = [
+  new TextExtension(),
+  new DocExtension(),
+];

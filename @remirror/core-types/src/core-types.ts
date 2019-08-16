@@ -1,6 +1,6 @@
 import { MarkGroup, NodeGroup, Tags } from '@remirror/core-constants';
-import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
 import { PortalContainer } from '@remirror/react-portals';
+import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
 import { ComponentType } from 'react';
 import {

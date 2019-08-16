@@ -10,8 +10,8 @@ import { RemirrorContext } from './react-contexts';
  * @param WrappedComponent
  */
 export const withRemirror = <
-  GExtensions extends AnyExtension[],
-  GProps extends InjectedRemirrorProps<GExtensions>
+  GExtension extends AnyExtension,
+  GProps extends InjectedRemirrorProps<GExtension>
 >(
   WrappedComponent: ComponentType<GProps>,
 ) => {

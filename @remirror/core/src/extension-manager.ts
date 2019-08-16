@@ -1,5 +1,5 @@
 import { Interpolation } from '@emotion/core';
-import { bool, isEqual, isFunction, isInstanceOf } from '@remirror/core-helpers';
+import { bool, Cast, isEqual, isFunction, isInstanceOf } from '@remirror/core-helpers';
 import {
   ActionMethod,
   AnyActions,
@@ -25,10 +25,10 @@ import {
   TransactionParams,
 } from '@remirror/core-types';
 import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from '@remirror/core-utils';
+import { PortalContainer } from '@remirror/react-portals';
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
-import { PortalContainer } from '@remirror/react-portals';
 import { EditorState } from 'prosemirror-state';
 import { ComponentType } from 'react';
 import { isMarkExtension, isNodeExtension } from './extension-helpers';
@@ -44,10 +44,11 @@ import {
   transformExtensionMap,
 } from './extension-manager.helpers';
 import {
-  ActionsFromExtensionList,
+  ActionsFromExtensions,
   AnyExtension,
   FlexibleExtension,
-  HelpersFromExtensionList,
+  HelpersFromExtensions,
+  InferFlexibleExtensionList,
   MarkNames,
   NodeNames,
   PlainNames,
@@ -90,7 +91,7 @@ export interface ExtensionManagerData<
  * - Construction - This takes in all the extensions and creates the schema.
  *
  * ```ts
- * const manager = new ExtensionManager([ new DocExtension(), new TextExtension(), new ParagraphExtension()])
+ * const manager = ExtensionManager.create([ new DocExtension(), new TextExtension(), new ParagraphExtension()])
  * ```
  *
  * - Initialize Getters - This connects the extension manager to the lazily
@@ -111,15 +112,16 @@ export interface ExtensionManagerData<
  * manager.data.actions
  * ```
  */
-export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[]>
+export class ExtensionManager<GExtension extends AnyExtension = AnyExtension>
   implements ExtensionManagerInitParams {
   /**
    * A static method for creating a new extension manager.
    */
-  public static create<GExtensions extends AnyExtension[] = AnyExtension[]>(
-    extensions: Array<FlexibleExtension<GExtensions[number]>>,
+  public static create<GFlexibleList extends Array<FlexibleExtension<any>>>(
+    prioritizedExtensions: GFlexibleList,
   ) {
-    return new ExtensionManager<GExtensions>(extensions);
+    const extensions = transformExtensionMap(prioritizedExtensions);
+    return new ExtensionManager<InferFlexibleExtensionList<GFlexibleList>>(extensions);
   }
 
   /**
@@ -142,7 +144,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   /**
    * The extensions stored by this manager
    */
-  public readonly extensions: GExtensions;
+  public readonly extensions: GExtension[];
 
   /**
    * Whether or not the manager has been initialized. This happens after init is
@@ -166,11 +168,14 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   private getHelpers = (name: keyof this['_H']) => this.initData.helpers[name];
 
   /**
-   * Creates the extension manager which is used to simplify the management of
-   * the different facets of building an editor with
+   * Creates the extension manager which is used to simplify the management the
+   * prosemirror editor.
+   *
+   * This should not be called directly if you want to use prioritized extensions.
+   * Instead use `ExtensionManager.create`.
    */
-  constructor(extensionMapValues: Array<FlexibleExtension<GExtensions[number]>>) {
-    this.extensions = transformExtensionMap(extensionMapValues);
+  constructor(extensions: GExtension[]) {
+    this.extensions = extensions;
 
     // Initialize the schema immediately since this doesn't ever change.
     this.initData.schema = this.createSchema();
@@ -297,7 +302,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
     const nodes: Record<this['_N'], NodeExtensionSpec> = {} as any;
 
     this.extensions.filter(isNodeExtension).forEach(extension => {
-      const { name, schema } = extension as NodeExtension;
+      const { name, schema } = Cast<NodeExtension>(extension);
       nodes[name as this['_N']] = schema;
     });
 
@@ -311,7 +316,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
     const marks: Record<this['_M'], MarkExtensionSpec> = {} as any;
 
     this.extensions.filter(isMarkExtension).forEach(extension => {
-      const { name, schema } = extension as MarkExtension;
+      const { name, schema } = Cast<MarkExtension>(extension);
       marks[name as this['_M']] = schema;
     });
 
@@ -711,7 +716,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _N!: NodeNames<this['extensions']>;
+  public readonly _N!: NodeNames<GExtension>;
 
   /**
    * `MarkNames`
@@ -722,7 +727,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _M!: MarkNames<this['extensions']>;
+  public readonly _M!: MarkNames<GExtension>;
 
   /**
    * `PlainNames`
@@ -733,7 +738,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _P!: PlainNames<this['extensions']>;
+  public readonly _P!: PlainNames<GExtension>;
 
   /**
    * `AllNames`
@@ -755,7 +760,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _A!: ActionsFromExtensionList<this['extensions']>;
+  public readonly _A!: ActionsFromExtensions<GExtension>;
 
   /**
    * `Helpers`
@@ -766,7 +771,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _H!: HelpersFromExtensionList<this['extensions']>;
+  public readonly _H!: HelpersFromExtensions<GExtension>;
 
   /**
    * `ExtensionData`
@@ -786,11 +791,11 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
  */
 export const isExtensionManager = isInstanceOf(ExtensionManager);
 
-export interface ManagerParams<GExtensions extends AnyExtension[] = AnyExtension[]> {
+export interface ManagerParams<GExtension extends AnyExtension = AnyExtension> {
   /**
    * The extension manager
    */
-  manager: ExtensionManager<GExtensions>;
+  manager: ExtensionManager<GExtension>;
 }
 
 export interface OnTransactionManagerParams extends TransactionParams, EditorStateParams {}
