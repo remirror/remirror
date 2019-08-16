@@ -9,6 +9,7 @@
       "@remirror/core-utils": ["@remirror/core-utils/src/index.ts"],
       "@remirror/core": ["@remirror/core/src/index.ts"],
       "@remirror/dev": ["@remirror/dev/src/index.ts"],
+      "@remirror/editor-markdown": ["@remirror/editor-markdown/src"],
       "@remirror/editor-social": ["@remirror/editor-social/src"],
       "@remirror/editor-wysiwyg": ["@remirror/editor-wysiwyg/src"],
       "@remirror/extension-code-block": ["@remirror/extension-code-block/src/index.ts"],

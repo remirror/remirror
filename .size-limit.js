@@ -6,6 +6,7 @@ const coreExtensions = require('./@remirror/core-extensions/package.json');
 const coreHelpers = require('./@remirror/core-helpers/package.json');
 const coreTypes = require('./@remirror/core-types/package.json');
 const coreUtils = require('./@remirror/core-utils/package.json');
+const editorMarkdown = require('./@remirror/editor-markdown/package.json');
 const editorSocial = require('./@remirror/editor-social/package.json');
 const editorWysiwyg = require('./@remirror/editor-wysiwyg/package.json');
 const extensionCodeBlock = require('./@remirror/extension-code-block/package.json');
@@ -33,6 +34,7 @@ const limits = {
   '@remirror/core-extensions': '100 KB',
   '@remirror/core-types': '100 KB',
   '@remirror/core-utils': '100 KB',
+  '@remirror/editor-markdown': '250 KB',
   '@remirror/editor-social': '250 KB',
   '@remirror/editor-wysiwyg': '400 KB',
   '@remirror/extension-code-block': '110 KB',
@@ -61,6 +63,7 @@ module.exports = [
   coreHelpers,
   coreTypes,
   coreUtils,
+  editorMarkdown,
   editorSocial,
   editorWysiwyg,
   extensionCodeBlock,

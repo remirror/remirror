@@ -6,6 +6,7 @@ import coreHelpers from '../../@remirror/core-helpers/package.json';
 import coreTypes from '../../@remirror/core-types/package.json';
 import coreUtils from '../../@remirror/core-utils/package.json';
 import dev from '../../@remirror/dev/package.json';
+import editorMarkdown from '../../@remirror/editor-markdown/package.json';
 import editorSocial from '../../@remirror/editor-social/package.json';
 import editorWysiwyg from '../../@remirror/editor-wysiwyg/package.json';
 import extensionCodeBlock from '../../@remirror/extension-code-block/package.json';
@@ -37,6 +38,7 @@ const configurations = [
   ...factory(coreTypes, '@remirror'),
   ...factory(coreUtils, '@remirror'),
   ...factory(dev, '@remirror'),
+  ...factory(editorMarkdown, '@remirror'),
   ...factory(editorSocial, '@remirror'),
   ...factory(editorWysiwyg, '@remirror'),
   ...factory(extensionCodeBlock, '@remirror'),
