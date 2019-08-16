@@ -25,12 +25,13 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@emotion/core": "^10.0.15",
+    "@emotion/core": "^10.0.16",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/core-constants": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
     "@remirror/core-types": "0.4.2-canary.2",
     "@remirror/core-utils": "0.4.2-canary.2",
+    "@remirror/react-portals": "0.4.2-canary.2",
     "@remirror/react-ssr": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2",
     "@remirror/renderer-react": "0.4.2-canary.2",
@@ -43,7 +44,6 @@
     "hoist-non-react-statics": "^3.3.0",
     "prosemirror-commands": "^1.0.8",
     "prosemirror-model": "^1.7.1",
-    "@remirror/react-portals": "0.4.2-canary.2",
     "prosemirror-state": "^1.2.4",
     "prosemirror-view": "^1.10.0"
   },

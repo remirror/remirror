@@ -28,13 +28,13 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@emotion/core": "^10.0.15",
+    "@emotion/core": "^10.0.16",
     "@remirror/core": "0.4.2-canary.2",
+    "@remirror/react-portals": "0.4.2-canary.2",
     "@remirror/renderer-react": "0.4.2-canary.2",
     "@types/min-document": "^2.19.0",
     "@types/prosemirror-view": "1.9.0",
     "min-document": "^2.19.0",
-    "@remirror/react-portals": "0.4.2-canary.2",
     "prosemirror-state": "^1.2.4",
     "prosemirror-view": "^1.10.0"
   },

@@ -25,11 +25,11 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@emotion/core": "^10.0.15",
+    "@emotion/core": "^10.0.16",
     "@reach/visually-hidden": "^0.1.4",
-    "@types/reach__visually-hidden": "^0.2.0",
     "@remirror/core": "0.4.2-canary.2",
-    "@remirror/ui": "0.4.2-canary.2"
+    "@remirror/ui": "0.4.2-canary.2",
+    "@types/reach__visually-hidden": "^0.2.0"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
