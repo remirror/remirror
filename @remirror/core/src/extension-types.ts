@@ -200,45 +200,32 @@ export type ActionNames<GExtensions extends AnyExtension[]> = StringKey<
 >;
 
 /**
- * The type signature of the extension helper method. It is used in determining whether
- * or not a helper has been defined on the extension in order to infer it's return type.
- */
-type ExtensionHelperMethodSignature = (...args: any[]) => ExtensionHelperReturn;
-
-/**
  * A utility type which maps the passed in extension helpers to a method called with
  * `manager.data.helpers.helperName()`.
  */
-type MapHelpers<
-  GHelper extends AnyFunction,
-  GHelperReturn extends ReturnType<GHelper> = ReturnType<GHelper>
-> = {
-  [P in Key<GHelperReturn>]: (...args: Parameters<GHelperReturn[P]>) => ReturnType<GHelperReturn[P]>;
+type MapHelpers<GHelpers extends ExtensionHelperReturn> = {
+  [P in Key<GHelpers>]: GHelpers[P];
 };
 
 /**
  * Utility type which receives an extension and provides the type of actions it makes available.
  */
-export type MappedHelpersFromExtension<
-  GExtension extends AnyExtension,
-  GHelpers extends HelpersOfExtension<GExtension> = HelpersOfExtension<GExtension>
-> = GHelpers extends ExtensionHelperMethodSignature ? MapHelpers<GHelpers> : {};
+export type HelpersFromExtension<GExtension extends AnyExtension> = UnionToIntersection<
+  MapHelpers<GExtension['_H']>
+>;
 
 /**
  * Creates an actions intersection object from a list of provided extensions.
  */
-export type MappedHelpersFromExtensionList<
-  GExtensions extends AnyExtension[],
-  GIntersection extends UnionToIntersection<
-    MappedHelpersFromExtension<GExtensions[number]>
-  > = UnionToIntersection<MappedHelpersFromExtension<GExtensions[number]>>
-> = GIntersection;
+export type HelpersFromExtensionList<GExtensions extends AnyExtension[]> = HelpersFromExtension<
+  GExtensions[number]
+>;
 
 /**
  * Utility type for pulling all the action names from a list
  */
-export type MappedHelperNames<GExtensions extends AnyExtension[]> = StringKey<
-  MappedHelpersFromExtensionList<GExtensions>
+export type HelperNames<GExtensions extends AnyExtension[]> = StringKey<
+  HelpersFromExtensionList<GExtensions>
 >;
 
 /**

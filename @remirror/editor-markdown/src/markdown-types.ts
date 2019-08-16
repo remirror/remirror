@@ -1,5 +1,4 @@
 import { RemirrorProps } from '@remirror/react';
-import { RemirrorTheme } from '@remirror/ui';
 
 export interface MarkdownEditorProps
   extends Partial<
@@ -18,6 +17,4 @@ export interface MarkdownEditorProps
       | 'editorStyles'
       | 'forceEnvironment'
     >
-  > {
-  theme?: Partial<RemirrorTheme>;
-}
+  > {}

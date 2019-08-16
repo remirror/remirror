@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "@remirror/editor-markdown",
   "description": "ui for a what you see is what you get (wysiwyg) editing experience",
   "license": "MIT",
@@ -35,14 +34,17 @@
     "@remirror/core-extensions": "0.4.2-canary.2",
     "@remirror/extension-code-block": "0.4.2-canary.2",
     "@remirror/extension-emoji": "0.4.2-canary.2",
+    "@remirror/extension-image": "0.4.2-canary.2",
     "@remirror/react": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2",
     "@remirror/ui": "0.4.2-canary.2",
     "@types/markdown-it": "^0.0.8",
     "@types/prosemirror-markdown": "^1.0.2",
+    "@types/refractor": "2.8.0",
     "keycode": "^2.2.0",
     "markdown-it": "^9.1.0",
-    "prosemirror-markdown": "^1.3.1"
+    "prosemirror-markdown": "^1.3.1",
+    "refractor": "^2.10.0"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",

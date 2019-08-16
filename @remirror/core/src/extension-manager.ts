@@ -47,7 +47,7 @@ import {
   ActionsFromExtensionList,
   AnyExtension,
   FlexibleExtension,
-  MappedHelpersFromExtensionList,
+  HelpersFromExtensionList,
   MarkNames,
   NodeNames,
   PlainNames,
@@ -766,7 +766,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _H!: MappedHelpersFromExtensionList<this['extensions']>;
+  public readonly _H!: HelpersFromExtensionList<this['extensions']>;
 
   /**
    * `ExtensionData`

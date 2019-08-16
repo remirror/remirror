@@ -38,14 +38,14 @@ export const toMarkdown = (content: ProsemirrorNode) =>
           return state.repeat(' ', maxW - nStr.length) + nStr + '. ';
         });
       },
-      list_item(state, node) {
+      listItem(state, node) {
         state.renderContent(node);
       },
       paragraph(state, node) {
+        console.log(state, node);
         state.renderInline(node);
         state.closeBlock(node);
       },
-
       image(state, node) {
         state.write(
           '![' +
@@ -72,8 +72,8 @@ export const toMarkdown = (content: ProsemirrorNode) =>
       },
     },
     {
-      em: { open: '*', close: '*', mixable: true, expelEnclosingWhitespace: true },
-      strong: { open: '**', close: '**', mixable: true, expelEnclosingWhitespace: true },
+      italic: { open: '*', close: '*', mixable: true, expelEnclosingWhitespace: true },
+      bold: { open: '**', close: '**', mixable: true, expelEnclosingWhitespace: true },
       link: {
         open(_state, mark, parent, index) {
           return isPlainURL(mark, parent, index, 1) ? '<' : '[';

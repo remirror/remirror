@@ -10,7 +10,7 @@ import {
   EditorViewParams,
   ElementParams,
   ExtensionManager,
-  MappedHelpersFromExtensionList,
+  HelpersFromExtensionList,
   ObjectNode,
   OptionsOfExtension,
   PlainObject,
@@ -105,7 +105,7 @@ export interface InjectedRemirrorProps<GExtensions extends AnyExtension[] = AnyE
   /**
    * A map of all helpers made available by the configured extensions.
    */
-  helpers: MappedHelpersFromExtensionList<GExtensions>;
+  helpers: HelpersFromExtensionList<GExtensions>;
 
   /**
    * The unique id for the editor instance.

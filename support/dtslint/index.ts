@@ -1,7 +1,14 @@
-import { ActionsFromExtension, Extension, NodeExtension } from '@remirror/core';
+import {
+  ActionsFromExtension,
+  DocExtension,
+  Extension,
+  ExtensionManager,
+  NodeExtension,
+  TextExtension,
+} from '@remirror/core';
 import { HistoryExtension } from '@remirror/core-extensions';
 
-class BestExtension extends Extension {
+class ErrExtension extends Extension {
   get name() {
     return 'base' as 'base';
   }
@@ -19,3 +26,9 @@ const historyActions: HistoryExtensionActions = {} as any;
 historyActions.redo(); // $ExpectType void
 historyActions.undo(); // $ExpectType void
 historyActions.undo({}); // $ExpectError
+
+const simpleManager = ExtensionManager.create([
+  { priority: 1, extension: new DocExtension() },
+  { priority: 1, extension: new TextExtension() },
+  new HistoryExtension(),
+]);

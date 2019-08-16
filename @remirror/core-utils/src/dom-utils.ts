@@ -628,8 +628,15 @@ export interface CreateDocumentNodeParams
   extends SchemaParams,
     Partial<CustomDocParams>,
     StringHandlerParams {
-  /** The content to render */
+  /**
+   * The content to render
+   */
   content: RemirrorContentType;
+
+  /**
+   * The fallback object node to use if unable to convert the value correctly
+   */
+  fallback?: ObjectNode;
 }
 
 export interface StringHandlerParams {
@@ -654,6 +661,7 @@ export const createDocumentNode = ({
   schema,
   doc,
   stringHandler,
+  fallback = EMPTY_PARAGRAPH_NODE,
 }: CreateDocumentNodeParams): ProsemirrorNode => {
   if (isProsemirrorNode(content)) {
     return content;
@@ -664,7 +672,7 @@ export const createDocumentNode = ({
       return schema.nodeFromJSON(content);
     } catch (e) {
       console.error(e);
-      return schema.nodeFromJSON(EMPTY_PARAGRAPH_NODE);
+      return schema.nodeFromJSON(fallback);
     }
   }
 
@@ -672,7 +680,7 @@ export const createDocumentNode = ({
     return stringHandler({ doc, content, schema });
   }
 
-  return schema.nodeFromJSON(EMPTY_PARAGRAPH_NODE);
+  return schema.nodeFromJSON(fallback);
 };
 
 /**
