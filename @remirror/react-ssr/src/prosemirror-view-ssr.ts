@@ -78,7 +78,7 @@ export class EditorViewSSR {
  * @param props
  * @param forceEnvironment
  */
-export const createEditorView = <GSchema extends EditorSchema = EditorSchema>(
+export const createEditorView = <GSchema extends EditorSchema = any>(
   place: Node | ((p: Node) => void) | { mount: Node } | undefined,
   props: DirectEditorProps,
   forceEnvironment?: RenderEnvironment,

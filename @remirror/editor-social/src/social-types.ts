@@ -1,5 +1,8 @@
 import { RemirrorTheme } from '@remirror/core';
-import { SuggestionStateMatch } from '@remirror/extension-mention';
+import { BaseExtensions, NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
+import { EmojiExtension } from '@remirror/extension-emoji';
+import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
+import { MentionExtension, SuggestionStateMatch } from '@remirror/extension-mention';
 import { ManagedRemirrorProviderProps } from '@remirror/react';
 import { Data, EmojiSet } from 'emoji-mart';
 
@@ -10,7 +13,7 @@ export type OnMentionChangeParams = MentionState & {
   activeIndex: number;
 };
 
-export interface SocialEditorProps extends Partial<ManagedRemirrorProviderProps> {
+export interface SocialEditorProps extends Partial<ManagedRemirrorProviderProps<SocialExtensions>> {
   /**
    * The message to show when the editor is empty.
    */
@@ -137,3 +140,16 @@ export interface TagSuggestionsProps
 export type DivProps = JSX.IntrinsicElements['div'];
 export type SpanProps = JSX.IntrinsicElements['span'];
 export type ImgProps = JSX.IntrinsicElements['img'];
+
+/**
+ * The extensions used by the social editor.
+ *
+ * Using this as a generic value allows for better type inference in the editor.
+ */
+export type SocialExtensions =
+  | BaseExtensions
+  | NodeCursorExtension
+  | PlaceholderExtension
+  | EmojiExtension
+  | EnhancedLinkExtension
+  | MentionExtension;

@@ -1,9 +1,10 @@
 import { bool, deepMerge, isFunction, RemirrorTheme, RemirrorThemeContextType } from '@remirror/core';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
-import { FC, ReactElement, useMemo, useState } from 'react';
+import React, { FC, ReactElement, useMemo, useState } from 'react';
 import { defaultRemirrorThemeValue, RemirrorThemeContext, withoutEmotionProps } from './ui-context';
 import { useEmotionTheme, useRemirrorTheme } from './ui-hooks';
 import { applyColorMode, getColorModes, getFactory } from './ui-utils';
+
 type DisableMerge = 'parent' | 'base' | 'emotion';
 
 export interface RemirrorThemeProviderProps {

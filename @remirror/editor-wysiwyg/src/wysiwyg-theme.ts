@@ -1,6 +1,5 @@
 import { EDITOR_CLASS_SELECTOR, RemirrorTheme } from '@remirror/core';
-
-export type ButtonState = 'default' | 'active-default' | 'inverse' | 'active-inverse';
+import { ButtonState } from './wysiwyg-types';
 
 export const buttonColors: Record<ButtonState, string> = {
   default: '#aaa',

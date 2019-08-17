@@ -96,7 +96,7 @@ export interface ExtensionConstructor<
  * A lower value for priority means a higher priority. Think of it as an index
  * and position in array except that it can also support negative values.
  */
-export interface PrioritizedExtension<GExtension extends AnyExtension = AnyExtension> {
+export interface PrioritizedExtension<GExtension extends AnyExtension = any> {
   /**
    * The instantiated extension
    */
@@ -127,11 +127,11 @@ export type FromFlexibleExtension<
  * This is used by the extension manager to allow for a more flexible
  * initialization.
  */
-export type FlexibleExtension<GExtension extends AnyExtension = AnyExtension> =
+export type FlexibleExtension<GExtension extends AnyExtension = any> =
   | GExtension
   | PrioritizedExtension<GExtension>;
 
-export type FlexibleExtensions<GExtensions extends AnyExtension[] = AnyExtension[]> = Array<
+export type FlexibleExtensions<GExtensions extends AnyExtension[] = any[]> = Array<
   FlexibleExtension<GExtensions[number]>
 >;
 
@@ -141,7 +141,7 @@ export interface ExtensionListParams {
    */
   extensions: AnyExtension[];
 }
-export interface ExtensionParams<GExtension extends AnyExtension = AnyExtension> {
+export interface ExtensionParams<GExtension extends AnyExtension = any> {
   /**
    * An extension
    */
@@ -244,7 +244,7 @@ export type NodeNames<GExtension extends AnyExtension> = GExtension extends Node
 /**
  * Gets the schema from a list of extensions
  */
-export type SchemaFromExtensionList<GExtension extends AnyExtension = AnyExtension> = EditorSchema<
+export type SchemaFromExtensions<GExtension extends AnyExtension = any> = EditorSchema<
   NodeNames<GExtension>,
   MarkNames<GExtension>
 >;

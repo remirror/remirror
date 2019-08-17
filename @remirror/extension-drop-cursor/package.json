@@ -21,7 +21,7 @@
     "dev": "run-p dev:*",
     "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
     "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
-    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json"
+    "_lint": "tslint --project tsconfig.lint.json --config ../../tslint.json"
   },
   "types": "lib/index.d.ts",
   "dependencies": {

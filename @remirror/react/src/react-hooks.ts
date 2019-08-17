@@ -31,7 +31,7 @@ import { RemirrorContext, RemirrorManagerContext } from './react-contexts';
  * }
  * ```
  */
-export const useRemirror = <GExtension extends AnyExtension = AnyExtension>() => {
+export const useRemirror = <GExtension extends AnyExtension = any>() => {
   const params = useContext<InjectedRemirrorProps<GExtension>>(RemirrorContext as any);
 
   if (!params) {
@@ -44,7 +44,7 @@ export const useRemirror = <GExtension extends AnyExtension = AnyExtension>() =>
 /**
  * A low level context picker to obtain the manager from within a RemirrorManager context
  */
-export const useRemirrorManager = <GExtension extends AnyExtension = AnyExtension>() => {
+export const useRemirrorManager = <GExtension extends AnyExtension = any>() => {
   const manager = useContext<ExtensionManager<GExtension>>(RemirrorManagerContext as any);
 
   if (!manager) {

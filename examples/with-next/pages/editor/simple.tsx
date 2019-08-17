@@ -16,8 +16,10 @@ import {
   useRemirror,
 } from '@remirror/react';
 
+type SimpleExtensions = BoldExtension | ItalicExtension | PlaceholderExtension | UnderlineExtension;
+
 const SillyMenu: FC = () => {
-  const { getPositionerProps, actions } = useRemirror();
+  const { getPositionerProps, actions } = useRemirror<SimpleExtensions>();
 
   const runAction = memoize(
     (method: () => void): MouseEventHandler<HTMLElement> => e => {
@@ -78,7 +80,7 @@ const SillyMenu: FC = () => {
 export default () => {
   const [json, setJson] = useState(JSON.stringify(initialJson, null, 2));
 
-  const onChange: RemirrorEventListener = ({ getJSON }) => {
+  const onChange: RemirrorEventListener<SimpleExtensions> = ({ getJSON }) => {
     const newJson = JSON.stringify(getJSON(), null, 2);
     setJson(newJson);
   };

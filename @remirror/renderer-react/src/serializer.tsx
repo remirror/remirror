@@ -23,7 +23,7 @@ type MarkToDOM = MarkExtensionSpec['toDOM'];
 /**
  * Serialize the extension provided schema into a JSX element that can be displayed node and non-dom environments.
  */
-export class ReactSerializer<GExtension extends AnyExtension = AnyExtension> {
+export class ReactSerializer<GExtension extends AnyExtension = any> {
   public nodes: Record<string, NodeToDOM>;
   public marks: Record<string, MarkToDOM>;
   private components: Record<string, ComponentType<any>>;
@@ -158,7 +158,7 @@ export class ReactSerializer<GExtension extends AnyExtension = AnyExtension> {
    *
    * @param manager
    */
-  public static fromExtensionManager<GExtension extends AnyExtension = AnyExtension>(
+  public static fromExtensionManager<GExtension extends AnyExtension = any>(
     manager: ExtensionManager<GExtension>,
   ) {
     return new ReactSerializer(
@@ -173,7 +173,7 @@ export class ReactSerializer<GExtension extends AnyExtension = AnyExtension> {
    *
    * @param manager
    */
-  private static nodesFromExtensionManager<GExtension extends AnyExtension = AnyExtension>(
+  private static nodesFromExtensionManager<GExtension extends AnyExtension = any>(
     manager: ExtensionManager<GExtension>,
   ) {
     const result = gatherToDOM(manager.nodes);
@@ -188,7 +188,7 @@ export class ReactSerializer<GExtension extends AnyExtension = AnyExtension> {
    *
    * @param manager
    */
-  private static marksFromExtensionManager<GExtension extends AnyExtension = AnyExtension>(
+  private static marksFromExtensionManager<GExtension extends AnyExtension = any>(
     manager: ExtensionManager<GExtension>,
   ) {
     return gatherToDOM(manager.marks);

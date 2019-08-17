@@ -6,7 +6,6 @@ export * from './mark-extension';
 export * from './node-extension';
 export * from './nodes';
 
-// TODO refactor as a breaking change
 export * from '@remirror/core-constants';
 export * from '@remirror/core-types';
 export * from '@remirror/core-utils';

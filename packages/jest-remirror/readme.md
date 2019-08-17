@@ -55,9 +55,6 @@ Create a `jest.framework.dom.ts` file and add the following
 
 import { jsdomExtras, jsdomPolyfill, remirrorMatchers } from 'jest-remirror';
 
-/* Auto cleanup DOM after each test */
-require('@testing-library/react/cleanup-after-each');
-
 /* Add jest-remirror assertions */
 expect.extend(remirrorMatchers);
 

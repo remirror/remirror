@@ -33,8 +33,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { ButtonState } from '../wysiwyg-theme';
-import { WysiwygExtensionList } from '../wysiwyg-types';
+import { ButtonState, WysiwygExtensions } from '../wysiwyg-types';
 import {
   BubbleContent,
   BubbleMenuTooltip,
@@ -43,7 +42,7 @@ import {
   WithPaddingProps,
 } from './wysiwyg-components';
 
-const menuItems: Array<[ActionNames<WysiwygExtensionList>, [ComponentType<IconProps>, string?], Attrs?]> = [
+const menuItems: Array<[ActionNames<WysiwygExtensions>, [ComponentType<IconProps>, string?], Attrs?]> = [
   ['bold', [BoldIcon]],
   ['italic', [ItalicIcon]],
   ['underline', [UnderlineIcon]],
@@ -81,7 +80,7 @@ interface MenuBarProps extends Pick<BubbleMenuProps, 'activateLink'> {
  * The MenuBar component which renders the actions that can be taken on the text within the editor.
  */
 export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
-  const { actions } = useRemirror<WysiwygExtensionList>();
+  const { actions } = useRemirror<WysiwygExtensions>();
 
   return (
     <Toolbar>
@@ -148,11 +147,11 @@ export interface BubbleMenuProps {
 }
 
 const bubbleMenuItems: Array<
-  [ActionNames<WysiwygExtensionList>, [ComponentType<IconProps>, string?], Attrs?]
+  [ActionNames<WysiwygExtensions>, [ComponentType<IconProps>, string?], Attrs?]
 > = [['bold', [BoldIcon]], ['italic', [ItalicIcon]], ['underline', [UnderlineIcon]]];
 
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
-  const { actions, getPositionerProps } = useRemirror<WysiwygExtensionList>();
+  const { actions, getPositionerProps } = useRemirror<WysiwygExtensions>();
   const { bottom, left, ref } = getPositionerProps({
     ...bubblePositioner,
     isActive: params =>

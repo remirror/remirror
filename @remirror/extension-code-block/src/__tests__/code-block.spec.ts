@@ -252,7 +252,9 @@ describe('commands', () => {
 
     it('creates the default codeBlock when no language is provided', () => {
       const markupBlock = codeBlock({ language: 'markup' });
+
       const { state } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
+        // @ts-ignore
         actions.createCodeBlock();
       });
 

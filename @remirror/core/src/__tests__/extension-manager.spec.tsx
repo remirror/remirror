@@ -3,9 +3,9 @@
 import { EMPTY_PARAGRAPH_NODE, Tags } from '@remirror/core-constants';
 import { Cast } from '@remirror/core-helpers';
 import { Attrs, EditorState, NodeExtensionSpec } from '@remirror/core-types';
+import { PortalContainer } from '@remirror/react-portals';
 import { defaultRemirrorThemeValue } from '@remirror/ui';
 import { createTestManager, extensions } from '@test-fixtures/schema-helpers';
-import { PortalContainer } from '@remirror/react-portals';
 import { EditorView } from 'prosemirror-view';
 import React, { FC } from 'react';
 import { Extension } from '../extension';

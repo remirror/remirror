@@ -2,7 +2,7 @@ import { AnyExtension, EditorStateParams, ManagerParams, PlainObject } from '@re
 import { mapProps, ReactSerializer } from '@remirror/renderer-react';
 import React from 'react';
 
-export interface RemirrorSSRProps<GExtension extends AnyExtension = AnyExtension>
+export interface RemirrorSSRProps<GExtension extends AnyExtension = any>
   extends EditorStateParams,
     ManagerParams<GExtension> {
   /**
@@ -18,7 +18,7 @@ export interface RemirrorSSRProps<GExtension extends AnyExtension = AnyExtension
 /**
  * Remirror SSR component used for rendering in non dom environments
  */
-export const RemirrorSSR = <GExtension extends AnyExtension = AnyExtension>({
+export const RemirrorSSR = <GExtension extends AnyExtension = any>({
   attributes,
   manager,
   state,

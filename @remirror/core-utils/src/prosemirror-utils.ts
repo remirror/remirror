@@ -18,7 +18,7 @@ import {
   TransactionParams,
 } from '@remirror/core-types';
 import { Selection as PMSelection } from 'prosemirror-state';
-import { isNodeSelection, isSelection, isTextDOMNode } from './dom-utils';
+import { isEditorState, isNodeSelection, isSelection, isTextDOMNode } from './dom-utils';
 
 /* "Borrowed" from prosemirror-utils in order to avoid requirement of
 `@prosemirror-tables`*/
@@ -280,12 +280,12 @@ export const findPositionOfNodeBefore = (selection: Selection): number | undefin
 };
 
 /**
- * Checks whether the selection  or state is currently empty.
+ * Checks whether the selection or state is currently empty.
  *
  * @param value - the current selection or state
  */
 export const selectionEmpty = (value: Selection | EditorState) =>
-  isSelection(value) ? value.empty : value.selection.empty;
+  isSelection(value) ? value.empty : isEditorState(value) ? value.selection.empty : true;
 
 /**
  * Check to see if a transaction has changed either the document or the current

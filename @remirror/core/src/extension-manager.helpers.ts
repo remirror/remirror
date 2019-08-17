@@ -16,6 +16,7 @@ import {
   AnyExtension,
   ExtensionListParams,
   FlexibleExtension,
+  InferFlexibleExtensionList,
   PrioritizedExtension,
 } from './extension-types';
 
@@ -214,7 +215,7 @@ export const extensionPropertyMapper = <
 /**
  * Converts an extension to its mapped value
  */
-function convertToExtensionMapValue(extension: FlexibleExtension<any>): PrioritizedExtension {
+function convertToExtensionMapValue(extension: FlexibleExtension): PrioritizedExtension {
   return isExtension(extension) ? { priority: DEFAULT_EXTENSION_PRIORITY, extension } : { ...extension };
 }
 
@@ -227,12 +228,12 @@ function convertToExtensionMapValue(extension: FlexibleExtension<any>): Prioriti
  * @param values - the extensions to transform as well as their priorities
  * @returns the list of extension instances sorted by priority
  */
-export const transformExtensionMap = <GExtension extends AnyExtension>(
-  values: Array<FlexibleExtension<GExtension>>,
-): GExtension[] =>
+export const transformExtensionMap = <GFlexibleList extends FlexibleExtension[]>(
+  values: GFlexibleList,
+): Array<InferFlexibleExtensionList<GFlexibleList>> =>
   sort(values.map(convertToExtensionMapValue), (a, b) => a.priority - b.priority).map(
     ({ extension }) => extension,
-  ) as any;
+  );
 
 /**
  * Takes in an object and removes all function values.

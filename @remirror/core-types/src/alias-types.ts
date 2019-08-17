@@ -30,22 +30,22 @@ export type EditorSchema<GNodes extends string = string, GMarks extends string =
   GNodes,
   GMarks
 >;
-export type EditorView<GSchema extends EditorSchema = EditorSchema> = PMEditorView<GSchema>;
-export type Selection<GSchema extends EditorSchema = EditorSchema> = PMSelection<GSchema>;
-export type DecorationSet<GSchema extends EditorSchema = EditorSchema> = PMDecorationSet<GSchema>;
-export type Transaction<GSchema extends EditorSchema = EditorSchema> = PMTransaction<GSchema>;
+export type EditorView<GSchema extends EditorSchema = any> = PMEditorView<GSchema>;
+export type Selection<GSchema extends EditorSchema = any> = PMSelection<GSchema>;
+export type DecorationSet<GSchema extends EditorSchema = any> = PMDecorationSet<GSchema>;
+export type Transaction<GSchema extends EditorSchema = any> = PMTransaction<GSchema>;
 export type PluginKey<GPluginState = any> = PMPluginKey<GPluginState, EditorSchema>;
 export type Plugin<GPluginState = any> = PMPlugin<GPluginState, EditorSchema>;
-export type Mark<GSchema extends EditorSchema = EditorSchema> = PMMark<GSchema>;
-export type ResolvedPos<GSchema extends EditorSchema = EditorSchema> = PMResolvedPos<GSchema>;
-export type InputRule<GSchema extends EditorSchema = EditorSchema> = PMInputRule<GSchema>;
-export type Fragment<GSchema extends EditorSchema = EditorSchema> = PMFragment<GSchema>;
-export type NodeView<GSchema extends EditorSchema = EditorSchema> = PMNodeView<GSchema>;
-export type ProsemirrorNode<GSchema extends EditorSchema = EditorSchema> = PMNode<GSchema>;
+export type Mark<GSchema extends EditorSchema = any> = PMMark<GSchema>;
+export type ResolvedPos<GSchema extends EditorSchema = any> = PMResolvedPos<GSchema>;
+export type InputRule<GSchema extends EditorSchema = any> = PMInputRule<GSchema>;
+export type Fragment<GSchema extends EditorSchema = any> = PMFragment<GSchema>;
+export type NodeView<GSchema extends EditorSchema = any> = PMNodeView<GSchema>;
+export type ProsemirrorNode<GSchema extends EditorSchema = any> = PMNode<GSchema>;
 export type ProsemirrorPlugin<GPluginState = any> = PMPlugin<GPluginState, EditorSchema>;
-export type MarkType<GSchema extends EditorSchema = EditorSchema> = PMMarkType<GSchema>;
-export type NodeType<GSchema extends EditorSchema = EditorSchema> = PMNodeType<GSchema>;
-export type EditorState<GSchema extends EditorSchema = EditorSchema> = PMEditorState<GSchema>;
-export type Slice<GSchema extends EditorSchema = EditorSchema> = PMSlice<GSchema>;
+export type MarkType<GSchema extends EditorSchema = any> = PMMarkType<GSchema>;
+export type NodeType<GSchema extends EditorSchema = any> = PMNodeType<GSchema>;
+export type EditorState<GSchema extends EditorSchema = any> = PMEditorState<GSchema>;
+export type Slice<GSchema extends EditorSchema = any> = PMSlice<GSchema>;
 export type Decoration = PMDecoration;
 export type Mapping = PMMapping;

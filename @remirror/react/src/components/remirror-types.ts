@@ -6,7 +6,7 @@ import {
   RemirrorContentType,
   RemirrorInterpolation,
   RenderEnvironment,
-  SchemaFromExtensionList,
+  SchemaFromExtensions,
   StringHandlerParams,
   TransactionTransformer,
 } from '@remirror/core';
@@ -18,7 +18,7 @@ import {
   RenderPropFunction,
 } from '@remirror/react-utils';
 
-export interface RemirrorProps<GExtension extends AnyExtension = AnyExtension> extends StringHandlerParams {
+export interface RemirrorProps<GExtension extends AnyExtension = any> extends StringHandlerParams {
   /**
    * Pass in the extension manager.
    *
@@ -53,7 +53,7 @@ export interface RemirrorProps<GExtension extends AnyExtension = AnyExtension> e
    * When onStateChange is defined this prop is used to set the next state value
    * of the remirror editor.
    */
-  value?: EditorState<SchemaFromExtensionList<GExtension>> | null;
+  value?: EditorState<SchemaFromExtensions<GExtension>> | null;
 
   /**
    * Adds attributes directly to the prosemirror html element.
@@ -111,7 +111,7 @@ export interface RemirrorProps<GExtension extends AnyExtension = AnyExtension> e
    * Use this to update the transaction which will be used to update the editor
    * state.
    */
-  onDispatchTransaction: TransactionTransformer<SchemaFromExtensionList<GExtension>>;
+  onDispatchTransaction: TransactionTransformer<SchemaFromExtensions<GExtension>>;
 
   /**
    * Sets the accessibility label for the editor instance.

@@ -12,7 +12,7 @@ import { useRemirrorManager } from '../react-hooks';
 import { Remirror } from './remirror';
 import { RemirrorProps } from './remirror-types';
 
-export interface RemirrorContextProviderProps<GExtension extends AnyExtension = AnyExtension>
+export interface RemirrorContextProviderProps<GExtension extends AnyExtension = any>
   extends ProviderProps<InjectedRemirrorProps<GExtension>> {
   /**
    * Sets the first child element as a the root (where the prosemirror editor instance will be rendered).
@@ -46,7 +46,7 @@ export interface RemirrorContextProviderProps<GExtension extends AnyExtension = 
   childAsRoot?: GetRootPropsConfig<string> | boolean;
 }
 
-export interface RemirrorProviderProps<GExtension extends AnyExtension = AnyExtension>
+export interface RemirrorProviderProps<GExtension extends AnyExtension = any>
   extends MakeOptional<Omit<RemirrorProps<GExtension>, 'children'>, keyof typeof defaultProps>,
     Pick<RemirrorContextProviderProps<GExtension>, 'childAsRoot'> {
   /**
@@ -63,7 +63,7 @@ export interface RemirrorProviderProps<GExtension extends AnyExtension = AnyExte
  * is called. However when called via a Provider the render prop renders the context component and it's not until
  * the element is actually rendered that the getRootProp in any nested components is called.
  */
-const RemirrorContextProvider = <GExtension extends AnyExtension = AnyExtension>({
+const RemirrorContextProvider = <GExtension extends AnyExtension = any>({
   childAsRoot: _,
   ...props
 }: RemirrorContextProviderProps<GExtension>) => {
@@ -91,7 +91,7 @@ RemirrorContextProvider.defaultProps = {
  * - `withRemirror`
  * - `withPositioner`
  */
-export const RemirrorProvider = <GExtension extends AnyExtension = AnyExtension>({
+export const RemirrorProvider = <GExtension extends AnyExtension = any>({
   children,
   childAsRoot,
   ...props
@@ -111,7 +111,7 @@ export const RemirrorProvider = <GExtension extends AnyExtension = AnyExtension>
 
 RemirrorProvider.$$remirrorType = RemirrorElementType.EditorProvider;
 
-export interface ManagedRemirrorProviderProps<GExtension extends AnyExtension = AnyExtension>
+export interface ManagedRemirrorProviderProps<GExtension extends AnyExtension = any>
   extends Omit<RemirrorProviderProps<GExtension>, 'manager'> {}
 
 /**
@@ -120,7 +120,7 @@ export interface ManagedRemirrorProviderProps<GExtension extends AnyExtension = 
  *
  * If no manager exists the child components are not rendered.
  */
-export const ManagedRemirrorProvider = <GExtension extends AnyExtension = AnyExtension>({
+export const ManagedRemirrorProvider = <GExtension extends AnyExtension = any>({
   children,
   ...props
 }: ManagedRemirrorProviderProps<GExtension>) => {

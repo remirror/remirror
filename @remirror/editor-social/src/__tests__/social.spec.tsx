@@ -9,7 +9,7 @@ test('should place the editor within the correct element', () => {
     <SocialEditor
       userData={[]}
       tagData={[]}
-      onMentionChange={console.log}
+      onMentionChange={jest.fn()}
       initialContent={docNodeBasicJSON}
       emojiData={{} as any}
     />,

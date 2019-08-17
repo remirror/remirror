@@ -3,11 +3,13 @@ import {
   DocExtension,
   EditorState,
   ExtensionManager,
+  ExtensionsFromManager,
   isObjectNode,
   isProsemirrorNode,
   isString,
   ProsemirrorNode,
   RemirrorContentType,
+  SchemaFromExtensions,
   SchemaParams,
   StringHandlerParams,
   TextExtension,
@@ -138,7 +140,7 @@ const createInitialContent = ({ content, schema }: CreateInitialContentParams): 
   };
 };
 
-export interface MarkdownEditorProps {
+interface MarkdownEditorProps {
   initialValue?: RemirrorContentType;
   editor: EditorDisplay;
 }
@@ -169,24 +171,29 @@ const markdownStringHandler: StringHandlerParams['stringHandler'] = ({
 };
 
 export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', editor }) => {
+  type WysiwygExtensions = ExtensionsFromManager<typeof wysiwygManager>;
+  type WysiwygSchema = SchemaFromExtensions<WysiwygExtensions>;
+  type MarkdownExtensions = ExtensionsFromManager<typeof markdownManager>;
+  type MarkdownSchema = SchemaFromExtensions<MarkdownExtensions>;
+
   const wysiwygManager = useWysiwygManager();
   const markdownManager = useMarkdownManager();
   const initialContent = createInitialContent({ content: initialValue, schema: wysiwygManager.schema });
   const [rawContent, setRawContent] = useState<Content>(initialContent);
-  const [markdownEditorState, setMarkdownEditorState] = useState<EditorState>();
-  const [wysiwygEditorState, setWysiwygEditorState] = useState<EditorState>();
+  const [markdownEditorState, setMarkdownEditorState] = useState<EditorState<MarkdownSchema>>();
+  const [wysiwygEditorState, setWysiwygEditorState] = useState<EditorState<WysiwygSchema>>();
 
   const createWysiwygState = (content: ProsemirrorNode) => wysiwygManager.createState({ content });
   const createMarkdownState = (content: string) =>
     wysiwygManager.createState({ content, stringHandler: markdownStringHandler });
 
-  const onMarkdownStateChange = ({ newState, getText }: RemirrorStateListenerParams) => {
+  const onMarkdownStateChange = ({ newState, getText }: RemirrorStateListenerParams<MarkdownExtensions>) => {
     setMarkdownEditorState(newState);
     setRawContent({ ...rawContent, markdown: getText() });
     setWysiwygEditorState(createWysiwygState(fromMarkdown(getText(), wysiwygManager.schema)));
   };
 
-  const onWysiwygStateChange = ({ newState }: RemirrorStateListenerParams) => {
+  const onWysiwygStateChange = ({ newState }: RemirrorStateListenerParams<WysiwygExtensions>) => {
     setWysiwygEditorState(newState);
     setRawContent({ ...rawContent, wysiwyg: newState.doc });
     setMarkdownEditorState(createMarkdownState(toMarkdown(newState.doc)));

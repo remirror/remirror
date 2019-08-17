@@ -9,6 +9,7 @@ import {
   MentionGetterParams,
   SetExitTriggeredInternallyParams,
   SocialEditorProps,
+  SocialExtensions,
 } from '../social-types';
 import {
   CharacterCountWrapper,
@@ -102,7 +103,7 @@ export const SocialEditorComponent: FC<SocialEditorComponentProps> = ({
     getRootProps,
     actions,
     state: { newState },
-  } = useRemirror();
+  } = useRemirror<SocialExtensions>();
   const content = newState.doc.textContent;
   return (
     <div>

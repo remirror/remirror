@@ -112,14 +112,11 @@ export interface ExtensionManagerData<
  * manager.data.actions
  * ```
  */
-export class ExtensionManager<GExtension extends AnyExtension = AnyExtension>
-  implements ExtensionManagerInitParams {
+export class ExtensionManager<GExtension extends AnyExtension = any> implements ExtensionManagerInitParams {
   /**
    * A static method for creating a new extension manager.
    */
-  public static create<GFlexibleList extends Array<FlexibleExtension<any>>>(
-    prioritizedExtensions: GFlexibleList,
-  ) {
+  public static create<GFlexibleList extends FlexibleExtension[]>(prioritizedExtensions: GFlexibleList) {
     const extensions = transformExtensionMap(prioritizedExtensions);
     return new ExtensionManager<InferFlexibleExtensionList<GFlexibleList>>(extensions);
   }
@@ -703,15 +700,22 @@ export class ExtensionManager<GExtension extends AnyExtension = AnyExtension>
     return extensionStyles;
   }
 
-  /* The following are placed at the bottom to prevent them from appearing at the top
-  of autosuggestions when accessing the manger. The names are prefixed with `z` to place them at the
-  bottom of alphabetical suggestion lists. */
+  /**
+   * `Extensions`
+   *
+   * Type inference hack for the extensions union of an extension manager.
+   * This is the only way I know to store types on a class.
+   *
+   * @internal
+   * INTERNAL USE ONLY
+   */
+  public readonly _E!: GExtension;
 
   /**
    * `NodeNames`
    *
    * Type inference hack for node extension names.
-   * Also provides a shorthand way for accessing types on a class.
+   * This is the only way I know to store types on a class.
    *
    * @internal
    * INTERNAL USE ONLY
@@ -722,7 +726,7 @@ export class ExtensionManager<GExtension extends AnyExtension = AnyExtension>
    * `MarkNames`
    *
    * Type inference hack for mark extension names.
-   * Also provides a shorthand way for accessing types on a class.
+   * This is the only way I know to store types on a class.
    *
    * @internal
    * INTERNAL USE ONLY
@@ -733,7 +737,7 @@ export class ExtensionManager<GExtension extends AnyExtension = AnyExtension>
    * `PlainNames`
    *
    * Type inference hack for plain extension names.
-   * Also provides a shorthand way for accessing types on a class.
+   * This is the only way I know to store types on a class.
    *
    * @internal
    * INTERNAL USE ONLY
@@ -744,7 +748,7 @@ export class ExtensionManager<GExtension extends AnyExtension = AnyExtension>
    * `AllNames`
    *
    * Type inference hack for all extension names.
-   * Also provides a shorthand way for accessing types on a class.
+   * This is the only way I know to store types on a class.
    *
    * @internal
    * INTERNAL USE ONLY
@@ -755,7 +759,7 @@ export class ExtensionManager<GExtension extends AnyExtension = AnyExtension>
    * `Actions`
    *
    * Type inference hack for all the actions this manager provides.
-   * Also provides a shorthand way for accessing types on a class.
+   * This is the only way I know to store types on a class.
    *
    * @internal
    * INTERNAL USE ONLY
@@ -791,11 +795,21 @@ export class ExtensionManager<GExtension extends AnyExtension = AnyExtension>
  */
 export const isExtensionManager = isInstanceOf(ExtensionManager);
 
-export interface ManagerParams<GExtension extends AnyExtension = AnyExtension> {
+export interface ManagerParams<GExtension extends AnyExtension = any> {
   /**
    * The extension manager
    */
   manager: ExtensionManager<GExtension>;
 }
+
+/**
+ * Retrieve the extensions from an `ExtensionManager`.
+ */
+export type ExtensionsFromManager<GManager extends AnyExtensionManager> = GManager['_E'];
+
+/**
+ * The utility for capturing all the possible `ExtensionManager` type variations.
+ */
+export type AnyExtensionManager = ExtensionManager<any>;
 
 export interface OnTransactionManagerParams extends TransactionParams, EditorStateParams {}

@@ -3,7 +3,14 @@ import { MentionExtensionAttrs, SuggestionStateMatch } from '@remirror/extension
 import { useRemirror } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import React, { forwardRef, FunctionComponent } from 'react';
-import { DivProps, ImgProps, SpanProps, TagSuggestionsProps, UserSuggestionsProps } from '../social-types';
+import {
+  DivProps,
+  ImgProps,
+  SocialExtensions,
+  SpanProps,
+  TagSuggestionsProps,
+  UserSuggestionsProps,
+} from '../social-types';
 
 const SuggestionsDropdown = forwardRef<HTMLDivElement, DivProps>((props, ref) => {
   const { css } = useRemirrorTheme();
@@ -148,7 +155,7 @@ export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
   data,
   setExitTriggeredInternally,
 }) => {
-  const { view, actions } = useRemirror();
+  const { view, actions } = useRemirror<SocialExtensions>();
 
   /**
    * Click handler for accepting a user suggestion
@@ -211,7 +218,7 @@ export const TagSuggestions: FunctionComponent<TagSuggestionsProps> = ({
   data,
   setExitTriggeredInternally,
 }) => {
-  const { view, actions } = useRemirror();
+  const { view, actions } = useRemirror<SocialExtensions>();
 
   /**
    * Click handler for accepting a tag suggestion

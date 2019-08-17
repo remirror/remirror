@@ -17,7 +17,7 @@ import {
   RemirrorContentType,
   RemirrorInterpolation,
   RemirrorThemeContextType,
-  SchemaFromExtensionList,
+  SchemaFromExtensions,
   shouldUseDOMEnvironment,
   toHTML,
   Transaction,
@@ -55,7 +55,7 @@ import React, { Component, ReactNode, Ref } from 'react';
 import { defaultProps } from '../react-constants';
 import { RemirrorProps } from './remirror-types';
 
-interface UpdateStateParams<GSchema extends EditorSchema = EditorSchema> extends EditorStateParams<GSchema> {
+interface UpdateStateParams<GSchema extends EditorSchema = any> extends EditorStateParams<GSchema> {
   /**
    * Called after the state has updated.
    */
@@ -69,7 +69,7 @@ interface UpdateStateParams<GSchema extends EditorSchema = EditorSchema> extends
   triggerOnChange?: boolean;
 }
 
-interface RemirrorState<GSchema extends EditorSchema = EditorSchema> {
+interface RemirrorState<GSchema extends EditorSchema = any> {
   /**
    * The Prosemirror editor state
    */
@@ -81,9 +81,9 @@ interface RemirrorState<GSchema extends EditorSchema = EditorSchema> {
   shouldRenderClient?: boolean;
 }
 
-export class Remirror<GExtension extends AnyExtension = AnyExtension> extends Component<
+export class Remirror<GExtension extends AnyExtension = any> extends Component<
   RemirrorProps<GExtension>,
-  RemirrorState<SchemaFromExtensionList<GExtension>>
+  RemirrorState<SchemaFromExtensions<GExtension>>
 > {
   public static defaultProps = defaultProps;
 
@@ -137,7 +137,7 @@ export class Remirror<GExtension extends AnyExtension = AnyExtension> extends Co
   /**
    * The prosemirror EditorView.
    */
-  private view: EditorViewType<SchemaFromExtensionList<GExtension>>;
+  private view: EditorViewType<SchemaFromExtensions<GExtension>>;
 
   /**
    * A unique ID for the editor which is also used as a key to pass into
@@ -219,7 +219,7 @@ export class Remirror<GExtension extends AnyExtension = AnyExtension> extends Co
    *
    * At this point both oldState and newState point to the same state object.
    */
-  private createInitialState(): RemirrorState<SchemaFromExtensionList<GExtension>> {
+  private createInitialState(): RemirrorState<SchemaFromExtensions<GExtension>> {
     const { suppressHydrationWarning } = this.props;
 
     const newState = this.createStateFromContent(this.props.initialContent);
@@ -237,7 +237,7 @@ export class Remirror<GExtension extends AnyExtension = AnyExtension> extends Co
    * Create the prosemirror editor view.
    */
   private createView() {
-    return createEditorView<SchemaFromExtensionList<GExtension>>(
+    return createEditorView<SchemaFromExtensions<GExtension>>(
       undefined,
       {
         state: this.state.editor.newState,
@@ -464,7 +464,7 @@ export class Remirror<GExtension extends AnyExtension = AnyExtension> extends Co
     state,
     triggerOnChange = true,
     onUpdate,
-  }: UpdateStateParams<SchemaFromExtensionList<GExtension>>) {
+  }: UpdateStateParams<SchemaFromExtensions<GExtension>>) {
     const { onChange, onStateChange } = this.props;
 
     /**
@@ -567,7 +567,7 @@ export class Remirror<GExtension extends AnyExtension = AnyExtension> extends Co
 
   public componentDidUpdate(
     { editable, manager: prevManager }: RemirrorProps<GExtension>,
-    { editor: { newState } }: RemirrorState<SchemaFromExtensionList<GExtension>>,
+    { editor: { newState } }: RemirrorState<SchemaFromExtensions<GExtension>>,
   ) {
     // Ensure that children is still a render prop
     propIsFunction(this.props.children);
@@ -665,7 +665,7 @@ export class Remirror<GExtension extends AnyExtension = AnyExtension> extends Co
    * The params used in the event listeners and the state listener
    */
   private baseListenerParams(
-    state?: EditorState<SchemaFromExtensionList<GExtension>>,
+    state?: EditorState<SchemaFromExtensions<GExtension>>,
   ): BaseListenerParams<GExtension> {
     return {
       view: this.view,
@@ -681,7 +681,7 @@ export class Remirror<GExtension extends AnyExtension = AnyExtension> extends Co
    * e.g. `onChange`
    */
   private eventListenerParams(
-    state?: EditorState<SchemaFromExtensionList<GExtension>>,
+    state?: EditorState<SchemaFromExtensions<GExtension>>,
   ): RemirrorEventListenerParams<GExtension> {
     return {
       ...this.baseListenerParams(),
@@ -695,7 +695,7 @@ export class Remirror<GExtension extends AnyExtension = AnyExtension> extends Co
   private editorStateEventListenerParams({
     newState,
     oldState,
-  }: Partial<CompareStateParams<SchemaFromExtensionList<GExtension>>> = {}): RemirrorStateListenerParams<
+  }: Partial<CompareStateParams<SchemaFromExtensions<GExtension>>> = {}): RemirrorStateListenerParams<
     GExtension
   > {
     return {
@@ -728,7 +728,7 @@ export class Remirror<GExtension extends AnyExtension = AnyExtension> extends Co
     };
   }
 
-  private getText = (state?: EditorState<SchemaFromExtensionList<GExtension>>) => (
+  private getText = (state?: EditorState<SchemaFromExtensions<GExtension>>) => (
     lineBreakDivider = '\n\n',
   ) => {
     const { doc } = state || this.state.editor.newState;
@@ -738,7 +738,7 @@ export class Remirror<GExtension extends AnyExtension = AnyExtension> extends Co
   /**
    * Retrieve the HTML from the `doc` prosemirror node
    */
-  private getHTML = (state?: EditorState<SchemaFromExtensionList<GExtension>>) => () => {
+  private getHTML = (state?: EditorState<SchemaFromExtensions<GExtension>>) => () => {
     return toHTML({
       node: (state || this.state.editor.newState).doc,
       schema: this.manager.data.schema,
@@ -749,14 +749,14 @@ export class Remirror<GExtension extends AnyExtension = AnyExtension> extends Co
   /**
    * Retrieve the full state json object
    */
-  private getJSON = (state?: EditorState<SchemaFromExtensionList<GExtension>>) => (): ObjectNode => {
+  private getJSON = (state?: EditorState<SchemaFromExtensions<GExtension>>) => (): ObjectNode => {
     return (state || this.state.editor.newState).toJSON() as ObjectNode;
   };
 
   /**
    * Return the json object for the prosemirror document.
    */
-  private getObjectNode = (state?: EditorState<SchemaFromExtensionList<GExtension>>) => (): ObjectNode => {
+  private getObjectNode = (state?: EditorState<SchemaFromExtensions<GExtension>>) => (): ObjectNode => {
     return (state || this.state.editor.newState).doc.toJSON() as ObjectNode;
   };
 
@@ -765,7 +765,7 @@ export class Remirror<GExtension extends AnyExtension = AnyExtension> extends Co
    */
   private createStateFromContent(
     content: RemirrorContentType,
-  ): EditorState<SchemaFromExtensionList<GExtension>> {
+  ): EditorState<SchemaFromExtensions<GExtension>> {
     return this.manager.createState({ content, doc: this.doc, stringHandler: this.props.stringHandler });
   }
 

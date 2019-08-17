@@ -1,22 +1,25 @@
 import {
-  AnyActions,
+  ActionsFromExtensions,
+  AnyExtension,
   Attrs,
   AttrsParams,
   CommandFunction,
-  EditorSchema,
   EditorState,
   EditorStateParams,
   Extension,
+  HelpersFromExtensions,
   MarkExtension,
   NodeExtension,
   PlainObject,
   ProsemirrorNode,
+  SchemaFromExtensions,
   SchemaParams,
 } from '@remirror/core';
 import { InjectedRemirrorProps } from '@remirror/react-utils';
 import { EventType, RenderResult } from '@testing-library/react';
 import { TestEditorView } from 'jest-prosemirror';
 import { Node as PMNode } from 'prosemirror-model';
+import { BaseExtensionNodeNames, BaseExtensionNodes } from './test-schema';
 
 export interface FireParams {
   /**
@@ -102,12 +105,19 @@ export interface TaggedProsemirrorNode extends PMNode {
   tags: Tags;
 }
 
-export interface AddContentReturn extends EditorStateParams {
+export interface AddContentReturn<GExtension extends AnyExtension>
+  extends EditorStateParams<SchemaFromExtensions<GExtension>> {
   /**
    * The actions available in the editor. When updating the content of the TestEditor make sure not to
    * use a stale copy of the actions otherwise it will throw errors due to using an outdated state.
    */
-  actions: AnyActions;
+  actions: ActionsFromExtensions<GExtension>;
+
+  /**
+   * The helpers available in the editor. When updating the content of the TestEditor make sure not to
+   * use a stale copy of the helpers object otherwise it will throw errors due to using an outdated state.
+   */
+  helpers: HelpersFromExtensions<GExtension>;
 
   /**
    * The start of the current selection
@@ -135,14 +145,16 @@ export interface AddContentReturn extends EditorStateParams {
   /**
    * Allows for the chaining of action calls.
    */
-  actionsCallback(callback: (actions: AnyActions) => void): AddContentReturn;
+  actionsCallback(
+    callback: (actions: ActionsFromExtensions<GExtension>) => void,
+  ): AddContentReturn<GExtension>;
 
   /**
    * A function which replaces the current selection with the new content.
    *
    * This should be used to add new content to the dom.
    */
-  replace(...content: string[] | TaggedProsemirrorNode[]): AddContentReturn;
+  replace(...content: string[] | TaggedProsemirrorNode[]): AddContentReturn<GExtension>;
 
   /**
    * Insert text at the current starting point for the cursor.
@@ -151,7 +163,7 @@ export interface AddContentReturn extends EditorStateParams {
    * ! This doesn't currently support the use of tags and cursors.
    * ! Also adding multiple strings which create nodes also creates an out of position error
    */
-  insertText(text: string): AddContentReturn;
+  insertText(text: string): AddContentReturn<GExtension>;
 
   /**
    * Runs a keyboard shortcut.
@@ -159,7 +171,7 @@ export interface AddContentReturn extends EditorStateParams {
    *
    * @param shortcut
    */
-  shortcut(shortcut: string): AddContentReturn;
+  shortcut(shortcut: string): AddContentReturn<GExtension>;
 
   /**
    * Presses a key on the keyboard.
@@ -167,14 +179,14 @@ export interface AddContentReturn extends EditorStateParams {
    *
    * @param key - the key to press (or string representing a key)
    */
-  press(key: string): AddContentReturn;
+  press(key: string): AddContentReturn<GExtension>;
 
   /**
    * Takes any command as an input and dispatches it within the document context.
    *
    * @param command - the command function to run with the current state and view
    */
-  dispatchCommand(command: CommandFunction): AddContentReturn;
+  dispatchCommand(command: CommandFunction): AddContentReturn<GExtension>;
 
   /**
    * Fires a custom event at the specified dom node.
@@ -182,15 +194,17 @@ export interface AddContentReturn extends EditorStateParams {
    *
    * @param shortcut - the shortcut to type
    */
-  fire(params: FireParams): AddContentReturn;
+  fire(params: FireParams): AddContentReturn<GExtension>;
 
   /**
    * Simply calls add again which overwrites the whole doc
    */
-  overwrite: AddContent;
+  overwrite: AddContent<GExtension>;
 }
 
-export type AddContent = (content: TaggedProsemirrorNode) => AddContentReturn;
+export type AddContent<GExtension extends AnyExtension> = (
+  content: TaggedProsemirrorNode,
+) => AddContentReturn<GExtension>;
 
 export type MarkWithAttrs<GNames extends string> = {
   [P in GNames]: (attrs?: Attrs) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
@@ -209,22 +223,46 @@ export type NodeWithoutAttrs<GNames extends string> = {
 };
 
 export type CreateTestEditorReturn<
-  GPlainMarkNames extends string,
-  GPlainNodeNames extends string,
-  GAttrMarkNames extends string,
-  GAttrNodeNames extends string
-> = Omit<InjectedRemirrorProps, 'view'> & {
-  view: TestEditorView;
+  GPlainMarks extends Array<MarkExtension<any>>,
+  GPlainNodes extends Array<NodeExtension<any>>,
+  GAttrMarks extends Array<MarkExtension<any>>,
+  GAttrNodes extends Array<NodeExtension<any>>,
+  GOthers extends Array<Extension<any>>,
+  GExtension extends GenericExtension<
+    GPlainMarks,
+    GPlainNodes,
+    GAttrMarks,
+    GAttrNodes,
+    GOthers
+  > = GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>
+> = Omit<InjectedRemirrorProps<GExtension>, 'view'> & {
+  view: TestEditorView<SchemaFromExtensions<GExtension>>;
 } & {
   utils: RenderResult;
-  add: AddContent;
-  nodes: NodeWithoutAttrs<GPlainNodeNames>;
-  marks: MarkWithoutAttrs<GPlainMarkNames>;
-  attrNodes: NodeWithAttrs<GAttrNodeNames>;
-  attrMarks: MarkWithAttrs<GAttrMarkNames>;
-  getState(): EditorState;
-  schema: EditorSchema;
+  add: AddContent<GExtension>;
+  nodes: NodeWithoutAttrs<GetNames<GPlainNodes> | BaseExtensionNodeNames>;
+  marks: MarkWithoutAttrs<GetNames<GPlainMarks>>;
+  attrNodes: NodeWithAttrs<GetNames<GAttrNodes>>;
+  attrMarks: MarkWithAttrs<GetNames<GAttrMarks>>;
+  getState(): EditorState<SchemaFromExtensions<GExtension>>;
+  schema: SchemaFromExtensions<GExtension>;
 };
+
+export type GetNames<GExtensions extends AnyExtension[]> = GExtensions[number]['name'];
+
+export type GenericExtension<
+  GPlainMarks extends Array<MarkExtension<any>>,
+  GPlainNodes extends Array<NodeExtension<any>>,
+  GAttrMarks extends Array<MarkExtension<any>>,
+  GAttrNodes extends Array<NodeExtension<any>>,
+  GOthers extends Array<Extension<any>>
+> =
+  | BaseExtensionNodes
+  | GPlainMarks[number]
+  | GPlainNodes[number]
+  | GAttrMarks[number]
+  | GAttrNodes[number]
+  | GOthers[number];
 
 export interface CreateTestEditorExtensions<
   GPlainMarks extends Array<MarkExtension<any>>,

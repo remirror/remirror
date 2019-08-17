@@ -1,6 +1,5 @@
-import { SerializedStyles } from '@emotion/core';
 import VisuallyHidden from '@reach/visually-hidden';
-import { RemirrorInterpolation, SxThemeProp, uniqueId, WithVariants } from '@remirror/core';
+import { RemirrorInterpolation, uniqueId } from '@remirror/core';
 import { useRemirrorTheme } from '@remirror/ui';
 import React, { forwardRef, useMemo } from 'react';
 

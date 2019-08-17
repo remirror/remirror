@@ -11,7 +11,7 @@ import {
 } from './alias-types';
 import { Attrs, MakeOptional, Position } from './base-types';
 
-export interface EditorViewParams<GSchema extends EditorSchema = EditorSchema> {
+export interface EditorViewParams<GSchema extends EditorSchema = any> {
   /**
    * An instance of the Prosemirror editor view.
    */
@@ -25,14 +25,14 @@ export interface SchemaParams<GNodes extends string = string, GMarks extends str
   schema: EditorSchema<GNodes, GMarks>;
 }
 
-export interface EditorStateParams<GSchema extends EditorSchema = EditorSchema> {
+export interface EditorStateParams<GSchema extends EditorSchema = any> {
   /**
    * An snapshot of the prosemirror editor state
    */
   state: EditorState<GSchema>;
 }
 
-export interface CompareStateParams<GSchema extends EditorSchema = EditorSchema> {
+export interface CompareStateParams<GSchema extends EditorSchema = any> {
   /**
    * The previous snapshot of the Prosemirror editor state.
    */
@@ -118,7 +118,7 @@ export interface MarkTypeParams {
   type: MarkType;
 }
 
-export interface ProsemirrorNodeParams<GSchema extends EditorSchema = EditorSchema> {
+export interface ProsemirrorNodeParams<GSchema extends EditorSchema = any> {
   /**
    * The prosemirror node
    */
@@ -175,7 +175,7 @@ export interface CallbackParams {
  *
  * Can be used to update the transaction and customise commands.
  */
-export type TransactionTransformer<GSchema extends EditorSchema = EditorSchema> = (
+export type TransactionTransformer<GSchema extends EditorSchema = any> = (
   tr: Transaction<GSchema>,
   state: EditorState<GSchema>,
 ) => Transaction<GSchema>;
@@ -183,7 +183,7 @@ export type TransactionTransformer<GSchema extends EditorSchema = EditorSchema> 
 /**
  * Perform transformations on the transaction before
  */
-export interface TransformTransactionParams<GSchema extends EditorSchema = EditorSchema> {
+export interface TransformTransactionParams<GSchema extends EditorSchema = any> {
   /**
    * Transforms the transaction before any other actions are done to it.
    *
@@ -206,7 +206,7 @@ export interface RangeParams<GKey extends keyof FromToParams = never> {
   range: OptionalFromToParams<GKey>;
 }
 
-export interface ResolvedPosParams<GSchema extends EditorSchema = EditorSchema> {
+export interface ResolvedPosParams<GSchema extends EditorSchema = any> {
   /**
    * A prosemirror resolved pos with provides helpful context methods when working with
    * a position in the editor.

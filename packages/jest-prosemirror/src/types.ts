@@ -1,3 +1,4 @@
+import { EditorSchema } from '@remirror/core';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { EditorView } from 'prosemirror-view';
 /**
@@ -16,7 +17,7 @@ export interface TaggedDocParams {
   taggedDoc: TaggedProsemirrorNode;
 }
 
-export interface TestEditorView extends EditorView {
+export interface TestEditorView<GSchema extends EditorSchema = any> extends EditorView<GSchema> {
   dispatchEvent(event: string | CustomEvent | { type: string }): void;
   domObserver: {
     flush: () => void;

@@ -53,12 +53,10 @@ export type WysiwygExtensions =
   | UnderlineExtension
   | CodeBlockExtension;
 
-export type WysiwygExtensionList = WysiwygExtensions[];
-
 export interface WysiwygEditorProps
   extends Partial<
       Pick<
-        RemirrorProps<WysiwygExtensionList>,
+        RemirrorProps<WysiwygExtensions>,
         | 'initialContent'
         | 'attributes'
         | 'editable'

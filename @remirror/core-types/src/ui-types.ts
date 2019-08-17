@@ -155,8 +155,6 @@ export type SxThemeProp = SystemStyleObject &
     | Record<string, SystemStyleObject | ResponsiveStyleValue<number | string>>
   >;
 
-export { SystemStyleObject, ResponsiveStyleValue };
-
 /**
  * Adds a variant property to the object.
  *

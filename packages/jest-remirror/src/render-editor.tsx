@@ -21,6 +21,8 @@ import {
   AddContentReturn,
   CreateTestEditorExtensions,
   CreateTestEditorReturn,
+  GenericExtension,
+  GetNames,
   MarkWithAttrs,
   MarkWithoutAttrs,
   NodeWithAttrs,
@@ -48,21 +50,12 @@ export const renderEditor = <
   GAttrMarks extends Array<MarkExtension<any>>,
   GAttrNodes extends Array<NodeExtension<any>>,
   GOthers extends Array<Extension<any>>,
-  GPlainMarkNames extends GPlainMarks[number]['name'],
-  GAttrMarkNames extends GAttrMarks[number]['name'],
-  GAttrNodeNames extends GAttrNodes[number]['name'],
-  GPlainNodeNames extends GPlainNodes[number]['name'] | BaseExtensionNodeNames,
-  GReturn extends CreateTestEditorReturn<
-    GPlainMarkNames,
-    GPlainNodeNames,
-    GAttrMarkNames,
-    GAttrNodeNames
-  > = CreateTestEditorReturn<
-    GPlainMarkNames,
-    GPlainNodeNames | BaseExtensionNodeNames,
-    GAttrMarkNames,
-    GAttrNodeNames
-  >
+  GReturn extends CreateTestEditorReturn<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>,
+  GExtension extends GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>,
+  GPlainMarkNames extends GetNames<GPlainMarks>,
+  GAttrMarkNames extends GetNames<GAttrMarks>,
+  GAttrNodeNames extends GetNames<GAttrNodes>,
+  GPlainNodeNames extends GetNames<GPlainNodes> | BaseExtensionNodeNames
 >(
   {
     plainMarks = Cast<GPlainMarks>([]),
@@ -71,7 +64,7 @@ export const renderEditor = <
     attrNodes = Cast<GAttrNodes>([]),
     others = Cast<GOthers>([]),
   }: Partial<CreateTestEditorExtensions<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>> = {},
-  props: Partial<Omit<RemirrorProps, 'manager'>> = {},
+  props: Partial<Omit<RemirrorProps<GExtension>, 'manager'>> = {},
 ): GReturn => {
   const innerNodeExtensions = nodeExtensions.filter(({ name }) => !plainNodes.some(ext => ext.name === name));
   const extensions = [
@@ -84,14 +77,16 @@ export const renderEditor = <
     ...attrNodes,
   ].map(extension => ({ extension, priority: 2 }));
   const manager = ExtensionManager.create(extensions);
-  let returnedParams!: InjectedRemirrorProps;
+  let returnedParams!: InjectedRemirrorProps<GExtension>;
   const utils = render(
-    <Remirror {...props} manager={manager as any}>
+    <Remirror {...(props as any)} manager={manager as any}>
       {params => {
-        returnedParams = params;
+        returnedParams = params as any;
+
         if (props.children) {
-          return props.children(params);
+          return props.children(params as any);
         }
+
         return <div />;
       }}
     </Remirror>,
@@ -99,7 +94,7 @@ export const renderEditor = <
 
   const view = returnedParams.view as TestEditorView;
 
-  const add: AddContent = taggedDoc => {
+  const add: AddContent<GExtension> = taggedDoc => {
     // Work around JSDOM/Node not supporting DOM Selection API
     jsdomSelectionPatch(view);
 
@@ -127,7 +122,7 @@ export const renderEditor = <
       });
     }
 
-    const updateContent = (newTags?: Tags): AddContentReturn => {
+    const updateContent = (newTags?: Tags): AddContentReturn<GExtension> => {
       const { selection } = view.state;
       return {
         tags: newTags ? { ...tags, ...newTags } : tags,
@@ -137,6 +132,7 @@ export const renderEditor = <
         overwrite: add,
         state: view.state,
         actions: returnedParams.actions,
+        helpers: returnedParams.helpers,
         replace: (...replacement) => {
           return updateContent(replaceSelection({ view, content: replacement }));
         },
