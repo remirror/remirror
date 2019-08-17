@@ -17,7 +17,7 @@ const extensionEpicMode = require('./@remirror/extension-epic-mode/package.json'
 const extensionImage = require('./@remirror/extension-image/package.json');
 const extensionMention = require('./@remirror/extension-mention/package.json');
 const react = require('./@remirror/react/package.json');
-const reactNodeView = require('./@remirror/react-nodeView/package.json');
+const reactNodeView = require('./@remirror/react-node-view/package.json');
 const reactSSR = require('./@remirror/react-ssr/package.json');
 const reactUtils = require('./@remirror/react-utils/package.json');
 const rendererReact = require('./@remirror/renderer-react/package.json');
@@ -29,31 +29,31 @@ const uiModal = require('./@remirror/ui-modal/package.json');
 const prosemirrorReactPortals = require('./@remirror/react-portals/package.json');
 
 const limits = {
-  '@remirror/core': '60 KB',
-  '@remirror/core-constants': '60 KB',
+  '@remirror/core': '55 KB',
+  '@remirror/core-constants': '2 KB',
   '@remirror/core-extensions': '100 KB',
-  '@remirror/core-types': '100 KB',
-  '@remirror/core-utils': '100 KB',
+  '@remirror/core-types': '1 KB',
+  '@remirror/core-utils': '50 KB',
   '@remirror/editor-markdown': '250 KB',
   '@remirror/editor-social': '250 KB',
-  '@remirror/editor-wysiwyg': '400 KB',
-  '@remirror/extension-code-block': '110 KB',
+  '@remirror/editor-wysiwyg': '250 KB',
+  '@remirror/extension-code-block': '120 KB',
   '@remirror/extension-collaboration': '60 KB',
-  '@remirror/extension-emoji': '220 KB',
+  '@remirror/extension-emoji': '200 KB',
   '@remirror/extension-enhanced-link': '70 KB',
   '@remirror/extension-epic-mode': '60 KB',
-  '@remirror/extension-image': '80 KB',
-  '@remirror/extension-mention': '80 KB',
+  '@remirror/extension-image': '100 KB',
+  '@remirror/extension-mention': '90 KB',
   '@remirror/react': '120 KB',
   '@remirror/react-ssr': '90 KB',
-  '@remirror/react-utils': '60 KB',
+  '@remirror/react-utils': '65 KB',
   '@remirror/renderer-react': '70 KB',
   '@remirror/ui': '70 KB',
   '@remirror/ui-buttons': '70 KB',
-  '@remirror/ui-icons': '70 KB',
+  '@remirror/ui-icons': '100 KB',
   '@remirror/ui-menus': '70 KB',
   '@remirror/ui-modal': '70 KB',
-  '@remirror/react-portals': '70 KB',
+  '@remirror/react-portals': '15 KB',
 };
 
 module.exports = [

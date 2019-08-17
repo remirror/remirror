@@ -21,6 +21,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
+    "@babel/runtime": "^7.5.5",
     "@types/nanoevents": "1.0.0",
     "@types/nanoid": "2.0.0",
     "nanoevents": "2.0.0",

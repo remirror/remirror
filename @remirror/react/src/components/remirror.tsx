@@ -51,7 +51,7 @@ import {
 } from '@remirror/react-utils';
 import { RemirrorThemeContext } from '@remirror/ui';
 import { EditorState } from 'prosemirror-state';
-import React, { Component, ReactNode, Ref } from 'react';
+import React, { PureComponent, ReactNode, Ref } from 'react';
 import { defaultProps } from '../react-constants';
 import { RemirrorProps } from './remirror-types';
 
@@ -81,7 +81,7 @@ interface RemirrorState<GSchema extends EditorSchema = any> {
   shouldRenderClient?: boolean;
 }
 
-export class Remirror<GExtension extends AnyExtension = any> extends Component<
+export class Remirror<GExtension extends AnyExtension = any> extends PureComponent<
   RemirrorProps<GExtension>,
   RemirrorState<SchemaFromExtensions<GExtension>>
 > {

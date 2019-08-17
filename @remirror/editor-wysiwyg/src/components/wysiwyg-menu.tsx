@@ -96,7 +96,6 @@ export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
             state={buttonState}
             disabled={!actions[name].isEnabled()}
             onClick={runAction(actions[name], attrs)}
-            withPadding='right'
           />
         );
       })}
@@ -105,7 +104,6 @@ export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
         state={getButtonState(actions.updateLink.isActive(), inverse)}
         disabled={!actions.updateLink.isEnabled()}
         onClick={activateLink}
-        withPadding='right'
       />
     </Toolbar>
   );
@@ -124,17 +122,9 @@ interface MenuItemProps extends Partial<WithPaddingProps> {
 /**
  * A single clickable menu item for editing the styling and format of the text.
  */
-const MenuItem: FC<MenuItemProps> = ({
-  state,
-  onClick,
-  Icon,
-  inverse = false,
-  disabled = false,
-  withPadding,
-  index,
-}) => {
+const MenuItem: FC<MenuItemProps> = ({ state, onClick, Icon, inverse = false, disabled = false, index }) => {
   return (
-    <IconButton onClick={onClick} state={state} disabled={disabled} withPadding={withPadding} index={index}>
+    <IconButton onClick={onClick} state={state} disabled={disabled} index={index}>
       <Icon inverse={inverse} />
     </IconButton>
   );
@@ -181,7 +171,6 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
                 disabled={!actions[name].isEnabled()}
                 onClick={runAction(actions[name], attrs)}
                 inverse={true}
-                withPadding='horizontal'
               />
             );
           })}
@@ -190,7 +179,6 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
             state={getButtonState(actions.updateLink.isActive(), true)}
             onClick={activateLink}
             inverse={true}
-            withPadding='horizontal'
           />
         </BubbleContent>
       )}
@@ -269,13 +257,7 @@ const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink,
         `}
       />
       {canRemove() && (
-        <MenuItem
-          Icon={TimesIcon}
-          state='active-inverse'
-          onClick={onClickRemoveLink}
-          inverse={true}
-          withPadding='horizontal'
-        />
+        <MenuItem Icon={TimesIcon} state='active-inverse' onClick={onClickRemoveLink} inverse={true} />
       )}
     </BubbleContent>
   );

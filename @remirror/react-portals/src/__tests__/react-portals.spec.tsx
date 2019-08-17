@@ -1,6 +1,6 @@
 // tslint:disable-next-line: no-implicit-dependencies
 import { RemirrorManager, useRemirrorManager } from '@remirror/react';
-import { act, render } from '@testing-library/react';
+import { act, render } from '@test-fixtures/testing-library';
 import { PortalContainer, RemirrorPortals } from '..';
 
 describe('RemirrorPortals', () => {

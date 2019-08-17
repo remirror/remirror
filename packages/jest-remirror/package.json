@@ -29,6 +29,7 @@
     "@types/lolex": "^3.1.1",
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-view": "^1.9.0",
+    "@types/testing-library__react": "^9.1.0",
     "jest-prosemirror": "0.4.2-canary.2",
     "jest-snapshot": "^24.9.0",
     "lolex": "^4.2.0",

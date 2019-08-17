@@ -1,6 +1,6 @@
 import { PlainObject } from '@remirror/core';
 import { createTestManager } from '@test-fixtures/schema-helpers';
-import { render } from '@testing-library/react';
+import { render } from '@test-fixtures/testing-library';
 import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 import { Remirror } from '..';
 

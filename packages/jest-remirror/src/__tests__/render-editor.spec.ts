@@ -5,7 +5,7 @@ import {
   HeadingExtension,
   LinkExtension,
 } from '@remirror/core-extensions';
-import { cleanup } from '@testing-library/react';
+import { cleanup } from '@test-fixtures/testing-library';
 import { Plugin } from 'prosemirror-state';
 import { renderEditor } from '../render-editor';
 

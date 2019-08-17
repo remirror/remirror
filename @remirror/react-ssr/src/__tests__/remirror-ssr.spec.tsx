@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { createTestManager, helpers, initialJson } from '@test-fixtures/schema-helpers';
-import { render } from '@testing-library/react';
+import { render } from '@test-fixtures/testing-library';
 
 import { ExtensionManager } from '@remirror/core';
 import { RemirrorSSR } from '..';

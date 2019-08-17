@@ -1,5 +1,5 @@
 import { findElementAtPosition, PosParams, SchemaParams, TextParams } from '@remirror/core';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react/pure';
 import { flush } from 'jest-prosemirror';
 import { AllSelection, NodeSelection, TextSelection } from 'prosemirror-state';
 import { coerce, offsetTags } from './builder';
@@ -190,10 +190,6 @@ export const dispatchTextSelection = ({ view, start, end }: DispatchTextSelectio
   view.dispatch(tr);
 };
 
-interface DispatchAllSelectionParams extends TestEditorViewParams {
-  taggedDoc: TaggedProsemirrorNode;
-}
-
 /**
  * Select everything in the current doc.
  *
@@ -201,8 +197,9 @@ interface DispatchAllSelectionParams extends TestEditorViewParams {
  * @param param.view
  * @param param.taggedDoc
  */
-export const dispatchAllSelection = ({ view, taggedDoc }: DispatchAllSelectionParams) => {
-  view.dispatch(view.state.tr.setSelection(new AllSelection(taggedDoc)));
+export const dispatchAllSelection = ({ view }: TestEditorViewParams) => {
+  const { tr, doc } = view.state;
+  view.dispatch(tr.setSelection(new AllSelection(doc)));
 };
 
 interface DispatchNodeSelectionParams extends TestEditorViewParams, PosParams {}

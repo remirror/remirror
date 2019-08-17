@@ -12,9 +12,8 @@ import {
 } from '@remirror/core';
 import { Remirror, RemirrorProps } from '@remirror/react';
 import { InjectedRemirrorProps } from '@remirror/react-utils';
-import { render } from '@testing-library/react';
+import { render } from '@testing-library/react/pure';
 import { TestEditorView } from 'jest-prosemirror';
-import { AllSelection } from 'prosemirror-state';
 import { markFactory, nodeFactory } from './builder';
 import {
   AddContent,
@@ -32,6 +31,7 @@ import {
 import { jsdomSelectionPatch } from './jsdom-patch';
 import { BaseExtensionNodeNames, nodeExtensions } from './test-schema';
 import {
+  dispatchAllSelection,
   dispatchNodeSelection,
   dispatchTextSelection,
   fireEventAtPosition,
@@ -78,6 +78,7 @@ export const renderEditor = <
   ].map(extension => ({ extension, priority: 2 }));
   const manager = ExtensionManager.create(extensions);
   let returnedParams!: InjectedRemirrorProps<GExtension>;
+
   const utils = render(
     <Remirror {...(props as any)} manager={manager as any}>
       {params => {
@@ -109,7 +110,7 @@ export const renderEditor = <
     dispatch(tr);
 
     if (all) {
-      view.dispatch(view.state.tr.setSelection(new AllSelection(taggedDoc)));
+      dispatchAllSelection({ view });
     } else if (node) {
       dispatchNodeSelection({ view, pos: node });
     } else if (cursor) {
