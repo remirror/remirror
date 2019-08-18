@@ -124,7 +124,7 @@ export const renderEditor = <
     }
 
     const updateContent = (newTags?: Tags): AddContentReturn<GExtension> => {
-      const { selection } = view.state;
+      const { selection, doc } = view.state;
       return {
         tags: newTags ? { ...tags, ...newTags } : tags,
         start: selection.from,
@@ -134,6 +134,16 @@ export const renderEditor = <
         state: view.state,
         actions: returnedParams.actions,
         helpers: returnedParams.helpers,
+        jumpTo: (pos: 'start' | 'end' | number, end?: number) => {
+          if (pos === 'start') {
+            dispatchTextSelection({ view, start: 1 });
+          } else if (pos === 'end') {
+            dispatchTextSelection({ view, start: doc.content.size - 1 });
+          } else {
+            dispatchTextSelection({ view, start: pos, end });
+          }
+          return updateContent();
+        },
         replace: (...replacement) => {
           return updateContent(replaceSelection({ view, content: replacement }));
         },
@@ -145,6 +155,10 @@ export const renderEditor = <
         actionsCallback: callback => {
           callback(returnedParams.actions);
           return updateContent();
+        },
+        helpersCallback: callback => {
+          callback(returnedParams.helpers);
+          return updateContent(); // Helpers don't update the content but this is easier.
         },
         shortcut: text => {
           shortcut({ shortcut: text, view });

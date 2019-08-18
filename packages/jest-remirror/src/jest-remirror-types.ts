@@ -150,6 +150,19 @@ export interface AddContentReturn<GExtension extends AnyExtension>
   ): AddContentReturn<GExtension>;
 
   /**
+   * Allows for the chaining of helper calls.
+   */
+  helpersCallback(
+    callback: (helpers: HelpersFromExtensions<GExtension>) => void,
+  ): AddContentReturn<GExtension>;
+
+  /**
+   * Set selection in the document to a certain position
+   */
+  jumpTo(pos: 'start' | 'end'): AddContentReturn<GExtension>;
+  jumpTo(start: number, end?: number): AddContentReturn<GExtension>;
+
+  /**
    * A function which replaces the current selection with the new content.
    *
    * This should be used to add new content to the dom.

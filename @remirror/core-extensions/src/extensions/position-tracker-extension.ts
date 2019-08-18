@@ -109,6 +109,23 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
 
         return found.length ? found[0].from : undefined;
       },
+
+      /**
+       * Find the positions of all the trackers.in the decoration set.
+       *
+       * @param id - the unique position id which can be any type
+       */
+      findAllPositionTrackers: (): Record<string, number> => {
+        const trackers: Record<string, number> = {};
+        const decorations = getPluginState<DecorationSet>(this.pluginKey, getState());
+        const found = decorations.find(undefined, undefined, spec => spec.type === this.name);
+
+        for (const decoration of found) {
+          trackers[decoration.spec.id] = decoration.from;
+        }
+
+        return trackers;
+      },
     };
 
     return helpers;
@@ -146,12 +163,13 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
       /**
        * A command to remove all active tracker positions.
        */
-      clearPositionTrackers: commandFactory<RemovePositionTrackerParams>('clearPositionTrackers'),
+      clearPositionTrackers: commandFactory<void>('clearPositionTrackers'),
     };
   }
 
   public plugin() {
     const key = this.pluginKey;
+    const name = this.name;
 
     return new Plugin<DecorationSet>({
       key,
@@ -180,6 +198,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
 
             const deco = Decoration.widget(tracker.add.pos, widget, {
               id: tracker.add.id,
+              type: name,
             });
 
             return decorationSet.add(tr.doc, [deco]);

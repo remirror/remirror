@@ -7,9 +7,6 @@
       "packages/*",
       "docs",
       "examples/*"
-    ],
-    "nohoist": [
-      "**/babel-preset-react-app/@babel/runtime"
     ]
   },
   "scripts": {
@@ -181,7 +178,7 @@
     "@size-limit/preset-big-lib": "2.1.0",
     "start-server-and-test": "1.10.0",
     "tslint": "5.18.0",
-    "typescript": "3.6.0-beta",
+    "typescript": "3.6.1-rc",
     "typescript-styled-plugin": "0.14.0",
     "typescript-tslint-plugin": "0.5.4",
     "wait-on": "3.3.0"
@@ -313,7 +310,6 @@
     ]
   },
   "resolutions": {
-    "**/@babel/runtime": "7.5.5",
     "@babel/parser": "7.5.5",
     "@babel/runtime": "7.5.5",
     "@microsoft/tsdoc": "0.12.12",
@@ -326,11 +322,9 @@
     "lodash.merge": "^4.6.2",
     "prosemirror-model": "1.7.1",
     "react": "16.9.0",
-    "react-dom": "16.9.0",
-    "react-test-renderer": "16.9.0",
     "semver": "6.3.0",
     "tar": "4.4.10",
     "tslint": "5.18.0",
-    "typescript": "3.6.0-beta"
+    "typescript": "3.6.1-rc"
   }
 }

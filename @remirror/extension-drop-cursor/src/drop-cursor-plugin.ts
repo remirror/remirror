@@ -1,33 +1,58 @@
+import { EditorView, ExtensionManagerParams } from '@remirror/core';
 import { Plugin } from 'prosemirror-state';
 import { dropPoint } from 'prosemirror-transform';
+import { DropCursorExtensionOptions } from './drop-cursor-types';
 
-export function createDropCursorPlugin(options = {}) {
+export function createDropCursorPlugin(params: ExtensionManagerParams, options: DropCursorExtensionOptions) {
+  const dropCursorState = new DropCursorState(params, options);
   return new Plugin({
     view(editorView) {
-      return new DropCursorView(editorView, options);
+      dropCursorState.init(editorView);
+      return {};
     },
     props: {
       handleDOMEvents: {
-        dragover: (view, event) => {},
+        dragover: (_, event) => {
+          dropCursorState.dragover(event);
+          return false;
+        },
+        dragend: () => {
+          dropCursorState.dragend();
+          return false;
+        },
+        drop: () => {
+          dropCursorState.drop();
+          return false;
+        },
+        dragleave: (_, event) => {
+          dropCursorState.dragleave(event);
+          return false;
+        },
       },
     },
   });
 }
 
-class DropCursorView {
-  constructor(editorView, options) {
+class DropCursorState {
+  public timeout?: number;
+  private view!: EditorView;
+
+  constructor(params: ExtensionManagerParams, options: DropCursorExtensionOptions) {
     this.editorView = editorView;
     this.width = options.width || 1;
     this.color = options.color || 'black';
     this.cursorPos = null;
     this.element = null;
-    this.timeout = null;
 
     this.handlers = ['dragover', 'dragend', 'drop', 'dragleave'].map(name => {
       const handler = e => this[name](e);
       editorView.dom.addEventListener(name, handler);
       return { name, handler };
     });
+  }
+
+  public init(view: EditorView) {
+    this.view = view;
   }
 
   public destroy() {
@@ -129,8 +154,8 @@ class DropCursorView {
     this.scheduleRemoval(20);
   }
 
-  public dragleave(event) {
-    if (event.target == this.editorView.dom || !this.editorView.dom.contains(event.relatedTarget)) {
+  public dragleave(event: Event) {
+    if (event.target == this.view.dom || !this.view.dom.contains(event.relatedTarget)) {
       this.setCursor(null);
     }
   }
