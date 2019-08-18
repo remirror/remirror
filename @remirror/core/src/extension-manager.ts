@@ -1,14 +1,14 @@
 import { Interpolation } from '@emotion/core';
-import { bool, Cast, isEqual, isFunction, isInstanceOf } from '@remirror/core-helpers';
+import { bool, isEqual, isFunction, isInstanceOf } from '@remirror/core-helpers';
 import {
   ActionMethod,
   AnyActions,
   AnyHelpers,
   Attrs,
   AttrsWithClass,
-  BooleanExtensionCheck,
   CommandFunction,
   CommandParams,
+  CommandStatusCheck,
   EditorSchema,
   EditorStateParams,
   EditorView,
@@ -52,9 +52,8 @@ import {
   MarkNames,
   NodeNames,
   PlainNames,
+  SchemaFromExtensions,
 } from './extension-types';
-import { MarkExtension } from './mark-extension';
-import { NodeExtension } from './node-extension';
 
 export interface ExtensionManagerData<
   GActions = AnyActions,
@@ -75,8 +74,8 @@ export interface ExtensionManagerData<
   actions: GActions;
   helpers: GHelpers;
   view: EditorView<EditorSchema<GNodes, GMarks>>;
-  isActive: Record<GNames, BooleanExtensionCheck>;
-  isEnabled: Record<GNames, BooleanExtensionCheck>;
+  isActive: Record<GNames, CommandStatusCheck>;
+  isEnabled: Record<GNames, CommandStatusCheck>;
   options: Record<GNames, PlainObject>;
   tags: ExtensionTags<GNodes, GMarks, GPlain>;
 }
@@ -112,7 +111,8 @@ export interface ExtensionManagerData<
  * manager.data.actions
  * ```
  */
-export class ExtensionManager<GExtension extends AnyExtension = any> implements ExtensionManagerInitParams {
+export class ExtensionManager<GExtension extends AnyExtension = any>
+  implements ExtensionManagerInitParams<SchemaFromExtensions<GExtension>> {
   /**
    * A static method for creating a new extension manager.
    */
@@ -147,7 +147,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> implements 
    * Whether or not the manager has been initialized. This happens after init is
    * called.
    */
-  private initialized = false;
+  private _initialized = false;
 
   /**
    * The extension manager data which is stored after Initialization
@@ -190,7 +190,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> implements 
    * This is called by the view layer and provides
    */
   public init({ getState, portalContainer, getTheme }: ExtensionManagerInitParams) {
-    if (this.initialized) {
+    if (this._initialized) {
       console.warn(
         'This manager is already in use. Avoid using the same manager for more than one editor as this may cause problems.',
       );
@@ -199,7 +199,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> implements 
     this.getState = getState;
     this.getTheme = getTheme;
     this.portalContainer = portalContainer;
-    this.initialized = true;
+    this._initialized = true;
 
     this.initData.styles = this.styles();
     this.initData.directPlugins = this.plugins();
@@ -207,8 +207,8 @@ export class ExtensionManager<GExtension extends AnyExtension = any> implements 
     this.initData.keymaps = this.keymaps();
     this.initData.inputRules = this.inputRules();
     this.initData.pasteRules = this.pasteRules();
-    this.initData.isActive = this.booleanCheck('isActive');
-    this.initData.isEnabled = this.booleanCheck('isEnabled');
+    this.initData.isActive = this.commandStatusCheck('isActive');
+    this.initData.isEnabled = this.commandStatusCheck('isEnabled');
 
     this.initData.plugins = [
       ...this.initData.directPlugins,
@@ -239,6 +239,13 @@ export class ExtensionManager<GExtension extends AnyExtension = any> implements 
   /* Public Get Properties */
 
   /**
+   * Should be used to check whether the manager needs to be reinitialized.
+   */
+  get initialized() {
+    return this._initialized;
+  }
+
+  /**
    * All the dynamically generated attributes provided by each extension. High
    * priority extensions have preference over the lower priority extensions.
    */
@@ -261,18 +268,19 @@ export class ExtensionManager<GExtension extends AnyExtension = any> implements 
   }
 
   /**
-   * Retrieve all the SSRComponent properties from the extensions.
+   * Retrieve all the SSRComponent's from the extensions.
    * This is used to render the initial SSR output.
    */
   get components() {
     const components: Record<string, ComponentType> = {};
-    this.extensions
-      .filter(extension => extension.options.SSRComponent)
-      // User can opt out of SSR rendering
-      .filter(extension => !extension.options.exclude.ssr)
-      .forEach(({ name, options: { SSRComponent } }) => {
-        components[name] = SSRComponent;
-      });
+
+    for (const extension of this.extensions) {
+      if (!extension.options.SSRComponent || extension.options.exclude.ssr) {
+        continue;
+      }
+
+      components[extension.name] = extension.options.SSRComponent;
+    }
 
     return components;
   }
@@ -281,7 +289,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> implements 
    * Get the extension manager data which is stored after initializing.
    */
   get data() {
-    if (!this.initialized) {
+    if (!this._initialized) {
       throw new Error('Extension Manager must be initialized before attempting to access the data');
     }
 
@@ -298,10 +306,12 @@ export class ExtensionManager<GExtension extends AnyExtension = any> implements 
   get nodes() {
     const nodes: Record<this['_N'], NodeExtensionSpec> = {} as any;
 
-    this.extensions.filter(isNodeExtension).forEach(extension => {
-      const { name, schema } = Cast<NodeExtension>(extension);
-      nodes[name as this['_N']] = schema;
-    });
+    for (const extension of this.extensions) {
+      if (isNodeExtension(extension)) {
+        const { name, schema } = extension;
+        nodes[name as this['_N']] = schema;
+      }
+    }
 
     return nodes;
   }
@@ -312,10 +322,12 @@ export class ExtensionManager<GExtension extends AnyExtension = any> implements 
   get marks() {
     const marks: Record<this['_M'], MarkExtensionSpec> = {} as any;
 
-    this.extensions.filter(isMarkExtension).forEach(extension => {
-      const { name, schema } = Cast<MarkExtension>(extension);
-      marks[name as this['_M']] = schema;
-    });
+    for (const extension of this.extensions) {
+      if (isMarkExtension(extension)) {
+        const { name, schema } = extension;
+        marks[name as this['_M']] = schema;
+      }
+    }
 
     return marks;
   }
@@ -478,7 +490,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> implements 
    * not
    */
   private checkInitialized() {
-    if (!this.initialized) {
+    if (!this._initialized) {
       throw new Error(
         'Before using the extension manager it must be initialized with a portalContainer and getState',
       );
@@ -556,11 +568,11 @@ export class ExtensionManager<GExtension extends AnyExtension = any> implements 
    *
    * This can be `isActive` or `isEnabled`.
    */
-  private booleanCheck(method: 'isEnabled' | 'isActive') {
+  private commandStatusCheck(method: 'isEnabled' | 'isActive') {
     // Will throw if not initialized
     this.checkInitialized();
 
-    const isActiveMethods: Record<this['_Names'], BooleanExtensionCheck> = {} as any;
+    const isActiveMethods: Record<this['_Names'], CommandStatusCheck> = {} as any;
 
     return this.extensions.filter(hasExtensionProperty(method)).reduce(
       (acc, extension) => ({

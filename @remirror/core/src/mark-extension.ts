@@ -1,6 +1,6 @@
 import { ExtensionType } from '@remirror/core-constants';
 import {
-  BooleanExtensionCheck,
+  CommandStatusCheck,
   EditorSchema,
   ExtensionManagerMarkTypeParams,
   MarkExtensionOptions,
@@ -40,11 +40,11 @@ export abstract class MarkExtension<
    */
   public abstract readonly schema: MarkExtensionSpec;
 
-  public isActive({ getState, type }: ExtensionManagerMarkTypeParams): BooleanExtensionCheck {
+  public isActive({ getState, type }: ExtensionManagerMarkTypeParams): CommandStatusCheck {
     return () => isMarkActive({ state: getState(), type });
   }
 
-  public isEnabled(_: ExtensionManagerMarkTypeParams): BooleanExtensionCheck {
+  public isEnabled(_: ExtensionManagerMarkTypeParams): CommandStatusCheck {
     return () => true;
   }
 }

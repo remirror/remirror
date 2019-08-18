@@ -6,7 +6,7 @@ import {
   Attrs,
   AttrsWithClass,
   BaseExtensionOptions,
-  BooleanExtensionCheck,
+  CommandStatusCheck,
   CommandTypeParams,
   ExtensionCommandReturn,
   ExtensionHelperReturn,
@@ -386,7 +386,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * @param params - extension manager params
    */
-  isActive?(params: ExtensionManagerParams): BooleanExtensionCheck<string>;
+  isActive?(params: ExtensionManagerParams): CommandStatusCheck<string>;
 
   /**
    * Determines whether this extension is enabled. If a command name is provided
@@ -395,7 +395,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * @param params - extension manager parameters
    */
-  isEnabled?(params: ExtensionManagerParams): BooleanExtensionCheck<string>;
+  isEnabled?(params: ExtensionManagerParams): CommandStatusCheck<string>;
 
   /**
    * Add key bindings for this extension.

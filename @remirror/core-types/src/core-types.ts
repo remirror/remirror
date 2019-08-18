@@ -133,7 +133,7 @@ export interface MarkExtensionSpec
   toDOM?: (mark: Mark, inline: boolean) => DOMOutputSpec;
 }
 
-export interface ExtensionManagerInitParams {
+export interface ExtensionManagerInitParams<GSchema extends EditorSchema = any> {
   /**
    * Retrieve the portal container
    */
@@ -141,7 +141,7 @@ export interface ExtensionManagerInitParams {
   /**
    * Retrieve the editor state via a function call
    */
-  getState(): EditorState;
+  getState(): EditorState<GSchema>;
 
   /**
    * Provides access to the theme and helpers from the RemirrorThemeContext.
@@ -174,20 +174,20 @@ export interface ViewExtensionManagerParams extends EditorViewParams, ExtensionM
 
 export type ExtensionCommandFunction = (...args: any[]) => CommandFunction;
 
-export interface ExtensionBooleanFunctionParams<GCommand extends string> extends Partial<AttrsParams> {
+export interface CommandStatusFunctionParams<GCommand extends string> extends Partial<AttrsParams> {
   /**
    * When provided check the status of this particular command
    */
   command?: GCommand;
 }
-export type ExtensionBooleanFunction<GCommand extends string> = (
-  params: ExtensionBooleanFunctionParams<GCommand>,
+export type CommandStatusFunction<GCommand extends string> = (
+  params: CommandStatusFunctionParams<GCommand>,
 ) => boolean;
 
 /**
  * The return signature for an extension's `isActive` and `isEnabled` method
  */
-export type BooleanExtensionCheck<GCommand extends string = string> = ExtensionBooleanFunction<GCommand>;
+export type CommandStatusCheck<GCommand extends string = string> = CommandStatusFunction<GCommand>;
 
 /**
  * The return signature for an extensions command method.
