@@ -5,6 +5,7 @@ import {
   BoldExtension,
   BulletListExtension,
   CodeExtension,
+  DropCursorExtension,
   HardBreakExtension,
   HeadingExtension,
   HorizontalRuleExtension,
@@ -51,6 +52,7 @@ export type WysiwygExtensions =
   | StrikeExtension
   | TrailingNodeExtension
   | UnderlineExtension
+  | DropCursorExtension
   | CodeBlockExtension;
 
 export interface WysiwygEditorProps

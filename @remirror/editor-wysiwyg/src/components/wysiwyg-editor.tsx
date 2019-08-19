@@ -4,6 +4,7 @@ import {
   BoldExtension,
   BulletListExtension,
   CodeExtension,
+  DropCursorExtension,
   HardBreakExtension,
   HeadingExtension,
   HorizontalRuleExtension,
@@ -75,6 +76,7 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
           placeholder={placeholder}
         />
         <RemirrorExtension Constructor={ParagraphExtension} />
+        <RemirrorExtension Constructor={DropCursorExtension} priority={1} />
         <RemirrorExtension Constructor={BoldExtension} />
         <RemirrorExtension Constructor={UnderlineExtension} />
         <RemirrorExtension Constructor={ItalicExtension} />

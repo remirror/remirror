@@ -170,8 +170,8 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    */
   public context!: RemirrorThemeContextType;
 
-  constructor(props: RemirrorProps<GExtension>) {
-    super(props);
+  constructor(props: RemirrorProps<GExtension>, context: RemirrorThemeContextType) {
+    super(props, context);
 
     // Ensure that children is a render prop.
     propIsFunction(props.children);
@@ -470,7 +470,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     /**
      * The callback passed to the setState handler.
      */
-    const updateHandler = (updatedState?: EditorState) => {
+    const updateHandler = (updatedState = state) => {
       // No need to continue if triggerOnChange is `false`
       if (!triggerOnChange) {
         return;
@@ -481,7 +481,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
       }
 
       if (onChange) {
-        onChange(this.eventListenerParams(updatedState || state));
+        onChange(this.eventListenerParams(updatedState));
       }
     };
 

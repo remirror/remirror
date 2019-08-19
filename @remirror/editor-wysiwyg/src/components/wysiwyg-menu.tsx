@@ -141,11 +141,20 @@ const bubbleMenuItems: Array<
 > = [['bold', [BoldIcon]], ['italic', [ItalicIcon]], ['underline', [UnderlineIcon]]];
 
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
-  const { actions, getPositionerProps } = useRemirror<WysiwygExtensions>();
+  const { actions, getPositionerProps, helpers } = useRemirror<WysiwygExtensions>();
+  console.log(helpers.isDragging());
+
   const { bottom, left, ref } = getPositionerProps({
     ...bubblePositioner,
-    isActive: params =>
-      (bubblePositioner.isActive(params) || linkActivated) && !actions.toggleCodeBlock.isActive(),
+    hasChanged: () => true,
+    isActive: params => {
+      const answer =
+        (bubblePositioner.isActive(params) || linkActivated) &&
+        !actions.toggleCodeBlock.isActive() &&
+        !helpers.isDragging();
+      console.log({ answer, dragging: helpers.isDragging() }, params.view.dragging);
+      return answer;
+    },
     positionerId: 'bubbleMenu',
   });
 

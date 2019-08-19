@@ -58,6 +58,15 @@ export const isSerializedStyle = (val: unknown): val is SerializedStyles =>
 export const hasThemeProp = (val: unknown): val is ThemeParams =>
   isPlainObject(val) && isPlainObject(val.theme);
 
+const getTheme = (
+  props:
+    | RemirrorTheme
+    | {
+        theme: RemirrorTheme;
+      }
+    | undefined,
+): RemirrorTheme | undefined => (hasThemeProp(props) ? props.theme : props);
+
 /**
  * A wrapper around the `@styled-system/css` for composing multiple themed
  * styles together in the `css` prop.
@@ -74,7 +83,7 @@ export const hasThemeProp = (val: unknown): val is ThemeParams =>
  * ```
  */
 export const sx: RemirrorThemeContextType['sx'] = (...styles) => props => {
-  const theme = hasThemeProp(props) ? props.theme : props;
+  const theme = getTheme(props);
 
   return serializeStyles(
     styles.map(style =>
@@ -90,3 +99,12 @@ export const sx: RemirrorThemeContextType['sx'] = (...styles) => props => {
     ),
   );
 };
+
+export const cssValueUnits = (val: unknown): string | undefined =>
+  isString(val) ? val.replace(/[0-9 ]+/g, '') : undefined;
+
+/**
+ * Transforms a number to
+ */
+export const numberToPixels = (val: number | string): string =>
+  cssValueUnits(val) ? `${val}`.replace(/ /g, '') : `${val}px`;

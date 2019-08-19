@@ -4,7 +4,7 @@ import { css as emotionCss } from '@emotion/core';
 import { render } from '@test-fixtures/testing-library';
 import { baseTheme } from '../';
 import { RemirrorThemeProvider } from '../ui-provider';
-import { sx } from '../ui-utils';
+import { cssValueUnits, numberToPixels, sx } from '../ui-utils';
 
 describe('sx', () => {
   it('renders object styles', () => {
@@ -61,4 +61,18 @@ describe('sx', () => {
     );
     expect(getByText('Test')).toHaveStyle(`color: red; background-color: pink;`);
   });
+});
+
+test('cssValueUnits', () => {
+  expect(cssValueUnits('10')).toBe('');
+  expect(cssValueUnits('10px')).toBe('px');
+  expect(cssValueUnits('10rem')).toBe('rem');
+  expect(cssValueUnits('10 vh')).toBe('vh');
+  expect(cssValueUnits(10)).toBeUndefined();
+});
+
+test('numberToPixels', () => {
+  expect(numberToPixels(10)).toBe('10px');
+  expect(numberToPixels('11')).toBe('11px');
+  expect(numberToPixels('12 px')).toBe('12px');
 });

@@ -31,6 +31,7 @@ import {
   MarkType,
   Node as PMNode,
   NodeType,
+  ResolvedPos as PMResolvedPos,
   Slice,
 } from 'prosemirror-model';
 import {
@@ -88,13 +89,22 @@ export const isEditorState = isInstanceOf(PMEditorState);
 export const isTextSelection = isInstanceOf(TextSelection);
 
 /**
- * Predicate checking whether the selection is a Selection
+ * Predicate checking whether the value is a Selection
  *
  * @param value - the value to check
  *
  * @public
  */
 export const isSelection = isInstanceOf(PMSelection);
+
+/**
+ * Predicate checking whether the value is a ResolvedPosition.
+ *
+ * @param value - the value to check
+ *
+ * @public
+ */
+export const isResolvedPos = isInstanceOf(PMResolvedPos);
 
 /**
  * Predicate checking whether the selection is a NodeSelection
@@ -144,10 +154,10 @@ export const isMarkActive = ({ state, type, from, to }: IsMarkActiveParams) => {
  */
 export const canInsertNode = (state: EditorState, type: NodeType) => {
   const { $from } = state.selection;
-  for (let d = $from.depth; d >= 0; d--) {
-    const index = $from.index(d);
+  for (let depth = $from.depth; depth >= 0; depth--) {
+    const index = $from.index(depth);
     try {
-      if ($from.node(d).canReplaceWith(index, index, type)) {
+      if ($from.node(depth).canReplaceWith(index, index, type)) {
         return true;
       }
     } catch {

@@ -31,7 +31,17 @@ export interface Positioner<GExtension extends AnyExtension = any> {
   initialPosition: Position;
   /**
    * Determines whether anything has changed and whether to continue with a
-   * recalculation
+   * recalculation. By default this is only true when the document has changed.
+   *
+   * @remarks
+   * Sometimes it is useful to recalculate the positioner on every state update. In this case
+   * you can set this method to always return true.
+   *
+   * ```ts
+   * const positioner: Positioner = {
+   *   hasChanged: () => true
+   * // ... other properties
+   * };
    *
    * @param params
    */

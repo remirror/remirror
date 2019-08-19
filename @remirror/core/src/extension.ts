@@ -327,7 +327,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * ```ts
    * class History extends Extension {
-   *   name = 'history';
+   *   name = 'history' as const;
    *   commands() {
    *     return {
    *       undoHistory: COMMAND_FN,
@@ -361,9 +361,39 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * A helper method is a function that takes in arguments and returns
    * a value depicting the state of the editor specific to this extension.
    *
+   * @remarks
+   *
    * Unlike commands they can return anything and they do not effect the editor in anyway.
    *
    * They are general versions of the `isActive` and `isEnabled` methods.
+   *
+   * Below is an example which should provide some idea on how to add helpers to the app.
+   *
+   * ```tsx
+   * // extension.ts
+   * import { ExtensionManagerParams } from '@remirror/core';
+   *
+   * class MyBeautifulExtension {
+   *   get name() {
+   *     return 'beautiful' as const
+   *   }
+   *
+   *   helpers(params: ExtensionManagerParams) {
+   *     return {
+   *       isMyCodeBeautiful: () => true,
+   *     }
+   *   }
+   * }
+   *
+   * // app.tsx
+   * import { useRemirror } from '@remirror/react';
+   *
+   * export const MyApp = () => {
+   *   const { helpers } = useRemirror();
+   *
+   *   return helpers.isMyCodeBeautiful() ? (<span>😍</span>) : (<span>😢</span>);
+   * };
+   * ```
    */
   helpers?(params: ExtensionManagerTypeParams<GType>): ExtensionHelperReturn;
 

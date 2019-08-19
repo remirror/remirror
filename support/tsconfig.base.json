@@ -3,7 +3,7 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
-    "lib": ["esnext", "dom"],
+    "lib": ["dom", "esnext"],
     "jsx": "preserve",
     "types": ["jest", "jest-extended", "jest-axe", "@testing-library/jest-dom/extend-expect", "jest-emotion"],
     "moduleResolution": "node",

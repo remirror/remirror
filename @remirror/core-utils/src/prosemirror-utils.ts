@@ -1,6 +1,7 @@
-import { bool, isNumber } from '@remirror/core-helpers';
+import { bool } from '@remirror/core-helpers';
 import {
   AttrsParams,
+  EditorSchema,
   EditorState,
   EditorStateParams,
   EditorView,
@@ -18,7 +19,7 @@ import {
   TransactionParams,
 } from '@remirror/core-types';
 import { Selection as PMSelection } from 'prosemirror-state';
-import { isEditorState, isNodeSelection, isSelection, isTextDOMNode } from './dom-utils';
+import { isEditorState, isNodeSelection, isResolvedPos, isSelection, isTextDOMNode } from './dom-utils';
 
 /* "Borrowed" from prosemirror-utils in order to avoid requirement of
 `@prosemirror-tables`*/
@@ -111,15 +112,36 @@ export const findElementAtPosition = (position: number, view: EditorView): HTMLE
  * @public
  */
 export const removeNodeBefore = (tr: Transaction): Transaction => {
-  const pos = findPositionOfNodeBefore(tr.selection);
-  if (isNumber(pos)) {
-    return removeNodeAtPosition({ pos, tr });
+  const result = findPositionOfNodeBefore(tr.selection);
+  if (result) {
+    return removeNodeAtPosition({ pos: result.pos, tr });
+  }
+  return tr;
+};
+
+/**
+ * Returns a new transaction that deletes the node after.
+ *
+ * ```ts
+ * dispatch(
+ *    removeNodeBefore(state.tr)
+ * );
+ * ```
+ *
+ * @param tr
+ *
+ * @public
+ */
+export const removeNodeAfter = (tr: Transaction): Transaction => {
+  const result = findPositionOfNodeAfter(tr.selection);
+  if (result) {
+    return removeNodeAtPosition({ pos: result.pos, tr });
   }
   return tr;
 };
 
 interface FindSelectedNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
-export interface FindSelectedNodeOfType extends FindParentNodeResult {
+export interface FindSelectedNodeOfType extends FindProsemirrorNodeResult {
   /**
    * The depth of the returned node.
    */
@@ -146,17 +168,28 @@ export const findSelectedNodeOfType = ({
   if (isNodeSelection(selection)) {
     const { node, $from } = selection;
     if (nodeEqualsType({ types, node })) {
-      return { node, pos: $from.pos, depth: $from.depth, start: $from.start() };
+      return {
+        node,
+        pos: $from.pos,
+        depth: $from.depth,
+        start: $from.start(),
+        end: $from.pos + node.nodeSize,
+      };
     }
   }
   return undefined;
 };
 
-export interface FindParentNodeResult extends ProsemirrorNodeParams {
+export interface FindProsemirrorNodeResult extends ProsemirrorNodeParams {
   /**
    * The start position of the node.
    */
   start: number;
+
+  /**
+   * The end position of the node.
+   */
+  end: number;
 
   /**
    * Points to position directly before the node.
@@ -179,15 +212,19 @@ interface FindParentNodeParams extends SelectionParams, PredicateParams<Prosemir
 export const findParentNode = ({
   predicate,
   selection,
-}: FindParentNodeParams): FindParentNodeResult | undefined => {
+}: FindParentNodeParams): FindProsemirrorNodeResult | undefined => {
   const { $from } = selection;
   for (let currentDepth = $from.depth; currentDepth > 0; currentDepth--) {
     const node = $from.node(currentDepth);
     if (predicate(node)) {
+      const pos = currentDepth > 0 ? $from.before(currentDepth) : 0;
+      const start = $from.start(currentDepth);
+      const end = pos + node.nodeSize;
       return {
         pos: currentDepth > 0 ? $from.before(currentDepth) : 0,
-        start: $from.start(currentDepth),
         node,
+        start,
+        end,
       };
     }
   }
@@ -197,7 +234,7 @@ export const findParentNode = ({
 /**
  * Finds the node at the passed selection.
  */
-export const findNodeAtSelection = (selection: Selection): FindParentNodeResult => {
+export const findNodeAtSelection = (selection: Selection): FindProsemirrorNodeResult => {
   return findParentNode({ predicate: () => true, selection })!;
 };
 
@@ -227,14 +264,18 @@ export const findNodeAtStartOfDoc = (doc: ProsemirrorNode) =>
  *
  * @param $pos - the resolve position in the document
  */
-export const findNodeAtPosition = ($pos: ResolvedPos): FindParentNodeResult => {
+export const findNodeAtPosition = ($pos: ResolvedPos): FindProsemirrorNodeResult => {
   const { depth } = $pos;
+  const pos = depth > 0 ? $pos.before(depth) : 0;
   const node = $pos.node(depth);
+  const start = $pos.start(depth);
+  const end = pos + node.nodeSize;
 
   return {
-    pos: depth > 0 ? $pos.before(depth) : 0,
-    start: $pos.start(depth),
+    pos,
+    start,
     node,
+    end,
   };
 };
 
@@ -252,7 +293,7 @@ interface FindParentNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
 export const findParentNodeOfType = ({
   types,
   selection,
-}: FindParentNodeOfTypeParams): FindParentNodeResult | undefined => {
+}: FindParentNodeOfTypeParams): FindProsemirrorNodeResult | undefined => {
   return findParentNode({ predicate: node => nodeEqualsType({ types, node }), selection });
 };
 
@@ -265,18 +306,69 @@ export const findParentNodeOfType = ({
  *
  * @param selection - the prosemirror selection
  */
-export const findPositionOfNodeBefore = (selection: Selection): number | undefined => {
-  const { nodeBefore } = selection.$from;
-  const maybeSelection = PMSelection.findFrom(selection.$from, -1);
-  if (maybeSelection && nodeBefore) {
-    const parent = findParentNodeOfType({ types: nodeBefore.type, selection: maybeSelection });
-    if (parent) {
-      return parent.pos;
-    }
-    return maybeSelection.$from.pos;
+export const findPositionOfNodeBefore = <GSchema extends EditorSchema = any>(
+  value: Selection<GSchema> | ResolvedPos<GSchema> | EditorState<GSchema> | Transaction<GSchema>,
+): FindProsemirrorNodeResult | undefined => {
+  const $pos = isResolvedPos(value) ? value : isSelection(value) ? value.$from : value.selection.$from;
+
+  if (!$pos) {
+    throw new Error('Invalid value passed in.');
   }
 
-  return;
+  const { nodeBefore } = $pos;
+  const selection = PMSelection.findFrom($pos, -1);
+
+  if (!selection || !nodeBefore) {
+    return;
+  }
+
+  const parent = findParentNodeOfType({ types: nodeBefore.type, selection });
+
+  return parent
+    ? parent
+    : {
+        node: nodeBefore,
+        pos: nodeBefore.isLeaf ? selection.from : selection.from - 1,
+        end: selection.from + nodeBefore.nodeSize,
+        start: selection.from,
+      };
+};
+
+/**
+ * Returns the position of the node after the current position, selection or state.
+ *
+ * ```ts
+ * const pos = findPositionOfNodeBefore(tr.selection);
+ * ```
+ *
+ * @param selection - the prosemirror selection
+ */
+export const findPositionOfNodeAfter = <GSchema extends EditorSchema = any>(
+  value: Selection<GSchema> | ResolvedPos<GSchema> | EditorState<GSchema>,
+): FindProsemirrorNodeResult | undefined => {
+  const $pos = isResolvedPos(value) ? value : isSelection(value) ? value.$from : value.selection.$from;
+
+  if (!$pos) {
+    throw new Error('Invalid value passed in.');
+  }
+
+  const { nodeAfter } = $pos;
+  const selection = PMSelection.findFrom($pos, 1);
+
+  if (!selection || !nodeAfter) {
+    return;
+  }
+
+  const parent = findParentNodeOfType({ types: nodeAfter.type, selection });
+
+  return parent
+    ? parent
+    : {
+        node: nodeAfter,
+        pos: nodeAfter.isLeaf ? selection.from : selection.from - 1,
+        end: selection.from + nodeAfter.nodeSize,
+        start: selection.from,
+      };
 };
 
 /**

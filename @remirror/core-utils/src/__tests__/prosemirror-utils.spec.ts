@@ -112,43 +112,48 @@ describe('findPositionOfNodeBefore', () => {
   });
 
   it('supports tables', () => {
+    const node = table(row(tdEmpty), row(tdEmpty));
     const {
       state: { selection },
-    } = createEditor(doc(p('text'), table(row(tdEmpty), row(tdEmpty)), '<cursor>'));
-    const position = findPositionOfNodeBefore(selection);
-    expect(position).toEqual(6);
+    } = createEditor(doc(p('abcd'), node, '<cursor>'));
+    const result = findPositionOfNodeBefore(selection);
+    expect(result).toEqual({ pos: 6, start: 7, end: 20, node });
   });
 
   it('supports blockquotes', () => {
+    const node = blockquote(p(''));
     const {
       state: { selection },
-    } = createEditor(doc(p('text'), blockquote(p('')), '<cursor>'));
+    } = createEditor(doc(p('abcd'), node, '<cursor>'));
     const position = findPositionOfNodeBefore(selection);
-    expect(position).toEqual(6);
+    expect(position).toEqual({ pos: 6, start: 7, end: 10, node });
   });
 
   it('supports nested leaf nodes', () => {
+    const node = atomBlock();
     const {
       state: { selection },
-    } = createEditor(doc(p('text'), table(row(td(p('1'), atomBlock(), '<cursor>')))));
+    } = createEditor(doc(p('abcd'), table(row(td(p('1'), node, '<cursor>')))));
     const position = findPositionOfNodeBefore(selection);
-    expect(position).toEqual(12);
+    expect(position).toEqual({ pos: 12, start: 12, end: 13, node });
   });
 
-  it('supports non-nested leaf node', () => {
+  it('supports non-nested leaf nodes', () => {
+    const node = atomBlock();
     const {
       state: { selection },
-    } = createEditor(doc(p('text'), atomBlock(), '<cursor>'));
+    } = createEditor(doc(p('abcd'), node, '<cursor>'));
     const position = findPositionOfNodeBefore(selection);
-    expect(position).toEqual(6);
+    expect(position).toEqual({ pos: 6, start: 6, end: 7, node });
   });
 
   it('supports leaf nodes with with nested inline atom nodes', () => {
+    const node = atomContainer(atomBlock());
     const {
       state: { selection },
-    } = createEditor(doc(p('text'), atomContainer(atomBlock()), '<cursor>'));
+    } = createEditor(doc(p('abcd'), atomContainer(atomBlock()), '<cursor>'));
     const position = findPositionOfNodeBefore(selection);
-    expect(position).toEqual(6);
+    expect(position).toEqual({ pos: 6, start: 7, end: 9, node });
   });
 });
 
