@@ -5,7 +5,8 @@ import { EpicModePluginStateParams, Particle, ParticleEffect, ParticleRange } fr
 export class EpicModePluginState {
   private particleEffect: ParticleEffect;
   private particleRange: ParticleRange;
-  private container: HTMLElement;
+  private getCanvasContainer: () => HTMLElement;
+  private container!: HTMLElement;
   private shakeActive: boolean;
   private colors: string[];
   private shakeTime = 0;
@@ -16,14 +17,31 @@ export class EpicModePluginState {
   private isActive = false;
   private view!: EditorView;
 
-  public readonly canvas: HTMLCanvasElement;
-  public readonly ctx: CanvasRenderingContext2D;
+  public canvas!: HTMLCanvasElement;
+  public ctx!: CanvasRenderingContext2D;
 
-  constructor({ particleEffect, colors, particleRange, canvasHolder, shake }: EpicModePluginStateParams) {
+  constructor({
+    particleEffect,
+    colors,
+    particleRange,
+    getCanvasContainer,
+    shake,
+  }: EpicModePluginStateParams) {
     this.particleEffect = particleEffect;
-    this.container = canvasHolder || document.body;
     this.particleRange = particleRange;
     this.shakeActive = shake;
+    this.colors = colors;
+    this.getCanvasContainer = getCanvasContainer;
+  }
+
+  /**
+   * Store a reference to the Prosemirror view and add the canvas to the DOM
+   *
+   * @param view
+   */
+  public init(view: EditorView) {
+    this.view = view;
+    this.container = this.getCanvasContainer ? this.getCanvasContainer() : document.body;
 
     const canvas = document.createElement('canvas');
     canvas.id = 'epic-mode-canvas';
@@ -34,18 +52,10 @@ export class EpicModePluginState {
     canvas.style.pointerEvents = 'none';
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d')!;
-    this.colors = colors;
-  }
 
-  /**
-   * Store a reference to the Prosemirror view and add the canvas to the DOM
-   *
-   * @param view
-   */
-  public init(view: EditorView) {
-    this.view = view;
     this.container.appendChild(this.canvas);
 
     this.isActive = true;
