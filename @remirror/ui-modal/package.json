@@ -29,7 +29,7 @@
     "@reach/visually-hidden": "^0.1.4",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/ui": "0.4.2-canary.2",
-    "react-modal": "^3.9.1"
+    "react-modal": "^3.10.1"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
