@@ -1,4 +1,5 @@
-import { bool, deepMerge, isFunction, RemirrorTheme, RemirrorThemeContextType } from '@remirror/core';
+import { bool, deepMerge, isFunction } from '@remirror/core-helpers';
+import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core-types';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import React, { FC, ReactElement, useMemo, useState } from 'react';
 import { defaultRemirrorThemeValue, RemirrorThemeContext, withoutEmotionProps } from './ui-context';

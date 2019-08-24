@@ -1,18 +1,13 @@
 import { css as serializeStyles, SerializedStyles } from '@emotion/core';
+import { deepMerge, get, isArray, isFunction, isPlainObject, isString } from '@remirror/core-helpers';
 import {
-  deepMerge,
-  get,
-  isArray,
-  isFunction,
-  isPlainObject,
-  isString,
   RemirrorTheme,
   RemirrorThemeColorModes,
   RemirrorThemeContextType,
   SxThemeProp,
   ThemeParams,
   WithVariants,
-} from '@remirror/core';
+} from '@remirror/core-types';
 import { css } from '@styled-system/css';
 
 /**
