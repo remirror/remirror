@@ -159,6 +159,8 @@ describe('predicates', () => {
     const failValue = '1';
     expect(isNumber(passValue)).toBeTrue();
     expect(isNumber(failValue)).toBeFalse();
+    expect(isNumber(Number('01'))).toBeTrue();
+    expect(isNumber(Number('abc'))).toBeFalse();
   });
 
   it('isPlainObject', () => {

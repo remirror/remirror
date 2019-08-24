@@ -1,5 +1,5 @@
 import VisuallyHidden from '@reach/visually-hidden';
-import { RemirrorInterpolation, uniqueId } from '@remirror/core';
+import { omitUndefined, RemirrorInterpolation, RemirrorTheme, uniqueId } from '@remirror/core';
 import { useRemirrorTheme } from '@remirror/ui';
 import React, { forwardRef, useMemo } from 'react';
 
@@ -20,11 +20,16 @@ export interface IconProps {
   color?: string;
 
   /**
+   * The background color to set for the icon
+   */
+  backgroundColor?: string;
+
+  /**
    * Whether to reverse the color and the background color of the icon.
    *
-   * @default false
+   * @default 'default'
    */
-  inverse?: boolean;
+  variant?: keyof RemirrorTheme['remirror:icons'];
 }
 
 interface BaseIconProps extends Omit<JSX.IntrinsicElements['svg'], 'style'>, IconProps {
@@ -45,50 +50,43 @@ interface BaseIconProps extends Omit<JSX.IntrinsicElements['svg'], 'style'>, Ico
 /**
  * Provides the icon for use throughout the rest of the application.
  *
- * Uses theme component styles under `components.icon:simple`
+ * Uses theme component styles under `components.remirror:icon`
  */
 export const Icon = forwardRef<SVGSVGElement, BaseIconProps>(
   (
     {
       children,
-      color: colorProp,
+      color,
+      backgroundColor,
       style,
       width,
       height,
       size = '1em',
-      inverse = false,
+      variant = 'default',
       name,
       standalone = false,
       ...props
     },
     ref,
   ) => {
-    const { theme, sx, get } = useRemirrorTheme();
+    const { sx } = useRemirrorTheme();
 
-    const themeStyles = get('components.icon:simple', {});
-    const mainColor = colorProp || get<string>('components.icon:simple.color', theme.colors.text);
-    const mainBackgroundColor = get<string>(
-      'components.icon:simple.backgroundColor',
-      theme.colors.background,
-    );
-
-    const backgroundColor = inverse ? mainColor : mainBackgroundColor;
-    const color = inverse ? mainBackgroundColor : mainColor;
-
+    const defaultStyles = { color: 'text', backgroundColor: 'background', verticalAlign: 'middle' };
     const id = useMemo(() => uniqueId(), []);
     const extraProps = standalone ? { role: 'img', 'aria-labelledby': id } : { 'aria-hidden': true };
+    const colorStyles = omitUndefined({ color, backgroundColor });
 
     return (
       <>
         {!standalone && <VisuallyHidden>{name}</VisuallyHidden>}
         <svg
-          css={sx(themeStyles, { verticalAlign: 'middle', color, backgroundColor }, style)}
           fill='currentColor'
           preserveAspectRatio='xMidYMid meet'
           height={height || size}
           width={width || size}
           {...extraProps}
           {...props}
+          css={sx(defaultStyles, { variant: `remirror:icons.${variant}` }, colorStyles, style)}
           ref={ref}
         >
           {standalone && <title id={id}>{name}</title>}

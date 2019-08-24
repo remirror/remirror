@@ -60,5 +60,4 @@ export const wysiwygEditorTheme: RemirrorTheme = {
       },
     },
   },
-  components: {},
 };

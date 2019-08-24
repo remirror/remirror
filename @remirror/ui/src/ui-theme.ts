@@ -41,6 +41,7 @@ const colors: RemirrorTheme['colors'] = {
  */
 export const baseTheme: RemirrorTheme = {
   initialColorMode: 'light',
+  colors,
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   sizes: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fonts: {
@@ -64,7 +65,7 @@ export const baseTheme: RemirrorTheme = {
     buttons: '0 0 0 0 hsla(210, 6%, 14%, 0.15) inset',
     text: 'none',
   },
-  colors,
+
   'remirror:buttons': {
     default: {
       backgroundColor: 'light',
@@ -76,39 +77,39 @@ export const baseTheme: RemirrorTheme = {
       paddingX: 3,
       fontWeight: 'bold',
       borderRadius: 1,
-      ':active': {
-        backgroundColor: active(primary),
-      },
-      ':hover': {
+      '&:hover': {
         backgroundColor: hover(primary),
+      },
+      '&:active': {
+        backgroundColor: active(primary),
       },
     },
     primary: {
       variant: 'remirror:buttons.default',
       backgroundColor: 'primary',
       color: 'background',
-      ':active': {
-        backgroundColor: active(primary),
-      },
       ':hover': {
         backgroundColor: hover(primary),
+      },
+      ':active': {
+        backgroundColor: active(primary),
       },
     },
     secondary: {
       variant: 'remirror:buttons.default',
       backgroundColor: 'secondary',
       color: 'background',
-      ':active': {
-        backgroundColor: active(hsl.secondary),
-      },
       ':hover': {
         backgroundColor: hover(hsl.secondary),
+      },
+      ':active': {
+        backgroundColor: active(hsl.secondary),
       },
     },
   },
   'remirror:icons': {
     default: {
-      color: 'dark',
+      color: 'text',
       transition: 'all 0.2s',
       ':hover': {
         color: 'grey',
@@ -118,7 +119,7 @@ export const baseTheme: RemirrorTheme = {
     inverse: {
       variant: 'remirror:icons.default',
       color: 'background',
-      backgroundColor: 'dark',
+      backgroundColor: 'text',
       ':hover': {
         color: 'light',
       },

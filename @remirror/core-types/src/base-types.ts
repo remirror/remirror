@@ -35,7 +35,36 @@ export type TupleValue<GTuple extends readonly unknown[]> = GTuple[number];
 /**
  * Creates a predicate type
  */
-export type Predicate<A> = (u: unknown) => u is A;
+export type Predicate<GType> = (u: unknown) => u is GType;
+
+declare const _brand: unique symbol;
+declare const _flavor: unique symbol;
+
+/**
+ * Used by Flavor to mark a type in a readable way.
+ */
+interface Flavoring<GFlavor> {
+  readonly [_flavor]?: GFlavor;
+}
+
+/**
+ * Create a "flavored" version of a type. TypeScript will disallow mixing flavors,
+ * but will allow unflavored values of that type to be passed in where a flavored
+ * version is expected. This is a less restrictive form of branding.
+ */
+export type Flavor<GType, GFlavor> = GType & Flavoring<GFlavor>;
+
+/**
+ * Used by Brand to mark a type in a readable way.
+ */
+interface Branding<GBrand> {
+  readonly [_brand]: GBrand;
+}
+
+/**
+ * Create a "branded" version of a type. TypeScript won't allow implicit conversion to this type
+ */
+export type Brand<GType, GBrand> = GType & Branding<GBrand>;
 
 /**
  * An object with string keys and values of type `any`

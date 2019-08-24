@@ -5,7 +5,7 @@ import React from 'react';
 import { Icon } from '../base-icon';
 
 describe('styles', () => {
-  it('renders default `component.icon:simple` styles', () => {
+  it('renders default `component.remirror:icon` styles', () => {
     const { container } = render(
       <RemirrorThemeProvider theme={baseTheme}>
         <Icon name='test icon' />
@@ -20,7 +20,7 @@ describe('styles', () => {
 
   it('renders default styles', () => {
     const { container } = render(
-      <RemirrorThemeProvider theme={{ ...baseTheme, components: { 'icon:simple': Merge.overwrite() } }}>
+      <RemirrorThemeProvider theme={{ ...baseTheme, 'remirror:icons': Merge.overwrite() }}>
         <Icon name='test icon' />
       </RemirrorThemeProvider>,
     );
@@ -43,15 +43,17 @@ describe('styles', () => {
     expect(svg).toHaveStyle(`color: blue; background-color: ${baseTheme.colors.background};`);
   });
 
-  it('can be inverted', () => {
+  it('can use the inverse invariant', () => {
     const { container } = render(
       <RemirrorThemeProvider theme={baseTheme}>
-        <Icon name='test icon' color='blue' inverse={true} />
+        <Icon name='test icon' variant='inverse' />
       </RemirrorThemeProvider>,
     );
 
     const svg = container.querySelector('svg');
-    expect(svg).toHaveStyle(`color: ${baseTheme.colors.background}; background-color: blue;`);
+    expect(svg).toHaveStyle(
+      `color: ${baseTheme.colors.background}; background-color: ${baseTheme.colors.text};`,
+    );
   });
 });
 

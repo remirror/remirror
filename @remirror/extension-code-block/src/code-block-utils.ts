@@ -282,7 +282,7 @@ export const getSupportedLanguagesMap = (supportedLanguages: RefractorSyntax[]) 
 
 /**
  * The list of strings that are recognised language names based on the the configured
- * supported languages
+ * supported languages.
  */
 export const getLanguageNamesAndAliases = (supportedLanguages: RefractorSyntax[]) => {
   return uniqueArray(

@@ -272,6 +272,8 @@ export const pick = objectPick;
  */
 export const omit = objectOmit;
 
+export const omitUndefined = (object: PlainObject) => omit(object, value => !isUndefined(value));
+
 /**
  * Shorthand for casting a value to it's boolean equivalent.
  *
@@ -316,7 +318,9 @@ const getObjectType = (value: unknown): TypeName | undefined => {
  * @param type -  the name of the type to check for
  * @returns a predicate function for checking the value type
  */
-const isOfType = <GType>(type: string) => (value: unknown): value is GType => typeof value === type;
+const isOfType = <GType>(type: string, test?: (value: GType) => boolean) => (
+  value: unknown,
+): value is GType => (typeof value === type ? (test ? test(value as GType) : true) : false);
 
 /**
  * Get the object type of passed in value. This avoids the reliance on `instanceof` checks
@@ -361,13 +365,15 @@ export const isUndefined = isOfType<undefined>('undefined');
 export const isString = isOfType<string>('string');
 
 /**
- * Predicate check that value is a number
+ * Predicate check that value is a number.
+ *
+ * Also by default doesn't include NaN as a valid number.
  *
  * @param value - the value to check
  *
  * @public
  */
-export const isNumber = isOfType<number>('number');
+export const isNumber = isOfType<number>('number', val => !Number.isNaN(val));
 
 /**
  * Predicate check that value is a function

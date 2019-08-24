@@ -19,29 +19,15 @@ Array [
     align center icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -74,29 +60,15 @@ Array [
     align justify icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -129,29 +101,15 @@ Array [
     align left icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -184,29 +142,15 @@ Array [
     align right icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -239,29 +183,15 @@ Array [
     bold icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -294,29 +224,15 @@ Array [
     border all icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -349,29 +265,15 @@ Array [
     border none icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -404,29 +306,15 @@ Array [
     border style icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -459,29 +347,15 @@ Array [
     clipboard icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -514,29 +388,15 @@ Array [
     clone icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -569,29 +429,15 @@ Array [
     code icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -624,29 +470,15 @@ Array [
     columns icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -679,29 +511,15 @@ Array [
     copy icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -734,29 +552,15 @@ Array [
     cut icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -789,29 +593,15 @@ Array [
     edit icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -844,29 +634,15 @@ Array [
     eraser icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -899,29 +675,15 @@ Array [
     file alt icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -954,29 +716,15 @@ Array [
     file icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1009,29 +757,15 @@ Array [
     filter icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1064,29 +798,15 @@ Array [
     font icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1119,29 +839,15 @@ Array [
     glasses icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1174,29 +880,15 @@ Array [
     h1 icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1231,29 +923,15 @@ Array [
     h2 icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1288,29 +966,15 @@ Array [
     h3 icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1345,29 +1009,15 @@ Array [
     h4 icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1402,29 +1052,15 @@ Array [
     h5 icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1459,29 +1095,15 @@ Array [
     h6 icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1516,29 +1138,15 @@ Array [
     heading icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1571,29 +1179,15 @@ Array [
     highlighter icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1626,29 +1220,15 @@ Array [
     i cursor icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1681,29 +1261,15 @@ Array [
     icons icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1736,29 +1302,15 @@ Array [
     indent icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1791,29 +1343,15 @@ Array [
     italic icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1846,29 +1384,15 @@ Array [
     link icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1901,29 +1425,15 @@ Array [
     list alt icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -1956,29 +1466,15 @@ Array [
     list icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2011,29 +1507,15 @@ Array [
     list ol icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2066,29 +1548,15 @@ Array [
     list ul icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2121,29 +1589,15 @@ Array [
     marker icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2176,29 +1630,15 @@ Array [
     outdent icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2231,29 +1671,15 @@ Array [
     paper plane icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2286,29 +1712,15 @@ Array [
     paperclip icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2341,29 +1753,15 @@ Array [
     paragraph icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2396,29 +1794,15 @@ Array [
     paste icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2451,29 +1835,15 @@ Array [
     pen alt icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2506,29 +1876,15 @@ Array [
     pen fancy icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2561,29 +1917,15 @@ Array [
     pen icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2616,29 +1958,15 @@ Array [
     pen nib icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2671,29 +1999,15 @@ Array [
     pencil alt icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2726,29 +2040,15 @@ Array [
     print icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2781,29 +2081,15 @@ Array [
     quote left icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2836,29 +2122,15 @@ Array [
     quote right icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2891,29 +2163,15 @@ Array [
     redo alt icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -2946,29 +2204,15 @@ Array [
     redo icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3001,29 +2245,15 @@ Array [
     remove format icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3056,29 +2286,15 @@ Array [
     reply all icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3111,29 +2327,15 @@ Array [
     reply icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3166,29 +2368,15 @@ Array [
     ruler horizontal icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3221,29 +2409,15 @@ Array [
     screwdriver icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3276,29 +2450,15 @@ Array [
     share icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3331,29 +2491,15 @@ Array [
     spell check icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3386,29 +2532,15 @@ Array [
     strikethrough icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3441,29 +2573,15 @@ Array [
     subscript icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3496,29 +2614,15 @@ Array [
     superscript icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3551,29 +2655,15 @@ Array [
     sync alt icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3606,29 +2696,15 @@ Array [
     sync icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3661,29 +2737,15 @@ Array [
     table icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3716,29 +2778,15 @@ Array [
     tasks icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3771,29 +2819,15 @@ Array [
     text height icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3826,29 +2860,15 @@ Array [
     text width icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3881,29 +2901,15 @@ Array [
     th icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3936,29 +2942,15 @@ Array [
     th large icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -3991,29 +2983,15 @@ Array [
     th list icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -4046,29 +3024,15 @@ Array [
     times icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -4101,29 +3065,15 @@ Array [
     tools icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -4156,29 +3106,15 @@ Array [
     trash alt icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -4211,29 +3147,15 @@ Array [
     trash icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -4266,29 +3188,15 @@ Array [
     trash restore alt icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -4321,29 +3229,15 @@ Array [
     trash restore icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -4376,29 +3270,15 @@ Array [
     underline icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -4431,29 +3311,15 @@ Array [
     undo alt icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -4486,29 +3352,15 @@ Array [
     undo icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -4541,29 +3393,15 @@ Array [
     unlink icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg
@@ -4596,29 +3434,15 @@ Array [
     wrench icon
   </div>,
   .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 .emotion-0 {
-  color: dark;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
+  color: text;
+  background-color: background;
   vertical-align: middle;
-  color: dark;
-  background-color: #fff;
-}
-
-.emotion-0:hover {
-  color: gray;
 }
 
 <svg

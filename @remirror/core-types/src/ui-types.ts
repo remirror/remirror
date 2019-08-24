@@ -130,16 +130,12 @@ export interface RemirrorThemeStyles {
 }
 
 export interface RemirrorThemeVariants {
-  components: RemirrorThemeComponentVariants & Record<string, SxThemeProp>;
+  'remirror:buttons'?: RemirrorVariant<'primary' | 'secondary' | 'default'>;
+  'remirror:icons'?: RemirrorVariant<'inverse' | 'default'>;
 }
 
-export interface RemirrorThemeComponentVariants {
-  /**
-   * Styles for the simple icon which is an icon on top of a background and
-   * can be inverted.
-   */
-  'icon:simple'?: WithVariants<SxThemeProp>;
-}
+export type RemirrorVariant<GKey extends string = string> = Partial<Record<GKey, WithVariants<SxThemeProp>>> &
+  Record<string, WithVariants<SxThemeProp>>;
 
 export type RemirrorTheme = RemirrorThemeProperties &
   RemirrorThemeVariants & { [key: string]: ThemeValue<any> | string };

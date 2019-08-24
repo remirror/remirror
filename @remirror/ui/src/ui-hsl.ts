@@ -271,10 +271,6 @@ export class HSL {
     return this.clone({ ...sla, h: createValidHue(h + degrees) });
   }
 
-  public complement(): HSL {
-    return this.rotate(180);
-  }
-
   /**
    * Lighten the color.
    *
@@ -440,6 +436,141 @@ export class HSL {
   public clone(hsla: Partial<HSLObject> = {}) {
     return new HSL(createValidHSLObject({ ...this.hsla, ...hsla }));
   }
+
+  /* Color Harmonies
+  Docs taken from https://www.tigercolor.com/color-lab/color-theory/color-harmonies.htm */
+
+  /**
+   * Colors that are opposite each other on the color wheel are considered to be complementary colors (example: red and green).
+   *
+   * The high contrast of complementary colors creates a vibrant look especially when used at full saturation. This color scheme must be managed well so it is not jarring.
+   * Complementary colors are tricky to use in large doses, but work well when you want something to stand out.
+   *
+   * In general, complementary colors are really bad for text.
+   */
+  public complement(): HSL {
+    return this.rotate(180);
+  }
+
+  /**
+   * Analogous color schemes use colors that are next to each other on the color wheel.
+   * They usually match well and create serene and comfortable designs.
+   *
+   * Analogous color schemes are often found in nature and are harmonious and pleasing to the eye.
+   * Make sure you have enough contrast when choosing an analogous color scheme.
+   *
+   * Choose one color to dominate, a second to support. The third color is used (along with black,
+   * white or gray) as an accent.
+   */
+  public analagous(direction: 'forwards' | 'backwards' = 'forwards'): [HSL, HSL] {
+    const [secondary, tertiary] = direction === 'forwards' ? [30, 60] : [-30, -60];
+    return [this.rotate(secondary), this.rotate(tertiary)];
+  }
+
+  /**
+   * A triadic color scheme uses colors that are evenly spaced around the color wheel.
+   *
+   * Triadic color harmonies tend to be quite vibrant, even if you use pale or unsaturated
+   * versions of your hues.
+   *
+   * To use a triadic harmony successfully, the colors should be carefully balanced - let one
+   * color dominate and use the two others for accent.
+   */
+  public triadic(): [HSL, HSL] {
+    return [this.rotate(120), this.rotate(240)];
+  }
+
+  /**
+   * The split complementary color scheme is a variation of the complementary color scheme.
+   * In addition to the base color, it uses the two colors adjacent to its complement.
+   *
+   * This color scheme has the same strong visual contrast as the complementary color scheme,
+   * but has less tension.
+   *
+   * The split-complimentary color scheme is often a good choice for beginners, because it is
+   * difficult to mess up.
+   */
+  public splitComplement(): [HSL, HSL] {
+    return [this.rotate(150), this.rotate(210)];
+  }
+
+  /**
+   * The rectangle or tetradic color scheme uses four colors arranged into two
+   * complementary pairs.
+   *
+   * This rich color scheme offers plenty of possibilities for variation.
+   * The tetradic color scheme works best if you let one color be dominant.
+   *
+   * You should also pay attention to the balance between warm and cool colors
+   * in your design.
+   *
+   * @param spacing - a value between 0 and 180 that separates the edges in degrees around a color wheel.
+   */
+  public rectangle(spacing = 60): [HSL, HSL, HSL] {
+    spacing = clamp({ min: 0, max: 180, value: spacing });
+    return [this.rotate(spacing), this.rotate(180), this.rotate(180 + spacing)];
+  }
+
+  /**
+   * The square color scheme is similar to the rectangle, but with all four colors spaced
+   * evenly around the color circle.
+   *
+   * The square color scheme works best if you let one color be dominant.
+   *
+   * You should also pay attention to the balance between warm and cool colors in your design.
+   */
+  public square(): [HSL, HSL, HSL] {
+    return this.rectangle(90);
+  }
 }
 
 const freeze = (hslObject: BrandedHSLObject): Readonly<BrandedHSLObject> => Object.freeze(hslObject);
+
+// const hslToRgb = ({h: hue, s: saturation, l: lightness}: HSL) => {
+//   const h = hue / 360;
+//   const s = saturation / 100;
+//   const l = lightness / 100;
+
+// 	let temp2;
+// 	let temp3;
+// 	let val;
+
+// 	if (s === 0) {
+// 		val = l * 255;
+// 		return [val, val, val];
+// 	}
+
+// 	if (l < 0.5) {
+// 		temp2 = l * (1 + s);
+// 	} else {
+// 		temp2 = l + s - l * s;
+// 	}
+
+// 	const t1 = 2 * l - temp2;
+
+// 	const rgb = [0, 0, 0];
+// 	for (let i = 0; i < 3; i++) {
+// 		temp3 = h + 1 / 3 * -(i - 1);
+// 		if (temp3 < 0) {
+// 			temp3++;
+// 		}
+
+// 		if (temp3 > 1) {
+// 			temp3--;
+// 		}
+
+// 		if (6 * temp3 < 1) {
+// 			val = t1 + (temp2 - t1) * 6 * temp3;
+// 		} else if (2 * temp3 < 1) {
+// 			val = temp2;
+// 		} else if (3 * temp3 < 2) {
+// 			val = t1 + (temp2 - t1) * (2 / 3 - temp3) * 6;
+// 		} else {
+// 			val = t1;
+// 		}
+
+// 		rgb[i] = val * 255;
+// 	}
+
+// 	return rgb;
+// };

@@ -1,4 +1,4 @@
-import { ActionNames, AnyFunction, Attrs, memoize } from '@remirror/core';
+import { ActionNames, AnyFunction, Attrs, memoize, RemirrorTheme } from '@remirror/core';
 import { useRemirror } from '@remirror/react';
 import { bubblePositioner } from '@remirror/react-utils';
 import { useRemirrorTheme } from '@remirror/ui';
@@ -113,7 +113,7 @@ interface MenuItemProps extends Partial<WithPaddingProps> {
   state: ButtonState;
   onClick: DOMAttributes<HTMLButtonElement>['onClick'];
   Icon: ComponentType<IconProps>;
-  inverse?: boolean;
+  variant?: keyof RemirrorTheme['remirror:icons'];
   disabled?: boolean;
   subText?: string;
   index?: number;
@@ -122,10 +122,10 @@ interface MenuItemProps extends Partial<WithPaddingProps> {
 /**
  * A single clickable menu item for editing the styling and format of the text.
  */
-const MenuItem: FC<MenuItemProps> = ({ state, onClick, Icon, inverse = false, disabled = false, index }) => {
+const MenuItem: FC<MenuItemProps> = ({ state, onClick, Icon, variant, disabled = false, index }) => {
   return (
     <IconButton onClick={onClick} state={state} disabled={disabled} index={index}>
-      <Icon inverse={inverse} />
+      <Icon variant={variant} />
     </IconButton>
   );
 };
@@ -142,7 +142,6 @@ const bubbleMenuItems: Array<
 
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
   const { actions, getPositionerProps, helpers } = useRemirror<WysiwygExtensions>();
-  console.log(helpers.isDragging());
 
   const { bottom, left, ref } = getPositionerProps({
     ...bubblePositioner,
@@ -152,7 +151,6 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
         (bubblePositioner.isActive(params) || linkActivated) &&
         !actions.toggleCodeBlock.isActive() &&
         !helpers.isDragging();
-      console.log({ answer, dragging: helpers.isDragging() }, params.view.dragging);
       return answer;
     },
     positionerId: 'bubbleMenu',
@@ -179,7 +177,7 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
                 state={buttonState}
                 disabled={!actions[name].isEnabled()}
                 onClick={runAction(actions[name], attrs)}
-                inverse={true}
+                variant='inverse'
               />
             );
           })}
@@ -187,7 +185,7 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
             Icon={LinkIcon}
             state={getButtonState(actions.updateLink.isActive(), true)}
             onClick={activateLink}
-            inverse={true}
+            variant='inverse'
           />
         </BubbleContent>
       )}
@@ -266,7 +264,7 @@ const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink,
         `}
       />
       {canRemove() && (
-        <MenuItem Icon={TimesIcon} state='active-inverse' onClick={onClickRemoveLink} inverse={true} />
+        <MenuItem Icon={TimesIcon} state='active-inverse' onClick={onClickRemoveLink} variant='inverse' />
       )}
     </BubbleContent>
   );

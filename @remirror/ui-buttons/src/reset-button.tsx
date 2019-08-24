@@ -1,12 +1,12 @@
 import { useRemirrorTheme } from '@remirror/ui';
 import React, { forwardRef } from 'react';
 
-export type ButtonProps = JSX.IntrinsicElements['button'];
+export type ResetButtonProps = JSX.IntrinsicElements['button'];
 
 /**
  * This component renders a button with all styling removed.
  */
-export const ResetButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+export const ResetButton = forwardRef<HTMLButtonElement, ResetButtonProps>((props, ref) => {
   const { css } = useRemirrorTheme();
 
   return (
@@ -19,8 +19,11 @@ export const ResetButton = forwardRef<HTMLButtonElement, ButtonProps>((props, re
         font: inherit;
         color: inherit;
         background-color: transparent;
-        outline: none;
+        outline: 0;
         cursor: pointer;
+        text-transform: none;
+        user-select: none;
+        display: inline-block;
       `}
     />
   );
