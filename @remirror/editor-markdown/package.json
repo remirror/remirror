@@ -39,7 +39,7 @@
     "@remirror/react-utils": "0.4.2-canary.2",
     "@remirror/ui": "0.4.2-canary.2",
     "@types/markdown-it": "^0.0.8",
-    "@types/prosemirror-markdown": "^1.0.2",
+    "@types/prosemirror-markdown": "^1.0.3",
     "@types/refractor": "2.8.0",
     "keycode": "^2.2.0",
     "markdown-it": "^9.1.0",

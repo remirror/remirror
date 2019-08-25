@@ -25,7 +25,7 @@
     "@types/nanoevents": "1.0.0",
     "@types/nanoid": "2.0.0",
     "nanoevents": "2.0.0",
-    "nanoid": "2.0.3"
+    "nanoid": "2.0.4"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",

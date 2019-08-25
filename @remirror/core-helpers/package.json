@@ -32,8 +32,8 @@
     "@types/object.pick": "^1.3.0",
     "deepmerge": "^4.0.0",
     "fast-deep-equal": "^2.0.1",
-    "memoize-one": "5.1.0",
-    "nanoid": "2.0.3",
+    "memoize-one": "5.1.1",
+    "nanoid": "2.0.4",
     "object.omit": "3.0.0",
     "object.pick": "1.3.0"
   },
