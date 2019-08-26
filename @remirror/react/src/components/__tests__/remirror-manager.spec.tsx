@@ -1,7 +1,7 @@
 import { ExtensionManager } from '@remirror/core';
 import { baseExtensions, ParagraphExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import { TestExtension } from '@test-fixtures/schema-helpers';
-import { render, RenderResult } from '@test-fixtures/testing-library';
+import { render, RenderResult } from '@testing-library/react';
 import { EditorView } from 'prosemirror-view';
 import React, { FC } from 'react';
 import { useRemirrorManager } from '../../react-hooks';

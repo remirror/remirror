@@ -45,7 +45,7 @@ export type ProsemirrorNode<GSchema extends EditorSchema = any> = PMNode<GSchema
 export type ProsemirrorPlugin<GPluginState = any> = PMPlugin<GPluginState, EditorSchema>;
 export type MarkType<GSchema extends EditorSchema = any> = PMMarkType<GSchema>;
 export type NodeType<GSchema extends EditorSchema = any> = PMNodeType<GSchema>;
-export type EditorState<GSchema extends EditorSchema = any> = PMEditorState<GSchema>;
+export type EditorState<GSchema extends EditorSchema = any> = Readonly<PMEditorState<GSchema>>;
 export type Slice<GSchema extends EditorSchema = any> = PMSlice<GSchema>;
 export type Decoration = PMDecoration;
 export type Mapping = PMMapping;

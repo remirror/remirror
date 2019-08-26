@@ -19,6 +19,7 @@ import {
   RemirrorContentType,
   SchemaFromExtensions,
   TextParams,
+  Transaction,
 } from '@remirror/core';
 import { ComponentClass, ComponentType, FC, ReactElement, ReactNode, Ref } from 'react';
 
@@ -232,17 +233,41 @@ export interface RemirrorGetterParams {
 
 export interface BaseListenerParams<GExtension extends AnyExtension = any>
   extends EditorViewParams<SchemaFromExtensions<GExtension>>,
-    RemirrorGetterParams {}
+    RemirrorGetterParams {
+  /**
+   * The original transaction which caused this state update.
+   *
+   * This allows for inspecting the reason behind the state change.
+   * When undefined this means that the state was updated externally.
+   *
+   * If available:
+   * - Metadata on the transaction can be inspected. `tr.getMeta`
+   * - Was the change caused by added / removed content? `tr.docChanged`
+   * - Was ths change caused by an updated selection? `tr.selectionSet`
+   * - `tr.steps` can be inspected for further granularity.
+   */
+  tr?: Transaction<SchemaFromExtensions<GExtension>>;
+
+  /**
+   * A shorthand way of checking whether the update was triggered by editor usage (internal) or
+   * overwriting the state.
+   *
+   * - `true` The update was triggered by a change in the prosemirror doc or an update to the selection.
+   * In these cases `tr` will have a value.
+   * - `false` The update was caused by a call to `setContent` or `resetContent`
+   */
+  internalUpdate: boolean;
+}
 
 export interface RemirrorEventListenerParams<GExtension extends AnyExtension = any>
   extends EditorStateParams<SchemaFromExtensions<GExtension>>,
-    BaseListenerParams {}
+    BaseListenerParams<GExtension> {}
 
 export interface RemirrorStateListenerParams<GExtension extends AnyExtension = any>
   extends CompareStateParams<SchemaFromExtensions<GExtension>>,
     BaseListenerParams<GExtension> {
   /**
-   * Allows for the creation of a new state object with the desired content
+   * Manually create a new state object with the desired content.
    */
   createStateFromContent(content: RemirrorContentType): EditorState<SchemaFromExtensions<GExtension>>;
 }

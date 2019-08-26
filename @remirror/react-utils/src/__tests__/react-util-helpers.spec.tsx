@@ -1,6 +1,5 @@
-import { render } from '@test-fixtures/testing-library';
+import { render } from '@testing-library/react';
 import React from 'react';
-import { RemirrorElementType, RemirrorFC } from '../react-types';
 import {
   cloneElement,
   getElementProps,
@@ -12,6 +11,7 @@ import {
   oneChildOnly,
   uniqueClass,
 } from '../react-util-helpers';
+import { RemirrorElementType, RemirrorFC } from '../react-util-types';
 
 test('getElementProps', () => {
   const expected = { id: 'test' };

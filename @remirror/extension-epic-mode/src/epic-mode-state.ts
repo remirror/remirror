@@ -1,5 +1,4 @@
-import { EditorView, randomInt } from '@remirror/core';
-import throttle from 'throttleit';
+import { EditorView, randomInt, throttle } from '@remirror/core';
 import { EpicModePluginStateParams, Particle, ParticleEffect, ParticleRange } from './epic-mode-types';
 
 export class EpicModePluginState {
@@ -77,13 +76,13 @@ export class EpicModePluginState {
     }
   }
 
-  public shake = throttle((time: number) => {
+  public shake = throttle(100, (time: number) => {
     if (this.shakeActive) {
       this.shakeTime = this.shakeTimeMax = time;
     }
-  }, 100);
+  });
 
-  public spawnParticles = throttle(() => {
+  public spawnParticles = throttle(100, () => {
     const { selection } = this.view.state;
     const coords = this.view.coordsAtPos(selection.$anchor.pos);
 
@@ -114,7 +113,7 @@ export class EpicModePluginState {
         canvas: this.canvas,
       });
     }
-  }, 100);
+  });
 
   /**
    * Runs through the animation loop

@@ -1,4 +1,4 @@
-import { render } from '@test-fixtures/testing-library';
+import { render } from '@testing-library/react';
 import React from 'react';
 
 import { docNodeBasicJSON } from '@test-fixtures/object-nodes';

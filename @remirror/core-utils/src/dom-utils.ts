@@ -646,7 +646,7 @@ export interface CreateDocumentNodeParams
   /**
    * The fallback object node to use if unable to convert the value correctly
    */
-  fallback?: ObjectNode;
+  fallback?: ObjectNode | ProsemirrorNode;
 }
 
 export interface StringHandlerParams {
@@ -658,6 +658,14 @@ export interface StringHandlerParams {
    */
   stringHandler?(params: FromStringParams): ProsemirrorNode;
 }
+
+const fallbackContent = ({
+  fallback,
+  schema,
+}: {
+  fallback: ObjectNode | ProsemirrorNode;
+  schema: EditorSchema;
+}) => (isProsemirrorNode(fallback) ? fallback : schema.nodeFromJSON(fallback));
 
 /**
  * Creates a document node from the passed in content and schema.
@@ -682,7 +690,7 @@ export const createDocumentNode = ({
       return schema.nodeFromJSON(content);
     } catch (e) {
       console.error(e);
-      return schema.nodeFromJSON(fallback);
+      return fallbackContent({ fallback, schema });
     }
   }
 
@@ -690,7 +698,7 @@ export const createDocumentNode = ({
     return stringHandler({ doc, content, schema });
   }
 
-  return schema.nodeFromJSON(fallback);
+  return fallbackContent({ fallback, schema });
 };
 
 /**

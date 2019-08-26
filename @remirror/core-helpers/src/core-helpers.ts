@@ -644,10 +644,11 @@ export class Merge {
   /**
    * Create an object that will completely replace the key when merging.
    *
-   * @param [obj] - the object to replace the key with. If blank an empty object is use.
+   * @param [obj] - the object to replace the key with.
+   * When blank an empty object is used.
    */
-  public static overwrite(obj: PlainObject = {}) {
-    return new Merge(obj);
+  public static overwrite<GReturn = any>(obj: PlainObject = {}): GReturn {
+    return new Merge(obj) as any;
   }
 
   /**
@@ -658,7 +659,7 @@ export class Merge {
   }
 
   /**
-   * This can be create any kind of object
+   * This can be used to create any kind of object
    */
   [key: string]: any;
 
@@ -748,3 +749,5 @@ export const get = <GReturn = any>(
 
   return isUndefined(obj) ? fallback : obj;
 };
+
+export * from 'throttle-debounce';

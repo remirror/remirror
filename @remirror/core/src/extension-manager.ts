@@ -376,7 +376,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   /**
    * Create the editor state from content passed to this extension manager.
    */
-  public createState({ content, doc, stringHandler }: Omit<CreateDocumentNodeParams, 'schema'>) {
+  public createState({ content, doc, stringHandler, fallback }: Omit<CreateDocumentNodeParams, 'schema'>) {
     const { schema, plugins } = this.data;
     return EditorState.create({
       schema,
@@ -385,6 +385,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
         doc,
         schema,
         stringHandler,
+        fallback,
       }),
       plugins,
     });

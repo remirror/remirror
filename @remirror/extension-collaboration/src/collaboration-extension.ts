@@ -2,6 +2,7 @@ import {
   Attrs,
   CommandFunction,
   CommandParams,
+  debounce,
   EditorState,
   Extension,
   isArray,
@@ -10,7 +11,6 @@ import {
   Plugin,
   uniqueId,
 } from '@remirror/core';
-import debounce from 'debounce';
 import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirror-collab';
 import { Step } from 'prosemirror-transform';
 import { CollaborationAttrs, CollaborationExtensionOptions } from './collaboration-types';
@@ -94,7 +94,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
    * This passes the sendable steps into the `onSendableReceived` handler defined in the
    * options when there is something to send.
    */
-  private getSendableSteps = debounce((state: EditorState) => {
+  private getSendableSteps = debounce(this.options.debounce, (state: EditorState) => {
     const sendable = sendableSteps(state);
 
     if (sendable) {
@@ -105,7 +105,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
       };
       this.options.onSendableReceived({ sendable, jsonSendable });
     }
-  }, this.options.debounce);
+  });
 }
 
 /**

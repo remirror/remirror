@@ -1,6 +1,6 @@
 import { InjectedRemirrorProps } from '@remirror/react-utils';
 import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
-import { render } from '@test-fixtures/testing-library';
+import { render } from '@testing-library/react';
 import React, { FC } from 'react';
 import { withRemirror } from '../../react-hocs';
 import { useRemirror } from '../../react-hooks';

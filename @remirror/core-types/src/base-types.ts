@@ -135,6 +135,14 @@ export type MakeReadonly<GType extends {}, GKeys extends Key<GType>> = Omit<GTyp
 export type Literal = string | number | boolean | undefined | null | void | {};
 
 /**
+ * A recursive partial type. Useful for object that will be merged
+ * with defaults.
+ */
+export type DeepPartial<GType> = GType extends object
+  ? { [K in keyof GType]?: DeepPartial<GType[K]> }
+  : GType;
+
+/**
  * A tuple for use with the regex constructor.
  *
  * @remarks

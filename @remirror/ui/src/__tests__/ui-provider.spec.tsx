@@ -1,7 +1,7 @@
 // tslint:disable: no-implicit-dependencies
 import { Remirror } from '@remirror/react';
 import { createTestManager } from '@test-fixtures/schema-helpers';
-import { render } from '@test-fixtures/testing-library';
+import { render } from '@testing-library/react';
 import { ThemeProvider } from 'emotion-theming';
 import { baseTheme } from '..';
 import { useEmotionTheme, useRemirrorTheme } from '../ui-hooks';

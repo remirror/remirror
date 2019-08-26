@@ -16,6 +16,7 @@ import {
   WidthProperty,
   ZIndexProperty,
 } from 'csstype';
+import { StringKey } from './base-types';
 
 export type RemirrorThemeColorMode = {
   /**
@@ -130,15 +131,29 @@ export interface RemirrorThemeStyles {
 }
 
 export interface RemirrorThemeVariants {
-  'remirror:buttons'?: RemirrorVariant<'primary' | 'secondary' | 'default'>;
-  'remirror:icons'?: RemirrorVariant<'inverse' | 'default'>;
+  /**
+   * The UI variants for the remirror buttons. These can be extended.
+   */
+  'remirror:buttons': {
+    default: WithVariants<SxThemeProp>;
+    primary: WithVariants<SxThemeProp>;
+    secondary: WithVariants<SxThemeProp>;
+  };
+
+  /**
+   * The UI variants for the remirror icons.
+   */
+  'remirror:icons': {
+    default: WithVariants<SxThemeProp>;
+    inverse: WithVariants<SxThemeProp>;
+  };
 }
 
-export type RemirrorVariant<GKey extends string = string> = Partial<Record<GKey, WithVariants<SxThemeProp>>> &
-  Record<string, WithVariants<SxThemeProp>>;
+export type KeyOfThemeVariant<GKey extends StringKey<RemirrorThemeVariants>> = StringKey<
+  RemirrorThemeVariants[GKey]
+>;
 
-export type RemirrorTheme = RemirrorThemeProperties &
-  RemirrorThemeVariants & { [key: string]: ThemeValue<any> | string };
+export type RemirrorTheme = RemirrorThemeProperties & Partial<RemirrorThemeVariants> & { [key: string]: any };
 
 /**
  * This prop allows for deeper nesting of styles within media queries and tags.

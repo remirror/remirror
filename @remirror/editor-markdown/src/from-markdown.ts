@@ -17,7 +17,7 @@ export const fromMarkdown = (markdown: string, schema: EditorSchema) =>
     },
     heading: { block: 'heading', getAttrs: tok => ({ level: +tok.tag.slice(1) }) },
     code_block: { block: 'codeBlock' },
-    fence: { block: 'codeBlock', getAttrs: tok => ({ params: tok.info || '' }) },
+    fence: { block: 'codeBlock', getAttrs: tok => ({ language: tok.info }) },
     hr: { node: 'horizontalRule' },
     image: {
       node: 'image',

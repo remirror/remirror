@@ -16,17 +16,25 @@ const hsl = {
   light: HSL.create([baseHue, 5, 90]),
 };
 
-const str = (color: HSL) => color.toString();
-const active = (color: HSL) => str(color.darken(10));
-const hover = (color: HSL) => str(color.darken(5).saturate(9));
+const str = (color: HSL, ...methods: Array<(color: HSL) => HSL>) =>
+  methods.reduce((col, method) => method(col), color).toString();
+const active = (color: HSL) => color.darken(10);
+const hover = (color: HSL) => color.darken(5).saturate(9);
 
 const colors: RemirrorTheme['colors'] = {
   text: str(hsl.text),
   background: str(hsl.background),
   primary: str(hsl.primary),
+  'primary:button:hover': str(primary, hover),
+  'primary:button:active': str(primary, active),
   secondary: str(hsl.secondary),
+  'secondary:button:hover': str(hsl.secondary, hover),
+  'secondary:button:active': str(hsl.secondary, active),
   muted: str(hsl.muted),
   grey: str(hsl.grey),
+  default: str(hsl.grey),
+  'default:button:hover': str(hsl.grey, hover),
+  'default:button:active': str(hsl.grey, active),
   light: str(hsl.light),
   modes: {
     dark: {
@@ -78,10 +86,10 @@ export const baseTheme: RemirrorTheme = {
       fontWeight: 'bold',
       borderRadius: 1,
       '&:hover': {
-        backgroundColor: hover(primary),
+        backgroundColor: 'default:button:hover',
       },
       '&:active': {
-        backgroundColor: active(primary),
+        backgroundColor: 'default:button:active',
       },
     },
     primary: {
@@ -89,10 +97,10 @@ export const baseTheme: RemirrorTheme = {
       backgroundColor: 'primary',
       color: 'background',
       ':hover': {
-        backgroundColor: hover(primary),
+        backgroundColor: 'primary:button:hover',
       },
       ':active': {
-        backgroundColor: active(primary),
+        backgroundColor: 'primary:button:active',
       },
     },
     secondary: {
@@ -100,10 +108,10 @@ export const baseTheme: RemirrorTheme = {
       backgroundColor: 'secondary',
       color: 'background',
       ':hover': {
-        backgroundColor: hover(hsl.secondary),
+        backgroundColor: 'secondary:button:hover',
       },
       ':active': {
-        backgroundColor: active(hsl.secondary),
+        backgroundColor: 'secondary:button:active',
       },
     },
   },
@@ -131,6 +139,7 @@ export const baseTheme: RemirrorTheme = {
         caretColor: 'currentColor',
         wordWrap: 'break-word',
         overflowWrap: 'break-word',
+        fontSize: 2,
       },
       [`${EDITOR_CLASS_SELECTOR}:focus`]: {
         outline: 'none',

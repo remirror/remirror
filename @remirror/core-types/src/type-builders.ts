@@ -156,11 +156,11 @@ export interface PosParams {
   pos: number;
 }
 
-export interface TransactionParams {
+export interface TransactionParams<GSchema extends EditorSchema = any> {
   /**
    * The prosemirror transaction
    */
-  tr: Transaction;
+  tr: Transaction<GSchema>;
 }
 
 export interface CallbackParams {

@@ -19,7 +19,7 @@ interface PercentBrand {
 
 type Hue = Brand<number, HueBrand>;
 type Percent = Brand<number, PercentBrand>;
-type Alpha = Percent | undefined;
+type Alpha = Percent;
 
 interface BrandedHSLObject {
   h: Hue;
@@ -58,7 +58,7 @@ export type HSLCreateParams = HSL | HSLObject | NamedHSLObject | HSLTuple | stri
 const HSLA_REGEX = /^hsla\((\d+),\s*([\d.]+)%,\s*([\d.]+)%,\s*(\d*(?:\.\d+)?)\)$/;
 
 // Taken from https://github.com/regexhq/hsl-regex/blob/3ea5cede63c1e4a30878e7329a197c502337b7b3/index.js#L7
-const HSL_REGEX = /^hsl\(\s*(\d+)\s*,\s*(\d*(?:\.\d+)?%)\s*,\s*(\d*(?:\.\d+)?%)\)$/;
+const HSL_REGEX = /^hsl\(\s*([\d.]+)\s*,\s*(\d*(?:\.\d+)?%)\s*,\s*(\d*(?:\.\d+)?%)\)$/;
 
 const HSL_SYMBOL = Symbol.for('hslColor');
 
@@ -143,7 +143,7 @@ const createValidAlpha = (value: number | string | undefined): Alpha => {
     : value;
 
   if (isUndefined(alpha)) {
-    return alpha;
+    return createValidPercent(100);
   }
 
   return createValidPercent(alpha);
@@ -226,8 +226,29 @@ export class HSL {
    *
    * The alpha value which is a number between 0 and 1.
    */
-  get a(): number | undefined {
+  get a(): number {
     return this.hsla.a;
+  }
+
+  /**
+   * Brightness
+   *
+   * Returns a number between 0 and 255 the current color (not taking into account the alpha level).
+   * The higher the number the brighter the color.
+   *
+   * https://24ways.org/2010/calculating-color-contrast
+   */
+  get brightness(): number {
+    const [r, g, b] = this.toRGB();
+    return (r * 299 + g * 587 + b * 114) / 1000;
+  }
+
+  get isDark() {
+    return this.brightness < 128;
+  }
+
+  get isLight() {
+    return !this.isDark;
   }
 
   /**
@@ -251,11 +272,20 @@ export class HSL {
    */
   public toString() {
     const { h, s, l, a } = this;
-    const [hue, saturation, lightness, alpha] = [h.toString(), `${s}%`, `${l}%`, a ? `${a}%` : undefined];
+    const [hue, saturation, lightness, alpha] = [h.toString(), `${s}%`, `${l}%`, `${percentageToRatio(a)}`];
 
-    return isString(alpha)
-      ? `hsla(${hue}, ${saturation}, ${lightness}, ${alpha})`
-      : `hsl(${hue}, ${saturation}, ${lightness})`;
+    return alpha === '1'
+      ? `hsl(${hue}, ${saturation}, ${lightness})`
+      : `hsla(${hue}, ${saturation}, ${lightness}, ${alpha})`;
+  }
+
+  /**
+   * Returns the array
+   */
+  public toRGB(): [number, number, number, number?] {
+    const { h, s, l, a } = this;
+    const [r, g, b] = hslToRgb([h, s, l]);
+    return [r, g, b, a];
   }
 
   /**
@@ -526,51 +556,48 @@ export class HSL {
 
 const freeze = (hslObject: BrandedHSLObject): Readonly<BrandedHSLObject> => Object.freeze(hslObject);
 
-// const hslToRgb = ({h: hue, s: saturation, l: lightness}: HSL) => {
-//   const h = hue / 360;
-//   const s = saturation / 100;
-//   const l = lightness / 100;
+/**
+ * Taken from https://github.com/usemeta/hsl-rgb/blob/1afed9a9703816e375839b4fbb6458f2765a76a8/index.js#L1
+ */
+const calculateHue = (pp: number, qq: number, hh: number) => {
+  hh = hh < 0 ? hh + 1 : hh > 1 ? hh - 1 : hh;
+  return hh < 1 / 6
+    ? pp + (qq - pp) * 6 * hh
+    : hh < 1 / 2
+    ? qq
+    : hh < 2 / 3
+    ? pp + (qq - pp) * (2 / 3 - hh) * 6
+    : pp;
+};
 
-// 	let temp2;
-// 	let temp3;
-// 	let val;
+/**
+ * Taken from https://github.com/usemeta/hsl-rgb/blob/1afed9a9703816e375839b4fbb6458f2765a76a8/index.js#L1
+ */
+const hslToRgb = ([hue, saturation, lightness]: [number, number, number]): [number, number, number] => {
+  let [rr, gg, bb] = [0, 0, 0];
+  const hh = hue / 360;
+  const ss = saturation / 100;
+  const ll = lightness / 100;
 
-// 	if (s === 0) {
-// 		val = l * 255;
-// 		return [val, val, val];
-// 	}
+  if (ss === 0) {
+    rr = gg = bb = ll;
+  } else {
+    const qq = ll < 0.5 ? ll * (1 + ss) : ll + ss - ll * ss;
+    const pp = 2 * ll - qq;
 
-// 	if (l < 0.5) {
-// 		temp2 = l * (1 + s);
-// 	} else {
-// 		temp2 = l + s - l * s;
-// 	}
+    rr = calculateHue(pp, qq, hh + 1 / 3);
+    gg = calculateHue(pp, qq, hh);
+    bb = calculateHue(pp, qq, hh - 1 / 3);
+  }
 
-// 	const t1 = 2 * l - temp2;
+  return [
+    Math.max(0, Math.min(Math.round(rr * 255), 255)),
+    Math.max(0, Math.min(Math.round(gg * 255), 255)),
+    Math.max(0, Math.min(Math.round(bb * 255), 255)),
+  ];
+};
 
-// 	const rgb = [0, 0, 0];
-// 	for (let i = 0; i < 3; i++) {
-// 		temp3 = h + 1 / 3 * -(i - 1);
-// 		if (temp3 < 0) {
-// 			temp3++;
-// 		}
-
-// 		if (temp3 > 1) {
-// 			temp3--;
-// 		}
-
-// 		if (6 * temp3 < 1) {
-// 			val = t1 + (temp2 - t1) * 6 * temp3;
-// 		} else if (2 * temp3 < 1) {
-// 			val = temp2;
-// 		} else if (3 * temp3 < 2) {
-// 			val = t1 + (temp2 - t1) * (2 / 3 - temp3) * 6;
-// 		} else {
-// 			val = t1;
-// 		}
-
-// 		rgb[i] = val * 255;
-// 	}
-
-// 	return rgb;
-// };
+/**
+ * Convert a percentage to a ratio while avoid
+ */
+const percentageToRatio = (percent: number, precision = 10) => Number((percent / 100).toFixed(precision));

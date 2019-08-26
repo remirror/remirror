@@ -4,6 +4,7 @@ import { RemirrorProps } from './components/remirror-types';
 
 export const defaultProps = asDefaultProps<RemirrorProps>()({
   initialContent: EMPTY_PARAGRAPH_NODE,
+  fallbackContent: EMPTY_PARAGRAPH_NODE,
   editable: true,
   usesBuiltInExtensions: true,
   attributes: {},

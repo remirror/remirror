@@ -3,6 +3,8 @@ import {
   AnyExtension,
   EditorState,
   ExtensionManager,
+  ObjectNode,
+  ProsemirrorNode,
   RemirrorContentType,
   RemirrorInterpolation,
   RenderEnvironment,
@@ -44,8 +46,6 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
    * updated unless you explicitly set the value prop to the updated state.
    *
    * Without a deep understanding of Prosemirror this is not recommended.
-   *
-   * @default undefined
    */
   onStateChange?(params: RemirrorStateListenerParams<GExtension>): void;
 
@@ -205,4 +205,13 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
    * https://reactjs.org/docs/dom-elements.html#suppresshydrationwarning.
    */
   suppressHydrationWarning?: boolean;
+
+  /**
+   * The value to use for empty content.
+   *
+   * This is the value used for an empty editor or when `resetContent` is called.
+   *
+   * @default EMPTY_PARAGRAPH_NODE
+   */
+  fallbackContent: ObjectNode | ProsemirrorNode;
 }

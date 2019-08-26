@@ -68,7 +68,6 @@ export const renderEditor = <
 ): GReturn => {
   const innerNodeExtensions = nodeExtensions.filter(({ name }) => !plainNodes.some(ext => ext.name === name));
   const extensions = [
-    // Allow testing the paragraph, text and doc extensions by filtering them out when they've been passed in
     ...innerNodeExtensions,
     ...others,
     ...plainMarks,
@@ -134,13 +133,13 @@ export const renderEditor = <
         state: view.state,
         actions: returnedParams.actions,
         helpers: returnedParams.helpers,
-        jumpTo: (pos: 'start' | 'end' | number, end?: number) => {
+        jumpTo: (pos: 'start' | 'end' | number, endPos?: number) => {
           if (pos === 'start') {
             dispatchTextSelection({ view, start: 1 });
           } else if (pos === 'end') {
             dispatchTextSelection({ view, start: doc.content.size - 1 });
           } else {
-            dispatchTextSelection({ view, start: pos, end });
+            dispatchTextSelection({ view, start: pos, end: endPos });
           }
           return updateContent();
         },

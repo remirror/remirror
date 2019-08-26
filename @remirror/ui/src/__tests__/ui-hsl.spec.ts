@@ -6,32 +6,32 @@ const validInputString: Array<[string, ValidHSLObject, ValidHSLTuple, string]> =
     'hsla(111, 12.343%, 0.9%, .1)',
     { h: 111, s: 12.343, l: 0.9, a: 10 },
     [111, 12.343, 0.9, 10],
-    'hsla(111, 12.343%, 0.9%, 10%)',
+    'hsla(111, 12.343%, 0.9%, 0.1)',
   ],
-  [
-    'hsla(123, 45%, 67%, 1)',
-    { h: 123, s: 45, l: 67, a: 100 },
-    [123, 45, 67, 100],
-    'hsla(123, 45%, 67%, 100%)',
-  ],
+  ['hsla(123, 45%, 67%, 1)', { h: 123, s: 45, l: 67, a: 100 }, [123, 45, 67, 100], 'hsl(123, 45%, 67%)'],
   [
     'hsla(1, 1.111%, 1.1111%, .4)',
     { h: 1, s: 1.111, l: 1.1111, a: 40 },
     [1, 1.111, 1.1111, 40],
-    'hsla(1, 1.111%, 1.1111%, 40%)',
+    'hsla(1, 1.111%, 1.1111%, 0.4)',
   ],
-  [
-    'hsl(180, 50.000%, 50%)',
-    { h: 180, s: 50, l: 50, a: undefined },
-    [180, 50, 50, undefined],
-    'hsl(180, 50%, 50%)',
-  ],
+  ['hsl(180, 50.000%, 50%)', { h: 180, s: 50, l: 50, a: 100 }, [180, 50, 50, 100], 'hsl(180, 50%, 50%)'],
+];
+
+const hslToRGBValues: Array<[string, [number, number, number, number?]]> = [
+  ['hsla(0, 100%, 50%, 0.4)', [255, 0, 0, 40]],
+  ['hsl(120, 100%, 50%)', [0, 255, 0, 100]],
+  ['hsl(279.7, 60.2%, 40.4%)', [123, 41, 165, 100]],
+  ['hsla(0, 0%, 0%, 1)', [0, 0, 0, 100]],
+  ['hsl(240, 100%, 50%)', [0, 0, 255, 100]],
+  ['hsl(340, 100%, 50%)', [255, 0, 85, 100]],
+  ['hsl(96, 48%, 59%)', [140, 201, 100, 100]],
 ];
 
 const validInputObject: Array<[HSLObject | NamedHSLObject, string]> = [
-  [{ h: 111, s: '12.343%', l: 0.9, a: '0.1' }, 'hsla(111, 12.343%, 0.9%, 10%)'],
+  [{ h: 111, s: '12.343%', l: 0.9, a: '0.1' }, 'hsla(111, 12.343%, 0.9%, 0.1)'],
   [{ h: '180', s: 50, l: '50' }, 'hsl(180, 50%, 50%)'],
-  [{ hue: '200', saturation: 50, lightness: 50, alpha: 80 }, 'hsla(200, 50%, 50%, 80%)'],
+  [{ hue: '200', saturation: 50, lightness: 50, alpha: 80 }, 'hsla(200, 50%, 50%, 0.8)'],
 ];
 
 describe('valid `HSL.create`', () => {
@@ -45,6 +45,10 @@ describe('valid `HSL.create`', () => {
 
   it.each(validInputString)('validates input string toString #%#', (input, _obj, _arr, expected) => {
     expect(HSL.create(input).toString()).toEqual(expected);
+  });
+
+  it.each(hslToRGBValues)('validates hsl to RGB #%#', (input, expected) => {
+    expect(HSL.create(input).toRGB()).toEqual(expected);
   });
 
   it.each(validInputObject)('validates input object toString #%#', (input, expected) => {

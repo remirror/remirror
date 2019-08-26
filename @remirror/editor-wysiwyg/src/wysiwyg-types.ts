@@ -5,7 +5,6 @@ import {
   BoldExtension,
   BulletListExtension,
   CodeExtension,
-  DropCursorExtension,
   HardBreakExtension,
   HeadingExtension,
   HorizontalRuleExtension,
@@ -20,6 +19,7 @@ import {
   UnderlineExtension,
 } from '@remirror/core-extensions';
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '@remirror/extension-code-block';
+import { DropCursorExtension } from '@remirror/extension-drop-cursor';
 import { ImageExtension } from '@remirror/extension-image';
 import { RemirrorProps } from '@remirror/react';
 

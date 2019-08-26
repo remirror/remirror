@@ -16,10 +16,13 @@ import {
 } from '@remirror/core';
 import {
   baseExtensions,
+  BaseKeymapExtension,
   BlockquoteExtension,
   BoldExtension,
   BulletListExtension,
   CodeExtension,
+  CompositionExtension,
+  GapCursorExtension,
   HardBreakExtension,
   HeadingExtension,
   HistoryExtension,
@@ -34,7 +37,7 @@ import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { ImageExtension } from '@remirror/extension-image';
 import { RemirrorProvider, RemirrorProviderProps } from '@remirror/react';
 import { RemirrorStateListenerParams } from '@remirror/react-utils';
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { fromMarkdown } from './from-markdown';
 import { toMarkdown } from './to-markdown';
 
@@ -54,8 +57,11 @@ const useMarkdownManager = () => {
       ExtensionManager.create([
         { priority: 1, extension: new DocExtension({ content: 'block' }) },
         { priority: 1, extension: new CodeBlockExtension({ defaultLanguage: 'markdown' }) },
-        new TextExtension(),
-        new HistoryExtension(),
+        { priority: 1, extension: new TextExtension() },
+        { extension: new CompositionExtension(), priority: 3 },
+        { extension: new HistoryExtension(), priority: 3 },
+        { extension: new GapCursorExtension(), priority: 10 },
+        { extension: new BaseKeymapExtension(), priority: 10 },
       ]),
     [],
   );
@@ -93,10 +99,10 @@ const useWysiwygManager = () => {
   );
 };
 
-const WysiwygEditor: FC<InternalEditorProps> = props => {
+const WysiwygEditor: FC<InternalEditorProps> = ({ children, ...props }) => {
   return (
     <RemirrorProvider {...props} childAsRoot={true}>
-      <div />
+      <div>{children}</div>
     </RemirrorProvider>
   );
 };
@@ -170,7 +176,18 @@ const markdownStringHandler: StringHandlerParams['stringHandler'] = ({
   );
 };
 
-export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', editor }) => {
+const useDebounce = (fn: () => any, ms: number = 0, args: any[] = []) => {
+  useEffect(() => {
+    const handle = setTimeout(fn.bind(null, args), ms);
+
+    return () => {
+      // if args change then clear timeout
+      clearTimeout(handle);
+    };
+  }, args);
+};
+
+export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', editor, children }) => {
   type WysiwygExtensions = ExtensionsFromManager<typeof wysiwygManager>;
   type WysiwygSchema = SchemaFromExtensions<WysiwygExtensions>;
   type MarkdownExtensions = ExtensionsFromManager<typeof markdownManager>;
@@ -179,40 +196,96 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', edi
   const wysiwygManager = useWysiwygManager();
   const markdownManager = useMarkdownManager();
   const initialContent = createInitialContent({ content: initialValue, schema: wysiwygManager.schema });
-  const [rawContent, setRawContent] = useState<Content>(initialContent);
   const [markdownEditorState, setMarkdownEditorState] = useState<EditorState<MarkdownSchema>>();
+  const [markdownParams, setMarkdownParams] = useState<
+    Pick<RemirrorStateListenerParams<MarkdownExtensions>, 'getText' | 'tr'>
+  >({ getText: () => initialContent.markdown });
   const [wysiwygEditorState, setWysiwygEditorState] = useState<EditorState<WysiwygSchema>>();
 
-  const createWysiwygState = (content: ProsemirrorNode) => wysiwygManager.createState({ content });
-  const createMarkdownState = (content: string) =>
-    wysiwygManager.createState({ content, stringHandler: markdownStringHandler });
+  const updateWysiwygFromMarkdown = useCallback(
+    (md: string) => {
+      const state = wysiwygManager.createState({ content: fromMarkdown(md, wysiwygManager.schema) });
+      setWysiwygEditorState(state);
+    },
+    [wysiwygManager],
+  );
 
-  const onMarkdownStateChange = ({ newState, getText }: RemirrorStateListenerParams<MarkdownExtensions>) => {
+  const updateMarkdownFromWysiwyg = useCallback(
+    (doc: ProsemirrorNode) =>
+      setMarkdownEditorState(
+        markdownManager.createState({ content: toMarkdown(doc), stringHandler: markdownStringHandler }),
+      ),
+    [markdownManager],
+  );
+
+  useDebounce(
+    () => {
+      const { tr, getText } = markdownParams;
+      if (tr && tr.docChanged) {
+        console.log('onMarkdownStateChange: triggering wysiwyg change');
+        updateWysiwygFromMarkdown(getText());
+        return;
+      }
+      console.log('onMarkdownStateChange: SKIP wysiwyg');
+    },
+    500,
+    [markdownParams.getText, markdownParams.tr],
+  );
+
+  const onMarkdownStateChange = ({
+    newState,
+    getText,
+    tr,
+  }: RemirrorStateListenerParams<MarkdownExtensions>) => {
+    console.log('onMarkdownStateChange: setting state');
+    setMarkdownParams({ getText, tr });
     setMarkdownEditorState(newState);
-    setRawContent({ ...rawContent, markdown: getText() });
-    setWysiwygEditorState(createWysiwygState(fromMarkdown(getText(), wysiwygManager.schema)));
   };
 
-  const onWysiwygStateChange = ({ newState }: RemirrorStateListenerParams<WysiwygExtensions>) => {
+  const onWysiwygStateChange = ({ newState, tr }: RemirrorStateListenerParams<WysiwygExtensions>) => {
+    console.log('onWysiwygStateChange: setting state');
     setWysiwygEditorState(newState);
-    setRawContent({ ...rawContent, wysiwyg: newState.doc });
-    setMarkdownEditorState(createMarkdownState(toMarkdown(newState.doc)));
+
+    if (tr && tr.docChanged) {
+      console.log('onWysiwygStateChange: triggering markdown change');
+      updateMarkdownFromWysiwyg(newState.doc);
+      return;
+    }
+
+    console.log('onWysiwygStateChange: SKIP markdown');
   };
 
-  return editor === 'markdown' ? (
-    <InternalMarkdownEditor
-      manager={markdownManager}
-      initialContent={rawContent.markdown}
-      stringHandler={markdownStringHandler}
-      value={markdownEditorState}
-      onStateChange={onMarkdownStateChange}
-    />
-  ) : (
-    <WysiwygEditor
-      manager={wysiwygManager}
-      initialContent={rawContent.wysiwyg}
-      value={wysiwygEditorState}
-      onStateChange={onWysiwygStateChange}
-    />
+  useEffect(() => {
+    if (editor === 'markdown') {
+      markdownManager.view.focus();
+    }
+
+    if (editor === 'wysiwyg') {
+      wysiwygManager.view.focus();
+    }
+  }, [editor]);
+
+  return (
+    <>
+      <div style={{ display: editor === 'markdown' ? 'block' : 'none' }}>
+        <InternalMarkdownEditor
+          manager={markdownManager}
+          initialContent={initialContent.markdown}
+          stringHandler={markdownStringHandler}
+          value={markdownEditorState}
+          onStateChange={onMarkdownStateChange}
+        />
+      </div>
+      <div style={{ display: editor === 'wysiwyg' ? 'block' : 'none' }}>
+        <WysiwygEditor
+          manager={wysiwygManager}
+          initialContent={initialContent.wysiwyg}
+          value={wysiwygEditorState}
+          onStateChange={onWysiwygStateChange}
+        >
+          {children}
+        </WysiwygEditor>
+      </div>
+    </>
   );
 };

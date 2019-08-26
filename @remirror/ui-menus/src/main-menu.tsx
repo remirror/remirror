@@ -19,5 +19,9 @@ const MenuDivider = () => {
 };
 
 export const MenuBar = () => {
-  return <div></div>;
+  return (
+    <div>
+      <MenuDivider />
+    </div>
+  );
 };

@@ -1,11 +1,11 @@
-import { omitUndefined, RemirrorInterpolation, RemirrorThemeVariants } from '@remirror/core';
+import { KeyOfThemeVariant, omitUndefined, RemirrorInterpolation } from '@remirror/core';
 import { useRemirrorTheme } from '@remirror/ui';
 import { IconProps } from '@remirror/ui-icons';
 import React, { ComponentType, forwardRef, ReactNode } from 'react';
 import { ResetButton, ResetButtonProps } from './reset-button';
 
 export type ButtonProps = Omit<ResetButtonProps, 'children'> & {
-  variant?: keyof RemirrorThemeVariants['remirror:buttons'];
+  variant?: KeyOfThemeVariant<'remirror:buttons'>;
   color?: string;
 
   backgroundColor?: string;

@@ -11,6 +11,7 @@ export const toMarkdown = (content: ProsemirrorNode) =>
         state.wrapBlock('> ', undefined, node, () => state.renderContent(node));
       },
       codeBlock(state, node) {
+        console.log(node.attrs);
         state.write('```' + (node.attrs.language || '') + '\n');
         state.text(node.textContent, false);
         state.ensureNewLine();
@@ -42,7 +43,6 @@ export const toMarkdown = (content: ProsemirrorNode) =>
         state.renderContent(node);
       },
       paragraph(state, node) {
-        console.log(state, node);
         state.renderInline(node);
         state.closeBlock(node);
       },

@@ -1,4 +1,4 @@
-import { ActionNames, AnyFunction, Attrs, memoize, RemirrorTheme } from '@remirror/core';
+import { ActionNames, AnyFunction, Attrs, KeyOfThemeVariant, memoize } from '@remirror/core';
 import { useRemirror } from '@remirror/react';
 import { bubblePositioner } from '@remirror/react-utils';
 import { useRemirrorTheme } from '@remirror/ui';
@@ -113,7 +113,7 @@ interface MenuItemProps extends Partial<WithPaddingProps> {
   state: ButtonState;
   onClick: DOMAttributes<HTMLButtonElement>['onClick'];
   Icon: ComponentType<IconProps>;
-  variant?: keyof RemirrorTheme['remirror:icons'];
+  variant?: KeyOfThemeVariant<'remirror:icons'>;
   disabled?: boolean;
   subText?: string;
   index?: number;

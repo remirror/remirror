@@ -75,7 +75,7 @@ export const getManagerFromComponentTree = ({
     const MangerRetriever = () => {
       const manager = useRemirrorManager();
       resolve(manager);
-      return <></>;
+      return null;
     };
     const props = { ...extraProps, [prop]: <MangerRetriever /> };
 

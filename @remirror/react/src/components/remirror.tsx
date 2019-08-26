@@ -6,7 +6,6 @@ import {
   EditorSchema,
   EditorStateParams,
   EditorView as EditorViewType,
-  EMPTY_PARAGRAPH_NODE,
   ExtensionManager,
   fromHTML,
   getDocument,
@@ -21,6 +20,7 @@ import {
   shouldUseDOMEnvironment,
   toHTML,
   Transaction,
+  TransactionParams,
   uniqueId,
 } from '@remirror/core';
 import { PortalContainer, RemirrorPortals } from '@remirror/react-portals';
@@ -55,7 +55,9 @@ import React, { PureComponent, ReactNode, Ref } from 'react';
 import { defaultProps } from '../react-constants';
 import { RemirrorProps } from './remirror-types';
 
-interface UpdateStateParams<GSchema extends EditorSchema = any> extends EditorStateParams<GSchema> {
+interface UpdateStateParams<GSchema extends EditorSchema = any>
+  extends Partial<TransactionParams<GSchema>>,
+    EditorStateParams<GSchema> {
   /**
    * Called after the state has updated.
    */
@@ -69,6 +71,11 @@ interface UpdateStateParams<GSchema extends EditorSchema = any> extends EditorSt
   triggerOnChange?: boolean;
 }
 
+interface EditorStateEventListenerParams<
+  GExtension extends AnyExtension = any,
+  GSchema extends EditorSchema = any
+> extends Partial<CompareStateParams<GSchema>>, Pick<BaseListenerParams<GExtension>, 'tr'> {}
+
 interface RemirrorState<GSchema extends EditorSchema = any> {
   /**
    * The Prosemirror editor state
@@ -80,6 +87,10 @@ interface RemirrorState<GSchema extends EditorSchema = any> {
    */
   shouldRenderClient?: boolean;
 }
+
+interface ListenerParams<GExtension extends AnyExtension = any, GSchema extends EditorSchema = any>
+  extends Partial<EditorStateParams<GSchema>>,
+    Pick<BaseListenerParams<GExtension>, 'tr'> {}
 
 export class Remirror<GExtension extends AnyExtension = any> extends PureComponent<
   RemirrorProps<GExtension>,
@@ -118,12 +129,6 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     return null;
   }
 
-  /**
-   * This method manages state updates only when the `onStateChange` is passed
-   * into the editor. Since it's up to the user to provide state updates to the
-   * editor this method is called when the value prop has changed.
-   */
-  private controlledComponentUpdateHandler?: (state: EditorState) => void;
   /**
    * Stores the Prosemirror EditorView dom element.
    */
@@ -259,7 +264,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   };
 
   /**
-   * The dynamically generated editor styles for the editor.
+   * Provides access to the dynamically generated `css-in-js` editor styles.
    */
   private get editorStyles(): RemirrorInterpolation[] {
     const styles = [this.props.editorStyles, this.props.css as RemirrorInterpolation, this.props.styles];
@@ -444,16 +449,53 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * @internalremarks
    * How does it work when transactions are dispatched one after the other.
    */
-  private dispatchTransaction = (transaction: Transaction) => {
-    const tr = this.props.onDispatchTransaction(transaction, this.getState()) || transaction;
+  private dispatchTransaction = (tr: Transaction) => {
+    tr = this.props.onDispatchTransaction(tr, this.getState()) || tr;
     const state = this.getState().apply(tr);
 
     this.updateState({
+      tr,
       state,
       onUpdate: () => {
         this.manager.onTransaction({ tr, state });
       },
     });
+  };
+
+  /**
+   * This method manages state updates only when the `onStateChange` is passed
+   * into the editor. Since it's up to the user to provide state updates to the
+   * editor this method is called when the value prop has changed.
+   */
+  private controlledUpdate = (state: EditorState<SchemaFromExtensions<GExtension>>) => {
+    const updateHandler = this.createUpdateStateHandler({ state });
+    this.view.updateState(state);
+    updateHandler();
+  };
+
+  /**
+   * Create the callback which is passed back to the setState handler.
+   */
+  private createUpdateStateHandler = ({
+    state,
+    triggerOnChange,
+    onUpdate,
+    tr,
+  }: UpdateStateParams<SchemaFromExtensions<GExtension>>) => (updatedState = state) => {
+    const { onChange } = this.props;
+
+    // No need to continue if triggerOnChange is `false`
+    if (!triggerOnChange) {
+      return;
+    }
+
+    if (onUpdate) {
+      onUpdate();
+    }
+
+    if (onChange) {
+      onChange(this.eventListenerParams({ state: updatedState, tr }));
+    }
   };
 
   /**
@@ -464,38 +506,16 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     state,
     triggerOnChange = true,
     onUpdate,
+    tr,
   }: UpdateStateParams<SchemaFromExtensions<GExtension>>) {
-    const { onChange, onStateChange } = this.props;
+    const { onStateChange } = this.props;
 
-    /**
-     * The callback passed to the setState handler.
-     */
-    const updateHandler = (updatedState = state) => {
-      // No need to continue if triggerOnChange is `false`
-      if (!triggerOnChange) {
-        return;
-      }
-
-      if (onUpdate) {
-        onUpdate();
-      }
-
-      if (onChange) {
-        onChange(this.eventListenerParams(updatedState));
-      }
-    };
+    const updateHandler = this.createUpdateStateHandler({ state, triggerOnChange, onUpdate });
 
     // Check if this is a controlled component.
     if (onStateChange) {
-      // This is a controlled component
-      this.controlledComponentUpdateHandler = (updatedState: EditorState) => {
-        this.view.updateState(state);
-        updateHandler(updatedState);
-        this.controlledComponentUpdateHandler = undefined;
-      };
-
       onStateChange(
-        this.editorStateEventListenerParams({ oldState: this.state.editor.newState, newState: state }),
+        this.editorStateEventListenerParams({ oldState: this.state.editor.newState, newState: state, tr }),
       );
     } else {
       // Update the internal prosemirror state. This happens before we update
@@ -567,7 +587,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
 
   public componentDidUpdate(
     { editable, manager: prevManager }: RemirrorProps<GExtension>,
-    { editor: { newState } }: RemirrorState<SchemaFromExtensions<GExtension>>,
+    prevState: RemirrorState<SchemaFromExtensions<GExtension>>,
   ) {
     // Ensure that children is still a render prop
     propIsFunction(this.props.children);
@@ -590,18 +610,17 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
       this.setContent(newContent, true);
     }
 
-    // Handle controlled component post update handler
-    if (
-      this.props.onStateChange &&
-      this.controlledComponentUpdateHandler &&
-      this.state.editor.newState !== newState
-    ) {
-      this.controlledComponentUpdateHandler(this.state.editor.newState);
+    const { newState } = this.state.editor;
+
+    // Check if this is controlled component and run the post update handler
+    if (this.props.onStateChange && newState !== prevState.editor.newState) {
+      // The update was caused by an internal change
+      this.controlledUpdate(newState);
     }
   }
 
   /**
-   * Called when the component unmounts and is responsible for cleanup
+   * Called when the component unmounts and is responsible for cleanup.
    *
    * @remarks
    *
@@ -652,22 +671,22 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   };
 
   /**
-   * Clear the content of the editor (reset to the default empty node)
+   * Clear; the content of the editor (reset to the default empty node)
    *
    * @param triggerOnChange - whether to notify the onChange handler that the
    * content has been reset
    */
   private clearContent = (triggerOnChange = false) => {
-    this.setContent(EMPTY_PARAGRAPH_NODE, triggerOnChange);
+    this.setContent(this.props.fallbackContent, triggerOnChange);
   };
 
   /**
    * The params used in the event listeners and the state listener
    */
-  private baseListenerParams(
-    state?: EditorState<SchemaFromExtensions<GExtension>>,
-  ): BaseListenerParams<GExtension> {
+  private baseListenerParams({ state, tr }: ListenerParams<GExtension>): BaseListenerParams<GExtension> {
     return {
+      tr,
+      internalUpdate: !tr,
       view: this.view,
       getHTML: this.getHTML(state),
       getJSON: this.getJSON(state),
@@ -680,11 +699,9 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * Creates the parameters passed into all event listener handlers.
    * e.g. `onChange`
    */
-  private eventListenerParams(
-    state?: EditorState<SchemaFromExtensions<GExtension>>,
-  ): RemirrorEventListenerParams<GExtension> {
+  private eventListenerParams({ state, tr }: ListenerParams = {}): RemirrorEventListenerParams<GExtension> {
     return {
-      ...this.baseListenerParams(),
+      ...this.baseListenerParams({ tr }),
       state: state || this.state.editor.newState,
     } as any;
   }
@@ -695,11 +712,10 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   private editorStateEventListenerParams({
     newState,
     oldState,
-  }: Partial<CompareStateParams<SchemaFromExtensions<GExtension>>> = {}): RemirrorStateListenerParams<
-    GExtension
-  > {
+    tr,
+  }: EditorStateEventListenerParams<GExtension> = {}): RemirrorStateListenerParams<GExtension> {
     return {
-      ...this.baseListenerParams(newState),
+      ...this.baseListenerParams({ state: newState, tr }),
       newState: newState || this.state.editor.newState,
       oldState: oldState || this.state.editor.oldState,
       createStateFromContent: this.createStateFromContent,
@@ -763,11 +779,12 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * Create the editor state from a remirror content type.
    */
-  private createStateFromContent(
+  private createStateFromContent = (
     content: RemirrorContentType,
-  ): EditorState<SchemaFromExtensions<GExtension>> {
-    return this.manager.createState({ content, doc: this.doc, stringHandler: this.props.stringHandler });
-  }
+  ): EditorState<SchemaFromExtensions<GExtension>> => {
+    const { stringHandler, fallbackContent: fallback } = this.props;
+    return this.manager.createState({ content, doc: this.doc, stringHandler, fallback });
+  };
 
   /**
    * Checks whether this is an SSR environment and returns a child array with

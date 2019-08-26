@@ -1,5 +1,5 @@
 import VisuallyHidden from '@reach/visually-hidden';
-import { omitUndefined, RemirrorInterpolation, RemirrorTheme, uniqueId } from '@remirror/core';
+import { KeyOfThemeVariant, omitUndefined, RemirrorInterpolation, uniqueId } from '@remirror/core';
 import { useRemirrorTheme } from '@remirror/ui';
 import React, { forwardRef, useMemo } from 'react';
 
@@ -29,7 +29,7 @@ export interface IconProps {
    *
    * @default 'default'
    */
-  variant?: keyof RemirrorTheme['remirror:icons'];
+  variant?: KeyOfThemeVariant<'remirror:icons'>;
 }
 
 interface BaseIconProps extends Omit<JSX.IntrinsicElements['svg'], 'style'>, IconProps {
