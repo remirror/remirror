@@ -1,4 +1,5 @@
 import { numberToPixels, useRemirrorTheme } from '@remirror/ui';
+import React from 'react';
 import { DropCursorExtensionComponentProps, DropCursorExtensionOptions } from './drop-cursor-types';
 
 type DropCursorComponentProps = Omit<DropCursorExtensionComponentProps, 'options'> & {

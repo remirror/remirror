@@ -7,13 +7,13 @@ import {
   isUndefined,
   pick,
   ResolvedPos,
+  throttle,
 } from '@remirror/core';
 import { PortalContainer } from '@remirror/react-portals';
 import { Plugin } from 'prosemirror-state';
 import { dropPoint, insertPoint } from 'prosemirror-transform';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import React, { ComponentType } from 'react';
-import throttle from 'throttleit';
 import { DropCursorComponent } from './drop-cursor-component';
 import { DropCursorExtensionOptions } from './drop-cursor-types';
 
@@ -243,7 +243,7 @@ export class DropCursorState {
    *
    * Captures the current position and whether
    */
-  public dragover = throttle((event: DragEvent) => {
+  public dragover = throttle(50, (event: DragEvent) => {
     const pos = this.view.posAtCoords({ left: event.clientX, top: event.clientY });
 
     if (pos) {
@@ -267,10 +267,12 @@ export class DropCursorState {
       this.updateDecorationSet();
       this.scheduleRemoval(100);
     }
-  }, 50);
+  });
 
   /**
-   * Called when the drag ends. This can someimes be missed.
+   * Called when the drag ends.
+   *
+   * ? Sometimes this event doesn't fire, is there a way to prevent this.
    */
   public dragend = () => {
     this.scheduleRemoval(100);
@@ -278,6 +280,8 @@ export class DropCursorState {
 
   /**
    * Called when the element is dropped.
+   *
+   * ? Sometimes this event doesn't fire, is there a way to prevent this.
    */
   public drop = () => {
     this.scheduleRemoval(100);
