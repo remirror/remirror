@@ -23,6 +23,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ### Changes
 
+- 💥 **BREAKING `@remirror/core`:** `@emotion/core` is now a `peerDependency`. When adding this libray to your project you will need to `yarn add @emotion/core` as well. This is required to prevent bugs with version conflicts within the EmotionThemeProvider.
 - 💥 **BREAKING `@remirror/core`:** `deepMerge` now takes multiple parameters instead of one array of objects to merge.
 - 💥 **BREAKING `@remirror/core` `@remirror/core-extensions` and all extensions:** Refactor ExtensionTypes with a whole set of helpers for better type checking and self documenting types. Now the remirror component can receive the List of Extensions and from this infer the nodes, marks and actions available on any editor. Currently this inference has only been added to the Wysiwyg editor but will be added to the Twitter editor and all future editors.
 - 💥 **BREAKING `@remirror/core` `@remirror/core-extensions`:** Move `ParagraphExtension` from core to core-extensions. The reason is to not pollute the core library with formatting methods which are primarily just for extensions.

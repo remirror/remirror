@@ -25,13 +25,13 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@emotion/core": "^10.0.16",
     "@reach/visually-hidden": "^0.1.4",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/ui": "0.4.2-canary.2",
     "react-modal": "^3.10.1"
   },
   "peerDependencies": {
+    "@emotion/core": "^10",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0"
   },

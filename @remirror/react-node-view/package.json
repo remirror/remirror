@@ -25,7 +25,6 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@emotion/core": "^10.0.16",
     "@remirror/core-constants": "0.4.2-canary.2",
     "@remirror/core-helpers": "0.4.2-canary.2",
     "@remirror/core-types": "0.4.2-canary.2",
@@ -33,6 +32,7 @@
     "@remirror/react-portals": "0.4.2-canary.2"
   },
   "peerDependencies": {
+    "@emotion/core": "^10",
     "@types/react": "^16.8.0",
     "react": "^16.8.0"
   },

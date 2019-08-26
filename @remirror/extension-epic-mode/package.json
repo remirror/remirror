@@ -24,12 +24,14 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@emotion/core": "^10.0.16",
     "@remirror/core": "0.4.2-canary.2",
     "@types/prosemirror-state": "^1.2.3",
     "@types/throttleit": "1.0.0",
     "prosemirror-state": "^1.2.4",
     "throttleit": "1.0.0"
+  },
+  "peerDependencies": {
+    "@emotion/core": "^10"
   },
   "publishConfig": {
     "access": "public"

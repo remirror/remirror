@@ -25,7 +25,6 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@emotion/core": "^10.0.16",
     "@remirror/core": "0.4.2-canary.2",
     "@types/prosemirror-keymap": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
@@ -33,6 +32,9 @@
     "prosemirror-keymap": "^1.0.1",
     "prosemirror-state": "^1.2.4",
     "prosemirror-view": "^1.10.0"
+  },
+  "peerDependencies": {
+    "@emotion/core": "^10"
   },
   "publishConfig": {
     "access": "public"
