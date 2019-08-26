@@ -20,6 +20,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 - Introduce new `@builtin` annotation to show when an extension is included by default.
 - Introduce new `@schema` annotation for extension options to indicated that an option should not be updated after creating or it will change the schema.
+- New command `yarn generate:json` which auto generates json files for `support/rollup/rollup.config.js`, `support/storybook/.babelrc.js`, `support/tsconfig.paths.json` and `.size-limit.json`. Previously these were maintained manually.
 
 ### Changes
 

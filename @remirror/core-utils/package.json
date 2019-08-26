@@ -49,5 +49,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/core-utils.cjs.js",
+  "meta": {
+    "sizeLimit": "50 KB"
+  },
   "sideEffects": false
 }

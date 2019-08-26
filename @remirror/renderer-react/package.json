@@ -43,5 +43,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/renderer-react.cjs.js",
+  "meta": {
+    "sizeLimit": "70 KB"
+  },
   "sideEffects": false
 }

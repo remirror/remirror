@@ -41,6 +41,7 @@
     "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md,mdx}\"",
     "fix:support": "yarn lint:support --fix",
     "frozen": "yarn --frozen-lockfile install",
+    "generate:json": "node support/scripts/generate-configs.js && yarn fix:prettier",
     "if-clean": "node support/scripts/run-if-clean.js",
     "if-config": "node support/scripts/run-if-config.js",
     "integrity": "yarn check --integrity",
@@ -88,6 +89,7 @@
     "@emotion/babel-preset-css-prop": "10.0.14",
     "@jest/types": "24.9.0",
     "@kj/tslint-rules": "2.0.1",
+    "@lerna/project": "3.16.0",
     "@microsoft/api-extractor": "7.3.8",
     "@size-limit/preset-big-lib": "2.1.1",
     "@storybook/addon-actions": "5.1.11",
@@ -180,7 +182,8 @@
     "typescript": "3.6.1-rc",
     "typescript-styled-plugin": "0.14.0",
     "typescript-tslint-plugin": "0.5.4",
-    "wait-on": "3.3.0"
+    "wait-on": "3.3.0",
+    "write-json-file": "4.2.0"
   },
   "engines": {
     "node": ">=10"

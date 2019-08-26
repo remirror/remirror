@@ -48,5 +48,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/react-ssr.cjs.js",
+  "meta": {
+    "sizeLimit": "90 KB"
+  },
   "sideEffects": false
 }

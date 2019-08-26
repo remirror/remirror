@@ -36,5 +36,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/react-utils.cjs.js",
+  "meta": {
+    "sizeLimit": "65 KB"
+  },
   "sideEffects": false
 }

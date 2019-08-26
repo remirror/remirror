@@ -44,5 +44,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/ui-buttons.cjs.js",
+  "meta": {
+    "sizeLimit": "70 KB"
+  },
   "sideEffects": false
 }

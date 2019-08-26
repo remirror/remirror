@@ -33,6 +33,7 @@
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
     "@remirror/extension-code-block": "0.4.2-canary.2",
+    "@remirror/extension-drop-cursor": "0.4.2-canary.2",
     "@remirror/extension-image": "0.4.2-canary.2",
     "@remirror/react": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2",
@@ -54,5 +55,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/editor-wysiwyg.cjs.js",
+  "meta": {
+    "sizeLimit": "250 KB"
+  },
   "sideEffects": false
 }

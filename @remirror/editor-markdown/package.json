@@ -56,5 +56,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/editor-markdown.cjs.js",
+  "meta": {
+    "sizeLimit": "250 KB"
+  },
   "sideEffects": false
 }

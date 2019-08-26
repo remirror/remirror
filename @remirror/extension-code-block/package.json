@@ -55,5 +55,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-code-block.cjs.js",
+  "meta": {
+    "sizeLimit": "120 KB"
+  },
   "sideEffects": false
 }

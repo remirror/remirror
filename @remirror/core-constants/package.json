@@ -30,5 +30,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/core-constants.cjs.js",
+  "meta": {
+    "sizeLimit": "2 KB"
+  },
   "sideEffects": false
 }

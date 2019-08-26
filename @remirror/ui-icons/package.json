@@ -43,5 +43,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/ui-icons.cjs.js",
+  "meta": {
+    "sizeLimit": "100 KB"
+  },
   "sideEffects": false
 }

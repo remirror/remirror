@@ -1,0 +1,97 @@
+const { join, resolve, sep } = require('path');
+const { getPackages } = require('@lerna/project');
+const writeJSON = require('write-json-file');
+
+const configs = {
+  sizeLimit: '.size-limit.json',
+  rollup: 'support/rollup/config.json',
+  tsconfig: 'support/tsconfig.paths.json',
+  storybook: 'support/storybook/modules.json',
+};
+
+const baseDir = (...paths) => resolve(__dirname, '../..', join(...paths));
+
+const getAllDependencies = async () => {
+  const packages = await getPackages();
+  // packages.forEach(p => console.log(p.rootPath));
+  return packages.map(pkg => ({
+    ...pkg.toJSON(),
+    location: pkg.location,
+    rootPath: pkg.rootPath,
+  }));
+};
+
+const generateSizeLimitConfig = async () => {
+  const packages = await getAllDependencies();
+  const sizeLimitArray = packages
+    .filter(pkg => pkg.meta && pkg.meta.sizeLimit)
+    .map(json => ({
+      name: json.name,
+      path: join(json.name, json.main),
+      limit: json.meta.sizeLimit,
+      ignore: Object.keys(json.peerDependencies || {}),
+    }));
+
+  await writeJSON(baseDir(configs.sizeLimit), sizeLimitArray);
+};
+
+const generateRollupConfig = async () => {
+  const packages = await getAllDependencies();
+  const rollupPackagesArray = packages
+    .filter(pkg => pkg.module && !pkg.private)
+    .map(json => {
+      const path = json.location.replace(`${json.rootPath}${sep}`, '');
+      return {
+        path: join('../..', path, 'package.json'),
+        root: path.split(sep)[0],
+      };
+    });
+
+  // console.log(rollupPackagesArray);
+  await writeJSON(baseDir(configs.rollup), rollupPackagesArray);
+};
+
+const generateTSConfig = async () => {
+  const packages = await getAllDependencies();
+  const tsPaths = packages
+    .filter(pkg => pkg.types)
+    .reduce((acc, json) => {
+      const path = json.location.replace(`${json.rootPath}${sep}`, '');
+      return {
+        ...acc,
+        [json.name]: [`${path}/src/index.ts`],
+        [`${json.name}/lib/*`]: [`${path}/src/*`],
+      };
+    }, {});
+
+  console.log(tsPaths);
+
+  await writeJSON(baseDir(configs.tsconfig), {
+    compilerOptions: {
+      baseUrl: '../',
+      paths: { ...tsPaths, '@test-fixtures/*': ['support/fixtures/*'] },
+    },
+  });
+};
+const generateStorybookResolverConfig = async () => {
+  const packages = await getAllDependencies();
+  const resolverConfig = packages
+    .filter(pkg => !pkg.private && pkg.name.startsWith('@remirror'))
+    .reduce((acc, json) => {
+      return {
+        ...acc,
+        [json.name]: [`../../${json.name}/src`],
+      };
+    }, {});
+
+  await writeJSON(baseDir(configs.storybook), resolverConfig);
+};
+
+const run = async () => {
+  await generateSizeLimitConfig();
+  await generateRollupConfig();
+  await generateTSConfig();
+  await generateStorybookResolverConfig();
+};
+
+run();

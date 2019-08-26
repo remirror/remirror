@@ -30,8 +30,11 @@
     "@remirror/core-helpers": "0.4.2-canary.2",
     "@remirror/core-types": "0.4.2-canary.2",
     "@remirror/core-utils": "0.4.2-canary.2",
+    "@remirror/react-portals": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2",
+    "@remirror/ui": "0.4.2-canary.2",
     "@types/prosemirror-commands": "^1.0.1",
+    "@types/prosemirror-dropcursor": "^1.0.0",
     "@types/prosemirror-gapcursor": "^1.0.1",
     "@types/prosemirror-history": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
@@ -40,13 +43,13 @@
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.9.0",
     "prosemirror-commands": "^1.0.8",
+    "prosemirror-dropcursor": "^1.1.1",
     "prosemirror-gapcursor": "^1.0.4",
     "prosemirror-history": "^1.0.4",
     "prosemirror-inputrules": "^1.0.4",
     "prosemirror-model": "^1.7.1",
     "prosemirror-schema-list": "^1.0.3",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-transform": "^1.1.4",
     "prosemirror-view": "^1.10.0"
   },
   "peerDependencies": {
@@ -58,5 +61,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/core-extensions.cjs.js",
+  "meta": {
+    "sizeLimit": "100 KB"
+  },
   "sideEffects": false
 }

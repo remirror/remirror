@@ -37,5 +37,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-enhanced-link.cjs.js",
+  "meta": {
+    "sizeLimit": "70 KB"
+  },
   "sideEffects": false
 }

@@ -42,5 +42,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/ui-menus.cjs.js",
+  "meta": {
+    "sizeLimit": "70 KB"
+  },
   "sideEffects": false
 }

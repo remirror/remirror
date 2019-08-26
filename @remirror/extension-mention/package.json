@@ -40,5 +40,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-mention.cjs.js",
+  "meta": {
+    "sizeLimit": "90 KB"
+  },
   "sideEffects": false
 }

@@ -25,9 +25,9 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "@remirror/core-types": "0.4.2-canary.2",
     "@remirror/core-constants": "0.4.2-canary.2",
     "@remirror/core-helpers": "0.4.2-canary.2",
+    "@remirror/core-types": "0.4.2-canary.2",
     "@styled-system/css": "^5.0.23",
     "@types/styled-system__css": "^5.0.4",
     "csstype": "^2.6.6",
@@ -42,5 +42,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/ui.cjs.js",
+  "meta": {
+    "sizeLimit": "70 KB"
+  },
   "sideEffects": false
 }

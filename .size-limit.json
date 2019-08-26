@@ -1,0 +1,158 @@
+[
+  {
+    "name": "@remirror/core-constants",
+    "path": "@remirror/core-constants/lib/index.js",
+    "limit": "2 KB",
+    "ignore": []
+  },
+  {
+    "name": "@remirror/core-extensions",
+    "path": "@remirror/core-extensions/lib/index.js",
+    "limit": "100 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
+  },
+  {
+    "name": "@remirror/core-types",
+    "path": "@remirror/core-types/lib/index.js",
+    "limit": "1 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
+  },
+  {
+    "name": "@remirror/core-utils",
+    "path": "@remirror/core-utils/lib/index.js",
+    "limit": "50 KB",
+    "ignore": []
+  },
+  {
+    "name": "@remirror/core",
+    "path": "@remirror/core/lib/index.js",
+    "limit": "55 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
+  },
+  {
+    "name": "@remirror/editor-markdown",
+    "path": "@remirror/editor-markdown/lib/index.js",
+    "limit": "250 KB",
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+  },
+  {
+    "name": "@remirror/editor-social",
+    "path": "@remirror/editor-social/lib/index.js",
+    "limit": "250 KB",
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+  },
+  {
+    "name": "@remirror/editor-wysiwyg",
+    "path": "@remirror/editor-wysiwyg/lib/index.js",
+    "limit": "250 KB",
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+  },
+  {
+    "name": "@remirror/extension-code-block",
+    "path": "@remirror/extension-code-block/lib/index.js",
+    "limit": "120 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
+  },
+  {
+    "name": "@remirror/extension-collaboration",
+    "path": "@remirror/extension-collaboration/lib/index.js",
+    "limit": "60 KB",
+    "ignore": ["@emotion/core"]
+  },
+  {
+    "name": "@remirror/extension-drop-cursor",
+    "path": "@remirror/extension-drop-cursor/lib/index.js",
+    "limit": "90 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
+  },
+  {
+    "name": "@remirror/extension-emoji",
+    "path": "@remirror/extension-emoji/lib/index.js",
+    "limit": "200 KB",
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+  },
+  {
+    "name": "@remirror/extension-enhanced-link",
+    "path": "@remirror/extension-enhanced-link/lib/index.js",
+    "limit": "70 KB",
+    "ignore": ["@emotion/core"]
+  },
+  {
+    "name": "@remirror/extension-epic-mode",
+    "path": "@remirror/extension-epic-mode/lib/index.js",
+    "limit": "60 KB",
+    "ignore": ["@emotion/core"]
+  },
+  {
+    "name": "@remirror/extension-image",
+    "path": "@remirror/extension-image/lib/index.js",
+    "limit": "100 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
+  },
+  {
+    "name": "@remirror/extension-mention",
+    "path": "@remirror/extension-mention/lib/index.js",
+    "limit": "90 KB",
+    "ignore": ["@emotion/core"]
+  },
+  {
+    "name": "@remirror/react-portals",
+    "path": "@remirror/react-portals/lib/index.js",
+    "limit": "15 KB",
+    "ignore": ["@types/react", "@types/react-dom", "react", "react-dom"]
+  },
+  {
+    "name": "@remirror/react-ssr",
+    "path": "@remirror/react-ssr/lib/index.js",
+    "limit": "90 KB",
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+  },
+  {
+    "name": "@remirror/react-utils",
+    "path": "@remirror/react-utils/lib/index.js",
+    "limit": "65 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
+  },
+  {
+    "name": "@remirror/react",
+    "path": "@remirror/react/lib/index.js",
+    "limit": "120 KB",
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+  },
+  {
+    "name": "@remirror/renderer-react",
+    "path": "@remirror/renderer-react/lib/index.js",
+    "limit": "70 KB",
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+  },
+  {
+    "name": "@remirror/ui-buttons",
+    "path": "@remirror/ui-buttons/lib/index.js",
+    "limit": "70 KB",
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+  },
+  {
+    "name": "@remirror/ui-icons",
+    "path": "@remirror/ui-icons/lib/index.js",
+    "limit": "100 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
+  },
+  {
+    "name": "@remirror/ui-menus",
+    "path": "@remirror/ui-menus/lib/index.js",
+    "limit": "70 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
+  },
+  {
+    "name": "@remirror/ui-modal",
+    "path": "@remirror/ui-modal/lib/index.js",
+    "limit": "70 KB",
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom"]
+  },
+  {
+    "name": "@remirror/ui",
+    "path": "@remirror/ui/lib/index.js",
+    "limit": "70 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
+  }
+]

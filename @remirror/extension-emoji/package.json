@@ -52,5 +52,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/extension-emoji.cjs.js",
+  "meta": {
+    "sizeLimit": "200 KB"
+  },
   "sideEffects": false
 }
