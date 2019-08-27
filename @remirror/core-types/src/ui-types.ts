@@ -138,6 +138,7 @@ export interface RemirrorThemeVariants {
     default: WithVariants<SxThemeProp>;
     primary: WithVariants<SxThemeProp>;
     secondary: WithVariants<SxThemeProp>;
+    light: WithVariants<SxThemeProp>;
   };
 
   /**
@@ -146,6 +147,17 @@ export interface RemirrorThemeVariants {
   'remirror:icons': {
     default: WithVariants<SxThemeProp>;
     inverse: WithVariants<SxThemeProp>;
+  };
+
+  'remirror:text': {
+    p: WithVariants<SxThemeProp>;
+    h1: WithVariants<SxThemeProp>;
+    h2: WithVariants<SxThemeProp>;
+    h3: WithVariants<SxThemeProp>;
+    h4: WithVariants<SxThemeProp>;
+    h5: WithVariants<SxThemeProp>;
+    h6: WithVariants<SxThemeProp>;
+    label: WithVariants<SxThemeProp>;
   };
 }
 

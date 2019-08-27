@@ -13,7 +13,6 @@ const baseDir = (...paths) => resolve(__dirname, '../..', join(...paths));
 
 const getAllDependencies = async () => {
   const packages = await getPackages();
-  // packages.forEach(p => console.log(p.rootPath));
   return packages.map(pkg => ({
     ...pkg.toJSON(),
     location: pkg.location,
@@ -64,8 +63,6 @@ const generateTSConfig = async () => {
       };
     }, {});
 
-  console.log(tsPaths);
-
   await writeJSON(baseDir(configs.tsconfig), {
     compilerOptions: {
       baseUrl: '../',
@@ -73,6 +70,7 @@ const generateTSConfig = async () => {
     },
   });
 };
+
 const generateStorybookResolverConfig = async () => {
   const packages = await getAllDependencies();
   const resolverConfig = packages
