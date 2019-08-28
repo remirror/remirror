@@ -1,6 +1,7 @@
 const { join, resolve, sep } = require('path');
 const { getPackages } = require('@lerna/project');
 const writeJSON = require('write-json-file');
+const { execSync } = require('child_process');
 
 const configs = {
   sizeLimit: '.size-limit.json',
@@ -10,6 +11,7 @@ const configs = {
 };
 
 const baseDir = (...paths) => resolve(__dirname, '../..', join(...paths));
+const formatFile = path => execSync(`prettier ${path} --write`, { stdio: 'inherit' });
 
 const getAllDependencies = async () => {
   const packages = await getPackages();
@@ -30,8 +32,10 @@ const generateSizeLimitConfig = async () => {
       limit: json.meta.sizeLimit,
       ignore: Object.keys(json.peerDependencies || {}),
     }));
+  const path = baseDir(configs.sizeLimit);
 
-  await writeJSON(baseDir(configs.sizeLimit), sizeLimitArray);
+  await writeJSON(path, sizeLimitArray);
+  formatFile(path);
 };
 
 const generateRollupConfig = async () => {
@@ -46,8 +50,10 @@ const generateRollupConfig = async () => {
       };
     });
 
-  // console.log(rollupPackagesArray);
-  await writeJSON(baseDir(configs.rollup), rollupPackagesArray);
+  const path = baseDir(configs.rollup);
+
+  await writeJSON(path, rollupPackagesArray);
+  formatFile(path);
 };
 
 const generateTSConfig = async () => {
@@ -63,12 +69,15 @@ const generateTSConfig = async () => {
       };
     }, {});
 
-  await writeJSON(baseDir(configs.tsconfig), {
+  const path = baseDir(configs.tsconfig);
+
+  await writeJSON(path, {
     compilerOptions: {
       baseUrl: '../',
       paths: { ...tsPaths, '@test-fixtures/*': ['support/fixtures/*'] },
     },
   });
+  formatFile(path);
 };
 
 const generateStorybookResolverConfig = async () => {
@@ -82,7 +91,10 @@ const generateStorybookResolverConfig = async () => {
       };
     }, {});
 
-  await writeJSON(baseDir(configs.storybook), resolverConfig);
+  const path = baseDir(configs.storybook);
+
+  await writeJSON(path, resolverConfig);
+  formatFile(path);
 };
 
 const run = async () => {

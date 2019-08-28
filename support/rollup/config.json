@@ -116,6 +116,10 @@
     "root": "@remirror"
   },
   {
+    "path": "../../@remirror/ui-text/package.json",
+    "root": "@remirror"
+  },
+  {
     "path": "../../@remirror/ui/package.json",
     "root": "@remirror"
   },

@@ -1,4 +1,5 @@
 {
+  "@remirror/cli": ["../../@remirror/cli/src"],
   "@remirror/core-constants": ["../../@remirror/core-constants/src"],
   "@remirror/core-extensions": ["../../@remirror/core-extensions/src"],
   "@remirror/core-helpers": ["../../@remirror/core-helpers/src"],
@@ -28,5 +29,6 @@
   "@remirror/ui-icons": ["../../@remirror/ui-icons/src"],
   "@remirror/ui-menus": ["../../@remirror/ui-menus/src"],
   "@remirror/ui-modal": ["../../@remirror/ui-modal/src"],
+  "@remirror/ui-text": ["../../@remirror/ui-text/src"],
   "@remirror/ui": ["../../@remirror/ui/src"]
 }

@@ -2,6 +2,8 @@
   "compilerOptions": {
     "baseUrl": "../",
     "paths": {
+      "@remirror/cli": ["@remirror/cli/src/index.ts"],
+      "@remirror/cli/lib/*": ["@remirror/cli/src/*"],
       "@remirror/core-constants": ["@remirror/core-constants/src/index.ts"],
       "@remirror/core-constants/lib/*": ["@remirror/core-constants/src/*"],
       "@remirror/core-extensions": ["@remirror/core-extensions/src/index.ts"],
@@ -62,6 +64,8 @@
       "@remirror/ui-menus/lib/*": ["@remirror/ui-menus/src/*"],
       "@remirror/ui-modal": ["@remirror/ui-modal/src/index.ts"],
       "@remirror/ui-modal/lib/*": ["@remirror/ui-modal/src/*"],
+      "@remirror/ui-text": ["@remirror/ui-text/src/index.ts"],
+      "@remirror/ui-text/lib/*": ["@remirror/ui-text/src/*"],
       "@remirror/ui": ["@remirror/ui/src/index.ts"],
       "@remirror/ui/lib/*": ["@remirror/ui/src/*"],
       "jest-prosemirror": ["packages/jest-prosemirror/src/index.ts"],

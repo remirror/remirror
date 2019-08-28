@@ -150,6 +150,12 @@
     "ignore": ["@emotion/core", "@types/react", "@types/react-dom"]
   },
   {
+    "name": "@remirror/ui-text",
+    "path": "@remirror/ui-text/lib/index.js",
+    "limit": "70 KB",
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+  },
+  {
     "name": "@remirror/ui",
     "path": "@remirror/ui/lib/index.js",
     "limit": "70 KB",

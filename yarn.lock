@@ -7166,11 +7166,6 @@ clone@~0.1.9:
   resolved "https://registry.yarnpkg.com/clone/-/clone-0.1.19.tgz#613fb68639b26a494ac53253e15b1a6bd88ada85"
   integrity sha1-YT+2hjmyaklKxTJT4Vsaa9iK2oU=
 
-clones@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/clones/-/clones-1.2.0.tgz#b34c872045446a9f264ccceb7731bca05c529b71"
-  integrity sha512-FXDYw4TjR8wgPZYui2LeTqWh1BLpfQ8lB6upMtlpDF6WlOOxghmTTxWyngdKTgozqBgKnHbTVwTE+hOHqAykuQ==
-
 co@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
@@ -14852,7 +14847,7 @@ js-beautify@1.6.14:
     mkdirp "~0.5.0"
     nopt "~3.0.1"
 
-js-beautify@^1.6.2, js-beautify@^1.8.9:
+js-beautify@^1.10.0, js-beautify@^1.6.2:
   version "1.10.2"
   resolved "https://registry.yarnpkg.com/js-beautify/-/js-beautify-1.10.2.tgz#88c9099cd6559402b124cfab18754936f8a7b178"
   integrity sha512-ZtBYyNUYJIsBWERnQP0rPN9KjkrDfJcMjuVGcvXOUJrD1zmOGwhRwQ4msG+HJ+Ni/FA7+sRQEMYVzdTQDvnzvQ==
@@ -21967,13 +21962,6 @@ safe-resolve@^1.0.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-safer-eval@^1.3.0:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/safer-eval/-/safer-eval-1.3.5.tgz#a75a1193a4e1dfadd34a8c87ad08e7b978c494b1"
-  integrity sha512-BJ//K2Y+EgCbOHEsDGS5YahYBcYy7JcFpKDo2ba5t4MnOGHYtk7HvQkcxTDFvjQvJ0CRcdas/PyF+gTTCay+3w==
-  dependencies:
-    clones "^1.2.0"
-
 samsam@1.x, samsam@^1.1.3:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/samsam/-/samsam-1.3.0.tgz#8d1d9350e25622da30de3e44ba692b5221ab7c50"
@@ -22179,13 +22167,12 @@ serialize-javascript@^1.7.0:
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-1.8.0.tgz#9515fc687232e2321aea1ca7a529476eb34bb480"
   integrity sha512-3tHgtF4OzDmeKYj6V9nSyceRS0UJ3C7VqyD2Yj28vC/z2j6jG5FmFGahOKMD9CrglxTm3tETr87jEypaYV8DUg==
 
-serialize-to-js@^1.1.1:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/serialize-to-js/-/serialize-to-js-1.2.2.tgz#1a567b0c9bf557bc7d7b77b503dfae0a8218d15d"
-  integrity sha512-mUc8vA5iJghe+O+3s0YDGFLMJcqitVFk787YKiv8a4sf6RX5W0u81b+gcHrp15O0fFa010dRBVZvwcKXOWsL9Q==
+serialize-to-js@2.0.1, serialize-to-js@^1.1.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/serialize-to-js/-/serialize-to-js-2.0.1.tgz#00175691666be505aa7fba01da3faf927c035df2"
+  integrity sha512-6py30mUe7gwth2uAMIH4A3fDU8j4RYiZivt4vLDVbcOeke0mcdYeGNytTgS5QEVu8vSgtbB7EJ78+5KSAq86og==
   dependencies:
-    js-beautify "^1.8.9"
-    safer-eval "^1.3.0"
+    js-beautify "^1.10.0"
 
 serve-favicon@^2.5.0:
   version "2.5.0"
