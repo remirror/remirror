@@ -1,65 +1,161 @@
-import { KeyOfThemeVariant, omitUndefined, RemirrorInterpolation } from '@remirror/core';
+import { Interpolation } from '@emotion/core';
+import { omit, pick } from '@remirror/core-helpers';
+import { KeyOfThemeVariant } from '@remirror/core-types';
 import { useRemirrorTheme } from '@remirror/ui';
-import { IconProps } from '@remirror/ui-icons';
-import React, { ComponentType, forwardRef, ReactNode } from 'react';
+import {
+  ColorProperty,
+  FontFamilyProperty,
+  FontSizeProperty,
+  FontWeightProperty,
+  LetterSpacingProperty,
+  TextAlignProperty,
+} from 'csstype';
+import mergeProps from 'merge-props';
+import React, { FC, forwardRef, ReactNode } from 'react';
 
-const BaseText = forwardRef<any, any>((props, ref) => null);
+type MergeProp = typeof mergeProps;
 
-export type ButtonProps = Omit<JSX.IntrinsicElements['p'], 'children'> & {
-  variant?: KeyOfThemeVariant<'remirror:buttons'>;
-  color?: string;
+interface InjectedTextProps {
+  className?: string;
+  children: ReactNode;
+  css: Interpolation;
+}
 
-  backgroundColor?: string;
-  /**
-   * The text string (or custom component rendered in the button)
-   */
-  content?: ReactNode;
+interface RenderPropsParams {
+  props: InjectedTextProps;
+  mergeProps: MergeProp;
+}
 
-  /**
-   * The icon to display on the right side of the button
-   */
-  RightIconComponent?: ComponentType<IconProps>;
+export interface BaseTextProps {
+  renderProp: (params: RenderPropsParams) => JSX.Element;
+  children?: ReactNode;
+  variant?: KeyOfThemeVariant<'remirror:text'>;
+  className?: string;
+  color?: ColorProperty;
+  textAlign?: TextAlignProperty;
+  letterSpacing?: LetterSpacingProperty<number | string>;
+  fontWeight?: FontWeightProperty;
+  fontFamily?: FontFamilyProperty;
+  fontSize?: FontSizeProperty<string | number>;
+}
 
-  /**
-   * The icon to display on the left side of the button.
-   */
-  LeftIconComponent?: ComponentType<IconProps>;
+const keys = ['textAlign', 'letterSpacing', 'fontWeight', 'fontFamily', 'fontSize', 'children'] as const;
+const pickTextProps = <GProps extends TextProps>(props: GProps) => pick(props, keys as any);
+const omitTextProps = <GProps extends TextProps>(props: GProps) => omit(props, keys as any);
 
-  leftIconProps?: Partial<IconProps>;
-  rightIconProps?: Partial<IconProps>;
+export const BaseText: FC<BaseTextProps> = ({
+  children,
+  renderProp,
+  variant = 'p',
+  className,
+  color,
+  textAlign,
+  letterSpacing,
+  fontFamily,
+  fontWeight,
+  fontSize,
+}) => {
+  const { sxx } = useRemirrorTheme();
+  const css = sxx(
+    { variant: `remirror:text.${variant}` },
+    { color, textAlign, letterSpacing, fontFamily, fontWeight, fontSize },
+  );
 
-  /**
-   * Custom styles to add to the icon
-   */
-  style?: RemirrorInterpolation;
+  return renderProp({ props: { children, css, className }, mergeProps });
 };
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      content,
-      RightIconComponent,
-      LeftIconComponent,
-      leftIconProps = {},
-      rightIconProps = {},
-      color,
-      backgroundColor,
-      variant = 'default',
-      ...props
-    },
-    ref,
-  ) => {
-    const { sx } = useRemirrorTheme();
-    const colorStyles = omitUndefined({ color, backgroundColor });
-    const leftIcon = LeftIconComponent && <LeftIconComponent {...colorStyles} {...leftIconProps} />;
-    const rightIcon = RightIconComponent && <RightIconComponent {...colorStyles} {...rightIconProps} />;
+export interface TextProps extends Omit<BaseTextProps, 'renderProp' | 'variant'> {}
 
+export const H1 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElements['h1']>((props, ref) => {
+  return (
+    <BaseText
+      variant='h1'
+      {...pickTextProps(props)}
+      renderProp={params => <h1 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+    />
+  );
+});
+
+export const H2 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElements['h2']>((props, ref) => {
+  return (
+    <BaseText
+      variant='h2'
+      {...pickTextProps(props)}
+      renderProp={params => <h2 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+    />
+  );
+});
+
+export const H3 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElements['h3']>((props, ref) => {
+  return (
+    <BaseText
+      variant='h3'
+      {...pickTextProps(props)}
+      renderProp={params => <h3 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+    />
+  );
+});
+
+export const H4 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElements['h4']>((props, ref) => {
+  return (
+    <BaseText
+      variant='h4'
+      {...pickTextProps(props)}
+      renderProp={params => <h4 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+    />
+  );
+});
+
+export const H5 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElements['h5']>((props, ref) => {
+  return (
+    <BaseText
+      variant='h5'
+      {...pickTextProps(props)}
+      renderProp={params => <h5 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+    />
+  );
+});
+
+export const H6 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElements['h6']>((props, ref) => {
+  return (
+    <BaseText
+      variant='h6'
+      {...pickTextProps(props)}
+      renderProp={params => <h6 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+    />
+  );
+});
+
+export const Text = forwardRef<HTMLParagraphElement, TextProps & JSX.IntrinsicElements['p']>((props, ref) => {
+  return (
+    <BaseText
+      variant='body'
+      {...pickTextProps(props)}
+      renderProp={params => <p {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+    />
+  );
+});
+
+export const Label = forwardRef<HTMLLabelElement, TextProps & JSX.IntrinsicElements['label']>(
+  (props, ref) => {
     return (
-      <span {...props} ref={ref} css={sx({ variant: `remirror:buttons.${variant}` }, colorStyles)}>
-        {leftIcon}
-        {content}
-        {rightIcon}
-      </span>
+      <BaseText
+        variant='label'
+        {...pickTextProps(props)}
+        renderProp={params => <label {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+      />
+    );
+  },
+);
+
+export const Caption = forwardRef<HTMLSpanElement, TextProps & JSX.IntrinsicElements['span']>(
+  (props, ref) => {
+    return (
+      <BaseText
+        variant='caption'
+        {...pickTextProps(props)}
+        renderProp={params => <span {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+      />
     );
   },
 );

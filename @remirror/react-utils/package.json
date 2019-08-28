@@ -25,6 +25,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
+    "resize-observer-polyfill": "^1.5.1",
     "@remirror/core": "0.4.2-canary.2"
   },
   "peerDependencies": {

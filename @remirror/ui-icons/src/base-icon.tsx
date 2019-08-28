@@ -12,7 +12,7 @@ export interface IconProps {
   /**
    * Custom styles to add to the icon
    */
-  style?: RemirrorInterpolation;
+  styles?: RemirrorInterpolation;
 
   /**
    * The color to set the icon
@@ -58,7 +58,7 @@ export const Icon = forwardRef<SVGSVGElement, BaseIconProps>(
       children,
       color,
       backgroundColor,
-      style,
+      styles,
       width,
       height,
       size = '1em',
@@ -86,7 +86,7 @@ export const Icon = forwardRef<SVGSVGElement, BaseIconProps>(
           width={width || size}
           {...extraProps}
           {...props}
-          css={sx(defaultStyles, { variant: `remirror:icons.${variant}` }, colorStyles, style)}
+          css={sx(defaultStyles, { variant: `remirror:icons.${variant}` }, colorStyles, styles)}
           ref={ref}
         >
           {standalone && <title id={id}>{name}</title>}

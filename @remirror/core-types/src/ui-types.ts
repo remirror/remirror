@@ -138,7 +138,10 @@ export interface RemirrorThemeVariants {
     default: WithVariants<SxThemeProp>;
     primary: WithVariants<SxThemeProp>;
     secondary: WithVariants<SxThemeProp>;
-    light: WithVariants<SxThemeProp>;
+    /**
+     * A button that blends in with the background.
+     */
+    background: WithVariants<SxThemeProp>;
   };
 
   /**
@@ -150,7 +153,7 @@ export interface RemirrorThemeVariants {
   };
 
   'remirror:text': {
-    p: WithVariants<SxThemeProp>;
+    body: WithVariants<SxThemeProp>;
     h1: WithVariants<SxThemeProp>;
     h2: WithVariants<SxThemeProp>;
     h3: WithVariants<SxThemeProp>;
@@ -158,6 +161,7 @@ export interface RemirrorThemeVariants {
     h5: WithVariants<SxThemeProp>;
     h6: WithVariants<SxThemeProp>;
     label: WithVariants<SxThemeProp>;
+    caption: WithVariants<SxThemeProp>;
   };
 }
 
@@ -175,7 +179,9 @@ export type SxThemeProp = SystemStyleObject &
     string,
     | SystemStyleObject
     | ResponsiveStyleValue<number | string>
-    | Record<string, SystemStyleObject | ResponsiveStyleValue<number | string>>
+    | Record<string, SystemStyleObject | ResponsiveStyleValue<number | string> | undefined | null>
+    | undefined
+    | null
   >;
 
 /**
@@ -207,6 +213,13 @@ export interface RemirrorThemeContextType {
   sx(
     ...args: Array<RemirrorInterpolation | RemirrorInterpolation[]>
   ): (props?: RemirrorTheme | { theme: RemirrorTheme }) => SerializedStyles;
+
+  /**
+   * Like the sx prop except this directly returns an object.
+   *
+   * Useful for the times when you don't want to return a function
+   */
+  sxx(...args: Array<RemirrorInterpolation | RemirrorInterpolation[]>): SerializedStyles;
 
   /**
    * The currently active theme. If this is a deeply nested provider then it will extend
@@ -251,16 +264,18 @@ export interface ThemeParams {
  */
 export type RemirrorInterpolation =
   | WithVariants<SxThemeProp>
-  | ((theme?: RemirrorTheme | { theme: RemirrorTheme }) => WithVariants<SxThemeProp>)
+  | ((theme?: RemirrorTheme | { theme: RemirrorTheme } | undefined) => WithVariants<SxThemeProp>)
   | undefined
   | null
+  | false
   | string
   | SerializedStyles
   | Array<
       | WithVariants<SxThemeProp>
-      | ((theme?: RemirrorTheme | { theme: RemirrorTheme }) => WithVariants<SxThemeProp>)
+      | ((theme?: RemirrorTheme | { theme: RemirrorTheme } | undefined) => WithVariants<SxThemeProp>)
       | undefined
       | null
+      | false
       | string
       | SerializedStyles
     >;

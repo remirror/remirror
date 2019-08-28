@@ -28,6 +28,8 @@
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/ui": "0.4.2-canary.2",
     "@remirror/ui-buttons": "0.4.2-canary.2",
+    "@remirror/ui-icons": "0.4.2-canary.2",
+    "react-spring": "8.0.27",
     "downshift": "^3.2.12"
   },
   "peerDependencies": {

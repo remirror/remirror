@@ -11,12 +11,7 @@ import { getColorModes, getFactory, sx } from './ui-utils';
  * This is useful for enabling the library user to switch off emotion when the requirement
  * is to only use CSS styles. The specificity of emotion class names makes this difficult.
  */
-const cssNoOp: typeof css = () => undefined as any;
-
-/**
- * A noop function that mimics the sx method but returns no output
- */
-const sxNoOp: typeof sx = () => undefined as any;
+const cssNoOp = () => undefined as any;
 
 /**
  * Provides access to the theme context
@@ -27,6 +22,7 @@ export const defaultRemirrorThemeValue: RemirrorThemeContextType = {
   theme: baseTheme,
   css,
   sx,
+  sxx: cssNoOp,
   get: getFactory(baseTheme),
   colorMode: baseTheme.initialColorMode,
   colorModes: getColorModes(baseTheme),
@@ -35,7 +31,7 @@ export const defaultRemirrorThemeValue: RemirrorThemeContextType = {
 
 export const withoutEmotionProps: Pick<RemirrorThemeContextType, 'css' | 'sx'> = {
   css: cssNoOp,
-  sx: sxNoOp,
+  sx: cssNoOp,
 };
 /**
  * Provides access to the styling methods from within the context tree.

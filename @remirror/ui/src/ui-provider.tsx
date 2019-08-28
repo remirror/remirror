@@ -110,7 +110,13 @@ export const RemirrorThemeProvider: FC<RemirrorThemeProviderProps> = ({
 
   const value = {
     ...defaultRemirrorThemeValue,
-    ...(withoutEmotion ? withoutEmotionProps : {}),
+    ...(withoutEmotion
+      ? withoutEmotionProps
+      : {
+          sxx: (...args: Parameters<typeof defaultRemirrorThemeValue.sx>) =>
+            defaultRemirrorThemeValue.sx(...args)(theme),
+        }),
+
     parent,
     theme,
     get,

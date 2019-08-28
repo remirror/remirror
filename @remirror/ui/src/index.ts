@@ -4,3 +4,4 @@ export * from './ui-provider';
 export * from './ui-hooks';
 export * from './ui-utils';
 export * from './ui-hsl';
+export * from './ui-theme-root';
