@@ -3,37 +3,47 @@ import { environment } from './environment';
 /**
  * Keycode for ALT key.
  */
-export const ALT = 'Alt';
+export const ALT = ['Alt', '⌥'] as const;
 
 /**
  * Keycode for CTRL key.
  */
-export const CTRL = 'Control';
+export const CTRL = ['Control', '⌃'] as const;
 
 /**
  * Keycode for COMMAND/META key.
  */
-export const COMMAND = 'Meta';
+export const COMMAND = ['Meta', '⌘'] as const;
 
 /**
  * Keycode for SHIFT key.
  */
-export const SHIFT = 'Shift';
+export const SHIFT = ['Shift', '⇧'] as const;
+
+/**
+ * Keycode for the windows key
+ */
+export const WINDOWS = ['Windows', '', '❖'];
+
+/**
+ * Keycode and symbols for caps lock
+ */
+export const CAPS_LOCK = ['CapsLock', '⇪', '⇪'];
 
 /**
  * Shorthand names for common modifier key combinations which should `just` work on Apple and PC.
  */
 export const Modifier = {
-  Primary: (isMac?: boolean) => (isMac ? [COMMAND] : [CTRL]),
-  PrimaryShift: (isMac?: boolean) => (isMac ? [SHIFT, COMMAND] : [CTRL, SHIFT]),
-  PrimaryAlt: (isMac?: boolean) => (isMac ? [ALT, COMMAND] : [CTRL, ALT]),
-  Secondary: (isMac?: boolean) => (isMac ? [SHIFT, ALT, COMMAND] : [CTRL, SHIFT, ALT]),
-  Access: (isMac?: boolean) => (isMac ? [CTRL, ALT] : [SHIFT, ALT]),
-  Ctrl: () => [CTRL],
-  Alt: () => [ALT],
-  CtrlShift: () => [CTRL, SHIFT],
-  Shift: () => [SHIFT],
-  ShiftAlt: () => [SHIFT, ALT],
+  Primary: (isMac?: boolean) => (isMac ? [COMMAND[0]] : [CTRL[0]]),
+  PrimaryShift: (isMac?: boolean) => (isMac ? [SHIFT[0], COMMAND[0]] : [CTRL[0], SHIFT[0]]),
+  PrimaryAlt: (isMac?: boolean) => (isMac ? [ALT[0], COMMAND[0]] : [CTRL[0], ALT[0]]),
+  Secondary: (isMac?: boolean) => (isMac ? [SHIFT[0], ALT[0], COMMAND[0]] : [CTRL[0], SHIFT[0], ALT[0]]),
+  Access: (isMac?: boolean) => (isMac ? [CTRL[0], ALT[0]] : [SHIFT[0], ALT[0]]),
+  Ctrl: () => [CTRL[0]],
+  Alt: () => [ALT[0]],
+  CtrlShift: () => [CTRL[0], SHIFT[0]],
+  Shift: () => [SHIFT[0]],
+  ShiftAlt: () => [SHIFT[0], ALT[0]],
 };
 
 /**

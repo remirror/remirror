@@ -1,10 +1,10 @@
-import { bubblePositioner } from '@remirror/react-utils';
 import { injectedPropsShape, positionerShape } from '@test-fixtures/object-shapes';
 import { createTestManager } from '@test-fixtures/schema-helpers';
 import { render } from '@testing-library/react';
 import React, { FC } from 'react';
 import { RemirrorProvider } from '../components/providers';
 import { usePositioner, useRemirror } from '../react-hooks';
+import { bubblePositioner } from '../react-positioners';
 
 test('useRemirrorContext', () => {
   expect.assertions(1);

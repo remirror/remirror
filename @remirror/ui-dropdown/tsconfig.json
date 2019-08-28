@@ -1,0 +1,7 @@
+{
+  "extends": "../../support/tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "lib"
+  },
+  "include": ["src", "dropdown"]
+}

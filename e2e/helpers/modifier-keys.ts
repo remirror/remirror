@@ -147,18 +147,18 @@ export const getModifiers = ({ modifiers, isMac = false }: GetModifiersParams) =
 
   for (const modifier of modifiers) {
     if (/^(cmd|meta|m)$/i.test(modifier)) {
-      list.push(COMMAND);
+      list.push(COMMAND[0]);
     } else if (/^a(lt)?$/i.test(modifier)) {
-      list.push(ALT);
+      list.push(ALT[0]);
     } else if (/^(c|ctrl|control)$/i.test(modifier)) {
-      list.push(CTRL);
+      list.push(CTRL[0]);
     } else if (/^s(hift)?$/i.test(modifier)) {
-      list.push(SHIFT);
+      list.push(SHIFT[0]);
     } else if (/^mod$/i.test(modifier)) {
       if (isMac) {
-        list.push(COMMAND);
+        list.push(COMMAND[0]);
       } else {
-        list.push(CTRL);
+        list.push(CTRL[0]);
       }
     } else {
       throw new Error('Unrecognized modifier name: ' + modifier);

@@ -1,14 +1,6 @@
 import { css as emotionCss, jsx } from '@emotion/core';
-import {
-  AnyFunction,
-  bool,
-  isArray,
-  isFunction,
-  isObject,
-  isString,
-  PlainObject,
-  uniqueArray,
-} from '@remirror/core';
+import { bool, isArray, isFunction, isObject, isString, uniqueArray } from '@remirror/core-helpers';
+import { AnyFunction, PlainObject } from '@remirror/core-types';
 import {
   Children,
   Fragment,

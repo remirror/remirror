@@ -2,7 +2,8 @@
   "extends": "../../support/tsconfig.base.json",
   "compilerOptions": {
     "outDir": "lib",
-    "types": ["node", "jest", "jest-extended"]
+    "types": ["node", "jest", "jest-extended"],
+    "skipLibCheck": true
   },
   "include": ["src"]
 }

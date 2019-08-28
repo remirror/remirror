@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-helpers",
-  "description": "Provide helper functions for the remirror codebase, kinda like lodash but smaller",
+  "description": "Provide helper functions for the remirror codebase, kinda like a tiny lodash",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-helpers",

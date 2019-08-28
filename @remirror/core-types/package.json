@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-types",
-  "description": "Provides the core TypeScript types for you used throughout the remirror codebase",
+  "description": "Provides the core TS types for use throughout the remirror codebase",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-types",
@@ -44,7 +44,7 @@
     "prosemirror-schema-list": "^1.0.3",
     "prosemirror-state": "^1.2.4",
     "prosemirror-transform": "^1.1.4",
-    "prosemirror-view": "^1.10.0"
+    "prosemirror-view": "^1.10.1"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

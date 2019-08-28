@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-utils",
-  "description": "Core extensions for the remirror wysiwyg editor",
+  "description": "Core utilities for dealing with the dom and prosemirror within remirror",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-utils",
@@ -29,7 +29,7 @@
     "@remirror/core-helpers": "0.4.2-canary.2",
     "@remirror/core-types": "0.4.2-canary.2",
     "@types/min-document": "^2.19.0",
-    "@types/node": "^10",
+    "@types/node": "^12.7.2",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-model": "^1.7.2",

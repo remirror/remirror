@@ -148,7 +148,7 @@
     "jest-environment-puppeteer": "4.3.0",
     "jest-enzyme": "7.1.0",
     "jest-extended": "0.11.2",
-    "jest-image-snapshot": "2.9.0",
+    "jest-image-snapshot": "2.10.0",
     "jest-puppeteer": "4.3.0",
     "jest-watch-typeahead": "0.4.0",
     "lerna": "3.16.4",
@@ -167,7 +167,7 @@
     "react-test-renderer": "16.9.0",
     "release": "6.1.0",
     "rimraf": "3.0.0",
-    "rollup": "1.20.2",
+    "rollup": "1.20.3",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-babel": "4.3.3",
     "rollup-plugin-commonjs": "10.1.0",
@@ -179,7 +179,7 @@
     "signal-exit": "3.0.2",
     "start-server-and-test": "1.10.0",
     "tslint": "5.19.0",
-    "typescript": "3.6.1-rc",
+    "typescript": "3.6.2",
     "typescript-styled-plugin": "0.14.0",
     "typescript-tslint-plugin": "0.5.4",
     "wait-on": "3.3.0",
@@ -316,6 +316,8 @@
     "@babel/runtime": "7.5.5",
     "@microsoft/tsdoc": "0.12.12",
     "serialize-to-js": "2.0.1",
+    "debug": "4.1.1",
+    "marked": "0.7.0",
     "bl": "3.0.0",
     "braces": "3.0.2",
     "hoist-non-react-statics": "3.3.0",
@@ -328,6 +330,6 @@
     "semver": "6.3.0",
     "tar": "4.4.10",
     "tslint": "5.19.0",
-    "typescript": "3.6.1-rc"
+    "typescript": "3.6.2"
   }
 }

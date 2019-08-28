@@ -30,7 +30,6 @@ import {
   BaseListenerParams,
   CalculatePositionerParams,
   cloneElement,
-  defaultPositioner,
   getElementProps,
   GetPositionerPropsConfig,
   GetPositionerReturn,
@@ -53,6 +52,7 @@ import { RemirrorThemeContext } from '@remirror/ui';
 import { EditorState } from 'prosemirror-state';
 import React, { PureComponent, ReactNode, Ref } from 'react';
 import { defaultProps } from '../react-constants';
+import { defaultPositioner } from '../react-positioners';
 import { RemirrorProps } from './remirror-types';
 
 interface UpdateStateParams<GSchema extends EditorSchema = any>

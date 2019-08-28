@@ -72,6 +72,10 @@
     "root": "@remirror"
   },
   {
+    "path": "../../@remirror/react-hooks/package.json",
+    "root": "@remirror"
+  },
+  {
     "path": "../../@remirror/react-node-view/package.json",
     "root": "@remirror"
   },
@@ -101,6 +105,10 @@
   },
   {
     "path": "../../@remirror/ui-buttons/package.json",
+    "root": "@remirror"
+  },
+  {
+    "path": "../../@remirror/ui-dropdown/package.json",
     "root": "@remirror"
   },
   {

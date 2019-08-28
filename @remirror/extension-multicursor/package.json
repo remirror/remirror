@@ -30,7 +30,7 @@
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.9.0",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.10.0"
+    "prosemirror-view": "^1.10.1"
   },
   "peerDependencies": {
     "@emotion/core": "^10"

@@ -9,7 +9,7 @@
       "dev",
       [
         "jest-axe",
-        "@testing-library/react",
+        "@testing-library",
         "enzyme",
         "react-test-renderer",
         "@test-fixtures",

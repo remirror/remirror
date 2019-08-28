@@ -25,12 +25,12 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.5.5",
-    "csstype": "^2.6.6",
-    "merge-props": "^5.0.1",
-    "@remirror/core-types": "0.4.2-canary.2",
     "@remirror/core-helpers": "0.4.2-canary.2",
+    "@remirror/core-types": "0.4.2-canary.2",
     "@remirror/ui": "0.4.2-canary.2",
-    "@remirror/ui-icons": "0.4.2-canary.2"
+    "@remirror/ui-icons": "0.4.2-canary.2",
+    "csstype": "^2.6.6",
+    "merge-props": "^5.0.1"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

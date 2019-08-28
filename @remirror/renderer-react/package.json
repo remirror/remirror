@@ -26,6 +26,8 @@
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "@remirror/core": "0.4.2-canary.2",
+    "@remirror/core-helpers": "0.4.2-canary.2",
+    "@remirror/core-types": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2"
   },
   "peerDependencies": {

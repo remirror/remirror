@@ -1,6 +1,5 @@
 import { ActionNames, AnyFunction, Attrs, KeyOfThemeVariant, memoize } from '@remirror/core';
-import { useRemirror } from '@remirror/react';
-import { bubblePositioner } from '@remirror/react-utils';
+import { bubblePositioner, useRemirror } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import {
   BoldIcon,

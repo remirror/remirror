@@ -1,6 +1,6 @@
 {
   "name": "@remirror/editor-markdown",
-  "description": "ui for a what you see is what you get (wysiwyg) editing experience",
+  "description": "A markdown editor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/editor-markdown",

@@ -96,6 +96,12 @@
     "ignore": ["@emotion/core"]
   },
   {
+    "name": "@remirror/react-hooks",
+    "path": "@remirror/react-hooks/lib/index.js",
+    "limit": "65 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
+  },
+  {
     "name": "@remirror/react-portals",
     "path": "@remirror/react-portals/lib/index.js",
     "limit": "15 KB",
@@ -130,6 +136,12 @@
     "path": "@remirror/ui-buttons/lib/index.js",
     "limit": "70 KB",
     "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+  },
+  {
+    "name": "@remirror/ui-dropdown",
+    "path": "@remirror/ui-dropdown/lib/index.js",
+    "limit": "70 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
   },
   {
     "name": "@remirror/ui-icons",

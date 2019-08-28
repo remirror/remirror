@@ -1,8 +1,17 @@
-import { KeyOfThemeVariant, omitUndefined, RemirrorInterpolation } from '@remirror/core';
+import {
+  KeyOfThemeVariant,
+  omitUndefined,
+  RemirrorInterpolation,
+  RemirrorThemeContextType,
+} from '@remirror/core';
 import { useRemirrorTheme } from '@remirror/ui';
 import { IconProps } from '@remirror/ui-icons';
 import React, { ComponentType, forwardRef, ReactNode } from 'react';
 import { ResetButton, ResetButtonProps } from './reset-button';
+
+export interface RenderIconParams {
+  remirrorTheme: RemirrorThemeContextType;
+}
 
 export type ButtonProps = ResetButtonProps & {
   variant?: KeyOfThemeVariant<'remirror:buttons'>;
@@ -28,6 +37,9 @@ export type ButtonProps = ResetButtonProps & {
   leftIconProps?: Partial<IconProps>;
   rightIconProps?: Partial<IconProps>;
 
+  renderRightIcon?(params: RenderIconParams): ReactNode;
+  renderLeftIcon?(params: RenderIconParams): ReactNode;
+
   /**
    * Custom styles to add to the icon
    */
@@ -39,9 +51,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     {
       content,
       active = false,
-      RightIconComponent,
       LeftIconComponent,
+      renderLeftIcon,
       leftIconProps = {},
+      RightIconComponent,
+      renderRightIcon,
       rightIconProps = {},
       color,
       backgroundColor,
@@ -53,23 +67,32 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    const { sxx } = useRemirrorTheme();
+    const remirrorTheme = useRemirrorTheme();
+    const { sxx } = remirrorTheme;
     const colorStyles = omitUndefined({ color, backgroundColor });
     const otherStyles = { fontWeight: fontWeight! };
 
     const paddedLeftIconProps = {
       ...leftIconProps,
-      styles: sxx(RightIconComponent || content ? { paddingRight: 1 } : undefined, leftIconProps.styles),
+      styles: sxx(
+        renderRightIcon || RightIconComponent || content ? { paddingRight: 1 } : undefined,
+        leftIconProps.styles,
+      ),
     };
-    const leftIcon = LeftIconComponent && <LeftIconComponent {...colorStyles} {...paddedLeftIconProps} />;
+    const leftIcon = renderLeftIcon
+      ? renderLeftIcon({ remirrorTheme })
+      : LeftIconComponent && <LeftIconComponent {...colorStyles} {...paddedLeftIconProps} />;
 
     const paddedRightIconsProps = {
       ...rightIconProps,
-      styles: sxx(LeftIconComponent || content ? { paddingLeft: 1 } : undefined, rightIconProps.styles),
+      styles: sxx(
+        renderLeftIcon || LeftIconComponent || content ? { paddingLeft: 1 } : undefined,
+        rightIconProps.styles,
+      ),
     };
-    const rightIcon = RightIconComponent && (
-      <RightIconComponent {...colorStyles} {...paddedRightIconsProps} />
-    );
+    const rightIcon = renderRightIcon
+      ? renderRightIcon({ remirrorTheme })
+      : RightIconComponent && <RightIconComponent {...colorStyles} {...paddedRightIconsProps} />;
 
     return (
       <ResetButton
