@@ -537,7 +537,7 @@ export const isDate = isObjectOfType<Date>(TypeName.Date);
 export const isError = isObjectOfType<Error>(TypeName.Error);
 
 /**
- * Predicate check that value is a map
+ * Predicate check that value is a `Map`
  *
  * @param value - the value to check
  *
@@ -547,7 +547,7 @@ export const isMap = (value: unknown): value is Map<unknown, unknown> =>
   isObjectOfType<Map<unknown, unknown>>(TypeName.Map)(value);
 
 /**
- * Predicate check that value is a set
+ * Predicate check that value is a `Set`
  *
  * @param value - the value to check
  *
@@ -576,7 +576,7 @@ export const isEmptyObject = (value: unknown): value is { [key: string]: never }
 export const isEmptyArray = (value: unknown): value is never[] => isArray(value) && value.length === 0;
 
 /**
- * Helpful alias
+ * Alias the isArray method.
  */
 export const isArray = Array.isArray;
 
@@ -602,14 +602,17 @@ export const isEqual = fastDeepEqual;
 /**
  * Create a unique array in a non-mutating manner
  *
- * @param array - the array which will be reduced to unique element
- * @return a new array containing only unique elements
+ * @param array - the array which will be reduced to its unique elements
+ * @param fromStart - when set to true the duplicates will be removed from the
+ * beginning of the array. This defaults to false.
+ * @return a new array containing only unique elements (by reference)
  *
  * @public
  */
-export const uniqueArray = <GType>(array: GType[]) => {
-  const set = new Set(array);
-  return Array.from(set);
+export const uniqueArray = <GType>(array: GType[], fromStart: boolean = false) => {
+  const arr = fromStart ? [...array].reverse() : array;
+  const set = new Set(arr);
+  return fromStart ? Array.from(set).reverse() : Array.from(set);
 };
 
 /**
@@ -659,7 +662,7 @@ export class Merge {
   }
 
   /**
-   * This can be used to create any kind of object
+   * This can be used to mimic any object shape.
    */
   [key: string]: any;
 
@@ -721,7 +724,7 @@ export const sort = <GType>(array: GType[], compareFn: (a: GType, b: GType) => n
 };
 
 /**
- * Get a property from an object or array.
+ * Get a property from an object or array by a string path or an array path.
  *
  * @param path - path to property
  * @param obj - object to retrieve property from
@@ -751,3 +754,80 @@ export const get = <GReturn = any>(
 };
 
 export * from 'throttle-debounce';
+
+/**
+ * Create a unique array of objects from a getter function
+ * or a property list.
+ *
+ * @param array - the array to extract unique values from
+ * @param getValue - a getter function or a string with the path to
+ * the item that is being used as a a test for uniqueness.
+ * @param fromStart - when true will remove duplicates from the start
+ * rather than from the end
+ *
+ * ```ts
+ * import { uniqueBy } from '@remirror/core-helpers';
+ *
+ * const values = uniqueBy([{ id: 'a', value: 'Awesome' }, { id: 'a', value: 'ignored' }], item => item.id);
+ * console.log(values) // => [{id: 'a', value: 'Awesome'}]
+ *
+ * const byKey = uniqueBy([{ id: 'a', value: 'Awesome' }, { id: 'a', value: 'ignored' }], 'id')
+ * // Same as above
+ * ```
+ */
+export const uniqueBy = <GItem extends object = any, GKey = any>(
+  array: GItem[],
+  getValue: ((item: GItem) => GKey) | string | Array<string | number>,
+  fromStart = false,
+): GItem[] => {
+  const unique: GItem[] = [];
+  const found: Set<GKey> = new Set();
+  const makeFn = (val: string | Array<string | number>) => (item: GItem) => get<GKey>(val, item);
+  const getter = isFunction(getValue) ? getValue : makeFn(getValue);
+  const arr = fromStart ? [...array].reverse() : array;
+
+  for (const item of arr) {
+    const value = getter(item);
+    if (!found.has(value)) {
+      found.add(value);
+      unique.push(item);
+    }
+  }
+
+  return fromStart ? unique.reverse() : unique;
+};
+
+/**
+ * A typesafe implementation of `Object.entries`
+ *
+ * Taken from https://github.com/biggyspender/ts-entries/blob/master/src/ts-entries.ts
+ */
+export const entries = <
+  GType extends object,
+  GKey extends Extract<keyof GType, string>,
+  GValue extends GType[GKey],
+  GEntry extends [GKey, GValue]
+>(
+  obj: GType,
+): GEntry[] => Object.entries(obj) as GEntry[];
+
+/**
+ * A typesafe implementation of `Object.keys`
+ */
+export const keys = <GObj extends object, GKey extends Extract<keyof GObj, string>>(obj: GObj): GKey[] =>
+  Object.keys(obj) as GKey[];
+
+/**
+ * Create a range from start to end.
+ *
+ * If only start is provided it creates an array of the size provided.
+ * if start and end are provided it creates an array who's first position is
+ * start and final position is end. i.e. `length = (end - start) + 1`
+ */
+export const range = (start: number, end?: number) => {
+  return !isNumber(end)
+    ? Array.from({ length: Math.abs(start) }, (_, index) => (start < 0 ? -1 : 1) * index)
+    : start <= end
+    ? Array.from({ length: end + 1 - start }, (_, index) => index + start)
+    : Array.from({ length: start + 1 - end }, (_, index) => -1 * index + start);
+};

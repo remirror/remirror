@@ -4,9 +4,9 @@ import { Dropdown } from '../dropdown';
 import { DropdownItem } from '../dropdown-types';
 
 const createItems = (onSelect: (item: DropdownItem) => void): DropdownItem[] => [
-  { label: 'Normal Text', value: 'p', onSelect },
-  { label: 'Heading 1', value: 'h1', onSelect },
-  { label: 'Heading 2', value: 'h2', onSelect },
+  { label: 'Normal Text', id: 'p', onSelect },
+  { label: 'Heading 1', id: 'h1', onSelect },
+  { label: 'Heading 2', id: 'h2', onSelect },
 ];
 
 test('Dropdown', () => {
@@ -14,9 +14,7 @@ test('Dropdown', () => {
   const Component = () => {
     const [items, setItems] = useState(
       createItems(item => {
-        setItems(
-          items.map(ii => (ii.value === item.value ? { ...ii, active: true } : { ...ii, active: false })),
-        );
+        setItems(items.map(ii => (ii.id === item.id ? { ...ii, active: true } : { ...ii, active: false })));
       }),
     );
 

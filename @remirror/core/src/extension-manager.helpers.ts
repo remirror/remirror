@@ -1,5 +1,5 @@
 import { DEFAULT_EXTENSION_PRIORITY, MarkGroup, NodeGroup, Tags } from '@remirror/core-constants';
-import { bool, Cast, isFunction, sort } from '@remirror/core-helpers';
+import { bool, Cast, entries, isFunction, sort } from '@remirror/core-helpers';
 import {
   AnyFunction,
   Attrs,
@@ -100,7 +100,7 @@ export const createCommands = ({ extensions, params }: CreateCommandsParams) => 
   extensions.filter(hasExtensionProperty('commands')).forEach(currentExtension => {
     const item = getItemParams(currentExtension);
 
-    Object.entries(item).forEach(([name, command]) => {
+    entries(item).forEach(([name, command]) => {
       isNameUnique({ name, set: names, shouldThrow: true });
 
       items[name] = { command: methodFactory(command), name: currentExtension.name };

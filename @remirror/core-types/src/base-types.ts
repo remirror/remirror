@@ -105,6 +105,15 @@ export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) ex
   : never;
 
 /**
+ * Make the whole interface partial except for some specified keys which will be made
+ * required.
+ */
+export type PartialWithRequiredKeys<GType extends {}, GKeys extends Key<GType>> = Partial<
+  Pick<GType, Exclude<keyof GType, GKeys>>
+> &
+  Required<Pick<GType, GKeys>>;
+
+/**
  * Makes specified keys of an interface optional while the rest stay the same.
  */
 export type MakeOptional<GType extends {}, GKeys extends Key<GType>> = Omit<GType, GKeys> &

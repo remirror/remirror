@@ -10,29 +10,14 @@ import { animated, useSpring } from 'react-spring';
 import { dropdownPositions } from './dropdown-constants';
 import { DropdownItem, DropdownProps } from './dropdown-types';
 
-const getActiveItems = (items: any[]) => items.filter(item => item.active);
-
 export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
-  const { sxx } = useRemirrorTheme();
-  const itemToString = (item: DropdownItem | null) => (item ? item.value : '');
-  const onChange = (item: DropdownItem | null) => {
-    if (!item) {
-      return;
-    }
-
-    if (item.onSelect) {
-      item.onSelect(item);
-      return;
-    }
-  };
-
   return (
     <Downshift
-      onChange={onChange}
-      selectedItem={props.multiSelect ? null : getActiveItems(props.items)[0] || null}
+      onSelect={props.onSelect}
+      selectedItem={null}
       initialSelectedItem={props.initialItem}
-      itemToString={itemToString}
-      suppressRefError={true}
+      itemToString={item => item.value}
+      initialIsOpen={props.initialIsOpen}
     >
       {({ getRootProps, ...params }) => {
         const { ref: downshiftRef, ...rootProps } = getRootProps();
@@ -45,15 +30,7 @@ export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>((props, ref) =
           }
         };
 
-        return (
-          <InnerDropdown
-            css={sxx({ width: 'max-content' })}
-            ref={refFn}
-            downshift={params}
-            {...rootProps}
-            {...props}
-          />
-        );
+        return <InnerDropdown ref={refFn} downshift={params} {...rootProps} {...props} />;
       }}
     </Downshift>
   );
@@ -77,7 +54,12 @@ const InnerDropdown = forwardRef<HTMLDivElement, InnerDropdownProps>(
       IconComponent,
       iconProps = {},
       dropdownPosition = 'below left',
+      minWidth,
+      width = 'max-content',
       disabled,
+      initialIsOpen,
+      onSelect,
+      selectedItems,
       ...props
     },
     ref,
@@ -92,7 +74,6 @@ const InnerDropdown = forwardRef<HTMLDivElement, InnerDropdownProps>(
       getLabelProps,
     } = downshift;
     const { sx } = useRemirrorTheme();
-    const activeItems = items.filter(item => item.active);
     const previous = usePrevious(isOpen);
     const [bind, { height: viewHeight }] = useMeasure();
     const [{ height, opacity, transform }, setSpring] = useSpring(() => ({
@@ -108,7 +89,7 @@ const InnerDropdown = forwardRef<HTMLDivElement, InnerDropdownProps>(
     });
 
     const labelElement = renderLabel ? (
-      renderLabel({ getLabelProps, label, activeItems })
+      renderLabel({ getLabelProps, label, selectedItems })
     ) : showLabel && label ? (
       <Label {...getLabelProps()}>{label}</Label>
     ) : null;
@@ -116,7 +97,7 @@ const InnerDropdown = forwardRef<HTMLDivElement, InnerDropdownProps>(
     const combineRefs = useCombinedRefs<HTMLDivElement>();
 
     return (
-      <div {...props} ref={ref}>
+      <div css={sx({ width })} {...props} ref={ref}>
         {labelElement}
         <Button
           active={isOpen}
@@ -127,6 +108,7 @@ const InnerDropdown = forwardRef<HTMLDivElement, InnerDropdownProps>(
           rightIconProps={{ backgroundColor: 'transparent', ...iconProps }}
           fontWeight='normal'
           css={sx({ position: 'relative' })}
+          minWidth={minWidth}
         >
           <animated.div
             {...combineRefs(getMenuProps(), bind)}
@@ -135,7 +117,7 @@ const InnerDropdown = forwardRef<HTMLDivElement, InnerDropdownProps>(
             css={sx(
               {
                 position: 'absolute',
-                minWidth: 'max-content',
+                minWidth,
                 py: 1,
                 margin: '0 auto',
                 borderRadius: 1,
@@ -149,7 +131,7 @@ const InnerDropdown = forwardRef<HTMLDivElement, InnerDropdownProps>(
             {isOpen &&
               items.map((item, index) => (
                 <DropdownItemComponent
-                  key={item.value}
+                  key={item.id}
                   getItemProps={getItemProps}
                   index={index}
                   item={item}

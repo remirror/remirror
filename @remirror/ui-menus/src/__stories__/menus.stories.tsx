@@ -13,7 +13,7 @@ const MenuComponent = () => {
   const [activeBlockTypes, setActiveBlockTypes] = useState({ ...defaultBlockTypes, p: true });
 
   const onSelectBlockTypeItem = (item: DropdownItem) => {
-    setActiveBlockTypes({ ...defaultBlockTypes, [item.value as BlockType]: true });
+    setActiveBlockTypes({ ...defaultBlockTypes, [item.id as BlockType]: true });
   };
 
   const onClickImageIcon = () => {
@@ -25,24 +25,25 @@ const MenuComponent = () => {
       type: 'group',
       content: [
         {
+          minWidth: 150,
           type: 'dropdown',
           label: 'Select block type',
           items: [
             {
               label: 'Normal Text',
-              value: 'p',
+              id: 'p',
               onSelect: onSelectBlockTypeItem,
               active: activeBlockTypes.p,
             },
             {
               label: 'Heading 1',
-              value: 'h1',
+              id: 'h1',
               onSelect: onSelectBlockTypeItem,
               active: activeBlockTypes.h1,
             },
             {
               label: 'Heading 2',
-              value: 'h2',
+              id: 'h2',
               onSelect: onSelectBlockTypeItem,
               active: activeBlockTypes.h2,
             },

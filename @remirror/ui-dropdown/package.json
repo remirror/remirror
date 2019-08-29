@@ -26,7 +26,9 @@
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "@remirror/core-helpers": "0.4.2-canary.2",
+    "@remirror/core-types": "0.4.2-canary.2",
     "@remirror/react-hooks": "0.4.2-canary.2",
+    "@remirror/react-utils": "0.4.2-canary.2",
     "@remirror/ui": "0.4.2-canary.2",
     "@remirror/ui-buttons": "0.4.2-canary.2",
     "@remirror/ui-icons": "0.4.2-canary.2",

@@ -1,5 +1,5 @@
 import { Extension, ExtensionParams } from '@remirror/core';
-import { uniqueArray } from '@remirror/core-helpers';
+import { entries, uniqueArray } from '@remirror/core-helpers';
 import {
   BaseExtensionOptions,
   ExtensionManagerParams,
@@ -96,7 +96,7 @@ export const createTrailingNodePlugin = ({ extension, tags, schema }: CreateTrai
 
   // The list of nodes for this schema that should have content injected after
   // them.
-  const types = Object.entries(schema.nodes)
+  const types = entries(schema.nodes)
     .map(([, entry]) => entry)
     .filter(entry => !notAfter.includes(entry.name));
 

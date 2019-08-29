@@ -23,21 +23,20 @@ const Grid: FC = ({ children }) => {
   );
 };
 
-const createItems = (onSelect: (item: DropdownItem) => void): DropdownItem[] => [
-  { label: 'Normal Text', value: 'p', onSelect },
-  { label: 'Heading 1', value: 'h1', onSelect },
-  { label: 'Heading 2', value: 'h2', onSelect },
+const createItems = (onSelect: (item: DropdownItem, cb: () => void) => void): DropdownItem[] => [
+  { label: 'Normal Text', id: 'p', onSelect },
+  { label: 'Heading 1', id: 'h1', onSelect },
+  { label: 'Heading 2', id: 'h2', onSelect },
 ];
 
 const DropdownWithPosition = ({
   dropdownPosition = 'below left',
 }: Pick<DropdownProps, 'dropdownPosition'>) => {
   const [items, setItems] = useState(
-    createItems(item => {
+    createItems((item, cb) => {
       console.log('setting item', item);
-      setItems(
-        items.map(ii => (ii.value === item.value ? { ...ii, active: true } : { ...ii, active: false })),
-      );
+      setItems(items.map(ii => (ii.id === item.id ? { ...ii, active: true } : { ...ii, active: false })));
+      cb();
     }),
   );
 

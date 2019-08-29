@@ -2,6 +2,7 @@ import {
   capitalize,
   clone,
   deepMerge,
+  entries,
   findMatches,
   format,
   get,
@@ -27,13 +28,16 @@ import {
   isSymbol,
   isUndefined,
   kebabCase,
+  keys,
   Merge,
   randomInt,
+  range,
   sort,
   startCase,
   take,
   trim,
   uniqueArray,
+  uniqueBy,
   uniqueId,
 } from '../core-helpers';
 
@@ -264,8 +268,9 @@ test('uniqueArray', () => {
   const arr = [1, 2, 3];
   expect(uniqueArray(arr)).toEqual([1, 2, 3]);
 
-  const dup = ['a', 'a', 'a', 'a', 'b'];
+  const dup = ['a', 'a', 'a', 'a', 'b', 'a'];
   expect(uniqueArray(dup)).toEqual(['a', 'b']);
+  expect(uniqueArray(dup, true)).toEqual(['b', 'a']);
 });
 
 test('sort', () => {
@@ -328,4 +333,38 @@ test('deepMerge', () => {
     c: 'c',
   });
   expect(deepMerge({ a: { b: 'b ' } }, { a: Merge.overwrite({ c: 'c' }) })).toEqual({ a: { c: 'c' } });
+});
+
+test('uniqueBy', () => {
+  const foo = { key: 'foo', name: 'foo' };
+  const bar = { key: 'bar', name: 'bar' };
+  const baz = { key: 'foo', name: 'baz' };
+  const original = [foo, bar, baz];
+  const expected = [foo, bar];
+
+  expect(uniqueBy(original, 'key')).toEqual(expected);
+  expect(uniqueBy(original, ['key'])).toEqual(expected);
+  expect(uniqueBy(original, item => item.key)).toEqual(expected);
+
+  expect(uniqueBy(original, item => item.key, true)).toEqual([bar, baz]);
+});
+
+test('entries', () => {
+  const input = { a: 1, b: 'b' };
+  expect(entries(input).map(([key, value]) => [key, value])).toEqual([['a', 1], ['b', 'b']]);
+});
+test('keys', () => {
+  const input = { a: 1, b: 'b' };
+  expect(keys(input).map(key => key)).toEqual(['a', 'b']);
+});
+
+test('range', () => {
+  expect(range(5)).toEqual([0, 1, 2, 3, 4]);
+  expect(range(-5)).toEqual([-0, -1, -2, -3, -4]);
+  expect(range(0)).toEqual([]);
+  expect(range(5, 5)).toEqual([5]);
+  expect(range(-5, -5)).toEqual([-5]);
+  expect(range(1, 5)).toEqual([1, 2, 3, 4, 5]);
+  expect(range(-5, -1)).toEqual([-5, -4, -3, -2, -1]);
+  expect(range(10, 5)).toEqual([10, 9, 8, 7, 6, 5]);
 });

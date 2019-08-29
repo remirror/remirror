@@ -1,9 +1,17 @@
 import { IconProps } from '@remirror/ui-icons';
-import { PropGetters } from 'downshift';
+import { MinWidthProperty, WidthProperty } from 'csstype';
+import { DownshiftProps, PropGetters } from 'downshift';
 import { ComponentType, ReactNode } from 'react';
 import { dropdownPositions } from './dropdown-constants';
 
 export interface DropdownItem {
+  /**
+   * A unique identifier for this item.
+   *
+   * This is also used as the key.
+   */
+  id: string;
+
   /**
    * The string label to render for the dropdown
    */
@@ -15,25 +23,26 @@ export interface DropdownItem {
   element?: ReactNode;
 
   /**
-   * The value this dropdown represents
+   * Whether the dropdown item is disabled.
    */
-  value: string;
-
-  /**
-   * What to do when this item is selected
-   */
-  onSelect?: (item: DropdownItem) => void;
-
-  active?: boolean;
+  disabled?: boolean;
 }
 
 export type DropdownPosition = keyof typeof dropdownPositions;
 
 export interface DropdownProps {
+  minWidth?: MinWidthProperty<number | string>;
+  width?: WidthProperty<number | string>;
+
   /**
    * The list of items available for this dropdown.
    */
   items: DropdownItem[];
+
+  /**
+   * An array of the selected items.
+   */
+  selectedItems: DropdownItem[];
 
   /**
    * The value when the dropdown is first rendered. Defaults to
@@ -89,10 +98,20 @@ export interface DropdownProps {
    * @default 'below left'
    */
   dropdownPosition?: DropdownPosition;
+
+  /**
+   * Called when a new item is selected.
+   */
+  onSelect: DownshiftProps<DropdownItem>['onSelect'];
+
+  /**
+   * Whether the dropdown should be open by default.
+   */
+  initialIsOpen?: boolean;
 }
 
 export interface RenderLabelParams {
   getLabelProps: PropGetters<any>['getLabelProps'];
   label?: string;
-  activeItems: DropdownItem[];
+  selectedItems: DropdownItem[];
 }
