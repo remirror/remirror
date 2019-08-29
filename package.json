@@ -15,11 +15,10 @@
     "build:modules": "lerna run build --stream --no-private",
     "build:rollup": "rollup --config ./support/rollup/rollup.config.js",
     "changelog": "lerna-changelog",
-    "checks": "run-s ci:audit integrity lint typecheck dtslint test",
+    "checks": "run-s integrity lint typecheck dtslint test",
     "checks:parallel": "run-p lint typecheck test",
     "checks:publish": "run-s checks build test:e2e",
     "ci": "yarn clean:force && yarn",
-    "ci:audit": "audit-ci --high",
     "clean": "yarn if-clean git clean -fdx --exclude=.config.json --exclude=node_modules",
     "clean:all": "yarn if-clean git clean -fdx --exclude=.config.json",
     "clean:force": "git clean -fdx",
@@ -118,7 +117,6 @@
     "@types/testing-library__dom": "^6.0.1",
     "@types/wait-on": "3.2.0",
     "@types/yargs": "13.0.2",
-    "audit-ci": "2.3.0",
     "babel-jest": "24.9.0",
     "babel-loader": "8.0.6",
     "babel-plugin-module-resolver": "3.2.0",
@@ -210,7 +208,7 @@
       "post-commit": "echo $HUSKY_GIT_STDIN | support/hooks/post-commit-lfs $HUSKY_GIT_PARAMS",
       "post-merge": "echo $HUSKY_GIT_STDIN | support/hooks/post-merge-lfs $HUSKY_GIT_PARAMS",
       "pre-commit": "yarn if-config hooks.preCommit lint-staged",
-      "pre-push": "echo $HUSKY_GIT_STDIN | support/hooks/pre-push-lfs $HUSKY_GIT_PARAMS && yarn if-config hooks.prePush yarn checks"
+      "pre-push": "echo $HUSKY_GIT_STDIN | support/hooks/pre-push-lfs $HUSKY_GIT_PARAMS && yarn if-config hooks.prePush yarn audit && yarn checks"
     }
   },
   "jest": {

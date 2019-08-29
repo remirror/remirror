@@ -33,7 +33,7 @@ before_install:
 
 install:
   - yarn ci
-  - yarn ci:audit
+  - yarn audit
 
 script:
   - yarn $YARN_CMD

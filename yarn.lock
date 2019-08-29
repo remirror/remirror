@@ -7767,7 +7767,7 @@ cssstyle@^1.2.2:
   dependencies:
     cssom "0.3.x"
 
-csstype@^2.2.0, csstype@^2.5.2, csstype@^2.5.5, csstype@^2.5.7, csstype@^2.6.4, csstype@^2.6.6:
+csstype@2.6.6, csstype@^2.2.0, csstype@^2.5.2, csstype@^2.5.5, csstype@^2.5.7, csstype@^2.6.4, csstype@^2.6.6:
   version "2.6.6"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.6.tgz#c34f8226a94bbb10c32cc0d714afdf942291fc41"
   integrity sha512-RpFbQGUE74iyPgvr46U9t1xoQBM8T4BL8SxrN66Le2xYAPSaDJJKeztV3awugusb3g3G9iL8StmkBBXhcbbXhg==
@@ -19411,6 +19411,20 @@ react-textarea-autosize@^7.1.0:
   dependencies:
     "@babel/runtime" "^7.1.2"
     prop-types "^15.6.0"
+
+react-use@10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/react-use/-/react-use-10.5.0.tgz#625e025c7c4eeaa8bc1401284b10aca864bccf09"
+  integrity sha512-sqpGs9e1aENXXYHJjEh3hctn0W845FGHovv3KXMi+kCXeqYNH0/UV4/9yCmWR4kO/TNdPVb7om5Be0eV0H8BeA==
+  dependencies:
+    "@types/react-wait" "^0.3.0"
+    copy-to-clipboard "^3.1.0"
+    nano-css "^5.1.0"
+    react-fast-compare "^2.0.4"
+    react-wait "^0.3.0"
+    screenfull "^4.1.0"
+    throttle-debounce "^2.0.1"
+    ts-easing "^0.2.0"
 
 react-use@11.3.2:
   version "11.3.2"
