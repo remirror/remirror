@@ -9,6 +9,7 @@
       "dev",
       [
         "jest-axe",
+        "react-use",
         "@testing-library",
         "enzyme",
         "react-test-renderer",

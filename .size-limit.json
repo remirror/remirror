@@ -135,7 +135,14 @@
     "name": "@remirror/ui-buttons",
     "path": "@remirror/ui-buttons/lib/index.js",
     "limit": "70 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+    "ignore": [
+      "@emotion/core",
+      "@remirror/ui-icons",
+      "@types/react",
+      "@types/react-dom",
+      "react",
+      "react-dom"
+    ]
   },
   {
     "name": "@remirror/ui-dropdown",

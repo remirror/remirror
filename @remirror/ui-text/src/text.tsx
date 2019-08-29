@@ -11,7 +11,7 @@ import {
   TextAlignProperty,
 } from 'csstype';
 import mergeProps from 'merge-props';
-import React, { FC, forwardRef, ReactNode } from 'react';
+import React, { FC, forwardRef, ReactElement, ReactNode } from 'react';
 
 type MergeProp = typeof mergeProps;
 
@@ -27,7 +27,7 @@ interface RenderPropsParams {
 }
 
 export interface BaseTextProps {
-  renderProp: (params: RenderPropsParams) => JSX.Element;
+  render: (params: RenderPropsParams) => ReactElement;
   children?: ReactNode;
   variant?: KeyOfThemeVariant<'remirror:text'>;
   className?: string;
@@ -45,7 +45,7 @@ const omitTextProps = <GProps extends TextProps>(props: GProps) => omit(props, k
 
 export const BaseText: FC<BaseTextProps> = ({
   children,
-  renderProp,
+  render,
   variant = 'p',
   className,
   color,
@@ -61,17 +61,17 @@ export const BaseText: FC<BaseTextProps> = ({
     { color, textAlign, letterSpacing, fontFamily, fontWeight, fontSize },
   );
 
-  return renderProp({ props: { children, css, className }, mergeProps });
+  return render({ props: { children, css, className }, mergeProps });
 };
 
-export interface TextProps extends Omit<BaseTextProps, 'renderProp' | 'variant'> {}
+export interface TextProps extends Omit<BaseTextProps, 'render' | 'variant'> {}
 
 export const H1 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElements['h1']>((props, ref) => {
   return (
     <BaseText
       variant='h1'
       {...pickTextProps(props)}
-      renderProp={params => <h1 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+      render={params => <h1 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
     />
   );
 });
@@ -81,7 +81,7 @@ export const H2 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElemen
     <BaseText
       variant='h2'
       {...pickTextProps(props)}
-      renderProp={params => <h2 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+      render={params => <h2 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
     />
   );
 });
@@ -91,7 +91,7 @@ export const H3 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElemen
     <BaseText
       variant='h3'
       {...pickTextProps(props)}
-      renderProp={params => <h3 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+      render={params => <h3 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
     />
   );
 });
@@ -101,7 +101,7 @@ export const H4 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElemen
     <BaseText
       variant='h4'
       {...pickTextProps(props)}
-      renderProp={params => <h4 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+      render={params => <h4 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
     />
   );
 });
@@ -111,7 +111,7 @@ export const H5 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElemen
     <BaseText
       variant='h5'
       {...pickTextProps(props)}
-      renderProp={params => <h5 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+      render={params => <h5 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
     />
   );
 });
@@ -121,7 +121,7 @@ export const H6 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElemen
     <BaseText
       variant='h6'
       {...pickTextProps(props)}
-      renderProp={params => <h6 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+      render={params => <h6 {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
     />
   );
 });
@@ -131,7 +131,7 @@ export const Text = forwardRef<HTMLParagraphElement, TextProps & JSX.IntrinsicEl
     <BaseText
       variant='body'
       {...pickTextProps(props)}
-      renderProp={params => <p {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+      render={params => <p {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
     />
   );
 });
@@ -142,7 +142,7 @@ export const Label = forwardRef<HTMLLabelElement, TextProps & JSX.IntrinsicEleme
       <BaseText
         variant='label'
         {...pickTextProps(props)}
-        renderProp={params => <label {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+        render={params => <label {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
       />
     );
   },
@@ -154,7 +154,7 @@ export const Caption = forwardRef<HTMLSpanElement, TextProps & JSX.IntrinsicElem
       <BaseText
         variant='caption'
         {...pickTextProps(props)}
-        renderProp={params => <span {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
+        render={params => <span {...params.mergeProps(params.props, omitTextProps(props))} ref={ref} />}
       />
     );
   },

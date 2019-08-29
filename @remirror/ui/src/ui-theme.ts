@@ -20,6 +20,8 @@ const str = (color: HSL, ...methods: Array<(color: HSL) => HSL>) =>
   methods.reduce((col, method) => method(col), color).toString();
 const active = (color: HSL) => color.darken(10);
 const hover = (color: HSL) => color.darken(5).saturate(9);
+// const fade = (amount: number) => (color: HSL) => color.fade(amount);
+const alpha = (amount: number) => (color: HSL) => color.alpha(amount);
 
 const colors: RemirrorTheme['colors'] = {
   text: str(hsl.text),
@@ -34,6 +36,7 @@ const colors: RemirrorTheme['colors'] = {
   'secondary:button:active': str(hsl.secondary, active),
   muted: str(hsl.muted),
   grey: str(hsl.grey),
+  'grey:fade': str(hsl.grey, alpha(20)),
   default: str(hsl.grey),
   'default:button:hover': str(hsl.grey, hover),
   'default:button:active': str(hsl.grey, active),
@@ -184,18 +187,12 @@ export const baseTheme: RemirrorTheme = {
     default: {
       color: 'text',
       transition: 'all 0.2s',
-      ':hover': {
-        color: 'grey',
-      },
       backgroundColor: 'background',
     },
     inverse: {
       variant: 'remirror:icons.default',
       color: 'background',
       backgroundColor: 'text',
-      ':hover': {
-        color: 'light',
-      },
     },
   },
 

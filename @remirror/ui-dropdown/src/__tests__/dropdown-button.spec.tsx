@@ -1,6 +1,6 @@
 import { fireEvent, render } from '@testing-library/react';
 import React, { useState } from 'react';
-import { Dropdown } from '../dropdown-button';
+import { Dropdown } from '../dropdown';
 import { DropdownItem } from '../dropdown-types';
 
 const createItems = (onSelect: (item: DropdownItem) => void): DropdownItem[] => [

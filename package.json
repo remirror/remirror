@@ -165,6 +165,7 @@
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-test-renderer": "16.9.0",
+    "react-use": "10.5.0",
     "release": "6.1.0",
     "rimraf": "3.0.0",
     "rollup": "1.20.3",

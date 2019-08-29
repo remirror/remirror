@@ -2,7 +2,7 @@ import { capitalize } from '@remirror/core-helpers';
 import { useRemirrorTheme } from '@remirror/ui';
 import { storiesOf } from '@storybook/react';
 import React, { FC, useState } from 'react';
-import { Dropdown } from '../dropdown-button';
+import { Dropdown } from '../dropdown';
 import { DropdownItem, DropdownProps } from '../dropdown-types';
 
 const Grid: FC = ({ children }) => {

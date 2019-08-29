@@ -87,6 +87,7 @@ const generateStorybookResolverConfig = async () => {
     .reduce((acc, json) => {
       return {
         ...acc,
+        [`${json.name}/lib`]: [`../../${json.name}/src`],
         [json.name]: [`../../${json.name}/src`],
       };
     }, {});

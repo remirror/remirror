@@ -342,12 +342,12 @@ export class HSL {
    *
    * ```ts
    * const hsl = HSL.create('hsla(180, 50%, 50%, 0.5)')
-   * color.unfade(50).a // => 0.75
-   * color.unfade('25%').a // => 0.625
+   * color.unfade(40).a // => 90
+   * color.unfade('25%').a // => 75
    * ```
    */
   public unfade(percent: number | string): HSL {
-    const { a = 1, ...hsl } = this.hsla;
+    const { a = 100, ...hsl } = this.hsla;
     const alpha = createValidPercent(clampPercent(a + createValidPercent(percent)));
     return this.clone({ ...hsl, a: alpha });
   }
@@ -359,8 +359,8 @@ export class HSL {
    *
    * ```ts
    * const hsl = HSL.create('hsla(180, 50%, 50%, 0.5)')
-   * color.fade(50).a // => 0.25
-   * color.fade('25%').a // => 0.375
+   * color.fade(40).a // => 10
+   * color.fade('25%').a // => 25
    * ```
    */
   public fade(percent: number | string): HSL {
@@ -492,9 +492,9 @@ export class HSL {
    * Choose one color to dominate, a second to support. The third color is used (along with black,
    * white or gray) as an accent.
    */
-  public analagous(direction: 'forwards' | 'backwards' = 'forwards'): [HSL, HSL] {
+  public analagous(direction: 'forwards' | 'backwards' = 'forwards'): [HSL, HSL, HSL] {
     const [secondary, tertiary] = direction === 'forwards' ? [30, 60] : [-30, -60];
-    return [this.rotate(secondary), this.rotate(tertiary)];
+    return [this, this.rotate(secondary), this.rotate(tertiary)];
   }
 
   /**
@@ -506,8 +506,8 @@ export class HSL {
    * To use a triadic harmony successfully, the colors should be carefully balanced - let one
    * color dominate and use the two others for accent.
    */
-  public triadic(): [HSL, HSL] {
-    return [this.rotate(120), this.rotate(240)];
+  public triadic(): [HSL, HSL, HSL] {
+    return [this, this.rotate(120), this.rotate(240)];
   }
 
   /**
@@ -520,8 +520,8 @@ export class HSL {
    * The split-complimentary color scheme is often a good choice for beginners, because it is
    * difficult to mess up.
    */
-  public splitComplement(): [HSL, HSL] {
-    return [this.rotate(150), this.rotate(210)];
+  public splitComplement(): [HSL, HSL, HSL] {
+    return [this, this.rotate(150), this.rotate(210)];
   }
 
   /**
@@ -536,9 +536,9 @@ export class HSL {
    *
    * @param spacing - a value between 0 and 180 that separates the edges in degrees around a color wheel.
    */
-  public rectangle(spacing = 60): [HSL, HSL, HSL] {
+  public rectangle(spacing = 60): [HSL, HSL, HSL, HSL] {
     spacing = clamp({ min: 0, max: 180, value: spacing });
-    return [this.rotate(spacing), this.rotate(180), this.rotate(180 + spacing)];
+    return [this, this.rotate(spacing), this.rotate(180), this.rotate(180 + spacing)];
   }
 
   /**
@@ -549,7 +549,7 @@ export class HSL {
    *
    * You should also pay attention to the balance between warm and cool colors in your design.
    */
-  public square(): [HSL, HSL, HSL] {
+  public square(): [HSL, HSL, HSL, HSL] {
     return this.rectangle(90);
   }
 }
