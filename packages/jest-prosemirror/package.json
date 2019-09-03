@@ -35,13 +35,13 @@
     "jest-snapshot": "^24.9.0",
     "prosemirror-gapcursor": "^1.0.4",
     "prosemirror-inputrules": "^1.0.4",
-    "prosemirror-model": "^1.7.1",
+    "prosemirror-model": "^1.7.2",
     "prosemirror-schema-basic": "^1.0.1",
     "prosemirror-schema-list": "^1.0.3",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-tables": "^0.9.1",
+    "prosemirror-tables": "^0.9.2",
     "prosemirror-test-builder": "^1.0.1",
-    "prosemirror-view": "^1.10.1"
+    "prosemirror-view": "^1.10.3"
   },
   "peerDependencies": {
     "jest": "^24.5.0"

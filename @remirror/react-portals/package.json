@@ -21,11 +21,11 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.6.0",
     "@types/nanoevents": "1.0.0",
     "@types/nanoid": "2.0.0",
     "nanoevents": "2.0.0",
-    "nanoid": "2.0.4"
+    "nanoid": "2.1.1"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",

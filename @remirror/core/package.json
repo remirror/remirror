@@ -31,7 +31,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.6.0",
     "@remirror/core-constants": "0.4.2-canary.2",
     "@remirror/core-helpers": "0.4.2-canary.2",
     "@remirror/core-types": "0.4.2-canary.2",
@@ -43,7 +43,7 @@
     "@types/prosemirror-state": "^1.2.3",
     "prosemirror-inputrules": "^1.0.4",
     "prosemirror-keymap": "^1.0.1",
-    "prosemirror-model": "^1.7.1",
+    "prosemirror-model": "^1.7.2",
     "prosemirror-state": "^1.2.4"
   },
   "peerDependencies": {

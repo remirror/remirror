@@ -24,7 +24,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.5"
+    "@babel/runtime": "^7.6.0"
   },
   "publishConfig": {
     "access": "public"

@@ -11,8 +11,8 @@
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@emotion/core": "10.0.16",
-    "@emotion/styled": "10.0.15",
+    "@emotion/core": "10.0.17",
+    "@emotion/styled": "10.0.17",
     "@remirror/showcase": "0.4.2-canary.2",
     "express": "4.17.1",
     "react": "16.9.0",
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@types/express": "4.17.1",
-    "@types/node": "12.7.2",
+    "@types/node": "12.7.5",
     "@types/react-router-dom": "4.3.5",
     "@types/webpack-env": "1.14.0",
     "razzle": "3.0.0",

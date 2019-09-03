@@ -28,7 +28,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.6.0",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
     "@remirror/extension-code-block": "0.4.2-canary.2",
@@ -41,7 +41,7 @@
     "@types/prosemirror-markdown": "^1.0.3",
     "@types/refractor": "2.8.0",
     "keycode": "^2.2.0",
-    "markdown-it": "^9.1.0",
+    "markdown-it": "^10.0.0",
     "prosemirror-markdown": "^1.3.1",
     "refractor": "^2.10.0"
   },

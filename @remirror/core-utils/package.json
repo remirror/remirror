@@ -24,12 +24,12 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.6.0",
     "@remirror/core-constants": "0.4.2-canary.2",
     "@remirror/core-helpers": "0.4.2-canary.2",
     "@remirror/core-types": "0.4.2-canary.2",
     "@types/min-document": "^2.19.0",
-    "@types/node": "^12.7.2",
+    "@types/node": "^12.7.5",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-model": "^1.7.2",
@@ -38,7 +38,7 @@
     "min-document": "2.19.0",
     "prosemirror-commands": "^1.0.8",
     "prosemirror-inputrules": "^1.0.4",
-    "prosemirror-model": "^1.7.1",
+    "prosemirror-model": "^1.7.2",
     "prosemirror-schema-list": "^1.0.3",
     "prosemirror-state": "^1.2.4"
   },

@@ -24,7 +24,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.6.0",
     "@remirror/core-constants": "0.4.2-canary.2",
     "@remirror/react-portals": "0.4.2-canary.2",
     "@styled-system/css": "^5.0.23",
@@ -40,11 +40,11 @@
     "prosemirror-commands": "^1.0.8",
     "prosemirror-inputrules": "^1.0.4",
     "prosemirror-keymap": "^1.0.1",
-    "prosemirror-model": "^1.7.1",
+    "prosemirror-model": "^1.7.2",
     "prosemirror-schema-list": "^1.0.3",
     "prosemirror-state": "^1.2.4",
     "prosemirror-transform": "^1.1.4",
-    "prosemirror-view": "^1.10.1"
+    "prosemirror-view": "^1.10.3"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

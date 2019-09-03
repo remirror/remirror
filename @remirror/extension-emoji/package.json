@@ -24,19 +24,19 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.6.0",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/react-node-view": "0.4.2-canary.2",
-    "@types/emoji-mart": "^2.8.4",
+    "@types/emoji-mart": "^2.11.0",
     "@types/emoji-regex": "^8.0.0",
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.9.0",
     "emoji-mart": "2.11.1",
     "emoji-regex": "^8.0.0",
-    "prosemirror-model": "^1.7.1",
+    "prosemirror-model": "^1.7.2",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.10.1"
+    "prosemirror-view": "^1.10.3"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

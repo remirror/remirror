@@ -24,7 +24,7 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.6.0",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/core-constants": "0.4.2-canary.2",
     "@remirror/core-helpers": "0.4.2-canary.2",
@@ -43,14 +43,14 @@
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.9.0",
     "prosemirror-commands": "^1.0.8",
-    "prosemirror-dropcursor": "^1.1.1",
+    "prosemirror-dropcursor": "^1.1.2",
     "prosemirror-gapcursor": "^1.0.4",
     "prosemirror-history": "^1.0.4",
     "prosemirror-inputrules": "^1.0.4",
-    "prosemirror-model": "^1.7.1",
+    "prosemirror-model": "^1.7.2",
     "prosemirror-schema-list": "^1.0.3",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.10.1"
+    "prosemirror-view": "^1.10.3"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

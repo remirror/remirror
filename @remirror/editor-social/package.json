@@ -24,8 +24,8 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
-    "@emotion/styled": "^10.0.15",
+    "@babel/runtime": "^7.6.0",
+    "@emotion/styled": "^10.0.17",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
     "@remirror/extension-emoji": "0.4.2-canary.2",
@@ -36,9 +36,9 @@
     "@remirror/ui": "0.4.2-canary.2",
     "@remirror/ui-buttons": "0.4.2-canary.2",
     "@remirror/ui-icons": "0.4.2-canary.2",
-    "@types/emoji-mart": "^2.8.4",
+    "@types/emoji-mart": "^2.11.0",
     "emoji-mart": "2.11.1",
-    "emotion-theming": "^10.0.14",
+    "emotion-theming": "^10.0.18",
     "keycode": "^2.2.0"
   },
   "peerDependencies": {
