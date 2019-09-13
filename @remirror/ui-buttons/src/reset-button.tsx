@@ -19,7 +19,6 @@ export const ResetButton = forwardRef<HTMLButtonElement, ResetButtonProps>((prop
         font: inherit;
         color: inherit;
         background-color: transparent;
-        outline: 0;
         cursor: pointer;
         text-transform: none;
         user-select: none;

@@ -1,7 +1,7 @@
 import { act, render } from '@testing-library/react';
 import React from 'react';
-import { useSetA11y } from '../multishift-hook-a11y';
-import { DEFAULT_STATE } from '../multishift-hook-utils';
+import { useSetA11y } from '../multishift-hooks';
+import { DEFAULT_STATE } from '../multishift-utils';
 
 test('useSetA11y', () => {
   const defaultItems = ['a', 'b', 'c'];
@@ -25,7 +25,7 @@ test('useSetA11y', () => {
     const [element, set] = useSetA11y({
       items,
       state: { ...DEFAULT_STATE, selectedItems, isOpen },
-      customStatusMessage: message,
+      customA11yStatusMessage: message,
     });
 
     setStatus = set;

@@ -22,6 +22,11 @@ export type StringKey<GRecord> = Extract<Key<GRecord>, string>;
 export type Value<GRecord> = GRecord[Key<GRecord>];
 
 /**
+ * Makes a type nullable or undefined.
+ */
+export type Nullable<GType> = GType | null | undefined;
+
+/**
  * Extract the values of a tuple as a union type.
  *
  * ```ts

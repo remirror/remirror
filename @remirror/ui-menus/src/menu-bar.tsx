@@ -2,7 +2,7 @@ import { isPlainObject } from '@remirror/core-helpers';
 import { useRemirrorTheme } from '@remirror/ui';
 import { Button, ButtonProps } from '@remirror/ui-buttons';
 import { Dropdown, DropdownProps } from '@remirror/ui-dropdown';
-import React, { FC, ReactElement } from 'react';
+import React, { FC, forwardRef, ReactElement } from 'react';
 
 interface MenubarDropdownConfiguration extends DropdownProps {
   type: 'dropdown';
@@ -25,9 +25,9 @@ interface MenubarProps {
 export const Menubar = ({ content }: MenubarProps) => {
   const { sx } = useRemirrorTheme();
   return (
-    <menu css={sx({ display: 'flex' })}>
+    <nav css={sx({ display: 'flex' })}>
       <MenuTree content={content} />
-    </menu>
+    </nav>
   );
 };
 
@@ -74,7 +74,7 @@ interface MenubarGroupProps {
   content: MenubarContent[];
 }
 
-const MenubarGroup: FC<MenubarGroupProps> = ({ children, render, ...props }) => {
+export const MenubarGroup: FC<MenubarGroupProps> = ({ children, render, ...props }) => {
   const { sx } = useRemirrorTheme();
 
   if (render) {
@@ -101,3 +101,17 @@ const MenubarGroup: FC<MenubarGroupProps> = ({ children, render, ...props }) => 
     </div>
   );
 };
+
+/**
+ * The menu component.
+ */
+export const Menu = forwardRef<HTMLMenuElement, JSX.IntrinsicElements['menu']>(
+  ({ children, ...props }, ref) => {
+    const { sx } = useRemirrorTheme();
+    return (
+      <nav {...props} css={sx({ display: 'flex' })} ref={ref}>
+        {children}
+      </nav>
+    );
+  },
+);

@@ -115,6 +115,7 @@ export const baseTheme: RemirrorTheme = {
     heading: baseLineHeights.tight,
   },
   shadows: {
+    focus: 'hsla(205, 73%, 57%, 0.6) 0px 0px 0px 3px',
     buttons: '0 0 0 0 hsla(205, 6%, 14%, 0.15) inset',
     text: 'none',
     card: `${HSL.create([baseHue, baseSaturation, 15, 25])} 0 4px 8px -2px, ${HSL.create([
@@ -246,6 +247,7 @@ export const baseTheme: RemirrorTheme = {
       },
       [`${EDITOR_CLASS_SELECTOR}:focus`]: {
         outline: 'none',
+        boxShadow: 'focus',
       },
       [`${EDITOR_CLASS_SELECTOR}[contenteditable="false"]`]: {
         whiteSpace: 'normal',

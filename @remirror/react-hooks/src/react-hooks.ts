@@ -39,8 +39,10 @@ export interface DOMRectReadOnlyLike {
 }
 
 /**
- * Provides the measurements for a react element.
- * Taken from https://codesandbox.io/embed/lp80n9z7v9
+ * ### `useMeasure`
+ *
+ * Provides the measurements for a react element at the point of layout. Taken
+ * from https://codesandbox.io/embed/lp80n9z7v9
  *
  * ```tsx
  * const [bindRef, { height }] = useMeasure()
@@ -58,6 +60,7 @@ export const useMeasure = <GRef extends HTMLElement = any>() => {
     if (ref.current) {
       resizeObserver.observe(ref.current);
     }
+
     return () => resizeObserver.disconnect();
   }, []);
 
@@ -71,13 +74,16 @@ interface RefProps<GRef extends HTMLElement = any> {
 }
 
 /**
- * Combines the refs within the passed props into a single ref
- * function.
+ * ### `useCombinedRefs`
+ *
+ * Combines the refs within the passed props into a single ref function.
  *
  * ```tsx
  * const combineRefs = useCombinedRefs<HTMLDivElement>();
  * return <div {...combineRefs(getMenuProps(), { ref }, otherProps)} />
  * ```
+ *
+ * @deprecated use `@seznam/compose-react-refs` instead
  */
 export const useCombinedRefs = <GRef extends HTMLElement = any>() => <GProp extends RefProps>(
   ...propsWithRefs: GProp[]
@@ -115,7 +121,10 @@ interface UseStateWithCallback {
 }
 
 /**
- * Enables the use of state with an optional callback parameter in the setState value.
+ * ### `useStateWithCallback`
+ *
+ * Enables the use of state with an optional callback parameter in the setState
+ * value. The callback is called once when the state next updates.
  */
 export const useStateWithCallback: UseStateWithCallback = <GState>(
   initialState?: GState | (() => GState),
@@ -145,12 +154,15 @@ export const useStateWithCallback: UseStateWithCallback = <GState>(
 export type PartialSetStateAction<GState> = Partial<GState> | ((prevState: GState) => Partial<GState>);
 
 /**
+ * ### `useSetState`
+ *
  * A replication of the setState from class Components.
  *
- * It accepts partial updates to the state object and a callback which
- * runs when the state has updated.
+ * It accepts partial updates to the state object and a callback which runs when
+ * the state has updated.
  *
- * It also returns a 3rd argument which resets the state.
+ * It also returns a 3rd argument which resets the state to the original
+ * initialState.
  *
  * ```ts
  * const [state, setState, resetState] = useSetState({a: 'initial', b: 'initial'});
@@ -197,10 +209,10 @@ export const useSetState = <GState extends object>(
 };
 
 /**
- * ### useEffectOnUpdate
+ * ### `useEffectOnUpdate`
  *
- * React effect hook that ignores the first invocation (e.g. on mount).
- * The signature is exactly the same as the useEffect hook.
+ * React effect hook that ignores the first invocation (e.g. on mount). The
+ * signature is exactly the same as the useEffect hook.
  *
  * #### Usage
  *
@@ -246,7 +258,7 @@ export const useEffectOnUpdate: typeof useEffect = (effect, deps) => {
 };
 
 /**
- * ### useEffectOnce
+ * ### `useEffectOnce`
  *
  * React lifecycle hook that runs an effect only once.
  *
@@ -270,4 +282,58 @@ export const useEffectOnUpdate: typeof useEffect = (effect, deps) => {
  */
 export const useEffectOnce = (effect: EffectCallback) => {
   useEffect(effect, []);
+};
+
+/**
+ * ### `useUnmount`
+ *
+ * React lifecycle hook that calls a function when the component will unmount.
+ * Use `useEffectOnce` if you need both a mount and unmount function.
+ *
+ * #### Usage
+ *
+ * ```jsx
+ * import {useUnmount} from 'react-use';
+ *
+ * const Demo = () => {
+ *   useUnmount(() => log('UNMOUNTED'));
+ *   return null;
+ * };
+ * ```
+ */
+export const useUnmount = (fn: () => void | undefined) => {
+  useEffectOnce(() => fn);
+};
+
+/**
+ * ### `useTimeouts`
+ *
+ * A hook for managing multiple timeouts.
+ *
+ * All timeouts are automatically cleared when unmounting.
+ */
+export const useTimeouts = () => {
+  const timeoutIds = useRef<number[]>([]);
+
+  const setHookTimeout = (fn: () => void, time = 1) => {
+    const id = setTimeout(() => {
+      timeoutIds.current = timeoutIds.current.filter(timeoutId => timeoutId !== id);
+      fn();
+    }, time);
+
+    timeoutIds.current.push(id);
+  };
+
+  const clearHookTimeouts = () => {
+    timeoutIds.current.forEach(id => {
+      clearTimeout(id);
+    });
+
+    timeoutIds.current = [];
+  };
+
+  // Clear the timeouts on dismount
+  useEffectOnce(() => clearHookTimeouts);
+
+  return [setHookTimeout, clearHookTimeouts] as const;
 };

@@ -72,6 +72,10 @@
     "root": "@remirror"
   },
   {
+    "path": "../../@remirror/multishift/package.json",
+    "root": "@remirror"
+  },
+  {
     "path": "../../@remirror/react-hooks/package.json",
     "root": "@remirror"
   },

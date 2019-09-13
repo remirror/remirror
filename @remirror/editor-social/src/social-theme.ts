@@ -57,6 +57,7 @@ export const socialEditorTheme: RemirrorTheme = {
       },
       [`${EDITOR_CLASS_SELECTOR}:focus`]: {
         outline: 'none',
+        boxShadow: 'focus',
       },
       [`${EDITOR_CLASS_SELECTOR} .Prosemirror-selectednode`]: {
         backgroundColor: 'selected',

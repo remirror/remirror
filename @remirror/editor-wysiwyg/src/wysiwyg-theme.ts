@@ -41,9 +41,7 @@ export const wysiwygEditorTheme: RemirrorTheme = {
         pointerEvents: 'none',
         cursor: 'default',
       },
-      [`${EDITOR_CLASS_SELECTOR}:focus`]: {
-        outline: 'none',
-      },
+      [`${EDITOR_CLASS_SELECTOR}:focus`]: {},
       [EDITOR_CLASS_SELECTOR]: {
         boxSizing: 'border-box',
         position: 'relative',

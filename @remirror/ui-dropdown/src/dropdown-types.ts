@@ -1,6 +1,6 @@
+import { MultishiftChangeHandlerProps, MultishiftPropGetters } from '@remirror/multishift';
 import { IconProps } from '@remirror/ui-icons';
 import { MinWidthProperty, WidthProperty } from 'csstype';
-import { DownshiftProps, PropGetters } from 'downshift';
 import { ComponentType, ReactNode } from 'react';
 import { dropdownPositions } from './dropdown-constants';
 
@@ -21,11 +21,6 @@ export interface DropdownItem {
    * An optional element which can be rendered in place of the label when provided.
    */
   element?: ReactNode;
-
-  /**
-   * Whether the dropdown item is disabled.
-   */
-  disabled?: boolean;
 }
 
 export type DropdownPosition = keyof typeof dropdownPositions;
@@ -42,7 +37,7 @@ export interface DropdownProps {
   /**
    * An array of the selected items.
    */
-  selectedItems: DropdownItem[];
+  selectedItems?: DropdownItem[];
 
   /**
    * The value when the dropdown is first rendered. Defaults to
@@ -53,7 +48,7 @@ export interface DropdownProps {
   /**
    * Set to true to support multiple item selection.
    */
-  multiSelect?: boolean;
+  multiple?: boolean;
 
   /**
    * The string to render when no item is selected.
@@ -100,9 +95,35 @@ export interface DropdownProps {
   dropdownPosition?: DropdownPosition;
 
   /**
+   * Whether to auto position the dropdown open direction based on remaining
+   * space in the Y direction.
+   */
+  autoPositionY?: boolean;
+
+  /**
+   * The spacing to give the dropdown menu.
+   *
+   * @default 20
+   */
+  autoPositionYSpace?: number;
+
+  /**
+   * Whether to horizontally auto position the dropdown open direction based on
+   * remaining space in the Y direction.
+   */
+  autoPositionX?: boolean;
+
+  /**
+   * The X-axis spacing to give the dropdown menu.
+   *
+   * @default 5
+   */
+  autoPositionXSpace?: number;
+
+  /**
    * Called when a new item is selected.
    */
-  onSelect: DownshiftProps<DropdownItem>['onSelect'];
+  onSelect?: MultishiftChangeHandlerProps<DropdownItem>['onSelectedItemsChange'];
 
   /**
    * Whether the dropdown should be open by default.
@@ -111,7 +132,7 @@ export interface DropdownProps {
 }
 
 export interface RenderLabelParams {
-  getLabelProps: PropGetters<any>['getLabelProps'];
+  getLabelProps: MultishiftPropGetters<DropdownItem>['getLabelProps'];
   label?: string;
   selectedItems: DropdownItem[];
 }

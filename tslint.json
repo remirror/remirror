@@ -35,6 +35,7 @@
       "react-use",
       "theme-ui",
       "@remirror/showcase",
+      "@remirror/ui-icons",
       "@storybook/addon-links",
       "@storybook/addon-actions",
       "@testing-library/react",

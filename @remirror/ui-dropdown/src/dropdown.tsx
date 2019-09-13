@@ -1,51 +1,19 @@
-import { isFunction } from '@remirror/core-helpers';
-import { useCombinedRefs, useMeasure, usePrevious } from '@remirror/react-hooks';
+import { MultishiftPropGetters, Type, useMultishift } from '@remirror/multishift';
+import { useMeasure, usePrevious } from '@remirror/react-hooks';
 import { useRemirrorTheme } from '@remirror/ui';
 import { Button } from '@remirror/ui-buttons';
 import { AngleDownIcon, AngleRightIcon } from '@remirror/ui-icons';
 import { Label } from '@remirror/ui-text';
-import Downshift, { ControllerStateAndHelpers, PropGetters } from 'downshift';
-import React, { forwardRef, Ref } from 'react';
+import React, { forwardRef, useLayoutEffect, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { dropdownPositions } from './dropdown-constants';
-import { DropdownItem, DropdownProps } from './dropdown-types';
+import { DropdownItem, DropdownPosition, DropdownProps } from './dropdown-types';
 
-export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>((props, ref) => {
-  return (
-    <Downshift
-      onSelect={props.onSelect}
-      selectedItem={null}
-      initialSelectedItem={props.initialItem}
-      itemToString={item => item.value}
-      initialIsOpen={props.initialIsOpen}
-    >
-      {({ getRootProps, ...params }) => {
-        const { ref: downshiftRef, ...rootProps } = getRootProps();
-        const refFn: Ref<HTMLDivElement> = instance => {
-          downshiftRef(instance);
-          if (isFunction(ref)) {
-            ref(instance);
-          } else if (ref) {
-            (ref as any).current = instance;
-          }
-        };
-
-        return <InnerDropdown ref={refFn} downshift={params} {...rootProps} {...props} />;
-      }}
-    </Downshift>
-  );
-});
-
-interface InnerDropdownProps extends DropdownProps {
-  downshift: Omit<ControllerStateAndHelpers<DropdownItem>, 'getRootProps'>;
-}
-
-const InnerDropdown = forwardRef<HTMLDivElement, InnerDropdownProps>(
+export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
   (
     {
-      downshift,
       items,
-      multiSelect = false,
+      multiple = false,
       showSelectedAsLabel = true,
       label,
       showLabel,
@@ -53,37 +21,83 @@ const InnerDropdown = forwardRef<HTMLDivElement, InnerDropdownProps>(
       initialItem,
       IconComponent,
       iconProps = {},
-      dropdownPosition = 'below left',
+      dropdownPosition: dropdownPositionProp = 'below left',
+      autoPositionY,
+      autoPositionYSpace = 20,
+      autoPositionX,
+      autoPositionXSpace = 5,
       minWidth,
       width = 'max-content',
       disabled,
       initialIsOpen,
       onSelect,
-      selectedItems,
+      selectedItems: selectedItemsProp,
       ...props
     },
     ref,
   ) => {
+    const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>(dropdownPositionProp);
     const {
       isOpen,
       getToggleButtonProps,
       getItemProps,
-      highlightedIndex,
-      selectedItem,
+      itemHighlightedAtIndex,
+      itemIsSelected,
       getMenuProps,
       getLabelProps,
-    } = downshift;
+      selectedItems,
+      hoveredIndex,
+    } = useMultishift({
+      items,
+      selectedItems: selectedItemsProp,
+      type: Type.Select,
+      onSelectedItemsChange: onSelect,
+      itemToString: item => item.label,
+      getItemId: item => item.id,
+    });
+
     const { sx } = useRemirrorTheme();
     const previous = usePrevious(isOpen);
-    const [bind, { height: viewHeight }] = useMeasure();
+    const [bind, rect] = useMeasure<HTMLDivElement>();
     const [{ height, opacity, transform }, setSpring] = useSpring(() => ({
       height: 0,
       opacity: 0,
       transform: 'translate3d(20px,0,0)',
     }));
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
+    useLayoutEffect(() => {
+      let newDropdownPosition = dropdownPosition;
+      if (!buttonRef.current) {
+        return;
+      }
+      const buttonRect = buttonRef.current.getBoundingClientRect();
+
+      if (autoPositionY) {
+        const yDirection =
+          window.innerHeight - buttonRect.bottom < rect.height + autoPositionYSpace &&
+          buttonRect.top > rect.height
+            ? 'above'
+            : 'below';
+        newDropdownPosition = transformDropdownPosition(newDropdownPosition, yDirection);
+      }
+
+      if (autoPositionX) {
+        const xDirection =
+          window.innerWidth - buttonRect.right < rect.width + autoPositionXSpace &&
+          buttonRect.left > rect.width
+            ? 'left'
+            : 'right';
+        newDropdownPosition = transformDropdownPosition(newDropdownPosition, xDirection);
+      }
+
+      if (newDropdownPosition !== dropdownPosition) {
+        setDropdownPosition(newDropdownPosition);
+      }
+    }, [rect.top, rect.bottom, rect.height]);
 
     setSpring({
-      height: isOpen ? viewHeight : 0,
+      height: isOpen ? rect.height : 0,
       opacity: isOpen ? 1 : 0,
       transform: `translate3d(${isOpen ? 0 : 20}px,0,0)`,
     });
@@ -94,16 +108,14 @@ const InnerDropdown = forwardRef<HTMLDivElement, InnerDropdownProps>(
       <Label {...getLabelProps()}>{label}</Label>
     ) : null;
 
-    const combineRefs = useCombinedRefs<HTMLDivElement>();
-
     return (
       <div css={sx({ width })} {...props} ref={ref}>
         {labelElement}
         <Button
           active={isOpen}
           variant='background'
-          {...getToggleButtonProps({ disabled })}
-          content={showSelectedAsLabel && selectedItem ? selectedItem.label : label}
+          {...getToggleButtonProps({ disabled, ref: buttonRef })}
+          content={showSelectedAsLabel && selectedItems[0] ? selectedItems[0].label : label}
           RightIconComponent={IconComponent ? IconComponent : isOpen ? AngleDownIcon : AngleRightIcon}
           rightIconProps={{ backgroundColor: 'transparent', ...iconProps }}
           fontWeight='normal'
@@ -111,7 +123,7 @@ const InnerDropdown = forwardRef<HTMLDivElement, InnerDropdownProps>(
           minWidth={minWidth}
         >
           <animated.div
-            {...combineRefs(getMenuProps(), bind)}
+            {...getMenuProps({ ...bind })}
             style={{ opacity, height: isOpen && previous === isOpen ? 'auto' : height, transform }}
             className='remirror-dropdown-item-wrapper'
             css={sx(
@@ -135,8 +147,9 @@ const InnerDropdown = forwardRef<HTMLDivElement, InnerDropdownProps>(
                   getItemProps={getItemProps}
                   index={index}
                   item={item}
-                  isHighlighted={highlightedIndex === index}
-                  isSelected={item === selectedItem}
+                  isHighlighted={itemHighlightedAtIndex(index)}
+                  isSelected={itemIsSelected(item)}
+                  isHovered={hoveredIndex === index}
                 />
               ))}
           </animated.div>
@@ -148,10 +161,11 @@ const InnerDropdown = forwardRef<HTMLDivElement, InnerDropdownProps>(
 
 interface DropdownItemProps {
   item: DropdownItem;
-  getItemProps: PropGetters<any>['getItemProps'];
+  getItemProps: MultishiftPropGetters<DropdownItem>['getItemProps'];
   index: number;
   isSelected: boolean;
   isHighlighted: boolean;
+  isHovered: boolean;
 }
 
 const DropdownItemComponent = ({
@@ -160,18 +174,32 @@ const DropdownItemComponent = ({
   item,
   isHighlighted,
   isSelected,
+  isHovered,
 }: DropdownItemProps) => {
   const { sxx } = useRemirrorTheme();
-  const isActive = item.active || isSelected;
   return (
     <div
-      {...getItemProps({ key: index, index, item })}
       css={sxx({
-        backgroundColor: isActive ? 'grey' : isHighlighted ? 'light' : 'background',
+        backgroundColor: isSelected ? 'grey' : isHighlighted ? 'light' : isHovered ? 'pink' : 'background',
         p: 2,
       })}
+      {...getItemProps({ index, item })}
     >
       {item.element || item.label}
     </div>
   );
 };
+
+const transformer = {
+  right: 'left',
+  left: 'right',
+  above: 'below',
+  below: 'above',
+} as const;
+
+type Transformation = keyof typeof transformer;
+
+const transformDropdownPosition = (
+  dropdownPosition: DropdownPosition,
+  to: Transformation,
+): DropdownPosition => dropdownPosition.replace(transformer[to], to) as DropdownPosition;

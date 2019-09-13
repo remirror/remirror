@@ -20,7 +20,7 @@ export const DefaultEmoji: FC<DefaultEmojiProps> = ({ node, options }) => {
       size={size as any}
       skin={skin || undefined}
     >
-      <span style={{ visibility: 'hidden' }}>{native}</span>
+      &nbsp;
     </NimbleEmoji>
   );
 };

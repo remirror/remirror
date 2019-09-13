@@ -260,7 +260,6 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
 
   private rootPropsConfig = {
     called: false,
-    suppressRefError: false,
   };
 
   /**

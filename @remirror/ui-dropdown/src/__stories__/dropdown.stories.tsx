@@ -1,9 +1,9 @@
 import { capitalize } from '@remirror/core-helpers';
 import { useRemirrorTheme } from '@remirror/ui';
 import { storiesOf } from '@storybook/react';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { Dropdown } from '../dropdown';
-import { DropdownItem, DropdownProps } from '../dropdown-types';
+import { DropdownProps } from '../dropdown-types';
 
 const Grid: FC = ({ children }) => {
   const { sx } = useRemirrorTheme();
@@ -23,23 +23,15 @@ const Grid: FC = ({ children }) => {
   );
 };
 
-const createItems = (onSelect: (item: DropdownItem, cb: () => void) => void): DropdownItem[] => [
-  { label: 'Normal Text', id: 'p', onSelect },
-  { label: 'Heading 1', id: 'h1', onSelect },
-  { label: 'Heading 2', id: 'h2', onSelect },
+const items = [
+  { label: 'Normal Text', id: 'p' },
+  { label: 'Heading 1', id: 'h1' },
+  { label: 'Heading 2', id: 'h2' },
 ];
 
 const DropdownWithPosition = ({
   dropdownPosition = 'below left',
 }: Pick<DropdownProps, 'dropdownPosition'>) => {
-  const [items, setItems] = useState(
-    createItems((item, cb) => {
-      console.log('setting item', item);
-      setItems(items.map(ii => (ii.id === item.id ? { ...ii, active: true } : { ...ii, active: false })));
-      cb();
-    }),
-  );
-
   return (
     <Dropdown
       items={items}
@@ -47,7 +39,6 @@ const DropdownWithPosition = ({
         .split(' ')
         .map(capitalize)
         .join(' ')}
-      initialItem={items[0]}
       dropdownPosition={dropdownPosition}
     />
   );
@@ -67,5 +58,6 @@ storiesOf('Dropdown', module).add('Buttons', () => (
     <DropdownWithPosition dropdownPosition='above inline left' />
     <DropdownWithPosition dropdownPosition='above wide right' />
     <DropdownWithPosition dropdownPosition='above wide left' />
+    <Dropdown items={items} label='Auto Positioned' autoPositionY={true} />
   </Grid>
 ));

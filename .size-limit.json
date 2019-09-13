@@ -96,6 +96,12 @@
     "ignore": ["@emotion/core"]
   },
   {
+    "name": "@remirror/multishift",
+    "path": "@remirror/multishift/lib/index.js",
+    "limit": "20 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
+  },
+  {
     "name": "@remirror/react-hooks",
     "path": "@remirror/react-hooks/lib/index.js",
     "limit": "65 KB",

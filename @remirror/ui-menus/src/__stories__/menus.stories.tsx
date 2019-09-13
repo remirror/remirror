@@ -7,13 +7,15 @@ import { Menubar } from '..';
 import { MenubarContent } from '../menu-bar';
 
 const MenuComponent = () => {
-  type BlockType = keyof typeof defaultBlockTypes;
+  const blockTypeItems = [
+    { label: 'Normal Text', id: 'p' },
+    { label: 'Heading 1', id: 'h1' },
+    { label: 'Heading 2', id: 'h2' },
+  ];
+  const [selectedBlockType, setActiveBlockType] = useState<DropdownItem>(blockTypeItems[0]);
 
-  const defaultBlockTypes = { p: false, h1: false, h2: false };
-  const [activeBlockTypes, setActiveBlockTypes] = useState({ ...defaultBlockTypes, p: true });
-
-  const onSelectBlockTypeItem = (item: DropdownItem) => {
-    setActiveBlockTypes({ ...defaultBlockTypes, [item.id as BlockType]: true });
+  const onSelectBlockTypeItem = (item: DropdownItem[]) => {
+    setActiveBlockType(item[0]);
   };
 
   const onClickImageIcon = () => {
@@ -25,29 +27,13 @@ const MenuComponent = () => {
       type: 'group',
       content: [
         {
+          multiple: false,
           minWidth: 150,
           type: 'dropdown',
           label: 'Select block type',
-          items: [
-            {
-              label: 'Normal Text',
-              id: 'p',
-              onSelect: onSelectBlockTypeItem,
-              active: activeBlockTypes.p,
-            },
-            {
-              label: 'Heading 1',
-              id: 'h1',
-              onSelect: onSelectBlockTypeItem,
-              active: activeBlockTypes.h1,
-            },
-            {
-              label: 'Heading 2',
-              id: 'h2',
-              onSelect: onSelectBlockTypeItem,
-              active: activeBlockTypes.h2,
-            },
-          ],
+          selectedItems: [selectedBlockType],
+          onSelect: onSelectBlockTypeItem,
+          items: blockTypeItems,
         },
         {
           type: 'button',

@@ -22,7 +22,8 @@ interface PlainObject {
 export const Cast = <GType = any>(arg: any): GType => arg;
 
 /**
- * Calls a function if defined and provides compile time type checking for the passed in parameters.
+ * Calls a function if defined and provides compile time type checking for the
+ * passed in parameters.
  *
  * @param fn - the function to call if it exists
  * @param args - the rest of the parameters with types
@@ -62,7 +63,8 @@ export const findMatches = (text: string, regexp: RegExp) => {
 };
 
 /**
- * A utility function to check whether the current browser is running on the android platform.
+ * A utility function to check whether the current browser is running on the
+ * android platform.
  * @public
  */
 export const isAndroidOS = () => {
@@ -143,8 +145,8 @@ export const trim = (str: string) => {
 };
 
 /**
- * Generate a random integer between min and max. If only one parameter is provided
- * minimum is set to 0.
+ * Generate a random integer between min and max. If only one parameter is
+ * provided minimum is set to 0.
  *
  * @param min - the minimum value
  * @param max - the maximum value
@@ -154,8 +156,8 @@ export const trim = (str: string) => {
 export const randomInt = (min: number, max?: number) => Math.floor(randomFloat(min, max));
 
 /**
- * Generate a random float between min and max. If only one parameter is provided
- * minimum is set to 0.
+ * Generate a random float between min and max. If only one parameter is
+ * provided minimum is set to 0.
  *
  * @param min - the minimum value
  * @param max - the maximum value
@@ -171,14 +173,13 @@ export const randomFloat = (min: number, max?: number) => {
 };
 
 /**
- * Converts a string, including strings in camelCase or snake_case, into Start Case (a variant
- * of Title Case where all words start with a capital letter), it keeps original single quote
- * and hyphen in the word.
+ * Converts a string, including strings in camelCase or snake_case, into Start
+ * Case (a variant of Title Case where all words start with a capital letter),
+ * it keeps original single quote and hyphen in the word.
  *
- *   'management_companies' to 'Management Companies'
- *   'managementCompanies' to 'Management Companies'
- *   `hell's kitchen` to `Hell's Kitchen`
- *   `co-op` to `Co-op`
+ *   'management_companies' to 'Management Companies' 'managementCompanies' to
+ *   'Management Companies' `hell's kitchen` to `Hell's Kitchen` `co-op` to
+ *   `Co-op`
  *
  * @param str - the string to examine
  */
@@ -195,15 +196,16 @@ const capitals = /[A-Z\u00C0-\u00D6\u00D9-\u00DD]/g;
 /**
  * Returns the kebab cased form of a string.
  *
- * Taken from https://github.com/angus-c/just/blob/master/packages/string-kebab-case/index.js
+ * Taken from
+ * https://github.com/angus-c/just/blob/master/packages/string-kebab-case/index.js
  * kebabCase('the quick brown fox'); // 'the-quick-brown-fox'
  * kebabCase('the-quick-brown-fox'); // 'the-quick-brown-fox'
  * kebabCase('the_quick_brown_fox'); // 'the-quick-brown-fox'
  * kebabCase('theQuickBrownFox'); // 'the-quick-brown-fox'
  * kebabCase('theQuickBrown Fox'); // 'the-quick-brown-fox'
- * kebabCase('thequickbrownfox'); // 'thequickbrownfox'
- * kebabCase('the - quick * brown# fox'); // 'the-quick-brown-fox'
- * kebabCase('theQUICKBrownFox'); // 'the-q-u-i-c-k-brown-fox'
+ * kebabCase('thequickbrownfox'); // 'thequickbrownfox' kebabCase('the - quick *
+ * brown# fox'); // 'the-quick-brown-fox' kebabCase('theQUICKBrownFox'); //
+ * 'the-q-u-i-c-k-brown-fox'
  */
 export const kebabCase = (str: string) => {
   // replace capitals with space + lower case equivalent for later parsing
@@ -250,7 +252,8 @@ export const uniqueId = ({ prefix = '', size }: UniqueIdParams = { prefix: '' })
 };
 
 /**
- * Takes a number of elements from the provided array starting from the zero-index
+ * Takes a number of elements from the provided array starting from the
+ * zero-index
  *
  * @param arr - the array to take from
  * @param num - the number of items to take
@@ -302,8 +305,8 @@ enum TypeName {
 const toString = Object.prototype.toString;
 
 /**
- * Retrieve the object type of a value via it's string reference. This is safer than
- * relying on instanceof checks which fail on cross-frame values.
+ * Retrieve the object type of a value via it's string reference. This is safer
+ * than relying on instanceof checks which fail on cross-frame values.
  *
  * @param value - the object to inspect
  */
@@ -323,8 +326,9 @@ const isOfType = <GType>(type: string, test?: (value: GType) => boolean) => (
 ): value is GType => (typeof value === type ? (test ? test(value as GType) : true) : false);
 
 /**
- * Get the object type of passed in value. This avoids the reliance on `instanceof` checks
- * which are subject to cross frame issues as outlined in this link https://bit.ly/1Qds27W
+ * Get the object type of passed in value. This avoids the reliance on
+ * `instanceof` checks which are subject to cross frame issues as outlined in
+ * this link https://bit.ly/1Qds27W
  *
  * @param type - the name of the object type to check for
  *
@@ -433,7 +437,8 @@ export const isSymbol = isOfType<symbol>('symbol');
 export const isInteger = (value: unknown): value is number => Number.isInteger(value as number);
 
 /**
- * Helper function for Number.isSafeInteger allowing for unknown values to be tested
+ * Helper function for Number.isSafeInteger allowing for unknown values to be
+ * tested
  *
  * @param value - the value to check
  *
@@ -647,8 +652,8 @@ export class Merge {
   /**
    * Create an object that will completely replace the key when merging.
    *
-   * @param [obj] - the object to replace the key with.
-   * When blank an empty object is used.
+   * @param [obj] - the object to replace the key with. When blank an empty
+   * object is used.
    */
   public static overwrite<GReturn = any>(obj: PlainObject = {}): GReturn {
     return new Merge(obj) as any;
@@ -677,8 +682,8 @@ export class Merge {
  * A deep merge which only merges plain objects and Arrays. It clones the object
  * before the merge so will not mutate any of the passed in values.
  *
- * To completely remove a key you can use the `Merge` helper class which replaces
- * it's key with a completely new object
+ * To completely remove a key you can use the `Merge` helper class which
+ * replaces it's key with a completely new object
  */
 export const deepMerge = <GType = any>(...objects: Array<PlainObject | unknown[]>): GType => {
   return merge<GType>(objects as any, { isMergeableObject: isPlainObject });
@@ -705,16 +710,15 @@ export const last = <GType>(array: GType[]) => array[array.length - 1];
  * Sorts an array while retaining the original order when the compare method
  * identifies the items as equal.
  *
- * `Array.prototype.sort()` is unstable and so values that are the same
- * will jump around in a non deterministic manner. Here I'm using the index
- * as a fallback. If two elements have the same priority the element with
- * the lower index is placed first hence retaining the original order.
+ * `Array.prototype.sort()` is unstable and so values that are the same will
+ * jump around in a non deterministic manner. Here I'm using the index as a
+ * fallback. If two elements have the same priority the element with the lower
+ * index is placed first hence retaining the original order.
  *
  * @param array - the array to sort
- * @param compareFn - compare the two value arguments `a` and `b`
- *                  - return 0 for equal
- *                  - return number > 0 for a > b
- *                  - return number < 0 for b > a
+ * @param compareFn - compare the two value arguments `a` and `b` - return 0 for
+ *                  equal - return number > 0 for a > b - return number < 0 for
+ *                  b > a
  */
 export const sort = <GType>(array: GType[], compareFn: (a: GType, b: GType) => number) => {
   return [...array]
@@ -756,14 +760,13 @@ export const get = <GReturn = any>(
 export * from 'throttle-debounce';
 
 /**
- * Create a unique array of objects from a getter function
- * or a property list.
+ * Create a unique array of objects from a getter function or a property list.
  *
  * @param array - the array to extract unique values from
- * @param getValue - a getter function or a string with the path to
- * the item that is being used as a a test for uniqueness.
- * @param fromStart - when true will remove duplicates from the start
- * rather than from the end
+ * @param getValue - a getter function or a string with the path to the item
+ * that is being used as a a test for uniqueness.
+ * @param fromStart - when true will remove duplicates from the start rather
+ * than from the end
  *
  * ```ts
  * import { uniqueBy } from '@remirror/core-helpers';
@@ -775,7 +778,7 @@ export * from 'throttle-debounce';
  * // Same as above
  * ```
  */
-export const uniqueBy = <GItem extends object = any, GKey = any>(
+export const uniqueBy = <GItem = any, GKey = any>(
   array: GItem[],
   getValue: ((item: GItem) => GKey) | string | Array<string | number>,
   fromStart = false,
@@ -800,7 +803,8 @@ export const uniqueBy = <GItem extends object = any, GKey = any>(
 /**
  * A typesafe implementation of `Object.entries`
  *
- * Taken from https://github.com/biggyspender/ts-entries/blob/master/src/ts-entries.ts
+ * Taken from
+ * https://github.com/biggyspender/ts-entries/blob/master/src/ts-entries.ts
  */
 export const entries = <
   GType extends object,
@@ -818,11 +822,21 @@ export const keys = <GObj extends object, GKey extends Extract<keyof GObj, strin
   Object.keys(obj) as GKey[];
 
 /**
+ * A more lenient typed version of `Array.prototype.includes` which allow less
+ * specific types to be checked.
+ */
+export const includes = <GType>(
+  array: GType[] | ReadonlyArray<GType>,
+  item: unknown,
+  fromIndex?: number,
+): item is GType => array.includes(item as GType, fromIndex);
+
+/**
  * Create a range from start to end.
  *
- * If only start is provided it creates an array of the size provided.
- * if start and end are provided it creates an array who's first position is
- * start and final position is end. i.e. `length = (end - start) + 1`
+ * If only start is provided it creates an array of the size provided. if start
+ * and end are provided it creates an array who's first position is start and
+ * final position is end. i.e. `length = (end - start) + 1`
  */
 export const range = (start: number, end?: number) => {
   return !isNumber(end)

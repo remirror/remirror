@@ -37,6 +37,8 @@
   "@remirror/extension-image": ["../../@remirror/extension-image/src"],
   "@remirror/extension-mention/lib": ["../../@remirror/extension-mention/src"],
   "@remirror/extension-mention": ["../../@remirror/extension-mention/src"],
+  "@remirror/multishift/lib": ["../../@remirror/multishift/src"],
+  "@remirror/multishift": ["../../@remirror/multishift/src"],
   "@remirror/react-hooks/lib": ["../../@remirror/react-hooks/src"],
   "@remirror/react-hooks": ["../../@remirror/react-hooks/src"],
   "@remirror/react-node-view/lib": ["../../@remirror/react-node-view/src"],

@@ -3,22 +3,27 @@ import React, { useState } from 'react';
 import { Dropdown } from '../dropdown';
 import { DropdownItem } from '../dropdown-types';
 
-const createItems = (onSelect: (item: DropdownItem) => void): DropdownItem[] => [
-  { label: 'Normal Text', id: 'p', onSelect },
-  { label: 'Heading 1', id: 'h1', onSelect },
-  { label: 'Heading 2', id: 'h2', onSelect },
+const items = [
+  { label: 'Normal Text', id: 'p' },
+  { label: 'Heading 1', id: 'h1' },
+  { label: 'Heading 2', id: 'h2' },
 ];
 
 test('Dropdown', () => {
   const label = 'Test';
   const Component = () => {
-    const [items, setItems] = useState(
-      createItems(item => {
-        setItems(items.map(ii => (ii.id === item.id ? { ...ii, active: true } : { ...ii, active: false })));
-      }),
+    const [selectedItems, setSelectedItems] = useState<DropdownItem[]>([]);
+    return (
+      <Dropdown
+        items={items}
+        label={label}
+        initialItem={items[0]}
+        selectedItems={selectedItems}
+        onSelect={selected => {
+          setSelectedItems(selected);
+        }}
+      />
     );
-
-    return <Dropdown items={items} label={label} initialItem={items[0]} />;
   };
 
   const { getByRole, getAllByRole } = render(<Component />);

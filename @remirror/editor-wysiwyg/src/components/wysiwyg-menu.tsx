@@ -255,7 +255,6 @@ const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink,
         onKeyPress={onKeyPress}
         css={css`
           border: none;
-          outline: none;
           color: white;
           background-color: transparent;
           min-width: 150px;
