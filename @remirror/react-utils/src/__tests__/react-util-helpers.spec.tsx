@@ -9,9 +9,10 @@ import {
   isRemirrorExtension,
   isRemirrorProvider,
   oneChildOnly,
+  RemirrorFC,
+  RemirrorType,
   uniqueClass,
-} from '../react-util-helpers';
-import { RemirrorElementType, RemirrorFC } from '../react-util-types';
+} from '../react-utils';
 
 test('getElementProps', () => {
   const expected = { id: 'test' };
@@ -44,19 +45,19 @@ test('uniqueClass', () => {
 
 test('isRemirrorExtension', () => {
   const Custom: RemirrorFC = () => <div />;
-  Custom.$$remirrorType = RemirrorElementType.Extension;
+  Custom.$$remirrorType = RemirrorType.Extension;
   expect(isRemirrorExtension(<Custom />)).toBeTrue();
 });
 
 test('isRemirrorProvider', () => {
   const Custom: RemirrorFC = () => <div />;
-  Custom.$$remirrorType = RemirrorElementType.EditorProvider;
+  Custom.$$remirrorType = RemirrorType.EditorProvider;
   expect(isRemirrorProvider(<Custom />)).toBeTrue();
 });
 
 test('isManagedRemirrorProvider', () => {
   const Custom: RemirrorFC = () => <div />;
-  Custom.$$remirrorType = RemirrorElementType.ManagedEditorProvider;
+  Custom.$$remirrorType = RemirrorType.ManagedEditorProvider;
   expect(isManagedRemirrorProvider(<Custom />)).toBeTrue();
 });
 

@@ -174,7 +174,7 @@ interface ContainsParams extends ProsemirrorNodeParams, NodeTypeParams {}
  * @remarks
  * ```ts
  * if (contains(panel, schema.nodes.listItem)) {
- *     // ...
+ *
  * }
  * ```
  */

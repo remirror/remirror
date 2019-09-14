@@ -1,6 +1,6 @@
 import { EMPTY_PARAGRAPH_NODE, Transaction } from '@remirror/core';
 import { asDefaultProps } from '@remirror/react-utils';
-import { RemirrorProps } from './components/remirror-types';
+import { RemirrorProps } from './react-types';
 
 export const defaultProps = asDefaultProps<RemirrorProps>()({
   initialContent: EMPTY_PARAGRAPH_NODE,

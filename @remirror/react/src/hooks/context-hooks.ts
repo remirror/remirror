@@ -1,26 +1,22 @@
 import { AnyExtension, ExtensionManager } from '@remirror/core';
-import { InjectedRemirrorProps, UsePositionerParams } from '@remirror/react-utils';
 import { useContext } from 'react';
-import { RemirrorContext, RemirrorManagerContext } from './react-contexts';
+import { RemirrorContext, RemirrorManagerContext } from '../react-contexts';
+import { InjectedRemirrorProps, UsePositionerParams } from '../react-types';
 
 /**
  * This provides access to the Remirror Editor context using hooks.
  *
  * ```ts
- * import { RemirrorProvider, useRemirror } from 'remirror';
- *
- * // ...
+ * import { RemirrorProvider, useRemirrorContext } from 'remirror';
  *
  * function HooksComponent(props) {
  *   // This pull the remirror props out from the context.
- *   const { getPositionerProps } = useRemirror();
+ *   const { getPositionerProps } = useRemirrorContext();
  *
- *   // ...
  *   return <Menu {...getPositionerProps()} />;
  * }
  *
  * class App extends Component {
- *   // ...
  *   render() {
  *     return (
  *       <RemirrorProvider>
@@ -31,7 +27,7 @@ import { RemirrorContext, RemirrorManagerContext } from './react-contexts';
  * }
  * ```
  */
-export const useRemirror = <GExtension extends AnyExtension = any>() => {
+export const useRemirrorContext = <GExtension extends AnyExtension = any>() => {
   const params = useContext<InjectedRemirrorProps<GExtension>>(RemirrorContext as any);
 
   if (!params) {
@@ -66,7 +62,6 @@ export const useRemirrorManager = <GExtension extends AnyExtension = any>() => {
  *   return (
  *     <div style={{ bottom, left }}>
  *       <MenuIcon {...properties} />
- *       // ...
  *     </div>
  *   );
  * }
@@ -85,7 +80,7 @@ export const usePositioner = <GRefKey extends string = 'ref'>({
   positioner,
   ...rest
 }: UsePositionerParams<GRefKey>) => {
-  const { getPositionerProps } = useRemirror();
+  const { getPositionerProps } = useRemirrorContext();
 
   return getPositionerProps<GRefKey>({ ...positioner, ...rest });
 };

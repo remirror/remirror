@@ -1,5 +1,4 @@
-export * from './remirror';
+export * from './remirror-component';
 export * from './remirror-manager';
 export * from './remirror-extension';
-export * from './providers';
-export * from './remirror-types';
+export * from './remirror-providers';

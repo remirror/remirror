@@ -1,5 +1,4 @@
-import React from 'react';
-
+// tslint:disable: no-implicit-dependencies
 import {
   DocExtension,
   ExtensionManager,
@@ -13,8 +12,8 @@ import { simpleJSON, testJSON } from '@test-fixtures/object-nodes';
 import { createTestManager } from '@test-fixtures/schema-helpers';
 import { shallow } from 'enzyme';
 import { Node as PMNode } from 'prosemirror-model';
-
-import { ReactSerializer } from '../serializer';
+import React from 'react';
+import { ReactSerializer } from '../react-serializer';
 
 class FooExtension extends NodeExtension {
   public name = 'foo';

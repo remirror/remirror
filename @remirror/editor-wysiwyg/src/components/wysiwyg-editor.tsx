@@ -21,7 +21,12 @@ import {
 import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { DropCursorExtension } from '@remirror/extension-drop-cursor';
 import { ImageExtension } from '@remirror/extension-image';
-import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager, useRemirror } from '@remirror/react';
+import {
+  ManagedRemirrorProvider,
+  RemirrorExtension,
+  RemirrorManager,
+  useRemirrorContext,
+} from '@remirror/react';
 import { ThemeProvider } from 'emotion-theming';
 import React, { FC, useState } from 'react';
 import { wysiwygEditorTheme } from '../wysiwyg-theme';
@@ -120,7 +125,7 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
  * Any component rendered has access to the remirror context.
  */
 const InnerEditor: FC<BubbleMenuProps> = ({ linkActivated, deactivateLink, activateLink }) => {
-  const { getRootProps } = useRemirror<WysiwygExtensions>();
+  const { getRootProps } = useRemirrorContext<WysiwygExtensions>();
 
   return (
     <EditorWrapper>

@@ -1,10 +1,7 @@
 import {
   AnyExtension,
   bool,
-  CompareStateParams,
   EDITOR_CLASS_NAME,
-  EditorSchema,
-  EditorStateParams,
   EditorView as EditorViewType,
   ExtensionManager,
   fromHTML,
@@ -20,77 +17,45 @@ import {
   shouldUseDOMEnvironment,
   toHTML,
   Transaction,
-  TransactionParams,
   uniqueId,
 } from '@remirror/core';
 import { PortalContainer, RemirrorPortals } from '@remirror/react-portals';
 import { createEditorView, RemirrorSSR } from '@remirror/react-ssr';
 import {
   addKeyToElement,
-  BaseListenerParams,
-  CalculatePositionerParams,
   cloneElement,
   getElementProps,
-  GetPositionerPropsConfig,
-  GetPositionerReturn,
-  GetRootPropsConfig,
-  InjectedRemirrorProps,
   isManagedRemirrorProvider,
   isReactDOMElement,
   isRemirrorContextProvider,
   isRemirrorProvider,
-  PositionerMapValue,
-  PositionerProps,
-  PositionerRefFactoryParams,
   propIsFunction,
-  RefKeyRootProps,
-  RemirrorElementType,
-  RemirrorEventListenerParams,
-  RemirrorStateListenerParams,
+  RemirrorType,
 } from '@remirror/react-utils';
 import { RemirrorThemeContext } from '@remirror/ui';
 import { EditorState } from 'prosemirror-state';
 import React, { PureComponent, ReactNode, Ref } from 'react';
 import { defaultProps } from '../react-constants';
 import { defaultPositioner } from '../react-positioners';
-import { RemirrorProps } from './remirror-types';
-
-interface UpdateStateParams<GSchema extends EditorSchema = any>
-  extends Partial<TransactionParams<GSchema>>,
-    EditorStateParams<GSchema> {
-  /**
-   * Called after the state has updated.
-   */
-  onUpdate?(): void;
-
-  /**
-   * Whether or not to trigger this as a change and call any handlers.
-   *
-   * @default true
-   */
-  triggerOnChange?: boolean;
-}
-
-interface EditorStateEventListenerParams<
-  GExtension extends AnyExtension = any,
-  GSchema extends EditorSchema = any
-> extends Partial<CompareStateParams<GSchema>>, Pick<BaseListenerParams<GExtension>, 'tr'> {}
-
-interface RemirrorState<GSchema extends EditorSchema = any> {
-  /**
-   * The Prosemirror editor state
-   */
-  editor: CompareStateParams<GSchema>;
-  /**
-   * Used when suppressHydrationWarning is true to determine when it's okay to
-   * render the client content.
-   */
-  shouldRenderClient?: boolean;
-}
-
-interface ListenerParams<GExtension extends AnyExtension = any, GSchema extends EditorSchema = any>
-  extends Partial<EditorStateParams<GSchema>>,
-    Pick<BaseListenerParams<GExtension>, 'tr'> {}
+import {
+  BaseListenerParams,
+  CalculatePositionerParams,
+  EditorStateEventListenerParams,
+  GetPositionerPropsConfig,
+  GetPositionerReturn,
+  GetRootPropsConfig,
+  InjectedRemirrorProps,
+  ListenerParams,
+  PositionerMapValue,
+  PositionerProps,
+  PositionerRefFactoryParams,
+  RefKeyRootProps,
+  RemirrorEventListenerParams,
+  RemirrorProps,
+  RemirrorState,
+  RemirrorStateListenerParams,
+  UpdateStateParams,
+} from '../react-types';
 
 export class Remirror<GExtension extends AnyExtension = any> extends PureComponent<
   RemirrorProps<GExtension>,
@@ -106,7 +71,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * Sets a flag to be a static remirror
    */
-  public static $$remirrorType = RemirrorElementType.Editor;
+  public static $$remirrorType = RemirrorType.Editor;
 
   /**
    * This is needed to manage the controlled component `value` prop and copy it

@@ -1,5 +1,5 @@
 import { AnyExtension, EditorStateParams, ManagerParams, PlainObject } from '@remirror/core';
-import { mapProps, ReactSerializer } from '@remirror/renderer-react';
+import { mapProps, ReactSerializer } from '@remirror/react-renderer';
 import React from 'react';
 
 export interface RemirrorSSRProps<GExtension extends AnyExtension = any>

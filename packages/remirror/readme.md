@@ -113,19 +113,3 @@ const EditorLayout: FunctionComponent = () => {
   );
 };
 ```
-
-The above example uses hooks but you can just as easily rely on Higher Order Components (HOC's) to wrap your component.
-
-In a similar fashion Higher Order Components (HOC's) can be used to wrap a component.
-
-```ts
-import { withRemirror } from 'remirror';
-
-// ...
-
-function SimpleMenu({ getPositionerProps }: InjectedRemirrorProps) {
-  return <Menu {...getPositionerProps()} />;
-}
-
-export const WrappedSimpleMenu = withRemirror(SimpleMenu);
-```

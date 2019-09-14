@@ -3,6 +3,9 @@ import { bool, isArray, isFunction, isObject, isString, uniqueArray } from '@rem
 import { AnyFunction, PlainObject } from '@remirror/core-types';
 import {
   Children,
+  ComponentClass,
+  ComponentType,
+  FC,
   Fragment,
   isValidElement as reactIsValidElement,
   LegacyRef,
@@ -10,7 +13,45 @@ import {
   ReactElement,
   ReactNode,
 } from 'react';
-import { RemirrorComponentType, RemirrorElement, RemirrorElementType } from './react-util-types';
+
+export interface RemirrorComponentStaticProperties {
+  /**
+   * Identifies this as a remirror specific component
+   */
+  $$remirrorType: RemirrorType;
+}
+
+export type RemirrorFC<P extends {} = {}> = FC<P> & RemirrorComponentStaticProperties;
+export type RemirrorComponentClass<P extends {} = {}> = ComponentClass<P> & RemirrorComponentStaticProperties;
+
+export interface RemirrorManagerProps {
+  /**
+   * Whether to use base extensions
+   */
+  useBaseExtensions?: boolean;
+}
+
+export type RemirrorComponentType<P extends {} = {}> = ComponentType<P> & RemirrorComponentStaticProperties;
+export type RemirrorElement<GOptions extends {} = any> = ReactElement<any> & {
+  type: RemirrorComponentType<GOptions>;
+};
+
+/**
+ * These are the constants used to determine whether an element is a remirror constant.
+ */
+export enum RemirrorType {
+  Extension = 'extension',
+  SSR = 'ssr',
+  EditorProvider = 'editor-provider',
+  ManagedEditorProvider = 'managed-editor-provider',
+  Editor = 'editor',
+  Manager = 'manager',
+  ManagerProvider = 'manager-provider',
+  /**
+   * Used to identify the ContextProviderWrapper
+   */
+  ContextProvider = 'context-provider',
+}
 
 /**
  * A drop in replacement for built in React.isValidElement which accepts a test value of any type
@@ -86,7 +127,7 @@ export const isRemirrorElement = <GOptions extends {} = any>(
   );
 };
 
-const isRemirrorElementOfType = (type: RemirrorElementType) => <GOptions extends {} = any>(
+const isRemirrorElementOfType = (type: RemirrorType) => <GOptions extends {} = any>(
   value: unknown,
 ): value is RemirrorElement<GOptions> => isRemirrorElement(value) && value.type.$$remirrorType === type;
 
@@ -98,7 +139,7 @@ const isRemirrorElementOfType = (type: RemirrorElementType) => <GOptions extends
  *
  * @param value - the value to check
  */
-export const isRemirrorContextProvider = isRemirrorElementOfType(RemirrorElementType.ContextProvider);
+export const isRemirrorContextProvider = isRemirrorElementOfType(RemirrorType.ContextProvider);
 
 /**
  * Checks if this is a RemirrorExtension type. These are used to configure the extensions that determine
@@ -106,14 +147,14 @@ export const isRemirrorContextProvider = isRemirrorElementOfType(RemirrorElement
  *
  * @param value - the value to check
  */
-export const isRemirrorExtension = isRemirrorElementOfType(RemirrorElementType.Extension);
+export const isRemirrorExtension = isRemirrorElementOfType(RemirrorType.Extension);
 
 /**
  * Finds if this is a RemirrorProvider (which provides the RemirrorInjectedProps into the context);
  *
  * @param value - the value to check
  */
-export const isRemirrorProvider = isRemirrorElementOfType(RemirrorElementType.EditorProvider);
+export const isRemirrorProvider = isRemirrorElementOfType(RemirrorType.EditorProvider);
 
 /**
  * Checks if this is a ManagedRemirrorProvider which pulls in the manager from the context and places it's children
@@ -121,7 +162,7 @@ export const isRemirrorProvider = isRemirrorElementOfType(RemirrorElementType.Ed
  *
  * @param value - the value to check
  */
-export const isManagedRemirrorProvider = isRemirrorElementOfType(RemirrorElementType.ManagedEditorProvider);
+export const isManagedRemirrorProvider = isRemirrorElementOfType(RemirrorType.ManagedEditorProvider);
 
 /**
  * Clones an element while also enabling the css prop on jsx elements at the same time.

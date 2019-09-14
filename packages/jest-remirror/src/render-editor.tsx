@@ -10,8 +10,7 @@ import {
   MarkExtension,
   NodeExtension,
 } from '@remirror/core';
-import { Remirror, RemirrorProps } from '@remirror/react';
-import { InjectedRemirrorProps } from '@remirror/react-utils';
+import { InjectedRemirrorProps, Remirror, RemirrorProps } from '@remirror/react';
 import { render } from '@testing-library/react/pure';
 import { TestEditorView } from 'jest-prosemirror';
 import { markFactory, nodeFactory } from './builder';

@@ -15,7 +15,7 @@ import {
   PlainObject,
   ProsemirrorNode,
 } from '@remirror/core';
-import { mapProps } from './utils';
+import { mapProps } from './renderer-utils';
 
 type NodeToDOM = NodeExtensionSpec['toDOM'];
 type MarkToDOM = MarkExtensionSpec['toDOM'];

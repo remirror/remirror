@@ -4,6 +4,7 @@ import {
   ActionsFromExtensions,
   AnyExtension,
   CompareStateParams,
+  EditorSchema,
   EditorState,
   EditorStateParams,
   EditorView,
@@ -16,12 +17,214 @@ import {
   PlainObject,
   Position,
   PositionParams,
+  ProsemirrorNode,
   RemirrorContentType,
+  RemirrorInterpolation,
+  RenderEnvironment,
   SchemaFromExtensions,
+  StringHandlerParams,
   TextParams,
   Transaction,
+  TransactionParams,
+  TransactionTransformer,
 } from '@remirror/core';
-import { ComponentClass, ComponentType, FC, ReactElement, ReactNode, Ref } from 'react';
+import { ReactNode, Ref } from 'react';
+
+export interface RemirrorProps<GExtension extends AnyExtension = any> extends StringHandlerParams {
+  /**
+   * Pass in the extension manager.
+   *
+   * The manager is responsible for handling all Prosemirror related
+   * functionality.
+   */
+  manager: ExtensionManager<GExtension>;
+
+  /**
+   * Set the starting value object of the editor.
+   *
+   * Without setting onStateChange remirror renders as an uncontrolled
+   * component. Value changes are passed back out of the editor and there is now
+   * way to set the value via props. As a result this is the only opportunity to
+   * directly control the rendered text.
+   *
+   * @defaultValue `{ type: 'doc', content: [{ type: 'paragraph' }] }`
+   */
+  initialContent: RemirrorContentType;
+
+  /**
+   * If this exists the editor becomes a controlled component. Nothing will be
+   * updated unless you explicitly set the value prop to the updated state.
+   *
+   * Without a deep understanding of Prosemirror this is not recommended.
+   */
+  onStateChange?(params: RemirrorStateListenerParams<GExtension>): void;
+
+  /**
+   * When onStateChange is defined this prop is used to set the next state value
+   * of the remirror editor.
+   */
+  value?: EditorState<SchemaFromExtensions<GExtension>> | null;
+
+  /**
+   * Adds attributes directly to the prosemirror html element.
+   *
+   * @defaultValue `{}`
+   */
+  attributes: Record<string, string> | AttributePropFunction;
+
+  /**
+   * Determines whether this editor is editable or not.
+   *
+   * @defaultValue true
+   */
+  editable: boolean;
+
+  /**
+   * When set to true focus will be place on the editor as soon as it first
+   * loads.
+   *
+   * @defaultValue false
+   */
+  autoFocus?: boolean;
+
+  /**
+   * An event listener which is called whenever the editor gains focus.
+   */
+  onFocus?: (params: RemirrorEventListenerParams<GExtension>, event: Event) => void;
+
+  /**
+   * An event listener which is called whenever the editor is blurred.
+   */
+  onBlur?: (params: RemirrorEventListenerParams<GExtension>, event: Event) => void;
+
+  /**
+   * Called on the first render when the prosemirror instance first becomes
+   * available
+   */
+  onFirstRender?: RemirrorEventListener<GExtension>;
+
+  /**
+   * Called on every change to the Prosemirror state.
+   */
+  onChange?: RemirrorEventListener<GExtension>;
+
+  /**
+   * The render prop that takes the injected remirror params and returns an
+   * element to render. The editor view is automatically attached to the DOM.
+   */
+  children: RenderPropFunction<GExtension>;
+
+  /**
+   * A method called when the editor is dispatching the transaction.
+   *
+   * @remarks
+   * Use this to update the transaction which will be used to update the editor
+   * state.
+   */
+  onDispatchTransaction: TransactionTransformer<SchemaFromExtensions<GExtension>>;
+
+  /**
+   * Sets the accessibility label for the editor instance.
+   *
+   * @defaultValue ''
+   */
+  label: string;
+
+  /**
+   * Determines whether or not to use the built in extensions.
+   *
+   * @remarks
+   *
+   * Use this if you would like to take full control of all your extensions and
+   * have some understanding of the underlying Prosemirror internals.
+   *
+   * ```ts
+   * const builtInExtensions = [new DocExtension(), new TextExtension(), new ParagraphExtension()]
+   * ```
+   *
+   * @defaultValue true
+   */
+  usesBuiltInExtensions: boolean;
+
+  /**
+   * Determine whether the editor should use default styles.
+   *
+   * @defaultValue true
+   */
+  usesDefaultStyles: boolean;
+
+  /**
+   * Additional editor styles passed into prosemirror. Used to provide styles
+   * for the text, nodes and marks rendered in the editor.
+   *
+   * @defaultValue `{}`
+   *
+   * @deprecated use `styles` or `css` prop instead.
+   */
+  editorStyles: RemirrorInterpolation;
+
+  /**
+   * Addition styles that will be passed directly to the prosemirror editor dom node.
+   *
+   * This can be used to provide extra styles
+   *
+   */
+  styles?: RemirrorInterpolation;
+
+  /**
+   * Emotion css prop for injecting styles into a component.
+   */
+  css?: Interpolation;
+
+  /**
+   * Determine whether the Prosemirror view is inserted at the `start` or `end`
+   * of it's container DOM element.
+   *
+   * @defaultValue 'end'
+   */
+  insertPosition: 'start' | 'end';
+
+  /**
+   * By default remirror will work out whether this is a dom environment or
+   * server environment for SSR rendering. You can override this behaviour here
+   * when required.
+   */
+  forceEnvironment?: RenderEnvironment;
+
+  /**
+   * Set to true to ignore the hydration warning for a mismatch between the
+   * rendered server and client content.
+   *
+   * @remarks
+   *
+   * This is a potential solution for those who require server side rendering.
+   *
+   * While on the server the prosemirror document is transformed into a react
+   * component so that it can be rendered. The moment it enters the DOM
+   * environment prosemirror takes over control of the root element. The problem
+   * is that this will always see this hydration warning on the client:
+   *
+   * `Warning: Did not expect server HTML to contain a <div> in <div>.`
+   *
+   * Setting this to true removes the warning at the cost of a slightly slower
+   * start up time. It uses the two pass solution mentioned in the react docs.
+   * See {@link https://reactjs.org/docs/react-dom.html#hydrate}.
+   *
+   * The props also takes it's name from a similar API used by react for DOM
+   * Elements. See {@link
+   * https://reactjs.org/docs/dom-elements.html#suppresshydrationwarning.
+   */
+  suppressHydrationWarning?: boolean;
+
+  /**
+   * The value to use for empty content.
+   *
+   * This is the value used for an empty editor or when `resetContent` is called.
+   *
+   * @default EMPTY_PARAGRAPH_NODE
+   */
+  fallbackContent: ObjectNode | ProsemirrorNode;
+}
 
 export interface Positioner<GExtension extends AnyExtension = any> {
   /**
@@ -41,7 +244,7 @@ export interface Positioner<GExtension extends AnyExtension = any> {
    * ```ts
    * const positioner: Positioner = {
    *   hasChanged: () => true
-   * // ... other properties
+   *
    * };
    *
    * @param params
@@ -156,10 +359,10 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
    * **Example with indirectly nested components**
    *
    * ```tsx
-   * import { ManagedRemirrorProvider, RemirrorManager, useRemirror } from '@remirror/react';
+   * import { ManagedRemirrorProvider, RemirrorManager, useRemirrorContext } from '@remirror/react';
    *
    * const InnerEditor = () => {
-   *   const { getRootProps } = useRemirror();
+   *   const { getRootProps } = useRemirrorContext();
    *   return <div {...getRootProps()} />;
    * }
    *
@@ -326,23 +529,6 @@ export interface UsePositionerParams<GRefKey extends string = 'ref'>
     PositionerParams,
     RefParams<GRefKey> {}
 
-/**
- * Used to mark a remirror specific component to determine it's behaviour.
- */
-export enum RemirrorElementType {
-  Extension = 'extension',
-  SSR = 'ssr',
-  EditorProvider = 'editor-provider',
-  ManagedEditorProvider = 'managed-editor-provider',
-  Editor = 'editor',
-  Manager = 'manager',
-  ManagerProvider = 'manager-provider',
-  /**
-   * Used to identify the ContextProviderWrapper
-   */
-  ContextProvider = 'context-provider',
-}
-
 export type RemirrorExtensionProps<
   GConstructor extends { prototype: AnyExtension },
   GExtension extends AbstractInstanceType<GConstructor>,
@@ -375,23 +561,39 @@ export interface BaseExtensionProps {
   children?: never;
 }
 
-export interface RemirrorComponentStaticProperties {
+export interface UpdateStateParams<GSchema extends EditorSchema = any>
+  extends Partial<TransactionParams<GSchema>>,
+    EditorStateParams<GSchema> {
   /**
-   * Identifies this as a remirror specific component
+   * Called after the state has updated.
    */
-  $$remirrorType: RemirrorElementType;
+  onUpdate?(): void;
+
+  /**
+   * Whether or not to trigger this as a change and call any handlers.
+   *
+   * @default true
+   */
+  triggerOnChange?: boolean;
 }
 
-export type RemirrorComponentType<P extends {} = {}> = ComponentType<P> & RemirrorComponentStaticProperties;
-export type RemirrorFC<P extends {} = {}> = FC<P> & RemirrorComponentStaticProperties;
-export type RemirrorComponentClass<P extends {} = {}> = ComponentClass<P> & RemirrorComponentStaticProperties;
-export type RemirrorElement<GOptions extends {} = any> = ReactElement<any> & {
-  type: RemirrorComponentType<GOptions>;
-};
+export interface EditorStateEventListenerParams<
+  GExtension extends AnyExtension = any,
+  GSchema extends EditorSchema = any
+> extends Partial<CompareStateParams<GSchema>>, Pick<BaseListenerParams<GExtension>, 'tr'> {}
 
-export interface RemirrorManagerProps {
+export interface RemirrorState<GSchema extends EditorSchema = any> {
   /**
-   * Whether to use base extensions
+   * The Prosemirror editor state
    */
-  useBaseExtensions?: boolean;
+  editor: CompareStateParams<GSchema>;
+  /**
+   * Used when suppressHydrationWarning is true to determine when it's okay to
+   * render the client content.
+   */
+  shouldRenderClient?: boolean;
 }
+
+export interface ListenerParams<GExtension extends AnyExtension = any, GSchema extends EditorSchema = any>
+  extends Partial<EditorStateParams<GSchema>>,
+    Pick<BaseListenerParams<GExtension>, 'tr'> {}

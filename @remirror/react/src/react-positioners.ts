@@ -8,7 +8,7 @@ import {
   NodeType,
   selectionEmpty,
 } from '@remirror/core';
-import { Positioner } from '@remirror/react-utils';
+import { Positioner } from './react-types';
 
 export const defaultPositioner: Positioner = {
   initialPosition: { top: -9999, left: -9999, right: 99999, bottom: 99999 },

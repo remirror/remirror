@@ -3,18 +3,9 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "lib": ["dom", "esnext"],
     "jsx": "preserve",
-    "types": [
-      "jest",
-      "jest-extended",
-      "jest-axe",
-      "@testing-library/jest-dom/extend-expect",
-      "jest-emotion"
-    ],
+    "types": ["jest", "jest-extended", "jest-axe", "@testing-library/jest-dom/extend-expect", "jest-emotion"],
     "moduleResolution": "node",
     "noImplicitReturns": true,
     "sourceMap": true,

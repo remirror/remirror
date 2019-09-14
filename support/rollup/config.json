@@ -88,6 +88,10 @@
     "root": "@remirror"
   },
   {
+    "path": "../../@remirror/react-renderer/package.json",
+    "root": "@remirror"
+  },
+  {
     "path": "../../@remirror/react-ssr/package.json",
     "root": "@remirror"
   },
@@ -97,10 +101,6 @@
   },
   {
     "path": "../../@remirror/react/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/renderer-react/package.json",
     "root": "@remirror"
   },
   {

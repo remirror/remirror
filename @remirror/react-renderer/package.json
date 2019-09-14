@@ -1,10 +1,10 @@
 {
-  "name": "@remirror/renderer-react",
+  "name": "@remirror/react-renderer",
   "description": "renderer-react utilities for remirror",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/renderer-react",
-  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/renderer-react",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/react-renderer",
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/react-renderer",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/renderer-react.esm.js",

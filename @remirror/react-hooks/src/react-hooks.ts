@@ -313,7 +313,7 @@ export const useUnmount = (fn: () => void | undefined) => {
  * All timeouts are automatically cleared when unmounting.
  */
 export const useTimeouts = () => {
-  const timeoutIds = useRef<number[]>([]);
+  const timeoutIds = useRef<any[]>([]);
 
   const setHookTimeout = (fn: () => void, time = 1) => {
     const id = setTimeout(() => {

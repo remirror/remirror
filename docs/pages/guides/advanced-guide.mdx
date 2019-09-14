@@ -159,7 +159,7 @@ const InnerEditor: FC<BubbleMenuProps> = ({
   deactivateLinkExtension,
   activateLinkExtension,
 }) => {
-  const { getRootProps } = useRemirror();
+  const { getRootProps } = useRemirrorContext();
 
   return (
     <EditorWrapper>
@@ -195,7 +195,7 @@ Option 2: Pass all of the props from `getRootProps()` (get this from the `useRem
 Note the example above, or:
 
 ```tsx
-import { useRemirror, ManagedRemirrorProvider } from '@remirror/react';
+import { useRemirrorContext, ManagedRemirrorProvider } from '@remirror/react';
 
 const MyEditor = () => (
   <ManagedRemirrorProvider>
@@ -208,7 +208,7 @@ const MyEditor = () => (
  * Inject the editor here using `getRootProps`
  */
 const MyInnerEditor = () => {
-  const { getRootProps } = useRemirror();
+  const { getRootProps } = useRemirrorContext();
 
   return (
     <div>

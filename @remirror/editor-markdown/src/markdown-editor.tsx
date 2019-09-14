@@ -35,8 +35,7 @@ import {
 } from '@remirror/core-extensions';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { ImageExtension } from '@remirror/extension-image';
-import { RemirrorProvider, RemirrorProviderProps } from '@remirror/react';
-import { RemirrorStateListenerParams } from '@remirror/react-utils';
+import { RemirrorProvider, RemirrorProviderProps, RemirrorStateListenerParams } from '@remirror/react';
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { fromMarkdown } from './from-markdown';
 import { toMarkdown } from './to-markdown';

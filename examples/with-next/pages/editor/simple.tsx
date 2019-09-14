@@ -13,13 +13,13 @@ import {
   RemirrorEventListener,
   RemirrorExtension,
   RemirrorManager,
-  useRemirror,
+  useRemirrorContext,
 } from '@remirror/react';
 
 type SimpleExtensions = BoldExtension | ItalicExtension | PlaceholderExtension | UnderlineExtension;
 
 const SillyMenu: FC = () => {
-  const { getPositionerProps, actions } = useRemirror<SimpleExtensions>();
+  const { getPositionerProps, actions } = useRemirrorContext<SimpleExtensions>();
 
   const runAction = memoize(
     (method: () => void): MouseEventHandler<HTMLElement> => e => {

@@ -4,10 +4,10 @@ import { TestExtension } from '@test-fixtures/schema-helpers';
 import { render, RenderResult } from '@testing-library/react';
 import { EditorView } from 'prosemirror-view';
 import React, { FC } from 'react';
-import { useRemirrorManager } from '../../react-hooks';
-import { ManagedRemirrorProvider } from '../providers';
+import { useRemirrorManager } from '../../hooks/context-hooks';
 import { RemirrorExtension } from '../remirror-extension';
 import { RemirrorManager } from '../remirror-manager';
+import { ManagedRemirrorProvider } from '../remirror-providers';
 
 test('a manager is created', () => {
   expect.assertions(1);

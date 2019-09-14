@@ -1,16 +1,11 @@
 import { AnyExtension, MakeOptional } from '@remirror/core';
-import {
-  GetRootPropsConfig,
-  InjectedRemirrorProps,
-  oneChildOnly,
-  RemirrorElementType,
-} from '@remirror/react-utils';
+import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 import React, { ProviderProps, ReactElement } from 'react';
+import { useRemirrorManager } from '../hooks/context-hooks';
 import { defaultProps } from '../react-constants';
 import { RemirrorContext } from '../react-contexts';
-import { useRemirrorManager } from '../react-hooks';
-import { Remirror } from './remirror';
-import { RemirrorProps } from './remirror-types';
+import { GetRootPropsConfig, InjectedRemirrorProps, RemirrorProps } from '../react-types';
+import { Remirror } from './remirror-component';
 
 export interface RemirrorContextProviderProps<GExtension extends AnyExtension = any>
   extends ProviderProps<InjectedRemirrorProps<GExtension>> {
@@ -71,7 +66,7 @@ const RemirrorContextProvider = <GExtension extends AnyExtension = any>({
   return <Component {...props} />;
 };
 
-RemirrorContextProvider.$$remirrorType = RemirrorElementType.ContextProvider;
+RemirrorContextProvider.$$remirrorType = RemirrorType.ContextProvider;
 RemirrorContextProvider.defaultProps = {
   childAsRoot: false,
 };
@@ -86,10 +81,6 @@ RemirrorContextProvider.defaultProps = {
  * These can either be consumed using React Hooks
  * - `useRemirrorContext`
  * - `usePositioner`
- *
- * Or the higher order components
- * - `withRemirror`
- * - `withPositioner`
  */
 export const RemirrorProvider = <GExtension extends AnyExtension = any>({
   children,
@@ -110,7 +101,7 @@ export const RemirrorProvider = <GExtension extends AnyExtension = any>({
   );
 };
 
-RemirrorProvider.$$remirrorType = RemirrorElementType.EditorProvider;
+RemirrorProvider.$$remirrorType = RemirrorType.EditorProvider;
 
 export interface ManagedRemirrorProviderProps<GExtension extends AnyExtension = any>
   extends Omit<RemirrorProviderProps<GExtension>, 'manager'> {}
@@ -134,4 +125,4 @@ export const ManagedRemirrorProvider = <GExtension extends AnyExtension = any>({
   ) : null;
 };
 
-ManagedRemirrorProvider.$$remirrorType = RemirrorElementType.ManagedEditorProvider;
+ManagedRemirrorProvider.$$remirrorType = RemirrorType.ManagedEditorProvider;

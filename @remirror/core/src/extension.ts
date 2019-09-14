@@ -386,10 +386,10 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * }
    *
    * // app.tsx
-   * import { useRemirror } from '@remirror/react';
+   * import { useRemirrorContext } from '@remirror/react';
    *
    * export const MyApp = () => {
-   *   const { helpers } = useRemirror();
+   *   const { helpers } = useRemirrorContext();
    *
    *   return helpers.isMyCodeBeautiful() ? (<span>😍</span>) : (<span>😢</span>);
    * };

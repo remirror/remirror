@@ -1,6 +1,6 @@
 import { Attrs, EditorView, RemirrorTheme } from '@remirror/core';
 import { MentionExtensionAttrs, SuggestionStateMatch } from '@remirror/extension-mention';
-import { useRemirror } from '@remirror/react';
+import { useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import React, { forwardRef, FunctionComponent } from 'react';
 import {
@@ -155,7 +155,7 @@ export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
   data,
   setExitTriggeredInternally,
 }) => {
-  const { view, actions } = useRemirror<SocialExtensions>();
+  const { view, actions } = useRemirrorContext<SocialExtensions>();
 
   /**
    * Click handler for accepting a user suggestion
@@ -218,7 +218,7 @@ export const TagSuggestions: FunctionComponent<TagSuggestionsProps> = ({
   data,
   setExitTriggeredInternally,
 }) => {
-  const { view, actions } = useRemirror<SocialExtensions>();
+  const { view, actions } = useRemirrorContext<SocialExtensions>();
 
   /**
    * Click handler for accepting a tag suggestion

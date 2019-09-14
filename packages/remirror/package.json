@@ -23,8 +23,7 @@
   "dependencies": {
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
-    "@remirror/react": "0.4.2-canary.2",
-    "@remirror/renderer-react": "0.4.2-canary.2"
+    "@remirror/react": "0.4.2-canary.2"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",

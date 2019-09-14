@@ -7,10 +7,10 @@ import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
 import { TestExtension } from '@test-fixtures/schema-helpers';
 import React, { FC } from 'react';
 import { renderToString } from 'react-dom/server';
-import { useRemirrorManager } from '../../react-hooks';
-import { ManagedRemirrorProvider } from '../providers';
+import { useRemirrorManager } from '../../hooks/context-hooks';
 import { RemirrorExtension } from '../remirror-extension';
 import { RemirrorManager } from '../remirror-manager';
+import { ManagedRemirrorProvider } from '../remirror-providers';
 
 test('it supports <RemirrorExtension />', () => {
   expect.assertions(2);

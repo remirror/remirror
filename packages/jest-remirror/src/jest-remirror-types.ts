@@ -15,7 +15,7 @@ import {
   SchemaFromExtensions,
   SchemaParams,
 } from '@remirror/core';
-import { InjectedRemirrorProps } from '@remirror/react-utils';
+import { InjectedRemirrorProps } from '@remirror/react';
 import { EventType, RenderResult } from '@testing-library/react/pure';
 import { TestEditorView } from 'jest-prosemirror';
 import { Node as PMNode } from 'prosemirror-model';

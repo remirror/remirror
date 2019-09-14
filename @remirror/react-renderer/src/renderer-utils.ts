@@ -1,7 +1,7 @@
 import { PlainObject } from '@remirror/core';
-import { possibleStandardNames } from './standard-names';
+import { possibleStandardNames } from './renderer-constants';
 
-export const getPossibleStandardName = (key: string): string => {
+const getPossibleStandardName = (key: string): string => {
   if (!possibleStandardNames.hasOwnProperty(key)) {
     return key;
   }

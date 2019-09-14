@@ -24,7 +24,6 @@ For a quick and simple setup add the following to your jest.config.js file.
 /* jest.config.js */
 
 module.exports = {
-  //...
   setupFilesAfterEnv: ['jest-remirror/environment'],
   testEnvironment: 'jsdom', // Required for dom manipulation
 };
@@ -71,7 +70,6 @@ In your `jest.config.js` file add this to the configuration
 /* jest.config.js */
 
 module.exports = {
-  //...
   setupFilesAfterEnv: ['<rootDir>/jest.framework.dom.ts'],
   testEnvironment: 'jsdom', // Required for dom manipulation
 };

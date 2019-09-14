@@ -1,7 +1,10 @@
+const { SKIP_STORIES } = process.env;
+
 const ignore = [
   '**/__tests__',
   '**/__mocks__',
   '**/__fixtures__',
+  ...(SKIP_STORIES ? ['**/__stories__'] : []),
   '*.{test,spec}.{ts,tsx}',
   '**/*.d.ts',
   '*.d.ts',

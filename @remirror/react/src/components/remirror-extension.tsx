@@ -1,5 +1,6 @@
 import { AbstractInstanceType, AnyExtension, OptionsOfExtension } from '@remirror/core';
-import { RemirrorElementType, RemirrorExtensionProps, RemirrorFC } from '@remirror/react-utils';
+import { RemirrorFC, RemirrorType } from '@remirror/react-utils';
+import { RemirrorExtensionProps } from '../react-types';
 
 /**
  * This component creates an extension that will be picked up by a parent RemirrorManager.
@@ -61,4 +62,4 @@ export const RemirrorExtension = <
   return null;
 };
 
-(RemirrorExtension as RemirrorFC<any>).$$remirrorType = RemirrorElementType.Extension;
+(RemirrorExtension as RemirrorFC<any>).$$remirrorType = RemirrorType.Extension;

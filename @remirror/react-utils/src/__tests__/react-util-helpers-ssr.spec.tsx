@@ -5,7 +5,7 @@
 import React from 'react';
 // tslint:disable-next-line:no-implicit-dependencies
 import { renderToStaticMarkup } from 'react-dom/server';
-import { cloneElement } from '../react-util-helpers';
+import { cloneElement } from '../react-utils';
 
 describe('cloneElement', () => {
   it('clones flat components', () => {

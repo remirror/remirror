@@ -1,7 +1,7 @@
 import { ExtensionManager, PlainObject } from '@remirror/core';
 import React, { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
-import { useRemirrorManager } from './react-hooks';
+import { useRemirrorManager } from './hooks/context-hooks';
 
 export interface GetManagerFromComponentTreeParams {
   /**

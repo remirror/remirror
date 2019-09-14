@@ -250,7 +250,7 @@ export interface MultishiftBehaviorProps {
    *
    * ```tsx
    * const items ['a', 'b', 'c'];
-   * const { getToggleButtonProps, getMenuProps, getItemProps, getLabelProps } = useRemirror({ type: 'select', items });
+   * const { getToggleButtonProps, getMenuProps, getItemProps, getLabelProps } = useMultishift({ type: 'select', items });
    *
    * return (
    *   <div>
@@ -295,7 +295,7 @@ export interface MultishiftBehaviorProps {
    *   getLabelProps,
    *   getComboBoxProps,
    *   getInputProps
-   * } = useRemirror({ type: 'autocomplete', items });
+   * } = useMultishift({ type: 'autocomplete', items });
    *
    * return (
    *   <div {...getComboBoxProps()}>

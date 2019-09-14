@@ -1,5 +1,5 @@
 import { Attrs } from '@remirror/core';
-import { useRemirror } from '@remirror/react';
+import { useRemirrorContext } from '@remirror/react';
 import { ResetButton } from '@remirror/ui-buttons';
 import React, { FC, RefObject } from 'react';
 import {
@@ -103,7 +103,7 @@ export const SocialEditorComponent: FC<SocialEditorComponentProps> = ({
     getRootProps,
     actions,
     state: { newState },
-  } = useRemirror<SocialExtensions>();
+  } = useRemirrorContext<SocialExtensions>();
   const content = newState.doc.textContent;
   return (
     <div>

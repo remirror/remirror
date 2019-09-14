@@ -114,6 +114,12 @@
     "ignore": ["@types/react", "@types/react-dom", "react", "react-dom"]
   },
   {
+    "name": "@remirror/react-renderer",
+    "path": "@remirror/react-renderer/lib/index.js",
+    "limit": "70 KB",
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+  },
+  {
     "name": "@remirror/react-ssr",
     "path": "@remirror/react-ssr/lib/index.js",
     "limit": "90 KB",
@@ -129,12 +135,6 @@
     "name": "@remirror/react",
     "path": "@remirror/react/lib/index.js",
     "limit": "120 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
-  },
-  {
-    "name": "@remirror/renderer-react",
-    "path": "@remirror/renderer-react/lib/index.js",
-    "limit": "70 KB",
     "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
   },
   {

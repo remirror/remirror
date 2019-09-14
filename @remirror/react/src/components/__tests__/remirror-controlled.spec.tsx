@@ -1,10 +1,10 @@
 import { EditorState, fromHTML } from '@remirror/core';
-import { InjectedRemirrorProps, RemirrorStateListenerParams } from '@remirror/react-utils';
 import { createTestManager } from '@test-fixtures/schema-helpers';
 import { act, render } from '@testing-library/react';
 import React, { useState } from 'react';
 import { Remirror } from '..';
-import { RemirrorProviderProps } from '../providers';
+import { InjectedRemirrorProps, RemirrorStateListenerParams } from '../../react-types';
+import { RemirrorProviderProps } from '../remirror-providers';
 
 const label = 'Remirror editor';
 

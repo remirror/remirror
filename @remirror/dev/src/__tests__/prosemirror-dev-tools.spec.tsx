@@ -3,6 +3,10 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import { ProsemirrorDevTools } from '../dev-components';
 
+beforeEach(() => {
+  jest.spyOn(console, 'warn').mockImplementation(() => {});
+});
+
 test('it supports <ProsemirrorDevTools />', () => {
   const { baseElement } = render(
     <RemirrorManager>
