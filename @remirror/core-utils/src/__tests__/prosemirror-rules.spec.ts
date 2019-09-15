@@ -1,6 +1,6 @@
 import { Slice } from '@remirror/core-types';
 import { createEditor, doc, horizontalRule, p, schema as testSchema, strong } from 'jest-prosemirror';
-import { markInputRule, markPasteRule, nodeInputRule } from '../prosemirror-rules';
+import { markInputRule, markPasteRule, nodeInputRule, plainInputRule } from '../prosemirror-rules';
 
 describe('markPasteRule', () => {
   it('should transform simple content', () => {
@@ -99,7 +99,7 @@ describe('markInputRule', () => {
 });
 
 describe('nodeInputRule', () => {
-  it('should wrap matched content with the specified mark type', () => {
+  it('should wrap matched content with the specified node type', () => {
     const getAttrs = jest.fn(() => ({ 'data-testid': 'awesome' }));
     const rule = nodeInputRule({ regexp: /~([^~]+)~$/, type: testSchema.nodes.horizontalRule, getAttrs });
     const {
@@ -132,5 +132,67 @@ describe('nodeInputRule', () => {
     });
 
     expect(view.state.doc).toEqualPMNode(doc(p('~Hello')));
+  });
+});
+
+describe('plainInputRule', () => {
+  it('should replace content with the transformation function', () => {
+    const rule = plainInputRule({
+      regexp: /abc$/,
+      transformMatch: val => val[0].toUpperCase(),
+    });
+
+    const {
+      state: { selection },
+      view,
+    } = createEditor(doc(p('ab<cursor>')), { rules: [rule] });
+    const { from, to } = selection;
+    const params = [view, from, to, 'c'];
+
+    view.someProp('handleTextInput', f => {
+      f(...params);
+    });
+
+    expect(view.state.doc).toEqualPMNode(doc(p('ABC')));
+  });
+
+  it('should work with partial matches', () => {
+    const rule = plainInputRule({
+      regexp: /(abc)xyz$/,
+      transformMatch: ([full, match]) => full.replace(match, match.toUpperCase()),
+    });
+
+    const {
+      state: { selection },
+      view,
+    } = createEditor(doc(p('abcxy<cursor>')), { rules: [rule] });
+    const { from, to } = selection;
+    const params = [view, from, to, 'z'];
+
+    view.someProp('handleTextInput', f => {
+      f(...params);
+    });
+
+    expect(view.state.doc).toEqualPMNode(doc(p('ABCxyz')));
+  });
+
+  it('should delete content when the value is an empty string', () => {
+    const rule = plainInputRule({
+      regexp: /abc$/,
+      transformMatch: () => '',
+    });
+
+    const {
+      state: { selection },
+      view,
+    } = createEditor(doc(p('ab<cursor>')), { rules: [rule] });
+    const { from, to } = selection;
+    const params = [view, from, to, 'c'];
+
+    view.someProp('handleTextInput', f => {
+      f(...params);
+    });
+
+    expect(view.state.doc).toEqualPMNode(doc(p('')));
   });
 });

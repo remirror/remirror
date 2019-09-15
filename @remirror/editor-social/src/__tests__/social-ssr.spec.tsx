@@ -16,7 +16,6 @@ test('it renders within an ssr environment', () => {
       tagData={[]}
       onMentionChange={console.log}
       initialContent={docNodeBasicJSON}
-      emojiData={{} as any}
     />,
   );
   expect(reactString).toInclude('basic');

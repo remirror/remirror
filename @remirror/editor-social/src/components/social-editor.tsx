@@ -1,6 +1,6 @@
-import { Attrs, deepMerge, omit, RemirrorTheme } from '@remirror/core';
+import { deepMerge, omit, RemirrorTheme } from '@remirror/core';
 import { NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
-import { EmojiExtension, isBaseEmoji } from '@remirror/extension-emoji';
+import { EmojiExtension } from '@remirror/extension-emoji';
 import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
 import {
   MentionExtension,
@@ -13,7 +13,7 @@ import {
 } from '@remirror/extension-mention';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
 import { RemirrorThemeProvider } from '@remirror/ui';
-import React, { createRef, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { socialEditorTheme } from '../social-theme';
 import {
   ActiveTagData,
@@ -24,13 +24,11 @@ import {
   SocialEditorProps,
 } from '../social-types';
 import { calculateNewIndexFromArrowPress, mapToActiveIndex } from '../social-utils';
-import { EmojiPickerProps } from './social-emoji-picker-component';
 import { SocialEditorComponent } from './social-wrapper-component';
 
 interface State {
   activeMatcher: MatchName | undefined;
   activeIndex: number;
-  emojiPickerActive: boolean;
   hideSuggestions: boolean;
 }
 
@@ -48,15 +46,9 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
 
   public readonly state: State = {
     activeIndex: 0,
-    emojiPickerActive: false,
     activeMatcher: undefined,
     hideSuggestions: false,
   };
-
-  /**
-   * The ref for the element that toggles the emoji picker display.
-   */
-  private toggleEmojiRef = createRef<HTMLButtonElement>();
 
   /**
    * The mention information
@@ -235,35 +227,6 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     this.exitTriggeredInternally = false;
   };
 
-  /**
-   * Called when an emoji is selected in order to insert the emoji at the current cursor position.
-   */
-  private onSelectEmoji = (command: (attrs: Attrs) => void): EmojiPickerProps['onSelection'] => emoji => {
-    if (isBaseEmoji(emoji)) {
-      command({
-        id: emoji.id,
-        name: emoji.name,
-        native: emoji.native,
-        colors: emoji.colons,
-        skin: String(emoji.skin || ''),
-      });
-    }
-  };
-
-  /**
-   * Called when the smiley emoji is clicked ans toggles the activity status of the emoji picker.
-   */
-  private onClickEmojiSmiley = () => {
-    this.setState(prevState => ({ emojiPickerActive: !prevState.emojiPickerActive }));
-  };
-
-  /**
-   * Called when the emoji picker loses focus so that it can hidden.
-   */
-  private onBlurEmojiPicker = () => {
-    this.setState({ emojiPickerActive: false });
-  };
-
   private get theme(): RemirrorTheme {
     return deepMerge(socialEditorTheme, this.props.theme || {});
   }
@@ -276,7 +239,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   };
 
   public render() {
-    const { emojiPickerActive, activeMatcher, hideSuggestions } = this.state;
+    const { activeMatcher, hideSuggestions } = this.state;
     const { children, placeholder, ...rest } = this.remirrorProps;
     return (
       <RemirrorThemeProvider theme={this.theme}>
@@ -303,11 +266,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
             keyBindings={this.keyBindings}
           />
           <RemirrorExtension Constructor={EnhancedLinkExtension} onUrlsChange={this.props.onUrlsChange} />
-          <RemirrorExtension
-            Constructor={EmojiExtension}
-            set={this.props.emojiSet}
-            emojiData={this.props.emojiData}
-          />
+          <RemirrorExtension Constructor={EmojiExtension} />
           <ManagedRemirrorProvider {...rest}>
             <>
               <SocialEditorComponent
@@ -315,16 +274,8 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
                 activeMatcher={activeMatcher}
                 setExitTriggeredInternally={this.setExitTriggeredInternally}
                 getMention={this.getMention}
-                emojiPickerActive={emojiPickerActive}
-                onBlurEmojiPicker={this.onBlurEmojiPicker}
-                emojiData={this.props.emojiData}
-                emojiSet={this.props.emojiSet}
-                ignoredElements={[this.toggleEmojiRef.current!]}
-                onClickEmojiSmiley={this.onClickEmojiSmiley}
-                toggleEmojiRef={this.toggleEmojiRef}
                 users={this.users}
                 tags={this.tags}
-                onSelectEmoji={this.onSelectEmoji}
               />
               {children}
             </>

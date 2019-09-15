@@ -3709,7 +3709,7 @@
   dependencies:
     "@types/linkify-it" "*"
 
-"@types/match-sorter@2.3.0":
+"@types/match-sorter@2.3.0", "@types/match-sorter@^2.3.0":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@types/match-sorter/-/match-sorter-2.3.0.tgz#902b927bc9c7f10863a9973da8deab48787dfc91"
   integrity sha512-oNHiGln5wL4/K5uvfkn20ZXdoSH3DyG8aN7pVjtwjVTYdJDdedJD/gKg4qOBhVnLtiPlUy2H3i+OHjBQnpdf9Q==
@@ -8762,6 +8762,11 @@ emoji-regex@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
   integrity sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==
+
+emojilib@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/emojilib/-/emojilib-2.4.0.tgz#ac518a8bb0d5f76dda57289ccb2fdf9d39ae721e"
+  integrity sha512-5U0rVMU5Y2n2+ykNLQqMoqklN9ICBT/KsvC1Gz6vqHbz2AXXGkG+Pm5rMWk/8Vjrr/mY9985Hi8DYzn1F09Nyw==
 
 emojis-list@^2.0.0:
   version "2.1.0"
@@ -15281,7 +15286,7 @@ marksy@^7.0.0:
     he "^1.1.1"
     marked "^0.6.2"
 
-match-sorter@^4.0.0:
+match-sorter@^4.0.0, match-sorter@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/match-sorter/-/match-sorter-4.0.1.tgz#94197906dec723c8023517f99189e5fa662b1036"
   integrity sha512-DdlYxhN20iVJI7jEK7wkZY+EPtaj2G4tT59lDSxG3F6lD9gGtQKaLNCP/0HF4q2n3bT/dRO5L7j3PL8TK5wRdA==

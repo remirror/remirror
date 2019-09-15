@@ -1,3 +1,2 @@
 export * from './emoji-extension';
-export * from './emoji-helpers';
-export * from './emoji-types';
+export * from './emoji-utils';

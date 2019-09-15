@@ -11,9 +11,9 @@
   },
   "scripts": {
     "build": "run-s build:rollup build:modules",
-    "build:production": "run-s clean build",
     "build:docs": "cd docs && yarn build",
     "build:modules": "cross-env SKIP_STORIES=true lerna run build --stream --no-private",
+    "build:production": "run-s clean build",
     "build:rollup": "rollup --config ./support/rollup/rollup.config.js",
     "changelog": "lerna-changelog",
     "checks": "run-s integrity lint typecheck dtslint test",

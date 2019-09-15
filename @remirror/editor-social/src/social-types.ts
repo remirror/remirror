@@ -43,16 +43,6 @@ export interface SocialEditorProps extends Partial<ManagedRemirrorProviderProps<
    * The theme to be used for setting .
    */
   theme?: Partial<RemirrorTheme & Partial<RemirrorTheme['colors']>>;
-
-  /**
-   * The data object used for emoji.
-   */
-  emojiData: Data;
-
-  /**
-   * The set of emojis to use.
-   */
-  emojiSet: EmojiSet;
 }
 
 interface BaseMentionState {

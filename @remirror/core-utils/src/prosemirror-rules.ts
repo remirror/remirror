@@ -1,5 +1,6 @@
-import { findMatches, isFunction } from '@remirror/core-helpers';
+import { findMatches, isFunction, isNullOrUndefined } from '@remirror/core-helpers';
 import {
+  EditorSchema,
   GetAttrsParams,
   MarkTypeParams,
   NodeTypeParams,
@@ -112,12 +113,55 @@ export const nodeInputRule = ({ regexp, type, getAttrs, updateSelection = false 
   });
 };
 
+/**
+ * Creates an node input rule based on the provided regex for the provided node type
+ */
+export const plainInputRule = <GSchema extends EditorSchema = EditorSchema>({
+  regexp,
+  transformMatch,
+  updateSelection = false,
+}: PlainInputRuleParams) => {
+  return new InputRule<GSchema>(regexp, (state, match, start, end) => {
+    const value = transformMatch(match);
+
+    if (isNullOrUndefined(value)) {
+      return null;
+    }
+
+    const { tr } = state;
+
+    if (value === '') {
+      tr.delete(start, end);
+    } else {
+      tr.replaceWith(start, end, state.schema.text(value) as any);
+    }
+
+    if (updateSelection) {
+      const $pos = tr.doc.resolve(start);
+      tr.setSelection(new TextSelection($pos));
+    }
+    return tr;
+  });
+};
+
 interface NodeInputRuleParams extends Partial<GetAttrsParams>, RegExpParams, NodeTypeParams {
   /**
    * Allows for setting a text selection at the start of the newly created node.
    * Leave blank or set to false to ignore.
    */
   updateSelection?: boolean;
+}
+interface PlainInputRuleParams extends RegExpParams {
+  /**
+   * Allows for setting a text selection at the start of the newly created node.
+   * Leave blank or set to false to ignore.
+   */
+  updateSelection?: boolean;
+
+  /**
+   * A function that transforms the match into the desired value.
+   */
+  transformMatch(match: string[]): string | null | undefined;
 }
 
 interface MarkInputRuleParams extends Partial<GetAttrsParams>, RegExpParams, MarkTypeParams {}

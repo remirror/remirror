@@ -55,7 +55,10 @@ const useMarkdownManager = () => {
     () =>
       ExtensionManager.create([
         { priority: 1, extension: new DocExtension({ content: 'block' }) },
-        { priority: 1, extension: new CodeBlockExtension({ defaultLanguage: 'markdown' }) },
+        {
+          priority: 1,
+          extension: new CodeBlockExtension({ defaultLanguage: 'markdown', toggleType: 'codeBlock' }),
+        },
         { priority: 1, extension: new TextExtension() },
         { extension: new CompositionExtension(), priority: 3 },
         { extension: new HistoryExtension(), priority: 3 },

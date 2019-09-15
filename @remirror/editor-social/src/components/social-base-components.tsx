@@ -22,46 +22,6 @@ export const CharacterCountWrapper = forwardRef<HTMLDivElement, DivProps>((props
   );
 });
 
-export const EmojiSmileyWrapper = forwardRef<HTMLDivElement, DivProps>((props, ref) => {
-  const { css } = useRemirrorTheme();
-
-  return (
-    <div
-      {...props}
-      ref={ref}
-      css={css`
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin: 10px 8px 0 4px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-      `}
-    />
-  );
-});
-
-export const EmojiPickerWrapper = forwardRef<HTMLDivElement, DivProps>((props, ref) => {
-  const { css } = useRemirrorTheme();
-
-  return (
-    <div
-      {...props}
-      ref={ref}
-      css={css`
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin: 40px 8px 0 4px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-      `}
-    />
-  );
-});
-
 export const EditorWrapper = forwardRef<HTMLDivElement, DivProps>((props, ref) => {
   const { css } = useRemirrorTheme();
 
