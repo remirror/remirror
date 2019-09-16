@@ -7,7 +7,7 @@ import {
 } from '@remirror/core-extensions';
 import { cleanup } from '@testing-library/react';
 import { Plugin } from 'prosemirror-state';
-import { renderEditor } from '../render-editor';
+import { renderEditor } from '../jest-remirror-editor';
 
 beforeEach(cleanup);
 

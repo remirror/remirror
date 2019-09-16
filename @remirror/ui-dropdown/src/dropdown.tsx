@@ -1,9 +1,9 @@
-import { MultishiftPropGetters, Type, useMultishift } from '@remirror/multishift';
 import { useMeasure, usePrevious } from '@remirror/react-hooks';
 import { useRemirrorTheme } from '@remirror/ui';
 import { Button } from '@remirror/ui-buttons';
 import { AngleDownIcon, AngleRightIcon } from '@remirror/ui-icons';
 import { Label } from '@remirror/ui-text';
+import { MultishiftPropGetters, Type, useMultishift } from 'multishift';
 import React, { forwardRef, useLayoutEffect, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { dropdownPositions } from './dropdown-constants';

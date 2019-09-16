@@ -1,3 +1,0 @@
-# @remirror/multishift
-
-Render stuff.

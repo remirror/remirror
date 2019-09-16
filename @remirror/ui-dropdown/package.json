@@ -27,7 +27,7 @@
     "@babel/runtime": "^7.6.0",
     "@remirror/core-helpers": "0.4.2-canary.2",
     "@remirror/core-types": "0.4.2-canary.2",
-    "@remirror/multishift": "0.4.2-canary.2",
+    "multishift": "0.4.2-canary.2",
     "@remirror/react-hooks": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2",
     "@remirror/ui": "0.4.2-canary.2",

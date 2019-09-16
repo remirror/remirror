@@ -12,6 +12,7 @@ const configs = {
 
 const baseDir = (...paths) => resolve(__dirname, '../..', join(...paths));
 const formatFile = path => execSync(`prettier ${path} --write`, { stdio: 'inherit' });
+const getPathFromRoot = json => json.location.replace(`${json.rootPath}${sep}`, '');
 
 const getAllDependencies = async () => {
   const packages = await getPackages();
@@ -28,7 +29,7 @@ const generateSizeLimitConfig = async () => {
     .filter(pkg => pkg.meta && pkg.meta.sizeLimit)
     .map(json => ({
       name: json.name,
-      path: join(json.name, json.main),
+      path: join(getPathFromRoot(json), json.main),
       limit: json.meta.sizeLimit,
       ignore: Object.keys(json.peerDependencies || {}),
     }));
@@ -41,9 +42,9 @@ const generateSizeLimitConfig = async () => {
 const generateRollupConfig = async () => {
   const packages = await getAllDependencies();
   const rollupPackagesArray = packages
-    .filter(pkg => pkg.module && !pkg.private)
+    .filter(pkg => !pkg.private && pkg.module)
     .map(json => {
-      const path = json.location.replace(`${json.rootPath}${sep}`, '');
+      const path = getPathFromRoot(json);
       return {
         path: join('../..', path, 'package.json'),
         root: path.split(sep)[0],
@@ -61,7 +62,7 @@ const generateTSConfig = async () => {
   const tsPaths = packages
     .filter(pkg => pkg.types)
     .reduce((acc, json) => {
-      const path = json.location.replace(`${json.rootPath}${sep}`, '');
+      const path = getPathFromRoot(json);
       return {
         ...acc,
         [json.name]: [`${path}/src/index.ts`],
@@ -83,12 +84,13 @@ const generateTSConfig = async () => {
 const generateStorybookResolverConfig = async () => {
   const packages = await getAllDependencies();
   const resolverConfig = packages
-    .filter(pkg => !pkg.private && pkg.name.startsWith('@remirror'))
+    .filter(pkg => !pkg.private && pkg.module)
     .reduce((acc, json) => {
+      const path = getPathFromRoot(json);
       return {
         ...acc,
-        [`${json.name}/lib`]: [`../../${json.name}/src`],
-        [json.name]: [`../../${json.name}/src`],
+        [`^${json.name}/lib`]: [`../../${path}/src`],
+        [`^${json.name}`]: [`../../${path}/src`],
       };
     }, {});
 

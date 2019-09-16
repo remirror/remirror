@@ -10,33 +10,15 @@ import {
   HelpersFromExtensions,
   MarkExtension,
   NodeExtension,
-  PlainObject,
   ProsemirrorNode,
   SchemaFromExtensions,
   SchemaParams,
 } from '@remirror/core';
 import { InjectedRemirrorProps } from '@remirror/react';
-import { EventType, RenderResult } from '@testing-library/react/pure';
-import { TestEditorView } from 'jest-prosemirror';
+import { RenderResult } from '@testing-library/react/pure';
+import { FireParams, TestEditorView } from 'jest-prosemirror';
 import { Node as PMNode } from 'prosemirror-model';
-import { BaseExtensionNodeNames, BaseExtensionNodes } from './test-schema';
-
-export interface FireParams {
-  /**
-   * The event to fire on the view
-   */
-  event: EventType;
-
-  /**
-   * Options passed into the event
-   */
-  options?: PlainObject;
-
-  /**
-   * Override the default position to use
-   */
-  position?: number;
-}
+import { BaseExtensionNodeNames, BaseExtensionNodes } from './jest-remirror-schema';
 
 export interface BaseFactoryParams extends SchemaParams, Partial<AttrsParams> {
   /**
@@ -289,12 +271,4 @@ export interface CreateTestEditorExtensions<
   attrMarks: GAttrMarks;
   attrNodes: GAttrNodes;
   others: GOthers;
-}
-
-export interface TestEditorViewParams {
-  /**
-   * An instance of the test editor view which allows for dispatching events
-   * and also containers TaggedProsemirrorNodes
-   */
-  view: TestEditorView;
 }

@@ -42,8 +42,6 @@
       "@remirror/extension-mention/lib/*": ["@remirror/extension-mention/src/*"],
       "@remirror/extension-multicursor": ["@remirror/extension-multicursor/src/index.ts"],
       "@remirror/extension-multicursor/lib/*": ["@remirror/extension-multicursor/src/*"],
-      "@remirror/multishift": ["@remirror/multishift/src/index.ts"],
-      "@remirror/multishift/lib/*": ["@remirror/multishift/src/*"],
       "@remirror/react-hooks": ["@remirror/react-hooks/src/index.ts"],
       "@remirror/react-hooks/lib/*": ["@remirror/react-hooks/src/*"],
       "@remirror/react-node-view": ["@remirror/react-node-view/src/index.ts"],
@@ -78,8 +76,14 @@
       "jest-prosemirror/lib/*": ["packages/jest-prosemirror/src/*"],
       "jest-remirror": ["packages/jest-remirror/src/index.ts"],
       "jest-remirror/lib/*": ["packages/jest-remirror/src/*"],
+      "multishift": ["packages/multishift/src/index.ts"],
+      "multishift/lib/*": ["packages/multishift/src/*"],
+      "prosemirror-suggest": ["packages/prosemirror-suggest/src/index.ts"],
+      "prosemirror-suggest/lib/*": ["packages/prosemirror-suggest/src/*"],
       "remirror": ["packages/remirror/src/index.ts"],
       "remirror/lib/*": ["packages/remirror/src/*"],
+      "test-keyboard": ["packages/test-keyboard/src/index.ts"],
+      "test-keyboard/lib/*": ["packages/test-keyboard/src/*"],
       "@test-fixtures/*": ["support/fixtures/*"]
     }
   }

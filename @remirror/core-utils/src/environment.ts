@@ -38,7 +38,7 @@ export const environment = {
    * True when running on macOS
    */
   get isMac(): boolean {
-    return environment.isBrowser && /Mac/.test(navigator.platform);
+    return environment.isBrowser && /Mac|iPod|iPhone|iPad/.test(navigator.platform);
   },
 
   /**

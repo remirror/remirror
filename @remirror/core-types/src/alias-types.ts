@@ -35,7 +35,7 @@ export type Selection<GSchema extends EditorSchema = any> = PMSelection<GSchema>
 export type DecorationSet<GSchema extends EditorSchema = any> = PMDecorationSet<GSchema>;
 export type Transaction<GSchema extends EditorSchema = any> = PMTransaction<GSchema>;
 export type PluginKey<GPluginState = any> = PMPluginKey<GPluginState, EditorSchema>;
-export type Plugin<GPluginState = any> = PMPlugin<GPluginState, EditorSchema>;
+export type Plugin<GPluginState = any, GSchema extends EditorSchema = any> = PMPlugin<GPluginState, GSchema>;
 export type Mark<GSchema extends EditorSchema = any> = PMMark<GSchema>;
 export type ResolvedPos<GSchema extends EditorSchema = any> = PMResolvedPos<GSchema>;
 export type InputRule<GSchema extends EditorSchema = any> = PMInputRule<GSchema>;

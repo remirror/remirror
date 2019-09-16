@@ -32,9 +32,9 @@
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.9.0",
-    "escape-string-regexp": "^2.0.0",
     "emoji-regex": "^8.0.0",
     "emojilib": "^2.4.0",
+    "escape-string-regexp": "^2.0.0",
     "match-sorter": "^4.0.1",
     "prosemirror-model": "^1.7.2",
     "prosemirror-state": "^1.2.4",
@@ -48,8 +48,8 @@
     "react-dom": "^16.8.0"
   },
   "devDependencies": {
-    "jest-remirror": "0.4.2-canary.2",
-    "emoji-mart": "2.11.1"
+    "emoji-mart": "2.11.1",
+    "jest-remirror": "0.4.2-canary.2"
   },
   "publishConfig": {
     "access": "public"

@@ -72,10 +72,6 @@
     "root": "@remirror"
   },
   {
-    "path": "../../@remirror/multishift/package.json",
-    "root": "@remirror"
-  },
-  {
     "path": "../../@remirror/react-hooks/package.json",
     "root": "@remirror"
   },
@@ -134,6 +130,14 @@
   {
     "path": "../../@remirror/ui/package.json",
     "root": "@remirror"
+  },
+  {
+    "path": "../../packages/multishift/package.json",
+    "root": "packages"
+  },
+  {
+    "path": "../../packages/prosemirror-suggest/package.json",
+    "root": "packages"
   },
   {
     "path": "../../packages/remirror/package.json",

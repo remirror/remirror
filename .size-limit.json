@@ -96,12 +96,6 @@
     "ignore": ["@emotion/core"]
   },
   {
-    "name": "@remirror/multishift",
-    "path": "@remirror/multishift/lib/index.js",
-    "limit": "20 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"]
-  },
-  {
     "name": "@remirror/react-hooks",
     "path": "@remirror/react-hooks/lib/index.js",
     "limit": "65 KB",
@@ -185,5 +179,17 @@
     "path": "@remirror/ui/lib/index.js",
     "limit": "70 KB",
     "ignore": ["@emotion/core", "@types/react", "react"]
+  },
+  {
+    "name": "multishift",
+    "path": "packages/multishift/lib/index.js",
+    "limit": "20 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"]
+  },
+  {
+    "name": "prosemirror-suggest",
+    "path": "packages/prosemirror-suggest/lib/index.js",
+    "limit": "90 KB",
+    "ignore": []
   }
 ]

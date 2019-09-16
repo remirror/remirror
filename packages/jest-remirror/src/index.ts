@@ -1,12 +1,11 @@
-export * from './builder';
+export * from './jest-remirror-builder';
 export * from './jsdom-polyfills';
-export * from './keys';
-export * from './matchers';
-export * from './render-editor';
-export * from './render-ssr-editor';
-export * from './setup-environment';
-export * from './test-schema';
-export * from './transactions';
+export * from './jest-remirror-matchers';
+export * from './jest-remirror-editor';
+export * from './jest-remirror-ssr';
+export * from './jest-remirror-environment';
+export * from './jest-remirror-schema';
+export * from './jest-remirror-transactions';
 export * from './jest-remirror-types';
 
 declare global {

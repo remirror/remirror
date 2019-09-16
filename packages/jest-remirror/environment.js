@@ -1,1 +1,1 @@
-require('./lib/setup-environment').setupRemirrorEnvironment();
+require('./lib/jest-remirror-environment').setupRemirrorEnvironment();

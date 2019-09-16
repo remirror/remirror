@@ -1,0 +1,33 @@
+{
+  "name": "test-keyboard",
+  "description": "A test keyboard for managing fake keyboard events",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/test-keyboard",
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/packages/test-keyboard",
+  "version": "0.4.2-canary.2",
+  "main": "lib/index.js",
+  "files": [
+    "environment.d.ts",
+    "environment.js",
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "build": "run-p build:*",
+    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
+    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
+    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@remirror/core-helpers": "0.4.2-canary.2",
+    "@remirror/core-types": "0.4.2-canary.2",
+    "@types/lolex": "^3.1.1",
+    "lolex": "^4.2.0"
+  },
+  "keywords": [
+    "keyboard"
+  ]
+}

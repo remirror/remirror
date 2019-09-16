@@ -8,6 +8,8 @@
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "files": [
+    "environment.d.ts",
+    "environment.js",
     "lib",
     "src"
   ],
@@ -21,6 +23,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@remirror/core": "0.4.2-canary.2",
+    "test-keyboard": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
     "@remirror/react": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2",

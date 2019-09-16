@@ -1,6 +1,6 @@
-import { MultishiftChangeHandlerProps, MultishiftPropGetters } from '@remirror/multishift';
 import { IconProps } from '@remirror/ui-icons';
 import { MinWidthProperty, WidthProperty } from 'csstype';
+import { MultishiftChangeHandlerProps, MultishiftPropGetters } from 'multishift';
 import { ComponentType, ReactNode } from 'react';
 import { dropdownPositions } from './dropdown-constants';
 

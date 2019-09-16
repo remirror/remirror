@@ -9,7 +9,9 @@
   "main": "lib/index.js",
   "files": [
     "lib",
-    "src"
+    "src",
+    "environment.d.ts",
+    "environment.js"
   ],
   "scripts": {
     "build": "run-p build:*",
@@ -21,6 +23,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@remirror/core": "0.4.2-canary.2",
+    "test-keyboard": "0.4.2-canary.2",
     "@types/prosemirror-gapcursor": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-model": "^1.7.2",
@@ -29,6 +32,7 @@
     "@types/prosemirror-tables": "^0.8.0",
     "@types/prosemirror-test-builder": "^1.0.1",
     "@types/prosemirror-view": "^1.9.0",
+    "@testing-library/dom": "6.0.0",
     "chalk": "^2.4.2",
     "jest-diff": "^24.9.0",
     "jest-matcher-utils": "^24.9.0",

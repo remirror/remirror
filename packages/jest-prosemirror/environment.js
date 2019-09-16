@@ -1,1 +1,1 @@
-require('./lib/environment').setupProsemirrorEnvironment();
+require('./lib/jest-prosemirror-environment').setupProsemirrorEnvironment();

@@ -1,6 +1,6 @@
 import { clone } from '@remirror/core';
 import { schema } from '@test-fixtures/schema-helpers';
-import { markFactory, nodeFactory, sequence, text } from '../builder';
+import { markFactory, nodeFactory, sequence, text } from '../jest-remirror-builder';
 import { TagTracker } from '../jest-remirror-types';
 
 describe('text', () => {

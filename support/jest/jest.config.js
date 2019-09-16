@@ -23,9 +23,12 @@ module.exports = {
   cacheDirectory: baseDir('.jest'),
   testEnvironment: 'jsdom',
   moduleNameMapper: {
-    '@remirror\\/([a-z0-9-]+)$': baseDir('@remirror', '$1', 'src'),
-    'jest-remirror$': baseDir('packages', 'jest-remirror', 'src'),
-    'jest-prosemirror$': baseDir('packages', 'jest-prosemirror', 'src'),
-    '@test-fixtures/(.*)$': baseDir('support/fixtures/$1'),
+    '^test-keyboard$': baseDir('packages', 'test-keyboard', 'src'),
+    '^jest-remirror$': baseDir('packages', 'jest-remirror', 'src'),
+    '^jest-prosemirror$': baseDir('packages', 'jest-prosemirror', 'src'),
+    '^prosemirror-suggest$': baseDir('packages', 'prosemirror-suggest', 'src'),
+    '^multishift$': baseDir('packages', 'multishift', 'src'),
+    '^@remirror\\/([a-z0-9-]+)$': baseDir('@remirror', '$1', 'src'),
+    '^@test-fixtures/(.*)$': baseDir('support/fixtures/$1'),
   },
 };
