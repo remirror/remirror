@@ -37,6 +37,7 @@ import {
   checkItemHighlighted,
   createItemClickPayload,
   createKeyDownPayload,
+  createStateHelpers,
   defaultGetItemId,
   getItemIndex,
   getKeyName,
@@ -146,7 +147,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     if (isOpen) {
       if (type === Type.ComboBox && refs.input.current) {
         refs.input.current.focus();
-      } else if (refs.menu.current) {
+      } else if (refs.menu.current && type !== Type.ControlledMenu) {
         refs.menu.current.focus();
       }
     }
@@ -158,7 +159,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     if (isOpen) {
       if (type === Type.ComboBox && refs.input.current) {
         refs.input.current.focus();
-      } else if (refs.menu.current) {
+      } else if (refs.menu.current && type !== Type.ControlledMenu) {
         refs.menu.current.focus();
       }
     } else if (!isOpen && document.activeElement === refs.menu.current) {
@@ -363,6 +364,9 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
       ...rest
     }: GetPropsWithRefOptions<GElement, GRefKey> = { refKey: 'ref' as GRefKey },
   ): GetPropsWithRefReturn<GElement, GRefKey> => {
+    if (type === Type.ControlledMenu) {
+      throw new Error('The toggle button props should not be used for the controlled menu');
+    }
     const isInternalEvent = <GEvent extends SyntheticEvent = any>(event: GEvent) =>
       [refs.input.current, refs.menu.current, ...refs.items.current].some(
         node => node && isOrContainsNode(node, event.target as Node),
@@ -560,6 +564,8 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     [],
   );
 
+  const stateHelpers = createStateHelpers(props, state);
+
   return {
     // State
     highlightedIndexes,
@@ -570,6 +576,9 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     inputValue,
     isOpen,
     jumpText,
+
+    // StateHelpers
+    ...stateHelpers,
 
     // Data
     mostRecentHighlightedIndex,

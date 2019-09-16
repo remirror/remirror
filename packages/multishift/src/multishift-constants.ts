@@ -44,6 +44,12 @@ export const Type = {
    * filtering potential options.
    */
   ComboBox: 'combobox',
+
+  /**
+   * A menu rendered without a toggleButton, combobox or input element. It is up
+   * to you to provide the input value and manage the focus.
+   */
+  ControlledMenu: 'controlled-menu',
 } as const;
 
 export type DropdownType = Value<typeof Type>;

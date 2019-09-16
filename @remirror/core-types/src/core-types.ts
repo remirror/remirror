@@ -461,6 +461,13 @@ export interface ExcludeOptions {
    * @default false
    */
   ssr?: boolean;
+
+  /**
+   * Whether to include the suggestions plugin configuration for the extension.
+   *
+   * @default false
+   */
+  suggesters?: boolean;
 }
 
 export interface SSRComponentParams {

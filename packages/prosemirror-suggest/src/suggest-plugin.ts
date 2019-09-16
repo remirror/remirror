@@ -1,3 +1,4 @@
+import { noop } from '@remirror/core-helpers';
 import {
   CompareStateParams,
   EditorSchema,
@@ -5,12 +6,11 @@ import {
   EditorStateParams,
   EditorView,
   FromToParams,
-  noop,
   ResolvedPosParams,
   TextParams,
-  transactionChanged,
   TransactionParams,
-} from '@remirror/core';
+} from '@remirror/core-types';
+import { transactionChanged } from '@remirror/core-utils';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { ChangeReason, ExitReason } from './suggest-constants';
@@ -105,6 +105,8 @@ export class SuggestState<GSchema extends EditorSchema = any> {
       : 'new';
   }
 
+  // TODO check for duplicate names and characters and log warnings when these
+  // are found.
   constructor(suggesters: Suggester[]) {
     this.suggesters = suggesters.map(suggester => ({ ...DEFAULT_SUGGESTER, ...suggester }));
   }
@@ -309,7 +311,7 @@ export const suggestPluginKey = new PluginKey('suggest');
  * This creates the plugin that manages the suggestions to offer when the
  * MentionExtension is active.
  */
-export const suggest = (suggesters: Suggester[]) => {
+export const suggest = (...suggesters: Suggester[]) => {
   const pluginState = SuggestState.create(suggesters);
 
   return new Plugin<SuggestState, EditorSchema>({

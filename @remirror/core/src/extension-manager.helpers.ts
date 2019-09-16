@@ -178,6 +178,7 @@ type ExtensionMethodProperties =
   | 'styles'
   | 'nodeView'
   | 'extensionData'
+  | 'suggesters'
   | 'isActive'
   | 'isEnabled';
 

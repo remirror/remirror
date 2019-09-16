@@ -30,6 +30,7 @@ import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
+import { suggest, Suggester } from 'prosemirror-suggest';
 import { ComponentType } from 'react';
 import { isMarkExtension, isNodeExtension } from './extension-helpers';
 import {
@@ -71,6 +72,7 @@ export interface ExtensionManagerData<
   keymaps: ProsemirrorPlugin[];
   inputRules: ProsemirrorPlugin;
   pasteRules: ProsemirrorPlugin[];
+  suggesters: Suggester[];
   actions: GActions;
   helpers: GHelpers;
   view: EditorView<EditorSchema<GNodes, GMarks>>;
@@ -207,6 +209,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     this.initData.keymaps = this.keymaps();
     this.initData.inputRules = this.inputRules();
     this.initData.pasteRules = this.pasteRules();
+    this.initData.suggesters = this.suggesters();
     this.initData.isActive = this.commandStatusCheck('isActive');
     this.initData.isEnabled = this.commandStatusCheck('isEnabled');
 
@@ -711,6 +714,22 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
       .map(extensionPropertyMapper('styles', this.params));
 
     return extensionStyles;
+  }
+
+  private suggesters() {
+    this.checkInitialized();
+    const suggesters: Suggester[] = [];
+
+    const extensionSuggesters = this.extensions
+      .filter(hasExtensionProperty('suggesters'))
+      .filter(extension => !extension.options.exclude.suggesters)
+      .map(extensionPropertyMapper('suggesters', this.params)) as Suggester[][];
+
+    extensionSuggesters.forEach(suggester => {
+      suggesters.push(...suggester);
+    });
+
+    return suggest(...suggesters);
   }
 
   /**

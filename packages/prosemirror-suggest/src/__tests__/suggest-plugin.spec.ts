@@ -11,7 +11,7 @@ test('`onChange` and `onExit` handlers are called', () => {
     }),
     onChange: jest.fn(),
   };
-  const plugin = suggest([{ char: '@', name: 'at', ...handlers, immediateMatch: true }]);
+  const plugin = suggest({ char: '@', name: 'at', ...handlers, immediateMatch: true });
   const editor = createEditor(doc(p('<cursor>')), { plugins: [plugin] }).insertText('@');
   expect(handlers.onChange).toHaveBeenCalledTimes(1);
 
@@ -23,7 +23,7 @@ test('`onChange` not called for character when immediateMatch is false', () => {
   const handlers = {
     onChange: jest.fn(),
   };
-  const plugin = suggest([{ char: '@', name: 'at', ...handlers, immediateMatch: false }]);
+  const plugin = suggest({ char: '@', name: 'at', ...handlers, immediateMatch: false });
   createEditor(doc(p('<cursor>')), { plugins: [plugin] }).insertText('@');
   expect(handlers.onChange).not.toHaveBeenCalled();
 });

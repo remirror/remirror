@@ -20,6 +20,7 @@ import {
 } from '@remirror/core-types';
 import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
+import { Suggester } from 'prosemirror-suggest';
 
 /**
  * These are the default options merged into every extension.
@@ -37,6 +38,7 @@ const defaultOptions: Required<BaseExtensionOptions> = {
     attributes: false,
     nodeView: false,
     ssr: false,
+    suggesters: false,
   },
 };
 
@@ -510,4 +512,10 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * @param params - extension manager parameters
    */
   styles?(params: ExtensionManagerParams): Interpolation;
+
+  /**
+   * Create suggestions which respond to character key combinations within the
+   * editor instance.
+   */
+  suggesters?(params: ExtensionManagerTypeParams<GType>): Suggester[];
 }

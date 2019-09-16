@@ -806,10 +806,20 @@ export interface MultishiftFocusHelpers {
   focusToggleButton(): void;
 }
 
+export interface MultishiftStateHelpers<GItem = any> {
+  addItems: (itemsToAdd: GItem[]) => any[];
+  addItem: (itemToAdd: GItem) => any[];
+  removeItems: (itemsToRemove: GItem[]) => GItem[];
+  removeItem: (itemToRemove: GItem) => GItem[];
+  toggleItems: (itemsToToggle: GItem[]) => GItem[];
+  toggleItem: (itemToToggle: GItem) => GItem[];
+}
+
 export interface MultishiftReturn<GItem = any>
   extends MultishiftState<GItem>,
     MultishiftPropGetters<GItem>,
     MultishiftDispatchActions<GItem>,
+    MultishiftStateHelpers<GItem>,
     MultishiftHelpers,
     MultishiftFocusHelpers {
   /**

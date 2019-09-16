@@ -1086,7 +1086,7 @@ export const omitUnchangedState = <GItem = any>(
 };
 
 /**
- * An object of helpers for manipulating the state.
+ * Helpers for transforming the state object.
  */
 export const createStateHelpers = <GItem = any>(
   { getItemId = defaultGetItemId, multiple }: MultishiftProps<GItem>,

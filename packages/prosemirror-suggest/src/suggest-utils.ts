@@ -1,18 +1,14 @@
+import { NULL_CHARACTER } from '@remirror/core-constants';
+import { bool, findMatches, isRegExp, isString, noop } from '@remirror/core-helpers';
 import {
-  bool,
   CommandFunction,
   EditorStateParams,
-  findMatches,
-  isRegExp,
-  isString,
   MakeOptional,
-  noop,
-  NULL_CHARACTER,
   ResolvedPosParams,
-  selectionEmpty,
   SelectionParams,
   TextParams,
-} from '@remirror/core';
+} from '@remirror/core-types';
+import { selectionEmpty } from '@remirror/core-utils';
 import { keydownHandler } from 'prosemirror-keymap';
 import { ChangeReason, ExitReason } from './suggest-constants';
 import {

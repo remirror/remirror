@@ -415,6 +415,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    */
   private dispatchTransaction = (tr: Transaction) => {
     tr = this.props.onDispatchTransaction(tr, this.getState()) || tr;
+
     const state = this.getState().apply(tr);
 
     this.updateState({

@@ -7,7 +7,7 @@ import {
   FromToParams,
   MakeRequired,
   MarkTypeParams,
-} from '@remirror/core';
+} from '@remirror/core-types';
 import { ChangeReason, ExitReason } from './suggest-constants';
 
 export interface Suggester<GSchema extends EditorSchema = any> extends OptionalSuggestMatcher {
