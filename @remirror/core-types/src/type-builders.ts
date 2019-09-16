@@ -104,11 +104,11 @@ export interface NodeTypeParams {
 /**
  * Accepts a single node type or multiple node types.
  */
-export interface NodeTypesParams {
+export interface NodeTypesParams<GSchema extends EditorSchema = any> {
   /**
    * A type(s) of prosemirror node to use.
    */
-  types: NodeType | NodeType[];
+  types: NodeType<GSchema> | Array<NodeType<GSchema>>;
 }
 
 export interface MarkTypeParams {
@@ -221,7 +221,10 @@ export interface TextParams {
   text: string;
 }
 
-export interface SelectionParams<GSelection extends Selection = Selection> {
+export interface SelectionParams<
+  GSchema extends EditorSchema = any,
+  GSelection extends Selection<GSchema> = Selection<GSchema>
+> {
   /**
    * The text editor selection
    */

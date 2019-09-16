@@ -87,10 +87,11 @@ const generateStorybookResolverConfig = async () => {
     .filter(pkg => !pkg.private && pkg.module)
     .reduce((acc, json) => {
       const path = getPathFromRoot(json);
+      const name = json.name.includes('@remirror') ? json.name : `${json.name}`;
       return {
         ...acc,
-        [`^${json.name}/lib`]: [`../../${path}/src`],
-        [`^${json.name}`]: [`../../${path}/src`],
+        [`${name}/lib`]: [`../../${path}/src`],
+        [`${name}`]: [`../../${path}/src`],
       };
     }, {});
 

@@ -72,7 +72,7 @@ export interface ExtensionManagerData<
   keymaps: ProsemirrorPlugin[];
   inputRules: ProsemirrorPlugin;
   pasteRules: ProsemirrorPlugin[];
-  suggesters: Suggester[];
+  suggesters: ProsemirrorPlugin;
   actions: GActions;
   helpers: GHelpers;
   view: EditorView<EditorSchema<GNodes, GMarks>>;

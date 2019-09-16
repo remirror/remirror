@@ -140,8 +140,13 @@ export const removeNodeAfter = (tr: Transaction): Transaction => {
   return tr;
 };
 
-interface FindSelectedNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
-export interface FindSelectedNodeOfType extends FindProsemirrorNodeResult {
+interface FindSelectedNodeOfTypeParams<
+  GSchema extends EditorSchema = any,
+  GSelection extends Selection<GSchema> = Selection<GSchema>
+> extends NodeTypesParams<GSchema>, SelectionParams<GSchema, GSelection> {}
+
+export interface FindSelectedNodeOfType<GSchema extends EditorSchema = any>
+  extends FindProsemirrorNodeResult<GSchema> {
   /**
    * The depth of the returned node.
    */
@@ -161,10 +166,13 @@ export interface FindSelectedNodeOfType extends FindProsemirrorNodeResult {
  * });
  * ```
  */
-export const findSelectedNodeOfType = ({
+export const findSelectedNodeOfType = <
+  GSchema extends EditorSchema = any,
+  GSelection extends Selection<GSchema> = Selection<GSchema>
+>({
   types,
   selection,
-}: FindSelectedNodeOfTypeParams): FindSelectedNodeOfType | undefined => {
+}: FindSelectedNodeOfTypeParams<GSchema, GSelection>): FindSelectedNodeOfType<GSchema> | undefined => {
   if (isNodeSelection(selection)) {
     const { node, $from } = selection;
     if (nodeEqualsType({ types, node })) {
@@ -180,7 +188,8 @@ export const findSelectedNodeOfType = ({
   return undefined;
 };
 
-export interface FindProsemirrorNodeResult extends ProsemirrorNodeParams {
+export interface FindProsemirrorNodeResult<GSchema extends EditorSchema = any>
+  extends ProsemirrorNodeParams<GSchema> {
   /**
    * The start position of the node.
    */

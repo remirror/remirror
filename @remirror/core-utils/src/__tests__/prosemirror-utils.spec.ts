@@ -386,9 +386,9 @@ describe('findSelectedNodeOfType', () => {
 
   it('should return selected node of one of the given `nodeType`s', () => {
     const { state } = createEditor(doc(p('<cursor>one')));
-    const { paragraph } = state.schema.nodes;
+    const { paragraph, table: tbl } = state.schema.nodes;
     const tr = state.tr.setSelection(NodeSelection.create(state.doc, 0));
-    const selectedNode = findSelectedNodeOfType({ types: [paragraph, table], selection: tr.selection });
+    const selectedNode = findSelectedNodeOfType({ types: [paragraph, tbl], selection: tr.selection });
 
     expect(selectedNode!.node.type.name).toEqual('paragraph');
   });

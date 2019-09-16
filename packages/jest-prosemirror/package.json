@@ -8,10 +8,10 @@
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "files": [
-    "lib",
-    "src",
     "environment.d.ts",
-    "environment.js"
+    "environment.js",
+    "lib",
+    "src"
   ],
   "scripts": {
     "build": "run-p build:*",
@@ -23,7 +23,8 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@remirror/core": "0.4.2-canary.2",
-    "@testing-library/dom": "6.2.0",
+    "@testing-library/dom": "^6.2.0",
+    "@types/testing-library__dom": "^6.0.3",
     "@types/prosemirror-gapcursor": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-model": "^1.7.2",

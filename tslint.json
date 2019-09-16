@@ -15,6 +15,7 @@
         "react-test-renderer",
         "@test-fixtures",
         "jest-remirror",
+        "test-keyboard",
         "jest-prosemirror",
         "@storybook/react",
         "prettier"

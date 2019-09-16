@@ -3247,7 +3247,7 @@
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
 
-"@testing-library/dom@6.2.0", "@testing-library/dom@^6.1.0":
+"@testing-library/dom@6.2.0", "@testing-library/dom@^6.1.0", "@testing-library/dom@^6.2.0":
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/@testing-library/dom/-/dom-6.2.0.tgz#6eeee738af12a2f02e74dc8cbadeaed1fc4223e5"
   integrity sha512-YaaoAIDTNV8AfC19XLa6KNeBB5KuSxWYPrgYN1vBu1i+czQlfWJSCS0A3yd2V3BUH9di9C1BD+7OoyVBpZCh2Q==
@@ -4098,14 +4098,6 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
 
-"@types/storybook__react@4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@types/storybook__react/-/storybook__react-4.0.2.tgz#f36fb399574c662e79c1a0cf6e429b6ff730da40"
-  integrity sha512-U/+J5qccRdKFryvHkk1a0IeZaSIZLCmTwAQhTSDGeC3SPNIYPus+EtunBqP49r870l8czbfxtjeC3IL9P66ngQ==
-  dependencies:
-    "@types/react" "*"
-    "@types/webpack-env" "*"
-
 "@types/styled-system@*", "@types/styled-system@5.1.1":
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/@types/styled-system/-/styled-system-5.1.1.tgz#22eff9e4b2f89cd2222c15053f8c11be5ec9c357"
@@ -4120,7 +4112,7 @@
   dependencies:
     csstype "^2.6.6"
 
-"@types/testing-library__dom@*", "@types/testing-library__dom@^6.0.0", "@types/testing-library__dom@^6.0.3":
+"@types/testing-library__dom@*", "@types/testing-library__dom@6.0.3", "@types/testing-library__dom@^6.0.0", "@types/testing-library__dom@^6.0.3":
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/@types/testing-library__dom/-/testing-library__dom-6.0.3.tgz#fb7f98d215de209a9c8ad677c13c2955a5b8a999"
   integrity sha512-NCjixGZ6iubYpe63YKYJy/bDkPp+HD8fbi+0iXcaYhsYjQhoa7IfFz/WcaCRZJnKSi63c9GSK9pZi/Y8/gTvFA==
@@ -4182,7 +4174,7 @@
   resolved "https://registry.yarnpkg.com/@types/wait-on/-/wait-on-3.2.0.tgz#87bfa57af081cb57399d741a963d532946fcdc92"
   integrity sha512-IBpiv5pRb0MFa7KoC1sqOKPGrZtQlCkXuU03VdlqoAqJXYJnkF0u0ERkzEW9AOA4Uv+HMHNSRJRSDB8JeraxKg==
 
-"@types/webpack-env@*", "@types/webpack-env@1.14.0":
+"@types/webpack-env@1.14.0":
   version "1.14.0"
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.14.0.tgz#8edfc5f8e6eae20eeed3ca0d02974ed4ee5e4efc"
   integrity sha512-Fv+0gYJzE/czLoRKq+gnXWr4yBpPM3tO3C8pDLFwqVKlMICQUq5OsxwwFZYDaVr7+L6mgNDp16iOcJHEz3J5RQ==
@@ -11748,11 +11740,6 @@ hsla-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/hsla-regex/-/hsla-regex-1.0.0.tgz#c1ce7a3168c8c6614033a4b5f7877f3b225f9c38"
   integrity sha1-wc56MWjIxmFAM6S194d/OyJfnDg=
-
-htm@2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/htm/-/htm-2.2.1.tgz#02ae7459901b3956aeaf6c7ae627fb6905dc7607"
-  integrity sha512-nPWqBlSbdSHaT2d/cpFRpZLqH5BcdaRcXaicyAtXbkIsIiXLnstPPg0fEX3I8SrlY16FSzb1FLK44uk25xhMvw==
 
 html-comment-regex@^1.1.0:
   version "1.1.2"

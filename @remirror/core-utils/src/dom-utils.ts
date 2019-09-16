@@ -1,5 +1,5 @@
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
-import { bool, Cast, isFunction, isInstanceOf, isNumber, isObject, isString } from '@remirror/core-helpers';
+import { bool, Cast, isFunction, isNumber, isObject, isString } from '@remirror/core-helpers';
 import {
   EditorSchema,
   EditorState,
@@ -50,7 +50,8 @@ import { environment } from './environment';
  *
  * @public
  */
-export const isNodeType = isInstanceOf(NodeType);
+export const isNodeType = <GSchema extends EditorSchema = any>(value: unknown): value is NodeType<GSchema> =>
+  isObject(value) && value instanceof NodeType;
 
 /**
  * Check to see if the passed value is a MarkType.
@@ -59,7 +60,8 @@ export const isNodeType = isInstanceOf(NodeType);
  *
  * @public
  */
-export const isMarkType = isInstanceOf(MarkType);
+export const isMarkType = <GSchema extends EditorSchema = any>(value: unknown): value is MarkType<GSchema> =>
+  isObject(value) && value instanceof MarkType;
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
@@ -68,7 +70,9 @@ export const isMarkType = isInstanceOf(MarkType);
  *
  * @public
  */
-export const isProsemirrorNode = isInstanceOf(PMNode);
+export const isProsemirrorNode = <GSchema extends EditorSchema = any>(
+  value: unknown,
+): value is PMNode<GSchema> => isObject(value) && value instanceof PMNode;
 
 /**
  * Checks to see if the passed value is a Prosemirror Editor State
@@ -77,7 +81,9 @@ export const isProsemirrorNode = isInstanceOf(PMNode);
  *
  * @public
  */
-export const isEditorState = isInstanceOf(PMEditorState);
+export const isEditorState = <GSchema extends EditorSchema = any>(
+  value: unknown,
+): value is PMEditorState<GSchema> => isObject(value) && value instanceof PMEditorState;
 
 /**
  * Predicate checking whether the selection is a TextSelection
@@ -86,7 +92,9 @@ export const isEditorState = isInstanceOf(PMEditorState);
  *
  * @public
  */
-export const isTextSelection = isInstanceOf(TextSelection);
+export const isTextSelection = <GSchema extends EditorSchema = any>(
+  value: unknown,
+): value is TextSelection<GSchema> => isObject(value) && value instanceof TextSelection;
 
 /**
  * Predicate checking whether the value is a Selection
@@ -95,7 +103,9 @@ export const isTextSelection = isInstanceOf(TextSelection);
  *
  * @public
  */
-export const isSelection = isInstanceOf(PMSelection);
+export const isSelection = <GSchema extends EditorSchema = any>(
+  value: unknown,
+): value is PMSelection<GSchema> => isObject(value) && value instanceof PMSelection;
 
 /**
  * Predicate checking whether the value is a ResolvedPosition.
@@ -104,7 +114,9 @@ export const isSelection = isInstanceOf(PMSelection);
  *
  * @public
  */
-export const isResolvedPos = isInstanceOf(PMResolvedPos);
+export const isResolvedPos = <GSchema extends EditorSchema = any>(
+  value: unknown,
+): value is PMResolvedPos<GSchema> => isObject(value) && value instanceof PMResolvedPos;
 
 /**
  * Predicate checking whether the selection is a NodeSelection
@@ -113,7 +125,9 @@ export const isResolvedPos = isInstanceOf(PMResolvedPos);
  *
  * @public
  */
-export const isNodeSelection = isInstanceOf(NodeSelection);
+export const isNodeSelection = <GSchema extends EditorSchema = any>(
+  value: unknown,
+): value is NodeSelection<GSchema> => isObject(value) && value instanceof NodeSelection;
 
 interface IsMarkActiveParams extends MarkTypeParams, EditorStateParams, Partial<FromToParams> {}
 

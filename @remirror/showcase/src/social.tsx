@@ -8,7 +8,6 @@ import {
   SocialEditorProps,
   UserData,
 } from '@remirror/editor-social';
-import emojiData from 'emoji-mart/data/all.json';
 
 import { startCase, take } from '@remirror/core';
 import matchSorter from 'match-sorter';
@@ -61,7 +60,6 @@ export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
   return (
     <SocialEditor
       {...props}
-      emojiData={emojiData}
       attributes={{ 'data-testid': 'editor-social' }}
       userData={userMatches}
       tagData={tagMatches}

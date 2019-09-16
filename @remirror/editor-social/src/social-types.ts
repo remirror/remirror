@@ -4,7 +4,6 @@ import { EmojiExtension } from '@remirror/extension-emoji';
 import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
 import { MentionExtension, SuggestionStateMatch } from '@remirror/extension-mention';
 import { ManagedRemirrorProviderProps } from '@remirror/react';
-import { Data, EmojiSet } from 'emoji-mart';
 
 export type OnMentionChangeParams = MentionState & {
   /**
