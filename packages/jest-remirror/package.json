@@ -23,7 +23,6 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@remirror/core": "0.4.2-canary.2",
-    "test-keyboard": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
     "@remirror/react": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2",
@@ -37,7 +36,8 @@
     "mutationobserver-shim": "0.3.3",
     "prosemirror-model": "^1.7.2",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.10.3"
+    "prosemirror-view": "^1.11.1",
+    "test-keyboard": "0.4.2-canary.2"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
