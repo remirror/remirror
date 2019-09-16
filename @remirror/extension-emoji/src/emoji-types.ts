@@ -1,6 +1,6 @@
-import AliasData from './data/aliases.json';
-import CategoryData from './data/categories.json';
-import EmojiData from './data/emojis.json';
+import AliasData from './data/aliases';
+import CategoryData from './data/categories';
+import EmojiData from './data/emojis';
 
 export type Names = keyof typeof EmojiData;
 export type AliasNames = keyof typeof AliasData;

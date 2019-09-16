@@ -43,7 +43,7 @@
   },
   "cjs": "lib/dist/ui-menus.cjs.js",
   "meta": {
-    "sizeLimit": "70 KB"
+    "sizeLimit": "50 KB"
   },
   "sideEffects": false
 }

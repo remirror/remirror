@@ -53,7 +53,7 @@
   },
   "cjs": "lib/dist/editor-social.cjs.js",
   "meta": {
-    "sizeLimit": "250 KB"
+    "sizeLimit": "200 KB"
   },
   "sideEffects": false
 }

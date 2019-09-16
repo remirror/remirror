@@ -1,5 +1,3 @@
-import React, { ComponentType, Fragment, ReactNode } from 'react';
-
 import { jsx as createElement } from '@emotion/core';
 import {
   AnyExtension,
@@ -15,6 +13,7 @@ import {
   PlainObject,
   ProsemirrorNode,
 } from '@remirror/core';
+import React, { ComponentType, Fragment, ReactNode } from 'react';
 import { mapProps } from './renderer-utils';
 
 type NodeToDOM = NodeExtensionSpec['toDOM'];

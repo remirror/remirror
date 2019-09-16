@@ -11,7 +11,7 @@ Note that this package itself is framework agnostic and while remirror today is 
 ## Installation
 
 ```bash
-yarn add @remirror/core
+yarn add @remirror/core prosemirror-view
 ```
 
 ## Extensions

@@ -43,7 +43,7 @@
   },
   "cjs": "lib/dist/ui.cjs.js",
   "meta": {
-    "sizeLimit": "70 KB"
+    "sizeLimit": "20 KB"
   },
   "sideEffects": false
 }

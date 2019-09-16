@@ -31,9 +31,11 @@
     "@remirror/core-utils": "0.4.2-canary.2",
     "@types/prosemirror-keymap": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
-    "@types/prosemirror-view": "^1.9.0",
     "prosemirror-keymap": "^1.0.1",
-    "prosemirror-state": "^1.2.4",
+    "prosemirror-state": "^1.2.4"
+  },
+  "peerDependencies": {
+    "@types/prosemirror-view": "^1.9.0",
     "prosemirror-view": "^1.11.1"
   },
   "publishConfig": {

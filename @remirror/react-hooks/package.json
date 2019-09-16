@@ -39,7 +39,7 @@
   },
   "cjs": "lib/dist/react-hooks.cjs.js",
   "meta": {
-    "sizeLimit": "65 KB"
+    "sizeLimit": "10 KB"
   },
   "sideEffects": false
 }

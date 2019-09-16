@@ -29,7 +29,7 @@ const generateSizeLimitConfig = async () => {
     .filter(pkg => pkg.meta && pkg.meta.sizeLimit)
     .map(json => ({
       name: json.name,
-      path: join(getPathFromRoot(json), json.main),
+      path: join(getPathFromRoot(json), json.module),
       limit: json.meta.sizeLimit,
       ignore: Object.keys(json.peerDependencies || {}),
     }));

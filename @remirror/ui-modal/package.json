@@ -40,7 +40,7 @@
   },
   "cjs": "lib/dist/ui-modal.cjs.js",
   "meta": {
-    "sizeLimit": "70 KB"
+    "sizeLimit": "30 KB"
   },
   "sideEffects": false
 }

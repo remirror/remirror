@@ -36,7 +36,7 @@
   },
   "cjs": "lib/dist/extension-epic-mode.cjs.js",
   "meta": {
-    "sizeLimit": "60 KB"
+    "sizeLimit": "90 KB"
   },
   "sideEffects": false
 }

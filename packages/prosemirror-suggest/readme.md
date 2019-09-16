@@ -7,5 +7,5 @@ Add suggestion plugins to your prosemirror editor.
 ## Installation
 
 ```bash
-yarn add prosemirror-suggest
+yarn add prosemirror-suggest prosemirror-view
 ```

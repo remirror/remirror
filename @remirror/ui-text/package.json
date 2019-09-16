@@ -44,7 +44,7 @@
   },
   "cjs": "lib/dist/ui-text.cjs.js",
   "meta": {
-    "sizeLimit": "70 KB"
+    "sizeLimit": "20 KB"
   },
   "sideEffects": false
 }

@@ -1,7 +1,7 @@
 const emojiLib = require('emojilib');
 const data = require('emoji-mart/data/all.json');
 const { join, resolve } = require('path');
-const writeJSON = require('write-json-file');
+const { writeFileSync } = require('fs');
 const { execSync } = require('child_process');
 const { startCase, uniqueArray, omit, entries } = require('../core-helpers/lib');
 
@@ -15,12 +15,14 @@ const DESCRIPTION = 'a';
 const KEYWORDS = 'j';
 
 const files = {
-  emojis: dir('src', 'data', 'emojis.json'),
-  aliases: dir('src', 'data', 'aliases.json'),
-  categories: dir('src', 'data', 'categories.json'),
+  emojis: dir('src', 'data', 'emojis.ts'),
+  aliases: dir('src', 'data', 'aliases.ts'),
+  categories: dir('src', 'data', 'categories.ts'),
 };
 
-const generateData = async () => {
+const wrapInDefaultExport = json => `export default ${JSON.stringify(json, null, 2)}`;
+
+const generateData = () => {
   const emojis = entries(baseEmojis)
     .map(([name, entry]) => {
       const other = enhancedEmojis[name] || enhancedEmojis[`flag-${name}`];
@@ -58,9 +60,9 @@ const generateData = async () => {
     }))
     .reduce((acc, { id, name }) => ({ ...acc, [id]: name }), {});
 
-  await writeJSON(files.emojis, emojis);
-  await writeJSON(files.aliases, data.aliases);
-  await writeJSON(files.categories, categories);
+  writeFileSync(files.emojis, wrapInDefaultExport(emojis));
+  writeFileSync(files.aliases, wrapInDefaultExport(data.aliases));
+  writeFileSync(files.categories, wrapInDefaultExport(categories));
   Object.values(files).forEach(path => formatFile(path));
 };
 

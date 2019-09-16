@@ -56,7 +56,7 @@
   },
   "cjs": "lib/dist/extension-emoji.cjs.js",
   "meta": {
-    "sizeLimit": "200 KB"
+    "sizeLimit": "150 KB"
   },
   "sideEffects": false
 }

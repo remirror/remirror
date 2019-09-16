@@ -38,7 +38,7 @@
   },
   "cjs": "lib/dist/extension-enhanced-link.cjs.js",
   "meta": {
-    "sizeLimit": "70 KB"
+    "sizeLimit": "90 KB"
   },
   "sideEffects": false
 }

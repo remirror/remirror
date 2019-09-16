@@ -47,7 +47,7 @@
   },
   "cjs": "lib/dist/ui-dropdown.cjs.js",
   "meta": {
-    "sizeLimit": "70 KB"
+    "sizeLimit": "40 KB"
   },
   "sideEffects": false
 }

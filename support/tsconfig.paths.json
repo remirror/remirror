@@ -40,8 +40,6 @@
       "@remirror/extension-image/lib/*": ["@remirror/extension-image/src/*"],
       "@remirror/extension-mention": ["@remirror/extension-mention/src/index.ts"],
       "@remirror/extension-mention/lib/*": ["@remirror/extension-mention/src/*"],
-      "@remirror/extension-multicursor": ["@remirror/extension-multicursor/src/index.ts"],
-      "@remirror/extension-multicursor/lib/*": ["@remirror/extension-multicursor/src/*"],
       "@remirror/react-hooks": ["@remirror/react-hooks/src/index.ts"],
       "@remirror/react-hooks/lib/*": ["@remirror/react-hooks/src/*"],
       "@remirror/react-node-view": ["@remirror/react-node-view/src/index.ts"],

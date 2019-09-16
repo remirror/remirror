@@ -1,5 +1,6 @@
 import VisuallyHidden from '@reach/visually-hidden';
-import { KeyOfThemeVariant, omitUndefined, RemirrorInterpolation, uniqueId } from '@remirror/core';
+import { omitUndefined, uniqueId } from '@remirror/core-helpers';
+import { KeyOfThemeVariant, RemirrorInterpolation } from '@remirror/core-types';
 import { useRemirrorTheme } from '@remirror/ui';
 import React, { forwardRef, useMemo } from 'react';
 

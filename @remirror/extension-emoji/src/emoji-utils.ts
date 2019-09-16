@@ -1,7 +1,7 @@
 import { entries, includes, keys } from '@remirror/core';
 import escapeStringRegex from 'escape-string-regexp';
-import aliasObject from './data/aliases.json';
-import rawEmojiObject from './data/emojis.json';
+import aliasObject from './data/aliases';
+import rawEmojiObject from './data/emojis';
 import { AliasNames, EmojiObjectRecord, Names, NamesAndAliases } from './emoji-types.js';
 
 /* Taken from https://github.com/tommoor/react-emoji-render/blob/bb67d5e344bb2b91a010461d84184052b1eb4212/data/asciiAliases.js  and emojiIndex.emoticons */
