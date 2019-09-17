@@ -1,12 +1,30 @@
-import { BaseExtensionOptions, Extension, plainInputRule } from '@remirror/core';
-import { getEmojiByName, getEmojiFromEmoticon, spacedEmoticonRegexp } from './emoji-utils';
-
-export interface EmojiExtensionOptions extends BaseExtensionOptions {
-  /**
-   * The character which will trigger the emoji suggestions popup.
-   */
-  suggestionCharacter?: string;
-}
+import {
+  CommandFunction,
+  CommandParams,
+  Extension,
+  ExtensionManagerParams,
+  FromToParams,
+  noop,
+  plainInputRule,
+} from '@remirror/core';
+import { Suggester } from 'prosemirror-suggest';
+import {
+  EmojiExtensionOptions,
+  EmojiObject,
+  EmojiSuggestCommand,
+  NamesAndAliases,
+  SkinVariation,
+} from './emoji-types';
+import {
+  ambiguousEmoticonRegex,
+  DEFAULT_FREQUENTLY_USED,
+  getEmojiByName,
+  getEmojiFromEmoticon,
+  populateFrequentlyUsed,
+  SKIN_VARIATIONS,
+  sortEmojiMatches,
+  unambiguousEmoticonRegex,
+} from './emoji-utils';
 
 export class EmojiExtension extends Extension<EmojiExtensionOptions> {
   /**
@@ -18,15 +36,32 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
 
   get defaultOptions() {
     return {
+      defaultEmoji: DEFAULT_FREQUENTLY_USED,
       suggestionCharacter: ':',
+      onSuggestionChange: noop,
     };
+  }
+
+  private frequentlyUsed!: EmojiObject[];
+
+  protected init() {
+    this.frequentlyUsed = populateFrequentlyUsed(this.options.defaultEmoji);
   }
 
   public inputRules() {
     return [
       // Emoticons
       plainInputRule({
-        regexp: spacedEmoticonRegexp,
+        regexp: unambiguousEmoticonRegex,
+        transformMatch: ([full, partial]) => {
+          const emoji = getEmojiFromEmoticon(partial);
+          return emoji ? full.replace(partial, emoji.char) : null;
+        },
+      }),
+
+      // Ambiguous Emoticons (require a space at the end)
+      plainInputRule({
+        regexp: ambiguousEmoticonRegex,
         transformMatch: ([full, partial]) => {
           const emoji = getEmojiFromEmoticon(partial);
           return emoji ? full.replace(partial, emoji.char) : null;
@@ -43,4 +78,100 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       }),
     ];
   }
+
+  public commands({  }: CommandParams) {
+    const commands = {
+      /**
+       * Insert an emoji into the document at the requested location by name
+       *
+       * The range is optional and if not specified the emoji will be inserted
+       * at the current selection.
+       *
+       * @param name - the emoji to insert
+       * @param [options] - the options when inserting the emoji.
+       */
+      insertEmojiByName: (name: string, options: EmojiCommandOptions = {}): CommandFunction => (...args) => {
+        const emoji = getEmojiByName(name);
+        if (!emoji) {
+          console.warn('invalid emoji name passed into emoji insertion');
+          return false;
+        }
+
+        return commands.insertEmojiByObject(emoji, options)(...args);
+      },
+      /**
+       * Insert an emoji into the document at the requested location.
+       *
+       * The range is optional and if not specified the emoji will be inserted
+       * at the current selection.
+       *
+       * @param emoji - the emoji object to use.
+       * @param [range] - the from/to position to replace.
+       */
+      insertEmojiByObject: (
+        emoji: EmojiObject,
+        { from, to, skinVariation }: EmojiCommandOptions = {},
+      ): CommandFunction => (state, dispatch) => {
+        const { tr } = state;
+        const emojiChar = emoji.char + (skinVariation ? SKIN_VARIATIONS[skinVariation] : '');
+        tr.insertText(emojiChar, from, to);
+
+        if (dispatch) {
+          dispatch(tr);
+        }
+
+        return true;
+      },
+    };
+
+    return commands;
+  }
+
+  public helpers() {
+    return {
+      /**
+       * Update the emoji which are displayed to the user when the query is not
+       * specific enough.
+       */
+      updateFrequentlyUsed: (names: NamesAndAliases[]) => {
+        this.frequentlyUsed = populateFrequentlyUsed(names);
+      },
+    };
+  }
+
+  public suggesters({ getActions }: ExtensionManagerParams): Suggester<EmojiSuggestCommand> {
+    const { suggestionCharacter, suggestionKeyBindings, maxResults, onSuggestionChange } = this.options;
+    return {
+      char: suggestionCharacter,
+      name: this.name,
+      appendText: '',
+      decorationsTag: 'span',
+      keyBindings: suggestionKeyBindings,
+      onChange: params => {
+        const query = params.query.full;
+        const emojiMatches =
+          query.length <= 1 ? this.frequentlyUsed : sortEmojiMatches({ query, maxResults });
+        onSuggestionChange({ ...params, emojiMatches });
+      },
+      createCommand: ({ match }) => {
+        const create = getActions('insertEmojiByObject');
+
+        return (emoji, skinVariation) => {
+          if (!emoji) {
+            throw new Error('An emoji object is required when calling the emoji suggestions command');
+          }
+
+          const { from, end: to } = match.range;
+          create(emoji, { skinVariation, from, to });
+        };
+      },
+    };
+  }
+}
+
+export interface EmojiCommandOptions extends Partial<FromToParams> {
+  /**
+   * The skin variation which is a number between `0` and `4`.
+   */
+  skinVariation?: SkinVariation;
 }

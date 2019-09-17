@@ -125,6 +125,36 @@ export interface AddContentReturn<GExtension extends AnyExtension>
   tags: Tags;
 
   /**
+   * Allows for the chaining of calls and is useful for running tests after
+   * actions.
+   *
+   * You shouldn't use it to call any mutative functions that would change
+   * the editor state.
+   *
+   * ```ts
+   * const create = () => renderEditor({ plainNodes: [], others: [new EmojiExtension()] });
+   * const {
+   *   nodes: { p, doc },
+   *   add,
+   * } = create();
+   *
+   * add(doc(p('<cursor>'))).insertText(':-)')
+   *   .callback(content => {
+   *     expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃')));
+   *   })
+   *   .insertText(' awesome')
+   *   .callback(content => {
+   *      expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃 awesome')));
+   *   });
+   * ```
+   */
+  callback(
+    fn: (
+      content: Pick<AddContentReturn<GExtension>, 'helpers' | 'actions' | 'end' | 'state' | 'tags' | 'start'>,
+    ) => void,
+  ): AddContentReturn<GExtension>;
+
+  /**
    * Allows for the chaining of action calls.
    */
   actionsCallback(

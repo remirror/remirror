@@ -1,5 +1,5 @@
 import { NULL_CHARACTER } from '@remirror/core-constants';
-import { bool, findMatches, isRegExp, isString, noop } from '@remirror/core-helpers';
+import { bool, findMatches, isRegExp, isString } from '@remirror/core-helpers';
 import {
   CommandFunction,
   EditorStateParams,
@@ -24,25 +24,6 @@ import {
   SuggestStateMatchParams,
 } from './suggest-types';
 
-const defaultHandler = () => false;
-
-const DEFAULT_SUGGEST_ACTIONS = { command: noop, create: noop, remove: noop, update: noop };
-
-export const DEFAULT_SUGGESTER = {
-  startOfLine: false,
-  supportedCharacters: /[\w\d_]+/,
-  immediateMatch: true,
-  appendText: ' ',
-  decorationsTag: 'a' as 'a',
-  suggestionClassName: 'suggestion',
-  onChange: defaultHandler,
-  onExit: defaultHandler,
-  onCharacterEntry: defaultHandler,
-  keyBindings: {},
-  createSuggestActions: () => DEFAULT_SUGGEST_ACTIONS,
-  getStage: () => 'new' as const,
-};
-
 /**
  * Escape a regex character
  *
@@ -66,8 +47,8 @@ export const regexToString = (regexpOrString: string | RegExp) =>
  */
 export const getRegexPrefix = (onlyStartOfLine: boolean) => (onlyStartOfLine ? '^' : '');
 
-const getRegexSupportedCharacters = (supportedCharacters: string | RegExp, immediateMatch: boolean) =>
-  immediateMatch ? `(?:${regexToString(supportedCharacters)})?` : `${regexToString(supportedCharacters)}`;
+const getRegexSupportedCharacters = (supportedCharacters: string | RegExp, matchOffset: number) =>
+  `(?:${regexToString(supportedCharacters)}){${matchOffset},}`;
 
 /**
  * Find a match for the provided matchers
@@ -96,13 +77,13 @@ export const findFromMatchers = ({
  * suggestions be activated or deactivated.
  */
 const findMatch = ({ $pos, suggester }: FindMatchParams): SuggestStateMatch | undefined => {
-  const { char, name, startOfLine, supportedCharacters, immediateMatch } = suggester;
+  const { char, name, startOfLine, supportedCharacters, matchOffset } = suggester;
 
   // Create the regular expression to match the text against
   const regexp = new RegExp(
     `${getRegexPrefix(startOfLine)}${escapeChar(char)}${getRegexSupportedCharacters(
       supportedCharacters,
-      immediateMatch,
+      matchOffset,
     )}`,
     'gm',
   );
@@ -427,7 +408,7 @@ export const isJumpReason = (map: SuggestReasonMap): map is Required<SuggestReas
  * True when the match is currently active (i.e. it's query has a value)
  */
 export const isValidMatch = (match: SuggestStateMatch | undefined): match is SuggestStateMatch =>
-  bool(match && (match.suggester.immediateMatch || match.query.full.length));
+  bool(match && match.query.full.length >= match.suggester.matchOffset);
 
 /**
  * True when the current selection is outside the match.

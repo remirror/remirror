@@ -1,4 +1,4 @@
-import { kebabCase } from '@remirror/core';
+import { kebabCase } from '@remirror/core-helpers';
 import { useRemirrorTheme } from '@remirror/ui';
 import { storiesOf } from '@storybook/react';
 import React, { FC } from 'react';

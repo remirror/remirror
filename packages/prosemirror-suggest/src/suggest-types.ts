@@ -1,38 +1,48 @@
 import {
   AnyFunction,
-  Attrs,
-  EditorSchema,
   EditorStateParams,
   EditorViewParams,
   FromToParams,
   MakeRequired,
-  MarkTypeParams,
 } from '@remirror/core-types';
 import { ChangeReason, ExitReason } from './suggest-constants';
 
-export interface Suggester<GSchema extends EditorSchema = any> extends OptionalSuggestMatcher {
+export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void>>
+  extends OptionalSuggestMatcher {
   /**
-   * If true a match is triggered as soon as the match character is typed. When
-   * false there must be an active query with at least one non-char character.
+   * Sets the characters that need to be present after the initial character
+   * match before a match is triggered.
    *
-   * @default true
+   * For example with `char` = `@` the following is true.
+   *
+   * - matchOffset: 0 matches `'@'` immediately
+   * - matchOffset: 1 matches `'@a'` but not `'@'`
+   * - matchOffset: 2 matches `'@ab'` but not `'@a'` or `'@'`
+   * - matchOffset: 3 matches `'@abc'` but not `'@ab'` or `'@a'` or `'@'`
+   * - And so on...
+   *
+   * @default 0
    */
-  immediateMatch?: boolean;
+  matchOffset?: number;
 
   /**
    * Text to append after the mention has been added.
    *
-   * @defaultValue ' '
+   * @defaultValue ''
    */
   appendText?: string;
 
   /**
    * Class name to use for the decoration (while the plugin is still being written)
+   *
+   * @default 'suggestion'
    */
   suggestionClassName?: string;
 
   /**
-   * Tag which wraps an active match
+   * Tag which wraps an active match.
+   *
+   * @default 'span'
    */
   decorationsTag?: keyof HTMLElementTagNameMap;
 
@@ -41,7 +51,7 @@ export interface Suggester<GSchema extends EditorSchema = any> extends OptionalS
    *
    * @defaultValue `() => void`
    */
-  onChange?(params: OnChangeCallbackParams): void;
+  onChange?(params: SuggestChangeHandlerParams<GCommand>): void;
 
   /**
    * Called when a suggestion is exited with the pre-exit match.
@@ -51,7 +61,7 @@ export interface Suggester<GSchema extends EditorSchema = any> extends OptionalS
    *
    * @defaultValue `() => void`
    */
-  onExit?(params: OnExitCallbackParams): void;
+  onExit?(params: SuggestExitHandlerParams<GCommand>): void;
 
   /**
    * Called for each character entry and can be used to disable certain characters.
@@ -62,14 +72,20 @@ export interface Suggester<GSchema extends EditorSchema = any> extends OptionalS
    *
    * @defaultValue `() => false`
    */
-  onCharacterEntry?(params: OnCharacterEntryParams): boolean;
+  onCharacterEntry?(params: SuggestCharacterEntryParams<GCommand>): boolean;
 
   /**
    * An object that describes how certain key bindings should be handled.
    *
    * Return `true` to prevent any further prosemirror actions or return `false` to allow prosemirror to continue.
    */
-  keyBindings?: SuggestKeyBindingMap;
+  keyBindings?: SuggestKeyBindingMap<GCommand>;
+
+  /**
+   * Check the current match and editor state to determine whether this match
+   * is being `new`ly created or `edit`ed.
+   */
+  getStage?(params: GetStageParams): SuggestStage;
 
   /**
    * Create the suggested actions which are made available to the `onExit` and
@@ -78,20 +94,16 @@ export interface Suggester<GSchema extends EditorSchema = any> extends OptionalS
    * Suggested actions are useful for developing plugins and extensions which
    * provide useful defaults for managing the suggestion lifecycle.
    */
-  createSuggestActions?(params: CreateSuggestActionsParams): DefaultSuggestActions;
-
-  /**
-   * Check the current match and editor state to determine whether this match
-   * is being `new`ly created or `edit`ed.
-   */
-  getStage?(params: GetStageParams<GSchema>): SuggestStage;
+  createCommand?(params: CreateSuggestCommandParams): GCommand;
 }
 
 export interface SuggestMatcher {
   /**
-   * The character to match against
+   * The character to match against.
    *
-   * @defaultValue '@'
+   * For example if building a mention plugin you might want to set this to `@`.
+   * Multi string characters are theoretically supported (although currently
+   * untested).
    */
   char: string;
 
@@ -111,58 +123,9 @@ export interface SuggestMatcher {
 
   /**
    * Name of matching character - This will be appended to the classnames
-   *
-   * @defaultValue 'at'
    */
   name: string;
 }
-
-export interface OptionalMentionExtensionParams {
-  /**
-   * The text to append to the replacement.
-   *
-   * @default '''
-   */
-  appendText?: string;
-
-  /**
-   * The type of replacement to use. By default the command will only replace text up the the cursor position.
-   *
-   * To force replacement of the whole match regardless of where in the match the cursor is placed set this to
-   * `full`.
-   *
-   * @default 'full'
-   */
-  replacementType?: SuggestReplacementType;
-}
-
-/**
- * The attrs that will be added to the node.
- * ID and label are plucked and used while attributes like href and role can be assigned as desired.
- */
-export type MentionExtensionAttrs = Attrs<
-  OptionalMentionExtensionParams & {
-    /**
-     * A unique identifier for the suggestions node
-     */
-    id: string;
-
-    /**
-     * The text to be placed within the suggestions node
-     */
-    label: string;
-
-    /**
-     * The name of the matched char
-     */
-    name?: string;
-
-    /**
-     * The range of the requested selection.
-     */
-    range?: FromToEndParams;
-  }
->;
 
 export interface SuggestMatcher {
   /**
@@ -250,29 +213,22 @@ export interface SuggestStateMatchParams {
   match: SuggestStateMatch;
 }
 
-export interface CreateSuggestActionsParams
+export interface CreateSuggestCommandParams
   extends Partial<ReasonParams>,
     SuggestStateMatchParams,
     StageParams {}
 
-export interface GetStageParams<GSchema extends EditorSchema = any>
-  extends SuggestStateMatchParams,
-    EditorStateParams<GSchema> {}
+export interface GetStageParams extends SuggestStateMatchParams, EditorStateParams {}
 
 /**
  * Determines whether to replace the full match or the partial match (up to the cursor position).
  */
 export type SuggestReplacementType = 'full' | 'partial';
 
-export interface SuggestCommandParams extends MarkTypeParams, OptionalMentionExtensionParams {
-  attrs: MentionExtensionAttrs;
-  range: FromToEndParams;
-}
-
-export interface SuggestCallbackParams
+export interface SuggestCallbackParams<GCommand extends AnyFunction<void> = AnyFunction<void>>
   extends SuggestStateMatch,
     EditorViewParams,
-    DefaultSuggestActions,
+    SuggestCommandParams<GCommand>,
     StageParams {}
 
 export interface StageParams {
@@ -296,18 +252,24 @@ export interface ReasonParams<GReason = ExitReason | ChangeReason> {
   reason: GReason;
 }
 
-export interface OnChangeCallbackParams extends SuggestCallbackParams, ReasonParams<ChangeReason> {}
+export interface SuggestChangeHandlerParams<GCommand extends AnyFunction<void> = AnyFunction<void>>
+  extends SuggestCallbackParams<GCommand>,
+    ReasonParams<ChangeReason> {}
 
-export interface OnExitCallbackParams extends SuggestCallbackParams, ReasonParams<ExitReason> {}
+export interface SuggestExitHandlerParams<GCommand extends AnyFunction<void> = AnyFunction<void>>
+  extends SuggestCallbackParams<GCommand>,
+    ReasonParams<ExitReason> {}
 
-export interface OnCharacterEntryParams extends SuggestCallbackParams {
+export interface SuggestCharacterEntryParams<GCommand extends AnyFunction<void> = AnyFunction<void>>
+  extends SuggestCallbackParams<GCommand> {
   /**
    * The text entry that was received.
    */
   entry: FromToParams & { text: string };
 }
 
-export interface SuggestKeyBindingParams extends SuggestCallbackParams {
+export interface SuggestKeyBindingParams<GCommand extends AnyFunction<void> = AnyFunction<void>>
+  extends SuggestCallbackParams<GCommand> {
   /**
    * The native keyboard event.
    */
@@ -320,23 +282,27 @@ export interface SuggestKeyBindingParams extends SuggestCallbackParams {
  * Return true to prevent any further bubbling of the key event and to stop other handlers
  * from also processing the event.
  */
-export type SuggestKeyBinding = (params: SuggestKeyBindingParams) => boolean | void;
+export type SuggestKeyBinding<GCommand extends AnyFunction<void> = AnyFunction<void>> = (
+  params: SuggestKeyBindingParams<GCommand>,
+) => boolean | void;
 
 /**
  * The handler callback signature.
  */
-export type SuggestCallback = (params: SuggestCallbackParams) => void;
+export type SuggestCallback<GCommand extends AnyFunction<void> = AnyFunction<void>> = (
+  params: SuggestCallbackParams<GCommand>,
+) => void;
 
 /**
  * The SuggestKeyBinding object.
  */
-export type SuggestKeyBindingMap = Partial<
+export type SuggestKeyBindingMap<GCommand extends AnyFunction<void> = AnyFunction<void>> = Partial<
   Record<
     'Enter' | 'ArrowDown' | 'ArrowUp' | 'ArrowLeft' | 'ArrowRight' | 'Esc' | 'Delete' | 'Backspace',
-    SuggestKeyBinding
+    SuggestKeyBinding<GCommand>
   >
 > &
-  Record<string, SuggestKeyBinding>;
+  Record<string, SuggestKeyBinding<GCommand>>;
 
 /**
  * A suggestion can have two stages. When it is `new` and when it has already been created
@@ -349,40 +315,11 @@ export type SuggestKeyBindingMap = Partial<
  */
 export type SuggestStage = 'new' | 'edit';
 
-export type SuggestCommandAttrs = Attrs<
-  Partial<Pick<MentionExtensionAttrs, 'id' | 'label' | 'appendText' | 'replacementType'>>
->;
-
-export interface BaseSuggestActions {
-  create: AnyFunction;
-  update: AnyFunction;
-  remove: AnyFunction;
-  command: AnyFunction;
-}
-
-export interface DefaultSuggestActions extends BaseSuggestActions {
+export interface SuggestCommandParams<GCommand extends AnyFunction<void> = AnyFunction<void>> {
   /**
-   * Create the suggestion for the first time
+   * A command which automatically applies the provided attributes to the command.
    */
-  create(attrs?: Attrs): void;
-
-  /**
-   * Update the active suggestion when suggestions are editable.
-   */
-  update(attrs?: Attrs): void;
-
-  /**
-   * Remove the active suggestion, where this is possible.
-   */
-  remove(attrs?: Attrs): void;
-
-  /**
-   * A command which automatically provides the default action.
-   *
-   * This is the recommended option to use an should typically fall back to the
-   * desired `update` `remove` or `create` action.
-   */
-  command(attrs?: Attrs): void;
+  command: GCommand;
 }
 
 export interface SuggesterParams {

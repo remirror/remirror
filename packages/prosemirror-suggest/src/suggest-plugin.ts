@@ -1,4 +1,3 @@
-import { noop } from '@remirror/core-helpers';
 import {
   CompareStateParams,
   EditorSchema,
@@ -13,10 +12,9 @@ import {
 import { transactionChanged } from '@remirror/core-utils';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { ChangeReason, ExitReason } from './suggest-constants';
+import { ChangeReason, DEFAULT_SUGGESTER, ExitReason } from './suggest-constants';
 import {
   CompareMatchParams,
-  DefaultSuggestActions,
   SuggestCallbackParams,
   Suggester,
   SuggestKeyBindingParams,
@@ -26,7 +24,6 @@ import {
   SuggestStateMatchReason,
 } from './suggest-types';
 import {
-  DEFAULT_SUGGESTER,
   findFromMatchers,
   findReason,
   isInvalidSplitReason,
@@ -39,14 +36,14 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * Create an instance of the SuggestState class.
    */
-  public static create<GSchema extends EditorSchema = any>(suggesters: Array<Suggester<GSchema>>) {
+  public static create(suggesters: Suggester[]) {
     return new SuggestState(suggesters);
   }
 
   /**
    * The suggesters that have been registered for the suggestions plugin.
    */
-  private suggesters: Array<Required<Suggester<GSchema>>>;
+  private suggesters: Array<Required<Suggester>>;
 
   /**
    * Keeps track of the current state.
@@ -80,13 +77,8 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * The actions created by the extension.
    */
-  private getCommands(_: SuggestStateMatch, __?: ExitReason | ChangeReason): DefaultSuggestActions {
-    return {
-      create: noop,
-      update: noop,
-      remove: noop,
-      command: noop,
-    };
+  private getCommand(match: SuggestStateMatch, reason?: ExitReason | ChangeReason) {
+    return match.suggester.createCommand({ match, reason, stage: this.stage });
   }
 
   /**
@@ -105,8 +97,8 @@ export class SuggestState<GSchema extends EditorSchema = any> {
       : 'new';
   }
 
-  // TODO check for duplicate names and characters and log warnings when these
-  // are found.
+  // TODO Check for duplicate names and characters and log warnings when these
+  // are found
   constructor(suggesters: Suggester[]) {
     this.suggesters = suggesters.map(suggester => ({ ...DEFAULT_SUGGESTER, ...suggester }));
   }
@@ -126,7 +118,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     return {
       view: this.view,
       stage: this.stage,
-      ...this.getCommands(match),
+      command: this.getCommand(match),
       ...match,
     };
   }
@@ -140,13 +132,13 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     return {
       view: this.view,
       stage: this.stage,
-      ...this.getCommands(match, match.reason),
+      command: this.getCommand(match, match.reason),
       ...match,
     };
   }
 
   /**
-   * Manages the view updates
+   * Manages the view updates.
    */
   private onViewUpdate: OnViewUpdate = () => {
     const {

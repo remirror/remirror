@@ -845,3 +845,14 @@ export const range = (start: number, end?: number) => {
     ? Array.from({ length: end + 1 - start }, (_, index) => index + start)
     : Array.from({ length: start + 1 - end }, (_, index) => -1 * index + start);
 };
+
+/**
+ * Check that a number is within the minimum and maximum bounds of a set of
+ * numbers.
+ *
+ * @param value - the number to test
+ */
+export const within = (value: number, ...rest: Array<number | undefined | null>) => {
+  const numbers: number[] = rest.filter<number>(isNumber);
+  return value >= Math.min(...numbers) && value <= Math.max(...numbers);
+};

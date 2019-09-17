@@ -1,4 +1,4 @@
-import { Merge } from '@remirror/core';
+import { Merge } from '@remirror/core-helpers';
 import { baseTheme, RemirrorThemeProvider } from '@remirror/ui';
 import { render } from '@testing-library/react';
 import React from 'react';

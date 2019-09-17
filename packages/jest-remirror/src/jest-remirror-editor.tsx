@@ -9,6 +9,7 @@ import {
   isNodeExtension,
   MarkExtension,
   NodeExtension,
+  pick,
 } from '@remirror/core';
 import { InjectedRemirrorProps, Remirror, RemirrorProps } from '@remirror/react';
 import { render } from '@testing-library/react/pure';
@@ -123,7 +124,7 @@ export const renderEditor = <
 
     const updateContent = (newTags?: Tags): AddContentReturn<GExtension> => {
       const { selection, doc } = view.state;
-      return {
+      const returnValue: AddContentReturn<GExtension> = {
         tags: newTags ? { ...tags, ...newTags } : tags,
         start: selection.from,
         end: selection.to,
@@ -148,6 +149,10 @@ export const renderEditor = <
         insertText: text => {
           const { from } = view.state.selection;
           insertText({ start: from, text, view });
+          return updateContent();
+        },
+        callback: fn => {
+          fn(pick(returnValue, ['helpers', 'actions', 'end', 'state', 'tags', 'start']));
           return updateContent();
         },
         actionsCallback: callback => {
@@ -175,6 +180,8 @@ export const renderEditor = <
           return updateContent();
         },
       };
+
+      return returnValue;
     };
 
     return updateContent();

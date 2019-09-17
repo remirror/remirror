@@ -123,6 +123,7 @@
     "chalk": "2.4.2",
     "cpy-cli": "2.0.0",
     "cross-env": "5.2.1",
+    "dts-gen": "0.5.8",
     "dtslint": "0.9.8",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.14.0",

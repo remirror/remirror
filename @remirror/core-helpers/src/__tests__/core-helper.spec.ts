@@ -39,6 +39,7 @@ import {
   uniqueArray,
   uniqueBy,
   uniqueId,
+  within,
 } from '../core-helpers';
 
 describe('findMatches', () => {
@@ -367,4 +368,13 @@ test('range', () => {
   expect(range(1, 5)).toEqual([1, 2, 3, 4, 5]);
   expect(range(-5, -1)).toEqual([-5, -4, -3, -2, -1]);
   expect(range(10, 5)).toEqual([10, 9, 8, 7, 6, 5]);
+});
+
+test('within', () => {
+  expect(within(5, 0, 5)).toBeTrue();
+  expect(within(5, 5, 5)).toBeTrue();
+  expect(within(5, 5, 10)).toBeTrue();
+  expect(within(5, 0, 4)).toBeFalse();
+  expect(within(-20, -21, -20)).toBeTrue();
+  expect(within(10, null, undefined, 0, 12)).toBeTrue();
 });

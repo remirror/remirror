@@ -517,5 +517,5 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * Create suggestions which respond to character key combinations within the
    * editor instance.
    */
-  suggesters?(params: ExtensionManagerTypeParams<GType>): Suggester[];
+  suggesters?(params: ExtensionManagerTypeParams<GType>): Suggester[] | Suggester;
 }

@@ -1,5 +1,5 @@
 import { Interpolation } from '@emotion/core';
-import { bool, isEqual, isFunction, isInstanceOf } from '@remirror/core-helpers';
+import { bool, isArray, isEqual, isFunction, isInstanceOf } from '@remirror/core-helpers';
 import {
   ActionMethod,
   AnyActions,
@@ -723,10 +723,10 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     const extensionSuggesters = this.extensions
       .filter(hasExtensionProperty('suggesters'))
       .filter(extension => !extension.options.exclude.suggesters)
-      .map(extensionPropertyMapper('suggesters', this.params)) as Suggester[][];
+      .map(extensionPropertyMapper('suggesters', this.params));
 
     extensionSuggesters.forEach(suggester => {
-      suggesters.push(...suggester);
+      suggesters.push(...(isArray(suggester) ? suggester : [suggester]));
     });
 
     return suggest(...suggesters);

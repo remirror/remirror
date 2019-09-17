@@ -20,25 +20,25 @@ export interface EditorViewParams<GSchema extends EditorSchema = any> {
 
 export interface SchemaParams<GNodes extends string = string, GMarks extends string = string> {
   /**
-   * Tbe Prosemirror schema being used for the current interface
+   * The Prosemirror schema being used for the current interface
    */
   schema: EditorSchema<GNodes, GMarks>;
 }
 
 export interface EditorStateParams<GSchema extends EditorSchema = any> {
   /**
-   * An snapshot of the prosemirror editor state
+   * A snapshot of the prosemirror editor state
    */
   state: EditorState<GSchema>;
 }
 
 export interface CompareStateParams<GSchema extends EditorSchema = any> {
   /**
-   * The previous snapshot of the Prosemirror editor state.
+   * The previous snapshot of the prosemirror editor state.
    */
   oldState: EditorState<GSchema>;
   /**
-   * The latest snapshot of the Prosemirror editor state.
+   * The latest snapshot of the prosemirror editor state.
    */
   newState: EditorState<GSchema>;
 }

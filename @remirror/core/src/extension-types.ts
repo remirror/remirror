@@ -170,7 +170,7 @@ export type InferFlexibleExtensionList<
  * A utility type which maps the passed in extension command in an action that is called via
  * `manager.data.actions.commandName()`.
  */
-type MapCommandToAction<GCommands extends Record<string, AnyFunction>> = {
+export type MapCommandToAction<GCommands extends Record<string, AnyFunction>> = {
   [P in Key<GCommands>]: ActionMethod<Parameters<GCommands[P]>>;
 };
 
@@ -190,7 +190,7 @@ export type ActionNames<GExtension extends AnyExtension> = StringKey<ActionsFrom
  * A utility type which maps the passed in extension helpers to a method called with
  * `manager.data.helpers.helperName()`.
  */
-type MapHelpers<GHelpers extends Record<string, AnyFunction>> = {
+export type MapHelpers<GHelpers extends Record<string, AnyFunction>> = {
   [P in Key<GHelpers>]: GHelpers[P];
 };
 

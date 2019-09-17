@@ -14,6 +14,7 @@ import {
   take,
   uniqueArray,
   uniqueBy,
+  within,
 } from '@remirror/core-helpers';
 import { AnyFunction, Nullable } from '@remirror/core-types';
 import computeScrollIntoView from 'compute-scroll-into-view';
@@ -666,15 +667,6 @@ export const checkItemHighlighted = (
   index: number,
   { start, end, indexes }: Omit<GetHighlightedIndexesParams, 'items'>,
 ) => indexes.includes(index) || within(index, start, end);
-
-/**
- * Check that a number is within the minimum and maximum bounds of a set of
- * numbers.
- */
-export const within = (value: number, ...rest: Array<number | undefined | null>) => {
-  const numbers: number[] = rest.filter<number>(isNumber);
-  return value >= Math.min(...numbers) && value <= Math.max(...numbers);
-};
 
 /**
  * Normalizes the 'key' property of a KeyboardEvent in IE/Edge

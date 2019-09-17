@@ -26,7 +26,7 @@
   "dependencies": {
     "@babel/runtime": "^7.6.0",
     "@reach/visually-hidden": "^0.1.4",
-    "@remirror/core": "0.4.2-canary.2",
+    "@remirror/core-helpers": "0.4.2-canary.2",
     "@remirror/ui": "0.4.2-canary.2",
     "react-modal": "^3.10.1"
   },

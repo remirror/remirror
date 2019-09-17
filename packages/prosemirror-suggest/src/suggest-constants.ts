@@ -1,3 +1,24 @@
+import { noop } from '@remirror/core-helpers';
+
+export const DEFAULT_SUGGEST_ACTIONS = { command: noop, create: noop, remove: noop, update: noop };
+
+const defaultHandler = () => false;
+
+export const DEFAULT_SUGGESTER = {
+  startOfLine: false,
+  supportedCharacters: /[\w\d_]+/,
+  matchOffset: 0,
+  appendText: '',
+  decorationsTag: 'span' as 'span',
+  suggestionClassName: 'suggestion',
+  onChange: defaultHandler,
+  onExit: defaultHandler,
+  onCharacterEntry: defaultHandler,
+  keyBindings: {},
+  createCommand: () => noop,
+  getStage: () => 'new' as const,
+};
+
 /**
  * The action taken on a suggestion
  */

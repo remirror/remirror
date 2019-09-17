@@ -1,11 +1,30 @@
-import { entries, includes, keys } from '@remirror/core';
+import {
+  bool,
+  entries,
+  includes,
+  isNumber,
+  isPlainObject,
+  keys,
+  range,
+  take,
+  uniqueArray,
+  within,
+} from '@remirror/core';
 import escapeStringRegex from 'escape-string-regexp';
+import matchSorter from 'match-sorter';
 import aliasObject from './data/aliases';
 import rawEmojiObject from './data/emojis';
-import { AliasNames, EmojiObjectRecord, Names, NamesAndAliases } from './emoji-types.js';
+import {
+  AliasNames,
+  EmojiObject,
+  EmojiObjectRecord,
+  Names,
+  NamesAndAliases,
+  SkinVariation,
+} from './emoji-types.js';
 
 /* Taken from https://github.com/tommoor/react-emoji-render/blob/bb67d5e344bb2b91a010461d84184052b1eb4212/data/asciiAliases.js  and emojiIndex.emoticons */
-export const emoticons: Record<string, string[]> = {
+export const EMOTICONS: Record<string, string[]> = {
   angry: ['>:(', '>:-('],
   blush: [':")', ':-")'],
   broken_heart: ['</3', '<\\3'],
@@ -31,7 +50,7 @@ export const emoticons: Record<string, string[]> = {
   sweat_smile: [',:)', ',:-)'],
   unamused: [':s', ':-S', ':z', ':-Z', ':$', ':-$'],
   wink: [';)', ';-)'],
-  monkey_face: [':o)', ':o)'],
+  monkey_face: [':o)'],
   kissing_heart: [':*', ':*', ':-*'],
   slightly_smiling_face: [':)', ':)', '(:', ':-)'],
   stuck_out_tongue_winking_eye: [';p', ';p', ';-p', ';b', ';-b', ';P', ';-P'],
@@ -41,19 +60,46 @@ export const emoticons: Record<string, string[]> = {
 
 export const SKIN_VARIATIONS = ['🏻', '🏼', '🏽', '🏾', '🏿'] as const;
 
-const emotionRegexpSource = `(${entries(emoticons)
-  .reduce((acc, [, emoticonList]) => [...acc, ...emoticonList.map(escapeStringRegex)], [] as string[])
-  .join('|')})`;
+/**
+ * Check that the value is a valid skin variation index.
+ */
+export const isValidSkinVariation = (value: unknown): value is SkinVariation =>
+  isNumber(value) && within(value, 0, 4);
 
-export const spacedEmoticonRegexp = new RegExp(`${emotionRegexpSource}[\\s]$`);
-export const emoticonRegexp = new RegExp(`${emotionRegexpSource}$`);
+export const DEFAULT_FREQUENTLY_USED: Names[] = [
+  '+1',
+  'grinning',
+  'kissing_heart',
+  'heart_eyes',
+  'laughing',
+  'stuck_out_tongue_winking_eye',
+  'sweat_smile',
+  'joy',
+  'scream',
+  'disappointed',
+  'unamused',
+  'weary',
+  'sob',
+  'sunglasses',
+  'heart',
+  'poop',
+];
 
 const emojiObject: EmojiObjectRecord = rawEmojiObject as EmojiObjectRecord;
-const aliasNames = entries(aliasObject as Record<AliasNames, Names>);
-for (const [alias, name] of aliasNames) {
-  emojiObject[alias] = { ...emojiObject[name], name: alias };
-}
+const emoticonList = uniqueArray(
+  entries(EMOTICONS).reduce((acc, [, emoticons]) => [...acc, ...emoticons], [] as string[]),
+);
+const unambiguousEmoticonSource = emoticonList
+  .filter(emoticon => !/^:[\w]+/.test(emoticon))
+  .map(escapeStringRegex)
+  .join('|');
+const ambiguousEmoticonSource = emoticonList
+  .filter(emoticon => /^:[\w]+/.test(emoticon))
+  .map(escapeStringRegex)
+  .join('|');
 
+export const unambiguousEmoticonRegex = new RegExp(`(${unambiguousEmoticonSource})$`);
+export const ambiguousEmoticonRegex = new RegExp(`(${ambiguousEmoticonSource})[\\s]$`);
 export const emojiNames = keys(emojiObject);
 export const emojiList = entries(emojiObject).map(([, entry]) => entry);
 export const emojiCategories = [
@@ -67,10 +113,16 @@ export const emojiCategories = [
   'flags',
 ] as const;
 
-export const isEmojiName = (name: unknown): name is NamesAndAliases => includes(emojiNames, name);
+export const isEmojiName = (name: unknown): name is Names => includes(emojiNames, name);
+export const isEmojiAliasName = (name: unknown): name is AliasNames => includes(keys(aliasObject), name);
+export const isValidEmojiName = (name: unknown): name is NamesAndAliases =>
+  isEmojiName(name) || isEmojiAliasName(name);
+export const isValidEmojiObject = (value: unknown): value is EmojiObject =>
+  bool(isPlainObject(value) && isEmojiName(value.name));
+export const aliasToName = (name: AliasNames) => aliasObject[name];
 
 export const getEmojiByName = (name: string | undefined) =>
-  isEmojiName(name) ? emojiObject[name] : undefined;
+  isEmojiName(name) ? emojiObject[name] : isEmojiAliasName(name) ? emojiObject[aliasToName(name)] : undefined;
 
 /**
  * Retrieve the EmojiData from an emoticon.
@@ -78,6 +130,59 @@ export const getEmojiByName = (name: string | undefined) =>
  * @param emoticon e.g. `:-)`
  */
 export const getEmojiFromEmoticon = (emoticon: string) => {
-  const emoticonName = Object.keys(emoticons).find(name => emoticons[name].includes(emoticon));
+  const emoticonName = Object.keys(EMOTICONS).find(name => EMOTICONS[name].includes(emoticon));
   return getEmojiByName(emoticonName);
+};
+
+export interface SortEmojiMatchesParams {
+  query: string;
+  /**
+   * The maximum number of results to display. By default it returns all results.
+   *
+   * @default -1
+   */
+  maxResults?: number;
+
+  /**
+   * The list of emoji to search through.
+   *
+   * By default it searches through every possible emoji value.
+   *
+   * @default `emojiList`
+   */
+  list?: EmojiObject[];
+}
+
+/**
+ * Return a list of `maxResults` length of closest matches
+ */
+export const sortEmojiMatches = ({ query, maxResults = -1, list = emojiList }: SortEmojiMatchesParams) => {
+  return take(
+    matchSorter(list, query, {
+      keys: ['name', item => item.description.replace(/[^\w]/g, ''), 'keywords'],
+    }),
+    maxResults,
+  );
+};
+
+export const populateFrequentlyUsed = (names: NamesAndAliases[]) => {
+  const frequentlyUsed: EmojiObject[] = [];
+  for (const name of names) {
+    const emoji = getEmojiByName(name);
+    if (emoji) {
+      frequentlyUsed.push(emoji);
+    }
+  }
+
+  return frequentlyUsed;
+};
+
+/**
+ * Return a string array of hexadecimals representing the hex code for an emoji
+ */
+export const getHexadecimalsFromEmoji = (emoji: string) => {
+  return range(emoji.length / 2).map(index => {
+    const codePoint = emoji.codePointAt(index * 2);
+    return codePoint ? codePoint.toString(16) : '';
+  });
 };

@@ -1,4 +1,4 @@
-import { getEmojiFromEmoticon, isEmojiName } from '../emoji-utils';
+import { getEmojiFromEmoticon, isEmojiName, sortEmojiMatches } from '../emoji-utils';
 
 test('isEmojiName', () => {
   expect(isEmojiName('')).toBeFalse();
@@ -10,4 +10,10 @@ test('getEmojiFromEmoticon', () => {
   expect(getEmojiFromEmoticon(':-)')!.char).toBe('😃');
   expect(getEmojiFromEmoticon(':-(')!.char).toBe('😦');
   expect(getEmojiFromEmoticon(':-(12')).toBeUndefined();
+});
+
+test('sortEmojiMatches', () => {
+  expect(sortEmojiMatches({ query: '+1', maxResults: 10 })[0].char).toBe('👍');
+  expect(sortEmojiMatches({ query: 'thumbsup', maxResults: 10 })[0].char).toBe('👍');
+  expect(sortEmojiMatches({ query: '' }).length).toBeGreaterThan(1000);
 });
