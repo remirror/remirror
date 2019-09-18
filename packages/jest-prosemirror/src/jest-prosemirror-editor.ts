@@ -3,13 +3,16 @@ import {
   CommandFunction,
   EditorSchema,
   EditorState,
+  EditorStateParams,
   findElementAtPosition,
   InputRule,
   isElementDOMNode,
   isTextDOMNode,
+  pick,
   PlainObject,
   Plugin,
   PosParams,
+  SelectionParams,
   TextParams,
 } from '@remirror/core';
 import { EventType, fireEvent } from '@testing-library/dom';
@@ -114,17 +117,43 @@ export const createEditor = <GSchema extends EditorSchema = any>(
 
   const createReturnValue = () => {
     const { selection, doc } = view.state;
-    return {
+    const returnValue = {
       start: selection.from,
+      selection,
       end: selection.to,
       state: view.state,
       view,
       schema: view.state.schema,
-      insertText(text: string) {
+      /**
+       * Overwrite all the current content within the editor.
+       */
+      overwrite: (newDoc: TaggedProsemirrorNode<GSchema>) => {
+        const tr = view.state.tr.replaceWith(0, view.state.doc.nodeSize - 2, newDoc);
+        tr.setMeta('addToHistory', false);
+        view.dispatch(tr);
+        return createReturnValue();
+      },
+
+      /**
+       * Run the command within the editor context.
+       */
+      command: (command: CommandFunction) => {
+        command(view.state, view.dispatch, view);
+        return createReturnValue();
+      },
+
+      /**
+       * Insert text into the editor at the current position.
+       */
+      insertText: (text: string) => {
         const { from } = view.state.selection;
         insertText({ start: from, text, view });
         return createReturnValue();
       },
+
+      /**
+       * Jump to the position in the editor.
+       */
       jumpTo: (pos: 'start' | 'end' | number, endPos?: number) => {
         if (pos === 'start') {
           dispatchTextSelection({ view, start: 1 });
@@ -135,10 +164,16 @@ export const createEditor = <GSchema extends EditorSchema = any>(
         }
         return createReturnValue();
       },
+
       shortcut: (text: string) => {
         shortcut({ shortcut: text, view });
         return createReturnValue();
       },
+      /**
+       * Simulate a keypress which is run through the editor's key handlers.
+       * **NOTE** This only simulates. For example an `Enter` would run all enter key
+       * handlers but not actually create a new line.
+       */
       press: (char: string) => {
         press({ char, view });
         return createReturnValue();
@@ -147,11 +182,26 @@ export const createEditor = <GSchema extends EditorSchema = any>(
         fireEventAtPosition({ view, ...params });
         return createReturnValue();
       },
+      callback: (fn: (content: ReturnValueCallbackParams<GSchema>) => void) => {
+        fn(pick(returnValue, ['start', 'end', 'state', 'view', 'schema', 'selection']));
+        return createReturnValue();
+      },
     };
+
+    return returnValue;
   };
 
   return createReturnValue();
 };
+
+interface ReturnValueCallbackParams<GSchema extends EditorSchema = any>
+  extends TestEditorViewParams<GSchema>,
+    EditorStateParams<GSchema>,
+    SelectionParams<GSchema> {
+  start: number;
+  end: number;
+  schema: GSchema;
+}
 
 export interface InsertTextParams<GSchema extends EditorSchema = any>
   extends TestEditorViewParams<GSchema>,

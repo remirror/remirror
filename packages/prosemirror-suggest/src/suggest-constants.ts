@@ -19,7 +19,7 @@ export const DEFAULT_SUGGESTER = {
   getStage: () => 'new' as const,
   ignoreDecorations: false,
   validPrefixCharacters: /^[\s\0]?$/,
-  invalidPrefixCharacters: undefined,
+  invalidPrefixCharacters: undefined as any,
 };
 
 /**
@@ -52,7 +52,7 @@ export enum ActionTaken {
  */
 export enum ExitReason {
   /**
-   * The user has pasted some text with multiple characters or run a command that adds multiple character.
+   * The user has pasted some text with multiple characters or run a command that adds multiple characters.
    *
    * `onExit` should be called but the previous match should be retested as it's possible that it's been extended.
    */
@@ -82,8 +82,9 @@ export enum ExitReason {
   InvalidSplit = 'invalid-exit-split',
 
   /**
-   * User has moved out of the suggestion at the end. This will typically be using arrow keys, but can also be
-   * via a mouse click or custom command. All that has changed is the cursor position.
+   * User has moved out of the suggestion at the end. This can happen via using arrow keys, but can also be
+   * via the suggestion no longer matching as the user types, a mouse click or custom command.
+   * All that has changed is the cursor position.
    */
   MoveEnd = 'move-end',
 

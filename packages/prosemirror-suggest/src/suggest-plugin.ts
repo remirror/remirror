@@ -86,9 +86,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    * Provides the current stage of the mention.
    */
   get stage(): SuggestStage {
-    return this.match && this.match.suggester.getStage({ match: this.match, state: this.view.state })
-      ? 'edit'
-      : 'new';
+    return this.match ? this.match.suggester.getStage({ match: this.match, state: this.view.state }) : 'new';
   }
 
   // TODO Check for duplicate names and characters and log warnings when these
@@ -158,8 +156,9 @@ export class SuggestState<GSchema extends EditorSchema = any> {
       const changeParams = this.createReasonParams(change);
       const movedForwards = exit.range.from < change.range.from;
 
-      movedForwards ? onChange(changeParams) : onExit(exitParams);
-      movedForwards ? onExit(exitParams) : onChange(changeParams);
+      movedForwards ? change.suggester.onChange(changeParams) : exit.suggester.onExit(exitParams);
+      movedForwards ? exit.suggester.onExit(exitParams) : change.suggester.onChange(changeParams);
+      return;
     }
 
     if (change) {

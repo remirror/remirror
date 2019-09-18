@@ -142,9 +142,9 @@ export interface SuggestMatcher {
    * This has preference over the `validPrefixCharacters` option and when it is
    * defined only it will be looked at in determining whether a prefix is valid.
    *
-   * @defaultValue `undefined`
+   * @defaultValue ''
    */
-  invalidPrefixCharacters: RegExp | string | undefined;
+  invalidPrefixCharacters: RegExp | string;
 
   /**
    * Name of matching character - This will be appended to the classnames
