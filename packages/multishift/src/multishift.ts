@@ -185,11 +185,14 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
   }, [mostRecentHighlightedIndex]);
 
   const itemHighlightedAtIndex = (index: number) => {
-    return checkItemHighlighted(index, {
-      start: highlightedGroupStartIndex,
-      end: highlightedGroupEndIndex,
-      indexes: highlightedIndexes,
-    });
+    const isHovered = index === hoveredIndex;
+    return (
+      checkItemHighlighted(index, {
+        start: highlightedGroupStartIndex,
+        end: highlightedGroupEndIndex,
+        indexes: highlightedIndexes,
+      }) || (props.multiple ? isHovered : !isValidIndex(mostRecentHighlightedIndex) && isHovered)
+    );
   };
 
   const itemIsSelected = useCallback(
@@ -344,7 +347,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     return {
       [refKey]: composeRefs(ref as Ref<GElement>, refs.menu),
       id: menuId,
-      role: 'listbox',
+      role: type === Type.ControlledMenu ? 'menu' : 'listbox',
       'aria-labelledby': labelId,
       tabIndex: -1,
       ...multi,
@@ -461,9 +464,9 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
           refs.items.current.push(itemNode);
         }
       }),
-      role: 'option',
+      role: type === Type.ControlledMenu ? (props.multiple ? 'menuitemcheckbox' : 'menuitemradio') : 'option',
       'aria-current': index === hoveredIndex || index === mostRecentHighlightedIndex,
-      'aria-selected': (itemHighlightedAtIndex(index) || index === hoveredIndex) && !rest.disabled,
+      'aria-selected': itemHighlightedAtIndex(index) && !rest.disabled,
       id: getItemA11yId(itemIndex),
       ...eventHandlers,
       ...rest,

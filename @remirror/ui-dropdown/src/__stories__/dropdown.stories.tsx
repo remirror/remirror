@@ -2,7 +2,7 @@ import { capitalize } from '@remirror/core-helpers';
 import { useRemirrorTheme } from '@remirror/ui';
 import { storiesOf } from '@storybook/react';
 import React, { FC } from 'react';
-import { Dropdown } from '../dropdown';
+import { DropdownSelect } from '../dropdown';
 import { DropdownProps } from '../dropdown-types';
 
 const Grid: FC = ({ children }) => {
@@ -33,7 +33,7 @@ const DropdownWithPosition = ({
   dropdownPosition = 'below left',
 }: Pick<DropdownProps, 'dropdownPosition'>) => {
   return (
-    <Dropdown
+    <DropdownSelect
       items={items}
       label={dropdownPosition
         .split(' ')
@@ -58,6 +58,6 @@ storiesOf('Dropdown', module).add('Buttons', () => (
     <DropdownWithPosition dropdownPosition='above inline left' />
     <DropdownWithPosition dropdownPosition='above wide right' />
     <DropdownWithPosition dropdownPosition='above wide left' />
-    <Dropdown items={items} label='Auto Positioned' autoPositionY={true} />
+    <DropdownSelect items={items} label='Auto Positioned' autoPositionY={true} />
   </Grid>
 ));

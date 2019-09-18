@@ -51,6 +51,8 @@ export const floatingPositioner: Positioner = {
 /**
  * Render a bubble menu which becomes active whenever a selection is made.
  *
+ * - `right` should be used to absolutely position away from the right
+ * hand edge of the screen
  * - `left` should be used to determine absolute horizontal positioning.
  * - `bottom` absolutely positions the element above the text selection.
  * - `top` absolutely positions the element below the text selection
@@ -78,11 +80,15 @@ export const bubblePositioner: Positioner = {
     // The bubble menu element
     const elementBox = element.getBoundingClientRect();
 
-    const left = (start.left + end.left) / 2 - parentBox.left;
+    const calculatedLeft = (start.left + end.left) / 2 - parentBox.left;
+    const left = Math.min(
+      parentBox.width - elementBox.width / 2,
+      Math.max(calculatedLeft, elementBox.width / 2),
+    );
 
     return {
-      ...bubblePositioner.initialPosition,
-      left: Math.min(parentBox.width - elementBox.width / 2, Math.max(left, elementBox.width / 2)),
+      right: left,
+      left,
       bottom: Math.trunc(parentBox.bottom - start.top),
       top: Math.trunc(start.bottom - parentBox.top),
     };

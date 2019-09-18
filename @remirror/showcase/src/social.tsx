@@ -122,35 +122,7 @@ export const SOCIAL_SHOWCASE_CONTENT = {
       content: [
         {
           type: 'text',
-          text: 'Emojis still make me smile ',
-        },
-        {
-          type: 'emoji',
-          attrs: {
-            id: 'yum',
-            native: '😋',
-            name: 'Face Savouring Delicious Food',
-            colons: '',
-            skin: '',
-            'aria-label': 'Emoji: Face Savouring Delicious Food',
-            title: 'Emoji: Face Savouring Delicious Food',
-            class: 'remirror-editor-emoji-node',
-            useNative: false,
-          },
-        },
-        {
-          type: 'emoji',
-          attrs: {
-            id: 'see_no_evil',
-            native: '🙈',
-            name: 'See-No-Evil Monkey',
-            colons: '',
-            skin: '',
-            'aria-label': 'Emoji: See-No-Evil Monkey',
-            title: 'Emoji: See-No-Evil Monkey',
-            class: 'remirror-editor-emoji-node',
-            useNative: false,
-          },
+          text: 'Emojis still make me smile 😋 🙈',
         },
         {
           type: 'text',

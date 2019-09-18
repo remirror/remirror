@@ -271,7 +271,6 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   };
 
   private onEmojiSuggestionExit: EmojiSuggestionExitHandler = () => {
-    console.log('SUGGEST - exit being cal;led');
     this.setState({
       hideEmojiSuggestions: true,
       emojiList: [],
@@ -379,7 +378,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
           <RemirrorExtension<typeof EmojiExtension, EmojiExtensionOptions>
             Constructor={EmojiExtension}
             priority={1}
-            maxResults={20}
+            // maxResults={6}
             onSuggestionChange={this.onEmojiSuggestionChange}
             suggestionKeyBindings={this.emojiKeyBindings}
             onSuggestionExit={this.onEmojiSuggestionExit}

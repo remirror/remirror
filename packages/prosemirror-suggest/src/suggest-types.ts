@@ -123,44 +123,31 @@ export interface SuggestMatcher {
   startOfLine: boolean;
 
   /**
-   * A regex containing all supported characters.
+   * A regex containing all supported characters when within a suggestion.
    *
    * @defaultValue `/[\w\d_]+/`
    */
   supportedCharacters: RegExp | string;
 
   /**
-   * Name of matching character - This will be appended to the classnames
-   */
-  name: string;
-}
-
-export interface SuggestMatcher {
-  /**
-   * The character to match against
+   * A regex expression used to validate the text directly before the match.
+   * By default this allows zero width characters and space characters.
    *
-   * @defaultValue '@'
+   * @defaultValue `/^[\s\0]?$/`
    */
-  char: string;
+  validPrefixCharacters: RegExp | string;
 
   /**
-   * Whether to only match from the start of the line
+   * A regex expression used to invalidate the text directly before the match.
+   * This has preference over the `validPrefixCharacters` option and when it is
+   * defined only it will be looked at in determining whether a prefix is valid.
    *
-   * @defaultValue false
+   * @defaultValue `undefined`
    */
-  startOfLine: boolean;
-
-  /**
-   * A regex containing all supported characters.
-   *
-   * @defaultValue `/[\w\d_]+/`
-   */
-  supportedCharacters: RegExp | string;
+  invalidPrefixCharacters: RegExp | string | undefined;
 
   /**
    * Name of matching character - This will be appended to the classnames
-   *
-   * @defaultValue 'at'
    */
   name: string;
 }

@@ -1,5 +1,5 @@
 import { NULL_CHARACTER } from '@remirror/core-constants';
-import { bool, findMatches, isRegExp } from '@remirror/core-helpers';
+import { bool, findMatches, isRegExp, isUndefined } from '@remirror/core-helpers';
 import {
   CommandFunction,
   EditorStateParams,
@@ -8,6 +8,7 @@ import {
   TextParams,
 } from '@remirror/core-types';
 import { selectionEmpty } from '@remirror/core-utils';
+import escapeStringRegex from 'escape-string-regexp';
 import { keydownHandler } from 'prosemirror-keymap';
 import { ChangeReason, ExitReason } from './suggest-constants';
 import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates';
@@ -25,19 +26,12 @@ import {
 } from './suggest-types';
 
 /**
- * Escape a regex character
- *
- * @param char The character to escape
- */
-export const escapeChar = (char: string) => `\\${char}`;
-
-/**
  * Convert a RegExp into a string
  *
- * @param regexpOrString
+ * @param regexOrString
  */
-export const regexToString = (regexpOrString: string | RegExp) =>
-  isRegExp(regexpOrString) ? regexpOrString.source : regexpOrString;
+export const regexToString = (regexOrString: string | RegExp) =>
+  isRegExp(regexOrString) ? regexOrString.source : regexOrString;
 
 /**
  * Find regex prefix when depending on whether the mention only supports the
@@ -81,7 +75,7 @@ const findMatch = ({ $pos, suggester }: FindMatchParams): SuggestStateMatch | un
 
   // Create the regular expression to match the text against
   const regexp = new RegExp(
-    `${getRegexPrefix(startOfLine)}${escapeChar(char)}${getRegexSupportedCharacters(
+    `${getRegexPrefix(startOfLine)}${escapeStringRegex(char)}${getRegexSupportedCharacters(
       supportedCharacters,
       matchOffset,
     )}`,
@@ -101,6 +95,30 @@ const findMatch = ({ $pos, suggester }: FindMatchParams): SuggestStateMatch | un
     name,
     supportedCharacters: new RegExp(regexToString(supportedCharacters), 'g'),
   });
+};
+
+/**
+ * Checks to see if the text before the matching character is a valid prefix.
+ *
+ * @param prefix - the prefix to test
+ * @param params - an object with the regex testing values
+ */
+const isPrefixValid = (
+  prefix: string,
+  {
+    invalidPrefixCharacters,
+    validPrefixCharacters,
+  }: Pick<SuggestMatcher, 'invalidPrefixCharacters' | 'validPrefixCharacters'>,
+) => {
+  if (!isUndefined(invalidPrefixCharacters)) {
+    const regex = new RegExp(regexToString(invalidPrefixCharacters));
+    return !regex.test(prefix);
+  }
+
+  {
+    const regex = new RegExp(regexToString(validPrefixCharacters));
+    return regex.test(prefix);
+  }
 };
 
 /**
@@ -127,9 +145,7 @@ const findPosition = ({
     // the supported characters
     const matchPrefix = match.input.slice(Math.max(0, match.index - 1), match.index);
 
-    // ? Can this be switched for NOT `supportedCharacters` - TEST once completed
-    // refactored
-    if (/^[\s\0]?$/.test(matchPrefix)) {
+    if (isPrefixValid(matchPrefix, suggester)) {
       const from = match.index + start; // The absolute position of the match wrapper node
       const end = from + match[0].length; // The position where the match ends
       const to = Math.min(end, cursor); // The cursor position (or end position whichever is greater)

@@ -18,6 +18,8 @@ export const DEFAULT_SUGGESTER = {
   createCommand: () => noop,
   getStage: () => 'new' as const,
   ignoreDecorations: false,
+  validPrefixCharacters: /^[\s\0]?$/,
+  invalidPrefixCharacters: undefined,
 };
 
 /**

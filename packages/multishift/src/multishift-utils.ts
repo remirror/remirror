@@ -326,7 +326,7 @@ export const getNextWrappingIndexes = (params: GetNextWrappingIndexParams): [num
  * Check whether the provided value is a valid index.
  */
 export const isValidIndex = (index: number | undefined | null): index is number =>
-  isNumber(index) ? index > -1 : false;
+  isNumber(index) && index > -1;
 
 export const isValidIndexAndNotDisabled = (index: number | undefined, disabled: number[]): index is number =>
   isValidIndex(index) && !disabled.includes(index);
@@ -428,6 +428,8 @@ type GetLastHighlightParams = Pick<
 
 /**
  * Get the most recently updated highlighted index.
+ *
+ * Returns -1 when no highlighted index is found.
  */
 export const getMostRecentHighlightIndex = ({
   highlightedGroupEndIndex,

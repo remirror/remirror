@@ -256,11 +256,13 @@ export const EmojiSuggestions: FunctionComponent<EmojiSuggestionsProps> = ({
   highlightedIndex,
   command,
 }) => {
+  const { sxx } = useRemirrorTheme();
   const { view, getPositionerProps } = useRemirrorContext<SocialExtensions>();
-  const { getMenuProps, getItemProps, itemHighlightedAtIndex } = useMultishift({
+  const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
     highlightedIndexes: [highlightedIndex],
     type: Type.ControlledMenu,
     items: data,
+    isOpen: true,
   });
 
   const { top, left, ref } = getPositionerProps({
@@ -271,19 +273,40 @@ export const EmojiSuggestions: FunctionComponent<EmojiSuggestionsProps> = ({
   });
 
   return (
-    <SuggestionsDropdown
-      {...getMenuProps({ role: 'presentation', ref })}
-      position={{ top, left, position: 'absolute' }}
+    <div
+      {...getMenuProps({ ref })}
+      className='remirror-dropdown-item-wrapper'
+      css={sxx({
+        position: 'absolute',
+        width: 'max-content',
+        py: 1,
+        margin: '0 auto',
+        borderRadius: 1,
+        boxShadow: 'card',
+        zIndex: '10',
+        top: top + 10,
+        left,
+        maxHeight: '250px',
+        overflowY: 'scroll',
+      })}
     >
       {data.map((emoji, index) => {
-        const active = itemHighlightedAtIndex(index);
+        const isHighlighted = itemHighlightedAtIndex(index);
+        const isHovered = index === hoveredIndex;
         return (
-          <ItemWrapper
-            active={active}
+          <div
             key={emoji.name}
+            css={sxx({
+              backgroundColor: isHighlighted ? 'grey' : isHovered ? 'light' : 'background',
+              p: 2,
+              textOverflow: 'ellipsis',
+              maxWidth: '250px',
+              width: '250px',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+            })}
             {...getItemProps({
-              className: `suggestions-item${active ? ' active' : ''}`,
-              role: 'option',
+              className: `suggestions-item${isHighlighted ? ' active' : ''}`,
               onClick: () => {
                 command(emoji);
                 view.focus();
@@ -292,12 +315,10 @@ export const EmojiSuggestions: FunctionComponent<EmojiSuggestionsProps> = ({
               index,
             })}
           >
-            <HashTagText>
-              {emoji.char} {emoji.description}
-            </HashTagText>
-          </ItemWrapper>
+            <span css={sxx({ fontSize: '1.25em' })}>{emoji.char}</span> {emoji.description}
+          </div>
         );
       })}
-    </SuggestionsDropdown>
+    </div>
   );
 };

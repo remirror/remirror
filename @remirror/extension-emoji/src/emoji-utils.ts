@@ -159,7 +159,12 @@ export interface SortEmojiMatchesParams {
 export const sortEmojiMatches = ({ query, maxResults = -1, list = emojiList }: SortEmojiMatchesParams) => {
   return take(
     matchSorter(list, query, {
-      keys: ['name', item => item.description.replace(/[^\w]/g, ''), 'keywords'],
+      keys: [
+        'name',
+        item => item.description.replace(/[^\w]/g, ''),
+        { minRanking: matchSorter.rankings.STARTS_WITH, key: 'keywords' },
+      ],
+      // threshold: matchSorter.rankings.CONTAINS,
     }),
     maxResults,
   );

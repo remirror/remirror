@@ -22,7 +22,7 @@ export interface EmojiObject {
   skinVariations: boolean;
 }
 
-interface OnSuggestionChangeParams extends SuggestChangeHandlerParams<EmojiSuggestCommand> {
+export interface EmojiSuggestionChangeHandlerParams extends SuggestChangeHandlerParams<EmojiSuggestCommand> {
   /**
    * The currently matching objects
    */
@@ -33,7 +33,7 @@ export type SkinVariation = 0 | 1 | 2 | 3 | 4;
 
 export type EmojiSuggestCommand = (emoji: EmojiObject, skinVariation?: SkinVariation) => void;
 export type EmojiSuggestionKeyBindings = SuggestKeyBindingMap<EmojiSuggestCommand>;
-export type EmojiSuggestionChangeHandler = (params: OnSuggestionChangeParams) => void;
+export type EmojiSuggestionChangeHandler = (params: EmojiSuggestionChangeHandlerParams) => void;
 export type EmojiSuggestionExitHandler = (params: SuggestExitHandlerParams) => void;
 
 export interface EmojiExtensionOptions extends BaseExtensionOptions {

@@ -1,6 +1,6 @@
 import { fireEvent, render } from '@testing-library/react';
 import React, { useState } from 'react';
-import { Dropdown } from '../dropdown';
+import { DropdownSelect } from '../dropdown';
 import { DropdownItem } from '../dropdown-types';
 
 const items = [
@@ -14,7 +14,7 @@ test('Dropdown', () => {
   const Component = () => {
     const [selectedItems, setSelectedItems] = useState<DropdownItem[]>([]);
     return (
-      <Dropdown
+      <DropdownSelect
         items={items}
         label={label}
         initialItem={items[0]}

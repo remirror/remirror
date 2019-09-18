@@ -1,12 +1,12 @@
 import {
   CommandFunction,
-  CommandParams,
   Extension,
   ExtensionManagerParams,
   FromToParams,
   noop,
   plainInputRule,
 } from '@remirror/core';
+import escapeStringRegex from 'escape-string-regexp';
 import { Suggester } from 'prosemirror-suggest';
 import {
   EmojiExtensionOptions,
@@ -38,6 +38,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
     return {
       defaultEmoji: DEFAULT_FREQUENTLY_USED,
       suggestionCharacter: ':',
+      maxResults: 20,
       onSuggestionChange: noop,
       onSuggestionExit: noop,
       suggestionKeyBindings: {},
@@ -81,7 +82,8 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
     ];
   }
 
-  public commands({  }: CommandParams) {
+  public commands() {
+    const { suggestionCharacter } = this.options;
     const commands = {
       /**
        * Insert an emoji into the document at the requested location by name
@@ -116,11 +118,25 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       ): CommandFunction => (state, dispatch) => {
         const { tr } = state;
         const emojiChar = skinVariation ? emoji.char + SKIN_VARIATIONS[skinVariation] : emoji.char;
-        console.log(emojiChar, from, to);
         tr.insertText(emojiChar, from, to);
 
         if (dispatch) {
           dispatch(tr);
+        }
+
+        return true;
+      },
+
+      /**
+       * Inserts the suggestion character into the current position in the editor
+       * in order to activate the suggestion popup..
+       */
+      openEmojiSuggestions: ({ from, to }: Partial<FromToParams> = {}): CommandFunction => (
+        state,
+        dispatch,
+      ) => {
+        if (dispatch) {
+          dispatch(state.tr.insertText(suggestionCharacter, from, to));
         }
 
         return true;
@@ -142,7 +158,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
     };
   }
 
-  public suggesters({ getActions }: ExtensionManagerParams): Suggester<EmojiSuggestCommand> {
+  public suggestions({ getActions }: ExtensionManagerParams): Suggester<EmojiSuggestCommand> {
     const {
       suggestionCharacter,
       suggestionKeyBindings,
@@ -153,6 +169,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
 
     return {
       ignoreDecorations: true,
+      invalidPrefixCharacters: escapeStringRegex(suggestionCharacter),
       char: suggestionCharacter,
       name: this.name,
       appendText: '',
@@ -161,7 +178,9 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       onChange: params => {
         const query = params.query.full;
         const emojiMatches =
-          query.length <= 1 ? this.frequentlyUsed : sortEmojiMatches({ query, maxResults });
+          query.length <= 1
+            ? sortEmojiMatches({ query, maxResults, list: this.frequentlyUsed })
+            : sortEmojiMatches({ query, maxResults });
         onSuggestionChange({ ...params, emojiMatches });
       },
       onExit: onSuggestionExit,
@@ -174,7 +193,6 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
           }
 
           const { from, end: to } = match.range;
-          console.log(match);
           create(emoji, { skinVariation, from, to });
         };
       },

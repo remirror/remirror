@@ -72,7 +72,7 @@ export interface ExtensionManagerData<
   keymaps: ProsemirrorPlugin[];
   inputRules: ProsemirrorPlugin;
   pasteRules: ProsemirrorPlugin[];
-  suggesters: ProsemirrorPlugin;
+  suggestions: ProsemirrorPlugin;
   actions: GActions;
   helpers: GHelpers;
   view: EditorView<EditorSchema<GNodes, GMarks>>;
@@ -209,13 +209,13 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     this.initData.keymaps = this.keymaps();
     this.initData.inputRules = this.inputRules();
     this.initData.pasteRules = this.pasteRules();
-    this.initData.suggesters = this.suggesters();
+    this.initData.suggestions = this.suggestions();
     this.initData.isActive = this.commandStatusCheck('isActive');
     this.initData.isEnabled = this.commandStatusCheck('isEnabled');
 
     this.initData.plugins = [
       ...this.initData.directPlugins,
-      this.initData.suggesters,
+      this.initData.suggestions,
       this.initData.inputRules,
       ...this.initData.pasteRules,
       ...this.initData.keymaps,
@@ -717,20 +717,20 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     return extensionStyles;
   }
 
-  private suggesters() {
+  private suggestions() {
     this.checkInitialized();
-    const suggesters: Suggester[] = [];
+    const suggestions: Suggester[] = [];
 
     const extensionSuggesters = this.extensions
-      .filter(hasExtensionProperty('suggesters'))
-      .filter(extension => !extension.options.exclude.suggesters)
-      .map(extensionPropertyMapper('suggesters', this.params));
+      .filter(hasExtensionProperty('suggestions'))
+      .filter(extension => !extension.options.exclude.suggestions)
+      .map(extensionPropertyMapper('suggestions', this.params));
 
     extensionSuggesters.forEach(suggester => {
-      suggesters.push(...(isArray(suggester) ? suggester : [suggester]));
+      suggestions.push(...(isArray(suggester) ? suggester : [suggester]));
     });
 
-    return suggest(...suggesters);
+    return suggest(...suggestions);
   }
 
   /**

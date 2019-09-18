@@ -9,7 +9,10 @@ import { animated, useSpring } from 'react-spring';
 import { dropdownPositions } from './dropdown-constants';
 import { DropdownItem, DropdownPosition, DropdownProps } from './dropdown-types';
 
-export const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
+/**
+ * A dropdown for select components
+ */
+export const DropdownSelect = forwardRef<HTMLDivElement, DropdownProps>(
   (
     {
       items,
@@ -180,7 +183,7 @@ const DropdownItemComponent = ({
   return (
     <div
       css={sxx({
-        backgroundColor: isSelected ? 'grey' : isHighlighted ? 'light' : isHovered ? 'pink' : 'background',
+        backgroundColor: isSelected ? 'grey' : isHighlighted ? 'light' : isHovered ? 'grey' : 'background',
         p: 2,
       })}
       {...getItemProps({ index, item })}
