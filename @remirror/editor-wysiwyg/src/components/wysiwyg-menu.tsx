@@ -20,7 +20,6 @@ import {
   UnderlineIcon,
   UndoAltIcon,
 } from '@remirror/ui-icons';
-import keyCode from 'keycode';
 import React, {
   ChangeEventHandler,
   ComponentType,
@@ -32,6 +31,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import keyNames from 'w3c-keyname';
 import { ButtonState, WysiwygExtensions } from '../wysiwyg-types';
 import {
   BubbleContent,
@@ -213,12 +213,13 @@ const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink,
   };
 
   const onKeyPress: KeyboardEventHandler<HTMLInputElement> = event => {
-    if (keyCode.isEventKey(event.nativeEvent, 'esc')) {
+    const key = keyNames.keyName(event.nativeEvent);
+    if (key === 'Escape') {
       event.preventDefault();
       deactivateLink();
     }
 
-    if (keyCode.isEventKey(event.nativeEvent, 'enter')) {
+    if (key === 'Enter') {
       event.preventDefault();
       submitLink();
     }

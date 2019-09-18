@@ -1,4 +1,5 @@
 import { EDITOR_CLASS_SELECTOR, RemirrorTheme } from '@remirror/core';
+import { baseTheme } from '@remirror/ui';
 
 const colors = {
   background: '#fff',
@@ -14,6 +15,7 @@ const colors = {
 };
 
 export const socialEditorTheme: RemirrorTheme = {
+  ...baseTheme,
   initialColorMode: 'light',
   colors,
   fonts: {

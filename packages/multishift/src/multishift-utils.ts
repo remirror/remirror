@@ -19,7 +19,7 @@ import {
 import { AnyFunction, Nullable } from '@remirror/core-types';
 import computeScrollIntoView from 'compute-scroll-into-view';
 import { Dispatch, KeyboardEvent, SyntheticEvent } from 'react';
-import keynames from 'w3c-keyname';
+import keyNames from 'w3c-keyname';
 import { SpecialKey, Type } from './multishift-constants';
 import {
   ActionCreator,
@@ -674,7 +674,7 @@ export const checkItemHighlighted = (
  * @param event - the keyboard event
  */
 export const getKeyName = (event: KeyboardEvent<HTMLElement>) => {
-  const key = keynames.keyName(event.nativeEvent);
+  const key = keyNames.keyName(event.nativeEvent);
 
   if (key === ' ') {
     return 'Space';

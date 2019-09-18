@@ -1,4 +1,4 @@
-import { deepMerge } from '@remirror/core';
+import { deepMerge, RemirrorTheme } from '@remirror/core';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -27,8 +27,8 @@ import {
   RemirrorManager,
   useRemirrorContext,
 } from '@remirror/react';
-import { ThemeProvider } from 'emotion-theming';
-import React, { FC, useState } from 'react';
+import { RemirrorThemeProvider } from '@remirror/ui';
+import React, { FC, useMemo, useState } from 'react';
 import { wysiwygEditorTheme } from '../wysiwyg-theme';
 import { WysiwygEditorProps, WysiwygExtensions } from '../wysiwyg-types';
 import { EditorWrapper } from './wysiwyg-components';
@@ -63,11 +63,11 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
     setLinkActivated(false);
   };
 
-  const editorTheme = deepMerge(wysiwygEditorTheme, theme);
+  const editorTheme = useMemo(() => deepMerge<RemirrorTheme>(wysiwygEditorTheme, theme), [theme]);
   const supportedLanguages = [...DEFAULT_LANGUAGES, ...supportedLanguagesProp];
 
   return (
-    <ThemeProvider theme={editorTheme}>
+    <RemirrorThemeProvider theme={editorTheme}>
       <RemirrorManager>
         <RemirrorExtension
           Constructor={PlaceholderExtension}
@@ -116,7 +116,7 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
           </>
         </ManagedRemirrorProvider>
       </RemirrorManager>
-    </ThemeProvider>
+    </RemirrorThemeProvider>
   );
 };
 
