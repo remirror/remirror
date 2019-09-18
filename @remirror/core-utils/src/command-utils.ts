@@ -13,7 +13,7 @@ import {
 } from '@remirror/core-types';
 import { lift, setBlockType, wrapIn } from 'prosemirror-commands';
 import { liftListItem, wrapInList } from 'prosemirror-schema-list';
-import { getMarkRange, isNodeType } from './dom-utils';
+import { getMarkRange, isMarkType, isNodeType } from './dom-utils';
 import { isNodeActive, selectionEmpty } from './prosemirror-utils';
 
 interface UpdateMarkParams extends Partial<RangeParams>, Partial<AttrsParams>, TransformTransactionParams {
@@ -140,7 +140,7 @@ interface ReplaceTextParams extends Partial<RangeParams>, Partial<AttrsParams>, 
   /**
    * The type of the
    */
-  type: NodeType | MarkType;
+  type: NodeType | MarkType | undefined;
 }
 
 interface CallMethodParams<GFunction extends AnyFunction, GReturn extends ReturnType<GFunction>> {
@@ -183,7 +183,7 @@ export const replaceText = ({
 
   // Run the pre transaction hook
   const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
-
+  console.log('in replace text');
   if (isNodeType(type)) {
     if (!selection.$from.parent.canReplaceWith(index, index, type)) {
       return false;
@@ -194,8 +194,9 @@ export const replaceText = ({
     if (!content) {
       throw new Error('`replaceText` cannot be called without content when using a mark type');
     }
+    console.log({ content });
 
-    tr.replaceWith(from, to, schema.text(content, [type.create(attrs)]));
+    tr.replaceWith(from, to, schema.text(content, isMarkType(type) ? [type.create(attrs)] : undefined));
   }
 
   /** Only append the text if when text is provided. */

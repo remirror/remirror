@@ -1,5 +1,9 @@
 import { BaseExtensionOptions } from '@remirror/core';
-import { SuggestChangeHandlerParams, SuggestKeyBindingMap } from 'prosemirror-suggest';
+import {
+  SuggestChangeHandlerParams,
+  SuggestExitHandlerParams,
+  SuggestKeyBindingMap,
+} from 'prosemirror-suggest';
 import AliasData from './data/aliases';
 import CategoryData from './data/categories';
 import EmojiData from './data/emojis';
@@ -28,6 +32,9 @@ interface OnSuggestionChangeParams extends SuggestChangeHandlerParams<EmojiSugge
 export type SkinVariation = 0 | 1 | 2 | 3 | 4;
 
 export type EmojiSuggestCommand = (emoji: EmojiObject, skinVariation?: SkinVariation) => void;
+export type EmojiSuggestionKeyBindings = SuggestKeyBindingMap<EmojiSuggestCommand>;
+export type EmojiSuggestionChangeHandler = (params: OnSuggestionChangeParams) => void;
+export type EmojiSuggestionExitHandler = (params: SuggestExitHandlerParams) => void;
 
 export interface EmojiExtensionOptions extends BaseExtensionOptions {
   /**
@@ -38,12 +45,18 @@ export interface EmojiExtensionOptions extends BaseExtensionOptions {
   /**
    * Key bindings for suggestions.
    */
-  suggestionKeyBindings?: SuggestKeyBindingMap<EmojiSuggestCommand>;
+  suggestionKeyBindings?: EmojiSuggestionKeyBindings;
 
   /**
    * Called whenever the suggestion value is updated.
    */
-  onSuggestionChange?(params: OnSuggestionChangeParams): void;
+  onSuggestionChange?: EmojiSuggestionChangeHandler;
+
+  /**
+   * Called when the suggestion exits.
+   * This is useful for cleaning up local state when emoji is set.
+   */
+  onSuggestionExit?: EmojiSuggestionExitHandler;
 
   /**
    * A list of the initial (frequently used) emoji displayed to the user.

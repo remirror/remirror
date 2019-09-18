@@ -17,6 +17,7 @@ export const DEFAULT_SUGGESTER = {
   keyBindings: {},
   createCommand: () => noop,
   getStage: () => 'new' as const,
+  ignoreDecorations: false,
 };
 
 /**
@@ -126,7 +127,8 @@ export enum ChangeReason {
   Text = 'change-character',
 
   /**
-   * A change happened to the selection status.
+   * A change happened to the selection status which was not purely a move.
+   * The selection area may have been increased.
    */
   SelectionInside = 'selection-inside',
 

@@ -1,6 +1,14 @@
 import { deepMerge, omit, RemirrorTheme } from '@remirror/core';
 import { NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
-import { EmojiExtension } from '@remirror/extension-emoji';
+import {
+  EmojiExtension,
+  EmojiExtensionOptions,
+  EmojiObject,
+  EmojiSuggestCommand,
+  EmojiSuggestionChangeHandler,
+  EmojiSuggestionExitHandler,
+  EmojiSuggestionKeyBindings,
+} from '@remirror/extension-emoji';
 import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
 import {
   MentionExtension,
@@ -29,7 +37,12 @@ import { SocialEditorComponent } from './social-wrapper-component';
 interface State {
   activeMatcher: MatchName | undefined;
   activeIndex: number;
-  hideSuggestions: boolean;
+  hideMentionSuggestions: boolean;
+
+  emojiList: EmojiObject[];
+  hideEmojiSuggestions: boolean;
+  activeEmojiIndex: number;
+  emojiCommand?: EmojiSuggestCommand;
 }
 
 /**
@@ -47,7 +60,10 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   public readonly state: State = {
     activeIndex: 0,
     activeMatcher: undefined,
-    hideSuggestions: false,
+    hideMentionSuggestions: false,
+    activeEmojiIndex: 0,
+    emojiList: [],
+    hideEmojiSuggestions: false,
   };
 
   /**
@@ -56,20 +72,20 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   private mention: SuggestionStateMatch | undefined;
 
   /**
-   * This keeps track of when an exit was triggered by an internal command.
-   * For example when the enter key is pressed to select a suggestion this should be set to
-   * true so that the subsequent `onExit` call can be ignored.
+   * This keeps track of when an exit was triggered by an internal command. For
+   * example when the enter key is pressed to select a suggestion this should be
+   * set to true so that the subsequent `onExit` call can be ignored.
    */
-  private exitTriggeredInternally = false;
+  private mentionExitTriggeredInternally = false;
 
   /**
-   * Create the arrow bindings.
+   * Create the arrow bindings for the mentions.
    */
-  private createArrowBindings = (direction: 'up' | 'down') => ({
+  private createMentionArrowBindings = (direction: 'up' | 'down') => ({
     query,
     name,
   }: SuggestionKeyBindingParams) => {
-    const { activeIndex: prevIndex, hideSuggestions } = this.state;
+    const { activeIndex: prevIndex, hideMentionSuggestions: hideSuggestions } = this.state;
     const { onMentionChange: onMentionStateChange } = this.props;
 
     const matches = name === 'at' ? this.users : this.tags;
@@ -92,14 +108,15 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   };
 
   /**
-   * These are the keyBindings for mentions extension. This allows for overriding
+   * These are the keyBindings for mentions extension. This allows for
+   * overriding
    */
-  private keyBindings: SuggestionKeyBindingMap = {
+  private mentionKeyBindings: SuggestionKeyBindingMap = {
     /**
      * Handle the enter key being pressed
      */
     Enter: ({ name, command, char }) => {
-      const { activeIndex, hideSuggestions } = this.state;
+      const { activeIndex, hideMentionSuggestions: hideSuggestions } = this.state;
 
       if (hideSuggestions) {
         return false;
@@ -117,7 +134,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
         return false;
       }
 
-      this.setExitTriggeredInternally();
+      this.setMentionExitTriggeredInternally();
       command({
         replacementType: 'full',
         id,
@@ -139,19 +156,19 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
         return false;
       }
 
-      this.setState({ hideSuggestions: true });
+      this.setState({ hideMentionSuggestions: true });
       return true;
     },
 
     /**
      * Handle the up arrow being pressed
      */
-    ArrowUp: this.createArrowBindings('up'),
+    ArrowUp: this.createMentionArrowBindings('up'),
 
     /**
      * Handle the down arrow being pressed
      */
-    ArrowDown: this.createArrowBindings('down'),
+    ArrowDown: this.createMentionArrowBindings('down'),
   };
 
   /**
@@ -176,11 +193,14 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   }
 
   /**
-   * Retrieves the mention property and can be passed down into child components.
+   * Retrieves the mention property and can be passed down into child
+   * components.
    *
-   * This is defined here and now as a part of state because we don't actually need to rerender the component
-   * when the query or suggestion state changes. We only need this in children components when clicking on the
-   * suggestion so that
+   * This is defined here and now as a part of state because we don't actually
+   * need to rerender the component when the query or suggestion state changes.
+   * We only need this in children components when clicking on the suggestion so
+   * that the click handler can know what the active mention query is since
+   * mentions can either be `@` or `#`.
    */
   private getMention = () => {
     if (!this.mention) {
@@ -204,7 +224,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     }
 
     // Reset the active index so that the dropdown is back to the top.
-    this.setState({ activeIndex: 0, activeMatcher: name as MatchName, hideSuggestions: false });
+    this.setState({ activeIndex: 0, activeMatcher: name as MatchName, hideMentionSuggestions: false });
     this.mention = params;
   };
 
@@ -212,8 +232,9 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
    * Called when the none of our configured matchers match
    */
   private onExit: Required<MentionExtensionOptions>['onExit'] = ({ query, command }) => {
-    // Check whether we've manually caused this exit. If not, trigger the command.
-    if (!this.exitTriggeredInternally) {
+    // Check whether we've manually caused this exit. If not, trigger the
+    // command.
+    if (!this.mentionExitTriggeredInternally) {
       command({
         role: 'presentation',
         href: `/${query.full}`,
@@ -224,7 +245,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     this.props.onMentionChange(undefined);
     this.setState({ activeIndex: 0, activeMatcher: undefined });
     this.mention = undefined;
-    this.exitTriggeredInternally = false;
+    this.mentionExitTriggeredInternally = false;
   };
 
   private get theme(): RemirrorTheme {
@@ -234,12 +255,102 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * Identifies the next exit as one which can be ignored.
    */
-  private setExitTriggeredInternally = () => {
-    this.exitTriggeredInternally = true;
+  private setMentionExitTriggeredInternally = () => {
+    this.mentionExitTriggeredInternally = true;
+  };
+
+  private onEmojiSuggestionChange: EmojiSuggestionChangeHandler = ({ emojiMatches, command }) => {
+    console.log('A change occurred', emojiMatches);
+    this.setState({
+      hideEmojiSuggestions: false,
+      emojiList: emojiMatches,
+      activeEmojiIndex: 0,
+      emojiCommand: command,
+    });
+    // this.setState({ hideEmojiSuggestions: false, activeEmojiIndex: 0 });
+  };
+
+  private onEmojiSuggestionExit: EmojiSuggestionExitHandler = () => {
+    console.log('SUGGEST - exit being cal;led');
+    this.setState({
+      hideEmojiSuggestions: true,
+      emojiList: [],
+      activeEmojiIndex: 0,
+      emojiCommand: undefined,
+    });
+  };
+
+  /**
+   * Create the arrow bindings for the emoji suggestions.
+   */
+  private createEmojiArrowBindings = (direction: 'up' | 'down') => () => {
+    const { activeEmojiIndex: prevIndex, hideMentionSuggestions, emojiList } = this.state;
+
+    if (hideMentionSuggestions || !emojiList.length) {
+      return false;
+    }
+
+    // pressed up arrow
+    const activeEmojiIndex = calculateNewIndexFromArrowPress({
+      direction,
+      matchLength: emojiList.length,
+      prevIndex,
+    });
+
+    this.setState({ activeEmojiIndex });
+    return true;
+  };
+
+  private emojiKeyBindings: EmojiSuggestionKeyBindings = {
+    /**
+     * Handle the enter key being pressed
+     */
+    Enter: ({ command }) => {
+      const { activeEmojiIndex, hideEmojiSuggestions, emojiList } = this.state;
+
+      if (hideEmojiSuggestions) {
+        return false;
+      }
+
+      const emoji = emojiList[activeEmojiIndex];
+
+      // Check if a matching id exists because the user has selected something.
+      if (!emoji) {
+        return false;
+      }
+
+      command(emoji);
+
+      return true;
+    },
+
+    /**
+     * Hide the suggestions when the escape key is pressed.
+     */
+    Escape: () => {
+      const { emojiList } = this.state;
+      if (!emojiList.length) {
+        return false;
+      }
+
+      this.setState({ hideEmojiSuggestions: true });
+      return true;
+    },
+
+    ArrowDown: this.createEmojiArrowBindings('down'),
+    ArrowUp: this.createEmojiArrowBindings('up'),
   };
 
   public render() {
-    const { activeMatcher, hideSuggestions } = this.state;
+    const {
+      activeMatcher,
+      emojiCommand,
+      hideMentionSuggestions,
+      activeEmojiIndex,
+      emojiList,
+      hideEmojiSuggestions,
+    } = this.state;
+
     const { children, placeholder, ...rest } = this.remirrorProps;
     return (
       <RemirrorThemeProvider theme={this.theme}>
@@ -255,7 +366,6 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
             }}
             placeholder={placeholder}
           />
-
           <RemirrorExtension Constructor={NodeCursorExtension} />
           <RemirrorExtension
             Constructor={MentionExtension}
@@ -263,16 +373,27 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
             extraAttrs={['href', ['role', 'presentation']]}
             onChange={this.onChange}
             onExit={this.onExit}
-            keyBindings={this.keyBindings}
+            keyBindings={this.mentionKeyBindings}
           />
           <RemirrorExtension Constructor={EnhancedLinkExtension} onUrlsChange={this.props.onUrlsChange} />
-          <RemirrorExtension Constructor={EmojiExtension} />
+          <RemirrorExtension<typeof EmojiExtension, EmojiExtensionOptions>
+            Constructor={EmojiExtension}
+            priority={1}
+            maxResults={20}
+            onSuggestionChange={this.onEmojiSuggestionChange}
+            suggestionKeyBindings={this.emojiKeyBindings}
+            onSuggestionExit={this.onEmojiSuggestionExit}
+          />
           <ManagedRemirrorProvider {...rest}>
             <>
               <SocialEditorComponent
-                hideSuggestions={hideSuggestions}
+                emojiCommand={emojiCommand}
+                activeEmojiIndex={activeEmojiIndex}
+                emojiList={emojiList}
+                hideEmojiSuggestions={hideEmojiSuggestions}
+                hideSuggestions={hideMentionSuggestions}
                 activeMatcher={activeMatcher}
-                setExitTriggeredInternally={this.setExitTriggeredInternally}
+                setExitTriggeredInternally={this.setMentionExitTriggeredInternally}
                 getMention={this.getMention}
                 users={this.users}
                 tags={this.tags}

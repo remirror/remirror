@@ -39,7 +39,8 @@
     "@types/emoji-mart": "^2.11.0",
     "emoji-mart": "2.11.1",
     "emotion-theming": "^10.0.18",
-    "keycode": "^2.2.0"
+    "keycode": "^2.2.0",
+    "multishift": "0.4.2-canary.2"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

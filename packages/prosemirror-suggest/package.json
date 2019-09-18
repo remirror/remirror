@@ -31,6 +31,7 @@
     "@remirror/core-utils": "0.4.2-canary.2",
     "@types/prosemirror-keymap": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
+    "escape-string-regexp": "^2.0.0",
     "prosemirror-keymap": "^1.0.1",
     "prosemirror-state": "^1.2.4"
   },

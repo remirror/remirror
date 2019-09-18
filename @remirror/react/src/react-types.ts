@@ -531,21 +531,15 @@ export interface UsePositionerParams<GRefKey extends string = 'ref'>
 
 export type RemirrorExtensionProps<
   GConstructor extends { prototype: AnyExtension },
-  GExtension extends AbstractInstanceType<GConstructor>,
-  GOptions extends OptionsOfExtension<GExtension>
-> = GOptions & BaseExtensionProps & ExtensionConstructorProps<GConstructor, GExtension, GOptions>;
-
-export type ExtensionConstructorProps<
-  GConstructor extends { prototype: AnyExtension },
-  GExtension extends AbstractInstanceType<GConstructor>,
-  GOptions extends OptionsOfExtension<GExtension>
-> = {
-  /**
-   * The constructor for the remirror extension.
-   * Will be instantiated with the options passed through as props.
-   */
-  Constructor: GConstructor;
-} & GOptions;
+  GOptions extends OptionsOfExtension<AbstractInstanceType<GConstructor>>
+> = GOptions &
+  BaseExtensionProps & {
+    /**
+     * The constructor for the remirror extension.
+     * Will be instantiated with the options passed through as props.
+     */
+    Constructor: GConstructor;
+  };
 
 export interface BaseExtensionProps {
   /**

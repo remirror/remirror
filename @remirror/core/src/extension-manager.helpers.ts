@@ -2,8 +2,8 @@ import { DEFAULT_EXTENSION_PRIORITY, MarkGroup, NodeGroup, Tags } from '@remirro
 import { bool, Cast, entries, isFunction, sort } from '@remirror/core-helpers';
 import {
   AnyFunction,
-  Attrs,
   CommandParams,
+  ExtensionCommandFunction,
   ExtensionManagerParams,
   ExtensionTags,
   GeneralExtensionTags,
@@ -89,10 +89,10 @@ export const createCommands = ({ extensions, params }: CreateCommandsParams) => 
         : ({} as any)),
     });
 
-  const methodFactory = (method: any) => (attrs?: Attrs) => {
+  const methodFactory = (method: ExtensionCommandFunction) => (...args: unknown[]) => {
     const { view, getState } = params;
     view.focus();
-    return method(attrs)(getState(), view.dispatch, view);
+    return method(...args)(getState(), view.dispatch, view);
   };
   const items: Record<string, { command: AnyFunction; name: string }> = {};
   const names = new Set<string>();

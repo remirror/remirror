@@ -1,3 +1,4 @@
+import { EmojiObject, EmojiSuggestCommand } from '@remirror/extension-emoji';
 import { useRemirrorContext } from '@remirror/react';
 import React, { FC } from 'react';
 import {
@@ -10,9 +11,13 @@ import {
 } from '../social-types';
 import { CharacterCountWrapper, EditorWrapper } from './social-base-components';
 import { CharacterCountIndicator } from './social-character-count-component';
-import { AtSuggestions, TagSuggestions } from './social-suggestion-components';
+import { AtSuggestions, EmojiSuggestions, TagSuggestions } from './social-suggestion-components';
 
 interface SocialEditorComponentProps extends MentionGetterParams, SetExitTriggeredInternallyParams {
+  emojiList: EmojiObject[];
+  hideEmojiSuggestions: boolean;
+  activeEmojiIndex: number;
+  emojiCommand?: EmojiSuggestCommand;
   /**
    * The current matching users.
    */
@@ -46,6 +51,10 @@ export const SocialEditorComponent: FC<SocialEditorComponentProps> = ({
   activeMatcher,
   setExitTriggeredInternally,
   hideSuggestions,
+  activeEmojiIndex,
+  emojiList,
+  hideEmojiSuggestions,
+  emojiCommand,
 }) => {
   const {
     getRootProps,
@@ -59,6 +68,9 @@ export const SocialEditorComponent: FC<SocialEditorComponentProps> = ({
         <CharacterCountWrapper>
           <CharacterCountIndicator characters={{ total: 140, used: content.length }} />
         </CharacterCountWrapper>
+        {hideEmojiSuggestions || !emojiCommand ? null : (
+          <EmojiSuggestions highlightedIndex={activeEmojiIndex} data={emojiList} command={emojiCommand} />
+        )}
       </EditorWrapper>
       <div>
         {!activeMatcher || hideSuggestions ? null : activeMatcher === 'at' ? (

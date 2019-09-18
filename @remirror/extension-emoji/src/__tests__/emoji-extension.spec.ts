@@ -15,17 +15,17 @@ describe('inputRules', () => {
       .callback(content => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃')));
       })
-      .insertText(' hello :-(')
+      .insertText(' hello :@')
       .callback(content => {
-        expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃 hello 😦')));
+        expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃 hello 😡')));
       })
       .insertText(':o')
       .callback(content => {
-        expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃 hello 😦:o')));
+        expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃 hello 😡:o')));
       })
       .insertText(' ')
       .callback(content => {
-        expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃 hello 😦😮 ')));
+        expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃 hello 😡😮 ')));
       });
   });
 

@@ -39,6 +39,8 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       defaultEmoji: DEFAULT_FREQUENTLY_USED,
       suggestionCharacter: ':',
       onSuggestionChange: noop,
+      onSuggestionExit: noop,
+      suggestionKeyBindings: {},
     };
   }
 
@@ -53,9 +55,9 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       // Emoticons
       plainInputRule({
         regexp: unambiguousEmoticonRegex,
-        transformMatch: ([full, partial]) => {
-          const emoji = getEmojiFromEmoticon(partial);
-          return emoji ? full.replace(partial, emoji.char) : null;
+        transformMatch: ([match]) => {
+          const emoji = getEmojiFromEmoticon(match);
+          return emoji ? emoji.char : null;
         },
       }),
 
@@ -113,7 +115,8 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
         { from, to, skinVariation }: EmojiCommandOptions = {},
       ): CommandFunction => (state, dispatch) => {
         const { tr } = state;
-        const emojiChar = emoji.char + (skinVariation ? SKIN_VARIATIONS[skinVariation] : '');
+        const emojiChar = skinVariation ? emoji.char + SKIN_VARIATIONS[skinVariation] : emoji.char;
+        console.log(emojiChar, from, to);
         tr.insertText(emojiChar, from, to);
 
         if (dispatch) {
@@ -140,8 +143,16 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
   }
 
   public suggesters({ getActions }: ExtensionManagerParams): Suggester<EmojiSuggestCommand> {
-    const { suggestionCharacter, suggestionKeyBindings, maxResults, onSuggestionChange } = this.options;
+    const {
+      suggestionCharacter,
+      suggestionKeyBindings,
+      maxResults,
+      onSuggestionChange,
+      onSuggestionExit,
+    } = this.options;
+
     return {
+      ignoreDecorations: true,
       char: suggestionCharacter,
       name: this.name,
       appendText: '',
@@ -153,6 +164,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
           query.length <= 1 ? this.frequentlyUsed : sortEmojiMatches({ query, maxResults });
         onSuggestionChange({ ...params, emojiMatches });
       },
+      onExit: onSuggestionExit,
       createCommand: ({ match }) => {
         const create = getActions('insertEmojiByObject');
 
@@ -162,6 +174,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
           }
 
           const { from, end: to } = match.range;
+          console.log(match);
           create(emoji, { skinVariation, from, to });
         };
       },

@@ -13,6 +13,7 @@ import { transactionChanged } from '@remirror/core-utils';
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { ChangeReason, DEFAULT_SUGGESTER, ExitReason } from './suggest-constants';
+import { isInvalidSplitReason, isJumpReason, isValidMatch } from './suggest-predicates';
 import {
   CompareMatchParams,
   SuggestCallbackParams,
@@ -23,14 +24,7 @@ import {
   SuggestStateMatch,
   SuggestStateMatchReason,
 } from './suggest-types';
-import {
-  findFromMatchers,
-  findReason,
-  isInvalidSplitReason,
-  isJumpReason,
-  isValidMatch,
-  runKeyBindings,
-} from './suggest-utils';
+import { findFromMatchers, findReason, runKeyBindings } from './suggest-utils';
 
 export class SuggestState<GSchema extends EditorSchema = any> {
   /**
@@ -78,7 +72,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    * The actions created by the extension.
    */
   private getCommand(match: SuggestStateMatch, reason?: ExitReason | ChangeReason) {
-    return match.suggester.createCommand({ match, reason, stage: this.stage });
+    return match.suggester.createCommand({ match, reason, stage: this.stage, view: this.view });
   }
 
   /**
@@ -281,6 +275,10 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   public decorations(state: EditorState) {
     const match = this.match;
     if (!isValidMatch(match)) {
+      return;
+    }
+
+    if (match.suggester.ignoreDecorations) {
       return;
     }
 

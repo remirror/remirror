@@ -215,6 +215,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
 
     this.initData.plugins = [
       ...this.initData.directPlugins,
+      this.initData.suggesters,
       this.initData.inputRules,
       ...this.initData.pasteRules,
       ...this.initData.keymaps,

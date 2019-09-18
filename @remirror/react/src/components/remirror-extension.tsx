@@ -54,10 +54,9 @@ import { RemirrorExtensionProps } from '../react-types';
  */
 export const RemirrorExtension = <
   GConstructor extends { prototype: AnyExtension },
-  GExtension extends AbstractInstanceType<GConstructor>,
-  GOptions extends OptionsOfExtension<GExtension>
+  GOptions extends OptionsOfExtension<AbstractInstanceType<GConstructor>>
 >(
-  _props: RemirrorExtensionProps<GConstructor, GExtension, GOptions>,
+  _props: RemirrorExtensionProps<GConstructor, GOptions>,
 ) => {
   return null;
 };

@@ -15,10 +15,10 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
    *
    * For example with `char` = `@` the following is true.
    *
-   * - matchOffset: 0 matches `'@'` immediately
-   * - matchOffset: 1 matches `'@a'` but not `'@'`
-   * - matchOffset: 2 matches `'@ab'` but not `'@a'` or `'@'`
-   * - matchOffset: 3 matches `'@abc'` but not `'@ab'` or `'@a'` or `'@'`
+   * - `matchOffset: 0` matches `'@'` immediately
+   * - `matchOffset: 1` matches `'@a'` but not `'@'`
+   * - `matchOffset: 2` matches `'@ab'` but not `'@a'` or `'@'`
+   * - `matchOffset: 3` matches `'@abc'` but not `'@ab'` or `'@a'` or `'@'`
    * - And so on...
    *
    * @default 0
@@ -47,17 +47,25 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
   decorationsTag?: keyof HTMLElementTagNameMap;
 
   /**
-   * Called when a suggestion is active and has changed.
+   * Whether to omit the decorations from being created.
+   */
+  ignoreDecorations?: boolean;
+
+  /**
+   * Called whenever a suggestion becomes active or changes in anyway.
+   * It receives a parameters object with the `reason` for the change
+   * for more granular control.
    *
    * @defaultValue `() => void`
    */
   onChange?(params: SuggestChangeHandlerParams<GCommand>): void;
 
   /**
-   * Called when a suggestion is exited with the pre-exit match.
+   * Called when a suggestion is exited with the pre-exit match value.
    *
    * Can be used to force the command to run e.g. when no match was found but a hash
-   * should still be created this can be used to call the command parameter and trigger the mention being created.
+   * should still be created this can be used to call the command parameter and trigger
+   * whatever action is felt required.
    *
    * @defaultValue `() => void`
    */
@@ -215,6 +223,7 @@ export interface SuggestStateMatchParams {
 
 export interface CreateSuggestCommandParams
   extends Partial<ReasonParams>,
+    EditorViewParams,
     SuggestStateMatchParams,
     StageParams {}
 
