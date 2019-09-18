@@ -44,7 +44,7 @@
     "prosemirror-schema-list": "^1.0.3",
     "prosemirror-state": "^1.2.4",
     "prosemirror-transform": "^1.1.4",
-    "prosemirror-view": "^1.11.1"
+    "prosemirror-view": "^1.11.2"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

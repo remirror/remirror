@@ -40,9 +40,8 @@
     "@remirror/ui": "0.4.2-canary.2",
     "@remirror/ui-buttons": "0.4.2-canary.2",
     "@remirror/ui-icons": "0.4.2-canary.2",
-    "emotion-theming": "^10.0.18",
-    "keycode": "^2.2.0",
-    "refractor": "^2.10.0"
+    "refractor": "^2.10.0",
+    "w3c-keyname": "^2.1.0"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

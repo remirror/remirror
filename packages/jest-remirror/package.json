@@ -36,7 +36,7 @@
     "mutationobserver-shim": "0.3.3",
     "prosemirror-model": "^1.7.2",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.11.1",
+    "prosemirror-view": "^1.11.2",
     "test-keyboard": "0.4.2-canary.2"
   },
   "peerDependencies": {

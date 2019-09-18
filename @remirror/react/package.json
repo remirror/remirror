@@ -40,7 +40,7 @@
     "prosemirror-commands": "^1.0.8",
     "prosemirror-model": "^1.7.2",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.11.1"
+    "prosemirror-view": "^1.11.2"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

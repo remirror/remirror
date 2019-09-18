@@ -31,7 +31,7 @@
     "@styled-system/css": "^5.0.23",
     "@types/styled-system__css": "^5.0.4",
     "csstype": "^2.6.6",
-    "emotion-theming": "^10.0.18"
+    "emotion-theming": "^10.0.19"
   },
   "peerDependencies": {
     "@emotion/core": "^10",
