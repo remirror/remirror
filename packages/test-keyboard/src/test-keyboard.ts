@@ -1,5 +1,4 @@
 import { take } from '@remirror/core-helpers';
-import lolex from 'lolex';
 import {
   KeyboardConstructorParams,
   KeyboardEventName,
@@ -7,6 +6,7 @@ import {
   OptionsParams,
   OptionsWithTypingParams,
   TextInputParams,
+  TypingInputParams,
 } from './test-keyboard-types';
 import { cleanKey, createKeyboardEvent, getModifierInformation } from './test-keyboard-utils';
 import {
@@ -59,15 +59,11 @@ export class Keyboard {
   public status: 'started' | 'ended' | 'idle' = 'idle';
 
   private readonly target: HTMLElement;
-  private readonly useFakeTimer: boolean;
-  private readonly startTime?: number | Date;
-  private readonly delay: number;
   private readonly defaultOptions: KeyboardEventInit;
   private readonly isMac: boolean;
   private readonly batch: boolean;
   private readonly onEventDispatch?: (event: KeyboardEvent) => void;
   private actions: BatchedKeyboardAction[] = [];
-  private clock?: lolex.InstalledClock<lolex.Clock>;
 
   private get started() {
     return this.status === 'started';
@@ -75,28 +71,16 @@ export class Keyboard {
 
   constructor({
     target,
-    useFakeTimer = false,
-    startTime,
-    delay = 10,
     defaultOptions = Keyboard.defaultOptions,
     isMac = false,
     batch = false,
     onEventDispatch,
   }: KeyboardConstructorParams) {
     this.target = target as HTMLElement;
-    this.useFakeTimer = useFakeTimer;
-    this.startTime = startTime;
-    this.delay = delay;
     this.defaultOptions = defaultOptions;
     this.isMac = isMac;
     this.batch = batch;
     this.onEventDispatch = onEventDispatch;
-  }
-
-  private tick() {
-    if (this.clock) {
-      this.clock.tick(this.delay);
-    }
   }
 
   /**
@@ -105,10 +89,6 @@ export class Keyboard {
   public start() {
     if (this.started) {
       return this;
-    }
-
-    if (this.useFakeTimer) {
-      this.clock = lolex.install({ now: this.startTime });
     }
 
     this.status = 'started';
@@ -122,10 +102,6 @@ export class Keyboard {
   public end() {
     if (!this.started) {
       return this;
-    }
-
-    if (this.clock) {
-      this.clock.uninstall();
     }
 
     if (this.batch) {
@@ -169,10 +145,7 @@ export class Keyboard {
    * Like `this.char` but only supports US Keyboard Characters. This is mainly
    * a utility for TypeScript and autocomplete support when typing characters.
    *
-   * @param textInput
-   * @param textInput.text
-   * @param [textInput.options]
-   * @param [textInput.typing]
+   * @param params - see {@link TextInputParams}
    */
   public usChar({ text, options = {}, typing = false }: TextInputParams<SupportedCharacters>) {
     if (!isUSKeyboardCharacter(text)) {
@@ -186,10 +159,7 @@ export class Keyboard {
   /**
    * Dispatches an event for a keyboard character
    *
-   * @param textInput
-   * @param textInput.text
-   * @param [textInput.options]
-   * @param [textInput.typing]
+   * @param params - see {@link TextInputParams}
    */
   public char({ text, options, typing }: TextInputParams) {
     options = {
@@ -205,8 +175,7 @@ export class Keyboard {
   /**
    * Triggers a keydown event with provided options
    *
-   * @param params
-   * @param params.options
+   * @param params - see {@link OptionsParams}
    */
   public keyDown = ({ options }: OptionsParams) => {
     return this.dispatchEvent('keydown', options);
@@ -215,8 +184,7 @@ export class Keyboard {
   /**
    * Trigger a keypress event with the provided options
    *
-   * @param params
-   * @param params.options
+   * @param params - see {@link OptionsParams}
    */
   public keyPress = ({ options }: OptionsParams) => {
     return this.dispatchEvent('keypress', options);
@@ -225,8 +193,7 @@ export class Keyboard {
   /**
    * Trigger a keyup event with the provided options
    *
-   * @param params
-   * @param params.options
+   * @param params - see {@link OptionsParams}
    */
   public keyUp = ({ options }: OptionsParams) => {
     return this.dispatchEvent('keyup', options);
@@ -235,11 +202,9 @@ export class Keyboard {
   /**
    * Breaks a string into single characters and fires a keyboard into the target node
    *
-   * @param textInput
-   * @param textInput.text
-   * @param [textInput.options]
+   * @param params - see {@link TypingInputParams}
    */
-  public type({ text, options = {} }: Omit<TextInputParams, 'typing'>) {
+  public type({ text, options = {} }: TypingInputParams) {
     for (const char of text) {
       this.char({ text: char, options, typing: true });
     }
@@ -258,10 +223,7 @@ export class Keyboard {
    *   .end();
    * ```
    *
-   * @param textInput
-   * @param textInput.text
-   * @param [textInput.options]
-   * @param [textInput.typing]
+   * @param params - see {@link TextInputParams}
    */
   public mod({ text, options = {} }: TextInputParams) {
     let modifiers = text.split(/-(?!$)/);
@@ -282,11 +244,9 @@ export class Keyboard {
   }
 
   /**
-   * Fires events where valid
+   * Fires events where valid.
    *
-   * @param params
-   * @param params.options
-   * @param [params.typing]
+   * @param options - see {@link OptionsWithTypingParams}
    */
   private fireAllEvents({ options, typing = false }: OptionsWithTypingParams) {
     this.keyDown({ options });
@@ -306,12 +266,8 @@ export class Keyboard {
   /**
    * Fires all modifier events
    *
-   * @param info
-   * @param info.altKey
-   * @param info.ctrlKey
-   * @param info.shiftKey
-   * @param info.metaKey
-   * @param type
+   * @param info - the modifier information for the keys see {@link ModifierInformation}
+   * @param type - the keyboard event type
    *
    */
   private fireModifierEvents(
@@ -343,8 +299,8 @@ export class Keyboard {
   /**
    * Dispatches the action or adds it to the queue when batching is enabled.
    *
-   * @param type
-   * @param options
+   * @param type - the keyboard event name
+   * @param options - options passed to the keyboard event. See {@link KeyboardEventInit}
    */
   private dispatchEvent(type: KeyboardEventName, options: KeyboardEventInit) {
     if (!this.started) {
@@ -358,8 +314,6 @@ export class Keyboard {
       if (this.onEventDispatch) {
         this.onEventDispatch(event);
       }
-
-      this.tick();
     };
 
     if (this.batch) {

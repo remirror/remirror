@@ -32,6 +32,7 @@ const generateSizeLimitConfig = async () => {
       path: join(getPathFromRoot(json), json.module),
       limit: json.meta.sizeLimit,
       ignore: Object.keys(json.peerDependencies || {}),
+      running: false,
     }));
   const path = baseDir(configs.sizeLimit);
 

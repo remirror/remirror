@@ -1,12 +1,13 @@
 {
   "name": "test-keyboard",
-  "description": "A test keyboard for managing fake keyboard events",
+  "description": "A test keyboard for composing fake keyboard events",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/test-keyboard",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/packages/test-keyboard",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
+  "module": "lib/dist/test-keyboard.esm.js",
   "files": [
     "environment.d.ts",
     "environment.js",
@@ -22,12 +23,17 @@
   },
   "types": "lib/index.d.ts",
   "dependencies": {
+    "@babel/runtime": "^7.6.0",
     "@remirror/core-helpers": "0.4.2-canary.2",
-    "@remirror/core-types": "0.4.2-canary.2",
-    "@types/lolex": "^3.1.1",
-    "lolex": "^4.2.0"
+    "@remirror/core-types": "0.4.2-canary.2"
   },
   "keywords": [
+    "compose events",
+    "events",
     "keyboard"
-  ]
+  ],
+  "cjs": "lib/dist/test-keyboard.cjs.js",
+  "meta": {
+    "sizeLimit": "10 KB"
+  }
 }

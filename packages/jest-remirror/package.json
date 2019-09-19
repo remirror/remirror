@@ -27,17 +27,14 @@
     "@remirror/react": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2",
     "@testing-library/react": "^9.1.4",
-    "@types/lolex": "^3.1.1",
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-view": "^1.9.0",
     "jest-prosemirror": "0.4.2-canary.2",
     "jest-snapshot": "^24.9.0",
-    "lolex": "^4.2.0",
     "mutationobserver-shim": "0.3.3",
     "prosemirror-model": "^1.7.2",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.11.2",
-    "test-keyboard": "0.4.2-canary.2"
+    "prosemirror-view": "^1.11.2"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",

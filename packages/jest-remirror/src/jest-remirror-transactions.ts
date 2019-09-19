@@ -1,47 +1,7 @@
-import { EditorSchema, SchemaParams, TextParams } from '@remirror/core';
+import { SchemaParams } from '@remirror/core';
 import { TestEditorViewParams } from 'jest-prosemirror';
-import { Keyboard } from 'test-keyboard';
 import { coerce, offsetTags } from './jest-remirror-builder';
 import { TaggedProsemirrorNode, Tags } from './jest-remirror-types';
-
-interface InsertTextParams<GSchema extends EditorSchema = any>
-  extends TestEditorViewParams<GSchema>,
-    TextParams {
-  /**
-   * The start point of text insertion
-   */
-  start: number;
-}
-
-/**
- * Insert text from the provided index. Each key is entered individually to better simulate
- * calls to handleTextInput.
- */
-export const insertText = <GSchema extends EditorSchema = any>({
-  view,
-  text,
-  start: from,
-}: InsertTextParams<GSchema>) => {
-  const keys = Keyboard.create({
-    target: view.dom,
-    useFakeTimer: true,
-    // onEventDispatch: event => {view.dispatchEvent(event)},
-  }).start();
-  let pos = from;
-  text.split('').forEach(character => {
-    keys.char({ text: character, typing: true });
-
-    if (!view.someProp('handleTextInput', f => f(view, pos, pos, character))) {
-      view.dispatch(view.state.tr.insertText(character, pos, pos));
-    }
-
-    // Update the position based on the current state selection. This allows plugins and commands to make changes to the
-    // size of the editor while typing and as long as there is a selection position this function won't fail.
-    pos = view.state.selection.anchor;
-  });
-
-  keys.end();
-};
 
 interface ProcessTextParams extends SchemaParams {
   /**

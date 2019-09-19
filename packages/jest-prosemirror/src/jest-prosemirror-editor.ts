@@ -336,8 +336,6 @@ export const insertText = <GSchema extends EditorSchema = any>({
 }: InsertTextParams<GSchema>) => {
   const keys = Keyboard.create({
     target: view.dom,
-    useFakeTimer: true,
-    // onEventDispatch: event => {view.dispatchEvent(event)},
   }).start();
   let pos = from;
   text.split('').forEach(character => {
@@ -428,7 +426,6 @@ export const press = <GSchema extends EditorSchema = any>({ view, char }: PressP
   Keyboard.create({
     target: view.dom,
     batch: true,
-    useFakeTimer: true,
   })
     .start()
     .char({ text: char })
@@ -454,7 +451,6 @@ export const shortcut = <GSchema extends EditorSchema = any>({
 }: KeyboardShortcutParams<GSchema>) => {
   Keyboard.create({
     target: view.dom,
-    useFakeTimer: true,
     batch: true,
   })
     .start()

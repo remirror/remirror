@@ -3,133 +3,155 @@
     "name": "@remirror/core-constants",
     "path": "@remirror/core-constants/lib/dist/core-constants.esm.js",
     "limit": "2 KB",
-    "ignore": []
+    "ignore": [],
+    "running": false
   },
   {
     "name": "@remirror/core-extensions",
     "path": "@remirror/core-extensions/lib/dist/core-extensions.esm.js",
     "limit": "100 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"]
+    "ignore": ["@emotion/core", "@types/react", "react"],
+    "running": false
   },
   {
     "name": "@remirror/core-types",
     "path": "@remirror/core-types/lib/dist/core-types.esm.js",
     "limit": "1 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"]
+    "ignore": ["@emotion/core", "@types/react", "react"],
+    "running": false
   },
   {
     "name": "@remirror/core-utils",
     "path": "@remirror/core-utils/lib/dist/core-utils.esm.js",
     "limit": "50 KB",
-    "ignore": []
+    "ignore": [],
+    "running": false
   },
   {
     "name": "@remirror/core",
     "path": "@remirror/core/lib/dist/core.esm.js",
     "limit": "55 KB",
-    "ignore": ["prosemirror-view", "@types/prosemirror-view", "@emotion/core", "@types/react", "react"]
+    "ignore": ["@emotion/core", "@types/prosemirror-view", "@types/react", "prosemirror-view", "react"],
+    "running": false
   },
   {
     "name": "@remirror/editor-markdown",
     "path": "@remirror/editor-markdown/lib/dist/editor-markdown.esm.js",
     "limit": "250 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "running": false
   },
   {
     "name": "@remirror/editor-social",
     "path": "@remirror/editor-social/lib/dist/editor-social.esm.js",
     "limit": "200 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "running": false
   },
   {
     "name": "@remirror/editor-wysiwyg",
     "path": "@remirror/editor-wysiwyg/lib/dist/editor-wysiwyg.esm.js",
     "limit": "250 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "running": false
   },
   {
     "name": "@remirror/extension-code-block",
     "path": "@remirror/extension-code-block/lib/dist/extension-code-block.esm.js",
     "limit": "120 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"]
+    "ignore": ["@emotion/core", "@types/react", "react"],
+    "running": false
   },
   {
     "name": "@remirror/extension-collaboration",
     "path": "@remirror/extension-collaboration/lib/dist/extension-collaboration.esm.js",
     "limit": "90 KB",
-    "ignore": ["@emotion/core"]
+    "ignore": ["@emotion/core"],
+    "running": false
   },
   {
     "name": "@remirror/extension-drop-cursor",
     "path": "@remirror/extension-drop-cursor/lib/dist/extension-drop-cursor.esm.js",
     "limit": "90 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"]
+    "ignore": ["@emotion/core", "@types/react", "react"],
+    "running": false
   },
   {
     "name": "@remirror/extension-emoji",
     "path": "@remirror/extension-emoji/lib/dist/extension-emoji.esm.js",
     "limit": "150 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "running": false
   },
   {
     "name": "@remirror/extension-enhanced-link",
     "path": "@remirror/extension-enhanced-link/lib/dist/extension-enhanced-link.esm.js",
     "limit": "90 KB",
-    "ignore": ["@emotion/core"]
+    "ignore": ["@emotion/core"],
+    "running": false
   },
   {
     "name": "@remirror/extension-epic-mode",
     "path": "@remirror/extension-epic-mode/lib/dist/extension-epic-mode.esm.js",
     "limit": "90 KB",
-    "ignore": ["@emotion/core"]
+    "ignore": ["@emotion/core"],
+    "running": false
   },
   {
     "name": "@remirror/extension-image",
     "path": "@remirror/extension-image/lib/dist/extension-image.esm.js",
     "limit": "100 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"]
+    "ignore": ["@emotion/core", "@types/react", "react"],
+    "running": false
   },
   {
     "name": "@remirror/extension-mention",
     "path": "@remirror/extension-mention/lib/dist/extension-mention.esm.js",
     "limit": "90 KB",
-    "ignore": ["@emotion/core"]
+    "ignore": ["@emotion/core"],
+    "running": false
   },
   {
     "name": "@remirror/react-hooks",
     "path": "@remirror/react-hooks/lib/dist/react-hooks.esm.js",
     "limit": "10 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"]
+    "ignore": ["@emotion/core", "@types/react", "react"],
+    "running": false
   },
   {
     "name": "@remirror/react-portals",
     "path": "@remirror/react-portals/lib/dist/@remirror/react-portals.esm.js",
     "limit": "15 KB",
-    "ignore": ["@types/react", "@types/react-dom", "react", "react-dom"]
+    "ignore": ["@types/react", "@types/react-dom", "react", "react-dom"],
+    "running": false
   },
   {
     "name": "@remirror/react-renderer",
     "path": "@remirror/react-renderer/lib/dist/renderer-react.esm.js",
     "limit": "20 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "running": false
   },
   {
     "name": "@remirror/react-ssr",
     "path": "@remirror/react-ssr/lib/dist/react-ssr.esm.js",
     "limit": "90 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "running": false
   },
   {
     "name": "@remirror/react-utils",
     "path": "@remirror/react-utils/lib/dist/react-utils.esm.js",
     "limit": "5 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"]
+    "ignore": ["@emotion/core", "@types/react", "react"],
+    "running": false
   },
   {
     "name": "@remirror/react",
     "path": "@remirror/react/lib/dist/react.esm.js",
     "limit": "120 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "running": false
   },
   {
     "name": "@remirror/ui-buttons",
@@ -142,54 +164,70 @@
       "@types/react-dom",
       "react",
       "react-dom"
-    ]
+    ],
+    "running": false
   },
   {
     "name": "@remirror/ui-dropdown",
     "path": "@remirror/ui-dropdown/lib/dist/ui-dropdown.esm.js",
     "limit": "40 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"]
+    "ignore": ["@emotion/core", "@types/react", "react"],
+    "running": false
   },
   {
     "name": "@remirror/ui-icons",
     "path": "@remirror/ui-icons/lib/dist/ui-icons.esm.js",
     "limit": "40 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"]
+    "ignore": ["@emotion/core", "@types/react", "react"],
+    "running": false
   },
   {
     "name": "@remirror/ui-menus",
     "path": "@remirror/ui-menus/lib/dist/ui-menus.esm.js",
     "limit": "50 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"]
+    "ignore": ["@emotion/core", "@types/react", "react"],
+    "running": false
   },
   {
     "name": "@remirror/ui-modal",
     "path": "@remirror/ui-modal/lib/dist/ui-modal.esm.js",
     "limit": "30 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom"]
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom"],
+    "running": false
   },
   {
     "name": "@remirror/ui-text",
     "path": "@remirror/ui-text/lib/dist/ui-text.esm.js",
     "limit": "20 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"]
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "running": false
   },
   {
     "name": "@remirror/ui",
     "path": "@remirror/ui/lib/dist/ui.esm.js",
     "limit": "20 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"]
+    "ignore": ["@emotion/core", "@types/react", "react"],
+    "running": false
   },
   {
     "name": "multishift",
     "path": "packages/multishift/lib/dist/multishift.esm.js",
     "limit": "20 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"]
+    "ignore": ["@emotion/core", "@types/react", "react"],
+    "running": false
   },
   {
     "name": "prosemirror-suggest",
     "path": "packages/prosemirror-suggest/lib/dist/prosemirror-suggest.esm.js",
     "limit": "90 KB",
-    "ignore": ["@types/prosemirror-view", "prosemirror-view"]
+    "ignore": ["@types/prosemirror-view", "prosemirror-view"],
+    "running": false
+  },
+  {
+    "name": "test-keyboard",
+    "path": "packages/test-keyboard/lib/dist/test-keyboard.esm.js",
+    "limit": "10 KB",
+    "ignore": [],
+    "running": false
   }
 ]

@@ -142,5 +142,9 @@
   {
     "path": "../../packages/remirror/package.json",
     "root": "packages"
+  },
+  {
+    "path": "../../packages/test-keyboard/package.json",
+    "root": "packages"
   }
 ]

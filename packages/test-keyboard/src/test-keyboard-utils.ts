@@ -13,8 +13,11 @@ export const createKeyboardEvent = (type: KeyboardEventName, options: KeyboardEv
   new KeyboardEvent(type, { ...options, bubbles: true });
 
 interface GetModifierInformationParams {
-  /** The modifier keys passed in */
+  /**
+   * The modifier keys passed in
+   */
   modifiers: string[];
+
   /**
    * Whether to treat this as a mac
    *

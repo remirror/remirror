@@ -1,7 +1,7 @@
 import { isPlainObject } from '@remirror/core-helpers';
 import { useRemirrorTheme } from '@remirror/ui';
 import { Button, ButtonProps } from '@remirror/ui-buttons';
-import { Dropdown, DropdownProps } from '@remirror/ui-dropdown';
+import { DropdownProps, DropdownSelect } from '@remirror/ui-dropdown';
 import React, { FC, forwardRef, ReactElement } from 'react';
 
 interface MenubarDropdownConfiguration extends DropdownProps {
@@ -49,7 +49,7 @@ const MenuTree: FC<MenuTreeProps> = ({ content }) => {
 
       case 'dropdown': {
         const { type, ...rest } = item;
-        return <Dropdown key={index} dropdownPosition='below left' {...rest} />;
+        return <DropdownSelect key={index} dropdownPosition='below left' {...rest} />;
       }
 
       case 'button': {
