@@ -89,10 +89,30 @@ declare global {
        *
        * This tests that mark has been removed by the provided command.
        *
-       * The to property is optional and if you would like to test that the node
-       * is identical after the transform you can leave it blank as a shorthand.
+       * The `to` property is optional and can be left blank to test that the
+       * node is identical after the transform.
        */
       toTransformNode(params: CommandTransformation): R;
+
+      /**
+       * Tests that two prosemirror documents are equal. Pass in the expected
+       * document and it checks that they are the same.
+       *
+       * ```ts
+       * import { createEditor, doc, p } from 'jest-prosemirror';
+       * import { removeNodeAtPosition } from '@remirror/core-utils';
+       *
+       * test('remove block top level node at specified position', () => {
+       *   const {
+       *     state: { tr },
+       *   } = createEditor(doc(p('x'), p('one')));
+       *   const newTr = removeNodeAtPosition({ pos: 3, tr });
+       *
+       *   expect(newTr).not.toBe(tr);
+       *   expect(newTr.doc).toEqualProsemirrorNode(doc(p('x')));
+       * });
+       * ```
+       */
       toEqualProsemirrorNode(params: ProsemirrorNode): R;
     }
   }

@@ -296,9 +296,28 @@ export interface CreateTestEditorExtensions<
   GAttrNodes extends Array<NodeExtension<any>>,
   GOthers extends Array<Extension<any>>
 > {
+  /**
+   * Create marks which don't need any attributes
+   */
   plainMarks: GPlainMarks;
+
+  /**
+   * Create nodes which don't take any attributes
+   */
   plainNodes: GPlainNodes;
+
+  /**
+   * Create marks which take attributes in a curried function call.
+   */
   attrMarks: GAttrMarks;
+
+  /**
+   * Create nodes which take attributes in a curried function call
+   */
   attrNodes: GAttrNodes;
+
+  /**
+   * For plain extensions (non-mark and non-node).
+   */
   others: GOthers;
 }

@@ -60,6 +60,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
       name: 'toContainRemirrorDocument',
     };
   },
+
   toEqualRemirrorDocument(actual: ProsemirrorNode, expected: TaggedProsemirrorNode) {
     // Because schema is created dynamically, expected value is a function (schema) => PMNode;
     // That's why this magic is necessary. It simplifies writing assertions, so

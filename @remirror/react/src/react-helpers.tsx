@@ -25,6 +25,7 @@ export interface GetManagerFromComponentTreeParams {
  * Retrieve the extension manager from your remirror component tree.
  *
  * @remarks
+ *
  * When building your multi-platform editor you will want to use **one** schema across
  * all your environments. Since Prosemirror renders in the DOM it makes sense to set
  * up the schema in your DOM based react code.
@@ -64,7 +65,7 @@ export interface GetManagerFromComponentTreeParams {
  * const { schema } =  manager;
  * ```
  *
- * This is useful in DOM-less (server-side rendered) environments.
+ * This is useful in DOM-less (e.g. server-side) environments.
  */
 export const getManagerFromComponentTree = ({
   Component,

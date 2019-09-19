@@ -16,12 +16,17 @@ test('`onChange`, `onExit` and `createCommand` handlers are called', () => {
     createCommand: () => command,
   };
   const plugin = suggest({ char: '@', name: 'at', ...handlers, matchOffset: 0 });
-  const editor = createEditor(doc(p('<cursor>')), { plugins: [plugin] }).insertText('@');
-  expect(handlers.onChange).toHaveBeenCalledTimes(1);
 
-  editor.insertText(`${expected} `);
-  expect(handlers.onChange).toHaveBeenCalledTimes(8);
-  expect(command).toHaveBeenCalledWith('command');
+  createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+    .insertText('@')
+    .callback(() => {
+      expect(handlers.onChange).toHaveBeenCalledTimes(1);
+    })
+    .insertText(`${expected} `)
+    .callback(() => {
+      expect(handlers.onChange).toHaveBeenCalledTimes(8);
+      expect(command).toHaveBeenCalledWith('command');
+    });
 });
 
 test('`keyBindings`', () => {
