@@ -392,11 +392,11 @@ describe('toDOM', () => {
 describe('fromHTML', () => {
   const content = `<p>Hello</p>`;
   it('transform html into a prosemirror node', () => {
-    expect(fromHTML({ content, schema: testSchema })).toEqualPMNode(doc(p('Hello')));
+    expect(fromHTML({ content, schema: testSchema })).toEqualProsemirrorNode(doc(p('Hello')));
   });
 
   it('allows for custom document to be passed in', () => {
-    expect(fromHTML({ content, schema: testSchema, doc: domino.createDocument() })).toEqualPMNode(
+    expect(fromHTML({ content, schema: testSchema, doc: domino.createDocument() })).toEqualProsemirrorNode(
       doc(p('Hello')),
     );
   });

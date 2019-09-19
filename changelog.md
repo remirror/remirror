@@ -42,6 +42,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - 💥 **BREAKING `@remirror/editor-social`:** Rename `@remirror/editor-twitter` to `@remirror/editor-social` for branding reasons.
 - 💥 **BREAKING `@remirror/core`:** Rename `NodeViewPortalContainer` to `PortalContainer`.
 - 💥 **BREAKING `@remirror/core`:** Refactor the type signature of SSRComponents to only take a node and options `extraAttrs` configuration to enable parsing the dom.
+- 💥 **BREAKING `jest-prosemirror`:** Names of matchers have been changed. `transformsPMNode` is now `toTransformNode` and `toEqualPMNode` is now `toEqualProsemirrorNode`.
 
 - `@remirror/core`: Update `extraAttrs` configuration to enable parsing the dom.
 - `@remirror/core`: Make default priority level for extensions `3` instead of `2`. A lower number means the extension is deemed more important and ordered earlier in lists.

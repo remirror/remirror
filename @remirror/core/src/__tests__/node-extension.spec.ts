@@ -67,7 +67,7 @@ describe('extraAttrs', () => {
     });
 
     const expected = doc(custom('hello'));
-    expect(node).toEqualPMNode(expected);
+    expect(node).toEqualProsemirrorNode(expected);
   });
 
   it('support parsing with getAttrs method', () => {
@@ -76,6 +76,6 @@ describe('extraAttrs', () => {
       schema,
     });
     const expected = doc(other('hello'));
-    expect(node).toEqualPMNode(expected);
+    expect(node).toEqualProsemirrorNode(expected);
   });
 });

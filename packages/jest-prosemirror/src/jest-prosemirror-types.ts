@@ -6,8 +6,30 @@ import { EditorView } from 'prosemirror-view';
  * The second state is optional if nothing has changed.
  */
 export interface CommandTransformation<GSchema extends EditorSchema = any> {
-  to?: TaggedProsemirrorNode<GSchema>;
+  /**
+   * The initial prosemirror node.
+   *
+   * ```ts
+   * import { doc, p, strong} from 'jest-prosemirror';
+   *
+   * const from = doc(p('Hello ', strong('Friend')));
+   * ```
+   */
   from: TaggedProsemirrorNode<GSchema>;
+
+  /**
+   * The output of the command transformation.
+   *
+   * ```ts
+   * import { doc, p, strong} from 'jest-prosemirror';
+   *
+   * const to = doc(p(strong('Friend')));
+   * ```
+   *
+   * This is optional and can be omitted if the transformation doesn't produce
+   * any results.
+   */
+  to?: TaggedProsemirrorNode<GSchema>;
 }
 
 export interface TaggedDocParams<GSchema extends EditorSchema = any> {

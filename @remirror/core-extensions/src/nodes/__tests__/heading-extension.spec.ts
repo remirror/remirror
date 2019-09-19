@@ -27,7 +27,7 @@ describe('schema', () => {
   it('it can parse content', () => {
     const node = fromHTML({ content: '<h2>Hello</h2>', schema });
     const expected = doc(h2('Hello'));
-    expect(node).toEqualPMNode(expected);
+    expect(node).toEqualProsemirrorNode(expected);
   });
 
   describe('extraAttrs', () => {

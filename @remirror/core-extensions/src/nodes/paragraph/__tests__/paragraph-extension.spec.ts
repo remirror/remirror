@@ -17,7 +17,7 @@ describe('schema', () => {
       schema,
     });
     const expected = doc(p('hello'));
-    expect(node).toEqualPMNode(expected);
+    expect(node).toEqualProsemirrorNode(expected);
   });
 
   it('it produces valid html', () => {

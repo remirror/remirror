@@ -33,7 +33,7 @@ describe('schema', () => {
       schema,
     });
     const expected = doc(p(a('link')));
-    expect(node).toEqualPMNode(expected);
+    expect(node).toEqualProsemirrorNode(expected);
   });
 
   describe('extraAttrs', () => {
@@ -79,7 +79,7 @@ describe('schema', () => {
       });
 
       const expected = doc(p(a('link')));
-      expect(node).toEqualPMNode(expected);
+      expect(node).toEqualProsemirrorNode(expected);
     });
   });
 });

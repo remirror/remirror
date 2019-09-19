@@ -52,7 +52,7 @@ describe('removeNodeAtPosition', () => {
     } = createEditor(doc(p('x'), p('one')));
     const newTr = removeNodeAtPosition({ pos: 3, tr });
     expect(newTr).not.toBe(tr);
-    expect(newTr.doc).toEqualPMNode(doc(p('x')));
+    expect(newTr.doc).toEqualProsemirrorNode(doc(p('x')));
   });
 
   it('removes nested inline nodes at specified position', () => {
@@ -61,7 +61,7 @@ describe('removeNodeAtPosition', () => {
     } = createEditor(doc(p('one', atomInline())));
     const newTr = removeNodeAtPosition({ pos: 4, tr });
     expect(newTr).not.toBe(tr);
-    expect(newTr.doc).toEqualPMNode(doc(p('one')));
+    expect(newTr.doc).toEqualProsemirrorNode(doc(p('one')));
   });
 });
 
@@ -80,7 +80,7 @@ describe('removeNodeBefore', () => {
     } = createEditor(doc(p('one'), table(row(tdEmpty), row(tdEmpty)), '<cursor>', p('two')));
     const newTr = removeNodeBefore(tr);
     expect(newTr).not.toBe(tr);
-    expect(newTr.doc).toEqualPMNode(doc(p('one'), p('two')));
+    expect(newTr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
   });
 
   it('supports removing blockquotes', () => {
@@ -89,7 +89,7 @@ describe('removeNodeBefore', () => {
     } = createEditor(doc(p('one'), blockquote(p('')), '<cursor>', p('two')));
     const newTr = removeNodeBefore(tr);
     expect(newTr).not.toBe(tr);
-    expect(newTr.doc).toEqualPMNode(doc(p('one'), p('two')));
+    expect(newTr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
   });
 
   it('supports removing leaf nodes (atom)', () => {
@@ -98,7 +98,7 @@ describe('removeNodeBefore', () => {
     } = createEditor(doc(p('one'), atomBlock(), '<cursor>', p('two')));
     const newTr = removeNodeBefore(tr);
     expect(newTr).not.toBe(tr);
-    expect(newTr.doc).toEqualPMNode(doc(p('one'), p('two')));
+    expect(newTr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
   });
 });
 

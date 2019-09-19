@@ -1,4 +1,4 @@
-import { isFunction } from '@remirror/core-helpers';
+import { isFunction, isNumber } from '@remirror/core-helpers';
 import {
   AnyFunction,
   Attrs,
@@ -183,7 +183,6 @@ export const replaceText = ({
 
   // Run the pre transaction hook
   const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
-  console.log('in replace text');
   if (isNodeType(type)) {
     if (!selection.$from.parent.canReplaceWith(index, index, type)) {
       return false;
@@ -194,7 +193,6 @@ export const replaceText = ({
     if (!content) {
       throw new Error('`replaceText` cannot be called without content when using a mark type');
     }
-    console.log({ content });
 
     tr.replaceWith(from, to, schema.text(content, isMarkType(type) ? [type.create(attrs)] : undefined));
   }
@@ -216,7 +214,7 @@ export const replaceText = ({
   return true;
 };
 
-interface RemoveMarkParams extends MarkTypeParams, Partial<RangeParams>, TransformTransactionParams {
+interface RemoveMarkParams extends MarkTypeParams, Partial<RangeParams<'to'>>, TransformTransactionParams {
   /**
    * Whether to expand empty selections to the current mark range
    *
@@ -243,11 +241,16 @@ export const removeMark = ({
   const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
   let { from, to } = range || selection;
 
-  if (expand && selectionEmpty(state)) {
-    ({ from, to } = getMarkRange(state.selection.$anchor, type) || { from, to });
+  if (expand) {
+    ({ from, to } = range
+      ? getMarkRange(state.doc.resolve(range.from), type) ||
+        (isNumber(range.to) && getMarkRange(state.doc.resolve(range.to), type)) || { from, to }
+      : selectionEmpty(state)
+      ? getMarkRange(state.selection.$anchor, type) || { from, to }
+      : { from, to });
   }
 
-  tr.removeMark(from, to, type);
+  tr.removeMark(from, isNumber(to) ? to : from, type);
 
   if (dispatch) {
     dispatch(callMethod({ fn: endTransaction, defaultReturn: tr }, [tr, state]));

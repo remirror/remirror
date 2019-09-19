@@ -25,7 +25,7 @@ describe('schema', () => {
       content: `<a class="mention mention-at" data-mention-id="${attrs.id}">${attrs.label}</a>`,
     });
     const expected = doc(p(mention(attrs.label)));
-    expect(node).toEqualPMNode(expected);
+    expect(node).toEqualProsemirrorNode(expected);
   });
 });
 

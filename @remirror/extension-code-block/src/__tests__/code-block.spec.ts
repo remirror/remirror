@@ -33,7 +33,7 @@ describe('schema', () => {
       content: `<pre><code class="language-${attrs.language}" data-code-block-language="${attrs.language}">${content}</code></pre>`,
     });
     const expected = doc(codeBlock(content));
-    expect(node).toEqualPMNode(expected);
+    expect(node).toEqualProsemirrorNode(expected);
   });
 });
 

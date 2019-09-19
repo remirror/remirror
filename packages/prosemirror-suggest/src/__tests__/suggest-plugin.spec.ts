@@ -42,7 +42,7 @@ test('`keyBindings`', () => {
     .insertText('@')
     .press('Enter')
     .callback(content => {
-      expect(content.state.doc).toEqualPMNode(doc(p('@awesome')));
+      expect(content.state.doc).toEqualProsemirrorNode(doc(p('@awesome')));
     });
 });
 

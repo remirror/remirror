@@ -15,7 +15,7 @@ describe('markPasteRule', () => {
     });
 
     view.dispatch(tr.replaceSelection(slice));
-    expect(view.state.doc).toEqualPMNode(doc(p(strong('Hello'))));
+    expect(view.state.doc).toEqualProsemirrorNode(doc(p(strong('Hello'))));
   });
 
   it('should transform complex content', () => {
@@ -32,7 +32,7 @@ describe('markPasteRule', () => {
     });
 
     view.dispatch(tr.replaceSelection(slice));
-    expect(view.state.doc).toEqualPMNode(
+    expect(view.state.doc).toEqualProsemirrorNode(
       doc(
         p('Some ', strong('@test'), ' ', strong('@content')),
         p('should ', strong('@be'), ' amazing'),
@@ -57,7 +57,7 @@ describe('markPasteRule', () => {
     });
 
     view.dispatch(tr.replaceSelection(slice));
-    expect(view.state.doc).toEqualPMNode(doc(p('Not The Word')));
+    expect(view.state.doc).toEqualProsemirrorNode(doc(p('Not The Word')));
   });
 });
 
@@ -76,7 +76,7 @@ describe('markInputRule', () => {
       f(...params);
     });
 
-    expect(view.state.doc).toEqualPMNode(doc(p(strong('Hello'))));
+    expect(view.state.doc).toEqualProsemirrorNode(doc(p(strong('Hello'))));
     expect(getAttrs).toHaveBeenCalledWith(expect.arrayContaining(['~Hello~', 'Hello']));
   });
 
@@ -94,7 +94,7 @@ describe('markInputRule', () => {
       return value;
     });
 
-    expect(view.state.doc).toEqualPMNode(doc(p('~Hello')));
+    expect(view.state.doc).toEqualProsemirrorNode(doc(p('~Hello')));
   });
 });
 
@@ -113,7 +113,7 @@ describe('nodeInputRule', () => {
       f(...params);
     });
 
-    expect(view.state.doc).toEqualPMNode(doc(horizontalRule(), p()));
+    expect(view.state.doc).toEqualProsemirrorNode(doc(horizontalRule(), p()));
     expect(getAttrs).toHaveBeenCalledWith(expect.arrayContaining(['~Hello~', 'Hello']));
   });
 
@@ -131,7 +131,7 @@ describe('nodeInputRule', () => {
       return value;
     });
 
-    expect(view.state.doc).toEqualPMNode(doc(p('~Hello')));
+    expect(view.state.doc).toEqualProsemirrorNode(doc(p('~Hello')));
   });
 });
 
@@ -153,7 +153,7 @@ describe('plainInputRule', () => {
       f(...params);
     });
 
-    expect(view.state.doc).toEqualPMNode(doc(p('ABC')));
+    expect(view.state.doc).toEqualProsemirrorNode(doc(p('ABC')));
   });
 
   it('should work with partial matches', () => {
@@ -173,7 +173,7 @@ describe('plainInputRule', () => {
       f(...params);
     });
 
-    expect(view.state.doc).toEqualPMNode(doc(p('ABCxyz')));
+    expect(view.state.doc).toEqualProsemirrorNode(doc(p('ABCxyz')));
   });
 
   it('should delete content when the value is an empty string', () => {
@@ -193,6 +193,6 @@ describe('plainInputRule', () => {
       f(...params);
     });
 
-    expect(view.state.doc).toEqualPMNode(doc(p('')));
+    expect(view.state.doc).toEqualProsemirrorNode(doc(p('')));
   });
 });
