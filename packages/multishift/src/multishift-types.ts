@@ -1,3 +1,6 @@
+// tslint:disable-next-line: no-reference
+/// <reference path="../globals.d.ts" />
+
 import {
   DetailedHTMLProps,
   Dispatch,

@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, { Fragment, ReactElement, useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { PortalContainer, PortalMap } from './portal-container';
@@ -58,7 +58,7 @@ export interface PortalProps extends RemirrorPortalsProps {
   /**
    * The plain component to render.
    */
-  Component: () => JSX.Element;
+  Component: () => ReactElement<any>;
 }
 
 /**

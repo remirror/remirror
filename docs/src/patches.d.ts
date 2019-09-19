@@ -72,17 +72,17 @@ declare module '@theme-ui/typography' {
 }
 
 declare module '*.mdx' {
-  const MDXComponent: (props) => JSX.Element;
+  const MDXComponent: (props: any) => JSX.Element;
   export default MDXComponent;
 }
 
 declare module '*.md' {
-  const MDXComponent: (props) => JSX.Element;
+  const MDXComponent: (props: any) => JSX.Element;
   export default MDXComponent;
 }
 
 declare module '@mdx-js/react' {
-  import { Component, ComponentType, StyleHTMLAttributes } from 'react';
+  import { Component, ComponentType, ReactNode, StyleHTMLAttributes } from 'react';
 
   export interface MDXProviderComponentsProp {
     /**
@@ -208,6 +208,7 @@ declare module '@mdx-js/react' {
 
 declare module 'compass-vertical-rhythm' {
   import * as CSS from 'csstype';
+  import { ReactNode } from 'react';
 
   function VerticalRhythm(options: VerticalRhythm.RhythmOptions): VerticalRhythm.RhythmType;
 
@@ -216,7 +217,7 @@ declare module 'compass-vertical-rhythm' {
       /**
        * @default '16px'
        */
-      baseFontSize?: CSS.FontSizeProperty;
+      baseFontSize?: CSS.FontSizeProperty<number | string>;
 
       /**
        * @default 1.5
@@ -231,7 +232,7 @@ declare module 'compass-vertical-rhythm' {
       /**
        * @default '1px'
        */
-      defaultRhythmBorderWidth?: CSS.BorderWidthProperty;
+      defaultRhythmBorderWidth?: CSS.BorderWidthProperty<number | string>;
 
       /**
        * @default 'solid'
@@ -255,11 +256,11 @@ declare module 'compass-vertical-rhythm' {
        * Set these values on the html tag in your css.
        */
       establishBaseline: RhythmStyleObject;
-      linesForFontSize(fontSize: CSS.FontSizeProperty): number;
+      linesForFontSize(fontSize: CSS.FontSizeProperty<number | string>): number;
       adjustFontSizeTo(
-        toSize: CSS.FontSizeProperty,
+        toSize: CSS.FontSizeProperty<number | string>,
         lines?: number | 'auto',
-        fromSize?: CSS.FontSizeProperty,
+        fromSize?: CSS.FontSizeProperty<number | string>,
       ): RhythmStyleObject;
     }
 

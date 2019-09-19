@@ -347,4 +347,4 @@ interface HandleTextInputParams extends FromToParams, TextParams {}
 
 interface UpdateReasonsParams extends EditorStateParams, ResolvedPosParams, Partial<CompareMatchParams> {}
 
-type OnViewUpdate = (view: EditorView, state: EditorState) => void;
+export type OnViewUpdate = (view: EditorView, state: EditorState) => void;

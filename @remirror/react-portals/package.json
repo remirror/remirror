@@ -7,7 +7,7 @@
   "repository": "https://github.com/ifiokjr/remirror/tree/canary/@remirror/react-portals",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
-  "module": "lib/dist/@remirror/react-portals.esm.js",
+  "module": "lib/dist/react-portals.esm.js",
   "files": [
     "lib",
     "src"
@@ -42,7 +42,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/@remirror/react-portals.cjs.js",
+  "cjs": "lib/dist/react-portals.cjs.js",
   "meta": {
     "sizeLimit": "15 KB"
   },

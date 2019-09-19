@@ -11,13 +11,24 @@ import {
 } from './alias-types';
 import { Attrs, MakeOptional, Position } from './base-types';
 
+/**
+ * A parameter builder interface containing the `view` property.
+ *
+ * @typeParam GSchema - the underlying editor schema.
+ */
 export interface EditorViewParams<GSchema extends EditorSchema = any> {
   /**
-   * An instance of the Prosemirror editor view.
+   * An instance of the Prosemirror editor `view`.
    */
   view: EditorView<GSchema>;
 }
 
+/**
+ * A parameter builder interface containing the `schema` property.
+ *
+ * @typeParam GNodes - the names of the nodes within the editor schema.
+ * @typeParam GMarks - the names of the marks within the editor schema.
+ */
 export interface SchemaParams<GNodes extends string = string, GMarks extends string = string> {
   /**
    * The Prosemirror schema being used for the current interface
@@ -25,6 +36,11 @@ export interface SchemaParams<GNodes extends string = string, GMarks extends str
   schema: EditorSchema<GNodes, GMarks>;
 }
 
+/**
+ * A parameter builder interface containing the `state` property.
+ *
+ * @typeParam GSchema - the underlying editor schema.
+ */
 export interface EditorStateParams<GSchema extends EditorSchema = any> {
   /**
    * A snapshot of the prosemirror editor state
@@ -32,17 +48,26 @@ export interface EditorStateParams<GSchema extends EditorSchema = any> {
   state: EditorState<GSchema>;
 }
 
+/**
+ * A parameter builder interface for comparing two instances of the editor state.
+ *
+ * @typeParam GSchema - the underlying editor schema.
+ */
 export interface CompareStateParams<GSchema extends EditorSchema = any> {
   /**
    * The previous snapshot of the prosemirror editor state.
    */
   oldState: EditorState<GSchema>;
+
   /**
    * The latest snapshot of the prosemirror editor state.
    */
   newState: EditorState<GSchema>;
 }
 
+/**
+ * A parameter builder interface for a html dom `element`.
+ */
 export interface ElementParams {
   /**
    * The target HTML element
@@ -50,11 +75,15 @@ export interface ElementParams {
   element: HTMLElement;
 }
 
+/**
+ * A parameter builder interface describing a `from`/`to` range.
+ */
 export interface FromToParams {
   /**
    * The starting point
    */
   from: number;
+
   /**
    * The ending point
    */
@@ -62,24 +91,16 @@ export interface FromToParams {
 }
 
 /**
- * FromToParams where from or to, or both can be set as optional
+ * A paramter builder type which uses {@link FromToParams} where `from` or `to`, or both
+ * can be set as optional.
+ *
+ * @typeParam GKey - the keys to set as optional (either `from` or `to`).
  */
 export type OptionalFromToParams<GKey extends keyof FromToParams> = MakeOptional<FromToParams, GKey>;
 
-export interface FixedCoordsParams {
-  /**
-   * Position or coordinates relative to the window.
-   *
-   * @remarks
-   * Typically this is the result of calling the following:
-   *
-   * ```ts
-   * view.coordsAtPos(pos);
-   * ```
-   */
-  coords: Position;
-}
-
+/**
+ * A parameter builder interface containing the `position` property.
+ */
 export interface PositionParams {
   /**
    * Defines a generic position with coordinates
@@ -87,6 +108,9 @@ export interface PositionParams {
   position: Position;
 }
 
+/**
+ * A paramter builder interface containing the `attrs` property.
+ */
 export interface AttrsParams {
   /**
    * An object describing the attrs for a prosemirror mark / node
@@ -94,28 +118,45 @@ export interface AttrsParams {
   attrs: Attrs;
 }
 
-export interface NodeTypeParams {
+/**
+ * A paramter builder interface containing the node `type` property.
+ *
+ * @typeParam GSchema - the underlying editor schema.
+ */
+export interface NodeTypeParams<GSchema extends EditorSchema = any> {
   /**
-   * The type of node in question
+   * A prosemirror node type instance.
    */
-  type: NodeType;
+  type: NodeType<GSchema>;
 }
 
 /**
- * Accepts a single node type or multiple node types.
+ * A paramter builder interface containing the `types` property which takes a
+ * single type or multiple types.
+ *
+ * @remarks
+ *
+ * This can be used to check whether a certain type matches any of these types.
+ *
+ * @typeParam GSchema - the underlying editor schema.
  */
 export interface NodeTypesParams<GSchema extends EditorSchema = any> {
   /**
-   * A type(s) of prosemirror node to use.
+   * The prosemirror node types to use.
    */
   types: NodeType<GSchema> | Array<NodeType<GSchema>>;
 }
 
-export interface MarkTypeParams {
+/**
+ * A paramter builder interface containing the mark `type` property.
+ *
+ * @typeParam GSchema - the underlying editor schema.
+ */
+export interface MarkTypeParams<GSchema extends EditorSchema = any> {
   /**
-   * The type of mark being used
+   * The prosemirror mark type instance.
    */
-  type: MarkType;
+  type: MarkType<GSchema>;
 }
 
 export interface ProsemirrorNodeParams<GSchema extends EditorSchema = any> {

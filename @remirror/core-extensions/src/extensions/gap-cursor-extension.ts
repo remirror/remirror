@@ -4,13 +4,14 @@ import { css } from '@remirror/react-utils';
 import { gapCursor, GapCursor } from 'prosemirror-gapcursor';
 
 /**
- * Create a gap cursor plugin. When enabled, this will capture clicks
- * near and arrow-key-motion past places that don't have a normally
- * selectable position nearby, and create a gap cursor selection for
- * them. The cursor is drawn as an element with class
- * `ProseMirror-gapcursor`.
+ * Create a gap cursor plugin.
  *
- * @builtin
+ * @remarks
+ *
+ * When enabled, this will capture clicks near and arrow-key-motion past places
+ * that don't have a normally selectable position nearby, and create a gap
+ * cursor selection for them. The cursor is drawn as an element with class
+ * `ProseMirror-gapcursor`.
  */
 export class GapCursorExtension extends Extension {
   get name() {
@@ -20,12 +21,12 @@ export class GapCursorExtension extends Extension {
   /**
    * Sets the styling for the gapCursor.
    *
-   * @remark
+   * @remarks
    *
    * To override set `exclude.styles` to true and pass you desired `extraStyles` into the editor.
    *
    * ```ts
-   * const extraStyles = css`...all my styles`;
+   * const extraStyles = css({ ...styles });
    * new GapCursorExtension({ exclude: {styled: true}, extraStyles });
    * ```
    *
@@ -73,7 +74,5 @@ export class GapCursorExtension extends Extension {
  * Predicate checking whether the selection is a GapCursor
  *
  * @param value - the value to check
- *
- * @public
  */
 export const isGapCursorSelection = isInstanceOf(GapCursor);

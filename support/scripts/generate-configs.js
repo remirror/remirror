@@ -1,7 +1,12 @@
-const { join, resolve, sep } = require('path');
-const { getPackages } = require('@lerna/project');
+const { join, sep } = require('path');
+const {
+  getAllDependencies,
+  formatFiles,
+  baseDir,
+  getRelativePathFromJson,
+  mangleScopedPackageName,
+} = require('./helpers');
 const writeJSON = require('write-json-file');
-const { execSync } = require('child_process');
 
 const configs = {
   sizeLimit: '.size-limit.json',
@@ -10,18 +15,7 @@ const configs = {
   storybook: 'support/storybook/modules.json',
 };
 
-const baseDir = (...paths) => resolve(__dirname, '../..', join(...paths));
-const formatFile = path => execSync(`prettier ${path} --write`, { stdio: 'inherit' });
-const getPathFromRoot = json => json.location.replace(`${json.rootPath}${sep}`, '');
-
-const getAllDependencies = async () => {
-  const packages = await getPackages();
-  return packages.map(pkg => ({
-    ...pkg.toJSON(),
-    location: pkg.location,
-    rootPath: pkg.rootPath,
-  }));
-};
+const filesToPrettify = [];
 
 const generateSizeLimitConfig = async () => {
   const packages = await getAllDependencies();
@@ -29,7 +23,7 @@ const generateSizeLimitConfig = async () => {
     .filter(pkg => pkg.meta && pkg.meta.sizeLimit)
     .map(json => ({
       name: json.name,
-      path: join(getPathFromRoot(json), json.module),
+      path: join(getRelativePathFromJson(json), json.module),
       limit: json.meta.sizeLimit,
       ignore: Object.keys(json.peerDependencies || {}),
       running: false,
@@ -37,7 +31,7 @@ const generateSizeLimitConfig = async () => {
   const path = baseDir(configs.sizeLimit);
 
   await writeJSON(path, sizeLimitArray);
-  formatFile(path);
+  filesToPrettify.push(path);
 };
 
 const generateRollupConfig = async () => {
@@ -45,7 +39,7 @@ const generateRollupConfig = async () => {
   const rollupPackagesArray = packages
     .filter(pkg => !pkg.private && pkg.module)
     .map(json => {
-      const path = getPathFromRoot(json);
+      const path = getRelativePathFromJson(json);
       return {
         path: join('../..', path, 'package.json'),
         root: path.split(sep)[0],
@@ -55,7 +49,7 @@ const generateRollupConfig = async () => {
   const path = baseDir(configs.rollup);
 
   await writeJSON(path, rollupPackagesArray);
-  formatFile(path);
+  filesToPrettify.push(path);
 };
 
 const generateTSConfig = async () => {
@@ -63,7 +57,7 @@ const generateTSConfig = async () => {
   const tsPaths = packages
     .filter(pkg => pkg.types)
     .reduce((acc, json) => {
-      const path = getPathFromRoot(json);
+      const path = getRelativePathFromJson(json);
       return {
         ...acc,
         [json.name]: [`${path}/src/index.ts`],
@@ -79,7 +73,7 @@ const generateTSConfig = async () => {
       paths: { ...tsPaths, '@test-fixtures/*': ['support/fixtures/*'] },
     },
   });
-  formatFile(path);
+  filesToPrettify.push(path);
 };
 
 const generateStorybookResolverConfig = async () => {
@@ -87,7 +81,7 @@ const generateStorybookResolverConfig = async () => {
   const resolverConfig = packages
     .filter(pkg => !pkg.private && pkg.module)
     .reduce((acc, json) => {
-      const path = getPathFromRoot(json);
+      const path = getRelativePathFromJson(json);
       const name = json.name.includes('@remirror') ? json.name : `${json.name}`;
       return {
         ...acc,
@@ -99,14 +93,92 @@ const generateStorybookResolverConfig = async () => {
   const path = baseDir(configs.storybook);
 
   await writeJSON(path, resolverConfig);
-  formatFile(path);
+  filesToPrettify.push(path);
+};
+
+const API_EXTRACTOR_FILENAME = 'api-extractor.json';
+const API_EXTRACTOR_CONFIG = {
+  $schema:
+    'https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json',
+  extends: join('../../support', API_EXTRACTOR_FILENAME),
+  mainEntryPointFilePath: '<projectFolder>/lib/index.d.ts',
+};
+
+const TSCONFIG_LINT_FILENAME = 'tsconfig.lint.json';
+const TSCONFIG_LINT = {
+  extends: './tsconfig.json',
+  compilerOptions: { baseUrl: 'src', paths: {} },
+};
+
+const TSCONFIG_PROD_FILENAME = 'tsconfig.prod.json';
+const TSCONFIG_PROD = {
+  extends: './tsconfig.json',
+  compilerOptions: { baseUrl: 'src', paths: {} },
+  exclude: [
+    '**/*.test.{ts,tsx}',
+    '**/*.stories.{ts,tsx}',
+    '**/*.spec.{ts,tsx}',
+    '**/__mocks__/**',
+    '**/__tests__/**',
+    '**/__stories__/**',
+  ],
+};
+
+const generateApiExtractorConfigs = async () => {
+  const packages = await getAllDependencies();
+
+  const paths = packages
+    .filter(pkg => !pkg.private && pkg.types && !(pkg.meta && pkg.meta.skipApi))
+    .map(json => ({
+      path: getRelativePathFromJson(json),
+      name: mangleScopedPackageName(json.name),
+    }));
+
+  const fn = async ({ path, name }) => {
+    const apiExtractorConfig = {
+      ...API_EXTRACTOR_CONFIG,
+      apiReport: {
+        enabled: true,
+        reportFolder: '../../support/api/',
+        reportFileName: `${name}.api.md`,
+      },
+    };
+    const apiExtractorPath = baseDir(path, API_EXTRACTOR_FILENAME);
+    const tsConfigProdPath = baseDir(path, TSCONFIG_PROD_FILENAME);
+
+    await writeJSON(apiExtractorPath, apiExtractorConfig);
+    await writeJSON(tsConfigProdPath, TSCONFIG_PROD);
+
+    filesToPrettify.push(apiExtractorPath, tsConfigProdPath);
+  };
+
+  await Promise.all(paths.map(fn));
+};
+
+const generateTsConfigLintConfig = async () => {
+  const packages = await getAllDependencies();
+  const paths = packages.map(json => getRelativePathFromJson(json));
+
+  const fn = async relativePath => {
+    const path = baseDir(relativePath, TSCONFIG_LINT_FILENAME);
+    await writeJSON(path, TSCONFIG_LINT);
+    filesToPrettify.push(path);
+  };
+
+  await Promise.all(paths.map(fn));
 };
 
 const run = async () => {
-  await generateSizeLimitConfig();
-  await generateRollupConfig();
-  await generateTSConfig();
-  await generateStorybookResolverConfig();
+  await Promise.all([
+    generateSizeLimitConfig(),
+    generateRollupConfig(),
+    generateTSConfig(),
+    generateStorybookResolverConfig(),
+    generateApiExtractorConfigs(),
+    generateTsConfigLintConfig(),
+  ]);
+
+  await formatFiles(filesToPrettify.join(' '));
 };
 
 run();

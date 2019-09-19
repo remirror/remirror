@@ -27,7 +27,7 @@
 
 <br />
 
-> Remirror is your toolkit for building world-class text-editors which run on the web, mobile and desktop.
+> Remirror is a toolkit for building accessibility focused editors which run on the web and desktop.
 
 <br />
 
@@ -39,16 +39,16 @@
 
 ### Features
 
-- Full support for **Server Side Rendering (SSR)** with **zero config**.
-- **Top quality** prebuilt editors for immediate use in your next application.
-- Almost 30 ready-made extensions for adding your own flavour and functionality to build your dream editor.
-- CSS-in-JS support (can be switched off).
+- A11y focused and ARIA compatible.
+- **3** prebuilt editors, [markdown](./@remirror/editor-markdown), [social](./@remirror/editor-social) and [wysiwyg](./@remirror/editor-wysiwyg).
+- Extensions available for adding your own flavour to your own custom editor editor.
+- Zero config support **Server Side Rendering (SSR)**.
 
 ### Prerequisites
 
-- Typescript `>= 3.5`
-- React `>= 16.8`
-- Yarn `>= 1.13`
+- Typescript `>= 3.6`
+- React `>= 16.9`
+- Yarn `>= 1.17`
 
 ### Testing
 
@@ -85,6 +85,9 @@ Please read [contributing.md](docs/pages/contributing.md) for details on our cod
 ### Versioning
 
 This project uses [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ifiokjr/remirror/tags).
+
+Currently all versions within the repo are locked and this will continue until version 1.0 is
+reached. At this point versions will be updated independently.
 
 ### License
 

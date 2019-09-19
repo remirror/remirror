@@ -6,7 +6,6 @@ import {
   EditorStateParams,
   EditorViewParams,
   ElementParams,
-  FixedCoordsParams,
   FromToParams,
   MarkTypeParams,
   NodeMatch,
@@ -21,6 +20,7 @@ import {
   SchemaParams,
   Selection,
   Transaction,
+  PositionParams,
 } from '@remirror/core-types';
 import minDocument from 'min-document';
 import {
@@ -479,7 +479,7 @@ export const getOffsetParent = ({ view, element }: GetOffsetParentParams): HTMLE
 export const getLineHeight = ({ element }: ElementParams) =>
   parseFloat(window.getComputedStyle(element, undefined).lineHeight || '');
 
-interface AbsoluteCoordinatesParams extends EditorViewParams, ElementParams, FixedCoordsParams {
+interface AbsoluteCoordinatesParams extends EditorViewParams, ElementParams, PositionParams {
   /**
    * The height offset of the parent
    */
@@ -666,9 +666,12 @@ export interface CreateDocumentNodeParams
 export interface StringHandlerParams {
   /**
    * A function which transforms a string into a prosemirror node.
-   * Can be used to transform markdown / html or any other string format.
    *
-   * For an example {@link fromHTML}
+   * @remarks
+   * Can be used to transform markdown / html or any other string format into a
+   * prosemirror node.
+   *
+   * See {@link fromHTML} for an example of how this could work.
    */
   stringHandler?(params: FromStringParams): ProsemirrorNode;
 }

@@ -3,6 +3,7 @@
   "compilerOptions": {
     "outDir": "lib",
     "types": ["node", "jest", "jest-extended"],
+    "declaration": false,
     "skipLibCheck": true
   },
   "include": ["src"]

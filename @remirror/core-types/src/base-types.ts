@@ -13,6 +13,8 @@ export type StringKey<GRecord> = Extract<Key<GRecord>, string>;
 /**
  * Extract the values of an object as a union type.
  *
+ * @remarks
+ *
  * ```ts
  * const myRecord = { A: 'a', B: 'b', C: 'c' } as const;
  *
@@ -28,6 +30,8 @@ export type Nullable<GType> = GType | null | undefined;
 
 /**
  * Extract the values of a tuple as a union type.
+ *
+ * @remarks
  *
  * ```ts
  * const myTuple = ['a', 'b', 'c'] as const;

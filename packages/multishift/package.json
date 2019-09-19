@@ -10,7 +10,8 @@
   "module": "lib/dist/multishift.esm.js",
   "files": [
     "lib",
-    "src"
+    "src",
+    "globals.d.ts"
   ],
   "scripts": {
     "build": "run-p build:*",

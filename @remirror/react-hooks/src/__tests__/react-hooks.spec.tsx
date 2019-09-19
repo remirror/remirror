@@ -1,8 +1,8 @@
 import { act, render } from '@testing-library/react';
 import { act as hookAct, renderHook } from '@testing-library/react-hooks';
-import { RefObject, useRef } from 'react';
+import React from 'react';
 import { fakeResizeObserverPolyfill, triggerChange } from '../../__mocks__/resize-observer-polyfill';
-import { useCombinedRefs, useMeasure, usePrevious, useSetState, useStateWithCallback } from '../react-hooks';
+import { useMeasure, usePrevious, useSetState, useStateWithCallback } from '../react-hooks';
 
 test('usePrevious', () => {
   const { result, rerender } = renderHook(({ initialValue }) => usePrevious(initialValue), {
@@ -41,28 +41,6 @@ test('useMeasure', () => {
 
   rerender(<div />);
   expect(fakeResizeObserverPolyfill.disconnect).toHaveBeenCalled();
-});
-
-test('useCombinedRefs', () => {
-  const ref1 = jest.fn();
-  let ref2!: RefObject<any>;
-
-  const Component = ({ extraRef }: { extraRef?: any }) => {
-    const combineRefs = useCombinedRefs();
-    ref2 = useRef();
-    return (
-      <div data-testid='test' {...combineRefs({ ref: ref1 }, { ref: ref2, style: {} }, { ref: extraRef })} />
-    );
-  };
-
-  const { getByTestId, rerender } = render(<Component />);
-  const el = getByTestId('test');
-  expect(ref2.current).toEqual(el);
-  expect(ref1).toHaveBeenCalledWith(el);
-
-  rerender(<Component />);
-  rerender(<Component />);
-  expect(ref1).toHaveBeenCalledTimes(1);
 });
 
 test('useStateWithCallback', () => {

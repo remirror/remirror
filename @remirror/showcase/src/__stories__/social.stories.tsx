@@ -1,4 +1,3 @@
-import { ProsemirrorDevTools } from '@remirror/dev';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 import { ExampleSocialEditor, SOCIAL_SHOWCASE_CONTENT } from '../social';

@@ -1,11 +1,12 @@
 import NanoEvents from 'nanoevents';
 import nano from 'nanoid';
+import { ReactElement } from 'react';
 
 export interface RenderParams {
   /**
    * Renders a JSX element.
    */
-  render: () => JSX.Element;
+  render: () => ReactElement<any>;
 }
 
 export interface MountedPortal extends RenderParams {

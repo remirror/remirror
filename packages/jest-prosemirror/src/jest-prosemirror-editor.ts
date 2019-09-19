@@ -23,10 +23,25 @@ import { DirectEditorProps, EditorView } from 'prosemirror-view';
 import { Keyboard } from 'test-keyboard';
 import { createEvents } from './jest-prosemirror-events';
 import { createState, pm, selectionFor, taggedDocHasSelection } from './jest-prosemirror-nodes';
-import { TestEditorView, TestEditorViewParams } from './jest-prosemirror-types';
+import { TaggedDocParams, TestEditorView, TestEditorViewParams } from './jest-prosemirror-types';
 
 /**
- * Apply the command to the taggedDoc
+ * The return type for the apply method which
+ * @remarks
+ *
+ * @typeParam GSchema - the editor schema used node.
+ */
+export interface ApplyReturn<GSchema extends EditorSchema = any>
+  extends TaggedDocParams<GSchema>,
+    EditorStateParams<GSchema> {
+  /**
+   * True when the command was applied successfully.
+   */
+  success: boolean;
+}
+
+/**
+ * Apply the command to the prosemirror node passed in.
  *
  * Returns a tuple matching the following structure
  * [
@@ -35,27 +50,32 @@ import { TestEditorView, TestEditorViewParams } from './jest-prosemirror-types';
  *   state => The new editor state after applying the command
  * ]
  *
- * @param taggedDoc
+ * @param taggedDoc - the tagged prosemirror node see {@link TaggedProsemirrorNode}
  * @param command
  * @param [result]
  */
 export const apply = <GSchema extends EditorSchema = any>(
   taggedDoc: TaggedProsemirrorNode<GSchema>,
-  command: CommandFunction,
+  command: CommandFunction<GSchema>,
   result?: TaggedProsemirrorNode<GSchema>,
-): [boolean, TaggedProsemirrorNode<GSchema>, EditorState<GSchema>] => {
+): ApplyReturn<GSchema> => {
   const { state, view } = createEditor(taggedDoc);
   let newState = state;
+  let success = true;
+  let doc = newState.doc as TaggedProsemirrorNode<GSchema>;
 
   command(state, tr => (newState = state.apply(tr)), view);
 
   if (!pm.eq(newState.doc, result || taggedDoc)) {
-    return [false, Cast<TaggedProsemirrorNode<GSchema>>(newState.doc), newState];
+    success = false;
   }
+
   if (result && taggedDocHasSelection(result)) {
-    return [pm.eq(newState.selection, selectionFor(result)), result || taggedDoc, newState];
+    success = pm.eq(newState.selection, selectionFor(result));
+    doc = result || taggedDoc;
   }
-  return [true, Cast<TaggedProsemirrorNode<GSchema>>(newState.doc), newState];
+
+  return { success, taggedDoc: doc, state: newState };
 };
 
 /**
@@ -106,7 +126,9 @@ export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
 }
 
 /**
- * Create a test prosemirror editor.
+ * Create a test prosemirror editor an pass back helper properties and methods.
+ *
+ * @remarks
  *
  * The call to create editor can be chained with various commands to enable
  * testing of the editor at each step along it's state without the need for
@@ -138,8 +160,8 @@ export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
  * ```
  *
  * @param taggedDoc - the tagged prosemirror node to inject into the editor.
- * @param options - the {@link CreateEditorOptions} interface which includes
- * all {@link http://prosemirror.net/docs/ref/#view.DirectEditorProps | DirectEditorProps}
+ * @param options - the {@link CreateEditorOptions} interface which includes all
+ * {@link http://prosemirror.net/docs/ref/#view.DirectEditorProps | DirectEditorProps}
  * except for `state`.
  */
 export const createEditor = <GSchema extends EditorSchema = any>(
@@ -205,6 +227,8 @@ export const createEditor = <GSchema extends EditorSchema = any>(
 
       /**
        * Run the command within the prosemirror editor.
+       *
+       * @remarks
        *
        * ```ts
        * test('commands are run', () => {

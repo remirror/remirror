@@ -1,7 +1,6 @@
-/// <reference types="jest-emotion" />
-
 import { css as emotionCss } from '@emotion/core';
 import { render } from '@testing-library/react';
+import React from 'react';
 import { baseTheme } from '../';
 import { RemirrorThemeProvider } from '../ui-provider';
 import { cssValueUnits, numberToPixels, sx } from '../ui-utils';

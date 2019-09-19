@@ -2,8 +2,6 @@
   "compilerOptions": {
     "baseUrl": "../",
     "paths": {
-      "@remirror/cli": ["@remirror/cli/src/index.ts"],
-      "@remirror/cli/lib/*": ["@remirror/cli/src/*"],
       "@remirror/core-constants": ["@remirror/core-constants/src/index.ts"],
       "@remirror/core-constants/lib/*": ["@remirror/core-constants/src/*"],
       "@remirror/core-extensions": ["@remirror/core-extensions/src/index.ts"],

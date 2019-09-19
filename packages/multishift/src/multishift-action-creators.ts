@@ -1,3 +1,6 @@
+// tslint:disable-next-line: no-reference
+/// <reference path="../globals.d.ts" />
+
 import { MultishiftActionTypes } from './multishift-constants';
 import {
   CreateMultishiftAction,

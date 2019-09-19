@@ -41,6 +41,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "meta": {
+    "skipApi": true
+  },
   "cjs": "lib/dist/remirror.cjs.js",
   "sideEffects": false
 }

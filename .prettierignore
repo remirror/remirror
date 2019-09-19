@@ -13,3 +13,4 @@ storybook-static
 lerna.json
 examples/with-razzle/build/**
 .vscode
+support/api

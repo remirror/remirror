@@ -1,7 +1,6 @@
 import { isFunction } from '@remirror/core-helpers';
 import {
   EffectCallback,
-  Ref,
   SetStateAction,
   useCallback,
   useEffect,
@@ -12,7 +11,7 @@ import {
 import ResizeObserver from 'resize-observer-polyfill';
 
 /**
- * Preserves the previous version of provided value.
+ * Preserves the previous version of a provided value.
  *
  * ```tsx
  * const [isOpen, setOpen] = useState<boolean>(false)
@@ -39,10 +38,11 @@ export interface DOMRectReadOnlyLike {
 }
 
 /**
- * ### `useMeasure`
+ * Provides the measurements for a react element at the point of layout.
  *
- * Provides the measurements for a react element at the point of layout. Taken
- * from https://codesandbox.io/embed/lp80n9z7v9
+ * @remarks
+ *
+ * Taken from https://codesandbox.io/embed/lp80n9z7v9
  *
  * ```tsx
  * const [bindRef, { height }] = useMeasure()
@@ -69,47 +69,6 @@ export const useMeasure = <GRef extends HTMLElement = any>() => {
 
 const defaultBounds = { x: 0, y: 0, width: 0, height: 0, top: 0, right: 0, bottom: 0, left: 0 };
 
-interface RefProps<GRef extends HTMLElement = any> {
-  ref?: Ref<GRef>;
-}
-
-/**
- * ### `useCombinedRefs`
- *
- * Combines the refs within the passed props into a single ref function.
- *
- * ```tsx
- * const combineRefs = useCombinedRefs<HTMLDivElement>();
- * return <div {...combineRefs(getMenuProps(), { ref }, otherProps)} />
- * ```
- *
- * @deprecated use `@seznam/compose-react-refs` instead
- */
-export const useCombinedRefs = <GRef extends HTMLElement = any>() => <GProp extends RefProps>(
-  ...propsWithRefs: GProp[]
-) => {
-  const targetRef = useCallback((instance: GRef | null) => {
-    propsWithRefs.forEach(props => {
-      const { ref } = props;
-      if (!ref) {
-        return;
-      }
-      if (isFunction(ref)) {
-        ref(instance);
-      } else {
-        (ref as any).current = instance;
-      }
-    });
-  }, []);
-  return propsWithRefs.reduce((acc, props) => {
-    return {
-      ...acc,
-      ...props,
-      ref: targetRef,
-    };
-  }, {});
-};
-
 export type DispatchWithCallback<GValue> = (value: GValue, callback?: () => void) => void;
 
 interface UseStateWithCallback {
@@ -121,10 +80,12 @@ interface UseStateWithCallback {
 }
 
 /**
- * ### `useStateWithCallback`
- *
  * Enables the use of state with an optional callback parameter in the setState
- * value. The callback is called once when the state next updates.
+ * value.
+ *
+ * @remarks
+ *
+ * The callback is called once when the state next updates.
  */
 export const useStateWithCallback: UseStateWithCallback = <GState>(
   initialState?: GState | (() => GState),
@@ -154,12 +115,12 @@ export const useStateWithCallback: UseStateWithCallback = <GState>(
 export type PartialSetStateAction<GState> = Partial<GState> | ((prevState: GState) => Partial<GState>);
 
 /**
- * ### `useSetState`
- *
  * A replication of the setState from class Components.
  *
- * It accepts partial updates to the state object and a callback which runs when
- * the state has updated.
+ * @remarks
+ *
+ * It also åaccepts partial updates to the state object and a callback which
+ * runs when the state has updated.
  *
  * It also returns a 3rd argument which resets the state to the original
  * initialState.
@@ -209,12 +170,11 @@ export const useSetState = <GState extends object>(
 };
 
 /**
- * ### `useEffectOnUpdate`
+ * React effect hook that ignores the first invocation (e.g. on mount).
  *
- * React effect hook that ignores the first invocation (e.g. on mount). The
- * signature is exactly the same as the useEffect hook.
+ * @remarks
  *
- * #### Usage
+ * The signature is exactly the same as the useEffect hook.
  *
  * ```tsx
  * import React from 'react'
@@ -258,11 +218,9 @@ export const useEffectOnUpdate: typeof useEffect = (effect, deps) => {
 };
 
 /**
- * ### `useEffectOnce`
- *
  * React lifecycle hook that runs an effect only once.
  *
- * #### Usage
+ * @remarks
  *
  * ```ts
  * import {useEffectOnce} from 'react-use';
@@ -285,12 +243,11 @@ export const useEffectOnce = (effect: EffectCallback) => {
 };
 
 /**
- * ### `useUnmount`
- *
  * React lifecycle hook that calls a function when the component will unmount.
- * Use `useEffectOnce` if you need both a mount and unmount function.
  *
- * #### Usage
+ * @remaarks
+ *
+ * Try `useEffectOnce` if you need both a mount and unmount function.
  *
  * ```jsx
  * import {useUnmount} from 'react-use';
@@ -306,9 +263,9 @@ export const useUnmount = (fn: () => void | undefined) => {
 };
 
 /**
- * ### `useTimeouts`
- *
  * A hook for managing multiple timeouts.
+ *
+ * @remarks
  *
  * All timeouts are automatically cleared when unmounting.
  */

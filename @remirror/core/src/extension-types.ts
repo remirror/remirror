@@ -217,6 +217,8 @@ export type TypeOfExtensionClass<
 /**
  * This is a utility type which allows for retrieving the instance types from an array of Extensions.
  *
+ * @remarks
+ *
  * ```ts
  * const list = [ParagraphExtension, DocExtension, TextExtension, LinkExtension];
  * type ListInstances = TypeOfExtensionClassList<typeof list>;

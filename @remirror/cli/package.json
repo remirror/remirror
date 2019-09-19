@@ -27,7 +27,6 @@
     "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
-  "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.0",
     "@remirror/core-helpers": "0.4.2-canary.2",

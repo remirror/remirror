@@ -1,9 +1,9 @@
 declare module 'storejs' {
   export = storejs;
 
-  declare function storejs(key: any, data: any, ...args: any[]): any;
+  function storejs(key: any, data: any, ...args: any[]): any;
 
-  declare namespace storejs {
+  namespace storejs {
     function clear(): any;
     function forEach(callback: any): any;
     function get(key: any, ...args: any[]): any;

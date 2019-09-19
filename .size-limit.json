@@ -120,7 +120,7 @@
   },
   {
     "name": "@remirror/react-portals",
-    "path": "@remirror/react-portals/lib/dist/@remirror/react-portals.esm.js",
+    "path": "@remirror/react-portals/lib/dist/react-portals.esm.js",
     "limit": "15 KB",
     "ignore": ["@types/react", "@types/react-dom", "react", "react-dom"],
     "running": false
@@ -149,7 +149,7 @@
   {
     "name": "@remirror/react",
     "path": "@remirror/react/lib/dist/react.esm.js",
-    "limit": "120 KB",
+    "limit": "115 KB",
     "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
     "running": false
   },
