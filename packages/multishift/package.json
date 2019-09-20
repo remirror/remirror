@@ -9,9 +9,9 @@
   "main": "lib/index.js",
   "module": "lib/dist/multishift.esm.js",
   "files": [
+    "globals.d.ts",
     "lib",
-    "src",
-    "globals.d.ts"
+    "src"
   ],
   "scripts": {
     "build": "run-p build:*",
