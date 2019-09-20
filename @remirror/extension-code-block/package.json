@@ -42,7 +42,7 @@
     "prosemirror-keymap": "^1.0.1",
     "prosemirror-state": "^1.2.4",
     "prosemirror-transform": "^1.1.4",
-    "prosemirror-view": "^1.11.2",
+    "prosemirror-view": "^1.11.3",
     "react-syntax-highlighter": "^11.0.2",
     "refractor": "^2.10.0"
   },

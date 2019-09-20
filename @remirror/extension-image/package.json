@@ -40,7 +40,7 @@
     "prosemirror-keymap": "^1.0.1",
     "prosemirror-model": "^1.7.2",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.11.2"
+    "prosemirror-view": "^1.11.3"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

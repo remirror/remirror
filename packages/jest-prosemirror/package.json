@@ -45,7 +45,7 @@
     "prosemirror-state": "^1.2.4",
     "prosemirror-tables": "^0.9.5",
     "prosemirror-test-builder": "^1.0.1",
-    "prosemirror-view": "^1.11.2",
+    "prosemirror-view": "^1.11.3",
     "test-keyboard": "0.4.2-canary.2"
   },
   "peerDependencies": {

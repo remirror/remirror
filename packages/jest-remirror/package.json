@@ -34,7 +34,7 @@
     "mutationobserver-shim": "0.3.3",
     "prosemirror-model": "^1.7.2",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.11.2"
+    "prosemirror-view": "^1.11.3"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
