@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cursorHelpers.isDragging() (type) should match snapshot 1`] = `"boolean"`;

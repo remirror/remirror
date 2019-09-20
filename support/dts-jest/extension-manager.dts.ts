@@ -19,7 +19,7 @@ class ErrExtension extends Extension {
     return 'base' as 'base';
   }
 
-  // $ExpectError
+  // @dts-jest:fail:snap
   public commands() {
     return {
       nothing: (param: string) => () => 'true',
@@ -29,16 +29,33 @@ class ErrExtension extends Extension {
 
 type HistoryExtensionActions = ActionsFromExtensions<HistoryExtension>;
 const historyActions: HistoryExtensionActions = {} as any;
-historyActions.redo(); // $ExpectType void
-historyActions.undo(); // $ExpectType void
-historyActions.undo({}); // $ExpectError
+
+// @dts-jest:pass:snap
+historyActions.redo();
+// @dts-jest:pass:snap
+historyActions.undo();
+// @dts-jest:fail:snap
+historyActions.undo({});
 
 type PositionTrackerExtensionHelpers = HelpersFromExtensions<PositionTrackerExtension>;
 const trackerHelpers: PositionTrackerExtensionHelpers = {} as any;
-trackerHelpers.addPositionTracker({ id: 'yo' }); // $ExpectType Transaction<any> | undefined
-trackerHelpers.clearPositionTrackers(); // $ExpectType Transaction<any> | undefined
 
-// $ExpectType ExtensionManager<DocExtension | HistoryExtension | PositionTrackerExtension | CodeBlockExtension | ParagraphExtension | TextExtension | BoldExtension>
+// @dts-jest:pass:snap
+trackerHelpers.addPositionTracker({ id: 'yo' });
+// @dts-jest:pass:snap
+trackerHelpers.clearPositionTrackers();
+
+// @dts-jest:pass:snap
+ExtensionManager.create([
+  new HistoryExtension(),
+  new ParagraphExtension(),
+  new BoldExtension(),
+  new CodeBlockExtension(),
+  new PositionTrackerExtension(),
+  { priority: 1, extension: new TextExtension() },
+  { priority: 0, extension: new DocExtension() },
+]);
+
 const manager1 = ExtensionManager.create([
   new HistoryExtension(),
   new ParagraphExtension(),
@@ -49,8 +66,17 @@ const manager1 = ExtensionManager.create([
   { priority: 0, extension: new DocExtension() },
 ]);
 
-manager1.nodes.awesome; // $ExpectError
-manager1.nodes.paragraph; // $ExpectType NodeExtensionSpec
+// @dts-jest:fail:snap
+manager1.nodes.awesome;
+// @dts-jest:pass:snap
+manager1.nodes.paragraph;
 
+// @dts-jest:pass:snap
+manager1.data.actions;
+// @dts-jest:pass:snap
+manager1.data.helpers;
+
+// @dts-jest:pass:snap
 manager1.data.actions.addPositionTracker({ id: 'yo' });
-manager1.data.helpers.findPositionTracker('yo'); // $ExpectType number | undefined
+// @dts-jest:pass:snap
+manager1.data.helpers.findPositionTracker('yo');

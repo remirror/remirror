@@ -15,8 +15,6 @@ jobs:
             displayName: 'Check all lint rules'
           - bash: yarn typecheck
             displayName: 'Typecheck code and tests'
-          - bash: yarn dtslint
-            displayName: 'Run dtslint'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
       - job: ${{ parameters.name }}UnitTests

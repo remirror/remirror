@@ -21,14 +21,7 @@
     "strict": true,
     "alwaysStrict": true,
     "resolveJsonModule": true,
-    "plugins": [
-      {
-        "name": "typescript-styled-plugin"
-      },
-      {
-        "name": "typescript-tslint-plugin"
-      }
-    ],
+    "plugins": [{ "name": "typescript-styled-plugin" }],
     "preserveWatchOutput": true
   }
 }

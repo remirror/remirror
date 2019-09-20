@@ -1,6 +1,0 @@
-{
-  "extends": ["../tslint.json", "dtslint/dtslint-expect-only.json"],
-  "rules": {
-    "no-unused-expression": false
-  }
-}
