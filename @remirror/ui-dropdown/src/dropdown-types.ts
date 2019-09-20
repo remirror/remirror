@@ -68,7 +68,8 @@ export interface DropdownProps {
 
   /**
    * Whether to show the selected item label within the button.
-   *   * @default true
+   *
+   * @defaultValue `true`
    */
   showSelectedAsLabel?: boolean;
 
@@ -90,7 +91,7 @@ export interface DropdownProps {
   /**
    * Sets whether the position that the drop down will render in.
    *
-   * @default 'below left'
+   * @defaultValue 'below left'
    */
   dropdownPosition?: DropdownPosition;
 
@@ -103,7 +104,7 @@ export interface DropdownProps {
   /**
    * The spacing to give the dropdown menu.
    *
-   * @default 20
+   * @defaultValue 20
    */
   autoPositionYSpace?: number;
 
@@ -116,7 +117,7 @@ export interface DropdownProps {
   /**
    * The X-axis spacing to give the dropdown menu.
    *
-   * @default 5
+   * @defaultValue 5
    */
   autoPositionXSpace?: number;
 

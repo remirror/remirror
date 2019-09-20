@@ -16,7 +16,7 @@ declare module 'jest-dev-server' {
 
     /**
      * Log server output, useful if server is crashing at start.
-     * @default false
+     * @defaultValue `false`
      * ```js
      * module.exports = {
      *   command: 'npm run start',
@@ -28,7 +28,7 @@ declare module 'jest-dev-server' {
 
     /**
      * How many milliseconds to wait for the spawned server to be available before giving up. Defaults to wait-port's default.
-     * @default 5000
+     * @defaultValue 5000
      * ```js
      * module.exports = {
      *   command: 'npm run start',
@@ -40,7 +40,7 @@ declare module 'jest-dev-server' {
 
     /**
      * Host to wait for activity on before considering the server running. Must be used in conjunction with port.
-     * @default 'localhost'
+     * @defaultValue 'localhost'
      *
      * ```js
      * module.exports = {
@@ -54,7 +54,7 @@ declare module 'jest-dev-server' {
 
     /**
      * To wait for an HTTP or TCP endpoint before considering the server running, include http or tcp as a protocol. Must be used in conjunction with port.
-     * @default 'tcp'
+     * @defaultValue 'tcp'
      * ```js
      * module.exports = {
      *   command: 'npm run start --port 3000',
@@ -67,7 +67,7 @@ declare module 'jest-dev-server' {
 
     /**
      * Port to wait for activity on before considering the server running. If not provided, the server is assumed to immediately be running.
-     * @default null
+     * @defaultValue null
      *
      * ```js
      * module.exports = {
@@ -80,7 +80,7 @@ declare module 'jest-dev-server' {
 
     /**
      * It defines the action to take if port is already used:
-     * @default 'ask'
+     * @defaultValue 'ask'
      *
      * - ask: a prompt is shown to decide if you want to kill the process or not
      * - error: an errow is thrown
@@ -98,7 +98,7 @@ declare module 'jest-dev-server' {
 
     /**
      * jest-dev-server uses the wait-on npm package to wait for resources to become available before calling callback.
-     * @default {}
+     * @defaultValue `{}`
      *
      * ```js
      * module.exports = {

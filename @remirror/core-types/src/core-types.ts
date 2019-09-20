@@ -218,10 +218,9 @@ export interface ExtensionManagerParams<GSchema extends EditorSchema = EditorSch
 /**
  * Parameters passed into many of the extension methods with a view added.
  *
- * @remarks
- *
- * {@inheritDoc EditorViewParams}
- * {@inheritDoc ExtensionManagerParams}
+ * Inherits from
+ * - {@link EditorViewParams}
+ * - {@link ExtensionManagerParams}
  *
  * @typeParam GSchema - the underlying editor schema.
  */
@@ -461,7 +460,7 @@ export interface BaseExtensionOptions {
    *   attribute with name `custom` and default value `false`. When parsing the
    *   dom it will look for the attribute `data-custom`
    *
-   * @default []
+   * @defaultValue `[]`
    */
   extraAttrs?: ExtraAttrs[];
 
@@ -476,63 +475,63 @@ export interface ExcludeOptions {
   /**
    * Whether to exclude the extension's styles.
    *
-   * @default false
+   * @defaultValue `false`
    */
   styles?: boolean;
 
   /**
    * Whether to exclude the extension's pasteRules
    *
-   * @default false
+   * @defaultValue `false`
    */
   pasteRules?: boolean;
 
   /**
    * Whether to exclude the extension's inputRules
    *
-   * @default false
+   * @defaultValue `false`
    */
   inputRules?: boolean;
 
   /**
    * Whether to exclude the extension's keymaps
    *
-   * @default false
+   * @defaultValue `false`
    */
   keymaps?: boolean;
 
   /**
    * Whether to exclude the extension's plugin
    *
-   * @default false
+   * @defaultValue `false`
    */
   plugin?: boolean;
 
   /**
    * Whether to exclude the extension's nodeView
    *
-   * @default false
+   * @defaultValue `false`
    */
   nodeView?: boolean;
 
   /**
    * Whether to use the attributes provided by this extension
    *
-   * @default false
+   * @defaultValue `false`
    */
   attributes?: boolean;
 
   /**
    * Whether to use the SSR component when not in a DOM environment
    *
-   * @default false
+   * @defaultValue `false`
    */
   ssr?: boolean;
 
   /**
    * Whether to include the suggestions plugin configuration for the extension.
    *
-   * @default false
+   * @defaultValue `false`
    */
   suggesters?: boolean;
 }

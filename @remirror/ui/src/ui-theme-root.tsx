@@ -6,7 +6,7 @@ export interface RemirrorThemeRootProps {
   /**
    * Whether or not the styles applied should be applied globally.
    *
-   * @default false
+   * @defaultValue `false`
    */
   makeGlobal?: boolean;
 }

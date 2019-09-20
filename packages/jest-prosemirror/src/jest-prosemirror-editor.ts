@@ -1,8 +1,6 @@
 import {
-  Cast,
   CommandFunction,
   EditorSchema,
-  EditorState,
   EditorStateParams,
   findElementAtPosition,
   InputRule,
@@ -37,7 +35,7 @@ export interface ApplyReturn<GSchema extends EditorSchema = any>
   /**
    * True when the command was applied successfully.
    */
-  success: boolean;
+  pass: boolean;
 }
 
 /**
@@ -61,21 +59,21 @@ export const apply = <GSchema extends EditorSchema = any>(
 ): ApplyReturn<GSchema> => {
   const { state, view } = createEditor(taggedDoc);
   let newState = state;
-  let success = true;
+  let pass = true;
   let doc = newState.doc as TaggedProsemirrorNode<GSchema>;
 
   command(state, tr => (newState = state.apply(tr)), view);
 
   if (!pm.eq(newState.doc, result || taggedDoc)) {
-    success = false;
+    pass = false;
   }
 
   if (result && taggedDocHasSelection(result)) {
-    success = pm.eq(newState.selection, selectionFor(result));
+    pass = pm.eq(newState.selection, selectionFor(result));
     doc = result || taggedDoc;
   }
 
-  return { success, taggedDoc: doc, state: newState };
+  return { pass, taggedDoc: doc, state: newState };
 };
 
 /**
@@ -107,20 +105,20 @@ export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
    * Whether to auto remove the editor from the dom after each test.
    * It is advisable to leave this unchanged.
    *
-   * @default true
+   * @defaultValue true
    */
   autoClean?: boolean;
   /**
    * The plugins that the test editor should use.
    *
-   * @default []
+   * @defaultValue `[]`
    */
   plugins?: Plugin[];
 
   /**
    * The input rules that the test editor should use.
    *
-   * @default []
+   * @defaultValue `[]`
    */
   rules?: InputRule[];
 }

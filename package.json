@@ -37,7 +37,7 @@
     "fix:lint:js": "yarn lint:js --fix",
     "fix:lint:ts": "lerna run lint --stream --no-bail -- --fix",
     "fix:pkgjson": "node support/scripts/package-json-prettier.js",
-    "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md,mdx}\"",
+    "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md,mdx}\" --ignore-path=\"docs/api/**\"",
     "fix:support": "yarn lint:support --fix",
     "frozen": "yarn --frozen-lockfile install",
     "generate:json": "node support/scripts/generate-configs.js",
@@ -55,7 +55,7 @@
     "lint:babel": "eslint **/.babelrc.js",
     "lint:e2e": "tslint --project e2e/tsconfig.json --config e2e/tslint.json",
     "lint:js": "eslint support '*.js' @remirror docs e2e examples",
-    "lint:prettier": "prettier --check \"**/*.{json,yml,yaml,md,mdx}\"",
+    "lint:prettier": "prettier --check \"**/*.{json,yml,yaml,md,mdx}\" --ignore-path=\"docs/api/**/*.md\"",
     "lint:support": "tslint --project support/tsconfig.json --config support/tslint.json",
     "lint:ts": "lerna run lint --no-bail",
     "publish:canary": "yarn if-clean run-s checks:publish lerna:publish:canary",
@@ -206,11 +206,11 @@
   },
   "husky": {
     "hooks": {
-      "post-checkout": "echo $HUSKY_GIT_STDIN | support/hooks/post-checkout-lfs $HUSKY_GIT_PARAMS",
-      "post-commit": "echo $HUSKY_GIT_STDIN | support/hooks/post-commit-lfs $HUSKY_GIT_PARAMS",
-      "post-merge": "echo $HUSKY_GIT_STDIN | support/hooks/post-merge-lfs $HUSKY_GIT_PARAMS",
+      "post-checkout": "echo $HUSKY_GIT_STDIN | support/git-hooks/post-checkout-lfs $HUSKY_GIT_PARAMS",
+      "post-commit": "echo $HUSKY_GIT_STDIN | support/git-hooks/post-commit-lfs $HUSKY_GIT_PARAMS",
+      "post-merge": "echo $HUSKY_GIT_STDIN | support/git-hooks/post-merge-lfs $HUSKY_GIT_PARAMS",
       "pre-commit": "yarn if-config hooks.preCommit lint-staged",
-      "pre-push": "echo $HUSKY_GIT_STDIN | support/hooks/pre-push-lfs $HUSKY_GIT_PARAMS && yarn if-config hooks.prePush yarn audit && yarn checks"
+      "pre-push": "echo $HUSKY_GIT_STDIN | support/git-hooks/pre-push-lfs $HUSKY_GIT_PARAMS && yarn if-config hooks.prePush yarn audit && yarn checks"
     }
   },
   "jest": {

@@ -30,7 +30,7 @@ export interface EpicModeExtensionOptions extends BaseExtensionOptions {
 
   /**
    * Whether the editor should shake
-   * @defaultValue true
+   * @defaultValue `true`
    */
   shake?: boolean;
 

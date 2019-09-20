@@ -12,6 +12,7 @@ import {
   ObjectNode,
   PlainObject,
   PluginKey,
+  PositionParams,
   ProsemirrorNode,
   RegexTuple,
   RemirrorContentType,
@@ -20,7 +21,6 @@ import {
   SchemaParams,
   Selection,
   Transaction,
-  PositionParams,
 } from '@remirror/core-types';
 import minDocument from 'min-document';
 import {
@@ -159,6 +159,7 @@ export const isMarkActive = ({ state, type, from, to }: IsMarkActiveParams) => {
  * Check if the specified type (NodeType) can be inserted at the current selection point.
  *
  * @remarks
+ *
  * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
  * @param state - the editor state
@@ -245,6 +246,7 @@ export const getMarkAttrs = (state: EditorState, type: MarkType) => {
  * Retrieve the start and end position of a mark
  *
  * @remarks
+ *
  * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
  * @param pmPosition - the resolved prosemirror position
@@ -300,6 +302,7 @@ export const getTextContentFromSlice = (slice: Slice) => {
  * Takes an empty selection and expands it out to the nearest group not matching the excluded characters.
  *
  * @remarks
+ *
  * Can be used to find the nearest selected word. See {@link getSelectedWord}
  *
  * @param state - the editor state
@@ -338,6 +341,7 @@ export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToPar
  * Retrieves the nearest space separated word from the current selection.
  *
  * @remarks
+ *
  * This always expands outward so that given:
  * `The tw<start>o words<end>`
  * The selection would become
@@ -490,30 +494,34 @@ interface AbsoluteCoordinatesParams extends EditorViewParams, ElementParams, Pos
  * Retrieve the absolute coordinates
  *
  * @remarks
+ *
  * We need to translate the co-ordinates because `coordsAtPos` returns co-ordinates
  * relative to `window`. And, also need to adjust the cursor container height.
  * (0, 0)
+ *
+ * ```
  * +--------------------- [window] ---------------------+
  * |   (left, top) +-------- [Offset Parent] --------+  |
  * | {coordsAtPos} | [Cursor]   <- cursorHeight      |  |
  * |               | [FloatingToolbar]               |  |
+ * ```
  *
- * @param params - the absolute coordinate parameters
+ * @param params - see {@link AbsoluteCoordinatesParams}.
  */
 export const absoluteCoordinates = ({
   view,
   element,
-  coords,
+  position,
   cursorHeight = getLineHeight({ element }),
 }: AbsoluteCoordinatesParams) => {
   const offsetParent = getOffsetParent({ view, element });
   const box = offsetParent.getBoundingClientRect();
 
   return {
-    left: coords.left - box.left,
-    right: coords.right - box.left,
-    top: coords.top - (box.top - cursorHeight) + offsetParent.scrollTop,
-    bottom: box.height - (coords.top - (box.top - cursorHeight) - offsetParent.scrollTop),
+    left: position.left - box.left,
+    right: position.right - box.left,
+    top: position.top - (box.top - cursorHeight) + offsetParent.scrollTop,
+    bottom: box.height - (position.top - (box.top - cursorHeight) - offsetParent.scrollTop),
   };
 };
 

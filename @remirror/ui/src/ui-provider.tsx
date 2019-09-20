@@ -20,7 +20,7 @@ export interface RemirrorThemeProviderProps {
    * much easier to configure your own styles without the burden of overriding
    * existing styles.
    *
-   * @default false
+   * @defaultValue `false`
    */
   withoutEmotion?: boolean;
   /**
@@ -42,7 +42,7 @@ export interface RemirrorThemeProviderProps {
    *   - With SSR this will always lead to a flash of unstyled content since the color mode can only be retrieved once the DOM loads
    * - store the mode in a cookie session and render the app with this color mode set from the server session.
    *
-   * @default `baseTheme.initialColorMode`
+   * @defaultValue `baseTheme.initialColorMode`
    */
   initialColorMode?: string;
   /**
@@ -64,7 +64,7 @@ export interface RemirrorThemeProviderProps {
    * - base - disable root providers merging with the base theme
    * - emotion - disable merging with any outer emotion themes
    *
-   * @default []
+   * @defaultValue `[]`
    */
   disableMerge?: DisableMerge[];
 }

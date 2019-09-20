@@ -34,7 +34,7 @@ interface IsNameUniqueParams {
   /**
    * Whether to throw when not unique
    *
-   * @defaultValue false
+   * @defaultValue `false`
    */
   shouldThrow?: boolean;
 

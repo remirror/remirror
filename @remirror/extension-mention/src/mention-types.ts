@@ -11,7 +11,7 @@ export interface OptionalMentionExtensionParams {
   /**
    * The text to append to the replacement.
    *
-   * @default '''
+   * @defaultValue '''
    */
   appendText?: string;
 
@@ -21,7 +21,7 @@ export interface OptionalMentionExtensionParams {
    * To force replacement of the whole match regardless of where in the match the cursor is placed set this to
    * `full`.
    *
-   * @default 'full'
+   * @defaultValue 'full'
    */
   replacementType?: SuggestionReplacementType;
 }
@@ -65,7 +65,7 @@ export interface SuggestionMatcher {
   /**
    * Whether to only match from the start of the line
    *
-   * @defaultValue false
+   * @defaultValue `false`
    */
   startOfLine: boolean;
 

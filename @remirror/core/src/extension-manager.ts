@@ -231,7 +231,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    *
    * @param view - the editor view
    */
-  public initView(view: EditorView) {
+  public initView(view: EditorView<SchemaFromExtensions<GExtension>>) {
     this.initData.view = view;
     this.initData.actions = this.actions({
       ...this.params,
@@ -250,8 +250,12 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   }
 
   /**
-   * All the dynamically generated attributes provided by each extension. High
-   * priority extensions have preference over the lower priority extensions.
+   * All the dynamically generated attributes provided by each extension.
+   *
+   * @remarks
+   *
+   * High priority extensions have preference over the lower priority
+   * extensions.
    */
   get attributes() {
     let combinedAttributes: AttrsWithClass = {};
@@ -354,7 +358,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   /**
    * A shorthand way of retrieving view.
    */
-  get view() {
+  get view(): EditorView<SchemaFromExtensions<GExtension>> {
     return this.initData.view;
   }
 
@@ -363,7 +367,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   /**
    * Utility getter for accessing the schema params
    */
-  private get params(): ExtensionManagerParams {
+  private get params(): ExtensionManagerParams<SchemaFromExtensions<GExtension>> {
     return {
       tags: this.tags,
       schema: this.schema,

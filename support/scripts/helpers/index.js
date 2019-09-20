@@ -3,8 +3,12 @@ const { getPackages } = require('@lerna/project');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
-const formatFiles = async (path = '') => {
+const formatFiles = async (path = '', silent = false) => {
   const { stderr, stdout } = await exec(`prettier ${path} --write`);
+
+  if (silent) {
+    return;
+  }
 
   if (stderr) {
     console.error(stderr.trim());

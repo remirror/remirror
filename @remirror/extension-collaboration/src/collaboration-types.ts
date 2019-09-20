@@ -28,7 +28,7 @@ export interface CollaborationExtensionOptions extends BaseExtensionOptions {
   /**
    * The document version.
    *
-   * @default 0
+   * @defaultValue 0
    */
   version?: number;
 
@@ -40,7 +40,7 @@ export interface CollaborationExtensionOptions extends BaseExtensionOptions {
   /**
    * The debounce time in milliseconds
    *
-   * @default 250
+   * @defaultValue 250
    */
   debounce?: number;
 

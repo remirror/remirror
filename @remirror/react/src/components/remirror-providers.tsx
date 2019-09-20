@@ -36,7 +36,7 @@ export interface RemirrorContextProviderProps<GExtension extends AnyExtension = 
    * If this is set to an empty object then the outer element must be able to receive a default ref prop which will mount
    * the editor to it. If left undefined then the children components are responsible for calling `getRootProps`.
    *
-   * @default undefined
+   * @defaultValue undefined
    */
   childAsRoot?: GetRootPropsConfig<string> | boolean;
 }

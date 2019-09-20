@@ -17,7 +17,6 @@
     "pretty": true,
     "forceConsistentCasingInFileNames": true,
     "allowUnreachableCode": false,
-    // "skipLibCheck": true,
     "experimentalDecorators": true,
     "strict": true,
     "alwaysStrict": true,

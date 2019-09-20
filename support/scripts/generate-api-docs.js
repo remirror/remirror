@@ -4,8 +4,9 @@ const {
   getAllDependencies,
   getRelativePathFromJson,
   exec,
-  formatFiles,
+  // formatFiles,
 } = require('./helpers');
+// const { sep } = require('path');
 const argv = require('yargs').argv;
 
 const generateDocs = async (inputFolder = '', packageName = '') => {
@@ -59,8 +60,10 @@ const runApiDocumenter = async () => {
   }));
 
   await Promise.all(paths.map(path => generateDocs(path.input, path.name)));
-  await formatFiles(baseDir('docs/api', '**/*.md'));
-  // await formatFiles(paths.map(path => baseDir('docs/api', path.name)).join(' '));
+  // await formatFiles(baseDir('docs/api', '**/*.md'));
+  // await Promise.all(
+  //   paths.map(path => formatFiles(`${baseDir('docs/api', path.name)}${sep}/*.md`)),
+  // );
 };
 
 const run = async () => {

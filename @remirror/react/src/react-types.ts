@@ -221,7 +221,7 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
    *
    * This is the value used for an empty editor or when `resetContent` is called.
    *
-   * @default EMPTY_PARAGRAPH_NODE
+   * @defaultValue EMPTY_PARAGRAPH_NODE
    */
   fallbackContent: ObjectNode | ProsemirrorNode;
 }
@@ -549,7 +549,7 @@ export interface BaseExtensionProps {
    *
    * Base extensions are loaded with a priority of 1.
    *
-   * @default 2
+   * @defaultValue 2
    */
   priority?: number;
   children?: never;
@@ -566,7 +566,7 @@ export interface UpdateStateParams<GSchema extends EditorSchema = any>
   /**
    * Whether or not to trigger this as a change and call any handlers.
    *
-   * @default true
+   * @defaultValue true
    */
   triggerOnChange?: boolean;
 }

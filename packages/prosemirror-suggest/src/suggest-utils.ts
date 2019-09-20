@@ -19,7 +19,6 @@ import {
   SuggesterParams,
   SuggestKeyBindingMap,
   SuggestKeyBindingParams,
-  SuggestMatcher,
   SuggestReasonMap,
   SuggestStateMatch,
   SuggestStateMatchParams,
@@ -93,7 +92,6 @@ const findMatch = ({ $pos, suggester }: FindMatchParams): SuggestStateMatch | un
     $pos,
     char,
     name,
-    supportedCharacters: new RegExp(regexToString(supportedCharacters), 'g'),
   });
 };
 
@@ -108,7 +106,7 @@ const isPrefixValid = (
   {
     invalidPrefixCharacters,
     validPrefixCharacters,
-  }: Pick<SuggestMatcher, 'invalidPrefixCharacters' | 'validPrefixCharacters'>,
+  }: Pick<Required<Suggester>, 'invalidPrefixCharacters' | 'validPrefixCharacters'>,
 ) => {
   if (!isUndefined(invalidPrefixCharacters)) {
     const regex = new RegExp(regexToString(invalidPrefixCharacters));
@@ -126,15 +124,7 @@ const isPrefixValid = (
  *
  * @param params
  */
-const findPosition = ({
-  text,
-  regexp,
-  $pos,
-  char,
-  name,
-  supportedCharacters,
-  suggester,
-}: FindPositionParams) => {
+const findPosition = ({ text, regexp, $pos, char, suggester }: FindPositionParams) => {
   let position: SuggestStateMatch | undefined;
 
   const cursor = $pos.pos; // The current cursor position
@@ -155,8 +145,6 @@ const findPosition = ({
       // range
       if (from < cursor && end >= cursor) {
         position = {
-          name,
-          char,
           range: {
             from,
             end,
@@ -164,7 +152,6 @@ const findPosition = ({
           },
           query: { partial: match[0].slice(char.length, matchLength), full: match[0].slice(char.length) },
           text: { partial: match[0].slice(0, matchLength), full: match[0] },
-          supportedCharacters,
           suggester,
         };
       }
@@ -408,7 +395,7 @@ interface FindFromMatchersParams extends ResolvedPosParams {
 interface FindMatchParams extends ResolvedPosParams, SuggesterParams {}
 
 interface FindPositionParams
-  extends Pick<SuggestMatcher, 'name' | 'char'>,
+  extends Pick<Suggester, 'name' | 'char'>,
     TextParams,
     SuggesterParams,
     ResolvedPosParams {
@@ -416,9 +403,4 @@ interface FindPositionParams
    * The regexp to use
    */
   regexp: RegExp;
-
-  /**
-   * The characters that are supported
-   */
-  supportedCharacters: RegExp;
 }

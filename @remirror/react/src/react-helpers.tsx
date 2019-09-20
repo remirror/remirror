@@ -11,7 +11,7 @@ export interface GetManagerFromComponentTreeParams {
 
   /**
    * A prop for inserting the component which will retrieve the manager
-   * @default 'children'
+   * @defaultValue 'children'
    */
   prop?: string;
 

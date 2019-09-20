@@ -23,14 +23,14 @@ export interface PositionTrackerExtensionOptions extends BaseExtensionOptions {
   /**
    * The className that is added to all tracker positions
    *
-   * '@default 'remirror-tracker-position'
+   * '@defaultValue 'remirror-tracker-position'
    */
   defaultClassName?: string;
 
   /**
    * The default element that is used for all trackers.
    *
-   * @default 'tracker'
+   * @defaultValue 'tracker'
    */
   defaultElement?: string;
 }
@@ -245,14 +245,14 @@ interface AddPositionTrackerParams extends Partial<PosParams>, RemovePositionTra
    * A custom class name to use for the tracker position. All the trackers
    * will automatically be given the class name `remirror-tracker-position`
    *
-   * @default ''
+   * @defaultValue ''
    */
   className?: string;
 
   /**
    * A custom html element or string for a created element tag name.
    *
-   * @default 'tracker'
+   * @defaultValue 'tracker'
    */
   element?: string | HTMLElement;
 }

@@ -1,6 +1,6 @@
 {
   "name": "prosemirror-suggest",
-  "description": "Mention extension for the remirror wysiwyg editor",
+  "description": "Primitives for building your prosemirror suggestion functionality",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/prosemirror-suggest",

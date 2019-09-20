@@ -18,7 +18,7 @@ declare module '@theme-ui/sidenav' {
     /**
      * The current pathname
      *
-     * @default ''
+     * @defaultValue ''
      */
     pathname?: string;
     children?: ReactNode;
@@ -215,32 +215,32 @@ declare module 'compass-vertical-rhythm' {
   namespace VerticalRhythm {
     interface RhythmOptions {
       /**
-       * @default '16px'
+       * @defaultValue '16px'
        */
       baseFontSize?: CSS.FontSizeProperty<number | string>;
 
       /**
-       * @default 1.5
+       * @defaultValue 1.5
        */
       baseLineHeight?: number;
 
       /**
-       * @default 'rem'
+       * @defaultValue 'rem'
        */
       rhythmUnit?: string;
 
       /**
-       * @default '1px'
+       * @defaultValue '1px'
        */
       defaultRhythmBorderWidth?: CSS.BorderWidthProperty<number | string>;
 
       /**
-       * @default 'solid'
+       * @defaultValue 'solid'
        */
       defaultRhythmBorderStyle?: string;
 
       /**
-       * @default true
+       * @defaultValue `true`
        */
       roundToNearestHalfLine?: boolean;
 

@@ -29,28 +29,28 @@ export interface DropCursorExtensionOptions extends BaseExtensionOptions {
    *
    * This can be a named color from the theme such as `background`
    *
-   * @default `primary`
+   * @defaultValue `primary`
    */
   color?: string;
 
   /**
    * The width of the inline drop cursor.
    *
-   * @default '2px'
+   * @defaultValue '2px'
    */
   inlineWidth?: string | number;
 
   /**
    * The horizontal margin around the inline cursor.
    *
-   * @default '10px'
+   * @defaultValue '10px'
    */
   inlineSpacing?: string | number;
 
   /**
    * The width of the block drop cursor.
    *
-   * @default '100%'
+   * @defaultValue '100%'
    */
   blockWidth?: string | number;
 
@@ -62,42 +62,42 @@ export interface DropCursorExtensionOptions extends BaseExtensionOptions {
   /**
    * The class name added to the block widget
    *
-   * @default 'remirror-drop-cursor-block'
+   * @defaultValue 'remirror-drop-cursor-block'
    */
   blockClassName?: string;
 
   /**
    * The class name added to the node that appears before the block drop cursor widget.
    *
-   * @default 'remirror-drop-cursor-before-block'
+   * @defaultValue 'remirror-drop-cursor-before-block'
    */
   beforeBlockClassName?: string;
 
   /**
    * The class name added to the node that appears after the block drop cursor widget.
    *
-   * @default 'remirror-drop-cursor-after-block'
+   * @defaultValue 'remirror-drop-cursor-after-block'
    */
   afterBlockClassName?: string;
 
   /**
    * The class name added to the inline drop cursor widget
    *
-   * @default 'remirror-drop-cursor-inline'
+   * @defaultValue 'remirror-drop-cursor-inline'
    */
   inlineClassName?: string;
 
   /**
    * The class name added to the node that appears before the inline drop cursor widget.
    *
-   * @default 'remirror-drop-cursor-before-inline'
+   * @defaultValue 'remirror-drop-cursor-before-inline'
    */
   beforeInlineClassName?: string;
 
   /**
    * The class name added to the node that appears after the inline drop cursor widget.
    *
-   * @default 'remirror-drop-cursor-after-inline'
+   * @defaultValue 'remirror-drop-cursor-after-inline'
    */
   afterInlineClassName?: string;
 }

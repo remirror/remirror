@@ -31,14 +31,14 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
    *
    * By default refractor bundles the following languages: `markup`, `css`, `clike`, `js`
    *
-   * @default []
+   * @defaultValue `[]`
    */
   supportedLanguages?: RefractorSyntax[];
 
   /**
    * The default language to use when none is provided.
    *
-   * @default 'markup'
+   * @defaultValue 'markup'
    */
   defaultLanguage?: string;
 
@@ -51,7 +51,7 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
    * Set this to false if you want to manage the syntax styles by yourself.
    * For tips on how this could be accomplished see {@link https://prismjs.com}
    *
-   * @default 'atomDark'
+   * @defaultValue 'atomDark'
    */
   syntaxTheme?: SyntaxTheme | false;
 
@@ -65,14 +65,14 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
   /**
    * A keyboard shortcut to trigger formatting the current block.
    *
-   * @default `Alt-Shift-F` (Mac) `Shift-Ctrl-F` (PC)
+   * @defaultValue `Alt-Shift-F` (Mac) `Shift-Ctrl-F` (PC)
    */
   keyboardShortcut?: string;
 
   /**
    * The name of the node that the code block should toggle back and forth from.
    *
-   * @default 'paragraph'
+   * @defaultValue 'paragraph'
    */
   toggleType?: string;
 }

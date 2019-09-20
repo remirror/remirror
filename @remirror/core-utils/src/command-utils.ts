@@ -20,7 +20,7 @@ interface UpdateMarkParams extends Partial<RangeParams>, Partial<AttrsParams>, T
   /**
    * The text to append.
    *
-   * @default '''
+   * @defaultValue '''
    */
   appendText?: string;
 
@@ -129,7 +129,7 @@ interface ReplaceTextParams extends Partial<RangeParams>, Partial<AttrsParams>, 
   /**
    * The text to append.
    *
-   * @default '''
+   * @defaultValue '''
    */
   appendText?: string;
   /**
@@ -218,7 +218,7 @@ interface RemoveMarkParams extends MarkTypeParams, Partial<RangeParams<'to'>>, T
   /**
    * Whether to expand empty selections to the current mark range
    *
-   * @defaultValue false
+   * @defaultValue `false`
    */
   expand?: boolean;
 }

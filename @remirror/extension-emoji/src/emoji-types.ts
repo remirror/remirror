@@ -67,7 +67,7 @@ export interface EmojiExtensionOptions extends BaseExtensionOptions {
   /**
    * The maximum results to show when searching for matching emoji.
    *
-   * @default 15
+   * @defaultValue 15
    */
   maxResults?: number;
 }

@@ -1,14 +1,78 @@
-import {
-  AnyFunction,
-  EditorStateParams,
-  EditorViewParams,
-  FromToParams,
-  MakeRequired,
-} from '@remirror/core-types';
+import { AnyFunction, EditorStateParams, EditorViewParams, FromToParams } from '@remirror/core-types';
 import { ChangeReason, ExitReason } from './suggest-constants';
 
-export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void>>
-  extends OptionalSuggestMatcher {
+/**
+ * This `Suggester` interface provides the options object which is used within
+ * the {@link suggest} plugin creator.
+ *
+ * @typeParam GCommand - the command function that this suggester makes
+ * available to its handlers.
+ */
+export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void>> {
+  /**
+   * The character to match against.
+   *
+   * @remarks
+   *
+   * For example if building a mention plugin you might want to set this to `@`.
+   * Multi string characters are theoretically supported (although currently
+   * untested).
+   *
+   * The character does not have to be
+   */
+  char: string;
+
+  /**
+   * A unique identifier for the matching character.
+   *
+   * @remarks
+   *
+   * This should be globally unique amongst the group of suggestions and will
+   * cause the suggestion plugin to fail if duplicates are found.
+   *
+   * Typically this value will be appended to classes.
+   */
+  name: string;
+
+  /**
+   * Whether to only match from the start of the line
+   *
+   * @defaultValue `false`
+   */
+  startOfLine?: boolean;
+
+  /**
+   * A regex containing all supported characters when within a suggestion.
+   *
+   * @defaultValue `/[\w\d_]+/`
+   */
+  supportedCharacters?: RegExp | string;
+
+  /**
+   * A regex expression used to validate the text directly before the match.
+   *
+   * @remarks
+   *
+   * This will be used when {@link Suggester.invalidPrefixCharacters} is not
+   * provided.
+   *
+   * @defaultValue `/^[\s\0]?$/` - translation: only space and zero width
+   * characters allowed.
+   */
+  validPrefixCharacters?: RegExp | string;
+
+  /**
+   * A regex expression used to invalidate the text directly before the match.
+   *
+   * @remarks
+   *
+   * This has preference over the `validPrefixCharacters` option and when it is
+   * defined only it will be looked at in determining whether a prefix is valid.
+   *
+   * @defaultValue ''
+   */
+  invalidPrefixCharacters?: RegExp | string;
+
   /**
    * Sets the characters that need to be present after the initial character
    * match before a match is triggered.
@@ -21,7 +85,7 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
    * - `matchOffset: 3` matches `'@abc'` but not `'@ab'` or `'@a'` or `'@'`
    * - And so on...
    *
-   * @default 0
+   * @defaultValue 0
    */
   matchOffset?: number;
 
@@ -33,28 +97,32 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
   appendText?: string;
 
   /**
-   * Class name to use for the decoration (while the plugin is still being written)
+   * Class name to use for the decoration (while the plugin is still being
+   * written)
    *
-   * @default 'suggestion'
+   * @defaultValue 'suggestion'
    */
   suggestionClassName?: string;
 
   /**
    * Tag which wraps an active match.
    *
-   * @default 'span'
+   * @defaultValue 'span'
    */
   decorationsTag?: keyof HTMLElementTagNameMap;
 
   /**
-   * Whether to omit the decorations from being created.
+   * When true, decorations are not created when this mention is being edited..
    */
   ignoreDecorations?: boolean;
 
   /**
    * Called whenever a suggestion becomes active or changes in anyway.
-   * It receives a parameters object with the `reason` for the change
-   * for more granular control.
+   *
+   * @remarks
+   *
+   * It receives a parameters object with the `reason` for the change for more
+   * granular control.
    *
    * @defaultValue `() => void`
    */
@@ -63,20 +131,24 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
   /**
    * Called when a suggestion is exited with the pre-exit match value.
    *
-   * Can be used to force the command to run e.g. when no match was found but a hash
-   * should still be created this can be used to call the command parameter and trigger
-   * whatever action is felt required.
+   * @remarks
+   *
+   * Can be used to force the command to run e.g. when no match was found but a
+   * hash should still be created this can be used to call the command parameter
+   * and trigger whatever action is felt required.
    *
    * @defaultValue `() => void`
    */
   onExit?(params: SuggestExitHandlerParams<GCommand>): void;
 
   /**
-   * Called for each character entry and can be used to disable certain characters.
+   * Called for each character entry and can be used to disable certain
+   * characters.
    *
    * @remarks
-   * For example you may want to disable all `@` symbols while the `at` matcher is active.
-   * Return true to stop the default character action.
+   *
+   * For example you may want to disable all `@` symbols while the suggester is
+   * active. Return `true` to prevent any further character handlers from running.
    *
    * @defaultValue `() => false`
    */
@@ -85,13 +157,16 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
   /**
    * An object that describes how certain key bindings should be handled.
    *
-   * Return `true` to prevent any further prosemirror actions or return `false` to allow prosemirror to continue.
+   * @remarks
+   *
+   * Return `true` to prevent any further prosemirror actions or return `false`
+   * to allow prosemirror to continue.
    */
   keyBindings?: SuggestKeyBindingMap<GCommand>;
 
   /**
-   * Check the current match and editor state to determine whether this match
-   * is being `new`ly created or `edit`ed.
+   * Check the current match and editor state to determine whether this match is
+   * being `new`ly created or `edit`ed.
    */
   getStage?(params: GetStageParams): SuggestStage;
 
@@ -99,69 +174,35 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
    * Create the suggested actions which are made available to the `onExit` and
    * on`onChange` handlers.
    *
+   * @remarks
+   *
    * Suggested actions are useful for developing plugins and extensions which
    * provide useful defaults for managing the suggestion lifecycle.
    */
   createCommand?(params: CreateSuggestCommandParams): GCommand;
 }
 
-export interface SuggestMatcher {
-  /**
-   * The character to match against.
-   *
-   * For example if building a mention plugin you might want to set this to `@`.
-   * Multi string characters are theoretically supported (although currently
-   * untested).
-   */
-  char: string;
-
-  /**
-   * Whether to only match from the start of the line
-   *
-   * @defaultValue false
-   */
-  startOfLine: boolean;
-
-  /**
-   * A regex containing all supported characters when within a suggestion.
-   *
-   * @defaultValue `/[\w\d_]+/`
-   */
-  supportedCharacters: RegExp | string;
-
-  /**
-   * A regex expression used to validate the text directly before the match.
-   * By default this allows zero width characters and space characters.
-   *
-   * @defaultValue `/^[\s\0]?$/`
-   */
-  validPrefixCharacters: RegExp | string;
-
-  /**
-   * A regex expression used to invalidate the text directly before the match.
-   * This has preference over the `validPrefixCharacters` option and when it is
-   * defined only it will be looked at in determining whether a prefix is valid.
-   *
-   * @defaultValue ''
-   */
-  invalidPrefixCharacters: RegExp | string;
-
-  /**
-   * Name of matching character - This will be appended to the classnames
-   */
-  name: string;
-}
-
-export type OptionalSuggestMatcher = MakeRequired<Partial<SuggestMatcher>, 'char' | 'name'>;
-
-export interface MatchLength {
+/**
+ * The match value with the full and partial text.
+ *
+ * @remarks
+ *
+ * For a suggester with a char `@` then the following text `@ab|c` where `|` is
+ * the current cursor position will create a query with the following signature.
+ *
+ * ```json
+ * { "full": "abc", "partial": "ab" }
+ * ```
+ */
+export interface MatchValue {
   /**
    * The complete match independent of the cursor position.
    */
   full: string;
 
   /**
-   * This value is a partial match which ends at the position of the cursor within the matching text.
+   * This value is a partial match which ends at the position of the cursor
+   * within the matching text.
    */
   partial: string;
 }
@@ -176,7 +217,8 @@ export interface FromToEndParams extends FromToParams {
   end: number;
 }
 
-export interface SuggestStateMatch extends Pick<SuggestMatcher, 'name' | 'char'>, SuggesterParams {
+export interface SuggestStateMatch<GCommand extends AnyFunction<void> = AnyFunction<void>>
+  extends SuggesterParams<GCommand> {
   /**
    * Range of current match.
    * - `from` is the start
@@ -188,17 +230,16 @@ export interface SuggestStateMatch extends Pick<SuggestMatcher, 'name' | 'char'>
   /**
    * Current query of match which doesn't include the match character.
    */
-  query: MatchLength;
+  query: MatchValue;
 
   /**
-   * Full text of match including the activation character e.g. `'@awesome'`.
+   * Full text of match including the activation character
+   *
+   * @remarks
+   *
+   * For a `char` of `'@'` and query of `'awesome'` `text.full` would be  `'@awesome'`.
    */
-  text: MatchLength;
-
-  /**
-   * The characters that the matcher supports
-   */
-  supportedCharacters: RegExp;
+  text: MatchValue;
 }
 
 export interface SuggestStateMatchParams {
@@ -217,7 +258,8 @@ export interface CreateSuggestCommandParams
 export interface GetStageParams extends SuggestStateMatchParams, EditorStateParams {}
 
 /**
- * Determines whether to replace the full match or the partial match (up to the cursor position).
+ * Determines whether to replace the full match or the partial match (up to the
+ * cursor position).
  */
 export type SuggestReplacementType = 'full' | 'partial';
 
@@ -229,7 +271,8 @@ export interface SuggestCallbackParams<GCommand extends AnyFunction<void> = AnyF
 
 export interface StageParams {
   /**
-   * The current stage of the focused mention. Can be used to decide which action to use.
+   * The current stage of the focused mention. Can be used to decide which
+   * action to use.
    */
   stage: SuggestStage;
 }
@@ -243,7 +286,8 @@ export interface OnKeyDownParams extends SuggestStateMatch, EditorViewParams {
 
 export interface ReasonParams<GReason = ExitReason | ChangeReason> {
   /**
-   * The reason this callback was triggered. This can be used to determine the action to use in your own code.
+   * The reason this callback was triggered. This can be used to determine the
+   * action to use in your own code.
    */
   reason: GReason;
 }
@@ -267,7 +311,7 @@ export interface SuggestCharacterEntryParams<GCommand extends AnyFunction<void> 
 export interface SuggestKeyBindingParams<GCommand extends AnyFunction<void> = AnyFunction<void>>
   extends SuggestCallbackParams<GCommand> {
   /**
-   * The native keyboard event.
+   * The dom keyboard event.
    */
   event: KeyboardEvent;
 }
@@ -275,8 +319,8 @@ export interface SuggestKeyBindingParams<GCommand extends AnyFunction<void> = An
 /**
  * A method for performing actions when a certain key / patter is pressed.
  *
- * Return true to prevent any further bubbling of the key event and to stop other handlers
- * from also processing the event.
+ * Return true to prevent any further bubbling of the key event and to stop
+ * other handlers from also processing the event.
  */
 export type SuggestKeyBinding<GCommand extends AnyFunction<void> = AnyFunction<void>> = (
   params: SuggestKeyBindingParams<GCommand>,
@@ -301,8 +345,8 @@ export type SuggestKeyBindingMap<GCommand extends AnyFunction<void> = AnyFunctio
   Record<string, SuggestKeyBinding<GCommand>>;
 
 /**
- * A suggestion can have two stages. When it is `new` and when it has already been created
- * and is now being `edit`ed.
+ * A suggestion can have two stages. When it is `new` and when it has already
+ * been created and is now being `edit`ed.
  *
  * Separating the stages allows for greater control in how mentions are updated.
  *
@@ -311,18 +355,22 @@ export type SuggestKeyBindingMap<GCommand extends AnyFunction<void> = AnyFunctio
  */
 export type SuggestStage = 'new' | 'edit';
 
+/**
+ * The command
+ */
 export interface SuggestCommandParams<GCommand extends AnyFunction<void> = AnyFunction<void>> {
   /**
-   * A command which automatically applies the provided attributes to the command.
+   * A command which automatically applies the provided attributes to the
+   * command.
    */
   command: GCommand;
 }
 
-export interface SuggesterParams {
+export interface SuggesterParams<GCommand extends AnyFunction<void> = AnyFunction<void>> {
   /**
    * The suggester to use for finding matches.
    */
-  suggester: Required<Suggester>;
+  suggester: Required<Suggester<GCommand>>;
 }
 
 export interface SuggestStateMatchReason<GReason> extends SuggestStateMatch, ReasonParams<GReason> {}

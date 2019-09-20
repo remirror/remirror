@@ -28,7 +28,7 @@ export interface IconProps {
   /**
    * Whether to reverse the color and the background color of the icon.
    *
-   * @default 'default'
+   * @defaultValue 'default'
    */
   variant?: KeyOfThemeVariant<'remirror:icons'>;
 }
@@ -43,7 +43,7 @@ interface BaseIconProps extends Omit<JSX.IntrinsicElements['svg'], 'style'>, Ico
    * Determines whether this icon should be rendered standalone which adds a role of image and a title to the icon.
    *
    * When standalone is true the svg has a `role='img'`
-   * @default true
+   * @defaultValue `true`
    */
   standalone?: boolean;
 }

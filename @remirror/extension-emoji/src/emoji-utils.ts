@@ -139,7 +139,7 @@ export interface SortEmojiMatchesParams {
   /**
    * The maximum number of results to display. By default it returns all results.
    *
-   * @default -1
+   * @defaultValue -1
    */
   maxResults?: number;
 
@@ -148,7 +148,7 @@ export interface SortEmojiMatchesParams {
    *
    * By default it searches through every possible emoji value.
    *
-   * @default `emojiList`
+   * @defaultValue `emojiList`
    */
   list?: EmojiObject[];
 }
