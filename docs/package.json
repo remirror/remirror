@@ -9,7 +9,6 @@
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
-    "lint": "tslint --project tsconfig.lint.json --config ../tslint.json",
     "now-build": "gatsby build",
     "serve": "gatsby serve",
     "start": "gatsby develop",

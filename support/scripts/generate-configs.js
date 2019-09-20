@@ -104,12 +104,6 @@ const API_EXTRACTOR_CONFIG = {
   mainEntryPointFilePath: '<projectFolder>/lib/index.d.ts',
 };
 
-const TSCONFIG_LINT_FILENAME = 'tsconfig.lint.json';
-const TSCONFIG_LINT = {
-  extends: './tsconfig.json',
-  compilerOptions: { baseUrl: 'src', paths: {} },
-};
-
 const TSCONFIG_PROD_FILENAME = 'tsconfig.prod.json';
 const TSCONFIG_PROD = {
   extends: './tsconfig.json',
@@ -155,19 +149,6 @@ const generateApiExtractorConfigs = async () => {
   await Promise.all(paths.map(fn));
 };
 
-const generateTsConfigLintConfig = async () => {
-  const packages = await getAllDependencies();
-  const paths = packages.map(json => getRelativePathFromJson(json));
-
-  const fn = async relativePath => {
-    const path = baseDir(relativePath, TSCONFIG_LINT_FILENAME);
-    await writeJSON(path, TSCONFIG_LINT);
-    filesToPrettify.push(path);
-  };
-
-  await Promise.all(paths.map(fn));
-};
-
 const run = async () => {
   await Promise.all([
     generateSizeLimitConfig(),
@@ -175,7 +156,6 @@ const run = async () => {
     generateTSConfig(),
     generateStorybookResolverConfig(),
     generateApiExtractorConfigs(),
-    generateTsConfigLintConfig(),
   ]);
 
   await formatFiles(filesToPrettify.join(' '));

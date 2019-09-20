@@ -24,7 +24,6 @@
     "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
     "dev": "run-p dev:*",
     "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
-    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {

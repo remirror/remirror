@@ -5,7 +5,6 @@
   "version": "0.4.2-canary.2",
   "scripts": {
     "build": "razzle build",
-    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
     "start": "razzle start",
     "start:prod": "NODE_ENV=production node build/server.js",
     "typecheck": "tsc -p ./tsconfig.json --noEmit"
