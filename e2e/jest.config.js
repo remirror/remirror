@@ -23,7 +23,6 @@ module.exports = {
     __SERVER__,
   },
   transform,
-  rootDir: baseDir('e2e'),
   testPathIgnorePatterns,
   testRegex: __SERVER__.regex,
   cacheDirectory,
@@ -34,4 +33,5 @@ module.exports = {
   setupFilesAfterEnv: ['expect-puppeteer', jestSupportDir('jest.framework.ts')],
   globalSetup: jestSupportDir('jest.puppeteer.setup.ts'),
   globalTeardown: jestSupportDir('jest.puppeteer.teardown.ts'),
+  snapshotSerializers: [`${__dirname}/helpers/serializers/html-serializer`],
 };
