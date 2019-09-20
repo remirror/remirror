@@ -1,6 +1,6 @@
 import { all as merge } from 'deepmerge';
 import fastDeepEqual from 'fast-deep-equal';
-import memoizeOne from 'memoize-one';
+import fastMemoize, { MemoizeFunc } from 'fast-memoize';
 import nano from 'nanoid';
 import objectOmit from 'object.omit';
 import objectPick from 'object.pick';
@@ -219,9 +219,22 @@ export const kebabCase = (str: string) => {
 };
 
 /**
+ * This is required since it is not exported from `fastMemomize`
+ *
+ * @internalRemarks
+ * TODO create a pull request to fix this.
+ */
+export interface Memoize extends MemoizeFunc {
+  strategies: {
+    variadic: MemoizeFunc;
+    monadic: MemoizeFunc;
+  };
+}
+
+/**
  * Alias for caching function calls
  */
-export const memoize = memoizeOne;
+export const memoize: Memoize = fastMemoize;
 
 interface UniqueIdParams {
   /**

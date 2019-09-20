@@ -1,5 +1,6 @@
 import {
   CommandFunction,
+  debounce,
   Extension,
   ExtensionManagerParams,
   FromToParams,
@@ -7,7 +8,7 @@ import {
   plainInputRule,
 } from '@remirror/core';
 import escapeStringRegex from 'escape-string-regexp';
-import { Suggester } from 'prosemirror-suggest';
+import { SuggestChangeHandlerParams, Suggester } from 'prosemirror-suggest';
 import {
   EmojiExtensionOptions,
   EmojiObject,
@@ -166,6 +167,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       onSuggestionChange,
       onSuggestionExit,
     } = this.options;
+    // const fn = debounce(100, sortEmojiMatches);
 
     return {
       ignoreDecorations: true,
@@ -177,10 +179,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       keyBindings: suggestionKeyBindings,
       onChange: params => {
         const query = params.query.full;
-        const emojiMatches =
-          query.length <= 1
-            ? sortEmojiMatches({ query, maxResults, list: this.frequentlyUsed })
-            : sortEmojiMatches({ query, maxResults });
+        const emojiMatches = query.length === 0 ? this.frequentlyUsed : sortEmojiMatches(query, maxResults);
         onSuggestionChange({ ...params, emojiMatches });
       },
       onExit: onSuggestionExit,

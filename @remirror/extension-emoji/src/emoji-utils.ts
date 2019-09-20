@@ -134,40 +134,16 @@ export const getEmojiFromEmoticon = (emoticon: string) => {
   return getEmojiByName(emoticonName);
 };
 
-export interface SortEmojiMatchesParams {
-  query: string;
-  /**
-   * The maximum number of results to display. By default it returns all results.
-   *
-   * @defaultValue -1
-   */
-  maxResults?: number;
-
-  /**
-   * The list of emoji to search through.
-   *
-   * By default it searches through every possible emoji value.
-   *
-   * @defaultValue `emojiList`
-   */
-  list?: EmojiObject[];
-}
-
 /**
  * Return a list of `maxResults` length of closest matches
  */
-export const sortEmojiMatches = ({ query, maxResults = -1, list = emojiList }: SortEmojiMatchesParams) => {
-  return take(
-    matchSorter(list, query, {
-      keys: [
-        'name',
-        item => item.description.replace(/[^\w]/g, ''),
-        { minRanking: matchSorter.rankings.STARTS_WITH, key: 'keywords' },
-      ],
-      // threshold: matchSorter.rankings.CONTAINS,
-    }),
-    maxResults,
-  );
+export const sortEmojiMatches = (query: string, maxResults = -1) => {
+  const results = matchSorter(emojiList, query, {
+    keys: ['name', item => item.description.replace(/[^\w]/g, '')],
+    threshold: matchSorter.rankings.CONTAINS,
+  });
+
+  return take(results, maxResults);
 };
 
 export const populateFrequentlyUsed = (names: NamesAndAliases[]) => {

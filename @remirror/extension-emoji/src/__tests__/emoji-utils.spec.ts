@@ -13,7 +13,7 @@ test('getEmojiFromEmoticon', () => {
 });
 
 test('sortEmojiMatches', () => {
-  expect(sortEmojiMatches({ query: '+1', maxResults: 10 })[0].char).toBe('👍');
-  expect(sortEmojiMatches({ query: 'thumbsup', maxResults: 10 })[0].char).toBe('👍');
-  expect(sortEmojiMatches({ query: '' }).length).toBeGreaterThan(1000);
+  expect(sortEmojiMatches('+1', 10)[0].char).toBe('👍');
+  expect(sortEmojiMatches('thumbsup', 10)[0].char).toBe('👍');
+  expect(sortEmojiMatches('').length).toBeGreaterThan(1000);
 });

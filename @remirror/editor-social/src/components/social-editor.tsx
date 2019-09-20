@@ -260,7 +260,6 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   };
 
   private onEmojiSuggestionChange: EmojiSuggestionChangeHandler = ({ emojiMatches, command }) => {
-    console.log('A change occurred', emojiMatches);
     this.setState({
       hideEmojiSuggestions: false,
       emojiList: emojiMatches,

@@ -1,7 +1,7 @@
 import { Attrs, EditorView, Position, RemirrorTheme } from '@remirror/core';
 import { EmojiObject, EmojiSuggestCommand } from '@remirror/extension-emoji';
 import { MentionExtensionAttrs, SuggestionStateMatch } from '@remirror/extension-mention';
-import { bubblePositioner, useRemirrorContext } from '@remirror/react';
+import { popupMenuPositioner, useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import { Type, useMultishift } from 'multishift';
 import React, { forwardRef, FunctionComponent } from 'react';
@@ -266,10 +266,8 @@ export const EmojiSuggestions: FunctionComponent<EmojiSuggestionsProps> = ({
   });
 
   const { top, left, ref } = getPositionerProps({
-    ...bubblePositioner,
-    hasChanged: () => true,
-    isActive: () => true,
-    positionerId: 'emojiBubbleMenu',
+    ...popupMenuPositioner,
+    positionerId: 'emojiPopupMenu',
   });
 
   return (
@@ -315,7 +313,8 @@ export const EmojiSuggestions: FunctionComponent<EmojiSuggestionsProps> = ({
               index,
             })}
           >
-            <span css={sxx({ fontSize: '1.25em' })}>{emoji.char}</span> {emoji.description}
+            <span css={sxx({ fontSize: '1.25em' })}>{emoji.char}</span>{' '}
+            <span css={sxx({ color: 'darkGrey' })}>:{emoji.name}:</span>
           </div>
         );
       })}

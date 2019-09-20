@@ -12,6 +12,7 @@ const hsl = {
   background: HSL.create([0, 0, 100]),
   text: HSL.create([baseHue, 5, 5]),
   grey: HSL.create([baseHue, 5, 80]),
+  darkGrey: HSL.create([baseHue, 5, 50]),
   muted: HSL.create([baseHue, 97.5, 97.5]),
   light: HSL.create([baseHue, 5, 90]),
 };
@@ -36,6 +37,7 @@ const colors: RemirrorTheme['colors'] = {
   'secondary:button:active': str(hsl.secondary, active),
   muted: str(hsl.muted),
   grey: str(hsl.grey),
+  darkGrey: str(hsl.darkGrey),
   'grey:fade': str(hsl.grey, alpha(20)),
   default: str(hsl.grey),
   'default:button:hover': str(hsl.grey, hover),
