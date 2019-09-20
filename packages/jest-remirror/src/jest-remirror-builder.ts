@@ -77,7 +77,7 @@ export const text = (value: string, schema: EditorSchema): TaggedContentItem => 
 export const offsetTags = (tags: Tags, offset: number): Tags => {
   const result: Tags = {};
   for (const name in tags) {
-    if (tags.hasOwnProperty(name)) {
+    if (Object.prototype.hasOwnProperty.call(tags, name)) {
       result[name] = tags[name] + offset;
     }
   }

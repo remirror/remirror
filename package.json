@@ -121,6 +121,8 @@
     "@types/testing-library__dom": "6.0.3",
     "@types/wait-on": "3.2.0",
     "@types/yargs": "13.0.2",
+    "@typescript-eslint/eslint-plugin": "^2.3.0",
+    "@typescript-eslint/parser": "^2.3.0",
     "babel-jest": "24.9.0",
     "babel-loader": "8.0.6",
     "babel-plugin-module-resolver": "3.2.0",
@@ -133,12 +135,14 @@
     "enzyme-adapter-react-16": "1.14.0",
     "eslint": "6.4.0",
     "eslint-config-prettier": "6.3.0",
-    "eslint-config-standard": "14.1.0",
     "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-jest": "^22.17.0",
     "eslint-plugin-node": "10.0.0",
     "eslint-plugin-prettier": "3.1.1",
     "eslint-plugin-promise": "4.2.1",
-    "eslint-plugin-standard": "4.0.1",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^2.0.1",
+    "htm": "2.2.1",
     "http-server": "^0.11.1",
     "husky": "3.0.5",
     "jest": "24.9.0",
@@ -198,13 +202,6 @@
     "maintained node versions",
     "not op_mini all"
   ],
-  "eslintConfig": {
-    "extends": [
-      "standard",
-      "prettier",
-      "plugin:prettier/recommended"
-    ]
-  },
   "husky": {
     "hooks": {
       "post-checkout": "echo $HUSKY_GIT_STDIN | support/git-hooks/post-checkout-lfs $HUSKY_GIT_PARAMS",
@@ -329,9 +326,9 @@
     "lodash.merge": "^4.6.2",
     "prosemirror-model": "1.7.2",
     "react": "16.9.0",
+    "react-dom": "16.8.6",
     "semver": "6.3.0",
     "tar": "4.4.10",
-    "tslint": "5.20.0",
-    "typescript": "3.6.3"
+    "typescript": "3.6.x"
   }
 }
