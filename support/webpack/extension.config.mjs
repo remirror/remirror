@@ -1,4 +1,4 @@
-// tslint:disable:no-var-requires no-implicit-dependencies
+
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import { sync } from 'glob';

@@ -84,7 +84,7 @@ export interface ExtensionConstructor<
   GOptions extends BaseExtensionOptions,
   GExtension extends Extension<GOptions, any>
 > {
-  // tslint:disable-next-line: callable-types
+
   new (options?: GOptions): GExtension;
 }
 

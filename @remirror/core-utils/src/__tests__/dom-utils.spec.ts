@@ -42,7 +42,7 @@ import {
   toHTML,
 } from '../dom-utils';
 
-// tslint:disable-next-line: no-implicit-dependencies
+
 import domino from 'domino';
 
 describe('markActive', () => {

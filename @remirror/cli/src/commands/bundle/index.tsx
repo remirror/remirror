@@ -1,4 +1,4 @@
-/* tslint:disable: no-void-expression */
+
 
 import { render } from 'ink';
 import React from 'react';

@@ -1,4 +1,4 @@
-// tslint:disable: no-implicit-dependencies
+
 
 import { EMPTY_PARAGRAPH_NODE, Tags } from '@remirror/core-constants';
 import { Cast } from '@remirror/core-helpers';

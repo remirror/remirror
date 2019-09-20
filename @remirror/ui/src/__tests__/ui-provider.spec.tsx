@@ -1,4 +1,4 @@
-// tslint:disable: no-implicit-dependencies
+
 import { Remirror } from '@remirror/react';
 import { createTestManager } from '@test-fixtures/schema-helpers';
 import { render } from '@testing-library/react';

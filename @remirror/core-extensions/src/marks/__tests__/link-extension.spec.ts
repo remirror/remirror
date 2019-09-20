@@ -1,4 +1,4 @@
-// tslint:disable: no-shadowed-variable
+
 
 import { fromHTML, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@test-fixtures/schema-helpers';

@@ -98,6 +98,6 @@ declare global {
    * This is an interface of all the actionTypes available. Use declaration merging to
    * extend it with your own custom actionTypes.
    */
-  // tslint:disable-next-line: no-empty-interface
+
   interface GlobalMultishiftActionTypes extends MultishiftTypesInterface {}
 }

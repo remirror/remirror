@@ -12,7 +12,7 @@ const create = (params: Partial<PositionTrackerExtensionOptions> = {}) =>
 describe('plugin', () => {
   let {
     add,
-    // tslint:disable-next-line: prefer-const
+
     nodes: { doc, p, heading: h, blockquote },
   } = create();
 

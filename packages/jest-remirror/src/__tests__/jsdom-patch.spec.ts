@@ -1,4 +1,4 @@
-// tslint:disable: no-void-expression
+
 
 import { Cast } from '@remirror/core';
 import { EditorView } from 'prosemirror-view';

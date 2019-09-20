@@ -126,7 +126,7 @@ function backticksFor(node: ProsemirrorNode, side: Side) {
   let m;
   let len = 0;
   if (node.isText) {
-    // tslint:disable-next-line:no-conditional-assignment
+
     while ((m = ticks.exec(node.text!))) {
       len = Math.max(len, m[0].length);
     }

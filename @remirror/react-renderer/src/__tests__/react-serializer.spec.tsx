@@ -1,4 +1,4 @@
-// tslint:disable: no-implicit-dependencies
+
 import {
   DocExtension,
   ExtensionManager,

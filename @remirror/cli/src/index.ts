@@ -1,4 +1,4 @@
-/* tslint:disable: no-unused-expression */
+
 
 import yargs from 'yargs';
 import { bundle } from './commands/bundle';

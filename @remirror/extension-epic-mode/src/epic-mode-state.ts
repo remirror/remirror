@@ -158,7 +158,7 @@ export class EpicModePluginState {
 function getRGBComponents(node: Element) {
   const color = getComputedStyle(node).color;
   let match: RegExpMatchArray | null;
-  // tslint:disable-next-line:no-conditional-assignment
+
   if (color && (match = color.match(/(\d+), (\d+), (\d+)/))) {
     try {
       return match.slice(1);
