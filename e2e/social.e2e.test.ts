@@ -1,7 +1,18 @@
 import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
 import { getDocument, queries } from 'pptr-testing-library';
 import { ElementHandle } from 'puppeteer';
-import { innerHtml, outerHtml, press, sel, skipTestOnFirefox, textContent, type } from './helpers';
+import {
+  innerHtml,
+  outerHtml,
+  press,
+  sel,
+  skipTestOnFirefox,
+  textContent,
+  type,
+  $innerHTML,
+} from './helpers';
+
+const FIRST_PARAGRAPH_SELECTOR = EDITOR_CLASS_SELECTOR + ' > p:first-child';
 
 const { getByRole } = queries;
 const path = __SERVER__.urls.social.empty;
@@ -20,8 +31,8 @@ describe('Social Showcase', () => {
     it('should have a social editor', async () => {
       await $editor.focus();
       await $editor.type('This is text https://url.com');
-      await expect(innerHtml(EDITOR_CLASS_SELECTOR)).resolves.toInclude(
-        '<a href="https://url.com" role="presentation">https://url.com</a>',
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
+        `This is text <a href="https://url.com" role="presentation">https://url.com</a>`,
       );
     });
 

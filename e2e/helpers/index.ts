@@ -101,3 +101,15 @@ export const type = async ({ text, delay = 10 }: TypeParams) => page.keyboard.ty
 export * from './modifier-keys';
 
 export * from './images';
+
+interface HTMLObject {
+  _: 'HTML';
+  html: string;
+}
+
+function makeHtmlObject(htmlOrPromise: string | Promise<string>): Promise<HTMLObject> {
+  return Promise.resolve(htmlOrPromise).then(html => Promise.resolve({ _: 'HTML', html }));
+}
+
+export const $innerHTML = (selector: string) =>
+  makeHtmlObject(page.$eval(selector, element => element.innerHTML));
