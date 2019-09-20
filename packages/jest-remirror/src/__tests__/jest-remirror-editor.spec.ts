@@ -42,17 +42,6 @@ test('can be configured with plain node extensions', () => {
   expect(dom).toHaveTextContent('A simple blockquote');
 });
 
-test('can be configured with plain node extensions', () => {
-  const expected = 'A simple blockquote';
-  const {
-    view: { dom },
-    nodes: { blockquote, doc, p },
-    add,
-  } = renderEditor({ plainNodes: [new BlockquoteExtension()] });
-  add(doc(blockquote(p(expected)), p('This is a p')));
-  expect(dom).toHaveTextContent('A simple blockquote');
-});
-
 test('can be configured with attribute node extensions', () => {
   const expected = 'A heading';
   const {

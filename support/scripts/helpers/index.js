@@ -19,18 +19,18 @@ const formatFiles = async (path = '', silent = false) => {
   }
 };
 
-let packages;
+let packages: Promise<any>;
 
-const getAllDependencies = async () => {
-  if (packages) {
-    return packages;
+const getAllDependencies = () => {
+  if (!packages) {
+    packages = getPackages().then(pkgs =>
+      pkgs.map(pkg => ({
+        ...pkg.toJSON(),
+        location: pkg.location,
+        rootPath: pkg.rootPath,
+      })),
+    );
   }
-
-  packages = (await getPackages()).map(pkg => ({
-    ...pkg.toJSON(),
-    location: pkg.location,
-    rootPath: pkg.rootPath,
-  }));
 
   return packages;
 };
