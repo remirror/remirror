@@ -220,17 +220,17 @@ export interface FromToEndParams extends FromToParams {
 export interface SuggestStateMatch<GCommand extends AnyFunction<void> = AnyFunction<void>>
   extends SuggesterParams<GCommand> {
   /**
-   * Range of current match.
-   * - `from` is the start
-   * - `to` is cursor position
-   * - `end` is the end of the match
+   * Range of current match; for example `@foo|bar` (where | is the cursor)
+   * - `from` is the start (= 0)
+   * - `to` is cursor position (= 4)
+   * - `end` is the end of the match (= 7)
    */
   range: FromToEndParams;
 
   /**
    * Current query of match which doesn't include the match character.
    */
-  query: MatchValue;
+  queryText: MatchValue;
 
   /**
    * Full text of match including the activation character
@@ -239,7 +239,7 @@ export interface SuggestStateMatch<GCommand extends AnyFunction<void> = AnyFunct
    *
    * For a `char` of `'@'` and query of `'awesome'` `text.full` would be  `'@awesome'`.
    */
-  text: MatchValue;
+  matchText: MatchValue;
 }
 
 export interface SuggestStateMatchParams {

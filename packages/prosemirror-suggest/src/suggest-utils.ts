@@ -150,8 +150,8 @@ const findPosition = ({ text, regexp, $pos, char, suggester }: FindPositionParam
             end,
             to,
           },
-          query: { partial: match[0].slice(char.length, matchLength), full: match[0].slice(char.length) },
-          text: { partial: match[0].slice(0, matchLength), full: match[0] },
+          queryText: { partial: match[0].slice(char.length, matchLength), full: match[0].slice(char.length) },
+          matchText: { partial: match[0].slice(0, matchLength), full: match[0] },
           suggester,
         };
       }
@@ -233,7 +233,7 @@ const findJumpReason = ({ prev, next, state }: CompareMatchParams & EditorStateP
   const updatedPrev = recheckMatch({ state, match: prev });
 
   const { exit } =
-    updatedPrev && updatedPrev.query.full !== prev.query.full // has query changed
+    updatedPrev && updatedPrev.queryText.full !== prev.queryText.full // has query changed
       ? createInsertReason({ prev, next: updatedPrev, state })
       : value;
 
@@ -267,7 +267,7 @@ const findExitReason = ({
   const updatedPrev = recheckMatch({ match, state });
 
   // Exit created a split
-  if (!updatedPrev || (updatedPrev && updatedPrev.query.full !== match.query.full)) {
+  if (!updatedPrev || (updatedPrev && updatedPrev.queryText.full !== match.queryText.full)) {
     return createInsertReason({ prev: match, next: updatedPrev, state });
   }
 
@@ -312,7 +312,7 @@ const createInsertReason = ({
   }
 
   // Are we within an invalid split?
-  if (!next || !prev.query.partial) {
+  if (!next || !prev.queryText.partial) {
     return {
       exit: createMatchWithReason({
         match: prev,
@@ -327,7 +327,7 @@ const createInsertReason = ({
   }
 
   // Are we in the middle of the mention
-  if (next && prev.query.partial) {
+  if (next && prev.queryText.partial) {
     return { exit: createMatchWithReason({ match: next, reason: ExitReason.Split }) };
   }
 

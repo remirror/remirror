@@ -9,7 +9,7 @@ test('`onChange`, `onExit` and `createCommand` handlers are called', () => {
   const handlers = {
     onExit: jest.fn((params: SuggestExitHandlerParams) => {
       params.command('command');
-      expect(params.query.full).toBe(expected);
+      expect(params.queryText.full).toBe(expected);
       expect(params.reason).toBe(ExitReason.MoveEnd);
     }),
     onChange: jest.fn(),

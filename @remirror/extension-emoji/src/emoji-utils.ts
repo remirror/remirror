@@ -89,17 +89,8 @@ const emojiObject: EmojiObjectRecord = rawEmojiObject as EmojiObjectRecord;
 const emoticonList = uniqueArray(
   entries(EMOTICONS).reduce((acc, [, emoticons]) => [...acc, ...emoticons], [] as string[]),
 );
-const unambiguousEmoticonSource = emoticonList
-  .filter(emoticon => !/^:[\w]+/.test(emoticon))
-  .map(escapeStringRegex)
-  .join('|');
-const ambiguousEmoticonSource = emoticonList
-  .filter(emoticon => /^:[\w]+/.test(emoticon))
-  .map(escapeStringRegex)
-  .join('|');
-
-export const unambiguousEmoticonRegex = new RegExp(`(${unambiguousEmoticonSource})$`);
-export const ambiguousEmoticonRegex = new RegExp(`(${ambiguousEmoticonSource})[\\s]$`);
+const emoticonSource = emoticonList.map(escapeStringRegex).join('|');
+export const emoticonRegex = new RegExp(`(${emoticonSource})[\\s]$`);
 export const emojiNames = keys(emojiObject);
 export const emojiList = entries(emojiObject).map(([, entry]) => entry);
 export const emojiCategories = [

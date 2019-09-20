@@ -19,7 +19,7 @@ const formatFiles = async (path = '', silent = false) => {
   }
 };
 
-let packages: Promise<any>;
+let packages;
 
 const getAllDependencies = () => {
   if (!packages) {

@@ -12,7 +12,7 @@ import {
  * Is this a change in the current suggestion (added or deleted characters)?
  */
 export const isChange = (compare: Partial<CompareMatchParams>): compare is CompareMatchParams =>
-  bool(compare.prev && compare.next && compare.prev.query.full !== compare.next.query.full);
+  bool(compare.prev && compare.next && compare.prev.queryText.full !== compare.next.queryText.full);
 
 /**
  * Has the cursor moved within the current suggestion (added or deleted
@@ -79,7 +79,7 @@ export const isJumpReason = (map: SuggestReasonMap): map is Required<SuggestReas
  * True when the match is currently active (i.e. it's query has a value)
  */
 export const isValidMatch = (match: SuggestStateMatch | undefined): match is SuggestStateMatch =>
-  bool(match && match.query.full.length >= match.suggester.matchOffset);
+  bool(match && match.queryText.full.length >= match.suggester.matchOffset);
 
 /**
  * True when the current selection is outside the match.

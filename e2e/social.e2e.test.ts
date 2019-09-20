@@ -2,6 +2,7 @@ import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
 import { getDocument, queries } from 'pptr-testing-library';
 import { ElementHandle } from 'puppeteer';
 import {
+  $innerHTML,
   innerHtml,
   outerHtml,
   press,
@@ -9,7 +10,6 @@ import {
   skipTestOnFirefox,
   textContent,
   type,
-  $innerHTML,
 } from './helpers';
 
 const FIRST_PARAGRAPH_SELECTOR = EDITOR_CLASS_SELECTOR + ' > p:first-child';
@@ -34,6 +34,8 @@ describe('Social Showcase', () => {
       await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
         `This is text <a href="https://url.com" role="presentation">https://url.com</a>`,
       );
+
+      // <P>This is text https://url.com<a href="https://url.com">https://url.com</a></p>
     });
 
     it('should parse simple urls', async () => {
@@ -202,10 +204,16 @@ describe('Social Showcase', () => {
 
   describe('Emoji', () => {
     // Emoji are being completely rewritten soon so this is temporary
-    it.skip('should be able to add emoji', async () => {
+    it('should be able to add emoji', async () => {
       await $editor.type('😀', { delay: 10 });
-      await expect(innerHtml(sel(EDITOR_CLASS_SELECTOR, 'span[title=grinning]'))).resolves.toBeTruthy();
-      await expect(innerHtml(sel(EDITOR_CLASS_SELECTOR, 'span[data-emoji-native=😀]'))).resolves.toBeTruthy();
+      await expect(innerHtml(sel(EDITOR_CLASS_SELECTOR, 'p'))).resolves.toMatchInlineSnapshot(`"😀"`);
+      //      , 'span[title=grinning]'))).resolves.toBeTruthy();
+      //    await expect(innerHtml(sel(EDITOR_CLASS_SELECTOR, 'span[data-emoji-native=😀]'))).resolves.toBeTruthy();
+    });
+
+    it('transforms emoticons', async () => {
+      await $editor.type(':-)', { delay: 10 });
+      // expect(innerHtml(sel(😀)))
     });
 
     it('should handle multiple emoji with no spaces', async () => {

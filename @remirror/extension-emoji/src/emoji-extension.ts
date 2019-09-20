@@ -1,6 +1,5 @@
 import {
   CommandFunction,
-  debounce,
   Extension,
   ExtensionManagerParams,
   FromToParams,
@@ -8,7 +7,7 @@ import {
   plainInputRule,
 } from '@remirror/core';
 import escapeStringRegex from 'escape-string-regexp';
-import { SuggestChangeHandlerParams, Suggester } from 'prosemirror-suggest';
+import { Suggester } from 'prosemirror-suggest';
 import {
   EmojiExtensionOptions,
   EmojiObject,
@@ -17,14 +16,13 @@ import {
   SkinVariation,
 } from './emoji-types';
 import {
-  ambiguousEmoticonRegex,
   DEFAULT_FREQUENTLY_USED,
+  emoticonRegex,
   getEmojiByName,
   getEmojiFromEmoticon,
   populateFrequentlyUsed,
   SKIN_VARIATIONS,
   sortEmojiMatches,
-  unambiguousEmoticonRegex,
 } from './emoji-utils';
 
 export class EmojiExtension extends Extension<EmojiExtensionOptions> {
@@ -56,16 +54,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
     return [
       // Emoticons
       plainInputRule({
-        regexp: unambiguousEmoticonRegex,
-        transformMatch: ([match]) => {
-          const emoji = getEmojiFromEmoticon(match);
-          return emoji ? emoji.char : null;
-        },
-      }),
-
-      // Ambiguous Emoticons (require a space at the end)
-      plainInputRule({
-        regexp: ambiguousEmoticonRegex,
+        regexp: emoticonRegex,
         transformMatch: ([full, partial]) => {
           const emoji = getEmojiFromEmoticon(partial);
           return emoji ? full.replace(partial, emoji.char) : null;
@@ -178,7 +167,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       decorationsTag: 'span',
       keyBindings: suggestionKeyBindings,
       onChange: params => {
-        const query = params.query.full;
+        const query = params.queryText.full;
         const emojiMatches = query.length === 0 ? this.frequentlyUsed : sortEmojiMatches(query, maxResults);
         onSuggestionChange({ ...params, emojiMatches });
       },
