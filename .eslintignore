@@ -7,3 +7,4 @@ node_modules
 storybook-static
 examples/with-razzle/build/**
 public
+coverage

@@ -17,6 +17,14 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
+    project: [
+      './@remirror/tsconfig.eslint.json',
+      './packages/tsconfig.eslint.json',
+      './support/tsconfig.eslint.json',
+      './examples/tsconfig.eslint.json',
+      './e2e/tsconfig.eslint.json',
+      './docs/tsconfig.eslint.json',
+    ],
   },
   settings: {
     react: {
@@ -109,6 +117,14 @@ module.exports = {
       files: ['**/*.d.ts'],
       rules: {
         '@typescript-eslint/no-namespace': 'off',
+      },
+    },
+    {
+      files: ['**/*.dts.ts'],
+      rules: {
+        '@typescript-eslint/no-namespace': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
+        'no-unused-expressions': 'off',
       },
     },
   ],

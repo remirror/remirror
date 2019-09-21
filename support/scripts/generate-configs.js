@@ -149,6 +149,8 @@ const generateApiExtractorConfigs = async () => {
   await Promise.all(paths.map(fn));
 };
 
+
+
 const run = async () => {
   await Promise.all([
     generateSizeLimitConfig(),
