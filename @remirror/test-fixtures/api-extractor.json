@@ -1,0 +1,10 @@
+{
+  "__AUTO_GENERATED__": "To update run: `yarn generate:json`",
+  "extends": "../../support/api-extractor.json",
+  "mainEntryPointFilePath": "<projectFolder>/lib/index.d.ts",
+  "apiReport": {
+    "enabled": true,
+    "reportFolder": "../../support/api/",
+    "reportFileName": "remirror__test-fixtures.api.md"
+  }
+}
