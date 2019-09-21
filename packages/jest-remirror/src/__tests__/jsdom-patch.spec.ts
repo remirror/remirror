@@ -1,5 +1,3 @@
-
-
 import { Cast } from '@remirror/core';
 import { EditorView } from 'prosemirror-view';
 import { jsdomSelectionPatch, NullSelectionReader } from '../jsdom-patch';

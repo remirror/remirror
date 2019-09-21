@@ -1,5 +1,7 @@
 !.babelrc.js
 !**/.babelrc.js
+!.eslintrc.js
+!**/.eslintrc.js
 lib
 dist
 node_modules

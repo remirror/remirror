@@ -1,3 +1,17 @@
+const fix = process.argv.includes('--fix');
+const extraOptions = fix
+  ? {}
+  : {
+      // project: [
+      //   './@remirror/tsconfig.lint.json',
+      //   './packages/tsconfig.lint.json',
+      //   './support/tsconfig.lint.json',
+      //   './examples/tsconfig.lint.json',
+      //   './e2e/tsconfig.lint.json',
+      //   './docs/tsconfig.lint.json',
+      // ],
+    };
+
 module.exports = {
   parser: '@typescript-eslint/parser',
   extends: [
@@ -17,14 +31,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    project: [
-      './@remirror/tsconfig.lint.json',
-      './packages/tsconfig.lint.json',
-      './support/tsconfig.lint.json',
-      './examples/tsconfig.lint.json',
-      './e2e/tsconfig.lint.json',
-      './docs/tsconfig.lint.json',
-    ],
+    ...extraOptions,
   },
   settings: {
     react: {
@@ -41,15 +48,6 @@ module.exports = {
     '@typescript-eslint/camelcase': 'off', // Gatsby and other projects use snake_case
     '@typescript-eslint/no-empty-function': 'off', // Empty functions/methods are often desired
     '@typescript-eslint/no-empty-interface': 'off', // Empty interfaces are useful for future planning
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
-        args: 'after-used',
-        ignoreRestSiblings: true,
-      },
-    ],
     '@typescript-eslint/no-var-requires': 'off', // We use 'require(..)' throughout
 
     'jest/no-focused-tests': 'error',
@@ -62,7 +60,7 @@ module.exports = {
 
     // ESLint rules (those without a '/' in) come after here
 
-    'no-nested-ternary': 'warn', // Prettier makes nested ternaries more acceptable
+    'no-nested-ternary': 'off', // Prettier makes nested ternaries more acceptable
     'no-return-assign': ['error', 'except-parens'],
     'no-unused-expressions': [
       'error',

@@ -14,7 +14,7 @@ import {
   ProsemirrorNode,
 } from '@remirror/core';
 import React, { ComponentType, Fragment, ReactNode } from 'react';
-import { mapProps } from './renderer-utils';
+import { mapProps, gatherToDOM } from './renderer-utils';
 
 type NodeToDOM = NodeExtensionSpec['toDOM'];
 type MarkToDOM = MarkExtensionSpec['toDOM'];
@@ -177,7 +177,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
   ) {
     const result = gatherToDOM(manager.nodes);
     if (!result.text) {
-      result.text = node => node.text!;
+      result.text = node => (node.text ? node.text : '');
     }
     return result;
   }
@@ -192,23 +192,4 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
   ) {
     return gatherToDOM(manager.marks);
   }
-}
-
-/**
- * Gather up all the toDOM methods from the provided spec object
- *
- * @param specs
- */
-function gatherToDOM<GSpec extends MarkExtensionSpec | NodeExtensionSpec>(specs: Record<string, GSpec>) {
-  const result: Record<string, GSpec['toDOM']> = {};
-  for (const name in specs) {
-    if (!specs.hasOwnProperty(name)) {
-      continue;
-    }
-    const toDOM = specs[name].toDOM;
-    if (toDOM) {
-      result[name] = toDOM;
-    }
-  }
-  return result;
 }

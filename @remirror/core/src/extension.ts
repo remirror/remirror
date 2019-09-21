@@ -17,6 +17,7 @@ import {
   OnTransactionParams,
   PlainObject,
   ProsemirrorPlugin,
+  ExtraAttrs,
 } from '@remirror/core-types';
 import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
@@ -137,7 +138,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
       throw new Error('Invalid use of extraAttrs within a plain extension.');
     }
 
-    const extraAttrs = this.options.extraAttrs!;
+    const extraAttrs = this.options.extraAttrs as ExtraAttrs[];
     const attrs: Record<string, { default?: unknown }> = {};
     if (!extraAttrs) {
       return attrs;
@@ -164,7 +165,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
       throw new Error('Invalid use of extraAttrs within a plain extension.');
     }
 
-    const extraAttrs = this.options.extraAttrs!;
+    const extraAttrs = this.options.extraAttrs as ExtraAttrs[];
     const attrs: Attrs = {};
     if (!extraAttrs) {
       return attrs;

@@ -84,7 +84,6 @@ export interface ExtensionConstructor<
   GOptions extends BaseExtensionOptions,
   GExtension extends Extension<GOptions, any>
 > {
-
   new (options?: GOptions): GExtension;
 }
 

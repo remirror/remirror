@@ -1,35 +1,15 @@
-import { Extension } from '@remirror/core';
-import { ZERO_WIDTH_SPACE_CHAR } from '@remirror/core-constants';
-import { BaseExtensionOptions, NodeMatch, ResolvedPos } from '@remirror/core-types';
+import {
+  Extension,
+  BaseExtensionOptions,
+  NodeMatch,
+  ResolvedPos,
+  ExtensionManagerParams,
+  ZERO_WIDTH_SPACE_CHAR,
+  uniqueArray,
+} from '@remirror/core';
 import { getPluginState, nodeNameMatchesList } from '@remirror/core-utils';
 import { EditorState, Plugin, Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { NODE_CURSOR_DEFAULTS } from '../core-extension-constants';
-
-export interface NodeCursorExtensionOptions extends BaseExtensionOptions {
-  targets?: NodeMatch[];
-}
-
-/**
- * This extension makes it possible to navigate with the arrow keys between nodes like emoji.
- *
- * Without it the cursor sometimes gets lost and stops responding to key presses.
- */
-export class NodeCursorExtension extends Extension<NodeCursorExtensionOptions> {
-  get name() {
-    return 'nodeCursor' as const;
-  }
-
-  get defaultOptions() {
-    return {
-      targets: NODE_CURSOR_DEFAULTS,
-    };
-  }
-
-  public plugin() {
-    return createNodeCursorExtensionPlugin(this);
-  }
-}
 
 export const findSpecialNodeAfter = ($pos: ResolvedPos, tr: Transaction, matchers: NodeMatch[]) => {
   if (nodeNameMatchesList($pos.nodeAfter, matchers)) {
@@ -70,7 +50,8 @@ export const findSpecialNodeBefore = ($pos: ResolvedPos, tr: Transaction, matche
   return;
 };
 
-const createNodeCursorExtensionPlugin = (ctx: NodeCursorExtension) => {
+const createNodeCursorExtensionPlugin = (ctx: NodeCursorExtension, nodeNames: string[]) => {
+  const targets = uniqueArray([...nodeNames, ...ctx.options.targets]);
   return new Plugin({
     key: ctx.pluginKey,
 
@@ -81,8 +62,8 @@ const createNodeCursorExtensionPlugin = (ctx: NodeCursorExtension) => {
         const { $from } = selection;
         const positions: number[] = [];
 
-        const posAfter = findSpecialNodeAfter($from, tr, ctx.options.targets);
-        const posBefore = findSpecialNodeBefore($from, tr, ctx.options.targets);
+        const posAfter = findSpecialNodeAfter($from, tr, targets);
+        const posBefore = findSpecialNodeBefore($from, tr, targets);
 
         if (posAfter !== undefined) {
           positions.push(posAfter);
@@ -118,3 +99,30 @@ const createNodeCursorExtensionPlugin = (ctx: NodeCursorExtension) => {
     },
   });
 };
+
+export interface NodeCursorExtensionOptions extends BaseExtensionOptions {
+  targets?: NodeMatch[];
+}
+
+/**
+ * This extension makes it possible to navigate with the arrow keys between nodes.
+ *
+ * @remarks
+ *
+ * Without it the cursor sometimes gets lost and stops responding to key presses.
+ */
+export class NodeCursorExtension extends Extension<NodeCursorExtensionOptions> {
+  get name() {
+    return 'nodeCursor' as const;
+  }
+
+  get defaultOptions() {
+    return {
+      targets: [],
+    };
+  }
+
+  public plugin({ tags }: ExtensionManagerParams) {
+    return createNodeCursorExtensionPlugin(this, tags.general.nodeCursor);
+  }
+}

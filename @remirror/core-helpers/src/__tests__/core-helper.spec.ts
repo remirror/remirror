@@ -40,6 +40,7 @@ import {
   uniqueBy,
   uniqueId,
   within,
+  hasOwnProperty,
 } from '../core-helpers';
 
 describe('findMatches', () => {
@@ -377,4 +378,10 @@ test('within', () => {
   expect(within(5, 0, 4)).toBeFalse();
   expect(within(-20, -21, -20)).toBeTrue();
   expect(within(10, null, undefined, 0, 12)).toBeTrue();
+});
+
+test('hasOwnProperty', () => {
+  expect(hasOwnProperty({ a: 1 }, 'a')).toBeTrue();
+  expect(hasOwnProperty({ a: 1 }, 'b')).toBeFalse();
+  expect(hasOwnProperty({ a: 1, hasOwnProperty: () => true }, 'b')).toBeFalse();
 });

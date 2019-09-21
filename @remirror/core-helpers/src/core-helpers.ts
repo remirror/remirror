@@ -869,3 +869,23 @@ export const within = (value: number, ...rest: Array<number | undefined | null>)
   const numbers: number[] = rest.filter<number>(isNumber);
   return value >= Math.min(...numbers) && value <= Math.max(...numbers);
 };
+
+/**
+ * Safe implementation of hasOwnProperty with typechecking.
+ *
+ * @remarks
+ *
+ * See {@link https://eslint.org/docs/rules/no-prototype-builtins}
+ *
+ * @param obj - the object to check
+ * @param key - the property to check
+ *
+ * @typeParam GObj - the object type
+ * @typeParam GProperty - the property which can be a string | number | symbol
+ */
+export const hasOwnProperty = <GObj extends {}, GProperty extends string | number | symbol>(
+  obj: GObj,
+  key: GProperty,
+): obj is GObj & { GKey: unknown } => {
+  return Object.prototype.hasOwnProperty.call(obj, key);
+};

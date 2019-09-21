@@ -29,7 +29,7 @@ export const Bundle = ({ args, startTime = Date.now(), runBundler }: BundleProps
     runBundler()
       .then(() => setState({ completed: true, endTime: Date.now() }))
       .catch(e => setState({ error: e, completed: true }));
-  }, []);
+  }, [runBundler, setState]);
 
   return (
     <>
@@ -56,19 +56,19 @@ export const Bundle = ({ args, startTime = Date.now(), runBundler }: BundleProps
 /**
  * Renders a loading line
  */
-const LoadingLine: FC<BundleState> = ({ completed, error, children }) => (
-  <>
-    <Box paddingRight={2}>
-      {!completed ? (
-        <Spinner />
-      ) : completed && !error ? (
-        <Color green={true}>{figures.tick}</Color>
-      ) : (
-        <Color red={true}>{figures.cross}</Color>
-      )}
-    </Box>
-    <Text>
-      <Color grey={true}>{children}</Color>
-    </Text>
-  </>
-);
+const LoadingLine: FC<BundleState> = ({ completed, error, children }) => {
+  const getElement = () => {
+    if (!completed) return <Spinner />;
+    if (completed && !error) return <Color green={true}>{figures.tick}</Color>;
+    return <Color red={true}>{figures.cross}</Color>;
+  };
+
+  return (
+    <>
+      <Box paddingRight={2}>{getElement()}</Box>
+      <Text>
+        <Color grey={true}>{children}</Color>
+      </Text>
+    </>
+  );
+};

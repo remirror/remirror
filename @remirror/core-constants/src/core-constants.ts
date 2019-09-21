@@ -155,22 +155,30 @@ export enum ExtensionType {
 }
 
 /**
- * These are the remirror supported tag strings which help categorize different
- * behaviors that extensions can exhibit. And extension can register itself with
- * multiple such behaviors and these categories can be used by other extensions
- * when running commands and updating the document.
+ * These are the default supported tag strings which help categorize different
+ * behaviors that extensions can exhibit.
+ *
+ * @remarks
+ *
+ * Any extension can register itself with multiple such behaviors and these
+ * categorizations can be used by other extensions when running commands and
+ * updating the document.
  */
 export enum Tags {
   /**
    * Describes a node that can be used as the last node of a document and
    * by extension doesn't need to render a node after itself.
    *
-   * e.g. paragraph
+   * @remarks
+   *
+   * e.g. `paragraph`
    */
   LastNodeCompatible = 'lastNodeCompatible',
 
   /**
    * A mark that is used to change the formatting of the node it wraps.
+   *
+   * @remarks
    *
    * e.g. `bold`, `italic`
    */
@@ -179,7 +187,20 @@ export enum Tags {
   /**
    * A node that is deemed to format in a non standard way.
    *
+   * @remarks
+   *
    * e.g. `codeBlock`, `heading`, `blockquote`
    */
   FormattingNode = 'formattingNode',
+
+  /**
+   * Identifies a node which has problems with cursor navigation.
+   *
+   * @remarks
+   *
+   * When this tag is added to an extension this will be picked up by
+   * behavioural extensions such as the NodeCursorExtension which makes hard to
+   * reach nodes navigable via the keyboard arrows.
+   */
+  NodeCursor = 'nodeCursor',
 }

@@ -186,7 +186,7 @@ const useDebounce = (fn: () => any, ms: number = 0, args: any[] = []) => {
       // if args change then clear timeout
       clearTimeout(handle);
     };
-  }, args);
+  }, [args, fn, ms]);
 };
 
 export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', editor, children }) => {
@@ -265,7 +265,7 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', edi
     if (editor === 'wysiwyg') {
       wysiwygManager.view.focus();
     }
-  }, [editor]);
+  }, [editor, markdownManager.view, wysiwygManager.view]);
 
   return (
     <>

@@ -12,8 +12,7 @@ const create = (params: Partial<PositionTrackerExtensionOptions> = {}) =>
 describe('plugin', () => {
   let {
     add,
-
-    nodes: { doc, p, heading: h, blockquote },
+    nodes: { doc, p, heading: h },
   } = create();
 
   beforeEach(() => {
@@ -38,10 +37,10 @@ describe('plugin', () => {
   it('tracks position across nodes', () => {
     add(doc(p('Yo <cursor>')))
       .actionsCallback(actions => actions.addPositionTracker({ id: 'test' }))
-      .replace(blockquote('<cursor>'))
+      .replace(p(''))
       .insertText(' new text')
       .helpersCallback(helpers => {
-        expect(helpers.findPositionTracker('test')).toBe(13);
+        expect(helpers.findPositionTracker('test')).toBe(17);
       });
   });
 

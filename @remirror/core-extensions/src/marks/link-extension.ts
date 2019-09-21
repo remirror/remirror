@@ -112,12 +112,13 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
       switch (command) {
         case 'removeLink':
           return isMarkActive({ state: getState(), type });
-        case 'updateLink':
+        case 'updateLink': {
           const { selection } = getState();
           if (selectionEmpty(selection) || !isTextSelection(selection)) {
             return false;
           }
           return true;
+        }
         default:
           return true;
       }

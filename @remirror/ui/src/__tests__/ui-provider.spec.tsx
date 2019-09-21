@@ -1,4 +1,3 @@
-
 import { Remirror } from '@remirror/react';
 import { createTestManager } from '@remirror/test-fixtures';
 import { render } from '@testing-library/react';

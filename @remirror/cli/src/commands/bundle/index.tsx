@@ -1,5 +1,3 @@
-
-
 import { render } from 'ink';
 import React from 'react';
 import { CommandModule } from 'yargs';

@@ -1,1 +1,1 @@
-modules.export = require('./support/.size-limit.json').sizes
+modules.export = require('./support/.size-limit.json').sizes;

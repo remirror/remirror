@@ -513,7 +513,7 @@ export const fireEventAtPosition = <GSchema extends EditorSchema = any>({
   options = {},
   position = view.state.selection.anchor,
 }: FireEventAtPositionParams<GSchema>) => {
-  const element = findElementAtPosition(position, view)!;
+  const element = findElementAtPosition(position, view);
   const syntheticEvents = createEvents(event, options);
 
   syntheticEvents.forEach(syntheticEvent => fireEvent(element, syntheticEvent));

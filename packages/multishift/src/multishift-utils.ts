@@ -1,5 +1,3 @@
-
-
 import {
   clamp,
   isArray,
@@ -64,7 +62,7 @@ export const defaultItemToString = <GItem = any>(item: GItem) => {
 export const defaultItemsToString = <GItem = any>(
   selectedItems: GItem[],
   itemToString = defaultItemToString as ItemToString, // TypeCast needed to prevent errors in consumers
-) => selectedItems.map(itemToString!).join(', ');
+) => selectedItems.map(itemToString).join(', ');
 
 export interface GetInitialPropsParams<GItem = any>
   extends MultishiftBehaviorProps,

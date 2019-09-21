@@ -10,11 +10,12 @@ const noSSRRegex = REMIRROR_E2E_BASIC
   ? basicRegex
   : `.*\\.(e2e|${REMIRROR_E2E_SERVER})\\.test\\.ts$`;
 
-const allTestRegex = REMIRROR_E2E_BASIC
-  ? basicRegex
-  : REMIRROR_E2E_BROWSER === 'firefox'
-  ? noSSRRegex
-  : `.*\\.(e2e|ssr|${REMIRROR_E2E_SERVER})\\.test\\.ts$`;
+const getRegex = () => {
+  if (REMIRROR_E2E_BASIC) return basicRegex;
+  if (REMIRROR_E2E_BROWSER === 'firefox') return noSSRRegex;
+  return `.*\\.(e2e|ssr|${REMIRROR_E2E_SERVER})\\.test\\.ts$`;
+};
+const allTestRegex = getRegex();
 
 const servers = (exports.servers = {
   next: {

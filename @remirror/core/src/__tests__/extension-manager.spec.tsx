@@ -1,5 +1,3 @@
-
-
 import { EMPTY_PARAGRAPH_NODE, Tags } from '@remirror/core-constants';
 import { Cast } from '@remirror/core-helpers';
 import { Attrs, EditorState, NodeExtensionSpec } from '@remirror/core-types';

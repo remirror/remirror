@@ -16,7 +16,7 @@ import {
 } from '@remirror/core';
 import { InjectedRemirrorProps } from '@remirror/react';
 import { RenderResult } from '@testing-library/react/pure';
-import { FireParams, TestEditorView } from 'jest-prosemirror';
+import { FireParams, TestEditorViewParams } from 'jest-prosemirror';
 import { Node as PMNode } from 'prosemirror-model';
 import { BaseExtensionNodeNames, BaseExtensionNodes } from './jest-remirror-schema';
 
@@ -260,18 +260,19 @@ export type CreateTestEditorReturn<
     GAttrNodes,
     GOthers
   > = GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>
-> = Omit<InjectedRemirrorProps<GExtension>, 'view'> & {
-  view: TestEditorView<SchemaFromExtensions<GExtension>>;
-} & {
-  utils: RenderResult;
-  add: AddContent<GExtension>;
-  nodes: NodeWithoutAttrs<GetNames<GPlainNodes> | BaseExtensionNodeNames>;
-  marks: MarkWithoutAttrs<GetNames<GPlainMarks>>;
-  attrNodes: NodeWithAttrs<GetNames<GAttrNodes>>;
-  attrMarks: MarkWithAttrs<GetNames<GAttrMarks>>;
-  getState(): EditorState<SchemaFromExtensions<GExtension>>;
-  schema: SchemaFromExtensions<GExtension>;
-};
+> = Omit<InjectedRemirrorProps<GExtension>, 'view'> &
+  TestEditorViewParams<SchemaFromExtensions<GExtension>> & {
+    utils: RenderResult;
+    add: AddContent<GExtension>;
+    nodes: NodeWithoutAttrs<GetNames<GPlainNodes> | BaseExtensionNodeNames>;
+    marks: MarkWithoutAttrs<GetNames<GPlainMarks>>;
+    attrNodes: NodeWithAttrs<GetNames<GAttrNodes>>;
+    attrMarks: MarkWithAttrs<GetNames<GAttrMarks>>;
+    getState(): EditorState<SchemaFromExtensions<GExtension>>;
+    schema: SchemaFromExtensions<GExtension>;
+    p: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
+    doc: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
+  };
 
 export type GetNames<GExtensions extends AnyExtension[]> = GExtensions[number]['name'];
 

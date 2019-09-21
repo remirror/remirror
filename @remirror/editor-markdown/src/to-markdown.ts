@@ -126,7 +126,6 @@ function backticksFor(node: ProsemirrorNode, side: Side) {
   let m;
   let len = 0;
   if (node.isText) {
-
     while ((m = ticks.exec(node.text!))) {
       len = Math.max(len, m[0].length);
     }

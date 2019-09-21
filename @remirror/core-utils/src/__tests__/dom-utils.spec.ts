@@ -42,7 +42,6 @@ import {
   toHTML,
 } from '../dom-utils';
 
-
 import domino from 'domino';
 
 describe('markActive', () => {

@@ -137,7 +137,7 @@ const useA11yStatus = (status: string, timeout = DEFAULT_TIMEOUT) => {
 
     setDisplayedStatus(status);
     clearStatus();
-  }, [status]);
+  }, [clearStatus, status]);
 
   return createElement(
     VisuallyHidden,

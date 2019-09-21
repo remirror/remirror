@@ -100,7 +100,7 @@ export const useStateWithCallback: UseStateWithCallback = <GState>(
       callback();
       setState([state, undefined]);
     }
-  }, [state]);
+  }, [callback, state]);
 
   const setStateWithCallback = useCallback(
     (value: SetStateAction<GState | undefined>, cb?: () => void) => {
@@ -153,7 +153,7 @@ export const useSetState = <GState extends object>(
     (cb?: () => void) => {
       setStateWithCallback(initialState, cb);
     },
-    [setStateWithCallback],
+    [initialState, setStateWithCallback],
   );
 
   const setState = useCallback(
@@ -205,7 +205,7 @@ export const useSetState = <GState extends object>(
  * };
  * ```
  */
-export const useEffectOnUpdate: typeof useEffect = (effect, deps) => {
+export const useEffectOnUpdate: typeof useEffect = effect => {
   const isInitialMount = useRef(true);
 
   useEffect(() => {
@@ -214,7 +214,7 @@ export const useEffectOnUpdate: typeof useEffect = (effect, deps) => {
     } else {
       return effect();
     }
-  }, deps);
+  }, [effect]);
 };
 
 /**

@@ -6,6 +6,7 @@ import {
   isProsemirrorNode,
   isString,
   SchemaParams,
+  hasOwnProperty,
 } from '@remirror/core';
 import { Fragment, Mark, Node as PMNode, Slice } from 'prosemirror-model';
 import {
@@ -77,7 +78,7 @@ export const text = (value: string, schema: EditorSchema): TaggedContentItem => 
 export const offsetTags = (tags: Tags, offset: number): Tags => {
   const result: Tags = {};
   for (const name in tags) {
-    if (Object.prototype.hasOwnProperty.call(tags, name)) {
+    if (hasOwnProperty(tags, name)) {
       result[name] = tags[name] + offset;
     }
   }

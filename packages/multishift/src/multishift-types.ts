@@ -1,4 +1,4 @@
-
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../globals.d.ts" />
 
 import {
@@ -185,9 +185,7 @@ export interface MultishiftChangeHandlerProps<GItem = any> {
    * more about in the stateChangeTypes section.
    * @param state - This is the full state object.
    *
-   * Tip: This function will be called any time any state is changed. The best
-   * way to determine whether any particular state was changed, you can use
-   * changes.hasOwnProperty('propName').
+   * Tip: This function will be called any time any state is changed.
    *
    * NOTE: This is only called when state actually changes. You should not
    * attempt to use this to handle events. If you wish to handle events, put

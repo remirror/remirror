@@ -27,6 +27,10 @@ export interface HistoryExtensionOptions extends BaseExtensionOptions {
   newGroupDelay?: number | null;
 
   /**
+   * Provide a custom state getter function.
+   *
+   * @remarks
+   *
    * This is only needed when the extension is part of a child editor, e.g.
    * `ImageCaptionEditor`. By passing in the `getState` method history actions
    * can be dispatched into the parent editor allowing them to propagate into
@@ -35,6 +39,10 @@ export interface HistoryExtensionOptions extends BaseExtensionOptions {
   getState?(): EditorState;
 
   /**
+   * Provide a custom dispatch getter function for embedded editors
+   *
+   * @remarks
+   *
    * This is only needed when the extension is part of a child editor, e.g.
    * `ImageCaptionEditor`. By passing in the `getDispatch` method history actions
    * can be dispatched into the parent editor allowing them to propagate into
@@ -62,16 +70,32 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
   }
 
   /**
+   * Wraps the history method to inject state from the getState or getDispatch
+   * method.
+   *
+   * @param method - the method to wrap
+   */
+  private wrapMethod = (method: CommandFunction): CommandFunction => {
+    return (state, dispatch, view) => {
+      const { getState, getDispatch } = this.options;
+
+      return method(
+        getState ? getState() || state : state,
+        getDispatch ? getDispatch() || dispatch : dispatch,
+        view,
+      );
+    };
+  };
+
+  /**
    * Adds the default key mappings for undo and redo.
    */
   public keys() {
-    const wrap = createHistoryMethodWrapper(this.options);
-
     return {
       'Mod-y': () => false,
-      'Mod-z': wrap(undo),
-      'Shift-Mod-z': wrap(redo),
-      ...(!environment.isMac ? { ['Mod-y']: wrap(redo) } : {}),
+      'Mod-z': this.wrapMethod(undo),
+      'Shift-Mod-z': this.wrapMethod(redo),
+      ...(!environment.isMac ? { ['Mod-y']: this.wrapMethod(redo) } : {}),
     };
   }
 
@@ -115,8 +139,6 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
    * Provide the undo and redo commands.
    */
   public commands() {
-    const wrap = createHistoryMethodWrapper(this.options);
-
     return {
       /**
        * Undo the last action that occurred. This can be overridden by
@@ -130,7 +152,7 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
        * tr.setMeta(pluginKey, { addToHistory: false })
        * ```
        */
-      undo: (): CommandFunction => wrap(undo),
+      undo: (): CommandFunction => this.wrapMethod(undo),
 
       /**
        * Redo an action that was in the undo stack.
@@ -139,23 +161,7 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
        * actions.redo()
        * ```
        */
-      redo: (): CommandFunction => wrap(redo),
+      redo: (): CommandFunction => this.wrapMethod(redo),
     };
   }
 }
-
-/**
- * Wraps the history method to inject state from the getState or getDispatch
- * method.
- */
-const createHistoryMethodWrapper = (options: Pick<HistoryExtensionOptions, 'getState' | 'getDispatch'>) => (
-  method: CommandFunction,
-): CommandFunction => (state, dispatch, view) => {
-  const { getState, getDispatch } = options;
-
-  return method(
-    getState ? getState() || state : state,
-    getDispatch ? getDispatch() || dispatch : dispatch,
-    view,
-  );
-};

@@ -1,5 +1,5 @@
 import { Interpolation } from '@emotion/core';
-import { bool, isArray, isEqual, isFunction, isInstanceOf } from '@remirror/core-helpers';
+import { bool, isArray, isEqual, isFunction, isInstanceOf, hasOwnProperty } from '@remirror/core-helpers';
 import {
   ActionMethod,
   AnyActions,
@@ -262,7 +262,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     this.extensions
       .filter(hasExtensionProperty('attributes'))
       .filter(extension => !extension.options.exclude.attributes)
-      .map(extension => extension.attributes!(this.params))
+      .map(extension => extension.attributes(this.params))
       .reverse()
       .forEach(attrs => {
         combinedAttributes = {
@@ -429,6 +429,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * @param otherManager - the value to test against
    */
   public isEqual(otherManager: unknown) {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     if (!isExtensionManager(otherManager)) {
       return false;
     }
@@ -461,7 +462,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    */
   public onTransaction(params: OnTransactionManagerParams) {
     this.extensions.filter(hasExtensionProperty('onTransaction')).forEach(({ onTransaction }) => {
-      onTransaction!({ ...params, ...this.params, view: this.data.view });
+      onTransaction({ ...params, ...this.params, view: this.data.view });
     });
   }
 
@@ -475,7 +476,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     this.checkInitialized();
     const key = this.pluginKeys[name];
     if (!key) {
-      throw new Error(`Cannot retrieve state for an extension: ${name} which doesn\'t exist`);
+      throw new Error(`Cannot retrieve state for an extension: ${name} which doesn't exist`);
     }
     return getPluginState<GState>(key, this.getState());
   }
@@ -488,7 +489,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
       .filter(hasExtensionProperty('ssrTransformer'))
       .filter(extension => !extension.options.exclude.ssr)
       .reduce((prevElement, extension) => {
-        return extension.ssrTransformer!(prevElement, this.params) as JSX.Element;
+        return extension.ssrTransformer(prevElement, this.params) as JSX.Element;
       }, element);
   }
 
@@ -643,7 +644,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
 
     for (const extensionKeymap of extensionKeymaps) {
       for (const key in extensionKeymap) {
-        if (!extensionKeymap.hasOwnProperty(key)) {
+        if (!hasOwnProperty(extensionKeymap, key)) {
           continue;
         }
         const oldCmd = mappedKeys[key];

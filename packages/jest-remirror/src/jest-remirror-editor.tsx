@@ -211,7 +211,7 @@ export const renderEditor = <
     marksWithoutAttrs[name as GPlainMarkNames] = markFactory({ name, schema });
   });
 
-  return Cast<GReturn>({
+  return ({
     ...returnedParams,
     utils,
     view,
@@ -222,5 +222,7 @@ export const renderEditor = <
     marks: marksWithoutAttrs,
     attrNodes: nodesWithAttrs,
     attrMarks: marksWithAttrs,
-  });
+    p: (nodesWithoutAttrs as any).p,
+    doc: (nodesWithoutAttrs as any).doc,
+  } as unknown) as GReturn;
 };

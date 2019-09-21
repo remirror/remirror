@@ -51,22 +51,24 @@ import {
 } from './multishift-utils';
 
 /**
- * ### `useMultishift`
- *
  * Multishift is a hook that provides all the necessary tools for building
  * accessible dropdown components.
+ *
+ * @remarks
  *
  * It supports `select` and `autocomplete` drop down experiences with built in
  * support for multi-selection.
  *
- * The library borrows (and steals) heavily from `downshift` but also adds some features
- * which are really important for the `remirror` project.
+ * The library borrows (and steals) heavily from `downshift` but also adds some
+ * features which are really important for the `remirror` project.
  *
  * - Focus on typescript support
  * - No React Native support
  * - Multi selection support
+ * - Render with **only** menu support (fully controlled)
  *
- * Eventually some of the code will be contributed back to the downshift library.
+ * Eventually some of the code will be contributed back to the downshift
+ * library.
  */
 export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): MultishiftReturn<GItem> => {
   const {
@@ -182,7 +184,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     } else if (refs.menu.current) {
       scrollIntoView(refs.items.current[mostRecentHighlightedIndex], refs.menu.current);
     }
-  }, [mostRecentHighlightedIndex]);
+  }, [isOpen, mostRecentHighlightedIndex, refs.items, refs.menu]);
 
   const itemHighlightedAtIndex = (index: number) => {
     const isHovered = index === hoveredIndex;
@@ -197,9 +199,12 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
 
   const itemIsSelected = useCallback(
     (item: GItem) => selectedItems.map(getItemId).includes(getItemId(item)),
-    [selectedItems],
+    [getItemId, selectedItems],
   );
-  const indexOfItem = useCallback((item: GItem) => items.map(getItemId).indexOf(getItemId(item)), [items]);
+  const indexOfItem = useCallback((item: GItem) => items.map(getItemId).indexOf(getItemId(item)), [
+    getItemId,
+    items,
+  ]);
 
   const getComboBoxProps = <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
     { refKey = 'ref' as GRefKey, ref, ...rest }: GetComboBoxPropsOptions<GElement, GRefKey> = {
@@ -564,7 +569,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
         }
       },
     }),
-    [],
+    [refs.input, refs.items, refs.menu, refs.toggleButton, type],
   );
 
   const stateHelpers = createStateHelpers(props, state);

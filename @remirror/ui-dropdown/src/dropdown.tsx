@@ -97,7 +97,17 @@ export const DropdownSelect = forwardRef<HTMLDivElement, DropdownProps>(
       if (newDropdownPosition !== dropdownPosition) {
         setDropdownPosition(newDropdownPosition);
       }
-    }, [rect.top, rect.bottom, rect.height]);
+    }, [
+      rect.top,
+      rect.bottom,
+      rect.height,
+      dropdownPosition,
+      autoPositionY,
+      autoPositionX,
+      rect.width,
+      autoPositionYSpace,
+      autoPositionXSpace,
+    ]);
 
     setSpring({
       height: isOpen ? rect.height : 0,

@@ -1,4 +1,4 @@
-import { take } from '@remirror/core-helpers';
+import { take, includes } from '@remirror/core-helpers';
 import {
   KeyboardConstructorParams,
   KeyboardEventName,
@@ -251,12 +251,12 @@ export class Keyboard {
   private fireAllEvents({ options, typing = false }: OptionsWithTypingParams) {
     this.keyDown({ options });
     if (
-      !noKeyPress.includes(options.key!) ||
+      !includes(noKeyPress, options.key) ||
       (typing && isUSKeyboardCharacter(options.key) && usKeyboardLayout[options.key].text)
     ) {
       this.keyPress({ options });
     }
-    if (!noKeyUp.includes(options.key!)) {
+    if (!includes(noKeyUp, options.key)) {
       this.keyUp({ options });
     }
 

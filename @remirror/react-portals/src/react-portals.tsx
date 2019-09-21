@@ -22,18 +22,14 @@ export const RemirrorPortals = ({ portalContainer }: RemirrorPortalsProps) => {
   /**
    * Update the state whenever the portal is updated.
    */
-  const onPortalChange = useCallback(
-    (portalMap: PortalMap) => {
-      setState(Array.from(portalMap.entries()));
-      // console.log(Array.from(portalMap.entries()));
-    },
-    [state],
-  );
+  const onPortalChange = useCallback((portalMap: PortalMap) => {
+    setState(Array.from(portalMap.entries()));
+  }, []);
 
   useEffect(() => {
     // Auto disposed when the component un-mounts
     return portalContainer.on(onPortalChange);
-  }, [portalContainer]);
+  }, [onPortalChange, portalContainer]);
 
   return (
     <>
@@ -75,7 +71,7 @@ const Portal = ({ portalContainer, container, Component }: PortalProps) => {
     return () => {
       portalContainer.remove(container);
     };
-  }, [portalContainer]);
+  }, [container, portalContainer]);
 
   return <Component />;
 };
