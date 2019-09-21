@@ -18,12 +18,12 @@ module.exports = {
       jsx: true,
     },
     project: [
-      './@remirror/tsconfig.eslint.json',
-      './packages/tsconfig.eslint.json',
-      './support/tsconfig.eslint.json',
-      './examples/tsconfig.eslint.json',
-      './e2e/tsconfig.eslint.json',
-      './docs/tsconfig.eslint.json',
+      './@remirror/tsconfig.lint.json',
+      './packages/tsconfig.lint.json',
+      './support/tsconfig.lint.json',
+      './examples/tsconfig.lint.json',
+      './e2e/tsconfig.lint.json',
+      './docs/tsconfig.lint.json',
     ],
   },
   settings: {

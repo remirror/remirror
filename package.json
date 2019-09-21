@@ -66,11 +66,11 @@
     "test:e2e:watch": "jest --watch --verbose=false --runInBand --config e2e/jest.config.js",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
     "typecheck": "run-s typecheck:*",
-    "typecheck:docs": "tsc -p docs/tsconfig.eslint.json --noEmit",
-    "typecheck:e2e": "tsc -p e2e/tsconfig.eslint.json --noEmit",
-    "typecheck:examples": "tsc -p ./examples/tsconfig.eslint.json --noEmit",
-    "typecheck:packages": "tsc -p packages/tsconfig.eslint.json --noEmit",
-    "typecheck:remirror": "tsc -p @remirror/tsconfig.eslint.json --noEmit",
+    "typecheck:docs": "tsc -p docs/tsconfig.lint.json --noEmit",
+    "typecheck:e2e": "tsc -p e2e/tsconfig.lint.json --noEmit",
+    "typecheck:examples": "tsc -p ./examples/tsconfig.lint.json --noEmit",
+    "typecheck:packages": "tsc -p packages/tsconfig.lint.json --noEmit",
+    "typecheck:remirror": "tsc -p @remirror/tsconfig.lint.json --noEmit",
     "typecheck:storybook": "tsc -p ./support/storybook/tsconfig.json --noEmit"
   },
   "devDependencies": {
