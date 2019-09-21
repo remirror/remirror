@@ -1,0 +1,30 @@
+{
+  "private": true,
+  "name": "@remirror/e2e",
+  "description": "e2e tests",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "version": "0.4.2-canary.2",
+  "main": "index.js",
+  "scripts": {
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@babel/runtime": "7.6.0",
+    "@remirror/core": "0.4.2-canary.2",
+    "@types/expect-puppeteer": "3.3.1",
+    "@types/jest-environment-puppeteer": "4.3.1",
+    "@types/puppeteer": "1.19.1",
+    "jest-environment-puppeteer": "4.3.0",
+    "jest-puppeteer": "4.3.0",
+    "pptr-testing-library": "0.4.0",
+    "puppeteer": "1.20.0",
+    "puppeteer-firefox": "0.5.0",
+    "test-keyboard": "0.4.2-canary.2"
+  },
+  "peerDependencies": {
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "jest-circus": "^24.9.0"
+  }
+}

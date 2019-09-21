@@ -1,5 +1,5 @@
 const config = require('../support/jest/jest.config');
-const { jestSupportDir, baseDir } = require('../support/jest/helpers');
+const { jestSupportDir } = require('../support/jest/helpers');
 const { server: __SERVER__ } = require('./server.config');
 
 const {
@@ -31,7 +31,7 @@ module.exports = {
   preset: 'jest-puppeteer',
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
   setupFilesAfterEnv: ['expect-puppeteer', jestSupportDir('jest.framework.ts')],
-  globalSetup: jestSupportDir('jest.puppeteer.setup.ts'),
-  globalTeardown: jestSupportDir('jest.puppeteer.teardown.ts'),
-  snapshotSerializers: [`${__dirname}/helpers/serializers/html-serializer`],
+  globalSetup: './jest.puppeteer.setup.ts',
+  globalTeardown: './jest.puppeteer.teardown.ts',
+  snapshotSerializers: [`${__dirname}/src/helpers/serializers/html-serializer`],
 };

@@ -1,6 +1,7 @@
 {
   "extends": "../support/tsconfig.base.json",
   "compilerOptions": {
+    "declaration": false,
     "types": [
       "jest",
       "node",
@@ -11,5 +12,5 @@
       "jest-image-snapshot"
     ]
   },
-  "include": ["./**/*.ts"]
+  "include": ["./", "patches.d.ts"]
 }
