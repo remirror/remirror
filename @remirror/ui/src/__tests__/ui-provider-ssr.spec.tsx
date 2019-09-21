@@ -4,7 +4,7 @@
 
 
 import { Remirror } from '@remirror/react';
-import { createTestManager } from '@test-fixtures/schema-helpers';
+import { createTestManager } from '@remirror/test-fixtures';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { baseTheme, RemirrorThemeProvider } from '..';

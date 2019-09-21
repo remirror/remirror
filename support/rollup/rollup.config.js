@@ -1,9 +1,9 @@
 import factory from './factory';
-import packages from './config.json';
+import { rollup } from './config.json';
 
 const configurations = [];
 
-packages.forEach(pkg => {
+rollup.forEach(pkg => {
   factory(require(pkg.path), pkg.root).forEach(config => configurations.push(config));
 });
 

@@ -1,5 +1,5 @@
 import { fromHTML } from '@remirror/core';
-import { createTestManager } from '@test-fixtures/schema-helpers';
+import { createTestManager } from '@remirror/test-fixtures';
 import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import React from 'react';

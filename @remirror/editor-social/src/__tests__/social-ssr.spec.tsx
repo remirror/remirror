@@ -5,7 +5,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
+import { docNodeBasicJSON } from '@remirror/test-fixtures';
 import { SocialEditor } from '..';
 
 test('it renders within an ssr environment', () => {

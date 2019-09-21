@@ -1,15 +1,30 @@
 {
+  "__AUTO_GENERATED__": "To update run: `yarn generate:json`",
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "baseUrl": "src",
-    "paths": {}
+    "paths": {},
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationMap": true,
+    "rootDir": "src"
   },
   "exclude": [
+    "lib",
     "**/*.test.{ts,tsx}",
     "**/*.stories.{ts,tsx}",
     "**/*.spec.{ts,tsx}",
     "**/__mocks__/**",
     "**/__tests__/**",
     "**/__stories__/**"
+  ],
+  "references": [
+    {
+      "path": "../core-constants/tsconfig.prod.json"
+    },
+    {
+      "path": "../react-portals/tsconfig.prod.json"
+    }
   ]
 }

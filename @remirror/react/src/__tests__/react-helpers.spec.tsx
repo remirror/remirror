@@ -1,6 +1,6 @@
 import { AnyExtension, ExtensionManager } from '@remirror/core';
 import { PlaceholderExtension } from '@remirror/core-extensions';
-import { TestExtension } from '@test-fixtures/schema-helpers';
+import { TestExtension } from '@remirror/test-fixtures';
 import React, { FC } from 'react';
 import { RemirrorExtension } from '../components/remirror-extension';
 import { RemirrorManager } from '../components/remirror-manager';

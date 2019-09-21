@@ -1,4 +1,3 @@
-
 import {
   DocExtension,
   ExtensionManager,
@@ -8,8 +7,8 @@ import {
   TextExtension,
 } from '@remirror/core';
 import { BoldExtension, CodeBlockExtension, ParagraphExtension } from '@remirror/core-extensions';
-import { simpleJSON, testJSON } from '@test-fixtures/object-nodes';
-import { createTestManager } from '@test-fixtures/schema-helpers';
+import { simpleJSON, testJSON } from '@remirror/test-fixtures';
+import { createTestManager } from '@remirror/test-fixtures';
 import { shallow } from 'enzyme';
 import { Node as PMNode } from 'prosemirror-model';
 import React from 'react';

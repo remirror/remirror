@@ -1,15 +1,36 @@
 {
+  "__AUTO_GENERATED__": "To update run: `yarn generate:json`",
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "baseUrl": "src",
-    "paths": {}
+    "paths": {},
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationMap": true,
+    "rootDir": "src"
   },
   "exclude": [
+    "lib",
     "**/*.test.{ts,tsx}",
     "**/*.stories.{ts,tsx}",
     "**/*.spec.{ts,tsx}",
     "**/__mocks__/**",
     "**/__tests__/**",
     "**/__stories__/**"
+  ],
+  "references": [
+    {
+      "path": "../core-helpers/tsconfig.prod.json"
+    },
+    {
+      "path": "../core-types/tsconfig.prod.json"
+    },
+    {
+      "path": "../ui/tsconfig.prod.json"
+    },
+    {
+      "path": "../ui-icons/tsconfig.prod.json"
+    }
   ]
 }

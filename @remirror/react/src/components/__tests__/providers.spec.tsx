@@ -1,5 +1,5 @@
-import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
-import { createBaseTestManager } from '@test-fixtures/schema-helpers';
+import { docNodeBasicJSON } from '@remirror/test-fixtures';
+import { createBaseTestManager } from '@remirror/test-fixtures';
 import { render } from '@testing-library/react';
 import React, { FC } from 'react';
 import { useRemirrorContext } from '../../hooks/context-hooks';

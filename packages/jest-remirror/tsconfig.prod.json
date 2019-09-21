@@ -1,15 +1,39 @@
 {
+  "__AUTO_GENERATED__": "To update run: `yarn generate:json`",
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "baseUrl": "src",
-    "paths": {}
+    "paths": {},
+    "composite": true,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationMap": true,
+    "rootDir": "src"
   },
   "exclude": [
+    "lib",
     "**/*.test.{ts,tsx}",
     "**/*.stories.{ts,tsx}",
     "**/*.spec.{ts,tsx}",
     "**/__mocks__/**",
     "**/__tests__/**",
     "**/__stories__/**"
+  ],
+  "references": [
+    {
+      "path": "../../@remirror/core/tsconfig.prod.json"
+    },
+    {
+      "path": "../../@remirror/core-extensions/tsconfig.prod.json"
+    },
+    {
+      "path": "../../@remirror/react/tsconfig.prod.json"
+    },
+    {
+      "path": "../../@remirror/react-utils/tsconfig.prod.json"
+    },
+    {
+      "path": "../jest-prosemirror/tsconfig.prod.json"
+    }
   ]
 }

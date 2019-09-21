@@ -1,5 +1,5 @@
 import { NodeMatch } from '@remirror/core-types';
-import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
+import { docNodeBasicJSON } from '@remirror/test-fixtures';
 import {
   atomInline,
   blockquote,

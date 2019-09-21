@@ -1,11 +1,12 @@
 const baseBabel = require('../babel/base.babel');
 const { resolve } = require('path');
+const { modules } = require('./modules.json');
 
 const moduleResolver = [
   'module-resolver',
   {
     alias: {
-      ...require('./modules.json'),
+      ...modules,
     },
     cwd: resolve(__dirname),
   },

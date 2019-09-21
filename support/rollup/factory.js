@@ -63,7 +63,7 @@ function configure(pkg, rootFolder = '@remirror') {
     globals(),
   ];
 
-  return {
+  const bundledOutput = {
     plugins,
     input,
     output: [
@@ -86,6 +86,19 @@ function configure(pkg, rootFolder = '@remirror') {
       return !!deps.find(dep => dep === id || id.startsWith(`${dep}/`));
     },
   };
+
+  const moduleOutput = {
+    ...bundledOutput,
+    output: {
+      dir: `${rootFolder}/${folderName}/lib`,
+      format: 'cjs',
+      exports: 'named',
+      sourcemap: true,
+    },
+    preserveModules: true,
+  };
+
+  return [bundledOutput, moduleOutput];
 }
 
 /**
@@ -95,7 +108,7 @@ function configure(pkg, rootFolder = '@remirror') {
  */
 
 function factory(pkg, rootFolder) {
-  return [configure(pkg, rootFolder)];
+  return configure(pkg, rootFolder);
 }
 
 /**

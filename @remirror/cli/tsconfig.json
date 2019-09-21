@@ -5,6 +5,5 @@
     "types": ["node", "jest", "jest-extended"],
     "declaration": false,
     "skipLibCheck": true // ! TODO There is a problem with the `ink-testing-library`
-  },
-  "include": ["src"]
+  }
 }

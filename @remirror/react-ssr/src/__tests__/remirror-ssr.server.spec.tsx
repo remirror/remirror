@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-import { createTestManager, helpers, initialJson } from '@test-fixtures/schema-helpers';
+import { createTestManager, helpers, initialJson } from '@remirror/test-fixtures';
 import { renderToString } from 'react-dom/server';
 
 import { ExtensionManager } from '@remirror/core';

@@ -1,5 +1,11 @@
 {
-  "packages": ["@remirror/*", "docs", "packages/*", "examples/*"],
+  "packages": [
+    "@remirror/*",
+    "packages/*",
+    "docs",
+    "e2e",
+    "examples/*"
+  ],
   "command": {
     "publish": {
       "message": "chore(release): publish %s",

@@ -45,7 +45,6 @@
     "rimraf": "^3.0.0",
     "yargs": "^14.0.0"
   },
-  "peerDependencies": {},
   "devDependencies": {
     "@testing-library/react-hooks": "2.0.1",
     "@types/ink-testing-library": "1.0.0",

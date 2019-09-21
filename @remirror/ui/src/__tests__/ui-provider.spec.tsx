@@ -1,6 +1,6 @@
 
 import { Remirror } from '@remirror/react';
-import { createTestManager } from '@test-fixtures/schema-helpers';
+import { createTestManager } from '@remirror/test-fixtures';
 import { render } from '@testing-library/react';
 import { ThemeProvider } from 'emotion-theming';
 import React from 'react';

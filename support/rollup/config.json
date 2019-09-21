@@ -1,150 +1,149 @@
-[
-  {
-    "path": "../../@remirror/core-constants/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/core-extensions/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/core-helpers/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/core-types/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/core-utils/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/core/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/dev/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/editor-markdown/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/editor-social/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/editor-wysiwyg/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/extension-code-block/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/extension-collaboration/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/extension-drop-cursor/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/extension-emoji/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/extension-enhanced-link/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/extension-epic-mode/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/extension-image/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/extension-mention/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/react-hooks/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/react-node-view/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/react-portals/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/react-renderer/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/react-ssr/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/react-utils/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/react/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/showcase/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/ui-buttons/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/ui-dropdown/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/ui-icons/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/ui-menus/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/ui-modal/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/ui-text/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../@remirror/ui/package.json",
-    "root": "@remirror"
-  },
-  {
-    "path": "../../packages/multishift/package.json",
-    "root": "packages"
-  },
-  {
-    "path": "../../packages/prosemirror-suggest/package.json",
-    "root": "packages"
-  },
-  {
-    "path": "../../packages/remirror/package.json",
-    "root": "packages"
-  },
-  {
-    "path": "../../packages/test-keyboard/package.json",
-    "root": "packages"
-  }
-]
+{
+  "__AUTO_GENERATED__": "To update run: `yarn generate:json`",
+  "rollup": [
+    {
+      "path": "../../@remirror/core-constants/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/core-extensions/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/core-helpers/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/core-types/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/core-utils/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/core/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/dev/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/editor-markdown/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/editor-social/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/editor-wysiwyg/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/extension-code-block/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/extension-collaboration/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/extension-drop-cursor/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/extension-emoji/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/extension-enhanced-link/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/extension-epic-mode/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/extension-image/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/extension-mention/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/react-hooks/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/react-node-view/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/react-portals/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/react-renderer/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/react-ssr/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/react-utils/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/react/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/showcase/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/ui-buttons/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/ui-dropdown/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/ui-icons/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/ui-menus/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/ui-modal/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/ui-text/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../@remirror/ui/package.json",
+      "root": "@remirror"
+    },
+    {
+      "path": "../../packages/multishift/package.json",
+      "root": "packages"
+    },
+    {
+      "path": "../../packages/prosemirror-suggest/package.json",
+      "root": "packages"
+    },
+    {
+      "path": "../../packages/remirror/package.json",
+      "root": "packages"
+    }
+  ]
+}

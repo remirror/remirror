@@ -1,4 +1,5 @@
 {
+  "__AUTO_GENERATED__": "To update run: `yarn generate:json`",
   "compilerOptions": {
     "baseUrl": "../",
     "paths": {
@@ -54,6 +55,8 @@
       "@remirror/react/lib/*": ["@remirror/react/src/*"],
       "@remirror/showcase": ["@remirror/showcase/src/index.ts"],
       "@remirror/showcase/lib/*": ["@remirror/showcase/src/*"],
+      "@remirror/test-fixtures": ["@remirror/test-fixtures/src/index.ts"],
+      "@remirror/test-fixtures/lib/*": ["@remirror/test-fixtures/src/*"],
       "@remirror/ui-buttons": ["@remirror/ui-buttons/src/index.ts"],
       "@remirror/ui-buttons/lib/*": ["@remirror/ui-buttons/src/*"],
       "@remirror/ui-dropdown": ["@remirror/ui-dropdown/src/index.ts"],
@@ -79,8 +82,7 @@
       "remirror": ["packages/remirror/src/index.ts"],
       "remirror/lib/*": ["packages/remirror/src/*"],
       "test-keyboard": ["packages/test-keyboard/src/index.ts"],
-      "test-keyboard/lib/*": ["packages/test-keyboard/src/*"],
-      "@test-fixtures/*": ["support/fixtures/*"]
+      "test-keyboard/lib/*": ["packages/test-keyboard/src/*"]
     }
   }
 }

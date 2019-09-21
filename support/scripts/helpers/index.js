@@ -1,4 +1,4 @@
-const { resolve, join, sep } = require('path');
+const { resolve, join, sep, relative } = require('path');
 const { getPackages } = require('@lerna/project');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
@@ -54,8 +54,7 @@ const mangleScopedPackageName = packageName => {
 };
 
 const baseDir = (...paths) => resolve(__dirname, '../../..', join(...paths));
-const getRelativePathFromJson = json =>
-  json.location.replace(`${json.rootPath}${sep}`, '');
+const getRelativePathFromJson = json => relative(baseDir(), json.location);
 
 module.exports = {
   getAllDependencies,

@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "test-keyboard",
   "description": "A test keyboard for composing fake keyboard events",
   "license": "MIT",

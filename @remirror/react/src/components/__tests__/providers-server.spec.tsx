@@ -2,8 +2,8 @@
  * @jest-environment node
  */
 
-import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
-import { createTestManager } from '@test-fixtures/schema-helpers';
+import { docNodeBasicJSON } from '@remirror/test-fixtures';
+import { createTestManager } from '@remirror/test-fixtures';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { useRemirrorContext } from '../../hooks/context-hooks';

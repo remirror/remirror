@@ -1,5 +1,5 @@
 import { clone } from '@remirror/core';
-import { schema } from '@test-fixtures/schema-helpers';
+import { schema } from '@remirror/test-fixtures';
 import { markFactory, nodeFactory, sequence, text } from '../jest-remirror-builder';
 import { TagTracker } from '../jest-remirror-types';
 

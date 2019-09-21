@@ -1,4 +1,4 @@
-import { createTestManager } from '@test-fixtures/schema-helpers';
+import { createTestManager } from '@remirror/test-fixtures';
 import { render, RenderResult } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import React, { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';

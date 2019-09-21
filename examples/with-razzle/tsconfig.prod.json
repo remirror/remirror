@@ -1,0 +1,24 @@
+{
+  "__AUTO_GENERATED__": "To update run: `yarn generate:json`",
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {},
+    "composite": true,
+    "noEmit": true
+  },
+  "exclude": [
+    "lib",
+    "**/*.test.{ts,tsx}",
+    "**/*.stories.{ts,tsx}",
+    "**/*.spec.{ts,tsx}",
+    "**/__mocks__/**",
+    "**/__tests__/**",
+    "**/__stories__/**"
+  ],
+  "references": [
+    {
+      "path": "../../@remirror/showcase/tsconfig.prod.json"
+    }
+  ]
+}

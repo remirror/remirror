@@ -1,8 +1,4 @@
 {
   "extends": "../support/tsconfig.base.json",
-  "compilerOptions": {
-    "declaration": false,
-    "jsx": "preserve"
-  },
-  "include": ["./", "patches.d.ts"]
+  "compilerOptions": {}
 }
