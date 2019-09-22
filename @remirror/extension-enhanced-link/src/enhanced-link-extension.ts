@@ -3,26 +3,28 @@ import {
   Cast,
   CommandMarkTypeParams,
   EditorState,
-  EditorStateParams,
   EditorView,
   ExtensionManagerMarkTypeParams,
   findMatches,
-  FromToParams,
   getMatchString,
   LEAF_NODE_REPLACING_CHARACTER,
-  Mark,
   MarkExtension,
   MarkExtensionOptions,
   MarkExtensionSpec,
   markPasteRule,
-  MarkTypeParams,
   removeMark,
-  TransactionParams,
   updateMark,
 } from '@remirror/core';
-import { Plugin, TextSelection } from 'prosemirror-state';
+import { Plugin } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
 import { extractUrl } from './extract-url';
+import {
+  extractHref,
+  EnhancedLinkHandlerProps,
+  enhancedLinkHandler,
+  getUrlsFromState,
+  isSetEqual,
+} from './enhanced-link-utils';
 
 export interface EnhancedLinkExtensionOptions extends MarkExtensionOptions {
   /**
@@ -199,67 +201,3 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
     });
   };
 }
-
-const extractHref = (url: string) => (url.startsWith('http') || url.startsWith('//') ? url : `http://${url}`);
-
-interface EnhancedLinkHandlerProps
-  extends EditorStateParams,
-    FromToParams,
-    Partial<TransactionParams>,
-    MarkTypeParams {
-  /**
-   * The url to add as a mark to the range provided.
-   */
-  url: string;
-}
-
-/**
- * Add the provided URL as a mark to the text range provided
- */
-const enhancedLinkHandler = ({ state, url, from, to, tr, type }: EnhancedLinkHandlerProps) => {
-  const endPosition = state.selection.to;
-  const enhancedLink = type.create({ href: extractHref(url) });
-
-  tr = (tr || state.tr).replaceWith(from, to, state.schema.text(url, [enhancedLink]));
-
-  // Ensure that the selection doesn't jump when the the current selection is within the range
-  if (endPosition < to) {
-    return tr.setSelection(TextSelection.create(state.doc, endPosition));
-  }
-
-  return tr;
-};
-
-/**
- * Retrieves all the automatically applied URLs from the state.
- */
-const getUrlsFromState = (state: EditorState, markName: string) => {
-  const $pos = state.doc.resolve(0);
-  let marks: Mark[] = [];
-
-  state.doc.nodesBetween($pos.start(), $pos.end(), node => {
-    marks = [...marks, ...node.marks];
-  });
-
-  const urls = marks.filter(markItem => markItem.type.name === markName).map(mark => mark.attrs.href);
-  return { set: new Set(urls), urls };
-};
-
-/**
- * Checks whether two sets are equal
- * @param setOne
- * @param setTwo
- */
-const isSetEqual = <GSetType>(setOne: Set<GSetType>, setTwo: Set<GSetType>) => {
-  if (setOne.size !== setTwo.size) {
-    return false;
-  }
-
-  for (const val of setOne) {
-    if (!setTwo.has(val)) {
-      return false;
-    }
-  }
-
-  return true;
-};

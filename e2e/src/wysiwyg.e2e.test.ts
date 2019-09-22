@@ -28,19 +28,19 @@ describe('Wysiwyg Showcase', () => {
     const text = '// This is amazing';
     const mdBlock = '##Markdown is great\n\nReally it is!\n\n```ts\nconst a = "party time"\n```\n';
 
-    it('can create a code blocks with space', async () => {
+    it('creates a code block with ``` and space', async () => {
       await $editor.type('```ts ' + text);
       await expect($editor).toMatchElement('pre.language-ts > code', { text });
     });
 
-    it('can create a code blocks with enter', async () => {
+    it('creates a code block with ``` and enter', async () => {
       await $editor.type('```ts');
       await press({ key: 'Enter' });
       await $editor.type(text);
       await expect($editor).toMatchElement('pre.language-ts > code', { text });
     });
 
-    it('can delete code without issue', async () => {
+    it('deletes code without issue', async () => {
       await $editor.type('```md ' + mdBlock + '\nabcde');
       await press({ key: 'Backspace', count: 5 });
       await $editor.type(text);

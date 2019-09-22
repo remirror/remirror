@@ -34,25 +34,23 @@ describe('Social Showcase', () => {
       await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
         `This is text <a href="https://url.com" role="presentation">https://url.com</a>`,
       );
-
-      // <P>This is text https://url.com<a href="https://url.com">https://url.com</a></p>
     });
 
     it('should parse simple urls', async () => {
       await $editor.type('url.com');
-      await expect(innerHtml(EDITOR_CLASS_SELECTOR)).resolves.toContain(
-        '<a href="http://url.com" role="presentation">url.com</a>',
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
+        `<a href="http://url.com" role="presentation">url.com</a>`,
       );
       await press({ key: 'Backspace' });
-      await expect(innerHtml(EDITOR_CLASS_SELECTOR)).resolves.toContain(
-        '<a href="http://url.co" role="presentation">url.co</a>',
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
+        `<a href="http://url.co" role="presentation">url.co</a>`,
       );
       await press({ key: 'Backspace' });
-      await expect(innerHtml(EDITOR_CLASS_SELECTOR)).resolves.toEqual('<p class="">url.c</p>');
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`url.c`);
 
       await type({ text: 'o.uk' });
-      await expect(innerHtml(EDITOR_CLASS_SELECTOR)).resolves.toContain(
-        '<a href="http://url.co.uk" role="presentation">url.co.uk</a>',
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
+        `<a href="http://url.co.uk" role="presentation">url.co.uk</a>`,
       );
     });
 
@@ -63,16 +61,17 @@ describe('Social Showcase', () => {
       await $editor.type('this.com is test.com');
       await press({ key: 'Home' }); // ? This does nothing on Firefox
       await type({ text: 'split.com ' });
-      await expect(innerHtml(EDITOR_CLASS_SELECTOR)).resolves.toIncludeMultiple([
-        '<a href="http://split.com" role="presentation">split.com</a>',
-        '<a href="http://this.com" role="presentation">this.com</a>',
-      ]);
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
+        `this is the first <a href="http://url.com" role="presentation">url.com</a>`,
+      );
 
       await press({ key: 'ArrowUp' });
       await press({ key: 'End' });
       await press({ key: 'Backspace', count: 2 });
       await type({ text: '..no .co more url please' });
-      await expect(innerHtml(EDITOR_CLASS_SELECTOR)).resolves.not.toInclude('url.com');
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
+        `this is the first url.c..no .co more url please`,
+      );
     });
 
     it('should handle the enter key', async () => {
@@ -80,12 +79,16 @@ describe('Social Showcase', () => {
       await press({ key: 'ArrowLeft', count: 3 });
       await press({ key: 'Enter' });
 
-      await expect(innerHtml(EDITOR_CLASS_SELECTOR)).resolves.not.toInclude('</a>');
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
+        `this is the first url.`,
+      );
     });
 
     it('should not contain false positives', async () => {
       await $editor.type('http://localhost:3000/ahttps://meowni.ca');
-      await expect(innerHtml(EDITOR_CLASS_SELECTOR)).resolves.not.toInclude('</a>');
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
+        `http://localhost:3000/ahttps://meowni.ca`,
+      );
     });
   });
 
@@ -212,8 +215,13 @@ describe('Social Showcase', () => {
     });
 
     it('transforms emoticons', async () => {
-      await $editor.type(':-)', { delay: 10 });
-      // expect(innerHtml(sel(😀)))
+      await $editor.type(':-) hello', { delay: 10 });
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`😃 hello`);
+    });
+
+    it('transforms colon emojis', async () => {
+      await $editor.type(':heart:', { delay: 10 });
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`❤️`);
     });
 
     it('should handle multiple emoji with no spaces', async () => {
@@ -222,7 +230,7 @@ describe('Social Showcase', () => {
       await press({ key: 'ArrowLeft', count: 2 });
       await press({ key: 'ArrowRight' });
       await type({ text });
-      await expect(innerHtml(sel(EDITOR_CLASS_SELECTOR))).resolves.toInclude(text);
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`😀😀😀123abcXYZ😀`);
     });
   });
 
@@ -230,17 +238,32 @@ describe('Social Showcase', () => {
     it('should combine mentions emoji and links', async () => {
       await $editor.type('#awesome hello @ab 😀 google.com', { delay: 10 });
       await press({ key: 'Enter' });
-      await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe('@ab');
-      await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-tag'))).resolves.toBe('#awesome');
-      await expect(innerHtml(sel(EDITOR_CLASS_SELECTOR, 'span[title=grinning]'))).resolves.toBeTruthy();
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`
+              <a
+                  href="/awesome"
+                  role="presentation"
+                  class="mention mention-tag"
+                  data-mention-id="awesome"
+                  >#awesome</a
+                >
+                hello
+                <a
+                  href="/ab"
+                  role="presentation"
+                  class="mention mention-at"
+                  data-mention-id="ab"
+                  >@ab</a
+                >
+                😀 <a href="http://google.com" role="presentation">google.com</a>
+            `);
     });
 
     it('should not replace emoji with link when no space between', async () => {
       await $editor.type('😀google.com', { delay: 10 });
       await press({ key: 'Enter' });
-      await expect(innerHtml(sel(EDITOR_CLASS_SELECTOR, 'span[title=grinning]'))).resolves.toBeTruthy();
-      // Using include since decorations can inject a space here affecting the text
-      await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '[href]'))).resolves.toInclude('google.com');
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
+        `<a href="http://😀google.com" role="presentation">😀google.com</a>`,
+      );
     });
   });
 });
