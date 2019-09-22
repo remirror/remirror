@@ -37,6 +37,7 @@ import {
   MultishiftStateChangeset,
   MultishiftStateProps,
   SpecialKeyDownPayload,
+  A11yStatusMessageParams,
 } from './multishift-types';
 
 /**

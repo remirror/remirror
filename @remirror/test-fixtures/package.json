@@ -24,6 +24,8 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.0",
+    "lolex": "4.2.0",
+    "@types/lolex": "2.1.2",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
     "@remirror/react-portals": "0.4.2-canary.2",

@@ -1,15 +1,14 @@
 {
-  "name": "multishift",
-  "description": "A repurposed downshift for internal use within remirror",
+  "name": "@remirror/ui-a11y-status",
+  "description": "Create a singleton live region for a11y status updates",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/multishift",
-  "repository": "https://github.com/ifiokjr/remirror/tree/master/packages/multishift",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-a11y-status",
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-a11y-status",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
-  "module": "lib/dist/multishift.esm.js",
+  "module": "lib/dist/ui-a11y-status.esm.js",
   "files": [
-    "globals.d.ts",
     "lib",
     "src"
   ],
@@ -25,32 +24,26 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.0",
-    "@reach/auto-id": "^0.2.0",
     "@remirror/core-helpers": "0.4.2-canary.2",
     "@remirror/core-types": "0.4.2-canary.2",
-    "@remirror/react-hooks": "0.4.2-canary.2",
-    "@remirror/react-utils": "0.4.2-canary.2",
-    "@remirror/ui-a11y-status": "0.4.2-canary.2",
     "@remirror/ui": "0.4.2-canary.2",
-    "@remirror/ui-buttons": "0.4.2-canary.2",
     "@remirror/ui-icons": "0.4.2-canary.2",
-    "@remirror/ui-text": "0.4.2-canary.2",
-    "@seznam/compose-react-refs": "^1.0.2",
-    "@types/reach__auto-id": "^0.2.0",
-    "@types/reach__visually-hidden": "^0.2.0",
-    "compute-scroll-into-view": "^1.0.11",
-    "w3c-keyname": "^2.1.0"
+    "csstype": "^2.6.6",
+    "merge-props": "^5.0.1"
   },
   "peerDependencies": {
     "@emotion/core": "^10",
     "@types/react": "^16.8.0",
-    "react": "^16.8.0"
+    "@types/react-dom": "^16.8.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/multishift.cjs.js",
+  "cjs": "lib/dist/ui-a11y-status.cjs.js",
   "meta": {
     "sizeLimit": "20 KB"
-  }
+  },
+  "sideEffects": false
 }

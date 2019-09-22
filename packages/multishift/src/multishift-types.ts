@@ -367,13 +367,6 @@ export interface MultishiftBehaviorProps {
   circularNavigation?: boolean;
 
   /**
-   * The timeout for the a11y status update in milliseconds.
-   *
-   * @defaultValue 500
-   */
-  a11yStatusTimeout?: number;
-
-  /**
    * Set a custom message to render for the duration provided by the timeout.
    *
    * @defaultValue ''
@@ -596,16 +589,40 @@ export interface GetItemPropsOptions<
 /**
  * These functions are used to apply props to the elements that you render. This
  * gives you maximum flexibility to render what, when, and wherever you like.
- * You call these on the element in question For example: `<input
- * {...getInputProps()} />`.
+ *
+ * @remarks
+ *
+ * You call these on the element in question For example:
+ *
+ * ```tsx
+ * <input {...getInputProps()} />
+ * ```
  *
  * It's advisable to pass all your props to that function rather than applying
  * them on the element yourself to avoid your props being overridden (or
- * overriding the props returned). For example: `getInputProps({onKeyUp(event)
- * {console.log(event)}})`.
+ * overriding the props returned). For example:
+ *
+ * ```tsx
+ * // Good
+ * <input getInputProps({
+ *   onKeyUp(event) {
+ *    log(event);
+ *   }
+ * }) />
+ *
+ * // Bad
+ * <input getInputProps() onKeyUp={event => {
+ *   log(event);
+ * } />
+ * ```
  */
 export interface MultishiftPropGetters<GItem = any> {
   /**
+   * Get the augmented props that will be used in the wrapper element on
+   * autocomplete dropdowns.
+   *
+   * @remarks
+   *
    * Return the props to be applied to the root element that is rendered. This
    * should always be used for `autocomplete` dropdowns but will throw an error
    * if used within a `select` dropdown.
@@ -615,6 +632,11 @@ export interface MultishiftPropGetters<GItem = any> {
   ): GetComboBoxPropsReturn<GElement, GRefKey>;
 
   /**
+   * Get the augmented props for the toggle button which typically opens and
+   * closes the menu.
+   *
+   * @remarks
+   *
    * Returns the props you should apply to any menu toggle button element you
    * render.
    */
@@ -623,6 +645,10 @@ export interface MultishiftPropGetters<GItem = any> {
   ): GetPropsWithRefReturn<GElement, GRefKey>;
 
   /**
+   * Get the augmented props for your menu dropdown container element.
+   *
+   * @remarks
+   *
    * This method should be applied to the element which contains your list of
    * items. Typically, this will be a <div> or a <ul> that surrounds a map
    * expression. This handles the proper ARIA roles and attributes.
@@ -668,6 +694,10 @@ export interface MultishiftPropGetters<GItem = any> {
   ): GetPropsWithRefReturn<GElement, GRefKey>;
 
   /**
+   * Get the augmented props for each item being rendered.
+   *
+   * @remarks
+   *
    * The props returned from calling this function should be applied to any menu
    * items you render.
    *
@@ -679,6 +709,10 @@ export interface MultishiftPropGetters<GItem = any> {
   ): GetPropsWithRefReturn<GElement, GRefKey>;
 
   /**
+   * Get the augmented props for the autocomplete input element.
+   *
+   * @remarks
+   *
    * This method should be applied to the input you render. It is recommended
    * that you pass all props as an object to this method which will compose
    * together any of the event handlers you need to apply to the input while
@@ -708,6 +742,8 @@ export interface MultishiftPropGetters<GItem = any> {
    * This method should be applied to the label you render. It will generate an
    * id that will be used to label the toggle button and the menu.
    *
+   * @remarks
+   *
    * There are no required properties for this method.
    *
    * > Note: For accessibility purposes, calling this method is highly
@@ -721,6 +757,8 @@ export interface MultishiftPropGetters<GItem = any> {
    * Adds a ref to an element which will prevent blurring from happening when the
    * element is in focus.
    *
+   * @remarks
+   *
    * - Allows for autofocusing the input / toggle button or items when [a specific one] when focused.
    */
   getIgnoredElementProps<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
@@ -729,27 +767,13 @@ export interface MultishiftPropGetters<GItem = any> {
 }
 
 export interface IgnoredElementOptions<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>
-  extends GetPropsWithRefOptions<GElement, GRefKey> {
-  /**
-   * When this element is focused it can automatically divert the focus to the provided element type.
-   *
-   * - The input
-   * - The toggle button
-   * - A specific item
-   * - The menu
-   */
-  // autoFocusElement?: 'input' | 'toggleButton' | 'item' | 'menu';
-  /**
-   * If the auto focus element option is set to item you can provide the item index here.
-   *
-   * This will set the item ind
-   */
-  // itemIndex?: number;
-}
+  extends GetPropsWithRefOptions<GElement, GRefKey> {}
 
 export interface MultishiftHelpers<GItem = any> {
   /**
    * Check if the item at the given index is highlighted.
+   *
+   * @remarks
    *
    * The highlight includes the current highlight (caused by hovers and the
    * arrow keys> as well as multi selection highlighting when the shift key is
@@ -764,6 +788,9 @@ export interface MultishiftHelpers<GItem = any> {
 
   /**
    * Return the index of the provided item within the list of items.
+   *
+   * @remarks
+   *
    * `-1` when not found
    */
   indexOfItem(item: GItem): number;
@@ -807,13 +834,49 @@ export interface MultishiftFocusHelpers {
   focusToggleButton(): void;
 }
 
+/**
+ * This provides utility methods which make updating the state for _uncontrolled_
+ * components a bit simpler.
+ *
+ * @typeParam GItem = the underlying item type.
+ */
 export interface MultishiftStateHelpers<GItem = any> {
-  addItems: (itemsToAdd: GItem[]) => any[];
-  addItem: (itemToAdd: GItem) => any[];
-  removeItems: (itemsToRemove: GItem[]) => GItem[];
-  removeItem: (itemToRemove: GItem) => GItem[];
-  toggleItems: (itemsToToggle: GItem[]) => GItem[];
-  toggleItem: (itemToToggle: GItem) => GItem[];
+  /**
+   * Add multiple items to the `selectedItems`.
+   *
+   * @param items - the items array to be added to the selection. When multiple
+   * is not true only the first item will be used and replace any current
+   * `selectedItems`.
+   */
+  addItems: (items: GItem[]) => any[];
+
+  /**
+   * Add one item to the `selectedItems`.
+   *
+   * @param item - the item to be added to the selection. When multiple is not
+   * true this will replace the current selected item.
+   */
+  addItem: (item: GItem) => any[];
+
+  /**
+   * Remove items from the `selectedItems`.
+   *
+   * @param items - the items to be removed.
+   */
+  removeItems: (items: GItem[]) => GItem[];
+
+  /**
+   * Remove one item from the `selectedItems`
+   *
+   * @param item - the item to remove
+   */
+  removeItem: (item: GItem) => GItem[];
+
+  /**
+   * Toggle item selection
+   */
+  toggleItems: (items: GItem[]) => GItem[];
+  toggleItem: (item: GItem) => GItem[];
 }
 
 export interface MultishiftReturn<GItem = any>
@@ -827,32 +890,6 @@ export interface MultishiftReturn<GItem = any>
    * Manually dispatch an action into the state reducer.
    */
   dispatch: Dispatch<MultishiftRootActions<GItem>>;
-
-  /**
-   * This renders the status element which notifies the screen reader of changes
-   * in the text dropdown.
-   *
-   * **Important**: This should always be included for accessibility purposes.
-   * **Note** it is spelled `a-(one one)-yStatus`.
-   *
-   * ```tsx
-   * const { getComboBoxProps, allStatus } = useMultishift({ ... });
-   *
-   * return (
-   *   <div {...getComboBoxProps()}>
-   *     {a11yStatus}
-   *     // Other stuff here
-   *   </div>
-   * )
-   * ```
-   */
-  a11yStatus: ReactElement;
-
-  /**
-   * Trigger a status update in the a11y element. Screen readers will read this
-   * message out.
-   */
-  updateA11yStatus: Dispatch<SetStateAction<string>>;
 }
 
 export interface RefParams<GRefKey extends string = 'ref'> {

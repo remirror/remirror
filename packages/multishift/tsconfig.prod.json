@@ -33,6 +33,9 @@
       "path": "../../@remirror/react-utils/tsconfig.prod.json"
     },
     {
+      "path": "../../@remirror/ui-a11y-status/tsconfig.prod.json"
+    },
+    {
       "path": "../../@remirror/ui/tsconfig.prod.json"
     },
     {

@@ -3579,6 +3579,11 @@
   resolved "https://registry.yarnpkg.com/@types/linkify-it/-/linkify-it-2.1.0.tgz#ea3dd64c4805597311790b61e872cbd1ed2cd806"
   integrity sha512-Q7DYAOi9O/+cLLhdaSvKdaumWyHbm7HAk/bFwwyTuU0arR5yyCeW5GOoqt4tJTpDRxhpx9Q8kQL6vMpuw9hDSw==
 
+"@types/lolex@2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@types/lolex/-/lolex-2.1.2.tgz#40fb763baf260ed5de0685a6257ba98c1286e173"
+  integrity sha512-C/ZFcv+0iIbtLSupcUunpFzKdolJRQ3BOef7d9jfuxkTaPsd4iRgbgfxihe50rnr/Ywu2t5mwgXpddtLxMYi9Q==
+
 "@types/markdown-it@*", "@types/markdown-it@^0.0.8":
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/@types/markdown-it/-/markdown-it-0.0.8.tgz#9af8704acde87fec70475369ba0413d50717bd8d"

@@ -53,6 +53,8 @@
     "@remirror/react": ["../../@remirror/react/src"],
     "@remirror/showcase/lib": ["../../@remirror/showcase/src"],
     "@remirror/showcase": ["../../@remirror/showcase/src"],
+    "@remirror/ui-a11y-status/lib": ["../../@remirror/ui-a11y-status/src"],
+    "@remirror/ui-a11y-status": ["../../@remirror/ui-a11y-status/src"],
     "@remirror/ui-buttons/lib": ["../../@remirror/ui-buttons/src"],
     "@remirror/ui-buttons": ["../../@remirror/ui-buttons/src"],
     "@remirror/ui-dropdown/lib": ["../../@remirror/ui-dropdown/src"],

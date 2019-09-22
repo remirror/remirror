@@ -106,6 +106,10 @@
       "root": "@remirror"
     },
     {
+      "path": "../../@remirror/ui-a11y-status/package.json",
+      "root": "@remirror"
+    },
+    {
       "path": "../../@remirror/ui-buttons/package.json",
       "root": "@remirror"
     },

@@ -197,21 +197,6 @@ test('after selection shift click creates a new highlight group including index'
   expect(gammaItem).toHaveAttribute('aria-selected', 'true');
 });
 
-test('focus restored upon item mouse click', () => {
-  const { getByText, getByRole } = render(<Component multiple={true} />);
-  const button = getByRole('button');
-  expect(document.activeElement!.nodeName).toEqual('BODY');
-
-  fireEvent.click(button);
-  const item = getByText('Alpha');
-
-  button!.focus();
-  expect(document.activeElement).toBe(button);
-
-  fireEvent.click(item);
-  expect(document.activeElement).toBe(button);
-});
-
 test('it supports arrow keys', () => {
   const { getByText, getByRole } = render(<Component multiple={false} />);
   const button = getByRole('button');

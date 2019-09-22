@@ -1,6 +1,6 @@
 {
   "name": "jest-prosemirror",
-  "description": "A text editor for react built with prosemirror",
+  "description": "Jest test utilities for your prosemirror text editor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/jest-prosemirror",
@@ -52,8 +52,8 @@
   },
   "keywords": [
     "prosemirror",
-    "react",
-    "ssr",
-    "text editor"
+    "jest",
+    "tests",
+    "snapshots"
   ]
 }

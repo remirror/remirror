@@ -156,6 +156,13 @@
       "running": false
     },
     {
+      "name": "@remirror/ui-a11y-status",
+      "path": "@remirror/ui-a11y-status/lib/dist/ui-a11y-status.esm.js",
+      "limit": "20 KB",
+      "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
+      "running": false
+    },
+    {
       "name": "@remirror/ui-buttons",
       "path": "@remirror/ui-buttons/lib/dist/ui-buttons.esm.js",
       "limit": "20 KB",

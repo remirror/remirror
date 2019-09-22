@@ -57,6 +57,8 @@
       "@remirror/showcase/lib/*": ["@remirror/showcase/src/*"],
       "@remirror/test-fixtures": ["@remirror/test-fixtures/src/index.ts"],
       "@remirror/test-fixtures/lib/*": ["@remirror/test-fixtures/src/*"],
+      "@remirror/ui-a11y-status": ["@remirror/ui-a11y-status/src/index.ts"],
+      "@remirror/ui-a11y-status/lib/*": ["@remirror/ui-a11y-status/src/*"],
       "@remirror/ui-buttons": ["@remirror/ui-buttons/src/index.ts"],
       "@remirror/ui-buttons/lib/*": ["@remirror/ui-buttons/src/*"],
       "@remirror/ui-dropdown": ["@remirror/ui-dropdown/src/index.ts"],

@@ -84,6 +84,9 @@
       "path": "@remirror/test-fixtures/tsconfig.prod.json"
     },
     {
+      "path": "@remirror/ui-a11y-status/tsconfig.prod.json"
+    },
+    {
       "path": "@remirror/ui-buttons/tsconfig.prod.json"
     },
     {

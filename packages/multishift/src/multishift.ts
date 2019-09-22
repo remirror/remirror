@@ -71,32 +71,14 @@ import {
  * library.
  */
 export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): MultishiftReturn<GItem> => {
-  const {
-    type,
-    customA11yStatusMessage,
-    getA11yStatusMessage,
-    a11yStatusTimeout,
-    items,
-    getItemId = defaultGetItemId,
-  } = props;
+  const { type, customA11yStatusMessage, getA11yStatusMessage, items, getItemId = defaultGetItemId } = props;
   const [state, dispatch] = useMultishiftReducer<GItem>(props);
   const actions = useMemo(
     () => bindActionCreators(MultishiftActions, dispatch) as AllMultishiftDispatchActions<GItem>,
     [dispatch],
   );
-  // const previousItems = usePrevious(items);
 
-  // if (previousItems && previousItems.length !== items.length) {
-  //   actions.clearHighlighted();
-  // }
-
-  const [a11yStatus, updateA11yStatus] = useSetA11y({
-    state,
-    items,
-    customA11yStatusMessage,
-    getA11yStatusMessage,
-    timeout: a11yStatusTimeout,
-  });
+  useSetA11y({ state, items, customA11yStatusMessage, getA11yStatusMessage });
 
   const stateProps = getState(state, props);
   const {
@@ -595,10 +577,6 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     itemHighlightedAtIndex,
     itemIsSelected,
     indexOfItem,
-
-    // A11y
-    a11yStatus,
-    updateA11yStatus,
 
     // Actions
     dispatch,

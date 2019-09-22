@@ -1,9 +1,8 @@
 import { useId } from '@reach/auto-id';
-import VisuallyHidden from '@reach/visually-hidden';
-import { debounce } from '@remirror/core-helpers';
 import { useEffectOnce, useEffectOnUpdate } from '@remirror/react-hooks';
-import { createElement, useCallback, useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { multishiftReducer } from './multishift-reducer';
+import { setStatus } from '@remirror/ui-a11y-status';
 import {
   A11yStatusMessageParams,
   GetA11yStatusMessage,
@@ -75,8 +74,6 @@ export const useElementRefs = () => {
   };
 };
 
-const DEFAULT_TIMEOUT = 500;
-
 /**
  * A default getA11yStatusMessage function is provided that will check `items.current.length`
  * and return "No results." or if there are results but no item is highlighted,
@@ -111,50 +108,10 @@ const defaultGetA11yStatusMessage = <GItem = any>({
   return '';
 };
 
-/**
- * Creates a status element that can be placed in the dom to notify
- *
- * @param status - the message to set as the status
- * @param timeout - the length of time to leave the status active for.
- */
-const useA11yStatus = (status: string, timeout = DEFAULT_TIMEOUT) => {
-  const [displayedStatus, setDisplayedStatus] = useState('');
-
-  /**
-   * Clear the status after a short delay
-   */
-  const clearStatus = useCallback(
-    debounce(timeout, () => {
-      setDisplayedStatus('');
-    }),
-    [setDisplayedStatus],
-  );
-
-  useEffect(() => {
-    if (!status) {
-      return;
-    }
-
-    setDisplayedStatus(status);
-    clearStatus();
-  }, [clearStatus, status]);
-
-  return createElement(
-    VisuallyHidden,
-    {
-      role: 'status',
-      'aria-live': 'polite',
-      'aria-relevant': 'additions text',
-    },
-    displayedStatus,
-  );
-};
-
 interface UseSetA11yProps<GItem = any> {
   state: MultishiftState<GItem>;
   items: GItem[];
   itemsToString?: ItemsToString<GItem>;
-  timeout?: number;
   getA11yStatusMessage?: GetA11yStatusMessage<GItem>;
   customA11yStatusMessage?: string;
 }
@@ -163,7 +120,6 @@ export const useSetA11y = <GItem = any>({
   state,
   items,
   itemsToString = defaultItemsToString,
-  timeout = DEFAULT_TIMEOUT,
   getA11yStatusMessage = defaultGetA11yStatusMessage,
   customA11yStatusMessage = '',
 }: UseSetA11yProps<GItem>) => {
@@ -172,8 +128,6 @@ export const useSetA11y = <GItem = any>({
     items,
     itemsToString,
   });
-
-  const [status, setStatus] = useState(automaticMessage);
 
   // Sets a11y status message on changes to relevant state values.
   useEffectOnUpdate(() => {
@@ -186,8 +140,6 @@ export const useSetA11y = <GItem = any>({
       setStatus(customA11yStatusMessage);
     }
   }, [customA11yStatusMessage]);
-
-  return [useA11yStatus(status, timeout), setStatus] as const;
 };
 
 /**
