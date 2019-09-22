@@ -8,9 +8,7 @@ import {
   HTMLProps,
   KeyboardEvent,
   MouseEvent,
-  ReactElement,
   Ref,
-  SetStateAction,
 } from 'react';
 import { DropdownType, SpecialKey } from './multishift-constants';
 

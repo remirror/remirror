@@ -37,7 +37,6 @@ import {
   MultishiftStateChangeset,
   MultishiftStateProps,
   SpecialKeyDownPayload,
-  A11yStatusMessageParams,
 } from './multishift-types';
 
 /**
@@ -93,6 +92,33 @@ const noUndefined = <GType = any>(fallback: GType, values: Array<GType | undefin
 };
 
 /**
+ * Get all the default state values.
+ */
+export const getDefaultState = <GItem = any>({
+  defaultSelectedItems,
+  defaultJumpText,
+  defaultIsOpen,
+  defaultInputValue,
+  defaultHoveredIndex,
+  defaultHighlightedIndexes,
+  defaultHighlightedGroupStartIndex,
+  defaultHighlightedGroupEndIndex,
+}: GetDefaultStateParams<GItem>) => ({
+  selectedItems: defaultSelectedItems || DEFAULT_STATE.selectedItems,
+  jumpText: noUndefined(DEFAULT_STATE.jumpText, [defaultJumpText]),
+  isOpen: noUndefined(DEFAULT_STATE.isOpen, [defaultIsOpen]),
+  inputValue: noUndefined(DEFAULT_STATE.inputValue, [defaultInputValue]),
+  hoveredIndex: noUndefined(DEFAULT_STATE.hoveredIndex, [defaultHoveredIndex]),
+  highlightedIndexes: defaultHighlightedIndexes || DEFAULT_STATE.highlightedIndexes,
+  highlightedGroupStartIndex: noUndefined(DEFAULT_STATE.highlightedGroupStartIndex, [
+    defaultHighlightedGroupStartIndex,
+  ]),
+  highlightedGroupEndIndex: noUndefined(DEFAULT_STATE.highlightedGroupEndIndex, [
+    defaultHighlightedGroupEndIndex,
+  ]),
+});
+
+/**
  * Get the initial state or props when provided.
  */
 export const getInitialStateProps = <GItem = any>({
@@ -139,33 +165,6 @@ export const getInitialStateProps = <GItem = any>({
 export interface GetDefaultStateParams<GItem = any>
   extends MultishiftDefaultValueProps<GItem>,
     MultishiftBehaviorProps {}
-
-/**
- * Get all the default state values.
- */
-export const getDefaultState = <GItem = any>({
-  defaultSelectedItems,
-  defaultJumpText,
-  defaultIsOpen,
-  defaultInputValue,
-  defaultHoveredIndex,
-  defaultHighlightedIndexes,
-  defaultHighlightedGroupStartIndex,
-  defaultHighlightedGroupEndIndex,
-}: GetDefaultStateParams<GItem>) => ({
-  selectedItems: defaultSelectedItems || DEFAULT_STATE.selectedItems,
-  jumpText: noUndefined(DEFAULT_STATE.jumpText, [defaultJumpText]),
-  isOpen: noUndefined(DEFAULT_STATE.isOpen, [defaultIsOpen]),
-  inputValue: noUndefined(DEFAULT_STATE.inputValue, [defaultInputValue]),
-  hoveredIndex: noUndefined(DEFAULT_STATE.hoveredIndex, [defaultHoveredIndex]),
-  highlightedIndexes: defaultHighlightedIndexes || DEFAULT_STATE.highlightedIndexes,
-  highlightedGroupStartIndex: noUndefined(DEFAULT_STATE.highlightedGroupStartIndex, [
-    defaultHighlightedGroupStartIndex,
-  ]),
-  highlightedGroupEndIndex: noUndefined(DEFAULT_STATE.highlightedGroupEndIndex, [
-    defaultHighlightedGroupEndIndex,
-  ]),
-});
 
 /**
  * The state that corresponds to the default highlight state. Useful when the
@@ -314,18 +313,18 @@ export const getNextWrappingIndex = ({
 };
 
 /**
+ * Check whether the provided value is a valid index.
+ */
+export const isValidIndex = (index: number | undefined | null): index is number =>
+  isNumber(index) && index > -1;
+
+/**
  * Get the next index when navigating with arrow keys.
  */
 export const getNextWrappingIndexes = (params: GetNextWrappingIndexParams): [number] | [] => {
   const index = getNextWrappingIndex(params);
   return isValidIndex(index) ? [index] : [];
 };
-
-/**
- * Check whether the provided value is a valid index.
- */
-export const isValidIndex = (index: number | undefined | null): index is number =>
-  isNumber(index) && index > -1;
 
 export const isValidIndexAndNotDisabled = (index: number | undefined, disabled: number[]): index is number =>
   isValidIndex(index) && !disabled.includes(index);
@@ -461,26 +460,6 @@ interface GetChangesFromItemClickParams<GItem = any> {
 }
 
 /**
- * Toggles the selected items.
- *
- * Firstly check whether all the items provided are already part of the current
- * items
- *  - If this is the case then remove all the toggleItems.
- *  - If this is not the case then add all the items (without duplication)
- *
- * When multiple is false or undefined it will only return one element.
- */
-export const toggleSelectedItems = <GItem = any>(
-  currentItems: GItem[],
-  toggleItems: GItem[],
-  getItemId: GetItemId<GItem>,
-  multiple?: boolean,
-) =>
-  allItemsSelected(currentItems, toggleItems, getItemId)
-    ? removeItems(currentItems, toggleItems, getItemId)
-    : addItems(currentItems, toggleItems, getItemId, multiple);
-
-/**
  * Returns true when all items are selected within the list.
  */
 export const allItemsSelected = <GItem = any>(
@@ -513,6 +492,88 @@ export const removeItems = <GItem = any>(
   getItemId: GetItemId<GItem>,
 ) =>
   currentItems.filter(prevItem => !removalItems.some(newItem => getItemId(newItem) === getItemId(prevItem)));
+
+/**
+ * Toggles the selected items.
+ *
+ * Firstly check whether all the items provided are already part of the current
+ * items
+ *  - If this is the case then remove all the toggleItems.
+ *  - If this is not the case then add all the items (without duplication)
+ *
+ * When multiple is false or undefined it will only return one element.
+ */
+export const toggleSelectedItems = <GItem = any>(
+  currentItems: GItem[],
+  toggleItems: GItem[],
+  getItemId: GetItemId<GItem>,
+  multiple?: boolean,
+) =>
+  allItemsSelected(currentItems, toggleItems, getItemId)
+    ? removeItems(currentItems, toggleItems, getItemId)
+    : addItems(currentItems, toggleItems, getItemId, multiple);
+
+/**
+ * Get an array of all the highlighted items Including any from the currently
+ * incomplete group.
+ */
+export const getHighlightedIndexes = <GItem = any>({
+  start,
+  end,
+  indexes,
+  items,
+  hoveredIndex,
+}: GetHighlightedIndexesParams<GItem>) => {
+  const max = items.length - 1;
+  const groupIndexes = isValidIndex(start)
+    ? range(
+        clamp({ min: 0, max, value: start }),
+        clamp({ min: 0, max, value: isValidIndex(end) ? end : start }),
+      )
+    : [];
+
+  const hoveredIndexes = isValidIndex(hoveredIndex) ? [hoveredIndex] : [];
+
+  return uniqueArray([...hoveredIndexes, ...indexes, ...groupIndexes], true);
+};
+
+/**
+ * Checks whether the an index is highlighted within a set of indexes and a
+ * highlighted group.
+ */
+export const checkItemHighlighted = (
+  index: number,
+  { start, end, indexes }: Omit<GetHighlightedIndexesParams, 'items'>,
+) => indexes.includes(index) || within(index, start, end);
+
+/**
+ * Removes any unchanged values from the changes object so that only the correct
+ * callbacks are triggered.
+ */
+export const omitUnchangedState = <GItem = any>(
+  changes: MultishiftStateProps<GItem>,
+  { state, getItemId }: OmitUnchangedParams<GItem>,
+): MultishiftStateProps<GItem> => {
+  return omit(changes, (value, key) => {
+    if (isArray(value)) {
+      if (key === 'selectedItems') {
+        return (
+          value.length !== state.selectedItems.length ||
+          (value as GItem[]).some((item, index) => getItemId(item) !== getItemId(state.selectedItems[index]))
+        );
+      }
+
+      if (key === 'highlightedIndexes') {
+        return (
+          value.length !== state.highlightedIndexes.length ||
+          (value as number[]).some((val, index) => val !== state.highlightedIndexes[index])
+        );
+      }
+    }
+
+    return value !== state[key];
+  });
+};
 
 /**
  * Create the desired change object when an item is clicked.
@@ -635,39 +696,6 @@ interface GetHighlightedIndexesParams<GItem = any> {
    */
   hoveredIndex?: number;
 }
-
-/**
- * Get an array of all the highlighted items Including any from the currently
- * incomplete group.
- */
-export const getHighlightedIndexes = <GItem = any>({
-  start,
-  end,
-  indexes,
-  items,
-  hoveredIndex,
-}: GetHighlightedIndexesParams<GItem>) => {
-  const max = items.length - 1;
-  const groupIndexes = isValidIndex(start)
-    ? range(
-        clamp({ min: 0, max, value: start }),
-        clamp({ min: 0, max, value: isValidIndex(end) ? end : start }),
-      )
-    : [];
-
-  const hoveredIndexes = isValidIndex(hoveredIndex) ? [hoveredIndex] : [];
-
-  return uniqueArray([...hoveredIndexes, ...indexes, ...groupIndexes], true);
-};
-
-/**
- * Checks whether the an index is highlighted within a set of indexes and a
- * highlighted group.
- */
-export const checkItemHighlighted = (
-  index: number,
-  { start, end, indexes }: Omit<GetHighlightedIndexesParams, 'items'>,
-) => indexes.includes(index) || within(index, start, end);
 
 /**
  * Normalizes the 'key' property of a KeyboardEvent in IE/Edge
@@ -1048,35 +1076,6 @@ interface OmitUnchangedParams<GItem = any> {
   state: MultishiftState<GItem>;
   getItemId: GetItemId<GItem>;
 }
-
-/**
- * Removes any unchanged values from the changes object so that only the correct
- * callbacks are triggered.
- */
-export const omitUnchangedState = <GItem = any>(
-  changes: MultishiftStateProps<GItem>,
-  { state, getItemId }: OmitUnchangedParams<GItem>,
-): MultishiftStateProps<GItem> => {
-  return omit(changes, (value, key) => {
-    if (isArray(value)) {
-      if (key === 'selectedItems') {
-        return (
-          value.length !== state.selectedItems.length ||
-          (value as GItem[]).some((item, index) => getItemId(item) !== getItemId(state.selectedItems[index]))
-        );
-      }
-
-      if (key === 'highlightedIndexes') {
-        return (
-          value.length !== state.highlightedIndexes.length ||
-          (value as number[]).some((val, index) => val !== state.highlightedIndexes[index])
-        );
-      }
-    }
-
-    return value !== state[key];
-  });
-};
 
 /**
  * Helpers for transforming the state object.

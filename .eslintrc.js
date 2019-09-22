@@ -1,16 +1,17 @@
-const fix = process.argv.includes('--fix');
-const extraOptions = fix
-  ? {}
-  : {
-      // project: [
-      //   './@remirror/tsconfig.lint.json',
-      //   './packages/tsconfig.lint.json',
-      //   './support/tsconfig.lint.json',
-      //   './examples/tsconfig.lint.json',
-      //   './e2e/tsconfig.lint.json',
-      //   './docs/tsconfig.lint.json',
-      // ],
-    };
+const { ESLINT_USE_PROJECTS } = process.env;
+
+const extraOptions = ESLINT_USE_PROJECTS
+  ? {
+      project: [
+        './@remirror/tsconfig.lint.json',
+        './packages/tsconfig.lint.json',
+        './support/tsconfig.lint.json',
+        './examples/tsconfig.lint.json',
+        './e2e/tsconfig.lint.json',
+        './docs/tsconfig.lint.json',
+      ],
+    }
+  : {};
 
 module.exports = {
   parser: '@typescript-eslint/parser',
