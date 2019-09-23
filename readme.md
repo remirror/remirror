@@ -88,8 +88,7 @@ Please read [contributing.md](docs/pages/contributing.md) for details on our cod
 
 This project uses [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ifiokjr/remirror/tags).
 
-Currently all versions within the repo are locked and this will continue until version 1.0 is
-reached. At this point versions will be updated independently.
+Currently all versions within the repo are locked and this will continue until `v1.0.0` is. At this point versions will be updated independently.
 
 ### License
 
