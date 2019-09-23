@@ -212,9 +212,9 @@ export type SuggestStage = 'new' | 'edit';
 
 // @public (undocumented)
 export interface SuggestStateMatch<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggesterParams<GCommand> {
-    query: MatchValue;
+    matchText: MatchValue;
+    queryText: MatchValue;
     range: FromToEndParams;
-    text: MatchValue;
 }
 
 // @public (undocumented)

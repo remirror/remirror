@@ -4,8 +4,10 @@
 
 ## MultishiftStateHelpers.removeItems property
 
+Remove items from the `selectedItems`<!-- -->.
+
 <b>Signature:</b>
 
 ```typescript
-removeItems: (itemsToRemove: GItem[]) => GItem[];
+removeItems: (items: GItem[]) => GItem[];
 ```

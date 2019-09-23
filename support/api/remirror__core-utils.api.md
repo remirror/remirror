@@ -374,7 +374,7 @@ export const removeNodeBefore: (tr: import("prosemirror-state").Transaction<any>
 export const replaceText: ({ range, type, attrs, appendText, content, startTransaction, endTransaction, }: ReplaceTextParams) => CommandFunction<any>;
 
 // @public
-export const selectionEmpty: (value: Selection<any> | Readonly<import("prosemirror-state").EditorState<any>>) => boolean;
+export const selectionEmpty: (value: Readonly<import("prosemirror-state").EditorState<any>> | Selection<any>) => boolean;
 
 // @public
 export const setPluginMeta: <GMeta>(key: string | Plugin<any, any> | import("prosemirror-state").PluginKey<any, import("prosemirror-model").Schema<string, string>>, tr: import("prosemirror-state").Transaction<any>, data: GMeta) => import("prosemirror-state").Transaction<any>;

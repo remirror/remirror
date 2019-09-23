@@ -35,6 +35,9 @@ export interface BaseRenderTreeProps {
 }
 
 // @public
+export const gatherToDOM: <GSpec extends NodeExtensionSpec | MarkExtensionSpec>(specs: Record<string, GSpec>) => Record<string, GSpec["toDOM"]>;
+
+// @public
 export const mapProps: (props: PlainObject) => PlainObject;
 
 // @public

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-toggleItem: (itemToToggle: GItem) => GItem[];
+toggleItem: (item: GItem) => GItem[];
 ```

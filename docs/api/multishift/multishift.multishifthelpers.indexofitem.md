@@ -4,7 +4,7 @@
 
 ## MultishiftHelpers.indexOfItem() method
 
-Return the index of the provided item within the list of items. `-1` when not found
+Return the index of the provided item within the list of items.
 
 <b>Signature:</b>
 
@@ -21,4 +21,8 @@ indexOfItem(item: GItem): number;
 <b>Returns:</b>
 
 `number`
+
+## Remarks
+
+`-1` when not found
 

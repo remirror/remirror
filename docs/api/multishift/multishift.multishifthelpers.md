@@ -20,7 +20,7 @@ export interface MultishiftHelpers<GItem = any>
 
 |  Method | Description |
 |  --- | --- |
-|  [indexOfItem(item)](./multishift.multishifthelpers.indexofitem.md) | Return the index of the provided item within the list of items. <code>-1</code> when not found |
-|  [itemHighlightedAtIndex(index)](./multishift.multishifthelpers.itemhighlightedatindex.md) | Check if the item at the given index is highlighted.<!-- -->The highlight includes the current highlight (caused by hovers and the arrow keys<!-- -->&gt; as well as multi selection highlighting when the shift key is pressed. |
+|  [indexOfItem(item)](./multishift.multishifthelpers.indexofitem.md) | Return the index of the provided item within the list of items. |
+|  [itemHighlightedAtIndex(index)](./multishift.multishifthelpers.itemhighlightedatindex.md) | Check if the item at the given index is highlighted. |
 |  [itemIsSelected(item)](./multishift.multishifthelpers.itemisselected.md) | Return true when the provided item is selected. |
 

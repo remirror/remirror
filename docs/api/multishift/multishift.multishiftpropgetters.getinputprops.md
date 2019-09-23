@@ -4,13 +4,7 @@
 
 ## MultishiftPropGetters.getInputProps() method
 
-This method should be applied to the input you render. It is recommended that you pass all props as an object to this method which will compose together any of the event handlers you need to apply to the input while preserving the ones that downshift needs to apply to make the input behave.
-
-There are no required properties for this method.
-
-Optional properties:
-
-disabled: If this is set to true, then no event handlers will be returned from getInputProps and a disabled prop will be returned (effectively disabling the input).
+Get the augmented props for the autocomplete input element.
 
 <b>Signature:</b>
 
@@ -27,4 +21,14 @@ getInputProps<GElement extends HTMLInputElement = any, GRefKey extends string = 
 <b>Returns:</b>
 
 `GetPropsWithRefReturn<GElement, GRefKey>`
+
+## Remarks
+
+This method should be applied to the input you render. It is recommended that you pass all props as an object to this method which will compose together any of the event handlers you need to apply to the input while preserving the ones that downshift needs to apply to make the input behave.
+
+There are no required properties for this method.
+
+Optional properties:
+
+disabled: If this is set to true, then no event handlers will be returned from getInputProps and a disabled prop will be returned (effectively disabling the input).
 

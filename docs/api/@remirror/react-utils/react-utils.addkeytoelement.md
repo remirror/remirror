@@ -11,5 +11,5 @@ This is useful when returning an array of components because a fragment isn't su
 <b>Signature:</b>
 
 ```typescript
-addKeyToElement: (element: ReactNode, key: string | number) => {} | null | undefined
+addKeyToElement: (element: ReactNode, key: import("react").ReactText) => {} | null | undefined
 ```

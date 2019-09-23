@@ -7,8 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-plugin(): Plugin<any, any>;
+plugin({ tags }: ExtensionManagerParams): Plugin<any, any>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  { tags } | <code>ExtensionManagerParams</code> |  |
+
 <b>Returns:</b>
 
 `Plugin<any, any>`

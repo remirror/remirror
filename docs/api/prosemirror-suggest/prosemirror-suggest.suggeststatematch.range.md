@@ -4,7 +4,7 @@
 
 ## SuggestStateMatch.range property
 
-Range of current match. - `from` is the start - `to` is cursor position - `end` is the end of the match
+Range of current match; for example `@foo|bar` (where \| is the cursor) - `from` is the start (= 0) - `to` is cursor position (= 4) - `end` is the end of the match (= 7)
 
 <b>Signature:</b>
 

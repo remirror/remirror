@@ -4,7 +4,7 @@
 
 ## HistoryExtensionOptions.getDispatch() method
 
-This is only needed when the extension is part of a child editor, e.g. `ImageCaptionEditor`<!-- -->. By passing in the `getDispatch` method history actions can be dispatched into the parent editor allowing them to propagate into the child editor.
+Provide a custom dispatch getter function for embedded editors
 
 <b>Signature:</b>
 
@@ -14,4 +14,8 @@ getDispatch?(): DispatchFunction;
 <b>Returns:</b>
 
 `DispatchFunction`
+
+## Remarks
+
+This is only needed when the extension is part of a child editor, e.g. `ImageCaptionEditor`<!-- -->. By passing in the `getDispatch` method history actions can be dispatched into the parent editor allowing them to propagate into the child editor.
 

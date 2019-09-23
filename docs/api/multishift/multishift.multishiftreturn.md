@@ -14,19 +14,5 @@ export interface MultishiftReturn<GItem = any> extends MultishiftState<GItem>, M
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [a11yStatus](./multishift.multishiftreturn.a11ystatus.md) | <code>ReactElement</code> | This renders the status element which notifies the screen reader of changes in the text dropdown.<!-- -->\*\*Important\*\*: This should always be included for accessibility purposes. \*\*Note\*\* it is spelled <code>a-(one one)-yStatus</code>.
-```tsx
-const { getComboBoxProps, allStatus } = useMultishift({ ... });
-
-return (
-  <div {...getComboBoxProps()}>
-    {a11yStatus}
-    // Other stuff here
-  </div>
-)
-
-```
- |
 |  [dispatch](./multishift.multishiftreturn.dispatch.md) | <code>Dispatch&lt;MultishiftRootActions&lt;GItem&gt;&gt;</code> | Manually dispatch an action into the state reducer. |
-|  [updateA11yStatus](./multishift.multishiftreturn.updatea11ystatus.md) | <code>Dispatch&lt;SetStateAction&lt;string&gt;&gt;</code> | Trigger a status update in the a11y element. Screen readers will read this message out. |
 

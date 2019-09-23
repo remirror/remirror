@@ -14,7 +14,6 @@ export interface MultishiftBehaviorProps
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [a11yStatusTimeout](./multishift.multishiftbehaviorprops.a11ystatustimeout.md) | <code>number</code> | The timeout for the a11y status update in milliseconds. |
 |  [autoSelectOnBlur](./multishift.multishiftbehaviorprops.autoselectonblur.md) | <code>boolean</code> | When true will automatically selected the higlightedIndexes on blur. |
 |  [circularNavigation](./multishift.multishiftbehaviorprops.circularnavigation.md) | <code>boolean</code> | Controls the circular keyboard navigation between items. If set to true, when first item is highlighted, the <code>ArrowUp</code> will move highlight to the last item, and vice versa using <code>ArrowDown</code>. |
 |  [closeOnSelection](./multishift.multishiftbehaviorprops.closeonselection.md) | <code>boolean</code> | Whether the input should be closed when a selection is made. This default to false when <code>multiple=true</code>. |

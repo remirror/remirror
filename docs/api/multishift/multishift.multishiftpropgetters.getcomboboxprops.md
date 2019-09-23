@@ -4,7 +4,7 @@
 
 ## MultishiftPropGetters.getComboBoxProps() method
 
-Return the props to be applied to the root element that is rendered. This should always be used for `autocomplete` dropdowns but will throw an error if used within a `select` dropdown.
+Get the augmented props that will be used in the wrapper element on autocomplete dropdowns.
 
 <b>Signature:</b>
 
@@ -21,4 +21,8 @@ getComboBoxProps<GElement extends HTMLElement = any, GRefKey extends string = 'r
 <b>Returns:</b>
 
 `GetComboBoxPropsReturn<GElement, GRefKey>`
+
+## Remarks
+
+Return the props to be applied to the root element that is rendered. This should always be used for `autocomplete` dropdowns but will throw an error if used within a `select` dropdown.
 

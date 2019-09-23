@@ -6,6 +6,7 @@
 
 import { Attrs } from '@remirror/core';
 import { BaseExtensionOptions } from '@remirror/core-types';
+import { BaseExtensionOptions as BaseExtensionOptions_2 } from '@remirror/core';
 import { CommandFunction } from '@remirror/core-types';
 import { CommandFunction as CommandFunction_2 } from '@remirror/core';
 import { CommandMarkTypeParams } from '@remirror/core';
@@ -20,6 +21,7 @@ import { Extension } from '@remirror/core';
 import { ExtensionManagerMarkTypeParams } from '@remirror/core';
 import { ExtensionManagerNodeTypeParams } from '@remirror/core';
 import { ExtensionManagerParams } from '@remirror/core-types';
+import { ExtensionManagerParams as ExtensionManagerParams_2 } from '@remirror/core';
 import { ExtensionParams } from '@remirror/core';
 import { ExtensionTagParams } from '@remirror/core-types';
 import { GapCursor } from 'prosemirror-gapcursor';
@@ -33,6 +35,7 @@ import { NodeExtension } from '@remirror/core';
 import { NodeExtensionOptions } from '@remirror/core';
 import { NodeExtensionSpec } from '@remirror/core';
 import { NodeMatch } from '@remirror/core-types';
+import { NodeMatch as NodeMatch_2 } from '@remirror/core';
 import { ObjectInterpolation } from '@emotion/core';
 import { PlainObject } from '@remirror/core-types';
 import { Plugin } from 'prosemirror-state';
@@ -61,10 +64,10 @@ export const baseExtensions: ({
     extension: ParagraphExtension;
     priority: number;
 } | {
-    extension: CompositionExtension;
+    extension: HistoryExtension;
     priority: number;
 } | {
-    extension: HistoryExtension;
+    extension: CompositionExtension;
     priority: number;
 } | {
     extension: GapCursorExtension;
@@ -264,10 +267,10 @@ export const EMPTY_NODE_CLASS_NAME: "is-empty";
 export const EMPTY_NODE_CLASS_SELECTOR: string;
 
 // @public (undocumented)
-export const findSpecialNodeAfter: ($pos: import("prosemirror-model").ResolvedPos<any>, tr: Transaction<any>, matchers: NodeMatch<any>[]) => number | undefined;
+export const findSpecialNodeAfter: ($pos: import("prosemirror-model").ResolvedPos<any>, tr: Transaction<any>, matchers: NodeMatch_2<any>[]) => number | undefined;
 
 // @public (undocumented)
-export const findSpecialNodeBefore: ($pos: import("prosemirror-model").ResolvedPos<any>, tr: Transaction<any>, matchers: NodeMatch<any>[]) => number | undefined;
+export const findSpecialNodeBefore: ($pos: import("prosemirror-model").ResolvedPos<any>, tr: Transaction<any>, matchers: NodeMatch_2<any>[]) => number | undefined;
 
 // @public
 export const FONT_PT_SIZES: number[];
@@ -356,7 +359,7 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
     // (undocumented)
     readonly name: "history";
     plugin(): import("prosemirror-state").Plugin<any, any>;
-}
+    }
 
 // @public (undocumented)
 export interface HistoryExtensionOptions extends BaseExtensionOptions {
@@ -493,18 +496,18 @@ export const NODE_CURSOR_DEFAULTS: string[];
 export class NodeCursorExtension extends Extension<NodeCursorExtensionOptions> {
     // (undocumented)
     readonly defaultOptions: {
-        targets: string[];
+        targets: never[];
     };
     // (undocumented)
     readonly name: "nodeCursor";
     // (undocumented)
-    plugin(): Plugin<any, any>;
+    plugin({ tags }: ExtensionManagerParams_2): Plugin<any, any>;
 }
 
 // @public (undocumented)
-export interface NodeCursorExtensionOptions extends BaseExtensionOptions {
+export interface NodeCursorExtensionOptions extends BaseExtensionOptions_2 {
     // (undocumented)
-    targets?: NodeMatch[];
+    targets?: NodeMatch_2[];
 }
 
 // @public (undocumented)

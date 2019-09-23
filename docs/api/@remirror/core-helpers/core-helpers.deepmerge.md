@@ -11,5 +11,5 @@ To completely remove a key you can use the `Merge` helper class which replaces i
 <b>Signature:</b>
 
 ```typescript
-deepMerge: <GType = any>(...objects: (unknown[] | PlainObject)[]) => GType
+deepMerge: <GType = any>(...objects: (PlainObject | unknown[])[]) => GType
 ```

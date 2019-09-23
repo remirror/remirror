@@ -9,9 +9,9 @@ Defines the return type of the toDom methods for both Nodes and marks
 <b>Signature:</b>
 
 ```typescript
-export declare type DOMOutputSpec = string | [string, 0] | [string, {
+export declare type DOMOutputSpec = string | [string, 0?] | [string, {
     [attr: string]: string;
-}, 0] | [string, DOMOutputSpecPos1?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?];
+}, 0?] | [string, DOMOutputSpecPos1?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?];
 ```
 
 ## Remarks

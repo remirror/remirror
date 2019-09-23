@@ -43,6 +43,7 @@ const overwriteResult = deepMerge(source, overwriteTarget) // => { awesome: { b:
 |  [flattenArray](./core-helpers.flattenarray.md) | Flattens an array |
 |  [format](./core-helpers.format.md) | Trim and conditionally capitalize string values. |
 |  [get](./core-helpers.get.md) | Get a property from an object or array by a string path or an array path. |
+|  [hasOwnProperty](./core-helpers.hasownproperty.md) | Safe implementation of hasOwnProperty with typechecking. |
 |  [includes](./core-helpers.includes.md) | A more lenient typed version of <code>Array.prototype.includes</code> which allow less specific types to be checked. |
 |  [isAndroidOS](./core-helpers.isandroidos.md) | A utility function to check whether the current browser is running on the android platform. |
 |  [isArray](./core-helpers.isarray.md) | Alias the isArray method. |

@@ -15,7 +15,7 @@ import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 
 // @public
-export const addKeyToElement: (element: ReactNode, key: string | number) => {} | null | undefined;
+export const addKeyToElement: (element: ReactNode, key: import("react").ReactText) => {} | null | undefined;
 
 // @public
 export const asDefaultProps: <GProps extends {}>() => <GDefaultProps extends Partial<GProps>>(props: GDefaultProps) => GDefaultProps;

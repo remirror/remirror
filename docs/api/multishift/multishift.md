@@ -28,12 +28,12 @@
 |  [MultishiftHelpers](./multishift.multishifthelpers.md) |  |
 |  [MultishiftInitialValueProps](./multishift.multishiftinitialvalueprops.md) |  |
 |  [MultishiftItemsChangeset](./multishift.multishiftitemschangeset.md) |  |
-|  [MultishiftPropGetters](./multishift.multishiftpropgetters.md) | These functions are used to apply props to the elements that you render. This gives you maximum flexibility to render what, when, and wherever you like. You call these on the element in question For example: <code>&lt;input {...getInputProps()} /&gt;</code>.<!-- -->It's advisable to pass all your props to that function rather than applying them on the element yourself to avoid your props being overridden (or overriding the props returned). For example: <code>getInputProps({onKeyUp(event) {console.log(event)}})</code>. |
+|  [MultishiftPropGetters](./multishift.multishiftpropgetters.md) | These functions are used to apply props to the elements that you render. This gives you maximum flexibility to render what, when, and wherever you like. |
 |  [MultishiftProps](./multishift.multishiftprops.md) |  |
 |  [MultishiftReturn](./multishift.multishiftreturn.md) |  |
 |  [MultishiftState](./multishift.multishiftstate.md) |  |
 |  [MultishiftStateChangeset](./multishift.multishiftstatechangeset.md) |  |
-|  [MultishiftStateHelpers](./multishift.multishiftstatehelpers.md) |  |
+|  [MultishiftStateHelpers](./multishift.multishiftstatehelpers.md) | This provides utility methods which make updating the state for \_uncontrolled\_ components a bit simpler. |
 |  [RefParams](./multishift.refparams.md) |  |
 |  [SpecialKeyDownPayload](./multishift.specialkeydownpayload.md) |  |
 
@@ -47,7 +47,7 @@
 |  [SPECIAL\_MENU\_KEYS](./multishift.special_menu_keys.md) |  |
 |  [SPECIAL\_TOGGLE\_BUTTON\_KEYS](./multishift.special_toggle_button_keys.md) |  |
 |  [Type](./multishift.type.md) |  |
-|  [useMultishift](./multishift.usemultishift.md) | \#\#\# <code>useMultishift</code>Multishift is a hook that provides all the necessary tools for building accessible dropdown components.<!-- -->It supports <code>select</code> and <code>autocomplete</code> drop down experiences with built in support for multi-selection.<!-- -->The library borrows (and steals) heavily from <code>downshift</code> but also adds some features which are really important for the <code>remirror</code> project.<!-- -->- Focus on typescript support - No React Native support - Multi selection support<!-- -->Eventually some of the code will be contributed back to the downshift library. |
+|  [useMultishift](./multishift.usemultishift.md) | Multishift is a hook that provides all the necessary tools for building accessible dropdown components. |
 
 ## Type Aliases
 

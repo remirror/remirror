@@ -19,7 +19,7 @@ createEditor: <GSchema extends import("prosemirror-model").Schema<string, string
     overwrite: (newDoc: TaggedProsemirrorNode<GSchema>) => any;
     command: (command: CommandFunction<any>) => any;
     insertText: (text: string) => any;
-    jumpTo: (start: number | "start" | "end", end?: number | undefined) => any;
+    jumpTo: (start: number | "end" | "start", end?: number | undefined) => any;
     shortcut: (mod: string) => any;
     press: (char: string) => any;
     fire: (params: Pick<FireEventAtPositionParams<GSchema>, "position" | "options" | "event">) => any;

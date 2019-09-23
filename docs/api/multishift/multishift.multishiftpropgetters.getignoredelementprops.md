@@ -6,8 +6,6 @@
 
 Adds a ref to an element which will prevent blurring from happening when the element is in focus.
 
-- Allows for autofocusing the input / toggle button or items when \[a specific one\] when focused.
-
 <b>Signature:</b>
 
 ```typescript
@@ -23,4 +21,8 @@ getIgnoredElementProps<GElement extends HTMLElement = any, GRefKey extends strin
 <b>Returns:</b>
 
 `GetPropsWithRefReturn<GElement, GRefKey>`
+
+## Remarks
+
+- Allows for autofocusing the input / toggle button or items when \[a specific one\] when focused.
 

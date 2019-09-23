@@ -23,7 +23,7 @@ Without `RemirrorExtension`
 ```tsx
 const WithoutRemirrorExtensions = () => {
   const handler = () => {
-    console.log('something happened');
+    log('something happened');
   }
 
   const manager = ExtensionManager.create([
@@ -45,7 +45,7 @@ With `RemirrorExtension`
 ```tsx
 const WithRemirrorExtensions = () => {
   const handler = () => {
-    console.log('something happened');
+    log('something happened');
   }
 
   return (

@@ -6,10 +6,6 @@
 
 This method should be applied to the label you render. It will generate an id that will be used to label the toggle button and the menu.
 
-There are no required properties for this method.
-
-&gt; Note: For accessibility purposes, calling this method is highly recommended.
-
 <b>Signature:</b>
 
 ```typescript
@@ -25,4 +21,10 @@ getLabelProps<GElement extends HTMLElement = any, GRefKey extends string = 'ref'
 <b>Returns:</b>
 
 `GetLabelPropsWithRefReturn<GElement, GRefKey>`
+
+## Remarks
+
+There are no required properties for this method.
+
+&gt; Note: For accessibility purposes, calling this method is highly recommended.
 

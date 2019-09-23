@@ -4,6 +4,26 @@
 
 ## MultishiftPropGetters.getMenuProps() method
 
+Get the augmented props for your menu dropdown container element.
+
+<b>Signature:</b>
+
+```typescript
+getMenuProps<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(options?: GetPropsWithRefOptions<GElement, GRefKey>): GetPropsWithRefReturn<GElement, GRefKey>;
+```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | <code>GetPropsWithRefOptions&lt;GElement, GRefKey&gt;</code> |  |
+
+<b>Returns:</b>
+
+`GetPropsWithRefReturn<GElement, GRefKey>`
+
+## Remarks
+
 This method should be applied to the element which contains your list of items. Typically, this will be a <div> or a <ul> that surrounds a map expression. This handles the proper ARIA roles and attributes.
 
 refKey: if you're rendering a composite component, that component will need to accept a prop which it forwards to the root DOM element. Commonly, folks call this innerRef. So you'd call: getMenuProps(<!-- -->{<!-- -->refKey: 'innerRef'<!-- -->}<!-- -->) and your composite component would forward like: &lt;<!-- -->ul ref=<!-- -->{<!-- -->props.innerRef<!-- -->} /<!-- -->&gt;<!-- -->. However, if you are just rendering a primitive component like <div>, there is no need to specify this property. Please keep in mind that menus, for accessiblity purposes, should always be rendered, regardless of whether you hide it or not. Otherwise, getMenuProps may throw error if you unmount and remount the menu.
@@ -24,20 +44,4 @@ const ui = (
 
 ```
 &gt; Note that for accessibility reasons it's best if you always render this &gt; element whether or not downshift is in an isOpen state.
-
-<b>Signature:</b>
-
-```typescript
-getMenuProps<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(options?: GetPropsWithRefOptions<GElement, GRefKey>): GetPropsWithRefReturn<GElement, GRefKey>;
-```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  options | <code>GetPropsWithRefOptions&lt;GElement, GRefKey&gt;</code> |  |
-
-<b>Returns:</b>
-
-`GetPropsWithRefReturn<GElement, GRefKey>`
 

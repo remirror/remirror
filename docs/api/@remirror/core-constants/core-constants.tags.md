@@ -4,7 +4,7 @@
 
 ## Tags enum
 
-These are the remirror supported tag strings which help categorize different behaviors that extensions can exhibit. And extension can register itself with multiple such behaviors and these categories can be used by other extensions when running commands and updating the document.
+These are the default supported tag strings which help categorize different behaviors that extensions can exhibit.
 
 <b>Signature:</b>
 
@@ -16,7 +16,12 @@ export declare enum Tags
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  FormattingMark | <code>&quot;formattingMark&quot;</code> | A mark that is used to change the formatting of the node it wraps.<!-- -->e.g. <code>bold</code>, <code>italic</code> |
-|  FormattingNode | <code>&quot;formattingNode&quot;</code> | A node that is deemed to format in a non standard way.<!-- -->e.g. <code>codeBlock</code>, <code>heading</code>, <code>blockquote</code> |
-|  LastNodeCompatible | <code>&quot;lastNodeCompatible&quot;</code> | Describes a node that can be used as the last node of a document and by extension doesn't need to render a node after itself.<!-- -->e.g. paragraph |
+|  FormattingMark | <code>&quot;formattingMark&quot;</code> | A mark that is used to change the formatting of the node it wraps. |
+|  FormattingNode | <code>&quot;formattingNode&quot;</code> | A node that is deemed to format in a non standard way. |
+|  LastNodeCompatible | <code>&quot;lastNodeCompatible&quot;</code> | Describes a node that can be used as the last node of a document and by extension doesn't need to render a node after itself. |
+|  NodeCursor | <code>&quot;nodeCursor&quot;</code> | Identifies a node which has problems with cursor navigation. |
+
+## Remarks
+
+Any extension can register itself with multiple such behaviors and these categorizations can be used by other extensions when running commands and updating the document.
 

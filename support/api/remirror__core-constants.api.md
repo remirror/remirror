@@ -69,7 +69,8 @@ export enum Side {
 export enum Tags {
     FormattingMark = "formattingMark",
     FormattingNode = "formattingNode",
-    LastNodeCompatible = "lastNodeCompatible"
+    LastNodeCompatible = "lastNodeCompatible",
+    NodeCursor = "nodeCursor"
 }
 
 // @public

@@ -115,9 +115,9 @@ const generateStorybookResolverConfig = async () => {
 
 const API_EXTRACTOR_FILENAME = 'api-extractor.json';
 const API_EXTRACTOR_CONFIG = {
-  ...AUTO_GENERATED_FLAG,
-  // $schema:
-  //   'https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json',
+  // ...AUTO_GENERATED_FLAG, // Breaks when added
+  $schema:
+    'https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json',
   extends: join('../../support', API_EXTRACTOR_FILENAME),
   mainEntryPointFilePath: '<projectFolder>/lib/index.d.ts',
 };

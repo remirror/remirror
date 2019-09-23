@@ -9,5 +9,5 @@ Checks whether the selection or state is currently empty.
 <b>Signature:</b>
 
 ```typescript
-selectionEmpty: (value: PMSelection<any> | Readonly<import("prosemirror-state").EditorState<any>>) => boolean
+selectionEmpty: (value: Readonly<import("prosemirror-state").EditorState<any>> | PMSelection<any>) => boolean
 ```

@@ -4,7 +4,7 @@
 
 ## MultishiftPropGetters.getToggleButtonProps() method
 
-Returns the props you should apply to any menu toggle button element you render.
+Get the augmented props for the toggle button which typically opens and closes the menu.
 
 <b>Signature:</b>
 
@@ -21,4 +21,8 @@ getToggleButtonProps<GElement extends HTMLElement = any, GRefKey extends string 
 <b>Returns:</b>
 
 `GetPropsWithRefReturn<GElement, GRefKey>`
+
+## Remarks
+
+Returns the props you should apply to any menu toggle button element you render.
 

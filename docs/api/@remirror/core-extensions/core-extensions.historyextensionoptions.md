@@ -21,6 +21,6 @@ export interface HistoryExtensionOptions extends BaseExtensionOptions
 
 |  Method | Description |
 |  --- | --- |
-|  [getDispatch()](./core-extensions.historyextensionoptions.getdispatch.md) | This is only needed when the extension is part of a child editor, e.g. <code>ImageCaptionEditor</code>. By passing in the <code>getDispatch</code> method history actions can be dispatched into the parent editor allowing them to propagate into the child editor. |
-|  [getState()](./core-extensions.historyextensionoptions.getstate.md) | This is only needed when the extension is part of a child editor, e.g. <code>ImageCaptionEditor</code>. By passing in the <code>getState</code> method history actions can be dispatched into the parent editor allowing them to propagate into the child editor |
+|  [getDispatch()](./core-extensions.historyextensionoptions.getdispatch.md) | Provide a custom dispatch getter function for embedded editors |
+|  [getState()](./core-extensions.historyextensionoptions.getstate.md) | Provide a custom state getter function. |
 

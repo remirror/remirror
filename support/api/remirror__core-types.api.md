@@ -178,9 +178,9 @@ export interface DocParams {
 // Warning: (ae-forgotten-export) The symbol "DOMOutputSpecPosX" needs to be exported by the entry point index.d.ts
 // 
 // @public
-export type DOMOutputSpec = string | [string, 0] | [string, {
+export type DOMOutputSpec = string | [string, 0?] | [string, {
     [attr: string]: string;
-}, 0] | [string, DOMOutputSpecPos1?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?];
+}, 0?] | [string, DOMOutputSpecPos1?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?, DOMOutputSpecPosX?];
 
 // @public (undocumented)
 export type EditorSchema<GNodes extends string = string, GMarks extends string = string> = Schema<GNodes, GMarks>;

@@ -22,6 +22,7 @@
 
 |  Variable | Description |
 |  --- | --- |
+|  [gatherToDOM](./react-renderer.gathertodom.md) | Gather up all the toDOM methods from the provided spec object |
 |  [mapProps](./react-renderer.mapprops.md) | Map standard html attribute names to their react equivalents. |
 |  [RenderTree](./react-renderer.rendertree.md) |  |
 

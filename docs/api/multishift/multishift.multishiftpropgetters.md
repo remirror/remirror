@@ -4,9 +4,7 @@
 
 ## MultishiftPropGetters interface
 
-These functions are used to apply props to the elements that you render. This gives you maximum flexibility to render what, when, and wherever you like. You call these on the element in question For example: `<input {...getInputProps()} />`<!-- -->.
-
-It's advisable to pass all your props to that function rather than applying them on the element yourself to avoid your props being overridden (or overriding the props returned). For example: `getInputProps({onKeyUp(event) {console.log(event)}})`<!-- -->.
+These functions are used to apply props to the elements that you render. This gives you maximum flexibility to render what, when, and wherever you like.
 
 <b>Signature:</b>
 
@@ -18,26 +16,37 @@ export interface MultishiftPropGetters<GItem = any>
 
 |  Method | Description |
 |  --- | --- |
-|  [getComboBoxProps(options)](./multishift.multishiftpropgetters.getcomboboxprops.md) | Return the props to be applied to the root element that is rendered. This should always be used for <code>autocomplete</code> dropdowns but will throw an error if used within a <code>select</code> dropdown. |
-|  [getIgnoredElementProps(options)](./multishift.multishiftpropgetters.getignoredelementprops.md) | Adds a ref to an element which will prevent blurring from happening when the element is in focus.<!-- -->- Allows for autofocusing the input / toggle button or items when \[a specific one\] when focused. |
-|  [getInputProps(options)](./multishift.multishiftpropgetters.getinputprops.md) | This method should be applied to the input you render. It is recommended that you pass all props as an object to this method which will compose together any of the event handlers you need to apply to the input while preserving the ones that downshift needs to apply to make the input behave.<!-- -->There are no required properties for this method.<!-- -->Optional properties:<!-- -->disabled: If this is set to true, then no event handlers will be returned from getInputProps and a disabled prop will be returned (effectively disabling the input). |
-|  [getItemProps(options)](./multishift.multishiftpropgetters.getitemprops.md) | The props returned from calling this function should be applied to any menu items you render.<!-- -->This is an impure function, so it should only be called when you will actually be applying the props to an item. |
-|  [getLabelProps(options)](./multishift.multishiftpropgetters.getlabelprops.md) | This method should be applied to the label you render. It will generate an id that will be used to label the toggle button and the menu.<!-- -->There are no required properties for this method.<!-- -->&gt; Note: For accessibility purposes, calling this method is highly recommended. |
-|  [getMenuProps(options)](./multishift.multishiftpropgetters.getmenuprops.md) | This method should be applied to the element which contains your list of items. Typically, this will be a <div> or a <ul> that surrounds a map expression. This handles the proper ARIA roles and attributes.<!-- -->refKey: if you're rendering a composite component, that component will need to accept a prop which it forwards to the root DOM element. Commonly, folks call this innerRef. So you'd call: getMenuProps(<!-- -->{<!-- -->refKey: 'innerRef'<!-- -->}<!-- -->) and your composite component would forward like: &lt;<!-- -->ul ref=<!-- -->{<!-- -->props.innerRef<!-- -->} /<!-- -->&gt;<!-- -->. However, if you are just rendering a primitive component like <div>, there is no need to specify this property. Please keep in mind that menus, for accessiblity purposes, should always be rendered, regardless of whether you hide it or not. Otherwise, getMenuProps may throw error if you unmount and remount the menu.<!-- -->aria-label: By default the menu will add an aria-labelledby that refers to the <label> rendered with getLabelProps. However, if you provide aria-label to give a more specific label that describes the options available, then aria-labelledby will not be provided and screen readers can use your aria-label instead. In some cases, you might want to completely bypass the refKey check. Then you can provide the object {<!-- -->suppressRefError : true<!-- -->} as the second argument to getMenuProps. Please use it with extreme care and only if you are absolutely sure that the ref is correctly forwarded otherwise Downshift will unexpectedly fail.
+|  [getComboBoxProps(options)](./multishift.multishiftpropgetters.getcomboboxprops.md) | Get the augmented props that will be used in the wrapper element on autocomplete dropdowns. |
+|  [getIgnoredElementProps(options)](./multishift.multishiftpropgetters.getignoredelementprops.md) | Adds a ref to an element which will prevent blurring from happening when the element is in focus. |
+|  [getInputProps(options)](./multishift.multishiftpropgetters.getinputprops.md) | Get the augmented props for the autocomplete input element. |
+|  [getItemProps(options)](./multishift.multishiftpropgetters.getitemprops.md) | Get the augmented props for each item being rendered. |
+|  [getLabelProps(options)](./multishift.multishiftpropgetters.getlabelprops.md) | This method should be applied to the label you render. It will generate an id that will be used to label the toggle button and the menu. |
+|  [getMenuProps(options)](./multishift.multishiftpropgetters.getmenuprops.md) | Get the augmented props for your menu dropdown container element. |
+|  [getRemoveButtonProps(options)](./multishift.multishiftpropgetters.getremovebuttonprops.md) | Gets the props to attach to a button that removes a selected item. |
+|  [getToggleButtonProps(options)](./multishift.multishiftpropgetters.gettogglebuttonprops.md) | Get the augmented props for the toggle button which typically opens and closes the menu. |
+
+## Remarks
+
+You call these on the element in question For example:
+
 ```tsx
-const {getMenuProps} = useMultishift({items})
-const ui = (
-  <ul {...getMenuProps()}>
-    {!isOpen
-      ? null
-      : items.map((item, index) => (
-          <li {...getItemProps({item, index, key: item.id})}>{item.name}</li>
-        ))}
-  </ul>
-)
+<input {...getInputProps()} />
 
 ```
-&gt; Note that for accessibility reasons it's best if you always render this &gt; element whether or not downshift is in an isOpen state. |
-|  [getRemoveButtonProps(options)](./multishift.multishiftpropgetters.getremovebuttonprops.md) | Gets the props to attach to a button that removes a selected item. |
-|  [getToggleButtonProps(options)](./multishift.multishiftpropgetters.gettogglebuttonprops.md) | Returns the props you should apply to any menu toggle button element you render. |
+It's advisable to pass all your props to that function rather than applying them on the element yourself to avoid your props being overridden (or overriding the props returned). For example:
+
+```tsx
+// Good
+<input getInputProps({
+  onKeyUp(event) {
+   log(event);
+  }
+}) />
+
+// Bad
+<input getInputProps() onKeyUp={event => {
+  log(event);
+} />
+
+```
 

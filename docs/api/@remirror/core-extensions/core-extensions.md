@@ -24,7 +24,7 @@
 |  [ItalicExtension](./core-extensions.italicextension.md) |  |
 |  [LinkExtension](./core-extensions.linkextension.md) |  |
 |  [ListItemExtension](./core-extensions.listitemextension.md) |  |
-|  [NodeCursorExtension](./core-extensions.nodecursorextension.md) | This extension makes it possible to navigate with the arrow keys between nodes like emoji.<!-- -->Without it the cursor sometimes gets lost and stops responding to key presses. |
+|  [NodeCursorExtension](./core-extensions.nodecursorextension.md) | This extension makes it possible to navigate with the arrow keys between nodes. |
 |  [OrderedListExtension](./core-extensions.orderedlistextension.md) |  |
 |  [ParagraphExtension](./core-extensions.paragraphextension.md) | The paragraph is one of the essential building blocks for a prosemirror editor and by default it is provided to all editors. |
 |  [PlaceholderExtension](./core-extensions.placeholderextension.md) |  |

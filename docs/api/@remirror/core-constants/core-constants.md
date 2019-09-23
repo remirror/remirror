@@ -12,7 +12,7 @@
 |  [MarkGroup](./core-constants.markgroup.md) | Marks are categorized into different groups. One motivation for this was to allow the <code>code</code> mark to exclude other marks, without needing to explicitly name them. Explicit naming requires the named mark to exist in the schema. This is undesirable because we want to construct different schemas that have different sets of nodes/marks. |
 |  [NodeGroup](./core-constants.nodegroup.md) |  |
 |  [Side](./core-constants.side.md) | Used to determine the side where a gap-cursor is drawn |
-|  [Tags](./core-constants.tags.md) | These are the remirror supported tag strings which help categorize different behaviors that extensions can exhibit. And extension can register itself with multiple such behaviors and these categories can be used by other extensions when running commands and updating the document. |
+|  [Tags](./core-constants.tags.md) | These are the default supported tag strings which help categorize different behaviors that extensions can exhibit. |
 
 ## Variables
 

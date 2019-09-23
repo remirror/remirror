@@ -24,11 +24,11 @@
 |  Variable | Description |
 |  --- | --- |
 |  [aliasToName](./extension-emoji.aliastoname.md) |  |
-|  [ambiguousEmoticonRegex](./extension-emoji.ambiguousemoticonregex.md) |  |
 |  [DEFAULT\_FREQUENTLY\_USED](./extension-emoji.default_frequently_used.md) |  |
 |  [emojiCategories](./extension-emoji.emojicategories.md) |  |
 |  [emojiList](./extension-emoji.emojilist.md) |  |
 |  [emojiNames](./extension-emoji.emojinames.md) |  |
+|  [emoticonRegex](./extension-emoji.emoticonregex.md) |  |
 |  [EMOTICONS](./extension-emoji.emoticons.md) |  |
 |  [getEmojiByName](./extension-emoji.getemojibyname.md) |  |
 |  [getEmojiFromEmoticon](./extension-emoji.getemojifromemoticon.md) | Retrieve the EmojiData from an emoticon. |
@@ -41,7 +41,6 @@
 |  [populateFrequentlyUsed](./extension-emoji.populatefrequentlyused.md) |  |
 |  [SKIN\_VARIATIONS](./extension-emoji.skin_variations.md) |  |
 |  [sortEmojiMatches](./extension-emoji.sortemojimatches.md) | Return a list of <code>maxResults</code> length of closest matches |
-|  [unambiguousEmoticonRegex](./extension-emoji.unambiguousemoticonregex.md) |  |
 
 ## Type Aliases
 

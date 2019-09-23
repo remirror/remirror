@@ -4,6 +4,8 @@
 
 ## MultishiftStateHelpers interface
 
+This provides utility methods which make updating the state for \_uncontrolled\_ components a bit simpler.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,10 +16,10 @@ export interface MultishiftStateHelpers<GItem = any>
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [addItem](./multishift.multishiftstatehelpers.additem.md) | <code>(itemToAdd: GItem) =&gt; any[]</code> |  |
-|  [addItems](./multishift.multishiftstatehelpers.additems.md) | <code>(itemsToAdd: GItem[]) =&gt; any[]</code> |  |
-|  [removeItem](./multishift.multishiftstatehelpers.removeitem.md) | <code>(itemToRemove: GItem) =&gt; GItem[]</code> |  |
-|  [removeItems](./multishift.multishiftstatehelpers.removeitems.md) | <code>(itemsToRemove: GItem[]) =&gt; GItem[]</code> |  |
-|  [toggleItem](./multishift.multishiftstatehelpers.toggleitem.md) | <code>(itemToToggle: GItem) =&gt; GItem[]</code> |  |
-|  [toggleItems](./multishift.multishiftstatehelpers.toggleitems.md) | <code>(itemsToToggle: GItem[]) =&gt; GItem[]</code> |  |
+|  [addItem](./multishift.multishiftstatehelpers.additem.md) | <code>(item: GItem) =&gt; any[]</code> | Add one item to the <code>selectedItems</code>. |
+|  [addItems](./multishift.multishiftstatehelpers.additems.md) | <code>(items: GItem[]) =&gt; any[]</code> | Add multiple items to the <code>selectedItems</code>. |
+|  [removeItem](./multishift.multishiftstatehelpers.removeitem.md) | <code>(item: GItem) =&gt; GItem[]</code> | Remove one item from the <code>selectedItems</code> |
+|  [removeItems](./multishift.multishiftstatehelpers.removeitems.md) | <code>(items: GItem[]) =&gt; GItem[]</code> | Remove items from the <code>selectedItems</code>. |
+|  [toggleItem](./multishift.multishiftstatehelpers.toggleitem.md) | <code>(item: GItem) =&gt; GItem[]</code> |  |
+|  [toggleItems](./multishift.multishiftstatehelpers.toggleitems.md) | <code>(items: GItem[]) =&gt; GItem[]</code> | Toggle item selection |
 

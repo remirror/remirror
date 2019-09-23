@@ -36,7 +36,7 @@ export const clone: <GObject extends {}>(value: GObject) => GObject;
 // Warning: (ae-forgotten-export) The symbol "PlainObject" needs to be exported by the entry point index.d.ts
 // 
 // @public
-export const deepMerge: <GType = any>(...objects: (unknown[] | PlainObject)[]) => GType;
+export const deepMerge: <GType = any>(...objects: (PlainObject | unknown[])[]) => GType;
 
 // @public
 export const entries: <GType extends object, GKey extends Extract<keyof GType, string>, GValue extends GType[GKey], GEntry extends [GKey, GValue]>(obj: GType) => GEntry[];
@@ -52,6 +52,11 @@ export const format: (str: string) => string;
 
 // @public
 export const get: <GReturn = any>(path: string | (string | number)[], obj: any, fallback?: any) => GReturn;
+
+// @public
+export const hasOwnProperty: <GObj extends {}, GProperty extends string | number | symbol>(obj: GObj, key: GProperty) => obj is GObj & {
+    GKey: unknown;
+};
 
 // @public
 export const includes: <GType>(array: readonly GType[] | GType[], item: unknown, fromIndex?: number | undefined) => item is GType;

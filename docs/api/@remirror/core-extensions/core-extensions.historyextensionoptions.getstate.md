@@ -4,7 +4,7 @@
 
 ## HistoryExtensionOptions.getState() method
 
-This is only needed when the extension is part of a child editor, e.g. `ImageCaptionEditor`<!-- -->. By passing in the `getState` method history actions can be dispatched into the parent editor allowing them to propagate into the child editor
+Provide a custom state getter function.
 
 <b>Signature:</b>
 
@@ -14,4 +14,8 @@ getState?(): EditorState;
 <b>Returns:</b>
 
 `EditorState`
+
+## Remarks
+
+This is only needed when the extension is part of a child editor, e.g. `ImageCaptionEditor`<!-- -->. By passing in the `getState` method history actions can be dispatched into the parent editor allowing them to propagate into the child editor
 

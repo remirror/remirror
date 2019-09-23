@@ -24,7 +24,7 @@ import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { TextParams } from '@remirror/core';
 
 // @public (undocumented)
-export const a: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const a: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public
 export const apply: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(taggedDoc: TaggedProsemirrorNode<GSchema>, command: CommandFunction<GSchema>, result?: TaggedProsemirrorNode<GSchema> | undefined) => ApplyReturn<GSchema>;
@@ -35,22 +35,22 @@ export interface ApplyReturn<GSchema extends EditorSchema = any> extends TaggedD
 }
 
 // @public (undocumented)
-export const atomBlock: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const atomBlock: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const atomContainer: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const atomContainer: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const atomInline: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const atomInline: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const blockquote: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const blockquote: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const code: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const code: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const codeBlock: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const codeBlock: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public
 export interface CommandTransformation<GSchema extends EditorSchema = any> {
@@ -59,7 +59,7 @@ export interface CommandTransformation<GSchema extends EditorSchema = any> {
 }
 
 // @public (undocumented)
-export const containerWithRestrictedContent: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const containerWithRestrictedContent: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public
 export const createEditor: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(taggedDoc: TaggedProsemirrorNode<GSchema>, { plugins, rules, autoClean, ...editorOptions }?: CreateEditorOptions) => {
@@ -72,7 +72,7 @@ export const createEditor: <GSchema extends import("prosemirror-model").Schema<s
     overwrite: (newDoc: TaggedProsemirrorNode<GSchema>) => any;
     command: (command: CommandFunction<any>) => any;
     insertText: (text: string) => any;
-    jumpTo: (start: number | "start" | "end", end?: number | undefined) => any;
+    jumpTo: (start: number | "end" | "start", end?: number | undefined) => any;
     shortcut: (mod: string) => any;
     press: (char: string) => any;
     fire: (params: Pick<FireEventAtPositionParams<GSchema>, "position" | "options" | "event">) => any;
@@ -106,10 +106,10 @@ export const dispatchNodeSelection: <GSchema extends import("prosemirror-model")
 export const dispatchTextSelection: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, start, end, }: DispatchTextSelectionParams<GSchema>) => void;
 
 // @public (undocumented)
-export const doc: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const doc: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const em: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const em: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // Warning: (ae-forgotten-export) The symbol "rawEventMap" needs to be exported by the entry point index.d.ts
 // 
@@ -133,34 +133,34 @@ export interface FireParams {
 export const flush: (view: TestEditorView<any>) => void;
 
 // @public (undocumented)
-export const h1: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const h1: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const h2: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const h2: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const h3: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const h3: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const h4: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const h4: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const h5: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const h5: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const h6: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const h6: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const hardBreak: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const hardBreak: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const heading: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const heading: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const horizontalRule: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const horizontalRule: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const image: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const image: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public
 export const initSelection: <GSchema extends Schema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>) => GapCursor | Selection<GSchema> | null;
@@ -174,19 +174,19 @@ export interface InsertTextParams<GSchema extends EditorSchema = any> extends Te
 }
 
 // @public (undocumented)
-export const li: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const li: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const link: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const link: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const ol: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const ol: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const p: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const p: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const paragraph: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const paragraph: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 export { pm }
 
@@ -246,7 +246,7 @@ export const prosemirrorMatchers: {
 };
 
 // @public (undocumented)
-export const schema: Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">;
+export const schema: Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">;
 
 // @public
 export const selectionFor: <GSchema extends Schema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>) => Selection<GSchema>;
@@ -260,19 +260,19 @@ export const setupProsemirrorEnvironment: () => void;
 export const shortcut: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, shortcut: text, }: KeyboardShortcutParams<GSchema>) => void;
 
 // @public (undocumented)
-export const strong: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const strong: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const table: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const table: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const tableCell: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const tableCell: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const tableHeader: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const tableHeader: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const tableRow: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const tableRow: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public
 export const taggedDocHasSelection: (taggedDoc: pm.TaggedProsemirrorNode<any>) => boolean;
@@ -283,13 +283,13 @@ export interface TaggedDocParams<GSchema extends EditorSchema = any> {
 }
 
 // @public (undocumented)
-export const td: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const td: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const tdCursor: pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const tdCursor: pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const tdEmpty: pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const tdEmpty: pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
 export interface TestEditorView<GSchema extends EditorSchema = any> extends EditorView<GSchema> {
@@ -309,22 +309,22 @@ export interface TestEditorViewParams<GSchema extends EditorSchema = any> {
 }
 
 // @public (undocumented)
-export const text: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const text: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const th: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const th: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const thCursor: pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const thCursor: pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const thEmpty: pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const thEmpty: pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const tr: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const tr: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public (undocumented)
-export const ul: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"blockquote" | "table" | "image" | "text" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
+export const ul: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 
 // Warnings were encountered during analysis:

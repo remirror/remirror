@@ -8,6 +8,6 @@
 
 ```typescript
 readonly defaultOptions: {
-        targets: string[];
+        targets: never[];
     };
 ```

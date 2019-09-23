@@ -4,9 +4,7 @@
 
 ## MultishiftPropGetters.getItemProps() method
 
-The props returned from calling this function should be applied to any menu items you render.
-
-This is an impure function, so it should only be called when you will actually be applying the props to an item.
+Get the augmented props for each item being rendered.
 
 <b>Signature:</b>
 
@@ -23,4 +21,10 @@ getItemProps<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>
 <b>Returns:</b>
 
 `GetPropsWithRefReturn<GElement, GRefKey>`
+
+## Remarks
+
+The props returned from calling this function should be applied to any menu items you render.
+
+This is an impure function, so it should only be called when you will actually be applying the props to an item.
 

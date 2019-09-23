@@ -4,8 +4,10 @@
 
 ## MultishiftStateHelpers.toggleItems property
 
+Toggle item selection
+
 <b>Signature:</b>
 
 ```typescript
-toggleItems: (itemsToToggle: GItem[]) => GItem[];
+toggleItems: (items: GItem[]) => GItem[];
 ```

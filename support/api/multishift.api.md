@@ -10,9 +10,7 @@ import { HTMLAttributes } from 'react';
 import { HTMLProps } from 'react';
 import { KeyboardEvent } from 'react';
 import { MouseEvent } from 'react';
-import { ReactElement } from 'react';
 import { Ref } from 'react';
-import { SetStateAction } from 'react';
 import { Value } from '@remirror/core-types';
 
 // @public (undocumented)
@@ -210,7 +208,6 @@ export interface MultishiftBaseProps<GItem = any> {
 
 // @public (undocumented)
 export interface MultishiftBehaviorProps {
-    a11yStatusTimeout?: number;
     autoSelectOnBlur?: boolean;
     circularNavigation?: boolean;
     closeOnSelection?: boolean;
@@ -331,9 +328,7 @@ export interface MultishiftProps<GItem = any> extends MultishiftA11yIdProps, Mul
 
 // @public (undocumented)
 export interface MultishiftReturn<GItem = any> extends MultishiftState<GItem>, MultishiftPropGetters<GItem>, MultishiftDispatchActions<GItem>, MultishiftStateHelpers<GItem>, MultishiftHelpers, MultishiftFocusHelpers {
-    a11yStatus: ReactElement;
     dispatch: Dispatch<MultishiftRootActions<GItem>>;
-    updateA11yStatus: Dispatch<SetStateAction<string>>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "ActionType" needs to be exported by the entry point index.d.ts
@@ -360,20 +355,15 @@ export interface MultishiftStateChangeset<GItem = any> {
     state: MultishiftState<GItem>;
 }
 
-// @public (undocumented)
+// @public
 export interface MultishiftStateHelpers<GItem = any> {
+    addItem: (item: GItem) => any[];
+    addItems: (items: GItem[]) => any[];
+    removeItem: (item: GItem) => GItem[];
+    removeItems: (items: GItem[]) => GItem[];
     // (undocumented)
-    addItem: (itemToAdd: GItem) => any[];
-    // (undocumented)
-    addItems: (itemsToAdd: GItem[]) => any[];
-    // (undocumented)
-    removeItem: (itemToRemove: GItem) => GItem[];
-    // (undocumented)
-    removeItems: (itemsToRemove: GItem[]) => GItem[];
-    // (undocumented)
-    toggleItem: (itemToToggle: GItem) => GItem[];
-    // (undocumented)
-    toggleItems: (itemsToToggle: GItem[]) => GItem[];
+    toggleItem: (item: GItem) => GItem[];
+    toggleItems: (items: GItem[]) => GItem[];
 }
 
 // @public (undocumented)

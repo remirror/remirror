@@ -6,8 +6,6 @@
 
 Check if the item at the given index is highlighted.
 
-The highlight includes the current highlight (caused by hovers and the arrow keys<!-- -->&gt; as well as multi selection highlighting when the shift key is pressed.
-
 <b>Signature:</b>
 
 ```typescript
@@ -23,4 +21,8 @@ itemHighlightedAtIndex(index: number): boolean;
 <b>Returns:</b>
 
 `boolean`
+
+## Remarks
+
+The highlight includes the current highlight (caused by hovers and the arrow keys<!-- -->&gt; as well as multi selection highlighting when the shift key is pressed.
 

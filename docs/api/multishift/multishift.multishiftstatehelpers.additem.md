@@ -4,8 +4,10 @@
 
 ## MultishiftStateHelpers.addItem property
 
+Add one item to the `selectedItems`<!-- -->.
+
 <b>Signature:</b>
 
 ```typescript
-addItem: (itemToAdd: GItem) => any[];
+addItem: (item: GItem) => any[];
 ```

@@ -21,10 +21,10 @@ baseExtensions: ({
     extension: ParagraphExtension;
     priority: number;
 } | {
-    extension: CompositionExtension;
+    extension: HistoryExtension;
     priority: number;
 } | {
-    extension: HistoryExtension;
+    extension: CompositionExtension;
     priority: number;
 } | {
     extension: GapCursorExtension;

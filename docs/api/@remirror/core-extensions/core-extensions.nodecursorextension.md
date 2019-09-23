@@ -4,9 +4,7 @@
 
 ## NodeCursorExtension class
 
-This extension makes it possible to navigate with the arrow keys between nodes like emoji.
-
-Without it the cursor sometimes gets lost and stops responding to key presses.
+This extension makes it possible to navigate with the arrow keys between nodes.
 
 <b>Signature:</b>
 
@@ -18,12 +16,16 @@ export declare class NodeCursorExtension extends Extension<NodeCursorExtensionOp
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [defaultOptions](./core-extensions.nodecursorextension.defaultoptions.md) |  | <code>{</code><br/><code>        targets: string[];</code><br/><code>    }</code> |  |
+|  [defaultOptions](./core-extensions.nodecursorextension.defaultoptions.md) |  | <code>{</code><br/><code>        targets: never[];</code><br/><code>    }</code> |  |
 |  [name](./core-extensions.nodecursorextension.name.md) |  | <code>&quot;nodeCursor&quot;</code> |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [plugin()](./core-extensions.nodecursorextension.plugin.md) |  |  |
+|  [plugin({ tags })](./core-extensions.nodecursorextension.plugin.md) |  |  |
+
+## Remarks
+
+Without it the cursor sometimes gets lost and stops responding to key presses.
 

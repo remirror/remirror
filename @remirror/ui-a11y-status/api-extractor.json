@@ -1,5 +1,5 @@
 {
-  "__AUTO_GENERATED__": "To update run: `yarn generate:json`",
+  "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
   "extends": "../../support/api-extractor.json",
   "mainEntryPointFilePath": "<projectFolder>/lib/index.d.ts",
   "apiReport": {
