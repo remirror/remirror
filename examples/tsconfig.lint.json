@@ -1,9 +1,0 @@
-{
-  "extends": "../support/tsconfig.base.json",
-  "compilerOptions": {
-    "allowJs": true,
-    "declaration": false,
-    "types": ["node", "webpack-env"]
-  },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/.babelrc.js"]
-}

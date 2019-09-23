@@ -1,8 +1,0 @@
-{
-  "extends": "../support/tsconfig.base.json",
-  "compilerOptions": {
-    "declaration": false,
-    "allowJs": true
-  },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.js"]
-}

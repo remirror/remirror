@@ -16,18 +16,6 @@
     "lib",
     "src"
   ],
-  "scripts": {
-    "api": "api-extractor run",
-    "api:local": "api-extractor run --local",
-    "build": "run-p build:*",
-    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
-    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "dev": "run-p dev:*",
-    "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
-    "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
-    "document": "node ../api-documenter/lib/start.js markdown --input-folder temp --output-folder ../../docs/api/@remirror",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
-  },
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.0",
@@ -50,7 +38,7 @@
     "@emotion/core": "^10",
     "@types/prosemirror-view": "^1.9.0",
     "@types/react": "^16.8.0",
-    "prosemirror-view": "^1.11.1",
+    "prosemirror-view": "^1.11.3",
     "react": "^16.8.0"
   },
   "publishConfig": {

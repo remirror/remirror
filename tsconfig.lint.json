@@ -1,0 +1,25 @@
+{
+  "extends": "./support/tsconfig.base.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "types": [
+      "jest",
+      "jest-extended",
+      "jest-axe",
+      "@testing-library/jest-dom/extend-expect",
+      "jest-emotion",
+      "snapshot-diff",
+      "jest-enzyme",
+      "jest-environment-enzyme",
+      "jest-environment-puppeteer",
+      "expect-puppeteer",
+      "puppeteer",
+      "jest-image-snapshot"
+    ],
+    "noEmit": true,
+    "declaration": false,
+    "skipLibCheck": true
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js", "*.js", ".eslintrc.js", "**/.babelrc.js"],
+  "exclude": ["**/dist", "**/lib/"]
+}

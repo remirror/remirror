@@ -105,8 +105,8 @@ const manager = ExtensionManager.create([
   { extension: new ItalicExtension(), priority: 2 },
 ]);
 
-console.log(manager.nodes); // { doc: { ... }, paragraph: { ... }, text: { ... } }
-console.log(extension.marks); // { bold: { ... }, italic: { ... } }
+log(manager.nodes); // { doc: { ... }, paragraph: { ... }, text: { ... } }
+log(extension.marks); // { bold: { ... }, italic: { ... } }
 
 // Can also create a schema for you
 manager.createSchema(); // Returns a schema composed of nodes and marks in the extensions provided

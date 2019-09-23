@@ -19,15 +19,9 @@
     "lib",
     "src"
   ],
-  "scripts": {
-    "build": "run-p build:*",
-    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
-    "dev": "run-p dev:*",
-    "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
-  },
   "dependencies": {
     "@babel/runtime": "^7.6.0",
+    "@emotion/core": "^10",
     "@remirror/core-helpers": "0.4.2-canary.2",
     "@types/jsesc": "0.4.29",
     "@types/node": "^12.7.5",

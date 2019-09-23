@@ -22,15 +22,6 @@
   "references": [
     {
       "path": "../core-helpers/tsconfig.prod.json"
-    },
-    {
-      "path": "../core-types/tsconfig.prod.json"
-    },
-    {
-      "path": "../ui/tsconfig.prod.json"
-    },
-    {
-      "path": "../ui-icons/tsconfig.prod.json"
     }
   ]
 }

@@ -11,8 +11,7 @@
     "clean": "gatsby clean",
     "now-build": "gatsby build",
     "serve": "gatsby serve",
-    "start": "gatsby develop",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+    "start": "gatsby develop"
   },
   "dependencies": {
     "@babel/runtime": "7.6.0",

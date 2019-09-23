@@ -13,14 +13,9 @@
     "lib",
     "src"
   ],
-  "scripts": {
-    "build": "run-p build:*",
-    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
-    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
-  },
   "types": "lib/index.d.ts",
   "dependencies": {
+    "@babel/runtime": "^7.6.0",
     "@remirror/core": "0.4.2-canary.2",
     "@testing-library/dom": "^6.2.0",
     "@types/prosemirror-gapcursor": "^1.0.1",
@@ -51,9 +46,9 @@
     "jest": "^24.5.0"
   },
   "keywords": [
-    "prosemirror",
     "jest",
-    "tests",
-    "snapshots"
+    "prosemirror",
+    "snapshots",
+    "tests"
   ]
 }

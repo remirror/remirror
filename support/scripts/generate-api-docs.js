@@ -30,8 +30,6 @@ const runApiExtractor = async () => {
     const relativePath = getRelativePathFromJson(json);
     const path = baseDir(relativePath, 'api-extractor.json');
 
-    console.log(path);
-
     const config = ExtractorConfig.loadFileAndPrepare(path);
     const result = Extractor.invoke(config, {
       localBuild: true,

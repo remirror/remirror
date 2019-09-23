@@ -6,8 +6,7 @@
   "scripts": {
     "build": "razzle build",
     "start": "razzle start",
-    "start:prod": "NODE_ENV=production node build/server.js",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+    "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
     "@emotion/core": "10.0.17",

@@ -1,6 +1,7 @@
-const { join, sep, relative } = require('path');
+const { join, relative } = require('path');
 const {
   getAllDependencies,
+  getDependencyPackageMap,
   formatFiles,
   baseDir,
   getRelativePathFromJson,
@@ -49,19 +50,23 @@ const generateSizeLimitConfig = async () => {
 };
 
 const generateRollupConfig = async () => {
-  const packages = await getAllDependencies();
+  const [packages, dependencies] = await Promise.all([
+    getAllDependencies(),
+    getDependencyPackageMap(true),
+  ]);
+
   const rollup = packages
-    .filter(pkg => !pkg.private && pkg.module)
+    .filter(pkg => !pkg.private)
     .map(json => {
       const packagePath = getRelativePathFromJson(json);
       return {
-        path: join('../..', packagePath, 'package.json'),
-        root: packagePath.split(sep)[0],
+        path: packagePath,
+        name: json.name,
       };
     });
   const jsonPath = baseDir(configs.rollup);
 
-  await writeJSON(jsonPath, { ...AUTO_GENERATED_FLAG, rollup });
+  await writeJSON(jsonPath, { ...AUTO_GENERATED_FLAG, rollup, dependencies });
   filesToPrettify.push(jsonPath);
 };
 
@@ -124,7 +129,6 @@ const TSCONFIG_PROD = {
   compilerOptions: {
     baseUrl: 'src',
     paths: {},
-    composite: true,
   },
   exclude: EXCLUDE_PROD,
 };
@@ -158,15 +162,13 @@ const generateApiExtractorConfigs = async () => {
   await Promise.all(paths.map(fn));
 };
 
-const TSCONFIG_FILENAME = 'tsconfig.json';
-const MAIN_TSCONFIG_PATH = baseDir(TSCONFIG_FILENAME);
-// const FIXTURES = '@remirror/test-fixtures';
+const MAIN_TSCONFIG_PROD_PATH = baseDir(TSCONFIG_PROD_FILENAME);
 
 const generateMainTsConfig = async () => {
   const packages = await getAllDependencies();
 
   const config = packages
-    .filter(pkg => pkg.types)
+    .filter(pkg => pkg.types && !pkg.private)
     .map(json => ({
       path: join(getRelativePathFromJson(json), TSCONFIG_PROD_FILENAME),
     }))
@@ -177,24 +179,22 @@ const generateMainTsConfig = async () => {
       exclude: EXCLUDE_PROD,
     });
 
-  filesToPrettify.push(MAIN_TSCONFIG_PATH);
-  await writeJSON(MAIN_TSCONFIG_PATH, config);
+  filesToPrettify.push(MAIN_TSCONFIG_PROD_PATH);
+  await writeJSON(MAIN_TSCONFIG_PROD_PATH, config);
 };
 
 const generatePackageTsConfigs = async () => {
-  const packages = await getAllDependencies();
-  const tsPackages = packages.filter(pkg => pkg.types);
-  const packagePathMapping = tsPackages.reduce(
-    (acc, json) => ({ ...acc, [json.name]: json.location }),
-    {},
-  );
+  const [packages, dependencies] = await Promise.all([
+    getAllDependencies(),
+    getDependencyPackageMap(),
+  ]);
 
   const fn = async json => {
     const references = Object.keys(json.dependencies)
-      .filter(dependency => !!packagePathMapping[dependency])
+      .filter(dependency => !!dependencies[dependency])
       .map(dependency => {
         const path = join(
-          relative(json.location, packagePathMapping[dependency]),
+          relative(json.location, dependencies[dependency]),
           TSCONFIG_PROD_FILENAME,
         );
         return {
@@ -205,6 +205,7 @@ const generatePackageTsConfigs = async () => {
     const tsConfigProdPath = join(json.location, TSCONFIG_PROD_FILENAME);
     const options = json.types
       ? {
+          composite: true,
           emitDeclarationOnly: true,
           declaration: true,
           declarationMap: true,

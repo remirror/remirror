@@ -4,25 +4,28 @@ import globals from 'rollup-plugin-node-globals';
 import json from 'rollup-plugin-json';
 import resolve from 'rollup-plugin-node-resolve';
 import autoExternal from 'rollup-plugin-auto-external';
-import path from 'path';
+import { join } from 'path';
+import chalk from 'chalk';
 
 /* Inspired by https://github.com/ianstormtaylor/slate/blob/6302b2d9d2d6a62ba32e6a7d987db5db8f846eef/support/rollup/factory.js#L1-L148 */
 
 /**
  * Return a Rollup configuration for a `pkg`
  *
- * @param {Object} pkg
+ * @param {Object} packageJson
  * @return {Object}
  */
 
-function configure(pkg, rootFolder = '@remirror') {
-  const folderName = pkg.name.replace('@remirror/', '');
+function configure(packageJson, path) {
   const extensions = ['.mjs', '.json', '.ts', '.tsx', '.js'];
+  const packagePath = join(path, 'package.json');
 
-  const input = `${rootFolder}/${folderName}/src/index.ts`;
+  const input = join(path, 'src', 'index.ts');
   const deps = []
-    .concat(pkg.dependencies ? Object.keys(pkg.dependencies) : [])
-    .concat(pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : []);
+    .concat(packageJson.dependencies ? Object.keys(packageJson.dependencies) : [])
+    .concat(
+      packageJson.peerDependencies ? Object.keys(packageJson.peerDependencies) : [],
+    );
 
   const plugins = [
     // Allow Rollup to resolve modules from `node_modules`, since it only
@@ -41,7 +44,7 @@ function configure(pkg, rootFolder = '@remirror') {
 
     // Use Babel to transpile the result, limiting it to the source code.
     babel({
-      include: [`${rootFolder}/${folderName}/src/**`],
+      include: [join(path, 'src', '**')],
       extensions,
       exclude: ['node_modules/**', '*.json'],
       runtimeHelpers: true,
@@ -49,13 +52,7 @@ function configure(pkg, rootFolder = '@remirror') {
 
     autoExternal({
       dependencies: true,
-      packagePath: path.resolve(
-        __dirname,
-        '../../',
-        rootFolder,
-        folderName,
-        'package.json',
-      ),
+      packagePath,
       peerDependencies: true,
     }),
 
@@ -67,30 +64,36 @@ function configure(pkg, rootFolder = '@remirror') {
     plugins,
     input,
     output: [
-      {
-        file: `${rootFolder}/${folderName}/${pkg.module}`,
+      packageJson.module && {
+        file: join(path, packageJson.module),
         format: 'es',
         sourcemap: true,
       },
-      {
-        file: `${rootFolder}/${folderName}/${pkg.cjs}`,
+      packageJson.cjs && {
+        file: join(path, packageJson.cjs),
         format: 'cjs',
         exports: 'named',
         sourcemap: true,
       },
-    ],
+    ].filter(Boolean),
     // We need to explicitly state which modules are external, meaning that
-    // they are present at runtime. In the case of non-UMD configs, this means
-    // all non-Remirror packages.
+    // they are present at runtime.
     external: id => {
-      return !!deps.find(dep => dep === id || id.startsWith(`${dep}/`));
+      const isExternal = !!deps.find(dep => dep === id || id.startsWith(`${dep}/`));
+      if (id === '@emotion/core' && !isExternal) {
+        throw new Error(
+          chalk`{red.bold Invalid configuration for '${packageJson.name}'}: {yellow '@emotion/core' must be declared as a {bold dependency} or {bold peerDependency}.}`,
+        );
+      }
+
+      return isExternal;
     },
   };
 
   const moduleOutput = {
     ...bundledOutput,
     output: {
-      dir: `${rootFolder}/${folderName}/lib`,
+      dir: join(path, 'lib'),
       format: 'cjs',
       exports: 'named',
       sourcemap: true,
@@ -98,7 +101,9 @@ function configure(pkg, rootFolder = '@remirror') {
     preserveModules: true,
   };
 
-  return [bundledOutput, moduleOutput];
+  return [(packageJson.module || packageJson.cjs) && bundledOutput, moduleOutput].filter(
+    Boolean,
+  );
 }
 
 /**
@@ -107,8 +112,8 @@ function configure(pkg, rootFolder = '@remirror') {
  * @return {Array}
  */
 
-function factory(pkg, rootFolder) {
-  return configure(pkg, rootFolder);
+function factory(pkg, root) {
+  return configure(pkg, root);
 }
 
 /**

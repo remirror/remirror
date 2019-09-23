@@ -74,6 +74,8 @@
     "prosemirror-suggest/lib": ["../../packages/prosemirror-suggest/src"],
     "prosemirror-suggest": ["../../packages/prosemirror-suggest/src"],
     "remirror/lib": ["../../packages/remirror/src"],
-    "remirror": ["../../packages/remirror/src"]
+    "remirror": ["../../packages/remirror/src"],
+    "test-keyboard/lib": ["../../packages/test-keyboard/src"],
+    "test-keyboard": ["../../packages/test-keyboard/src"]
   }
 }
