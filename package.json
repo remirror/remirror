@@ -52,9 +52,9 @@
     "lint": "run-s lint:*",
     "lint:es": "eslint -f friendly --ext=.tsx,.ts,.js .",
     "lint:prettier": "prettier --check \"**/*.{json,yml,yaml,md,mdx}\" \"!docs/api/**\" \"!support/api/**\" \"!**/temp/**\"",
-    "publish:canary": "yarn if-clean run-s checks:publish lerna:publish:canary",
-    "publish:minor": "yarn if-clean run-s checks:publish lerna:publish:minor",
-    "publish:patch": "yarn if-clean run-s checks:publish lerna:publish:patch",
+    "publish:canary": "yarn if-clean yarn lerna:publish:canary",
+    "publish:minor": "yarn if-clean yarn lerna:publish:minor",
+    "publish:patch": "yarn if-clean yarn lerna:publish:patch",
     "size": "size-limit",
     "start:checks": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
     "stop:checks": "rimraf ./.config.json",
@@ -67,7 +67,7 @@
     "test:e2e:watch": "jest --watch --verbose=false --runInBand --config e2e/jest.config.js",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
     "typecheck": "tsc -p ./tsconfig.checks.json",
-    "preversion": "run-s checks build"
+    "preversion": "run-s checks build size test:e2e:ssr"
   },
   "devDependencies": {
     "@babel/cli": "7.6.0",
