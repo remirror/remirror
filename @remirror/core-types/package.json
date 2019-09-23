@@ -25,7 +25,6 @@
     "@types/prosemirror-schema-list": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-transform": "^1.1.0",
-    "@types/prosemirror-view": "^1.9.0",
     "@types/styled-system__css": "^5.0.4",
     "csstype": "^2.6.6",
     "prosemirror-commands": "^1.0.8",
@@ -34,11 +33,12 @@
     "prosemirror-model": "^1.7.2",
     "prosemirror-schema-list": "^1.0.3",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-transform": "^1.1.4",
-    "prosemirror-view": "^1.11.3"
+    "prosemirror-transform": "^1.1.4"
   },
   "peerDependencies": {
     "@emotion/core": "^10",
+    "@types/prosemirror-view": "^1.9.0",
+    "prosemirror-view": "^1.11.3",
     "@types/react": "^16.8.0",
     "react": "^16.8.0"
   },
