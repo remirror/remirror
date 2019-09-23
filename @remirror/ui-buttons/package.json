@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-buttons",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-buttons",
-  "version": "0.4.2-canary.2",
+  "version": "0.5.0",
   "main": "lib/index.js",
   "module": "lib/dist/ui-buttons.esm.js",
   "files": [
@@ -15,9 +15,9 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.0",
-    "@remirror/core": "0.4.2-canary.2",
-    "@remirror/ui": "0.4.2-canary.2",
-    "@remirror/ui-icons": "0.4.2-canary.2",
+    "@remirror/core": "0.5.0",
+    "@remirror/ui": "0.5.0",
+    "@remirror/ui-icons": "0.5.0",
     "csstype": "2.6.6"
   },
   "peerDependencies": {

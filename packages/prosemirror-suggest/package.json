@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/prosemirror-suggest",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/packages/prosemirror-suggest",
-  "version": "0.4.2-canary.2",
+  "version": "0.5.0",
   "main": "lib/index.js",
   "module": "lib/dist/prosemirror-suggest.esm.js",
   "files": [
@@ -15,10 +15,10 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.0",
-    "@remirror/core-constants": "0.4.2-canary.2",
-    "@remirror/core-helpers": "0.4.2-canary.2",
-    "@remirror/core-types": "0.4.2-canary.2",
-    "@remirror/core-utils": "0.4.2-canary.2",
+    "@remirror/core-constants": "0.5.0",
+    "@remirror/core-helpers": "0.5.0",
+    "@remirror/core-types": "0.5.0",
+    "@remirror/core-utils": "0.5.0",
     "@types/prosemirror-keymap": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
     "escape-string-regexp": "^2.0.0",

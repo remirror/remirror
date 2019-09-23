@@ -2,7 +2,7 @@
   "private": true,
   "name": "with-next",
   "license": "ISC",
-  "version": "0.4.2-canary.2",
+  "version": "0.5.0",
   "scripts": {
     "build": "next build",
     "dev": "next",
@@ -11,12 +11,12 @@
   },
   "dependencies": {
     "@emotion/core": "10.0.17",
-    "@remirror/core": "0.4.2-canary.2",
-    "@remirror/core-extensions": "0.4.2-canary.2",
-    "@remirror/editor-social": "0.4.2-canary.2",
-    "@remirror/editor-wysiwyg": "0.4.2-canary.2",
-    "@remirror/react": "0.4.2-canary.2",
-    "@remirror/showcase": "0.4.2-canary.2",
+    "@remirror/core": "0.5.0",
+    "@remirror/core-extensions": "0.5.0",
+    "@remirror/editor-social": "0.5.0",
+    "@remirror/editor-wysiwyg": "0.5.0",
+    "@remirror/react": "0.5.0",
+    "@remirror/showcase": "0.5.0",
     "next": "9.0.6",
     "react": "16.9.0",
     "react-dom": "16.9.0"

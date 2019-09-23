@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-types",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-types",
-  "version": "0.4.2-canary.2",
+  "version": "0.5.0",
   "main": "lib/index.js",
   "module": "lib/dist/core-types.esm.js",
   "files": [
@@ -15,8 +15,8 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.0",
-    "@remirror/core-constants": "0.4.2-canary.2",
-    "@remirror/react-portals": "0.4.2-canary.2",
+    "@remirror/core-constants": "0.5.0",
+    "@remirror/react-portals": "0.5.0",
     "@styled-system/css": "^5.0.23",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
@@ -38,8 +38,8 @@
   "peerDependencies": {
     "@emotion/core": "^10",
     "@types/prosemirror-view": "^1.9.0",
-    "prosemirror-view": "^1.11.3",
     "@types/react": "^16.8.0",
+    "prosemirror-view": "^1.11.3",
     "react": "^16.8.0"
   },
   "publishConfig": {

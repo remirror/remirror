@@ -6,7 +6,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/test-fixtures",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/test-fixtures",
-  "version": "0.4.2-canary.2",
+  "version": "0.5.0",
   "main": "lib/index.js",
   "files": [
     "lib",
@@ -15,10 +15,10 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.0",
-    "@remirror/core": "0.4.2-canary.2",
-    "@remirror/core-extensions": "0.4.2-canary.2",
-    "@remirror/react-portals": "0.4.2-canary.2",
-    "@remirror/ui": "0.4.2-canary.2",
+    "@remirror/core": "0.5.0",
+    "@remirror/core-extensions": "0.5.0",
+    "@remirror/react-portals": "0.5.0",
+    "@remirror/ui": "0.5.0",
     "@types/lolex": "^3.1.1",
     "@types/prosemirror-view": "^1.9.0",
     "lolex": "^4.2.0",

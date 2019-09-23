@@ -2,7 +2,7 @@
   "private": true,
   "name": "with-razzle",
   "license": "MIT",
-  "version": "0.4.2-canary.2",
+  "version": "0.5.0",
   "scripts": {
     "build": "razzle build",
     "start": "razzle start",
@@ -11,7 +11,7 @@
   "dependencies": {
     "@emotion/core": "10.0.17",
     "@emotion/styled": "10.0.17",
-    "@remirror/showcase": "0.4.2-canary.2",
+    "@remirror/showcase": "0.5.0",
     "express": "4.17.1",
     "react": "16.9.0",
     "react-dom": "16.9.0",
