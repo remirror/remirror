@@ -1,12 +1,8 @@
-import { Attrs, EditorView, Position, RemirrorTheme } from '@remirror/core';
-import { EmojiObject, EmojiSuggestCommand } from '@remirror/extension-emoji';
-import { MentionExtensionAttrs, SuggestionStateMatch } from '@remirror/extension-mention';
-import { popupMenuPositioner, useRemirrorContext } from '@remirror/react';
+import { Position, RemirrorTheme } from '@remirror/core';
+import { useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
-import { Type, useMultishift } from 'multishift';
 import React, { forwardRef, FunctionComponent } from 'react';
 import {
-  DataParams,
   DivProps,
   ImgProps,
   SocialExtensions,
@@ -14,6 +10,7 @@ import {
   TagSuggestionsProps,
   UserSuggestionsProps,
 } from '../social-types';
+import { createOnClickMethodFactory } from '../social-utils';
 
 type SuggestionsDropdownProps = DivProps & {
   position?: Partial<Position> & { position?: 'absolute' };
@@ -45,6 +42,7 @@ const SuggestionsDropdown = forwardRef<HTMLDivElement, SuggestionsDropdownProps>
     );
   },
 );
+SuggestionsDropdown.displayName = 'SuggestionsDropdown';
 
 const ItemWrapper = forwardRef<HTMLSpanElement, SpanProps & { active: boolean }>(
   ({ active, ...props }, ref) => {
@@ -74,6 +72,7 @@ const ItemWrapper = forwardRef<HTMLSpanElement, SpanProps & { active: boolean }>
     );
   },
 );
+ItemWrapper.displayName = 'ItemWrapper';
 
 const AtImage = forwardRef<HTMLImageElement, ImgProps>((props, ref) => {
   const { sx } = useRemirrorTheme();
@@ -86,6 +85,7 @@ const AtImage = forwardRef<HTMLImageElement, ImgProps>((props, ref) => {
     />
   );
 });
+AtImage.displayName = 'AtImage';
 
 const AtDisplayName = forwardRef<HTMLSpanElement, SpanProps>((props, ref) => {
   const { sx } = useRemirrorTheme();
@@ -98,48 +98,14 @@ const AtDisplayName = forwardRef<HTMLSpanElement, SpanProps>((props, ref) => {
     />
   );
 });
+AtDisplayName.displayName = 'AtDisplayName';
 
 const AtUsername = forwardRef<HTMLSpanElement, SpanProps>((props, ref) => {
   const { css } = useRemirrorTheme();
 
   return <span {...props} ref={ref} css={css({ color: '#657786' })} />;
 });
-
-interface CreateOnClickMethodFactoryParams {
-  getMention: () => SuggestionStateMatch;
-  setExitTriggeredInternally: () => void;
-  view: EditorView;
-  command(attrs: Attrs): void;
-}
-
-/**
- * This method helps create the onclick factory method used by both types of suggestions supported
- */
-const createOnClickMethodFactory = ({
-  getMention,
-  setExitTriggeredInternally,
-  view,
-  command,
-}: CreateOnClickMethodFactoryParams) => (id: string) => () => {
-  const { char, name, range } = getMention();
-
-  const params: MentionExtensionAttrs = {
-    id,
-    label: `${char}${id}`,
-    name,
-    replacementType: 'full',
-    range,
-    role: 'presentation',
-    href: `/${id}`,
-  };
-
-  setExitTriggeredInternally(); // Prevents further `onExit` calls
-  command(params);
-
-  if (!view.hasFocus()) {
-    view.focus();
-  }
-};
+AtUsername.displayName = 'AtUsername';
 
 /**
  * Render the suggestions for mentioning a user.
@@ -203,6 +169,7 @@ const HashTagText = forwardRef<HTMLSpanElement, SpanProps>((props, ref) => {
     />
   );
 });
+HashTagText.displayName = 'HashTagText';
 
 /**
  * Render the suggestions for tagging.
@@ -240,84 +207,5 @@ export const TagSuggestions: FunctionComponent<TagSuggestionsProps> = ({
         </ItemWrapper>
       ))}
     </SuggestionsDropdown>
-  );
-};
-
-interface EmojiSuggestionsProps extends DataParams<EmojiObject> {
-  highlightedIndex: number;
-  command: EmojiSuggestCommand;
-}
-
-/**
- * Render the suggestions for tagging.
- */
-export const EmojiSuggestions: FunctionComponent<EmojiSuggestionsProps> = ({
-  data,
-  highlightedIndex,
-  command,
-}) => {
-  const { sxx } = useRemirrorTheme();
-  const { view, getPositionerProps } = useRemirrorContext<SocialExtensions>();
-  const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
-    highlightedIndexes: [highlightedIndex],
-    type: Type.ControlledMenu,
-    items: data,
-    isOpen: true,
-  });
-
-  const { top, left, ref } = getPositionerProps({
-    ...popupMenuPositioner,
-    positionerId: 'emojiPopupMenu',
-  });
-
-  return (
-    <div
-      {...getMenuProps({ ref })}
-      className='remirror-dropdown-item-wrapper'
-      css={sxx({
-        position: 'absolute',
-        width: 'max-content',
-        py: 1,
-        margin: '0 auto',
-        borderRadius: 1,
-        boxShadow: 'card',
-        zIndex: '10',
-        top: top + 10,
-        left,
-        maxHeight: '250px',
-        overflowY: 'scroll',
-      })}
-    >
-      {data.map((emoji, index) => {
-        const isHighlighted = itemHighlightedAtIndex(index);
-        const isHovered = index === hoveredIndex;
-        return (
-          <div
-            key={emoji.name}
-            css={sxx({
-              backgroundColor: isHighlighted ? 'grey' : isHovered ? 'light' : 'background',
-              p: 2,
-              textOverflow: 'ellipsis',
-              maxWidth: '250px',
-              width: '250px',
-              overflow: 'hidden',
-              whiteSpace: 'nowrap',
-            })}
-            {...getItemProps({
-              className: `suggestions-item${isHighlighted ? ' active' : ''}`,
-              onClick: () => {
-                command(emoji);
-                view.focus();
-              },
-              item: emoji,
-              index,
-            })}
-          >
-            <span css={sxx({ fontSize: '1.25em' })}>{emoji.char}</span>{' '}
-            <span css={sxx({ color: 'darkGrey' })}>:{emoji.name}:</span>
-          </div>
-        );
-      })}
-    </div>
   );
 };

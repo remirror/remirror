@@ -1,5 +1,5 @@
 import { NULL_CHARACTER } from '@remirror/core-constants';
-import { bool, findMatches, isRegExp, isUndefined } from '@remirror/core-helpers';
+import { bool, findMatches, isUndefined } from '@remirror/core-helpers';
 import {
   CommandFunction,
   EditorStateParams,
@@ -8,7 +8,6 @@ import {
   TextParams,
 } from '@remirror/core-types';
 import { selectionEmpty } from '@remirror/core-utils';
-import escapeStringRegex from 'escape-string-regexp';
 import { keydownHandler } from 'prosemirror-keymap';
 import { ChangeReason, ExitReason } from './suggest-constants';
 import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates';
@@ -23,77 +22,18 @@ import {
   SuggestStateMatch,
   SuggestStateMatchParams,
 } from './suggest-types';
+import { regexToString, createRegexFromSuggester } from './suggest-helpers';
 
 /**
- * Convert a RegExp into a string
- *
- * @param regexOrString
+ * Small utility method for creating a match with the reason property available.
  */
-export const regexToString = (regexOrString: string | RegExp) =>
-  isRegExp(regexOrString) ? regexOrString.source : regexOrString;
-
-/**
- * Find regex prefix when depending on whether the mention only supports the
- * start of a line or not
- *
- * @param onlyStartOfLine
- */
-export const getRegexPrefix = (onlyStartOfLine: boolean) => (onlyStartOfLine ? '^' : '');
-
-const getRegexSupportedCharacters = (supportedCharacters: string | RegExp, matchOffset: number) =>
-  `(?:${regexToString(supportedCharacters)}){${matchOffset},}`;
-
-/**
- * Find a match for the provided matchers
- */
-export const findFromMatchers = ({
-  suggesters,
-  $pos,
-}: FindFromMatchersParams): SuggestStateMatch | undefined => {
-  // Find the first match and break when done
-  for (const suggester of suggesters) {
-    try {
-      const match = findMatch({ suggester, $pos });
-      if (match) {
-        return match;
-      }
-    } catch {
-      console.warn('Error while finding match.');
-    }
-  }
-
-  return undefined;
-};
-
-/**
- * Checks if any matches exist at the current selection for so that the
- * suggestions be activated or deactivated.
- */
-const findMatch = ({ $pos, suggester }: FindMatchParams): SuggestStateMatch | undefined => {
-  const { char, name, startOfLine, supportedCharacters, matchOffset } = suggester;
-
-  // Create the regular expression to match the text against
-  const regexp = new RegExp(
-    `${getRegexPrefix(startOfLine)}${escapeStringRegex(char)}${getRegexSupportedCharacters(
-      supportedCharacters,
-      matchOffset,
-    )}`,
-    'gm',
-  );
-
-  // All the text in the current node
-  const text = $pos.doc.textBetween($pos.before(), $pos.end(), NULL_CHARACTER, NULL_CHARACTER);
-
-  // Find the position and return it
-  return findPosition({
-    suggester,
-    text,
-    regexp,
-    $pos,
-    char,
-    name,
-  });
-};
+const createMatchWithReason = <GReason>({
+  match,
+  reason,
+}: SuggestStateMatchParams & ReasonParams<GReason>) => ({
+  ...match,
+  reason,
+});
 
 /**
  * Checks to see if the text before the matching character is a valid prefix.
@@ -161,47 +101,30 @@ const findPosition = ({ text, regexp, $pos, char, suggester }: FindPositionParam
 };
 
 /**
- * Creates an array of the actions taken based on the current prev and next
- * state field
+ * Checks if any matches exist at the current selection for so that the
+ * suggestions be activated or deactivated.
  */
-export const findReason = ({ prev, next, state, $pos }: FindReasonsParams): SuggestReasonMap => {
-  const value: SuggestReasonMap = {};
+const findMatch = ({
+  $pos,
+  suggester,
+}: ResolvedPosParams & SuggesterParams): SuggestStateMatch | undefined => {
+  const { char, name, startOfLine, supportedCharacters, matchOffset } = suggester;
 
-  if (!prev && !next) {
-    return value;
-  }
+  // Create the regular expression to match the text against
+  const regexp = createRegexFromSuggester({ char, matchOffset, startOfLine, supportedCharacters });
 
-  const compare = { prev, next };
+  // All the text in the current node
+  const text = $pos.doc.textBetween($pos.before(), $pos.end(), NULL_CHARACTER, NULL_CHARACTER);
 
-  // Check for a Jump
-  if (isJump(compare)) {
-    return findJumpReason({ prev: compare.prev, next: compare.next, state });
-  }
-
-  // Entered into a new suggestion
-  if (isEntry(compare)) {
-    return { change: createMatchWithReason({ match: compare.next, reason: ChangeReason.Start }) };
-  }
-
-  // Exited a suggestion
-  if (isExit(compare)) {
-    return findExitReason({ $pos, match: compare.prev, state });
-  }
-
-  if (isChange(compare)) {
-    return { change: createMatchWithReason({ match: compare.next, reason: ChangeReason.Text }) };
-  }
-
-  if (isMove(compare)) {
-    return {
-      change: createMatchWithReason({
-        match: compare.next,
-        reason: selectionEmpty(state) ? ChangeReason.Move : ChangeReason.SelectionInside,
-      }),
-    };
-  }
-
-  return value;
+  // Find the position and return it
+  return findPosition({
+    suggester,
+    text,
+    regexp,
+    $pos,
+    char,
+    name,
+  });
 };
 
 /**
@@ -222,6 +145,51 @@ const recheckMatch = ({ state, match }: SuggestStateMatchParams & EditorStatePar
   } catch {
     return undefined;
   }
+};
+
+/**
+ * Check whether the insert action occurred at the end, in the middle or caused
+ * the suggestion to be invalid.
+ *
+ * Prev refers to the original previous and next refers to the updated version
+ * after the split
+ */
+const createInsertReason = ({
+  prev,
+  next,
+  state,
+}: MakeOptional<CompareMatchParams, 'next'> & EditorStateParams): SuggestReasonMap => {
+  // Has the text been removed? TODO how to tests for deletions mid document?
+  if (!next && prev.range.from >= state.doc.nodeSize) {
+    return {
+      exit: createMatchWithReason({
+        match: prev,
+        reason: ExitReason.Removed,
+      }),
+    };
+  }
+
+  // Are we within an invalid split?
+  if (!next || !prev.queryText.partial) {
+    return {
+      exit: createMatchWithReason({
+        match: prev,
+        reason: ExitReason.InvalidSplit,
+      }),
+    };
+  }
+
+  // Are we at the end position?
+  if (next && prev.range.end === next.range.to) {
+    return { exit: createMatchWithReason({ match: next, reason: ExitReason.End }) };
+  }
+
+  // Are we in the middle of the mention
+  if (next && prev.queryText.partial) {
+    return { exit: createMatchWithReason({ match: next, reason: ExitReason.Split }) };
+  }
+
+  return {};
 };
 
 /**
@@ -289,55 +257,17 @@ const findExitReason = ({
   return {};
 };
 
-/**
- * Check whether the insert action occurred at the end, in the middle or caused
- * the suggestion to be invalid.
- *
- * Prev refers to the original previous and next refers to the updated version
- * after the split
- */
-const createInsertReason = ({
-  prev,
-  next,
-  state,
-}: MakeOptional<CompareMatchParams, 'next'> & EditorStateParams): SuggestReasonMap => {
-  // Has the text been removed? TODO how to tests for deletions mid document?
-  if (!next && prev.range.from >= state.doc.nodeSize) {
-    return {
-      exit: createMatchWithReason({
-        match: prev,
-        reason: ExitReason.Removed,
-      }),
-    };
-  }
+interface TransformKeyBindingsParams {
+  /**
+   * The object where each keys are mapped to corresponding actions.
+   */
+  bindings: SuggestKeyBindingMap;
 
-  // Are we within an invalid split?
-  if (!next || !prev.queryText.partial) {
-    return {
-      exit: createMatchWithReason({
-        match: prev,
-        reason: ExitReason.InvalidSplit,
-      }),
-    };
-  }
-
-  // Are we at the end position?
-  if (next && prev.range.end === next.range.to) {
-    return { exit: createMatchWithReason({ match: next, reason: ExitReason.End }) };
-  }
-
-  // Are we in the middle of the mention
-  if (next && prev.queryText.partial) {
-    return { exit: createMatchWithReason({ match: next, reason: ExitReason.Split }) };
-  }
-
-  return {};
-};
-
-const createMatchWithReason = <GReason>({ match, reason }: CreateMatchWithReasonParams<GReason>) => ({
-  ...match,
-  reason,
-});
+  /**
+   * The param object which is passed into each method.
+   */
+  params: SuggestKeyBindingParams;
+}
 
 /**
  * Transforms the keybindings into an object that can be consumed by the
@@ -369,30 +299,12 @@ export const runKeyBindings = (bindings: SuggestKeyBindingMap, params: SuggestKe
   return keydownHandler(transformKeyBindings({ bindings, params }))(params.view, params.event);
 };
 
-interface TransformKeyBindingsParams {
-  /**
-   * The object where each keys are mapped to corresponding actions.
-   */
-  bindings: SuggestKeyBindingMap;
-
-  /**
-   * The param object which is passed into each method.
-   */
-  params: SuggestKeyBindingParams;
-}
-
-interface CreateMatchWithReasonParams<GReason> extends SuggestStateMatchParams, ReasonParams<GReason> {}
-
-interface FindReasonsParams extends EditorStateParams, ResolvedPosParams, Partial<CompareMatchParams> {}
-
 interface FindFromMatchersParams extends ResolvedPosParams {
   /**
    * The matchers to search through.
    */
   suggesters: Array<Required<Suggester>>;
 }
-
-interface FindMatchParams extends ResolvedPosParams, SuggesterParams {}
 
 interface FindPositionParams
   extends Pick<Suggester, 'name' | 'char'>,
@@ -404,3 +316,74 @@ interface FindPositionParams
    */
   regexp: RegExp;
 }
+
+/**
+ * Creates an array of the actions taken based on the current prev and next
+ * state field
+ */
+export const findReason = ({
+  prev,
+  next,
+  state,
+  $pos,
+}: EditorStateParams & ResolvedPosParams & Partial<CompareMatchParams>): SuggestReasonMap => {
+  const value: SuggestReasonMap = {};
+
+  if (!prev && !next) {
+    return value;
+  }
+
+  const compare = { prev, next };
+
+  // Check for a Jump
+  if (isJump(compare)) {
+    return findJumpReason({ prev: compare.prev, next: compare.next, state });
+  }
+
+  // Entered into a new suggestion
+  if (isEntry(compare)) {
+    return { change: createMatchWithReason({ match: compare.next, reason: ChangeReason.Start }) };
+  }
+
+  // Exited a suggestion
+  if (isExit(compare)) {
+    return findExitReason({ $pos, match: compare.prev, state });
+  }
+
+  if (isChange(compare)) {
+    return { change: createMatchWithReason({ match: compare.next, reason: ChangeReason.Text }) };
+  }
+
+  if (isMove(compare)) {
+    return {
+      change: createMatchWithReason({
+        match: compare.next,
+        reason: selectionEmpty(state) ? ChangeReason.Move : ChangeReason.SelectionInside,
+      }),
+    };
+  }
+
+  return value;
+};
+
+/**
+ * Find a match for the provided matchers
+ */
+export const findFromMatchers = ({
+  suggesters,
+  $pos,
+}: FindFromMatchersParams): SuggestStateMatch | undefined => {
+  // Find the first match and break when done
+  for (const suggester of suggesters) {
+    try {
+      const match = findMatch({ suggester, $pos });
+      if (match) {
+        return match;
+      }
+    } catch {
+      console.warn('Error while finding match.');
+    }
+  }
+
+  return undefined;
+};

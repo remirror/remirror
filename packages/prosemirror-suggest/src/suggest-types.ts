@@ -97,19 +97,19 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
   appendText?: string;
 
   /**
-   * Class name to use for the decoration (while the plugin is still being
+   * Class name to use for the decoration (while the suggestion is still being
    * written)
    *
-   * @defaultValue 'suggestion'
+   * @defaultValue 'suggest'
    */
-  suggestionClassName?: string;
+  suggestClassName?: string;
 
   /**
-   * Tag which wraps an active match.
+   * Tag for the prosemirror decoration which wraps an active match.
    *
    * @defaultValue 'span'
    */
-  decorationsTag?: keyof HTMLElementTagNameMap;
+  suggestTag?: string;
 
   /**
    * When true, decorations are not created when this mention is being edited..
@@ -148,7 +148,8 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
    * @remarks
    *
    * For example you may want to disable all `@` symbols while the suggester is
-   * active. Return `true` to prevent any further character handlers from running.
+   * active. Return `true` to prevent any further character handlers from
+   * running.
    *
    * @defaultValue `() => false`
    */
@@ -237,7 +238,8 @@ export interface SuggestStateMatch<GCommand extends AnyFunction<void> = AnyFunct
    *
    * @remarks
    *
-   * For a `char` of `'@'` and query of `'awesome'` `text.full` would be  `'@awesome'`.
+   * For a `char` of `'@'` and query of `'awesome'` `text.full` would be
+   * `'@awesome'`.
    */
   matchText: MatchValue;
 }
@@ -249,11 +251,27 @@ export interface SuggestStateMatchParams {
   match: SuggestStateMatch;
 }
 
+/**
+ * A special parameter needed when creating editable suggester using prosemirror
+ * `Marks`. The method should be called when removing a suggestion that was
+ * identified by a prosemirror `Mark`.
+ */
+export interface SuggestMarkParams {
+  /**
+   * When managing suggestions with marks it is possible to remove a mark but
+   * have that not reflect in the prosemirror state. This method should be used
+   * when removing a suggestion if you are using prosemirror `Marks` to identify
+   * the suggestion.
+   */
+  setMarkRemoved(): void;
+}
+
 export interface CreateSuggestCommandParams
   extends Partial<ReasonParams>,
     EditorViewParams,
     SuggestStateMatchParams,
-    StageParams {}
+    StageParams,
+    SuggestMarkParams {}
 
 export interface GetStageParams extends SuggestStateMatchParams, EditorStateParams {}
 
@@ -309,7 +327,8 @@ export interface SuggestCharacterEntryParams<GCommand extends AnyFunction<void> 
 }
 
 export interface SuggestKeyBindingParams<GCommand extends AnyFunction<void> = AnyFunction<void>>
-  extends SuggestCallbackParams<GCommand> {
+  extends SuggestCallbackParams<GCommand>,
+    SuggestMarkParams {
   /**
    * The dom keyboard event.
    */

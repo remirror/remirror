@@ -62,20 +62,34 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   private view!: EditorView<GSchema>;
 
   /**
-   * Lets us know whether the most recent change was to remove a mark.
+   * Lets us know whether the most recent change was to remove a mention.
    *
-   * This is needed because sometimes removing a mark has no effect. Hence we
-   * need to keep track of whether it's removed and then later in the apply step
-   * check that a removal has happened and reset the `handlerMatches` to prevent
-   * an infinite loop.
+   * This is needed because sometimes removing a prosemirror `Mark` has no
+   * effect. Hence we need to keep track of whether it's removed and then later
+   * in the apply step check that a removal has happened and reset the
+   * `handlerMatches` to prevent an infinite loop.
    */
   private removed = false;
+
+  /**
+   * Sets the removed property to be true. This is passed as a property to the
+   * `createCommand` option.
+   */
+  private setRemovedTrue = () => {
+    this.removed = true;
+  };
 
   /**
    * The actions created by the extension.
    */
   private getCommand(match: SuggestStateMatch, reason?: ExitReason | ChangeReason) {
-    return match.suggester.createCommand({ match, reason, stage: this.stage, view: this.view });
+    return match.suggester.createCommand({
+      match,
+      reason,
+      stage: this.stage,
+      view: this.view,
+      setMarkRemoved: this.setRemovedTrue,
+    });
   }
 
   /**
@@ -155,6 +169,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
       const movedForwards = exit.range.from < change.range.from;
       movedForwards ? change.suggester.onChange(changeParams) : exit.suggester.onExit(exitParams);
       movedForwards ? exit.suggester.onExit(exitParams) : change.suggester.onChange(changeParams);
+      this.removed = false;
       return;
     }
 
@@ -164,7 +179,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
 
     if (exit) {
       exit.suggester.onExit(this.createReasonParams(exit));
-
+      this.removed = false;
       if (isInvalidSplitReason(exit.reason)) {
         this.handlerMatches = {};
       }
@@ -242,6 +257,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     const { keyBindings } = match.suggester;
     const params: SuggestKeyBindingParams = {
       event,
+      setMarkRemoved: this.setRemovedTrue,
       ...this.createParams(match),
     };
 
@@ -283,7 +299,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
 
     const {
       range,
-      suggester: { name, decorationsTag, suggestionClassName },
+      suggester: { name, suggestTag: decorationsTag, suggestClassName: suggestionClassName },
     } = match;
     const { from, end } = range;
 

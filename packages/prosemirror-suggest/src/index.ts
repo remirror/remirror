@@ -113,7 +113,7 @@
  * ```
  *
  * You can see this example brought to life in the `remirror` codebase under the
- * @remirror/extension-emoji.
+ * `@remirror/extension-emoji` and the `@remirror/extension-mention` packages.
  *
  * [GIF-EXAMPLE]
  *
@@ -123,3 +123,5 @@
 export * from './suggest-plugin';
 export * from './suggest-types';
 export * from './suggest-constants';
+export * from './suggest-predicates';
+export * from './suggest-helpers';

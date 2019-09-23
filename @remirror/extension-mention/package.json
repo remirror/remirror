@@ -16,6 +16,7 @@
   "dependencies": {
     "@babel/runtime": "^7.6.0",
     "@remirror/core": "0.5.0",
+    "prosemirror-suggest": "0.5.0",
     "@types/prosemirror-keymap": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.9.0",

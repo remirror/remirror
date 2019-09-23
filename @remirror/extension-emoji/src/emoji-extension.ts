@@ -164,7 +164,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       char: suggestionCharacter,
       name: this.name,
       appendText: '',
-      decorationsTag: 'span',
+      suggestTag: 'span',
       keyBindings: suggestionKeyBindings,
       onChange: params => {
         const query = params.queryText.full;

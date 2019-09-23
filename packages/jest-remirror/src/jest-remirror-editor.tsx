@@ -21,6 +21,7 @@ import {
   insertText,
   press,
   shortcut,
+  pasteContent,
   TestEditorView,
 } from 'jest-prosemirror';
 import { markFactory, nodeFactory } from './jest-remirror-builder';
@@ -128,7 +129,7 @@ export const renderEditor = <
         tags: newTags ? { ...tags, ...newTags } : tags,
         start: selection.from,
         end: selection.to,
-
+        doc,
         overwrite: add,
         state: view.state,
         actions: returnedParams.actions,
@@ -152,7 +153,7 @@ export const renderEditor = <
           return updateContent();
         },
         callback: fn => {
-          fn(pick(returnValue, ['helpers', 'actions', 'end', 'state', 'tags', 'start']));
+          fn(pick(returnValue, ['helpers', 'actions', 'end', 'state', 'tags', 'start', 'doc']));
           return updateContent();
         },
         actionsCallback: callback => {
@@ -165,6 +166,10 @@ export const renderEditor = <
         },
         shortcut: text => {
           shortcut({ shortcut: text, view });
+          return updateContent();
+        },
+        paste: content => {
+          pasteContent({ view, content });
           return updateContent();
         },
         press: char => {

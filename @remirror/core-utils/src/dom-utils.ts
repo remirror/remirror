@@ -21,6 +21,7 @@ import {
   SchemaParams,
   Selection,
   Transaction,
+  ProsemirrorNodeParams,
 } from '@remirror/core-types';
 import minDocument from 'min-document';
 import {
@@ -146,13 +147,16 @@ interface IsMarkActiveParams extends MarkTypeParams, EditorStateParams, Partial<
 export const isMarkActive = ({ state, type, from, to }: IsMarkActiveParams) => {
   const { selection, doc, storedMarks } = state;
   const { $from, empty } = selection;
-  return bool(
-    from && to
-      ? Math.max(from, to) < doc.nodeSize && doc.rangeHasMark(from, to, type)
-      : empty
-      ? type.isInSet(storedMarks || $from.marks())
-      : doc.rangeHasMark(selection.from, selection.to, type),
-  );
+
+  if (from && to) {
+    return Math.max(from, to) < doc.nodeSize && doc.rangeHasMark(from, to, type);
+  }
+
+  if (empty) {
+    return bool(type.isInSet(storedMarks || $from.marks()));
+  }
+
+  return doc.rangeHasMark(selection.from, selection.to, type);
 };
 
 /**
@@ -318,17 +322,20 @@ export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToPar
 
   let { from, to } = state.selection;
 
-  const createChar = (start: number, end: number) =>
+  const getChar = (start: number, end: number) =>
     getTextContentFromSlice(TextSelection.create(state.doc, start, end).content());
 
-  // Keep going until reaching first excluded character or empty text content.
   for (
-    let char = createChar(from - 1, from);
+    let char = getChar(from - 1, from);
     char && !exclude.test(char);
-    from--, char = createChar(from - 1, from)
-  ) {}
+    from--, char = getChar(from - 1, from)
+  ) {
+    // Step backwards until reaching first excluded character or empty text content.
+  }
 
-  for (let char = createChar(to, to + 1); char && !exclude.test(char); to++, char = createChar(to, to + 1)) {}
+  for (let char = getChar(to, to + 1); char && !exclude.test(char); to++, char = getChar(to, to + 1)) {
+    // Step forwards until reaching the first excluded character or empty text content
+  }
 
   if (from === to) {
     return false;
@@ -424,6 +431,16 @@ export const isDOMNode = (domNode: unknown): domNode is Node =>
     : isObject(domNode) && isNumber(Cast(domNode).nodeType) && isString(Cast(domNode).nodeName);
 
 /**
+ * Checks for an element node like `<p>` or `<div>`.
+ *
+ * @param domNode - the dom node
+ *
+ * @public
+ */
+export const isElementDOMNode = (domNode: unknown): domNode is HTMLElement =>
+  isDOMNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE;
+
+/**
  * Finds the closest element which matches the passed selector
  *
  * @param domNode - the dom node
@@ -448,16 +465,6 @@ export const closestElement = (domNode: Node | null | undefined, selector: strin
   } while (isElementDOMNode(domNode));
   return null;
 };
-
-/**
- * Checks for an element node like `<p>` or `<div>`.
- *
- * @param domNode - the dom node
- *
- * @public
- */
-export const isElementDOMNode = (domNode: unknown): domNode is HTMLElement =>
-  isDOMNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE;
 
 /**
  * Checks for a text node.
@@ -744,15 +751,22 @@ export const getDocument = (forceEnvironment?: RenderEnvironment) => {
   return shouldUseDOMEnvironment(forceEnvironment) ? document : minDocument;
 };
 
-interface CustomDocParams {
+export interface CustomDocParams {
   /** The custom document to use (allows for ssr rendering) */
   doc: Document;
 }
 
-interface ProsemirrorNodeParams {
-  /** The prosemirror node */
-  node: ProsemirrorNode;
-}
+/**
+ * Convert a node into its DOM representative
+ *
+ * @param params - the from node params
+ *
+ * @public
+ */
+export const toDOM = ({ node, schema, doc }: FromNodeParams): DocumentFragment => {
+  const fragment = isDocNode(node, schema) ? node.content : Fragment.from(node);
+  return DOMSerializer.fromSchema(schema).serializeFragment(fragment, { document: doc });
+};
 
 interface FromNodeParams extends SchemaParams, ProsemirrorNodeParams, Partial<CustomDocParams> {}
 
@@ -768,18 +782,6 @@ export const toHTML = ({ node, schema, doc = getDocument() }: FromNodeParams) =>
   element.appendChild(toDOM({ node, schema, doc }));
 
   return element.innerHTML;
-};
-
-/**
- * Convert a node into its DOM representative
- *
- * @param params - the from node params
- *
- * @public
- */
-export const toDOM = ({ node, schema, doc }: FromNodeParams): DocumentFragment => {
-  const fragment = isDocNode(node, schema) ? node.content : Fragment.from(node);
-  return DOMSerializer.fromSchema(schema).serializeFragment(fragment, { document: doc });
 };
 
 interface FromStringParams extends Partial<CustomDocParams>, SchemaParams {

@@ -90,6 +90,11 @@ export interface TaggedProsemirrorNode extends PMNode {
 export interface AddContentReturn<GExtension extends AnyExtension>
   extends EditorStateParams<SchemaFromExtensions<GExtension>> {
   /**
+   * The current prosemirror document.
+   */
+  doc: ProsemirrorNode;
+
+  /**
    * The actions available in the editor. When updating the content of the TestEditor make sure not to
    * use a stale copy of the actions otherwise it will throw errors due to using an outdated state.
    */
@@ -150,7 +155,10 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    */
   callback(
     fn: (
-      content: Pick<AddContentReturn<GExtension>, 'helpers' | 'actions' | 'end' | 'state' | 'tags' | 'start'>,
+      content: Pick<
+        AddContentReturn<GExtension>,
+        'helpers' | 'actions' | 'end' | 'state' | 'tags' | 'start' | 'doc'
+      >,
     ) => void,
   ): AddContentReturn<GExtension>;
 
@@ -205,6 +213,15 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    * @param key - the key to press (or string representing a key)
    */
   press(key: string): AddContentReturn<GExtension>;
+
+  /**
+   * A simplistic implementation of pasting content into the editor.
+   * Underneath it calls the paste handler `transformPaste` and that is all.
+   *
+   * @param content - The text or node to paste into the document at the current
+   * selection.
+   */
+  paste(content: TaggedProsemirrorNode | string): AddContentReturn<GExtension>;
 
   /**
    * Takes any command as an input and dispatches it within the document context.

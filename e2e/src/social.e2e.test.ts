@@ -101,7 +101,7 @@ describe('Social Showcase', () => {
     describe('@', () => {
       it('should wrap in progress mentions in a-tag decorations', async () => {
         await $editor.type('Hello @jonathan');
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.suggestion-at'))).resolves.toBe('@jonathan');
+        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.suggest-at'))).resolves.toBe('@jonathan');
       });
 
       it('should accept selections onEnter', async () => {
@@ -178,7 +178,7 @@ describe('Social Showcase', () => {
     describe('#', () => {
       it('should wrap in progress mentions in a-tag decorations', async () => {
         await $editor.type('My tag is #Topic');
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.suggestion-tag'))).resolves.toBe('#Topic');
+        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.suggest-tag'))).resolves.toBe('#Topic');
       });
 
       it('should accept selections onEnter', async () => {
@@ -244,6 +244,7 @@ describe('Social Showcase', () => {
                   role="presentation"
                   class="mention mention-tag"
                   data-mention-id="awesome"
+                  data-mention-name="tag"
                   >#awesome</a
                 >
                 hello
@@ -252,6 +253,7 @@ describe('Social Showcase', () => {
                   role="presentation"
                   class="mention mention-at"
                   data-mention-id="ab"
+                  data-mention-name="at"
                   >@ab</a
                 >
                 😀 <a href="http://google.com" role="presentation">google.com</a>
