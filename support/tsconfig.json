@@ -1,8 +1,8 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "types": ["jest", "node", "jest-environment-puppeteer", "expect-puppeteer", "puppeteer"]
+    "declaration": false
   },
-  "include": ["./**/*.ts", "webpack/extension.config.mjs"],
-  "exclude": ["dtslint"]
+  "include": ["*.ts{x,}", "**/*.ts{x,}"],
+  "exclude": ["dts-jest"]
 }

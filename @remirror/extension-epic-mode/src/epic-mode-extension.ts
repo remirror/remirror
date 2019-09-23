@@ -6,7 +6,7 @@ import { EpicModeExtensionOptions } from './epic-mode-types';
 
 export const defaultEpicModeExtensionOptions: EpicModeExtensionOptions = {
   particleEffect: defaultEffect,
-  canvasHolder: document.body,
+  getCanvasContainer: () => document.body,
   colors: VIBRANT_COLORS,
   particleRange: PARTICLE_NUM_RANGE,
   shake: true,

@@ -1,5 +1,5 @@
 import { fromHTML, toHTML } from '@remirror/core';
-import { createBaseTestManager } from '@test-fixtures/schema-helpers';
+import { createBaseTestManager } from '@remirror/test-fixtures';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import typescriptPlugin from 'prettier/parser-typescript';
@@ -33,7 +33,7 @@ describe('schema', () => {
       content: `<pre><code class="language-${attrs.language}" data-code-block-language="${attrs.language}">${content}</code></pre>`,
     });
     const expected = doc(codeBlock(content));
-    expect(node).toEqualPMNode(expected);
+    expect(node).toEqualProsemirrorNode(expected);
   });
 });
 
@@ -89,7 +89,7 @@ describe('plugin', () => {
     const adder = add(doc(tsBlock(`const a = 'test';<cursor>`), plainBlock('Nothing to see here')));
 
     expect(dom.querySelector('.language-typescript code')!.innerHTML).toMatchSnapshot();
-    adder.insertText('\n\nconsole.log(a);');
+    adder.insertText('\n\nlog(a);');
     expect(dom.querySelector('.language-typescript code')!.innerHTML).toMatchSnapshot();
   });
 
@@ -252,7 +252,9 @@ describe('commands', () => {
 
     it('creates the default codeBlock when no language is provided', () => {
       const markupBlock = codeBlock({ language: 'markup' });
+
       const { state } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
+        // @ts-ignore
         actions.createCodeBlock();
       });
 
@@ -313,45 +315,43 @@ describe('commands', () => {
 
     it('can format the codebase', () => {
       const { state } = add(
-        doc(tsBlock(`const a: string\n = 'test'  ;\n\n\nconsole.log("welcome friends")<cursor>`)),
+        doc(tsBlock(`const a: string\n = 'test'  ;\n\n\nlog("welcome friends")<cursor>`)),
       ).actionsCallback(actions => actions.formatCodeBlock());
 
       expect(state.doc).toEqualRemirrorDocument(
-        doc(tsBlock(`const a: string = 'test';\n\nconsole.log('welcome friends');\n`)),
+        doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
       );
     });
 
     it('maintains cursor position after formatting', () => {
-      const { state } = add(
-        doc(tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nconsole.log("welcome friends")`)),
-      )
+      const { state } = add(doc(tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`)))
         .actionsCallback(actions => actions.formatCodeBlock())
         .insertText('ing');
 
       expect(state.doc).toEqualRemirrorDocument(
-        doc(tsBlock(`const a: string = 'testing';\n\nconsole.log('welcome friends');\n`)),
+        doc(tsBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`)),
       );
     });
 
     it('formats text selections', () => {
       const { state, start, end } = add(
-        doc(tsBlock(`<start>const a: string\n = 'test'  ;<end>\n\n\nconsole.log("welcome friends")`)),
+        doc(tsBlock(`<start>const a: string\n = 'test'  ;<end>\n\n\nlog("welcome friends")`)),
       ).actionsCallback(actions => actions.formatCodeBlock());
 
       expect(state.doc).toEqualRemirrorDocument(
-        doc(tsBlock(`const a: string = 'test';\n\nconsole.log('welcome friends');\n`)),
+        doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
       );
       expect([start, end]).toEqual([1, 26]);
     });
 
     it('can format complex scenarios', () => {
       const content = p('Hello darkness, my old friend.');
-      const otherCode = tsBlock(`document.addEventListener("click",  console.log)`);
+      const otherCode = tsBlock(`document.addEventListener("click",  log)`);
       const { state } = add(
         doc(
           content,
           content,
-          tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nconsole.log("welcome friends")`),
+          tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`),
           content,
           content,
           otherCode,
@@ -364,7 +364,7 @@ describe('commands', () => {
         doc(
           content,
           content,
-          tsBlock(`const a: string = 'testing';\n\nconsole.log('welcome friends');\n`),
+          tsBlock(`const a: string = 'testing';\n\nlog('welcome friends');\n`),
           content,
           content,
           otherCode,

@@ -1,7 +1,5 @@
-// tslint:disable: no-shadowed-variable
-
 import { fromHTML, toHTML } from '@remirror/core';
-import { createBaseTestManager } from '@test-fixtures/schema-helpers';
+import { createBaseTestManager } from '@remirror/test-fixtures';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import { LinkExtension, LinkExtensionOptions } from '../link-extension';
@@ -33,7 +31,7 @@ describe('schema', () => {
       schema,
     });
     const expected = doc(p(a('link')));
-    expect(node).toEqualPMNode(expected);
+    expect(node).toEqualProsemirrorNode(expected);
   });
 
   describe('extraAttrs', () => {
@@ -79,7 +77,7 @@ describe('schema', () => {
       });
 
       const expected = doc(p(a('link')));
-      expect(node).toEqualPMNode(expected);
+      expect(node).toEqualProsemirrorNode(expected);
     });
   });
 });

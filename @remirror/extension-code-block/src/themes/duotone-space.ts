@@ -70,7 +70,8 @@ export default css`
     color: #5b5b76;
   }
 
-  .token.punctuation {
+  .token.punctuation,
+  .token.punctuation.important {
     color: #5b5b76;
   }
 

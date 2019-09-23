@@ -1,19 +1,194 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`commands updateCodeBlock  updates the language 1`] = `"<code data-code-block-language=\\"javascript\\"><span class=\\"token keyword\\">const</span><span> a </span><span class=\\"token operator\\">=</span><span> </span><span class=\\"token string\\">'test'</span><span class=\\"token punctuation\\">;</span></code>"`;
-
-exports[`plugin can be updated 1`] = `"<span class=\\"token keyword\\">const</span><span> a </span><span class=\\"token operator\\">=</span><span> </span><span class=\\"token string\\">'test'</span><span class=\\"token punctuation\\">;</span>"`;
-
-exports[`plugin can be updated 2`] = `
-"<span class=\\"token keyword\\">const</span><span> a </span><span class=\\"token operator\\">=</span><span> </span><span class=\\"token string\\">'test'</span><span class=\\"token punctuation\\">;</span><span>
-
-</span><span class=\\"token builtin\\">console</span><span class=\\"token punctuation\\">.</span><span class=\\"token function\\">log</span><span class=\\"token punctuation\\">(</span><span>a</span><span class=\\"token punctuation\\">)</span><span class=\\"token punctuation\\">;</span>"
+exports[`commands updateCodeBlock  updates the language 1`] = `
+<code data-code-block-language="javascript">
+  <span class="token keyword">
+    const
+  </span>
+  <span>
+    a
+  </span>
+  <span class="token operator">
+    =
+  </span>
+  <span>
+  </span>
+  <span class="token string">
+    'test'
+  </span>
+  <span class="token punctuation">
+    ;
+  </span>
+</code>
 `;
 
-exports[`plugin changes markup when the language changes 1`] = `"<span class=\\"token keyword\\">const</span><span> a </span><span class=\\"token operator\\">=</span><span> </span><span class=\\"token string\\">'test'</span><span class=\\"token punctuation\\">;</span>"`;
+exports[`plugin can be updated 1`] = `
+<span class="token keyword">
+  const
+</span>
+<span>
+  a
+</span>
+<span class="token operator">
+  =
+</span>
+<span>
+</span>
+<span class="token string">
+  'test'
+</span>
+<span class="token punctuation">
+  ;
+</span>
+`;
 
-exports[`plugin renders the correct decorations 1`] = `"<span class=\\"token keyword\\">const</span><span> a </span><span class=\\"token operator\\">=</span><span> </span><span class=\\"token string\\">'test'</span><span class=\\"token punctuation\\">;</span>"`;
+exports[`plugin can be updated 2`] = `
+<span class="token keyword">
+  const
+</span>
+<span>
+  a
+</span>
+<span class="token operator">
+  =
+</span>
+<span>
+</span>
+<span class="token string">
+  'test'
+</span>
+<span class="token punctuation">
+  ;
+</span>
+<span>
+</span>
+<span class="token function">
+  log
+</span>
+<span class="token punctuation">
+  (
+</span>
+<span>
+  a
+</span>
+<span class="token punctuation">
+  )
+</span>
+<span class="token punctuation">
+  ;
+</span>
+`;
 
-exports[`plugin updates when multiple changes occur 1`] = `"<pre class=\\"language-typescript\\"><code data-code-block-language=\\"typescript\\"><span class=\\"token keyword\\">const</span><span> a </span><span class=\\"token operator\\">=</span><span> </span><span class=\\"token string\\">'test'</span><span class=\\"token punctuation\\">;</span></code></pre><pre class=\\"language-typescript\\"><code data-code-block-language=\\"typescript\\"><span class=\\"token keyword\\">let</span><span> b</span><span class=\\"token punctuation\\">;</span></code></pre>"`;
+exports[`plugin changes markup when the language changes 1`] = `
+<span class="token keyword">
+  const
+</span>
+<span>
+  a
+</span>
+<span class="token operator">
+  =
+</span>
+<span>
+</span>
+<span class="token string">
+  'test'
+</span>
+<span class="token punctuation">
+  ;
+</span>
+`;
 
-exports[`plugin updates when multiple changes occur 2`] = `"<pre class=\\"language-typescript\\"><code data-code-block-language=\\"typescript\\"><span class=\\"token keyword\\">const</span><span> c </span><span class=\\"token operator\\">=</span><span> </span><span class=\\"token string\\">'test'</span><span class=\\"token punctuation\\">;</span></code></pre><pre class=\\"language-typescript\\"><code data-code-block-language=\\"typescript\\"><span class=\\"token keyword\\">let</span><span> d</span><span class=\\"token punctuation\\">;</span></code></pre>"`;
+exports[`plugin renders the correct decorations 1`] = `
+<span class="token keyword">
+  const
+</span>
+<span>
+  a
+</span>
+<span class="token operator">
+  =
+</span>
+<span>
+</span>
+<span class="token string">
+  'test'
+</span>
+<span class="token punctuation">
+  ;
+</span>
+`;
+
+exports[`plugin updates when multiple changes occur 1`] = `
+<pre class="language-typescript">
+  <code data-code-block-language="typescript">
+    <span class="token keyword">
+      const
+    </span>
+    <span>
+      a
+    </span>
+    <span class="token operator">
+      =
+    </span>
+    <span>
+    </span>
+    <span class="token string">
+      'test'
+    </span>
+    <span class="token punctuation">
+      ;
+    </span>
+  </code>
+</pre>
+<pre class="language-typescript">
+  <code data-code-block-language="typescript">
+    <span class="token keyword">
+      let
+    </span>
+    <span>
+      b
+    </span>
+    <span class="token punctuation">
+      ;
+    </span>
+  </code>
+</pre>
+`;
+
+exports[`plugin updates when multiple changes occur 2`] = `
+<pre class="language-typescript">
+  <code data-code-block-language="typescript">
+    <span class="token keyword">
+      const
+    </span>
+    <span>
+      c
+    </span>
+    <span class="token operator">
+      =
+    </span>
+    <span>
+    </span>
+    <span class="token string">
+      'test'
+    </span>
+    <span class="token punctuation">
+      ;
+    </span>
+  </code>
+</pre>
+<pre class="language-typescript">
+  <code data-code-block-language="typescript">
+    <span class="token keyword">
+      let
+    </span>
+    <span>
+      d
+    </span>
+    <span class="token punctuation">
+      ;
+    </span>
+  </code>
+</pre>
+`;

@@ -5,9 +5,12 @@ import { formatter } from './code-formatter';
 
 export const ExampleWysiwygEditor: FC<WysiwygEditorProps> = ({
   initialContent = EMPTY_PARAGRAPH_NODE,
+  autoFocus = true,
   ...props
 }) => {
-  return <WysiwygEditor {...props} initialContent={initialContent} autoFocus={true} formatter={formatter} />;
+  return (
+    <WysiwygEditor {...props} initialContent={initialContent} autoFocus={autoFocus} formatter={formatter} />
+  );
 };
 
 export const WYSIWYG_SHOWCASE_CONTENT = {
@@ -33,7 +36,7 @@ export const WYSIWYG_SHOWCASE_CONTENT = {
         {
           type: 'text',
           text:
-            '## Simple Code Blocks\n\n```js\nconsole.log("with code fence support");\n```\n\n```bash\necho "fun times"\n```\n\nUse Shift-Enter or Mod-Enter to hard break out of the code block',
+            '## Simple Code Blocks\n\n```js\nlog("with code fence support");\n```\n\n```bash\necho "fun times"\n```\n\nUse Shift-Enter or Mod-Enter to hard break out of the code block',
         },
       ],
     },

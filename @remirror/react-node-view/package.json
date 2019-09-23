@@ -1,0 +1,34 @@
+{
+  "name": "@remirror/react-node-view",
+  "description": "Create your prosemirror node views with react",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/react-node-view",
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/react-node-view",
+  "version": "0.4.2-canary.2",
+  "main": "lib/index.js",
+  "module": "lib/dist/react-node-view.esm.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@babel/runtime": "^7.6.0",
+    "@remirror/core-constants": "0.4.2-canary.2",
+    "@remirror/core-helpers": "0.4.2-canary.2",
+    "@remirror/core-types": "0.4.2-canary.2",
+    "@remirror/core-utils": "0.4.2-canary.2",
+    "@remirror/react-portals": "0.4.2-canary.2"
+  },
+  "peerDependencies": {
+    "@emotion/core": "^10",
+    "@types/react": "^16.8.0",
+    "react": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/react-node-view.cjs.js",
+  "sideEffects": false
+}

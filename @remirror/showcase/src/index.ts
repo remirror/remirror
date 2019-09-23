@@ -1,2 +1,2 @@
-export * from './twitter';
+export * from './social';
 export * from './wysiwyg';

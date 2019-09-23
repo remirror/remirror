@@ -10,7 +10,7 @@ export interface ParagraphExtensionOptions extends NodeExtensionOptions {
    * The levels of indentation supported - should be a tuple with the lowest value first and
    * the max indent last.
    *
-   * @default [0,7]
+   * @defaultValue `[0,7]`
    */
   indentLevels?: IndentLevels;
 }

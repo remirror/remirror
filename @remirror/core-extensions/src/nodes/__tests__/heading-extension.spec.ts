@@ -1,7 +1,5 @@
-/* tslint:disable: no-shadowed-variable */
-
 import { fromHTML, toHTML } from '@remirror/core';
-import { createBaseTestManager } from '@test-fixtures/schema-helpers';
+import { createBaseTestManager } from '@remirror/test-fixtures';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import { BoldExtension } from '../../marks';
@@ -27,7 +25,7 @@ describe('schema', () => {
   it('it can parse content', () => {
     const node = fromHTML({ content: '<h2>Hello</h2>', schema });
     const expected = doc(h2('Hello'));
-    expect(node).toEqualPMNode(expected);
+    expect(node).toEqualProsemirrorNode(expected);
   });
 
   describe('extraAttrs', () => {

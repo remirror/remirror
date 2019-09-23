@@ -1,40 +1,65 @@
 import factory from './factory';
-import dev from '../../@remirror/dev/package.json';
-import core from '../../@remirror/core/package.json';
-import coreExtensions from '../../@remirror/core-extensions/package.json';
-import extensionCodeBlock from '../../@remirror/extension-code-block/package.json';
-import extensionCollaboration from '../../@remirror/extension-collaboration/package.json';
-import extensionEmoji from '../../@remirror/extension-emoji/package.json';
-import extensionEpicMode from '../../@remirror/extension-epic-mode/package.json';
-import extensionEnhancedLink from '../../@remirror/extension-enhanced-link/package.json';
-import extensionMention from '../../@remirror/extension-mention/package.json';
-import react from '../../@remirror/react/package.json';
-import reactSSR from '../../@remirror/react-ssr/package.json';
-import reactUtils from '../../@remirror/react-utils/package.json';
-import remirror from '../../packages/remirror/package.json';
-import rendererReact from '../../@remirror/renderer-react/package.json';
-import showcase from '../../@remirror/showcase/package.json';
-import editorTwitter from '../../@remirror/editor-twitter/package.json';
-import editorWysiwyg from '../../@remirror/editor-wysiwyg/package.json';
+import { join } from 'path';
+import { rollup, dependencies } from './config.json';
+import chalk from 'chalk';
+const { baseDir } = require('../scripts/helpers');
 
-const configurations = [
-  ...factory(dev, '@remirror'),
-  ...factory(core, '@remirror'),
-  ...factory(coreExtensions, '@remirror'),
-  ...factory(extensionCodeBlock, '@remirror'),
-  ...factory(extensionCollaboration, '@remirror'),
-  ...factory(extensionEmoji, '@remirror'),
-  ...factory(extensionEpicMode, '@remirror'),
-  ...factory(extensionEnhancedLink, '@remirror'),
-  ...factory(extensionMention, '@remirror'),
-  ...factory(react, '@remirror'),
-  ...factory(reactSSR, '@remirror'),
-  ...factory(reactUtils, '@remirror'),
-  ...factory(remirror, 'packages'),
-  ...factory(rendererReact, '@remirror'),
-  ...factory(showcase, '@remirror'),
-  ...factory(editorTwitter, '@remirror'),
-  ...factory(editorWysiwyg, '@remirror'),
-];
+const uniqueArray = arr => Array.from(new Set(arr));
+
+const { PACKAGES } = process.env;
+const names = (PACKAGES && PACKAGES.split(',')) || [];
+const entryPoints = names.map(name => {
+  const config = rollup.find(config => config.name === name);
+
+  if (!config) {
+    throw new Error(
+      chalk`{red You must specify a recognized package within the 'PACKAGES' environment variable}: {bold '${name}'} {red is invalid}`,
+    );
+  }
+
+  return config;
+});
+
+let filtered = rollup;
+
+const getNames = (name = '') => {
+  const config = rollup.find(conf => conf.name === name);
+  const arr = [name];
+  if (!config) {
+    return arr;
+  }
+
+  const path = baseDir(config.path);
+  const pkg = require(join(path, 'package.json'));
+
+  return ['dependencies', 'peerDependencies', 'devDependencies'].reduce((acc, key) => {
+    if (pkg[key]) {
+      return [
+        ...acc,
+        ...Object.keys(pkg[key])
+          .filter(dep => dependencies[dep])
+          .reduce((acc, key) => [...acc, ...getNames(key)], []),
+      ];
+    }
+
+    return acc;
+  }, arr);
+};
+
+if (entryPoints && entryPoints.length) {
+  filtered = uniqueArray(
+    entryPoints.reduce((acc, config) => [...acc, ...getNames(config.name)], []),
+  )
+    .map(key => rollup.find(config => config.name === key))
+    .reverse();
+}
+
+const configurations = [];
+
+filtered.forEach(config => {
+  const path = baseDir(config.path);
+  const packageJson = join(path, 'package.json');
+  factory(require(packageJson), path).forEach(project => configurations.push(project));
+});
 
 export default configurations;

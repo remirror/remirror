@@ -3,9 +3,16 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
-    "lib": ["esnext", "dom"],
-    "jsx": "preserve",
-    "types": ["jest", "jest-extended", "jest-axe", "@testing-library/jest-dom/extend-expect", "jest-emotion"],
+    "lib": ["dom", "esnext"],
+    "jsx": "react",
+    "types": [
+      "jest",
+      "jest-extended",
+      "jest-axe",
+      "@testing-library/jest-dom/extend-expect",
+      "jest-emotion",
+      "snapshot-diff"
+    ],
     "moduleResolution": "node",
     "noImplicitReturns": true,
     "sourceMap": true,
@@ -17,12 +24,11 @@
     "pretty": true,
     "forceConsistentCasingInFileNames": true,
     "allowUnreachableCode": false,
-    "skipLibCheck": true,
     "experimentalDecorators": true,
     "strict": true,
     "alwaysStrict": true,
     "resolveJsonModule": true,
-    "plugins": [{ "name": "typescript-styled-plugin" }, { "name": "typescript-tslint-plugin" }],
+    "plugins": [{ "name": "typescript-styled-plugin" }],
     "preserveWatchOutput": true
   }
 }

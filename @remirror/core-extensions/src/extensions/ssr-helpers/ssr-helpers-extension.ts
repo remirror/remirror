@@ -1,4 +1,5 @@
-import { BaseExtensionOptions, Extension, ExtensionManagerParams } from '@remirror/core';
+import { Extension } from '@remirror/core';
+import { BaseExtensionOptions, ExtensionManagerParams } from '@remirror/core-types';
 import { DEFAULT_TRANSFORMATIONS, SSRTransformer } from './ssr-helpers-utils';
 
 export interface SSRHelperExtensionOptions extends BaseExtensionOptions {

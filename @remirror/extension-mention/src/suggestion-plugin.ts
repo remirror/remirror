@@ -76,9 +76,10 @@ export class SuggestionState {
   private view!: EditorView;
 
   /**
-   * Lets us know whether the most recent change was to remove a mark.
-   * This is needed because sometimes removing a mark has not effect. Hence we need to keep track of whether it's removed
-   * and then later in the apply step check that a removal has happened and reset the `handlerMatches` to prevent an
+   * Lets us know whether the most recent change was to remove a mark. This is
+   * needed because sometimes removing a mark has no effect. Hence we need to
+   * keep track of whether it's removed and then later in the apply step check
+   * that a removal has happened and reset the `handlerMatches` to prevent an
    * infinite loop.
    */
   private removed = false;
@@ -204,8 +205,9 @@ export class SuggestionState {
 
     // Call Handlers
 
-    // When a jump happens run the action that involves the position that occurs later in the document.
-    // This is so that changes don't affect previous positions.
+    // When a jump happens run the action that involves the position that occurs
+    // later in the document. This is so that changes don't affect previous
+    // positions.
 
     if (change && exit && isJumpReason({ change, exit })) {
       const exitParams = this.createReasonParams(exit);
@@ -321,7 +323,8 @@ export class SuggestionState {
   }
 
   /**
-   * Handle the decorations which wrap the mention while it is active and not yet complete.
+   * Handle the decorations which wrap the mention while it is active and not
+   * yet complete.
    */
   public decorations(state: EditorState) {
     const match = this.match;
@@ -343,7 +346,8 @@ export class SuggestionState {
 }
 
 /**
- * This creates the plugin that manages the suggestions to offer when the MentionExtension is active.
+ * This creates the plugin that manages the suggestions to offer when the
+ * MentionExtension is active.
  */
 export const createSuggestionPlugin = ({ extension, ...params }: SuggestionStateCreateParams) => {
   const pluginState = SuggestionState.create({ extension, ...params });
@@ -379,7 +383,8 @@ export const createSuggestionPlugin = ({ extension, ...params }: SuggestionState
         return pluginState.handleTextInput({ text, from, to });
       },
 
-      // Sets up a decoration (styling options) on the currently active decoration
+      // Sets up a decoration (styling options) on the currently active
+      // decoration
       decorations(state) {
         return pluginState.decorations(state);
       },

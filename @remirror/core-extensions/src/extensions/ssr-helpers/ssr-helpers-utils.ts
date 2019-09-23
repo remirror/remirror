@@ -1,5 +1,6 @@
 import { jsx } from '@emotion/core';
-import { ExtensionManagerParams, isArray, PlainObject } from '@remirror/core';
+import { isArray } from '@remirror/core-helpers';
+import { ExtensionManagerParams, PlainObject } from '@remirror/core-types';
 import { cloneElement, getElementProps, isReactDOMElement, isReactFragment } from '@remirror/react-utils';
 import { Children, JSXElementConstructor } from 'react';
 

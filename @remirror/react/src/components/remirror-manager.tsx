@@ -7,7 +7,7 @@ import {
   RemirrorManagerProps,
 } from '@remirror/react-utils';
 import React, { Children, Component, ReactNode } from 'react';
-import { RemirrorManagerContext } from '../contexts';
+import { RemirrorManagerContext } from '../react-contexts';
 
 /**
  * This component consumes any directly nested RemirrorExtension components and creates a

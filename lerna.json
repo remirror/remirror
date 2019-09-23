@@ -1,8 +1,9 @@
 {
   "packages": [
     "@remirror/*",
-    "docs",
     "packages/*",
+    "docs",
+    "e2e",
     "examples/*"
   ],
   "command": {
@@ -12,10 +13,7 @@
       "npmClient": "npm",
       "signGitCommit": true,
       "signGitTag": true,
-      "allowBranch": [
-        "master",
-        "canary"
-      ]
+      "allowBranch": ["master", "canary"]
     }
   },
   "version": "0.4.2-canary.2",

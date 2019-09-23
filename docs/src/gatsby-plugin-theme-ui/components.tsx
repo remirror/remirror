@@ -5,7 +5,7 @@ import { ComponentType, ElementType, PropsWithChildren } from 'react';
 import { jsx } from 'theme-ui';
 
 const heading = (Tag: ElementType): ComponentType<{ id: string }> => props =>
-  !!props.id ? (
+  props.id ? (
     <Tag {...props}>
       <a
         href={`#${props.id}`}

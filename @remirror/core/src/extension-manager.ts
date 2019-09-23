@@ -1,8 +1,36 @@
 import { Interpolation } from '@emotion/core';
+import { bool, isArray, isEqual, isFunction, isInstanceOf, hasOwnProperty } from '@remirror/core-helpers';
+import {
+  ActionMethod,
+  AnyActions,
+  AnyHelpers,
+  Attrs,
+  AttrsWithClass,
+  CommandFunction,
+  CommandParams,
+  CommandStatusCheck,
+  EditorSchema,
+  EditorStateParams,
+  EditorView,
+  ExtensionManagerInitParams,
+  ExtensionManagerParams,
+  ExtensionTags,
+  MarkExtensionSpec,
+  NodeExtensionSpec,
+  NodeViewMethod,
+  PlainObject,
+  PluginKey,
+  ProsemirrorPlugin,
+  RemirrorThemeContextType,
+  TransactionParams,
+} from '@remirror/core-types';
+import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from '@remirror/core-utils';
+import { PortalContainer } from '@remirror/react-portals';
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
-import { EditorState, PluginKey } from 'prosemirror-state';
+import { EditorState } from 'prosemirror-state';
+import { suggest, Suggester } from 'prosemirror-suggest';
 import { ComponentType } from 'react';
 import { isMarkExtension, isNodeExtension } from './extension-helpers';
 import {
@@ -17,41 +45,16 @@ import {
   transformExtensionMap,
 } from './extension-manager.helpers';
 import {
-  ActionsFromExtensionList,
+  ActionsFromExtensions,
   AnyExtension,
   FlexibleExtension,
-  MappedHelpersFromExtensionList,
+  HelpersFromExtensions,
+  InferFlexibleExtensionList,
   MarkNames,
   NodeNames,
   PlainNames,
+  SchemaFromExtensions,
 } from './extension-types';
-import { bool, isEqual, isFunction, isInstanceOf } from './helpers';
-import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from './helpers/document';
-import { MarkExtension } from './mark-extension';
-import { NodeExtension } from './node-extension';
-import { PortalContainer } from './portal-container';
-import {
-  ActionMethod,
-  AnyActions,
-  AnyHelpers,
-  Attrs,
-  AttrsWithClass,
-  BooleanExtensionCheck,
-  CommandFunction,
-  CommandParams,
-  EditorSchema,
-  EditorStateParams,
-  EditorView,
-  ExtensionManagerInitParams,
-  ExtensionManagerParams,
-  ExtensionTags,
-  MarkExtensionSpec,
-  NodeExtensionSpec,
-  NodeViewMethod,
-  PlainObject,
-  ProsemirrorPlugin,
-  TransactionParams,
-} from './types';
 
 export interface ExtensionManagerData<
   GActions = AnyActions,
@@ -69,11 +72,12 @@ export interface ExtensionManagerData<
   keymaps: ProsemirrorPlugin[];
   inputRules: ProsemirrorPlugin;
   pasteRules: ProsemirrorPlugin[];
+  suggestions: ProsemirrorPlugin;
   actions: GActions;
   helpers: GHelpers;
   view: EditorView<EditorSchema<GNodes, GMarks>>;
-  isActive: Record<GNames, BooleanExtensionCheck>;
-  isEnabled: Record<GNames, BooleanExtensionCheck>;
+  isActive: Record<GNames, CommandStatusCheck>;
+  isEnabled: Record<GNames, CommandStatusCheck>;
   options: Record<GNames, PlainObject>;
   tags: ExtensionTags<GNodes, GMarks, GPlain>;
 }
@@ -88,7 +92,7 @@ export interface ExtensionManagerData<
  * - Construction - This takes in all the extensions and creates the schema.
  *
  * ```ts
- * const manager = new ExtensionManager([ new DocExtension(), new TextExtension(), new ParagraphExtension()])
+ * const manager = ExtensionManager.create([ new DocExtension(), new TextExtension(), new ParagraphExtension()])
  * ```
  *
  * - Initialize Getters - This connects the extension manager to the lazily
@@ -109,15 +113,14 @@ export interface ExtensionManagerData<
  * manager.data.actions
  * ```
  */
-export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[]>
-  implements ExtensionManagerInitParams {
+export class ExtensionManager<GExtension extends AnyExtension = any>
+  implements ExtensionManagerInitParams<SchemaFromExtensions<GExtension>> {
   /**
    * A static method for creating a new extension manager.
    */
-  public static create<GExtensions extends AnyExtension[] = AnyExtension[]>(
-    extensions: Array<FlexibleExtension<GExtensions[number]>>,
-  ) {
-    return new ExtensionManager<GExtensions>(extensions);
+  public static create<GFlexibleList extends FlexibleExtension[]>(prioritizedExtensions: GFlexibleList) {
+    const extensions = transformExtensionMap(prioritizedExtensions);
+    return new ExtensionManager<InferFlexibleExtensionList<GFlexibleList>>(extensions);
   }
 
   /**
@@ -125,6 +128,11 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * This is only available after the first Initialization.
    */
   public getState!: () => EditorState;
+
+  /**
+   * Provides access to the theme and helpers from the RemirrorThemeContext
+   */
+  public getTheme!: () => RemirrorThemeContextType;
 
   /**
    * Retrieve the portal container for any custom nodeViews. This is only
@@ -135,13 +143,13 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   /**
    * The extensions stored by this manager
    */
-  public readonly extensions: GExtensions;
+  public readonly extensions: GExtension[];
 
   /**
    * Whether or not the manager has been initialized. This happens after init is
    * called.
    */
-  private initialized = false;
+  private _initialized = false;
 
   /**
    * The extension manager data which is stored after Initialization
@@ -159,11 +167,14 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   private getHelpers = (name: keyof this['_H']) => this.initData.helpers[name];
 
   /**
-   * Creates the extension manager which is used to simplify the management of
-   * the different facets of building an editor with
+   * Creates the extension manager which is used to simplify the management the
+   * prosemirror editor.
+   *
+   * This should not be called directly if you want to use prioritized extensions.
+   * Instead use `ExtensionManager.create`.
    */
-  constructor(extensionMapValues: Array<FlexibleExtension<GExtensions[number]>>) {
-    this.extensions = transformExtensionMap(extensionMapValues);
+  constructor(extensions: GExtension[]) {
+    this.extensions = extensions;
 
     // Initialize the schema immediately since this doesn't ever change.
     this.initData.schema = this.createSchema();
@@ -180,16 +191,17 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    *
    * This is called by the view layer and provides
    */
-  public init({ getState, portalContainer }: ExtensionManagerInitParams) {
-    if (this.initialized) {
+  public init({ getState, portalContainer, getTheme }: ExtensionManagerInitParams) {
+    if (this._initialized) {
       console.warn(
         'This manager is already in use. Avoid using the same manager for more than one editor as this may cause problems.',
       );
     }
 
     this.getState = getState;
+    this.getTheme = getTheme;
     this.portalContainer = portalContainer;
-    this.initialized = true;
+    this._initialized = true;
 
     this.initData.styles = this.styles();
     this.initData.directPlugins = this.plugins();
@@ -197,11 +209,13 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
     this.initData.keymaps = this.keymaps();
     this.initData.inputRules = this.inputRules();
     this.initData.pasteRules = this.pasteRules();
-    this.initData.isActive = this.booleanCheck('isActive');
-    this.initData.isEnabled = this.booleanCheck('isEnabled');
+    this.initData.suggestions = this.suggestions();
+    this.initData.isActive = this.commandStatusCheck('isActive');
+    this.initData.isEnabled = this.commandStatusCheck('isEnabled');
 
     this.initData.plugins = [
       ...this.initData.directPlugins,
+      this.initData.suggestions,
       this.initData.inputRules,
       ...this.initData.pasteRules,
       ...this.initData.keymaps,
@@ -217,7 +231,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    *
    * @param view - the editor view
    */
-  public initView(view: EditorView) {
+  public initView(view: EditorView<SchemaFromExtensions<GExtension>>) {
     this.initData.view = view;
     this.initData.actions = this.actions({
       ...this.params,
@@ -229,15 +243,26 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   /* Public Get Properties */
 
   /**
-   * All the dynamically generated attributes provided by each extension. High
-   * priority extensions have preference over the lower priority extensions.
+   * Should be used to check whether the manager needs to be reinitialized.
+   */
+  get initialized() {
+    return this._initialized;
+  }
+
+  /**
+   * All the dynamically generated attributes provided by each extension.
+   *
+   * @remarks
+   *
+   * High priority extensions have preference over the lower priority
+   * extensions.
    */
   get attributes() {
     let combinedAttributes: AttrsWithClass = {};
     this.extensions
       .filter(hasExtensionProperty('attributes'))
       .filter(extension => !extension.options.exclude.attributes)
-      .map(extension => extension.attributes!(this.params))
+      .map(extension => extension.attributes(this.params))
       .reverse()
       .forEach(attrs => {
         combinedAttributes = {
@@ -251,18 +276,19 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   }
 
   /**
-   * Retrieve all the SSRComponent properties from the extensions.
+   * Retrieve all the SSRComponent's from the extensions.
    * This is used to render the initial SSR output.
    */
   get components() {
     const components: Record<string, ComponentType> = {};
-    this.extensions
-      .filter(extension => extension.options.SSRComponent)
-      // User can opt out of SSR rendering
-      .filter(extension => !extension.options.exclude.ssr)
-      .forEach(({ name, options: { SSRComponent } }) => {
-        components[name] = SSRComponent;
-      });
+
+    for (const extension of this.extensions) {
+      if (!extension.options.SSRComponent || extension.options.exclude.ssr) {
+        continue;
+      }
+
+      components[extension.name] = extension.options.SSRComponent;
+    }
 
     return components;
   }
@@ -271,7 +297,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * Get the extension manager data which is stored after initializing.
    */
   get data() {
-    if (!this.initialized) {
+    if (!this._initialized) {
       throw new Error('Extension Manager must be initialized before attempting to access the data');
     }
 
@@ -288,10 +314,12 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   get nodes() {
     const nodes: Record<this['_N'], NodeExtensionSpec> = {} as any;
 
-    this.extensions.filter(isNodeExtension).forEach(extension => {
-      const { name, schema } = extension as NodeExtension;
-      nodes[name as this['_N']] = schema;
-    });
+    for (const extension of this.extensions) {
+      if (isNodeExtension(extension)) {
+        const { name, schema } = extension;
+        nodes[name as this['_N']] = schema;
+      }
+    }
 
     return nodes;
   }
@@ -302,10 +330,12 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   get marks() {
     const marks: Record<this['_M'], MarkExtensionSpec> = {} as any;
 
-    this.extensions.filter(isMarkExtension).forEach(extension => {
-      const { name, schema } = extension as MarkExtension;
-      marks[name as this['_M']] = schema;
-    });
+    for (const extension of this.extensions) {
+      if (isMarkExtension(extension)) {
+        const { name, schema } = extension;
+        marks[name as this['_M']] = schema;
+      }
+    }
 
     return marks;
   }
@@ -328,7 +358,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   /**
    * A shorthand way of retrieving view.
    */
-  get view() {
+  get view(): EditorView<SchemaFromExtensions<GExtension>> {
     return this.initData.view;
   }
 
@@ -337,12 +367,13 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   /**
    * Utility getter for accessing the schema params
    */
-  private get params(): ExtensionManagerParams {
+  private get params(): ExtensionManagerParams<SchemaFromExtensions<GExtension>> {
     return {
       tags: this.tags,
       schema: this.schema,
       portalContainer: this.portalContainer,
       getState: this.getState,
+      getTheme: this.getTheme,
       getActions: this.getActions as any,
       getHelpers: this.getHelpers as any,
     };
@@ -353,7 +384,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
   /**
    * Create the editor state from content passed to this extension manager.
    */
-  public createState({ content, doc, stringHandler }: Omit<CreateDocumentNodeParams, 'schema'>) {
+  public createState({ content, doc, stringHandler, fallback }: Omit<CreateDocumentNodeParams, 'schema'>) {
     const { schema, plugins } = this.data;
     return EditorState.create({
       schema,
@@ -362,6 +393,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
         doc,
         schema,
         stringHandler,
+        fallback,
       }),
       plugins,
     });
@@ -397,6 +429,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * @param otherManager - the value to test against
    */
   public isEqual(otherManager: unknown) {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     if (!isExtensionManager(otherManager)) {
       return false;
     }
@@ -429,7 +462,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    */
   public onTransaction(params: OnTransactionManagerParams) {
     this.extensions.filter(hasExtensionProperty('onTransaction')).forEach(({ onTransaction }) => {
-      onTransaction!({ ...params, ...this.params, view: this.data.view });
+      onTransaction({ ...params, ...this.params, view: this.data.view });
     });
   }
 
@@ -443,7 +476,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
     this.checkInitialized();
     const key = this.pluginKeys[name];
     if (!key) {
-      throw new Error(`Cannot retrieve state for an extension: ${name} which doesn\'t exist`);
+      throw new Error(`Cannot retrieve state for an extension: ${name} which doesn't exist`);
     }
     return getPluginState<GState>(key, this.getState());
   }
@@ -456,7 +489,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
       .filter(hasExtensionProperty('ssrTransformer'))
       .filter(extension => !extension.options.exclude.ssr)
       .reduce((prevElement, extension) => {
-        return extension.ssrTransformer!(prevElement, this.params) as JSX.Element;
+        return extension.ssrTransformer(prevElement, this.params) as JSX.Element;
       }, element);
   }
 
@@ -467,7 +500,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * not
    */
   private checkInitialized() {
-    if (!this.initialized) {
+    if (!this._initialized) {
       throw new Error(
         'Before using the extension manager it must be initialized with a portalContainer and getState',
       );
@@ -545,11 +578,11 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    *
    * This can be `isActive` or `isEnabled`.
    */
-  private booleanCheck(method: 'isEnabled' | 'isActive') {
+  private commandStatusCheck(method: 'isEnabled' | 'isActive') {
     // Will throw if not initialized
     this.checkInitialized();
 
-    const isActiveMethods: Record<this['_Names'], BooleanExtensionCheck> = {} as any;
+    const isActiveMethods: Record<this['_Names'], CommandStatusCheck> = {} as any;
 
     return this.extensions.filter(hasExtensionProperty(method)).reduce(
       (acc, extension) => ({
@@ -611,7 +644,7 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
 
     for (const extensionKeymap of extensionKeymaps) {
       for (const key in extensionKeymap) {
-        if (!extensionKeymap.hasOwnProperty(key)) {
+        if (!hasOwnProperty(extensionKeymap, key)) {
           continue;
         }
         const oldCmd = mappedKeys[key];
@@ -689,47 +722,74 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
     return extensionStyles;
   }
 
-  /* The following are placed at the bottom to prevent them from appearing at the top
-  of autosuggestions when accessing the manger. The names are prefixed with `z` to place them at the
-  bottom of alphabetical suggestion lists. */
+  private suggestions() {
+    this.checkInitialized();
+    const suggestions: Suggester[] = [];
+
+    const extensionSuggesters = this.extensions
+      .filter(hasExtensionProperty('suggestions'))
+      .filter(extension => !extension.options.exclude.suggestions)
+      .map(extensionPropertyMapper('suggestions', this.params));
+
+    extensionSuggesters.forEach(suggester => {
+      suggestions.push(...(isArray(suggester) ? suggester : [suggester]));
+    });
+
+    return suggest(...suggestions);
+  }
+
+  /**
+   * `Extensions`
+   *
+   * Type inference hack for the extensions union of an extension manager.
+   * This is the only way I know to store types on a class.
+   *
+   * @internal
+   * INTERNAL USE ONLY
+   */
+  public readonly _E!: GExtension;
 
   /**
    * `NodeNames`
    *
    * Type inference hack for node extension names.
-   * Also provides a shorthand way for accessing types on a class.
+   * This is the only way I know to store types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
-  public readonly _N!: NodeNames<this['extensions']>;
+  public readonly _N!: NodeNames<GExtension>;
 
   /**
    * `MarkNames`
    *
    * Type inference hack for mark extension names.
-   * Also provides a shorthand way for accessing types on a class.
+   * This is the only way I know to store types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
-  public readonly _M!: MarkNames<this['extensions']>;
+  public readonly _M!: MarkNames<GExtension>;
 
   /**
    * `PlainNames`
    *
    * Type inference hack for plain extension names.
-   * Also provides a shorthand way for accessing types on a class.
+   * This is the only way I know to store types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
-  public readonly _P!: PlainNames<this['extensions']>;
+  public readonly _P!: PlainNames<GExtension>;
 
   /**
    * `AllNames`
    *
    * Type inference hack for all extension names.
-   * Also provides a shorthand way for accessing types on a class.
+   * This is the only way I know to store types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
   public readonly _Names!: this['_P'] | this['_N'] | this['_M'];
 
@@ -737,11 +797,12 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * `Actions`
    *
    * Type inference hack for all the actions this manager provides.
-   * Also provides a shorthand way for accessing types on a class.
+   * This is the only way I know to store types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
-  public readonly _A!: ActionsFromExtensionList<this['extensions']>;
+  public readonly _A!: ActionsFromExtensions<GExtension>;
 
   /**
    * `Helpers`
@@ -749,9 +810,10 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * Type inference hack for all the helpers this manager provides.
    * Also provides a shorthand way for accessing types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
-  public readonly _H!: MappedHelpersFromExtensionList<this['extensions']>;
+  public readonly _H!: HelpersFromExtensions<GExtension>;
 
   /**
    * `ExtensionData`
@@ -759,7 +821,8 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
    * Type inference hack for all the extensionData that this manager provides.
    * Also provides a shorthand way for accessing types on a class.
    *
-   * DO NOT USE (on penalty of intense confusion)
+   * @internal
+   * INTERNAL USE ONLY
    */
   public readonly _D!: ExtensionManagerData<this['_A'], this['_H'], this['_N'], this['_M'], this['_P']>;
 }
@@ -770,11 +833,21 @@ export class ExtensionManager<GExtensions extends AnyExtension[] = AnyExtension[
  */
 export const isExtensionManager = isInstanceOf(ExtensionManager);
 
-export interface ManagerParams<GExtensions extends AnyExtension[] = AnyExtension[]> {
+export interface ManagerParams<GExtension extends AnyExtension = any> {
   /**
    * The extension manager
    */
-  manager: ExtensionManager<GExtensions>;
+  manager: ExtensionManager<GExtension>;
 }
+
+/**
+ * Retrieve the extensions from an `ExtensionManager`.
+ */
+export type ExtensionsFromManager<GManager extends AnyExtensionManager> = GManager['_E'];
+
+/**
+ * The utility for capturing all the possible `ExtensionManager` type variations.
+ */
+export type AnyExtensionManager = ExtensionManager<any>;
 
 export interface OnTransactionManagerParams extends TransactionParams, EditorStateParams {}

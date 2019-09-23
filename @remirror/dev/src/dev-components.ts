@@ -1,4 +1,4 @@
-import { useRemirror } from '@remirror/react';
+import { useRemirrorContext } from '@remirror/react';
 import applyDevTools from 'prosemirror-dev-tools';
 import { useEffect } from 'react';
 import { unmountComponentAtNode } from 'react-dom';
@@ -14,7 +14,7 @@ import { unmountComponentAtNode } from 'react-dom';
  * Based on https://github.com/d4rkr00t/prosemirror-dev-tools
  */
 export const ProsemirrorDevTools = () => {
-  const { view } = useRemirror();
+  const { view } = useRemirrorContext();
 
   useEffect(() => {
     applyDevTools(view);

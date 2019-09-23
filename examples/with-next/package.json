@@ -6,21 +6,19 @@
   "scripts": {
     "build": "next build",
     "dev": "next",
-    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
     "start": "next start",
-    "type-check": "tsc",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
+    "type-check": "tsc"
   },
   "dependencies": {
+    "@emotion/core": "10.0.17",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
-    "@remirror/editor-twitter": "0.4.2-canary.2",
+    "@remirror/editor-social": "0.4.2-canary.2",
     "@remirror/editor-wysiwyg": "0.4.2-canary.2",
     "@remirror/react": "0.4.2-canary.2",
     "@remirror/showcase": "0.4.2-canary.2",
-    "emoji-mart": "2.11.1",
-    "next": "9.0.3",
-    "react": "16.8.6",
-    "react-dom": "16.8.6"
+    "next": "9.0.6",
+    "react": "16.9.0",
+    "react-dom": "16.9.0"
   }
 }

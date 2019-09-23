@@ -1,3 +1,4 @@
+import { RemirrorTheme } from '@remirror/core';
 import {
   BaseExtensions,
   BlockquoteExtension,
@@ -7,7 +8,6 @@ import {
   HardBreakExtension,
   HeadingExtension,
   HorizontalRuleExtension,
-  ImageExtension,
   ItalicExtension,
   LinkExtension,
   ListItemExtension,
@@ -19,8 +19,9 @@ import {
   UnderlineExtension,
 } from '@remirror/core-extensions';
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '@remirror/extension-code-block';
-import { RemirrorProps } from '@remirror/react-utils';
-import { ButtonState, WysiwygEditorTheme } from './wysiwyg-theme';
+import { DropCursorExtension } from '@remirror/extension-drop-cursor';
+import { ImageExtension } from '@remirror/extension-image';
+import { RemirrorProps } from '@remirror/react';
 
 /**
  * The union type of all the extension used within the Wysiwyg Editor.
@@ -29,7 +30,7 @@ import { ButtonState, WysiwygEditorTheme } from './wysiwyg-theme';
  * better typechecking and inference.
  *
  * ```ts
- * const { actions } = useRemirror<WysiwygExtensions[]>();
+ * const { actions } = useRemirrorContext<WysiwygExtensions[]>();
  * const actions.updateLink() // => full type checking
  */
 export type WysiwygExtensions =
@@ -51,14 +52,13 @@ export type WysiwygExtensions =
   | StrikeExtension
   | TrailingNodeExtension
   | UnderlineExtension
+  | DropCursorExtension
   | CodeBlockExtension;
-
-export type WysiwygExtensionList = WysiwygExtensions[];
 
 export interface WysiwygEditorProps
   extends Partial<
       Pick<
-        RemirrorProps<WysiwygExtensionList>,
+        RemirrorProps<WysiwygExtensions>,
         | 'initialContent'
         | 'attributes'
         | 'editable'
@@ -83,23 +83,11 @@ export interface WysiwygEditorProps
   /**
    * Extend the theme with your own styles
    */
-  theme?: Partial<WysiwygEditorTheme>;
-
-  /**
-   * By default the editor injects a link tag with FontAwesome into the dom. Set this to true to prevent
-   * that from happening. Please note unless you provide your own link Server Side rendering will flash unstyled
-   * content.
-   *
-   * ```tsx
-   * // Add something similar to the following
-   * <link rel='stylesheet' href='https://unpkg.com/@fortawesome/fontawesome-svg-core@1.2.19/styles.css' />
-   * ```
-   *
-   * @default false
-   */
-  removeFontAwesomeCSS?: boolean;
+  theme?: Partial<RemirrorTheme>;
 }
 
-export interface ButtonProps {
-  state: ButtonState;
-}
+export type ButtonProps = JSX.IntrinsicElements['button'] & {
+  state?: ButtonState;
+};
+
+export type ButtonState = 'default' | 'active-default' | 'inverse' | 'active-inverse';

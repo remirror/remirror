@@ -1,0 +1,30 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": true,
+  "eslint.enable": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.lintTask.enable": true,
+  "eslint.lintTask.options": "--ext .js,.jsx,.ts,.tsx .",
+  "eslint.validate": [
+    { "autoFix": true, "language": "javascript" },
+    { "autoFix": true, "language": "javascriptreact" },
+    { "autoFix": true, "language": "typescript" },
+    { "autoFix": true, "language": "typescriptreact" },
+  ],
+  "files.exclude": {
+    "docs/api": true,
+    "support/api": true
+  },
+  // ESLint calls prettier for these types already, so don't let them squabble
+  "prettier.disableLanguages": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+  ],
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "javascript.format.enable": false,
+  "typescript.format.enable": false
+}

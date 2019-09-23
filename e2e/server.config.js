@@ -10,16 +10,17 @@ const noSSRRegex = REMIRROR_E2E_BASIC
   ? basicRegex
   : `.*\\.(e2e|${REMIRROR_E2E_SERVER})\\.test\\.ts$`;
 
-const allTestRegex = REMIRROR_E2E_BASIC
-  ? basicRegex
-  : REMIRROR_E2E_BROWSER === 'firefox'
-  ? noSSRRegex
-  : `.*\\.(e2e|ssr|${REMIRROR_E2E_SERVER})\\.test\\.ts$`;
+const getRegex = () => {
+  if (REMIRROR_E2E_BASIC) return basicRegex;
+  if (REMIRROR_E2E_BROWSER === 'firefox') return noSSRRegex;
+  return `.*\\.(e2e|ssr|${REMIRROR_E2E_SERVER})\\.test\\.ts$`;
+};
+const allTestRegex = getRegex();
 
 const servers = (exports.servers = {
   next: {
     server: {
-      command: 'cd examples/with-next && yarn build && yarn start -p 3030',
+      command: 'cd examples/with-next && yarn dev -p 3030',
       port: 3030,
       usedPortAction: 'kill',
       launchTimeout: 120000,
@@ -27,6 +28,7 @@ const servers = (exports.servers = {
     regex: allTestRegex,
     home: 'http://localhost:3030',
   },
+
   storybook: {
     server: {
       command: 'yarn start-storybook -p 3030 -c support/storybook --quiet --ci',
@@ -37,6 +39,7 @@ const servers = (exports.servers = {
     regex: noSSRRegex,
     home: 'http://localhost:3030',
   },
+
   docs: {
     server: {
       command: 'cd docs && yarn start -p 3030',
@@ -47,6 +50,7 @@ const servers = (exports.servers = {
     regex: noSSRRegex,
     home: 'http://localhost:3030',
   },
+
   razzle: {
     server: {
       command: 'cd examples/with-razzle && PORT=3030 yarn start',
@@ -60,22 +64,22 @@ const servers = (exports.servers = {
 });
 
 const editors = (exports.editors = {
-  twitter: {
+  social: {
     storybook: {
-      empty: 'http://localhost:3030/iframe.html?id=twitter-editor--basic',
-      content: 'http://localhost:3030/iframe.html?id=twitter-editor--with-content',
+      empty: 'http://localhost:3030/iframe.html?id=social-editor--basic',
+      content: 'http://localhost:3030/iframe.html?id=social-editor--with-content',
     },
     next: {
-      empty: 'http://localhost:3030/editor/twitter',
-      content: 'http://localhost:3030/editor/twitter/content',
+      empty: 'http://localhost:3030/editor/social',
+      content: 'http://localhost:3030/editor/social/content',
     },
     docs: {
-      empty: 'http://localhost:3030/showcase/twitter',
+      empty: 'http://localhost:3030/showcase/social',
       content: '',
     },
     razzle: {
-      empty: 'http://localhost:3030/editors/twitter',
-      content: 'http://localhost:3030/editors/twitter/content',
+      empty: 'http://localhost:3030/editors/social',
+      content: 'http://localhost:3030/editors/social/content',
     },
   },
   wysiwyg: {

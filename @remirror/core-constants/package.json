@@ -1,0 +1,27 @@
+{
+  "name": "@remirror/core-constants",
+  "description": "The core constants used throughout the remirror codebase",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-constants",
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-constants",
+  "version": "0.4.2-canary.2",
+  "main": "lib/index.js",
+  "module": "lib/dist/core-constants.esm.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@babel/runtime": "^7.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/core-constants.cjs.js",
+  "meta": {
+    "sizeLimit": "2 KB"
+  },
+  "sideEffects": false
+}

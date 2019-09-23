@@ -3,5 +3,7 @@ steps:
     inputs:
       versionSpec: '10.x'
     displayName: 'Install Node.js'
+  - bash: yarn audit
+    displayName: 'Check for vulnerabilities'
   - bash: yarn ci
     displayName: 'Install dependencies'

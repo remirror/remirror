@@ -19,7 +19,7 @@ class Home extends React.Component<{}, {}> {
               <a href='/editors/wysiwyg'>wysiwyg</a>
             </li>
             <li>
-              <a href='/editors/twitter'>twitter</a>
+              <a href='/editors/social'>social</a>
             </li>
           </ul>
         </div>

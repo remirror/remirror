@@ -1,15 +1,10 @@
 {
-  "private": true,
   "name": "@remirror/editor-markdown",
-  "description": "ui for a what you see is what you get (wysiwyg) editing experience",
+  "description": "A markdown editor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/editor-markdown",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/editor-markdown"
-  },
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/editor-markdown",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/editor-markdown.esm.js",
@@ -17,41 +12,26 @@
     "lib",
     "src"
   ],
-  "scripts": {
-    "build": "run-p build:*",
-    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
-    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "dev": "run-p watch:*",
-    "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
-    "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
-    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
-    "test": "jest",
-    "test:live": "cross-env TEST_ENV=live jest",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit",
-    "watch:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -w",
-    "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
-  },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
-    "@emotion/core": "^10.0.15",
-    "@emotion/styled": "^10.0.15",
-    "@fortawesome/fontawesome-svg-core": "^1.2.21",
-    "@fortawesome/free-solid-svg-icons": "^5.10.1",
-    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@babel/runtime": "^7.6.0",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
     "@remirror/extension-code-block": "0.4.2-canary.2",
     "@remirror/extension-emoji": "0.4.2-canary.2",
+    "@remirror/extension-image": "0.4.2-canary.2",
     "@remirror/react": "0.4.2-canary.2",
+    "@remirror/react-utils": "0.4.2-canary.2",
+    "@remirror/ui": "0.4.2-canary.2",
     "@types/markdown-it": "^0.0.8",
-    "@types/prosemirror-markdown": "^1.0.2",
-    "emotion-theming": "^10.0.14",
-    "keycode": "^2.2.0",
-    "markdown-it": "^9.0.1",
-    "prosemirror-markdown": "^1.3.1"
+    "@types/prosemirror-markdown": "^1.0.3",
+    "@types/refractor": "2.8.0",
+    "markdown-it": "^10.0.0",
+    "prosemirror-markdown": "^1.3.1",
+    "refractor": "^2.10.0"
   },
   "peerDependencies": {
+    "@emotion/core": "^10",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",
@@ -61,5 +41,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/editor-markdown.cjs.js",
+  "meta": {
+    "sizeLimit": "250 KB"
+  },
   "sideEffects": false
 }

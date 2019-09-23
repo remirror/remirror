@@ -21,8 +21,8 @@ const Layout: FunctionComponent<Props> = ({ children, title = 'This is the defau
             <a>Home</a>
           </Link>{' '}
           |{' '}
-          <Link href='/editor/twitter'>
-            <a>Twitter UI</a>
+          <Link href='/editor/social'>
+            <a>Social UI</a>
           </Link>{' '}
           |{' '}
           <Link href='/editor/wysiwyg'>
@@ -37,7 +37,7 @@ const Layout: FunctionComponent<Props> = ({ children, title = 'This is the defau
       {children}
       <footer>
         <hr />
-        <span>I'm here to stay (Footer)</span>
+        <span>I&apos;m here to stay (Footer)</span>
       </footer>
     </div>
   );

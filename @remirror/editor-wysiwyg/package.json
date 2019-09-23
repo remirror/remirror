@@ -4,11 +4,7 @@
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/editor-wysiwyg",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/editor-wysiwyg"
-  },
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/editor-wysiwyg",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/editor-wysiwyg.esm.js",
@@ -16,38 +12,25 @@
     "lib",
     "src"
   ],
-  "scripts": {
-    "build": "run-p build:*",
-    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
-    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "dev": "run-p watch:*",
-    "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
-    "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
-    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
-    "test": "jest",
-    "test:live": "cross-env TEST_ENV=live jest",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit",
-    "watch:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -w",
-    "watch:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch"
-  },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
-    "@emotion/core": "^10.0.15",
-    "@emotion/styled": "^10.0.15",
-    "@fortawesome/fontawesome-svg-core": "^1.2.21",
-    "@fortawesome/free-solid-svg-icons": "^5.10.1",
-    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@babel/runtime": "^7.6.0",
+    "@emotion/styled": "^10.0.17",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
     "@remirror/extension-code-block": "0.4.2-canary.2",
+    "@remirror/extension-drop-cursor": "0.4.2-canary.2",
+    "@remirror/extension-image": "0.4.2-canary.2",
     "@remirror/react": "0.4.2-canary.2",
     "@remirror/react-utils": "0.4.2-canary.2",
-    "emotion-theming": "^10.0.14",
-    "keycode": "^2.2.0",
-    "refractor": "^2.10.0"
+    "@remirror/ui": "0.4.2-canary.2",
+    "@remirror/ui-buttons": "0.4.2-canary.2",
+    "@remirror/ui-icons": "0.4.2-canary.2",
+    "refractor": "^2.10.0",
+    "w3c-keyname": "^2.1.0"
   },
   "peerDependencies": {
+    "@emotion/core": "^10",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",
@@ -57,5 +40,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/editor-wysiwyg.cjs.js",
+  "meta": {
+    "sizeLimit": "250 KB"
+  },
   "sideEffects": false
 }

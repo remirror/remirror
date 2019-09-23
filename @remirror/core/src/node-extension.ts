@@ -1,14 +1,14 @@
-import { NodeType } from 'prosemirror-model';
-import { ExtensionType } from './constants';
-import { Extension } from './extension';
-import { isNodeActive } from './helpers/utils';
+import { ExtensionType } from '@remirror/core-constants';
 import {
-  BooleanExtensionCheck,
+  CommandStatusCheck,
   EditorSchema,
   ExtensionManagerNodeTypeParams,
   NodeExtensionOptions,
   NodeExtensionSpec,
-} from './types';
+  NodeType,
+} from '@remirror/core-types';
+import { isNodeActive } from '@remirror/core-utils';
+import { Extension } from './extension';
 
 /**
  * Defines an abstract class for creating extensions which can place nodes into the prosemirror state.
@@ -36,13 +36,13 @@ export abstract class NodeExtension<
    */
   public abstract readonly schema: NodeExtensionSpec;
 
-  public isActive({ getState, type }: ExtensionManagerNodeTypeParams): BooleanExtensionCheck {
+  public isActive({ getState, type }: ExtensionManagerNodeTypeParams): CommandStatusCheck {
     return ({ attrs }) => {
       return isNodeActive({ state: getState(), type, attrs });
     };
   }
 
-  public isEnabled(_: ExtensionManagerNodeTypeParams): BooleanExtensionCheck {
+  public isEnabled(_: ExtensionManagerNodeTypeParams): CommandStatusCheck {
     return () => true;
   }
 }

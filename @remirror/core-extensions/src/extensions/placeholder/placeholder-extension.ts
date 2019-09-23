@@ -1,6 +1,7 @@
-import { Extension, ExtensionManagerParams, isDocNodeEmpty, Plugin } from '@remirror/core';
+import { Extension } from '@remirror/core';
+import { ExtensionManagerParams, Plugin } from '@remirror/core-types';
+import { isDocNodeEmpty } from '@remirror/core-utils';
 import { cloneElement, getElementProps } from '@remirror/react-utils';
-
 import { Children } from 'react';
 import { EMPTY_NODE_CLASS_NAME } from '../../core-extension-constants';
 import { PlaceholderExtensionOptions, PlaceholderPluginState } from '../../core-extension-types';

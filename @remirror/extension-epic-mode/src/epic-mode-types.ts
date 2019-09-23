@@ -16,7 +16,7 @@ export interface EpicModeExtensionOptions extends BaseExtensionOptions {
   /**
    * Where in the dom the canvas element should be stored
    */
-  canvasHolder?: HTMLElement;
+  getCanvasContainer?(): HTMLElement;
 
   /**
    * The colors for the epic effect
@@ -30,7 +30,7 @@ export interface EpicModeExtensionOptions extends BaseExtensionOptions {
 
   /**
    * Whether the editor should shake
-   * @defaultValue true
+   * @defaultValue `true`
    */
   shake?: boolean;
 

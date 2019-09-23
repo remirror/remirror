@@ -2,17 +2,17 @@
  * @jest-environment node
  */
 
-import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
-import { createTestManager } from '@test-fixtures/schema-helpers';
+import { docNodeBasicJSON } from '@remirror/test-fixtures';
+import { createTestManager } from '@remirror/test-fixtures';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { useRemirror } from '../../hooks';
-import { ManagedRemirrorProvider, RemirrorProvider } from '../providers';
+import { useRemirrorContext } from '../../hooks/context-hooks';
 import { RemirrorManager } from '../remirror-manager';
+import { ManagedRemirrorProvider, RemirrorProvider } from '../remirror-providers';
 
 test('RemirrorProvider', () => {
   const TestComponent = () => {
-    const { getRootProps } = useRemirror();
+    const { getRootProps } = useRemirrorContext();
     const rootProps = getRootProps();
     return (
       <div data-testid='1'>
@@ -35,7 +35,7 @@ test('RemirrorProvider', () => {
 test('ManagedRemirrorProvider', () => {
   // global.render = renderToStaticMarkup;
   const TestComponent = () => {
-    const { getRootProps } = useRemirror();
+    const { getRootProps } = useRemirrorContext();
     const rootProps = getRootProps();
     return (
       <div>

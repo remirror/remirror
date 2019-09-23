@@ -1,5 +1,6 @@
 import { AbstractInstanceType, AnyExtension, OptionsOfExtension } from '@remirror/core';
-import { RemirrorElementType, RemirrorExtensionProps, RemirrorFC } from '@remirror/react-utils';
+import { RemirrorFC, RemirrorType } from '@remirror/react-utils';
+import { RemirrorExtensionProps } from '../react-types';
 
 /**
  * This component creates an extension that will be picked up by a parent RemirrorManager.
@@ -13,7 +14,7 @@ import { RemirrorElementType, RemirrorExtensionProps, RemirrorFC } from '@remirr
  * ```tsx
  * const WithoutRemirrorExtensions = () => {
  *   const handler = () => {
- *     console.log('something happened');
+ *     log('something happened');
  *   }
  *
  *   const manager = ExtensionManager.create([
@@ -34,7 +35,7 @@ import { RemirrorElementType, RemirrorExtensionProps, RemirrorFC } from '@remirr
  * ```tsx
  * const WithRemirrorExtensions = () => {
  *   const handler = () => {
- *     console.log('something happened');
+ *     log('something happened');
  *   }
  *
  *   return (
@@ -53,12 +54,11 @@ import { RemirrorElementType, RemirrorExtensionProps, RemirrorFC } from '@remirr
  */
 export const RemirrorExtension = <
   GConstructor extends { prototype: AnyExtension },
-  GExtension extends AbstractInstanceType<GConstructor>,
-  GOptions extends OptionsOfExtension<GExtension>
+  GOptions extends OptionsOfExtension<AbstractInstanceType<GConstructor>>
 >(
-  _props: RemirrorExtensionProps<GConstructor, GExtension, GOptions>,
+  _props: RemirrorExtensionProps<GConstructor, GOptions>,
 ) => {
   return null;
 };
 
-(RemirrorExtension as RemirrorFC<any>).$$remirrorType = RemirrorElementType.Extension;
+(RemirrorExtension as RemirrorFC<any>).$$remirrorType = RemirrorType.Extension;

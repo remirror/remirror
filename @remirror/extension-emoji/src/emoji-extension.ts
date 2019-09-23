@@ -1,19 +1,31 @@
 import {
-  Attrs,
-  Cast,
-  CommandNodeTypeParams,
-  ExtensionManagerNodeTypeParams,
-  isElementDOMNode,
-  NodeExtension,
-  NodeExtensionSpec,
-  replaceText,
+  CommandFunction,
+  Extension,
+  ExtensionManagerParams,
+  FromToParams,
+  noop,
+  plainInputRule,
 } from '@remirror/core';
-import { ReactNodeView } from '@remirror/react';
-import { DefaultEmoji } from './components/emoji-component';
-import { createEmojiPlugin } from './emoji-plugin';
-import { EmojiAttrs, EmojiExtensionOptions } from './emoji-types';
+import escapeStringRegex from 'escape-string-regexp';
+import { Suggester } from 'prosemirror-suggest';
+import {
+  EmojiExtensionOptions,
+  EmojiObject,
+  EmojiSuggestCommand,
+  NamesAndAliases,
+  SkinVariation,
+} from './emoji-types';
+import {
+  DEFAULT_FREQUENTLY_USED,
+  emoticonRegex,
+  getEmojiByName,
+  getEmojiFromEmoticon,
+  populateFrequentlyUsed,
+  SKIN_VARIATIONS,
+  sortEmojiMatches,
+} from './emoji-utils';
 
-export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
+export class EmojiExtension extends Extension<EmojiExtensionOptions> {
   /**
    * The name is dynamically generated based on the passed in type.
    */
@@ -23,101 +35,162 @@ export class EmojiExtension extends NodeExtension<EmojiExtensionOptions> {
 
   get defaultOptions() {
     return {
-      transformAttrs: (attrs: Pick<EmojiAttrs, 'name'>) => ({
-        'aria-label': `Emoji: ${attrs.name}`,
-        title: `Emoji: ${attrs.name}`,
-        class: this.options.className,
-      }),
-      className: '',
-      size: '1.1em',
-      style: {},
-      EmojiComponent: DefaultEmoji,
+      defaultEmoji: DEFAULT_FREQUENTLY_USED,
+      suggestionCharacter: ':',
+      maxResults: 20,
+      onSuggestionChange: noop,
+      onSuggestionExit: noop,
+      suggestionKeyBindings: {},
     };
   }
 
-  get schema(): NodeExtensionSpec {
-    const { transformAttrs } = this.options;
-    return {
-      inline: true,
-      group: 'inline',
-      selectable: false,
-      attrs: {
-        id: { default: '' },
-        native: { default: '' },
-        name: { default: '' },
-        colons: { default: '' },
-        skin: { default: '' },
-        'aria-label': { default: '' },
-        title: { default: '' },
-        class: { default: '' },
-        useNative: { default: false },
-        ...this.extraAttrs(),
-      },
-      parseDOM: [
-        {
-          tag: 'span[data-emoji-id]',
-          getAttrs: node => {
-            if (!isElementDOMNode(node)) {
-              return false;
-            }
+  private frequentlyUsed!: EmojiObject[];
 
-            const skin = node.getAttribute('data-emoji-skin');
-            const useNative = node.getAttribute('data-emoji-use-native');
+  protected init() {
+    this.frequentlyUsed = populateFrequentlyUsed(this.options.defaultEmoji);
+  }
 
-            const attrs = {
-              id: node.getAttribute('data-emoji-id') || '',
-              native: node.getAttribute('data-emoji-native') || '',
-              name: node.getAttribute('data-emoji-name') || '',
-              colons: node.getAttribute('data-emoji-colons') || '',
-              skin: skin ? Number(skin) : null,
-              useNative: useNative === 'true',
-            };
-
-            return attrs;
-          },
+  public inputRules() {
+    return [
+      // Emoticons
+      plainInputRule({
+        regexp: emoticonRegex,
+        transformMatch: ([full, partial]) => {
+          const emoji = getEmojiFromEmoticon(partial);
+          return emoji ? full.replace(partial, emoji.char) : null;
         },
-      ],
-      toDOM: node => {
-        const { id, name, native, colons, skin, useNative } = node.attrs as EmojiAttrs;
-        const attrs = {
-          'data-emoji-id': id,
-          'data-emoji-colons': colons,
-          'data-emoji-native': native,
-          'data-emoji-name': name,
-          'data-emoji-skin': !isNaN(Number(skin)) ? String(skin) : '',
-          'data-use-native': useNative ? 'true' : 'false',
-          ...transformAttrs({ name }),
-        };
-        return ['span', attrs, native];
-      },
-    };
+      }),
+
+      // Emoji Names
+      plainInputRule({
+        regexp: /:([\w\d_-]+):$/,
+        transformMatch: ([, match]) => {
+          const emoji = getEmojiByName(match);
+          return emoji ? emoji.char : null;
+        },
+      }),
+    ];
   }
 
-  public commands({ type }: CommandNodeTypeParams) {
+  public commands() {
+    const { suggestionCharacter } = this.options;
+    const commands = {
+      /**
+       * Insert an emoji into the document at the requested location by name
+       *
+       * The range is optional and if not specified the emoji will be inserted
+       * at the current selection.
+       *
+       * @param name - the emoji to insert
+       * @param [options] - the options when inserting the emoji.
+       */
+      insertEmojiByName: (name: string, options: EmojiCommandOptions = {}): CommandFunction => (...args) => {
+        const emoji = getEmojiByName(name);
+        if (!emoji) {
+          console.warn('invalid emoji name passed into emoji insertion');
+          return false;
+        }
+
+        return commands.insertEmojiByObject(emoji, options)(...args);
+      },
+      /**
+       * Insert an emoji into the document at the requested location.
+       *
+       * The range is optional and if not specified the emoji will be inserted
+       * at the current selection.
+       *
+       * @param emoji - the emoji object to use.
+       * @param [range] - the from/to position to replace.
+       */
+      insertEmojiByObject: (
+        emoji: EmojiObject,
+        { from, to, skinVariation }: EmojiCommandOptions = {},
+      ): CommandFunction => (state, dispatch) => {
+        const { tr } = state;
+        const emojiChar = skinVariation ? emoji.char + SKIN_VARIATIONS[skinVariation] : emoji.char;
+        tr.insertText(emojiChar, from, to);
+
+        if (dispatch) {
+          dispatch(tr);
+        }
+
+        return true;
+      },
+
+      /**
+       * Inserts the suggestion character into the current position in the editor
+       * in order to activate the suggestion popup..
+       */
+      openEmojiSuggestions: ({ from, to }: Partial<FromToParams> = {}): CommandFunction => (
+        state,
+        dispatch,
+      ) => {
+        if (dispatch) {
+          dispatch(state.tr.insertText(suggestionCharacter, from, to));
+        }
+
+        return true;
+      },
+    };
+
+    return commands;
+  }
+
+  public helpers() {
     return {
-      emoji: (attrs?: Attrs) => {
-        attrs = { ...attrs, ...this.options.transformAttrs(Cast<EmojiAttrs>(attrs)) };
-        return replaceText({ type, attrs });
+      /**
+       * Update the emoji which are displayed to the user when the query is not
+       * specific enough.
+       */
+      updateFrequentlyUsed: (names: NamesAndAliases[]) => {
+        this.frequentlyUsed = populateFrequentlyUsed(names);
       },
     };
   }
 
-  public plugin({ type }: ExtensionManagerNodeTypeParams) {
-    const { emojiData } = this.options;
-    return createEmojiPlugin({
-      key: this.pluginKey,
-      emojiData,
-      type,
-    });
-  }
+  public suggestions({ getActions }: ExtensionManagerParams): Suggester<EmojiSuggestCommand> {
+    const {
+      suggestionCharacter,
+      suggestionKeyBindings,
+      maxResults,
+      onSuggestionChange,
+      onSuggestionExit,
+    } = this.options;
+    // const fn = debounce(100, sortEmojiMatches);
 
-  public nodeView({ portalContainer }: ExtensionManagerNodeTypeParams) {
-    const { EmojiComponent, ...options } = this.options;
+    return {
+      ignoreDecorations: true,
+      invalidPrefixCharacters: escapeStringRegex(suggestionCharacter),
+      char: suggestionCharacter,
+      name: this.name,
+      appendText: '',
+      decorationsTag: 'span',
+      keyBindings: suggestionKeyBindings,
+      onChange: params => {
+        const query = params.queryText.full;
+        const emojiMatches = query.length === 0 ? this.frequentlyUsed : sortEmojiMatches(query, maxResults);
+        onSuggestionChange({ ...params, emojiMatches });
+      },
+      onExit: onSuggestionExit,
+      createCommand: ({ match }) => {
+        const create = getActions('insertEmojiByObject');
 
-    return ReactNodeView.createNodeView({
-      Component: EmojiComponent,
-      portalContainer,
-      options,
-    });
+        return (emoji, skinVariation) => {
+          if (!emoji) {
+            throw new Error('An emoji object is required when calling the emoji suggestions command');
+          }
+
+          const { from, end: to } = match.range;
+          create(emoji, { skinVariation, from, to });
+        };
+      },
+    };
   }
+}
+
+export interface EmojiCommandOptions extends Partial<FromToParams> {
+  /**
+   * The skin variation which is a number between `0` and `4`.
+   */
+  skinVariation?: SkinVariation;
 }

@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExtensionManager.create([
+    new HistoryExtension(),
+    new ParagraphExtension(),
+    new BoldExtension(),
+    new CodeBlockExtension(),
+    new PositionTrackerExtension(),
+    { priority: 1, extension: new TextExtension() },
+    { priority: 0, extension: new DocExtension() },
+  ]) (type) should match snapshot 1`] = `"ExtensionManager<HistoryExtension | PositionTrackerExtension | ParagraphExtension | BoldExtension | CodeBlockExtension | TextExtension | DocExtension>"`;
+
+exports[`historyActions.redo() (type) should match snapshot 1`] = `"void"`;
+
+exports[`historyActions.undo() (type) should match snapshot 1`] = `"void"`;
+
+exports[`historyActions.undo({}) (type) should match snapshot 1`] = `"Expected 0 arguments, but got 1."`;
+
+exports[`manager1.data.actions (type) should match snapshot 1`] = `"MapCommandToAction<{}> & MapCommandToAction<{ undo: () => CommandFunction<any>; redo: () => CommandFunction<any>; }> & MapCommandToAction<{ addPositionTracker: (params: AddPositionTrackerParams) => CommandFunction<any>; removePositionTracker: (params: RemovePositionTrackerParams) => CommandFunction<any>; clearPositionTrackers: (params: void) => CommandFunction<any>; }> & MapCommandToAction<{ createParagraph: (attrs?: Attrs<{ align?: \\"left\\" | \\"right\\" | \\"center\\" | \\"justify\\" | null | undefined; indent?: number | null | undefined; lineSpacing?: string | null | undefined; id?: string | null | undefined; }> | undefined) => (state: EditorState<Schema<string, string>>, dispatch?: ((tr: Transaction<Schema<string, string>>) => void) | undefined) => boolean; }> & MapCommandToAction<{ bold: () => (state: EditorState<Schema<string, string>>, dispatch?: ((tr: Transaction<Schema<string, string>>) => void) | undefined) => boolean; }> & MapCommandToAction<{ toggleCodeBlock: () => CommandFunction<any>; }>"`;
+
+exports[`manager1.data.actions.addPositionTracker({ id: 'yo' }) (type) should match snapshot 1`] = `"void"`;
+
+exports[`manager1.data.helpers (type) should match snapshot 1`] = `"MapHelpers<{}> & MapHelpers<{ addPositionTracker: ({ pos, id }: AddPositionTrackerParams, tr?: Transaction<Schema<string, string>>) => Transaction<any> | undefined; removePositionTracker: ({ id }: RemovePositionTrackerParams, tr?: Transaction<Schema<string, string>>) => Transaction<any> | undefined; clearPositionTrackers: (tr?: Transaction<any>) => Transaction<any> | undefined; findPositionTracker: (id: unknown) => number | undefined; findAllPositionTrackers: () => Record<string, number>; }>"`;
+
+exports[`manager1.data.helpers.findPositionTracker('yo') (type) should match snapshot 1`] = `"number | undefined"`;
+
+exports[`manager1.nodes.awesome (type) should match snapshot 1`] = `"Property 'awesome' does not exist on type 'Record<\\"doc\\" | \\"text\\" | \\"codeBlock\\" | \\"paragraph\\", NodeExtensionSpec>'."`;
+
+exports[`manager1.nodes.paragraph (type) should match snapshot 1`] = `"NodeExtensionSpec"`;
+
+exports[`public commands() {
+    return {
+      nothing: (param: string) => () => 'true',
+    };
+  } (type) should match snapshot 1`] = `
+"Property 'commands' in type 'ErrExtension' is not assignable to the same property in base type 'Extension<BaseExtensionOptions, never>'.
+  Type '() => { nothing: (param: string) => () => string; }' is not assignable to type '(params: never) => ExtensionCommandReturn'.
+    Type '{ nothing: (param: string) => () => string; }' is not assignable to type 'ExtensionCommandReturn'.
+      Property 'nothing' is incompatible with index signature.
+        Type '(param: string) => () => string' is not assignable to type 'ExtensionCommandFunction'.
+          Type '() => string' is not assignable to type 'CommandFunction<any>'.
+            Type 'string' is not assignable to type 'boolean'."
+`;
+
+exports[`trackerHelpers.addPositionTracker({ id: 'yo' }) (type) should match snapshot 1`] = `"Transaction<any> | undefined"`;
+
+exports[`trackerHelpers.clearPositionTrackers() (type) should match snapshot 1`] = `"Transaction<any> | undefined"`;

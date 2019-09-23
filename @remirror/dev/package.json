@@ -4,11 +4,7 @@
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/dev",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "@remirror/dev"
-  },
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/dev",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/dev.esm.js",
@@ -16,27 +12,17 @@
     "lib",
     "src"
   ],
-  "scripts": {
-    "build": "run-p build:*",
-    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
-    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "dev": "run-p dev:*",
-    "dev:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s --watch",
-    "dev:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap --watch",
-    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
-  },
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.6.0",
+    "@remirror/react": "0.4.2-canary.2",
     "@types/prosemirror-dev-tools": "^2.1.0",
     "prosemirror-dev-tools": "^2.1.1"
   },
   "peerDependencies": {
-    "@remirror/react": "0.4.2-canary.2",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.9.0",
-    "@types/react": "^16.8.22",
+    "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "prosemirror-state": "^1.2.3",
     "prosemirror-view": "^1.9.13",

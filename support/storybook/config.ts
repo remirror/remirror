@@ -1,10 +1,12 @@
-import { configure } from '@storybook/react';
+import { addDecorator, configure } from '@storybook/react';
+import { ThemeDecorator } from './decorators';
 
-// automatically import all files ending in *.stories.tsx
-const req = require.context('../../@remirror/showcase', true, /__stories__\/.*.stories.tsx$/);
+const all = require.context('../../@remirror', true, /__stories__\/.*.stories.tsx$/);
 
-function loadStories() {
-  req.keys().forEach(req);
-}
+const loadStories = () => {
+  all.keys().forEach(all);
+};
 
 configure(loadStories, module);
+
+[ThemeDecorator].forEach(addDecorator);

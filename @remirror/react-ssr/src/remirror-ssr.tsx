@@ -1,10 +1,10 @@
 import { AnyExtension, EditorStateParams, ManagerParams, PlainObject } from '@remirror/core';
-import { mapProps, ReactSerializer } from '@remirror/renderer-react';
+import { mapProps, ReactSerializer } from '@remirror/react-renderer';
 import React from 'react';
 
-export interface RemirrorSSRProps<GExtensions extends AnyExtension[] = AnyExtension[]>
+export interface RemirrorSSRProps<GExtension extends AnyExtension = any>
   extends EditorStateParams,
-    ManagerParams<GExtensions> {
+    ManagerParams<GExtension> {
   /**
    * The attributes to pass into the root div element.
    */
@@ -18,12 +18,12 @@ export interface RemirrorSSRProps<GExtensions extends AnyExtension[] = AnyExtens
 /**
  * Remirror SSR component used for rendering in non dom environments
  */
-export const RemirrorSSR = <GExtensions extends AnyExtension[] = AnyExtension[]>({
+export const RemirrorSSR = <GExtension extends AnyExtension = any>({
   attributes,
   manager,
   state,
   editable,
-}: RemirrorSSRProps<GExtensions>) => {
+}: RemirrorSSRProps<GExtension>) => {
   const outerProps = mapProps(attributes);
   const ssrElement = ReactSerializer.fromExtensionManager(manager).serializeFragment(state.doc.content);
   const transformedElement = manager.ssrTransformer(ssrElement);

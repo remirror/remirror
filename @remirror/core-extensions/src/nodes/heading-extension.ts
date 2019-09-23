@@ -18,6 +18,13 @@ export interface HeadingExtensionOptions extends NodeExtensionOptions {
   defaultLevel?: number;
 }
 
+export type HeadingExtensionAttrs = Attrs<{
+  /**
+   * The heading size.
+   */
+  level?: number;
+}>;
+
 export const defaultHeadingExtensionOptions = {
   levels: [1, 2, 3, 4, 5, 6],
   defaultLevel: 1,
@@ -61,7 +68,11 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
 
   public commands({ type, schema }: CommandNodeTypeParams) {
     return {
-      toggleHeading: (attrs?: Attrs) => toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs }),
+      /**
+       * Toggle the heading for the current block.
+       */
+      toggleHeading: (attrs?: HeadingExtensionAttrs) =>
+        toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs }),
     };
   }
 

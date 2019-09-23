@@ -1,2 +1,2 @@
-export * from './types';
-export * from './theme';
+export * from './markdown-types';
+export * from './markdown-editor';

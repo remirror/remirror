@@ -49,7 +49,7 @@ export const EditLink: FC<EditLinkProps> = ({
     );
   };
 
-  return <Location children={renderFn} />;
+  return <Location>{renderFn}</Location>;
 };
 
 export default EditLink;

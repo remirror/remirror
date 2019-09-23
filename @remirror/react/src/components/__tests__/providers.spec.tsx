@@ -1,15 +1,14 @@
-import { InjectedRemirrorProps } from '@remirror/react-utils';
-import { docNodeBasicJSON } from '@test-fixtures/object-nodes';
+import { docNodeBasicJSON } from '@remirror/test-fixtures';
+import { createBaseTestManager } from '@remirror/test-fixtures';
 import { render } from '@testing-library/react';
 import React, { FC } from 'react';
-import { withRemirror } from '../../hocs';
-import { useRemirror } from '../../hooks';
-import { ManagedRemirrorProvider } from '../providers';
+import { useRemirrorContext } from '../../hooks/context-hooks';
 import { RemirrorManager } from '../remirror-manager';
+import { ManagedRemirrorProvider, RemirrorProvider } from '../remirror-providers';
 
-describe('ManagedRemirrorProvider', () => {
+test('ManagedRemirrorProvider', () => {
   const TestComponent: FC = () => {
-    const { getRootProps } = useRemirror();
+    const { getRootProps } = useRemirrorContext();
     return (
       <div>
         <div data-testid='target' {...getRootProps()} />
@@ -17,41 +16,36 @@ describe('ManagedRemirrorProvider', () => {
     );
   };
 
-  const HOC: FC<InjectedRemirrorProps> = ({ getRootProps }) => {
-    const rootProps = getRootProps({ 'data-testid': 'target' });
+  const { getByRole, getByTestId } = render(
+    <RemirrorManager>
+      <ManagedRemirrorProvider initialContent={docNodeBasicJSON}>
+        <TestComponent />
+      </ManagedRemirrorProvider>
+    </RemirrorManager>,
+  );
+  const target = getByTestId('target');
+  const editor = getByRole('textbox');
+  expect(target).toContainElement(editor);
+});
+
+test('RemirrorProvider', () => {
+  const TestComponent: FC = () => {
+    const { getRootProps } = useRemirrorContext();
     return (
       <div>
-        <div {...rootProps} />
+        <div data-testid='target' {...getRootProps()} />
       </div>
     );
   };
 
-  const TestComponentHOC = withRemirror(HOC);
+  const manager = createBaseTestManager();
 
-  it('supports getRootProps via hooks', () => {
-    const { getByRole, getByTestId } = render(
-      <RemirrorManager>
-        <ManagedRemirrorProvider initialContent={docNodeBasicJSON}>
-          <TestComponent />
-        </ManagedRemirrorProvider>
-      </RemirrorManager>,
-    );
-    const target = getByTestId('target');
-    const editor = getByRole('textbox');
-    expect(target).toContainElement(editor);
-  });
-
-  it('supports getRootProps via HOC', () => {
-    const { getByRole, getByTestId } = render(
-      <RemirrorManager>
-        <ManagedRemirrorProvider initialContent={docNodeBasicJSON}>
-          <TestComponentHOC />
-        </ManagedRemirrorProvider>
-      </RemirrorManager>,
-    );
-    const target = getByTestId('target');
-    const editor = getByRole('textbox');
-    expect(target).toContainElement(editor);
-    expect(editor).toHaveTextContent('basic');
-  });
+  const { getByRole, getByTestId } = render(
+    <RemirrorProvider initialContent={docNodeBasicJSON} manager={manager}>
+      <TestComponent />
+    </RemirrorProvider>,
+  );
+  const target = getByTestId('target');
+  const editor = getByRole('textbox');
+  expect(target).toContainElement(editor);
 });

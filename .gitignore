@@ -136,3 +136,8 @@ secret.json
 storybook-static
 
 docs/public/**
+
+tsconfig.tsbuildinfo
+tsconfig.prod.tsbuildinfo
+
+e2e/failed-diffs

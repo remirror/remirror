@@ -1,5 +1,7 @@
 !.babelrc.js
 !**/.babelrc.js
+!.eslintrc.js
+!**/.eslintrc.js
 lib
 dist
 node_modules
@@ -7,3 +9,4 @@ node_modules
 storybook-static
 examples/with-razzle/build/**
 public
+coverage

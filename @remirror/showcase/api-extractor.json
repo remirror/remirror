@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
+  "extends": "../../support/api-extractor.json",
+  "mainEntryPointFilePath": "<projectFolder>/lib/index.d.ts",
+  "apiReport": {
+    "enabled": true,
+    "reportFolder": "../../support/api/",
+    "reportFileName": "remirror__showcase.api.md"
+  }
+}

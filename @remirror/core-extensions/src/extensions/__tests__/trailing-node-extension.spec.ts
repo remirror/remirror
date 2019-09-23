@@ -1,4 +1,4 @@
-import { ExtensionMap } from '@test-fixtures/schema-helpers';
+import { ExtensionMap } from '@remirror/test-fixtures';
 import { renderEditor } from 'jest-remirror';
 import { TrailingNodeExtension, TrailingNodeExtensionOptions } from '../trailing-node-extension';
 

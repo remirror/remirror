@@ -56,7 +56,8 @@ export default css`
     color: #d4d0ab;
   }
 
-  .token.punctuation {
+  .token.punctuation,
+  .token.punctuation.important {
     color: #fefefe;
   }
 

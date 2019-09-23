@@ -1,18 +1,19 @@
-import { BaseExtensionOptions, Extension } from '@remirror/core';
+import { Extension } from '@remirror/core';
+import { BaseExtensionOptions } from '@remirror/core-types';
 import { dropCursor } from 'prosemirror-dropcursor';
 
 export interface DropCursorExtensionOptions extends BaseExtensionOptions {
   /**
    * Set the color of the cursor.
    *
-   * @default 'black'
+   * @defaultValue 'black'
    */
   color?: string;
 
   /**
    * Set the precise width of the cursor in pixels.
    *
-   * @default 1
+   * @defaultValue 1
    */
   width?: number;
 }

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`invalid \`HSL.create\` invalid input object should throw #0 1`] = `"Invalid HSL input value passed: {\\"hue\\":111,\\"s\\":\\"12.343%\\",\\"l\\":0.9,\\"a\\":\\"0.1\\"}"`;
+
+exports[`invalid \`HSL.create\` invalid input object should throw #1 1`] = `"Invalid 'percentage': 8000"`;
+
+exports[`invalid \`HSL.create\` invalid input string should throw #0 1`] = `"Invalid HSL input string used: 'hsl(111, 12.343%, 0.9%, 0.1)'"`;
+
+exports[`invalid \`HSL.create\` invalid input string should throw #1 1`] = `"Invalid HSL input string used: 'hsl(111, 12.343%, 0.9)'"`;
+
+exports[`invalid \`HSL.create\` invalid input string should throw #2 1`] = `"Invalid HSL input string used: 'hsla(111, 12.343, 0.9%, 0.1)'"`;
+
+exports[`invalid \`HSL.create\` invalid input string should throw #3 1`] = `"Invalid HSL input string used: 'hsla(, 12.343%, 0.9%, 0.1)'"`;

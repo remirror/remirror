@@ -1,8 +1,8 @@
 import {
   Attrs,
-  BooleanExtensionCheck,
   Cast,
   CommandMarkTypeParams,
+  CommandStatusCheck,
   ExtensionManagerMarkTypeParams,
   getMarkRange,
   getMatchString,
@@ -107,17 +107,18 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public isEnabled({ getState, type }: ExtensionManagerMarkTypeParams): BooleanExtensionCheck {
+  public isEnabled({ getState, type }: ExtensionManagerMarkTypeParams): CommandStatusCheck {
     return ({ command }) => {
       switch (command) {
         case 'removeLink':
           return isMarkActive({ state: getState(), type });
-        case 'updateLink':
+        case 'updateLink': {
           const { selection } = getState();
           if (selectionEmpty(selection) || !isTextSelection(selection)) {
             return false;
           }
           return true;
+        }
         default:
           return true;
       }

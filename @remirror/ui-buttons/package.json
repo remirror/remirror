@@ -1,0 +1,39 @@
+{
+  "name": "@remirror/ui-buttons",
+  "description": "ui-buttons utilities for remirror",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-buttons",
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-buttons",
+  "version": "0.4.2-canary.2",
+  "main": "lib/index.js",
+  "module": "lib/dist/ui-buttons.esm.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@babel/runtime": "^7.6.0",
+    "@remirror/core": "0.4.2-canary.2",
+    "@remirror/ui": "0.4.2-canary.2",
+    "@remirror/ui-icons": "0.4.2-canary.2",
+    "csstype": "2.6.6"
+  },
+  "peerDependencies": {
+    "@emotion/core": "^10",
+    "@remirror/ui-icons": "0.4.2-canary.2",
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/ui-buttons.cjs.js",
+  "meta": {
+    "sizeLimit": "20 KB"
+  },
+  "sideEffects": false
+}

@@ -1,16 +1,16 @@
-import { Extension } from './extension';
-import { MarkExtension } from './mark-extension';
-import { NodeExtension } from './node-extension';
 import {
   ActionMethod,
   AnyConstructor,
   AnyFunction,
   BaseExtensionOptions,
   EditorSchema,
-  ExtensionCommandReturn,
-  ExtensionHelperReturn,
+  Key,
+  StringKey,
   UnionToIntersection,
-} from './types';
+} from '@remirror/core-types';
+import { Extension } from './extension';
+import { MarkExtension } from './mark-extension';
+import { NodeExtension } from './node-extension';
 
 /**
  * Provides a type annotation which is applicable to any extension type.
@@ -73,30 +73,17 @@ export type ProsemirrorTypeOfExtension<
 export type NameOfExtension<GExtension extends AnyExtension> = GExtension['name'];
 
 /**
- * Utility type for retrieving all the names from a list of extensions.
- */
-export type NamesInExtensionList<GExtensions extends AnyExtension[]> = NameOfExtension<GExtensions[number]>;
-
-/**
  * A utility type for retrieving the name of an extension only when it's a plain extension.
  */
-export type PlainName<GExtension extends AnyExtension> = ProsemirrorTypeOfExtension<GExtension> extends never
+export type PlainNames<GExtension extends AnyExtension> = ProsemirrorTypeOfExtension<GExtension> extends never
   ? GExtension['name']
   : never;
-
-/**
- * Utility type for getting all the plain names from a list of extensions.
- *
- * This is used to define the schema plain types available on the extension manager.
- */
-export type PlainNames<GExtensions extends AnyExtension[]> = PlainName<GExtensions[number]>;
 
 /** An extension constructor */
 export interface ExtensionConstructor<
   GOptions extends BaseExtensionOptions,
   GExtension extends Extension<GOptions, any>
 > {
-  // tslint:disable-next-line: callable-types
   new (options?: GOptions): GExtension;
 }
 
@@ -108,7 +95,7 @@ export interface ExtensionConstructor<
  * A lower value for priority means a higher priority. Think of it as an index
  * and position in array except that it can also support negative values.
  */
-export interface PrioritizedExtension<GExtension extends AnyExtension = AnyExtension> {
+export interface PrioritizedExtension<GExtension extends AnyExtension = any> {
   /**
    * The instantiated extension
    */
@@ -127,6 +114,10 @@ export interface PrioritizedExtension<GExtension extends AnyExtension = AnyExten
   priority: number;
 }
 
+export type FromFlexibleExtension<
+  GValue extends FlexibleExtension<any>
+> = GValue extends PrioritizedExtension<infer P> ? P : GValue extends AnyExtension ? GValue : never;
+
 /**
  * Either a PrioritizedExtension or the actual Extension.
  *
@@ -135,16 +126,21 @@ export interface PrioritizedExtension<GExtension extends AnyExtension = AnyExten
  * This is used by the extension manager to allow for a more flexible
  * initialization.
  */
-export type FlexibleExtension<GExtension extends AnyExtension = AnyExtension> =
-  | PrioritizedExtension<GExtension>
-  | GExtension;
+export type FlexibleExtension<GExtension extends AnyExtension = any> =
+  | GExtension
+  | PrioritizedExtension<GExtension>;
+
+export type FlexibleExtensions<GExtensions extends AnyExtension[] = any[]> = Array<
+  FlexibleExtension<GExtensions[number]>
+>;
+
 export interface ExtensionListParams {
   /**
    * A list of passed extensions
    */
   extensions: AnyExtension[];
 }
-export interface ExtensionParams<GExtension extends AnyExtension = AnyExtension> {
+export interface ExtensionParams<GExtension extends AnyExtension = any> {
   /**
    * An extension
    */
@@ -154,7 +150,7 @@ export interface ExtensionParams<GExtension extends AnyExtension = AnyExtension>
 /**
  * Get the extension from a PrioritizedExtension.
  */
-export type ExtensionFromFlexible<
+export type InferFlexibleExtension<
   GFlexible extends FlexibleExtension<any>
 > = GFlexible extends PrioritizedExtension<any>
   ? GFlexible['extension']
@@ -165,91 +161,49 @@ export type ExtensionFromFlexible<
 /**
  * Get the extension types from a list of PrioritizedExtensions.
  */
-export type ExtensionsFromFlexibleList<
+export type InferFlexibleExtensionList<
   GFlexibleList extends Array<FlexibleExtension<any>>
-> = ExtensionFromFlexible<GFlexibleList[number]>;
-
-/**
- * The type signature of the extension command method. It is used in determining whether
- * or not a command has been defined on the extension in order to infer it's return type.
- */
-type ExtensionCommandMethodSignature = (...args: any[]) => ExtensionCommandReturn;
+> = InferFlexibleExtension<GFlexibleList[number]>;
 
 /**
  * A utility type which maps the passed in extension command in an action that is called via
  * `manager.data.actions.commandName()`.
  */
-type MapCommandToAction<
-  GCommand extends AnyFunction,
-  GCommandReturn extends ReturnType<GCommand> = ReturnType<GCommand>
-> = {
-  [P in keyof GCommandReturn]: ActionMethod<Parameters<GCommandReturn[P]>>;
+export type MapCommandToAction<GCommands extends Record<string, AnyFunction>> = {
+  [P in Key<GCommands>]: ActionMethod<Parameters<GCommands[P]>>;
 };
 
 /**
  * Utility type which receives an extension and provides the type of actions it makes available.
  */
-export type ActionsFromExtension<
-  GExtension extends AnyExtension,
-  GCommands extends CommandsOfExtension<GExtension> = CommandsOfExtension<GExtension>
-> = GCommands extends ExtensionCommandMethodSignature ? MapCommandToAction<GCommands> : {};
-
-/**
- * Creates an actions intersection object from a list of provided extensions.
- */
-export type ActionsFromExtensionList<
-  GExtensions extends AnyExtension[],
-  GIntersection extends UnionToIntersection<ActionsFromExtension<GExtensions[number]>> = UnionToIntersection<
-    ActionsFromExtension<GExtensions[number]>
-  >
-> = GIntersection;
+export type ActionsFromExtensions<GExtension extends AnyExtension> = UnionToIntersection<
+  MapCommandToAction<GExtension['_C']>
+>;
 
 /**
  * Utility type for pulling all the action names from a list
  */
-export type ActionNames<GExtensions extends AnyExtension[]> = keyof (ActionsFromExtensionList<GExtensions>);
-
-/**
- * The type signature of the extension helper method. It is used in determining whether
- * or not a helper has been defined on the extension in order to infer it's return type.
- */
-type ExtensionHelperMethodSignature = (...args: any[]) => ExtensionHelperReturn;
+export type ActionNames<GExtension extends AnyExtension> = StringKey<ActionsFromExtensions<GExtension>>;
 
 /**
  * A utility type which maps the passed in extension helpers to a method called with
  * `manager.data.helpers.helperName()`.
  */
-type MapHelpers<
-  GHelper extends AnyFunction,
-  GHelperReturn extends ReturnType<GHelper> = ReturnType<GHelper>
-> = {
-  [P in keyof GHelperReturn]: (...args: Parameters<GHelperReturn[P]>) => ReturnType<GHelperReturn[P]>;
+export type MapHelpers<GHelpers extends Record<string, AnyFunction>> = {
+  [P in Key<GHelpers>]: GHelpers[P];
 };
 
 /**
- * Utility type which receives an extension and provides the type of actions it makes available.
+ * Utility type which receives an extension and provides the type of helpers it makes available.
  */
-export type MappedHelpersFromExtension<
-  GExtension extends AnyExtension,
-  GHelpers extends HelpersOfExtension<GExtension> = HelpersOfExtension<GExtension>
-> = GHelpers extends ExtensionHelperMethodSignature ? MapHelpers<GHelpers> : {};
-
-/**
- * Creates an actions intersection object from a list of provided extensions.
- */
-export type MappedHelpersFromExtensionList<
-  GExtensions extends AnyExtension[],
-  GIntersection extends UnionToIntersection<
-    MappedHelpersFromExtension<GExtensions[number]>
-  > = UnionToIntersection<MappedHelpersFromExtension<GExtensions[number]>>
-> = GIntersection;
+export type HelpersFromExtensions<GExtension extends AnyExtension> = UnionToIntersection<
+  MapHelpers<GExtension['_H']>
+>;
 
 /**
  * Utility type for pulling all the action names from a list
  */
-export type MappedHelperNames<GExtensions extends AnyExtension[]> = keyof (MappedHelpersFromExtensionList<
-  GExtensions
->);
+export type HelperNames<GExtension extends AnyExtension> = StringKey<HelpersFromExtensions<GExtension>>;
 
 /**
  * Retrieve the instance type from an ExtensionClass.
@@ -261,6 +215,8 @@ export type TypeOfExtensionClass<
 
 /**
  * This is a utility type which allows for retrieving the instance types from an array of Extensions.
+ *
+ * @remarks
  *
  * ```ts
  * const list = [ParagraphExtension, DocExtension, TextExtension, LinkExtension];
@@ -275,35 +231,21 @@ export type TypeOfExtensionClassList<GExtensionConstructors extends AnyConstruct
 /**
  * A utility type for retrieving the name of an extension only when it's a mark extension.
  */
-export type MarkName<GExtension extends AnyExtension> = GExtension extends MarkExtension
+export type MarkNames<GExtension extends AnyExtension> = GExtension extends MarkExtension<any>
   ? GExtension['name']
   : never;
-
-/**
- * Utility type for getting all the mark names from a list of extensions.
- *
- * This is used to define the schema mark types available on the extension manager.
- */
-export type MarkNames<GExtensions extends AnyExtension[]> = MarkName<GExtensions[number]>;
 
 /**
  * A utility type for retrieving the name of an extension only when it's a node extension.
  */
-export type NodeName<GExtension extends AnyExtension> = GExtension extends NodeExtension
+export type NodeNames<GExtension extends AnyExtension> = GExtension extends NodeExtension<any>
   ? GExtension['name']
   : never;
 
 /**
- * Utility type for pulling all the node names from a list of extensions.
- *
- * This is used to define the schema node types available on the extension manager.
- */
-export type NodeNames<GExtensions extends AnyExtension[]> = NodeName<GExtensions[number]>;
-
-/**
  * Gets the schema from a list of extensions
  */
-export type SchemaFromExtensionList<GExtensions extends AnyExtension[] = AnyExtension[]> = EditorSchema<
-  NodeNames<GExtensions>,
-  MarkNames<GExtensions>
+export type SchemaFromExtensions<GExtension extends AnyExtension = any> = EditorSchema<
+  NodeNames<GExtension>,
+  MarkNames<GExtension>
 >;

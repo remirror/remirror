@@ -1,6 +1,6 @@
 import {
-  BooleanExtensionCheck,
   CommandNodeTypeParams,
+  CommandStatusCheck,
   ExtensionManagerNodeTypeParams,
   findParentNodeOfType,
   GetAttrs,
@@ -174,7 +174,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
     };
   }
 
-  public active({ type, getState }: CommandNodeTypeParams): BooleanExtensionCheck {
+  public active({ type, getState }: CommandNodeTypeParams): CommandStatusCheck {
     return ({ command }) => {
       switch (command) {
         case 'updateCodeBlock':
@@ -188,7 +188,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
     };
   }
 
-  public enabled({ type, getState }: CommandNodeTypeParams): BooleanExtensionCheck {
+  public enabled({ type, getState }: CommandNodeTypeParams): CommandStatusCheck {
     return ({ command }) => {
       switch (command) {
         case 'toggleCodeBlock':

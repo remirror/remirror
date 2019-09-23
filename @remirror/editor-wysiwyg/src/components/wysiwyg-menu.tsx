@@ -1,24 +1,28 @@
+import { ActionNames, AnyFunction, Attrs, KeyOfThemeVariant, memoize } from '@remirror/core';
+import { bubblePositioner, useRemirrorContext } from '@remirror/react';
+import { useRemirrorTheme } from '@remirror/ui';
 import {
-  faBold,
-  faCode,
-  faGripLines,
-  faHeading,
-  faItalic,
-  faLink,
-  faList,
-  faListOl,
-  faQuoteRight,
-  faRedoAlt,
-  faStrikethrough,
-  faTimes,
-  faUnderline,
-  faUndoAlt,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import keyCode from 'keycode';
+  BoldIcon,
+  CodeIcon,
+  H1Icon,
+  H2Icon,
+  H3Icon,
+  IconProps,
+  ItalicIcon,
+  LinkIcon,
+  ListOlIcon,
+  ListUlIcon,
+  QuoteRightIcon,
+  RedoAltIcon,
+  RulerHorizontalIcon,
+  StrikethroughIcon,
+  TimesIcon,
+  UnderlineIcon,
+  UndoAltIcon,
+} from '@remirror/ui-icons';
 import React, {
   ChangeEventHandler,
+  ComponentType,
   DOMAttributes,
   FC,
   KeyboardEventHandler,
@@ -27,11 +31,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
-
-import { ActionNames, Attrs, memoize } from '@remirror/core';
-import { bubblePositioner, useRemirror } from '@remirror/react';
-import { ButtonState, styled } from '../wysiwyg-theme';
-import { WysiwygExtensionList } from '../wysiwyg-types';
+import keyNames from 'w3c-keyname';
+import { ButtonState, WysiwygExtensions } from '../wysiwyg-types';
 import {
   BubbleContent,
   BubbleMenuTooltip,
@@ -40,25 +41,25 @@ import {
   WithPaddingProps,
 } from './wysiwyg-components';
 
-const menuItems: Array<[ActionNames<WysiwygExtensionList>, [IconDefinition, string?], Attrs?]> = [
-  ['bold', [faBold]],
-  ['italic', [faItalic]],
-  ['underline', [faUnderline]],
-  ['strike', [faStrikethrough]],
-  ['toggleHeading', [faHeading, '1'], { level: 1 }],
-  ['toggleHeading', [faHeading, '2'], { level: 2 }],
-  ['toggleHeading', [faHeading, '3'], { level: 3 }],
-  ['undo', [faUndoAlt]],
-  ['redo', [faRedoAlt]],
-  ['toggleBulletList', [faList]],
-  ['toggleOrderedList', [faListOl]],
-  ['blockquote', [faQuoteRight]],
-  ['toggleCodeBlock', [faCode]],
-  ['horizontalRule', [faGripLines]],
+const menuItems: Array<[ActionNames<WysiwygExtensions>, [ComponentType<IconProps>, string?], Attrs?]> = [
+  ['bold', [BoldIcon]],
+  ['italic', [ItalicIcon]],
+  ['underline', [UnderlineIcon]],
+  ['strike', [StrikethroughIcon]],
+  ['toggleHeading', [H1Icon, '1'], { level: 1 }],
+  ['toggleHeading', [H2Icon, '2'], { level: 2 }],
+  ['toggleHeading', [H3Icon, '3'], { level: 3 }],
+  ['undo', [UndoAltIcon]],
+  ['redo', [RedoAltIcon]],
+  ['toggleBulletList', [ListUlIcon]],
+  ['toggleOrderedList', [ListOlIcon]],
+  ['blockquote', [QuoteRightIcon]],
+  ['toggleCodeBlock', [CodeIcon]],
+  ['horizontalRule', [RulerHorizontalIcon]],
 ];
 
 const runAction = memoize(
-  (method: (attrs?: Attrs) => void, attrs?: Attrs): MouseEventHandler<HTMLElement> => e => {
+  (method: AnyFunction, attrs?: Attrs): MouseEventHandler<HTMLElement> => e => {
     e.preventDefault();
     method(attrs);
   },
@@ -78,32 +79,30 @@ interface MenuBarProps extends Pick<BubbleMenuProps, 'activateLink'> {
  * The MenuBar component which renders the actions that can be taken on the text within the editor.
  */
 export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
-  const { actions } = useRemirror<WysiwygExtensionList>();
+  const { actions } = useRemirrorContext<WysiwygExtensions>();
 
   return (
     <Toolbar>
-      {menuItems.map(([name, [icon, subText], attrs], index) => {
+      {menuItems.map(([name, [Icon, subText], attrs], index) => {
         const buttonState = getButtonState(actions[name].isActive(attrs), inverse);
 
         return (
           <MenuItem
             index={index}
             key={index}
-            icon={icon}
+            Icon={Icon}
             subText={subText}
             state={buttonState}
             disabled={!actions[name].isEnabled()}
             onClick={runAction(actions[name], attrs)}
-            withPadding='right'
           />
         );
       })}
       <MenuItem
-        icon={faLink}
+        Icon={LinkIcon}
         state={getButtonState(actions.updateLink.isActive(), inverse)}
         disabled={!actions.updateLink.isEnabled()}
         onClick={activateLink}
-        withPadding='right'
       />
     </Toolbar>
   );
@@ -112,8 +111,8 @@ export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
 interface MenuItemProps extends Partial<WithPaddingProps> {
   state: ButtonState;
   onClick: DOMAttributes<HTMLButtonElement>['onClick'];
-  icon: IconDefinition;
-  inverse?: boolean;
+  Icon: ComponentType<IconProps>;
+  variant?: KeyOfThemeVariant<'remirror:icons'>;
   disabled?: boolean;
   subText?: string;
   index?: number;
@@ -122,20 +121,10 @@ interface MenuItemProps extends Partial<WithPaddingProps> {
 /**
  * A single clickable menu item for editing the styling and format of the text.
  */
-const MenuItem: FC<MenuItemProps> = ({
-  state,
-  onClick,
-  icon,
-  inverse = false,
-  disabled = false,
-  subText,
-  withPadding,
-  index,
-}) => {
+const MenuItem: FC<MenuItemProps> = ({ state, onClick, Icon, variant, disabled = false, index }) => {
   return (
-    <IconButton onClick={onClick} state={state} disabled={disabled} withPadding={withPadding} index={index}>
-      <FontAwesomeIcon icon={icon} inverse={inverse} size='1x' />
-      {subText}
+    <IconButton onClick={onClick} state={state} disabled={disabled} index={index}>
+      <Icon variant={variant} />
     </IconButton>
   );
 };
@@ -146,18 +135,23 @@ export interface BubbleMenuProps {
   activateLink(): void;
 }
 
-const bubbleMenuItems: Array<[string, [IconDefinition, string?], Attrs?]> = [
-  ['bold', [faBold]],
-  ['italic', [faItalic]],
-  ['underline', [faUnderline]],
-];
+const bubbleMenuItems: Array<
+  [ActionNames<WysiwygExtensions>, [ComponentType<IconProps>, string?], Attrs?]
+> = [['bold', [BoldIcon]], ['italic', [ItalicIcon]], ['underline', [UnderlineIcon]]];
 
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
-  const { actions, getPositionerProps } = useRemirror<WysiwygExtensionList>();
+  const { actions, getPositionerProps, helpers } = useRemirrorContext<WysiwygExtensions>();
+
   const { bottom, left, ref } = getPositionerProps({
     ...bubblePositioner,
-    isActive: params =>
-      (bubblePositioner.isActive(params) || linkActivated) && !actions.toggleCodeBlock.isActive(),
+    hasChanged: () => true,
+    isActive: params => {
+      const answer =
+        (bubblePositioner.isActive(params) || linkActivated) &&
+        !actions.toggleCodeBlock.isActive() &&
+        !helpers.isDragging();
+      return answer;
+    },
     positionerId: 'bubbleMenu',
   });
 
@@ -171,43 +165,32 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
         <LinkInput {...{ deactivateLink, updateLink, removeLink, canRemove }} />
       ) : (
         <BubbleContent>
-          {bubbleMenuItems.map(([name, [icon, subText], attrs], index) => {
+          {bubbleMenuItems.map(([name, [Icon, subText], attrs], index) => {
             const buttonState = getButtonState(actions[name].isActive(attrs), true);
 
             return (
               <MenuItem
                 key={index}
-                icon={icon}
+                Icon={Icon}
                 subText={subText}
                 state={buttonState}
                 disabled={!actions[name].isEnabled()}
                 onClick={runAction(actions[name], attrs)}
-                inverse={true}
-                withPadding='horizontal'
+                variant='inverse'
               />
             );
           })}
           <MenuItem
-            icon={faLink}
+            Icon={LinkIcon}
             state={getButtonState(actions.updateLink.isActive(), true)}
             onClick={activateLink}
-            inverse={true}
-            withPadding='horizontal'
+            variant='inverse'
           />
         </BubbleContent>
       )}
     </BubbleMenuTooltip>
   );
 };
-
-const Input = styled.input`
-  border: none;
-  outline: none;
-  color: white;
-  background-color: transparent;
-  min-width: 150px;
-  padding: 0 10px;
-`;
 
 interface LinkInputProps extends Pick<BubbleMenuProps, 'deactivateLink'> {
   updateLink(href: string): void;
@@ -217,6 +200,7 @@ interface LinkInputProps extends Pick<BubbleMenuProps, 'deactivateLink'> {
 
 const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink, canRemove }) => {
   const [href, setHref] = useState('');
+  const { css } = useRemirrorTheme();
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = event => {
@@ -229,12 +213,13 @@ const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink,
   };
 
   const onKeyPress: KeyboardEventHandler<HTMLInputElement> = event => {
-    if (keyCode.isEventKey(event.nativeEvent, 'esc')) {
+    const key = keyNames.keyName(event.nativeEvent);
+    if (key === 'Escape') {
       event.preventDefault();
       deactivateLink();
     }
 
-    if (keyCode.isEventKey(event.nativeEvent, 'enter')) {
+    if (key === 'Enter') {
       event.preventDefault();
       submitLink();
     }
@@ -262,22 +247,23 @@ const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink,
 
   return (
     <BubbleContent ref={wrapperRef}>
-      <Input
+      <input
         placeholder='Enter URL...'
         autoFocus={true}
         onChange={onChange}
         // onBlur={deactivateLink}
         onSubmit={submitLink}
         onKeyPress={onKeyPress}
+        css={css`
+          border: none;
+          color: white;
+          background-color: transparent;
+          min-width: 150px;
+          padding: 0 10px;
+        `}
       />
       {canRemove() && (
-        <MenuItem
-          icon={faTimes}
-          state='active-inverse'
-          onClick={onClickRemoveLink}
-          inverse={true}
-          withPadding='horizontal'
-        />
+        <MenuItem Icon={TimesIcon} state='active-inverse' onClick={onClickRemoveLink} variant='inverse' />
       )}
     </BubbleContent>
   );

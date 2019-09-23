@@ -1,30 +1,23 @@
 {
   "name": "jest-prosemirror",
-  "description": "A text editor for react built with prosemirror",
+  "description": "Jest test utilities for your prosemirror text editor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/jest-prosemirror",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "packages/jest-prosemirror"
-  },
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/packages/jest-prosemirror",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "files": [
+    "environment.d.ts",
+    "environment.js",
     "lib",
     "src"
   ],
-  "scripts": {
-    "build": "run-p build:*",
-    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
-    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
-  },
   "types": "lib/index.d.ts",
   "dependencies": {
+    "@babel/runtime": "^7.6.0",
     "@remirror/core": "0.4.2-canary.2",
+    "@testing-library/dom": "^6.2.0",
     "@types/prosemirror-gapcursor": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-model": "^1.7.2",
@@ -33,27 +26,29 @@
     "@types/prosemirror-tables": "^0.8.0",
     "@types/prosemirror-test-builder": "^1.0.1",
     "@types/prosemirror-view": "^1.9.0",
+    "@types/testing-library__dom": "^6.0.3",
     "chalk": "^2.4.2",
-    "jest-diff": "^24.8.0",
-    "jest-matcher-utils": "^24.8.0",
-    "jest-snapshot": "^24.8.0",
+    "jest-diff": "^24.9.0",
+    "jest-matcher-utils": "^24.9.0",
+    "jest-snapshot": "^24.9.0",
     "prosemirror-gapcursor": "^1.0.4",
     "prosemirror-inputrules": "^1.0.4",
-    "prosemirror-model": "^1.7.1",
+    "prosemirror-model": "^1.7.2",
     "prosemirror-schema-basic": "^1.0.1",
     "prosemirror-schema-list": "^1.0.3",
-    "prosemirror-state": "^1.2.3",
-    "prosemirror-tables": "^0.9.1",
+    "prosemirror-state": "^1.2.4",
+    "prosemirror-tables": "^0.9.5",
     "prosemirror-test-builder": "^1.0.1",
-    "prosemirror-view": "^1.9.13"
+    "prosemirror-view": "^1.11.3",
+    "test-keyboard": "0.4.2-canary.2"
   },
   "peerDependencies": {
     "jest": "^24.5.0"
   },
   "keywords": [
+    "jest",
     "prosemirror",
-    "react",
-    "ssr",
-    "text editor"
+    "snapshots",
+    "tests"
   ]
 }

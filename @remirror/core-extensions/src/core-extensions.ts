@@ -1,4 +1,4 @@
-import { DocExtension, ExtensionsFromFlexibleList, TextExtension } from '@remirror/core';
+import { DocExtension, InferFlexibleExtensionList, TextExtension } from '@remirror/core';
 import {
   BaseKeymapExtension,
   CompositionExtension,
@@ -18,11 +18,11 @@ export const baseExtensions = [
   { extension: new DocExtension(), priority: 1 },
   { extension: new TextExtension(), priority: 1 },
   { extension: new ParagraphExtension(), priority: 2 },
-  { extension: new CompositionExtension(), priority: 3 },
   { extension: new HistoryExtension(), priority: 3 },
+  { extension: new CompositionExtension(), priority: 4 },
   { extension: new GapCursorExtension(), priority: 10 },
-  { extension: new DropCursorExtension(), priority: 10 },
-  { extension: new BaseKeymapExtension(), priority: 10 },
+  { extension: new DropCursorExtension(), priority: 11 },
+  { extension: new BaseKeymapExtension(), priority: 12 },
 ];
 
 /**
@@ -31,4 +31,4 @@ export const baseExtensions = [
  * This union type is useful when paired with your own types to provide better typechecking
  * throughout your codebase.
  */
-export type BaseExtensions = ExtensionsFromFlexibleList<typeof baseExtensions>;
+export type BaseExtensions = InferFlexibleExtensionList<typeof baseExtensions>;

@@ -1,4 +1,4 @@
-import { EditorView, Transaction } from '@remirror/core';
+import { EditorView, Transaction } from '@remirror/core-types';
 import { Selection } from 'prosemirror-state';
 
 /**

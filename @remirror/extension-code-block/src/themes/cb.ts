@@ -72,7 +72,8 @@ export default css`
 
   .token.selector,
   .token.operator,
-  .token.punctuation {
+  .token.punctuation,
+  .token.punctuation.important {
     color: #fff;
   }
 

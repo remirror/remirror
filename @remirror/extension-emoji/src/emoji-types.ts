@@ -1,56 +1,75 @@
-import { Interpolation } from '@emotion/core';
-import { Attrs, NodeExtensionOptions, NodeType, PluginKey } from '@remirror/core';
-import { NodeViewComponentProps } from '@remirror/react';
-import { BaseEmoji, Data, EmojiSet } from 'emoji-mart';
-import { ComponentType } from 'react';
+import { BaseExtensionOptions } from '@remirror/core';
+import {
+  SuggestChangeHandlerParams,
+  SuggestExitHandlerParams,
+  SuggestKeyBindingMap,
+} from 'prosemirror-suggest';
+import AliasData from './data/aliases';
+import CategoryData from './data/categories';
+import EmojiData from './data/emojis';
 
-export type EmojiAttrs = Attrs<
-  Pick<BaseEmoji, 'id' | 'name' | 'native' | 'colons' | 'skin'> & {
-    useNative?: boolean;
-  }
->;
+export type Names = keyof typeof EmojiData;
+export type AliasNames = keyof typeof AliasData;
+export type Category = keyof typeof CategoryData;
+export type NamesAndAliases = Names | AliasNames;
 
-export interface CreateEmojiPluginParams extends Pick<EmojiExtensionOptions, 'emojiData'> {
-  key: PluginKey;
-  type: NodeType;
+export interface EmojiObject {
+  keywords: string[];
+  char: string;
+  category: Category;
+  name: Names;
+  description: string;
+  skinVariations: boolean;
 }
 
-export type DefaultEmojiProps = NodeViewComponentProps<
-  Omit<EmojiExtensionOptions, 'EmojiComponent'>,
-  EmojiAttrs
->;
-
-export interface EmojiExtensionOptions extends NodeExtensionOptions {
-  transformAttrs?(attrs: Pick<EmojiAttrs, 'name'>): Attrs;
-
-  className?: string;
-
+export interface EmojiSuggestionChangeHandlerParams extends SuggestChangeHandlerParams<EmojiSuggestCommand> {
   /**
-   * The emoji collection to use. See https://github.com/missive/emoji-mart#components
+   * The currently matching objects
    */
-  set: EmojiSet;
+  emojiMatches: EmojiObject[];
+}
 
+export type SkinVariation = 0 | 1 | 2 | 3 | 4;
+
+export type EmojiSuggestCommand = (emoji: EmojiObject, skinVariation?: SkinVariation) => void;
+export type EmojiSuggestionKeyBindings = SuggestKeyBindingMap<EmojiSuggestCommand>;
+export type EmojiSuggestionChangeHandler = (params: EmojiSuggestionChangeHandlerParams) => void;
+export type EmojiSuggestionExitHandler = (params: SuggestExitHandlerParams) => void;
+
+export interface EmojiExtensionOptions extends BaseExtensionOptions {
   /**
-   * Set the size of the image used. Once I find a way to use SVG it would be awesome to allow ems that match
-   * up with the font size.
+   * The character which will trigger the emoji suggestions popup.
    */
-  size?: number | string;
+  suggestionCharacter?: string;
 
   /**
-   * The data used for emoji
+   * Key bindings for suggestions.
    */
-  emojiData: Data;
+  suggestionKeyBindings?: EmojiSuggestionKeyBindings;
 
   /**
-   * The component to use within the displayed prosemirror node view
+   * Called whenever the suggestion value is updated.
+   */
+  onSuggestionChange?: EmojiSuggestionChangeHandler;
+
+  /**
+   * Called when the suggestion exits.
+   * This is useful for cleaning up local state when emoji is set.
+   */
+  onSuggestionExit?: EmojiSuggestionExitHandler;
+
+  /**
+   * A list of the initial (frequently used) emoji displayed to the user.
+   * These are used when the query typed is less than two characters long.
+   */
+  defaultEmoji?: NamesAndAliases[];
+
+  /**
+   * The maximum results to show when searching for matching emoji.
    *
-   * @default DefaultEmoji
+   * @defaultValue 15
    */
-  EmojiComponent?: ComponentType<DefaultEmojiProps>;
-
-  /**
-   * Allow customization of the styles passed through to the emoji component
-   * @default undefined
-   */
-  style?: Interpolation;
+  maxResults?: number;
 }
+
+export type EmojiObjectRecord = Record<Names, EmojiObject>;

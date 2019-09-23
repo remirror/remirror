@@ -1,14 +1,12 @@
 import { Interpolation } from '@emotion/core';
-import { InputRule } from 'prosemirror-inputrules';
-import { PluginKey } from 'prosemirror-state';
-import { ExtensionType, Tags } from './constants';
-import { Cast, deepMerge, isString } from './helpers/base';
+import { ExtensionType, Tags } from '@remirror/core-constants';
+import { Cast, deepMerge, isString } from '@remirror/core-helpers';
 import {
   AnyFunction,
   Attrs,
   AttrsWithClass,
   BaseExtensionOptions,
-  BooleanExtensionCheck,
+  CommandStatusCheck,
   CommandTypeParams,
   ExtensionCommandReturn,
   ExtensionHelperReturn,
@@ -19,7 +17,11 @@ import {
   OnTransactionParams,
   PlainObject,
   ProsemirrorPlugin,
-} from './types';
+  ExtraAttrs,
+} from '@remirror/core-types';
+import { InputRule } from 'prosemirror-inputrules';
+import { PluginKey } from 'prosemirror-state';
+import { Suggester } from 'prosemirror-suggest';
 
 /**
  * These are the default options merged into every extension.
@@ -37,6 +39,7 @@ const defaultOptions: Required<BaseExtensionOptions> = {
     attributes: false,
     nodeView: false,
     ssr: false,
+    suggesters: false,
   },
 };
 
@@ -118,7 +121,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
 
   constructor(options: GOptions = Cast<GOptions>({})) {
     this.options = Cast<Required<GOptions>>(
-      deepMerge([defaultOptions, { ...this.defaultOptions, ...options }]),
+      deepMerge(defaultOptions, { ...this.defaultOptions, ...options }),
     );
 
     this.init();
@@ -135,7 +138,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
       throw new Error('Invalid use of extraAttrs within a plain extension.');
     }
 
-    const extraAttrs = this.options.extraAttrs!;
+    const extraAttrs = this.options.extraAttrs as ExtraAttrs[];
     const attrs: Record<string, { default?: unknown }> = {};
     if (!extraAttrs) {
       return attrs;
@@ -162,7 +165,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
       throw new Error('Invalid use of extraAttrs within a plain extension.');
     }
 
-    const extraAttrs = this.options.extraAttrs!;
+    const extraAttrs = this.options.extraAttrs as ExtraAttrs[];
     const attrs: Attrs = {};
     if (!extraAttrs) {
       return attrs;
@@ -277,10 +280,20 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
   public readonly _T!: GType;
 
   /**
+   * `ExtensionCommands`
+   *
    * This pseudo property makes it easier to infer Generic types of this class.
    * @private
    */
   public readonly _C!: this['commands'] extends AnyFunction ? ReturnType<this['commands']> : {};
+
+  /**
+   * `ExtensionHelpers`
+   *
+   * This pseudo property makes it easier to infer Generic types of this class.
+   * @private
+   */
+  public readonly _H!: this['helpers'] extends AnyFunction ? ReturnType<this['helpers']> : {};
 }
 
 export interface Extension<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GType = never> {
@@ -317,7 +330,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * ```ts
    * class History extends Extension {
-   *   name = 'history';
+   *   name = 'history' as const;
    *   commands() {
    *     return {
    *       undoHistory: COMMAND_FN,
@@ -351,9 +364,39 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * A helper method is a function that takes in arguments and returns
    * a value depicting the state of the editor specific to this extension.
    *
+   * @remarks
+   *
    * Unlike commands they can return anything and they do not effect the editor in anyway.
    *
    * They are general versions of the `isActive` and `isEnabled` methods.
+   *
+   * Below is an example which should provide some idea on how to add helpers to the app.
+   *
+   * ```tsx
+   * // extension.ts
+   * import { ExtensionManagerParams } from '@remirror/core';
+   *
+   * class MyBeautifulExtension {
+   *   get name() {
+   *     return 'beautiful' as const
+   *   }
+   *
+   *   helpers(params: ExtensionManagerParams) {
+   *     return {
+   *       isMyCodeBeautiful: () => true,
+   *     }
+   *   }
+   * }
+   *
+   * // app.tsx
+   * import { useRemirrorContext } from '@remirror/react';
+   *
+   * export const MyApp = () => {
+   *   const { helpers } = useRemirrorContext();
+   *
+   *   return helpers.isMyCodeBeautiful() ? (<span>😍</span>) : (<span>😢</span>);
+   * };
+   * ```
    */
   helpers?(params: ExtensionManagerTypeParams<GType>): ExtensionHelperReturn;
 
@@ -376,7 +419,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * @param params - extension manager params
    */
-  isActive?(params: ExtensionManagerParams): BooleanExtensionCheck<string>;
+  isActive?(params: ExtensionManagerParams): CommandStatusCheck<string>;
 
   /**
    * Determines whether this extension is enabled. If a command name is provided
@@ -385,7 +428,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * @param params - extension manager parameters
    */
-  isEnabled?(params: ExtensionManagerParams): BooleanExtensionCheck<string>;
+  isEnabled?(params: ExtensionManagerParams): CommandStatusCheck<string>;
 
   /**
    * Add key bindings for this extension.
@@ -470,4 +513,10 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * @param params - extension manager parameters
    */
   styles?(params: ExtensionManagerParams): Interpolation;
+
+  /**
+   * Create suggestions which respond to character key combinations within the
+   * editor instance.
+   */
+  suggestions?(params: ExtensionManagerTypeParams<GType>): Suggester[] | Suggester;
 }

@@ -1,4 +1,4 @@
-import { createTestManager } from '@test-fixtures/schema-helpers';
+import { createTestManager } from '@remirror/test-fixtures';
 import { render, RenderResult } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import React, { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';
@@ -58,7 +58,7 @@ describe('nestedRootProps', () => {
 
   beforeEach(() => {
     result = render(
-      <Remirror manager={createTestManager()}>
+      <Remirror manager={createTestManager()} label='Editor'>
         {({ getRootProps }) => {
           return (
             <div>

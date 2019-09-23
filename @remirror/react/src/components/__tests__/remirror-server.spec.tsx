@@ -3,8 +3,8 @@
  */
 
 import { EDITOR_CLASS_NAME } from '@remirror/core';
-import { docNodeSimpleJSON } from '@test-fixtures/object-nodes';
-import { createTestManager } from '@test-fixtures/schema-helpers';
+import { docNodeSimpleJSON } from '@remirror/test-fixtures';
+import { createTestManager } from '@remirror/test-fixtures';
 import React, { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
 import { Remirror } from '..';
@@ -99,21 +99,6 @@ test('prepends to the react element when insertPosition=start with getRootProps'
   const indexOfInnerDiv = reactString.indexOf(finalId);
   const indexOfInjectedSSRComponent = reactString.indexOf(EDITOR_CLASS_NAME);
   expect(isAscending([indexOfInjectedSSRComponent, indexOfInnerDiv, indexOfOuter])).toBeTrue();
-});
-
-describe('withoutEmotion', () => {
-  it('should not render extra class names when true', () => {
-    const child = () => <div data-testid='test' />;
-    const withEmotionString = renderToString(<Remirror manager={createTestManager()}>{child}</Remirror>);
-    expect(withEmotionString).toInclude('css-');
-
-    const withoutEmotionString = renderToString(
-      <Remirror manager={createTestManager()} withoutEmotion={true}>
-        {child}
-      </Remirror>,
-    );
-    expect(withoutEmotionString).not.toInclude('css-');
-  });
 });
 
 /**

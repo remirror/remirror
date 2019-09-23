@@ -7,7 +7,6 @@
     "noEmit": true,
     "target": "es2016",
     "allowJs": true,
-    "resolveJsonModule": false,
     "isolatedModules": true,
     "types": ["node", "webpack-env"],
     "downlevelIteration": true

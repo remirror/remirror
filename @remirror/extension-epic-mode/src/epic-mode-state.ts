@@ -1,11 +1,11 @@
-import { EditorView, randomInt } from '@remirror/core';
-import throttle from 'throttleit';
+import { EditorView, randomInt, throttle } from '@remirror/core';
 import { EpicModePluginStateParams, Particle, ParticleEffect, ParticleRange } from './epic-mode-types';
 
 export class EpicModePluginState {
   private particleEffect: ParticleEffect;
   private particleRange: ParticleRange;
-  private container: HTMLElement;
+  private getCanvasContainer: () => HTMLElement;
+  private container!: HTMLElement;
   private shakeActive: boolean;
   private colors: string[];
   private shakeTime = 0;
@@ -16,14 +16,31 @@ export class EpicModePluginState {
   private isActive = false;
   private view!: EditorView;
 
-  public readonly canvas: HTMLCanvasElement;
-  public readonly ctx: CanvasRenderingContext2D;
+  public canvas!: HTMLCanvasElement;
+  public ctx!: CanvasRenderingContext2D;
 
-  constructor({ particleEffect, colors, particleRange, canvasHolder, shake }: EpicModePluginStateParams) {
+  constructor({
+    particleEffect,
+    colors,
+    particleRange,
+    getCanvasContainer,
+    shake,
+  }: EpicModePluginStateParams) {
     this.particleEffect = particleEffect;
-    this.container = canvasHolder || document.body;
     this.particleRange = particleRange;
     this.shakeActive = shake;
+    this.colors = colors;
+    this.getCanvasContainer = getCanvasContainer;
+  }
+
+  /**
+   * Store a reference to the Prosemirror view and add the canvas to the DOM
+   *
+   * @param view
+   */
+  public init(view: EditorView) {
+    this.view = view;
+    this.container = this.getCanvasContainer ? this.getCanvasContainer() : document.body;
 
     const canvas = document.createElement('canvas');
     canvas.id = 'epic-mode-canvas';
@@ -34,18 +51,10 @@ export class EpicModePluginState {
     canvas.style.pointerEvents = 'none';
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d')!;
-    this.colors = colors;
-  }
 
-  /**
-   * Store a reference to the Prosemirror view and add the canvas to the DOM
-   *
-   * @param view
-   */
-  public init(view: EditorView) {
-    this.view = view;
     this.container.appendChild(this.canvas);
 
     this.isActive = true;
@@ -67,13 +76,13 @@ export class EpicModePluginState {
     }
   }
 
-  public shake = throttle((time: number) => {
+  public shake = throttle(100, (time: number) => {
     if (this.shakeActive) {
       this.shakeTime = this.shakeTimeMax = time;
     }
-  }, 100);
+  });
 
-  public spawnParticles = throttle(() => {
+  public spawnParticles = throttle(100, () => {
     const { selection } = this.view.state;
     const coords = this.view.coordsAtPos(selection.$anchor.pos);
 
@@ -104,7 +113,7 @@ export class EpicModePluginState {
         canvas: this.canvas,
       });
     }
-  }, 100);
+  });
 
   /**
    * Runs through the animation loop
@@ -149,7 +158,7 @@ export class EpicModePluginState {
 function getRGBComponents(node: Element) {
   const color = getComputedStyle(node).color;
   let match: RegExpMatchArray | null;
-  // tslint:disable-next-line:no-conditional-assignment
+
   if (color && (match = color.match(/(\d+), (\d+), (\d+)/))) {
     try {
       return match.slice(1);

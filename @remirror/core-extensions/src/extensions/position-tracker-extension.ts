@@ -1,16 +1,14 @@
+import { Extension } from '@remirror/core';
+import { isNumber, isString } from '@remirror/core-helpers';
 import {
   BaseExtensionOptions,
   CommandFunction,
   CommandParams,
-  Extension,
   ExtensionManagerParams,
-  getPluginMeta,
-  getPluginState,
-  isNumber,
-  isString,
   PosParams,
   Transaction,
-} from '@remirror/core';
+} from '@remirror/core-types';
+import { getPluginMeta, getPluginState } from '@remirror/core-utils';
 import { Plugin } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
@@ -25,14 +23,14 @@ export interface PositionTrackerExtensionOptions extends BaseExtensionOptions {
   /**
    * The className that is added to all tracker positions
    *
-   * '@default 'remirror-tracker-position'
+   * '@defaultValue 'remirror-tracker-position'
    */
   defaultClassName?: string;
 
   /**
    * The default element that is used for all trackers.
    *
-   * @default 'tracker'
+   * @defaultValue 'tracker'
    */
   defaultElement?: string;
 }
@@ -111,6 +109,23 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
 
         return found.length ? found[0].from : undefined;
       },
+
+      /**
+       * Find the positions of all the trackers.in the decoration set.
+       *
+       * @param id - the unique position id which can be any type
+       */
+      findAllPositionTrackers: (): Record<string, number> => {
+        const trackers: Record<string, number> = {};
+        const decorations = getPluginState<DecorationSet>(this.pluginKey, getState());
+        const found = decorations.find(undefined, undefined, spec => spec.type === this.name);
+
+        for (const decoration of found) {
+          trackers[decoration.spec.id] = decoration.from;
+        }
+
+        return trackers;
+      },
     };
 
     return helpers;
@@ -148,12 +163,13 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
       /**
        * A command to remove all active tracker positions.
        */
-      clearPositionTrackers: commandFactory<RemovePositionTrackerParams>('clearPositionTrackers'),
+      clearPositionTrackers: commandFactory<void>('clearPositionTrackers'),
     };
   }
 
   public plugin() {
     const key = this.pluginKey;
+    const name = this.name;
 
     return new Plugin<DecorationSet>({
       key,
@@ -182,6 +198,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
 
             const deco = Decoration.widget(tracker.add.pos, widget, {
               id: tracker.add.id,
+              type: name,
             });
 
             return decorationSet.add(tr.doc, [deco]);
@@ -228,14 +245,14 @@ interface AddPositionTrackerParams extends Partial<PosParams>, RemovePositionTra
    * A custom class name to use for the tracker position. All the trackers
    * will automatically be given the class name `remirror-tracker-position`
    *
-   * @default ''
+   * @defaultValue ''
    */
   className?: string;
 
   /**
    * A custom html element or string for a created element tag name.
    *
-   * @default 'tracker'
+   * @defaultValue 'tracker'
    */
   element?: string | HTMLElement;
 }

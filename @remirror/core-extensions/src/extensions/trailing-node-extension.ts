@@ -1,14 +1,12 @@
+import { Extension, ExtensionParams } from '@remirror/core';
+import { entries, uniqueArray } from '@remirror/core-helpers';
 import {
   BaseExtensionOptions,
-  Extension,
   ExtensionManagerParams,
-  ExtensionParams,
   ExtensionTagParams,
-  getPluginState,
-  nodeEqualsType,
   SchemaParams,
-  uniqueArray,
-} from '@remirror/core';
+} from '@remirror/core-types';
+import { getPluginState, nodeEqualsType } from '@remirror/core-utils';
 import { Plugin } from 'prosemirror-state';
 
 export interface TrailingNodeExtensionOptions extends BaseExtensionOptions {
@@ -18,7 +16,7 @@ export interface TrailingNodeExtensionOptions extends BaseExtensionOptions {
    * **Note**: the nodeName will always be added to the ignoredNodes lists to
    * prevent an infinite loop.
    *
-   * @default 'paragraph'
+   * @defaultValue 'paragraph'
    */
   nodeName?: string;
 
@@ -33,7 +31,7 @@ export interface TrailingNodeExtensionOptions extends BaseExtensionOptions {
    * means that the only nodes that will be ignored are those passed to the
    * `ignoredNodes` array.
    *
-   * @default false
+   * @defaultValue false
    */
   disableTags?: boolean;
 }
@@ -55,7 +53,7 @@ export const defaultTrailingNodeExtensionOptions: TrailingNodeExtensionOptions =
  * Why? In some scenarios it is difficult to place a cursor after the last element.
  * This ensures there's always space to select the position afterward.
  *
- * @default false
+ * @defaultValue false
  */
 export class TrailingNodeExtension extends Extension<TrailingNodeExtensionOptions> {
   get name() {
@@ -98,7 +96,7 @@ export const createTrailingNodePlugin = ({ extension, tags, schema }: CreateTrai
 
   // The list of nodes for this schema that should have content injected after
   // them.
-  const types = Object.entries(schema.nodes)
+  const types = entries(schema.nodes)
     .map(([, entry]) => entry)
     .filter(entry => !notAfter.includes(entry.name));
 

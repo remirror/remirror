@@ -4,11 +4,7 @@
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/remirror",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ifiokjr/remirror.git",
-    "directory": "packages/remirror"
-  },
+  "repository": "https://github.com/ifiokjr/remirror/tree/master/packages/remirror",
   "version": "0.4.2-canary.2",
   "main": "lib/index.js",
   "module": "lib/dist/remirror.esm.js",
@@ -16,22 +12,15 @@
     "lib",
     "src"
   ],
-  "scripts": {
-    "build": "run-p build:*",
-    "build:babel": "babel src --out-dir lib --root-mode=upward --extensions \".ts,.tsx\" -s",
-    "build:declaration": "tsc -p ./tsconfig.prod.json --emitDeclarationOnly --declarationMap",
-    "lint": "tslint --project tsconfig.lint.json --config ../../tslint.json",
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
-  },
   "types": "lib/index.d.ts",
   "dependencies": {
+    "@babel/runtime": "^7.6.0",
     "@remirror/core": "0.4.2-canary.2",
     "@remirror/core-extensions": "0.4.2-canary.2",
-    "@remirror/react": "0.4.2-canary.2",
-    "@remirror/renderer-react": "0.4.2-canary.2"
+    "@remirror/react": "0.4.2-canary.2"
   },
   "peerDependencies": {
-    "@types/react": "^16.7.18",
+    "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
@@ -46,5 +35,8 @@
     "access": "public"
   },
   "cjs": "lib/dist/remirror.cjs.js",
+  "meta": {
+    "skipApi": true
+  },
   "sideEffects": false
 }

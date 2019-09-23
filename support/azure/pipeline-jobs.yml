@@ -11,14 +11,10 @@ jobs:
           - template: pipeline-yarn-install.yml
           - bash: yarn integrity
             displayName: 'Check yarn lock file is up to date'
-          - bash: yarn ci:audit
-            displayName: 'Check for security audit flags in dependencies'
           - bash: yarn lint
             displayName: 'Check all lint rules'
           - bash: yarn typecheck
             displayName: 'Typecheck code and tests'
-          - bash: yarn dtslint
-            displayName: 'Run dtslint'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
       - job: ${{ parameters.name }}UnitTests
@@ -36,7 +32,7 @@ jobs:
           vmImage: ${{ parameters.vmImage }}
         steps:
           - template: pipeline-yarn-install.yml
-          - bash: yarn build
+          - bash: yarn build:rollup
             displayName: 'Build project'
           - bash: yarn size
             displayName: 'Check size limits'
@@ -56,22 +52,20 @@ jobs:
           - bash: yarn build
             displayName: 'Build project'
 
-          - bash: yarn test:e2e
-            displayName: 'NextJS integration tests'
-            env:
-              REMIRROR_E2E_SERVER: 'next'
+          # - bash: yarn test:e2e
+          #   displayName: 'NextJS integration tests'
+          #   env:
+          #     REMIRROR_E2E_SERVER: 'next'
 
           - bash: yarn test:e2e
             displayName: 'Razzle integration tests'
             env:
               REMIRROR_E2E_SERVER: razzle
-              REMIRROR_E2E_BASIC: 'true'
 
-          - bash: yarn test:e2e
-            displayName: 'Storybook integration tests'
-            env:
-              REMIRROR_E2E_SERVER: storybook
-              EMIRROR_E2E_BASIC: 'true'
+          # - bash: yarn test:e2e
+          #   displayName: 'Storybook integration tests'
+          #   env:
+          #     REMIRROR_E2E_SERVER: storybook
 
           - publish: $(System.DefaultWorkingDirectory)/e2e/__image_snapshots__
             condition: failed()

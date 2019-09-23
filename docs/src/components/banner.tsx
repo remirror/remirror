@@ -3,7 +3,6 @@
 import { FC } from 'react';
 import { Container, jsx, ThemeProvider } from 'theme-ui';
 
-const gradient = `linear-gradient(120deg, rgba(230, 59, 25, .5), rgba(51, 51, 238, 0), rgba(51, 51, 238, .25))`;
 const theme = {
   styles: {
     p: {
@@ -46,8 +45,7 @@ export const Banner: FC = ({ children }) => (
       sx={{
         py: [5, 6],
         color: 'background',
-        bg: 'primary',
-        backgroundImage: gradient,
+        bg: 'purple',
       }}
     >
       <Container sx={{}}>

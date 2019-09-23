@@ -12,14 +12,14 @@ export const Head: FC<RootLayoutProps> = ({ pageContext: { frontmatter } }) => {
       <meta name='description' content={pkg.description} />
       <link rel='icon' type='image/png' href='/icon.png' />
       <link rel='apple-touch-icon' type='image/png' href='/icon.png' />
-      <meta name='twitter:card' content='summary' />
-      <meta name='twitter:site' content='@ifiokjr' />
+      <meta name='social:card' content='summary' />
+      <meta name='social:site' content='@ifiokjr' />
       <meta
-        name='twitter:image'
+        name='social:image'
         content='https://repository-images.githubusercontent.com/166780923/9e00f600-7721-11e9-848b-eb31a5db5b89'
       />
-      <meta name='twitter:title' content={title} />
-      <meta name='twitter:description' content={pkg.description} />
+      <meta name='social:title' content={title} />
+      <meta name='social:description' content={pkg.description} />
     </Helmet>
   );
 };

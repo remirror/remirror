@@ -30,6 +30,7 @@ test('ssr component', () => {
       },
     ],
   });
+
   expect(reactString).toInclude('<pre class="language-markup"><code>Simple Code Blocks');
   expect(reactString).toMatchSnapshot();
 });
@@ -50,5 +51,6 @@ test('formatted ssr component', () => {
       },
     ],
   });
+
   expect(reactString).toMatchSnapshot();
 });
