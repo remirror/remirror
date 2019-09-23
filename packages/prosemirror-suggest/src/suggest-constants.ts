@@ -23,32 +23,7 @@ export const DEFAULT_SUGGESTER = {
 };
 
 /**
- * The action taken on a suggestion
- */
-export enum ActionTaken {
-  /**
-   * We've moved from suggestion to another.
-   */
-  Moved = 'moved',
-
-  /**
-   * The suggestion wasn't active before and now it is active
-   */
-  Entered = 'entered',
-
-  /**
-   * The suggestion was active before and not it is no longer active
-   */
-  Exited = 'exited',
-
-  /**
-   * The suggestion query has changed either by typing or deleting characters
-   */
-  Changed = 'changed',
-}
-
-/**
- * The potential reasons for an exit
+ * The potential reasons for an exit of a mention.
  */
 export enum ExitReason {
   /**

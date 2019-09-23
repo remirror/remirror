@@ -3,20 +3,26 @@
  *
  * ## The problem
  *
- * You want to create a suggestion plugin for your prosemirror editor but are
- * unsure how to get started. The suggestions could be for mentions, emojis,
- * responding to a keypress with a dropdown of potential actions or anything
- * that needs to extract a query from the current editor when a matching
- * character is entered.
+ * You want to create a plugin for your prosemirror editor that responds to an
+ * activation character to create suggestions or options or actions for the
+ * user. Doing this from scratch can be difficult.
  *
  * ## This solution
  *
- * `prosemirror-suggest` provides the suggestion primitives you will need for
- * within your editor. It doesn't try to be magical and even with this library
- * setting up suggestions can be difficult. However, with this toolkit, you will
- * be able to build pretty much any suggestion plugin you can think of.
+ * `prosemirror-suggest` provides the suggestion primitives needed for building
+ * this functionality into your editor. You might be building user mentions,
+ * emoji search, an actions dropdown or anything that extracts a query from the
+ * editor after the activation character(s).
+ *
+ * This implementation doesn't attempt to be magical. There's still a lot of
+ * work that goes into setting up your configuration. However, with this
+ * toolkit, you you will be building on a well-tested foundation with a
+ * structured API.
  *
  * ## Installation
+ *
+ * `prosemirror-view` is a peer dependency of `prosemirror-suggest` and needs to
+ * be installed as well.
  *
  * ```bash
  * yarn add prosemirror-suggest prosemirror-view
@@ -24,9 +30,9 @@
  *
  * ## Getting Started
  *
- * The configuration of prosemirror suggests is based around an object which
- * defines the suggestion behaviour. This configuration is passed the
- * `suggestion` method which adds all the suggestion plugins to the editor.
+ * `prosemirror-suggest` uses configuration objects called `Suggester`'s to define the behaviour of
+ * the suggestions you create. By calling the exported `suggest` method with all required
+ * `Suggester`'s the functionality is added to the editor in one plugin.
  *
  * In the following example we're creating an emoji suggestion plugin that
  * responds to the colon character with a query and presents a list of matching
@@ -105,6 +111,11 @@
  *   plugins: [suggestionPlugin],
  * });
  * ```
+ *
+ * You can see this example brought to life in the `remirror` codebase under the
+ * @remirror/extension-emoji.
+ *
+ * [GIF-EXAMPLE]
  *
  * @packageDocumentation
  */
