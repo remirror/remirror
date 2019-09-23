@@ -31,9 +31,6 @@
     "ssr",
     "text editor"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "cjs": "lib/dist/remirror.cjs.js",
   "meta": {
     "skipApi": true
