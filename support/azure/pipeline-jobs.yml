@@ -67,7 +67,7 @@ jobs:
           #   env:
           #     REMIRROR_E2E_SERVER: storybook
 
-          - publish: $(System.DefaultWorkingDirectory)/e2e/__image_snapshots__
+          - publish: $(System.DefaultWorkingDirectory)/e2e/__failed-diffs__
             condition: failed()
             artifact: ImageSnapshots
 

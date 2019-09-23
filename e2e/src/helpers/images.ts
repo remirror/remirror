@@ -7,7 +7,7 @@ import md from 'mkdirp-promise';
 
 const write = promisify(writeFile);
 
-const tempDir = (...paths: string[]) => resolve(__dirname, '../..', 'failed-diffs', ...paths);
+const tempDir = (...paths: string[]) => resolve(__dirname, '../..', '__failed-diffs__', ...paths);
 
 const toPng = (name: string) => (!name.endsWith('.png') ? `${name}.png` : name);
 
