@@ -1,5 +1,5 @@
 import { renderEditor } from 'jest-remirror';
-import { HistoryExtension } from 'remirror';
+import { HistoryExtension } from '../history-extension';
 
 describe('commands', () => {
   const create = () => renderEditor({ others: [new HistoryExtension()] });
