@@ -11,7 +11,6 @@ export const toMarkdown = (content: ProsemirrorNode) =>
         state.wrapBlock('> ', undefined, node, () => state.renderContent(node));
       },
       codeBlock(state, node) {
-        console.log(node.attrs);
         state.write('```' + (node.attrs.language || '') + '\n');
         state.text(node.textContent, false);
         state.ensureNewLine();

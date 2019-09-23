@@ -224,11 +224,9 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', edi
     () => {
       const { tr, getText } = markdownParams;
       if (tr && tr.docChanged) {
-        console.log('onMarkdownStateChange: triggering wysiwyg change');
         updateWysiwygFromMarkdown(getText());
         return;
       }
-      console.log('onMarkdownStateChange: SKIP wysiwyg');
     },
     500,
     [markdownParams.getText, markdownParams.tr],
@@ -239,22 +237,17 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', edi
     getText,
     tr,
   }: RemirrorStateListenerParams<MarkdownExtensions>) => {
-    console.log('onMarkdownStateChange: setting state');
     setMarkdownParams({ getText, tr });
     setMarkdownEditorState(newState);
   };
 
   const onWysiwygStateChange = ({ newState, tr }: RemirrorStateListenerParams<WysiwygExtensions>) => {
-    console.log('onWysiwygStateChange: setting state');
     setWysiwygEditorState(newState);
 
     if (tr && tr.docChanged) {
-      console.log('onWysiwygStateChange: triggering markdown change');
       updateMarkdownFromWysiwyg(newState.doc);
       return;
     }
-
-    console.log('onWysiwygStateChange: SKIP markdown');
   };
 
   useEffect(() => {

@@ -103,7 +103,7 @@ export const nodeInputRule = ({ regexp, type, getAttrs, updateSelection = false 
     const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
     const { tr } = state;
 
-    tr.replaceWith(start - 1, end, type.create(attrs!));
+    tr.replaceWith(start - 1, end, type.create(attrs));
 
     if (updateSelection) {
       const $pos = tr.doc.resolve(start);

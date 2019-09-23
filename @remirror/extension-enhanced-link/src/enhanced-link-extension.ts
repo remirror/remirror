@@ -62,14 +62,16 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
           }),
         },
       ],
-      toDOM: node => [
-        'a',
-        {
-          ...node.attrs,
-          role: 'presentation',
-        },
-        0,
-      ],
+      toDOM: node => {
+        return [
+          'a',
+          {
+            ...node.attrs,
+            role: 'presentation',
+          },
+          0,
+        ];
+      },
     };
   }
 

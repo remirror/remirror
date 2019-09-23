@@ -11,14 +11,20 @@ const { setup: setupPuppeteer } = require('jest-environment-puppeteer');
 
 let serverSetupPromise: Promise<void> | undefined;
 
+export async function destroyServer(globalConfig?: Config.GlobalConfig) {
+  serverSetupPromise = undefined;
+  await teardown();
+  await teardownPuppeteer(globalConfig);
+}
+
 export async function setupServer(globalConfig: Config.GlobalConfig) {
   await setup([server]);
 
-  onExit(() =>
-    Promise.all([teardown(), teardownPuppeteer()]).then(() => {
+  onExit(() => {
+    destroyServer().then(() => {
       process.exit();
-    }),
-  );
+    });
+  });
 
   await setupPuppeteer(globalConfig);
 }
@@ -30,10 +36,4 @@ export async function startServer(globalConfig: Config.GlobalConfig) {
     serverSetupPromise = setupServer(globalConfig);
     return serverSetupPromise;
   }
-}
-
-export async function destroyServer(globalConfig: Config.GlobalConfig) {
-  serverSetupPromise = undefined;
-  await teardown();
-  await teardownPuppeteer(globalConfig);
 }

@@ -14,7 +14,7 @@ import { RemirrorExtensionProps } from '../react-types';
  * ```tsx
  * const WithoutRemirrorExtensions = () => {
  *   const handler = () => {
- *     console.log('something happened');
+ *     log('something happened');
  *   }
  *
  *   const manager = ExtensionManager.create([
@@ -35,7 +35,7 @@ import { RemirrorExtensionProps } from '../react-types';
  * ```tsx
  * const WithRemirrorExtensions = () => {
  *   const handler = () => {
- *     console.log('something happened');
+ *     log('something happened');
  *   }
  *
  *   return (

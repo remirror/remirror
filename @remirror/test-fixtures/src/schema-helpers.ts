@@ -3,9 +3,9 @@ import {
   ExtensionManager,
   TextExtension,
   Cast,
-  PrioritizedExtension,
   Extension,
   BaseExtensionOptions,
+  FlexibleExtension,
 } from '@remirror/core';
 import {
   ParagraphExtension,
@@ -63,11 +63,13 @@ export const ExtensionMap = {
  */
 export const manager = ExtensionManager.create(extensions).init(helpers);
 
-export const createBaseTestManager = (extra: PrioritizedExtension[] = []) =>
-  ExtensionManager.create([...baseExtensions, ...extra]);
+export const createBaseTestManager = <GFlexibleList extends FlexibleExtension[]>(
+  extra: GFlexibleList = [] as any,
+) => ExtensionManager.create([...baseExtensions, ...extra]);
 
-export const createTestManager = (extra: PrioritizedExtension[] = []) =>
-  ExtensionManager.create([...extensions, ...extra]);
+export const createTestManager = <GFlexibleList extends FlexibleExtension[]>(
+  extra: GFlexibleList = [] as any,
+) => ExtensionManager.create([...extensions, ...extra]);
 
 export const { schema, plugins } = manager.data;
 export const testDocument = minDocument;

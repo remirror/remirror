@@ -39,11 +39,11 @@ export const socialEditorTheme: RemirrorTheme = {
         borderStyle: 'solid',
         borderColor: 'border',
         boxShadow: 'default',
-        lineHeight: '20px',
+        lineHeight: 'relaxed',
         borderRadius: '8px',
         width: '100%',
         fontFamily: 'body',
-        fontSize: '14px',
+        fontSize: 2,
         maxHeight: 'calc(90vh - 124px)',
         minHeight: '142px',
         padding: '8px',
@@ -56,6 +56,11 @@ export const socialEditorTheme: RemirrorTheme = {
       },
       [`${EDITOR_CLASS_SELECTOR} a.mention`]: {
         pointerEvents: 'none',
+        cursor: 'default',
+      },
+      [`${EDITOR_CLASS_SELECTOR} a`]: {
+        textDecoration: 'none !important',
+        color: 'primary',
       },
       [`${EDITOR_CLASS_SELECTOR}:focus`]: {
         outline: 'none',

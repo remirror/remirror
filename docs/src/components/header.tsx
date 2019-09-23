@@ -5,7 +5,7 @@ import Button from './button';
 import MenuButton from './menu-button';
 import NavLink from './nav-link';
 
-const modes = ['light', 'dark', 'deep', 'swiss'];
+const modes = ['light', 'dark'];
 
 interface HeaderProps {
   menuOpen: boolean;

@@ -1,25 +1,7 @@
 /**
- * Retrieve the browser name from the environment
- */
-export const getBrowserName = (): SupportedBrowserName => process.env.REMIRROR_E2E_BROWSER || 'chromium';
-
-/**
- * Prefix the browser name to the passed in string
- */
-export const prefixBrowserName = (...value: string[]) =>
-  `${getBrowserName()}-${process.platform}-${__SERVER__.name}-${value.join('-')}`;
-
-/**
  * Declare the globals used throughout tests
  */
 declare global {
-  const __DEV__: boolean;
-  const __TEST__: boolean;
-  /**
-   * Identifies whether this is an e2e test
-   */
-  const __E2E__: boolean;
-
   /**
    * Lists the servers running for end to end test.
    */
@@ -53,3 +35,14 @@ declare global {
   type RemirrorTestEditors = 'social' | 'wysiwyg' | 'epic';
   type SupportedBrowserName = 'firefox' | 'chromium';
 }
+
+/**
+ * Retrieve the browser name from the environment
+ */
+export const getBrowserName = (): SupportedBrowserName => process.env.REMIRROR_E2E_BROWSER || 'chromium';
+
+/**
+ * Prefix the browser name to the passed in string
+ */
+export const prefixBrowserName = (...value: string[]) =>
+  `${getBrowserName()}-${process.platform}-${__SERVER__.name}-${value.join('-')}`;

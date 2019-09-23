@@ -1,6 +1,5 @@
 import {
   Attrs,
-  bool,
   CommandMarkTypeParams,
   EditorState,
   ExtensionManagerMarkTypeParams,
@@ -8,7 +7,6 @@ import {
   getMatchString,
   isElementDOMNode,
   isNullOrUndefined,
-  isObject,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
@@ -20,8 +18,14 @@ import {
   replaceText,
   TransactionTransformer,
 } from '@remirror/core';
-import { MentionExtensionAttrs as MentionAttrs, MentionExtensionOptions } from './mention-types';
-import { DEFAULT_MATCHER, escapeChar, getRegexPrefix, regexToString } from './mention-utils';
+import { MentionExtensionOptions } from './mention-types';
+import {
+  DEFAULT_MATCHER,
+  escapeChar,
+  getRegexPrefix,
+  regexToString,
+  isValidMentionAttrs,
+} from './mention-utils';
 import { createSuggestionPlugin, SuggestionState } from './suggestion-plugin';
 
 const defaultHandler = () => false;
@@ -192,10 +196,3 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     return createSuggestionPlugin({ extension: this, ...params });
   }
 }
-
-/**
- * Check that the attributes exist and are valid for the mention update
- * command method.
- */
-const isValidMentionAttrs = (attrs?: Attrs): attrs is MentionAttrs =>
-  bool(attrs && isObject(attrs) && attrs.id && attrs.label);

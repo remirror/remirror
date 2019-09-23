@@ -376,7 +376,6 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
           <RemirrorExtension Constructor={EnhancedLinkExtension} onUrlsChange={this.props.onUrlsChange} />
           <RemirrorExtension<typeof EmojiExtension, EmojiExtensionOptions>
             Constructor={EmojiExtension}
-            // maxResults={6}
             onSuggestionChange={this.onEmojiSuggestionChange}
             suggestionKeyBindings={this.emojiKeyBindings}
             onSuggestionExit={this.onEmojiSuggestionExit}

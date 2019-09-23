@@ -6,20 +6,22 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "version": "0.4.2-canary.2",
   "main": "index.js",
-  "scripts": {
-    "typecheck": "tsc -p ./tsconfig.json --noEmit"
-  },
+  "scripts": {},
   "dependencies": {
     "@babel/runtime": "7.6.0",
     "@remirror/core": "0.4.2-canary.2",
     "@types/expect-puppeteer": "3.3.1",
     "@types/jest-environment-puppeteer": "4.3.1",
+    "@types/mkdirp-promise": "5.0.0",
     "@types/puppeteer": "1.19.1",
     "jest-environment-puppeteer": "4.3.0",
     "jest-puppeteer": "4.3.0",
+    "looks-same": "7.2.1",
+    "mkdirp-promise": "5.0.1",
     "pptr-testing-library": "0.4.0",
     "puppeteer": "1.20.0",
     "puppeteer-firefox": "0.5.0",
+    "signal-exit": "3.0.2",
     "test-keyboard": "0.4.2-canary.2"
   },
   "peerDependencies": {

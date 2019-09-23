@@ -249,7 +249,7 @@ export const baseTheme: RemirrorTheme = {
       },
       [`${EDITOR_CLASS_SELECTOR}:focus`]: {
         outline: 'none',
-        boxShadow: 'focus',
+        // boxShadow: 'focus',
       },
       [`${EDITOR_CLASS_SELECTOR}[contenteditable="false"]`]: {
         whiteSpace: 'normal',

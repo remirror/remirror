@@ -76,27 +76,6 @@ interface CreateDecorationsParams extends Pick<CodeBlockExtensionOptions, 'defau
 }
 
 /**
- * Creates a decoration set for the provided blocks
- */
-export const createDecorations = ({ blocks, skipLast }: CreateDecorationsParams) => {
-  const decorations: Decoration[] = [];
-
-  blocks.forEach(block => {
-    const positionedRefractorNodes = getPositionedRefractorNodes(block);
-    const lastBlockLength = skipLast ? positionedRefractorNodes.length - 1 : positionedRefractorNodes.length;
-    for (let ii = 0; ii < lastBlockLength; ii++) {
-      const positionedRefractorNode = positionedRefractorNodes[ii];
-      const decoration = Decoration.inline(positionedRefractorNode.from, positionedRefractorNode.to, {
-        class: positionedRefractorNode.classes.join(' '),
-      });
-      decorations.push(decoration);
-    }
-  });
-
-  return decorations;
-};
-
-/**
  * Retrieves positioned refractor nodes from the positionedNode
  *
  * @param nodeWithPosition - a node and position
@@ -119,6 +98,27 @@ const getPositionedRefractorNodes = ({ node, pos }: NodeWithPosition) => {
   const parsedRefractorNodes = parseRefractorNodes(refractorNodes);
 
   return flattenArray<ParsedRefractorNode>(parsedRefractorNodes).map(mapper);
+};
+
+/**
+ * Creates a decoration set for the provided blocks
+ */
+export const createDecorations = ({ blocks, skipLast }: CreateDecorationsParams) => {
+  const decorations: Decoration[] = [];
+
+  blocks.forEach(block => {
+    const positionedRefractorNodes = getPositionedRefractorNodes(block);
+    const lastBlockLength = skipLast ? positionedRefractorNodes.length - 1 : positionedRefractorNodes.length;
+    for (let ii = 0; ii < lastBlockLength; ii++) {
+      const positionedRefractorNode = positionedRefractorNodes[ii];
+      const decoration = Decoration.inline(positionedRefractorNode.from, positionedRefractorNode.to, {
+        class: positionedRefractorNode.classes.join(' '),
+      });
+      decorations.push(decoration);
+    }
+  });
+
+  return decorations;
 };
 
 interface PosWithinRangeParams extends PosParams, FromToParams {}
@@ -157,6 +157,12 @@ export const getNodeInformationFromState = (state: EditorState): NodeInformation
 };
 
 /**
+ * Check that the attributes exist and are valid for the codeBlock updateAttrs.
+ */
+export const isValidCodeBlockAttrs = (attrs?: Attrs): attrs is CodeBlockAttrs =>
+  bool(attrs && isObject(attrs) && isString(attrs.language) && attrs.language.length);
+
+/**
  * Updates the node attrs.
  *
  * This is used to update the language for the codeBlock.
@@ -169,7 +175,7 @@ export const updateNodeAttrs = (type: NodeType) => (attrs: CodeBlockAttrs): Comm
     throw new Error('Invalid attrs passed to the updateAttrs method');
   }
 
-  const parent = findParentNodeOfType({ types: type, selection })!;
+  const parent = findParentNodeOfType({ types: type, selection });
 
   if (!parent || isEqual(attrs, parent.node.attrs)) {
     // Do nothing since the attrs are the same
@@ -184,6 +190,50 @@ export const updateNodeAttrs = (type: NodeType) => (attrs: CodeBlockAttrs): Comm
 
   return true;
 };
+
+const PRELOADED_LANGUAGES = [markup, clike, css, js];
+
+/**
+ * The list of strings that are recognised language names based on the the configured
+ * supported languages.
+ */
+export const getLanguageNamesAndAliases = (supportedLanguages: RefractorSyntax[]) => {
+  return uniqueArray(
+    flattenArray(
+      [...PRELOADED_LANGUAGES, ...supportedLanguages].map(({ name, aliases }) => [name, ...aliases]),
+    ),
+  );
+};
+
+/**
+ * Returns true if the language is supported.
+ */
+export const isSupportedLanguage = (language: string, supportedLanguages: RefractorSyntax[]) => {
+  return getLanguageNamesAndAliases(supportedLanguages).includes(language);
+};
+
+interface GetLanguageParams {
+  /**
+   * The language input from the user;
+   */
+  language: string;
+
+  /**
+   * The languages supported by the editor.
+   */
+  supportedLanguages: RefractorSyntax[];
+
+  /**
+   * The default language to use if none found.
+   */
+  fallback: string;
+}
+
+/**
+ * Get the language from user input.
+ */
+export const getLanguage = ({ language, supportedLanguages, fallback }: GetLanguageParams) =>
+  !isSupportedLanguage(language, supportedLanguages) ? fallback : language;
 
 interface FormatCodeBlockFactoryParams
   extends NodeTypeParams,
@@ -259,19 +309,11 @@ export const formatCodeBlockFactory = ({
 };
 
 /**
- * Check that the attributes exist and are valid for the codeBlock updateAttrs.
- */
-export const isValidCodeBlockAttrs = (attrs?: Attrs): attrs is CodeBlockAttrs =>
-  bool(attrs && isObject(attrs) && isString(attrs.language) && attrs.language.length);
-
-const AUTO_LOADED_LANGUAGES = [markup, clike, css, js];
-
-/**
  * Retrieve the supported language names based on configuration.
  */
 export const getSupportedLanguagesMap = (supportedLanguages: RefractorSyntax[]) => {
   const obj: Record<string, string> = {};
-  for (const { name, aliases } of [...AUTO_LOADED_LANGUAGES, ...supportedLanguages]) {
+  for (const { name, aliases } of [...PRELOADED_LANGUAGES, ...supportedLanguages]) {
     obj[name] = name;
     aliases.forEach(alias => {
       obj[alias] = name;
@@ -279,45 +321,3 @@ export const getSupportedLanguagesMap = (supportedLanguages: RefractorSyntax[]) 
   }
   return obj;
 };
-
-/**
- * The list of strings that are recognised language names based on the the configured
- * supported languages.
- */
-export const getLanguageNamesAndAliases = (supportedLanguages: RefractorSyntax[]) => {
-  return uniqueArray(
-    flattenArray(
-      [...AUTO_LOADED_LANGUAGES, ...supportedLanguages].map(({ name, aliases }) => [name, ...aliases]),
-    ),
-  );
-};
-
-/**
- * Returns true if the language is supported.
- */
-export const isSupportedLanguage = (language: string, supportedLanguages: RefractorSyntax[]) => {
-  return getLanguageNamesAndAliases(supportedLanguages).includes(language);
-};
-
-interface GetLanguageParams {
-  /**
-   * The language input from the user;
-   */
-  language: string;
-
-  /**
-   * The languages supported by the editor.
-   */
-  supportedLanguages: RefractorSyntax[];
-
-  /**
-   * The default language to use if none found.
-   */
-  fallback: string;
-}
-
-/**
- * Get the language from user input.
- */
-export const getLanguage = ({ language, supportedLanguages, fallback }: GetLanguageParams) =>
-  !isSupportedLanguage(language, supportedLanguages) ? fallback : language;

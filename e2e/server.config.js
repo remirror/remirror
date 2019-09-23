@@ -20,7 +20,7 @@ const allTestRegex = getRegex();
 const servers = (exports.servers = {
   next: {
     server: {
-      command: 'cd examples/with-next && yarn build && yarn start -p 3030',
+      command: 'cd examples/with-next && yarn dev -p 3030',
       port: 3030,
       usedPortAction: 'kill',
       launchTimeout: 120000,
@@ -28,6 +28,7 @@ const servers = (exports.servers = {
     regex: allTestRegex,
     home: 'http://localhost:3030',
   },
+
   storybook: {
     server: {
       command: 'yarn start-storybook -p 3030 -c support/storybook --quiet --ci',
@@ -38,6 +39,7 @@ const servers = (exports.servers = {
     regex: noSSRRegex,
     home: 'http://localhost:3030',
   },
+
   docs: {
     server: {
       command: 'cd docs && yarn start -p 3030',
@@ -48,6 +50,7 @@ const servers = (exports.servers = {
     regex: noSSRRegex,
     home: 'http://localhost:3030',
   },
+
   razzle: {
     server: {
       command: 'cd examples/with-razzle && PORT=3030 yarn start',

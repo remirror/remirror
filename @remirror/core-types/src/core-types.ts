@@ -100,8 +100,8 @@ type DOMOutputSpecPosX = string | 0 | [string, 0] | [string, { [attr: string]: s
  */
 export type DOMOutputSpec =
   | string
-  | [string, 0]
-  | [string, { [attr: string]: string }, 0]
+  | [string, 0?]
+  | [string, { [attr: string]: string }, 0?]
   | [
       string,
       DOMOutputSpecPos1?,

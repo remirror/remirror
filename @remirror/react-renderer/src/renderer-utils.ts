@@ -22,7 +22,6 @@ export const mapProps = (props: PlainObject) => {
     transformedProps[name] = props[key];
 
     if (name === 'contentEditable') {
-      console.log('contentEditable found', name);
       transformedProps.suppressContentEditableWarning = true;
     }
   }

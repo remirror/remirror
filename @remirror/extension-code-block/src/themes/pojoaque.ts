@@ -108,7 +108,8 @@ export default css`
   .token.deleted {
     color: #dc322f;
   }
-  .token.punctuation {
+  .token.punctuation,
+  .token.punctuation.important {
     color: #dccf8f;
   }
   .token.entity {

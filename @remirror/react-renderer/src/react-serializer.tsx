@@ -55,9 +55,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
       let child: ReactNode;
       child = this.serializeNode(node);
       node.marks.reverse().forEach(mark => {
-        if (mark.type.spec.spanning === false) {
-          return;
-        }
+        // TODO test behaviour expectations for `spanning` marks. Currently not HANDLED.
         child = this.serializeMark(mark, node.isInline, child);
       });
 

@@ -11,6 +11,8 @@ import {
   selectionEmpty,
   SelectionParams,
   TextParams,
+  Attrs,
+  isPlainObject,
 } from '@remirror/core';
 import { keydownHandler } from 'prosemirror-keymap';
 import {
@@ -25,6 +27,7 @@ import {
   SuggestionMatchParams,
   SuggestionReasonMap,
   SuggestionStateMatch,
+  MentionExtensionAttrs,
 } from './mention-types';
 
 /**
@@ -504,3 +507,10 @@ export const runWhileFalsy = (methods: Array<() => unknown>) => {
 
   return false;
 };
+
+/**
+ * Check that the attributes exist and are valid for the mention update
+ * command method.
+ */
+export const isValidMentionAttrs = (attrs?: Attrs): attrs is MentionExtensionAttrs =>
+  bool(attrs && isPlainObject(attrs) && attrs.id && attrs.label);

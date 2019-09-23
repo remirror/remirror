@@ -97,7 +97,8 @@ export default css`
   .token.bold {
     font-weight: bold;
   }
-  .token.punctuation {
+  .token.punctuation,
+  .token.punctuation.important {
     color: #bebec5;
   }
   .token.entity {

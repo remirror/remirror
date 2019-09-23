@@ -15,280 +15,8 @@ interface PlainObject {
  * Type cast an argument. If no type is provided it will default to any.
  *
  * @param arg - the arg to typecast
- *
- * @public
- *
  */
 export const Cast = <GType = any>(arg: any): GType => arg;
-
-/**
- * Calls a function if defined and provides compile time type checking for the
- * passed in parameters.
- *
- * @param fn - the function to call if it exists
- * @param args - the rest of the parameters with types
- */
-export const callIfDefined = <GFunc extends AnyFunction>(fn: GFunc | unknown, ...args: Parameters<GFunc>) => {
-  if (isFunction(fn)) {
-    fn(...args);
-  }
-};
-
-/**
- * Finds all the regex matches for a string
- *
- * @param text - the text to check against
- * @param regexp - the regex (which should include a 'g' flag)
- *
- * @public
- */
-export const findMatches = (text: string, regexp: RegExp) => {
-  const results: RegExpExecArray[] = [];
-  const flags = regexp.flags;
-  let match: RegExpExecArray | null;
-
-  if (!flags.includes('g')) {
-    regexp = new RegExp(regexp.source, `g${flags}`);
-  }
-
-  do {
-    match = regexp.exec(text);
-    if (match) {
-      results.push(match);
-    }
-  } while (match);
-
-  regexp.lastIndex = 0;
-  return results;
-};
-
-/**
- * A utility function to check whether the current browser is running on the
- * android platform.
- * @public
- */
-export const isAndroidOS = () => {
-  const ua = navigator.userAgent;
-  const match = RegExp('\\b' + 'Android' + '(?:/[\\d.]+|[ \\w.]*)', 'i').exec(ua);
-  if (!match) {
-    return false;
-  }
-  return cleanupOS(match[0], 'Android', 'Android').includes('Android');
-};
-
-/**
- * A utility function to clean up the Operating System name.
- *
- * @param os - the OS name to clean up.
- * @param pattern - a `RegExp` pattern matching the OS name.
- * @param label - a label for the OS.
- * @returns a cleaned up Operating System name
- *
- * @public
- */
-export const cleanupOS = (os: string, pattern?: string, label?: string) => {
-  if (pattern && label) {
-    os = os.replace(RegExp(pattern, 'i'), label);
-  }
-
-  const val = format(
-    os
-      .replace(/ ce$/i, ' CE')
-      .replace(/\bhpw/i, 'web')
-      .replace(/\bMacintosh\b/, 'Mac OS')
-      .replace(/_PowerPC\b/i, ' OS')
-      .replace(/\b(OS X) [^ \d]+/i, '$1')
-      .replace(/\bMac (OS X)\b/, '$1')
-      .replace(/\/(\d)/, ' $1')
-      .replace(/_/g, '.')
-      .replace(/(?: BePC|[ .]*fc[ \d.]+)$/i, '')
-      .replace(/\bx86\.64\b/gi, 'x86_64')
-      .replace(/\b(Windows Phone) OS\b/, '$1')
-      .replace(/\b(Chrome OS \w+) [\d.]+\b/, '$1')
-      .split(' on ')[0],
-  );
-
-  return val;
-};
-
-/**
- * Trim and conditionally capitalize string values.
- *
- * @param str - the string to format.
- *
- * @public
- */
-export const format = (str: string) => {
-  str = trim(str);
-  return /^(?:webOS|i(?:OS|P))/.test(str) ? str : capitalize(str);
-};
-
-/**
- * Capitalizes a string value.
- *
- * @param str - the string to capitalize.
- * @public
- */
-export const capitalize = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
-
-/**
- * Removes leading and trailing whitespace from a string.
- *
- * @param str - the string to trim
- *
- * @public
- */
-export const trim = (str: string) => {
-  return str.replace(/^ +| +$/g, '');
-};
-
-/**
- * Generate a random integer between min and max. If only one parameter is
- * provided minimum is set to 0.
- *
- * @param min - the minimum value
- * @param max - the maximum value
- *
- * @public
- */
-export const randomInt = (min: number, max?: number) => Math.floor(randomFloat(min, max));
-
-/**
- * Generate a random float between min and max. If only one parameter is
- * provided minimum is set to 0.
- *
- * @param min - the minimum value
- * @param max - the maximum value
- *
- * @public
- */
-export const randomFloat = (min: number, max?: number) => {
-  if (!max) {
-    max = min;
-    min = 0.0;
-  }
-  return Math.random() * (max - min + 1) + min;
-};
-
-/**
- * Converts a string, including strings in camelCase or snake_case, into Start
- * Case (a variant of Title Case where all words start with a capital letter),
- * it keeps original single quote and hyphen in the word.
- *
- *   'management_companies' to 'Management Companies' 'managementCompanies' to
- *   'Management Companies' `hell's kitchen` to `Hell's Kitchen` `co-op` to
- *   `Co-op`
- *
- * @param str - the string to examine
- */
-export const startCase = (str: string) => {
-  return str
-    .replace(/_/g, ' ')
-    .replace(/([a-z])([A-Z])/g, (_, $1, $2) => $1 + ' ' + $2)
-    .replace(/(\s|^)(\w)/g, (_, $1, $2) => $1 + $2.toUpperCase());
-};
-
-const wordSeparators = /[\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]+/;
-const capitals = /[A-Z\u00C0-\u00D6\u00D9-\u00DD]/g;
-
-/**
- * Returns the kebab cased form of a string.
- *
- * Taken from
- * https://github.com/angus-c/just/blob/master/packages/string-kebab-case/index.js
- * kebabCase('the quick brown fox'); // 'the-quick-brown-fox'
- * kebabCase('the-quick-brown-fox'); // 'the-quick-brown-fox'
- * kebabCase('the_quick_brown_fox'); // 'the-quick-brown-fox'
- * kebabCase('theQuickBrownFox'); // 'the-quick-brown-fox'
- * kebabCase('theQuickBrown Fox'); // 'the-quick-brown-fox'
- * kebabCase('thequickbrownfox'); // 'thequickbrownfox' kebabCase('the - quick *
- * brown# fox'); // 'the-quick-brown-fox' kebabCase('theQUICKBrownFox'); //
- * 'the-q-u-i-c-k-brown-fox'
- */
-export const kebabCase = (str: string) => {
-  // replace capitals with space + lower case equivalent for later parsing
-  return str
-    .replace(capitals, match => {
-      return ' ' + (match.toLowerCase() || match);
-    })
-    .trim()
-    .split(wordSeparators)
-    .join('-');
-};
-
-/**
- * This is required since it is not exported from `fastMemomize`
- *
- * @internalRemarks
- * TODO create a pull request to fix this.
- */
-export interface Memoize extends MemoizeFunc {
-  strategies: {
-    variadic: MemoizeFunc;
-    monadic: MemoizeFunc;
-  };
-}
-
-/**
- * Alias for caching function calls
- */
-export const memoize: Memoize = fastMemoize;
-
-interface UniqueIdParams {
-  /**
-   * The prefix for the unique id
-   *
-   * @defaultValue ''
-   */
-  prefix?: string;
-
-  /**
-   * The length of the generated ID for the unique id
-   *
-   * @defaultValue 21
-   */
-  size?: number;
-}
-
-/**
- * Generate a unique id
- *
- * @param params - the destructured params
- * @returns a unique string of specified length
- *
- * @public
- */
-export const uniqueId = ({ prefix = '', size }: UniqueIdParams = { prefix: '' }) => {
-  return `${prefix}${nano(size)}`;
-};
-
-/**
- * Takes a number of elements from the provided array starting from the
- * zero-index
- *
- * @param arr - the array to take from
- * @param num - the number of items to take
- *
- * @public
- */
-export const take = <GArray extends any[]>(arr: GArray, num: number) => {
-  num = Math.max(Math.min(0, num), num);
-  return arr.slice(0, num);
-};
-
-/**
- * Alias for picking properties from an object
- */
-export const pick = objectPick;
-
-/**
- * Alias for excluding properties from an object
- */
-export const omit = objectOmit;
-
-export const omitUndefined = (object: PlainObject) => omit(object, value => !isUndefined(value));
 
 /**
  * Shorthand for casting a value to it's boolean equivalent.
@@ -355,13 +83,6 @@ const isObjectOfType = <GType>(type: TypeName) => (value: unknown): value is GTy
  */
 export const isDirectInstanceOf = <T>(instance: unknown, Constructor: AnyConstructor<T>): instance is T =>
   Object.getPrototypeOf(instance) === Constructor.prototype;
-
-/**
- * A shorthand method for creating instance of checks.
- */
-export const isInstanceOf = <GConstructor extends AnyConstructor>(Constructor: GConstructor) => (
-  value: unknown,
-): value is InstanceType<GConstructor> => isObject(value) && value instanceof Constructor;
 
 /**
  * Predicate check that value is undefined
@@ -495,6 +216,13 @@ export const isObject = (value: unknown): value is object =>
   !isNullOrUndefined(value) && (isFunction(value) || isOfType('object')(value));
 
 /**
+ * A shorthand method for creating instance of checks.
+ */
+export const isInstanceOf = <GConstructor extends AnyConstructor>(Constructor: GConstructor) => (
+  value: unknown,
+): value is InstanceType<GConstructor> => isObject(value) && value instanceof Constructor;
+
+/**
  * Predicate check that value is a native promise
  *
  * @param value - the value to check
@@ -585,6 +313,11 @@ export const isEmptyObject = (value: unknown): value is { [key: string]: never }
   isObject(value) && !isMap(value) && !isSet(value) && Object.keys(value).length === 0;
 
 /**
+ * Alias the isArray method.
+ */
+export const isArray = Array.isArray;
+
+/**
  * Predicate check that value is an empty array
  *
  * @param value - the value to check
@@ -594,9 +327,273 @@ export const isEmptyObject = (value: unknown): value is { [key: string]: never }
 export const isEmptyArray = (value: unknown): value is never[] => isArray(value) && value.length === 0;
 
 /**
- * Alias the isArray method.
+ * Capitalizes a string value.
+ *
+ * @param str - the string to capitalize.
+ * @public
  */
-export const isArray = Array.isArray;
+export const capitalize = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+/**
+ * Removes leading and trailing whitespace from a string.
+ *
+ * @param str - the string to trim
+ *
+ * @public
+ */
+export const trim = (str: string) => {
+  return str.replace(/^ +| +$/g, '');
+};
+
+/**
+ * Trim and conditionally capitalize string values.
+ *
+ * @param str - the string to format.
+ *
+ * @public
+ */
+export const format = (str: string) => {
+  str = trim(str);
+  return /^(?:webOS|i(?:OS|P))/.test(str) ? str : capitalize(str);
+};
+
+/**
+ * Calls a function if defined and provides compile time type checking for the
+ * passed in parameters.
+ *
+ * @param fn - the function to call if it exists
+ * @param args - the rest of the parameters with types
+ */
+export const callIfDefined = <GFunc extends AnyFunction>(fn: GFunc | unknown, ...args: Parameters<GFunc>) => {
+  if (isFunction(fn)) {
+    fn(...args);
+  }
+};
+
+/**
+ * Finds all the regex matches for a string
+ *
+ * @param text - the text to check against
+ * @param regexp - the regex (which should include a 'g' flag)
+ *
+ * @public
+ */
+export const findMatches = (text: string, regexp: RegExp) => {
+  const results: RegExpExecArray[] = [];
+  const flags = regexp.flags;
+  let match: RegExpExecArray | null;
+
+  if (!flags.includes('g')) {
+    regexp = new RegExp(regexp.source, `g${flags}`);
+  }
+
+  do {
+    match = regexp.exec(text);
+    if (match) {
+      results.push(match);
+    }
+  } while (match);
+
+  regexp.lastIndex = 0;
+  return results;
+};
+
+/**
+ * A utility function to clean up the Operating System name.
+ *
+ * @param os - the OS name to clean up.
+ * @param pattern - a `RegExp` pattern matching the OS name.
+ * @param label - a label for the OS.
+ * @returns a cleaned up Operating System name
+ *
+ * @public
+ */
+export const cleanupOS = (os: string, pattern?: string, label?: string) => {
+  if (pattern && label) {
+    os = os.replace(RegExp(pattern, 'i'), label);
+  }
+
+  const val = format(
+    os
+      .replace(/ ce$/i, ' CE')
+      .replace(/\bhpw/i, 'web')
+      .replace(/\bMacintosh\b/, 'Mac OS')
+      .replace(/_PowerPC\b/i, ' OS')
+      .replace(/\b(OS X) [^ \d]+/i, '$1')
+      .replace(/\bMac (OS X)\b/, '$1')
+      .replace(/\/(\d)/, ' $1')
+      .replace(/_/g, '.')
+      .replace(/(?: BePC|[ .]*fc[ \d.]+)$/i, '')
+      .replace(/\bx86\.64\b/gi, 'x86_64')
+      .replace(/\b(Windows Phone) OS\b/, '$1')
+      .replace(/\b(Chrome OS \w+) [\d.]+\b/, '$1')
+      .split(' on ')[0],
+  );
+
+  return val;
+};
+
+/**
+ * A utility function to check whether the current browser is running on the
+ * android platform.
+ * @public
+ */
+export const isAndroidOS = () => {
+  const ua = navigator.userAgent;
+  const match = RegExp('\\b' + 'Android' + '(?:/[\\d.]+|[ \\w.]*)', 'i').exec(ua);
+  if (!match) {
+    return false;
+  }
+  return cleanupOS(match[0], 'Android', 'Android').includes('Android');
+};
+
+/**
+ * Generate a random float between min and max. If only one parameter is
+ * provided minimum is set to 0.
+ *
+ * @param min - the minimum value
+ * @param max - the maximum value
+ *
+ * @public
+ */
+export const randomFloat = (min: number, max?: number) => {
+  if (!max) {
+    max = min;
+    min = 0.0;
+  }
+  return Math.random() * (max - min + 1) + min;
+};
+
+/**
+ * Generate a random integer between min and max. If only one parameter is
+ * provided minimum is set to 0.
+ *
+ * @param min - the minimum value
+ * @param max - the maximum value
+ *
+ * @public
+ */
+export const randomInt = (min: number, max?: number) => Math.floor(randomFloat(min, max));
+
+/**
+ * Converts a string, including strings in camelCase or snake_case, into Start
+ * Case (a variant of Title Case where all words start with a capital letter),
+ * it keeps original single quote and hyphen in the word.
+ *
+ *   'management_companies' to 'Management Companies' 'managementCompanies' to
+ *   'Management Companies' `hell's kitchen` to `Hell's Kitchen` `co-op` to
+ *   `Co-op`
+ *
+ * @param str - the string to examine
+ */
+export const startCase = (str: string) => {
+  return str
+    .replace(/_/g, ' ')
+    .replace(/([a-z])([A-Z])/g, (_, $1, $2) => $1 + ' ' + $2)
+    .replace(/(\s|^)(\w)/g, (_, $1, $2) => $1 + $2.toUpperCase());
+};
+
+const wordSeparators = /[\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-./:;<=>?@[\]^_`{|}~]+/;
+const capitals = /[A-Z\u00C0-\u00D6\u00D9-\u00DD]/g;
+
+/**
+ * Returns the kebab cased form of a string.
+ *
+ * Taken from
+ * https://github.com/angus-c/just/blob/master/packages/string-kebab-case/index.js
+ * kebabCase('the quick brown fox'); // 'the-quick-brown-fox'
+ * kebabCase('the-quick-brown-fox'); // 'the-quick-brown-fox'
+ * kebabCase('the_quick_brown_fox'); // 'the-quick-brown-fox'
+ * kebabCase('theQuickBrownFox'); // 'the-quick-brown-fox'
+ * kebabCase('theQuickBrown Fox'); // 'the-quick-brown-fox'
+ * kebabCase('thequickbrownfox'); // 'thequickbrownfox' kebabCase('the - quick *
+ * brown# fox'); // 'the-quick-brown-fox' kebabCase('theQUICKBrownFox'); //
+ * 'the-q-u-i-c-k-brown-fox'
+ */
+export const kebabCase = (str: string) => {
+  // replace capitals with space + lower case equivalent for later parsing
+  return str
+    .replace(capitals, match => {
+      return ' ' + (match.toLowerCase() || match);
+    })
+    .trim()
+    .split(wordSeparators)
+    .join('-');
+};
+
+/**
+ * This is required since it is not exported from `fastMemomize`
+ *
+ * @internalRemarks
+ * TODO create a pull request to fix this.
+ */
+export interface Memoize extends MemoizeFunc {
+  strategies: {
+    variadic: MemoizeFunc;
+    monadic: MemoizeFunc;
+  };
+}
+
+/**
+ * Alias for caching function calls
+ */
+export const memoize: Memoize = fastMemoize;
+
+interface UniqueIdParams {
+  /**
+   * The prefix for the unique id
+   *
+   * @defaultValue ''
+   */
+  prefix?: string;
+
+  /**
+   * The length of the generated ID for the unique id
+   *
+   * @defaultValue 21
+   */
+  size?: number;
+}
+
+/**
+ * Generate a unique id
+ *
+ * @param params - the destructured params
+ * @returns a unique string of specified length
+ *
+ * @public
+ */
+export const uniqueId = ({ prefix = '', size }: UniqueIdParams = { prefix: '' }) => {
+  return `${prefix}${nano(size)}`;
+};
+
+/**
+ * Takes a number of elements from the provided array starting from the
+ * zero-index
+ *
+ * @param arr - the array to take from
+ * @param num - the number of items to take
+ *
+ * @public
+ */
+export const take = <GArray extends any[]>(arr: GArray, num: number) => {
+  num = Math.max(Math.min(0, num), num);
+  return arr.slice(0, num);
+};
+
+/**
+ * Alias for picking properties from an object
+ */
+export const pick = objectPick;
+
+/**
+ * Alias for excluding properties from an object
+ */
+export const omit = objectOmit;
+
+export const omitUndefined = (object: PlainObject) => omit(object, value => !isUndefined(value));
 
 /**
  * Clones a plain object using object spread notation
@@ -785,7 +782,7 @@ export * from 'throttle-debounce';
  * import { uniqueBy } from '@remirror/core-helpers';
  *
  * const values = uniqueBy([{ id: 'a', value: 'Awesome' }, { id: 'a', value: 'ignored' }], item => item.id);
- * console.log(values) // => [{id: 'a', value: 'Awesome'}]
+ * log(values) // => [{id: 'a', value: 'Awesome'}]
  *
  * const byKey = uniqueBy([{ id: 'a', value: 'Awesome' }, { id: 'a', value: 'ignored' }], 'id')
  * // Same as above

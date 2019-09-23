@@ -52,22 +52,20 @@ jobs:
           - bash: yarn build
             displayName: 'Build project'
 
-          - bash: yarn test:e2e
-            displayName: 'NextJS integration tests'
-            env:
-              REMIRROR_E2E_SERVER: 'next'
+          # - bash: yarn test:e2e
+          #   displayName: 'NextJS integration tests'
+          #   env:
+          #     REMIRROR_E2E_SERVER: 'next'
 
           - bash: yarn test:e2e
             displayName: 'Razzle integration tests'
             env:
               REMIRROR_E2E_SERVER: razzle
-              REMIRROR_E2E_BASIC: 'true'
 
-          - bash: yarn test:e2e
-            displayName: 'Storybook integration tests'
-            env:
-              REMIRROR_E2E_SERVER: storybook
-              EMIRROR_E2E_BASIC: 'true'
+          # - bash: yarn test:e2e
+          #   displayName: 'Storybook integration tests'
+          #   env:
+          #     REMIRROR_E2E_SERVER: storybook
 
           - publish: $(System.DefaultWorkingDirectory)/e2e/__image_snapshots__
             condition: failed()

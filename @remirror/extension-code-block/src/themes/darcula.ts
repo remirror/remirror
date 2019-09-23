@@ -148,12 +148,14 @@ export default css`
     background: #484a4a;
   }
 
-  /*code.language-css .token.punctuation {
+  /*code.language-css .token.punctuation,
+  .token.punctuation.important {
 	color: #cc7832;
 }*/
 
   code.language-css .token.property,
-  code.language-css .token.property + .token.punctuation {
+  code.language-css .token.property + .token.punctuation,
+  .token.punctuation.important {
     color: #a9b7c6;
   }
 

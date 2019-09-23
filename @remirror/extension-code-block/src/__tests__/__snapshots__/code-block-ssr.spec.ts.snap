@@ -1,14 +1,71 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`formatted ssr component 1`] = `
-"<style data-emotion-css=\\"14bh8k1\\">.css-14bh8k1 code[class*='language-'],.css-14bh8k1 pre[class*='language-']{color:#c5c8c6;text-shadow:0 1px rgba(0,0,0,0.3);font-family:Inconsolata,Monaco,Consolas,'Courier New',Courier,monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;}.css-14bh8k1 pre[class*='language-']{padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;}.css-14bh8k1:not(pre) > code[class*='language-'],.css-14bh8k1 pre[class*='language-']{background:#1d1f21;}.css-14bh8k1:not(pre) > code[class*='language-']{padding:0.1em;border-radius:0.3em;}.css-14bh8k1 .token.comment,.css-14bh8k1 .token.prolog,.css-14bh8k1 .token.doctype,.css-14bh8k1 .token.cdata{color:#7c7c7c;}.css-14bh8k1 .token.punctuation{color:#c5c8c6;}.css-14bh8k1 .namespace{opacity:0.7;}.css-14bh8k1 .token.property,.css-14bh8k1 .token.keyword,.css-14bh8k1 .token.tag{color:#96cbfe;}.css-14bh8k1 .token.class-name{color:#ffffb6;-webkit-text-decoration:underline;text-decoration:underline;}.css-14bh8k1 .token.boolean,.css-14bh8k1 .token.constant{color:#99cc99;}.css-14bh8k1 .token.symbol,.css-14bh8k1 .token.deleted{color:#f92672;}.css-14bh8k1 .token.number{color:#ff73fd;}.css-14bh8k1 .token.selector,.css-14bh8k1 .token.attr-name,.css-14bh8k1 .token.string,.css-14bh8k1 .token.char,.css-14bh8k1 .token.builtin,.css-14bh8k1 .token.inserted{color:#a8ff60;}.css-14bh8k1 .token.variable{color:#c6c5fe;}.css-14bh8k1 .token.operator{color:#ededed;}.css-14bh8k1 .token.entity{color:#ffffb6;}.css-14bh8k1 .token.url{color:#96cbfe;}.css-14bh8k1 .language-css .token.string,.css-14bh8k1 .style .token.string{color:#87c38a;}.css-14bh8k1 .token.atrule,.css-14bh8k1 .token.attr-value{color:#f9ee98;}.css-14bh8k1 .token.function{color:#dad085;}.css-14bh8k1 .token.regex{color:#e9c062;}.css-14bh8k1 .token.important{color:#fd971f;}.css-14bh8k1 .token.important,.css-14bh8k1 .token.bold{font-weight:bold;}.css-14bh8k1 .token.italic{font-style:italic;}.css-14bh8k1 .token.entity{cursor:help;}</style><div class=\\"css-14bh8k1\\"><div role=\\"textbox\\" aria-multiline=\\"true\\" aria-label=\\"\\" class=\\"Prosemirror remirror-editor\\" contenteditable=\\"true\\"><pre class=\\"language-markdown\\"><code><span class=\\"token title important\\"><span class=\\"token punctuation\\">#</span> Welcome</span>
-<span class=\\"token bold\\"><span class=\\"token punctuation\\">**</span><span class=\\"token content\\">To the greatest show</span><span class=\\"token punctuation\\">**</span></span>
-
-<span class=\\"token italic\\"><span class=\\"token punctuation\\">_</span><span class=\\"token content\\">Ever created</span><span class=\\"token punctuation\\">_</span></span>.</code></pre></div></div>"
+<style data-emotion-css="12np8yq">
+  .css-12np8yq code[class*='language-'],.css-12np8yq pre[class*='language-']{color:#c5c8c6;text-shadow:0 1px rgba(0,0,0,0.3);font-family:Inconsolata,Monaco,Consolas,'Courier New',Courier,monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;}.css-12np8yq pre[class*='language-']{padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;}.css-12np8yq:not(pre) > code[class*='language-'],.css-12np8yq pre[class*='language-']{background:#1d1f21;}.css-12np8yq:not(pre) > code[class*='language-']{padding:0.1em;border-radius:0.3em;}.css-12np8yq .token.comment,.css-12np8yq .token.prolog,.css-12np8yq .token.doctype,.css-12np8yq .token.cdata{color:#7c7c7c;}.css-12np8yq .token.punctuation,.css-12np8yq .token.punctuation.important{color:#c5c8c6;}.css-12np8yq .namespace{opacity:0.7;}.css-12np8yq .token.property,.css-12np8yq .token.keyword,.css-12np8yq .token.tag{color:#96cbfe;}.css-12np8yq .token.class-name{color:#ffffb6;-webkit-text-decoration:underline;text-decoration:underline;}.css-12np8yq .token.boolean,.css-12np8yq .token.constant{color:#99cc99;}.css-12np8yq .token.symbol,.css-12np8yq .token.deleted{color:#f92672;}.css-12np8yq .token.number{color:#ff73fd;}.css-12np8yq .token.selector,.css-12np8yq .token.attr-name,.css-12np8yq .token.string,.css-12np8yq .token.char,.css-12np8yq .token.builtin,.css-12np8yq .token.inserted{color:#a8ff60;}.css-12np8yq .token.variable{color:#c6c5fe;}.css-12np8yq .token.operator{color:#ededed;}.css-12np8yq .token.entity{color:#ffffb6;}.css-12np8yq .token.url{color:#96cbfe;}.css-12np8yq .language-css .token.string,.css-12np8yq .style .token.string{color:#87c38a;}.css-12np8yq .token.atrule,.css-12np8yq .token.attr-value{color:#f9ee98;}.css-12np8yq .token.function{color:#dad085;}.css-12np8yq .token.regex{color:#e9c062;}.css-12np8yq .token.important{color:#fd971f;}.css-12np8yq .token.important,.css-12np8yq .token.bold{font-weight:bold;}.css-12np8yq .token.italic{font-style:italic;}.css-12np8yq .token.entity{cursor:help;}
+</style>
+<div class="css-12np8yq">
+  <div role="textbox"
+       aria-multiline="true"
+       aria-label
+       class="Prosemirror remirror-editor"
+       contenteditable="true"
+  >
+    <pre class="language-markdown">
+      <code>
+        <span class="token title important">
+          <span class="token punctuation">
+            #
+          </span>
+          Welcome
+        </span>
+        <span class="token bold">
+          <span class="token punctuation">
+            **
+          </span>
+          <span class="token content">
+            To the greatest show
+          </span>
+          <span class="token punctuation">
+            **
+          </span>
+        </span>
+        <span class="token italic">
+          <span class="token punctuation">
+            _
+          </span>
+          <span class="token content">
+            Ever created
+          </span>
+          <span class="token punctuation">
+            _
+          </span>
+        </span>
+        .
+      </code>
+    </pre>
+  </div>
+</div>
 `;
 
 exports[`ssr component 1`] = `
-"<style data-emotion-css=\\"14bh8k1\\">.css-14bh8k1 code[class*='language-'],.css-14bh8k1 pre[class*='language-']{color:#c5c8c6;text-shadow:0 1px rgba(0,0,0,0.3);font-family:Inconsolata,Monaco,Consolas,'Courier New',Courier,monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;}.css-14bh8k1 pre[class*='language-']{padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;}.css-14bh8k1:not(pre) > code[class*='language-'],.css-14bh8k1 pre[class*='language-']{background:#1d1f21;}.css-14bh8k1:not(pre) > code[class*='language-']{padding:0.1em;border-radius:0.3em;}.css-14bh8k1 .token.comment,.css-14bh8k1 .token.prolog,.css-14bh8k1 .token.doctype,.css-14bh8k1 .token.cdata{color:#7c7c7c;}.css-14bh8k1 .token.punctuation{color:#c5c8c6;}.css-14bh8k1 .namespace{opacity:0.7;}.css-14bh8k1 .token.property,.css-14bh8k1 .token.keyword,.css-14bh8k1 .token.tag{color:#96cbfe;}.css-14bh8k1 .token.class-name{color:#ffffb6;-webkit-text-decoration:underline;text-decoration:underline;}.css-14bh8k1 .token.boolean,.css-14bh8k1 .token.constant{color:#99cc99;}.css-14bh8k1 .token.symbol,.css-14bh8k1 .token.deleted{color:#f92672;}.css-14bh8k1 .token.number{color:#ff73fd;}.css-14bh8k1 .token.selector,.css-14bh8k1 .token.attr-name,.css-14bh8k1 .token.string,.css-14bh8k1 .token.char,.css-14bh8k1 .token.builtin,.css-14bh8k1 .token.inserted{color:#a8ff60;}.css-14bh8k1 .token.variable{color:#c6c5fe;}.css-14bh8k1 .token.operator{color:#ededed;}.css-14bh8k1 .token.entity{color:#ffffb6;}.css-14bh8k1 .token.url{color:#96cbfe;}.css-14bh8k1 .language-css .token.string,.css-14bh8k1 .style .token.string{color:#87c38a;}.css-14bh8k1 .token.atrule,.css-14bh8k1 .token.attr-value{color:#f9ee98;}.css-14bh8k1 .token.function{color:#dad085;}.css-14bh8k1 .token.regex{color:#e9c062;}.css-14bh8k1 .token.important{color:#fd971f;}.css-14bh8k1 .token.important,.css-14bh8k1 .token.bold{font-weight:bold;}.css-14bh8k1 .token.italic{font-style:italic;}.css-14bh8k1 .token.entity{cursor:help;}</style><div class=\\"css-14bh8k1\\"><div role=\\"textbox\\" aria-multiline=\\"true\\" aria-label=\\"\\" class=\\"Prosemirror remirror-editor\\" contenteditable=\\"true\\"><pre class=\\"language-markup\\"><code>Simple Code Blocks
+<style data-emotion-css="12np8yq">
+  .css-12np8yq code[class*='language-'],.css-12np8yq pre[class*='language-']{color:#c5c8c6;text-shadow:0 1px rgba(0,0,0,0.3);font-family:Inconsolata,Monaco,Consolas,'Courier New',Courier,monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;}.css-12np8yq pre[class*='language-']{padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;}.css-12np8yq:not(pre) > code[class*='language-'],.css-12np8yq pre[class*='language-']{background:#1d1f21;}.css-12np8yq:not(pre) > code[class*='language-']{padding:0.1em;border-radius:0.3em;}.css-12np8yq .token.comment,.css-12np8yq .token.prolog,.css-12np8yq .token.doctype,.css-12np8yq .token.cdata{color:#7c7c7c;}.css-12np8yq .token.punctuation,.css-12np8yq .token.punctuation.important{color:#c5c8c6;}.css-12np8yq .namespace{opacity:0.7;}.css-12np8yq .token.property,.css-12np8yq .token.keyword,.css-12np8yq .token.tag{color:#96cbfe;}.css-12np8yq .token.class-name{color:#ffffb6;-webkit-text-decoration:underline;text-decoration:underline;}.css-12np8yq .token.boolean,.css-12np8yq .token.constant{color:#99cc99;}.css-12np8yq .token.symbol,.css-12np8yq .token.deleted{color:#f92672;}.css-12np8yq .token.number{color:#ff73fd;}.css-12np8yq .token.selector,.css-12np8yq .token.attr-name,.css-12np8yq .token.string,.css-12np8yq .token.char,.css-12np8yq .token.builtin,.css-12np8yq .token.inserted{color:#a8ff60;}.css-12np8yq .token.variable{color:#c6c5fe;}.css-12np8yq .token.operator{color:#ededed;}.css-12np8yq .token.entity{color:#ffffb6;}.css-12np8yq .token.url{color:#96cbfe;}.css-12np8yq .language-css .token.string,.css-12np8yq .style .token.string{color:#87c38a;}.css-12np8yq .token.atrule,.css-12np8yq .token.attr-value{color:#f9ee98;}.css-12np8yq .token.function{color:#dad085;}.css-12np8yq .token.regex{color:#e9c062;}.css-12np8yq .token.important{color:#fd971f;}.css-12np8yq .token.important,.css-12np8yq .token.bold{font-weight:bold;}.css-12np8yq .token.italic{font-style:italic;}.css-12np8yq .token.entity{cursor:help;}
+</style>
+<div class="css-12np8yq">
+  <div role="textbox"
+       aria-multiline="true"
+       aria-label
+       class="Prosemirror remirror-editor"
+       contenteditable="true"
+  >
+    <pre class="language-markup">
+      <code>
+        Simple Code Blocks
 echo &quot;fun times&quot;
-Use Shift-Enter or Mod-Enter to hard break out of the code block</code></pre></div></div>"
+Use Shift-Enter or Mod-Enter to hard break out of the code block
+      </code>
+    </pre>
+  </div>
+</div>
 `;

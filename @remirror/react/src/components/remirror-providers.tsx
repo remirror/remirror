@@ -90,7 +90,6 @@ export const RemirrorProvider = <GExtension extends AnyExtension = any>({
   return (
     <Remirror {...props}>
       {value => {
-        // console.log('value has changed', value);
         return (
           <RemirrorContextProvider value={value} childAsRoot={childAsRoot}>
             {oneChildOnly(children)}

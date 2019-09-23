@@ -1,6 +1,7 @@
 import { DropdownItem } from '@remirror/ui-dropdown';
 import { ImagesRegularIcon } from '@remirror/ui-icons/lib/editor/images-regular-icon';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import React from 'react';
 import useState from 'react-use/lib/useSetState';
 import { Menubar } from '..';
@@ -16,10 +17,6 @@ const MenuComponent = () => {
 
   const onSelectBlockTypeItem = (item: DropdownItem[]) => {
     setActiveBlockType(item[0]);
-  };
-
-  const onClickImageIcon = () => {
-    console.log('image icon clicked');
   };
 
   const content: MenubarContent[] = [
@@ -39,7 +36,7 @@ const MenuComponent = () => {
           type: 'button',
           RightIconComponent: ImagesRegularIcon,
           rightIconProps: { backgroundColor: 'transparent' },
-          onClick: onClickImageIcon,
+          onClick: action('clicked image icon'),
         },
       ],
     },

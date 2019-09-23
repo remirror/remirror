@@ -5,34 +5,34 @@ import React, { FC, forwardRef } from 'react';
 import { ButtonProps } from '../wysiwyg-types';
 
 export const Menu = forwardRef<HTMLDivElement, JSX.IntrinsicElements['div']>((props, ref) => {
-  const { css } = useRemirrorTheme();
+  const { sx } = useRemirrorTheme();
 
   return (
     <div
       {...props}
       ref={ref}
-      css={css`
-        & > button {
-          display: inline-block;
-        }
-      `}
+      css={sx({
+        '& > button': {
+          display: 'inline-block',
+        },
+      })}
     />
   );
 });
 
 export const Toolbar: FC = props => {
-  const { css } = useRemirrorTheme();
+  const { sx } = useRemirrorTheme();
 
   return (
     <Menu
       {...props}
-      css={css`
-        position: relative;
-        padding: 1px 28px 17px;
-        margin: 0 -20px;
-        border-bottom: 2px solid #eee;
-        margin-bottom: 20px;
-      `}
+      css={sx({
+        position: 'relative',
+        padding: '1px 28px 17px',
+        margin: '0 -20px',
+        borderBottom: '2px solid #eee',
+        marginBottom: '20px',
+      })}
     />
   );
 };
@@ -69,18 +69,9 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>((props,
  * Allows positioners to work.
  */
 export const EditorWrapper = forwardRef<HTMLDivElement, JSX.IntrinsicElements['div']>((props, ref) => {
-  const { css } = useRemirrorTheme();
+  const { sx } = useRemirrorTheme();
 
-  return (
-    <div
-      {...props}
-      ref={ref}
-      css={css`
-        /* border: 1px solid grey; */
-        position: relative;
-      `}
-    />
-  );
+  return <div {...props} ref={ref} css={sx({ position: 'relative' })} />;
 });
 
 type BubbleMenuTooltipProps = { bottom: number; left: number } & JSX.IntrinsicElements['span'];
@@ -99,17 +90,6 @@ export const BubbleMenuTooltip = forwardRef<HTMLSpanElement, BubbleMenuTooltipPr
         left: ${props.left}px;
         padding-bottom: 9px;
         transform: translateX(-50%);
-
-        &::after {
-          content: '';
-          position: absolute;
-          border-left: 9px solid transparent;
-          border-right: 9px solid transparent;
-          border-top: 9px solid black;
-          bottom: 0;
-          left: 50%;
-          transform: translateX(-50%);
-        }
       `}
     />
   );

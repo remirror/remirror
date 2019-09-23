@@ -43,11 +43,13 @@ export const wysiwygEditorTheme: RemirrorTheme = {
         pointerEvents: 'none',
         cursor: 'default',
       },
-      [`${EDITOR_CLASS_SELECTOR}:focus`]: {},
+      [`${EDITOR_CLASS_SELECTOR}:focus`]: {
+        outline: 'none',
+      },
       [EDITOR_CLASS_SELECTOR]: {
         boxSizing: 'border-box',
         position: 'relative',
-        lineHeight: '1.6em',
+        lineHeight: 'relaxed',
         width: '100%',
         fontSize: 2,
         minHeight: '142px',
