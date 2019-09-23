@@ -24,7 +24,7 @@ const EXCLUDE_PROD = [
 ];
 
 const configs = {
-  sizeLimit: 'support/.size-limit.json',
+  sizeLimit: '.size-limit.json',
   rollup: 'support/rollup/config.json',
   tsconfig: 'support/tsconfig.paths.json',
   storybook: 'support/storybook/modules.json',
@@ -45,7 +45,7 @@ const generateSizeLimitConfig = async () => {
     }));
   const path = baseDir(configs.sizeLimit);
 
-  await writeJSON(path, { ...AUTO_GENERATED_FLAG, sizes });
+  await writeJSON(path, sizes);
   filesToPrettify.push(path);
 };
 
@@ -115,7 +115,6 @@ const generateStorybookResolverConfig = async () => {
 
 const API_EXTRACTOR_FILENAME = 'api-extractor.json';
 const API_EXTRACTOR_CONFIG = {
-  // ...AUTO_GENERATED_FLAG, // Breaks when added
   $schema:
     'https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json',
   extends: join('../../support', API_EXTRACTOR_FILENAME),

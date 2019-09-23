@@ -32,7 +32,7 @@ jobs:
           vmImage: ${{ parameters.vmImage }}
         steps:
           - template: pipeline-yarn-install.yml
-          - bash: yarn build
+          - bash: yarn build:rollup
             displayName: 'Build project'
           - bash: yarn size
             displayName: 'Check size limits'
