@@ -14,13 +14,13 @@
   ],
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.6.0",
+    "@babel/runtime": "^7.6.2",
     "@remirror/core": "0.5.0",
     "@remirror/core-extensions": "0.5.0",
     "@remirror/react-portals": "0.5.0",
     "@remirror/ui": "0.5.0",
     "@types/lolex": "^3.1.1",
-    "@types/prosemirror-view": "^1.9.0",
+    "@types/prosemirror-view": "^1.11.0",
     "lolex": "^4.2.0",
     "min-document": "^2.19.0",
     "prosemirror-view": "^1.11.3"

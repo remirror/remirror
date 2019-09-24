@@ -121,10 +121,6 @@ dependencies/**/yarn.lock
 
 .config.json
 
-# Lerna changelog
-.changelog
-
-
 key.json
 db.json
 secret.json
@@ -136,8 +132,5 @@ secret.json
 storybook-static
 
 docs/public/**
-
-tsconfig.tsbuildinfo
-tsconfig.prod.tsbuildinfo
-
+*.tsbuildinfo
 e2e/__failed-diffs__

@@ -20,13 +20,13 @@
     "src"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.6.0",
+    "@babel/runtime": "^7.6.2",
     "@emotion/core": "^10",
     "@remirror/core-helpers": "0.5.0",
     "@types/jsesc": "0.4.29",
-    "@types/node": "^12.7.5",
+    "@types/node": "^12.7.7",
     "@types/parcel-bundler": "^1.12.0",
-    "@types/react": "^16.9.2",
+    "@types/react": "^16.9.3",
     "@types/rimraf": "^2.0.2",
     "@types/yargs": "^13.0.0",
     "figures": "^3.0.0",
@@ -35,7 +35,7 @@
     "jsesc": "^2.5.2",
     "parcel-bundler": "^1.12.3",
     "react": "^16.8.0",
-    "react-use": "12.2.0",
+    "react-use": "12.2.1",
     "rimraf": "^3.0.0",
     "yargs": "^14.0.0"
   },

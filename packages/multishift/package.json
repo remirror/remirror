@@ -15,7 +15,7 @@
   ],
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.6.0",
+    "@babel/runtime": "^7.6.2",
     "@reach/auto-id": "^0.2.0",
     "@remirror/core-helpers": "0.5.0",
     "@remirror/core-types": "0.5.0",
