@@ -1,0 +1,37 @@
+image:
+  file: support/docker/gitpod.Dockerfile
+
+ports:
+  - port: 3030
+    onOpen: ignore
+  - port: 6006
+    onOpen: open-preview
+  - port: 8000
+  - port: 3000
+  - port: 3001
+tasks:
+  - init: yarn install && yarn build
+    command: yarn storybook
+
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint@1.9.2:uu6wGB6V2hYJjLg9hnDAAg==
+
+github:
+  prebuilds:
+    # enable for the master/default branch (defaults to true)
+    master: true
+    # enable for all branches in this repo (defaults to false)
+    branches: true
+    # enable for pull requests coming from this repo (defaults to true)
+    pullRequests: true
+    # enable for pull requests coming from forks (defaults to false)
+    pullRequestsFromForks: true
+    # add a check to pull requests (defaults to true)
+    addCheck: true
+    # add a "Review in Gitpod" button as a comment to pull requests (defaults to false)
+    addComment: true
+    # add a "Review in Gitpod" button to the pull request's description (defaults to false)
+    addBadge: false
+    # add a label once the prebuild is ready to pull requests (defaults to false)
+    addLabel: false
