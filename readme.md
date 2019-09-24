@@ -1,7 +1,7 @@
 <div align="center">
 	<br />
 	<div align="center">
-		<img width="300" height="300" src="support/assets/logo.svg" alt="remirror" />
+		<img width="300" height="300" src="https://rawcdn.githack.com/ifiokjr/remirror/f94e6c63e555f65ad5f3f13a3f343204cdc92dff/support/assets/logo.svg?sanitize=true" alt="remirror" />
 	</div>
     <br />
     <br />
@@ -81,6 +81,8 @@ yarn stop:checks
 ### Contributing
 
 Please read [contributing.md](docs/pages/contributing.md) for details on our code of conduct, and the process for submitting pull requests.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ifiokjr/remirror)
 
 ### Versioning
 
