@@ -2,12 +2,17 @@ jobs:
   - template: pipeline-jobs.yml
     parameters:
       name: Linux
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-latest'
 
   - template: pipeline-jobs.yml
     parameters:
       name: macOS
-      vmImage: 'macOS-10.14'
+      vmImage: 'macOS-latest'
+
+  - template: pipeline-jobs.yml
+    parameters:
+      name: Windows
+      vmImage: 'windows-latest'
 
 # Cron jobs for scheduling builds
 schedules:

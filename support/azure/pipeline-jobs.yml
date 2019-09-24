@@ -37,39 +37,28 @@ jobs:
           - bash: yarn size
             displayName: 'Check size limits'
 
-  - ${{ if eq(parameters.name, 'macOS') }}:
-      - job: ${{ parameters.name }}ChromeIntegrationTests
-        pool:
-          vmImage: ${{ parameters.vmImage }}
-        steps:
-          - checkout: self
-            lfs: true
-          - ${{ if eq(parameters.name, 'Linux') }}:
-              - bash: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-                displayName: 'Increase file watch limit for Linux only'
-          - template: pipeline-yarn-install.yml
+  - job: ${{ parameters.name }}ChromeIntegrationTests
+    pool:
+      vmImage: ${{ parameters.vmImage }}
+    steps:
+      - checkout: self
+        lfs: true
+      - ${{ if eq(parameters.name, 'Linux') }}:
+          - bash: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+            displayName: 'Increase file watch limit for Linux only'
+      - template: pipeline-yarn-install.yml
 
-          - bash: yarn build
-            displayName: 'Build project'
+      - bash: yarn build
+        displayName: 'Build project'
 
-          # - bash: yarn test:e2e
-          #   displayName: 'NextJS integration tests'
-          #   env:
-          #     REMIRROR_E2E_SERVER: 'next'
+      - bash: yarn test:e2e
+        displayName: 'Razzle integration tests'
+        env:
+          REMIRROR_E2E_SERVER: razzle
 
-          - bash: yarn test:e2e
-            displayName: 'Razzle integration tests'
-            env:
-              REMIRROR_E2E_SERVER: razzle
-
-          # - bash: yarn test:e2e
-          #   displayName: 'Storybook integration tests'
-          #   env:
-          #     REMIRROR_E2E_SERVER: storybook
-
-          - publish: $(System.DefaultWorkingDirectory)/e2e/__failed-diffs__
-            condition: failed()
-            artifact: ImageSnapshots
+      - publish: $(System.DefaultWorkingDirectory)/e2e/__failed-diffs__
+        condition: failed()
+        artifact: ImageSnapshots
 
   - ${{ if eq(parameters.name, 'Linux') }}:
       - job: ${{ parameters.name }}PublishCIBuildToNpm
