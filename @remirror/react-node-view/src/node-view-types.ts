@@ -33,7 +33,7 @@ export interface NodeViewComponentProps<
 /**
  * Retrieve the position of the current nodeView
  */
-export type GetPosition = () => number;
+export type GetPosition = (() => number) | boolean;
 
 export interface ReactNodeViewParams<
   GOptions extends BaseExtensionOptions = BaseExtensionOptions,

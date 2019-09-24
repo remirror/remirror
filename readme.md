@@ -21,6 +21,7 @@
 <a href="https://github.com/ifiokjr/remirror/tags"><img src="https://img.shields.io/github/tag-date/ifiokjr/remirror.svg?amp;logo=github" alt="GitHub tag (latest SemVer)" /></a>
 <a href="https://github.com/ifiokjr/remirror/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/remirror.svg" alt="LICENSE" /></a>
 <a href="https://app.netlify.com/sites/remirror/deploys"><img src="https://api.netlify.com/api/v1/badges/f59cbf02-798f-45dd-a78c-93ec52b08d20/deploy-status" alt="Netlify Status" /></a>
+<a href="https://spectrum.chat/remirror"><img alt="Join the community on Spectrum" src="https://withspectrum.github.io/badge/badge.svg" /></a>
 
 </p>
 

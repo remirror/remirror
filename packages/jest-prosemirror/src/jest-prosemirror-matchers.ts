@@ -1,15 +1,11 @@
-import { bool, Cast, CommandFunction, ProsemirrorNode } from '@remirror/core';
+import { bool, CommandFunction, ProsemirrorNode as _ProsemirrorNode } from '@remirror/core';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { apply } from './jest-prosemirror-editor';
 import { transformsNodeFailMessage, transformsNodePassMessage } from './jest-prosemirror-messages';
 import { CommandTransformation } from './jest-prosemirror-types';
 
 export const prosemirrorMatchers = {
-  toTransformNode(
-    this: jest.MatcherUtils,
-    command: CommandFunction,
-    { from, to }: CommandTransformation = Cast({}),
-  ) {
+  toTransformNode(this: jest.MatcherUtils, command: CommandFunction, { from, to }: CommandTransformation) {
     if (typeof command !== 'function') {
       return {
         message: () => `Please specify a valid command`,
@@ -113,7 +109,7 @@ declare global {
        * });
        * ```
        */
-      toEqualProsemirrorNode(params: ProsemirrorNode): R;
+      toEqualProsemirrorNode(params: _ProsemirrorNode): R;
     }
   }
 }

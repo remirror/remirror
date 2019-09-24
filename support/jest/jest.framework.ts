@@ -2,6 +2,7 @@ import 'jest-extended';
 import toDiffableHtml from 'diffable-html';
 import { toMatchDiffSnapshot, getSnapshotDiffSerializer } from 'snapshot-diff';
 import { configureToMatchImageSnapshot } from 'jest-image-snapshot';
+import { prosemirrorSerializer } from 'jest-prosemirror';
 
 expect.addSnapshotSerializer(getSnapshotDiffSerializer());
 expect.extend({ toMatchDiffSnapshot });
@@ -42,3 +43,5 @@ expect.addSnapshotSerializer({
     return toDiffableHtml(val).trim();
   },
 });
+
+expect.addSnapshotSerializer(prosemirrorSerializer);

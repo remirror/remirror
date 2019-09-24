@@ -1,4 +1,0 @@
-{
-  "extends": "./tsconfig.lint.json",
-  "exclude": ["./support/dts-jest/**", "**/dist", "**/lib/"]
-}

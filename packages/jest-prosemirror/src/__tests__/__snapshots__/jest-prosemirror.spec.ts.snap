@@ -1,0 +1,367 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`serializer 1`] = `
+Prosemirror node: {
+  "type": "doc",
+  "content": [
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "text",
+          "text": "simple"
+        }
+      ]
+    }
+  ]
+}
+`;
+
+exports[`serializer 2`] = `
+Prosemirror schema: {
+  "nodes": {
+    "doc": {
+      "content": "block+"
+    },
+    "orderedList": {
+      "attrs": {
+        "order": {
+          "default": 1
+        }
+      },
+      "parseDOM": [
+        {
+          "tag": "ol"
+        }
+      ],
+      "content": "listItem+",
+      "group": "block"
+    },
+    "bulletList": {
+      "parseDOM": [
+        {
+          "tag": "ul"
+        }
+      ],
+      "content": "listItem+",
+      "group": "block"
+    },
+    "listItem": {
+      "parseDOM": [
+        {
+          "tag": "li"
+        }
+      ],
+      "defining": true,
+      "content": "paragraph block*"
+    },
+    "paragraph": {
+      "content": "inline*",
+      "group": "block",
+      "parseDOM": [
+        {
+          "tag": "p"
+        }
+      ]
+    },
+    "text": {
+      "group": "inline"
+    },
+    "horizontalRule": {
+      "group": "block",
+      "parseDOM": [
+        {
+          "tag": "hr"
+        }
+      ]
+    },
+    "atomInline": {
+      "inline": true,
+      "group": "inline",
+      "atom": true,
+      "selectable": true,
+      "parseDOM": [
+        {
+          "tag": "span[data-node-type=\\"atomInline\\"]"
+        }
+      ]
+    },
+    "atomBlock": {
+      "inline": false,
+      "group": "block",
+      "atom": true,
+      "selectable": true,
+      "parseDOM": [
+        {
+          "tag": "div[data-node-type=\\"atomBlock\\"]"
+        }
+      ]
+    },
+    "atomContainer": {
+      "inline": false,
+      "group": "block",
+      "content": "atomBlock+",
+      "parseDOM": [
+        {
+          "tag": "div[data-node-type=\\"atomBlockContainer\\"]"
+        }
+      ]
+    },
+    "containerWithRestrictedContent": {
+      "inline": false,
+      "group": "block",
+      "content": "paragraph+",
+      "parseDOM": [
+        {
+          "tag": "div[data-node-type=\\"containerWithRestrictedContent\\"]"
+        }
+      ]
+    },
+    "table": {
+      "content": "table_row+",
+      "tableRole": "table",
+      "isolating": true,
+      "group": "block",
+      "parseDOM": [
+        {
+          "tag": "table"
+        }
+      ]
+    },
+    "table_row": {
+      "content": "(table_cell | table_header)*",
+      "tableRole": "row",
+      "parseDOM": [
+        {
+          "tag": "tr"
+        }
+      ]
+    },
+    "table_cell": {
+      "content": "block+",
+      "attrs": {
+        "colspan": {
+          "default": 1
+        },
+        "rowspan": {
+          "default": 1
+        },
+        "colwidth": {
+          "default": null
+        },
+        "pretty": {
+          "default": true
+        },
+        "ugly": {
+          "default": false
+        }
+      },
+      "tableRole": "cell",
+      "isolating": true,
+      "parseDOM": [
+        {
+          "tag": "td"
+        }
+      ]
+    },
+    "table_header": {
+      "content": "block+",
+      "attrs": {
+        "colspan": {
+          "default": 1
+        },
+        "rowspan": {
+          "default": 1
+        },
+        "colwidth": {
+          "default": null
+        },
+        "pretty": {
+          "default": true
+        },
+        "ugly": {
+          "default": false
+        }
+      },
+      "tableRole": "header_cell",
+      "isolating": true,
+      "parseDOM": [
+        {
+          "tag": "th"
+        }
+      ]
+    },
+    "blockquote": {
+      "content": "block+",
+      "group": "block",
+      "defining": true,
+      "parseDOM": [
+        {
+          "tag": "blockquote"
+        }
+      ]
+    },
+    "heading": {
+      "attrs": {
+        "level": {
+          "default": 1
+        }
+      },
+      "content": "inline*",
+      "group": "block",
+      "defining": true,
+      "parseDOM": [
+        {
+          "tag": "h1",
+          "attrs": {
+            "level": 1
+          }
+        },
+        {
+          "tag": "h2",
+          "attrs": {
+            "level": 2
+          }
+        },
+        {
+          "tag": "h3",
+          "attrs": {
+            "level": 3
+          }
+        },
+        {
+          "tag": "h4",
+          "attrs": {
+            "level": 4
+          }
+        },
+        {
+          "tag": "h5",
+          "attrs": {
+            "level": 5
+          }
+        },
+        {
+          "tag": "h6",
+          "attrs": {
+            "level": 6
+          }
+        }
+      ]
+    },
+    "code_block": {
+      "content": "text*",
+      "marks": "",
+      "group": "block",
+      "code": true,
+      "defining": true,
+      "parseDOM": [
+        {
+          "tag": "pre",
+          "preserveWhitespace": "full"
+        }
+      ]
+    },
+    "hard_break": {
+      "inline": true,
+      "group": "inline",
+      "selectable": false,
+      "parseDOM": [
+        {
+          "tag": "br"
+        }
+      ]
+    },
+    "image": {
+      "inline": true,
+      "attrs": {
+        "src": {},
+        "alt": {
+          "default": null
+        },
+        "title": {
+          "default": null
+        }
+      },
+      "group": "inline",
+      "draggable": true,
+      "parseDOM": [
+        {
+          "tag": "img[src]"
+        }
+      ]
+    }
+  },
+  "marks": {
+    "link": {
+      "attrs": {
+        "href": {},
+        "title": {
+          "default": null
+        }
+      },
+      "inclusive": false,
+      "parseDOM": [
+        {
+          "tag": "a[href]"
+        }
+      ]
+    },
+    "em": {
+      "parseDOM": [
+        {
+          "tag": "i"
+        },
+        {
+          "tag": "em"
+        },
+        {
+          "style": "font-style=italic"
+        }
+      ]
+    },
+    "strong": {
+      "parseDOM": [
+        {
+          "tag": "strong"
+        },
+        {
+          "tag": "b"
+        },
+        {
+          "style": "font-weight"
+        }
+      ]
+    },
+    "code": {
+      "parseDOM": [
+        {
+          "tag": "code"
+        }
+      ]
+    }
+  }
+}
+`;
+
+exports[`serializer 3`] = `
+Prosemirror doc: {
+  "type": "doc",
+  "content": [
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "type": "text",
+          "text": "simple"
+        }
+      ]
+    }
+  ]
+}
+Prosemirror selection: {
+  "type": "text",
+  "anchor": 1,
+  "head": 7
+}
+`;

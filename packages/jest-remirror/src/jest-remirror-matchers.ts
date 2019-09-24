@@ -1,5 +1,4 @@
 import { EditorState, isEditorState, isProsemirrorNode, ProsemirrorNode } from '@remirror/core';
-import { toMatchSnapshot } from 'jest-snapshot';
 import { TaggedProsemirrorNode } from './jest-remirror-types';
 
 export const remirrorMatchers: jest.ExpectExtendMap = {
@@ -116,55 +115,10 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
       name: 'toEqualRemirrorDocument',
     };
   },
-
-  toMatchRemirrorSnapshot(actual) {
-    const { currentTestName, snapshotState } = this;
-
-    const removeFirstWord = (sentence?: string) =>
-      sentence
-        ? sentence
-            .split(' ')
-            .slice(1)
-            .join(' ')
-        : '';
-
-    // this change is to ensure we are mentioning test file name only once in snapshot file
-    // for integration tests only
-    const newTestName = removeFirstWord(currentTestName);
-
-    // remove ids that may change from the document so snapshots are repeatable
-    const transformedDoc = actual;
-
-    // since the test runner fires off multiple browsers for a single test, map each snapshot to the same one
-    // (otherwise we'll try to create as many snapshots as there are browsers)
-    const oldCounters = (snapshotState as any)._counters;
-    (snapshotState as any)._counters = Object.create(oldCounters, {
-      set: {
-        value: (key: string) => oldCounters.set(key, 1),
-      },
-      get: {
-        value: (key: string) => oldCounters.get(key),
-      },
-    });
-
-    // In `jest-snapshot@22`, passing the optional testName doesn't override test name anymore.
-    // Instead it appends the passed name with original name.
-    const oldTestName = this.currentTestName;
-    this.currentTestName = newTestName;
-
-    const ret = toMatchSnapshot.call(this as any, transformedDoc);
-
-    this.currentTestName = oldTestName;
-    return ret;
-  },
 };
 
 declare global {
   namespace jest {
-    interface MatcherUtils {
-      currentTestName?: string;
-      snapshotState: any;
-    }
     interface Matchers<R> {
       /**
        * Checks that EditorState passed in has this as it's top level parent node.
@@ -175,10 +129,9 @@ declare global {
        */
       toContainRemirrorDocument(builder: TaggedProsemirrorNode): R;
       /**
-       * Checks that the nodes are equal.
+       * Checks that two prosemirror documents are identical.
        */
       toEqualRemirrorDocument(builder: TaggedProsemirrorNode): R;
-      toMatchRemirrorSnapshot(): R;
     }
   }
 }

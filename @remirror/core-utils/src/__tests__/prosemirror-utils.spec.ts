@@ -1,4 +1,4 @@
-import { omit } from '@remirror/core-helpers';
+import { omit, pick } from '@remirror/core-helpers';
 import {
   atomBlock,
   atomContainer,
@@ -15,6 +15,7 @@ import {
   tdEmpty,
   tr as row,
 } from 'jest-prosemirror';
+import { marks, nodes } from 'prosemirror-schema-basic';
 import { NodeSelection, Selection, TextSelection } from 'prosemirror-state';
 import {
   cloneTransaction,
@@ -32,7 +33,9 @@ import {
   removeNodeBefore,
   selectionEmpty,
   transactionChanged,
+  schemaToJSON,
 } from '../prosemirror-utils';
+import { Schema } from 'prosemirror-model';
 
 describe('nodeEqualsType', () => {
   it('matches with a singular nodeType', () => {
@@ -416,4 +419,13 @@ describe('findNodeAt...', () => {
     const { node } = findNodeAtStartOfDoc(pmDoc);
     expect(node).toBe(expectedStart);
   });
+});
+
+test('schemaToJSON', () => {
+  const testSchema = new Schema({
+    nodes: pick(nodes, ['doc', 'paragraph', 'text']),
+    marks: pick(marks, ['em', 'strong']),
+  });
+
+  expect(schemaToJSON(testSchema)).toMatchSnapshot();
 });

@@ -50,7 +50,12 @@ export class ReactNodeView<
   /**
    * Method for retrieving the position of the current nodeView
    */
-  private getPosition: GetPosition;
+  private getPosition = () => 0;
+
+  /**
+   * Only applicable for mark nodeViews. Indicates whether the mark content is inline.
+   */
+  private contentInline = false;
 
   /**
    * A container and event dispatcher which keeps track of all dom elements that
@@ -83,6 +88,7 @@ export class ReactNodeView<
   }: ReactNodeViewParams<GOptions, GAttrs>) {
     this.node = node;
     this.view = view;
+    if ()
     this.getPosition = getPosition;
     this.portalContainer = portalContainer;
     this.Component = Component;

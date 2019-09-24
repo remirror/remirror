@@ -1,4 +1,4 @@
-import { bool } from '@remirror/core-helpers';
+import { bool, keys } from '@remirror/core-helpers';
 import {
   AttrsParams,
   EditorSchema,
@@ -20,6 +20,7 @@ import {
 } from '@remirror/core-types';
 import { Selection as PMSelection } from 'prosemirror-state';
 import { isEditorState, isNodeSelection, isResolvedPos, isSelection, isTextDOMNode } from './dom-utils';
+import { NodeSpec, MarkSpec } from 'prosemirror-model';
 
 /* "Borrowed" from prosemirror-utils in order to avoid requirement of
 `@prosemirror-tables`*/
@@ -421,4 +422,32 @@ export const isNodeActive = ({ state, type, attrs = {} }: IsNodeActiveParams) =>
   }
 
   return parent.node.hasMarkup(type, attrs);
+};
+
+/**
+ * Converts a schema to a simple json compatible object.
+ */
+export const schemaToJSON = <GNodes extends string = string, GMarks extends string = string>(
+  schema: EditorSchema<GNodes, GMarks>,
+) => {
+  const nodes = keys(schema.nodes).reduce(
+    (acc, key) => {
+      const { spec } = schema.nodes[key];
+      return { ...acc, [key]: spec };
+    },
+    {} as Record<GNodes, NodeSpec>,
+  );
+
+  const marks = keys(schema.marks).reduce(
+    (acc, key) => {
+      const { spec } = schema.marks[key];
+      return { ...acc, [key]: spec };
+    },
+    {} as Record<GMarks, MarkSpec>,
+  );
+
+  return {
+    nodes,
+    marks,
+  };
 };

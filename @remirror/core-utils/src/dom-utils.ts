@@ -34,6 +34,7 @@ import {
   NodeType,
   ResolvedPos as PMResolvedPos,
   Slice,
+  Schema,
 } from 'prosemirror-model';
 import {
   EditorState as PMEditorState,
@@ -85,6 +86,17 @@ export const isProsemirrorNode = <GSchema extends EditorSchema = any>(
 export const isEditorState = <GSchema extends EditorSchema = any>(
   value: unknown,
 ): value is PMEditorState<GSchema> => isObject(value) && value instanceof PMEditorState;
+
+/**
+ * Checks to see if the passed value is an instance of the editor schema
+ *
+ * @param value - the value to check
+ *
+ * @public
+ */
+export const isEditorSchema = <GNodes extends string = string, GMarks extends string = string>(
+  value: unknown,
+): value is Schema<GNodes, GMarks> => isObject(value) && value instanceof Schema;
 
 /**
  * Predicate checking whether the selection is a TextSelection

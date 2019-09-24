@@ -30,6 +30,5 @@ test('should render the ssr component', () => {
       state={state}
     />,
   );
-  expect(htmlString).toInclude('Better docs to come soon...');
   expect(htmlString).toMatchSnapshot();
 });
