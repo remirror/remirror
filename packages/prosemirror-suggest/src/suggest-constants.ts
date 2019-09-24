@@ -5,21 +5,23 @@ export const DEFAULT_SUGGEST_ACTIONS = { command: noop, create: noop, remove: no
 const defaultHandler = () => false;
 
 export const DEFAULT_SUGGESTER = {
-  startOfLine: false,
-  supportedCharacters: /[\w\d_]+/,
-  matchOffset: 0,
   appendText: '',
-  suggestTag: 'span' as 'span',
-  suggestClassName: 'suggest',
-  onChange: defaultHandler,
-  onExit: defaultHandler,
-  onCharacterEntry: defaultHandler,
-  keyBindings: {},
   createCommand: () => noop,
   getStage: () => 'new' as const,
-  ignoreDecorations: false,
-  validPrefixCharacters: /^[\s\0]?$/,
+  ignoredClassName: undefined as any,
+  ignoredTag: 'span',
   invalidPrefixCharacters: undefined as any,
+  keyBindings: {},
+  matchOffset: 0,
+  noDecorations: false,
+  onChange: defaultHandler,
+  onCharacterEntry: defaultHandler,
+  onExit: defaultHandler,
+  startOfLine: false,
+  suggestClassName: 'suggest',
+  suggestTag: 'span',
+  supportedCharacters: /[\w\d_]+/,
+  validPrefixCharacters: /^[\s\0]?$/,
 };
 
 /**

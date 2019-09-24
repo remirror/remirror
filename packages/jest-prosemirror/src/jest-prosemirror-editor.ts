@@ -15,7 +15,7 @@ import {
   ProsemirrorNode,
   isString,
 } from '@remirror/core';
-import { EventType, fireEvent } from '@testing-library/dom';
+import { EventType, fireEvent, prettyDOM } from '@testing-library/dom';
 import { inputRules } from 'prosemirror-inputrules';
 import { AllSelection, NodeSelection, TextSelection } from 'prosemirror-state';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
@@ -164,6 +164,30 @@ export const press = <GSchema extends EditorSchema = any>({ view, char }: PressP
       view.dispatchEvent(event);
       flush(view);
     });
+};
+
+/**
+ * Simulate a backspace key press..
+ */
+export const backspace = <GSchema extends EditorSchema = any>({
+  view,
+  times = 1,
+}: TestEditorViewParams<GSchema> & { times?: number }) => {
+  const { selection, tr } = view.state;
+  const { from, empty } = selection;
+
+  if (empty) {
+    view.dispatch(tr.delete(from - times, from));
+    return;
+  }
+
+  tr.deleteSelection();
+
+  if (times > 1) {
+    tr.delete(from - (times - 1), from);
+  }
+
+  view.dispatch(tr);
 };
 
 interface KeyboardShortcutParams<GSchema extends EditorSchema = any> extends TestEditorViewParams<GSchema> {
@@ -340,6 +364,10 @@ export const createEditor = <GSchema extends EditorSchema = any>(
     });
   }
 
+  const debug = () => {
+    console.log(prettyDOM(view.dom as HTMLElement));
+  };
+
   const createReturnValue = () => {
     const { selection, doc } = view.state;
     const returnValue = {
@@ -471,6 +499,22 @@ export const createEditor = <GSchema extends EditorSchema = any>(
       },
 
       /**
+       * Simulates a backspace keypress and deletes text backwards.
+       */
+      backspace: (times?: number) => {
+        backspace({ view, times });
+        return createReturnValue();
+      },
+
+      /**
+       * Logs to the dom for help debugging your tests.
+       */
+      debug: () => {
+        debug();
+        return createReturnValue();
+      },
+
+      /**
        * Fire an event in the editor (very hit and miss).
        *
        * @param params - the fire event parameters
@@ -485,7 +529,7 @@ export const createEditor = <GSchema extends EditorSchema = any>(
        * for easier testing of the current state of the editor.
        */
       callback: (fn: (content: ReturnValueCallbackParams<GSchema>) => void) => {
-        fn(pick(returnValue, ['start', 'end', 'state', 'view', 'schema', 'selection', 'doc']));
+        fn({ ...pick(returnValue, ['start', 'end', 'state', 'view', 'schema', 'selection', 'doc']), debug });
         return createReturnValue();
       },
 
@@ -515,6 +559,10 @@ export interface ReturnValueCallbackParams<GSchema extends EditorSchema = any>
   end: number;
   schema: GSchema;
   doc: ProsemirrorNode;
+  /**
+   * Pretty log the current view to the dom.
+   */
+  debug(): void;
 }
 
 /**

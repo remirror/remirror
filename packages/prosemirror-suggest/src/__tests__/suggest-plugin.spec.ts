@@ -87,3 +87,42 @@ test('handles jumping with two suggesters', () => {
       expect(handlers2.onChange).not.toHaveBeenCalled();
     });
 });
+
+test('ignore matches', () => {
+  let clearIgnored: () => void;
+  const handlers = {
+    onExit: jest.fn(
+      ({
+        addIgnored,
+        range: { from },
+        suggester: { char, name },
+        clearIgnored: clear,
+      }: SuggestExitHandlerParams) => {
+        addIgnored({ from, char, name });
+        clearIgnored = clear;
+      },
+    ),
+    onChange: jest.fn(),
+  };
+  const plugin = suggest({ char: '@', name: 'at', ...handlers });
+
+  createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+    .insertText('@abc ')
+    .callback(() => {
+      expect(handlers.onExit).toHaveBeenCalledTimes(1);
+      expect(handlers.onChange).toHaveBeenCalledTimes(4);
+      jest.clearAllMocks();
+    })
+    .backspace(3)
+    .callback(() => expect(handlers.onChange).not.toHaveBeenCalled())
+    .insertText('b ')
+    .callback(() => {
+      expect(handlers.onExit).not.toHaveBeenCalled();
+      clearIgnored();
+    })
+    .backspace(2)
+    .insertText('bc')
+    .callback(() => {
+      expect(handlers.onChange).toHaveBeenCalledTimes(3);
+    });
+});

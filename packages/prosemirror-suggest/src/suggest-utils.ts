@@ -299,7 +299,7 @@ export const runKeyBindings = (bindings: SuggestKeyBindingMap, params: SuggestKe
   return keydownHandler(transformKeyBindings({ bindings, params }))(params.view, params.event);
 };
 
-interface FindFromMatchersParams extends ResolvedPosParams {
+interface FindFromSuggestersParams extends ResolvedPosParams {
   /**
    * The matchers to search through.
    */
@@ -369,10 +369,10 @@ export const findReason = ({
 /**
  * Find a match for the provided matchers
  */
-export const findFromMatchers = ({
+export const findFromSuggesters = ({
   suggesters,
   $pos,
-}: FindFromMatchersParams): SuggestStateMatch | undefined => {
+}: FindFromSuggestersParams): SuggestStateMatch | undefined => {
   // Find the first match and break when done
   for (const suggester of suggesters) {
     try {

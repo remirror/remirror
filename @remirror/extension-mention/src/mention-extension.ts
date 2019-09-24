@@ -223,7 +223,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       matchers,
       onChange,
       onExit,
-      ignoreDecorations,
+      noDecorations,
       keyBindings,
       onCharacterEntry,
       suggestTag,
@@ -232,7 +232,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       return {
         ...DEFAULT_MATCHER,
         ...matcher,
-        ignoreDecorations,
+        noDecorations,
         suggestTag,
         onChange,
         onExit,

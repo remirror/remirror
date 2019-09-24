@@ -77,7 +77,7 @@ export interface MentionExtensionOptions
   extends MarkExtensionOptions,
     Pick<
       Suggester<MentionExtensionSuggestCommand>,
-      'suggestTag' | 'ignoreDecorations' | 'onChange' | 'onExit' | 'onCharacterEntry' | 'keyBindings'
+      'suggestTag' | 'noDecorations' | 'onChange' | 'onExit' | 'onCharacterEntry' | 'keyBindings'
     > {
   /**
    * Provide a custom matcher with options
