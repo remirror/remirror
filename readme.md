@@ -12,7 +12,6 @@
 
 <a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=1&amp;branchName=master"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/ifiokjr.remirror?branchName=canary" alt="Azure DevOps builds" /></a>
 <a href="https://travis-ci.com/ifiokjr/remirror"><img src="https://travis-ci.com/ifiokjr/remirror.svg?branch=canary" alt="Travis (.com)" /></a>
-<a href="https://codeclimate.com/github/ifiokjr/remirror/maintainability"><img src="https://api.codeclimate.com/v1/badges/cfd42ff63704a1cbe232/maintainability" /></a>
 <a href="https://codeclimate.com/github/ifiokjr/remirror/test_coverage"><img src="https://api.codeclimate.com/v1/badges/cfd42ff63704a1cbe232/test_coverage" /></a>
 <a href="https://github.com/ifiokjr/remirror/commits/master"><img src="https://img.shields.io/github/commit-activity/m/ifiokjr/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
 <a href="https://github.com/ifiokjr/remirror/commits/master"><img src="https://img.shields.io/github/last-commit/ifiokjr/remirror.svg?amp;logo=github" alt="GitHub last commit" /></a>
