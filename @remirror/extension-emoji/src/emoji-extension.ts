@@ -159,12 +159,12 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
     // const fn = debounce(100, sortEmojiMatches);
 
     return {
-      ignoreDecorations: true,
+      noDecorations: true,
       invalidPrefixCharacters: escapeStringRegex(suggestionCharacter),
       char: suggestionCharacter,
       name: this.name,
       appendText: '',
-      decorationsTag: 'span',
+      suggestTag: 'span',
       keyBindings: suggestionKeyBindings,
       onChange: params => {
         const query = params.queryText.full;

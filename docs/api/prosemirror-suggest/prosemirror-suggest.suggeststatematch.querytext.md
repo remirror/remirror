@@ -4,7 +4,7 @@
 
 ## SuggestStateMatch.queryText property
 
-Current query of match which doesn't include the match character.
+Current query of match which doesn't include the activation character.
 
 <b>Signature:</b>
 

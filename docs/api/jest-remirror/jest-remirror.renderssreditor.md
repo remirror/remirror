@@ -9,5 +9,5 @@ Render the editor with the params passed in. Useful for testing.
 <b>Signature:</b>
 
 ```typescript
-renderSSREditor: <GExtension extends import("@remirror/core").Extension<any, any> = any>(extensions?: GExtension[], props?: Partial<Pick<RemirrorProps<GExtension>, "attributes" | "styles" | "initialContent" | "onStateChange" | "value" | "editable" | "autoFocus" | "onFocus" | "onBlur" | "onFirstRender" | "onChange" | "children" | "onDispatchTransaction" | "label" | "usesBuiltInExtensions" | "usesDefaultStyles" | "editorStyles" | "css" | "insertPosition" | "forceEnvironment" | "suppressHydrationWarning" | "fallbackContent" | "stringHandler">>) => string
+renderSSREditor: <GExtension extends import("@remirror/core").Extension<any, any> = any>(extensions?: GExtension[], props?: Partial<Pick<RemirrorProps<GExtension>, "initialContent" | "onStateChange" | "value" | "attributes" | "editable" | "autoFocus" | "onFocus" | "onBlur" | "onFirstRender" | "onChange" | "children" | "onDispatchTransaction" | "label" | "usesBuiltInExtensions" | "usesDefaultStyles" | "editorStyles" | "styles" | "css" | "insertPosition" | "forceEnvironment" | "suppressHydrationWarning" | "fallbackContent" | "stringHandler">>) => string
 ```

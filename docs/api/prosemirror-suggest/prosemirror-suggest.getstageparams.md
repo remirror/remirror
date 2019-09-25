@@ -4,8 +4,15 @@
 
 ## GetStageParams interface
 
+The parameters passed through to the [Suggester.getStage()](./prosemirror-suggest.suggester.getstage.md) method.
+
 <b>Signature:</b>
 
 ```typescript
 export interface GetStageParams extends SuggestStateMatchParams, EditorStateParams 
 ```
+
+## Remarks
+
+See: - [SuggestStateMatchParams](./prosemirror-suggest.suggeststatematchparams.md) - 
+

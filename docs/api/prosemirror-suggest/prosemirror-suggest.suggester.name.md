@@ -4,7 +4,7 @@
 
 ## Suggester.name property
 
-A unique identifier for the matching character.
+A unique identifier for the suggester.
 
 <b>Signature:</b>
 
@@ -14,7 +14,7 @@ name: string;
 
 ## Remarks
 
-This should be globally unique amongst the group of suggestions and will cause the suggestion plugin to fail if duplicates are found.
+This should be globally unique amongst all suggesters registered with this plugin. The plugin will through an error if duplicates names are found.
 
 Typically this value will be appended to classes.
 

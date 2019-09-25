@@ -4,7 +4,7 @@
 
 ## CompareMatchParams interface
 
-Compares two matches.
+A parameter builder interface which compares the previous and next match.
 
 <b>Signature:</b>
 
@@ -18,4 +18,8 @@ export interface CompareMatchParams
 |  --- | --- | --- |
 |  [next](./prosemirror-suggest.comparematchparams.next.md) | <code>SuggestStateMatch</code> | The current match |
 |  [prev](./prosemirror-suggest.comparematchparams.prev.md) | <code>SuggestStateMatch</code> | The initial match |
+
+## Remarks
+
+It is used within the codebase to determine the kind of change that has occurred (i.e. change or exit see [SuggestReasonMap](./prosemirror-suggest.suggestreasonmap.md)<!-- -->) and the reason for that that change. See [ExitReason](./prosemirror-suggest.exitreason.md) [ChangeReason](./prosemirror-suggest.changereason.md)
 

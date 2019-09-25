@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {},
   "dependencies": {
-    "@babel/runtime": "7.6.0",
+    "@babel/runtime": "7.6.2",
     "@remirror/core": "0.5.0",
     "@types/expect-puppeteer": "3.3.1",
     "@types/jest-environment-puppeteer": "4.3.1",

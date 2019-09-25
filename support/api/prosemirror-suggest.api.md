@@ -14,15 +14,13 @@ import { EditorView } from '@remirror/core-types';
 import { EditorViewParams } from '@remirror/core-types';
 import { FromToParams } from '@remirror/core-types';
 import { Plugin } from 'prosemirror-state';
+import { SelectionParams } from '@remirror/core-types';
 import { TextParams } from '@remirror/core-types';
 import { TransactionParams } from '@remirror/core-types';
 
 // @public
-export enum ActionTaken {
-    Changed = "changed",
-    Entered = "entered",
-    Exited = "exited",
-    Moved = "moved"
+export interface AddIgnoredParams extends RemoveIgnoredParams {
+    specific?: false;
 }
 
 // @public
@@ -42,13 +40,10 @@ export interface CompareMatchParams {
 }
 
 // @public
-export interface CompareMatchParams {
-    next: SuggestStateMatch;
-    prev: SuggestStateMatch;
-}
+export const createRegexFromSuggester: ({ char, matchOffset, startOfLine, supportedCharacters, }: Pick<Required<Suggester<import("@remirror/core-types").AnyFunction<void>>>, "char" | "startOfLine" | "supportedCharacters" | "matchOffset">, flags?: string) => RegExp;
 
-// @public (undocumented)
-export interface CreateSuggestCommandParams extends Partial<ReasonParams>, EditorViewParams, SuggestStateMatchParams, StageParams {
+// @public
+export interface CreateSuggestCommandParams extends Partial<ReasonParams>, EditorViewParams, SuggestStateMatchParams, StageParams, SuggestMarkParams, SuggestIgnoreParams {
 }
 
 // @public (undocumented)
@@ -61,22 +56,27 @@ export const DEFAULT_SUGGEST_ACTIONS: {
 
 // @public (undocumented)
 export const DEFAULT_SUGGESTER: {
-    startOfLine: boolean;
-    supportedCharacters: RegExp;
-    matchOffset: number;
     appendText: string;
-    decorationsTag: "span";
-    suggestionClassName: string;
-    onChange: () => boolean;
-    onExit: () => boolean;
-    onCharacterEntry: () => boolean;
-    keyBindings: {};
     createCommand: () => () => void;
     getStage: () => "new";
-    ignoreDecorations: boolean;
-    validPrefixCharacters: RegExp;
+    ignoredClassName: any;
+    ignoredTag: string;
     invalidPrefixCharacters: any;
+    keyBindings: {};
+    matchOffset: number;
+    noDecorations: boolean;
+    onChange: () => boolean;
+    onCharacterEntry: () => boolean;
+    onExit: () => boolean;
+    startOfLine: boolean;
+    suggestClassName: string;
+    suggestTag: string;
+    supportedCharacters: RegExp;
+    validPrefixCharacters: RegExp;
 };
+
+// @public (undocumented)
+export const escapeChar: (char: string) => string;
 
 // @public
 export enum ExitReason {
@@ -91,12 +91,15 @@ export enum ExitReason {
     Split = "exit-split"
 }
 
-// @public (undocumented)
+// @public
 export interface FromToEndParams extends FromToParams {
     end: number;
 }
 
-// @public (undocumented)
+// @public
+export const getRegexPrefix: (onlyStartOfLine: boolean) => "" | "^";
+
+// @public
 export interface GetStageParams extends SuggestStateMatchParams, EditorStateParams {
 }
 
@@ -106,27 +109,78 @@ export interface GetStageParams extends SuggestStateMatchParams, EditorStatePara
 export const getSuggestPluginState: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(state: Readonly<import("prosemirror-state").EditorState<GSchema>>) => SuggestState<any>;
 
 // @public
+export const isChange: (compare: Partial<CompareMatchParams>) => compare is CompareMatchParams;
+
+// @public (undocumented)
+export const isChangeReason: (value: unknown) => value is ChangeReason;
+
+// @public
+export const isEntry: (compare: Partial<CompareMatchParams>) => compare is Pick<CompareMatchParams, "next">;
+
+// @public
+export const isExit: (compare: Partial<CompareMatchParams>) => compare is Pick<CompareMatchParams, "prev">;
+
+// @public
+export const isExitReason: (value: unknown) => value is ExitReason;
+
+// @public
+export const isInvalidSplitReason: (value?: unknown) => value is ExitReason.InvalidSplit;
+
+// @public
+export const isJump: (compare: Partial<CompareMatchParams>) => compare is CompareMatchParams;
+
+// @public
+export const isJumpReason: (map: SuggestReasonMap) => map is Required<SuggestReasonMap>;
+
+// @public
+export const isMove: (compare: Partial<CompareMatchParams>) => compare is CompareMatchParams;
+
+// @public
+export const isRemovedReason: (value?: unknown) => value is ExitReason.Removed;
+
+// @public
+export const isSplitReason: (value?: unknown) => value is ExitReason.Split;
+
+// @public
+export const isValidMatch: (match: SuggestStateMatch<import("@remirror/core-types").AnyFunction<void>> | undefined) => match is SuggestStateMatch<import("@remirror/core-types").AnyFunction<void>>;
+
+// @public
+export interface KeyboardEventParams {
+    event: KeyboardEvent;
+}
+
+// @public
 export interface MatchValue {
     full: string;
     partial: string;
 }
 
-// @public (undocumented)
-export interface OnKeyDownParams extends SuggestStateMatch, EditorViewParams {
-    event: KeyboardEvent;
+// @public
+export interface OnKeyDownParams extends SuggestStateMatch, EditorViewParams, KeyboardEventParams {
 }
 
-// @public (undocumented)
+// @public
 export interface ReasonMatchParams<GReason> {
     match: SuggestStateMatchReason<GReason>;
 }
 
-// @public (undocumented)
+// @public
 export interface ReasonParams<GReason = ExitReason | ChangeReason> {
     reason: GReason;
 }
 
-// @public (undocumented)
+// @public
+export const regexToString: (regexOrString: string | RegExp) => string;
+
+// @public
+export interface RemoveIgnoredParams extends Pick<Suggester, 'char' | 'name'> {
+    from: number;
+}
+
+// @public
+export const selectionOutsideMatch: ({ match, selection, }: Partial<SuggestStateMatchParams> & SelectionParams<any, import("prosemirror-state").Selection<any>>) => boolean | undefined;
+
+// @public
 export interface StageParams {
     stage: SuggestStage;
 }
@@ -134,22 +188,16 @@ export interface StageParams {
 // @public
 export const suggest: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(...suggesters: Suggester<import("@remirror/core-types").AnyFunction<void>>[]) => Plugin<SuggestState<any>, GSchema>;
 
-// @public
-export type SuggestCallback<GCommand extends AnyFunction<void> = AnyFunction<void>> = (params: SuggestCallbackParams<GCommand>) => void;
-
 // @public (undocumented)
-export interface SuggestCallbackParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestStateMatch, EditorViewParams, SuggestCommandParams<GCommand>, StageParams {
+export interface SuggestCallbackParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestStateMatch, EditorViewParams, SuggestCommandParams<GCommand>, StageParams, SuggestIgnoreParams {
 }
 
-// @public (undocumented)
+// @public
 export interface SuggestChangeHandlerParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestCallbackParams<GCommand>, ReasonParams<ChangeReason> {
 }
 
-// @public (undocumented)
-export interface SuggestCharacterEntryParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestCallbackParams<GCommand> {
-    entry: FromToParams & {
-        text: string;
-    };
+// @public
+export interface SuggestCharacterEntryParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestCallbackParams<GCommand>, FromToParams, TextParams {
 }
 
 // @public
@@ -162,18 +210,20 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
     appendText?: string;
     char: string;
     createCommand?(params: CreateSuggestCommandParams): GCommand;
-    decorationsTag?: keyof HTMLElementTagNameMap;
     getStage?(params: GetStageParams): SuggestStage;
-    ignoreDecorations?: boolean;
+    ignoredClassName?: string;
+    ignoredTag?: string;
     invalidPrefixCharacters?: RegExp | string;
     keyBindings?: SuggestKeyBindingMap<GCommand>;
     matchOffset?: number;
     name: string;
+    noDecorations?: boolean;
     onChange?(params: SuggestChangeHandlerParams<GCommand>): void;
     onCharacterEntry?(params: SuggestCharacterEntryParams<GCommand>): boolean;
     onExit?(params: SuggestExitHandlerParams<GCommand>): void;
     startOfLine?: boolean;
-    suggestionClassName?: string;
+    suggestClassName?: string;
+    suggestTag?: string;
     supportedCharacters?: RegExp | string;
     validPrefixCharacters?: RegExp | string;
 }
@@ -183,8 +233,14 @@ export interface SuggesterParams<GCommand extends AnyFunction<void> = AnyFunctio
     suggester: Required<Suggester<GCommand>>;
 }
 
-// @public (undocumented)
+// @public
 export interface SuggestExitHandlerParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestCallbackParams<GCommand>, ReasonParams<ExitReason> {
+}
+
+// @public
+export interface SuggestIgnoreParams {
+    addIgnored(params: AddIgnoredParams): void;
+    clearIgnored(name?: string): void;
 }
 
 // @public
@@ -193,12 +249,16 @@ export type SuggestKeyBinding<GCommand extends AnyFunction<void> = AnyFunction<v
 // @public
 export type SuggestKeyBindingMap<GCommand extends AnyFunction<void> = AnyFunction<void>> = Partial<Record<'Enter' | 'ArrowDown' | 'ArrowUp' | 'ArrowLeft' | 'ArrowRight' | 'Esc' | 'Delete' | 'Backspace', SuggestKeyBinding<GCommand>>> & Record<string, SuggestKeyBinding<GCommand>>;
 
-// @public (undocumented)
-export interface SuggestKeyBindingParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestCallbackParams<GCommand> {
-    event: KeyboardEvent;
+// @public
+export interface SuggestKeyBindingParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestCallbackParams<GCommand>, SuggestMarkParams, KeyboardEventParams {
 }
 
-// @public (undocumented)
+// @public
+export interface SuggestMarkParams {
+    setMarkRemoved(): void;
+}
+
+// @public
 export interface SuggestReasonMap {
     change?: SuggestStateMatchReason<ChangeReason>;
     exit?: SuggestStateMatchReason<ExitReason>;
@@ -210,14 +270,14 @@ export type SuggestReplacementType = 'full' | 'partial';
 // @public
 export type SuggestStage = 'new' | 'edit';
 
-// @public (undocumented)
+// @public
 export interface SuggestStateMatch<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggesterParams<GCommand> {
     matchText: MatchValue;
     queryText: MatchValue;
     range: FromToEndParams;
 }
 
-// @public (undocumented)
+// @public
 export interface SuggestStateMatchParams {
     match: SuggestStateMatch;
 }

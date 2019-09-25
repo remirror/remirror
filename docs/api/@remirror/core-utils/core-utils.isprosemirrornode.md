@@ -9,5 +9,5 @@ Checks to see if the passed value is a ProsemirrorNode
 <b>Signature:</b>
 
 ```typescript
-isProsemirrorNode: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(value: unknown) => value is PMNode<GSchema>
+isProsemirrorNode: <GSchema extends Schema<string, string> = any>(value: unknown) => value is PMNode<GSchema>
 ```

@@ -4,6 +4,8 @@
 
 ## SuggestStateMatchParams interface
 
+A parameter builder interface describing match found by the suggest plugin.
+
 <b>Signature:</b>
 
 ```typescript

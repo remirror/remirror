@@ -5,50 +5,27 @@ export const DEFAULT_SUGGEST_ACTIONS = { command: noop, create: noop, remove: no
 const defaultHandler = () => false;
 
 export const DEFAULT_SUGGESTER = {
-  startOfLine: false,
-  supportedCharacters: /[\w\d_]+/,
-  matchOffset: 0,
   appendText: '',
-  decorationsTag: 'span' as 'span',
-  suggestionClassName: 'suggestion',
-  onChange: defaultHandler,
-  onExit: defaultHandler,
-  onCharacterEntry: defaultHandler,
-  keyBindings: {},
   createCommand: () => noop,
   getStage: () => 'new' as const,
-  ignoreDecorations: false,
-  validPrefixCharacters: /^[\s\0]?$/,
+  ignoredClassName: undefined as any,
+  ignoredTag: 'span',
   invalidPrefixCharacters: undefined as any,
+  keyBindings: {},
+  matchOffset: 0,
+  noDecorations: false,
+  onChange: defaultHandler,
+  onCharacterEntry: defaultHandler,
+  onExit: defaultHandler,
+  startOfLine: false,
+  suggestClassName: 'suggest',
+  suggestTag: 'span',
+  supportedCharacters: /[\w\d_]+/,
+  validPrefixCharacters: /^[\s\0]?$/,
 };
 
 /**
- * The action taken on a suggestion
- */
-export enum ActionTaken {
-  /**
-   * We've moved from suggestion to another.
-   */
-  Moved = 'moved',
-
-  /**
-   * The suggestion wasn't active before and now it is active
-   */
-  Entered = 'entered',
-
-  /**
-   * The suggestion was active before and not it is no longer active
-   */
-  Exited = 'exited',
-
-  /**
-   * The suggestion query has changed either by typing or deleting characters
-   */
-  Changed = 'changed',
-}
-
-/**
- * The potential reasons for an exit
+ * The potential reasons for an exit of a mention.
  */
 export enum ExitReason {
   /**

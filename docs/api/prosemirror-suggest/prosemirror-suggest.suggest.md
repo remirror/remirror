@@ -29,7 +29,7 @@ const suggestEmojis: Suggester = {
   // suggestion in the dom.
   // In this example we don't need decorations (in fact they cause problems when the
   // emoji string replaces the query text in the dom).
-  ignoreDecorations: true,
+  noDecorations: true,
   char: ':', // The character to match against
   name: 'emoji-suggestion', // a unique name
   appendText: '', // Text to append to the created match

@@ -4,6 +4,87 @@
 
 ## jest-prosemirror package
 
+\#\# The problem
+
+You want to write tests for some of your prosemirror editor but you don't know where to start. You know you should avoid testing implementation details and just want to be sure that your commands and plugins produce the correct underlying prosemirror state.
+
+\#\# This solution
+
+`jest-prosemirror` takes inspiration from the \[`testing-library`<!-- -->\](https://github.com/testing-library/react-testing-library) mantra and enables you to write more intuitive tests for your prosemirror editor.
+
+\#\# Installation
+
+```bash
+yarn add jest-prosemirror
+
+```
+\#\# Getting started
+
+\#\#\# Quick setup
+
+For a quick setup add the following to your jest.config.js file.
+
+```js
+module.exports = {
+setupFilesAfterEnv: ['jest-prosemirror/environment'],
+testEnvironment: 'jsdom', // Required for dom manipulation
+};
+
+```
+This will automatically:
+
+- Add the jest assertions `toTransformNode` and `toEqualProsemirrorNode`<!-- -->.
+
+If you are using typescript then add this to your `tsconfig.json` file for global type support.
+
+```json
+{
+"compilerOptions": {
+ "types": ["jest-prosemirror"]
+}
+}
+
+```
+\#\#\# Manual setup
+
+Create a `jest.framework.dom.ts` file and add the following
+
+```ts
+import { prosemirrorMatchers } from 'jest-prosemirror';
+
+// Add jest-prosemirror assertions
+expect.extend(prosemirrorMatchers);
+
+```
+In your `jest.config.js` add the created file to your configuration.
+
+```js
+module.exports = {
+setupFilesAfterEnv: ['<rootDir>/jest.framework.dom.ts'],
+testEnvironment: 'jsdom', // Required for dom manipulation
+};
+
+```
+\#\# Snapshot serializer
+
+This package exports a serializer for better snapshot testing of prosemirror primitives. To set this up add the following to your `jest.config.js` file.
+
+```js
+module.exports = {
+snapshotSerializers: ['jest-prosemirror/serializer'],
+};
+
+```
+Alternatively, you can add the following to your `jest.framework.dom.ts` file.
+
+```ts
+import { prosemirrorSerializer } from 'jest-prosemirror';
+
+// Add the serializer for use throughout all the configured test files.
+expect.addSnapshotSerializer(prosemirrorSerializer);
+
+```
+
 ## Interfaces
 
 |  Interface | Description |
@@ -13,6 +94,7 @@
 |  [CreateEditorOptions](./jest-prosemirror.createeditoroptions.md) |  |
 |  [FireParams](./jest-prosemirror.fireparams.md) |  |
 |  [InsertTextParams](./jest-prosemirror.inserttextparams.md) |  |
+|  [ReturnValueCallbackParams](./jest-prosemirror.returnvaluecallbackparams.md) |  |
 |  [TaggedDocParams](./jest-prosemirror.taggeddocparams.md) |  |
 |  [TestEditorView](./jest-prosemirror.testeditorview.md) |  |
 |  [TestEditorViewParams](./jest-prosemirror.testeditorviewparams.md) |  |
@@ -26,6 +108,7 @@
 |  [atomBlock](./jest-prosemirror.atomblock.md) |  |
 |  [atomContainer](./jest-prosemirror.atomcontainer.md) |  |
 |  [atomInline](./jest-prosemirror.atominline.md) |  |
+|  [backspace](./jest-prosemirror.backspace.md) | Simulate a backspace key press.. |
 |  [blockquote](./jest-prosemirror.blockquote.md) |  |
 |  [code](./jest-prosemirror.code.md) |  |
 |  [codeBlock](./jest-prosemirror.codeblock.md) |  |
@@ -58,9 +141,11 @@
 |  [ol](./jest-prosemirror.ol.md) |  |
 |  [p](./jest-prosemirror.p.md) |  |
 |  [paragraph](./jest-prosemirror.paragraph.md) |  |
+|  [pasteContent](./jest-prosemirror.pastecontent.md) | Add eventual support for all of prosemirror paste commands |
 |  [pmBuild](./jest-prosemirror.pmbuild.md) | A short hand way for building prosemirror test builders with the core nodes already provided - <code>doc</code> - <code>paragraph</code> - <code>text</code> |
 |  [press](./jest-prosemirror.press.md) | Press a key. |
 |  [prosemirrorMatchers](./jest-prosemirror.prosemirrormatchers.md) |  |
+|  [prosemirrorSerializer](./jest-prosemirror.prosemirrorserializer.md) | Jest serializer for prosemirror nodes and the editor state. |
 |  [schema](./jest-prosemirror.schema.md) |  |
 |  [selectionFor](./jest-prosemirror.selectionfor.md) | Returns a selection regardless of whether anything is tagged in the provided doc |
 |  [setupProsemirrorEnvironment](./jest-prosemirror.setupprosemirrorenvironment.md) | Setup the environment automatically for jest-prosemirror |

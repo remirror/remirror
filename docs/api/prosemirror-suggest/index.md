@@ -8,12 +8,12 @@
 
 |  Package | Description |
 |  --- | --- |
-|  [prosemirror-suggest](./prosemirror-suggest.md) | Primitives for building your prosemirror suggestion functionality.<!-- -->\#\# The problem<!-- -->You want to create a suggestion plugin for your prosemirror editor but are unsure how to get started. The suggestions could be for mentions, emojis, responding to a keypress with a dropdown of potential actions or anything that needs to extract a query from the current editor when a matching character is entered.<!-- -->\#\# This solution<code>prosemirror-suggest</code> provides the suggestion primitives you will need for within your editor. It doesn't try to be magical and even with this library setting up suggestions can be difficult. However, with this toolkit, you will be able to build pretty much any suggestion plugin you can think of.<!-- -->\#\# Installation
+|  [prosemirror-suggest](./prosemirror-suggest.md) | Primitives for building your prosemirror suggestion functionality.<!-- -->\#\# The problem<!-- -->You want to create a plugin for your prosemirror editor that responds to an activation character to create suggestions or options or actions for the user. Doing this from scratch can be difficult.<!-- -->\#\# This solution<code>prosemirror-suggest</code> provides the suggestion primitives needed for building this functionality into your editor. You might be building user mentions, emoji search, an actions dropdown or anything that extracts a query from the editor after the activation character(s).<!-- -->This implementation doesn't attempt to be magical. There's still a lot of work that goes into setting up your configuration. However, with this toolkit, you you will be building on a well-tested foundation with a structured API.<!-- -->\#\# Installation<code>prosemirror-view</code> is a peer dependency of <code>prosemirror-suggest</code> and needs to be installed as well.
 ```bash
 yarn add prosemirror-suggest prosemirror-view
 
 ```
-\#\# Getting Started<!-- -->The configuration of prosemirror suggests is based around an object which defines the suggestion behaviour. This configuration is passed the <code>suggestion</code> method which adds all the suggestion plugins to the editor.<!-- -->In the following example we're creating an emoji suggestion plugin that responds to the colon character with a query and presents a list of matching emojis based on the query typed so far.
+\#\# Getting Started<code>prosemirror-suggest</code> uses configuration objects called <code>Suggester</code>'s to define the behaviour of the suggestions you create. By calling the exported <code>suggest</code> method with all required <code>Suggester</code>'s the functionality is added to the editor in one plugin.<!-- -->In the following example we're creating an emoji suggestion plugin that responds to the colon character with a query and presents a list of matching emojis based on the query typed so far.
 ```ts
 import { Suggester, suggest } from 'prosemirror-suggest';
 
@@ -27,7 +27,7 @@ const suggestEmojis: Suggester = {
   // suggestion in the dom.
   // In this example we don't need decorations (in fact they cause problems when the
   // emoji string replaces the query text in the dom).
-  ignoreDecorations: true,
+  noDecorations: true,
   char: ':', // The character to match against
   name: 'emoji-suggestion', // a unique name
   appendText: '', // Text to append to the created match
@@ -88,5 +88,5 @@ const state = EditorState.create({schema,
 });
 
 ```
- |
+You can see this example brought to life in the <code>remirror</code> codebase under the <code>@remirror/extension-emoji</code> and the <code>@remirror/extension-mention</code> packages.<!-- -->\[GIF-EXAMPLE\] |
 

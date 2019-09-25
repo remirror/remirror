@@ -5,7 +5,7 @@ import { useRemirrorManager } from '../hooks/context-hooks';
 import { defaultProps } from '../react-constants';
 import { RemirrorContext } from '../react-contexts';
 import { GetRootPropsConfig, InjectedRemirrorProps, RemirrorProps } from '../react-types';
-import { Remirror } from './remirror-component';
+import { Remirror } from './remirror';
 
 export interface RemirrorContextProviderProps<GExtension extends AnyExtension = any>
   extends ProviderProps<InjectedRemirrorProps<GExtension>> {

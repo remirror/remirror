@@ -4,7 +4,7 @@
 
 ## SuggestKeyBindingMap type
 
-The SuggestKeyBinding object.
+The keybindings shape for the [Suggester.keyBindings](./prosemirror-suggest.suggester.keybindings.md) property.
 
 <b>Signature:</b>
 

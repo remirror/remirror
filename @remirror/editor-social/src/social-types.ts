@@ -2,8 +2,9 @@ import { RemirrorTheme } from '@remirror/core';
 import { BaseExtensions, NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import { EmojiExtension } from '@remirror/extension-emoji';
 import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
-import { MentionExtension, SuggestionStateMatch } from '@remirror/extension-mention';
+import { MentionExtension } from '@remirror/extension-mention';
 import { ManagedRemirrorProviderProps } from '@remirror/react';
+import { SuggestStateMatch } from 'prosemirror-suggest';
 
 export type OnMentionChangeParams = MentionState & {
   /**
@@ -13,6 +14,11 @@ export type OnMentionChangeParams = MentionState & {
 };
 
 export interface SocialEditorProps extends Partial<ManagedRemirrorProviderProps<SocialExtensions>> {
+  /**
+   * Set this to true to hide the character indicator.
+   */
+  hideCharacterIndicator?: boolean;
+
   /**
    * The message to show when the editor is empty.
    */
@@ -92,7 +98,7 @@ export interface ActiveTagData extends TagData {
 /**
  * A method for retrieving the most up to date mention data.
  */
-export type MentionGetter = () => SuggestionStateMatch;
+export type MentionGetter = () => SuggestStateMatch;
 
 export interface SetExitTriggeredInternallyParams {
   /**

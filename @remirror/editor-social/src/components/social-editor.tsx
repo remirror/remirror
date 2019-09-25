@@ -13,11 +13,7 @@ import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
 import {
   MentionExtension,
   MentionExtensionOptions,
-  OptionalSuggestionMatcher,
-  SuggestionCallback,
-  SuggestionKeyBindingMap,
-  SuggestionKeyBindingParams,
-  SuggestionStateMatch,
+  MentionExtensionMatcher,
 } from '@remirror/extension-mention';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
 import { RemirrorThemeProvider } from '@remirror/ui';
@@ -33,6 +29,12 @@ import {
 } from '../social-types';
 import { calculateNewIndexFromArrowPress, mapToActiveIndex } from '../social-utils';
 import { SocialEditorComponent } from './social-wrapper-component';
+import {
+  SuggestStateMatch,
+  SuggestKeyBindingMap,
+  SuggestKeyBindingParams,
+  SuggestChangeHandlerParams,
+} from 'prosemirror-suggest';
 
 interface State {
   activeMatcher: MatchName | undefined;
@@ -48,7 +50,10 @@ interface State {
 /**
  * These are the matchers
  */
-const matchers: OptionalSuggestionMatcher[] = [{ name: 'at', char: '@' }, { name: 'tag', char: '#' }];
+const matchers: MentionExtensionMatcher[] = [
+  { name: 'at', char: '@', appendText: ' ' },
+  { name: 'tag', char: '#', appendText: ' ' },
+];
 
 export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   public static defaultProps = {
@@ -69,7 +74,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * The mention information
    */
-  private mention: SuggestionStateMatch | undefined;
+  private mention: SuggestStateMatch | undefined;
 
   /**
    * This keeps track of when an exit was triggered by an internal command. For
@@ -82,9 +87,9 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
    * Create the arrow bindings for the mentions.
    */
   private createMentionArrowBindings = (direction: 'up' | 'down') => ({
-    query,
-    name,
-  }: SuggestionKeyBindingParams) => {
+    queryText,
+    suggester: { name },
+  }: SuggestKeyBindingParams) => {
     const { activeIndex: prevIndex, hideMentionSuggestions: hideSuggestions } = this.state;
     const { onMentionChange: onMentionStateChange } = this.props;
 
@@ -102,7 +107,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     });
 
     this.setState({ activeIndex, activeMatcher: name as MatchName });
-    onMentionStateChange({ name, query: query.full, activeIndex } as OnMentionChangeParams);
+    onMentionStateChange({ name, query: queryText.full, activeIndex } as OnMentionChangeParams);
 
     return true;
   };
@@ -111,11 +116,11 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
    * These are the keyBindings for mentions extension. This allows for
    * overriding
    */
-  private mentionKeyBindings: SuggestionKeyBindingMap = {
+  private mentionKeyBindings: SuggestKeyBindingMap = {
     /**
      * Handle the enter key being pressed
      */
-    Enter: ({ name, command, char }) => {
+    Enter: ({ suggester: { char, name }, command }) => {
       const { activeIndex, hideMentionSuggestions: hideSuggestions } = this.state;
 
       if (hideSuggestions) {
@@ -149,7 +154,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     /**
      * Hide the suggestions when the escape key is pressed.
      */
-    Escape: ({ name }) => {
+    Escape: ({ suggester: { name } }) => {
       const matches = name === 'at' ? this.users : this.tags;
 
       if (!matches.length) {
@@ -212,13 +217,18 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * The is the callback for when a suggestion is changed.
    */
-  private onChange: SuggestionCallback = params => {
-    const { query, name } = params;
+  private onChange = (params: SuggestChangeHandlerParams) => {
+    const {
+      queryText,
+      suggester: { name },
+    } = params;
+
+    console.log('onChange called', params);
 
     if (name) {
       const props = {
         name,
-        query: query.full,
+        query: queryText.full,
       } as MentionState;
       this.props.onMentionChange({ ...props, activeIndex: this.state.activeIndex });
     }
@@ -231,13 +241,16 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * Called when the none of our configured matchers match
    */
-  private onExit: Required<MentionExtensionOptions>['onExit'] = ({ query, command }) => {
+  private onExit: Required<MentionExtensionOptions>['onExit'] = params => {
+    const { queryText, command } = params;
+
     // Check whether we've manually caused this exit. If not, trigger the
     // command.
+    console.log('onExit called', params);
     if (!this.mentionExitTriggeredInternally) {
       command({
         role: 'presentation',
-        href: `/${query.full}`,
+        href: `/${queryText.full}`,
         appendText: '',
       });
     }

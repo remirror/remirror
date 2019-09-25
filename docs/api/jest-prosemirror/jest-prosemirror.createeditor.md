@@ -13,17 +13,21 @@ createEditor: <GSchema extends import("prosemirror-model").Schema<string, string
     start: number;
     end: number;
     selection: import("prosemirror-state").Selection<GSchema>;
+    doc: import("prosemirror-model").Node<GSchema>;
     schema: GSchema;
     state: import("prosemirror-state").EditorState<GSchema>;
     view: TestEditorView<GSchema>;
     overwrite: (newDoc: TaggedProsemirrorNode<GSchema>) => any;
     command: (command: CommandFunction<any>) => any;
     insertText: (text: string) => any;
-    jumpTo: (start: number | "end" | "start", end?: number | undefined) => any;
+    jumpTo: (start: number | "start" | "end", end?: number | undefined) => any;
     shortcut: (mod: string) => any;
     press: (char: string) => any;
-    fire: (params: Pick<FireEventAtPositionParams<GSchema>, "position" | "options" | "event">) => any;
+    backspace: (times?: number | undefined) => any;
+    debug: () => any;
+    fire: (params: Pick<FireEventAtPositionParams<GSchema>, "event" | "options" | "position">) => any;
     callback: (fn: (content: ReturnValueCallbackParams<GSchema>) => void) => any;
+    paste: (content: string | import("prosemirror-model").Node<any>) => any;
 }
 ```
 

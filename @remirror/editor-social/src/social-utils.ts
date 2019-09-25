@@ -1,3 +1,7 @@
+import { Attrs, EditorView } from '@remirror/core';
+import { MentionExtensionAttrs } from '@remirror/extension-mention';
+import { MentionGetterParams } from './social-types';
+
 /**
  * Maps the items to items with an active property
  */
@@ -39,3 +43,38 @@ export const calculateNewIndexFromArrowPress = ({
     : prevIndex - 1 < 0
     ? matchLength - 1
     : prevIndex - 1;
+
+interface CreateOnClickMethodFactoryParams extends MentionGetterParams {
+  setExitTriggeredInternally: () => void;
+  view: EditorView;
+  command(attrs: Attrs): void;
+}
+
+/**
+ * This method helps create the onclick factory method used by both types of suggestions supported
+ */
+export const createOnClickMethodFactory = ({
+  getMention,
+  setExitTriggeredInternally,
+  view,
+  command,
+}: CreateOnClickMethodFactoryParams) => (id: string) => () => {
+  const {
+    suggester: { char, name },
+    range,
+  } = getMention();
+  const params: MentionExtensionAttrs = {
+    id,
+    label: `${char}${id}`,
+    name,
+    replacementType: 'full',
+    range,
+    role: 'presentation',
+    href: `/${id}`,
+  };
+  setExitTriggeredInternally(); // Prevents further `onExit` calls
+  command(params);
+  if (!view.hasFocus()) {
+    view.focus();
+  }
+};

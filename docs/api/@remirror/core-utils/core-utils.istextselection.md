@@ -9,5 +9,5 @@ Predicate checking whether the selection is a TextSelection
 <b>Signature:</b>
 
 ```typescript
-isTextSelection: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(value: unknown) => value is TextSelection<GSchema>
+isTextSelection: <GSchema extends Schema<string, string> = any>(value: unknown) => value is TextSelection<GSchema>
 ```

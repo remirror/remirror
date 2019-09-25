@@ -22,8 +22,11 @@ import {
   SuggestStage,
   SuggestStateMatch,
   SuggestStateMatchReason,
+  AddIgnoredParams,
+  RemoveIgnoredParams,
 } from './suggest-types';
-import { findFromMatchers, findReason, runKeyBindings } from './suggest-utils';
+import { findFromSuggesters, findReason, runKeyBindings } from './suggest-utils';
+import { Transaction } from 'prosemirror-state';
 
 /**
  * The suggestion state which manages the list of suggestions.
@@ -62,20 +65,41 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   private view!: EditorView<GSchema>;
 
   /**
-   * Lets us know whether the most recent change was to remove a mark.
+   * The set of ignored decorations
+   */
+  private ignored = DecorationSet.empty;
+
+  /**
+   * Lets us know whether the most recent change was to remove a mention.
    *
-   * This is needed because sometimes removing a mark has no effect. Hence we
-   * need to keep track of whether it's removed and then later in the apply step
-   * check that a removal has happened and reset the `handlerMatches` to prevent
-   * an infinite loop.
+   * This is needed because sometimes removing a prosemirror `Mark` has no
+   * effect. Hence we need to keep track of whether it's removed and then later
+   * in the apply step check that a removal has happened and reset the
+   * `handlerMatches` to prevent an infinite loop.
    */
   private removed = false;
+
+  /**
+   * Sets the removed property to be true. This is passed as a property to the
+   * `createCommand` option.
+   */
+  private setRemovedTrue = () => {
+    this.removed = true;
+  };
 
   /**
    * The actions created by the extension.
    */
   private getCommand(match: SuggestStateMatch, reason?: ExitReason | ChangeReason) {
-    return match.suggester.createCommand({ match, reason, stage: this.stage, view: this.view });
+    return match.suggester.createCommand({
+      match,
+      reason,
+      stage: this.stage,
+      view: this.view,
+      setMarkRemoved: this.setRemovedTrue,
+      addIgnored: this.addIgnored,
+      clearIgnored: this.clearIgnored,
+    });
   }
 
   /**
@@ -92,9 +116,31 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     return this.match ? this.match.suggester.getStage({ match: this.match, state: this.view.state }) : 'new';
   }
 
-  // TODO Check for duplicate names
+  /**
+   * Create the state for the `prosemirror-suggest` plugin.
+   *
+   * @remarks
+   *
+   * Each suggester must provide a name value which is globally unique since it
+   * acts as the identifier.
+   *
+   * It is possible to register multiple suggesters with identical `char`
+   * properties. The matched suggester is based on the specificity of the
+   * `regex` and the order in which they are passed in. Earlier suggesters are
+   * prioritized.
+   */
   constructor(suggesters: Suggester[]) {
-    this.suggesters = suggesters.map(suggester => ({ ...DEFAULT_SUGGESTER, ...suggester }));
+    const names: string[] = [];
+    this.suggesters = suggesters.map(suggester => {
+      if (names.includes(suggester.name)) {
+        throw new Error(
+          `A suggester already exists with the name '${suggester.name}'. The name provided must be unique.`,
+        );
+      }
+
+      names.push(suggester.name);
+      return { ...DEFAULT_SUGGESTER, ...suggester };
+    });
   }
 
   /**
@@ -112,6 +158,8 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     return {
       view: this.view,
       stage: this.stage,
+      addIgnored: this.addIgnored,
+      clearIgnored: this.clearIgnored,
       command: this.getCommand(match),
       ...match,
     };
@@ -124,8 +172,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     match: SuggestStateMatchReason<GReason>,
   ) {
     return {
-      view: this.view,
-      stage: this.stage,
+      ...this.createParams(match),
       command: this.getCommand(match, match.reason),
       ...match,
     };
@@ -155,6 +202,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
       const movedForwards = exit.range.from < change.range.from;
       movedForwards ? change.suggester.onChange(changeParams) : exit.suggester.onExit(exitParams);
       movedForwards ? exit.suggester.onExit(exitParams) : change.suggester.onChange(changeParams);
+      this.removed = false;
       return;
     }
 
@@ -164,12 +212,136 @@ export class SuggestState<GSchema extends EditorSchema = any> {
 
     if (exit) {
       exit.suggester.onExit(this.createReasonParams(exit));
-
+      this.removed = false;
       if (isInvalidSplitReason(exit.reason)) {
         this.handlerMatches = {};
       }
     }
   };
+
+  /**
+   * Update the current ignored decorations based on the latest changes to the
+   * prosemirror document.
+   */
+  private mapIgnoredDecorations(tr: Transaction) {
+    // Map over and update the ignored decorations.
+    const ignored = this.ignored.map(tr.mapping, tr.doc);
+    const decorations = ignored.find();
+
+    // For suggesters with multiple characters it is possible for a `paste` or
+    // any edit action within the decoration to expand the ignored section. We check for
+    // that here and if the section size has changed it should be marked as
+    // invalid and removed from the ignored `DecorationSet`.
+    const invalid = decorations.filter(({ from, to, spec }) => {
+      if (to - from !== spec.char.length) {
+        return true;
+      }
+      return false;
+    });
+
+    this.ignored = ignored.remove(invalid);
+  }
+
+  /**
+   * Ignores the match specified. Until the match is deleted no more `onChange`,
+   * `onExit` handlers will be triggered. It will be like the match doesn't
+   * exist.
+   *
+   * @remarks
+   *
+   * All we need to ignore is the match character. This means that any further
+   * matches from the activation character will be ignored.
+   */
+  public addIgnored = ({ from, char, name, specific = false }: AddIgnoredParams) => {
+    const to = from + char.length;
+    const suggester = this.suggesters.find(val => val.name === name);
+
+    if (!suggester) {
+      throw new Error(`No suggester exists for the name provided: ${name}`);
+    }
+
+    const attrs = suggester.ignoredClassName ? { class: suggester.ignoredClassName } : {};
+
+    const decoration = Decoration.inline(
+      from,
+      to,
+      { nodeName: suggester.ignoredTag, ...attrs },
+      // TODO enable extra spec attributes in DefinitelyTyped.
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      { char, name, specific },
+    );
+
+    this.ignored = this.ignored.add(this.view.state.doc, [decoration]);
+  };
+
+  /**
+   * Removes a single match character from the ignored decorations.
+   *
+   * @remarks
+   *
+   * After this point event handlers will begin to be called again for match character.
+   */
+  public removeIgnored = ({ from, char, name }: RemoveIgnoredParams) => {
+    const decorations = this.ignored.find(from, from + char.length);
+    const decoration = decorations[0];
+
+    if (!decoration || decoration.spec.name !== name) {
+      return;
+    }
+
+    this.ignored = this.ignored.remove([decoration]);
+  };
+
+  /**
+   * Removes all the ignored decorations so that suggesters can active their
+   * handlers anywhere in the document.
+   */
+  public clearIgnored = (name?: string) => {
+    if (name) {
+      const decorations = this.ignored.find();
+      const decorationsToClear = decorations.filter(({ spec }) => {
+        return spec.name === name;
+      });
+
+      this.ignored = this.ignored.remove(decorationsToClear);
+    } else {
+      console.log('ignoring all');
+      this.ignored = DecorationSet.empty;
+    }
+  };
+
+  private shouldIgnoreMatch({ range, suggester: { name } }: SuggestStateMatch) {
+    const decorations = this.ignored.find();
+
+    return decorations.some(({ spec, from }) => {
+      if (from !== range.from) {
+        return false;
+      }
+      const shouldIgnore = spec.specific ? spec.name === name : true;
+      return shouldIgnore;
+    });
+  }
+
+  /**
+   * Reset the state.
+   */
+  private resetState() {
+    this.handlerMatches = {};
+    this.next = undefined;
+    this.removed = false;
+  }
+
+  /**
+   * Update the next state value.
+   */
+  private updateReasons({ $pos, state }: UpdateReasonsParams) {
+    const match = findFromSuggesters({ suggesters: this.suggesters, $pos });
+    this.next = match && this.shouldIgnoreMatch(match) ? undefined : match;
+
+    // Store the matches with reasons
+    this.handlerMatches = findReason({ next: this.next, prev: this.prev, state, $pos });
+  }
 
   /**
    * Used to handle the view property of the plugin spec.
@@ -185,15 +357,6 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   }
 
   /**
-   * Reset the state.
-   */
-  private resetState() {
-    this.handlerMatches = {};
-    this.next = undefined;
-    this.removed = false;
-  }
-
-  /**
    * Applies updates to the state to be used within the plugins apply method.
    *
    * @param - params
@@ -204,6 +367,8 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     if (!transactionChanged(tr) && !this.removed) {
       return this;
     }
+
+    this.mapIgnoredDecorations(tr);
 
     // If the previous run was an exit reset the suggestion matches
     if (exit) {
@@ -216,15 +381,6 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     this.updateReasons({ $pos: tr.selection.$from, state: newState });
 
     return this;
-  }
-
-  /**
-   * Update the next state value.
-   */
-  private updateReasons({ $pos, state }: UpdateReasonsParams) {
-    this.next = findFromMatchers({ suggesters: this.suggesters, $pos });
-    // Store the matches with reasons
-    this.handlerMatches = findReason({ next: this.next, prev: this.prev, state, $pos });
   }
 
   /**
@@ -242,6 +398,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     const { keyBindings } = match.suggester;
     const params: SuggestKeyBindingParams = {
       event,
+      setMarkRemoved: this.setRemovedTrue,
       ...this.createParams(match),
     };
 
@@ -262,7 +419,9 @@ export class SuggestState<GSchema extends EditorSchema = any> {
 
     return onCharacterEntry({
       ...this.createParams(match),
-      entry: { text, from, to },
+      from,
+      to,
+      text,
     });
   }
 
@@ -274,25 +433,27 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     const match = this.match;
 
     if (!isValidMatch(match)) {
-      return;
+      return this.ignored;
     }
 
-    if (match.suggester.ignoreDecorations) {
-      return;
+    if (match.suggester.noDecorations) {
+      return this.ignored;
     }
 
     const {
       range,
-      suggester: { name, decorationsTag, suggestionClassName },
+      suggester: { name, suggestTag: decorationsTag, suggestClassName: suggestionClassName },
     } = match;
     const { from, end } = range;
 
-    return DecorationSet.create(state.doc, [
-      Decoration.inline(from, end, {
-        nodeName: decorationsTag,
-        class: name ? `${suggestionClassName} ${suggestionClassName}-${name}` : suggestionClassName,
-      }),
-    ]);
+    return this.shouldIgnoreMatch(match)
+      ? this.ignored
+      : this.ignored.add(state.doc, [
+          Decoration.inline(from, end, {
+            nodeName: decorationsTag,
+            class: name ? `${suggestionClassName} ${suggestionClassName}-${name}` : suggestionClassName,
+          }),
+        ]);
   }
 }
 

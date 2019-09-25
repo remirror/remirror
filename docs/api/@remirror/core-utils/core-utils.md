@@ -9,6 +9,7 @@
 |  Interface | Description |
 |  --- | --- |
 |  [CreateDocumentNodeParams](./core-utils.createdocumentnodeparams.md) |  |
+|  [CustomDocParams](./core-utils.customdocparams.md) |  |
 |  [FindProsemirrorNodeResult](./core-utils.findprosemirrornoderesult.md) |  |
 |  [FindSelectedNodeOfType](./core-utils.findselectednodeoftype.md) |  |
 |  [NodeWithPosition](./core-utils.nodewithposition.md) | A node with it's start position. |
@@ -94,6 +95,7 @@ const selectedNode = findSelectedNodeOfType({
 |  [isDocNode](./core-utils.isdocnode.md) | Checks whether a Prosemirror node is the top level <code>doc</code> node |
 |  [isDocNodeEmpty](./core-utils.isdocnodeempty.md) | Checks if a node looks like an empty document |
 |  [isDOMNode](./core-utils.isdomnode.md) | Checks whether the passed value is a valid dom node |
+|  [isEditorSchema](./core-utils.iseditorschema.md) | Checks to see if the passed value is an instance of the editor schema |
 |  [isEditorState](./core-utils.iseditorstate.md) | Checks to see if the passed value is a Prosemirror Editor State |
 |  [isElementDOMNode](./core-utils.iselementdomnode.md) | Checks for an element node like <code>&lt;p&gt;</code> or <code>&lt;div&gt;</code>. |
 |  [isEmptyParagraphNode](./core-utils.isemptyparagraphnode.md) | Checks if the current node a paragraph node and empty |
@@ -142,6 +144,7 @@ dispatch(
 ```
  |
 |  [replaceText](./core-utils.replacetext.md) | Replaces text with an optional appended string at the end |
+|  [schemaToJSON](./core-utils.schematojson.md) | Converts a schema to a simple json compatible object. |
 |  [selectionEmpty](./core-utils.selectionempty.md) | Checks whether the selection or state is currently empty. |
 |  [setPluginMeta](./core-utils.setpluginmeta.md) | Set the plugin meta data |
 |  [SHIFT](./core-utils.shift.md) | Keycode for SHIFT key. |

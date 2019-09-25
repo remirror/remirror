@@ -11,5 +11,5 @@ To force replacement of the whole match regardless of where in the match the cur
 <b>Signature:</b>
 
 ```typescript
-replacementType?: SuggestionReplacementType;
+replacementType?: SuggestReplacementType;
 ```

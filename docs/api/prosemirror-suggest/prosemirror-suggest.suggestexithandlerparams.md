@@ -4,6 +4,8 @@
 
 ## SuggestExitHandlerParams interface
 
+The parameters passed to the [Suggester.onExit()](./prosemirror-suggest.suggester.onexit.md) method.
+
 <b>Signature:</b>
 
 ```typescript

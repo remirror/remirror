@@ -4,12 +4,15 @@
 
 ## SuggestKeyBinding type
 
-A method for performing actions when a certain key / patter is pressed.
-
-Return true to prevent any further bubbling of the key event and to stop other handlers from also processing the event.
+A method for performing actions when a certain key / pattern is pressed.
 
 <b>Signature:</b>
 
 ```typescript
 export declare type SuggestKeyBinding<GCommand extends AnyFunction<void> = AnyFunction<void>> = (params: SuggestKeyBindingParams<GCommand>) => boolean | void;
 ```
+
+## Remarks
+
+Return true to prevent any further bubbling of the key event and to stop other handlers from also processing the event.
+

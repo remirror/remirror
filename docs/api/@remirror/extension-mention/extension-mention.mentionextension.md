@@ -16,7 +16,7 @@ export declare class MentionExtension extends MarkExtension<MentionExtensionOpti
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [defaultOptions](./extension-mention.mentionextension.defaultoptions.md) |  | <code>{</code><br/><code>        matchers: import(&quot;./mention-types&quot;).SuggestionMatcher[];</code><br/><code>        appendText: string;</code><br/><code>        mentionClassName: string;</code><br/><code>        extraAttrs: never[];</code><br/><code>        tag: &quot;a&quot;;</code><br/><code>        decorationsTag: &quot;a&quot;;</code><br/><code>        suggestionClassName: string;</code><br/><code>        onChange: () =&gt; boolean;</code><br/><code>        onExit: () =&gt; boolean;</code><br/><code>        onCharacterEntry: () =&gt; boolean;</code><br/><code>        keyBindings: {};</code><br/><code>    }</code> | Provide the default options for this extension |
+|  [defaultOptions](./extension-mention.mentionextension.defaultoptions.md) |  | <code>{</code><br/><code>        matchers: never[];</code><br/><code>        appendText: string;</code><br/><code>        mentionClassName: string;</code><br/><code>        extraAttrs: never[];</code><br/><code>        mentionTag: &quot;a&quot;;</code><br/><code>        suggestTag: &quot;a&quot;;</code><br/><code>        onChange: () =&gt; boolean;</code><br/><code>        onExit: () =&gt; boolean;</code><br/><code>        onCharacterEntry: () =&gt; boolean;</code><br/><code>        keyBindings: {};</code><br/><code>    }</code> | Provide the default options for this extension |
 |  [name](./extension-mention.mentionextension.name.md) |  | <code>&quot;mention&quot;</code> |  |
 |  [schema](./extension-mention.mentionextension.schema.md) |  | <code>MarkExtensionSpec</code> |  |
 
@@ -26,5 +26,5 @@ export declare class MentionExtension extends MarkExtension<MentionExtensionOpti
 |  --- | --- | --- |
 |  [commands({ type, getState })](./extension-mention.mentionextension.commands.md) |  |  |
 |  [pasteRules({ type })](./extension-mention.mentionextension.pasterules.md) |  |  |
-|  [plugin(params)](./extension-mention.mentionextension.plugin.md) |  |  |
+|  [suggestions({ getActions, type })](./extension-mention.mentionextension.suggestions.md) |  |  |
 

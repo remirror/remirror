@@ -4,6 +4,8 @@
 
 ## SuggestChangeHandlerParams interface
 
+The parameters passed to the [Suggester.onChange()](./prosemirror-suggest.suggester.onchange.md) method.
+
 <b>Signature:</b>
 
 ```typescript

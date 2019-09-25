@@ -1,63 +1,36 @@
-import { Slice } from '@remirror/core-types';
 import { createEditor, doc, horizontalRule, p, schema as testSchema, strong } from 'jest-prosemirror';
 import { markInputRule, markPasteRule, nodeInputRule, plainInputRule } from '../prosemirror-rules';
 
 describe('markPasteRule', () => {
   it('should transform simple content', () => {
     const plugin = markPasteRule({ regexp: /(Hello)/, type: testSchema.marks.strong });
-    const {
-      state: { tr },
-      view,
-    } = createEditor(doc(p('<cursor>')), { plugins: [plugin] });
-    let slice = p('Hello').slice(0);
-    view.someProp('transformPasted', f => {
-      slice = f(slice);
-    });
-
-    view.dispatch(tr.replaceSelection(slice));
-    expect(view.state.doc).toEqualProsemirrorNode(doc(p(strong('Hello'))));
+    createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+      .paste('Hello')
+      .callback(content => expect(content.doc).toEqualProsemirrorNode(doc(p(strong('Hello')))));
   });
 
   it('should transform complex content', () => {
     const plugin = markPasteRule({ regexp: /(@[a-z]+)/, type: testSchema.marks.strong });
-    const {
-      state: { tr },
-      view,
-    } = createEditor(doc(p('<cursor>')), { plugins: [plugin] });
-
-    let slice = doc(p('Some @test @content'), p('should @be amazing')).slice(1);
-
-    view.someProp('transformPasted', f => {
-      slice = f(slice);
-    });
-
-    view.dispatch(tr.replaceSelection(slice));
-    expect(view.state.doc).toEqualProsemirrorNode(
-      doc(
-        p('Some ', strong('@test'), ' ', strong('@content')),
-        p('should ', strong('@be'), ' amazing'),
-        p(''),
-      ),
-    );
+    createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+      .paste(doc(p('Some @test @content'), p('should @be amazing')))
+      .callback(content => {
+        expect(content.doc).toEqualProsemirrorNode(
+          doc(
+            p('Some ', strong('@test'), ' ', strong('@content')),
+            p('should ', strong('@be'), ' amazing'),
+            p(''),
+          ),
+        );
+      });
   });
 
   it('should not transform when no match found', () => {
     const plugin = markPasteRule({ regexp: /(Hello)/, type: testSchema.marks.strong });
-    const {
-      state: { tr },
-      view,
-    } = createEditor(doc(p('<cursor>')), { plugins: [plugin] });
-    const slice = p('Not The Word').slice(0);
-
-    let newSlice: Slice;
-
-    view.someProp('transformPasted', f => {
-      newSlice = f(slice);
-      expect(newSlice.eq(slice)).toBe(true);
-    });
-
-    view.dispatch(tr.replaceSelection(slice));
-    expect(view.state.doc).toEqualProsemirrorNode(doc(p('Not The Word')));
+    createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+      .paste('Not The Word')
+      .callback(content => {
+        expect(content.doc).toEqualProsemirrorNode(doc(p('Not The Word')));
+      });
   });
 });
 

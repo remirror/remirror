@@ -4,15 +4,15 @@
 
 ## SuggestKeyBindingParams interface
 
+The parameters required by the [SuggestKeyBinding](./prosemirror-suggest.suggestkeybinding.md) method.
+
 <b>Signature:</b>
 
 ```typescript
-export interface SuggestKeyBindingParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestCallbackParams<GCommand> 
+export interface SuggestKeyBindingParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestCallbackParams<GCommand>, SuggestMarkParams, KeyboardEventParams 
 ```
 
-## Properties
+## Remarks
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [event](./prosemirror-suggest.suggestkeybindingparams.event.md) | <code>KeyboardEvent</code> | The dom keyboard event. |
+See: - [SuggestCallbackParams](./prosemirror-suggest.suggestcallbackparams.md) - [SuggestMarkParams](./prosemirror-suggest.suggestmarkparams.md) - [KeyboardEventParams](./prosemirror-suggest.keyboardeventparams.md)
 

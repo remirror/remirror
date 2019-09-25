@@ -8,13 +8,17 @@ Primitives for building your prosemirror suggestion functionality.
 
 \#\# The problem
 
-You want to create a suggestion plugin for your prosemirror editor but are unsure how to get started. The suggestions could be for mentions, emojis, responding to a keypress with a dropdown of potential actions or anything that needs to extract a query from the current editor when a matching character is entered.
+You want to create a plugin for your prosemirror editor that responds to an activation character to create suggestions or options or actions for the user. Doing this from scratch can be difficult.
 
 \#\# This solution
 
-`prosemirror-suggest` provides the suggestion primitives you will need for within your editor. It doesn't try to be magical and even with this library setting up suggestions can be difficult. However, with this toolkit, you will be able to build pretty much any suggestion plugin you can think of.
+`prosemirror-suggest` provides the suggestion primitives needed for building this functionality into your editor. You might be building user mentions, emoji search, an actions dropdown or anything that extracts a query from the editor after the activation character(s).
+
+This implementation doesn't attempt to be magical. There's still a lot of work that goes into setting up your configuration. However, with this toolkit, you you will be building on a well-tested foundation with a structured API.
 
 \#\# Installation
+
+`prosemirror-view` is a peer dependency of `prosemirror-suggest` and needs to be installed as well.
 
 ```bash
 yarn add prosemirror-suggest prosemirror-view
@@ -22,7 +26,7 @@ yarn add prosemirror-suggest prosemirror-view
 ```
 \#\# Getting Started
 
-The configuration of prosemirror suggests is based around an object which defines the suggestion behaviour. This configuration is passed the `suggestion` method which adds all the suggestion plugins to the editor.
+`prosemirror-suggest` uses configuration objects called `Suggester`<!-- -->'s to define the behaviour of the suggestions you create. By calling the exported `suggest` method with all required `Suggester`<!-- -->'s the functionality is added to the editor in one plugin.
 
 In the following example we're creating an emoji suggestion plugin that responds to the colon character with a query and presents a list of matching emojis based on the query typed so far.
 
@@ -39,7 +43,7 @@ const suggestEmojis: Suggester = {
   // suggestion in the dom.
   // In this example we don't need decorations (in fact they cause problems when the
   // emoji string replaces the query text in the dom).
-  ignoreDecorations: true,
+  noDecorations: true,
   char: ':', // The character to match against
   name: 'emoji-suggestion', // a unique name
   appendText: '', // Text to append to the created match
@@ -100,57 +104,80 @@ const state = EditorState.create({schema,
 });
 
 ```
+You can see this example brought to life in the `remirror` codebase under the `@remirror/extension-emoji` and the `@remirror/extension-mention` packages.
+
+\[GIF-EXAMPLE\]
 
 ## Enumerations
 
 |  Enumeration | Description |
 |  --- | --- |
-|  [ActionTaken](./prosemirror-suggest.actiontaken.md) | The action taken on a suggestion |
 |  [ChangeReason](./prosemirror-suggest.changereason.md) | The potential reason for changes |
-|  [ExitReason](./prosemirror-suggest.exitreason.md) | The potential reasons for an exit |
+|  [ExitReason](./prosemirror-suggest.exitreason.md) | The potential reasons for an exit of a mention. |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [CompareMatchParams](./prosemirror-suggest.comparematchparams.md) | Compares two matches. |
-|  [CreateSuggestCommandParams](./prosemirror-suggest.createsuggestcommandparams.md) |  |
-|  [FromToEndParams](./prosemirror-suggest.fromtoendparams.md) |  |
-|  [GetStageParams](./prosemirror-suggest.getstageparams.md) |  |
+|  [AddIgnoredParams](./prosemirror-suggest.addignoredparams.md) | The parameters needed for the [SuggestIgnoreParams.addIgnored()](./prosemirror-suggest.suggestignoreparams.addignored.md) action method available to the suggest plugin handlers. |
+|  [CompareMatchParams](./prosemirror-suggest.comparematchparams.md) | A parameter builder interface which compares the previous and next match. |
+|  [CreateSuggestCommandParams](./prosemirror-suggest.createsuggestcommandparams.md) | The parameters passed into the <code>createSuggest</code> suggester property. |
+|  [FromToEndParams](./prosemirror-suggest.fromtoendparams.md) | A parameter builder interface describing a <code>from</code>/<code>to</code>/<code>end</code> range. |
+|  [GetStageParams](./prosemirror-suggest.getstageparams.md) | The parameters passed through to the [Suggester.getStage()](./prosemirror-suggest.suggester.getstage.md) method. |
+|  [KeyboardEventParams](./prosemirror-suggest.keyboardeventparams.md) | A parameter builder interface describing the event which triggers the keyboard event handler. |
 |  [MatchValue](./prosemirror-suggest.matchvalue.md) | The match value with the full and partial text. |
-|  [OnKeyDownParams](./prosemirror-suggest.onkeydownparams.md) |  |
-|  [ReasonMatchParams](./prosemirror-suggest.reasonmatchparams.md) |  |
-|  [ReasonParams](./prosemirror-suggest.reasonparams.md) |  |
-|  [StageParams](./prosemirror-suggest.stageparams.md) |  |
+|  [OnKeyDownParams](./prosemirror-suggest.onkeydownparams.md) | The parameters required by the . |
+|  [ReasonMatchParams](./prosemirror-suggest.reasonmatchparams.md) | A parameter builder interface which adds the match property. |
+|  [ReasonParams](./prosemirror-suggest.reasonparams.md) | A parameter builder interface indicating the reason the handler was called. |
+|  [RemoveIgnoredParams](./prosemirror-suggest.removeignoredparams.md) | The parameters needed for the  action method available to the suggest plugin handlers. |
+|  [StageParams](./prosemirror-suggest.stageparams.md) | A parameter builder interface describing the stage of the suggestion whether is it being edited or newly created. |
 |  [SuggestCallbackParams](./prosemirror-suggest.suggestcallbackparams.md) |  |
-|  [SuggestChangeHandlerParams](./prosemirror-suggest.suggestchangehandlerparams.md) |  |
-|  [SuggestCharacterEntryParams](./prosemirror-suggest.suggestcharacterentryparams.md) |  |
-|  [SuggestCommandParams](./prosemirror-suggest.suggestcommandparams.md) | The command |
-|  [Suggester](./prosemirror-suggest.suggester.md) | This <code>Suggester</code> interface provides the options object which is used within the [suggest](./prosemirror-suggest.suggest.md) plugin creator. |
+|  [SuggestChangeHandlerParams](./prosemirror-suggest.suggestchangehandlerparams.md) | The parameters passed to the [Suggester.onChange()](./prosemirror-suggest.suggester.onchange.md) method. |
+|  [SuggestCharacterEntryParams](./prosemirror-suggest.suggestcharacterentryparams.md) | The parameters passed to the [Suggester.onCharacterEntry()](./prosemirror-suggest.suggester.oncharacterentry.md) method. |
+|  [SuggestCommandParams](./prosemirror-suggest.suggestcommandparams.md) | A parameter builder interface which adds the command property. |
+|  [Suggester](./prosemirror-suggest.suggester.md) | This <code>Suggester</code> interface defines all the options required to create a suggestion within your editor. |
 |  [SuggesterParams](./prosemirror-suggest.suggesterparams.md) |  |
-|  [SuggestExitHandlerParams](./prosemirror-suggest.suggestexithandlerparams.md) |  |
-|  [SuggestKeyBindingParams](./prosemirror-suggest.suggestkeybindingparams.md) |  |
-|  [SuggestReasonMap](./prosemirror-suggest.suggestreasonmap.md) |  |
-|  [SuggestStateMatch](./prosemirror-suggest.suggeststatematch.md) |  |
-|  [SuggestStateMatchParams](./prosemirror-suggest.suggeststatematchparams.md) |  |
+|  [SuggestExitHandlerParams](./prosemirror-suggest.suggestexithandlerparams.md) | The parameters passed to the [Suggester.onExit()](./prosemirror-suggest.suggester.onexit.md) method. |
+|  [SuggestIgnoreParams](./prosemirror-suggest.suggestignoreparams.md) | A parameter builder interface describing the ignore methods available to the [Suggester](./prosemirror-suggest.suggester.md) handlers. |
+|  [SuggestKeyBindingParams](./prosemirror-suggest.suggestkeybindingparams.md) | The parameters required by the [SuggestKeyBinding](./prosemirror-suggest.suggestkeybinding.md) method. |
+|  [SuggestMarkParams](./prosemirror-suggest.suggestmarkparams.md) | A special parameter needed when creating editable suggester using prosemirror <code>Marks</code>. The method should be called when removing a suggestion that was identified by a prosemirror <code>Mark</code>. |
+|  [SuggestReasonMap](./prosemirror-suggest.suggestreasonmap.md) | A mapping of the handler matches with their reasons for occurring within the suggest state. |
+|  [SuggestStateMatch](./prosemirror-suggest.suggeststatematch.md) | Describes the properties of a match which includes range and the text as well as information of the suggester that created the match. |
+|  [SuggestStateMatchParams](./prosemirror-suggest.suggeststatematchparams.md) | A parameter builder interface describing match found by the suggest plugin. |
 |  [SuggestStateMatchReason](./prosemirror-suggest.suggeststatematchreason.md) |  |
 
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
+|  [createRegexFromSuggester](./prosemirror-suggest.createregexfromsuggester.md) | Create a regex expression to evaluate matches directly from the suggester properties. |
 |  [DEFAULT\_SUGGEST\_ACTIONS](./prosemirror-suggest.default_suggest_actions.md) |  |
 |  [DEFAULT\_SUGGESTER](./prosemirror-suggest.default_suggester.md) |  |
+|  [escapeChar](./prosemirror-suggest.escapechar.md) |  |
+|  [getRegexPrefix](./prosemirror-suggest.getregexprefix.md) | Find regex prefix when depending on whether the mention only supports the start of a line or not |
 |  [getSuggestPluginState](./prosemirror-suggest.getsuggestpluginstate.md) | Get the state of the suggest plugin. |
+|  [isChange](./prosemirror-suggest.ischange.md) | Is this a change in the current suggestion (added or deleted characters)? |
+|  [isChangeReason](./prosemirror-suggest.ischangereason.md) |  |
+|  [isEntry](./prosemirror-suggest.isentry.md) | Are we entering a new suggestion? |
+|  [isExit](./prosemirror-suggest.isexit.md) | Are we exiting a suggestion? |
+|  [isExitReason](./prosemirror-suggest.isexitreason.md) | Check that the passed in value is an ExitReason |
+|  [isInvalidSplitReason](./prosemirror-suggest.isinvalidsplitreason.md) | Checks that the reason was caused by a split at a point where there is no query. |
+|  [isJump](./prosemirror-suggest.isjump.md) | Is this a jump from one suggestion to another? |
+|  [isJumpReason](./prosemirror-suggest.isjumpreason.md) | Checks to see if this is a jump reason. |
+|  [isMove](./prosemirror-suggest.ismove.md) | Has the cursor moved within the current suggestion (added or deleted characters)? |
+|  [isRemovedReason](./prosemirror-suggest.isremovedreason.md) | Checks that the reason was caused by a deletion. |
+|  [isSplitReason](./prosemirror-suggest.issplitreason.md) | Checks that the reason passed is a split reason. This typically means that we should default to a partial update / creation of the mention. |
+|  [isValidMatch](./prosemirror-suggest.isvalidmatch.md) | True when the match is currently active (i.e. it's query has a value) |
+|  [regexToString](./prosemirror-suggest.regextostring.md) | Convert a RegExp into a string |
+|  [selectionOutsideMatch](./prosemirror-suggest.selectionoutsidematch.md) | True when the current selection is outside the match. |
 |  [suggest](./prosemirror-suggest.suggest.md) | This creates a suggestion plugin with all the suggestions provided. |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [SuggestCallback](./prosemirror-suggest.suggestcallback.md) | The handler callback signature. |
-|  [SuggestKeyBinding](./prosemirror-suggest.suggestkeybinding.md) | A method for performing actions when a certain key / patter is pressed.<!-- -->Return true to prevent any further bubbling of the key event and to stop other handlers from also processing the event. |
-|  [SuggestKeyBindingMap](./prosemirror-suggest.suggestkeybindingmap.md) | The SuggestKeyBinding object. |
+|  [SuggestKeyBinding](./prosemirror-suggest.suggestkeybinding.md) | A method for performing actions when a certain key / pattern is pressed. |
+|  [SuggestKeyBindingMap](./prosemirror-suggest.suggestkeybindingmap.md) | The keybindings shape for the [Suggester.keyBindings](./prosemirror-suggest.suggester.keybindings.md) property. |
 |  [SuggestReplacementType](./prosemirror-suggest.suggestreplacementtype.md) | Determines whether to replace the full match or the partial match (up to the cursor position). |
 |  [SuggestStage](./prosemirror-suggest.suggeststage.md) | A suggestion can have two stages. When it is <code>new</code> and when it has already been created and is now being <code>edit</code>ed.<!-- -->Separating the stages allows for greater control in how mentions are updated.<!-- -->The edit state is only applicable for editable suggestions. Most nodes and text insertions can't be edited once created. |
 

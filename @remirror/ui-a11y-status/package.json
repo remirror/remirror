@@ -14,7 +14,7 @@
   ],
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.6.0",
+    "@babel/runtime": "^7.6.2",
     "@remirror/core-helpers": "0.5.0"
   },
   "publishConfig": {

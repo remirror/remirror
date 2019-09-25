@@ -338,7 +338,7 @@ export interface ActionMethod<GParams extends any[] = []> {
 export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (
   node: ProsemirrorNode,
   view: EditorView,
-  getPos: () => number,
+  getPos: (() => number) | boolean,
   decorations: Decoration[],
 ) => GNodeView;
 

@@ -10,7 +10,7 @@ ports:
   - port: 3000
   - port: 3001
 tasks:
-  - init: yarn install && yarn build
+  - init: yarn
     command: yarn storybook
 
 vscode:
@@ -30,8 +30,8 @@ github:
     # add a check to pull requests (defaults to true)
     addCheck: true
     # add a "Review in Gitpod" button as a comment to pull requests (defaults to false)
-    addComment: true
+    addComment: false
     # add a "Review in Gitpod" button to the pull request's description (defaults to false)
-    addBadge: false
+    addBadge: true
     # add a label once the prebuild is ready to pull requests (defaults to false)
     addLabel: false

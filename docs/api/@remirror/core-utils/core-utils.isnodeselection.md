@@ -9,5 +9,5 @@ Predicate checking whether the selection is a NodeSelection
 <b>Signature:</b>
 
 ```typescript
-isNodeSelection: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(value: unknown) => value is NodeSelection<GSchema>
+isNodeSelection: <GSchema extends Schema<string, string> = any>(value: unknown) => value is NodeSelection<GSchema>
 ```

@@ -89,12 +89,3 @@ export class TestExtension extends Extension<{ run: boolean } & BaseExtensionOpt
     };
   }
 }
-
-declare global {
-  const __DEV__: boolean;
-  const __TEST__: boolean;
-  /**
-   * Identifies whether this is an e2e test
-   */
-  const __E2E__: boolean;
-}

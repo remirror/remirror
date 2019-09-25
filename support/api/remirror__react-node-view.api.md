@@ -28,7 +28,7 @@ export interface CreateNodeViewParams<GOptions extends BaseExtensionOptions = Ba
 }
 
 // @public
-export type GetPosition = () => number;
+export type GetPosition = (() => number) | boolean;
 
 // @public (undocumented)
 export interface NodeViewComponentProps<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GAttrs extends Attrs = Attrs> extends EditorViewParams, SSRComponentProps<GOptions, GAttrs> {

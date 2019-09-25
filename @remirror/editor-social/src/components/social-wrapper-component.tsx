@@ -11,7 +11,8 @@ import {
 } from '../social-types';
 import { CharacterCountWrapper, EditorWrapper } from './social-base-components';
 import { CharacterCountIndicator } from './social-character-count-component';
-import { AtSuggestions, EmojiSuggestions, TagSuggestions } from './social-suggestion-components';
+import { AtSuggestions, TagSuggestions } from './social-suggestion-components';
+import { EmojiSuggestions } from './emoji-suggestion-component';
 
 interface SocialEditorComponentProps extends MentionGetterParams, SetExitTriggeredInternallyParams {
   emojiList: EmojiObject[];

@@ -14,6 +14,7 @@ export interface SocialEditorProps extends Partial<ManagedRemirrorProviderProps<
 
 |  Property | Type | Description |
 |  --- | --- | --- |
+|  [hideCharacterIndicator](./editor-social.socialeditorprops.hidecharacterindicator.md) | <code>boolean</code> | Set this to true to hide the character indicator. |
 |  [placeholder](./editor-social.socialeditorprops.placeholder.md) | <code>string</code> | The message to show when the editor is empty. |
 |  [tagData](./editor-social.socialeditorprops.tagdata.md) | <code>TagData[]</code> | List of tags |
 |  [theme](./editor-social.socialeditorprops.theme.md) | <code>Partial&lt;RemirrorTheme &amp; Partial&lt;RemirrorTheme['colors']&gt;&gt;</code> | The theme to be used for setting . |

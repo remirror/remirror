@@ -15,6 +15,7 @@ export interface AddContentReturn<GExtension extends AnyExtension> extends Edito
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [actions](./jest-remirror.addcontentreturn.actions.md) | <code>ActionsFromExtensions&lt;GExtension&gt;</code> | The actions available in the editor. When updating the content of the TestEditor make sure not to use a stale copy of the actions otherwise it will throw errors due to using an outdated state. |
+|  [doc](./jest-remirror.addcontentreturn.doc.md) | <code>ProsemirrorNode</code> | The current prosemirror document. |
 |  [end](./jest-remirror.addcontentreturn.end.md) | <code>number</code> | The end of the current selection. For a cursor selection this will be the same as the start. |
 |  [helpers](./jest-remirror.addcontentreturn.helpers.md) | <code>HelpersFromExtensions&lt;GExtension&gt;</code> | The helpers available in the editor. When updating the content of the TestEditor make sure not to use a stale copy of the helpers object otherwise it will throw errors due to using an outdated state. |
 |  [overwrite](./jest-remirror.addcontentreturn.overwrite.md) | <code>AddContent&lt;GExtension&gt;</code> | Simply calls add again which overwrites the whole doc |
@@ -51,6 +52,7 @@ add(doc(p('<cursor>'))).insertText(':-)')
 |  [insertText(text)](./jest-remirror.addcontentreturn.inserttext.md) | Insert text at the current starting point for the cursor. Text will be typed out with keys each firing a keyboard event.<!-- -->! This doesn't currently support the use of tags and cursors. ! Also adding multiple strings which create nodes also creates an out of position error |
 |  [jumpTo(pos)](./jest-remirror.addcontentreturn.jumpto.md) | Set selection in the document to a certain position |
 |  [jumpTo(start, end)](./jest-remirror.addcontentreturn.jumpto_1.md) |  |
+|  [paste(content)](./jest-remirror.addcontentreturn.paste.md) | A simplistic implementation of pasting content into the editor. Underneath it calls the paste handler <code>transformPaste</code> and that is all. |
 |  [press(key)](./jest-remirror.addcontentreturn.press.md) | Presses a key on the keyboard. e.g. <code>Mod-X</code> |
 |  [replace(content)](./jest-remirror.addcontentreturn.replace.md) | A function which replaces the current selection with the new content.<!-- -->This should be used to add new content to the dom. |
 |  [shortcut(shortcut)](./jest-remirror.addcontentreturn.shortcut.md) | Runs a keyboard shortcut. e.g. <code>Mod-X</code> |

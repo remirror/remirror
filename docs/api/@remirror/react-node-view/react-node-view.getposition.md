@@ -9,5 +9,5 @@ Retrieve the position of the current nodeView
 <b>Signature:</b>
 
 ```typescript
-export declare type GetPosition = () => number;
+export declare type GetPosition = (() => number) | boolean;
 ```

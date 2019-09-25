@@ -17,12 +17,12 @@
   ],
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.6.0",
+    "@babel/runtime": "^7.6.2",
     "@remirror/core": "0.5.0",
     "@remirror/react-portals": "0.5.0",
     "@remirror/react-renderer": "0.5.0",
     "@types/min-document": "^2.19.0",
-    "@types/prosemirror-view": "1.9.0",
+    "@types/prosemirror-view": "^1.11.0",
     "min-document": "^2.19.0",
     "prosemirror-state": "^1.2.4",
     "prosemirror-view": "^1.11.3"

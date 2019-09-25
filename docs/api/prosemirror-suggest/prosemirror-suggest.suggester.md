@@ -4,7 +4,7 @@
 
 ## Suggester interface
 
-This `Suggester` interface provides the options object which is used within the [suggest](./prosemirror-suggest.suggest.md) plugin creator.
+This `Suggester` interface defines all the options required to create a suggestion within your editor.
 
 <b>Signature:</b>
 
@@ -17,15 +17,17 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [appendText](./prosemirror-suggest.suggester.appendtext.md) | <code>string</code> | Text to append after the mention has been added. |
-|  [char](./prosemirror-suggest.suggester.char.md) | <code>string</code> | The character to match against. |
-|  [decorationsTag](./prosemirror-suggest.suggester.decorationstag.md) | <code>keyof HTMLElementTagNameMap</code> | Tag which wraps an active match. |
-|  [ignoreDecorations](./prosemirror-suggest.suggester.ignoredecorations.md) | <code>boolean</code> | When true, decorations are not created when this mention is being edited.. |
+|  [char](./prosemirror-suggest.suggester.char.md) | <code>string</code> | The activation character(s) to match against. |
+|  [ignoredClassName](./prosemirror-suggest.suggester.ignoredclassname.md) | <code>string</code> | Set a class for the ignored suggestion decoration. |
+|  [ignoredTag](./prosemirror-suggest.suggester.ignoredtag.md) | <code>string</code> | Set a tag for the ignored suggestion decoration. |
 |  [invalidPrefixCharacters](./prosemirror-suggest.suggester.invalidprefixcharacters.md) | <code>RegExp &#124; string</code> | A regex expression used to invalidate the text directly before the match. |
 |  [keyBindings](./prosemirror-suggest.suggester.keybindings.md) | <code>SuggestKeyBindingMap&lt;GCommand&gt;</code> | An object that describes how certain key bindings should be handled. |
 |  [matchOffset](./prosemirror-suggest.suggester.matchoffset.md) | <code>number</code> | Sets the characters that need to be present after the initial character match before a match is triggered.<!-- -->For example with <code>char</code> = <code>@</code> the following is true.<!-- -->- <code>matchOffset: 0</code> matches <code>'@'</code> immediately - <code>matchOffset: 1</code> matches <code>'@a'</code> but not <code>'@'</code> - <code>matchOffset: 2</code> matches <code>'@ab'</code> but not <code>'@a'</code> or <code>'@'</code> - <code>matchOffset: 3</code> matches <code>'@abc'</code> but not <code>'@ab'</code> or <code>'@a'</code> or <code>'@'</code> - And so on... |
-|  [name](./prosemirror-suggest.suggester.name.md) | <code>string</code> | A unique identifier for the matching character. |
+|  [name](./prosemirror-suggest.suggester.name.md) | <code>string</code> | A unique identifier for the suggester. |
+|  [noDecorations](./prosemirror-suggest.suggester.nodecorations.md) | <code>boolean</code> | When true, decorations are not created when this mention is being edited.. |
 |  [startOfLine](./prosemirror-suggest.suggester.startofline.md) | <code>boolean</code> | Whether to only match from the start of the line |
-|  [suggestionClassName](./prosemirror-suggest.suggester.suggestionclassname.md) | <code>string</code> | Class name to use for the decoration (while the plugin is still being written) |
+|  [suggestClassName](./prosemirror-suggest.suggester.suggestclassname.md) | <code>string</code> | Class name to use for the decoration (while the suggestion is still being written) |
+|  [suggestTag](./prosemirror-suggest.suggester.suggesttag.md) | <code>string</code> | Tag for the prosemirror decoration which wraps an active match. |
 |  [supportedCharacters](./prosemirror-suggest.suggester.supportedcharacters.md) | <code>RegExp &#124; string</code> | A regex containing all supported characters when within a suggestion. |
 |  [validPrefixCharacters](./prosemirror-suggest.suggester.validprefixcharacters.md) | <code>RegExp &#124; string</code> | A regex expression used to validate the text directly before the match. |
 
@@ -38,4 +40,8 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
 |  [onChange(params)](./prosemirror-suggest.suggester.onchange.md) | Called whenever a suggestion becomes active or changes in anyway. |
 |  [onCharacterEntry(params)](./prosemirror-suggest.suggester.oncharacterentry.md) | Called for each character entry and can be used to disable certain characters. |
 |  [onExit(params)](./prosemirror-suggest.suggester.onexit.md) | Called when a suggestion is exited with the pre-exit match value. |
+
+## Remarks
+
+The options are passed to the [suggest](./prosemirror-suggest.suggest.md) method which uses them.
 

@@ -8,5 +8,10 @@
 
 |  Package | Description |
 |  --- | --- |
-|  [@remirror/extension-mention](./extension-mention.md) |  |
+|  [@remirror/extension-mention](./extension-mention.md) | \#\# The problem<!-- -->You'd love a simpler way to create \*\*editable\*\* <code>@</code> and <code>#</code> mentions with suggestions built into your <code>remirror</code> editor. Or perhaps you'd prefer non-editable mentions that create an inline prosemirror node. Or maybe you're keeping it simple and decide that you want mentions to output plain text into your markdown editor.<!-- -->\#\# The solution<code>@remirror/extension-mention</code> exports three <code>remirror</code> extensions for managing \*\*editable\*\* <code>Mark</code> mentions, non-editable <code>Node</code> mentions and plain text mentions. Underneath the work is being done by <code>prosemirror-suggest</code> to reduce the boilerplate needed to setup.<!-- -->\#\# Installation<!-- -->After completing the installation of the the <code>remirror</code> environment as shown in the \[docs\](https://docs.remirror.org/install) run the following command.
+```bash
+yarn add @remirror/extension-mention`
+
+```
+\#\# Getting started |
 

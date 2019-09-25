@@ -1,5 +1,7 @@
 FROM gitpod/workspace-full
 
+USER root
+
 RUN \
   apt-get update && \
   apt-get install -y sudo curl git && \
@@ -7,3 +9,8 @@ RUN \
   sudo apt-get install git-lfs && \
   git lfs install
 
+USER gitpod
+
+ENV REMIRROR_E2E_DOCKER=true
+
+USER root

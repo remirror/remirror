@@ -1,8 +1,0 @@
-{
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "declaration": false
-  },
-  "include": ["*.ts{x,}", "**/*.ts{x,}"],
-  "exclude": ["dts-jest"]
-}

@@ -12,7 +12,5 @@ The attrs that will be added to the node. ID and label are plucked and used whil
 export declare type MentionExtensionAttrs = Attrs<OptionalMentionExtensionParams & {
     id: string;
     label: string;
-    name?: string;
-    range?: FromToEndParams;
 }>;
 ```

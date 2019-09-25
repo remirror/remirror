@@ -9,5 +9,5 @@ Retrieve plugin meta data of specified type
 <b>Signature:</b>
 
 ```typescript
-getPluginMeta: <GMeta>(key: string | Plugin<any, any> | import("prosemirror-state").PluginKey<any, import("prosemirror-model").Schema<string, string>>, tr: import("prosemirror-state").Transaction<any>) => GMeta
+getPluginMeta: <GMeta>(key: string | Plugin<any, any> | import("prosemirror-state").PluginKey<any, Schema<string, string>>, tr: import("prosemirror-state").Transaction<any>) => GMeta
 ```

@@ -14,14 +14,14 @@
   ],
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.6.0",
+    "@babel/runtime": "^7.6.2",
     "@remirror/react": "0.5.0",
     "@types/prosemirror-dev-tools": "^2.1.0",
     "prosemirror-dev-tools": "^2.1.1"
   },
   "peerDependencies": {
     "@types/prosemirror-state": "^1.2.3",
-    "@types/prosemirror-view": "^1.9.0",
+    "@types/prosemirror-view": "^1.11.0",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "prosemirror-state": "^1.2.3",

@@ -20,6 +20,8 @@ export const Menu = forwardRef<HTMLDivElement, JSX.IntrinsicElements['div']>((pr
   );
 });
 
+Menu.displayName = 'Menu';
+
 export const Toolbar: FC = props => {
   const { sx } = useRemirrorTheme();
 
@@ -65,6 +67,8 @@ export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>((props,
   );
 });
 
+IconButton.displayName = 'IconButton';
+
 /**
  * Allows positioners to work.
  */
@@ -73,6 +77,8 @@ export const EditorWrapper = forwardRef<HTMLDivElement, JSX.IntrinsicElements['d
 
   return <div {...props} ref={ref} css={sx({ position: 'relative' })} />;
 });
+
+EditorWrapper.displayName = 'EditorWrapper';
 
 type BubbleMenuTooltipProps = { bottom: number; left: number } & JSX.IntrinsicElements['span'];
 
@@ -95,6 +101,8 @@ export const BubbleMenuTooltip = forwardRef<HTMLSpanElement, BubbleMenuTooltipPr
   );
 });
 
+BubbleMenuTooltip.displayName = 'BubbleMenuTooltip';
+
 export const BubbleContent = forwardRef<HTMLSpanElement, JSX.IntrinsicElements['span']>((props, ref) => {
   const { css } = useRemirrorTheme();
 
@@ -115,3 +123,5 @@ export const BubbleContent = forwardRef<HTMLSpanElement, JSX.IntrinsicElements['
     />
   );
 });
+
+BubbleContent.displayName = 'BubbleContent';

@@ -105,14 +105,3 @@ describe('toEqualRemirrorDocument', () => {
     expect(newState.doc.content.child(0)).not.toEqualRemirrorDocument(oldNode);
   });
 });
-
-test('toMatchRemirrorSnapshot', () => {
-  const {
-    nodes: { doc, p },
-    add,
-  } = renderEditor({ plainNodes: [] });
-  const expected = p('simple');
-  add(doc(expected));
-
-  expect(expected).toMatchRemirrorSnapshot();
-});

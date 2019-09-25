@@ -4,8 +4,15 @@
 
 ## CreateSuggestCommandParams interface
 
+The parameters passed into the `createSuggest` suggester property.
+
 <b>Signature:</b>
 
 ```typescript
-export interface CreateSuggestCommandParams extends Partial<ReasonParams>, EditorViewParams, SuggestStateMatchParams, StageParams 
+export interface CreateSuggestCommandParams extends Partial<ReasonParams>, EditorViewParams, SuggestStateMatchParams, StageParams, SuggestMarkParams, SuggestIgnoreParams 
 ```
+
+## Remarks
+
+See: - [ReasonParams](./prosemirror-suggest.reasonparams.md) -  - [SuggestStateMatchParams](./prosemirror-suggest.suggeststatematchparams.md) - [StageParams](./prosemirror-suggest.stageparams.md) - [SuggestMarkParams](./prosemirror-suggest.suggestmarkparams.md) - [SuggestIgnoreParams](./prosemirror-suggest.suggestignoreparams.md)
+
