@@ -23,6 +23,7 @@ import {
   SuggestStateMatch,
   SuggestStateMatchReason,
   AddIgnoredParams,
+  RemoveIgnoredParams,
 } from './suggest-types';
 import { findFromSuggesters, findReason, runKeyBindings } from './suggest-utils';
 import { Transaction } from 'prosemirror-state';
@@ -272,9 +273,24 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     );
 
     this.ignored = this.ignored.add(this.view.state.doc, [decoration]);
+  };
 
-    // this.resetState();
-    // this.view.dispatch(this.view.state.tr.setMeta('skipApply', true));
+  /**
+   * Removes a single match character from the ignored decorations.
+   *
+   * @remarks
+   *
+   * After this point event handlers will begin to be called again for match character.
+   */
+  public removeIgnored = ({ from, char, name }: RemoveIgnoredParams) => {
+    const decorations = this.ignored.find(from, from + char.length);
+    const decoration = decorations[0];
+
+    if (!decoration || decoration.spec.name !== name) {
+      return;
+    }
+
+    this.ignored = this.ignored.remove([decoration]);
   };
 
   /**
@@ -290,6 +306,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
 
       this.ignored = this.ignored.remove(decorationsToClear);
     } else {
+      console.log('ignoring all');
       this.ignored = DecorationSet.empty;
     }
   };
@@ -347,7 +364,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   public apply({ tr, newState }: TransactionParams<GSchema> & CompareStateParams<GSchema>) {
     const { exit } = this.handlerMatches;
 
-    if (tr.getMeta('skipApply') || (!transactionChanged(tr) && !this.removed)) {
+    if (!transactionChanged(tr) && !this.removed) {
       return this;
     }
 
@@ -402,7 +419,9 @@ export class SuggestState<GSchema extends EditorSchema = any> {
 
     return onCharacterEntry({
       ...this.createParams(match),
-      entry: { text, from, to },
+      from,
+      to,
+      text,
     });
   }
 
