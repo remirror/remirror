@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/extension-code-block",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/extension-code-block",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "lib/index.js",
   "module": "lib/dist/extension-code-block.esm.js",
   "files": [
@@ -16,8 +16,8 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "@remirror/core": "0.5.0",
-    "@remirror/react-utils": "0.5.0",
+    "@remirror/core": "0.6.0",
+    "@remirror/react-utils": "0.6.0",
     "@types/prismjs": "^1.16.0",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",

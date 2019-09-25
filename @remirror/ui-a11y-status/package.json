@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-a11y-status",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-a11y-status",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "lib/index.js",
   "module": "lib/dist/ui-a11y-status.esm.js",
   "files": [
@@ -15,7 +15,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "@remirror/core-helpers": "0.5.0"
+    "@remirror/core-helpers": "0.6.0"
   },
   "publishConfig": {
     "access": "public"

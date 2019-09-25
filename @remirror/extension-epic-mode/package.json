@@ -4,7 +4,7 @@
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/extension-epic-mode",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "lib/index.js",
   "module": "lib/dist/extension-epic-mode.esm.js",
   "files": [
@@ -14,7 +14,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "@remirror/core": "0.5.0",
+    "@remirror/core": "0.6.0",
     "@types/prosemirror-state": "^1.2.3",
     "prosemirror-state": "^1.2.4"
   },

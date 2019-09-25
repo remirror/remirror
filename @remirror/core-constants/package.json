@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-constants",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-constants",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "lib/index.js",
   "module": "lib/dist/core-constants.esm.js",
   "files": [

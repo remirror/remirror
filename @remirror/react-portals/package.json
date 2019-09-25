@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/canary/@remirror/react-portals",
   "repository": "https://github.com/ifiokjr/remirror/tree/canary/@remirror/react-portals",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "lib/index.js",
   "module": "lib/dist/react-portals.esm.js",
   "files": [

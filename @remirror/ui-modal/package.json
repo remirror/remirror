@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-modal",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-modal",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "lib/index.js",
   "module": "lib/dist/ui-modal.esm.js",
   "files": [
@@ -16,8 +16,8 @@
   "dependencies": {
     "@babel/runtime": "^7.6.2",
     "@reach/visually-hidden": "^0.1.4",
-    "@remirror/core-helpers": "0.5.0",
-    "@remirror/ui": "0.5.0",
+    "@remirror/core-helpers": "0.6.0",
+    "@remirror/ui": "0.6.0",
     "react-modal": "^3.10.1"
   },
   "peerDependencies": {

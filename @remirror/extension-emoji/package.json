@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/extension-emoji",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/extension-emoji",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "lib/index.js",
   "module": "lib/dist/extension-emoji.esm.js",
   "files": [
@@ -15,8 +15,8 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "@remirror/core": "0.5.0",
-    "@remirror/react-node-view": "0.5.0",
+    "@remirror/core": "0.6.0",
+    "@remirror/react-node-view": "0.6.0",
     "@types/emoji-regex": "^8.0.0",
     "@types/match-sorter": "^2.3.0",
     "@types/prosemirror-model": "^1.7.2",
@@ -27,7 +27,7 @@
     "match-sorter": "^4.0.1",
     "prosemirror-model": "^1.7.2",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-suggest": "0.5.0",
+    "prosemirror-suggest": "0.6.0",
     "prosemirror-view": "^1.11.3"
   },
   "peerDependencies": {
@@ -40,7 +40,7 @@
   "devDependencies": {
     "emoji-mart": "2.11.1",
     "emojilib": "^2.4.0",
-    "jest-remirror": "0.5.0"
+    "jest-remirror": "0.6.0"
   },
   "publishConfig": {
     "access": "public"

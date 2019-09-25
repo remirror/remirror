@@ -4,12 +4,12 @@
   "description": "e2e tests",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "index.js",
   "scripts": {},
   "dependencies": {
     "@babel/runtime": "7.6.2",
-    "@remirror/core": "0.5.0",
+    "@remirror/core": "0.6.0",
     "@types/expect-puppeteer": "3.3.1",
     "@types/jest-environment-puppeteer": "4.3.1",
     "@types/mkdirp-promise": "5.0.0",
@@ -22,7 +22,7 @@
     "puppeteer": "1.20.0",
     "puppeteer-firefox": "0.5.0",
     "signal-exit": "3.0.2",
-    "test-keyboard": "0.5.0"
+    "test-keyboard": "0.6.0"
   },
   "peerDependencies": {
     "babel-jest": "^24.9.0",

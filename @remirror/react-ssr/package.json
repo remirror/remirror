@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/react-ssr",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/react-ssr",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "lib/index.js",
   "module": "lib/dist/react-ssr.esm.js",
   "browser": {
@@ -18,9 +18,9 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "@remirror/core": "0.5.0",
-    "@remirror/react-portals": "0.5.0",
-    "@remirror/react-renderer": "0.5.0",
+    "@remirror/core": "0.6.0",
+    "@remirror/react-portals": "0.6.0",
+    "@remirror/react-renderer": "0.6.0",
     "@types/min-document": "^2.19.0",
     "@types/prosemirror-view": "^1.11.0",
     "min-document": "^2.19.0",

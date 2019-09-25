@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-icons",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-icons",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "lib/index.js",
   "module": "lib/dist/ui-icons.esm.js",
   "files": [
@@ -16,9 +16,9 @@
   "dependencies": {
     "@babel/runtime": "^7.6.2",
     "@reach/visually-hidden": "^0.1.4",
-    "@remirror/core-helpers": "0.5.0",
-    "@remirror/core-types": "0.5.0",
-    "@remirror/ui": "0.5.0",
+    "@remirror/core-helpers": "0.6.0",
+    "@remirror/core-types": "0.6.0",
+    "@remirror/ui": "0.6.0",
     "@types/reach__visually-hidden": "^0.2.0"
   },
   "peerDependencies": {
