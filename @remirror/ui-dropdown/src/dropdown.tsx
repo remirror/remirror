@@ -8,6 +8,7 @@ import React, { forwardRef, useLayoutEffect, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 import { dropdownPositions } from './dropdown-constants';
 import { DropdownItem, DropdownPosition, DropdownProps } from './dropdown-types';
+import { transformDropdownPosition } from './dropdown-utils';
 
 /**
  * A dropdown for select components
@@ -52,6 +53,7 @@ export const DropdownSelect = forwardRef<HTMLDivElement, DropdownProps>(
       hoveredIndex,
     } = useMultishift({
       items,
+      multiple,
       selectedItems: selectedItemsProp,
       type: Type.Select,
       onSelectedItemsChange: onSelect,
@@ -202,17 +204,3 @@ const DropdownItemComponent = ({
     </div>
   );
 };
-
-const transformer = {
-  right: 'left',
-  left: 'right',
-  above: 'below',
-  below: 'above',
-} as const;
-
-type Transformation = keyof typeof transformer;
-
-const transformDropdownPosition = (
-  dropdownPosition: DropdownPosition,
-  to: Transformation,
-): DropdownPosition => dropdownPosition.replace(transformer[to], to) as DropdownPosition;
