@@ -1,6 +1,15 @@
 {
   "extends": "../../support/tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "lib"
+    "outDir": "lib",
+    "types": [
+      "jest",
+      "jest-extended",
+      "jest-axe",
+      "@testing-library/jest-dom/extend-expect",
+      "jest-emotion",
+      "snapshot-diff",
+      "node"
+    ]
   }
 }
