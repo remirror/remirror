@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`plugin supports deleting content 1`] = `
+Prosemirror node: {
+  "type": "doc",
+  "content": [
+    {
+      "type": "paragraph",
+      "attrs": {
+        "align": null,
+        "id": null,
+        "indent": 0,
+        "lineSpacing": null
+      }
+    }
+  ]
+}
+`;

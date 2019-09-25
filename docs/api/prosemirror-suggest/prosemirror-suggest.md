@@ -21,14 +21,12 @@ Primitives for building your prosemirror suggestion and autocomplete functionali
 |  [CompareMatchParams](./prosemirror-suggest.comparematchparams.md) | A parameter builder interface which compares the previous and next match. |
 |  [CreateSuggestCommandParams](./prosemirror-suggest.createsuggestcommandparams.md) | The parameters passed into the <code>createSuggest</code> suggester property. |
 |  [FromToEndParams](./prosemirror-suggest.fromtoendparams.md) | A parameter builder interface describing a <code>from</code>/<code>to</code>/<code>end</code> range. |
-|  [GetStageParams](./prosemirror-suggest.getstageparams.md) | The parameters passed through to the [Suggester.getStage()](./prosemirror-suggest.suggester.getstage.md) method. |
 |  [KeyboardEventParams](./prosemirror-suggest.keyboardeventparams.md) | A parameter builder interface describing the event which triggers the keyboard event handler. |
 |  [MatchValue](./prosemirror-suggest.matchvalue.md) | The match value with the full and partial text. |
 |  [OnKeyDownParams](./prosemirror-suggest.onkeydownparams.md) | The parameters required by the . |
 |  [ReasonMatchParams](./prosemirror-suggest.reasonmatchparams.md) | A parameter builder interface which adds the match property. |
 |  [ReasonParams](./prosemirror-suggest.reasonparams.md) | A parameter builder interface indicating the reason the handler was called. |
 |  [RemoveIgnoredParams](./prosemirror-suggest.removeignoredparams.md) | The parameters needed for the  action method available to the suggest plugin handlers. |
-|  [StageParams](./prosemirror-suggest.stageparams.md) | A parameter builder interface describing the stage of the suggestion whether is it being edited or newly created. |
 |  [SuggestCallbackParams](./prosemirror-suggest.suggestcallbackparams.md) |  |
 |  [SuggestChangeHandlerParams](./prosemirror-suggest.suggestchangehandlerparams.md) | The parameters passed to the [Suggester.onChange()](./prosemirror-suggest.suggester.onchange.md) method. |
 |  [SuggestCharacterEntryParams](./prosemirror-suggest.suggestcharacterentryparams.md) | The parameters passed to the [Suggester.onCharacterEntry()](./prosemirror-suggest.suggester.oncharacterentry.md) method. |
@@ -77,7 +75,6 @@ Primitives for building your prosemirror suggestion and autocomplete functionali
 |  [SuggestKeyBinding](./prosemirror-suggest.suggestkeybinding.md) | A method for performing actions when a certain key / pattern is pressed. |
 |  [SuggestKeyBindingMap](./prosemirror-suggest.suggestkeybindingmap.md) | The keybindings shape for the [Suggester.keyBindings](./prosemirror-suggest.suggester.keybindings.md) property. |
 |  [SuggestReplacementType](./prosemirror-suggest.suggestreplacementtype.md) | Determines whether to replace the full match or the partial match (up to the cursor position). |
-|  [SuggestStage](./prosemirror-suggest.suggeststage.md) | A suggestion can have two stages. When it is <code>new</code> and when it has already been created and is now being <code>edit</code>ed.<!-- -->Separating the stages allows for greater control in how mentions are updated.<!-- -->The edit state is only applicable for editable suggestions. Most nodes and text insertions can't be edited once created. |
 
 ## Remarks
 

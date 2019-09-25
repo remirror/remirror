@@ -36,7 +36,6 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
 |  Method | Description |
 |  --- | --- |
 |  [createCommand(params)](./prosemirror-suggest.suggester.createcommand.md) | Create the suggested actions which are made available to the <code>onExit</code> and on<code>onChange</code> handlers. |
-|  [getStage(params)](./prosemirror-suggest.suggester.getstage.md) | Check the current match and editor state to determine whether this match is being <code>new</code>ly created or <code>edit</code>ed. |
 |  [onChange(params)](./prosemirror-suggest.suggester.onchange.md) | Called whenever a suggestion becomes active or changes in anyway. |
 |  [onCharacterEntry(params)](./prosemirror-suggest.suggester.oncharacterentry.md) | Called for each character entry and can be used to disable certain characters. |
 |  [onExit(params)](./prosemirror-suggest.suggester.onexit.md) | Called when a suggestion is exited with the pre-exit match value. |

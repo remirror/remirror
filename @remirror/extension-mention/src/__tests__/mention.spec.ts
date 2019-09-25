@@ -76,9 +76,12 @@ describe('plugin', () => {
   };
 
   const mocks = {
-    onChange: jest.fn(),
+    onChange: jest.fn(({ reason }) => {
+      console.log('change handler called', reason);
+    }),
     onExit: jest.fn(({ command }: SuggestCommandParams<MentionExtensionSuggestCommand>) => {
       command({ appendText: '' });
+      console.log('exit handler called');
     }),
   };
 
@@ -155,6 +158,21 @@ describe('plugin', () => {
     add(doc(p('<cursor>'))).insertText(`This ${label} `);
     expect(view.state).toContainRemirrorDocument(p('This ', mentionMark(label), ' '));
     expect(mocks.onChange).toHaveBeenCalledTimes(id.length);
+  });
+
+  it('supports deleting content', () => {
+    add(doc(p('<cursor>')))
+      .insertText(`@1`)
+      .dispatchCommand((state, dispatch) => {
+        if (dispatch) {
+          dispatch(state.tr.delete(0, state.selection.head));
+        }
+
+        return true;
+      })
+      .callback(({ doc }) => {
+        expect(doc).toMatchSnapshot();
+      });
   });
 
   it('supports multiple characters', () => {

@@ -26,5 +26,5 @@ export declare class MentionExtension extends MarkExtension<MentionExtensionOpti
 |  --- | --- | --- |
 |  [commands({ type, getState })](./extension-mention.mentionextension.commands.md) |  |  |
 |  [pasteRules({ type })](./extension-mention.mentionextension.pasterules.md) |  |  |
-|  [suggestions({ getActions, type })](./extension-mention.mentionextension.suggestions.md) |  |  |
+|  [suggestions({ getActions, type, getState })](./extension-mention.mentionextension.suggestions.md) |  |  |
 

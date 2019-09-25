@@ -218,7 +218,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     });
   }
 
-  public suggestions({ getActions, type }: ExtensionManagerMarkTypeParams): Suggester[] {
+  public suggestions({ getActions, type, getState }: ExtensionManagerMarkTypeParams): Suggester[] {
     const {
       matchers,
       onChange,
@@ -238,17 +238,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
         onExit,
         keyBindings,
         onCharacterEntry,
-        getStage: ({ match, state }) => {
-          return isMarkActive({
-            from: match.range.from,
-            to: match.range.end,
-            type: type,
-            state: state,
-          })
-            ? 'edit'
-            : 'new';
-        },
-        createCommand: ({ match, stage, reason, setMarkRemoved }) => {
+        createCommand: ({ match, reason, setMarkRemoved }) => {
           const {
             suggester: { name },
             range,
@@ -256,8 +246,15 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
           const create = getActions('createMention');
           const update = getActions('updateMention');
           const remove = getActions('removeMention');
+          const isActive = isMarkActive({
+            from: match.range.from,
+            to: match.range.end,
+            type: type,
 
-          const fn = stage === 'new' ? create : update;
+            state: getState(),
+          });
+
+          const fn = isActive ? update : create;
           const isSplit = isSplitReason(reason);
           const isInvalid = isInvalidSplitReason(reason);
           const isRemoved = isRemovedReason(reason);

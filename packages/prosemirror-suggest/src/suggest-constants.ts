@@ -7,7 +7,6 @@ const defaultHandler = () => false;
 export const DEFAULT_SUGGESTER = {
   appendText: '',
   createCommand: () => noop,
-  getStage: () => 'new' as const,
   ignoredClassName: undefined as any,
   ignoredTag: 'span',
   invalidPrefixCharacters: undefined as any,

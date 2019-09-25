@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-suggestions({ getActions, type }: ExtensionManagerMarkTypeParams): Suggester[];
+suggestions({ getActions, type, getState }: ExtensionManagerMarkTypeParams): Suggester[];
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  { getActions, type } | <code>ExtensionManagerMarkTypeParams</code> |  |
+|  { getActions, type, getState } | <code>ExtensionManagerMarkTypeParams</code> |  |
 
 <b>Returns:</b>
 

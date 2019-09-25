@@ -19,7 +19,6 @@ import {
   Suggester,
   SuggestKeyBindingParams,
   SuggestReasonMap,
-  SuggestStage,
   SuggestStateMatch,
   SuggestStateMatchReason,
   AddIgnoredParams,
@@ -94,7 +93,6 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     return match.suggester.createCommand({
       match,
       reason,
-      stage: this.stage,
       view: this.view,
       setMarkRemoved: this.setRemovedTrue,
       addIgnored: this.addIgnored,
@@ -107,13 +105,6 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    */
   get match(): Readonly<SuggestStateMatch> | undefined {
     return this.next ? this.next : this.prev && this.handlerMatches.exit ? this.prev : undefined;
-  }
-
-  /**
-   * Provides the current stage of the mention.
-   */
-  get stage(): SuggestStage {
-    return this.match ? this.match.suggester.getStage({ match: this.match, state: this.view.state }) : 'new';
   }
 
   /**
@@ -157,7 +148,6 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   private createParams(match: SuggestStateMatch): SuggestCallbackParams {
     return {
       view: this.view,
-      stage: this.stage,
       addIgnored: this.addIgnored,
       clearIgnored: this.clearIgnored,
       command: this.getCommand(match),

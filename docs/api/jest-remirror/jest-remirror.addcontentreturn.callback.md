@@ -29,14 +29,14 @@ add(doc(p('<cursor>'))).insertText(':-)')
 <b>Signature:</b>
 
 ```typescript
-callback(fn: (content: Pick<AddContentReturn<GExtension>, 'helpers' | 'actions' | 'end' | 'state' | 'tags' | 'start' | 'doc'>) => void): AddContentReturn<GExtension>;
+callback(fn: (content: Pick<AddContentReturn<GExtension>, 'helpers' | 'actions' | 'end' | 'state' | 'tags' | 'start' | 'doc' | 'view'>) => void): AddContentReturn<GExtension>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  fn | <code>(content: Pick&lt;AddContentReturn&lt;GExtension&gt;, 'helpers' &#124; 'actions' &#124; 'end' &#124; 'state' &#124; 'tags' &#124; 'start' &#124; 'doc'&gt;) =&gt; void</code> |  |
+|  fn | <code>(content: Pick&lt;AddContentReturn&lt;GExtension&gt;, 'helpers' &#124; 'actions' &#124; 'end' &#124; 'state' &#124; 'tags' &#124; 'start' &#124; 'doc' &#124; 'view'&gt;) =&gt; void</code> |  |
 
 <b>Returns:</b>
 

@@ -13,6 +13,7 @@ import {
   ProsemirrorNode,
   SchemaFromExtensions,
   SchemaParams,
+  EditorViewParams,
 } from '@remirror/core';
 import { InjectedRemirrorProps } from '@remirror/react';
 import { RenderResult } from '@testing-library/react/pure';
@@ -88,7 +89,8 @@ export interface TaggedProsemirrorNode extends PMNode {
 }
 
 export interface AddContentReturn<GExtension extends AnyExtension>
-  extends EditorStateParams<SchemaFromExtensions<GExtension>> {
+  extends EditorStateParams<SchemaFromExtensions<GExtension>>,
+    EditorViewParams<SchemaFromExtensions<GExtension>> {
   /**
    * The current prosemirror document.
    */
@@ -157,7 +159,7 @@ export interface AddContentReturn<GExtension extends AnyExtension>
     fn: (
       content: Pick<
         AddContentReturn<GExtension>,
-        'helpers' | 'actions' | 'end' | 'state' | 'tags' | 'start' | 'doc'
+        'helpers' | 'actions' | 'end' | 'state' | 'tags' | 'start' | 'doc' | 'view'
       >,
     ) => void,
   ): AddContentReturn<GExtension>;

@@ -9,7 +9,6 @@ import { CompareStateParams } from '@remirror/core-types';
 import { DecorationSet } from 'prosemirror-view';
 import { EditorSchema } from '@remirror/core-types';
 import { EditorState } from '@remirror/core-types';
-import { EditorStateParams } from '@remirror/core-types';
 import { EditorView } from '@remirror/core-types';
 import { EditorViewParams } from '@remirror/core-types';
 import { FromToParams } from '@remirror/core-types';
@@ -43,7 +42,7 @@ export interface CompareMatchParams {
 export const createRegexFromSuggester: ({ char, matchOffset, startOfLine, supportedCharacters, }: Pick<Required<Suggester<import("@remirror/core-types").AnyFunction<void>>>, "char" | "startOfLine" | "supportedCharacters" | "matchOffset">, flags?: string) => RegExp;
 
 // @public
-export interface CreateSuggestCommandParams extends Partial<ReasonParams>, EditorViewParams, SuggestStateMatchParams, StageParams, SuggestMarkParams, SuggestIgnoreParams {
+export interface CreateSuggestCommandParams extends Partial<ReasonParams>, EditorViewParams, SuggestStateMatchParams, SuggestMarkParams, SuggestIgnoreParams {
 }
 
 // @public (undocumented)
@@ -58,7 +57,6 @@ export const DEFAULT_SUGGEST_ACTIONS: {
 export const DEFAULT_SUGGESTER: {
     appendText: string;
     createCommand: () => () => void;
-    getStage: () => "new";
     ignoredClassName: any;
     ignoredTag: string;
     invalidPrefixCharacters: any;
@@ -98,10 +96,6 @@ export interface FromToEndParams extends FromToParams {
 
 // @public
 export const getRegexPrefix: (onlyStartOfLine: boolean) => "" | "^";
-
-// @public
-export interface GetStageParams extends SuggestStateMatchParams, EditorStateParams {
-}
 
 // Warning: (ae-forgotten-export) The symbol "SuggestState" needs to be exported by the entry point index.d.ts
 // 
@@ -181,15 +175,10 @@ export interface RemoveIgnoredParams extends Pick<Suggester, 'char' | 'name'> {
 export const selectionOutsideMatch: ({ match, selection, }: Partial<SuggestStateMatchParams> & SelectionParams<any, import("prosemirror-state").Selection<any>>) => boolean | undefined;
 
 // @public
-export interface StageParams {
-    stage: SuggestStage;
-}
-
-// @public
 export const suggest: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(...suggesters: Suggester<import("@remirror/core-types").AnyFunction<void>>[]) => Plugin<SuggestState<any>, GSchema>;
 
 // @public (undocumented)
-export interface SuggestCallbackParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestStateMatch, EditorViewParams, SuggestCommandParams<GCommand>, StageParams, SuggestIgnoreParams {
+export interface SuggestCallbackParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestStateMatch, EditorViewParams, SuggestCommandParams<GCommand>, SuggestIgnoreParams {
 }
 
 // @public
@@ -210,7 +199,6 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
     appendText?: string;
     char: string;
     createCommand?(params: CreateSuggestCommandParams): GCommand;
-    getStage?(params: GetStageParams): SuggestStage;
     ignoredClassName?: string;
     ignoredTag?: string;
     invalidPrefixCharacters?: RegExp | string;
@@ -266,9 +254,6 @@ export interface SuggestReasonMap {
 
 // @public
 export type SuggestReplacementType = 'full' | 'partial';
-
-// @public
-export type SuggestStage = 'new' | 'edit';
 
 // @public
 export interface SuggestStateMatch<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggesterParams<GCommand> {

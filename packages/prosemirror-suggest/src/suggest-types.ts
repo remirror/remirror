@@ -1,10 +1,4 @@
-import {
-  AnyFunction,
-  EditorStateParams,
-  EditorViewParams,
-  FromToParams,
-  TextParams,
-} from '@remirror/core-types';
+import { AnyFunction, EditorViewParams, FromToParams, TextParams } from '@remirror/core-types';
 import { ChangeReason, ExitReason } from './suggest-constants';
 
 /**
@@ -194,12 +188,6 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
   keyBindings?: SuggestKeyBindingMap<GCommand>;
 
   /**
-   * Check the current match and editor state to determine whether this match is
-   * being `new`ly created or `edit`ed.
-   */
-  getStage?(params: GetStageParams): SuggestStage;
-
-  /**
    * Create the suggested actions which are made available to the `onExit` and
    * on`onChange` handlers.
    *
@@ -383,7 +371,6 @@ export interface SuggestMarkParams {
  * - {@link ReasonParams}
  * - {@link @remirror/core-types#EditorViewParams}
  * - {@link SuggestStateMatchParams}
- * - {@link StageParams}
  * - {@link SuggestMarkParams}
  * - {@link SuggestIgnoreParams}
  */
@@ -391,20 +378,8 @@ export interface CreateSuggestCommandParams
   extends Partial<ReasonParams>,
     EditorViewParams,
     SuggestStateMatchParams,
-    StageParams,
     SuggestMarkParams,
     SuggestIgnoreParams {}
-
-/**
- * The parameters passed through to the {@link Suggester.getStage} method.
- *
- * @remarks
- *
- * See:
- * - {@link SuggestStateMatchParams}
- * - {@link @remirror/core-types#EditorStateParams}
- */
-export interface GetStageParams extends SuggestStateMatchParams, EditorStateParams {}
 
 /**
  * Determines whether to replace the full match or the partial match (up to the
@@ -416,20 +391,7 @@ export interface SuggestCallbackParams<GCommand extends AnyFunction<void> = AnyF
   extends SuggestStateMatch,
     EditorViewParams,
     SuggestCommandParams<GCommand>,
-    StageParams,
     SuggestIgnoreParams {}
-
-/**
- * A parameter builder interface describing the stage of the suggestion whether
- * is it being edited or newly created.
- */
-export interface StageParams {
-  /**
-   * The current stage of the focused mention. Can be used to decide which
-   * action to use.
-   */
-  stage: SuggestStage;
-}
 
 /**
  * The parameters required by the {@link Suggester.onKeyDown}.
@@ -544,17 +506,6 @@ export type SuggestKeyBindingMap<GCommand extends AnyFunction<void> = AnyFunctio
   >
 > &
   Record<string, SuggestKeyBinding<GCommand>>;
-
-/**
- * A suggestion can have two stages. When it is `new` and when it has already
- * been created and is now being `edit`ed.
- *
- * Separating the stages allows for greater control in how mentions are updated.
- *
- * The edit state is only applicable for editable suggestions. Most nodes and
- * text insertions can't be edited once created.
- */
-export type SuggestStage = 'new' | 'edit';
 
 /**
  * A parameter builder interface which adds the command property.
