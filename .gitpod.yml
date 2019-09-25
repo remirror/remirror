@@ -10,7 +10,8 @@ ports:
   - port: 3000
   - port: 3001
 tasks:
-  - init: yarn
+  - before: brew install git-lfs
+    init: yarn
     command: yarn storybook
 
 vscode:
