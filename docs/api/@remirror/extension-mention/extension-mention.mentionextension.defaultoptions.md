@@ -10,13 +10,12 @@ Provide the default options for this extension
 
 ```typescript
 readonly defaultOptions: {
-        matchers: import("./mention-types").SuggestionMatcher[];
+        matchers: never[];
         appendText: string;
         mentionClassName: string;
         extraAttrs: never[];
-        tag: "a";
-        decorationsTag: "a";
-        suggestionClassName: string;
+        mentionTag: "a";
+        suggestTag: "a";
         onChange: () => boolean;
         onExit: () => boolean;
         onCharacterEntry: () => boolean;

@@ -4,7 +4,7 @@
 
 ## Suggester.char property
 
-The character to match against.
+The activation character(s) to match against.
 
 <b>Signature:</b>
 
@@ -16,5 +16,5 @@ char: string;
 
 For example if building a mention plugin you might want to set this to `@`<!-- -->. Multi string characters are theoretically supported (although currently untested).
 
-The character does not have to be
+The character does not have to be unique amongst the suggesters and the eventually matched suggester will depend on the specificity of the regex the order in which the suggesters are added to the plugin.
 

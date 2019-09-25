@@ -4,7 +4,7 @@
 
 ## ExitReason enum
 
-The potential reasons for an exit
+The potential reasons for an exit of a mention.
 
 <b>Signature:</b>
 

@@ -9,5 +9,5 @@ Check to see if the passed value is a MarkType.
 <b>Signature:</b>
 
 ```typescript
-isMarkType: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(value: unknown) => value is MarkType<GSchema>
+isMarkType: <GSchema extends Schema<string, string> = any>(value: unknown) => value is MarkType<GSchema>
 ```

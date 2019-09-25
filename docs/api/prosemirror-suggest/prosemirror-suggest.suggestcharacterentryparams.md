@@ -4,15 +4,10 @@
 
 ## SuggestCharacterEntryParams interface
 
+The parameters passed to the [Suggester.onCharacterEntry()](./prosemirror-suggest.suggester.oncharacterentry.md) method.
+
 <b>Signature:</b>
 
 ```typescript
-export interface SuggestCharacterEntryParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestCallbackParams<GCommand> 
+export interface SuggestCharacterEntryParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestCallbackParams<GCommand>, FromToParams, TextParams 
 ```
-
-## Properties
-
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [entry](./prosemirror-suggest.suggestcharacterentryparams.entry.md) | <code>FromToParams &amp; {</code><br/><code>        text: string;</code><br/><code>    }</code> | The text entry that was received. |
-

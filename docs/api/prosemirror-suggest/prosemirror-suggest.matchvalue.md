@@ -21,7 +21,7 @@ export interface MatchValue
 
 ## Remarks
 
-For a suggester with a char `@` then the following text `@ab|c` where `|` is the current cursor position will create a query with the following signature.
+For a suggester with a char `@` then the following text `@ab|c` where `|` is the current cursor position will create a queryText with the following signature.
 
 ```json
 { "full": "abc", "partial": "ab" }

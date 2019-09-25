@@ -4,6 +4,8 @@
 
 ## StageParams interface
 
+A parameter builder interface describing the stage of the suggestion whether is it being edited or newly created.
+
 <b>Signature:</b>
 
 ```typescript

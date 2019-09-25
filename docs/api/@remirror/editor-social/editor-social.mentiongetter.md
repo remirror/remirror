@@ -9,5 +9,5 @@ A method for retrieving the most up to date mention data.
 <b>Signature:</b>
 
 ```typescript
-export declare type MentionGetter = () => SuggestionStateMatch;
+export declare type MentionGetter = () => SuggestStateMatch;
 ```

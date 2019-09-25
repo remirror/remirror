@@ -9,5 +9,5 @@ Set the plugin meta data
 <b>Signature:</b>
 
 ```typescript
-setPluginMeta: <GMeta>(key: string | Plugin<any, any> | import("prosemirror-state").PluginKey<any, import("prosemirror-model").Schema<string, string>>, tr: import("prosemirror-state").Transaction<any>, data: GMeta) => import("prosemirror-state").Transaction<any>
+setPluginMeta: <GMeta>(key: string | Plugin<any, any> | import("prosemirror-state").PluginKey<any, Schema<string, string>>, tr: import("prosemirror-state").Transaction<any>, data: GMeta) => import("prosemirror-state").Transaction<any>
 ```

@@ -9,5 +9,5 @@ Predicate checking whether the value is a ResolvedPosition.
 <b>Signature:</b>
 
 ```typescript
-isResolvedPos: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(value: unknown) => value is PMResolvedPos<GSchema>
+isResolvedPos: <GSchema extends Schema<string, string> = any>(value: unknown) => value is PMResolvedPos<GSchema>
 ```

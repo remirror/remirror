@@ -4,7 +4,7 @@
 
 ## SuggestCommandParams interface
 
-The command
+A parameter builder interface which adds the command property.
 
 <b>Signature:</b>
 

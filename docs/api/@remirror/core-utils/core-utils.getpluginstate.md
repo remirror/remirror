@@ -9,5 +9,5 @@ Retrieve plugin state of specified type
 <b>Signature:</b>
 
 ```typescript
-getPluginState: <GState>(plugin: Plugin<any, any> | import("prosemirror-state").PluginKey<any, import("prosemirror-model").Schema<string, string>>, state: Readonly<PMEditorState<any>>) => GState
+getPluginState: <GState>(plugin: Plugin<any, any> | import("prosemirror-state").PluginKey<any, Schema<string, string>>, state: Readonly<PMEditorState<any>>) => GState
 ```

@@ -409,7 +409,7 @@ export interface NodeTypesParams<GSchema extends EditorSchema = any> {
 export type NodeView<GSchema extends EditorSchema = any> = NodeView_2<GSchema>;
 
 // @public
-export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (node: ProsemirrorNode, view: EditorView, getPos: () => number, decorations: Decoration_2[]) => GNodeView;
+export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (node: ProsemirrorNode, view: EditorView, getPos: (() => number) | boolean, decorations: Decoration_2[]) => GNodeView;
 
 // @public (undocumented)
 export type NodeWithAttrs<GAttrs extends Attrs = Attrs> = ProsemirrorNode & {

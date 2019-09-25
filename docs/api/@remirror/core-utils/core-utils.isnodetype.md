@@ -9,5 +9,5 @@ Check to see if the passed value is a NodeType.
 <b>Signature:</b>
 
 ```typescript
-isNodeType: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(value: unknown) => value is NodeType<GSchema>
+isNodeType: <GSchema extends Schema<string, string> = any>(value: unknown) => value is NodeType<GSchema>
 ```

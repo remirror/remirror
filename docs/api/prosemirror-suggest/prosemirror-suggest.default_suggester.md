@@ -8,20 +8,22 @@
 
 ```typescript
 DEFAULT_SUGGESTER: {
-    startOfLine: boolean;
-    supportedCharacters: RegExp;
-    matchOffset: number;
     appendText: string;
-    decorationsTag: "span";
-    suggestionClassName: string;
-    onChange: () => boolean;
-    onExit: () => boolean;
-    onCharacterEntry: () => boolean;
-    keyBindings: {};
     createCommand: () => () => void;
     getStage: () => "new";
-    ignoreDecorations: boolean;
-    validPrefixCharacters: RegExp;
+    ignoredClassName: any;
+    ignoredTag: string;
     invalidPrefixCharacters: any;
+    keyBindings: {};
+    matchOffset: number;
+    noDecorations: boolean;
+    onChange: () => boolean;
+    onCharacterEntry: () => boolean;
+    onExit: () => boolean;
+    startOfLine: boolean;
+    suggestClassName: string;
+    suggestTag: string;
+    supportedCharacters: RegExp;
+    validPrefixCharacters: RegExp;
 }
 ```

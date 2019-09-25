@@ -4,6 +4,8 @@
 
 ## SuggestReasonMap interface
 
+A mapping of the handler matches with their reasons for occurring within the suggest state.
+
 <b>Signature:</b>
 
 ```typescript

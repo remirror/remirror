@@ -4,15 +4,15 @@
 
 ## OnKeyDownParams interface
 
+The parameters required by the .
+
 <b>Signature:</b>
 
 ```typescript
-export interface OnKeyDownParams extends SuggestStateMatch, EditorViewParams 
+export interface OnKeyDownParams extends SuggestStateMatch, EditorViewParams, KeyboardEventParams 
 ```
 
-## Properties
+## Remarks
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [event](./prosemirror-suggest.onkeydownparams.event.md) | <code>KeyboardEvent</code> | The keyboard event |
+See: - [SuggestStateMatch](./prosemirror-suggest.suggeststatematch.md) -  - [KeyboardEventParams](./prosemirror-suggest.keyboardeventparams.md)
 

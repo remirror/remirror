@@ -15,7 +15,7 @@ import { NodeCursorExtension } from '@remirror/core-extensions';
 import { PlaceholderExtension } from '@remirror/core-extensions';
 import { PureComponent } from 'react';
 import { RemirrorTheme } from '@remirror/core';
-import { SuggestionStateMatch } from '@remirror/extension-mention';
+import { SuggestStateMatch } from 'prosemirror-suggest';
 
 // @public (undocumented)
 export interface ActiveTagData extends TagData {
@@ -44,7 +44,7 @@ export type ImgProps = JSX.IntrinsicElements['img'];
 export type MatchName = 'at' | 'tag';
 
 // @public
-export type MentionGetter = () => SuggestionStateMatch;
+export type MentionGetter = () => SuggestStateMatch;
 
 // @public (undocumented)
 export interface MentionGetterParams {
@@ -88,6 +88,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
 
 // @public (undocumented)
 export interface SocialEditorProps extends Partial<ManagedRemirrorProviderProps<SocialExtensions>> {
+    hideCharacterIndicator?: boolean;
     onMentionChange(params?: OnMentionChangeParams): void;
     onUrlsChange?(params: {
         set: Set<string>;

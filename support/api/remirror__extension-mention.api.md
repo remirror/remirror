@@ -4,84 +4,16 @@
 
 ```ts
 
-import { ActionGetter } from '@remirror/core';
 import { Attrs } from '@remirror/core';
 import { CommandMarkTypeParams } from '@remirror/core';
-import { CompareStateParams } from '@remirror/core';
-import { DecorationSet } from 'prosemirror-view';
-import { EditorState } from '@remirror/core';
-import { EditorView } from '@remirror/core';
-import { EditorViewParams } from '@remirror/core';
 import { ExtensionManagerMarkTypeParams } from '@remirror/core';
-import { FromToParams } from '@remirror/core';
-import { MakeRequired } from '@remirror/core';
+import { FromToEndParams } from 'prosemirror-suggest';
 import { MarkExtension } from '@remirror/core';
 import { MarkExtensionOptions } from '@remirror/core';
 import { MarkExtensionSpec } from '@remirror/core';
-import { MarkType } from '@remirror/core';
-import { MarkTypeParams } from '@remirror/core';
-import { Plugin } from '@remirror/core';
-import { Plugin as Plugin_2 } from 'prosemirror-state';
 import { RangeParams } from '@remirror/core';
-import { TextParams } from '@remirror/core';
-import { TransactionParams } from '@remirror/core';
-
-// @public
-export enum ActionTaken {
-    Changed = "changed",
-    Entered = "entered",
-    Exited = "exited",
-    Moved = "moved"
-}
-
-// @public
-export enum ChangeReason {
-    JumpBackward = "jump-backward-change",
-    JumpForward = "jump-forward-change",
-    Move = "move",
-    SelectionInside = "selection-inside",
-    Start = "start",
-    Text = "change-character"
-}
-
-// @public
-export interface CompareMatchParams {
-    next: SuggestionStateMatch;
-    prev: SuggestionStateMatch;
-}
-
-// @public
-export interface CompareMatchParams {
-    next: SuggestionStateMatch;
-    prev: SuggestionStateMatch;
-}
-
-// @public
-export const createSuggestionPlugin: ({ extension, ...params }: SuggestionStateCreateParams) => Plugin_2<SuggestionState, import("prosemirror-model").Schema<string, string>>;
-
-// @public
-export enum ExitReason {
-    End = "exit-end",
-    InvalidSplit = "invalid-exit-split",
-    JumpBackward = "jump-backward-exit",
-    JumpForward = "jump-forward-exit",
-    MoveEnd = "move-end",
-    MoveStart = "move-start",
-    Removed = "delete",
-    SelectionOutside = "selection-outside",
-    Split = "exit-split"
-}
-
-// @public (undocumented)
-export interface FromToEndParams extends FromToParams {
-    end: number;
-}
-
-// @public (undocumented)
-export interface MatchLength {
-    full: string;
-    partial: string;
-}
+import { Suggester } from 'prosemirror-suggest';
+import { SuggestReplacementType } from 'prosemirror-suggest';
 
 // @public
 export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
@@ -92,13 +24,12 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
         removeMention: ({ range }?: Partial<RangeParams<never>>) => import("@remirror/core").CommandFunction<any>;
     };
     readonly defaultOptions: {
-        matchers: import("./mention-types").SuggestionMatcher[];
+        matchers: never[];
         appendText: string;
         mentionClassName: string;
         extraAttrs: never[];
-        tag: "a";
-        decorationsTag: "a";
-        suggestionClassName: string;
+        mentionTag: "a";
+        suggestTag: "a";
         onChange: () => boolean;
         onExit: () => boolean;
         onCharacterEntry: () => boolean;
@@ -109,185 +40,41 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     // (undocumented)
     pasteRules({ type }: ExtensionManagerMarkTypeParams): import("prosemirror-state").Plugin<any, any>[];
     // (undocumented)
-    plugin(params: ExtensionManagerMarkTypeParams): Plugin<SuggestionState>;
-    // (undocumented)
     readonly schema: MarkExtensionSpec;
+    // (undocumented)
+    suggestions({ getActions, type }: ExtensionManagerMarkTypeParams): Suggester[];
 }
 
 // @public
 export type MentionExtensionAttrs = Attrs<OptionalMentionExtensionParams & {
     id: string;
     label: string;
-    name?: string;
-    range?: FromToEndParams;
 }>;
 
-// @public (undocumented)
-export type MentionExtensionCommands = 'createMention' | 'updateMention' | 'removeMention';
+// @public
+export interface MentionExtensionMatcher extends Pick<Suggester, 'char' | 'name' | 'startOfLine' | 'supportedCharacters' | 'validPrefixCharacters' | 'invalidPrefixCharacters' | 'matchOffset' | 'appendText' | 'suggestClassName'> {
+    mentionClassName?: string;
+}
 
 // @public
-export interface MentionExtensionOptions extends MarkExtensionOptions {
-    appendText?: string;
-    decorationsTag?: keyof HTMLElementTagNameMap;
-    keyBindings?: SuggestionKeyBindingMap;
-    matchers?: OptionalSuggestionMatcher[];
-    mentionClassName?: string;
-    onChange?(params: OnChangeCallbackParams): void;
-    onCharacterEntry?(params: OnCharacterEntryParams): boolean;
-    onExit?(params: OnExitCallbackParams): void;
-    suggestionClassName?: string;
-    readonly tag?: keyof HTMLElementTagNameMap;
+export interface MentionExtensionOptions extends MarkExtensionOptions, Pick<Suggester<MentionExtensionSuggestCommand>, 'suggestTag' | 'noDecorations' | 'onChange' | 'onExit' | 'onCharacterEntry' | 'keyBindings'> {
+    matchers: MentionExtensionMatcher[];
+    mentionTag?: string;
 }
 
-// @public (undocumented)
-export interface OnChangeCallbackParams extends SuggestionCallbackParams, ReasonParams<ChangeReason> {
-}
-
-// @public (undocumented)
-export interface OnCharacterEntryParams extends SuggestionCallbackParams {
-    entry: FromToParams & {
-        text: string;
-    };
-}
-
-// @public (undocumented)
-export interface OnExitCallbackParams extends SuggestionCallbackParams, ReasonParams<ExitReason> {
-}
-
-// @public (undocumented)
-export interface OnKeyDownParams extends SuggestionStateMatch, EditorViewParams {
-    event: KeyboardEvent;
-}
+// @public
+export type MentionExtensionSuggestCommand = (attrs: SuggestionCommandAttrs) => void;
 
 // @public (undocumented)
 export interface OptionalMentionExtensionParams {
     appendText?: string;
-    replacementType?: SuggestionReplacementType;
-}
-
-// @public (undocumented)
-export type OptionalSuggestionMatcher = MakeRequired<Partial<SuggestionMatcher>, 'char' | 'name'>;
-
-// @public (undocumented)
-export interface ReasonMatchParams<GReason> {
-    match: SuggestionStateMatchReason<GReason>;
-}
-
-// @public (undocumented)
-export interface ReasonParams<GReason> {
-    reason: GReason;
-}
-
-// @public (undocumented)
-export interface SuggestionActions {
-    command(attrs: SuggestionCommandAttrs): void;
-    create(attrs: MentionExtensionAttrs): void;
-    remove(attrs: Attrs<FromToParams>): void;
-    stage: SuggestionStage;
-    update(attrs: MentionExtensionAttrs): void;
-}
-
-// @public
-export type SuggestionCallback = (params: SuggestionCallbackParams) => void;
-
-// @public (undocumented)
-export interface SuggestionCallbackParams extends SuggestionStateMatch, EditorViewParams, SuggestionActions {
+    name?: string;
+    range?: FromToEndParams;
+    replacementType?: SuggestReplacementType;
 }
 
 // @public (undocumented)
 export type SuggestionCommandAttrs = Attrs<Partial<Pick<MentionExtensionAttrs, 'id' | 'label' | 'appendText' | 'replacementType'>>>;
 
-// @public (undocumented)
-export interface SuggestionCommandParams extends MarkTypeParams, OptionalMentionExtensionParams {
-    // (undocumented)
-    attrs: MentionExtensionAttrs;
-    // (undocumented)
-    range: FromToEndParams;
-}
-
-// @public
-export type SuggestionKeyBinding = (params: SuggestionKeyBindingParams) => boolean | void;
-
-// @public
-export type SuggestionKeyBindingMap = Partial<Record<'Enter' | 'ArrowDown' | 'ArrowUp' | 'Esc' | 'Delete' | 'Backspace', SuggestionKeyBinding>> & Record<string, SuggestionKeyBinding>;
-
-// @public (undocumented)
-export interface SuggestionKeyBindingParams extends SuggestionCallbackParams {
-    event: KeyboardEvent;
-}
-
-// @public (undocumented)
-export interface SuggestionMatcher {
-    char: string;
-    name: string;
-    startOfLine: boolean;
-    supportedCharacters: RegExp | string;
-}
-
-// @public (undocumented)
-export interface SuggestionMatcherParams {
-    matcher: Partial<SuggestionMatcher>;
-}
-
-// @public (undocumented)
-export interface SuggestionMatchParams {
-    match: SuggestionStateMatch;
-}
-
-// @public (undocumented)
-export interface SuggestionReasonMap {
-    change?: SuggestionStateMatchReason<ChangeReason>;
-    exit?: SuggestionStateMatchReason<ExitReason>;
-}
-
-// @public
-export type SuggestionReplacementType = 'full' | 'partial';
-
-// @public
-export type SuggestionStage = 'new' | 'edit';
-
-// @public (undocumented)
-export class SuggestionState {
-    constructor(extension: MarkExtension<MentionExtensionOptions>, type: MarkType, getActions: ActionGetter);
-    apply({ tr, newState }: TransactionParams & CompareStateParams): this;
-    static create({ extension, type, getActions }: SuggestionStateCreateParams): SuggestionState;
-    decorations(state: EditorState): DecorationSet<any> | undefined;
-    handleKeyDown(event: KeyboardEvent): boolean;
-    // Warning: (ae-forgotten-export) The symbol "HandleTextInputParams" needs to be exported by the entry point index.d.ts
-    handleTextInput({ text, from, to }: HandleTextInputParams): boolean;
-    init(view: EditorView): this;
-    readonly match: Readonly<SuggestionStateMatch> | undefined;
-    readonly stage: SuggestionStage;
-    // (undocumented)
-    toJSON(): Readonly<SuggestionStateMatch> | undefined;
-    viewHandler(): {
-        update: OnViewUpdate;
-    };
-}
-
-// @public (undocumented)
-export interface SuggestionStateCreateParams extends ExtensionManagerMarkTypeParams {
-    // (undocumented)
-    extension: MarkExtension<MentionExtensionOptions>;
-}
-
-// @public (undocumented)
-export interface SuggestionStateMatch extends Pick<SuggestionMatcher, 'name' | 'char'>, SuggestionMatcherParams {
-    query: MatchLength;
-    range: FromToEndParams;
-    supportedCharacters: RegExp;
-    text: MatchLength;
-}
-
-// @public (undocumented)
-export interface SuggestionStateMatchReason<GReason> extends SuggestionStateMatch, ReasonParams<GReason> {
-}
-
-
-// Warnings were encountered during analysis:
-// 
-// src/suggestion-plugin.ts:236:21 - (ae-forgotten-export) The symbol "OnViewUpdate" needs to be exported by the entry point index.d.ts
-
-// (No @packageDocumentation comment for this package)
 
 ```

@@ -22,6 +22,9 @@
   "references": [
     {
       "path": "../core/tsconfig.prod.json"
+    },
+    {
+      "path": "../../packages/prosemirror-suggest/tsconfig.prod.json"
     }
   ]
 }

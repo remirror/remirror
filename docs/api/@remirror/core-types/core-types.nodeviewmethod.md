@@ -9,5 +9,5 @@ The method signature used to call the Prosemirror `nodeViews`
 <b>Signature:</b>
 
 ```typescript
-export declare type NodeViewMethod<GNodeView extends NodeView = NodeView> = (node: ProsemirrorNode, view: EditorView, getPos: () => number, decorations: Decoration[]) => GNodeView;
+export declare type NodeViewMethod<GNodeView extends NodeView = NodeView> = (node: ProsemirrorNode, view: EditorView, getPos: (() => number) | boolean, decorations: Decoration[]) => GNodeView;
 ```

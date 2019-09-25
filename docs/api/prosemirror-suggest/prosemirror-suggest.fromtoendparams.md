@@ -4,6 +4,8 @@
 
 ## FromToEndParams interface
 
+A parameter builder interface describing a `from`<!-- -->/`to`<!-- -->/`end` range.
+
 <b>Signature:</b>
 
 ```typescript

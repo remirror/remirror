@@ -4,6 +4,8 @@
 
 ## ReasonParams interface
 
+A parameter builder interface indicating the reason the handler was called.
+
 <b>Signature:</b>
 
 ```typescript

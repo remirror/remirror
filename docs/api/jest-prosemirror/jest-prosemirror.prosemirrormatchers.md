@@ -8,7 +8,7 @@
 
 ```typescript
 prosemirrorMatchers: {
-    toTransformNode(this: jest.MatcherUtils, command: CommandFunction<any>, { from, to }?: CommandTransformation<any>): {
+    toTransformNode(this: jest.MatcherUtils, command: CommandFunction<any>, { from, to }: CommandTransformation<any>): {
         message: () => string;
         pass: boolean;
     } | {

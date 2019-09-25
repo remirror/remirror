@@ -9,5 +9,5 @@ Provide a custom matcher with options
 <b>Signature:</b>
 
 ```typescript
-matchers?: OptionalSuggestionMatcher[];
+matchers: MentionExtensionMatcher[];
 ```

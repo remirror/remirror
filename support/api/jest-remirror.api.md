@@ -37,8 +37,9 @@ export type AddContent<GExtension extends AnyExtension> = (content: TaggedProsem
 export interface AddContentReturn<GExtension extends AnyExtension> extends EditorStateParams<SchemaFromExtensions<GExtension>> {
     actions: ActionsFromExtensions<GExtension>;
     actionsCallback(callback: (actions: ActionsFromExtensions<GExtension>) => void): AddContentReturn<GExtension>;
-    callback(fn: (content: Pick<AddContentReturn<GExtension>, 'helpers' | 'actions' | 'end' | 'state' | 'tags' | 'start'>) => void): AddContentReturn<GExtension>;
+    callback(fn: (content: Pick<AddContentReturn<GExtension>, 'helpers' | 'actions' | 'end' | 'state' | 'tags' | 'start' | 'doc'>) => void): AddContentReturn<GExtension>;
     dispatchCommand(command: CommandFunction): AddContentReturn<GExtension>;
+    doc: ProsemirrorNode;
     end: number;
     fire(params: FireParams): AddContentReturn<GExtension>;
     helpers: HelpersFromExtensions<GExtension>;
@@ -48,6 +49,7 @@ export interface AddContentReturn<GExtension extends AnyExtension> extends Edito
     jumpTo(start: number, end?: number): AddContentReturn<GExtension>;
     jumpTo(pos: 'start' | 'end'): AddContentReturn<GExtension>;
     overwrite: AddContent<GExtension>;
+    paste(content: TaggedProsemirrorNode | string): AddContentReturn<GExtension>;
     press(key: string): AddContentReturn<GExtension>;
     replace(...content: string[] | TaggedProsemirrorNode[]): AddContentReturn<GExtension>;
     shortcut(shortcut: string): AddContentReturn<GExtension>;
@@ -160,10 +162,10 @@ export const offsetTags: (tags: Tags, offset: number) => Tags;
 export const remirrorMatchers: jest.ExpectExtendMap;
 
 // @public
-export const renderEditor: <GPlainMarks extends MarkExtension<any>[], GPlainNodes extends NodeExtension<any>[], GAttrMarks extends MarkExtension<any>[], GAttrNodes extends NodeExtension<any>[], GOthers extends Extension<any, never>[], GReturn extends CreateTestEditorReturn<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers, GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>>, GExtension extends GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>, GPlainMarkNames extends GPlainMarks[number]["name"], GAttrMarkNames extends GAttrMarks[number]["name"], GAttrNodeNames extends GAttrNodes[number]["name"], GPlainNodeNames extends "paragraph" | "doc" | "p" | GPlainNodes[number]["name"]>({ plainMarks, plainNodes, attrMarks, attrNodes, others, }?: Partial<CreateTestEditorExtensions<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>>, props?: Partial<Pick<RemirrorProps<GExtension>, "attributes" | "styles" | "initialContent" | "onStateChange" | "value" | "editable" | "autoFocus" | "onFocus" | "onBlur" | "onFirstRender" | "onChange" | "children" | "onDispatchTransaction" | "label" | "usesBuiltInExtensions" | "usesDefaultStyles" | "editorStyles" | "css" | "insertPosition" | "forceEnvironment" | "suppressHydrationWarning" | "fallbackContent" | "stringHandler">>) => GReturn;
+export const renderEditor: <GPlainMarks extends MarkExtension<any>[], GPlainNodes extends NodeExtension<any>[], GAttrMarks extends MarkExtension<any>[], GAttrNodes extends NodeExtension<any>[], GOthers extends Extension<any, never>[], GReturn extends CreateTestEditorReturn<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers, GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>>, GExtension extends GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>, GPlainMarkNames extends GPlainMarks[number]["name"], GAttrMarkNames extends GAttrMarks[number]["name"], GAttrNodeNames extends GAttrNodes[number]["name"], GPlainNodeNames extends "p" | "paragraph" | "doc" | GPlainNodes[number]["name"]>({ plainMarks, plainNodes, attrMarks, attrNodes, others, }?: Partial<CreateTestEditorExtensions<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>>, props?: Partial<Pick<RemirrorProps<GExtension>, "initialContent" | "onStateChange" | "value" | "attributes" | "editable" | "autoFocus" | "onFocus" | "onBlur" | "onFirstRender" | "onChange" | "children" | "onDispatchTransaction" | "label" | "usesBuiltInExtensions" | "usesDefaultStyles" | "editorStyles" | "styles" | "css" | "insertPosition" | "forceEnvironment" | "suppressHydrationWarning" | "fallbackContent" | "stringHandler">>) => GReturn;
 
 // @public
-export const renderSSREditor: <GExtension extends import("@remirror/core").Extension<any, any> = any>(extensions?: GExtension[], props?: Partial<Pick<RemirrorProps<GExtension>, "attributes" | "styles" | "initialContent" | "onStateChange" | "value" | "editable" | "autoFocus" | "onFocus" | "onBlur" | "onFirstRender" | "onChange" | "children" | "onDispatchTransaction" | "label" | "usesBuiltInExtensions" | "usesDefaultStyles" | "editorStyles" | "css" | "insertPosition" | "forceEnvironment" | "suppressHydrationWarning" | "fallbackContent" | "stringHandler">>) => string;
+export const renderSSREditor: <GExtension extends import("@remirror/core").Extension<any, any> = any>(extensions?: GExtension[], props?: Partial<Pick<RemirrorProps<GExtension>, "initialContent" | "onStateChange" | "value" | "attributes" | "editable" | "autoFocus" | "onFocus" | "onBlur" | "onFirstRender" | "onChange" | "children" | "onDispatchTransaction" | "label" | "usesBuiltInExtensions" | "usesDefaultStyles" | "editorStyles" | "styles" | "css" | "insertPosition" | "forceEnvironment" | "suppressHydrationWarning" | "fallbackContent" | "stringHandler">>) => string;
 
 // Warning: (ae-forgotten-export) The symbol "InsertParams" needs to be exported by the entry point index.d.ts
 // 

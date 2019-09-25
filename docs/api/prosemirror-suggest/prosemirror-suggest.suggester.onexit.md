@@ -24,5 +24,5 @@ onExit?(params: SuggestExitHandlerParams<GCommand>): void;
 
 ## Remarks
 
-Can be used to force the command to run e.g. when no match was found but a hash should still be created this can be used to call the command parameter and trigger whatever action is felt required.
+Can be used to force the command to run the command e.g. when no match was found but a tag should still be created. To accomplish this you would call the command parameter and trigger whatever action is felt required.
 

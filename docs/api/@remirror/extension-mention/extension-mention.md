@@ -4,65 +4,43 @@
 
 ## extension-mention package
 
+\#\# The problem
+
+You'd love a simpler way to create \*\*editable\*\* `@` and `#` mentions with suggestions built into your `remirror` editor. Or perhaps you'd prefer non-editable mentions that create an inline prosemirror node. Or maybe you're keeping it simple and decide that you want mentions to output plain text into your markdown editor.
+
+\#\# The solution
+
+`@remirror/extension-mention` exports three `remirror` extensions for managing \*\*editable\*\* `Mark` mentions, non-editable `Node` mentions and plain text mentions. Underneath the work is being done by `prosemirror-suggest` to reduce the boilerplate needed to setup.
+
+\#\# Installation
+
+After completing the installation of the the `remirror` environment as shown in the \[docs\](https://docs.remirror.org/install) run the following command.
+
+```bash
+yarn add @remirror/extension-mention`
+
+```
+\#\# Getting started
+
 ## Classes
 
 |  Class | Description |
 |  --- | --- |
 |  [MentionExtension](./extension-mention.mentionextension.md) | The mention extension manages suggestions through onChange, onKeyDown, onExit and onEnter callbacks. It also allows for configuration options to be passed into transforming suggestion queries into a mention node. |
-|  [SuggestionState](./extension-mention.suggestionstate.md) |  |
-
-## Enumerations
-
-|  Enumeration | Description |
-|  --- | --- |
-|  [ActionTaken](./extension-mention.actiontaken.md) | The action taken on a suggestion |
-|  [ChangeReason](./extension-mention.changereason.md) | The potential reason for changes |
-|  [ExitReason](./extension-mention.exitreason.md) | The potential reasons for an exit |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [CompareMatchParams](./extension-mention.comparematchparams.md) | Compares two matches. |
-|  [FromToEndParams](./extension-mention.fromtoendparams.md) |  |
-|  [MatchLength](./extension-mention.matchlength.md) |  |
+|  [MentionExtensionMatcher](./extension-mention.mentionextensionmatcher.md) | The options for the matchers which can be created by this extension. |
 |  [MentionExtensionOptions](./extension-mention.mentionextensionoptions.md) | The options passed into a mention |
-|  [OnChangeCallbackParams](./extension-mention.onchangecallbackparams.md) |  |
-|  [OnCharacterEntryParams](./extension-mention.oncharacterentryparams.md) |  |
-|  [OnExitCallbackParams](./extension-mention.onexitcallbackparams.md) |  |
-|  [OnKeyDownParams](./extension-mention.onkeydownparams.md) |  |
 |  [OptionalMentionExtensionParams](./extension-mention.optionalmentionextensionparams.md) |  |
-|  [ReasonMatchParams](./extension-mention.reasonmatchparams.md) |  |
-|  [ReasonParams](./extension-mention.reasonparams.md) |  |
-|  [SuggestionActions](./extension-mention.suggestionactions.md) |  |
-|  [SuggestionCallbackParams](./extension-mention.suggestioncallbackparams.md) |  |
-|  [SuggestionCommandParams](./extension-mention.suggestioncommandparams.md) |  |
-|  [SuggestionKeyBindingParams](./extension-mention.suggestionkeybindingparams.md) |  |
-|  [SuggestionMatcher](./extension-mention.suggestionmatcher.md) |  |
-|  [SuggestionMatcherParams](./extension-mention.suggestionmatcherparams.md) |  |
-|  [SuggestionMatchParams](./extension-mention.suggestionmatchparams.md) |  |
-|  [SuggestionReasonMap](./extension-mention.suggestionreasonmap.md) |  |
-|  [SuggestionStateCreateParams](./extension-mention.suggestionstatecreateparams.md) |  |
-|  [SuggestionStateMatch](./extension-mention.suggestionstatematch.md) |  |
-|  [SuggestionStateMatchReason](./extension-mention.suggestionstatematchreason.md) |  |
-
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [createSuggestionPlugin](./extension-mention.createsuggestionplugin.md) | This creates the plugin that manages the suggestions to offer when the MentionExtension is active. |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
 |  [MentionExtensionAttrs](./extension-mention.mentionextensionattrs.md) | The attrs that will be added to the node. ID and label are plucked and used while attributes like href and role can be assigned as desired. |
-|  [MentionExtensionCommands](./extension-mention.mentionextensioncommands.md) |  |
-|  [OptionalSuggestionMatcher](./extension-mention.optionalsuggestionmatcher.md) |  |
-|  [SuggestionCallback](./extension-mention.suggestioncallback.md) | The handler callback signature. |
+|  [MentionExtensionSuggestCommand](./extension-mention.mentionextensionsuggestcommand.md) | The attrs for the command on a mention extension. |
 |  [SuggestionCommandAttrs](./extension-mention.suggestioncommandattrs.md) |  |
-|  [SuggestionKeyBinding](./extension-mention.suggestionkeybinding.md) | A method for performing actions when a certain key / patter is pressed.<!-- -->Return true to prevent any further bubbling of the key event and to stop other handlers from also processing the event. |
-|  [SuggestionKeyBindingMap](./extension-mention.suggestionkeybindingmap.md) | The SuggestionKeyBinding object. |
-|  [SuggestionReplacementType](./extension-mention.suggestionreplacementtype.md) | Determines whether to replace the full match or the partial match (up to the cursor position). |
-|  [SuggestionStage](./extension-mention.suggestionstage.md) | A suggestion has two stage. When it is <code>new</code> and when it has already been created and is now being <code>edit</code>ed.<!-- -->Separating the stages allows for greater control in how mentions are updated. |
 

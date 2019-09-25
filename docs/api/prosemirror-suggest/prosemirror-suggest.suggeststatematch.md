@@ -4,6 +4,8 @@
 
 ## SuggestStateMatch interface
 
+Describes the properties of a match which includes range and the text as well as information of the suggester that created the match.
+
 <b>Signature:</b>
 
 ```typescript
@@ -15,6 +17,6 @@ export interface SuggestStateMatch<GCommand extends AnyFunction<void> = AnyFunct
 |  Property | Type | Description |
 |  --- | --- | --- |
 |  [matchText](./prosemirror-suggest.suggeststatematch.matchtext.md) | <code>MatchValue</code> | Full text of match including the activation character |
-|  [queryText](./prosemirror-suggest.suggeststatematch.querytext.md) | <code>MatchValue</code> | Current query of match which doesn't include the match character. |
+|  [queryText](./prosemirror-suggest.suggeststatematch.querytext.md) | <code>MatchValue</code> | Current query of match which doesn't include the activation character. |
 |  [range](./prosemirror-suggest.suggeststatematch.range.md) | <code>FromToEndParams</code> | Range of current match; for example <code>@foo&#124;bar</code> (where \| is the cursor) - <code>from</code> is the start (= 0) - <code>to</code> is cursor position (= 4) - <code>end</code> is the end of the match (= 7) |
 
