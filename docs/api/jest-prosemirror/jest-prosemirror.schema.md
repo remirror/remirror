@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-schema: Schema<"doc" | "orderedList" | "bulletList" | "listItem" | "paragraph" | "text" | "horizontalRule" | "atomInline" | "atomBlock" | "atomContainer" | "containerWithRestrictedContent" | "table" | "table_row" | "table_cell" | "table_header" | "blockquote" | "heading" | "code_block" | "hard_break" | "image", "link" | "em" | "strong" | "code">
+schema: Schema<"text" | "doc" | "orderedList" | "bulletList" | "listItem" | "paragraph" | "horizontalRule" | "atomInline" | "atomBlock" | "atomContainer" | "containerWithRestrictedContent" | "table" | "table_row" | "table_cell" | "table_header" | "blockquote" | "heading" | "code_block" | "hard_break" | "image", "link" | "em" | "strong" | "code">
 ```

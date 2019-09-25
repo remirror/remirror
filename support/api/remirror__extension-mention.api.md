@@ -42,7 +42,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     // (undocumented)
     readonly schema: MarkExtensionSpec;
     // (undocumented)
-    suggestions({ getActions, type }: ExtensionManagerMarkTypeParams): Suggester[];
+    suggestions({ getActions, type, getState }: ExtensionManagerMarkTypeParams): Suggester[];
 }
 
 // @public

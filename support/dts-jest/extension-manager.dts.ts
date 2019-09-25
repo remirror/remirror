@@ -31,9 +31,9 @@ type HistoryExtensionActions = ActionsFromExtensions<HistoryExtension>;
 const historyActions: HistoryExtensionActions = {} as any;
 
 // @dts-jest:pass:snap
-historyActions.redo();
+historyActions.redo;
 // @dts-jest:pass:snap
-historyActions.undo();
+historyActions.undo;
 // @dts-jest:fail:snap
 historyActions.undo({});
 
@@ -79,4 +79,8 @@ manager1.data.helpers;
 // @dts-jest:pass:snap
 manager1.data.actions.addPositionTracker({ id: 'yo' });
 // @dts-jest:pass:snap
+manager1.data.actions.addPositionTracker;
+// @dts-jest:pass:snap
 manager1.data.helpers.findPositionTracker('yo');
+// @dts-jest:pass:snap
+manager1.data.helpers.findPositionTracker;

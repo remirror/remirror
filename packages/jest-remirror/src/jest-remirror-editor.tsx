@@ -132,6 +132,7 @@ export const renderEditor = <
         doc,
         overwrite: add,
         state: view.state,
+        view,
         actions: returnedParams.actions,
         helpers: returnedParams.helpers,
         jumpTo: (pos: 'start' | 'end' | number, endPos?: number) => {
@@ -153,7 +154,7 @@ export const renderEditor = <
           return updateContent();
         },
         callback: fn => {
-          fn(pick(returnValue, ['helpers', 'actions', 'end', 'state', 'tags', 'start', 'doc']));
+          fn(pick(returnValue, ['helpers', 'actions', 'end', 'state', 'tags', 'start', 'doc', 'view']));
           return updateContent();
         },
         actionsCallback: callback => {

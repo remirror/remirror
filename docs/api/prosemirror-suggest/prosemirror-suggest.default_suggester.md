@@ -10,7 +10,6 @@
 DEFAULT_SUGGESTER: {
     appendText: string;
     createCommand: () => () => void;
-    getStage: () => "new";
     ignoredClassName: any;
     ignoredTag: string;
     invalidPrefixCharacters: any;

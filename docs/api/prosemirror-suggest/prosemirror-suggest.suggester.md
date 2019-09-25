@@ -22,7 +22,7 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
 |  [ignoredTag](./prosemirror-suggest.suggester.ignoredtag.md) | <code>string</code> | Set a tag for the ignored suggestion decoration. |
 |  [invalidPrefixCharacters](./prosemirror-suggest.suggester.invalidprefixcharacters.md) | <code>RegExp &#124; string</code> | A regex expression used to invalidate the text directly before the match. |
 |  [keyBindings](./prosemirror-suggest.suggester.keybindings.md) | <code>SuggestKeyBindingMap&lt;GCommand&gt;</code> | An object that describes how certain key bindings should be handled. |
-|  [matchOffset](./prosemirror-suggest.suggester.matchoffset.md) | <code>number</code> | Sets the characters that need to be present after the initial character match before a match is triggered.<!-- -->For example with <code>char</code> = <code>@</code> the following is true.<!-- -->- <code>matchOffset: 0</code> matches <code>'@'</code> immediately - <code>matchOffset: 1</code> matches <code>'@a'</code> but not <code>'@'</code> - <code>matchOffset: 2</code> matches <code>'@ab'</code> but not <code>'@a'</code> or <code>'@'</code> - <code>matchOffset: 3</code> matches <code>'@abc'</code> but not <code>'@ab'</code> or <code>'@a'</code> or <code>'@'</code> - And so on... |
+|  [matchOffset](./prosemirror-suggest.suggester.matchoffset.md) | <code>number</code> | Sets the characters that need to be present after the initial character match before a match is triggered. |
 |  [name](./prosemirror-suggest.suggester.name.md) | <code>string</code> | A unique identifier for the suggester. |
 |  [noDecorations](./prosemirror-suggest.suggester.nodecorations.md) | <code>boolean</code> | When true, decorations are not created when this mention is being edited.. |
 |  [startOfLine](./prosemirror-suggest.suggester.startofline.md) | <code>boolean</code> | Whether to only match from the start of the line |
@@ -36,7 +36,6 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
 |  Method | Description |
 |  --- | --- |
 |  [createCommand(params)](./prosemirror-suggest.suggester.createcommand.md) | Create the suggested actions which are made available to the <code>onExit</code> and on<code>onChange</code> handlers. |
-|  [getStage(params)](./prosemirror-suggest.suggester.getstage.md) | Check the current match and editor state to determine whether this match is being <code>new</code>ly created or <code>edit</code>ed. |
 |  [onChange(params)](./prosemirror-suggest.suggester.onchange.md) | Called whenever a suggestion becomes active or changes in anyway. |
 |  [onCharacterEntry(params)](./prosemirror-suggest.suggester.oncharacterentry.md) | Called for each character entry and can be used to disable certain characters. |
 |  [onExit(params)](./prosemirror-suggest.suggester.onexit.md) | Called when a suggestion is exited with the pre-exit match value. |

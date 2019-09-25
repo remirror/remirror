@@ -12,7 +12,7 @@
     { "autoFix": true, "language": "typescript" },
     { "autoFix": true, "language": "typescriptreact" },
   ],
-  "files.exclude": {
+  "search.exclude": {
     "docs/api": true,
     "support/api": true
   },

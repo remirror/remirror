@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-strong: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"doc" | "orderedList" | "bulletList" | "listItem" | "paragraph" | "text" | "horizontalRule" | "atomInline" | "atomBlock" | "atomContainer" | "containerWithRestrictedContent" | "table" | "table_row" | "table_cell" | "table_header" | "blockquote" | "heading" | "code_block" | "hard_break" | "image", "link" | "em" | "strong" | "code">>
+strong: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"text" | "doc" | "orderedList" | "bulletList" | "listItem" | "paragraph" | "horizontalRule" | "atomInline" | "atomBlock" | "atomContainer" | "containerWithRestrictedContent" | "table" | "table_row" | "table_cell" | "table_header" | "blockquote" | "heading" | "code_block" | "hard_break" | "image", "link" | "em" | "strong" | "code">>
 ```

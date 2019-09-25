@@ -161,7 +161,11 @@ export const isMarkActive = ({ state, type, from, to }: IsMarkActiveParams) => {
   const { $from, empty } = selection;
 
   if (from && to) {
-    return Math.max(from, to) < doc.nodeSize && doc.rangeHasMark(from, to, type);
+    try {
+      return Math.max(from, to) < doc.nodeSize && doc.rangeHasMark(from, to, type);
+    } catch {
+      return false;
+    }
   }
 
   if (empty) {

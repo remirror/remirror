@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface AddContentReturn<GExtension extends AnyExtension> extends EditorStateParams<SchemaFromExtensions<GExtension>> 
+export interface AddContentReturn<GExtension extends AnyExtension> extends EditorStateParams<SchemaFromExtensions<GExtension>>, EditorViewParams<SchemaFromExtensions<GExtension>> 
 ```
 
 ## Properties

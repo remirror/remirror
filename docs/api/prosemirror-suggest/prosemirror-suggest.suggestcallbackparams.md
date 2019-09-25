@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-export interface SuggestCallbackParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestStateMatch, EditorViewParams, SuggestCommandParams<GCommand>, StageParams, SuggestIgnoreParams 
+export interface SuggestCallbackParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestStateMatch, EditorViewParams, SuggestCommandParams<GCommand>, SuggestIgnoreParams 
 ```
