@@ -13,6 +13,10 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - `jest-prosemirror`: New `debug` method which logs the editor's prettified html to the console.
 - `prosemirror-suggest`: Now supports ignoring activation characters to prevent matches from appearing in ignored sections.
 
+### Changes
+
+- `@remirror/extension-mention`: Fix a long standing bug where the editor crashes after deleting a single character mention.
+
 ## [0.5.0] - 2019-09-23
 
 ### Added
