@@ -27,7 +27,14 @@
 
 <br />
 
-> Remirror is a toolkit for building accessibility focused editors which run on the web and desktop.
+<div align="center">
+	<div align="center">
+		<img width="600"  src="https://media.githubusercontent.com/media/ifiokjr/remirror/canary/support/assets/wysiwyg.png" alt="remirror" />
+	</div>
+    <br />
+</div>
+
+> Remirror is a toolkit for building accessible editors which run on the web and desktop.
 
 <br />
 
@@ -44,11 +51,17 @@
 - Extensions available for adding your own flavour to your own custom editor editor.
 - Zero config support **Server Side Rendering (SSR)**.
 
+<br />
+
 ### Prerequisites
 
 - Typescript `>= 3.6`
 - React `>= 16.9`
 - Yarn `>= 1.17`
+
+<br />
+
+![A gif showing mentions being suggested as the user types with editing supported](https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/repo-banner.gif 'A gif showing mentions being suggested as the user types with editing supported')
 
 ### Testing
 
@@ -71,6 +84,8 @@ To stop per-commit / per-push checks run:
 yarn stop:checks
 ```
 
+<br />
+
 ### Built With
 
 - [Typescript]
@@ -78,17 +93,23 @@ yarn stop:checks
 - [Prosemirror]
 - [Theme UI]
 
+<br />
+
 ### Contributing
 
 Please read [contributing.md](docs/pages/contributing.md) for details on our code of conduct, and the process for submitting pull requests.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ifiokjr/remirror)
 
+<br />
+
 ### Versioning
 
 This project uses [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ifiokjr/remirror/tags).
 
 Currently all versions within the repo are locked and this will continue until `v1.0.0` is. At this point versions will be updated independently.
+
+<br />
 
 ### License
 

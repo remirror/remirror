@@ -6,12 +6,15 @@
 
 Sets the characters that need to be present after the initial character match before a match is triggered.
 
-For example with `char` = `@` the following is true.
-
-- `matchOffset: 0` matches `'@'` immediately - `matchOffset: 1` matches `'@a'` but not `'@'` - `matchOffset: 2` matches `'@ab'` but not `'@a'` or `'@'` - `matchOffset: 3` matches `'@abc'` but not `'@ab'` or `'@a'` or `'@'` - And so on...
-
 <b>Signature:</b>
 
 ```typescript
 matchOffset?: number;
 ```
+
+## Remarks
+
+For example with `char` = `@` the following is true.
+
+- `matchOffset: 0` matches `'@'` immediately - `matchOffset: 1` matches `'@a'` but not `'@'` - `matchOffset: 2` matches `'@ab'` but not `'@a'` or `'@'` - `matchOffset: 3` matches `'@abc'` but not `'@ab'` or `'@a'` or `'@'` - And so on...
+

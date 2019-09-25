@@ -89,6 +89,8 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
    * Sets the characters that need to be present after the initial character
    * match before a match is triggered.
    *
+   * @remarks
+   *
    * For example with `char` = `@` the following is true.
    *
    * - `matchOffset: 0` matches `'@'` immediately
@@ -264,10 +266,11 @@ export interface SuggestIgnoreParams {
    *
    * ```ts
    * const suggester = {
-   *   onExit({ addIgnored, rang }) {
-   *   }
+   *   onExit: ({ addIgnored, range: { from }, suggester: { char, name } }: SuggestExitHandlerParams) => {
+   *     addIgnored({ from, char, name }); // Ignore this suggestion
+   *   },
    * }
-   *
+   * ```
    */
   addIgnored(params: AddIgnoredParams): void;
 

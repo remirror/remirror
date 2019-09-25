@@ -32,5 +32,12 @@ There are a number of use cases for this. You may chose to ignore a match when:
 
 - The user presses the `escape` key to exit your suggestion dropdown. - The user continues typing without selecting any of the options for the selection drop down. - The user clicks outside of the suggestions dropdown.
 
-\`\`\`<!-- -->ts const suggester = { onExit(<!-- -->{ addIgnored, rang }<!-- -->) { } }
+```ts
+const suggester = {
+  onExit: ({ addIgnored, range: { from }, suggester: { char, name } }: SuggestExitHandlerParams) => {
+    addIgnored({ from, char, name }); // Ignore this suggestion
+  },
+}
+
+```
 

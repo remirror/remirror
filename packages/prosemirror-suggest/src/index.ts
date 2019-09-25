@@ -1,5 +1,7 @@
 /**
- * Primitives for building your prosemirror suggestion functionality.
+ * Primitives for building your prosemirror suggestion and autocomplete functionality.
+ *
+ * @remarks
  *
  * ## The problem
  *
@@ -30,9 +32,10 @@
  *
  * ## Getting Started
  *
- * `prosemirror-suggest` uses configuration objects called `Suggester`'s to define the behaviour of
- * the suggestions you create. By calling the exported `suggest` method with all required
- * `Suggester`'s the functionality is added to the editor in one plugin.
+ * `prosemirror-suggest` uses configuration objects called `Suggester`'s to
+ * define the behaviour of the suggestions you create. By calling the exported
+ * `suggest` method with all required `Suggester`'s the functionality is added
+ * to the editor in one plugin.
  *
  * In the following example we're creating an emoji suggestion plugin that
  * responds to the colon character with a query and presents a list of matching
@@ -115,7 +118,27 @@
  * You can see this example brought to life in the `remirror` codebase under the
  * `@remirror/extension-emoji` and the `@remirror/extension-mention` packages.
  *
- * [GIF-EXAMPLE]
+ * The following examples are available for you to try out
+ * [https://docs.remirror.org/showcase/social]
+ *
+ * **Search emoji on `:` key**
+ *
+ * The emojis are inserted as plain text. It’s up to you whether you insert the
+ * emoji as a node, mark or plaintext.
+ *
+ * ![A gif showing emoji being inserted after typing the colon (:) key. First a
+ * laughing emoji then a heart and finally the poop
+ * emoji](https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/emoji.gif
+ * "A gif showing emoji being inserted after typing the colon (:) key. First a
+ * laughing emoji then a heart and finally the poop emoji")
+ *
+ * **Editable mention on `@` key**
+ *
+ * Each mention is a mark that wraps the mentioned text with a spec property of
+ * `inclusive: false`
+ *
+ * ![A gif showing mentions being suggested as the user types with editing supported](https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/mentions.gif
+ * "A gif showing mentions being suggested as the user types with editing supported")
  *
  * @packageDocumentation
  */

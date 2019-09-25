@@ -3,30 +3,6 @@ import { EditorDisplay, MarkdownEditor } from '@remirror/editor-markdown';
 import { Button } from '@remirror/ui-buttons';
 import React, { FC, useState } from 'react';
 
-export const ExampleMarkdownEditor: FC = ({ children }) => {
-  const [editor, setEditor] = useState<EditorDisplay>('markdown');
-
-  const toggleEditor = () => {
-    if (editor === 'wysiwyg') {
-      setEditor('markdown');
-    }
-    if (editor === 'markdown') {
-      setEditor('wysiwyg');
-    }
-  };
-
-  return (
-    <div>
-      <span>
-        <Button onClick={toggleEditor} content='Toggle Editor' variant='primary' /> {capitalize(editor)}
-      </span>
-      <MarkdownEditor editor={editor} initialValue={initialValue}>
-        {children}
-      </MarkdownEditor>
-    </div>
-  );
-};
-
 const initialValue = {
   type: 'doc',
   content: [
@@ -52,4 +28,28 @@ const initialValue = {
       ],
     },
   ],
+};
+
+export const ExampleMarkdownEditor: FC = ({ children }) => {
+  const [editor, setEditor] = useState<EditorDisplay>('markdown');
+
+  const toggleEditor = () => {
+    if (editor === 'wysiwyg') {
+      setEditor('markdown');
+    }
+    if (editor === 'markdown') {
+      setEditor('wysiwyg');
+    }
+  };
+
+  return (
+    <div>
+      <span>
+        <Button onClick={toggleEditor} content='Toggle Editor' variant='primary' /> {capitalize(editor)}
+      </span>
+      <MarkdownEditor editor={editor} initialValue={initialValue}>
+        {children}
+      </MarkdownEditor>
+    </div>
+  );
 };
