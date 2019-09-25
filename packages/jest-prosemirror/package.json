@@ -10,9 +10,9 @@
   "files": [
     "environment.d.ts",
     "environment.js",
+    "lib",
     "serializer.d.ts",
     "serializer.js",
-    "lib",
     "src"
   ],
   "types": "lib/index.d.ts",
@@ -31,9 +31,9 @@
     "@types/testing-library__dom": "^6.0.3",
     "chalk": "^2.4.2",
     "jest-diff": "^24.9.0",
-    "pretty-format": "24.9.0",
     "jest-matcher-utils": "^24.9.0",
     "jest-snapshot": "^24.9.0",
+    "pretty-format": "24.9.0",
     "prosemirror-gapcursor": "^1.0.4",
     "prosemirror-inputrules": "^1.0.4",
     "prosemirror-model": "^1.7.2",

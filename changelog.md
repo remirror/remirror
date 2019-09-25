@@ -10,8 +10,8 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 ### Added
 
 - `jest-prosemirror`: New snapshot serializer exported as `prosemirrorSerializer`.
-- `jest-prosemirror`: New debug method.
-- `prosemirror-suggest`: Now supports ignored matches to prevent matches from appearing in ignored sections.
+- `jest-prosemirror`: New `debug` method which logs the editor's prettified html to the console.
+- `prosemirror-suggest`: Now supports ignoring activation characters to prevent matches from appearing in ignored sections.
 
 ## [0.5.0] - 2019-09-23
 
