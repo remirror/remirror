@@ -1,4 +1,4 @@
-import { ActionNames, AnyFunction, Attrs, KeyOfThemeVariant, memoize } from '@remirror/core';
+import { ActionNames, AnyFunction, Attrs, KeyOfThemeVariant } from '@remirror/core';
 import { bubblePositioner, useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import {
@@ -58,12 +58,10 @@ const menuItems: Array<[ActionNames<WysiwygExtensions>, [ComponentType<IconProps
   ['horizontalRule', [RulerHorizontalIcon]],
 ];
 
-const runAction = memoize(
-  (method: AnyFunction, attrs?: Attrs): MouseEventHandler<HTMLElement> => e => {
-    e.preventDefault();
-    method(attrs);
-  },
-);
+const runAction = (method: AnyFunction, attrs?: Attrs): MouseEventHandler<HTMLElement> => e => {
+  e.preventDefault();
+  method(attrs);
+};
 
 /**
  * Retrieve the state for the button
