@@ -1,5 +1,5 @@
 import { EDITOR_CLASS_NAME, SELECTED_NODE_CLASS_NAME } from '@remirror/core-constants';
-import { isPlainObject, isString } from '@remirror/core-helpers';
+import { isPlainObject, isString, isFunction } from '@remirror/core-helpers';
 import {
   Attrs,
   BaseExtensionOptions,
@@ -52,10 +52,10 @@ export class ReactNodeView<
    */
   private getPosition = () => 0;
 
-  /**
-   * Only applicable for mark nodeViews. Indicates whether the mark content is inline.
-   */
-  private contentInline = false;
+  // /**
+  //  * Only applicable for mark nodeViews. Indicates whether the mark content is inline.
+  //  */
+  // private markContentInline = false;
 
   /**
    * A container and event dispatcher which keeps track of all dom elements that
@@ -88,11 +88,15 @@ export class ReactNodeView<
   }: ReactNodeViewParams<GOptions, GAttrs>) {
     this.node = node;
     this.view = view;
-    if ()
-    this.getPosition = getPosition;
     this.portalContainer = portalContainer;
     this.Component = Component;
     this.options = options;
+
+    if (isFunction(getPosition)) {
+      this.getPosition = getPosition;
+    } else {
+      // this._markContentInline = getPosition;
+    }
   }
 
   /**
