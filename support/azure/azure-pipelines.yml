@@ -1,3 +1,6 @@
+variables:
+  ci: 'true'
+
 jobs:
   - template: pipeline-jobs.yml
     parameters:

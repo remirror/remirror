@@ -10,4 +10,7 @@ const value = readProperty({ property });
 if (value) {
   console.log('Opted into husky checks... 😋');
   execSync(command, { stdio: 'inherit' });
+} else {
+  console.log('Ignoring checks');
+  process.exit(0);
 }

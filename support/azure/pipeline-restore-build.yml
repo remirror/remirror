@@ -1,0 +1,7 @@
+steps:
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      artifact: Build
+      patterns: '**'
+      path: $(Build.SourcesDirectory)
+    displayName: 'Restore build artifact'

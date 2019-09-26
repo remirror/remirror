@@ -3,6 +3,11 @@ steps:
     inputs:
       versionSpec: '10.x'
     displayName: 'Install Node.js'
+  # - task: CacheBeta@1
+  #   inputs:
+  #     key: yarn | $(Agent.OS) | yarn.lock
+  #     path: $(Pipeline.Workspace)/.yarn
+  #   displayName: Cache Yarn packages
   - bash: yarn audit
     displayName: 'Check for vulnerabilities'
   - bash: yarn ci

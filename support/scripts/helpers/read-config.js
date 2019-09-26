@@ -22,7 +22,7 @@ const readJSON = str => {
 exports.readConfigFile = () => {
   if (!existsSync(configFilePath)) {
     console.log('No .config.json file');
-    return;
+    return {};
   }
 
   const fileContents = readFileSync(configFilePath).toString();
