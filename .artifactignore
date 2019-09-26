@@ -1,0 +1,10 @@
+**/*
+
+## Build artifacts
+!@remirror/*/lib/**
+!@packages/*/lib/**
+!@remirror/*/lib
+!packages/*/lib
+
+## Failed Diffs
+!e2e/__failed-diffs__

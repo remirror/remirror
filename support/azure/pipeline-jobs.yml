@@ -27,19 +27,35 @@ jobs:
             displayName: 'Run unit tests across project'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
-      - job: ${{ parameters.name }}SizeChecks
+      - job: ${{ parameters.name }}Build
         pool:
           vmImage: ${{ parameters.vmImage }}
         steps:
           - template: pipeline-yarn-install.yml
-          - bash: yarn build:rollup
-            displayName: 'Build project'
+          - bash: yarn build
+            displayName: 'Build all project dependencies'
+          - publish: $(System.DefaultWorkingDirectory)/
+            condition: succeeded()
+            artifact: Build
+            displayName: Create build artifact
+
+  - ${{ if eq(parameters.name, 'Linux') }}:
+      - job: ${{ parameters.name }}SizeChecks
+        pool:
+          vmImage: ${{ parameters.vmImage }}
+        dependsOn:
+          - LinuxBuild
+        steps:
+          - template: pipeline-yarn-install.yml
+          - template: pipeline-restore-build.yml
           - bash: yarn size
             displayName: 'Check size limits'
 
   - job: ${{ parameters.name }}ChromeIntegrationTests
     pool:
       vmImage: ${{ parameters.vmImage }}
+    dependsOn:
+      - LinuxBuild
     steps:
       - checkout: self
         lfs: true
@@ -47,15 +63,11 @@ jobs:
           - bash: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
             displayName: 'Increase file watch limit for Linux only'
       - template: pipeline-yarn-install.yml
-
-      - bash: yarn build
-        displayName: 'Build project'
-
+      - template: pipeline-restore-build.yml
       - bash: yarn test:e2e
         displayName: 'Razzle integration tests'
         env:
           REMIRROR_E2E_SERVER: razzle
-
       - publish: $(System.DefaultWorkingDirectory)/e2e/__failed-diffs__
         condition: failed()
         artifact: ImageSnapshots
@@ -74,8 +86,7 @@ jobs:
           vmImage: ${{ parameters.vmImage }}
         steps:
           - template: pipeline-yarn-install.yml
-          - bash: yarn build
-            displayName: 'Build project'
+          - template: pipeline-restore-build.yml
           - bash: echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN}" > .npmrc 2> /dev/null
             displayName: Authenticate npm for lerna
             env:

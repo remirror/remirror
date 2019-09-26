@@ -35,15 +35,16 @@
     "fix": "run-s fix:prettier fix:pkgjson fix:es",
     "fix:es": "yarn lint:es --fix",
     "fix:pkgjson": "node support/scripts/package-json-prettier.js",
-    "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md,mdx,js,tsx,ts}\" \"!docs/api/**\" \"!support/api/**\" \"!**/temp/**\"",
+    "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md,mdx}\" \"!docs/api/**\" \"!support/api/**\" \"!**/temp/**\"",
     "frozen": "yarn --frozen-lockfile install",
     "generate:all": "node support/scripts/generate-api-docs.js --all",
     "generate:api": "node support/scripts/generate-api-docs.js --api",
     "generate:docs": "node support/scripts/generate-api-docs.js --docs",
     "generate:json": "node support/scripts/generate-configs.js",
     "if-clean": "node support/scripts/run-if-clean.js",
+    "if-not-ci": "node support/scripts/run-if-not-ci.js",
     "if-config": "node support/scripts/run-if-config.js",
-    "postinstall": "run-s build:cli build:cli:ts",
+    "postinstall": "yarn if-not-ci run-s build:cli build:cli:ts",
     "integrity": "yarn check --integrity",
     "lerna:publish:canary": "lerna publish prerelease --preid=canary --dist-tag next --exact --force-publish && release --pre",
     "lerna:publish:ci": "lerna publish -y --canary --preid=ci.$(date +%s) --dist-tag ci",
@@ -186,7 +187,7 @@
       "post-commit": "echo $HUSKY_GIT_STDIN | support/git-hooks/post-commit-lfs $HUSKY_GIT_PARAMS",
       "post-merge": "echo $HUSKY_GIT_STDIN | support/git-hooks/post-merge-lfs $HUSKY_GIT_PARAMS",
       "pre-commit": "yarn if-config hooks.preCommit lint-staged",
-      "pre-push": "echo $HUSKY_GIT_STDIN | support/git-hooks/pre-push-lfs $HUSKY_GIT_PARAMS && yarn if-config hooks.prePush yarn audit && yarn checks"
+      "pre-push": "echo $HUSKY_GIT_STDIN | support/git-hooks/pre-push-lfs $HUSKY_GIT_PARAMS && yarn if-config hooks.prePush \"yarn audit && yarn checks\""
     }
   },
   "jest": {

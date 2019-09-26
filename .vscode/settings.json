@@ -7,10 +7,22 @@
   "eslint.lintTask.enable": true,
   "eslint.lintTask.options": "--ext .js,.jsx,.ts,.tsx .",
   "eslint.validate": [
-    { "autoFix": true, "language": "javascript" },
-    { "autoFix": true, "language": "javascriptreact" },
-    { "autoFix": true, "language": "typescript" },
-    { "autoFix": true, "language": "typescriptreact" },
+    {
+      "autoFix": true,
+      "language": "javascript"
+    },
+    {
+      "autoFix": true,
+      "language": "javascriptreact"
+    },
+    {
+      "autoFix": true,
+      "language": "typescript"
+    },
+    {
+      "autoFix": true,
+      "language": "typescriptreact"
+    },
   ],
   "search.exclude": {
     "docs/api": true,
@@ -26,5 +38,6 @@
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "javascript.format.enable": false,
-  "typescript.format.enable": false
+  "typescript.format.enable": false,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
