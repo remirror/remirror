@@ -8,7 +8,7 @@ const getHREF = (base: string, location: WindowLocation) => {
     return false;
   }
 
-  return base + location.pathname.replace(/\/+$/, '') + '.mdx';
+  return `${base + location.pathname.replace(/\/+$/, '')}.mdx`;
 };
 
 interface EditLinkProps {

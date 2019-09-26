@@ -31,7 +31,9 @@ exports.readConfigFile = () => {
 
 exports.readProperty = ({ property = '', config = exports.readConfigFile() }) => {
   let item = config;
-  if (!property || !config) return undefined;
+  if (!property || !config) {
+    return undefined;
+  }
   const keys = property.split('.');
   for (const key of keys) {
     if (key in item) {

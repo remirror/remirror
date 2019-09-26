@@ -261,7 +261,7 @@ export interface ExtensionHelperReturn {
 /**
  * A utility type used to create the generic prosemirror typescript types.
  */
-type InferredType<GType> = GType extends {} ? { type: GType } : {};
+type InferredType<GType> = GType extends object ? { type: GType } : {};
 
 /**
  * Generic extension manager type params for methods which require a prosemirror

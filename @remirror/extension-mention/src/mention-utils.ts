@@ -42,7 +42,11 @@ export const getMatcher = (name: string, matchers: MentionExtensionMatcher[]) =>
  * also be an empty string.
  */
 export const getAppendText = (preferred: string | undefined, fallback: string | undefined) => {
-  if (isString(preferred)) return preferred;
-  if (isString(fallback)) return fallback;
+  if (isString(preferred)) {
+    return preferred;
+  }
+  if (isString(fallback)) {
+    return fallback;
+  }
   return DEFAULT_MATCHER.appendText;
 };

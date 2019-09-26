@@ -1,6 +1,6 @@
 {
   "name": "jest-prosemirror",
-  "description": "Jest test utilities for your prosemirror text editor",
+  "description": "Write expressive tests for your prosemirror editor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/jest-prosemirror",
@@ -18,8 +18,11 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "@remirror/core": "0.6.0",
-    "@testing-library/dom": "^6.4.0",
+    "@remirror/core-helpers": "0.6.0",
+    "@remirror/core-types": "0.6.0",
+    "@remirror/core-constants": "0.6.0",
+    "@remirror/core-utils": "0.6.0",
+    "@testing-library/dom": "^6.4.1",
     "@types/prosemirror-gapcursor": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-model": "^1.7.2",

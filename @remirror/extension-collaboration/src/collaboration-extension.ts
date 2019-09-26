@@ -94,7 +94,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
    * This passes the sendable steps into the `onSendableReceived` handler defined in the
    * options when there is something to send.
    */
-  private getSendableSteps = debounce(this.options.debounce, (state: EditorState) => {
+  private readonly getSendableSteps = debounce(this.options.debounce, (state: EditorState) => {
     const sendable = sendableSteps(state);
 
     if (sendable) {

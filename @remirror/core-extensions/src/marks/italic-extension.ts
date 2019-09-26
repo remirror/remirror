@@ -2,7 +2,6 @@ import {
   CommandMarkTypeParams,
   ExtensionManagerMarkTypeParams,
   MarkExtension,
-  MarkExtensionOptions,
   MarkExtensionSpec,
   MarkGroup,
   markInputRule,
@@ -10,7 +9,7 @@ import {
 } from '@remirror/core';
 import { toggleMark } from 'prosemirror-commands';
 
-export class ItalicExtension extends MarkExtension<MarkExtensionOptions> {
+export class ItalicExtension extends MarkExtension {
   get name() {
     return 'italic' as const;
   }

@@ -35,7 +35,7 @@ const CharacterCountIndicatorComponent: FC<CharacterCountIndicatorProps> = ({
   const dashOffset = dashArray - dashArray * (ratio > 1 ? 1 : ratio);
 
   return (
-    <div style={{ marginLeft: 8, lineHeight: size + 'px', display: 'flex' }}>
+    <div style={{ marginLeft: 8, lineHeight: `${size}px`, display: 'flex' }}>
       {warn && (
         <div
           style={{

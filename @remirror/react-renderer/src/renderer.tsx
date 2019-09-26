@@ -28,7 +28,7 @@ const TextHandler: FC<TextHandlerProps> = ({ node, ...props }) => {
 
     if (!MarkHandler) {
       if (!props.skipUnknownMarks) {
-        throw new Error('No handler for mark type `' + normalized.type + '` registered');
+        throw new Error(`No handler for mark type \`${normalized.type}\` registered`);
       }
 
       return child;
@@ -126,7 +126,7 @@ export const RenderTree: FC<RenderTreeProps> = ({
   const TypeHandler = typeMap[json.type];
   if (!TypeHandler) {
     if (!skipUnknownTypes) {
-      throw new Error('No handler for node type `' + json.type + '` registered');
+      throw new Error(`No handler for node type \`${json.type}\` registered`);
     }
     return null;
   }

@@ -1,4 +1,5 @@
-import { Cast, EditorSchema, Plugin } from '@remirror/core';
+import { Cast } from '@remirror/core-helpers';
+import { EditorSchema, Plugin } from '@remirror/core-types';
 import { GapCursor } from 'prosemirror-gapcursor';
 import { Schema } from 'prosemirror-model';
 import { AllSelection, EditorState, NodeSelection, Selection, TextSelection } from 'prosemirror-state';

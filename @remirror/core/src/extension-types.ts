@@ -114,9 +114,13 @@ export interface PrioritizedExtension<GExtension extends AnyExtension = any> {
   priority: number;
 }
 
-export type FromFlexibleExtension<
-  GValue extends FlexibleExtension<any>
-> = GValue extends PrioritizedExtension<infer P> ? P : GValue extends AnyExtension ? GValue : never;
+export type FromFlexibleExtension<GValue extends FlexibleExtension> = GValue extends PrioritizedExtension<
+  infer P
+>
+  ? P
+  : GValue extends AnyExtension
+  ? GValue
+  : never;
 
 /**
  * Either a PrioritizedExtension or the actual Extension.
@@ -151,8 +155,8 @@ export interface ExtensionParams<GExtension extends AnyExtension = any> {
  * Get the extension from a PrioritizedExtension.
  */
 export type InferFlexibleExtension<
-  GFlexible extends FlexibleExtension<any>
-> = GFlexible extends PrioritizedExtension<any>
+  GFlexible extends FlexibleExtension
+> = GFlexible extends PrioritizedExtension
   ? GFlexible['extension']
   : GFlexible extends AnyExtension
   ? GFlexible
@@ -161,9 +165,9 @@ export type InferFlexibleExtension<
 /**
  * Get the extension types from a list of PrioritizedExtensions.
  */
-export type InferFlexibleExtensionList<
-  GFlexibleList extends Array<FlexibleExtension<any>>
-> = InferFlexibleExtension<GFlexibleList[number]>;
+export type InferFlexibleExtensionList<GFlexibleList extends FlexibleExtension[]> = InferFlexibleExtension<
+  GFlexibleList[number]
+>;
 
 /**
  * A utility type which maps the passed in extension command in an action that is called via

@@ -30,7 +30,7 @@
     "react-dom": "^16.8.0"
   },
   "devDependencies": {
-    "@remirror/react": "0.4.2-canary.2"
+    "@remirror/react": "0.6.0"
   },
   "publishConfig": {
     "access": "public"

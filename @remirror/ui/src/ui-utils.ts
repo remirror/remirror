@@ -2,7 +2,6 @@ import { css as serializeStyles, SerializedStyles } from '@emotion/core';
 import { deepMerge, get, isArray, isFunction, isPlainObject, isString } from '@remirror/core-helpers';
 import {
   RemirrorTheme,
-  RemirrorThemeColorModes,
   RemirrorThemeContextType,
   SxThemeProp,
   ThemeParams,
@@ -23,9 +22,9 @@ export const applyColorMode = (theme: RemirrorTheme, mode: string): RemirrorThem
     return theme;
   }
 
-  const modes = get('colors.modes', theme, {}) as RemirrorThemeColorModes;
+  const modes = get('colors.modes', theme, {});
 
-  return deepMerge(theme, { colors: get(mode, modes, {}) }) as RemirrorTheme;
+  return deepMerge(theme, { colors: get(mode, modes, {}) });
 };
 
 /**

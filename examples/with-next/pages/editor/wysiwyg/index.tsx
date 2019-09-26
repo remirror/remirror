@@ -1,4 +1,7 @@
 import { ExampleWysiwygEditor } from '@remirror/showcase/lib/wysiwyg';
-import React from 'react';
+import React, { FC } from 'react';
 
-export default () => <ExampleWysiwygEditor suppressHydrationWarning={true} />;
+const WysiwygEditor: FC = () => <ExampleWysiwygEditor suppressHydrationWarning={true} />;
+WysiwygEditor.displayName = 'WysiwygEditor';
+
+export default WysiwygEditor;

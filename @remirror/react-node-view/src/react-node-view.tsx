@@ -50,7 +50,7 @@ export class ReactNodeView<
   /**
    * Method for retrieving the position of the current nodeView
    */
-  private getPosition = () => 0;
+  private readonly getPosition = () => 0;
 
   // /**
   //  * Only applicable for mark nodeViews. Indicates whether the mark content is inline.
@@ -61,12 +61,12 @@ export class ReactNodeView<
    * A container and event dispatcher which keeps track of all dom elements that
    * hold node views
    */
-  private portalContainer: PortalContainer;
+  private readonly portalContainer: PortalContainer;
 
   /**
    * The component responsible for rendering the dom via React.
    */
-  private Component: ComponentType<NodeViewComponentProps<GOptions, GAttrs>>;
+  private readonly Component: ComponentType<NodeViewComponentProps<GOptions, GAttrs>>;
 
   /**
    * Whether or not the node is currently selected.
@@ -76,7 +76,7 @@ export class ReactNodeView<
   /**
    * The options that were passed into the extension that created this nodeView
    */
-  private options: GOptions;
+  private readonly options: GOptions;
 
   constructor({
     Component,
@@ -169,7 +169,7 @@ export class ReactNodeView<
     return undefined;
   }
 
-  private handleRef = (node: HTMLElement | undefined) => {
+  private readonly handleRef = (node: HTMLElement | undefined) => {
     const contentDOM = this.contentDOMWrapper || this.contentDOM;
 
     // move the contentDOM node inside the inner reference after rendering

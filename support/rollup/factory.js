@@ -16,7 +16,7 @@ import chalk from 'chalk';
  * @return {Object}
  */
 
-function configure(packageJson, path) {
+const configure = (packageJson, path) => {
   const extensions = ['.mjs', '.json', '.ts', '.tsx', '.js'];
   const packagePath = join(path, 'package.json');
 
@@ -104,7 +104,7 @@ function configure(packageJson, path) {
   return [(packageJson.module || packageJson.cjs) && bundledOutput, moduleOutput].filter(
     Boolean,
   );
-}
+};
 
 /**
  * Return a Rollup configuration for a `pkg`.
@@ -112,9 +112,9 @@ function configure(packageJson, path) {
  * @return {Array}
  */
 
-function factory(pkg, root) {
+const factory = (pkg, root) => {
   return configure(pkg, root);
-}
+};
 
 /**
  * Export.

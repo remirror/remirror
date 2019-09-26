@@ -3,8 +3,7 @@
  */
 
 import { EDITOR_CLASS_NAME } from '@remirror/core';
-import { docNodeSimpleJSON } from '@remirror/test-fixtures';
-import { createTestManager } from '@remirror/test-fixtures';
+import { docNodeSimpleJSON, createTestManager } from '@remirror/test-fixtures';
 import React, { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
 import { Remirror } from '..';

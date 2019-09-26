@@ -57,7 +57,7 @@ export const getModifierInformation = ({ modifiers, isMac = false }: GetModifier
         info.ctrlKey = true;
       }
     } else {
-      throw new Error('Unrecognized modifier name: ' + modifier);
+      throw new Error(`Unrecognized modifier name: ${modifier}`);
     }
   }
 

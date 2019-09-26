@@ -12,7 +12,7 @@ import {
   type,
 } from './helpers';
 
-const FIRST_PARAGRAPH_SELECTOR = EDITOR_CLASS_SELECTOR + ' > p:first-child';
+const FIRST_PARAGRAPH_SELECTOR = `${EDITOR_CLASS_SELECTOR} > p:first-child`;
 
 const { getByRole } = queries;
 const path = __SERVER__.urls.social.empty;

@@ -424,6 +424,11 @@ export const isNodeActive = ({ state, type, attrs = {} }: IsNodeActiveParams) =>
   return parent.node.hasMarkup(type, attrs);
 };
 
+export interface SchemaJSON<GNodes extends string = string, GMarks extends string = string> {
+  nodes: Record<GNodes, NodeSpec>;
+  marks: Record<GMarks, MarkSpec>;
+}
+
 /**
  * Converts a schema to a simple json compatible object.
  */

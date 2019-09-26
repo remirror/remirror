@@ -1,4 +1,8 @@
 /**
+ * Write expressive tests for your prosemirror editor
+ *
+ * @remarks
+ *
  * ## The problem
  *
  * You want to write tests for some of your prosemirror editor but you don't

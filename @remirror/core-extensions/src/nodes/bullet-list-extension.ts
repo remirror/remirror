@@ -2,14 +2,13 @@ import {
   CommandNodeTypeParams,
   ExtensionManagerNodeTypeParams,
   NodeExtension,
-  NodeExtensionOptions,
   NodeExtensionSpec,
   NodeGroup,
   toggleList,
 } from '@remirror/core';
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
-export class BulletListExtension extends NodeExtension<NodeExtensionOptions> {
+export class BulletListExtension extends NodeExtension {
   get name() {
     return 'bulletList' as const;
   }

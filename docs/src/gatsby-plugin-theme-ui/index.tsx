@@ -4,11 +4,11 @@ const heading = {
   lineHeight: 'heading',
 };
 
-const spreadObject = <GProps extends string, GObj extends {}>(
+const spreadObject = <GProps extends string, GObj extends object>(
   props: GProps[],
   obj: GObj,
 ): Record<GProps, GObj> => {
-  const returnValue = {} as Record<GProps, GObj>;
+  const returnValue = Object.create(null);
   for (const prop of props) {
     returnValue[prop] = obj;
   }

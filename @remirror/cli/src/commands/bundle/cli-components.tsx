@@ -58,8 +58,14 @@ export const Bundle = ({ args, startTime = Date.now(), runBundler }: BundleProps
  */
 const LoadingLine: FC<BundleState> = ({ completed, error, children }) => {
   const getElement = () => {
-    if (!completed) return <Spinner />;
-    if (completed && !error) return <Color green={true}>{figures.tick}</Color>;
+    if (!completed) {
+      return <Spinner />;
+    }
+
+    if (!error) {
+      return <Color green={true}>{figures.tick}</Color>;
+    }
+
     return <Color red={true}>{figures.cross}</Color>;
   };
 

@@ -21,8 +21,8 @@ export interface RemirrorComponentStaticProperties {
   $$remirrorType: RemirrorType;
 }
 
-export type RemirrorFC<P extends {} = {}> = FC<P> & RemirrorComponentStaticProperties;
-export type RemirrorComponentClass<P extends {} = {}> = ComponentClass<P> & RemirrorComponentStaticProperties;
+export type RemirrorFC<P extends object = {}> = FC<P> & RemirrorComponentStaticProperties;
+export type RemirrorComponentClass<P extends object = {}> = ComponentClass<P> & RemirrorComponentStaticProperties;
 
 export interface RemirrorManagerProps {
   /**
@@ -31,8 +31,8 @@ export interface RemirrorManagerProps {
   useBaseExtensions?: boolean;
 }
 
-export type RemirrorComponentType<P extends {} = {}> = ComponentType<P> & RemirrorComponentStaticProperties;
-export type RemirrorElement<GOptions extends {} = any> = ReactElement<any> & {
+export type RemirrorComponentType<P extends object = {}> = ComponentType<P> & RemirrorComponentStaticProperties;
+export type RemirrorElement<GOptions extends object = any> = ReactElement & {
   type: RemirrorComponentType<GOptions>;
 };
 
@@ -58,7 +58,7 @@ export enum RemirrorType {
  *
  * @param value - the value to check
  */
-export const isValidElement = <GProps extends {} = any>(value: unknown): value is ReactElement<GProps> =>
+export const isValidElement = <GProps extends object = any>(value: unknown): value is ReactElement<GProps> =>
   isObject(value) && reactIsValidElement(value);
 
 /**
@@ -66,7 +66,7 @@ export const isValidElement = <GProps extends {} = any>(value: unknown): value i
  *
  * @param value - the value to check
  */
-export const isReactDOMElement = <GProps extends {} = any>(
+export const isReactDOMElement = <GProps extends object = any>(
   value: unknown,
 ): value is ReactElement<GProps> & { type: string } => {
   return isValidElement(value) && isString(value.type);
@@ -77,7 +77,7 @@ export const isReactDOMElement = <GProps extends {} = any>(
  *
  * @param value - the value to check
  */
-export const isReactFragment = <GProps extends {} = any>(
+export const isReactFragment = <GProps extends object = any>(
   value: unknown,
 ): value is ReactElement<GProps> & { type: typeof Fragment } =>
   isObject(value) && isValidElement(value) && value.type === Fragment;
@@ -108,7 +108,7 @@ export const uniqueClass = (uid: string, className: string) => `${className}-${u
  * });
  * ```
  */
-export const asDefaultProps = <GProps extends {}>() => <GDefaultProps extends Partial<GProps>>(
+export const asDefaultProps = <GProps extends object>() => <GDefaultProps extends Partial<GProps>>(
   props: GDefaultProps,
 ): GDefaultProps => props;
 
@@ -117,7 +117,7 @@ export const asDefaultProps = <GProps extends {}>() => <GDefaultProps extends Pa
  *
  * @param value - the value to check
  */
-export const isRemirrorElement = <GOptions extends {} = any>(
+export const isRemirrorElement = <GOptions extends object = any>(
   value: unknown,
 ): value is RemirrorElement<GOptions> => {
   return bool(
@@ -127,7 +127,7 @@ export const isRemirrorElement = <GOptions extends {} = any>(
   );
 };
 
-const isRemirrorElementOfType = (type: RemirrorType) => <GOptions extends {} = any>(
+const isRemirrorElementOfType = (type: RemirrorType) => <GOptions extends object = any>(
   value: unknown,
 ): value is RemirrorElement<GOptions> => isRemirrorElement(value) && value.type.$$remirrorType === type;
 
@@ -230,7 +230,7 @@ export const css = String.raw || ((template: TemplateStringsArray) => template[0
  * A drop in replacement for React.Children.only which provides more readable errors
  * when the child is not a react element or undefined.
  */
-export const oneChildOnly = <GProps extends {} = any>(value: unknown): ReactElement<GProps> => {
+export const oneChildOnly = <GProps extends object = any>(value: unknown): ReactElement<GProps> => {
   if (!value) {
     throw new Error('This component requires ONE child component - Nothing was provided');
   }

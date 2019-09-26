@@ -116,36 +116,36 @@ export const suggest = <GSchema extends EditorSchema = any>(...suggesters: Sugge
     key: suggestPluginKey,
 
     // Handle the plugin view
-    view(view) {
+    view: view => {
       return pluginState.init(view).viewHandler();
     },
 
     state: {
       // Initialize the state
-      init() {
+      init: () => {
         return pluginState;
       },
 
       // Apply changes to the state
-      apply(tr, _, oldState, newState) {
+      apply: (tr, _, oldState, newState) => {
         return pluginState.apply({ tr, oldState, newState });
       },
     },
 
     props: {
       // Call the keydown hook if suggestion is active.
-      handleKeyDown(_, event) {
+      handleKeyDown: (_, event) => {
         return pluginState.handleKeyDown(event);
       },
 
       // Defer to the pluginState handler
-      handleTextInput(_, from, to, text) {
+      handleTextInput: (_, from, to, text) => {
         return pluginState.handleTextInput({ text, from, to });
       },
 
       // Sets up a decoration (styling options) on the currently active
       // decoration
-      decorations(state) {
+      decorations: state => {
         return pluginState.decorations(state);
       },
     },

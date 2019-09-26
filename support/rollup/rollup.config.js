@@ -2,6 +2,7 @@ import factory from './factory';
 import { join } from 'path';
 import { rollup, dependencies } from './config.json';
 import chalk from 'chalk';
+
 const { baseDir } = require('../scripts/helpers');
 
 const uniqueArray = arr => Array.from(new Set(arr));

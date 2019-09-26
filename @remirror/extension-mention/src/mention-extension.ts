@@ -116,7 +116,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
   /**
    * A function for creating the mention for the first time.
    */
-  private createMention = (type: MarkType, getState: () => EditorState, shouldUpdate = false) => (
+  private readonly createMention = (type: MarkType, getState: () => EditorState, shouldUpdate = false) => (
     config?: Attrs,
   ) => {
     if (!isValidMentionAttrs(config)) {

@@ -419,7 +419,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * @param params - extension manager params
    */
-  isActive?(params: ExtensionManagerParams): CommandStatusCheck<string>;
+  isActive?(params: ExtensionManagerParams): CommandStatusCheck;
 
   /**
    * Determines whether this extension is enabled. If a command name is provided
@@ -428,7 +428,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * @param params - extension manager parameters
    */
-  isEnabled?(params: ExtensionManagerParams): CommandStatusCheck<string>;
+  isEnabled?(params: ExtensionManagerParams): CommandStatusCheck;
 
   /**
    * Add key bindings for this extension.

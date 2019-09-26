@@ -16,8 +16,8 @@ const getDiffPaths = () => {
 
   return {
     diff: tempDir(toPng(testName)),
-    one: tempDir(toPng(testName + '_1')),
-    two: tempDir(toPng(testName + '_2')),
+    one: tempDir(toPng(`${testName}_1`)),
+    two: tempDir(toPng(`${testName}_2`)),
   };
 };
 

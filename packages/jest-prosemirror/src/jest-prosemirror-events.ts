@@ -1,4 +1,4 @@
-import { PlainObject } from '@remirror/core';
+import { PlainObject } from '@remirror/core-types';
 
 // Taken from dom-testing-library
 
@@ -353,10 +353,13 @@ type EventMap = Record<EventType, EventProperties>;
 const eventMap: EventMap = rawEventMap as EventMap;
 
 export const createEvents = <GEvent extends Event>(event: EventType, options: PlainObject): GEvent[] => {
-  const { Constructor, defaultProperties } = eventMap[event] || {
-    Constructor: 'Event',
-    defaultProperties: { bubbles: true, cancelable: true },
-  };
+  const { Constructor, defaultProperties } =
+    event in eventMap
+      ? eventMap[event]
+      : {
+          Constructor: 'Event',
+          defaultProperties: { bubbles: true, cancelable: true },
+        };
   let eventName = event.toLowerCase();
   const properties: PlainObject = { ...defaultProperties, ...options };
   type GEventConstructor = new (type: string, eventInitDict?: EventInit) => GEvent;

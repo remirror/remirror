@@ -2,15 +2,15 @@ import { EditorView, randomInt, throttle } from '@remirror/core';
 import { EpicModePluginStateParams, Particle, ParticleEffect, ParticleRange } from './epic-mode-types';
 
 export class EpicModePluginState {
-  private particleEffect: ParticleEffect;
-  private particleRange: ParticleRange;
-  private getCanvasContainer: () => HTMLElement;
+  private readonly particleEffect: ParticleEffect;
+  private readonly particleRange: ParticleRange;
+  private readonly getCanvasContainer: () => HTMLElement;
   private container!: HTMLElement;
-  private shakeActive: boolean;
-  private colors: string[];
+  private readonly shakeActive: boolean;
+  private readonly colors: string[];
   private shakeTime = 0;
   private shakeTimeMax = 0;
-  private shakeIntensity = 5;
+  private readonly shakeIntensity = 5;
   private lastTime = 0;
   private particles: Particle[] = [];
   private isActive = false;

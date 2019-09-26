@@ -190,7 +190,7 @@ export type SxThemeProp = SystemStyleObject &
  * This is used with the `SxThemeProp` and allow a user to
  * configure the variant to use for the active style.
  */
-export type WithVariants<GObject extends {}> = GObject & { variant?: string };
+export type WithVariants<GObject extends object> = GObject & { variant?: string };
 
 export interface RemirrorThemeContextType {
   /**

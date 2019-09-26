@@ -102,18 +102,18 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * A map to keep track of all registered positioners.
    */
-  private positionerMap = new Map<string, PositionerMapValue>();
+  private readonly positionerMap = new Map<string, PositionerMapValue>();
 
   /**
    * The prosemirror EditorView.
    */
-  private view: EditorViewType<SchemaFromExtensions<GExtension>>;
+  private readonly view: EditorViewType<SchemaFromExtensions<GExtension>>;
 
   /**
    * A unique ID for the editor which is also used as a key to pass into
    * `getRootProps`.
    */
-  private uid = uniqueId({ size: 10 });
+  private readonly uid = uniqueId({ size: 10 });
 
   /**
    * The portal container which keeps track of all the React Portals containing
@@ -174,13 +174,13 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * Retrieve the editor state. This is passed through to the extension manager.
    */
-  private getState = () =>
+  private readonly getState = () =>
     this.props.onStateChange && this.props.value ? this.props.value : this.view.state;
 
   /**
    * Retrieve the them from the context and pass it to the ExtensionManager
    */
-  private getTheme = () => this.context;
+  private readonly getTheme = () => this.context;
 
   /**
    * Create the initial React state which stores copies of the Prosemirror
@@ -247,7 +247,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * The external `getRootProps` that is used to spread props onto a desired
    * holder element for the prosemirror view.
    */
-  private getRootProps = <GRefKey extends string = 'ref'>(options?: GetRootPropsConfig<GRefKey>) => {
+  private readonly getRootProps = <GRefKey extends string = 'ref'>(options?: GetRootPropsConfig<GRefKey>) => {
     return this.internalGetRootProps(options, null);
   };
 
@@ -255,7 +255,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * Creates the props that should be spread on the root element inside which
    * the prosemirror instance will be rendered.
    */
-  private internalGetRootProps = <GRefKey extends string = 'ref'>(
+  private readonly internalGetRootProps = <GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,
     children?: ReactNode,
   ): RefKeyRootProps<GRefKey> => {
@@ -285,7 +285,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * position and positioner information components that want to respond to the
    * cursor position (e.g.) a floating / bubble menu.
    */
-  private getPositionerProps = <GRefKey extends string = 'ref'>(
+  private readonly getPositionerProps = <GRefKey extends string = 'ref'>(
     options: GetPositionerPropsConfig<GExtension, GRefKey>,
   ) => {
     const { refKey = 'ref', ...config } = { ...defaultPositioner, ...(options || {}) };
@@ -311,7 +311,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * Stores the Prosemirror editor dom instance for this component using `refs`
    */
-  private onRef: Ref<HTMLElement> = ref => {
+  private readonly onRef: Ref<HTMLElement> = ref => {
     if (ref) {
       this.editorRef = ref;
       this.onRefLoad();
@@ -327,7 +327,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * descriptive string) so that multiple positioners can be registered per
    * editor.
    */
-  private positionerRefFactory = ({
+  private readonly positionerRefFactory = ({
     positionerId,
     position,
   }: PositionerRefFactoryParams): Ref<HTMLElement> => element => {
@@ -388,7 +388,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * This sets the attributes that wrap the outer prosemirror node.
    */
-  private getAttributes = (ssr = false) => {
+  private readonly getAttributes = (ssr = false) => {
     const { attributes } = this.props;
     const propAttributes = isFunction(attributes) ? attributes(this.eventListenerParams()) : attributes;
 
@@ -413,7 +413,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * @internalremarks
    * How does it work when transactions are dispatched one after the other.
    */
-  private dispatchTransaction = (tr: Transaction) => {
+  private readonly dispatchTransaction = (tr: Transaction) => {
     tr = this.props.onDispatchTransaction(tr, this.getState()) || tr;
 
     const state = this.getState().apply(tr);
@@ -432,7 +432,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * into the editor. Since it's up to the user to provide state updates to the
    * editor this method is called when the value prop has changed.
    */
-  private controlledUpdate = (state: EditorState<SchemaFromExtensions<GExtension>>) => {
+  private readonly controlledUpdate = (state: EditorState<SchemaFromExtensions<GExtension>>) => {
     const updateHandler = this.createUpdateStateHandler({ state });
     this.view.updateState(state);
     updateHandler();
@@ -441,7 +441,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * Create the callback which is passed back to the setState handler.
    */
-  private createUpdateStateHandler = ({
+  private readonly createUpdateStateHandler = ({
     state,
     triggerOnChange,
     onUpdate,
@@ -609,7 +609,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * Listener for editor 'blur' events
    */
-  private onBlur = (event: Event) => {
+  private readonly onBlur = (event: Event) => {
     if (this.props.onBlur) {
       this.props.onBlur(this.eventListenerParams(), event);
     }
@@ -618,7 +618,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * Listener for editor 'focus' events
    */
-  private onFocus = (event: Event) => {
+  private readonly onFocus = (event: Event) => {
     if (this.props.onFocus) {
       this.props.onFocus(this.eventListenerParams(), event);
     }
@@ -630,7 +630,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * @param content
    * @param triggerOnChange
    */
-  private setContent = (content: RemirrorContentType, triggerOnChange = false) => {
+  private readonly setContent = (content: RemirrorContentType, triggerOnChange = false) => {
     const state = this.createStateFromContent(content);
     this.updateState({ state, triggerOnChange });
   };
@@ -641,7 +641,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * @param triggerOnChange - whether to notify the onChange handler that the
    * content has been reset
    */
-  private clearContent = (triggerOnChange = false) => {
+  private readonly clearContent = (triggerOnChange = false) => {
     this.setContent(this.props.fallbackContent, triggerOnChange);
   };
 
@@ -709,7 +709,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     };
   }
 
-  private getText = (state?: EditorState<SchemaFromExtensions<GExtension>>) => (
+  private readonly getText = (state?: EditorState<SchemaFromExtensions<GExtension>>) => (
     lineBreakDivider = '\n\n',
   ) => {
     const { doc } = state || this.state.editor.newState;
@@ -719,7 +719,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * Retrieve the HTML from the `doc` prosemirror node
    */
-  private getHTML = (state?: EditorState<SchemaFromExtensions<GExtension>>) => () => {
+  private readonly getHTML = (state?: EditorState<SchemaFromExtensions<GExtension>>) => () => {
     return toHTML({
       node: (state || this.state.editor.newState).doc,
       schema: this.manager.data.schema,
@@ -730,21 +730,23 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * Retrieve the full state json object
    */
-  private getJSON = (state?: EditorState<SchemaFromExtensions<GExtension>>) => (): ObjectNode => {
+  private readonly getJSON = (state?: EditorState<SchemaFromExtensions<GExtension>>) => (): ObjectNode => {
     return (state || this.state.editor.newState).toJSON() as ObjectNode;
   };
 
   /**
    * Return the json object for the prosemirror document.
    */
-  private getObjectNode = (state?: EditorState<SchemaFromExtensions<GExtension>>) => (): ObjectNode => {
+  private readonly getObjectNode = (
+    state?: EditorState<SchemaFromExtensions<GExtension>>,
+  ) => (): ObjectNode => {
     return (state || this.state.editor.newState).doc.toJSON() as ObjectNode;
   };
 
   /**
    * Create the editor state from a remirror content type.
    */
-  private createStateFromContent = (
+  private readonly createStateFromContent = (
     content: RemirrorContentType,
   ): EditorState<SchemaFromExtensions<GExtension>> => {
     const { stringHandler, fallbackContent: fallback } = this.props;

@@ -1,4 +1,4 @@
-import { SchemaParams } from '@remirror/core';
+import { SchemaParams, isProsemirrorNode, isObject } from '@remirror/core';
 import { TestEditorViewParams } from 'jest-prosemirror';
 import { coerce, offsetTags } from './jest-remirror-builder';
 import { TaggedProsemirrorNode, Tags } from './jest-remirror-types';
@@ -49,3 +49,9 @@ export const replaceSelection = ({ view, content }: InsertParams): Tags => {
   view.dispatch(tr);
   return offsetTags(tags, from);
 };
+
+/**
+ * Check if a node is tagged.
+ */
+export const isTaggedNode = (val: unknown): val is TaggedProsemirrorNode =>
+  isProsemirrorNode(val) && isObject((val as any).tags);

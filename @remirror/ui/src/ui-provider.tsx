@@ -70,8 +70,25 @@ export interface RemirrorThemeProviderProps {
 }
 
 /**
+ * Check whether the theme has a parent.
+ */
+const hasParent = (
+  theme: RemirrorThemeContextType,
+): theme is RemirrorThemeContextType & { parent: RemirrorTheme } => bool(theme.parent);
+
+/**
+ * When true this is the outermost remirror theme in the component tree.
+ *
+ * Since RemirrorThemeProvider's support nesting it is necessary to check so
+ * that inner themes can be safely merged into the outer theme values.
+ */
+const isRoot = (theme: RemirrorThemeContextType) => !hasParent(theme);
+
+/**
  * A component that either extends the existing emotion theme with the provided theme
  * or it creates a new theme context for all children components nested in the tree.
+ *
+ * @remarks
  *
  * Supports nested themes.
  */
@@ -87,7 +104,7 @@ export const RemirrorThemeProvider: FC<RemirrorThemeProviderProps> = ({
   const disableMergeWithEmotion = disableMerge.includes('emotion');
 
   const outer = useRemirrorTheme();
-  const emotionTheme = useEmotionTheme() || {};
+  const emotionTheme = useEmotionTheme();
   const [colorMode, setColorMode] = useState(initialColorMode || outer.colorMode);
 
   const parentEmotionTheme = isRoot(outer) && !disableMergeWithEmotion ? emotionTheme : {};
@@ -131,18 +148,3 @@ export const RemirrorThemeProvider: FC<RemirrorThemeProviderProps> = ({
     </EmotionThemeProvider>
   );
 };
-
-/**
- * When true this is the outermost remirror theme in the component tree.
- *
- * Since RemirrorThemeProvider's support nesting it is necessary to check so
- * that inner themes can be safely merged into the outer theme values.
- */
-const isRoot = (theme: RemirrorThemeContextType) => !hasParent(theme);
-
-/**
- * Check whether the theme has a parent.
- */
-const hasParent = (
-  theme: RemirrorThemeContextType,
-): theme is RemirrorThemeContextType & { parent: RemirrorTheme } => bool(theme.parent);

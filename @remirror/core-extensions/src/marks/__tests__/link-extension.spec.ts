@@ -242,47 +242,43 @@ describe('keys', () => {
       add,
       nodes: { doc, p },
     } = create({ activationHandler });
-    const { state } = add(doc(p(`<cursor>Link`))).shortcut('Mod-k');
-    const { from, to } = state.selection;
-    expect({ from, to }).toEqual({ from: 1, to: 5 });
-    expect(activationHandler).toHaveBeenCalled();
+    add(doc(p(`<cursor>Link`)))
+      .shortcut('Mod-k')
+      .callback(({ start, end }) => {
+        expect({ start, end }).toEqual({ start: 1, end: 5 });
+        expect(activationHandler).toHaveBeenCalled();
+      });
   });
+
   it('does not call handler when no nearby word', () => {
     const activationHandler = jest.fn(() => true);
     const {
       add,
       nodes: { doc, p },
     } = create({ activationHandler });
-    const { state } = add(doc(p(`<cursor> Link`))).shortcut('Mod-k');
-    const { from, to } = state.selection;
-    expect({ from, to }).toEqual({ from: 1, to: 1 });
-    expect(activationHandler).not.toHaveBeenCalled();
+    add(doc(p(`<cursor> Link`)))
+      .shortcut('Mod-k')
+      .callback(({ start, end }) => {
+        expect({ start, end }).toEqual({ start: 1, end: 1 });
+        expect(activationHandler).not.toHaveBeenCalled();
+      });
   });
 });
 
 describe('plugin', () => {
-  let {
-    getState,
-    add,
-    attrMarks: { link },
-    nodes: { doc, p },
-  } = create();
-
-  beforeEach(() => {
-    ({
-      getState,
+  it('clickHandler selects the full text of the link when clicked', () => {
+    const {
       add,
       attrMarks: { link },
-      nodes: { doc, p },
-    } = create());
-  });
+      doc,
+      p,
+    } = create();
+    const testLink = link({ href });
 
-  describe('clickHandler', () => {
-    it('selects the full text of the link when clicked', () => {
-      const testLink = link({ href });
-      add(doc(p(testLink('Li<cursor>nk')))).fire({ event: 'click' });
-      const { from, to } = getState().selection;
-      expect({ from, to }).toEqual({ from: 1, to: 5 });
-    });
+    add(doc(p(testLink('Li<cursor>nk'))))
+      .fire({ event: 'click' })
+      .callback(({ start, end }) => {
+        expect({ start, end }).toEqual({ start: 1, end: 5 });
+      });
   });
 });

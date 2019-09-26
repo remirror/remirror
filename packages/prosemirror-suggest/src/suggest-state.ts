@@ -26,6 +26,7 @@ import {
 } from './suggest-types';
 import { findFromSuggesters, findReason, runKeyBindings } from './suggest-utils';
 import { Transaction } from 'prosemirror-state';
+import { bool } from '@remirror/core-helpers/lib';
 
 /**
  * The suggestion state which manages the list of suggestions.
@@ -41,7 +42,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * The suggesters that have been registered for the suggestions plugin.
    */
-  private suggesters: Array<Required<Suggester>>;
+  private readonly suggesters: Array<Required<Suggester>>;
 
   /**
    * Keeps track of the current state.
@@ -82,7 +83,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    * Sets the removed property to be true. This is passed as a property to the
    * `createCommand` option.
    */
-  private setRemovedTrue = () => {
+  private readonly setRemovedTrue = () => {
     this.removed = true;
   };
 
@@ -171,7 +172,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * Manages the view updates.
    */
-  private onViewUpdate = () => {
+  private readonly onViewUpdate = () => {
     const {
       match,
       handlerMatches: { change, exit },
@@ -256,9 +257,6 @@ export class SuggestState<GSchema extends EditorSchema = any> {
       from,
       to,
       { nodeName: suggester.ignoredTag, ...attrs },
-      // TODO enable extra spec attributes in DefinitelyTyped.
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
       { char, name, specific },
     );
 
@@ -276,7 +274,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     const decorations = this.ignored.find(from, from + char.length);
     const decoration = decorations[0];
 
-    if (!decoration || decoration.spec.name !== name) {
+    if (!bool(decoration) || decoration.spec.name !== name) {
       return;
     }
 

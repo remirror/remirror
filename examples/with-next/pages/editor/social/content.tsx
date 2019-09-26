@@ -1,6 +1,9 @@
 import { ExampleSocialEditor, SOCIAL_SHOWCASE_CONTENT } from '@remirror/showcase/lib/social';
-import React from 'react';
+import React, { FC } from 'react';
 
-export default () => (
+const SocialEditorWithContent: FC = () => (
   <ExampleSocialEditor initialContent={SOCIAL_SHOWCASE_CONTENT} suppressHydrationWarning={true} />
 );
+SocialEditorWithContent.displayName = 'SocialEditorWithContent';
+
+export default SocialEditorWithContent;

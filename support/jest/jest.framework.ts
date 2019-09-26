@@ -34,15 +34,15 @@ process.on('unhandledRejection', reason => {
  * Serializer for HTML content.
  */
 expect.addSnapshotSerializer({
-  test(object) {
+  test: object => {
     if (typeof object !== 'string') {
       return false;
     }
 
     const trimmed = object.trim();
-    return trimmed.length > 2 && trimmed[0] === '<' && trimmed[trimmed.length - 1] === '>';
+    return trimmed.length > 2 && trimmed.startsWith('<') && trimmed.endsWith('>');
   },
-  print(val) {
+  print: val => {
     return toDiffableHtml(val).trim();
   },
 });

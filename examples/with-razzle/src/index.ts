@@ -20,7 +20,7 @@ const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 export default express()
   .use((req, res) => app.handle(req, res))
-  .listen(port, (err: Error) => {
+  .listen(port, (err?: Error) => {
     if (err) {
       console.error(err);
       return;

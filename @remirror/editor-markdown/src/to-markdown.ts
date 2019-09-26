@@ -11,14 +11,14 @@ export const toMarkdown = (content: ProsemirrorNode) =>
         state.wrapBlock('> ', undefined, node, () => state.renderContent(node));
       },
       codeBlock(state, node) {
-        state.write('```' + (node.attrs.language || '') + '\n');
+        state.write(`\`\`\`${node.attrs.language || ''}\n`);
         state.text(node.textContent, false);
         state.ensureNewLine();
         state.write('```');
         state.closeBlock(node);
       },
       heading(state, node) {
-        state.write(state.repeat('#', node.attrs.level) + ' ');
+        state.write(`${state.repeat('#', node.attrs.level)} `);
         state.renderInline(node);
         state.closeBlock(node);
       },
@@ -27,7 +27,7 @@ export const toMarkdown = (content: ProsemirrorNode) =>
         state.closeBlock(node);
       },
       bulletList(state, node) {
-        state.renderList(node, '  ', () => (node.attrs.bullet || '*') + ' ');
+        state.renderList(node, '  ', () => `${node.attrs.bullet || '*'} `);
       },
       orderedList(state, node) {
         const start = node.attrs.order || 1;
@@ -35,7 +35,7 @@ export const toMarkdown = (content: ProsemirrorNode) =>
         const space = state.repeat(' ', maxW + 2);
         state.renderList(node, space, i => {
           const nStr = String(start + i);
-          return state.repeat(' ', maxW - nStr.length) + nStr + '. ';
+          return `${state.repeat(' ', maxW - nStr.length) + nStr}. `;
         });
       },
       listItem(state, node) {
@@ -47,12 +47,9 @@ export const toMarkdown = (content: ProsemirrorNode) =>
       },
       image(state, node) {
         state.write(
-          '![' +
-            state.esc(node.attrs.alt || '') +
-            '](' +
-            state.esc(node.attrs.src) +
-            (node.attrs.title ? ' ' + state.quote(node.attrs.title) : '') +
-            ')',
+          `![${state.esc(node.attrs.alt || '')}](${state.esc(node.attrs.src)}${
+            node.attrs.title ? ` ${state.quote(node.attrs.title)}` : ''
+          })`,
         );
       },
       hardBreak(state, node, parent, index) {
@@ -80,10 +77,9 @@ export const toMarkdown = (content: ProsemirrorNode) =>
         close(state, mark, parent, index) {
           return isPlainURL(mark, parent, index, -1)
             ? '>'
-            : '](' +
-                state.esc(mark.attrs.href) +
-                (mark.attrs.title ? ' ' + state.quote(mark.attrs.title) : '') +
-                ')';
+            : `](${state.esc(mark.attrs.href)}${
+                mark.attrs.title ? ` ${state.quote(mark.attrs.title)}` : ''
+              })`;
         },
       },
       code: {

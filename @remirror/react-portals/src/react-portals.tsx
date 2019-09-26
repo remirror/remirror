@@ -54,7 +54,7 @@ export interface PortalProps extends RemirrorPortalsProps {
   /**
    * The plain component to render.
    */
-  Component: () => ReactElement<any>;
+  Component: () => ReactElement;
 }
 
 /**

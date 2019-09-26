@@ -161,7 +161,7 @@ export const getModifiers = ({ modifiers, isMac = false }: GetModifiersParams) =
         list.push(CTRL[0]);
       }
     } else {
-      throw new Error('Unrecognized modifier name: ' + modifier);
+      throw new Error(`Unrecognized modifier name: ${modifier}`);
     }
   }
 

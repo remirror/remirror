@@ -3,14 +3,13 @@ import {
   EDITOR_CLASS_SELECTOR,
   ExtensionManagerNodeTypeParams,
   NodeExtension,
-  NodeExtensionOptions,
   NodeExtensionSpec,
   NodeGroup,
   toggleWrap,
 } from '@remirror/core';
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
-export class BlockquoteExtension extends NodeExtension<NodeExtensionOptions> {
+export class BlockquoteExtension extends NodeExtension {
   get name() {
     return 'blockquote' as const;
   }

@@ -75,7 +75,7 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
    *
    * @param method - the method to wrap
    */
-  private wrapMethod = (method: CommandFunction): CommandFunction => {
+  private readonly wrapMethod = (method: CommandFunction): CommandFunction => {
     return (state, dispatch, view) => {
       const { getState, getDispatch } = this.options;
 

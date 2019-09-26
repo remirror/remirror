@@ -5,7 +5,7 @@ import { MentionGetterParams } from './social-types';
 /**
  * Maps the items to items with an active property
  */
-export const mapToActiveIndex = <GItem extends {}>(
+export const mapToActiveIndex = <GItem extends object>(
   items: GItem[],
   activeIndex: number,
 ): Array<GItem & { active: boolean }> => {

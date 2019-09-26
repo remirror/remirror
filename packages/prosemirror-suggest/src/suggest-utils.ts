@@ -180,12 +180,12 @@ const createInsertReason = ({
   }
 
   // Are we at the end position?
-  if (next && prev.range.end === next.range.to) {
+  if (prev.range.end === next.range.to) {
     return { exit: createMatchWithReason({ match: next, reason: ExitReason.End }) };
   }
 
   // Are we in the middle of the mention
-  if (next && prev.queryText.partial) {
+  if (prev.queryText.partial) {
     return { exit: createMatchWithReason({ match: next, reason: ExitReason.Split }) };
   }
 
@@ -235,7 +235,7 @@ const findExitReason = ({
   const updatedPrev = recheckMatch({ match, state });
 
   // Exit created a split
-  if (!updatedPrev || (updatedPrev && updatedPrev.queryText.full !== match.queryText.full)) {
+  if (!updatedPrev || updatedPrev.queryText.full !== match.queryText.full) {
     return createInsertReason({ prev: match, next: updatedPrev, state });
   }
 

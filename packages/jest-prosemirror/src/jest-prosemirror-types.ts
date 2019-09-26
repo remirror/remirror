@@ -1,4 +1,4 @@
-import { EditorSchema } from '@remirror/core';
+import { EditorSchema } from '@remirror/core-types';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { EditorView } from 'prosemirror-view';
 /**

@@ -4,14 +4,13 @@ import {
   EDITOR_CLASS_SELECTOR,
   ExtensionManagerNodeTypeParams,
   NodeExtension,
-  NodeExtensionOptions,
   NodeExtensionSpec,
   NodeGroup,
   toggleBlockItem,
 } from '@remirror/core';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
-export class CodeBlockExtension extends NodeExtension<NodeExtensionOptions> {
+export class CodeBlockExtension extends NodeExtension {
   get name() {
     return 'codeBlock' as const;
   }

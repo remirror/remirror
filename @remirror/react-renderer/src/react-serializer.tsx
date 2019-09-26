@@ -25,8 +25,8 @@ type MarkToDOM = MarkExtensionSpec['toDOM'];
 export class ReactSerializer<GExtension extends AnyExtension = any> {
   public nodes: Record<string, NodeToDOM>;
   public marks: Record<string, MarkToDOM>;
-  private components: Record<string, ComponentType<any>>;
-  private options: Record<string, PlainObject>;
+  private readonly components: Record<string, ComponentType<any>>;
+  private readonly options: Record<string, PlainObject>;
 
   constructor(
     nodes: Record<string, NodeToDOM>,

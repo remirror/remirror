@@ -5,7 +5,7 @@ export * from './jest-remirror-editor';
 export * from './jest-remirror-ssr';
 export * from './jest-remirror-environment';
 export * from './jest-remirror-schema';
-export * from './jest-remirror-transactions';
+export * from './jest-remirror-utils';
 export * from './jest-remirror-types';
 
 declare global {

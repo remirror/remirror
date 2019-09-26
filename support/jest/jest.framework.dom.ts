@@ -4,6 +4,7 @@ import { setupProsemirrorEnvironment } from 'jest-prosemirror';
 import { ignoreJSDOMWarnings, setupRemirrorEnvironment } from 'jest-remirror';
 
 require('@testing-library/jest-dom/extend-expect');
+
 expect.addSnapshotSerializer(createSerializer({}));
 expect.extend(toHaveNoViolations);
 expect.extend(matchers);

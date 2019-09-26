@@ -159,12 +159,12 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   /**
    * Retrieve the specified action.
    */
-  private getActions = (name: keyof this['_A']) => this.initData.actions[name];
+  private readonly getActions = (name: keyof this['_A']) => this.initData.actions[name];
 
   /**
    * Retrieve the specified helper.
    */
-  private getHelpers = (name: keyof this['_H']) => this.initData.helpers[name];
+  private readonly getHelpers = (name: keyof this['_H']) => this.initData.helpers[name];
 
   /**
    * Creates the extension manager which is used to simplify the management the
@@ -489,7 +489,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
       .filter(hasExtensionProperty('ssrTransformer'))
       .filter(extension => !extension.options.exclude.ssr)
       .reduce((prevElement, extension) => {
-        return extension.ssrTransformer(prevElement, this.params) as JSX.Element;
+        return extension.ssrTransformer(prevElement, this.params);
       }, element);
   }
 
@@ -848,6 +848,6 @@ export type ExtensionsFromManager<GManager extends AnyExtensionManager> = GManag
 /**
  * The utility for capturing all the possible `ExtensionManager` type variations.
  */
-export type AnyExtensionManager = ExtensionManager<any>;
+export type AnyExtensionManager = ExtensionManager;
 
 export interface OnTransactionManagerParams extends TransactionParams, EditorStateParams {}

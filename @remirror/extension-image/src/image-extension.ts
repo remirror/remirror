@@ -6,18 +6,17 @@ import {
   CommandNodeTypeParams,
   isElementDOMNode,
   NodeExtension,
-  NodeExtensionOptions,
   NodeExtensionSpec,
 } from '@remirror/core';
 import { ResolvedPos } from 'prosemirror-model';
 import { createImageExtensionPlugin } from './image-plugin';
 import { getAttrs } from './image-utils';
 
-const hasCursor = <T extends {}>(arg: T): arg is T & { $cursor: ResolvedPos } => {
+const hasCursor = <T extends object>(arg: T): arg is T & { $cursor: ResolvedPos } => {
   return bool(Cast(arg).$cursor);
 };
 
-export class ImageExtension extends NodeExtension<NodeExtensionOptions> {
+export class ImageExtension extends NodeExtension {
   get name() {
     return 'image' as const;
   }

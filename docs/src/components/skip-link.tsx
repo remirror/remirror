@@ -5,7 +5,6 @@ type AnchorProps = JSX.IntrinsicElements['a'];
 
 export const SkipLink = (props: AnchorProps) => (
   <a
-    children='Skip to content'
     {...props}
     href='#content'
     sx={{
@@ -32,7 +31,9 @@ export const SkipLink = (props: AnchorProps) => (
         clip: 'auto',
       },
     }}
-  />
+  >
+    Skip to content
+  </a>
 );
 
 export default SkipLink;

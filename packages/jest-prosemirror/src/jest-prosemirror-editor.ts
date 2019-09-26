@@ -1,20 +1,17 @@
+import { findElementAtPosition, isElementDOMNode, isTextDOMNode } from '@remirror/core-utils';
+import { pick, isString } from '@remirror/core-helpers';
 import {
   CommandFunction,
   EditorSchema,
   EditorStateParams,
-  findElementAtPosition,
   InputRule,
-  isElementDOMNode,
-  isTextDOMNode,
-  pick,
   PlainObject,
   Plugin,
   PosParams,
   SelectionParams,
   TextParams,
   ProsemirrorNode,
-  isString,
-} from '@remirror/core';
+} from '@remirror/core-types';
 import { EventType, fireEvent, prettyDOM } from '@testing-library/dom';
 import { inputRules } from 'prosemirror-inputrules';
 import { AllSelection, NodeSelection, TextSelection } from 'prosemirror-state';
@@ -358,7 +355,7 @@ export const createEditor = <GSchema extends EditorSchema = any>(
   if (autoClean) {
     afterEach(() => {
       view.destroy();
-      if (place && place.parentNode) {
+      if (place.parentNode) {
         place.parentNode.removeChild(place);
       }
     });
@@ -597,7 +594,7 @@ export const apply = <GSchema extends EditorSchema = any>(
 
   if (result && taggedDocHasSelection(result)) {
     pass = pm.eq(newState.selection, selectionFor(result));
-    doc = result || taggedDoc;
+    doc = result;
   }
 
   return { pass, taggedDoc: doc, state: newState };

@@ -3,7 +3,7 @@ import { EditorState } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 
 export class NullSelectionReader {
-  constructor(private warnOnce: () => void) {}
+  constructor(private readonly warnOnce: () => void) {}
 
   public destroy() {}
   public poll() {}

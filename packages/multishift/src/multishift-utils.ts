@@ -47,7 +47,7 @@ export const defaultGetItemId = (item: any) => item;
 /**
  * The default itemToString implementation.
  */
-export const defaultItemToString = <GItem = any>(item: GItem) => {
+export const defaultItemToString = <GItem = any>(item: GItem | undefined) => {
   return item ? String(item) : '';
 };
 
@@ -1069,7 +1069,7 @@ export const isBrowser = () =>
  * Checks whether the parent contains (or is the same as) the child node.
  */
 export const isOrContainsNode = (parent: Node, child: Node | null): child is Node => {
-  return parent === child || (parent.contains && parent.contains(child));
+  return parent === child || parent.contains(child);
 };
 
 interface OmitUnchangedParams<GItem = any> {

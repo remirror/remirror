@@ -37,7 +37,7 @@ export class CodeBlockState {
 
   private deleted = false;
 
-  constructor(private type: NodeType) {}
+  constructor(private readonly type: NodeType) {}
 
   /**
    * Creates the initial set of decorations

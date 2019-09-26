@@ -119,7 +119,7 @@ export const sequence = (...content: TaggedContentItem[]) => {
       const thickness = node.isText ? 0 : 1;
       tags = { ...tags, ...offsetTags(node.tags, position + thickness) };
       position += node.nodeSize;
-      nodes.push(node as TaggedProsemirrorNode);
+      nodes.push(node);
     }
   }
   return { nodes, tags };
@@ -148,7 +148,7 @@ export const coerce = ({ content, schema }: CoerceParams) => {
   return sequence(...flattenArray<TaggedContentItem>(taggedContent));
 };
 
-interface NodeFactoryParams extends BaseFactoryParams {
+interface NodeFactoryParams<GSchema extends EditorSchema = EditorSchema> extends BaseFactoryParams<GSchema> {
   /**
    * The marks which wrap this node.
    */
@@ -164,8 +164,13 @@ interface NodeFactoryParams extends BaseFactoryParams {
  * @param params.attrs
  * @param params.marks
  */
-export const nodeFactory = ({ name, schema, attrs, marks }: NodeFactoryParams) => {
-  const nodeBuilder = schema.nodes[name];
+export const nodeFactory = <GSchema extends EditorSchema = EditorSchema>({
+  name,
+  schema,
+  attrs,
+  marks,
+}: NodeFactoryParams<GSchema>) => {
+  const nodeBuilder = hasOwnProperty(schema.nodes, name) ? schema.nodes[name] : undefined;
   if (!nodeBuilder) {
     throw new Error(
       `Node: "${name}" doesn't exist in schema. It's usually caused by lacking of the extension that contributes this node. Schema contains following nodes: ${Object.keys(
@@ -195,7 +200,7 @@ interface MarkFactoryParams extends BaseFactoryParams {
  * @param params.allowDupes
  */
 export const markFactory = ({ name, schema, attrs, allowDupes = false }: MarkFactoryParams) => {
-  const markBuilder = schema.marks[name];
+  const markBuilder = hasOwnProperty(schema.marks, name) ? schema.marks[name] : undefined;
   if (!markBuilder) {
     throw new Error(
       `Mark: "${name}" doesn't exist in schema. It's usually caused by lacking of the extension that contributes this mark. Schema contains following marks: ${Object.keys(

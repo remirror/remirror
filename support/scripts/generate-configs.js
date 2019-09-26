@@ -27,6 +27,7 @@ const configs = {
   sizeLimit: '.size-limit.json',
   rollup: 'support/rollup/config.json',
   tsconfig: 'support/tsconfig.paths.json',
+  eslint: 'support/eslint-imports.json',
   storybook: 'support/storybook/modules.json',
 };
 

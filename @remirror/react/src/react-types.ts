@@ -210,8 +210,8 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
    * start up time. It uses the two pass solution mentioned in the react docs.
    * See {@link https://reactjs.org/docs/react-dom.html#hydrate}.
    *
-   * The props also takes it's name from a similar API used by react for DOM
-   * Elements. See {@link
+   * For ease of use this prop copies the name used by react for DOM Elements.
+   * See {@link
    * https://reactjs.org/docs/dom-elements.html#suppresshydrationwarning.
    */
   suppressHydrationWarning?: boolean;

@@ -90,7 +90,7 @@ const defaultGetA11yStatusMessage = <GItem = any>({
     return `${itemsToString(selectedItems)} has been selected.`;
   }
 
-  if (!items) {
+  if (!items.length) {
     return '';
   }
 

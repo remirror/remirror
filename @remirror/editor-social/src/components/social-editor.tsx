@@ -86,7 +86,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * Create the arrow bindings for the mentions.
    */
-  private createMentionArrowBindings = (direction: 'up' | 'down') => ({
+  private readonly createMentionArrowBindings = (direction: 'up' | 'down') => ({
     queryText,
     suggester: { name },
   }: SuggestKeyBindingParams) => {
@@ -116,7 +116,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
    * These are the keyBindings for mentions extension. This allows for
    * overriding
    */
-  private mentionKeyBindings: SuggestKeyBindingMap = {
+  private readonly mentionKeyBindings: SuggestKeyBindingMap = {
     /**
      * Handle the enter key being pressed
      */
@@ -207,7 +207,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
    * that the click handler can know what the active mention query is since
    * mentions can either be `@` or `#`.
    */
-  private getMention = () => {
+  private readonly getMention = () => {
     if (!this.mention) {
       throw new Error('There is currently no mention data available');
     }
@@ -217,7 +217,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * The is the callback for when a suggestion is changed.
    */
-  private onChange = (params: SuggestChangeHandlerParams) => {
+  private readonly onChange = (params: SuggestChangeHandlerParams) => {
     const {
       queryText,
       suggester: { name },
@@ -241,7 +241,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * Called when the none of our configured matchers match
    */
-  private onExit: Required<MentionExtensionOptions>['onExit'] = params => {
+  private readonly onExit: Required<MentionExtensionOptions>['onExit'] = params => {
     const { queryText, command } = params;
 
     // Check whether we've manually caused this exit. If not, trigger the
@@ -268,11 +268,11 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * Identifies the next exit as one which can be ignored.
    */
-  private setMentionExitTriggeredInternally = () => {
+  private readonly setMentionExitTriggeredInternally = () => {
     this.mentionExitTriggeredInternally = true;
   };
 
-  private onEmojiSuggestionChange: EmojiSuggestionChangeHandler = ({ emojiMatches, command }) => {
+  private readonly onEmojiSuggestionChange: EmojiSuggestionChangeHandler = ({ emojiMatches, command }) => {
     this.setState({
       hideEmojiSuggestions: false,
       emojiList: emojiMatches,
@@ -282,7 +282,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     // this.setState({ hideEmojiSuggestions: false, activeEmojiIndex: 0 });
   };
 
-  private onEmojiSuggestionExit: EmojiSuggestionExitHandler = () => {
+  private readonly onEmojiSuggestionExit: EmojiSuggestionExitHandler = () => {
     this.setState({
       hideEmojiSuggestions: true,
       emojiList: [],
@@ -294,7 +294,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * Create the arrow bindings for the emoji suggestions.
    */
-  private createEmojiArrowBindings = (direction: 'up' | 'down') => () => {
+  private readonly createEmojiArrowBindings = (direction: 'up' | 'down') => () => {
     const { activeEmojiIndex: prevIndex, hideMentionSuggestions, emojiList } = this.state;
 
     if (hideMentionSuggestions || !emojiList.length) {
@@ -312,7 +312,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     return true;
   };
 
-  private emojiKeyBindings: EmojiSuggestionKeyBindings = {
+  private readonly emojiKeyBindings: EmojiSuggestionKeyBindings = {
     /**
      * Handle the enter key being pressed
      */

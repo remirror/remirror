@@ -1,4 +1,4 @@
-import { NodeGroup } from '@remirror/core';
+import { NodeGroup } from '@remirror/core-constants';
 import { NodeSpec, Schema } from 'prosemirror-model';
 import { marks, nodes } from 'prosemirror-schema-basic';
 import {
@@ -45,7 +45,7 @@ const atomInline: NodeSpec = {
       tag: 'span[data-node-type="atomInline"]',
     },
   ],
-  toDOM() {
+  toDOM: () => {
     return ['span', { 'data-node-type': 'atomInline' }];
   },
 };
@@ -60,7 +60,7 @@ const atomBlock: NodeSpec = {
       tag: 'div[data-node-type="atomBlock"]',
     },
   ],
-  toDOM() {
+  toDOM: () => {
     return ['div', { 'data-node-type': 'atomBlock' }];
   },
 };
@@ -74,7 +74,7 @@ const atomContainer: NodeSpec = {
       tag: 'div[data-node-type="atomBlockContainer"]',
     },
   ],
-  toDOM() {
+  toDOM: () => {
     return ['div', { 'data-node-type': 'atomBlockContainer' }];
   },
 };
@@ -88,7 +88,7 @@ const containerWithRestrictedContent: NodeSpec = {
       tag: 'div[data-node-type="containerWithRestrictedContent"]',
     },
   ],
-  toDOM() {
+  toDOM: () => {
     return ['div', { 'data-node-type': 'containerWithRestrictedContent' }];
   },
 };

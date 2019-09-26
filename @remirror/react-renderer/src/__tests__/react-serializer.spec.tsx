@@ -7,8 +7,7 @@ import {
   TextExtension,
 } from '@remirror/core';
 import { BoldExtension, CodeBlockExtension, ParagraphExtension } from '@remirror/core-extensions';
-import { simpleJSON, testJSON } from '@remirror/test-fixtures';
-import { createTestManager } from '@remirror/test-fixtures';
+import { simpleJSON, testJSON, createTestManager } from '@remirror/test-fixtures';
 import { shallow } from 'enzyme';
 import { Node as PMNode } from 'prosemirror-model';
 import React from 'react';
@@ -20,7 +19,7 @@ class FooExtension extends NodeExtension {
     content: 'block*',
     group: NodeGroup.Block,
 
-    toDOM() {
+    toDOM: () => {
       const attrs = {
         'data-foo-type': 'true',
       };

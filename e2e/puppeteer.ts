@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { Config } from '@jest/types';
 import { setup, teardown } from 'jest-dev-server';
 import onExit from 'signal-exit';
@@ -11,13 +12,13 @@ const { setup: setupPuppeteer } = require('jest-environment-puppeteer');
 
 let serverSetupPromise: Promise<void> | undefined;
 
-export async function destroyServer(globalConfig?: Config.GlobalConfig) {
+export const destroyServer = async (globalConfig?: Config.GlobalConfig) => {
   serverSetupPromise = undefined;
   await teardown();
   await teardownPuppeteer(globalConfig);
-}
+};
 
-export async function setupServer(globalConfig: Config.GlobalConfig) {
+export const setupServer = async (globalConfig: Config.GlobalConfig) => {
   await setup([server]);
 
   onExit(() => {
@@ -27,13 +28,13 @@ export async function setupServer(globalConfig: Config.GlobalConfig) {
   });
 
   await setupPuppeteer(globalConfig);
-}
+};
 
-export async function startServer(globalConfig: Config.GlobalConfig) {
+export const startServer = (globalConfig: Config.GlobalConfig) => {
   if (serverSetupPromise) {
     return serverSetupPromise;
   } else {
     serverSetupPromise = setupServer(globalConfig);
     return serverSetupPromise;
   }
-}
+};

@@ -1,4 +1,5 @@
-import { bool, CommandFunction, ProsemirrorNode as _ProsemirrorNode } from '@remirror/core';
+import { CommandFunction, ProsemirrorNode as _ProsemirrorNode } from '@remirror/core-types';
+import { bool } from '@remirror/core-helpers';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { apply } from './jest-prosemirror-editor';
 import { transformsNodeFailMessage, transformsNodePassMessage } from './jest-prosemirror-messages';
@@ -12,7 +13,7 @@ export const prosemirrorMatchers = {
         pass: false,
       };
     }
-    if (!from) {
+    if (!bool(from)) {
       return {
         message: () => `Please specify the 'from' node which this command: ${command.name} should transform`,
         pass: false,

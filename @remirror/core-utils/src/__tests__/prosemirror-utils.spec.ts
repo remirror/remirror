@@ -165,14 +165,14 @@ describe('findElementAtPosition', () => {
     const { view } = createEditor(doc(p('text'), atomBlock()));
     const ref = findElementAtPosition(6, view);
     expect(ref instanceof HTMLDivElement).toBe(true);
-    expect((ref as HTMLElement).getAttribute('data-node-type')).toEqual('atomBlock');
+    expect(ref.getAttribute('data-node-type')).toEqual('atomBlock');
   });
 
   it('should return DOM reference of a nested inline leaf node', () => {
     const { view } = createEditor(doc(p('one', atomInline(), 'two')));
     const ref = findElementAtPosition(4, view);
     expect(ref instanceof HTMLSpanElement).toBe(true);
-    expect((ref as HTMLElement).getAttribute('data-node-type')).toEqual('atomInline');
+    expect(ref.getAttribute('data-node-type')).toEqual('atomInline');
   });
 
   it('should return DOM reference of a content block node', () => {
@@ -253,18 +253,20 @@ describe('cloneTransaction', () => {
     jest.useRealTimers();
   });
 
-  it('clones the transaction', done => {
-    const {
-      state: { tr },
-    } = createEditor(doc(p()));
+  it('clones the transaction', () => {
+    return new Promise(done => {
+      const {
+        state: { tr },
+      } = createEditor(doc(p()));
 
-    setTimeout(() => {
-      const clonedTr = cloneTransaction(tr);
-      expect(omit(tr, ['time'])).toEqual(omit(clonedTr, ['time']));
-      done();
-    }, 10);
+      setTimeout(() => {
+        const clonedTr = cloneTransaction(tr);
+        expect(omit(tr, ['time'])).toEqual(omit(clonedTr, ['time']));
+        done();
+      }, 10);
 
-    jest.advanceTimersByTime(20);
+      jest.advanceTimersByTime(20);
+    });
   });
 });
 

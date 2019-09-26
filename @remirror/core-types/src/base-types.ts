@@ -117,7 +117,7 @@ export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) ex
  * Make the whole interface partial except for some specified keys which will be made
  * required.
  */
-export type PartialWithRequiredKeys<GType extends {}, GKeys extends Key<GType>> = Partial<
+export type PartialWithRequiredKeys<GType extends object, GKeys extends Key<GType>> = Partial<
   Pick<GType, Exclude<keyof GType, GKeys>>
 > &
   Required<Pick<GType, GKeys>>;
@@ -125,26 +125,26 @@ export type PartialWithRequiredKeys<GType extends {}, GKeys extends Key<GType>> 
 /**
  * Makes specified keys of an interface optional while the rest stay the same.
  */
-export type MakeOptional<GType extends {}, GKeys extends Key<GType>> = Omit<GType, GKeys> &
+export type MakeOptional<GType extends object, GKeys extends Key<GType>> = Omit<GType, GKeys> &
   { [P in GKeys]+?: GType[P] };
 
 /**
  * Makes specified keys of an interface nullable while the rest stay the same.
  */
-export type MakeNullable<GType extends {}, GKeys extends Key<GType>> = Omit<GType, GKeys> &
+export type MakeNullable<GType extends object, GKeys extends Key<GType>> = Omit<GType, GKeys> &
   { [P in GKeys]: GType[P] | null };
 
 /**
  * Makes specified keys of an interface Required while the rest remain
  * unchanged.
  */
-export type MakeRequired<GType extends {}, GKeys extends Key<GType>> = Omit<GType, GKeys> &
+export type MakeRequired<GType extends object, GKeys extends Key<GType>> = Omit<GType, GKeys> &
   { [P in GKeys]-?: GType[P] };
 
 /**
  * Makes specified keys of an interface readonly.
  */
-export type MakeReadonly<GType extends {}, GKeys extends Key<GType>> = Omit<GType, GKeys> &
+export type MakeReadonly<GType extends object, GKeys extends Key<GType>> = Omit<GType, GKeys> &
   { +readonly [P in GKeys]: GType[P] };
 
 /**
@@ -209,7 +209,7 @@ export interface Position {
 /**
  * Used for attributes which can be added to prosemirror nodes and marks.
  */
-export type Attrs<GExtra extends {} = {}> = Record<string, unknown> & GExtra;
+export type Attrs<GExtra extends object = {}> = Record<string, unknown> & GExtra;
 
 export type AttrsWithClass = Attrs & { class?: string };
 

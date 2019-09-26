@@ -26,7 +26,7 @@ import {
 } from 'jest-prosemirror';
 import { markFactory, nodeFactory } from './jest-remirror-builder';
 import { BaseExtensionNodeNames, nodeExtensions } from './jest-remirror-schema';
-import { replaceSelection } from './jest-remirror-transactions';
+import { replaceSelection } from './jest-remirror-utils';
 import {
   AddContent,
   AddContentReturn,
@@ -100,7 +100,7 @@ export const renderEditor = <
     jsdomSelectionPatch(view);
 
     const { content } = taggedDoc;
-    const { cursor, node, start, end, all, ...tags } = taggedDoc.tags || ({} as Tags);
+    const { cursor, node, start, end, all, ...tags } = taggedDoc.tags;
     const { dispatch, state } = view;
 
     // Add the text to the dom

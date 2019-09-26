@@ -22,7 +22,7 @@ const Component = ({ multiple }: { multiple: boolean }) => {
   } = useMultishift({
     multiple,
     type: 'select',
-    itemToString: item => (item ? item.id : ''),
+    itemToString: item => item.id,
     items,
     getItemId: item => item.id,
   });

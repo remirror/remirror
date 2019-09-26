@@ -2,7 +2,9 @@
 !**/.babelrc.js
 !.eslintrc.js
 !**/.eslintrc.js
+**/lib
 lib
+**/dist
 dist
 node_modules
 .out

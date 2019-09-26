@@ -1,4 +1,4 @@
-import { debounce, includes, isNullOrUndefined, isUndefined } from '@remirror/core-helpers';
+import { debounce, includes, isNullOrUndefined, isUndefined, bool } from '@remirror/core-helpers';
 import { useEffectOnce, useEffectOnUpdate, useTimeouts } from '@remirror/react-hooks';
 import composeRefs from '@seznam/compose-react-refs';
 import { ChangeEvent, HTMLProps, Ref, SyntheticEvent, useCallback, useEffect, useMemo, useRef } from 'react';
@@ -146,7 +146,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
       } else if (refs.menu.current && type !== Type.ControlledMenu) {
         refs.menu.current.focus();
       }
-    } else if (!isOpen && document.activeElement === refs.menu.current) {
+    } else if (document.activeElement === refs.menu.current) {
       if (type === Type.ComboBox && refs.input.current) {
         refs.input.current.focus();
       } else if (refs.toggleButton.current) {
@@ -397,7 +397,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
       eventHandlers = {};
     }
 
-    const extra = Type.Select ? { 'aria-expanded': isOpen } : {};
+    const extra = type === Type.Select ? { 'aria-expanded': isOpen } : {};
     const ariaLabel = isUndefined(rest['aria-label'])
       ? { 'aria-labelledby': `${labelId} ${toggleButtonId}` }
       : {};
@@ -407,7 +407,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
       type: 'button',
       role: 'button',
       id: toggleButtonId,
-      'aria-haspopup': Type.ComboBox ? true : 'listbox',
+      'aria-haspopup': type === Type.ComboBox ? true : 'listbox',
       ...ariaLabel,
       ...extra,
       ...eventHandlers,
@@ -526,7 +526,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
 
   const focusHelpers = useMemo(
     (): MultishiftFocusHelpers => ({
-      focusInput() {
+      focusInput: () => {
         if (type !== Type.ComboBox) {
           throw new Error(`The input element cannot be focused for this type of dropdown: ${type}`);
         }
@@ -535,18 +535,18 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
           refs.input.current.focus();
         }
       },
-      focusToggleButton() {
+      focusToggleButton: () => {
         if (refs.toggleButton.current) {
           refs.toggleButton.current.focus();
         }
       },
-      focusMenu() {
+      focusMenu: () => {
         if (refs.menu.current) {
           refs.menu.current.focus();
         }
       },
-      focusMenuItem(index: number) {
-        if (refs.items.current[index]) {
+      focusMenuItem: (index: number) => {
+        if (bool(refs.items.current[index])) {
           refs.items.current[index].focus();
         }
       },

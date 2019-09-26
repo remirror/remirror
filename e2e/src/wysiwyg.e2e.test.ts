@@ -29,7 +29,7 @@ describe('Wysiwyg Showcase', () => {
     const mdBlock = '##Markdown is great\n\nReally it is!\n\n```ts\nconst a = "party time"\n```\n';
 
     it('creates a code block with ``` and space', async () => {
-      await $editor.type('```ts ' + text);
+      await $editor.type(`\`\`\`ts ${text}`);
       await expect($editor).toMatchElement('pre.language-ts > code', { text });
     });
 
@@ -41,14 +41,14 @@ describe('Wysiwyg Showcase', () => {
     });
 
     it('deletes code without issue', async () => {
-      await $editor.type('```md ' + mdBlock + '\nabcde');
+      await $editor.type(`\`\`\`md ${mdBlock}\nabcde`);
       await press({ key: 'Backspace', count: 5 });
       await $editor.type(text);
       await expect($editor).toMatchElement('pre.language-md > code', { text });
     });
 
     it('supports the keyboard shortcut for exiting the block', async () => {
-      await $editor.type('```md ' + mdBlock);
+      await $editor.type(`\`\`\`md ${mdBlock}`);
       await pressKeyWithModifier('Shift-Enter');
       await $editor.type('My paragraph');
       await expect($editor).toMatchElement('p', { text: 'My paragraph' });
@@ -57,13 +57,13 @@ describe('Wysiwyg Showcase', () => {
     const unformatted = `function concatAwesome(str:    string){return "Awesome " + str}`;
     const formatted = `function concatAwesome(str: string) {\n  return 'Awesome ' + str;\n}\n`;
     it('supports formatting', async () => {
-      await $editor.type('```ts ' + unformatted);
+      await $editor.type(`\`\`\`ts ${unformatted}`);
       await pressKeyWithModifier(mod('ShiftAlt', 'KeyF'));
       await expect(textContent('pre.language-ts > code')).resolves.toBe(formatted);
     });
 
     it('preserves position while formatting', async () => {
-      await $editor.type('```ts ' + unformatted);
+      await $editor.type(`\`\`\`ts ${unformatted}`);
       await press({ key: 'ArrowLeft', count: 9 });
       await pressKeyWithModifier(mod('ShiftAlt', 'KeyF'));
       await $editor.type(' World');
@@ -73,7 +73,7 @@ describe('Wysiwyg Showcase', () => {
     });
 
     it('preserves selection while formatting', async () => {
-      await $editor.type('```ts ' + unformatted);
+      await $editor.type(`\`\`\`ts ${unformatted}`);
 
       // TODO create a utility for selecting text
       await press({ key: 'ArrowLeft', count: 16 });
@@ -90,7 +90,7 @@ describe('Wysiwyg Showcase', () => {
     });
 
     it('can immediately leave the code area with arrow key', async () => {
-      await $editor.type('```ts ' + unformatted);
+      await $editor.type(`\`\`\`ts ${unformatted}`);
       await press({ key: 'ArrowRight' });
       await $editor.type('Outside of the codeblock');
       await expect($editor).toMatchElement('p', { text: 'Outside of the codeblock' });

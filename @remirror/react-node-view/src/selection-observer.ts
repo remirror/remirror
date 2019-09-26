@@ -73,7 +73,7 @@ const resolveSelectionValue = (el: Element): FromToParams => {
  */
 export class SelectionObserver {
   private observables: SelectionEntry[] = [];
-  private callback: SelectionObserverCallback;
+  private readonly callback: SelectionObserverCallback;
 
   constructor(callback: SelectionObserverCallback) {
     this.callback = callback;
@@ -117,7 +117,7 @@ export class SelectionObserver {
     return this.observables.slice(0);
   }
 
-  private check = (): void => {
+  private readonly check = (): void => {
     let changed = false;
     const callback = this.callback;
 

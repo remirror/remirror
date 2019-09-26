@@ -60,8 +60,8 @@ export function dropCursorPlugin(
 }
 
 export class DropCursorState {
-  private portalContainer: PortalContainer;
-  private extension: Extension<DropCursorExtensionOptions>;
+  private readonly portalContainer: PortalContainer;
+  private readonly extension: Extension<DropCursorExtensionOptions>;
 
   /**
    * The currently active timeout. This is used when removing the drop cursor to prevent any flicker.
@@ -146,12 +146,12 @@ export class DropCursorState {
   /**
    * Dispatch an empty transaction to trigger a decoration update.
    */
-  private triggerDecorationSet = () => this.view.dispatch(this.view.state.tr);
+  private readonly triggerDecorationSet = () => this.view.dispatch(this.view.state.tr);
 
   /**
    * Removes the decoration and (by default) the current target value.
    */
-  private removeDecorationSet = (ignoreTarget = false) => {
+  private readonly removeDecorationSet = (ignoreTarget = false) => {
     if (!ignoreTarget) {
       this.target = undefined;
     }
@@ -178,7 +178,7 @@ export class DropCursorState {
   /**
    * Update the decoration set with a new position.
    */
-  private updateDecorationSet = () => {
+  private readonly updateDecorationSet = () => {
     if (!this.target) {
       return;
     }
@@ -299,7 +299,7 @@ export class DropCursorState {
 
 interface CreateDropPlaceholderParams {
   portalContainer: PortalContainer;
-  Component: ComponentType<{}>;
+  Component: ComponentType;
   container: HTMLElement;
 }
 

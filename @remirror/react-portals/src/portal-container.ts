@@ -6,7 +6,7 @@ export interface RenderParams {
   /**
    * Renders a JSX element.
    */
-  render: () => ReactElement<any>;
+  render: () => ReactElement;
 }
 
 export interface MountedPortal extends RenderParams {
