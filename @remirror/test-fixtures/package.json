@@ -23,7 +23,7 @@
     "@types/prosemirror-view": "^1.11.0",
     "lolex": "^4.2.0",
     "min-document": "^2.19.0",
-    "prosemirror-view": "^1.11.3"
+    "prosemirror-view": "^1.11.4"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

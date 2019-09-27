@@ -20,7 +20,7 @@
     "@remirror/core-extensions": "0.6.0",
     "@remirror/react": "0.6.0",
     "@remirror/react-utils": "0.6.0",
-    "@testing-library/react": "^9.1.4",
+    "@testing-library/react": "^9.2.0",
     "@types/node": ">=8",
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-view": "^1.11.0",
@@ -29,7 +29,7 @@
     "mutationobserver-shim": "0.3.3",
     "prosemirror-model": "^1.7.2",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.11.3"
+    "prosemirror-view": "^1.11.4"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

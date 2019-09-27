@@ -28,7 +28,7 @@
     "prosemirror-model": "^1.7.2",
     "prosemirror-state": "^1.2.4",
     "prosemirror-suggest": "0.6.0",
-    "prosemirror-view": "^1.11.3"
+    "prosemirror-view": "^1.11.4"
   },
   "peerDependencies": {
     "@emotion/core": "^10",
