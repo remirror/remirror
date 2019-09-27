@@ -35,7 +35,7 @@ import {
   ItalicExtension,
   LinkExtension,
   LinkExtensionOptions,
-  Underline,
+  UnderlineExtension,
 } from '@remirror/core-extensions';
 import {
   asDefaultProps,
@@ -68,7 +68,7 @@ export class MyAwesomeEditor extends PureComponent<{}, State> {
     return (
       <RemirrorManager>
         <RemirrorExtension Constructor={BoldExtension} />
-        <RemirrorExtension Constructor={Underline} />
+        <RemirrorExtension Constructor={UnderlineExtension} />
         <RemirrorExtension Constructor={ItalicExtension} />
         <RemirrorExtension<LinkExtensionOptions>
           Constructor={LinkExtension}
