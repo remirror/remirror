@@ -30,7 +30,7 @@
   {
     "name": "@remirror/core",
     "path": "@remirror/core/lib/dist/core.esm.js",
-    "limit": "55 KB",
+    "limit": "70 KB",
     "ignore": ["@emotion/core", "@types/prosemirror-view", "@types/react", "prosemirror-view", "react"],
     "running": false
   },
@@ -142,7 +142,7 @@
   {
     "name": "@remirror/react-utils",
     "path": "@remirror/react-utils/lib/dist/react-utils.esm.js",
-    "limit": "5 KB",
+    "limit": "15 KB",
     "ignore": ["@emotion/core", "@types/react", "react"],
     "running": false
   },

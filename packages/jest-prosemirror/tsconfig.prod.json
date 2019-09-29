@@ -21,7 +21,16 @@
   ],
   "references": [
     {
-      "path": "../../@remirror/core/tsconfig.prod.json"
+      "path": "../../@remirror/core-constants/tsconfig.prod.json"
+    },
+    {
+      "path": "../../@remirror/core-helpers/tsconfig.prod.json"
+    },
+    {
+      "path": "../../@remirror/core-types/tsconfig.prod.json"
+    },
+    {
+      "path": "../../@remirror/core-utils/tsconfig.prod.json"
     },
     {
       "path": "../test-keyboard/tsconfig.prod.json"

@@ -9,6 +9,7 @@ import {
   TextParams,
   TransactionParams,
 } from '@remirror/core-types';
+import { bool } from '@remirror/core-helpers';
 import { transactionChanged } from '@remirror/core-utils';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { ChangeReason, DEFAULT_SUGGESTER, ExitReason } from './suggest-constants';
@@ -26,7 +27,6 @@ import {
 } from './suggest-types';
 import { findFromSuggesters, findReason, runKeyBindings } from './suggest-utils';
 import { Transaction } from 'prosemirror-state';
-import { bool } from '@remirror/core-helpers/lib';
 
 /**
  * The suggestion state which manages the list of suggestions.

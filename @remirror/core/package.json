@@ -46,7 +46,7 @@
   },
   "cjs": "lib/dist/core.cjs.js",
   "meta": {
-    "sizeLimit": "55 KB"
+    "sizeLimit": "70 KB"
   },
   "sideEffects": false
 }

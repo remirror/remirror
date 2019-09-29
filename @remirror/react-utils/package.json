@@ -28,7 +28,7 @@
   },
   "cjs": "lib/dist/react-utils.cjs.js",
   "meta": {
-    "sizeLimit": "5 KB"
+    "sizeLimit": "15 KB"
   },
   "sideEffects": false
 }
