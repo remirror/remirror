@@ -18,9 +18,9 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7.6.2",
+    "@remirror/core-constants": "0.6.0",
     "@remirror/core-helpers": "0.6.0",
     "@remirror/core-types": "0.6.0",
-    "@remirror/core-constants": "0.6.0",
     "@remirror/core-utils": "0.6.0",
     "@testing-library/dom": "^6.4.1",
     "@types/prosemirror-gapcursor": "^1.0.1",
