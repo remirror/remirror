@@ -196,7 +196,7 @@ const createInsertReason = ({
  * Find the reason for the Jump
  */
 const findJumpReason = ({ prev, next, state }: CompareMatchParams & EditorStateParams): SuggestReasonMap => {
-  const value: SuggestReasonMap = {};
+  const value: SuggestReasonMap = Object.create(null);
 
   const updatedPrev = recheckMatch({ state, match: prev });
 
@@ -277,7 +277,7 @@ export const transformKeyBindings = ({
   bindings,
   params,
 }: TransformKeyBindingsParams): Record<string, CommandFunction> => {
-  const keys: Record<string, CommandFunction> = {};
+  const keys: Record<string, CommandFunction> = Object.create(null);
   return Object.entries(bindings).reduce((prev, [key, method]) => {
     return {
       ...prev,
@@ -327,7 +327,7 @@ export const findReason = ({
   state,
   $pos,
 }: EditorStateParams & ResolvedPosParams & Partial<CompareMatchParams>): SuggestReasonMap => {
-  const value: SuggestReasonMap = {};
+  const value: SuggestReasonMap = Object.create(null);
 
   if (!prev && !next) {
     return value;

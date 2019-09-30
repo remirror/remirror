@@ -13,8 +13,7 @@
       "jest-environment-enzyme",
       "jest-environment-puppeteer",
       "expect-puppeteer",
-      "puppeteer",
-      "jest-image-snapshot"
+      "puppeteer"
     ],
     "noEmit": true,
     "declaration": false,

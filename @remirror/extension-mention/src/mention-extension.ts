@@ -189,7 +189,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     return {
       createMention: this.createMention(type, getState),
       updateMention: this.createMention(type, getState, true),
-      removeMention: ({ range }: Partial<RangeParams> = {}) => {
+      removeMention: ({ range }: Partial<RangeParams> = Object.create(null)) => {
         return removeMark({ type, expand: true, range });
       },
     };

@@ -76,12 +76,9 @@ describe('plugin', () => {
   };
 
   const mocks = {
-    onChange: jest.fn(({ reason }) => {
-      console.log('change handler called', reason);
-    }),
+    onChange: jest.fn(),
     onExit: jest.fn(({ command }: SuggestCommandParams<MentionExtensionSuggestCommand>) => {
       command({ appendText: '' });
-      console.log('exit handler called');
     }),
   };
 

@@ -223,8 +223,6 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
       suggester: { name },
     } = params;
 
-    console.log('onChange called', params);
-
     if (name) {
       const props = {
         name,
@@ -246,7 +244,6 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
 
     // Check whether we've manually caused this exit. If not, trigger the
     // command.
-    console.log('onExit called', params);
     if (!this.mentionExitTriggeredInternally) {
       command({
         role: 'presentation',
@@ -262,7 +259,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   };
 
   private get theme(): RemirrorTheme {
-    return deepMerge(socialEditorTheme, this.props.theme || {});
+    return deepMerge(socialEditorTheme, this.props.theme || Object.create(null));
   }
 
   /**

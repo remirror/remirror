@@ -64,8 +64,10 @@ export const renderEditor = <
     attrMarks = Cast<GAttrMarks>([]),
     attrNodes = Cast<GAttrNodes>([]),
     others = Cast<GOthers>([]),
-  }: Partial<CreateTestEditorExtensions<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>> = {},
-  props: Partial<Omit<RemirrorProps<GExtension>, 'manager'>> = {},
+  }: Partial<
+    CreateTestEditorExtensions<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>
+  > = Object.create(null),
+  props: Partial<Omit<RemirrorProps<GExtension>, 'manager'>> = Object.create(null),
 ): GReturn => {
   const innerNodeExtensions = nodeExtensions.filter(({ name }) => !plainNodes.some(ext => ext.name === name));
   const extensions = [
@@ -195,9 +197,10 @@ export const renderEditor = <
 
   const { schema } = view.state;
 
-  const nodesWithAttrs: NodeWithAttrs<GAttrNodeNames> = Cast({});
+  const nodesWithAttrs: NodeWithAttrs<GAttrNodeNames> = Object.create(null);
   attrNodes.filter(isNodeExtension).forEach(({ name }) => {
-    nodesWithAttrs[name as GAttrNodeNames] = (attrs: Attrs = {}) => nodeFactory({ name, schema, attrs });
+    nodesWithAttrs[name as GAttrNodeNames] = (attrs: Attrs = Object.create(null)) =>
+      nodeFactory({ name, schema, attrs });
   });
 
   const nodesWithoutAttrs: NodeWithoutAttrs<GPlainNodeNames> = Cast({
@@ -207,12 +210,13 @@ export const renderEditor = <
     nodesWithoutAttrs[name as GPlainNodeNames] = nodeFactory({ name, schema });
   });
 
-  const marksWithAttrs: MarkWithAttrs<GAttrMarkNames> = Cast({});
+  const marksWithAttrs: MarkWithAttrs<GAttrMarkNames> = Object.create(null);
   attrMarks.filter(isMarkExtension).forEach(({ name }) => {
-    marksWithAttrs[name as GAttrMarkNames] = (attrs: Attrs = {}) => markFactory({ name, schema, attrs });
+    marksWithAttrs[name as GAttrMarkNames] = (attrs: Attrs = Object.create(null)) =>
+      markFactory({ name, schema, attrs });
   });
 
-  const marksWithoutAttrs: MarkWithoutAttrs<GPlainMarkNames> = Cast({});
+  const marksWithoutAttrs: MarkWithoutAttrs<GPlainMarkNames> = Object.create(null);
   plainMarks.filter(isMarkExtension).forEach(({ name }) => {
     marksWithoutAttrs[name as GPlainMarkNames] = markFactory({ name, schema });
   });

@@ -10,7 +10,7 @@ import { nodeExtensions } from './jest-remirror-schema';
  */
 export const renderSSREditor = <GExtension extends AnyExtension = any>(
   extensions: GExtension[] = [],
-  props: Partial<Omit<RemirrorProps<GExtension>, 'manager'>> = {},
+  props: Partial<Omit<RemirrorProps<GExtension>, 'manager'>> = Object.create(null),
 ): string => {
   const manager = ExtensionManager.create([...nodeExtensions, ...extensions]);
 

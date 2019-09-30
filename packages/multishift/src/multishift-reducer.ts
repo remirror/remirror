@@ -27,7 +27,7 @@ export const multishiftReducer = <GItem = any>(
   action: MultishiftRootActions<GItem>,
   props: MultishiftProps<GItem>,
 ): [MultishiftState<GItem>, MultishiftStateProps<GItem>] => {
-  let changes: MultishiftStateProps<GItem> = {};
+  let changes: MultishiftStateProps<GItem> = Object.create(null);
 
   const defaultState = getDefaultState(props);
   const { multiple, items, getItemId = defaultGetItemId, autoSelectOnBlur = true } = props;

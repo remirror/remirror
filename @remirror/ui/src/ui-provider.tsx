@@ -111,9 +111,9 @@ export const RemirrorThemeProvider: FC<RemirrorThemeProviderProps> = ({
   const parent = disableMergeWithParent
     ? hasParent(outer)
       ? outer.parent
-      : ({} as RemirrorTheme)
+      : Object.create(null)
     : isRoot(outer) && disableMergeWithBase
-    ? ({} as RemirrorTheme)
+    ? Object.create(null)
     : outer.theme;
 
   const themeWithoutColorMode: RemirrorTheme = deepMerge(

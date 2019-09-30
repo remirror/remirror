@@ -463,7 +463,7 @@ export class HSL {
    *
    * If an HSLObject is provided it merges these properties into the final object.
    */
-  public clone(hsla: Partial<HSLObject> = {}) {
+  public clone(hsla: Partial<HSLObject> = Object.create(null)) {
     return new HSL(createValidHSLObject({ ...this.hsla, ...hsla }));
   }
 

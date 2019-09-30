@@ -37,10 +37,12 @@ interface UpdateMarkParams extends Partial<RangeParams>, Partial<AttrsParams>, T
  *
  * @public
  */
-export const updateMark = ({ type, attrs = {}, appendText, range }: UpdateMarkParams): CommandFunction => (
-  state,
-  dispatch,
-) => {
+export const updateMark = ({
+  type,
+  attrs = Object.create(null),
+  appendText,
+  range,
+}: UpdateMarkParams): CommandFunction => (state, dispatch) => {
   const { selection } = state;
   const { tr } = state;
   const { from, to } = range || selection;
@@ -112,10 +114,11 @@ interface ToggleBlockItemParams extends NodeTypeParams, Partial<AttrsParams> {
  *
  * @public
  */
-export const toggleBlockItem = ({ type, toggleType, attrs = {} }: ToggleBlockItemParams): CommandFunction => (
-  state,
-  dispatch,
-) => {
+export const toggleBlockItem = ({
+  type,
+  toggleType,
+  attrs = Object.create(null),
+}: ToggleBlockItemParams): CommandFunction => (state, dispatch) => {
   const isActive = isNodeActive({ state, type, attrs });
 
   if (isActive) {
@@ -170,7 +173,7 @@ const callMethod = <
 export const replaceText = ({
   range,
   type,
-  attrs = {},
+  attrs = Object.create(null),
   appendText = '',
   content = '',
   startTransaction,

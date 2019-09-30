@@ -17,7 +17,7 @@ type SuggestionsDropdownProps = DivProps & {
 };
 
 const SuggestionsDropdown = forwardRef<HTMLDivElement, SuggestionsDropdownProps>(
-  ({ position = {}, ...props }, ref) => {
+  ({ position = Object.create(null), ...props }, ref) => {
     const { sx, css } = useRemirrorTheme();
 
     return (

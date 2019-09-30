@@ -411,7 +411,7 @@ interface IsNodeActiveParams extends EditorStateParams, NodeTypeParams, Partial<
  *
  * @param params - the destructured node active parameters
  */
-export const isNodeActive = ({ state, type, attrs = {} }: IsNodeActiveParams) => {
+export const isNodeActive = ({ state, type, attrs = Object.create(null) }: IsNodeActiveParams) => {
   const { selection } = state;
   const predicate = (node: ProsemirrorNode) => node.type === type;
   const parent =
@@ -434,22 +434,16 @@ export interface SchemaJSON<GNodes extends string = string, GMarks extends strin
  */
 export const schemaToJSON = <GNodes extends string = string, GMarks extends string = string>(
   schema: EditorSchema<GNodes, GMarks>,
-) => {
-  const nodes = keys(schema.nodes).reduce(
-    (acc, key) => {
-      const { spec } = schema.nodes[key];
-      return { ...acc, [key]: spec };
-    },
-    {} as Record<GNodes, NodeSpec>,
-  );
+): SchemaJSON<GNodes, GMarks> => {
+  const nodes = keys(schema.nodes).reduce((acc, key) => {
+    const { spec } = schema.nodes[key];
+    return { ...acc, [key]: spec };
+  }, Object.create(null));
 
-  const marks = keys(schema.marks).reduce(
-    (acc, key) => {
-      const { spec } = schema.marks[key];
-      return { ...acc, [key]: spec };
-    },
-    {} as Record<GMarks, MarkSpec>,
-  );
+  const marks = keys(schema.marks).reduce((acc, key) => {
+    const { spec } = schema.marks[key];
+    return { ...acc, [key]: spec };
+  }, Object.create(null));
 
   return {
     nodes,

@@ -8,7 +8,7 @@ import {
   EmojiSuggestionChangeHandlerParams,
 } from '../emoji-types';
 
-const create = (options: EmojiExtensionOptions = {}) =>
+const create = (options: EmojiExtensionOptions = Object.create(null)) =>
   renderEditor({
     plainNodes: [],
     others: [new EmojiExtension({ onSuggestionChange, onSuggestionExit, suggestionKeyBindings, ...options })],

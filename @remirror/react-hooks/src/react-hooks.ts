@@ -139,7 +139,7 @@ export type PartialSetStateAction<GState> = Partial<GState> | ((prevState: GStat
  * ```
  */
 export const useSetState = <GState extends object>(
-  initialState: GState | (() => GState) = {} as GState,
+  initialState: GState | (() => GState) = Object.create(null),
 ): readonly [
   GState,
   DispatchWithCallback<PartialSetStateAction<GState>>,

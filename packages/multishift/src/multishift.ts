@@ -257,7 +257,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     };
 
     if (rest.disabled) {
-      eventHandlers = {};
+      eventHandlers = Object.create(null);
     }
 
     return {
@@ -328,7 +328,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     };
 
     if (rest.disabled) {
-      eventHandlers = {};
+      eventHandlers = Object.create(null);
     }
 
     return {
@@ -394,7 +394,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     };
 
     if (rest.disabled) {
-      eventHandlers = {};
+      eventHandlers = Object.create(null);
     }
 
     const extra = type === Type.Select ? { 'aria-expanded': isOpen } : {};
@@ -442,7 +442,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
 
     if (rest.disabled) {
       disabled.current.push(itemIndex);
-      eventHandlers = {};
+      eventHandlers = Object.create(null);
     }
 
     return {
@@ -469,10 +469,10 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
       ...rest
     }: IgnoredElementOptions<GElement, GRefKey> = { refKey: 'ref' as GRefKey },
   ): GetPropsWithRefReturn<GElement, GRefKey> => {
-    let eventHandlers: HTMLProps<GElement> = {};
+    let eventHandlers: HTMLProps<GElement> = Object.create(null);
 
     if (rest.disabled) {
-      eventHandlers = {};
+      eventHandlers = Object.create(null);
     }
 
     return {
@@ -514,7 +514,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     };
 
     if (rest.disabled) {
-      eventHandlers = {};
+      eventHandlers = Object.create(null);
     }
 
     return {

@@ -665,7 +665,7 @@ export class Merge {
    * @param [obj] - the object to replace the key with. When blank an empty
    * object is used.
    */
-  public static overwrite<GReturn = any>(obj: PlainObject = {}): GReturn {
+  public static overwrite<GReturn = any>(obj: PlainObject = Object.create(null)): GReturn {
     return new Merge(obj) as any;
   }
 
@@ -681,7 +681,7 @@ export class Merge {
    */
   [key: string]: any;
 
-  private constructor(obj: PlainObject = {}) {
+  private constructor(obj: PlainObject = Object.create(null)) {
     Object.keys(obj).forEach(key => {
       this[key] = obj[key];
     });

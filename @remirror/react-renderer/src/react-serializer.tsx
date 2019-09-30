@@ -123,7 +123,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
     }
 
     const Component = structure[0];
-    const props: PlainObject = {};
+    const props: PlainObject = Object.create(null);
     const attrs = structure[1];
     const children: ReactNode[] = [];
     let currentIndex = 1;

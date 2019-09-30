@@ -28,7 +28,7 @@ class ErrExtension extends Extension {
 }
 
 type HistoryExtensionActions = ActionsFromExtensions<HistoryExtension>;
-const historyActions: HistoryExtensionActions = {} as any;
+const historyActions: HistoryExtensionActions = Object.create(null);
 
 // @dts-jest:pass:snap
 historyActions.redo;
@@ -38,7 +38,7 @@ historyActions.undo;
 historyActions.undo({});
 
 type PositionTrackerExtensionHelpers = HelpersFromExtensions<PositionTrackerExtension>;
-const trackerHelpers: PositionTrackerExtensionHelpers = {} as any;
+const trackerHelpers: PositionTrackerExtensionHelpers = Object.create(null);
 
 // @dts-jest:pass:snap
 trackerHelpers.addPositionTracker({ id: 'yo' });

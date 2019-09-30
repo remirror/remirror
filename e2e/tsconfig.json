@@ -2,15 +2,7 @@
   "extends": "../support/tsconfig.base.json",
   "compilerOptions": {
     "declaration": false,
-    "types": [
-      "jest",
-      "node",
-      "jest-environment-puppeteer",
-      "expect-puppeteer",
-      "puppeteer",
-      "jest-extended",
-      "jest-image-snapshot"
-    ]
+    "types": ["jest", "node", "jest-environment-puppeteer", "expect-puppeteer", "puppeteer", "jest-extended"]
   },
   "include": ["./", "patches.d.ts"]
 }

@@ -5,7 +5,7 @@ describe('callAllEventHandlers', () => {
     expect(callAllEventHandlers()).toEqual(expect.any(Function));
   });
 
-  const args = [{} as any, 1, '2', true] as const;
+  const args = [Object.create(null), 1, '2', true] as const;
   const handler1 = jest.fn();
   const handler2 = jest.fn();
 
@@ -36,7 +36,7 @@ describe('callAllEventHandlers', () => {
       return true;
     });
     const result = callAllEventHandlers(handler, handler1, handler2);
-    result({} as any, 1, '2', true);
+    result(Object.create(null), 1, '2', true);
 
     expect(handler1).not.toHaveBeenCalled();
     expect(handler2).not.toHaveBeenCalled();
