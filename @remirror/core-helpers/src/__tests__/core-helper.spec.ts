@@ -141,7 +141,7 @@ describe('predicates', () => {
 
   it('isMap', () => {
     const passValue = new Map();
-    const failValue = {};
+    const failValue = Object.create(null);
     expect(isMap(passValue)).toBeTrue();
     expect(isMap(failValue)).toBeFalse();
   });
@@ -244,7 +244,7 @@ describe('predicates', () => {
   });
 
   it('isEmptyObject', () => {
-    const passValue = {};
+    const passValue = Object.create(null);
     const failValue = { oop: 'sie' };
     const altPassValue = new (class Simple {})();
     expect(isEmptyObject(passValue)).toBeTrue();
@@ -384,4 +384,9 @@ test('hasOwnProperty', () => {
   expect(hasOwnProperty({ a: 1 }, 'a')).toBeTrue();
   expect(hasOwnProperty({ a: 1 }, 'b')).toBeFalse();
   expect(hasOwnProperty({ a: 1, hasOwnProperty: () => true }, 'b')).toBeFalse();
+
+  const noProto = Object.create(null);
+  noProto.a = 1;
+  expect(hasOwnProperty(noProto, 'a')).toBeTrue();
+  expect(hasOwnProperty(noProto, 'b')).toBeFalse();
 });

@@ -44,7 +44,7 @@ const DEFAULT_LANGUAGES = [markdown, typescript, tsx, bash];
 
 export const WysiwygEditor: FC<WysiwygEditorProps> = ({
   placeholder = defaultPlaceholder,
-  theme = {},
+  theme = Object.create(null),
   supportedLanguages: supportedLanguagesProp = [],
   syntaxTheme = 'atomDark',
   defaultLanguage,

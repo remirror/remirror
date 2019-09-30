@@ -24,7 +24,7 @@ export const DropdownSelect = forwardRef<HTMLDivElement, DropdownProps>(
       renderLabel,
       initialItem,
       IconComponent,
-      iconProps = {},
+      iconProps = Object.create(null),
       dropdownPosition: dropdownPositionProp = 'below left',
       autoPositionY,
       autoPositionYSpace = 20,

@@ -268,7 +268,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     }
     this.rootPropsConfig.called = true;
 
-    const { refKey = 'ref', ...config } = options || {};
+    const { refKey = 'ref', ...config } = options || Object.create(null);
     const { sx } = this.context;
 
     return {
@@ -286,9 +286,9 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * cursor position (e.g.) a floating / bubble menu.
    */
   private readonly getPositionerProps = <GRefKey extends string = 'ref'>(
-    options: GetPositionerPropsConfig<GExtension, GRefKey>,
+    options: GetPositionerPropsConfig<GExtension, GRefKey> | undefined,
   ) => {
-    const { refKey = 'ref', ...config } = { ...defaultPositioner, ...(options || {}) };
+    const { refKey = 'ref', ...config } = { ...defaultPositioner, ...(options || Object.create(null)) };
 
     // Create the onRef handler which will store the ref to the positioner
     // component
@@ -664,7 +664,9 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * Creates the parameters passed into all event listener handlers.
    * e.g. `onChange`
    */
-  private eventListenerParams({ state, tr }: ListenerParams = {}): RemirrorEventListenerParams<GExtension> {
+  private eventListenerParams(
+    { state, tr }: ListenerParams = Object.create(null),
+  ): RemirrorEventListenerParams<GExtension> {
     return {
       ...this.baseListenerParams({ tr }),
       state: state || this.state.editor.newState,
@@ -674,11 +676,9 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * The params passed into onStateChange (within controlled components)
    */
-  private editorStateEventListenerParams({
-    newState,
-    oldState,
-    tr,
-  }: EditorStateEventListenerParams<GExtension> = {}): RemirrorStateListenerParams<GExtension> {
+  private editorStateEventListenerParams(
+    { newState, oldState, tr }: EditorStateEventListenerParams<GExtension> = Object.create(null),
+  ): RemirrorStateListenerParams<GExtension> {
     return {
       ...this.baseListenerParams({ state: newState, tr }),
       newState: newState || this.state.editor.newState,

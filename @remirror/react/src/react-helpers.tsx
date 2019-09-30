@@ -70,7 +70,7 @@ export interface GetManagerFromComponentTreeParams {
 export const getManagerFromComponentTree = ({
   Component,
   prop = 'children',
-  extraProps = {},
+  extraProps = Object.create(null),
 }: GetManagerFromComponentTreeParams) =>
   new Promise<ExtensionManager>((resolve, reject) => {
     const MangerRetriever = () => {

@@ -82,7 +82,7 @@ describe('schema', () => {
   });
 });
 
-const create = (params: LinkExtensionOptions = {}) =>
+const create = (params: LinkExtensionOptions = Object.create(null)) =>
   renderEditor({
     attrMarks: [new LinkExtension({ ...params })],
     plainNodes: [],

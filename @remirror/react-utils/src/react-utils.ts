@@ -21,8 +21,8 @@ export interface RemirrorComponentStaticProperties {
   $$remirrorType: RemirrorType;
 }
 
-export type RemirrorFC<P extends object = {}> = FC<P> & RemirrorComponentStaticProperties;
-export type RemirrorComponentClass<P extends object = {}> = ComponentClass<P> &
+export type RemirrorFC<GProps extends object = {}> = FC<GProps> & RemirrorComponentStaticProperties;
+export type RemirrorComponentClass<GProps extends object = {}> = ComponentClass<GProps> &
   RemirrorComponentStaticProperties;
 
 export interface RemirrorManagerProps {
@@ -32,7 +32,7 @@ export interface RemirrorManagerProps {
   useBaseExtensions?: boolean;
 }
 
-export type RemirrorComponentType<P extends object = {}> = ComponentType<P> &
+export type RemirrorComponentType<GProps extends object = {}> = ComponentType<GProps> &
   RemirrorComponentStaticProperties;
 export type RemirrorElement<GOptions extends object = any> = ReactElement & {
   type: RemirrorComponentType<GOptions>;

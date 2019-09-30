@@ -49,7 +49,7 @@ describe('constructor', () => {
 
 const supportedLanguages = [typescript, javascript, markdown, tsx];
 
-const create = (params: CodeBlockExtensionOptions = {}) =>
+const create = (params: CodeBlockExtensionOptions = Object.create(null)) =>
   renderEditor({
     plainNodes: [],
     attrNodes: [new CodeBlockExtension({ ...params, supportedLanguages })],

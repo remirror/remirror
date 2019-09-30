@@ -57,7 +57,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * The handler matches which are passed into `onChange` / `onExit` handlers.
    */
-  private handlerMatches: SuggestReasonMap = {};
+  private handlerMatches: SuggestReasonMap = Object.create(null);
 
   /**
    * Holds a copy of the view
@@ -205,7 +205,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
       exit.suggester.onExit(this.createReasonParams(exit));
       this.removed = false;
       if (isInvalidSplitReason(exit.reason)) {
-        this.handlerMatches = {};
+        this.handlerMatches = Object.create(null);
       }
     }
   };
@@ -294,7 +294,6 @@ export class SuggestState<GSchema extends EditorSchema = any> {
 
       this.ignored = this.ignored.remove(decorationsToClear);
     } else {
-      console.log('ignoring all');
       this.ignored = DecorationSet.empty;
     }
   };
@@ -315,7 +314,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    * Reset the state.
    */
   private resetState() {
-    this.handlerMatches = {};
+    this.handlerMatches = Object.create(null);
     this.next = undefined;
     this.removed = false;
   }

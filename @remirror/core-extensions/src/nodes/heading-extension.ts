@@ -77,7 +77,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
   }
 
   public keys({ type }: ExtensionManagerNodeTypeParams) {
-    const keys: KeyboardBindings = {};
+    const keys: KeyboardBindings = Object.create(null);
 
     this.options.levels.forEach(level => {
       keys[`Shift-Ctrl-${level}`] = setBlockType(type, { level });

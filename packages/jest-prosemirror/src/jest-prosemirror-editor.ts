@@ -240,7 +240,7 @@ interface FireEventAtPositionParams<GSchema extends EditorSchema = any>
 export const fireEventAtPosition = <GSchema extends EditorSchema = any>({
   view,
   event,
-  options = {},
+  options = Object.create(null),
   position = view.state.selection.anchor,
 }: FireEventAtPositionParams<GSchema>) => {
   const element = findElementAtPosition(position, view);
@@ -346,7 +346,7 @@ export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
  */
 export const createEditor = <GSchema extends EditorSchema = any>(
   taggedDoc: TaggedProsemirrorNode<GSchema>,
-  { plugins = [], rules = [], autoClean = true, ...editorOptions }: CreateEditorOptions = {},
+  { plugins = [], rules = [], autoClean = true, ...editorOptions }: CreateEditorOptions = Object.create(null),
 ) => {
   const place = document.body.appendChild(document.createElement('div'));
   const state = createState(taggedDoc, [...plugins, inputRules({ rules })]);

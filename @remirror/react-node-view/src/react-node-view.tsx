@@ -1,5 +1,5 @@
 import { EDITOR_CLASS_NAME, SELECTED_NODE_CLASS_NAME } from '@remirror/core-constants';
-import { isPlainObject, isString, isFunction } from '@remirror/core-helpers';
+import { isPlainObject, isString, isFunction, keys } from '@remirror/core-helpers';
 import {
   Attrs,
   BaseExtensionOptions,
@@ -117,10 +117,10 @@ export class ReactNodeView<
       contentDOM: undefined,
     };
 
-    if (this.domRef && contentDOMWrapper) {
+    if (contentDOMWrapper) {
       this.domRef.appendChild(contentDOMWrapper);
       this.contentDOM = contentDOM ? contentDOM : contentDOMWrapper;
-      this.contentDOMWrapper = contentDOMWrapper || contentDOM;
+      this.contentDOMWrapper = contentDOMWrapper;
     }
 
     this.domRef.classList.add(`${EDITOR_CLASS_NAME}-${this.node.type.name}-node-view`);
@@ -232,7 +232,7 @@ export class ReactNodeView<
       const attrs = domSpec[1];
 
       if (isPlainObject(attrs)) {
-        Object.keys(attrs).forEach(attr => {
+        keys(attrs).forEach(attr => {
           element.setAttribute(attr, String(attrs[attr]));
         });
 
@@ -240,7 +240,7 @@ export class ReactNodeView<
       }
     }
 
-    Object.keys(node.attrs || {}).forEach(attr => {
+    keys(node.attrs).forEach(attr => {
       element.setAttribute(attr, node.attrs[attr]);
     });
   }

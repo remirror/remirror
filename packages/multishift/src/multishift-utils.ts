@@ -266,7 +266,9 @@ export const callChangeHandlers = <GItem = any>(
  */
 export const getElementIds = (
   defaultId: string | number,
-  { id, labelId, menuId, getItemA11yId, toggleButtonId, inputId }: MultishiftA11yIdProps = {},
+  { id, labelId, menuId, getItemA11yId, toggleButtonId, inputId }: MultishiftA11yIdProps = Object.create(
+    null,
+  ),
 ) => {
   const uniqueId = id === undefined ? `multishift-${defaultId}` : id;
 
@@ -970,7 +972,7 @@ export const bindActionCreators = <
   actionCreators: GCreatorMap,
   dispatch: GDispatch,
 ): ActionCreatorMapToDispatch<GCreatorMap> => {
-  const boundActionCreators: ActionCreatorMapToDispatch<GCreatorMap> = {} as any;
+  const boundActionCreators: ActionCreatorMapToDispatch<GCreatorMap> = Object.create(null);
   const creatorKeys = keys(actionCreators);
 
   for (const key of creatorKeys) {

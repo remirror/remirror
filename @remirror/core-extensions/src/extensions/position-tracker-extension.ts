@@ -116,7 +116,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
        * @param id - the unique position id which can be any type
        */
       findAllPositionTrackers: (): Record<string, number> => {
-        const trackers: Record<string, number> = {};
+        const trackers: Record<string, number> = Object.create(null);
         const decorations = getPluginState<DecorationSet>(this.pluginKey, getState());
         const found = decorations.find(undefined, undefined, spec => spec.type === this.name);
 

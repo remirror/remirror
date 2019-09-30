@@ -24,7 +24,7 @@ const server = express()
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', (req: express.Request, res: express.Response) => {
-    const context = {};
+    const context = Object.create(null);
     const markup = renderToString(
       <StaticRouter context={context} location={req.url}>
         <App />

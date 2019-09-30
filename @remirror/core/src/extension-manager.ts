@@ -154,7 +154,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   /**
    * The extension manager data which is stored after Initialization
    */
-  private initData: this['_D'] = {} as this['_D'];
+  private initData: this['_D'] = Object.create(null);
 
   /**
    * Retrieve the specified action.
@@ -258,7 +258,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * extensions.
    */
   get attributes() {
-    let combinedAttributes: AttrsWithClass = {};
+    let combinedAttributes: AttrsWithClass = Object.create(null);
     this.extensions
       .filter(hasExtensionProperty('attributes'))
       .filter(extension => !extension.options.exclude.attributes)
@@ -280,7 +280,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * This is used to render the initial SSR output.
    */
   get components() {
-    const components: Record<string, ComponentType> = {};
+    const components: Record<string, ComponentType> = Object.create(null);
 
     for (const extension of this.extensions) {
       if (!extension.options.SSRComponent || extension.options.exclude.ssr) {
@@ -312,7 +312,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * Filters through all provided extensions and picks the nodes
    */
   get nodes() {
-    const nodes: Record<this['_N'], NodeExtensionSpec> = {} as any;
+    const nodes: Record<this['_N'], NodeExtensionSpec> = Object.create(null);
 
     for (const extension of this.extensions) {
       if (isNodeExtension(extension)) {
@@ -328,7 +328,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * Filters through all provided extensions and picks the marks
    */
   get marks() {
-    const marks: Record<this['_M'], MarkExtensionSpec> = {} as any;
+    const marks: Record<this['_M'], MarkExtensionSpec> = Object.create(null);
 
     for (const extension of this.extensions) {
       if (isMarkExtension(extension)) {
@@ -405,7 +405,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * renderProp function parameters.
    */
   public extensionData() {
-    const data: Record<string, PlainObject> = {};
+    const data: Record<string, PlainObject> = Object.create(null);
 
     for (const extension of this.extensions) {
       data[extension.name] = extension.extensionData
@@ -521,7 +521,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * Retrieve all the extension plugin keys
    */
   private get pluginKeys() {
-    const pluginKeys: Record<this['_N'], PluginKey> = {} as any;
+    const pluginKeys: Record<this['_N'], PluginKey> = Object.create(null);
     this.extensions
       .filter(extension => extension.plugin)
       .forEach(({ pluginKey, name }) => {
@@ -545,7 +545,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     this.checkInitialized();
 
     const extensions = this.extensions;
-    const actions: AnyActions = {};
+    const actions: AnyActions = Object.create(null);
 
     // Creates the methods that take in attrs and dispatch an action into the editor
     const commands = createCommands({ extensions, params });
@@ -563,14 +563,14 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   }
 
   private helpers(): this['_H'] {
-    const helpers = {} as AnyHelpers;
+    const helpers = Object.create(null);
     const methods = createHelpers({ extensions: this.extensions, params: this.params });
 
     Object.entries(methods).forEach(([helperName, helper]) => {
       helpers[helperName] = helper;
     });
 
-    return helpers as any;
+    return helpers;
   }
 
   /**
@@ -582,7 +582,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     // Will throw if not initialized
     this.checkInitialized();
 
-    const isActiveMethods: Record<this['_Names'], CommandStatusCheck> = {} as any;
+    const isActiveMethods: Record<this['_Names'], CommandStatusCheck> = Object.create(null);
 
     return this.extensions.filter(hasExtensionProperty(method)).reduce(
       (acc, extension) => ({
@@ -617,7 +617,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    */
   private nodeViews() {
     this.checkInitialized();
-    const nodeViews: Record<string, NodeViewMethod> = {};
+    const nodeViews: Record<string, NodeViewMethod> = Object.create(null);
     return this.extensions
       .filter(hasExtensionProperty('nodeView'))
       .filter(extension => !extension.options.exclude.nodeView)
@@ -640,7 +640,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
       .filter(extension => !extension.options.exclude.keymaps)
       .map(extensionPropertyMapper('keys', this.params));
 
-    const mappedKeys: Record<string, CommandFunction> = {};
+    const mappedKeys: Record<string, CommandFunction> = Object.create(null);
 
     for (const extensionKeymap of extensionKeymaps) {
       for (const key in extensionKeymap) {
@@ -683,7 +683,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * Retrieve all the options passed in for the extension manager
    */
   private extensionOptions(): Record<string, PlainObject> {
-    const options: Record<string, PlainObject> = {};
+    const options: Record<string, PlainObject> = Object.create(null);
     for (const extension of this.extensions) {
       options[extension.name] = extension.options;
     }

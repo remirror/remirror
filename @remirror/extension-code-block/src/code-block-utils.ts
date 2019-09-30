@@ -247,7 +247,7 @@ export const formatCodeBlockFactory = ({
   formatter,
   supportedLanguages,
   defaultLanguage: fallback,
-}: FormatCodeBlockFactoryParams) => ({ pos }: Partial<PosParams> = {}): CommandFunction => (
+}: FormatCodeBlockFactoryParams) => ({ pos }: Partial<PosParams> = Object.create(null)): CommandFunction => (
   state,
   dispatch,
 ) => {
@@ -312,7 +312,7 @@ export const formatCodeBlockFactory = ({
  * Retrieve the supported language names based on configuration.
  */
 export const getSupportedLanguagesMap = (supportedLanguages: RefractorSyntax[]) => {
-  const obj: Record<string, string> = {};
+  const obj: Record<string, string> = Object.create(null);
   for (const { name, aliases } of [...PRELOADED_LANGUAGES, ...supportedLanguages]) {
     obj[name] = name;
     aliases.forEach(alias => {

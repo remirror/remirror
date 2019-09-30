@@ -60,7 +60,7 @@ describe('schema', () => {
 });
 
 describe('plugins', () => {
-  const create = (params: HeadingExtensionOptions = {}) =>
+  const create = (params: HeadingExtensionOptions = Object.create(null)) =>
     renderEditor({
       attrNodes: [new HeadingExtension({ ...params })],
       plainNodes: [],

@@ -147,7 +147,11 @@ export class Keyboard {
    *
    * @param params - see {@link TextInputParams}
    */
-  public usChar({ text, options = {}, typing = false }: TextInputParams<SupportedCharacters>) {
+  public usChar({
+    text,
+    options = Object.create(null),
+    typing = false,
+  }: TextInputParams<SupportedCharacters>) {
     if (!isUSKeyboardCharacter(text)) {
       throw new Error(
         'This is not a supported character. For generic characters use the `keyboard.char` method instead',
@@ -204,7 +208,7 @@ export class Keyboard {
    *
    * @param params - see {@link TypingInputParams}
    */
-  public type({ text, options = {} }: TypingInputParams) {
+  public type({ text, options = Object.create(null) }: TypingInputParams) {
     for (const char of text) {
       this.char({ text: char, options, typing: true });
     }
@@ -225,7 +229,7 @@ export class Keyboard {
    *
    * @param params - see {@link TextInputParams}
    */
-  public mod({ text, options = {} }: TextInputParams) {
+  public mod({ text, options = Object.create(null) }: TextInputParams) {
     let modifiers = text.split(/-(?!$)/);
     let result = modifiers[modifiers.length - 1];
     modifiers = take(modifiers, modifiers.length - 1);

@@ -10,4 +10,4 @@ export const useRemirrorTheme = (): RemirrorThemeContextType => useContext(Remir
  *
  * If no theme exists it uses the default `baseTheme`.
  */
-export const useEmotionTheme = (): RemirrorTheme => useContext(EmotionThemeContext) || {};
+export const useEmotionTheme = (): RemirrorTheme => useContext(EmotionThemeContext);

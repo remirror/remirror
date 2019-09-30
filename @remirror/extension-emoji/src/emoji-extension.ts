@@ -84,7 +84,10 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
        * @param name - the emoji to insert
        * @param [options] - the options when inserting the emoji.
        */
-      insertEmojiByName: (name: string, options: EmojiCommandOptions = {}): CommandFunction => (...args) => {
+      insertEmojiByName: (
+        name: string,
+        options: EmojiCommandOptions = Object.create(null),
+      ): CommandFunction => (...args) => {
         const emoji = getEmojiByName(name);
         if (!emoji) {
           console.warn('invalid emoji name passed into emoji insertion');
@@ -104,7 +107,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
        */
       insertEmojiByObject: (
         emoji: EmojiObject,
-        { from, to, skinVariation }: EmojiCommandOptions = {},
+        { from, to, skinVariation }: EmojiCommandOptions = Object.create(null),
       ): CommandFunction => (state, dispatch) => {
         const { tr } = state;
         const emojiChar = skinVariation ? emoji.char + SKIN_VARIATIONS[skinVariation] : emoji.char;
@@ -121,7 +124,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
        * Inserts the suggestion character into the current position in the editor
        * in order to activate the suggestion popup..
        */
-      openEmojiSuggestions: ({ from, to }: Partial<FromToParams> = {}): CommandFunction => (
+      openEmojiSuggestions: ({ from, to }: Partial<FromToParams> = Object.create(null)): CommandFunction => (
         state,
         dispatch,
       ) => {

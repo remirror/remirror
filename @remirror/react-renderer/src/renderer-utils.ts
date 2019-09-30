@@ -12,7 +12,7 @@ const getPossibleStandardName = (key: string): string => {
  * Map standard html attribute names to their react equivalents.
  */
 export const mapProps = (props: PlainObject) => {
-  const transformedProps: PlainObject = {};
+  const transformedProps: PlainObject = Object.create(null);
   for (const key in props) {
     if (!hasOwnProperty(props, key)) {
       continue;
@@ -36,7 +36,7 @@ export const mapProps = (props: PlainObject) => {
 export const gatherToDOM = <GSpec extends MarkExtensionSpec | NodeExtensionSpec>(
   specs: Record<string, GSpec>,
 ) => {
-  const result: Record<string, GSpec['toDOM']> = {};
+  const result: Record<string, GSpec['toDOM']> = Object.create(null);
   for (const name in specs) {
     if (!hasOwnProperty(specs, name)) {
       continue;

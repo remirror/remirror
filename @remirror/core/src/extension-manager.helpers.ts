@@ -85,10 +85,12 @@ const getParamsType = <GKey extends keyof AnyExtension, GParams extends Extensio
   if (isMarkExtension(extension)) {
     return { type: params.schema.marks[extension.name] };
   }
+
   if (isNodeExtension(extension)) {
     return { type: params.schema.nodes[extension.name] };
   }
-  return {} as any;
+
+  return Object.create(null);
 };
 
 /**
@@ -128,7 +130,7 @@ export const createCommands = ({ extensions, params }: CreateCommandsParams) => 
     view.focus();
     return method(...args)(getState(), view.dispatch, view);
   };
-  const items: Record<string, { command: AnyFunction; name: string }> = {};
+  const items: Record<string, { command: AnyFunction; name: string }> = Object.create(null);
   const names = new Set<string>();
 
   extensions.filter(hasExtensionProperty('commands')).forEach(currentExtension => {
@@ -163,7 +165,7 @@ export const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
       ...getParamsType(extension, params),
     });
 
-  const items: Record<string, AnyFunction> = {};
+  const items: Record<string, AnyFunction> = Object.create(null);
   const names = new Set<string>();
 
   extensions.filter(hasExtensionProperty('helpers')).forEach(currentExtension => {
@@ -265,7 +267,7 @@ export const transformExtensionMap = <GFlexibleList extends FlexibleExtension[]>
  * @returns a new object without any of the functions defined
  */
 export const ignoreFunctions = (obj: Record<string, unknown>) => {
-  const newObject: Record<string, unknown> = {};
+  const newObject: Record<string, unknown> = Object.create(null);
   for (const key of Object.keys(obj)) {
     if (isFunction(obj[key])) {
       continue;

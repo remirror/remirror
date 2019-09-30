@@ -1,6 +1,6 @@
 import { Interpolation } from '@emotion/core';
 import { ExtensionType, Tags } from '@remirror/core-constants';
-import { Cast, deepMerge, isString } from '@remirror/core-helpers';
+import { deepMerge, isString } from '@remirror/core-helpers';
 import {
   AnyFunction,
   Attrs,
@@ -119,10 +119,8 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
    */
   private pk?: PluginKey;
 
-  constructor(options: GOptions = Cast<GOptions>({})) {
-    this.options = Cast<Required<GOptions>>(
-      deepMerge(defaultOptions, { ...this.defaultOptions, ...options }),
-    );
+  constructor(options: GOptions = Object.create(null)) {
+    this.options = deepMerge(defaultOptions, { ...this.defaultOptions, ...options });
 
     this.init();
   }
@@ -138,11 +136,8 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
       throw new Error('Invalid use of extraAttrs within a plain extension.');
     }
 
-    const extraAttrs = this.options.extraAttrs as ExtraAttrs[];
-    const attrs: Record<string, { default?: unknown }> = {};
-    if (!extraAttrs) {
-      return attrs;
-    }
+    const extraAttrs: ExtraAttrs[] = (this.options.extraAttrs as ExtraAttrs[] | undefined) || [];
+    const attrs: Record<string, { default?: unknown }> = Object.create(null);
 
     for (const item of extraAttrs) {
       if (Array.isArray(item)) {
@@ -165,11 +160,8 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
       throw new Error('Invalid use of extraAttrs within a plain extension.');
     }
 
-    const extraAttrs = this.options.extraAttrs as ExtraAttrs[];
-    const attrs: Attrs = {};
-    if (!extraAttrs) {
-      return attrs;
-    }
+    const extraAttrs = (this.options.extraAttrs as ExtraAttrs[] | undefined) || [];
+    const attrs: Attrs = Object.create(null);
 
     for (const item of extraAttrs) {
       if (Array.isArray(item)) {
