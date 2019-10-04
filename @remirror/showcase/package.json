@@ -26,9 +26,9 @@
     "@remirror/react": "0.6.0",
     "@remirror/ui-buttons": "0.6.0",
     "@types/match-sorter": "2.3.0",
-    "@types/prettier": "^1.18.2",
+    "@types/prettier": "^1.18.3",
     "emoji-mart": "^2.11.1",
-    "match-sorter": "^4.0.0",
+    "match-sorter": "^4.0.2",
     "prettier": "^1.18.2"
   },
   "peerDependencies": {

@@ -18,7 +18,7 @@
     "@remirror/core": "0.6.0",
     "@remirror/ui": "0.6.0",
     "@remirror/ui-icons": "0.6.0",
-    "csstype": "2.6.6"
+    "csstype": "2.6.7"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

@@ -26,14 +26,14 @@
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-transform": "^1.1.0",
     "@types/styled-system__css": "^5.0.4",
-    "csstype": "^2.6.6",
+    "csstype": "^2.6.7",
     "prosemirror-commands": "^1.0.8",
     "prosemirror-inputrules": "^1.0.4",
     "prosemirror-keymap": "^1.0.1",
-    "prosemirror-model": "^1.7.2",
+    "prosemirror-model": "^1.7.3",
     "prosemirror-schema-list": "^1.0.3",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-transform": "^1.1.4"
+    "prosemirror-transform": "^1.1.5"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

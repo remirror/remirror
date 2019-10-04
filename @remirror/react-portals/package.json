@@ -16,9 +16,9 @@
   "dependencies": {
     "@babel/runtime": "^7.6.2",
     "@types/nanoevents": "1.0.0",
-    "@types/nanoid": "2.0.0",
+    "@types/nanoid": "2.1.0",
     "nanoevents": "2.0.0",
-    "nanoid": "2.1.1"
+    "nanoid": "2.1.2"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

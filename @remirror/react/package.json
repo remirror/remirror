@@ -25,12 +25,12 @@
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-state": "^1.2.3",
-    "@types/prosemirror-view": "^1.11.0",
+    "@types/prosemirror-view": "^1.11.2",
     "hoist-non-react-statics": "^3.3.0",
     "prosemirror-commands": "^1.0.8",
-    "prosemirror-model": "^1.7.2",
+    "prosemirror-model": "^1.7.3",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.11.4"
+    "prosemirror-view": "^1.11.5"
   },
   "peerDependencies": {
     "@emotion/core": "^10",
