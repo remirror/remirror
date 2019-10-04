@@ -270,11 +270,13 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
 
     const { refKey = 'ref', ...config } = options || Object.create(null);
     const { sx } = this.context;
+    const css = sx(this.editorStyles);
+    const extra = bool(css) ? { css } : {};
 
     return {
       [refKey]: this.onRef,
       key: this.uid,
-      css: sx(this.editorStyles),
+      ...extra,
       ...config,
       children: children || this.renderChildren(null),
     } as RefKeyRootProps<GRefKey>;
