@@ -6,7 +6,7 @@ import { IMAGE_FILE_TYPES } from './image-constants';
  * Whether the file is an image file
  */
 export const isImageFileType = (file: File) => {
-  return file && IMAGE_FILE_TYPES.has(file.type);
+  return IMAGE_FILE_TYPES.has(file.type);
 };
 
 export const getAttrs = (extraAttrs: Attrs) => (domNode: HTMLElement) => {

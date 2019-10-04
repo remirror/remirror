@@ -11,6 +11,9 @@ interface TextHandlerProps {
   skipUnknownMarks?: boolean;
 }
 
+const normalizeMark = (mark: ObjectMark | string) =>
+  isString(mark) ? { type: mark, attrs: {} } : { attrs: {}, ...mark };
+
 const TextHandler: FC<TextHandlerProps> = ({ node, ...props }) => {
   if (!node.text) {
     return null;
@@ -40,9 +43,6 @@ const TextHandler: FC<TextHandlerProps> = ({ node, ...props }) => {
   // Use assigned mark handlers
   return node.marks.reduce<JSX.Element>(fn, textElement);
 };
-
-const normalizeMark = (mark: ObjectMark | string) =>
-  isString(mark) ? { type: mark, attrs: {} } : { attrs: {}, ...mark };
 
 const CodeBlock: FC<{
   node: ObjectNode;

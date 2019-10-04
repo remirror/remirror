@@ -3,6 +3,61 @@
 import { ALT, COMMAND, CTRL, mod, SHIFT, take } from '@remirror/core';
 
 /**
+ * Returns a list of normalized modifier keys
+ */
+export const getModifiers = ({ modifiers, isMac = false }: GetModifiersParams) => {
+  const list: string[] = [];
+
+  for (const modifier of modifiers) {
+    if (/^(cmd|meta|m)$/i.test(modifier)) {
+      list.push(COMMAND[0]);
+    } else if (/^a(lt)?$/i.test(modifier)) {
+      list.push(ALT[0]);
+    } else if (/^(c|ctrl|control)$/i.test(modifier)) {
+      list.push(CTRL[0]);
+    } else if (/^s(hift)?$/i.test(modifier)) {
+      list.push(SHIFT[0]);
+    } else if (/^mod$/i.test(modifier)) {
+      if (isMac) {
+        list.push(COMMAND[0]);
+      } else {
+        list.push(CTRL[0]);
+      }
+    } else {
+      throw new Error(`Unrecognized modifier name: ${modifier}`);
+    }
+  }
+
+  return list;
+};
+
+/**
+ * The modifier keys currently active
+ */
+export interface ModifierInformation {
+  /**
+   * Whether the `Shift` key is active
+   */
+
+  shiftKey: boolean;
+  /**
+   * Whether the `Meta` key is active
+   */
+
+  metaKey: boolean;
+  /**
+   * Whether the `Control` key is active
+   */
+
+  ctrlKey: boolean;
+  /**
+   * Whether the `Alt` key is active
+   */
+
+  altKey: boolean;
+}
+
+/**
  * Emulates a Ctrl+A SelectAll key combination by dispatching custom keyboard
  * events and using the results of those events to determine whether to call
  * `document.execCommand( 'selectall' );`. This is necessary because Puppeteer
@@ -137,59 +192,4 @@ interface GetModifiersParams {
    * @defaultValue `false`
    */
   isMac?: boolean;
-}
-
-/**
- * Returns a list of normalized modifier keys
- */
-export const getModifiers = ({ modifiers, isMac = false }: GetModifiersParams) => {
-  const list: string[] = [];
-
-  for (const modifier of modifiers) {
-    if (/^(cmd|meta|m)$/i.test(modifier)) {
-      list.push(COMMAND[0]);
-    } else if (/^a(lt)?$/i.test(modifier)) {
-      list.push(ALT[0]);
-    } else if (/^(c|ctrl|control)$/i.test(modifier)) {
-      list.push(CTRL[0]);
-    } else if (/^s(hift)?$/i.test(modifier)) {
-      list.push(SHIFT[0]);
-    } else if (/^mod$/i.test(modifier)) {
-      if (isMac) {
-        list.push(COMMAND[0]);
-      } else {
-        list.push(CTRL[0]);
-      }
-    } else {
-      throw new Error(`Unrecognized modifier name: ${modifier}`);
-    }
-  }
-
-  return list;
-};
-
-/**
- * The modifier keys currently active
- */
-export interface ModifierInformation {
-  /**
-   * Whether the `Shift` key is active
-   */
-
-  shiftKey: boolean;
-  /**
-   * Whether the `Meta` key is active
-   */
-
-  metaKey: boolean;
-  /**
-   * Whether the `Control` key is active
-   */
-
-  ctrlKey: boolean;
-  /**
-   * Whether the `Alt` key is active
-   */
-
-  altKey: boolean;
 }

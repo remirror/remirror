@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+
 import {
   bool,
   clamp,
@@ -71,6 +73,11 @@ const isNamedHSLObject = (value: unknown): value is NamedHSLObject =>
 const isHSLObject = (value: unknown): value is HSLObject =>
   bool(isPlainObject(value) && value.h && value.s && value.l);
 
+const hslArrayToObject = (value: any[]): HSLObject => {
+  const [h, s, l, a] = value;
+  return { h, s, l, a };
+};
+
 const hslStringToObject = (value: string): HSLObject => {
   const regexValue = HSLA_REGEX.exec(value) || HSL_REGEX.exec(value);
 
@@ -81,11 +88,6 @@ const hslStringToObject = (value: string): HSLObject => {
   const [, ...array] = regexValue;
 
   return hslArrayToObject(array);
-};
-
-const hslArrayToObject = (value: any[]): HSLObject => {
-  const [h, s, l, a] = value;
-  return { h, s, l, a };
 };
 
 const convertHSLToObject = (value: HSLObject | NamedHSLObject | HSLTuple | string): HSLObject => {
@@ -163,6 +165,54 @@ const createValidHSLObject = ({
   l: createValidPercent(lightness),
   a: createValidAlpha(alpha),
 });
+
+const freeze = (hslObject: BrandedHSLObject): Readonly<BrandedHSLObject> => Object.freeze(hslObject);
+
+/**
+ * Taken from https://github.com/usemeta/hsl-rgb/blob/1afed9a9703816e375839b4fbb6458f2765a76a8/index.js#L1
+ */
+const calculateHue = (pp: number, qq: number, hh: number) => {
+  hh = hh < 0 ? hh + 1 : hh > 1 ? hh - 1 : hh;
+  return hh < 1 / 6
+    ? pp + (qq - pp) * 6 * hh
+    : hh < 1 / 2
+    ? qq
+    : hh < 2 / 3
+    ? pp + (qq - pp) * (2 / 3 - hh) * 6
+    : pp;
+};
+
+/**
+ * Taken from https://github.com/usemeta/hsl-rgb/blob/1afed9a9703816e375839b4fbb6458f2765a76a8/index.js#L1
+ */
+const hslToRgb = ([hue, saturation, lightness]: [number, number, number]): [number, number, number] => {
+  let [rr, gg, bb] = [0, 0, 0];
+  const hh = hue / 360;
+  const ss = saturation / 100;
+  const ll = lightness / 100;
+
+  if (ss === 0) {
+    rr = gg = bb = ll;
+  } else {
+    const qq = ll < 0.5 ? ll * (1 + ss) : ll + ss - ll * ss;
+    const pp = 2 * ll - qq;
+
+    rr = calculateHue(pp, qq, hh + 1 / 3);
+    gg = calculateHue(pp, qq, hh);
+    bb = calculateHue(pp, qq, hh - 1 / 3);
+  }
+
+  return [
+    Math.max(0, Math.min(Math.round(rr * 255), 255)),
+    Math.max(0, Math.min(Math.round(gg * 255), 255)),
+    Math.max(0, Math.min(Math.round(bb * 255), 255)),
+  ];
+};
+
+/**
+ * Convert a percentage to a ratio while avoid
+ */
+const percentageToRatio = (percent: number, precision = 10) => Number((percent / 100).toFixed(precision));
 
 /**
  * HSLColor is a small utility for transforming colors, but only hsl colors.
@@ -553,51 +603,3 @@ export class HSL {
     return this.rectangle(90);
   }
 }
-
-const freeze = (hslObject: BrandedHSLObject): Readonly<BrandedHSLObject> => Object.freeze(hslObject);
-
-/**
- * Taken from https://github.com/usemeta/hsl-rgb/blob/1afed9a9703816e375839b4fbb6458f2765a76a8/index.js#L1
- */
-const calculateHue = (pp: number, qq: number, hh: number) => {
-  hh = hh < 0 ? hh + 1 : hh > 1 ? hh - 1 : hh;
-  return hh < 1 / 6
-    ? pp + (qq - pp) * 6 * hh
-    : hh < 1 / 2
-    ? qq
-    : hh < 2 / 3
-    ? pp + (qq - pp) * (2 / 3 - hh) * 6
-    : pp;
-};
-
-/**
- * Taken from https://github.com/usemeta/hsl-rgb/blob/1afed9a9703816e375839b4fbb6458f2765a76a8/index.js#L1
- */
-const hslToRgb = ([hue, saturation, lightness]: [number, number, number]): [number, number, number] => {
-  let [rr, gg, bb] = [0, 0, 0];
-  const hh = hue / 360;
-  const ss = saturation / 100;
-  const ll = lightness / 100;
-
-  if (ss === 0) {
-    rr = gg = bb = ll;
-  } else {
-    const qq = ll < 0.5 ? ll * (1 + ss) : ll + ss - ll * ss;
-    const pp = 2 * ll - qq;
-
-    rr = calculateHue(pp, qq, hh + 1 / 3);
-    gg = calculateHue(pp, qq, hh);
-    bb = calculateHue(pp, qq, hh - 1 / 3);
-  }
-
-  return [
-    Math.max(0, Math.min(Math.round(rr * 255), 255)),
-    Math.max(0, Math.min(Math.round(gg * 255), 255)),
-    Math.max(0, Math.min(Math.round(bb * 255), 255)),
-  ];
-};
-
-/**
- * Convert a percentage to a ratio while avoid
- */
-const percentageToRatio = (percent: number, precision = 10) => Number((percent / 100).toFixed(precision));

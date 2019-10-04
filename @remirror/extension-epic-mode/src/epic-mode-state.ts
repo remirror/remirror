@@ -1,6 +1,21 @@
 import { EditorView, randomInt, throttle } from '@remirror/core';
 import { EpicModePluginStateParams, Particle, ParticleEffect, ParticleRange } from './epic-mode-types';
 
+const getRGBComponents = (node: Element) => {
+  const color = getComputedStyle(node).color;
+  let match: RegExpMatchArray | null;
+
+  if (color && (match = color.match(/(\d+), (\d+), (\d+)/))) {
+    try {
+      return match.slice(1);
+    } catch {
+      return [255, 255, 255];
+    }
+  } else {
+    return [255, 255, 255];
+  }
+};
+
 export class EpicModePluginState {
   private readonly particleEffect: ParticleEffect;
   private readonly particleRange: ParticleRange;
@@ -40,9 +55,10 @@ export class EpicModePluginState {
    */
   public init(view: EditorView) {
     this.view = view;
-    this.container = this.getCanvasContainer ? this.getCanvasContainer() : document.body;
+    this.container = this.getCanvasContainer();
 
     const canvas = document.createElement('canvas');
+    this.canvas = canvas;
     canvas.id = 'epic-mode-canvas';
     canvas.style.position = 'absolute';
     canvas.style.top = '0';
@@ -51,12 +67,14 @@ export class EpicModePluginState {
     canvas.style.pointerEvents = 'none';
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    const ctx = canvas.getContext('2d');
 
-    this.canvas = canvas;
-    this.ctx = canvas.getContext('2d')!;
+    if (!ctx) {
+      throw new Error('An error occured while creating the canvas context');
+    }
 
+    this.ctx = ctx;
     this.container.appendChild(this.canvas);
-
     this.isActive = true;
     this.loop();
 
@@ -146,26 +164,11 @@ export class EpicModePluginState {
 
   private drawParticles() {
     for (const particle of this.particles) {
-      if (!particle || particle.alpha < 0.01 || particle.size <= 0.5) {
+      if (particle.alpha < 0.01 || particle.size <= 0.5) {
         continue;
       }
 
       this.particleEffect.updateParticle({ particle, ctx: this.ctx, canvas: this.canvas });
     }
-  }
-}
-
-function getRGBComponents(node: Element) {
-  const color = getComputedStyle(node).color;
-  let match: RegExpMatchArray | null;
-
-  if (color && (match = color.match(/(\d+), (\d+), (\d+)/))) {
-    try {
-      return match.slice(1);
-    } catch {
-      return [255, 255, 255];
-    }
-  } else {
-    return [255, 255, 255];
   }
 }

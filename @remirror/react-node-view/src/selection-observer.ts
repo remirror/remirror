@@ -118,7 +118,7 @@ export class SelectionObserver {
   }
 
   private readonly check = (): void => {
-    let changed = false;
+    let changed: boolean = false;
     const callback = this.callback;
 
     this.observables = this.observables.map(obj => {

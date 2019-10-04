@@ -143,29 +143,6 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/__tests__/**'],
-      rules: {
-        '@typescript-eslint/ban-ts-ignore': 'off', // Often you need to use @ts-ignore in tests
-        '@typescript-eslint/no-non-null-assertion': 'off', // Makes writing tests more convenient
-        '@typescript-eslint/no-use-before-define': 'off',
-      },
-    },
-    {
-      files: ['**/*.d.ts'],
-      rules: {
-        'import/no-duplicates': 'off',
-        '@typescript-eslint/no-namespace': 'off',
-      },
-    },
-    {
-      files: ['**/*.dts.ts'],
-      rules: {
-        '@typescript-eslint/no-namespace': 'off',
-        '@typescript-eslint/no-unused-vars': 'off',
-        'no-unused-expressions': 'off',
-      },
-    },
-    {
       files: ['*.ts', '*.tsx'],
       rules: {
         ...tsProjectRules,
@@ -188,6 +165,34 @@ module.exports = {
           'warn',
           { ignoreDestructuring: true, properties: 'never' },
         ],
+      },
+    },
+    {
+      files: ['**/__tests__/**'],
+      rules: {
+        '@typescript-eslint/ban-ts-ignore': 'off', // Often you need to use @ts-ignore in tests
+        '@typescript-eslint/no-non-null-assertion': 'off', // Makes writing tests more convenient
+        '@typescript-eslint/no-use-before-define': 'off',
+        'react/display-name': 'off',
+        ...Object.keys(tsProjectRules).reduce(
+          (acc, key) => ({ ...acc, [key]: 'off' }),
+          {},
+        ),
+      },
+    },
+    {
+      files: ['**/*.d.ts'],
+      rules: {
+        'import/no-duplicates': 'off',
+        '@typescript-eslint/no-namespace': 'off',
+      },
+    },
+    {
+      files: ['**/*.dts.ts'],
+      rules: {
+        '@typescript-eslint/no-namespace': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
+        'no-unused-expressions': 'off',
       },
     },
   ],

@@ -1,10 +1,10 @@
-import { absoluteCoordinates, isEmptyParagraphNode, selectionEmpty } from '@remirror/core';
+import { absoluteCoordinates, isEmptyParagraphNode, selectionEmpty, bool } from '@remirror/core';
 import { Positioner } from './react-types';
 
 export const defaultPositioner: Positioner = {
   initialPosition: { top: -99999, left: -99999, right: 99999, bottom: 99999 },
   hasChanged({ oldState, newState }) {
-    return !(oldState && oldState.doc.eq(newState.doc) && oldState.selection.eq(newState.selection));
+    return !(bool(oldState) && oldState.doc.eq(newState.doc) && oldState.selection.eq(newState.selection));
   },
 
   isActive: ({ newState }) => !selectionEmpty(newState),
@@ -29,9 +29,14 @@ export const floatingPositioner: Positioner = {
   },
 
   getPosition({ view, element, newState }) {
-    const editorRect = element.offsetParent!.getBoundingClientRect();
+    if (!element.offsetParent) {
+      return floatingPositioner.initialPosition;
+    }
+
+    const editorRect = element.offsetParent.getBoundingClientRect();
     const cursorRect = view.coordsAtPos(newState.selection.$anchor.pos);
     const top = cursorRect.top - editorRect.top;
+
     return { ...floatingPositioner.initialPosition, top };
   },
 };

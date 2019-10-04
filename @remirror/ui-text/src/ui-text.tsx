@@ -75,6 +75,7 @@ export const H1 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElemen
     />
   );
 });
+H1.displayName = 'H1';
 
 export const H2 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElements['h2']>((props, ref) => {
   return (
@@ -85,6 +86,7 @@ export const H2 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElemen
     />
   );
 });
+H2.displayName = 'H2';
 
 export const H3 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElements['h3']>((props, ref) => {
   return (
@@ -95,6 +97,7 @@ export const H3 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElemen
     />
   );
 });
+H3.displayName = 'H3';
 
 export const H4 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElements['h4']>((props, ref) => {
   return (
@@ -105,6 +108,7 @@ export const H4 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElemen
     />
   );
 });
+H4.displayName = 'H4';
 
 export const H5 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElements['h5']>((props, ref) => {
   return (
@@ -115,6 +119,7 @@ export const H5 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElemen
     />
   );
 });
+H5.displayName = 'H5';
 
 export const H6 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElements['h6']>((props, ref) => {
   return (
@@ -125,6 +130,7 @@ export const H6 = forwardRef<HTMLHeadingElement, TextProps & JSX.IntrinsicElemen
     />
   );
 });
+H6.displayName = 'H6';
 
 export const Text = forwardRef<HTMLParagraphElement, TextProps & JSX.IntrinsicElements['p']>((props, ref) => {
   return (
@@ -135,6 +141,7 @@ export const Text = forwardRef<HTMLParagraphElement, TextProps & JSX.IntrinsicEl
     />
   );
 });
+Text.displayName = 'Text';
 
 export const Label = forwardRef<HTMLLabelElement, TextProps & JSX.IntrinsicElements['label']>(
   (props, ref) => {
@@ -147,6 +154,7 @@ export const Label = forwardRef<HTMLLabelElement, TextProps & JSX.IntrinsicEleme
     );
   },
 );
+Label.displayName = 'Label';
 
 export const Caption = forwardRef<HTMLSpanElement, TextProps & JSX.IntrinsicElements['span']>(
   (props, ref) => {
@@ -159,3 +167,4 @@ export const Caption = forwardRef<HTMLSpanElement, TextProps & JSX.IntrinsicElem
     );
   },
 );
+Caption.displayName = 'Caption';

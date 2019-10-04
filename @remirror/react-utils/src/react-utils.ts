@@ -90,7 +90,7 @@ export const isReactFragment = <GProps extends object = any>(
  * @param element
  */
 export const getElementProps = (element: JSX.Element): PlainObject & { children: JSX.Element } => {
-  return element ? element.props : {};
+  return isValidElement(element) ? element.props : {};
 };
 
 /**
@@ -183,7 +183,7 @@ export const cloneElement = <GProps extends PropsWithChildren<{ ref?: LegacyRef<
 ) => {
   const children = uniqueArray([
     ...(isArray(props.children) ? props.children : props.children ? [props.children] : []),
-    ...(isArray(rest) ? rest : rest ? [rest] : []),
+    ...rest,
   ]);
 
   return jsx(
@@ -226,7 +226,7 @@ export const cssNoOp: typeof emotionCss = () => undefined as any;
  * A css function that just returns the string.
  * This is typically used for css syntax highlighting of plain strings in editors.
  */
-export const css = String.raw || ((template: TemplateStringsArray) => template[0]);
+export const css = bool(String.raw) ? String.raw : (template: TemplateStringsArray) => template[0];
 
 /**
  * A drop in replacement for React.Children.only which provides more readable errors
