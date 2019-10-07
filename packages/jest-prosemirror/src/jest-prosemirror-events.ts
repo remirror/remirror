@@ -76,6 +76,10 @@ const rawEventMap = {
     Constructor: 'Event',
     defaultProperties: { bubbles: true, cancelable: true },
   },
+  reset: {
+    Constructor: 'Event',
+    defaultProperties: { bubbles: true, cancelable: true },
+  },
   // Mouse Events
   click: {
     Constructor: 'MouseEvent',
