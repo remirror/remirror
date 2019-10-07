@@ -21,14 +21,14 @@
     "@types/match-sorter": "^2.3.0",
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-state": "^1.2.3",
-    "@types/prosemirror-view": "^1.11.0",
+    "@types/prosemirror-view": "^1.11.2",
     "emoji-regex": "^8.0.0",
     "escape-string-regexp": "^2.0.0",
-    "match-sorter": "^4.0.1",
-    "prosemirror-model": "^1.7.2",
+    "match-sorter": "^4.0.2",
+    "prosemirror-model": "^1.7.3",
     "prosemirror-state": "^1.2.4",
     "prosemirror-suggest": "0.6.0",
-    "prosemirror-view": "^1.11.4"
+    "prosemirror-view": "^1.11.5"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

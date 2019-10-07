@@ -1,8 +1,7 @@
-import { EditorSchema, Extension, getPluginState, ProsemirrorPlugin } from '@remirror/core';
-import { Plugin } from 'prosemirror-state';
+import { Extension, ProsemirrorPlugin } from '@remirror/core';
 import { defaultEffect, PARTICLE_NUM_RANGE, VIBRANT_COLORS } from './epic-mode-effects';
-import { EpicModePluginState } from './epic-mode-state';
 import { EpicModeExtensionOptions } from './epic-mode-types';
+import { createEpicModePlugin } from './epic-mode-plugin';
 
 export const defaultEpicModeExtensionOptions: EpicModeExtensionOptions = {
   particleEffect: defaultEffect,
@@ -26,40 +25,3 @@ export class EpicModeExtension extends Extension<EpicModeExtensionOptions> {
     return createEpicModePlugin(this);
   }
 }
-
-/**
- * Create the epic mode plugin responsible for unleashing the epic-ness!
- */
-const createEpicModePlugin = (ctx: Extension<EpicModeExtensionOptions>) => {
-  const plugin = new Plugin<EpicModePluginState, EditorSchema>({
-    key: ctx.pluginKey,
-    state: {
-      init() {
-        return new EpicModePluginState(ctx.options);
-      },
-      apply(_tr, pluginState) {
-        return pluginState;
-      },
-    },
-
-    props: {
-      handleKeyPress(view) {
-        const pluginState = getPluginState<EpicModePluginState>(ctx.pluginKey, view.state);
-        pluginState.shake(ctx.options.shakeTime);
-        pluginState.spawnParticles();
-        return false;
-      },
-    },
-
-    view(view) {
-      const pluginState = getPluginState<EpicModePluginState>(ctx.pluginKey, view.state).init(view);
-
-      return {
-        destroy() {
-          pluginState.destroy();
-        },
-      };
-    },
-  });
-  return plugin;
-};

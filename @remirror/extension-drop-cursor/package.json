@@ -22,10 +22,10 @@
     "@remirror/ui": "0.6.0",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-transform": "^1.1.0",
-    "@types/prosemirror-view": "^1.11.0",
+    "@types/prosemirror-view": "^1.11.2",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-transform": "^1.1.4",
-    "prosemirror-view": "^1.11.4"
+    "prosemirror-transform": "^1.1.5",
+    "prosemirror-view": "^1.11.5"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

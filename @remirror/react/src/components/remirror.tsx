@@ -84,7 +84,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
       ...rest
     } = state;
 
-    if (newState && onStateChange && value && value !== newState) {
+    if (onStateChange && value && value !== newState) {
       return {
         editor: { newState: value, oldState: newState },
         ...rest,
@@ -270,11 +270,13 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
 
     const { refKey = 'ref', ...config } = options || Object.create(null);
     const { sx } = this.context;
+    const css = sx(this.editorStyles);
+    const extra = bool(css) ? { css } : {};
 
     return {
       [refKey]: this.onRef,
       key: this.uid,
-      css: sx(this.editorStyles),
+      ...extra,
       ...config,
       children: children || this.renderChildren(null),
     } as RefKeyRootProps<GRefKey>;
@@ -414,7 +416,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * How does it work when transactions are dispatched one after the other.
    */
   private readonly dispatchTransaction = (tr: Transaction) => {
-    tr = this.props.onDispatchTransaction(tr, this.getState()) || tr;
+    tr = this.props.onDispatchTransaction(tr, this.getState());
 
     const state = this.getState().apply(tr);
 

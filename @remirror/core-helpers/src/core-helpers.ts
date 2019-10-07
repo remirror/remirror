@@ -12,6 +12,11 @@ interface PlainObject {
 }
 
 /**
+ * Any falsy type.
+ */
+export type Falsy = false | 0 | '' | null | undefined;
+
+/**
  * Type cast an argument. If no type is provided it will default to any.
  *
  * @param arg - the arg to typecast
@@ -25,7 +30,7 @@ export const Cast = <GType = any>(arg: any): GType => arg;
  *
  * @public
  */
-export const bool = (value: unknown) => !!value;
+export const bool = <GValue>(value: GValue): value is Exclude<GValue, Falsy> => !!value;
 
 /**
  * A type name matcher for object types
@@ -492,7 +497,7 @@ export const startCase = (str: string) => {
   return str
     .replace(/_/g, ' ')
     .replace(/([a-z])([A-Z])/g, (_, $1, $2) => `${$1} ${$2}`)
-    .replace(/(\s|^)(\w)/g, (_, $1, $2) => $1 + $2.toUpperCase());
+    .replace(/(\s|^)(\w)/g, (_, $1, $2) => `${$1}${$2.toUpperCase()}`);
 };
 
 const wordSeparators = /[\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-./:;<=>?@[\]^_`{|}~]+/;

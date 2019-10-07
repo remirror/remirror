@@ -115,3 +115,4 @@ export const Menu = forwardRef<HTMLMenuElement, JSX.IntrinsicElements['menu']>(
     );
   },
 );
+Menu.displayName = 'Menu';

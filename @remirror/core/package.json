@@ -30,7 +30,7 @@
     "@types/prosemirror-state": "^1.2.3",
     "prosemirror-inputrules": "^1.0.4",
     "prosemirror-keymap": "^1.0.1",
-    "prosemirror-model": "^1.7.2",
+    "prosemirror-model": "^1.7.3",
     "prosemirror-state": "^1.2.4",
     "prosemirror-suggest": "0.6.0"
   },

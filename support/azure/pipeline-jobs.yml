@@ -81,7 +81,8 @@ jobs:
           - ${{ parameters.name }}UnitTests
           - ${{ parameters.name }}SizeChecks
           - macOSChromeIntegrationTests
-        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/canary')) # Only run on canary
+        # Only run on canary when not a scheduled build.
+        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/canary'), notIn(variables['Build.Reason'], 'Schedule', 'PullRequest'))
         pool:
           vmImage: ${{ parameters.vmImage }}
         steps:

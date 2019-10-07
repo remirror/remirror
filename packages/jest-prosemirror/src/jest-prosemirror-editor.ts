@@ -12,13 +12,13 @@ import {
   TextParams,
   ProsemirrorNode,
 } from '@remirror/core-types';
-import { EventType, fireEvent, prettyDOM } from '@testing-library/dom';
+import { fireEvent, prettyDOM } from '@testing-library/dom';
 import { inputRules } from 'prosemirror-inputrules';
 import { AllSelection, NodeSelection, TextSelection } from 'prosemirror-state';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { DirectEditorProps, EditorView } from 'prosemirror-view';
 import { Keyboard } from 'test-keyboard';
-import { createEvents } from './jest-prosemirror-events';
+import { createEvents, EventType } from './jest-prosemirror-events';
 import { createState, pm, selectionFor, taggedDocHasSelection, p } from './jest-prosemirror-nodes';
 import { TaggedDocParams, TestEditorView, TestEditorViewParams } from './jest-prosemirror-types';
 

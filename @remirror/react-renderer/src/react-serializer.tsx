@@ -12,6 +12,7 @@ import {
   NodeExtensionSpec,
   PlainObject,
   ProsemirrorNode,
+  bool,
 } from '@remirror/core';
 import React, { ComponentType, Fragment, ReactNode } from 'react';
 import { mapProps, gatherToDOM } from './renderer-utils';
@@ -80,7 +81,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
     if (node.content.childCount > 0) {
       children = this.serializeFragment(node.content);
     }
-    return Component ? (
+    return bool(Component) ? (
       <Component options={options} node={node}>
         {children}
       </Component>
@@ -101,7 +102,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
     const Component = this.components[mark.type.name];
     const options = this.options[mark.type.name];
 
-    return Component ? (
+    return bool(Component) ? (
       <Component options={options} mark={mark}>
         {wrappedElement}
       </Component>

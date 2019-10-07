@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`excludeDomEvents() (type) should match snapshot 1`] = `"\\"tripleClick\\""`;
+
+exports[`excludeEvents() (type) should match snapshot 1`] = `"never"`;

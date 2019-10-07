@@ -27,8 +27,10 @@ import { InjectedRemirrorProps, UsePositionerParams } from '../react-types';
  * }
  * ```
  */
-export const useRemirrorContext = <GExtension extends AnyExtension = any>() => {
-  const params = useContext<InjectedRemirrorProps<GExtension>>(RemirrorContext as any);
+export const useRemirrorContext = <GExtension extends AnyExtension = any>(): InjectedRemirrorProps<
+  GExtension
+> => {
+  const params = useContext(RemirrorContext);
 
   if (!params) {
     throw new Error('There is no remirror context defined.');
@@ -40,8 +42,8 @@ export const useRemirrorContext = <GExtension extends AnyExtension = any>() => {
 /**
  * A low level context picker to obtain the manager from within a RemirrorManager context
  */
-export const useRemirrorManager = <GExtension extends AnyExtension = any>() => {
-  const manager = useContext<ExtensionManager<GExtension>>(RemirrorManagerContext as any);
+export const useRemirrorManager = <GExtension extends AnyExtension = any>(): ExtensionManager<GExtension> => {
+  const manager = useContext(RemirrorManagerContext);
 
   if (!manager) {
     throw new Error('There is no manager defined within the context.');

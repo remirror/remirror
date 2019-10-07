@@ -117,11 +117,11 @@ export const ManagedRemirrorProvider = <GExtension extends AnyExtension = any>({
 }: ManagedRemirrorProviderProps<GExtension>) => {
   const manager = useRemirrorManager<GExtension>();
 
-  return manager ? (
+  return (
     <RemirrorProvider {...props} manager={manager}>
       {children}
     </RemirrorProvider>
-  ) : null;
+  );
 };
 
 ManagedRemirrorProvider.$$remirrorType = RemirrorType.ManagedEditorProvider;

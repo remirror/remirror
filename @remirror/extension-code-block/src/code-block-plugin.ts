@@ -67,7 +67,7 @@ export class CodeBlockState {
   private numberOfChangedBlocks(steps: Step[]) {
     let changes = 0;
 
-    // Urm yeah this is a loop within a loop within a loop and it makes me head hurt.
+    // Urm yeah this is a loop within a loop within a loop and it makes my head hurt.
     for (const { node, pos: from } of this.blocks) {
       let hasChanged = false;
       for (const step of steps) {

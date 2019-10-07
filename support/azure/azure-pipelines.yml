@@ -12,11 +12,6 @@ jobs:
       name: macOS
       vmImage: 'macOS-latest'
 
-  # - template: pipeline-jobs.yml
-  #   parameters:
-  #     name: Windows
-  #     vmImage: 'windows-latest'
-
 # Cron jobs for scheduling builds
 schedules:
   - cron: '0 0 * * *'
