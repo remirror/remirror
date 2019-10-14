@@ -14,7 +14,7 @@
   ],
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.6.2",
+    "@babel/runtime": "^7",
     "@remirror/core": "0.6.1",
     "@remirror/react-node-view": "0.6.1",
     "@types/emoji-regex": "^8.0.0",
@@ -25,10 +25,10 @@
     "emoji-regex": "^8.0.0",
     "escape-string-regexp": "^2.0.0",
     "match-sorter": "^4.0.2",
-    "prosemirror-model": "^1.7.3",
+    "prosemirror-model": "^1.7.4",
     "prosemirror-state": "^1.2.4",
     "prosemirror-suggest": "0.6.1",
-    "prosemirror-view": "^1.11.5"
+    "prosemirror-view": "^1.12.0"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

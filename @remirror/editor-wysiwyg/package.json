@@ -14,7 +14,7 @@
   ],
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.6.2",
+    "@babel/runtime": "^7",
     "@emotion/styled": "^10.0.17",
     "@remirror/core": "0.6.1",
     "@remirror/core-extensions": "0.6.1",
@@ -27,7 +27,7 @@
     "@remirror/ui-buttons": "0.6.1",
     "@remirror/ui-icons": "0.6.1",
     "refractor": "^2.10.0",
-    "w3c-keyname": "^2.1.0"
+    "w3c-keyname": "^2.1.1"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

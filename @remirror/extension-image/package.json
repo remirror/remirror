@@ -15,7 +15,7 @@
   ],
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.6.2",
+    "@babel/runtime": "^7",
     "@remirror/core": "0.6.1",
     "@remirror/core-extensions": "0.6.1",
     "@remirror/react-utils": "0.6.1",
@@ -27,10 +27,10 @@
     "@types/prosemirror-view": "^1.11.2",
     "prosemirror-commands": "^1.0.8",
     "prosemirror-inputrules": "^1.0.4",
-    "prosemirror-keymap": "^1.0.1",
-    "prosemirror-model": "^1.7.3",
+    "prosemirror-keymap": "^1.0.2",
+    "prosemirror-model": "^1.7.4",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.11.5"
+    "prosemirror-view": "^1.12.0"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

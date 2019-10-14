@@ -14,7 +14,7 @@
   ],
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.6.2",
+    "@babel/runtime": "^7",
     "@remirror/core-constants": "0.6.1",
     "@remirror/react-portals": "0.6.1",
     "@styled-system/css": "^5.0.23",
@@ -29,9 +29,9 @@
     "csstype": "^2.6.7",
     "prosemirror-commands": "^1.0.8",
     "prosemirror-inputrules": "^1.0.4",
-    "prosemirror-keymap": "^1.0.1",
-    "prosemirror-model": "^1.7.3",
-    "prosemirror-schema-list": "^1.0.3",
+    "prosemirror-keymap": "^1.0.2",
+    "prosemirror-model": "^1.7.4",
+    "prosemirror-schema-list": "^1.0.4",
     "prosemirror-state": "^1.2.4",
     "prosemirror-transform": "^1.1.5"
   },

@@ -15,21 +15,21 @@
   ],
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.6.2",
+    "@babel/runtime": "^7",
     "@remirror/core": "0.6.1",
     "@remirror/core-extensions": "0.6.1",
     "@remirror/react": "0.6.1",
     "@remirror/react-utils": "0.6.1",
     "@testing-library/react": "^9.3.0",
-    "@types/node": ">=12.7.11",
+    "@types/node": ">=12.11.2",
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-view": "^1.11.2",
     "jest-prosemirror": "0.6.1",
     "jest-snapshot": "^24.9.0",
     "mutationobserver-shim": "0.3.3",
-    "prosemirror-model": "^1.7.3",
+    "prosemirror-model": "^1.7.4",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.11.5"
+    "prosemirror-view": "^1.12.0"
   },
   "peerDependencies": {
     "@emotion/core": "^10",
