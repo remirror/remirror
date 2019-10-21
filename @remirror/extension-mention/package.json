@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/extension-mention",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/extension-mention",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "main": "lib/index.js",
   "module": "lib/dist/extension-mention.esm.js",
   "files": [
@@ -15,13 +15,13 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "0.6.1",
+    "@remirror/core": "0.6.2",
     "@types/prosemirror-keymap": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.11.2",
     "prosemirror-keymap": "^1.0.2",
     "prosemirror-state": "^1.2.4",
-    "prosemirror-suggest": "0.6.1",
+    "prosemirror-suggest": "0.6.2",
     "prosemirror-view": "^1.12.0"
   },
   "peerDependencies": {
