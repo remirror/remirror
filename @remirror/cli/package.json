@@ -24,7 +24,7 @@
     "@emotion/core": "^10",
     "@remirror/core-helpers": "0.6.2",
     "@types/node": ">=12.11.2",
-    "figures": "^3.0.0",
+    "figures": "^3.1.0",
     "ink": "^2.5.0",
     "ink-spinner": "^3.0.1",
     "jsesc": "^2.5.2",
