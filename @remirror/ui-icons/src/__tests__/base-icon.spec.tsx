@@ -14,7 +14,7 @@ describe('styles', () => {
 
     const svg = container.querySelector('svg');
     expect(svg).toHaveStyle(
-      `color: ${baseTheme.colors.dark}; background-color: ${baseTheme.colors.background};`,
+      `color: ${baseTheme.colors.text}; background-color: ${baseTheme.colors.background};`,
     );
   });
 

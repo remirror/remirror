@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-utils",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-utils",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "main": "lib/index.js",
   "module": "lib/dist/core-utils.esm.js",
   "files": [
@@ -14,12 +14,12 @@
   ],
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.6.2",
-    "@remirror/core-constants": "0.6.1",
-    "@remirror/core-helpers": "0.6.1",
-    "@remirror/core-types": "0.6.1",
+    "@babel/runtime": "^7",
+    "@remirror/core-constants": "0.6.2",
+    "@remirror/core-helpers": "0.6.2",
+    "@remirror/core-types": "0.6.2",
     "@types/min-document": "^2.19.0",
-    "@types/node": ">=8",
+    "@types/node": ">=12.11.2",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-model": "^1.7.2",
@@ -28,8 +28,8 @@
     "min-document": "2.19.0",
     "prosemirror-commands": "^1.0.8",
     "prosemirror-inputrules": "^1.0.4",
-    "prosemirror-model": "^1.7.3",
-    "prosemirror-schema-list": "^1.0.3",
+    "prosemirror-model": "^1.7.4",
+    "prosemirror-schema-list": "^1.0.4",
     "prosemirror-state": "^1.2.4"
   },
   "devDependencies": {

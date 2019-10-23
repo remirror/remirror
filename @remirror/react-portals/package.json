@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/canary/@remirror/react-portals",
   "repository": "https://github.com/ifiokjr/remirror/tree/canary/@remirror/react-portals",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "main": "lib/index.js",
   "module": "lib/dist/react-portals.esm.js",
   "files": [
@@ -14,11 +14,11 @@
   ],
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@babel/runtime": "^7.6.2",
+    "@babel/runtime": "^7",
     "@types/nanoevents": "1.0.0",
     "@types/nanoid": "2.1.0",
     "nanoevents": "2.0.0",
-    "nanoid": "2.1.2"
+    "nanoid": "2.1.4"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

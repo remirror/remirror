@@ -1,8 +1,8 @@
 <div align="center">
-	<br />
-	<div align="center">
-		<img width="300" height="300" src="https://rawcdn.githack.com/ifiokjr/remirror/f94e6c63e555f65ad5f3f13a3f343204cdc92dff/support/assets/logo.svg?sanitize=true" alt="remirror" />
-	</div>
+  <br />
+  <div align="center">
+    <img width="300" height="300" src="https://rawcdn.githack.com/ifiokjr/remirror/f94e6c63e555f65ad5f3f13a3f343204cdc92dff/support/assets/logo.svg?sanitize=true" alt="remirror" />
+  </div>
     <br />
     <br />
     <br />
@@ -10,16 +10,16 @@
 
 <p align="center">
 
-<a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=1&amp;branchName=master"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/ifiokjr.remirror?branchName=canary" alt="Azure DevOps builds" /></a>
+<a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=1&amp;branchName=canary"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/ifiokjr.remirror?branchName=canary" alt="Azure DevOps builds" /></a>
 <a href="https://travis-ci.com/ifiokjr/remirror"><img src="https://travis-ci.com/ifiokjr/remirror.svg?branch=canary" alt="Travis (.com)" /></a>
 <a href="https://codeclimate.com/github/ifiokjr/remirror/test_coverage"><img src="https://api.codeclimate.com/v1/badges/cfd42ff63704a1cbe232/test_coverage" /></a>
-<a href="https://github.com/ifiokjr/remirror/commits/master"><img src="https://img.shields.io/github/commit-activity/m/ifiokjr/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
-<a href="https://github.com/ifiokjr/remirror/commits/master"><img src="https://img.shields.io/github/last-commit/ifiokjr/remirror.svg?amp;logo=github" alt="GitHub last commit" /></a>
+<a href="https://github.com/ifiokjr/remirror/commits/canary"><img src="https://img.shields.io/github/commit-activity/m/ifiokjr/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
+<a href="https://github.com/ifiokjr/remirror/commits/canary"><img src="https://img.shields.io/github/last-commit/ifiokjr/remirror.svg?amp;logo=github" alt="GitHub last commit" /></a>
 <a href="https://github.com/ifiokjr/remirror/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc"><img src="https://img.shields.io/github/issues-raw/ifiokjr/remirror.svg?amp;logo=github" alt="GitHub issues" /></a>
 <a href="https://github.com/ifiokjr/remirror/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc"><img src="https://img.shields.io/github/issues-pr/ifiokjr/remirror.svg?amp;logo=github" alt="GitHub pull requests" /></a>
 <a href="https://github.com/ifiokjr/remirror"><img src="https://img.shields.io/github/stars/ifiokjr/remirror.svg?amp;logo=github" alt="GitHub stars" /></a>
 <a href="https://github.com/ifiokjr/remirror/tags"><img src="https://img.shields.io/github/tag-date/ifiokjr/remirror.svg?amp;logo=github" alt="GitHub tag (latest SemVer)" /></a>
-<a href="https://github.com/ifiokjr/remirror/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/remirror.svg" alt="LICENSE" /></a>
+<a href="https://github.com/ifiokjr/remirror/blob/canary/LICENSE"><img src="https://img.shields.io/npm/l/remirror.svg" alt="LICENSE" /></a>
 <a href="https://app.netlify.com/sites/remirror/deploys"><img src="https://api.netlify.com/api/v1/badges/f59cbf02-798f-45dd-a78c-93ec52b08d20/deploy-status" alt="Netlify Status" /></a>
 <a href="https://spectrum.chat/remirror"><img alt="Join the community on Spectrum" src="https://withspectrum.github.io/badge/badge.svg" /></a>
 
@@ -28,9 +28,9 @@
 <br />
 
 <div align="center">
-	<div align="center">
-		<img width="600"  src="https://media.githubusercontent.com/media/ifiokjr/remirror/canary/support/assets/wysiwyg.png" alt="remirror" />
-	</div>
+  <div align="center">
+    <img width="600"  src="https://media.githubusercontent.com/media/ifiokjr/remirror/canary/support/assets/wysiwyg.png" alt="remirror" />
+  </div>
     <br />
 </div>
 

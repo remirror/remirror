@@ -5,9 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) when it reaches `v1.0.0`.
 
+## [Unreleased]
+
+## [0.6.2] - 2019-10-21
+
+### Changed
+
+- Upgrade dependencies
+- Internal cleanup
+
+### Removed
+
+- `@remirror/react-node-view` - Remove `SelectionObserver`
+
 ## [0.6.1] - 2019-10-07
 
-### Changes
+### Changed
 
 - Upgrade dependencies
 - Use `Object.create(null)` instead of `{}` throughout the codebase.
@@ -20,7 +33,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - `jest-prosemirror`: New `debug` method which logs the editor's prettified html to the console.
 - `prosemirror-suggest`: Now supports ignoring activation characters to prevent matches from appearing in ignored sections.
 
-### Changes
+### Changed
 
 - `@remirror/extension-mention`: Fix a long standing bug where the editor crashes after deleting a single character mention.
 
@@ -46,7 +59,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - Introduce new `@schema` annotation for extension options to indicated that an option should not be updated after creating or it will change the schema.
 - New command `yarn generate:json` which auto generates json files for `support/rollup/rollup.config.js`, `support/storybook/.babelrc.js`, `support/tsconfig.paths.json` and `.size-limit.json`. Previously these were maintained manually.
 
-### Changes
+### Changed
 
 - 💥 **BREAKING `@remirror/react-renderer`:** Updated the name of `@remirror/renderer-react` for consistency.
 - 💥 **BREAKING `@remirror/core`:** `@emotion/core` is now a `peerDependency`. When adding this library to your project you will need to `yarn add @emotion/core` as well. This is required to prevent bugs with version conflicts within the EmotionThemeProvider.
@@ -67,7 +80,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - `@remirror/core`: Make default priority level for extensions `3` instead of `2`. A lower number means the extension is deemed more important and ordered earlier in lists.
 - `@remirror/core-extensions`: Add `extraAttrs` to the following extensions: `LinkExtension`, `ParagraphExtension`, `HeadingExtension`.
 
-### Remove
+### Removed
 
 - 💥 **BREAKING `@remirror/renderer-react`:** Removed package.
 - 💥 **BREAKING `@remirror/react-utils`:** Remove placeholder prop from the `RemirrorManager`.
@@ -76,7 +89,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [0.4.1] - 2019-07-22
 
-### Changes
+### Changed
 
 - `@remirror/showcase`: Allow the `ExampleWysiwygEditor` to use prop `suppressHydrationWarning` for SSR rendering.
 - `@remirror/showcase`: Revert unintended renaming of `ExampleTwitterEditor` to `ShowcaseTwitterEditor`.
@@ -100,7 +113,7 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 - Add internal modifier key functions for puppeteer testing.
 - Add integration editor tests for the `Wysiwyg` editor.
 
-### Changes
+### Changed
 
 - 💥 **BREAKING `@remirror/core`:** Change the way commands are configured. The command function on extensions now only accepts an object with the command names being globally unique. For example, the heading extension used to return a function now it returns an object with the following signature.
 
@@ -149,7 +162,7 @@ This is a large breaking change and may cause a lot of your existing code to sto
 - `@remirror/editor-twitter`, `@remirror/editor-wysiwyg` : Use image-snapshot testing to ensure SSR and DOM rendered editors are identical.
 - Update husky command from ~~`yarn stop:hooks`~~ and ~~`yarn start:hooks`~~ to `yarn husky:stop` and `yarn husky:start`.
 
-### Remove
+### Removed
 
 - 💥 **BREAKING `@remirror/react-utils` `@remirror/react` `@remirror/editor-markdown` `@remirror/editor-wysiwyg`:** Remove customRootProp from `RemirrorProps`.
 - 💥 **BREAKING `@remirror/core`:** Remove `isEditable` guard from command functions. It is now up to the command or the caller to decide if it should run when the editor is not editable. To help with this command params with the method `isEditable` are passed to the `commands` method of the extension.
@@ -180,7 +193,7 @@ This is a large breaking change and may cause a lot of your existing code to sto
 - Remove `cx` import from `emotion` library in from `@remirror/core` to reduce the bundle size.
 - Set `@emotion/core` and `@emotion/styled` as peer dependencies.
 
-### Remove
+### Removed
 
 - 💥 **BREAKING:** `@remirror/ui-*` packages.
 
@@ -202,7 +215,8 @@ This is a large breaking change and may cause a lot of your existing code to sto
 - Fixes missing TypeScript definitions #77.
 - Fixes crash when rendering a ReactNodeView in NextJS #75.
 
-[unreleased]: https://github.com/ifiokjr/remirror/compare/v0.6.1...HEAD
+[unreleased]: https://github.com/ifiokjr/remirror/compare/v0.6.2...HEAD
+[0.6.2]: https://github.com/ifiokjr/remirror/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/ifiokjr/remirror/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/ifiokjr/remirror/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/ifiokjr/remirror/compare/v0.4.1...v0.5.0

@@ -35,7 +35,7 @@ describe('sx', () => {
     const styles = sx([`color: red;`, { backgroundColor: 'pink' }]);
     const { getByText } = render(<p css={styles}>Test</p>);
 
-    expect(getByText('Test')!).toHaveStyle(`color: red: background-color: pink;`);
+    expect(getByText('Test')!).toHaveStyle(`color: red; background-color: pink;`);
   });
 
   it('composes multiple object styles', () => {
