@@ -4,18 +4,18 @@ title: Extension
 
 # Extension
 
-Extensions manage similar concerns. It allows for grouping items that affect
+Extensions manage similar concerns. It allows for grouping items that affect:
 
 - How the editor displays certain content, i.e. **bold**, _italic_, **underline**.
 - Makes certain commands available e.g. `actions.bold()` to make selected text bold.
 - Check if a command is currently active or enabled e.g. `actions.bold.isActive()`.
-- Register Prosemirror plugins, keymaps, input rules paste rules and custom nodeViews which affect the behaviour of the editor.
+- Register Prosemirror plugins, keymaps, input rules, paste rules, and custom nodeViews, which affect the behaviour of the editor.
 
 There are three types of `Extension`.
 
-- `NodeExtension` - For creating Prosemirror nodes in the editor
-- `MarkExtension` - For creating Prosemirror marks in the editor
-- `Extension` - For behaviour which doesn't need to be displayed in the dom.
+- `NodeExtension` - For creating [Prosemirror nodes](https://prosemirror.net/docs/ref/#model.Node) in the editor.
+- `MarkExtension` - For creating [Prosemirror marks](https://prosemirror.net/docs/ref/#model.Mark) in the editor.
+- `Extension` - For behaviour which doesn't need to be displayed in the DOM.
 
 #### Available extensions
 
