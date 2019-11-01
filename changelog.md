@@ -7,22 +7,30 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+## [0.6.3] - 2019-11-01
+
+### Changed
+
+- Upgrade dependencies.
+- Add [all-contributors](https://allcontributors.org/) config.
+- Add package patches for broken types.
+
 ## [0.6.2] - 2019-10-21
 
 ### Changed
 
-- Upgrade dependencies
-- Internal cleanup
+- Upgrade dependencies.
+- Internal cleanup.
 
 ### Removed
 
-- `@remirror/react-node-view` - Remove `SelectionObserver`
+- `@remirror/react-node-view` - Remove `SelectionObserver`.
 
 ## [0.6.1] - 2019-10-07
 
 ### Changed
 
-- Upgrade dependencies
+- Upgrade dependencies.
 - Use `Object.create(null)` instead of `{}` throughout the codebase.
 
 ## [0.6.0] - 2019-09-25
@@ -215,7 +223,8 @@ This is a large breaking change and may cause a lot of your existing code to sto
 - Fixes missing TypeScript definitions #77.
 - Fixes crash when rendering a ReactNodeView in NextJS #75.
 
-[unreleased]: https://github.com/ifiokjr/remirror/compare/v0.6.2...HEAD
+[unreleased]: https://github.com/ifiokjr/remirror/compare/v0.6.3...HEAD
+[0.6.2]: https://github.com/ifiokjr/remirror/compare/v0.6.2...v0.6.3
 [0.6.2]: https://github.com/ifiokjr/remirror/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/ifiokjr/remirror/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/ifiokjr/remirror/compare/v0.5.0...v0.6.0
