@@ -18,7 +18,7 @@
     "@types/nanoevents": "1.0.0",
     "@types/nanoid": "2.1.0",
     "nanoevents": "2.0.0",
-    "nanoid": "2.1.4"
+    "nanoid": "2.1.6"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

@@ -15,7 +15,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@reach/visually-hidden": "^0.3.0",
+    "@reach/visually-hidden": "^0.5.0",
     "@remirror/core-helpers": "0.6.2",
     "@remirror/ui": "0.6.2",
     "react-modal": "^3.10.1"

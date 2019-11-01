@@ -10,14 +10,14 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@emotion/core": "10.0.21",
+    "@emotion/core": "10.0.22",
     "@remirror/core": "0.6.2",
     "@remirror/core-extensions": "0.6.2",
     "@remirror/editor-social": "0.6.2",
     "@remirror/editor-wysiwyg": "0.6.2",
     "@remirror/react": "0.6.2",
     "@remirror/showcase": "0.6.2",
-    "next": "9.1.1",
+    "next": "9.1.2",
     "react": "16.10.2",
     "react-dom": "16.10.2"
   }
