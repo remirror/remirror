@@ -2,7 +2,7 @@
   "private": true,
   "name": "with-next",
   "license": "ISC",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "scripts": {
     "build": "next build",
     "dev": "next",
@@ -11,12 +11,12 @@
   },
   "dependencies": {
     "@emotion/core": "10.0.22",
-    "@remirror/core": "0.6.2",
-    "@remirror/core-extensions": "0.6.2",
-    "@remirror/editor-social": "0.6.2",
-    "@remirror/editor-wysiwyg": "0.6.2",
-    "@remirror/react": "0.6.2",
-    "@remirror/showcase": "0.6.2",
+    "@remirror/core": "0.6.3",
+    "@remirror/core-extensions": "0.6.3",
+    "@remirror/editor-social": "0.6.3",
+    "@remirror/editor-wysiwyg": "0.6.3",
+    "@remirror/react": "0.6.3",
+    "@remirror/showcase": "0.6.3",
     "next": "9.1.2",
     "react": "16.10.2",
     "react-dom": "16.10.2"
