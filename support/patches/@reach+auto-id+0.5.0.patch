@@ -1,0 +1,10 @@
+diff --git a/node_modules/@reach/auto-id/index.d.ts b/node_modules/@reach/auto-id/index.d.ts
+index 98ed7fb..7a592cf 100644
+--- a/node_modules/@reach/auto-id/index.d.ts
++++ b/node_modules/@reach/auto-id/index.d.ts
+@@ -7,4 +7,4 @@
+  *
+  * @see Docs https://reacttraining.com/reach-ui/auto-id
+  */
+-declare const useId: () => number;
++export declare const useId: () => number;

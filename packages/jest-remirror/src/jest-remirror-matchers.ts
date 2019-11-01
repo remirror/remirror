@@ -9,7 +9,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
         actual: state,
         expected,
         name: 'toContainRemirrorDocument',
-        message: 'The expected value should be an instance of ProsemirrorNode.',
+        message: () => 'The expected value should be an instance of ProsemirrorNode.',
       };
     }
 
@@ -19,7 +19,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
         actual: state,
         expected,
         name: 'toContainRemirrorDocument',
-        message: 'Expected the value passed in to be an EditorState',
+        message: () => 'Expected the value passed in to be an EditorState',
       };
     }
 
@@ -29,7 +29,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
         actual: state,
         expected,
         name: 'toContainRemirrorDocument',
-        message: 'Expected both values to be using the same schema.',
+        message: () => 'Expected both values to be using the same schema.',
       };
     }
 
@@ -75,7 +75,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
         actual,
         expected,
         name: 'toEqualRemirrorDocument',
-        message: 'Expected both values to be instance of prosemirror-model Node.',
+        message: () => 'Expected both values to be instance of prosemirror-model Node.',
       };
     }
 
@@ -85,7 +85,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
         actual,
         expected,
         name: 'toEqualRemirrorDocument',
-        message: 'Expected both values to be using the same schema.',
+        message: () => 'Expected both values to be using the same schema.',
       };
     }
 
@@ -119,7 +119,7 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
 
 declare global {
   namespace jest {
-    interface Matchers<R> {
+    interface Matchers<R, T> {
       /**
        * Checks that EditorState passed in has this as it's top level parent node.
        *

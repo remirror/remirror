@@ -1,0 +1,13 @@
+diff --git a/node_modules/snapshot-diff/index.d.ts b/node_modules/snapshot-diff/index.d.ts
+index d60a36a..d78c6cd 100644
+--- a/node_modules/snapshot-diff/index.d.ts
++++ b/node_modules/snapshot-diff/index.d.ts
+@@ -10,7 +10,7 @@ type DiffOptions = {
+ }
+ 
+ declare namespace jest {
+-  interface Matchers<R> {
++  interface Matchers<R, T> {
+     /**
+      * Compare the difference between the actual in the `expect()`
+      * vs the object inside `valueB` with some extra options.

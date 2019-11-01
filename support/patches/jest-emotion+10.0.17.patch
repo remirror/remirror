@@ -1,0 +1,13 @@
+diff --git a/node_modules/jest-emotion/types/index.d.ts b/node_modules/jest-emotion/types/index.d.ts
+index 2f407ad..7d6e1e1 100644
+--- a/node_modules/jest-emotion/types/index.d.ts
++++ b/node_modules/jest-emotion/types/index.d.ts
+@@ -30,7 +30,7 @@ export default serializer
+ 
+ declare global {
+   namespace jest {
+-    interface Matchers<R> {
++    interface Matchers<R, T> {
+       toHaveStyleRule(
+         property: string,
+         value: any,

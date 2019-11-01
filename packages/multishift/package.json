@@ -27,8 +27,6 @@
     "@remirror/ui-icons": "0.6.2",
     "@remirror/ui-text": "0.6.2",
     "@seznam/compose-react-refs": "^1.0.2",
-    "@types/reach__auto-id": "^0.2.0",
-    "@types/reach__visually-hidden": "^0.2.0",
     "compute-scroll-into-view": "^1.0.11",
     "w3c-keyname": "^2.1.1"
   },

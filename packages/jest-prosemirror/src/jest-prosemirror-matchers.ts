@@ -66,7 +66,7 @@ export const prosemirrorMatchers = {
 
 declare global {
   namespace jest {
-    interface Matchers<R> {
+    interface Matchers<R, T> {
       /**
        * A utility from jest-prosemirror which tests that a command transforms
        * the prosemirror node in the desired way.
