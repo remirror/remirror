@@ -4,13 +4,13 @@ title: Advanced Guide
 
 # Advanced Guide
 
-One of the core goals of remirror is allowing developers to fully customise the editors they build.
+One of the core goals of remirror is allowing developers to customise the editors they build fully.
 
-This is achieved through layered packages. Each layer building on the abstractions found in the lower level layers.
+Layered packages provide this flexibility, with each layer building on the abstractions found in the lower-level layers.
 
 If you've followed the [quickstart guide](/guides/quickstart) you'll have seen how to use the editors that remirror provides.
 
-This guide aims to provide insights into how all the lower level layers can be composed together in order to achieve the same world class outcome.
+This guide aims to provide insights into how all the lower-level layers can be composed together to achieve the same world-class outcome.
 
 ## Installation
 
@@ -22,9 +22,9 @@ yarn add @emotion/core @remirror/core @remirror/react @remirror/core-extensions
 
 ## The code
 
-So we want to build a simple editor with a floating menu and the ability to make text bold, italic, to add links and insert code blocks.
+So we want to build a simple editor with a floating menu and the ability to make text bold, italic, add links, and insert code blocks.
 
-To get started we need to import the right extensions and set up the editor as follows.
+To get started, we need to import the right extensions and set up the editor as follows.
 
 ```ts
 import {
@@ -88,14 +88,14 @@ export class MyAwesomeEditor extends PureComponent<{}, State> {
 Quite a lot has been introduced here.
 
 - `<RemirrorManager />` - Injects an ExtensionManager instance into the react context.
-- `<RemirrorExtension />` - Injects the extension (passed via the `Constructor` prop into the created extensionManager). These only activate if they are direct descendants of the `<RemirrorManager />
-- `<ManagedRemirrorProvider />` - This component automatically pulls the created extension manager instance from the context and passes it on to the underlying Remirror component. It also injects it's own context to all nested components as we shall see soon.
+- `<RemirrorExtension />` - Injects the extension (passed via the `Constructor` prop into the created `extensionManager`). These only activate if they are direct descendants of the `<RemirrorManager />
+- `<ManagedRemirrorProvider />` - This component automatically pulls the created extension manager instance from the context and passes it on to the underlying Remirror component. It also injects it's own context to all nested components, as we shall see soon.
 
-Each extension is automatically injected into the context which is being picked up by the `ManagedRemirrorProvider`.
+Remirror automatically injects extensions into the context which is being picked up by the `ManagedRemirrorProvider`.
 
-Now we need to create our own internal editor. But before we do that there's just one small change to make the initial code.
+Now we need to **create our internal editor**. But before we do that, there's just one small change to make the initial code.
 
-They underlying text editor is controlled by Prosemirror and unlike react it needs a DOM node to render itself into. To that end the Editor context provides a method called `getRootProps` which passes back a `ref` function that will be used to store the editor dom node.
+[Prosemirror](http://prosemirror.net/) controls the underlying text editor, and unlike React, it needs a DOM node which it can render within. To that end, the Editor context provides a method called `getRootProps` which passes back a `ref` function that will be used to store the editor dom node.
 
 Now let's create the inner editor.
 
@@ -174,13 +174,13 @@ const InnerEditor: FC<BubbleMenuProps> = ({
 };
 ```
 
-## Initializing the element Prose Mirror will control
+## Initializing the element Prose Mirror will Control
 
 By setting `childAsRoot` to an object, Remirror will inject these props into the first child element.
 
 You have two choices for instantiating Prosemirror:
 
-Option 1: Simply set `childAsRoot` on `<ManagedRemirrorProvider />` to be true and pass a single child html element (usually a div) to serve as the content editable Prosemirror will use.
+Option 1: Simply set `childAsRoot` on `<ManagedRemirrorProvider />` to be true and pass a single child HTML element (usually a div) to serve as the content editable Prosemirror will use.
 
 Example:
 
