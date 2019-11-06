@@ -16,6 +16,14 @@ import { Step } from 'prosemirror-transform';
 import { CollaborationAttrs, CollaborationExtensionOptions } from './collaboration-types';
 
 /**
+ * Check that the attributes exist and are valid for the collaboration update
+ * command method.
+ */
+const isValidCollaborationAttrs = (attrs?: Attrs): attrs is CollaborationAttrs => {
+  return !(!attrs || !isArray(attrs.steps) || !isNumber(attrs.version));
+};
+
+/**
  * The collaboration extension adds collaborative functionality to your editor.
  *
  * Once a central server is created the collaboration extension is good.
@@ -107,15 +115,3 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
     }
   });
 }
-
-/**
- * Check that the attributes exist and are valid for the collaboration update
- * command method.
- */
-const isValidCollaborationAttrs = (attrs?: Attrs): attrs is CollaborationAttrs => {
-  if (!attrs || !isArray(attrs.steps) || !isNumber(attrs.version)) {
-    return false;
-  }
-
-  return true;
-};
