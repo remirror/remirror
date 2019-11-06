@@ -1,8 +1,10 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import VisuallyHidden from '@reach/visually-hidden';
 import { omitUndefined, uniqueId } from '@remirror/core-helpers';
 import { KeyOfThemeVariant, RemirrorInterpolation } from '@remirror/core-types';
 import { useRemirrorTheme } from '@remirror/ui';
-import React, { forwardRef, useMemo } from 'react';
+import { Fragment, forwardRef, useMemo } from 'react';
 
 export interface IconProps {
   /**
@@ -78,7 +80,7 @@ export const Icon = forwardRef<SVGSVGElement, BaseIconProps>(
     const colorStyles = omitUndefined({ color, backgroundColor });
 
     return (
-      <>
+      <Fragment>
         {!standalone && <VisuallyHidden>{name}</VisuallyHidden>}
         <svg
           fill='currentColor'
@@ -93,7 +95,7 @@ export const Icon = forwardRef<SVGSVGElement, BaseIconProps>(
           {standalone && <title id={id}>{name}</title>}
           {children}
         </svg>
-      </>
+      </Fragment>
     );
   },
 );

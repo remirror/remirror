@@ -2,9 +2,12 @@
  * @jest-environment node
  */
 
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { docNodeSimpleJSON, createTestManager } from '@remirror/test-fixtures';
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
 import { Remirror } from '..';
 

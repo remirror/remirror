@@ -1,3 +1,6 @@
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from '@remirror/core-extensions';
 import {
@@ -8,7 +11,7 @@ import {
   spawningEffect,
 } from '@remirror/extension-epic-mode';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
-import React, { FC, FunctionComponent } from 'react';
+import { FC, FunctionComponent } from 'react';
 
 const editorStyles = {
   [EDITOR_CLASS_SELECTOR]: {

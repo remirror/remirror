@@ -1,8 +1,10 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import { EmojiObject, EmojiSuggestCommand } from '@remirror/extension-emoji';
 import { popupMenuPositioner, useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import { Type, useMultishift } from 'multishift';
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { DataParams, SocialExtensions } from '../social-types';
 
 interface EmojiSuggestionsProps extends DataParams<EmojiObject> {

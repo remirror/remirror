@@ -1,6 +1,9 @@
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import { AnyExtension, MakeOptional } from '@remirror/core';
 import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
-import React, { ProviderProps, ReactElement } from 'react';
+import { ProviderProps, ReactElement } from 'react';
 import { useRemirrorManager } from '../hooks/context-hooks';
 import { defaultProps } from '../react-constants';
 import { RemirrorContext } from '../react-contexts';

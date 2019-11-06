@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import { ActionNames, AnyFunction, Attrs, KeyOfThemeVariant } from '@remirror/core';
 import { bubblePositioner, useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
@@ -20,7 +22,7 @@ import {
   UnderlineIcon,
   UndoAltIcon,
 } from '@remirror/ui-icons';
-import React, {
+import {
   ChangeEventHandler,
   ComponentType,
   DOMAttributes,

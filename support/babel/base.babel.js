@@ -10,11 +10,7 @@ const ignore = [
   '*.d.ts',
 ];
 
-const basePreset = [
-  '@babel/preset-typescript',
-  '@babel/preset-react',
-  '@emotion/babel-preset-css-prop',
-];
+const basePreset = ['@babel/preset-typescript', '@babel/preset-react'];
 
 const presets = [['@babel/preset-env'], ...basePreset];
 

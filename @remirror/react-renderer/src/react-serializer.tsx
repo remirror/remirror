@@ -1,4 +1,6 @@
-import { jsx as createElement } from '@emotion/core';
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import {
   AnyExtension,
   DOMOutputSpec,
@@ -14,7 +16,7 @@ import {
   ProsemirrorNode,
   bool,
 } from '@remirror/core';
-import React, { ComponentType, Fragment, ReactNode } from 'react';
+import { ComponentType, Fragment, ReactNode } from 'react';
 import { mapProps, gatherToDOM } from './renderer-utils';
 
 type NodeToDOM = NodeExtensionSpec['toDOM'];
@@ -63,7 +65,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
       children.push(child);
     });
 
-    return createElement(Fragment, {}, ...children);
+    return jsx(Fragment, {}, ...children);
   }
 
   /**
@@ -143,12 +145,12 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
         if (ii < structure.length - 1 || ii > currentIndex) {
           throw new RangeError('Content hole (0) must be the only child of its parent node');
         }
-        return createElement(Component, mapProps(props), wraps);
+        return jsx(Component, mapProps(props), wraps);
       }
       children.push(ReactSerializer.renderSpec(child as DOMOutputSpec, wraps));
     }
 
-    return createElement(Component, mapProps(props), ...children);
+    return jsx(Component, mapProps(props), ...children);
   }
 
   /**

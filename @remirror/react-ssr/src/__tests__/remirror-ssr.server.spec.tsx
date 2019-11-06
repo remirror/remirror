@@ -2,8 +2,9 @@
  * @jest-environment node
  */
 
-import React from 'react';
+/** @jsx jsx */
 
+import { jsx } from '@emotion/core';
 import { createTestManager, helpers, initialJson } from '@remirror/test-fixtures';
 import { renderToString } from 'react-dom/server';
 

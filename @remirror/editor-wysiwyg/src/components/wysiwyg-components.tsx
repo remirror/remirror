@@ -1,7 +1,9 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import { RemirrorInterpolation } from '@remirror/core';
 import { useRemirrorTheme } from '@remirror/ui';
 import { ResetButton } from '@remirror/ui-buttons';
-import React, { FC, forwardRef } from 'react';
+import { FC, forwardRef } from 'react';
 import { ButtonProps } from '../wysiwyg-types';
 
 export const Menu = forwardRef<HTMLDivElement, JSX.IntrinsicElements['div']>((props, ref) => {

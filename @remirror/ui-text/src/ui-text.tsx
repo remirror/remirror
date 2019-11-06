@@ -1,4 +1,7 @@
-import { Interpolation } from '@emotion/core';
+/** @jsx jsx */
+
+import { jsx, Interpolation } from '@emotion/core';
+
 import { omit, pick } from '@remirror/core-helpers';
 import { KeyOfThemeVariant } from '@remirror/core-types';
 import { useRemirrorTheme } from '@remirror/ui';
@@ -11,7 +14,7 @@ import {
   TextAlignProperty,
 } from 'csstype';
 import mergeProps from 'merge-props';
-import React, { FC, forwardRef, ReactElement, ReactNode } from 'react';
+import { FC, forwardRef, ReactElement, ReactNode } from 'react';
 
 type MergeProp = typeof mergeProps;
 

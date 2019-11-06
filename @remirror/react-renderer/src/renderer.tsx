@@ -1,5 +1,7 @@
-import React, { ComponentType, FC } from 'react';
+/** @jsx jsx */
 
+import { jsx } from '@emotion/core';
+import { ComponentType, FC, Fragment } from 'react';
 import { isString, ObjectMark, ObjectNode } from '@remirror/core';
 
 /* Inspired by https://github.com/rexxars/react-prosemirror-document */
@@ -19,7 +21,7 @@ const TextHandler: FC<TextHandlerProps> = ({ node, ...props }) => {
     return null;
   }
 
-  const textElement = <>{node.text}</>;
+  const textElement = <Fragment>{node.text}</Fragment>;
 
   if (!node.marks) {
     return textElement;
@@ -118,7 +120,7 @@ export const RenderTree: FC<RenderTreeProps> = ({
   typeMap = defaultTypeMap,
 }) => {
   if (json.type === 'text' && json.text && (!json.marks || !json.marks.length)) {
-    return <>{json.text}</>; // For some reason FunctionalComponent don't allow returning react-nodes
+    return <Fragment>{json.text}</Fragment>; // For some reason FunctionalComponent don't allow returning react-nodes
   }
 
   const rest = { markMap, typeMap, skipUnknownMarks, skipUnknownTypes };

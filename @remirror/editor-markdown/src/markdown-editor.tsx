@@ -1,3 +1,6 @@
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import {
   createDocumentNode,
   DocExtension,
@@ -36,7 +39,7 @@ import {
 import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { ImageExtension } from '@remirror/extension-image';
 import { RemirrorProvider, RemirrorProviderProps, RemirrorStateListenerParams } from '@remirror/react';
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { fromMarkdown } from './from-markdown';
 import { toMarkdown } from './to-markdown';
 
@@ -261,7 +264,7 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', edi
   }, [editor, markdownManager.view, wysiwygManager.view]);
 
   return (
-    <>
+    <Fragment>
       <div style={{ display: editor === 'markdown' ? 'block' : 'none' }}>
         <InternalMarkdownEditor
           manager={markdownManager}
@@ -281,6 +284,6 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', edi
           {children}
         </WysiwygEditor>
       </div>
-    </>
+    </Fragment>
   );
 };

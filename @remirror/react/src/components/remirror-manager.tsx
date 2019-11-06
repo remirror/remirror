@@ -1,3 +1,6 @@
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import { ExtensionManager, PrioritizedExtension } from '@remirror/core';
 import { baseExtensions } from '@remirror/core-extensions';
 import {
@@ -6,7 +9,7 @@ import {
   isRemirrorExtension,
   RemirrorManagerProps,
 } from '@remirror/react-utils';
-import React, { Children, Component, ReactNode } from 'react';
+import { Children, Component, ReactNode } from 'react';
 import { RemirrorManagerContext } from '../react-contexts';
 
 /**

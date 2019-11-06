@@ -26,7 +26,7 @@ test('ssr', () => {
   });
   expect(string).toInclude('http://Random.com');
   expect(string).toMatchInlineSnapshot(`
-    <div class="css-1yqapqh">
+    <div class="css-1u8qly9">
       <div role="textbox"
            aria-multiline="true"
            aria-label
