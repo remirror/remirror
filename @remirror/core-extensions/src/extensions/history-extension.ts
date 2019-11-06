@@ -100,7 +100,7 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
   }
 
   /**
-   * Bring the `prosemirror-history` plugin with options set on theis extension.
+   * Bring the `prosemirror-history` plugin with options set on this extension.
    */
   public plugin() {
     const { depth, newGroupDelay } = this.options;
