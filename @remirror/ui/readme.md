@@ -28,7 +28,10 @@ sx(styleObject)(theme);
 **Usage:**
 
 ```jsx
-<div css={sx(styles)} />
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
+
+<div css={sx(styles)} />;
 ```
 
 | Argument      | Type   | Description                                                                                          |

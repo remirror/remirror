@@ -1,7 +1,9 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import { kebabCase } from '@remirror/core-helpers';
 import { useRemirrorTheme } from '@remirror/ui';
 import { storiesOf } from '@storybook/react';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import * as BaseIcons from '../base';
 import * as EditorIcons from '../editor';
 

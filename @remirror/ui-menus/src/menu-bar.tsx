@@ -1,8 +1,10 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import { isPlainObject } from '@remirror/core-helpers';
 import { useRemirrorTheme } from '@remirror/ui';
 import { Button, ButtonProps } from '@remirror/ui-buttons';
 import { DropdownProps, DropdownSelect } from '@remirror/ui-dropdown';
-import React, { FC, forwardRef, ReactElement } from 'react';
+import { FC, Fragment, forwardRef, ReactElement } from 'react';
 
 interface MenubarDropdownConfiguration extends DropdownProps {
   type: 'dropdown';
@@ -66,7 +68,7 @@ const MenuTree: FC<MenuTreeProps> = ({ content }) => {
     }
   });
 
-  return <>{tree}</>;
+  return <Fragment>{tree}</Fragment>;
 };
 
 interface MenubarGroupProps {

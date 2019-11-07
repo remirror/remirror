@@ -2,7 +2,9 @@
  * @jest-environment node
  */
 
-import React from 'react';
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import { renderToString } from 'react-dom/server';
 
 import { docNodeBasicJSON } from '@remirror/test-fixtures';

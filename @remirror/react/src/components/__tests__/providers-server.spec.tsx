@@ -2,8 +2,10 @@
  * @jest-environment node
  */
 
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import { docNodeBasicJSON, createTestManager } from '@remirror/test-fixtures';
-import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { useRemirrorContext } from '../../hooks/context-hooks';
 import { RemirrorManager } from '../remirror-manager';

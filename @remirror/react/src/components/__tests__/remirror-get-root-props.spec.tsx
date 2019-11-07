@@ -1,7 +1,10 @@
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import { createTestManager } from '@remirror/test-fixtures';
 import { render, RenderResult } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import React, { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';
+import { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';
 import { Remirror } from '..';
 
 const mock = jest.fn();

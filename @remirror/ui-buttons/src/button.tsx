@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import {
   KeyOfThemeVariant,
   omitUndefined,
@@ -7,7 +9,7 @@ import {
 import { useRemirrorTheme } from '@remirror/ui';
 import { IconProps } from '@remirror/ui-icons';
 import { MinWidthProperty, WidthProperty } from 'csstype';
-import React, { ComponentType, forwardRef, ReactNode } from 'react';
+import { ComponentType, forwardRef, ReactNode } from 'react';
 import { ResetButton, ResetButtonProps } from './reset-button';
 
 export interface RenderIconParams {

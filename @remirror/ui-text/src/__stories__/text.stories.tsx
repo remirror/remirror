@@ -1,6 +1,8 @@
+/** @jsx jsx */
+import { jsx } from '@emotion/core';
 import { useRemirrorTheme } from '@remirror/ui';
 import { storiesOf } from '@storybook/react';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Caption, H1, H2, H3, H4, H5, H6, Label, Text } from '../';
 
 const Grid: FC = ({ children }) => {

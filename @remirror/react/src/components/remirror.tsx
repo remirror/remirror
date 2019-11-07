@@ -1,3 +1,6 @@
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import {
   AnyExtension,
   bool,
@@ -34,7 +37,7 @@ import {
 } from '@remirror/react-utils';
 import { RemirrorThemeContext } from '@remirror/ui';
 import { EditorState } from 'prosemirror-state';
-import React, { PureComponent, ReactNode, Ref } from 'react';
+import { Fragment, PureComponent, ReactNode, Ref } from 'react';
 import { defaultProps } from '../react-constants';
 import { defaultPositioner } from '../react-positioners';
 import {
@@ -842,10 +845,10 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     this.rootPropsConfig.called = false;
 
     return (
-      <>
+      <Fragment>
         {this.renderReactElement()}
         <RemirrorPortals portalContainer={this.portalContainer} />
-      </>
+      </Fragment>
     );
   }
 }

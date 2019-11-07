@@ -178,7 +178,7 @@ export const useSetState = <GState extends object>(
  *
  * ```tsx
  * import React from 'react'
- * import {useEffectOnUpdate} from 'react-use';
+ * import { useEffectOnUpdate } from 'react-use';
  *
  * const Demo = () => {
  *   const [count, setCount] = React.useState(0);

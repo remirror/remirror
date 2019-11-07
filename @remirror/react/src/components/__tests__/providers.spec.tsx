@@ -1,6 +1,9 @@
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import { docNodeBasicJSON, createBaseTestManager } from '@remirror/test-fixtures';
 import { render } from '@testing-library/react';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { useRemirrorContext } from '../../hooks/context-hooks';
 import { RemirrorManager } from '../remirror-manager';
 import { ManagedRemirrorProvider, RemirrorProvider } from '../remirror-providers';

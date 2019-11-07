@@ -1,3 +1,6 @@
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import {
   EditorView,
   Extension,
@@ -13,7 +16,7 @@ import { PortalContainer } from '@remirror/react-portals';
 import { Plugin } from 'prosemirror-state';
 import { dropPoint, insertPoint } from 'prosemirror-transform';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import React, { ComponentType } from 'react';
+import { ComponentType } from 'react';
 import { DropCursorComponent } from './drop-cursor-component';
 import { DropCursorExtensionOptions } from './drop-cursor-types';
 

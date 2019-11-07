@@ -1,3 +1,6 @@
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import { deepMerge, omit, RemirrorTheme } from '@remirror/core';
 import { NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import {
@@ -17,7 +20,7 @@ import {
 } from '@remirror/extension-mention';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
 import { RemirrorThemeProvider } from '@remirror/ui';
-import React, { PureComponent } from 'react';
+import { Fragment, PureComponent } from 'react';
 import { socialEditorTheme } from '../social-theme';
 import {
   ActiveTagData,
@@ -391,7 +394,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
             onSuggestionExit={this.onEmojiSuggestionExit}
           />
           <ManagedRemirrorProvider {...rest}>
-            <>
+            <Fragment>
               <SocialEditorComponent
                 emojiCommand={emojiCommand}
                 activeEmojiIndex={activeEmojiIndex}
@@ -405,7 +408,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
                 tags={this.tags}
               />
               {children}
-            </>
+            </Fragment>
           </ManagedRemirrorProvider>
         </RemirrorManager>
       </RemirrorThemeProvider>

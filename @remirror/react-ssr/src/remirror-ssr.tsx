@@ -1,6 +1,8 @@
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import { AnyExtension, EditorStateParams, ManagerParams, PlainObject } from '@remirror/core';
 import { mapProps, ReactSerializer } from '@remirror/react-renderer';
-import React from 'react';
 
 export interface RemirrorSSRProps<GExtension extends AnyExtension = any>
   extends EditorStateParams,

@@ -1,3 +1,6 @@
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import { deepMerge, RemirrorTheme } from '@remirror/core';
 import {
   BlockquoteExtension,
@@ -28,7 +31,7 @@ import {
   useRemirrorContext,
 } from '@remirror/react';
 import { RemirrorThemeProvider } from '@remirror/ui';
-import React, { FC, useMemo, useState } from 'react';
+import { FC, Fragment, useMemo, useState } from 'react';
 import { wysiwygEditorTheme } from '../wysiwyg-theme';
 import { WysiwygEditorProps, WysiwygExtensions } from '../wysiwyg-types';
 import { EditorWrapper } from './wysiwyg-components';
@@ -106,14 +109,14 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
         />
         <RemirrorExtension Constructor={SSRHelperExtension} />
         <ManagedRemirrorProvider {...props}>
-          <>
+          <Fragment>
             <InnerEditor
               linkActivated={linkActivated}
               deactivateLink={deactivateLink}
               activateLink={activateLink}
             />
             {children}
-          </>
+          </Fragment>
         </ManagedRemirrorProvider>
       </RemirrorManager>
     </RemirrorThemeProvider>

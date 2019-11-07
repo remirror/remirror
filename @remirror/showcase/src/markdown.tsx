@@ -1,7 +1,10 @@
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import { capitalize } from '@remirror/core';
 import { EditorDisplay, MarkdownEditor } from '@remirror/editor-markdown';
 import { Button } from '@remirror/ui-buttons';
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 
 const initialValue = {
   type: 'doc',

@@ -347,18 +347,24 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
 
   /**
    * A function that returns props which should be spread on a react element and
-   * declare it the editor root.
+   * declare it as the editor root (where the editor is injected in the DOM).
    *
    * @remarks
    * By default remirror will add the prosemirror editor instance directly into
-   * the first child element it holds.
+   * the first child element it receives. Using this method gives you full
+   * control over where the editor should be injected.
    *
-   * **IMPORTANT** In order to support pre-rendering this should only be spread
+   * **IMPORTANT** For this to work properly you will need to use the JSX pragma from
+   * `emotion/core` so that the `css` prop can properly be added to the element.
+   *
+   * **IMPORTANT** In order to support SSR pre-rendering this should only be spread
    * on a component with NO children.
    *
    * **Example with indirectly nested components**
    *
    * ```tsx
+   * // @jsx jsx
+   * import { jsx } from '@emotion/core';
    * import { ManagedRemirrorProvider, RemirrorManager, useRemirrorContext } from '@remirror/react';
    *
    * const InnerEditor = () => {

@@ -100,6 +100,9 @@ Now we need to **create our internal editor**. But before we do that, there's ju
 Now let's create the inner editor.
 
 ```tsx
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
 import { styled } from '@emotion/styled';
 import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
 
@@ -195,6 +198,9 @@ Option 2: Pass all of the props from `getRootProps()` (get this from the `useRem
 Note the example above, or:
 
 ```tsx
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core'; // Needed to support `getRootProps`
 import { useRemirrorContext, ManagedRemirrorProvider } from '@remirror/react';
 
 const MyEditor = () => (

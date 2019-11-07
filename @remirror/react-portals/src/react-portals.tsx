@@ -1,4 +1,7 @@
-import React, { Fragment, ReactElement, useCallback, useEffect, useState } from 'react';
+/** @jsx jsx */
+
+import { jsx } from '@emotion/core';
+import { Fragment, ReactElement, useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { PortalContainer, PortalMap } from './portal-container';
@@ -32,7 +35,7 @@ export const RemirrorPortals = ({ portalContainer }: RemirrorPortalsProps) => {
   }, [onPortalChange, portalContainer]);
 
   return (
-    <>
+    <Fragment>
       {state.map(([container, { render: Component, key }]) => (
         <Fragment key={key}>
           {createPortal(
@@ -41,7 +44,7 @@ export const RemirrorPortals = ({ portalContainer }: RemirrorPortalsProps) => {
           )}
         </Fragment>
       ))}
-    </>
+    </Fragment>
   );
 };
 
