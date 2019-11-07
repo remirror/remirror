@@ -7,6 +7,11 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+### Changed
+
+- Switch to using JSX Pragma from `emotion/core`.
+- Upgrade dependencies.
+
 ## [0.6.3] - 2019-11-01
 
 ### Changed
