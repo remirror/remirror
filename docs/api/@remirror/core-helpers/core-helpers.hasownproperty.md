@@ -9,7 +9,7 @@ Safe implementation of hasOwnProperty with typechecking.
 <b>Signature:</b>
 
 ```typescript
-hasOwnProperty: <GObj extends {}, GProperty extends string | number | symbol>(obj: GObj, key: GProperty) => obj is GObj & {
+hasOwnProperty: <GObj extends object, GProperty extends string | number | symbol>(obj: GObj, key: GProperty) => obj is GObj & {
     GKey: unknown;
 }
 ```
@@ -17,4 +17,3 @@ hasOwnProperty: <GObj extends {}, GProperty extends string | number | symbol>(ob
 ## Remarks
 
 See [https://eslint.org/docs/rules/no-prototype-builtins](https://eslint.org/docs/rules/no-prototype-builtins)
-

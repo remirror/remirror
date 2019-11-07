@@ -9,5 +9,5 @@ The plain component to render.
 <b>Signature:</b>
 
 ```typescript
-Component: () => ReactElement<any>;
+Component: () => ReactElement;
 ```

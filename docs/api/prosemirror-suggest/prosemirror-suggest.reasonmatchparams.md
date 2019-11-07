@@ -9,16 +9,15 @@ A parameter builder interface which adds the match property.
 <b>Signature:</b>
 
 ```typescript
-export interface ReasonMatchParams<GReason> 
+export interface ReasonMatchParams<GReason>
 ```
-
-## Properties
-
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [match](./prosemirror-suggest.reasonmatchparams.match.md) | <code>SuggestStateMatchReason&lt;GReason&gt;</code> | The match with its reason property. |
 
 ## Remarks
 
 This is used to build parameters for [Suggester](./prosemirror-suggest.suggester.md) handler methods.
 
+## Properties
+
+| Property                                                  | Type                                                | Description                         |
+| --------------------------------------------------------- | --------------------------------------------------- | ----------------------------------- |
+| [match](./prosemirror-suggest.reasonmatchparams.match.md) | <code>SuggestStateMatchReason&lt;GReason&gt;</code> | The match with its reason property. |

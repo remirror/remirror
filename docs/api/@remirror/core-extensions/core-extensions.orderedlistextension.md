@@ -7,21 +7,20 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class OrderedListExtension extends NodeExtension<NodeExtensionOptions> 
+export declare class OrderedListExtension extends NodeExtension
 ```
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.orderedlistextension.name.md) |  | <code>&quot;orderedList&quot;</code> |  |
-|  [schema](./core-extensions.orderedlistextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
+| Property                                                   | Modifiers | Type                                 | Description |
+| ---------------------------------------------------------- | --------- | ------------------------------------ | ----------- |
+| [name](./core-extensions.orderedlistextension.name.md)     |           | <code>&quot;orderedList&quot;</code> |             |
+| [schema](./core-extensions.orderedlistextension.schema.md) |           | <code>NodeExtensionSpec</code>       |             |
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [commands({ type, schema })](./core-extensions.orderedlistextension.commands.md) |  |  |
-|  [inputRules({ type })](./core-extensions.orderedlistextension.inputrules.md) |  |  |
-|  [keys({ type, schema })](./core-extensions.orderedlistextension.keys.md) |  |  |
-
+| Method                                                                           | Modifiers | Description |
+| -------------------------------------------------------------------------------- | --------- | ----------- |
+| [commands({ type, schema })](./core-extensions.orderedlistextension.commands.md) |           |             |
+| [inputRules({ type })](./core-extensions.orderedlistextension.inputrules.md)     |           |             |
+| [keys({ type, schema })](./core-extensions.orderedlistextension.keys.md)         |           |             |

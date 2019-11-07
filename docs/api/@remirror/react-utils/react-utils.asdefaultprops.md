@@ -16,5 +16,6 @@ static defaultProps = asDefaultProps<RemirrorProps>()({
 <b>Signature:</b>
 
 ```typescript
-asDefaultProps: <GProps extends {}>() => <GDefaultProps extends Partial<GProps>>(props: GDefaultProps) => GDefaultProps
+asDefaultProps: <GProps extends object>() => <GDefaultProps extends Partial<GProps>>(props: GDefaultProps) =>
+  GDefaultProps;
 ```

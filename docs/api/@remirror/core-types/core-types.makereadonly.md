@@ -9,7 +9,8 @@ Makes specified keys of an interface readonly.
 <b>Signature:</b>
 
 ```typescript
-export declare type MakeReadonly<GType extends {}, GKeys extends Key<GType>> = Omit<GType, GKeys> & {
+export declare type MakeReadonly<GType extends object, GKeys extends Key<GType>> = Omit<GType, GKeys> &
+  {
     +readonly [P in GKeys]: GType[P];
-};
+  };
 ```

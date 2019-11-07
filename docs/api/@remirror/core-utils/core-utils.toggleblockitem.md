@@ -9,5 +9,5 @@ Toggle a block between the provided type and toggleType.
 <b>Signature:</b>
 
 ```typescript
-toggleBlockItem: ({ type, toggleType, attrs }: ToggleBlockItemParams) => CommandFunction<any>
+toggleBlockItem: ({ type, toggleType, attrs, }: ToggleBlockItemParams) => CommandFunction<any>
 ```

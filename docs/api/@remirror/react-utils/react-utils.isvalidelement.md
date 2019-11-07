@@ -9,5 +9,5 @@ A drop in replacement for built in React.isValidElement which accepts a test val
 <b>Signature:</b>
 
 ```typescript
-isValidElement: <GProps extends {} = any>(value: unknown) => value is ReactElement<GProps, string | ((props: any) => ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)>
+isValidElement: <GProps extends object = any>(value: unknown) => value is ReactElement<GProps, string | ((props: any) => ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)>
 ```

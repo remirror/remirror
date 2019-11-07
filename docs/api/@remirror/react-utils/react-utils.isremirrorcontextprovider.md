@@ -11,5 +11,5 @@ This is used to help determine how the Remirror component will be rendered. `get
 <b>Signature:</b>
 
 ```typescript
-isRemirrorContextProvider: <GOptions extends {} = any>(value: unknown) => value is RemirrorElement<GOptions>
+isRemirrorContextProvider: <GOptions extends object = any>(value: unknown) => value is RemirrorElement<GOptions>
 ```

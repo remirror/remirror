@@ -9,7 +9,7 @@ Checks whether the element is a react fragment
 <b>Signature:</b>
 
 ```typescript
-isReactFragment: <GProps extends {} = any>(value: unknown) => value is ReactElement<GProps, string | ((props: any) => ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)> & {
+isReactFragment: <GProps extends object = any>(value: unknown) => value is ReactElement<GProps, string | ((props: any) => ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)> & {
     type: import("react").ExoticComponent<{
         children?: ReactNode;
     }>;

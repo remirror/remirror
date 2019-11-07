@@ -9,5 +9,5 @@ Checks if this is a RemirrorExtension type. These are used to configure the exte
 <b>Signature:</b>
 
 ```typescript
-isRemirrorExtension: <GOptions extends {} = any>(value: unknown) => value is RemirrorElement<GOptions>
+isRemirrorExtension: <GOptions extends object = any>(value: unknown) => value is RemirrorElement<GOptions>
 ```

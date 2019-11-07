@@ -7,22 +7,21 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class ItalicExtension extends MarkExtension<MarkExtensionOptions> 
+export declare class ItalicExtension extends MarkExtension
 ```
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.italicextension.name.md) |  | <code>&quot;italic&quot;</code> |  |
-|  [schema](./core-extensions.italicextension.schema.md) |  | <code>MarkExtensionSpec</code> |  |
+| Property                                              | Modifiers | Type                            | Description |
+| ----------------------------------------------------- | --------- | ------------------------------- | ----------- |
+| [name](./core-extensions.italicextension.name.md)     |           | <code>&quot;italic&quot;</code> |             |
+| [schema](./core-extensions.italicextension.schema.md) |           | <code>MarkExtensionSpec</code>  |             |
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [commands({ type })](./core-extensions.italicextension.commands.md) |  |  |
-|  [inputRules({ type })](./core-extensions.italicextension.inputrules.md) |  |  |
-|  [keys({ type })](./core-extensions.italicextension.keys.md) |  |  |
-|  [pasteRules({ type })](./core-extensions.italicextension.pasterules.md) |  |  |
-
+| Method                                                                  | Modifiers | Description |
+| ----------------------------------------------------------------------- | --------- | ----------- |
+| [commands({ type })](./core-extensions.italicextension.commands.md)     |           |             |
+| [inputRules({ type })](./core-extensions.italicextension.inputrules.md) |           |             |
+| [keys({ type })](./core-extensions.italicextension.keys.md)             |           |             |
+| [pasteRules({ type })](./core-extensions.italicextension.pasterules.md) |           |             |

@@ -7,22 +7,21 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class StrikeExtension extends MarkExtension<MarkExtensionOptions> 
+export declare class StrikeExtension extends MarkExtension
 ```
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.strikeextension.name.md) |  | <code>&quot;strike&quot;</code> |  |
-|  [schema](./core-extensions.strikeextension.schema.md) |  | <code>MarkExtensionSpec</code> |  |
+| Property                                              | Modifiers | Type                            | Description |
+| ----------------------------------------------------- | --------- | ------------------------------- | ----------- |
+| [name](./core-extensions.strikeextension.name.md)     |           | <code>&quot;strike&quot;</code> |             |
+| [schema](./core-extensions.strikeextension.schema.md) |           | <code>MarkExtensionSpec</code>  |             |
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [commands({ type })](./core-extensions.strikeextension.commands.md) |  |  |
-|  [inputRules({ type })](./core-extensions.strikeextension.inputrules.md) |  |  |
-|  [keys({ type })](./core-extensions.strikeextension.keys.md) |  |  |
-|  [pasteRules({ type })](./core-extensions.strikeextension.pasterules.md) |  |  |
-
+| Method                                                                  | Modifiers | Description |
+| ----------------------------------------------------------------------- | --------- | ----------- |
+| [commands({ type })](./core-extensions.strikeextension.commands.md)     |           |             |
+| [inputRules({ type })](./core-extensions.strikeextension.inputrules.md) |           |             |
+| [keys({ type })](./core-extensions.strikeextension.keys.md)             |           |             |
+| [pasteRules({ type })](./core-extensions.strikeextension.pasterules.md) |           |             |

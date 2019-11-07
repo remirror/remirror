@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type RemirrorElement<GOptions extends {} = any> = ReactElement<any> & {
-    type: RemirrorComponentType<GOptions>;
+export declare type RemirrorElement<GOptions extends object = any> = ReactElement & {
+  type: RemirrorComponentType<GOptions>;
 };
 ```

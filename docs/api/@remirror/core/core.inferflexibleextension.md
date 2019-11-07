@@ -9,5 +9,11 @@ Get the extension from a PrioritizedExtension.
 <b>Signature:</b>
 
 ```typescript
-export declare type InferFlexibleExtension<GFlexible extends FlexibleExtension<any>> = GFlexible extends PrioritizedExtension<any> ? GFlexible['extension'] : GFlexible extends AnyExtension ? GFlexible : never;
+export declare type InferFlexibleExtension<
+  GFlexible extends FlexibleExtension
+> = GFlexible extends PrioritizedExtension
+  ? GFlexible['extension']
+  : GFlexible extends AnyExtension
+  ? GFlexible
+  : never;
 ```

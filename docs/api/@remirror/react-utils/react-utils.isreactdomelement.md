@@ -9,7 +9,7 @@ Check whether a react node is a built in dom element (i.e. `div`<!-- -->, `span`
 <b>Signature:</b>
 
 ```typescript
-isReactDOMElement: <GProps extends {} = any>(value: unknown) => value is ReactElement<GProps, string | ((props: any) => ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)> & {
+isReactDOMElement: <GProps extends object = any>(value: unknown) => value is ReactElement<GProps, string | ((props: any) => ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)> & {
     type: string;
 }
 ```

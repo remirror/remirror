@@ -9,5 +9,5 @@ Update the selection with the provided MarkType
 <b>Signature:</b>
 
 ```typescript
-updateMark: ({ type, attrs, appendText, range }: UpdateMarkParams) => CommandFunction<any>
+updateMark: ({ type, attrs, appendText, range, }: UpdateMarkParams) => CommandFunction<any>
 ```

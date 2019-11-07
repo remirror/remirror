@@ -9,5 +9,5 @@ Renders a JSX element.
 <b>Signature:</b>
 
 ```typescript
-render: () => ReactElement<any>;
+render: () => ReactElement;
 ```

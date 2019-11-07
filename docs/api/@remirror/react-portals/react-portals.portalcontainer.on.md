@@ -9,5 +9,5 @@ Event handler for subscribing to update events from the portalContainer.
 <b>Signature:</b>
 
 ```typescript
-on: (callback: (map: Map<HTMLElement, MountedPortal>) => void) => () => void;
+on: (callback: (map: PortalMap) => void) => () => void;
 ```

@@ -9,5 +9,5 @@ Create a builder function for nodes.
 <b>Signature:</b>
 
 ```typescript
-nodeFactory: ({ name, schema, attrs, marks }: NodeFactoryParams) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode
+nodeFactory: <GSchema extends import("prosemirror-model").Schema<string, string> = import("prosemirror-model").Schema<string, string>>({ name, schema, attrs, marks, }: NodeFactoryParams<GSchema>) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode<import("prosemirror-model").Schema<string, string>>
 ```

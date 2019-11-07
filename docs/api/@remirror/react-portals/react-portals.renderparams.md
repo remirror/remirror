@@ -7,12 +7,11 @@
 <b>Signature:</b>
 
 ```typescript
-export interface RenderParams 
+export interface RenderParams
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [render](./react-portals.renderparams.render.md) | <code>() =&gt; ReactElement&lt;any&gt;</code> | Renders a JSX element. |
-
+| Property                                         | Type                               | Description            |
+| ------------------------------------------------ | ---------------------------------- | ---------------------- |
+| [render](./react-portals.renderparams.render.md) | <code>() =&gt; ReactElement</code> | Renders a JSX element. |

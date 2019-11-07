@@ -9,16 +9,15 @@ Like `this.char` but only supports US Keyboard Characters. This is mainly a util
 <b>Signature:</b>
 
 ```typescript
-usChar({ text, options, typing }: TextInputParams<SupportedCharacters>): this;
+usChar({ text, options, typing, }: TextInputParams<SupportedCharacters>): this;
 ```
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  { text, options, typing } | <code>TextInputParams&lt;SupportedCharacters&gt;</code> |  |
+| Parameter                  | Type                                                    | Description |
+| -------------------------- | ------------------------------------------------------- | ----------- |
+| { text, options, typing, } | <code>TextInputParams&lt;SupportedCharacters&gt;</code> |             |
 
 <b>Returns:</b>
 
 `this`
-

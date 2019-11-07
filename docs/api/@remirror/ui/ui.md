@@ -6,39 +6,40 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [HSL](./ui.hsl.md) | HSLColor is a small utility for transforming colors, but only hsl colors. |
+| Class              | Description                                                               |
+| ------------------ | ------------------------------------------------------------------------- |
+| [HSL](./ui.hsl.md) | HSLColor is a small utility for transforming colors, but only hsl colors. |
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [HSLObject](./ui.hslobject.md) |  |
-|  [NamedHSLObject](./ui.namedhslobject.md) |  |
-|  [RemirrorThemeProviderProps](./ui.remirrorthemeproviderprops.md) |  |
-|  [RemirrorThemeRootProps](./ui.remirrorthemerootprops.md) |  |
-|  [ValidHSLObject](./ui.validhslobject.md) |  |
+| Interface                                                        | Description |
+| ---------------------------------------------------------------- | ----------- |
+| [HSLObject](./ui.hslobject.md)                                   |             |
+| [NamedHSLObject](./ui.namedhslobject.md)                         |             |
+| [RemirrorThemeProviderProps](./ui.remirrorthemeproviderprops.md) |             |
+| [RemirrorThemeRootProps](./ui.remirrorthemerootprops.md)         |             |
+| [ValidHSLObject](./ui.validhslobject.md)                         |             |
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [applyColorMode](./ui.applycolormode.md) | Applies the selected color mode to the theme.<!-- -->Taken from https://github.com/system-ui/theme-ui/blob/7a92518ee0e71aaf42a3115b102254b50d16683d/packages/theme-ui/src/provider.js\#L14-L20 |
-|  [baseTheme](./ui.basetheme.md) | This is the default theme used throughout the built in ui-components. |
-|  [cssValueUnits](./ui.cssvalueunits.md) |  |
-|  [defaultRemirrorThemeValue](./ui.defaultremirrorthemevalue.md) |  |
-|  [EmotionThemeContext](./ui.emotionthemecontext.md) | Provides access to the theme context |
-|  [getColorModes](./ui.getcolormodes.md) | Get the color modes available on this theme. |
-|  [getFactory](./ui.getfactory.md) | Creates a path getter for the provided theme. |
-|  [hasThemeProp](./ui.hasthemeprop.md) | Return true when a theme prop exists on the value passed in. |
-|  [isHSL](./ui.ishsl.md) |  |
-|  [isSerializedStyle](./ui.isserializedstyle.md) | Checks whether an object passed is a serialized style |
-|  [numberToPixels](./ui.numbertopixels.md) | Transforms a number to |
-|  [RemirrorThemeContext](./ui.remirrorthemecontext.md) | Provides access to the styling methods from within the context tree. |
-|  [RemirrorThemeProvider](./ui.remirrorthemeprovider.md) | A component that either extends the existing emotion theme with the provided theme or it creates a new theme context for all children components nested in the tree.<!-- -->Supports nested themes. |
-|  [RemirrorThemeRoot](./ui.remirrorthemeroot.md) | Provides the root component which can be placed within the remirror theme content to apply the default body font to all children. |
-|  [sx](./ui.sx.md) | A wrapper around the <code>@styled-system/css</code> for composing multiple themed styles together in the <code>css</code> prop.
+| Variable                                                       | Description                                                                                                                                                                                    |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [applyColorMode](./ui.applycolormode.md)                       | Applies the selected color mode to the theme.<!-- -->Taken from https://github.com/system-ui/theme-ui/blob/7a92518ee0e71aaf42a3115b102254b50d16683d/packages/theme-ui/src/provider.js\#L14-L20 |
+| [baseTheme](./ui.basetheme.md)                                 | This is the default theme used throughout the built in ui-components.                                                                                                                          |
+| [cssValueUnits](./ui.cssvalueunits.md)                         |                                                                                                                                                                                                |
+| [defaultRemirrorThemeValue](./ui.defaultremirrorthemevalue.md) |                                                                                                                                                                                                |
+| [EmotionThemeContext](./ui.emotionthemecontext.md)             | Provides access to the theme context                                                                                                                                                           |
+| [getColorModes](./ui.getcolormodes.md)                         | Get the color modes available on this theme.                                                                                                                                                   |
+| [getFactory](./ui.getfactory.md)                               | Creates a path getter for the provided theme.                                                                                                                                                  |
+| [hasThemeProp](./ui.hasthemeprop.md)                           | Return true when a theme prop exists on the value passed in.                                                                                                                                   |
+| [isHSL](./ui.ishsl.md)                                         |                                                                                                                                                                                                |
+| [isSerializedStyle](./ui.isserializedstyle.md)                 | Checks whether an object passed is a serialized style                                                                                                                                          |
+| [numberToPixels](./ui.numbertopixels.md)                       | Transforms a number to                                                                                                                                                                         |
+| [RemirrorThemeContext](./ui.remirrorthemecontext.md)           | Provides access to the styling methods from within the context tree.                                                                                                                           |
+| [RemirrorThemeProvider](./ui.remirrorthemeprovider.md)         | A component that either extends the existing emotion theme with the provided theme or it creates a new theme context for all children components nested in the tree.                           |
+| [RemirrorThemeRoot](./ui.remirrorthemeroot.md)                 | Provides the root component which can be placed within the remirror theme content to apply the default body font to all children.                                                              |
+| [sx](./ui.sx.md)                                               | A wrapper around the <code>@styled-system/css</code> for composing multiple themed styles together in the <code>css</code> prop.                                                               |
+
 ```tsx
 const Component = () => {
   const { sx, css } = useRemirrorTheme();
@@ -48,18 +49,17 @@ const Component = () => {
 
   return <div css={sx({ variant: 'simple' }, stringStyles)} />;
 };
-
 ```
- |
-|  [useEmotionTheme](./ui.useemotiontheme.md) | A hook which returns the current remirror theme from the emotion context.<!-- -->If no theme exists it uses the default <code>baseTheme</code>. |
-|  [useRemirrorTheme](./ui.useremirrortheme.md) | A hook for pulling the remirror theme from the react context. |
-|  [withoutEmotionProps](./ui.withoutemotionprops.md) |  |
+
+|
+| [useEmotionTheme](./ui.useemotiontheme.md) | A hook which returns the current remirror theme from the emotion context.<!-- -->If no theme exists it uses the default <code>baseTheme</code>. |
+| [useRemirrorTheme](./ui.useremirrortheme.md) | A hook for pulling the remirror theme from the react context. |
+| [withoutEmotionProps](./ui.withoutemotionprops.md) | |
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [HSLCreateParams](./ui.hslcreateparams.md) |  |
-|  [HSLTuple](./ui.hsltuple.md) |  |
-|  [ValidHSLTuple](./ui.validhsltuple.md) |  |
-
+| Type Alias                                 | Description |
+| ------------------------------------------ | ----------- |
+| [HSLCreateParams](./ui.hslcreateparams.md) |             |
+| [HSLTuple](./ui.hsltuple.md)               |             |
+| [ValidHSLTuple](./ui.validhsltuple.md)     |             |

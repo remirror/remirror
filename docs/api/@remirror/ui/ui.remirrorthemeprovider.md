@@ -6,10 +6,12 @@
 
 A component that either extends the existing emotion theme with the provided theme or it creates a new theme context for all children components nested in the tree.
 
-Supports nested themes.
-
 <b>Signature:</b>
 
 ```typescript
 RemirrorThemeProvider: FC<RemirrorThemeProviderProps>
 ```
+
+## Remarks
+
+Supports nested themes.

@@ -9,5 +9,5 @@ Checks if this is a ManagedRemirrorProvider which pulls in the manager from the 
 <b>Signature:</b>
 
 ```typescript
-isManagedRemirrorProvider: <GOptions extends {} = any>(value: unknown) => value is RemirrorElement<GOptions>
+isManagedRemirrorProvider: <GOptions extends object = any>(value: unknown) => value is RemirrorElement<GOptions>
 ```

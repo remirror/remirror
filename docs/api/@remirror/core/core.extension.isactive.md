@@ -11,16 +11,15 @@ If a command name is provided (to the return function) then this method should r
 <b>Signature:</b>
 
 ```typescript
-isActive?(params: ExtensionManagerParams): CommandStatusCheck<string>;
+isActive?(params: ExtensionManagerParams): CommandStatusCheck;
 ```
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  params | <code>ExtensionManagerParams</code> | extension manager params |
+| Parameter | Type                                | Description              |
+| --------- | ----------------------------------- | ------------------------ |
+| params    | <code>ExtensionManagerParams</code> | extension manager params |
 
 <b>Returns:</b>
 
-`CommandStatusCheck<string>`
-
+`CommandStatusCheck`

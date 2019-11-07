@@ -9,5 +9,5 @@ Finds if this is a RemirrorProvider (which provides the RemirrorInjectedProps in
 <b>Signature:</b>
 
 ```typescript
-isRemirrorProvider: <GOptions extends {} = any>(value: unknown) => value is RemirrorElement<GOptions>
+isRemirrorProvider: <GOptions extends object = any>(value: unknown) => value is RemirrorElement<GOptions>
 ```

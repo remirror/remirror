@@ -22,5 +22,4 @@ While on the server the prosemirror document is transformed into a react compone
 
 Setting this to true removes the warning at the cost of a slightly slower start up time. It uses the two pass solution mentioned in the react docs. See [https://reactjs.org/docs/react-dom.html\#hydrate](https://reactjs.org/docs/react-dom.html#hydrate)<!-- -->.
 
-The props also takes it's name from a similar API used by react for DOM Elements. See {@<!-- -->link https://reactjs.org/docs/dom-elements.html\#suppresshydrationwarning.
-
+For ease of use this prop copies the name used by react for DOM Elements. See {@<!-- -->link https://reactjs.org/docs/dom-elements.html\#suppresshydrationwarning.

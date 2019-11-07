@@ -9,5 +9,5 @@ Checks if this element has a type of any RemirrorComponent
 <b>Signature:</b>
 
 ```typescript
-isRemirrorElement: <GOptions extends {} = any>(value: unknown) => value is RemirrorElement<GOptions>
+isRemirrorElement: <GOptions extends object = any>(value: unknown) => value is RemirrorElement<GOptions>
 ```

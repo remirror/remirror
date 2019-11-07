@@ -9,22 +9,21 @@ The node view portal container keeps track of all the portals which have been ad
 <b>Signature:</b>
 
 ```typescript
-export declare class PortalContainer 
+export declare class PortalContainer
 ```
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [events](./react-portals.portalcontainer.events.md) |  | <code>NanoEvents&lt;Events&gt;</code> | The event listener which allows consumers to subscribe to when a new portal is added / deleted via the updated event. |
-|  [on](./react-portals.portalcontainer.on.md) |  | <code>(callback: (map: Map&lt;HTMLElement, MountedPortal&gt;) =&gt; void) =&gt; () =&gt; void</code> | Event handler for subscribing to update events from the portalContainer. |
-|  [portals](./react-portals.portalcontainer.portals.md) |  | <code>Map&lt;HTMLElement, MountedPortal&gt;</code> | A map of all the active portals. |
+| Property                                              | Modifiers | Type                                                                     | Description                                                                                                           |
+| ----------------------------------------------------- | --------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| [events](./react-portals.portalcontainer.events.md)   |           | <code>NanoEvents&lt;Events&gt;</code>                                    | The event listener which allows consumers to subscribe to when a new portal is added / deleted via the updated event. |
+| [on](./react-portals.portalcontainer.on.md)           |           | <code>(callback: (map: PortalMap) =&gt; void) =&gt; () =&gt; void</code> | Event handler for subscribing to update events from the portalContainer.                                              |
+| [portals](./react-portals.portalcontainer.portals.md) |           | <code>Map&lt;HTMLElement, MountedPortal&gt;</code>                       | A map of all the active portals.                                                                                      |
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [forceUpdate()](./react-portals.portalcontainer.forceupdate.md) |  | Force an update in all the portals by setting new keys for every portal.<!-- -->Delete all orphaned containers (deleted from the DOM). This is useful for Decoration where there is no destroy method. |
-|  [remove(container)](./react-portals.portalcontainer.remove.md) |  | Deletes the portal within the container. |
-|  [render({ render, container })](./react-portals.portalcontainer.render.md) |  | Responsible for registering a new portal by rendering the react element into the provided container. |
-
+| Method                                                                     | Modifiers | Description                                                                                                                                                                                            |
+| -------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [forceUpdate()](./react-portals.portalcontainer.forceupdate.md)            |           | Force an update in all the portals by setting new keys for every portal.<!-- -->Delete all orphaned containers (deleted from the DOM). This is useful for Decoration where there is no destroy method. |
+| [remove(container)](./react-portals.portalcontainer.remove.md)             |           | Deletes the portal within the container.                                                                                                                                                               |
+| [render({ render, container })](./react-portals.portalcontainer.render.md) |           | Responsible for registering a new portal by rendering the react element into the provided container.                                                                                                   |
