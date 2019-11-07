@@ -9,16 +9,15 @@ The parameters needed for the [SuggestIgnoreParams.addIgnored()](./prosemirror-s
 <b>Signature:</b>
 
 ```typescript
-export interface AddIgnoredParams extends RemoveIgnoredParams 
+export interface AddIgnoredParams extends RemoveIgnoredParams
 ```
-
-## Properties
-
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [specific](./prosemirror-suggest.addignoredparams.specific.md) | <code>false</code> | When <code>false</code> this will ignore the range for all matching suggesters. When true the ignored suggesters will only be the one provided by the name. |
 
 ## Remarks
 
 See: - [RemoveIgnoredParams](./prosemirror-suggest.removeignoredparams.md)
 
+## Properties
+
+| Property                                                       | Type               | Description                                                                                                                                                 |
+| -------------------------------------------------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [specific](./prosemirror-suggest.addignoredparams.specific.md) | <code>false</code> | When <code>false</code> this will ignore the range for all matching suggesters. When true the ignored suggesters will only be the one provided by the name. |

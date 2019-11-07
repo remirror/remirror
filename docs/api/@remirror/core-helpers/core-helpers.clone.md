@@ -9,5 +9,5 @@ Clones a plain object using object spread notation
 <b>Signature:</b>
 
 ```typescript
-clone: <GObject extends {}>(value: GObject) => GObject
+clone: <GObject extends object>(value: GObject) => GObject & PlainObject;
 ```

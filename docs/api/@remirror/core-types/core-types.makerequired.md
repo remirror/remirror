@@ -9,7 +9,8 @@ Makes specified keys of an interface Required while the rest remain unchanged.
 <b>Signature:</b>
 
 ```typescript
-export declare type MakeRequired<GType extends {}, GKeys extends Key<GType>> = Omit<GType, GKeys> & {
+export declare type MakeRequired<GType extends object, GKeys extends Key<GType>> = Omit<GType, GKeys> &
+  {
     [P in GKeys]-?: GType[P];
-};
+  };
 ```

@@ -9,7 +9,8 @@ Makes specified keys of an interface nullable while the rest stay the same.
 <b>Signature:</b>
 
 ```typescript
-export declare type MakeNullable<GType extends {}, GKeys extends Key<GType>> = Omit<GType, GKeys> & {
+export declare type MakeNullable<GType extends object, GKeys extends Key<GType>> = Omit<GType, GKeys> &
+  {
     [P in GKeys]: GType[P] | null;
-};
+  };
 ```

@@ -7,12 +7,12 @@
 <b>Signature:</b>
 
 ```typescript
-export interface BaseFactoryParams extends SchemaParams, Partial<AttrsParams> 
+export interface BaseFactoryParams<GSchema extends EditorSchema = EditorSchema> extends Partial<AttrsParams>
 ```
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [name](./jest-remirror.basefactoryparams.name.md) | <code>string</code> | The name of the node or mark |
-
+| Property                                              | Type                 | Description                  |
+| ----------------------------------------------------- | -------------------- | ---------------------------- |
+| [name](./jest-remirror.basefactoryparams.name.md)     | <code>string</code>  | The name of the node or mark |
+| [schema](./jest-remirror.basefactoryparams.schema.md) | <code>GSchema</code> | The editor schema            |

@@ -9,5 +9,5 @@ Shorthand for casting a value to it's boolean equivalent.
 <b>Signature:</b>
 
 ```typescript
-bool: (value: unknown) => boolean
+bool: <GValue>(value: GValue) => value is Exclude<GValue, Falsy>
 ```

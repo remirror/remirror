@@ -9,16 +9,15 @@ Determines whether this extension is enabled. If a command name is provided then
 <b>Signature:</b>
 
 ```typescript
-isEnabled?(params: ExtensionManagerParams): CommandStatusCheck<string>;
+isEnabled?(params: ExtensionManagerParams): CommandStatusCheck;
 ```
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  params | <code>ExtensionManagerParams</code> | extension manager parameters |
+| Parameter | Type                                | Description                  |
+| --------- | ----------------------------------- | ---------------------------- |
+| params    | <code>ExtensionManagerParams</code> | extension manager parameters |
 
 <b>Returns:</b>
 
-`CommandStatusCheck<string>`
-
+`CommandStatusCheck`

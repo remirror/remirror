@@ -9,22 +9,8 @@ All mark extensions should be created from here.
 <b>Signature:</b>
 
 ```typescript
-export declare abstract class MarkExtension<GOptions extends MarkExtensionOptions = MarkExtensionOptions> extends Extension<GOptions, MarkType<EditorSchema>> 
+export declare abstract class MarkExtension<GOptions extends MarkExtensionOptions = MarkExtensionOptions> extends Extension<GOptions, MarkType<EditorSchema>>
 ```
-
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [schema](./core.markextension.schema.md) |  | <code>MarkExtensionSpec</code> | The prosemirror specification which sets up the mark in the schema. |
-|  [type](./core.markextension.type.md) |  | <code>ExtensionType.Mark</code> | Set's the type of this extension to be a <code>Mark</code>. |
-
-## Methods
-
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [isActive({ getState, type })](./core.markextension.isactive.md) |  | Performs a default check to see whether the mark is active at the current selection. |
-|  [isEnabled(\_)](./core.markextension.isenabled.md) |  | By default all marks extensions are set to be enabled. In your extension this can be overridden and set to false based on the context. |
 
 ## Remarks
 
@@ -32,3 +18,16 @@ A mark extension is based on the `Mark` concept from from within prosemirror [ht
 
 Marks are used to add extra styling or other information to inline content. Mark types are objects much like node types, used to tag mark objects and provide additional information about them.
 
+## Properties
+
+| Property                                 | Modifiers | Type                            | Description                                                         |
+| ---------------------------------------- | --------- | ------------------------------- | ------------------------------------------------------------------- |
+| [schema](./core.markextension.schema.md) |           | <code>MarkExtensionSpec</code>  | The prosemirror specification which sets up the mark in the schema. |
+| [type](./core.markextension.type.md)     |           | <code>ExtensionType.Mark</code> | Set's the type of this extension to be a <code>Mark</code>.         |
+
+## Methods
+
+| Method                                                           | Modifiers | Description                                                                                                                            |
+| ---------------------------------------------------------------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| [isActive({ getState, type })](./core.markextension.isactive.md) |           | Performs a default check to see whether the mark is active at the current selection.                                                   |
+| [isEnabled(\_)](./core.markextension.isenabled.md)               |           | By default all marks extensions are set to be enabled. In your extension this can be overridden and set to false based on the context. |

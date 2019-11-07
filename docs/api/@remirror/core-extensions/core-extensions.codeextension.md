@@ -7,22 +7,21 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class CodeExtension extends MarkExtension<MarkExtensionOptions> 
+export declare class CodeExtension extends MarkExtension
 ```
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.codeextension.name.md) |  | <code>&quot;code&quot;</code> |  |
-|  [schema](./core-extensions.codeextension.schema.md) |  | <code>MarkExtensionSpec</code> |  |
+| Property                                            | Modifiers | Type                           | Description |
+| --------------------------------------------------- | --------- | ------------------------------ | ----------- |
+| [name](./core-extensions.codeextension.name.md)     |           | <code>&quot;code&quot;</code>  |             |
+| [schema](./core-extensions.codeextension.schema.md) |           | <code>MarkExtensionSpec</code> |             |
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [commands({ type })](./core-extensions.codeextension.commands.md) |  |  |
-|  [inputRules({ type })](./core-extensions.codeextension.inputrules.md) |  |  |
-|  [keys({ type })](./core-extensions.codeextension.keys.md) |  |  |
-|  [pasteRules({ type })](./core-extensions.codeextension.pasterules.md) |  |  |
-
+| Method                                                                | Modifiers | Description |
+| --------------------------------------------------------------------- | --------- | ----------- |
+| [commands({ type })](./core-extensions.codeextension.commands.md)     |           |             |
+| [inputRules({ type })](./core-extensions.codeextension.inputrules.md) |           |             |
+| [keys({ type })](./core-extensions.codeextension.keys.md)             |           |             |
+| [pasteRules({ type })](./core-extensions.codeextension.pasterules.md) |           |             |

@@ -9,5 +9,5 @@ A more lenient typed version of `Array.prototype.includes` which allow less spec
 <b>Signature:</b>
 
 ```typescript
-includes: <GType>(array: readonly GType[] | GType[], item: unknown, fromIndex?: number | undefined) => item is GType
+includes: <GType>(array: GType[] | readonly GType[], item: unknown, fromIndex?: number | undefined) => item is GType
 ```

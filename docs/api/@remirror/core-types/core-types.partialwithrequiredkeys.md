@@ -9,5 +9,8 @@ Make the whole interface partial except for some specified keys which will be ma
 <b>Signature:</b>
 
 ```typescript
-export declare type PartialWithRequiredKeys<GType extends {}, GKeys extends Key<GType>> = Partial<Pick<GType, Exclude<keyof GType, GKeys>>> & Required<Pick<GType, GKeys>>;
+export declare type PartialWithRequiredKeys<GType extends object, GKeys extends Key<GType>> = Partial<
+  Pick<GType, Exclude<keyof GType, GKeys>>
+> &
+  Required<Pick<GType, GKeys>>;
 ```

@@ -9,20 +9,19 @@ A JSON representation of the prosemirror Node.
 <b>Signature:</b>
 
 ```typescript
-export interface ObjectNode 
+export interface ObjectNode
 ```
-
-## Properties
-
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [attrs](./core-types.objectnode.attrs.md) | <code>Record&lt;string, Literal &#124; object&gt;</code> |  |
-|  [content](./core-types.objectnode.content.md) | <code>ObjectNode[]</code> |  |
-|  [marks](./core-types.objectnode.marks.md) | <code>Array&lt;ObjectMark &#124; string&gt;</code> |  |
-|  [text](./core-types.objectnode.text.md) | <code>string</code> |  |
-|  [type](./core-types.objectnode.type.md) | <code>string</code> |  |
 
 ## Remarks
 
 This is used to represent the top level doc nodes content.
 
+## Properties
+
+| Property                                      | Type                                                     | Description |
+| --------------------------------------------- | -------------------------------------------------------- | ----------- |
+| [attrs](./core-types.objectnode.attrs.md)     | <code>Record&lt;string, Literal &#124; object&gt;</code> |             |
+| [content](./core-types.objectnode.content.md) | <code>ObjectNode[]</code>                                |             |
+| [marks](./core-types.objectnode.marks.md)     | <code>Array&lt;ObjectMark &#124; string&gt;</code>       |             |
+| [text](./core-types.objectnode.text.md)       | <code>string</code>                                      |             |
+| [type](./core-types.objectnode.type.md)       | <code>string</code>                                      |             |

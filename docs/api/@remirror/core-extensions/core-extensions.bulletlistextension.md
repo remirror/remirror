@@ -7,21 +7,20 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class BulletListExtension extends NodeExtension<NodeExtensionOptions> 
+export declare class BulletListExtension extends NodeExtension
 ```
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.bulletlistextension.name.md) |  | <code>&quot;bulletList&quot;</code> |  |
-|  [schema](./core-extensions.bulletlistextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
+| Property                                                  | Modifiers | Type                                | Description |
+| --------------------------------------------------------- | --------- | ----------------------------------- | ----------- |
+| [name](./core-extensions.bulletlistextension.name.md)     |           | <code>&quot;bulletList&quot;</code> |             |
+| [schema](./core-extensions.bulletlistextension.schema.md) |           | <code>NodeExtensionSpec</code>      |             |
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [commands({ type, schema })](./core-extensions.bulletlistextension.commands.md) |  |  |
-|  [inputRules({ type })](./core-extensions.bulletlistextension.inputrules.md) |  |  |
-|  [keys({ type, schema })](./core-extensions.bulletlistextension.keys.md) |  |  |
-
+| Method                                                                          | Modifiers | Description |
+| ------------------------------------------------------------------------------- | --------- | ----------- |
+| [commands({ type, schema })](./core-extensions.bulletlistextension.commands.md) |           |             |
+| [inputRules({ type })](./core-extensions.bulletlistextension.inputrules.md)     |           |             |
+| [keys({ type, schema })](./core-extensions.bulletlistextension.keys.md)         |           |             |

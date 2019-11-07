@@ -9,5 +9,5 @@ Used for attributes which can be added to prosemirror nodes and marks.
 <b>Signature:</b>
 
 ```typescript
-export declare type Attrs<GExtra extends {} = {}> = Record<string, unknown> & GExtra;
+export declare type Attrs<GExtra extends object = {}> = Record<string, unknown> & GExtra;
 ```

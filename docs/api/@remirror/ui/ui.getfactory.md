@@ -9,5 +9,8 @@ Creates a path getter for the provided theme.
 <b>Signature:</b>
 
 ```typescript
-getFactory: (theme: RemirrorTheme) => <GReturn = any>(path: string | (string | number)[], fallback?: any) => GReturn
+getFactory: (theme: RemirrorTheme) => <GReturn = any>(
+  path: string | import('react').ReactText[],
+  fallback?: any,
+) => GReturn;
 ```

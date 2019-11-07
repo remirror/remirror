@@ -7,21 +7,20 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class BoldExtension extends MarkExtension<MarkExtensionOptions> 
+export declare class BoldExtension extends MarkExtension
 ```
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.boldextension.name.md) |  | <code>&quot;bold&quot;</code> |  |
-|  [schema](./core-extensions.boldextension.schema.md) |  | <code>MarkExtensionSpec</code> |  |
+| Property                                            | Modifiers | Type                           | Description |
+| --------------------------------------------------- | --------- | ------------------------------ | ----------- |
+| [name](./core-extensions.boldextension.name.md)     |           | <code>&quot;bold&quot;</code>  |             |
+| [schema](./core-extensions.boldextension.schema.md) |           | <code>MarkExtensionSpec</code> |             |
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [commands({ type })](./core-extensions.boldextension.commands.md) |  |  |
-|  [inputRules({ type })](./core-extensions.boldextension.inputrules.md) |  |  |
-|  [keys({ type })](./core-extensions.boldextension.keys.md) |  |  |
-
+| Method                                                                | Modifiers | Description |
+| --------------------------------------------------------------------- | --------- | ----------- |
+| [commands({ type })](./core-extensions.boldextension.commands.md)     |           |             |
+| [inputRules({ type })](./core-extensions.boldextension.inputrules.md) |           |             |
+| [keys({ type })](./core-extensions.boldextension.keys.md)             |           |             |

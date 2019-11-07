@@ -7,20 +7,19 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class HorizontalRuleExtension extends NodeExtension<NodeExtensionOptions> 
+export declare class HorizontalRuleExtension extends NodeExtension
 ```
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.horizontalruleextension.name.md) |  | <code>&quot;horizontalRule&quot;</code> |  |
-|  [schema](./core-extensions.horizontalruleextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
+| Property                                                      | Modifiers | Type                                    | Description |
+| ------------------------------------------------------------- | --------- | --------------------------------------- | ----------- |
+| [name](./core-extensions.horizontalruleextension.name.md)     |           | <code>&quot;horizontalRule&quot;</code> |             |
+| [schema](./core-extensions.horizontalruleextension.schema.md) |           | <code>NodeExtensionSpec</code>          |             |
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [commands({ type })](./core-extensions.horizontalruleextension.commands.md) |  |  |
-|  [inputRules({ type })](./core-extensions.horizontalruleextension.inputrules.md) |  |  |
-
+| Method                                                                          | Modifiers | Description |
+| ------------------------------------------------------------------------------- | --------- | ----------- |
+| [commands({ type })](./core-extensions.horizontalruleextension.commands.md)     |           |             |
+| [inputRules({ type })](./core-extensions.horizontalruleextension.inputrules.md) |           |             |

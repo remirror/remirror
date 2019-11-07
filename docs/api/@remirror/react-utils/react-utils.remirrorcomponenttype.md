@@ -7,5 +7,6 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type RemirrorComponentType<P extends {} = {}> = ComponentType<P> & RemirrorComponentStaticProperties;
+export declare type RemirrorComponentType<GProps extends object = {}> = ComponentType<GProps> &
+  RemirrorComponentStaticProperties;
 ```

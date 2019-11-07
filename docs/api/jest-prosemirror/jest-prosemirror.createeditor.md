@@ -25,7 +25,7 @@ createEditor: <GSchema extends import("prosemirror-model").Schema<string, string
     press: (char: string) => any;
     backspace: (times?: number | undefined) => any;
     debug: () => any;
-    fire: (params: Pick<FireEventAtPositionParams<GSchema>, "event" | "options" | "position">) => any;
+    fire: (params: Pick<FireEventAtPositionParams<GSchema>, "position" | "event" | "options">) => any;
     callback: (fn: (content: ReturnValueCallbackParams<GSchema>) => void) => any;
     paste: (content: string | import("prosemirror-model").Node<any>) => any;
 }
@@ -41,23 +41,25 @@ The created editor is automatically cleaned after each test.
 import { createEditor } from 'jest-remirror';
 
 test('`keyBindings`', () => {
-const keyBindings = {
- Enter: jest.fn((params: SuggestKeyBindingParams) => {
-   params.command();
- }),
-};
+  const keyBindings = {
+    Enter: jest.fn((params: SuggestKeyBindingParams) => {
+      params.command();
+    }),
+  };
 
-const plugin = suggest({char: '@', name: 'at', keyBindings, matchOffset: 0,
-  createCommand: ({ view }) => () =>
-    view.dispatch(view.state.tr.insertText('awesome')),
-});
-
-createEditor(doc(p('<cursor>')), { plugins: [plugin] }) .insertText('@')
-  .press('Enter')
-  .callback(content => {
-    expect(content.state.doc).toEqualProsemirrorNode(doc(p('@awesome')));
+  const plugin = suggest({
+    char: '@',
+    name: 'at',
+    keyBindings,
+    matchOffset: 0,
+    createCommand: ({ view }) => () => view.dispatch(view.state.tr.insertText('awesome')),
   });
+
+  createEditor(doc(p('<cursor>')), { plugins: [plugin] })
+    .insertText('@')
+    .press('Enter')
+    .callback(content => {
+      expect(content.state.doc).toEqualProsemirrorNode(doc(p('@awesome')));
+    });
 });
-
 ```
-

@@ -23,8 +23,8 @@ export const getAttrs = (extraAttrs: Attrs) => (domNode: HTMLElement) => {
     align = 'block';
   }
 
-  width = width || domNode.getAttribute('width');
-  height = height || domNode.getAttribute('height');
+  width = width || domNode.getAttribute('width') || '';
+  height = height || domNode.getAttribute('height') || '';
 
   let crop = null;
   let rotate = null;

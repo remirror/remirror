@@ -9,5 +9,5 @@ A drop in replacement for React.Children.only which provides more readable error
 <b>Signature:</b>
 
 ```typescript
-oneChildOnly: <GProps extends {} = any>(value: unknown) => ReactElement<GProps, string | ((props: any) => ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)>
+oneChildOnly: <GProps extends object = any>(value: unknown) => ReactElement<GProps, string | ((props: any) => ReactElement<any, string | any | (new (props: any) => import("react").Component<any, any, any>)> | null) | (new (props: any) => import("react").Component<any, any, any>)>
 ```

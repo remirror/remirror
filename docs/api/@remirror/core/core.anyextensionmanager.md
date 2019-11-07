@@ -9,5 +9,5 @@ The utility for capturing all the possible `ExtensionManager` type variations.
 <b>Signature:</b>
 
 ```typescript
-export declare type AnyExtensionManager = ExtensionManager<any>;
+export declare type AnyExtensionManager = ExtensionManager;
 ```

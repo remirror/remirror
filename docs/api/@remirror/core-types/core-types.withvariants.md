@@ -11,7 +11,7 @@ This is used with the `SxThemeProp` and allow a user to configure the variant to
 <b>Signature:</b>
 
 ```typescript
-export declare type WithVariants<GObject extends {}> = GObject & {
-    variant?: string;
+export declare type WithVariants<GObject extends object> = GObject & {
+  variant?: string;
 };
 ```

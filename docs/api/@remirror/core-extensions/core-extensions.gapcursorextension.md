@@ -9,23 +9,22 @@ Create a gap cursor plugin.
 <b>Signature:</b>
 
 ```typescript
-export declare class GapCursorExtension extends Extension 
+export declare class GapCursorExtension extends Extension
 ```
-
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.gapcursorextension.name.md) |  | <code>&quot;gapCursor&quot;</code> |  |
-
-## Methods
-
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [plugin()](./core-extensions.gapcursorextension.plugin.md) |  | Adds the gapCursor plugin functionality into the editor. |
-|  [styles()](./core-extensions.gapcursorextension.styles.md) |  | Sets the styling for the gapCursor. |
 
 ## Remarks
 
 When enabled, this will capture clicks near and arrow-key-motion past places that don't have a normally selectable position nearby, and create a gap cursor selection for them. The cursor is drawn as an element with class `ProseMirror-gapcursor`<!-- -->.
 
+## Properties
+
+| Property                                             | Modifiers | Type                               | Description |
+| ---------------------------------------------------- | --------- | ---------------------------------- | ----------- |
+| [name](./core-extensions.gapcursorextension.name.md) |           | <code>&quot;gapCursor&quot;</code> |             |
+
+## Methods
+
+| Method                                                     | Modifiers | Description                                              |
+| ---------------------------------------------------------- | --------- | -------------------------------------------------------- |
+| [plugin()](./core-extensions.gapcursorextension.plugin.md) |           | Adds the gapCursor plugin functionality into the editor. |
+| [styles()](./core-extensions.gapcursorextension.styles.md) |           | Sets the styling for the gapCursor.                      |

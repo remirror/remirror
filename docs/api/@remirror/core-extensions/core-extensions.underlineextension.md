@@ -7,20 +7,19 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class UnderlineExtension extends MarkExtension<MarkExtensionOptions> 
+export declare class UnderlineExtension extends MarkExtension
 ```
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.underlineextension.name.md) |  | <code>&quot;underline&quot;</code> |  |
-|  [schema](./core-extensions.underlineextension.schema.md) |  | <code>MarkExtensionSpec</code> |  |
+| Property                                                 | Modifiers | Type                               | Description |
+| -------------------------------------------------------- | --------- | ---------------------------------- | ----------- |
+| [name](./core-extensions.underlineextension.name.md)     |           | <code>&quot;underline&quot;</code> |             |
+| [schema](./core-extensions.underlineextension.schema.md) |           | <code>MarkExtensionSpec</code>     |             |
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [commands({ type })](./core-extensions.underlineextension.commands.md) |  |  |
-|  [keys({ type })](./core-extensions.underlineextension.keys.md) |  |  |
-
+| Method                                                                 | Modifiers | Description |
+| ---------------------------------------------------------------------- | --------- | ----------- |
+| [commands({ type })](./core-extensions.underlineextension.commands.md) |           |             |
+| [keys({ type })](./core-extensions.underlineextension.keys.md)         |           |             |

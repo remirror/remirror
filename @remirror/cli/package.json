@@ -30,12 +30,12 @@
     "jsesc": "^2.5.2",
     "parcel-bundler": "^1.12.4",
     "react": "^16.8.0",
-    "react-use": "12.13.0",
+    "react-use": "13.3.0",
     "rimraf": "^3.0.0",
     "yargs": "^14.0.0"
   },
   "devDependencies": {
-    "@testing-library/react-hooks": "3.1.1",
+    "@testing-library/react-hooks": "3.2.1",
     "@types/ink-testing-library": "1.0.0",
     "@types/jsesc": "0.4.29",
     "@types/parcel-bundler": "1.12.1",

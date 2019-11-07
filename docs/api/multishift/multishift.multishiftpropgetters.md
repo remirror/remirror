@@ -9,21 +9,8 @@ These functions are used to apply props to the elements that you render. This gi
 <b>Signature:</b>
 
 ```typescript
-export interface MultishiftPropGetters<GItem = any> 
+export interface MultishiftPropGetters<GItem = any>
 ```
-
-## Methods
-
-|  Method | Description |
-|  --- | --- |
-|  [getComboBoxProps(options)](./multishift.multishiftpropgetters.getcomboboxprops.md) | Get the augmented props that will be used in the wrapper element on autocomplete dropdowns. |
-|  [getIgnoredElementProps(options)](./multishift.multishiftpropgetters.getignoredelementprops.md) | Adds a ref to an element which will prevent blurring from happening when the element is in focus. |
-|  [getInputProps(options)](./multishift.multishiftpropgetters.getinputprops.md) | Get the augmented props for the autocomplete input element. |
-|  [getItemProps(options)](./multishift.multishiftpropgetters.getitemprops.md) | Get the augmented props for each item being rendered. |
-|  [getLabelProps(options)](./multishift.multishiftpropgetters.getlabelprops.md) | This method should be applied to the label you render. It will generate an id that will be used to label the toggle button and the menu. |
-|  [getMenuProps(options)](./multishift.multishiftpropgetters.getmenuprops.md) | Get the augmented props for your menu dropdown container element. |
-|  [getRemoveButtonProps(options)](./multishift.multishiftpropgetters.getremovebuttonprops.md) | Gets the props to attach to a button that removes a selected item. |
-|  [getToggleButtonProps(options)](./multishift.multishiftpropgetters.gettogglebuttonprops.md) | Get the augmented props for the toggle button which typically opens and closes the menu. |
 
 ## Remarks
 
@@ -31,8 +18,8 @@ You call these on the element in question For example:
 
 ```tsx
 <input {...getInputProps()} />
-
 ```
+
 It's advisable to pass all your props to that function rather than applying them on the element yourself to avoid your props being overridden (or overriding the props returned). For example:
 
 ```tsx
@@ -50,3 +37,15 @@ It's advisable to pass all your props to that function rather than applying them
 
 ```
 
+## Methods
+
+| Method                                                                                          | Description                                                                                                                              |
+| ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| [getComboBoxProps(options)](./multishift.multishiftpropgetters.getcomboboxprops.md)             | Get the augmented props that will be used in the wrapper element on autocomplete dropdowns.                                              |
+| [getIgnoredElementProps(options)](./multishift.multishiftpropgetters.getignoredelementprops.md) | Adds a ref to an element which will prevent blurring from happening when the element is in focus.                                        |
+| [getInputProps(options)](./multishift.multishiftpropgetters.getinputprops.md)                   | Get the augmented props for the autocomplete input element.                                                                              |
+| [getItemProps(options)](./multishift.multishiftpropgetters.getitemprops.md)                     | Get the augmented props for each item being rendered.                                                                                    |
+| [getLabelProps(options)](./multishift.multishiftpropgetters.getlabelprops.md)                   | This method should be applied to the label you render. It will generate an id that will be used to label the toggle button and the menu. |
+| [getMenuProps(options)](./multishift.multishiftpropgetters.getmenuprops.md)                     | Get the augmented props for your menu dropdown container element.                                                                        |
+| [getRemoveButtonProps(options)](./multishift.multishiftpropgetters.getremovebuttonprops.md)     | Gets the props to attach to a button that removes a selected item.                                                                       |
+| [getToggleButtonProps(options)](./multishift.multishiftpropgetters.gettogglebuttonprops.md)     | Get the augmented props for the toggle button which typically opens and closes the menu.                                                 |
