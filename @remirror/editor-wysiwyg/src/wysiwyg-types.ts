@@ -14,6 +14,7 @@ import {
   OrderedListExtension,
   ParagraphExtension,
   SerializerExtension,
+  SerializerHandler,
   SSRHelperExtension,
   StrikeExtension,
   TrailingNodeExtension,
@@ -86,6 +87,12 @@ export interface WysiwygEditorProps
    * Extend the theme with your own styles
    */
   theme?: Partial<RemirrorTheme>;
+
+  /**
+   * onSerialization is a callback to capture editor state and is triggered
+   * when a serialization command is issued.
+   */
+  onSerialization: SerializerHandler;
 }
 
 export type ButtonProps = JSX.IntrinsicElements['button'] & {

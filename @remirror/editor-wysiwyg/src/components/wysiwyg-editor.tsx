@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { deepMerge, RemirrorTheme, EditorState } from '@remirror/core';
+import { deepMerge, RemirrorTheme } from '@remirror/core';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -101,15 +101,7 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
         <RemirrorExtension Constructor={OrderedListExtension} />
         <RemirrorExtension Constructor={HardBreakExtension} />
         <RemirrorExtension Constructor={TrailingNodeExtension} />
-        <RemirrorExtension
-          Constructor={SerializerExtension}
-          onSerialize={(s: EditorState) => {
-            // todo: modify the wysiwyg options to allow this callback to be provided by
-            // the view rendering the editor.
-            console.log('serialized state', s.toJSON());
-            return true;
-          }}
-        />
+        <RemirrorExtension Constructor={SerializerExtension} onSerialize={props.onSerialization} />
         <RemirrorExtension
           Constructor={CodeBlockExtension}
           supportedLanguages={supportedLanguages}
