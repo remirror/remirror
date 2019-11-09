@@ -13,6 +13,7 @@ import {
   ListItemExtension,
   OrderedListExtension,
   ParagraphExtension,
+  SerializerExtension,
   SSRHelperExtension,
   StrikeExtension,
   TrailingNodeExtension,
@@ -48,6 +49,7 @@ export type WysiwygExtensions =
   | ListItemExtension
   | OrderedListExtension
   | ParagraphExtension
+  | SerializerExtension
   | SSRHelperExtension
   | StrikeExtension
   | TrailingNodeExtension
