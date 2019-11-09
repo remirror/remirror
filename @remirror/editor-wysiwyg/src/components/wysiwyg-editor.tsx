@@ -138,11 +138,20 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
  * Any component rendered has access to the remirror context.
  */
 const InnerEditor: FC<BubbleMenuProps> = ({ linkActivated, deactivateLink, activateLink }) => {
-  const { getRootProps } = useRemirrorContext<WysiwygExtensions>();
+  const { getRootProps, actions } = useRemirrorContext<WysiwygExtensions>();
 
   return (
     <EditorWrapper>
       <MenuBar activateLink={activateLink} />
+      <div>
+        <button
+          onClick={() => {
+            actions['serializeState']();
+          }}
+        >
+          Save
+        </button>
+      </div>
       <BubbleMenu linkActivated={linkActivated} deactivateLink={deactivateLink} activateLink={activateLink} />
       <div {...getRootProps()} data-testid='remirror-wysiwyg-editor' />
     </EditorWrapper>
