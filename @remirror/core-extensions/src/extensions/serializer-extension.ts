@@ -27,10 +27,6 @@ export class SerializerExtension extends Extension<SerializerExtensionOptions> {
     return 'serializer' as const;
   }
 
-  get defaultOptions() {
-    return {};
-  }
-
   public keys({ getActions }: ExtensionManagerParams) {
     return {
       'Mod-s': () => {
