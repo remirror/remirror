@@ -19,7 +19,7 @@
       ]
     }
   },
-  "version": "0.6.4",
+  "version": "0.6.5",
   "npmClient": "yarn",
   "registry": "https://registry.npmjs.org/",
   "useWorkspaces": true,

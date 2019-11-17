@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/cli"
   },
-  "version": "0.6.4",
+  "version": "0.6.5",
   "main": "lib/index.js",
   "preferGlobal": true,
   "bin": {
@@ -22,7 +22,7 @@
   "dependencies": {
     "@babel/runtime": "^7",
     "@emotion/core": "^10",
-    "@remirror/core-helpers": "0.6.4",
+    "@remirror/core-helpers": "0.6.5",
     "@types/node": ">=12.11.2",
     "figures": "^3.1.0",
     "ink": "^2.5.0",
