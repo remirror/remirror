@@ -22,7 +22,6 @@ You want to write tests for some of your prosemirror editor but you don't know w
 yarn add jest-prosemirror
 
 ```
-
 \#\# Getting started
 
 \#\#\# Quick setup
@@ -31,11 +30,11 @@ For a quick setup add the following to your jest.config.js file.
 
 ```js
 module.exports = {
-  setupFilesAfterEnv: ['jest-prosemirror/environment'],
-  testEnvironment: 'jsdom', // Required for dom manipulation
+setupFilesAfterEnv: ['jest-prosemirror/environment'],
+testEnvironment: 'jsdom', // Required for dom manipulation
 };
-```
 
+```
 This will automatically:
 
 - Add the jest assertions `toTransformNode` and `toEqualProsemirrorNode`<!-- -->.
@@ -44,12 +43,12 @@ If you are using typescript then add this to your `tsconfig.json` file for globa
 
 ```json
 {
-  "compilerOptions": {
-    "types": ["jest-prosemirror"]
-  }
+"compilerOptions": {
+ "types": ["jest-prosemirror"]
 }
-```
+}
 
+```
 \#\#\# Manual setup
 
 Create a `jest.framework.dom.ts` file and add the following
@@ -59,27 +58,27 @@ import { prosemirrorMatchers } from 'jest-prosemirror';
 
 // Add jest-prosemirror assertions
 expect.extend(prosemirrorMatchers);
-```
 
+```
 In your `jest.config.js` add the created file to your configuration.
 
 ```js
 module.exports = {
-  setupFilesAfterEnv: ['<rootDir>/jest.framework.dom.ts'],
-  testEnvironment: 'jsdom', // Required for dom manipulation
+setupFilesAfterEnv: ['<rootDir>/jest.framework.dom.ts'],
+testEnvironment: 'jsdom', // Required for dom manipulation
 };
-```
 
+```
 \#\# Snapshot serializer
 
 This package exports a serializer for better snapshot testing of prosemirror primitives. To set this up add the following to your `jest.config.js` file.
 
 ```js
 module.exports = {
-  snapshotSerializers: ['jest-prosemirror/serializer'],
+snapshotSerializers: ['jest-prosemirror/serializer'],
 };
-```
 
+```
 Alternatively, you can add the following to your `jest.framework.dom.ts` file.
 
 ```ts
@@ -87,91 +86,93 @@ import { prosemirrorSerializer } from 'jest-prosemirror';
 
 // Add the serializer for use throughout all the configured test files.
 expect.addSnapshotSerializer(prosemirrorSerializer);
+
 ```
 
 ## Interfaces
 
-| Interface                                                                    | Description                                                                                                                  |
-| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [ApplyReturn](./jest-prosemirror.applyreturn.md)                             | The return type for the apply method which                                                                                   |
-| [CommandTransformation](./jest-prosemirror.commandtransformation.md)         | Tests that a command run transform the nodes from one state to another. The second state is optional if nothing has changed. |
-| [CreateEditorOptions](./jest-prosemirror.createeditoroptions.md)             |                                                                                                                              |
-| [FireParams](./jest-prosemirror.fireparams.md)                               |                                                                                                                              |
-| [InsertTextParams](./jest-prosemirror.inserttextparams.md)                   |                                                                                                                              |
-| [ReturnValueCallbackParams](./jest-prosemirror.returnvaluecallbackparams.md) |                                                                                                                              |
-| [TaggedDocParams](./jest-prosemirror.taggeddocparams.md)                     |                                                                                                                              |
-| [TestEditorView](./jest-prosemirror.testeditorview.md)                       |                                                                                                                              |
-| [TestEditorViewParams](./jest-prosemirror.testeditorviewparams.md)           |                                                                                                                              |
+|  Interface | Description |
+|  --- | --- |
+|  [ApplyReturn](./jest-prosemirror.applyreturn.md) | The return type for the apply method which |
+|  [CommandTransformation](./jest-prosemirror.commandtransformation.md) | Tests that a command run transform the nodes from one state to another. The second state is optional if nothing has changed. |
+|  [CreateEditorOptions](./jest-prosemirror.createeditoroptions.md) |  |
+|  [FireParams](./jest-prosemirror.fireparams.md) |  |
+|  [InsertTextParams](./jest-prosemirror.inserttextparams.md) |  |
+|  [ReturnValueCallbackParams](./jest-prosemirror.returnvaluecallbackparams.md) |  |
+|  [TaggedDocParams](./jest-prosemirror.taggeddocparams.md) |  |
+|  [TestEditorView](./jest-prosemirror.testeditorview.md) |  |
+|  [TestEditorViewParams](./jest-prosemirror.testeditorviewparams.md) |  |
 
 ## Variables
 
-| Variable                                                                               | Description                                                                                                                                                                                                                                                                                                   |
-| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [a](./jest-prosemirror.a.md)                                                           |                                                                                                                                                                                                                                                                                                               |
-| [apply](./jest-prosemirror.apply.md)                                                   | Apply the command to the prosemirror node passed in.<!-- -->Returns a tuple matching the following structure \[ bool =<!-- -->&gt; was the command successfully applied taggedDoc =<!-- -->&gt; the new doc as a result of the command state =<!-- -->&gt; The new editor state after applying the command \] |
-| [atomBlock](./jest-prosemirror.atomblock.md)                                           |                                                                                                                                                                                                                                                                                                               |
-| [atomContainer](./jest-prosemirror.atomcontainer.md)                                   |                                                                                                                                                                                                                                                                                                               |
-| [atomInline](./jest-prosemirror.atominline.md)                                         |                                                                                                                                                                                                                                                                                                               |
-| [backspace](./jest-prosemirror.backspace.md)                                           | Simulate a backspace key press..                                                                                                                                                                                                                                                                              |
-| [blockquote](./jest-prosemirror.blockquote.md)                                         |                                                                                                                                                                                                                                                                                                               |
-| [code](./jest-prosemirror.code.md)                                                     |                                                                                                                                                                                                                                                                                                               |
-| [codeBlock](./jest-prosemirror.codeblock.md)                                           |                                                                                                                                                                                                                                                                                                               |
-| [containerWithRestrictedContent](./jest-prosemirror.containerwithrestrictedcontent.md) |                                                                                                                                                                                                                                                                                                               |
-| [createEditor](./jest-prosemirror.createeditor.md)                                     | Create a test prosemirror editor an pass back helper properties and methods.                                                                                                                                                                                                                                  |
-| [createEvents](./jest-prosemirror.createevents.md)                                     |                                                                                                                                                                                                                                                                                                               |
-| [createState](./jest-prosemirror.createstate.md)                                       | Create the editor state for a tagged prosemirror doc                                                                                                                                                                                                                                                          |
-| [dispatchAllSelection](./jest-prosemirror.dispatchallselection.md)                     | Select everything in the current doc.                                                                                                                                                                                                                                                                         |
-| [dispatchNodeSelection](./jest-prosemirror.dispatchnodeselection.md)                   | Dispatch a text selection from start to end                                                                                                                                                                                                                                                                   |
-| [dispatchTextSelection](./jest-prosemirror.dispatchtextselection.md)                   | Dispatch a text selection from start to \[end\]                                                                                                                                                                                                                                                               |
-| [doc](./jest-prosemirror.doc.md)                                                       |                                                                                                                                                                                                                                                                                                               |
-| [em](./jest-prosemirror.em.md)                                                         |                                                                                                                                                                                                                                                                                                               |
-| [findTextNode](./jest-prosemirror.findtextnode.md)                                     | Find the first text node with the provided string.                                                                                                                                                                                                                                                            |
-| [fireEventAtPosition](./jest-prosemirror.fireeventatposition.md)                       | Fires an event at the provided position or the current selected position in the dom.                                                                                                                                                                                                                          |
-| [flush](./jest-prosemirror.flush.md)                                                   | Flushes the dom                                                                                                                                                                                                                                                                                               |
-| [h1](./jest-prosemirror.h1.md)                                                         |                                                                                                                                                                                                                                                                                                               |
-| [h2](./jest-prosemirror.h2.md)                                                         |                                                                                                                                                                                                                                                                                                               |
-| [h3](./jest-prosemirror.h3.md)                                                         |                                                                                                                                                                                                                                                                                                               |
-| [h4](./jest-prosemirror.h4.md)                                                         |                                                                                                                                                                                                                                                                                                               |
-| [h5](./jest-prosemirror.h5.md)                                                         |                                                                                                                                                                                                                                                                                                               |
-| [h6](./jest-prosemirror.h6.md)                                                         |                                                                                                                                                                                                                                                                                                               |
-| [hardBreak](./jest-prosemirror.hardbreak.md)                                           |                                                                                                                                                                                                                                                                                                               |
-| [heading](./jest-prosemirror.heading.md)                                               |                                                                                                                                                                                                                                                                                                               |
-| [horizontalRule](./jest-prosemirror.horizontalrule.md)                                 |                                                                                                                                                                                                                                                                                                               |
-| [image](./jest-prosemirror.image.md)                                                   |                                                                                                                                                                                                                                                                                                               |
-| [initSelection](./jest-prosemirror.initselection.md)                                   | Initialize the selection based on the passed in tagged node via it's cursor.<!-- -->The supported tags are <code>['cursor', 'node', 'start', 'end', 'anchor', 'all']</code>                                                                                                                                   |
-| [insertText](./jest-prosemirror.inserttext.md)                                         | Insert text from the provided index. Each key is entered individually to better simulate calls to handleTextInput.                                                                                                                                                                                            |
-| [li](./jest-prosemirror.li.md)                                                         |                                                                                                                                                                                                                                                                                                               |
-| [link](./jest-prosemirror.link.md)                                                     |                                                                                                                                                                                                                                                                                                               |
-| [ol](./jest-prosemirror.ol.md)                                                         |                                                                                                                                                                                                                                                                                                               |
-| [p](./jest-prosemirror.p.md)                                                           |                                                                                                                                                                                                                                                                                                               |
-| [paragraph](./jest-prosemirror.paragraph.md)                                           |                                                                                                                                                                                                                                                                                                               |
-| [pasteContent](./jest-prosemirror.pastecontent.md)                                     | Add eventual support for all of prosemirror paste commands                                                                                                                                                                                                                                                    |
-| [pmBuild](./jest-prosemirror.pmbuild.md)                                               | A short hand way for building prosemirror test builders with the core nodes already provided - <code>doc</code> - <code>paragraph</code> - <code>text</code>                                                                                                                                                  |
-| [press](./jest-prosemirror.press.md)                                                   | Press a key.                                                                                                                                                                                                                                                                                                  |
-| [prosemirrorMatchers](./jest-prosemirror.prosemirrormatchers.md)                       |                                                                                                                                                                                                                                                                                                               |
-| [prosemirrorSerializer](./jest-prosemirror.prosemirrorserializer.md)                   | Jest serializer for prosemirror nodes and the editor state.                                                                                                                                                                                                                                                   |
-| [schema](./jest-prosemirror.schema.md)                                                 |                                                                                                                                                                                                                                                                                                               |
-| [selectionFor](./jest-prosemirror.selectionfor.md)                                     | Returns a selection regardless of whether anything is tagged in the provided doc                                                                                                                                                                                                                              |
-| [setupProsemirrorEnvironment](./jest-prosemirror.setupprosemirrorenvironment.md)       | Setup the environment automatically for jest-prosemirror                                                                                                                                                                                                                                                      |
-| [shortcut](./jest-prosemirror.shortcut.md)                                             | Runs a keyboard shortcut.                                                                                                                                                                                                                                                                                     |
-| [strong](./jest-prosemirror.strong.md)                                                 |                                                                                                                                                                                                                                                                                                               |
-| [table](./jest-prosemirror.table.md)                                                   |                                                                                                                                                                                                                                                                                                               |
-| [tableCell](./jest-prosemirror.tablecell.md)                                           |                                                                                                                                                                                                                                                                                                               |
-| [tableHeader](./jest-prosemirror.tableheader.md)                                       |                                                                                                                                                                                                                                                                                                               |
-| [tableRow](./jest-prosemirror.tablerow.md)                                             |                                                                                                                                                                                                                                                                                                               |
-| [taggedDocHasSelection](./jest-prosemirror.taggeddochasselection.md)                   | Checks that the tagged doc has a selection                                                                                                                                                                                                                                                                    |
-| [td](./jest-prosemirror.td.md)                                                         |                                                                                                                                                                                                                                                                                                               |
-| [tdCursor](./jest-prosemirror.tdcursor.md)                                             |                                                                                                                                                                                                                                                                                                               |
-| [tdEmpty](./jest-prosemirror.tdempty.md)                                               |                                                                                                                                                                                                                                                                                                               |
-| [text](./jest-prosemirror.text.md)                                                     |                                                                                                                                                                                                                                                                                                               |
-| [th](./jest-prosemirror.th.md)                                                         |                                                                                                                                                                                                                                                                                                               |
-| [thCursor](./jest-prosemirror.thcursor.md)                                             |                                                                                                                                                                                                                                                                                                               |
-| [thEmpty](./jest-prosemirror.thempty.md)                                               |                                                                                                                                                                                                                                                                                                               |
-| [tr](./jest-prosemirror.tr.md)                                                         |                                                                                                                                                                                                                                                                                                               |
-| [ul](./jest-prosemirror.ul.md)                                                         |                                                                                                                                                                                                                                                                                                               |
+|  Variable | Description |
+|  --- | --- |
+|  [a](./jest-prosemirror.a.md) |  |
+|  [apply](./jest-prosemirror.apply.md) | Apply the command to the prosemirror node passed in.<!-- -->Returns a tuple matching the following structure \[ bool =<!-- -->&gt; was the command successfully applied taggedDoc =<!-- -->&gt; the new doc as a result of the command state =<!-- -->&gt; The new editor state after applying the command \] |
+|  [atomBlock](./jest-prosemirror.atomblock.md) |  |
+|  [atomContainer](./jest-prosemirror.atomcontainer.md) |  |
+|  [atomInline](./jest-prosemirror.atominline.md) |  |
+|  [backspace](./jest-prosemirror.backspace.md) | Simulate a backspace key press.. |
+|  [blockquote](./jest-prosemirror.blockquote.md) |  |
+|  [code](./jest-prosemirror.code.md) |  |
+|  [codeBlock](./jest-prosemirror.codeblock.md) |  |
+|  [containerWithRestrictedContent](./jest-prosemirror.containerwithrestrictedcontent.md) |  |
+|  [createEditor](./jest-prosemirror.createeditor.md) | Create a test prosemirror editor an pass back helper properties and methods. |
+|  [createEvents](./jest-prosemirror.createevents.md) |  |
+|  [createState](./jest-prosemirror.createstate.md) | Create the editor state for a tagged prosemirror doc |
+|  [dispatchAllSelection](./jest-prosemirror.dispatchallselection.md) | Select everything in the current doc. |
+|  [dispatchNodeSelection](./jest-prosemirror.dispatchnodeselection.md) | Dispatch a text selection from start to end |
+|  [dispatchTextSelection](./jest-prosemirror.dispatchtextselection.md) | Dispatch a text selection from start to \[end\] |
+|  [doc](./jest-prosemirror.doc.md) |  |
+|  [em](./jest-prosemirror.em.md) |  |
+|  [findTextNode](./jest-prosemirror.findtextnode.md) | Find the first text node with the provided string. |
+|  [fireEventAtPosition](./jest-prosemirror.fireeventatposition.md) | Fires an event at the provided position or the current selected position in the dom. |
+|  [flush](./jest-prosemirror.flush.md) | Flushes the dom |
+|  [h1](./jest-prosemirror.h1.md) |  |
+|  [h2](./jest-prosemirror.h2.md) |  |
+|  [h3](./jest-prosemirror.h3.md) |  |
+|  [h4](./jest-prosemirror.h4.md) |  |
+|  [h5](./jest-prosemirror.h5.md) |  |
+|  [h6](./jest-prosemirror.h6.md) |  |
+|  [hardBreak](./jest-prosemirror.hardbreak.md) |  |
+|  [heading](./jest-prosemirror.heading.md) |  |
+|  [horizontalRule](./jest-prosemirror.horizontalrule.md) |  |
+|  [image](./jest-prosemirror.image.md) |  |
+|  [initSelection](./jest-prosemirror.initselection.md) | Initialize the selection based on the passed in tagged node via it's cursor.<!-- -->The supported tags are <code>['cursor', 'node', 'start', 'end', 'anchor', 'all']</code> |
+|  [insertText](./jest-prosemirror.inserttext.md) | Insert text from the provided index. Each key is entered individually to better simulate calls to handleTextInput. |
+|  [li](./jest-prosemirror.li.md) |  |
+|  [link](./jest-prosemirror.link.md) |  |
+|  [ol](./jest-prosemirror.ol.md) |  |
+|  [p](./jest-prosemirror.p.md) |  |
+|  [paragraph](./jest-prosemirror.paragraph.md) |  |
+|  [pasteContent](./jest-prosemirror.pastecontent.md) | Add eventual support for all of prosemirror paste commands |
+|  [pmBuild](./jest-prosemirror.pmbuild.md) | A short hand way for building prosemirror test builders with the core nodes already provided - <code>doc</code> - <code>paragraph</code> - <code>text</code> |
+|  [press](./jest-prosemirror.press.md) | Press a key. |
+|  [prosemirrorMatchers](./jest-prosemirror.prosemirrormatchers.md) |  |
+|  [prosemirrorSerializer](./jest-prosemirror.prosemirrorserializer.md) | Jest serializer for prosemirror nodes and the editor state. |
+|  [schema](./jest-prosemirror.schema.md) |  |
+|  [selectionFor](./jest-prosemirror.selectionfor.md) | Returns a selection regardless of whether anything is tagged in the provided doc |
+|  [setupProsemirrorEnvironment](./jest-prosemirror.setupprosemirrorenvironment.md) | Setup the environment automatically for jest-prosemirror |
+|  [shortcut](./jest-prosemirror.shortcut.md) | Runs a keyboard shortcut. |
+|  [strong](./jest-prosemirror.strong.md) |  |
+|  [table](./jest-prosemirror.table.md) |  |
+|  [tableCell](./jest-prosemirror.tablecell.md) |  |
+|  [tableHeader](./jest-prosemirror.tableheader.md) |  |
+|  [tableRow](./jest-prosemirror.tablerow.md) |  |
+|  [taggedDocHasSelection](./jest-prosemirror.taggeddochasselection.md) | Checks that the tagged doc has a selection |
+|  [td](./jest-prosemirror.td.md) |  |
+|  [tdCursor](./jest-prosemirror.tdcursor.md) |  |
+|  [tdEmpty](./jest-prosemirror.tdempty.md) |  |
+|  [text](./jest-prosemirror.text.md) |  |
+|  [th](./jest-prosemirror.th.md) |  |
+|  [thCursor](./jest-prosemirror.thcursor.md) |  |
+|  [thEmpty](./jest-prosemirror.thempty.md) |  |
+|  [tr](./jest-prosemirror.tr.md) |  |
+|  [ul](./jest-prosemirror.ul.md) |  |
 
 ## Type Aliases
 
-| Type Alias                                   | Description |
-| -------------------------------------------- | ----------- |
-| [EventType](./jest-prosemirror.eventtype.md) |             |
+|  Type Alias | Description |
+|  --- | --- |
+|  [EventType](./jest-prosemirror.eventtype.md) |  |
+

@@ -9,8 +9,7 @@ Makes specified keys of an interface optional while the rest stay the same.
 <b>Signature:</b>
 
 ```typescript
-export declare type MakeOptional<GType extends object, GKeys extends Key<GType>> = Omit<GType, GKeys> &
-  {
+export declare type MakeOptional<GType extends object, GKeys extends Key<GType>> = Omit<GType, GKeys> & {
     [P in GKeys]+?: GType[P];
-  };
+};
 ```

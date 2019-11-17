@@ -9,5 +9,5 @@ Transforms a number to
 <b>Signature:</b>
 
 ```typescript
-numberToPixels: (val: import('react').ReactText) => string;
+numberToPixels: (val: import("csstype").AnimationIterationCountProperty) => string
 ```

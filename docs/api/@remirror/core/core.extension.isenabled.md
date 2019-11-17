@@ -14,10 +14,11 @@ isEnabled?(params: ExtensionManagerParams): CommandStatusCheck;
 
 ## Parameters
 
-| Parameter | Type                                | Description                  |
-| --------- | ----------------------------------- | ---------------------------- |
-| params    | <code>ExtensionManagerParams</code> | extension manager parameters |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  params | <code>ExtensionManagerParams</code> | extension manager parameters |
 
 <b>Returns:</b>
 
 `CommandStatusCheck`
+

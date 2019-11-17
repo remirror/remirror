@@ -9,5 +9,5 @@ Find regex prefix when depending on whether the mention only supports the start 
 <b>Signature:</b>
 
 ```typescript
-getRegexPrefix: (onlyStartOfLine: boolean) => '^' | '';
+getRegexPrefix: (onlyStartOfLine: boolean) => "" | "^"
 ```

@@ -9,8 +9,5 @@ Create a builder function for marks.
 <b>Signature:</b>
 
 ```typescript
-markFactory: ({ name, schema, attrs, allowDupes }: MarkFactoryParams) => (
-  ...content: TaggedContentWithText[]
-) => TaggedProsemirrorNode < import('prosemirror-model').Schema < string,
-  string >> [];
+markFactory: ({ name, schema, attrs, allowDupes }: MarkFactoryParams) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode<import("prosemirror-model").Schema<string, string>>[]
 ```

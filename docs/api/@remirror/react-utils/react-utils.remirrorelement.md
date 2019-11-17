@@ -8,6 +8,6 @@
 
 ```typescript
 export declare type RemirrorElement<GOptions extends object = any> = ReactElement & {
-  type: RemirrorComponentType<GOptions>;
+    type: RemirrorComponentType<GOptions>;
 };
 ```

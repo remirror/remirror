@@ -17,3 +17,4 @@ hasOwnProperty: <GObj extends object, GProperty extends string | number | symbol
 ## Remarks
 
 See [https://eslint.org/docs/rules/no-prototype-builtins](https://eslint.org/docs/rules/no-prototype-builtins)
+

@@ -9,7 +9,7 @@ This extension makes it easier to add SSR transformations to the editor.
 <b>Signature:</b>
 
 ```typescript
-export declare class SSRHelperExtension extends Extension<SSRHelperExtensionOptions>
+export declare class SSRHelperExtension extends Extension<SSRHelperExtensionOptions> 
 ```
 
 ## Remarks
@@ -22,13 +22,14 @@ The transformations can also serve as a guideline when creating your own SSRTran
 
 ## Properties
 
-| Property                                                                 | Modifiers | Type                                                                                 | Description |
-| ------------------------------------------------------------------------ | --------- | ------------------------------------------------------------------------------------ | ----------- |
-| [defaultOptions](./core-extensions.ssrhelperextension.defaultoptions.md) |           | <code>{</code><br/><code> transformers: SSRTransformer[];</code><br/><code> }</code> |             |
-| [name](./core-extensions.ssrhelperextension.name.md)                     |           | <code>&quot;ssrHelper&quot;</code>                                                   |             |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [defaultOptions](./core-extensions.ssrhelperextension.defaultoptions.md) |  | <code>{</code><br/><code>        transformers: SSRTransformer[];</code><br/><code>    }</code> |  |
+|  [name](./core-extensions.ssrhelperextension.name.md) |  | <code>&quot;ssrHelper&quot;</code> |  |
 
 ## Methods
 
-| Method                                                                                    | Modifiers | Description                                                                            |
-| ----------------------------------------------------------------------------------------- | --------- | -------------------------------------------------------------------------------------- |
-| [ssrTransformer(element, params)](./core-extensions.ssrhelperextension.ssrtransformer.md) |           | Runs through all the provided transformations for changing the rendered SSR component. |
+|  Method | Modifiers | Description |
+|  --- | --- | --- |
+|  [ssrTransformer(element, params)](./core-extensions.ssrhelperextension.ssrtransformer.md) |  | Runs through all the provided transformations for changing the rendered SSR component. |
+

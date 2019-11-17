@@ -9,13 +9,15 @@ The return type for the apply method which
 <b>Signature:</b>
 
 ```typescript
-export interface ApplyReturn<GSchema extends EditorSchema = any> extends TaggedDocParams<GSchema>, EditorStateParams<GSchema>
+export interface ApplyReturn<GSchema extends EditorSchema = any> extends TaggedDocParams<GSchema>, EditorStateParams<GSchema> 
 ```
 
 ## Remarks
 
+
 ## Properties
 
-| Property                                       | Type                 | Description                                     |
-| ---------------------------------------------- | -------------------- | ----------------------------------------------- |
-| [pass](./jest-prosemirror.applyreturn.pass.md) | <code>boolean</code> | True when the command was applied successfully. |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [pass](./jest-prosemirror.applyreturn.pass.md) | <code>boolean</code> | True when the command was applied successfully. |
+

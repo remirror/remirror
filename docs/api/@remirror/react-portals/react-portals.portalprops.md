@@ -7,12 +7,13 @@
 <b>Signature:</b>
 
 ```typescript
-export interface PortalProps extends RemirrorPortalsProps
+export interface PortalProps extends RemirrorPortalsProps 
 ```
 
 ## Properties
 
-| Property                                              | Type                               | Description                                                |
-| ----------------------------------------------------- | ---------------------------------- | ---------------------------------------------------------- |
-| [Component](./react-portals.portalprops.component.md) | <code>() =&gt; ReactElement</code> | The plain component to render.                             |
-| [container](./react-portals.portalprops.container.md) | <code>HTMLElement</code>           | Holds the element that this portal is being rendered into. |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [Component](./react-portals.portalprops.component.md) | <code>() =&gt; ReactElement</code> | The plain component to render. |
+|  [container](./react-portals.portalprops.container.md) | <code>HTMLElement</code> | Holds the element that this portal is being rendered into. |
+

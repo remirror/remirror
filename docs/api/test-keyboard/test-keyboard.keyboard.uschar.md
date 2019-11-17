@@ -14,10 +14,11 @@ usChar({ text, options, typing, }: TextInputParams<SupportedCharacters>): this;
 
 ## Parameters
 
-| Parameter                  | Type                                                    | Description |
-| -------------------------- | ------------------------------------------------------- | ----------- |
-| { text, options, typing, } | <code>TextInputParams&lt;SupportedCharacters&gt;</code> |             |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  { text, options, typing, } | <code>TextInputParams&lt;SupportedCharacters&gt;</code> |  |
 
 <b>Returns:</b>
 
 `this`
+

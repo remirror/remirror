@@ -11,7 +11,7 @@ Provides the commands that this extension uses.
 ```typescript
 commands({ type }: CommandNodeTypeParams): {
         createParagraph: (attrs?: import("@remirror/core").Attrs<{
-            align?: "left" | "right" | "center" | "justify" | null | undefined;
+            align?: "center" | "left" | "right" | "justify" | null | undefined;
             indent?: number | null | undefined;
             lineSpacing?: string | null | undefined;
             id?: string | null | undefined;
@@ -29,7 +29,7 @@ commands({ type }: CommandNodeTypeParams): {
 
 `{
         createParagraph: (attrs?: import("@remirror/core").Attrs<{
-            align?: "left" | "right" | "center" | "justify" | null | undefined;
+            align?: "center" | "left" | "right" | "justify" | null | undefined;
             indent?: number | null | undefined;
             lineSpacing?: string | null | undefined;
             id?: string | null | undefined;

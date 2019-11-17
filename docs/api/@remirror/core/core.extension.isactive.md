@@ -16,10 +16,11 @@ isActive?(params: ExtensionManagerParams): CommandStatusCheck;
 
 ## Parameters
 
-| Parameter | Type                                | Description              |
-| --------- | ----------------------------------- | ------------------------ |
-| params    | <code>ExtensionManagerParams</code> | extension manager params |
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  params | <code>ExtensionManagerParams</code> | extension manager params |
 
 <b>Returns:</b>
 
 `CommandStatusCheck`
+

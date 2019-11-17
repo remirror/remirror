@@ -9,7 +9,7 @@ A parameter builder interface which compares the previous and next match.
 <b>Signature:</b>
 
 ```typescript
-export interface CompareMatchParams
+export interface CompareMatchParams 
 ```
 
 ## Remarks
@@ -18,7 +18,8 @@ It is used within the codebase to determine the kind of change that has occurred
 
 ## Properties
 
-| Property                                                 | Type                           | Description       |
-| -------------------------------------------------------- | ------------------------------ | ----------------- |
-| [next](./prosemirror-suggest.comparematchparams.next.md) | <code>SuggestStateMatch</code> | The current match |
-| [prev](./prosemirror-suggest.comparematchparams.prev.md) | <code>SuggestStateMatch</code> | The initial match |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [next](./prosemirror-suggest.comparematchparams.next.md) | <code>SuggestStateMatch</code> | The current match |
+|  [prev](./prosemirror-suggest.comparematchparams.prev.md) | <code>SuggestStateMatch</code> | The initial match |
+

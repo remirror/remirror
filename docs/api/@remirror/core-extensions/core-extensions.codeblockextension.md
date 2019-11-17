@@ -7,21 +7,22 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class CodeBlockExtension extends NodeExtension
+export declare class CodeBlockExtension extends NodeExtension 
 ```
 
 ## Properties
 
-| Property                                                 | Modifiers | Type                               | Description |
-| -------------------------------------------------------- | --------- | ---------------------------------- | ----------- |
-| [name](./core-extensions.codeblockextension.name.md)     |           | <code>&quot;codeBlock&quot;</code> |             |
-| [schema](./core-extensions.codeblockextension.schema.md) |           | <code>NodeExtensionSpec</code>     |             |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [name](./core-extensions.codeblockextension.name.md) |  | <code>&quot;codeBlock&quot;</code> |  |
+|  [schema](./core-extensions.codeblockextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
 
 ## Methods
 
-| Method                                                                         | Modifiers | Description |
-| ------------------------------------------------------------------------------ | --------- | ----------- |
-| [commands({ type, schema })](./core-extensions.codeblockextension.commands.md) |           |             |
-| [inputRules({ type })](./core-extensions.codeblockextension.inputrules.md)     |           |             |
-| [keys({ type, schema })](./core-extensions.codeblockextension.keys.md)         |           |             |
-| [styles()](./core-extensions.codeblockextension.styles.md)                     |           |             |
+|  Method | Modifiers | Description |
+|  --- | --- | --- |
+|  [commands({ type, schema })](./core-extensions.codeblockextension.commands.md) |  |  |
+|  [inputRules({ type })](./core-extensions.codeblockextension.inputrules.md) |  |  |
+|  [keys({ type, schema })](./core-extensions.codeblockextension.keys.md) |  |  |
+|  [styles()](./core-extensions.codeblockextension.styles.md) |  |  |
+

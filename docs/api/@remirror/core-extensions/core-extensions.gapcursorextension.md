@@ -9,7 +9,7 @@ Create a gap cursor plugin.
 <b>Signature:</b>
 
 ```typescript
-export declare class GapCursorExtension extends Extension
+export declare class GapCursorExtension extends Extension 
 ```
 
 ## Remarks
@@ -18,13 +18,14 @@ When enabled, this will capture clicks near and arrow-key-motion past places tha
 
 ## Properties
 
-| Property                                             | Modifiers | Type                               | Description |
-| ---------------------------------------------------- | --------- | ---------------------------------- | ----------- |
-| [name](./core-extensions.gapcursorextension.name.md) |           | <code>&quot;gapCursor&quot;</code> |             |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [name](./core-extensions.gapcursorextension.name.md) |  | <code>&quot;gapCursor&quot;</code> |  |
 
 ## Methods
 
-| Method                                                     | Modifiers | Description                                              |
-| ---------------------------------------------------------- | --------- | -------------------------------------------------------- |
-| [plugin()](./core-extensions.gapcursorextension.plugin.md) |           | Adds the gapCursor plugin functionality into the editor. |
-| [styles()](./core-extensions.gapcursorextension.styles.md) |           | Sets the styling for the gapCursor.                      |
+|  Method | Modifiers | Description |
+|  --- | --- | --- |
+|  [plugin()](./core-extensions.gapcursorextension.plugin.md) |  | Adds the gapCursor plugin functionality into the editor. |
+|  [styles()](./core-extensions.gapcursorextension.styles.md) |  | Sets the styling for the gapCursor. |
+

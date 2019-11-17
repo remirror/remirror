@@ -9,11 +9,12 @@ A standard ProseMirror Node that also tracks tags.
 <b>Signature:</b>
 
 ```typescript
-export interface TaggedProsemirrorNode<GSchema extends EditorSchema = EditorSchema> extends PMNode<GSchema>
+export interface TaggedProsemirrorNode<GSchema extends EditorSchema = EditorSchema> extends PMNode<GSchema> 
 ```
 
 ## Properties
 
-| Property                                              | Type              | Description |
-| ----------------------------------------------------- | ----------------- | ----------- |
-| [tags](./jest-remirror.taggedprosemirrornode.tags.md) | <code>Tags</code> |             |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [tags](./jest-remirror.taggedprosemirrornode.tags.md) | <code>Tags</code> |  |
+

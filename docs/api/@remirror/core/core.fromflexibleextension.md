@@ -7,7 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type FromFlexibleExtension<
-  GValue extends FlexibleExtension
-> = GValue extends PrioritizedExtension<infer P> ? P : GValue extends AnyExtension ? GValue : never;
+export declare type FromFlexibleExtension<GValue extends FlexibleExtension> = GValue extends PrioritizedExtension<infer P> ? P : GValue extends AnyExtension ? GValue : never;
 ```

@@ -9,7 +9,7 @@ The match value with the full and partial text.
 <b>Signature:</b>
 
 ```typescript
-export interface MatchValue
+export interface MatchValue 
 ```
 
 ## Remarks
@@ -18,11 +18,13 @@ For a suggester with a char `@` then the following text `@ab|c` where `|` is the
 
 ```json
 { "full": "abc", "partial": "ab" }
+
 ```
 
 ## Properties
 
-| Property                                               | Type                | Description                                                                                      |
-| ------------------------------------------------------ | ------------------- | ------------------------------------------------------------------------------------------------ |
-| [full](./prosemirror-suggest.matchvalue.full.md)       | <code>string</code> | The complete match independent of the cursor position.                                           |
-| [partial](./prosemirror-suggest.matchvalue.partial.md) | <code>string</code> | This value is a partial match which ends at the position of the cursor within the matching text. |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [full](./prosemirror-suggest.matchvalue.full.md) | <code>string</code> | The complete match independent of the cursor position. |
+|  [partial](./prosemirror-suggest.matchvalue.partial.md) | <code>string</code> | This value is a partial match which ends at the position of the cursor within the matching text. |
+

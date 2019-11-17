@@ -9,7 +9,7 @@ Provides a priority value to the extension which determines the priority.
 <b>Signature:</b>
 
 ```typescript
-export interface PrioritizedExtension<GExtension extends AnyExtension = any>
+export interface PrioritizedExtension<GExtension extends AnyExtension = any> 
 ```
 
 ## Remarks
@@ -18,7 +18,8 @@ A lower value for priority means a higher priority. Think of it as an index and 
 
 ## Properties
 
-| Property                                              | Type                    | Description                        |
-| ----------------------------------------------------- | ----------------------- | ---------------------------------- |
-| [extension](./core.prioritizedextension.extension.md) | <code>GExtension</code> | The instantiated extension         |
-| [priority](./core.prioritizedextension.priority.md)   | <code>number</code>     | A priority given to the extension. |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [extension](./core.prioritizedextension.extension.md) | <code>GExtension</code> | The instantiated extension |
+|  [priority](./core.prioritizedextension.priority.md) | <code>number</code> | A priority given to the extension. |
+

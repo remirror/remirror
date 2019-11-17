@@ -9,7 +9,5 @@ Get the extension types from a list of PrioritizedExtensions.
 <b>Signature:</b>
 
 ```typescript
-export declare type InferFlexibleExtensionList<
-  GFlexibleList extends FlexibleExtension[]
-> = InferFlexibleExtension<GFlexibleList[number]>;
+export declare type InferFlexibleExtensionList<GFlexibleList extends FlexibleExtension[]> = InferFlexibleExtension<GFlexibleList[number]>;
 ```

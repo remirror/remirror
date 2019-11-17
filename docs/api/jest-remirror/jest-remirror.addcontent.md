@@ -7,7 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type AddContent<GExtension extends AnyExtension> = (
-  content: TaggedProsemirrorNode<SchemaFromExtensions<GExtension>>,
-) => AddContentReturn<GExtension>;
+export declare type AddContent<GExtension extends AnyExtension> = (content: TaggedProsemirrorNode<SchemaFromExtensions<GExtension>>) => AddContentReturn<GExtension>;
 ```

@@ -15,3 +15,4 @@ RemirrorThemeProvider: FC<RemirrorThemeProviderProps>
 ## Remarks
 
 Supports nested themes.
+

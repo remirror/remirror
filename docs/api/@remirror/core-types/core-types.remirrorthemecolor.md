@@ -9,7 +9,7 @@ The interface for the RemirrorThemeColors.
 <b>Signature:</b>
 
 ```typescript
-export interface RemirrorThemeColor
+export interface RemirrorThemeColor 
 ```
 
 ## Remarks
@@ -19,18 +19,20 @@ This interface allows for declaration merging.
 ```ts
 declare module '@remirror/ui' {
   interface RemirrorThemeVariants {
-    customColor: 'pink';
-  }
+    customColor: 'pink'
+  };
 }
+
 ```
 
 ## Properties
 
-| Property                                                    | Type                       | Description                                                                                                     |
-| ----------------------------------------------------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| [accent](./core-types.remirrorthemecolor.accent.md)         | <code>ColorProperty</code> | A contrast color for emphasizing UI                                                                             |
-| [background](./core-types.remirrorthemecolor.background.md) | <code>ColorProperty</code> | Body background color                                                                                           |
-| [muted](./core-types.remirrorthemecolor.muted.md)           | <code>ColorProperty</code> | A faint color for backgrounds, borders, and accents that do not require high contrast with the background color |
-| [primary](./core-types.remirrorthemecolor.primary.md)       | <code>ColorProperty</code> | Primary brand color for links, buttons, etc.                                                                    |
-| [secondary](./core-types.remirrorthemecolor.secondary.md)   | <code>ColorProperty</code> | A secondary brand color for alternative styling                                                                 |
-| [text](./core-types.remirrorthemecolor.text.md)             | <code>ColorProperty</code> | Body foreground color                                                                                           |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [accent](./core-types.remirrorthemecolor.accent.md) | <code>ColorProperty</code> | A contrast color for emphasizing UI |
+|  [background](./core-types.remirrorthemecolor.background.md) | <code>ColorProperty</code> | Body background color |
+|  [muted](./core-types.remirrorthemecolor.muted.md) | <code>ColorProperty</code> | A faint color for backgrounds, borders, and accents that do not require high contrast with the background color |
+|  [primary](./core-types.remirrorthemecolor.primary.md) | <code>ColorProperty</code> | Primary brand color for links, buttons, etc. |
+|  [secondary](./core-types.remirrorthemecolor.secondary.md) | <code>ColorProperty</code> | A secondary brand color for alternative styling |
+|  [text](./core-types.remirrorthemecolor.text.md) | <code>ColorProperty</code> | Body foreground color |
+

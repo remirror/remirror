@@ -7,19 +7,20 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class ImageExtension extends NodeExtension
+export declare class ImageExtension extends NodeExtension 
 ```
 
 ## Properties
 
-| Property                                             | Modifiers | Type                           | Description |
-| ---------------------------------------------------- | --------- | ------------------------------ | ----------- |
-| [name](./extension-image.imageextension.name.md)     |           | <code>&quot;image&quot;</code> |             |
-| [schema](./extension-image.imageextension.schema.md) |           | <code>NodeExtensionSpec</code> |             |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [name](./extension-image.imageextension.name.md) |  | <code>&quot;image&quot;</code> |  |
+|  [schema](./extension-image.imageextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
 
 ## Methods
 
-| Method                                                             | Modifiers | Description |
-| ------------------------------------------------------------------ | --------- | ----------- |
-| [commands({ type })](./extension-image.imageextension.commands.md) |           |             |
-| [plugin()](./extension-image.imageextension.plugin.md)             |           |             |
+|  Method | Modifiers | Description |
+|  --- | --- | --- |
+|  [commands({ type })](./extension-image.imageextension.commands.md) |  |  |
+|  [plugin()](./extension-image.imageextension.plugin.md) |  |  |
+

@@ -7,6 +7,13 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+## [0.6.5] - 2019-11-17
+
+### Changed
+
+- `@remirror/extension-collaboration`: Bug fix for `this` being undefined https://github.com/ifiokjr/remirror/issues/174.
+- Upgrade dependencies.
+
 ## [0.6.4] - 2019-11-07
 
 ### Changed
@@ -230,9 +237,10 @@ This is a large breaking change and may cause a lot of your existing code to sto
 - Fixes missing TypeScript definitions #77.
 - Fixes crash when rendering a ReactNodeView in NextJS #75.
 
-[unreleased]: https://github.com/ifiokjr/remirror/compare/v0.6.4...HEAD
-[0.6.3]: https://github.com/ifiokjr/remirror/compare/v0.6.3...v0.6.4
-[0.6.2]: https://github.com/ifiokjr/remirror/compare/v0.6.2...v0.6.3
+[unreleased]: https://github.com/ifiokjr/remirror/compare/v0.6.5...HEAD
+[0.6.5]: https://github.com/ifiokjr/remirror/compare/v0.6.4...v0.6.5
+[0.6.4]: https://github.com/ifiokjr/remirror/compare/v0.6.3...v0.6.4
+[0.6.3]: https://github.com/ifiokjr/remirror/compare/v0.6.2...v0.6.3
 [0.6.2]: https://github.com/ifiokjr/remirror/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/ifiokjr/remirror/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/ifiokjr/remirror/compare/v0.5.0...v0.6.0

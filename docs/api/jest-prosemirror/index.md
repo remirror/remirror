@@ -6,6 +6,7 @@
 
 ## Packages
 
-| Package                                   | Description                                        |
-| ----------------------------------------- | -------------------------------------------------- |
-| [jest-prosemirror](./jest-prosemirror.md) | Write expressive tests for your prosemirror editor |
+|  Package | Description |
+|  --- | --- |
+|  [jest-prosemirror](./jest-prosemirror.md) | Write expressive tests for your prosemirror editor |
+

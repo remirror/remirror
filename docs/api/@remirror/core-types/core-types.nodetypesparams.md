@@ -9,7 +9,7 @@ A paramter builder interface containing the `types` property which takes a singl
 <b>Signature:</b>
 
 ```typescript
-export interface NodeTypesParams<GSchema extends EditorSchema = any>
+export interface NodeTypesParams<GSchema extends EditorSchema = any> 
 ```
 
 ## Remarks
@@ -18,6 +18,7 @@ This can be used to check whether a certain type matches any of these types.
 
 ## Properties
 
-| Property                                       | Type                                                                             | Description                        |
-| ---------------------------------------------- | -------------------------------------------------------------------------------- | ---------------------------------- |
-| [types](./core-types.nodetypesparams.types.md) | <code>NodeType&lt;GSchema&gt; &#124; Array&lt;NodeType&lt;GSchema&gt;&gt;</code> | The prosemirror node types to use. |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [types](./core-types.nodetypesparams.types.md) | <code>NodeType&lt;GSchema&gt; &#124; Array&lt;NodeType&lt;GSchema&gt;&gt;</code> | The prosemirror node types to use. |
+

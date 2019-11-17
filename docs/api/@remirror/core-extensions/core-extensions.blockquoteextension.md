@@ -7,21 +7,22 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class BlockquoteExtension extends NodeExtension
+export declare class BlockquoteExtension extends NodeExtension 
 ```
 
 ## Properties
 
-| Property                                                  | Modifiers | Type                                | Description |
-| --------------------------------------------------------- | --------- | ----------------------------------- | ----------- |
-| [name](./core-extensions.blockquoteextension.name.md)     |           | <code>&quot;blockquote&quot;</code> |             |
-| [schema](./core-extensions.blockquoteextension.schema.md) |           | <code>NodeExtensionSpec</code>      |             |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [name](./core-extensions.blockquoteextension.name.md) |  | <code>&quot;blockquote&quot;</code> |  |
+|  [schema](./core-extensions.blockquoteextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
 
 ## Methods
 
-| Method                                                                      | Modifiers | Description |
-| --------------------------------------------------------------------------- | --------- | ----------- |
-| [commands({ type })](./core-extensions.blockquoteextension.commands.md)     |           |             |
-| [inputRules({ type })](./core-extensions.blockquoteextension.inputrules.md) |           |             |
-| [keys({ type })](./core-extensions.blockquoteextension.keys.md)             |           |             |
-| [styles()](./core-extensions.blockquoteextension.styles.md)                 |           |             |
+|  Method | Modifiers | Description |
+|  --- | --- | --- |
+|  [commands({ type })](./core-extensions.blockquoteextension.commands.md) |  |  |
+|  [inputRules({ type })](./core-extensions.blockquoteextension.inputrules.md) |  |  |
+|  [keys({ type })](./core-extensions.blockquoteextension.keys.md) |  |  |
+|  [styles()](./core-extensions.blockquoteextension.styles.md) |  |  |
+

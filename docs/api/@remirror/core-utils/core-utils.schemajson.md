@@ -7,12 +7,13 @@
 <b>Signature:</b>
 
 ```typescript
-export interface SchemaJSON<GNodes extends string = string, GMarks extends string = string>
+export interface SchemaJSON<GNodes extends string = string, GMarks extends string = string> 
 ```
 
 ## Properties
 
-| Property                                  | Type                                        | Description |
-| ----------------------------------------- | ------------------------------------------- | ----------- |
-| [marks](./core-utils.schemajson.marks.md) | <code>Record&lt;GMarks, MarkSpec&gt;</code> |             |
-| [nodes](./core-utils.schemajson.nodes.md) | <code>Record&lt;GNodes, NodeSpec&gt;</code> |             |
+|  Property | Type | Description |
+|  --- | --- | --- |
+|  [marks](./core-utils.schemajson.marks.md) | <code>Record&lt;GMarks, MarkSpec&gt;</code> |  |
+|  [nodes](./core-utils.schemajson.nodes.md) | <code>Record&lt;GNodes, NodeSpec&gt;</code> |  |
+

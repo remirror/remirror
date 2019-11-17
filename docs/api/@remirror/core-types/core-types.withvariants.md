@@ -12,6 +12,6 @@ This is used with the `SxThemeProp` and allow a user to configure the variant to
 
 ```typescript
 export declare type WithVariants<GObject extends object> = GObject & {
-  variant?: string;
+    variant?: string;
 };
 ```
