@@ -109,7 +109,14 @@ export const multishiftReducer = <GItem = any>(
 
       const extra =
         indexes.length && autoSelectOnBlur
-          ? { selectedItems: addItems(selected, indexes.map(index => items[index]), getItemId, multiple) }
+          ? {
+              selectedItems: addItems(
+                selected,
+                indexes.map(index => items[index]),
+                getItemId,
+                multiple,
+              ),
+            }
           : {};
 
       changes = omitUnchangedState(

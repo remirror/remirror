@@ -135,9 +135,15 @@ export interface BubbleMenuProps {
   activateLink(): void;
 }
 
-const bubbleMenuItems: Array<
-  [ActionNames<WysiwygExtensions>, [ComponentType<IconProps>, string?], Attrs?]
-> = [['bold', [BoldIcon]], ['italic', [ItalicIcon]], ['underline', [UnderlineIcon]]];
+const bubbleMenuItems: Array<[
+  ActionNames<WysiwygExtensions>,
+  [ComponentType<IconProps>, string?],
+  Attrs?,
+]> = [
+  ['bold', [BoldIcon]],
+  ['italic', [ItalicIcon]],
+  ['underline', [UnderlineIcon]],
+];
 
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
   const { actions, getPositionerProps, helpers } = useRemirrorContext<WysiwygExtensions>();

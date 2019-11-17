@@ -47,9 +47,10 @@ export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
 
   const userMatches: ActiveUserData[] =
     mention && mention.name === 'at' && mention.query.length
-      ? take(matchSorter(userData, mention.query, { keys: ['username', 'displayName'] }), 6).map(
-          (user, index) => ({ ...user, active: index === mention.activeIndex }),
-        )
+      ? take(
+          matchSorter(userData, mention.query, { keys: ['username', 'displayName'] }),
+          6,
+        ).map((user, index) => ({ ...user, active: index === mention.activeIndex }))
       : [];
 
   const tagMatches: ActiveTagData[] =

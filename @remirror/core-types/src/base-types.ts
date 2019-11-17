@@ -109,7 +109,9 @@ export type AbstractInstanceType<GConstructor extends { prototype: any }> = GCon
  * A magical utility which maps a union type to an intersection type using TypeScript KungFu
  * Taken from https://stackoverflow.com/a/50375286/2172153
  */
-export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void)
+export type UnionToIntersection<U> = (U extends any
+? (k: U) => void
+: never) extends (k: infer I) => void
   ? I
   : never;
 

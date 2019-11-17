@@ -16,7 +16,7 @@ export const SPECIAL_KEYS = [
   'SelectAll',
 ] as const;
 
-export type SpecialKey = (typeof SPECIAL_KEYS)[number];
+export type SpecialKey = typeof SPECIAL_KEYS[number];
 
 export const SPECIAL_INPUT_KEYS = ['ArrowDown', 'ArrowUp', 'Enter', 'Escape'] as const;
 export const SPECIAL_MENU_KEYS = [

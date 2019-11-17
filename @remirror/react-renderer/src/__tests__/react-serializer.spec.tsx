@@ -143,10 +143,9 @@ describe('ReactSerializer.renderSpec', () => {
 
   it('supports deep nesting', () => {
     expect(
-      shallow(ReactSerializer.renderSpec(
-        ['div', attrs, ['div', { class: 'inside' }, 0]],
-        'message',
-      ) as JSX.Element),
+      shallow(
+        ReactSerializer.renderSpec(['div', attrs, ['div', { class: 'inside' }, 0]], 'message') as JSX.Element,
+      ),
     ).toMatchElement(
       <div {...attrs}>
         <div>message</div>

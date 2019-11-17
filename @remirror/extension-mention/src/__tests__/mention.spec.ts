@@ -192,7 +192,11 @@ describe('plugin', () => {
 
 describe('pasteRules', () => {
   const options = {
-    matchers: [{ char: '#', name: 'tag' }, { char: '@', name: 'at' }, { char: '+', name: 'plus' }],
+    matchers: [
+      { char: '#', name: 'tag' },
+      { char: '@', name: 'at' },
+      { char: '+', name: 'plus' },
+    ],
   };
 
   it('supports pasting content', () => {
@@ -231,7 +235,11 @@ describe('pasteRules', () => {
 
 describe('commands', () => {
   const options = {
-    matchers: [{ char: '#', name: 'tag' }, { char: '@', name: 'at' }, { char: '+', name: 'plus' }],
+    matchers: [
+      { char: '#', name: 'tag' },
+      { char: '@', name: 'at' },
+      { char: '+', name: 'plus' },
+    ],
   };
   let {
     nodes: { doc, p },

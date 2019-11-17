@@ -251,15 +251,12 @@ interface CleanParams extends SchemaParams {
 export const clean = ({ schema, content }: CleanParams) => {
   const node = content;
   if (Array.isArray(node)) {
-    return node.reduce(
-      (acc, next) => {
-        if (isProsemirrorNode(next)) {
-          acc.push(PMNode.fromJSON(schema, next.toJSON()));
-        }
-        return acc;
-      },
-      [] as PMNode[],
-    );
+    return node.reduce((acc, next) => {
+      if (isProsemirrorNode(next)) {
+        acc.push(PMNode.fromJSON(schema, next.toJSON()));
+      }
+      return acc;
+    }, [] as PMNode[]);
   }
   return isProsemirrorNode(node) ? PMNode.fromJSON(schema, node.toJSON()) : undefined;
 };

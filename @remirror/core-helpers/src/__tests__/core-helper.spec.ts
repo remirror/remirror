@@ -353,7 +353,10 @@ test('uniqueBy', () => {
 
 test('entries', () => {
   const input = { a: 1, b: 'b' };
-  expect(entries(input).map(([key, value]) => [key, value])).toEqual([['a', 1], ['b', 'b']]);
+  expect(entries(input).map(([key, value]) => [key, value])).toEqual([
+    ['a', 1],
+    ['b', 'b'],
+  ]);
 });
 test('keys', () => {
   const input = { a: 1, b: 'b' };

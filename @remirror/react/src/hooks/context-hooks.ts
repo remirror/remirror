@@ -27,9 +27,9 @@ import { InjectedRemirrorProps, UsePositionerParams } from '../react-types';
  * }
  * ```
  */
-export const useRemirrorContext = <GExtension extends AnyExtension = any>(): InjectedRemirrorProps<
-  GExtension
-> => {
+export const useRemirrorContext = <
+  GExtension extends AnyExtension = any
+>(): InjectedRemirrorProps<GExtension> => {
   const params = useContext(RemirrorContext);
 
   if (!params) {

@@ -75,7 +75,13 @@ const offsetIncrement = (
  * A prettier based code formatter which can be dropped in for use within the CodeBlockExtension
  */
 export const formatter: CodeBlockFormatter = ({ cursorOffset, language, source }) => {
-  const fn = (result: CursorResult, pairs: Array<[string, string]> = [['"', "'"], ["'", '"']]) => {
+  const fn = (
+    result: CursorResult,
+    pairs: Array<[string, string]> = [
+      ['"', "'"],
+      ["'", '"'],
+    ],
+  ) => {
     const increment = offsetIncrement(source, cursorOffset, result.formatted, result.cursorOffset, pairs);
     return { ...result, cursorOffset: result.cursorOffset + increment };
   };
