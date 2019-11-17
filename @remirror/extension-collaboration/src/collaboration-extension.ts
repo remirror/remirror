@@ -47,6 +47,10 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
     };
   }
 
+  protected init() {
+    this.getSendableSteps = debounce(this.options.debounce, this.getSendableSteps);
+  }
+
   /**
    * This provides one command for issuing updates .
    */
@@ -94,15 +98,15 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
   /**
    * Called whenever a transaction occurs.
    */
-  public onTransaction({ getState }: OnTransactionParams) {
+  public onTransaction = ({ getState }: OnTransactionParams) => {
     this.getSendableSteps(getState());
-  }
+  };
 
   /**
    * This passes the sendable steps into the `onSendableReceived` handler defined in the
    * options when there is something to send.
    */
-  private readonly getSendableSteps = debounce(this.options.debounce, (state: EditorState) => {
+  private getSendableSteps = (state: EditorState) => {
     const sendable = sendableSteps(state);
 
     if (sendable) {
@@ -113,5 +117,5 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
       };
       this.options.onSendableReceived({ sendable, jsonSendable });
     }
-  });
+  };
 }
