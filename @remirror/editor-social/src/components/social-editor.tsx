@@ -362,10 +362,10 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
       hideEmojiSuggestions,
     } = this.state;
 
-    const { children, placeholder, ...rest } = this.remirrorProps;
+    const { children, placeholder, extensions = [], ...rest } = this.remirrorProps;
     return (
       <RemirrorThemeProvider theme={this.theme}>
-        <RemirrorManager>
+        <RemirrorManager extensions={extensions}>
           <RemirrorExtension
             Constructor={PlaceholderExtension}
             placeholderStyle={{

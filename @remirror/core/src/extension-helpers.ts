@@ -1,7 +1,7 @@
-import { ExtensionType } from '@remirror/core-constants';
+import { ExtensionType, DEFAULT_EXTENSION_PRIORITY } from '@remirror/core-constants';
 import { isObject } from '@remirror/core-helpers';
 import { Extension } from './extension';
-import { AnyExtension } from './extension-types';
+import { AnyExtension, FlexibleExtension, PrioritizedExtension } from './extension-types';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
 
@@ -36,3 +36,12 @@ export const isMarkExtension = (extension: unknown): extension is MarkExtension<
  */
 export const isNodeExtension = (extension: unknown): extension is NodeExtension<any> =>
   isExtension(extension) && extension.type === ExtensionType.Node;
+
+/**
+ * Converts an extension to its mapped value
+ */
+export const convertToPrioritizedExtension = <GExtension extends AnyExtension = any>(
+  extension: FlexibleExtension<GExtension>,
+): PrioritizedExtension<GExtension> => {
+  return isExtension(extension) ? { priority: DEFAULT_EXTENSION_PRIORITY, extension } : { ...extension };
+};
