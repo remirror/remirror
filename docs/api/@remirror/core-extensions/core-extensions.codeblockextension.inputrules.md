@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-inputRules({ type }: ExtensionManagerNodeTypeParams): import("prosemirror-inputrules").InputRule<import("prosemirror-model").Schema<string, string>>[];
+inputRules({ type }: ExtensionManagerNodeTypeParams): import("prosemirror-inputrules").InputRule<import("@remirror/core").EditorSchema<string, string>>[];
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ inputRules({ type }: ExtensionManagerNodeTypeParams): import("prosemirror-inputr
 
 <b>Returns:</b>
 
-`import("prosemirror-inputrules").InputRule<import("prosemirror-model").Schema<string, string>>[]`
+`import("prosemirror-inputrules").InputRule<import("@remirror/core").EditorSchema<string, string>>[]`
 

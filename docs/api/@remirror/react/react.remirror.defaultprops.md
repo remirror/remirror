@@ -12,17 +12,13 @@ static defaultProps: {
             type: string;
             content: {
                 type: string;
-            }[]; /**
-             * Allow the component to pull in context from the the `RemirrorThemeContext`
-             */
+            }[];
         };
         fallbackContent: {
             type: string;
             content: {
                 type: string;
-            }[]; /**
-             * Allow the component to pull in context from the the `RemirrorThemeContext`
-             */
+            }[];
         };
         editable: true;
         usesBuiltInExtensions: true;
@@ -32,7 +28,7 @@ static defaultProps: {
         styles: {};
         editorStyles: {};
         insertPosition: "end";
-        onDispatchTransaction: (tr: import("prosemirror-state").Transaction<any>) => import("prosemirror-state").Transaction<any>;
+        onDispatchTransaction: (tr: Transaction<any>) => Transaction<any>;
         stringHandler: () => never;
     };
 ```

@@ -18,14 +18,13 @@ export declare class CollaborationExtension extends Extension<CollaborationExten
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [defaultOptions](./extension-collaboration.collaborationextension.defaultoptions.md) |  | <code>{</code><br/><code>        version: number;</code><br/><code>        clientID: string;</code><br/><code>        debounce: number;</code><br/><code>    }</code> | The default options for eht extension |
-|  [name](./extension-collaboration.collaborationextension.name.md) |  | <code>&quot;collaboration&quot;</code> | Provides the name of this extension. |
+|  [onTransaction](./extension-collaboration.collaborationextension.ontransaction.md) |  | <code>({ getState }: OnTransactionParams) =&gt; void</code> | Called whenever a transaction occurs. |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
 |  [commands({ getState, schema })](./extension-collaboration.collaborationextension.commands.md) |  | This provides one command for issuing updates . |
-|  [onTransaction({ getState })](./extension-collaboration.collaborationextension.ontransaction.md) |  | Called whenever a transaction occurs. |
+|  [init()](./extension-collaboration.collaborationextension.init.md) |  |  |
 |  [plugin()](./extension-collaboration.collaborationextension.plugin.md) |  | This returns the collab plugin provided by <code>prosemirror-collab</code>. |
 

@@ -29,6 +29,6 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any>
 |  --- | --- |
 |  [clearContent(triggerOnChange)](./react.injectedremirrorprops.clearcontent.md) | Clears all editor content |
 |  [getPositionerProps(options)](./react.injectedremirrorprops.getpositionerprops.md) | Attach these props to a component to inject it with position data. Typically this is used for creating menu components.<!-- -->A custom positioner can be passed in to update the method used to calculate the position. |
-|  [getRootProps(options)](./react.injectedremirrorprops.getrootprops.md) | A function that returns props which should be spread on a react element and declare it the editor root. |
+|  [getRootProps(options)](./react.injectedremirrorprops.getrootprops.md) | A function that returns props which should be spread on a react element and declare it as the editor root (where the editor is injected in the DOM). |
 |  [setContent(content, triggerOnChange)](./react.injectedremirrorprops.setcontent.md) | Replace all editor content with the new content. |
 

@@ -11,5 +11,5 @@ Special markers called `tags` can be put in the text. Tags provide a way to decl
 <b>Signature:</b>
 
 ```typescript
-text: (value: string, schema: import("prosemirror-model").Schema<string, string>) => TaggedContentItem
+text: (value: string, schema: EditorSchema<string, string>) => TaggedContentItem
 ```

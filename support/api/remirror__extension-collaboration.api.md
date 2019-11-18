@@ -24,19 +24,21 @@ export type CollaborationAttrs = Attrs<{
 
 // @public
 export class CollaborationExtension extends Extension<CollaborationExtensionOptions> {
+    get name(): "collaboration";
+    protected get defaultOptions(): {
+        version: number;
+        clientID: string;
+        debounce: number;
+    };
     commands({ getState, schema }: CommandParams): {
         collaborationUpdate: (attrs: Attrs<{
             steps: any[];
             version: number;
         }>) => CommandFunction<any>;
     };
-    protected readonly defaultOptions: {
-        version: number;
-        clientID: string;
-        debounce: number;
-    };
-    readonly name: "collaboration";
-    onTransaction({ getState }: OnTransactionParams): void;
+    // (undocumented)
+    protected init(): void;
+    onTransaction: ({ getState }: OnTransactionParams) => void;
     plugin(): Plugin;
 }
 

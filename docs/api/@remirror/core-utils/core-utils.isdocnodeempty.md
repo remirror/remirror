@@ -9,5 +9,5 @@ Checks if a node looks like an empty document
 <b>Signature:</b>
 
 ```typescript
-isDocNodeEmpty: (node: PMNode<any>) => boolean
+isDocNodeEmpty: (node: ProsemirrorNode<any>) => boolean
 ```

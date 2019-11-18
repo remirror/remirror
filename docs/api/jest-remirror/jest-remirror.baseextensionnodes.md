@@ -9,5 +9,5 @@ The types of the different nodes injected into every test setup
 <b>Signature:</b>
 
 ```typescript
-export declare type BaseExtensionNodes = (typeof nodeExtensions)[number];
+export declare type BaseExtensionNodes = typeof nodeExtensions[number];
 ```

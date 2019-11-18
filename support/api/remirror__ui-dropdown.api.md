@@ -9,7 +9,6 @@ import { IconProps } from '@remirror/ui-icons';
 import { MinWidthProperty } from 'csstype';
 import { MultishiftChangeHandlerProps } from 'multishift';
 import { MultishiftPropGetters } from 'multishift';
-import React from 'react';
 import { ReactNode } from 'react';
 import { WidthProperty } from 'csstype';
 
@@ -21,7 +20,7 @@ export interface DropdownItem {
 }
 
 // Warning: (ae-forgotten-export) The symbol "dropdownPositions" needs to be exported by the entry point index.d.ts
-// 
+//
 // @public (undocumented)
 export type DropdownPosition = keyof typeof dropdownPositions;
 
@@ -52,7 +51,7 @@ export interface DropdownProps {
 }
 
 // @public
-export const DropdownSelect: React.ForwardRefExoticComponent<DropdownProps & React.RefAttributes<HTMLDivElement>>;
+export const DropdownSelect: import("react").ForwardRefExoticComponent<DropdownProps & import("react").RefAttributes<HTMLDivElement>>;
 
 // @public (undocumented)
 export interface RenderLabelParams {

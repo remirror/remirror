@@ -13,18 +13,16 @@ import { Plugin } from 'prosemirror-state';
 
 // @public
 export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOptions> {
+    get name(): "enhancedLink";
+    get schema(): MarkExtensionSpec;
     // (undocumented)
     commands({ type }: CommandMarkTypeParams): {
         enhancedLink: (attrs?: Record<string, unknown> | undefined) => import("@remirror/core").CommandFunction<any>;
     };
     // (undocumented)
-    readonly name: "enhancedLink";
-    // (undocumented)
     pasteRules({ type }: ExtensionManagerMarkTypeParams): Plugin<any, any>[];
     // (undocumented)
-    plugin: ({ type }: import("@remirror/core").ExtensionManagerTypeParams<import("prosemirror-model").MarkType<import("prosemirror-model").Schema<string, string>>>) => Plugin<any, any>;
-    // (undocumented)
-    readonly schema: MarkExtensionSpec;
+    plugin: ({ type }: import("@remirror/core").ExtensionManagerTypeParams<import("prosemirror-model").MarkType<import("@remirror/core").EditorSchema<string, string>>>) => Plugin<any, any>;
 }
 
 // @public (undocumented)

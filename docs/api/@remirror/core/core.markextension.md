@@ -23,7 +23,6 @@ Marks are used to add extra styling or other information to inline content. Mark
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [schema](./core.markextension.schema.md) |  | <code>MarkExtensionSpec</code> | The prosemirror specification which sets up the mark in the schema. |
-|  [type](./core.markextension.type.md) |  | <code>ExtensionType.Mark</code> | Set's the type of this extension to be a <code>Mark</code>. |
 
 ## Methods
 

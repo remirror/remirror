@@ -10,7 +10,7 @@ The RemirrorProvider which injects context into it's child component.
 
 ```typescript
 RemirrorProvider: {
-    <GExtension extends import("@remirror/core").Extension<any, any> = any>({ children, childAsRoot, ...props }: RemirrorProviderProps<GExtension>): JSX.Element;
+    <GExtension extends AnyExtension = any>({ children, childAsRoot, ...props }: RemirrorProviderProps<GExtension>): JSX.Element;
     $$remirrorType: RemirrorType;
 }
 ```

@@ -14,5 +14,5 @@ Finds the node at the end of the Prosemirror document.
 <b>Signature:</b>
 
 ```typescript
-findNodeAtEndOfDoc: (doc: import("prosemirror-model").Node<any>) => FindProsemirrorNodeResult<any>
+findNodeAtEndOfDoc: (doc: ProsemirrorNode<any>) => FindProsemirrorNodeResult<any>
 ```

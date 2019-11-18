@@ -9,5 +9,5 @@ Creates an node input rule based on the provided regex for the provided node typ
 <b>Signature:</b>
 
 ```typescript
-plainInputRule: <GSchema extends import("prosemirror-model").Schema<string, string> = import("prosemirror-model").Schema<string, string>>({ regexp, transformMatch, updateSelection, }: PlainInputRuleParams) => InputRule<GSchema>
+plainInputRule: <GSchema extends EditorSchema<string, string> = EditorSchema<string, string>>({ regexp, transformMatch, updateSelection, }: PlainInputRuleParams) => InputRule<GSchema>
 ```

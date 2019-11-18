@@ -10,13 +10,6 @@
 export declare class CodeExtension extends MarkExtension 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.codeextension.name.md) |  | <code>&quot;code&quot;</code> |  |
-|  [schema](./core-extensions.codeextension.schema.md) |  | <code>MarkExtensionSpec</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

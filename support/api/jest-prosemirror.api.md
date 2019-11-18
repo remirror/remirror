@@ -27,7 +27,7 @@ import { TextParams } from '@remirror/core-types';
 export const a: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public
-export const apply: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(taggedDoc: TaggedProsemirrorNode<GSchema>, command: CommandFunction<GSchema>, result?: TaggedProsemirrorNode<GSchema> | undefined) => ApplyReturn<GSchema>;
+export const apply: <GSchema extends EditorSchema<string, string> = any>(taggedDoc: TaggedProsemirrorNode<GSchema>, command: CommandFunction<GSchema>, result?: TaggedProsemirrorNode<GSchema> | undefined) => ApplyReturn<GSchema>;
 
 // @public
 export interface ApplyReturn<GSchema extends EditorSchema = any> extends TaggedDocParams<GSchema>, EditorStateParams<GSchema> {
@@ -44,7 +44,7 @@ export const atomContainer: (...args: (string | pm.TaggedProsemirrorNode<any> | 
 export const atomInline: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public
-export const backspace: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, times, }: TestEditorViewParams<GSchema> & {
+export const backspace: <GSchema extends EditorSchema<string, string> = any>({ view, times, }: TestEditorViewParams<GSchema> & {
     times?: number | undefined;
 }) => void;
 
@@ -67,7 +67,7 @@ export interface CommandTransformation<GSchema extends EditorSchema = any> {
 export const containerWithRestrictedContent: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public
-export const createEditor: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(taggedDoc: TaggedProsemirrorNode<GSchema>, { plugins, rules, autoClean, ...editorOptions }?: CreateEditorOptions) => {
+export const createEditor: <GSchema extends EditorSchema<string, string> = any>(taggedDoc: TaggedProsemirrorNode<GSchema>, { plugins, rules, autoClean, ...editorOptions }?: CreateEditorOptions) => {
     start: number;
     end: number;
     selection: import("prosemirror-state").Selection<GSchema>;
@@ -85,7 +85,7 @@ export const createEditor: <GSchema extends import("prosemirror-model").Schema<s
     debug: () => any;
     fire: (params: Pick<FireEventAtPositionParams<GSchema>, "position" | "options" | "event">) => any;
     callback: (fn: (content: ReturnValueCallbackParams<GSchema>) => void) => any;
-    paste: (content: string | import("prosemirror-model").Node<any>) => any;
+    paste: (content: string | ProsemirrorNode<any>) => any;
 };
 
 // @public (undocumented)
@@ -99,20 +99,20 @@ export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
 export const createEvents: <GEvent extends Event>(event: EventType, options: PlainObject) => GEvent[];
 
 // @public
-export const createState: <GSchema extends Schema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>, plugins?: import("prosemirror-state").Plugin<any, any>[]) => EditorState<GSchema>;
+export const createState: <GSchema extends EditorSchema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>, plugins?: Plugin<any, any>[]) => EditorState<GSchema>;
 
 // @public
-export const dispatchAllSelection: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, }: TestEditorViewParams<GSchema>) => void;
+export const dispatchAllSelection: <GSchema extends EditorSchema<string, string> = any>({ view, }: TestEditorViewParams<GSchema>) => void;
 
 // Warning: (ae-forgotten-export) The symbol "DispatchNodeSelectionParams" needs to be exported by the entry point index.d.ts
 //
 // @public
-export const dispatchNodeSelection: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, pos, }: DispatchNodeSelectionParams<GSchema>) => void;
+export const dispatchNodeSelection: <GSchema extends EditorSchema<string, string> = any>({ view, pos, }: DispatchNodeSelectionParams<GSchema>) => void;
 
 // Warning: (ae-forgotten-export) The symbol "DispatchTextSelectionParams" needs to be exported by the entry point index.d.ts
 //
 // @public
-export const dispatchTextSelection: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, start, end, }: DispatchTextSelectionParams<GSchema>) => void;
+export const dispatchTextSelection: <GSchema extends EditorSchema<string, string> = any>({ view, start, end, }: DispatchTextSelectionParams<GSchema>) => void;
 
 // @public (undocumented)
 export const doc: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
@@ -129,7 +129,7 @@ export type EventType = keyof typeof rawEventMap | 'doubleClick' | 'tripleClick'
 export const findTextNode: (node: Node, text: string) => Node | undefined;
 
 // @public
-export const fireEventAtPosition: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, event, options, position, }: FireEventAtPositionParams<GSchema>) => void;
+export const fireEventAtPosition: <GSchema extends EditorSchema<string, string> = any>({ view, event, options, position, }: FireEventAtPositionParams<GSchema>) => void;
 
 // @public (undocumented)
 export interface FireParams {
@@ -172,10 +172,10 @@ export const horizontalRule: (...args: (string | pm.TaggedProsemirrorNode<any> |
 export const image: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public
-export const initSelection: <GSchema extends Schema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>) => GapCursor | Selection<GSchema> | null;
+export const initSelection: <GSchema extends EditorSchema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>) => GapCursor | Selection<GSchema> | null;
 
 // @public
-export const insertText: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, text, start: from, }: InsertTextParams<GSchema>) => void;
+export const insertText: <GSchema extends EditorSchema<string, string> = any>({ view, text, start: from, }: InsertTextParams<GSchema>) => void;
 
 // @public (undocumented)
 export interface InsertTextParams<GSchema extends EditorSchema = any> extends TestEditorViewParams<GSchema>, TextParams {
@@ -198,8 +198,8 @@ export const p: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFla
 export const paragraph: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedProsemirrorNode<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;
 
 // @public
-export const pasteContent: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, content, }: TestEditorViewParams<GSchema> & {
-    content: string | import("prosemirror-model").Node<any>;
+export const pasteContent: <GSchema extends EditorSchema<string, string> = any>({ view, content, }: TestEditorViewParams<GSchema> & {
+    content: string | ProsemirrorNode<any>;
 }) => void;
 
 export { pm }
@@ -230,7 +230,7 @@ export const pmBuild: <GObj extends Record<string, pm.NodeTypeAttributes | pm.Ma
 // Warning: (ae-forgotten-export) The symbol "PressParams" needs to be exported by the entry point index.d.ts
 //
 // @public
-export const press: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, char }: PressParams<GSchema>) => void;
+export const press: <GSchema extends EditorSchema<string, string> = any>({ view, char }: PressParams<GSchema>) => void;
 
 // @public (undocumented)
 export const prosemirrorMatchers: {
@@ -279,7 +279,7 @@ export interface ReturnValueCallbackParams<GSchema extends EditorSchema = any> e
 export const schema: Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">;
 
 // @public
-export const selectionFor: <GSchema extends Schema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>) => Selection<GSchema>;
+export const selectionFor: <GSchema extends EditorSchema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>) => Selection<GSchema>;
 
 // @public
 export const setupProsemirrorEnvironment: () => void;
@@ -287,7 +287,7 @@ export const setupProsemirrorEnvironment: () => void;
 // Warning: (ae-forgotten-export) The symbol "KeyboardShortcutParams" needs to be exported by the entry point index.d.ts
 //
 // @public
-export const shortcut: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, shortcut: text, }: KeyboardShortcutParams<GSchema>) => void;
+export const shortcut: <GSchema extends EditorSchema<string, string> = any>({ view, shortcut: text, }: KeyboardShortcutParams<GSchema>) => void;
 
 // @public (undocumented)
 export const strong: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFlatObject<any>)[]) => pm.TaggedFlatObject<Schema<"text" | "table" | "blockquote" | "image" | "doc" | "paragraph" | "heading" | "code_block" | "hard_break" | "table_cell" | "table_header" | "table_row" | "atomInline" | "atomBlock" | "containerWithRestrictedContent" | "orderedList" | "bulletList" | "listItem" | "horizontalRule" | "atomContainer", "link" | "code" | "em" | "strong">>;

@@ -16,14 +16,12 @@ import { throttle } from '@remirror/core';
 
 // @public
 export class DropCursorExtension extends Extension<DropCursorExtensionOptions> {
-    // (undocumented)
-    readonly defaultOptions: DropCursorExtensionOptions;
+    get name(): "dropCursor";
+    get defaultOptions(): DropCursorExtensionOptions;
     // (undocumented)
     helpers({ getState }: ExtensionManagerParams): {
         isDragging: () => boolean;
     };
-    // (undocumented)
-    readonly name: "dropCursor";
     plugin(params: ExtensionManagerParams): Plugin_2;
 }
 

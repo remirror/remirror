@@ -9,5 +9,5 @@ A magical utility which maps a union type to an intersection type using TypeScri
 <b>Signature:</b>
 
 ```typescript
-export declare type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
+export declare type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 ```

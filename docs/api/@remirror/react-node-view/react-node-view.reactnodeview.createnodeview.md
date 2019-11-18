@@ -9,7 +9,7 @@ A shorthand method for creating the ReactNodeView
 <b>Signature:</b>
 
 ```typescript
-static createNodeView<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GAttrs extends Attrs = Attrs>({ Component, portalContainer, options }: CreateNodeViewParams<GOptions, GAttrs>): (node: import("prosemirror-model").Node<any>, view: import("prosemirror-view").EditorView<any>, getPosition: GetPosition) => ReactNodeView<GOptions, GAttrs>;
+static createNodeView<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GAttrs extends Attrs = Attrs>({ Component, portalContainer, options }: CreateNodeViewParams<GOptions, GAttrs>): (node: ProsemirrorNode<any>, view: EditorView<any>, getPosition: GetPosition) => ReactNodeView<GOptions, GAttrs>;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ static createNodeView<GOptions extends BaseExtensionOptions = BaseExtensionOptio
 
 <b>Returns:</b>
 
-`(node: import("prosemirror-model").Node<any>, view: import("prosemirror-view").EditorView<any>, getPosition: GetPosition) => ReactNodeView<GOptions, GAttrs>`
+`(node: ProsemirrorNode<any>, view: EditorView<any>, getPosition: GetPosition) => ReactNodeView<GOptions, GAttrs>`
 

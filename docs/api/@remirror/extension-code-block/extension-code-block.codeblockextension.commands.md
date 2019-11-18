@@ -9,7 +9,7 @@
 ```typescript
 commands({ type, schema }: CommandNodeTypeParams): {
         toggleCodeBlock: (attrs?: Partial<CodeBlockAttrs> | undefined) => import("@remirror/core").CommandFunction<any>;
-        createCodeBlock: (attrs: CodeBlockAttrs) => (state: import("prosemirror-state").EditorState<import("prosemirror-model").Schema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("prosemirror-model").Schema<string, string>>) => void) | undefined) => boolean;
+        createCodeBlock: (attrs: CodeBlockAttrs) => (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
         updateCodeBlock: (attrs: CodeBlockAttrs) => import("@remirror/core").CommandFunction<any>;
         formatCodeBlock: ({ pos }?: Partial<import("@remirror/core").PosParams>) => import("@remirror/core").CommandFunction<any>;
     };
@@ -25,7 +25,7 @@ commands({ type, schema }: CommandNodeTypeParams): {
 
 `{
         toggleCodeBlock: (attrs?: Partial<CodeBlockAttrs> | undefined) => import("@remirror/core").CommandFunction<any>;
-        createCodeBlock: (attrs: CodeBlockAttrs) => (state: import("prosemirror-state").EditorState<import("prosemirror-model").Schema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("prosemirror-model").Schema<string, string>>) => void) | undefined) => boolean;
+        createCodeBlock: (attrs: CodeBlockAttrs) => (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
         updateCodeBlock: (attrs: CodeBlockAttrs) => import("@remirror/core").CommandFunction<any>;
         formatCodeBlock: ({ pos }?: Partial<import("@remirror/core").PosParams>) => import("@remirror/core").CommandFunction<any>;
     }`

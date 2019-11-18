@@ -9,5 +9,5 @@ Get the state of the suggest plugin.
 <b>Signature:</b>
 
 ```typescript
-getSuggestPluginState: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(state: Readonly<import("prosemirror-state").EditorState<GSchema>>) => SuggestState<any>
+getSuggestPluginState: <GSchema extends EditorSchema<string, string> = any>(state: Readonly<import("prosemirror-state").EditorState<GSchema>>) => SuggestState<any>
 ```

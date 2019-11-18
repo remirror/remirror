@@ -12,7 +12,7 @@ Checks if the content item is a string and runs the text transformer otherwise p
 
 ```typescript
 coerce: ({ content, schema }: CoerceParams) => {
-    nodes: TaggedProsemirrorNode<import("prosemirror-model").Schema<string, string>>[];
+    nodes: TaggedProsemirrorNode<EditorSchema<string, string>>[];
     tags: Tags;
 }
 ```

@@ -10,7 +10,7 @@ This component creates an extension that will be picked up by a parent RemirrorM
 
 ```typescript
 RemirrorExtension: <GConstructor extends {
-    prototype: import("@remirror/core").Extension<any, any>;
+    prototype: AnyExtension;
 }, GOptions extends GConstructor["prototype"]["_O"]>(_props: RemirrorExtensionProps<GConstructor, GOptions>) => null
 ```
 

@@ -10,6 +10,7 @@ import { CommandFunction } from '@remirror/core-types';
 import { EditorSchema } from '@remirror/core-types';
 import { EditorState } from 'prosemirror-state';
 import { EditorStateParams } from '@remirror/core-types';
+import { EditorView } from '@remirror/core-types';
 import { EditorViewParams } from '@remirror/core-types';
 import { ElementParams } from '@remirror/core-types';
 import { FromToParams } from '@remirror/core-types';
@@ -30,6 +31,7 @@ import { NodeTypesParams } from '@remirror/core-types';
 import { ObjectNode } from '@remirror/core-types';
 import { OptionalProsemirrorNodeParams } from '@remirror/core-types';
 import { Plugin } from 'prosemirror-state';
+import { PluginKey } from '@remirror/core-types';
 import { PositionParams } from '@remirror/core-types';
 import { PosParams } from '@remirror/core-types';
 import { PredicateParams } from '@remirror/core-types';
@@ -39,6 +41,7 @@ import { RangeParams } from '@remirror/core-types';
 import { RegExpParams } from '@remirror/core-types';
 import { RemirrorContentType } from '@remirror/core-types';
 import { ResolvedPos } from 'prosemirror-model';
+import { ResolvedPos as ResolvedPos_2 } from '@remirror/core-types';
 import { Schema } from 'prosemirror-model';
 import { SchemaParams } from '@remirror/core-types';
 import { Selection } from 'prosemirror-state';
@@ -46,6 +49,7 @@ import { Selection as Selection_2 } from '@remirror/core-types';
 import { SelectionParams } from '@remirror/core-types';
 import { Slice } from 'prosemirror-model';
 import { TextSelection } from 'prosemirror-state';
+import { Transaction } from '@remirror/core-types';
 import { TransactionParams } from '@remirror/core-types';
 import { TransformTransactionParams } from '@remirror/core-types';
 
@@ -75,7 +79,7 @@ export const canInsertNode: (state: Readonly<EditorState<any>>, type: NodeType_2
 export const CAPS_LOCK: string[];
 
 // @public
-export const cloneTransaction: (tr: import("prosemirror-state").Transaction<any>) => import("prosemirror-state").Transaction<any>;
+export const cloneTransaction: (tr: Transaction<any>) => Transaction<any>;
 
 // @public
 export const closestElement: (domNode: Node | null | undefined, selector: string) => HTMLElement | null;
@@ -89,7 +93,7 @@ export const COMMAND: readonly ["Meta", "⌘"];
 export const contains: ({ node, type }: ContainsParams) => boolean;
 
 // @public
-export const createDocumentNode: ({ content, schema, doc, stringHandler, fallback, }: CreateDocumentNodeParams) => Node<any>;
+export const createDocumentNode: ({ content, schema, doc, stringHandler, fallback, }: CreateDocumentNodeParams) => ProsemirrorNode<any>;
 
 // @public (undocumented)
 export interface CreateDocumentNodeParams extends SchemaParams, Partial<CustomDocParams>, StringHandlerParams {
@@ -106,7 +110,7 @@ export interface CustomDocParams {
 }
 
 // @public
-export const endPositionOfParent: (pmPosition: ResolvedPos<any>) => number;
+export const endPositionOfParent: (pmPosition: ResolvedPos_2<any>) => number;
 
 // @public
 export const environment: {
@@ -146,22 +150,22 @@ export const findChildrenByMark: ({ node, type, descend }: FindChildrenByMarkPar
 export const findChildrenByNode: ({ node, type, descend }: FindChildrenByNodeParams) => NodeWithPosition[];
 
 // @public
-export const findElementAtPosition: (position: number, view: import("prosemirror-view").EditorView<any>) => HTMLElement;
+export const findElementAtPosition: (position: number, view: EditorView<any>) => HTMLElement;
 
 // @public
 export const findInlineNodes: (params: FlattenParams) => NodeWithPosition[];
 
 // @public @deprecated
-export const findNodeAtEndOfDoc: (doc: import("prosemirror-model").Node<any>) => FindProsemirrorNodeResult<any>;
+export const findNodeAtEndOfDoc: (doc: ProsemirrorNode<any>) => FindProsemirrorNodeResult<any>;
 
 // @public
-export const findNodeAtPosition: ($pos: import("prosemirror-model").ResolvedPos<any>) => FindProsemirrorNodeResult<any>;
+export const findNodeAtPosition: ($pos: ResolvedPos_2<any>) => FindProsemirrorNodeResult<any>;
 
 // @public
-export const findNodeAtSelection: (selection: Selection<any>) => FindProsemirrorNodeResult<any>;
+export const findNodeAtSelection: (selection: Selection_2<any>) => FindProsemirrorNodeResult<any>;
 
 // @public @deprecated
-export const findNodeAtStartOfDoc: (doc: import("prosemirror-model").Node<any>) => FindProsemirrorNodeResult<any>;
+export const findNodeAtStartOfDoc: (doc: ProsemirrorNode<any>) => FindProsemirrorNodeResult<any>;
 
 // Warning: (ae-forgotten-export) The symbol "FindParentNodeParams" needs to be exported by the entry point index.d.ts
 //
@@ -174,10 +178,10 @@ export const findParentNode: ({ predicate, selection, }: FindParentNodeParams) =
 export const findParentNodeOfType: ({ types, selection, }: FindParentNodeOfTypeParams) => FindProsemirrorNodeResult<any> | undefined;
 
 // @public
-export const findPositionOfNodeAfter: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(value: Selection<GSchema> | import("prosemirror-model").ResolvedPos<GSchema> | Readonly<import("prosemirror-state").EditorState<GSchema>>) => FindProsemirrorNodeResult<any> | undefined;
+export const findPositionOfNodeAfter: <GSchema extends EditorSchema<string, string> = any>(value: Selection_2<GSchema> | ResolvedPos_2<GSchema> | Readonly<import("prosemirror-state").EditorState<GSchema>>) => FindProsemirrorNodeResult<any> | undefined;
 
 // @public
-export const findPositionOfNodeBefore: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(value: Selection<GSchema> | import("prosemirror-model").ResolvedPos<GSchema> | Readonly<import("prosemirror-state").EditorState<GSchema>> | import("prosemirror-state").Transaction<GSchema>) => FindProsemirrorNodeResult<any> | undefined;
+export const findPositionOfNodeBefore: <GSchema extends EditorSchema<string, string> = any>(value: Selection_2<GSchema> | ResolvedPos_2<GSchema> | Readonly<import("prosemirror-state").EditorState<GSchema>> | Transaction<GSchema>) => FindProsemirrorNodeResult<any> | undefined;
 
 // @public (undocumented)
 export interface FindProsemirrorNodeResult<GSchema extends EditorSchema = any> extends ProsemirrorNodeParams<GSchema> {
@@ -194,7 +198,7 @@ export interface FindSelectedNodeOfType<GSchema extends EditorSchema = any> exte
 // Warning: (ae-forgotten-export) The symbol "FindSelectedNodeOfTypeParams" needs to be exported by the entry point index.d.ts
 //
 // @public
-export const findSelectedNodeOfType: <GSchema extends import("prosemirror-model").Schema<string, string> = any, GSelection extends Selection<GSchema> = Selection<GSchema>>({ types, selection, }: FindSelectedNodeOfTypeParams<GSchema, GSelection>) => FindSelectedNodeOfType<GSchema> | undefined;
+export const findSelectedNodeOfType: <GSchema extends EditorSchema<string, string> = any, GSelection extends Selection_2<GSchema> = Selection_2<GSchema>>({ types, selection, }: FindSelectedNodeOfTypeParams<GSchema, GSelection>) => FindSelectedNodeOfType<GSchema> | undefined;
 
 // @public
 export const findTextNodes: (params: FlattenParams) => NodeWithPosition[];
@@ -205,10 +209,10 @@ export const flatten: ({ node, descend }: FlattenParams) => NodeWithPosition[];
 // Warning: (ae-forgotten-export) The symbol "FromStringParams" needs to be exported by the entry point index.d.ts
 //
 // @public
-export const fromHTML: ({ content, schema, doc }: FromStringParams) => Node<any>;
+export const fromHTML: ({ content, schema, doc }: FromStringParams) => ProsemirrorNode<any>;
 
 // @public
-export const getCursor: (selection: Selection<any>) => ResolvedPos<any> | null | undefined;
+export const getCursor: (selection: Selection_2<any>) => ResolvedPos_2<any> | null | undefined;
 
 // @public
 export const getDocument: (forceEnvironment?: "ssr" | "dom" | undefined) => Document;
@@ -222,7 +226,7 @@ export const getMarkAttrs: (state: Readonly<EditorState<any>>, type: MarkType_2<
 };
 
 // @public
-export const getMarkRange: (pmPosition?: ResolvedPos<any> | null, type?: MarkType_2<any> | null | undefined) => false | FromToParams;
+export const getMarkRange: (pmPosition?: ResolvedPos_2<any> | null, type?: MarkType_2<any> | null | undefined) => false | FromToParams;
 
 // @public
 export const getMatchString: (match: string | string[], index?: number) => string;
@@ -236,10 +240,10 @@ export const getNearestNonTextNode: (domNode: Node) => HTMLElement;
 export const getOffsetParent: ({ view, element }: GetOffsetParentParams) => HTMLElement;
 
 // @public
-export const getPluginMeta: <GMeta>(key: string | Plugin<any, any> | import("prosemirror-state").PluginKey<any, Schema<string, string>>, tr: import("prosemirror-state").Transaction<any>) => GMeta;
+export const getPluginMeta: <GMeta>(key: string | Plugin<any, any> | PluginKey<any>, tr: Transaction<any>) => GMeta;
 
 // @public
-export const getPluginState: <GState>(plugin: Plugin<any, any> | import("prosemirror-state").PluginKey<any, Schema<string, string>>, state: Readonly<EditorState<any>>) => GState;
+export const getPluginState: <GState>(plugin: Plugin<any, any> | PluginKey<any>, state: Readonly<EditorState<any>>) => GState;
 
 // @public
 export const getSelectedGroup: (state: Readonly<EditorState<any>>, exclude: RegExp) => false | FromToParams;
@@ -254,10 +258,10 @@ export const getTextContentFromSlice: (slice: Slice<any>) => string;
 export const isApple: () => boolean;
 
 // @public
-export const isDocNode: (node: Node<any> | null | undefined, schema?: Schema<string, string> | undefined) => boolean;
+export const isDocNode: (node: ProsemirrorNode<any> | null | undefined, schema?: EditorSchema<string, string> | undefined) => boolean;
 
 // @public
-export const isDocNodeEmpty: (node: Node<any>) => boolean;
+export const isDocNodeEmpty: (node: ProsemirrorNode<any>) => boolean;
 
 // @public
 export const isDOMNode: (domNode: unknown) => domNode is Node;
@@ -266,13 +270,13 @@ export const isDOMNode: (domNode: unknown) => domNode is Node;
 export const isEditorSchema: <GNodes extends string = string, GMarks extends string = string>(value: unknown) => value is Schema<GNodes, GMarks>;
 
 // @public
-export const isEditorState: <GSchema extends Schema<string, string> = any>(value: unknown) => value is EditorState<GSchema>;
+export const isEditorState: <GSchema extends EditorSchema<string, string> = any>(value: unknown) => value is EditorState<GSchema>;
 
 // @public
 export const isElementDOMNode: (domNode: unknown) => domNode is HTMLElement;
 
 // @public
-export const isEmptyParagraphNode: (node: Node<any> | null | undefined) => boolean;
+export const isEmptyParagraphNode: (node: ProsemirrorNode<any> | null | undefined) => boolean;
 
 // Warning: (ae-forgotten-export) The symbol "IsMarkActiveParams" needs to be exported by the entry point index.d.ts
 //
@@ -280,7 +284,7 @@ export const isEmptyParagraphNode: (node: Node<any> | null | undefined) => boole
 export const isMarkActive: ({ state, type, from, to }: IsMarkActiveParams) => boolean;
 
 // @public
-export const isMarkType: <GSchema extends Schema<string, string> = any>(value: unknown) => value is MarkType_2<GSchema>;
+export const isMarkType: <GSchema extends EditorSchema<string, string> = any>(value: unknown) => value is MarkType_2<GSchema>;
 
 // Warning: (ae-forgotten-export) The symbol "IsNodeActiveParams" needs to be exported by the entry point index.d.ts
 //
@@ -288,28 +292,28 @@ export const isMarkType: <GSchema extends Schema<string, string> = any>(value: u
 export const isNodeActive: ({ state, type, attrs }: IsNodeActiveParams) => boolean;
 
 // @public
-export const isNodeSelection: <GSchema extends Schema<string, string> = any>(value: unknown) => value is NodeSelection<GSchema>;
+export const isNodeSelection: <GSchema extends EditorSchema<string, string> = any>(value: unknown) => value is NodeSelection<GSchema>;
 
 // @public
-export const isNodeType: <GSchema extends Schema<string, string> = any>(value: unknown) => value is NodeType_2<GSchema>;
+export const isNodeType: <GSchema extends EditorSchema<string, string> = any>(value: unknown) => value is NodeType_2<GSchema>;
 
 // @public
 export const isObjectNode: (value: unknown) => value is ObjectNode;
 
 // @public
-export const isProsemirrorNode: <GSchema extends Schema<string, string> = any>(value: unknown) => value is Node<GSchema>;
+export const isProsemirrorNode: <GSchema extends EditorSchema<string, string> = any>(value: unknown) => value is Node<GSchema>;
 
 // @public
-export const isResolvedPos: <GSchema extends Schema<string, string> = any>(value: unknown) => value is ResolvedPos<GSchema>;
+export const isResolvedPos: <GSchema extends EditorSchema<string, string> = any>(value: unknown) => value is ResolvedPos<GSchema>;
 
 // @public
-export const isSelection: <GSchema extends Schema<string, string> = any>(value: unknown) => value is Selection<GSchema>;
+export const isSelection: <GSchema extends EditorSchema<string, string> = any>(value: unknown) => value is Selection<GSchema>;
 
 // @public
 export const isTextDOMNode: (domNode: unknown) => domNode is Text;
 
 // @public
-export const isTextSelection: <GSchema extends Schema<string, string> = any>(value: unknown) => value is TextSelection<GSchema>;
+export const isTextSelection: <GSchema extends EditorSchema<string, string> = any>(value: unknown) => value is TextSelection<GSchema>;
 
 // Warning: (ae-forgotten-export) The symbol "MarkInputRuleParams" needs to be exported by the entry point index.d.ts
 //
@@ -350,7 +354,7 @@ export const nodeEqualsType: ({ types, node }: NodeEqualsTypeParams) => boolean;
 export const nodeInputRule: ({ regexp, type, getAttrs, updateSelection }: NodeInputRuleParams) => InputRule<any>;
 
 // @public
-export const nodeNameMatchesList: (node: Node<any> | null | undefined, nodeMatches: NodeMatch<any>[]) => node is Node<any>;
+export const nodeNameMatchesList: (node: ProsemirrorNode<any> | null | undefined, nodeMatches: NodeMatch<any>[]) => node is ProsemirrorNode<any>;
 
 // @public
 export interface NodeWithPosition extends ProsemirrorNodeParams, PosParams {
@@ -359,7 +363,7 @@ export interface NodeWithPosition extends ProsemirrorNodeParams, PosParams {
 // Warning: (ae-forgotten-export) The symbol "PlainInputRuleParams" needs to be exported by the entry point index.d.ts
 //
 // @public
-export const plainInputRule: <GSchema extends import("prosemirror-model").Schema<string, string> = import("prosemirror-model").Schema<string, string>>({ regexp, transformMatch, updateSelection, }: PlainInputRuleParams) => InputRule<GSchema>;
+export const plainInputRule: <GSchema extends EditorSchema<string, string> = EditorSchema<string, string>>({ regexp, transformMatch, updateSelection, }: PlainInputRuleParams) => InputRule<GSchema>;
 
 // Warning: (ae-forgotten-export) The symbol "RemoveMarkParams" needs to be exported by the entry point index.d.ts
 //
@@ -367,15 +371,15 @@ export const plainInputRule: <GSchema extends import("prosemirror-model").Schema
 export const removeMark: ({ type, expand, range, endTransaction, startTransaction, }: RemoveMarkParams) => CommandFunction<any>;
 
 // @public
-export const removeNodeAfter: (tr: import("prosemirror-state").Transaction<any>) => import("prosemirror-state").Transaction<any>;
+export const removeNodeAfter: (tr: Transaction<any>) => Transaction<any>;
 
 // Warning: (ae-forgotten-export) The symbol "RemoveNodeAtPositionParams" needs to be exported by the entry point index.d.ts
 //
 // @public
-export const removeNodeAtPosition: ({ pos, tr }: RemoveNodeAtPositionParams) => import("prosemirror-state").Transaction<any>;
+export const removeNodeAtPosition: ({ pos, tr }: RemoveNodeAtPositionParams) => Transaction<any>;
 
 // @public
-export const removeNodeBefore: (tr: import("prosemirror-state").Transaction<any>) => import("prosemirror-state").Transaction<any>;
+export const removeNodeBefore: (tr: Transaction<any>) => Transaction<any>;
 
 // Warning: (ae-forgotten-export) The symbol "ReplaceTextParams" needs to be exported by the entry point index.d.ts
 //
@@ -391,13 +395,13 @@ export interface SchemaJSON<GNodes extends string = string, GMarks extends strin
 }
 
 // @public
-export const schemaToJSON: <GNodes extends string = string, GMarks extends string = string>(schema: import("prosemirror-model").Schema<GNodes, GMarks>) => SchemaJSON<GNodes, GMarks>;
+export const schemaToJSON: <GNodes extends string = string, GMarks extends string = string>(schema: EditorSchema<GNodes, GMarks>) => SchemaJSON<GNodes, GMarks>;
 
 // @public
-export const selectionEmpty: (value: Selection<any> | Readonly<import("prosemirror-state").EditorState<any>>) => boolean;
+export const selectionEmpty: (value: Readonly<import("prosemirror-state").EditorState<any>> | Selection_2<any>) => boolean;
 
 // @public
-export const setPluginMeta: <GMeta>(key: string | Plugin<any, any> | import("prosemirror-state").PluginKey<any, Schema<string, string>>, tr: import("prosemirror-state").Transaction<any>, data: GMeta) => import("prosemirror-state").Transaction<any>;
+export const setPluginMeta: <GMeta>(key: string | Plugin<any, any> | PluginKey<any>, tr: Transaction<any>, data: GMeta) => Transaction<any>;
 
 // @public
 export const SHIFT: readonly ["Shift", "⇧"];
@@ -406,7 +410,7 @@ export const SHIFT: readonly ["Shift", "⇧"];
 export const shouldUseDOMEnvironment: (forceEnvironment?: "ssr" | "dom" | undefined) => boolean;
 
 // @public
-export const startPositionOfParent: (pmPosition: ResolvedPos<any>) => number;
+export const startPositionOfParent: (pmPosition: ResolvedPos_2<any>) => number;
 
 // @public (undocumented)
 export interface StringHandlerParams {
@@ -424,16 +428,16 @@ export const toDOM: ({ node, schema, doc }: FromNodeParams) => DocumentFragment;
 export const toggleBlockItem: ({ type, toggleType, attrs, }: ToggleBlockItemParams) => CommandFunction<any>;
 
 // @public
-export const toggleList: (type: import("prosemirror-model").NodeType<any>, itemType: import("prosemirror-model").NodeType<any>) => CommandFunction<any>;
+export const toggleList: (type: NodeType<any>, itemType: NodeType<any>) => CommandFunction<any>;
 
 // @public
-export const toggleWrap: (type: import("prosemirror-model").NodeType<any>, attrs?: Record<string, unknown> | undefined) => CommandFunction<any>;
+export const toggleWrap: (type: NodeType<any>, attrs?: Record<string, unknown> | undefined) => CommandFunction<any>;
 
 // @public
 export const toHTML: ({ node, schema, doc }: FromNodeParams) => string;
 
 // @public
-export const transactionChanged: (tr: import("prosemirror-state").Transaction<any>) => boolean;
+export const transactionChanged: (tr: Transaction<any>) => boolean;
 
 // Warning: (ae-forgotten-export) The symbol "UpdateMarkParams" needs to be exported by the entry point index.d.ts
 //

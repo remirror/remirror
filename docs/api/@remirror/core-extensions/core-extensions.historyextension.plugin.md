@@ -4,7 +4,7 @@
 
 ## HistoryExtension.plugin() method
 
-Bring the `prosemirror-history` plugin with options set on theis extension.
+Bring the `prosemirror-history` plugin with options set on this extension.
 
 <b>Signature:</b>
 

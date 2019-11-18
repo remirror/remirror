@@ -7,9 +7,11 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+## [0.7.0] - 2019-11-18
+
 ### Added
 
-- 🚀 `@remirror/react`, `@remirror/editor-wysiwyg`, `@remirror/editor-social`: New `extensions` props on the `RemirrorManager` for injecting additional extensions into prebuilt editors.
+- 🚀 `@remirror/react`, `@remirror/editor-wysiwyg`, `@remirror/editor-social`: New `extensions` props on the `RemirrorManager` for injecting additional extensions into prebuilt editors https://github.com/ifiokjr/remirror/pull/176.
 
 ## [0.6.5] - 2019-11-17
 
@@ -241,7 +243,8 @@ This is a large breaking change and may cause a lot of your existing code to sto
 - Fixes missing TypeScript definitions #77.
 - Fixes crash when rendering a ReactNodeView in NextJS #75.
 
-[unreleased]: https://github.com/ifiokjr/remirror/compare/v0.6.5...HEAD
+[unreleased]: https://github.com/ifiokjr/remirror/compare/0.7.0...HEAD
+[0.7.0]: https://github.com/ifiokjr/remirror/compare/v0.6.5...0.7.0
 [0.6.5]: https://github.com/ifiokjr/remirror/compare/v0.6.4...v0.6.5
 [0.6.4]: https://github.com/ifiokjr/remirror/compare/v0.6.3...v0.6.4
 [0.6.3]: https://github.com/ifiokjr/remirror/compare/v0.6.2...v0.6.3

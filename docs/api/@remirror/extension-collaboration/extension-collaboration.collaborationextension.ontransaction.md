@@ -2,23 +2,12 @@
 
 [Home](./index.md) &gt; [@remirror/extension-collaboration](./extension-collaboration.md) &gt; [CollaborationExtension](./extension-collaboration.collaborationextension.md) &gt; [onTransaction](./extension-collaboration.collaborationextension.ontransaction.md)
 
-## CollaborationExtension.onTransaction() method
+## CollaborationExtension.onTransaction property
 
 Called whenever a transaction occurs.
 
 <b>Signature:</b>
 
 ```typescript
-onTransaction({ getState }: OnTransactionParams): void;
+onTransaction: ({ getState }: OnTransactionParams) => void;
 ```
-
-## Parameters
-
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  { getState } | <code>OnTransactionParams</code> |  |
-
-<b>Returns:</b>
-
-`void`
-

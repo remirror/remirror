@@ -9,5 +9,5 @@ Toggle between wrapping an inactive node with the provided node type, and liftin
 <b>Signature:</b>
 
 ```typescript
-toggleWrap: (type: import("prosemirror-model").NodeType<any>, attrs?: Record<string, unknown> | undefined) => CommandFunction<any>
+toggleWrap: (type: NodeType<any>, attrs?: Record<string, unknown> | undefined) => CommandFunction<any>
 ```

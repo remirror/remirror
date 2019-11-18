@@ -10,13 +10,6 @@
 export declare class BulletListExtension extends NodeExtension 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.bulletlistextension.name.md) |  | <code>&quot;bulletList&quot;</code> |  |
-|  [schema](./core-extensions.bulletlistextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

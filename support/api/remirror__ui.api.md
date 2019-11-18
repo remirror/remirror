@@ -40,28 +40,26 @@ export const hasThemeProp: (val: unknown) => val is ThemeParams;
 export class HSL {
     // (undocumented)
     static $$id: symbol;
-    readonly a: number;
     alpha(alpha?: number | string): HSL;
     analagous(direction?: 'forwards' | 'backwards'): [HSL, HSL, HSL];
-    readonly brightness: number;
+    get h(): number;
+    get s(): number;
+    get l(): number;
+    get a(): number;
+    get brightness(): number;
+    get isDark(): boolean;
+    get isLight(): boolean;
     clone(hsla?: Partial<HSLObject>): HSL;
     complement(): HSL;
     static create(value: HSLCreateParams): HSL;
     darken(percent: number | string): HSL;
     desaturate(percent: number | string): HSL;
     fade(percent: number | string): HSL;
-    readonly h: number;
     hue(hue: number | string): HSL;
-    // (undocumented)
-    readonly isDark: boolean;
-    // (undocumented)
-    readonly isLight: boolean;
-    readonly l: number;
     lighten(percent: number | string): HSL;
     lightness(lightness: number | string): HSL;
     rectangle(spacing?: number): [HSL, HSL, HSL, HSL];
     rotate(degrees: number): HSL;
-    readonly s: number;
     saturate(percent: number | string): HSL;
     saturation(saturation: number | string): HSL;
     splitComplement(): [HSL, HSL, HSL];

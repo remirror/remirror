@@ -22,6 +22,7 @@ import { LinkExtension } from '@remirror/core-extensions';
 import { ListItemExtension } from '@remirror/core-extensions';
 import { OrderedListExtension } from '@remirror/core-extensions';
 import { ParagraphExtension } from '@remirror/core-extensions';
+import { RemirrorManagerProps } from '@remirror/react';
 import { RemirrorProps } from '@remirror/react';
 import { RemirrorTheme } from '@remirror/core';
 import { SSRHelperExtension } from '@remirror/core-extensions';
@@ -44,7 +45,7 @@ export type ButtonState = 'default' | 'active-default' | 'inverse' | 'active-inv
 export const WysiwygEditor: FC<WysiwygEditorProps>;
 
 // @public (undocumented)
-export interface WysiwygEditorProps extends Partial<Pick<RemirrorProps<WysiwygExtensions>, 'initialContent' | 'attributes' | 'editable' | 'autoFocus' | 'onChange' | 'onFocus' | 'onBlur' | 'onFirstRender' | 'onDispatchTransaction' | 'label' | 'editorStyles' | 'forceEnvironment' | 'suppressHydrationWarning'>>, Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'> {
+export interface WysiwygEditorProps extends Partial<Pick<RemirrorProps<WysiwygExtensions>, 'initialContent' | 'attributes' | 'editable' | 'autoFocus' | 'onChange' | 'onFocus' | 'onBlur' | 'onFirstRender' | 'onDispatchTransaction' | 'label' | 'editorStyles' | 'forceEnvironment' | 'suppressHydrationWarning'>>, Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'>, Pick<RemirrorManagerProps, 'extensions'> {
     placeholder?: string;
     theme?: Partial<RemirrorTheme>;
 }

@@ -34,6 +34,7 @@
 |  [RemirrorContextProviderProps](./react.remirrorcontextproviderprops.md) |  |
 |  [RemirrorEventListenerParams](./react.remirroreventlistenerparams.md) |  |
 |  [RemirrorGetterParams](./react.remirrorgetterparams.md) |  |
+|  [RemirrorManagerProps](./react.remirrormanagerprops.md) |  |
 |  [RemirrorProps](./react.remirrorprops.md) |  |
 |  [RemirrorProviderProps](./react.remirrorproviderprops.md) |  |
 |  [RemirrorState](./react.remirrorstate.md) |  |

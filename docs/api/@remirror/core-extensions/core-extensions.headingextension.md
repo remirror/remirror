@@ -10,14 +10,6 @@
 export declare class HeadingExtension extends NodeExtension<HeadingExtensionOptions> 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [defaultOptions](./core-extensions.headingextension.defaultoptions.md) |  | <code>{</code><br/><code>        levels: number[];</code><br/><code>        defaultLevel: number;</code><br/><code>    }</code> |  |
-|  [name](./core-extensions.headingextension.name.md) |  | <code>&quot;heading&quot;</code> |  |
-|  [schema](./core-extensions.headingextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

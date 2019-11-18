@@ -9,5 +9,5 @@ Checks if the current node a paragraph node and empty
 <b>Signature:</b>
 
 ```typescript
-isEmptyParagraphNode: (node: PMNode<any> | null | undefined) => boolean
+isEmptyParagraphNode: (node: ProsemirrorNode<any> | null | undefined) => boolean
 ```

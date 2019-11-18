@@ -9,5 +9,5 @@ Checks to see whether the name of the passed node matches anything in the list p
 <b>Signature:</b>
 
 ```typescript
-nodeNameMatchesList: (node: PMNode<any> | null | undefined, nodeMatches: NodeMatch<any>[]) => node is PMNode<any>
+nodeNameMatchesList: (node: ProsemirrorNode<any> | null | undefined, nodeMatches: NodeMatch<any>[]) => node is ProsemirrorNode<any>
 ```

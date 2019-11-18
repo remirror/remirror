@@ -10,13 +10,6 @@
 export declare class ListItemExtension extends NodeExtension 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.listitemextension.name.md) |  | <code>&quot;listItem&quot;</code> |  |
-|  [schema](./core-extensions.listitemextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

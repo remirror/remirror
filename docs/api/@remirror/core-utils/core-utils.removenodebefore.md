@@ -16,5 +16,5 @@ dispatch(
 <b>Signature:</b>
 
 ```typescript
-removeNodeBefore: (tr: import("prosemirror-state").Transaction<any>) => import("prosemirror-state").Transaction<any>
+removeNodeBefore: (tr: Transaction<any>) => Transaction<any>
 ```

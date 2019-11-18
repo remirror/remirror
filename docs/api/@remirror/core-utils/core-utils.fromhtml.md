@@ -9,5 +9,5 @@ Convert a HTML string into Prosemirror node
 <b>Signature:</b>
 
 ```typescript
-fromHTML: ({ content, schema, doc }: FromStringParams) => PMNode<any>
+fromHTML: ({ content, schema, doc }: FromStringParams) => ProsemirrorNode<any>
 ```

@@ -9,5 +9,5 @@ Allow the component to pull in context from the the `RemirrorThemeContext`
 <b>Signature:</b>
 
 ```typescript
-static contextType: React.Context<RemirrorThemeContextType>;
+static contextType: import("react").Context<RemirrorThemeContextType>;
 ```

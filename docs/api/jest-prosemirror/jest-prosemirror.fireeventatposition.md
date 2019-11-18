@@ -9,5 +9,5 @@ Fires an event at the provided position or the current selected position in the 
 <b>Signature:</b>
 
 ```typescript
-fireEventAtPosition: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, event, options, position, }: FireEventAtPositionParams<GSchema>) => void
+fireEventAtPosition: <GSchema extends EditorSchema<string, string> = any>({ view, event, options, position, }: FireEventAtPositionParams<GSchema>) => void
 ```

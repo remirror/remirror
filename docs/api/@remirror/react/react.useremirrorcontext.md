@@ -31,5 +31,5 @@ class App extends Component {
 <b>Signature:</b>
 
 ```typescript
-useRemirrorContext: <GExtension extends import("@remirror/core").Extension<any, any> = any>() => InjectedRemirrorProps<GExtension>
+useRemirrorContext: <GExtension extends AnyExtension = any>() => InjectedRemirrorProps<GExtension>
 ```

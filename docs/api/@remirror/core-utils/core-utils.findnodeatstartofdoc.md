@@ -14,5 +14,5 @@ Finds the node at the start of the prosemirror.
 <b>Signature:</b>
 
 ```typescript
-findNodeAtStartOfDoc: (doc: import("prosemirror-model").Node<any>) => FindProsemirrorNodeResult<any>
+findNodeAtStartOfDoc: (doc: ProsemirrorNode<any>) => FindProsemirrorNodeResult<any>
 ```

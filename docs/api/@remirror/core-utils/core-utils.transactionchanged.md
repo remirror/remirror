@@ -9,5 +9,5 @@ Check to see if a transaction has changed either the document or the current sel
 <b>Signature:</b>
 
 ```typescript
-transactionChanged: (tr: import("prosemirror-state").Transaction<any>) => boolean
+transactionChanged: (tr: Transaction<any>) => boolean
 ```

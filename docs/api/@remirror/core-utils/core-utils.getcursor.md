@@ -9,5 +9,5 @@ Retrieve the current position of the cursor
 <b>Signature:</b>
 
 ```typescript
-getCursor: (selection: PMSelection<any>) => PMResolvedPos<any> | null | undefined
+getCursor: (selection: Selection<any>) => ResolvedPos<any> | null | undefined
 ```

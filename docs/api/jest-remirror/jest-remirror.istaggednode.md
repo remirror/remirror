@@ -9,5 +9,5 @@ Check if a node is tagged.
 <b>Signature:</b>
 
 ```typescript
-isTaggedNode: (val: unknown) => val is TaggedProsemirrorNode<import("prosemirror-model").Schema<string, string>>
+isTaggedNode: (val: unknown) => val is TaggedProsemirrorNode<import("@remirror/core").EditorSchema<string, string>>
 ```

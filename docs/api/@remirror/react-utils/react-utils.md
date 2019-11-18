@@ -15,7 +15,6 @@
 |  Interface | Description |
 |  --- | --- |
 |  [RemirrorComponentStaticProperties](./react-utils.remirrorcomponentstaticproperties.md) |  |
-|  [RemirrorManagerProps](./react-utils.remirrormanagerprops.md) |  |
 
 ## Variables
 

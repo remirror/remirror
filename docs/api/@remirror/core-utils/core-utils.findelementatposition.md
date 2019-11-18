@@ -9,7 +9,7 @@ Returns DOM reference of a node at a given `position`<!-- -->.
 <b>Signature:</b>
 
 ```typescript
-findElementAtPosition: (position: number, view: import("prosemirror-view").EditorView<any>) => HTMLElement
+findElementAtPosition: (position: number, view: EditorView<any>) => HTMLElement
 ```
 
 ## Remarks

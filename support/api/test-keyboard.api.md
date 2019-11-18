@@ -38,12 +38,12 @@ export const isUSKeyboardCharacter: (char: unknown) => char is "\0" | "x" | "y" 
 // @public (undocumented)
 export class Keyboard {
     constructor({ target, defaultOptions, isMac, batch, onEventDispatch, }: KeyboardConstructorParams);
+    static get defaultOptions(): KeyboardEventInit;
     char({ text, options, typing }: TextInputParams): this;
     // (undocumented)
     static create(params: KeyboardConstructorParams): Keyboard;
-    // (undocumented)
-    static readonly defaultOptions: KeyboardEventInit;
     end(): this;
+    private get started();
     forEach(fn: BatchedCallback): this;
     keyDown: ({ options }: OptionsParams) => this;
     keyPress: ({ options }: OptionsParams) => this;

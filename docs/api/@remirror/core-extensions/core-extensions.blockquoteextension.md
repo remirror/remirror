@@ -10,13 +10,6 @@
 export declare class BlockquoteExtension extends NodeExtension 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.blockquoteextension.name.md) |  | <code>&quot;blockquote&quot;</code> |  |
-|  [schema](./core-extensions.blockquoteextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

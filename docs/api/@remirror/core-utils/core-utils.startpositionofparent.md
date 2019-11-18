@@ -9,5 +9,5 @@ Get the start position of the parent of the current resolve position
 <b>Signature:</b>
 
 ```typescript
-startPositionOfParent: (pmPosition: PMResolvedPos<any>) => number
+startPositionOfParent: (pmPosition: ResolvedPos<any>) => number
 ```

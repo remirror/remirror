@@ -16,13 +16,6 @@ export declare class NodeCursorExtension extends Extension<NodeCursorExtensionOp
 
 Without it the cursor sometimes gets lost and stops responding to key presses.
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [defaultOptions](./core-extensions.nodecursorextension.defaultoptions.md) |  | <code>{</code><br/><code>        targets: never[];</code><br/><code>    }</code> |  |
-|  [name](./core-extensions.nodecursorextension.name.md) |  | <code>&quot;nodeCursor&quot;</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

@@ -9,5 +9,5 @@ Returns a selection regardless of whether anything is tagged in the provided doc
 <b>Signature:</b>
 
 ```typescript
-selectionFor: <GSchema extends Schema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>) => Selection<GSchema>
+selectionFor: <GSchema extends EditorSchema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>) => Selection<GSchema>
 ```

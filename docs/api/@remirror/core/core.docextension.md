@@ -13,12 +13,3 @@ The parent node in a Prosemirror Schema. A representation of the doc is required
 ```typescript
 export declare class DocExtension extends NodeExtension<DocExtensionOptions> 
 ```
-
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [defaultOptions](./core.docextension.defaultoptions.md) |  | <code>{</code><br/><code>        content: string;</code><br/><code>    }</code> |  |
-|  [name](./core.docextension.name.md) |  | <code>&quot;doc&quot;</code> |  |
-|  [schema](./core.docextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
-

@@ -9,7 +9,7 @@ Create a test prosemirror editor an pass back helper properties and methods.
 <b>Signature:</b>
 
 ```typescript
-createEditor: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(taggedDoc: TaggedProsemirrorNode<GSchema>, { plugins, rules, autoClean, ...editorOptions }?: CreateEditorOptions) => {
+createEditor: <GSchema extends EditorSchema<string, string> = any>(taggedDoc: TaggedProsemirrorNode<GSchema>, { plugins, rules, autoClean, ...editorOptions }?: CreateEditorOptions) => {
     start: number;
     end: number;
     selection: import("prosemirror-state").Selection<GSchema>;
@@ -27,7 +27,7 @@ createEditor: <GSchema extends import("prosemirror-model").Schema<string, string
     debug: () => any;
     fire: (params: Pick<FireEventAtPositionParams<GSchema>, "position" | "options" | "event">) => any;
     callback: (fn: (content: ReturnValueCallbackParams<GSchema>) => void) => any;
-    paste: (content: string | import("prosemirror-model").Node<any>) => any;
+    paste: (content: string | ProsemirrorNode<any>) => any;
 }
 ```
 

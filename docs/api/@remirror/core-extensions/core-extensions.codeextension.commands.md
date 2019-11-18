@@ -8,7 +8,7 @@
 
 ```typescript
 commands({ type }: CommandMarkTypeParams): {
-        code: () => (state: import("prosemirror-state").EditorState<import("prosemirror-model").Schema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("prosemirror-model").Schema<string, string>>) => void) | undefined) => boolean;
+        code: () => (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
     };
 ```
 
@@ -21,6 +21,6 @@ commands({ type }: CommandMarkTypeParams): {
 <b>Returns:</b>
 
 `{
-        code: () => (state: import("prosemirror-state").EditorState<import("prosemirror-model").Schema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("prosemirror-model").Schema<string, string>>) => void) | undefined) => boolean;
+        code: () => (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
     }`
 

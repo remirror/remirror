@@ -21,7 +21,6 @@ export declare class ReactNodeView<GOptions extends BaseExtensionOptions = BaseE
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [contentDOM](./react-node-view.reactnodeview.contentdom.md) |  | <code>Node &#124; undefined</code> |  |
-|  [dom](./react-node-view.reactnodeview.dom.md) |  | <code>HTMLElement &#124; undefined</code> | Provides readonly access to the dom element |
 |  [node](./react-node-view.reactnodeview.node.md) |  | <code>NodeWithAttrs&lt;GAttrs&gt;</code> | The ProsemirrorNode that this nodeView is responsible for rendering. |
 |  [view](./react-node-view.reactnodeview.view.md) |  | <code>EditorView</code> | The editor this nodeView belongs to. |
 

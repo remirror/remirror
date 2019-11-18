@@ -9,5 +9,5 @@ Get the end position of the parent of the current resolve position
 <b>Signature:</b>
 
 ```typescript
-endPositionOfParent: (pmPosition: PMResolvedPos<any>) => number
+endPositionOfParent: (pmPosition: ResolvedPos<any>) => number
 ```

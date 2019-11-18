@@ -10,13 +10,6 @@
 export declare class ImageExtension extends NodeExtension 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./extension-image.imageextension.name.md) |  | <code>&quot;image&quot;</code> |  |
-|  [schema](./extension-image.imageextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

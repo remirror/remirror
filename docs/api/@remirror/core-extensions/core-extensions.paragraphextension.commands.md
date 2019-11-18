@@ -11,11 +11,11 @@ Provides the commands that this extension uses.
 ```typescript
 commands({ type }: CommandNodeTypeParams): {
         createParagraph: (attrs?: import("@remirror/core").Attrs<{
-            align?: "center" | "left" | "right" | "justify" | null | undefined;
+            align?: "left" | "right" | "center" | "justify" | null | undefined;
             indent?: number | null | undefined;
             lineSpacing?: string | null | undefined;
             id?: string | null | undefined;
-        }> | undefined) => (state: import("prosemirror-state").EditorState<import("prosemirror-model").Schema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("prosemirror-model").Schema<string, string>>) => void) | undefined) => boolean;
+        }> | undefined) => (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
     };
 ```
 
@@ -29,10 +29,10 @@ commands({ type }: CommandNodeTypeParams): {
 
 `{
         createParagraph: (attrs?: import("@remirror/core").Attrs<{
-            align?: "center" | "left" | "right" | "justify" | null | undefined;
+            align?: "left" | "right" | "center" | "justify" | null | undefined;
             indent?: number | null | undefined;
             lineSpacing?: string | null | undefined;
             id?: string | null | undefined;
-        }> | undefined) => (state: import("prosemirror-state").EditorState<import("prosemirror-model").Schema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("prosemirror-model").Schema<string, string>>) => void) | undefined) => boolean;
+        }> | undefined) => (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
     }`
 

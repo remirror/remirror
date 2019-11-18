@@ -13,15 +13,6 @@ The paragraph is one of the essential building blocks for a prosemirror editor a
 export declare class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions> 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [defaultOptions](./core-extensions.paragraphextension.defaultoptions.md) |  | <code>{</code><br/><code>        indentAttribute: string;</code><br/><code>        indentLevels: [number, number];</code><br/><code>    }</code> |  |
-|  [name](./core-extensions.paragraphextension.name.md) |  | <code>&quot;paragraph&quot;</code> |  |
-|  [schema](./core-extensions.paragraphextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
-|  [tags](./core-extensions.paragraphextension.tags.md) |  | <code>Tags[]</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

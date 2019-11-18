@@ -9,5 +9,5 @@ Creates a document node from the passed in content and schema.
 <b>Signature:</b>
 
 ```typescript
-createDocumentNode: ({ content, schema, doc, stringHandler, fallback, }: CreateDocumentNodeParams) => PMNode<any>
+createDocumentNode: ({ content, schema, doc, stringHandler, fallback, }: CreateDocumentNodeParams) => ProsemirrorNode<any>
 ```

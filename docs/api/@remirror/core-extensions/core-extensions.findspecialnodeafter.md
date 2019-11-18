@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-findSpecialNodeAfter: ($pos: import("prosemirror-model").ResolvedPos<any>, tr: Transaction<any>, matchers: NodeMatch<any>[]) => number | undefined
+findSpecialNodeAfter: ($pos: ResolvedPos<any>, tr: Transaction<any>, matchers: NodeMatch<any>[]) => number | undefined
 ```

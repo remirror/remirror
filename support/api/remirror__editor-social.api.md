@@ -14,6 +14,7 @@ import { MentionExtension } from '@remirror/extension-mention';
 import { NodeCursorExtension } from '@remirror/core-extensions';
 import { PlaceholderExtension } from '@remirror/core-extensions';
 import { PureComponent } from 'react';
+import { RemirrorManagerProps } from '@remirror/react';
 import { RemirrorTheme } from '@remirror/core';
 import { SuggestStateMatch } from 'prosemirror-suggest';
 
@@ -53,7 +54,7 @@ export interface MentionGetterParams {
 
 // Warning: (ae-forgotten-export) The symbol "AtMentionState" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "HashMentionState" needs to be exported by the entry point index.d.ts
-// 
+//
 // @public (undocumented)
 export type MentionState = AtMentionState | HashMentionState;
 
@@ -68,7 +69,7 @@ export interface SetExitTriggeredInternallyParams {
 }
 
 // Warning: (ae-forgotten-export) The symbol "State" needs to be exported by the entry point index.d.ts
-// 
+//
 // @public (undocumented)
 export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     // (undocumented)
@@ -80,14 +81,18 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
         emojiSet: string;
         placeholder: string;
     };
+    private get users();
+    private get tags();
+    private get remirrorProps();
+    private get theme();
     // (undocumented)
     render(): JSX.Element;
     // (undocumented)
     readonly state: State;
-    }
+}
 
 // @public (undocumented)
-export interface SocialEditorProps extends Partial<ManagedRemirrorProviderProps<SocialExtensions>> {
+export interface SocialEditorProps extends Partial<ManagedRemirrorProviderProps<SocialExtensions>>, Pick<RemirrorManagerProps, 'extensions'> {
     hideCharacterIndicator?: boolean;
     onMentionChange(params?: OnMentionChangeParams): void;
     onUrlsChange?(params: {

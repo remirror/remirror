@@ -17,6 +17,7 @@ import { EditorView } from '@remirror/core';
 import { EditorViewParams } from '@remirror/core';
 import { ElementParams } from '@remirror/core';
 import { ExtensionManager } from '@remirror/core';
+import { FlexibleExtension } from '@remirror/core';
 import { HelpersFromExtensions } from '@remirror/core';
 import { Interpolation } from '@emotion/core';
 import { MakeOptional } from '@remirror/core';
@@ -29,13 +30,11 @@ import { PositionParams } from '@remirror/core';
 import { ProsemirrorNode } from '@remirror/core';
 import { ProviderProps } from 'react';
 import { PureComponent } from 'react';
-import React from 'react';
 import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { Ref } from 'react';
 import { RemirrorContentType } from '@remirror/core';
 import { RemirrorInterpolation } from '@remirror/core';
-import { RemirrorManagerProps } from '@remirror/react-utils';
 import { RemirrorThemeContextType } from '@remirror/core';
 import { RemirrorType } from '@remirror/react-utils';
 import { RenderEnvironment } from '@remirror/core';
@@ -131,7 +130,7 @@ export interface ListenerParams<GExtension extends AnyExtension = any, GSchema e
 
 // @public
 export const ManagedRemirrorProvider: {
-    <GExtension extends import("@remirror/core").Extension<any, any> = any>({ children, ...props }: ManagedRemirrorProviderProps<GExtension>): JSX.Element;
+    <GExtension extends AnyExtension = any>({ children, ...props }: ManagedRemirrorProviderProps<GExtension>): JSX.Element;
     $$remirrorType: RemirrorType;
 };
 
@@ -202,25 +201,23 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     // (undocumented)
     componentDidUpdate({ editable, manager: prevManager }: RemirrorProps<GExtension>, prevState: RemirrorState<SchemaFromExtensions<GExtension>>): void;
     componentWillUnmount(): void;
+    private get doc();
+    private get manager();
     context: RemirrorThemeContextType;
-    static contextType: React.Context<RemirrorThemeContextType>;
+    static contextType: import("react").Context<RemirrorThemeContextType>;
     // (undocumented)
     static defaultProps: {
         initialContent: {
             type: string;
             content: {
                 type: string;
-            }[]; /**
-             * Allow the component to pull in context from the the `RemirrorThemeContext`
-             */
+            }[];
         };
         fallbackContent: {
             type: string;
             content: {
                 type: string;
-            }[]; /**
-             * Allow the component to pull in context from the the `RemirrorThemeContext`
-             */
+            }[];
         };
         editable: true;
         usesBuiltInExtensions: true;
@@ -230,14 +227,14 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
         styles: {};
         editorStyles: {};
         insertPosition: "end";
-        onDispatchTransaction: (tr: import("prosemirror-state").Transaction<any>) => import("prosemirror-state").Transaction<any>;
+        onDispatchTransaction: (tr: Transaction<any>) => Transaction<any>;
         stringHandler: () => never;
     };
+    private get editorStyles();
     static getDerivedStateFromProps(props: RemirrorProps, state: RemirrorState): RemirrorState | null;
     // (undocumented)
     render(): JSX.Element;
-    // (undocumented)
-    readonly renderParams: InjectedRemirrorProps<GExtension>;
+    get renderParams(): InjectedRemirrorProps<GExtension>;
     updateExtensionManager(): void;
     }
 
@@ -255,7 +252,7 @@ export interface RemirrorEventListenerParams<GExtension extends AnyExtension = a
 
 // @public
 export const RemirrorExtension: <GConstructor extends {
-    prototype: import("@remirror/core").Extension<any, any>;
+    prototype: AnyExtension;
 }, GOptions extends GConstructor["prototype"]["_O"]>(_props: RemirrorExtensionProps<GConstructor, GOptions>) => null;
 
 // @public (undocumented)
@@ -279,10 +276,16 @@ export class RemirrorManager extends Component<RemirrorManagerProps> {
     static defaultProps: {
         useBaseExtensions: true;
     };
-    readonly manager: ExtensionManager;
     // (undocumented)
     render(): JSX.Element;
+    get manager(): ExtensionManager;
     }
+
+// @public (undocumented)
+export interface RemirrorManagerProps {
+    extensions?: Array<FlexibleExtension<AnyExtension>>;
+    useBaseExtensions?: boolean;
+}
 
 // @public (undocumented)
 export interface RemirrorProps<GExtension extends AnyExtension = any> extends StringHandlerParams {
@@ -314,7 +317,7 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
 
 // @public
 export const RemirrorProvider: {
-    <GExtension extends import("@remirror/core").Extension<any, any> = any>({ children, childAsRoot, ...props }: RemirrorProviderProps<GExtension>): JSX.Element;
+    <GExtension extends AnyExtension = any>({ children, childAsRoot, ...props }: RemirrorProviderProps<GExtension>): JSX.Element;
     $$remirrorType: RemirrorType;
 };
 
@@ -353,10 +356,10 @@ export interface UsePositionerParams<GRefKey extends string = 'ref'> extends Pos
 }
 
 // @public
-export const useRemirrorContext: <GExtension extends import("@remirror/core").Extension<any, any> = any>() => InjectedRemirrorProps<GExtension>;
+export const useRemirrorContext: <GExtension extends AnyExtension = any>() => InjectedRemirrorProps<GExtension>;
 
 // @public
-export const useRemirrorManager: <GExtension extends import("@remirror/core").Extension<any, any> = any>() => ExtensionManager<GExtension>;
+export const useRemirrorManager: <GExtension extends AnyExtension = any>() => ExtensionManager<GExtension>;
 
 
 export * from "@remirror/react-utils";

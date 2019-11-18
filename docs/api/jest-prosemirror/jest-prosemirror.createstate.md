@@ -9,5 +9,5 @@ Create the editor state for a tagged prosemirror doc
 <b>Signature:</b>
 
 ```typescript
-createState: <GSchema extends Schema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>, plugins?: import("prosemirror-state").Plugin<any, any>[]) => EditorState<GSchema>
+createState: <GSchema extends EditorSchema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>, plugins?: Plugin<any, any>[]) => EditorState<GSchema>
 ```

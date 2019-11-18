@@ -9,7 +9,7 @@ This creates a suggestion plugin with all the suggestions provided.
 <b>Signature:</b>
 
 ```typescript
-suggest: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(...suggesters: Suggester<import("@remirror/core-types").AnyFunction<void>>[]) => Plugin<SuggestState<any>, GSchema>
+suggest: <GSchema extends EditorSchema<string, string> = any>(...suggesters: Suggester<import("@remirror/core-types").AnyFunction<void>>[]) => Plugin<SuggestState<any>, GSchema>
 ```
 
 ## Remarks

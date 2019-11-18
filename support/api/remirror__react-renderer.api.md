@@ -23,7 +23,7 @@ export interface BaseRenderTreeProps {
     // (undocumented)
     children?: never;
     // Warning: (ae-forgotten-export) The symbol "MarkMap" needs to be exported by the entry point index.d.ts
-    // 
+    //
     // (undocumented)
     markMap: MarkMap;
     // (undocumented)
@@ -35,7 +35,7 @@ export interface BaseRenderTreeProps {
 }
 
 // @public
-export const gatherToDOM: <GSpec extends NodeExtensionSpec | MarkExtensionSpec>(specs: Record<string, GSpec>) => Record<string, GSpec["toDOM"]>;
+export const gatherToDOM: <GSpec extends MarkExtensionSpec | NodeExtensionSpec>(specs: Record<string, GSpec>) => Record<string, GSpec["toDOM"]>;
 
 // @public
 export const mapProps: (props: PlainObject) => PlainObject;
@@ -45,11 +45,11 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
     constructor(nodes: Record<string, NodeToDOM>, marks: Record<string, MarkToDOM>, manager: ExtensionManager<GExtension>);
     static fromExtensionManager<GExtension extends AnyExtension = any>(manager: ExtensionManager<GExtension>): ReactSerializer<GExtension>;
     // Warning: (ae-forgotten-export) The symbol "MarkToDOM" needs to be exported by the entry point index.d.ts
-    // 
+    //
     // (undocumented)
     marks: Record<string, MarkToDOM>;
     // Warning: (ae-forgotten-export) The symbol "NodeToDOM" needs to be exported by the entry point index.d.ts
-    // 
+    //
     // (undocumented)
     nodes: Record<string, NodeToDOM>;
     static renderSpec(structure: DOMOutputSpec, wraps?: ReactNode): ReactNode;

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type SpecialKey = (typeof SPECIAL_KEYS)[number];
+export declare type SpecialKey = typeof SPECIAL_KEYS[number];
 ```

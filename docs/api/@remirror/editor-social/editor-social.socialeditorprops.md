@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface SocialEditorProps extends Partial<ManagedRemirrorProviderProps<SocialExtensions>> 
+export interface SocialEditorProps extends Partial<ManagedRemirrorProviderProps<SocialExtensions>>, Pick<RemirrorManagerProps, 'extensions'> 
 ```
 
 ## Properties

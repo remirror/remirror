@@ -48,20 +48,10 @@ manager.data.actions
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [attributes](./core.extensionmanager.attributes.md) |  | <code>AttrsWithClass</code> | All the dynamically generated attributes provided by each extension. |
-|  [components](./core.extensionmanager.components.md) |  | <code>Record&lt;string, ComponentType&lt;{}&gt;&gt;</code> | Retrieve all the SSRComponent's from the extensions. This is used to render the initial SSR output. |
-|  [data](./core.extensionmanager.data.md) |  | <code>this[&quot;_D&quot;]</code> | Get the extension manager data which is stored after initializing. |
 |  [extensions](./core.extensionmanager.extensions.md) |  | <code>GExtension[]</code> | The extensions stored by this manager |
 |  [getState](./core.extensionmanager.getstate.md) |  | <code>() =&gt; EditorState</code> | Retrieve the latest state of the editor this manager is responsible for. This is only available after the first Initialization. |
 |  [getTheme](./core.extensionmanager.gettheme.md) |  | <code>() =&gt; RemirrorThemeContextType</code> | Provides access to the theme and helpers from the RemirrorThemeContext |
-|  [initialized](./core.extensionmanager.initialized.md) |  | <code>boolean</code> | Should be used to check whether the manager needs to be reinitialized. |
-|  [marks](./core.extensionmanager.marks.md) |  | <code>Record&lt;this[&quot;_M&quot;], MarkExtensionSpec&gt;</code> | Filters through all provided extensions and picks the marks |
-|  [nodes](./core.extensionmanager.nodes.md) |  | <code>Record&lt;this[&quot;_N&quot;], NodeExtensionSpec&gt;</code> | Filters through all provided extensions and picks the nodes |
-|  [options](./core.extensionmanager.options.md) |  | <code>Record&lt;NodeNames&lt;GExtension&gt; &#124; MarkNames&lt;GExtension&gt; &#124; PlainNames&lt;GExtension&gt;, PlainObject&gt;</code> |  |
 |  [portalContainer](./core.extensionmanager.portalcontainer.md) |  | <code>PortalContainer</code> | Retrieve the portal container for any custom nodeViews. This is only available after the first Initialization. |
-|  [schema](./core.extensionmanager.schema.md) |  | <code>Schema&lt;NodeNames&lt;GExtension&gt;, MarkNames&lt;GExtension&gt;&gt;</code> | A shorthand method for retrieving the schema for this extension manager from the data. |
-|  [tags](./core.extensionmanager.tags.md) |  | <code>ExtensionTags&lt;NodeNames&lt;GExtension&gt;, MarkNames&lt;GExtension&gt;, PlainNames&lt;GExtension&gt;&gt;</code> | A shorthand getter for retrieving the tags from the extension manager. |
-|  [view](./core.extensionmanager.view.md) |  | <code>EditorView&lt;SchemaFromExtensions&lt;GExtension&gt;&gt;</code> | A shorthand way of retrieving view. |
 
 ## Methods
 

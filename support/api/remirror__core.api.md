@@ -45,7 +45,6 @@ import { PluginKey } from 'prosemirror-state';
 import { PortalContainer } from '@remirror/react-portals';
 import { ProsemirrorPlugin } from '@remirror/core-types';
 import { RemirrorThemeContextType } from '@remirror/core-types';
-import { Schema } from 'prosemirror-model';
 import { StringKey } from '@remirror/core-types';
 import { Suggester } from 'prosemirror-suggest';
 import { Tags } from '@remirror/core-constants';
@@ -70,20 +69,20 @@ export type CommandsOfExtension<GExtension extends {
 }> = GExtension['commands'];
 
 // @public
+export const convertToPrioritizedExtension: <GExtension extends AnyExtension = any>(extension: FlexibleExtension<GExtension>) => PrioritizedExtension<GExtension>;
+
+// @public
 export type DataOfExtension<GExtension extends {
     extensionData?: any;
 }> = GExtension['extensionData'];
 
 // @public
 export class DocExtension extends NodeExtension<DocExtensionOptions> {
-    // (undocumented)
-    readonly defaultOptions: {
+    get name(): "doc";
+    get defaultOptions(): {
         content: string;
     };
-    // (undocumented)
-    readonly name: "doc";
-    // (undocumented)
-    readonly schema: NodeExtensionSpec;
+    get schema(): NodeExtensionSpec;
 }
 
 // @public (undocumented)
@@ -95,7 +94,6 @@ export interface DocExtensionOptions extends NodeExtensionOptions {
 export abstract class Extension<GOptions extends BaseExtensionOptions, GType = never> {
     constructor(options?: GOptions);
     readonly _C: this['commands'] extends AnyFunction ? ReturnType<this['commands']> : {};
-    protected readonly defaultOptions: Partial<GOptions>;
     protected extraAttrs(fallback?: string | null): Record<string, {
         default?: unknown;
     }>;
@@ -103,12 +101,13 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
     readonly _H: this['helpers'] extends AnyFunction ? ReturnType<this['helpers']> : {};
     protected init(): void;
     abstract readonly name: string;
+    get type(): ExtensionType;
+    get tags(): Array<Tags | string>;
+    get pluginKey(): PluginKey;
+    protected get defaultOptions(): Partial<GOptions>;
     readonly _O: GOptions;
     readonly options: Required<GOptions>;
-    readonly pluginKey: PluginKey;
     readonly _T: GType;
-    readonly tags: Array<Tags | string>;
-    readonly type: ExtensionType;
 }
 
 // @public (undocumented)
@@ -149,45 +148,46 @@ export class ExtensionManager<GExtension extends AnyExtension = any> implements 
     constructor(extensions: GExtension[]);
     // @internal
     readonly _A: ActionsFromExtensions<GExtension>;
-    readonly attributes: AttrsWithClass;
-    readonly components: Record<string, ComponentType<{}>>;
     static create<GFlexibleList extends FlexibleExtension[]>(prioritizedExtensions: GFlexibleList): ExtensionManager<import("./extension-types").InferFlexibleExtension<GFlexibleList[number]>>;
     createState({ content, doc, stringHandler, fallback }: Omit<CreateDocumentNodeParams, 'schema'>): EditorState<any>;
     // @internal
     readonly _D: ExtensionManagerData<this['_A'], this['_H'], this['_N'], this['_M'], this['_P']>;
-    readonly data: this["_D"];
     // @internal
     readonly _E: GExtension;
     extensionData(): Record<string, PlainObject>;
+    get initialized(): boolean;
+    get attributes(): AttrsWithClass;
+    get components(): Record<string, ComponentType<{}>>;
+    get data(): this["_D"];
+    get options(): Record<NodeNames<GExtension> | MarkNames<GExtension> | PlainNames<GExtension>, PlainObject>;
+    get nodes(): Record<this["_N"], NodeExtensionSpec>;
+    get marks(): Record<this["_M"], MarkExtensionSpec>;
+    get schema(): EditorSchema<NodeNames<GExtension>, MarkNames<GExtension>>;
+    get tags(): ExtensionTags<NodeNames<GExtension>, MarkNames<GExtension>, PlainNames<GExtension>>;
+    get view(): EditorView<SchemaFromExtensions<GExtension>>;
+    private get params();
     readonly extensions: GExtension[];
     getPluginState<GState>(name: this['_N']): GState;
     getState: () => EditorState;
     getTheme: () => RemirrorThemeContextType;
     // @internal
     readonly _H: HelpersFromExtensions<GExtension>;
+    private get pluginKeys();
     init({ getState, portalContainer, getTheme }: ExtensionManagerInitParams): this;
-    readonly initialized: boolean;
     initView(view: EditorView<SchemaFromExtensions<GExtension>>): void;
     isEqual(otherManager: unknown): boolean;
     // @internal
     readonly _M: MarkNames<GExtension>;
-    readonly marks: Record<this["_M"], MarkExtensionSpec>;
     // @internal
     readonly _N: NodeNames<GExtension>;
     // @internal
     readonly _Names: this['_P'] | this['_N'] | this['_M'];
-    readonly nodes: Record<this["_N"], NodeExtensionSpec>;
     onTransaction(params: OnTransactionManagerParams): void;
-    // (undocumented)
-    readonly options: Record<NodeNames<GExtension> | MarkNames<GExtension> | PlainNames<GExtension>, PlainObject>;
     // @internal
     readonly _P: PlainNames<GExtension>;
     portalContainer: PortalContainer;
-    readonly schema: Schema<NodeNames<GExtension>, MarkNames<GExtension>>;
     ssrTransformer(element: JSX.Element): JSX.Element;
-    readonly tags: ExtensionTags<NodeNames<GExtension>, MarkNames<GExtension>, PlainNames<GExtension>>;
-    readonly view: EditorView<SchemaFromExtensions<GExtension>>;
-}
+    }
 
 // @public (undocumented)
 export interface ExtensionManagerData<GActions = AnyActions, GHelpers = AnyHelpers, GNodes extends string = string, GMarks extends string = string, GPlain extends string = string, GNames extends string = GNodes | GMarks | GPlain> {
@@ -260,7 +260,7 @@ export type InferFlexibleExtension<GFlexible extends FlexibleExtension> = GFlexi
 export type InferFlexibleExtensionList<GFlexibleList extends FlexibleExtension[]> = InferFlexibleExtension<GFlexibleList[number]>;
 
 // @public
-export const isExtension: (extension: unknown) => extension is Extension<any, any>;
+export const isExtension: (extension: unknown) => extension is AnyExtension;
 
 // @public
 export const isExtensionManager: (value: unknown) => value is ExtensionManager<import("./extension").Extension<any, any>>;
@@ -291,10 +291,10 @@ export type MapHelpers<GHelpers extends Record<string, AnyFunction>> = {
 
 // @public
 export abstract class MarkExtension<GOptions extends MarkExtensionOptions = MarkExtensionOptions> extends Extension<GOptions, MarkType<EditorSchema>> {
+    get type(): ExtensionType.Mark;
     isActive({ getState, type }: ExtensionManagerMarkTypeParams): CommandStatusCheck;
     isEnabled(_: ExtensionManagerMarkTypeParams): CommandStatusCheck;
     abstract readonly schema: MarkExtensionSpec;
-    readonly type: ExtensionType.Mark;
 }
 
 // @public
@@ -305,12 +305,12 @@ export type NameOfExtension<GExtension extends AnyExtension> = GExtension['name'
 
 // @public
 export abstract class NodeExtension<GOptions extends NodeExtensionOptions = NodeExtensionOptions> extends Extension<GOptions, NodeType<EditorSchema>> {
+    get type(): ExtensionType.Node;
     // (undocumented)
     isActive({ getState, type }: ExtensionManagerNodeTypeParams): CommandStatusCheck;
     // (undocumented)
     isEnabled(_: ExtensionManagerNodeTypeParams): CommandStatusCheck;
     abstract readonly schema: NodeExtensionSpec;
-    readonly type: ExtensionType.Node;
 }
 
 // @public
@@ -344,10 +344,8 @@ export type SchemaFromExtensions<GExtension extends AnyExtension = any> = Editor
 
 // @public
 export class TextExtension extends NodeExtension {
-    // (undocumented)
-    readonly name: "text";
-    // (undocumented)
-    readonly schema: {
+    get name(): "text";
+    get schema(): {
         group: string;
     };
 }

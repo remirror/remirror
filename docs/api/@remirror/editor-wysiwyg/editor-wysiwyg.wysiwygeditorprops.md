@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface WysiwygEditorProps extends Partial<Pick<RemirrorProps<WysiwygExtensions>, 'initialContent' | 'attributes' | 'editable' | 'autoFocus' | 'onChange' | 'onFocus' | 'onBlur' | 'onFirstRender' | 'onDispatchTransaction' | 'label' | 'editorStyles' | 'forceEnvironment' | 'suppressHydrationWarning'>>, Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'> 
+export interface WysiwygEditorProps extends Partial<Pick<RemirrorProps<WysiwygExtensions>, 'initialContent' | 'attributes' | 'editable' | 'autoFocus' | 'onChange' | 'onFocus' | 'onBlur' | 'onFirstRender' | 'onDispatchTransaction' | 'label' | 'editorStyles' | 'forceEnvironment' | 'suppressHydrationWarning'>>, Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'>, Pick<RemirrorManagerProps, 'extensions'> 
 ```
 
 ## Properties

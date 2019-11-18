@@ -14,13 +14,6 @@ Why? In some scenarios it is difficult to place a cursor after the last element.
 export declare class TrailingNodeExtension extends Extension<TrailingNodeExtensionOptions> 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [defaultOptions](./core-extensions.trailingnodeextension.defaultoptions.md) |  | <code>TrailingNodeExtensionOptions</code> |  |
-|  [name](./core-extensions.trailingnodeextension.name.md) |  | <code>&quot;trailingNode&quot;</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

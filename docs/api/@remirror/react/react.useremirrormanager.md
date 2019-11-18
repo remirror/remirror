@@ -9,5 +9,5 @@ A low level context picker to obtain the manager from within a RemirrorManager c
 <b>Signature:</b>
 
 ```typescript
-useRemirrorManager: <GExtension extends import("@remirror/core").Extension<any, any> = any>() => ExtensionManager<GExtension>
+useRemirrorManager: <GExtension extends AnyExtension = any>() => ExtensionManager<GExtension>
 ```

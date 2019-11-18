@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-plugin: ({ type }: import("@remirror/core").ExtensionManagerTypeParams<import("prosemirror-model").MarkType<import("prosemirror-model").Schema<string, string>>>) => Plugin<any, any>;
+plugin: ({ type }: import("@remirror/core").ExtensionManagerTypeParams<import("prosemirror-model").MarkType<import("@remirror/core").EditorSchema<string, string>>>) => Plugin<any, any>;
 ```

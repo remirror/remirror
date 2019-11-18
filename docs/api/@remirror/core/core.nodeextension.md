@@ -21,7 +21,6 @@ For more information see [https://prosemirror.net/docs/ref/\#model.Node](https:/
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [schema](./core.nodeextension.schema.md) |  | <code>NodeExtensionSpec</code> | The prosemirror specification which sets up the node in the schema.<!-- -->The main difference between this and Prosemirror <code>NodeSpec</code> is that that the <code>toDOM</code> method doesn't allow dom manipulation. You can only return an array or string.<!-- -->For more advanced configurations, where dom manipulation is required, it is advisable to set up a nodeView. |
-|  [type](./core.nodeextension.type.md) |  | <code>ExtensionType.Node</code> | Identifies this extension as a \*\*NODE\*\* type from the prosemirror terminology. |
 
 ## Methods
 

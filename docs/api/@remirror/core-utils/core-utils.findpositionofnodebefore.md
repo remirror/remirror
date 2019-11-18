@@ -14,5 +14,5 @@ const pos = findPositionOfNodeBefore(tr.selection);
 <b>Signature:</b>
 
 ```typescript
-findPositionOfNodeBefore: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(value: PMSelection<GSchema> | import("prosemirror-model").ResolvedPos<GSchema> | Readonly<import("prosemirror-state").EditorState<GSchema>> | import("prosemirror-state").Transaction<GSchema>) => FindProsemirrorNodeResult<any> | undefined
+findPositionOfNodeBefore: <GSchema extends EditorSchema<string, string> = any>(value: Selection<GSchema> | ResolvedPos<GSchema> | Readonly<import("prosemirror-state").EditorState<GSchema>> | Transaction<GSchema>) => FindProsemirrorNodeResult<any> | undefined
 ```

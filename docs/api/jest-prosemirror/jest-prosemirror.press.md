@@ -9,5 +9,5 @@ Press a key.
 <b>Signature:</b>
 
 ```typescript
-press: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, char }: PressParams<GSchema>) => void
+press: <GSchema extends EditorSchema<string, string> = any>({ view, char }: PressParams<GSchema>) => void
 ```

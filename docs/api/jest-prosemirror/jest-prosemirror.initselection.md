@@ -11,5 +11,5 @@ The supported tags are `['cursor', 'node', 'start', 'end', 'anchor', 'all']`
 <b>Signature:</b>
 
 ```typescript
-initSelection: <GSchema extends Schema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>) => GapCursor | Selection<GSchema> | null
+initSelection: <GSchema extends EditorSchema<string, string> = any>(taggedDoc: pm.TaggedProsemirrorNode<GSchema>) => GapCursor | Selection<GSchema> | null
 ```

@@ -9,5 +9,5 @@ Creates a new transaction object from a given transaction
 <b>Signature:</b>
 
 ```typescript
-cloneTransaction: (tr: import("prosemirror-state").Transaction<any>) => import("prosemirror-state").Transaction<any>
+cloneTransaction: (tr: Transaction<any>) => Transaction<any>
 ```

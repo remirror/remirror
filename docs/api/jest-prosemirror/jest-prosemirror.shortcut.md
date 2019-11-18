@@ -9,5 +9,5 @@ Runs a keyboard shortcut.
 <b>Signature:</b>
 
 ```typescript
-shortcut: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, shortcut: text, }: KeyboardShortcutParams<GSchema>) => void
+shortcut: <GSchema extends EditorSchema<string, string> = any>({ view, shortcut: text, }: KeyboardShortcutParams<GSchema>) => void
 ```

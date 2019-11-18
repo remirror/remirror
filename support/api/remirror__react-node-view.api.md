@@ -42,12 +42,12 @@ export class ReactNodeView<GOptions extends BaseExtensionOptions = BaseExtension
     constructor({ Component, getPosition, node, portalContainer, view, options, }: ReactNodeViewParams<GOptions, GAttrs>);
     // (undocumented)
     contentDOM: Node | undefined;
+    get dom(): HTMLElement | undefined;
     createDomRef(): HTMLElement;
-    static createNodeView<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GAttrs extends Attrs = Attrs>({ Component, portalContainer, options }: CreateNodeViewParams<GOptions, GAttrs>): (node: import("prosemirror-model").Node<any>, view: import("prosemirror-view").EditorView<any>, getPosition: GetPosition) => ReactNodeView<GOptions, GAttrs>;
+    static createNodeView<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GAttrs extends Attrs = Attrs>({ Component, portalContainer, options }: CreateNodeViewParams<GOptions, GAttrs>): (node: ProsemirrorNode<any>, view: EditorView<any>, getPosition: GetPosition) => ReactNodeView<GOptions, GAttrs>;
     // (undocumented)
     deselectNode(): void;
     destroy(): void;
-    readonly dom: HTMLElement | undefined;
     getContentDOM(): {
         dom: Node;
         contentDOM?: Node | null | undefined;

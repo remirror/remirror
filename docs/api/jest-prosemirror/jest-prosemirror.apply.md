@@ -11,5 +11,5 @@ Returns a tuple matching the following structure \[ bool =<!-- -->&gt; was the c
 <b>Signature:</b>
 
 ```typescript
-apply: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(taggedDoc: TaggedProsemirrorNode<GSchema>, command: CommandFunction<GSchema>, result?: TaggedProsemirrorNode<GSchema> | undefined) => ApplyReturn<GSchema>
+apply: <GSchema extends EditorSchema<string, string> = any>(taggedDoc: TaggedProsemirrorNode<GSchema>, command: CommandFunction<GSchema>, result?: TaggedProsemirrorNode<GSchema> | undefined) => ApplyReturn<GSchema>
 ```

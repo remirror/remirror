@@ -8,9 +8,9 @@
 
 ```typescript
 helpers({ getState }: ExtensionManagerParams): {
-        addPositionTracker: ({ pos, id }: AddPositionTrackerParams, tr?: import("prosemirror-state").Transaction<import("prosemirror-model").Schema<string, string>>) => import("prosemirror-state").Transaction<any> | undefined;
-        removePositionTracker: ({ id }: RemovePositionTrackerParams, tr?: import("prosemirror-state").Transaction<import("prosemirror-model").Schema<string, string>>) => import("prosemirror-state").Transaction<any> | undefined;
-        clearPositionTrackers: (tr?: import("prosemirror-state").Transaction<any>) => import("prosemirror-state").Transaction<any> | undefined;
+        addPositionTracker: ({ pos, id }: AddPositionTrackerParams, tr?: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => import("prosemirror-state").Transaction<any> | undefined;
+        removePositionTracker: ({ id }: RemovePositionTrackerParams, tr?: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => import("prosemirror-state").Transaction<any> | undefined;
+        clearPositionTrackers: (tr?: Transaction<any>) => import("prosemirror-state").Transaction<any> | undefined;
         findPositionTracker: (id: unknown) => number | undefined;
         findAllPositionTrackers: () => Record<string, number>;
     };
@@ -25,9 +25,9 @@ helpers({ getState }: ExtensionManagerParams): {
 <b>Returns:</b>
 
 `{
-        addPositionTracker: ({ pos, id }: AddPositionTrackerParams, tr?: import("prosemirror-state").Transaction<import("prosemirror-model").Schema<string, string>>) => import("prosemirror-state").Transaction<any> | undefined;
-        removePositionTracker: ({ id }: RemovePositionTrackerParams, tr?: import("prosemirror-state").Transaction<import("prosemirror-model").Schema<string, string>>) => import("prosemirror-state").Transaction<any> | undefined;
-        clearPositionTrackers: (tr?: import("prosemirror-state").Transaction<any>) => import("prosemirror-state").Transaction<any> | undefined;
+        addPositionTracker: ({ pos, id }: AddPositionTrackerParams, tr?: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => import("prosemirror-state").Transaction<any> | undefined;
+        removePositionTracker: ({ id }: RemovePositionTrackerParams, tr?: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => import("prosemirror-state").Transaction<any> | undefined;
+        clearPositionTrackers: (tr?: Transaction<any>) => import("prosemirror-state").Transaction<any> | undefined;
         findPositionTracker: (id: unknown) => number | undefined;
         findAllPositionTrackers: () => Record<string, number>;
     }`

@@ -10,13 +10,6 @@
 export declare class HorizontalRuleExtension extends NodeExtension 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.horizontalruleextension.name.md) |  | <code>&quot;horizontalRule&quot;</code> |  |
-|  [schema](./core-extensions.horizontalruleextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

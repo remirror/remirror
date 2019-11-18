@@ -9,5 +9,5 @@ Predicate checking whether the value is a Selection
 <b>Signature:</b>
 
 ```typescript
-isSelection: <GSchema extends Schema<string, string> = any>(value: unknown) => value is PMSelection<GSchema>
+isSelection: <GSchema extends EditorSchema<string, string> = any>(value: unknown) => value is PMSelection<GSchema>
 ```

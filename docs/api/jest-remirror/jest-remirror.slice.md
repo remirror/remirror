@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-slice: (schema: import("prosemirror-model").Schema<string, string>) => (...content: TaggedContentWithText[]) => Slice<import("prosemirror-model").Schema<string, string>>
+slice: (schema: EditorSchema<string, string>) => (...content: TaggedContentWithText[]) => Slice<EditorSchema<string, string>>
 ```

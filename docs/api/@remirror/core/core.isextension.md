@@ -9,5 +9,5 @@ Determines if the passed in extension is a any type of extension.
 <b>Signature:</b>
 
 ```typescript
-isExtension: (extension: unknown) => extension is Extension<any, any>
+isExtension: (extension: unknown) => extension is AnyExtension
 ```

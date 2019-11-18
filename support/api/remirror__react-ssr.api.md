@@ -14,10 +14,12 @@ import { ManagerParams } from '@remirror/core';
 import { PlainObject } from '@remirror/core';
 import { Transaction } from '@remirror/core';
 
+// Warning: (ae-forgotten-export) The symbol "DirectEditorProps" needs to be exported by the entry point index.d.ts
+//
 // @public
-export const createEditorView: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(place: Node | {
+export const createEditorView: <GSchema extends EditorSchema<string, string> = any>(place: Node | {
     mount: Node;
-} | ((p: Node) => void) | undefined, props: DirectEditorProps_2<import("prosemirror-model").Schema<string, string>>, forceEnvironment?: "ssr" | "dom" | undefined) => EditorView<GSchema>;
+} | ((p: Node) => void) | undefined, props: DirectEditorProps, forceEnvironment?: "ssr" | "dom" | undefined) => EditorView<GSchema>;
 
 // @public
 export class EditorViewSSR {
@@ -65,8 +67,6 @@ export class EditorViewSSR {
     } | null | undefined;
     // (undocumented)
     posAtDOM(_node: Node, _offset: number, _bias?: number | null): number;
-    // Warning: (ae-forgotten-export) The symbol "DirectEditorProps" needs to be exported by the entry point index.d.ts
-    // 
     // (undocumented)
     props: DirectEditorProps;
     // (undocumented)
@@ -84,7 +84,7 @@ export class EditorViewSSR {
 }
 
 // @public
-export const RemirrorSSR: <GExtension extends import("@remirror/core").Extension<any, any> = any>({ attributes, manager, state, editable, }: RemirrorSSRProps<GExtension>) => JSX.Element;
+export const RemirrorSSR: <GExtension extends AnyExtension = any>({ attributes, manager, state, editable, }: RemirrorSSRProps<GExtension>) => JSX.Element;
 
 // @public (undocumented)
 export interface RemirrorSSRProps<GExtension extends AnyExtension = any> extends EditorStateParams, ManagerParams<GExtension> {

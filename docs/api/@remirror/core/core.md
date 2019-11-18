@@ -33,6 +33,7 @@
 
 |  Variable | Description |
 |  --- | --- |
+|  [convertToPrioritizedExtension](./core.converttoprioritizedextension.md) | Converts an extension to its mapped value |
 |  [isExtension](./core.isextension.md) | Determines if the passed in extension is a any type of extension. |
 |  [isExtensionManager](./core.isextensionmanager.md) | Checks to see whether this is an extension manager |
 |  [isMarkExtension](./core.ismarkextension.md) | Determines if the passed in extension is a mark extension. Useful as a type guard where a particular type of extension is needed. |

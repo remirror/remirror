@@ -10,13 +10,6 @@
 export declare class StrikeExtension extends MarkExtension 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.strikeextension.name.md) |  | <code>&quot;strike&quot;</code> |  |
-|  [schema](./core-extensions.strikeextension.schema.md) |  | <code>MarkExtensionSpec</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

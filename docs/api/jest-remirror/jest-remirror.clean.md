@@ -9,5 +9,5 @@ Builds a 'clean' version of the nodes, without Tags or TagTrackers
 <b>Signature:</b>
 
 ```typescript
-clean: ({ schema, content }: CleanParams) => PMNode<import("prosemirror-model").Schema<string, string>> | PMNode<any>[] | undefined
+clean: ({ schema, content }: CleanParams) => PMNode<EditorSchema<string, string>> | PMNode<any>[] | undefined
 ```

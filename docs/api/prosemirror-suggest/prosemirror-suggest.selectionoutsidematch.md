@@ -9,5 +9,5 @@ True when the current selection is outside the match.
 <b>Signature:</b>
 
 ```typescript
-selectionOutsideMatch: ({ match, selection, }: Partial<SuggestStateMatchParams> & SelectionParams<any, import("prosemirror-state").Selection<any>>) => boolean | undefined
+selectionOutsideMatch: ({ match, selection, }: Partial<SuggestStateMatchParams> & SelectionParams<any, import("@remirror/core-types").Selection<any>>) => boolean | undefined
 ```

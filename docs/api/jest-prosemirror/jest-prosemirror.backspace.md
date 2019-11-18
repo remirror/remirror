@@ -9,7 +9,7 @@ Simulate a backspace key press..
 <b>Signature:</b>
 
 ```typescript
-backspace: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, times, }: TestEditorViewParams<GSchema> & {
+backspace: <GSchema extends EditorSchema<string, string> = any>({ view, times, }: TestEditorViewParams<GSchema> & {
     times?: number | undefined;
 }) => void
 ```

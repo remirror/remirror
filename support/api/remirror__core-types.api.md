@@ -718,7 +718,7 @@ export interface TransformTransactionParams<GSchema extends EditorSchema = any> 
 export type TupleValue<GTuple extends readonly unknown[]> = GTuple[number];
 
 // @public
-export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
+export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 
 // @public
 export type Value<GRecord> = GRecord[Key<GRecord>];

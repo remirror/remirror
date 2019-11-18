@@ -10,13 +10,6 @@
 export declare class OrderedListExtension extends NodeExtension 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.orderedlistextension.name.md) |  | <code>&quot;orderedList&quot;</code> |  |
-|  [schema](./core-extensions.orderedlistextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

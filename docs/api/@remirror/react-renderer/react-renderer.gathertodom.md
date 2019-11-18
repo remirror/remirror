@@ -9,5 +9,5 @@ Gather up all the toDOM methods from the provided spec object
 <b>Signature:</b>
 
 ```typescript
-gatherToDOM: <GSpec extends NodeExtensionSpec | MarkExtensionSpec>(specs: Record<string, GSpec>) => Record<string, GSpec["toDOM"]>
+gatherToDOM: <GSpec extends MarkExtensionSpec | NodeExtensionSpec>(specs: Record<string, GSpec>) => Record<string, GSpec["toDOM"]>
 ```

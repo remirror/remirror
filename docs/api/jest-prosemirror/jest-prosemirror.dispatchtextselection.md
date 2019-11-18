@@ -9,5 +9,5 @@ Dispatch a text selection from start to \[end\]
 <b>Signature:</b>
 
 ```typescript
-dispatchTextSelection: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, start, end, }: DispatchTextSelectionParams<GSchema>) => void
+dispatchTextSelection: <GSchema extends EditorSchema<string, string> = any>({ view, start, end, }: DispatchTextSelectionParams<GSchema>) => void
 ```

@@ -9,5 +9,5 @@ Converts the left margin into an indentation level.
 <b>Signature:</b>
 
 ```typescript
-marginToIndent: (marginLeft: string, levels?: [number, number]) => number
+marginToIndent: (marginLeft: string, levels?: IndentLevels) => number
 ```

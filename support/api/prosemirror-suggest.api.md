@@ -100,7 +100,7 @@ export const getRegexPrefix: (onlyStartOfLine: boolean) => "" | "^";
 // Warning: (ae-forgotten-export) The symbol "SuggestState" needs to be exported by the entry point index.d.ts
 //
 // @public
-export const getSuggestPluginState: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(state: Readonly<import("prosemirror-state").EditorState<GSchema>>) => SuggestState<any>;
+export const getSuggestPluginState: <GSchema extends EditorSchema<string, string> = any>(state: Readonly<import("prosemirror-state").EditorState<GSchema>>) => SuggestState<any>;
 
 // @public
 export const isChange: (compare: Partial<CompareMatchParams>) => compare is CompareMatchParams;
@@ -172,10 +172,10 @@ export interface RemoveIgnoredParams extends Pick<Suggester, 'char' | 'name'> {
 }
 
 // @public
-export const selectionOutsideMatch: ({ match, selection, }: Partial<SuggestStateMatchParams> & SelectionParams<any, import("prosemirror-state").Selection<any>>) => boolean | undefined;
+export const selectionOutsideMatch: ({ match, selection, }: Partial<SuggestStateMatchParams> & SelectionParams<any, import("@remirror/core-types").Selection<any>>) => boolean | undefined;
 
 // @public
-export const suggest: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(...suggesters: Suggester<import("@remirror/core-types").AnyFunction<void>>[]) => Plugin<SuggestState<any>, GSchema>;
+export const suggest: <GSchema extends EditorSchema<string, string> = any>(...suggesters: Suggester<import("@remirror/core-types").AnyFunction<void>>[]) => Plugin<SuggestState<any>, GSchema>;
 
 // @public (undocumented)
 export interface SuggestCallbackParams<GCommand extends AnyFunction<void> = AnyFunction<void>> extends SuggestStateMatch, EditorViewParams, SuggestCommandParams<GCommand>, SuggestIgnoreParams {

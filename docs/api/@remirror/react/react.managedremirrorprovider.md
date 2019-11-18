@@ -12,7 +12,7 @@ If no manager exists the child components are not rendered.
 
 ```typescript
 ManagedRemirrorProvider: {
-    <GExtension extends import("@remirror/core").Extension<any, any> = any>({ children, ...props }: ManagedRemirrorProviderProps<GExtension>): JSX.Element;
+    <GExtension extends AnyExtension = any>({ children, ...props }: ManagedRemirrorProviderProps<GExtension>): JSX.Element;
     $$remirrorType: RemirrorType;
 }
 ```

@@ -9,5 +9,5 @@ A dropdown for select components
 <b>Signature:</b>
 
 ```typescript
-DropdownSelect: React.ForwardRefExoticComponent<DropdownProps & React.RefAttributes<HTMLDivElement>>
+DropdownSelect: import("react").ForwardRefExoticComponent<DropdownProps & import("react").RefAttributes<HTMLDivElement>>
 ```

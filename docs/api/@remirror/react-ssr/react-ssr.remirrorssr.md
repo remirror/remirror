@@ -9,5 +9,5 @@ Remirror SSR component used for rendering in non dom environments
 <b>Signature:</b>
 
 ```typescript
-RemirrorSSR: <GExtension extends import("@remirror/core").Extension<any, any> = any>({ attributes, manager, state, editable, }: RemirrorSSRProps<GExtension>) => JSX.Element
+RemirrorSSR: <GExtension extends AnyExtension = any>({ attributes, manager, state, editable, }: RemirrorSSRProps<GExtension>) => JSX.Element
 ```

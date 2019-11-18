@@ -18,7 +18,12 @@ childAsRoot?: GetRootPropsConfig<string> | boolean;
 
 When using a remirror provider calling `getRootProps` is mandatory. By setting `childAsRoot` to an object Remirror will inject these props into the first child element.
 
+\*\*Important\*\* When using the child as root prop make sure to set the JSX pragma as shown below.
+
 ```tsx
+// @jsx jsx
+
+import { jsx } from '@emotion/core';
 import { ManagedRemirrorProvider, RemirrorManager } from '@remirror/react';
 
 const Editor = () => {

@@ -9,5 +9,5 @@ Insert text from the provided index. Each key is entered individually to better 
 <b>Signature:</b>
 
 ```typescript
-insertText: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, text, start: from, }: InsertTextParams<GSchema>) => void
+insertText: <GSchema extends EditorSchema<string, string> = any>({ view, text, start: from, }: InsertTextParams<GSchema>) => void
 ```

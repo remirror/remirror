@@ -18,7 +18,7 @@ The signature is exactly the same as the useEffect hook.
 
 ```tsx
 import React from 'react'
-import {useEffectOnUpdate} from 'react-use';
+import { useEffectOnUpdate } from 'react-use';
 
 const Demo = () => {
   const [count, setCount] = React.useState(0);

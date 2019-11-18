@@ -10,14 +10,6 @@
 export declare class LinkExtension extends MarkExtension<LinkExtensionOptions> 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [defaultOptions](./core-extensions.linkextension.defaultoptions.md) |  | <code>{</code><br/><code>        activationHandler: () =&gt; boolean;</code><br/><code>    }</code> |  |
-|  [name](./core-extensions.linkextension.name.md) |  | <code>&quot;link&quot;</code> |  |
-|  [schema](./core-extensions.linkextension.schema.md) |  | <code>MarkExtensionSpec</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

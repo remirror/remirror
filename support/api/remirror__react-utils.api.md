@@ -15,7 +15,7 @@ import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 
 // @public
-export const addKeyToElement: (element: ReactNode, key: import("csstype").AnimationIterationCountProperty) => {} | null | undefined;
+export const addKeyToElement: (element: ReactNode, key: import("react").ReactText) => {} | null | undefined;
 
 // @public
 export const asDefaultProps: <GProps extends object>() => <GDefaultProps extends Partial<GProps>>(props: GDefaultProps) => GDefaultProps;
@@ -90,11 +90,6 @@ export type RemirrorElement<GOptions extends object = any> = ReactElement & {
 
 // @public (undocumented)
 export type RemirrorFC<GProps extends object = {}> = FC<GProps> & RemirrorComponentStaticProperties;
-
-// @public (undocumented)
-export interface RemirrorManagerProps {
-    useBaseExtensions?: boolean;
-}
 
 // @public
 export enum RemirrorType {

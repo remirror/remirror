@@ -63,7 +63,7 @@ export interface AddContentReturn<GExtension extends AnyExtension> extends Edito
 export type BaseExtensionNodeNames = Exclude<BaseExtensionNodes['name'], 'text'> | 'p';
 
 // @public
-export type BaseExtensionNodes = (typeof nodeExtensions)[number];
+export type BaseExtensionNodes = typeof nodeExtensions[number];
 
 // @public (undocumented)
 export interface BaseFactoryParams<GSchema extends EditorSchema = EditorSchema> extends Partial<AttrsParams> {
@@ -74,13 +74,13 @@ export interface BaseFactoryParams<GSchema extends EditorSchema = EditorSchema> 
 // Warning: (ae-forgotten-export) The symbol "CleanParams" needs to be exported by the entry point index.d.ts
 //
 // @public
-export const clean: ({ schema, content }: CleanParams) => Node<import("prosemirror-model").Schema<string, string>> | Node<any>[] | undefined;
+export const clean: ({ schema, content }: CleanParams) => Node<EditorSchema<string, string>> | Node<any>[] | undefined;
 
 // Warning: (ae-forgotten-export) The symbol "CoerceParams" needs to be exported by the entry point index.d.ts
 //
 // @public
 export const coerce: ({ content, schema }: CoerceParams) => {
-    nodes: TaggedProsemirrorNode<import("prosemirror-model").Schema<string, string>>[];
+    nodes: TaggedProsemirrorNode<EditorSchema<string, string>>[];
     tags: Tags;
 };
 
@@ -120,7 +120,7 @@ export type GetNames<GExtensions extends AnyExtension[]> = GExtensions[number]['
 export const ignoreJSDOMWarnings: (val?: boolean) => void;
 
 // @public
-export const isTaggedNode: (val: unknown) => val is TaggedProsemirrorNode<import("prosemirror-model").Schema<string, string>>;
+export const isTaggedNode: (val: unknown) => val is TaggedProsemirrorNode<import("@remirror/core").EditorSchema<string, string>>;
 
 // @public
 export const jsdomExtras: () => void;
@@ -131,7 +131,7 @@ export const jsdomPolyfill: () => void;
 // Warning: (ae-forgotten-export) The symbol "MarkFactoryParams" needs to be exported by the entry point index.d.ts
 //
 // @public
-export const markFactory: ({ name, schema, attrs, allowDupes }: MarkFactoryParams) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode<import("prosemirror-model").Schema<string, string>>[];
+export const markFactory: ({ name, schema, attrs, allowDupes }: MarkFactoryParams) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode<EditorSchema<string, string>>[];
 
 // @public (undocumented)
 export type MarkWithAttrs<GNames extends string> = {
@@ -149,7 +149,7 @@ export const nodeExtensions: (DocExtension | TextExtension | ParagraphExtension)
 // Warning: (ae-forgotten-export) The symbol "NodeFactoryParams" needs to be exported by the entry point index.d.ts
 //
 // @public
-export const nodeFactory: <GSchema extends import("prosemirror-model").Schema<string, string> = import("prosemirror-model").Schema<string, string>>({ name, schema, attrs, marks, }: NodeFactoryParams<GSchema>) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode<import("prosemirror-model").Schema<string, string>>;
+export const nodeFactory: <GSchema extends EditorSchema<string, string> = EditorSchema<string, string>>({ name, schema, attrs, marks, }: NodeFactoryParams<GSchema>) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode<EditorSchema<string, string>>;
 
 // @public (undocumented)
 export type NodeWithAttrs<GNames extends string> = {
@@ -168,10 +168,10 @@ export const offsetTags: (tags: Tags, offset: number) => Tags;
 export const remirrorMatchers: jest.ExpectExtendMap;
 
 // @public
-export const renderEditor: <GPlainMarks extends MarkExtension<any>[], GPlainNodes extends NodeExtension<any>[], GAttrMarks extends MarkExtension<any>[], GAttrNodes extends NodeExtension<any>[], GOthers extends Extension<any, never>[], GReturn extends CreateTestEditorReturn<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers, GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>>, GExtension extends GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>, GPlainMarkNames extends GPlainMarks[number]["name"], GAttrMarkNames extends GAttrMarks[number]["name"], GAttrNodeNames extends GAttrNodes[number]["name"], GPlainNodeNames extends "p" | "doc" | "paragraph" | GPlainNodes[number]["name"]>({ plainMarks, plainNodes, attrMarks, attrNodes, others, }?: Partial<CreateTestEditorExtensions<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>>, props?: Partial<Pick<RemirrorProps<GExtension>, "label" | "children" | "onChange" | "attributes" | "styles" | "stringHandler" | "value" | "initialContent" | "onStateChange" | "editable" | "autoFocus" | "onFocus" | "onBlur" | "onFirstRender" | "onDispatchTransaction" | "usesBuiltInExtensions" | "usesDefaultStyles" | "editorStyles" | "css" | "insertPosition" | "forceEnvironment" | "suppressHydrationWarning" | "fallbackContent">>) => GReturn;
+export const renderEditor: <GPlainMarks extends MarkExtension<any>[], GPlainNodes extends NodeExtension<any>[], GAttrMarks extends MarkExtension<any>[], GAttrNodes extends NodeExtension<any>[], GOthers extends Extension<any, never>[], GReturn extends CreateTestEditorReturn<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers, GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>>, GExtension extends GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>, GPlainMarkNames extends GPlainMarks[number]["name"], GAttrMarkNames extends GAttrMarks[number]["name"], GAttrNodeNames extends GAttrNodes[number]["name"], GPlainNodeNames extends "p" | "doc" | "paragraph" | GPlainNodes[number]["name"]>({ plainMarks, plainNodes, attrMarks, attrNodes, others, }?: Partial<CreateTestEditorExtensions<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>>, props?: Partial<Pick<RemirrorProps<GExtension>, "label" | "attributes" | "children" | "onChange" | "styles" | "stringHandler" | "value" | "initialContent" | "onStateChange" | "editable" | "autoFocus" | "onFocus" | "onBlur" | "onFirstRender" | "onDispatchTransaction" | "usesBuiltInExtensions" | "usesDefaultStyles" | "editorStyles" | "css" | "insertPosition" | "forceEnvironment" | "suppressHydrationWarning" | "fallbackContent">>) => GReturn;
 
 // @public
-export const renderSSREditor: <GExtension extends import("@remirror/core").Extension<any, any> = any>(extensions?: GExtension[], props?: Partial<Pick<RemirrorProps<GExtension>, "label" | "children" | "onChange" | "attributes" | "styles" | "stringHandler" | "value" | "initialContent" | "onStateChange" | "editable" | "autoFocus" | "onFocus" | "onBlur" | "onFirstRender" | "onDispatchTransaction" | "usesBuiltInExtensions" | "usesDefaultStyles" | "editorStyles" | "css" | "insertPosition" | "forceEnvironment" | "suppressHydrationWarning" | "fallbackContent">>) => string;
+export const renderSSREditor: <GExtension extends AnyExtension = any>(extensions?: GExtension[], props?: Partial<Pick<RemirrorProps<GExtension>, "label" | "attributes" | "children" | "onChange" | "styles" | "stringHandler" | "value" | "initialContent" | "onStateChange" | "editable" | "autoFocus" | "onFocus" | "onBlur" | "onFirstRender" | "onDispatchTransaction" | "usesBuiltInExtensions" | "usesDefaultStyles" | "editorStyles" | "css" | "insertPosition" | "forceEnvironment" | "suppressHydrationWarning" | "fallbackContent">>) => string;
 
 // Warning: (ae-forgotten-export) The symbol "InsertParams" needs to be exported by the entry point index.d.ts
 //
@@ -180,7 +180,7 @@ export const replaceSelection: ({ view, content }: InsertParams) => Tags;
 
 // @public
 export const sequence: (...content: TaggedContentItem[]) => {
-    nodes: TaggedProsemirrorNode<import("prosemirror-model").Schema<string, string>>[];
+    nodes: TaggedProsemirrorNode<EditorSchema<string, string>>[];
     tags: Tags;
 };
 
@@ -188,7 +188,7 @@ export const sequence: (...content: TaggedContentItem[]) => {
 export const setupRemirrorEnvironment: () => void;
 
 // @public (undocumented)
-export const slice: (schema: import("prosemirror-model").Schema<string, string>) => (...content: TaggedContentWithText[]) => Slice<import("prosemirror-model").Schema<string, string>>;
+export const slice: (schema: EditorSchema<string, string>) => (...content: TaggedContentWithText[]) => Slice<EditorSchema<string, string>>;
 
 // @public
 export type TaggedContent = TaggedContentItem | Array<ProsemirrorNode | TaggedContentItem>;
@@ -218,7 +218,7 @@ export class TagTracker {
 }
 
 // @public
-export const text: (value: string, schema: import("prosemirror-model").Schema<string, string>) => TaggedContentItem;
+export const text: (value: string, schema: EditorSchema<string, string>) => TaggedContentItem;
 
 
 // (No @packageDocumentation comment for this package)

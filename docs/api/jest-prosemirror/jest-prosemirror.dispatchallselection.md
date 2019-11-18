@@ -9,5 +9,5 @@ Select everything in the current doc.
 <b>Signature:</b>
 
 ```typescript
-dispatchAllSelection: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, }: TestEditorViewParams<GSchema>) => void
+dispatchAllSelection: <GSchema extends EditorSchema<string, string> = any>({ view, }: TestEditorViewParams<GSchema>) => void
 ```

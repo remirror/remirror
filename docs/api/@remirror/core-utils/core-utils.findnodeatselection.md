@@ -9,5 +9,5 @@ Finds the node at the passed selection.
 <b>Signature:</b>
 
 ```typescript
-findNodeAtSelection: (selection: PMSelection<any>) => FindProsemirrorNodeResult<any>
+findNodeAtSelection: (selection: Selection<any>) => FindProsemirrorNodeResult<any>
 ```

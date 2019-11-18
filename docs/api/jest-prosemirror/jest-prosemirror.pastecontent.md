@@ -9,7 +9,7 @@ Add eventual support for all of prosemirror paste commands
 <b>Signature:</b>
 
 ```typescript
-pasteContent: <GSchema extends import("prosemirror-model").Schema<string, string> = any>({ view, content, }: TestEditorViewParams<GSchema> & {
-    content: string | import("prosemirror-model").Node<any>;
+pasteContent: <GSchema extends EditorSchema<string, string> = any>({ view, content, }: TestEditorViewParams<GSchema> & {
+    content: string | ProsemirrorNode<any>;
 }) => void
 ```

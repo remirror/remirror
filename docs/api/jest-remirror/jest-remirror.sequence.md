@@ -10,7 +10,7 @@ Given a collection of nodes, sequence them in an array and return the result alo
 
 ```typescript
 sequence: (...content: TaggedContentItem[]) => {
-    nodes: TaggedProsemirrorNode<import("prosemirror-model").Schema<string, string>>[];
+    nodes: TaggedProsemirrorNode<EditorSchema<string, string>>[];
     tags: Tags;
 }
 ```

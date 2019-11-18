@@ -13,13 +13,6 @@ This allow composition events to delete inline nodes using gboard on Android dev
 export declare class CompositionExtension extends Extension<CompositionExtensionOptions> 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [defaultOptions](./core-extensions.compositionextension.defaultoptions.md) |  | <code>{</code><br/><code>        ensureNodeDeletion: string[];</code><br/><code>    }</code> |  |
-|  [name](./core-extensions.compositionextension.name.md) |  | <code>&quot;composition&quot;</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

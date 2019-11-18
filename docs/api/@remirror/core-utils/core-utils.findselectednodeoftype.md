@@ -19,5 +19,5 @@ const selectedNode = findSelectedNodeOfType({
 <b>Signature:</b>
 
 ```typescript
-findSelectedNodeOfType: <GSchema extends import("prosemirror-model").Schema<string, string> = any, GSelection extends PMSelection<GSchema> = PMSelection<GSchema>>({ types, selection, }: FindSelectedNodeOfTypeParams<GSchema, GSelection>) => FindSelectedNodeOfType<GSchema> | undefined
+findSelectedNodeOfType: <GSchema extends EditorSchema<string, string> = any, GSelection extends Selection<GSchema> = Selection<GSchema>>({ types, selection, }: FindSelectedNodeOfTypeParams<GSchema, GSelection>) => FindSelectedNodeOfType<GSchema> | undefined
 ```

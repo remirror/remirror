@@ -332,7 +332,7 @@ export interface MultishiftReturn<GItem = any> extends MultishiftState<GItem>, M
 }
 
 // Warning: (ae-forgotten-export) The symbol "ActionType" needs to be exported by the entry point index.d.ts
-// 
+//
 // @public (undocumented)
 export type MultishiftRootActions<GItem = any> = ActionType<AllMultishiftActions<GItem>>;
 
@@ -387,7 +387,7 @@ export const SPECIAL_MENU_KEYS: readonly ["ArrowDown", "ArrowUp", "Space", "Tab"
 export const SPECIAL_TOGGLE_BUTTON_KEYS: readonly ["ArrowDown", "ArrowUp", "Space"];
 
 // @public (undocumented)
-export type SpecialKey = (typeof SPECIAL_KEYS)[number];
+export type SpecialKey = typeof SPECIAL_KEYS[number];
 
 // @public (undocumented)
 export interface SpecialKeyDownPayload {

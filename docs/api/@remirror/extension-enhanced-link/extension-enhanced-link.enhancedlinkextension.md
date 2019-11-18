@@ -20,9 +20,7 @@ export declare class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExt
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./extension-enhanced-link.enhancedlinkextension.name.md) |  | <code>&quot;enhancedLink&quot;</code> |  |
-|  [plugin](./extension-enhanced-link.enhancedlinkextension.plugin.md) |  | <code>({ type }: import(&quot;@remirror/core&quot;).ExtensionManagerTypeParams&lt;import(&quot;prosemirror-model&quot;).MarkType&lt;import(&quot;prosemirror-model&quot;).Schema&lt;string, string&gt;&gt;&gt;) =&gt; Plugin&lt;any, any&gt;</code> |  |
-|  [schema](./extension-enhanced-link.enhancedlinkextension.schema.md) |  | <code>MarkExtensionSpec</code> |  |
+|  [plugin](./extension-enhanced-link.enhancedlinkextension.plugin.md) |  | <code>({ type }: import(&quot;@remirror/core&quot;).ExtensionManagerTypeParams&lt;import(&quot;prosemirror-model&quot;).MarkType&lt;import(&quot;@remirror/core&quot;).EditorSchema&lt;string, string&gt;&gt;&gt;) =&gt; Plugin&lt;any, any&gt;</code> |  |
 
 ## Methods
 

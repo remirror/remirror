@@ -9,5 +9,5 @@ Finds the node at the resolved position.
 <b>Signature:</b>
 
 ```typescript
-findNodeAtPosition: ($pos: import("prosemirror-model").ResolvedPos<any>) => FindProsemirrorNodeResult<any>
+findNodeAtPosition: ($pos: ResolvedPos<any>) => FindProsemirrorNodeResult<any>
 ```

@@ -10,13 +10,6 @@
 export declare class CodeBlockExtension extends NodeExtension 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core-extensions.codeblockextension.name.md) |  | <code>&quot;codeBlock&quot;</code> |  |
-|  [schema](./core-extensions.codeblockextension.schema.md) |  | <code>NodeExtensionSpec</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

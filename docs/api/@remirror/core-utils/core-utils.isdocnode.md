@@ -9,5 +9,5 @@ Checks whether a Prosemirror node is the top level `doc` node
 <b>Signature:</b>
 
 ```typescript
-isDocNode: (node: PMNode<any> | null | undefined, schema?: Schema<string, string> | undefined) => boolean
+isDocNode: (node: ProsemirrorNode<any> | null | undefined, schema?: EditorSchema<string, string> | undefined) => boolean
 ```

@@ -12,13 +12,6 @@ This is a custom drop cursor that allows for customising what is shown in the do
 export declare class DropCursorExtension extends Extension<DropCursorExtensionOptions> 
 ```
 
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [defaultOptions](./extension-drop-cursor.dropcursorextension.defaultoptions.md) |  | <code>DropCursorExtensionOptions</code> |  |
-|  [name](./extension-drop-cursor.dropcursorextension.name.md) |  | <code>&quot;dropCursor&quot;</code> |  |
-
 ## Methods
 
 |  Method | Modifiers | Description |

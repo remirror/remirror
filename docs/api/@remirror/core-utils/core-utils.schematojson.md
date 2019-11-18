@@ -9,5 +9,5 @@ Converts a schema to a simple json compatible object.
 <b>Signature:</b>
 
 ```typescript
-schemaToJSON: <GNodes extends string = string, GMarks extends string = string>(schema: import("prosemirror-model").Schema<GNodes, GMarks>) => SchemaJSON<GNodes, GMarks>
+schemaToJSON: <GNodes extends string = string, GMarks extends string = string>(schema: EditorSchema<GNodes, GMarks>) => SchemaJSON<GNodes, GMarks>
 ```

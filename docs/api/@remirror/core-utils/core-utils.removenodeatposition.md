@@ -9,5 +9,5 @@ Returns a `delete` transaction that removes a node at a given position with the 
 <b>Signature:</b>
 
 ```typescript
-removeNodeAtPosition: ({ pos, tr }: RemoveNodeAtPositionParams) => import("prosemirror-state").Transaction<any>
+removeNodeAtPosition: ({ pos, tr }: RemoveNodeAtPositionParams) => Transaction<any>
 ```

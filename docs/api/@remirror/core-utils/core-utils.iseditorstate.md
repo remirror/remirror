@@ -9,5 +9,5 @@ Checks to see if the passed value is a Prosemirror Editor State
 <b>Signature:</b>
 
 ```typescript
-isEditorState: <GSchema extends Schema<string, string> = any>(value: unknown) => value is PMEditorState<GSchema>
+isEditorState: <GSchema extends EditorSchema<string, string> = any>(value: unknown) => value is PMEditorState<GSchema>
 ```

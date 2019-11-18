@@ -9,7 +9,7 @@ Retrieve the start and end position of a mark
 <b>Signature:</b>
 
 ```typescript
-getMarkRange: (pmPosition?: PMResolvedPos<any> | null, type?: MarkType<any> | null | undefined) => false | FromToParams
+getMarkRange: (pmPosition?: ResolvedPos<any> | null, type?: MarkType<any> | null | undefined) => false | FromToParams
 ```
 
 ## Remarks

@@ -9,7 +9,7 @@ Creates a new editor view
 <b>Signature:</b>
 
 ```typescript
-createEditorView: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(place: Node | {
+createEditorView: <GSchema extends EditorSchema<string, string> = any>(place: Node | {
     mount: Node;
-} | ((p: Node) => void) | undefined, props: DEP<import("prosemirror-model").Schema<string, string>>, forceEnvironment?: "ssr" | "dom" | undefined) => EditorView<GSchema>
+} | ((p: Node) => void) | undefined, props: DirectEditorProps, forceEnvironment?: "ssr" | "dom" | undefined) => EditorView<GSchema>
 ```

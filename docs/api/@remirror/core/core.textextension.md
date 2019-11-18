@@ -12,11 +12,3 @@ The default text passed into the prosemirror schema.
 ```typescript
 export declare class TextExtension extends NodeExtension 
 ```
-
-## Properties
-
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [name](./core.textextension.name.md) |  | <code>&quot;text&quot;</code> |  |
-|  [schema](./core.textextension.schema.md) |  | <code>{</code><br/><code>        group: string;</code><br/><code>    }</code> |  |
-

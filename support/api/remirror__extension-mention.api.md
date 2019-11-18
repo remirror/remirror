@@ -17,13 +17,8 @@ import { SuggestReplacementType } from 'prosemirror-suggest';
 
 // @public
 export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
-    // (undocumented)
-    commands({ type, getState }: CommandMarkTypeParams): {
-        createMention: (config?: Record<string, unknown> | undefined) => import("@remirror/core").CommandFunction<any>;
-        updateMention: (config?: Record<string, unknown> | undefined) => import("@remirror/core").CommandFunction<any>;
-        removeMention: ({ range }?: Partial<RangeParams<never>>) => import("@remirror/core").CommandFunction<any>;
-    };
-    readonly defaultOptions: {
+    get name(): "mention";
+    get defaultOptions(): {
         matchers: never[];
         appendText: string;
         mentionClassName: string;
@@ -35,12 +30,15 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
         onCharacterEntry: () => boolean;
         keyBindings: {};
     };
+    get schema(): MarkExtensionSpec;
     // (undocumented)
-    readonly name: "mention";
+    commands({ type, getState }: CommandMarkTypeParams): {
+        createMention: (config?: Record<string, unknown> | undefined) => import("@remirror/core").CommandFunction<any>;
+        updateMention: (config?: Record<string, unknown> | undefined) => import("@remirror/core").CommandFunction<any>;
+        removeMention: ({ range }?: Partial<RangeParams<never>>) => import("@remirror/core").CommandFunction<any>;
+    };
     // (undocumented)
     pasteRules({ type }: ExtensionManagerMarkTypeParams): import("prosemirror-state").Plugin<any, any>[];
-    // (undocumented)
-    readonly schema: MarkExtensionSpec;
     // (undocumented)
     suggestions({ getActions, type, getState }: ExtensionManagerMarkTypeParams): Suggester[];
 }

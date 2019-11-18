@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-inputRules(): import("prosemirror-inputrules").InputRule<import("prosemirror-model").Schema<string, string>>[];
+inputRules(): import("prosemirror-inputrules").InputRule<import("@remirror/core").EditorSchema<string, string>>[];
 ```
 <b>Returns:</b>
 
-`import("prosemirror-inputrules").InputRule<import("prosemirror-model").Schema<string, string>>[]`
+`import("prosemirror-inputrules").InputRule<import("@remirror/core").EditorSchema<string, string>>[]`
 

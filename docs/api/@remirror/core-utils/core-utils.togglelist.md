@@ -9,7 +9,7 @@ Toggles a list item.
 <b>Signature:</b>
 
 ```typescript
-toggleList: (type: import("prosemirror-model").NodeType<any>, itemType: import("prosemirror-model").NodeType<any>) => CommandFunction<any>
+toggleList: (type: NodeType<any>, itemType: NodeType<any>) => CommandFunction<any>
 ```
 
 ## Remarks
