@@ -1,4 +1,4 @@
-import { DEFAULT_EXTENSION_PRIORITY, MarkGroup, NodeGroup, Tags } from '@remirror/core-constants';
+import { MarkGroup, NodeGroup, Tags } from '@remirror/core-constants';
 import { bool, Cast, entries, isFunction, sort } from '@remirror/core-helpers';
 import {
   AnyFunction,
@@ -11,13 +11,12 @@ import {
   MarkExtensionTags,
   NodeExtensionTags,
 } from '@remirror/core-types';
-import { isExtension, isMarkExtension, isNodeExtension } from './extension-helpers';
+import { isMarkExtension, isNodeExtension, convertToPrioritizedExtension } from './extension-helpers';
 import {
   AnyExtension,
   ExtensionListParams,
   FlexibleExtension,
   InferFlexibleExtensionList,
-  PrioritizedExtension,
 } from './extension-types';
 
 interface IsNameUniqueParams {
@@ -232,13 +231,6 @@ export const extensionPropertyMapper = <
 };
 
 /**
- * Converts an extension to its mapped value
- */
-const convertToExtensionMapValue = (extension: FlexibleExtension): PrioritizedExtension => {
-  return isExtension(extension) ? { priority: DEFAULT_EXTENSION_PRIORITY, extension } : { ...extension };
-};
-
-/**
  * Sorts and transforms extension map based on the provided priorities and
  * outputs just the extensions
  *
@@ -250,7 +242,7 @@ const convertToExtensionMapValue = (extension: FlexibleExtension): PrioritizedEx
 export const transformExtensionMap = <GFlexibleList extends FlexibleExtension[]>(
   values: GFlexibleList,
 ): Array<InferFlexibleExtensionList<GFlexibleList>> =>
-  sort(values.map(convertToExtensionMapValue), (a, b) => a.priority - b.priority).map(
+  sort(values.map(convertToPrioritizedExtension), (a, b) => a.priority - b.priority).map(
     ({ extension }) => extension,
   );
 

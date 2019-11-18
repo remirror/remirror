@@ -102,6 +102,25 @@ test('it supports <RemirrorExtension />', () => {
     </RemirrorManager>,
   );
 });
+test('it supports injecting additional extensions', () => {
+  const Component: FC = () => {
+    const manager = useRemirrorManager();
+    expect(manager.extensions).toContainValues([expect.any(TestExtension), expect.any(PlaceholderExtension)]);
+    return null;
+  };
+
+  render(
+    <RemirrorManager extensions={[{ extension: new TestExtension(), priority: 1 }]}>
+      <Component />
+      <RemirrorExtension Constructor={TestExtension} run={true} />
+      <RemirrorExtension
+        Constructor={PlaceholderExtension}
+        emptyNodeClass='empty'
+        placeholder='Type here...'
+      />
+    </RemirrorManager>,
+  );
+});
 
 test('it supports <RemirrorExtension /> in child fragments', () => {
   const Component: FC = () => {

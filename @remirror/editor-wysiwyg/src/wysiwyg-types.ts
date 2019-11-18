@@ -21,7 +21,7 @@ import {
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '@remirror/extension-code-block';
 import { DropCursorExtension } from '@remirror/extension-drop-cursor';
 import { ImageExtension } from '@remirror/extension-image';
-import { RemirrorProps } from '@remirror/react';
+import { RemirrorProps, RemirrorManagerProps } from '@remirror/react';
 
 /**
  * The union type of all the extension used within the Wysiwyg Editor.
@@ -74,7 +74,8 @@ export interface WysiwygEditorProps
         | 'suppressHydrationWarning'
       >
     >,
-    Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'> {
+    Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'>,
+    Pick<RemirrorManagerProps, 'extensions'> {
   /**
    * The message to show when the editor is empty.
    */

@@ -53,6 +53,7 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
   defaultLanguage,
   formatter,
   children,
+  extensions = [],
   ...props
 }) => {
   // Manages whether there is a floating link dialog within the editor..
@@ -71,7 +72,7 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
 
   return (
     <RemirrorThemeProvider theme={editorTheme}>
-      <RemirrorManager>
+      <RemirrorManager extensions={extensions}>
         <RemirrorExtension
           Constructor={PlaceholderExtension}
           placeholderStyle={{

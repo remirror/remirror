@@ -7,6 +7,10 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+### Added
+
+- 🚀 `@remirror/react`, `@remirror/editor-wysiwyg`, `@remirror/editor-social`: New `extensions` props on the `RemirrorManager` for injecting additional extensions into prebuilt editors.
+
 ## [0.6.5] - 2019-11-17
 
 ### Changed

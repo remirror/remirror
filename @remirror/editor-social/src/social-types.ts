@@ -3,7 +3,7 @@ import { BaseExtensions, NodeCursorExtension, PlaceholderExtension } from '@remi
 import { EmojiExtension } from '@remirror/extension-emoji';
 import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
 import { MentionExtension } from '@remirror/extension-mention';
-import { ManagedRemirrorProviderProps } from '@remirror/react';
+import { ManagedRemirrorProviderProps, RemirrorManagerProps } from '@remirror/react';
 import { SuggestStateMatch } from 'prosemirror-suggest';
 
 export type OnMentionChangeParams = MentionState & {
@@ -13,7 +13,9 @@ export type OnMentionChangeParams = MentionState & {
   activeIndex: number;
 };
 
-export interface SocialEditorProps extends Partial<ManagedRemirrorProviderProps<SocialExtensions>> {
+export interface SocialEditorProps
+  extends Partial<ManagedRemirrorProviderProps<SocialExtensions>>,
+    Pick<RemirrorManagerProps, 'extensions'> {
   /**
    * Set this to true to hide the character indicator.
    */

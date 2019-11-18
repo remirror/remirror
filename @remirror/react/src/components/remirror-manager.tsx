@@ -1,16 +1,34 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { ExtensionManager, PrioritizedExtension } from '@remirror/core';
-import { baseExtensions } from '@remirror/core-extensions';
 import {
-  asDefaultProps,
-  isReactFragment,
-  isRemirrorExtension,
-  RemirrorManagerProps,
-} from '@remirror/react-utils';
+  AnyExtension,
+  ExtensionManager,
+  PrioritizedExtension,
+  FlexibleExtension,
+  convertToPrioritizedExtension,
+} from '@remirror/core';
+import { baseExtensions } from '@remirror/core-extensions';
+import { asDefaultProps, isReactFragment, isRemirrorExtension } from '@remirror/react-utils';
 import { Children, Component, ReactNode } from 'react';
 import { RemirrorManagerContext } from '../react-contexts';
+
+export interface RemirrorManagerProps {
+  /**
+   * Whether to use base extensions
+   */
+  useBaseExtensions?: boolean;
+
+  /**
+   * Inject custom extensions into the Remirror manager.
+   *
+   * Each extension must be in the form of a prioritized
+   * extension which determines the order in which it'll be loaded.
+   *
+   * By default these are placed after the JSX `RemirrorExtension`'s.
+   */
+  extensions?: Array<FlexibleExtension<AnyExtension>>;
+}
 
 /**
  * This component consumes any directly nested RemirrorExtension components and creates a
@@ -62,7 +80,12 @@ export class RemirrorManager extends Component<RemirrorManagerProps> {
       extensions.push({ extension: new Constructor(options), priority });
     });
 
-    const newManager = ExtensionManager.create(this.withBaseExtensions(extensions));
+    const newManager = ExtensionManager.create(
+      this.withBaseExtensions([
+        ...extensions,
+        ...(this.props.extensions ?? []).map(convertToPrioritizedExtension),
+      ]),
+    );
 
     // Only update the manager when it has changed to prevent unnecessary re-rendering
     if (newManager.isEqual(this.cachedManager)) {
