@@ -1,5 +1,6 @@
 variables:
   ci: 'true'
+  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
 
 jobs:
   - template: pipeline-jobs.yml
@@ -26,6 +27,7 @@ schedules:
 trigger:
   - master
   - canary
+  - ci/*
 
 # The branches which cause a PR to trigger a new build
 pr:
