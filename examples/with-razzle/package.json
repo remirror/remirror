@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@types/express": "4.17.2",
-    "@types/node": "12.12.8",
+    "@types/node": "12.12.11",
     "@types/react-router-dom": "5.1.2",
     "@types/webpack-env": "1.14.1",
     "razzle": "3.0.0",
