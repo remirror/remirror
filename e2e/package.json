@@ -4,7 +4,7 @@
   "description": "e2e tests",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "main": "index.js",
   "scripts": {},
   "dependencies": {

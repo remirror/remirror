@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/editor-social",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/editor-social",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "main": "lib/index.js",
   "module": "lib/dist/editor-social.esm.js",
   "files": [
@@ -18,7 +18,7 @@
     "@emotion/styled": "^10.0.17",
     "@remirror/core": "0.7.0",
     "@remirror/core-extensions": "0.7.0",
-    "@remirror/extension-emoji": "0.7.0",
+    "@remirror/extension-emoji": "0.7.1",
     "@remirror/extension-enhanced-link": "0.7.0",
     "@remirror/extension-mention": "0.7.0",
     "@remirror/react": "0.7.0",

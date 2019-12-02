@@ -4,7 +4,7 @@
   "description": "A world class text editor toolkit for every environment",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "main": "index.js",
   "scripts": {
     "build": "gatsby build",
@@ -21,7 +21,7 @@
     "@mdx-js/react": "^1.5.1",
     "@reach/router": "^1.2.1",
     "@remirror/core": "0.7.0",
-    "@remirror/showcase": "0.7.0",
+    "@remirror/showcase": "0.7.1",
     "@styled-system/edit": "^5.0.21",
     "@theme-ui/presets": "^0.2.44",
     "@theme-ui/prism": "^0.2.40",

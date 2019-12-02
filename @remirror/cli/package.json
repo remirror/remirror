@@ -9,7 +9,7 @@
     "url": "https://github.com/ifiokjr/remirror.git",
     "directory": "@remirror/cli"
   },
-  "version": "0.7.0",
+  "version": "0.7.1",
   "main": "lib/index.js",
   "preferGlobal": true,
   "bin": {

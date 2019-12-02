@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/extension-emoji",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/extension-emoji",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "main": "lib/index.js",
   "module": "lib/dist/extension-emoji.esm.js",
   "files": [
@@ -40,7 +40,7 @@
   "devDependencies": {
     "emoji-mart": "2.11.1",
     "emojilib": "^2.4.0",
-    "jest-remirror": "0.7.0"
+    "jest-remirror": "0.7.1"
   },
   "publishConfig": {
     "access": "public"

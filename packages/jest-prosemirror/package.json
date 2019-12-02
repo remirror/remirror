@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/jest-prosemirror",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/packages/jest-prosemirror",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "main": "lib/index.js",
   "files": [
     "environment.d.ts",
