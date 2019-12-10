@@ -14,6 +14,13 @@ An example of this would be uploading an image. From when the upload starts to w
 export declare class PositionTrackerExtension extends Extension<PositionTrackerExtensionOptions> 
 ```
 
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [defaultOptions](./core-extensions.positiontrackerextension.defaultoptions.md) |  | <code>Partial&lt;PositionTrackerExtensionOptions&gt;</code> |  |
+|  [name](./core-extensions.positiontrackerextension.name.md) |  | <code>&quot;positionTracker&quot;</code> |  |
+
 ## Methods
 
 |  Method | Modifiers | Description |

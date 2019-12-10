@@ -10,6 +10,13 @@
 export declare class ItalicExtension extends MarkExtension 
 ```
 
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [name](./core-extensions.italicextension.name.md) |  | <code>&quot;italic&quot;</code> |  |
+|  [schema](./core-extensions.italicextension.schema.md) |  | <code>MarkExtensionSpec</code> |  |
+
 ## Methods
 
 |  Method | Modifiers | Description |

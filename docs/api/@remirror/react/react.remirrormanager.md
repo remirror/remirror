@@ -19,6 +19,7 @@ export declare class RemirrorManager extends Component<RemirrorManagerProps>
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [defaultProps](./react.remirrormanager.defaultprops.md) | <code>static</code> | <code>{</code><br/><code>        useBaseExtensions: true;</code><br/><code>    }</code> |  |
+|  [manager](./react.remirrormanager.manager.md) |  | <code>ExtensionManager</code> | Calculate the manager based on the baseExtension and passed in props. |
 
 ## Methods
 

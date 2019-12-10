@@ -20,6 +20,13 @@ The aim of this extension is to provide a series of helper transformations which
 
 The transformations can also serve as a guideline when creating your own SSRTransforms. However in most cases the defaults should be sufficient.
 
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [defaultOptions](./core-extensions.ssrhelperextension.defaultoptions.md) |  | <code>{</code><br/><code>        transformers: SSRTransformer[];</code><br/><code>    }</code> |  |
+|  [name](./core-extensions.ssrhelperextension.name.md) |  | <code>&quot;ssrHelper&quot;</code> |  |
+
 ## Methods
 
 |  Method | Modifiers | Description |

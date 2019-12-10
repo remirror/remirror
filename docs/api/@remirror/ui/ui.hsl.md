@@ -17,6 +17,13 @@ export declare class HSL
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [$$id](./ui.hsl.__id.md) | <code>static</code> | <code>symbol</code> |  |
+|  [a](./ui.hsl.a.md) |  | <code>number</code> | Alpha<!-- -->The alpha value which is a number between 0 and 1. |
+|  [brightness](./ui.hsl.brightness.md) |  | <code>number</code> | Brightness<!-- -->Returns a number between 0 and 255 the current color (not taking into account the alpha level). The higher the number the brighter the color.<!-- -->https://24ways.org/2010/calculating-color-contrast |
+|  [h](./ui.hsl.h.md) |  | <code>number</code> | Hue<!-- -->A value between 0 and 360 representing the color wheel rotation. |
+|  [isDark](./ui.hsl.isdark.md) |  | <code>boolean</code> |  |
+|  [isLight](./ui.hsl.islight.md) |  | <code>boolean</code> |  |
+|  [l](./ui.hsl.l.md) |  | <code>number</code> | Lightness<!-- -->A value between 0 and 100 representing the percentage lightness. |
+|  [s](./ui.hsl.s.md) |  | <code>number</code> | Saturation<!-- -->A value between 0 and 100 representing the percentage saturation. |
 
 ## Methods
 

@@ -17,7 +17,12 @@ import { SuggestReplacementType } from 'prosemirror-suggest';
 
 // @public
 export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
-    get name(): "mention";
+    // (undocumented)
+    commands({ type, getState }: CommandMarkTypeParams): {
+        createMention: (config?: Record<string, unknown> | undefined) => import("@remirror/core").CommandFunction<any>;
+        updateMention: (config?: Record<string, unknown> | undefined) => import("@remirror/core").CommandFunction<any>;
+        removeMention: ({ range }?: Partial<RangeParams<never>>) => import("@remirror/core").CommandFunction<any>;
+    };
     get defaultOptions(): {
         matchers: never[];
         appendText: string;
@@ -30,15 +35,12 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
         onCharacterEntry: () => boolean;
         keyBindings: {};
     };
-    get schema(): MarkExtensionSpec;
     // (undocumented)
-    commands({ type, getState }: CommandMarkTypeParams): {
-        createMention: (config?: Record<string, unknown> | undefined) => import("@remirror/core").CommandFunction<any>;
-        updateMention: (config?: Record<string, unknown> | undefined) => import("@remirror/core").CommandFunction<any>;
-        removeMention: ({ range }?: Partial<RangeParams<never>>) => import("@remirror/core").CommandFunction<any>;
-    };
+    get name(): "mention";
     // (undocumented)
     pasteRules({ type }: ExtensionManagerMarkTypeParams): import("prosemirror-state").Plugin<any, any>[];
+    // (undocumented)
+    get schema(): MarkExtensionSpec;
     // (undocumented)
     suggestions({ getActions, type, getState }: ExtensionManagerMarkTypeParams): Suggester[];
 }

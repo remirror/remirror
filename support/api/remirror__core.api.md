@@ -78,10 +78,13 @@ export type DataOfExtension<GExtension extends {
 
 // @public
 export class DocExtension extends NodeExtension<DocExtensionOptions> {
-    get name(): "doc";
+    // (undocumented)
     get defaultOptions(): {
         content: string;
     };
+    // (undocumented)
+    get name(): "doc";
+    // (undocumented)
     get schema(): NodeExtensionSpec;
 }
 
@@ -94,6 +97,7 @@ export interface DocExtensionOptions extends NodeExtensionOptions {
 export abstract class Extension<GOptions extends BaseExtensionOptions, GType = never> {
     constructor(options?: GOptions);
     readonly _C: this['commands'] extends AnyFunction ? ReturnType<this['commands']> : {};
+    protected get defaultOptions(): Partial<GOptions>;
     protected extraAttrs(fallback?: string | null): Record<string, {
         default?: unknown;
     }>;
@@ -101,13 +105,12 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
     readonly _H: this['helpers'] extends AnyFunction ? ReturnType<this['helpers']> : {};
     protected init(): void;
     abstract readonly name: string;
-    get type(): ExtensionType;
-    get tags(): Array<Tags | string>;
-    get pluginKey(): PluginKey;
-    protected get defaultOptions(): Partial<GOptions>;
     readonly _O: GOptions;
     readonly options: Required<GOptions>;
+    get pluginKey(): PluginKey;
     readonly _T: GType;
+    get tags(): Array<Tags | string>;
+    get type(): ExtensionType;
 }
 
 // @public (undocumented)
@@ -148,46 +151,45 @@ export class ExtensionManager<GExtension extends AnyExtension = any> implements 
     constructor(extensions: GExtension[]);
     // @internal
     readonly _A: ActionsFromExtensions<GExtension>;
+    get attributes(): AttrsWithClass;
+    get components(): Record<string, ComponentType<{}>>;
     static create<GFlexibleList extends FlexibleExtension[]>(prioritizedExtensions: GFlexibleList): ExtensionManager<import("./extension-types").InferFlexibleExtension<GFlexibleList[number]>>;
     createState({ content, doc, stringHandler, fallback }: Omit<CreateDocumentNodeParams, 'schema'>): EditorState<any>;
     // @internal
     readonly _D: ExtensionManagerData<this['_A'], this['_H'], this['_N'], this['_M'], this['_P']>;
+    get data(): this["_D"];
     // @internal
     readonly _E: GExtension;
     extensionData(): Record<string, PlainObject>;
-    get initialized(): boolean;
-    get attributes(): AttrsWithClass;
-    get components(): Record<string, ComponentType<{}>>;
-    get data(): this["_D"];
-    get options(): Record<NodeNames<GExtension> | MarkNames<GExtension> | PlainNames<GExtension>, PlainObject>;
-    get nodes(): Record<this["_N"], NodeExtensionSpec>;
-    get marks(): Record<this["_M"], MarkExtensionSpec>;
-    get schema(): EditorSchema<NodeNames<GExtension>, MarkNames<GExtension>>;
-    get tags(): ExtensionTags<NodeNames<GExtension>, MarkNames<GExtension>, PlainNames<GExtension>>;
-    get view(): EditorView<SchemaFromExtensions<GExtension>>;
-    private get params();
     readonly extensions: GExtension[];
     getPluginState<GState>(name: this['_N']): GState;
     getState: () => EditorState;
     getTheme: () => RemirrorThemeContextType;
     // @internal
     readonly _H: HelpersFromExtensions<GExtension>;
-    private get pluginKeys();
     init({ getState, portalContainer, getTheme }: ExtensionManagerInitParams): this;
+    get initialized(): boolean;
     initView(view: EditorView<SchemaFromExtensions<GExtension>>): void;
     isEqual(otherManager: unknown): boolean;
     // @internal
     readonly _M: MarkNames<GExtension>;
+    get marks(): Record<this["_M"], MarkExtensionSpec>;
     // @internal
     readonly _N: NodeNames<GExtension>;
     // @internal
     readonly _Names: this['_P'] | this['_N'] | this['_M'];
+    get nodes(): Record<this["_N"], NodeExtensionSpec>;
     onTransaction(params: OnTransactionManagerParams): void;
+    // (undocumented)
+    get options(): Record<NodeNames<GExtension> | MarkNames<GExtension> | PlainNames<GExtension>, PlainObject>;
     // @internal
     readonly _P: PlainNames<GExtension>;
     portalContainer: PortalContainer;
+    get schema(): EditorSchema<NodeNames<GExtension>, MarkNames<GExtension>>;
     ssrTransformer(element: JSX.Element): JSX.Element;
-    }
+    get tags(): ExtensionTags<NodeNames<GExtension>, MarkNames<GExtension>, PlainNames<GExtension>>;
+    get view(): EditorView<SchemaFromExtensions<GExtension>>;
+}
 
 // @public (undocumented)
 export interface ExtensionManagerData<GActions = AnyActions, GHelpers = AnyHelpers, GNodes extends string = string, GMarks extends string = string, GPlain extends string = string, GNames extends string = GNodes | GMarks | GPlain> {
@@ -291,10 +293,10 @@ export type MapHelpers<GHelpers extends Record<string, AnyFunction>> = {
 
 // @public
 export abstract class MarkExtension<GOptions extends MarkExtensionOptions = MarkExtensionOptions> extends Extension<GOptions, MarkType<EditorSchema>> {
-    get type(): ExtensionType.Mark;
     isActive({ getState, type }: ExtensionManagerMarkTypeParams): CommandStatusCheck;
     isEnabled(_: ExtensionManagerMarkTypeParams): CommandStatusCheck;
     abstract readonly schema: MarkExtensionSpec;
+    get type(): ExtensionType.Mark;
 }
 
 // @public
@@ -305,12 +307,12 @@ export type NameOfExtension<GExtension extends AnyExtension> = GExtension['name'
 
 // @public
 export abstract class NodeExtension<GOptions extends NodeExtensionOptions = NodeExtensionOptions> extends Extension<GOptions, NodeType<EditorSchema>> {
-    get type(): ExtensionType.Node;
     // (undocumented)
     isActive({ getState, type }: ExtensionManagerNodeTypeParams): CommandStatusCheck;
     // (undocumented)
     isEnabled(_: ExtensionManagerNodeTypeParams): CommandStatusCheck;
     abstract readonly schema: NodeExtensionSpec;
+    get type(): ExtensionType.Node;
 }
 
 // @public
@@ -344,7 +346,9 @@ export type SchemaFromExtensions<GExtension extends AnyExtension = any> = Editor
 
 // @public
 export class TextExtension extends NodeExtension {
+    // (undocumented)
     get name(): "text";
+    // (undocumented)
     get schema(): {
         group: string;
     };

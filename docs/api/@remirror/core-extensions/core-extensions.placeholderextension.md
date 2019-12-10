@@ -10,6 +10,13 @@
 export declare class PlaceholderExtension extends Extension<PlaceholderExtensionOptions> 
 ```
 
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [defaultOptions](./core-extensions.placeholderextension.defaultoptions.md) |  | <code>{</code><br/><code>        emptyNodeClass: &quot;is-empty&quot;;</code><br/><code>        placeholderStyles: {};</code><br/><code>        placeholder: string;</code><br/><code>    }</code> |  |
+|  [name](./core-extensions.placeholderextension.name.md) |  | <code>&quot;placeholder&quot;</code> |  |
+
 ## Methods
 
 |  Method | Modifiers | Description |

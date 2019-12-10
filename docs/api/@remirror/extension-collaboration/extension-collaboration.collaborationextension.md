@@ -18,6 +18,8 @@ export declare class CollaborationExtension extends Extension<CollaborationExten
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [defaultOptions](./extension-collaboration.collaborationextension.defaultoptions.md) |  | <code>{</code><br/><code>        version: number;</code><br/><code>        clientID: string;</code><br/><code>        debounce: number;</code><br/><code>    }</code> | The default options for eht extension |
+|  [name](./extension-collaboration.collaborationextension.name.md) |  | <code>&quot;collaboration&quot;</code> | Provides the name of this extension. |
 |  [onTransaction](./extension-collaboration.collaborationextension.ontransaction.md) |  | <code>({ getState }: OnTransactionParams) =&gt; void</code> | Called whenever a transaction occurs. |
 
 ## Methods

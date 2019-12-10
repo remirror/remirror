@@ -7,6 +7,11 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+### Changes
+
+- 🐛 **`@remirror/core`**: Fix bug in `isExtension` predicate test (https://github.com/ifiokjr/remirror/pull/181).
+- Upgrade dependencies and add new command for unit testing built code.
+
 ## [0.7.1] - 2019-12-02
 
 ### Changes
