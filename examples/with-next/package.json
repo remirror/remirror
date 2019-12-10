@@ -10,15 +10,15 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@emotion/core": "10.0.22",
+    "@emotion/core": "^10.0.22",
     "@remirror/core": "0.7.0",
     "@remirror/core-extensions": "0.7.0",
     "@remirror/editor-social": "0.7.1",
     "@remirror/editor-wysiwyg": "0.7.0",
     "@remirror/react": "0.7.0",
     "@remirror/showcase": "0.7.1",
-    "next": "9.1.4",
-    "react": "16.10.2",
-    "react-dom": "16.10.2"
+    "next": "^9.1.5",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   }
 }
