@@ -4,6 +4,7 @@ const tsProjectOptions = EXCLUDE_TS ? {} : { project: ['./tsconfig.lint.json'] }
 const tsProjectRules = EXCLUDE_TS
   ? {}
   : {
+      '@typescript-eslint/prefer-nullish-coalescing': 'error',
       '@typescript-eslint/prefer-readonly': 'warn',
       '@typescript-eslint/await-thenable': 'warn',
       '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
@@ -63,14 +64,13 @@ module.exports = {
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
     'default-case': 'warn',
 
+    'prefer-template': 'warn',
+    'guard-for-in': 'warn',
+
     '@typescript-eslint/array-type': [
       'error',
       { default: 'array-simple', readonly: 'array-simple' },
     ],
-
-    'prefer-template': 'warn',
-    'guard-for-in': 'warn',
-
     '@typescript-eslint/camelcase': [
       'warn',
       { ignoreDestructuring: true, properties: 'never' },
@@ -146,6 +146,8 @@ module.exports = {
       files: ['*.ts', '*.tsx'],
       rules: {
         ...tsProjectRules,
+        '@typescript-eslint/no-extra-non-null-assertion': ['error'],
+        '@typescript-eslint/prefer-optional-chain': ['error'],
         '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
         '@typescript-eslint/explicit-member-accessibility': [
           'warn',
@@ -161,6 +163,11 @@ module.exports = {
           },
         ],
         '@typescript-eslint/no-var-requires': 'error',
+        '@typescript-eslint/restrict-template-expressions': [
+          'warn',
+          { allowNumber: true },
+        ],
+        '@typescript-eslint/no-dynamic-delete': ['error'],
         '@typescript-eslint/camelcase': [
           'warn',
           { ignoreDestructuring: true, properties: 'never' },
