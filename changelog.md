@@ -7,6 +7,8 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+## [0.7.2] - 2019-12-10
+
 ### Changes
 
 - 🐛 **`@remirror/core`**: Fix bug in `isExtension` predicate test (https://github.com/ifiokjr/remirror/pull/181).
@@ -254,7 +256,8 @@ This is a large breaking change and may cause a lot of your existing code to sto
 - Fixes missing TypeScript definitions #77.
 - Fixes crash when rendering a ReactNodeView in NextJS #75.
 
-[unreleased]: https://github.com/ifiokjr/remirror/compare/0.7.1...HEAD
+[unreleased]: https://github.com/ifiokjr/remirror/compare/0.7.2...HEAD
+[0.7.2]: https://github.com/ifiokjr/remirror/compare/v0.7.1...0.7.2
 [0.7.1]: https://github.com/ifiokjr/remirror/compare/v0.7.0...0.7.1
 [0.7.0]: https://github.com/ifiokjr/remirror/compare/v0.6.5...0.7.0
 [0.6.5]: https://github.com/ifiokjr/remirror/compare/v0.6.4...v0.6.5
