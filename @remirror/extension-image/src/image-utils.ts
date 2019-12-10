@@ -12,7 +12,7 @@ export const isImageFileType = (file: File) => {
 export const getAttrs = (extraAttrs: Attrs) => (domNode: HTMLElement) => {
   const { cssFloat, display, marginTop, marginLeft } = domNode.style;
   let { width, height } = domNode.style;
-  let align = domNode.getAttribute('data-align') || domNode.getAttribute('align');
+  let align = domNode.getAttribute('data-align') ?? domNode.getAttribute('align');
   if (align) {
     align = /(left|right|center)/.test(align) ? align : null;
   } else if (cssFloat === 'left' && !display) {
@@ -23,8 +23,8 @@ export const getAttrs = (extraAttrs: Attrs) => (domNode: HTMLElement) => {
     align = 'block';
   }
 
-  width = width || domNode.getAttribute('width') || '';
-  height = height || domNode.getAttribute('height') || '';
+  width = (width || domNode.getAttribute('width')) ?? '';
+  height = (height || domNode.getAttribute('height')) ?? '';
 
   let crop = null;
   let rotate = null;
@@ -52,7 +52,7 @@ export const getAttrs = (extraAttrs: Attrs) => (domNode: HTMLElement) => {
     if (ps.transform) {
       // example: `rotate(1.57rad) translateZ(0px)`;
       const mm = ps.transform.match(CSS_ROTATE_PATTERN);
-      if (mm && mm[1]) {
+      if (mm?.[1]) {
         rotate = parseFloat(mm[1]) || null;
       }
     }
@@ -61,12 +61,12 @@ export const getAttrs = (extraAttrs: Attrs) => (domNode: HTMLElement) => {
   return {
     ...extraAttrs,
     align,
-    alt: domNode.getAttribute('alt') || null,
+    alt: domNode.getAttribute('alt') ?? null,
     crop,
     height: parseInt(height || '0', 10) || null,
     rotate,
-    src: domNode.getAttribute('src') || null,
-    title: domNode.getAttribute('title') || null,
+    src: domNode.getAttribute('src') ?? null,
+    title: domNode.getAttribute('title') ?? null,
     width: parseInt(width || '0', 10) || null,
   };
 };

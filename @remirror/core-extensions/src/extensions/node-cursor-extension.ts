@@ -82,7 +82,7 @@ const createNodeCursorExtensionPlugin = (ctx: NodeCursorExtension, nodeNames: st
         const { doc } = state;
         const positions = getPluginState<number[]>(ctx.pluginKey, state);
 
-        if (positions && positions.length) {
+        if (positions?.length) {
           const decorations = positions.map(position => {
             const node = document.createElement('span');
             node.appendChild(document.createTextNode(ZERO_WIDTH_SPACE_CHAR));

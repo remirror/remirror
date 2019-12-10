@@ -12,6 +12,7 @@
     "lib",
     "src"
   ],
+  "sideEffects": false,
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
@@ -34,6 +35,5 @@
   "cjs": "lib/dist/ui-buttons.cjs.js",
   "meta": {
     "sizeLimit": "20 KB"
-  },
-  "sideEffects": false
+  }
 }

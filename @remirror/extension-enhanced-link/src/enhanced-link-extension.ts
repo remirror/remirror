@@ -78,7 +78,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
   public commands({ type }: CommandMarkTypeParams) {
     return {
       enhancedLink: (attrs?: Attrs) => {
-        if (attrs && attrs.href) {
+        if (attrs?.href) {
           return updateMark({ type, attrs });
         }
 

@@ -87,7 +87,7 @@ export const getManagerFromComponentTree = ({
 
     reject(
       new Error(
-        `The manager was not found. Please check that \`${Component.displayName ||
+        `The manager was not found. Please check that \`${Component.displayName ??
           Component.name}\` has a prop called \`${prop}\` which is rendered within the \`<RemirrorManager />\` context`,
       ),
     );

@@ -415,7 +415,7 @@ export const isNodeActive = ({ state, type, attrs = Object.create(null) }: IsNod
   const { selection } = state;
   const predicate = (node: ProsemirrorNode) => node.type === type;
   const parent =
-    findSelectedNodeOfType({ selection, types: type }) || findParentNode({ predicate, selection });
+    findSelectedNodeOfType({ selection, types: type }) ?? findParentNode({ predicate, selection });
 
   if (!Object.keys(attrs).length || !parent) {
     return bool(parent);

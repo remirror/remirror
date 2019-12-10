@@ -271,7 +271,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     }
     this.rootPropsConfig.called = true;
 
-    const { refKey = 'ref', ...config } = options || Object.create(null);
+    const { refKey = 'ref', ...config } = options ?? Object.create(null);
     const { sx } = this.context;
     const css = sx(this.editorStyles);
     const extra = bool(css) ? { css } : {};
@@ -281,7 +281,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
       key: this.uid,
       ...extra,
       ...config,
-      children: children || this.renderChildren(null),
+      children: children ?? this.renderChildren(null),
     } as RefKeyRootProps<GRefKey>;
   };
 
@@ -293,7 +293,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   private readonly getPositionerProps = <GRefKey extends string = 'ref'>(
     options: GetPositionerPropsConfig<GExtension, GRefKey> | undefined,
   ) => {
-    const { refKey = 'ref', ...config } = { ...defaultPositioner, ...(options || Object.create(null)) };
+    const { refKey = 'ref', ...config } = { ...defaultPositioner, ...(options ?? Object.create(null)) };
 
     // Create the onRef handler which will store the ref to the positioner
     // component
@@ -604,7 +604,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     const editorState = this.state.editor.newState;
     this.view.state.plugins.forEach(plugin => {
       const state = plugin.getState(editorState);
-      if (state && state.destroy) {
+      if (state?.destroy) {
         state.destroy();
       }
     });
@@ -674,7 +674,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   ): RemirrorEventListenerParams<GExtension> {
     return {
       ...this.baseListenerParams({ tr }),
-      state: state || this.state.editor.newState,
+      state: state ?? this.state.editor.newState,
     } as any;
   }
 
@@ -686,8 +686,8 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   ): RemirrorStateListenerParams<GExtension> {
     return {
       ...this.baseListenerParams({ state: newState, tr }),
-      newState: newState || this.state.editor.newState,
-      oldState: oldState || this.state.editor.oldState,
+      newState: newState ?? this.state.editor.newState,
+      oldState: oldState ?? this.state.editor.oldState,
       createStateFromContent: this.createStateFromContent,
     };
   }
@@ -717,7 +717,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   private readonly getText = (state?: EditorState<SchemaFromExtensions<GExtension>>) => (
     lineBreakDivider = '\n\n',
   ) => {
-    const { doc } = state || this.state.editor.newState;
+    const { doc } = state ?? this.state.editor.newState;
     return doc.textBetween(0, doc.content.size, lineBreakDivider);
   };
 
@@ -726,7 +726,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    */
   private readonly getHTML = (state?: EditorState<SchemaFromExtensions<GExtension>>) => () => {
     return toHTML({
-      node: (state || this.state.editor.newState).doc,
+      node: (state ?? this.state.editor.newState).doc,
       schema: this.manager.data.schema,
       doc: this.doc,
     });
@@ -736,7 +736,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * Retrieve the full state json object
    */
   private readonly getJSON = (state?: EditorState<SchemaFromExtensions<GExtension>>) => (): ObjectNode => {
-    return (state || this.state.editor.newState).toJSON() as ObjectNode;
+    return (state ?? this.state.editor.newState).toJSON() as ObjectNode;
   };
 
   /**
@@ -745,7 +745,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   private readonly getObjectNode = (
     state?: EditorState<SchemaFromExtensions<GExtension>>,
   ) => (): ObjectNode => {
-    return (state || this.state.editor.newState).doc.toJSON() as ObjectNode;
+    return (state ?? this.state.editor.newState).doc.toJSON() as ObjectNode;
   };
 
   /**

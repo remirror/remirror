@@ -97,8 +97,8 @@ const getAttrs = (
   dom: HTMLElement,
 ) => {
   const { lineHeight, textAlign, marginLeft } = dom.style;
-  let align: string | undefined = dom.getAttribute('align') || textAlign || '';
-  let indent = parseInt(dom.getAttribute(indentAttribute) || '0', 10);
+  let align: string | undefined = dom.getAttribute('align') ?? (textAlign || '');
+  let indent = parseInt(dom.getAttribute(indentAttribute) ?? '0', 10);
 
   align = ALIGN_PATTERN.test(align) ? align : undefined;
 
@@ -109,7 +109,7 @@ const getAttrs = (
   indent = indent || indentLevels[0];
 
   const lineSpacing = lineHeight ? lineHeight : undefined;
-  const id = dom.getAttribute('id') || undefined;
+  const id = dom.getAttribute('id') ?? undefined;
 
   return { align, indent, lineSpacing, id } as ParagraphExtensionAttrs;
 };

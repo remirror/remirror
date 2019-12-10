@@ -108,7 +108,7 @@ export const RemirrorThemeProvider: FC<RemirrorThemeProviderProps> = ({
 
   const outer = useRemirrorTheme();
   const emotionTheme = useEmotionTheme();
-  const [colorMode, setColorMode] = useState(initialColorMode || outer.colorMode);
+  const [colorMode, setColorMode] = useState(initialColorMode ?? outer.colorMode);
 
   const parentEmotionTheme = isRoot(outer) && !disableMergeWithEmotion ? emotionTheme : {};
   const parent = disableMergeWithParent

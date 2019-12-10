@@ -262,7 +262,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   };
 
   private get theme(): RemirrorTheme {
-    return deepMerge(socialEditorTheme, this.props.theme || Object.create(null));
+    return deepMerge(socialEditorTheme, this.props.theme ?? Object.create(null));
   }
 
   /**

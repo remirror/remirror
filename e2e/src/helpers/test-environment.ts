@@ -39,7 +39,7 @@ declare global {
 /**
  * Retrieve the browser name from the environment
  */
-export const getBrowserName = (): SupportedBrowserName => process.env.REMIRROR_E2E_BROWSER || 'chromium';
+export const getBrowserName = (): SupportedBrowserName => process.env.REMIRROR_E2E_BROWSER ?? 'chromium';
 
 /**
  * Prefix the browser name to the passed in string

@@ -104,12 +104,12 @@ export const getDefaultState = <GItem = any>({
   defaultHighlightedGroupStartIndex,
   defaultHighlightedGroupEndIndex,
 }: GetDefaultStateParams<GItem>) => ({
-  selectedItems: defaultSelectedItems || DEFAULT_STATE.selectedItems,
+  selectedItems: defaultSelectedItems ?? DEFAULT_STATE.selectedItems,
   jumpText: noUndefined(DEFAULT_STATE.jumpText, [defaultJumpText]),
   isOpen: noUndefined(DEFAULT_STATE.isOpen, [defaultIsOpen]),
   inputValue: noUndefined(DEFAULT_STATE.inputValue, [defaultInputValue]),
   hoveredIndex: noUndefined(DEFAULT_STATE.hoveredIndex, [defaultHoveredIndex]),
-  highlightedIndexes: defaultHighlightedIndexes || DEFAULT_STATE.highlightedIndexes,
+  highlightedIndexes: defaultHighlightedIndexes ?? DEFAULT_STATE.highlightedIndexes,
   highlightedGroupStartIndex: noUndefined(DEFAULT_STATE.highlightedGroupStartIndex, [
     defaultHighlightedGroupStartIndex,
   ]),
@@ -184,12 +184,12 @@ export const getState = <GItem = any>(
   state: MultishiftState<GItem>,
   props: MultishiftStateProps<GItem>,
 ): MultishiftState<GItem> => ({
-  selectedItems: props.selectedItems || state.selectedItems,
+  selectedItems: props.selectedItems ?? state.selectedItems,
   jumpText: noUndefined(state.jumpText, [props.jumpText]),
   isOpen: noUndefined(state.isOpen, [props.isOpen]),
   inputValue: noUndefined(state.inputValue, [props.inputValue]),
   hoveredIndex: noUndefined(state.hoveredIndex, [props.hoveredIndex]),
-  highlightedIndexes: props.highlightedIndexes || state.highlightedIndexes,
+  highlightedIndexes: props.highlightedIndexes ?? state.highlightedIndexes,
   highlightedGroupStartIndex: noUndefined(state.highlightedGroupStartIndex, [
     props.highlightedGroupStartIndex,
   ]),
@@ -200,46 +200,42 @@ const changeHandlerMap = {
   selectedItems: <GItem = any>(
     { onSelectedItemsChange }: MultishiftChangeHandlerProps<GItem>,
     { state }: MultishiftStateChangeset<GItem>,
-  ) => onSelectedItemsChange && onSelectedItemsChange(state.selectedItems, state),
+  ) => onSelectedItemsChange?.(state.selectedItems, state),
 
   jumpText: <GItem = any>(
     { onJumpTextChange }: MultishiftChangeHandlerProps<GItem>,
     { state }: MultishiftStateChangeset<GItem>,
-  ) => onJumpTextChange && onJumpTextChange(state.jumpText, state),
+  ) => onJumpTextChange?.(state.jumpText, state),
 
   isOpen: <GItem = any>(
     { onIsOpenChange }: MultishiftChangeHandlerProps<GItem>,
     { state }: MultishiftStateChangeset<GItem>,
-  ) => onIsOpenChange && onIsOpenChange(state.isOpen, state),
+  ) => onIsOpenChange?.(state.isOpen, state),
 
   inputValue: <GItem = any>(
     { onInputValueChange }: MultishiftChangeHandlerProps<GItem>,
     { state }: MultishiftStateChangeset<GItem>,
-  ) => onInputValueChange && onInputValueChange(state.inputValue, state),
+  ) => onInputValueChange?.(state.inputValue, state),
 
   hoveredIndex: <GItem = any>(
     { onHoveredIndexChange }: MultishiftChangeHandlerProps<GItem>,
     { state }: MultishiftStateChangeset<GItem>,
-  ) => onHoveredIndexChange && onHoveredIndexChange(state.hoveredIndex, state),
+  ) => onHoveredIndexChange?.(state.hoveredIndex, state),
 
   highlightedIndexes: <GItem = any>(
     { onHighlightedIndexesChange }: MultishiftChangeHandlerProps<GItem>,
     { state }: MultishiftStateChangeset<GItem>,
-  ) => onHighlightedIndexesChange && onHighlightedIndexesChange(state.highlightedIndexes, state),
+  ) => onHighlightedIndexesChange?.(state.highlightedIndexes, state),
 
   highlightedGroupStartIndex: <GItem = any>(
     { onHighlightedGroupStartIndexChange }: MultishiftChangeHandlerProps<GItem>,
     { state }: MultishiftStateChangeset<GItem>,
-  ) =>
-    onHighlightedGroupStartIndexChange &&
-    onHighlightedGroupStartIndexChange(state.highlightedGroupStartIndex, state),
+  ) => onHighlightedGroupStartIndexChange?.(state.highlightedGroupStartIndex, state),
 
   highlightedGroupEndIndex: <GItem = any>(
     { onHighlightedGroupEndIndexChange }: MultishiftChangeHandlerProps<GItem>,
     { state }: MultishiftStateChangeset<GItem>,
-  ) =>
-    onHighlightedGroupEndIndexChange &&
-    onHighlightedGroupEndIndexChange(state.highlightedGroupEndIndex, state),
+  ) => onHighlightedGroupEndIndexChange?.(state.highlightedGroupEndIndex, state),
 };
 
 /**
@@ -273,11 +269,11 @@ export const getElementIds = (
   const uniqueId = id === undefined ? `multishift-${defaultId}` : id;
 
   return {
-    labelId: labelId || `${uniqueId}-label`,
-    inputId: inputId || `${uniqueId}-input`,
-    menuId: menuId || `${uniqueId}-menu`,
-    getItemA11yId: getItemA11yId || (index => `${uniqueId}-item-${index}`),
-    toggleButtonId: toggleButtonId || `${uniqueId}-toggle-button`,
+    labelId: labelId ?? `${uniqueId}-label`,
+    inputId: inputId ?? `${uniqueId}-input`,
+    menuId: menuId ?? `${uniqueId}-menu`,
+    getItemA11yId: getItemA11yId ?? (index => `${uniqueId}-item-${index ?? 0}`),
+    toggleButtonId: toggleButtonId ?? `${uniqueId}-toggle-button`,
   };
 };
 

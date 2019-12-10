@@ -169,7 +169,7 @@ export const isMarkActive = ({ state, type, from, to }: IsMarkActiveParams) => {
   }
 
   if (empty) {
-    return bool(type.isInSet(storedMarks || $from.marks()));
+    return bool(type.isInSet(storedMarks ?? $from.marks()));
   }
 
   return doc.rangeHasMark(selection.from, selection.to, type);
@@ -477,7 +477,7 @@ export const closestElement = (domNode: Node | null | undefined, selector: strin
     if (domNode[matches] && domNode[matches](selector)) {
       return domNode;
     }
-    domNode = (domNode.parentElement || domNode.parentNode) as HTMLElement;
+    domNode = (domNode.parentElement ?? domNode.parentNode) as HTMLElement;
   } while (isElementDOMNode(domNode));
   return null;
 };

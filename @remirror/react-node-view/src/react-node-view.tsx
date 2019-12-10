@@ -115,7 +115,7 @@ export class ReactNodeView<
     this.domRef = this.createDomRef();
     this.setDomAttrs(this.node, this.domRef);
 
-    const { dom: contentDOMWrapper, contentDOM } = this.getContentDOM() || {
+    const { dom: contentDOMWrapper, contentDOM } = this.getContentDOM() ?? {
       dom: undefined,
       contentDOM: undefined,
     };
@@ -173,7 +173,7 @@ export class ReactNodeView<
   }
 
   private readonly handleRef = (node: HTMLElement | undefined) => {
-    const contentDOM = this.contentDOMWrapper || this.contentDOM;
+    const contentDOM = this.contentDOMWrapper ?? this.contentDOM;
 
     // move the contentDOM node inside the inner reference after rendering
     if (node && contentDOM && !node.contains(contentDOM)) {

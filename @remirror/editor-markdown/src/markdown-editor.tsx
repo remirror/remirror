@@ -226,7 +226,7 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', edi
   useDebounce(
     () => {
       const { tr, getText } = markdownParams;
-      if (tr && tr.docChanged) {
+      if (tr?.docChanged) {
         updateWysiwygFromMarkdown(getText());
         return;
       }
@@ -247,7 +247,7 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', edi
   const onWysiwygStateChange = ({ newState, tr }: RemirrorStateListenerParams<WysiwygExtensions>) => {
     setWysiwygEditorState(newState);
 
-    if (tr && tr.docChanged) {
+    if (tr?.docChanged) {
       updateMarkdownFromWysiwyg(newState.doc);
       return;
     }

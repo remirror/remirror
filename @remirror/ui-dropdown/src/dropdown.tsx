@@ -202,7 +202,7 @@ const DropdownItemComponent = ({
       })}
       {...getItemProps({ index, item })}
     >
-      {item.element || item.label}
+      {item.element ?? item.label}
     </div>
   );
 };

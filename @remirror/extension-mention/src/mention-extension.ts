@@ -96,7 +96,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
         const { label: _, id, name, ...attrs } = node.attrs;
         const matcher = this.options.matchers.find(matcher => matcher.name === name);
         const mentionClassName = matcher
-          ? matcher.mentionClassName || DEFAULT_MATCHER.mentionClassName
+          ? matcher.mentionClassName ?? DEFAULT_MATCHER.mentionClassName
           : DEFAULT_MATCHER.mentionClassName;
 
         return [
@@ -150,7 +150,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       throw new Error(`Mentions matcher not found for name ${name}.`);
     }
 
-    const { from, to } = range || getState().selection;
+    const { from, to } = range ?? getState().selection;
 
     let startTransaction: TransactionTransformer | undefined;
 

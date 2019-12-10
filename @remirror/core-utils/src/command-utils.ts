@@ -45,7 +45,7 @@ export const updateMark = ({
 }: UpdateMarkParams): CommandFunction => (state, dispatch) => {
   const { selection } = state;
   const { tr } = state;
-  const { from, to } = range || selection;
+  const { from, to } = range ?? selection;
 
   tr.addMark(from, to, type.create(attrs));
 
@@ -182,7 +182,7 @@ export const replaceText = ({
   const { schema, selection } = state;
   // const { $from, $to } = selection;
   const index = selection.$from.index();
-  const { from, to } = range || selection;
+  const { from, to } = range ?? selection;
 
   // Run the pre transaction hook
   const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
@@ -242,7 +242,7 @@ export const removeMark = ({
 }: RemoveMarkParams): CommandFunction => (state, dispatch) => {
   const { selection } = state;
   const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
-  let { from, to } = range || selection;
+  let { from, to } = range ?? selection;
 
   if (expand) {
     ({ from, to } = range

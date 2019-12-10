@@ -136,7 +136,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
       throw new Error('Invalid use of extraAttrs within a plain extension.');
     }
 
-    const extraAttrs: ExtraAttrs[] = (this.options.extraAttrs as ExtraAttrs[] | undefined) || [];
+    const extraAttrs: ExtraAttrs[] = (this.options.extraAttrs as ExtraAttrs[] | undefined) ?? [];
     const attrs: Record<string, { default?: unknown }> = Object.create(null);
 
     for (const item of extraAttrs) {
@@ -160,7 +160,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
       throw new Error('Invalid use of extraAttrs within a plain extension.');
     }
 
-    const extraAttrs = (this.options.extraAttrs as ExtraAttrs[] | undefined) || [];
+    const extraAttrs = (this.options.extraAttrs as ExtraAttrs[] | undefined) ?? [];
     const attrs: Attrs = Object.create(null);
 
     for (const item of extraAttrs) {

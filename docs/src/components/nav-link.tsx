@@ -23,13 +23,13 @@ interface NavLinkProps {
 }
 
 export const NavLink: FC<NavLinkProps> = ({ href, ...props }) => {
-  const isExternal = isAbsoluteURL(href || '');
+  const isExternal = isAbsoluteURL(href ?? '');
 
   if (isExternal) {
     return <a {...props} href={href} sx={styles} />;
   }
 
-  const to = (props.to || href) as string;
+  const to = (props.to ?? href) as string;
   return <Link {...props} to={to} sx={styles} activeClassName='active' />;
 };
 

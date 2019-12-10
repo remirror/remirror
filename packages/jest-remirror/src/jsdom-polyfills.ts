@@ -16,11 +16,11 @@ export const jsdomPolyfill = () => {
     const getInnerText = (node: Node): string =>
       Array.prototype.slice.call(node.childNodes).reduce((text, child) => {
         if (child.nodeType === child.TEXT_NODE) {
-          return `${text}${child.textContent}`;
+          return `${text as string}${child.textContent as string}`;
         }
 
         if (child.childNodes.length) {
-          return `${text}${getInnerText(child)}`;
+          return `${text as string}${getInnerText(child)}`;
         }
 
         return text;

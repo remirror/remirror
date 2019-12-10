@@ -13,7 +13,7 @@ export const fromMarkdown = (markdown: string, schema: EditorSchema) =>
     bullet_list: { block: 'bulletList' },
     ordered_list: {
       block: 'orderedList',
-      getAttrs: tok => ({ order: parseInt(tok.attrGet('order') || '1', 10) }),
+      getAttrs: tok => ({ order: parseInt(tok.attrGet('order') ?? '1', 10) }),
     },
     heading: { block: 'heading', getAttrs: tok => ({ level: +tok.tag.slice(1) }) },
     code_block: { block: 'codeBlock' },
@@ -23,7 +23,7 @@ export const fromMarkdown = (markdown: string, schema: EditorSchema) =>
       node: 'image',
       getAttrs: tok => ({
         src: tok.attrGet('src'),
-        title: tok.attrGet('title') || null,
+        title: tok.attrGet('title') ?? null,
         alt: (tok.children[0] && tok.children[0].content) || null,
       }),
     },
@@ -34,7 +34,7 @@ export const fromMarkdown = (markdown: string, schema: EditorSchema) =>
       mark: 'link',
       getAttrs: tok => ({
         href: tok.attrGet('href'),
-        title: tok.attrGet('title') || null,
+        title: tok.attrGet('title') ?? null,
       }),
     },
     code_inline: { mark: 'code' },

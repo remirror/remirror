@@ -85,8 +85,8 @@ export const Icon = forwardRef<SVGSVGElement, BaseIconProps>(
         <svg
           fill='currentColor'
           preserveAspectRatio='xMidYMid meet'
-          height={height || size}
-          width={width || size}
+          height={height ?? size}
+          width={width ?? size}
           {...extraProps}
           {...props}
           css={sx(defaultStyles, { variant: `remirror:icons.${variant}` }, colorStyles, styles)}

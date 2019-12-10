@@ -12,6 +12,7 @@
     "lib",
     "src"
   ],
+  "sideEffects": false,
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
@@ -45,6 +46,5 @@
   "cjs": "lib/dist/react.cjs.js",
   "meta": {
     "sizeLimit": "115 KB"
-  },
-  "sideEffects": false
+  }
 }

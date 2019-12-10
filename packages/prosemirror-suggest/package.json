@@ -12,6 +12,7 @@
     "lib",
     "src"
   ],
+  "sideEffects": false,
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
@@ -32,6 +33,5 @@
   "cjs": "lib/dist/prosemirror-suggest.cjs.js",
   "meta": {
     "sizeLimit": "90 KB"
-  },
-  "sideEffects": false
+  }
 }

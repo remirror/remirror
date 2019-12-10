@@ -45,7 +45,7 @@ export const text = (value: string, schema: EditorSchema): TaggedContentItem => 
     const [taggedToken, escapeCharacters, tagName] = match;
     let { index } = match;
 
-    const skipLen = escapeCharacters && escapeCharacters.length;
+    const skipLen = escapeCharacters?.length;
     if (skipLen) {
       if (isOdd(skipLen)) {
         stripped += value.slice(textIndex, index + (skipLen - 1) / 2);

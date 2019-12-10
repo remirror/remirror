@@ -12,6 +12,7 @@
     "lib",
     "src"
   ],
+  "sideEffects": false,
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
@@ -38,6 +39,5 @@
   "cjs": "lib/dist/ui-dropdown.cjs.js",
   "meta": {
     "sizeLimit": "40 KB"
-  },
-  "sideEffects": false
+  }
 }

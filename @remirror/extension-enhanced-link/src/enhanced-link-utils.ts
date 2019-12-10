@@ -29,7 +29,7 @@ export const enhancedLinkHandler = ({ state, url, from, to, tr, type }: Enhanced
   const endPosition = state.selection.to;
   const enhancedLink = type.create({ href: extractHref(url) });
 
-  tr = (tr || state.tr).replaceWith(from, to, state.schema.text(url, [enhancedLink]));
+  tr = (tr ?? state.tr).replaceWith(from, to, state.schema.text(url, [enhancedLink]));
 
   // Ensure that the selection doesn't jump when the the current selection is within the range
   if (endPosition < to) {

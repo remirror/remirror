@@ -123,7 +123,7 @@ export class DropCursorState {
    * Check if the editor is currently being dragged around.
    */
   public isDragging = () =>
-    this.view.dragging || this.decorationSet !== DecorationSet.empty || !isUndefined(this.target);
+    this.view.dragging ?? (this.decorationSet !== DecorationSet.empty || !isUndefined(this.target));
 
   /**
    * Attach the react components to drop cursor elements.
@@ -255,10 +255,9 @@ export class DropCursorState {
         state: { doc, schema },
       } = this.view;
 
-      const target =
-        dragging && dragging.slice
-          ? dropPoint(doc, pos.pos, dragging.slice) || pos.pos
-          : insertPoint(doc, pos.pos, schema.image) || pos.pos;
+      const target = dragging?.slice
+        ? dropPoint(doc, pos.pos, dragging.slice) ?? pos.pos
+        : insertPoint(doc, pos.pos, schema.image) ?? pos.pos;
 
       if (target === this.target) {
         // This line resets the timeout.

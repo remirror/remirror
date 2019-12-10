@@ -209,13 +209,13 @@ const findJumpReason = ({ prev, next, state }: CompareMatchParams & EditorStateP
 
   if (isJumpForward) {
     return {
-      exit: exit || createMatchWithReason({ match: prev, reason: ExitReason.JumpForward }),
+      exit: exit ?? createMatchWithReason({ match: prev, reason: ExitReason.JumpForward }),
       change: createMatchWithReason({ match: next, reason: ChangeReason.JumpForward }),
     };
   }
 
   return {
-    exit: exit || createMatchWithReason({ match: prev, reason: ExitReason.JumpBackward }),
+    exit: exit ?? createMatchWithReason({ match: prev, reason: ExitReason.JumpBackward }),
     change: createMatchWithReason({ match: next, reason: ChangeReason.JumpBackward }),
   };
 };

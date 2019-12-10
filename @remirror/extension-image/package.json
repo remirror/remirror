@@ -13,6 +13,7 @@
     "lib",
     "src"
   ],
+  "sideEffects": false,
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
@@ -43,6 +44,5 @@
   "cjs": "lib/dist/extension-image.cjs.js",
   "meta": {
     "sizeLimit": "100 KB"
-  },
-  "sideEffects": false
+  }
 }

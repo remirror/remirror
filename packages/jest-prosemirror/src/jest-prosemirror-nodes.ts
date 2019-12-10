@@ -89,7 +89,7 @@ export const initSelection = <GSchema extends EditorSchema = any>(
   const $anchor = resolveCell(taggedDoc, anchor);
   if ($anchor) {
     return Cast<Selection<GSchema>>(
-      new CellSelection<GSchema>($anchor, resolveCell(taggedDoc, taggedDoc.tag.head) || undefined),
+      new CellSelection<GSchema>($anchor, resolveCell(taggedDoc, taggedDoc.tag.head) ?? undefined),
     );
   }
   return null;
@@ -103,7 +103,7 @@ export const initSelection = <GSchema extends EditorSchema = any>(
 export const selectionFor = <GSchema extends EditorSchema = any>(
   taggedDoc: TaggedProsemirrorNode<GSchema>,
 ): Selection<GSchema> => {
-  return initSelection(taggedDoc) || Selection.atStart(taggedDoc);
+  return initSelection(taggedDoc) ?? Selection.atStart(taggedDoc);
 };
 
 /**

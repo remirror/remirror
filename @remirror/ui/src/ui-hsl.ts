@@ -79,7 +79,7 @@ const hslArrayToObject = (value: any[]): HSLObject => {
 };
 
 const hslStringToObject = (value: string): HSLObject => {
-  const regexValue = HSLA_REGEX.exec(value) || HSL_REGEX.exec(value);
+  const regexValue = HSLA_REGEX.exec(value) ?? HSL_REGEX.exec(value);
 
   if (!regexValue) {
     throw new Error(`Invalid HSL input string used: '${value}'`);

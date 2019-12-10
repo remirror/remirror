@@ -12,6 +12,7 @@
     "lib",
     "src"
   ],
+  "sideEffects": false,
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
@@ -23,6 +24,5 @@
   "cjs": "lib/dist/ui-a11y-status.cjs.js",
   "meta": {
     "sizeLimit": "1 KB"
-  },
-  "sideEffects": false
+  }
 }

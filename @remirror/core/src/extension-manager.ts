@@ -268,7 +268,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
         combinedAttributes = {
           ...combinedAttributes,
           ...attrs,
-          class: (combinedAttributes.class || '') + (bool(attrs.class) ? attrs.class : '') || '',
+          class: (combinedAttributes.class ?? '') + (bool(attrs.class) ? attrs.class : '') || '',
         };
       });
 

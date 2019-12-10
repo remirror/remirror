@@ -55,7 +55,7 @@ export const markPasteRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) =
 
     fragment.forEach(child => {
       if (child.isText) {
-        const text = child.text || '';
+        const text = child.text ?? '';
         let pos = 0;
 
         // ? For some reason including the index param makes this work. I'm not sure why...?

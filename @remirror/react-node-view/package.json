@@ -12,6 +12,7 @@
     "lib",
     "src"
   ],
+  "sideEffects": false,
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
@@ -29,6 +30,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/react-node-view.cjs.js",
-  "sideEffects": false
+  "cjs": "lib/dist/react-node-view.cjs.js"
 }
