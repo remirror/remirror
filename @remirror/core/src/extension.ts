@@ -1,5 +1,5 @@
 import { Interpolation } from '@emotion/core';
-import { ExtensionType, Tags } from '@remirror/core-constants';
+import { ExtensionType, Tags, RemirrorClassName } from '@remirror/core-constants';
 import { deepMerge, isString } from '@remirror/core-helpers';
 import {
   AnyFunction,
@@ -286,6 +286,13 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
    * @private
    */
   public readonly _H!: this['helpers'] extends AnyFunction ? ReturnType<this['helpers']> : {};
+
+  /**
+   * Override the default toString method to match the native toString methods.
+   */
+  public toString() {
+    return RemirrorClassName.Extension;
+  }
 }
 
 export interface Extension<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GType = never> {

@@ -110,6 +110,10 @@
       "name": "@remirror/showcase"
     },
     {
+      "path": "@remirror/test-fixtures",
+      "name": "@remirror/test-fixtures"
+    },
+    {
       "path": "@remirror/ui-a11y-status",
       "name": "@remirror/ui-a11y-status"
     },

@@ -51,6 +51,18 @@ jobs:
           - bash: yarn size
             displayName: 'Check size limits'
 
+  - ${{ if eq(parameters.name, 'Linux') }}:
+      - job: ${{ parameters.name }}BuildUnitTests
+        pool:
+          vmImage: ${{ parameters.vmImage }}
+        dependsOn:
+          - LinuxBuild
+        steps:
+          - template: pipeline-yarn-install.yml
+          - template: pipeline-restore-build.yml
+          - bash: yarn test:build
+            displayName: 'Run unit tests against built code'
+
   - job: ${{ parameters.name }}ChromeIntegrationTests
     pool:
       vmImage: ${{ parameters.vmImage }}

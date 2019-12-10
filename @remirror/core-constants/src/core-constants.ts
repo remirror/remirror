@@ -204,3 +204,10 @@ export enum Tags {
    */
   NodeCursor = 'nodeCursor',
 }
+
+/**
+ * The toString return value for any created remirror class.
+ */
+export enum RemirrorClassName {
+  Extension = '$$RemirrorExtension',
+}

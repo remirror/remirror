@@ -60,6 +60,7 @@
     "stop:checks": "rimraf ./.config.json",
     "storybook": "start-storybook -p 6006 -c support/storybook",
     "test": "jest --verbose",
+    "test:build": "cross-env TEST_BUILD=true jest --verbose --coverage=false",
     "test:e2e": "jest --verbose --runInBand --config e2e/jest.config.js",
     "test:e2e:debug": "cross-env REMIRROR_E2E_DEBUG=true yarn test:e2e",
     "test:e2e:ssr": "cross-env REMIRROR_E2E_SERVER=razzle yarn test:e2e",
