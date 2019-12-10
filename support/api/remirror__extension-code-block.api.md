@@ -25,11 +25,8 @@ export const codeBlockDefaultOptions: CodeBlockExtensionOptions;
 
 // @public (undocumented)
 export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions> {
-    get name(): "codeBlock";
-    get defaultOptions(): CodeBlockExtensionOptions;
     // (undocumented)
     active({ type, getState }: CommandNodeTypeParams): CommandStatusCheck;
-    get schema(): NodeExtensionSpec;
     // (undocumented)
     commands({ type, schema }: CommandNodeTypeParams): {
         toggleCodeBlock: (attrs?: Partial<CodeBlockAttrs> | undefined) => import("@remirror/core").CommandFunction<any>;
@@ -37,6 +34,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
         updateCodeBlock: (attrs: CodeBlockAttrs) => import("@remirror/core").CommandFunction<any>;
         formatCodeBlock: ({ pos }?: Partial<import("@remirror/core").PosParams>) => import("@remirror/core").CommandFunction<any>;
     };
+    get defaultOptions(): CodeBlockExtensionOptions;
     // (undocumented)
     enabled({ type, getState }: CommandNodeTypeParams): CommandStatusCheck;
     protected init(): void;
@@ -44,7 +42,10 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
     // (undocumented)
     keys({ type, getActions }: ExtensionManagerNodeTypeParams): KeyboardBindings;
     // (undocumented)
+    get name(): "codeBlock";
+    // (undocumented)
     plugin(params: ExtensionManagerNodeTypeParams): Plugin;
+    get schema(): NodeExtensionSpec;
     styles(): string | undefined;
 }
 

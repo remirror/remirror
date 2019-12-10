@@ -11,14 +11,16 @@ import { NodeExtensionSpec } from '@remirror/core';
 
 // @public (undocumented)
 export class ImageExtension extends NodeExtension {
-    get name(): "image";
-    get schema(): NodeExtensionSpec;
     // (undocumented)
     commands({ type }: CommandNodeTypeParams): {
         insertImage: (attrs?: Record<string, unknown> | undefined) => CommandFunction<any>;
     };
     // (undocumented)
+    get name(): "image";
+    // (undocumented)
     plugin(): import("prosemirror-state").Plugin<any, any>;
+    // (undocumented)
+    get schema(): NodeExtensionSpec;
 }
 
 

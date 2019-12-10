@@ -10,6 +10,13 @@
 export declare class BoldExtension extends MarkExtension 
 ```
 
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [name](./core-extensions.boldextension.name.md) |  | <code>&quot;bold&quot;</code> |  |
+|  [schema](./core-extensions.boldextension.schema.md) |  | <code>MarkExtensionSpec</code> |  |
+
 ## Methods
 
 |  Method | Modifiers | Description |

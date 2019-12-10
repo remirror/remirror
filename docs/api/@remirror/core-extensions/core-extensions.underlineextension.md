@@ -10,6 +10,13 @@
 export declare class UnderlineExtension extends MarkExtension 
 ```
 
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [name](./core-extensions.underlineextension.name.md) |  | <code>&quot;underline&quot;</code> |  |
+|  [schema](./core-extensions.underlineextension.schema.md) |  | <code>MarkExtensionSpec</code> |  |
+
 ## Methods
 
 |  Method | Modifiers | Description |

@@ -13,6 +13,13 @@ This extension provides undo and redo commands and inserts a plugin which handle
 export declare class HistoryExtension extends Extension<HistoryExtensionOptions> 
 ```
 
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [defaultOptions](./core-extensions.historyextension.defaultoptions.md) |  | <code>{</code><br/><code>        depth: number;</code><br/><code>        newGroupDelay: number;</code><br/><code>    }</code> |  |
+|  [name](./core-extensions.historyextension.name.md) |  | <code>&quot;history&quot;</code> |  |
+
 ## Methods
 
 |  Method | Modifiers | Description |

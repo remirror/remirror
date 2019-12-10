@@ -201,8 +201,6 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     // (undocumented)
     componentDidUpdate({ editable, manager: prevManager }: RemirrorProps<GExtension>, prevState: RemirrorState<SchemaFromExtensions<GExtension>>): void;
     componentWillUnmount(): void;
-    private get doc();
-    private get manager();
     context: RemirrorThemeContextType;
     static contextType: import("react").Context<RemirrorThemeContextType>;
     // (undocumented)
@@ -230,10 +228,10 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
         onDispatchTransaction: (tr: Transaction<any>) => Transaction<any>;
         stringHandler: () => never;
     };
-    private get editorStyles();
     static getDerivedStateFromProps(props: RemirrorProps, state: RemirrorState): RemirrorState | null;
     // (undocumented)
     render(): JSX.Element;
+    // (undocumented)
     get renderParams(): InjectedRemirrorProps<GExtension>;
     updateExtensionManager(): void;
     }
@@ -276,9 +274,9 @@ export class RemirrorManager extends Component<RemirrorManagerProps> {
     static defaultProps: {
         useBaseExtensions: true;
     };
+    get manager(): ExtensionManager;
     // (undocumented)
     render(): JSX.Element;
-    get manager(): ExtensionManager;
     }
 
 // @public (undocumented)

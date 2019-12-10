@@ -1,5 +1,7 @@
 const { jestSupportDir, baseDir } = require('./helpers');
 
+const { TEST_BUILD } = process.env;
+
 module.exports = {
   clearMocks: true,
   verbose: true,
@@ -22,13 +24,16 @@ module.exports = {
   snapshotSerializers: ['jest-emotion'],
   cacheDirectory: baseDir('.jest'),
   testEnvironment: 'jsdom',
-  moduleNameMapper: {
-    '^test-keyboard$': baseDir('packages', 'test-keyboard', 'src'),
-    '^jest-remirror$': baseDir('packages', 'jest-remirror', 'src'),
-    '^jest-prosemirror$': baseDir('packages', 'jest-prosemirror', 'src'),
-    '^prosemirror-suggest$': baseDir('packages', 'prosemirror-suggest', 'src'),
-    '^multishift$': baseDir('packages', 'multishift', 'src'),
-    '^@remirror\\/([a-z0-9-]+)$': baseDir('@remirror', '$1', 'src'),
-    '^@test-fixtures/(.*)$': baseDir('support/fixtures/$1'),
-  },
+  moduleNameMapper:
+    TEST_BUILD === 'true'
+      ? // ? { '^@remirror\\/test-fixtures$': baseDir('@remirror', 'test-fixtures', 'src') }
+        {}
+      : {
+          '^test-keyboard$': baseDir('packages', 'test-keyboard', 'src'),
+          '^jest-remirror$': baseDir('packages', 'jest-remirror', 'src'),
+          '^jest-prosemirror$': baseDir('packages', 'jest-prosemirror', 'src'),
+          '^prosemirror-suggest$': baseDir('packages', 'prosemirror-suggest', 'src'),
+          '^multishift$': baseDir('packages', 'multishift', 'src'),
+          '^@remirror\\/([a-z0-9-]+)$': baseDir('@remirror', '$1', 'src'),
+        },
 };

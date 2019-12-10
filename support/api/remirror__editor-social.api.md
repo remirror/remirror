@@ -81,15 +81,11 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
         emojiSet: string;
         placeholder: string;
     };
-    private get users();
-    private get tags();
-    private get remirrorProps();
-    private get theme();
     // (undocumented)
     render(): JSX.Element;
     // (undocumented)
     readonly state: State;
-}
+    }
 
 // @public (undocumented)
 export interface SocialEditorProps extends Partial<ManagedRemirrorProviderProps<SocialExtensions>>, Pick<RemirrorManagerProps, 'extensions'> {

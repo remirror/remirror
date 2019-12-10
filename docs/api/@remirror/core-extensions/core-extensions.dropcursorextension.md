@@ -13,6 +13,13 @@ Create a plugin that, when added to a ProseMirror instance, causes a decoration 
 export declare class DropCursorExtension extends Extension<DropCursorExtensionOptions> 
 ```
 
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [defaultOptions](./core-extensions.dropcursorextension.defaultoptions.md) |  | <code>DropCursorExtensionOptions</code> |  |
+|  [name](./core-extensions.dropcursorextension.name.md) |  | <code>&quot;dropCursor&quot;</code> |  |
+
 ## Methods
 
 |  Method | Modifiers | Description |

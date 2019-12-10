@@ -84,11 +84,13 @@ export const baseExtensions: ({
 
 // @public
 export class BaseKeymapExtension extends Extension<BaseKeymapExtensionOptions> {
-    get name(): "baseKeymap";
+    // (undocumented)
     get defaultOptions(): BaseKeymapExtensionOptions;
     keys(): {
         [x: string]: any;
     };
+    // (undocumented)
+    get name(): "baseKeymap";
 }
 
 // @public (undocumented)
@@ -99,8 +101,6 @@ export interface BaseKeymapExtensionOptions extends BaseExtensionOptions {
 
 // @public (undocumented)
 export class BlockquoteExtension extends NodeExtension {
-    get name(): "blockquote";
-    get schema(): NodeExtensionSpec;
     // (undocumented)
     commands({ type }: CommandNodeTypeParams): {
         blockquote: () => import("@remirror/core").CommandFunction<any>;
@@ -112,13 +112,15 @@ export class BlockquoteExtension extends NodeExtension {
         'Ctrl->': import("@remirror/core").CommandFunction<any>;
     };
     // (undocumented)
+    get name(): "blockquote";
+    // (undocumented)
+    get schema(): NodeExtensionSpec;
+    // (undocumented)
     styles(): string;
 }
 
 // @public (undocumented)
 export class BoldExtension extends MarkExtension {
-    get name(): "bold";
-    get schema(): MarkExtensionSpec;
     // (undocumented)
     commands({ type }: CommandMarkTypeParams): {
         bold: () => (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
@@ -129,12 +131,14 @@ export class BoldExtension extends MarkExtension {
     keys({ type }: ExtensionManagerMarkTypeParams): {
         'Mod-b': (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
     };
+    // (undocumented)
+    get name(): "bold";
+    // (undocumented)
+    get schema(): MarkExtensionSpec;
 }
 
 // @public (undocumented)
 export class BulletListExtension extends NodeExtension {
-    get name(): "bulletList";
-    get schema(): NodeExtensionSpec;
     // (undocumented)
     commands({ type, schema }: CommandNodeTypeParams): {
         toggleBulletList: () => import("@remirror/core").CommandFunction<any>;
@@ -145,6 +149,10 @@ export class BulletListExtension extends NodeExtension {
     keys({ type, schema }: ExtensionManagerNodeTypeParams): {
         'Shift-Ctrl-8': import("@remirror/core").CommandFunction<any>;
     };
+    // (undocumented)
+    get name(): "bulletList";
+    // (undocumented)
+    get schema(): NodeExtensionSpec;
 }
 
 // @public
@@ -152,8 +160,6 @@ export const cloneSSRElement: (element: JSX.Element, transformChildElements: (ch
 
 // @public (undocumented)
 export class CodeBlockExtension extends NodeExtension {
-    get name(): "codeBlock";
-    get schema(): NodeExtensionSpec;
     // (undocumented)
     commands({ type, schema }: CommandNodeTypeParams): {
         toggleCodeBlock: () => import("@remirror/core").CommandFunction<any>;
@@ -165,13 +171,15 @@ export class CodeBlockExtension extends NodeExtension {
         'Shift-Ctrl-\\': import("@remirror/core").CommandFunction<any>;
     };
     // (undocumented)
+    get name(): "codeBlock";
+    // (undocumented)
+    get schema(): NodeExtensionSpec;
+    // (undocumented)
     styles(): Interpolation;
 }
 
 // @public (undocumented)
 export class CodeExtension extends MarkExtension {
-    get name(): "code";
-    get schema(): MarkExtensionSpec;
     // (undocumented)
     commands({ type }: CommandMarkTypeParams): {
         code: () => (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
@@ -183,15 +191,21 @@ export class CodeExtension extends MarkExtension {
         'Mod-`': (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
     };
     // (undocumented)
+    get name(): "code";
+    // (undocumented)
     pasteRules({ type }: ExtensionManagerMarkTypeParams): import("prosemirror-state").Plugin<any, any>[];
+    // (undocumented)
+    get schema(): MarkExtensionSpec;
 }
 
 // @public
 export class CompositionExtension extends Extension<CompositionExtensionOptions> {
-    get name(): "composition";
+    // (undocumented)
     get defaultOptions(): {
         ensureNodeDeletion: string[];
     };
+    // (undocumented)
+    get name(): "composition";
     // (undocumented)
     plugin(): ProsemirrorPlugin;
 }
@@ -232,8 +246,10 @@ export const defaultTrailingNodeExtensionOptions: TrailingNodeExtensionOptions;
 
 // @public
 export class DropCursorExtension extends Extension<DropCursorExtensionOptions> {
-    get name(): "dropCursor";
+    // (undocumented)
     get defaultOptions(): DropCursorExtensionOptions;
+    // (undocumented)
+    get name(): "dropCursor";
     plugin(): import("prosemirror-state").Plugin<any, any>;
 }
 
@@ -263,6 +279,7 @@ export const FONT_PT_SIZES: number[];
 
 // @public
 export class GapCursorExtension extends Extension {
+    // (undocumented)
     get name(): "gapCursor";
     plugin(): import("prosemirror-state").Plugin<any, any>;
     styles(): string;
@@ -270,23 +287,19 @@ export class GapCursorExtension extends Extension {
 
 // @public (undocumented)
 export class HardBreakExtension extends NodeExtension {
-    get name(): "hardBreak";
-    get schema(): NodeExtensionSpec;
     // (undocumented)
     keys({ type }: ExtensionManagerNodeTypeParams): {
         'Mod-Enter': <S extends import("prosemirror-model").Schema<any, any> = any>(p1: import("prosemirror-state").EditorState<S>, p2?: ((tr: import("prosemirror-state").Transaction<S>) => void) | undefined, p3?: import("prosemirror-view").EditorView<S> | undefined) => boolean;
         'Shift-Enter': <S extends import("prosemirror-model").Schema<any, any> = any>(p1: import("prosemirror-state").EditorState<S>, p2?: ((tr: import("prosemirror-state").Transaction<S>) => void) | undefined, p3?: import("prosemirror-view").EditorView<S> | undefined) => boolean;
     };
+    // (undocumented)
+    get name(): "hardBreak";
+    // (undocumented)
+    get schema(): NodeExtensionSpec;
 }
 
 // @public (undocumented)
 export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
-    get name(): "heading";
-    get defaultOptions(): {
-        levels: number[];
-        defaultLevel: number;
-    };
-    get schema(): NodeExtensionSpec;
     // (undocumented)
     commands({ type, schema }: CommandNodeTypeParams): {
         toggleHeading: (attrs?: Attrs<{
@@ -294,9 +307,18 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
         }> | undefined) => import("@remirror/core").CommandFunction<any>;
     };
     // (undocumented)
+    get defaultOptions(): {
+        levels: number[];
+        defaultLevel: number;
+    };
+    // (undocumented)
     inputRules({ type }: ExtensionManagerNodeTypeParams): import("prosemirror-inputrules").InputRule<import("@remirror/core").EditorSchema<string, string>>[];
     // (undocumented)
     keys({ type }: ExtensionManagerNodeTypeParams): Record<string, import("@remirror/core").CommandFunction<any>>;
+    // (undocumented)
+    get name(): "heading";
+    // (undocumented)
+    get schema(): NodeExtensionSpec;
 }
 
 // @public (undocumented)
@@ -314,14 +336,14 @@ export interface HeadingExtensionOptions extends NodeExtensionOptions {
 
 // @public
 export class HistoryExtension extends Extension<HistoryExtensionOptions> {
-    get name(): "history";
-    get defaultOptions(): {
-        depth: number;
-        newGroupDelay: number;
-    };
     commands(): {
         undo: () => CommandFunction<any>;
         redo: () => CommandFunction<any>;
+    };
+    // (undocumented)
+    get defaultOptions(): {
+        depth: number;
+        newGroupDelay: number;
     };
     isActive(): () => boolean;
     isEnabled({ getState }: ExtensionManagerParams): ({ command }: {
@@ -336,6 +358,8 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
         'Mod-z': CommandFunction<any>;
         'Shift-Mod-z': CommandFunction<any>;
     };
+    // (undocumented)
+    get name(): "history";
     plugin(): import("prosemirror-state").Plugin<any, any>;
     }
 
@@ -349,14 +373,16 @@ export interface HistoryExtensionOptions extends BaseExtensionOptions {
 
 // @public (undocumented)
 export class HorizontalRuleExtension extends NodeExtension {
-    get name(): "horizontalRule";
-    get schema(): NodeExtensionSpec;
     // (undocumented)
     commands({ type }: CommandNodeTypeParams): {
         horizontalRule: () => CommandFunction_2<any>;
     };
     // (undocumented)
     inputRules({ type }: ExtensionManagerNodeTypeParams): import("prosemirror-inputrules").InputRule<any>[];
+    // (undocumented)
+    get name(): "horizontalRule";
+    // (undocumented)
+    get schema(): NodeExtensionSpec;
 }
 
 // @public
@@ -388,8 +414,6 @@ export const isGapCursorSelection: (value: unknown) => value is GapCursor;
 
 // @public (undocumented)
 export class ItalicExtension extends MarkExtension {
-    get name(): "italic";
-    get schema(): MarkExtensionSpec;
     // (undocumented)
     commands({ type }: CommandMarkTypeParams): {
         italic: () => (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
@@ -401,7 +425,11 @@ export class ItalicExtension extends MarkExtension {
         'Mod-i': (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
     };
     // (undocumented)
+    get name(): "italic";
+    // (undocumented)
     pasteRules({ type }: ExtensionManagerMarkTypeParams): import("prosemirror-state").Plugin<any, any>[];
+    // (undocumented)
+    get schema(): MarkExtensionSpec;
 }
 
 // @public
@@ -409,24 +437,27 @@ export const LINE_SPACING_VALUES: string[];
 
 // @public (undocumented)
 export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
-    get name(): "link";
-    get defaultOptions(): {
-        activationHandler: () => boolean;
-    };
-    get schema(): MarkExtensionSpec;
     // (undocumented)
     commands({ type }: CommandMarkTypeParams): {
         updateLink: (attrs?: Record<string, unknown> | undefined) => import("@remirror/core").CommandFunction<any>;
         removeLink: () => import("@remirror/core").CommandFunction<any>;
     };
     // (undocumented)
+    get defaultOptions(): {
+        activationHandler: () => boolean;
+    };
+    // (undocumented)
     isEnabled({ getState, type }: ExtensionManagerMarkTypeParams): CommandStatusCheck;
     // (undocumented)
     keys(): KeyboardBindings;
     // (undocumented)
+    get name(): "link";
+    // (undocumented)
     pasteRules({ type }: ExtensionManagerMarkTypeParams): Plugin<any, any>[];
     // (undocumented)
     plugin({ type }: ExtensionManagerMarkTypeParams): Plugin<any, any>;
+    // (undocumented)
+    get schema(): MarkExtensionSpec;
 }
 
 // @public (undocumented)
@@ -439,14 +470,16 @@ export interface LinkExtensionOptions extends MarkExtensionOptions {
 
 // @public (undocumented)
 export class ListItemExtension extends NodeExtension {
-    get name(): "listItem";
-    get schema(): NodeExtensionSpec;
     // (undocumented)
     keys({ type }: ExtensionManagerNodeTypeParams): {
         Enter: (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
         Tab: (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
         'Shift-Tab': (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
     };
+    // (undocumented)
+    get name(): "listItem";
+    // (undocumented)
+    get schema(): NodeExtensionSpec;
 }
 
 // @public
@@ -463,10 +496,12 @@ export const NODE_CURSOR_DEFAULTS: string[];
 
 // @public
 export class NodeCursorExtension extends Extension<NodeCursorExtensionOptions> {
-    get name(): "nodeCursor";
+    // (undocumented)
     get defaultOptions(): {
         targets: never[];
     };
+    // (undocumented)
+    get name(): "nodeCursor";
     // (undocumented)
     plugin({ tags }: ExtensionManagerParams_2): Plugin<any, any>;
 }
@@ -479,8 +514,6 @@ export interface NodeCursorExtensionOptions extends BaseExtensionOptions_2 {
 
 // @public (undocumented)
 export class OrderedListExtension extends NodeExtension {
-    get name(): "orderedList";
-    get schema(): NodeExtensionSpec;
     // (undocumented)
     commands({ type, schema }: CommandNodeTypeParams): {
         toggleOrderedList: () => import("@remirror/core").CommandFunction<any>;
@@ -491,27 +524,35 @@ export class OrderedListExtension extends NodeExtension {
     keys({ type, schema }: ExtensionManagerNodeTypeParams): {
         'Shift-Ctrl-9': import("@remirror/core").CommandFunction<any>;
     };
+    // (undocumented)
+    get name(): "orderedList";
+    // (undocumented)
+    get schema(): NodeExtensionSpec;
 }
 
 // Warning: (ae-forgotten-export) The symbol "ParagraphExtensionOptions" needs to be exported by the entry point index.d.ts
 //
 // @public
 export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions> {
-    get name(): "paragraph";
-    get tags(): Tags[];
-    get defaultOptions(): {
-        indentAttribute: string;
-        indentLevels: import("./paragraph-types").IndentLevels;
-    };
-    get schema(): NodeExtensionSpec;
     commands({ type }: CommandNodeTypeParams): {
         createParagraph: (attrs?: import("@remirror/core").Attrs<{
-            align?: "left" | "right" | "center" | "justify" | null | undefined;
+            align?: "center" | "left" | "right" | "justify" | null | undefined;
             indent?: number | null | undefined;
             lineSpacing?: string | null | undefined;
             id?: string | null | undefined;
         }> | undefined) => (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
     };
+    // (undocumented)
+    get defaultOptions(): {
+        indentAttribute: string;
+        indentLevels: import("./paragraph-types").IndentLevels;
+    };
+    // (undocumented)
+    get name(): "paragraph";
+    // (undocumented)
+    get schema(): NodeExtensionSpec;
+    // (undocumented)
+    get tags(): Tags[];
 }
 
 // @public
@@ -519,15 +560,17 @@ export const PIXEL_TO_PT_RATIO = 0.7518796992481203;
 
 // @public (undocumented)
 export class PlaceholderExtension extends Extension<PlaceholderExtensionOptions> {
-    get name(): "placeholder";
+    attributes(): {
+        'aria-placeholder': string;
+    };
+    // (undocumented)
     get defaultOptions(): {
         emptyNodeClass: "is-empty";
         placeholderStyles: {};
         placeholder: string;
     };
-    attributes(): {
-        'aria-placeholder': string;
-    };
+    // (undocumented)
+    get name(): "placeholder";
     // (undocumented)
     plugin(): Plugin_2<PlaceholderPluginState>;
     ssrTransformer(element: JSX.Element, { getState }: ExtensionManagerParams): JSX.Element;
@@ -559,14 +602,14 @@ export interface PlaceholderPluginState extends Required<PlaceholderExtensionOpt
 
 // @public
 export class PositionTrackerExtension extends Extension<PositionTrackerExtensionOptions> {
-    get name(): "positionTracker";
-    get defaultOptions(): Partial<PositionTrackerExtensionOptions>;
     // (undocumented)
     commands({ getHelpers }: CommandParams): {
         addPositionTracker: (params: AddPositionTrackerParams) => CommandFunction<any>;
         removePositionTracker: (params: RemovePositionTrackerParams) => CommandFunction<any>;
         clearPositionTrackers: (params: void) => CommandFunction<any>;
     };
+    // (undocumented)
+    get defaultOptions(): Partial<PositionTrackerExtensionOptions>;
     // (undocumented)
     helpers({ getState }: ExtensionManagerParams): {
         addPositionTracker: ({ pos, id }: AddPositionTrackerParams, tr?: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => import("prosemirror-state").Transaction<any> | undefined;
@@ -575,6 +618,8 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
         findPositionTracker: (id: unknown) => number | undefined;
         findAllPositionTrackers: () => Record<string, number>;
     };
+    // (undocumented)
+    get name(): "positionTracker";
     // (undocumented)
     plugin(): Plugin<DecorationSet<any>, any>;
 }
@@ -606,10 +651,12 @@ export const SIZE_PATTERN: RegExp;
 
 // @public
 export class SSRHelperExtension extends Extension<SSRHelperExtensionOptions> {
-    get name(): "ssrHelper";
+    // (undocumented)
     get defaultOptions(): {
         transformers: SSRTransformer[];
     };
+    // (undocumented)
+    get name(): "ssrHelper";
     ssrTransformer(element: JSX.Element, params: ExtensionManagerParams): JSX.Element;
 }
 
@@ -624,8 +671,6 @@ export type SSRTransformer = (element: JSX.Element, params: ExtensionManagerPara
 
 // @public (undocumented)
 export class StrikeExtension extends MarkExtension {
-    get name(): "strike";
-    get schema(): MarkExtensionSpec;
     // (undocumented)
     commands({ type }: CommandMarkTypeParams): {
         strike: () => (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
@@ -637,13 +682,19 @@ export class StrikeExtension extends MarkExtension {
         'Mod-d': (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
     };
     // (undocumented)
+    get name(): "strike";
+    // (undocumented)
     pasteRules({ type }: ExtensionManagerMarkTypeParams): import("prosemirror-state").Plugin<any, any>[];
+    // (undocumented)
+    get schema(): MarkExtensionSpec;
 }
 
 // @public
 export class TrailingNodeExtension extends Extension<TrailingNodeExtensionOptions> {
-    get name(): "trailingNode";
+    // (undocumented)
     get defaultOptions(): TrailingNodeExtensionOptions;
+    // (undocumented)
+    get name(): "trailingNode";
     plugin({ tags, schema }: ExtensionManagerParams): Plugin<boolean, any>;
 }
 
@@ -656,8 +707,6 @@ export interface TrailingNodeExtensionOptions extends BaseExtensionOptions {
 
 // @public (undocumented)
 export class UnderlineExtension extends MarkExtension {
-    get name(): "underline";
-    get schema(): MarkExtensionSpec;
     // (undocumented)
     commands({ type }: CommandMarkTypeParams): {
         underline: () => (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
@@ -666,6 +715,10 @@ export class UnderlineExtension extends MarkExtension {
     keys({ type }: ExtensionManagerMarkTypeParams): {
         'Mod-u': (state: import("prosemirror-state").EditorState<import("@remirror/core").EditorSchema<string, string>>, dispatch?: ((tr: import("prosemirror-state").Transaction<import("@remirror/core").EditorSchema<string, string>>) => void) | undefined) => boolean;
     };
+    // (undocumented)
+    get name(): "underline";
+    // (undocumented)
+    get schema(): MarkExtensionSpec;
 }
 
 

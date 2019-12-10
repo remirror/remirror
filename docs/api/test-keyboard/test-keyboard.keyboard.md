@@ -20,6 +20,7 @@ export declare class Keyboard
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
+|  [defaultOptions](./test-keyboard.keyboard.defaultoptions.md) | <code>static</code> | <code>KeyboardEventInit</code> |  |
 |  [keyDown](./test-keyboard.keyboard.keydown.md) |  | <code>({ options }: OptionsParams) =&gt; this</code> | Triggers a keydown event with provided options |
 |  [keyPress](./test-keyboard.keyboard.keypress.md) |  | <code>({ options }: OptionsParams) =&gt; this</code> | Trigger a keypress event with the provided options |
 |  [keyUp](./test-keyboard.keyboard.keyup.md) |  | <code>({ options }: OptionsParams) =&gt; this</code> | Trigger a keyup event with the provided options |

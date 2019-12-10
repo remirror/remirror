@@ -57,7 +57,7 @@ const generateRollupConfig = async () => {
   ]);
 
   const rollup = packages
-    .filter(pkg => !pkg.private)
+    .filter(pkg => !pkg.private || pkg.name === '@remirror/test-fixtures')
     .map(json => {
       const packagePath = getRelativePathFromJson(json);
       return {

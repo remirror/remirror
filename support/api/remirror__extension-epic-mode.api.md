@@ -26,8 +26,10 @@ export const defaultEffect: ParticleEffect;
 
 // @public (undocumented)
 export class EpicModeExtension extends Extension<EpicModeExtensionOptions> {
-    get name(): "epicMode";
+    // (undocumented)
     get defaultOptions(): EpicModeExtensionOptions;
+    // (undocumented)
+    get name(): "epicMode";
     // (undocumented)
     plugin(): ProsemirrorPlugin;
 }

@@ -17,6 +17,13 @@ export declare class BaseKeymapExtension extends Extension<BaseKeymapExtensionOp
 Without this extension most of the shortcuts and behaviours we have come to expected from text editors would not be provided.
 
 
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [defaultOptions](./core-extensions.basekeymapextension.defaultoptions.md) |  | <code>BaseKeymapExtensionOptions</code> |  |
+|  [name](./core-extensions.basekeymapextension.name.md) |  | <code>&quot;baseKeymap&quot;</code> |  |
+
 ## Methods
 
 |  Method | Modifiers | Description |

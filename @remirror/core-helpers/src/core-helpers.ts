@@ -33,7 +33,9 @@ export const Cast = <GType = any>(arg: any): GType => arg;
 export const bool = <GValue>(value: GValue): value is Exclude<GValue, Falsy> => !!value;
 
 /**
- * A type name matcher for object types
+ * A type name matcher for object types.
+ *
+ * @private
  */
 enum TypeName {
   Object = 'Object',
@@ -46,7 +48,9 @@ enum TypeName {
 }
 
 /**
- * Alias of toString for non-dom environments
+ * Alias of toString for non-dom environments.
+ *
+ * @private
  */
 const toString = Object.prototype.toString;
 
@@ -58,6 +62,7 @@ const toString = Object.prototype.toString;
  */
 const getObjectType = (value: unknown): TypeName | undefined => {
   const objectName = toString.call(value).slice(8, -1);
+
   return objectName as TypeName;
 };
 
@@ -78,7 +83,7 @@ const isOfType = <GType>(type: string, test?: (value: GType) => boolean) => (
  *
  * @param type - the name of the object type to check for
  *
- * @public
+ * @private
  */
 const isObjectOfType = <GType>(type: TypeName) => (value: unknown): value is GType =>
   getObjectType(value) === type;
