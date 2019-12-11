@@ -1,5 +1,6 @@
 import { renderEditor } from 'jest-remirror';
 import { SuggestKeyBindingParams } from 'prosemirror-suggest';
+
 import { EmojiExtension } from '../emoji-extension';
 import {
   EmojiExtensionOptions,

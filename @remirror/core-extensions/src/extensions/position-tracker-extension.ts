@@ -1,5 +1,5 @@
 import { Extension } from '@remirror/core';
-import { isNumber, isString } from '@remirror/core-helpers';
+import { isNullOrUndefined, isNumber, isString } from '@remirror/core-helpers';
 import {
   BaseExtensionOptions,
   CommandFunction,
@@ -184,7 +184,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
           // Get tracker updates from the meta data
           const tracker = getPluginMeta<PositionTrackerExtensionMeta>(key, tr);
 
-          if (!tracker) {
+          if (isNullOrUndefined(tracker)) {
             return decorationSet;
           }
 

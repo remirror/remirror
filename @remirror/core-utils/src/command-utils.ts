@@ -13,6 +13,7 @@ import {
 } from '@remirror/core-types';
 import { lift, setBlockType, wrapIn } from 'prosemirror-commands';
 import { liftListItem, wrapInList } from 'prosemirror-schema-list';
+
 import { getMarkRange, isMarkType, isNodeType } from './dom-utils';
 import { isNodeActive, selectionEmpty } from './prosemirror-utils';
 
@@ -164,6 +165,17 @@ const callMethod = <
 ): GReturn => (isFunction(fn) ? fn(...args) : defaultReturn);
 
 /**
+ * Taken from https://stackoverflow.com/a/4900484
+ *
+ * Check that the browser is chrome. Supports passing a minimum version to check that it is a greater than or equal version.
+ */
+const isChrome = (minVersion = 0): boolean => {
+  const parsedAgent = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+
+  return parsedAgent ? parseInt(parsedAgent[2], 10) >= minVersion : false;
+};
+
+/**
  * Replaces text with an optional appended string at the end
  *
  * @param params - the destructured params
@@ -209,7 +221,7 @@ export const replaceText = ({
     if (isChrome(60)) {
       // A workaround for a chrome bug
       // https://github.com/ProseMirror/prosemirror/issues/710#issuecomment-338047650
-      document.getSelection()!.empty();
+      document.getSelection()?.empty();
     }
     dispatch(callMethod({ fn: endTransaction, defaultReturn: tr }, [tr, state]));
   }
@@ -260,15 +272,4 @@ export const removeMark = ({
   }
 
   return true;
-};
-
-/**
- * Taken from https://stackoverflow.com/a/4900484
- *
- * Check that the browser is chrome. Supports passing a minimum version to check that it is a greater than or equal version.
- */
-const isChrome = (minVersion = 0): boolean => {
-  const parsedAgent = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
-
-  return parsedAgent ? parseInt(parsedAgent[2], 10) >= minVersion : false;
 };

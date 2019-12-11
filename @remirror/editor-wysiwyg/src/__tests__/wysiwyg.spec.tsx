@@ -1,7 +1,7 @@
+import { docNodeBasicJSON } from '@remirror/test-fixtures';
 import { render } from '@testing-library/react';
 import React from 'react';
 
-import { docNodeBasicJSON } from '@remirror/test-fixtures';
 import { WysiwygEditor } from '..';
 
 test('it renders within an ssr environment', () => {

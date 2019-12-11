@@ -1,4 +1,5 @@
 import { randomInt } from '@remirror/core';
+
 import { ParticleEffect } from './epic-mode-types';
 
 export const COLORS = [
@@ -67,6 +68,9 @@ export const defaultEffect: ParticleEffect = {
   },
 };
 
+const DEFAULT_SPAWNING_DRAG = 0.92;
+const createSpawningTheta = () => (randomInt(0, 360) * Math.PI) / 180;
+
 export const spawningEffect: ParticleEffect = {
   createParticle({ x, y, color }) {
     return {
@@ -75,21 +79,21 @@ export const spawningEffect: ParticleEffect = {
       alpha: 1,
       color,
       size: randomInt(2, 8),
-      drag: 0.92,
+      drag: DEFAULT_SPAWNING_DRAG,
       vx: randomInt(-3, 3),
       vy: randomInt(-3, 3),
       wander: 0.15,
-      theta: (randomInt(0, 360) * Math.PI) / 180,
+      theta: createSpawningTheta(),
     };
   },
   updateParticle({ particle, ctx }) {
     particle.x += particle.vx;
     particle.y += particle.vy;
-    particle.vx *= particle.drag!;
-    particle.vy *= particle.drag!;
-    particle.theta! += randomInt(-0.5, 0.5);
-    particle.vx += Math.sin(particle.theta!) * 0.1;
-    particle.vy += Math.cos(particle.theta!) * 0.1;
+    particle.vx *= particle.drag ?? DEFAULT_SPAWNING_DRAG;
+    particle.vy *= particle.drag ?? DEFAULT_SPAWNING_DRAG;
+    particle.theta = (particle.theta ?? createSpawningTheta()) + randomInt(-0.5, 0.5);
+    particle.vx += Math.sin(particle.theta) * 0.1;
+    particle.vy += Math.cos(particle.theta) * 0.1;
     particle.size *= 0.96;
 
     ctx.fillStyle = `rgba(${particle.color[0]},${particle.color[1]},${particle.color[2]},${particle.alpha})`;

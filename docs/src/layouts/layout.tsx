@@ -3,6 +3,7 @@
 import { Global } from '@emotion/core';
 import { FC, useRef, useState } from 'react';
 import { Container, jsx, Layout as LayoutUI, Main, Styled } from 'theme-ui';
+
 import EditLink from '../components/edit-link';
 import Footer from '../components/footer';
 import Head from '../components/head';

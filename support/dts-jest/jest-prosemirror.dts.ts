@@ -1,5 +1,5 @@
-import { EventType } from 'jest-prosemirror';
 import { EventType as DomEventType } from '@testing-library/dom';
+import { EventType } from 'jest-prosemirror';
 
 const eventType: EventType = 'abort';
 const domEventType: DomEventType = 'animationEnd';

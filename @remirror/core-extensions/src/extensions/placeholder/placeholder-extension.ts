@@ -1,8 +1,9 @@
-import { Extension } from '@remirror/core';
+import { Extension, isString } from '@remirror/core';
 import { ExtensionManagerParams, Plugin } from '@remirror/core-types';
 import { isDocNodeEmpty } from '@remirror/core-utils';
 import { cloneElement, getElementProps } from '@remirror/react-utils';
 import { Children } from 'react';
+
 import { EMPTY_NODE_CLASS_NAME } from '../../core-extension-constants';
 import { PlaceholderExtensionOptions, PlaceholderPluginState } from '../../core-extension-types';
 import { createPlaceholderPlugin } from './placeholder-plugin';
@@ -65,7 +66,7 @@ export class PlaceholderExtension extends Extension<PlaceholderExtensionOptions>
       {},
       cloneElement(children, {
         ...props,
-        className: props.className ? `${props.className} ${emptyNodeClass}` : emptyNodeClass,
+        className: isString(props.className) ? `${props.className} ${emptyNodeClass}` : emptyNodeClass,
         'data-placeholder': placeholder,
       }),
     );

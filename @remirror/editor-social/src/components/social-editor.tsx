@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { deepMerge, omit, RemirrorTheme } from '@remirror/core';
+import { deepMerge, isUndefined, omit, RemirrorTheme } from '@remirror/core';
 import { NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import {
   EmojiExtension,
@@ -15,12 +15,19 @@ import {
 import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
 import {
   MentionExtension,
-  MentionExtensionOptions,
   MentionExtensionMatcher,
+  MentionExtensionOptions,
 } from '@remirror/extension-mention';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
 import { RemirrorThemeProvider } from '@remirror/ui';
+import {
+  SuggestChangeHandlerParams,
+  SuggestKeyBindingMap,
+  SuggestKeyBindingParams,
+  SuggestStateMatch,
+} from 'prosemirror-suggest';
 import { Fragment, PureComponent } from 'react';
+
 import { socialEditorTheme } from '../social-theme';
 import {
   ActiveTagData,
@@ -32,12 +39,6 @@ import {
 } from '../social-types';
 import { calculateNewIndexFromArrowPress, mapToActiveIndex } from '../social-utils';
 import { SocialEditorComponent } from './social-wrapper-component';
-import {
-  SuggestStateMatch,
-  SuggestKeyBindingMap,
-  SuggestKeyBindingParams,
-  SuggestChangeHandlerParams,
-} from 'prosemirror-suggest';
 
 interface State {
   activeMatcher: MatchName | undefined;
@@ -323,10 +324,10 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
         return false;
       }
 
-      const emoji = emojiList[activeEmojiIndex];
+      const emoji: EmojiObject | undefined = emojiList[activeEmojiIndex];
 
       // Check if a matching id exists because the user has selected something.
-      if (!emoji) {
+      if (isUndefined(emoji)) {
         return false;
       }
 

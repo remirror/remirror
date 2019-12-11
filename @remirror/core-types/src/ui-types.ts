@@ -16,6 +16,7 @@ import {
   WidthProperty,
   ZIndexProperty,
 } from 'csstype';
+
 import { StringKey } from './base-types';
 
 export type RemirrorThemeColorMode = {

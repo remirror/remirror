@@ -2,9 +2,10 @@
 /// <reference path="../../globals.d.ts" />
 
 import 'jest-extended';
+
 import toDiffableHtml from 'diffable-html';
-import { toMatchDiffSnapshot, getSnapshotDiffSerializer } from 'snapshot-diff';
 import { prosemirrorSerializer } from 'jest-prosemirror';
+import { getSnapshotDiffSerializer, toMatchDiffSnapshot } from 'snapshot-diff';
 
 expect.addSnapshotSerializer(getSnapshotDiffSerializer());
 expect.extend({ toMatchDiffSnapshot });

@@ -1,6 +1,7 @@
 /** @jsx jsx */
 
 import { Container, Footer as FooterUI, jsx } from 'theme-ui';
+
 import NavLink from './nav-link';
 
 export const Footer = () => (

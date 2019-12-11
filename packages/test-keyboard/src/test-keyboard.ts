@@ -1,4 +1,5 @@
-import { take, includes } from '@remirror/core-helpers';
+import { includes, take } from '@remirror/core-helpers';
+
 import {
   KeyboardConstructorParams,
   KeyboardEventName,

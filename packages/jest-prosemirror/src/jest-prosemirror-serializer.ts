@@ -1,5 +1,5 @@
 import { keys } from '@remirror/core-helpers';
-import { isProsemirrorNode, isEditorState, isEditorSchema } from '@remirror/core-utils';
+import { isEditorSchema, isEditorState, isProsemirrorNode } from '@remirror/core-utils';
 
 /**
  * Jest serializer for prosemirror nodes and the editor state.

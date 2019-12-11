@@ -6,6 +6,7 @@ import Bundler, { ParcelOptions } from 'parcel-bundler';
 import path from 'path';
 import rimraf from 'rimraf';
 import util from 'util';
+
 import { BundleArgv } from './cli-types';
 
 const REMIRROR_ID = '__remirror';

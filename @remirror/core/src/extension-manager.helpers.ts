@@ -1,5 +1,5 @@
 import { MarkGroup, NodeGroup, Tags } from '@remirror/core-constants';
-import { bool, Cast, entries, isFunction, sort } from '@remirror/core-helpers';
+import { bool, Cast, entries, isFunction, isUndefined, sort } from '@remirror/core-helpers';
 import {
   AnyFunction,
   CommandParams,
@@ -11,7 +11,8 @@ import {
   MarkExtensionTags,
   NodeExtensionTags,
 } from '@remirror/core-types';
-import { isMarkExtension, isNodeExtension, convertToPrioritizedExtension } from './extension-helpers';
+
+import { convertToPrioritizedExtension, isMarkExtension, isNodeExtension } from './extension-helpers';
 import {
   AnyExtension,
   ExtensionListParams,
@@ -315,14 +316,20 @@ export const createExtensionTags = <
   for (const extension of extensions) {
     if (isNodeExtension(extension)) {
       const group = extension.schema.group as NodeGroup;
-      node[group] = node[group] ? [...node[group], extension.name as GNodes] : [extension.name as GNodes];
+      node[group] = isUndefined(node[group])
+        ? [extension.name as GNodes]
+        : [...node[group], extension.name as GNodes];
     } else if (isMarkExtension(extension)) {
       const group = extension.schema.group as MarkGroup;
-      mark[group] = mark[group] ? [...mark[group], extension.name as GMarks] : [extension.name as GMarks];
+      mark[group] = isUndefined(mark[group])
+        ? [extension.name as GMarks]
+        : [...mark[group], extension.name as GMarks];
     }
 
     (extension.tags as Tags[]).forEach(tag => {
-      general[tag] = general[tag] ? [...general[tag], extension.name as GNames] : [extension.name as GNames];
+      general[tag] = isUndefined(general[tag])
+        ? [extension.name as GNames]
+        : [...general[tag], extension.name as GNames];
     });
   }
 

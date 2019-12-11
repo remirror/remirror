@@ -8,6 +8,7 @@ import javascript from 'refractor/lang/javascript';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
+
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '../';
 import { CodeBlockFormatter } from '../code-block-types';
 import { getLanguage } from '../code-block-utils';

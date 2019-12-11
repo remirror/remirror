@@ -1,5 +1,5 @@
 import { Interpolation } from '@emotion/core';
-import { ExtensionType, Tags, RemirrorClassName } from '@remirror/core-constants';
+import { ExtensionType, RemirrorClassName, Tags } from '@remirror/core-constants';
 import { deepMerge, isString } from '@remirror/core-helpers';
 import {
   AnyFunction,
@@ -12,12 +12,12 @@ import {
   ExtensionHelperReturn,
   ExtensionManagerParams,
   ExtensionManagerTypeParams,
+  ExtraAttrs,
   KeyboardBindings,
   NodeViewMethod,
   OnTransactionParams,
   PlainObject,
   ProsemirrorPlugin,
-  ExtraAttrs,
 } from '@remirror/core-types';
 import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';

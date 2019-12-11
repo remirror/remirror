@@ -1,4 +1,5 @@
 import { pick } from '@remirror/core-helpers';
+
 import { HSL, HSLObject, NamedHSLObject, ValidHSLObject, ValidHSLTuple } from '../ui-hsl';
 
 const validInputString: Array<[string, ValidHSLObject, ValidHSLTuple, string]> = [

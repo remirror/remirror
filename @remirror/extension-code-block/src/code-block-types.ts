@@ -1,5 +1,6 @@
 import { Attrs, NodeExtensionOptions } from '@remirror/core';
 import { RefractorSyntax } from 'refractor/core';
+
 import { SyntaxTheme } from './themes';
 
 export interface CodeBlockExtensionOptions extends NodeExtensionOptions {

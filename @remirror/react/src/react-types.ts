@@ -273,7 +273,7 @@ export type GetPositionerPropsConfig<
   Partial<Omit<CalculatePositionerParams<GExtension>, 'positionerId'>> &
   PositionerIdParams;
 
-export interface RefParams<GRefKey extends string = 'ref'> {
+export interface RefParams<GRefKey = 'ref'> {
   /**
    * A custom ref key which allows a reference to be obtained from non standard
    * components.
@@ -293,8 +293,11 @@ export type RefKeyRootProps<GRefKey extends string = 'ref'> = {
   [P in Exclude<GRefKey, 'key'>]: Ref<any>;
 } & { css: Interpolation | ((theme: any) => Interpolation); key: string; children: ReactNode } & PlainObject;
 
-export type GetPositionerReturn<GRefKey extends string = 'ref'> = PositionerProps &
-  { [P in GRefKey]: Ref<any> };
+export type GetPositionerReturn<GRefKey extends string = 'ref'> =
+  // GRefKey extends 'ref'
+  //   ? PositionerProps & { ref: Ref<any> }
+  // :
+  PositionerProps & { [P in GRefKey]: Ref<any> };
 
 /**
  * These are the props passed to the render function provided when setting up

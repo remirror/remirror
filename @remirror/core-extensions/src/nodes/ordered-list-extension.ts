@@ -1,7 +1,7 @@
 import {
-  Cast,
   CommandNodeTypeParams,
   ExtensionManagerNodeTypeParams,
+  isElementDOMNode,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -27,11 +27,15 @@ export class OrderedListExtension extends NodeExtension {
       parseDOM: [
         {
           tag: 'ol',
-          getAttrs: node => ({
-            order: Cast<Element>(node).hasAttribute('start')
-              ? +Cast<Element>(node).getAttribute('start')!
-              : 1,
-          }),
+          getAttrs: node => {
+            if (!isElementDOMNode(node)) {
+              return {};
+            }
+
+            return {
+              order: +(node.getAttribute('start') ?? 1),
+            };
+          },
         },
       ],
       toDOM: node => (node.attrs.order === 1 ? ['ol', 0] : ['ol', { start: node.attrs.order }, 0]),
@@ -54,7 +58,7 @@ export class OrderedListExtension extends NodeExtension {
         /^(\d+)\.\s$/,
         type,
         match => ({ order: +match[1] }),
-        (match, node) => node.childCount + node.attrs.order === +match[1],
+        (match, node) => node.childCount + (node.attrs.order as number) === +match[1],
       ),
     ];
   }

@@ -32,15 +32,15 @@ import {
 } from '@remirror/react';
 import { RemirrorThemeProvider } from '@remirror/ui';
 import { FC, Fragment, useMemo, useState } from 'react';
-import { wysiwygEditorTheme } from '../wysiwyg-theme';
-import { WysiwygEditorProps, WysiwygExtensions } from '../wysiwyg-types';
-import { EditorWrapper } from './wysiwyg-components';
-import { BubbleMenu, BubbleMenuProps, MenuBar } from './wysiwyg-menu';
-
 import bash from 'refractor/lang/bash';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
+
+import { wysiwygEditorTheme } from '../wysiwyg-theme';
+import { WysiwygEditorProps, WysiwygExtensions } from '../wysiwyg-types';
+import { EditorWrapper } from './wysiwyg-components';
+import { BubbleMenu, BubbleMenuProps, MenuBar } from './wysiwyg-menu';
 
 const defaultPlaceholder = 'Start typing...';
 const DEFAULT_LANGUAGES = [markdown, typescript, tsx, bash];

@@ -1,4 +1,4 @@
-import { Extension } from '@remirror/core';
+import { Extension, isFunction } from '@remirror/core';
 import {
   BaseExtensionOptions,
   CommandFunction,
@@ -79,11 +79,10 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
     return (state, dispatch, view) => {
       const { getState, getDispatch } = this.options;
 
-      return method(
-        getState ? getState() || state : state,
-        getDispatch ? getDispatch() || dispatch : dispatch,
-        view,
-      );
+      const wrappedState = isFunction(getState) ? getState() : state;
+      const wrappedDispatch = isFunction(getDispatch) ? getDispatch() : dispatch;
+
+      return method(wrappedState, wrappedDispatch, view);
     };
   };
 

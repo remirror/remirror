@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+
 import { User } from '../interfaces';
 import ListItem from './list-item';
 

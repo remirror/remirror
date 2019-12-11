@@ -21,11 +21,12 @@ import {
 import { setBlockType } from 'prosemirror-commands';
 import { TextSelection } from 'prosemirror-state';
 import refractor from 'refractor/core';
+
 import { CodeBlockComponent } from './code-block-component';
 import createCodeBlockPlugin from './code-block-plugin';
 import { CodeBlockAttrs, CodeBlockExtensionOptions } from './code-block-types';
 import { formatCodeBlockFactory, getLanguage, updateNodeAttrs } from './code-block-utils';
-import { syntaxTheme, SyntaxTheme } from './themes';
+import { SyntaxTheme, syntaxTheme } from './themes';
 
 export const codeBlockDefaultOptions: CodeBlockExtensionOptions = {
   SSRComponent: CodeBlockComponent,
@@ -97,7 +98,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
         },
       ],
       toDOM: node => {
-        const { language, ...rest } = node.attrs;
+        const { language, ...rest } = node.attrs as CodeBlockAttrs;
         const attrs = { ...rest, class: `language-${language}` };
 
         return ['pre', attrs, ['code', { [dataAttribute]: language }, 0]];
@@ -233,9 +234,9 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
       Backspace: (state, dispatch) => {
         const { selection } = state;
         let tr = state.tr;
-        const parent = findParentNodeOfType({ types: type, selection })!;
+        const parent = findParentNodeOfType({ types: type, selection });
 
-        if (!parent || parent.start !== selection.from) {
+        if (parent?.start !== selection.from) {
           return false;
         }
 

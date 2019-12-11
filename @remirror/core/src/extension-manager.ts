@@ -1,5 +1,5 @@
 import { Interpolation } from '@emotion/core';
-import { bool, isArray, isEqual, isFunction, isInstanceOf, hasOwnProperty } from '@remirror/core-helpers';
+import { bool, hasOwnProperty, isArray, isEqual, isFunction, isInstanceOf } from '@remirror/core-helpers';
 import {
   ActionMethod,
   AnyActions,
@@ -32,6 +32,7 @@ import { Schema } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
 import { suggest, Suggester } from 'prosemirror-suggest';
 import { ComponentType } from 'react';
+
 import { isMarkExtension, isNodeExtension } from './extension-helpers';
 import {
   createCommands,
@@ -475,6 +476,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   public getPluginState<GState>(name: this['_N']): GState {
     this.checkInitialized();
     const key = this.pluginKeys[name];
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!key) {
       throw new Error(`Cannot retrieve state for an extension: ${name} which doesn't exist`);
     }
@@ -551,8 +553,10 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     const commands = createCommands({ extensions, params });
 
     Object.entries(commands).forEach(([commandName, { command, name }]) => {
-      const isActive = this.initData.isActive[name as this['_Names']] || defaultIsActive;
-      const isEnabled = this.initData.isEnabled[name as this['_Names']] || defaultIsEnabled;
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      const isActive = this.initData.isActive[name as this['_Names']] ?? defaultIsActive;
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      const isEnabled = this.initData.isEnabled[name as this['_Names']] ?? defaultIsEnabled;
 
       actions[commandName] = command as ActionMethod;
       actions[commandName].isActive = (attrs?: Attrs) => isActive({ attrs, command: commandName });
@@ -640,7 +644,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
       .filter(extension => !extension.options.exclude.keymaps)
       .map(extensionPropertyMapper('keys', this.params));
 
-    const mappedKeys: Record<string, CommandFunction> = Object.create(null);
+    const mappedKeys: Partial<Record<string, CommandFunction>> = Object.create(null);
 
     for (const extensionKeymap of extensionKeymaps) {
       for (const key in extensionKeymap) {

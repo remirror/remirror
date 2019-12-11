@@ -4,6 +4,7 @@
 
 import { initialJson, plugins, schema, testDocument } from '@remirror/test-fixtures';
 import { EditorState } from 'prosemirror-state';
+
 import { createEditorView, EditorViewSSR } from '../prosemirror-view-ssr';
 
 const state = EditorState.create({ doc: schema.nodeFromJSON(initialJson), schema, plugins });

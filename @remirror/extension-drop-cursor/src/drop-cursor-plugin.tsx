@@ -17,50 +17,14 @@ import { Plugin } from 'prosemirror-state';
 import { dropPoint, insertPoint } from 'prosemirror-transform';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import { ComponentType } from 'react';
+
 import { DropCursorComponent } from './drop-cursor-component';
 import { DropCursorExtensionOptions } from './drop-cursor-types';
 
-/**
- * Create a drop cursor plugin which adds a decoration to the position that is currently being dragged over.
- */
-export function dropCursorPlugin(
-  params: ExtensionManagerParams,
-  extension: Extension<DropCursorExtensionOptions>,
-) {
-  const dropCursorState = new DropCursorState(params, extension);
-  return new Plugin<DropCursorState>({
-    key: extension.pluginKey,
-    view(editorView) {
-      dropCursorState.init(editorView);
-      return pick(dropCursorState, ['destroy']);
-    },
-    state: {
-      init: () => dropCursorState,
-      apply: () => dropCursorState,
-    },
-    props: {
-      decorations: () => dropCursorState.decorationSet,
-      handleDOMEvents: {
-        dragover: (_, event) => {
-          dropCursorState.dragover(event as DragEvent);
-          return false;
-        },
-        dragend: () => {
-          dropCursorState.dragend();
-          return false;
-        },
-        drop: () => {
-          dropCursorState.drop();
-          return false;
-        },
-        dragleave: (_, event) => {
-          dropCursorState.dragleave(event as DragEvent);
-          return false;
-        },
-      },
-    },
-  });
-}
+const createDropPlaceholder = ({ portalContainer, Component, container }: CreateDropPlaceholderParams) => {
+  const PortalContainerComponent = () => <Component />;
+  portalContainer.render({ render: PortalContainerComponent, container });
+};
 
 export class DropCursorState {
   private readonly portalContainer: PortalContainer;
@@ -129,20 +93,24 @@ export class DropCursorState {
    * Attach the react components to drop cursor elements.
    */
   private attachComponentsToElements() {
+    const BlockDropCursorComponent = () => (
+      <DropCursorComponent options={this.extension.options} type='block' container={this.blockElement} />
+    );
+
     createDropPlaceholder({
       container: this.blockElement,
       portalContainer: this.portalContainer,
-      Component: () => (
-        <DropCursorComponent options={this.extension.options} type='block' container={this.blockElement} />
-      ),
+      Component: BlockDropCursorComponent,
     });
+
+    const InlineDropCursorComponent = () => (
+      <DropCursorComponent options={this.extension.options} type='inline' container={this.inlineElement} />
+    );
 
     createDropPlaceholder({
       container: this.inlineElement,
       portalContainer: this.portalContainer,
-      Component: () => (
-        <DropCursorComponent options={this.extension.options} type='inline' container={this.inlineElement} />
-      ),
+      Component: InlineDropCursorComponent,
     });
   }
 
@@ -305,6 +273,44 @@ interface CreateDropPlaceholderParams {
   container: HTMLElement;
 }
 
-const createDropPlaceholder = ({ portalContainer, Component, container }: CreateDropPlaceholderParams) => {
-  portalContainer.render({ render: () => <Component />, container });
-};
+/**
+ * Create a drop cursor plugin which adds a decoration to the position that is currently being dragged over.
+ */
+export function dropCursorPlugin(
+  params: ExtensionManagerParams,
+  extension: Extension<DropCursorExtensionOptions>,
+) {
+  const dropCursorState = new DropCursorState(params, extension);
+  return new Plugin<DropCursorState>({
+    key: extension.pluginKey,
+    view(editorView) {
+      dropCursorState.init(editorView);
+      return pick(dropCursorState, ['destroy']);
+    },
+    state: {
+      init: () => dropCursorState,
+      apply: () => dropCursorState,
+    },
+    props: {
+      decorations: () => dropCursorState.decorationSet,
+      handleDOMEvents: {
+        dragover: (_, event) => {
+          dropCursorState.dragover(event as DragEvent);
+          return false;
+        },
+        dragend: () => {
+          dropCursorState.dragend();
+          return false;
+        },
+        drop: () => {
+          dropCursorState.drop();
+          return false;
+        },
+        dragleave: (_, event) => {
+          dropCursorState.dragleave(event as DragEvent);
+          return false;
+        },
+      },
+    },
+  });
+}

@@ -13,6 +13,7 @@ import {
 } from '@remirror/core';
 import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirror-collab';
 import { Step } from 'prosemirror-transform';
+
 import { CollaborationAttrs, CollaborationExtensionOptions } from './collaboration-types';
 
 /**

@@ -3,6 +3,7 @@ import { NodeExtensionSpec } from '@remirror/core-types';
 import { fromHTML } from '@remirror/core-utils';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 import { pmBuild } from 'jest-prosemirror';
+
 import { NodeExtension } from '../';
 
 class CustomExtension extends NodeExtension {

@@ -1,5 +1,6 @@
 import { getDocument, queries } from 'pptr-testing-library';
 import { ElementHandle } from 'puppeteer';
+
 import { mod, press, pressKeyWithModifier, selectAll, textContent } from './helpers';
 
 const { getByRole } = queries;

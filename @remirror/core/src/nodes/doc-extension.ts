@@ -1,4 +1,5 @@
 import { NodeExtensionOptions, NodeExtensionSpec } from '@remirror/core-types';
+
 import { NodeExtension } from '../node-extension';
 
 export interface DocExtensionOptions extends NodeExtensionOptions {

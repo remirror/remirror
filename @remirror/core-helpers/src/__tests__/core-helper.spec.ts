@@ -6,6 +6,7 @@ import {
   findMatches,
   format,
   get,
+  hasOwnProperty,
   isBoolean,
   isDate,
   isEmptyArray,
@@ -40,7 +41,6 @@ import {
   uniqueBy,
   uniqueId,
   within,
-  hasOwnProperty,
 } from '../core-helpers';
 
 describe('findMatches', () => {

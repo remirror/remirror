@@ -1,8 +1,9 @@
 import { useId } from '@reach/auto-id';
 import { useEffectOnce, useEffectOnUpdate } from '@remirror/react-hooks';
-import { useEffect, useReducer, useRef } from 'react';
-import { multishiftReducer } from './multishift-reducer';
 import { setStatus } from '@remirror/ui-a11y-status';
+import { useEffect, useReducer, useRef } from 'react';
+
+import { multishiftReducer } from './multishift-reducer';
 import {
   A11yStatusMessageParams,
   GetA11yStatusMessage,

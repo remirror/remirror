@@ -1,5 +1,6 @@
-import { SchemaParams, isProsemirrorNode, isObject } from '@remirror/core';
+import { isObject, isProsemirrorNode, SchemaParams } from '@remirror/core';
 import { TestEditorViewParams } from 'jest-prosemirror';
+
 import { coerce, offsetTags } from './jest-remirror-builder';
 import { TaggedProsemirrorNode, Tags } from './jest-remirror-types';
 

@@ -1,4 +1,5 @@
 import { createEditor, doc, p } from 'jest-prosemirror';
+
 import { ExitReason } from '../suggest-constants';
 import { suggest } from '../suggest-plugin';
 import { SuggestExitHandlerParams, SuggestKeyBindingParams } from '../suggest-types';

@@ -34,6 +34,7 @@ import {
   useState,
 } from 'react';
 import keyNames from 'w3c-keyname';
+
 import { ButtonState, WysiwygExtensions } from '../wysiwyg-types';
 import {
   BubbleContent,
@@ -148,7 +149,7 @@ const bubbleMenuItems: Array<[
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
   const { actions, getPositionerProps, helpers } = useRemirrorContext<WysiwygExtensions>();
 
-  const { bottom, left, ref } = getPositionerProps({
+  const positionerProps = getPositionerProps({
     ...bubblePositioner,
     hasChanged: () => true,
     isActive: params => {
@@ -160,6 +161,8 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
     },
     positionerId: 'bubbleMenu',
   });
+
+  const { bottom, ref, left } = positionerProps;
 
   const updateLink = (href: string) => actions.updateLink({ href });
   const removeLink = () => actions.removeLink();
@@ -237,19 +240,19 @@ const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink,
     deactivateLink();
   };
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClick, false);
-    return () => {
-      document.removeEventListener('mousedown', handleClick, false);
-    };
-  });
-
   const handleClick = (event: MouseEvent) => {
     if (!wrapperRef.current || wrapperRef.current.contains(event.target as Node)) {
       return;
     }
     deactivateLink();
   };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClick, false);
+    return () => {
+      document.removeEventListener('mousedown', handleClick, false);
+    };
+  });
 
   return (
     <BubbleContent ref={wrapperRef}>

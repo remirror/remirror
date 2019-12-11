@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { Global, jsx } from '@emotion/core';
 import { FC } from 'react';
+
 import { useRemirrorTheme } from './ui-hooks';
 
 export interface RemirrorThemeRootProps {

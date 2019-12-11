@@ -1,7 +1,8 @@
 import { Extension, ProsemirrorPlugin } from '@remirror/core';
+
 import { defaultEffect, PARTICLE_NUM_RANGE, VIBRANT_COLORS } from './epic-mode-effects';
-import { EpicModeExtensionOptions } from './epic-mode-types';
 import { createEpicModePlugin } from './epic-mode-plugin';
+import { EpicModeExtensionOptions } from './epic-mode-types';
 
 export const defaultEpicModeExtensionOptions: EpicModeExtensionOptions = {
   particleEffect: defaultEffect,

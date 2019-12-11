@@ -1,4 +1,4 @@
-import { bool } from '@remirror/core-helpers';
+import { bool, isFunction } from '@remirror/core-helpers';
 import {
   Attrs,
   MarkTypeParams,
@@ -9,6 +9,7 @@ import {
   ProsemirrorNode,
   ProsemirrorNodeParams,
 } from '@remirror/core-types';
+
 import { isProsemirrorNode } from './dom-utils';
 
 interface DescendParams {
@@ -71,7 +72,7 @@ interface FindChildrenParams extends FlattenParams, NodePredicateParams {}
 export const findChildren = ({ node, predicate, descend }: FindChildrenParams) => {
   if (!node) {
     throw new Error('Invalid "node" parameter');
-  } else if (!predicate) {
+  } else if (!isFunction(predicate)) {
     throw new Error('Invalid "predicate" parameter');
   }
   return flatten({ node, descend }).filter(child => predicate(child.node));

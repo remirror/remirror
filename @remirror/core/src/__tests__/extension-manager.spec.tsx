@@ -2,10 +2,11 @@ import { EMPTY_PARAGRAPH_NODE, Tags } from '@remirror/core-constants';
 import { Cast } from '@remirror/core-helpers';
 import { Attrs, EditorState, NodeExtensionSpec } from '@remirror/core-types';
 import { PortalContainer } from '@remirror/react-portals';
-import { defaultRemirrorThemeValue } from '@remirror/ui';
 import { createTestManager, extensions } from '@remirror/test-fixtures';
+import { defaultRemirrorThemeValue } from '@remirror/ui';
 import { EditorView } from 'prosemirror-view';
 import React, { FC } from 'react';
+
 import { Extension } from '../extension';
 import { ExtensionManager, isExtensionManager } from '../extension-manager';
 import { NodeExtension } from '../node-extension';

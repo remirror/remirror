@@ -31,6 +31,7 @@ module.exports = {
     'prettier/react',
   ],
   plugins: [
+    'simple-import-sort',
     'jest',
     '@typescript-eslint',
     'react-hooks',
@@ -60,7 +61,7 @@ module.exports = {
     es6: true,
   },
   rules: {
-    eqeqeq: ['warn', 'always', { null: 'ignore' }],
+    eqeqeq: ['error', 'always', { null: 'ignore' }],
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
     'default-case': 'warn',
 
@@ -94,17 +95,24 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
 
     'import/no-deprecated': 'warn',
-    'import/first': 'warn',
+    'import/first': 'error',
     'import/no-duplicates': 'error',
     'import/no-cycle': 'error',
     'import/no-self-import': 'error',
-    'import/newline-after-import': 'warn',
+    'import/newline-after-import': 'error',
+    'import/order': 'off',
+
+    'simple-import-sort/sort': 'error',
+    'sort-imports': 'off',
 
     // ESLint rules (those without a '/' in) come after here
 
     'no-nested-ternary': 'off', // Prettier makes nested ternaries more acceptable
     'no-return-assign': ['error', 'except-parens'],
-    'no-unused-expressions': ['error', { allowTernary: true }],
+    '@typescript-eslint/no-unused-expressions': [
+      'error',
+      { allowTernary: true, allowShortCircuit: true },
+    ],
     'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
 
     // Temporarily disabled rules (please re-enable these!):
@@ -113,7 +121,7 @@ module.exports = {
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-namespace': 'off', // Migrate all the global namespaces to be in .d.ts files (see overrides)
     '@typescript-eslint/no-non-null-assertion': 'warn',
-    '@typescript-eslint/no-use-before-define': 'warn',
+    '@typescript-eslint/no-use-before-define': ['warn', { typedefs: false }],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {
@@ -165,7 +173,7 @@ module.exports = {
         '@typescript-eslint/no-var-requires': 'error',
         '@typescript-eslint/restrict-template-expressions': [
           'warn',
-          { allowNumber: true },
+          { allowNumber: true, allowBoolean: true },
         ],
         '@typescript-eslint/no-dynamic-delete': ['error'],
         '@typescript-eslint/camelcase': [
@@ -199,7 +207,7 @@ module.exports = {
       rules: {
         '@typescript-eslint/no-namespace': 'off',
         '@typescript-eslint/no-unused-vars': 'off',
-        'no-unused-expressions': 'off',
+        '@typescript-eslint/no-unused-expressions': 'off',
       },
     },
   ],

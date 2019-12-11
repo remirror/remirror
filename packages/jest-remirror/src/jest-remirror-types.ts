@@ -4,21 +4,22 @@ import {
   Attrs,
   AttrsParams,
   CommandFunction,
+  EditorSchema,
   EditorState,
   EditorStateParams,
+  EditorViewParams,
   Extension,
   HelpersFromExtensions,
   MarkExtension,
   NodeExtension,
   ProsemirrorNode,
   SchemaFromExtensions,
-  EditorViewParams,
-  EditorSchema,
 } from '@remirror/core';
 import { InjectedRemirrorProps } from '@remirror/react';
 import { RenderResult } from '@testing-library/react/pure';
 import { FireParams, TestEditorViewParams } from 'jest-prosemirror';
 import { Node as PMNode } from 'prosemirror-model';
+
 import { BaseExtensionNodeNames, BaseExtensionNodes } from './jest-remirror-schema';
 
 export interface BaseFactoryParams<GSchema extends EditorSchema = EditorSchema> extends Partial<AttrsParams> {

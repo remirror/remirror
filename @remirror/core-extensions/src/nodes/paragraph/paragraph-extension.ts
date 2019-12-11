@@ -1,8 +1,34 @@
 import { CommandNodeTypeParams, NodeExtension, NodeExtensionSpec, NodeGroup, Tags } from '@remirror/core';
 import { setBlockType } from 'prosemirror-commands';
+
 import { ALIGN_PATTERN, INDENT_ATTRIBUTE, INDENT_LEVELS } from '../node-constants';
 import { marginToIndent } from '../node-utils';
 import { ParagraphExtensionAttrs, ParagraphExtensionOptions } from './paragraph-types';
+
+/**
+ * Pull the paragraph attributes from the dom element.
+ */
+const getAttrs = (
+  { indentAttribute, indentLevels }: Required<ParagraphExtensionOptions>,
+  dom: HTMLElement,
+) => {
+  const { lineHeight, textAlign, marginLeft } = dom.style;
+  let align: string | undefined = dom.getAttribute('align') ?? (textAlign || '');
+  let indent = parseInt(dom.getAttribute(indentAttribute) ?? '0', 10);
+
+  align = ALIGN_PATTERN.test(align) ? align : undefined;
+
+  if (!indent && marginLeft) {
+    indent = marginToIndent(marginLeft);
+  }
+
+  indent = indent || indentLevels[0];
+
+  const lineSpacing = lineHeight ? lineHeight : undefined;
+  const id = dom.getAttribute('id') ?? undefined;
+
+  return { align, indent, lineSpacing, id } as ParagraphExtensionAttrs;
+};
 
 /**
  * The paragraph is one of the essential building blocks for a prosemirror
@@ -88,28 +114,3 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions>
     };
   }
 }
-
-/**
- * Pull the paragraph attributes from the dom element.
- */
-const getAttrs = (
-  { indentAttribute, indentLevels }: Required<ParagraphExtensionOptions>,
-  dom: HTMLElement,
-) => {
-  const { lineHeight, textAlign, marginLeft } = dom.style;
-  let align: string | undefined = dom.getAttribute('align') ?? (textAlign || '');
-  let indent = parseInt(dom.getAttribute(indentAttribute) ?? '0', 10);
-
-  align = ALIGN_PATTERN.test(align) ? align : undefined;
-
-  if (!indent && marginLeft) {
-    indent = marginToIndent(marginLeft);
-  }
-
-  indent = indent || indentLevels[0];
-
-  const lineSpacing = lineHeight ? lineHeight : undefined;
-  const id = dom.getAttribute('id') ?? undefined;
-
-  return { align, indent, lineSpacing, id } as ParagraphExtensionAttrs;
-};

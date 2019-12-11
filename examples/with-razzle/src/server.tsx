@@ -2,6 +2,7 @@ import express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
+
 import App from './app';
 
 declare global {
@@ -38,11 +39,11 @@ const server = express()
         <meta charSet='utf-8' />
         <title>Razzle TypeScript</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        ${assets.client.css ? `<link rel="stylesheet" href="${assets.client.css}">` : ''}
+        ${assets.client.css ? `<link rel="stylesheet" href="${assets.client.css as string}">` : ''}
           ${
             process.env.NODE_ENV === 'production'
-              ? `<script src="${assets.client.js}" defer></script>`
-              : `<script src="${assets.client.js}" defer crossorigin></script>`
+              ? `<script src="${assets.client.js as string}" defer></script>`
+              : `<script src="${assets.client.js as string}" defer crossorigin></script>`
           }
     </head>
     <body>

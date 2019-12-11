@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
+
 import logo from './logo.svg';
 
 class Home extends React.Component {

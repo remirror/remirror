@@ -4,6 +4,7 @@ import { capitalize } from '@remirror/core-helpers';
 import { useRemirrorTheme } from '@remirror/ui';
 import { storiesOf } from '@storybook/react';
 import { FC } from 'react';
+
 import { DropdownSelect } from '../dropdown';
 import { DropdownProps } from '../dropdown-types';
 

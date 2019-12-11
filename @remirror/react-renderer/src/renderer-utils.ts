@@ -1,4 +1,5 @@
-import { PlainObject, hasOwnProperty, MarkExtensionSpec, NodeExtensionSpec } from '@remirror/core';
+import { hasOwnProperty, MarkExtensionSpec, NodeExtensionSpec, PlainObject } from '@remirror/core';
+
 import { possibleStandardNames } from './renderer-constants';
 
 const getPossibleStandardName = (key: string): string => {

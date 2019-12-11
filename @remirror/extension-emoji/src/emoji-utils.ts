@@ -12,6 +12,7 @@ import {
 } from '@remirror/core';
 import escapeStringRegex from 'escape-string-regexp';
 import matchSorter from 'match-sorter';
+
 import aliasObject from './data/aliases';
 import rawEmojiObject from './data/emojis';
 import {

@@ -1,5 +1,6 @@
 import { storiesOf } from '@storybook/react';
 import React, { useState } from 'react';
+
 import { useMultishift } from '../multishift';
 
 const names = ['Olu', 'Tolu', 'Bemi', 'Jay', 'Raj', 'Li Peng', 'Ryoku', 'Temi', 'Kima'];

@@ -25,9 +25,7 @@ export const ProsemirrorDevTools = () => {
         return;
       }
 
-      if (node) {
-        unmountComponentAtNode(node);
-      }
+      unmountComponentAtNode(node);
 
       if (node.parentNode) {
         node.parentNode.removeChild(node);

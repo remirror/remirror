@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   Attrs,
   Cast,
@@ -19,14 +17,15 @@ import {
   dispatchTextSelection,
   fireEventAtPosition,
   insertText,
+  pasteContent,
   press,
   shortcut,
-  pasteContent,
   TestEditorView,
 } from 'jest-prosemirror';
+import React from 'react';
+
 import { markFactory, nodeFactory } from './jest-remirror-builder';
 import { BaseExtensionNodeNames, nodeExtensions } from './jest-remirror-schema';
-import { replaceSelection } from './jest-remirror-utils';
 import {
   AddContent,
   AddContentReturn,
@@ -40,6 +39,7 @@ import {
   NodeWithoutAttrs,
   Tags,
 } from './jest-remirror-types';
+import { replaceSelection } from './jest-remirror-utils';
 import { jsdomSelectionPatch } from './jsdom-patch';
 
 /**

@@ -2,6 +2,7 @@ import { AnyExtension, ExtensionManager } from '@remirror/core';
 import { PlaceholderExtension } from '@remirror/core-extensions';
 import { TestExtension } from '@remirror/test-fixtures';
 import React, { FC } from 'react';
+
 import { RemirrorExtension } from '../components/remirror-extension';
 import { RemirrorManager } from '../components/remirror-manager';
 import { getManagerFromComponentTree } from '../react-helpers';

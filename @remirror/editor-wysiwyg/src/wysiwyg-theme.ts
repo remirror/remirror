@@ -1,5 +1,6 @@
 import { EDITOR_CLASS_SELECTOR, RemirrorTheme } from '@remirror/core';
 import { baseTheme } from '@remirror/ui';
+
 import { ButtonState } from './wysiwyg-types';
 
 export const buttonColors: Record<ButtonState, string> = {

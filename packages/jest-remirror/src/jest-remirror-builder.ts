@@ -2,13 +2,14 @@ import {
   EditorSchema,
   findMatches,
   flattenArray,
+  hasOwnProperty,
   isInstanceOf,
   isProsemirrorNode,
   isString,
   SchemaParams,
-  hasOwnProperty,
 } from '@remirror/core';
 import { Fragment, Mark, Node as PMNode, Slice } from 'prosemirror-model';
+
 import {
   BaseFactoryParams,
   TaggedContent,

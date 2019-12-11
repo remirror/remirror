@@ -1,4 +1,4 @@
-import { p, doc, prosemirrorSerializer, schema } from '../';
+import { doc, p, prosemirrorSerializer, schema } from '../';
 import { createEditor } from '../jest-prosemirror-editor';
 
 test('serializer', () => {

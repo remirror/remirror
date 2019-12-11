@@ -1,6 +1,7 @@
 import { render } from 'ink';
 import React from 'react';
 import { CommandModule } from 'yargs';
+
 import { Bundle } from './cli-components';
 import { bundleFile } from './cli-parcel';
 import { BundleArgv } from './cli-types';

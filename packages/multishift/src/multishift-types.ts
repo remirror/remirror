@@ -10,6 +10,7 @@ import {
   MouseEvent,
   Ref,
 } from 'react';
+
 import { DropdownType, SpecialKey } from './multishift-constants';
 
 export interface MultishiftState<GItem = any> {

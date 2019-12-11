@@ -9,6 +9,7 @@ import {
   NodeExtensionSpec,
 } from '@remirror/core';
 import { ResolvedPos } from 'prosemirror-model';
+
 import { createImageExtensionPlugin } from './image-plugin';
 import { getAttrs } from './image-utils';
 

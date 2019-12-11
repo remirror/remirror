@@ -1,6 +1,45 @@
 import { Fragment, Mark, ProsemirrorNode } from '@remirror/core';
 import { MarkdownSerializer } from 'prosemirror-markdown';
 
+function isPlainURL(link: Mark, parent: Fragment, index: number, side: Side) {
+  if (link.attrs.title) {
+    return false;
+  }
+
+  const content = parent.child(index + (side < 0 ? -1 : 0));
+  if (
+    !content.isText ||
+    content.text !== link.attrs.href ||
+    content.marks[content.marks.length - 1] !== link
+  ) {
+    return false;
+  }
+  if (index === (side < 0 ? 1 : parent.childCount - 1)) {
+    return true;
+  }
+  const next = parent.child(index + (side < 0 ? -2 : 1));
+  return !link.isInSet(next.marks);
+}
+
+function backticksFor(node: ProsemirrorNode, side: Side) {
+  const ticks = /`+/g;
+  let m;
+  let len = 0;
+  if (node.isText) {
+    while ((m = ticks.exec(node.text ?? ''))) {
+      len = Math.max(len, m[0].length);
+    }
+  }
+  let result = len > 0 && side > 0 ? ' `' : '`';
+  for (let i = 0; i < len; i++) {
+    result += '`';
+  }
+  if (len > 0 && side < 0) {
+    result += ' ';
+  }
+  return result;
+}
+
 /**
  * A serializer for converting between markdown and regular text
  */
@@ -11,7 +50,8 @@ export const toMarkdown = (content: ProsemirrorNode) =>
         state.wrapBlock('> ', undefined, node, () => state.renderContent(node));
       },
       codeBlock(state, node) {
-        state.write(`\`\`\`${node.attrs.language || ''}\n`);
+        const language: string | undefined = node.attrs.language;
+        state.write(`\`\`\`${language ?? ''}\n`);
         state.text(node.textContent, false);
         state.ensureNewLine();
         state.write('```');
@@ -27,10 +67,11 @@ export const toMarkdown = (content: ProsemirrorNode) =>
         state.closeBlock(node);
       },
       bulletList(state, node) {
-        state.renderList(node, '  ', () => `${node.attrs.bullet || '*'} `);
+        const bullet: string | undefined = node.attrs.bullet;
+        state.renderList(node, '  ', () => `${bullet ?? '*'} `);
       },
       orderedList(state, node) {
-        const start = node.attrs.order || 1;
+        const start: number = node.attrs.order || 1;
         const maxW = String(start + node.childCount - 1).length;
         const space = state.repeat(' ', maxW + 2);
         state.renderList(node, space, i => {
@@ -95,42 +136,3 @@ export const toMarkdown = (content: ProsemirrorNode) =>
   ).serialize(content);
 
 type Side = -1 | 1;
-
-function isPlainURL(link: Mark, parent: Fragment, index: number, side: Side) {
-  if (link.attrs.title) {
-    return false;
-  }
-
-  const content = parent.child(index + (side < 0 ? -1 : 0));
-  if (
-    !content.isText ||
-    content.text !== link.attrs.href ||
-    content.marks[content.marks.length - 1] !== link
-  ) {
-    return false;
-  }
-  if (index === (side < 0 ? 1 : parent.childCount - 1)) {
-    return true;
-  }
-  const next = parent.child(index + (side < 0 ? -2 : 1));
-  return !link.isInSet(next.marks);
-}
-
-function backticksFor(node: ProsemirrorNode, side: Side) {
-  const ticks = /`+/g;
-  let m;
-  let len = 0;
-  if (node.isText) {
-    while ((m = ticks.exec(node.text!))) {
-      len = Math.max(len, m[0].length);
-    }
-  }
-  let result = len > 0 && side > 0 ? ' `' : '`';
-  for (let i = 0; i < len; i++) {
-    result += '`';
-  }
-  if (len > 0 && side < 0) {
-    result += ' ';
-  }
-  return result;
-}

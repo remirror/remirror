@@ -501,8 +501,8 @@ export const randomInt = (min: number, max?: number) => Math.floor(randomFloat(m
 export const startCase = (str: string) => {
   return str
     .replace(/_/g, ' ')
-    .replace(/([a-z])([A-Z])/g, (_, $1, $2) => `${$1} ${$2}`)
-    .replace(/(\s|^)(\w)/g, (_, $1, $2) => `${$1}${$2.toUpperCase()}`);
+    .replace(/([a-z])([A-Z])/g, (_, $1: string, $2: string) => `${$1} ${$2}`)
+    .replace(/(\s|^)(\w)/g, (_, $1: string, $2: string) => `${$1}${$2.toUpperCase()}`);
 };
 
 const wordSeparators = /[\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-./:;<=>?@[\]^_`{|}~]+/;

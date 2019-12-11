@@ -6,9 +6,10 @@
 
 import { jsx } from '@emotion/core';
 import { EDITOR_CLASS_NAME } from '@remirror/core';
-import { docNodeSimpleJSON, createTestManager } from '@remirror/test-fixtures';
+import { createTestManager, docNodeSimpleJSON } from '@remirror/test-fixtures';
 import { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
+
 import { Remirror } from '..';
 
 const label = 'Remirror editor';

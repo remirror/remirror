@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Icon, IconProps } from '../base-icon';
 
 export const PenIcon = (props: IconProps) => (

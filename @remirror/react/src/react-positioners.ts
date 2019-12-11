@@ -1,4 +1,5 @@
-import { absoluteCoordinates, isEmptyParagraphNode, selectionEmpty, bool } from '@remirror/core';
+import { absoluteCoordinates, bool, isEmptyParagraphNode, selectionEmpty } from '@remirror/core';
+
 import { Positioner } from './react-types';
 
 export const defaultPositioner: Positioner = {

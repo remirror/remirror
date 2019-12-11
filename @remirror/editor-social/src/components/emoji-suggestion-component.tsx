@@ -5,6 +5,7 @@ import { popupMenuPositioner, useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import { Type, useMultishift } from 'multishift';
 import { FunctionComponent } from 'react';
+
 import { DataParams, SocialExtensions } from '../social-types';
 
 interface EmojiSuggestionsProps extends DataParams<EmojiObject> {
@@ -28,10 +29,15 @@ export const EmojiSuggestions: FunctionComponent<EmojiSuggestionsProps> = ({
     items: data,
     isOpen: true,
   });
-  const { top, left, ref } = getPositionerProps({
+
+  const positionerProps = getPositionerProps({
     ...popupMenuPositioner,
     positionerId: 'emojiPopupMenu',
+    refKey: 'ref',
   });
+
+  const { top, left, ref } = positionerProps;
+
   return (
     <div
       {...getMenuProps({ ref })}

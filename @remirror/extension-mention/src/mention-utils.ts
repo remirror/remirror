@@ -1,6 +1,7 @@
-import { bool, Attrs, isPlainObject, pick, isString } from '@remirror/core';
-import { MentionExtensionAttrs, MentionExtensionMatcher } from './mention-types';
+import { Attrs, bool, isPlainObject, isString, pick } from '@remirror/core';
 import { DEFAULT_SUGGESTER } from 'prosemirror-suggest';
+
+import { MentionExtensionAttrs, MentionExtensionMatcher } from './mention-types';
 
 /**
  * The default matcher to use when none is provided in options

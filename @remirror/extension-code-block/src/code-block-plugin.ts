@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import {
   CompareStateParams,
   EditorState,
@@ -15,6 +16,7 @@ import { keydownHandler } from 'prosemirror-keymap';
 import { Plugin } from 'prosemirror-state';
 import { Step } from 'prosemirror-transform';
 import { DecorationSet } from 'prosemirror-view';
+
 import { CodeBlockExtensionOptions } from './code-block-types';
 import {
   createDecorations,

@@ -1,5 +1,6 @@
 import { Attrs } from '@remirror/core';
 import { CSS_ROTATE_PATTERN, EMPTY_CSS_VALUE } from '@remirror/core-extensions';
+
 import { IMAGE_FILE_TYPES } from './image-constants';
 
 /**
