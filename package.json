@@ -306,6 +306,7 @@
     "react": "^16.10.0",
     "react-dom": "^16.10.0",
     "semver": "^6.3.0",
+    "serialize-javascript": ">=2.1.1",
     "tar": ">=4.4.10",
     "typescript": "3.7.x"
   }
