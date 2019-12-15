@@ -3,6 +3,7 @@
 import { jsx } from '@emotion/core';
 import {
   AnyExtension,
+  bool,
   DOMOutputSpec,
   ExtensionManager,
   Fragment as ProsemirrorFragment,
@@ -14,10 +15,10 @@ import {
   NodeExtensionSpec,
   PlainObject,
   ProsemirrorNode,
-  bool,
 } from '@remirror/core';
 import { ComponentType, Fragment, ReactNode } from 'react';
-import { mapProps, gatherToDOM } from './renderer-utils';
+
+import { gatherToDOM, mapProps } from './renderer-utils';
 
 type NodeToDOM = NodeExtensionSpec['toDOM'];
 type MarkToDOM = MarkExtensionSpec['toDOM'];

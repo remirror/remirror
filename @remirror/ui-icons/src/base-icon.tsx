@@ -4,7 +4,7 @@ import VisuallyHidden from '@reach/visually-hidden';
 import { omitUndefined, uniqueId } from '@remirror/core-helpers';
 import { KeyOfThemeVariant, RemirrorInterpolation } from '@remirror/core-types';
 import { useRemirrorTheme } from '@remirror/ui';
-import { Fragment, forwardRef, useMemo } from 'react';
+import { forwardRef, Fragment, useMemo } from 'react';
 
 export interface IconProps {
   /**

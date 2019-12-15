@@ -1,4 +1,5 @@
 import { atomInline, blockquote, doc, h1, li, p, schema, strong, ul } from 'jest-prosemirror';
+
 import {
   removeMark,
   replaceText,

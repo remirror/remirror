@@ -1,7 +1,6 @@
-import React, { FunctionComponent } from 'react';
-
 import Head from 'next/head';
 import Link from 'next/link';
+import React, { FunctionComponent } from 'react';
 
 interface Props {
   title?: string;

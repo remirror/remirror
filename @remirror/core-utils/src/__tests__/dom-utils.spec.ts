@@ -1,5 +1,6 @@
 import { NodeMatch } from '@remirror/core-types';
 import { docNodeBasicJSON } from '@remirror/test-fixtures';
+import domino from 'domino';
 import {
   atomInline,
   blockquote,
@@ -14,6 +15,7 @@ import {
   tableRow,
 } from 'jest-prosemirror';
 import { TextSelection } from 'prosemirror-state';
+
 import {
   atDocEnd,
   atDocStart,
@@ -41,8 +43,6 @@ import {
   toDOM,
   toHTML,
 } from '../dom-utils';
-
-import domino from 'domino';
 
 describe('markActive', () => {
   it('shows active when within an active region', () => {

@@ -1,4 +1,5 @@
 import { AnyFunction, EditorViewParams, FromToParams, TextParams } from '@remirror/core-types';
+
 import { ChangeReason, ExitReason } from './suggest-constants';
 
 /**

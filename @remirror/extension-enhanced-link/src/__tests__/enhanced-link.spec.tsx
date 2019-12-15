@@ -1,5 +1,6 @@
-import { EnhancedLinkExtension } from '../enhanced-link-extension';
 import { renderSSREditor } from 'jest-remirror';
+
+import { EnhancedLinkExtension } from '../enhanced-link-extension';
 
 test('ssr', () => {
   // const manager = createBaseTestManager([new EnhancedLinkExtension({})]);

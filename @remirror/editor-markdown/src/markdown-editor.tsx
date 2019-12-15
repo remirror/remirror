@@ -40,13 +40,13 @@ import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { ImageExtension } from '@remirror/extension-image';
 import { RemirrorProvider, RemirrorProviderProps, RemirrorStateListenerParams } from '@remirror/react';
 import { FC, Fragment, useCallback, useEffect, useMemo, useState } from 'react';
-import { fromMarkdown } from './from-markdown';
-import { toMarkdown } from './to-markdown';
-
 import bash from 'refractor/lang/bash';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
+
+import { fromMarkdown } from './from-markdown';
+import { toMarkdown } from './to-markdown';
 
 /**
  * The props which are passed to the internal RemirrorProvider
@@ -193,13 +193,14 @@ const useDebounce = (fn: () => any, ms: number = 0, args: any[] = []) => {
 };
 
 export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', editor, children }) => {
+  const wysiwygManager = useWysiwygManager();
+  const markdownManager = useMarkdownManager();
+
   type WysiwygExtensions = ExtensionsFromManager<typeof wysiwygManager>;
   type WysiwygSchema = SchemaFromExtensions<WysiwygExtensions>;
   type MarkdownExtensions = ExtensionsFromManager<typeof markdownManager>;
   type MarkdownSchema = SchemaFromExtensions<MarkdownExtensions>;
 
-  const wysiwygManager = useWysiwygManager();
-  const markdownManager = useMarkdownManager();
   const initialContent = createInitialContent({ content: initialValue, schema: wysiwygManager.schema });
   const [markdownEditorState, setMarkdownEditorState] = useState<EditorState<MarkdownSchema>>();
   const [markdownParams, setMarkdownParams] = useState<

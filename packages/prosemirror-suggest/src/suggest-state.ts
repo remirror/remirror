@@ -1,3 +1,4 @@
+import { bool } from '@remirror/core-helpers';
 import {
   CompareStateParams,
   EditorSchema,
@@ -9,24 +10,24 @@ import {
   TextParams,
   TransactionParams,
 } from '@remirror/core-types';
-import { bool } from '@remirror/core-helpers';
 import { transactionChanged } from '@remirror/core-utils';
+import { Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
+
 import { ChangeReason, DEFAULT_SUGGESTER, ExitReason } from './suggest-constants';
 import { isInvalidSplitReason, isJumpReason, isValidMatch } from './suggest-predicates';
 import {
+  AddIgnoredParams,
   CompareMatchParams,
+  RemoveIgnoredParams,
   SuggestCallbackParams,
   Suggester,
   SuggestKeyBindingParams,
   SuggestReasonMap,
   SuggestStateMatch,
   SuggestStateMatchReason,
-  AddIgnoredParams,
-  RemoveIgnoredParams,
 } from './suggest-types';
 import { findFromSuggesters, findReason, runKeyBindings } from './suggest-utils';
-import { Transaction } from 'prosemirror-state';
 
 /**
  * The suggestion state which manages the list of suggestions.

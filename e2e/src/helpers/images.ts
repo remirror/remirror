@@ -1,9 +1,9 @@
-import looksSame, { createDiff } from 'looks-same';
 import { kebabCase } from '@remirror/core';
-import { promisify } from 'util';
-import { resolve, dirname } from 'path';
 import { writeFile } from 'fs';
+import looksSame, { createDiff } from 'looks-same';
 import md from 'mkdirp-promise';
+import { dirname, resolve } from 'path';
+import { promisify } from 'util';
 
 const write = promisify(writeFile);
 

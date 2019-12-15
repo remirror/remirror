@@ -1,4 +1,5 @@
 import React from 'react';
+
 import theme from '../gatsby-plugin-theme-ui';
 
 type SvgProps = JSX.IntrinsicElements['svg'];

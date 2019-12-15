@@ -1,6 +1,7 @@
 import { act, render } from '@testing-library/react';
 import { act as hookAct, renderHook } from '@testing-library/react-hooks';
 import React from 'react';
+
 import { fakeResizeObserverPolyfill, triggerChange } from '../../__mocks__/resize-observer-polyfill';
 import { useMeasure, usePrevious, useSetState, useStateWithCallback } from '../react-hooks';
 

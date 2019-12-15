@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { PortalContainer } from '..';
 
 test('PortalContainer', () => {

@@ -1,5 +1,6 @@
 import { Attrs, EditorView } from '@remirror/core';
 import { MentionExtensionAttrs } from '@remirror/extension-mention';
+
 import { MentionGetterParams } from './social-types';
 
 /**

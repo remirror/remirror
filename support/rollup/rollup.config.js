@@ -1,7 +1,8 @@
-import factory from './factory';
-import { join } from 'path';
-import { rollup, dependencies } from './config.json';
 import chalk from 'chalk';
+import { join } from 'path';
+
+import { dependencies, rollup } from './config.json';
+import factory from './factory';
 
 const { baseDir } = require('../scripts/helpers');
 

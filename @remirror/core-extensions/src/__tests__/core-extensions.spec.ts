@@ -1,4 +1,5 @@
 import { isExtension } from '@remirror/core';
+
 import { baseExtensions } from '../core-extensions';
 
 test('baseExtensions', () => {

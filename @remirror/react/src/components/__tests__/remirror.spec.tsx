@@ -4,6 +4,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+
 import { Remirror } from '../';
 import { InjectedRemirrorProps } from '../../react-types';
 

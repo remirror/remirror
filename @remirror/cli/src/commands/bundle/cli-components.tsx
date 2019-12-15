@@ -3,6 +3,7 @@ import { Box, Color, Text } from 'ink';
 import Spinner from 'ink-spinner';
 import React, { FC, useEffect } from 'react';
 import useSetState from 'react-use/lib/useSetState';
+
 import { msToDuration } from '../cli-utils';
 import { BundleArgv } from './cli-types';
 

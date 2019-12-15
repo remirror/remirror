@@ -2,7 +2,7 @@
 
 import { jsx } from '@emotion/core';
 import { EDITOR_CLASS_NAME, SELECTED_NODE_CLASS_NAME } from '@remirror/core-constants';
-import { isPlainObject, isString, isFunction, keys } from '@remirror/core-helpers';
+import { isFunction, isPlainObject, isString, keys } from '@remirror/core-helpers';
 import {
   Attrs,
   BaseExtensionOptions,
@@ -15,6 +15,7 @@ import {
 import { isDOMNode, isElementDOMNode } from '@remirror/core-utils';
 import { PortalContainer } from '@remirror/react-portals';
 import { ComponentType } from 'react';
+
 import {
   CreateNodeViewParams,
   GetPosition,

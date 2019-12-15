@@ -1,5 +1,6 @@
 import { isRegExp } from '@remirror/core-helpers';
 import escapeStringRegex from 'escape-string-regexp';
+
 import { Suggester } from './suggest-types';
 
 export const escapeChar = (char: string) => escapeStringRegex(char);

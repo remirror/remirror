@@ -48,7 +48,7 @@ export const ALIGN_PATTERN = /(left|right|center|justify)/;
 /**
  * Regex for matching sizes in the DOM.
  */
-export const SIZE_PATTERN = /([\d\.]+)(px|pt)/i;
+export const SIZE_PATTERN = /([\d.]+)(px|pt)/i;
 
 /**
  * The default pixel to pt font size ratio.
@@ -67,4 +67,4 @@ export const PT_TO_PIXEL_RATIO = 1.33;
  */
 export const FONT_PT_SIZES = [8, 9, 10, 11, 12, 14, 18, 24, 30, 36, 48, 60, 72, 90];
 
-export const CSS_ROTATE_PATTERN = /rotate\(([0-9\.]+)rad\)/i;
+export const CSS_ROTATE_PATTERN = /rotate\(([0-9.]+)rad\)/i;

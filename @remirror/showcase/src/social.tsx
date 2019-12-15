@@ -1,8 +1,7 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { useState } from 'react';
-
+import { startCase, take } from '@remirror/core';
 import {
   ActiveTagData,
   ActiveUserData,
@@ -11,9 +10,9 @@ import {
   SocialEditorProps,
   UserData,
 } from '@remirror/editor-social';
-
-import { startCase, take } from '@remirror/core';
 import matchSorter from 'match-sorter';
+import { useState } from 'react';
+
 import { fakeUsers } from './data/fake-users';
 
 const fakeTags = [

@@ -1,5 +1,6 @@
-import { ExtensionType, DEFAULT_EXTENSION_PRIORITY, RemirrorClassName } from '@remirror/core-constants';
+import { DEFAULT_EXTENSION_PRIORITY, ExtensionType, RemirrorClassName } from '@remirror/core-constants';
 import { isObject } from '@remirror/core-helpers';
+
 import { Extension } from './extension';
 import { AnyExtension, FlexibleExtension, PrioritizedExtension } from './extension-types';
 import { MarkExtension } from './mark-extension';
@@ -11,7 +12,7 @@ import { NodeExtension } from './node-extension';
  * @param extension - the extension to check
  */
 export const isExtension = (extension: unknown): extension is AnyExtension =>
-  isObject(extension) && extension.toString() == RemirrorClassName.Extension;
+  isObject(extension) && extension.toString() === RemirrorClassName.Extension;
 
 // export const isExtension = _isObjectOfType<AnyExtension>(_TypeName.RemirrorExtension);
 

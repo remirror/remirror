@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
+
 import { ButtonProps } from './button';
 
 const Burger = ({ size = '1em' }) => (

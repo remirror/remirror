@@ -1,4 +1,5 @@
 import { DocExtension, InferFlexibleExtensionList, TextExtension } from '@remirror/core';
+
 import {
   BaseKeymapExtension,
   CompositionExtension,

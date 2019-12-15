@@ -1,4 +1,5 @@
 import { TestExtension } from '@remirror/test-fixtures';
+
 import { transformExtensionMap } from '../extension-manager.helpers';
 import { DocExtension, TextExtension } from '../nodes';
 

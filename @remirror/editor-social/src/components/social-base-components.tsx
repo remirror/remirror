@@ -2,6 +2,7 @@
 import { jsx } from '@emotion/core';
 import { useRemirrorTheme } from '@remirror/ui';
 import { forwardRef } from 'react';
+
 import { DivProps } from '../social-types';
 
 export const CharacterCountWrapper = forwardRef<HTMLDivElement, DivProps>((props, ref) => {

@@ -4,6 +4,7 @@ import { jsx } from '@emotion/core';
 import { EmojiObject, EmojiSuggestCommand } from '@remirror/extension-emoji';
 import { useRemirrorContext } from '@remirror/react';
 import { FC } from 'react';
+
 import {
   ActiveTagData,
   ActiveUserData,
@@ -12,10 +13,10 @@ import {
   SetExitTriggeredInternallyParams,
   SocialExtensions,
 } from '../social-types';
+import { EmojiSuggestions } from './emoji-suggestion-component';
 import { CharacterCountWrapper, EditorWrapper } from './social-base-components';
 import { CharacterCountIndicator } from './social-character-count-component';
 import { AtSuggestions, TagSuggestions } from './social-suggestion-components';
-import { EmojiSuggestions } from './emoji-suggestion-component';
 
 interface SocialEditorComponentProps extends MentionGetterParams, SetExitTriggeredInternallyParams {
   emojiList: EmojiObject[];

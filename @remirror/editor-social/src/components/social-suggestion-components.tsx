@@ -4,6 +4,7 @@ import { Position, RemirrorTheme } from '@remirror/core';
 import { useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import { forwardRef, FunctionComponent } from 'react';
+
 import {
   DivProps,
   ImgProps,

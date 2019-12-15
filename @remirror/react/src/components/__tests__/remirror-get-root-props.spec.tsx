@@ -5,6 +5,7 @@ import { createTestManager } from '@remirror/test-fixtures';
 import { render, RenderResult } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';
+
 import { Remirror } from '..';
 
 const mock = jest.fn();

@@ -2,6 +2,7 @@
 import { Sidenav, SidnavProps } from '@theme-ui/sidenav';
 import React from 'react';
 import { jsx } from 'theme-ui';
+
 import Content from '../sidebar.mdx';
 import NavLink from './nav-link';
 

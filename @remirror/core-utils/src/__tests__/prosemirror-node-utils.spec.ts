@@ -1,5 +1,6 @@
 import { bool } from '@remirror/core-helpers';
 import { atomInline, createEditor, doc, p, strong, table, td, tdEmpty, tr as row } from 'jest-prosemirror';
+
 import {
   contains,
   findBlockNodes,

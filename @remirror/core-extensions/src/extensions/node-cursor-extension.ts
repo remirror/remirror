@@ -1,11 +1,11 @@
 import {
-  Extension,
   BaseExtensionOptions,
+  Extension,
+  ExtensionManagerParams,
   NodeMatch,
   ResolvedPos,
-  ExtensionManagerParams,
-  ZERO_WIDTH_SPACE_CHAR,
   uniqueArray,
+  ZERO_WIDTH_SPACE_CHAR,
 } from '@remirror/core';
 import { getPluginState, nodeNameMatchesList } from '@remirror/core-utils';
 import { EditorState, Plugin, Transaction } from 'prosemirror-state';

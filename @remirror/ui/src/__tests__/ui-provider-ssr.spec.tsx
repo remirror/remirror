@@ -6,6 +6,7 @@ import { Remirror } from '@remirror/react';
 import { createTestManager } from '@remirror/test-fixtures';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+
 import { baseTheme, RemirrorThemeProvider } from '..';
 
 describe('withoutEmotion', () => {

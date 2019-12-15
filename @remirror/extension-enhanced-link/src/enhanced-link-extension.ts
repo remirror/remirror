@@ -7,6 +7,7 @@ import {
   ExtensionManagerMarkTypeParams,
   findMatches,
   getMatchString,
+  isFunction,
   LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
   MarkExtensionOptions,
@@ -17,14 +18,15 @@ import {
 } from '@remirror/core';
 import { Plugin } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
-import { extractUrl } from './extract-url';
+
 import {
-  extractHref,
-  EnhancedLinkHandlerProps,
   enhancedLinkHandler,
+  EnhancedLinkHandlerProps,
+  extractHref,
   getUrlsFromState,
   isSetEqual,
 } from './enhanced-link-utils';
+import { extractUrl } from './extract-url';
 
 export interface EnhancedLinkExtensionOptions extends MarkExtensionOptions {
   /**
@@ -188,7 +190,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
       },
       view: () => ({
         update(view: EditorView, prevState: EditorState) {
-          if (!onUrlsChange) {
+          if (!isFunction(onUrlsChange)) {
             return;
           }
 

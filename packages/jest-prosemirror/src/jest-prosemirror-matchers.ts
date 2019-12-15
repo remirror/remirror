@@ -1,6 +1,7 @@
-import { CommandFunction, ProsemirrorNode as _ProsemirrorNode } from '@remirror/core-types';
 import { bool } from '@remirror/core-helpers';
+import { CommandFunction, ProsemirrorNode as _ProsemirrorNode } from '@remirror/core-types';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
+
 import { apply } from './jest-prosemirror-editor';
 import { transformsNodeFailMessage, transformsNodePassMessage } from './jest-prosemirror-messages';
 import { CommandTransformation } from './jest-prosemirror-types';

@@ -1,5 +1,5 @@
 import { Attrs, MarkExtensionOptions } from '@remirror/core';
-import { SuggestReplacementType, Suggester, FromToEndParams } from 'prosemirror-suggest';
+import { FromToEndParams, Suggester, SuggestReplacementType } from 'prosemirror-suggest';
 
 export interface OptionalMentionExtensionParams {
   /**

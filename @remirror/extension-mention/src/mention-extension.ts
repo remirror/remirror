@@ -6,33 +6,35 @@ import {
   getMarkRange,
   getMatchString,
   isElementDOMNode,
+  isMarkActive,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
   markPasteRule,
   MarkType,
+  noop,
   RangeParams,
   removeMark,
   replaceText,
   TransactionTransformer,
-  noop,
-  isMarkActive,
 } from '@remirror/core';
 import {
-  MentionExtensionOptions,
-  SuggestionCommandAttrs,
-  MentionExtensionSuggestCommand,
-} from './mention-types';
-import { DEFAULT_MATCHER, isValidMentionAttrs, getMatcher, getAppendText } from './mention-utils';
-import {
-  Suggester,
-  isSplitReason,
+  escapeChar,
+  getRegexPrefix,
   isInvalidSplitReason,
   isRemovedReason,
-  getRegexPrefix,
-  escapeChar,
+  isSplitReason,
   regexToString,
+  Suggester,
 } from 'prosemirror-suggest';
+
+import {
+  MentionExtensionAttrs,
+  MentionExtensionOptions,
+  MentionExtensionSuggestCommand,
+  SuggestionCommandAttrs,
+} from './mention-types';
+import { DEFAULT_MATCHER, getAppendText, getMatcher, isValidMentionAttrs } from './mention-utils';
 
 const defaultHandler = () => false;
 
@@ -93,7 +95,9 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
         },
       ],
       toDOM: node => {
-        const { label: _, id, name, ...attrs } = node.attrs;
+        const { label: _, id, name, replacementType, range, ...attrs } = node.attrs as Required<
+          MentionExtensionAttrs
+        >;
         const matcher = this.options.matchers.find(matcher => matcher.name === name);
         const mentionClassName = matcher
           ? matcher.mentionClassName ?? DEFAULT_MATCHER.mentionClassName

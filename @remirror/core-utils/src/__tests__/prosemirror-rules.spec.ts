@@ -1,4 +1,5 @@
 import { createEditor, doc, horizontalRule, p, schema as testSchema, strong } from 'jest-prosemirror';
+
 import { markInputRule, markPasteRule, nodeInputRule, plainInputRule } from '../prosemirror-rules';
 
 describe('markPasteRule', () => {

@@ -3,6 +3,7 @@ import { jsx } from '@emotion/core';
 import { useRemirrorTheme } from '@remirror/ui';
 import { storiesOf } from '@storybook/react';
 import { FC } from 'react';
+
 import { Button } from '..';
 
 const Grid: FC = ({ children }) => {

@@ -1,10 +1,10 @@
 /** @jsx jsx */
 
+import { capitalize } from '@remirror/core-helpers';
 import CodeBlock from '@theme-ui/prism';
 import { ElementType, FC } from 'react';
-import { jsx } from 'theme-ui';
 import { isString } from 'remirror';
-import { capitalize } from '@remirror/core-helpers';
+import { jsx } from 'theme-ui';
 
 const heading = (Tag: ElementType) => {
   const Component: FC<{ id: string }> = props =>

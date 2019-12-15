@@ -8,6 +8,7 @@ import {
   NodeType,
 } from '@remirror/core-types';
 import { isNodeActive } from '@remirror/core-utils';
+
 import { Extension } from './extension';
 
 /**

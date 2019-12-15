@@ -18,6 +18,7 @@ import { AnyFunction, Nullable } from '@remirror/core-types';
 import computeScrollIntoView from 'compute-scroll-into-view';
 import { Dispatch, KeyboardEvent, SyntheticEvent } from 'react';
 import keyNames from 'w3c-keyname';
+
 import { SpecialKey, Type } from './multishift-constants';
 import {
   ActionCreator,

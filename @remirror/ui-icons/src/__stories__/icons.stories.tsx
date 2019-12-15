@@ -4,6 +4,7 @@ import { kebabCase } from '@remirror/core-helpers';
 import { useRemirrorTheme } from '@remirror/ui';
 import { storiesOf } from '@storybook/react';
 import { FC } from 'react';
+
 import * as BaseIcons from '../base';
 import * as EditorIcons from '../editor';
 

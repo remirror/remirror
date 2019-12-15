@@ -7,10 +7,11 @@ import {
   TextExtension,
 } from '@remirror/core';
 import { BoldExtension, CodeBlockExtension, ParagraphExtension } from '@remirror/core-extensions';
-import { simpleJSON, testJSON, createTestManager } from '@remirror/test-fixtures';
+import { createTestManager, simpleJSON, testJSON } from '@remirror/test-fixtures';
 import { shallow } from 'enzyme';
 import { Node as PMNode } from 'prosemirror-model';
 import React from 'react';
+
 import { ReactSerializer } from '../react-serializer';
 
 class FooExtension extends NodeExtension {

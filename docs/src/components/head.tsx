@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Helmet } from 'react-helmet';
+
 import pkg from '../../package.json';
 import { RootLayoutProps } from '../typings';
 

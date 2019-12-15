@@ -1,4 +1,5 @@
 import { clamp } from '@remirror/core';
+
 import { INDENT_LEVELS, INDENT_MARGIN_PT_SIZE, PIXEL_TO_PT_RATIO, SIZE_PATTERN } from './node-constants';
 import { IndentLevels } from './paragraph/paragraph-types';
 

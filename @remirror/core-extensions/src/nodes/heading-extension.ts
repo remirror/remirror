@@ -61,7 +61,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
           return [`h${this.options.defaultLevel}`, 0];
         }
 
-        return [`h${node.attrs.level}`, 0];
+        return [`h${node.attrs.level as string}`, 0];
       },
     };
   }

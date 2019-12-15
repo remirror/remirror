@@ -1,5 +1,6 @@
 import { fireEvent, render } from '@testing-library/react';
 import React from 'react';
+
 import { useMultishift } from '../multishift';
 
 const Component = ({ multiple }: { multiple: boolean }) => {

@@ -1,7 +1,6 @@
 /** @jsx jsx */
 
-import { jsx, Interpolation } from '@emotion/core';
-
+import { Interpolation, jsx } from '@emotion/core';
 import { omit, pick } from '@remirror/core-helpers';
 import { KeyOfThemeVariant } from '@remirror/core-types';
 import { useRemirrorTheme } from '@remirror/ui';

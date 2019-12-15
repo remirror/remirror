@@ -1,5 +1,4 @@
-import { findElementAtPosition, isElementDOMNode, isTextDOMNode } from '@remirror/core-utils';
-import { pick, isString } from '@remirror/core-helpers';
+import { isString, pick } from '@remirror/core-helpers';
 import {
   CommandFunction,
   EditorSchema,
@@ -8,18 +7,20 @@ import {
   PlainObject,
   Plugin,
   PosParams,
+  ProsemirrorNode,
   SelectionParams,
   TextParams,
-  ProsemirrorNode,
 } from '@remirror/core-types';
+import { findElementAtPosition, isElementDOMNode, isTextDOMNode } from '@remirror/core-utils';
 import { fireEvent, prettyDOM } from '@testing-library/dom';
 import { inputRules } from 'prosemirror-inputrules';
 import { AllSelection, NodeSelection, TextSelection } from 'prosemirror-state';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { DirectEditorProps, EditorView } from 'prosemirror-view';
 import { Keyboard } from 'test-keyboard';
+
 import { createEvents, EventType } from './jest-prosemirror-events';
-import { createState, pm, selectionFor, taggedDocHasSelection, p } from './jest-prosemirror-nodes';
+import { createState, p, pm, selectionFor, taggedDocHasSelection } from './jest-prosemirror-nodes';
 import { TaggedDocParams, TestEditorView, TestEditorViewParams } from './jest-prosemirror-types';
 
 /**

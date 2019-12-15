@@ -4,6 +4,7 @@ import {
   SuggestExitHandlerParams,
   SuggestKeyBindingMap,
 } from 'prosemirror-suggest';
+
 import AliasData from './data/aliases';
 import CategoryData from './data/categories';
 import EmojiData from './data/emojis';

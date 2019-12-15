@@ -7,6 +7,12 @@ and this project will adhere to [Semantic Versioning](https://semver.org/spec/v2
 
 ## [Unreleased]
 
+### Removed
+
+- `@remirror/core`: Remove deprecated `findNodeAtEndOfDoc`
+  `findNodeAtStartOfDoc` which can be replaced with `doc.firstChild` and
+  `doc.lastChild`
+
 ## [0.7.2] - 2019-12-10
 
 ### Changes

@@ -1,5 +1,6 @@
 import { AnyExtension, ExtensionManager } from '@remirror/core';
 import { useContext } from 'react';
+
 import { RemirrorContext, RemirrorManagerContext } from '../react-contexts';
 import { InjectedRemirrorProps, UsePositionerParams } from '../react-types';
 

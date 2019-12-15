@@ -26,7 +26,7 @@ const CharacterCountIndicatorComponent: FC<CharacterCountIndicatorProps> = ({
   const remainingCharacters = characters.total - characters.used;
   const warn = remainingCharacters <= warningThreshold;
   const ratio = characters.used / characters.total;
-  const strokeColor = remainingCharacters < 0 ? colors.error : warn ? colors.warn : colors.primary!;
+  const strokeColor = remainingCharacters < 0 ? colors.error : warn ? colors.warn : colors.primary;
 
   // SVG centers the stroke width on the radius, subtract out so circle fits in square
   const radius = (size - strokeWidth) / 2;

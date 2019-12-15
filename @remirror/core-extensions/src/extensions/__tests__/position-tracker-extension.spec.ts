@@ -1,5 +1,6 @@
 import { ExtensionMap } from '@remirror/test-fixtures';
 import { renderEditor } from 'jest-remirror';
+
 import { PositionTrackerExtension, PositionTrackerExtensionOptions } from '../position-tracker-extension';
 
 const { heading: headingNode, blockquote: blockquoteNode } = ExtensionMap.nodes;

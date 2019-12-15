@@ -1,5 +1,6 @@
 import { omit } from '@remirror/core-helpers';
 import { PlainObject } from '@remirror/core-types';
+
 import { KeyboardEventName, ModifierInformation } from './test-keyboard-types';
 import { SupportedCharacters, usKeyboardLayout } from './us-keyboard-layout';
 

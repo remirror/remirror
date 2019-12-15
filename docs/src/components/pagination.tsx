@@ -2,6 +2,7 @@
 import { Location } from '@reach/router';
 import { Pagination as PaginationUI } from '@theme-ui/sidenav';
 import { jsx } from 'theme-ui';
+
 import Sidenav from '../sidebar.mdx';
 
 export const Pagination = () => (

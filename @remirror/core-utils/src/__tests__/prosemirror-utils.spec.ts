@@ -15,14 +15,14 @@ import {
   tdEmpty,
   tr as row,
 } from 'jest-prosemirror';
+import { Schema } from 'prosemirror-model';
 import { marks, nodes } from 'prosemirror-schema-basic';
 import { NodeSelection, Selection, TextSelection } from 'prosemirror-state';
+
 import {
   cloneTransaction,
   findElementAtPosition,
-  findNodeAtEndOfDoc,
   findNodeAtSelection,
-  findNodeAtStartOfDoc,
   findParentNode,
   findParentNodeOfType,
   findPositionOfNodeBefore,
@@ -31,11 +31,10 @@ import {
   nodeEqualsType,
   removeNodeAtPosition,
   removeNodeBefore,
+  schemaToJSON,
   selectionEmpty,
   transactionChanged,
-  schemaToJSON,
 } from '../prosemirror-utils';
-import { Schema } from 'prosemirror-model';
 
 describe('nodeEqualsType', () => {
   it('matches with a singular nodeType', () => {
@@ -410,16 +409,6 @@ describe('findNodeAt...', () => {
     expect(node).toBe(expectedEnd);
     expect(pos).toBe(16);
     expect(start).toBe(17);
-  });
-
-  test('findNodeAtEndOfDoc', () => {
-    const { node } = findNodeAtEndOfDoc(pmDoc);
-    expect(node).toBe(expectedEnd);
-  });
-
-  test('findNodeAtStartOfDoc', () => {
-    const { node } = findNodeAtStartOfDoc(pmDoc);
-    expect(node).toBe(expectedStart);
   });
 });
 

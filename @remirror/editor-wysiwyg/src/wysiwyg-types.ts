@@ -21,7 +21,7 @@ import {
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '@remirror/extension-code-block';
 import { DropCursorExtension } from '@remirror/extension-drop-cursor';
 import { ImageExtension } from '@remirror/extension-image';
-import { RemirrorProps, RemirrorManagerProps } from '@remirror/react';
+import { RemirrorManagerProps, RemirrorProps } from '@remirror/react';
 
 /**
  * The union type of all the extension used within the Wysiwyg Editor.

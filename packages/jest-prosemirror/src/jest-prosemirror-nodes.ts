@@ -5,6 +5,7 @@ import { Schema } from 'prosemirror-model';
 import { AllSelection, EditorState, NodeSelection, Selection, TextSelection } from 'prosemirror-state';
 import { cellAround, CellSelection } from 'prosemirror-tables';
 import pm, { MarkTypeAttributes, NodeTypeAttributes, TaggedProsemirrorNode } from 'prosemirror-test-builder';
+
 import { schema } from './jest-prosemirror-schema';
 import { TaggedDocParams } from './jest-prosemirror-types';
 

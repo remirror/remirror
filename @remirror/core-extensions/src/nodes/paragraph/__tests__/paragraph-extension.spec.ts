@@ -1,6 +1,7 @@
 import { fromHTML, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 import { pmBuild } from 'jest-prosemirror';
+
 import { ParagraphExtension } from '../paragraph-extension';
 
 describe('schema', () => {

@@ -2,6 +2,7 @@ import { EditorState, fromHTML } from '@remirror/core';
 import { createTestManager } from '@remirror/test-fixtures';
 import { act, render } from '@testing-library/react';
 import React, { useState } from 'react';
+
 import { Remirror } from '..';
 import { InjectedRemirrorProps, RemirrorStateListenerParams } from '../../react-types';
 import { RemirrorProviderProps } from '../remirror-providers';

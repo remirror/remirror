@@ -9,7 +9,9 @@ import {
 } from '@remirror/core-types';
 import { selectionEmpty } from '@remirror/core-utils';
 import { keydownHandler } from 'prosemirror-keymap';
+
 import { ChangeReason, ExitReason } from './suggest-constants';
+import { createRegexFromSuggester, regexToString } from './suggest-helpers';
 import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates';
 import {
   CompareMatchParams,
@@ -22,7 +24,6 @@ import {
   SuggestStateMatch,
   SuggestStateMatchParams,
 } from './suggest-types';
-import { regexToString, createRegexFromSuggester } from './suggest-helpers';
 
 /**
  * Small utility method for creating a match with the reason property available.

@@ -8,6 +8,7 @@ import {
   MarkType,
 } from '@remirror/core-types';
 import { isMarkActive } from '@remirror/core-utils';
+
 import { Extension } from './extension';
 
 /**

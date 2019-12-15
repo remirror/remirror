@@ -1,6 +1,4 @@
 declare module 'storejs' {
-  export = storejs;
-
   function storejs(key: any, data: any, ...args: any[]): any;
 
   namespace storejs {
@@ -13,4 +11,6 @@ declare module 'storejs' {
     function search(str: any): any;
     function set(key: any, val: any): any;
   }
+
+  export = storejs;
 }

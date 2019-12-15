@@ -1,6 +1,7 @@
 /** @jsx jsx */
-import { jsx, css as emotionCss } from '@emotion/core';
+import { css as emotionCss, jsx } from '@emotion/core';
 import { render } from '@testing-library/react';
+
 import { baseTheme } from '../';
 import { RemirrorThemeProvider } from '../ui-provider';
 import { cssValueUnits, numberToPixels, sx } from '../ui-utils';

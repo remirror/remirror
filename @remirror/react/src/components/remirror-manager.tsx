@@ -3,14 +3,15 @@
 import { jsx } from '@emotion/core';
 import {
   AnyExtension,
-  ExtensionManager,
-  PrioritizedExtension,
-  FlexibleExtension,
   convertToPrioritizedExtension,
+  ExtensionManager,
+  FlexibleExtension,
+  PrioritizedExtension,
 } from '@remirror/core';
 import { baseExtensions } from '@remirror/core-extensions';
 import { asDefaultProps, isReactFragment, isRemirrorExtension } from '@remirror/react-utils';
 import { Children, Component, ReactNode } from 'react';
+
 import { RemirrorManagerContext } from '../react-contexts';
 
 export interface RemirrorManagerProps {

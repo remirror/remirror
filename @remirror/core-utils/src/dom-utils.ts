@@ -1,5 +1,13 @@
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
-import { bool, Cast, isFunction, isNumber, isObject, isString } from '@remirror/core-helpers';
+import {
+  bool,
+  Cast,
+  isFunction,
+  isNullOrUndefined,
+  isNumber,
+  isObject,
+  isString,
+} from '@remirror/core-helpers';
 import {
   EditorSchema,
   EditorState,
@@ -14,6 +22,7 @@ import {
   PluginKey,
   PositionParams,
   ProsemirrorNode,
+  ProsemirrorNodeParams,
   RegexTuple,
   RemirrorContentType,
   RenderEnvironment,
@@ -21,7 +30,6 @@ import {
   SchemaParams,
   Selection,
   Transaction,
-  ProsemirrorNodeParams,
 } from '@remirror/core-types';
 import minDocument from 'min-document';
 import {
@@ -33,8 +41,8 @@ import {
   Node as PMNode,
   NodeType,
   ResolvedPos as PMResolvedPos,
-  Slice,
   Schema,
+  Slice,
 } from 'prosemirror-model';
 import {
   EditorState as PMEditorState,
@@ -43,6 +51,7 @@ import {
   Selection as PMSelection,
   TextSelection,
 } from 'prosemirror-state';
+
 import { environment } from './environment';
 
 /**
@@ -220,7 +229,7 @@ export const isDocNodeEmpty = (node: ProsemirrorNode) => {
     nodeChild.type.isBlock &&
     !nodeChild.childCount &&
     nodeChild.nodeSize === 2 &&
-    (!nodeChild.marks || nodeChild.marks.length === 0)
+    (isNullOrUndefined(nodeChild.marks) || nodeChild.marks.length === 0)
   );
 };
 
@@ -468,13 +477,13 @@ export const closestElement = (domNode: Node | null | undefined, selector: strin
   if (!isElementDOMNode(domNode)) {
     return null;
   }
-  if (!document.documentElement || !document.documentElement.contains(domNode)) {
+  if (isNullOrUndefined(document.documentElement) || !document.documentElement.contains(domNode)) {
     return null;
   }
-  const matches = domNode.matches ? 'matches' : Cast<'matches'>('msMatchesSelector');
+  const matches = isFunction(domNode.matches) ? 'matches' : Cast<'matches'>('msMatchesSelector');
 
   do {
-    if (domNode[matches] && domNode[matches](selector)) {
+    if (isFunction(domNode[matches]) && domNode[matches](selector)) {
       return domNode;
     }
     domNode = (domNode.parentElement ?? domNode.parentNode) as HTMLElement;
@@ -496,7 +505,9 @@ export const isTextDOMNode = (domNode: unknown): domNode is Text => {
 interface GetOffsetParentParams extends EditorViewParams, ElementParams {}
 
 export const getOffsetParent = ({ view, element }: GetOffsetParentParams): HTMLElement =>
-  element ? (element.offsetParent as HTMLElement) : ((view.dom as HTMLElement).offsetParent as HTMLElement);
+  isNullOrUndefined(element)
+    ? ((view.dom as HTMLElement).offsetParent as HTMLElement)
+    : (element.offsetParent as HTMLElement);
 
 /**
  * Retrieve the line height from a an element

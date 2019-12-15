@@ -1,5 +1,6 @@
 import { NextPageContext } from 'next';
 import React, { Component } from 'react';
+
 import Layout from '../components/layout';
 import ListDetail from '../components/list-detail';
 import { User } from '../interfaces';

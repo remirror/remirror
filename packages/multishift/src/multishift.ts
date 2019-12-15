@@ -1,7 +1,8 @@
-import { debounce, includes, isNullOrUndefined, isUndefined, bool } from '@remirror/core-helpers';
+import { bool, debounce, includes, isNullOrUndefined, isUndefined } from '@remirror/core-helpers';
 import { useEffectOnce, useEffectOnUpdate, useTimeouts } from '@remirror/react-hooks';
 import composeRefs from '@seznam/compose-react-refs';
 import { ChangeEvent, HTMLProps, Ref, SyntheticEvent, useCallback, useEffect, useMemo, useRef } from 'react';
+
 import * as MultishiftActions from './multishift-action-creators';
 import {
   SPECIAL_INPUT_KEYS,

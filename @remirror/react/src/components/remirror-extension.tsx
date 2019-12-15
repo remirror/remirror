@@ -1,5 +1,6 @@
 import { AbstractInstanceType, AnyExtension, OptionsOfExtension } from '@remirror/core';
 import { RemirrorFC, RemirrorType } from '@remirror/react-utils';
+
 import { RemirrorExtensionProps } from '../react-types';
 
 /**

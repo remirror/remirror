@@ -1,6 +1,6 @@
-import React from 'react';
+import { css, Global } from '@emotion/core';
 import App from 'next/app';
-import { Global, css } from '@emotion/core';
+import React from 'react';
 
 export default class MyApp extends App {
   // Only uncomment this method if you have blocking data requirements for

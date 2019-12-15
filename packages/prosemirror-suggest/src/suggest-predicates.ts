@@ -1,5 +1,6 @@
 import { bool, isString } from '@remirror/core-helpers';
 import { SelectionParams } from '@remirror/core-types';
+
 import { ChangeReason, ExitReason } from './suggest-constants';
 import {
   CompareMatchParams,

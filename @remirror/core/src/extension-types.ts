@@ -8,6 +8,7 @@ import {
   StringKey,
   UnionToIntersection,
 } from '@remirror/core-types';
+
 import { Extension } from './extension';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';

@@ -3,11 +3,13 @@ import {
   Extension,
   ExtensionManagerParams,
   FromToParams,
+  isNullOrUndefined,
   noop,
   plainInputRule,
 } from '@remirror/core';
 import escapeStringRegex from 'escape-string-regexp';
 import { Suggester } from 'prosemirror-suggest';
+
 import {
   EmojiExtensionOptions,
   EmojiObject,
@@ -179,7 +181,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
         const create = getActions('insertEmojiByObject');
 
         return (emoji, skinVariation) => {
-          if (!emoji) {
+          if (isNullOrUndefined(emoji)) {
             throw new Error('An emoji object is required when calling the emoji suggestions command');
           }
 

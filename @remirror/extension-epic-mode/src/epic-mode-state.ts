@@ -1,4 +1,5 @@
 import { EditorView, randomInt, throttle } from '@remirror/core';
+
 import { EpicModePluginStateParams, Particle, ParticleEffect, ParticleRange } from './epic-mode-types';
 
 const getRGBComponents = (node: Element) => {
@@ -70,7 +71,7 @@ export class EpicModePluginState {
     const ctx = canvas.getContext('2d');
 
     if (!ctx) {
-      throw new Error('An error occured while creating the canvas context');
+      throw new Error('An error occurred while creating the canvas context');
     }
 
     this.ctx = ctx;

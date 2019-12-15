@@ -1,25 +1,25 @@
 import {
-  DocExtension,
-  ExtensionManager,
-  TextExtension,
-  Cast,
-  Extension,
   BaseExtensionOptions,
+  Cast,
+  DocExtension,
+  Extension,
+  ExtensionManager,
   FlexibleExtension,
+  TextExtension,
 } from '@remirror/core';
 import {
-  ParagraphExtension,
+  BlockquoteExtension,
   BoldExtension,
+  HeadingExtension,
+  HistoryExtension,
   ItalicExtension,
+  ParagraphExtension,
   PlaceholderExtension,
   UnderlineExtension,
-  BlockquoteExtension,
-  HistoryExtension,
-  HeadingExtension,
 } from '@remirror/core-extensions';
-import minDocument from 'min-document';
 import { PortalContainer } from '@remirror/react-portals';
 import { defaultRemirrorThemeValue } from '@remirror/ui';
+import minDocument from 'min-document';
 
 export const helpers = {
   getState: Cast(jest.fn()),

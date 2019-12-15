@@ -1,5 +1,6 @@
 import { Cast } from '@remirror/core';
 import { BoldExtension } from '@remirror/core-extensions';
+
 import { renderEditor } from '../jest-remirror-editor';
 
 describe('toContainRemirrorDocument', () => {

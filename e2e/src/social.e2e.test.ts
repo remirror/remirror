@@ -1,6 +1,7 @@
 import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
 import { getDocument, queries } from 'pptr-testing-library';
 import { ElementHandle } from 'puppeteer';
+
 import {
   $innerHTML,
   innerHtml,
