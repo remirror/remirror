@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import {
   CompareStateParams,
   EditorState,
@@ -71,7 +70,7 @@ export class CodeBlockState {
 
     // Urm yeah this is a loop within a loop within a loop and it makes my head hurt.
     for (const { node, pos: from } of this.blocks) {
-      let hasChanged = false;
+      let hasChanged: boolean = false;
       for (const step of steps) {
         step.getMap().forEach((oldStart, oldEnd) => {
           const to = from + node.nodeSize;

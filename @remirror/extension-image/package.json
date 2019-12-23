@@ -17,9 +17,9 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "0.7.2",
-    "@remirror/core-extensions": "0.7.2",
-    "@remirror/react-utils": "0.7.2",
+    "@remirror/core": "^0.7.2",
+    "@remirror/core-extensions": "^0.7.2",
+    "@remirror/react-utils": "^0.7.2",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-keymap": "^1.0.1",

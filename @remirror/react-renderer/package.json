@@ -16,8 +16,8 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "0.7.2",
-    "@remirror/react-utils": "0.7.2"
+    "@remirror/core": "^0.7.2",
+    "@remirror/react-utils": "^0.7.2"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

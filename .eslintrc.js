@@ -11,7 +11,7 @@ const tsProjectRules = EXCLUDE_TS
       '@typescript-eslint/no-unnecessary-type-arguments': 'warn',
       '@typescript-eslint/restrict-plus-operands': 'warn',
       '@typescript-eslint/no-misused-promises': 'warn',
-      '@typescript-eslint/no-unnecessary-condition': ['warn', { ignoreRhs: true }],
+      // '@typescript-eslint/no-unnecessary-condition': ['warn', { ignoreRhs: true }], // TODO : test for false positives again
       '@typescript-eslint/prefer-includes': 'warn',
       '@typescript-eslint/prefer-string-starts-ends-with': 'warn',
     };

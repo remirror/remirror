@@ -16,7 +16,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core-helpers": "0.7.2"
+    "@remirror/core-helpers": "^0.7.2"
   },
   "publishConfig": {
     "access": "public"

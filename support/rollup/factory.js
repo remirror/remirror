@@ -3,7 +3,6 @@ import { join } from 'path';
 import autoExternal from 'rollup-plugin-auto-external';
 import babel from 'rollup-plugin-babel';
 import json from 'rollup-plugin-json';
-import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
 import resolve from 'rollup-plugin-node-resolve';
 
@@ -38,9 +37,6 @@ const configure = (packageJson, path) => {
 
     // Convert JSON imports to ES6 modules.
     json(),
-
-    // Register Node.js builtins for browserify compatibility.
-    builtins(),
 
     // Use Babel to transpile the result, limiting it to the source code.
     babel({

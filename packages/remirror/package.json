@@ -16,9 +16,9 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "0.7.2",
-    "@remirror/core-extensions": "0.7.2",
-    "@remirror/react": "0.7.2"
+    "@remirror/core": "^0.7.2",
+    "@remirror/core-extensions": "^0.7.2",
+    "@remirror/react": "^0.7.2"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
