@@ -16,7 +16,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "0.7.2",
+    "@remirror/core": "^0.7.2",
     "@types/prosemirror-collab": "^1.0.2",
     "@types/prosemirror-transform": "^1.1.0",
     "prosemirror-collab": "^1.1.2",

@@ -50,7 +50,6 @@ export const jsdomPolyfill = () => {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!window.cancelAnimationFrame) {
     window.cancelAnimationFrame = () => {
       if (!window.ignoreAllJSDOMWarnings && !window.hasWarnedAboutCancelAnimationFramePolyfill) {

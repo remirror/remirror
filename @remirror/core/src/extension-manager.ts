@@ -476,7 +476,6 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   public getPluginState<GState>(name: this['_N']): GState {
     this.checkInitialized();
     const key = this.pluginKeys[name];
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (!key) {
       throw new Error(`Cannot retrieve state for an extension: ${name} which doesn't exist`);
     }
@@ -553,9 +552,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     const commands = createCommands({ extensions, params });
 
     Object.entries(commands).forEach(([commandName, { command, name }]) => {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       const isActive = this.initData.isActive[name as this['_Names']] ?? defaultIsActive;
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       const isEnabled = this.initData.isEnabled[name as this['_Names']] ?? defaultIsEnabled;
 
       actions[commandName] = command as ActionMethod;

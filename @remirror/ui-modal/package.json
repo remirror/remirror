@@ -16,9 +16,9 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@reach/visually-hidden": "^0.6.1",
-    "@remirror/core-helpers": "0.7.2",
-    "@remirror/ui": "0.7.2",
+    "@reach/visually-hidden": "^0.7.0",
+    "@remirror/core-helpers": "^0.7.2",
+    "@remirror/ui": "^0.7.2",
     "react-modal": "^3.10.1"
   },
   "peerDependencies": {
