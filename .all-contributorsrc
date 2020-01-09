@@ -9,6 +9,19 @@
   "skipCi": true,
   "contributors": [
     {
+      "login": "ifiokjr",
+      "name": "Ifiok Jr.",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1160934?v=4",
+      "profile": "https://ifiokjr.com",
+      "contributions": [
+        "doc",
+        "code",
+        "example",
+        "test",
+        "maintenance"
+      ]
+    },
+    {
       "login": "benjie",
       "name": "Benjie Gillam",
       "avatar_url": "https://avatars2.githubusercontent.com/u/129910?v=4",
@@ -21,5 +34,6 @@
       ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "commitConvention": "none"
 }

@@ -176,3 +176,17 @@ available at [http://contributor-covenant.org/version/1/4][version]
 [gatsby]: https://www.gatsbyjs.org/
 [repo]: https://github.com/ifiokjr/remirror
 [husky]: https://github.com/typicode/husky
+
+### Being added as Contributor
+
+This project is using https://allcontributors.org/ so you will be added for your contribution.
+
+To do so from command line run the following commands.
+
+```bash
+# Add yourself where GITHUB_USERNAME is your username
+yarn all-contributors add GITHUB_USERNAME doc code
+
+# Update the readme.md
+yarn all-contributors generate
+```

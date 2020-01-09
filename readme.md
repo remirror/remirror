@@ -137,3 +137,21 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 [react]: https://github.com/facebook/react
 [prosemirror]: https://prosemirror.net
 [theme ui]: https://github.com/system-ui/theme-ui
+
+<br />
+
+### Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://ifiokjr.com"><img src="https://avatars2.githubusercontent.com/u/1160934?v=4" width="100px;" alt=""/><br /><sub><b>Ifiok Jr.</b></sub></a><br /><a href="https://github.com/ifiokjr/remirror/commits?author=ifiokjr" title="Documentation">📖</a> <a href="https://github.com/ifiokjr/remirror/commits?author=ifiokjr" title="Code">💻</a> <a href="#example-ifiokjr" title="Examples">💡</a> <a href="https://github.com/ifiokjr/remirror/commits?author=ifiokjr" title="Tests">⚠️</a> <a href="#maintenance-ifiokjr" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://graphile.org/sponsor"><img src="https://avatars2.githubusercontent.com/u/129910?v=4" width="100px;" alt=""/><br /><sub><b>Benjie Gillam</b></sub></a><br /><a href="https://github.com/ifiokjr/remirror/commits?author=benjie" title="Documentation">📖</a> <a href="https://github.com/ifiokjr/remirror/issues?q=author%3Abenjie" title="Bug reports">🐛</a> <a href="#example-benjie" title="Examples">💡</a> <a href="https://github.com/ifiokjr/remirror/commits?author=benjie" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
