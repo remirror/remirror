@@ -11,6 +11,7 @@
 <p align="center">
 
 <a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=1&amp;branchName=canary"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/ifiokjr.remirror?branchName=canary" alt="Azure DevOps builds" /></a>
+<a href="https://github.com/ifiokjr/remirror/actions?query=workflow%3A%22Node+CI%22"><img src="https://github.com/ifiokjr/remirror/workflows/Node%20CI/badge.svg" alt="GitHub Actions CI" /></a>
 <a href="https://travis-ci.com/ifiokjr/remirror"><img src="https://travis-ci.com/ifiokjr/remirror.svg?branch=canary" alt="Travis (.com)" /></a>
 <a href="https://codeclimate.com/github/ifiokjr/remirror/test_coverage"><img src="https://api.codeclimate.com/v1/badges/cfd42ff63704a1cbe232/test_coverage" /></a>
 <a href="https://github.com/ifiokjr/remirror/commits/canary"><img src="https://img.shields.io/github/commit-activity/m/ifiokjr/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>

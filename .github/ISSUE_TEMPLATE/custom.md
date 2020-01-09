@@ -5,6 +5,4 @@ about: Describe this issue template's purpose here.
 
 ## Checklist
 
-- [ ] I have read the [**contributing**][contributing] document.
-
-[contributing]: https://github.com/ifiokjr/remirror/blob/canary/docs/pages/contributing.md
+- [ ] I have read the [**contributing**](https://github.com/ifiokjr/remirror/blob/canary/docs/pages/contributing.md) document.
