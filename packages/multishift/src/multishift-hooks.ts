@@ -47,7 +47,7 @@ export const useMultishiftReducer = <GItem = any>({ stateReducer, ...props }: Mu
 export const useElementIds = (props: MultishiftA11yIdProps) => {
   const defaultId = useId();
 
-  return getElementIds(defaultId, props);
+  return getElementIds(defaultId ?? '', props);
 };
 
 /**
