@@ -9,8 +9,6 @@ jobs:
           vmImage: ${{ parameters.vmImage }}
         steps:
           - template: pipeline-yarn-install.yml
-          - bash: yarn integrity
-            displayName: 'Check yarn lock file is up to date'
           - bash: yarn lint
             displayName: 'Check all lint rules'
           - bash: yarn typecheck
