@@ -1,3 +1,25 @@
 {
-  "files": ["readme.md"]
+  "files": [
+    "readme.md"
+  ],
+  "projectName": "remirror",
+  "projectOwner": "ifiokjr",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true,
+  "contributors": [
+    {
+      "login": "benjie",
+      "name": "Benjie Gillam",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/129910?v=4",
+      "profile": "https://graphile.org/sponsor",
+      "contributions": [
+        "doc",
+        "bug",
+        "example",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
 }
