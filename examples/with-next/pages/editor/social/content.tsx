@@ -2,7 +2,11 @@ import { ExampleSocialEditor, SOCIAL_SHOWCASE_CONTENT } from '@remirror/showcase
 import React, { FC } from 'react';
 
 const SocialEditorWithContent: FC = () => (
-  <ExampleSocialEditor initialContent={SOCIAL_SHOWCASE_CONTENT} suppressHydrationWarning={true} />
+  <ExampleSocialEditor
+    initialContent={SOCIAL_SHOWCASE_CONTENT}
+    suppressHydrationWarning={true}
+    characterLimit={280}
+  />
 );
 SocialEditorWithContent.displayName = 'SocialEditorWithContent';
 
