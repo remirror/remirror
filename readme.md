@@ -154,4 +154,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
