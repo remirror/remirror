@@ -19,9 +19,9 @@ export interface SocialEditorProps
     Pick<RemirrorManagerProps, 'extensions'>,
     Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'> {
   /**
-   * Set this to true to hide the character indicator.
+   * Show a typing hint that limits the number of characters; defaults to 140, set to null to disable.
    */
-  hideCharacterIndicator?: boolean;
+  characterLimit?: number;
 
   /**
    * The message to show when the editor is empty.

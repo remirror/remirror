@@ -42,6 +42,11 @@ interface SocialEditorComponentProps extends MentionGetterParams, SetExitTrigger
    * Whether or not suggestions have been hidden by pressing the escape key
    */
   hideSuggestions: boolean;
+
+  /**
+   * Show a typing hint that limits the number of characters; defaults to 140, set to null to disable.
+   */
+  characterLimit?: number;
 }
 
 /**
@@ -60,6 +65,7 @@ export const SocialEditorComponent: FC<SocialEditorComponentProps> = ({
   emojiList,
   hideEmojiSuggestions,
   emojiCommand,
+  characterLimit = 140,
 }) => {
   const {
     getRootProps,
@@ -70,9 +76,11 @@ export const SocialEditorComponent: FC<SocialEditorComponentProps> = ({
     <div>
       <EditorWrapper data-testid='social-editor-wrapper'>
         <div {...getRootProps()} data-testid='remirror-editor' />
-        <CharacterCountWrapper>
-          <CharacterCountIndicator characters={{ total: 140, used: content.length }} />
-        </CharacterCountWrapper>
+        {characterLimit ? (
+          <CharacterCountWrapper>
+            <CharacterCountIndicator characters={{ total: characterLimit, used: content.length }} />
+          </CharacterCountWrapper>
+        ) : null}
         {hideEmojiSuggestions || !emojiCommand ? null : (
           <EmojiSuggestions highlightedIndex={activeEmojiIndex} data={emojiList} command={emojiCommand} />
         )}

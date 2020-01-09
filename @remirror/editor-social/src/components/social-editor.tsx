@@ -391,6 +391,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
       formatter,
       supportedLanguages: supportedLanguagesProp = [],
       rich,
+      characterLimit,
       ...rest
     } = this.remirrorProps;
     const supportedLanguages = [...DEFAULT_LANGUAGES, ...supportedLanguagesProp];
@@ -457,6 +458,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
                 getMention={this.getMention}
                 users={this.users}
                 tags={this.tags}
+                characterLimit={characterLimit}
               />
               {children}
             </Fragment>
