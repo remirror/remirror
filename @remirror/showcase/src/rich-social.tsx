@@ -63,6 +63,7 @@ export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
   return (
     <SocialEditor
       {...props}
+      rich
       attributes={{ 'data-testid': 'editor-social' }}
       userData={userMatches}
       tagData={tagMatches}
