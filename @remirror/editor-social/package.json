@@ -19,6 +19,7 @@
     "@emotion/styled": "^10.0.17",
     "@remirror/core": "^0.7.2",
     "@remirror/core-extensions": "^0.7.2",
+    "@remirror/extension-code-block": "^0.7.2",
     "@remirror/extension-emoji": "^0.7.2",
     "@remirror/extension-enhanced-link": "^0.7.2",
     "@remirror/extension-mention": "^0.7.2",
@@ -27,7 +28,8 @@
     "@remirror/ui": "^0.7.2",
     "@remirror/ui-buttons": "^0.7.2",
     "@remirror/ui-icons": "^0.7.2",
-    "multishift": "^0.7.2"
+    "multishift": "^0.7.2",
+    "refractor": "^2.10.0"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

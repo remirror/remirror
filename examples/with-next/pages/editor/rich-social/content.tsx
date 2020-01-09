@@ -6,4 +6,4 @@ const RichSocialEditorWithContent: FC = () => (
 );
 RichSocialEditorWithContent.displayName = 'SocialEditorWithContent';
 
-export default SocialEditorWithContent;
+export default RichSocialEditorWithContent;
