@@ -5,7 +5,8 @@
     "baseUrl": "src",
     "paths": {},
     "composite": true,
-    "emitDeclarationOnly": true,
+    "emitDeclarationOnly": false,
+    "module": "commonjs",
     "declaration": true,
     "declarationMap": true,
     "rootDir": "src"
