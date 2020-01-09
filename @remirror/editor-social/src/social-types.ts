@@ -17,9 +17,9 @@ export interface SocialEditorProps
   extends Partial<ManagedRemirrorProviderProps<SocialExtensions>>,
     Pick<RemirrorManagerProps, 'extensions'> {
   /**
-   * Set this to true to hide the character indicator.
+   * Display a typing hint that limits the number of characters to this number. Defaults to 140, set to `null` to disable.
    */
-  hideCharacterIndicator?: boolean;
+  characterLimit?: number | null;
 
   /**
    * The message to show when the editor is empty.
