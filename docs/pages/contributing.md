@@ -176,3 +176,7 @@ available at [http://contributor-covenant.org/version/1/4][version]
 [gatsby]: https://www.gatsbyjs.org/
 [repo]: https://github.com/ifiokjr/remirror
 [husky]: https://github.com/typicode/husky
+
+### Troubleshooting
+
+If you're getting errors like `ReferenceError: CodeBlockExtension is not defined` but you know you've imported it, it might be because you've not added it as a dependency to the relevant `package.json`. Rather than throwing an error in this case, rollup (?) seems to just drop the import statement but still persist the lines where the import is used.
