@@ -97,7 +97,20 @@ export const RICH_SOCIAL_SHOWCASE_CONTENT = {
         },
         {
           type: 'text',
-          text: ' has proven to me most helpful!',
+          text: ' has proven to me ',
+        },
+        {
+          type: 'text',
+          text: 'most',
+          marks: [
+            {
+              type: 'italic',
+            },
+          ],
+        },
+        {
+          type: 'text',
+          text: ' helpful!',
         },
       ],
     },
@@ -123,12 +136,25 @@ export const RICH_SOCIAL_SHOWCASE_CONTENT = {
       ],
     },
     {
+      type: 'codeBlock',
+      attrs: { language: 'markdown' },
+      content: [
+        {
+          type: 'text',
+          text:
+            '## Simple Code Blocks\n\n```js\nlog("with code fence support");\n```\n\n```bash\necho "fun times"\n```\n\nUse Shift-Enter or Mod-Enter to hard break out of the code block',
+        },
+      ],
+    },
+    {
       type: 'paragraph',
       content: [
         {
           type: 'text',
-          text: 'Emojis still make me smile 😋 🙈',
+          text: 'Emojis ',
         },
+        { type: 'text', text: 'still', marks: [{ type: 'strike' }] },
+        { type: 'text', text: ' make me smile 😋 🙈' },
         {
           type: 'text',
           text: " and I'm here for that.",
