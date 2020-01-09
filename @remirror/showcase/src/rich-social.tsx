@@ -68,6 +68,7 @@ export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
       userData={userMatches}
       tagData={tagMatches}
       onMentionChange={onChange}
+      characterLimit={500}
     />
   );
 };
