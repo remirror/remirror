@@ -3,6 +3,9 @@
   "files": [],
   "references": [
     {
+      "path": "@remirror/core/tsconfig.prod.json"
+    },
+    {
       "path": "@remirror/core-constants/tsconfig.prod.json"
     },
     {
@@ -16,9 +19,6 @@
     },
     {
       "path": "@remirror/core-utils/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/core/tsconfig.prod.json"
     },
     {
       "path": "@remirror/dev/tsconfig.prod.json"
@@ -57,6 +57,9 @@
       "path": "@remirror/extension-mention/tsconfig.prod.json"
     },
     {
+      "path": "@remirror/react/tsconfig.prod.json"
+    },
+    {
       "path": "@remirror/react-hooks/tsconfig.prod.json"
     },
     {
@@ -75,10 +78,10 @@
       "path": "@remirror/react-utils/tsconfig.prod.json"
     },
     {
-      "path": "@remirror/react/tsconfig.prod.json"
+      "path": "@remirror/showcase/tsconfig.prod.json"
     },
     {
-      "path": "@remirror/showcase/tsconfig.prod.json"
+      "path": "@remirror/ui/tsconfig.prod.json"
     },
     {
       "path": "@remirror/ui-a11y-status/tsconfig.prod.json"
@@ -100,9 +103,6 @@
     },
     {
       "path": "@remirror/ui-text/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/ui/tsconfig.prod.json"
     },
     {
       "path": "packages/jest-prosemirror/tsconfig.prod.json"

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export interface RefParams<GRefKey extends string = 'ref'> 
+export interface RefParams<GRefKey = 'ref'> 
 ```
 
 ## Properties

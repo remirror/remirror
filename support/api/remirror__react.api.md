@@ -189,7 +189,7 @@ export type RefKeyRootProps<GRefKey extends string = 'ref'> = {
 } & PlainObject;
 
 // @public (undocumented)
-export interface RefParams<GRefKey extends string = 'ref'> {
+export interface RefParams<GRefKey = 'ref'> {
     refKey?: GRefKey;
 }
 

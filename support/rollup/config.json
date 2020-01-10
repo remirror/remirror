@@ -6,6 +6,10 @@
       "name": "@remirror/cli"
     },
     {
+      "path": "@remirror/core",
+      "name": "@remirror/core"
+    },
+    {
       "path": "@remirror/core-constants",
       "name": "@remirror/core-constants"
     },
@@ -24,10 +28,6 @@
     {
       "path": "@remirror/core-utils",
       "name": "@remirror/core-utils"
-    },
-    {
-      "path": "@remirror/core",
-      "name": "@remirror/core"
     },
     {
       "path": "@remirror/dev",
@@ -78,6 +78,10 @@
       "name": "@remirror/extension-mention"
     },
     {
+      "path": "@remirror/react",
+      "name": "@remirror/react"
+    },
+    {
       "path": "@remirror/react-hooks",
       "name": "@remirror/react-hooks"
     },
@@ -102,16 +106,16 @@
       "name": "@remirror/react-utils"
     },
     {
-      "path": "@remirror/react",
-      "name": "@remirror/react"
-    },
-    {
       "path": "@remirror/showcase",
       "name": "@remirror/showcase"
     },
     {
       "path": "@remirror/test-fixtures",
       "name": "@remirror/test-fixtures"
+    },
+    {
+      "path": "@remirror/ui",
+      "name": "@remirror/ui"
     },
     {
       "path": "@remirror/ui-a11y-status",
@@ -142,10 +146,6 @@
       "name": "@remirror/ui-text"
     },
     {
-      "path": "@remirror/ui",
-      "name": "@remirror/ui"
-    },
-    {
       "path": "packages/jest-prosemirror",
       "name": "jest-prosemirror"
     },
@@ -171,12 +171,12 @@
     }
   ],
   "dependencies": {
+    "@remirror/core": "@remirror/core",
     "@remirror/core-constants": "@remirror/core-constants",
     "@remirror/core-extensions": "@remirror/core-extensions",
     "@remirror/core-helpers": "@remirror/core-helpers",
     "@remirror/core-types": "@remirror/core-types",
     "@remirror/core-utils": "@remirror/core-utils",
-    "@remirror/core": "@remirror/core",
     "@remirror/dev": "@remirror/dev",
     "@remirror/editor-markdown": "@remirror/editor-markdown",
     "@remirror/editor-social": "@remirror/editor-social",
@@ -189,15 +189,16 @@
     "@remirror/extension-epic-mode": "@remirror/extension-epic-mode",
     "@remirror/extension-image": "@remirror/extension-image",
     "@remirror/extension-mention": "@remirror/extension-mention",
+    "@remirror/react": "@remirror/react",
     "@remirror/react-hooks": "@remirror/react-hooks",
     "@remirror/react-node-view": "@remirror/react-node-view",
     "@remirror/react-portals": "@remirror/react-portals",
     "@remirror/react-renderer": "@remirror/react-renderer",
     "@remirror/react-ssr": "@remirror/react-ssr",
     "@remirror/react-utils": "@remirror/react-utils",
-    "@remirror/react": "@remirror/react",
     "@remirror/showcase": "@remirror/showcase",
     "@remirror/test-fixtures": "@remirror/test-fixtures",
+    "@remirror/ui": "@remirror/ui",
     "@remirror/ui-a11y-status": "@remirror/ui-a11y-status",
     "@remirror/ui-buttons": "@remirror/ui-buttons",
     "@remirror/ui-dropdown": "@remirror/ui-dropdown",
@@ -205,7 +206,6 @@
     "@remirror/ui-menus": "@remirror/ui-menus",
     "@remirror/ui-modal": "@remirror/ui-modal",
     "@remirror/ui-text": "@remirror/ui-text",
-    "@remirror/ui": "@remirror/ui",
     "jest-prosemirror": "packages/jest-prosemirror",
     "jest-remirror": "packages/jest-remirror",
     "multishift": "packages/multishift",

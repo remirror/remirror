@@ -52,6 +52,12 @@ export enum NodeGroup {
 export const NULL_CHARACTER = "\0";
 
 // @public
+export enum RemirrorClassName {
+    // (undocumented)
+    Extension = "$$RemirrorExtension"
+}
+
+// @public
 export const SELECTED_NODE_CLASS_NAME = "ProseMirror-selectednode";
 
 // @public

@@ -1,7 +1,8 @@
 {
   "__AUTO_GENERATED__": "To update run: `yarn generate:json`",
-  "extends": "./tsconfig.json",
+  "extends": "../../support/tsconfig.base.json",
   "compilerOptions": {
+    "outDir": "lib",
     "baseUrl": "src",
     "paths": {},
     "composite": true,

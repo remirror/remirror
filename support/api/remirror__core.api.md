@@ -44,6 +44,7 @@ import { PlainObject } from '@remirror/core-types';
 import { PluginKey } from 'prosemirror-state';
 import { PortalContainer } from '@remirror/react-portals';
 import { ProsemirrorPlugin } from '@remirror/core-types';
+import { RemirrorClassName } from '@remirror/core-constants';
 import { RemirrorThemeContextType } from '@remirror/core-types';
 import { StringKey } from '@remirror/core-types';
 import { Suggester } from 'prosemirror-suggest';
@@ -110,6 +111,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
     get pluginKey(): PluginKey;
     readonly _T: GType;
     get tags(): Array<Tags | string>;
+    toString(): RemirrorClassName;
     get type(): ExtensionType;
 }
 

@@ -89,7 +89,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
 
 // @public (undocumented)
 export interface SocialEditorProps extends Partial<ManagedRemirrorProviderProps<SocialExtensions>>, Pick<RemirrorManagerProps, 'extensions'> {
-    hideCharacterIndicator?: boolean;
+    characterLimit?: number | null;
     onMentionChange(params?: OnMentionChangeParams): void;
     onUrlsChange?(params: {
         set: Set<string>;

@@ -1,5 +1,12 @@
 [
   {
+    "name": "@remirror/core",
+    "path": "@remirror/core/lib/dist/core.esm.js",
+    "limit": "70 KB",
+    "ignore": ["@emotion/core", "@types/prosemirror-view", "@types/react", "prosemirror-view", "react"],
+    "running": false
+  },
+  {
     "name": "@remirror/core-constants",
     "path": "@remirror/core-constants/lib/dist/core-constants.esm.js",
     "limit": "2 KB",
@@ -25,13 +32,6 @@
     "path": "@remirror/core-utils/lib/dist/core-utils.esm.js",
     "limit": "50 KB",
     "ignore": [],
-    "running": false
-  },
-  {
-    "name": "@remirror/core",
-    "path": "@remirror/core/lib/dist/core.esm.js",
-    "limit": "70 KB",
-    "ignore": ["@emotion/core", "@types/prosemirror-view", "@types/react", "prosemirror-view", "react"],
     "running": false
   },
   {
@@ -112,6 +112,13 @@
     "running": false
   },
   {
+    "name": "@remirror/react",
+    "path": "@remirror/react/lib/dist/react.esm.js",
+    "limit": "115 KB",
+    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "running": false
+  },
+  {
     "name": "@remirror/react-hooks",
     "path": "@remirror/react-hooks/lib/dist/react-hooks.esm.js",
     "limit": "10 KB",
@@ -147,10 +154,10 @@
     "running": false
   },
   {
-    "name": "@remirror/react",
-    "path": "@remirror/react/lib/dist/react.esm.js",
-    "limit": "115 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "name": "@remirror/ui",
+    "path": "@remirror/ui/lib/dist/ui.esm.js",
+    "limit": "20 KB",
+    "ignore": ["@emotion/core", "@types/react", "react"],
     "running": false
   },
   {
@@ -207,13 +214,6 @@
     "path": "@remirror/ui-text/lib/dist/ui-text.esm.js",
     "limit": "20 KB",
     "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
-    "running": false
-  },
-  {
-    "name": "@remirror/ui",
-    "path": "@remirror/ui/lib/dist/ui.esm.js",
-    "limit": "20 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"],
     "running": false
   },
   {

@@ -1,4 +1,24 @@
 {
-  "extends": "./tsconfig.lint.json",
+  "extends": "./support/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "node",
+      "jest",
+      "jest-extended",
+      "jest-axe",
+      "@testing-library/jest-dom/extend-expect",
+      "jest-emotion",
+      "snapshot-diff",
+      "jest-enzyme",
+      "jest-environment-enzyme",
+      "jest-environment-puppeteer",
+      "expect-puppeteer",
+      "puppeteer"
+    ],
+    "noEmit": true,
+    "declaration": false,
+    "skipLibCheck": true
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["./support/dts-jest/**", "**/dist/", "**/lib/", "dist", "lib"]
 }

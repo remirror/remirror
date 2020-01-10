@@ -359,6 +359,6 @@ export const ul: (...args: (string | pm.TaggedProsemirrorNode<any> | pm.TaggedFl
 
 // Warnings were encountered during analysis:
 //
-// src/jest-prosemirror-editor.ts:519:7 - (ae-forgotten-export) The symbol "FireEventAtPositionParams" needs to be exported by the entry point index.d.ts
+// src/jest-prosemirror-editor.ts:520:7 - (ae-forgotten-export) The symbol "FireEventAtPositionParams" needs to be exported by the entry point index.d.ts
 
 ```

@@ -5,14 +5,7 @@
     "target": "esnext",
     "lib": ["dom", "esnext"],
     "jsx": "react",
-    "types": [
-      "jest",
-      "jest-extended",
-      "jest-axe",
-      "@testing-library/jest-dom/extend-expect",
-      "jest-emotion",
-      "snapshot-diff"
-    ],
+    "types": ["node", "jest"],
     "moduleResolution": "node",
     "noImplicitReturns": true,
     "sourceMap": true,
