@@ -52,5 +52,8 @@
     "prosemirror",
     "snapshots",
     "tests"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

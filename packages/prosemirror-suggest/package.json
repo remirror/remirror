@@ -30,6 +30,9 @@
     "@types/prosemirror-view": "^1.11.0",
     "prosemirror-view": "^1.11.1"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "cjs": "lib/dist/prosemirror-suggest.cjs.js",
   "meta": {
     "sizeLimit": "90 KB"

@@ -25,6 +25,9 @@
     "events",
     "keyboard"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "cjs": "lib/dist/test-keyboard.cjs.js",
   "meta": {
     "sizeLimit": "10 KB"

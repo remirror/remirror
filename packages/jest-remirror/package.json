@@ -43,5 +43,8 @@
     "react",
     "ssr",
     "text editor"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
