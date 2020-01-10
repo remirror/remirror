@@ -10,7 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      -name: checkout code repository
+        uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
 
       - name: get yarn cache
         id: yarn-cache
