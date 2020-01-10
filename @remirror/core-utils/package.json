@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-utils",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/core-utils",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "main": "lib/index.js",
   "module": "lib/dist/core-utils.esm.js",
   "files": [
@@ -16,9 +16,9 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core-constants": "^0.7.2",
-    "@remirror/core-helpers": "^0.7.2",
-    "@remirror/core-types": "^0.7.2",
+    "@remirror/core-constants": "^0.7.3",
+    "@remirror/core-helpers": "^0.7.3",
+    "@remirror/core-types": "^0.7.3",
     "@types/min-document": "^2.19.0",
     "@types/node": ">=12.11.2",
     "@types/prosemirror-commands": "^1.0.1",
