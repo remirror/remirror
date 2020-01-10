@@ -1,5 +1,5 @@
 const { resolve, join, relative } = require('path');
-const { getPackages } = require('@lerna/project');
+const getWorkspaces = require('get-workspaces').default;
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
@@ -44,13 +44,16 @@ let packages;
 
 const getAllDependencies = () => {
   if (!packages) {
-    packages = getPackages().then(pkgs =>
-      pkgs.map(pkg => ({
-        ...pkg.toJSON(),
-        location: pkg.location,
-        rootPath: pkg.rootPath,
-      })),
-    );
+    packages = getWorkspaces().then(pkgs => {
+      if (!pkgs) {
+        return [];
+      }
+
+      return pkgs.map(pkg => ({
+        ...pkg.config,
+        location: pkg.dir,
+      }));
+    });
   }
 
   return packages;

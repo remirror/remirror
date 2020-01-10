@@ -81,29 +81,3 @@ jobs:
       - publish: $(System.DefaultWorkingDirectory)/e2e/__failed-diffs__
         condition: failed()
         artifact: ImageSnapshots
-
-  - ${{ if eq(parameters.name, 'Linux') }}:
-      - job: ${{ parameters.name }}PublishCIBuildToNpm
-        variables:
-          - group: remirror-secrets
-        dependsOn:
-          - ${{ parameters.name }}Checks
-          - ${{ parameters.name }}UnitTests
-          - ${{ parameters.name }}SizeChecks
-          - macOSChromeIntegrationTests
-        # Only run on canary when not a scheduled build.
-        condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/canary'), notIn(variables['Build.Reason'], 'Schedule', 'PullRequest'))
-        pool:
-          vmImage: ${{ parameters.vmImage }}
-        steps:
-          - template: pipeline-yarn-install.yml
-          - template: pipeline-restore-build.yml
-          - bash: echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN}" > .npmrc 2> /dev/null
-            displayName: Authenticate npm for lerna
-            env:
-              NPM_AUTH_TOKEN: $(npmAuthToken)
-          - bash: yarn lerna:publish:ci
-            displayName: Publish canary build to NPM
-            env:
-              NPM_AUTH_TOKEN: $(npmAuthToken)
-              CI: 'true'

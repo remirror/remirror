@@ -13,5 +13,5 @@ steps:
     displayName: Cache Yarn packages
   - bash: yarn audit
     displayName: 'Check for vulnerabilities'
-  - bash: yarn --pure-lockfile
+  - bash: yarn ci
     displayName: 'Install dependencies'
