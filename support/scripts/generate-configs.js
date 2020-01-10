@@ -29,6 +29,7 @@ const configs = {
   tsconfig: 'support/tsconfig.paths.json',
   eslint: 'support/eslint-imports.json',
   storybook: 'support/storybook/modules.json',
+  base: 'support/tsconfig.base.json',
 };
 
 const filesToPrettify = [];
@@ -119,14 +120,15 @@ const API_EXTRACTOR_CONFIG = {
   $schema:
     'https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json',
   extends: join('../../support', API_EXTRACTOR_FILENAME),
-  mainEntryPointFilePath: '<projectFolder>/lib/index.d.ts',
+  mainEntryPointFilePath: './lib/index.d.ts',
 };
 
 const TSCONFIG_PROD_FILENAME = 'tsconfig.prod.json';
 const TSCONFIG_PROD = {
   ...AUTO_GENERATED_FLAG,
-  extends: './tsconfig.json',
+  extends: '',
   compilerOptions: {
+    outDir: 'lib',
     baseUrl: 'src',
     paths: {},
   },
@@ -150,6 +152,11 @@ const generateApiExtractorConfigs = async () => {
         enabled: true,
         reportFolder: '../../support/api/',
         reportFileName: `${name}.api.md`,
+        reportTempFolder: './temp/',
+      },
+      docModel: {
+        enabled: true,
+        apiJsonFilePath: './temp/<unscopedPackageName>.api.json',
       },
     };
     const apiExtractorPath = baseDir(path, API_EXTRACTOR_FILENAME);
@@ -211,15 +218,18 @@ const generatePackageTsConfigs = async () => {
           declarationMap: true,
           rootDir: 'src',
         }
-      : { noEmit: true };
-    await writeJSON(tsConfigProdPath, {
+      : { noEmit: true, declaration: false, skipLibCheck: true };
+    const tsConfigProd = {
       ...TSCONFIG_PROD,
+      extends: relative(json.location, baseDir(configs.base)),
       compilerOptions: {
         ...TSCONFIG_PROD.compilerOptions,
         ...options,
       },
       references,
-    });
+    };
+
+    await writeJSON(tsConfigProdPath, tsConfigProd);
 
     filesToPrettify.push(tsConfigProdPath);
   };

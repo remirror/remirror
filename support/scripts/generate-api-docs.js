@@ -9,6 +9,8 @@ const {
 // const { sep } = require('path');
 const argv = require('yargs').argv;
 
+const { check, all, api, docs } = argv;
+
 const generateDocs = async (inputFolder = '', packageName = '') => {
   const outputFolder = baseDir('docs/api', packageName);
   await exec(
@@ -28,12 +30,21 @@ const runApiExtractor = async () => {
 
   packages.forEach(json => {
     const relativePath = getRelativePathFromJson(json);
-    const path = baseDir(relativePath, 'api-extractor.json');
+    const configObjectFullPath = baseDir(relativePath, 'api-extractor.json');
 
-    const config = ExtractorConfig.loadFileAndPrepare(path);
-    const result = Extractor.invoke(config, {
-      localBuild: true,
-      showVerboseMessages: true,
+    console.log(configObjectFullPath, relativePath);
+
+    const configObject = ExtractorConfig.loadFile(configObjectFullPath);
+    const extractor = ExtractorConfig.prepare({
+      configObject,
+      configObjectFullPath,
+      packageJson: json,
+      packageJsonFullPath: baseDir(relativePath, 'package.json'),
+    });
+
+    const result = Extractor.invoke(extractor, {
+      localBuild: !check,
+      // showVerboseMessages: true,
       typescriptCompilerFolder: baseDir('node_modules', 'typescript'),
     });
 
@@ -41,9 +52,10 @@ const runApiExtractor = async () => {
       console.info(
         `API Extractor completed successfully with ${result.warningCount} warnings: ${json.name}`,
       );
-    } else {
+    } else if (check && result.apiReportChanged) {
       console.error(
-        `API Extractor completed with ${result.errorCount} errors and ${result.warningCount} warnings: ${json.name}`,
+        `API Extractor completed with ${result.errorCount} errors and ${result.warningCount} warnings: ${json.name}
+        \n\nRun yarn generate:api to fix this.\n\n`,
       );
       process.exitCode = 1;
     }
@@ -65,11 +77,11 @@ const runApiDocumenter = async () => {
 };
 
 const run = async () => {
-  if (argv.all || !argv.docs) {
+  if (all || !docs) {
     await runApiExtractor();
   }
 
-  if (argv.all || !argv.api) {
+  if (all || !api) {
     await runApiDocumenter();
   }
 };
