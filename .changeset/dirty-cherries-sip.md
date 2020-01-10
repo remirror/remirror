@@ -3,7 +3,6 @@
 '@remirror/core': patch
 '@remirror/core-constants': patch
 '@remirror/core-extensions': patch
-'@remirror/core-helpers': patch
 '@remirror/core-types': patch
 '@remirror/core-utils': patch
 '@remirror/dev': patch
