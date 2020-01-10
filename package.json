@@ -47,7 +47,6 @@
     "is-logged-in": "npm whoami",
     "lint": "run-s lint:*",
     "lint:es": "eslint -f friendly --ext=.tsx,.ts,.js .",
-    "lint:prettier": "prettier --check \"**/*.{json,yml,yaml,md,mdx}\" \"!docs/api/**\" \"!support/api/**\" \"!**/temp/**\" \"!docs/pages/index.mdx\"",
     "md": "node support/scripts/md.js",
     "patch": "patch-package --patch-dir support/patches",
     "prerelease": "yarn if-not-ci run-s checks:release",
