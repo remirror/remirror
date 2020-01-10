@@ -32,10 +32,7 @@
     "@types/prosemirror-test-builder": "^1.0.1",
     "@types/prosemirror-view": "^1.11.2",
     "chalk": "^3.0.0",
-    "jest-diff": "^24.9.0",
     "jest-matcher-utils": "^24.9.0",
-    "jest-snapshot": "^24.9.0",
-    "pretty-format": "24.9.0",
     "prosemirror-gapcursor": "^1.0.4",
     "prosemirror-inputrules": "^1.0.4",
     "prosemirror-model": "^1.7.4",
@@ -48,7 +45,7 @@
     "test-keyboard": "^0.7.2"
   },
   "peerDependencies": {
-    "jest": "^24.5.0"
+    "jest": "^24"
   },
   "keywords": [
     "jest",
