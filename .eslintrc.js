@@ -1,5 +1,6 @@
-const { EXCLUDE_TS } = process.env;
+const { existsSync } = require('fs');
 
+const { EXCLUDE_TS } = process.env;
 const tsProjectOptions = EXCLUDE_TS ? {} : { project: ['./tsconfig.lint.json'] };
 const tsProjectRules = EXCLUDE_TS
   ? {}
@@ -15,6 +16,19 @@ const tsProjectRules = EXCLUDE_TS
       '@typescript-eslint/prefer-includes': 'warn',
       '@typescript-eslint/prefer-string-starts-ends-with': 'warn',
     };
+const schemaJsonFilePath = `${__dirname}/docs/.cache/caches/gatsby-plugin-typegen/schema.json`;
+const graphqlRules = existsSync(schemaJsonFilePath)
+  ? {
+      'graphql/template-strings': [
+        'error',
+        {
+          env: 'apollo',
+          schemaJsonFilepath: schemaJsonFilePath,
+          tagName: 'gql',
+        },
+      ],
+    }
+  : {};
 
 module.exports = {
   parser: '@typescript-eslint/parser',
@@ -40,6 +54,7 @@ module.exports = {
     'unicorn',
     'import',
     'jsx-a11y',
+    'graphql',
   ],
   parserOptions: {
     ecmaVersion: 2018,
@@ -61,6 +76,7 @@ module.exports = {
     es6: true,
   },
   rules: {
+    ...graphqlRules,
     eqeqeq: ['error', 'always', { null: 'ignore' }],
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
     'default-case': 'warn',

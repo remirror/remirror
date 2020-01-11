@@ -2,7 +2,7 @@
 
 import { capitalize } from '@remirror/core-helpers';
 import CodeBlock from '@theme-ui/prism';
-import { ElementType, FC } from 'react';
+import { ElementType, FC, Fragment } from 'react';
 import { isString } from 'remirror';
 import { jsx } from 'theme-ui';
 
@@ -31,8 +31,7 @@ const heading = (Tag: ElementType) => {
   return Component;
 };
 
-const Pre: FC = ({ children }) => <div>{children}</div>;
-Pre.displayName = 'Pre';
+const Pre: FC = ({ children }) => <Fragment>{children}</Fragment>;
 
 export default {
   code: CodeBlock,

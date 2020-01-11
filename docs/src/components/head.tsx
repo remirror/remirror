@@ -1,11 +1,11 @@
+import { MdxFrontmatter } from 'docs/generated/gatsby.js';
 import React, { FC } from 'react';
 import { Helmet } from 'react-helmet';
 
 import pkg from '../../package.json';
-import { RootLayoutProps } from '../typings';
 
-export const Head: FC<RootLayoutProps> = ({ pageContext: { frontmatter } }) => {
-  const title = [frontmatter ? frontmatter.title : false, 'Remirror'].filter(Boolean).join(' — ');
+export const Head: FC<Pick<MdxFrontmatter, 'fullWidth' | 'title'>> = props => {
+  const title = [props ? props.title : false, 'Remirror'].filter(Boolean).join(' — ');
 
   return (
     <Helmet htmlAttributes={{ lang: 'en-GB' }}>

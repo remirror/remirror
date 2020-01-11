@@ -113,7 +113,7 @@ yarn stop:checks
 
 ### Contributing
 
-Please read [contributing.md](docs/pages/contributing.md) for details on our code of conduct, and the process for submitting pull requests.
+Please read [contributing.md](docs/contributing.md) for details on our code of conduct, and the process for submitting pull requests.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ifiokjr/remirror)
 

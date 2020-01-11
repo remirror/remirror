@@ -1,3 +1,7 @@
+import { MdxFrontmatter } from 'docs/generated/gatsby.js';
+import { ReplaceComponentRendererArgs } from 'gatsby';
+import { Except } from 'type-fest';
+
 export interface RootLayoutProps {
   path: string;
   location: Location;
@@ -6,6 +10,8 @@ export interface RootLayoutProps {
   pageContext: PageContext;
   pathContext: PageContext;
 }
+
+export type TemplateProps = Except<ReplaceComponentRendererArgs['props'], 'children'>;
 
 interface PageResources {
   json: Json;
@@ -44,3 +50,5 @@ interface Location {
   state?: any;
   key: string;
 }
+
+export type FrontMatterProps = Pick<MdxFrontmatter, 'fullWidth' | 'title'>;

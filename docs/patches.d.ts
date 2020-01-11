@@ -1,3 +1,10 @@
+declare module '*.gql' {
+  import { DocumentNode } from 'graphql';
+
+  const value: DocumentNode;
+  export = value;
+}
+
 declare module '@theme-ui/sidenav' {
   import { MDXProviderComponentsProp } from '@mdx-js/react';
   import { FC, ReactNode, RefForwardingComponent } from 'react';
@@ -80,131 +87,6 @@ declare module '*.mdx' {
 declare module '*.md' {
   const MDXComponent: (props: any) => JSX.Element;
   export default MDXComponent;
-}
-
-declare module '@mdx-js/react' {
-  import { Component, ComponentType, ReactNode, StyleHTMLAttributes } from 'react';
-
-  export interface MDXProviderComponentsProp {
-    /**
-     * The wrapper component can be used to set the layout for the MDX document.
-     * It’s often used to set container width, borders, background colors, etc.
-     * However, it’s also unique because it has access to the children passed to
-     * it.
-     *
-     * This means that you can do powerful things with the MDX document
-     * elements.
-     */
-    wrapper: ComponentType<any>;
-    /**
-     * Paragraph
-     */
-    p?: ComponentType<any>;
-    /**
-     * Heading 1	#
-     */
-    h1?: ComponentType<any>;
-    /**
-     * Heading 2	##
-     */
-    h2?: ComponentType<any>;
-    /**
-     * Heading 3	###
-     */
-    h3?: ComponentType<any>;
-    /**
-     * Heading 4	####
-     */
-    h4?: ComponentType<any>;
-    /**
-     * Heading 5	#####
-     */
-    h5?: ComponentType<any>;
-    /**
-     * Heading 6	######
-     */
-    h6?: ComponentType<any>;
-    /**
-     * Thematic break	***
-     */
-    thematicBreak?: ComponentType<any>;
-    /**
-     * Blockquote	>
-     */
-    blockquote?: ComponentType<any>;
-    /**
-     * List	-
-     */
-    ul?: ComponentType<any>;
-    /**
-     * Ordered list	1.
-     */
-    ol?: ComponentType<any>;
-    /**
-     * List item
-     */
-    li?: ComponentType<any>;
-    /**
-     * Table
-     */
-    table?: ComponentType<any>;
-    /**
-     * Table row
-     */
-    tr?: ComponentType<any>;
-    /**
-     * Table Cell
-     */
-    th?: ComponentType<any>;
-    td?: ComponentType<any>;
-    /**
-     * Pre
-     */
-    pre?: ComponentType<any>;
-    /**
-     * Code	`\code```
-     */
-    code?: ComponentType<any>;
-    /**
-     * Emphasis	_emphasis_
-     */
-    em?: ComponentType<any>;
-    /**
-     * Strong	**strong**
-     */
-    strong?: ComponentType<any>;
-    /**
-     * Delete	~~strikethrough~~
-     */
-    delete?: ComponentType<any>;
-    /**
-     * InlineCode	`inlineCode`
-     */
-    inlineCode?: ComponentType<any>;
-    /**
-     * Break	---
-     */
-    hr?: ComponentType<any>;
-    /**
-     * Link	<https://mdxjs.com> or [MDX](https://mdxjs.com)
-     */
-    a?: ComponentType<any>;
-    /**
-     * Image	![alt](https://mdx-logo.now.sh)
-     */
-    img?: ComponentType<any>;
-
-    /**
-     * Any other components we wish to define
-     */
-    [key: string]: ReactNode;
-  }
-  export interface MDXProps {
-    children: React.ReactNode;
-    components: MDXProviderComponentsProp;
-  }
-
-  export class MDXProvider extends Component<MDXProps> {}
 }
 
 declare module 'compass-vertical-rhythm' {

@@ -1,21 +1,27 @@
 /** @jsx jsx */
 
 import { Global } from '@emotion/core';
-import { FC, useRef, useState } from 'react';
+import { FC, Fragment, useRef, useState } from 'react';
 import { Container, jsx, Layout as LayoutUI, Main, Styled } from 'theme-ui';
 
-import EditLink from '../components/edit-link';
-import Footer from '../components/footer';
-import Head from '../components/head';
-import Header from '../components/header';
-import Pagination from '../components/pagination';
-import Sidebar from '../components/sidebar';
-import SkipLink from '../components/skip-link';
-import { RootLayoutProps } from '../typings';
+import { FrontMatterProps } from '../typings';
+import EditLink from './edit-link';
+import Footer from './footer';
+import Head from './head';
+import Header from './header';
+import Pagination from './pagination';
+import Sidebar from './sidebar';
+import SkipLink from './skip-link';
 
-export const Layout: FC<RootLayoutProps> = ({ children, ...props }) => {
-  const { frontmatter } = props.pageContext;
-  const { fullWidth = false } = frontmatter ? frontmatter : {};
+interface LayoutProps extends FrontMatterProps {
+  /**
+   * The file path relative to the root of this repository
+   */
+  relativePath: string;
+}
+
+export const Layout: FC<LayoutProps> = ({ children, relativePath, ...props }) => {
+  const { fullWidth = false } = props ?? {};
   const [menuOpen, setMenuOpen] = useState(false);
   const nav = useRef<HTMLDivElement>(null);
 
@@ -72,8 +78,12 @@ export const Layout: FC<RootLayoutProps> = ({ children, ...props }) => {
                 }}
               >
                 {children}
-                <EditLink />
-                {!fullWidth && <Pagination />}
+                {!fullWidth && (
+                  <Fragment>
+                    <EditLink relativePath={relativePath} />
+                    <Pagination />
+                  </Fragment>
+                )}
               </div>
             </div>
           </Container>
@@ -83,5 +93,3 @@ export const Layout: FC<RootLayoutProps> = ({ children, ...props }) => {
     </Styled.root>
   );
 };
-
-export default Layout;

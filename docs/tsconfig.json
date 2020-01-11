@@ -1,4 +1,9 @@
 {
   "extends": "../support/tsconfig.base.json",
-  "compilerOptions": {}
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "lib": ["dom", "esnext"],
+    "jsx": "react"
+  }
 }
