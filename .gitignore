@@ -114,9 +114,6 @@ dependencies/**/yarn.lock
 ./**/.vscode
 
 
-#
-.vscode
-
 /report.*.json
 
 .config.json
@@ -134,3 +131,4 @@ storybook-static
 docs/public/**
 *.tsbuildinfo
 e2e/__failed-diffs__
+cc-reporter

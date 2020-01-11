@@ -43,18 +43,17 @@ jobs:
       - name: typecheck project
         run: yarn typecheck
 
-      - name: run unit tests & publish code coverage
+      - name: run unit tests
+        run: yarn test
+
+      - name: publish code coverage report
         uses: paambaati/codeclimate-action@v2.4.0
         if: github.ref == 'refs/heads/canary'
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: yarn test
-          debug: true
-
-      - name: run unit tests
-        if: github.ref != 'refs/heads/canary'
-        run: yarn test
+          coverageCommand: 'echo Coverage'
+          debug: false
 
       - name: build project
         run: yarn build
