@@ -6,8 +6,7 @@
     "baseUrl": "src",
     "paths": {},
     "noEmit": true,
-    "declaration": false,
-    "skipLibCheck": true
+    "declaration": false
   },
   "exclude": [
     "lib",

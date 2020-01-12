@@ -218,7 +218,7 @@ const generatePackageTsConfigs = async () => {
           declarationMap: true,
           rootDir: 'src',
         }
-      : { noEmit: true, declaration: false, skipLibCheck: true };
+      : { noEmit: true, declaration: false };
     const tsConfigProd = {
       ...TSCONFIG_PROD,
       extends: relative(json.location, baseDir(configs.base)),

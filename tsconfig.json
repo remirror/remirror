@@ -17,7 +17,7 @@
     ],
     "noEmit": true,
     "declaration": false,
-    "skipLibCheck": true
+    "skipLibCheck": false
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["./support/dts-jest/**", "**/dist/", "**/lib/", "dist", "lib"]
