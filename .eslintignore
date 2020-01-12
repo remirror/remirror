@@ -13,3 +13,5 @@ examples/with-razzle/build/**
 public
 coverage
 docs/generated/*
+docs/.cache/
+docs/gatsby-config.js

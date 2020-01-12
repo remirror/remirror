@@ -22,7 +22,7 @@ describe('Wysiwyg Showcase', () => {
     await selectAll();
     await page.keyboard.press('Delete');
     await $editor.type(expected);
-    await expect($editor).toMatch(expected);
+    await expect($editor).resolves.toMatch(expected);
   });
 
   describe('codeBlock', () => {

@@ -1,21 +1,21 @@
 const { existsSync } = require('fs');
 
-const { EXCLUDE_TS } = process.env;
-const tsProjectOptions = EXCLUDE_TS ? {} : { project: ['./tsconfig.lint.json'] };
-const tsProjectRules = EXCLUDE_TS
-  ? {}
-  : {
-      '@typescript-eslint/prefer-nullish-coalescing': 'error',
-      '@typescript-eslint/prefer-readonly': 'warn',
-      '@typescript-eslint/await-thenable': 'warn',
-      '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
-      '@typescript-eslint/no-unnecessary-type-arguments': 'warn',
-      '@typescript-eslint/restrict-plus-operands': 'warn',
-      '@typescript-eslint/no-misused-promises': 'warn',
-      // '@typescript-eslint/no-unnecessary-condition': ['warn', { ignoreRhs: true }], // TODO : test for false positives again
-      '@typescript-eslint/prefer-includes': 'warn',
-      '@typescript-eslint/prefer-string-starts-ends-with': 'warn',
-    };
+const tsProjectOptions = { project: ['./tsconfig.lint.json'] };
+
+const tsProjectRules = {
+  '@typescript-eslint/prefer-nullish-coalescing': 'error',
+  '@typescript-eslint/prefer-readonly': 'warn',
+  '@typescript-eslint/await-thenable': 'warn',
+  '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
+  '@typescript-eslint/no-unnecessary-type-arguments': 'warn',
+  '@typescript-eslint/restrict-plus-operands': 'warn',
+  '@typescript-eslint/no-misused-promises': 'warn',
+  '@typescript-eslint/prefer-includes': 'warn',
+  '@typescript-eslint/prefer-string-starts-ends-with': 'warn',
+  // TODO : test for false positives again
+  // '@typescript-eslint/no-unnecessary-condition': ['warn', { ignoreRhs: true }],
+};
+
 const schemaJsonFilePath = `${__dirname}/docs/.cache/caches/gatsby-plugin-typegen/schema.json`;
 const graphqlRules = existsSync(schemaJsonFilePath)
   ? {
@@ -37,12 +37,12 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended', // Disables incompatible eslint:recommended settings
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
-    // 'plugin:jsx-a11y/recommended',
     'plugin:react/recommended',
     'plugin:import/typescript',
     'prettier',
     'prettier/@typescript-eslint',
     'prettier/react',
+    // 'plugin:jsx-a11y/recommended',
   ],
   plugins: [
     'simple-import-sort',
