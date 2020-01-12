@@ -32,27 +32,44 @@ describe('Social Showcase', () => {
     it('should have a social editor', async () => {
       await $editor.focus();
       await $editor.type('This is text https://url.com');
-      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
-        `This is text <a href="https://url.com" role="presentation">https://url.com</a>`,
-      );
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`
+              This is text
+              <a href="https://url.com"
+                 role="presentation"
+              >
+                https://url.com
+              </a>
+            `);
     });
 
     it('should parse simple urls', async () => {
       await $editor.type('url.com');
-      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
-        `<a href="http://url.com" role="presentation">url.com</a>`,
-      );
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`
+              <a href="http://url.com"
+                 role="presentation"
+              >
+                url.com
+              </a>
+            `);
       await press({ key: 'Backspace' });
-      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
-        `<a href="http://url.co" role="presentation">url.co</a>`,
-      );
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`
+              <a href="http://url.co"
+                 role="presentation"
+              >
+                url.co
+              </a>
+            `);
       await press({ key: 'Backspace' });
       await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`url.c`);
 
       await type({ text: 'o.uk' });
-      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
-        `<a href="http://url.co.uk" role="presentation">url.co.uk</a>`,
-      );
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`
+              <a href="http://url.co.uk"
+                 role="presentation"
+              >
+                url.co.uk
+              </a>
+            `);
     });
 
     // TODO The 'Home' key press doesn't work on Firefox
@@ -62,9 +79,14 @@ describe('Social Showcase', () => {
       await $editor.type('this.com is test.com');
       await press({ key: 'Home' }); // ? This does nothing on Firefox
       await type({ text: 'split.com ' });
-      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
-        `this is the first <a href="http://url.com" role="presentation">url.com</a>`,
-      );
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`
+              this is the first
+              <a href="http://url.com"
+                 role="presentation"
+              >
+                url.com
+              </a>
+            `);
 
       await press({ key: 'ArrowUp' });
       await press({ key: 'End' });
@@ -240,33 +262,42 @@ describe('Social Showcase', () => {
       await $editor.type('#awesome hello @ab 😀 google.com', { delay: 10 });
       await press({ key: 'Enter' });
       await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`
-              <a
-                  href="/awesome"
-                  role="presentation"
-                  class="mention mention-tag"
-                  data-mention-id="awesome"
-                  data-mention-name="tag"
-                  >#awesome</a
-                >
-                hello
-                <a
-                  href="/ab"
-                  role="presentation"
-                  class="mention mention-at"
-                  data-mention-id="ab"
-                  data-mention-name="at"
-                  >@ab</a
-                >
-                😀 <a href="http://google.com" role="presentation">google.com</a>
+              <a href="/awesome"
+                 role="presentation"
+                 class="mention mention-tag"
+                 data-mention-id="awesome"
+                 data-mention-name="tag"
+              >
+                #awesome
+              </a>
+              hello
+              <a href="/ab"
+                 role="presentation"
+                 class="mention mention-at"
+                 data-mention-id="ab"
+                 data-mention-name="at"
+              >
+                @ab
+              </a>
+              😀
+              <a href="http://google.com"
+                 role="presentation"
+              >
+                google.com
+              </a>
             `);
     });
 
     it('should not replace emoji with link when no space between', async () => {
       await $editor.type('😀google.com', { delay: 10 });
       await press({ key: 'Enter' });
-      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
-        `<a href="http://😀google.com" role="presentation">😀google.com</a>`,
-      );
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`
+              <a href="http://😀google.com"
+                 role="presentation"
+              >
+                😀google.com
+              </a>
+            `);
     });
   });
 });

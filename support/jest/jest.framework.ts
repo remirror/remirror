@@ -37,3 +37,15 @@ expect.addSnapshotSerializer({
 });
 
 expect.addSnapshotSerializer(prosemirrorSerializer);
+
+interface PuppeteerHtml {
+  _: 'HTML';
+  html: string;
+}
+
+expect.addSnapshotSerializer({
+  test: val => val?._ === 'HTML',
+  print(val: PuppeteerHtml) {
+    return toDiffableHtml(val.html).trim();
+  },
+});

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/await-thenable */
 import { getDocument, queries } from 'pptr-testing-library';
 import { ElementHandle } from 'puppeteer';
 
@@ -22,7 +23,7 @@ describe('Wysiwyg Showcase', () => {
     await selectAll();
     await page.keyboard.press('Delete');
     await $editor.type(expected);
-    await expect($editor).resolves.toMatch(expected);
+    await expect($editor).toMatch(expected);
   });
 
   describe('codeBlock', () => {

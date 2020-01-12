@@ -41,6 +41,9 @@ declare namespace jasmine {
   let currentTest: CustomReporterResult;
 }
 
+/**
+ * The following code block allows the current test name to be read.
+ */
 jasmine.getEnv().addReporter({
   specStarted: result => {
     jasmine.currentTest = result;

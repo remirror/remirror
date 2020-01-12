@@ -37,5 +37,4 @@ module.exports = {
   ],
   globalSetup: './jest.puppeteer.setup.ts',
   globalTeardown: './jest.puppeteer.teardown.ts',
-  snapshotSerializers: [`${__dirname}/src/helpers/serializers/html-serializer`],
 };
