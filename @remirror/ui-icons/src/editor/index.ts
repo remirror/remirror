@@ -30,6 +30,8 @@ export * from './highlighter-icon';
 export * from './i-cursor-icon';
 export * from './icons-icon';
 export * from './indent-icon';
+export * from './images-regular-icon';
+export * from './images-solid-icon';
 export * from './italic-icon';
 export * from './link-icon';
 export * from './list-alt-icon';
