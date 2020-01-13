@@ -10,6 +10,7 @@ Clone the remirror repository, install the dependencies, and then change to this
 git clone git@github.com:ifiokjr/remirror.git
 cd remirror
 yarn
+yarn build
 cd examples/with-next
 yarn dev
 ```
