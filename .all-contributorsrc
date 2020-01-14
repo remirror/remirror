@@ -51,6 +51,16 @@
         "doc",
         "code"
       ]
+    },
+    {
+      "login": "charlex",
+      "name": "Charley Bodkin",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1542740?v=4",
+      "profile": "http://yellowbrim.com",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
