@@ -32,6 +32,15 @@
         "example",
         "code"
       ]
+    },
+    {
+      "login": "aried3r",
+      "name": "Anton Rieder",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1301152?v=4",
+      "profile": "https://github.com/aried3r",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
