@@ -41,6 +41,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "aarongreenlee",
+      "name": "Aaron Greenlee",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/264508?v=4",
+      "profile": "https://aarongreenlee.com/",
+      "contributions": [
+        "doc",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
