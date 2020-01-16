@@ -1,16 +1,11 @@
 {
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "eslint.enable": true,
   "eslint.lintTask.enable": true,
   "eslint.lintTask.options": "--ext .js,.jsx,.ts,.tsx .",
-  "prettier.disableLanguages": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-  ],
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "javascript.format.enable": false,
@@ -18,5 +13,6 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "prettier.ignorePath": ".eslintignore"
 }

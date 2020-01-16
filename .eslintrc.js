@@ -36,7 +36,6 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended', // Disables incompatible eslint:recommended settings
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
     'plugin:react/recommended',
     'plugin:import/typescript',
     'prettier',
@@ -50,7 +49,6 @@ module.exports = {
     '@typescript-eslint',
     'react-hooks',
     'react',
-    'prettier',
     'unicorn',
     'import',
     'jsx-a11y',
