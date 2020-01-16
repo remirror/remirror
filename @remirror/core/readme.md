@@ -1,12 +1,15 @@
 # @remirror/core
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/core.svg?)](https://bundlephobia.com/result?p=@remirror/core) [![npm](https://img.shields.io/npm/dm/@remirror/core.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/core)
+[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/core.svg?)](https://bundlephobia.com/result?p=@remirror/core)
+[![npm](https://img.shields.io/npm/dm/@remirror/core.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/core)
 
-This packages provides the core building blocks for the remirror editing experience. It provides the api for extensions and TypeScript types used throughout the other packages.
+This packages provides the core building blocks for the remirror editing experience. It provides the api for
+extensions and TypeScript types used throughout the other packages.
 
 It should rarely be used independently.
 
-Note that this package itself is framework agnostic and while remirror today is targeted at react users it's possible to widen the scope to `angular`, `vue` and other popular framework libraries.
+Note that this package itself is framework agnostic and while remirror today is targeted at react users it's
+possible to widen the scope to `angular`, `vue` and other popular framework libraries.
 
 ## Installation
 
@@ -16,17 +19,26 @@ yarn add @remirror/core prosemirror-view
 
 ## Extensions
 
-Extensions are the building blocks of the editing experience in remirror. They provide behaviour, plugins, [marks](https://prosemirror.net/docs/guide/#schema.marks), and [nodes](https://prosemirror.net/docs/guide/#schema.node_types) as well as configuration at instantiation for any extension.
+Extensions are the building blocks of the editing experience in remirror. They provide behaviour, plugins,
+[marks](https://prosemirror.net/docs/guide/#schema.marks), and
+[nodes](https://prosemirror.net/docs/guide/#schema.node_types) as well as configuration at instantiation for
+any extension.
 
 ### Create an extension
 
 Extension can be `Extension`, `MarkExtension` or `NodeExtension`.
 
-- `Extension` Pure extensions only concern themselves with the behaviour of the editor. For example the extension called `History` is a plain extension and it tracks all the actions and provides undo and redo commands to your configured editor.
-- `MarkExtension` These are used to add extra styling or other information to inline content. Marks are used for adding links to content, bold stying, italic and other changes which affect the content in a standard way.
-- `NodeExtension` These add make nodes available to the content of the editor. Examples include [`@remirror/extension-emoji`](../extension-emoji) and [`@remirror/extension-mention`](../extension-mention)
+- `Extension` Pure extensions only concern themselves with the behaviour of the editor. For example the
+  extension called `History` is a plain extension and it tracks all the actions and provides undo and redo
+  commands to your configured editor.
+- `MarkExtension` These are used to add extra styling or other information to inline content. Marks are used
+  for adding links to content, bold stying, italic and other changes which affect the content in a standard
+  way.
+- `NodeExtension` These add make nodes available to the content of the editor. Examples include
+  [`@remirror/extension-emoji`](../extension-emoji) and [`@remirror/extension-mention`](../extension-mention)
 
-To create an extension extend from the class provided from the core library. The following example is taken from the Strikethrough extension in the [`@remirror/core-extensions`](../core-extensions) library.
+To create an extension extend from the class provided from the core library. The following example is taken
+from the Strikethrough extension in the [`@remirror/core-extensions`](../core-extensions) library.
 
 ```ts
 import {
@@ -91,7 +103,8 @@ export class StrikeExtension extends MarkExtension {
 
 ## Extension Manager
 
-The extension manager is used to manage the extensions passed into the editor. It automatically creates the nodes and marks which are used for generating a schema.
+The extension manager is used to manage the extensions passed into the editor. It automatically creates the
+nodes and marks which are used for generating a schema.
 
 ```ts
 import { ExtensionManager, DocExtension, TextExtension } from '@remirror/core';

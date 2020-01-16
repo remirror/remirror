@@ -273,7 +273,7 @@
     "semi": true,
     "singleQuote": true,
     "trailingComma": "all",
-    "proseWrap": "preserve",
+    "proseWrap": "always",
     "endOfLine": "lf",
     "jsxSingleQuote": true,
     "overrides": [

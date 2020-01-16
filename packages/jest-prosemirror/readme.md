@@ -4,17 +4,15 @@
 
 ## The problem
 
-You want to write tests for some of your prosemirror editor but you don't know
-where to start. You know you should avoid testing implementation details and
-just want to be sure that your commands and plugins produce the correct
-underlying prosemirror state.
+You want to write tests for some of your prosemirror editor but you don't know where to start. You know you
+should avoid testing implementation details and just want to be sure that your commands and plugins produce
+the correct underlying prosemirror state.
 
 ## This solution
 
 `jest-prosemirror` takes inspiration from the
-[`testing-library`](https://github.com/testing-library/react-testing-library)
-mantra and enables you to write more intuitive tests for your prosemirror
-editor.
+[`testing-library`](https://github.com/testing-library/react-testing-library) mantra and enables you to write
+more intuitive tests for your prosemirror editor.
 
 ## Installation
 
@@ -39,8 +37,7 @@ This will automatically:
 
 - Add the jest assertions `toTransformNode` and `toEqualProsemirrorNode`.
 
-If you are using typescript then add this to your `tsconfig.json` file for
-global type support.
+If you are using typescript then add this to your `tsconfig.json` file for global type support.
 
 ```json
 {
@@ -74,8 +71,8 @@ module.exports = {
 
 ## Snapshot serializer
 
-This package exports a serializer for better snapshot testing of prosemirror
-primitives. To set this up add the following to your `jest.config.js` file.
+This package exports a serializer for better snapshot testing of prosemirror primitives. To set this up add
+the following to your `jest.config.js` file.
 
 ```js
 module.exports = {
@@ -98,8 +95,7 @@ expect.addSnapshotSerializer(prosemirrorSerializer);
 
 ### `toTransformNode`
 
-A utility from jest-prosemirror which tests that a command transforms the
-prosemirror node in the desired way.
+A utility from jest-prosemirror which tests that a command transforms the prosemirror node in the desired way.
 
 ```ts
 import { removeMark } from '@remirror/core-utils';
@@ -116,13 +112,12 @@ test('remove the mark', () => {
 
 This tests that mark has been removed by the provided command.
 
-The `to` property is optional and can be left blank to test that the node is
-identical after the transform.
+The `to` property is optional and can be left blank to test that the node is identical after the transform.
 
 ### `toEqualProsemirrorNode`
 
-Tests that two prosemirror documents are equal. Pass in the expected document
-and it checks that they are the same.
+Tests that two prosemirror documents are equal. Pass in the expected document and it checks that they are the
+same.
 
 ```ts
 import { createEditor, doc, p } from 'jest-prosemirror';
@@ -143,8 +138,8 @@ test('remove block top level node at specified position', () => {
 
 Create a test prosemirror editor.
 
-The call to create editor can be chained with various commands to enable testing
-of the editor at each step without the need for intermediate holding variables.
+The call to create editor can be chained with various commands to enable testing of the editor at each step
+without the need for intermediate holding variables.
 
 ```ts
 import { createEditor, doc, p } from 'jest-remirror';
@@ -181,8 +176,7 @@ The tagged prosemirror node to inject into the editor.
 #### options - `CreateEditorOptions`
 
 The following options which include all
-[DirectEditorProps](http://prosemirror.net/docs/ref/#view.DirectEditorProps)
-except for `state`.
+[DirectEditorProps](http://prosemirror.net/docs/ref/#view.DirectEditorProps) except for `state`.
 
 | **Property** |   **Type**    | **Default** | **Description**                                                                                          |
 | ------------ | :-----------: | :---------: | -------------------------------------------------------------------------------------------------------- |
@@ -252,15 +246,15 @@ Insert text into the editor at the current position.
 
 Jump to the specified position in the editor.
 
-**`start`** - a number position or the shorthand 'start' | 'end'. **`[end]`** -
-the option end position of the new selection.
+**`start`** - a number position or the shorthand 'start' | 'end'. **`[end]`** - the option end position of the
+new selection.
 
 #### shortcut - `(mod: string) => ReturnType<typeof createEditor>`
 
 Type a keyboard shortcut - e.g. `Mod-Enter`.
 
-**NOTE** This only simulates the events. For example an `Mod-Enter` would run
-all enter key handlers but not actually create a new line.
+**NOTE** This only simulates the events. For example an `Mod-Enter` would run all enter key handlers but not
+actually create a new line.
 
 **`mod`** - the keyboard shortcut to type
 
@@ -268,8 +262,8 @@ all enter key handlers but not actually create a new line.
 
 Simulate a keypress which is run through the editor's key handlers.
 
-**NOTE** This only simulates the events. For example an `Enter` would run all
-enter key handlers but not actually create a new line.
+**NOTE** This only simulates the events. For example an `Enter` would run all enter key handlers but not
+actually create a new line.
 
 **`char`** - the character to type
 
@@ -281,9 +275,8 @@ Fire an event in the editor (very hit and miss).
 
 #### callback - `(fn: (content: ReturnValueCallbackParams<GSchema>) => void) => ReturnType<typeof createEditor>`
 
-Callback function which receives the `start`, `end`, `state`, `view`, `schema`
-and `selection` properties and allows for easier testing of the current state of
-the editor.
+Callback function which receives the `start`, `end`, `state`, `view`, `schema` and `selection` properties and
+allows for easier testing of the current state of the editor.
 
 ## Acknowledgements
 

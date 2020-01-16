@@ -1,6 +1,7 @@
 # @remirror/extension-code-block
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/extension-code-block.svg?)](https://bundlephobia.com/result?p=@remirror/extension-code-block) [![npm](https://img.shields.io/npm/dm/@remirror/extension-code-block.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/extension-code-block)
+[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/extension-code-block.svg?)](https://bundlephobia.com/result?p=@remirror/extension-code-block)
+[![npm](https://img.shields.io/npm/dm/@remirror/extension-code-block.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/extension-code-block)
 
 Add code highlighting to your codeBlocks.
 

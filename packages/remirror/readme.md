@@ -1,6 +1,7 @@
 # remirror
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/remirror.svg?)](https://bundlephobia.com/result?p=remirror) [![npm](https://img.shields.io/npm/dm/remirror.svg?&logo=npm)](https://www.npmjs.com/package/remirror)
+[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/remirror.svg?)](https://bundlephobia.com/result?p=remirror)
+[![npm](https://img.shields.io/npm/dm/remirror.svg?&logo=npm)](https://www.npmjs.com/package/remirror)
 
 Remirror is an extensible text-editor for react, built on top of Prosemirror.
 
@@ -18,7 +19,8 @@ Remirror is an extensible text-editor for react, built on top of Prosemirror.
 yarn add remirror
 ```
 
-The following is a small example which renders a floating menu and enables the extensions `Bold`, `Italic` and `Underline`.
+The following is a small example which renders a floating menu and enables the extensions `Bold`, `Italic` and
+`Underline`.
 
 ```ts
 import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
