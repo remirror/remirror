@@ -85,8 +85,12 @@ If you're modifying a package and import helpers from another packages in the
 monorepo, ensure that the other package is referenced in the referring
 package's `package.json` file.
 
-If you add a new file, use `yarn generate:json` to ensure that the system
-understands about the existence of the new file.
+This project is using composite types and adding a new dependency to the
+project throws the build process since it's location has to explicitly be
+updated. Running `yarn generate:json` will automatically update all your
+project references so that the build still works. (It basically creates all
+the project `tsconfig.prod.json` files for you as can be seen
+[here](https://github.com/ifiokjr/remirror/blob/b096ed1dd3/support/scripts/generate-configs.js#L186-L228).)
 
 <br />
 
