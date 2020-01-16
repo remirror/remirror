@@ -2,20 +2,7 @@
 
 import { jsx } from '@emotion/core';
 import { deepMerge, isUndefined, omit, RemirrorTheme } from '@remirror/core';
-import {
-  BlockquoteExtension,
-  BoldExtension,
-  CodeExtension,
-  HardBreakExtension,
-  ItalicExtension,
-  NodeCursorExtension,
-  ParagraphExtension,
-  PlaceholderExtension,
-  SSRHelperExtension,
-  StrikeExtension,
-  UnderlineExtension,
-} from '@remirror/core-extensions';
-import { CodeBlockExtension } from '@remirror/extension-code-block';
+import { NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import {
   EmojiExtension,
   EmojiExtensionOptions,
@@ -40,10 +27,6 @@ import {
   SuggestStateMatch,
 } from 'prosemirror-suggest';
 import { Fragment, PureComponent } from 'react';
-import bash from 'refractor/lang/bash';
-import markdown from 'refractor/lang/markdown';
-import tsx from 'refractor/lang/tsx';
-import typescript from 'refractor/lang/typescript';
 
 import { socialEditorTheme } from '../social-theme';
 import {
@@ -56,8 +39,6 @@ import {
 } from '../social-types';
 import { calculateNewIndexFromArrowPress, mapToActiveIndex } from '../social-utils';
 import { SocialEditorComponent } from './social-wrapper-component';
-
-const DEFAULT_LANGUAGES = [markdown, typescript, tsx, bash];
 
 interface State {
   activeMatcher: MatchName | undefined;
@@ -391,10 +372,9 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
       defaultLanguage,
       formatter,
       supportedLanguages: supportedLanguagesProp = [],
-      rich,
+      extensionElements,
       ...rest
     } = this.remirrorProps;
-    const supportedLanguages = [...DEFAULT_LANGUAGES, ...supportedLanguagesProp];
     return (
       <RemirrorThemeProvider theme={this.theme}>
         <RemirrorManager extensions={extensions}>
@@ -426,24 +406,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
             onSuggestionExit={this.onEmojiSuggestionExit}
           />
 
-          {rich ? <RemirrorExtension Constructor={ParagraphExtension} /> : null}
-          {rich ? <RemirrorExtension Constructor={BoldExtension} /> : null}
-          {rich ? <RemirrorExtension Constructor={UnderlineExtension} /> : null}
-          {rich ? <RemirrorExtension Constructor={ItalicExtension} /> : null}
-          {rich ? <RemirrorExtension Constructor={BlockquoteExtension} /> : null}
-          {rich ? <RemirrorExtension Constructor={StrikeExtension} /> : null}
-          {rich ? <RemirrorExtension Constructor={CodeExtension} /> : null}
-          {rich ? <RemirrorExtension Constructor={HardBreakExtension} /> : null}
-          {rich ? (
-            <RemirrorExtension
-              Constructor={CodeBlockExtension}
-              supportedLanguages={supportedLanguages}
-              formatter={formatter}
-              syntaxTheme={syntaxTheme}
-              defaultLanguage={defaultLanguage}
-            />
-          ) : null}
-          {rich ? <RemirrorExtension Constructor={SSRHelperExtension} /> : null}
+          {extensionElements}
 
           <ManagedRemirrorProvider {...rest}>
             <Fragment>

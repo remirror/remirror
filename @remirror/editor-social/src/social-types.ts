@@ -54,9 +54,9 @@ export interface SocialEditorProps
   theme?: Partial<RemirrorTheme & Partial<RemirrorTheme['colors']>>;
 
   /**
-   * If true, enables richer text formatting (bold, italic, underline, code blocks, etc)
+   * Pass additional React extension elements
    */
-  rich?: boolean;
+  extensionElements?: React.ReactElement;
 }
 
 interface BaseMentionState {

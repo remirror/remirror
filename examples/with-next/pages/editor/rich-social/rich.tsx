@@ -3,15 +3,34 @@
 import { jsx } from '@emotion/core';
 import { take } from '@remirror/core';
 import {
+  BlockquoteExtension,
+  BoldExtension,
+  CodeExtension,
+  HardBreakExtension,
+  ItalicExtension,
+  ParagraphExtension,
+  SSRHelperExtension,
+  StrikeExtension,
+  UnderlineExtension,
+} from '@remirror/core-extensions';
+import {
   ActiveTagData,
   ActiveUserData,
   OnMentionChangeParams,
   SocialEditor,
   SocialEditorProps,
 } from '@remirror/editor-social';
+import { CodeBlockExtension } from '@remirror/extension-code-block';
+import { RemirrorExtension } from '@remirror/react';
 import { userData } from '@remirror/showcase';
 import matchSorter from 'match-sorter';
 import { useState } from 'react';
+import bash from 'refractor/lang/bash';
+import markdown from 'refractor/lang/markdown';
+import tsx from 'refractor/lang/tsx';
+import typescript from 'refractor/lang/typescript';
+
+const DEFAULT_LANGUAGES = [markdown, typescript, tsx, bash];
 
 const fakeTags = [
   'Tags',
@@ -49,21 +68,39 @@ export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
         }))
       : [];
 
-  /*
-
-  extensions
-
-  */
+  const syntaxTheme = 'atomDark',
+    defaultLanguage = undefined,
+    formatter = undefined;
+  const supportedLanguages = [...DEFAULT_LANGUAGES];
 
   return (
     <SocialEditor
       {...props}
-      rich
       attributes={{ 'data-testid': 'editor-social' }}
       userData={userMatches}
       tagData={tagMatches}
       onMentionChange={onChange}
       characterLimit={500}
+      extensionElements={
+        <>
+          <RemirrorExtension Constructor={ParagraphExtension} />
+          <RemirrorExtension Constructor={BoldExtension} />
+          <RemirrorExtension Constructor={UnderlineExtension} />
+          <RemirrorExtension Constructor={ItalicExtension} />
+          <RemirrorExtension Constructor={BlockquoteExtension} />
+          <RemirrorExtension Constructor={StrikeExtension} />
+          <RemirrorExtension Constructor={CodeExtension} />
+          <RemirrorExtension Constructor={HardBreakExtension} />
+          <RemirrorExtension
+            Constructor={CodeBlockExtension}
+            supportedLanguages={supportedLanguages}
+            formatter={formatter}
+            syntaxTheme={syntaxTheme}
+            defaultLanguage={defaultLanguage}
+          />
+          <RemirrorExtension Constructor={SSRHelperExtension} />
+        </>
+      }
     />
   );
 };
