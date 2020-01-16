@@ -49,9 +49,6 @@
       "path": "../react/tsconfig.prod.json"
     },
     {
-      "path": "tsconfig.prod.json"
-    },
-    {
       "path": "../ui-buttons/tsconfig.prod.json"
     }
   ]

@@ -368,10 +368,6 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
       placeholder,
       extensions = [],
       characterLimit,
-      syntaxTheme = 'atomDark',
-      defaultLanguage,
-      formatter,
-      supportedLanguages: supportedLanguagesProp = [],
       extensionElements,
       ...rest
     } = this.remirrorProps;
