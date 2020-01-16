@@ -28,7 +28,7 @@ const fakeTags = [
   'MCM',
 ];
 
-export const userData: UserData[] = fakeUsers.results.map(
+const userData: UserData[] = fakeUsers.results.map(
   (user): UserData => ({
     avatarUrl: user.picture.thumbnail,
     displayName: startCase(`${user.name.first} ${user.name.last}`),
@@ -37,7 +37,7 @@ export const userData: UserData[] = fakeUsers.results.map(
   }),
 );
 
-export { fakeUsers, fakeTags };
+export { fakeUsers, fakeTags, userData };
 
 export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
   const [mention, setMention] = useState<OnMentionChangeParams>();
