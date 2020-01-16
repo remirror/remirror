@@ -25,6 +25,7 @@
     "@remirror/extension-code-block": "^0.7.3",
     "@remirror/extension-epic-mode": "^0.7.3",
     "@remirror/react": "^0.7.3",
+    "@remirror/showcase": "^0.7.3",
     "@remirror/ui-buttons": "^0.7.3",
     "@types/match-sorter": "^4.0.0",
     "@types/prettier": "^1.18.3",

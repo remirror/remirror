@@ -15,10 +15,12 @@
     "@remirror/core-extensions": "^0.7.2",
     "@remirror/editor-social": "^0.7.2",
     "@remirror/editor-wysiwyg": "^0.7.2",
+    "@remirror/extension-code-block": "^0.7.3",
     "@remirror/react": "^0.7.2",
     "@remirror/showcase": "^0.7.2",
     "next": "^9.1.5",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "refractor": "^2.10.0"
   }
 }

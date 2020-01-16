@@ -1,19 +1,17 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { startCase, take } from '@remirror/core';
+import { take } from '@remirror/core';
 import {
   ActiveTagData,
   ActiveUserData,
   OnMentionChangeParams,
   SocialEditor,
   SocialEditorProps,
-  UserData,
 } from '@remirror/editor-social';
+import { userData } from '@remirror/showcase';
 import matchSorter from 'match-sorter';
 import { useState } from 'react';
-
-import { fakeUsers } from './data/fake-users';
 
 const fakeTags = [
   'Tags',
@@ -27,15 +25,6 @@ const fakeTags = [
   'LondonHits',
   'MCM',
 ];
-
-const userData: UserData[] = fakeUsers.results.map(
-  (user): UserData => ({
-    avatarUrl: user.picture.thumbnail,
-    displayName: startCase(`${user.name.first} ${user.name.last}`),
-    uid: user.login.uuid,
-    username: user.login.username,
-  }),
-);
 
 export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
   const [mention, setMention] = useState<OnMentionChangeParams>();
@@ -59,6 +48,12 @@ export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
           active: index === mention.activeIndex,
         }))
       : [];
+
+  /*
+
+  extensions
+
+  */
 
   return (
     <SocialEditor
