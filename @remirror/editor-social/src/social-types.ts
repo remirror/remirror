@@ -50,11 +50,6 @@ export interface SocialEditorProps
    * The theme to be used for setting .
    */
   theme?: Partial<RemirrorTheme & Partial<RemirrorTheme['colors']>>;
-
-  /**
-   * Pass additional React extension elements
-   */
-  extensionElements?: React.ReactElement;
 }
 
 interface BaseMentionState {

@@ -21,10 +21,9 @@ import {
   SocialEditorProps,
 } from '@remirror/editor-social';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
-import { RemirrorExtension } from '@remirror/react';
 import { userData } from '@remirror/showcase';
 import matchSorter from 'match-sorter';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import bash from 'refractor/lang/bash';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
@@ -73,6 +72,53 @@ export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
     formatter = undefined;
   const supportedLanguages = [...DEFAULT_LANGUAGES];
 
+  /**
+   * The following JSX:
+   *
+   * ```
+   * const element = (
+   *   <RemirrorExtension
+   *     Constructor={Constructor}
+   *     priority={priority}
+   *     {...options}
+   *   />
+   * );
+   * ```
+   *
+   * gets converted into something like this in RemirrorManager:
+   *
+   * ```
+   * const prioritisedExtension = {
+   *   extension: new Constructor(options),
+   *   priority: priority || 2,
+   * };
+   * ```
+   *
+   * We need the final form to pass into the `extensions` prop:
+   */
+  const extensions = useMemo(() => {
+    return [
+      { extension: new ParagraphExtension(), priority: 2 },
+      { extension: new BoldExtension(), priority: 2 },
+      { extension: new UnderlineExtension(), priority: 2 },
+      { extension: new ItalicExtension(), priority: 2 },
+      { extension: new BlockquoteExtension(), priority: 2 },
+      { extension: new StrikeExtension(), priority: 2 },
+      { extension: new CodeExtension(), priority: 2 },
+      { extension: new HardBreakExtension(), priority: 2 },
+      {
+        extension: new CodeBlockExtension({
+          supportedLanguages,
+          formatter,
+          syntaxTheme,
+          defaultLanguage,
+        }),
+        priority: 2,
+      },
+      { extension: new SSRHelperExtension(), priority: 2 },
+    ];
+  }, [defaultLanguage, formatter, supportedLanguages]);
+
   return (
     <SocialEditor
       {...props}
@@ -81,26 +127,7 @@ export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
       tagData={tagMatches}
       onMentionChange={onChange}
       characterLimit={500}
-      extensionElements={
-        <>
-          <RemirrorExtension Constructor={ParagraphExtension} />
-          <RemirrorExtension Constructor={BoldExtension} />
-          <RemirrorExtension Constructor={UnderlineExtension} />
-          <RemirrorExtension Constructor={ItalicExtension} />
-          <RemirrorExtension Constructor={BlockquoteExtension} />
-          <RemirrorExtension Constructor={StrikeExtension} />
-          <RemirrorExtension Constructor={CodeExtension} />
-          <RemirrorExtension Constructor={HardBreakExtension} />
-          <RemirrorExtension
-            Constructor={CodeBlockExtension}
-            supportedLanguages={supportedLanguages}
-            formatter={formatter}
-            syntaxTheme={syntaxTheme}
-            defaultLanguage={defaultLanguage}
-          />
-          <RemirrorExtension Constructor={SSRHelperExtension} />
-        </>
-      }
+      extensions={extensions}
     />
   );
 };

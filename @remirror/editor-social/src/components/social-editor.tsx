@@ -363,14 +363,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
       hideEmojiSuggestions,
     } = this.state;
 
-    const {
-      children,
-      placeholder,
-      extensions = [],
-      characterLimit,
-      extensionElements,
-      ...rest
-    } = this.remirrorProps;
+    const { children, placeholder, extensions = [], characterLimit, ...rest } = this.remirrorProps;
     return (
       <RemirrorThemeProvider theme={this.theme}>
         <RemirrorManager extensions={extensions}>
@@ -401,9 +394,6 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
             suggestionKeyBindings={this.emojiKeyBindings}
             onSuggestionExit={this.onEmojiSuggestionExit}
           />
-
-          {extensionElements}
-
           <ManagedRemirrorProvider {...rest}>
             <Fragment>
               <SocialEditorComponent
