@@ -28,6 +28,9 @@
       "path": "../core-extensions/tsconfig.prod.json"
     },
     {
+      "path": "../extension-code-block/tsconfig.prod.json"
+    },
+    {
       "path": "../extension-emoji/tsconfig.prod.json"
     },
     {

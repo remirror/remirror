@@ -78,8 +78,15 @@ yarn stop:checks
 
 First, run `yarn build` so the initial version of everything is built.
 
-After your first build, you can run `yarn dev:modules` to watch for changes
+After your first build, you can run `yarn dev` to watch for changes
 and recompile as necessary.
+
+If you're modifying a package and import helpers from another packages in the
+monorepo, ensure that the other package is referenced in the referring
+package's `package.json` file.
+
+If you add a new file, use `yarn generate:json` to ensure that the system
+understands about the existence of the new file.
 
 <br />
 
