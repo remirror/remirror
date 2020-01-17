@@ -1,5 +1,12 @@
 # @remirror/ui-icons
 
+## 0.7.4
+
+### Patch Changes
+
+- ade2ed1b: **Fix** the missing exports from the `@remirror/ui-icons` library. Now exporting
+  `ImagesRegularIcon` and `ImagesSolidIcon`.
+
 ## 0.7.3
 
 ### Patch Changes

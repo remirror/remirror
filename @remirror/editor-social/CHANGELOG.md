@@ -1,5 +1,18 @@
 # @remirror/editor-social
 
+## 0.8.0
+
+### Minor Changes
+
+- 416d65da: Allow overriding character limit in Social UI (#187)
+
+### Patch Changes
+
+- Updated dependencies [416d65da]
+- Updated dependencies [ade2ed1b]
+  - @remirror/react@0.7.4
+  - @remirror/ui-icons@0.7.4
+
 ## 0.7.3
 
 ### Patch Changes

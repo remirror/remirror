@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/editor-social",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/editor-social",
-  "version": "0.7.3",
+  "version": "0.8.0",
   "main": "lib/index.js",
   "module": "lib/dist/editor-social.esm.js",
   "files": [
@@ -22,11 +22,11 @@
     "@remirror/extension-emoji": "^0.7.3",
     "@remirror/extension-enhanced-link": "^0.7.3",
     "@remirror/extension-mention": "^0.7.3",
-    "@remirror/react": "^0.7.3",
+    "@remirror/react": "^0.7.4",
     "@remirror/react-utils": "^0.7.3",
     "@remirror/ui": "^0.7.3",
     "@remirror/ui-buttons": "^0.7.3",
-    "@remirror/ui-icons": "^0.7.3",
+    "@remirror/ui-icons": "^0.7.4",
     "multishift": "^0.7.3"
   },
   "peerDependencies": {
