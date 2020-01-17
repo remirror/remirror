@@ -33,7 +33,7 @@
     "fix": "run-s fix:prettier fix:pkgjson fix:es",
     "fix:es": "yarn lint:es --fix",
     "fix:pkgjson": "node support/scripts/package-json-prettier.js",
-    "fix:prettier": "prettier --write \"**/*.{json,yml,yaml,md}\" \"!docs/api/**\" \"!support/api/**\" \"!**/temp/**\"",
+    "fix:prettier": "yarn prettier:run --write",
     "frozen": "yarn --frozen-lockfile install",
     "generate:all": "node support/scripts/generate-api-docs.js --all",
     "generate:api": "node support/scripts/generate-api-docs.js --api",
@@ -47,6 +47,7 @@
     "is-logged-in": "npm whoami",
     "lint": "run-s lint:*",
     "lint:es": "eslint -f friendly --ext=.tsx,.ts,.js .",
+    "lint:prettier": "yarn prettier:run --check",
     "md": "node support/scripts/md.js",
     "patch": "patch-package --patch-dir support/patches",
     "prerelease": "yarn if-not-ci run-s checks:release",
@@ -63,6 +64,7 @@
     "test:e2e:ssr:watch": "yarn test:e2e:ssr --verbose=false --watch",
     "test:e2e:watch": "jest --watch --verbose=false --runInBand --config e2e/jest.config.js",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
+    "prettier:run": "prettier --ignore-path .eslintignore '**/*.{js,jsx,ts,tsx,md,json,html,css,yml,yaml,graphql}'",
     "typecheck": "tsc -p ./tsconfig.json"
   },
   "devDependencies": {
@@ -122,7 +124,6 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^23.4.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.1.2",
