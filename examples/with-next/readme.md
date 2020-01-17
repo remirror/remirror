@@ -15,7 +15,8 @@ cd examples/with-next
 yarn dev
 ```
 
-After a few seconds you should receive a `[ ready ]` message, and a URL to open such as http://localhost:3000. You can use the links at the top to visit different examples:
+After a few seconds you should receive a `[ ready ]` message, and a URL to open such as http://localhost:3000.
+You can use the links at the top to visit different examples:
 
 ![Home page](screenshots/home.png)
 

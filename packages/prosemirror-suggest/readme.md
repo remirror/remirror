@@ -1,18 +1,24 @@
 # prosemirror-suggest
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/prosemirror-suggest.svg?)](https://bundlephobia.com/result?p=prosemirror-suggest) [![npm](https://img.shields.io/npm/dm/prosemirror-suggest.svg?&logo=npm)](https://www.npmjs.com/package/prosemirror-suggest)
+[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/prosemirror-suggest.svg?)](https://bundlephobia.com/result?p=prosemirror-suggest)
+[![npm](https://img.shields.io/npm/dm/prosemirror-suggest.svg?&logo=npm)](https://www.npmjs.com/package/prosemirror-suggest)
 
 Primitives for building your prosemirror suggestion and autocomplete functionality.
 
 ## The problem
 
-You want to create a plugin for your prosemirror editor that responds to an activation character to create suggestions or options or actions for the user. Doing this from scratch can be difficult.
+You want to create a plugin for your prosemirror editor that responds to an activation character to create
+suggestions or options or actions for the user. Doing this from scratch can be difficult.
 
 ## This solution
 
-`prosemirror-suggest` provides the suggestion primitives needed for building this functionality into your editor. You might be building user mentions, emoji search, an actions dropdown or anything that extracts a query from the editor after the activation character(s).
+`prosemirror-suggest` provides the suggestion primitives needed for building this functionality into your
+editor. You might be building user mentions, emoji search, an actions dropdown or anything that extracts a
+query from the editor after the activation character(s).
 
-This implementation doesn't attempt to be magical. There's still a lot of work that goes into setting up your configuration. However, with this toolkit, you you will be building on a well-tested foundation with a structured API.
+This implementation doesn't attempt to be magical. There's still a lot of work that goes into setting up your
+configuration. However, with this toolkit, you you will be building on a well-tested foundation with a
+structured API.
 
 ## Installation
 
@@ -25,9 +31,12 @@ yarn add prosemirror-suggest prosemirror-view
 
 ## Getting Started
 
-`prosemirror-suggest` uses configuration objects called `Suggester`<!-- -->'s to define the behaviour of the suggestions you create. By calling the exported `suggest` method with all required `Suggester`<!-- -->'s the functionality is added to the editor in one plugin.
+`prosemirror-suggest` uses configuration objects called `Suggester`<!-- -->'s to define the behaviour of the
+suggestions you create. By calling the exported `suggest` method with all required `Suggester`<!-- -->'s the
+functionality is added to the editor in one plugin.
 
-In the following example we're creating an emoji suggestion plugin that responds to the colon character with a query and presents a list of matching emojis based on the query typed so far.
+In the following example we're creating an emoji suggestion plugin that responds to the colon character with a
+query and presents a list of matching emojis based on the query typed so far.
 
 ```ts
 import { Suggester, suggest } from 'prosemirror-suggest';
@@ -103,13 +112,16 @@ const suggestionPlugin = suggest(suggestEmojis);
 const state = EditorState.create({ schema, plugins: [suggestionPlugin] });
 ```
 
-You can see this example brought to life in the `remirror` codebase under the `@remirror/extension-emoji` and the `@remirror/extension-mention` packages.
+You can see this example brought to life in the `remirror` codebase under the `@remirror/extension-emoji` and
+the `@remirror/extension-mention` packages.
 
-The following examples are available for you to try out on the [docs site](https://docs.remirror.org/showcase/social)
+The following examples are available for you to try out on the
+[docs site](https://docs.remirror.org/showcase/social)
 
 **Search emoji on `:` key**
 
-The emojis are inserted as plain text. It’s up to you whether you insert the emoji as a node, mark or plaintext.
+The emojis are inserted as plain text. It’s up to you whether you insert the emoji as a node, mark or
+plaintext.
 
 ![A gif showing emoji being inserted after typing the colon (:) key. First a laughing emoji then a heart and finally the poop emoji](https://media.githubusercontent.com/media/ifiokjr/assets/master/remirror/emoji.gif 'A gif showing emoji being inserted after typing the colon (:) key. First a laughing emoji then a heart and finally the poop emoji')
 
@@ -141,7 +153,8 @@ const plugin = suggest(two, one, three);
 
 In the above example `two` will be checked first, then `one` and then `three`.
 
-Only one suggestion can match at any given time. The order and specificity of the regex parameters help determines which suggestion will be active.
+Only one suggestion can match at any given time. The order and specificity of the regex parameters help
+determines which suggestion will be active.
 
 <br />
 
@@ -183,7 +196,9 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
 | [onCharacterEntry(params)](https://github.com/ifiokjr/remirror/blob/canary/docs/api/prosemirror-suggest/prosemirror-suggest.suggester.oncharacterentry.md) | Called for each character entry and can be used to disable certain characters.                                         |
 | [onExit(params)](https://github.com/ifiokjr/remirror/blob/canary/docs/api/prosemirror-suggest/prosemirror-suggest.suggester.onexit.md)                     | Called when a suggestion is exited with the pre-exit match value.                                                      |
 
-The options are passed to the [suggest](https://github.com/ifiokjr/remirror/blob/canary/docs/api/prosemirror-suggest/prosemirror-suggest.suggest.md) method which uses them.
+The options are passed to the
+[suggest](https://github.com/ifiokjr/remirror/blob/canary/docs/api/prosemirror-suggest/prosemirror-suggest.suggest.md)
+method which uses them.
 
 <br />
 
