@@ -50,6 +50,8 @@
 |  [Icon](./ui-icons.icon.md) | Provides the icon for use throughout the rest of the application.<!-- -->Uses theme component styles under <code>components.remirror:icon</code> |
 |  [IconsIcon](./ui-icons.iconsicon.md) |  |
 |  [ICursorIcon](./ui-icons.icursoricon.md) |  |
+|  [ImagesRegularIcon](./ui-icons.imagesregularicon.md) |  |
+|  [ImagesSolidIcon](./ui-icons.imagessolidicon.md) |  |
 |  [IndentIcon](./ui-icons.indenticon.md) |  |
 |  [ItalicIcon](./ui-icons.italicicon.md) |  |
 |  [LinkIcon](./ui-icons.linkicon.md) |  |

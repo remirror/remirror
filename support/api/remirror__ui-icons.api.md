@@ -127,6 +127,12 @@ export const IconsIcon: (props: IconProps) => JSX.Element;
 export const ICursorIcon: (props: IconProps) => JSX.Element;
 
 // @public (undocumented)
+export const ImagesRegularIcon: (props: IconProps) => JSX.Element;
+
+// @public (undocumented)
+export const ImagesSolidIcon: (props: IconProps) => JSX.Element;
+
+// @public (undocumented)
 export const IndentIcon: (props: IconProps) => JSX.Element;
 
 // @public (undocumented)

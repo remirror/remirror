@@ -15,3 +15,30 @@ By default these are placed after the JSX `RemirrorExtension`<!-- -->'s.
 ```typescript
 extensions?: Array<FlexibleExtension<AnyExtension>>;
 ```
+
+## Remarks
+
+If you have a `<RemirrorExtension />` element such as this:
+
+```tsx
+const element = (
+  <RemirrorExtension
+    Constructor={Constructor}
+    priority={priority}
+    {...options}
+  />
+);
+
+```
+you'd convert that to a valid entry in the `extensions` list like this:
+
+```tsx
+const extensions = [
+  {
+    extension: new Constructor(options),
+    priority: priority || 2,
+  },
+];
+
+```
+

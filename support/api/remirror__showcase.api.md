@@ -6,6 +6,7 @@
 
 import { FC } from 'react';
 import { SocialEditorProps } from '@remirror/editor-social';
+import { UserData } from '@remirror/editor-social';
 import { WysiwygEditorProps } from '@remirror/editor-wysiwyg';
 
 // @public (undocumented)
@@ -13,6 +14,14 @@ export const ExampleSocialEditor: (props: Partial<SocialEditorProps>) => JSX.Ele
 
 // @public (undocumented)
 export const ExampleWysiwygEditor: FC<WysiwygEditorProps>;
+
+// @public (undocumented)
+export const fakeTags: string[];
+
+// Warning: (ae-forgotten-export) The symbol "FakeUserObject" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export const fakeUsers: FakeUserObject;
 
 // @public (undocumented)
 export const SOCIAL_SHOWCASE_CONTENT: {
@@ -55,6 +64,9 @@ export const SOCIAL_SHOWCASE_CONTENT: {
         })[];
     })[];
 };
+
+// @public (undocumented)
+export const userData: UserData[];
 
 // @public (undocumented)
 export const WYSIWYG_SHOWCASE_CONTENT: {

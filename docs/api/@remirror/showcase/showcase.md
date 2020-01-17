@@ -10,6 +10,9 @@
 |  --- | --- |
 |  [ExampleSocialEditor](./showcase.examplesocialeditor.md) |  |
 |  [ExampleWysiwygEditor](./showcase.examplewysiwygeditor.md) |  |
+|  [fakeTags](./showcase.faketags.md) |  |
+|  [fakeUsers](./showcase.fakeusers.md) |  |
 |  [SOCIAL\_SHOWCASE\_CONTENT](./showcase.social_showcase_content.md) |  |
+|  [userData](./showcase.userdata.md) |  |
 |  [WYSIWYG\_SHOWCASE\_CONTENT](./showcase.wysiwyg_showcase_content.md) |  |
 

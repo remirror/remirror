@@ -9,5 +9,5 @@ Render the editor with the params passed in. Useful for testing.
 <b>Signature:</b>
 
 ```typescript
-renderSSREditor: <GExtension extends AnyExtension = any>(extensions?: GExtension[], props?: Partial<Pick<RemirrorProps<GExtension>, "label" | "children" | "onChange" | "attributes" | "styles" | "stringHandler" | "value" | "initialContent" | "onStateChange" | "editable" | "autoFocus" | "onFocus" | "onBlur" | "onFirstRender" | "onDispatchTransaction" | "usesBuiltInExtensions" | "usesDefaultStyles" | "editorStyles" | "css" | "insertPosition" | "forceEnvironment" | "suppressHydrationWarning" | "fallbackContent">>) => string
+renderSSREditor: <GExtension extends AnyExtension = any>(extensions?: GExtension[], props?: Partial<Pick<RemirrorProps<GExtension>, "attributes" | "styles" | "initialContent" | "onStateChange" | "value" | "editable" | "autoFocus" | "onFocus" | "onBlur" | "onFirstRender" | "onChange" | "children" | "onDispatchTransaction" | "label" | "usesBuiltInExtensions" | "usesDefaultStyles" | "editorStyles" | "css" | "insertPosition" | "forceEnvironment" | "suppressHydrationWarning" | "fallbackContent" | "stringHandler">>) => string
 ```

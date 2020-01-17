@@ -16,9 +16,30 @@ RemirrorExtension: <GConstructor extends {
 
 ## Remarks
 
-This is a more React-ish way of configuring the editor extensions. The alternative to creating a component tree structure would be manually dealing with the ExtensionManager.
+RemirrorExtension is a more React-ish way of configuring the editor extensions. The alternative to creating a component tree structure would be manually dealing with the ExtensionManager.
 
-Without `RemirrorExtension`
+The following JSX:
+
+```tsx
+const element = (
+  <RemirrorExtension
+    Constructor={Constructor}
+    priority={priority}
+    {...options}
+  />
+);
+
+```
+gets converted into something like this in RemirrorManager:
+
+```tsx
+const prioritisedExtension = {
+  extension: new Constructor(options),
+  priority: priority || 2,
+};
+
+```
+Without `RemirrorExtension`<!-- -->:
 
 ```tsx
 const WithoutRemirrorExtensions = () => {
@@ -40,7 +61,7 @@ const WithoutRemirrorExtensions = () => {
 }
 
 ```
-With `RemirrorExtension`
+With `RemirrorExtension`<!-- -->:
 
 ```tsx
 const WithRemirrorExtensions = () => {
