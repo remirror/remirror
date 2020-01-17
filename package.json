@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@remirror/workspace",
+  "name": "root",
   "workspaces": {
     "packages": [
       "@remirror/*",
@@ -293,7 +293,7 @@
     "debug": "^4.1.1",
     "https-proxy-agent": ">=3",
     "jest": "^24.9.0",
-    "jsdom": "^15.1.1",
+    "jsdom": "^15.2.1",
     "marked": ">=0.7.0",
     "mem": ">=4",
     "react": "^16.10.0",
