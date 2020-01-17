@@ -1,8 +1,7 @@
 {
   "private": true,
   "name": "with-razzle",
-  "license": "MIT",
-  "version": "0.7.2",
+  "version": "0.0.0",
   "scripts": {
     "build": "razzle build",
     "start": "razzle start",

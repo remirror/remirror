@@ -2,10 +2,7 @@
   "private": true,
   "name": "@remirror/docs",
   "description": "A world class text editor toolkit for every environment",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "version": "0.7.3",
-  "main": "index.js",
+  "version": "0.0.0",
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",

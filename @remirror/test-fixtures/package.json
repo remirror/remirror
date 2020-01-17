@@ -6,7 +6,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/test-fixtures",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/test-fixtures",
-  "version": "0.7.3",
+  "version": "0.0.0",
   "main": "lib/index.js",
   "files": [
     "lib",

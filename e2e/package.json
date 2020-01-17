@@ -2,10 +2,7 @@
   "private": true,
   "name": "@remirror/e2e",
   "description": "e2e tests",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "version": "0.7.2",
-  "main": "index.js",
+  "version": "0.0.0",
   "dependencies": {
     "@babel/runtime": "^7.6.3",
     "@remirror/core": "^0.7.2",

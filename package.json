@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "root",
+  "name": "@remirror/workspace",
   "workspaces": {
     "packages": [
       "@remirror/*",
@@ -234,6 +234,7 @@
   },
   "lint-staged": {
     "{@remirror,packages,docs,support,examples}/**/*.{ts,tsx,js}": [
+      "prettier --write",
       "eslint --fix",
       "git add"
     ],
@@ -244,6 +245,7 @@
       "jest --coverage=false --bail --findRelatedTests"
     ],
     "**/*.js": [
+      "prettier --write",
       "eslint --fix",
       "git add"
     ],
@@ -257,10 +259,6 @@
     ],
     "*.{json,yml,yaml,md,mdx}": [
       "prettier --write",
-      "git add"
-    ],
-    "**/.babelrc.js": [
-      "eslint --fix",
       "git add"
     ]
   },
