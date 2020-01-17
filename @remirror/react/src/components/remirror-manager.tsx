@@ -27,6 +27,32 @@ export interface RemirrorManagerProps {
    * extension which determines the order in which it'll be loaded.
    *
    * By default these are placed after the JSX `RemirrorExtension`'s.
+   *
+   * @remarks
+   *
+   * If you have a `<RemirrorExtension />` element such as this:
+   *
+   * ```tsx
+   * const element = (
+   *   <RemirrorExtension
+   *     Constructor={Constructor}
+   *     priority={priority}
+   *     {...options}
+   *   />
+   * );
+   * ```
+   *
+   * you'd convert that to a valid entry in the `extensions` list like this:
+   *
+   * ```tsx
+   * const extensions = [
+   *   {
+   *     extension: new Constructor(options),
+   *     priority: priority || 2,
+   *   },
+   * ];
+   * ```
+   *
    */
   extensions?: Array<FlexibleExtension<AnyExtension>>;
 }

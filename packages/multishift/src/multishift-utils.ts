@@ -262,7 +262,7 @@ export const callChangeHandlers = <GItem = any>(
  * Get the ids for each element.
  */
 export const getElementIds = (
-  defaultId: string,
+  defaultId: string | number,
   { id, labelId, menuId, getItemA11yId, toggleButtonId, inputId }: MultishiftA11yIdProps = Object.create(
     null,
   ),

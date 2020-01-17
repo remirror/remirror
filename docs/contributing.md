@@ -78,8 +78,19 @@ yarn stop:checks
 
 First, run `yarn build` so the initial version of everything is built.
 
-After your first build, you can run `yarn dev:modules` to watch for changes
+After your first build, you can run `yarn dev` to watch for changes
 and recompile as necessary.
+
+If you're modifying a package and import helpers from another packages in the
+monorepo, ensure that the other package is referenced in the referring
+package's `package.json` file.
+
+This project is using composite types and adding a new dependency to the
+project throws the build process since it's location has to explicitly be
+updated. Running `yarn generate:json` will automatically update all your
+project references so that the build still works. (It basically creates all
+the project `tsconfig.prod.json` files for you as can be seen
+[here](https://github.com/ifiokjr/remirror/blob/b096ed1dd3/support/scripts/generate-configs.js#L186-L228).)
 
 <br />
 
@@ -190,3 +201,7 @@ yarn all-contributors add GITHUB_USERNAME doc code
 # Update the readme.md
 yarn all-contributors generate
 ```
+
+### Troubleshooting
+
+If you're getting errors like `ReferenceError: CodeBlockExtension is not defined` but you know you've imported it, it might be because you've not added it as a dependency to the relevant `package.json`. Rather than throwing an error in this case, rollup (?) seems to just drop the import statement but still persist the lines where the import is used.

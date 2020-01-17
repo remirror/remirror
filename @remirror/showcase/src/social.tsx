@@ -37,6 +37,8 @@ const userData: UserData[] = fakeUsers.results.map(
   }),
 );
 
+export { fakeUsers, fakeTags, userData };
+
 export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
   const [mention, setMention] = useState<OnMentionChangeParams>();
 
