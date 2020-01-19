@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/react",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/react",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "main": "lib/index.js",
   "module": "lib/dist/react.esm.js",
   "files": [

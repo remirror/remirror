@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-icons",
   "repository": "https://github.com/ifiokjr/remirror/tree/master/@remirror/ui-icons",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "main": "lib/index.js",
   "module": "lib/dist/ui-icons.esm.js",
   "files": [

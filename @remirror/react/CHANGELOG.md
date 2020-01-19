@@ -1,5 +1,11 @@
 # @remirror/react
 
+## 0.7.4
+
+### Patch Changes
+
+- 416d65da: Better code comment docs around how to apply additional extensions (#186).
+
 ## 0.7.3
 
 ### Patch Changes
