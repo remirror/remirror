@@ -68,7 +68,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   public static defaultProps = defaultProps;
 
   /**
-   * Allow the component to pull in context from the the `RemirrorThemeContext`
+   * Allow the component to pull in context from the `RemirrorThemeContext`
    */
   public static contextType = RemirrorThemeContext;
 

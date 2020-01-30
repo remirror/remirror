@@ -11,7 +11,11 @@ about: Suggest an idea for this project
 
 <!--- Not obligatory, but suggest an idea for implementing addition or change -->
 
+<!-- prettier-ignore-start -->
+
+
 ## Checklist
 
-- [ ] I have read the [**contributing**](https://github.com/ifiokjr/remirror/blob/canary/docs/contributing.md)
-      document.
+- [ ] I have read the [**contributing**](https://github.com/ifiokjr/remirror/blob/canary/docs/contributing.md) document.
+
+<!-- prettier-ignore-end -->

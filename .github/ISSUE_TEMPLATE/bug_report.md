@@ -13,5 +13,8 @@ about: Create a report to help us improve
 
 ## Checklist
 
-- [ ] I have read the [**contributing**](https://github.com/ifiokjr/remirror/blob/canary/docs/contributing.md)
-      document.
+<!-- prettier-ignore-start -->
+
+- [ ] I have read the [**contributing**](https://github.com/ifiokjr/remirror/blob/canary/docs/contributing.md) document.
+
+<!-- prettier-ignore-end -->
