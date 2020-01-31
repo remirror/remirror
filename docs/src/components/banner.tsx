@@ -20,24 +20,40 @@ const theme = {
       mt: 0,
       mb: 4,
     },
-    a: {
-      display: 'inline-block',
-      textDecoration: 'none',
-      fontWeight: 'bold',
-      fontSize: 2,
-      p: 3,
-      color: 'primary',
-      bg: 'background',
-      mr: 3,
-      mb: 3,
-      borderRadius: 6,
-      ':hover': {
-        color: 'background',
-        bg: 'text',
-      },
+    img: {
+      paddingRight: 1,
     },
   },
 };
+
+export const BannerSection: FC = ({ children }) => <div sx={{ mb: 3 }}>{children}</div>;
+
+export const BannerLinks: FC = ({ children }) => (
+  <ThemeProvider
+    theme={{
+      styles: {
+        a: {
+          display: 'inline-block',
+          textDecoration: 'none',
+          fontWeight: 'bold',
+          fontSize: 2,
+          p: 3,
+          color: 'primary',
+          bg: 'background',
+          mr: 3,
+          mb: 3,
+          borderRadius: 6,
+          ':hover': {
+            color: 'background',
+            bg: 'text',
+          },
+        },
+      },
+    }}
+  >
+    {children}
+  </ThemeProvider>
+);
 
 export const Banner: FC = ({ children }) => (
   <ThemeProvider theme={theme}>
@@ -61,5 +77,3 @@ export const Banner: FC = ({ children }) => (
     </div>
   </ThemeProvider>
 );
-
-export default Banner;
