@@ -3,6 +3,7 @@ import {
   CommandNodeTypeParams,
   EDITOR_CLASS_SELECTOR,
   ExtensionManagerNodeTypeParams,
+  KeyboardBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -33,7 +34,7 @@ export class CodeBlockExtension extends NodeExtension {
     return { toggleCodeBlock: () => toggleBlockItem({ type, toggleType: schema.nodes.paragraph }) };
   }
 
-  public keys({ type, schema }: ExtensionManagerNodeTypeParams) {
+  public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyboardBindings {
     return {
       'Shift-Ctrl-\\': toggleBlockItem({ type, toggleType: schema.nodes.paragraph }),
     };

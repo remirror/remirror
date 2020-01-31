@@ -1,4 +1,4 @@
-import { Extension, isFunction } from '@remirror/core';
+import { Extension, isFunction, KeyboardBindings } from '@remirror/core';
 import {
   BaseExtensionOptions,
   CommandFunction,
@@ -89,7 +89,7 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
   /**
    * Adds the default key mappings for undo and redo.
    */
-  public keys() {
+  public keys():KeyboardBindings {
     return {
       'Mod-y': () => false,
       'Mod-z': this.wrapMethod(undo),

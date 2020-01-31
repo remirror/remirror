@@ -3,6 +3,7 @@ import {
   CommandNodeTypeParams,
   ExtensionManagerNodeTypeParams,
   KeyboardBindings,
+  KeyboardBindings,
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
@@ -76,7 +77,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
     };
   }
 
-  public keys({ type }: ExtensionManagerNodeTypeParams) {
+  public keys({ type }: ExtensionManagerNodeTypeParams):KeyboardBindings {
     const keys: KeyboardBindings = Object.create(null);
 
     this.options.levels.forEach(level => {

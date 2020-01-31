@@ -3,6 +3,7 @@ import {
   ExtensionManagerMarkTypeParams,
   isElementDOMNode,
   isString,
+  KeyboardBindings,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
@@ -38,7 +39,7 @@ export class BoldExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams) {
+  public keys({ type }: ExtensionManagerMarkTypeParams):KeyboardBindings {
     return {
       'Mod-b': toggleMark(type),
     };

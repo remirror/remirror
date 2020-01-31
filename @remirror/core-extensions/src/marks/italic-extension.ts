@@ -1,6 +1,7 @@
 import {
   CommandMarkTypeParams,
   ExtensionManagerMarkTypeParams,
+  KeyboardBindings,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
@@ -22,7 +23,7 @@ export class ItalicExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams) {
+  public keys({ type }: ExtensionManagerMarkTypeParams) : KeyboardBindings{
     return {
       'Mod-i': toggleMark(type),
     };
