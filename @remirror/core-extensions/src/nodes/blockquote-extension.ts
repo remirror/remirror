@@ -57,7 +57,7 @@ export class BlockquoteExtension extends NodeExtension {
     `;
   }
 
-  public keys({ type }: ExtensionManagerNodeTypeParams):KeyboardBindings {
+  public keys({ type }: ExtensionManagerNodeTypeParams): KeyboardBindings {
     return {
       'Ctrl->': toggleWrap(type),
     };

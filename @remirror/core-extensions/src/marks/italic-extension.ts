@@ -23,7 +23,7 @@ export class ItalicExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams) : KeyboardBindings{
+  public keys({ type }: ExtensionManagerMarkTypeParams): KeyboardBindings {
     return {
       'Mod-i': toggleMark(type),
     };

@@ -89,7 +89,7 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
   /**
    * Adds the default key mappings for undo and redo.
    */
-  public keys():KeyboardBindings {
+  public keys(): KeyboardBindings {
     return {
       'Mod-y': () => false,
       'Mod-z': this.wrapMethod(undo),

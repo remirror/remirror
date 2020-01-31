@@ -37,7 +37,7 @@ export class StrikeExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams):KeyboardBindings {
+  public keys({ type }: ExtensionManagerMarkTypeParams): KeyboardBindings {
     return {
       'Mod-d': toggleMark(type),
     };

@@ -29,7 +29,7 @@ export class UnderlineExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams)  : KeyboardBindings {
+  public keys({ type }: ExtensionManagerMarkTypeParams): KeyboardBindings {
     return {
       'Mod-u': toggleMark(type),
     };

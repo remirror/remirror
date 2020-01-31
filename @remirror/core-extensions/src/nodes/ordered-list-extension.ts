@@ -47,7 +47,7 @@ export class OrderedListExtension extends NodeExtension {
     return { toggleOrderedList: () => toggleList(type, schema.nodes.listItem) };
   }
 
-  public keys({ type, schema }: ExtensionManagerNodeTypeParams) : KeyboardBindings{
+  public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyboardBindings {
     return {
       'Shift-Ctrl-9': toggleList(type, schema.nodes.listItem),
     };

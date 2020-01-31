@@ -39,7 +39,7 @@ export class BoldExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams):KeyboardBindings {
+  public keys({ type }: ExtensionManagerMarkTypeParams): KeyboardBindings {
     return {
       'Mod-b': toggleMark(type),
     };
