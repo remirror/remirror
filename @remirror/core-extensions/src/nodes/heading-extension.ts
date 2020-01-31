@@ -3,7 +3,6 @@ import {
   CommandNodeTypeParams,
   ExtensionManagerNodeTypeParams,
   KeyboardBindings,
-  KeyboardBindings,
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
