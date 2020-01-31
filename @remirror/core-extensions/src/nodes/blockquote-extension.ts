@@ -2,6 +2,7 @@ import {
   CommandNodeTypeParams,
   EDITOR_CLASS_SELECTOR,
   ExtensionManagerNodeTypeParams,
+  KeyboardBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -56,7 +57,7 @@ export class BlockquoteExtension extends NodeExtension {
     `;
   }
 
-  public keys({ type }: ExtensionManagerNodeTypeParams) {
+  public keys({ type }: ExtensionManagerNodeTypeParams): KeyboardBindings {
     return {
       'Ctrl->': toggleWrap(type),
     };

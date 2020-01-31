@@ -1,6 +1,7 @@
 import {
   CommandMarkTypeParams,
   ExtensionManagerMarkTypeParams,
+  KeyboardBindings,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
@@ -28,7 +29,7 @@ export class UnderlineExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams) {
+  public keys({ type }: ExtensionManagerMarkTypeParams): KeyboardBindings {
     return {
       'Mod-u': toggleMark(type),
     };
