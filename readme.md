@@ -155,6 +155,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
     <td align="center"><a href="https://github.com/aried3r"><img src="https://avatars1.githubusercontent.com/u/1301152?v=4" width="100px;" alt=""/><br /><sub><b>Anton Rieder</b></sub></a><br /><a href="https://github.com/ifiokjr/remirror/commits?author=aried3r" title="Documentation">📖</a></td>
     <td align="center"><a href="https://aarongreenlee.com/"><img src="https://avatars0.githubusercontent.com/u/264508?v=4" width="100px;" alt=""/><br /><sub><b>Aaron Greenlee</b></sub></a><br /><a href="https://github.com/ifiokjr/remirror/commits?author=aarongreenlee" title="Documentation">📖</a> <a href="https://github.com/ifiokjr/remirror/commits?author=aarongreenlee" title="Code">💻</a></td>
     <td align="center"><a href="http://yellowbrim.com"><img src="https://avatars2.githubusercontent.com/u/1542740?v=4" width="100px;" alt=""/><br /><sub><b>Charley Bodkin</b></sub></a><br /><a href="https://github.com/ifiokjr/remirror/commits?author=charlex" title="Code">💻</a> <a href="https://github.com/ifiokjr/remirror/commits?author=charlex" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://ocavue.github.io/"><img src="https://avatars2.githubusercontent.com/u/24715727?v=4" width="100px;" alt=""/><br /><sub><b>ocavue</b></sub></a><br /><a href="https://github.com/ifiokjr/remirror/commits?author=ocavue" title="Code">💻</a></td>
   </tr>
 </table>
 
