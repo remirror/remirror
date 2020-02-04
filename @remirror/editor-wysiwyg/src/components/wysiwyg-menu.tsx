@@ -10,6 +10,7 @@ import {
   H2Icon,
   H3Icon,
   IconProps,
+  ImagesRegularIcon,
   ItalicIcon,
   LinkIcon,
   ListOlIcon,
@@ -59,6 +60,7 @@ const menuItems: Array<[ActionNames<WysiwygExtensions>, [ComponentType<IconProps
   ['blockquote', [QuoteRightIcon]],
   ['toggleCodeBlock', [CodeIcon]],
   ['horizontalRule', [RulerHorizontalIcon]],
+  ['insertImage', [ImagesRegularIcon], { src: 'https://avatars0.githubusercontent.com/u/2158740?s=460&v=4' }],
 ];
 
 const runAction = (method: AnyFunction, attrs?: Attrs): MouseEventHandler<HTMLElement> => e => {
