@@ -180,6 +180,7 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
             return (
               <MenuItem
                 key={index}
+                index={index}
                 Icon={Icon}
                 subText={subText}
                 state={buttonState}
