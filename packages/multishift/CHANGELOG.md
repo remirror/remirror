@@ -1,5 +1,22 @@
 # multishift
 
+## 0.7.4
+
+### Patch Changes
+
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
+  organisation.
+- Updated dependencies [7380e18f]
+  - @remirror/core-helpers@0.7.4
+  - @remirror/core-types@0.7.4
+  - @remirror/react-hooks@0.7.4
+  - @remirror/react-utils@0.7.4
+  - @remirror/ui-a11y-status@0.7.4
+  - @remirror/ui-buttons@0.7.4
+  - @remirror/ui-icons@0.7.5
+  - @remirror/ui-text@0.7.4
+  - @remirror/ui@0.7.4
+
 ## 0.7.3
 
 ### Patch Changes
