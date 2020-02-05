@@ -3,8 +3,8 @@
   "description": "A text editor for react built with prosemirror",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "homepage": "https://github.com/ifiokjr/remirror/tree/master/packages/jest-remirror",
-  "repository": "https://github.com/ifiokjr/remirror/tree/master/packages/jest-remirror",
+  "homepage": "https://github.com/remirror/remirror/tree/master/packages/jest-remirror",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/jest-remirror",
   "version": "0.7.3",
   "main": "lib/index.js",
   "files": [

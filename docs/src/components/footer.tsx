@@ -14,7 +14,7 @@ export const Footer = () => (
       <div sx={{ display: 'flex' }}>
         <div sx={{ mx: 'auto' }} />
         <NavLink to='/'>Remirror</NavLink>
-        <NavLink href='https://github.com/ifiokjr/remirror'>GitHub</NavLink>
+        <NavLink href='https://github.com/remirror/remirror'>GitHub</NavLink>
       </div>
     </Container>
   </FooterUI>

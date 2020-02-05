@@ -7,7 +7,7 @@ This is a small project demonstrating the usage of remirror with Next.JS.
 Clone the remirror repository, install the dependencies, and then change to this folder and run `yarn dev`:
 
 ```bash
-git clone git@github.com:ifiokjr/remirror.git
+git clone git@github.com:remirror/remirror.git
 cd remirror
 yarn
 yarn build

@@ -12,7 +12,7 @@ Fork [this respository][repo], clone your fork and add this repository as the up
 
 ```bash
 git clone <<FORKED_REPO_URL>>
-git remote add upstream https://github.com/ifiokjr/remirror
+git remote add upstream https://github.com/remirror/remirror
 
 yarn ## Install all dependencies
 
@@ -91,7 +91,7 @@ This project is using composite types and adding a new dependency to the project
 since it's location has to explicitly be updated. Running `yarn generate:json` will automatically update all
 your project references so that the build still works. (It basically creates all the project
 `tsconfig.prod.json` files for you as can be seen
-[here](https://github.com/ifiokjr/remirror/blob/b096ed1dd3/support/scripts/generate-configs.js#L186-L228).)
+[here](https://github.com/remirror/remirror/blob/b096ed1dd3/support/scripts/generate-configs.js#L186-L228).)
 
 <br />
 
@@ -182,7 +182,7 @@ This Code of Conduct is adapted from the [Contributor Covenant], version 1.4, av
 [contributor covenant]: http://contributor-covenant.org
 [version]: http://contributor-covenant.org/version/1/4/
 [gatsby]: https://www.gatsbyjs.org/
-[repo]: https://github.com/ifiokjr/remirror
+[repo]: https://github.com/remirror/remirror
 [husky]: https://github.com/typicode/husky
 
 ### Being added as Contributor

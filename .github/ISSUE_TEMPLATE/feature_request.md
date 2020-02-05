@@ -16,6 +16,6 @@ about: Suggest an idea for this project
 
 ## Checklist
 
-- [ ] I have read the [**contributing**](https://github.com/ifiokjr/remirror/blob/canary/docs/contributing.md) document.
+- [ ] I have read the [**contributing**](https://github.com/remirror/remirror/blob/canary/docs/contributing.md) document.
 
 <!-- prettier-ignore-end -->

@@ -45,7 +45,7 @@ export const Header = ({ menuOpen, setMenuOpen, nav }: HeaderProps) => {
           <Flex>
             <NavLink href='/introduction'>Docs</NavLink>
             <NavLink href='/api'>API</NavLink>
-            <NavLink href='https://github.com/ifiokjr/remirror'>GitHub</NavLink>
+            <NavLink href='https://github.com/remirror/remirror'>GitHub</NavLink>
             <Button
               sx={{
                 ml: 2,
