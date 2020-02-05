@@ -17,7 +17,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) when it reaches `v
 ### Changes
 
 - 🐛 **`@remirror/core`**: Fix bug in `isExtension` predicate test
-  (https://github.com/ifiokjr/remirror/pull/181).
+  (https://github.com/remirror/remirror/pull/181).
 - Upgrade dependencies and add new command for unit testing built code.
 
 ## [0.7.1] - 2019-12-02
@@ -32,14 +32,14 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) when it reaches `v
 
 - 🚀 `@remirror/react`, `@remirror/editor-wysiwyg`, `@remirror/editor-social`: New `extensions` props on the
   `RemirrorManager` for injecting additional extensions into prebuilt editors
-  https://github.com/ifiokjr/remirror/pull/176.
+  https://github.com/remirror/remirror/pull/176.
 
 ## [0.6.5] - 2019-11-17
 
 ### Changed
 
 - `@remirror/extension-collaboration`: Bug fix for `this` being undefined
-  https://github.com/ifiokjr/remirror/issues/174.
+  https://github.com/remirror/remirror/issues/174.
 - Upgrade dependencies.
 
 ## [0.6.4] - 2019-11-07
@@ -345,19 +345,19 @@ using type inference. Please do bear with me as I make these changes. I truly be
 - Fixes missing TypeScript definitions #77.
 - Fixes crash when rendering a ReactNodeView in NextJS #75.
 
-[unreleased]: https://github.com/ifiokjr/remirror/compare/0.7.2...HEAD
-[0.7.2]: https://github.com/ifiokjr/remirror/compare/v0.7.1...0.7.2
-[0.7.1]: https://github.com/ifiokjr/remirror/compare/v0.7.0...0.7.1
-[0.7.0]: https://github.com/ifiokjr/remirror/compare/v0.6.5...0.7.0
-[0.6.5]: https://github.com/ifiokjr/remirror/compare/v0.6.4...v0.6.5
-[0.6.4]: https://github.com/ifiokjr/remirror/compare/v0.6.3...v0.6.4
-[0.6.3]: https://github.com/ifiokjr/remirror/compare/v0.6.2...v0.6.3
-[0.6.2]: https://github.com/ifiokjr/remirror/compare/v0.6.1...v0.6.2
-[0.6.1]: https://github.com/ifiokjr/remirror/compare/v0.6.0...v0.6.1
-[0.6.0]: https://github.com/ifiokjr/remirror/compare/v0.5.0...v0.6.0
-[0.5.0]: https://github.com/ifiokjr/remirror/compare/v0.4.1...v0.5.0
-[0.4.1]: https://github.com/ifiokjr/remirror/compare/v0.4.0...v0.4.1
-[0.4.0]: https://github.com/ifiokjr/remirror/compare/v0.3.0...v0.4.0
-[0.3.0]: https://github.com/ifiokjr/remirror/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/ifiokjr/remirror/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/ifiokjr/remirror/releases/tag/v0.1.0
+[unreleased]: https://github.com/remirror/remirror/compare/0.7.2...HEAD
+[0.7.2]: https://github.com/remirror/remirror/compare/v0.7.1...0.7.2
+[0.7.1]: https://github.com/remirror/remirror/compare/v0.7.0...0.7.1
+[0.7.0]: https://github.com/remirror/remirror/compare/v0.6.5...0.7.0
+[0.6.5]: https://github.com/remirror/remirror/compare/v0.6.4...v0.6.5
+[0.6.4]: https://github.com/remirror/remirror/compare/v0.6.3...v0.6.4
+[0.6.3]: https://github.com/remirror/remirror/compare/v0.6.2...v0.6.3
+[0.6.2]: https://github.com/remirror/remirror/compare/v0.6.1...v0.6.2
+[0.6.1]: https://github.com/remirror/remirror/compare/v0.6.0...v0.6.1
+[0.6.0]: https://github.com/remirror/remirror/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/remirror/remirror/compare/v0.4.1...v0.5.0
+[0.4.1]: https://github.com/remirror/remirror/compare/v0.4.0...v0.4.1
+[0.4.0]: https://github.com/remirror/remirror/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/remirror/remirror/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/remirror/remirror/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/remirror/remirror/releases/tag/v0.1.0
