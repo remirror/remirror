@@ -105,6 +105,8 @@ Now let's create the inner editor.
 import { jsx } from '@emotion/core';
 import { styled } from '@emotion/styled';
 import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
+import { BubbleMenu, EditorWrapper } from '@remirror/editor-wysiwyg';
+import { useRemirrorContext } from '@remirror/react';
 
 // Add styles to the editor instance
 export const InnerEditorWrapper = styled.div`
