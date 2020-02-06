@@ -142,11 +142,13 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 <br />
 
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
 ### Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
+
 <table>
   <tr>
     <td align="center"><a href="https://ifiokjr.com"><img src="https://avatars2.githubusercontent.com/u/1160934?v=4" width="100px;" alt=""/><br /><sub><b>Ifiok Jr.</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=ifiokjr" title="Documentation">📖</a> <a href="https://github.com/remirror/remirror/commits?author=ifiokjr" title="Code">💻</a> <a href="#example-ifiokjr" title="Examples">💡</a> <a href="https://github.com/remirror/remirror/commits?author=ifiokjr" title="Tests">⚠️</a> <a href="#maintenance-ifiokjr" title="Maintenance">🚧</a></td>
@@ -159,6 +161,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
   </tr>
 </table>
 
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->

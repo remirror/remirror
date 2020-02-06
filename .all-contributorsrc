@@ -3,7 +3,7 @@
     "readme.md"
   ],
   "projectName": "remirror",
-  "projectOwner": "ifiokjr",
+  "projectOwner": "remirror",
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true,
@@ -67,6 +67,15 @@
       "name": "ocavue",
       "avatar_url": "https://avatars2.githubusercontent.com/u/24715727?v=4",
       "profile": "https://ocavue.github.io/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "hboylan",
+      "name": "Hugh Boylan",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2158740?v=4",
+      "profile": "https://hughboylan.com",
       "contributions": [
         "code"
       ]
