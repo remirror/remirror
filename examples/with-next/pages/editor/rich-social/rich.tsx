@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { take, EditorState } from '@remirror/core';
+import { EditorState, take } from '@remirror/core';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -25,7 +25,7 @@ import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { RemirrorStateListenerParams } from '@remirror/react';
 import { userData } from '@remirror/showcase';
 import matchSorter from 'match-sorter';
-import { useMemo, useState, useCallback, ChangeEvent } from 'react';
+import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import bash from 'refractor/lang/bash';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
@@ -121,7 +121,7 @@ export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
     ];
   }, [defaultLanguage, formatter, supportedLanguages]);
 
-  const [value, setValue] = useState<EditorState<any> | null>(null);
+  const [value, setValue] = useState<EditorState | null>(null);
 
   const handleStateChange = useCallback((params: RemirrorStateListenerParams<SocialExtensions>): void => {
     setValue(params.newState);
@@ -147,7 +147,7 @@ export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
 
   const jsonValue = useMemo(() => {
     return value && showJSON ? JSON.stringify(value.toJSON(), null, 2) : '';
-  }, [value]);
+  }, [showJSON, value]);
 
   return (
     <div>
