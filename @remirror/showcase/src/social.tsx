@@ -32,8 +32,9 @@ const userData: UserData[] = fakeUsers.results.map(
   (user): UserData => ({
     avatarUrl: user.picture.thumbnail,
     displayName: startCase(`${user.name.first} ${user.name.last}`),
-    uid: user.login.uuid,
+    id: user.login.uuid,
     username: user.login.username,
+    href: `/u/${user.login.username}`,
   }),
 );
 

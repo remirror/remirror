@@ -79,13 +79,16 @@ export type MatchName = 'at' | 'tag';
 export type MentionState = AtMentionState | HashMentionState;
 
 export interface UserData {
-  uid: string;
+  id?: string;
+  href?: string;
   username: string;
   displayName: string;
   avatarUrl: string;
 }
 
 export interface TagData {
+  id?: string;
+  href?: string;
   tag: string;
 }
 
