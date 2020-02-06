@@ -1,5 +1,12 @@
 # @remirror/core-constants
 
+## 0.7.4
+
+### Patch Changes
+
+- 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
+  organisation.
+
 ## 0.7.3
 
 ### Patch Changes
