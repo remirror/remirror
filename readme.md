@@ -142,11 +142,13 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 <br />
 
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
 ### Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
+
 <table>
   <tr>
     <td align="center"><a href="https://ifiokjr.com"><img src="https://avatars2.githubusercontent.com/u/1160934?v=4" width="100px;" alt=""/><br /><sub><b>Ifiok Jr.</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=ifiokjr" title="Documentation">📖</a> <a href="https://github.com/remirror/remirror/commits?author=ifiokjr" title="Code">💻</a> <a href="#example-ifiokjr" title="Examples">💡</a> <a href="https://github.com/remirror/remirror/commits?author=ifiokjr" title="Tests">⚠️</a> <a href="#maintenance-ifiokjr" title="Maintenance">🚧</a></td>
@@ -155,10 +157,11 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
     <td align="center"><a href="https://aarongreenlee.com/"><img src="https://avatars0.githubusercontent.com/u/264508?v=4" width="100px;" alt=""/><br /><sub><b>Aaron Greenlee</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=aarongreenlee" title="Documentation">📖</a> <a href="https://github.com/remirror/remirror/commits?author=aarongreenlee" title="Code">💻</a></td>
     <td align="center"><a href="http://yellowbrim.com"><img src="https://avatars2.githubusercontent.com/u/1542740?v=4" width="100px;" alt=""/><br /><sub><b>Charley Bodkin</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=charlex" title="Code">💻</a> <a href="https://github.com/remirror/remirror/commits?author=charlex" title="Documentation">📖</a></td>
     <td align="center"><a href="https://ocavue.github.io/"><img src="https://avatars2.githubusercontent.com/u/24715727?v=4" width="100px;" alt=""/><br /><sub><b>ocavue</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=ocavue" title="Code">💻</a></td>
+    <td align="center"><a href="https://hughboylan.com"><img src="https://avatars2.githubusercontent.com/u/2158740?v=4" width="100px;" alt=""/><br /><sub><b>Hugh Boylan</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=hboylan" title="Code">💻</a></td>
   </tr>
 </table>
 
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
