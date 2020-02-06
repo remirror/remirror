@@ -109,7 +109,7 @@ export const fakeUsers: FakeUserObject = {
       email: 'jacinto.darosa@example.com',
       login: {
         uuid: '85d3419f-484b-48e2-b290-119d75d561de',
-        username: 'purplebird177',
+        username: 'purple_bird177',
         password: 'berlin',
         salt: 'rGrUG5i9',
         md5: '868275f6718b3cdca3eaed5ad31eba73',

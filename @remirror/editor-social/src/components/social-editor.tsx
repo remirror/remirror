@@ -125,31 +125,35 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
      * Handle the enter key being pressed
      */
     Enter: ({ suggester: { char, name }, command }) => {
-      const { activeIndex, hideMentionSuggestions: hideSuggestions } = this.state;
+      const {
+        users,
+        tags,
+        state: { activeIndex, hideMentionSuggestions: hideSuggestions },
+      } = this;
 
       if (hideSuggestions) {
         return false;
       }
 
-      const id =
-        name === 'at' && this.users.length
-          ? this.users[activeIndex].username
-          : name === 'tag' && this.tags.length
-          ? this.tags[activeIndex].tag
-          : undefined;
+      const userData = name === 'at' && users.length > activeIndex ? users[activeIndex] : null;
+      const tagData = name === 'tag' && tags.length > activeIndex ? tags[activeIndex] : null;
 
-      // Check if a matching id exists because the user has selected something.
-      if (!id) {
+      const id = userData ? userData.id : tagData ? tagData.id : null;
+      const label = userData ? userData.username : tagData ? tagData.tag : null;
+      const href = userData ? userData.href : tagData ? tagData.href : null;
+
+      // Check if the user has selected something.
+      if (!label) {
         return false;
       }
 
       this.setMentionExitTriggeredInternally();
       command({
         replacementType: 'full',
-        id,
-        label: `${char}${id}`,
+        id: id ?? label,
+        label: `${char}${label}`,
         role: 'presentation',
-        href: `/${id}`,
+        href: href ?? `/${id ?? label}`,
       });
 
       return true;
