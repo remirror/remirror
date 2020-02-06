@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { take } from '@remirror/core';
+import { take, EditorState } from '@remirror/core';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -19,11 +19,13 @@ import {
   OnMentionChangeParams,
   SocialEditor,
   SocialEditorProps,
+  SocialExtensions,
 } from '@remirror/editor-social';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
+import { RemirrorStateListenerParams } from '@remirror/react';
 import { userData } from '@remirror/showcase';
 import matchSorter from 'match-sorter';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback, ChangeEvent } from 'react';
 import bash from 'refractor/lang/bash';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
@@ -119,16 +121,57 @@ export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
     ];
   }, [defaultLanguage, formatter, supportedLanguages]);
 
+  const [value, setValue] = useState<EditorState<any> | null>(null);
+
+  const handleStateChange = useCallback((params: RemirrorStateListenerParams<SocialExtensions>): void => {
+    setValue(params.newState);
+  }, []);
+
+  const [showJSON, setShowJSON] = useState(
+    typeof localStorage === 'object' && localStorage
+      ? localStorage.getItem('showEditorDocument') === '1'
+      : false,
+  );
+
+  const handleShowJSONChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const show = e.target.checked;
+    setShowJSON(show);
+    if (typeof localStorage === 'object' && localStorage) {
+      if (show) {
+        localStorage.setItem('showEditorDocument', '1');
+      } else {
+        localStorage.removeItem('showEditorDocument');
+      }
+    }
+  }, []);
+
+  const jsonValue = useMemo(() => {
+    return value && showJSON ? JSON.stringify(value.toJSON(), null, 2) : '';
+  }, [value]);
+
   return (
-    <SocialEditor
-      {...props}
-      attributes={{ 'data-testid': 'editor-social' }}
-      userData={userMatches}
-      tagData={tagMatches}
-      onMentionChange={onChange}
-      characterLimit={500}
-      extensions={extensions}
-    />
+    <div>
+      <SocialEditor
+        {...props}
+        value={value}
+        onStateChange={handleStateChange}
+        attributes={{ 'data-testid': 'editor-social' }}
+        userData={userMatches}
+        tagData={tagMatches}
+        onMentionChange={onChange}
+        characterLimit={500}
+        extensions={extensions}
+      />
+      <label>
+        <input type='checkbox' checked={showJSON} onChange={handleShowJSONChange} /> Show document source as
+        JSON
+      </label>
+      {showJSON ? (
+        <pre>
+          <code>{jsonValue}</code>
+        </pre>
+      ) : null}
+    </div>
   );
 };
 
