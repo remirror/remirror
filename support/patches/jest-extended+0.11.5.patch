@@ -1,5 +1,5 @@
 diff --git a/node_modules/jest-extended/types/index.d.ts b/node_modules/jest-extended/types/index.d.ts
-index cd4cc1f..3c70556 100644
+index de45f8c..f31454d 100644
 --- a/node_modules/jest-extended/types/index.d.ts
 +++ b/node_modules/jest-extended/types/index.d.ts
 @@ -2,7 +2,7 @@
