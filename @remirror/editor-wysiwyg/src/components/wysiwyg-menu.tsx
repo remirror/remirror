@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { ActionNames, AnyFunction, Attrs, KeyOfThemeVariant } from '@remirror/core';
+import { ActionNames, AnyFunction, Attrs, getMarkAttrs, KeyOfThemeVariant } from '@remirror/core';
 import { bubblePositioner, useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import {
@@ -30,6 +30,7 @@ import {
   KeyboardEventHandler,
   MouseEventHandler,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -147,7 +148,7 @@ const bubbleMenuItems: Array<[
 ];
 
 export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
-  const { actions, getPositionerProps, helpers } = useRemirrorContext<WysiwygExtensions>();
+  const { actions, getPositionerProps, helpers, state, manager } = useRemirrorContext<WysiwygExtensions>();
 
   const positionerProps = getPositionerProps({
     ...bubblePositioner,
@@ -168,10 +169,17 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
   const removeLink = () => actions.removeLink();
   const canRemove = () => actions.removeLink.isActive();
 
+  const activatedLinkHref = useMemo<string | undefined>(() => {
+    return getMarkAttrs(state.newState, manager.schema.marks.link).href;
+  }, [manager, state]);
+
   return (
     <BubbleMenuTooltip ref={ref} bottom={bottom + 5} left={left}>
       {linkActivated ? (
-        <LinkInput {...{ deactivateLink, updateLink, removeLink, canRemove }} />
+        <LinkInput
+          {...{ deactivateLink, updateLink, removeLink, canRemove }}
+          defaultValue={activatedLinkHref}
+        />
       ) : (
         <BubbleContent>
           {bubbleMenuItems.map(([name, [Icon, subText], attrs], index) => {
@@ -203,12 +211,19 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
 };
 
 interface LinkInputProps extends Pick<BubbleMenuProps, 'deactivateLink'> {
+  defaultValue?: string;
   updateLink(href: string): void;
   removeLink(): void;
   canRemove(): boolean;
 }
 
-const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink, canRemove }) => {
+const LinkInput: FC<LinkInputProps> = ({
+  defaultValue,
+  deactivateLink,
+  updateLink,
+  removeLink,
+  canRemove,
+}) => {
   const [href, setHref] = useState('');
   const { css } = useRemirrorTheme();
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -258,6 +273,7 @@ const LinkInput: FC<LinkInputProps> = ({ deactivateLink, updateLink, removeLink,
   return (
     <BubbleContent ref={wrapperRef}>
       <input
+        defaultValue={defaultValue}
         placeholder='Enter URL...'
         autoFocus={true}
         onChange={onChange}
