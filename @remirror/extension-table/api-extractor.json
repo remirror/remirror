@@ -5,7 +5,7 @@
   "apiReport": {
     "enabled": true,
     "reportFolder": "../../support/api/",
-    "reportFileName": "remirror__extension-code-block.api.md",
+    "reportFileName": "remirror__extension-table.api.md",
     "reportTempFolder": "./temp/"
   },
   "docModel": {

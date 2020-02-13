@@ -1,2 +1,1 @@
-export * from './code-block-extension';
-export * from './code-block-types';
+export * from './simple-table-extension';

@@ -1,13 +1,13 @@
 {
-  "name": "@remirror/extension-code-block",
-  "description": "CodeBlock extension for the remirror wysiwyg editor",
+  "name": "@remirror/extension-table",
+  "description": "Table extension for the remirror wysiwyg editor",
   "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-code-block",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-code-block",
-  "version": "0.7.4",
+  "author": "Ocavue <ocavue@gmail.com>",
+  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-table",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-table",
+  "version": "0.1.0",
   "main": "lib/index.js",
-  "module": "lib/dist/extension-code-block.esm.js",
+  "module": "lib/dist/extension-table.esm.js",
   "files": [
     "internal",
     "lib",
@@ -34,18 +34,16 @@
     "prosemirror-state": "^1.2.4",
     "prosemirror-transform": "^1.1.5",
     "prosemirror-view": "^1.12.0",
-    "react-syntax-highlighter": "^11.0.2",
-    "refractor": "^2.10.0"
+    "prosemirror-table": "*"
   },
   "peerDependencies": {
-    "@emotion/core": "^10",
     "@types/react": "^16.8.0",
     "react": "^16.8.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/extension-code-block.cjs.js",
+  "cjs": "lib/dist/extension-table.cjs.js",
   "meta": {
     "sizeLimit": "120 KB"
   }

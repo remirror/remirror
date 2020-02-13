@@ -1,22 +1,16 @@
-# @remirror/extension-code-block
+# @remirror/extension-table
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/extension-code-block.svg?)](https://bundlephobia.com/result?p=@remirror/extension-code-block)
-[![npm](https://img.shields.io/npm/dm/@remirror/extension-code-block.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/extension-code-block)
-
-Add code highlighting to your codeBlocks.
+[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/extension-table.svg?)](https://bundlephobia.com/result?p=@remirror/extension-table)
+[![npm](https://img.shields.io/npm/dm/@remirror/extension-table.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/extension-table)
 
 ## Installation
 
 ```bash
-yarn add refractor @remirror/extension-code-block
+yarn add @remirror/extension-table
 ```
 
-Refractor is a peer dependency and is needed when adding extra language support.
-
 ```ts
-import jsx from 'refractor/lang/jsx';
-import typescript from 'refractor/lang/typescript';
-import { CodeBlockExtension } from '@remirror/extension-code-block';
+import { SimpleTableExtension } from '@remirror/extension-table';
 
-new CodeBlockExtension({ supportedLanguages: [typescript, jsx] });
+new SimpleTableExtension();
 ```
