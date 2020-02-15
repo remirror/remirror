@@ -9,6 +9,7 @@ import {
   NodeExtension,
   pick,
 } from '@remirror/core';
+import { baseExtensions } from '@remirror/core-extensions';
 import { InjectedRemirrorProps, Remirror, RemirrorProps } from '@remirror/react';
 import { render } from '@testing-library/react/pure';
 import {
@@ -77,7 +78,10 @@ export const renderEditor = <
     ...plainNodes,
     ...attrMarks,
     ...attrNodes,
-  ].map(extension => ({ extension, priority: 2 }));
+  ].map(extension => ({
+    extension,
+    priority: baseExtensions.filter(base => base.extension.name === extension.name)[0]?.priority || 2,
+  }));
   const manager = ExtensionManager.create(extensions);
   let returnedParams!: InjectedRemirrorProps<GExtension>;
 
