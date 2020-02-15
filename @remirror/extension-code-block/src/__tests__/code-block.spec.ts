@@ -134,7 +134,7 @@ describe('plugin', () => {
       expect(state.doc).toEqualRemirrorDocument(doc(p('abc'), tsBlock('content')));
     });
 
-    it("doesn't steps into the previous node when the selection isn't empty", () => {
+    it("doesn't step into the previous node when the selection isn't empty", () => {
       const { state } = add(doc(p('abc'), tsBlock('<start>code<end>content'))).press('Backspace');
       expect(state.doc).toEqualRemirrorDocument(doc(p('abc'), tsBlock('content')));
     });
