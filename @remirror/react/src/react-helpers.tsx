@@ -77,12 +77,12 @@ export const getManagerFromComponentTree = ({
   extraProps = Object.create(null),
 }: GetManagerFromComponentTreeParams) =>
   new Promise<ExtensionManager>((resolve, reject) => {
-    const MangerRetriever = () => {
+    const ManagerRetriever = () => {
       const manager = useRemirrorManager();
       resolve(manager);
       return null;
     };
-    const props = { ...extraProps, [prop]: <MangerRetriever /> };
+    const props = { ...extraProps, [prop]: <ManagerRetriever /> };
 
     renderToString(<Component {...props} />);
 

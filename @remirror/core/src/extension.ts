@@ -307,7 +307,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * the editor more accessible by setting the `aria-placeholder` value to match
    * the value of the placeholder.
    *
-   * @param params - extension manger params
+   * @param params - extension manager params
    *
    * @alpha
    */
