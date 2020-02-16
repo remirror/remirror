@@ -1,8 +1,10 @@
 import {
   Attrs,
   Cast,
+  convertToPrioritizedExtension,
   Extension,
   ExtensionManager,
+  FlexibleExtension,
   isMarkExtension,
   isNodeExtension,
   MarkExtension,
@@ -46,11 +48,11 @@ import { jsdomSelectionPatch } from './jsdom-patch';
  * Render the editor with the params passed in. Useful for testing.
  */
 export const renderEditor = <
-  GPlainMarks extends Array<MarkExtension<any>>,
-  GPlainNodes extends Array<NodeExtension<any>>,
-  GAttrMarks extends Array<MarkExtension<any>>,
-  GAttrNodes extends Array<NodeExtension<any>>,
-  GOthers extends Array<Extension<any>>,
+  GPlainMarks extends Array<FlexibleExtension<MarkExtension<any>>>,
+  GPlainNodes extends Array<FlexibleExtension<NodeExtension<any>>>,
+  GAttrMarks extends Array<FlexibleExtension<MarkExtension<any>>>,
+  GAttrNodes extends Array<FlexibleExtension<NodeExtension<any>>>,
+  GOthers extends Array<FlexibleExtension<Extension<any>>>,
   GReturn extends CreateTestEditorReturn<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>,
   GExtension extends GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>,
   GPlainMarkNames extends GetNames<GPlainMarks>,
@@ -69,7 +71,10 @@ export const renderEditor = <
   > = Object.create(null),
   props: Partial<Omit<RemirrorProps<GExtension>, 'manager'>> = Object.create(null),
 ): GReturn => {
-  const innerNodeExtensions = nodeExtensions.filter(({ name }) => !plainNodes.some(ext => ext.name === name));
+  const innerNodeExtensions = nodeExtensions.filter(
+    ({ name }) => !plainNodes.some(ext => convertToPrioritizedExtension(ext).extension.name === name),
+  );
+
   const extensions = [
     ...innerNodeExtensions,
     ...others,
@@ -77,7 +82,7 @@ export const renderEditor = <
     ...plainNodes,
     ...attrMarks,
     ...attrNodes,
-  ].map(extension => ({ extension, priority: 2 }));
+  ].map(convertToPrioritizedExtension);
   const manager = ExtensionManager.create(extensions);
   let returnedParams!: InjectedRemirrorProps<GExtension>;
 

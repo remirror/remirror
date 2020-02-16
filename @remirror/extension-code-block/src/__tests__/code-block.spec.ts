@@ -1,4 +1,5 @@
 import { fromHTML, toHTML } from '@remirror/core';
+import { BaseKeymapExtension } from '@remirror/core-extensions';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
@@ -54,6 +55,7 @@ const create = (params: CodeBlockExtensionOptions = Object.create(null)) =>
   renderEditor({
     plainNodes: [],
     attrNodes: [new CodeBlockExtension({ ...params, supportedLanguages })],
+    others: [{ priority: 10, extension: new BaseKeymapExtension() }],
   });
 
 describe('plugin', () => {
@@ -129,6 +131,11 @@ describe('plugin', () => {
       const { state } = add(doc(p(), tsBlock('<cursor>content')))
         .press('Backspace')
         .insertText('abc');
+      expect(state.doc).toEqualRemirrorDocument(doc(p('abc'), tsBlock('content')));
+    });
+
+    it('avoids stepping into the previous node with non empty selection', () => {
+      const { state } = add(doc(p('abc'), tsBlock('<start>code<end>content'))).press('Backspace');
       expect(state.doc).toEqualRemirrorDocument(doc(p('abc'), tsBlock('content')));
     });
 

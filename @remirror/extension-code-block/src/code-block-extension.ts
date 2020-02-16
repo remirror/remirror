@@ -233,6 +233,13 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
     return {
       Backspace: (state, dispatch) => {
         const { selection } = state;
+
+        // If the selection is not empty, return false and let other extension (ie: BaseKeymapExtension) to do
+        // the deleting operation.
+        if (!selection.empty) {
+          return false;
+        }
+
         let tr = state.tr;
         const parent = findParentNodeOfType({ types: type, selection });
 
@@ -245,6 +252,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
         if (node.textContent.trim() === '') {
           tr = removeNodeAtPosition({ pos, tr });
         } else if (start - 2 > 0) {
+          // Make the cursor jump to the previous node.
           tr.setSelection(TextSelection.create(tr.doc, start - 2));
         } else {
           // There is no content before the codeBlock so simply create a new block and jump into it.
