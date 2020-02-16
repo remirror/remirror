@@ -9,6 +9,7 @@ import {
   EditorStateParams,
   EditorViewParams,
   Extension,
+  FlexibleExtension,
   HelpersFromExtensions,
   MarkExtension,
   NodeExtension,
@@ -273,11 +274,11 @@ export type NodeWithoutAttrs<GNames extends string> = {
 };
 
 export type CreateTestEditorReturn<
-  GPlainMarks extends Array<MarkExtension<any>>,
-  GPlainNodes extends Array<NodeExtension<any>>,
-  GAttrMarks extends Array<MarkExtension<any>>,
-  GAttrNodes extends Array<NodeExtension<any>>,
-  GOthers extends Array<Extension<any>>,
+  GPlainMarks extends Array<FlexibleExtension<MarkExtension<any>>>,
+  GPlainNodes extends Array<FlexibleExtension<NodeExtension<any>>>,
+  GAttrMarks extends Array<FlexibleExtension<MarkExtension<any>>>,
+  GAttrNodes extends Array<FlexibleExtension<NodeExtension<any>>>,
+  GOthers extends Array<FlexibleExtension<Extension<any>>>,
   GExtension extends GenericExtension<
     GPlainMarks,
     GPlainNodes,
@@ -299,28 +300,31 @@ export type CreateTestEditorReturn<
     doc: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
   };
 
-export type GetNames<GExtensions extends AnyExtension[]> = GExtensions[number]['name'];
+export type GetNames<GExtensions extends FlexibleExtension[]> = Extract<
+  GExtensions[number],
+  AnyExtension
+>['name'];
 
 export type GenericExtension<
-  GPlainMarks extends Array<MarkExtension<any>>,
-  GPlainNodes extends Array<NodeExtension<any>>,
-  GAttrMarks extends Array<MarkExtension<any>>,
-  GAttrNodes extends Array<NodeExtension<any>>,
-  GOthers extends Array<Extension<any>>
+  GPlainMarks extends Array<FlexibleExtension<MarkExtension<any>>>,
+  GPlainNodes extends Array<FlexibleExtension<NodeExtension<any>>>,
+  GAttrMarks extends Array<FlexibleExtension<MarkExtension<any>>>,
+  GAttrNodes extends Array<FlexibleExtension<NodeExtension<any>>>,
+  GOthers extends Array<FlexibleExtension<Extension<any>>>
 > =
   | BaseExtensionNodes
-  | GPlainMarks[number]
-  | GPlainNodes[number]
-  | GAttrMarks[number]
-  | GAttrNodes[number]
-  | GOthers[number];
+  | Extract<GPlainMarks[number], AnyExtension>
+  | Extract<GPlainNodes[number], AnyExtension>
+  | Extract<GAttrMarks[number], AnyExtension>
+  | Extract<GAttrNodes[number], AnyExtension>
+  | Extract<GOthers[number], AnyExtension>;
 
 export interface CreateTestEditorExtensions<
-  GPlainMarks extends Array<MarkExtension<any>>,
-  GPlainNodes extends Array<NodeExtension<any>>,
-  GAttrMarks extends Array<MarkExtension<any>>,
-  GAttrNodes extends Array<NodeExtension<any>>,
-  GOthers extends Array<Extension<any>>
+  GPlainMarks extends Array<FlexibleExtension<MarkExtension<any>>>,
+  GPlainNodes extends Array<FlexibleExtension<NodeExtension<any>>>,
+  GAttrMarks extends Array<FlexibleExtension<MarkExtension<any>>>,
+  GAttrNodes extends Array<FlexibleExtension<NodeExtension<any>>>,
+  GOthers extends Array<FlexibleExtension<Extension<any>>>
 > {
   /**
    * Create marks which don't need any attributes

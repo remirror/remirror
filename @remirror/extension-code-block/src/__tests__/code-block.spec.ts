@@ -55,7 +55,7 @@ const create = (params: CodeBlockExtensionOptions = Object.create(null)) =>
   renderEditor({
     plainNodes: [],
     attrNodes: [new CodeBlockExtension({ ...params, supportedLanguages })],
-    others: [new BaseKeymapExtension()],
+    others: [{ priority: 10, extension: new BaseKeymapExtension() }],
   });
 
 describe('plugin', () => {
@@ -134,7 +134,7 @@ describe('plugin', () => {
       expect(state.doc).toEqualRemirrorDocument(doc(p('abc'), tsBlock('content')));
     });
 
-    it("doesn't step into the previous node when the selection isn't empty", () => {
+    it('avoids stepping into the previous node with non empty selection', () => {
       const { state } = add(doc(p('abc'), tsBlock('<start>code<end>content'))).press('Backspace');
       expect(state.doc).toEqualRemirrorDocument(doc(p('abc'), tsBlock('content')));
     });
