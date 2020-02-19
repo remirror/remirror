@@ -13,7 +13,7 @@ import {
   ExtensionManagerParams,
   ExtensionManagerTypeParams,
   ExtraAttrs,
-  KeyboardBindings,
+  KeyBindings,
   NodeViewMethod,
   OnTransactionParams,
   PlainObject,
@@ -32,7 +32,7 @@ const defaultOptions: Required<BaseExtensionOptions> = {
   extraAttrs: [],
   exclude: {
     inputRules: false,
-    keymaps: false,
+    keys: false,
     pasteRules: false,
     plugin: false,
     styles: false,
@@ -434,7 +434,7 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    *
    * @param params - schema params with type included
    */
-  keys?(params: ExtensionManagerTypeParams<GType>): KeyboardBindings;
+  keys?(params: ExtensionManagerTypeParams<GType>): KeyBindings;
 
   /**
    * Registers a node view for the extension.

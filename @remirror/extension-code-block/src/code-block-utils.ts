@@ -1,7 +1,6 @@
 import {
   Attrs,
   bool,
-  CommandFunction,
   EditorState,
   findParentNodeOfType,
   flattenArray,
@@ -13,6 +12,7 @@ import {
   NodeTypeParams,
   NodeWithPosition,
   PosParams,
+  ProsemirrorCommandFunction,
   ProsemirrorNodeParams,
   TextParams,
   uniqueArray,
@@ -167,7 +167,7 @@ export const isValidCodeBlockAttrs = (attrs?: Attrs): attrs is CodeBlockAttrs =>
  *
  * This is used to update the language for the codeBlock.
  */
-export const updateNodeAttrs = (type: NodeType) => (attrs: CodeBlockAttrs): CommandFunction => (
+export const updateNodeAttrs = (type: NodeType) => (attrs: CodeBlockAttrs): ProsemirrorCommandFunction => (
   { tr, selection },
   dispatch,
 ) => {
@@ -247,10 +247,9 @@ export const formatCodeBlockFactory = ({
   formatter,
   supportedLanguages,
   defaultLanguage: fallback,
-}: FormatCodeBlockFactoryParams) => ({ pos }: Partial<PosParams> = Object.create(null)): CommandFunction => (
-  state,
-  dispatch,
-) => {
+}: FormatCodeBlockFactoryParams) => (
+  { pos }: Partial<PosParams> = Object.create(null),
+): ProsemirrorCommandFunction => (state, dispatch) => {
   const { tr, selection } = state;
 
   const { from, to } = pos ? { from: pos, to: pos } : selection;

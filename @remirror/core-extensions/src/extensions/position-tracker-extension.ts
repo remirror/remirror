@@ -2,10 +2,10 @@ import { Extension } from '@remirror/core';
 import { isNullOrUndefined, isNumber, isString } from '@remirror/core-helpers';
 import {
   BaseExtensionOptions,
-  CommandFunction,
   CommandParams,
   ExtensionManagerParams,
   PosParams,
+  ProsemirrorCommandFunction,
   Transaction,
 } from '@remirror/core-types';
 import { getPluginMeta, getPluginState } from '@remirror/core-utils';
@@ -132,7 +132,10 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
   }
 
   public commands({ getHelpers }: CommandParams) {
-    const commandFactory = <GArg>(helperName: string) => (params: GArg): CommandFunction => (_, dispatch) => {
+    const commandFactory = <GArg>(helperName: string) => (params: GArg): ProsemirrorCommandFunction => (
+      _,
+      dispatch,
+    ) => {
       const helper = getHelpers(helperName);
       const tr = helper(params);
 

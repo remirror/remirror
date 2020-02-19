@@ -1,9 +1,10 @@
 import { Interpolation } from '@emotion/core';
 import {
   CommandNodeTypeParams,
+  convertCommand,
   EDITOR_CLASS_SELECTOR,
   ExtensionManagerNodeTypeParams,
-  KeyboardBindings,
+  KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -34,9 +35,9 @@ export class CodeBlockExtension extends NodeExtension {
     return { toggleCodeBlock: () => toggleBlockItem({ type, toggleType: schema.nodes.paragraph }) };
   }
 
-  public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyboardBindings {
+  public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
     return {
-      'Shift-Ctrl-\\': toggleBlockItem({ type, toggleType: schema.nodes.paragraph }),
+      'Shift-Ctrl-\\': convertCommand(toggleBlockItem({ type, toggleType: schema.nodes.paragraph })),
     };
   }
 

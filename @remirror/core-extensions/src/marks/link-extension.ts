@@ -9,7 +9,7 @@ import {
   getSelectedWord,
   isMarkActive,
   isTextSelection,
-  KeyboardBindings,
+  KeyBindings,
   MarkExtension,
   MarkExtensionOptions,
   MarkExtensionSpec,
@@ -71,16 +71,18 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public keys(): KeyboardBindings {
+  public keys(): KeyBindings {
     return {
-      'Mod-k': (state, dispatch) => {
+      'Mod-k': ({ state, dispatch }) => {
         // Expand selection
         const range = getSelectedWord(state);
         if (!range) {
           return false;
         }
+
         const { from, to } = range;
         const tr = state.tr.setSelection(TextSelection.create(state.doc, from, to));
+
         if (dispatch) {
           dispatch(tr);
         }

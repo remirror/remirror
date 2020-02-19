@@ -3,7 +3,6 @@ import {
   AnyExtension,
   Attrs,
   AttrsParams,
-  CommandFunction,
   EditorSchema,
   EditorState,
   EditorStateParams,
@@ -13,6 +12,7 @@ import {
   HelpersFromExtensions,
   MarkExtension,
   NodeExtension,
+  ProsemirrorCommandFunction,
   ProsemirrorNode,
   SchemaFromExtensions,
 } from '@remirror/core';
@@ -237,7 +237,7 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    *
    * @param command - the command function to run with the current state and view
    */
-  dispatchCommand(command: CommandFunction): AddContentReturn<GExtension>;
+  dispatchCommand(command: ProsemirrorCommandFunction): AddContentReturn<GExtension>;
 
   /**
    * Fires a custom event at the specified dom node.

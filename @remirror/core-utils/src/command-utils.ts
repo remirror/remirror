@@ -3,11 +3,11 @@ import {
   AnyFunction,
   Attrs,
   AttrsParams,
-  CommandFunction,
   MarkType,
   MarkTypeParams,
   NodeType,
   NodeTypeParams,
+  ProsemirrorCommandFunction,
   RangeParams,
   TransformTransactionParams,
 } from '@remirror/core-types';
@@ -43,7 +43,7 @@ export const updateMark = ({
   attrs = Object.create(null),
   appendText,
   range,
-}: UpdateMarkParams): CommandFunction => (state, dispatch) => {
+}: UpdateMarkParams): ProsemirrorCommandFunction => (state, dispatch) => {
   const { selection } = state;
   const { tr } = state;
   const { from, to } = range ?? selection;
@@ -69,7 +69,10 @@ export const updateMark = ({
  *
  * @public
  */
-export const toggleWrap = (type: NodeType, attrs?: Attrs): CommandFunction => (state, dispatch) => {
+export const toggleWrap = (type: NodeType, attrs?: Attrs): ProsemirrorCommandFunction => (
+  state,
+  dispatch,
+) => {
   const isActive = isNodeActive({ state, type });
 
   if (isActive) {
@@ -91,7 +94,10 @@ export const toggleWrap = (type: NodeType, attrs?: Attrs): CommandFunction => (s
  *
  * @public
  */
-export const toggleList = (type: NodeType, itemType: NodeType): CommandFunction => (state, dispatch) => {
+export const toggleList = (type: NodeType, itemType: NodeType): ProsemirrorCommandFunction => (
+  state,
+  dispatch,
+) => {
   const isActive = isNodeActive({ state, type });
 
   if (isActive) {
@@ -119,7 +125,7 @@ export const toggleBlockItem = ({
   type,
   toggleType,
   attrs = Object.create(null),
-}: ToggleBlockItemParams): CommandFunction => (state, dispatch) => {
+}: ToggleBlockItemParams): ProsemirrorCommandFunction => (state, dispatch) => {
   const isActive = isNodeActive({ state, type, attrs });
 
   if (isActive) {
@@ -190,7 +196,7 @@ export const replaceText = ({
   content = '',
   startTransaction,
   endTransaction,
-}: ReplaceTextParams): CommandFunction => (state, dispatch) => {
+}: ReplaceTextParams): ProsemirrorCommandFunction => (state, dispatch) => {
   const { schema, selection } = state;
   // const { $from, $to } = selection;
   const index = selection.$from.index();
@@ -251,7 +257,7 @@ export const removeMark = ({
   range,
   endTransaction,
   startTransaction,
-}: RemoveMarkParams): CommandFunction => (state, dispatch) => {
+}: RemoveMarkParams): ProsemirrorCommandFunction => (state, dispatch) => {
   const { selection } = state;
   const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
   let { from, to } = range ?? selection;
@@ -273,3 +279,12 @@ export const removeMark = ({
 
   return true;
 };
+
+/**
+ * An empty (noop) command function.
+ *
+ * @remarks
+ *
+ * This is typically to represent the default _do nothing_ action.
+ */
+export const emptyCommandFunction: ProsemirrorCommandFunction = () => false;

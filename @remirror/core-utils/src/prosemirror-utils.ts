@@ -1,15 +1,18 @@
 import { bool, isNullOrUndefined, keys } from '@remirror/core-helpers';
 import {
   AttrsParams,
+  CommandFunction,
   EditorSchema,
   EditorState,
   EditorStateParams,
   EditorView,
+  KeyBindingCommandFunction,
   NodeTypeParams,
   NodeTypesParams,
   OptionalProsemirrorNodeParams,
   PosParams,
   PredicateParams,
+  ProsemirrorCommandFunction,
   ProsemirrorNode,
   ProsemirrorNodeParams,
   ResolvedPos,
@@ -457,4 +460,68 @@ export const schemaToJSON = <GNodes extends string = string, GMarks extends stri
     nodes,
     marks,
   };
+};
+
+/**
+ * Wraps the default {@link ProsemirrorCommandFunction} and makes it compatible with the default **remirror**
+ * {@link CommandFunction} call signature.
+ */
+export const convertCommand = <GSchema extends EditorSchema = any, GExtraParams extends object = {}>(
+  commandFunction: ProsemirrorCommandFunction<GSchema>,
+): CommandFunction<GSchema, GExtraParams> => ({ state, dispatch, view }) =>
+  commandFunction(state, dispatch, view);
+
+/**
+ * Similar to the chainCommands from the `prosemirror-commands` library. Allows multiple commands to be
+ * chained together and runs until one of them returns true.
+ */
+export const chainCommands = <GSchema extends EditorSchema = any, GExtraParams extends object = {}>(
+  ...commands: Array<CommandFunction<GSchema, GExtraParams>>
+): CommandFunction<GSchema, GExtraParams> => ({ state, dispatch, view, ...rest }) => {
+  for (let commandIndex = 0; commandIndex < commands.length; commandIndex++) {
+    if (commands[commandIndex]({ state, dispatch, view, ...(rest as GExtraParams) })) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+/**
+ * Chains together keybindings.
+ *
+ * @remarks
+ *
+ * When `next` hands over full control of the keybindings to the caller.
+ */
+export const chainKeyBindingCommands = (
+  ...commands: KeyBindingCommandFunction[]
+): KeyBindingCommandFunction => params => {
+  if (!commands.length) {
+    return false;
+  }
+
+  const [command, ...rest] = commands;
+
+  let calledNext = false;
+
+  const createNext = (...nextCommands: KeyBindingCommandFunction[]): (() => boolean) => () => {
+    if (!nextCommands.length) {
+      return false;
+    }
+
+    calledNext = true;
+
+    const [, ...nextRest] = nextCommands;
+    return chainKeyBindingCommands(...nextCommands)({ ...params, next: createNext(...nextRest) });
+  };
+
+  const next = createNext(...rest);
+  const status = command({ ...params, next });
+
+  if (calledNext || status) {
+    return status;
+  }
+
+  return next();
 };

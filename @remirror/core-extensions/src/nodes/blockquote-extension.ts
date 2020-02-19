@@ -1,8 +1,9 @@
 import {
   CommandNodeTypeParams,
+  convertCommand,
   EDITOR_CLASS_SELECTOR,
   ExtensionManagerNodeTypeParams,
-  KeyboardBindings,
+  KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -57,9 +58,9 @@ export class BlockquoteExtension extends NodeExtension {
     `;
   }
 
-  public keys({ type }: ExtensionManagerNodeTypeParams): KeyboardBindings {
+  public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
     return {
-      'Ctrl->': toggleWrap(type),
+      'Ctrl->': convertCommand(toggleWrap(type)),
     };
   }
 

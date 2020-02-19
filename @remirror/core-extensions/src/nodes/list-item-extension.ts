@@ -1,6 +1,7 @@
 import {
+  convertCommand,
   ExtensionManagerNodeTypeParams,
-  KeyboardBindings,
+  KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
 } from '@remirror/core';
@@ -22,11 +23,11 @@ export class ListItemExtension extends NodeExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerNodeTypeParams): KeyboardBindings {
+  public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
     return {
-      Enter: splitListItem(type),
-      Tab: sinkListItem(type),
-      'Shift-Tab': liftListItem(type),
+      Enter: convertCommand(splitListItem(type)),
+      Tab: convertCommand(sinkListItem(type)),
+      'Shift-Tab': convertCommand(liftListItem(type)),
     };
   }
 }

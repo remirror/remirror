@@ -1,6 +1,15 @@
-import { Extension } from '@remirror/core';
-import { BaseExtensionOptions, KeyboardBindings } from '@remirror/core-types';
-import { baseKeymap, chainCommands, selectParentNode } from 'prosemirror-commands';
+import {
+  BaseExtensionOptions,
+  chainKeyBindingCommands,
+  convertCommand,
+  Extension,
+  ExtensionManagerParams,
+  hasOwnProperty,
+  isFunction,
+  KeyBindings,
+} from '@remirror/core';
+import mapObject from 'map-obj';
+import { baseKeymap, chainCommands as pmChainCommands, selectParentNode } from 'prosemirror-commands';
 import { undoInputRule } from 'prosemirror-inputrules';
 
 export interface BaseKeymapExtensionOptions extends BaseExtensionOptions {
@@ -17,11 +26,33 @@ export interface BaseKeymapExtensionOptions extends BaseExtensionOptions {
    * @defaultValue `false`
    */
   selectParentNodeOnEscape?: boolean;
+
+  /**
+   * Extra key mappings to be added to the default keymap.
+   *
+   * @remarks
+   *
+   * This allows for you to add extra key mappings which will be checked before the default keymaps, if they
+   * return false then the default keymaps are still checked.
+   *
+   * No key mappings are removed in this process.
+   *
+   * ```ts
+   * const extension = BaseKeymapExtension.create({ keymap: {
+   *   Enter({ state, dispatch }) {
+   *     //... Logic
+   *     return true;
+   *   },
+   * }});
+   * ```
+   */
+  keymap?: KeyBindings | ((params: ExtensionManagerParams) => KeyBindings);
 }
 
 export const defaultBaseKeymapExtensionOptions: BaseKeymapExtensionOptions = {
   undoInputRuleOnBackspace: true,
   selectParentNodeOnEscape: false,
+  keymap: {},
 };
 
 /**
@@ -29,12 +60,19 @@ export const defaultBaseKeymapExtensionOptions: BaseKeymapExtensionOptions = {
  *
  * @remarks
  *
- * Without this extension most of the shortcuts and behaviours we have come to
- * expected from text editors would not be provided.
+ * Without this extension most of the shortcuts and behaviors we have come to
+ * expect from text editors would not be provided.
  *
  * @builtin
  */
 export class BaseKeymapExtension extends Extension<BaseKeymapExtensionOptions> {
+  /**
+   * Shorthand method for creating the `BaseKeymapExtension`
+   */
+  public static create(options: BaseKeymapExtensionOptions) {
+    return new BaseKeymapExtension(options);
+  }
+
   get name() {
     return 'baseKeymap' as const;
   }
@@ -46,13 +84,34 @@ export class BaseKeymapExtension extends Extension<BaseKeymapExtensionOptions> {
   /**
    * Injects the baseKeymap into the editor.
    */
-  public keys() {
-    const { selectParentNodeOnEscape, undoInputRuleOnBackspace } = this.options;
-    const backspaceRule: KeyboardBindings = undoInputRuleOnBackspace
-      ? { Backspace: chainCommands(undoInputRule, baseKeymap.Backspace) }
+  public keys(params: ExtensionManagerParams) {
+    const { selectParentNodeOnEscape, undoInputRuleOnBackspace, keymap } = this.options;
+    const backspaceRule: KeyBindings = undoInputRuleOnBackspace
+      ? { Backspace: convertCommand(pmChainCommands(undoInputRule, baseKeymap.Backspace)) }
       : {};
-    const escapeRule: KeyboardBindings = selectParentNodeOnEscape ? { Escape: selectParentNode } : {};
+    const escapeRule: KeyBindings = selectParentNodeOnEscape
+      ? { Escape: convertCommand(selectParentNode) }
+      : {};
 
-    return { ...baseKeymap, ...backspaceRule, ...escapeRule };
+    const mappedKeys: KeyBindings = {
+      ...mapObject(baseKeymap, (key, value) => [key as string, convertCommand(value)]),
+      ...backspaceRule,
+      ...escapeRule,
+    };
+
+    const keyBindings = isFunction(keymap) ? keymap(params) : keymap;
+
+    for (const key in keyBindings) {
+      if (!hasOwnProperty(keymap, key)) {
+        continue;
+      }
+
+      const oldCmd = mappedKeys[key];
+      const newCmd = keyBindings[key];
+
+      mappedKeys[key] = oldCmd ? chainKeyBindingCommands(newCmd, oldCmd) : newCmd;
+    }
+
+    return mappedKeys;
   }
 }

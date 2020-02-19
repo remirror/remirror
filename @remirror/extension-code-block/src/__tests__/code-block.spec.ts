@@ -89,11 +89,14 @@ describe('plugin', () => {
 
   it('can be updated', () => {
     const plainBlock = codeBlock({});
-    const adder = add(doc(tsBlock(`const a = 'test';<cursor>`), plainBlock('Nothing to see here')));
-
-    expect(dom.querySelector('.language-typescript code')!.innerHTML).toMatchSnapshot();
-    adder.insertText('\n\nlog(a);');
-    expect(dom.querySelector('.language-typescript code')!.innerHTML).toMatchSnapshot();
+    add(doc(tsBlock(`const a = 'test';<cursor>`), plainBlock('Nothing to see here')))
+      .callback(() => {
+        expect(dom.querySelector('.language-typescript code')!.innerHTML).toMatchSnapshot();
+      })
+      .insertText('\n\nlog(a);')
+      .callback(() => {
+        expect(dom.querySelector('.language-typescript code')!.innerHTML).toMatchSnapshot();
+      });
   });
 
   it('updates when multiple changes occur', () => {

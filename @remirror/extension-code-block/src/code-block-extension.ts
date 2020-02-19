@@ -8,7 +8,7 @@ import {
   isElementDOMNode,
   isNodeActive,
   isTextSelection,
-  KeyboardBindings,
+  KeyBindings,
   mod,
   NodeExtension,
   NodeExtensionSpec,
@@ -227,11 +227,11 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
     ];
   }
 
-  public keys({ type, getActions }: ExtensionManagerNodeTypeParams): KeyboardBindings {
+  public keys({ type, getActions }: ExtensionManagerNodeTypeParams): KeyBindings {
     const { keyboardShortcut, toggleType } = this.options;
 
     return {
-      Backspace: (state, dispatch) => {
+      Backspace: ({ state, dispatch }) => {
         const { selection } = state;
 
         // If the selection is not empty, return false and let other extension (ie: BaseKeymapExtension) to do
@@ -265,7 +265,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
         }
         return true;
       },
-      Enter: (state, dispatch) => {
+      Enter: ({ state, dispatch }) => {
         const { selection, tr } = state;
         if (!isTextSelection(selection) || !selection.$cursor) {
           return false;
@@ -311,7 +311,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
 
         return true;
       },
-      [keyboardShortcut]: state => {
+      [keyboardShortcut]: ({ state }) => {
         const command = getActions('formatCodeBlock');
 
         if (!isNodeActive({ type, state }) || !command) {

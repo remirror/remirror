@@ -1,8 +1,9 @@
 import {
   Attrs,
   CommandNodeTypeParams,
+  convertCommand,
   ExtensionManagerNodeTypeParams,
-  KeyboardBindings,
+  KeyBindings,
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
@@ -76,11 +77,11 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
     };
   }
 
-  public keys({ type }: ExtensionManagerNodeTypeParams): KeyboardBindings {
-    const keys: KeyboardBindings = Object.create(null);
+  public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
+    const keys: KeyBindings = Object.create(null);
 
     this.options.levels.forEach(level => {
-      keys[`Shift-Ctrl-${level}`] = setBlockType(type, { level });
+      keys[`Shift-Ctrl-${level}`] = convertCommand(setBlockType(type, { level }));
     });
     return keys;
   }

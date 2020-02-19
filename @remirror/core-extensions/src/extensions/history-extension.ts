@@ -1,12 +1,12 @@
-import { Extension, isFunction, KeyboardBindings } from '@remirror/core';
+import { Extension, isFunction, KeyBindings } from '@remirror/core';
 import {
   BaseExtensionOptions,
-  CommandFunction,
   DispatchFunction,
   EditorState,
   ExtensionManagerParams,
+  ProsemirrorCommandFunction,
 } from '@remirror/core-types';
-import { environment } from '@remirror/core-utils';
+import { convertCommand, environment } from '@remirror/core-utils';
 import { history, redo, redoDepth, undo, undoDepth } from 'prosemirror-history';
 
 export interface HistoryExtensionOptions extends BaseExtensionOptions {
@@ -75,7 +75,7 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
    *
    * @param method - the method to wrap
    */
-  private readonly wrapMethod = (method: CommandFunction): CommandFunction => {
+  private readonly wrapMethod = (method: ProsemirrorCommandFunction): ProsemirrorCommandFunction => {
     return (state, dispatch, view) => {
       const { getState, getDispatch } = this.options;
 
@@ -89,12 +89,14 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
   /**
    * Adds the default key mappings for undo and redo.
    */
-  public keys(): KeyboardBindings {
+  public keys(): KeyBindings {
+    const notMacOS = !environment.isMac ? { ['Mod-y']: convertCommand(this.wrapMethod(redo)) } : undefined;
+
     return {
       'Mod-y': () => false,
-      'Mod-z': this.wrapMethod(undo),
-      'Shift-Mod-z': this.wrapMethod(redo),
-      ...(!environment.isMac ? { ['Mod-y']: this.wrapMethod(redo) } : {}),
+      'Mod-z': convertCommand(this.wrapMethod(undo)),
+      'Shift-Mod-z': convertCommand(this.wrapMethod(redo)),
+      ...notMacOS,
     };
   }
 
@@ -151,7 +153,7 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
        * tr.setMeta(pluginKey, { addToHistory: false })
        * ```
        */
-      undo: (): CommandFunction => this.wrapMethod(undo),
+      undo: (): ProsemirrorCommandFunction => this.wrapMethod(undo),
 
       /**
        * Redo an action that was in the undo stack.
@@ -160,7 +162,7 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
        * actions.redo()
        * ```
        */
-      redo: (): CommandFunction => this.wrapMethod(redo),
+      redo: (): ProsemirrorCommandFunction => this.wrapMethod(redo),
     };
   }
 }

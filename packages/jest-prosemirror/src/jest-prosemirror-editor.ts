@@ -1,12 +1,12 @@
 import { isString, pick } from '@remirror/core-helpers';
 import {
-  CommandFunction,
   EditorSchema,
   EditorStateParams,
   InputRule,
   PlainObject,
   Plugin,
   PosParams,
+  ProsemirrorCommandFunction,
   ProsemirrorNode,
   SelectionParams,
   TextParams,
@@ -55,8 +55,8 @@ export interface InsertTextParams<GSchema extends EditorSchema = any>
 }
 
 /**
- * Insert text from the provided index. Each key is entered individually to better simulate
- * calls to handleTextInput.
+ * Insert text from the provided index. Each key is entered individually to better simulate calls to
+ * handleTextInput.
  */
 export const insertText = <GSchema extends EditorSchema = any>({
   view,
@@ -74,8 +74,9 @@ export const insertText = <GSchema extends EditorSchema = any>({
       view.dispatch(view.state.tr.insertText(character, pos, pos));
     }
 
-    // Update the position based on the current state selection. This allows plugins and commands to make changes to the
-    // size of the editor while typing and as long as there is a selection position this function won't fail.
+    // Update the position based on the current state selection. This allows plugins and commands to make
+    // changes to the size of the editor while typing and as long as there is a selection position this
+    // function won't fail.
     pos = view.state.selection.anchor;
   });
 
@@ -285,8 +286,7 @@ export interface ApplyReturn<GSchema extends EditorSchema = any>
 
 export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
   /**
-   * Whether to auto remove the editor from the dom after each test.
-   * It is advisable to leave this unchanged.
+   * Whether to auto remove the editor from the dom after each test. It is advisable to leave this unchanged.
    *
    * @defaultValue true
    */
@@ -307,13 +307,214 @@ export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
 }
 
 /**
+ * An instance of this class is returned when using `createEditor`. It allows for chaining of test operations and
+ * adds some useful helpers to your testing toolkit.
+ */
+export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
+  /**
+   * A static helper utility for creating new TestReturn values.
+   */
+  public static of<GSchema extends EditorSchema = any>(view: TestEditorView<GSchema>) {
+    return new ProsemirrorTestChain(view);
+  }
+
+  /**
+   * The prosemirror view.
+   */
+  public view: TestEditorView<GSchema>;
+
+  /**
+   * The current prosemirror node document
+   */
+  get doc() {
+    return this.state.doc;
+  }
+
+  /**
+   * The prosemirror schema.
+   */
+  get schema() {
+    return this.state.schema;
+  }
+
+  /**
+   * The prosemirror state.
+   */
+  get state() {
+    return this.view.state;
+  }
+
+  /**
+   * The prosemirror selection.
+   */
+  get selection() {
+    return this.state.selection;
+  }
+
+  /**
+   * The start of the current selection.
+   */
+  get start() {
+    return this.state.selection.from;
+  }
+
+  /**
+   * The end of the current selection.
+   */
+  get end() {
+    return this.state.selection.to;
+  }
+
+  constructor(view: TestEditorView<GSchema>) {
+    this.view = view;
+  }
+
+  /**
+   * Overwrite all the current content within the editor.
+   *
+   * @param newDoc - the new content to use
+   */
+  public overwrite(newDoc: TaggedProsemirrorNode<GSchema>) {
+    const tr = this.state.tr.replaceWith(0, this.view.state.doc.nodeSize - 2, newDoc);
+    tr.setMeta('addToHistory', false);
+    this.view.dispatch(tr);
+    return this;
+  }
+
+  /**
+   * Run the command within the prosemirror editor.
+   *
+   * @remarks
+   *
+   * ```ts
+   * test('commands are run', () => {
+   *   createEditor(doc(p('<cursor>')))
+   *     .command((state, dispatch) => {
+   *        if (dispatch) {
+   *          dispatch(state.tr.insertText('hello'));
+   *        }
+   *     })
+   *     .callback(content => {
+   *       expect(content.state.doc).toEqualProsemirrorDocument(doc(p('hello')));
+   *     })
+   * })
+   * ```
+   *
+   * @param command - the command function to run
+   */
+  public command(command: ProsemirrorCommandFunction) {
+    command(this.state, this.view.dispatch, this.view);
+    return this;
+  }
+
+  /**
+   * Insert text into the editor at the current position.
+   *
+   * @param text - the text to insert
+   */
+  public insertText(text: string) {
+    const { from } = this.selection;
+    insertText({ start: from, text, view: this.view });
+    return this;
+  }
+
+  /**
+   * Jump to the specified position in the editor.
+   *
+   * @param start - a number position or the shorthand 'start' | 'end'
+   * @param [end] - the option end position of the new selection
+   */
+  public jumpTo(start: 'start' | 'end' | number, end?: number) {
+    if (start === 'start') {
+      dispatchTextSelection({ view: this.view, start: 1 });
+    } else if (start === 'end') {
+      dispatchTextSelection({ view: this.view, start: this.doc.content.size - 1 });
+    } else {
+      dispatchTextSelection({ view: this.view, start, end });
+    }
+    return this;
+  }
+
+  /**
+   * Type a keyboard shortcut - e.g. `Mod-Enter`.
+   *
+   * **NOTE** This only simulates the events. For example an `Mod-Enter` would run all enter key handlers but
+   * not actually create a new line.
+   *
+   * @param mod - the keyboard shortcut to type
+   */
+  public shortcut(mod: string) {
+    shortcut({ shortcut: mod, view: this.view });
+    return this;
+  }
+
+  /**
+   * Simulate a keypress which is run through the editor's key handlers.
+   *
+   * **NOTE** This only simulates the events. For example an `Enter` would run all enter key handlers but not
+   * actually create a new line.
+   *
+   * @param char - the character to type
+   */
+  public press(char: string) {
+    press({ char, view: this.view });
+    return this;
+  }
+
+  /**
+   * Simulates a backspace keypress and deletes text backwards.
+   */
+  public backspace(times?: number) {
+    backspace({ view: this.view, times });
+    return this;
+  }
+
+  /**
+   * Logs to the dom for help debugging your tests.
+   */
+  public debug = () => {
+    console.log(prettyDOM(this.view.dom as HTMLElement));
+    return this;
+  };
+
+  /**
+   * Fire an event in the editor (very hit and miss).
+   *
+   * @param params - the fire event parameters
+   */
+  public fire(params: Omit<FireEventAtPositionParams<GSchema>, 'view'>) {
+    fireEventAtPosition({ view: this.view, ...params });
+    return this;
+  }
+
+  /**
+   * Callback function which receives the `start`, `end`, `state`, `view`, `schema` and `selection` properties
+   * and allows for easier testing of the current state of the editor.
+   */
+  public callback(fn: (content: ReturnValueCallbackParams<GSchema>) => void) {
+    fn(pick(this, ['start', 'end', 'state', 'view', 'schema', 'selection', 'doc', 'debug']));
+    return this;
+  }
+
+  /**
+   * Paste text into the editor.
+   *
+   * TODO - this is overly simplistic and doesn't fully express what prosemirror can do so will need to be
+   * improved.
+   */
+  public paste(content: ProsemirrorNode | string) {
+    pasteContent({ view: this.view, content });
+    return this;
+  }
+}
+
+/**
  * Create a test prosemirror editor an pass back helper properties and methods.
  *
  * @remarks
  *
- * The call to create editor can be chained with various commands to enable
- * testing of the editor at each step along it's state without the need for
- * intermediate holding variables.
+ * The call to create editor can be chained with various commands to enable testing of the editor at each step
+ * along it's state without the need for intermediate holding variables.
  *
  * The created editor is automatically cleaned after each test.
  *
@@ -342,8 +543,7 @@ export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
  *
  * @param taggedDoc - the tagged prosemirror node to inject into the editor.
  * @param options - the {@link CreateEditorOptions} interface which includes all
- * {@link http://prosemirror.net/docs/ref/#view.DirectEditorProps | DirectEditorProps}
- * except for `state`.
+ * {@link http://prosemirror.net/docs/ref/#view.DirectEditorProps | DirectEditorProps} except for `state`.
  */
 export const createEditor = <GSchema extends EditorSchema = any>(
   taggedDoc: TaggedProsemirrorNode<GSchema>,
@@ -362,191 +562,7 @@ export const createEditor = <GSchema extends EditorSchema = any>(
     });
   }
 
-  const debug = () => {
-    console.log(prettyDOM(view.dom as HTMLElement));
-  };
-
-  const createReturnValue = () => {
-    const { selection, doc } = view.state;
-    const returnValue = {
-      /**
-       * The start of the current selection.
-       */
-      start: selection.from,
-
-      /**
-       * The end of the current selection.
-       */
-      end: selection.to,
-
-      /**
-       * The prosemirror selection.
-       */
-      selection,
-
-      /**
-       * The current prosemirror node document
-       */
-      doc: view.state.doc,
-
-      /**
-       * The prosemirror schema.
-       */
-      schema: view.state.schema,
-
-      /**
-       * The prosemirror state.
-       */
-      state: view.state,
-
-      /**
-       * The prosemirror view.
-       */
-      view,
-
-      /**
-       * Overwrite all the current content within the editor.
-       *
-       * @param newDoc - the new content to use
-       */
-      overwrite: (newDoc: TaggedProsemirrorNode<GSchema>) => {
-        const tr = view.state.tr.replaceWith(0, view.state.doc.nodeSize - 2, newDoc);
-        tr.setMeta('addToHistory', false);
-        view.dispatch(tr);
-        return createReturnValue();
-      },
-
-      /**
-       * Run the command within the prosemirror editor.
-       *
-       * @remarks
-       *
-       * ```ts
-       * test('commands are run', () => {
-       *   createEditor(doc(p('<cursor>')))
-       *     .command((state, dispatch) => {
-       *        if (dispatch) {
-       *          dispatch(state.tr.insertText('hello'));
-       *        }
-       *     })
-       *     .callback(content => {
-       *       expect(content.state.doc).toEqualProsemirrorDocument(doc(p('hello')));
-       *     })
-       * })
-       * ```
-       *
-       * @param command - the command function to run
-       */
-      command: (command: CommandFunction) => {
-        command(view.state, view.dispatch, view);
-        return createReturnValue();
-      },
-
-      /**
-       * Insert text into the editor at the current position.
-       *
-       * @param text - the text to insert
-       */
-      insertText: (text: string) => {
-        const { from } = view.state.selection;
-        insertText({ start: from, text, view });
-        return createReturnValue();
-      },
-
-      /**
-       * Jump to the specified position in the editor.
-       *
-       * @param start - a number position or the shorthand 'start' | 'end'
-       * @param [end] - the option end position of the new selection
-       */
-      jumpTo: (start: 'start' | 'end' | number, end?: number) => {
-        if (start === 'start') {
-          dispatchTextSelection({ view, start: 1 });
-        } else if (start === 'end') {
-          dispatchTextSelection({ view, start: doc.content.size - 1 });
-        } else {
-          dispatchTextSelection({ view, start, end });
-        }
-        return createReturnValue();
-      },
-
-      /**
-       * Type a keyboard shortcut - e.g. `Mod-Enter`.
-       *
-       * **NOTE** This only simulates the events. For example an `Mod-Enter` would run all enter key
-       * handlers but not actually create a new line.
-       *
-       * @param mod - the keyboard shortcut to type
-       */
-      shortcut: (mod: string) => {
-        shortcut({ shortcut: mod, view });
-        return createReturnValue();
-      },
-
-      /**
-       * Simulate a keypress which is run through the editor's key handlers.
-       *
-       * **NOTE** This only simulates the events. For example an `Enter` would run all enter key
-       * handlers but not actually create a new line.
-       *
-       * @param char - the character to type
-       */
-      press: (char: string) => {
-        press({ char, view });
-        return createReturnValue();
-      },
-
-      /**
-       * Simulates a backspace keypress and deletes text backwards.
-       */
-      backspace: (times?: number) => {
-        backspace({ view, times });
-        return createReturnValue();
-      },
-
-      /**
-       * Logs to the dom for help debugging your tests.
-       */
-      debug: () => {
-        debug();
-        return createReturnValue();
-      },
-
-      /**
-       * Fire an event in the editor (very hit and miss).
-       *
-       * @param params - the fire event parameters
-       */
-      fire: (params: Omit<FireEventAtPositionParams<GSchema>, 'view'>) => {
-        fireEventAtPosition({ view, ...params });
-        return createReturnValue();
-      },
-
-      /**
-       * Callback function which receives the `start`, `end`, `state`, `view`, `schema` and `selection` properties and allows
-       * for easier testing of the current state of the editor.
-       */
-      callback: (fn: (content: ReturnValueCallbackParams<GSchema>) => void) => {
-        fn({ ...pick(returnValue, ['start', 'end', 'state', 'view', 'schema', 'selection', 'doc']), debug });
-        return createReturnValue();
-      },
-
-      /**
-       * Paste text into the editor.
-       *
-       * TODO - this is overly simplistic and doesn't fully express what
-       * prosemirror can do so will need to be improved.
-       */
-      paste: (content: ProsemirrorNode | string) => {
-        pasteContent({ view, content });
-        return createReturnValue();
-      },
-    };
-
-    return returnValue;
-  };
-
-  return createReturnValue();
+  return ProsemirrorTestChain.of(view);
 };
 
 export interface ReturnValueCallbackParams<GSchema extends EditorSchema = any>
@@ -568,9 +584,8 @@ export interface ReturnValueCallbackParams<GSchema extends EditorSchema = any>
  *
  * Returns a tuple matching the following structure
  * [
- *   bool => was the command successfully applied
- *   taggedDoc => the new doc as a result of the command
- *   state => The new editor state after applying the command
+ *   bool => was the command successfully applied taggedDoc => the new doc as a result of the command state =>
+ *   The new editor state after applying the command
  * ]
  *
  * @param taggedDoc - the tagged prosemirror node see {@link TaggedProsemirrorNode}
@@ -579,7 +594,7 @@ export interface ReturnValueCallbackParams<GSchema extends EditorSchema = any>
  */
 export const apply = <GSchema extends EditorSchema = any>(
   taggedDoc: TaggedProsemirrorNode<GSchema>,
-  command: CommandFunction<GSchema>,
+  command: ProsemirrorCommandFunction<GSchema>,
   result?: TaggedProsemirrorNode<GSchema>,
 ): ApplyReturn<GSchema> => {
   const { state, view } = createEditor(taggedDoc);

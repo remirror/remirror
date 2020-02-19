@@ -1,7 +1,8 @@
 import {
   CommandNodeTypeParams,
+  convertCommand,
   ExtensionManagerNodeTypeParams,
-  KeyboardBindings,
+  KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -28,9 +29,9 @@ export class BulletListExtension extends NodeExtension {
     return { toggleBulletList: () => toggleList(type, schema.nodes.listItem) };
   }
 
-  public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyboardBindings {
+  public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
     return {
-      'Shift-Ctrl-8': toggleList(type, schema.nodes.listItem),
+      'Shift-Ctrl-8': convertCommand(toggleList(type, schema.nodes.listItem)),
     };
   }
 
