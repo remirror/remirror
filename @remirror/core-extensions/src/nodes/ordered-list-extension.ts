@@ -1,8 +1,9 @@
 import {
   CommandNodeTypeParams,
+  convertCommand,
   ExtensionManagerNodeTypeParams,
   isElementDOMNode,
-  KeyboardBindings,
+  KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -47,9 +48,9 @@ export class OrderedListExtension extends NodeExtension {
     return { toggleOrderedList: () => toggleList(type, schema.nodes.listItem) };
   }
 
-  public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyboardBindings {
+  public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
     return {
-      'Shift-Ctrl-9': toggleList(type, schema.nodes.listItem),
+      'Shift-Ctrl-9': convertCommand(toggleList(type, schema.nodes.listItem)),
     };
   }
 

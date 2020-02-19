@@ -1,6 +1,5 @@
 import {
   Attrs,
-  CommandFunction,
   CommandParams,
   debounce,
   EditorState,
@@ -9,6 +8,7 @@ import {
   isNumber,
   OnTransactionParams,
   Plugin,
+  ProsemirrorCommandFunction,
   uniqueId,
 } from '@remirror/core';
 import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirror-collab';
@@ -57,7 +57,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
    */
   public commands({ getState, schema }: CommandParams) {
     return {
-      collaborationUpdate: (attrs: CollaborationAttrs): CommandFunction => (_, dispatch) => {
+      collaborationUpdate: (attrs: CollaborationAttrs): ProsemirrorCommandFunction => (_, dispatch) => {
         if (!isValidCollaborationAttrs(attrs)) {
           throw new Error('Invalid attributes passed to the collaboration command.');
         }

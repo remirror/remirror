@@ -1,10 +1,12 @@
 import {
+  chainCommands,
+  convertCommand,
   ExtensionManagerNodeTypeParams,
-  KeyboardBindings,
+  KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
 } from '@remirror/core';
-import { chainCommands, exitCode } from 'prosemirror-commands';
+import { exitCode } from 'prosemirror-commands';
 
 export class HardBreakExtension extends NodeExtension {
   get name() {
@@ -22,14 +24,15 @@ export class HardBreakExtension extends NodeExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerNodeTypeParams): KeyboardBindings {
-    const command = chainCommands(exitCode, (state, dispatch) => {
+  public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
+    const command = chainCommands(convertCommand(exitCode), ({ state, dispatch }) => {
       if (dispatch) {
         dispatch(state.tr.replaceSelectionWith(type.create()).scrollIntoView());
       }
 
       return true;
     });
+
     return {
       'Mod-Enter': command,
       'Shift-Enter': command,

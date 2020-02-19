@@ -1,9 +1,9 @@
 import { NULL_CHARACTER } from '@remirror/core-constants';
 import { bool, findMatches, isUndefined } from '@remirror/core-helpers';
 import {
-  CommandFunction,
   EditorStateParams,
   MakeOptional,
+  ProsemirrorCommandFunction,
   ResolvedPosParams,
   TextParams,
 } from '@remirror/core-types';
@@ -277,8 +277,8 @@ interface TransformKeyBindingsParams {
 export const transformKeyBindings = ({
   bindings,
   params,
-}: TransformKeyBindingsParams): Record<string, CommandFunction> => {
-  const keys: Record<string, CommandFunction> = Object.create(null);
+}: TransformKeyBindingsParams): Record<string, ProsemirrorCommandFunction> => {
+  const keys: Record<string, ProsemirrorCommandFunction> = Object.create(null);
   return Object.entries(bindings).reduce((prev, [key, method]) => {
     return {
       ...prev,

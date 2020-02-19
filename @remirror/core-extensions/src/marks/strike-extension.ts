@@ -1,7 +1,8 @@
 import {
   CommandMarkTypeParams,
+  convertCommand,
   ExtensionManagerMarkTypeParams,
-  KeyboardBindings,
+  KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
@@ -37,9 +38,9 @@ export class StrikeExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams): KeyboardBindings {
+  public keys({ type }: ExtensionManagerMarkTypeParams): KeyBindings {
     return {
-      'Mod-d': toggleMark(type),
+      'Mod-d': convertCommand(toggleMark(type)),
     };
   }
 

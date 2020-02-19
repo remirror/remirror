@@ -6,7 +6,6 @@ import {
   AnyHelpers,
   Attrs,
   AttrsWithClass,
-  CommandFunction,
   CommandParams,
   CommandStatusCheck,
   EditorSchema,
@@ -15,16 +14,24 @@ import {
   ExtensionManagerInitParams,
   ExtensionManagerParams,
   ExtensionTags,
+  KeyBindingCommandFunction,
+  KeyBindings,
   MarkExtensionSpec,
   NodeExtensionSpec,
   NodeViewMethod,
   PlainObject,
   PluginKey,
+  ProsemirrorCommandFunction,
   ProsemirrorPlugin,
   RemirrorThemeContextType,
   TransactionParams,
 } from '@remirror/core-types';
-import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from '@remirror/core-utils';
+import {
+  chainKeyBindingCommands,
+  createDocumentNode,
+  CreateDocumentNodeParams,
+  getPluginState,
+} from '@remirror/core-utils';
 import { PortalContainer } from '@remirror/react-portals';
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
@@ -118,8 +125,20 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   implements ExtensionManagerInitParams<SchemaFromExtensions<GExtension>> {
   /**
    * A static method for creating a new extension manager.
+   *
+   * @deprecated
+   *
+   * Use {@link ExtensionManager.of} instead.
    */
   public static create<GFlexibleList extends FlexibleExtension[]>(prioritizedExtensions: GFlexibleList) {
+    const extensions = transformExtensionMap(prioritizedExtensions);
+    return new ExtensionManager<InferFlexibleExtensionList<GFlexibleList>>(extensions);
+  }
+
+  /**
+   * A static method for creating a new extension manager.
+   */
+  public static of<GFlexibleList extends FlexibleExtension[]>(prioritizedExtensions: GFlexibleList) {
     const extensions = transformExtensionMap(prioritizedExtensions);
     return new ExtensionManager<InferFlexibleExtensionList<GFlexibleList>>(extensions);
   }
@@ -636,29 +655,32 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    */
   private keymaps() {
     this.checkInitialized();
-    const extensionKeymaps: Array<Record<string, CommandFunction>> = this.extensions
+    const extensionKeymaps: KeyBindings[] = this.extensions
       .filter(hasExtensionProperty('keys'))
-      .filter(extension => !extension.options.exclude.keymaps)
+      .filter(extension => !extension.options.exclude.keys)
       .map(extensionPropertyMapper('keys', this.params));
 
-    const mappedKeys: Partial<Record<string, CommandFunction>> = Object.create(null);
+    const previousCommandsMap = new Map<string, KeyBindingCommandFunction[]>();
+    const mappedCommands: Record<string, ProsemirrorCommandFunction> = Object.create(null);
 
     for (const extensionKeymap of extensionKeymaps) {
       for (const key in extensionKeymap) {
         if (!hasOwnProperty(extensionKeymap, key)) {
           continue;
         }
-        const oldCmd = mappedKeys[key];
-        let newCmd = extensionKeymap[key];
-        if (oldCmd) {
-          newCmd = (state, dispatch, view) => {
-            return oldCmd(state, dispatch, view) || extensionKeymap[key](state, dispatch, view);
-          };
-        }
-        mappedKeys[key] = newCmd;
+
+        const previousCommands: KeyBindingCommandFunction[] = previousCommandsMap.get(key) ?? [];
+        const commands = [...previousCommands, extensionKeymap[key]];
+        const command = chainKeyBindingCommands(...commands);
+        previousCommandsMap.set(key, commands);
+
+        mappedCommands[key] = (state, dispatch, view) => {
+          return command({ state, dispatch, view, next: () => false });
+        };
       }
     }
-    return [keymap(mappedKeys)];
+
+    return [keymap(mappedCommands)];
   }
 
   /**

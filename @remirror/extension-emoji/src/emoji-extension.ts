@@ -1,11 +1,11 @@
 import {
-  CommandFunction,
   Extension,
   ExtensionManagerParams,
   FromToParams,
   isNullOrUndefined,
   noop,
   plainInputRule,
+  ProsemirrorCommandFunction,
 } from '@remirror/core';
 import escapeStringRegex from 'escape-string-regexp';
 import { Suggester } from 'prosemirror-suggest';
@@ -89,7 +89,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       insertEmojiByName: (
         name: string,
         options: EmojiCommandOptions = Object.create(null),
-      ): CommandFunction => (...args) => {
+      ): ProsemirrorCommandFunction => (...args) => {
         const emoji = getEmojiByName(name);
         if (!emoji) {
           console.warn('invalid emoji name passed into emoji insertion');
@@ -110,7 +110,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       insertEmojiByObject: (
         emoji: EmojiObject,
         { from, to, skinVariation }: EmojiCommandOptions = Object.create(null),
-      ): CommandFunction => (state, dispatch) => {
+      ): ProsemirrorCommandFunction => (state, dispatch) => {
         const { tr } = state;
         const emojiChar = skinVariation ? emoji.char + SKIN_VARIATIONS[skinVariation] : emoji.char;
         tr.insertText(emojiChar, from, to);
@@ -126,10 +126,9 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
        * Inserts the suggestion character into the current position in the editor
        * in order to activate the suggestion popup..
        */
-      openEmojiSuggestions: ({ from, to }: Partial<FromToParams> = Object.create(null)): CommandFunction => (
-        state,
-        dispatch,
-      ) => {
+      openEmojiSuggestions: (
+        { from, to }: Partial<FromToParams> = Object.create(null),
+      ): ProsemirrorCommandFunction => (state, dispatch) => {
         if (dispatch) {
           dispatch(state.tr.insertText(suggestionCharacter, from, to));
         }

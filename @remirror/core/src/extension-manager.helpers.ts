@@ -333,9 +333,9 @@ export const createExtensionTags = <
     });
   }
 
-  return {
+  return ({
     general,
     mark,
     node,
-  } as any;
+  } as unknown) as ExtensionTags<GNodes, GMarks, GPlain>;
 };

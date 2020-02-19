@@ -1,5 +1,5 @@
 import { bool } from '@remirror/core-helpers';
-import { CommandFunction, ProsemirrorNode as _ProsemirrorNode } from '@remirror/core-types';
+import { ProsemirrorCommandFunction, ProsemirrorNode as _ProsemirrorNode } from '@remirror/core-types';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 
 import { apply } from './jest-prosemirror-editor';
@@ -7,7 +7,11 @@ import { transformsNodeFailMessage, transformsNodePassMessage } from './jest-pro
 import { CommandTransformation } from './jest-prosemirror-types';
 
 export const prosemirrorMatchers = {
-  toTransformNode(this: jest.MatcherUtils, command: CommandFunction, { from, to }: CommandTransformation) {
+  toTransformNode(
+    this: jest.MatcherUtils,
+    command: ProsemirrorCommandFunction,
+    { from, to }: CommandTransformation,
+  ) {
     if (typeof command !== 'function') {
       return {
         message: () => `Please specify a valid command`,

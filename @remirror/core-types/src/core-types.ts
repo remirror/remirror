@@ -52,14 +52,14 @@ export type NodeMatch<GSchema extends EditorSchema = any> =
   | RegexTuple;
 
 /**
- * Used to apply the Prosemirror transaction to the current EditorState.
+ * Used to apply the Prosemirror transaction to the current {@link EditorState}.
  *
  * @typeParam GSchema - the underlying editor schema.
  */
 export type DispatchFunction<GSchema extends EditorSchema = any> = (tr: Transaction<GSchema>) => void;
 
 /**
- * This is the type signature for actions within the prosemirror editor.
+ * This is the type signature for commands within the prosemirror editor.
  *
  * @remarks
  *
@@ -72,19 +72,91 @@ export type DispatchFunction<GSchema extends EditorSchema = any> = (tr: Transact
  *
  * @typeParam GSchema - the underlying editor schema.
  */
-export type CommandFunction<GSchema extends EditorSchema = any> = (
+export type ProsemirrorCommandFunction<GSchema extends EditorSchema = any> = (
   state: EditorState<GSchema>,
   dispatch: DispatchFunction<GSchema> | undefined,
-  view: EditorView<GSchema>,
+  view: EditorView<GSchema> | undefined,
 ) => boolean;
 
 /**
- * A map of keyboard bindings and their corresponding command functions (a.k.a
- * editing actions).
+ * This is the modified type signature for commands within the remirror editor.
+ *
+ * @typeParam GSchema - the underlying editor schema.
+ * @typeParam GExtraParams - extra parameters to add to the command function.
+ *
+ * @remarks
+ *
+ * This groups all the prosemirror command arguments into a single parameter.
+ *
+ * @see {@link ProsemirrorCommandFunction}
+ */
+export type CommandFunction<GSchema extends EditorSchema = any, GExtraParams extends object = {}> = (
+  params: CommandFunctionParams<GSchema> & GExtraParams,
+) => boolean;
+
+/**
+ * A parameter builder interface for the remirror `CommandFunction`.
  *
  * @typeParam GSchema - the underlying editor schema.
  */
-export type KeyboardBindings<GSchema extends EditorSchema = any> = Record<string, CommandFunction<GSchema>>;
+export interface CommandFunctionParams<GSchema extends EditorSchema = any>
+  extends Partial<EditorViewParams<GSchema>>,
+    EditorStateParams<GSchema> {
+  /**
+   * The dispatch function which causes the command to be performed.
+   *
+   * @remarks
+   *
+   * `dispatch` can be `undefined`. When no `dispatch` callback is provided the command should perform a 'dry
+   * run', determining whether the command is applicable (`return true`), but not actually performing the
+   * action.
+   */
+  dispatch?: DispatchFunction<GSchema>;
+}
+
+/**
+ * The command function passed to any of the keybindings
+ */
+export type KeyBindingCommandFunction<GSchema extends EditorSchema = any> = CommandFunction<
+  GSchema,
+  {
+    /**
+     * A method to run the next (lower priority) command in the chain of keybindings.
+     *
+     * @remarks
+     *
+     * This can be used to chain together keyboard commands between extensions. It's possible that you will
+     * need to combine actions when a key is pressed while still running the default action. This method
+     * allows for the greater degree of control.
+     *
+     * By default, matching keyboard commands from the different extension are chained together (in order of
+     * priority) until one returns `true`. Calling `next` changes this default behaviour. The default keyboard
+     * chaining stops and you are given full control of the keyboard command chain.
+     */
+    next: () => boolean;
+  }
+>;
+
+/**
+ * A map of keyboard bindings and their corresponding command functions (a.k.a editing actions).
+ *
+ * @typeParam GSchema - the underlying editor schema.
+ *
+ * @remarks
+ *
+ * Each keyboard binding returns an object mapping the keys pressed to the
+ * {@link KeyBindingCommandFunction}. By default the highest priority extension will be run first. If it
+ * returns true, then nothing else will be run after. If it returns `false` then the next (lower priority)
+ * extension defining the same keybinding will be run.
+ *
+ * It is possible to combine the commands being run by using the `next` parameter. When called it will run the
+ * keybinding command function for the proceeding (lower priority) extension. The act of calling the `next`
+ * method will prevent the default flow from executing.
+ */
+export type KeyBindings<GSchema extends EditorSchema = any> = Record<
+  string,
+  KeyBindingCommandFunction<GSchema>
+>;
 
 type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string };
 type DOMOutputSpecPosX = string | 0 | [string, 0] | [string, { [attr: string]: string }, 0];
@@ -229,7 +301,7 @@ export interface ViewExtensionManagerParams<GSchema extends EditorSchema = any>
   extends EditorViewParams<GSchema>,
     ExtensionManagerParams<GSchema> {}
 
-export type ExtensionCommandFunction = (...args: any[]) => CommandFunction;
+export type ExtensionCommandFunction = (...args: any[]) => ProsemirrorCommandFunction;
 
 export interface CommandStatusFunctionParams<GCommand extends string> extends Partial<AttrsParams> {
   /**
@@ -499,7 +571,7 @@ export interface ExcludeOptions {
    *
    * @defaultValue `false`
    */
-  keymaps?: boolean;
+  keys?: boolean;
 
   /**
    * Whether to exclude the extension's plugin
@@ -530,7 +602,7 @@ export interface ExcludeOptions {
   ssr?: boolean;
 
   /**
-   * Whether to include the suggestions plugin configuration for the extension.
+   * Whether to exclude the suggestions plugin configuration for the extension.
    *
    * @defaultValue `false`
    */

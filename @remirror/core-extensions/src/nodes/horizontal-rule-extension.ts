@@ -1,11 +1,11 @@
 import {
-  CommandFunction,
   CommandNodeTypeParams,
   ExtensionManagerNodeTypeParams,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
   nodeInputRule,
+  ProsemirrorCommandFunction,
 } from '@remirror/core';
 
 export class HorizontalRuleExtension extends NodeExtension {
@@ -24,7 +24,7 @@ export class HorizontalRuleExtension extends NodeExtension {
 
   public commands({ type }: CommandNodeTypeParams) {
     return {
-      horizontalRule: (): CommandFunction => (state, dispatch) => {
+      horizontalRule: (): ProsemirrorCommandFunction => (state, dispatch) => {
         if (dispatch) {
           dispatch(state.tr.replaceSelectionWith(type.create()));
         }
