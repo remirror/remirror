@@ -1,5 +1,21 @@
 # jest-prosemirror
 
+## 0.8.0
+
+### Minor Changes
+
+- 24f83413: Create a new class `ProsemirrorTestChain` for chaining the return from `createEditor`. Previously
+  it was manually chained with a function. The plan is to extend this class within the `jest-remirror`
+  codebase.
+
+### Patch Changes
+
+- Updated dependencies [24f83413]
+  - @remirror/core-types@0.8.0
+  - @remirror/core-helpers@0.7.5
+  - @remirror/core-utils@0.7.5
+  - test-keyboard@0.7.5
+
 ## 0.7.4
 
 ### Patch Changes

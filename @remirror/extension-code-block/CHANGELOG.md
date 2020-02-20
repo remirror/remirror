@@ -1,5 +1,15 @@
 # @remirror/extension-code-block
 
+## 0.7.5
+
+### Patch Changes
+
+- 47493cc2: Doesn't step into the previous node when pressing Backspace if the selection isn't empty #231.
+- Updated dependencies [24f83413]
+- Updated dependencies [24f83413]
+  - @remirror/core@0.8.0
+  - @remirror/react-utils@0.7.5
+
 ## 0.7.4
 
 ### Patch Changes

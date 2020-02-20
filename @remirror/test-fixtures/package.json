@@ -2,7 +2,7 @@
   "private": true,
   "name": "@remirror/test-fixtures",
   "description": "Test fixtures for remirror unit tests",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "lib/index.js",
   "files": [
     "lib",
@@ -12,10 +12,10 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "^0.7.3",
-    "@remirror/core-extensions": "^0.7.3",
+    "@remirror/core": "^0.8.0",
+    "@remirror/core-extensions": "^0.7.5",
     "@remirror/react-portals": "^0.7.3",
-    "@remirror/ui": "^0.7.3",
+    "@remirror/ui": "^0.7.5",
     "@types/lolex": "^5.1.0",
     "@types/prosemirror-view": "^1.11.2",
     "lolex": "^5.1.1",

@@ -1,5 +1,22 @@
 # jest-remirror
 
+## 0.8.0
+
+### Minor Changes
+
+- 527395be: `renderEditor` now accepts PrioritizedExtensions for more flexible testing.
+
+### Patch Changes
+
+- Updated dependencies [24f83413]
+- Updated dependencies [24f83413]
+- Updated dependencies [24f83413]
+  - @remirror/core@0.8.0
+  - jest-prosemirror@0.8.0
+  - @remirror/core-extensions@0.7.5
+  - @remirror/react-utils@0.7.5
+  - @remirror/react@0.7.6
+
 ## 0.7.4
 
 ### Patch Changes
