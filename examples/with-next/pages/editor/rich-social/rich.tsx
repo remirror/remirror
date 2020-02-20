@@ -31,6 +31,8 @@ import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 
+import yExtensions from './y';
+
 const DEFAULT_LANGUAGES = [markdown, typescript, tsx, bash];
 
 const fakeTags = [
@@ -46,7 +48,12 @@ const fakeTags = [
   'MCM',
 ];
 
-export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
+export interface ExampleRichSocialEditorProps extends Partial<SocialEditorProps> {
+  collaboration?: boolean;
+}
+
+export const ExampleRichSocialEditor = (inProps: ExampleRichSocialEditorProps) => {
+  const { collaboration, ...props } = inProps;
   const [mention, setMention] = useState<OnMentionChangeParams>();
 
   const onChange = (params: OnMentionChangeParams) => {
@@ -118,8 +125,11 @@ export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
         priority: 2,
       },
       { extension: new SSRHelperExtension(), priority: 2 },
-    ];
-  }, [defaultLanguage, formatter, supportedLanguages]);
+      ...(collaboration && typeof window !== 'undefined'
+        ? yExtensions.map(YExtension => ({ extension: new YExtension(), priority: 2 }))
+        : []),
+    ].filter(Boolean);
+  }, [collaboration, defaultLanguage, formatter, supportedLanguages]);
 
   const [value, setValue] = useState<EditorState | null>(null);
 
