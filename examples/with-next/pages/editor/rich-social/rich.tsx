@@ -30,8 +30,9 @@ import bash from 'refractor/lang/bash';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
+import { WebsocketProvider } from 'y-websocket';
 
-import yExtensions from './y';
+import makeYExtensions from './y';
 
 const DEFAULT_LANGUAGES = [markdown, typescript, tsx, bash];
 
@@ -49,7 +50,7 @@ const fakeTags = [
 ];
 
 export interface ExampleRichSocialEditorProps extends Partial<SocialEditorProps> {
-  collaboration?: boolean;
+  collaboration?: WebsocketProvider | null;
 }
 
 export const ExampleRichSocialEditor = (inProps: ExampleRichSocialEditorProps) => {
@@ -79,7 +80,7 @@ export const ExampleRichSocialEditor = (inProps: ExampleRichSocialEditorProps) =
   const syntaxTheme = 'atomDark',
     defaultLanguage = undefined,
     formatter = undefined;
-  const supportedLanguages = [...DEFAULT_LANGUAGES];
+  const supportedLanguages = useMemo(() => [...DEFAULT_LANGUAGES], []);
 
   /**
    * The following JSX:
@@ -125,8 +126,8 @@ export const ExampleRichSocialEditor = (inProps: ExampleRichSocialEditorProps) =
         priority: 2,
       },
       { extension: new SSRHelperExtension(), priority: 2 },
-      ...(collaboration && typeof window !== 'undefined'
-        ? yExtensions.map(YExtension => ({ extension: new YExtension(), priority: 2 }))
+      ...(collaboration
+        ? makeYExtensions(collaboration).map(YExtension => ({ extension: new YExtension(), priority: 2 }))
         : []),
     ].filter(Boolean);
   }, [collaboration, defaultLanguage, formatter, supportedLanguages]);

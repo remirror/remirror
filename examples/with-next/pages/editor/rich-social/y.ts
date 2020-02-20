@@ -2,7 +2,7 @@ import { Extension, ProsemirrorPlugin } from '@remirror/core';
 import { keymap } from 'prosemirror-keymap';
 import { redo, undo, yCursorPlugin, ySyncPlugin, yUndoPlugin } from 'y-prosemirror';
 import { WebsocketProvider } from 'y-websocket';
-import * as Y from 'yjs';
+import { Doc } from 'yjs';
 
 const browser = typeof window !== 'undefined';
 
@@ -18,21 +18,16 @@ function extension<T extends string>(name: T, plugin: ProsemirrorPlugin) {
   };
 }
 
-let arr: Array<ReturnType<typeof extension>> = [];
-
-if (browser) {
-  arr = [];
-  const ydoc = new Y.Doc();
-  const provider = new WebsocketProvider('ws://localhost:1234', 'prosemirror', ydoc);
+export default function makeYExtensions(provider: WebsocketProvider): Array<ReturnType<typeof extension>> {
+  if (!browser) {
+    return [];
+  }
+  const ydoc: Doc = provider.doc;
   const type = ydoc.getXmlFragment('prosemirror');
 
-  arr = [
+  return [
     extension('ysync', ySyncPlugin(type)),
-    extension(
-      'ycursor',
-
-      yCursorPlugin(provider.awareness),
-    ),
+    extension('ycursor', yCursorPlugin(provider.awareness)),
     extension('yundo', yUndoPlugin()),
     extension(
       'ykeymap',
@@ -44,5 +39,3 @@ if (browser) {
     ),
   ];
 }
-
-export default arr;
