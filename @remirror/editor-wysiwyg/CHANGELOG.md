@@ -1,5 +1,24 @@
 # @remirror/editor-wysiwyg
 
+## 0.8.1
+
+### Patch Changes
+
+- db20a731: Populate the Wysiwyg's `<LinkInput />` component with the current href to resolve the issue #111
+- Updated dependencies [24f83413]
+- Updated dependencies [24f83413]
+- Updated dependencies [47493cc2]
+  - @remirror/core@0.8.0
+  - @remirror/extension-code-block@0.7.5
+  - @remirror/core-extensions@0.7.5
+  - @remirror/react-utils@0.7.5
+  - @remirror/ui@0.7.5
+  - @remirror/ui-icons@0.7.6
+  - @remirror/extension-drop-cursor@0.7.5
+  - @remirror/extension-image@0.7.5
+  - @remirror/react@0.7.6
+  - @remirror/ui-buttons@0.7.5
+
 ## 0.8.0
 
 ### Minor Changes

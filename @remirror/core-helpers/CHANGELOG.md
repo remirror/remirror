@@ -1,5 +1,12 @@
 # @remirror/core-helpers
 
+## 0.7.5
+
+### Patch Changes
+
+- Updated dependencies [24f83413]
+  - @remirror/core-types@0.8.0
+
 ## 0.7.4
 
 ### Patch Changes

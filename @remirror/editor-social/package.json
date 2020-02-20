@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/editor-social",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/editor-social",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "main": "lib/index.js",
   "module": "lib/dist/editor-social.esm.js",
   "files": [
@@ -17,17 +17,17 @@
   "dependencies": {
     "@babel/runtime": "^7",
     "@emotion/styled": "^10.0.17",
-    "@remirror/core": "^0.7.4",
-    "@remirror/core-extensions": "^0.7.4",
-    "@remirror/extension-emoji": "^0.7.4",
-    "@remirror/extension-enhanced-link": "^0.7.4",
-    "@remirror/extension-mention": "^0.7.4",
-    "@remirror/react": "^0.7.5",
-    "@remirror/react-utils": "^0.7.4",
-    "@remirror/ui": "^0.7.4",
-    "@remirror/ui-buttons": "^0.7.4",
-    "@remirror/ui-icons": "^0.7.5",
-    "multishift": "^0.7.4"
+    "@remirror/core": "^0.8.0",
+    "@remirror/core-extensions": "^0.7.5",
+    "@remirror/extension-emoji": "^0.7.5",
+    "@remirror/extension-enhanced-link": "^0.7.5",
+    "@remirror/extension-mention": "^0.7.5",
+    "@remirror/react": "^0.7.6",
+    "@remirror/react-utils": "^0.7.5",
+    "@remirror/ui": "^0.7.5",
+    "@remirror/ui-buttons": "^0.7.5",
+    "@remirror/ui-icons": "^0.7.6",
+    "multishift": "^0.7.5"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

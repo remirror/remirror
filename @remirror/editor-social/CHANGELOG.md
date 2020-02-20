@@ -1,5 +1,28 @@
 # @remirror/editor-social
 
+## 0.9.0
+
+### Minor Changes
+
+- f7969a67: - Allow the override of mention and tag id and href properties.
+  - BREAKING Changed `uid` property of of `UserData` to `id`
+
+### Patch Changes
+
+- Updated dependencies [24f83413]
+- Updated dependencies [24f83413]
+  - @remirror/core@0.8.0
+  - @remirror/core-extensions@0.7.5
+  - @remirror/react-utils@0.7.5
+  - @remirror/ui@0.7.5
+  - @remirror/ui-icons@0.7.6
+  - multishift@0.7.5
+  - @remirror/extension-emoji@0.7.5
+  - @remirror/extension-enhanced-link@0.7.5
+  - @remirror/extension-mention@0.7.5
+  - @remirror/react@0.7.6
+  - @remirror/ui-buttons@0.7.5
+
 ## 0.8.1
 
 ### Patch Changes

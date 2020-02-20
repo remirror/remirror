@@ -1,5 +1,14 @@
 # @remirror/react-ssr
 
+## 0.7.5
+
+### Patch Changes
+
+- Updated dependencies [24f83413]
+- Updated dependencies [24f83413]
+  - @remirror/core@0.8.0
+  - @remirror/react-renderer@0.7.5
+
 ## 0.7.4
 
 ### Patch Changes
