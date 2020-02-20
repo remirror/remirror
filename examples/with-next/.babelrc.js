@@ -1,3 +1,15 @@
 module.exports = {
-  presets: ['next/babel', '@emotion/babel-preset-css-prop'],
+  presets: [
+    [
+      'next/babel',
+      {
+        'preset-env': {
+          targets: {
+            browsers: '>2%',
+          },
+        },
+      },
+    ],
+    '@emotion/babel-preset-css-prop',
+  ],
 };
