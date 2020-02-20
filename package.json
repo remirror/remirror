@@ -168,14 +168,6 @@
   "engines": {
     "node": ">=10"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 version",
-    "not dead",
-    "not ie <= 11",
-    "maintained node versions",
-    "not op_mini all"
-  ],
   "husky": {
     "hooks": {
       "post-checkout": "echo $HUSKY_GIT_STDIN | support/git-hooks/post-checkout-lfs $HUSKY_GIT_PARAMS",
