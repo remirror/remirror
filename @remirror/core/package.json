@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/core",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/core",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "main": "lib/index.js",
   "module": "lib/dist/core.esm.js",
   "browser": {

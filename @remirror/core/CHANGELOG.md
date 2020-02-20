@@ -1,5 +1,12 @@
 # @remirror/core
 
+## 0.8.1
+
+### Patch Changes
+
+- 2904ebfd: Fix problem with build outputting native classes which can't be extended when the build process
+  converts classes to their ES% function equivalent.
+
 ## 0.8.0
 
 ### Minor Changes
