@@ -14,7 +14,8 @@ const IndexPage: NextPage = () => {
           SocialUI: <Link href='/editor/social'>blank</Link> /{' '}
           <Link href='/editor/social/content'>with content</Link> /{' '}
           <Link href='/editor/rich-social'>rich text</Link> /{' '}
-          <Link href='/editor/rich-social/content'>rich text with content</Link>
+          <Link href='/editor/rich-social/content'>rich text with content</Link> /{' '}
+          <Link href='/editor/rich-social/collab'>rich text with realtime collaboration</Link>
         </li>
 
         <li>
