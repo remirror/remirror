@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { print } from 'graphql/language/printer';
 import { relative, resolve } from 'path';
 
-import { LoadAllMdxQuery } from '../../generated/gatsby';
+import { Query } from '../../generated/gatsby';
 
 export const allMdxQuery = gql`
   query loadAllMdx {
@@ -39,7 +39,7 @@ export const onCreateNode: GatsbyNode['onCreateNode'] = ({ node, actions, getNod
 const baseDir = resolve(__dirname, '../../../');
 
 export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions }) => {
-  const result = await graphql<LoadAllMdxQuery>(print(allMdxQuery));
+  const result = await graphql<Pick<Query, 'allMdx'>>(print(allMdxQuery));
   if (result.errors) {
     console.log(result.errors);
     return;
@@ -51,7 +51,7 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
     const relativePath = relative(baseDir, page.fileAbsolutePath);
 
     actions.createPage({
-      path: page.fields.slug,
+      path: page.fields?.slug ?? '',
       component: require.resolve('../layouts/index.tsx'),
       context: {
         id: page.id,

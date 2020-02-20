@@ -1,9 +1,8 @@
 /** @jsx jsx */
 
-import { capitalize } from '@remirror/core-helpers';
+import { capitalize, isString } from '@remirror/core-helpers';
 import CodeBlock from '@theme-ui/prism';
 import { ElementType, FC, Fragment } from 'react';
-import { isString } from 'remirror';
 import { jsx } from 'theme-ui';
 
 const heading = (Tag: ElementType) => {
