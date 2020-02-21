@@ -79,6 +79,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "splitinfinities",
+      "name": "William M. Riley",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1245238?v=4",
+      "profile": "https://splitinfinities.com",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
