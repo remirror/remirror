@@ -2,9 +2,10 @@ import { RemirrorTheme } from '@remirror/core';
 import { BaseExtensions, NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import { EmojiExtension } from '@remirror/extension-emoji';
 import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
-import { MentionExtension } from '@remirror/extension-mention';
+import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
 import { ManagedRemirrorProviderProps, RemirrorManagerProps } from '@remirror/react';
 import { SuggestStateMatch } from 'prosemirror-suggest';
+import { Except } from 'type-fest';
 
 export type OnMentionChangeParams = MentionState & {
   /**
@@ -50,6 +51,16 @@ export interface SocialEditorProps
    * The theme to be used for setting .
    */
   theme?: Partial<RemirrorTheme & Partial<RemirrorTheme['colors']>>;
+
+  /**
+   * The matcher options for the `@` mention character.
+   */
+  atMatcherOptions?: Except<MentionExtensionMatcher, 'name' | 'char'>;
+
+  /**
+   * The matcher options for the `#` mention character/
+   */
+  tagMatcherOptions?: Except<MentionExtensionMatcher, 'name' | 'char'>;
 }
 
 interface BaseMentionState {

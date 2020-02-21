@@ -35,7 +35,7 @@
     "prosemirror-schema-list": "^1.0.4",
     "prosemirror-state": "^1.2.4",
     "prosemirror-transform": "^1.1.5",
-    "type-fest": "^0.10.0"
+    "type-fest": "^0.11.0"
   },
   "peerDependencies": {
     "@emotion/core": "^10",
