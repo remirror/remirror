@@ -159,6 +159,9 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
     <td align="center"><a href="https://ocavue.github.io/"><img src="https://avatars2.githubusercontent.com/u/24715727?v=4" width="100px;" alt=""/><br /><sub><b>ocavue</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=ocavue" title="Code">💻</a></td>
     <td align="center"><a href="https://hughboylan.com"><img src="https://avatars2.githubusercontent.com/u/2158740?v=4" width="100px;" alt=""/><br /><sub><b>Hugh Boylan</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=hboylan" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://splitinfinities.com"><img src="https://avatars0.githubusercontent.com/u/1245238?v=4" width="100px;" alt=""/><br /><sub><b>William M. Riley</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=splitinfinities" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Asplitinfinities" title="Bug reports">🐛</a></td>
+  </tr>
 </table>
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
