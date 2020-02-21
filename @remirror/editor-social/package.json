@@ -1,6 +1,6 @@
 {
   "name": "@remirror/editor-social",
-  "description": "ui for a social-like editing experience",
+  "description": "A configurable social editor.",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/editor-social",
@@ -27,7 +27,8 @@
     "@remirror/ui": "^0.7.5",
     "@remirror/ui-buttons": "^0.7.5",
     "@remirror/ui-icons": "^0.7.6",
-    "multishift": "^0.7.5"
+    "multishift": "^0.7.5",
+    "type-fest": "^0.11.0"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

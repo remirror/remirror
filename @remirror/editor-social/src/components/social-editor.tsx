@@ -51,14 +51,6 @@ interface State {
   emojiCommand?: EmojiSuggestCommand;
 }
 
-/**
- * These are the matchers
- */
-const matchers: MentionExtensionMatcher[] = [
-  { name: 'at', char: '@', appendText: ' ' },
-  { name: 'tag', char: '#', appendText: ' ' },
-];
-
 export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   public static defaultProps = {
     theme: { colors: {}, font: {} },
@@ -86,6 +78,17 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
    * set to true so that the subsequent `onExit` call can be ignored.
    */
   private mentionExitTriggeredInternally = false;
+
+  /**
+   * These are the matchers
+   */
+  private get matchers(): MentionExtensionMatcher[] {
+    const { atMatcherOptions, tagMatcherOptions } = this.props;
+    return [
+      { name: 'at', char: '@', appendText: ' ', ...atMatcherOptions },
+      { name: 'tag', char: '#', appendText: ' ', ...tagMatcherOptions },
+    ];
+  }
 
   /**
    * Create the arrow bindings for the mentions.
@@ -385,7 +388,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
           <RemirrorExtension Constructor={NodeCursorExtension} />
           <RemirrorExtension
             Constructor={MentionExtension}
-            matchers={matchers}
+            matchers={this.matchers}
             extraAttrs={['href', ['role', 'presentation']]}
             onChange={this.onChange}
             onExit={this.onExit}
