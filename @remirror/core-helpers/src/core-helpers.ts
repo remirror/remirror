@@ -1,4 +1,4 @@
-import { all as merge } from 'deepmerge';
+import deepmerge from 'deepmerge';
 import fastDeepEqual from 'fast-deep-equal';
 import fastMemoize, { MemoizeFunc } from 'fast-memoize';
 import nano from 'nanoid';
@@ -706,7 +706,7 @@ export class Merge {
  * replaces it's key with a completely new object
  */
 export const deepMerge = <GType = any>(...objects: Array<PlainObject | unknown[]>): GType => {
-  return merge<GType>(objects as any, { isMergeableObject: isPlainObject });
+  return deepmerge.all<GType>(objects as any, { isMergeableObject: isPlainObject });
 };
 
 interface ClampParams {
