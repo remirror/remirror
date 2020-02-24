@@ -125,12 +125,15 @@ export const createCommands = ({ extensions, params }: CreateCommandsParams) => 
       ...getParamsType(extension, params),
     });
 
+  const { view, getState } = params;
+
   const methodFactory = (method: ExtensionCommandFunction) => (...args: unknown[]) => {
-    const { view, getState } = params;
     view.focus();
     return method(...args)(getState(), view.dispatch, view);
   };
-  const items: Record<string, { command: AnyFunction; name: string }> = Object.create(null);
+  const items: Record<string, { command: AnyFunction; isEnabled: AnyFunction; name: string }> = Object.create(
+    null,
+  );
   const names = new Set<string>();
 
   extensions.filter(hasExtensionProperty('commands')).forEach(currentExtension => {
@@ -139,7 +142,13 @@ export const createCommands = ({ extensions, params }: CreateCommandsParams) => 
     entries(item).forEach(([name, command]) => {
       isNameUnique({ name, set: names, shouldThrow: true });
 
-      items[name] = { command: methodFactory(command), name: currentExtension.name };
+      items[name] = {
+        name: currentExtension.name,
+        command: methodFactory(command),
+        isEnabled: (...args: unknown[]): boolean => {
+          return !!command(...args)(getState(), undefined, view);
+        },
+      };
     });
   });
 
@@ -193,8 +202,7 @@ type ExtensionMethodProperties =
   | 'nodeView'
   | 'extensionData'
   | 'suggestions'
-  | 'isActive'
-  | 'isEnabled';
+  | 'isActive';
 
 /**
  * Looks at the passed property and calls the extension with the required

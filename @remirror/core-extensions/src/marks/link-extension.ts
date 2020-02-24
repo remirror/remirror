@@ -2,7 +2,6 @@ import {
   Attrs,
   Cast,
   CommandMarkTypeParams,
-  CommandStatusCheck,
   ExtensionManagerMarkTypeParams,
   getMarkRange,
   getMatchString,
@@ -15,6 +14,7 @@ import {
   MarkExtensionSpec,
   MarkGroup,
   markPasteRule,
+  ProsemirrorCommandFunction,
   removeMark,
   selectionEmpty,
   updateMark,
@@ -99,31 +99,26 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
       /**
        * A command to update the selected link
        */
-      updateLink: (attrs?: Attrs) => updateMark({ type, attrs }),
+      updateLink: (attrs?: Attrs): ProsemirrorCommandFunction => {
+        return (state, dispatch, view) => {
+          const { selection } = state;
+          if (selectionEmpty(selection) || (!isTextSelection(selection) && !isMarkActive({ state, type }))) {
+            return false;
+          }
+          return updateMark({ type, attrs })(state, dispatch, view);
+        };
+      },
       /**
        * Remove the link at the current position
        */
-      removeLink: () => {
-        return removeMark({ type, expand: true });
-      },
-    };
-  }
-
-  public isEnabled({ getState, type }: ExtensionManagerMarkTypeParams): CommandStatusCheck {
-    return ({ command }) => {
-      switch (command) {
-        case 'removeLink':
-          return isMarkActive({ state: getState(), type });
-        case 'updateLink': {
-          const { selection } = getState();
-          if (selectionEmpty(selection) || !isTextSelection(selection)) {
+      removeLink: (): ProsemirrorCommandFunction => {
+        return (state, dispatch, view) => {
+          if (!isMarkActive({ state, type })) {
             return false;
           }
-          return true;
-        }
-        default:
-          return true;
-      }
+          return removeMark({ type, expand: true })(state, dispatch, view);
+        };
+      },
     };
   }
 
