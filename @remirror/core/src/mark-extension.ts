@@ -1,7 +1,7 @@
 import { ExtensionType } from '@remirror/core-constants';
 import {
-  CommandStatusCheck,
   EditorSchema,
+  ExtensionIsActiveFunction,
   ExtensionManagerMarkTypeParams,
   MarkExtensionOptions,
   MarkExtensionSpec,
@@ -57,17 +57,7 @@ export abstract class MarkExtension<
    *
    * @param params - see {@link @remirror/core-types#ExtensionManagerMarkTypeParams}
    */
-  public isActive({ getState, type }: ExtensionManagerMarkTypeParams): CommandStatusCheck {
+  public isActive({ getState, type }: ExtensionManagerMarkTypeParams): ExtensionIsActiveFunction {
     return () => isMarkActive({ state: getState(), type });
-  }
-
-  /**
-   * By default all marks extensions are set to be enabled. In your extension
-   * this can be overridden and set to false based on the context.
-   *
-   * @param _ - see see {@link @remirror/core-types#ExtensionManagerMarkTypeParams}
-   */
-  public isEnabled(_: ExtensionManagerMarkTypeParams): CommandStatusCheck {
-    return () => true;
   }
 }

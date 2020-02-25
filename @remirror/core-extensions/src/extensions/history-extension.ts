@@ -80,7 +80,7 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
       const { getState, getDispatch } = this.options;
 
       const wrappedState = isFunction(getState) ? getState() : state;
-      const wrappedDispatch = isFunction(getDispatch) ? getDispatch() : dispatch;
+      const wrappedDispatch = isFunction(getDispatch) && dispatch ? getDispatch() : dispatch;
 
       return method(wrappedState, wrappedDispatch, view);
     };

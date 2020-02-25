@@ -126,7 +126,7 @@ interface MenuItemProps extends Partial<WithPaddingProps> {
 const MenuItem: FC<MenuItemProps> = ({ state, onClick, Icon, variant, disabled = false, index }) => {
   return (
     <IconButton onClick={onClick} state={state} disabled={disabled} index={index}>
-      <Icon variant={variant} />
+      <Icon variant={variant} styles={{ color: disabled ? 'gray' : undefined }} />
     </IconButton>
   );
 };

@@ -243,6 +243,7 @@ export interface ExtensionManagerInitParams<GSchema extends EditorSchema = any> 
    * Retrieve the portal container
    */
   portalContainer: PortalContainer;
+
   /**
    * Retrieve the editor state via a function call
    */
@@ -303,20 +304,7 @@ export interface ViewExtensionManagerParams<GSchema extends EditorSchema = any>
 
 export type ExtensionCommandFunction = (...args: any[]) => ProsemirrorCommandFunction;
 
-export interface CommandStatusFunctionParams<GCommand extends string> extends Partial<AttrsParams> {
-  /**
-   * When provided check the status of this particular command
-   */
-  command?: GCommand;
-}
-export type CommandStatusFunction<GCommand extends string> = (
-  params: CommandStatusFunctionParams<GCommand>,
-) => boolean;
-
-/**
- * The return signature for an extension's `isActive` and `isEnabled` method
- */
-export type CommandStatusCheck<GCommand extends string = string> = CommandStatusFunction<GCommand>;
+export type ExtensionIsActiveFunction = (params: Partial<AttrsParams>) => boolean;
 
 /**
  * The return signature for an extensions command method.

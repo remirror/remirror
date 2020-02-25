@@ -6,10 +6,10 @@ import {
   Attrs,
   AttrsWithClass,
   BaseExtensionOptions,
-  CommandStatusCheck,
   CommandTypeParams,
   ExtensionCommandReturn,
   ExtensionHelperReturn,
+  ExtensionIsActiveFunction,
   ExtensionManagerParams,
   ExtensionManagerTypeParams,
   ExtraAttrs,
@@ -411,23 +411,9 @@ export interface Extension<GOptions extends BaseExtensionOptions = BaseExtension
    * Determines whether this extension is currently active (only applies to Node
    * Extensions and Mark Extensions).
    *
-   * If a command name is provided (to the return function) then this method
-   * should return true if that command is currently active. Conceptually this
-   * doesn't always make sense and in those cases it should be save to just
-   * return false.
-   *
    * @param params - extension manager params
    */
-  isActive?(params: ExtensionManagerParams): CommandStatusCheck;
-
-  /**
-   * Determines whether this extension is enabled. If a command name is provided
-   * then it should return a value determining whether that command is able to
-   * be run.
-   *
-   * @param params - extension manager parameters
-   */
-  isEnabled?(params: ExtensionManagerParams): CommandStatusCheck;
+  isActive?(params: ExtensionManagerParams): ExtensionIsActiveFunction;
 
   /**
    * Add key bindings for this extension.

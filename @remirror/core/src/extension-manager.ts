@@ -7,10 +7,10 @@ import {
   Attrs,
   AttrsWithClass,
   CommandParams,
-  CommandStatusCheck,
   EditorSchema,
   EditorStateParams,
   EditorView,
+  ExtensionIsActiveFunction,
   ExtensionManagerInitParams,
   ExtensionManagerParams,
   ExtensionTags,
@@ -84,8 +84,7 @@ export interface ExtensionManagerData<
   actions: GActions;
   helpers: GHelpers;
   view: EditorView<EditorSchema<GNodes, GMarks>>;
-  isActive: Record<GNames, CommandStatusCheck>;
-  isEnabled: Record<GNames, CommandStatusCheck>;
+  isActive: Record<GNames, ExtensionIsActiveFunction>;
   options: Record<GNames, PlainObject>;
   tags: ExtensionTags<GNodes, GMarks, GPlain>;
 }
@@ -230,8 +229,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     this.initData.inputRules = this.inputRules();
     this.initData.pasteRules = this.pasteRules();
     this.initData.suggestions = this.suggestions();
-    this.initData.isActive = this.commandStatusCheck('isActive');
-    this.initData.isEnabled = this.commandStatusCheck('isEnabled');
+    this.initData.isActive = this.isActiveMethods();
 
     this.initData.plugins = [
       ...this.initData.directPlugins,
@@ -570,13 +568,12 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     // Creates the methods that take in attrs and dispatch an action into the editor
     const commands = createCommands({ extensions, params });
 
-    Object.entries(commands).forEach(([commandName, { command, name }]) => {
+    Object.entries(commands).forEach(([commandName, { command, isEnabled, name }]) => {
       const isActive = this.initData.isActive[name as this['_Names']] ?? defaultIsActive;
-      const isEnabled = this.initData.isEnabled[name as this['_Names']] ?? defaultIsEnabled;
 
       actions[commandName] = command as ActionMethod;
-      actions[commandName].isActive = (attrs?: Attrs) => isActive({ attrs, command: commandName });
-      actions[commandName].isEnabled = (attrs?: Attrs) => isEnabled({ attrs, command: commandName });
+      actions[commandName].isActive = (attrs?: Attrs) => isActive({ attrs });
+      actions[commandName].isEnabled = isEnabled ?? defaultIsEnabled;
     });
 
     return actions as any;
@@ -594,20 +591,18 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   }
 
   /**
-   * Return the object of a boolean helper.
-   *
-   * This can be `isActive` or `isEnabled`.
+   * Retrieve an object mapping extension names to their isActive() methods
    */
-  private commandStatusCheck(method: 'isEnabled' | 'isActive') {
+  private isActiveMethods() {
     // Will throw if not initialized
     this.checkInitialized();
 
-    const isActiveMethods: Record<this['_Names'], CommandStatusCheck> = Object.create(null);
+    const isActiveMethods: Record<this['_Names'], ExtensionIsActiveFunction> = Object.create(null);
 
-    return this.extensions.filter(hasExtensionProperty(method)).reduce(
+    return this.extensions.filter(hasExtensionProperty('isActive')).reduce(
       (acc, extension) => ({
         ...acc,
-        [extension.name]: extensionPropertyMapper(method, this.params)(extension),
+        [extension.name]: extensionPropertyMapper('isActive', this.params)(extension),
       }),
       isActiveMethods,
     );

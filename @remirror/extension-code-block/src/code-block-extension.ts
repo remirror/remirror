@@ -1,6 +1,5 @@
 import {
   CommandNodeTypeParams,
-  CommandStatusCheck,
   ExtensionManagerNodeTypeParams,
   findParentNodeOfType,
   GetAttrs,
@@ -172,34 +171,6 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
        * ```
        */
       formatCodeBlock: formatCodeBlockFactory({ type, formatter, defaultLanguage, supportedLanguages }),
-    };
-  }
-
-  public active({ type, getState }: CommandNodeTypeParams): CommandStatusCheck {
-    return ({ command }) => {
-      switch (command) {
-        case 'updateCodeBlock':
-        case 'createCodeBlock':
-        case 'formatCodeBlock': // The formatter could be run to check but this seems expensive
-          return isNodeActive({ state: getState(), type });
-
-        default:
-          return false;
-      }
-    };
-  }
-
-  public enabled({ type, getState }: CommandNodeTypeParams): CommandStatusCheck {
-    return ({ command }) => {
-      switch (command) {
-        case 'toggleCodeBlock':
-          return true;
-        case 'createCodeBlock':
-          return !isNodeActive({ state: getState(), type });
-
-        default:
-          return true;
-      }
     };
   }
 

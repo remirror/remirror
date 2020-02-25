@@ -1,7 +1,7 @@
 import { ExtensionType } from '@remirror/core-constants';
 import {
-  CommandStatusCheck,
   EditorSchema,
+  ExtensionIsActiveFunction,
   ExtensionManagerNodeTypeParams,
   NodeExtensionOptions,
   NodeExtensionSpec,
@@ -37,13 +37,9 @@ export abstract class NodeExtension<
    */
   public abstract readonly schema: NodeExtensionSpec;
 
-  public isActive({ getState, type }: ExtensionManagerNodeTypeParams): CommandStatusCheck {
+  public isActive({ getState, type }: ExtensionManagerNodeTypeParams): ExtensionIsActiveFunction {
     return ({ attrs }) => {
       return isNodeActive({ state: getState(), type, attrs });
     };
-  }
-
-  public isEnabled(_: ExtensionManagerNodeTypeParams): CommandStatusCheck {
-    return () => true;
   }
 }
