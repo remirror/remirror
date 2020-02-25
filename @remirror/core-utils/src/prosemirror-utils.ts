@@ -111,7 +111,7 @@ export const findElementAtPosition = (position: number, view: EditorView): HTMLE
  *
  * ```ts
  * const predicate = node => node.type === schema.nodes.blockquote;
- * const parent = findParentNode(predicate)(selection);
+ * const parent = findParentNode({predicate, selection});
  * ```
  */
 export const findParentNode = ({
@@ -119,14 +119,15 @@ export const findParentNode = ({
   selection,
 }: FindParentNodeParams): FindProsemirrorNodeResult | undefined => {
   const { $from } = selection;
-  for (let currentDepth = $from.depth; currentDepth > 0; currentDepth--) {
-    const node = $from.node(currentDepth);
+  for (let depth = $from.depth; depth > 0; depth--) {
+    const node = $from.node(depth);
     if (predicate(node)) {
-      const pos = currentDepth > 0 ? $from.before(currentDepth) : 0;
-      const start = $from.start(currentDepth);
+      const pos = depth > 0 ? $from.before(depth) : 0;
+      const start = $from.start(depth);
       const end = pos + node.nodeSize;
       return {
-        pos: currentDepth > 0 ? $from.before(currentDepth) : 0,
+        pos,
+        depth,
         node,
         start,
         end,
@@ -153,6 +154,7 @@ export const findNodeAtPosition = ($pos: ResolvedPos): FindProsemirrorNodeResult
     start,
     node,
     end,
+    depth,
   };
 };
 
@@ -198,7 +200,7 @@ interface FindParentNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
  *  before the node.
  *
  *  ```ts
- *  const parent = findParentNodeOfType(schema.nodes.paragraph)(selection);
+ *  const parent = findParentNodeOfType({types: schema.nodes.paragraph, selection});
  *  ```
  */
 export const findParentNodeOfType = ({
@@ -234,14 +236,14 @@ export const findPositionOfNodeBefore = <GSchema extends EditorSchema = any>(
   }
 
   const parent = findParentNodeOfType({ types: nodeBefore.type, selection });
-
   return parent
     ? parent
     : {
         node: nodeBefore,
-        pos: nodeBefore.isLeaf ? selection.from : selection.from - 1,
-        end: selection.from + nodeBefore.nodeSize,
-        start: selection.from,
+        pos: selection.$from.pos,
+        end: selection.$from.end(),
+        depth: selection.$from.depth + 1,
+        start: selection.$from.start(selection.$from.depth + 1),
       };
 };
 
@@ -330,6 +332,11 @@ export interface FindProsemirrorNodeResult<GSchema extends EditorSchema = any>
    * Points to position directly before the node.
    */
   pos: number;
+
+  /**
+   * The depth the node. Equal to 0 if node is the root.
+   */
+  depth: number;
 }
 
 interface FindParentNodeParams extends SelectionParams, PredicateParams<ProsemirrorNode> {}
@@ -365,9 +372,10 @@ export const findPositionOfNodeAfter = <GSchema extends EditorSchema = any>(
     ? parent
     : {
         node: nodeAfter,
-        pos: nodeAfter.isLeaf ? selection.from : selection.from - 1,
-        end: selection.from + nodeAfter.nodeSize,
-        start: selection.from,
+        pos: selection.$from.pos,
+        end: selection.$from.end(),
+        depth: selection.$from.depth + 1,
+        start: selection.$from.start(selection.$from.depth + 1),
       };
 };
 

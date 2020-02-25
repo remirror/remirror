@@ -3,11 +3,13 @@ import {
   AnyFunction,
   Attrs,
   AttrsParams,
+  EditorSchema,
   MarkType,
   MarkTypeParams,
   NodeType,
   NodeTypeParams,
   ProsemirrorCommandFunction,
+  ProsemirrorNode,
   RangeParams,
   TransformTransactionParams,
 } from '@remirror/core-types';
@@ -15,7 +17,7 @@ import { lift, setBlockType, wrapIn } from 'prosemirror-commands';
 import { liftListItem, wrapInList } from 'prosemirror-schema-list';
 
 import { getMarkRange, isMarkType, isNodeType } from './dom-utils';
-import { isNodeActive, selectionEmpty } from './prosemirror-utils';
+import { findParentNode, isNodeActive, selectionEmpty } from './prosemirror-utils';
 
 interface UpdateMarkParams extends Partial<RangeParams>, Partial<AttrsParams>, TransformTransactionParams {
   /**
@@ -98,10 +100,38 @@ export const toggleList = (type: NodeType, itemType: NodeType): ProsemirrorComma
   state,
   dispatch,
 ) => {
-  const isActive = isNodeActive({ state, type });
+  const { schema, selection } = state;
+  const { $from, $to } = selection;
+  const range = $from.blockRange($to);
 
-  if (isActive) {
-    return liftListItem(itemType)(state, dispatch);
+  if (!range) {
+    return false;
+  }
+
+  function isList(node: ProsemirrorNode, schema: EditorSchema) {
+    return node.type === schema.nodes.bulletList || node.type === schema.nodes.orderedList;
+  }
+
+  const parentList = findParentNode({
+    predicate: node => isList(node, schema),
+    selection,
+  });
+
+  if (range.depth >= 1 && parentList && range.depth - parentList.depth <= 1) {
+    if (parentList.node.type === type) {
+      return liftListItem(itemType)(state, dispatch);
+    }
+
+    if (isList(parentList.node, schema) && type.validContent(parentList.node.content)) {
+      const { tr } = state;
+      tr.setNodeMarkup(parentList.pos, type);
+
+      if (dispatch) {
+        dispatch(tr);
+      }
+
+      return true;
+    }
   }
 
   return wrapInList(type)(state, dispatch);
