@@ -25,6 +25,7 @@ import {
   findNodeAtSelection,
   findParentNode,
   findParentNodeOfType,
+  findPositionOfNodeAfter,
   findPositionOfNodeBefore,
   findSelectedNodeOfType,
   isNodeActive,
@@ -119,7 +120,7 @@ describe('findPositionOfNodeBefore', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), node, '<cursor>'));
     const result = findPositionOfNodeBefore(selection);
-    expect(result).toEqual({ pos: 6, start: 7, end: 20, node });
+    expect(result).toEqual({ pos: 6, start: 7, end: 20, depth: 1, node });
   });
 
   it('supports blockquotes', () => {
@@ -128,7 +129,7 @@ describe('findPositionOfNodeBefore', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), node, '<cursor>'));
     const position = findPositionOfNodeBefore(selection);
-    expect(position).toEqual({ pos: 6, start: 7, end: 10, node });
+    expect(position).toEqual({ pos: 6, start: 7, end: 10, depth: 1, node });
   });
 
   it('supports nested leaf nodes', () => {
@@ -137,7 +138,7 @@ describe('findPositionOfNodeBefore', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), table(row(td(p('1'), node, '<cursor>')))));
     const position = findPositionOfNodeBefore(selection);
-    expect(position).toEqual({ pos: 12, start: 12, end: 13, node });
+    expect(position).toEqual({ pos: 12, start: 13, end: 13, depth: 4, node });
   });
 
   it('supports non-nested leaf nodes', () => {
@@ -146,16 +147,71 @@ describe('findPositionOfNodeBefore', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), node, '<cursor>'));
     const position = findPositionOfNodeBefore(selection);
-    expect(position).toEqual({ pos: 6, start: 6, end: 7, node });
+    expect(position).toEqual({ pos: 6, start: 7, end: 7, depth: 1, node });
   });
 
   it('supports leaf nodes with with nested inline atom nodes', () => {
     const node = atomContainer(atomBlock());
     const {
       state: { selection },
-    } = createEditor(doc(p('abcd'), atomContainer(atomBlock()), '<cursor>'));
+    } = createEditor(doc(p('abcd'), node, '<cursor>'));
     const position = findPositionOfNodeBefore(selection);
-    expect(position).toEqual({ pos: 6, start: 7, end: 9, node });
+    expect(position).toEqual({ pos: 6, start: 7, end: 9, depth: 1, node });
+  });
+});
+
+describe('findPositionOfNodeAfter', () => {
+  it('returns `undefined` when none exists', () => {
+    const {
+      state: { selection },
+    } = createEditor(doc(p('<cursor>')));
+    const result = findPositionOfNodeAfter(selection);
+    expect(result).toBeUndefined();
+  });
+
+  it('supports tables', () => {
+    const node = table(row(tdEmpty), row(tdEmpty));
+    const {
+      state: { selection },
+    } = createEditor(doc(p('abcd'), '<cursor>', node));
+    const result = findPositionOfNodeAfter(selection);
+    expect(result).toEqual({ pos: 6, start: 7, end: 20, depth: 1, node });
+  });
+
+  it('supports blockquotes', () => {
+    const node = blockquote(p(''));
+    const {
+      state: { selection },
+    } = createEditor(doc(p('abcd'), '<cursor>', node));
+    const position = findPositionOfNodeAfter(selection);
+    expect(position).toEqual({ pos: 6, start: 7, end: 10, depth: 1, node });
+  });
+
+  it('supports nested leaf nodes', () => {
+    const node = atomBlock();
+    const {
+      state: { selection },
+    } = createEditor(doc(p('abcd'), table(row(td(p('1'), '<cursor>', node)))));
+    const position = findPositionOfNodeAfter(selection);
+    expect(position).toEqual({ pos: 12, start: 13, end: 13, depth: 4, node });
+  });
+
+  it('supports non-nested leaf nodes', () => {
+    const node = atomBlock();
+    const {
+      state: { selection },
+    } = createEditor(doc(p('abcd'), '<cursor>', node));
+    const position = findPositionOfNodeAfter(selection);
+    expect(position).toEqual({ pos: 6, start: 7, end: 7, depth: 1, node });
+  });
+
+  it('supports leaf nodes with with nested inline atom nodes', () => {
+    const node = atomContainer(atomBlock());
+    const {
+      state: { selection },
+    } = createEditor(doc(p('abcd'), '<cursor>', node));
+    const position = findPositionOfNodeAfter(selection);
+    expect(position).toEqual({ pos: 6, start: 7, end: 9, depth: 1, node });
   });
 });
 
@@ -271,14 +327,15 @@ describe('cloneTransaction', () => {
 
 describe('findParentNode', () => {
   it('finds parent node with cursor directly inside', () => {
+    const node = p('hello <cursor>');
     const {
       state: { selection },
-    } = createEditor(doc(p('hello <cursor>')));
-    const { node } = findParentNode({
+    } = createEditor(doc(node));
+    const position = findParentNode({
       predicate: pmNode => pmNode.type === schema.nodes.paragraph,
       selection,
     })!;
-    expect(node.type.name).toEqual('paragraph');
+    expect(position).toEqual({ pos: 0, start: 1, end: 8, depth: 1, node });
   });
 
   it('finds parent from inside nested child', () => {
@@ -303,11 +360,12 @@ describe('findParentNode', () => {
 
 describe('findParentNodeOfType', () => {
   it('finds parent node of a given `nodeType`', () => {
+    const node = p('hello <cursor>');
     const {
       state: { selection },
-    } = createEditor(doc(p('hello <cursor>')));
-    const { node } = findParentNodeOfType({ types: schema.nodes.paragraph, selection })!;
-    expect(node.type.name).toEqual('paragraph');
+    } = createEditor(doc(node));
+    const position = findParentNodeOfType({ types: schema.nodes.paragraph, selection })!;
+    expect(position).toEqual({ pos: 0, start: 1, end: 8, depth: 1, node });
   });
 
   it('returns `undefined` when given `nodeType` is not found', () => {
@@ -319,6 +377,7 @@ describe('findParentNodeOfType', () => {
   });
 
   it('finds parent node when `nodeType` is an array', () => {
+    const node = p('hello <cursor>');
     const {
       state: {
         schema: {
@@ -326,9 +385,9 @@ describe('findParentNodeOfType', () => {
         },
         selection,
       },
-    } = createEditor(doc(p('hello <cursor>')));
-    const { node } = findParentNodeOfType({ types: [tbl, bq, paragraph], selection })!;
-    expect(node.type.name).toEqual('paragraph');
+    } = createEditor(doc(node));
+    const position = findParentNodeOfType({ types: [tbl, bq, paragraph], selection })!;
+    expect(position).toEqual({ pos: 0, start: 1, end: 8, depth: 1, node });
   });
 });
 
