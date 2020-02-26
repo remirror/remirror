@@ -138,6 +138,7 @@ describe('toggleList', () => {
       to,
     });
   });
+
   it('toggles bullet list to paragraph', () => {
     const from = doc(ul(li(p('make <cursor>list'))));
     const to = doc(p('make list'));
@@ -146,6 +147,7 @@ describe('toggleList', () => {
       to,
     });
   });
+
   it('toggles ordered list to bullet list', () => {
     const from = doc(ol(li(p('make <cursor>list'))));
     const to = doc(ul(li(p('make list'))));
@@ -154,6 +156,7 @@ describe('toggleList', () => {
       to,
     });
   });
+
   it('toggles nested ordered list to bullet list', () => {
     const fromNested = ol(li('1.1'), li(p('1.2<cursor>')), li(p('1.3')));
     const from = doc(ol(li(p('1'), fromNested), li(p('2'))));
