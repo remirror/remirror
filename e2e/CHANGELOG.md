@@ -1,5 +1,13 @@
 # @remirror/e2e
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies [0300d01c]
+  - @remirror/core@0.9.0
+  - test-keyboard@0.7.6
+
 ## 0.0.1
 
 ### Patch Changes

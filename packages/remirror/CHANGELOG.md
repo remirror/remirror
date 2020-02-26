@@ -1,5 +1,14 @@
 # remirror
 
+## 0.7.6
+
+### Patch Changes
+
+- Updated dependencies [0300d01c]
+  - @remirror/core@0.9.0
+  - @remirror/core-extensions@0.7.6
+  - @remirror/react@0.7.7
+
 ## 0.7.5
 
 ### Patch Changes

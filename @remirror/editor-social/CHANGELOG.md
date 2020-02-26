@@ -1,5 +1,28 @@
 # @remirror/editor-social
 
+## 0.10.0
+
+### Minor Changes
+
+- 23d599fc: Enable options to be passed into the social editor `@remirror/extension-mention` matchers via
+  `atMatcherOptions` and `tagMatcherOptions`. This allows for more powerful configuration of the mentions
+  within the social editor.
+
+### Patch Changes
+
+- Updated dependencies [0300d01c]
+  - @remirror/core@0.9.0
+  - @remirror/core-extensions@0.7.6
+  - @remirror/react-utils@0.7.6
+  - @remirror/ui@0.7.6
+  - @remirror/ui-icons@0.7.7
+  - multishift@0.7.6
+  - @remirror/extension-emoji@0.7.6
+  - @remirror/extension-enhanced-link@0.7.6
+  - @remirror/extension-mention@0.7.6
+  - @remirror/react@0.7.7
+  - @remirror/ui-buttons@0.7.6
+
 ## 0.9.0
 
 ### Minor Changes

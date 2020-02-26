@@ -1,5 +1,21 @@
 # @remirror/showcase
 
+## 0.7.7
+
+### Patch Changes
+
+- Updated dependencies [23d599fc]
+- Updated dependencies [0300d01c]
+  - @remirror/editor-social@0.10.0
+  - @remirror/core@0.9.0
+  - @remirror/core-extensions@0.7.6
+  - @remirror/editor-markdown@0.7.6
+  - @remirror/editor-wysiwyg@0.8.2
+  - @remirror/extension-code-block@0.7.6
+  - @remirror/extension-epic-mode@0.7.6
+  - @remirror/react@0.7.7
+  - @remirror/ui-buttons@0.7.6
+
 ## 0.7.6
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @remirror/extension-epic-mode
 
+## 0.7.6
+
+### Patch Changes
+
+- Updated dependencies [0300d01c]
+  - @remirror/core@0.9.0
+
 ## 0.7.5
 
 ### Patch Changes

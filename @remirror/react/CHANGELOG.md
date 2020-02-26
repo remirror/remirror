@@ -1,5 +1,16 @@
 # @remirror/react
 
+## 0.7.7
+
+### Patch Changes
+
+- Updated dependencies [0300d01c]
+  - @remirror/core@0.9.0
+  - @remirror/core-extensions@0.7.6
+  - @remirror/react-utils@0.7.6
+  - @remirror/ui@0.7.6
+  - @remirror/react-ssr@0.7.6
+
 ## 0.7.6
 
 ### Patch Changes

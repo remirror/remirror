@@ -1,5 +1,15 @@
 # @remirror/core-types
 
+## 0.9.0
+
+### Minor Changes
+
+- 0300d01c: - Auto defined `isEnabled` via commands with `dispatch=undefined`.
+  - `HistoryExtension` now checks that whether `dispatch=undefined`.
+  - Remove `CommandStatusCheck`.
+  - Add new type `ExtensionIsActiveFunction` which doesn't take the command name.
+  - Remove `isEnabled` from `Extension` interface.
+
 ## 0.8.0
 
 ### Minor Changes

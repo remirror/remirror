@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/react-renderer",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react-renderer",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "main": "lib/index.js",
   "module": "lib/dist/renderer-react.esm.js",
   "files": [
@@ -16,8 +16,8 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "^0.8.0",
-    "@remirror/react-utils": "^0.7.5"
+    "@remirror/core": "^0.9.0",
+    "@remirror/react-utils": "^0.7.6"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

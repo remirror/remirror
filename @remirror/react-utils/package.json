@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/react-utils",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react-utils",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "main": "lib/index.js",
   "module": "lib/dist/react-utils.esm.js",
   "files": [
@@ -16,8 +16,8 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core-helpers": "^0.7.5",
-    "@remirror/core-types": "^0.8.0"
+    "@remirror/core-helpers": "^0.7.6",
+    "@remirror/core-types": "^0.9.0"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

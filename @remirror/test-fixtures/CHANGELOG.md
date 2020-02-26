@@ -1,5 +1,14 @@
 # @remirror/test-fixtures
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies [0300d01c]
+  - @remirror/core@0.9.0
+  - @remirror/core-extensions@0.7.6
+  - @remirror/ui@0.7.6
+
 ## 0.0.1
 
 ### Patch Changes

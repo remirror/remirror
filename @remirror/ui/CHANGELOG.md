@@ -1,5 +1,13 @@
 # @remirror/ui
 
+## 0.7.6
+
+### Patch Changes
+
+- Updated dependencies [0300d01c]
+  - @remirror/core-types@0.9.0
+  - @remirror/core-helpers@0.7.6
+
 ## 0.7.5
 
 ### Patch Changes
