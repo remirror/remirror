@@ -1,5 +1,19 @@
 # @remirror/core-utils
 
+## 0.8.0
+
+### Minor Changes
+
+- c4645570: - Allow toggling between bullet and ordered list and vice versa.
+  - Add depth to findParentNode(), findPositionOfNodeBefore(), findPositionOfNodeAfter().
+  - Fix findPositionOfNodeBefore(), findPositionOfNodeAfter() returning incorrect start position.
+
+### Patch Changes
+
+- Updated dependencies [0300d01c]
+  - @remirror/core-types@0.9.0
+  - @remirror/core-helpers@0.7.6
+
 ## 0.7.5
 
 ### Patch Changes

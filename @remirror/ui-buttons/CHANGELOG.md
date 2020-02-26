@@ -1,5 +1,14 @@
 # @remirror/ui-buttons
 
+## 0.7.6
+
+### Patch Changes
+
+- Updated dependencies [0300d01c]
+  - @remirror/core@0.9.0
+  - @remirror/ui@0.7.6
+  - @remirror/ui-icons@0.7.7
+
 ## 0.7.5
 
 ### Patch Changes

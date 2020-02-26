@@ -1,5 +1,23 @@
 # @remirror/core-extensions
 
+## 0.7.6
+
+### Patch Changes
+
+- 0300d01c: - Auto defined `isEnabled` via commands with `dispatch=undefined`.
+  - `HistoryExtension` now checks that whether `dispatch=undefined`.
+  - Remove `CommandStatusCheck`.
+  - Add new type `ExtensionIsActiveFunction` which doesn't take the command name.
+  - Remove `isEnabled` from `Extension` interface.
+- Updated dependencies [c4645570]
+- Updated dependencies [0300d01c]
+  - @remirror/core-utils@0.8.0
+  - @remirror/core-types@0.9.0
+  - @remirror/core@0.9.0
+  - @remirror/core-helpers@0.7.6
+  - @remirror/react-utils@0.7.6
+  - @remirror/ui@0.7.6
+
 ## 0.7.5
 
 ### Patch Changes

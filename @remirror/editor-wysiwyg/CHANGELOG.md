@@ -1,5 +1,21 @@
 # @remirror/editor-wysiwyg
 
+## 0.8.2
+
+### Patch Changes
+
+- Updated dependencies [0300d01c]
+  - @remirror/core@0.9.0
+  - @remirror/core-extensions@0.7.6
+  - @remirror/react-utils@0.7.6
+  - @remirror/ui@0.7.6
+  - @remirror/ui-icons@0.7.7
+  - @remirror/extension-code-block@0.7.6
+  - @remirror/extension-drop-cursor@0.7.6
+  - @remirror/extension-image@0.7.6
+  - @remirror/react@0.7.7
+  - @remirror/ui-buttons@0.7.6
+
 ## 0.8.1
 
 ### Patch Changes

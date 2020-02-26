@@ -1,5 +1,19 @@
 # @remirror/editor-markdown
 
+## 0.7.6
+
+### Patch Changes
+
+- Updated dependencies [0300d01c]
+  - @remirror/core@0.9.0
+  - @remirror/core-extensions@0.7.6
+  - @remirror/react-utils@0.7.6
+  - @remirror/ui@0.7.6
+  - @remirror/extension-code-block@0.7.6
+  - @remirror/extension-emoji@0.7.6
+  - @remirror/extension-image@0.7.6
+  - @remirror/react@0.7.7
+
 ## 0.7.5
 
 ### Patch Changes

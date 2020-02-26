@@ -5,7 +5,7 @@
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/packages/jest-prosemirror",
   "repository": "https://github.com/remirror/remirror/tree/master/packages/jest-prosemirror",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "main": "lib/index.js",
   "files": [
     "environment.d.ts",
@@ -19,9 +19,9 @@
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core-constants": "^0.7.4",
-    "@remirror/core-helpers": "^0.7.5",
-    "@remirror/core-types": "^0.8.0",
-    "@remirror/core-utils": "^0.7.5",
+    "@remirror/core-helpers": "^0.7.6",
+    "@remirror/core-types": "^0.9.0",
+    "@remirror/core-utils": "^0.8.0",
     "@testing-library/dom": "^6.8.1",
     "@types/prosemirror-gapcursor": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",
@@ -42,7 +42,7 @@
     "prosemirror-tables": "^1.0.0",
     "prosemirror-test-builder": "^1.0.1",
     "prosemirror-view": "^1.12.0",
-    "test-keyboard": "^0.7.5"
+    "test-keyboard": "^0.7.6"
   },
   "peerDependencies": {
     "jest": "^24"
