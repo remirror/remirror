@@ -1,4 +1,4 @@
-import NanoEvents from 'nanoevents';
+import createNanoEvents from 'nanoevents';
 import nano from 'nanoid';
 import { ReactElement } from 'react';
 
@@ -24,7 +24,7 @@ interface Events {
   /**
    * Trigger an update in all subscribers
    */
-  update: PortalMap;
+  update: (map: PortalMap) => void;
 }
 
 export type PortalList = ReadonlyArray<[HTMLElement, MountedPortal]>;
@@ -44,7 +44,7 @@ export class PortalContainer {
    * The event listener which allows consumers to subscribe to when a new portal
    * is added / deleted via the updated event.
    */
-  public events = new NanoEvents<Events>();
+  public events = createNanoEvents<Events>();
 
   /**
    * Event handler for subscribing to update events from the portalContainer.

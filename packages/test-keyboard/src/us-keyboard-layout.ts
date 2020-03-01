@@ -341,7 +341,7 @@ export interface KeyDefinition {
   text?: string;
 }
 export type USKeyboardLayout = typeof rawUSKeyboardLayout;
-export type SupportedCharacters = keyof USKeyboardLayout;
+export type SupportedCharacters = Extract<keyof USKeyboardLayout, string>;
 
 /**
  * Predicate for checking if the passed char is a supported character for the US Keyboard

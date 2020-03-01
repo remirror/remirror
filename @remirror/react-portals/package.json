@@ -18,7 +18,7 @@
     "@babel/runtime": "^7",
     "@types/nanoevents": "1.0.0",
     "@types/nanoid": "2.1.0",
-    "nanoevents": "2.0.0",
+    "nanoevents": "4.0.3",
     "nanoid": "^2.1.7"
   },
   "peerDependencies": {

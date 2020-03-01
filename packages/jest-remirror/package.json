@@ -25,7 +25,7 @@
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-view": "^1.11.2",
     "jest-prosemirror": "^0.8.1",
-    "jest-snapshot": "^24.9.0",
+    "jest-snapshot": "^25.1.0",
     "mutationobserver-shim": "0.3.3",
     "prosemirror-model": "^1.7.4",
     "prosemirror-state": "^1.2.4",

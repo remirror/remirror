@@ -16,9 +16,7 @@
     "@remirror/core-extensions": "^0.7.6",
     "@remirror/react-portals": "^0.7.3",
     "@remirror/ui": "^0.7.6",
-    "@types/lolex": "^5.1.0",
     "@types/prosemirror-view": "^1.11.2",
-    "lolex": "^5.1.1",
     "min-document": "^2.19.0",
     "prosemirror-view": "^1.12.0"
   },

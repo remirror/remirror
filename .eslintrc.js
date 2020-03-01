@@ -44,7 +44,6 @@ module.exports = {
     // 'plugin:jsx-a11y/recommended',
   ],
   plugins: [
-    'simple-import-sort',
     'jest',
     '@typescript-eslint',
     'react-hooks',
@@ -116,7 +115,6 @@ module.exports = {
     'import/newline-after-import': 'error',
     'import/order': 'off',
 
-    'simple-import-sort/sort': 'error',
     'sort-imports': 'off',
 
     // ESLint rules (those without a '/' in) come after here
