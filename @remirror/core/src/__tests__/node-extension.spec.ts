@@ -43,6 +43,14 @@ describe('extraAttrs', () => {
             getAttrs: domNode => (domNode as Element).getAttribute('simple'),
             name: 'crazy',
           },
+          {
+            name: 'foo',
+            default: '',
+          },
+          {
+            name: 'bar',
+            default: null,
+          },
         ],
       }),
       priority: 1,
@@ -58,6 +66,8 @@ describe('extraAttrs', () => {
       title: { default: '' },
       run: { default: 'failure' },
       crazy: { default: 'yo' },
+      foo: { default: '' },
+      bar: { default: null },
     });
   });
 

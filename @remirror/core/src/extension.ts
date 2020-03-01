@@ -146,7 +146,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
         attrs[item] = { default: fallback };
       } else {
         const { name, default: def } = item;
-        attrs[name] = def ? { default: def } : {};
+        attrs[name] = def !== undefined ? { default: def } : {};
       }
     }
     return attrs;
