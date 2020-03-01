@@ -139,3 +139,73 @@ describe('initialContent', () => {
     expect(container.innerHTML).toInclude('Hello');
   });
 });
+
+test('focus', () => {
+  jest.useFakeTimers();
+  const content = {
+    type: 'doc',
+    content: [{ type: 'paragraph', content: [{ type: 'text', text: 'A sentence here' }] }],
+  };
+
+  let props!: InjectedRemirrorProps<any>;
+  const { getByRole } = render(
+    <Remirror
+      label={label}
+      {...handlers}
+      manager={createTestManager()}
+      initialContent={content}
+      autoFocus={true}
+    >
+      {context => {
+        props = context;
+        return <div />;
+      }}
+    </Remirror>,
+  );
+
+  const editorNode = getByRole('textbox');
+
+  // Focusing on a focused editor without a new position should be idempotent (do nothing).
+  expect(props.state.newState.selection.from).toBe(1);
+  props.focus();
+  jest.runAllTimers();
+  expect(props.state.newState.selection.from).toBe(1);
+
+  // Can focus on the end
+  fireEvent.blur(editorNode);
+  props.focus('end');
+  jest.runAllTimers();
+  expect(props.state.newState.selection.from).toBe(16);
+
+  // Can focus on the start even when already focused.
+  props.focus('start');
+  jest.runAllTimers();
+  expect(props.state.newState.selection.from).toBe(1);
+
+  // Can specify the exact position for the blurred editor
+  fireEvent.blur(editorNode);
+  props.focus(10);
+  jest.runAllTimers();
+  expect(props.state.newState.selection.from).toBe(10);
+
+  // Can specify the selection for the editor
+  fireEvent.blur(editorNode);
+  const expected = { from: 2, to: 5 };
+  props.focus(expected);
+  jest.runAllTimers();
+  {
+    const { from, to } = props.state.newState.selection;
+    expect({ from, to }).toEqual(expected);
+  }
+
+  // Restores the previous selection when focused without a paramter.
+  fireEvent.blur(editorNode);
+  props.focus();
+  {
+    const { from, to } = props.state.newState.selection;
+    expect({ from, to }).toEqual(expected);
+  }
+
+  // expect(props.state.newState.selection.from).toBe(10);
+  jest.useRealTimers();
+});

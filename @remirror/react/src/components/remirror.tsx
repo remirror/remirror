@@ -6,6 +6,7 @@ import {
   EDITOR_CLASS_NAME,
   EditorView as EditorViewType,
   ExtensionManager,
+  FromToParams,
   ObjectNode,
   RemirrorContentType,
   RemirrorInterpolation,
@@ -13,10 +14,12 @@ import {
   SchemaFromExtensions,
   Transaction,
   bool,
+  clamp,
   fromHTML,
   getDocument,
   isArray,
   isFunction,
+  isNumber,
   isPlainObject,
   shouldUseDOMEnvironment,
   toHTML,
@@ -36,7 +39,7 @@ import {
   propIsFunction,
 } from '@remirror/react-utils';
 import { RemirrorThemeContext } from '@remirror/ui';
-import { EditorState } from 'prosemirror-state';
+import { EditorState, TextSelection } from 'prosemirror-state';
 import { Fragment, PureComponent, ReactNode, Ref } from 'react';
 
 import { defaultProps } from '../react-constants';
@@ -693,6 +696,51 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     };
   }
 
+  /**
+   * Set the focus for the editor.
+   */
+  private readonly focus = (position?: FromToParams | number | 'start' | 'end') => {
+    if (this.view.hasFocus() && !position) {
+      return;
+    }
+
+    const { selection, doc, tr } = this.getState();
+    const { from = 0, to = from } = selection;
+
+    let pos: number | FromToParams;
+
+    /** Ensure the selection is within the current document range */
+    const clampToDoc = (value: number) => clamp({ min: 0, max: doc.content.size, value });
+
+    if (position === undefined) {
+      pos = { from, to };
+    } else if (position === 'start') {
+      pos = 0;
+    } else if (position === 'end') {
+      pos = doc.nodeSize - 2;
+    } else {
+      pos = position;
+    }
+
+    let newSelection: TextSelection;
+
+    if (isNumber(pos)) {
+      pos = clampToDoc(pos);
+      newSelection = TextSelection.near(doc.resolve(pos));
+    } else {
+      const start = clampToDoc(pos.from);
+      const end = clampToDoc(pos.to);
+      newSelection = TextSelection.create(doc, start, end);
+    }
+
+    // Set the selection to the requested value
+    const transaction = tr.setSelection(newSelection);
+    this.view.dispatch(transaction);
+
+    // Wait for the next event loop to set the focus.
+    requestAnimationFrame(() => this.view.focus());
+  };
+
   get renderParams(): InjectedRemirrorProps<GExtension> {
     return {
       /* Properties */
@@ -712,6 +760,9 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
       /* Setter Methods */
       clearContent: this.clearContent,
       setContent: this.setContent,
+
+      /* Helper Methods */
+      focus: this.focus,
     };
   }
 

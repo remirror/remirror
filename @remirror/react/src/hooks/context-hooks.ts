@@ -11,7 +11,7 @@ import { InjectedRemirrorProps, UsePositionerParams } from '../react-types';
  * import { RemirrorProvider, useRemirrorContext } from 'remirror';
  *
  * function HooksComponent(props) {
- *   // This pull the remirror props out from the context.
+ *   // This pulls the remirror props out from the context.
  *   const { getPositionerProps } = useRemirrorContext();
  *
  *   return <Menu {...getPositionerProps()} />;

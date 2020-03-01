@@ -11,6 +11,7 @@ import {
   EditorViewParams,
   ElementParams,
   ExtensionManager,
+  FromToParams,
   HelpersFromExtensions,
   ObjectNode,
   OptionsOfExtension,
@@ -405,6 +406,11 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
    * The previous and next state
    */
   state: CompareStateParams<SchemaFromExtensions<GExtension>>;
+
+  /**
+   * Focus the editor at the `start` | `end` a specific position or at a valid range between `{ from, to }`
+   */
+  focus(position?: FromToParams | number | 'start' | 'end'): void;
 }
 
 /**
