@@ -1,6 +1,6 @@
 name: Node CI
 
-on: [push, pull_request]
+on: [push]
 
 env:
   CI: true
@@ -76,7 +76,7 @@ jobs:
 
       - name: notify slack
         uses: 8398a7/action-slack@v2
-        if: github.ref == 'refs/heads/canary'
+        if: always() # Pick up events even if the job fails or is cancelled.
         with:
           status: ${{ job.status }}
           author_name: Remirror GitHub CI
