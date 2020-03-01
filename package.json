@@ -182,7 +182,7 @@
     "react-dom": "^16.10.0",
     "serialize-javascript": ">=2.1.1",
     "tar": ">=4.4.10",
-    "typescript": "3.7.x"
+    "typescript": "3.8.x"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
@@ -272,7 +272,7 @@
     "rollup-plugin-terser": "^5.1.2",
     "size-limit": "^4.3.1",
     "snapshot-diff": "^0.7.0",
-    "typescript": "^3.7.5",
+    "typescript": "^3.8.3",
     "typescript-styled-plugin": "^0.15.0",
     "write-json-file": "^4.2.1"
   },
