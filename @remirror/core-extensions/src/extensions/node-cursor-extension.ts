@@ -4,8 +4,8 @@ import {
   ExtensionManagerParams,
   NodeMatch,
   ResolvedPos,
-  uniqueArray,
   ZERO_WIDTH_SPACE_CHAR,
+  uniqueArray,
 } from '@remirror/core';
 import { getPluginState, nodeNameMatchesList } from '@remirror/core-utils';
 import { EditorState, Plugin, Transaction } from 'prosemirror-state';

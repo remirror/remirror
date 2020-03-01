@@ -1,7 +1,7 @@
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
 import {
-  bool,
   Cast,
+  bool,
   isFunction,
   isNullOrUndefined,
   isNumber,
@@ -38,17 +38,17 @@ import {
   Fragment,
   Mark,
   MarkType,
-  Node as PMNode,
   NodeType,
+  Node as PMNode,
   ResolvedPos as PMResolvedPos,
   Schema,
   Slice,
 } from 'prosemirror-model';
 import {
-  EditorState as PMEditorState,
   NodeSelection,
-  Plugin,
+  EditorState as PMEditorState,
   Selection as PMSelection,
+  Plugin,
   TextSelection,
 } from 'prosemirror-state';
 

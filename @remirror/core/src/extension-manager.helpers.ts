@@ -1,5 +1,5 @@
 import { MarkGroup, NodeGroup, Tags } from '@remirror/core-constants';
-import { bool, Cast, entries, isFunction, isUndefined, sort } from '@remirror/core-helpers';
+import { Cast, bool, entries, isFunction, isUndefined, sort } from '@remirror/core-helpers';
 import {
   AnyFunction,
   CommandParams,

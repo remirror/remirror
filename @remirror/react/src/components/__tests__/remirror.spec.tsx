@@ -5,8 +5,8 @@ import { axe } from 'jest-axe';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { Remirror } from '../';
 import { InjectedRemirrorProps } from '../../react-types';
+import { Remirror } from '../';
 
 const textContent = `This is editor text`;
 const label = 'Remirror editor';

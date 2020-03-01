@@ -1,23 +1,23 @@
 import {
   EditorSchema,
+  SchemaParams,
   findMatches,
   flattenArray,
   hasOwnProperty,
   isInstanceOf,
   isProsemirrorNode,
   isString,
-  SchemaParams,
 } from '@remirror/core';
 import { Fragment, Mark, Node as PMNode, Slice } from 'prosemirror-model';
 
 import {
   BaseFactoryParams,
+  TagTracker,
   TaggedContent,
   TaggedContentItem,
   TaggedContentWithText,
   TaggedProsemirrorNode,
   Tags,
-  TagTracker,
 } from './jest-remirror-types';
 
 /**

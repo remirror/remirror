@@ -26,16 +26,16 @@ The following is a small example which renders a floating menu and enables the e
 import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
 
 import {
-  EMPTY_PARAGRAPH_NODE,
   Bold,
+  EMPTY_PARAGRAPH_NODE,
   Italic,
-  Underline,
-  bubblePositioner,
   ManagedRemirrorProvider,
   RemirrorEventListener,
   RemirrorExtension,
   RemirrorManager,
   RemirrorProps,
+  Underline,
+  bubblePositioner,
   useRemirrorContext,
 } from 'remirror';
 

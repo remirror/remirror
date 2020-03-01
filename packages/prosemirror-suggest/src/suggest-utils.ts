@@ -16,13 +16,13 @@ import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates'
 import {
   CompareMatchParams,
   ReasonParams,
-  Suggester,
-  SuggesterParams,
   SuggestKeyBindingMap,
   SuggestKeyBindingParams,
   SuggestReasonMap,
   SuggestStateMatch,
   SuggestStateMatchParams,
+  Suggester,
+  SuggesterParams,
 } from './suggest-types';
 
 /**

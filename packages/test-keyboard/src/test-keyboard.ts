@@ -11,10 +11,10 @@ import {
 } from './test-keyboard-types';
 import { cleanKey, createKeyboardEvent, getModifierInformation } from './test-keyboard-utils';
 import {
+  SupportedCharacters,
   isUSKeyboardCharacter,
   noKeyPress,
   noKeyUp,
-  SupportedCharacters,
   usKeyboardLayout,
 } from './us-keyboard-layout';
 

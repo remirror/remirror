@@ -2,14 +2,14 @@ import {
   CompareStateParams,
   EditorState,
   ExtensionManagerNodeTypeParams,
-  findChildrenByNode,
-  nodeEqualsType,
   NodeExtension,
   NodeType,
   NodeWithPosition,
   ProsemirrorNodeParams,
   Transaction,
   TransactionParams,
+  findChildrenByNode,
+  nodeEqualsType,
 } from '@remirror/core';
 import { keydownHandler } from 'prosemirror-keymap';
 import { Plugin } from 'prosemirror-state';
@@ -18,10 +18,10 @@ import { DecorationSet } from 'prosemirror-view';
 
 import { CodeBlockExtensionOptions } from './code-block-types';
 import {
+  NodeInformation,
   createDecorations,
   getNodeInformationFromState,
   lengthHasChanged,
-  NodeInformation,
   posWithinRange,
 } from './code-block-utils';
 

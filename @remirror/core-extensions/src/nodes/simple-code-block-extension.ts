@@ -1,13 +1,13 @@
 import { Interpolation } from '@emotion/core';
 import {
   CommandNodeTypeParams,
-  convertCommand,
   EDITOR_CLASS_SELECTOR,
   ExtensionManagerNodeTypeParams,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
+  convertCommand,
   toggleBlockItem,
 } from '@remirror/core';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';

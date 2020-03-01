@@ -1,7 +1,6 @@
 import {
   Attrs,
   CommandNodeTypeParams,
-  convertCommand,
   ExtensionManagerNodeTypeParams,
   KeyBindings,
   NodeExtension,
@@ -9,6 +8,7 @@ import {
   NodeExtensionSpec,
   NodeGroup,
   ProsemirrorNode,
+  convertCommand,
   toggleBlockItem,
 } from '@remirror/core';
 import { setBlockType } from 'prosemirror-commands';

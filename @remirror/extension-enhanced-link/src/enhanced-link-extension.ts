@@ -5,13 +5,13 @@ import {
   EditorState,
   EditorView,
   ExtensionManagerMarkTypeParams,
-  findMatches,
-  getMatchString,
-  isFunction,
   LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
   MarkExtensionOptions,
   MarkExtensionSpec,
+  findMatches,
+  getMatchString,
+  isFunction,
   markPasteRule,
   removeMark,
   updateMark,
@@ -20,8 +20,8 @@ import { Plugin } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
 
 import {
-  enhancedLinkHandler,
   EnhancedLinkHandlerProps,
+  enhancedLinkHandler,
   extractHref,
   getUrlsFromState,
   isSetEqual,

@@ -1,4 +1,4 @@
-import { hasOwnProperty, MarkExtensionSpec, NodeExtensionSpec, PlainObject } from '@remirror/core';
+import { MarkExtensionSpec, NodeExtensionSpec, PlainObject, hasOwnProperty } from '@remirror/core';
 
 import { possibleStandardNames } from './renderer-constants';
 

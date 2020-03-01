@@ -1,18 +1,18 @@
 {
   "name": "@remirror/extension-emoji",
+  "version": "0.7.6",
   "description": "Emoji extension for the remirror wysiwyg editor",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-emoji",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-emoji",
-  "version": "0.7.6",
-  "main": "lib/index.js",
-  "module": "lib/dist/extension-emoji.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/extension-emoji.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
@@ -31,16 +31,16 @@
     "prosemirror-suggest": "^0.7.6",
     "prosemirror-view": "^1.12.0"
   },
+  "devDependencies": {
+    "emoji-mart": "2.11.1",
+    "emojilib": "^2.4.0"
+  },
   "peerDependencies": {
     "@emotion/core": "^10",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
-  },
-  "devDependencies": {
-    "emoji-mart": "2.11.1",
-    "emojilib": "^2.4.0"
   },
   "publishConfig": {
     "access": "public"

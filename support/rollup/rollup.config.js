@@ -1,5 +1,6 @@
-import chalk from 'chalk';
 import { join } from 'path';
+
+import chalk from 'chalk';
 
 import { dependencies, rollup } from './config.json';
 import factory from './factory';

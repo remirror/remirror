@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { deepMerge, isUndefined, omit, RemirrorTheme } from '@remirror/core';
+import { RemirrorTheme, deepMerge, isUndefined, omit } from '@remirror/core';
 import { NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import {
   EmojiExtension,

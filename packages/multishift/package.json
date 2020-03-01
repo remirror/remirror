@@ -1,18 +1,18 @@
 {
   "name": "multishift",
+  "version": "0.7.6",
   "description": "A repurposed downshift for internal use within remirror",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/packages/multishift",
   "repository": "https://github.com/remirror/remirror/tree/master/packages/multishift",
-  "version": "0.7.6",
-  "main": "lib/index.js",
-  "module": "lib/dist/multishift.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "globals.d.ts",
     "lib",
     "src"
   ],
+  "main": "lib/index.js",
+  "module": "lib/dist/multishift.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

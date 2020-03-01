@@ -1,18 +1,24 @@
 {
   "name": "remirror",
+  "version": "0.7.6",
   "description": "An advanced text editor for react built with prosemirror",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "keywords": [
+    "prosemirror",
+    "react",
+    "ssr",
+    "text editor"
+  ],
   "homepage": "https://github.com/remirror/remirror/tree/master/packages/remirror",
   "repository": "https://github.com/remirror/remirror/tree/master/packages/remirror",
-  "version": "0.7.6",
-  "main": "lib/index.js",
-  "module": "lib/dist/remirror.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/remirror.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
@@ -26,12 +32,6 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
-  "keywords": [
-    "prosemirror",
-    "react",
-    "ssr",
-    "text editor"
-  ],
   "publishConfig": {
     "access": "public"
   },

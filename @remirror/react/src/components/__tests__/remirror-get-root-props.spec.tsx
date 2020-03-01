@@ -2,9 +2,9 @@
 
 import { jsx } from '@emotion/core';
 import { createTestManager } from '@remirror/test-fixtures';
-import { render, RenderResult } from '@testing-library/react';
+import { RenderResult, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
-import { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';
+import { FunctionComponent, Ref, RefAttributes, forwardRef } from 'react';
 
 import { Remirror } from '..';
 

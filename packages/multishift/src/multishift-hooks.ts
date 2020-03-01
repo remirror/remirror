@@ -1,5 +1,5 @@
 import { useId } from '@reach/auto-id';
-import { useEffectOnce, useEffectOnUpdate } from '@remirror/react-hooks';
+import { useEffectOnUpdate, useEffectOnce } from '@remirror/react-hooks';
 import { setStatus } from '@remirror/ui-a11y-status';
 import { useEffect, useReducer, useRef } from 'react';
 

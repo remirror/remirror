@@ -2,10 +2,10 @@ import {
   Extension,
   ExtensionManagerParams,
   FromToParams,
+  ProsemirrorCommandFunction,
   isNullOrUndefined,
   noop,
   plainInputRule,
-  ProsemirrorCommandFunction,
 } from '@remirror/core';
 import escapeStringRegex from 'escape-string-regexp';
 import { Suggester } from 'prosemirror-suggest';
@@ -19,11 +19,11 @@ import {
 } from './emoji-types';
 import {
   DEFAULT_FREQUENTLY_USED,
+  SKIN_VARIATIONS,
   emoticonRegex,
   getEmojiByName,
   getEmojiFromEmoticon,
   populateFrequentlyUsed,
-  SKIN_VARIATIONS,
   sortEmojiMatches,
 } from './emoji-utils';
 

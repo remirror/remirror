@@ -5,11 +5,11 @@ import {
   EditorView,
   Extension,
   ExtensionManagerParams,
+  ResolvedPos,
   findPositionOfNodeAfter,
   findPositionOfNodeBefore,
   isUndefined,
   pick,
-  ResolvedPos,
   throttle,
 } from '@remirror/core';
 import { PortalContainer } from '@remirror/react-portals';

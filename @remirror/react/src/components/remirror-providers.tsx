@@ -2,7 +2,7 @@
 
 import { jsx } from '@emotion/core';
 import { AnyExtension, MakeOptional } from '@remirror/core';
-import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
+import { RemirrorType, oneChildOnly } from '@remirror/react-utils';
 import { ProviderProps, ReactElement } from 'react';
 
 import { useRemirrorManager } from '../hooks/context-hooks';

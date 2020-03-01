@@ -1,4 +1,5 @@
 import {
+  Merge,
   capitalize,
   clone,
   deepMerge,
@@ -30,7 +31,6 @@ import {
   isUndefined,
   kebabCase,
   keys,
-  Merge,
   randomInt,
   range,
   sort,

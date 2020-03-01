@@ -1,18 +1,18 @@
 {
   "name": "@remirror/react-node-view",
+  "version": "0.7.6",
   "description": "Create your prosemirror node views with react",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/react-node-view",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react-node-view",
-  "version": "0.7.6",
-  "main": "lib/index.js",
-  "module": "lib/dist/react-node-view.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/react-node-view.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

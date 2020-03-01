@@ -1,18 +1,18 @@
 {
   "name": "@remirror/core-constants",
+  "version": "0.7.4",
   "description": "The core constants used throughout the remirror codebase",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/core-constants",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/core-constants",
-  "version": "0.7.4",
-  "main": "lib/index.js",
-  "module": "lib/dist/core-constants.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/core-constants.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7"

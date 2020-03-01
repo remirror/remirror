@@ -5,8 +5,8 @@ import { storiesOf } from '@storybook/react';
 import React from 'react';
 import useState from 'react-use/lib/useSetState';
 
-import { Menubar } from '..';
 import { MenubarContent } from '../menu-bar';
+import { Menubar } from '..';
 
 const MenuComponent = () => {
   const blockTypeItems = [

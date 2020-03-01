@@ -10,9 +10,9 @@ import {
   hardBreak,
   p,
   pm,
-  schema as testSchema,
   table,
   tableRow,
+  schema as testSchema,
 } from 'jest-prosemirror';
 import { TextSelection } from 'prosemirror-state';
 

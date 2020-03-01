@@ -1,14 +1,14 @@
 {
-  "private": true,
   "name": "@remirror/test-fixtures",
-  "description": "Test fixtures for remirror unit tests",
   "version": "0.0.2",
-  "main": "lib/index.js",
+  "private": true,
+  "description": "Test fixtures for remirror unit tests",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

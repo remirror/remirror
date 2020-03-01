@@ -42,11 +42,11 @@ from the Strikethrough extension in the [`@remirror/core-extensions`](../core-ex
 
 ```ts
 import {
+  ExtensionManagerMarkTypeParams,
   MarkExtension,
   MarkExtensionSpec,
   markInputRule,
   markPasteRule,
-  ExtensionManagerMarkTypeParams,
   toggleMark,
 } from '@remirror/core';
 
@@ -107,7 +107,7 @@ The extension manager is used to manage the extensions passed into the editor. I
 nodes and marks which are used for generating a schema.
 
 ```ts
-import { ExtensionManager, DocExtension, TextExtension } from '@remirror/core';
+import { DocExtension, ExtensionManager, TextExtension } from '@remirror/core';
 import { BoldExtension, ItalicExtension, ParagraphExtension } from '@remirror/core-extensions';
 
 const manager = ExtensionManager.create([

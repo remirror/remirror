@@ -1,10 +1,10 @@
 import {
-  chainCommands,
-  convertCommand,
   ExtensionManagerNodeTypeParams,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
+  chainCommands,
+  convertCommand,
 } from '@remirror/core';
 import { exitCode } from 'prosemirror-commands';
 

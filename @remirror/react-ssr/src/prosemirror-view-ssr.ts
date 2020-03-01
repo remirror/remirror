@@ -3,8 +3,8 @@ import {
   EditorSchema,
   EditorState,
   RenderEnvironment,
-  shouldUseDOMEnvironment,
   Transaction,
+  shouldUseDOMEnvironment,
 } from '@remirror/core';
 import minDocument from 'min-document';
 import { DirectEditorProps as DEP, EditorView } from 'prosemirror-view';

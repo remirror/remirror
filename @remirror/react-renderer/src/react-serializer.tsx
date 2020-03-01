@@ -3,18 +3,18 @@
 import { jsx } from '@emotion/core';
 import {
   AnyExtension,
-  bool,
   DOMOutputSpec,
   ExtensionManager,
-  Fragment as ProsemirrorFragment,
-  isArray,
-  isPlainObject,
-  isString,
   Mark,
   MarkExtensionSpec,
   NodeExtensionSpec,
   PlainObject,
+  Fragment as ProsemirrorFragment,
   ProsemirrorNode,
+  bool,
+  isArray,
+  isPlainObject,
+  isString,
 } from '@remirror/core';
 import { ComponentType, Fragment, ReactNode } from 'react';
 

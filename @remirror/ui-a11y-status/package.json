@@ -1,18 +1,18 @@
 {
   "name": "@remirror/ui-a11y-status",
+  "version": "0.7.4",
   "description": "Create a singleton live region for a11y status updates",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/ui-a11y-status",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/ui-a11y-status",
-  "version": "0.7.4",
-  "main": "lib/index.js",
-  "module": "lib/dist/ui-a11y-status.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/ui-a11y-status.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

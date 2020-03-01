@@ -1,8 +1,8 @@
 {
-  "private": true,
   "name": "@remirror/docs",
-  "description": "A world class text editor toolkit for every environment",
   "version": "0.0.2",
+  "private": true,
+  "description": "A world class text editor toolkit for every environment",
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",

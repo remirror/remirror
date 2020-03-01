@@ -1,9 +1,9 @@
 import {
-  convertCommand,
   ExtensionManagerNodeTypeParams,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
+  convertCommand,
 } from '@remirror/core';
 import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list';
 

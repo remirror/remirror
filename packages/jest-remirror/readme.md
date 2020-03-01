@@ -87,8 +87,8 @@ editor to the dom and provides a number of utilities exposed when calling the `r
 ## Example
 
 ```ts
-import { renderEditor } from 'jest-remirror';
 import { EmojiExtension } from '@remirror/extension-emoji';
+import { renderEditor } from 'jest-remirror';
 
 test('emoticons replaced with emoji', () => {
   const {

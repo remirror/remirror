@@ -3,7 +3,7 @@
  */
 
 import { PlaceholderExtension } from '@remirror/core-extensions';
-import { docNodeBasicJSON, TestExtension } from '@remirror/test-fixtures';
+import { TestExtension, docNodeBasicJSON } from '@remirror/test-fixtures';
 import React, { FC } from 'react';
 import { renderToString } from 'react-dom/server';
 

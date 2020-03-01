@@ -1,12 +1,12 @@
 import {
   Attrs,
-  bool,
   Cast,
   CommandNodeTypeParams,
-  isElementDOMNode,
   NodeExtension,
   NodeExtensionSpec,
   ProsemirrorCommandFunction,
+  bool,
+  isElementDOMNode,
 } from '@remirror/core';
 import { ResolvedPos } from 'prosemirror-model';
 

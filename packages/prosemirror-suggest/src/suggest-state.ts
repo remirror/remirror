@@ -21,11 +21,11 @@ import {
   CompareMatchParams,
   RemoveIgnoredParams,
   SuggestCallbackParams,
-  Suggester,
   SuggestKeyBindingParams,
   SuggestReasonMap,
   SuggestStateMatch,
   SuggestStateMatchReason,
+  Suggester,
 } from './suggest-types';
 import { findFromSuggesters, findReason, runKeyBindings } from './suggest-utils';
 

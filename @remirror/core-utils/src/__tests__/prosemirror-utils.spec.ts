@@ -8,12 +8,12 @@ import {
   doc,
   h2,
   p,
+  tr as row,
   schema,
   table,
   td,
   tdCursor,
   tdEmpty,
-  tr as row,
 } from 'jest-prosemirror';
 import { Schema } from 'prosemirror-model';
 import { marks, nodes } from 'prosemirror-schema-basic';

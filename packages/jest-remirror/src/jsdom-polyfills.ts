@@ -1,5 +1,6 @@
-import { environment, isTextDOMNode } from '@remirror/core';
 import { readFileSync } from 'fs';
+
+import { environment, isTextDOMNode } from '@remirror/core';
 
 /**
  * Polyfill DOMElement.innerText because JSDOM lacks support for it.

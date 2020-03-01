@@ -13,7 +13,7 @@ import {
   TextAlignProperty,
 } from 'csstype';
 import mergeProps from 'merge-props';
-import { FC, forwardRef, ReactElement, ReactNode } from 'react';
+import { FC, ReactElement, ReactNode, forwardRef } from 'react';
 
 type MergeProp = typeof mergeProps;
 

@@ -1,18 +1,18 @@
 {
   "name": "@remirror/editor-social",
+  "version": "0.10.0",
   "description": "A configurable social editor.",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/editor-social",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/editor-social",
-  "version": "0.10.0",
-  "main": "lib/index.js",
-  "module": "lib/dist/editor-social.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/editor-social.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

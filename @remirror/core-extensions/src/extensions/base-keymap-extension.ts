@@ -1,12 +1,12 @@
 import {
   BaseExtensionOptions,
-  chainKeyBindingCommands,
-  convertCommand,
   Extension,
   ExtensionManagerParams,
+  KeyBindings,
+  chainKeyBindingCommands,
+  convertCommand,
   hasOwnProperty,
   isFunction,
-  KeyBindings,
 } from '@remirror/core';
 import mapObject from 'map-obj';
 import { baseKeymap, chainCommands as pmChainCommands, selectParentNode } from 'prosemirror-commands';

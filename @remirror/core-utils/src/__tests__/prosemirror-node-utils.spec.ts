@@ -1,5 +1,5 @@
 import { bool } from '@remirror/core-helpers';
-import { atomInline, createEditor, doc, p, strong, table, td, tdEmpty, tr as row } from 'jest-prosemirror';
+import { atomInline, createEditor, doc, p, tr as row, strong, table, td, tdEmpty } from 'jest-prosemirror';
 
 import {
   contains,

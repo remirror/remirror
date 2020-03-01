@@ -1,8 +1,9 @@
+import { relative, resolve } from 'path';
+
 import { GatsbyNode } from 'gatsby';
 import { createFilePath } from 'gatsby-source-filesystem';
 import gql from 'graphql-tag';
 import { print } from 'graphql/language/printer';
-import { relative, resolve } from 'path';
 
 import { Query } from '../../generated/gatsby';
 

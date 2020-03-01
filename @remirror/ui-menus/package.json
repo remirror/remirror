@@ -1,18 +1,18 @@
 {
   "name": "@remirror/ui-menus",
+  "version": "0.7.4",
   "description": "Menu components for the remirror editor",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/ui-menus",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/ui-menus",
-  "version": "0.7.4",
-  "main": "lib/index.js",
-  "module": "lib/dist/ui-menus.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/ui-menus.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

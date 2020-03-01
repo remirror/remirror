@@ -1,18 +1,18 @@
 {
   "name": "@remirror/ui-text",
+  "version": "0.7.6",
   "description": "ui-text utilities for remirror",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/ui-text",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/ui-text",
-  "version": "0.7.6",
-  "main": "lib/index.js",
-  "module": "lib/dist/ui-text.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/ui-text.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

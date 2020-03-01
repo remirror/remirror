@@ -1,13 +1,7 @@
 import {
   Attrs,
-  bool,
   EditorState,
-  findParentNodeOfType,
-  flattenArray,
   FromToParams,
-  isEqual,
-  isObject,
-  isString,
   NodeType,
   NodeTypeParams,
   NodeWithPosition,
@@ -15,6 +9,12 @@ import {
   ProsemirrorCommandFunction,
   ProsemirrorNodeParams,
   TextParams,
+  bool,
+  findParentNodeOfType,
+  flattenArray,
+  isEqual,
+  isObject,
+  isString,
   uniqueArray,
 } from '@remirror/core';
 // Refractor languages

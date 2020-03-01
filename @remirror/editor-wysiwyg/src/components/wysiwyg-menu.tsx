@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { ActionNames, AnyFunction, Attrs, getMarkAttrs, KeyOfThemeVariant } from '@remirror/core';
+import { ActionNames, AnyFunction, Attrs, KeyOfThemeVariant, getMarkAttrs } from '@remirror/core';
 import { bubblePositioner, useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import {

@@ -2,14 +2,14 @@
 import { jsx } from '@emotion/core';
 import {
   KeyOfThemeVariant,
-  omitUndefined,
   RemirrorInterpolation,
   RemirrorThemeContextType,
+  omitUndefined,
 } from '@remirror/core';
 import { useRemirrorTheme } from '@remirror/ui';
 import { IconProps } from '@remirror/ui-icons';
 import { MinWidthProperty, WidthProperty } from 'csstype';
-import { ComponentType, forwardRef, ReactNode } from 'react';
+import { ComponentType, ReactNode, forwardRef } from 'react';
 
 import { ResetButton, ResetButtonProps } from './reset-button';
 

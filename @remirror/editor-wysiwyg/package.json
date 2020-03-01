@@ -1,18 +1,18 @@
 {
   "name": "@remirror/editor-wysiwyg",
+  "version": "0.8.2",
   "description": "ui for a what you see is what you get (wysiwyg) editing experience",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/editor-wysiwyg",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/editor-wysiwyg",
-  "version": "0.8.2",
-  "main": "lib/index.js",
-  "module": "lib/dist/editor-wysiwyg.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/editor-wysiwyg.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

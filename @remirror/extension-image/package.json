@@ -1,19 +1,19 @@
 {
   "name": "@remirror/extension-image",
+  "version": "0.7.6",
   "description": "CodeBlock extension for the remirror wysiwyg editor",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-image",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-image",
-  "version": "0.7.6",
-  "main": "lib/index.js",
-  "module": "lib/dist/extension-image.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "internal",
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/extension-image.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

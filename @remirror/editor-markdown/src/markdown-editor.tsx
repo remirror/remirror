@@ -2,23 +2,22 @@
 
 import { jsx } from '@emotion/core';
 import {
-  createDocumentNode,
   DocExtension,
   EditorState,
   ExtensionManager,
   ExtensionsFromManager,
-  isObjectNode,
-  isProsemirrorNode,
-  isString,
   ProsemirrorNode,
   RemirrorContentType,
   SchemaFromExtensions,
   SchemaParams,
   StringHandlerParams,
   TextExtension,
+  createDocumentNode,
+  isObjectNode,
+  isProsemirrorNode,
+  isString,
 } from '@remirror/core';
 import {
-  baseExtensions,
   BaseKeymapExtension,
   BlockquoteExtension,
   BoldExtension,
@@ -35,6 +34,7 @@ import {
   ListItemExtension,
   OrderedListExtension,
   PlaceholderExtension,
+  baseExtensions,
 } from '@remirror/core-extensions';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { ImageExtension } from '@remirror/extension-image';

@@ -1,14 +1,14 @@
 import {
   Attrs,
   CommandParams,
-  debounce,
   EditorState,
   Extension,
-  isArray,
-  isNumber,
   OnTransactionParams,
   Plugin,
   ProsemirrorCommandFunction,
+  debounce,
+  isArray,
+  isNumber,
   uniqueId,
 } from '@remirror/core';
 import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirror-collab';

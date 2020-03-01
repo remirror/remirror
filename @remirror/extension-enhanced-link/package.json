@@ -1,17 +1,17 @@
 {
   "name": "@remirror/extension-enhanced-link",
+  "version": "0.7.6",
   "description": "Enhanced link extension for the remirror wysiwyg editor",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-enhanced-link",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-enhanced-link",
-  "version": "0.7.6",
-  "main": "lib/index.js",
-  "module": "lib/dist/extension-enhanced-link.esm.js",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/extension-enhanced-link.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

@@ -1,30 +1,30 @@
 {
   "name": "test-keyboard",
+  "version": "0.7.6",
   "description": "A test keyboard for composing fake keyboard events",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "keywords": [
+    "compose events",
+    "events",
+    "keyboard"
+  ],
   "homepage": "https://github.com/remirror/remirror/tree/master/packages/test-keyboard",
   "repository": "https://github.com/remirror/remirror/tree/master/packages/test-keyboard",
-  "version": "0.7.6",
-  "main": "lib/index.js",
-  "module": "lib/dist/test-keyboard.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "environment.d.ts",
     "environment.js",
     "lib",
     "src"
   ],
+  "main": "lib/index.js",
+  "module": "lib/dist/test-keyboard.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core-helpers": "^0.7.6",
     "@remirror/core-types": "^0.9.0"
   },
-  "keywords": [
-    "compose events",
-    "events",
-    "keyboard"
-  ],
   "publishConfig": {
     "access": "public"
   },

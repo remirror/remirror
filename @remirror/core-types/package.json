@@ -1,18 +1,18 @@
 {
   "name": "@remirror/core-types",
+  "version": "0.9.0",
   "description": "Provides the core TS types for use throughout the remirror codebase",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/core-types",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/core-types",
-  "version": "0.9.0",
-  "main": "lib/index.js",
-  "module": "lib/dist/core-types.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/core-types.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

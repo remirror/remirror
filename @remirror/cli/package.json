@@ -1,25 +1,24 @@
 {
   "name": "@remirror/cli",
+  "version": "0.7.4",
   "description": "The remirror cli",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/cli",
   "repository": {
     "type": "git",
     "url": "https://github.com/remirror/remirror.git",
     "directory": "@remirror/cli"
   },
-  "version": "0.7.4",
-  "main": "lib/index.js",
-  "preferGlobal": true,
-  "bin": {
-    "remirror": "lib/cli.js"
-  },
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "bin": {
+    "remirror": "lib/cli.js"
+  },
   "dependencies": {
     "@babel/runtime": "^7",
     "@emotion/core": "^10",
@@ -49,6 +48,7 @@
   "engines": {
     "node": ">=8"
   },
+  "preferGlobal": true,
   "publishConfig": {
     "access": "public"
   }

@@ -14,9 +14,9 @@ yarn add refractor @remirror/extension-code-block
 Refractor is a peer dependency and is needed when adding extra language support.
 
 ```ts
+import { CodeBlockExtension } from '@remirror/extension-code-block';
 import jsx from 'refractor/lang/jsx';
 import typescript from 'refractor/lang/typescript';
-import { CodeBlockExtension } from '@remirror/extension-code-block';
 
 new CodeBlockExtension({ supportedLanguages: [typescript, jsx] });
 ```

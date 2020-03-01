@@ -1,8 +1,8 @@
 {
-  "private": true,
   "name": "@remirror/e2e",
-  "description": "e2e tests",
   "version": "0.0.2",
+  "private": true,
+  "description": "e2e tests",
   "dependencies": {
     "@babel/runtime": "^7.6.3",
     "@remirror/core": "^0.9.0",

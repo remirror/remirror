@@ -3,10 +3,10 @@
 import { jsx } from '@emotion/core';
 import {
   AnyExtension,
-  convertToPrioritizedExtension,
   ExtensionManager,
   FlexibleExtension,
   PrioritizedExtension,
+  convertToPrioritizedExtension,
 } from '@remirror/core';
 import { baseExtensions } from '@remirror/core-extensions';
 import { asDefaultProps, isReactFragment, isRemirrorExtension } from '@remirror/react-utils';

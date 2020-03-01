@@ -2,6 +2,7 @@ import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core-types';
 import { useContext } from 'react';
 
 import { EmotionThemeContext, RemirrorThemeContext } from './ui-context';
+
 /**
  * A hook for pulling the remirror theme from the react context.
  */

@@ -1,4 +1,4 @@
-import { baseTheme, RemirrorThemeProvider, RemirrorThemeRoot, useRemirrorTheme } from '@remirror/ui';
+import { RemirrorThemeProvider, RemirrorThemeRoot, baseTheme, useRemirrorTheme } from '@remirror/ui';
 import { DecoratorFunction } from '@storybook/addons';
 import React, { FC, ReactElement } from 'react';
 

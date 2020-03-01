@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { deepMerge, RemirrorTheme } from '@remirror/core';
+import { RemirrorTheme, deepMerge } from '@remirror/core';
 import {
   BlockquoteExtension,
   BoldExtension,

@@ -19,7 +19,7 @@ import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { DirectEditorProps, EditorView } from 'prosemirror-view';
 import { Keyboard } from 'test-keyboard';
 
-import { createEvents, EventType } from './jest-prosemirror-events';
+import { EventType, createEvents } from './jest-prosemirror-events';
 import { createState, p, pm, selectionFor, taggedDocHasSelection } from './jest-prosemirror-nodes';
 import { TaggedDocParams, TestEditorView, TestEditorViewParams } from './jest-prosemirror-types';
 

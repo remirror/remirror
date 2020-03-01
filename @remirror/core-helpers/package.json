@@ -1,18 +1,18 @@
 {
   "name": "@remirror/core-helpers",
+  "version": "0.7.6",
   "description": "Provide helper functions for the remirror codebase, kinda like a tiny lodash",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/core-helpers",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/core-helpers",
-  "version": "0.7.6",
-  "main": "lib/index.js",
-  "module": "lib/dist/core-helpers.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/core-helpers.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

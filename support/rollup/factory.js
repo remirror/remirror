@@ -1,10 +1,11 @@
-import chalk from 'chalk';
 import { join } from 'path';
+
+import json from '@rollup/plugin-json';
+import resolve from '@rollup/plugin-node-resolve';
+import chalk from 'chalk';
 import autoExternal from 'rollup-plugin-auto-external';
 import babel from 'rollup-plugin-babel';
-import json from 'rollup-plugin-json';
 import globals from 'rollup-plugin-node-globals';
-import resolve from 'rollup-plugin-node-resolve';
 
 /* Inspired by https://github.com/ianstormtaylor/slate/blob/6302b2d9d2d6a62ba32e6a7d987db5db8f846eef/support/rollup/factory.js#L1-L148 */
 

@@ -1,12 +1,17 @@
 {
   "name": "jest-prosemirror",
+  "version": "0.8.1",
   "description": "Write expressive tests for your prosemirror editor",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "keywords": [
+    "jest",
+    "prosemirror",
+    "snapshots",
+    "tests"
+  ],
   "homepage": "https://github.com/remirror/remirror/tree/master/packages/jest-prosemirror",
   "repository": "https://github.com/remirror/remirror/tree/master/packages/jest-prosemirror",
-  "version": "0.8.1",
-  "main": "lib/index.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "environment.d.ts",
     "environment.js",
@@ -15,6 +20,7 @@
     "serializer.js",
     "src"
   ],
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
@@ -47,12 +53,6 @@
   "peerDependencies": {
     "jest": "^24"
   },
-  "keywords": [
-    "jest",
-    "prosemirror",
-    "snapshots",
-    "tests"
-  ],
   "publishConfig": {
     "access": "public"
   }

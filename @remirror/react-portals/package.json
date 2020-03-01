@@ -1,18 +1,24 @@
 {
   "name": "@remirror/react-portals",
+  "version": "0.7.4",
   "description": "Enables using react portals to render prosemirror nodes",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "keywords": [
+    "prosemirror",
+    "react",
+    "ssr",
+    "text editor"
+  ],
   "homepage": "https://github.com/remirror/remirror/tree/canary/@remirror/react-portals",
   "repository": "https://github.com/remirror/remirror/tree/canary/@remirror/react-portals",
-  "version": "0.7.4",
-  "main": "lib/index.js",
-  "module": "lib/dist/react-portals.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/react-portals.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
@@ -28,12 +34,6 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
-  "keywords": [
-    "prosemirror",
-    "react",
-    "ssr",
-    "text editor"
-  ],
   "publishConfig": {
     "access": "public"
   },

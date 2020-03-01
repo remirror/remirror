@@ -1,18 +1,18 @@
 {
   "name": "@remirror/showcase",
+  "version": "0.7.7",
   "description": "ui for a what you see is what you get (wysiwyg) editing experience",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/showcase",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/showcase",
-  "version": "0.7.7",
-  "main": "lib/index.js",
-  "module": "lib/dist/showcase.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/showcase.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

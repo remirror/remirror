@@ -1,13 +1,13 @@
 import {
   CommandMarkTypeParams,
-  convertCommand,
   ExtensionManagerMarkTypeParams,
-  isElementDOMNode,
-  isString,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
+  convertCommand,
+  isElementDOMNode,
+  isString,
   markInputRule,
 } from '@remirror/core';
 import { toggleMark } from 'prosemirror-commands';

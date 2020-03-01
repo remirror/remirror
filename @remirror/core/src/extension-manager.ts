@@ -27,9 +27,9 @@ import {
   TransactionParams,
 } from '@remirror/core-types';
 import {
+  CreateDocumentNodeParams,
   chainKeyBindingCommands,
   createDocumentNode,
-  CreateDocumentNodeParams,
   getPluginState,
 } from '@remirror/core-utils';
 import { PortalContainer } from '@remirror/react-portals';
@@ -37,7 +37,7 @@ import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
-import { suggest, Suggester } from 'prosemirror-suggest';
+import { Suggester, suggest } from 'prosemirror-suggest';
 import { ComponentType } from 'react';
 
 import { isMarkExtension, isNodeExtension } from './extension-helpers';

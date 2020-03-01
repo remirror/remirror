@@ -1,7 +1,7 @@
 {
-  "private": true,
   "name": "with-razzle",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "build": "razzle build",
     "start": "razzle start",

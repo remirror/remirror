@@ -4,10 +4,10 @@ import { jsx } from '@emotion/core';
 import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from '@remirror/core-extensions';
 import {
-  defaultEffect,
   EpicModeExtension,
-  heartEffect,
   ParticleEffect,
+  defaultEffect,
+  heartEffect,
   spawningEffect,
 } from '@remirror/extension-epic-mode';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';

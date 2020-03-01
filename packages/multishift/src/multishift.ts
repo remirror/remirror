@@ -1,5 +1,5 @@
 import { bool, debounce, includes, isNullOrUndefined, isUndefined } from '@remirror/core-helpers';
-import { useEffectOnce, useEffectOnUpdate, useTimeouts } from '@remirror/react-hooks';
+import { useEffectOnUpdate, useEffectOnce, useTimeouts } from '@remirror/react-hooks';
 import composeRefs from '@seznam/compose-react-refs';
 import { ChangeEvent, HTMLProps, Ref, SyntheticEvent, useCallback, useEffect, useMemo, useRef } from 'react';
 

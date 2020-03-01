@@ -1,11 +1,11 @@
 import {
   CommandMarkTypeParams,
-  convertCommand,
   ExtensionManagerMarkTypeParams,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
+  convertCommand,
   markInputRule,
   markPasteRule,
 } from '@remirror/core';

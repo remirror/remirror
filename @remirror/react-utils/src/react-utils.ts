@@ -7,11 +7,11 @@ import {
   ComponentType,
   FC,
   Fragment,
-  isValidElement as reactIsValidElement,
   LegacyRef,
   PropsWithChildren,
   ReactElement,
   ReactNode,
+  isValidElement as reactIsValidElement,
 } from 'react';
 
 export interface RemirrorComponentStaticProperties {

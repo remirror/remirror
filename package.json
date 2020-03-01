@@ -1,6 +1,6 @@
 {
-  "private": true,
   "name": "root",
+  "private": true,
   "workspaces": {
     "packages": [
       "@remirror/*",
@@ -30,7 +30,7 @@
     "dev:rollup": "yarn build:rollup --watch",
     "dev:ts": "yarn build:ts --watch",
     "docs": "cd docs && yarn start",
-    "fix": "run-s fix:prettier fix:pkgjson fix:es",
+    "fix": "run-s fix:prettier fix:es",
     "fix:es": "yarn lint:es --fix",
     "fix:prettier": "yarn run:prettier --write",
     "frozen": "yarn --frozen-lockfile install",
@@ -51,6 +51,7 @@
     "patch": "patch-package --patch-dir support/patches",
     "prerelease": "yarn if-not-ci run-s checks:release",
     "release": "changeset publish",
+    "run:prettier": "prettier --ignore-path .eslintignore '**/*.{js,jsx,ts,tsx,md,json,html,css,yml,yaml,graphql}'",
     "size": "size-limit",
     "start:checks": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
     "stop:checks": "rimraf ./.config.json",
@@ -63,8 +64,120 @@
     "test:e2e:ssr:watch": "yarn test:e2e:ssr --verbose=false --watch",
     "test:e2e:watch": "jest --watch --verbose=false --runInBand --config e2e/jest.config.js",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
-    "run:prettier": "prettier --ignore-path .eslintignore '**/*.{js,jsx,ts,tsx,md,json,html,css,yml,yaml,graphql}'",
     "typecheck": "tsc -p ./tsconfig.json"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn if-config hooks.preCommit lint-staged",
+      "pre-push": "yarn if-config hooks.prePush \"yarn audit && yarn checks\""
+    }
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{json,yml,yaml,md,mdx}": [
+      "prettier --write"
+    ],
+    "{@remirror,packages,docs,support,examples}/**/*.{ts,tsx,js}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "{@remirror,packages,examples}/**/*.spec.{ts,tsx}": [
+      "jest --coverage=false --bail --findRelatedTests"
+    ]
+  },
+  "prettier": {
+    "bracketSpacing": true,
+    "endOfLine": "lf",
+    "jsxBracketSameLine": false,
+    "jsxSingleQuote": true,
+    "plugins": [
+      "prettier-plugin-packagejson",
+      "prettier-plugin-import-sort"
+    ],
+    "printWidth": 110,
+    "proseWrap": "always",
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "all",
+    "useTabs": false,
+    "overrides": [
+      {
+        "files": "*.js",
+        "options": {
+          "printWidth": 90
+        }
+      }
+    ]
+  },
+  "jest": {
+    "cacheDirectory": "<rootDir>/.jest",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx}",
+      "!**/*.d.ts"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "\\.d.ts",
+      "/__mocks__/",
+      "/__tests__/",
+      "/__fixtures__/",
+      "/support/",
+      "jest\\.*\\.ts"
+    ],
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text-summary",
+      "clover"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "functions": 50,
+        "lines": 50,
+        "statements": 50
+      }
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "projects": [
+      "<rootDir>/@remirror/*/jest.config.js",
+      "<rootDir>/support/dts-jest",
+      "<rootDir>/packages/*/jest.config.js"
+    ],
+    "testRunner": "jest-circus/runner",
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ]
+  },
+  "resolutions": {
+    "@babel/core": "^7.6",
+    "@babel/parser": "^7.6",
+    "@babel/runtime": "^7.6",
+    "babel-jest": "^25.1.0",
+    "bl": ">=3.0.0",
+    "braces": "^3.0.2",
+    "debug": "^4.1.1",
+    "https-proxy-agent": ">=3",
+    "jest": "^25.1.0",
+    "jsdom": "^15.2.1",
+    "marked": ">=0.7.0",
+    "mem": ">=4",
+    "react": "^16.10.0",
+    "react-dom": "^16.10.0",
+    "serialize-javascript": ">=2.1.1",
+    "tar": ">=4.4.10",
+    "typescript": "3.7.x"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
@@ -85,6 +198,9 @@
     "@jest/types": "^25.1.0",
     "@microsoft/api-documenter": "^7.7.0",
     "@microsoft/api-extractor": "^7.6.2",
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-json": "^4.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
     "@size-limit/preset-big-lib": "^4.0.2",
     "@storybook/addon-actions": "^5.2.6",
     "@storybook/addon-info": "^5.2.6",
@@ -127,6 +243,7 @@
     "eslint-plugin-react-hooks": "^2.1.2",
     "eslint-plugin-unicorn": "^16.1.1",
     "get-workspaces": "^0.6.0",
+    "import-sort-style-module": "^6.0.0",
     "jest": "^25.1.0",
     "jest-axe": "^3.2.0",
     "jest-circus": "^25.1.0",
@@ -152,10 +269,7 @@
     "rollup": "^1.27.3",
     "rollup-plugin-auto-external": "^2.0.0",
     "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-globals": "^1.4.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.1.2",
     "size-limit": "4.0.2",
     "snapshot-diff": "^0.7.0",
@@ -166,123 +280,10 @@
   "engines": {
     "node": ">=10"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn if-config hooks.preCommit lint-staged",
-      "pre-push": "yarn if-config hooks.prePush \"yarn audit && yarn checks\""
-    }
-  },
-  "jest": {
-    "cacheDirectory": "<rootDir>/.jest",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json"
-    ],
-    "collectCoverage": true,
-    "projects": [
-      "<rootDir>/@remirror/*/jest.config.js",
-      "<rootDir>/support/dts-jest",
-      "<rootDir>/packages/*/jest.config.js"
-    ],
-    "watchPlugins": [
-      "jest-watch-typeahead/filename",
-      "jest-watch-typeahead/testname"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "functions": 50,
-        "lines": 50,
-        "statements": 50
-      }
-    },
-    "coverageReporters": [
-      "json",
-      "lcov",
-      "text-summary",
-      "clover"
-    ],
-    "testRunner": "jest-circus/runner",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "\\.d.ts",
-      "/__mocks__/",
-      "/__tests__/",
-      "/__fixtures__/",
-      "/support/",
-      "jest\\.*\\.ts"
-    ],
-    "collectCoverageFrom": [
-      "**/*.{ts,tsx}",
-      "!**/*.d.ts"
-    ]
-  },
-  "lint-staged": {
-    "{@remirror,packages,docs,support,examples}/**/*.{ts,tsx,js}": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "{@remirror,packages,examples}/**/*.spec.{ts,tsx}": [
-      "jest --coverage=false --bail --findRelatedTests"
-    ],
-    "**/*.js": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "*.{json,yml,yaml,md,mdx}": [
-      "prettier --write"
-    ]
-  },
-  "prettier": {
-    "useTabs": false,
-    "tabWidth": 2,
-    "jsxBracketSameLine": false,
-    "bracketSpacing": true,
-    "printWidth": 110,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "all",
-    "proseWrap": "always",
-    "endOfLine": "lf",
-    "jsxSingleQuote": true,
-    "overrides": [
-      {
-        "files": "*.js",
-        "options": {
-          "printWidth": 90
-        }
-      }
-    ],
-    "plugins": [
-      "prettier-plugin-packagejson",
-      "prettier-plugin-import-sort"
-    ]
-  },
   "importSort": {
     ".js, .jsx, .ts, .tsx": {
       "style": "module",
       "parser": "typescript"
     }
-  },
-  "resolutions": {
-    "@babel/core": "^7.6",
-    "@babel/parser": "^7.6",
-    "@babel/runtime": "^7.6",
-    "babel-jest": "^25.1.0",
-    "bl": ">=3.0.0",
-    "braces": "^3.0.2",
-    "debug": "^4.1.1",
-    "https-proxy-agent": ">=3",
-    "jest": "^25.1.0",
-    "jsdom": "^15.2.1",
-    "marked": ">=0.7.0",
-    "mem": ">=4",
-    "react": "^16.10.0",
-    "react-dom": "^16.10.0",
-    "serialize-javascript": ">=2.1.1",
-    "tar": ">=4.4.10",
-    "typescript": "3.7.x"
   }
 }

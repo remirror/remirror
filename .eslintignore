@@ -17,11 +17,10 @@ docs/.cache/
 docs/gatsby-config.js
 
 .cache
-package.json
-**/package.json
 **/.next
 lerna.json
 .vscode
+.yarn/**
 
 /support/api/**/*.md
 /support/api/**

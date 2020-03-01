@@ -1,19 +1,20 @@
 import {
   Attrs,
   Cast,
-  convertToPrioritizedExtension,
   Extension,
   ExtensionManager,
   FlexibleExtension,
-  isMarkExtension,
-  isNodeExtension,
   MarkExtension,
   NodeExtension,
+  convertToPrioritizedExtension,
+  isMarkExtension,
+  isNodeExtension,
   pick,
 } from '@remirror/core';
 import { InjectedRemirrorProps, Remirror, RemirrorProps } from '@remirror/react';
 import { render } from '@testing-library/react/pure';
 import {
+  TestEditorView,
   dispatchAllSelection,
   dispatchNodeSelection,
   dispatchTextSelection,
@@ -22,7 +23,6 @@ import {
   pasteContent,
   press,
   shortcut,
-  TestEditorView,
 } from 'jest-prosemirror';
 import React from 'react';
 

@@ -6,8 +6,8 @@ import {
   Node as PMNode,
   NodeType as PMNodeType,
   ResolvedPos as PMResolvedPos,
-  Schema,
   Slice as PMSlice,
+  Schema,
 } from 'prosemirror-model';
 import {
   EditorState as PMEditorState,

@@ -1,4 +1,4 @@
-import { Extension, isFunction, KeyBindings } from '@remirror/core';
+import { Extension, KeyBindings, isFunction } from '@remirror/core';
 import {
   BaseExtensionOptions,
   DispatchFunction,

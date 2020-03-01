@@ -99,7 +99,7 @@ A utility from jest-prosemirror which tests that a command transforms the prosem
 
 ```ts
 import { removeMark } from '@remirror/core-utils';
-import { schema, doc, p, strong } from 'jest-prosemirror';
+import { doc, p, schema, strong } from 'jest-prosemirror';
 
 test('remove the mark', () => {
   const type = schema.marks.bold;
@@ -120,8 +120,8 @@ Tests that two prosemirror documents are equal. Pass in the expected document an
 same.
 
 ```ts
-import { createEditor, doc, p } from 'jest-prosemirror';
 import { removeNodeAtPosition } from '@remirror/core-utils';
+import { createEditor, doc, p } from 'jest-prosemirror';
 
 test('remove block top level node at specified position', () => {
   const {

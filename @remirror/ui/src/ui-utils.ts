@@ -1,4 +1,4 @@
-import { css as serializeStyles, SerializedStyles } from '@emotion/core';
+import { SerializedStyles, css as serializeStyles } from '@emotion/core';
 import { deepMerge, get, isArray, isFunction, isPlainObject, isString } from '@remirror/core-helpers';
 import {
   RemirrorTheme,

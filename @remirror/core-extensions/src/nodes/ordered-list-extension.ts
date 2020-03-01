@@ -1,12 +1,12 @@
 import {
   CommandNodeTypeParams,
-  convertCommand,
   ExtensionManagerNodeTypeParams,
-  isElementDOMNode,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
+  convertCommand,
+  isElementDOMNode,
   toggleList,
 } from '@remirror/core';
 import { wrappingInputRule } from 'prosemirror-inputrules';

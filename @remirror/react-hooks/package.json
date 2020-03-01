@@ -1,18 +1,18 @@
 {
   "name": "@remirror/react-hooks",
+  "version": "0.7.6",
   "description": "React hooks for remirror",
-  "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/react-hooks",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react-hooks",
-  "version": "0.7.6",
-  "main": "lib/index.js",
-  "module": "lib/dist/react-hooks.esm.js",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/react-hooks.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",

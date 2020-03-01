@@ -7,7 +7,7 @@ import { createTestManager } from '@remirror/test-fixtures';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { baseTheme, RemirrorThemeProvider } from '..';
+import { RemirrorThemeProvider, baseTheme } from '..';
 
 describe('withoutEmotion', () => {
   /// TODO figure out how to get this working with built code tests

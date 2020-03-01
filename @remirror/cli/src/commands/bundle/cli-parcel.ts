@@ -1,11 +1,12 @@
-import { bool, uniqueId } from '@remirror/core-helpers';
 import fs from 'fs';
-import escape from 'jsesc';
 import os from 'os';
-import Bundler, { ParcelOptions } from 'parcel-bundler';
 import path from 'path';
-import rimraf from 'rimraf';
 import util from 'util';
+
+import { bool, uniqueId } from '@remirror/core-helpers';
+import escape from 'jsesc';
+import Bundler, { ParcelOptions } from 'parcel-bundler';
+import rimraf from 'rimraf';
 
 import { BundleArgv } from './cli-types';
 

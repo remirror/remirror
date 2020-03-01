@@ -3,28 +3,29 @@
 import { jsx } from '@emotion/core';
 import {
   AnyExtension,
-  bool,
   EDITOR_CLASS_NAME,
   EditorView as EditorViewType,
   ExtensionManager,
-  fromHTML,
-  getDocument,
-  isArray,
-  isFunction,
-  isPlainObject,
   ObjectNode,
   RemirrorContentType,
   RemirrorInterpolation,
   RemirrorThemeContextType,
   SchemaFromExtensions,
+  Transaction,
+  bool,
+  fromHTML,
+  getDocument,
+  isArray,
+  isFunction,
+  isPlainObject,
   shouldUseDOMEnvironment,
   toHTML,
-  Transaction,
   uniqueId,
 } from '@remirror/core';
 import { PortalContainer, RemirrorPortals } from '@remirror/react-portals';
-import { createEditorView, RemirrorSSR } from '@remirror/react-ssr';
+import { RemirrorSSR, createEditorView } from '@remirror/react-ssr';
 import {
+  RemirrorType,
   addKeyToElement,
   cloneElement,
   getElementProps,
@@ -33,7 +34,6 @@ import {
   isRemirrorContextProvider,
   isRemirrorProvider,
   propIsFunction,
-  RemirrorType,
 } from '@remirror/react-utils';
 import { RemirrorThemeContext } from '@remirror/ui';
 import { EditorState } from 'prosemirror-state';
