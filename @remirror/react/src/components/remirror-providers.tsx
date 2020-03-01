@@ -14,19 +14,16 @@ import { Remirror } from './remirror';
 export interface RemirrorContextProviderProps<GExtension extends AnyExtension = any>
   extends ProviderProps<InjectedRemirrorProps<GExtension>> {
   /**
-   * Sets the first child element as a the root (where the prosemirror editor
-   * instance will be rendered).
+   * Sets the first child element as a the root (where the prosemirror editor instance will be rendered).
    *
    * @remarks
    *
    * **Example with directly nested components**
    *
-   * When using a remirror provider calling `getRootProps` is mandatory. By
-   * setting `childAsRoot` to an object Remirror will inject these props into
-   * the first child element.
+   * When using a remirror provider calling `getRootProps` is mandatory. By setting `childAsRoot` to an object
+   * Remirror will inject these props into the first child element.
    *
-   * **Important** When using the child as root prop make sure to set the JSX
-   * pragma as shown below.
+   * **Important** When using the child as root prop make sure to set the JSX pragma as shown below.
    *
    * ```tsx
    * // @jsx jsx
@@ -45,9 +42,8 @@ export interface RemirrorContextProviderProps<GExtension extends AnyExtension = 
    * }
    * ```
    *
-   * If this is set to an empty object then the outer element must be able to
-   * receive a default ref prop which will mount the editor to it. If left
-   * undefined then the children components are responsible for calling
+   * If this is set to an empty object then the outer element must be able to receive a default ref prop which
+   * will mount the editor to it. If left undefined then the children components are responsible for calling
    * `getRootProps`.
    *
    * @defaultValue undefined
@@ -65,14 +61,12 @@ export interface RemirrorProviderProps<GExtension extends AnyExtension = any>
 }
 
 /**
- * This purely exists so that we know when the remirror editor has been called
- * with a provider as opposed to directly as a render prop by the user.
+ * This purely exists so that we know when the remirror editor has been called with a provider as opposed to
+ * directly as a render prop by the user.
  *
- * It's important because when called directly by the user `getRootProps` is
- * automatically called when the render prop is called. However when called via
- * a Provider the render prop renders the context component and it's not until
- * the element is actually rendered that the getRootProp in any nested
- * components is called.
+ * It's important because when called directly by the user `getRootProps` is automatically called when the
+ * render prop is called. However when called via a Provider the render prop renders the context component and
+ * it's not until the element is actually rendered that the getRootProp in any nested components is called.
  */
 const RemirrorContextProvider = <GExtension extends AnyExtension = any>({
   childAsRoot: _,
@@ -91,8 +85,8 @@ RemirrorContextProvider.defaultProps = {
  * The RemirrorProvider which injects context into it's child component.
  *
  * @remarks
- * This only supports one child. At the moment if that that child is an built in
- * html string element then it is also treated as the
+ * This only supports one child. At the moment if that that child is a built in html string element then it is
+ * also where the prosemirror editor will be injected (root element).
  *
  * These can either be consumed using React Hooks
  * - `useRemirrorContext`
@@ -122,8 +116,7 @@ export interface ManagedRemirrorProviderProps<GExtension extends AnyExtension = 
   extends Omit<RemirrorProviderProps<GExtension>, 'manager'> {}
 
 /**
- * Renders the content while pulling the manager from the context and passing it
- * on to the RemirrorProvider.
+ * Renders the content while pulling the manager from the context and passing it on to the RemirrorProvider.
  *
  * If no manager exists the child components are not rendered.
  */
