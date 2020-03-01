@@ -69,7 +69,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "yarn if-config hooks.preCommit lint-staged",
-      "pre-push": "yarn if-config hooks.prePush \"yarn audit && yarn checks\""
+      "pre-push": "yarn if-config hooks.prePush \"yarn checks\""
     }
   },
   "lint-staged": {
@@ -243,6 +243,7 @@
     "eslint-plugin-react-hooks": "^2.1.2",
     "eslint-plugin-unicorn": "^16.1.1",
     "get-workspaces": "^0.6.0",
+    "husky": "^4.2.3",
     "import-sort-style-module": "^6.0.0",
     "jest": "^25.1.0",
     "jest-axe": "^3.2.0",
