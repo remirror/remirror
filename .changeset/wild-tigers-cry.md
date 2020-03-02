@@ -1,5 +1,5 @@
 ---
-'@remirror/extension-table': major
+'@remirror/extension-tables': major
 ---
 
 First version.

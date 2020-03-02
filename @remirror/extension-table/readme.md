@@ -1,16 +1,16 @@
-# @remirror/extension-table
+# @remirror/extension-tables
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/extension-table.svg?)](https://bundlephobia.com/result?p=@remirror/extension-table)
-[![npm](https://img.shields.io/npm/dm/@remirror/extension-table.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/extension-table)
+[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/extension-tables.svg?)](https://bundlephobia.com/result?p=@remirror/extension-tables)
+[![npm](https://img.shields.io/npm/dm/@remirror/extension-tables.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/extension-tables)
 
 ## Installation
 
 ```bash
-yarn add @remirror/extension-table
+yarn add @remirror/extension-tables
 ```
 
 ```ts
-import { TableExtension } from '@remirror/extension-table';
+import { TableExtension } from '@remirror/extension-tables';
 
 new TableExtension();
 ```

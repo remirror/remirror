@@ -1,9 +1,9 @@
 {
-  "name": "@remirror/extension-table",
+  "name": "@remirror/extension-tables",
   "version": "0.1.0",
   "description": "Table extension for the remirror wysiwyg editor",
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-table",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-table",
+  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-tables",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-tables",
   "license": "MIT",
   "author": "Ocavue <ocavue@gmail.com>",
   "files": [
@@ -13,7 +13,7 @@
   ],
   "sideEffects": false,
   "main": "lib/index.js",
-  "module": "lib/dist/extension-table.esm.js",
+  "module": "lib/dist/extension-tables.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
@@ -43,7 +43,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/extension-table.cjs.js",
+  "cjs": "lib/dist/extension-tables.cjs.js",
   "meta": {
     "sizeLimit": "120 KB"
   }
