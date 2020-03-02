@@ -27,6 +27,18 @@ export class TableExtension extends NodeExtension   {
     public plugin() {
         return tableEditing()
     }
+
+    public commands() {
+        return {
+            tableAddColumnAfter: () => addColumnAfter,
+            tableAddColumnBefore: () => addColumnBefore,
+            tableAddRowAfter: () => addRowAfter,
+            tableAddRowBefore: () => addRowBefore,
+            tableDeleteColumn: () => deleteColumn,
+            tableDeleteRow: () => deleteRow,
+            tableDeleteTable: () => deleteRow,
+        }
+    }
 }
 
 export class TableRowExtension extends NodeExtension  {
@@ -64,17 +76,5 @@ export class TableCellExtension extends NodeExtension  {
         toDOM() {
             return ["td", 0]
         },
-    }
-
-    public commands() {
-        return {
-            tableAddColumnAfter: () => addColumnAfter,
-            tableAddColumnBefore: () => addColumnBefore,
-            tableAddRowAfter: () => addRowAfter,
-            tableAddRowBefore: () => addRowBefore,
-            tableDeleteColumn: () => deleteColumn,
-            tableDeleteRow: () => deleteRow,
-            tableDeleteTable: () => deleteRow,
-        }
     }
 }
