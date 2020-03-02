@@ -1,56 +1,50 @@
+import { fromHTML, toHTML } from '@remirror/core';
+import { BaseKeymapExtension } from '@remirror/core-extensions';
+import { createBaseTestManager } from '@remirror/test-fixtures';
+import { pmBuild } from 'jest-prosemirror';
+import { renderEditor } from 'jest-remirror';
+import typescriptPlugin from 'prettier/parser-typescript';
+import { formatWithCursor } from 'prettier/standalone';
+import javascript from 'refractor/lang/javascript';
+import markdown from 'refractor/lang/markdown';
+import tsx from 'refractor/lang/tsx';
+import typescript from 'refractor/lang/typescript';
+
+import { TableCellExtension, TableExtension, TableRowExtension } from '..';
+
+
 /**
- * @jest-environment node
+ *
+ * @param args A
  */
+const html = (strings: TemplateStringsArray) => {
+  return strings[0]
+}
 
-// import { ObjectNode } from '@remirror/core';
-// import { renderSSREditor } from 'jest-remirror';
-// import javascript from 'refractor/lang/javascript';
-// import markdown from 'refractor/lang/markdown';
-// import typescript from 'refractor/lang/typescript';
 
-// import { CodeBlockExtension } from '..';
+describe('schema', () => {
+  const { schema } = createBaseTestManager([
+    { extension: new TableExtension() },
+    { extension: new TableRowExtension() },
+    { extension: new TableCellExtension() },
+  ]);
 
-// const supportedLanguages = [typescript, javascript, markdown];
-// const create = (initialContent: ObjectNode) =>
-//   renderSSREditor([new CodeBlockExtension({ supportedLanguages })], { initialContent });
+  const { table, tableRow, tableCell } = pmBuild(schema, {
+    table: { nodeType: 'table' },
+    tableRow: { nodeType: 'tableRow' },
+    tableCell: { nodeType: 'tableCell' },
+  });
 
-// test('ssr component', () => {
-//   const reactString = create({
-//     type: 'doc',
-//     content: [
-//       {
-//         type: 'codeBlock',
-//         content: [
-//           {
-//             type: 'text',
-//             text:
-//               'Simple Code Blocks\necho "fun times"\nUse Shift-Enter or Mod-Enter to hard break out of the code block',
-//           },
-//         ],
-//       },
-//     ],
-//   });
-
-//   expect(reactString).toInclude('<pre class="language-markup"><code>Simple Code Blocks');
-//   expect(reactString).toMatchSnapshot();
-// });
-
-// test('formatted ssr component', () => {
-//   const reactString = create({
-//     type: 'doc',
-//     content: [
-//       {
-//         type: 'codeBlock',
-//         attrs: { language: 'markdown' },
-//         content: [
-//           {
-//             type: 'text',
-//             text: '# Welcome\n**To the greatest show**\n\n_Ever created_.',
-//           },
-//         ],
-//       },
-//     ],
-//   });
-
-//   expect(reactString).toMatchSnapshot();
-// });
+  it('dump to html', () => {
+    expect(
+      toHTML({
+        node: table(
+          tableRow(tableCell('A1'), tableCell('B1')),
+          tableRow(tableCell('A2'), tableCell('B2')),
+          tableRow(tableCell('A3'), tableCell('B3')),
+        ),
+        schema,
+      }),
+    ).toBe(html`<table><tr><td>A1</td><td>B1</td></tr><tr><td>A2</td><td>B2</td></tr><tr><td>A3</td><td>B3</td></tr></table>`);
+  });
+});
