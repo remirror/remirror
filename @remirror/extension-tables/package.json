@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-tables",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Table extension for the remirror wysiwyg editor",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-tables",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-tables",
