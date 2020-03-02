@@ -10,7 +10,7 @@ yarn add @remirror/extension-table
 ```
 
 ```ts
-import { SimpleTableExtension } from '@remirror/extension-table';
+import { TableExtension } from '@remirror/extension-table';
 
-new SimpleTableExtension();
+new TableExtension();
 ```
