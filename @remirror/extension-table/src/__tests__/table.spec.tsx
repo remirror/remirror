@@ -72,8 +72,7 @@ describe('command', () => {
     const {
       view,
       add,
-      nodes: { table, tableRow, tableCell },
-      nodes: { doc },
+      nodes: { doc, p, table, tableRow, tableCell },
     } = create();
 
     const buildRegularTable = (rows: string[][]) => {
@@ -87,13 +86,14 @@ describe('command', () => {
       view,
       add,
       doc,
+      p,
       buildRegularTable,
     };
   };
 
-  let { view, add, doc, buildRegularTable } = setup();
+  let { view, add, doc, p, buildRegularTable } = setup();
   beforeEach(() => {
-    ({ view, add, doc, buildRegularTable } = setup());
+    ({ view, add, doc, p, buildRegularTable } = setup());
   });
 
   test('tableAddColumnAfter', () => {
@@ -114,8 +114,8 @@ describe('command', () => {
 
   test('tableAddColumnBefore', () => {
     const table = buildRegularTable([
-      ['A1', 'B1<cursor>', 'C1'],
-      ['A2', 'B2', 'C2'],
+      ['A1', 'B1', 'C1'],
+      ['A2', 'B2<cursor>', 'C2'],
     ]);
     const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddColumnBefore());
     expect(state.doc).toEqualRemirrorDocument(
@@ -126,5 +126,82 @@ describe('command', () => {
         ]),
       ),
     );
+  });
+
+  test('tableAddRowAfter', () => {
+    const table = buildRegularTable([
+      ['A1<cursor>', 'B1'],
+      ['A2', 'B2'],
+    ]);
+    const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddRowAfter());
+    expect(state.doc).toEqualRemirrorDocument(
+      doc(
+        buildRegularTable([
+          ['A1', 'B1'],
+          ['', ''],
+          ['A2', 'B2'],
+        ]),
+      ),
+    );
+  });
+
+  test('tableAddRowBefore', () => {
+    const table = buildRegularTable([
+      ['A1', 'B1<cursor>'],
+      ['A2', 'B2'],
+    ]);
+    const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddRowBefore());
+    expect(state.doc).toEqualRemirrorDocument(
+      doc(
+        buildRegularTable([
+          ['', ''],
+          ['A1', 'B1'],
+          ['A2', 'B2'],
+        ]),
+      ),
+    );
+  });
+
+  test('tableDeleteColumn', () => {
+    const table = buildRegularTable([
+      ['A1', 'B1', 'C1'],
+      ['A2<cursor>', 'B2', 'C2'],
+    ]);
+    const { state } = add(doc(table)).actionsCallback(actions => actions.tableDeleteColumn());
+    expect(state.doc).toEqualRemirrorDocument(
+      doc(
+        buildRegularTable([
+          ['B1', 'C1'],
+          ['B2', 'C2'],
+        ]),
+      ),
+    );
+  });
+
+  test('tableDeleteRow', () => {
+    const table = buildRegularTable([
+      ['A1', 'B1', 'C1'],
+      ['A2', 'B2<cursor>', 'C2'],
+      ['A3', 'B3', 'C3'],
+    ]);
+    const { state } = add(doc(table)).actionsCallback(actions => actions.tableDeleteRow());
+    expect(state.doc).toEqualRemirrorDocument(
+      doc(
+        buildRegularTable([
+          ['A1', 'B1', 'C1'],
+          ['A3', 'B3', 'C3'],
+        ]),
+      ),
+    );
+  });
+
+  test('tableDeleteTable', () => {
+    const table = buildRegularTable([
+      ['A1', 'B1', 'C1'],
+      ['A2', 'B2', 'C2'],
+      ['A3', 'B3', 'C3<cursor>'],
+    ]);
+    const { state } = add(doc(p(), table)).actionsCallback(actions => actions.tableDeleteTable());
+    expect(state.doc).toEqualRemirrorDocument(doc(p()));
   });
 });

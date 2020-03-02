@@ -6,6 +6,7 @@ import {
     addRowBefore,
     deleteColumn,
     deleteRow,
+    deleteTable,
     tableEditing,
 } from "prosemirror-tables"
 import {TableSchemaSpec} from './types'
@@ -36,7 +37,7 @@ export class TableExtension extends NodeExtension   {
             tableAddRowBefore: () => addRowBefore,
             tableDeleteColumn: () => deleteColumn,
             tableDeleteRow: () => deleteRow,
-            tableDeleteTable: () => deleteRow,
+            tableDeleteTable: () => deleteTable,
         }
     }
 }
