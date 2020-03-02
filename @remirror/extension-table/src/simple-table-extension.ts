@@ -24,10 +24,10 @@ export interface TableSchemaSpec extends NodeExtensionSpec {
 }
 
 export class TableExtension extends NodeExtension   {
-    public readonly name = "rinoTable"
+    public readonly name = "table"
 
     public readonly schema: TableSchemaSpec = {
-        content: "rinoTableRow+",
+        content: "tableRow+",
         tableRole: "table",
         isolating: true,
         group: "block",
@@ -49,9 +49,9 @@ export class TableExtension extends NodeExtension   {
                         return schema.text(text)
                     })
 
-                const cells = texts.map(text => schema.nodes.rinoTableCell.create(null, text))
-                const row = schema.nodes.rinoTableRow.create(null, cells)
-                const table = schema.nodes.rinoTable.create(null, row)
+                const cells = texts.map(text => schema.nodes.tableCell.create(null, text))
+                const row = schema.nodes.tableRow.create(null, cells)
+                const table = schema.nodes.table.create(null, row)
                 tr = tr.delete(start, end).insert(start, table)
                 return tr
             },
@@ -75,11 +75,11 @@ export class TableExtension extends NodeExtension   {
     public fromMarkdown() {}
 }
 
-export class RinoTableRowExtension extends NodeExtension  {
-    public readonly name = "rinoTableRow"
+export class TableRowExtension extends NodeExtension  {
+    public readonly name = "tableRow"
 
-    public   readonly schema: TableSchemaSpec = {
-        content: "rinoTableCell+",
+    public readonly schema: TableSchemaSpec = {
+        content: "tableCell+",
         tableRole: "row",
         parseDOM: [{ tag: "tr" }],
         toDOM() {
@@ -91,8 +91,8 @@ export class RinoTableRowExtension extends NodeExtension  {
    public  fromMarkdown() {}
 }
 
-export class RinoTableCellExtension extends NodeExtension  {
-    public readonly name = "rinoTableCell"
+export class TableCellExtension extends NodeExtension  {
+    public readonly name = "tableCell"
 
     public readonly schema: TableSchemaSpec = {
         content: "inline*",

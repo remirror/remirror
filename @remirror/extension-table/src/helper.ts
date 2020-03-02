@@ -7,8 +7,8 @@ export function selectedTableCell(state: EditorState): ProsemirrorNode | null {
     const toCell: ProsemirrorNode = state.selection.$to.parent
 
     if (
-        fromCell.type.name === "rinoTableCell" &&
-        toCell.type.name === "rinoTableCell" &&
+        fromCell.type.name === "tableCell" &&
+        toCell.type.name === "tableCell" &&
         fromCell === toCell
     ) {
         return fromCell
