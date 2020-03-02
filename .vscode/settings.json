@@ -19,4 +19,7 @@
   "[javascript]": {
     "editor.rulers": [90],
   },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 }
