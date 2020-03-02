@@ -1,5 +1,4 @@
 import {
-    CommandNodeTypeParams,
     ExtensionManagerNodeTypeParams,
     KeyBindings,
     NodeExtension,
@@ -39,7 +38,7 @@ export class TableExtension extends NodeExtension   {
     }
 
     public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
-        return buildBlockEnterKeymapBindings(/^\|((?:[^\|]+\|){2,})\s*$/, type, {
+        return buildBlockEnterKeymapBindings(/^\|((?:[^|]+\|){2,})\s*$/, type, {
             transact: (match: string[], tr: Transaction, start: number, end: number) => {
                 console.warn("TableExtension.keys")
                 const texts = match[1]
