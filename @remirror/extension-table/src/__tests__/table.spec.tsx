@@ -68,16 +68,47 @@ const create = () =>
   });
 
 describe('command', () => {
-  const {
-    view,
-    add,
-    plainNodes: { table, tableRow, tableCell },
-    nodes: { doc, p },
-  } = create();
+  const setup = () => {
+    const {
+      view,
+      add,
+      nodes: { table, tableRow, tableCell },
+      nodes: { doc },
+    } = create();
 
-  const tbl = table(
-    tableRow(tableCell('A1'), tableCell('B1')),
-    tableRow(tableCell('A2'), tableCell('B2')),
-    tableRow(tableCell('A3'), tableCell('B3')),
-  );
+    const buildRegularTable = (rows: string[][]) => {
+      // Esnure that all rows have same length
+      expect(Array.from(new Set(rows.map(row => row.length)))).toHaveLength(1);
+
+      return table(...rows.map(row => tableRow(...row.map(cell => tableCell(cell)))));
+    };
+
+    return {
+      view,
+      add,
+      doc,
+      buildRegularTable,
+    };
+  };
+
+  let { view, add, doc, buildRegularTable } = setup();
+  beforeEach(() => {
+    ({ view, add, doc, buildRegularTable } = setup());
+  });
+
+  test('tableAddColumnAfter', () => {
+    const table = buildRegularTable([
+      ['A1', 'B1'],
+      ['A2', 'B2'],
+    ]);
+    const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddColumnAfter());
+    expect(state.doc).toEqualRemirrorDocument(
+      doc(
+        buildRegularTable([
+          ['A1', 'B1', ''],
+          ['A2', 'B2', ''],
+        ]),
+      ),
+    );
+  });
 });
