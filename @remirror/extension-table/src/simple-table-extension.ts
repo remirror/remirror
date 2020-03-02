@@ -2,7 +2,6 @@ import {
     ExtensionManagerNodeTypeParams,
     KeyBindings,
     NodeExtension,
-    NodeExtensionSpec,
 } from "@remirror/core"
 import {   buildBlockEnterKeymapBindings , selectedTableCell } from "./helper"
 import { Node as ProsemirroNode } from "prosemirror-model"
@@ -17,11 +16,7 @@ import {
     tableEditing,
 } from "prosemirror-tables"
 import { createTableHeigthlightPlugin } from "./plugin"
-
-
-export interface TableSchemaSpec extends NodeExtensionSpec {
-    tableRole: "table" | "row" | "cell"
-}
+import {TableSchemaSpec} from './types'
 
 export class TableExtension extends NodeExtension   {
     public readonly name = "table"
