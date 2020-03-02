@@ -1,18 +1,12 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { ProsemirrorNode, fromHTML, toHTML } from '@remirror/core';
+import { fromHTML, toHTML } from '@remirror/core';
 import { BaseKeymapExtension } from '@remirror/core-extensions';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 import { shallow } from 'enzyme';
 import { pmBuild } from 'jest-prosemirror';
-import { TaggedProsemirrorNode, renderEditor } from 'jest-remirror';
-import typescriptPlugin from 'prettier/parser-typescript';
-import { formatWithCursor } from 'prettier/standalone';
-import javascript from 'refractor/lang/javascript';
-import markdown from 'refractor/lang/markdown';
-import tsx from 'refractor/lang/tsx';
-import typescript from 'refractor/lang/typescript';
+import { renderEditor } from 'jest-remirror';
 
 import { TableCellExtension, TableExtension, TableRowExtension } from '..';
 
