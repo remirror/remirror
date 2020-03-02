@@ -10,7 +10,7 @@ import {
   tableEditing,
 } from 'prosemirror-tables';
 
-import { TableSchemaSpec } from './types';
+import { TableSchemaSpec } from './table-types';
 
 export class TableExtension extends NodeExtension {
   public readonly name = 'table';
