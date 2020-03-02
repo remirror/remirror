@@ -85,9 +85,9 @@ describe('command', () => {
     };
   };
 
-  let { view, add, doc, p, buildRegularTable } = setup();
+  let { add, doc, p, buildRegularTable } = setup();
   beforeEach(() => {
-    ({ view, add, doc, p, buildRegularTable } = setup());
+    ({ add, doc, p, buildRegularTable } = setup());
   });
 
   test('tableAddColumnAfter', () => {
