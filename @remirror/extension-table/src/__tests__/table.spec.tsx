@@ -60,3 +60,24 @@ describe('schema', () => {
     expect(fromHTML({ content: html, schema })).toEqualProsemirrorNode(doc(node));
   });
 });
+
+const create = () =>
+  renderEditor({
+    plainNodes: [new TableExtension(), new TableRowExtension(), new TableCellExtension()],
+    others: [{ priority: 10, extension: new BaseKeymapExtension() }],
+  });
+
+describe('command', () => {
+  const {
+    view,
+    add,
+    plainNodes: { table, tableRow, tableCell },
+    nodes: { doc, p },
+  } = create();
+
+  const tbl = table(
+    tableRow(tableCell('A1'), tableCell('B1')),
+    tableRow(tableCell('A2'), tableCell('B2')),
+    tableRow(tableCell('A3'), tableCell('B3')),
+  );
+});
