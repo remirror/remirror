@@ -1,10 +1,6 @@
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
 import { fromHTML, toHTML } from '@remirror/core';
 import { BaseKeymapExtension } from '@remirror/core-extensions';
 import { createBaseTestManager } from '@remirror/test-fixtures';
-import { shallow } from 'enzyme';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
@@ -29,22 +25,7 @@ describe('schema', () => {
     tableRow(tableCell('A3'), tableCell('B3')),
   );
 
-  const html: string = shallow(
-    <table>
-      <tr>
-        <td>A1</td>
-        <td>B1</td>
-      </tr>
-      <tr>
-        <td>A2</td>
-        <td>B2</td>
-      </tr>
-      <tr>
-        <td>A3</td>
-        <td>B3</td>
-      </tr>
-    </table>,
-  ).html();
+  const html = `<table><tr><td>A1</td><td>B1</td></tr><tr><td>A2</td><td>B2</td></tr><tr><td>A3</td><td>B3</td></tr></table>`;
 
   it('dump to html', () => {
     expect(toHTML({ node, schema })).toBe(html);
