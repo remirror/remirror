@@ -98,15 +98,15 @@ describe('command', () => {
 
   test('tableAddColumnAfter', () => {
     const table = buildRegularTable([
-      ['A1', 'B1'],
-      ['A2', 'B2'],
+      ['A1', 'B1<cursor>', 'C1'],
+      ['A2', 'B2', 'C2'],
     ]);
     const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddColumnAfter());
     expect(state.doc).toEqualRemirrorDocument(
       doc(
         buildRegularTable([
-          ['A1', 'B1', ''],
-          ['A2', 'B2', ''],
+          ['A1', 'B1', '', 'C1'],
+          ['A2', 'B2', '', 'C2'],
         ]),
       ),
     );
