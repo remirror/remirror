@@ -57,6 +57,9 @@
       "path": "@remirror/extension-mention/tsconfig.prod.json"
     },
     {
+      "path": "@remirror/extension-tables/tsconfig.prod.json"
+    },
+    {
       "path": "@remirror/react/tsconfig.prod.json"
     },
     {

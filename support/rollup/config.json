@@ -78,6 +78,10 @@
       "name": "@remirror/extension-mention"
     },
     {
+      "path": "@remirror/extension-tables",
+      "name": "@remirror/extension-tables"
+    },
+    {
       "path": "@remirror/react",
       "name": "@remirror/react"
     },
@@ -189,6 +193,7 @@
     "@remirror/extension-epic-mode": "@remirror/extension-epic-mode",
     "@remirror/extension-image": "@remirror/extension-image",
     "@remirror/extension-mention": "@remirror/extension-mention",
+    "@remirror/extension-tables": "@remirror/extension-tables",
     "@remirror/react": "@remirror/react",
     "@remirror/react-hooks": "@remirror/react-hooks",
     "@remirror/react-node-view": "@remirror/react-node-view",
