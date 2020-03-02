@@ -199,9 +199,9 @@ describe('command', () => {
     const table = buildRegularTable([
       ['A1', 'B1', 'C1'],
       ['A2', 'B2', 'C2'],
-      ['A3', 'B3', 'C3<cursor>'],
+      ['A3', 'B3<cursor>', 'C3'],
     ]);
-    const { state } = add(doc(p(), table)).actionsCallback(actions => actions.tableDeleteTable());
+    const { state } = add(doc(table)).actionsCallback(actions => actions.tableDeleteTable());
     expect(state.doc).toEqualRemirrorDocument(doc(p()));
   });
 });
