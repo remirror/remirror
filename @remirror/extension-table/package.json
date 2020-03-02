@@ -1,23 +1,23 @@
 {
   "name": "@remirror/extension-table",
+  "version": "0.1.0",
   "description": "Table extension for the remirror wysiwyg editor",
-  "license": "MIT",
-  "author": "Ocavue <ocavue@gmail.com>",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-table",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-table",
-  "version": "0.1.0",
-  "main": "lib/index.js",
-  "module": "lib/dist/extension-table.esm.js",
+  "license": "MIT",
+  "author": "Ocavue <ocavue@gmail.com>",
   "files": [
     "internal",
     "lib",
     "src"
   ],
   "sideEffects": false,
+  "main": "lib/index.js",
+  "module": "lib/dist/extension-table.esm.js",
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "^0.7.4",
+    "@remirror/core": "^0.9.0",
     "@remirror/react-utils": "^0.7.4",
     "@types/prismjs": "^1.16.0",
     "@types/prosemirror-commands": "^1.0.1",
@@ -32,9 +32,9 @@
     "prosemirror-inputrules": "^1.0.4",
     "prosemirror-keymap": "^1.0.2",
     "prosemirror-state": "^1.2.4",
+    "prosemirror-tables": "^1.0.0",
     "prosemirror-transform": "^1.1.5",
-    "prosemirror-view": "^1.12.0",
-    "prosemirror-tables": "^1.0.0"
+    "prosemirror-view": "^1.12.0"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
