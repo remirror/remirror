@@ -37,6 +37,8 @@
     "@remirror/extension-image": ["../../@remirror/extension-image/src"],
     "@remirror/extension-mention/lib": ["../../@remirror/extension-mention/src"],
     "@remirror/extension-mention": ["../../@remirror/extension-mention/src"],
+    "@remirror/extension-tables/lib": ["../../@remirror/extension-tables/src"],
+    "@remirror/extension-tables": ["../../@remirror/extension-tables/src"],
     "@remirror/react/lib": ["../../@remirror/react/src"],
     "@remirror/react": ["../../@remirror/react/src"],
     "@remirror/react-hooks/lib": ["../../@remirror/react-hooks/src"],
