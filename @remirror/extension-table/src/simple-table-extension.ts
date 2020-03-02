@@ -1,11 +1,4 @@
-import {
-    ExtensionManagerNodeTypeParams,
-    KeyBindings,
-    NodeExtension,
-} from "@remirror/core"
-import {   buildBlockEnterKeymapBindings , selectedTableCell } from "./helper"
-import { Node as ProsemirroNode } from "prosemirror-model"
-import { Transaction } from "prosemirror-state"
+import {NodeExtension} from "@remirror/core"
 import {
     addColumnAfter,
     addColumnBefore,
@@ -15,7 +8,6 @@ import {
     deleteRow,
     tableEditing,
 } from "prosemirror-tables"
-import { createTableHeigthlightPlugin } from "./plugin"
 import {TableSchemaSpec} from './types'
 
 export class TableExtension extends NodeExtension   {
@@ -32,42 +24,9 @@ export class TableExtension extends NodeExtension   {
         },
     }
 
-    public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
-        return buildBlockEnterKeymapBindings(/^\|((?:[^|]+\|){2,})\s*$/, type, {
-            transact: (match: string[], tr: Transaction, start: number, end: number) => {
-                const texts = match[1]
-                    .split("|")
-                    .slice(0, -1) // Remove the empty string at the end
-                    .map(text => {
-                        text = text.trim()
-                        if (!text) {text = " "} // Prosemirror text doesn't allow empty text
-                        return schema.text(text)
-                    })
-
-                const cells = texts.map(text => schema.nodes.tableCell.create(null, text))
-                const row = schema.nodes.tableRow.create(null, cells)
-                const table = schema.nodes.table.create(null, row)
-                tr = tr.delete(start, end).insert(start, table)
-                return tr
-            },
-        })
-    }
-
-    public helpers(params: ExtensionManagerNodeTypeParams) {
-        return {
-            selectedTableCell: (): ProsemirroNode | null => {
-                const state = params.getState()
-                return selectedTableCell(state)
-            },
-        }
-    }
-
     public plugin() {
         return tableEditing()
     }
-
-    public toMarkdown() {}
-    public fromMarkdown() {}
 }
 
 export class TableRowExtension extends NodeExtension  {
@@ -81,9 +40,6 @@ export class TableRowExtension extends NodeExtension  {
             return ["tr", 0]
         },
     }
-
-   public  toMarkdown() {}
-   public  fromMarkdown() {}
 }
 
 export class TableCellExtension extends NodeExtension  {
@@ -121,11 +77,4 @@ export class TableCellExtension extends NodeExtension  {
             tableDeleteTable: () => deleteRow,
         }
     }
-
-    public plugin() {
-        return createTableHeigthlightPlugin()
-    }
-
-    public toMarkdown() {}
-    public fromMarkdown() {}
 }
