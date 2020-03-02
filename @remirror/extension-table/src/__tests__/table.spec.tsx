@@ -111,4 +111,20 @@ describe('command', () => {
       ),
     );
   });
+
+  test('tableAddColumnBefore', () => {
+    const table = buildRegularTable([
+      ['A1', 'B1<cursor>', 'C1'],
+      ['A2', 'B2', 'C2'],
+    ]);
+    const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddColumnBefore());
+    expect(state.doc).toEqualRemirrorDocument(
+      doc(
+        buildRegularTable([
+          ['A1', '', 'B1', 'C1'],
+          ['A2', '', 'B2', 'C2'],
+        ]),
+      ),
+    );
+  });
 });
