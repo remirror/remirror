@@ -9,6 +9,7 @@ import {
   deleteTable,
   tableEditing,
 } from 'prosemirror-tables';
+
 import { TableSchemaSpec } from './types';
 
 export class TableExtension extends NodeExtension {
