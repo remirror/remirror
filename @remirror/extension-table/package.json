@@ -34,7 +34,7 @@
     "prosemirror-state": "^1.2.4",
     "prosemirror-transform": "^1.1.5",
     "prosemirror-view": "^1.12.0",
-    "prosemirror-table": "*"
+    "prosemirror-tables": "^1.0.0"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
