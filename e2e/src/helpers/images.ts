@@ -13,7 +13,7 @@ const tempDir = (...paths: string[]) => resolve(__dirname, '../..', '__failed-di
 const toPng = (name: string) => (!name.endsWith('.png') ? `${name}.png` : name);
 
 const getDiffPaths = () => {
-  const testName = kebabCase(jasmine.currentTest.fullName.toLowerCase());
+  const testName = kebabCase(jestCircus.currentTestName.toLowerCase());
 
   return {
     diff: tempDir(toPng(testName)),

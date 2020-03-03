@@ -1,5 +1,5 @@
 variables:
-  ci: 'true'
+  CI: 'true'
   YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
 
 jobs:
