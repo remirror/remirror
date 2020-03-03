@@ -37,4 +37,6 @@ module.exports = {
   ],
   globalSetup: './jest.puppeteer.setup.ts',
   globalTeardown: './jest.puppeteer.teardown.ts',
+  testEnvironment: './custom-environment.js',
+  testRunner: 'jest-circus/runner',
 };

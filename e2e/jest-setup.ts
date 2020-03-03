@@ -1,54 +1,14 @@
-declare namespace jasmine {
-  interface CustomReportExpectation {
-    matcherName: string;
-    message: string;
-    passed: boolean;
-    stack: string;
-  }
+import { Circus } from '@jest/types';
 
-  interface FailedExpectation extends CustomReportExpectation {
-    actual: string;
-    expected: string;
-  }
+const { CI } = process.env;
 
-  interface PassedExpectation extends CustomReportExpectation {}
-
-  interface CustomReporterResult {
-    description: string;
-    failedExpectations?: FailedExpectation[];
-    fullName: string;
-    id: string;
-    passedExpectations?: PassedExpectation[];
-    pendingReason?: string;
-    status?: string;
-  }
-
-  interface CustomReporter {
-    suiteStarted?(result: CustomReporterResult): void;
-    specStarted?(result: CustomReporterResult): void;
-    specDone?(result: CustomReporterResult): void;
-    suiteDone?(result: CustomReporterResult): void;
-  }
-
-  interface Env {
-    version(): any;
-    versionString(): string;
-    nextSpecId(): number;
-    addReporter(reporter: CustomReporter): void;
-    execute(): void;
-  }
-  function getEnv(): Env;
-  let currentTest: CustomReporterResult;
+declare global {
+  const jestCircus: {
+    currentTest: NonNullable<Circus.State['currentlyRunningTest']>;
+    currentTestName: string;
+  };
 }
 
-/**
- * The following code block allows the current test name to be read.
- */
-jasmine.getEnv().addReporter({
-  specStarted: result => {
-    jasmine.currentTest = result;
-  },
-  specDone: result => {
-    jasmine.currentTest = result;
-  },
-});
+if (CI === 'true') {
+  jest.retryTimes(3);
+}
