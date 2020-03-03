@@ -1,5 +1,13 @@
 # @remirror/extension-image
 
+## 0.11.0
+
+### Patch Changes
+
+- Updated dependencies [c2237aa0]
+  - @remirror/core@0.11.0
+  - @remirror/core-extensions@0.11.0
+
 ## 0.7.6
 
 ### Patch Changes

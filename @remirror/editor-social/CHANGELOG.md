@@ -1,5 +1,19 @@
 # @remirror/editor-social
 
+## 0.11.0
+
+### Patch Changes
+
+- Updated dependencies [026d4238]
+- Updated dependencies [c2237aa0]
+  - @remirror/react@0.11.0
+  - @remirror/core@0.11.0
+  - @remirror/core-extensions@0.11.0
+  - @remirror/extension-emoji@0.11.0
+  - @remirror/extension-enhanced-link@0.11.0
+  - @remirror/extension-mention@0.11.0
+  - @remirror/ui-buttons@0.7.7
+
 ## 0.10.0
 
 ### Minor Changes

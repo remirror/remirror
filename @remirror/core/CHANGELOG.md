@@ -1,5 +1,11 @@
 # @remirror/core
 
+## 0.11.0
+
+### Patch Changes
+
+- c2237aa0: Allow empty string default value for extraAttrs
+
 ## 0.9.0
 
 ### Minor Changes
