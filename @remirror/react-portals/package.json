@@ -22,10 +22,9 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@types/nanoevents": "1.0.0",
     "@types/nanoid": "2.1.0",
-    "nanoevents": "4.0.3",
-    "nanoid": "^2.1.7"
+    "nanoid": "^2.1.7",
+    "type-fest": "^0.11.0"
   },
   "peerDependencies": {
     "@emotion/core": "^10",
