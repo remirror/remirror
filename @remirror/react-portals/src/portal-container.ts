@@ -1,6 +1,7 @@
-import createNanoEvents from 'nanoevents';
 import nano from 'nanoid';
 import { ReactElement } from 'react';
+
+import createNanoEvents from './nanoevents';
 
 export interface RenderParams {
   /**
