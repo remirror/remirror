@@ -7,11 +7,15 @@ declare module '*.gql' {
 
 declare module '@theme-ui/sidenav' {
   import { MDXProviderComponentsProp } from '@mdx-js/react';
-  import { FC, ReactNode, RefForwardingComponent } from 'react';
+  import { FC, ReactNode, RefForwardingComponent, MouseEventHandler } from 'react';
 
   type DivProps = JSX.IntrinsicElements['div'];
 
   export interface SidnavProps extends DivProps {
+    /**
+     * Whether the side nav is open or closed.
+     */
+    open?: boolean;
     /**
      * The component map to be passed into the MDXProvider
      */
@@ -32,6 +36,19 @@ declare module '@theme-ui/sidenav' {
   }
 
   export const Pagination: FC<PaginationProps>;
+
+  export const AccordionNav: RefForwardingComponent<HTMLDivElement, SidnavProps>;
+
+  export interface AccordionButtonProps {
+    /** True when the side nav is open */
+    open: boolean;
+
+    /** The current pathname */
+    pathname?: string;
+    href?: string;
+    onClick: MouseEventHandler<HTMLButtonElement>;
+  }
+  export const AccordionButton: FC<AccordionButtonProps>;
 }
 
 declare module '@theme-ui/prism' {

@@ -1,4 +1,4 @@
-// eslint-disable
+/* eslint-disable */
 
 export type Maybe<T> = T | undefined;
 /** All built-in and custom scalars, mapped to their actual values */
@@ -1800,6 +1800,8 @@ export type Query_siteArgs = {
   children: Maybe<NodeFilterListInput>;
   internal: Maybe<InternalFilterInput>;
   siteMetadata: Maybe<SiteSiteMetadataFilterInput>;
+  port: Maybe<IntQueryOperatorInput>;
+  host: Maybe<StringQueryOperatorInput>;
   polyfill: Maybe<BooleanQueryOperatorInput>;
   pathPrefix: Maybe<StringQueryOperatorInput>;
   buildTime: Maybe<DateQueryOperatorInput>;
@@ -1841,6 +1843,8 @@ export type Site = Node & {
   readonly children: ReadonlyArray<Node>;
   readonly internal: Internal;
   readonly siteMetadata: Maybe<SiteSiteMetadata>;
+  readonly port: Maybe<Scalars['Int']>;
+  readonly host: Maybe<Scalars['String']>;
   readonly polyfill: Maybe<Scalars['Boolean']>;
   readonly pathPrefix: Maybe<Scalars['String']>;
   readonly buildTime: Maybe<Scalars['Date']>;
@@ -1967,6 +1971,8 @@ export enum SiteFieldsEnum {
   internal___type = 'internal.type',
   siteMetadata___siteUrl = 'siteMetadata.siteUrl',
   siteMetadata___description = 'siteMetadata.description',
+  port = 'port',
+  host = 'host',
   polyfill = 'polyfill',
   pathPrefix = 'pathPrefix',
   buildTime = 'buildTime',
@@ -1978,6 +1984,8 @@ export type SiteFilterInput = {
   readonly children: Maybe<NodeFilterListInput>;
   readonly internal: Maybe<InternalFilterInput>;
   readonly siteMetadata: Maybe<SiteSiteMetadataFilterInput>;
+  readonly port: Maybe<IntQueryOperatorInput>;
+  readonly host: Maybe<StringQueryOperatorInput>;
   readonly polyfill: Maybe<BooleanQueryOperatorInput>;
   readonly pathPrefix: Maybe<StringQueryOperatorInput>;
   readonly buildTime: Maybe<DateQueryOperatorInput>;
@@ -2710,4 +2718,10 @@ export type EntryQuery = {
       readonly wordCount: Maybe<Pick<MdxWordCount, 'paragraphs' | 'words' | 'sentences'>>;
     }
   >;
+};
+
+export type PagesQueryQueryVariables = {};
+
+export type PagesQueryQuery = {
+  readonly allSitePage: { readonly nodes: ReadonlyArray<Pick<SitePage, 'path'>> };
 };

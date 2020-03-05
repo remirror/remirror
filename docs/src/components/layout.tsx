@@ -1,8 +1,8 @@
 /** @jsx jsx */
 
 import { Global } from '@emotion/core';
-import { FC, Fragment, useRef, useState } from 'react';
-import { Container, Layout as LayoutUI, Main, Styled, jsx } from 'theme-ui';
+import { FC, Fragment, useCallback, useRef, useState } from 'react';
+import { Box, Container, Flex, Styled, jsx } from 'theme-ui';
 
 import { FrontMatterProps } from '../typings';
 import EditLink from './edit-link';
@@ -23,11 +23,10 @@ interface LayoutProps extends FrontMatterProps {
 export const Layout: FC<LayoutProps> = ({ children, relativePath, ...props }) => {
   const { fullWidth = false } = props ?? {};
   const [menuOpen, setMenuOpen] = useState(false);
-  const nav = useRef<HTMLDivElement>(null);
-
-  const onSidebarFocus = () => setMenuOpen(true);
-  const onSidebarBlur = () => setMenuOpen(false);
-  const onSidebarClick = () => setMenuOpen(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const onSidebarFocus = useCallback(() => setMenuOpen(true), [setMenuOpen]);
+  const onSidebarBlur = useCallback(() => setMenuOpen(false), [setMenuOpen]);
+  const onSidebarClick = useCallback(() => setMenuOpen(false), [setMenuOpen]);
 
   return (
     <Styled.root>
@@ -43,53 +42,55 @@ export const Layout: FC<LayoutProps> = ({ children, relativePath, ...props }) =>
         }}
       />
       <SkipLink>Skip to content</SkipLink>
-      <LayoutUI>
-        <Header nav={nav} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-        <Main>
+      <Flex
+        sx={{
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}
+      >
+        <Header nav={sidebarRef} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+        <Box
+          sx={{
+            flex: '1 1 auto',
+          }}
+        >
           <Container
             sx={{
               py: 0,
               px: fullWidth ? 0 : 3,
               maxWidth: fullWidth ? 'none' : '',
+              display: ['block', 'flex'],
+              mx: fullWidth ? 0 : -3,
             }}
           >
+            <Sidebar
+              fullWidth={fullWidth}
+              ref={sidebarRef}
+              open={menuOpen}
+              onFocus={onSidebarFocus}
+              onBlur={onSidebarBlur}
+              onClick={onSidebarClick}
+            />
             <div
+              id='content'
               sx={{
-                display: ['block', 'flex'],
-                mx: fullWidth ? 0 : -3,
+                width: '100%',
+                minWidth: 0,
+                px: fullWidth ? 0 : 3,
               }}
             >
-              <Sidebar
-                ref={nav}
-                open={menuOpen}
-                sx={{
-                  display: ['none', fullWidth ? 'none' : 'block'],
-                }}
-                onFocus={onSidebarFocus}
-                onBlur={onSidebarBlur}
-                onClick={onSidebarClick}
-              />
-              <div
-                id='content'
-                sx={{
-                  width: '100%',
-                  minWidth: 0,
-                  px: fullWidth ? 0 : 3,
-                }}
-              >
-                {children}
-                {!fullWidth && (
-                  <Fragment>
-                    <EditLink relativePath={relativePath} />
-                    <Pagination />
-                  </Fragment>
-                )}
-              </div>
+              {children}
+              {!fullWidth && (
+                <Fragment>
+                  <EditLink relativePath={relativePath} />
+                  <Pagination />
+                </Fragment>
+              )}
             </div>
           </Container>
-        </Main>
+        </Box>
         <Footer />
-      </LayoutUI>
+      </Flex>
     </Styled.root>
   );
 };

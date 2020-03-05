@@ -1,6 +1,7 @@
 /** @jsx jsx */
+
 import { Dispatch, RefObject, SetStateAction } from 'react';
-import { Container, Flex, Header as HeaderUI, jsx, useColorMode } from 'theme-ui';
+import { Flex, jsx, useColorMode } from 'theme-ui';
 
 import Button from './button';
 import MenuButton from './menu-button';
@@ -25,39 +26,46 @@ export const Header = ({ menuOpen, setMenuOpen, nav }: HeaderProps) => {
 
   const onMenuClick = () => {
     setMenuOpen(!menuOpen);
+
     if (!nav.current) {
       return;
     }
+
     const navLink = nav.current.querySelector('a');
+
     if (navLink) {
       navLink.focus();
     }
   };
 
   return (
-    <HeaderUI>
-      <Container>
-        <Flex sx={{ justifyContent: 'space-between' }}>
-          <Flex sx={{ alignItems: 'center' }}>
-            <MenuButton onClick={onMenuClick} />
-            <NavLink to='/'>Remirror</NavLink>
-          </Flex>
-          <Flex>
-            <NavLink href='/introduction'>Docs</NavLink>
-            <NavLink href='/api'>API</NavLink>
-            <NavLink href='https://github.com/remirror/remirror'>GitHub</NavLink>
-            <Button
-              sx={{
-                ml: 2,
-              }}
-              onClick={cycleMode}
-            >
-              {mode}
-            </Button>
-          </Flex>
-        </Flex>
-      </Container>
-    </HeaderUI>
+    <Flex
+      as='header'
+      sx={{
+        height: 64,
+        px: 3,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+    >
+      <Flex sx={{ alignItems: 'center' }}>
+        <MenuButton onClick={onMenuClick} />
+        <NavLink to='/'>Remirror</NavLink>
+      </Flex>
+      <Flex>
+        <NavLink href='/introduction'>Docs</NavLink>
+        <NavLink href='/api'>API</NavLink>
+        <NavLink href='https://github.com/remirror/remirror'>GitHub</NavLink>
+        <Button
+          sx={{
+            ml: 2,
+          }}
+          onClick={cycleMode}
+        >
+          {mode}
+        </Button>
+      </Flex>
+    </Flex>
   );
 };
 
