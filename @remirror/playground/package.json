@@ -1,0 +1,35 @@
+{
+  "name": "@remirror/playground",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Remirror Playground",
+  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/ui-text",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/ui-text",
+  "license": "MIT",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>",
+    "Benjie Gillam <code@benjiegillam.com>"
+  ],
+  "files": [
+    "lib"
+  ],
+  "sideEffects": false,
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@babel/runtime": "^7"
+  },
+  "peerDependencies": {
+    "@emotion/core": "^10",
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "2 MB"
+  }
+}

@@ -194,6 +194,7 @@
     "@remirror/extension-image": "@remirror/extension-image",
     "@remirror/extension-mention": "@remirror/extension-mention",
     "@remirror/extension-tables": "@remirror/extension-tables",
+    "@remirror/playground": "@remirror/playground",
     "@remirror/react": "@remirror/react",
     "@remirror/react-hooks": "@remirror/react-hooks",
     "@remirror/react-node-view": "@remirror/react-node-view",

@@ -41,6 +41,8 @@
       "@remirror/extension-mention/lib/*": ["@remirror/extension-mention/src/*"],
       "@remirror/extension-tables": ["@remirror/extension-tables/src/index.ts"],
       "@remirror/extension-tables/lib/*": ["@remirror/extension-tables/src/*"],
+      "@remirror/playground": ["@remirror/playground/src/index.ts"],
+      "@remirror/playground/lib/*": ["@remirror/playground/src/*"],
       "@remirror/react": ["@remirror/react/src/index.ts"],
       "@remirror/react/lib/*": ["@remirror/react/src/*"],
       "@remirror/react-hooks": ["@remirror/react-hooks/src/index.ts"],
