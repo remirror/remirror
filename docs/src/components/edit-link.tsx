@@ -17,7 +17,7 @@ interface EditLinkProps {
 }
 
 export const EditLink: FC<EditLinkProps> = ({
-  base = 'https://github.com/ifiokr/remirror/edit/canary/',
+  base = 'https://github.com/remirror/remirror/edit/master/',
   children = 'Edit the page on GitHub',
   relativePath,
   ...props

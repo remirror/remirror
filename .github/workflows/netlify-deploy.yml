@@ -50,10 +50,10 @@ jobs:
       - name: deploy docs
         uses: nwtgck/actions-netlify@develop
         with:
-          publish-dir: './docs/public'
+          publish-dir: "./docs/public"
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: 'Deploy Docs from GitHub Actions for PR ${{ github.event.pull_request.title }}'
+          deploy-message: "Deploy Docs from GitHub Actions for PR ${{ github.event.pull_request.title }}"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

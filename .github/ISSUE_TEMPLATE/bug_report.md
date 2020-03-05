@@ -13,8 +13,4 @@ about: Create a report to help us improve
 
 ## Checklist
 
-<!-- prettier-ignore-start -->
-
 - [ ] I have read the [**contributing**](https://github.com/remirror/remirror/blob/canary/docs/contributing.md) document.
-
-<!-- prettier-ignore-end -->

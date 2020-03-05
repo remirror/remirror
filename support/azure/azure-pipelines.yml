@@ -20,16 +20,16 @@ schedules:
     branches:
       include:
         - master
-        - canary
+        - next
     always: true
 
 # What triggers a new build
 trigger:
   - master
-  - canary
+  - next
   - ci/*
 
 # The branches which cause a PR to trigger a new build
 pr:
   - master
-  - canary
+  - next

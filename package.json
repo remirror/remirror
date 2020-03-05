@@ -77,7 +77,7 @@
       "prettier --write",
       "eslint --fix"
     ],
-    "*.{json,yml,yaml,md,mdx}": [
+    "*.{json,yml,yaml,md}": [
       "prettier --write"
     ],
     "{@remirror,packages,docs,support,examples}/**/*.{ts,tsx,js}": [

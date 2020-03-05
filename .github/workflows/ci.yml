@@ -49,11 +49,11 @@ jobs:
 
       - name: publish code coverage report
         uses: paambaati/codeclimate-action@v2.4.0
-        if: github.ref == 'refs/heads/canary'
+        if: github.ref == 'refs/heads/master'
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: 'echo Coverage'
+          coverageCommand: "echo Coverage"
           debug: false
 
       - name: build project
@@ -66,7 +66,7 @@ jobs:
         run: yarn test:e2e
 
       - name: create release pr or publish to npm
-        if: github.ref == 'refs/heads/canary'
+        if: github.ref == 'refs/heads/master'
         uses: changesets/action@master
         with:
           publish: yarn release

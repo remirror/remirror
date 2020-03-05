@@ -10,15 +10,15 @@
 
 <p align="center">
 
-<a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=2&amp;branchName=canary"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/remirror.remirror?branchName=canary" alt="Azure DevOps builds" /></a>
+<a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=2&amp;branchName=master"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/remirror.remirror?branchName=master" alt="Azure DevOps builds" /></a>
 <a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Node+CI%22"><img src="https://github.com/remirror/remirror/workflows/Node%20CI/badge.svg" alt="GitHub Actions CI" /></a>
 <a href="https://codeclimate.com/github/remirror/remirror/test_coverage"><img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/test_coverage" /></a>
-<a href="https://github.com/remirror/remirror/commits/canary"><img src="https://img.shields.io/github/commit-activity/m/remirror/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
-<a href="https://github.com/remirror/remirror/commits/canary"><img src="https://img.shields.io/github/last-commit/remirror/remirror.svg?amp;logo=github" alt="GitHub last commit" /></a>
+<a href="https://github.com/remirror/remirror/commits/master"><img src="https://img.shields.io/github/commit-activity/m/remirror/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
+<a href="https://github.com/remirror/remirror/commits/master"><img src="https://img.shields.io/github/last-commit/remirror/remirror.svg?amp;logo=github" alt="GitHub last commit" /></a>
 <a href="https://github.com/remirror/remirror/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc"><img src="https://img.shields.io/github/issues-raw/remirror/remirror.svg?amp;logo=github" alt="GitHub issues" /></a>
 <a href="https://github.com/remirror/remirror/pulls?q=is%3Apr+is%3Aopen+sort%3Aupdated-desc"><img src="https://img.shields.io/github/issues-pr/remirror/remirror.svg?amp;logo=github" alt="GitHub pull requests" /></a>
 <a href="https://github.com/remirror/remirror"><img src="https://img.shields.io/github/stars/remirror/remirror.svg?amp;logo=github" alt="GitHub stars" /></a>
-<a href="https://github.com/remirror/remirror/blob/canary/LICENSE"><img src="https://img.shields.io/npm/l/remirror.svg" alt="LICENSE" /></a>
+<a href="https://github.com/remirror/remirror/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/remirror.svg" alt="LICENSE" /></a>
 <a href="https://app.netlify.com/sites/remirror/deploys"><img src="https://api.netlify.com/api/v1/badges/f59cbf02-798f-45dd-a78c-93ec52b08d20/deploy-status" alt="Netlify Status" /></a>
 <a href="https://spectrum.chat/remirror"><img alt="Join the community on Spectrum" src="https://withspectrum.github.io/badge/badge.svg" /></a>
 
@@ -28,7 +28,7 @@
 
 <div align="center">
   <div align="center">
-    <img width="600"  src="https://media.githubusercontent.com/media/remirror/remirror/canary/support/assets/wysiwyg.png" alt="remirror" />
+    <img width="600"  src="https://media.githubusercontent.com/media/remirror/remirror/master/support/assets/wysiwyg.png" alt="remirror" />
   </div>
     <br />
 </div>
@@ -45,7 +45,7 @@ the priority.
 
 Right now the best way to understand the library is to read through the codebase and take a look at how
 existing editors have been structured. A quick way to get started is to
-[spin up our Next.js example](https://github.com/remirror/remirror/blob/canary/examples/with-next/readme.md#getting-started).
+[spin up our Next.js example](https://github.com/remirror/remirror/blob/master/examples/with-next/readme.md#getting-started).
 
 ### Documentation
 

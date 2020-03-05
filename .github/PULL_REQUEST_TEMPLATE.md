@@ -6,14 +6,10 @@
 
 <!-- Go over all the following points, and put an `x` in all the boxes that apply. -->
 
-<!-- prettier-ignore-start -->
-
 - [ ] I have read the [**contributing**](https://github.com/remirror/remirror/blob/master/docs/contributing.md) document.
 - [ ] My code follows the code style of this project and `yarn fix` runs successfully.
 - [ ] I have updated the documentation where necessary.
 - [ ] New code is unit tested and all current tests pass when running `yarn test` .
-
-<!-- prettier-ignore-end -->
 
 ## Screenshots
 

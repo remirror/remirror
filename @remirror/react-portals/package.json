@@ -8,8 +8,8 @@
     "ssr",
     "text editor"
   ],
-  "homepage": "https://github.com/remirror/remirror/tree/canary/@remirror/react-portals",
-  "repository": "https://github.com/remirror/remirror/tree/canary/@remirror/react-portals",
+  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/react-portals",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react-portals",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
   "files": [
