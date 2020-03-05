@@ -8,9 +8,9 @@ import {
 } from '@remirror/core';
 import { BoldExtension, CodeBlockExtension, ParagraphExtension } from '@remirror/core-extensions';
 import { createTestManager, simpleJSON, testJSON } from '@remirror/test-fixtures';
-import { shallow } from 'enzyme';
 import { Node as PMNode } from 'prosemirror-model';
 import React from 'react';
+import TestRenderer from 'react-test-renderer';
 
 import { ReactSerializer } from '../react-serializer';
 
@@ -56,11 +56,14 @@ describe('ReactSerializer', () => {
   describe('#serializeNode', () => {
     it('serializes the node', () => {
       const node = PMNode.fromJSON(schema, simpleJSON);
-      expect(shallow(serializer.serializeNode(node) as JSX.Element)).toMatchElement(
+      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchInlineSnapshot(`
         <p>
-          This is a node with <strong>bold text.</strong>
-        </p>,
-      );
+          This is a node with${' '}
+          <strong>
+            bold text.
+          </strong>
+        </p>
+      `);
     });
 
     it('serializes a codeBlock node with nested array from `toDOM` call', () => {
@@ -75,28 +78,37 @@ describe('ReactSerializer', () => {
       };
 
       const node = PMNode.fromJSON(schema, codeBlockJSON);
-      expect(shallow(serializer.serializeNode(node) as JSX.Element)).toMatchElement(
+      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchInlineSnapshot(`
         <pre>
-          <code>Hello</code>
-        </pre>,
-      );
+          <code>
+            Hello
+          </code>
+        </pre>
+      `);
     });
 
     it('serializes the node with nested data', () => {
       const node = PMNode.fromJSON(schema, testJSON);
-      expect(shallow(serializer.serializeNode(node) as JSX.Element)).toMatchElement(
+      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchInlineSnapshot(`
         <p>
-          This is a node with <strong>bold text and </strong>
+          This is a node with${' '}
           <strong>
-            <em>italic bold and </em>
+            bold text and${' '}
           </strong>
           <strong>
             <em>
-              <u>underlined italic text</u>
+              italic bold and${' '}
             </em>
           </strong>
-        </p>,
-      );
+          <strong>
+            <em>
+              <u>
+                underlined italic text
+              </u>
+            </em>
+          </strong>
+        </p>
+      `);
     });
 
     it('serializes a deeply nested custom node', () => {
@@ -105,13 +117,19 @@ describe('ReactSerializer', () => {
         content: [{ type: 'paragraph', content: [{ type: 'text', text: 'This is the foo thing' }] }],
       });
 
-      expect(shallow(serializer.serializeNode(node) as JSX.Element)).toMatchElement(
-        <div data-foo-type='true'>
-          <div className='inside'>
-            <p>This is the foo thing</p>
+      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchInlineSnapshot(`
+        <div
+          data-foo-type="true"
+        >
+          <div
+            className="inside"
+          >
+            <p>
+              This is the foo thing
+            </p>
           </div>
-        </div>,
-      );
+        </div>
+      `);
     });
   });
 });
@@ -120,7 +138,9 @@ describe('ReactSerializer.renderSpec', () => {
   const attrs = { 'data-attribute': 'some attribute' };
 
   it('supports simple renders', () => {
-    expect(shallow(ReactSerializer.renderSpec(['p']) as JSX.Element)).toMatchElement(<p />);
+    expect(TestRenderer.create(ReactSerializer.renderSpec(['p']) as JSX.Element)).toMatchInlineSnapshot(
+      `<p />`,
+    );
   });
 
   it('renders just text when a string is passed', () => {
@@ -128,37 +148,51 @@ describe('ReactSerializer.renderSpec', () => {
   });
 
   it('supports attrs', () => {
-    expect(shallow(ReactSerializer.renderSpec(['p', attrs]) as JSX.Element)).toMatchElement(<p {...attrs} />);
+    expect(TestRenderer.create(ReactSerializer.renderSpec(['p', attrs]) as JSX.Element))
+      .toMatchInlineSnapshot(`
+      <p
+        data-attribute="some attribute"
+      />
+    `);
   });
 
   it('supports nesting', () => {
     expect(
-      shallow(ReactSerializer.renderSpec(['div', attrs, ['p', 0], 'message']) as JSX.Element),
-    ).toMatchElement(
-      <div {...attrs}>
+      TestRenderer.create(ReactSerializer.renderSpec(['div', attrs, ['p', 0], 'message']) as JSX.Element),
+    ).toMatchInlineSnapshot(`
+      <div
+        data-attribute="some attribute"
+      >
         <p />
         message
-      </div>,
-    );
+      </div>
+    `);
   });
 
   it('supports deep nesting', () => {
     expect(
-      shallow(
+      TestRenderer.create(
         ReactSerializer.renderSpec(['div', attrs, ['div', { class: 'inside' }, 0]], 'message') as JSX.Element,
       ),
-    ).toMatchElement(
-      <div {...attrs}>
-        <div>message</div>
-      </div>,
-    );
+    ).toMatchInlineSnapshot(`
+      <div
+        data-attribute="some attribute"
+      >
+        <div
+          className="inside"
+        >
+          message
+        </div>
+      </div>
+    `);
   });
 
   it('supports wrapping an already created element', () => {
-    expect(shallow(ReactSerializer.renderSpec(['div', 0], <h1 />) as JSX.Element)).toMatchElement(
-      <div>
-        <h1 />
-      </div>,
-    );
+    expect(TestRenderer.create(ReactSerializer.renderSpec(['div', 0], <h1 />) as JSX.Element))
+      .toMatchInlineSnapshot(`
+<div>
+  <h1 />
+</div>
+`);
   });
 });

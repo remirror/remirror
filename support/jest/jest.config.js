@@ -23,7 +23,7 @@ module.exports = {
   ],
   snapshotSerializers: ['jest-emotion'],
   cacheDirectory: baseDir('.jest'),
-  testEnvironment: 'jsdom',
+  testEnvironment: 'jest-environment-jsdom-sixteen',
   moduleNameMapper:
     TEST_BUILD === 'true'
       ? // ? { '^@remirror\\/test-fixtures$': baseDir('@remirror', 'test-fixtures', 'src') }

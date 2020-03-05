@@ -1,0 +1,13 @@
+diff --git a/node_modules/jest-emotion/types/index.d.ts b/node_modules/jest-emotion/types/index.d.ts
+index 2f407ad..db53e52 100644
+--- a/node_modules/jest-emotion/types/index.d.ts
++++ b/node_modules/jest-emotion/types/index.d.ts
+@@ -23,7 +23,7 @@ export interface StyleRuleOptions {
+ export function createSerializer(
+   options?: CreateSerializerOptions
+ ): jest.SnapshotSerializerPlugin
+-export const print: jest.SnapshotSerializerPlugin['print']
++export const print: any
+ export const test: jest.SnapshotSerializerPlugin['test']
+ declare const serializer: jest.SnapshotSerializerPlugin
+ export default serializer

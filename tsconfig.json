@@ -9,8 +9,6 @@
       "@testing-library/jest-dom",
       "jest-emotion",
       "snapshot-diff",
-      "jest-enzyme",
-      "jest-environment-enzyme",
       "jest-environment-puppeteer",
       "expect-puppeteer",
       "puppeteer"
