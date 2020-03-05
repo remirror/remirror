@@ -11,6 +11,9 @@ const Playground: FC = () => {
       <Main>
         <Panel>Dropdowns...</Panel>
         <CodeEditor value={value} onChange={setValue} />
+        <Panel flex='1'>
+          <div style={{ padding: '1rem' }}>[Insert editor here]</div>
+        </Panel>
       </Main>
     </Container>
   );

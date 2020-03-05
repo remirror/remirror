@@ -20,4 +20,6 @@ export const Header: FC = ({ children }) => (
 export const Main: FC = ({ children }) => (
   <div style={{ flex: '1', display: 'flex', backgroundColor: '#ddd' }}>{children}</div>
 );
-export const Panel: FC = ({ children }) => <div style={{ height: '100%' }}>{children}</div>;
+export const Panel: FC<{ flex?: string }> = ({ children, flex }) => (
+  <div style={{ height: '100%', flex }}>{children}</div>
+);
