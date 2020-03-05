@@ -1,21 +1,6 @@
-import * as monaco from 'monaco-editor';
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useState } from 'react';
 
-const CodeEditor: FC = () => {
-  const ref = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (ref.current) {
-      monaco.editor.create(ref.current, {
-        value: "function hello() {\n\talert('Hello world!');\n}",
-        language: 'typescript',
-        automaticLayout: true,
-      });
-    }
-  }, []);
-
-  return <div style={{ flex: '1', height: '100%', backgroundColor: '#f3f' }} ref={ref} />;
-};
+import CodeEditor from './code-editor';
 
 const Header: FC = ({ children }) => (
   <div style={{ flex: '0 0 3rem', borderBottom: '1px solid black', background: '#aaa' }}>{children}</div>
@@ -26,6 +11,7 @@ const Main: FC = ({ children }) => (
 const Panel: FC = ({ children }) => <div style={{ height: '100%' }}>{children}</div>;
 
 const Playground: FC = () => {
+  const [value, setValue] = useState('// Add some code here\n');
   return (
     <div
       style={{
@@ -40,7 +26,7 @@ const Playground: FC = () => {
       <Header>Playground</Header>
       <Main>
         <Panel>Dropdowns...</Panel>
-        <CodeEditor />
+        <CodeEditor value={value} onChange={setValue} />
       </Main>
     </div>
   );
