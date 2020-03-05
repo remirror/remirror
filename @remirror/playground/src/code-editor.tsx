@@ -10,8 +10,15 @@ interface CodeEditorProps {
 const CodeEditor: FC<CodeEditorProps> = props => {
   const { value, onChange, readOnly } = props;
   const ref = useRef<HTMLDivElement | null>(null);
-  const model = useMemo(() => monaco.editor.createModel('', 'typescript'), []);
+  const model = useMemo(
+    () => monaco.editor.createModel('', 'typescript', monaco.Uri.parse('file:///remirror.tsx')),
+    [],
+  );
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+
+  useEffect(() => {
+    return () => model.dispose();
+  }, [model]);
 
   useEffect(() => {
     if (ref.current) {
@@ -25,7 +32,6 @@ const CodeEditor: FC<CodeEditorProps> = props => {
   useEffect(() => {
     if (editorRef.current) {
       editorRef.current.updateOptions({
-        automaticLayout: true,
         readOnly,
       });
     }
