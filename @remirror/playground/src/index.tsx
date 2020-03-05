@@ -8,10 +8,57 @@ interface CodeOptions {
 }
 
 function makeCode(codeOptions: CodeOptions): string {
+  const { extensions = [] } = codeOptions;
+
+  const imports: {
+    [moduleName: string]: Array<[string, string]>;
+  } = {};
+
+  function addImport(packageName: string, rawSpec: string | [string, string]) {
+    const spec: [string, string] = typeof rawSpec === 'string' ? [rawSpec, rawSpec] : rawSpec;
+    if (!imports[packageName]) {
+      imports[packageName] = [];
+    }
+    const existing = imports[packageName].find(oldSpec => oldSpec[0] === spec[0] && oldSpec[1] === spec[1]);
+    if (!existing) {
+      imports[packageName].push(spec);
+    }
+  }
+
+  addImport('react', ['default', 'React']);
+  addImport('@remirror/react', 'RemirrorProvider');
+  addImport('@remirror/react', 'useExtensionManager');
+  addImport('@remirror/react', 'useExtension');
+
+  const importLines = [];
+  const modules = Object.keys(imports).sort();
+  for (const moduleName of modules) {
+    const importsFromModule = imports[moduleName];
+    importsFromModule.sort((a, b) => a[0].localeCompare(b[0]));
+    let defaultName: string | null = null;
+    const namedImports: string[] = [];
+    for (const [name, alias] of importsFromModule) {
+      if (name === 'default') {
+        if (defaultName) {
+          throw new Error(`Cannot have two default imports from '${moduleName}'`);
+        }
+        defaultName = alias;
+      } else {
+        namedImports.push(name + (alias ? ` as ${alias}` : ''));
+      }
+    }
+    const things: string[] = [];
+    if (defaultName) {
+      things.push(defaultName);
+    }
+    if (namedImports.length) {
+      things.push(`{\n  ${namedImports.join(',\n  ')}\n}`);
+    }
+    importLines.push(`import ${things.join(', ')} from '${moduleName}';`);
+  }
+
   const code = `\
-import React from 'react';
-import { BoldExtension, ItalicExtension } from '@remirror/core-extensions';
-import { RemirrorProvider, useExtensionManager, useExtension } from '@remirror/react';
+${importLines.join('\n')}
 
 // Set up the component to provide the functionality for the editor
 const SmallEditor = () => {
@@ -40,6 +87,8 @@ const SmallEditorWrapper = () => {
     </RemirrorProvider>
   );
 };
+
+export default SmallEditorWrapper;
 `;
   // TODO: prettier
   return code;
