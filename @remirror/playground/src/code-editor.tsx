@@ -2,12 +2,13 @@ import * as monaco from 'monaco-editor';
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 
 interface CodeEditorProps {
+  readOnly?: boolean;
   value: string;
   onChange: (newValue: string) => void;
 }
 
 const CodeEditor: FC<CodeEditorProps> = props => {
-  const { value, onChange } = props;
+  const { value, onChange, readOnly } = props;
   const ref = useRef<HTMLDivElement | null>(null);
   const model = useMemo(() => monaco.editor.createModel('', 'typescript'), []);
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
@@ -16,11 +17,19 @@ const CodeEditor: FC<CodeEditorProps> = props => {
     if (ref.current) {
       editorRef.current = monaco.editor.create(ref.current, {
         model,
-        language: 'typescript',
         automaticLayout: true,
       });
     }
   }, [model]);
+
+  useEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.updateOptions({
+        automaticLayout: true,
+        readOnly,
+      });
+    }
+  }, [readOnly]);
 
   useEffect(() => {
     if (model.getValue() !== value) {
