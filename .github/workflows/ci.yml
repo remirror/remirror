@@ -26,7 +26,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: setup node.js ${{ matrix.node-version }}
+      - name: setup node.js
         uses: actions/setup-node@v1
         with:
           node-version: 12
