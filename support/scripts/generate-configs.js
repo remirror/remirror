@@ -190,6 +190,7 @@ const generatePackageTsConfigs = async () => {
   const [packages, dependencies] = await Promise.all([getAllDependencies(), getDependencyPackageMap()]);
 
   const fn = async json => {
+    json.dependencies = json.dependencies || {};
     const references = Object.keys(json.dependencies)
       .filter(dependency => !!dependencies[dependency])
       .map(dependency => {
