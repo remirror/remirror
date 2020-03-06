@@ -31,6 +31,16 @@ import {
 } from '@remirror/core';
 import { ReactNode, Ref } from 'react';
 
+/**
+ * The type of arguments acceptable for the focus parameter.
+ *
+ * - Can be a selection of `{ from, to }
+ * - A single position with a `number`
+ * - `start` | `end`
+ * - `true` which sets the focus to the current position or start.
+ */
+export type FocusType = FromToParams | number | 'start' | 'end' | boolean;
+
 export interface RemirrorProps<GExtension extends AnyExtension = any> extends StringHandlerParams {
   /**
    * Pass in the extension manager.
@@ -86,7 +96,7 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
    *
    * @defaultValue false
    */
-  autoFocus?: boolean;
+  autoFocus?: FocusType;
 
   /**
    * An event listener which is called whenever the editor gains focus.
@@ -410,7 +420,7 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
   /**
    * Focus the editor at the `start` | `end` a specific position or at a valid range between `{ from, to }`
    */
-  focus(position?: FromToParams | number | 'start' | 'end'): void;
+  focus(position?: FocusType): void;
 }
 
 /**

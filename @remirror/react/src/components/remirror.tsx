@@ -48,6 +48,7 @@ import {
   BaseListenerParams,
   CalculatePositionerParams,
   EditorStateEventListenerParams,
+  FocusType,
   GetPositionerPropsConfig,
   GetPositionerReturn,
   GetRootPropsConfig,
@@ -531,7 +532,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     const { autoFocus, onFirstRender, onStateChange } = this.props;
     this.addProsemirrorViewToDom(this.editorRef, this.view.dom);
     if (autoFocus) {
-      this.view.focus();
+      this.focus(autoFocus);
     }
 
     if (onFirstRender) {
@@ -699,8 +700,12 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * Set the focus for the editor.
    */
-  private readonly focus = (position?: FromToParams | number | 'start' | 'end') => {
-    if (this.view.hasFocus() && !position) {
+  private readonly focus = (position?: FocusType) => {
+    if (position === false) {
+      return;
+    }
+
+    if (this.view.hasFocus() && (position === undefined || position === true)) {
       return;
     }
 
@@ -712,7 +717,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     /** Ensure the selection is within the current document range */
     const clampToDoc = (value: number) => clamp({ min: 0, max: doc.content.size, value });
 
-    if (position === undefined) {
+    if (position === undefined || position === true) {
       pos = { from, to };
     } else if (position === 'start') {
       pos = 0;

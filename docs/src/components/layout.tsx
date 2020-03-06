@@ -26,7 +26,9 @@ export const Layout: FC<LayoutProps> = ({ children, relativePath, ...props }) =>
   const sidebarRef = useRef<HTMLDivElement>(null);
   const onSidebarFocus = useCallback(() => setMenuOpen(true), [setMenuOpen]);
   const onSidebarBlur = useCallback(() => setMenuOpen(false), [setMenuOpen]);
-  const onSidebarClick = useCallback(() => setMenuOpen(false), [setMenuOpen]);
+  const onSidebarClick = useCallback(() => {
+    setMenuOpen(false);
+  }, [setMenuOpen]);
 
   return (
     <Styled.root>

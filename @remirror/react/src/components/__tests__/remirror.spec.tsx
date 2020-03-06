@@ -140,72 +140,102 @@ describe('initialContent', () => {
   });
 });
 
-test('focus', () => {
-  jest.useFakeTimers();
+describe('focus', () => {
   const content = {
     type: 'doc',
     content: [{ type: 'paragraph', content: [{ type: 'text', text: 'A sentence here' }] }],
   };
 
   let props!: InjectedRemirrorProps<any>;
-  const { getByRole } = render(
-    <Remirror
-      label={label}
-      {...handlers}
-      manager={createTestManager()}
-      initialContent={content}
-      autoFocus={true}
-    >
-      {context => {
-        props = context;
-        return <div />;
-      }}
-    </Remirror>,
-  );
+  let editorNode: HTMLElement;
 
-  const editorNode = getByRole('textbox');
+  beforeEach(() => {
+    jest.useFakeTimers();
+    const { getByRole } = render(
+      <Remirror
+        label={label}
+        {...handlers}
+        manager={createTestManager()}
+        initialContent={content}
+        autoFocus={true}
+      >
+        {context => {
+          props = context;
+          return <div />;
+        }}
+      </Remirror>,
+    );
 
-  // Focusing on a focused editor without a new position should be idempotent (do nothing).
-  expect(props.state.newState.selection.from).toBe(1);
-  props.focus();
-  jest.runAllTimers();
-  expect(props.state.newState.selection.from).toBe(1);
+    editorNode = getByRole('textbox');
+  });
 
-  // Can focus on the end
-  fireEvent.blur(editorNode);
-  props.focus('end');
-  jest.runAllTimers();
-  expect(props.state.newState.selection.from).toBe(16);
+  afterEach(() => {
+    jest.useRealTimers();
+  });
 
-  // Can focus on the start even when already focused.
-  props.focus('start');
-  jest.runAllTimers();
-  expect(props.state.newState.selection.from).toBe(1);
+  it('should do nothing when focusing on a focused editor without a new position', () => {
+    expect(props.state.newState.selection.from).toBe(1);
+    props.focus();
+    jest.runAllTimers();
+    expect(props.state.newState.selection.from).toBe(1);
+    // TODO expect(props.view.hasFocus()).toBeTrue();
+  });
 
-  // Can specify the exact position for the blurred editor
-  fireEvent.blur(editorNode);
-  props.focus(10);
-  jest.runAllTimers();
-  expect(props.state.newState.selection.from).toBe(10);
+  it('can focus on the end', () => {
+    fireEvent.blur(editorNode);
+    props.focus('end');
+    jest.runAllTimers();
+    expect(props.state.newState.selection.from).toBe(16);
+  });
 
-  // Can specify the selection for the editor
-  fireEvent.blur(editorNode);
+  it('can focus on the start even when already focused', () => {
+    props.focus('start');
+    jest.runAllTimers();
+    expect(props.state.newState.selection.from).toBe(1);
+  });
+
+  it('can specify the exact position for the blurred editor', () => {
+    fireEvent.blur(editorNode);
+    props.focus(10);
+    jest.runAllTimers();
+    expect(props.state.newState.selection.from).toBe(10);
+  });
+
   const expected = { from: 2, to: 5 };
-  props.focus(expected);
-  jest.runAllTimers();
-  {
-    const { from, to } = props.state.newState.selection;
-    expect({ from, to }).toEqual(expected);
-  }
 
-  // Restores the previous selection when focused without a paramter.
-  fireEvent.blur(editorNode);
-  props.focus();
-  {
-    const { from, to } = props.state.newState.selection;
-    expect({ from, to }).toEqual(expected);
-  }
+  it('can specify the selection for the editor', () => {
+    fireEvent.blur(editorNode);
+    props.focus(expected);
+    jest.runAllTimers();
+    {
+      const { from, to } = props.state.newState.selection;
+      expect({ from, to }).toEqual(expected);
+    }
+  });
 
-  // expect(props.state.newState.selection.from).toBe(10);
-  jest.useRealTimers();
+  it('restores the previous selection when focused without a parameter', () => {
+    fireEvent.blur(editorNode);
+    props.focus(expected);
+    jest.runAllTimers();
+    {
+      const { from, to } = props.state.newState.selection;
+      expect({ from, to }).toEqual(expected);
+    }
+
+    fireEvent.blur(editorNode);
+    props.focus();
+    jest.runAllTimers();
+    {
+      const { from, to } = props.state.newState.selection;
+      expect({ from, to }).toEqual(expected);
+      // expect(props.view.hasFocus()).toBeTrue();
+    }
+  });
+
+  it('should do nothing when passing `false`', () => {
+    fireEvent.blur(editorNode);
+    props.focus(false);
+    jest.runAllTimers();
+    expect(props.state.newState.selection.from).toBe(1);
+  });
 });
