@@ -1,6 +1,11 @@
 name: Node CI
 
-on: [push]
+on:
+  push:
+  pull_request:
+    branches:
+      - master
+      - next
 
 env:
   CI: true

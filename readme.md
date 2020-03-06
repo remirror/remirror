@@ -11,7 +11,7 @@
 <p align="center">
 
 <a href="https://dev.azure.com/remirror/remirror/_build/latest?definitionId=2&amp;branchName=master"><img src="https://dev.azure.com/remirror/remirror/_apis/build/status/remirror.remirror?branchName=master" alt="Azure DevOps builds" /></a>
-<a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Node+CI%22"><img src="https://github.com/remirror/remirror/workflows/Node%20CI/badge.svg" alt="GitHub Actions CI" /></a>
+<a href="https://github.com/remirror/remirror/actions?query=workflow%3A%22Node+CI%22?branch=master"><img src="https://github.com/remirror/remirror/workflows/Node%20CI/badge.svg?branch=master" alt="GitHub Actions CI" /></a>
 <a href="https://codeclimate.com/github/remirror/remirror/test_coverage"><img src="https://api.codeclimate.com/v1/badges/f4d8dcd5c2228524a53a/test_coverage" /></a>
 <a href="https://github.com/remirror/remirror/commits/master"><img src="https://img.shields.io/github/commit-activity/m/remirror/remirror.svg?amp;logo=github" alt="GitHub commit activity"></a>
 <a href="https://github.com/remirror/remirror/commits/master"><img src="https://img.shields.io/github/last-commit/remirror/remirror.svg?amp;logo=github" alt="GitHub last commit" /></a>

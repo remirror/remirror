@@ -4,6 +4,8 @@ on:
   push:
   pull_request:
     types: [opened, synchronize]
+    branches:
+      - master
 
 env:
   CI: true
@@ -11,6 +13,7 @@ env:
 jobs:
   deploy_docs:
     runs-on: ubuntu-latest
+    if: (github.ref == 'refs/heads/master' && github.event.push) || github.event.pull_request
 
     steps:
       - name: checkout code repository
@@ -53,7 +56,7 @@ jobs:
           publish-dir: "./docs/public"
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Deploy Docs from GitHub Actions for PR ${{ github.event.pull_request.title }}"
+          deploy-message: "Deploy Docs from GitHub Actions - ${{ github.event.pull_request.title || github.ref }}"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
