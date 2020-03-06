@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-epic-mode",
-  "version": "0.7.6",
+  "version": "0.11.0",
   "description": "Epic (power) mode extension for the remirror wysiwyg editor",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-epic-mode",
   "license": "MIT",
@@ -15,7 +15,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "^0.9.0",
+    "@remirror/core": "^0.11.0",
     "@types/prosemirror-state": "^1.2.3",
     "prosemirror-state": "^1.2.4"
   },

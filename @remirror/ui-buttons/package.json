@@ -1,6 +1,6 @@
 {
   "name": "@remirror/ui-buttons",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "ui-buttons utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/ui-buttons",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/ui-buttons",
@@ -16,7 +16,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "^0.9.0",
+    "@remirror/core": "^0.11.0",
     "@remirror/ui": "^0.7.6",
     "@remirror/ui-icons": "^0.7.7",
     "csstype": "^2.6.7"

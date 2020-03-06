@@ -1,5 +1,13 @@
 # @remirror/dev
 
+## 0.11.0
+
+### Patch Changes
+
+- Updated dependencies [026d4238]
+- Updated dependencies [69d00c62]
+  - @remirror/react@0.11.0
+
 ## 0.7.4
 
 ### Patch Changes

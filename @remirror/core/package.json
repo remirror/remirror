@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core",
-  "version": "0.9.0",
+  "version": "0.11.0",
   "description": "Provides the core abstractions for managing your remirror editor functionality",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/core",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/core",

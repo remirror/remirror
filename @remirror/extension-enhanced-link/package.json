@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-enhanced-link",
-  "version": "0.7.6",
+  "version": "0.11.0",
   "description": "Enhanced link extension for the remirror wysiwyg editor",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-enhanced-link",
   "license": "MIT",
@@ -15,7 +15,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "^0.9.0",
+    "@remirror/core": "^0.11.0",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-transform": "^1.1.0",
     "prosemirror-state": "^1.2.4",

@@ -1,5 +1,13 @@
 # @remirror/docs
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [c2237aa0]
+  - @remirror/core@0.11.0
+  - @remirror/showcase@0.11.0
+
 ## 0.0.2
 
 ### Patch Changes

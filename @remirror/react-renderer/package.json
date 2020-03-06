@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react-renderer",
-  "version": "0.7.6",
+  "version": "0.11.0",
   "description": "renderer-react utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/react-renderer",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react-renderer",
@@ -16,7 +16,7 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "^0.9.0",
+    "@remirror/core": "^0.11.0",
     "@remirror/react-utils": "^0.7.6"
   },
   "peerDependencies": {
