@@ -13,7 +13,7 @@ env:
 jobs:
   deploy_docs:
     runs-on: ubuntu-latest
-    if: (github.ref == 'refs/heads/master' && github.event.push) || github.event.pull_request
+    if: github.ref == 'refs/heads/master' || github.event.pull_request
 
     steps:
       - name: checkout code repository
