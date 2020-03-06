@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-image",
-  "version": "0.7.6",
+  "version": "0.11.0",
   "description": "CodeBlock extension for the remirror wysiwyg editor",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-image",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-image",
@@ -17,8 +17,8 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "^0.9.0",
-    "@remirror/core-extensions": "^0.7.6",
+    "@remirror/core": "^0.11.0",
+    "@remirror/core-extensions": "^0.11.0",
     "@remirror/react-utils": "^0.7.6",
     "@types/prosemirror-commands": "^1.0.1",
     "@types/prosemirror-inputrules": "^1.0.2",

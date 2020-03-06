@@ -1,5 +1,40 @@
 # @remirror/react
 
+## 0.11.0
+
+### Minor Changes
+
+- 026d4238: Add a `focus` method to the remirror editor context object. It allows focusing at a provided
+  position which can be `start`, `end`, a specific position or a range using the `{from: number; to: number}`
+  type signature.
+
+  To use this run
+
+  ```tsx
+  import { useRemirrorContext } from '@remirror/react';
+
+  const MyEditor = () => {
+    const { focus, getRootProps } = useRemirrorContext();
+
+    useEffect(() => {
+      focus('end'); // Autofocus to the end once
+    }, []);
+  };
+  return <div {...getRootProps()} />;
+  ```
+
+  Resolves the initial issue raised in #229.
+
+- 69d00c62: Add custom arguments to `autoFocus` props. The same arguments that can added to the `focus()`
+  context method can now be passed as a prop.
+
+### Patch Changes
+
+- Updated dependencies [c2237aa0]
+  - @remirror/core@0.11.0
+  - @remirror/core-extensions@0.11.0
+  - @remirror/react-ssr@0.11.0
+
 ## 0.7.7
 
 ### Patch Changes

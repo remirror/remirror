@@ -1,5 +1,16 @@
 # jest-remirror
 
+## 0.11.0
+
+### Patch Changes
+
+- Updated dependencies [026d4238]
+- Updated dependencies [69d00c62]
+- Updated dependencies [c2237aa0]
+  - @remirror/react@0.11.0
+  - @remirror/core@0.11.0
+  - @remirror/core-extensions@0.11.0
+
 ## 0.8.1
 
 ### Patch Changes

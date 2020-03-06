@@ -1,6 +1,6 @@
 {
   "name": "@remirror/test-fixtures",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "description": "Test fixtures for remirror unit tests",
   "files": [
@@ -12,8 +12,8 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/core": "^0.9.0",
-    "@remirror/core-extensions": "^0.7.6",
+    "@remirror/core": "^0.11.0",
+    "@remirror/core-extensions": "^0.11.0",
     "@remirror/react-portals": "^0.7.3",
     "@remirror/ui": "^0.7.6",
     "@types/prosemirror-view": "^1.11.2",

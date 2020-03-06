@@ -1,6 +1,6 @@
 {
   "name": "@remirror/docs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "description": "A world class text editor toolkit for every environment",
   "scripts": {
@@ -19,8 +19,8 @@
     "@mdx-js/mdx": "^1.5.1",
     "@mdx-js/react": "^1.5.1",
     "@reach/router": "^1.2.1",
-    "@remirror/core": "^0.9.0",
-    "@remirror/showcase": "^0.7.7",
+    "@remirror/core": "^0.11.0",
+    "@remirror/showcase": "^0.11.0",
     "@styled-system/edit": "^5.0.21",
     "@theme-ui/presets": "^0.3.0",
     "@theme-ui/prism": "^0.3.0",
