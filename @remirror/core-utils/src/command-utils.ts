@@ -178,9 +178,9 @@ interface ReplaceTextParams extends Partial<RangeParams>, Partial<AttrsParams>, 
   content?: string;
 
   /**
-   * The type of the
+   * The content type to be inserted in place of the range / selection.
    */
-  type: NodeType | MarkType | undefined;
+  type?: NodeType | MarkType;
 }
 
 interface CallMethodParams<GFunction extends AnyFunction, GReturn extends ReturnType<GFunction>> {

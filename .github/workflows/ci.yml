@@ -81,7 +81,7 @@ jobs:
 
       - name: notify slack
         uses: 8398a7/action-slack@v2
-        if: always() # Pick up events even if the job fails or is cancelled.
+        if: github.event.push && always() # Pick up events even if the job fails or is cancelled.
         with:
           status: ${{ job.status }}
           author_name: Remirror GitHub CI

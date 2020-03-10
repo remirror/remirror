@@ -62,17 +62,19 @@ describe('nestedRootProps', () => {
 
   beforeEach(() => {
     result = render(
-      <Remirror manager={createTestManager()} label='Editor'>
-        {({ getRootProps }) => {
-          return (
-            <div>
-              <div {...getRootProps()} id='nested-div'>
-                <div id='wrapped-div'>Wrapped text</div>
+      <main>
+        <Remirror manager={createTestManager()} label='Editor'>
+          {({ getRootProps }) => {
+            return (
+              <div>
+                <div {...getRootProps()} id='nested-div'>
+                  <div id='wrapped-div'>Wrapped text</div>
+                </div>
               </div>
-            </div>
-          );
-        }}
-      </Remirror>,
+            );
+          }}
+        </Remirror>
+      </main>,
     );
   });
 

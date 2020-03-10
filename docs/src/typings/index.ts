@@ -1,4 +1,3 @@
-import { MdxFrontmatter } from 'docs/generated/gatsby.js';
 import { ReplaceComponentRendererArgs } from 'gatsby';
 import { Except } from 'type-fest';
 
@@ -51,4 +50,4 @@ interface Location {
   key: string;
 }
 
-export type FrontMatterProps = Pick<MdxFrontmatter, 'fullWidth' | 'title'>;
+export type FrontMatterProps = Pick<GatsbyTypes.MdxFrontmatter, 'fullWidth' | 'title'>;

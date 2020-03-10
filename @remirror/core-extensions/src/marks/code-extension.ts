@@ -2,6 +2,7 @@ import {
   CommandMarkTypeParams,
   ExtensionManagerMarkTypeParams,
   KeyBindings,
+  LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
@@ -35,7 +36,9 @@ export class CodeExtension extends MarkExtension {
   }
 
   public inputRules({ type }: ExtensionManagerMarkTypeParams) {
-    return [markInputRule({ regexp: /(?:`)([^`]+)(?:`)$/, type })];
+    return [
+      markInputRule({ regexp: new RegExp(`(?:\`)([^\`${LEAF_NODE_REPLACING_CHARACTER}]+)(?:\`)$`), type }),
+    ];
   }
 
   public pasteRules({ type }: ExtensionManagerMarkTypeParams) {

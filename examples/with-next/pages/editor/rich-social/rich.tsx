@@ -11,6 +11,7 @@ import {
   ParagraphExtension,
   SSRHelperExtension,
   StrikeExtension,
+  TrailingNodeExtension,
   UnderlineExtension,
 } from '@remirror/core-extensions';
 import {
@@ -108,6 +109,7 @@ export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
       { extension: new StrikeExtension(), priority: 2 },
       { extension: new CodeExtension(), priority: 2 },
       { extension: new HardBreakExtension(), priority: 2 },
+      { extension: new TrailingNodeExtension(), priority: 2 },
       {
         extension: new CodeBlockExtension({
           supportedLanguages,

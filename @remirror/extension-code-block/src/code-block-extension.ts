@@ -7,12 +7,14 @@ import {
   NodeExtensionSpec,
   NodeGroup,
   Plugin,
+  findNodeAtSelection,
   findParentNodeOfType,
   getMatchString,
   isElementDOMNode,
   isNodeActive,
   isTextSelection,
   mod,
+  nodeEqualsType,
   nodeInputRule,
   removeNodeAtPosition,
   toggleBlockItem,
@@ -202,6 +204,28 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
     const { keyboardShortcut, toggleType } = this.options;
 
     return {
+      Tab: ({ state, dispatch }) => {
+        const { selection, tr, schema } = state;
+        // Check that this is the correct node.
+        const { node } = findNodeAtSelection(selection);
+
+        if (!nodeEqualsType({ node, types: type })) {
+          return false;
+        }
+
+        if (selection.empty) {
+          tr.insertText('\t');
+        } else {
+          const { from, to } = selection;
+          tr.replaceWith(from, to, schema.text('\t'));
+        }
+
+        if (dispatch) {
+          dispatch(tr);
+        }
+
+        return true;
+      },
       Backspace: ({ state, dispatch }) => {
         const { selection } = state;
 
@@ -212,6 +236,8 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
         }
 
         let tr = state.tr;
+
+        // Check that this is the correct node.
         const parent = findParentNodeOfType({ types: type, selection });
 
         if (parent?.start !== selection.from) {

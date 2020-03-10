@@ -90,7 +90,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
             const id = node.getAttribute(dataAttributeId);
             const name = node.getAttribute(dataAttributeName);
             const label = node.innerText;
-            return { id, label, name };
+            return { ...this.getExtraAttrs(node), id, label, name };
           },
         },
       ],

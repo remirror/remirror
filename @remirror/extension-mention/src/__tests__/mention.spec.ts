@@ -36,6 +36,33 @@ describe('schema', () => {
     const expected = doc(p(mention(attrs.label)));
     expect(node).toEqualProsemirrorNode(expected);
   });
+
+  describe('extraAttrs', () => {
+    const custom = 'test';
+    const { schema } = createBaseTestManager([
+      {
+        extension: new MentionExtension({
+          matchers: [],
+          extraAttrs: ['data-custom'],
+        }),
+        priority: 1,
+      },
+    ]);
+
+    const { doc, p, mention } = pmBuild(schema, {
+      mention: { markType: 'mention', ['data-custom']: custom, ...attrs },
+    });
+
+    it('parses the dom structure and finds itself with custom attributes', () => {
+      const node = fromHTML({
+        schema,
+        content: `<a class="mention mention-at" data-custom="${custom}" data-mention-id="${attrs.id}" data-mention-name="${attrs.name}">${attrs.label}</a>`,
+      });
+
+      const expected = doc(p(mention(attrs.label)));
+      expect(node).toEqualProsemirrorNode(expected);
+    });
+  });
 });
 
 describe('constructor', () => {
