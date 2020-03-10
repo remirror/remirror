@@ -6,8 +6,8 @@ import {
   EditorSchema,
   Key,
   StringKey,
-  UnionToIntersection,
 } from '@remirror/core-types';
+import { UnionToIntersection } from 'type-fest';
 
 import { Extension } from './extension';
 import { MarkExtension } from './mark-extension';
