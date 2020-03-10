@@ -180,8 +180,17 @@ describe('plugin', () => {
     });
   });
 
+  describe('Tab', () => {
+    it('responds to `Tab` key press', () => {
+      const { state } = add(doc(tsBlock('<cursor>')))
+        .press('Tab')
+        .insertText('abc');
+      expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('\tabc')));
+    });
+  });
+
   describe('Enter', () => {
-    it('responds to enter key press', () => {
+    it('responds to `Enter` key press', () => {
       const { state } = add(doc(p('<cursor>')))
         .insertText('```typescript')
         .press('Enter')
