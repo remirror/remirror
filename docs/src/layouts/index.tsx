@@ -5,12 +5,11 @@ import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { FC, ReactNode } from 'react';
 import { jsx } from 'theme-ui';
 
-import { EntryQuery } from '../../generated/gatsby';
 import { Layout } from '../components/layout';
 import { TemplateProps } from '../typings';
 
 export interface MainLayoutProps extends TemplateProps {
-  data: EntryQuery;
+  data: GatsbyTypes.EntryQuery;
   pageContext: {
     id: string;
     relativePath: string;
