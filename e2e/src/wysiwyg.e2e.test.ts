@@ -97,6 +97,32 @@ describe('Wysiwyg Showcase', () => {
       await $editor.type('Outside of the codeblock');
       await expect($editor).toMatchElement('p', { text: 'Outside of the codeblock' });
     });
+
+    it('can interact with shift enter #218', async () => {
+      const expected = 'This text should be displayed';
+      await $editor.type('Hello:');
+      await pressKeyWithModifier(mod('Shift', 'Enter'));
+      await $editor.type('```');
+      await pressKeyWithModifier(mod('Shift', 'Enter'));
+      await $editor.type('amazing test');
+      await pressKeyWithModifier(mod('Shift', 'Enter'));
+      await $editor.type('```');
+      await press({ key: 'ArrowUp', count: 2 });
+      await $editor.type(expected);
+      await expect($editor).toMatch(expected);
+    });
+
+    it('supports the tab key #266', async () => {
+      const input = 'console.log("awesome");';
+      await $editor.type(`\`\`\`ts function() {`);
+      await press({ key: 'Enter' });
+      await press({ key: 'Tab' });
+      await $editor.type(input);
+      await expect(textContent('pre.language-ts > code')).resolves.toMatchInlineSnapshot(`
+              "function() {
+              \tconsole.log(\\"awesome\\");"
+            `);
+    });
   });
 
   describe('bold', () => {
