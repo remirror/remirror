@@ -94,8 +94,8 @@
     "jsxBracketSameLine": false,
     "jsxSingleQuote": true,
     "plugins": [
-      "prettier-plugin-packagejson",
-      "prettier-plugin-import-sort"
+      "./node_modules/prettier-plugin-packagejson",
+      "./node_modules/prettier-plugin-import-sort"
     ],
     "printWidth": 110,
     "proseWrap": "always",

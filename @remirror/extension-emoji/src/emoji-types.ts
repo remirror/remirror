@@ -17,8 +17,8 @@ export type NamesAndAliases = Names | AliasNames;
 export interface EmojiObject {
   keywords: string[];
   char: string;
-  category: Category;
-  name: Names;
+  category: string;
+  name: string;
   description: string;
   skinVariations: boolean;
 }
