@@ -31,6 +31,7 @@ test('RemirrorProvider', () => {
     </RemirrorProvider>
   );
   const reactString = renderToStaticMarkup(element);
+
   expect(reactString).toInclude('basic');
 });
 
@@ -53,5 +54,6 @@ test('ManagedRemirrorProvider', () => {
       </ManagedRemirrorProvider>
     </RemirrorManager>,
   );
+
   expect(reactString).toInclude('basic');
 });

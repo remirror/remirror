@@ -18,11 +18,13 @@ afterEach(() => {
 describe('char', () => {
   it('should fire all events for simple characters', () => {
     expect.assertions(4);
+
     const events: KeyboardEventName[] = [];
     const text = 'a';
 
     const listener = (event: KeyboardEvent) => {
       expect(event.key).toBe(text);
+
       events.push(event.type as KeyboardEventName);
     };
 
@@ -31,16 +33,19 @@ describe('char', () => {
     target.addEventListener('keypress', listener);
 
     keyboard.char({ text });
+
     expect(events).toEqual(['keydown', 'keypress', 'keyup']);
   });
 
   it('it should not fire keypress for meta characters', () => {
     expect.assertions(3);
+
     const events: KeyboardEventName[] = [];
     const text = 'Control';
 
     const listener = (event: KeyboardEvent) => {
       expect(event.key).toBe(text);
+
       events.push(event.type as KeyboardEventName);
     };
 
@@ -49,6 +54,7 @@ describe('char', () => {
     target.addEventListener('keypress', listener);
 
     keyboard.char({ text });
+
     expect(events).toEqual(['keydown', 'keyup']);
   });
 
@@ -58,6 +64,7 @@ describe('char', () => {
 
     const listener = (event: KeyboardEvent) => {
       expect(event.key).toBe(text);
+
       events.push(event.type as KeyboardEventName);
     };
 
@@ -66,6 +73,7 @@ describe('char', () => {
     target.addEventListener('keypress', listener);
 
     keyboard.char({ text });
+
     expect(events).toEqual(['keydown']);
   });
 });
@@ -86,6 +94,7 @@ describe('type', () => {
     target.addEventListener('keyup', listener);
 
     keyboard.type({ text: 'testing\n' });
+
     expect(keys.keydown).toEqual([]);
     expect(keys.keypress).toEqual([]);
     expect(keys.keyup).toEqual([]);
@@ -103,15 +112,18 @@ describe('batching', () => {
 
     const listener = (event: KeyboardEvent) => {
       expect(event.key).toBe(text);
+
       hasRun = true;
     };
 
     target.addEventListener('keydown', listener);
 
     keyboard.usChar({ text });
+
     expect(hasRun).toBeFalse();
 
     keyboard.end();
+
     expect(hasRun).toBeTrue();
   });
 });
@@ -172,14 +184,18 @@ describe('mod', () => {
 
 test('start', () => {
   expect(keyboard.status).toBe('idle');
+
   keyboard.start();
+
   expect(keyboard.status).toBe('started');
 });
 
 test('end', () => {
   keyboard.end();
+
   expect(keyboard.status).toBe('idle');
 
   keyboard.start().end();
+
   expect(keyboard.status).toBe('ended');
 });

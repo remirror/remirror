@@ -9,6 +9,7 @@ const create = (params: Partial<TrailingNodeExtensionOptions> = Object.create(nu
     plainNodes: [headingNode, blockquoteNode],
     others: [new TrailingNodeExtension(params)],
   });
+
 describe('plugin', () => {
   let {
     add,
@@ -24,16 +25,19 @@ describe('plugin', () => {
 
   it('adds a new paragraph by default', () => {
     const { state } = add(doc(h('Yo')));
+
     expect(state.doc).toEqualRemirrorDocument(doc(h('Yo'), p()));
   });
 
   it('does not add multiple paragraphs', () => {
     const { state } = add(doc(p('Yo')));
+
     expect(state.doc).toEqualRemirrorDocument(doc(p('Yo')));
   });
 
   it('dynamically appends paragraphs', () => {
     const { state } = add(doc(p('Yo'), p('<cursor>'))).insertText('# Greatness');
+
     expect(state.doc).toEqualRemirrorDocument(doc(p('Yo'), h('Greatness'), p()));
   });
 
@@ -44,6 +48,7 @@ describe('plugin', () => {
     } = create({ nodeName: 'heading' }));
 
     const { state } = add(doc(p('Yo'), p('<cursor>'))).insertText('> Epic quote');
+
     expect(state.doc).toEqualRemirrorDocument(doc(p('Yo'), blockquote(p('Epic quote')), h()));
   });
 });

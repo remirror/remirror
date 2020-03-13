@@ -61,6 +61,7 @@ const Component = ({ multiple }: { multiple: boolean }) => {
 
 test('uncontrolled editor with multiple selection enabled', () => {
   const { getByTestId, getByRole, getByText, getAllByTestId } = render(<Component multiple={true} />);
+
   expect(getByRole('listbox')).toHaveAttribute('aria-multiselectable', 'true');
 
   const button = getByRole('button');
@@ -74,23 +75,31 @@ test('uncontrolled editor with multiple selection enabled', () => {
   fireEvent.click(betaItem);
 
   fireEvent.mouseMove(gammaItem);
+
   expect(gammaItem).toHaveAttribute('aria-selected', 'true');
+
   fireEvent.mouseMove(deltaItem);
+
   expect(deltaItem).toHaveAttribute('aria-selected', 'false');
 
   const alphaDisplay = getByTestId('a');
   fireEvent.click(alphaDisplay);
+
   expect(alphaDisplay).not.toBeInTheDocument();
 
   // Previous item should lose hover once another item is selected / removed
   expect(gammaItem).toHaveAttribute('aria-selected', 'false');
 
   fireEvent.mouseMove(betaItem);
+
   expect(betaItem).toHaveAttribute('aria-selected', 'true');
+
   fireEvent.mouseLeave(betaItem);
+
   expect(betaItem).toHaveAttribute('aria-selected', 'false');
 
   fireEvent.click(betaItem);
+
   expect(() => getAllByTestId('b')).toThrow();
 });
 
@@ -214,21 +223,26 @@ test('it supports arrow keys', () => {
   expect(alphaItem).toHaveAttribute('aria-selected', 'true');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown' });
+
   expect(alphaItem).toHaveAttribute('aria-selected', 'false');
   expect(betaItem).toHaveAttribute('aria-selected', 'true');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown' });
+
   expect(betaItem).toHaveAttribute('aria-selected', 'false');
   expect(gammaItem).toHaveAttribute('aria-selected', 'true');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown' });
+
   expect(gammaItem).toHaveAttribute('aria-selected', 'false');
   expect(deltaItem).toHaveAttribute('aria-selected', 'false');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown' });
+
   expect(epsilonItem).toHaveAttribute('aria-selected', 'true');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown' });
+
   expect(alphaItem).toHaveAttribute('aria-selected', 'true');
 });
 
@@ -248,18 +262,22 @@ test('it supports multi highlight arrow keys', () => {
   expect(alphaItem).toHaveAttribute('aria-selected', 'true');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown', shiftKey: true });
+
   expect(alphaItem).toHaveAttribute('aria-selected', 'true');
   expect(betaItem).toHaveAttribute('aria-selected', 'true');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown', shiftKey: true });
+
   expect(betaItem).toHaveAttribute('aria-selected', 'true');
   expect(gammaItem).toHaveAttribute('aria-selected', 'true');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown', shiftKey: true });
+
   expect(gammaItem).toHaveAttribute('aria-selected', 'true');
   expect(deltaItem).toHaveAttribute('aria-selected', 'false');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown', shiftKey: true });
+
   expect(epsilonItem).toHaveAttribute('aria-selected', 'true');
 
   fireEvent.keyDown(menu, { key: 'Enter' });

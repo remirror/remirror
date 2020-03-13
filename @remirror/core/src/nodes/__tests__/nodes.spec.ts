@@ -18,12 +18,14 @@ import { DocExtension, TextExtension } from '../..';
 describe('nodes', () => {
   test('doc', () => {
     const doc = new DocExtension();
+
     expect(doc.name).toBe('doc');
     expect(Cast(doc.pluginKey).key).toInclude('doc$');
   });
 
   test('text', () => {
     const text = new TextExtension();
+
     expect(text.name).toBe('text');
     expect(Cast(text.pluginKey).key).toInclude('text$');
   });

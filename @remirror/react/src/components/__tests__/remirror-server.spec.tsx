@@ -66,11 +66,14 @@ test('appends to the react element by default with getRootProps', () => {
       )}
     </Remirror>,
   );
+
   expect(reactString).toInclude('This is a node with');
+
   const indexOfOuter = reactString.indexOf(outerId);
   const indexOfWrapper = reactString.indexOf(wrapperId);
   const indexOfInnerDiv = reactString.indexOf(finalId);
   const indexOfInjectedSSRComponent = reactString.indexOf(EDITOR_CLASS_NAME);
+
   expect(indexOfOuter).toBeLessThan(indexOfWrapper);
   expect(
     isAscending([indexOfOuter, indexOfWrapper, indexOfInnerDiv, indexOfInjectedSSRComponent]),
@@ -101,6 +104,7 @@ test('prepends to the react element when insertPosition=start with getRootProps'
   const indexOfOuter = reactString.indexOf(outerId);
   const indexOfInnerDiv = reactString.indexOf(finalId);
   const indexOfInjectedSSRComponent = reactString.indexOf(EDITOR_CLASS_NAME);
+
   expect(isAscending([indexOfInjectedSSRComponent, indexOfInnerDiv, indexOfOuter])).toBeTrue();
 });
 

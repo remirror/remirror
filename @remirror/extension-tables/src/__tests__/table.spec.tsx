@@ -67,6 +67,7 @@ describe('command', () => {
   };
 
   let { add, doc, p, buildRegularTable } = setup();
+
   beforeEach(() => {
     ({ add, doc, p, buildRegularTable } = setup());
   });
@@ -77,6 +78,7 @@ describe('command', () => {
       ['A2', 'B2', 'C2'],
     ]);
     const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddColumnAfter());
+
     expect(state.doc).toEqualRemirrorDocument(
       doc(
         buildRegularTable([
@@ -93,6 +95,7 @@ describe('command', () => {
       ['A2', 'B2<cursor>', 'C2'],
     ]);
     const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddColumnBefore());
+
     expect(state.doc).toEqualRemirrorDocument(
       doc(
         buildRegularTable([
@@ -109,6 +112,7 @@ describe('command', () => {
       ['A2', 'B2'],
     ]);
     const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddRowAfter());
+
     expect(state.doc).toEqualRemirrorDocument(
       doc(
         buildRegularTable([
@@ -126,6 +130,7 @@ describe('command', () => {
       ['A2', 'B2'],
     ]);
     const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddRowBefore());
+
     expect(state.doc).toEqualRemirrorDocument(
       doc(
         buildRegularTable([
@@ -143,6 +148,7 @@ describe('command', () => {
       ['A2<cursor>', 'B2', 'C2'],
     ]);
     const { state } = add(doc(table)).actionsCallback(actions => actions.tableDeleteColumn());
+
     expect(state.doc).toEqualRemirrorDocument(
       doc(
         buildRegularTable([
@@ -160,6 +166,7 @@ describe('command', () => {
       ['A3', 'B3', 'C3'],
     ]);
     const { state } = add(doc(table)).actionsCallback(actions => actions.tableDeleteRow());
+
     expect(state.doc).toEqualRemirrorDocument(
       doc(
         buildRegularTable([
@@ -177,6 +184,7 @@ describe('command', () => {
       ['A3', 'B3<cursor>', 'C3'],
     ]);
     const { state } = add(doc(table)).actionsCallback(actions => actions.tableDeleteTable());
+
     expect(state.doc).toEqualRemirrorDocument(doc(p()));
   });
 });

@@ -78,6 +78,7 @@ describe('extraAttrs', () => {
     });
 
     const expected = doc(custom('hello'));
+
     expect(node).toEqualProsemirrorNode(expected);
   });
 
@@ -87,6 +88,7 @@ describe('extraAttrs', () => {
       schema,
     });
     const expected = doc(other('hello'));
+
     expect(node).toEqualProsemirrorNode(expected);
   });
 });

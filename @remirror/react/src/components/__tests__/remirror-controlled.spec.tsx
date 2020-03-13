@@ -33,6 +33,7 @@ describe('Remirror Controlled Component', () => {
         {() => <div />}
       </Remirror>,
     );
+
     expect(onStateChange).toHaveBeenCalled();
     expect(value).not.toBeNull();
   });
@@ -57,8 +58,11 @@ describe('Remirror Controlled Component', () => {
 
     renderParams.setContent(expectedContent, true);
     rerender(<Component value={null} />);
+
     expect(getByRole('textbox')).toContainHTML(initialContent);
+
     rerender(<Component value={stateParams.newState} />);
+
     expect(getByRole('textbox')).toContainHTML(expectedContent);
   });
 
@@ -78,10 +82,12 @@ describe('Remirror Controlled Component', () => {
 
     const firstUpdate = '<p>First Update</p>';
     rerender(<Component value={stateParams.createStateFromContent(firstUpdate)} />);
+
     expect(getByRole('textbox')).toContainHTML(firstUpdate);
 
     const secondUpdate = '<p>Second Update</p>';
     rerender(<Component value={stateParams.createStateFromContent(secondUpdate)} />);
+
     expect(getByRole('textbox')).toContainHTML(secondUpdate);
 
     expect(onStateChange.mock.calls.every(call => call[0].tr === undefined)).toBeTrue();
@@ -109,9 +115,11 @@ describe('Remirror Controlled Component', () => {
       );
     };
     const { getByRole } = render(<Component />);
+
     expect(latestState).toBe(renderParams.state.newState);
 
     act(() => renderParams.view.dispatch(renderParams.state.newState.tr.insertText('Awesome')));
+
     expect(getByRole('textbox')).toHaveTextContent('Awesome');
   });
 
@@ -147,6 +155,7 @@ describe('Remirror Controlled Component', () => {
     const { getByRole } = render(<Component />);
 
     act(() => renderParams.view.dispatch(renderParams.state.newState.tr.insertText('Awesome')));
+
     expect(getByRole('textbox')).toHaveTextContent('Awesome');
   });
 });

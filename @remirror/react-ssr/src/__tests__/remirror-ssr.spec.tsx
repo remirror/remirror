@@ -25,5 +25,6 @@ test('should render the ssr component', () => {
       state={state}
     />,
   );
+
   expect(container).toHaveTextContent('Better docs to come soon...');
 });

@@ -10,5 +10,6 @@ import { WysiwygEditor } from '..';
 
 test('it renders within an ssr environment', () => {
   const reactString = renderToString(<WysiwygEditor initialContent={docNodeBasicJSON} />);
+
   expect(reactString).toInclude('basic');
 });

@@ -99,12 +99,14 @@ describe('ExtensionManager', () => {
   test('commands', () => {
     const attrs = { a: 'a' };
     manager.data.actions.dummy(attrs);
+
     expect(mock).toHaveBeenCalledWith(attrs);
     expect(innerMock).toHaveBeenCalledWith(state, view.dispatch, view);
   });
 
   test('helpers', () => {
     const val = manager.data.helpers.getInformation();
+
     expect(val).toBe('information');
     expect(getInformation).toHaveBeenCalled();
   });
@@ -118,10 +120,12 @@ describe('ExtensionManager', () => {
 
     it('should throw if data accessed without init', () => {
       const testManager = createTestManager();
+
       expect(() => testManager.data).toThrowErrorMatchingInlineSnapshot(
         `"Extension Manager must be initialized before attempting to access the data"`,
       );
     });
+
     it('should provide the schema at instantiation', () => {
       expect(createTestManager().schema).toBeTruthy();
     });
@@ -209,6 +213,7 @@ test('keymaps', () => {
       expect(mocks.firstEnter).toHaveBeenCalled();
       expect(mocks.secondEnter).toHaveBeenCalled();
       expect(mocks.thirdEnter).toHaveBeenCalled();
+
       jest.clearAllMocks();
       mocks.firstEnter.mockImplementation(() => true);
     })
@@ -217,6 +222,7 @@ test('keymaps', () => {
       expect(mocks.firstEnter).toHaveBeenCalled();
       expect(mocks.secondEnter).not.toHaveBeenCalled();
       expect(mocks.thirdEnter).not.toHaveBeenCalled();
+
       jest.clearAllMocks();
       mocks.firstEnter.mockImplementation(({ next }) => {
         return next();
@@ -226,6 +232,7 @@ test('keymaps', () => {
     .callback(() => {
       expect(mocks.secondEnter).toHaveBeenCalledTimes(1);
       expect(mocks.thirdEnter).toHaveBeenCalledTimes(1);
+
       jest.clearAllMocks();
       mocks.secondEnter.mockImplementation(() => true);
     })

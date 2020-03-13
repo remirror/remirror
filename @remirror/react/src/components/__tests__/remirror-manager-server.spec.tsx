@@ -17,6 +17,7 @@ test('it supports <RemirrorExtension />', () => {
 
   const Component: FC = () => {
     const manager = useRemirrorManager();
+
     expect(manager.extensions).toContainAnyValues([
       expect.any(TestExtension),
       expect.any(PlaceholderExtension),

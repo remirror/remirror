@@ -28,10 +28,12 @@ describe('RemirrorPortals', () => {
 
   it('provides access to the manager context', () => {
     expect.assertions(1);
+
     const Component = () => {
       const manager = useRemirrorManager();
 
       expect(manager).toBeTruthy();
+
       return <div data-testid='test' />;
     };
 

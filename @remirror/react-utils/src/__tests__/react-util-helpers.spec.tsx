@@ -18,17 +18,20 @@ import {
 test('getElementProps', () => {
   const expected = { id: 'test' };
   const Element = <div {...expected} />;
+
   expect(getElementProps(Element)).toEqual(expected);
 });
 
 test('isReactDOMElement', () => {
   const Custom = () => <div />;
+
   expect(isReactDOMElement(<div />)).toBeTrue();
   expect(isReactDOMElement(<Custom />)).toBeFalse();
 });
 
 test('isReactFragment', () => {
   const Custom = () => <div />;
+
   expect(isReactFragment(<></>)).toBeTrue();
   expect(
     isReactFragment(
@@ -47,18 +50,21 @@ test('uniqueClass', () => {
 test('isRemirrorExtension', () => {
   const Custom: RemirrorFC = () => <div />;
   Custom.$$remirrorType = RemirrorType.Extension;
+
   expect(isRemirrorExtension(<Custom />)).toBeTrue();
 });
 
 test('isRemirrorProvider', () => {
   const Custom: RemirrorFC = () => <div />;
   Custom.$$remirrorType = RemirrorType.EditorProvider;
+
   expect(isRemirrorProvider(<Custom />)).toBeTrue();
 });
 
 test('isManagedRemirrorProvider', () => {
   const Custom: RemirrorFC = () => <div />;
   Custom.$$remirrorType = RemirrorType.ManagedEditorProvider;
+
   expect(isManagedRemirrorProvider(<Custom />)).toBeTrue();
 });
 
@@ -73,6 +79,7 @@ describe('cloneElement', () => {
     const cloned = cloneElement(el, el.props);
     const elRender = render(el);
     const clonedRender = render(cloned);
+
     expect(elRender.baseElement.innerHTML).toEqual(clonedRender.baseElement.innerHTML);
   });
 
@@ -90,6 +97,7 @@ describe('cloneElement', () => {
     const cloned = cloneElement(el, el.props);
     const elRender = render(el);
     const clonedRender = render(cloned);
+
     expect(elRender.baseElement.innerHTML).toEqual(clonedRender.baseElement.innerHTML);
   });
 
@@ -101,6 +109,7 @@ describe('cloneElement', () => {
     const childRender = render(child);
     const propChildRender = render(propChild);
     const clonedRender = render(cloned);
+
     expect(clonedRender.baseElement).toContainHTML(propChildRender.baseElement.innerHTML);
     expect(clonedRender.baseElement).toContainHTML(childRender.baseElement.innerHTML);
   });
@@ -113,6 +122,7 @@ describe('cloneElement', () => {
     const childrenRender = render(<>{children}</>);
     const propChildRender = render(propChild);
     const clonedRender = render(cloned);
+
     expect(clonedRender.baseElement).toContainHTML(propChildRender.baseElement.innerHTML);
     expect(clonedRender.baseElement).toContainHTML(childrenRender.baseElement.innerHTML);
   });
@@ -130,5 +140,6 @@ test('oneChildOnly', () => {
   );
 
   const expected = <div />;
+
   expect(oneChildOnly(expected)).toBe(expected);
 });

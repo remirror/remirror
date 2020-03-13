@@ -16,5 +16,6 @@ test('it renders within an ssr environment', () => {
   const reactString = renderToString(
     <SocialEditor userData={[]} tagData={[]} onMentionChange={noop} initialContent={docNodeBasicJSON} />,
   );
+
   expect(reactString).toInclude('basic');
 });

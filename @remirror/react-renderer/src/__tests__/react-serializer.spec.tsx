@@ -35,6 +35,7 @@ const manager = createTestManager([
 ]);
 const { schema } = manager;
 const serializer = ReactSerializer.fromExtensionManager(manager);
+
 test('ReactSerializer.fromExtensionManager', () => {
   expect(serializer).toBeInstanceOf(ReactSerializer);
   expect(serializer.nodes.paragraph).toBeFunction();
@@ -49,6 +50,7 @@ test('ReactSerializer.fromExtensionManager', () => {
     { extension: new CodeBlockExtension(), priority: 2 },
   ];
   const altManager = ExtensionManager.create(altExtensions);
+
   expect(ReactSerializer.fromExtensionManager(altManager).nodes.text).toBeFunction();
 });
 
@@ -56,6 +58,7 @@ describe('ReactSerializer', () => {
   describe('#serializeNode', () => {
     it('serializes the node', () => {
       const node = PMNode.fromJSON(schema, simpleJSON);
+
       expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchInlineSnapshot(`
         <p>
           This is a node with${' '}
@@ -78,6 +81,7 @@ describe('ReactSerializer', () => {
       };
 
       const node = PMNode.fromJSON(schema, codeBlockJSON);
+
       expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchInlineSnapshot(`
         <pre>
           <code>
@@ -89,6 +93,7 @@ describe('ReactSerializer', () => {
 
     it('serializes the node with nested data', () => {
       const node = PMNode.fromJSON(schema, testJSON);
+
       expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchInlineSnapshot(`
         <p>
           This is a node with${' '}

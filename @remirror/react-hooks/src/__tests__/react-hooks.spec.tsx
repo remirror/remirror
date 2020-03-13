@@ -11,14 +11,19 @@ test('usePrevious', () => {
   });
 
   expect(result.current).toBe(undefined);
+
   rerender({ initialValue: 20 });
+
   expect(result.current).toBe(10);
+
   rerender({ initialValue: 30 });
+
   expect(result.current).toBe(20);
 });
 
 test('useMeasure', () => {
   const { result } = renderHook(() => useMeasure());
+
   expect(result.current[1].height).toBe(0);
 
   const Component = () => {
@@ -33,14 +38,17 @@ test('useMeasure', () => {
 
   const { getByTestId, rerender } = render(<Component />);
   const el = getByTestId('test');
+
   expect(fakeResizeObserverPolyfill.observe).toHaveBeenCalledWith(el);
 
   act(() => {
     triggerChange({ height: 100 }, el);
   });
+
   expect(getByTestId('test')).toHaveTextContent('Height: 100');
 
   rerender(<div />);
+
   expect(fakeResizeObserverPolyfill.disconnect).toHaveBeenCalled();
 });
 

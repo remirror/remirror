@@ -8,9 +8,12 @@ import { bubblePositioner } from '../react-positioners';
 
 test('useRemirrorContext', () => {
   expect.assertions(1);
+
   const HookComponent: FC = () => {
     const injectedProps = useRemirrorContext();
+
     expect(injectedProps).toMatchObject(injectedPropsShape);
+
     return <div />;
   };
 
@@ -23,9 +26,12 @@ test('useRemirrorContext', () => {
 
 test('usePositioner', () => {
   expect.assertions(1);
+
   const HookComponent: FC = () => {
     const injectedProps = usePositioner({ positioner: bubblePositioner, positionerId: 'bubble-menu' });
+
     expect(injectedProps).toMatchObject(positionerShape);
+
     return <div />;
   };
 

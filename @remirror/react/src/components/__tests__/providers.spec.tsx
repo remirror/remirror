@@ -28,6 +28,7 @@ test('ManagedRemirrorProvider', () => {
   );
   const target = getByTestId('target');
   const editor = getByRole('textbox');
+
   expect(target).toContainElement(editor);
 });
 
@@ -50,5 +51,6 @@ test('RemirrorProvider', () => {
   );
   const target = getByTestId('target');
   const editor = getByRole('textbox');
+
   expect(target).toContainElement(editor);
 });

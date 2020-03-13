@@ -11,5 +11,6 @@ test('should place the editor within the correct element', () => {
 
   const editor = getByRole('textbox');
   const wrapper = getByTestId('remirror-editor');
+
   expect(wrapper).toContainElement(editor);
 });

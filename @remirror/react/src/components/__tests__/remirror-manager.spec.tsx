@@ -12,9 +12,12 @@ import { ManagedRemirrorProvider } from '../remirror-providers';
 
 test('a manager is created', () => {
   expect.assertions(1);
+
   const Component: FC = () => {
     const manager = useRemirrorManager();
+
     expect(manager).toBeTruthy();
+
     return null;
   };
 
@@ -87,7 +90,9 @@ describe('manager prop', () => {
 test('it supports <RemirrorExtension />', () => {
   const Component: FC = () => {
     const manager = useRemirrorManager();
+
     expect(manager.extensions).toContainValues([expect.any(TestExtension), expect.any(PlaceholderExtension)]);
+
     return null;
   };
 
@@ -103,10 +108,13 @@ test('it supports <RemirrorExtension />', () => {
     </RemirrorManager>,
   );
 });
+
 test('it supports injecting additional extensions', () => {
   const Component: FC = () => {
     const manager = useRemirrorManager();
+
     expect(manager.extensions).toContainValues([expect.any(TestExtension), expect.any(PlaceholderExtension)]);
+
     return null;
   };
 
@@ -126,7 +134,9 @@ test('it supports injecting additional extensions', () => {
 test('it supports <RemirrorExtension /> in child fragments', () => {
   const Component: FC = () => {
     const manager = useRemirrorManager();
+
     expect(manager.extensions).toContainValues([expect.any(TestExtension), expect.any(PlaceholderExtension)]);
+
     return null;
   };
 
@@ -150,12 +160,14 @@ test('it supports overriding base extensions', () => {
 
   const Component: FC = () => {
     const manager = useRemirrorManager();
+
     expect(manager.extensions).not.toContain([originalParagraph]);
     expect(
       manager.extensions.find(({ options }) => {
         return options.indentLevels && options.indentLevels[1] === 1;
       }),
     ).toBeTruthy();
+
     return null;
   };
 

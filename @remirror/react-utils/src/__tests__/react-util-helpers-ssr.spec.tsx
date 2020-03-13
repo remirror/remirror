@@ -18,6 +18,7 @@ describe('cloneElement', () => {
     const cloned = cloneElement(el, el.props);
     const elString = renderToStaticMarkup(el);
     const clonedString = renderToStaticMarkup(cloned);
+
     expect(elString).toEqual(clonedString);
   });
 
@@ -35,6 +36,7 @@ describe('cloneElement', () => {
     const cloned = cloneElement(el, el.props);
     const elString = renderToStaticMarkup(el);
     const clonedString = renderToStaticMarkup(cloned);
+
     expect(elString).toEqual(clonedString);
   });
 
@@ -46,6 +48,7 @@ describe('cloneElement', () => {
     const childString = renderToStaticMarkup(child);
     const propChildString = renderToStaticMarkup(propChild);
     const clonedString = renderToStaticMarkup(cloned);
+
     expect(clonedString).toInclude(propChildString);
     expect(clonedString).toInclude(childString);
   });
@@ -58,6 +61,7 @@ describe('cloneElement', () => {
     const childrenString = renderToStaticMarkup(<>{children}</>);
     const propChildString = renderToStaticMarkup(propChild);
     const clonedString = renderToStaticMarkup(cloned);
+
     expect(clonedString).toInclude(propChildString);
     expect(clonedString).toInclude(childrenString);
   });

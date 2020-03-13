@@ -24,6 +24,7 @@ test('updates the offscreen attribute when a selection is active', () => {
       }}
     </Remirror>,
   );
+
   expect(mock).toHaveBeenCalledWith(expect.any(Function));
 });
 
@@ -32,11 +33,14 @@ test('provides correct menu props', () => {
     <Remirror manager={createTestManager()}>
       {({ getPositionerProps }) => {
         const { ref, ...props } = getPositionerProps({ positionerId: 'test' });
+
         expect(ref).toEqual(expect.any(Function));
         expect(props).toContainAllKeys(['top', 'left', 'bottom', 'right', 'isActive']);
+
         return <div />;
       }}
     </Remirror>,
   );
+
   expect.hasAssertions();
 });

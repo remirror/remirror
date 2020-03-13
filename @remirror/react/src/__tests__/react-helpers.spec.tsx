@@ -22,6 +22,7 @@ describe('getManagerFromComponentTree', () => {
     );
   };
   let manager: ExtensionManager;
+
   beforeEach(async () => {
     manager = await getManagerFromComponentTree({ Component: Tester });
   });

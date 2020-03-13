@@ -19,6 +19,7 @@ test('createEditorView', () => {
       },
     },
   );
+
   expect(view).toBeInstanceOf(EditorViewSSR);
   expect(view.destroy).toBeFunction();
   expect(view.state).toBe(state);

@@ -18,6 +18,7 @@ describe('schema', () => {
       schema,
     });
     const expected = doc(p('hello'));
+
     expect(node).toEqualProsemirrorNode(expected);
   });
 
@@ -30,6 +31,7 @@ describe('schema', () => {
       node: p('hello'),
       schema,
     });
+
     expect(html).toBe(`<p style="text-align: right;line-height: 100%;" data-indent="1" id="never">hello</p>`);
   });
 });

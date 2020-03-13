@@ -18,6 +18,7 @@ describe('withoutEmotion', () => {
         <Remirror manager={createTestManager()}>{child}</Remirror>
       </RemirrorThemeProvider>,
     );
+
     expect(withEmotionString).toMatch(/css-[a-z0-9]+/gi);
 
     const withoutEmotionString = renderToString(
@@ -25,6 +26,7 @@ describe('withoutEmotion', () => {
         <Remirror manager={createTestManager()}>{child}</Remirror>
       </RemirrorThemeProvider>,
     );
+
     expect(withoutEmotionString).not.toMatch(/css-[a-z0-9]+/gi);
   });
 });

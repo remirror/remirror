@@ -46,8 +46,10 @@ import {
 describe('findMatches', () => {
   const regex = /(@[0-9]+)/g;
   const str = '@12 @34 #12';
+
   it('finds the correct number of matches', () => {
     const matches = findMatches(str, regex);
+
     expect(matches).toHaveLength(2);
     expect(matches[0][1]).toBe('@12');
     expect(matches[0].index).toBe(0);
@@ -107,6 +109,7 @@ describe('predicates', () => {
   it('isBoolean', () => {
     const passValue = true;
     const failValue = 'true';
+
     expect(isBoolean(passValue)).toBeTrue();
     expect(isBoolean(failValue)).toBeFalse();
   });
@@ -114,6 +117,7 @@ describe('predicates', () => {
   it('isDate', () => {
     const passValue = new Date();
     const failValue = Date.now();
+
     expect(isDate(passValue)).toBeTrue();
     expect(isDate(failValue)).toBeFalse();
   });
@@ -121,6 +125,7 @@ describe('predicates', () => {
   it('isError', () => {
     const passValue = new Error('Pass');
     const failValue = new (class Simple {})();
+
     expect(isError(passValue)).toBeTrue();
     expect(isError(failValue)).toBeFalse();
   });
@@ -128,6 +133,7 @@ describe('predicates', () => {
   it('isFunction', () => {
     const passValue = () => {};
     const failValue = '() => {}';
+
     expect(isFunction(passValue)).toBeTrue();
     expect(isFunction(failValue)).toBeFalse();
   });
@@ -135,6 +141,7 @@ describe('predicates', () => {
   it('isInteger', () => {
     const passValue = 1002;
     const failValue = 10.02;
+
     expect(isInteger(passValue)).toBeTrue();
     expect(isInteger(failValue)).toBeFalse();
   });
@@ -142,6 +149,7 @@ describe('predicates', () => {
   it('isMap', () => {
     const passValue = new Map();
     const failValue = Object.create(null);
+
     expect(isMap(passValue)).toBeTrue();
     expect(isMap(failValue)).toBeFalse();
   });
@@ -149,6 +157,7 @@ describe('predicates', () => {
   it('isNativePromise', () => {
     const passValue = Promise.resolve();
     const failValue = { undefined };
+
     expect(isNativePromise(passValue)).toBeTrue();
     expect(isNativePromise(failValue)).toBeFalse();
   });
@@ -156,6 +165,7 @@ describe('predicates', () => {
   it('isNull', () => {
     const passValue = null;
     const failValue = undefined;
+
     expect(isNull(passValue)).toBeTrue();
     expect(isNull(failValue)).toBeFalse();
   });
@@ -163,6 +173,7 @@ describe('predicates', () => {
   it('isNumber', () => {
     const passValue = 1;
     const failValue = '1';
+
     expect(isNumber(passValue)).toBeTrue();
     expect(isNumber(failValue)).toBeFalse();
     expect(isNumber(Number('01'))).toBeTrue();
@@ -175,6 +186,7 @@ describe('predicates', () => {
       public a = 'a';
     })();
     const simpleFailValue = undefined;
+
     expect(isPlainObject(passValue)).toBeTrue();
     expect(isPlainObject(failValue)).toBeFalse();
     expect(isPlainObject(simpleFailValue)).toBeFalse();
@@ -183,6 +195,7 @@ describe('predicates', () => {
   it('isPromise', () => {
     const passValue = { then: () => {}, catch: () => {} };
     const failValue = null;
+
     expect(isPromise(passValue)).toBeTrue();
     expect(isPromise(failValue)).toBeFalse();
   });
@@ -190,6 +203,7 @@ describe('predicates', () => {
   it('isRegExp', () => {
     const passValue = new RegExp('', 'g');
     const failValue = '//w';
+
     expect(isRegExp(passValue)).toBeTrue();
     expect(isRegExp(failValue)).toBeFalse();
   });
@@ -197,6 +211,7 @@ describe('predicates', () => {
   it('isSafeInteger', () => {
     const passValue = Math.pow(2, 53) - 1;
     const failValue = Math.pow(2, 53);
+
     expect(isSafeInteger(passValue)).toBeTrue();
     expect(isSafeInteger(failValue)).toBeFalse();
   });
@@ -204,6 +219,7 @@ describe('predicates', () => {
   it('isSet', () => {
     const passValue = new Set();
     const failValue = new WeakSet();
+
     expect(isSet(passValue)).toBeTrue();
     expect(isSet(failValue)).toBeFalse();
   });
@@ -211,6 +227,7 @@ describe('predicates', () => {
   it('isString', () => {
     const passValue = 'isString';
     const failValue = 10;
+
     expect(isString(passValue)).toBeTrue();
     expect(isString(failValue)).toBeFalse();
   });
@@ -218,6 +235,7 @@ describe('predicates', () => {
   it('isSymbol', () => {
     const passValue = Symbol('a');
     const failValue = 'symbol';
+
     expect(isSymbol(passValue)).toBeTrue();
     expect(isSymbol(failValue)).toBeFalse();
   });
@@ -225,6 +243,7 @@ describe('predicates', () => {
   it('isUndefined', () => {
     const passValue = undefined;
     const failValue = null;
+
     expect(isUndefined(passValue)).toBeTrue();
     expect(isUndefined(failValue)).toBeFalse();
   });
@@ -232,6 +251,7 @@ describe('predicates', () => {
   it('isNullOrUndefined', () => {
     const passValue = null;
     const failValue = false;
+
     expect(isNullOrUndefined(passValue)).toBeTrue();
     expect(isNullOrUndefined(failValue)).toBeFalse();
   });
@@ -239,6 +259,7 @@ describe('predicates', () => {
   it('isObject', () => {
     const passValue = new (class Simple {})();
     const failValue = false;
+
     expect(isObject(passValue)).toBeTrue();
     expect(isObject(failValue)).toBeFalse();
   });
@@ -247,6 +268,7 @@ describe('predicates', () => {
     const passValue = Object.create(null);
     const failValue = { oop: 'sie' };
     const altPassValue = new (class Simple {})();
+
     expect(isEmptyObject(passValue)).toBeTrue();
     expect(isEmptyObject(failValue)).toBeFalse();
     expect(isEmptyObject(altPassValue)).toBeTrue();
@@ -255,6 +277,7 @@ describe('predicates', () => {
   it('isEmptyArray', () => {
     const passValue: never[] = [];
     const failValue = ['oop', 'sie'];
+
     expect(isEmptyArray(passValue)).toBeTrue();
     expect(isEmptyArray(failValue)).toBeFalse();
   });
@@ -262,21 +285,25 @@ describe('predicates', () => {
 
 test('clone', () => {
   const simple = { a: 'a', b: 'b' };
+
   expect(clone(simple)).not.toBe(simple);
   expect(clone(simple)).toEqual(simple);
 });
 
 test('uniqueArray', () => {
   const arr = [1, 2, 3];
+
   expect(uniqueArray(arr)).toEqual([1, 2, 3]);
 
   const dup = ['a', 'a', 'a', 'a', 'b', 'a'];
+
   expect(uniqueArray(dup)).toEqual(['a', 'b']);
   expect(uniqueArray(dup, true)).toEqual(['b', 'a']);
 });
 
 test('sort', () => {
   const arr = [...Array(100), 11, 9, 12].map((value, index) => ({ value: value || 10, index }));
+
   expect(sort(arr, (a, b) => a.value - b.value)).toEqual([
     { value: 9, index: 101 },
     ...take(arr, 100),
@@ -353,13 +380,16 @@ test('uniqueBy', () => {
 
 test('entries', () => {
   const input = { a: 1, b: 'b' };
+
   expect(entries(input).map(([key, value]) => [key, value])).toEqual([
     ['a', 1],
     ['b', 'b'],
   ]);
 });
+
 test('keys', () => {
   const input = { a: 1, b: 'b' };
+
   expect(keys(input).map(key => key)).toEqual(['a', 'b']);
 });
 
@@ -390,6 +420,7 @@ test('hasOwnProperty', () => {
 
   const noProto = Object.create(null);
   noProto.a = 1;
+
   expect(hasOwnProperty(noProto, 'a')).toBeTrue();
   expect(hasOwnProperty(noProto, 'b')).toBeFalse();
 });

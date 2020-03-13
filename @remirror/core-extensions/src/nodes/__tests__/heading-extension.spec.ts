@@ -26,6 +26,7 @@ describe('schema', () => {
   it('it can parse content', () => {
     const node = fromHTML({ content: '<h2>Hello</h2>', schema });
     const expected = doc(h2('Hello'));
+
     expect(node).toEqualProsemirrorNode(expected);
   });
 
@@ -103,6 +104,7 @@ describe('plugins', () => {
     const h1 = heading({ level: 1 });
     const h3 = heading({ level: 3 });
     const text = 'Welcome to the jungle';
+
     expect(add(doc(p(`<cursor>${text}`))).shortcut('Shift-Ctrl-1').state).toContainRemirrorDocument(h1(text));
     expect(add(doc(p(`<cursor>${text}`))).shortcut('Shift-Ctrl-3').state).toContainRemirrorDocument(h3(text));
   });

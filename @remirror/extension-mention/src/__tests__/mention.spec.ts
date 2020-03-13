@@ -34,6 +34,7 @@ describe('schema', () => {
       content: `<a class="mention mention-at" data-mention-id="${attrs.id}" data-mention-name="${attrs.name}">${attrs.label}</a>`,
     });
     const expected = doc(p(mention(attrs.label)));
+
     expect(node).toEqualProsemirrorNode(expected);
   });
 
@@ -60,6 +61,7 @@ describe('schema', () => {
       });
 
       const expected = doc(p(mention(attrs.label)));
+
       expect(node).toEqualProsemirrorNode(expected);
     });
   });
@@ -85,6 +87,7 @@ describe('constructor', () => {
     const mentionOne = new MentionExtension({
       matchers: [{ char: '#', name: 'tag' }],
     });
+
     expect(mentionOne.options.matchers).toEqual([{ char: '#', name: 'tag' }]);
   });
 });
@@ -146,6 +149,7 @@ describe('plugin', () => {
     } = create(options));
 
     add(doc(p('<cursor>'))).insertText(`This ${label} `);
+
     expect(view.state).toContainRemirrorDocument(p(`This ${label} `));
   });
 
@@ -157,12 +161,14 @@ describe('plugin', () => {
 
   it('should handle joined text separated by space', () => {
     add(doc(p('hello <cursor>friend'))).insertText(`${label} `);
+
     expect(view.state).toContainRemirrorDocument(p('hello ', mentionMark(label), ' friend'));
   });
 
   it('can split mentions', () => {
     const splitMention = mention({ id: '123', label: '@123', name: 'at' });
     add(doc(p(splitMention('@1<cursor>23')))).insertText(` `);
+
     expect(view.state).toContainRemirrorDocument(
       p(mention({ id: '1', label: '@1', name: 'at' })('@1'), ' 23'),
     );
@@ -171,16 +177,19 @@ describe('plugin', () => {
   it('removes invalid mentions', () => {
     const splitMention = mention({ id: '123', label: '@123', name: 'at' });
     add(doc(p(splitMention('@<cursor>123')))).insertText(` `);
+
     expect(view.state).toContainRemirrorDocument(p('@ 123'));
   });
 
   it('decorates split mentions', () => {
     add(doc(p('hello <cursor>friend'))).insertText(`${label}`);
+
     expect(view.dom).toContainHTML('<a class="suggest suggest-at">@mentionfriend</a>');
   });
 
   it('injects the mention at the correct place', () => {
     add(doc(p('<cursor>'))).insertText(`This ${label} `);
+
     expect(view.state).toContainRemirrorDocument(p('This ', mentionMark(label), ' '));
     expect(mocks.onChange).toHaveBeenCalledTimes(id.length);
   });
@@ -208,12 +217,15 @@ describe('plugin', () => {
     const atMark = mention({ id, label: labelFn('@'), name: 'at' });
 
     add(doc(p('<cursor>'))).insertText(`This ${labelFn('#')} `);
+
     expect(view.state).toContainRemirrorDocument(p('This ', hashMark(labelFn('#')), ' '));
 
     add(doc(p('<cursor>'))).insertText(`This ${labelFn('+')} `);
+
     expect(view.state).toContainRemirrorDocument(p('This ', plusMark(labelFn('+')), ' '));
 
     add(doc(p('<cursor>'))).insertText(`This ${labelFn('@')} `);
+
     expect(view.state).toContainRemirrorDocument(p('This ', atMark(labelFn('@')), ' '));
   });
 });

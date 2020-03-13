@@ -58,6 +58,7 @@ describe('Wysiwyg Showcase', () => {
 
     const unformatted = `function concatAwesome(str:    string){return "Awesome " + str}`;
     const formatted = `function concatAwesome(str: string) {\n  return 'Awesome ' + str;\n}\n`;
+
     it('supports formatting', async () => {
       await $editor.type(`\`\`\`ts ${unformatted}`);
       await pressKeyWithModifier(mod('ShiftAlt', 'KeyF'));

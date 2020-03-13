@@ -17,6 +17,7 @@ test('it supports <ProsemirrorDevTools />', () => {
     </RemirrorManager>,
   );
   const element = baseElement.querySelector('.__prosemirror-dev-tools__');
+
   expect(element).toBeTruthy();
 });
 
@@ -39,5 +40,6 @@ test('it unmounts <ProsemirrorDevTools />', () => {
     </RemirrorManager>,
   );
   const element = baseElement.querySelector('.__prosemirror-dev-tools__');
+
   expect(element).toBeFalsy();
 });

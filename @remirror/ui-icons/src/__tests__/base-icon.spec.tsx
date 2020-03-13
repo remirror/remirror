@@ -14,6 +14,7 @@ describe('styles', () => {
     );
 
     const svg = container.querySelector('svg');
+
     expect(svg).toHaveStyle(
       `color: ${baseTheme.colors.text}; background-color: ${baseTheme.colors.background};`,
     );
@@ -41,6 +42,7 @@ describe('styles', () => {
     );
 
     const svg = container.querySelector('svg');
+
     expect(svg).toHaveStyle(`color: blue; background-color: ${baseTheme.colors.background};`);
   });
 
@@ -52,6 +54,7 @@ describe('styles', () => {
     );
 
     const svg = container.querySelector('svg');
+
     expect(svg).toHaveStyle(
       `color: ${baseTheme.colors.background}; background-color: ${baseTheme.colors.text};`,
     );
@@ -66,6 +69,7 @@ test('standalone', () => {
   );
 
   const svg = getByRole('img');
+
   expect(svg.querySelector('title')).toHaveTextContent('test icon');
 
   rerender(

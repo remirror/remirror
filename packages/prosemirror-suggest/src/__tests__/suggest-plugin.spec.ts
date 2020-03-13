@@ -11,6 +11,7 @@ describe('Suggest Handlers', () => {
     const handlers = {
       onExit: jest.fn((params: SuggestExitHandlerParams) => {
         params.command('command');
+
         expect(params.queryText.full).toBe(expected);
         expect(params.reason).toBe(ExitReason.MoveEnd);
       }),
@@ -37,6 +38,7 @@ describe('Suggest Handlers', () => {
     };
     const plugin = suggest({ char: '@', name: 'at', ...handlers, matchOffset: 1 });
     createEditor(doc(p('<cursor>')), { plugins: [plugin] }).insertText('@');
+
     expect(handlers.onChange).not.toHaveBeenCalled();
   });
 
@@ -82,6 +84,7 @@ describe('Suggest Handlers', () => {
         expect(handlers1.onChange).toHaveBeenCalledTimes(4);
         expect(handlers1.onExit).toHaveBeenCalledTimes(1);
         expect(handlers2.onChange).toHaveBeenCalledTimes(4);
+
         jest.clearAllMocks();
       })
       .jumpTo(5)
@@ -111,6 +114,7 @@ describe('Suggest Ignore', () => {
       .callback(() => {
         expect(handlers.onExit).toHaveBeenCalledTimes(1);
         expect(handlers.onChange).toHaveBeenCalledTimes(4);
+
         jest.clearAllMocks();
       })
       .backspace(3)
@@ -152,6 +156,7 @@ describe('Suggest Ignore', () => {
       .jumpTo(2)
       .callback(() => {
         expect(atHandlers.onChange).not.toHaveBeenCalled();
+
         clear.at('at');
       })
       .jumpTo(3)
@@ -161,6 +166,7 @@ describe('Suggest Ignore', () => {
       .jumpTo(7)
       .callback(() => {
         expect(tagHandlers.onChange).not.toHaveBeenCalled();
+
         clear.tag('tag');
       })
       .jumpTo(8)

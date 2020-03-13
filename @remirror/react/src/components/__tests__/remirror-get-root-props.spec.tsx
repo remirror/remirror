@@ -22,6 +22,7 @@ test('supports a custom root element', () => {
       }}
     </Remirror>,
   );
+
   expect(mock).toHaveBeenCalledWith(expect.any(Function));
 });
 
@@ -38,12 +39,14 @@ test('supports a custom ref label and passed props through', () => {
       }}
     </Remirror>,
   );
+
   expect(mock.mock.calls[0][0].customRef).toBeFunction();
   expect(mock.mock.calls[0][0].testProp).toBe(testProp);
 });
 
 test('throws an error when called multiple times during render', () => {
   expect.assertions(2);
+
   render(
     <Remirror manager={createTestManager()}>
       {({ getRootProps }) => {
@@ -51,6 +54,7 @@ test('throws an error when called multiple times during render', () => {
         expect(() => getRootProps()).toThrowErrorMatchingInlineSnapshot(
           `"\`getRootProps\` has been called MULTIPLE times. It should only be called ONCE during render."`,
         );
+
         return <div />;
       }}
     </Remirror>,
@@ -80,6 +84,7 @@ describe('nestedRootProps', () => {
 
   it('should not duplicate nodes', () => {
     const { baseElement } = result;
+
     expect(baseElement.querySelectorAll('#nested-div')).toHaveLength(1);
   });
 
@@ -87,6 +92,7 @@ describe('nestedRootProps', () => {
     const { baseElement, getByRole } = result;
     const innerLabel = baseElement.querySelector('#wrapped-div') as HTMLElement;
     const wrapper = baseElement.querySelector('#nested-div');
+
     expect(innerLabel).toBeVisible();
     expect(wrapper!.childElementCount).toBe(2);
     expect(wrapper).toContainElement(innerLabel);

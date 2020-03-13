@@ -31,5 +31,6 @@ test('should render the ssr component', () => {
       state={state}
     />,
   );
+
   expect(htmlString).toMatchSnapshot();
 });
