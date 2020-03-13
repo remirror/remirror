@@ -12,8 +12,6 @@ const tsProjectRules = {
   '@typescript-eslint/no-misused-promises': 'warn',
   '@typescript-eslint/prefer-includes': 'warn',
   '@typescript-eslint/prefer-string-starts-ends-with': 'warn',
-  // TODO : test for false positives again
-  // '@typescript-eslint/no-unnecessary-condition': ['warn', { ignoreRhs: true }],
 };
 
 const schemaJsonFilePath = `${__dirname}/docs/.cache/caches/gatsby-plugin-typegen/schema.json`;
@@ -41,10 +39,11 @@ module.exports = {
     'prettier',
     'prettier/@typescript-eslint',
     'prettier/react',
-    // 'plugin:jsx-a11y/recommended',
+    'plugin:jest-formatting/strict',
   ],
   plugins: [
     'jest',
+    'jest-formatting',
     '@typescript-eslint',
     'react-hooks',
     'react',
