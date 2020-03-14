@@ -346,7 +346,7 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.0.0", "@babel/parser@^7.0.0-beta.54", "@babel/parser@^7.1.0", "@babel/parser@^7.4.4", "@babel/parser@^7.6", "@babel/parser@^7.7.0", "@babel/parser@^7.7.5", "@babel/parser@^7.8.6", "@babel/parser@^7.8.7":
+"@babel/parser@^7.0.0", "@babel/parser@^7.1.0", "@babel/parser@^7.4.4", "@babel/parser@^7.6", "@babel/parser@^7.7.0", "@babel/parser@^7.7.5", "@babel/parser@^7.8.6", "@babel/parser@^7.8.7":
   version "7.8.8"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.8.8.tgz#4c3b7ce36db37e0629be1f0d50a571d2f86f6cd4"
   integrity sha512-mO5GWzBPsPf6865iIbzNE0AvkKF3NE+2S3eRUpE+FE07BOAkXh6G+GW/Pj01hhXjve1WScbaIO4UlY1JKeqCcA==
@@ -1126,7 +1126,7 @@
     "@babel/parser" "^7.8.6"
     "@babel/types" "^7.8.6"
 
-"@babel/traverse@^7.0.0", "@babel/traverse@^7.0.0-beta.54", "@babel/traverse@^7.1.0", "@babel/traverse@^7.4.4", "@babel/traverse@^7.7.0", "@babel/traverse@^7.7.4", "@babel/traverse@^7.8.3", "@babel/traverse@^7.8.4", "@babel/traverse@^7.8.6":
+"@babel/traverse@^7.0.0", "@babel/traverse@^7.1.0", "@babel/traverse@^7.4.4", "@babel/traverse@^7.7.0", "@babel/traverse@^7.7.4", "@babel/traverse@^7.8.3", "@babel/traverse@^7.8.4", "@babel/traverse@^7.8.6":
   version "7.8.6"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.8.6.tgz#acfe0c64e1cd991b3e32eae813a6eb564954b5ff"
   integrity sha512-2B8l0db/DPi8iinITKuo7cbPznLCEk0kCxDoB9/N6gGNg/gxOXiR/IcymAFPiBwk5w6TtQ27w4wpElgp9btR9A==
@@ -1150,7 +1150,7 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@babel/types@^7.0.0", "@babel/types@^7.0.0-beta.54", "@babel/types@^7.3.0", "@babel/types@^7.4.4", "@babel/types@^7.7.0", "@babel/types@^7.7.1", "@babel/types@^7.7.4", "@babel/types@^7.8.3", "@babel/types@^7.8.6", "@babel/types@^7.8.7":
+"@babel/types@^7.0.0", "@babel/types@^7.3.0", "@babel/types@^7.4.4", "@babel/types@^7.7.0", "@babel/types@^7.7.1", "@babel/types@^7.7.4", "@babel/types@^7.8.3", "@babel/types@^7.8.6", "@babel/types@^7.8.7":
   version "7.8.7"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.8.7.tgz#1fc9729e1acbb2337d5b6977a63979b4819f5d1d"
   integrity sha512-k2TreEHxFA4CjGkL+GYjRyx35W0Mr7DP5+9q6WMkyKXB+904bYmG40syjMFV0oLlhhFCwWl0vA0DyzTDkwAiJw==
@@ -3655,6 +3655,11 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.4.tgz#38fd73ddfd9b55abb1e1b2ed578cb55bd7b7d339"
   integrity sha512-8+KAKzEvSUdeo+kmqnKrqgeE+LcA0tjYWFY7RPProVYwnqDjukzO+3b6dLD56rYX5TdWejnEOLJYOIeh4CXKuA==
 
+"@types/json5@^0.0.30":
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.30.tgz#44cb52f32a809734ca562e685c6473b5754a7818"
+  integrity sha512-sqm9g7mHlPY/43fcSNrCYfOeX9zkTTK+euO5E6+CVijSMm5tTjkVdwdqRkY3ljjIAf8679vps5jKUoJBCLsMDA==
+
 "@types/linkify-it@*":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@types/linkify-it/-/linkify-it-2.1.0.tgz#ea3dd64c4805597311790b61e872cbd1ed2cd806"
@@ -3789,7 +3794,7 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/prettier@^1.18.3":
+"@types/prettier@^1.18.3", "@types/prettier@^1.19.0":
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-1.19.0.tgz#a2502fb7ce9b6626fdbfc2e2a496f472de1bdd05"
   integrity sha512-gDE8JJEygpay7IjA/u3JiIURvwZW08f0cZSZLAzFoX/ZmeqvS0Sqv+97aKuHpNsalAMMhwPe+iAS6fQbfmbt7A==
@@ -4048,6 +4053,13 @@
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/@types/resolve/-/resolve-0.0.8.tgz#f26074d238e02659e323ce1a13d041eee280e194"
   integrity sha512-auApPaJf3NPfe18hSoJkp8EbZzer2ISk7o8mCC3M9he/a04+gbMF97NkpD2S8riMGvm4BMRI59/SZQSaLTKpsQ==
+  dependencies:
+    "@types/node" "*"
+
+"@types/resolve@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@types/resolve/-/resolve-1.14.0.tgz#c95d696264f8e53e764a7c0b83e9317b458b76c3"
+  integrity sha512-bmjNBW6tok+67iOsASeYSJxSgY++BIR35nGyGLORTDirhra9reJ0shgGL3U7KPDUbOBCx8JrlCjd4d/y5uiMRQ==
   dependencies:
     "@types/node" "*"
 
@@ -10289,11 +10301,6 @@ find-file-up@^0.1.2:
     fs-exists-sync "^0.1.0"
     resolve-dir "^0.1.0"
 
-find-line-column@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/find-line-column/-/find-line-column-0.5.2.tgz#db00238ff868551a182e74a103416d295a98c8ca"
-  integrity sha1-2wAjj/hoVRoYLnShA0FtKVqYyMo=
-
 find-pkg@^0.1.0, find-pkg@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/find-pkg/-/find-pkg-0.1.2.tgz#1bdc22c06e36365532e2a248046854b9788da557"
@@ -12588,17 +12595,6 @@ import-sort-config@^6.0.0:
     minimatch "^3.0.4"
     resolve-from "^4.0.0"
 
-import-sort-parser-babylon@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/import-sort-parser-babylon/-/import-sort-parser-babylon-6.0.0.tgz#e1a4c28e0794ad7d9ff36cd045559d8ca8c38be7"
-  integrity sha512-NyShTiNhTh4Vy7kJUVe6CuvOaQAzzfSIT72wtp3CzGjz8bHjNj59DCAjncuviicmDOgVAgmLuSh1WMcLYAMWGg==
-  dependencies:
-    "@babel/core" "^7.2.2"
-    "@babel/parser" "^7.0.0-beta.54"
-    "@babel/traverse" "^7.0.0-beta.54"
-    "@babel/types" "^7.0.0-beta.54"
-    find-line-column "^0.5.2"
-
 import-sort-parser-typescript@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/import-sort-parser-typescript/-/import-sort-parser-typescript-6.0.0.tgz#98e73cef9e077d073e798722ed59e215b51c17e2"
@@ -12611,10 +12607,15 @@ import-sort-parser@^6.0.0:
   resolved "https://registry.yarnpkg.com/import-sort-parser/-/import-sort-parser-6.0.0.tgz#0d901f264d98ed7caaae71f66128a686f828f2f4"
   integrity sha512-H5L+d6HnqHvThB0GmAA3/43Sv74oCwL0iMk3/ixOv0LRJ69rCyHXeG/+UadMHrD2FefEmgPIWboEPAG7gsQrkA==
 
-import-sort-style-module@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/import-sort-style-module/-/import-sort-style-module-6.0.0.tgz#3149df4785bae804ed32630634ed49e405fa7cad"
-  integrity sha512-Oxd256EVt6TAgawhIDuKnNHWumzHMHFWhVncBBvlHVnx69B4GP/Gu4Xo+gjxtqSEKEvam5ajUkNvnsXLDMDjKg==
+import-sort-style-custom@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/import-sort-style-custom/-/import-sort-style-custom-2.0.0.tgz#51221f92adb299459498235adb225b4fbc450868"
+  integrity sha512-SEKPf5zHlMWhd51lSLwfBTtRgBT0HwcJ+xuECQwHl5Iln21spUPwbYgouebleWSB9xa99krgKlT/opwJnTk0EQ==
+  dependencies:
+    escape-string-regexp "^2.0.0"
+    import-sort-parser "^6.0.0"
+    import-sort-style "^6.0.0"
+    tsconfig-resolver "^2.0.1"
 
 import-sort-style@^6.0.0:
   version "6.0.0"
@@ -18535,22 +18536,24 @@ prepend-http@^2.0.0:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"
   integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
 
-prettier-plugin-import-sort@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-import-sort/-/prettier-plugin-import-sort-0.0.3.tgz#5184ba2aba8d88323b16c276bc04e11ebf784504"
-  integrity sha512-wDMt9bGg59H/+OBpD13lKaOYTtyuqmtzzO8ZH7MhpJadm7SZctl6l+OdXmqbK0bxxLYs5LDRxJageUYynmKOmQ==
-  dependencies:
-    import-sort "^6.0.0"
-    import-sort-config "^6.0.0"
-    import-sort-parser-babylon "^6.0.0"
-    import-sort-parser-typescript "^6.0.0"
-
 prettier-plugin-packagejson@^2.0.10:
   version "2.0.10"
   resolved "https://registry.yarnpkg.com/prettier-plugin-packagejson/-/prettier-plugin-packagejson-2.0.10.tgz#65bf6245ee40a4c1e1e9bd69d0b5617b188d45f6"
   integrity sha512-NJtwxysgZPfeexeACcUlPkAE82W7wE9ZTDdrefNLxGRHFXH5R7CRNgF5rLvYy7LdycMsq8UIaHakDGZgLIkB9Q==
   dependencies:
     sort-package-json "1.39.0"
+
+prettier-plugin-sorted@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-sorted/-/prettier-plugin-sorted-1.1.0.tgz#b547f913cf9b21afceee5318d060b2dd896499c1"
+  integrity sha512-dkIQ5RsfteCnaXjuqLdd3+ac4rD7gvDjn4YLJn3qSQdNzmSPBkewzQOMmIX1Nv05OQFs4E25Nz5vjLXmPaXcWw==
+  dependencies:
+    "@types/prettier" "^1.19.0"
+    import-sort "^6.0.0"
+    import-sort-config "^6.0.0"
+    import-sort-parser-typescript "^6.0.0"
+    import-sort-style-custom "^2.0.0"
+    tiny-invariant "^1.1.0"
 
 prettier@^1.18.2, prettier@^1.19.1:
   version "1.19.1"
@@ -22687,7 +22690,7 @@ tiny-inflate@^1.0.0:
   resolved "https://registry.yarnpkg.com/tiny-inflate/-/tiny-inflate-1.0.3.tgz#122715494913a1805166aaf7c93467933eea26c4"
   integrity sha512-pkY1fj1cKHb2seWDy0B16HeWyczlJA9/WW3u3c4z/NiWDsO3DOU5D7nhTLE9CF0yXv/QZFY7sEJmj24dK+Rrqw==
 
-tiny-invariant@^1.0.2:
+tiny-invariant@^1.0.2, tiny-invariant@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.1.0.tgz#634c5f8efdc27714b7f386c35e6760991d230875"
   integrity sha512-ytxQvrb1cPc9WBEI/HSeYYoGD0kWnGEOR8RY6KomWLBVhqz0RgTwVO9dLrGz7dC+nN9llyI7OKAgRq8Vq4ZBSw==
@@ -22931,6 +22934,19 @@ ts-pnp@^1.1.2, ts-pnp@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.1.6.tgz#389a24396d425a0d3162e96d2b4638900fdc289a"
   integrity sha512-CrG5GqAAzMT7144Cl+UIFP7mz/iIhiy+xQ6GGcnjTezhALT02uPMRw7tgDSESgB5MsfKt55+GPWw4ir1kVtMIQ==
+
+tsconfig-resolver@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/tsconfig-resolver/-/tsconfig-resolver-2.0.1.tgz#166e3d2841df1bc58c5017cc8b0db4ee21ab9482"
+  integrity sha512-vZ3zrDMtdLF2bQnNIQ9tPfBz09xdtfE8fhVTQfdvxuMM1pkZbWirTQryjFG2xC1l1hIbeKl33bPd/O9LHn+qIQ==
+  dependencies:
+    "@types/json5" "^0.0.30"
+    "@types/resolve" "^1.14.0"
+    json5 "^2.1.1"
+    prettier-plugin-packagejson "^2.0.10"
+    resolve "^1.15.1"
+    strip-bom "^4.0.0"
+    type-fest "^0.12.0"
 
 tslib@1.10.0:
   version "1.10.0"
