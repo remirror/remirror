@@ -1,4 +1,14 @@
 import {
+  Suggester,
+  escapeChar,
+  getRegexPrefix,
+  isInvalidSplitReason,
+  isRemovedReason,
+  isSplitReason,
+  regexToString,
+} from 'prosemirror-suggest';
+
+import {
   Attrs,
   CommandMarkTypeParams,
   EditorState,
@@ -18,15 +28,6 @@ import {
   removeMark,
   replaceText,
 } from '@remirror/core';
-import {
-  Suggester,
-  escapeChar,
-  getRegexPrefix,
-  isInvalidSplitReason,
-  isRemovedReason,
-  isSplitReason,
-  regexToString,
-} from 'prosemirror-suggest';
 
 import {
   MentionExtensionAttrs,

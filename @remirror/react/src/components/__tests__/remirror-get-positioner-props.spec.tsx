@@ -1,7 +1,8 @@
-import { PlainObject } from '@remirror/core';
-import { createTestManager } from '@remirror/test-fixtures';
 import { render } from '@testing-library/react';
 import React, { FunctionComponent, RefAttributes, forwardRef } from 'react';
+
+import { PlainObject } from '@remirror/core';
+import { createTestManager } from '@remirror/test-fixtures';
 
 import { Remirror } from '..';
 

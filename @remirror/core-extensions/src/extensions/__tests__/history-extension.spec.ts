@@ -1,5 +1,6 @@
-import { EditorState } from '@remirror/core';
 import { renderEditor } from 'jest-remirror';
+
+import { EditorState } from '@remirror/core';
 
 import { HistoryExtension } from '../history-extension';
 

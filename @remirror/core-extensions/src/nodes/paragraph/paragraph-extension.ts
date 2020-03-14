@@ -1,5 +1,6 @@
-import { CommandNodeTypeParams, NodeExtension, NodeExtensionSpec, NodeGroup, Tags } from '@remirror/core';
 import { setBlockType } from 'prosemirror-commands';
+
+import { CommandNodeTypeParams, NodeExtension, NodeExtensionSpec, NodeGroup, Tags } from '@remirror/core';
 
 import { ALIGN_PATTERN, INDENT_ATTRIBUTE, INDENT_LEVELS } from '../node-constants';
 import { marginToIndent } from '../node-utils';

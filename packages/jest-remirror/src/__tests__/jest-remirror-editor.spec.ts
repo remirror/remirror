@@ -1,3 +1,6 @@
+import { cleanup } from '@testing-library/react';
+import { Plugin } from 'prosemirror-state';
+
 import { Extension, toHTML } from '@remirror/core';
 import {
   BlockquoteExtension,
@@ -5,8 +8,6 @@ import {
   HeadingExtension,
   LinkExtension,
 } from '@remirror/core-extensions';
-import { cleanup } from '@testing-library/react';
-import { Plugin } from 'prosemirror-state';
 
 import { renderEditor } from '../jest-remirror-editor';
 

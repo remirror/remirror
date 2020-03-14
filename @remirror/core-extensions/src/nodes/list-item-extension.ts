@@ -1,3 +1,5 @@
+import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list';
+
 import {
   ExtensionManagerNodeTypeParams,
   KeyBindings,
@@ -5,7 +7,6 @@ import {
   NodeExtensionSpec,
   convertCommand,
 } from '@remirror/core';
-import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list';
 
 export class ListItemExtension extends NodeExtension {
   get name() {

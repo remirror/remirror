@@ -1,3 +1,5 @@
+import { UnionToIntersection } from 'type-fest';
+
 import {
   ActionMethod,
   AnyConstructor,
@@ -7,7 +9,6 @@ import {
   Key,
   StringKey,
 } from '@remirror/core-types';
-import { UnionToIntersection } from 'type-fest';
 
 import { Extension } from './extension';
 import { MarkExtension } from './mark-extension';

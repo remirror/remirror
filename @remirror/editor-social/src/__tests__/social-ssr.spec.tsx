@@ -5,9 +5,10 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
+import { renderToString } from 'react-dom/server';
+
 import { noop } from '@remirror/core';
 import { docNodeBasicJSON } from '@remirror/test-fixtures';
-import { renderToString } from 'react-dom/server';
 
 import { SocialEditor } from '..';
 

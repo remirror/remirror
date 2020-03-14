@@ -1,6 +1,7 @@
 import { ThemeContext, css } from '@emotion/core';
-import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core-types';
 import { Context, createContext } from 'react';
+
+import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core-types';
 
 import { baseTheme } from './ui-theme';
 import { getColorModes, getFactory, sx } from './ui-utils';

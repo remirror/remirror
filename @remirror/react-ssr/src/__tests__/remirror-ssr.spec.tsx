@@ -1,7 +1,8 @@
-import { ExtensionManager } from '@remirror/core';
-import { createTestManager, helpers, initialJson } from '@remirror/test-fixtures';
 import { render } from '@testing-library/react';
 import React from 'react';
+
+import { ExtensionManager } from '@remirror/core';
+import { createTestManager, helpers, initialJson } from '@remirror/test-fixtures';
 
 import { RemirrorSSR } from '..';
 

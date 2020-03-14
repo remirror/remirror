@@ -1,5 +1,6 @@
-import { Fragment, Mark, ProsemirrorNode } from '@remirror/core';
 import { MarkdownSerializer } from 'prosemirror-markdown';
+
+import { Fragment, Mark, ProsemirrorNode } from '@remirror/core';
 
 function isPlainURL(link: Mark, parent: Fragment, index: number, side: Side) {
   if (link.attrs.title) {

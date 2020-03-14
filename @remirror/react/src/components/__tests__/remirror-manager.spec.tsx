@@ -1,9 +1,10 @@
-import { ExtensionManager } from '@remirror/core';
-import { ParagraphExtension, PlaceholderExtension, baseExtensions } from '@remirror/core-extensions';
-import { TestExtension } from '@remirror/test-fixtures';
 import { RenderResult, render } from '@testing-library/react';
 import { EditorView } from 'prosemirror-view';
 import React, { FC } from 'react';
+
+import { ExtensionManager } from '@remirror/core';
+import { ParagraphExtension, PlaceholderExtension, baseExtensions } from '@remirror/core-extensions';
+import { TestExtension } from '@remirror/test-fixtures';
 
 import { useRemirrorManager } from '../../hooks/context-hooks';
 import { RemirrorExtension } from '../remirror-extension';

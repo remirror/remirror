@@ -1,3 +1,7 @@
+import { setBlockType } from 'prosemirror-commands';
+import { TextSelection } from 'prosemirror-state';
+import refractor from 'refractor/core';
+
 import {
   CommandNodeTypeParams,
   ExtensionManagerNodeTypeParams,
@@ -19,9 +23,6 @@ import {
   removeNodeAtPosition,
   toggleBlockItem,
 } from '@remirror/core';
-import { setBlockType } from 'prosemirror-commands';
-import { TextSelection } from 'prosemirror-state';
-import refractor from 'refractor/core';
 
 import { CodeBlockComponent } from './code-block-component';
 import createCodeBlockPlugin from './code-block-plugin';

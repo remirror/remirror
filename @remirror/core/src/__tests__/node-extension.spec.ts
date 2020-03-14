@@ -1,8 +1,9 @@
+import { pmBuild } from 'jest-prosemirror';
+
 import { NodeGroup } from '@remirror/core-constants';
 import { NodeExtensionSpec } from '@remirror/core-types';
 import { fromHTML } from '@remirror/core-utils';
 import { createBaseTestManager } from '@remirror/test-fixtures';
-import { pmBuild } from 'jest-prosemirror';
 
 import { NodeExtension } from '../';
 

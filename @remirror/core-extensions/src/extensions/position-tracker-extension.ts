@@ -1,3 +1,6 @@
+import { Plugin } from 'prosemirror-state';
+import { Decoration, DecorationSet } from 'prosemirror-view';
+
 import { Extension } from '@remirror/core';
 import { isNullOrUndefined, isNumber, isString } from '@remirror/core-helpers';
 import {
@@ -9,8 +12,6 @@ import {
   Transaction,
 } from '@remirror/core-types';
 import { getPluginMeta, getPluginState } from '@remirror/core-utils';
-import { Plugin } from 'prosemirror-state';
-import { Decoration, DecorationSet } from 'prosemirror-view';
 
 const CLEAR = Symbol('CLEAR');
 

@@ -1,6 +1,7 @@
+import { Plugin, PluginKey } from 'prosemirror-state';
+
 import { EditorSchema, EditorState } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
-import { Plugin, PluginKey } from 'prosemirror-state';
 
 import { SuggestState } from './suggest-state';
 import { Suggester } from './suggest-types';

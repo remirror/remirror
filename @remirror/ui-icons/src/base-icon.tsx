@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import VisuallyHidden from '@reach/visually-hidden';
+import { Fragment, forwardRef, useMemo } from 'react';
+
 import { omitUndefined, uniqueId } from '@remirror/core-helpers';
 import { KeyOfThemeVariant, RemirrorInterpolation } from '@remirror/core-types';
 import { useRemirrorTheme } from '@remirror/ui';
-import { Fragment, forwardRef, useMemo } from 'react';
 
 export interface IconProps {
   /**

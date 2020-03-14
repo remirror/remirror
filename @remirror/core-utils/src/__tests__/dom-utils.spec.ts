@@ -1,5 +1,3 @@
-import { NodeMatch } from '@remirror/core-types';
-import { docNodeBasicJSON } from '@remirror/test-fixtures';
 import domino from 'domino';
 import {
   atomInline,
@@ -15,6 +13,9 @@ import {
   schema as testSchema,
 } from 'jest-prosemirror';
 import { TextSelection } from 'prosemirror-state';
+
+import { NodeMatch } from '@remirror/core-types';
+import { docNodeBasicJSON } from '@remirror/test-fixtures';
 
 import {
   atDocEnd,

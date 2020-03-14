@@ -1,8 +1,9 @@
+import { Plugin, Selection } from 'prosemirror-state';
+
 import { Extension } from '@remirror/core';
 import { Cast, isAndroidOS } from '@remirror/core-helpers';
 import { EditorView } from '@remirror/core-types';
 import { getPluginState, isTextSelection, nodeNameMatchesList } from '@remirror/core-utils';
-import { Plugin, Selection } from 'prosemirror-state';
 
 import { CompositionExtensionOptions, InputEvent } from '../../core-extension-types';
 import { CompositionState } from './composition-state';

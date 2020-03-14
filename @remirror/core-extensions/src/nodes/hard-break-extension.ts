@@ -1,3 +1,5 @@
+import { exitCode } from 'prosemirror-commands';
+
 import {
   ExtensionManagerNodeTypeParams,
   KeyBindings,
@@ -6,7 +8,6 @@ import {
   chainCommands,
   convertCommand,
 } from '@remirror/core';
-import { exitCode } from 'prosemirror-commands';
 
 export class HardBreakExtension extends NodeExtension {
   get name() {

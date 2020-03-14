@@ -1,6 +1,7 @@
-import { ManagedRemirrorProvider, RemirrorManager } from '@remirror/react';
 import { render } from '@testing-library/react';
 import React from 'react';
+
+import { ManagedRemirrorProvider, RemirrorManager } from '@remirror/react';
 
 import { ProsemirrorDevTools } from '../dev-components';
 

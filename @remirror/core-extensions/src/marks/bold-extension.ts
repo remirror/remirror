@@ -1,3 +1,5 @@
+import { toggleMark } from 'prosemirror-commands';
+
 import {
   CommandMarkTypeParams,
   ExtensionManagerMarkTypeParams,
@@ -10,7 +12,6 @@ import {
   isString,
   markInputRule,
 } from '@remirror/core';
-import { toggleMark } from 'prosemirror-commands';
 
 export class BoldExtension extends MarkExtension {
   get name() {

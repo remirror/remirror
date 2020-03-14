@@ -1,3 +1,6 @@
+import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirror-collab';
+import { Step } from 'prosemirror-transform';
+
 import {
   Attrs,
   CommandParams,
@@ -11,8 +14,6 @@ import {
   isNumber,
   uniqueId,
 } from '@remirror/core';
-import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirror-collab';
-import { Step } from 'prosemirror-transform';
 
 import { CollaborationAttrs, CollaborationExtensionOptions } from './collaboration-types';
 

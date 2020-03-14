@@ -1,7 +1,8 @@
-import { fromHTML, toHTML } from '@remirror/core';
-import { createBaseTestManager } from '@remirror/test-fixtures';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
+
+import { fromHTML, toHTML } from '@remirror/core';
+import { createBaseTestManager } from '@remirror/test-fixtures';
 
 import { BoldExtension } from '../../marks';
 import { HeadingExtension, HeadingExtensionOptions } from '../heading-extension';

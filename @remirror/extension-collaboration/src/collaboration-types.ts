@@ -1,5 +1,6 @@
-import { Attrs, BaseExtensionOptions, EditorSchema, PlainObject, Transaction } from '@remirror/core';
 import { Step } from 'prosemirror-transform';
+
+import { Attrs, BaseExtensionOptions, EditorSchema, PlainObject, Transaction } from '@remirror/core';
 
 export interface Sendable {
   version: number;

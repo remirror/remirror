@@ -1,5 +1,8 @@
 import { isUndefined } from 'util';
 
+import { MarkSpec, NodeSpec } from 'prosemirror-model';
+import { Selection as PMSelection } from 'prosemirror-state';
+
 import { bool, isNullOrUndefined, keys } from '@remirror/core-helpers';
 import {
   AttrsParams,
@@ -23,8 +26,6 @@ import {
   Transaction,
   TransactionParams,
 } from '@remirror/core-types';
-import { MarkSpec, NodeSpec } from 'prosemirror-model';
-import { Selection as PMSelection } from 'prosemirror-state';
 
 import { isEditorState, isNodeSelection, isResolvedPos, isSelection, isTextDOMNode } from './dom-utils';
 

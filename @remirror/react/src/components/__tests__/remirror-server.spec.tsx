@@ -5,10 +5,11 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { EDITOR_CLASS_NAME } from '@remirror/core';
-import { createTestManager, docNodeSimpleJSON } from '@remirror/test-fixtures';
 import { Fragment } from 'react';
 import { renderToString } from 'react-dom/server';
+
+import { EDITOR_CLASS_NAME } from '@remirror/core';
+import { createTestManager, docNodeSimpleJSON } from '@remirror/test-fixtures';
 
 import { Remirror } from '..';
 

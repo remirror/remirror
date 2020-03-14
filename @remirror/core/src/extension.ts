@@ -1,4 +1,8 @@
 import { Interpolation } from '@emotion/core';
+import { InputRule } from 'prosemirror-inputrules';
+import { PluginKey } from 'prosemirror-state';
+import { Suggester } from 'prosemirror-suggest';
+
 import { ExtensionType, RemirrorClassName, Tags } from '@remirror/core-constants';
 import { deepMerge, isString } from '@remirror/core-helpers';
 import {
@@ -19,9 +23,6 @@ import {
   PlainObject,
   ProsemirrorPlugin,
 } from '@remirror/core-types';
-import { InputRule } from 'prosemirror-inputrules';
-import { PluginKey } from 'prosemirror-state';
-import { Suggester } from 'prosemirror-suggest';
 
 /**
  * These are the default options merged into every extension.

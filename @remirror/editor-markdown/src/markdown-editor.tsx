@@ -1,6 +1,12 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
+import { FC, Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import bash from 'refractor/lang/bash';
+import markdown from 'refractor/lang/markdown';
+import tsx from 'refractor/lang/tsx';
+import typescript from 'refractor/lang/typescript';
+
 import {
   DocExtension,
   EditorState,
@@ -39,11 +45,6 @@ import {
 import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { ImageExtension } from '@remirror/extension-image';
 import { RemirrorProvider, RemirrorProviderProps, RemirrorStateListenerParams } from '@remirror/react';
-import { FC, Fragment, useCallback, useEffect, useMemo, useState } from 'react';
-import bash from 'refractor/lang/bash';
-import markdown from 'refractor/lang/markdown';
-import tsx from 'refractor/lang/tsx';
-import typescript from 'refractor/lang/typescript';
 
 import { fromMarkdown } from './from-markdown';
 import { toMarkdown } from './to-markdown';

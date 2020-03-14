@@ -5,9 +5,10 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
+import { renderToString } from 'react-dom/server';
+
 import { ExtensionManager } from '@remirror/core';
 import { createTestManager, helpers, initialJson } from '@remirror/test-fixtures';
-import { renderToString } from 'react-dom/server';
 
 import { RemirrorSSR } from '..';
 

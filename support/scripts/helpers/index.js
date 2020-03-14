@@ -6,9 +6,7 @@ const exec = util.promisify(require('child_process').exec);
 const separator = '__';
 
 const unmangleScopedPackage = mangledName => {
-  return mangledName.includes(separator)
-    ? `@${mangledName.replace(separator, '/')}`
-    : mangledName;
+  return mangledName.includes(separator) ? `@${mangledName.replace(separator, '/')}` : mangledName;
 };
 
 const mangleScopedPackageName = packageName => {

@@ -1,4 +1,6 @@
 import { SerializedStyles, css as serializeStyles } from '@emotion/core';
+import { css } from '@styled-system/css';
+
 import { deepMerge, get, isArray, isFunction, isPlainObject, isString } from '@remirror/core-helpers';
 import {
   RemirrorTheme,
@@ -7,7 +9,6 @@ import {
   ThemeParams,
   WithVariants,
 } from '@remirror/core-types';
-import { css } from '@styled-system/css';
 
 /**
  * Applies the selected color mode to the theme.

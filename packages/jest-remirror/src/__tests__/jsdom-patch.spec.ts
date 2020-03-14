@@ -1,5 +1,6 @@
-import { Cast } from '@remirror/core';
 import { EditorView } from 'prosemirror-view';
+
+import { Cast } from '@remirror/core';
 
 import { NullSelectionReader, jsdomSelectionPatch } from '../jsdom-patch';
 import { jsdomPolyfill } from '../jsdom-polyfills';

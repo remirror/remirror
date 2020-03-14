@@ -1,3 +1,5 @@
+import { toggleMark } from 'prosemirror-commands';
+
 import {
   CommandMarkTypeParams,
   ExtensionManagerMarkTypeParams,
@@ -7,7 +9,6 @@ import {
   MarkGroup,
   convertCommand,
 } from '@remirror/core';
-import { toggleMark } from 'prosemirror-commands';
 
 export class UnderlineExtension extends MarkExtension {
   get name() {

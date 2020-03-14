@@ -1,3 +1,6 @@
+import { lift, setBlockType, wrapIn } from 'prosemirror-commands';
+import { liftListItem, wrapInList } from 'prosemirror-schema-list';
+
 import { isFunction, isNumber } from '@remirror/core-helpers';
 import {
   AnyFunction,
@@ -13,8 +16,6 @@ import {
   RangeParams,
   TransformTransactionParams,
 } from '@remirror/core-types';
-import { lift, setBlockType, wrapIn } from 'prosemirror-commands';
-import { liftListItem, wrapInList } from 'prosemirror-schema-list';
 
 import { getMarkRange, isMarkType, isNodeType } from './dom-utils';
 import { findParentNode, isNodeActive, selectionEmpty } from './prosemirror-utils';

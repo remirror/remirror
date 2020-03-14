@@ -1,10 +1,11 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { createTestManager } from '@remirror/test-fixtures';
 import { RenderResult, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { FunctionComponent, Ref, RefAttributes, forwardRef } from 'react';
+
+import { createTestManager } from '@remirror/test-fixtures';
 
 import { Remirror } from '..';
 

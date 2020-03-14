@@ -1,3 +1,7 @@
+import { createEditor, doc, p } from 'jest-prosemirror';
+import { EditorView } from 'prosemirror-view';
+import React, { FC } from 'react';
+
 import { EMPTY_PARAGRAPH_NODE, Tags } from '@remirror/core-constants';
 import { Cast } from '@remirror/core-helpers';
 import {
@@ -15,9 +19,6 @@ import {
   helpers as initHelpers,
 } from '@remirror/test-fixtures';
 import { defaultRemirrorThemeValue } from '@remirror/ui';
-import { createEditor, doc, p } from 'jest-prosemirror';
-import { EditorView } from 'prosemirror-view';
-import React, { FC } from 'react';
 
 import { Extension } from '../extension';
 import { ExtensionManager, isExtensionManager } from '../extension-manager';

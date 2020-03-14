@@ -23,9 +23,7 @@ const configure = (packageJson, path) => {
   const input = join(path, 'src', 'index.ts');
   const deps = []
     .concat(packageJson.dependencies ? Object.keys(packageJson.dependencies) : [])
-    .concat(
-      packageJson.peerDependencies ? Object.keys(packageJson.peerDependencies) : [],
-    );
+    .concat(packageJson.peerDependencies ? Object.keys(packageJson.peerDependencies) : []);
 
   const plugins = [
     // Allow Rollup to resolve modules from `node_modules`, since it only
@@ -98,9 +96,7 @@ const configure = (packageJson, path) => {
     preserveModules: true,
   };
 
-  return [(packageJson.module || packageJson.cjs) && bundledOutput, moduleOutput].filter(
-    Boolean,
-  );
+  return [(packageJson.module || packageJson.cjs) && bundledOutput, moduleOutput].filter(Boolean);
 };
 
 /**

@@ -1,9 +1,10 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
+import { ProviderProps, ReactElement } from 'react';
+
 import { AnyExtension, MakeOptional } from '@remirror/core';
 import { RemirrorType, oneChildOnly } from '@remirror/react-utils';
-import { ProviderProps, ReactElement } from 'react';
 
 import { useRemirrorManager } from '../hooks/context-hooks';
 import { defaultProps } from '../react-constants';

@@ -1,3 +1,7 @@
+import { Node as PMNode } from 'prosemirror-model';
+import React from 'react';
+import TestRenderer from 'react-test-renderer';
+
 import {
   DocExtension,
   ExtensionManager,
@@ -8,9 +12,6 @@ import {
 } from '@remirror/core';
 import { BoldExtension, CodeBlockExtension, ParagraphExtension } from '@remirror/core-extensions';
 import { createTestManager, simpleJSON, testJSON } from '@remirror/test-fixtures';
-import { Node as PMNode } from 'prosemirror-model';
-import React from 'react';
-import TestRenderer from 'react-test-renderer';
 
 import { ReactSerializer } from '../react-serializer';
 

@@ -1,3 +1,5 @@
+import { Plugin, TextSelection } from 'prosemirror-state';
+
 import {
   Attrs,
   Cast,
@@ -19,7 +21,6 @@ import {
   selectionEmpty,
   updateMark,
 } from '@remirror/core';
-import { Plugin, TextSelection } from 'prosemirror-state';
 
 export interface LinkExtensionOptions extends MarkExtensionOptions {
   /**

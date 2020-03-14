@@ -1,4 +1,3 @@
-import { omit, pick } from '@remirror/core-helpers';
 import {
   atomBlock,
   atomContainer,
@@ -18,6 +17,8 @@ import {
 import { Schema } from 'prosemirror-model';
 import { marks, nodes } from 'prosemirror-schema-basic';
 import { NodeSelection, Selection, TextSelection } from 'prosemirror-state';
+
+import { omit, pick } from '@remirror/core-helpers';
 
 import {
   cloneTransaction,

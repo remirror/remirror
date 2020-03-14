@@ -1,3 +1,7 @@
+import { InputRule } from 'prosemirror-inputrules';
+import { Fragment, Slice } from 'prosemirror-model';
+import { Plugin, TextSelection } from 'prosemirror-state';
+
 import { findMatches, isFunction, isNullOrUndefined } from '@remirror/core-helpers';
 import {
   EditorSchema,
@@ -7,9 +11,6 @@ import {
   ProsemirrorNode,
   RegExpParams,
 } from '@remirror/core-types';
-import { InputRule } from 'prosemirror-inputrules';
-import { Fragment, Slice } from 'prosemirror-model';
-import { Plugin, TextSelection } from 'prosemirror-state';
 
 /**
  * Creates an input rule based on the provided regex for the provided mark type

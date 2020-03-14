@@ -1,9 +1,10 @@
-import { BaseExtensionOptions } from '@remirror/core';
 import {
   SuggestChangeHandlerParams,
   SuggestExitHandlerParams,
   SuggestKeyBindingMap,
 } from 'prosemirror-suggest';
+
+import { BaseExtensionOptions } from '@remirror/core';
 
 import AliasData from './data/aliases';
 import CategoryData from './data/categories';

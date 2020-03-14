@@ -1,6 +1,3 @@
-import { fromHTML, toHTML } from '@remirror/core';
-import { BaseKeymapExtension } from '@remirror/core-extensions';
-import { createBaseTestManager } from '@remirror/test-fixtures';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import typescriptPlugin from 'prettier/parser-typescript';
@@ -9,6 +6,10 @@ import javascript from 'refractor/lang/javascript';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
+
+import { fromHTML, toHTML } from '@remirror/core';
+import { BaseKeymapExtension } from '@remirror/core-extensions';
+import { createBaseTestManager } from '@remirror/test-fixtures';
 
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '../';
 import { CodeBlockFormatter } from '../code-block-types';

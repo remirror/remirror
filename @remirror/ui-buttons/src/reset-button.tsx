@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useRemirrorTheme } from '@remirror/ui';
 import { forwardRef } from 'react';
+
+import { useRemirrorTheme } from '@remirror/ui';
 
 export type ResetButtonProps = JSX.IntrinsicElements['button'];
 

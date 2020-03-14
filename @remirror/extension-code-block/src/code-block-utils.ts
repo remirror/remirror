@@ -1,3 +1,12 @@
+// Refractor languages
+import { TextSelection } from 'prosemirror-state';
+import { Decoration } from 'prosemirror-view';
+import refractor, { RefractorNode, RefractorSyntax } from 'refractor/core';
+import clike from 'refractor/lang/clike';
+import css from 'refractor/lang/css';
+import js from 'refractor/lang/javascript';
+import markup from 'refractor/lang/markup';
+
 import {
   Attrs,
   EditorState,
@@ -17,14 +26,6 @@ import {
   isString,
   uniqueArray,
 } from '@remirror/core';
-// Refractor languages
-import { TextSelection } from 'prosemirror-state';
-import { Decoration } from 'prosemirror-view';
-import refractor, { RefractorNode, RefractorSyntax } from 'refractor/core';
-import clike from 'refractor/lang/clike';
-import css from 'refractor/lang/css';
-import js from 'refractor/lang/javascript';
-import markup from 'refractor/lang/markup';
 
 import { CodeBlockAttrs, CodeBlockExtensionOptions, FormattedContent } from './code-block-types';
 

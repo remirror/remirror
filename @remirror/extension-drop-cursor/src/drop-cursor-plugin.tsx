@@ -1,6 +1,11 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
+import { Plugin } from 'prosemirror-state';
+import { dropPoint, insertPoint } from 'prosemirror-transform';
+import { Decoration, DecorationSet } from 'prosemirror-view';
+import { ComponentType } from 'react';
+
 import {
   EditorView,
   Extension,
@@ -13,10 +18,6 @@ import {
   throttle,
 } from '@remirror/core';
 import { PortalContainer } from '@remirror/react-portals';
-import { Plugin } from 'prosemirror-state';
-import { dropPoint, insertPoint } from 'prosemirror-transform';
-import { Decoration, DecorationSet } from 'prosemirror-view';
-import { ComponentType } from 'react';
 
 import { DropCursorComponent } from './drop-cursor-component';
 import { DropCursorExtensionOptions } from './drop-cursor-types';

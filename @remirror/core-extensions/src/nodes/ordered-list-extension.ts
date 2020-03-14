@@ -1,3 +1,5 @@
+import { wrappingInputRule } from 'prosemirror-inputrules';
+
 import {
   CommandNodeTypeParams,
   ExtensionManagerNodeTypeParams,
@@ -9,7 +11,6 @@ import {
   isElementDOMNode,
   toggleList,
 } from '@remirror/core';
-import { wrappingInputRule } from 'prosemirror-inputrules';
 
 export class OrderedListExtension extends NodeExtension {
   get name() {

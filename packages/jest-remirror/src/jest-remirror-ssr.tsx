@@ -1,7 +1,8 @@
-import { AnyExtension, ExtensionManager } from '@remirror/core';
-import { Remirror, RemirrorProps } from '@remirror/react';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+
+import { AnyExtension, ExtensionManager } from '@remirror/core';
+import { Remirror, RemirrorProps } from '@remirror/react';
 
 import { nodeExtensions } from './jest-remirror-schema';
 

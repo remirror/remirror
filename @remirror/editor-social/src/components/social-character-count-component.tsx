@@ -1,8 +1,9 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { useRemirrorTheme } from '@remirror/ui';
 import { FC } from 'react';
+
+import { useRemirrorTheme } from '@remirror/ui';
 
 export interface CharacterCountIndicatorProps {
   /**

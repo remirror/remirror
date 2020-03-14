@@ -3,13 +3,7 @@ const data = require('emoji-mart/data/all.json');
 const { join, resolve } = require('path');
 const { writeFileSync } = require('fs');
 const { execSync } = require('child_process');
-const {
-  startCase,
-  uniqueArray,
-  omit,
-  entries,
-  capitalize,
-} = require('../core-helpers/lib');
+const { startCase, uniqueArray, omit, entries, capitalize } = require('../core-helpers/lib');
 
 const dir = (...paths) => resolve(__dirname, join(...paths));
 const formatFile = path => execSync(`prettier ${path} --write`, { stdio: 'inherit' });
@@ -61,12 +55,8 @@ const generateData = () => {
       const other = enhancedEmojis[name] || enhancedEmojis[`flag-${name}`];
       const firstKeyword = entry.keywords[0];
       const category = entry.category;
-      const description = other
-        ? other[DESCRIPTION]
-        : startCase(getStartCase(category, name, firstKeyword));
-      const keywords = other
-        ? uniqueArray([...entry.keywords, ...(other[KEYWORDS] || [])])
-        : entry.keywords;
+      const description = other ? other[DESCRIPTION] : startCase(getStartCase(category, name, firstKeyword));
+      const keywords = other ? uniqueArray([...entry.keywords, ...(other[KEYWORDS] || [])]) : entry.keywords;
 
       const { fitzpatrick_scale: skinVariations } = entry;
 
@@ -88,10 +78,7 @@ const generateData = () => {
     .reduce((acc, { id, name }) => ({ ...acc, [id]: name }), {});
 
   writeFileSync(files.emojis, createFileContents(emojis, 'emojis', TYPES['emoji']));
-  writeFileSync(
-    files.categories,
-    createFileContents(categories, 'categories', TYPES['categories']),
-  );
+  writeFileSync(files.categories, createFileContents(categories, 'categories', TYPES['categories']));
 
   Object.values(files).forEach(path => formatFile(path));
 };

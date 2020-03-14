@@ -1,4 +1,6 @@
 import { Interpolation } from '@emotion/core';
+import { textblockTypeInputRule } from 'prosemirror-inputrules';
+
 import {
   CommandNodeTypeParams,
   EDITOR_CLASS_SELECTOR,
@@ -10,7 +12,6 @@ import {
   convertCommand,
   toggleBlockItem,
 } from '@remirror/core';
-import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 export class CodeBlockExtension extends NodeExtension {
   get name() {

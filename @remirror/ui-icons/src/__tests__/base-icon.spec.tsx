@@ -1,7 +1,8 @@
-import { Merge } from '@remirror/core-helpers';
-import { RemirrorThemeProvider, baseTheme } from '@remirror/ui';
 import { render } from '@testing-library/react';
 import React from 'react';
+
+import { Merge } from '@remirror/core-helpers';
+import { RemirrorThemeProvider, baseTheme } from '@remirror/ui';
 
 import { Icon } from '../base-icon';
 

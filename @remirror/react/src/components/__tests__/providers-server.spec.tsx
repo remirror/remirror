@@ -5,8 +5,9 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { createTestManager, docNodeBasicJSON } from '@remirror/test-fixtures';
 import { renderToStaticMarkup } from 'react-dom/server';
+
+import { createTestManager, docNodeBasicJSON } from '@remirror/test-fixtures';
 
 import { useRemirrorContext } from '../../hooks/context-hooks';
 import { RemirrorManager } from '../remirror-manager';

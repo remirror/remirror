@@ -1,8 +1,9 @@
-import { MarkGroup, NodeGroup, Tags } from '@remirror/core-constants';
-import { PortalContainer } from '@remirror/react-portals';
 import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
 import { ComponentType } from 'react';
+
+import { MarkGroup, NodeGroup, Tags } from '@remirror/core-constants';
+import { PortalContainer } from '@remirror/react-portals';
 
 import {
   EditorSchema,

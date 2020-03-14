@@ -1,4 +1,3 @@
-import { NodeGroup } from '@remirror/core-constants';
 import { NodeSpec, Schema } from 'prosemirror-model';
 import { marks, nodes } from 'prosemirror-schema-basic';
 import {
@@ -7,6 +6,8 @@ import {
   orderedList as baseOrderedList,
 } from 'prosemirror-schema-list';
 import { tableNodes } from 'prosemirror-tables';
+
+import { NodeGroup } from '@remirror/core-constants';
 
 const {
   doc,

@@ -1,8 +1,9 @@
-import { fromHTML, toHTML } from '@remirror/core';
-import { createBaseTestManager } from '@remirror/test-fixtures';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import { SuggestCommandParams } from 'prosemirror-suggest';
+
+import { fromHTML, toHTML } from '@remirror/core';
+import { createBaseTestManager } from '@remirror/test-fixtures';
 
 import { MentionExtension, MentionExtensionOptions } from '../';
 import { MentionExtensionSuggestCommand } from '../mention-types';

@@ -1,5 +1,6 @@
-import { EditorView, Transaction } from '@remirror/core-types';
 import { Selection } from 'prosemirror-state';
+
+import { EditorView, Transaction } from '@remirror/core-types';
 
 /**
  * Manages the composition state of the editor.

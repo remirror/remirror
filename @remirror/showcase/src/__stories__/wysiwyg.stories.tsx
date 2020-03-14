@@ -1,6 +1,7 @@
-import { ProsemirrorDevTools } from '@remirror/dev';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
+
+import { ProsemirrorDevTools } from '@remirror/dev';
 
 import { ExampleWysiwygEditor, WYSIWYG_SHOWCASE_CONTENT } from '../wysiwyg';
 

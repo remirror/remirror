@@ -1,8 +1,9 @@
+import { pmBuild } from 'jest-prosemirror';
+import { renderEditor } from 'jest-remirror';
+
 import { fromHTML, toHTML } from '@remirror/core';
 import { BaseKeymapExtension } from '@remirror/core-extensions';
 import { createBaseTestManager } from '@remirror/test-fixtures';
-import { pmBuild } from 'jest-prosemirror';
-import { renderEditor } from 'jest-remirror';
 
 import { TableCellExtension, TableExtension, TableRowExtension } from '..';
 

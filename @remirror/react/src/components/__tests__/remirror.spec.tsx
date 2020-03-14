@@ -1,9 +1,10 @@
-import { fromHTML } from '@remirror/core';
-import { createTestManager } from '@remirror/test-fixtures';
 import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+
+import { fromHTML } from '@remirror/core';
+import { createTestManager } from '@remirror/test-fixtures';
 
 import { InjectedRemirrorProps } from '../../react-types';
 import { Remirror } from '../';
