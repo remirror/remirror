@@ -1,7 +1,8 @@
-import { Merge } from '@remirror/core-helpers';
-import { RemirrorThemeProvider, baseTheme } from '@remirror/ui';
 import { render } from '@testing-library/react';
 import React from 'react';
+
+import { Merge } from '@remirror/core-helpers';
+import { RemirrorThemeProvider, baseTheme } from '@remirror/ui';
 
 import { Icon } from '../base-icon';
 
@@ -14,6 +15,7 @@ describe('styles', () => {
     );
 
     const svg = container.querySelector('svg');
+
     expect(svg).toHaveStyle(
       `color: ${baseTheme.colors.text}; background-color: ${baseTheme.colors.background};`,
     );
@@ -41,6 +43,7 @@ describe('styles', () => {
     );
 
     const svg = container.querySelector('svg');
+
     expect(svg).toHaveStyle(`color: blue; background-color: ${baseTheme.colors.background};`);
   });
 
@@ -52,6 +55,7 @@ describe('styles', () => {
     );
 
     const svg = container.querySelector('svg');
+
     expect(svg).toHaveStyle(
       `color: ${baseTheme.colors.background}; background-color: ${baseTheme.colors.text};`,
     );
@@ -66,6 +70,7 @@ test('standalone', () => {
   );
 
   const svg = getByRole('img');
+
   expect(svg.querySelector('title')).toHaveTextContent('test icon');
 
   rerender(

@@ -12,8 +12,6 @@ const tsProjectRules = {
   '@typescript-eslint/no-misused-promises': 'warn',
   '@typescript-eslint/prefer-includes': 'warn',
   '@typescript-eslint/prefer-string-starts-ends-with': 'warn',
-  // TODO : test for false positives again
-  // '@typescript-eslint/no-unnecessary-condition': ['warn', { ignoreRhs: true }],
 };
 
 const schemaJsonFilePath = `${__dirname}/docs/.cache/caches/gatsby-plugin-typegen/schema.json`;
@@ -41,10 +39,11 @@ module.exports = {
     'prettier',
     'prettier/@typescript-eslint',
     'prettier/react',
-    // 'plugin:jsx-a11y/recommended',
+    'plugin:jest-formatting/strict',
   ],
   plugins: [
     'jest',
+    'jest-formatting',
     '@typescript-eslint',
     'react-hooks',
     'react',
@@ -81,14 +80,8 @@ module.exports = {
     'prefer-template': 'warn',
     'guard-for-in': 'warn',
 
-    '@typescript-eslint/array-type': [
-      'error',
-      { default: 'array-simple', readonly: 'array-simple' },
-    ],
-    '@typescript-eslint/camelcase': [
-      'warn',
-      { ignoreDestructuring: true, properties: 'never' },
-    ],
+    '@typescript-eslint/array-type': ['error', { default: 'array-simple', readonly: 'array-simple' }],
+    '@typescript-eslint/camelcase': ['warn', { ignoreDestructuring: true, properties: 'never' }],
     '@typescript-eslint/no-empty-function': 'off', // Empty functions/methods are often desired
     '@typescript-eslint/no-empty-interface': 'off', // Empty interfaces are useful for future planning
     '@typescript-eslint/no-var-requires': 'off', // We use 'require(..)' throughout
@@ -121,10 +114,7 @@ module.exports = {
 
     'no-nested-ternary': 'off', // Prettier makes nested ternaries more acceptable
     'no-return-assign': ['error', 'except-parens'],
-    '@typescript-eslint/no-unused-expressions': [
-      'error',
-      { allowTernary: true, allowShortCircuit: true },
-    ],
+    '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true, allowShortCircuit: true }],
     'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
 
     // Temporarily disabled rules (please re-enable these!):
@@ -188,10 +178,7 @@ module.exports = {
           { allowNumber: true, allowBoolean: true },
         ],
         '@typescript-eslint/no-dynamic-delete': ['error'],
-        '@typescript-eslint/camelcase': [
-          'warn',
-          { ignoreDestructuring: true, properties: 'never' },
-        ],
+        '@typescript-eslint/camelcase': ['warn', { ignoreDestructuring: true, properties: 'never' }],
       },
     },
     {
@@ -201,10 +188,7 @@ module.exports = {
         '@typescript-eslint/no-non-null-assertion': 'off', // Makes writing tests more convenient
         '@typescript-eslint/no-use-before-define': 'off',
         'react/display-name': 'off',
-        ...Object.keys(tsProjectRules).reduce(
-          (acc, key) => ({ ...acc, [key]: 'off' }),
-          {},
-        ),
+        ...Object.keys(tsProjectRules).reduce((acc, key) => ({ ...acc, [key]: 'off' }), {}),
       },
     },
     {

@@ -58,6 +58,7 @@ describe('valid `HSL.create`', () => {
 
   it('supports a seperate instance of HSL', () => {
     const hsl = HSL.create('hsl(0, 0%, 0%)');
+
     expect(HSL.create(hsl)).toBeInstanceOf(HSL);
   });
 });
@@ -93,6 +94,7 @@ describe('methods', () => {
 
   test('#clone', () => {
     const cloned = hsl.clone();
+
     expect(cloned).not.toBe(hsl);
     expect(pick(hsl, ['h', 's', 'l', 'a'])).toEqual(pick(cloned, ['h', 's', 'l', 'a']));
   });

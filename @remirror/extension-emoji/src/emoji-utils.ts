@@ -1,3 +1,6 @@
+import escapeStringRegex from 'escape-string-regexp';
+import matchSorter from 'match-sorter';
+
 import {
   bool,
   entries,
@@ -10,8 +13,6 @@ import {
   uniqueArray,
   within,
 } from '@remirror/core';
-import escapeStringRegex from 'escape-string-regexp';
-import matchSorter from 'match-sorter';
 
 import aliasObject from './data/aliases';
 import rawEmojiObject from './data/emojis';

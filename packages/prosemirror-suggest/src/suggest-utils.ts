@@ -1,3 +1,5 @@
+import { keydownHandler } from 'prosemirror-keymap';
+
 import { NULL_CHARACTER } from '@remirror/core-constants';
 import { bool, findMatches, isUndefined } from '@remirror/core-helpers';
 import {
@@ -8,7 +10,6 @@ import {
   TextParams,
 } from '@remirror/core-types';
 import { selectionEmpty } from '@remirror/core-utils';
-import { keydownHandler } from 'prosemirror-keymap';
 
 import { ChangeReason, ExitReason } from './suggest-constants';
 import { createRegexFromSuggester, regexToString } from './suggest-helpers';

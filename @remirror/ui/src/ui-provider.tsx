@@ -1,10 +1,11 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { bool, deepMerge, isFunction } from '@remirror/core-helpers';
-import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core-types';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import { FC, ReactElement, useMemo, useState } from 'react';
+
+import { bool, deepMerge, isFunction } from '@remirror/core-helpers';
+import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core-types';
 
 import { RemirrorThemeContext, defaultRemirrorThemeValue, withoutEmotionProps } from './ui-context';
 import { useEmotionTheme, useRemirrorTheme } from './ui-hooks';

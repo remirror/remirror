@@ -1,8 +1,9 @@
 import { jsx } from '@emotion/core';
+import { Children, JSXElementConstructor } from 'react';
+
 import { isArray } from '@remirror/core-helpers';
 import { ExtensionManagerParams, PlainObject } from '@remirror/core-types';
 import { cloneElement, getElementProps, isReactDOMElement, isReactFragment } from '@remirror/react-utils';
-import { Children, JSXElementConstructor } from 'react';
 
 /**
  * A function that transforms the element received during Server Side Rendering

@@ -1,5 +1,19 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+import {
+  ChangeEventHandler,
+  ComponentType,
+  DOMAttributes,
+  FC,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import keyNames from 'w3c-keyname';
+
 import { ActionNames, AnyFunction, Attrs, KeyOfThemeVariant, getMarkAttrs } from '@remirror/core';
 import { bubblePositioner, useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
@@ -22,19 +36,6 @@ import {
   UnderlineIcon,
   UndoAltIcon,
 } from '@remirror/ui-icons';
-import {
-  ChangeEventHandler,
-  ComponentType,
-  DOMAttributes,
-  FC,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import keyNames from 'w3c-keyname';
 
 import { ButtonState, WysiwygExtensions } from '../wysiwyg-types';
 import {

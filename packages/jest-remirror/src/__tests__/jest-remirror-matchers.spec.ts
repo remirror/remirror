@@ -11,6 +11,7 @@ describe('toContainRemirrorDocument', () => {
     } = renderEditor({ plainNodes: [] });
     const expected = p('simple');
     const { state } = add(doc(expected));
+
     expect(state).toContainRemirrorDocument(expected);
   });
 
@@ -21,6 +22,7 @@ describe('toContainRemirrorDocument', () => {
     } = renderEditor({ plainNodes: [] });
     const expected = p('simple');
     const { state } = add(doc(expected));
+
     expect(state).not.toContainRemirrorDocument(Cast({}));
     expect(Cast({})).not.toContainRemirrorDocument(expected);
   });
@@ -32,6 +34,7 @@ describe('toContainRemirrorDocument', () => {
     } = renderEditor({ plainNodes: [] });
     const { state } = add(doc(p('old')));
     const { state: newState } = add(doc(p('new')));
+
     expect(state).not.toContainRemirrorDocument(p('new'));
     expect(newState).toContainRemirrorDocument(p('new'));
   });
@@ -50,6 +53,7 @@ describe('toContainRemirrorDocument', () => {
     const newNode = p('simple');
     const { state: oldState } = addOld(docOld(oldNode));
     const { state: newState } = add(doc(newNode));
+
     expect(oldState).not.toContainRemirrorDocument(newNode);
     expect(newState).not.toContainRemirrorDocument(oldNode);
   });
@@ -63,6 +67,7 @@ describe('toEqualRemirrorDocument', () => {
     } = renderEditor({ plainNodes: [] });
     const expected = p('simple');
     const { state } = add(doc(expected));
+
     expect(state.doc.content.child(0)).toEqualRemirrorDocument(expected);
   });
 
@@ -73,6 +78,7 @@ describe('toEqualRemirrorDocument', () => {
     } = renderEditor({ plainNodes: [] });
     const expected = p('simple');
     const { state } = add(doc(expected));
+
     expect(state.doc.content.child(0)).not.toEqualRemirrorDocument(Cast({}));
     expect(Cast({})).not.toEqualRemirrorDocument(expected);
   });
@@ -84,6 +90,7 @@ describe('toEqualRemirrorDocument', () => {
     } = renderEditor({ plainNodes: [] });
     const { state } = add(doc(p('old')));
     const { state: newState } = add(doc(p('new')));
+
     expect(state.doc.content.child(0)).not.toEqualRemirrorDocument(p('new'));
     expect(newState.doc.content.child(0)).toEqualRemirrorDocument(p('new'));
   });
@@ -102,6 +109,7 @@ describe('toEqualRemirrorDocument', () => {
     const newNode = p('simple');
     const { state: oldState } = addOld(docOld(oldNode));
     const { state: newState } = add(doc(newNode));
+
     expect(oldState.doc.content.child(0)).not.toEqualRemirrorDocument(newNode);
     expect(newState.doc.content.child(0)).not.toEqualRemirrorDocument(oldNode);
   });

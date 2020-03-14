@@ -2,8 +2,9 @@
  * @jest-environment node
  */
 
-import { initialJson, plugins, schema, testDocument } from '@remirror/test-fixtures';
 import { EditorState } from 'prosemirror-state';
+
+import { initialJson, plugins, schema, testDocument } from '@remirror/test-fixtures';
 
 import { EditorViewSSR, createEditorView } from '../prosemirror-view-ssr';
 
@@ -19,6 +20,7 @@ test('createEditorView', () => {
       },
     },
   );
+
   expect(view).toBeInstanceOf(EditorViewSSR);
   expect(view.destroy).toBeFunction();
   expect(view.state).toBe(state);

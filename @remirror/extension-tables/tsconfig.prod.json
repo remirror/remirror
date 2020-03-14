@@ -23,9 +23,6 @@
   "references": [
     {
       "path": "../core/tsconfig.prod.json"
-    },
-    {
-      "path": "../react-utils/tsconfig.prod.json"
     }
   ]
 }

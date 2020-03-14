@@ -1,4 +1,6 @@
 import { Interpolation, ObjectInterpolation } from '@emotion/core';
+import { ReactNode, Ref } from 'react';
+
 import {
   AbstractInstanceType,
   ActionsFromExtensions,
@@ -29,7 +31,6 @@ import {
   TransactionParams,
   TransactionTransformer,
 } from '@remirror/core';
-import { ReactNode, Ref } from 'react';
 
 /**
  * The type of arguments acceptable for the focus parameter.

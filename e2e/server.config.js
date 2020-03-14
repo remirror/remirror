@@ -6,9 +6,7 @@ const {
 
 const basicRegex = 'basic\\.e2e\\.test\\.ts$';
 
-const noSSRRegex = REMIRROR_E2E_BASIC
-  ? basicRegex
-  : `.*\\.(e2e|${REMIRROR_E2E_SERVER})\\.test\\.ts$`;
+const noSSRRegex = REMIRROR_E2E_BASIC ? basicRegex : `.*\\.(e2e|${REMIRROR_E2E_SERVER})\\.test\\.ts$`;
 
 const getRegex = () => {
   if (REMIRROR_E2E_BASIC) {

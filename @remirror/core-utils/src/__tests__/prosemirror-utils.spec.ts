@@ -1,4 +1,3 @@
-import { omit, pick } from '@remirror/core-helpers';
 import {
   atomBlock,
   atomContainer,
@@ -18,6 +17,8 @@ import {
 import { Schema } from 'prosemirror-model';
 import { marks, nodes } from 'prosemirror-schema-basic';
 import { NodeSelection, Selection, TextSelection } from 'prosemirror-state';
+
+import { omit, pick } from '@remirror/core-helpers';
 
 import {
   cloneTransaction,
@@ -44,6 +45,7 @@ describe('nodeEqualsType', () => {
 
   it('matches with an array of nodeTypes', () => {
     const { paragraph, blockquote: bq } = schema.nodes;
+
     expect(nodeEqualsType({ types: [paragraph, bq], node: blockquote() })).toBeTrue();
   });
 });
@@ -54,6 +56,7 @@ describe('removeNodeAtPosition', () => {
       state: { tr },
     } = createEditor(doc(p('x'), p('one')));
     const newTr = removeNodeAtPosition({ pos: 3, tr });
+
     expect(newTr).not.toBe(tr);
     expect(newTr.doc).toEqualProsemirrorNode(doc(p('x')));
   });
@@ -63,6 +66,7 @@ describe('removeNodeAtPosition', () => {
       state: { tr },
     } = createEditor(doc(p('one', atomInline())));
     const newTr = removeNodeAtPosition({ pos: 4, tr });
+
     expect(newTr).not.toBe(tr);
     expect(newTr.doc).toEqualProsemirrorNode(doc(p('one')));
   });
@@ -74,6 +78,7 @@ describe('removeNodeBefore', () => {
       state: { tr },
     } = createEditor(doc(p('<cursor>')));
     const newTr = removeNodeBefore(tr);
+
     expect(tr).toBe(newTr);
   });
 
@@ -82,6 +87,7 @@ describe('removeNodeBefore', () => {
       state: { tr },
     } = createEditor(doc(p('one'), table(row(tdEmpty), row(tdEmpty)), '<cursor>', p('two')));
     const newTr = removeNodeBefore(tr);
+
     expect(newTr).not.toBe(tr);
     expect(newTr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
   });
@@ -91,6 +97,7 @@ describe('removeNodeBefore', () => {
       state: { tr },
     } = createEditor(doc(p('one'), blockquote(p('')), '<cursor>', p('two')));
     const newTr = removeNodeBefore(tr);
+
     expect(newTr).not.toBe(tr);
     expect(newTr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
   });
@@ -100,6 +107,7 @@ describe('removeNodeBefore', () => {
       state: { tr },
     } = createEditor(doc(p('one'), atomBlock(), '<cursor>', p('two')));
     const newTr = removeNodeBefore(tr);
+
     expect(newTr).not.toBe(tr);
     expect(newTr.doc).toEqualProsemirrorNode(doc(p('one'), p('two')));
   });
@@ -111,6 +119,7 @@ describe('findPositionOfNodeBefore', () => {
       state: { selection },
     } = createEditor(doc(p('<cursor>')));
     const result = findPositionOfNodeBefore(selection);
+
     expect(result).toBeUndefined();
   });
 
@@ -120,6 +129,7 @@ describe('findPositionOfNodeBefore', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), node, '<cursor>'));
     const result = findPositionOfNodeBefore(selection);
+
     expect(result).toEqual({ pos: 6, start: 7, end: 20, depth: 1, node });
   });
 
@@ -129,6 +139,7 @@ describe('findPositionOfNodeBefore', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), node, '<cursor>'));
     const position = findPositionOfNodeBefore(selection);
+
     expect(position).toEqual({ pos: 6, start: 7, end: 10, depth: 1, node });
   });
 
@@ -138,6 +149,7 @@ describe('findPositionOfNodeBefore', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), table(row(td(p('1'), node, '<cursor>')))));
     const position = findPositionOfNodeBefore(selection);
+
     expect(position).toEqual({ pos: 12, start: 13, end: 13, depth: 4, node });
   });
 
@@ -147,6 +159,7 @@ describe('findPositionOfNodeBefore', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), node, '<cursor>'));
     const position = findPositionOfNodeBefore(selection);
+
     expect(position).toEqual({ pos: 6, start: 7, end: 7, depth: 1, node });
   });
 
@@ -156,6 +169,7 @@ describe('findPositionOfNodeBefore', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), node, '<cursor>'));
     const position = findPositionOfNodeBefore(selection);
+
     expect(position).toEqual({ pos: 6, start: 7, end: 9, depth: 1, node });
   });
 });
@@ -166,6 +180,7 @@ describe('findPositionOfNodeAfter', () => {
       state: { selection },
     } = createEditor(doc(p('<cursor>')));
     const result = findPositionOfNodeAfter(selection);
+
     expect(result).toBeUndefined();
   });
 
@@ -175,6 +190,7 @@ describe('findPositionOfNodeAfter', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), '<cursor>', node));
     const result = findPositionOfNodeAfter(selection);
+
     expect(result).toEqual({ pos: 6, start: 7, end: 20, depth: 1, node });
   });
 
@@ -184,6 +200,7 @@ describe('findPositionOfNodeAfter', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), '<cursor>', node));
     const position = findPositionOfNodeAfter(selection);
+
     expect(position).toEqual({ pos: 6, start: 7, end: 10, depth: 1, node });
   });
 
@@ -193,6 +210,7 @@ describe('findPositionOfNodeAfter', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), table(row(td(p('1'), '<cursor>', node)))));
     const position = findPositionOfNodeAfter(selection);
+
     expect(position).toEqual({ pos: 12, start: 13, end: 13, depth: 4, node });
   });
 
@@ -202,6 +220,7 @@ describe('findPositionOfNodeAfter', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), '<cursor>', node));
     const position = findPositionOfNodeAfter(selection);
+
     expect(position).toEqual({ pos: 6, start: 7, end: 7, depth: 1, node });
   });
 
@@ -211,6 +230,7 @@ describe('findPositionOfNodeAfter', () => {
       state: { selection },
     } = createEditor(doc(p('abcd'), '<cursor>', node));
     const position = findPositionOfNodeAfter(selection);
+
     expect(position).toEqual({ pos: 6, start: 7, end: 9, depth: 1, node });
   });
 });
@@ -219,6 +239,7 @@ describe('findElementAtPosition', () => {
   it('should return DOM reference of a top level block leaf node', () => {
     const { view } = createEditor(doc(p('text'), atomBlock()));
     const ref = findElementAtPosition(6, view);
+
     expect(ref instanceof HTMLDivElement).toBe(true);
     expect(ref.getAttribute('data-node-type')).toEqual('atomBlock');
   });
@@ -226,6 +247,7 @@ describe('findElementAtPosition', () => {
   it('should return DOM reference of a nested inline leaf node', () => {
     const { view } = createEditor(doc(p('one', atomInline(), 'two')));
     const ref = findElementAtPosition(4, view);
+
     expect(ref instanceof HTMLSpanElement).toBe(true);
     expect(ref.getAttribute('data-node-type')).toEqual('atomInline');
   });
@@ -233,18 +255,21 @@ describe('findElementAtPosition', () => {
   it('should return DOM reference of a content block node', () => {
     const { view } = createEditor(doc(p('one'), blockquote(p('two'))));
     const ref = findElementAtPosition(5, view);
+
     expect(ref instanceof HTMLQuoteElement).toBe(true);
   });
 
   it('should return DOM reference of a text node when offset=0', () => {
     const { view } = createEditor(doc(p('text')));
     const ref = findElementAtPosition(1, view);
+
     expect(ref instanceof HTMLParagraphElement).toBe(true);
   });
 
   it('should return DOM reference of a paragraph if cursor is inside of a text node', () => {
     const { view } = createEditor(doc(p(atomInline(), 'text')));
     const ref = findElementAtPosition(3, view);
+
     expect(ref instanceof HTMLParagraphElement).toBe(true);
   });
 });
@@ -254,6 +279,7 @@ describe('selectionEmpty', () => {
     const {
       state: { selection },
     } = createEditor(doc(p('inline'), p('<start>aba<end>', 'awesome')));
+
     expect(selectionEmpty(selection)).toBeFalse();
   });
 
@@ -261,6 +287,7 @@ describe('selectionEmpty', () => {
     const {
       state: { selection },
     } = createEditor(doc(p('inline'), p('<cursor>aba')));
+
     expect(selectionEmpty(selection)).toBeTrue();
   });
 
@@ -268,6 +295,7 @@ describe('selectionEmpty', () => {
     const {
       state: { selection },
     } = createEditor(doc(p('inline'), p('aba')));
+
     expect(selectionEmpty(selection)).toBeTrue();
   });
 });
@@ -279,6 +307,7 @@ describe('transactionChanged', () => {
       view,
     } = createEditor(doc(p('inline'), p('<start>aba<end>', 'awesome')));
     view.dispatch(tr);
+
     expect(transactionChanged(tr)).toBeFalse();
   });
 
@@ -289,12 +318,14 @@ describe('transactionChanged', () => {
     } = createEditor(doc(p('inline'), p('<start>aba<end>', 'awesome')));
     const newTr = tr.deleteSelection();
     view.dispatch(newTr);
+
     expect(transactionChanged(tr)).toBeTrue();
   });
 
   it('returns true when cursor changes', () => {
     const { state } = createEditor(doc(p('inline'), p('aba<cursor>')));
     const tr = state.tr.setSelection(TextSelection.atStart(state.doc));
+
     expect(transactionChanged(tr)).toBeTrue();
   });
 });
@@ -316,7 +347,9 @@ describe('cloneTransaction', () => {
 
       setTimeout(() => {
         const clonedTr = cloneTransaction(tr);
+
         expect(omit(tr, ['time'])).toEqual(omit(clonedTr, ['time']));
+
         done();
       }, 10);
 
@@ -335,6 +368,7 @@ describe('findParentNode', () => {
       predicate: pmNode => pmNode.type === schema.nodes.paragraph,
       selection,
     })!;
+
     expect(position).toEqual({ pos: 0, start: 1, end: 8, depth: 1, node });
   });
 
@@ -343,6 +377,7 @@ describe('findParentNode', () => {
       state: { selection },
     } = createEditor(doc(table(row(tdCursor))));
     const { node } = findParentNode({ predicate: pmNode => pmNode.type === schema.nodes.table, selection })!;
+
     expect(node.type.name).toEqual('table');
   });
 
@@ -354,6 +389,7 @@ describe('findParentNode', () => {
       predicate: pmNode => pmNode.type === schema.nodes.table_header,
       selection,
     });
+
     expect(result).toBeUndefined();
   });
 });
@@ -365,6 +401,7 @@ describe('findParentNodeOfType', () => {
       state: { selection },
     } = createEditor(doc(node));
     const position = findParentNodeOfType({ types: schema.nodes.paragraph, selection })!;
+
     expect(position).toEqual({ pos: 0, start: 1, end: 8, depth: 1, node });
   });
 
@@ -373,6 +410,7 @@ describe('findParentNodeOfType', () => {
       state: { selection },
     } = createEditor(doc(p('hello <cursor>')));
     const result = findParentNodeOfType({ types: schema.nodes.table, selection });
+
     expect(result).toBeUndefined();
   });
 
@@ -387,6 +425,7 @@ describe('findParentNodeOfType', () => {
       },
     } = createEditor(doc(node));
     const position = findParentNodeOfType({ types: [tbl, bq, paragraph], selection })!;
+
     expect(position).toEqual({ pos: 0, start: 1, end: 8, depth: 1, node });
   });
 });
@@ -394,11 +433,13 @@ describe('findParentNodeOfType', () => {
 describe('nodeActive', () => {
   it('shows active when within an active region', () => {
     const { state, schema: sch } = createEditor(doc(p('Something', blockquote('is <cursor>in blockquote'))));
+
     expect(isNodeActive({ state, type: sch.nodes.blockquote })).toBeTrue();
   });
 
   it('returns false when not within the node', () => {
     const { state, schema: sch } = createEditor(doc(p('Something<cursor>', blockquote('hello'))));
+
     expect(isNodeActive({ state, type: sch.nodes.blockquote })).toBeFalse();
   });
 
@@ -406,21 +447,25 @@ describe('nodeActive', () => {
     const { state, schema: sch } = createEditor(
       doc(p('Something<start>', blockquote('is italic'), '<end> here')),
     );
+
     expect(isNodeActive({ state, type: sch.nodes.blockquote })).toBeFalse();
   });
 
   it('returns true when node selection directly before node', () => {
     const { state, schema: sch } = createEditor(doc(p('Something', blockquote('<node>is italic'), 'here')));
+
     expect(isNodeActive({ state, type: sch.nodes.blockquote })).toBeTrue();
   });
 
   it('returns false nested within other nodes', () => {
     const { state, schema: sch } = createEditor(doc(p('a<node>', p(p(blockquote('is italic')), 'here'))));
+
     expect(isNodeActive({ state, type: sch.nodes.blockquote })).toBeFalse();
   });
 
   it('matches nodes by specified attributes', () => {
     const { state, schema: sch } = createEditor(doc(p('Something', h2('is <cursor> heading'), 'here')));
+
     expect(isNodeActive({ state, type: sch.nodes.heading, attrs: { level: 1 } })).toBeFalse();
     expect(isNodeActive({ state, type: sch.nodes.heading, attrs: { level: 2 } })).toBeTrue();
   });
@@ -465,6 +510,7 @@ describe('findNodeAt...', () => {
   test('findNodeAtSelection', () => {
     const selection = Selection.atEnd(pmDoc);
     const { node, pos, start } = findNodeAtSelection(selection);
+
     expect(node).toBe(expectedEnd);
     expect(pos).toBe(16);
     expect(start).toBe(17);

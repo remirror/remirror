@@ -1,14 +1,12 @@
 const { resolve, join, relative } = require('path');
-const getWorkspaces = require('get-workspaces').default;
+const { getPackages } = require('@manypkg/get-packages');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
 const separator = '__';
 
 const unmangleScopedPackage = mangledName => {
-  return mangledName.includes(separator)
-    ? `@${mangledName.replace(separator, '/')}`
-    : mangledName;
+  return mangledName.includes(separator) ? `@${mangledName.replace(separator, '/')}` : mangledName;
 };
 
 const mangleScopedPackageName = packageName => {
@@ -44,13 +42,13 @@ let packages;
 
 const getAllDependencies = () => {
   if (!packages) {
-    packages = getWorkspaces().then(pkgs => {
-      if (!pkgs) {
+    packages = getPackages().then(({ packages }) => {
+      if (!packages) {
         return [];
       }
 
-      return pkgs.map(pkg => ({
-        ...pkg.config,
+      return packages.map(pkg => ({
+        ...pkg.packageJson,
         location: pkg.dir,
       }));
     });

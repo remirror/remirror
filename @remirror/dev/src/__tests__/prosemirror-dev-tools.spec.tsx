@@ -1,6 +1,7 @@
-import { ManagedRemirrorProvider, RemirrorManager } from '@remirror/react';
 import { render } from '@testing-library/react';
 import React from 'react';
+
+import { ManagedRemirrorProvider, RemirrorManager } from '@remirror/react';
 
 import { ProsemirrorDevTools } from '../dev-components';
 
@@ -17,6 +18,7 @@ test('it supports <ProsemirrorDevTools />', () => {
     </RemirrorManager>,
   );
   const element = baseElement.querySelector('.__prosemirror-dev-tools__');
+
   expect(element).toBeTruthy();
 });
 
@@ -39,5 +41,6 @@ test('it unmounts <ProsemirrorDevTools />', () => {
     </RemirrorManager>,
   );
   const element = baseElement.querySelector('.__prosemirror-dev-tools__');
+
   expect(element).toBeFalsy();
 });

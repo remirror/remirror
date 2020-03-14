@@ -1,3 +1,6 @@
+import { Plugin } from 'prosemirror-state';
+import { ReplaceStep } from 'prosemirror-transform';
+
 import {
   Attrs,
   Cast,
@@ -16,8 +19,6 @@ import {
   removeMark,
   updateMark,
 } from '@remirror/core';
-import { Plugin } from 'prosemirror-state';
-import { ReplaceStep } from 'prosemirror-transform';
 
 import {
   EnhancedLinkHandlerProps,

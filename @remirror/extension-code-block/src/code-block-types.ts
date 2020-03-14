@@ -1,5 +1,6 @@
-import { Attrs, NodeExtensionOptions } from '@remirror/core';
 import { RefractorSyntax } from 'refractor/core';
+
+import { Attrs, NodeExtensionOptions } from '@remirror/core';
 
 import { SyntaxTheme } from './themes';
 

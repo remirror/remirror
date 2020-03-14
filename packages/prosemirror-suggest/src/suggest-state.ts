@@ -1,3 +1,6 @@
+import { Transaction } from 'prosemirror-state';
+import { Decoration, DecorationSet } from 'prosemirror-view';
+
 import { bool } from '@remirror/core-helpers';
 import {
   CompareStateParams,
@@ -11,8 +14,6 @@ import {
   TransactionParams,
 } from '@remirror/core-types';
 import { transactionChanged } from '@remirror/core-utils';
-import { Transaction } from 'prosemirror-state';
-import { Decoration, DecorationSet } from 'prosemirror-view';
 
 import { ChangeReason, DEFAULT_SUGGESTER, ExitReason } from './suggest-constants';
 import { isInvalidSplitReason, isJumpReason, isValidMatch } from './suggest-predicates';

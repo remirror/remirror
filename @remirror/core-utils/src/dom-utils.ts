@@ -1,3 +1,24 @@
+import minDocument from 'min-document';
+import {
+  DOMParser,
+  DOMSerializer,
+  Fragment,
+  Mark,
+  MarkType,
+  NodeType,
+  Node as PMNode,
+  ResolvedPos as PMResolvedPos,
+  Schema,
+  Slice,
+} from 'prosemirror-model';
+import {
+  NodeSelection,
+  EditorState as PMEditorState,
+  Selection as PMSelection,
+  Plugin,
+  TextSelection,
+} from 'prosemirror-state';
+
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
 import {
   Cast,
@@ -31,26 +52,6 @@ import {
   Selection,
   Transaction,
 } from '@remirror/core-types';
-import minDocument from 'min-document';
-import {
-  DOMParser,
-  DOMSerializer,
-  Fragment,
-  Mark,
-  MarkType,
-  NodeType,
-  Node as PMNode,
-  ResolvedPos as PMResolvedPos,
-  Schema,
-  Slice,
-} from 'prosemirror-model';
-import {
-  NodeSelection,
-  EditorState as PMEditorState,
-  Selection as PMSelection,
-  Plugin,
-  TextSelection,
-} from 'prosemirror-state';
 
 import { environment } from './environment';
 

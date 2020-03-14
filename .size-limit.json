@@ -115,7 +115,7 @@
     "name": "@remirror/extension-tables",
     "path": "@remirror/extension-tables/lib/dist/extension-tables.esm.js",
     "limit": "120 KB",
-    "ignore": ["@types/react", "react"],
+    "ignore": [],
     "running": false
   },
   {

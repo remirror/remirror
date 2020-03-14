@@ -1,10 +1,11 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { SSRComponentProps } from '@remirror/core';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import SyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-light';
+
+import { SSRComponentProps } from '@remirror/core';
 
 import { CodeBlockAttrs, CodeBlockExtensionOptions } from './code-block-types';
 import { getLanguage } from './code-block-utils';

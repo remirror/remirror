@@ -1,3 +1,5 @@
+import minDocument from 'min-document';
+
 import {
   BaseExtensionOptions,
   Cast,
@@ -19,7 +21,6 @@ import {
 } from '@remirror/core-extensions';
 import { PortalContainer } from '@remirror/react-portals';
 import { defaultRemirrorThemeValue } from '@remirror/ui';
-import minDocument from 'min-document';
 
 export const helpers = {
   getState: Cast(jest.fn()),

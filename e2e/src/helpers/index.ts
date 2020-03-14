@@ -1,5 +1,6 @@
-import { MakeOptional } from '@remirror/core';
 import { SupportedCharacters } from 'test-keyboard';
+
+import { MakeOptional } from '@remirror/core';
 
 import { getBrowserName } from './test-environment';
 

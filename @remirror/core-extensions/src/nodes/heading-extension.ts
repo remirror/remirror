@@ -1,3 +1,6 @@
+import { setBlockType } from 'prosemirror-commands';
+import { textblockTypeInputRule } from 'prosemirror-inputrules';
+
 import {
   Attrs,
   CommandNodeTypeParams,
@@ -11,8 +14,6 @@ import {
   convertCommand,
   toggleBlockItem,
 } from '@remirror/core';
-import { setBlockType } from 'prosemirror-commands';
-import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 export interface HeadingExtensionOptions extends NodeExtensionOptions {
   levels?: number[];

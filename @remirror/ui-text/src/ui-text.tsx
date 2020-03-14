@@ -1,9 +1,6 @@
 /** @jsx jsx */
 
 import { Interpolation, jsx } from '@emotion/core';
-import { omit, pick } from '@remirror/core-helpers';
-import { KeyOfThemeVariant } from '@remirror/core-types';
-import { useRemirrorTheme } from '@remirror/ui';
 import {
   ColorProperty,
   FontFamilyProperty,
@@ -14,6 +11,10 @@ import {
 } from 'csstype';
 import mergeProps from 'merge-props';
 import { FC, ReactElement, ReactNode, forwardRef } from 'react';
+
+import { omit, pick } from '@remirror/core-helpers';
+import { KeyOfThemeVariant } from '@remirror/core-types';
+import { useRemirrorTheme } from '@remirror/ui';
 
 type MergeProp = typeof mergeProps;
 

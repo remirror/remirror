@@ -1,9 +1,10 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { ExtensionManager, PlainObject } from '@remirror/core';
 import { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
+
+import { ExtensionManager, PlainObject } from '@remirror/core';
 
 import { useRemirrorManager } from './hooks/context-hooks';
 

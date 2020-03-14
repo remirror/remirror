@@ -50,9 +50,7 @@ const getNames = (name = '') => {
 };
 
 if (entryPoints && entryPoints.length) {
-  filtered = uniqueArray(
-    entryPoints.reduce((acc, config) => [...acc, ...getNames(config.name)], []),
-  )
+  filtered = uniqueArray(entryPoints.reduce((acc, config) => [...acc, ...getNames(config.name)], []))
     .map(key => rollup.find(config => config.name === key))
     .reverse();
 }

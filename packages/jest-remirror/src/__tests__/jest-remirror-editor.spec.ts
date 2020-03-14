@@ -1,3 +1,6 @@
+import { cleanup } from '@testing-library/react';
+import { Plugin } from 'prosemirror-state';
+
 import { Extension, toHTML } from '@remirror/core';
 import {
   BlockquoteExtension,
@@ -5,8 +8,6 @@ import {
   HeadingExtension,
   LinkExtension,
 } from '@remirror/core-extensions';
-import { cleanup } from '@testing-library/react';
-import { Plugin } from 'prosemirror-state';
 
 import { renderEditor } from '../jest-remirror-editor';
 
@@ -17,6 +18,7 @@ test('renders an editor into the dom', () => {
     utils: { getByRole },
   } = renderEditor();
   const editor = getByRole('textbox');
+
   expect(editor).toBeVisible();
 });
 
@@ -29,6 +31,7 @@ test('allows for injection of basic content', () => {
     // TODO Investigate why typescript autocomplete on plain nodes doesn't work without at least an empty array
   } = renderEditor({ plainNodes: [] });
   add(doc(p(expected)));
+
   expect(view.dom).toHaveTextContent(expected);
 });
 
@@ -40,6 +43,7 @@ test('can be configured with plain node extensions', () => {
     add,
   } = renderEditor({ plainNodes: [new BlockquoteExtension()] });
   add(doc(blockquote(p(expected)), p('This is a p')));
+
   expect(dom).toHaveTextContent('A simple blockquote');
 });
 
@@ -56,6 +60,7 @@ test('can be configured with attribute node extensions', () => {
   const h3 = heading({ level: 3 });
   const h2 = heading({ level: 2 });
   add(doc(h2(expected), h3(expected)));
+
   expect(dom).toContainHTML(toHTML({ node: h3(expected), schema }));
   expect(dom).toContainHTML(toHTML({ node: h2(expected), schema }));
 });
@@ -69,6 +74,7 @@ test('can be configured with plain mark extensions', () => {
     marks: { bold },
   } = renderEditor({ plainNodes: [], plainMarks: [new BoldExtension()] });
   add(doc(p('Text is ', bold(expected))));
+
   expect(dom.querySelector('strong')!.innerText).toBe(expected);
 });
 
@@ -85,6 +91,7 @@ test('can be configured with attribute mark extensions', () => {
   add(doc(p('LinkExtension to ', googleLinkExtension(expected))));
 
   const linkElement = dom.querySelector('a');
+
   expect(linkElement).toHaveAttribute('href', href);
   expect(linkElement).toHaveTextContent(expected);
 });
@@ -137,9 +144,11 @@ describe('add', () => {
     const expectedTwo = toHTML({ node: nodeTwo, schema });
 
     add(doc(node));
+
     expect(dom).toContainHTML(expected);
 
     add(doc(nodeTwo));
+
     expect(dom).toContainHTML(expectedTwo);
     expect(dom).not.toContainHTML(expected);
   });
@@ -147,33 +156,42 @@ describe('add', () => {
   it('can be chained', () => {
     const node = p('New me');
     add(doc(p('Hello'))).overwrite(doc(node));
+
     expect(dom).toContainHTML(toHTML({ node, schema }));
   });
 
   it('can insert text', () => {
     const expected = 'Welcome friend';
     add(doc(p('Welcome <cursor>'))).insertText('friend');
+
     expect(dom).toHaveTextContent(expected);
   });
 
   it('can use keyboard shortcuts', () => {
     const node = p(bold('Welcome'));
     add(doc(p('<start>Welcome<end>'))).shortcut('Mod-b');
+
     expect(dom).toContainHTML(toHTML({ node, schema }));
   });
 
   it('can fire custom events', () => {
     add(doc(p('Simple'))).fire({ event: 'dblClick' });
+
     expect(doubleClickMock).toHaveBeenCalled();
+
     add(doc(p('Simple'))).fire({ event: 'click' });
+
     expect(clickMock).toHaveBeenCalled();
+
     add(doc(p('Simple'))).fire({ event: 'tripleClick' as any });
+
     expect(tripleClickMock).toHaveBeenCalled();
   });
 
   it('can replace text with text', () => {
     const expected = 'Today is a happy day';
     add(doc(p('Today is a <start>sad<end> day'))).replace('happy');
+
     expect(dom).toHaveTextContent(expected);
   });
 
@@ -183,6 +201,7 @@ describe('add', () => {
     const expected = toHTML({ node, schema });
     const expectedTwo = toHTML({ node: nodeTwo, schema });
     add(doc(p('Today is a <start>sad<end> day'))).replace(node, nodeTwo);
+
     expect(dom).toContainHTML(expected);
     expect(dom).toContainHTML(expectedTwo);
   });
@@ -205,6 +224,7 @@ describe('tags', () => {
 
   it('supports <cursor>', () => {
     const { start, end } = add(doc(p('This is a <cursor>position')));
+
     expect(start).toBe(11);
     expect(start).toBe(view.state.selection.from);
     expect(end).toBe(11);
@@ -213,6 +233,7 @@ describe('tags', () => {
 
   it('supports <start>', () => {
     const { start, end } = add(doc(p('This is a <start>position')));
+
     expect(start).toBe(11);
     expect(start).toBe(view.state.selection.from);
     expect(end).toBe(19);
@@ -221,6 +242,7 @@ describe('tags', () => {
 
   it('supports <start> / <end>', () => {
     const { start, end } = add(doc(p('This is a <start>pos<end>ition')));
+
     expect(start).toBe(11);
     expect(start).toBe(view.state.selection.from);
     expect(end).toBe(14);
@@ -229,6 +251,7 @@ describe('tags', () => {
 
   it('supports <all>', () => {
     const { start, end } = add(doc(p('This is an <all>position')));
+
     expect(start).toBe(0);
     expect(start).toBe(view.state.selection.from);
     expect(end).toBe(21);
@@ -238,6 +261,7 @@ describe('tags', () => {
   it('supports <node>', () => {
     // ? Crashes if node is placed at the beginning of the p
     const { start, end } = add(doc(p('Hello'), p('T<node>ext here')));
+
     expect(start).toBe(9);
     expect(start).toBe(view.state.selection.from);
     expect(end).toBe(17);

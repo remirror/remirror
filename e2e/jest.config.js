@@ -30,11 +30,7 @@ module.exports = {
   modulePathIgnorePatterns: ['node_modules'],
   preset: 'jest-puppeteer',
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
-  setupFilesAfterEnv: [
-    'expect-puppeteer',
-    jestSupportDir('jest.framework.ts'),
-    '<rootDir>/jest-setup.ts',
-  ],
+  setupFilesAfterEnv: ['expect-puppeteer', jestSupportDir('jest.framework.ts'), '<rootDir>/jest-setup.ts'],
   globalSetup: './jest.puppeteer.setup.ts',
   globalTeardown: './jest.puppeteer.teardown.ts',
   testEnvironment: './custom-environment.js',

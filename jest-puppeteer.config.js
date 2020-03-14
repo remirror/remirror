@@ -1,8 +1,4 @@
-const {
-  REMIRROR_E2E_DEBUG,
-  REMIRROR_E2E_BROWSER = 'chromium',
-  REMIRROR_E2E_DOCKER,
-} = process.env;
+const { REMIRROR_E2E_DEBUG, REMIRROR_E2E_BROWSER = 'chromium', REMIRROR_E2E_DOCKER } = process.env;
 
 const debug = REMIRROR_E2E_DEBUG === 'true';
 const extraLaunchConfig =

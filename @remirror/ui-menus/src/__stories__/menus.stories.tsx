@@ -1,9 +1,10 @@
-import { DropdownItem } from '@remirror/ui-dropdown';
-import { ImagesRegularIcon } from '@remirror/ui-icons';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 import useState from 'react-use/lib/useSetState';
+
+import { DropdownItem } from '@remirror/ui-dropdown';
+import { ImagesRegularIcon } from '@remirror/ui-icons';
 
 import { MenubarContent } from '../menu-bar';
 import { Menubar } from '..';

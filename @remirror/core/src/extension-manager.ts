@@ -1,4 +1,11 @@
 import { Interpolation } from '@emotion/core';
+import { InputRule, inputRules } from 'prosemirror-inputrules';
+import { keymap } from 'prosemirror-keymap';
+import { Schema } from 'prosemirror-model';
+import { EditorState } from 'prosemirror-state';
+import { Suggester, suggest } from 'prosemirror-suggest';
+import { ComponentType } from 'react';
+
 import { bool, hasOwnProperty, isArray, isEqual, isFunction, isInstanceOf } from '@remirror/core-helpers';
 import {
   ActionMethod,
@@ -33,12 +40,6 @@ import {
   getPluginState,
 } from '@remirror/core-utils';
 import { PortalContainer } from '@remirror/react-portals';
-import { InputRule, inputRules } from 'prosemirror-inputrules';
-import { keymap } from 'prosemirror-keymap';
-import { Schema } from 'prosemirror-model';
-import { EditorState } from 'prosemirror-state';
-import { Suggester, suggest } from 'prosemirror-suggest';
-import { ComponentType } from 'react';
 
 import { isMarkExtension, isNodeExtension } from './extension-helpers';
 import {

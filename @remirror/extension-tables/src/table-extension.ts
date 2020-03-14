@@ -1,4 +1,3 @@
-import { NodeExtension } from '@remirror/core';
 import {
   addColumnAfter,
   addColumnBefore,
@@ -9,6 +8,8 @@ import {
   deleteTable,
   tableEditing,
 } from 'prosemirror-tables';
+
+import { NodeExtension } from '@remirror/core';
 
 import { TableSchemaSpec } from './table-types';
 

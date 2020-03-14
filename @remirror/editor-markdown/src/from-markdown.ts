@@ -1,6 +1,7 @@
-import { EditorSchema } from '@remirror/core';
 import md from 'markdown-it';
 import { MarkdownParser } from 'prosemirror-markdown';
+
+import { EditorSchema } from '@remirror/core';
 
 /**
  * Parses markdown content into a ProsemirrorNode compatible with the provided schema.

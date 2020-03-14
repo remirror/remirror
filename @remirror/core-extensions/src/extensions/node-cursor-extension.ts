@@ -1,3 +1,6 @@
+import { EditorState, Plugin, Transaction } from 'prosemirror-state';
+import { Decoration, DecorationSet } from 'prosemirror-view';
+
 import {
   BaseExtensionOptions,
   Extension,
@@ -8,8 +11,6 @@ import {
   uniqueArray,
 } from '@remirror/core';
 import { getPluginState, nodeNameMatchesList } from '@remirror/core-utils';
-import { EditorState, Plugin, Transaction } from 'prosemirror-state';
-import { Decoration, DecorationSet } from 'prosemirror-view';
 
 export const findSpecialNodeAfter = ($pos: ResolvedPos, tr: Transaction, matchers: NodeMatch[]) => {
   if (nodeNameMatchesList($pos.nodeAfter, matchers)) {

@@ -1,3 +1,5 @@
+import { history, redo, redoDepth, undo, undoDepth } from 'prosemirror-history';
+
 import { Extension, KeyBindings, isFunction } from '@remirror/core';
 import {
   BaseExtensionOptions,
@@ -7,7 +9,6 @@ import {
   ProsemirrorCommandFunction,
 } from '@remirror/core-types';
 import { convertCommand, environment } from '@remirror/core-utils';
-import { history, redo, redoDepth, undo, undoDepth } from 'prosemirror-history';
 
 export interface HistoryExtensionOptions extends BaseExtensionOptions {
   /**

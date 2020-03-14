@@ -1,4 +1,3 @@
-import { isFunction } from '@remirror/core-helpers';
 import {
   EffectCallback,
   SetStateAction,
@@ -9,6 +8,8 @@ import {
   useState,
 } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
+
+import { isFunction } from '@remirror/core-helpers';
 
 /**
  * Preserves the previous version of a provided value.

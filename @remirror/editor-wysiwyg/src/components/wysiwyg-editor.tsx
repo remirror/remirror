@@ -1,6 +1,12 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
+import { FC, Fragment, useMemo, useState } from 'react';
+import bash from 'refractor/lang/bash';
+import markdown from 'refractor/lang/markdown';
+import tsx from 'refractor/lang/tsx';
+import typescript from 'refractor/lang/typescript';
+
 import { RemirrorTheme, deepMerge } from '@remirror/core';
 import {
   BlockquoteExtension,
@@ -31,11 +37,6 @@ import {
   useRemirrorContext,
 } from '@remirror/react';
 import { RemirrorThemeProvider } from '@remirror/ui';
-import { FC, Fragment, useMemo, useState } from 'react';
-import bash from 'refractor/lang/bash';
-import markdown from 'refractor/lang/markdown';
-import tsx from 'refractor/lang/tsx';
-import typescript from 'refractor/lang/typescript';
 
 import { wysiwygEditorTheme } from '../wysiwyg-theme';
 import { WysiwygEditorProps, WysiwygExtensions } from '../wysiwyg-types';

@@ -1,3 +1,5 @@
+import { ComponentType } from 'react';
+
 import {
   Attrs,
   BaseExtensionOptions,
@@ -7,7 +9,6 @@ import {
   SSRComponentProps,
 } from '@remirror/core-types';
 import { PortalContainer } from '@remirror/react-portals';
-import { ComponentType } from 'react';
 
 export interface NodeViewComponentProps<
   GOptions extends BaseExtensionOptions = BaseExtensionOptions,

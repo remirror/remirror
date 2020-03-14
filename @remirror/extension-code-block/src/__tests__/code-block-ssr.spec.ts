@@ -2,11 +2,12 @@
  * @jest-environment node
  */
 
-import { ObjectNode } from '@remirror/core';
 import { renderSSREditor } from 'jest-remirror';
 import javascript from 'refractor/lang/javascript';
 import markdown from 'refractor/lang/markdown';
 import typescript from 'refractor/lang/typescript';
+
+import { ObjectNode } from '@remirror/core';
 
 import { CodeBlockExtension } from '../';
 

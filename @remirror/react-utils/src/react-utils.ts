@@ -1,6 +1,4 @@
 import { css as emotionCss, jsx } from '@emotion/core';
-import { bool, isArray, isFunction, isObject, isString, uniqueArray } from '@remirror/core-helpers';
-import { AnyFunction, PlainObject } from '@remirror/core-types';
 import {
   Children,
   ComponentClass,
@@ -13,6 +11,9 @@ import {
   ReactNode,
   isValidElement as reactIsValidElement,
 } from 'react';
+
+import { bool, isArray, isFunction, isObject, isString, uniqueArray } from '@remirror/core-helpers';
+import { AnyFunction, PlainObject } from '@remirror/core-types';
 
 export interface RemirrorComponentStaticProperties {
   /**

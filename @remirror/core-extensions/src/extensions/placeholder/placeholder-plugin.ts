@@ -1,8 +1,9 @@
+import { EditorState, Plugin } from 'prosemirror-state';
+import { Decoration, DecorationSet } from 'prosemirror-view';
+
 import { Extension } from '@remirror/core';
 import { EditorSchema, Transaction } from '@remirror/core-types';
 import { getPluginState, isDocNodeEmpty } from '@remirror/core-utils';
-import { EditorState, Plugin } from 'prosemirror-state';
-import { Decoration, DecorationSet } from 'prosemirror-view';
 
 import { PlaceholderExtensionOptions, PlaceholderPluginState } from '../../core-extension-types';
 

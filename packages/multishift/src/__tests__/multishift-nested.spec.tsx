@@ -77,20 +77,25 @@ test('it supports arrow keys when the button contains the menu', () => {
   expect(alphaItem).toHaveAttribute('aria-selected', 'true');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown' });
+
   expect(alphaItem).toHaveAttribute('aria-selected', 'false');
   expect(betaItem).toHaveAttribute('aria-selected', 'true');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown' });
+
   expect(betaItem).toHaveAttribute('aria-selected', 'false');
   expect(gammaItem).toHaveAttribute('aria-selected', 'true');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown' });
+
   expect(gammaItem).toHaveAttribute('aria-selected', 'false');
   expect(deltaItem).toHaveAttribute('aria-selected', 'false');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown' });
+
   expect(epsilonItem).toHaveAttribute('aria-selected', 'true');
 
   fireEvent.keyDown(menu, { key: 'ArrowDown' });
+
   expect(alphaItem).toHaveAttribute('aria-selected', 'true');
 });

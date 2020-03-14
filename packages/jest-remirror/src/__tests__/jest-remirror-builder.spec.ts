@@ -7,18 +7,21 @@ import { TagTracker } from '../jest-remirror-types';
 describe('text', () => {
   it('returns tracker for empty string', () => {
     const nodes = text('', schema);
+
     expect(nodes).toBeInstanceOf(TagTracker);
     expect(nodes.tags).toEqual({});
   });
 
   it('returns tracker for string with single tag only', () => {
     const nodes = text('<a>', schema);
+
     expect(nodes).toBeInstanceOf(TagTracker);
     expect(nodes.tags).toEqual({ a: 0 });
   });
 
   it('returns tracker for string with multiple tags only', () => {
     const nodes = text('<a><b>', schema);
+
     expect(nodes).toBeInstanceOf(TagTracker);
     expect(nodes.tags).toEqual({ a: 0, b: 0 });
   });
@@ -74,6 +77,7 @@ describe('text', () => {
 
   it('supports escaping tags with backslash', () => {
     const node = text('\\<a>', schema);
+
     expect((node as any).text).toBe('<a>');
   });
 
@@ -121,22 +125,26 @@ describe('nodeFactory', () => {
   it('correctly calculates single nested node tag positions', () => {
     const node = doc(p('t<a>ex<b>t'));
     const { a, b } = node.tags;
+
     expect(node.textBetween(a, b)).toBe('ex');
   });
 
   it('correctly calculates twice nested node tag positions', () => {
     const node = doc(blockquote(p('t<a>ex<b>t')));
     const { a, b } = node.tags;
+
     expect(node.textBetween(a, b)).toBe('ex');
   });
 
   it('supports a start tag', () => {
     const node = text('<start>0', schema);
+
     expect(node.tags).toEqual({ start: 0 });
   });
 });
 
 const em = markFactory({ name: 'italic', schema, attrs: {} });
+
 describe('markFactory', () => {
   it('returns a function', () => {
     expect(em).toBeFunction();
@@ -149,18 +157,21 @@ describe('markFactory', () => {
   it('correctly calculates tags', () => {
     const node = p(em('t<a>ex<b>t'));
     const { a, b } = node.tags;
+
     expect(node.textBetween(a, b)).toBe('ex');
   });
 
   it('supports being composed with text() and maintaining tags', () => {
     const node = p(em('t<a>ex<b>t'));
     const { a, b } = node.tags;
+
     expect(node.textBetween(a, b)).toBe('ex');
   });
 
   it('supports being composed with multiple text() and maintaining tags', () => {
     const node = p(em('t<a>ex<b>t', 't<c>ex<d>t'));
     const { a, b, c, d } = node.tags;
+
     expect(node.textBetween(a, b)).toBe('ex');
     expect(node.textBetween(c, d)).toBe('ex');
   });
@@ -174,6 +185,7 @@ describe('sequence', () => {
     const tagSnapshotB = clone(b.tags);
 
     sequence(a, b);
+
     expect(a.tags).toEqual(tagSnapshotA);
     expect(b.tags).toEqual(tagSnapshotB);
   });
@@ -185,6 +197,7 @@ describe('sequence', () => {
     const tagSnapshotB = clone(b.tags);
 
     sequence(a, b);
+
     expect(a.tags).toEqual(tagSnapshotA);
     expect(b.tags).toEqual(tagSnapshotB);
   });
@@ -195,6 +208,7 @@ describe('sequence', () => {
     const c = text('0<c>', schema);
 
     const { nodes } = sequence(a, b, c);
+
     expect(nodes).toEqual([a, b, c]);
   });
 
@@ -204,6 +218,7 @@ describe('sequence', () => {
     const c = text('0<c>', schema);
 
     const { tags } = sequence(a, b, c);
+
     expect(Object.keys(tags)).toEqual(['a', 'b', 'c']);
   });
 
@@ -213,6 +228,7 @@ describe('sequence', () => {
     const c = text('0<c>', schema);
 
     const { tags } = sequence(a, b, c);
+
     expect(tags.a).toBe(1);
     expect(tags.b).toBe(2);
     expect(tags.c).toBe(3);
@@ -224,6 +240,7 @@ describe('sequence', () => {
     const c = text('<c>', schema);
 
     const { tags } = sequence(a, b, c);
+
     expect(tags.a).toBe(0);
     expect(tags.c).toBe(1);
   });
@@ -234,6 +251,7 @@ describe('sequence', () => {
     const c = text('0<c>', schema);
 
     const { tags } = sequence(a, b, c);
+
     expect(tags.a).toBe(1);
     expect(tags.b).toBe(3);
     expect(tags.c).toBe(5);
@@ -243,6 +261,7 @@ describe('sequence', () => {
     const a = doc(p('<a>'));
 
     const { tags } = sequence(a);
+
     expect(tags.a).toBe(2);
   });
 });

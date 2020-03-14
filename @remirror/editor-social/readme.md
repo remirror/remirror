@@ -11,9 +11,8 @@ The following editor would add emoji characters as valid prefix characters when 
 editor.
 
 ```tsx
-import { SocialEditor } from '@remirror/editor-social';
 import emojiRegex from 'emoji-regex';
-
+import { SocialEditor } from '@remirror/editor-social';
 const Editor = props => (
   <SocialEditor
     {...props}

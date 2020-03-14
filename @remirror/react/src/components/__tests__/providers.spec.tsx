@@ -1,9 +1,10 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { createBaseTestManager, docNodeBasicJSON } from '@remirror/test-fixtures';
 import { render } from '@testing-library/react';
 import { FC } from 'react';
+
+import { createBaseTestManager, docNodeBasicJSON } from '@remirror/test-fixtures';
 
 import { useRemirrorContext } from '../../hooks/context-hooks';
 import { RemirrorManager } from '../remirror-manager';
@@ -28,6 +29,7 @@ test('ManagedRemirrorProvider', () => {
   );
   const target = getByTestId('target');
   const editor = getByRole('textbox');
+
   expect(target).toContainElement(editor);
 });
 
@@ -50,5 +52,6 @@ test('RemirrorProvider', () => {
   );
   const target = getByTestId('target');
   const editor = getByRole('textbox');
+
   expect(target).toContainElement(editor);
 });

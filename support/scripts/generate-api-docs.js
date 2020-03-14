@@ -13,16 +13,12 @@ const { check, all, api, docs } = argv;
 
 const generateDocs = async (inputFolder = '', packageName = '') => {
   const outputFolder = baseDir('docs/api', packageName);
-  await exec(
-    `api-documenter markdown --input-folder ${inputFolder} --output-folder ${outputFolder}`,
-  );
+  await exec(`api-documenter markdown --input-folder ${inputFolder} --output-folder ${outputFolder}`);
 };
 
 const getPackages = () =>
   getAllDependencies().then(packages => {
-    return packages.filter(
-      pkg => !pkg.private && pkg.types && !(pkg.meta && pkg.meta.skipApi),
-    );
+    return packages.filter(pkg => !pkg.private && pkg.types && !(pkg.meta && pkg.meta.skipApi));
   });
 
 const runApiExtractor = async () => {
@@ -49,9 +45,7 @@ const runApiExtractor = async () => {
     });
 
     if (result.succeeded) {
-      console.info(
-        `API Extractor completed successfully with ${result.warningCount} warnings: ${json.name}`,
-      );
+      console.info(`API Extractor completed successfully with ${result.warningCount} warnings: ${json.name}`);
     } else if (check && result.apiReportChanged) {
       console.error(
         `API Extractor completed with ${result.errorCount} errors and ${result.warningCount} warnings: ${json.name}

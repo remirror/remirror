@@ -1,3 +1,8 @@
+import { keydownHandler } from 'prosemirror-keymap';
+import { Plugin } from 'prosemirror-state';
+import { Step } from 'prosemirror-transform';
+import { DecorationSet } from 'prosemirror-view';
+
 import {
   CompareStateParams,
   EditorState,
@@ -11,10 +16,6 @@ import {
   findChildrenByNode,
   nodeEqualsType,
 } from '@remirror/core';
-import { keydownHandler } from 'prosemirror-keymap';
-import { Plugin } from 'prosemirror-state';
-import { Step } from 'prosemirror-transform';
-import { DecorationSet } from 'prosemirror-view';
 
 import { CodeBlockExtensionOptions } from './code-block-types';
 import {

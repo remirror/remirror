@@ -25,6 +25,7 @@ test('ssr', () => {
     initialContent,
     forceEnvironment: 'ssr',
   });
+
   expect(string).toInclude('http://Random.com');
   expect(string).toMatchInlineSnapshot(`
     <div class="css-1u8qly9">

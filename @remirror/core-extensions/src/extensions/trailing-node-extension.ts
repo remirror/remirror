@@ -1,3 +1,5 @@
+import { Plugin } from 'prosemirror-state';
+
 import { Extension, ExtensionParams } from '@remirror/core';
 import { entries, uniqueArray } from '@remirror/core-helpers';
 import {
@@ -7,7 +9,6 @@ import {
   SchemaParams,
 } from '@remirror/core-types';
 import { getPluginState, nodeEqualsType } from '@remirror/core-utils';
-import { Plugin } from 'prosemirror-state';
 
 interface CreateTrailingNodePluginParams
   extends ExtensionTagParams,

@@ -1,3 +1,17 @@
+import { render } from '@testing-library/react/pure';
+import {
+  TestEditorView,
+  dispatchAllSelection,
+  dispatchNodeSelection,
+  dispatchTextSelection,
+  fireEventAtPosition,
+  insertText,
+  pasteContent,
+  press,
+  shortcut,
+} from 'jest-prosemirror';
+import React from 'react';
+
 import {
   Attrs,
   Cast,
@@ -12,19 +26,6 @@ import {
   pick,
 } from '@remirror/core';
 import { InjectedRemirrorProps, Remirror, RemirrorProps } from '@remirror/react';
-import { render } from '@testing-library/react/pure';
-import {
-  TestEditorView,
-  dispatchAllSelection,
-  dispatchNodeSelection,
-  dispatchTextSelection,
-  fireEventAtPosition,
-  insertText,
-  pasteContent,
-  press,
-  shortcut,
-} from 'jest-prosemirror';
-import React from 'react';
 
 import { markFactory, nodeFactory } from './jest-remirror-builder';
 import { BaseExtensionNodeNames, nodeExtensions } from './jest-remirror-schema';

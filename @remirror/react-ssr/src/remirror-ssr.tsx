@@ -1,6 +1,7 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
+
 import { AnyExtension, EditorStateParams, ManagerParams, PlainObject } from '@remirror/core';
 import { ReactSerializer, mapProps } from '@remirror/react-renderer';
 

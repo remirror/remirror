@@ -1,8 +1,9 @@
-import { Remirror } from '@remirror/react';
-import { createTestManager } from '@remirror/test-fixtures';
 import { render } from '@testing-library/react';
 import { ThemeProvider } from 'emotion-theming';
 import React from 'react';
+
+import { Remirror } from '@remirror/react';
+import { createTestManager } from '@remirror/test-fixtures';
 
 import { useEmotionTheme, useRemirrorTheme } from '../ui-hooks';
 import { RemirrorThemeProvider } from '../ui-provider';
@@ -11,7 +12,9 @@ import { baseTheme } from '..';
 test('uses the base theme when none is provided', () => {
   const ConsumerComponent = () => {
     const { theme } = useRemirrorTheme();
+
     expect(theme).toEqual(baseTheme);
+
     return null;
   };
 
@@ -90,6 +93,7 @@ describe('disableMerge', () => {
       const { theme } = useRemirrorTheme();
 
       expect(theme).toEqual(expected);
+
       return null;
     };
 
@@ -107,6 +111,7 @@ describe('disableMerge', () => {
       const { theme } = useRemirrorTheme();
 
       expect(theme).not.toHaveProperty('emotion');
+
       return null;
     };
 
@@ -125,6 +130,7 @@ describe('withoutEmotion', () => {
   it.skip('should not render extra class names when true', () => {
     const child = () => <div data-testid='test' />;
     const { getByTestId, rerender } = render(<Remirror manager={createTestManager()}>{child}</Remirror>);
+
     expect(getByTestId('test')).toHaveAttribute('class');
 
     rerender(
@@ -132,6 +138,7 @@ describe('withoutEmotion', () => {
         <Remirror manager={createTestManager()}>{child}</Remirror>
       </RemirrorThemeProvider>,
     );
+
     expect(getByTestId('test')).not.toHaveAttribute('class');
   });
 });

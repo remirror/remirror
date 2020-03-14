@@ -1,3 +1,5 @@
+import { wrappingInputRule } from 'prosemirror-inputrules';
+
 import {
   CommandNodeTypeParams,
   EDITOR_CLASS_SELECTOR,
@@ -9,7 +11,6 @@ import {
   convertCommand,
   toggleWrap,
 } from '@remirror/core';
-import { wrappingInputRule } from 'prosemirror-inputrules';
 
 export class BlockquoteExtension extends NodeExtension {
   get name() {

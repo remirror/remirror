@@ -1,6 +1,3 @@
-import { fromHTML, toHTML } from '@remirror/core';
-import { BaseKeymapExtension } from '@remirror/core-extensions';
-import { createBaseTestManager } from '@remirror/test-fixtures';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import typescriptPlugin from 'prettier/parser-typescript';
@@ -9,6 +6,10 @@ import javascript from 'refractor/lang/javascript';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
+
+import { fromHTML, toHTML } from '@remirror/core';
+import { BaseKeymapExtension } from '@remirror/core-extensions';
+import { createBaseTestManager } from '@remirror/test-fixtures';
 
 import { CodeBlockExtension, CodeBlockExtensionOptions } from '../';
 import { CodeBlockFormatter } from '../code-block-types';
@@ -35,6 +36,7 @@ describe('schema', () => {
       content: `<pre><code class="language-${attrs.language}" data-code-block-language="${attrs.language}">${content}</code></pre>`,
     });
     const expected = doc(codeBlock(content));
+
     expect(node).toEqualProsemirrorNode(expected);
   });
 });
@@ -44,6 +46,7 @@ describe('constructor', () => {
     const codeBlock = new CodeBlockExtension({
       syntaxTheme: 'a11yDark',
     });
+
     expect(codeBlock.options.syntaxTheme).toEqual('a11yDark');
     expect(codeBlock.options.defaultLanguage).toEqual('markup');
   });
@@ -101,9 +104,11 @@ describe('plugin', () => {
 
   it('updates when multiple changes occur', () => {
     const { overwrite } = add(doc(tsBlock(`const a = 'test';`), tsBlock(`let b;`)));
+
     expect(dom.innerHTML).toMatchSnapshot();
 
     overwrite(doc(tsBlock(`const c = 'test';`), tsBlock(`let d;`)));
+
     expect(dom.innerHTML).toMatchSnapshot();
   });
 
@@ -115,6 +120,7 @@ describe('plugin', () => {
 
     overwrite(doc(tsBlock(content)));
     const newHtml = dom.querySelector('.language-typescript code')!.innerHTML;
+
     expect(newHtml).not.toBe(initialHtml);
     expect(newHtml).toMatchSnapshot();
   });
@@ -122,11 +128,13 @@ describe('plugin', () => {
   describe('Backspace', () => {
     it('can be deleted', () => {
       const { state } = add(doc(tsBlock('<cursor>'))).press('Backspace');
+
       expect(state.doc).toEqualRemirrorDocument(doc(p()));
     });
 
     it('is still deleted when all that remains is whitespace', () => {
       const { state } = add(doc(tsBlock('<cursor>          '))).press('Backspace');
+
       expect(state.doc).toEqualRemirrorDocument(doc(p()));
     });
 
@@ -134,11 +142,13 @@ describe('plugin', () => {
       const { state } = add(doc(p(), tsBlock('<cursor>content')))
         .press('Backspace')
         .insertText('abc');
+
       expect(state.doc).toEqualRemirrorDocument(doc(p('abc'), tsBlock('content')));
     });
 
     it('avoids stepping into the previous node with non empty selection', () => {
       const { state } = add(doc(p('abc'), tsBlock('<start>code<end>content'))).press('Backspace');
+
       expect(state.doc).toEqualRemirrorDocument(doc(p('abc'), tsBlock('content')));
     });
 
@@ -146,6 +156,7 @@ describe('plugin', () => {
       const { state } = add(doc(tsBlock('<cursor>content')))
         .press('Backspace')
         .insertText('abc');
+
       expect(state.doc).toEqualRemirrorDocument(doc(p('abc'), tsBlock('content')));
     });
   });
@@ -153,29 +164,34 @@ describe('plugin', () => {
   describe('Space', () => {
     it('responds to space input rule', () => {
       const { state } = add(doc(p('<cursor>'))).insertText('```typescript abc');
+
       expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('abc'), p()));
     });
 
     it('responds to empty space input rule using the default language', () => {
       const markupBlock = codeBlock({ language: 'markup' });
       const { state } = add(doc(p('<cursor>'))).insertText('``` abc');
+
       expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
     });
 
     it('does not match invalid regex', () => {
       const { state } = add(doc(p('<cursor>'))).insertText('```123-__ ');
+
       expect(state.doc).toEqualRemirrorDocument(doc(p('```123-__ ')));
     });
 
     it('use default markup for non existent language', () => {
       const markupBlock = codeBlock({ language: 'markup' });
       const { state } = add(doc(p('<cursor>'))).insertText('```abcde abc');
+
       expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
     });
 
     it('keeps alias language name when supported', () => {
       const htmlBlock = codeBlock({ language: 'html' });
       const { state } = add(doc(p('<cursor>'))).insertText('```html abc');
+
       expect(state.doc).toEqualRemirrorDocument(doc(htmlBlock('abc'), p()));
     });
   });
@@ -185,6 +201,7 @@ describe('plugin', () => {
       const { state } = add(doc(tsBlock('<cursor>')))
         .press('Tab')
         .insertText('abc');
+
       expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('\tabc')));
     });
   });
@@ -195,6 +212,7 @@ describe('plugin', () => {
         .insertText('```typescript')
         .press('Enter')
         .insertText('abc');
+
       expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('abc'), p()));
     });
 
@@ -204,6 +222,7 @@ describe('plugin', () => {
         .insertText('```')
         .press('Enter')
         .insertText('abc');
+
       expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
     });
 
@@ -213,6 +232,7 @@ describe('plugin', () => {
         .insertText('```invalidlang')
         .press('Enter')
         .insertText('abc');
+
       expect(state.doc).toEqualRemirrorDocument(doc(markupBlock('abc'), p()));
     });
 
@@ -222,6 +242,7 @@ describe('plugin', () => {
         .insertText('```html')
         .press('Enter')
         .insertText('abc');
+
       expect(state.doc).toEqualRemirrorDocument(doc(htmlBlock('abc'), p()));
     });
   });
@@ -293,6 +314,7 @@ describe('commands', () => {
       const { state: stateTwo } = actionsCallback(actions =>
         actions.toggleCodeBlock({ language: 'typescript' }),
       );
+
       expect(stateTwo.doc).toEqualRemirrorDocument(doc(p('')));
     });
 
@@ -305,6 +327,7 @@ describe('commands', () => {
       expect(stateOne.doc).toEqualRemirrorDocument(doc(markupBlock('')));
 
       const { state: stateTwo } = actionsCallback(actions => actions.toggleCodeBlock());
+
       expect(stateTwo.doc).toEqualRemirrorDocument(doc(p('')));
     });
   });

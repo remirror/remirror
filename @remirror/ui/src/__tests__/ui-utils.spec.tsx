@@ -59,6 +59,7 @@ describe('sx', () => {
         <p css={styles}>Test</p>
       </RemirrorThemeProvider>,
     );
+
     expect(getByText('Test')).toHaveStyle(`color: red; background-color: pink;`);
   });
 });

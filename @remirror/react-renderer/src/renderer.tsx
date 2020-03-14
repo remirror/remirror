@@ -1,8 +1,9 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
-import { ObjectMark, ObjectNode, isString } from '@remirror/core';
 import { ComponentType, FC, Fragment } from 'react';
+
+import { ObjectMark, ObjectNode, isString } from '@remirror/core';
 
 /* Inspired by https://github.com/rexxars/react-prosemirror-document */
 

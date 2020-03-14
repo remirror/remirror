@@ -1,3 +1,5 @@
+import { wrappingInputRule } from 'prosemirror-inputrules';
+
 import {
   CommandNodeTypeParams,
   ExtensionManagerNodeTypeParams,
@@ -8,7 +10,6 @@ import {
   convertCommand,
   toggleList,
 } from '@remirror/core';
-import { wrappingInputRule } from 'prosemirror-inputrules';
 
 export class BulletListExtension extends NodeExtension {
   get name() {

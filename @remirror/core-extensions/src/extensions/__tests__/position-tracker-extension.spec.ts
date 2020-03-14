@@ -1,5 +1,6 @@
-import { ExtensionMap } from '@remirror/test-fixtures';
 import { renderEditor } from 'jest-remirror';
+
+import { ExtensionMap } from '@remirror/test-fixtures';
 
 import { PositionTrackerExtension, PositionTrackerExtensionOptions } from '../position-tracker-extension';
 

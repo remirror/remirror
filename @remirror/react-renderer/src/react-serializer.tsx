@@ -1,6 +1,8 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
+import { ComponentType, Fragment, ReactNode } from 'react';
+
 import {
   AnyExtension,
   DOMOutputSpec,
@@ -16,7 +18,6 @@ import {
   isPlainObject,
   isString,
 } from '@remirror/core';
-import { ComponentType, Fragment, ReactNode } from 'react';
 
 import { gatherToDOM, mapProps } from './renderer-utils';
 

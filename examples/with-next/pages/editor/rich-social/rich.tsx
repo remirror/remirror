@@ -1,6 +1,13 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
+import matchSorter from 'match-sorter';
+import { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import bash from 'refractor/lang/bash';
+import markdown from 'refractor/lang/markdown';
+import tsx from 'refractor/lang/tsx';
+import typescript from 'refractor/lang/typescript';
+
 import { EditorState, take } from '@remirror/core';
 import {
   BlockquoteExtension,
@@ -25,12 +32,6 @@ import {
 import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { RemirrorStateListenerParams } from '@remirror/react';
 import { userData } from '@remirror/showcase';
-import matchSorter from 'match-sorter';
-import { ChangeEvent, useCallback, useMemo, useState } from 'react';
-import bash from 'refractor/lang/bash';
-import markdown from 'refractor/lang/markdown';
-import tsx from 'refractor/lang/tsx';
-import typescript from 'refractor/lang/typescript';
 
 const DEFAULT_LANGUAGES = [markdown, typescript, tsx, bash];
 

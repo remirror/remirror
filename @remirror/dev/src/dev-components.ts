@@ -1,7 +1,8 @@
-import { useRemirrorContext } from '@remirror/react';
 import applyDevTools from 'prosemirror-dev-tools';
 import { useEffect } from 'react';
 import { unmountComponentAtNode } from 'react-dom';
+
+import { useRemirrorContext } from '@remirror/react';
 
 /**
  * A component that should be placed within the remirror context and will

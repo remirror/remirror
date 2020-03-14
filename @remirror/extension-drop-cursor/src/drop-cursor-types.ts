@@ -1,5 +1,6 @@
-import { BaseExtensionOptions } from '@remirror/core';
 import { ComponentType } from 'react';
+
+import { BaseExtensionOptions } from '@remirror/core';
 
 /**
  * This indicates whether the current cursor position is within a textblock or

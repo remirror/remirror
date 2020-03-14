@@ -1,6 +1,7 @@
-import { RemirrorThemeProvider, RemirrorThemeRoot, baseTheme, useRemirrorTheme } from '@remirror/ui';
 import { DecoratorFunction } from '@storybook/addons';
 import React, { FC, ReactElement } from 'react';
+
+import { RemirrorThemeProvider, RemirrorThemeRoot, baseTheme, useRemirrorTheme } from '@remirror/ui';
 
 export const ThemeDecorator: DecoratorFunction<ReactElement> = storyFn => (
   <RemirrorThemeProvider theme={baseTheme}>

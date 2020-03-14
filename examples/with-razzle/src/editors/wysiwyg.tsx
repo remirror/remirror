@@ -1,5 +1,6 @@
-import { ExampleWysiwygEditor, WYSIWYG_SHOWCASE_CONTENT } from '@remirror/showcase/lib/wysiwyg';
 import React from 'react';
+
+import { ExampleWysiwygEditor, WYSIWYG_SHOWCASE_CONTENT } from '@remirror/showcase/lib/wysiwyg';
 
 export const WysiwygEditor = () => <ExampleWysiwygEditor suppressHydrationWarning={true} />;
 export const WysiwygEditorWithContent = () => (

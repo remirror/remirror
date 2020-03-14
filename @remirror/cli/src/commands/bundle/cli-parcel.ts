@@ -3,10 +3,11 @@ import os from 'os';
 import path from 'path';
 import util from 'util';
 
-import { bool, uniqueId } from '@remirror/core-helpers';
 import escape from 'jsesc';
 import Bundler, { ParcelOptions } from 'parcel-bundler';
 import rimraf from 'rimraf';
+
+import { bool, uniqueId } from '@remirror/core-helpers';
 
 import { BundleArgv } from './cli-types';
 

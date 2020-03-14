@@ -98,14 +98,12 @@ expect.addSnapshotSerializer(prosemirrorSerializer);
 A utility from jest-prosemirror which tests that a command transforms the prosemirror node in the desired way.
 
 ```ts
-import { removeMark } from '@remirror/core-utils';
 import { doc, p, schema, strong } from 'jest-prosemirror';
-
+import { removeMark } from '@remirror/core-utils';
 test('remove the mark', () => {
   const type = schema.marks.bold;
   const from = doc(p(strong('<start>bold<end>')));
   const to = doc(p('bold'));
-
   expect(removeMark({ type })).toTransformNode({ from, to });
 });
 ```
@@ -120,15 +118,13 @@ Tests that two prosemirror documents are equal. Pass in the expected document an
 same.
 
 ```ts
-import { removeNodeAtPosition } from '@remirror/core-utils';
 import { createEditor, doc, p } from 'jest-prosemirror';
-
+import { removeNodeAtPosition } from '@remirror/core-utils';
 test('remove block top level node at specified position', () => {
   const {
     state: { tr },
   } = createEditor(doc(p('x'), p('one')));
   const newTr = removeNodeAtPosition({ pos: 3, tr });
-
   expect(newTr).not.toBe(tr);
   expect(newTr.doc).toEqualProsemirrorNode(doc(p('x')));
 });

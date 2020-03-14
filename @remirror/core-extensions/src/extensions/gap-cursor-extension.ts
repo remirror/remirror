@@ -1,7 +1,8 @@
+import { GapCursor, gapCursor } from 'prosemirror-gapcursor';
+
 import { Extension } from '@remirror/core';
 import { isInstanceOf } from '@remirror/core-helpers';
 import { css } from '@remirror/react-utils';
-import { GapCursor, gapCursor } from 'prosemirror-gapcursor';
 
 /**
  * Create a gap cursor plugin.

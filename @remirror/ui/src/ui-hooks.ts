@@ -1,5 +1,6 @@
-import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core-types';
 import { useContext } from 'react';
+
+import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core-types';
 
 import { EmotionThemeContext, RemirrorThemeContext } from './ui-context';
 

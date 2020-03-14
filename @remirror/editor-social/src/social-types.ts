@@ -1,11 +1,12 @@
+import { SuggestStateMatch } from 'prosemirror-suggest';
+import { Except } from 'type-fest';
+
 import { RemirrorTheme } from '@remirror/core';
 import { BaseExtensions, NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import { EmojiExtension } from '@remirror/extension-emoji';
 import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
 import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
 import { ManagedRemirrorProviderProps, RemirrorManagerProps } from '@remirror/react';
-import { SuggestStateMatch } from 'prosemirror-suggest';
-import { Except } from 'type-fest';
 
 export type OnMentionChangeParams = MentionState & {
   /**

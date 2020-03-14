@@ -1,6 +1,7 @@
-import { RemirrorManager, useRemirrorManager } from '@remirror/react';
 import { act, render } from '@testing-library/react';
 import React from 'react';
+
+import { RemirrorManager, useRemirrorManager } from '@remirror/react';
 
 import { PortalContainer, RemirrorPortals } from '..';
 
@@ -28,10 +29,12 @@ describe('RemirrorPortals', () => {
 
   it('provides access to the manager context', () => {
     expect.assertions(1);
+
     const Component = () => {
       const manager = useRemirrorManager();
 
       expect(manager).toBeTruthy();
+
       return <div data-testid='test' />;
     };
 

@@ -2,10 +2,11 @@
  * @jest-environment node
  */
 
-import { Remirror } from '@remirror/react';
-import { createTestManager } from '@remirror/test-fixtures';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+
+import { Remirror } from '@remirror/react';
+import { createTestManager } from '@remirror/test-fixtures';
 
 import { RemirrorThemeProvider, baseTheme } from '..';
 
@@ -18,6 +19,7 @@ describe('withoutEmotion', () => {
         <Remirror manager={createTestManager()}>{child}</Remirror>
       </RemirrorThemeProvider>,
     );
+
     expect(withEmotionString).toMatch(/css-[a-z0-9]+/gi);
 
     const withoutEmotionString = renderToString(
@@ -25,6 +27,7 @@ describe('withoutEmotion', () => {
         <Remirror manager={createTestManager()}>{child}</Remirror>
       </RemirrorThemeProvider>,
     );
+
     expect(withoutEmotionString).not.toMatch(/css-[a-z0-9]+/gi);
   });
 });

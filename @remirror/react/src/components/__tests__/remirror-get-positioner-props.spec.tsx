@@ -1,7 +1,8 @@
-import { PlainObject } from '@remirror/core';
-import { createTestManager } from '@remirror/test-fixtures';
 import { render } from '@testing-library/react';
 import React, { FunctionComponent, RefAttributes, forwardRef } from 'react';
+
+import { PlainObject } from '@remirror/core';
+import { createTestManager } from '@remirror/test-fixtures';
 
 import { Remirror } from '..';
 
@@ -24,6 +25,7 @@ test('updates the offscreen attribute when a selection is active', () => {
       }}
     </Remirror>,
   );
+
   expect(mock).toHaveBeenCalledWith(expect.any(Function));
 });
 
@@ -32,11 +34,14 @@ test('provides correct menu props', () => {
     <Remirror manager={createTestManager()}>
       {({ getPositionerProps }) => {
         const { ref, ...props } = getPositionerProps({ positionerId: 'test' });
+
         expect(ref).toEqual(expect.any(Function));
         expect(props).toContainAllKeys(['top', 'left', 'bottom', 'right', 'isActive']);
+
         return <div />;
       }}
     </Remirror>,
   );
+
   expect.hasAssertions();
 });

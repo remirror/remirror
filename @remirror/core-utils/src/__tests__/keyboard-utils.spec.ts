@@ -3,6 +3,7 @@ import { mod } from '../keyboard-utils';
 describe('mod', () => {
   it('should run on PC', () => {
     const isMac = () => false;
+
     expect(mod('Primary', 'Enter', isMac)).toBe('Control-Enter');
     expect(mod('PrimaryShift', 'Enter', isMac)).toBe('Control-Shift-Enter');
     expect(mod('PrimaryAlt', 'Enter', isMac)).toBe('Control-Alt-Enter');
@@ -17,6 +18,7 @@ describe('mod', () => {
 
   it('should run on Mac', () => {
     const isMac = () => true;
+
     expect(mod('Primary', 'Enter', isMac)).toBe('Meta-Enter');
     expect(mod('PrimaryShift', 'Enter', isMac)).toBe('Shift-Meta-Enter');
     expect(mod('PrimaryAlt', 'Enter', isMac)).toBe('Alt-Meta-Enter');

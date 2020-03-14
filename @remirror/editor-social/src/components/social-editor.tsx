@@ -1,6 +1,14 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
+import {
+  SuggestChangeHandlerParams,
+  SuggestKeyBindingMap,
+  SuggestKeyBindingParams,
+  SuggestStateMatch,
+} from 'prosemirror-suggest';
+import { Fragment, PureComponent } from 'react';
+
 import { RemirrorTheme, deepMerge, isUndefined, omit } from '@remirror/core';
 import { NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import {
@@ -20,13 +28,6 @@ import {
 } from '@remirror/extension-mention';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
 import { RemirrorThemeProvider } from '@remirror/ui';
-import {
-  SuggestChangeHandlerParams,
-  SuggestKeyBindingMap,
-  SuggestKeyBindingParams,
-  SuggestStateMatch,
-} from 'prosemirror-suggest';
-import { Fragment, PureComponent } from 'react';
 
 import { socialEditorTheme } from '../social-theme';
 import {

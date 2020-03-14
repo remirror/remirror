@@ -1,7 +1,8 @@
+import React, { FC } from 'react';
+
 import { AnyExtension, ExtensionManager } from '@remirror/core';
 import { PlaceholderExtension } from '@remirror/core-extensions';
 import { TestExtension } from '@remirror/test-fixtures';
-import React, { FC } from 'react';
 
 import { RemirrorExtension } from '../components/remirror-extension';
 import { RemirrorManager } from '../components/remirror-manager';
@@ -22,6 +23,7 @@ describe('getManagerFromComponentTree', () => {
     );
   };
   let manager: ExtensionManager;
+
   beforeEach(async () => {
     manager = await getManagerFromComponentTree({ Component: Tester });
   });

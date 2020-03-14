@@ -1,8 +1,9 @@
+import { pmBuild } from 'jest-prosemirror';
+
 import { NodeGroup } from '@remirror/core-constants';
 import { NodeExtensionSpec } from '@remirror/core-types';
 import { fromHTML } from '@remirror/core-utils';
 import { createBaseTestManager } from '@remirror/test-fixtures';
-import { pmBuild } from 'jest-prosemirror';
 
 import { NodeExtension } from '../';
 
@@ -78,6 +79,7 @@ describe('extraAttrs', () => {
     });
 
     const expected = doc(custom('hello'));
+
     expect(node).toEqualProsemirrorNode(expected);
   });
 
@@ -87,6 +89,7 @@ describe('extraAttrs', () => {
       schema,
     });
     const expected = doc(other('hello'));
+
     expect(node).toEqualProsemirrorNode(expected);
   });
 });

@@ -1,3 +1,6 @@
+import minDocument from 'min-document';
+import { DirectEditorProps as DEP, EditorView } from 'prosemirror-view';
+
 import {
   Cast,
   EditorSchema,
@@ -6,8 +9,6 @@ import {
   Transaction,
   shouldUseDOMEnvironment,
 } from '@remirror/core';
-import minDocument from 'min-document';
-import { DirectEditorProps as DEP, EditorView } from 'prosemirror-view';
 
 type DirectEditorProps = DEP<EditorSchema>;
 

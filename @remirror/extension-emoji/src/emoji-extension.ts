@@ -1,3 +1,6 @@
+import escapeStringRegex from 'escape-string-regexp';
+import { Suggester } from 'prosemirror-suggest';
+
 import {
   Extension,
   ExtensionManagerParams,
@@ -7,8 +10,6 @@ import {
   noop,
   plainInputRule,
 } from '@remirror/core';
-import escapeStringRegex from 'escape-string-regexp';
-import { Suggester } from 'prosemirror-suggest';
 
 import {
   EmojiExtensionOptions,

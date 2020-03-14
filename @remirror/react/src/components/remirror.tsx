@@ -1,6 +1,9 @@
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core';
+import { EditorState, TextSelection } from 'prosemirror-state';
+import { Fragment, PureComponent, ReactNode, Ref } from 'react';
+
 import {
   AnyExtension,
   EDITOR_CLASS_NAME,
@@ -39,8 +42,6 @@ import {
   propIsFunction,
 } from '@remirror/react-utils';
 import { RemirrorThemeContext } from '@remirror/ui';
-import { EditorState, TextSelection } from 'prosemirror-state';
-import { Fragment, PureComponent, ReactNode, Ref } from 'react';
 
 import { defaultProps } from '../react-constants';
 import { defaultPositioner } from '../react-positioners';

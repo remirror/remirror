@@ -64,7 +64,9 @@ describe('markInputRule', () => {
     const params = [view, from, to, '@'];
     view.someProp('handleTextInput', f => {
       const value = f(...params);
+
       expect(value).toBe(false);
+
       return value;
     });
 
@@ -101,7 +103,9 @@ describe('nodeInputRule', () => {
     const params = [view, from, to, '@'];
     view.someProp('handleTextInput', f => {
       const value = f(...params);
+
       expect(value).toBe(false);
+
       return value;
     });
 

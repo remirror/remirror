@@ -1,5 +1,6 @@
-import { ExtensionManager } from '@remirror/core';
 import { createContext } from 'react';
+
+import { ExtensionManager } from '@remirror/core';
 
 import { InjectedRemirrorProps } from './react-types';
 

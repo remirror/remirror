@@ -1,10 +1,11 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
+import { FC, Fragment, ReactElement, forwardRef } from 'react';
+
 import { isPlainObject } from '@remirror/core-helpers';
 import { useRemirrorTheme } from '@remirror/ui';
 import { Button, ButtonProps } from '@remirror/ui-buttons';
 import { DropdownProps, DropdownSelect } from '@remirror/ui-dropdown';
-import { FC, Fragment, ReactElement, forwardRef } from 'react';
 
 interface MenubarDropdownConfiguration extends DropdownProps {
   type: 'dropdown';

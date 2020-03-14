@@ -1,9 +1,10 @@
-import { BaseExtensionOptions } from '@remirror/core';
 import {
   SuggestChangeHandlerParams,
   SuggestExitHandlerParams,
   SuggestKeyBindingMap,
 } from 'prosemirror-suggest';
+
+import { BaseExtensionOptions } from '@remirror/core';
 
 import AliasData from './data/aliases';
 import CategoryData from './data/categories';
@@ -17,8 +18,8 @@ export type NamesAndAliases = Names | AliasNames;
 export interface EmojiObject {
   keywords: string[];
   char: string;
-  category: Category;
-  name: Names;
+  category: string;
+  name: string;
   description: string;
   skinVariations: boolean;
 }

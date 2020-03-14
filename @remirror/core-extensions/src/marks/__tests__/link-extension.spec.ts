@@ -1,7 +1,8 @@
-import { fromHTML, toHTML } from '@remirror/core';
-import { createBaseTestManager } from '@remirror/test-fixtures';
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
+
+import { fromHTML, toHTML } from '@remirror/core';
+import { createBaseTestManager } from '@remirror/test-fixtures';
 
 import { LinkExtension, LinkExtensionOptions } from '../link-extension';
 
@@ -32,6 +33,7 @@ describe('schema', () => {
       schema,
     });
     const expected = doc(p(a('link')));
+
     expect(node).toEqualProsemirrorNode(expected);
   });
 
@@ -78,6 +80,7 @@ describe('schema', () => {
       });
 
       const expected = doc(p(a('link')));
+
       expect(node).toEqualProsemirrorNode(expected);
     });
   });
@@ -114,6 +117,7 @@ describe('actions', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
         actions.removeLink();
+
         expect(getState()).toContainRemirrorDocument(p('Paragraph A link'));
       });
 
@@ -121,6 +125,7 @@ describe('actions', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('A <cursor>link'))));
         actions.removeLink();
+
         expect(getState()).toContainRemirrorDocument(p('Paragraph A link'));
       });
 
@@ -128,6 +133,7 @@ describe('actions', () => {
         const testLink = link({ href });
         add(doc(p('<all>', testLink('1'), ' ', testLink('2'), ' ', testLink('3'))));
         actions.removeLink();
+
         expect(getState()).toContainRemirrorDocument(p('1 2 3'));
       });
     });
@@ -136,24 +142,28 @@ describe('actions', () => {
       it('is not enabled when not selected', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph<cursor> ', testLink('A link'))));
+
         expect(actions.removeLink.isEnabled()).toBeFalse();
       });
 
       it('is enabled with selection wrapped', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
+
         expect(actions.removeLink.isEnabled()).toBeTrue();
       });
 
       it('is enabled with cursor within link', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('A <cursor>link'))));
+
         expect(actions.removeLink.isEnabled()).toBeTrue();
       });
 
       it('is enabled with selection of multiple nodes', () => {
         const testLink = link({ href });
         add(doc(p('<all>Paragraph ', testLink('A link'))));
+
         expect(actions.removeLink.isEnabled()).toBeTrue();
       });
     });
@@ -165,12 +175,14 @@ describe('actions', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph <start>A link<end>')));
         actions.updateLink({ href });
+
         expect(getState()).toContainRemirrorDocument(p('Paragraph ', testLink('<start>A link<end>')));
       });
 
       it('does nothing for an empty selection', () => {
         add(doc(p('Paragraph <cursor>A link')));
         actions.updateLink({ href });
+
         expect(getState()).toContainRemirrorDocument(p('Paragraph A link'));
       });
 
@@ -180,6 +192,7 @@ describe('actions', () => {
         const altLink = link(attrs);
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
         actions.updateLink(attrs);
+
         expect(getState()).toContainRemirrorDocument(p('Paragraph ', altLink('<start>A link<end>')));
       });
 
@@ -187,6 +200,7 @@ describe('actions', () => {
         const testLink = link({ href });
         add(doc(p('<all>', testLink('1'), ' ', testLink('2'), ' ', testLink('3'))));
         actions.updateLink({ href });
+
         expect(getState()).toContainRemirrorDocument(p(testLink('1 2 3')));
       });
     });
@@ -195,24 +209,28 @@ describe('actions', () => {
       it('is not active when not selected', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph<cursor> ', testLink('A link'))));
+
         expect(actions.updateLink.isActive()).toBeFalse();
       });
 
       it('is active with selection wrapped', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
+
         expect(actions.updateLink.isActive()).toBeTrue();
       });
 
       it('is active with cursor within link', () => {
         const testLink = link({ href });
         add(doc(p('Paragraph ', testLink('A <cursor>link'))));
+
         expect(actions.updateLink.isActive()).toBeTrue();
       });
 
       it('is active with selection of multiple nodes', () => {
         const testLink = link({ href });
         add(doc(p('<all>Paragraph ', testLink('A link'))));
+
         expect(actions.updateLink.isActive()).toBeTrue();
       });
     });
@@ -220,16 +238,19 @@ describe('actions', () => {
     describe('.isEnabled()', () => {
       it('is enabled when text is selected', () => {
         add(doc(p('Paragraph <start>A<end> link')));
+
         expect(actions.updateLink.isEnabled()).toBeTrue();
       });
 
       it('is not enabled for empty selections', () => {
         add(doc(p('Paragraph <cursor>A link')));
+
         expect(actions.updateLink.isEnabled()).toBeFalse();
       });
 
       it('is not enabled for node selections', () => {
         add(doc(p('Paragraph <node>A link')));
+
         expect(actions.updateLink.isEnabled()).toBeFalse();
       });
     });

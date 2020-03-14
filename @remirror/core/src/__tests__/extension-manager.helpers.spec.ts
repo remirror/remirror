@@ -13,6 +13,7 @@ describe('transformExtensionMap', () => {
       { extension: test, priority: 2 },
       { extension: text, priority: 2 },
     ];
+
     expect(transformExtensionMap(extensions)).toEqual([doc, test, text]);
   });
 
@@ -25,6 +26,7 @@ describe('transformExtensionMap', () => {
       { extension: test, priority: 2 },
       { extension: text, priority: -1 },
     ];
+
     expect(transformExtensionMap(extensions)).toEqual([text, doc, test]);
   });
 
@@ -33,6 +35,7 @@ describe('transformExtensionMap', () => {
     const test = new TestExtension();
     const text = new TextExtension();
     const extensions = [{ extension: doc, priority: 1 }, test, { extension: text, priority: -1 }];
+
     expect(transformExtensionMap(extensions)).toEqual([text, doc, test]);
   });
 });
