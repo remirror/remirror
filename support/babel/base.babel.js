@@ -10,20 +10,22 @@ const ignore = [
   '*.d.ts',
 ];
 
-const basePreset = ['@babel/preset-typescript', '@babel/preset-react'];
+const basePreset = ['@babel/preset-react'];
 
-const presets = [['@babel/preset-env'], ...basePreset];
+const presets = [...basePreset, ['@babel/preset-env']];
 
 const testBabelPresetEnv = ['@babel/preset-env', { targets: { node: '8' } }];
 const nonTestEnv = { ignore, presets };
 
 module.exports = {
-  presets: [testBabelPresetEnv, ...basePreset],
+  presets: [...basePreset, testBabelPresetEnv],
+  overrides: [
+    { test: /\.ts$/, plugins: [['@babel/plugin-transform-typescript', { isTSX: false }]] },
+    { test: /\.tsx$/, plugins: [['@babel/plugin-transform-typescript', { isTSX: true }]] },
+    { test: /\.tsx?$/, plugins: ['@babel/plugin-proposal-class-properties'] },
+  ],
   plugins: [
-    // Required for the compilation of abstract classes
-    '@babel/plugin-transform-typescript',
     ['@babel/plugin-transform-runtime'],
-    ['@babel/plugin-proposal-class-properties'],
     ['@babel/plugin-proposal-object-rest-spread'],
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-nullish-coalescing-operator',

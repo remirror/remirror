@@ -12,7 +12,7 @@ module.exports = {
     __E2E__: false,
   },
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': jestSupportDir('jest.transformer.js'),
+    '^.+\\.(js|jsx|ts|tsx)$': [require.resolve('babel-jest'), { rootMode: 'upward' }],
   },
   moduleDirectories: ['node_modules'],
   testPathIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/node_modules/'],
