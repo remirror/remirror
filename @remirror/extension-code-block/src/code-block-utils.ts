@@ -24,6 +24,7 @@ import {
   isEqual,
   isObject,
   isString,
+  object,
   uniqueArray,
 } from '@remirror/core';
 
@@ -248,9 +249,10 @@ export const formatCodeBlockFactory = ({
   formatter,
   supportedLanguages,
   defaultLanguage: fallback,
-}: FormatCodeBlockFactoryParams) => (
-  { pos }: Partial<PosParams> = Object.create(null),
-): ProsemirrorCommandFunction => (state, dispatch) => {
+}: FormatCodeBlockFactoryParams) => ({ pos }: Partial<PosParams> = object()): ProsemirrorCommandFunction => (
+  state,
+  dispatch,
+) => {
   const { tr, selection } = state;
 
   const { from, to } = pos ? { from: pos, to: pos } : selection;
@@ -312,7 +314,7 @@ export const formatCodeBlockFactory = ({
  * Retrieve the supported language names based on configuration.
  */
 export const getSupportedLanguagesMap = (supportedLanguages: RefractorSyntax[]) => {
-  const obj: Record<string, string> = Object.create(null);
+  const obj: Record<string, string> = object();
   for (const { name, aliases } of [...PRELOADED_LANGUAGES, ...supportedLanguages]) {
     obj[name] = name;
     aliases.forEach(alias => {

@@ -1,3 +1,5 @@
+import { object } from '@remirror/core-helpers';
+
 const heading = {
   fontFamily: 'heading',
   fontWeight: 'heading',
@@ -8,7 +10,7 @@ const spreadObject = <GProps extends string, GObj extends object>(
   props: GProps[],
   obj: GObj,
 ): Record<GProps, GObj> => {
-  const returnValue = Object.create(null);
+  const returnValue = object<Record<GProps, GObj>>();
   for (const prop of props) {
     returnValue[prop] = obj;
   }

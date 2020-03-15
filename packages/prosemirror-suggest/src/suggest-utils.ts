@@ -1,7 +1,7 @@
 import { keydownHandler } from 'prosemirror-keymap';
 
 import { NULL_CHARACTER } from '@remirror/core-constants';
-import { bool, findMatches, isUndefined } from '@remirror/core-helpers';
+import { bool, findMatches, isUndefined, object } from '@remirror/core-helpers';
 import {
   EditorStateParams,
   MakeOptional,
@@ -198,7 +198,7 @@ const createInsertReason = ({
  * Find the reason for the Jump
  */
 const findJumpReason = ({ prev, next, state }: CompareMatchParams & EditorStateParams): SuggestReasonMap => {
-  const value: SuggestReasonMap = Object.create(null);
+  const value: SuggestReasonMap = object();
 
   const updatedPrev = recheckMatch({ state, match: prev });
 
@@ -279,7 +279,7 @@ export const transformKeyBindings = ({
   bindings,
   params,
 }: TransformKeyBindingsParams): Record<string, ProsemirrorCommandFunction> => {
-  const keys: Record<string, ProsemirrorCommandFunction> = Object.create(null);
+  const keys: Record<string, ProsemirrorCommandFunction> = object();
   return Object.entries(bindings).reduce((prev, [key, method]) => {
     return {
       ...prev,
@@ -329,7 +329,7 @@ export const findReason = ({
   state,
   $pos,
 }: EditorStateParams & ResolvedPosParams & Partial<CompareMatchParams>): SuggestReasonMap => {
-  const value: SuggestReasonMap = Object.create(null);
+  const value: SuggestReasonMap = object();
 
   if (!prev && !next) {
     return value;

@@ -1,7 +1,7 @@
 import { Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
-import { bool } from '@remirror/core-helpers';
+import { bool, object } from '@remirror/core-helpers';
 import {
   CompareStateParams,
   EditorSchema,
@@ -59,7 +59,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * The handler matches which are passed into `onChange` / `onExit` handlers.
    */
-  private handlerMatches: SuggestReasonMap = Object.create(null);
+  private handlerMatches: SuggestReasonMap = object();
 
   /**
    * Holds a copy of the view
@@ -207,7 +207,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
       exit.suggester.onExit(this.createReasonParams(exit));
       this.removed = false;
       if (isInvalidSplitReason(exit.reason)) {
-        this.handlerMatches = Object.create(null);
+        this.handlerMatches = object();
       }
     }
   };
@@ -316,7 +316,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    * Reset the state.
    */
   private resetState() {
-    this.handlerMatches = Object.create(null);
+    this.handlerMatches = object();
     this.next = undefined;
     this.removed = false;
   }

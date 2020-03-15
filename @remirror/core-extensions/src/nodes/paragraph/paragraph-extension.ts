@@ -1,6 +1,13 @@
 import { setBlockType } from 'prosemirror-commands';
 
-import { CommandNodeTypeParams, NodeExtension, NodeExtensionSpec, NodeGroup, Tags } from '@remirror/core';
+import {
+  CommandNodeTypeParams,
+  NodeExtension,
+  NodeExtensionSpec,
+  NodeGroup,
+  Tags,
+  object,
+} from '@remirror/core';
 
 import { ALIGN_PATTERN, INDENT_ATTRIBUTE, INDENT_LEVELS } from '../node-constants';
 import { marginToIndent } from '../node-utils';
@@ -76,7 +83,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions>
       ],
       toDOM: node => {
         const { align, indent, lineSpacing, id } = node.attrs as ParagraphExtensionAttrs;
-        const attrs: Record<string, string> = Object.create(null);
+        const attrs: Record<string, string> = object();
         let style = '';
 
         if (align && align !== 'left') {

@@ -24,6 +24,15 @@ export type Falsy = false | 0 | '' | null | undefined;
 export const Cast = <GType = any>(arg: any): GType => arg;
 
 /**
+ * Creates an object with the null prototype.
+ *
+ * @param value - the object to create
+ */
+export const object = <Type extends object>(value?: Type): Type => {
+  return Object.assign(Object.create(null), value);
+};
+
+/**
  * Shorthand for casting a value to it's boolean equivalent.
  *
  * @param value - the value to transform into a boolean
@@ -675,7 +684,7 @@ export class Merge {
    * @param [obj] - the object to replace the key with. When blank an empty
    * object is used.
    */
-  public static overwrite<GReturn = any>(obj: PlainObject = Object.create(null)): GReturn {
+  public static overwrite<GReturn = any>(obj: PlainObject = object()): GReturn {
     return new Merge(obj) as any;
   }
 
@@ -691,7 +700,7 @@ export class Merge {
    */
   [key: string]: any;
 
-  private constructor(obj: PlainObject = Object.create(null)) {
+  private constructor(obj: PlainObject = object()) {
     Object.keys(obj).forEach(key => {
       this[key] = obj[key];
     });
@@ -893,6 +902,6 @@ export const within = (value: number, ...rest: Array<number | undefined | null>)
 export const hasOwnProperty = <GObj extends object, GProperty extends string | number | symbol>(
   obj: GObj,
   key: GProperty,
-): obj is GObj & { GKey: unknown } => {
+): obj is GProperty extends keyof GObj ? GObj : GObj & { GKey: unknown } => {
   return Object.prototype.hasOwnProperty.call(obj, key);
 };

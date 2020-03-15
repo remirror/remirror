@@ -4,7 +4,7 @@ import { PluginKey } from 'prosemirror-state';
 import { Suggester } from 'prosemirror-suggest';
 
 import { ExtensionType, RemirrorClassName, Tags } from '@remirror/core-constants';
-import { deepMerge, isString } from '@remirror/core-helpers';
+import { deepMerge, isString, object } from '@remirror/core-helpers';
 import {
   AnyFunction,
   Attrs,
@@ -120,7 +120,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
    */
   private pk?: PluginKey;
 
-  constructor(options: GOptions = Object.create(null)) {
+  constructor(options: GOptions = object()) {
     this.options = deepMerge(defaultOptions, { ...this.defaultOptions, ...options });
 
     this.init();
@@ -138,7 +138,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
     }
 
     const extraAttrs: ExtraAttrs[] = (this.options.extraAttrs as ExtraAttrs[] | undefined) ?? [];
-    const attrs: Record<string, { default?: unknown }> = Object.create(null);
+    const attrs: Record<string, { default?: unknown }> = object();
 
     for (const item of extraAttrs) {
       if (Array.isArray(item)) {
@@ -162,7 +162,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
     }
 
     const extraAttrs = (this.options.extraAttrs as ExtraAttrs[] | undefined) ?? [];
-    const attrs: Attrs = Object.create(null);
+    const attrs: Attrs = object();
 
     for (const item of extraAttrs) {
       if (Array.isArray(item)) {

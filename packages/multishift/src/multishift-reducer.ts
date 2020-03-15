@@ -1,3 +1,5 @@
+import { object } from '@remirror/core-helpers';
+
 import { MultishiftActionTypes } from './multishift-constants';
 import {
   MultishiftProps,
@@ -27,7 +29,7 @@ export const multishiftReducer = <GItem = any>(
   action: MultishiftRootActions<GItem>,
   props: MultishiftProps<GItem>,
 ): [MultishiftState<GItem>, MultishiftStateProps<GItem>] => {
-  let changes: MultishiftStateProps<GItem> = Object.create(null);
+  let changes: MultishiftStateProps<GItem> = object();
 
   const defaultState = getDefaultState(props);
   const { multiple, items, getItemId = defaultGetItemId, autoSelectOnBlur = true } = props;

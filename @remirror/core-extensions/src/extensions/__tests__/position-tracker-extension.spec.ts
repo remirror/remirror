@@ -1,15 +1,17 @@
 import { renderEditor } from 'jest-remirror';
 
+import { object } from '@remirror/core';
 import { ExtensionMap } from '@remirror/test-fixtures';
 
 import { PositionTrackerExtension, PositionTrackerExtensionOptions } from '../position-tracker-extension';
 
 const { heading: headingNode, blockquote: blockquoteNode } = ExtensionMap.nodes;
-const create = (params: Partial<PositionTrackerExtensionOptions> = Object.create(null)) =>
-  renderEditor({
+const create = (params: Partial<PositionTrackerExtensionOptions> = object()) => {
+  return renderEditor({
     plainNodes: [headingNode, blockquoteNode],
     others: [new PositionTrackerExtension(params)],
   });
+};
 
 describe('plugin', () => {
   let {

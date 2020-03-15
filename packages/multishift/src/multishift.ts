@@ -1,7 +1,7 @@
 import composeRefs from '@seznam/compose-react-refs';
 import { ChangeEvent, HTMLProps, Ref, SyntheticEvent, useCallback, useEffect, useMemo, useRef } from 'react';
 
-import { bool, debounce, includes, isNullOrUndefined, isUndefined } from '@remirror/core-helpers';
+import { bool, debounce, includes, isNullOrUndefined, isUndefined, object } from '@remirror/core-helpers';
 import { useEffectOnUpdate, useEffectOnce, useTimeouts } from '@remirror/react-hooks';
 
 import * as MultishiftActions from './multishift-action-creators';
@@ -259,7 +259,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     };
 
     if (rest.disabled) {
-      eventHandlers = Object.create(null);
+      eventHandlers = object();
     }
 
     return {
@@ -330,7 +330,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     };
 
     if (rest.disabled) {
-      eventHandlers = Object.create(null);
+      eventHandlers = object();
     }
 
     return {
@@ -396,7 +396,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     };
 
     if (rest.disabled) {
-      eventHandlers = Object.create(null);
+      eventHandlers = object();
     }
 
     const extra = type === Type.Select ? { 'aria-expanded': isOpen } : {};
@@ -444,7 +444,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
 
     if (rest.disabled) {
       disabled.current.push(itemIndex);
-      eventHandlers = Object.create(null);
+      eventHandlers = object();
     }
 
     return {
@@ -471,10 +471,10 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
       ...rest
     }: IgnoredElementOptions<GElement, GRefKey> = { refKey: 'ref' as GRefKey },
   ): GetPropsWithRefReturn<GElement, GRefKey> => {
-    let eventHandlers: HTMLProps<GElement> = Object.create(null);
+    let eventHandlers: HTMLProps<GElement> = object();
 
     if (rest.disabled) {
-      eventHandlers = Object.create(null);
+      eventHandlers = object();
     }
 
     return {
@@ -516,7 +516,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     };
 
     if (rest.disabled) {
-      eventHandlers = Object.create(null);
+      eventHandlers = object();
     }
 
     return {

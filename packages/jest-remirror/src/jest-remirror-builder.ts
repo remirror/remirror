@@ -9,6 +9,7 @@ import {
   isInstanceOf,
   isProsemirrorNode,
   isString,
+  object,
 } from '@remirror/core';
 
 import {
@@ -41,7 +42,7 @@ const isOdd = (n: number) => n % 2 === 1;
 export const text = (value: string, schema: EditorSchema): TaggedContentItem => {
   let stripped = '';
   let textIndex = 0;
-  const tags: Tags = Object.create(null);
+  const tags: Tags = object();
 
   for (const match of findMatches(value, /([\\]+)?<(\w+)>/g)) {
     const [taggedToken, escapeCharacters, tagName] = match;
@@ -78,7 +79,7 @@ export const text = (value: string, schema: EditorSchema): TaggedContentItem => 
  * @param offset
  */
 export const offsetTags = (tags: Tags, offset: number): Tags => {
-  const result: Tags = Object.create(null);
+  const result: Tags = object();
   for (const name in tags) {
     if (hasOwnProperty(tags, name)) {
       result[name] = tags[name] + offset;
@@ -110,7 +111,7 @@ const isTaggedProsemirrorNode = (value: unknown): value is TaggedProsemirrorNode
  */
 export const sequence = (...content: TaggedContentItem[]) => {
   let position = 0;
-  let tags: Tags = Object.create(null);
+  let tags: Tags = object();
   const nodes: TaggedProsemirrorNode[] = [];
 
   for (const node of content) {

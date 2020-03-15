@@ -25,6 +25,7 @@ import {
   isMarkActive,
   markPasteRule,
   noop,
+  object,
   removeMark,
   replaceText,
 } from '@remirror/core';
@@ -194,7 +195,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     return {
       createMention: this.createMention(type, getState),
       updateMention: this.createMention(type, getState, true),
-      removeMention: ({ range }: Partial<RangeParams> = Object.create(null)) => {
+      removeMention: ({ range }: Partial<RangeParams> = object()) => {
         return removeMark({ type, expand: true, range });
       },
     };

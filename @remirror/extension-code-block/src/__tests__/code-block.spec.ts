@@ -7,7 +7,7 @@ import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 
-import { fromHTML, toHTML } from '@remirror/core';
+import { fromHTML, object, toHTML } from '@remirror/core';
 import { BaseKeymapExtension } from '@remirror/core-extensions';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 
@@ -54,7 +54,7 @@ describe('constructor', () => {
 
 const supportedLanguages = [typescript, javascript, markdown, tsx];
 
-const create = (params: CodeBlockExtensionOptions = Object.create(null)) =>
+const create = (params: CodeBlockExtensionOptions = object()) =>
   renderEditor({
     plainNodes: [],
     attrNodes: [new CodeBlockExtension({ ...params, supportedLanguages })],

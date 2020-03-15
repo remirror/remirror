@@ -1,3 +1,5 @@
+import { PlainObject } from '@remirror/core-types';
+
 import {
   Merge,
   capitalize,
@@ -31,6 +33,7 @@ import {
   isUndefined,
   kebabCase,
   keys,
+  object,
   randomInt,
   range,
   sort,
@@ -148,7 +151,7 @@ describe('predicates', () => {
 
   it('isMap', () => {
     const passValue = new Map();
-    const failValue = Object.create(null);
+    const failValue = object();
 
     expect(isMap(passValue)).toBeTrue();
     expect(isMap(failValue)).toBeFalse();
@@ -265,7 +268,7 @@ describe('predicates', () => {
   });
 
   it('isEmptyObject', () => {
-    const passValue = Object.create(null);
+    const passValue = object();
     const failValue = { oop: 'sie' };
     const altPassValue = new (class Simple {})();
 
@@ -418,7 +421,7 @@ test('hasOwnProperty', () => {
   expect(hasOwnProperty({ a: 1 }, 'b')).toBeFalse();
   expect(hasOwnProperty({ a: 1, hasOwnProperty: () => true }, 'b')).toBeFalse();
 
-  const noProto = Object.create(null);
+  const noProto = object<PlainObject>();
   noProto.a = 1;
 
   expect(hasOwnProperty(noProto, 'a')).toBeTrue();

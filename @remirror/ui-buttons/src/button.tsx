@@ -7,6 +7,7 @@ import {
   KeyOfThemeVariant,
   RemirrorInterpolation,
   RemirrorThemeContextType,
+  object,
   omitUndefined,
 } from '@remirror/core';
 import { useRemirrorTheme } from '@remirror/ui';
@@ -78,10 +79,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       active = false,
       LeftIconComponent,
       renderLeftIcon,
-      leftIconProps = Object.create(null),
+      leftIconProps = object<Partial<IconProps>>(),
       RightIconComponent,
       renderRightIcon,
-      rightIconProps = Object.create(null),
+      rightIconProps = object<Partial<IconProps>>(),
       color,
       backgroundColor,
       fontWeight,

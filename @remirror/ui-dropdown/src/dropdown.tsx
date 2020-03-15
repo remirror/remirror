@@ -4,10 +4,11 @@ import { MultishiftPropGetters, Type, useMultishift } from 'multishift';
 import { forwardRef, useLayoutEffect, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 
+import { object } from '@remirror/core-helpers';
 import { useMeasure, usePrevious } from '@remirror/react-hooks';
 import { useRemirrorTheme } from '@remirror/ui';
 import { Button } from '@remirror/ui-buttons';
-import { AngleDownIcon, AngleRightIcon } from '@remirror/ui-icons';
+import { AngleDownIcon, AngleRightIcon, IconProps } from '@remirror/ui-icons';
 import { Label } from '@remirror/ui-text';
 
 import { dropdownPositions } from './dropdown-constants';
@@ -28,7 +29,7 @@ export const DropdownSelect = forwardRef<HTMLDivElement, DropdownProps>(
       renderLabel,
       initialItem,
       IconComponent,
-      iconProps = Object.create(null),
+      iconProps = object<Partial<IconProps>>(),
       dropdownPosition: dropdownPositionProp = 'below left',
       autoPositionY,
       autoPositionYSpace = 20,

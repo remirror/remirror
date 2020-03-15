@@ -1,7 +1,7 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
-import { fromHTML, toHTML } from '@remirror/core';
+import { fromHTML, object, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 
 import { LinkExtension, LinkExtensionOptions } from '../link-extension';
@@ -86,7 +86,7 @@ describe('schema', () => {
   });
 });
 
-const create = (params: LinkExtensionOptions = Object.create(null)) =>
+const create = (params: LinkExtensionOptions = object()) =>
   renderEditor({
     attrMarks: [new LinkExtension({ ...params })],
     plainNodes: [],

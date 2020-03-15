@@ -12,6 +12,7 @@ import {
   NodeGroup,
   ProsemirrorNode,
   convertCommand,
+  object,
   toggleBlockItem,
 } from '@remirror/core';
 
@@ -79,7 +80,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
   }
 
   public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
-    const keys: KeyBindings = Object.create(null);
+    const keys: KeyBindings = object();
 
     this.options.levels.forEach(level => {
       keys[`Shift-Ctrl-${level}`] = convertCommand(setBlockType(type, { level }));

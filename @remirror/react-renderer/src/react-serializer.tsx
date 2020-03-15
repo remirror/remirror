@@ -17,6 +17,7 @@ import {
   isArray,
   isPlainObject,
   isString,
+  object,
 } from '@remirror/core';
 
 import { gatherToDOM, mapProps } from './renderer-utils';
@@ -128,7 +129,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
     }
 
     const Component = structure[0];
-    const props: PlainObject = Object.create(null);
+    const props: PlainObject = object();
     const attrs = structure[1];
     const children: ReactNode[] = [];
     let currentIndex = 1;

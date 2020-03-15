@@ -8,6 +8,7 @@ import {
   ProsemirrorCommandFunction,
   isNullOrUndefined,
   noop,
+  object,
   plainInputRule,
 } from '@remirror/core';
 
@@ -89,7 +90,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
        */
       insertEmojiByName: (
         name: string,
-        options: EmojiCommandOptions = Object.create(null),
+        options: EmojiCommandOptions = object(),
       ): ProsemirrorCommandFunction => (...args) => {
         const emoji = getEmojiByName(name);
         if (!emoji) {
@@ -110,7 +111,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
        */
       insertEmojiByObject: (
         emoji: EmojiObject,
-        { from, to, skinVariation }: EmojiCommandOptions = Object.create(null),
+        { from, to, skinVariation }: EmojiCommandOptions = object(),
       ): ProsemirrorCommandFunction => (state, dispatch) => {
         const { tr } = state;
         const emojiChar = skinVariation ? emoji.char + SKIN_VARIATIONS[skinVariation] : emoji.char;
@@ -127,9 +128,10 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
        * Inserts the suggestion character into the current position in the editor
        * in order to activate the suggestion popup..
        */
-      openEmojiSuggestions: (
-        { from, to }: Partial<FromToParams> = Object.create(null),
-      ): ProsemirrorCommandFunction => (state, dispatch) => {
+      openEmojiSuggestions: ({ from, to }: Partial<FromToParams> = object()): ProsemirrorCommandFunction => (
+        state,
+        dispatch,
+      ) => {
         if (dispatch) {
           dispatch(state.tr.insertText(suggestionCharacter, from, to));
         }

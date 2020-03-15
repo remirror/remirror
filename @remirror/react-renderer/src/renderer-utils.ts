@@ -1,4 +1,4 @@
-import { MarkExtensionSpec, NodeExtensionSpec, PlainObject, hasOwnProperty } from '@remirror/core';
+import { MarkExtensionSpec, NodeExtensionSpec, PlainObject, hasOwnProperty, object } from '@remirror/core';
 
 import { possibleStandardNames } from './renderer-constants';
 
@@ -13,7 +13,7 @@ const getPossibleStandardName = (key: string): string => {
  * Map standard html attribute names to their react equivalents.
  */
 export const mapProps = (props: PlainObject) => {
-  const transformedProps: PlainObject = Object.create(null);
+  const transformedProps: PlainObject = object();
   for (const key in props) {
     if (!hasOwnProperty(props, key)) {
       continue;
@@ -37,7 +37,7 @@ export const mapProps = (props: PlainObject) => {
 export const gatherToDOM = <GSpec extends MarkExtensionSpec | NodeExtensionSpec>(
   specs: Record<string, GSpec>,
 ) => {
-  const result: Record<string, GSpec['toDOM']> = Object.create(null);
+  const result: Record<string, GSpec['toDOM']> = object();
   for (const name in specs) {
     if (!hasOwnProperty(specs, name)) {
       continue;

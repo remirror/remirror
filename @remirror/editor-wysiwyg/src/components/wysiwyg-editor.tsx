@@ -7,7 +7,7 @@ import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 
-import { RemirrorTheme, deepMerge } from '@remirror/core';
+import { RemirrorTheme, deepMerge, object } from '@remirror/core';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -48,7 +48,7 @@ const DEFAULT_LANGUAGES = [markdown, typescript, tsx, bash];
 
 export const WysiwygEditor: FC<WysiwygEditorProps> = ({
   placeholder = defaultPlaceholder,
-  theme = Object.create(null),
+  theme = object<RemirrorTheme>(),
   supportedLanguages: supportedLanguagesProp = [],
   syntaxTheme = 'atomDark',
   defaultLanguage,

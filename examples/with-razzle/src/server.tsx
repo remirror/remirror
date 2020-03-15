@@ -3,6 +3,8 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 
+import { object } from '@remirror/core';
+
 import App from './app';
 
 declare global {
@@ -25,7 +27,7 @@ const server = express()
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', (req: express.Request, res: express.Response) => {
-    const context = Object.create(null);
+    const context = object();
     const markup = renderToString(
       <StaticRouter context={context} location={req.url}>
         <App />

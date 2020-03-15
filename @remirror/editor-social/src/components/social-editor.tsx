@@ -9,7 +9,7 @@ import {
 } from 'prosemirror-suggest';
 import { Fragment, PureComponent } from 'react';
 
-import { RemirrorTheme, deepMerge, isUndefined, omit } from '@remirror/core';
+import { RemirrorTheme, deepMerge, isUndefined, object, omit } from '@remirror/core';
 import { NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import {
   EmojiExtension,
@@ -271,7 +271,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   };
 
   private get theme(): RemirrorTheme {
-    return deepMerge(socialEditorTheme, this.props.theme ?? Object.create(null));
+    return deepMerge(socialEditorTheme, this.props.theme ?? object());
   }
 
   /**

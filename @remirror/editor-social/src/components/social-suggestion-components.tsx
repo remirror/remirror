@@ -2,7 +2,7 @@
 import { jsx } from '@emotion/core';
 import { FunctionComponent, forwardRef } from 'react';
 
-import { Position, RemirrorTheme } from '@remirror/core';
+import { Position, RemirrorTheme, object } from '@remirror/core';
 import { useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 
@@ -16,12 +16,13 @@ import {
 } from '../social-types';
 import { createOnClickMethodFactory } from '../social-utils';
 
+type SuggestionsDropdownPosition = Partial<Position> & { position?: 'absolute' };
 type SuggestionsDropdownProps = DivProps & {
-  position?: Partial<Position> & { position?: 'absolute' };
+  position?: SuggestionsDropdownPosition;
 };
 
 const SuggestionsDropdown = forwardRef<HTMLDivElement, SuggestionsDropdownProps>(
-  ({ position = Object.create(null), ...props }, ref) => {
+  ({ position = object<SuggestionsDropdownPosition>(), ...props }, ref) => {
     const { sx, css } = useRemirrorTheme();
 
     return (

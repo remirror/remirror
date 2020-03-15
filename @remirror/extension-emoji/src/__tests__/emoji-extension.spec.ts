@@ -1,6 +1,8 @@
 import { renderEditor } from 'jest-remirror';
 import { SuggestKeyBindingParams } from 'prosemirror-suggest';
 
+import { object } from '@remirror/core';
+
 import { EmojiExtension } from '../emoji-extension';
 import {
   EmojiExtensionOptions,
@@ -9,7 +11,7 @@ import {
   EmojiSuggestionChangeHandlerParams,
 } from '../emoji-types';
 
-const create = (options: EmojiExtensionOptions = Object.create(null)) =>
+const create = (options: EmojiExtensionOptions = object()) =>
   renderEditor({
     plainNodes: [],
     others: [new EmojiExtension({ onSuggestionChange, onSuggestionExit, suggestionKeyBindings, ...options })],

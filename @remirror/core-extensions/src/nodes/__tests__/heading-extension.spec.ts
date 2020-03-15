@@ -1,7 +1,7 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
-import { fromHTML, toHTML } from '@remirror/core';
+import { fromHTML, object, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 
 import { BoldExtension } from '../../marks';
@@ -63,7 +63,7 @@ describe('schema', () => {
 });
 
 describe('plugins', () => {
-  const create = (params: HeadingExtensionOptions = Object.create(null)) =>
+  const create = (params: HeadingExtensionOptions = object()) =>
     renderEditor({
       attrNodes: [new HeadingExtension({ ...params })],
       plainNodes: [],

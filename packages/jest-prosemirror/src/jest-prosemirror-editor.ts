@@ -5,7 +5,7 @@ import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { DirectEditorProps, EditorView } from 'prosemirror-view';
 import { Keyboard } from 'test-keyboard';
 
-import { isString, pick } from '@remirror/core-helpers';
+import { isString, object, pick } from '@remirror/core-helpers';
 import {
   EditorSchema,
   EditorStateParams,
@@ -243,7 +243,7 @@ interface FireEventAtPositionParams<GSchema extends EditorSchema = any>
 export const fireEventAtPosition = <GSchema extends EditorSchema = any>({
   view,
   event,
-  options = Object.create(null),
+  options = object<PlainObject>(),
   position = view.state.selection.anchor,
 }: FireEventAtPositionParams<GSchema>) => {
   const element = findElementAtPosition(position, view);
@@ -548,7 +548,7 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
  */
 export const createEditor = <GSchema extends EditorSchema = any>(
   taggedDoc: TaggedProsemirrorNode<GSchema>,
-  { plugins = [], rules = [], autoClean = true, ...editorOptions }: CreateEditorOptions = Object.create(null),
+  { plugins = [], rules = [], autoClean = true, ...editorOptions }: CreateEditorOptions = object(),
 ) => {
   const place = document.body.appendChild(document.createElement('div'));
   const state = createState(taggedDoc, [...plugins, inputRules({ rules })]);

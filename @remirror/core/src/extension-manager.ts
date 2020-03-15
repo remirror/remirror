@@ -6,7 +6,15 @@ import { EditorState } from 'prosemirror-state';
 import { Suggester, suggest } from 'prosemirror-suggest';
 import { ComponentType } from 'react';
 
-import { bool, hasOwnProperty, isArray, isEqual, isFunction, isInstanceOf } from '@remirror/core-helpers';
+import {
+  bool,
+  hasOwnProperty,
+  isArray,
+  isEqual,
+  isFunction,
+  isInstanceOf,
+  object,
+} from '@remirror/core-helpers';
 import {
   ActionMethod,
   AnyActions,
@@ -174,7 +182,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   /**
    * The extension manager data which is stored after Initialization
    */
-  private initData: this['_D'] = Object.create(null);
+  private initData: this['_D'] = object();
 
   /**
    * Retrieve the specified action.
@@ -277,7 +285,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * extensions.
    */
   get attributes() {
-    let combinedAttributes: AttrsWithClass = Object.create(null);
+    let combinedAttributes: AttrsWithClass = object();
     this.extensions
       .filter(hasExtensionProperty('attributes'))
       .filter(extension => !extension.options.exclude.attributes)
@@ -299,7 +307,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * This is used to render the initial SSR output.
    */
   get components() {
-    const components: Record<string, ComponentType> = Object.create(null);
+    const components: Record<string, ComponentType> = object();
 
     for (const extension of this.extensions) {
       if (!extension.options.SSRComponent || extension.options.exclude.ssr) {
@@ -331,7 +339,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * Filters through all provided extensions and picks the nodes
    */
   get nodes() {
-    const nodes: Record<this['_N'], NodeExtensionSpec> = Object.create(null);
+    const nodes: Record<this['_N'], NodeExtensionSpec> = object();
 
     for (const extension of this.extensions) {
       if (isNodeExtension(extension)) {
@@ -347,7 +355,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * Filters through all provided extensions and picks the marks
    */
   get marks() {
-    const marks: Record<this['_M'], MarkExtensionSpec> = Object.create(null);
+    const marks: Record<this['_M'], MarkExtensionSpec> = object();
 
     for (const extension of this.extensions) {
       if (isMarkExtension(extension)) {
@@ -424,7 +432,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * renderProp function parameters.
    */
   public extensionData() {
-    const data: Record<string, PlainObject> = Object.create(null);
+    const data: Record<string, PlainObject> = object();
 
     for (const extension of this.extensions) {
       data[extension.name] = extension.extensionData
@@ -540,7 +548,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * Retrieve all the extension plugin keys
    */
   private get pluginKeys() {
-    const pluginKeys: Record<this['_N'], PluginKey> = Object.create(null);
+    const pluginKeys: Record<this['_N'], PluginKey> = object();
     this.extensions
       .filter(extension => extension.plugin)
       .forEach(({ pluginKey, name }) => {
@@ -564,7 +572,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     this.checkInitialized();
 
     const extensions = this.extensions;
-    const actions: AnyActions = Object.create(null);
+    const actions: AnyActions = object();
 
     // Creates the methods that take in attrs and dispatch an action into the editor
     const commands = createCommands({ extensions, params });
@@ -577,18 +585,18 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
       actions[commandName].isEnabled = isEnabled ?? defaultIsEnabled;
     });
 
-    return actions as any;
+    return actions as this['_A'];
   }
 
   private helpers(): this['_H'] {
-    const helpers = Object.create(null);
+    const helpers = object<PlainObject>();
     const methods = createHelpers({ extensions: this.extensions, params: this.params });
 
     Object.entries(methods).forEach(([helperName, helper]) => {
       helpers[helperName] = helper;
     });
 
-    return helpers;
+    return helpers as this['_H'];
   }
 
   /**
@@ -598,7 +606,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     // Will throw if not initialized
     this.checkInitialized();
 
-    const isActiveMethods: Record<this['_Names'], ExtensionIsActiveFunction> = Object.create(null);
+    const isActiveMethods: Record<this['_Names'], ExtensionIsActiveFunction> = object();
 
     return this.extensions.filter(hasExtensionProperty('isActive')).reduce(
       (acc, extension) => ({
@@ -633,7 +641,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    */
   private nodeViews() {
     this.checkInitialized();
-    const nodeViews: Record<string, NodeViewMethod> = Object.create(null);
+    const nodeViews: Record<string, NodeViewMethod> = object();
     return this.extensions
       .filter(hasExtensionProperty('nodeView'))
       .filter(extension => !extension.options.exclude.nodeView)
@@ -657,7 +665,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
       .map(extensionPropertyMapper('keys', this.params));
 
     const previousCommandsMap = new Map<string, KeyBindingCommandFunction[]>();
-    const mappedCommands: Record<string, ProsemirrorCommandFunction> = Object.create(null);
+    const mappedCommands: Record<string, ProsemirrorCommandFunction> = object();
 
     for (const extensionKeymap of extensionKeymaps) {
       for (const key in extensionKeymap) {
@@ -702,7 +710,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * Retrieve all the options passed in for the extension manager
    */
   private extensionOptions(): Record<string, PlainObject> {
-    const options: Record<string, PlainObject> = Object.create(null);
+    const options: Record<string, PlainObject> = object();
     for (const extension of this.extensions) {
       options[extension.name] = extension.options;
     }

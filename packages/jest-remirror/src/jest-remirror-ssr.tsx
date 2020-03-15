@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { AnyExtension, ExtensionManager } from '@remirror/core';
+import { AnyExtension, ExtensionManager, object } from '@remirror/core';
 import { Remirror, RemirrorProps } from '@remirror/react';
 
 import { nodeExtensions } from './jest-remirror-schema';
@@ -11,7 +11,7 @@ import { nodeExtensions } from './jest-remirror-schema';
  */
 export const renderSSREditor = <GExtension extends AnyExtension = any>(
   extensions: GExtension[] = [],
-  props: Partial<Omit<RemirrorProps<GExtension>, 'manager'>> = Object.create(null),
+  props: Partial<Omit<RemirrorProps<GExtension>, 'manager'>> = object(),
 ): string => {
   const manager = ExtensionManager.create([...nodeExtensions, ...extensions]);
 

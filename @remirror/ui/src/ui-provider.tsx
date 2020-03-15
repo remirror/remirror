@@ -4,7 +4,7 @@ import { jsx } from '@emotion/core';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import { FC, ReactElement, useMemo, useState } from 'react';
 
-import { bool, deepMerge, isFunction } from '@remirror/core-helpers';
+import { bool, deepMerge, isFunction, object } from '@remirror/core-helpers';
 import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core-types';
 
 import { RemirrorThemeContext, defaultRemirrorThemeValue, withoutEmotionProps } from './ui-context';
@@ -116,9 +116,9 @@ export const RemirrorThemeProvider: FC<RemirrorThemeProviderProps> = ({
   const parent = disableMergeWithParent
     ? hasParent(outer)
       ? outer.parent
-      : Object.create(null)
+      : object<RemirrorTheme>()
     : isRoot(outer) && disableMergeWithBase
-    ? Object.create(null)
+    ? object<RemirrorTheme>()
     : outer.theme;
 
   const themeWithoutColorMode: RemirrorTheme = deepMerge(

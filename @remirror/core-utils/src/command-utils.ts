@@ -1,7 +1,7 @@
 import { lift, setBlockType, wrapIn } from 'prosemirror-commands';
 import { liftListItem, wrapInList } from 'prosemirror-schema-list';
 
-import { isFunction, isNumber } from '@remirror/core-helpers';
+import { isFunction, isNumber, object } from '@remirror/core-helpers';
 import {
   AnyFunction,
   Attrs,
@@ -43,7 +43,7 @@ interface UpdateMarkParams extends Partial<RangeParams>, Partial<AttrsParams>, T
  */
 export const updateMark = ({
   type,
-  attrs = Object.create(null),
+  attrs = object<Attrs>(),
   appendText,
   range,
 }: UpdateMarkParams): ProsemirrorCommandFunction => (state, dispatch) => {
@@ -155,7 +155,7 @@ interface ToggleBlockItemParams extends NodeTypeParams, Partial<AttrsParams> {
 export const toggleBlockItem = ({
   type,
   toggleType,
-  attrs = Object.create(null),
+  attrs = object<Attrs>(),
 }: ToggleBlockItemParams): ProsemirrorCommandFunction => (state, dispatch) => {
   const isActive = isNodeActive({ state, type, attrs });
 
@@ -222,7 +222,7 @@ const isChrome = (minVersion = 0): boolean => {
 export const replaceText = ({
   range,
   type,
-  attrs = Object.create(null),
+  attrs = object<Attrs>(),
   appendText = '',
   content = '',
   startTransaction,

@@ -3,8 +3,9 @@ import { isUndefined } from 'util';
 import { MarkSpec, NodeSpec } from 'prosemirror-model';
 import { Selection as PMSelection } from 'prosemirror-state';
 
-import { bool, isNullOrUndefined, keys } from '@remirror/core-helpers';
+import { bool, isNullOrUndefined, keys, object } from '@remirror/core-helpers';
 import {
+  Attrs,
   AttrsParams,
   CommandFunction,
   EditorSchema,
@@ -432,7 +433,7 @@ interface IsNodeActiveParams extends EditorStateParams, NodeTypeParams, Partial<
  *
  * @param params - the destructured node active parameters
  */
-export const isNodeActive = ({ state, type, attrs = Object.create(null) }: IsNodeActiveParams) => {
+export const isNodeActive = ({ state, type, attrs = object<Attrs>() }: IsNodeActiveParams) => {
   const { selection } = state;
   const predicate = (node: ProsemirrorNode) => node.type === type;
   const parent =
@@ -459,12 +460,12 @@ export const schemaToJSON = <GNodes extends string = string, GMarks extends stri
   const nodes = keys(schema.nodes).reduce((acc, key) => {
     const { spec } = schema.nodes[key];
     return { ...acc, [key]: spec };
-  }, Object.create(null));
+  }, object<SchemaJSON['nodes']>());
 
   const marks = keys(schema.marks).reduce((acc, key) => {
     const { spec } = schema.marks[key];
     return { ...acc, [key]: spec };
-  }, Object.create(null));
+  }, object<SchemaJSON['marks']>());
 
   return {
     nodes,

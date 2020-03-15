@@ -9,7 +9,7 @@ import {
 } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
-import { isFunction } from '@remirror/core-helpers';
+import { isFunction, object } from '@remirror/core-helpers';
 
 /**
  * Preserves the previous version of a provided value.
@@ -140,7 +140,7 @@ export type PartialSetStateAction<GState> = Partial<GState> | ((prevState: GStat
  * ```
  */
 export const useSetState = <GState extends object>(
-  initialState: GState | (() => GState) = Object.create(null),
+  initialState: GState | (() => GState) = object<GState>(),
 ): readonly [
   GState,
   DispatchWithCallback<PartialSetStateAction<GState>>,

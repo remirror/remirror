@@ -5,6 +5,7 @@ import {
   ExtensionManager,
   HelpersFromExtensions,
   TextExtension,
+  object,
 } from '@remirror/core';
 import {
   BoldExtension,
@@ -28,7 +29,7 @@ class ErrExtension extends Extension {
 }
 
 type HistoryExtensionActions = ActionsFromExtensions<HistoryExtension>;
-const historyActions: HistoryExtensionActions = Object.create(null);
+const historyActions: HistoryExtensionActions = object();
 
 // @dts-jest:pass:snap
 historyActions.redo;
@@ -38,7 +39,7 @@ historyActions.undo;
 historyActions.undo({});
 
 type PositionTrackerExtensionHelpers = HelpersFromExtensions<PositionTrackerExtension>;
-const trackerHelpers: PositionTrackerExtensionHelpers = Object.create(null);
+const trackerHelpers: PositionTrackerExtensionHelpers = object();
 
 // @dts-jest:pass:snap
 trackerHelpers.addPositionTracker({ id: 'yo' });

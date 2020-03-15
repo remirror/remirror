@@ -1,11 +1,12 @@
 import { renderEditor } from 'jest-remirror';
 
+import { object } from '@remirror/core';
 import { ExtensionMap } from '@remirror/test-fixtures';
 
 import { TrailingNodeExtension, TrailingNodeExtensionOptions } from '../trailing-node-extension';
 
 const { heading: headingNode, blockquote: blockquoteNode } = ExtensionMap.nodes;
-const create = (params: Partial<TrailingNodeExtensionOptions> = Object.create(null)) =>
+const create = (params: Partial<TrailingNodeExtensionOptions> = object()) =>
   renderEditor({
     plainNodes: [headingNode, blockquoteNode],
     others: [new TrailingNodeExtension(params)],

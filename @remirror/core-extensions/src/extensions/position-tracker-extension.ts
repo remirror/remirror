@@ -2,7 +2,7 @@ import { Plugin } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
 import { Extension } from '@remirror/core';
-import { isNullOrUndefined, isNumber, isString } from '@remirror/core-helpers';
+import { isNullOrUndefined, isNumber, isString, object } from '@remirror/core-helpers';
 import {
   BaseExtensionOptions,
   CommandParams,
@@ -117,7 +117,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
        * @param id - the unique position id which can be any type
        */
       findAllPositionTrackers: (): Record<string, number> => {
-        const trackers: Record<string, number> = Object.create(null);
+        const trackers: Record<string, number> = object();
         const decorations = getPluginState<DecorationSet>(this.pluginKey, getState());
         const found = decorations.find(undefined, undefined, spec => spec.type === this.name);
 

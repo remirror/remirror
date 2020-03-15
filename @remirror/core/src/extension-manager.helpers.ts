@@ -1,5 +1,5 @@
 import { MarkGroup, NodeGroup, Tags } from '@remirror/core-constants';
-import { Cast, bool, entries, isFunction, isUndefined, sort } from '@remirror/core-helpers';
+import { Cast, bool, entries, isFunction, isUndefined, object, sort } from '@remirror/core-helpers';
 import {
   AnyFunction,
   CommandParams,
@@ -90,7 +90,7 @@ const getParamsType = <GKey extends keyof AnyExtension, GParams extends Extensio
     return { type: params.schema.nodes[extension.name] };
   }
 
-  return Object.create(null);
+  return object();
 };
 
 /**
@@ -174,7 +174,7 @@ export const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
       ...getParamsType(extension, params),
     });
 
-  const items: Record<string, AnyFunction> = Object.create(null);
+  const items: Record<string, AnyFunction> = object();
   const names = new Set<string>();
 
   extensions.filter(hasExtensionProperty('helpers')).forEach(currentExtension => {
@@ -268,7 +268,7 @@ export const transformExtensionMap = <GFlexibleList extends FlexibleExtension[]>
  * @returns a new object without any of the functions defined
  */
 export const ignoreFunctions = (obj: Record<string, unknown>) => {
-  const newObject: Record<string, unknown> = Object.create(null);
+  const newObject: Record<string, unknown> = object();
   for (const key of Object.keys(obj)) {
     if (isFunction(obj[key])) {
       continue;

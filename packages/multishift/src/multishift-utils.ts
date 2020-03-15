@@ -11,6 +11,7 @@ import {
   isUndefined,
   keys,
   last,
+  object,
   omit,
   range,
   take,
@@ -970,7 +971,7 @@ export const bindActionCreators = <
   actionCreators: GCreatorMap,
   dispatch: GDispatch,
 ): ActionCreatorMapToDispatch<GCreatorMap> => {
-  const boundActionCreators: ActionCreatorMapToDispatch<GCreatorMap> = Object.create(null);
+  const boundActionCreators: ActionCreatorMapToDispatch<GCreatorMap> = object();
   const creatorKeys = keys(actionCreators);
 
   for (const key of creatorKeys) {

@@ -9,6 +9,7 @@ import {
   isPlainObject,
   isString,
   isUndefined,
+  object,
 } from '@remirror/core-helpers';
 import { Brand } from '@remirror/core-types';
 
@@ -513,7 +514,7 @@ export class HSL {
    *
    * If an HSLObject is provided it merges these properties into the final object.
    */
-  public clone(hsla: Partial<HSLObject> = Object.create(null)) {
+  public clone(hsla: Partial<HSLObject> = object()) {
     return new HSL(createValidHSLObject({ ...this.hsla, ...hsla }));
   }
 

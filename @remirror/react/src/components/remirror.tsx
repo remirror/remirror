@@ -24,6 +24,7 @@ import {
   isFunction,
   isNumber,
   isPlainObject,
+  object,
   shouldUseDOMEnvironment,
   toHTML,
   uniqueId,
@@ -277,7 +278,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     }
     this.rootPropsConfig.called = true;
 
-    const { refKey = 'ref', ...config } = options ?? Object.create(null);
+    const { refKey = 'ref', ...config } = options ?? object<NonNullable<typeof options>>();
     const { sx } = this.context;
     const css = sx(this.editorStyles);
     const extra = bool(css) ? { css } : {};
@@ -299,7 +300,10 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   private readonly getPositionerProps = <GRefKey extends string = 'ref'>(
     options: GetPositionerPropsConfig<GExtension, GRefKey> | undefined,
   ) => {
-    const { refKey = 'ref', ...config } = { ...defaultPositioner, ...(options ?? Object.create(null)) };
+    const { refKey = 'ref', ...config } = {
+      ...defaultPositioner,
+      ...(options ?? object<NonNullable<typeof options>>()),
+    };
 
     // Create the onRef handler which will store the ref to the positioner
     // component
@@ -676,7 +680,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * e.g. `onChange`
    */
   private eventListenerParams(
-    { state, tr }: ListenerParams = Object.create(null),
+    { state, tr }: ListenerParams = object(),
   ): RemirrorEventListenerParams<GExtension> {
     return {
       ...this.baseListenerParams({ tr }),
@@ -688,7 +692,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * The params passed into onStateChange (within controlled components)
    */
   private editorStateEventListenerParams(
-    { newState, oldState, tr }: EditorStateEventListenerParams<GExtension> = Object.create(null),
+    { newState, oldState, tr }: EditorStateEventListenerParams<GExtension> = object(),
   ): RemirrorStateListenerParams<GExtension> {
     return {
       ...this.baseListenerParams({ state: newState, tr }),
