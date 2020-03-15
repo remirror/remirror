@@ -204,6 +204,7 @@ const generatePackageTsConfigs = async () => {
       ? {
           composite: true,
           emitDeclarationOnly: true,
+          isolatedModules: true,
           declaration: true,
           declarationMap: true,
           rootDir: 'src',
