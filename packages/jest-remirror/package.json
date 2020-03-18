@@ -33,9 +33,9 @@
     "jest-prosemirror": "^0.8.1",
     "jest-snapshot": "^25.1.0",
     "mutationobserver-shim": "0.3.3",
-    "prosemirror-model": "^1.7.4",
-    "prosemirror-state": "^1.2.4",
-    "prosemirror-view": "^1.12.0"
+    "prosemirror-model": "^1.9.1",
+    "prosemirror-state": "^1.3.2",
+    "prosemirror-view": "^1.14.4"
   },
   "peerDependencies": {
     "@emotion/core": "^10",
