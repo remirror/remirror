@@ -16,7 +16,7 @@
   {
     "name": "@remirror/core-extensions",
     "path": "@remirror/core-extensions/lib/dist/core-extensions.esm.js",
-    "limit": "100 KB",
+    "limit": "120 KB",
     "ignore": ["@emotion/core", "@types/react", "react"],
     "running": false
   },
@@ -100,7 +100,7 @@
   {
     "name": "@remirror/extension-image",
     "path": "@remirror/extension-image/lib/dist/extension-image.esm.js",
-    "limit": "100 KB",
+    "limit": "120 KB",
     "ignore": ["@emotion/core", "@types/react", "react"],
     "running": false
   },
@@ -121,7 +121,7 @@
   {
     "name": "@remirror/react",
     "path": "@remirror/react/lib/dist/react.esm.js",
-    "limit": "115 KB",
+    "limit": "140 KB",
     "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
     "running": false
   },

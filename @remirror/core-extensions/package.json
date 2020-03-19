@@ -54,6 +54,6 @@
   },
   "cjs": "lib/dist/core-extensions.cjs.js",
   "meta": {
-    "sizeLimit": "100 KB"
+    "sizeLimit": "120 KB"
   }
 }

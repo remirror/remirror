@@ -45,6 +45,6 @@
   },
   "cjs": "lib/dist/react.cjs.js",
   "meta": {
-    "sizeLimit": "115 KB"
+    "sizeLimit": "140 KB"
   }
 }

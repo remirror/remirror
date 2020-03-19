@@ -43,6 +43,6 @@
   },
   "cjs": "lib/dist/extension-image.cjs.js",
   "meta": {
-    "sizeLimit": "100 KB"
+    "sizeLimit": "120 KB"
   }
 }
