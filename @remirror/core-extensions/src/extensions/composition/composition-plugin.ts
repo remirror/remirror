@@ -106,7 +106,7 @@ export const createCompositionPlugin = (ctx: Extension<CompositionExtensionOptio
         return pluginState.apply();
       },
     },
-    view: view => {
+    view: (view) => {
       getPluginState<CompositionState>(ctx.pluginKey, view.state).init(view);
       return {};
     },

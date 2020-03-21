@@ -103,7 +103,9 @@ export type AnyConstructor<GType = unknown> = new (...args: any[]) => GType;
  * Abstract classes don't support the builtin `InstanceType` helper. This is an
  * alternative which allows us to pull out the type of the prototype.
  */
-export type AbstractInstanceType<GConstructor extends { prototype: any }> = GConstructor['prototype'];
+export type AbstractInstanceType<
+  GConstructor extends { prototype: any }
+> = GConstructor['prototype'];
 
 /**
  * Make the whole interface partial except for some specified keys which will be made

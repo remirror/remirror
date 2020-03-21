@@ -125,7 +125,9 @@ describe('Social Showcase', () => {
     describe('@', () => {
       it('should wrap in progress mentions in a-tag decorations', async () => {
         await $editor.type('Hello @jonathan');
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.suggest-at'))).resolves.toBe('@jonathan');
+        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.suggest-at'))).resolves.toBe(
+          '@jonathan',
+        );
       });
 
       it('should accept selections onEnter', async () => {
@@ -146,7 +148,9 @@ describe('Social Showcase', () => {
         const selector = '.suggestions-item.active';
         await $editor.type('hello @alex');
         await page.click(selector);
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe('@lazymeercat594');
+        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe(
+          '@lazymeercat594',
+        );
         await expect(textContent(EDITOR_CLASS_SELECTOR)).resolves.toBe('hello @lazymeercat594 ');
       });
 
@@ -187,7 +191,9 @@ describe('Social Showcase', () => {
         const username = '@abcd1234';
         await $editor.type(username);
         await press({ key: 'Enter' });
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe(username);
+        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe(
+          username,
+        );
       });
 
       it('splits up the mark when enter is pressed', async () => {
@@ -195,14 +201,18 @@ describe('Social Showcase', () => {
         await $editor.type(username);
         await press({ key: 'ArrowLeft', count: 3 });
         await press({ key: 'Enter' });
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe('@abcd12');
+        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe(
+          '@abcd12',
+        );
       });
     });
 
     describe('#', () => {
       it('should wrap in progress mentions in a-tag decorations', async () => {
         await $editor.type('My tag is #Topic');
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.suggest-tag'))).resolves.toBe('#Topic');
+        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.suggest-tag'))).resolves.toBe(
+          '#Topic',
+        );
       });
 
       it('should accept selections onEnter', async () => {
@@ -223,7 +233,9 @@ describe('Social Showcase', () => {
         const selector = '.suggestions-item.active';
         await $editor.type('My #T');
         await page.click(selector);
-        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-tag'))).resolves.toBe('#Tags');
+        await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-tag'))).resolves.toBe(
+          '#Tags',
+        );
         await expect(textContent(EDITOR_CLASS_SELECTOR)).resolves.toBe('My #Tags ');
       });
     });
@@ -233,7 +245,9 @@ describe('Social Showcase', () => {
     // Emoji are being completely rewritten soon so this is temporary
     it('should be able to add emoji', async () => {
       await $editor.type('😀', { delay: 10 });
-      await expect(innerHtml(sel(EDITOR_CLASS_SELECTOR, 'p'))).resolves.toMatchInlineSnapshot(`"😀"`);
+      await expect(innerHtml(sel(EDITOR_CLASS_SELECTOR, 'p'))).resolves.toMatchInlineSnapshot(
+        `"😀"`,
+      );
       //      , 'span[title=grinning]'))).resolves.toBeTruthy();
       //    await expect(innerHtml(sel(EDITOR_CLASS_SELECTOR, 'span[data-emoji-native=😀]'))).resolves.toBeTruthy();
     });
@@ -254,7 +268,9 @@ describe('Social Showcase', () => {
       await press({ key: 'ArrowLeft', count: 2 });
       await press({ key: 'ArrowRight' });
       await type({ text });
-      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(`😀😀😀123abcXYZ😀`);
+      await expect($innerHTML(FIRST_PARAGRAPH_SELECTOR)).resolves.toMatchInlineSnapshot(
+        `😀😀😀123abcXYZ😀`,
+      );
     });
   });
 

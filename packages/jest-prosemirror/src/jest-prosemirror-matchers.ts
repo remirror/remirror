@@ -1,7 +1,10 @@
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 
 import { bool } from '@remirror/core-helpers';
-import { ProsemirrorCommandFunction, ProsemirrorNode as _ProsemirrorNode } from '@remirror/core-types';
+import {
+  ProsemirrorCommandFunction,
+  ProsemirrorNode as _ProsemirrorNode,
+} from '@remirror/core-types';
 
 import { apply } from './jest-prosemirror-editor';
 import { transformsNodeFailMessage, transformsNodePassMessage } from './jest-prosemirror-messages';
@@ -21,7 +24,8 @@ export const prosemirrorMatchers = {
     }
     if (!bool(from)) {
       return {
-        message: () => `Please specify the 'from' node which this command: ${command.name} should transform`,
+        message: () =>
+          `Please specify the 'from' node which this command: ${command.name} should transform`,
         pass: false,
       };
     }
@@ -31,9 +35,17 @@ export const prosemirrorMatchers = {
     const properties = { actual, expected, name: 'toTransformNode' };
 
     if (pass) {
-      return { ...properties, pass, message: transformsNodePassMessage(actual, expected, shouldChange) };
+      return {
+        ...properties,
+        pass,
+        message: transformsNodePassMessage(actual, expected, shouldChange),
+      };
     } else {
-      return { ...properties, pass, message: transformsNodeFailMessage(actual, expected, shouldChange) };
+      return {
+        ...properties,
+        pass,
+        message: transformsNodeFailMessage(actual, expected, shouldChange),
+      };
     }
   },
 
@@ -46,7 +58,9 @@ export const prosemirrorMatchers = {
     const message = pass
       ? () =>
           `${this.utils.matcherHint('.not.toEqualProsemirrorNode')}\n\n` +
-          `Expected JSON value of document to not equal:\n  ${this.utils.printExpected(expected)}\n` +
+          `Expected JSON value of document to not equal:\n  ${this.utils.printExpected(
+            expected,
+          )}\n` +
           `Actual JSON:\n  ${this.utils.printReceived(actual)}`
       : () => {
           const diffString = this.utils.diff(expected, actual, {

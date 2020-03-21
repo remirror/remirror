@@ -67,7 +67,9 @@ export class PlaceholderExtension extends Extension<PlaceholderExtensionOptions>
       {},
       cloneElement(children, {
         ...props,
-        className: isString(props.className) ? `${props.className} ${emptyNodeClass}` : emptyNodeClass,
+        className: isString(props.className)
+          ? `${props.className} ${emptyNodeClass}`
+          : emptyNodeClass,
         'data-placeholder': placeholder,
       }),
     );

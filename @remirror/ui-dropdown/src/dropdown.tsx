@@ -45,7 +45,9 @@ export const DropdownSelect = forwardRef<HTMLDivElement, DropdownProps>(
     },
     ref,
   ) => {
-    const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>(dropdownPositionProp);
+    const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>(
+      dropdownPositionProp,
+    );
     const {
       isOpen,
       getToggleButtonProps,
@@ -62,8 +64,8 @@ export const DropdownSelect = forwardRef<HTMLDivElement, DropdownProps>(
       selectedItems: selectedItemsProp,
       type: Type.Select,
       onSelectedItemsChange: onSelect,
-      itemToString: item => item.label,
-      getItemId: item => item.id,
+      itemToString: (item) => item.label,
+      getItemId: (item) => item.id,
     });
 
     const { sx } = useRemirrorTheme();
@@ -136,7 +138,9 @@ export const DropdownSelect = forwardRef<HTMLDivElement, DropdownProps>(
           variant='background'
           {...getToggleButtonProps({ disabled, ref: buttonRef })}
           content={showSelectedAsLabel && selectedItems[0] ? selectedItems[0].label : label}
-          RightIconComponent={IconComponent ? IconComponent : isOpen ? AngleDownIcon : AngleRightIcon}
+          RightIconComponent={
+            IconComponent ? IconComponent : isOpen ? AngleDownIcon : AngleRightIcon
+          }
           rightIconProps={{ backgroundColor: 'transparent', ...iconProps }}
           fontWeight='normal'
           css={sx({ position: 'relative' })}
@@ -200,7 +204,13 @@ const DropdownItemComponent = ({
   return (
     <div
       css={sxx({
-        backgroundColor: isSelected ? 'grey' : isHighlighted ? 'light' : isHovered ? 'grey' : 'background',
+        backgroundColor: isSelected
+          ? 'grey'
+          : isHighlighted
+          ? 'light'
+          : isHovered
+          ? 'grey'
+          : 'background',
         p: 2,
       })}
       {...getItemProps({ index, item })}

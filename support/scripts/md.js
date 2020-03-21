@@ -9,7 +9,7 @@ if (!arg) {
 
 const directory = arg;
 
-const directoryExists = path => {
+const directoryExists = (path) => {
   try {
     return statSync(path).isDirectory;
   } catch {

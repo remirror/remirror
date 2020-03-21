@@ -75,7 +75,7 @@ export const findChildren = ({ node, predicate, descend }: FindChildrenParams) =
   } else if (!isFunction(predicate)) {
     throw new Error('Invalid "predicate" parameter');
   }
-  return flatten({ node, descend }).filter(child => predicate(child.node));
+  return flatten({ node, descend }).filter((child) => predicate(child.node));
 };
 
 const findNodeByPredicate = ({ predicate }: NodePredicateParams) => (params: FlattenParams) =>
@@ -91,7 +91,7 @@ const findNodeByPredicate = ({ predicate }: NodePredicateParams) => (params: Fla
  * const textNodes = findTextNodes(node);
  * ```
  */
-export const findTextNodes = findNodeByPredicate({ predicate: child => child.isText });
+export const findTextNodes = findNodeByPredicate({ predicate: (child) => child.isText });
 
 /**
  * Returns inline nodes of a given `node`.
@@ -103,7 +103,7 @@ export const findTextNodes = findNodeByPredicate({ predicate: child => child.isT
  * const inlineNodes = findInlineNodes(node);
  * ```
  */
-export const findInlineNodes = findNodeByPredicate({ predicate: child => child.isInline });
+export const findInlineNodes = findNodeByPredicate({ predicate: (child) => child.isInline });
 
 /**
  * Returns block descendants of a given `node`.
@@ -115,7 +115,7 @@ export const findInlineNodes = findNodeByPredicate({ predicate: child => child.i
  * const blockNodes = findBlockNodes(node);
  * ```
  */
-export const findBlockNodes = findNodeByPredicate({ predicate: child => child.isBlock });
+export const findBlockNodes = findNodeByPredicate({ predicate: (child) => child.isBlock });
 
 interface FindChildrenByAttrParams extends FlattenParams {
   /**
@@ -135,7 +135,7 @@ interface FindChildrenByAttrParams extends FlattenParams {
  * ```
  */
 export const findChildrenByAttr = ({ node, predicate, descend }: FindChildrenByAttrParams) =>
-  findChildren({ node, predicate: child => predicate(child.attrs), descend });
+  findChildren({ node, predicate: (child) => predicate(child.attrs), descend });
 
 interface FindChildrenByNodeParams extends FlattenParams, NodeTypeParams {}
 
@@ -150,7 +150,7 @@ interface FindChildrenByNodeParams extends FlattenParams, NodeTypeParams {}
  * ```
  */
 export const findChildrenByNode = ({ node, type, descend }: FindChildrenByNodeParams) =>
-  findChildren({ node, predicate: child => child.type === type, descend });
+  findChildren({ node, predicate: (child) => child.type === type, descend });
 
 interface FindChildrenByMarkParams extends FlattenParams, MarkTypeParams {}
 
@@ -165,7 +165,7 @@ interface FindChildrenByMarkParams extends FlattenParams, MarkTypeParams {}
  * ```
  */
 export const findChildrenByMark = ({ node, type, descend }: FindChildrenByMarkParams) =>
-  findChildren({ node, predicate: child => bool(type.isInSet(child.marks)), descend });
+  findChildren({ node, predicate: (child) => bool(type.isInSet(child.marks)), descend });
 
 interface ContainsParams extends ProsemirrorNodeParams, NodeTypeParams {}
 
@@ -179,4 +179,5 @@ interface ContainsParams extends ProsemirrorNodeParams, NodeTypeParams {}
  * }
  * ```
  */
-export const contains = ({ node, type }: ContainsParams) => findChildrenByNode({ node, type }).length > 0;
+export const contains = ({ node, type }: ContainsParams) =>
+  findChildrenByNode({ node, type }).length > 0;

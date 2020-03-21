@@ -1,9 +1,8 @@
-import { relative, resolve } from 'path';
-
 import { GatsbyNode } from 'gatsby';
 import { createFilePath } from 'gatsby-source-filesystem';
 import gql from 'graphql-tag';
 import { print } from 'graphql/language/printer';
+import { relative, resolve } from 'path';
 
 export const allMdxQuery = gql`
   query loadAllMdx {
@@ -44,9 +43,9 @@ export const createPages: GatsbyNode['createPages'] = async ({ graphql, actions 
     return;
   }
 
-  const pages = result.data?.allMdx.edges.map(edge => edge.node) ?? [];
+  const pages = result.data?.allMdx.edges.map((edge) => edge.node) ?? [];
 
-  pages.forEach(page => {
+  pages.forEach((page) => {
     const relativePath = relative(baseDir, page.fileAbsolutePath);
 
     actions.createPage({

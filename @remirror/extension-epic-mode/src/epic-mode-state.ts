@@ -1,6 +1,11 @@
 import { EditorView, randomInt, throttle } from '@remirror/core';
 
-import { EpicModePluginStateParams, Particle, ParticleEffect, ParticleRange } from './epic-mode-types';
+import {
+  EpicModePluginStateParams,
+  Particle,
+  ParticleEffect,
+  ParticleRange,
+} from './epic-mode-types';
 
 const getRGBComponents = (node: Element) => {
   const color = getComputedStyle(node).color;

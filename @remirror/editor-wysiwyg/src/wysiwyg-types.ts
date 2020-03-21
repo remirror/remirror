@@ -74,7 +74,10 @@ export interface WysiwygEditorProps
         | 'suppressHydrationWarning'
       >
     >,
-    Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'>,
+    Pick<
+      CodeBlockExtensionOptions,
+      'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'
+    >,
     Pick<RemirrorManagerProps, 'extensions'> {
   /**
    * The message to show when the editor is empty.

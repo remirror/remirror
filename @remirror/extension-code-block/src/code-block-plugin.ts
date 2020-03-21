@@ -7,22 +7,22 @@ import {
   CompareStateParams,
   EditorState,
   ExtensionManagerNodeTypeParams,
+  findChildrenByNode,
+  nodeEqualsType,
   NodeExtension,
   NodeType,
   NodeWithPosition,
   ProsemirrorNodeParams,
   Transaction,
   TransactionParams,
-  findChildrenByNode,
-  nodeEqualsType,
 } from '@remirror/core';
 
 import { CodeBlockExtensionOptions } from './code-block-types';
 import {
-  NodeInformation,
   createDecorations,
   getNodeInformationFromState,
   lengthHasChanged,
+  NodeInformation,
   posWithinRange,
 } from './code-block-utils';
 
@@ -75,7 +75,10 @@ export class CodeBlockState {
       for (const step of steps) {
         step.getMap().forEach((oldStart, oldEnd) => {
           const to = from + node.nodeSize;
-          if (posWithinRange({ from, to, pos: oldStart }) || posWithinRange({ from, to, pos: oldEnd })) {
+          if (
+            posWithinRange({ from, to, pos: oldStart }) ||
+            posWithinRange({ from, to, pos: oldEnd })
+          ) {
             hasChanged = true;
           }
         });
@@ -140,7 +143,10 @@ export class CodeBlockState {
    * Removes all decorations which relate to the changed block node before creating new decorations
    * and adding them to the decorationSet.
    */
-  private updateDecorationSet({ nodeInfo: { from, to, node, pos }, tr }: UpdateDecorationSetParams) {
+  private updateDecorationSet({
+    nodeInfo: { from, to, node, pos },
+    tr,
+  }: UpdateDecorationSetParams) {
     const decorationSet = this.decorationSet.remove(this.decorationSet.find(from, to));
     this.decorationSet = decorationSet.add(
       tr.doc,
@@ -150,7 +156,10 @@ export class CodeBlockState {
 
   private manageDecorationSet({ previous, current, tr }: ManageDecorationSetParams) {
     // Update the previous first although this could be buggy when deleting (possibly)
-    if (nodeEqualsType({ types: this.type, node: previous.node }) && !previous.node.eq(current.node)) {
+    if (
+      nodeEqualsType({ types: this.type, node: previous.node }) &&
+      !previous.node.eq(current.node)
+    ) {
       this.updateDecorationSet({ nodeInfo: previous, tr });
     }
 

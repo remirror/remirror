@@ -5,11 +5,11 @@ import {
   Extension,
   ExtensionManagerParams,
   FromToParams,
-  ProsemirrorCommandFunction,
   isNullOrUndefined,
   noop,
   object,
   plainInputRule,
+  ProsemirrorCommandFunction,
 } from '@remirror/core';
 
 import {
@@ -21,11 +21,11 @@ import {
 } from './emoji-types';
 import {
   DEFAULT_FREQUENTLY_USED,
-  SKIN_VARIATIONS,
   emoticonRegex,
   getEmojiByName,
   getEmojiFromEmoticon,
   populateFrequentlyUsed,
+  SKIN_VARIATIONS,
   sortEmojiMatches,
 } from './emoji-utils';
 
@@ -128,10 +128,9 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
        * Inserts the suggestion character into the current position in the editor
        * in order to activate the suggestion popup..
        */
-      openEmojiSuggestions: ({ from, to }: Partial<FromToParams> = object()): ProsemirrorCommandFunction => (
-        state,
-        dispatch,
-      ) => {
+      openEmojiSuggestions: (
+        { from, to }: Partial<FromToParams> = object(),
+      ): ProsemirrorCommandFunction => (state, dispatch) => {
         if (dispatch) {
           dispatch(state.tr.insertText(suggestionCharacter, from, to));
         }
@@ -173,9 +172,10 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       appendText: '',
       suggestTag: 'span',
       keyBindings: suggestionKeyBindings,
-      onChange: params => {
+      onChange: (params) => {
         const query = params.queryText.full;
-        const emojiMatches = query.length === 0 ? this.frequentlyUsed : sortEmojiMatches(query, maxResults);
+        const emojiMatches =
+          query.length === 0 ? this.frequentlyUsed : sortEmojiMatches(query, maxResults);
         onSuggestionChange({ ...params, emojiMatches });
       },
       onExit: onSuggestionExit,
@@ -184,7 +184,9 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
 
         return (emoji, skinVariation) => {
           if (isNullOrUndefined(emoji)) {
-            throw new Error('An emoji object is required when calling the emoji suggestions command');
+            throw new Error(
+              'An emoji object is required when calling the emoji suggestions command',
+            );
           }
 
           const { from, end: to } = match.range;

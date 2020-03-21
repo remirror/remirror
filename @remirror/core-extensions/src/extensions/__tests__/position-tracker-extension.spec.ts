@@ -3,7 +3,10 @@ import { renderEditor } from 'jest-remirror';
 import { object } from '@remirror/core';
 import { ExtensionMap } from '@remirror/test-fixtures';
 
-import { PositionTrackerExtension, PositionTrackerExtensionOptions } from '../position-tracker-extension';
+import {
+  PositionTrackerExtension,
+  PositionTrackerExtensionOptions,
+} from '../position-tracker-extension';
 
 const { heading: headingNode, blockquote: blockquoteNode } = ExtensionMap.nodes;
 const create = (params: Partial<PositionTrackerExtensionOptions> = object()) => {
@@ -28,34 +31,34 @@ describe('plugin', () => {
 
   it('tracks the correct position when text is added', () => {
     add(doc(p('Yo<cursor>')))
-      .actionsCallback(actions => actions.addPositionTracker({ id: 'test' }))
-      .helpersCallback(helpers => {
+      .actionsCallback((actions) => actions.addPositionTracker({ id: 'test' }))
+      .helpersCallback((helpers) => {
         expect(helpers.findPositionTracker('test')).toBe(3);
       })
       .insertText(' new text')
-      .helpersCallback(helpers => {
+      .helpersCallback((helpers) => {
         expect(helpers.findPositionTracker('test')).toBe(12);
       });
   });
 
   it('tracks position across nodes', () => {
     add(doc(p('Yo <cursor>')))
-      .actionsCallback(actions => actions.addPositionTracker({ id: 'test' }))
+      .actionsCallback((actions) => actions.addPositionTracker({ id: 'test' }))
       .replace(p(''))
       .insertText(' new text')
-      .helpersCallback(helpers => {
+      .helpersCallback((helpers) => {
         expect(helpers.findPositionTracker('test')).toBe(17);
       });
   });
 
   it('can track multiple positions', () => {
     add(doc(p('H<cursor>ello')))
-      .actionsCallback(actions => actions.addPositionTracker({ id: 'test1' }))
+      .actionsCallback((actions) => actions.addPositionTracker({ id: 'test1' }))
       .jumpTo(3)
-      .actionsCallback(actions => actions.addPositionTracker({ id: 'test2' }))
+      .actionsCallback((actions) => actions.addPositionTracker({ id: 'test2' }))
       .jumpTo('end')
-      .actionsCallback(actions => actions.addPositionTracker({ id: 'test3' }))
-      .helpersCallback(helpers => {
+      .actionsCallback((actions) => actions.addPositionTracker({ id: 'test3' }))
+      .helpersCallback((helpers) => {
         expect(helpers.findAllPositionTrackers()).toEqual({
           test1: 2,
           test2: 3,
@@ -63,7 +66,7 @@ describe('plugin', () => {
         });
       })
       .insertText(' world')
-      .helpersCallback(helpers => {
+      .helpersCallback((helpers) => {
         expect(helpers.findAllPositionTrackers()).toEqual({
           test1: 2,
           test2: 3,
@@ -74,35 +77,35 @@ describe('plugin', () => {
 
   it('loses the position when overwritten', () => {
     add(doc(p('Yo<cursor>')))
-      .actionsCallback(actions => actions.addPositionTracker({ id: 'test' }))
+      .actionsCallback((actions) => actions.addPositionTracker({ id: 'test' }))
       .overwrite(doc(h('awesome'), p('<cursor>')))
       .insertText(' new text')
-      .helpersCallback(helpers => {
+      .helpersCallback((helpers) => {
         expect(helpers.findPositionTracker('test')).toBe(undefined);
       });
   });
 
   it('removes a position', () => {
     add(doc(p('Yo<cursor>')))
-      .actionsCallback(actions => actions.addPositionTracker({ id: 'test' }))
+      .actionsCallback((actions) => actions.addPositionTracker({ id: 'test' }))
 
       .insertText(' new text')
-      .actionsCallback(actions => actions.removePositionTracker({ id: 'test' }))
-      .helpersCallback(helpers => {
+      .actionsCallback((actions) => actions.removePositionTracker({ id: 'test' }))
+      .helpersCallback((helpers) => {
         expect(helpers.findPositionTracker('test')).toBe(undefined);
       });
   });
 
   it('removes all positions', () => {
     add(doc(p('H<cursor>ello')))
-      .actionsCallback(actions => actions.addPositionTracker({ id: 'test1' }))
+      .actionsCallback((actions) => actions.addPositionTracker({ id: 'test1' }))
       .jumpTo(3)
-      .actionsCallback(actions => actions.addPositionTracker({ id: 'test2' }))
+      .actionsCallback((actions) => actions.addPositionTracker({ id: 'test2' }))
       .jumpTo('end')
-      .actionsCallback(actions => actions.addPositionTracker({ id: 'test3' }))
-      .actionsCallback(actions => actions.clearPositionTrackers())
+      .actionsCallback((actions) => actions.addPositionTracker({ id: 'test3' }))
+      .actionsCallback((actions) => actions.clearPositionTrackers())
       .insertText(' world')
-      .helpersCallback(helpers => {
+      .helpersCallback((helpers) => {
         expect(helpers.findAllPositionTrackers()).toEqual({});
       });
   });

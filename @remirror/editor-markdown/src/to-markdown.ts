@@ -75,7 +75,7 @@ export const toMarkdown = (content: ProsemirrorNode) =>
         const start: number = node.attrs.order || 1;
         const maxW = String(start + node.childCount - 1).length;
         const space = state.repeat(' ', maxW + 2);
-        state.renderList(node, space, i => {
+        state.renderList(node, space, (i) => {
           const nStr = String(start + i);
           return `${state.repeat(' ', maxW - nStr.length) + nStr}. `;
         });

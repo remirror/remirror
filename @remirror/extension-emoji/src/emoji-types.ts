@@ -24,7 +24,8 @@ export interface EmojiObject {
   skinVariations: boolean;
 }
 
-export interface EmojiSuggestionChangeHandlerParams extends SuggestChangeHandlerParams<EmojiSuggestCommand> {
+export interface EmojiSuggestionChangeHandlerParams
+  extends SuggestChangeHandlerParams<EmojiSuggestCommand> {
   /**
    * The currently matching objects
    */

@@ -1,4 +1,4 @@
-import { EditorState, ProsemirrorNode, isEditorState, isProsemirrorNode } from '@remirror/core';
+import { EditorState, isEditorState, isProsemirrorNode, ProsemirrorNode } from '@remirror/core';
 
 import { TaggedProsemirrorNode } from './jest-remirror-types';
 
@@ -38,7 +38,9 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
     const message = pass
       ? () =>
           `${this.utils.matcherHint('.not.toContainRemirrorDocument')}\n\n` +
-          `Expected JSON value of document to not contain:\n  ${this.utils.printExpected(expected)}\n` +
+          `Expected JSON value of document to not contain:\n  ${this.utils.printExpected(
+            expected,
+          )}\n` +
           `Actual JSON:\n  ${this.utils.printReceived(state.doc.content.child(0))}`
       : () => {
           const diffString = this.utils.diff(expected, state.doc.content.child(0), {
@@ -94,7 +96,9 @@ export const remirrorMatchers: jest.ExpectExtendMap = {
     const message = pass
       ? () =>
           `${this.utils.matcherHint('.not.toEqualRemirrorDocument')}\n\n` +
-          `Expected JSON value of document to not equal:\n  ${this.utils.printExpected(expected)}\n` +
+          `Expected JSON value of document to not equal:\n  ${this.utils.printExpected(
+            expected,
+          )}\n` +
           `Actual JSON:\n  ${this.utils.printReceived(actual)}`
       : () => {
           const diffString = this.utils.diff(expected, actual, {

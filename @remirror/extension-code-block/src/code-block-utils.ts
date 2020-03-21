@@ -9,22 +9,22 @@ import markup from 'refractor/lang/markup';
 
 import {
   Attrs,
+  bool,
   EditorState,
+  findParentNodeOfType,
+  flattenArray,
   FromToParams,
+  isEqual,
+  isObject,
+  isString,
   NodeType,
   NodeTypeParams,
   NodeWithPosition,
+  object,
   PosParams,
   ProsemirrorCommandFunction,
   ProsemirrorNodeParams,
   TextParams,
-  bool,
-  findParentNodeOfType,
-  flattenArray,
-  isEqual,
-  isObject,
-  isString,
-  object,
   uniqueArray,
 } from '@remirror/core';
 
@@ -46,7 +46,7 @@ function parseRefractorNodes(
   refractorNodes: RefractorNode[],
   className: string[] = [],
 ): ParsedRefractorNode[][] {
-  return refractorNodes.map(node => {
+  return refractorNodes.map((node) => {
     const classes = [
       ...className,
       ...(node.type === 'element' && node.properties.className ? node.properties.className : []),
@@ -85,7 +85,10 @@ interface CreateDecorationsParams extends Pick<CodeBlockExtensionOptions, 'defau
  */
 const getPositionedRefractorNodes = ({ node, pos }: NodeWithPosition) => {
   let startPos = pos + 1;
-  const refractorNodes = refractor.highlight(node.textContent || '', node.attrs.language || 'markup');
+  const refractorNodes = refractor.highlight(
+    node.textContent || '',
+    node.attrs.language || 'markup',
+  );
   function mapper(refractorNode: ParsedRefractorNode): PositionedRefractorNode {
     const from = startPos;
     const to = from + refractorNode.text.length;
@@ -108,14 +111,20 @@ const getPositionedRefractorNodes = ({ node, pos }: NodeWithPosition) => {
 export const createDecorations = ({ blocks, skipLast }: CreateDecorationsParams) => {
   const decorations: Decoration[] = [];
 
-  blocks.forEach(block => {
+  blocks.forEach((block) => {
     const positionedRefractorNodes = getPositionedRefractorNodes(block);
-    const lastBlockLength = skipLast ? positionedRefractorNodes.length - 1 : positionedRefractorNodes.length;
+    const lastBlockLength = skipLast
+      ? positionedRefractorNodes.length - 1
+      : positionedRefractorNodes.length;
     for (let ii = 0; ii < lastBlockLength; ii++) {
       const positionedRefractorNode = positionedRefractorNodes[ii];
-      const decoration = Decoration.inline(positionedRefractorNode.from, positionedRefractorNode.to, {
-        class: positionedRefractorNode.classes.join(' '),
-      });
+      const decoration = Decoration.inline(
+        positionedRefractorNode.from,
+        positionedRefractorNode.to,
+        {
+          class: positionedRefractorNode.classes.join(' '),
+        },
+      );
       decorations.push(decoration);
     }
   });
@@ -136,7 +145,11 @@ export const posWithinRange = ({ from, to, pos }: PosWithinRangeParams) => from 
 export const lengthHasChanged = <GType>(prev: ArrayLike<GType>, next: ArrayLike<GType>) =>
   next.length !== prev.length;
 
-export interface NodeInformation extends NodeTypeParams, FromToParams, ProsemirrorNodeParams, PosParams {}
+export interface NodeInformation
+  extends NodeTypeParams,
+    FromToParams,
+    ProsemirrorNodeParams,
+    PosParams {}
 
 /**
  * Retrieves helpful node information from the current state.
@@ -169,10 +182,9 @@ export const isValidCodeBlockAttrs = (attrs?: Attrs): attrs is CodeBlockAttrs =>
  *
  * This is used to update the language for the codeBlock.
  */
-export const updateNodeAttrs = (type: NodeType) => (attrs: CodeBlockAttrs): ProsemirrorCommandFunction => (
-  { tr, selection },
-  dispatch,
-) => {
+export const updateNodeAttrs = (type: NodeType) => (
+  attrs: CodeBlockAttrs,
+): ProsemirrorCommandFunction => ({ tr, selection }, dispatch) => {
   if (!isValidCodeBlockAttrs(attrs)) {
     throw new Error('Invalid attrs passed to the updateAttrs method');
   }
@@ -202,7 +214,10 @@ const PRELOADED_LANGUAGES = [markup, clike, css, js];
 export const getLanguageNamesAndAliases = (supportedLanguages: RefractorSyntax[]) => {
   return uniqueArray(
     flattenArray(
-      [...PRELOADED_LANGUAGES, ...supportedLanguages].map(({ name, aliases }) => [name, ...aliases]),
+      [...PRELOADED_LANGUAGES, ...supportedLanguages].map(({ name, aliases }) => [
+        name,
+        ...aliases,
+      ]),
     ),
   );
 };
@@ -239,7 +254,9 @@ export const getLanguage = ({ language, supportedLanguages, fallback }: GetLangu
 
 interface FormatCodeBlockFactoryParams
   extends NodeTypeParams,
-    Required<Pick<CodeBlockExtensionOptions, 'formatter' | 'supportedLanguages' | 'defaultLanguage'>> {}
+    Required<
+      Pick<CodeBlockExtensionOptions, 'formatter' | 'supportedLanguages' | 'defaultLanguage'>
+    > {}
 
 /**
  * A factory for creating a command which can format a selected codeBlock (or one located at the provided position).
@@ -249,10 +266,9 @@ export const formatCodeBlockFactory = ({
   formatter,
   supportedLanguages,
   defaultLanguage: fallback,
-}: FormatCodeBlockFactoryParams) => ({ pos }: Partial<PosParams> = object()): ProsemirrorCommandFunction => (
-  state,
-  dispatch,
-) => {
+}: FormatCodeBlockFactoryParams) => (
+  { pos }: Partial<PosParams> = object(),
+): ProsemirrorCommandFunction => (state, dispatch) => {
   const { tr, selection } = state;
 
   const { from, to } = pos ? { from: pos, to: pos } : selection;
@@ -317,7 +333,7 @@ export const getSupportedLanguagesMap = (supportedLanguages: RefractorSyntax[]) 
   const obj: Record<string, string> = object();
   for (const { name, aliases } of [...PRELOADED_LANGUAGES, ...supportedLanguages]) {
     obj[name] = name;
-    aliases.forEach(alias => {
+    aliases.forEach((alias) => {
       obj[alias] = name;
     });
   }

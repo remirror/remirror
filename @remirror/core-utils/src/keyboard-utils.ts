@@ -37,7 +37,8 @@ export const Modifier = {
   Primary: (isMac?: boolean) => (isMac ? [COMMAND[0]] : [CTRL[0]]),
   PrimaryShift: (isMac?: boolean) => (isMac ? [SHIFT[0], COMMAND[0]] : [CTRL[0], SHIFT[0]]),
   PrimaryAlt: (isMac?: boolean) => (isMac ? [ALT[0], COMMAND[0]] : [CTRL[0], ALT[0]]),
-  Secondary: (isMac?: boolean) => (isMac ? [SHIFT[0], ALT[0], COMMAND[0]] : [CTRL[0], SHIFT[0], ALT[0]]),
+  Secondary: (isMac?: boolean) =>
+    isMac ? [SHIFT[0], ALT[0], COMMAND[0]] : [CTRL[0], SHIFT[0], ALT[0]],
   Access: (isMac?: boolean) => (isMac ? [CTRL[0], ALT[0]] : [SHIFT[0], ALT[0]]),
   Ctrl: () => [CTRL[0]],
   Alt: () => [ALT[0]],

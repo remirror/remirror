@@ -83,7 +83,13 @@ export const formatter: CodeBlockFormatter = ({ cursorOffset, language, source }
       ["'", '"'],
     ],
   ) => {
-    const increment = offsetIncrement(source, cursorOffset, result.formatted, result.cursorOffset, pairs);
+    const increment = offsetIncrement(
+      source,
+      cursorOffset,
+      result.formatted,
+      result.cursorOffset,
+      pairs,
+    );
     return { ...result, cursorOffset: result.cursorOffset + increment };
   };
 

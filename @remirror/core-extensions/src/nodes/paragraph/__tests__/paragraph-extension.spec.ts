@@ -33,6 +33,8 @@ describe('schema', () => {
       schema,
     });
 
-    expect(html).toBe(`<p style="text-align: right;line-height: 100%;" data-indent="1" id="never">hello</p>`);
+    expect(html).toBe(
+      `<p style="text-align: right;line-height: 100%;" data-indent="1" id="never">hello</p>`,
+    );
   });
 });

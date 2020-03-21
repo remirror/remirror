@@ -2,7 +2,6 @@ import { Fragment, Mark, Node as PMNode, Slice } from 'prosemirror-model';
 
 import {
   EditorSchema,
-  SchemaParams,
   findMatches,
   flattenArray,
   hasOwnProperty,
@@ -10,16 +9,17 @@ import {
   isProsemirrorNode,
   isString,
   object,
+  SchemaParams,
 } from '@remirror/core';
 
 import {
   BaseFactoryParams,
-  TagTracker,
   TaggedContent,
   TaggedContentItem,
   TaggedContentWithText,
   TaggedProsemirrorNode,
   Tags,
+  TagTracker,
 } from './jest-remirror-types';
 
 /**
@@ -66,7 +66,8 @@ export const text = (value: string, schema: EditorSchema): TaggedContentItem => 
 
   stripped += value.slice(textIndex);
 
-  const node = stripped === '' ? new TagTracker() : (schema.text(stripped) as TaggedProsemirrorNode);
+  const node =
+    stripped === '' ? new TagTracker() : (schema.text(stripped) as TaggedProsemirrorNode);
 
   node.tags = tags;
   return node;
@@ -145,13 +146,14 @@ interface CoerceParams extends SchemaParams {
  * @param schema
  */
 export const coerce = ({ content, schema }: CoerceParams) => {
-  const taggedContent = content.map(item => (isString(item) ? text(item, schema) : item)) as Array<
-    TaggedContentItem | TaggedContentItem[]
-  >;
+  const taggedContent = content.map((item) =>
+    isString(item) ? text(item, schema) : item,
+  ) as Array<TaggedContentItem | TaggedContentItem[]>;
   return sequence(...flattenArray<TaggedContentItem>(taggedContent));
 };
 
-interface NodeFactoryParams<GSchema extends EditorSchema = EditorSchema> extends BaseFactoryParams<GSchema> {
+interface NodeFactoryParams<GSchema extends EditorSchema = EditorSchema>
+  extends BaseFactoryParams<GSchema> {
   /**
    * The marks which wrap this node.
    */
@@ -215,7 +217,7 @@ export const markFactory = ({ name, schema, attrs, allowDupes = false }: MarkFac
   return (...content: TaggedContentWithText[]): TaggedProsemirrorNode[] => {
     const mark = markBuilder.create(attrs);
     const { nodes } = coerce({ content, schema });
-    return nodes.map(node => {
+    return nodes.map((node) => {
       if (!allowDupes && mark.type.isInSet(node.marks)) {
         return node;
       } else {
@@ -232,7 +234,8 @@ export const markFactory = ({ name, schema, attrs, allowDupes = false }: MarkFac
  *
  * @param [...content]
  */
-export const fragment = (...content: TaggedContentWithText[]) => flattenArray<TaggedContentWithText>(content);
+export const fragment = (...content: TaggedContentWithText[]) =>
+  flattenArray<TaggedContentWithText>(content);
 
 export const slice = (schema: EditorSchema) => (...content: TaggedContentWithText[]) =>
   new Slice(Fragment.from(coerce({ content, schema }).nodes), 0, 0);

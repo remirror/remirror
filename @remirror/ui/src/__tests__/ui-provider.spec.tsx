@@ -5,9 +5,9 @@ import React from 'react';
 import { Remirror } from '@remirror/react';
 import { createTestManager } from '@remirror/test-fixtures';
 
+import { baseTheme } from '..';
 import { useEmotionTheme, useRemirrorTheme } from '../ui-hooks';
 import { RemirrorThemeProvider } from '../ui-provider';
-import { baseTheme } from '..';
 
 test('uses the base theme when none is provided', () => {
   const ConsumerComponent = () => {
@@ -129,7 +129,9 @@ describe('withoutEmotion', () => {
   /// TODO figure out how to get this working with built code
   it.skip('should not render extra class names when true', () => {
     const child = () => <div data-testid='test' />;
-    const { getByTestId, rerender } = render(<Remirror manager={createTestManager()}>{child}</Remirror>);
+    const { getByTestId, rerender } = render(
+      <Remirror manager={createTestManager()}>{child}</Remirror>,
+    );
 
     expect(getByTestId('test')).toHaveAttribute('class');
 

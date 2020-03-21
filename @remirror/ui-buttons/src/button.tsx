@@ -1,14 +1,14 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { MinWidthProperty, WidthProperty } from 'csstype';
-import { ComponentType, ReactNode, forwardRef } from 'react';
+import { ComponentType, forwardRef, ReactNode } from 'react';
 
 import {
   KeyOfThemeVariant,
-  RemirrorInterpolation,
-  RemirrorThemeContextType,
   object,
   omitUndefined,
+  RemirrorInterpolation,
+  RemirrorThemeContextType,
 } from '@remirror/core';
 import { useRemirrorTheme } from '@remirror/ui';
 import { IconProps } from '@remirror/ui-icons';

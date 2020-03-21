@@ -5,24 +5,24 @@ import {
   Fragment,
   Mark,
   MarkType,
-  NodeType,
   Node as PMNode,
+  NodeType,
   ResolvedPos as PMResolvedPos,
   Schema,
   Slice,
 } from 'prosemirror-model';
 import {
-  NodeSelection,
   EditorState as PMEditorState,
-  Selection as PMSelection,
+  NodeSelection,
   Plugin,
+  Selection as PMSelection,
   TextSelection,
 } from 'prosemirror-state';
 
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
 import {
-  Cast,
   bool,
+  Cast,
   isFunction,
   isNullOrUndefined,
   isNumber,
@@ -62,8 +62,9 @@ import { environment } from './environment';
  *
  * @public
  */
-export const isNodeType = <GSchema extends EditorSchema = any>(value: unknown): value is NodeType<GSchema> =>
-  isObject(value) && value instanceof NodeType;
+export const isNodeType = <GSchema extends EditorSchema = any>(
+  value: unknown,
+): value is NodeType<GSchema> => isObject(value) && value instanceof NodeType;
 
 /**
  * Check to see if the passed value is a MarkType.
@@ -72,8 +73,9 @@ export const isNodeType = <GSchema extends EditorSchema = any>(value: unknown): 
  *
  * @public
  */
-export const isMarkType = <GSchema extends EditorSchema = any>(value: unknown): value is MarkType<GSchema> =>
-  isObject(value) && value instanceof MarkType;
+export const isMarkType = <GSchema extends EditorSchema = any>(
+  value: unknown,
+): value is MarkType<GSchema> => isObject(value) && value instanceof MarkType;
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
@@ -243,7 +245,8 @@ export const isDocNodeEmpty = (node: ProsemirrorNode) => {
  */
 export const isEmptyParagraphNode = (node: ProsemirrorNode | null | undefined) => {
   return (
-    !isProsemirrorNode(node) || (node.type.name === 'paragraph' && !node.textContent && !node.childCount)
+    !isProsemirrorNode(node) ||
+    (node.type.name === 'paragraph' && !node.textContent && !node.childCount)
   );
 };
 
@@ -259,11 +262,11 @@ export const getMarkAttrs = (state: EditorState, type: MarkType) => {
   const { from, to } = state.selection;
   let marks: Mark[] = [];
 
-  state.doc.nodesBetween(from, to, node => {
+  state.doc.nodesBetween(from, to, (node) => {
     marks = [...marks, ...node.marks];
   });
 
-  const mark = marks.find(markItem => markItem.type.name === type.name);
+  const mark = marks.find((markItem) => markItem.type.name === type.name);
 
   if (mark) {
     return mark.attrs;
@@ -359,7 +362,11 @@ export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToPar
     // Step backwards until reaching first excluded character or empty text content.
   }
 
-  for (let char = getChar(to, to + 1); char && !exclude.test(char); to++, char = getChar(to, to + 1)) {
+  for (
+    let char = getChar(to, to + 1);
+    char && !exclude.test(char);
+    to++, char = getChar(to, to + 1)
+  ) {
     // Step forwards until reaching the first excluded character or empty text content
   }
 
@@ -474,7 +481,10 @@ export const isElementDOMNode = (domNode: unknown): domNode is HTMLElement =>
  *
  * @public
  */
-export const closestElement = (domNode: Node | null | undefined, selector: string): HTMLElement | null => {
+export const closestElement = (
+  domNode: Node | null | undefined,
+  selector: string,
+): HTMLElement | null => {
   if (!isElementDOMNode(domNode)) {
     return null;
   }
@@ -589,7 +599,8 @@ export const atDocStart = (state: EditorState): boolean =>
  *
  * @param pmPosition - the resolved prosemirror position
  */
-export const startPositionOfParent = (pmPosition: ResolvedPos): number => pmPosition.start(pmPosition.depth);
+export const startPositionOfParent = (pmPosition: ResolvedPos): number =>
+  pmPosition.start(pmPosition.depth);
 
 /**
  * Get the end position of the parent of the current resolve position
@@ -598,7 +609,8 @@ export const startPositionOfParent = (pmPosition: ResolvedPos): number => pmPosi
  *
  * @public
  */
-export const endPositionOfParent = (pmPosition: ResolvedPos): number => pmPosition.end(pmPosition.depth) + 1;
+export const endPositionOfParent = (pmPosition: ResolvedPos): number =>
+  pmPosition.end(pmPosition.depth) + 1;
 
 /**
  * Retrieve the current position of the cursor
@@ -678,7 +690,9 @@ export const nodeNameMatchesList = (
  * @public
  */
 export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: EditorSchema) => {
-  return isProsemirrorNode(node) && (schema ? node.type === schema.nodes.doc : node.type.name === 'doc');
+  return (
+    isProsemirrorNode(node) && (schema ? node.type === schema.nodes.doc : node.type.name === 'doc')
+  );
 };
 
 /**
@@ -689,7 +703,9 @@ export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: Edi
  * @public
  */
 export const isObjectNode = (value: unknown): value is ObjectNode =>
-  isObject(value) && (value as PlainObject).type === 'doc' && Array.isArray((value as PlainObject).content);
+  isObject(value) &&
+  (value as PlainObject).type === 'doc' &&
+  Array.isArray((value as PlainObject).content);
 
 export interface CreateDocumentNodeParams
   extends SchemaParams,
@@ -824,7 +840,11 @@ interface FromStringParams extends Partial<CustomDocParams>, SchemaParams {
  *
  * @public
  */
-export const fromHTML = ({ content, schema, doc = getDocument() }: FromStringParams): ProsemirrorNode => {
+export const fromHTML = ({
+  content,
+  schema,
+  doc = getDocument(),
+}: FromStringParams): ProsemirrorNode => {
   const element = doc.createElement('div');
   element.innerHTML = content.trim();
   return DOMParser.fromSchema(schema).parse(element);

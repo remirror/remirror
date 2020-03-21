@@ -17,13 +17,13 @@ import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates'
 import {
   CompareMatchParams,
   ReasonParams,
+  Suggester,
+  SuggesterParams,
   SuggestKeyBindingMap,
   SuggestKeyBindingParams,
   SuggestReasonMap,
   SuggestStateMatch,
   SuggestStateMatchParams,
-  Suggester,
-  SuggesterParams,
 } from './suggest-types';
 
 /**
@@ -72,7 +72,7 @@ const findPosition = ({ text, regexp, $pos, char, suggester }: FindPositionParam
   const cursor = $pos.pos; // The current cursor position
   const start = $pos.start(); // The starting position for matches
 
-  findMatches(text, regexp).forEach(match => {
+  findMatches(text, regexp).forEach((match) => {
     // Check the character before the current match to ensure it is not one of
     // the supported characters
     const matchPrefix = match.input.slice(Math.max(0, match.index - 1), match.index);
@@ -92,7 +92,10 @@ const findPosition = ({ text, regexp, $pos, char, suggester }: FindPositionParam
             end,
             to,
           },
-          queryText: { partial: match[0].slice(char.length, matchLength), full: match[0].slice(char.length) },
+          queryText: {
+            partial: match[0].slice(char.length, matchLength),
+            full: match[0].slice(char.length),
+          },
           matchText: { partial: match[0].slice(0, matchLength), full: match[0] },
           suggester,
         };
@@ -197,7 +200,11 @@ const createInsertReason = ({
 /**
  * Find the reason for the Jump
  */
-const findJumpReason = ({ prev, next, state }: CompareMatchParams & EditorStateParams): SuggestReasonMap => {
+const findJumpReason = ({
+  prev,
+  next,
+  state,
+}: CompareMatchParams & EditorStateParams): SuggestReasonMap => {
   const value: SuggestReasonMap = object();
 
   const updatedPrev = recheckMatch({ state, match: prev });
@@ -242,7 +249,10 @@ const findExitReason = ({
   }
 
   // Exit caused by a selection
-  if (!selectionEmpty(state) && (selection.from <= match.range.from || selection.to >= match.range.end)) {
+  if (
+    !selectionEmpty(state) &&
+    (selection.from <= match.range.from || selection.to >= match.range.end)
+  ) {
     return { exit: createMatchWithReason({ match, reason: ExitReason.SelectionOutside }) };
   }
 

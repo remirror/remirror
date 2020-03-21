@@ -7,7 +7,7 @@ import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 
-import { RemirrorTheme, deepMerge, object } from '@remirror/core';
+import { deepMerge, object, RemirrorTheme } from '@remirror/core';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -91,7 +91,11 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
         <RemirrorExtension Constructor={UnderlineExtension} />
         <RemirrorExtension Constructor={ItalicExtension} />
         <RemirrorExtension Constructor={BlockquoteExtension} />
-        <RemirrorExtension Constructor={LinkExtension} activationHandler={activateLink} priority={1} />
+        <RemirrorExtension
+          Constructor={LinkExtension}
+          activationHandler={activateLink}
+          priority={1}
+        />
         <RemirrorExtension Constructor={StrikeExtension} />
         <RemirrorExtension Constructor={CodeExtension} />
         <RemirrorExtension Constructor={HeadingExtension} />
@@ -135,7 +139,11 @@ const InnerEditor: FC<BubbleMenuProps> = ({ linkActivated, deactivateLink, activ
   return (
     <EditorWrapper>
       <MenuBar activateLink={activateLink} />
-      <BubbleMenu linkActivated={linkActivated} deactivateLink={deactivateLink} activateLink={activateLink} />
+      <BubbleMenu
+        linkActivated={linkActivated}
+        deactivateLink={deactivateLink}
+        activateLink={activateLink}
+      />
       <div {...getRootProps()} data-testid='remirror-wysiwyg-editor' />
     </EditorWrapper>
   );

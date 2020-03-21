@@ -25,7 +25,12 @@ test('can render in a node server environment', () => {
   const Component = 'span';
   const mock = jest.fn(() => <Component />);
   const reactString = renderToString(
-    <Remirror {...handlers} label={label} initialContent={docNodeSimpleJSON} manager={createTestManager()}>
+    <Remirror
+      {...handlers}
+      label={label}
+      initialContent={docNodeSimpleJSON}
+      manager={createTestManager()}
+    >
       {mock}
     </Remirror>,
   );
@@ -38,7 +43,12 @@ test('can render in a node server environment', () => {
 
 test('can render with a non-dom top level node', () => {
   const reactString = renderToString(
-    <Remirror {...handlers} label={label} initialContent={docNodeSimpleJSON} manager={createTestManager()}>
+    <Remirror
+      {...handlers}
+      label={label}
+      initialContent={docNodeSimpleJSON}
+      manager={createTestManager()}
+    >
       {() => <Fragment />}
     </Remirror>,
   );
@@ -53,7 +63,12 @@ const outerId = 'OUTER123';
 
 test('appends to the react element by default with getRootProps', () => {
   const reactString = renderToString(
-    <Remirror {...handlers} label={label} initialContent={docNodeSimpleJSON} manager={createTestManager()}>
+    <Remirror
+      {...handlers}
+      label={label}
+      initialContent={docNodeSimpleJSON}
+      manager={createTestManager()}
+    >
       {({ getRootProps }) => (
         <div>
           <div data-testid={outerId}>

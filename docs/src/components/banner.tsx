@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { FC } from 'react';
-import { Container, ThemeProvider, jsx } from 'theme-ui';
+import { Container, jsx, ThemeProvider } from 'theme-ui';
 
 const theme = {
   styles: {

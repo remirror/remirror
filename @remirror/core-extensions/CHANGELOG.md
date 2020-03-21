@@ -42,8 +42,8 @@
 
 ### Patch Changes
 
-- 10419145: Make all built-in extensions' `keys()` return a `KeyboardBindings` object instead of a specific
-  object (#206)
+- 10419145: Make all built-in extensions' `keys()` return a `KeyboardBindings` object instead of a
+  specific object (#206)
 - 7380e18f: Update repository url from ifiokjr/remirror to remirror/remirror to reflect new GitHub
   organisation.
 - Updated dependencies [7380e18f]

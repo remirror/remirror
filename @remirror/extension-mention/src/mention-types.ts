@@ -1,4 +1,4 @@
-import { FromToEndParams, SuggestReplacementType, Suggester } from 'prosemirror-suggest';
+import { FromToEndParams, Suggester, SuggestReplacementType } from 'prosemirror-suggest';
 
 import { Attrs, MarkExtensionOptions } from '@remirror/core';
 

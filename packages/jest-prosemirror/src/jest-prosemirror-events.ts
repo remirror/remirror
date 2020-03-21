@@ -356,7 +356,10 @@ interface EventProperties {
 type EventMap = Record<EventType, EventProperties>;
 const eventMap: EventMap = rawEventMap as EventMap;
 
-export const createEvents = <GEvent extends Event>(event: EventType, options: PlainObject): GEvent[] => {
+export const createEvents = <GEvent extends Event>(
+  event: EventType,
+  options: PlainObject,
+): GEvent[] => {
   const { Constructor, defaultProperties } =
     event in eventMap
       ? eventMap[event]

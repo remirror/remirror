@@ -2,12 +2,12 @@ import { toggleMark } from 'prosemirror-commands';
 
 import {
   CommandMarkTypeParams,
+  convertCommand,
   ExtensionManagerMarkTypeParams,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
-  convertCommand,
 } from '@remirror/core';
 
 export class UnderlineExtension extends MarkExtension {
@@ -24,7 +24,7 @@ export class UnderlineExtension extends MarkExtension {
         },
         {
           style: 'text-decoration',
-          getAttrs: node => (node === 'underline' ? {} : false),
+          getAttrs: (node) => (node === 'underline' ? {} : false),
         },
       ],
       toDOM: () => ['u', 0],

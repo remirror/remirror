@@ -64,7 +64,12 @@ export const defaultEffect: ParticleEffect = {
     particle.alpha *= PARTICLE_ALPHA_FADEOUT;
 
     ctx.fillStyle = `rgba(${particle.color[0]},${particle.color[1]},${particle.color[2]},${particle.alpha})`;
-    ctx.fillRect(Math.round(particle.x - 1), Math.round(particle.y - 1), particle.size, particle.size);
+    ctx.fillRect(
+      Math.round(particle.x - 1),
+      Math.round(particle.y - 1),
+      particle.size,
+      particle.size,
+    );
   },
 };
 

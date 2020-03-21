@@ -249,7 +249,7 @@ describe('pasteRules', () => {
     } = create(options);
     add(doc(p('<cursor>')))
       .paste(p('This is text @hello'))
-      .callback(content => {
+      .callback((content) => {
         expect(content.state).toContainRemirrorDocument(
           p('This is text ', mention({ id: '@hello', name: 'at', label: '@hello' })('@hello')),
         );
@@ -268,7 +268,7 @@ describe('pasteRules', () => {
     const tag = mention({ id: '#12', name: 'tag', label: '#12' })('#12');
     add(doc(p('<cursor>')))
       .paste(p('#12 +awesome @hello'))
-      .callback(content => {
+      .callback((content) => {
         expect(content.state).toContainRemirrorDocument(p(tag, ' ', plus, ' ', at));
       });
   });
@@ -329,13 +329,19 @@ describe('commands', () => {
       expect(() => actions.createMention({ ...attrs, id: '' })).toThrowErrorMatchingInlineSnapshot(
         `"Invalid configuration attributes passed to the MentionExtension command."`,
       );
-      expect(() => actions.createMention({ ...attrs, label: '' })).toThrowErrorMatchingInlineSnapshot(
+      expect(() =>
+        actions.createMention({ ...attrs, label: '' }),
+      ).toThrowErrorMatchingInlineSnapshot(
         `"Invalid configuration attributes passed to the MentionExtension command."`,
       );
-      expect(() => actions.createMention({ ...attrs, name: 'invalid' })).toThrowErrorMatchingInlineSnapshot(
+      expect(() =>
+        actions.createMention({ ...attrs, name: 'invalid' }),
+      ).toThrowErrorMatchingInlineSnapshot(
         `"The name 'invalid' specified for this command is invalid. Please choose from: [\\"tag\\",\\"at\\",\\"plus\\"]."`,
       );
-      expect(() => actions.createMention({ ...attrs, name: undefined })).toThrowErrorMatchingInlineSnapshot(
+      expect(() =>
+        actions.createMention({ ...attrs, name: undefined }),
+      ).toThrowErrorMatchingInlineSnapshot(
         `"The MentionExtension command must specify a name since there are multiple matchers configured"`,
       );
     });

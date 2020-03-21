@@ -1,4 +1,4 @@
-import { SerializedStyles, css } from '@emotion/core';
+import { css, SerializedStyles } from '@emotion/core';
 import { ResponsiveStyleValue, SystemStyleObject, ThemeValue } from '@styled-system/css';
 import {
   BorderProperty,
@@ -170,7 +170,8 @@ export type KeyOfThemeVariant<GKey extends StringKey<RemirrorThemeVariants>> = S
   RemirrorThemeVariants[GKey]
 >;
 
-export type RemirrorTheme = RemirrorThemeProperties & Partial<RemirrorThemeVariants> & { [key: string]: any };
+export type RemirrorTheme = RemirrorThemeProperties &
+  Partial<RemirrorThemeVariants> & { [key: string]: any };
 
 /**
  * This prop allows for deeper nesting of styles within media queries and tags.
@@ -273,7 +274,9 @@ export type RemirrorInterpolation =
   | SerializedStyles
   | Array<
       | WithVariants<SxThemeProp>
-      | ((theme?: RemirrorTheme | { theme: RemirrorTheme } | undefined) => WithVariants<SxThemeProp>)
+      | ((
+          theme?: RemirrorTheme | { theme: RemirrorTheme } | undefined,
+        ) => WithVariants<SxThemeProp>)
       | undefined
       | null
       | false

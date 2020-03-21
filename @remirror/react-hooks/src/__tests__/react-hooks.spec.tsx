@@ -2,7 +2,10 @@ import { act, render } from '@testing-library/react';
 import { act as hookAct, renderHook } from '@testing-library/react-hooks';
 import React from 'react';
 
-import { fakeResizeObserverPolyfill, triggerChange } from '../../__mocks__/resize-observer-polyfill';
+import {
+  fakeResizeObserverPolyfill,
+  triggerChange,
+} from '../../__mocks__/resize-observer-polyfill';
 import { useMeasure, usePrevious, useSetState, useStateWithCallback } from '../react-hooks';
 
 test('usePrevious', () => {
@@ -71,7 +74,7 @@ test('useStateWithCallback', () => {
 
   hookAct(() => {
     const [, setState] = result.current;
-    setState(prevState => prevState + 10);
+    setState((prevState) => prevState + 10);
   });
 
   expect(result.current[0]).toBe(30);
@@ -80,7 +83,11 @@ test('useStateWithCallback', () => {
 
 test('useSetState', () => {
   const mock = jest.fn();
-  const initialState: { a: number; b: number; c?: number; d?: string } = { a: 10, b: 20, c: undefined };
+  const initialState: { a: number; b: number; c?: number; d?: string } = {
+    a: 10,
+    b: 20,
+    c: undefined,
+  };
 
   const { result } = renderHook(({ initialState: val }) => useSetState(val), {
     initialProps: { initialState },
@@ -98,7 +105,7 @@ test('useSetState', () => {
 
   hookAct(() => {
     const [, setState] = result.current;
-    setState(prevState => ({ a: prevState.a - 100, d: 'test' }), mock);
+    setState((prevState) => ({ a: prevState.a - 100, d: 'test' }), mock);
   });
 
   expect(result.current[0]).toEqual({ ...initialState, a: 0, d: 'test' });

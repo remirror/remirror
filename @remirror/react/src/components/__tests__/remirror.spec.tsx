@@ -6,8 +6,8 @@ import { renderToString } from 'react-dom/server';
 import { fromHTML } from '@remirror/core';
 import { createTestManager } from '@remirror/test-fixtures';
 
-import { InjectedRemirrorProps } from '../../react-types';
 import { Remirror } from '../';
+import { InjectedRemirrorProps } from '../../react-types';
 
 const textContent = `This is editor text`;
 const label = 'Remirror editor';
@@ -40,7 +40,12 @@ test('should be called via a render prop', () => {
 test('can suppressHydrationWarning without breaking', () => {
   const mock = jest.fn(() => <div />);
   const { getByLabelText } = render(
-    <Remirror manager={createTestManager()} label={label} {...handlers} suppressHydrationWarning={true}>
+    <Remirror
+      manager={createTestManager()}
+      label={label}
+      {...handlers}
+      suppressHydrationWarning={true}
+    >
       {mock}
     </Remirror>,
   );
@@ -176,7 +181,7 @@ describe('focus', () => {
         initialContent={content}
         autoFocus={true}
       >
-        {context => {
+        {(context) => {
           props = context;
           return <div />;
         }}

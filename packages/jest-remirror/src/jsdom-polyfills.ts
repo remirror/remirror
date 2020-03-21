@@ -34,7 +34,9 @@ export const jsdomPolyfill = () => {
         return getInnerText(this);
       },
       set(text) {
-        const textNodes = Array.prototype.slice.call(this.childNodes).filter(node => isTextDOMNode(node));
+        const textNodes = Array.prototype.slice
+          .call(this.childNodes)
+          .filter((node) => isTextDOMNode(node));
 
         // If there's only one child that is a text node, update it
         if (textNodes.length === 1) {
@@ -43,7 +45,7 @@ export const jsdomPolyfill = () => {
         }
 
         // Remove all child nodes as per WHATWG LS Spec
-        Array.prototype.slice.call(this.childNodes).forEach(node => this.removeChild(node));
+        Array.prototype.slice.call(this.childNodes).forEach((node) => this.removeChild(node));
 
         // Append a single text child node with the text
         this.appendChild(this.ownerDocument.createTextNode(text));
@@ -72,7 +74,7 @@ export const jsdomExtras = () => {
 
   document.getSelection = window.getSelection = () => {
     return {
-      addRange: _ => {},
+      addRange: (_) => {},
       removeAllRanges: () => {},
     } as Selection;
   };
@@ -114,7 +116,9 @@ export const jsdomExtras = () => {
     } as any);
 
   // Taken from https://github.com/jsdom/jsdom/issues/639#issuecomment-371278152
-  const mutationObserver = readFileSync(require.resolve('mutationobserver-shim'), { encoding: 'utf-8' });
+  const mutationObserver = readFileSync(require.resolve('mutationobserver-shim'), {
+    encoding: 'utf-8',
+  });
   const mutationObserverScript = window.document.createElement('script');
   mutationObserverScript.textContent = mutationObserver;
 

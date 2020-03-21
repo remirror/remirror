@@ -22,11 +22,11 @@ import {
   CompareMatchParams,
   RemoveIgnoredParams,
   SuggestCallbackParams,
+  Suggester,
   SuggestKeyBindingParams,
   SuggestReasonMap,
   SuggestStateMatch,
   SuggestStateMatchReason,
-  Suggester,
 } from './suggest-types';
 import { findFromSuggesters, findReason, runKeyBindings } from './suggest-utils';
 
@@ -125,7 +125,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    */
   constructor(suggesters: Suggester[]) {
     const names: string[] = [];
-    this.suggesters = suggesters.map(suggester => {
+    this.suggesters = suggesters.map((suggester) => {
       if (names.includes(suggester.name)) {
         throw new Error(
           `A suggester already exists with the name '${suggester.name}'. The name provided must be unique.`,
@@ -185,10 +185,9 @@ export class SuggestState<GSchema extends EditorSchema = any> {
       return;
     }
 
-    // Call Handlers
-    // When a jump happens run the action that involves the position that occurs
-    // later in the document. This is so that changes don't affect previous
-    // positions.
+    // Call Handlers When a jump happens run the action that involves the
+    // position that occurs later in the document. This is so that changes don't
+    // affect previous positions.
     if (change && exit && isJumpReason({ change, exit })) {
       const exitParams = this.createReasonParams(exit);
       const changeParams = this.createReasonParams(change);
@@ -222,9 +221,9 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     const decorations = ignored.find();
 
     // For suggesters with multiple characters it is possible for a `paste` or
-    // any edit action within the decoration to expand the ignored section. We check for
-    // that here and if the section size has changed it should be marked as
-    // invalid and removed from the ignored `DecorationSet`.
+    // any edit action within the decoration to expand the ignored section. We
+    // check for that here and if the section size has changed it should be
+    // marked as invalid and removed from the ignored `DecorationSet`.
     const invalid = decorations.filter(({ from, to, spec }) => {
       if (to - from !== spec.char.length) {
         return true;
@@ -247,7 +246,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    */
   public addIgnored = ({ from, char, name, specific = false }: AddIgnoredParams) => {
     const to = from + char.length;
-    const suggester = this.suggesters.find(val => val.name === name);
+    const suggester = this.suggesters.find((val) => val.name === name);
 
     if (!suggester) {
       throw new Error(`No suggester exists for the name provided: ${name}`);
@@ -270,7 +269,8 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    *
    * @remarks
    *
-   * After this point event handlers will begin to be called again for match character.
+   * After this point event handlers will begin to be called again for match
+   * character.
    */
   public removeIgnored = ({ from, char, name }: RemoveIgnoredParams) => {
     const decorations = this.ignored.find(from, from + char.length);
@@ -440,7 +440,9 @@ export class SuggestState<GSchema extends EditorSchema = any> {
       : this.ignored.add(state.doc, [
           Decoration.inline(from, end, {
             nodeName: decorationsTag,
-            class: name ? `${suggestionClassName} ${suggestionClassName}-${name}` : suggestionClassName,
+            class: name
+              ? `${suggestionClassName} ${suggestionClassName}-${name}`
+              : suggestionClassName,
           }),
         ]);
   }

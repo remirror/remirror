@@ -43,7 +43,9 @@ describe('schema', () => {
 
     const { schema } = createBaseTestManager([
       {
-        extension: new LinkExtension({ extraAttrs: ['title', ['custom', 'failure', 'data-custom']] }),
+        extension: new LinkExtension({
+          extraAttrs: ['title', ['custom', 'failure', 'data-custom']],
+        }),
         priority: 1,
       },
     ]);
@@ -59,7 +61,9 @@ describe('schema', () => {
     it('does not override the href', () => {
       const { schema } = createBaseTestManager([
         {
-          extension: new LinkExtension({ extraAttrs: [['href', 'should not appear', 'data-custom']] }),
+          extension: new LinkExtension({
+            extraAttrs: [['href', 'should not appear', 'data-custom']],
+          }),
           priority: 1,
         },
       ]);
@@ -176,7 +180,9 @@ describe('actions', () => {
         add(doc(p('Paragraph <start>A link<end>')));
         actions.updateLink({ href });
 
-        expect(getState()).toContainRemirrorDocument(p('Paragraph ', testLink('<start>A link<end>')));
+        expect(getState()).toContainRemirrorDocument(
+          p('Paragraph ', testLink('<start>A link<end>')),
+        );
       });
 
       it('does nothing for an empty selection', () => {
@@ -193,7 +199,9 @@ describe('actions', () => {
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
         actions.updateLink(attrs);
 
-        expect(getState()).toContainRemirrorDocument(p('Paragraph ', altLink('<start>A link<end>')));
+        expect(getState()).toContainRemirrorDocument(
+          p('Paragraph ', altLink('<start>A link<end>')),
+        );
       });
 
       it('overwrites multiple existing links', () => {

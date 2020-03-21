@@ -10,8 +10,10 @@ import { SupportedCharacters, usKeyboardLayout } from './us-keyboard-layout';
  * @param type
  * @param options
  */
-export const createKeyboardEvent = (type: KeyboardEventName, options: KeyboardEventInit & PlainObject) =>
-  new KeyboardEvent(type, { ...options, bubbles: true });
+export const createKeyboardEvent = (
+  type: KeyboardEventName,
+  options: KeyboardEventInit & PlainObject,
+) => new KeyboardEvent(type, { ...options, bubbles: true });
 
 interface GetModifierInformationParams {
   /**
@@ -34,7 +36,10 @@ interface GetModifierInformationParams {
  * @param params.modifiers
  * @param [params.isMac]
  */
-export const getModifierInformation = ({ modifiers, isMac = false }: GetModifierInformationParams) => {
+export const getModifierInformation = ({
+  modifiers,
+  isMac = false,
+}: GetModifierInformationParams) => {
   const info: ModifierInformation = {
     altKey: false,
     ctrlKey: false,

@@ -39,12 +39,12 @@
 
 ### Status
 
-Remirror is still undergoing heavy development, but is used in production by at least one company. At the
-moment the focus is on releasing a stable API and while this is ongoing documentation has slipped from being
-the priority.
+Remirror is still undergoing heavy development, but is used in production by at least one company.
+At the moment the focus is on releasing a stable API and while this is ongoing documentation has
+slipped from being the priority.
 
-Right now the best way to understand the library is to read through the codebase and take a look at how
-existing editors have been structured. A quick way to get started is to
+Right now the best way to understand the library is to read through the codebase and take a look at
+how existing editors have been structured. A quick way to get started is to
 [spin up our Next.js example](https://github.com/remirror/remirror/blob/master/examples/with-next/readme.md#getting-started).
 
 ### Documentation
@@ -60,8 +60,8 @@ View our documentation website at https://docs.remirror.org/
 ### Features
 
 - A11y focused and ARIA compatible.
-- **3** prebuilt editors, [markdown](./@remirror/editor-markdown), [social](./@remirror/editor-social) and
-  [wysiwyg](./@remirror/editor-wysiwyg).
+- **3** prebuilt editors, [markdown](./@remirror/editor-markdown),
+  [social](./@remirror/editor-social) and [wysiwyg](./@remirror/editor-wysiwyg).
 - Extensions available for adding your own flavour to your own custom editor editor.
 - Zero config support **Server Side Rendering (SSR)**.
 
@@ -79,14 +79,15 @@ View our documentation website at https://docs.remirror.org/
 
 ### Testing
 
-From the root of this repository run the following to trigger a full typecheck, linting and jest tests.
+From the root of this repository run the following to trigger a full typecheck, linting and jest
+tests.
 
 ```bash
 yarn checks
 ```
 
-By default these checks are not run automatically. To enable automatic precommit and prepush hooks use the
-following command:
+By default these checks are not run automatically. To enable automatic precommit and prepush hooks
+use the following command:
 
 ```bash
 yarn start:checks
@@ -111,8 +112,8 @@ yarn stop:checks
 
 ### Contributing
 
-Please read [contributing.md](docs/contributing.md) for details on our code of conduct, and the process for
-submitting pull requests.
+Please read [contributing.md](docs/contributing.md) for details on our code of conduct, and the
+process for submitting pull requests.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/remirror/remirror)
 
@@ -123,8 +124,8 @@ submitting pull requests.
 This project uses [SemVer](http://semver.org/) for versioning. For the versions available, see the
 [tags on this repository](https://github.com/remirror/remirror/tags).
 
-Currently all versions within the repo are locked and this will continue until `v1.0.0` is. At this point
-versions will be updated independently.
+Currently all versions within the repo are locked and this will continue until `v1.0.0` is. At this
+point versions will be updated independently.
 
 <br />
 

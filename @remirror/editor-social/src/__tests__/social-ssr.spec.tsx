@@ -15,7 +15,12 @@ import { SocialEditor } from '..';
 test('it renders within an ssr environment', () => {
   // global.renderToString = renderToString;
   const reactString = renderToString(
-    <SocialEditor userData={[]} tagData={[]} onMentionChange={noop} initialContent={docNodeBasicJSON} />,
+    <SocialEditor
+      userData={[]}
+      tagData={[]}
+      onMentionChange={noop}
+      initialContent={docNodeBasicJSON}
+    />,
   );
 
   expect(reactString).toInclude('basic');

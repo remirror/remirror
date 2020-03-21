@@ -1,7 +1,14 @@
-import { SerializedStyles, css as serializeStyles } from '@emotion/core';
+import { css as serializeStyles, SerializedStyles } from '@emotion/core';
 import { css } from '@styled-system/css';
 
-import { deepMerge, get, isArray, isFunction, isPlainObject, isString } from '@remirror/core-helpers';
+import {
+  deepMerge,
+  get,
+  isArray,
+  isFunction,
+  isPlainObject,
+  isString,
+} from '@remirror/core-helpers';
 import {
   RemirrorTheme,
   RemirrorThemeContextType,
@@ -77,11 +84,11 @@ const getTheme = (
  * };
  * ```
  */
-export const sx: RemirrorThemeContextType['sx'] = (...styles) => props => {
+export const sx: RemirrorThemeContextType['sx'] = (...styles) => (props) => {
   const theme = getTheme(props);
 
   return serializeStyles(
-    styles.map(style =>
+    styles.map((style) =>
       isArray(style)
         ? sx(...style)(theme)
         : isFunction(style)

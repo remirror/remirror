@@ -1,4 +1,4 @@
-import { ThemeContext, css } from '@emotion/core';
+import { css, ThemeContext } from '@emotion/core';
 import { Context, createContext } from 'react';
 
 import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core-types';
@@ -38,4 +38,6 @@ export const withoutEmotionProps: Pick<RemirrorThemeContextType, 'css' | 'sx'> =
 /**
  * Provides access to the styling methods from within the context tree.
  */
-export const RemirrorThemeContext = createContext<RemirrorThemeContextType>(defaultRemirrorThemeValue);
+export const RemirrorThemeContext = createContext<RemirrorThemeContextType>(
+  defaultRemirrorThemeValue,
+);

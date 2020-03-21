@@ -107,7 +107,8 @@ export const emojiCategories = [
 ] as const;
 
 export const isEmojiName = (name: unknown): name is Names => includes(emojiNames, name);
-export const isEmojiAliasName = (name: unknown): name is AliasNames => includes(keys(aliasObject), name);
+export const isEmojiAliasName = (name: unknown): name is AliasNames =>
+  includes(keys(aliasObject), name);
 export const isValidEmojiName = (name: unknown): name is NamesAndAliases =>
   isEmojiName(name) || isEmojiAliasName(name);
 export const isValidEmojiObject = (value: unknown): value is EmojiObject =>
@@ -115,7 +116,11 @@ export const isValidEmojiObject = (value: unknown): value is EmojiObject =>
 export const aliasToName = (name: AliasNames) => aliasObject[name];
 
 export const getEmojiByName = (name: string | undefined) =>
-  isEmojiName(name) ? emojiObject[name] : isEmojiAliasName(name) ? emojiObject[aliasToName(name)] : undefined;
+  isEmojiName(name)
+    ? emojiObject[name]
+    : isEmojiAliasName(name)
+    ? emojiObject[aliasToName(name)]
+    : undefined;
 
 /**
  * Retrieve the EmojiData from an emoticon.
@@ -123,7 +128,7 @@ export const getEmojiByName = (name: string | undefined) =>
  * @param emoticon e.g. `:-)`
  */
 export const getEmojiFromEmoticon = (emoticon: string) => {
-  const emoticonName = Object.keys(EMOTICONS).find(name => EMOTICONS[name].includes(emoticon));
+  const emoticonName = Object.keys(EMOTICONS).find((name) => EMOTICONS[name].includes(emoticon));
   return getEmojiByName(emoticonName);
 };
 
@@ -132,7 +137,7 @@ export const getEmojiFromEmoticon = (emoticon: string) => {
  */
 export const sortEmojiMatches = (query: string, maxResults = -1) => {
   const results = matchSorter(emojiList, query, {
-    keys: ['name', item => item.description.replace(/[^\w]/g, '')],
+    keys: ['name', (item) => item.description.replace(/[^\w]/g, '')],
     threshold: matchSorter.rankings.CONTAINS,
   });
 
@@ -155,7 +160,7 @@ export const populateFrequentlyUsed = (names: NamesAndAliases[]) => {
  * Return a string array of hexadecimals representing the hex code for an emoji
  */
 export const getHexadecimalsFromEmoji = (emoji: string) => {
-  return range(emoji.length / 2).map(index => {
+  return range(emoji.length / 2).map((index) => {
     const codePoint = emoji.codePointAt(index * 2);
     return codePoint ? codePoint.toString(16) : '';
   });

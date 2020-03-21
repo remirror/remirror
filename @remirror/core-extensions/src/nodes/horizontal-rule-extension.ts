@@ -4,8 +4,8 @@ import {
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
-  ProsemirrorCommandFunction,
   nodeInputRule,
+  ProsemirrorCommandFunction,
 } from '@remirror/core';
 
 export class HorizontalRuleExtension extends NodeExtension {

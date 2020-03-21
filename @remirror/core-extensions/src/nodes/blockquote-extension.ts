@@ -2,13 +2,13 @@ import { wrappingInputRule } from 'prosemirror-inputrules';
 
 import {
   CommandNodeTypeParams,
+  convertCommand,
   EDITOR_CLASS_SELECTOR,
   ExtensionManagerNodeTypeParams,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
-  convertCommand,
   toggleWrap,
 } from '@remirror/core';
 

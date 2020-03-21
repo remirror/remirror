@@ -3,7 +3,12 @@ import { Children, JSXElementConstructor } from 'react';
 
 import { isArray } from '@remirror/core-helpers';
 import { ExtensionManagerParams, PlainObject } from '@remirror/core-types';
-import { cloneElement, getElementProps, isReactDOMElement, isReactFragment } from '@remirror/react-utils';
+import {
+  cloneElement,
+  getElementProps,
+  isReactDOMElement,
+  isReactFragment,
+} from '@remirror/react-utils';
 
 /**
  * A function that transforms the element received during Server Side Rendering
@@ -63,13 +68,13 @@ const elementIsOfType = <
  * Prosemirror automatically injects break tags into empty paragraph tags. This causes the document
  * rendered during SSR to be different than when the page loads.
  */
-export const injectBrIntoEmptyParagraphs: SSRTransformer = element => {
-  return cloneSSRElement(element, children => {
+export const injectBrIntoEmptyParagraphs: SSRTransformer = (element) => {
+  return cloneSSRElement(element, (children) => {
     if (!isArray(children)) {
       return children;
     }
 
-    return Children.map(children, child => {
+    return Children.map(children, (child) => {
       if (!(isReactDOMElement(child) && elementIsEmpty(child) && elementIsOfType(child, 'p'))) {
         return child;
       }

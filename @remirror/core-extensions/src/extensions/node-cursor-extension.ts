@@ -7,8 +7,8 @@ import {
   ExtensionManagerParams,
   NodeMatch,
   ResolvedPos,
-  ZERO_WIDTH_SPACE_CHAR,
   uniqueArray,
+  ZERO_WIDTH_SPACE_CHAR,
 } from '@remirror/core';
 import { getPluginState, nodeNameMatchesList } from '@remirror/core-utils';
 
@@ -30,7 +30,11 @@ export const findSpecialNodeAfter = ($pos: ResolvedPos, tr: Transaction, matcher
   return;
 };
 
-export const findSpecialNodeBefore = ($pos: ResolvedPos, tr: Transaction, matchers: NodeMatch[]) => {
+export const findSpecialNodeBefore = (
+  $pos: ResolvedPos,
+  tr: Transaction,
+  matchers: NodeMatch[],
+) => {
   if (nodeNameMatchesList($pos.nodeBefore, matchers)) {
     return $pos.pos - 1;
   }
@@ -84,7 +88,7 @@ const createNodeCursorExtensionPlugin = (ctx: NodeCursorExtension, nodeNames: st
         const positions = getPluginState<number[]>(ctx.pluginKey, state);
 
         if (positions?.length) {
-          const decorations = positions.map(position => {
+          const decorations = positions.map((position) => {
             const node = document.createElement('span');
             node.appendChild(document.createTextNode(ZERO_WIDTH_SPACE_CHAR));
             return Decoration.widget(position, node, {

@@ -25,14 +25,16 @@ export const isMove = (compare: Partial<CompareMatchParams>): compare is Compare
 /**
  * Are we entering a new suggestion?
  */
-export const isEntry = (compare: Partial<CompareMatchParams>): compare is Pick<CompareMatchParams, 'next'> =>
-  bool(!compare.prev && compare.next);
+export const isEntry = (
+  compare: Partial<CompareMatchParams>,
+): compare is Pick<CompareMatchParams, 'next'> => bool(!compare.prev && compare.next);
 
 /**
  * Are we exiting a suggestion?
  */
-export const isExit = (compare: Partial<CompareMatchParams>): compare is Pick<CompareMatchParams, 'prev'> =>
-  bool(compare.prev && !compare.next);
+export const isExit = (
+  compare: Partial<CompareMatchParams>,
+): compare is Pick<CompareMatchParams, 'prev'> => bool(compare.prev && !compare.next);
 
 /**
  * Is this a jump from one suggestion to another?
@@ -52,7 +54,8 @@ export const isChangeReason = (value: unknown): value is ChangeReason =>
  * Checks that the reason passed is a split reason. This typically means that we
  * should default to a partial update / creation of the mention.
  */
-export const isSplitReason = (value?: unknown): value is ExitReason.Split => value === ExitReason.Split;
+export const isSplitReason = (value?: unknown): value is ExitReason.Split =>
+  value === ExitReason.Split;
 
 /**
  * Checks that the reason was caused by a split at a point where there is no
@@ -64,7 +67,8 @@ export const isInvalidSplitReason = (value?: unknown): value is ExitReason.Inval
 /**
  * Checks that the reason was caused by a deletion.
  */
-export const isRemovedReason = (value?: unknown): value is ExitReason.Removed => value === ExitReason.Removed;
+export const isRemovedReason = (value?: unknown): value is ExitReason.Removed =>
+  value === ExitReason.Removed;
 
 /**
  * Checks to see if this is a jump reason.

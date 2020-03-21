@@ -29,7 +29,10 @@ test('usePositioner', () => {
   expect.assertions(1);
 
   const HookComponent: FC = () => {
-    const injectedProps = usePositioner({ positioner: bubblePositioner, positionerId: 'bubble-menu' });
+    const injectedProps = usePositioner({
+      positioner: bubblePositioner,
+      positionerId: 'bubble-menu',
+    });
 
     expect(injectedProps).toMatchObject(positionerShape);
 

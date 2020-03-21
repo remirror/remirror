@@ -5,19 +5,19 @@ import { ComponentType, Fragment, ReactNode } from 'react';
 
 import {
   AnyExtension,
+  bool,
   DOMOutputSpec,
   ExtensionManager,
-  Mark,
-  MarkExtensionSpec,
-  NodeExtensionSpec,
-  PlainObject,
   Fragment as ProsemirrorFragment,
-  ProsemirrorNode,
-  bool,
   isArray,
   isPlainObject,
   isString,
+  Mark,
+  MarkExtensionSpec,
+  NodeExtensionSpec,
   object,
+  PlainObject,
+  ProsemirrorNode,
 } from '@remirror/core';
 
 import { gatherToDOM, mapProps } from './renderer-utils';
@@ -57,10 +57,10 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
   public serializeFragment(fragment: ProsemirrorFragment): JSX.Element {
     const children: ReactNode[] = [];
 
-    fragment.forEach(node => {
+    fragment.forEach((node) => {
       let child: ReactNode;
       child = this.serializeNode(node);
-      node.marks.reverse().forEach(mark => {
+      node.marks.reverse().forEach((mark) => {
         // TODO test behaviour expectations for `spanning` marks. Currently not HANDLED.
         child = this.serializeMark(mark, node.isInline, child);
       });
@@ -181,7 +181,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
   ) {
     const result = gatherToDOM(manager.nodes);
     if (!result.text) {
-      result.text = node => (node.text ? node.text : '');
+      result.text = (node) => (node.text ? node.text : '');
     }
     return result;
   }

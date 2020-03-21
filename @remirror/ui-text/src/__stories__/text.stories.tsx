@@ -42,8 +42,8 @@ storiesOf('Text', module)
       <Text>
         This is general text.
         <br />
-        At some point documentation needs to be written for this library. How is it that I have the energy to
-        type out this text, but not the energy to finish up the docs?
+        At some point documentation needs to be written for this library. How is it that I have the
+        energy to type out this text, but not the energy to finish up the docs?
       </Text>
       <Label>This is a label.</Label>
       <Caption>This is a caption</Caption>

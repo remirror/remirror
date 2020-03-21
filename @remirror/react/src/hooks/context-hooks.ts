@@ -29,9 +29,9 @@ import { InjectedRemirrorProps, UsePositionerParams } from '../react-types';
  * }
  * ```
  */
-export const useRemirrorContext = <
-  GExtension extends AnyExtension = any
->(): InjectedRemirrorProps<GExtension> => {
+export const useRemirrorContext = <GExtension extends AnyExtension = any>(): InjectedRemirrorProps<
+  GExtension
+> => {
   const params = useContext(RemirrorContext);
 
   if (!params) {
@@ -44,7 +44,9 @@ export const useRemirrorContext = <
 /**
  * A low level context picker to obtain the manager from within a RemirrorManager context
  */
-export const useRemirrorManager = <GExtension extends AnyExtension = any>(): ExtensionManager<GExtension> => {
+export const useRemirrorManager = <GExtension extends AnyExtension = any>(): ExtensionManager<
+  GExtension
+> => {
   const manager = useContext(RemirrorManagerContext);
 
   if (!manager) {

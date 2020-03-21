@@ -5,21 +5,21 @@ import refractor from 'refractor/core';
 import {
   CommandNodeTypeParams,
   ExtensionManagerNodeTypeParams,
-  GetAttrs,
-  KeyBindings,
-  NodeExtension,
-  NodeExtensionSpec,
-  NodeGroup,
-  Plugin,
   findNodeAtSelection,
   findParentNodeOfType,
+  GetAttrs,
   getMatchString,
   isElementDOMNode,
   isNodeActive,
   isTextSelection,
+  KeyBindings,
   mod,
   nodeEqualsType,
+  NodeExtension,
+  NodeExtensionSpec,
+  NodeGroup,
   nodeInputRule,
+  Plugin,
   removeNodeAtPosition,
   toggleBlockItem,
 } from '@remirror/core';
@@ -83,7 +83,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
         {
           tag: 'pre',
           preserveWhitespace: 'full',
-          getAttrs: node => {
+          getAttrs: (node) => {
             if (!isElementDOMNode(node)) {
               return false;
             }
@@ -99,7 +99,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
           },
         },
       ],
-      toDOM: node => {
+      toDOM: (node) => {
         const { language, ...rest } = node.attrs as CodeBlockAttrs;
         const attrs = { ...rest, class: `language-${language}` };
 
@@ -120,7 +120,12 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
   }
 
   public commands({ type, schema }: CommandNodeTypeParams) {
-    const { defaultLanguage, supportedLanguages, formatter, toggleType = 'paragraph' } = this.options;
+    const {
+      defaultLanguage,
+      supportedLanguages,
+      formatter,
+      toggleType = 'paragraph',
+    } = this.options;
     return {
       /**
        * Call this method to toggle the code block.
@@ -146,7 +151,8 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
        * actions.createCodeBlock({ language: 'js' });
        * ```
        */
-      createCodeBlock: (attrs: CodeBlockAttrs) => setBlockType(type, { language: defaultLanguage, ...attrs }),
+      createCodeBlock: (attrs: CodeBlockAttrs) =>
+        setBlockType(type, { language: defaultLanguage, ...attrs }),
 
       /**
        * Update the code block at the current position. Primarily this is used to change the language.
@@ -173,7 +179,12 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
        * }
        * ```
        */
-      formatCodeBlock: formatCodeBlockFactory({ type, formatter, defaultLanguage, supportedLanguages }),
+      formatCodeBlock: formatCodeBlockFactory({
+        type,
+        formatter,
+        defaultLanguage,
+        supportedLanguages,
+      }),
     };
   }
 
@@ -182,7 +193,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
    */
   public inputRules({ type }: ExtensionManagerNodeTypeParams) {
     const regexp = /^```([a-zA-Z]*)? $/;
-    const getAttrs: GetAttrs = match => {
+    const getAttrs: GetAttrs = (match) => {
       const language = getLanguage({
         language: getMatchString(match, 1),
         fallback: this.options.defaultLanguage,

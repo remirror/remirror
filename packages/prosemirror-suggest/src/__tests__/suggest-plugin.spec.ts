@@ -59,7 +59,7 @@ describe('Suggest Handlers', () => {
     createEditor(doc(p('<cursor>')), { plugins: [plugin] })
       .insertText('@')
       .press('Enter')
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualProsemirrorNode(doc(p('@awesome')));
       });
   });

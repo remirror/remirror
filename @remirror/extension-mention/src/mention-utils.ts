@@ -35,7 +35,7 @@ export const isValidMentionAttrs = (attrs?: Attrs): attrs is MentionExtensionAtt
  * @param matchers - the list of matchers to search through
  */
 export const getMatcher = (name: string, matchers: MentionExtensionMatcher[]) => {
-  const matcher = matchers.find(matcher => matcher.name === name);
+  const matcher = matchers.find((matcher) => matcher.name === name);
   return matcher ? { ...DEFAULT_MATCHER, ...matcher } : undefined;
 };
 

@@ -1,11 +1,10 @@
 import fs from 'fs';
-import os from 'os';
-import path from 'path';
-import util from 'util';
-
 import escape from 'jsesc';
+import os from 'os';
 import Bundler, { ParcelOptions } from 'parcel-bundler';
+import path from 'path';
 import rimraf from 'rimraf';
+import util from 'util';
 
 import { bool, uniqueId } from '@remirror/core-helpers';
 
@@ -45,7 +44,7 @@ const createJSFile = createFile();
 export const bundleFile = ({ source }: BundleArgv) => {
   const readFile = util.promisify(fs.readFile);
   const writeFile = util.promisify(fs.writeFile);
-  const clearPath = (glob: string) => new Promise(resolve => rimraf(glob, () => resolve()));
+  const clearPath = (glob: string) => new Promise((resolve) => rimraf(glob, () => resolve()));
   const workingDirectory = process.cwd();
   // Paths
   const entryFile = path.join(workingDirectory, source);

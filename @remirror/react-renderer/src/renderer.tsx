@@ -3,7 +3,7 @@
 import { jsx } from '@emotion/core';
 import { ComponentType, FC, Fragment } from 'react';
 
-import { ObjectMark, ObjectNode, isString, object } from '@remirror/core';
+import { isString, object, ObjectMark, ObjectNode } from '@remirror/core';
 
 /* Inspired by https://github.com/rexxars/react-prosemirror-document */
 
@@ -50,7 +50,7 @@ const TextHandler: FC<TextHandlerProps> = ({ node, ...props }) => {
 const CodeBlock: FC<{
   node: ObjectNode;
   markMap: MarkMap;
-}> = props => {
+}> = (props) => {
   const content = props.node.content;
   if (!content) {
     return null;

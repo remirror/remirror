@@ -143,7 +143,8 @@ type ActionType<GActionCreatorOrMap extends any> = GActionCreatorOrMap extends A
     }[keyof GActionCreatorOrMap]
   : never;
 
-export type AllMultishiftActions<GItem = any> = GlobalMultishiftActions<GItem> & MultishiftActions<GItem>;
+export type AllMultishiftActions<GItem = any> = GlobalMultishiftActions<GItem> &
+  MultishiftActions<GItem>;
 
 export type MultishiftRootActions<GItem = any> = ActionType<AllMultishiftActions<GItem>>;
 
@@ -201,8 +202,8 @@ export interface MultishiftChangeHandlerProps<GItem = any> {
    * or the user clearing the selection. Called with the items that were
    * selected or an empty array when removed
    *
-   * @param selectedItems - The currently selected items if an empty array then the
-   * selection was cleared.
+   * @param selectedItems - The currently selected items if an empty array then
+   * the selection was cleared.
    * @param state - the list of all currently selected items.
    */
   onSelectedItemsChange?(selectedItems: GItem[], state: MultishiftState<GItem>): void;
@@ -463,7 +464,10 @@ export interface MultishiftProps<GItem = any>
     MultishiftInitialValueProps<GItem>,
     MultishiftChangeHandlerProps<GItem> {}
 
-export type ItemsToString<GItem = any> = (items: GItem[], itemToString?: (item: GItem) => string) => string;
+export type ItemsToString<GItem = any> = (
+  items: GItem[],
+  itemToString?: (item: GItem) => string,
+) => string;
 export type GetItemId<GItem = any> = (items: GItem) => any;
 export type ItemToString<GItem = any> = (item: GItem) => string;
 export type GetA11yStatusMessage<GItem = any> = (options: A11yStatusMessageParams<GItem>) => string;
@@ -496,9 +500,11 @@ export interface MultishiftStateChangeset<GItem = any> {
   prevState: MultishiftState<GItem>;
 }
 
-export type CreateMultishiftAction<GType extends string, GPayload = any, GArgs extends any[] = [GPayload]> = (
-  ...args: GArgs
-) => ActionWithPayload<GType, GPayload>;
+export type CreateMultishiftAction<
+  GType extends string,
+  GPayload = any,
+  GArgs extends any[] = [GPayload]
+> = (...args: GArgs) => ActionWithPayload<GType, GPayload>;
 
 export interface GetRemoveButtonOptions<GElement extends HTMLElement = any, GItem = any>
   extends HTMLProps<GElement> {
@@ -523,9 +529,10 @@ export interface GetRemoveButtonReturn<GElement extends HTMLElement = any>
   role: string;
 }
 
-export interface GetComboBoxPropsOptions<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>
-  extends RefParams<GRefKey>,
-    HTMLProps<GElement> {}
+export interface GetComboBoxPropsOptions<
+  GElement extends HTMLElement = any,
+  GRefKey extends string = 'ref'
+> extends RefParams<GRefKey>, HTMLProps<GElement> {}
 
 export type GetComboBoxPropsReturn<
   GElement extends HTMLElement = any,
@@ -542,21 +549,28 @@ export type GetComboBoxPropsReturn<
     'aria-labelledby': string;
   };
 
-export interface GetPropsWithRefOptions<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>
-  extends RefParams<GRefKey>,
-    HTMLProps<GElement> {
+export interface GetPropsWithRefOptions<
+  GElement extends HTMLElement = any,
+  GRefKey extends string = 'ref'
+> extends RefParams<GRefKey>, HTMLProps<GElement> {
   /**
    * Determine whether or not the item can be highlighted and selected.
    */
   disabled?: boolean;
 }
 
-export type GetPropsWithRefReturn<GElement extends HTMLElement = any, GRefKey extends string = 'ref'> = {
+export type GetPropsWithRefReturn<
+  GElement extends HTMLElement = any,
+  GRefKey extends string = 'ref'
+> = {
   [P in Exclude<GRefKey, 'key'>]: Ref<any>;
 } &
   DetailedHTMLProps<HTMLAttributes<GElement>, GElement>;
 
-export type GetLabelPropsWithRefReturn<GElement extends HTMLElement = any, GRefKey extends string = 'ref'> = {
+export type GetLabelPropsWithRefReturn<
+  GElement extends HTMLElement = any,
+  GRefKey extends string = 'ref'
+> = {
   [P in Exclude<GRefKey, 'key'>]: Ref<any>;
 } &
   DetailedHTMLProps<HTMLAttributes<GElement>, GElement> & {
@@ -753,20 +767,23 @@ export interface MultishiftPropGetters<GItem = any> {
   ): GetLabelPropsWithRefReturn<GElement, GRefKey>;
 
   /**
-   * Adds a ref to an element which will prevent blurring from happening when the
-   * element is in focus.
+   * Adds a ref to an element which will prevent blurring from happening when
+   * the element is in focus.
    *
    * @remarks
    *
-   * - Allows for autofocusing the input / toggle button or items when [a specific one] when focused.
+   * - Allows for autofocusing the input / toggle button or items when [a
+   *   specific one] when focused.
    */
   getIgnoredElementProps<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
     options?: IgnoredElementOptions<GElement, GRefKey>,
   ): GetPropsWithRefReturn<GElement, GRefKey>;
 }
 
-export interface IgnoredElementOptions<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>
-  extends GetPropsWithRefOptions<GElement, GRefKey> {}
+export interface IgnoredElementOptions<
+  GElement extends HTMLElement = any,
+  GRefKey extends string = 'ref'
+> extends GetPropsWithRefOptions<GElement, GRefKey> {}
 
 export interface MultishiftHelpers<GItem = any> {
   /**
@@ -804,7 +821,9 @@ export interface MultishiftHelpers<GItem = any> {
 }
 
 export type AllMultishiftDispatchActions<GItem = any> = {
-  [P in keyof AllMultishiftActions<GItem>]: (...args: Parameters<AllMultishiftActions<GItem>[P]>) => void;
+  [P in keyof AllMultishiftActions<GItem>]: (
+    ...args: Parameters<AllMultishiftActions<GItem>[P]>
+  ) => void;
 };
 
 export type MultishiftDispatchActions<GItem = any> = {
@@ -834,8 +853,8 @@ export interface MultishiftFocusHelpers {
 }
 
 /**
- * This provides utility methods which make updating the state for _uncontrolled_
- * components a bit simpler.
+ * This provides utility methods which make updating the state for
+ * _uncontrolled_ components a bit simpler.
  *
  * @typeParam GItem = the underlying item type.
  */

@@ -3,7 +3,7 @@
 import { jsx } from '@emotion/core';
 
 import { AnyExtension, EditorStateParams, ManagerParams, PlainObject } from '@remirror/core';
-import { ReactSerializer, mapProps } from '@remirror/react-renderer';
+import { mapProps, ReactSerializer } from '@remirror/react-renderer';
 
 export interface RemirrorSSRProps<GExtension extends AnyExtension = any>
   extends EditorStateParams,
@@ -28,7 +28,9 @@ export const RemirrorSSR = <GExtension extends AnyExtension = any>({
   editable,
 }: RemirrorSSRProps<GExtension>) => {
   const outerProps = mapProps(attributes);
-  const ssrElement = ReactSerializer.fromExtensionManager(manager).serializeFragment(state.doc.content);
+  const ssrElement = ReactSerializer.fromExtensionManager(manager).serializeFragment(
+    state.doc.content,
+  );
   const transformedElement = manager.ssrTransformer(ssrElement);
   return (
     <div {...outerProps} suppressContentEditableWarning={true} contentEditable={editable}>

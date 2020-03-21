@@ -296,7 +296,10 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
   }
 }
 
-export interface Extension<GOptions extends BaseExtensionOptions = BaseExtensionOptions, GType = never> {
+export interface Extension<
+  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
+  GType = never
+> {
   /**
    * Allows the extension to modify the attributes for the Prosemirror editor
    * dom element.

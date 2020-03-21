@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { FunctionComponent, forwardRef } from 'react';
+import { forwardRef, FunctionComponent } from 'react';
 
-import { Position, RemirrorTheme, object } from '@remirror/core';
+import { object, Position, RemirrorTheme } from '@remirror/core';
 import { useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 
@@ -134,7 +134,7 @@ export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
 
   return (
     <SuggestionsDropdown role='presentation'>
-      {data.map(user => {
+      {data.map((user) => {
         return (
           <ItemWrapper
             active={user.active}
@@ -162,7 +162,7 @@ const HashTagText = forwardRef<HTMLSpanElement, SpanProps>((props, ref) => {
     <span
       {...props}
       ref={ref}
-      css={theme => css`
+      css={(theme) => css`
         font-weight: bold;
         color: #66757f;
 

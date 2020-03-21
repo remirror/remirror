@@ -6,7 +6,7 @@ import React, { FC } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { PlaceholderExtension } from '@remirror/core-extensions';
-import { TestExtension, docNodeBasicJSON } from '@remirror/test-fixtures';
+import { docNodeBasicJSON, TestExtension } from '@remirror/test-fixtures';
 
 import { useRemirrorManager } from '../../hooks/context-hooks';
 import { RemirrorExtension } from '../remirror-extension';

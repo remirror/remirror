@@ -1,4 +1,11 @@
-import { createEditor, doc, horizontalRule, p, strong, schema as testSchema } from 'jest-prosemirror';
+import {
+  createEditor,
+  doc,
+  horizontalRule,
+  p,
+  schema as testSchema,
+  strong,
+} from 'jest-prosemirror';
 
 import { markInputRule, markPasteRule, nodeInputRule, plainInputRule } from '../prosemirror-rules';
 
@@ -7,14 +14,14 @@ describe('markPasteRule', () => {
     const plugin = markPasteRule({ regexp: /(Hello)/, type: testSchema.marks.strong });
     createEditor(doc(p('<cursor>')), { plugins: [plugin] })
       .paste('Hello')
-      .callback(content => expect(content.doc).toEqualProsemirrorNode(doc(p(strong('Hello')))));
+      .callback((content) => expect(content.doc).toEqualProsemirrorNode(doc(p(strong('Hello')))));
   });
 
   it('should transform complex content', () => {
     const plugin = markPasteRule({ regexp: /(@[a-z]+)/, type: testSchema.marks.strong });
     createEditor(doc(p('<cursor>')), { plugins: [plugin] })
       .paste(doc(p('Some @test @content'), p('should @be amazing')))
-      .callback(content => {
+      .callback((content) => {
         expect(content.doc).toEqualProsemirrorNode(
           doc(
             p('Some ', strong('@test'), ' ', strong('@content')),
@@ -29,7 +36,7 @@ describe('markPasteRule', () => {
     const plugin = markPasteRule({ regexp: /(Hello)/, type: testSchema.marks.strong });
     createEditor(doc(p('<cursor>')), { plugins: [plugin] })
       .paste('Not The Word')
-      .callback(content => {
+      .callback((content) => {
         expect(content.doc).toEqualProsemirrorNode(doc(p('Not The Word')));
       });
   });
@@ -46,7 +53,7 @@ describe('markInputRule', () => {
     const { from, to } = selection;
     const params = [view, from, to, '~'];
 
-    view.someProp('handleTextInput', f => {
+    view.someProp('handleTextInput', (f) => {
       f(...params);
     });
 
@@ -62,7 +69,7 @@ describe('markInputRule', () => {
     } = createEditor(doc(p('~Hello<cursor>')), { rules: [rule] });
     const { from, to } = selection;
     const params = [view, from, to, '@'];
-    view.someProp('handleTextInput', f => {
+    view.someProp('handleTextInput', (f) => {
       const value = f(...params);
 
       expect(value).toBe(false);
@@ -77,7 +84,11 @@ describe('markInputRule', () => {
 describe('nodeInputRule', () => {
   it('should wrap matched content with the specified node type', () => {
     const getAttrs = jest.fn(() => ({ 'data-testid': 'awesome' }));
-    const rule = nodeInputRule({ regexp: /~([^~]+)~$/, type: testSchema.nodes.horizontalRule, getAttrs });
+    const rule = nodeInputRule({
+      regexp: /~([^~]+)~$/,
+      type: testSchema.nodes.horizontalRule,
+      getAttrs,
+    });
     const {
       state: { selection },
       view,
@@ -85,7 +96,7 @@ describe('nodeInputRule', () => {
     const { from, to } = selection;
     const params = [view, from, to, '~'];
 
-    view.someProp('handleTextInput', f => {
+    view.someProp('handleTextInput', (f) => {
       f(...params);
     });
 
@@ -101,7 +112,7 @@ describe('nodeInputRule', () => {
     } = createEditor(doc(p('~Hello<cursor>')), { rules: [rule] });
     const { from, to } = selection;
     const params = [view, from, to, '@'];
-    view.someProp('handleTextInput', f => {
+    view.someProp('handleTextInput', (f) => {
       const value = f(...params);
 
       expect(value).toBe(false);
@@ -117,7 +128,7 @@ describe('plainInputRule', () => {
   it('should replace content with the transformation function', () => {
     const rule = plainInputRule({
       regexp: /abc$/,
-      transformMatch: val => val[0].toUpperCase(),
+      transformMatch: (val) => val[0].toUpperCase(),
     });
 
     const {
@@ -127,7 +138,7 @@ describe('plainInputRule', () => {
     const { from, to } = selection;
     const params = [view, from, to, 'c'];
 
-    view.someProp('handleTextInput', f => {
+    view.someProp('handleTextInput', (f) => {
       f(...params);
     });
 
@@ -147,7 +158,7 @@ describe('plainInputRule', () => {
     const { from, to } = selection;
     const params = [view, from, to, 'z'];
 
-    view.someProp('handleTextInput', f => {
+    view.someProp('handleTextInput', (f) => {
       f(...params);
     });
 
@@ -167,7 +178,7 @@ describe('plainInputRule', () => {
     const { from, to } = selection;
     const params = [view, from, to, 'c'];
 
-    view.someProp('handleTextInput', f => {
+    view.someProp('handleTextInput', (f) => {
       f(...params);
     });
 

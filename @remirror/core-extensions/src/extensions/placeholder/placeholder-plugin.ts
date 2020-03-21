@@ -63,7 +63,7 @@ export const createPlaceholderPlugin = (extension: Extension<PlaceholderExtensio
       },
     },
     props: {
-      decorations: state => {
+      decorations: (state) => {
         return createDecorationSet({ state, extension });
       },
     },

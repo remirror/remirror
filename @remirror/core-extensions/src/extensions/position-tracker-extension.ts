@@ -66,7 +66,9 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
           return;
         }
 
-        return tr.setMeta(this.pluginKey, { add: { id, pos: isNumber(pos) ? pos : tr.selection.from } });
+        return tr.setMeta(this.pluginKey, {
+          add: { id, pos: isNumber(pos) ? pos : tr.selection.from },
+        });
       },
 
       /**
@@ -106,7 +108,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
        */
       findPositionTracker: (id: unknown) => {
         const decorations = getPluginState<DecorationSet>(this.pluginKey, getState());
-        const found = decorations.find(undefined, undefined, spec => spec.id === id);
+        const found = decorations.find(undefined, undefined, (spec) => spec.id === id);
 
         return found.length ? found[0].from : undefined;
       },
@@ -119,7 +121,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
       findAllPositionTrackers: (): Record<string, number> => {
         const trackers: Record<string, number> = object();
         const decorations = getPluginState<DecorationSet>(this.pluginKey, getState());
-        const found = decorations.find(undefined, undefined, spec => spec.type === this.name);
+        const found = decorations.find(undefined, undefined, (spec) => spec.type === this.name);
 
         for (const decoration of found) {
           trackers[decoration.spec.id] = decoration.from;
@@ -133,10 +135,9 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
   }
 
   public commands({ getHelpers }: CommandParams) {
-    const commandFactory = <GArg>(helperName: string) => (params: GArg): ProsemirrorCommandFunction => (
-      _,
-      dispatch,
-    ) => {
+    const commandFactory = <GArg>(helperName: string) => (
+      params: GArg,
+    ): ProsemirrorCommandFunction => (_, dispatch) => {
       const helper = getHelpers(helperName);
       const tr = helper(params);
 
@@ -210,7 +211,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
 
           if (tracker.remove) {
             const { remove } = tracker;
-            const found = decorationSet.find(undefined, undefined, spec => spec.id === remove.id);
+            const found = decorationSet.find(undefined, undefined, (spec) => spec.id === remove.id);
 
             return decorationSet.remove(found);
           }
@@ -223,7 +224,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
         },
       },
       props: {
-        decorations: state => {
+        decorations: (state) => {
           return getPluginState(key, state);
         },
       },

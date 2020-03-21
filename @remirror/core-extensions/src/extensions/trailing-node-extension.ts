@@ -19,7 +19,11 @@ interface CreateTrailingNodePluginParams
  * Create the paragraph plugin which can check the end of the document and
  * insert a new node.
  */
-export const createTrailingNodePlugin = ({ extension, tags, schema }: CreateTrailingNodePluginParams) => {
+export const createTrailingNodePlugin = ({
+  extension,
+  tags,
+  schema,
+}: CreateTrailingNodePluginParams) => {
   const { options, pluginKey } = extension;
   const { disableTags, ignoredNodes, nodeName } = options;
 
@@ -35,13 +39,13 @@ export const createTrailingNodePlugin = ({ extension, tags, schema }: CreateTrai
   // them.
   const types = entries(schema.nodes)
     .map(([, entry]) => entry)
-    .filter(entry => !notAfter.includes(entry.name));
+    .filter((entry) => !notAfter.includes(entry.name));
 
   return new Plugin<ShouldInsertNodeAtEnd>({
     key: extension.pluginKey,
     view() {
       return {
-        update: view => {
+        update: (view) => {
           const { state, dispatch } = view;
           const { doc } = state;
           const shouldInsertNodeAtEnd = getPluginState<ShouldInsertNodeAtEnd>(pluginKey, state);

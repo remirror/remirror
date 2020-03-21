@@ -53,9 +53,9 @@ describe('command', () => {
 
     const buildRegularTable = (rows: string[][]) => {
       // Esnure that all rows have same length
-      expect(Array.from(new Set(rows.map(row => row.length)))).toHaveLength(1);
+      expect(Array.from(new Set(rows.map((row) => row.length)))).toHaveLength(1);
 
-      return table(...rows.map(row => tableRow(...row.map(cell => tableCell(cell)))));
+      return table(...rows.map((row) => tableRow(...row.map((cell) => tableCell(cell)))));
     };
 
     return {
@@ -78,7 +78,7 @@ describe('command', () => {
       ['A1', 'B1<cursor>', 'C1'],
       ['A2', 'B2', 'C2'],
     ]);
-    const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddColumnAfter());
+    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableAddColumnAfter());
 
     expect(state.doc).toEqualRemirrorDocument(
       doc(
@@ -95,7 +95,7 @@ describe('command', () => {
       ['A1', 'B1', 'C1'],
       ['A2', 'B2<cursor>', 'C2'],
     ]);
-    const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddColumnBefore());
+    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableAddColumnBefore());
 
     expect(state.doc).toEqualRemirrorDocument(
       doc(
@@ -112,7 +112,7 @@ describe('command', () => {
       ['A1<cursor>', 'B1'],
       ['A2', 'B2'],
     ]);
-    const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddRowAfter());
+    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableAddRowAfter());
 
     expect(state.doc).toEqualRemirrorDocument(
       doc(
@@ -130,7 +130,7 @@ describe('command', () => {
       ['A1', 'B1<cursor>'],
       ['A2', 'B2'],
     ]);
-    const { state } = add(doc(table)).actionsCallback(actions => actions.tableAddRowBefore());
+    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableAddRowBefore());
 
     expect(state.doc).toEqualRemirrorDocument(
       doc(
@@ -148,7 +148,7 @@ describe('command', () => {
       ['A1', 'B1', 'C1'],
       ['A2<cursor>', 'B2', 'C2'],
     ]);
-    const { state } = add(doc(table)).actionsCallback(actions => actions.tableDeleteColumn());
+    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableDeleteColumn());
 
     expect(state.doc).toEqualRemirrorDocument(
       doc(
@@ -166,7 +166,7 @@ describe('command', () => {
       ['A2', 'B2<cursor>', 'C2'],
       ['A3', 'B3', 'C3'],
     ]);
-    const { state } = add(doc(table)).actionsCallback(actions => actions.tableDeleteRow());
+    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableDeleteRow());
 
     expect(state.doc).toEqualRemirrorDocument(
       doc(
@@ -184,7 +184,7 @@ describe('command', () => {
       ['A2', 'B2', 'C2'],
       ['A3', 'B3<cursor>', 'C3'],
     ]);
-    const { state } = add(doc(table)).actionsCallback(actions => actions.tableDeleteTable());
+    const { state } = add(doc(table)).actionsCallback((actions) => actions.tableDeleteTable());
 
     expect(state.doc).toEqualRemirrorDocument(doc(p()));
   });

@@ -13,8 +13,9 @@ const suggestPluginKey = new PluginKey('suggest');
  *
  * @param state - the editor state.
  */
-export const getSuggestPluginState = <GSchema extends EditorSchema = any>(state: EditorState<GSchema>) =>
-  getPluginState<SuggestState>(suggestPluginKey, state);
+export const getSuggestPluginState = <GSchema extends EditorSchema = any>(
+  state: EditorState<GSchema>,
+) => getPluginState<SuggestState>(suggestPluginKey, state);
 
 /**
  * This creates a suggestion plugin with all the suggestions provided.
@@ -118,7 +119,7 @@ export const suggest = <GSchema extends EditorSchema = any>(...suggesters: Sugge
     key: suggestPluginKey,
 
     // Handle the plugin view
-    view: view => {
+    view: (view) => {
       return pluginState.init(view).viewHandler();
     },
 
@@ -147,7 +148,7 @@ export const suggest = <GSchema extends EditorSchema = any>(...suggesters: Sugge
 
       // Sets up a decoration (styling options) on the currently active
       // decoration
-      decorations: state => {
+      decorations: (state) => {
         return pluginState.decorations(state);
       },
     },

@@ -17,7 +17,7 @@ export const renderSSREditor = <GExtension extends AnyExtension = any>(
 
   return renderToString(
     <Remirror {...props} manager={manager as any}>
-      {params => {
+      {(params) => {
         if (props.children) {
           return props.children(params);
         }

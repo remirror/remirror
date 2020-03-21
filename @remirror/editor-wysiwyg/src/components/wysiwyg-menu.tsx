@@ -14,7 +14,7 @@ import {
 } from 'react';
 import keyNames from 'w3c-keyname';
 
-import { ActionNames, AnyFunction, Attrs, KeyOfThemeVariant, getMarkAttrs } from '@remirror/core';
+import { ActionNames, AnyFunction, Attrs, getMarkAttrs, KeyOfThemeVariant } from '@remirror/core';
 import { bubblePositioner, useRemirrorContext } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import {
@@ -46,7 +46,11 @@ import {
   WithPaddingProps,
 } from './wysiwyg-components';
 
-const menuItems: Array<[ActionNames<WysiwygExtensions>, [ComponentType<IconProps>, string?], Attrs?]> = [
+const menuItems: Array<[
+  ActionNames<WysiwygExtensions>,
+  [ComponentType<IconProps>, string?],
+  Attrs?,
+]> = [
   ['bold', [BoldIcon]],
   ['italic', [ItalicIcon]],
   ['underline', [UnderlineIcon]],
@@ -63,7 +67,7 @@ const menuItems: Array<[ActionNames<WysiwygExtensions>, [ComponentType<IconProps
   ['horizontalRule', [RulerHorizontalIcon]],
 ];
 
-const runAction = (method: AnyFunction, attrs?: Attrs): MouseEventHandler<HTMLElement> => e => {
+const runAction = (method: AnyFunction, attrs?: Attrs): MouseEventHandler<HTMLElement> => (e) => {
   e.preventDefault();
   method(attrs);
 };
@@ -124,7 +128,14 @@ interface MenuItemProps extends Partial<WithPaddingProps> {
 /**
  * A single clickable menu item for editing the styling and format of the text.
  */
-const MenuItem: FC<MenuItemProps> = ({ state, onClick, Icon, variant, disabled = false, index }) => {
+const MenuItem: FC<MenuItemProps> = ({
+  state,
+  onClick,
+  Icon,
+  variant,
+  disabled = false,
+  index,
+}) => {
   return (
     <IconButton onClick={onClick} state={state} disabled={disabled} index={index}>
       <Icon variant={variant} styles={{ color: disabled ? 'gray' : undefined }} />
@@ -148,13 +159,19 @@ const bubbleMenuItems: Array<[
   ['underline', [UnderlineIcon]],
 ];
 
-export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
-  const { actions, getPositionerProps, helpers, state, manager } = useRemirrorContext<WysiwygExtensions>();
+export const BubbleMenu: FC<BubbleMenuProps> = ({
+  linkActivated = false,
+  deactivateLink,
+  activateLink,
+}) => {
+  const { actions, getPositionerProps, helpers, state, manager } = useRemirrorContext<
+    WysiwygExtensions
+  >();
 
   const positionerProps = getPositionerProps({
     ...bubblePositioner,
     hasChanged: () => true,
-    isActive: params => {
+    isActive: (params) => {
       const answer =
         (bubblePositioner.isActive(params) || linkActivated) &&
         !actions.toggleCodeBlock.isActive() &&
@@ -229,7 +246,7 @@ const LinkInput: FC<LinkInputProps> = ({
   const { css } = useRemirrorTheme();
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = event => {
+  const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setHref(event.target.value);
   };
 
@@ -238,7 +255,7 @@ const LinkInput: FC<LinkInputProps> = ({
     deactivateLink();
   };
 
-  const onKeyPress: KeyboardEventHandler<HTMLInputElement> = event => {
+  const onKeyPress: KeyboardEventHandler<HTMLInputElement> = (event) => {
     const key = keyNames.keyName(event.nativeEvent);
     if (key === 'Escape') {
       event.preventDefault();
@@ -251,7 +268,7 @@ const LinkInput: FC<LinkInputProps> = ({
     }
   };
 
-  const onClickRemoveLink: DOMAttributes<HTMLButtonElement>['onClick'] = event => {
+  const onClickRemoveLink: DOMAttributes<HTMLButtonElement>['onClick'] = (event) => {
     event.preventDefault();
     removeLink();
     deactivateLink();
@@ -290,7 +307,12 @@ const LinkInput: FC<LinkInputProps> = ({
         `}
       />
       {canRemove() && (
-        <MenuItem Icon={TimesIcon} state='active-inverse' onClick={onClickRemoveLink} variant='inverse' />
+        <MenuItem
+          Icon={TimesIcon}
+          state='active-inverse'
+          onClick={onClickRemoveLink}
+          variant='inverse'
+        />
       )}
     </BubbleContent>
   );

@@ -2,13 +2,13 @@ import { ResolvedPos } from 'prosemirror-model';
 
 import {
   Attrs,
+  bool,
   Cast,
   CommandNodeTypeParams,
+  isElementDOMNode,
   NodeExtension,
   NodeExtensionSpec,
   ProsemirrorCommandFunction,
-  bool,
-  isElementDOMNode,
 } from '@remirror/core';
 
 import { createImageExtensionPlugin } from './image-plugin';
@@ -42,7 +42,8 @@ export class ImageExtension extends NodeExtension {
       parseDOM: [
         {
           tag: 'img[src]',
-          getAttrs: domNode => (isElementDOMNode(domNode) ? getAttrs(this.getExtraAttrs(domNode)) : {}),
+          getAttrs: (domNode) =>
+            isElementDOMNode(domNode) ? getAttrs(this.getExtraAttrs(domNode)) : {},
         },
       ],
       toDOM(node) {

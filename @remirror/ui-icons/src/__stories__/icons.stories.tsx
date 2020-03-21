@@ -18,9 +18,7 @@ const NameWrapper = ({ name }: { name: string }) => {
         textAlign: 'center',
       })}
     >
-      {kebabCase(name)
-        .split('-')
-        .join(' ')}
+      {kebabCase(name).split('-').join(' ')}
     </p>
   );
 };

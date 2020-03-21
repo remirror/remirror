@@ -1,7 +1,7 @@
-import { Extension, ExtensionManagerParams, Plugin, getPluginState } from '@remirror/core';
+import { Extension, ExtensionManagerParams, getPluginState, Plugin } from '@remirror/core';
 
 import { defaultDropCursorExtensionOptions } from './drop-cursor-constants';
-import { DropCursorState, dropCursorPlugin } from './drop-cursor-plugin';
+import { dropCursorPlugin, DropCursorState } from './drop-cursor-plugin';
 import { DropCursorExtensionOptions } from './drop-cursor-types';
 
 /**

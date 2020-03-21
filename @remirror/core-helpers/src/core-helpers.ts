@@ -100,8 +100,10 @@ const isObjectOfType = <GType>(type: TypeName) => (value: unknown): value is GTy
 /**
  * Check if an instance is the direct instance of the provided class.
  */
-export const isDirectInstanceOf = <T>(instance: unknown, Constructor: AnyConstructor<T>): instance is T =>
-  Object.getPrototypeOf(instance) === Constructor.prototype;
+export const isDirectInstanceOf = <T>(
+  instance: unknown,
+  Constructor: AnyConstructor<T>,
+): instance is T => Object.getPrototypeOf(instance) === Constructor.prototype;
 
 /**
  * Predicate check that value is undefined
@@ -130,7 +132,7 @@ export const isString = isOfType<string>('string');
  *
  * @public
  */
-export const isNumber = isOfType<number>('number', val => !Number.isNaN(val));
+export const isNumber = isOfType<number>('number', (val) => !Number.isNaN(val));
 
 /**
  * Predicate check that value is a function
@@ -197,7 +199,8 @@ export const isInteger = (value: unknown): value is number => Number.isInteger(v
  *
  * @public
  */
-export const isSafeInteger = (value: unknown): value is number => Number.isSafeInteger(value as number);
+export const isSafeInteger = (value: unknown): value is number =>
+  Number.isSafeInteger(value as number);
 
 /**
  * Predicate check for whether passed in value is a plain object
@@ -343,7 +346,8 @@ export const isArray = Array.isArray;
  *
  * @public
  */
-export const isEmptyArray = (value: unknown): value is never[] => isArray(value) && value.length === 0;
+export const isEmptyArray = (value: unknown): value is never[] =>
+  isArray(value) && value.length === 0;
 
 /**
  * Capitalizes a string value.
@@ -385,7 +389,10 @@ export const format = (str: string) => {
  * @param fn - the function to call if it exists
  * @param args - the rest of the parameters with types
  */
-export const callIfDefined = <GFunc extends AnyFunction>(fn: GFunc | unknown, ...args: Parameters<GFunc>) => {
+export const callIfDefined = <GFunc extends AnyFunction>(
+  fn: GFunc | unknown,
+  ...args: Parameters<GFunc>
+) => {
   if (isFunction(fn)) {
     fn(...args);
   }
@@ -534,7 +541,7 @@ const capitals = /[A-Z\u00C0-\u00D6\u00D9-\u00DD]/g;
 export const kebabCase = (str: string) => {
   // replace capitals with space + lower case equivalent for later parsing
   return str
-    .replace(capitals, match => {
+    .replace(capitals, (match) => {
       return ` ${match.toLowerCase() || match}`;
     })
     .trim()
@@ -612,7 +619,7 @@ export const pick = objectPick;
  */
 export const omit = objectOmit;
 
-export const omitUndefined = (object: PlainObject) => omit(object, value => !isUndefined(value));
+export const omitUndefined = (object: PlainObject) => omit(object, (value) => !isUndefined(value));
 
 /**
  * Clones a plain object using object spread notation
@@ -701,7 +708,7 @@ export class Merge {
   [key: string]: any;
 
   private constructor(obj: PlainObject = object()) {
-    Object.keys(obj).forEach(key => {
+    Object.keys(obj).forEach((key) => {
       this[key] = obj[key];
     });
   }
@@ -847,8 +854,9 @@ export const entries = <
 /**
  * A typesafe implementation of `Object.keys`
  */
-export const keys = <GObj extends object, GKey extends Extract<keyof GObj, string>>(obj: GObj): GKey[] =>
-  Object.keys(obj) as GKey[];
+export const keys = <GObj extends object, GKey extends Extract<keyof GObj, string>>(
+  obj: GObj,
+): GKey[] => Object.keys(obj) as GKey[];
 
 /**
  * A more lenient typed version of `Array.prototype.includes` which allow less

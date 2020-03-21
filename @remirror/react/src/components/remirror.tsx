@@ -6,33 +6,32 @@ import { Fragment, PureComponent, ReactNode, Ref } from 'react';
 
 import {
   AnyExtension,
+  bool,
+  clamp,
   EDITOR_CLASS_NAME,
   EditorView as EditorViewType,
   ExtensionManager,
-  FromToParams,
-  ObjectNode,
-  RemirrorContentType,
-  RemirrorInterpolation,
-  RemirrorThemeContextType,
-  SchemaFromExtensions,
-  Transaction,
-  bool,
-  clamp,
   fromHTML,
+  FromToParams,
   getDocument,
   isArray,
   isFunction,
   isNumber,
   isPlainObject,
   object,
+  ObjectNode,
+  RemirrorContentType,
+  RemirrorInterpolation,
+  RemirrorThemeContextType,
+  SchemaFromExtensions,
   shouldUseDOMEnvironment,
   toHTML,
+  Transaction,
   uniqueId,
 } from '@remirror/core';
 import { PortalContainer, RemirrorPortals } from '@remirror/react-portals';
-import { RemirrorSSR, createEditorView } from '@remirror/react-ssr';
+import { createEditorView, RemirrorSSR } from '@remirror/react-ssr';
 import {
-  RemirrorType,
   addKeyToElement,
   cloneElement,
   getElementProps,
@@ -41,6 +40,7 @@ import {
   isRemirrorContextProvider,
   isRemirrorProvider,
   propIsFunction,
+  RemirrorType,
 } from '@remirror/react-utils';
 import { RemirrorThemeContext } from '@remirror/ui';
 
@@ -87,7 +87,10 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * This is needed to manage the controlled component `value` prop and copy it
    * to the components state for internal usage.
    */
-  public static getDerivedStateFromProps(props: RemirrorProps, state: RemirrorState): RemirrorState | null {
+  public static getDerivedStateFromProps(
+    props: RemirrorProps,
+    state: RemirrorState,
+  ): RemirrorState | null {
     const { onStateChange, value } = props;
     const {
       editor: { newState },
@@ -177,7 +180,11 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    */
   public updateExtensionManager() {
     this.manager
-      .init({ getState: this.getState, getTheme: this.getTheme, portalContainer: this.portalContainer })
+      .init({
+        getState: this.getState,
+        getTheme: this.getTheme,
+        portalContainer: this.portalContainer,
+      })
       .initView(this.view);
   }
 
@@ -241,7 +248,11 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * Provides access to the dynamically generated `css-in-js` editor styles.
    */
   private get editorStyles(): RemirrorInterpolation[] {
-    const styles = [this.props.editorStyles, this.props.css as RemirrorInterpolation, this.props.styles];
+    const styles = [
+      this.props.editorStyles,
+      this.props.css as RemirrorInterpolation,
+      this.props.styles,
+    ];
 
     // Inject the styles from extensions
     styles.unshift(this.manager.data.styles as RemirrorInterpolation);
@@ -257,7 +268,9 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    * The external `getRootProps` that is used to spread props onto a desired
    * holder element for the prosemirror view.
    */
-  private readonly getRootProps = <GRefKey extends string = 'ref'>(options?: GetRootPropsConfig<GRefKey>) => {
+  private readonly getRootProps = <GRefKey extends string = 'ref'>(
+    options?: GetRootPropsConfig<GRefKey>,
+  ) => {
     return this.internalGetRootProps(options, null);
   };
 
@@ -326,7 +339,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * Stores the Prosemirror editor dom instance for this component using `refs`
    */
-  private readonly onRef: Ref<HTMLElement> = ref => {
+  private readonly onRef: Ref<HTMLElement> = (ref) => {
     if (ref) {
       this.editorRef = ref;
       this.onRefLoad();
@@ -345,7 +358,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   private readonly positionerRefFactory = ({
     positionerId,
     position,
-  }: PositionerRefFactoryParams): Ref<HTMLElement> => element => {
+  }: PositionerRefFactoryParams): Ref<HTMLElement> => (element) => {
     if (!element) {
       return;
     }
@@ -405,7 +418,9 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    */
   private readonly getAttributes = (ssr = false) => {
     const { attributes } = this.props;
-    const propAttributes = isFunction(attributes) ? attributes(this.eventListenerParams()) : attributes;
+    const propAttributes = isFunction(attributes)
+      ? attributes(this.eventListenerParams())
+      : attributes;
 
     const managerAttrs = this.manager.attributes;
 
@@ -495,7 +510,11 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     // Check if this is a controlled component.
     if (onStateChange) {
       onStateChange(
-        this.editorStateEventListenerParams({ oldState: this.state.editor.newState, newState: state, tr }),
+        this.editorStateEventListenerParams({
+          oldState: this.state.editor.newState,
+          newState: state,
+          tr,
+        }),
       );
     } else {
       // Update the internal prosemirror state. This happens before we update
@@ -532,7 +551,9 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    */
   private onRefLoad() {
     if (!this.editorRef) {
-      throw Error('Something went wrong when initializing the text editor. Please check your setup.');
+      throw Error(
+        'Something went wrong when initializing the text editor. Please check your setup.',
+      );
     }
     const { autoFocus, onFirstRender, onStateChange } = this.props;
     this.addProsemirrorViewToDom(this.editorRef, this.view.dom);
@@ -585,8 +606,15 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
       // The following converts the current content to HTML and then uses the
       // new manager schema to convert it back into a ProsemirrorNode for
       // compatibility with the new manager.
-      const htmlString = toHTML({ node: this.state.editor.newState.doc, schema: prevManager.schema });
-      const newContent = fromHTML({ schema: this.manager.schema, content: htmlString, doc: this.doc });
+      const htmlString = toHTML({
+        node: this.state.editor.newState.doc,
+        schema: prevManager.schema,
+      });
+      const newContent = fromHTML({
+        schema: this.manager.schema,
+        content: htmlString,
+        doc: this.doc,
+      });
       this.setContent(newContent, true);
     }
 
@@ -612,7 +640,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
     this.view.dom.removeEventListener('blur', this.onBlur);
     this.view.dom.removeEventListener('focus', this.onFocus);
     const editorState = this.state.editor.newState;
-    this.view.state.plugins.forEach(plugin => {
+    this.view.state.plugins.forEach((plugin) => {
       const state = plugin.getState(editorState);
       if (state?.destroy) {
         state.destroy();
@@ -663,7 +691,10 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * The params used in the event listeners and the state listener
    */
-  private baseListenerParams({ state, tr }: ListenerParams<GExtension>): BaseListenerParams<GExtension> {
+  private baseListenerParams({
+    state,
+    tr,
+  }: ListenerParams<GExtension>): BaseListenerParams<GExtension> {
     return {
       tr,
       internalUpdate: !tr,
@@ -797,7 +828,9 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
   /**
    * Retrieve the full state json object
    */
-  private readonly getJSON = (state?: EditorState<SchemaFromExtensions<GExtension>>) => (): ObjectNode => {
+  private readonly getJSON = (
+    state?: EditorState<SchemaFromExtensions<GExtension>>,
+  ) => (): ObjectNode => {
     return (state ?? this.state.editor.newState).toJSON() as ObjectNode;
   };
 
@@ -832,7 +865,10 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
 
     const children = isArray(child) ? child : [child];
 
-    if (shouldUseDOMEnvironment(forceEnvironment) && (!suppressHydrationWarning || shouldRenderClient)) {
+    if (
+      shouldUseDOMEnvironment(forceEnvironment) &&
+      (!suppressHydrationWarning || shouldRenderClient)
+    ) {
       return children;
     }
 
@@ -895,7 +931,10 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
    *
    * This method also supports rendering the children within a domless environment where necessary.
    */
-  private renderClonedElement(element: JSX.Element, rootProps?: GetRootPropsConfig<string> | boolean) {
+  private renderClonedElement(
+    element: JSX.Element,
+    rootProps?: GetRootPropsConfig<string> | boolean,
+  ) {
     const { children, ...rest } = getElementProps(element);
     const props = isPlainObject(rootProps) ? { ...rootProps, ...rest } : rest;
 

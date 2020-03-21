@@ -11,10 +11,10 @@ import {
 } from './test-keyboard-types';
 import { cleanKey, createKeyboardEvent, getModifierInformation } from './test-keyboard-utils';
 import {
-  SupportedCharacters,
   isUSKeyboardCharacter,
   noKeyPress,
   noKeyUp,
+  SupportedCharacters,
   usKeyboardLayout,
 } from './us-keyboard-layout';
 
@@ -36,7 +36,8 @@ export interface BatchedKeyboardAction {
 }
 
 /**
- * The callback function signature for the `eachEvent` which is available when `batch` is true.
+ * The callback function signature for the `eachEvent` which is available when
+ * `batch` is true.
  */
 export type BatchedCallback = (
   action: BatchedKeyboardAction,
@@ -116,7 +117,8 @@ export class Keyboard {
   }
 
   /**
-   * When batched is true the user can run through each event and fire as they please.
+   * When batched is true the user can run through each event and fire as they
+   * please.
    */
   public forEach(fn: BatchedCallback) {
     if (!this.started) {
@@ -137,18 +139,22 @@ export class Keyboard {
    * Runs all the batched events.
    */
   private runBatchedEvents() {
-    this.actions.forEach(action => {
+    this.actions.forEach((action) => {
       action.dispatch();
     });
   }
 
   /**
-   * Like `this.char` but only supports US Keyboard Characters. This is mainly
-   * a utility for TypeScript and autocomplete support when typing characters.
+   * Like `this.char` but only supports US Keyboard Characters. This is mainly a
+   * utility for TypeScript and autocomplete support when typing characters.
    *
    * @param params - see {@link TextInputParams}
    */
-  public usChar({ text, options = object(), typing = false }: TextInputParams<SupportedCharacters>) {
+  public usChar({
+    text,
+    options = object(),
+    typing = false,
+  }: TextInputParams<SupportedCharacters>) {
     if (!isUSKeyboardCharacter(text)) {
       throw new Error(
         'This is not a supported character. For generic characters use the `keyboard.char` method instead',
@@ -201,7 +207,8 @@ export class Keyboard {
   };
 
   /**
-   * Breaks a string into single characters and fires a keyboard into the target node
+   * Breaks a string into single characters and fires a keyboard into the target
+   * node
    *
    * @param params - see {@link TypingInputParams}
    */
@@ -267,7 +274,8 @@ export class Keyboard {
   /**
    * Fires all modifier events
    *
-   * @param info - the modifier information for the keys see {@link ModifierInformation}
+   * @param info - the modifier information for the keys see
+   * {@link ModifierInformation}
    * @param type - the keyboard event type
    *
    */
@@ -301,7 +309,8 @@ export class Keyboard {
    * Dispatches the action or adds it to the queue when batching is enabled.
    *
    * @param type - the keyboard event name
-   * @param options - options passed to the keyboard event. See {@link KeyboardEventInit}
+   * @param options - options passed to the keyboard event. See
+   * {@link KeyboardEventInit}
    */
   private dispatchEvent(type: KeyboardEventName, options: KeyboardEventInit) {
     if (!this.started) {

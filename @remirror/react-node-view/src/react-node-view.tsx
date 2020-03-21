@@ -237,7 +237,7 @@ export class ReactNodeView<
       const attrs = domSpec[1];
 
       if (isPlainObject(attrs)) {
-        keys(attrs).forEach(attr => {
+        keys(attrs).forEach((attr) => {
           element.setAttribute(attr, String(attrs[attr]));
         });
 
@@ -245,7 +245,7 @@ export class ReactNodeView<
       }
     }
 
-    keys(node.attrs).forEach(attr => {
+    keys(node.attrs).forEach((attr) => {
       element.setAttribute(attr, node.attrs[attr]);
     });
   }

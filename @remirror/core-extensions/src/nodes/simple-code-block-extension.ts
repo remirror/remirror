@@ -3,13 +3,13 @@ import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 import {
   CommandNodeTypeParams,
+  convertCommand,
   EDITOR_CLASS_SELECTOR,
   ExtensionManagerNodeTypeParams,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
-  convertCommand,
   toggleBlockItem,
 } from '@remirror/core';
 
@@ -38,7 +38,9 @@ export class CodeBlockExtension extends NodeExtension {
 
   public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
     return {
-      'Shift-Ctrl-\\': convertCommand(toggleBlockItem({ type, toggleType: schema.nodes.paragraph })),
+      'Shift-Ctrl-\\': convertCommand(
+        toggleBlockItem({ type, toggleType: schema.nodes.paragraph }),
+      ),
     };
   }
 

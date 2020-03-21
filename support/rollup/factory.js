@@ -1,8 +1,7 @@
-import { join } from 'path';
-
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import chalk from 'chalk';
+import { join } from 'path';
 import autoExternal from 'rollup-plugin-auto-external';
 import babel from 'rollup-plugin-babel';
 import globals from 'rollup-plugin-node-globals';
@@ -73,8 +72,8 @@ const configure = (packageJson, path) => {
     ].filter(Boolean),
     // We need to explicitly state which modules are external, meaning that
     // they are present at runtime.
-    external: id => {
-      const isExternal = !!deps.find(dep => dep === id || id.startsWith(`${dep}/`));
+    external: (id) => {
+      const isExternal = !!deps.find((dep) => dep === id || id.startsWith(`${dep}/`));
       if (id === '@emotion/core' && !isExternal) {
         throw new Error(
           chalk`{red.bold Invalid configuration for '${packageJson.name}'}: {yellow '@emotion/core' must be declared as a {bold dependency} or {bold peerDependency}.}`,

@@ -35,7 +35,8 @@
 
 ### Patch Changes
 
-- db20a731: Populate the Wysiwyg's `<LinkInput />` component with the current href to resolve the issue #111
+- db20a731: Populate the Wysiwyg's `<LinkInput />` component with the current href to resolve the
+  issue #111
 - Updated dependencies [24f83413]
 - Updated dependencies [24f83413]
 - Updated dependencies [47493cc2]
@@ -54,8 +55,8 @@
 
 ### Minor Changes
 
-- 9e66324a: Make internal `@remirror/editor-wysiwyg` components public. The components exported are unstable
-  and may change at any time.
+- 9e66324a: Make internal `@remirror/editor-wysiwyg` components public. The components exported are
+  unstable and may change at any time.
 
 ### Patch Changes
 

@@ -65,7 +65,7 @@ describe('RemirrorPortals', () => {
     expect(queryByTestId('test')).toBeTruthy();
 
     document.body.removeChild(container);
-    portalContainer.on(portals => {
+    portalContainer.on((portals) => {
       expect(portals.has(container)).toBeFalse();
     });
 

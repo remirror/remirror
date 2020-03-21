@@ -284,7 +284,7 @@ describe('commands', () => {
 
   describe('createCodeBlock ', () => {
     it('creates the codeBlock', () => {
-      const { state } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
+      const { state } = add(doc(p(`<cursor>`))).actionsCallback((actions) => {
         actions.createCodeBlock({ language: 'typescript' });
       });
 
@@ -294,7 +294,7 @@ describe('commands', () => {
     it('creates the default codeBlock when no language is provided', () => {
       const markupBlock = codeBlock({ language: 'markup' });
 
-      const { state } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
+      const { state } = add(doc(p(`<cursor>`))).actionsCallback((actions) => {
         // @ts-ignore
         actions.createCodeBlock();
       });
@@ -305,13 +305,13 @@ describe('commands', () => {
 
   describe('toggleCodeBlock ', () => {
     it('toggles the codeBlock', () => {
-      const { state, actionsCallback } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
+      const { state, actionsCallback } = add(doc(p(`<cursor>`))).actionsCallback((actions) => {
         actions.toggleCodeBlock({ language: 'typescript' });
       });
 
       expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('')));
 
-      const { state: stateTwo } = actionsCallback(actions =>
+      const { state: stateTwo } = actionsCallback((actions) =>
         actions.toggleCodeBlock({ language: 'typescript' }),
       );
 
@@ -320,13 +320,15 @@ describe('commands', () => {
 
     it('toggles the default codeBlock when no language is provided', () => {
       const markupBlock = codeBlock({ language: 'markup' });
-      const { state: stateOne, actionsCallback } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
-        actions.toggleCodeBlock();
-      });
+      const { state: stateOne, actionsCallback } = add(doc(p(`<cursor>`))).actionsCallback(
+        (actions) => {
+          actions.toggleCodeBlock();
+        },
+      );
 
       expect(stateOne.doc).toEqualRemirrorDocument(doc(markupBlock('')));
 
-      const { state: stateTwo } = actionsCallback(actions => actions.toggleCodeBlock());
+      const { state: stateTwo } = actionsCallback((actions) => actions.toggleCodeBlock());
 
       expect(stateTwo.doc).toEqualRemirrorDocument(doc(p('')));
     });
@@ -359,7 +361,7 @@ describe('commands', () => {
     it('can format the codebase', () => {
       const { state } = add(
         doc(tsBlock(`const a: string\n = 'test'  ;\n\n\nlog("welcome friends")<cursor>`)),
-      ).actionsCallback(actions => actions.formatCodeBlock());
+      ).actionsCallback((actions) => actions.formatCodeBlock());
 
       expect(state.doc).toEqualRemirrorDocument(
         doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
@@ -367,8 +369,10 @@ describe('commands', () => {
     });
 
     it('maintains cursor position after formatting', () => {
-      const { state } = add(doc(tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`)))
-        .actionsCallback(actions => actions.formatCodeBlock())
+      const { state } = add(
+        doc(tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`)),
+      )
+        .actionsCallback((actions) => actions.formatCodeBlock())
         .insertText('ing');
 
       expect(state.doc).toEqualRemirrorDocument(
@@ -379,7 +383,7 @@ describe('commands', () => {
     it('formats text selections', () => {
       const { state, start, end } = add(
         doc(tsBlock(`<start>const a: string\n = 'test'  ;<end>\n\n\nlog("welcome friends")`)),
-      ).actionsCallback(actions => actions.formatCodeBlock());
+      ).actionsCallback((actions) => actions.formatCodeBlock());
 
       expect(state.doc).toEqualRemirrorDocument(
         doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
@@ -400,7 +404,7 @@ describe('commands', () => {
           otherCode,
         ),
       )
-        .actionsCallback(actions => actions.formatCodeBlock())
+        .actionsCallback((actions) => actions.formatCodeBlock())
         .insertText('ing');
 
       expect(state.doc).toEqualRemirrorDocument(

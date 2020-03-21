@@ -2,7 +2,7 @@
 
 import { Global } from '@emotion/core';
 import { FC, Fragment, useCallback, useRef, useState } from 'react';
-import { Box, Container, Flex, Styled, jsx } from 'theme-ui';
+import { Box, Container, Flex, jsx, Styled } from 'theme-ui';
 
 import { FrontMatterProps } from '../typings';
 import EditLink from './edit-link';

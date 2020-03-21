@@ -6,8 +6,8 @@ import {
   EditorSchema,
   EditorState,
   RenderEnvironment,
-  Transaction,
   shouldUseDOMEnvironment,
+  Transaction,
 } from '@remirror/core';
 
 type DirectEditorProps = DEP<EditorSchema>;

@@ -21,7 +21,7 @@ class CustomExtension extends NodeExtension {
       parseDOM: [
         {
           tag: 'p',
-          getAttrs: node => this.getExtraAttrs(node as Element),
+          getAttrs: (node) => this.getExtraAttrs(node as Element),
         },
       ],
       toDOM: () => ['p', 0],
@@ -41,7 +41,7 @@ describe('extraAttrs', () => {
           ['run', 'failure', 'data-run'],
           {
             default: 'yo',
-            getAttrs: domNode => (domNode as Element).getAttribute('simple'),
+            getAttrs: (domNode) => (domNode as Element).getAttribute('simple'),
             name: 'crazy',
           },
           {

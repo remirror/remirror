@@ -1,8 +1,24 @@
 import composeRefs from '@seznam/compose-react-refs';
-import { ChangeEvent, HTMLProps, Ref, SyntheticEvent, useCallback, useEffect, useMemo, useRef } from 'react';
+import {
+  ChangeEvent,
+  HTMLProps,
+  Ref,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 
-import { bool, debounce, includes, isNullOrUndefined, isUndefined, object } from '@remirror/core-helpers';
-import { useEffectOnUpdate, useEffectOnce, useTimeouts } from '@remirror/react-hooks';
+import {
+  bool,
+  debounce,
+  includes,
+  isNullOrUndefined,
+  isUndefined,
+  object,
+} from '@remirror/core-helpers';
+import { useEffectOnce, useEffectOnUpdate, useTimeouts } from '@remirror/react-hooks';
 
 import * as MultishiftActions from './multishift-action-creators';
 import {
@@ -72,8 +88,16 @@ import {
  * Eventually some of the code will be contributed back to the downshift
  * library.
  */
-export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): MultishiftReturn<GItem> => {
-  const { type, customA11yStatusMessage, getA11yStatusMessage, items, getItemId = defaultGetItemId } = props;
+export const useMultishift = <GItem = any>(
+  props: MultishiftProps<GItem>,
+): MultishiftReturn<GItem> => {
+  const {
+    type,
+    customA11yStatusMessage,
+    getA11yStatusMessage,
+    items,
+    getItemId = defaultGetItemId,
+  } = props;
   const [state, dispatch] = useMultishiftReducer<GItem>(props);
   const actions = useMemo(
     () => bindActionCreators(MultishiftActions, dispatch) as AllMultishiftDispatchActions<GItem>,
@@ -234,10 +258,10 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
       : {};
 
     let eventHandlers: HTMLProps<GElement> = {
-      onChange: callAllEventHandlers(onChange, onInput, event => {
+      onChange: callAllEventHandlers(onChange, onInput, (event) => {
         actions.inputValueChange((event as ChangeEvent<GElement>).target.value);
       }),
-      onKeyDown: callAllEventHandlers(onKeyDown, event => {
+      onKeyDown: callAllEventHandlers(onKeyDown, (event) => {
         const key = getKeyName(event);
         if (includes(SPECIAL_INPUT_KEYS, key)) {
           actions.inputSpecialKeyDown(createKeyDownPayload(event, key, disabled.current));
@@ -269,7 +293,8 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
       'aria-controls': isOpen ? menuId : null,
       'aria-labelledby': labelId,
       // https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
-      // revert back since autocomplete="nope" is ignored on latest Chrome and Opera
+      // revert back since autocomplete="nope" is ignored on latest Chrome and
+      // Opera
       autoComplete: 'off',
       value: inputValue,
       id: inputId,
@@ -295,7 +320,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
       : {};
 
     let eventHandlers: HTMLProps<GElement> = {
-      onKeyDown: callAllEventHandlers(onKeyDown, event => {
+      onKeyDown: callAllEventHandlers(onKeyDown, (event) => {
         const key = getKeyName(event);
 
         if (includes(SPECIAL_MENU_KEYS, key)) {
@@ -308,7 +333,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
           actions.menuCharacterKeyDown(key);
         }
       }),
-      onBlur: callAllEventHandlers(onBlur, event => {
+      onBlur: callAllEventHandlers(onBlur, (event) => {
         const blurTarget = event.target;
         setInternalTimeout(() => {
           if (
@@ -320,7 +345,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
                 refs.toggleButton.current,
                 ...refs.items.current,
                 ...refs.ignored.current,
-              ].some(node => node && isOrContainsNode(node, document.activeElement)) &&
+              ].some((node) => node && isOrContainsNode(node, document.activeElement)) &&
                 document.activeElement !== blurTarget))
           ) {
             actions.menuBlur();
@@ -361,11 +386,11 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     }
     const isInternalEvent = <GEvent extends SyntheticEvent = any>(event: GEvent) =>
       [refs.input.current, refs.menu.current, ...refs.items.current].some(
-        node => node && isOrContainsNode(node, event.target as Node),
+        (node) => node && isOrContainsNode(node, event.target as Node),
       );
     let eventHandlers: HTMLProps<GElement> = {
       onClick: callAllEventHandlers(onClick, () => actions.toggleButtonClick()),
-      onKeyDown: callAllEventHandlers(onKeyDown, event => {
+      onKeyDown: callAllEventHandlers(onKeyDown, (event) => {
         const key = getKeyName(event);
 
         if (isInternalEvent(event)) {
@@ -377,12 +402,13 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
           event.preventDefault();
         }
       }),
-      onBlur: callAllEventHandlers(onBlur, event => {
+      onBlur: callAllEventHandlers(onBlur, (event) => {
         if (isInternalEvent(event)) {
           return;
         }
         const blurTarget = event.target; // Save blur target for comparison with activeElement later
-        // Need setTimeout, so that when the user presses Tab, the activeElement is the next focused element, not body element
+        // Need setTimeout, so that when the user presses Tab, the activeElement
+        // is the next focused element, not body element
         setInternalTimeout(() => {
           if (
             !contextRef.current.isMouseDown &&
@@ -436,7 +462,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
       onMouseMove: callAllEventHandlers(onMouseMove, () => actions.itemMouseMove(itemIndex)),
       onMouseLeave: callAllEventHandlers(onMouseLeave, () => actions.itemMouseLeave(itemIndex)),
 
-      onClick: callAllEventHandlers(onClick, event => {
+      onClick: callAllEventHandlers(onClick, (event) => {
         event.preventDefault();
         actions.itemClick(createItemClickPayload(event, itemIndex));
       }),
@@ -448,12 +474,17 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     }
 
     return {
-      [refKey]: composeRefs(ref as Ref<GElement>, itemNode => {
+      [refKey]: composeRefs(ref as Ref<GElement>, (itemNode) => {
         if (itemNode) {
           refs.items.current.push(itemNode);
         }
       }),
-      role: type === Type.ControlledMenu ? (props.multiple ? 'menuitemcheckbox' : 'menuitemradio') : 'option',
+      role:
+        type === Type.ControlledMenu
+          ? props.multiple
+            ? 'menuitemcheckbox'
+            : 'menuitemradio'
+          : 'option',
       'aria-current': index === hoveredIndex || index === mostRecentHighlightedIndex,
       'aria-selected': itemHighlightedAtIndex(index) && !rest.disabled,
       id: getItemA11yId(itemIndex),
@@ -462,7 +493,10 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     } as GetPropsWithRefReturn<GElement, GRefKey>;
   };
 
-  const getIgnoredElementProps = <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
+  const getIgnoredElementProps = <
+    GElement extends HTMLElement = any,
+    GRefKey extends string = 'ref'
+  >(
     {
       refKey = 'ref' as GRefKey,
       ref,
@@ -478,7 +512,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     }
 
     return {
-      [refKey]: composeRefs(ref as Ref<GElement>, node => {
+      [refKey]: composeRefs(ref as Ref<GElement>, (node) => {
         if (node && !rest.disabled) {
           refs.ignored.current.push(node);
         }
@@ -494,7 +528,7 @@ export const useMultishift = <GItem = any>(props: MultishiftProps<GItem>): Multi
     },
   ): GetLabelPropsWithRefReturn<GElement, GRefKey> =>
     ({
-      [refKey]: composeRefs(ref as Ref<GElement>, node => {
+      [refKey]: composeRefs(ref as Ref<GElement>, (node) => {
         if (node) {
           refs.ignored.current.push(node);
         }

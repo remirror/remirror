@@ -10,11 +10,11 @@ import {
   EditorView,
   Extension,
   ExtensionManagerParams,
-  ResolvedPos,
   findPositionOfNodeAfter,
   findPositionOfNodeBefore,
   isUndefined,
   pick,
+  ResolvedPos,
   throttle,
 } from '@remirror/core';
 import { PortalContainer } from '@remirror/react-portals';
@@ -22,7 +22,11 @@ import { PortalContainer } from '@remirror/react-portals';
 import { DropCursorComponent } from './drop-cursor-component';
 import { DropCursorExtensionOptions } from './drop-cursor-types';
 
-const createDropPlaceholder = ({ portalContainer, Component, container }: CreateDropPlaceholderParams) => {
+const createDropPlaceholder = ({
+  portalContainer,
+  Component,
+  container,
+}: CreateDropPlaceholderParams) => {
   const PortalContainerComponent = () => <Component />;
   portalContainer.render({ render: PortalContainerComponent, container });
 };
@@ -61,7 +65,10 @@ export class DropCursorState {
    */
   public decorationSet = DecorationSet.empty;
 
-  constructor({ portalContainer }: ExtensionManagerParams, extension: Extension<DropCursorExtensionOptions>) {
+  constructor(
+    { portalContainer }: ExtensionManagerParams,
+    extension: Extension<DropCursorExtensionOptions>,
+  ) {
     this.portalContainer = portalContainer;
     this.extension = extension;
   }
@@ -95,7 +102,11 @@ export class DropCursorState {
    */
   private attachComponentsToElements() {
     const BlockDropCursorComponent = () => (
-      <DropCursorComponent options={this.extension.options} type='block' container={this.blockElement} />
+      <DropCursorComponent
+        options={this.extension.options}
+        type='block'
+        container={this.blockElement}
+      />
     );
 
     createDropPlaceholder({
@@ -105,7 +116,11 @@ export class DropCursorState {
     });
 
     const InlineDropCursorComponent = () => (
-      <DropCursorComponent options={this.extension.options} type='inline' container={this.inlineElement} />
+      <DropCursorComponent
+        options={this.extension.options}
+        type='inline'
+        container={this.inlineElement}
+      />
     );
 
     createDropPlaceholder({
@@ -175,7 +190,9 @@ export class DropCursorState {
   private createInlineDecoration($pos: ResolvedPos): Decoration[] {
     const decorations: Decoration[] = [];
 
-    const dropCursor = Decoration.widget($pos.pos, this.inlineElement, { key: 'drop-cursor-inline' });
+    const dropCursor = Decoration.widget($pos.pos, this.inlineElement, {
+      key: 'drop-cursor-inline',
+    });
     decorations.push(dropCursor);
 
     return decorations;

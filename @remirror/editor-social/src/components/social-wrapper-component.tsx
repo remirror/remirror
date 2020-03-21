@@ -83,7 +83,11 @@ export const SocialEditorComponent: FC<SocialEditorComponentProps> = ({
           </CharacterCountWrapper>
         ) : null}
         {hideEmojiSuggestions || !emojiCommand ? null : (
-          <EmojiSuggestions highlightedIndex={activeEmojiIndex} data={emojiList} command={emojiCommand} />
+          <EmojiSuggestions
+            highlightedIndex={activeEmojiIndex}
+            data={emojiList}
+            command={emojiCommand}
+          />
         )}
       </EditorWrapper>
       <div>

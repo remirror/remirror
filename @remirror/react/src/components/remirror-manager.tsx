@@ -5,10 +5,10 @@ import { Children, Component, ReactNode } from 'react';
 
 import {
   AnyExtension,
+  convertToPrioritizedExtension,
   ExtensionManager,
   FlexibleExtension,
   PrioritizedExtension,
-  convertToPrioritizedExtension,
 } from '@remirror/core';
 import { baseExtensions } from '@remirror/core-extensions';
 import { asDefaultProps, isReactFragment, isRemirrorExtension } from '@remirror/react-utils';
@@ -91,15 +91,18 @@ export class RemirrorManager extends Component<RemirrorManagerProps> {
 
     const { children } = this.props;
 
-    const resolvedChildren = Children.toArray(children).reduce((acc: ReactNode[], child: ReactNode) => {
-      if (isReactFragment(child)) {
-        return [...acc, ...Children.toArray(child.props.children)];
-      } else {
-        return [...acc, child];
-      }
-    }, []);
+    const resolvedChildren = Children.toArray(children).reduce(
+      (acc: ReactNode[], child: ReactNode) => {
+        if (isReactFragment(child)) {
+          return [...acc, ...Children.toArray(child.props.children)];
+        } else {
+          return [...acc, child];
+        }
+      },
+      [],
+    );
 
-    resolvedChildren.forEach(child => {
+    resolvedChildren.forEach((child) => {
       if (!isRemirrorExtension(child)) {
         return;
       }

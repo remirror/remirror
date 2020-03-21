@@ -15,7 +15,7 @@ if (__E2E__) {
 }
 
 /* Make unhandledRejection errors easier to debug */
-process.on('unhandledRejection', reason => {
+process.on('unhandledRejection', (reason) => {
   console.error('REJECTION', reason);
 });
 
@@ -23,7 +23,7 @@ process.on('unhandledRejection', reason => {
  * Serializer for HTML content.
  */
 expect.addSnapshotSerializer({
-  test: object => {
+  test: (object) => {
     if (typeof object !== 'string') {
       return false;
     }
@@ -31,7 +31,7 @@ expect.addSnapshotSerializer({
     const trimmed = object.trim();
     return trimmed.length > 2 && trimmed.startsWith('<') && trimmed.endsWith('>');
   },
-  print: val => {
+  print: (val) => {
     return toDiffableHtml(val).trim();
   },
 });
@@ -44,7 +44,7 @@ interface PuppeteerHtml {
 }
 
 expect.addSnapshotSerializer({
-  test: val => val?._ === 'HTML',
+  test: (val) => val?._ === 'HTML',
   print(val: PuppeteerHtml) {
     return toDiffableHtml(val.html).trim();
   },

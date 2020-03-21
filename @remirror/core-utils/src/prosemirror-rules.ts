@@ -54,7 +54,7 @@ export const markPasteRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) =
   const handler = (fragment: Fragment) => {
     const nodes: ProsemirrorNode[] = [];
 
-    fragment.forEach(child => {
+    fragment.forEach((child) => {
       if (child.isText) {
         const text = child.text ?? '';
         let pos = 0;
@@ -91,7 +91,7 @@ export const markPasteRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) =
 
   return new Plugin({
     props: {
-      transformPasted: slice => new Slice(handler(slice.content), slice.openStart, slice.openEnd),
+      transformPasted: (slice) => new Slice(handler(slice.content), slice.openStart, slice.openEnd),
     },
   });
 };
@@ -99,7 +99,12 @@ export const markPasteRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) =
 /**
  * Creates an node input rule based on the provided regex for the provided node type
  */
-export const nodeInputRule = ({ regexp, type, getAttrs, updateSelection = false }: NodeInputRuleParams) => {
+export const nodeInputRule = ({
+  regexp,
+  type,
+  getAttrs,
+  updateSelection = false,
+}: NodeInputRuleParams) => {
   return new InputRule(regexp, (state, match, start, end) => {
     const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
     const { tr } = state;

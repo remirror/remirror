@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react/pure';
 import {
-  TestEditorView,
   dispatchAllSelection,
   dispatchNodeSelection,
   dispatchTextSelection,
@@ -9,20 +8,21 @@ import {
   pasteContent,
   press,
   shortcut,
+  TestEditorView,
 } from 'jest-prosemirror';
 import React from 'react';
 
 import {
   Attrs,
   Cast,
+  convertToPrioritizedExtension,
   Extension,
   ExtensionManager,
   FlexibleExtension,
-  MarkExtension,
-  NodeExtension,
-  convertToPrioritizedExtension,
   isMarkExtension,
   isNodeExtension,
+  MarkExtension,
+  NodeExtension,
   object,
   pick,
 } from '@remirror/core';
@@ -74,7 +74,8 @@ export const renderEditor = <
   props: Partial<Omit<RemirrorProps<GExtension>, 'manager'>> = object(),
 ): GReturn => {
   const innerNodeExtensions = nodeExtensions.filter(
-    ({ name }) => !plainNodes.some(ext => convertToPrioritizedExtension(ext).extension.name === name),
+    ({ name }) =>
+      !plainNodes.some((ext) => convertToPrioritizedExtension(ext).extension.name === name),
   );
 
   const extensions = [
@@ -90,7 +91,7 @@ export const renderEditor = <
 
   const utils = render(
     <Remirror {...(props as any)} manager={manager as any}>
-      {params => {
+      {(params) => {
         returnedParams = params as any;
 
         if (props.children) {
@@ -104,7 +105,7 @@ export const renderEditor = <
 
   const view = returnedParams.view as TestEditorView;
 
-  const add: AddContent<GExtension> = taggedDoc => {
+  const add: AddContent<GExtension> = (taggedDoc) => {
     // Work around JSDOM/Node not supporting DOM Selection API
     jsdomSelectionPatch(view);
 
@@ -157,40 +158,51 @@ export const renderEditor = <
         replace: (...replacement) => {
           return updateContent(replaceSelection({ view, content: replacement }));
         },
-        insertText: text => {
+        insertText: (text) => {
           const { from } = view.state.selection;
           insertText({ start: from, text, view });
           return updateContent();
         },
-        callback: fn => {
-          fn(pick(returnValue, ['helpers', 'actions', 'end', 'state', 'tags', 'start', 'doc', 'view']));
+        callback: (fn) => {
+          fn(
+            pick(returnValue, [
+              'helpers',
+              'actions',
+              'end',
+              'state',
+              'tags',
+              'start',
+              'doc',
+              'view',
+            ]),
+          );
           return updateContent();
         },
-        actionsCallback: callback => {
+        actionsCallback: (callback) => {
           callback(returnedParams.actions);
           return updateContent();
         },
-        helpersCallback: callback => {
+        helpersCallback: (callback) => {
           callback(returnedParams.helpers);
           return updateContent(); // Helpers don't update the content but this is easier.
         },
-        shortcut: text => {
+        shortcut: (text) => {
           shortcut({ shortcut: text, view });
           return updateContent();
         },
-        paste: content => {
+        paste: (content) => {
           pasteContent({ view, content });
           return updateContent();
         },
-        press: char => {
+        press: (char) => {
           press({ char, view });
           return updateContent();
         },
-        dispatchCommand: command => {
+        dispatchCommand: (command) => {
           command(view.state, view.dispatch, view);
           return updateContent();
         },
-        fire: params => {
+        fire: (params) => {
           fireEventAtPosition({ view, ...params });
           return updateContent();
         },

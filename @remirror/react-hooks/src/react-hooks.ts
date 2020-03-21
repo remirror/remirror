@@ -105,7 +105,7 @@ export const useStateWithCallback: UseStateWithCallback = <GState>(
 
   const setStateWithCallback = useCallback(
     (value: SetStateAction<GState | undefined>, cb?: () => void) => {
-      setState(prevState => [isFunction(value) ? value(prevState[0]) : value, cb]);
+      setState((prevState) => [isFunction(value) ? value(prevState[0]) : value, cb]);
     },
     [setState],
   );
@@ -113,7 +113,9 @@ export const useStateWithCallback: UseStateWithCallback = <GState>(
   return [state, setStateWithCallback] as const;
 };
 
-export type PartialSetStateAction<GState> = Partial<GState> | ((prevState: GState) => Partial<GState>);
+export type PartialSetStateAction<GState> =
+  | Partial<GState>
+  | ((prevState: GState) => Partial<GState>);
 
 /**
  * A replication of the setState from class Components.
@@ -160,7 +162,10 @@ export const useSetState = <GState extends object>(
   const setState = useCallback(
     (patch: PartialSetStateAction<GState>, cb?: () => void) => {
       setStateWithCallback(
-        (prevState: GState) => ({ ...prevState, ...(isFunction(patch) ? patch(prevState) : patch) }),
+        (prevState: GState) => ({
+          ...prevState,
+          ...(isFunction(patch) ? patch(prevState) : patch),
+        }),
         cb,
       );
     },
@@ -206,7 +211,7 @@ export const useSetState = <GState extends object>(
  * };
  * ```
  */
-export const useEffectOnUpdate: typeof useEffect = effect => {
+export const useEffectOnUpdate: typeof useEffect = (effect) => {
   const isInitialMount = useRef(true);
 
   useEffect(() => {
@@ -275,7 +280,7 @@ export const useTimeouts = () => {
 
   const setHookTimeout = (fn: () => void, time = 1) => {
     const id = setTimeout(() => {
-      timeoutIds.current = timeoutIds.current.filter(timeoutId => timeoutId !== id);
+      timeoutIds.current = timeoutIds.current.filter((timeoutId) => timeoutId !== id);
       fn();
     }, time);
 
@@ -283,7 +288,7 @@ export const useTimeouts = () => {
   };
 
   const clearHookTimeouts = () => {
-    timeoutIds.current.forEach(id => {
+    timeoutIds.current.forEach((id) => {
       clearTimeout(id);
     });
 

@@ -6,8 +6,8 @@ import useState from 'react-use/lib/useSetState';
 import { DropdownItem } from '@remirror/ui-dropdown';
 import { ImagesRegularIcon } from '@remirror/ui-icons';
 
-import { MenubarContent } from '../menu-bar';
 import { Menubar } from '..';
+import { MenubarContent } from '../menu-bar';
 
 const MenuComponent = () => {
   const blockTypeItems = [

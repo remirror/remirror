@@ -14,7 +14,14 @@ import {
 const create = (options: EmojiExtensionOptions = object()) =>
   renderEditor({
     plainNodes: [],
-    others: [new EmojiExtension({ onSuggestionChange, onSuggestionExit, suggestionKeyBindings, ...options })],
+    others: [
+      new EmojiExtension({
+        onSuggestionChange,
+        onSuggestionExit,
+        suggestionKeyBindings,
+        ...options,
+      }),
+    ],
   });
 
 let emoji: EmojiObject | undefined;
@@ -45,19 +52,19 @@ describe('inputRules', () => {
 
     add(doc(p('<cursor>')))
       .insertText(':-) ')
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃 ')));
       })
       .insertText('hello :@ ')
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃 hello 😡 ')));
       })
       .insertText(':o')
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃 hello 😡 :o')));
       })
       .insertText(' ')
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃 hello 😡 😮 ')));
       });
   });
@@ -70,11 +77,11 @@ describe('inputRules', () => {
 
     add(doc(p('<cursor>')))
       .insertText(':smiley:')
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃')));
       })
       .insertText(' :frowning:')
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃 😦')));
       });
   });
@@ -93,7 +100,7 @@ describe('suggestions', () => {
         expect(onSuggestionChange).toHaveBeenCalledTimes(1);
       })
       .press('Enter')
-      .callback(content => {
+      .callback((content) => {
         expect(suggestionKeyBindings.Enter).toHaveBeenCalledTimes(1);
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('👍')));
         expect(onSuggestionExit).toHaveBeenCalledTimes(1);
@@ -109,7 +116,7 @@ describe('suggestions', () => {
     add(doc(p('<cursor>')))
       .insertText(':')
       .press('Enter')
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('❤️')));
       });
   });
@@ -127,7 +134,7 @@ describe('suggestions', () => {
         expect(onSuggestionChange).toHaveBeenCalledTimes(1);
       })
       .press('Enter')
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃👍')));
       });
   });
@@ -141,18 +148,18 @@ describe('commands', () => {
     } = create();
 
     add(doc(p('<cursor>')))
-      .actionsCallback(actions => {
+      .actionsCallback((actions) => {
         actions.openEmojiSuggestions();
       })
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p(':')));
         expect(onSuggestionChange).toHaveBeenCalledTimes(1);
       })
       .overwrite(doc(p('abcde')))
-      .actionsCallback(actions => {
+      .actionsCallback((actions) => {
         actions.openEmojiSuggestions({ from: 3, to: 4 });
       })
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('ab:de')));
       });
   });
@@ -164,17 +171,17 @@ describe('commands', () => {
     } = create();
 
     add(doc(p('<cursor>')))
-      .actionsCallback(actions => {
+      .actionsCallback((actions) => {
         actions.insertEmojiByName('heart');
       })
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('❤️')));
       })
       .overwrite(doc(p('abcde')))
-      .actionsCallback(actions => {
+      .actionsCallback((actions) => {
         actions.insertEmojiByName('heart', { from: 3, to: 4 });
       })
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('ab❤️de')));
       });
   });
@@ -188,12 +195,12 @@ describe('helpers', () => {
     } = create();
 
     add(doc(p('<cursor>')))
-      .helpersCallback(helpers => {
+      .helpersCallback((helpers) => {
         helpers.updateFrequentlyUsed(['heart']);
       })
       .insertText(':')
       .press('Enter')
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('❤️')));
       });
   });

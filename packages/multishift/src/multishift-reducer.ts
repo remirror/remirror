@@ -15,9 +15,9 @@ import {
   getChangesFromMenuKeyDown,
   getChangesFromToggleButtonKeyDown,
   getDefaultState,
-  getHighlightReset,
-  getHighlightedIndexOnOpen,
   getHighlightedIndexes,
+  getHighlightedIndexOnOpen,
+  getHighlightReset,
   getItemIndexesByJumpText,
   omitUnchangedState,
   removeItems,
@@ -114,7 +114,7 @@ export const multishiftReducer = <GItem = any>(
           ? {
               selectedItems: addItems(
                 selected,
-                indexes.map(index => items[index]),
+                indexes.map((index) => items[index]),
                 getItemId,
                 multiple,
               ),
@@ -267,7 +267,7 @@ export const multishiftReducer = <GItem = any>(
         indexes: highlightedIndexes,
         items,
       });
-      const highlightedItems = indexes.map(index => items[index]);
+      const highlightedItems = indexes.map((index) => items[index]);
       const extra =
         indexes.length && autoSelectOnBlur
           ? { selectedItems: addItems(selected, highlightedItems, getItemId, multiple) }

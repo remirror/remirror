@@ -1,11 +1,11 @@
 import {
-  Suggester,
   escapeChar,
   getRegexPrefix,
   isInvalidSplitReason,
   isRemovedReason,
   isSplitReason,
   regexToString,
+  Suggester,
 } from 'prosemirror-suggest';
 
 import {
@@ -13,21 +13,21 @@ import {
   CommandMarkTypeParams,
   EditorState,
   ExtensionManagerMarkTypeParams,
-  MarkExtension,
-  MarkExtensionSpec,
-  MarkGroup,
-  MarkType,
-  RangeParams,
-  TransactionTransformer,
   getMarkRange,
   getMatchString,
   isElementDOMNode,
   isMarkActive,
+  MarkExtension,
+  MarkExtensionSpec,
+  MarkGroup,
   markPasteRule,
+  MarkType,
   noop,
   object,
+  RangeParams,
   removeMark,
   replaceText,
+  TransactionTransformer,
 } from '@remirror/core';
 
 import {
@@ -84,7 +84,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       parseDOM: [
         {
           tag: `${this.options.mentionTag}[${dataAttributeId}]`,
-          getAttrs: node => {
+          getAttrs: (node) => {
             if (!isElementDOMNode(node)) {
               return false;
             }
@@ -96,11 +96,11 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
           },
         },
       ],
-      toDOM: node => {
+      toDOM: (node) => {
         const { label: _, id, name, replacementType, range, ...attrs } = node.attrs as Required<
           MentionExtensionAttrs
         >;
-        const matcher = this.options.matchers.find(matcher => matcher.name === name);
+        const matcher = this.options.matchers.find((matcher) => matcher.name === name);
         const mentionClassName = matcher
           ? matcher.mentionClassName ?? DEFAULT_MATCHER.mentionClassName
           : DEFAULT_MATCHER.mentionClassName;
@@ -122,9 +122,11 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
   /**
    * A function for creating the mention for the first time.
    */
-  private readonly createMention = (type: MarkType, getState: () => EditorState, shouldUpdate = false) => (
-    config?: Attrs,
-  ) => {
+  private readonly createMention = (
+    type: MarkType,
+    getState: () => EditorState,
+    shouldUpdate = false,
+  ) => (config?: Attrs) => {
     if (!isValidMentionAttrs(config)) {
       throw new Error('Invalid configuration attributes passed to the MentionExtension command.');
     }
@@ -202,7 +204,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
   }
 
   public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
-    return this.options.matchers.map(matcher => {
+    return this.options.matchers.map((matcher) => {
       const { startOfLine, char, supportedCharacters, name } = {
         ...DEFAULT_MATCHER,
         ...matcher,
@@ -215,7 +217,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       return markPasteRule({
         regexp,
         type,
-        getAttrs: str => ({
+        getAttrs: (str) => ({
           id: getMatchString(str.slice(char.length, str.length)),
           label: getMatchString(str),
           name,
@@ -234,7 +236,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       onCharacterEntry,
       suggestTag,
     } = this.options;
-    return matchers.map<Suggester<MentionExtensionSuggestCommand>>(matcher => {
+    return matchers.map<Suggester<MentionExtensionSuggestCommand>>((matcher) => {
       return {
         ...DEFAULT_MATCHER,
         ...matcher,

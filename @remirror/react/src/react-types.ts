@@ -297,13 +297,19 @@ export interface RefParams<GRefKey = 'ref'> {
 
 export type PositionerProps = IsActiveParams & Position;
 
-export interface GetRootPropsConfig<GRefKey extends string = 'ref'> extends RefParams<GRefKey>, PlainObject {
+export interface GetRootPropsConfig<GRefKey extends string = 'ref'>
+  extends RefParams<GRefKey>,
+    PlainObject {
   editorStyles?: Interpolation;
 }
 
 export type RefKeyRootProps<GRefKey extends string = 'ref'> = {
   [P in Exclude<GRefKey, 'key'>]: Ref<any>;
-} & { css: Interpolation | ((theme: any) => Interpolation); key: string; children: ReactNode } & PlainObject;
+} & {
+  css: Interpolation | ((theme: any) => Interpolation);
+  key: string;
+  children: ReactNode;
+} & PlainObject;
 
 export type GetPositionerReturn<GRefKey extends string = 'ref'> =
   // GRefKey extends 'ref'
@@ -498,7 +504,9 @@ export interface RemirrorStateListenerParams<GExtension extends AnyExtension = a
   /**
    * Manually create a new state object with the desired content.
    */
-  createStateFromContent(content: RemirrorContentType): EditorState<SchemaFromExtensions<GExtension>>;
+  createStateFromContent(
+    content: RemirrorContentType,
+  ): EditorState<SchemaFromExtensions<GExtension>>;
 }
 
 export type RemirrorEventListener<GExtension extends AnyExtension = any> = (
@@ -614,6 +622,7 @@ export interface RemirrorState<GSchema extends EditorSchema = any> {
   shouldRenderClient?: boolean;
 }
 
-export interface ListenerParams<GExtension extends AnyExtension = any, GSchema extends EditorSchema = any>
-  extends Partial<EditorStateParams<GSchema>>,
-    Pick<BaseListenerParams<GExtension>, 'tr'> {}
+export interface ListenerParams<
+  GExtension extends AnyExtension = any,
+  GSchema extends EditorSchema = any
+> extends Partial<EditorStateParams<GSchema>>, Pick<BaseListenerParams<GExtension>, 'tr'> {}

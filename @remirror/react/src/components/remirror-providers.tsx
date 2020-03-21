@@ -4,7 +4,7 @@ import { jsx } from '@emotion/core';
 import { ProviderProps, ReactElement } from 'react';
 
 import { AnyExtension, MakeOptional } from '@remirror/core';
-import { RemirrorType, oneChildOnly } from '@remirror/react-utils';
+import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 
 import { useRemirrorManager } from '../hooks/context-hooks';
 import { defaultProps } from '../react-constants';
@@ -100,7 +100,7 @@ export const RemirrorProvider = <GExtension extends AnyExtension = any>({
 }: RemirrorProviderProps<GExtension>) => {
   return (
     <Remirror {...props}>
-      {value => {
+      {(value) => {
         return (
           <RemirrorContextProvider value={value} childAsRoot={childAsRoot}>
             {oneChildOnly(children)}

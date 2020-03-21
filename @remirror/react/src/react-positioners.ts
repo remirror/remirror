@@ -5,7 +5,11 @@ import { Positioner } from './react-types';
 export const defaultPositioner: Positioner = {
   initialPosition: { top: -99999, left: -99999, right: 99999, bottom: 99999 },
   hasChanged({ oldState, newState }) {
-    return !(bool(oldState) && oldState.doc.eq(newState.doc) && oldState.selection.eq(newState.selection));
+    return !(
+      bool(oldState) &&
+      oldState.doc.eq(newState.doc) &&
+      oldState.selection.eq(newState.selection)
+    );
   },
 
   isActive: ({ newState }) => !selectionEmpty(newState),

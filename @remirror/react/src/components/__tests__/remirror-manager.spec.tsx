@@ -1,9 +1,13 @@
-import { RenderResult, render } from '@testing-library/react';
+import { render, RenderResult } from '@testing-library/react';
 import { EditorView } from 'prosemirror-view';
 import React, { FC } from 'react';
 
 import { ExtensionManager } from '@remirror/core';
-import { ParagraphExtension, PlaceholderExtension, baseExtensions } from '@remirror/core-extensions';
+import {
+  baseExtensions,
+  ParagraphExtension,
+  PlaceholderExtension,
+} from '@remirror/core-extensions';
 import { TestExtension } from '@remirror/test-fixtures';
 
 import { useRemirrorManager } from '../../hooks/context-hooks';
@@ -92,7 +96,10 @@ test('it supports <RemirrorExtension />', () => {
   const Component: FC = () => {
     const manager = useRemirrorManager();
 
-    expect(manager.extensions).toContainValues([expect.any(TestExtension), expect.any(PlaceholderExtension)]);
+    expect(manager.extensions).toContainValues([
+      expect.any(TestExtension),
+      expect.any(PlaceholderExtension),
+    ]);
 
     return null;
   };
@@ -114,7 +121,10 @@ test('it supports injecting additional extensions', () => {
   const Component: FC = () => {
     const manager = useRemirrorManager();
 
-    expect(manager.extensions).toContainValues([expect.any(TestExtension), expect.any(PlaceholderExtension)]);
+    expect(manager.extensions).toContainValues([
+      expect.any(TestExtension),
+      expect.any(PlaceholderExtension),
+    ]);
 
     return null;
   };
@@ -136,7 +146,10 @@ test('it supports <RemirrorExtension /> in child fragments', () => {
   const Component: FC = () => {
     const manager = useRemirrorManager();
 
-    expect(manager.extensions).toContainValues([expect.any(TestExtension), expect.any(PlaceholderExtension)]);
+    expect(manager.extensions).toContainValues([
+      expect.any(TestExtension),
+      expect.any(PlaceholderExtension),
+    ]);
 
     return null;
   };

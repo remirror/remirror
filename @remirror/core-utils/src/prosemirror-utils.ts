@@ -1,7 +1,6 @@
-import { isUndefined } from 'util';
-
 import { MarkSpec, NodeSpec } from 'prosemirror-model';
 import { Selection as PMSelection } from 'prosemirror-state';
+import { isUndefined } from 'util';
 
 import { bool, isNullOrUndefined, keys, object } from '@remirror/core-helpers';
 import {
@@ -28,7 +27,13 @@ import {
   TransactionParams,
 } from '@remirror/core-types';
 
-import { isEditorState, isNodeSelection, isResolvedPos, isSelection, isTextDOMNode } from './dom-utils';
+import {
+  isEditorState,
+  isNodeSelection,
+  isResolvedPos,
+  isSelection,
+  isTextDOMNode,
+} from './dom-utils';
 
 /* "Borrowed" from prosemirror-utils in order to avoid requirement of
 `@prosemirror-tables`*/
@@ -182,7 +187,8 @@ export const findNodeAtSelection = (selection: Selection): FindProsemirrorNodeRe
  *
  * @deprecated use `doc.lastChild` instead
  */
-export const findNodeAtEndOfDoc = (doc: ProsemirrorNode) => findNodeAtPosition(PMSelection.atEnd(doc).$from);
+export const findNodeAtEndOfDoc = (doc: ProsemirrorNode) =>
+  findNodeAtPosition(PMSelection.atEnd(doc).$from);
 
 /**
  * Finds the node at the start of the prosemirror.
@@ -210,7 +216,7 @@ export const findParentNodeOfType = ({
   types,
   selection,
 }: FindParentNodeOfTypeParams): FindProsemirrorNodeResult | undefined => {
-  return findParentNode({ predicate: node => nodeEqualsType({ types, node }), selection });
+  return findParentNode({ predicate: (node) => nodeEqualsType({ types, node }), selection });
 };
 
 /**
@@ -225,7 +231,11 @@ export const findParentNodeOfType = ({
 export const findPositionOfNodeBefore = <GSchema extends EditorSchema = any>(
   value: Selection<GSchema> | ResolvedPos<GSchema> | EditorState<GSchema> | Transaction<GSchema>,
 ): FindProsemirrorNodeResult | undefined => {
-  const $pos = isResolvedPos(value) ? value : isSelection(value) ? value.$from : value.selection.$from;
+  const $pos = isResolvedPos(value)
+    ? value
+    : isSelection(value)
+    ? value.$from
+    : value.selection.$from;
 
   if (isNullOrUndefined($pos)) {
     throw new Error('Invalid value passed in.');
@@ -303,7 +313,9 @@ export const findSelectedNodeOfType = <
 >({
   types,
   selection,
-}: FindSelectedNodeOfTypeParams<GSchema, GSelection>): FindSelectedNodeOfType<GSchema> | undefined => {
+}: FindSelectedNodeOfTypeParams<GSchema, GSelection>):
+  | FindSelectedNodeOfType<GSchema>
+  | undefined => {
   if (isNodeSelection(selection)) {
     const { node, $from } = selection;
     if (nodeEqualsType({ types, node })) {
@@ -356,7 +368,11 @@ interface FindParentNodeParams extends SelectionParams, PredicateParams<Prosemir
 export const findPositionOfNodeAfter = <GSchema extends EditorSchema = any>(
   value: Selection<GSchema> | ResolvedPos<GSchema> | EditorState<GSchema>,
 ): FindProsemirrorNodeResult | undefined => {
-  const $pos = isResolvedPos(value) ? value : isSelection(value) ? value.$from : value.selection.$from;
+  const $pos = isResolvedPos(value)
+    ? value
+    : isSelection(value)
+    ? value.$from
+    : value.selection.$from;
 
   if (isNullOrUndefined($pos)) {
     throw new Error('Invalid value passed in.');
@@ -477,7 +493,10 @@ export const schemaToJSON = <GNodes extends string = string, GMarks extends stri
  * Wraps the default {@link ProsemirrorCommandFunction} and makes it compatible with the default **remirror**
  * {@link CommandFunction} call signature.
  */
-export const convertCommand = <GSchema extends EditorSchema = any, GExtraParams extends object = {}>(
+export const convertCommand = <
+  GSchema extends EditorSchema = any,
+  GExtraParams extends object = {}
+>(
   commandFunction: ProsemirrorCommandFunction<GSchema>,
 ): CommandFunction<GSchema, GExtraParams> => ({ state, dispatch, view }) =>
   commandFunction(state, dispatch, view);
@@ -507,7 +526,7 @@ export const chainCommands = <GSchema extends EditorSchema = any, GExtraParams e
  */
 export const chainKeyBindingCommands = (
   ...commands: KeyBindingCommandFunction[]
-): KeyBindingCommandFunction => params => {
+): KeyBindingCommandFunction => (params) => {
   if (!commands.length) {
     return false;
   }

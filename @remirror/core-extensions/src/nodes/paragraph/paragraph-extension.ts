@@ -5,8 +5,8 @@ import {
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
-  Tags,
   object,
+  Tags,
 } from '@remirror/core';
 
 import { ALIGN_PATTERN, INDENT_ATTRIBUTE, INDENT_LEVELS } from '../node-constants';
@@ -75,13 +75,13 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions>
       parseDOM: [
         {
           tag: 'p',
-          getAttrs: node => ({
+          getAttrs: (node) => ({
             ...this.getExtraAttrs(node as HTMLElement),
             ...getAttrs(this.options, node as HTMLElement),
           }),
         },
       ],
-      toDOM: node => {
+      toDOM: (node) => {
         const { align, indent, lineSpacing, id } = node.attrs as ParagraphExtensionAttrs;
         const attrs: Record<string, string> = object();
         let style = '';

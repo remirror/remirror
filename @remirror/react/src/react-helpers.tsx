@@ -4,7 +4,7 @@ import { jsx } from '@emotion/core';
 import { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { ExtensionManager, PlainObject, object } from '@remirror/core';
+import { ExtensionManager, object, PlainObject } from '@remirror/core';
 
 import { useRemirrorManager } from './hooks/context-hooks';
 
@@ -89,8 +89,9 @@ export const getManagerFromComponentTree = ({
 
     reject(
       new Error(
-        `The manager was not found. Please check that \`${Component.displayName ??
-          Component.name}\` has a prop called \`${prop}\` which is rendered within the \`<RemirrorManager />\` context`,
+        `The manager was not found. Please check that \`${
+          Component.displayName ?? Component.name
+        }\` has a prop called \`${prop}\` which is rendered within the \`<RemirrorManager />\` context`,
       ),
     );
   });

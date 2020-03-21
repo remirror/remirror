@@ -24,7 +24,8 @@ import { InjectedRemirrorProps } from '@remirror/react';
 
 import { BaseExtensionNodeNames, BaseExtensionNodes } from './jest-remirror-schema';
 
-export interface BaseFactoryParams<GSchema extends EditorSchema = EditorSchema> extends Partial<AttrsParams> {
+export interface BaseFactoryParams<GSchema extends EditorSchema = EditorSchema>
+  extends Partial<AttrsParams> {
   /**
    * The name of the node or mark
    */
@@ -92,7 +93,8 @@ export class TagTracker {
 /**
  * A standard ProseMirror Node that also tracks tags.
  */
-export interface TaggedProsemirrorNode<GSchema extends EditorSchema = EditorSchema> extends PMNode<GSchema> {
+export interface TaggedProsemirrorNode<GSchema extends EditorSchema = EditorSchema>
+  extends PMNode<GSchema> {
   tags: Tags;
 }
 
@@ -259,7 +261,9 @@ export type AddContent<GExtension extends AnyExtension> = (
 ) => AddContentReturn<GExtension>;
 
 export type MarkWithAttrs<GNames extends string> = {
-  [P in GNames]: (attrs?: Attrs) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
+  [P in GNames]: (
+    attrs?: Attrs,
+  ) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
 };
 
 export type NodeWithAttrs<GNames extends string> = {

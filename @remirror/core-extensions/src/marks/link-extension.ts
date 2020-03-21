@@ -5,18 +5,18 @@ import {
   Cast,
   CommandMarkTypeParams,
   ExtensionManagerMarkTypeParams,
-  KeyBindings,
-  MarkExtension,
-  MarkExtensionOptions,
-  MarkExtensionSpec,
-  MarkGroup,
-  ProsemirrorCommandFunction,
   getMarkRange,
   getMatchString,
   getSelectedWord,
   isMarkActive,
   isTextSelection,
+  KeyBindings,
+  MarkExtension,
+  MarkExtensionOptions,
+  MarkExtensionSpec,
+  MarkGroup,
   markPasteRule,
+  ProsemirrorCommandFunction,
   removeMark,
   selectionEmpty,
   updateMark,
@@ -55,13 +55,13 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
       parseDOM: [
         {
           tag: 'a[href]',
-          getAttrs: node => ({
+          getAttrs: (node) => ({
             href: Cast<Element>(node).getAttribute('href'),
             ...this.getExtraAttrs(Cast<Element>(node)),
           }),
         },
       ],
-      toDOM: node => [
+      toDOM: (node) => [
         'a',
         {
           ...node.attrs,
@@ -103,7 +103,10 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
       updateLink: (attrs?: Attrs): ProsemirrorCommandFunction => {
         return (state, dispatch, view) => {
           const { selection } = state;
-          if (selectionEmpty(selection) || (!isTextSelection(selection) && !isMarkActive({ state, type }))) {
+          if (
+            selectionEmpty(selection) ||
+            (!isTextSelection(selection) && !isMarkActive({ state, type }))
+          ) {
             return false;
           }
           return updateMark({ type, attrs })(state, dispatch, view);
@@ -128,7 +131,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
       markPasteRule({
         regexp: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
         type,
-        getAttrs: url => ({ href: getMatchString(url) }),
+        getAttrs: (url) => ({ href: getMatchString(url) }),
       }),
     ];
   }

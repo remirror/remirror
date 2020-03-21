@@ -34,7 +34,9 @@ describe('schema', () => {
   describe('extraAttrs', () => {
     const { schema } = createBaseTestManager([
       {
-        extension: new HeadingExtension({ extraAttrs: ['title', ['custom', 'failure', 'data-custom']] }),
+        extension: new HeadingExtension({
+          extraAttrs: ['title', ['custom', 'failure', 'data-custom']],
+        }),
         priority: 1,
       },
     ]);
@@ -106,7 +108,11 @@ describe('plugins', () => {
     const h3 = heading({ level: 3 });
     const text = 'Welcome to the jungle';
 
-    expect(add(doc(p(`<cursor>${text}`))).shortcut('Shift-Ctrl-1').state).toContainRemirrorDocument(h1(text));
-    expect(add(doc(p(`<cursor>${text}`))).shortcut('Shift-Ctrl-3').state).toContainRemirrorDocument(h3(text));
+    expect(add(doc(p(`<cursor>${text}`))).shortcut('Shift-Ctrl-1').state).toContainRemirrorDocument(
+      h1(text),
+    );
+    expect(add(doc(p(`<cursor>${text}`))).shortcut('Shift-Ctrl-3').state).toContainRemirrorDocument(
+      h3(text),
+    );
   });
 });

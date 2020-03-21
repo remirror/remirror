@@ -11,7 +11,7 @@ describe('commands', () => {
     const { p, doc, add } = create();
     add(doc(p('<cursor>')))
       .insertText('Text goes here')
-      .actionsCallback(actions => {
+      .actionsCallback((actions) => {
         expect(actions.undo.isActive()).toBeFalse();
         expect(actions.undo.isEnabled()).toBeTrue();
 
@@ -19,7 +19,7 @@ describe('commands', () => {
 
         expect(actions.undo.isEnabled()).toBeFalse();
       })
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('')));
       });
   });
@@ -28,7 +28,7 @@ describe('commands', () => {
     const { p, doc, add } = create();
     add(doc(p('<cursor>')))
       .insertText('Text goes here')
-      .actionsCallback(actions => {
+      .actionsCallback((actions) => {
         expect(actions.redo.isActive()).toBeFalse();
         expect(actions.redo.isEnabled()).toBeFalse();
 
@@ -40,7 +40,7 @@ describe('commands', () => {
 
         expect(actions.redo.isEnabled()).toBeFalse();
       })
-      .callback(content => {
+      .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('Text goes here')));
       });
   });
@@ -65,10 +65,10 @@ describe('`getState` and `getDispatch`', () => {
   it('overrides for undo', () => {
     add(doc(p('<cursor>')))
       .insertText('Text goes here')
-      .callback(content => {
+      .callback((content) => {
         state = content.state;
       })
-      .actionsCallback(actions => {
+      .actionsCallback((actions) => {
         actions.undo();
 
         expect(mocks.getState).toHaveBeenCalledTimes(1);
@@ -79,10 +79,10 @@ describe('`getState` and `getDispatch`', () => {
   it('overrides for redo', () => {
     add(doc(p('<cursor>')))
       .insertText('Text goes here')
-      .callback(content => {
+      .callback((content) => {
         state = content.state;
       })
-      .actionsCallback(actions => {
+      .actionsCallback((actions) => {
         actions.undo();
         jest.clearAllMocks();
         actions.redo();
@@ -96,7 +96,7 @@ describe('`getState` and `getDispatch`', () => {
     add(doc(p('<cursor>')))
       .insertText('Text goes here')
       .shortcut('Mod-z')
-      .callback(content => {
+      .callback((content) => {
         state = content.state;
       })
       .callback(() => {

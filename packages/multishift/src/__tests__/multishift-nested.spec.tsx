@@ -23,9 +23,9 @@ const Component = ({ multiple }: { multiple: boolean }) => {
   } = useMultishift({
     multiple,
     type: 'select',
-    itemToString: item => item.id,
+    itemToString: (item) => item.id,
     items,
-    getItemId: item => item.id,
+    getItemId: (item) => item.id,
   });
 
   return (
@@ -34,7 +34,7 @@ const Component = ({ multiple }: { multiple: boolean }) => {
         <label {...getLabelProps()}>Label</label>
         {selectedItems.length && (
           <ul>
-            {selectedItems.map(item => {
+            {selectedItems.map((item) => {
               return (
                 <li key={item.id} {...getRemoveButtonProps({ item })} data-testid={item.id}>
                   {item.label}

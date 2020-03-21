@@ -1,6 +1,6 @@
 import { history, redo, redoDepth, undo, undoDepth } from 'prosemirror-history';
 
-import { Extension, KeyBindings, isFunction } from '@remirror/core';
+import { Extension, isFunction, KeyBindings } from '@remirror/core';
 import {
   BaseExtensionOptions,
   DispatchFunction,
@@ -76,7 +76,9 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
    *
    * @param method - the method to wrap
    */
-  private readonly wrapMethod = (method: ProsemirrorCommandFunction): ProsemirrorCommandFunction => {
+  private readonly wrapMethod = (
+    method: ProsemirrorCommandFunction,
+  ): ProsemirrorCommandFunction => {
     return (state, dispatch, view) => {
       const { getState, getDispatch } = this.options;
 
@@ -91,7 +93,9 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
    * Adds the default key mappings for undo and redo.
    */
   public keys(): KeyBindings {
-    const notMacOS = !environment.isMac ? { ['Mod-y']: convertCommand(this.wrapMethod(redo)) } : undefined;
+    const notMacOS = !environment.isMac
+      ? { ['Mod-y']: convertCommand(this.wrapMethod(redo)) }
+      : undefined;
 
     return {
       'Mod-y': () => false,

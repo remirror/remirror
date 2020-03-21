@@ -1,5 +1,5 @@
 import { MarkGroup, NodeGroup, Tags } from '@remirror/core-constants';
-import { Cast, bool, entries, isFunction, isUndefined, object, sort } from '@remirror/core-helpers';
+import { bool, Cast, entries, isFunction, isUndefined, object, sort } from '@remirror/core-helpers';
 import {
   AnyFunction,
   CommandParams,
@@ -12,7 +12,11 @@ import {
   NodeExtensionTags,
 } from '@remirror/core-types';
 
-import { convertToPrioritizedExtension, isMarkExtension, isNodeExtension } from './extension-helpers';
+import {
+  convertToPrioritizedExtension,
+  isMarkExtension,
+  isNodeExtension,
+} from './extension-helpers';
 import {
   AnyExtension,
   ExtensionListParams,
@@ -47,12 +51,17 @@ interface IsNameUniqueParams {
 }
 
 /**
- * Checks whether a given string is unique to the set. Add the name if it
- * doesn't already exist, or throw an error when `shouldThrow` is true.
+ * Checks whether a given string is unique to the set. Add the name if it doesn't already exist, or
+ * throw an error when `shouldThrow` is true.
  *
  * @param params - destructured params
  */
-const isNameUnique = ({ name, set, shouldThrow = false, type = 'extension' }: IsNameUniqueParams) => {
+const isNameUnique = ({
+  name,
+  set,
+  shouldThrow = false,
+  type = 'extension',
+}: IsNameUniqueParams) => {
   if (set.has(name)) {
     const message = `There is a naming conflict for the name: ${name} used in this type: ${type}. Please rename to avoid runtime errors.`;
     if (shouldThrow) {
@@ -107,7 +116,9 @@ const getParamsType = <GKey extends keyof AnyExtension, GParams extends Extensio
  *
  * @param property - the extension property / method name
  */
-export const hasExtensionProperty = <GExt extends object, GKey extends Key<GExt>>(property: GKey) => (
+export const hasExtensionProperty = <GExt extends object, GKey extends Key<GExt>>(
+  property: GKey,
+) => (
   extension: GExt,
 ): extension is GExt extends undefined ? never : GExt & Pick<Required<GExt>, GKey> =>
   bool(extension[property]);
@@ -115,8 +126,8 @@ export const hasExtensionProperty = <GExt extends object, GKey extends Key<GExt>
 /**
  * Generate all the action commands for usage within the UI.
  *
- * Typically actions are used to create interactive menus. For example a menu
- * can use a command to toggle bold formatting or to undo the last action.
+ * Typically actions are used to create interactive menus. For example a menu can use a command to
+ * toggle bold formatting or to undo the last action.
  */
 export const createCommands = ({ extensions, params }: CreateCommandsParams) => {
   const getItemParams = (extension: Required<Pick<AnyExtension, 'commands'>>) =>
@@ -131,12 +142,13 @@ export const createCommands = ({ extensions, params }: CreateCommandsParams) => 
     view.focus();
     return method(...args)(getState(), view.dispatch, view);
   };
-  const items: Record<string, { command: AnyFunction; isEnabled: AnyFunction; name: string }> = Object.create(
-    null,
-  );
+  const items: Record<
+    string,
+    { command: AnyFunction; isEnabled: AnyFunction; name: string }
+  > = Object.create(null);
   const names = new Set<string>();
 
-  extensions.filter(hasExtensionProperty('commands')).forEach(currentExtension => {
+  extensions.filter(hasExtensionProperty('commands')).forEach((currentExtension) => {
     const item = getItemParams(currentExtension);
 
     entries(item).forEach(([name, command]) => {
@@ -164,8 +176,8 @@ interface CreateHelpersParams extends ExtensionListParams {
 /**
  * Generate all the helpers from the extension list.
  *
- * Helpers are functions which enable extensions to provide useful
- * information or transformations to their consumers and other extensions.
+ * Helpers are functions which enable extensions to provide useful information or transformations to
+ * their consumers and other extensions.
  */
 export const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
   const getItemParams = (extension: Required<Pick<AnyExtension, 'helpers'>>) =>
@@ -177,7 +189,7 @@ export const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
   const items: Record<string, AnyFunction> = object();
   const names = new Set<string>();
 
-  extensions.filter(hasExtensionProperty('helpers')).forEach(currentExtension => {
+  extensions.filter(hasExtensionProperty('helpers')).forEach((currentExtension) => {
     const item = getItemParams(currentExtension);
 
     Object.entries(item).forEach(([name, helper]) => {
@@ -205,8 +217,7 @@ type ExtensionMethodProperties =
   | 'isActive';
 
 /**
- * Looks at the passed property and calls the extension with the required
- * parameters.
+ * Looks at the passed property and calls the extension with the required parameters.
  *
  * @param property - the extension method to map
  * @param params - the params the method will be called with
@@ -217,7 +228,9 @@ export const extensionPropertyMapper = <
 >(
   property: GExtMethodProp,
   params: ExtensionManagerParams,
-) => (extension: GExt): GExt[GExtMethodProp] extends AnyFunction ? ReturnType<GExt[GExtMethodProp]> : {} => {
+) => (
+  extension: GExt,
+): GExt[GExtMethodProp] extends AnyFunction ? ReturnType<GExt[GExtMethodProp]> : {} => {
   const extensionMethod = extension[property];
   if (!extensionMethod) {
     throw new Error('Invalid extension passed into the extension manager');
@@ -231,7 +244,10 @@ export const extensionPropertyMapper = <
       });
     }
     if (isMarkExtension(extension)) {
-      return extensionMethod.bind(extension)({ ...params, type: Cast(params.schema.marks[extension.name]) });
+      return extensionMethod.bind(extension)({
+        ...params,
+        type: Cast(params.schema.marks[extension.name]),
+      });
     }
     return extensionMethod.bind(extension)(Cast(params));
   };
@@ -240,8 +256,8 @@ export const extensionPropertyMapper = <
 };
 
 /**
- * Sorts and transforms extension map based on the provided priorities and
- * outputs just the extensions
+ * Sorts and transforms extension map based on the provided priorities and outputs just the
+ * extensions
  *
  * TODO Add a check for requiredExtensions and inject them automatically
  *
@@ -261,8 +277,8 @@ export const transformExtensionMap = <GFlexibleList extends FlexibleExtension[]>
  * @remarks
  * This is useful for deep equality checks when functions need to be ignored.
  *
- * A current limitation is that it only dives one level deep. So objects with
- * nested object methods will retain those methods.
+ * A current limitation is that it only dives one level deep. So objects with nested object methods
+ * will retain those methods.
  *
  * @param obj - an object which might contain methods
  * @returns a new object without any of the functions defined
@@ -285,14 +301,13 @@ export const ignoreFunctions = (obj: Record<string, unknown>) => {
 export const defaultIsActive = () => false;
 
 /**
- * By default isEnabled should return true to let the code know that the
- * commands are available.
+ * By default isEnabled should return true to let the code know that the commands are available.
  */
 export const defaultIsEnabled = () => true;
 
 /**
- * Create the extension tags which are passed into each extensions method to
- * enable dynamically generated rules and commands.
+ * Create the extension tags which are passed into each extensions method to enable dynamically
+ * generated rules and commands.
  */
 export const createExtensionTags = <
   GNodes extends string = string,
@@ -334,7 +349,7 @@ export const createExtensionTags = <
         : [...mark[group], extension.name as GMarks];
     }
 
-    (extension.tags as Tags[]).forEach(tag => {
+    (extension.tags as Tags[]).forEach((tag) => {
       general[tag] = isUndefined(general[tag])
         ? [extension.name as GNames]
         : [...general[tag], extension.name as GNames];

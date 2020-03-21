@@ -118,7 +118,11 @@ class CustomExtension extends Extension {
 }
 
 describe('add', () => {
-  const params = { plainMarks: [new BoldExtension()], plainNodes: [], others: [new CustomExtension()] };
+  const params = {
+    plainMarks: [new BoldExtension()],
+    plainNodes: [],
+    others: [new CustomExtension()],
+  };
   let {
     view: { dom },
     schema,

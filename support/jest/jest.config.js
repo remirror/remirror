@@ -17,7 +17,10 @@ module.exports = {
   moduleDirectories: ['node_modules'],
   testPathIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/node_modules/'],
   testRegex: '/__tests__/.*\\.spec\\.tsx?$',
-  setupFilesAfterEnv: [jestSupportDir('jest.framework.ts'), jestSupportDir('jest.framework.dom.ts')],
+  setupFilesAfterEnv: [
+    jestSupportDir('jest.framework.ts'),
+    jestSupportDir('jest.framework.dom.ts'),
+  ],
   snapshotSerializers: ['jest-emotion'],
   cacheDirectory: baseDir('.jest'),
   testEnvironment: 'jest-environment-jsdom-sixteen',

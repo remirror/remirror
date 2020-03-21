@@ -5,8 +5,8 @@ import { isEditorSchema, isEditorState, isProsemirrorNode } from '@remirror/core
  * Jest serializer for prosemirror nodes and the editor state.
  */
 export const prosemirrorSerializer: jest.SnapshotSerializerPlugin = {
-  test: val => isProsemirrorNode(val) || isEditorState(val) || isEditorSchema(val),
-  print: val => {
+  test: (val) => isProsemirrorNode(val) || isEditorState(val) || isEditorSchema(val),
+  print: (val) => {
     if (isEditorState(val)) {
       return `Prosemirror doc: ${JSON.stringify(
         val.doc.toJSON(),

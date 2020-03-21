@@ -4,15 +4,15 @@ import { textblockTypeInputRule } from 'prosemirror-inputrules';
 import {
   Attrs,
   CommandNodeTypeParams,
+  convertCommand,
   ExtensionManagerNodeTypeParams,
   KeyBindings,
   NodeExtension,
   NodeExtensionOptions,
   NodeExtensionSpec,
   NodeGroup,
-  ProsemirrorNode,
-  convertCommand,
   object,
+  ProsemirrorNode,
   toggleBlockItem,
 } from '@remirror/core';
 
@@ -54,7 +54,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
       group: NodeGroup.Block,
       defining: true,
       draggable: false,
-      parseDOM: this.options.levels.map(level => ({
+      parseDOM: this.options.levels.map((level) => ({
         tag: `h${level}`,
         attrs: { level },
       })),
@@ -82,14 +82,14 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
   public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
     const keys: KeyBindings = object();
 
-    this.options.levels.forEach(level => {
+    this.options.levels.forEach((level) => {
       keys[`Shift-Ctrl-${level}`] = convertCommand(setBlockType(type, { level }));
     });
     return keys;
   }
 
   public inputRules({ type }: ExtensionManagerNodeTypeParams) {
-    return this.options.levels.map(level =>
+    return this.options.levels.map((level) =>
       textblockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), type, () => ({ level })),
     );
   }

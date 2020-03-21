@@ -77,7 +77,9 @@ export type NameOfExtension<GExtension extends AnyExtension> = GExtension['name'
 /**
  * A utility type for retrieving the name of an extension only when it's a plain extension.
  */
-export type PlainNames<GExtension extends AnyExtension> = ProsemirrorTypeOfExtension<GExtension> extends never
+export type PlainNames<GExtension extends AnyExtension> = ProsemirrorTypeOfExtension<
+  GExtension
+> extends never
   ? GExtension['name']
   : never;
 
@@ -116,13 +118,9 @@ export interface PrioritizedExtension<GExtension extends AnyExtension = any> {
   priority: number;
 }
 
-export type FromFlexibleExtension<GValue extends FlexibleExtension> = GValue extends PrioritizedExtension<
-  infer P
->
-  ? P
-  : GValue extends AnyExtension
-  ? GValue
-  : never;
+export type FromFlexibleExtension<
+  GValue extends FlexibleExtension
+> = GValue extends PrioritizedExtension<infer P> ? P : GValue extends AnyExtension ? GValue : never;
 
 /**
  * Either a PrioritizedExtension or the actual Extension.
@@ -167,9 +165,9 @@ export type InferFlexibleExtension<
 /**
  * Get the extension types from a list of PrioritizedExtensions.
  */
-export type InferFlexibleExtensionList<GFlexibleList extends FlexibleExtension[]> = InferFlexibleExtension<
-  GFlexibleList[number]
->;
+export type InferFlexibleExtensionList<
+  GFlexibleList extends FlexibleExtension[]
+> = InferFlexibleExtension<GFlexibleList[number]>;
 
 /**
  * A utility type which maps the passed in extension command in an action that is called via
@@ -189,7 +187,9 @@ export type ActionsFromExtensions<GExtension extends AnyExtension> = UnionToInte
 /**
  * Utility type for pulling all the action names from a list
  */
-export type ActionNames<GExtension extends AnyExtension> = StringKey<ActionsFromExtensions<GExtension>>;
+export type ActionNames<GExtension extends AnyExtension> = StringKey<
+  ActionsFromExtensions<GExtension>
+>;
 
 /**
  * A utility type which maps the passed in extension helpers to a method called with
@@ -209,7 +209,9 @@ export type HelpersFromExtensions<GExtension extends AnyExtension> = UnionToInte
 /**
  * Utility type for pulling all the action names from a list
  */
-export type HelperNames<GExtension extends AnyExtension> = StringKey<HelpersFromExtensions<GExtension>>;
+export type HelperNames<GExtension extends AnyExtension> = StringKey<
+  HelpersFromExtensions<GExtension>
+>;
 
 /**
  * Retrieve the instance type from an ExtensionClass.
@@ -230,9 +232,9 @@ export type TypeOfExtensionClass<
  * // => (ParagraphExtension, DocExtension, TextExtension, LinkExtension)[]
  * ```
  */
-export type TypeOfExtensionClassList<GExtensionConstructors extends AnyConstructor[]> = TypeOfExtensionClass<
-  GExtensionConstructors[number]
->;
+export type TypeOfExtensionClassList<
+  GExtensionConstructors extends AnyConstructor[]
+> = TypeOfExtensionClass<GExtensionConstructors[number]>;
 
 /**
  * A utility type for retrieving the name of an extension only when it's a mark extension.

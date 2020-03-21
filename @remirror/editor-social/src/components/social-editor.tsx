@@ -9,7 +9,7 @@ import {
 } from 'prosemirror-suggest';
 import { Fragment, PureComponent } from 'react';
 
-import { RemirrorTheme, deepMerge, isUndefined, object, omit } from '@remirror/core';
+import { deepMerge, isUndefined, object, omit, RemirrorTheme } from '@remirror/core';
 import { NodeCursorExtension, PlaceholderExtension } from '@remirror/core-extensions';
 import {
   EmojiExtension,
@@ -244,14 +244,18 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     }
 
     // Reset the active index so that the dropdown is back to the top.
-    this.setState({ activeIndex: 0, activeMatcher: name as MatchName, hideMentionSuggestions: false });
+    this.setState({
+      activeIndex: 0,
+      activeMatcher: name as MatchName,
+      hideMentionSuggestions: false,
+    });
     this.mention = params;
   };
 
   /**
    * Called when the none of our configured matchers match
    */
-  private readonly onExit: Required<MentionExtensionOptions>['onExit'] = params => {
+  private readonly onExit: Required<MentionExtensionOptions>['onExit'] = (params) => {
     const { queryText, command } = params;
 
     // Check whether we've manually caused this exit. If not, trigger the
@@ -281,7 +285,10 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     this.mentionExitTriggeredInternally = true;
   };
 
-  private readonly onEmojiSuggestionChange: EmojiSuggestionChangeHandler = ({ emojiMatches, command }) => {
+  private readonly onEmojiSuggestionChange: EmojiSuggestionChangeHandler = ({
+    emojiMatches,
+    command,
+  }) => {
     this.setState({
       hideEmojiSuggestions: false,
       emojiList: emojiMatches,
@@ -395,7 +402,10 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
             onExit={this.onExit}
             keyBindings={this.mentionKeyBindings}
           />
-          <RemirrorExtension Constructor={EnhancedLinkExtension} onUrlsChange={this.props.onUrlsChange} />
+          <RemirrorExtension
+            Constructor={EnhancedLinkExtension}
+            onUrlsChange={this.props.onUrlsChange}
+          />
           <RemirrorExtension<typeof EmojiExtension, EmojiExtensionOptions>
             Constructor={EmojiExtension}
             onSuggestionChange={this.onEmojiSuggestionChange}

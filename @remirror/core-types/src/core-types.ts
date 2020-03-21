@@ -57,7 +57,9 @@ export type NodeMatch<GSchema extends EditorSchema = any> =
  *
  * @typeParam GSchema - the underlying editor schema.
  */
-export type DispatchFunction<GSchema extends EditorSchema = any> = (tr: Transaction<GSchema>) => void;
+export type DispatchFunction<GSchema extends EditorSchema = any> = (
+  tr: Transaction<GSchema>,
+) => void;
 
 /**
  * This is the type signature for commands within the prosemirror editor.
@@ -91,9 +93,10 @@ export type ProsemirrorCommandFunction<GSchema extends EditorSchema = any> = (
  *
  * @see {@link ProsemirrorCommandFunction}
  */
-export type CommandFunction<GSchema extends EditorSchema = any, GExtraParams extends object = {}> = (
-  params: CommandFunctionParams<GSchema> & GExtraParams,
-) => boolean;
+export type CommandFunction<
+  GSchema extends EditorSchema = any,
+  GExtraParams extends object = {}
+> = (params: CommandFunctionParams<GSchema> & GExtraParams) => boolean;
 
 /**
  * A parameter builder interface for the remirror `CommandFunction`.
@@ -610,7 +613,9 @@ export interface SSRComponentParams {
 export interface NodeExtensionOptions extends BaseExtensionOptions, SSRComponentParams {}
 export interface MarkExtensionOptions extends BaseExtensionOptions, SSRComponentParams {}
 
-export interface BaseExtensionOptionsParams<GOptions extends BaseExtensionOptions = BaseExtensionOptions> {
+export interface BaseExtensionOptionsParams<
+  GOptions extends BaseExtensionOptions = BaseExtensionOptions
+> {
   /**
    * The options that were passed into the extension that created this nodeView
    */

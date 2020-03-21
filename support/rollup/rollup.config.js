@@ -1,18 +1,17 @@
-import { join } from 'path';
-
 import chalk from 'chalk';
+import { join } from 'path';
 
 import { dependencies, rollup } from './config.json';
 import factory from './factory';
 
 const { baseDir } = require('../scripts/helpers');
 
-const uniqueArray = arr => Array.from(new Set(arr));
+const uniqueArray = (arr) => Array.from(new Set(arr));
 
 const { PACKAGES } = process.env;
 const names = (PACKAGES && PACKAGES.split(',')) || [];
-const entryPoints = names.map(name => {
-  const config = rollup.find(config => config.name === name);
+const entryPoints = names.map((name) => {
+  const config = rollup.find((config) => config.name === name);
 
   if (!config) {
     throw new Error(
@@ -26,7 +25,7 @@ const entryPoints = names.map(name => {
 let filtered = rollup;
 
 const getNames = (name = '') => {
-  const config = rollup.find(conf => conf.name === name);
+  const config = rollup.find((conf) => conf.name === name);
   const arr = [name];
   if (!config) {
     return arr;
@@ -40,7 +39,7 @@ const getNames = (name = '') => {
       return [
         ...acc,
         ...Object.keys(pkg[key])
-          .filter(dep => dependencies[dep])
+          .filter((dep) => dependencies[dep])
           .reduce((acc, key) => [...acc, ...getNames(key)], []),
       ];
     }
@@ -50,17 +49,19 @@ const getNames = (name = '') => {
 };
 
 if (entryPoints && entryPoints.length) {
-  filtered = uniqueArray(entryPoints.reduce((acc, config) => [...acc, ...getNames(config.name)], []))
-    .map(key => rollup.find(config => config.name === key))
+  filtered = uniqueArray(
+    entryPoints.reduce((acc, config) => [...acc, ...getNames(config.name)], []),
+  )
+    .map((key) => rollup.find((config) => config.name === key))
     .reverse();
 }
 
 const configurations = [];
 
-filtered.forEach(config => {
+filtered.forEach((config) => {
   const path = baseDir(config.path);
   const packageJson = join(path, 'package.json');
-  factory(require(packageJson), path).forEach(project => configurations.push(project));
+  factory(require(packageJson), path).forEach((project) => configurations.push(project));
 });
 
 export default configurations;

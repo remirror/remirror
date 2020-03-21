@@ -96,7 +96,10 @@ export interface FromToParams {
  *
  * @typeParam GKey - the keys to set as optional (either `from` or `to`).
  */
-export type OptionalFromToParams<GKey extends keyof FromToParams> = MakeOptional<FromToParams, GKey>;
+export type OptionalFromToParams<GKey extends keyof FromToParams> = MakeOptional<
+  FromToParams,
+  GKey
+>;
 
 /**
  * A parameter builder interface containing the `position` property.

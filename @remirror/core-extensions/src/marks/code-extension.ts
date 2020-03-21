@@ -2,13 +2,13 @@ import { toggleMark } from 'prosemirror-commands';
 
 import {
   CommandMarkTypeParams,
+  convertCommand,
   ExtensionManagerMarkTypeParams,
   KeyBindings,
   LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
-  convertCommand,
   markInputRule,
   markPasteRule,
 } from '@remirror/core';
@@ -38,7 +38,10 @@ export class CodeExtension extends MarkExtension {
 
   public inputRules({ type }: ExtensionManagerMarkTypeParams) {
     return [
-      markInputRule({ regexp: new RegExp(`(?:\`)([^\`${LEAF_NODE_REPLACING_CHARACTER}]+)(?:\`)$`), type }),
+      markInputRule({
+        regexp: new RegExp(`(?:\`)([^\`${LEAF_NODE_REPLACING_CHARACTER}]+)(?:\`)$`),
+        type,
+      }),
     ];
   }
 

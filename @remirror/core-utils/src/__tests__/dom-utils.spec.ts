@@ -8,9 +8,9 @@ import {
   hardBreak,
   p,
   pm,
+  schema as testSchema,
   table,
   tableRow,
-  schema as testSchema,
 } from 'jest-prosemirror';
 import { TextSelection } from 'prosemirror-state';
 
@@ -65,13 +65,17 @@ describe('markActive', () => {
   });
 
   it('returns true when surrounding an active region', () => {
-    const { state, schema } = createEditor(doc(p('Something<start>', em('is italic'), '<end> here')));
+    const { state, schema } = createEditor(
+      doc(p('Something<start>', em('is italic'), '<end> here')),
+    );
 
     expect(isMarkActive({ state, type: schema.marks.em })).toBeTrue();
   });
 
   it('can override from and to', () => {
-    const { state, schema } = createEditor(doc(p('<start>Something<end>', em('is italic'), ' here')));
+    const { state, schema } = createEditor(
+      doc(p('<start>Something<end>', em('is italic'), ' here')),
+    );
 
     expect(isMarkActive({ state, type: schema.marks.em, from: 11, to: 20 })).toBeTrue();
   });
@@ -323,7 +327,9 @@ test('startPositionOfParent', () => {
 });
 
 test('endPositionOfParent', () => {
-  const { state } = createEditor(doc(p('Something', p('This has a position<cursor>'), 'what becomes')));
+  const { state } = createEditor(
+    doc(p('Something', p('This has a position<cursor>'), 'what becomes')),
+  );
 
   expect(endPositionOfParent(state.selection.$from)).toBe(31);
 });
@@ -343,7 +349,7 @@ describe('getCursor', () => {
 });
 
 describe('nodeNameMatchesList', () => {
-  const matchers: NodeMatch[] = ['paragraph', name => name === 'blockquote', ['table', 'gi']];
+  const matchers: NodeMatch[] = ['paragraph', (name) => name === 'blockquote', ['table', 'gi']];
 
   it('returns true when it successfully matches', () => {
     expect(nodeNameMatchesList(p(), matchers)).toBeTrue();
@@ -395,15 +401,18 @@ describe('createDocumentNode', () => {
   });
 
   it('creates content via an ObjectNode', () => {
-    expect(createDocumentNode({ content: docNodeBasicJSON, schema: testSchema })!.textContent).toContain(
-      'basic',
-    );
+    expect(
+      createDocumentNode({ content: docNodeBasicJSON, schema: testSchema })!.textContent,
+    ).toContain('basic');
   });
 
   it('creates content via custom string handler', () => {
     expect(
-      createDocumentNode({ content: '<p>basic html</p>', schema: testSchema, stringHandler: fromHTML })!
-        .textContent,
+      createDocumentNode({
+        content: '<p>basic html</p>',
+        schema: testSchema,
+        stringHandler: fromHTML,
+      })!.textContent,
     ).toContain('basic html');
   });
 });
@@ -440,8 +449,8 @@ describe('fromHTML', () => {
   });
 
   it('allows for custom document to be passed in', () => {
-    expect(fromHTML({ content, schema: testSchema, doc: domino.createDocument() })).toEqualProsemirrorNode(
-      doc(p('Hello')),
-    );
+    expect(
+      fromHTML({ content, schema: testSchema, doc: domino.createDocument() }),
+    ).toEqualProsemirrorNode(doc(p('Hello')));
   });
 });

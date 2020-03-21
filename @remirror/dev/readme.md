@@ -17,8 +17,8 @@ For in depth usage with proper code example see the [docs](https://docs.remirror
 
 ### Prosemirror Dev Tools
 
-The following will render the development view in your editor. For more information on what's possible see the
-[docs][prosemirror-dev-tools].
+The following will render the development view in your editor. For more information on what's
+possible see the [docs][prosemirror-dev-tools].
 
 ```tsx
 import React from 'react';

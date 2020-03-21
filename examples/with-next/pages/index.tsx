@@ -18,8 +18,9 @@ const IndexPage: NextPage = () => {
         </li>
 
         <li>
-          <abbr title='What you see is what you get'>WYSIWYG</abbr>: <Link href='/editor/wysiwyg'>blank</Link>{' '}
-          / <Link href='/editor/wysiwyg/content'>with content</Link>
+          <abbr title='What you see is what you get'>WYSIWYG</abbr>:{' '}
+          <Link href='/editor/wysiwyg'>blank</Link> /{' '}
+          <Link href='/editor/wysiwyg/content'>with content</Link>
         </li>
       </ul>
     </Layout>

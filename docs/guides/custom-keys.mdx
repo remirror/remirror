@@ -2,11 +2,11 @@
 title: Creating custom keys
 ---
 
-The following is an example where the enter key can be customised to ignore all lower priority `Enter` key
-bindings.
+The following is an example where the enter key can be customised to ignore all lower priority
+`Enter` key bindings.
 
-The `next` method allows full control beyond the return value. It allows both calling all lower priority key
-bindings regardless of whether true or false has been called.
+The `next` method allows full control beyond the return value. It allows both calling all lower
+priority key bindings regardless of whether true or false has been called.
 
 ```tsx
 import { BaseExtensionOptions, Extension, KeyBindings } from '@remirror/core';
@@ -71,7 +71,8 @@ const manager = ExtensionManager.of([
 ]);
 ```
 
-This manager can now be used to create an editor where the baseKeymap for the `Enter` key is overriden.
+This manager can now be used to create an editor where the baseKeymap for the `Enter` key is
+overriden.
 
-If override is set to `false`, the method will call all lower priority keybindings while still allowing the
-behaviour you want for the extension.
+If override is set to `false`, the method will call all lower priority keybindings while still
+allowing the behaviour you want for the extension.

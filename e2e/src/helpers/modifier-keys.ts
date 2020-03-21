@@ -1,6 +1,6 @@
 // Taken from https://github.com/WordPress/gutenberg/blob/5bbda3656a530616a7a78c0a101d6ec2d8fa6a7a/packages/e2e-test-utils/src/press-key-with-modifier.js
 
-import { ALT, COMMAND, CTRL, SHIFT, mod, take } from '@remirror/core';
+import { ALT, COMMAND, CTRL, mod, SHIFT, take } from '@remirror/core';
 
 /**
  * Returns a list of normalized modifier keys
@@ -164,7 +164,7 @@ export async function pressKeyWithModifier(pattern: string) {
   const list = getModifiers({ modifiers, isMac: isApple() });
 
   await Promise.all(
-    list.map(async modifier => {
+    list.map(async (modifier) => {
       return page.keyboard.down(modifier);
     }),
   );
@@ -172,7 +172,7 @@ export async function pressKeyWithModifier(pattern: string) {
   await page.keyboard.press(key);
 
   await Promise.all(
-    list.map(async modifier => {
+    list.map(async (modifier) => {
       return page.keyboard.up(modifier);
     }),
   );

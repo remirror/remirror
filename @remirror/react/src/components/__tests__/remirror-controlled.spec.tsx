@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import { EditorState, fromHTML } from '@remirror/core';
 import { createTestManager } from '@remirror/test-fixtures';
 
+import { Remirror } from '..';
 import { InjectedRemirrorProps, RemirrorStateListenerParams } from '../../react-types';
 import { RemirrorProviderProps } from '../remirror-providers';
-import { Remirror } from '..';
 
 const label = 'Remirror editor';
 
@@ -26,7 +26,7 @@ describe('Remirror Controlled Component', () => {
 
   it('should call onStateChange', () => {
     let value: EditorState | null = null;
-    const onStateChange = jest.fn<void, [RemirrorStateListenerParams]>(params => {
+    const onStateChange = jest.fn<void, [RemirrorStateListenerParams]>((params) => {
       value = params.newState;
     });
     render(
@@ -43,7 +43,7 @@ describe('Remirror Controlled Component', () => {
     let stateParams!: RemirrorStateListenerParams;
     let renderParams!: InjectedRemirrorProps;
 
-    const onStateChange = jest.fn<void, [RemirrorStateListenerParams]>(params => {
+    const onStateChange = jest.fn<void, [RemirrorStateListenerParams]>((params) => {
       stateParams = params;
     });
     const mock = jest.fn((params: InjectedRemirrorProps) => {
@@ -70,7 +70,7 @@ describe('Remirror Controlled Component', () => {
   it('responds to direct value updates', () => {
     let stateParams!: RemirrorStateListenerParams;
 
-    const onStateChange = jest.fn<void, [RemirrorStateListenerParams]>(params => {
+    const onStateChange = jest.fn<void, [RemirrorStateListenerParams]>((params) => {
       stateParams = params;
     });
 
@@ -91,7 +91,7 @@ describe('Remirror Controlled Component', () => {
 
     expect(getByRole('textbox')).toContainHTML(secondUpdate);
 
-    expect(onStateChange.mock.calls.every(call => call[0].tr === undefined)).toBeTrue();
+    expect(onStateChange.mock.calls.every((call) => call[0].tr === undefined)).toBeTrue();
   });
 
   it('responds to internal editor updates', () => {

@@ -34,7 +34,7 @@ describe('getManagerFromComponentTree', () => {
 
   it('should include the new extension', () => {
     expect(manager.extensions).toSatisfy((extensions: AnyExtension[]) =>
-      extensions.some(ext => ext instanceof TestExtension),
+      extensions.some((ext) => ext instanceof TestExtension),
     );
   });
 

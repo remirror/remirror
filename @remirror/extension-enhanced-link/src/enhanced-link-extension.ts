@@ -8,21 +8,21 @@ import {
   EditorState,
   EditorView,
   ExtensionManagerMarkTypeParams,
+  findMatches,
+  getMatchString,
+  isFunction,
   LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
   MarkExtensionOptions,
   MarkExtensionSpec,
-  findMatches,
-  getMatchString,
-  isFunction,
   markPasteRule,
   removeMark,
   updateMark,
 } from '@remirror/core';
 
 import {
-  EnhancedLinkHandlerProps,
   enhancedLinkHandler,
+  EnhancedLinkHandlerProps,
   extractHref,
   getUrlsFromState,
   isSetEqual,
@@ -60,12 +60,12 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
       parseDOM: [
         {
           tag: 'a[href]',
-          getAttrs: node => ({
+          getAttrs: (node) => ({
             href: Cast<Element>(node).getAttribute('href'),
           }),
         },
       ],
-      toDOM: node => {
+      toDOM: (node) => {
         return [
           'a',
           {
@@ -95,7 +95,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
       markPasteRule({
         regexp: extractUrl,
         type,
-        getAttrs: url => {
+        getAttrs: (url) => {
           return {
             href: extractHref(getMatchString(url)),
           };
@@ -130,7 +130,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
         const { selection, doc } = state;
         const { $from, $to, from, to } = selection;
         const hasReplaceTransactions = transactions.some(({ steps }) =>
-          steps.some(step => step instanceof ReplaceStep),
+          steps.some((step) => step instanceof ReplaceStep),
         );
 
         if (!hasReplaceTransactions) {
@@ -153,7 +153,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
             LEAF_NODE_REPLACING_CHARACTER,
             leafChar,
           );
-          findMatches(prevSearchText, extractUrl).forEach(match => {
+          findMatches(prevSearchText, extractUrl).forEach((match) => {
             const startIndex = match.index;
             const url = match[1];
             const start = $pos.start() + startIndex;
@@ -166,13 +166,18 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
         }
 
         // Finds matches within the current node when in the middle of a node
-        findMatches(searchText, extractUrl).forEach(match => {
+        findMatches(searchText, extractUrl).forEach((match) => {
           const startIndex = match.index;
           const url = match[1];
           const start = $from.start() + startIndex;
           const end = $from.start() + startIndex + match[0].length;
           // The text directly before the match
-          const textBefore = doc.textBetween(start - 1, start, LEAF_NODE_REPLACING_CHARACTER, leafChar);
+          const textBefore = doc.textBetween(
+            start - 1,
+            start,
+            LEAF_NODE_REPLACING_CHARACTER,
+            leafChar,
+          );
 
           if (!/[\w\d]/.test(textBefore)) {
             collectedParams.push({ state, url, from: start, to: end, type });
@@ -183,7 +188,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
         tr.removeMark($from.start(), $from.end(), type);
 
         // Add all marks again for the nodes
-        collectedParams.forEach(params => {
+        collectedParams.forEach((params) => {
           enhancedLinkHandler({ ...params, tr });
         });
 

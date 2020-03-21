@@ -30,7 +30,11 @@ export interface Emitter<Events extends BaseEvents> {
    * @param cb The listener function.
    * @returns Unbind listener from event.
    */
-  on<EventsKey extends keyof Events>(this: this, event: EventsKey, cb: Events[EventsKey]): () => void;
+  on<EventsKey extends keyof Events>(
+    this: this,
+    event: EventsKey,
+    cb: Events[EventsKey],
+  ): () => void;
 
   /**
    * Calls each of the listeners registered for a given event.
@@ -53,7 +57,9 @@ export interface Emitter<Events extends BaseEvents> {
  * Forked from https://github.com/ai/nanoevents/blob/700bbaa778cf0e62d1af503044c990e17a83033d/index.js#L1
  * Due to a type issue.
  */
-const createNanoEvents = <Events extends { [event: string]: any } = BaseEvents>(): Emitter<Events> => ({
+const createNanoEvents = <Events extends { [event: string]: any } = BaseEvents>(): Emitter<
+  Events
+> => ({
   events: {},
 
   emit(event, ...args) {
@@ -66,7 +72,7 @@ const createNanoEvents = <Events extends { [event: string]: any } = BaseEvents>(
     this.events[event] = this.events[event] ?? [];
     this.events[event]?.push(cb);
 
-    return () => (this.events[event] = this.events[event]?.filter(fn => fn !== cb));
+    return () => (this.events[event] = this.events[event]?.filter((fn) => fn !== cb));
   },
 });
 

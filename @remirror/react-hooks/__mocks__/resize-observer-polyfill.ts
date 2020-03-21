@@ -11,7 +11,10 @@ export const fakeResizeObserverPolyfill = Object.freeze({
 let callback: any;
 const defaultBounds = { x: 0, y: 0, width: 0, height: 0, top: 0, right: 0, bottom: 0, left: 0 };
 
-export const triggerChange = (bounds: Partial<typeof defaultBounds> = object(), el: HTMLElement) => {
+export const triggerChange = (
+  bounds: Partial<typeof defaultBounds> = object(),
+  el: HTMLElement,
+) => {
   const target = observers.get(el);
 
   if (callback && target) {
@@ -19,7 +22,7 @@ export const triggerChange = (bounds: Partial<typeof defaultBounds> = object(), 
   }
 };
 
-export default jest.fn(cb => {
+export default jest.fn((cb) => {
   callback = cb;
   return fakeResizeObserverPolyfill;
 });

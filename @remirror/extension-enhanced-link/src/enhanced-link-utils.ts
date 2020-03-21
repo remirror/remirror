@@ -26,7 +26,14 @@ export interface EnhancedLinkHandlerProps
 /**
  * Add the provided URL as a mark to the text range provided
  */
-export const enhancedLinkHandler = ({ state, url, from, to, tr, type }: EnhancedLinkHandlerProps) => {
+export const enhancedLinkHandler = ({
+  state,
+  url,
+  from,
+  to,
+  tr,
+  type,
+}: EnhancedLinkHandlerProps) => {
   const endPosition = state.selection.to;
   const enhancedLink = type.create({ href: extractHref(url) });
 
@@ -47,11 +54,13 @@ export const getUrlsFromState = (state: EditorState, markName: string) => {
   const $pos = state.doc.resolve(0);
   let marks: Mark[] = [];
 
-  state.doc.nodesBetween($pos.start(), $pos.end(), node => {
+  state.doc.nodesBetween($pos.start(), $pos.end(), (node) => {
     marks = [...marks, ...node.marks];
   });
 
-  const urls = marks.filter(markItem => markItem.type.name === markName).map(mark => mark.attrs.href);
+  const urls = marks
+    .filter((markItem) => markItem.type.name === markName)
+    .map((mark) => mark.attrs.href);
 
   return { set: new Set(urls), urls };
 };

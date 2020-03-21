@@ -20,7 +20,7 @@ test('Dropdown', () => {
         label={label}
         initialItem={items[0]}
         selectedItems={selectedItems}
-        onSelect={selected => {
+        onSelect={(selected) => {
           setSelectedItems(selected);
         }}
       />

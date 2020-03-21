@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { FC, Fragment, ReactElement, forwardRef } from 'react';
+import { FC, forwardRef, Fragment, ReactElement } from 'react';
 
 import { isPlainObject } from '@remirror/core-helpers';
 import { useRemirrorTheme } from '@remirror/ui';
@@ -19,7 +19,10 @@ interface MenubarButton extends Omit<ButtonProps, 'ref'> {
   type: 'button';
 }
 
-export type MenubarContent = MenubarDropdownConfiguration | MenubarGroupConfiguration | MenubarButton;
+export type MenubarContent =
+  | MenubarDropdownConfiguration
+  | MenubarGroupConfiguration
+  | MenubarButton;
 
 interface MenubarProps {
   content: MenubarContent[];

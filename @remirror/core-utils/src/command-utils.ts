@@ -20,7 +20,10 @@ import {
 import { getMarkRange, isMarkType, isNodeType } from './dom-utils';
 import { findParentNode, isNodeActive, selectionEmpty } from './prosemirror-utils';
 
-interface UpdateMarkParams extends Partial<RangeParams>, Partial<AttrsParams>, TransformTransactionParams {
+interface UpdateMarkParams
+  extends Partial<RangeParams>,
+    Partial<AttrsParams>,
+    TransformTransactionParams {
   /**
    * The text to append.
    *
@@ -114,7 +117,7 @@ export const toggleList = (type: NodeType, itemType: NodeType): ProsemirrorComma
   }
 
   const parentList = findParentNode({
-    predicate: node => isList(node, schema),
+    predicate: (node) => isList(node, schema),
     selection,
   });
 
@@ -166,7 +169,10 @@ export const toggleBlockItem = ({
   return setBlockType(type, attrs)(state, dispatch);
 };
 
-interface ReplaceTextParams extends Partial<RangeParams>, Partial<AttrsParams>, TransformTransactionParams {
+interface ReplaceTextParams
+  extends Partial<RangeParams>,
+    Partial<AttrsParams>,
+    TransformTransactionParams {
   /**
    * The text to append.
    *
@@ -246,7 +252,11 @@ export const replaceText = ({
       throw new Error('`replaceText` cannot be called without content when using a mark type');
     }
 
-    tr.replaceWith(from, to, schema.text(content, isMarkType(type) ? [type.create(attrs)] : undefined));
+    tr.replaceWith(
+      from,
+      to,
+      schema.text(content, isMarkType(type) ? [type.create(attrs)] : undefined),
+    );
   }
 
   /** Only append the text if when text is provided. */
@@ -266,7 +276,10 @@ export const replaceText = ({
   return true;
 };
 
-interface RemoveMarkParams extends MarkTypeParams, Partial<RangeParams<'to'>>, TransformTransactionParams {
+interface RemoveMarkParams
+  extends MarkTypeParams,
+    Partial<RangeParams<'to'>>,
+    TransformTransactionParams {
   /**
    * Whether to expand empty selections to the current mark range
    *

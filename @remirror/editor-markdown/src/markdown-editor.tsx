@@ -8,22 +8,23 @@ import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 
 import {
+  createDocumentNode,
   DocExtension,
   EditorState,
   ExtensionManager,
   ExtensionsFromManager,
+  isObjectNode,
+  isProsemirrorNode,
+  isString,
   ProsemirrorNode,
   RemirrorContentType,
   SchemaFromExtensions,
   SchemaParams,
   StringHandlerParams,
   TextExtension,
-  createDocumentNode,
-  isObjectNode,
-  isProsemirrorNode,
-  isString,
 } from '@remirror/core';
 import {
+  baseExtensions,
   BaseKeymapExtension,
   BlockquoteExtension,
   BoldExtension,
@@ -40,11 +41,14 @@ import {
   ListItemExtension,
   OrderedListExtension,
   PlaceholderExtension,
-  baseExtensions,
 } from '@remirror/core-extensions';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
 import { ImageExtension } from '@remirror/extension-image';
-import { RemirrorProvider, RemirrorProviderProps, RemirrorStateListenerParams } from '@remirror/react';
+import {
+  RemirrorProvider,
+  RemirrorProviderProps,
+  RemirrorStateListenerParams,
+} from '@remirror/react';
 
 import { fromMarkdown } from './from-markdown';
 import { toMarkdown } from './to-markdown';
@@ -61,7 +65,10 @@ const useMarkdownManager = () => {
         { priority: 1, extension: new DocExtension({ content: 'block' }) },
         {
           priority: 1,
-          extension: new CodeBlockExtension({ defaultLanguage: 'markdown', toggleType: 'codeBlock' }),
+          extension: new CodeBlockExtension({
+            defaultLanguage: 'markdown',
+            toggleType: 'codeBlock',
+          }),
         },
         { priority: 1, extension: new TextExtension() },
         { extension: new CompositionExtension(), priority: 3 },
@@ -73,7 +80,7 @@ const useMarkdownManager = () => {
   );
 };
 
-const InternalMarkdownEditor: FC<InternalEditorProps> = props => {
+const InternalMarkdownEditor: FC<InternalEditorProps> = (props) => {
   return (
     <RemirrorProvider {...props} childAsRoot={true}>
       <div />
@@ -193,7 +200,11 @@ const useDebounce = (fn: () => any, ms: number = 0, args: any[] = []) => {
   }, [args, fn, ms]);
 };
 
-export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', editor, children }) => {
+export const MarkdownEditor: FC<MarkdownEditorProps> = ({
+  initialValue = '',
+  editor,
+  children,
+}) => {
   const wysiwygManager = useWysiwygManager();
   const markdownManager = useMarkdownManager();
 
@@ -202,7 +213,10 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', edi
   type MarkdownExtensions = ExtensionsFromManager<typeof markdownManager>;
   type MarkdownSchema = SchemaFromExtensions<MarkdownExtensions>;
 
-  const initialContent = createInitialContent({ content: initialValue, schema: wysiwygManager.schema });
+  const initialContent = createInitialContent({
+    content: initialValue,
+    schema: wysiwygManager.schema,
+  });
   const [markdownEditorState, setMarkdownEditorState] = useState<EditorState<MarkdownSchema>>();
   const [markdownParams, setMarkdownParams] = useState<
     Pick<RemirrorStateListenerParams<MarkdownExtensions>, 'getText' | 'tr'>
@@ -211,7 +225,9 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', edi
 
   const updateWysiwygFromMarkdown = useCallback(
     (md: string) => {
-      const state = wysiwygManager.createState({ content: fromMarkdown(md, wysiwygManager.schema) });
+      const state = wysiwygManager.createState({
+        content: fromMarkdown(md, wysiwygManager.schema),
+      });
       setWysiwygEditorState(state);
     },
     [wysiwygManager],
@@ -220,7 +236,10 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', edi
   const updateMarkdownFromWysiwyg = useCallback(
     (doc: ProsemirrorNode) =>
       setMarkdownEditorState(
-        markdownManager.createState({ content: toMarkdown(doc), stringHandler: markdownStringHandler }),
+        markdownManager.createState({
+          content: toMarkdown(doc),
+          stringHandler: markdownStringHandler,
+        }),
       ),
     [markdownManager],
   );
@@ -246,7 +265,10 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({ initialValue = '', edi
     setMarkdownEditorState(newState);
   };
 
-  const onWysiwygStateChange = ({ newState, tr }: RemirrorStateListenerParams<WysiwygExtensions>) => {
+  const onWysiwygStateChange = ({
+    newState,
+    tr,
+  }: RemirrorStateListenerParams<WysiwygExtensions>) => {
     setWysiwygEditorState(newState);
 
     if (tr?.docChanged) {

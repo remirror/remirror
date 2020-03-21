@@ -49,7 +49,8 @@ export const ExampleMarkdownEditor: FC = ({ children }) => {
   return (
     <div>
       <span>
-        <Button onClick={toggleEditor} content='Toggle Editor' variant='primary' /> {capitalize(editor)}
+        <Button onClick={toggleEditor} content='Toggle Editor' variant='primary' />{' '}
+        {capitalize(editor)}
       </span>
       <MarkdownEditor editor={editor} initialValue={initialValue}>
         {children}

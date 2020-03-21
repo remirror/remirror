@@ -7,7 +7,7 @@ import { FC, ReactElement, useMemo, useState } from 'react';
 import { bool, deepMerge, isFunction, object } from '@remirror/core-helpers';
 import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core-types';
 
-import { RemirrorThemeContext, defaultRemirrorThemeValue, withoutEmotionProps } from './ui-context';
+import { defaultRemirrorThemeValue, RemirrorThemeContext, withoutEmotionProps } from './ui-context';
 import { useEmotionTheme, useRemirrorTheme } from './ui-hooks';
 import { applyColorMode, getColorModes, getFactory } from './ui-utils';
 

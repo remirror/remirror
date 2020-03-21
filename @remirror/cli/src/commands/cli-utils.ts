@@ -24,7 +24,10 @@ export const msToDuration = (duration: number, skipMs = false): string => {
   }
 
   if (duration < ONE_HOUR) {
-    return `${Math.floor(duration / ONE_MINUTE)}m ${msToDuration(duration % ONE_MINUTE, true)}`.trim();
+    return `${Math.floor(duration / ONE_MINUTE)}m ${msToDuration(
+      duration % ONE_MINUTE,
+      true,
+    )}`.trim();
   }
 
   if (duration < ONE_DAY) {

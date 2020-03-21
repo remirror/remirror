@@ -2,12 +2,12 @@ import { toggleMark } from 'prosemirror-commands';
 
 import {
   CommandMarkTypeParams,
+  convertCommand,
   ExtensionManagerMarkTypeParams,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
-  convertCommand,
   markInputRule,
   markPasteRule,
 } from '@remirror/core';
@@ -32,7 +32,7 @@ export class StrikeExtension extends MarkExtension {
         },
         {
           style: 'text-decoration',
-          getAttrs: node => (node === 'line-through' ? {} : false),
+          getAttrs: (node) => (node === 'line-through' ? {} : false),
         },
       ],
       toDOM: () => ['s', 0],

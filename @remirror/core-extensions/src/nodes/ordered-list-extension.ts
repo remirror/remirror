@@ -2,13 +2,13 @@ import { wrappingInputRule } from 'prosemirror-inputrules';
 
 import {
   CommandNodeTypeParams,
+  convertCommand,
   ExtensionManagerNodeTypeParams,
+  isElementDOMNode,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
-  convertCommand,
-  isElementDOMNode,
   toggleList,
 } from '@remirror/core';
 
@@ -30,7 +30,7 @@ export class OrderedListExtension extends NodeExtension {
       parseDOM: [
         {
           tag: 'ol',
-          getAttrs: node => {
+          getAttrs: (node) => {
             if (!isElementDOMNode(node)) {
               return {};
             }
@@ -41,7 +41,8 @@ export class OrderedListExtension extends NodeExtension {
           },
         },
       ],
-      toDOM: node => (node.attrs.order === 1 ? ['ol', 0] : ['ol', { start: node.attrs.order }, 0]),
+      toDOM: (node) =>
+        node.attrs.order === 1 ? ['ol', 0] : ['ol', { start: node.attrs.order }, 0],
     };
   }
 
@@ -60,7 +61,7 @@ export class OrderedListExtension extends NodeExtension {
       wrappingInputRule(
         /^(\d+)\.\s$/,
         type,
-        match => ({ order: +match[1] }),
+        (match) => ({ order: +match[1] }),
         (match, node) => node.childCount + (node.attrs.order as number) === +match[1],
       ),
     ];

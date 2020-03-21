@@ -1,6 +1,10 @@
 import pkg from './package.json';
 
-const remarkPlugins = [require('remark-slug'), require('remark-emoji'), require('remark-unwrap-images')];
+const remarkPlugins = [
+  require('remark-slug'),
+  require('remark-emoji'),
+  require('remark-unwrap-images'),
+];
 
 const gatsbyRemarkPlugins = [
   'gatsby-remark-relative-images',

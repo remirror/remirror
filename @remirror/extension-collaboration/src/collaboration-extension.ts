@@ -4,14 +4,14 @@ import { Step } from 'prosemirror-transform';
 import {
   Attrs,
   CommandParams,
+  debounce,
   EditorState,
   Extension,
+  isArray,
+  isNumber,
   OnTransactionParams,
   Plugin,
   ProsemirrorCommandFunction,
-  debounce,
-  isArray,
-  isNumber,
   uniqueId,
 } from '@remirror/core';
 
@@ -58,7 +58,10 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
    */
   public commands({ getState, schema }: CommandParams) {
     return {
-      collaborationUpdate: (attrs: CollaborationAttrs): ProsemirrorCommandFunction => (_, dispatch) => {
+      collaborationUpdate: (attrs: CollaborationAttrs): ProsemirrorCommandFunction => (
+        _,
+        dispatch,
+      ) => {
         if (!isValidCollaborationAttrs(attrs)) {
           throw new Error('Invalid attributes passed to the collaboration command.');
         }
@@ -74,8 +77,8 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
           dispatch(
             receiveTransaction(
               state,
-              steps.map(item => Step.fromJSON(schema, item.step)),
-              steps.map(item => item.clientID),
+              steps.map((item) => Step.fromJSON(schema, item.step)),
+              steps.map((item) => item.clientID),
             ),
           );
         }
@@ -114,7 +117,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
     if (sendable) {
       const jsonSendable = {
         version: sendable.version,
-        steps: sendable.steps.map(step => step.toJSON()),
+        steps: sendable.steps.map((step) => step.toJSON()),
         clientID: sendable.clientID,
       };
       this.options.onSendableReceived({ sendable, jsonSendable });

@@ -1,6 +1,8 @@
 import { BaseExtensionOptions } from '@remirror/core';
 
-export type EpicModePluginStateParams = Required<Omit<EpicModeExtensionOptions, keyof BaseExtensionOptions>>;
+export type EpicModePluginStateParams = Required<
+  Omit<EpicModeExtensionOptions, keyof BaseExtensionOptions>
+>;
 
 export interface ParticleRange {
   min: number;

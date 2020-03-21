@@ -4,8 +4,8 @@ import {
   Extension,
   ExtensionManager,
   HelpersFromExtensions,
-  TextExtension,
   object,
+  TextExtension,
 } from '@remirror/core';
 import {
   BoldExtension,

@@ -1,16 +1,20 @@
 import mapObject from 'map-obj';
-import { baseKeymap, chainCommands as pmChainCommands, selectParentNode } from 'prosemirror-commands';
+import {
+  baseKeymap,
+  chainCommands as pmChainCommands,
+  selectParentNode,
+} from 'prosemirror-commands';
 import { undoInputRule } from 'prosemirror-inputrules';
 
 import {
   BaseExtensionOptions,
-  Extension,
-  ExtensionManagerParams,
-  KeyBindings,
   chainKeyBindingCommands,
   convertCommand,
+  Extension,
+  ExtensionManagerParams,
   hasOwnProperty,
   isFunction,
+  KeyBindings,
 } from '@remirror/core';
 
 export interface BaseKeymapExtensionOptions extends BaseExtensionOptions {
