@@ -5,7 +5,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { Remirror } from '@remirror/react';
+import { RenderEditor } from '@remirror/react';
 import { createTestManager } from '@remirror/test-fixtures';
 
 import { baseTheme, RemirrorThemeProvider } from '..';
@@ -16,7 +16,7 @@ describe('withoutEmotion', () => {
     const child = () => <div data-testid='test' />;
     const withEmotionString = renderToString(
       <RemirrorThemeProvider theme={baseTheme} withoutEmotion={false}>
-        <Remirror manager={createTestManager()}>{child}</Remirror>
+        <RenderEditor manager={createTestManager()}>{child}</RenderEditor>
       </RemirrorThemeProvider>,
     );
 
@@ -24,7 +24,7 @@ describe('withoutEmotion', () => {
 
     const withoutEmotionString = renderToString(
       <RemirrorThemeProvider theme={baseTheme} withoutEmotion={true}>
-        <Remirror manager={createTestManager()}>{child}</Remirror>
+        <RenderEditor manager={createTestManager()}>{child}</RenderEditor>
       </RemirrorThemeProvider>,
     );
 

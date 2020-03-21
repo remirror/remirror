@@ -16303,6 +16303,11 @@ nano-css@^5.2.1:
     stacktrace-js "^2.0.0"
     stylis "3.5.0"
 
+nanoevents@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/nanoevents/-/nanoevents-5.0.1.tgz#72bdc1ecc516d26cebc6e2423fa2f572674c92cf"
+  integrity sha512-f9vILBAZAJ/zsPfE0lTJubk2SiR/fGEo9V01baQiN7VHW2bnJBp8RL7JHrGDtUTMbE9SR5D6D59+iWvViCOvjg==
+
 nanoid@^2.1.11, nanoid@^2.1.7:
   version "2.1.11"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-2.1.11.tgz#ec24b8a758d591561531b4176a01e3ab4f0f0280"
@@ -22915,7 +22920,7 @@ tiny-inflate@^1.0.0:
   resolved "https://registry.yarnpkg.com/tiny-inflate/-/tiny-inflate-1.0.3.tgz#122715494913a1805166aaf7c93467933eea26c4"
   integrity sha512-pkY1fj1cKHb2seWDy0B16HeWyczlJA9/WW3u3c4z/NiWDsO3DOU5D7nhTLE9CF0yXv/QZFY7sEJmj24dK+Rrqw==
 
-tiny-invariant@^1.0.2:
+tiny-invariant@^1.0.2, tiny-invariant@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.1.0.tgz#634c5f8efdc27714b7f386c35e6760991d230875"
   integrity sha512-ytxQvrb1cPc9WBEI/HSeYYoGD0kWnGEOR8RY6KomWLBVhqz0RgTwVO9dLrGz7dC+nN9llyI7OKAgRq8Vq4ZBSw==

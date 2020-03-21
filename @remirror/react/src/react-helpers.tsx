@@ -6,7 +6,7 @@ import { renderToString } from 'react-dom/server';
 
 import { ExtensionManager, object, PlainObject } from '@remirror/core';
 
-import { useRemirrorManager } from './hooks/context-hooks';
+import { useRemirror } from './hooks/use-remirror';
 
 export interface GetManagerFromComponentTreeParams {
   /**
@@ -72,14 +72,14 @@ export interface GetManagerFromComponentTreeParams {
  *
  * This is useful in DOM-less (e.g. server-side) environments.
  */
-export const getManagerFromComponentTree = ({
+export const getSchemaFromComponentTree = ({
   Component,
   prop = 'children',
   extraProps = object<PlainObject>(),
 }: GetManagerFromComponentTreeParams) =>
   new Promise<ExtensionManager>((resolve, reject) => {
     const ManagerRetriever = () => {
-      const manager = useRemirrorManager();
+      const { manager } = useRemirror();
       resolve(manager);
       return null;
     };

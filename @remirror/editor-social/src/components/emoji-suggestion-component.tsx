@@ -4,7 +4,7 @@ import { Type, useMultishift } from 'multishift';
 import { FunctionComponent } from 'react';
 
 import { EmojiObject, EmojiSuggestCommand } from '@remirror/extension-emoji';
-import { popupMenuPositioner, useRemirrorContext } from '@remirror/react';
+import { popupMenuPositioner, useRemirror } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 
 import { DataParams, SocialExtensions } from '../social-types';
@@ -23,7 +23,7 @@ export const EmojiSuggestions: FunctionComponent<EmojiSuggestionsProps> = ({
   command,
 }) => {
   const { sxx } = useRemirrorTheme();
-  const { view, getPositionerProps } = useRemirrorContext<SocialExtensions>();
+  const { view, getPositionerProps } = useRemirror<SocialExtensions>();
   const { getMenuProps, getItemProps, itemHighlightedAtIndex, hoveredIndex } = useMultishift({
     highlightedIndexes: [highlightedIndex],
     type: Type.ControlledMenu,

@@ -67,7 +67,7 @@ import {
   UpdateStateParams,
 } from '../react-types';
 
-export class Remirror<GExtension extends AnyExtension = any> extends PureComponent<
+export class RenderEditor<GExtension extends AnyExtension = any> extends PureComponent<
   RemirrorProps<GExtension>,
   RemirrorState<SchemaFromExtensions<GExtension>>
 > {
@@ -428,7 +428,7 @@ export class Remirror<GExtension extends AnyExtension = any> extends PureCompone
       role: 'textbox',
       'aria-multiline': 'true',
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
-      'aria-label': this.props.label || '',
+      'aria-label': this.props.label ?? '',
       ...managerAttrs,
       class: [ssr && 'Prosemirror', EDITOR_CLASS_NAME, managerAttrs.class].filter(bool).join(' '),
     };

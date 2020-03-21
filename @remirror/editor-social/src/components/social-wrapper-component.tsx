@@ -4,7 +4,7 @@ import { jsx } from '@emotion/core';
 import { FC } from 'react';
 
 import { EmojiObject, EmojiSuggestCommand } from '@remirror/extension-emoji';
-import { useRemirrorContext } from '@remirror/react';
+import { useRemirror } from '@remirror/react';
 
 import {
   ActiveTagData,
@@ -71,7 +71,7 @@ export const SocialEditorComponent: FC<SocialEditorComponentProps> = ({
   const {
     getRootProps,
     state: { newState },
-  } = useRemirrorContext<SocialExtensions>();
+  } = useRemirror<SocialExtensions>();
   const content = newState.doc.textContent;
   return (
     <div>

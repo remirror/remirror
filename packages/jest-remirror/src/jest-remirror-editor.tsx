@@ -26,7 +26,7 @@ import {
   object,
   pick,
 } from '@remirror/core';
-import { InjectedRemirrorProps, Remirror, RemirrorProps } from '@remirror/react';
+import { InjectedRemirrorProps, RemirrorProps, RenderEditor } from '@remirror/react';
 
 import { markFactory, nodeFactory } from './jest-remirror-builder';
 import { BaseExtensionNodeNames, nodeExtensions } from './jest-remirror-schema';
@@ -90,17 +90,17 @@ export const renderEditor = <
   let returnedParams!: InjectedRemirrorProps<GExtension>;
 
   const utils = render(
-    <Remirror {...(props as any)} manager={manager as any}>
+    <RenderEditor {...(props as any)} manager={manager as any}>
       {(params) => {
-        returnedParams = params as any;
+        returnedParams = params;
 
         if (props.children) {
-          return props.children(params as any);
+          return props.children(params);
         }
 
         return <div />;
       }}
-    </Remirror>,
+    </RenderEditor>,
   );
 
   const view = returnedParams.view as TestEditorView;

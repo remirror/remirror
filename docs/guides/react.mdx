@@ -6,8 +6,8 @@ title: React
 
 Creating an editor consists of two steps.
 
-1. Creating the wrapper with `RemirrorProvider` which sets up the editor functionality by passing in the
-   extension manager.
+1. Creating the wrapper with `RemirrorProvider` which sets up the editor functionality by passing in
+   the extension manager.
 
 ```tsx
 import { useCorePreset, useFormattingPreset } from '@remirror/core-presets';
@@ -29,23 +29,27 @@ const EditorWrapper = () => {
 };
 ```
 
-2. Creating the inner editor which has access to the editor commands, functionality, updating dynamic props
-   cursor position and more. This is where the editor specifis UI will live.
+2. Creating the inner editor which has access to the editor commands, functionality, updating
+   dynamic props cursor position and more. This is where the editor specifis UI will live.
 
 ```tsx
 import { MouseEventHandler } from 'react';
 import { useFormattingPresetProps } from '@remirror/core-presets';
 import { useRemirror } from '@remirror/react';
+
 export const MyEditor = () => {
   const { getRootProps, commands } = useRemirror();
-  const onBold: MouseEventHandler<HTMLButtonElement> = event => {
+
+  const onBold: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
     commands.bold();
   };
-  const onItalic: MouseEventHandler<HTMLButtonElement> = event => {
+
+  const onItalic: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
     commands.italic();
   };
+
   return (
     <div>
       <button onClick={onBold} />

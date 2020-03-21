@@ -7,7 +7,7 @@ import { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';
 
 import { createTestManager } from '@remirror/test-fixtures';
 
-import { Remirror } from '..';
+import { RenderEditor } from '..';
 
 const mock = jest.fn();
 const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef((props, ref) => {
@@ -17,11 +17,11 @@ const CustomRoot: FunctionComponent<RefAttributes<HTMLDivElement>> = forwardRef(
 
 test('supports a custom root element', () => {
   render(
-    <Remirror manager={createTestManager()}>
+    <RenderEditor manager={createTestManager()}>
       {({ getRootProps }) => {
         return <CustomRoot {...getRootProps()} />;
       }}
-    </Remirror>,
+    </RenderEditor>,
   );
 
   expect(mock).toHaveBeenCalledWith(expect.any(Function));
@@ -34,11 +34,11 @@ test('supports a custom ref label and passed props through', () => {
   }
   const testProp = 'test';
   render(
-    <Remirror manager={createTestManager()}>
+    <RenderEditor manager={createTestManager()}>
       {({ getRootProps }) => {
         return <Cmp {...getRootProps({ refKey: 'customRef', testProp })} />;
       }}
-    </Remirror>,
+    </RenderEditor>,
   );
 
   expect(mock.mock.calls[0][0].customRef).toBeFunction();
@@ -49,7 +49,7 @@ test('throws an error when called multiple times during render', () => {
   expect.assertions(2);
 
   render(
-    <Remirror manager={createTestManager()}>
+    <RenderEditor manager={createTestManager()}>
       {({ getRootProps }) => {
         expect(() => getRootProps()).not.toThrow();
         expect(() => getRootProps()).toThrowErrorMatchingInlineSnapshot(
@@ -58,7 +58,7 @@ test('throws an error when called multiple times during render', () => {
 
         return <div />;
       }}
-    </Remirror>,
+    </RenderEditor>,
   );
 });
 
@@ -68,7 +68,7 @@ describe('nestedRootProps', () => {
   beforeEach(() => {
     result = render(
       <main>
-        <Remirror manager={createTestManager()} label='Editor'>
+        <RenderEditor manager={createTestManager()} label='Editor'>
           {({ getRootProps }) => {
             return (
               <div>
@@ -78,7 +78,7 @@ describe('nestedRootProps', () => {
               </div>
             );
           }}
-        </Remirror>
+        </RenderEditor>
       </main>,
     );
   });

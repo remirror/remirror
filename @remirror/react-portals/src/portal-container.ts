@@ -1,7 +1,6 @@
+import { createNanoEvents } from 'nanoevents';
 import nano from 'nanoid';
 import { ReactElement } from 'react';
-
-import createNanoEvents from './nanoevents';
 
 export interface RenderParams {
   /**
@@ -25,7 +24,7 @@ interface Events {
   /**
    * Trigger an update in all subscribers
    */
-  update: (map: PortalMap) => void;
+  update: (portalMap: PortalMap) => void;
 }
 
 export type PortalList = ReadonlyArray<[HTMLElement, MountedPortal]>;
@@ -50,8 +49,20 @@ export class PortalContainer {
   /**
    * Event handler for subscribing to update events from the portalContainer.
    */
-  public on = (callback: (map: PortalMap) => void) => {
+  public on = (callback: (portalMap: PortalMap) => void) => {
     return this.events.on('update', callback);
+  };
+
+  /**
+   * Subscribe to one event before automatically unbinding.
+   */
+  public once = (callback: (portalMap: PortalMap) => void) => {
+    const unbind = this.events.on('update', (portalMap) => {
+      unbind();
+      callback(portalMap);
+    });
+
+    return unbind;
   };
 
   /**

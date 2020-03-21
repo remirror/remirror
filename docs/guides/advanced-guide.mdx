@@ -30,7 +30,8 @@ add links, and insert code blocks.
 
 To get started, we need to import the right extensions and set up the editor as follows.
 
-```ts
+```tsx
+import React, { FC, PureComponent } from 'react';
 import {
   BoldExtension,
   CodeBlockExtension,
@@ -42,13 +43,11 @@ import {
   UnderlineExtension,
 } from '@remirror/core-extensions';
 import {
-  asDefaultProps,
-  ManagedRemirrorProvider,
   RemirrorExtension,
   RemirrorManager,
   RemirrorProps,
+  RemirrorProvider,
 } from '@remirror/react';
-import React, { FC, PureComponent } from 'react';
 import { wysiwygEditorTheme } from '../theme';
 
 interface State {
@@ -56,9 +55,7 @@ interface State {
 }
 
 export class MyAwesomeEditor extends PureComponent<{}, State> {
-  public state: State = {
-    linkActivated: false,
-  };
+  public state: State = { linkActivated: false };
 
   private activateLinkExtension = () => {
     this.setState({ linkActivated: true });
@@ -120,7 +117,6 @@ import { styled } from '@emotion/styled';
 import { EDITOR_CLASS_SELECTOR } from '@remirror/core';
 import { BubbleMenu, EditorWrapper } from '@remirror/editor-wysiwyg';
 import { useRemirrorContext } from '@remirror/react';
-
 // Add styles to the editor instance
 export const InnerEditorWrapper = styled.div`
   height: 100%;
@@ -171,14 +167,12 @@ export const InnerEditorWrapper = styled.div`
     background-color: rgb(245, 248, 250);
   }
 `;
-
 const InnerEditor: FC<BubbleMenuProps> = ({
   linkActivated,
   deactivateLinkExtension,
   activateLinkExtension,
 }) => {
   const { getRootProps } = useRemirrorContext();
-
   return (
     <EditorWrapper>
       <BubbleMenu
@@ -219,7 +213,7 @@ Note the example above, or:
 /** @jsx jsx */
 
 import { jsx } from '@emotion/core'; // Needed to support `getRootProps`
-import { useRemirrorContext, ManagedRemirrorProvider } from '@remirror/react';
+import { ManagedRemirrorProvider, useRemirrorContext } from '@remirror/react';
 
 const MyEditor = () => (
   <ManagedRemirrorProvider>

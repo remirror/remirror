@@ -2,7 +2,7 @@ import applyDevTools from 'prosemirror-dev-tools';
 import { useEffect } from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 
-import { useRemirrorContext } from '@remirror/react';
+import { useRemirror } from '@remirror/react';
 
 /**
  * A component that should be placed within the remirror context and will
@@ -15,7 +15,7 @@ import { useRemirrorContext } from '@remirror/react';
  * Based on https://github.com/d4rkr00t/prosemirror-dev-tools
  */
 export const ProsemirrorDevTools = () => {
-  const { view } = useRemirrorContext();
+  const { view } = useRemirror();
 
   useEffect(() => {
     applyDevTools(view);

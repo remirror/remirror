@@ -15,7 +15,7 @@ import {
 import keyNames from 'w3c-keyname';
 
 import { ActionNames, AnyFunction, Attrs, getMarkAttrs, KeyOfThemeVariant } from '@remirror/core';
-import { bubblePositioner, useRemirrorContext } from '@remirror/react';
+import { bubblePositioner, useRemirror } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import {
   BoldIcon,
@@ -86,7 +86,7 @@ interface MenuBarProps extends Pick<BubbleMenuProps, 'activateLink'> {
  * The MenuBar component which renders the actions that can be taken on the text within the editor.
  */
 export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
-  const { actions } = useRemirrorContext<WysiwygExtensions>();
+  const { actions } = useRemirror<WysiwygExtensions>();
 
   return (
     <Toolbar>
@@ -164,9 +164,7 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({
   deactivateLink,
   activateLink,
 }) => {
-  const { actions, getPositionerProps, helpers, state, manager } = useRemirrorContext<
-    WysiwygExtensions
-  >();
+  const { actions, getPositionerProps, helpers, state, manager } = useRemirror<WysiwygExtensions>();
 
   const positionerProps = getPositionerProps({
     ...bubblePositioner,

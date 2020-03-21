@@ -6,11 +6,10 @@ import { ProviderProps, ReactElement } from 'react';
 import { AnyExtension, MakeOptional } from '@remirror/core';
 import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 
-import { useRemirrorManager } from '../hooks/context-hooks';
 import { defaultProps } from '../react-constants';
 import { RemirrorContext } from '../react-contexts';
 import { GetRootPropsConfig, InjectedRemirrorProps, RemirrorProps } from '../react-types';
-import { Remirror } from './remirror';
+import { RenderEditor } from './render-editor';
 
 export interface RemirrorContextProviderProps<GExtension extends AnyExtension = any>
   extends ProviderProps<InjectedRemirrorProps<GExtension>> {
@@ -73,8 +72,7 @@ const RemirrorContextProvider = <GExtension extends AnyExtension = any>({
   childAsRoot: _,
   ...props
 }: RemirrorContextProviderProps<GExtension>) => {
-  const Component = RemirrorContext.Provider;
-  return <Component {...props} />;
+  return <RemirrorContext.Provider {...props} />;
 };
 
 RemirrorContextProvider.$$remirrorType = RemirrorType.ContextProvider;
@@ -99,7 +97,7 @@ export const RemirrorProvider = <GExtension extends AnyExtension = any>({
   ...props
 }: RemirrorProviderProps<GExtension>) => {
   return (
-    <Remirror {...props}>
+    <RenderEditor {...props}>
       {(value) => {
         return (
           <RemirrorContextProvider value={value} childAsRoot={childAsRoot}>
@@ -107,7 +105,7 @@ export const RemirrorProvider = <GExtension extends AnyExtension = any>({
           </RemirrorContextProvider>
         );
       }}
-    </Remirror>
+    </RenderEditor>
   );
 };
 
@@ -115,23 +113,3 @@ RemirrorProvider.$$remirrorType = RemirrorType.EditorProvider;
 
 export interface ManagedRemirrorProviderProps<GExtension extends AnyExtension = any>
   extends Omit<RemirrorProviderProps<GExtension>, 'manager'> {}
-
-/**
- * Renders the content while pulling the manager from the context and passing it on to the RemirrorProvider.
- *
- * If no manager exists the child components are not rendered.
- */
-export const ManagedRemirrorProvider = <GExtension extends AnyExtension = any>({
-  children,
-  ...props
-}: ManagedRemirrorProviderProps<GExtension>) => {
-  const manager = useRemirrorManager<GExtension>();
-
-  return (
-    <RemirrorProvider {...props} manager={manager}>
-      {children}
-    </RemirrorProvider>
-  );
-};
-
-ManagedRemirrorProvider.$$remirrorType = RemirrorType.ManagedEditorProvider;

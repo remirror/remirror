@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core';
 import { forwardRef, FunctionComponent } from 'react';
 
 import { object, Position, RemirrorTheme } from '@remirror/core';
-import { useRemirrorContext } from '@remirror/react';
+import { useRemirror } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 
 import {
@@ -120,7 +120,7 @@ export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
   data,
   setExitTriggeredInternally,
 }) => {
-  const { view, actions } = useRemirrorContext<SocialExtensions>();
+  const { view, actions } = useRemirror<SocialExtensions>();
 
   /**
    * Click handler for accepting a user suggestion
@@ -184,7 +184,7 @@ export const TagSuggestions: FunctionComponent<TagSuggestionsProps> = ({
   data,
   setExitTriggeredInternally,
 }) => {
-  const { view, actions } = useRemirrorContext<SocialExtensions>();
+  const { view, actions } = useRemirror<SocialExtensions>();
 
   /**
    * Click handler for accepting a tag suggestion

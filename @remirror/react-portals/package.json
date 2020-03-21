@@ -23,6 +23,7 @@
   "dependencies": {
     "@babel/runtime": "^7",
     "@types/nanoid": "2.1.0",
+    "nanoevents": "^5.0.1",
     "nanoid": "^2.1.7",
     "type-fest": "^0.12.0"
   },

@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import { EditorState, fromHTML } from '@remirror/core';
 import { createTestManager } from '@remirror/test-fixtures';
 
-import { Remirror } from '..';
+import { RenderEditor } from '..';
 import { InjectedRemirrorProps, RemirrorStateListenerParams } from '../../react-types';
-import { RemirrorProviderProps } from '../remirror-providers';
+import { RemirrorProviderProps } from '../remirror-provider';
 
 const label = 'Remirror editor';
 
@@ -30,9 +30,9 @@ describe('Remirror Controlled Component', () => {
       value = params.newState;
     });
     render(
-      <Remirror {...props} value={value} onStateChange={onStateChange}>
+      <RenderEditor {...props} value={value} onStateChange={onStateChange}>
         {() => <div />}
-      </Remirror>,
+      </RenderEditor>,
     );
 
     expect(onStateChange).toHaveBeenCalled();
@@ -51,9 +51,9 @@ describe('Remirror Controlled Component', () => {
       return <div />;
     });
     const Component = ({ value }: { value?: EditorState | null }) => (
-      <Remirror {...props} onStateChange={onStateChange} value={value}>
+      <RenderEditor {...props} onStateChange={onStateChange} value={value}>
         {mock}
-      </Remirror>
+      </RenderEditor>
     );
     const { rerender, getByRole } = render(<Component value={null} />);
 
@@ -75,9 +75,9 @@ describe('Remirror Controlled Component', () => {
     });
 
     const Component = ({ value }: { value?: EditorState | null }) => (
-      <Remirror {...props} onStateChange={onStateChange} value={value}>
+      <RenderEditor {...props} onStateChange={onStateChange} value={value}>
         {() => <div />}
-      </Remirror>
+      </RenderEditor>
     );
     const { rerender, getByRole } = render(<Component value={null} />);
 
@@ -107,12 +107,12 @@ describe('Remirror Controlled Component', () => {
       };
 
       return (
-        <Remirror {...props} onStateChange={onStateChange} value={value}>
+        <RenderEditor {...props} onStateChange={onStateChange} value={value}>
           {(params: InjectedRemirrorProps) => {
             renderParams = params;
             return <div />;
           }}
-        </Remirror>
+        </RenderEditor>
       );
     };
     const { getByRole } = render(<Component />);
@@ -144,12 +144,12 @@ describe('Remirror Controlled Component', () => {
       };
 
       return (
-        <Remirror {...props} onStateChange={onStateChange} value={value}>
+        <RenderEditor {...props} onStateChange={onStateChange} value={value}>
           {(params: InjectedRemirrorProps) => {
             renderParams = params;
             return <div />;
           }}
-        </Remirror>
+        </RenderEditor>
       );
     };
 
