@@ -11,9 +11,7 @@
     "start": "gatsby develop"
   },
   "dependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/register": "^7.7.7",
-    "@babel/runtime": "^7.6.3",
+    "@babel/runtime": "^7.9.2",
     "@emotion/core": "^10.0.22",
     "@emotion/styled": "^10.0.23",
     "@mdx-js/mdx": "^1.5.1",
