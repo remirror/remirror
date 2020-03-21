@@ -51,6 +51,7 @@ module.exports = {
     'import',
     'jsx-a11y',
     'graphql',
+    'simple-import-sort',
   ],
   parserOptions: {
     ecmaVersion: 2018,
@@ -100,15 +101,40 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'error',
     'react-hooks/rules-of-hooks': 'error',
 
-    'import/no-deprecated': 'warn',
+    'import/no-deprecated': 'error',
     'import/first': 'error',
     'import/no-duplicates': 'error',
     'import/no-cycle': 'error',
     'import/no-self-import': 'error',
-    'import/newline-after-import': 'error',
-    'import/order': 'off',
+    'import/newline-after-import': 'warn',
 
+    // Turn off import rules
+    'import/order': 'off',
     'sort-imports': 'off',
+    'simple-import-sort/sort': [
+      'warn',
+      {
+        groups: [
+          // Side effect imports.
+          ['^\\u0000'],
+
+          // Packages that are not scoped to `remirror`
+          // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+          ['^(?!@?remirror)@?\\w'],
+
+          // Scoped packages
+          ['^@?remirror'],
+
+          // Absolute imports and other imports such as Vue-style `@/foo`.
+          // Anything that does not start with a dot.
+          ['^[^.]'],
+
+          // Relative imports.
+          // Anything that starts with a dot.
+          ['^\\.'],
+        ],
+      },
+    ],
 
     // ESLint rules (those without a '/' in) come after here
 
@@ -121,7 +147,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-inferrable-types': 'off',
-    '@typescript-eslint/no-namespace': 'off', // Migrate all the global namespaces to be in .d.ts files (see overrides)
+    '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/no-non-null-assertion': 'warn',
     '@typescript-eslint/no-use-before-define': ['warn', { typedefs: false }],
     '@typescript-eslint/no-unused-vars': [
@@ -141,10 +167,10 @@ module.exports = {
     'react/no-children-prop': 'warn',
     'react/no-multi-comp': 'off', // Might want to enable this later
 
-    'no-invalid-regexp': 'warn',
-    'no-multi-str': 'warn',
-    'no-constant-condition': 'warn',
-    'no-extra-boolean-cast': 'warn',
+    'no-invalid-regexp': 'error',
+    'no-multi-str': 'error',
+    'no-constant-condition': 'error',
+    'no-extra-boolean-cast': 'error',
     'no-empty': 'warn', // Later, put a `/* noop */` comment in empty blocks to explain why
     'no-useless-escape': 'warn',
     radix: 'warn',

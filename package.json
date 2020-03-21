@@ -51,7 +51,7 @@
     "patch": "patch-package --patch-dir support/patches",
     "prerelease": "yarn if-not-ci run-s checks:release",
     "release": "changeset publish",
-    "run:prettier": "prettier --ignore-path .eslintignore '**/*.{js,jsx,ts,tsx,md,json,html,css,yml,yaml,graphql}'",
+    "run:prettier": "prettier --ignore-path .eslintignore '**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}'",
     "size": "size-limit",
     "start:checks": "cpy support/.config.sample.json ./ --rename=\".config.json\"",
     "stop:checks": "rimraf ./.config.json",
@@ -94,10 +94,9 @@
     "jsxBracketSameLine": false,
     "jsxSingleQuote": true,
     "plugins": [
-      "./node_modules/prettier-plugin-packagejson",
-      "./node_modules/prettier-plugin-sorted"
+      "prettier-plugin-packagejson"
     ],
-    "printWidth": 110,
+    "printWidth": 100,
     "proseWrap": "always",
     "semi": true,
     "singleQuote": true,
@@ -236,6 +235,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.1.2",
+    "eslint-plugin-simple-import-sort": "^5.0.2",
     "eslint-plugin-unicorn": "^17.1.0",
     "husky": "^4.2.3",
     "jest": "^25.1.0",
@@ -252,7 +252,6 @@
     "postinstall-postinstall": "^2.0.0",
     "prettier": "^2.0.1",
     "prettier-plugin-packagejson": "^2.0.10",
-    "prettier-plugin-sorted": "^1.2.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-test-renderer": "^16.12.0",
@@ -271,15 +270,5 @@
   },
   "engines": {
     "node": ">=10"
-  },
-  "importSort": {
-    ".js,.jsx,.ts,.tsx": {
-      "options": {
-        "ignoreTsConfig": true,
-        "extraAliases": [
-          "@remirror/"
-        ]
-      }
-    }
   }
 }
