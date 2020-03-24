@@ -15,5 +15,9 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "prettier.ignorePath": ".eslintignore"
+  "prettier.ignorePath": ".eslintignore",
+
+  "files.exclude": {
+    ".yarn/releases/**": true
+  }
 }
