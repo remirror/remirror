@@ -11,14 +11,12 @@ import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
 
 /**
- * Determines if the passed in extension is a any type of extension.
+ * Determines if the passed in extension is any type of extension.
  *
  * @param extension - the extension to check
  */
 export const isExtension = (extension: unknown): extension is AnyExtension =>
-  isObject(extension) && extension.toString() === RemirrorClassName.Extension;
-
-// export const isExtension = _isObjectOfType<AnyExtension>(_TypeName.RemirrorExtension);
+  isObject(extension) && extension.toString().startsWith(RemirrorClassName.Extension);
 
 /**
  * Checks whether the this is an extension and if it is a plain one

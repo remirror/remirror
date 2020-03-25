@@ -5,6 +5,8 @@ import nano from 'nanoid';
 import objectOmit from 'object.omit';
 import objectPick from 'object.pick';
 
+import { Predicate } from '@remirror/core-types';
+
 type AnyConstructor<GType = unknown> = new (...args: any[]) => GType;
 type AnyFunction<GType = any> = (...args: any[]) => GType;
 interface PlainObject {
@@ -59,9 +61,20 @@ enum TypeName {
 /**
  * Alias of toString for non-dom environments.
  *
- * @private
+ * This is a safe way of calling `toString` on objects created with
+ * `Object.create(null)`.
  */
-const toString = Object.prototype.toString;
+export const toString = (value: unknown) => Object.prototype.toString.call(value);
+
+/**
+ * Negates a predicate check.
+ *
+ * @remarks
+ *
+ * Unfortunately I'm not sure if it's possible to actually negate the predicate
+ * with typescript automatically.
+ */
+export const not = <GType>(predicate: Predicate<GType>) => (a: unknown) => !predicate(a);
 
 /**
  * Retrieve the object type of a value via it's string reference. This is safer
@@ -70,7 +83,7 @@ const toString = Object.prototype.toString;
  * @param value - the object to inspect
  */
 const getObjectType = (value: unknown): TypeName | undefined => {
-  const objectName = toString.call(value).slice(8, -1);
+  const objectName = toString(value).slice(8, -1);
 
   return objectName as TypeName;
 };

@@ -207,7 +207,10 @@ export enum Tags {
 
 /**
  * The toString return value for any created remirror class.
+ *
+ * @internal
  */
 export enum RemirrorClassName {
   Extension = '$$RemirrorExtension',
+  ExtensionManager = '$$RemirrorExtensionManager',
 }

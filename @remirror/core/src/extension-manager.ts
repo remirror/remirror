@@ -6,14 +6,16 @@ import { EditorState } from 'prosemirror-state';
 import { suggest, Suggester } from 'prosemirror-suggest';
 import { ComponentType } from 'react';
 
+import { RemirrorClassName } from '@remirror/core-constants';
 import {
   bool,
   hasOwnProperty,
   isArray,
   isEqual,
   isFunction,
-  isInstanceOf,
+  isObject,
   object,
+  toString,
 } from '@remirror/core-helpers';
 import {
   ActionMethod,
@@ -132,20 +134,6 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   implements ExtensionManagerInitParams<SchemaFromExtensions<GExtension>> {
   /**
    * A static method for creating a new extension manager.
-   *
-   * @deprecated
-   *
-   * Use {@link ExtensionManager.of} instead.
-   */
-  public static create<GFlexibleList extends FlexibleExtension[]>(
-    prioritizedExtensions: GFlexibleList,
-  ) {
-    const extensions = transformExtensionMap(prioritizedExtensions);
-    return new ExtensionManager<InferFlexibleExtensionList<GFlexibleList>>(extensions);
-  }
-
-  /**
-   * A static method for creating a new extension manager.
    */
   public static of<GFlexibleList extends FlexibleExtension[]>(
     prioritizedExtensions: GFlexibleList,
@@ -202,7 +190,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * This should not be called directly if you want to use prioritized extensions. Instead use
    * `ExtensionManager.create`.
    */
-  constructor(extensions: GExtension[]) {
+  private constructor(extensions: GExtension[]) {
     this.extensions = extensions;
 
     // Initialize the schema immediately since this doesn't ever change.
@@ -764,6 +752,13 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   }
 
   /**
+   * Used to identify this class as an `ExtensionManager`
+   */
+  public toString() {
+    return RemirrorClassName.ExtensionManager;
+  }
+
+  /**
    * `Extensions`
    *
    * Type inference hack for the extensions union of an extension manager. This is the only way I know to
@@ -853,12 +848,14 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     this['_P']
   >;
 }
+
 /**
- * Checks to see whether this is an extension manager
+ * Checks to see whether this is an extension manager.
  *
  * @param value - the value to check
  */
-export const isExtensionManager = isInstanceOf(ExtensionManager);
+export const isExtensionManager = (value: unknown): value is ExtensionManager =>
+  isObject(value) && toString(value) === RemirrorClassName.ExtensionManager;
 
 export interface ManagerParams<GExtension extends AnyExtension = any> {
   /**

@@ -467,7 +467,7 @@ export interface Extension<
   plugin?(params: ExtensionManagerTypeParams<GType>): ProsemirrorPlugin;
 
   /**
-   * An extension can declare the extensions it requires with options needed for
+   * An extension can declare the extensions it requires with the default options for
    * instantiating them.
    *
    * @remarks
