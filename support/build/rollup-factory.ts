@@ -50,6 +50,7 @@ const configure = async ({
       path: join(root, 'lib', 'dist'),
       production: cjsProdFileName,
       development: cjsFileName,
+      devOnly,
     });
   }
 
@@ -125,7 +126,6 @@ const configure = async ({
       plugins: createPlugins(env),
       input,
       output,
-      onwarn: () => {},
       // We need to explicitly state which modules are external, meaning that
       // they are present at runtime.
       external: (id) => {

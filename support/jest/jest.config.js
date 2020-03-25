@@ -22,12 +22,11 @@ module.exports = {
     jestSupportDir('jest.framework.dom.ts'),
   ],
   snapshotSerializers: ['jest-emotion'],
-  cacheDirectory: baseDir('.jest'),
+  cacheDirectory: baseDir('.jest', TEST_BUILD ? 'build' : 'aliased'),
   testEnvironment: 'jest-environment-jsdom-sixteen',
   moduleNameMapper:
     TEST_BUILD === 'true'
-      ? // ? { '^@remirror\\/test-fixtures$': baseDir('@remirror', 'test-fixtures', 'src') }
-        {}
+      ? { '^@remirror\\/test-fixtures$': baseDir('@remirror', 'test-fixtures', 'src') }
       : {
           '^test-keyboard$': baseDir('packages', 'test-keyboard', 'src'),
           '^jest-remirror$': baseDir('packages', 'jest-remirror', 'src'),

@@ -1,10 +1,9 @@
 import { getPackages, Packages } from '@manypkg/get-packages';
-import fs, { outputFile } from 'fs-extra';
+import { outputFile } from 'fs-extra';
 import { join, relative, resolve } from 'path';
-import progressEstimator from 'progress-estimator';
 import { PackageJson as BasePackageJson } from 'type-fest';
 
-export { keys, uniqueArray } from '@remirror/core-helpers';
+export { keys, uniqueArray } from '../../@remirror/core-helpers/src';
 
 export const DEPENDENCY_TYPES = [
   'dependencies',
@@ -91,6 +90,13 @@ export interface WriteCjsEntryFileOptions {
    * @defaultValue 'index.js'
    */
   fileName?: string;
+
+  /**
+   * Whether this is a 'development' only build.
+   *
+   * @default false
+   */
+  devOnly?: boolean;
 }
 
 /**
@@ -100,12 +106,16 @@ export const writeCjsEntryFile = async ({
   path,
   production,
   development,
-  fileName = join('lib', 'dist', 'index.js'),
+  fileName = 'index.js',
+  devOnly = false,
 }: WriteCjsEntryFileOptions) => {
   const commonJsRequire = (fileName: string) =>
     `module.exports = require('./${relative(path, fileName)}');`;
 
-  const contents = `'use strict'
+  const contents = devOnly
+    ? commonJsRequire(development)
+    : `'use strict'
+
 if (process.env.NODE_ENV === 'production') {
   ${commonJsRequire(production)}
 } else {
@@ -114,14 +124,4 @@ if (process.env.NODE_ENV === 'production') {
 `;
 
   return outputFile(join(path, fileName), contents);
-};
-
-const PROGRESS_ESTIMATOR_CACHE = baseDir('node_modules', '.cache', '.progress-estimator');
-
-export const createProgressEstimator = async () => {
-  await fs.ensureDir(PROGRESS_ESTIMATOR_CACHE);
-
-  return progressEstimator({
-    storagePath: PROGRESS_ESTIMATOR_CACHE,
-  });
 };

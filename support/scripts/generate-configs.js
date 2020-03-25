@@ -25,7 +25,6 @@ const EXCLUDE_PROD = [
 
 const configs = {
   sizeLimit: '.size-limit.json',
-  rollup: 'support/rollup/config.json',
   tsconfig: 'support/tsconfig.paths.json',
   eslint: 'support/eslint-imports.json',
   storybook: 'support/storybook/modules.json',
@@ -49,27 +48,6 @@ const generateSizeLimitConfig = async () => {
 
   await writeJSON(path, sizes);
   filesToPrettify.push(path);
-};
-
-const generateRollupConfig = async () => {
-  const [packages, dependencies] = await Promise.all([
-    getAllDependencies(),
-    getDependencyPackageMap(true),
-  ]);
-
-  const rollup = packages
-    .filter((pkg) => !pkg.private || pkg.name === '@remirror/test-fixtures')
-    .map((json) => {
-      const packagePath = getRelativePathFromJson(json);
-      return {
-        path: packagePath,
-        name: json.name,
-      };
-    });
-  const jsonPath = baseDir(configs.rollup);
-
-  await writeJSON(jsonPath, { ...AUTO_GENERATED_FLAG, rollup, dependencies });
-  filesToPrettify.push(jsonPath);
 };
 
 const generateTSConfig = async () => {
@@ -241,7 +219,6 @@ const generatePackageTsConfigs = async () => {
 const run = async () => {
   await Promise.all([
     generateSizeLimitConfig(),
-    generateRollupConfig(),
     generateTSConfig(),
     generateStorybookResolverConfig(),
     generateApiExtractorConfigs(),

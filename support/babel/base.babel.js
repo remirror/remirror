@@ -14,7 +14,7 @@ const basePreset = ['@babel/preset-react'];
 
 const presets = [...basePreset, ['@babel/preset-env']];
 
-const testBabelPresetEnv = ['@babel/preset-env', { targets: { node: '8' } }];
+const testBabelPresetEnv = ['@babel/preset-env', { targets: { node: '10' } }];
 const nonTestEnv = { ignore, presets };
 
 module.exports = {
@@ -33,7 +33,6 @@ module.exports = {
   plugins: [
     'babel-plugin-annotate-pure-calls',
     'babel-plugin-dev-expression',
-    'babel-plugin-transform-async-to-promises',
     '@babel/plugin-transform-runtime',
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-syntax-dynamic-import',

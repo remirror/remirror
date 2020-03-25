@@ -1,14 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import chalk from 'chalk';
 import { join } from 'path';
-import { rollup, RollupOptions } from 'rollup';
+import { RollupOptions } from 'rollup';
 import { PackageJson } from 'type-fest';
-
-import { isArray } from '@remirror/core-helpers';
 
 import {
   baseDir,
-  createProgressEstimator,
   DEPENDENCY_TYPES,
   getAllDependencies,
   getDependencyPackageMap,
@@ -21,10 +18,14 @@ import factory from './rollup-factory';
 
 // Specify the exact packages to be build with `PACKAGE` environment variable.
 // `PACKAGES=jest-remirror,@remirror/core rollup -c`
-const { PACKAGES } = process.env;
+const { PACKAGES, DEV_ONLY } = process.env;
 
 // The names of the packages specifically requested to be built.
 const requestedPackageNames = PACKAGES?.split(',') ?? [];
+
+// Whether this build should ignore minification. Used when running `rollup
+// --watch`
+const devOnly = DEV_ONLY === 'true';
 
 // The list of packages to ignore from the list. Basically packages which have
 // types but are never published.
@@ -146,7 +147,11 @@ const createRollupConfig = async () => {
     const path = baseDir(config.path);
     const packageJson = join(path, 'package.json');
 
-    const configs = await factory({ pkg: require(packageJson), root: path });
+    const configs = await factory({
+      pkg: require(packageJson),
+      root: path,
+      devOnly,
+    });
 
     for (const config of configs) {
       configurations.push(config);
@@ -156,35 +161,4 @@ const createRollupConfig = async () => {
   return configurations;
 };
 
-const buildRollup = async () => {
-  const logger = await createProgressEstimator();
-  const configPromise = createRollupConfig();
-
-  logger(configPromise, 'Preparing');
-  const rollupOptions = await configPromise;
-
-  const promiseList = rollupOptions.map(async (options) => {
-    const bundle = await rollup(options);
-    if (!options.output) {
-      return;
-    }
-
-    if (isArray(options.output)) {
-      return Promise.all(options.output.map((output) => bundle.write(output)));
-    }
-
-    return bundle.write(options.output);
-  });
-
-  const rollupBuildPromise = Promise.all(promiseList);
-
-  logger(rollupBuildPromise, `Building ${requestedPackageNames.join(', ') || 'all'} packages`);
-  await rollupBuildPromise;
-};
-
-buildRollup()
-  .then(() => process.exit(0))
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  });
+export default createRollupConfig();
