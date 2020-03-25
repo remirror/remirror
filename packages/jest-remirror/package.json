@@ -12,14 +12,14 @@
   "repository": "https://github.com/remirror/remirror/tree/master/packages/jest-remirror",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "environment.d.ts",
     "environment.js",
     "lib",
     "src"
   ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",

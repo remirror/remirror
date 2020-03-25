@@ -6,14 +6,14 @@
   "repository": "https://github.com/remirror/remirror/tree/master/packages/multishift",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "main": "lib/dist/index.js",
+  "module": "lib/dist/multishift.esm.js",
+  "types": "lib/index.d.ts",
   "files": [
     "globals.d.ts",
     "lib",
     "src"
   ],
-  "main": "lib/index.js",
-  "module": "lib/dist/multishift.esm.js",
-  "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
     "@reach/auto-id": "^0.9.0",

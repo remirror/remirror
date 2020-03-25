@@ -6,18 +6,18 @@
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/core",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "files": [
-    "internal",
-    "lib",
-    "src"
-  ],
   "sideEffects": false,
-  "main": "lib/index.js",
+  "main": "lib/dist/index.js",
   "module": "lib/dist/core.esm.js",
   "browser": {
     "min-document": false
   },
   "types": "lib/index.d.ts",
+  "files": [
+    "internal",
+    "lib",
+    "src"
+  ],
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core-constants": "^0.7.4",

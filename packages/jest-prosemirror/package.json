@@ -12,6 +12,8 @@
   "repository": "https://github.com/remirror/remirror/tree/master/packages/jest-prosemirror",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "environment.d.ts",
     "environment.js",
@@ -20,8 +22,6 @@
     "serializer.js",
     "src"
   ],
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core-constants": "^0.7.4",

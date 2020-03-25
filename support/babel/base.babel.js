@@ -22,11 +22,20 @@ module.exports = {
   overrides: [
     { test: /\.ts$/, plugins: [['@babel/plugin-transform-typescript', { isTSX: false }]] },
     { test: /\.tsx$/, plugins: [['@babel/plugin-transform-typescript', { isTSX: true }]] },
-    { test: /\.tsx?$/, plugins: ['@babel/plugin-proposal-class-properties'] },
+    {
+      test: /\.tsx?$/,
+      plugins: [
+        '@babel/plugin-proposal-class-properties',
+        '@babel/plugin-proposal-private-methods',
+      ],
+    },
   ],
   plugins: [
-    ['@babel/plugin-transform-runtime'],
-    ['@babel/plugin-proposal-object-rest-spread'],
+    'babel-plugin-annotate-pure-calls',
+    'babel-plugin-dev-expression',
+    'babel-plugin-transform-async-to-promises',
+    '@babel/plugin-transform-runtime',
+    '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-nullish-coalescing-operator',
     '@babel/plugin-proposal-optional-chaining',

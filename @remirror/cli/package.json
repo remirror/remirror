@@ -10,15 +10,15 @@
   },
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "files": [
-    "lib",
-    "src"
-  ],
   "sideEffects": false,
   "main": "lib/index.js",
   "bin": {
     "remirror": "lib/cli.js"
   },
+  "files": [
+    "lib",
+    "src"
+  ],
   "dependencies": {
     "@babel/runtime": "^7",
     "@emotion/core": "^10",
