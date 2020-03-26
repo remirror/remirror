@@ -1,14 +1,14 @@
 {
   "name": "@remirror/playground",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "description": "Remirror Playground",
-  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/ui-text",
-  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/ui-text",
+  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/playground",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/playground",
   "license": "MIT",
   "contributors": [
-    "Ifiok Jr. <ifiokotung@gmail.com>",
-    "Benjie Gillam <code@benjiegillam.com>"
+    "Benjie Gillam <code@benjiegillam.com>",
+    "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "files": [
     "lib"
