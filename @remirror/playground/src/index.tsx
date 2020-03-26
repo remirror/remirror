@@ -38,6 +38,7 @@ function makeCode(codeOptions: CodeOptions): string {
   }
 
   addImport('react', ['default', 'React']);
+  addImport('react', 'FC');
   addImport('@remirror/react', 'RemirrorProvider');
   addImport('@remirror/react', 'useExtensionManager');
   addImport('@remirror/react', 'useExtension');
@@ -82,7 +83,7 @@ function makeCode(codeOptions: CodeOptions): string {
 ${importLines.join('\n')}
 
 // Set up the component to provide the functionality for the editor
-const SmallEditor = () => {
+const SmallEditor: FC = () => {
   const { getRootProps, commands } = useRemirror(); // Picked from the context.
 
   return (

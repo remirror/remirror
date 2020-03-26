@@ -40,12 +40,14 @@ export function compile(
   let result: BabelFileResult | null = null;
   try {
     result = transform(code, {
+      filename: 'usercode.tsx',
+
       /*
        * These presets and plugins are named inside @babel/standalone, they
        * **MUST NOT** have their `@babel/preset-` or `@babel/plugin-` prefixes
        * otherwise they WILL NOT WORK.
        */
-      presets: ['react', 'env'],
+      presets: ['react', 'env', 'typescript'],
       plugins: [
         ['transform-runtime'],
         ['proposal-object-rest-spread'],
