@@ -18,6 +18,8 @@
   "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
+    "@babel/standalone": "^7.9.4",
+    "@types/babel__standalone": "^7.1.2",
     "monaco-editor": "^0.20.0"
   },
   "peerDependencies": {
