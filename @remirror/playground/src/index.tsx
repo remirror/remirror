@@ -66,7 +66,7 @@ function makeCode(codeOptions: CodeOptions): string {
         }
         defaultName = alias;
       } else {
-        namedImports.push(name + (alias ? ` as ${alias}` : ''));
+        namedImports.push(name + (alias && alias !== name ? ` as ${alias}` : ''));
       }
     }
     const things: string[] = [];

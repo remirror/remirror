@@ -6,6 +6,7 @@ import * as babelRuntimeHelpersInteropRequireDefault from '@babel/runtime/helper
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { debounce } from 'remirror';
+import * as remirror from 'remirror';
 
 import * as remirrorCoreExtensions from '@remirror/core-extensions';
 import * as remirrorReact from '@remirror/react';
@@ -16,6 +17,7 @@ const knownRequires: { [moduleName: string]: any } = {
   '@babel/runtime/helpers/interopRequireDefault': babelRuntimeHelpersInteropRequireDefault,
   '@remirror/core-extensions': remirrorCoreExtensions,
   '@remirror/react': remirrorReact,
+  remirror: remirror,
   react: React,
 };
 
@@ -73,7 +75,7 @@ async function makeRequire(requires: string[]) {
 
   await Promise.all(tasks);
 
-  return (moduleName: string) => {
+  return function require(moduleName: string) {
     if (modules[moduleName]) {
       return modules[moduleName];
     } else {

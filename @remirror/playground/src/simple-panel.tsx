@@ -16,6 +16,10 @@ const knownExtensions: ExtensionSpec[] = [
     module: '@remirror/core-extensions',
     export: 'ItalicExtension',
   },
+  {
+    module: '@remirror/core-extensions',
+    export: 'UnderlineExtension',
+  },
 ];
 
 const ExtensionCheckbox: FC<{

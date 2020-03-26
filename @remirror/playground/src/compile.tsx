@@ -18,6 +18,8 @@ function playgroundImports() {
           args[0].type === 'StringLiteral'
         ) {
           requires.push(args[0].value);
+
+          // For debugging:
           t.addComment(args[0], 'trailing', 'Importing');
         }
       },
