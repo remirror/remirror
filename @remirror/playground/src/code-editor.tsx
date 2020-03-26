@@ -18,7 +18,6 @@ const CodeEditor: FC<CodeEditorProps> = props => {
 
   useEffect(() => {
     return () => {
-      console.log('DISPOSING OF MODEL');
       model.dispose();
     };
   }, [model]);
@@ -30,7 +29,6 @@ const CodeEditor: FC<CodeEditorProps> = props => {
       });
       editorRef.current = editor;
       return () => {
-        console.log('DISPOSING OF EDITOR');
         editor.dispose();
       };
     }
