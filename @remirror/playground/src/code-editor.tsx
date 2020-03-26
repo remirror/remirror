@@ -17,7 +17,9 @@ const CodeEditor: FC<CodeEditorProps> = props => {
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
   useEffect(() => {
-    return () => model.dispose();
+    return () => {
+      model.dispose();
+    };
   }, [model]);
 
   useEffect(() => {
@@ -26,6 +28,11 @@ const CodeEditor: FC<CodeEditorProps> = props => {
         model,
       });
     }
+    return () => {
+      if (editorRef.current) {
+        editorRef.current.dispose();
+      }
+    };
   }, [model]);
 
   useEffect(() => {
