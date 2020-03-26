@@ -87,8 +87,8 @@ const SmallEditor = () => {
 
   return (
     <div>
-      <button onClick={() => commands.bold()}>bold<button>
-      <button onClick={() => commands.italic()}>italic<button>
+      <button onClick={() => commands.bold()}>bold</button>
+      <button onClick={() => commands.italic()}>italic</button>
       <div {...getRootProps()} />
     </div>
   );
