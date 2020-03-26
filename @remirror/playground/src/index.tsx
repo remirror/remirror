@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState } from 'react';
 
 import CodeEditor from './code-editor';
 import { CodeOptions } from './interfaces';
-import { Container, Header, Main, Panel } from './primitives';
+import { Container, Divide, Header, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
 
 function nameify(str: string): [string, string] {
@@ -151,18 +151,22 @@ const Playground: FC = () => {
     <Container>
       <Header>Playground</Header>
       <Main>
-        <Panel>
+        <Panel flex='0 0 16rem'>
           {advanced ? (
-            <>
+            <div>
               <button onClick={handleToggleAdvanced}>Enter simple mode</button>
-            </>
+            </div>
           ) : (
             <SimplePanel options={options} setOptions={setOptions} onAdvanced={handleToggleAdvanced} />
           )}
         </Panel>
-        <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
-        <Panel flex='1'>
-          <div style={{ padding: '1rem' }}>[Insert editor here]</div>
+        <Divide />
+        <Panel vertical>
+          <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
+          <Divide />
+          <Panel flex='1'>
+            <div style={{ padding: '1rem' }}>[Insert editor here]</div>
+          </Panel>
         </Panel>
       </Main>
     </Container>
