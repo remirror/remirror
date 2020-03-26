@@ -1,4 +1,4 @@
-import * as monaco from 'monaco-editor';
+import { Uri, editor } from 'monaco-editor';
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 
 interface CodeEditorProps {
@@ -10,11 +10,8 @@ interface CodeEditorProps {
 const CodeEditor: FC<CodeEditorProps> = props => {
   const { value, onChange, readOnly } = props;
   const ref = useRef<HTMLDivElement | null>(null);
-  const model = useMemo(
-    () => monaco.editor.createModel('', 'typescript', monaco.Uri.parse('file:///remirror.tsx')),
-    [],
-  );
-  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+  const model = useMemo(() => editor.createModel('', 'typescript', Uri.parse('file:///usercode.tsx')), []);
+  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
 
   useEffect(() => {
     return () => {
@@ -24,12 +21,12 @@ const CodeEditor: FC<CodeEditorProps> = props => {
 
   useEffect(() => {
     if (ref.current) {
-      const editor = monaco.editor.create(ref.current, {
+      const myEditor = editor.create(ref.current, {
         model,
       });
-      editorRef.current = editor;
+      editorRef.current = myEditor;
       return () => {
-        editor.dispose();
+        myEditor.dispose();
       };
     }
     return;

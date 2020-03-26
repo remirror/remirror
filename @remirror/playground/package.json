@@ -20,7 +20,8 @@
     "@babel/runtime": "^7",
     "@babel/standalone": "^7.9.4",
     "@types/babel__standalone": "^7.1.2",
-    "monaco-editor": "^0.20.0"
+    "monaco-editor": "^0.20.0",
+    "monaco-editor-webpack-plugin": "^1.9.0"
   },
   "peerDependencies": {
     "@emotion/core": "^10",
