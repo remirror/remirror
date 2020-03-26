@@ -42,6 +42,12 @@ async function makeRequire(requires: string[]) {
   };
 }
 
+function runCode(code: string, requireFn: (mod: string) => any) {
+  const userModule = { exports: {} as any };
+  eval(`(function userCode(require, module, exports) {${code}})`)(requireFn, userModule, userModule.exports);
+  return userModule;
+}
+
 function runCodeInDiv(div: HTMLDivElement, { code, requires }: { code: string; requires: string[] }) {
   let active = true;
   (async function doIt() {
@@ -52,13 +58,8 @@ function runCodeInDiv(div: HTMLDivElement, { code, requires }: { code: string; r
     }
 
     // Then run the code to generate the React element
-    const mod = { exports: {} as any };
-    eval(`\
-(function userCode(require, module, exports) {
-  ${code}
-})
-`)(requireFn, mod, mod.exports);
-    const Component = mod.exports.default || mod.exports;
+    const userModule = runCode(code, requireFn);
+    const Component = userModule.exports.default || userModule.exports;
 
     // Then mount the React element into the div
     render(
@@ -67,7 +68,6 @@ function runCodeInDiv(div: HTMLDivElement, { code, requires }: { code: string; r
       </ErrorBoundary>,
       div,
     );
-    console.dir(mod);
   })();
 
   return () => {
@@ -80,8 +80,11 @@ export const Execute: FC<ExecuteProps> = props => {
   const { code, requires } = props;
   const ref = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    const release = runCodeInDiv(ref.current, { code, requires });
-    return release;
+    if (ref.current) {
+      const release = runCodeInDiv(ref.current, { code, requires });
+      return release;
+    }
+    return;
   }, [code, requires]);
 
   return <div ref={ref} />;
