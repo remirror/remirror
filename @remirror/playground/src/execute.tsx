@@ -51,23 +51,35 @@ function runCode(code: string, requireFn: (mod: string) => any) {
 function runCodeInDiv(div: HTMLDivElement, { code, requires }: { code: string; requires: string[] }) {
   let active = true;
   (async function doIt() {
-    // First do the requires.
-    const requireFn = await makeRequire(requires);
-    if (!active) {
-      return;
+    try {
+      // First do the requires.
+      const requireFn = await makeRequire(requires);
+      if (!active) {
+        return;
+      }
+
+      // Then run the code to generate the React element
+      const userModule = runCode(code, requireFn);
+      const Component = userModule.exports.default || userModule.exports;
+
+      // Then mount the React element into the div
+      render(
+        <ErrorBoundary>
+          <Component />
+        </ErrorBoundary>,
+        div,
+      );
+    } catch (e) {
+      render(
+        <div>
+          <h1>Error occurred</h1>
+          <pre>
+            <code>{String(e)}</code>
+          </pre>
+        </div>,
+        div,
+      );
     }
-
-    // Then run the code to generate the React element
-    const userModule = runCode(code, requireFn);
-    const Component = userModule.exports.default || userModule.exports;
-
-    // Then mount the React element into the div
-    render(
-      <ErrorBoundary>
-        <Component />
-      </ErrorBoundary>,
-      div,
-    );
   })();
 
   return () => {
