@@ -3,7 +3,7 @@ import * as crypto from 'crypto';
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import * as babelRuntimeHelpersInteropRequireDefault from '@babel/runtime/helpers/interopRequireDefault';
-import React, { FC, useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { FC, useEffect, useMemo, useRef } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { debounce } from 'remirror';
 
@@ -12,10 +12,6 @@ import * as remirrorReact from '@remirror/react';
 
 import { ErrorBoundary } from './error-boundary';
 
-export interface ExecuteProps {
-  code: string;
-  requires: string[];
-}
 const knownRequires: { [moduleName: string]: any } = {
   '@babel/runtime/helpers/interopRequireDefault': babelRuntimeHelpersInteropRequireDefault,
   '@remirror/core-extensions': remirrorCoreExtensions,
@@ -44,7 +40,8 @@ function bundle(moduleName: string, id: string): Promise<any> {
       console.log(`LOADED ${moduleName}`);
       resolve((window as any)[id]);
     };
-    el.onerror = event => {
+    el.onerror = _event => {
+      // We cannot really get details from the event because browsers prevent that for security reasons.
       reject(new Error(`Failed to load ${el.src}`));
     };
     el.src = `http://bundle.run/${encodeURIComponent(moduleName)}@latest?name=${encodeURIComponent(id)}`;
@@ -85,6 +82,10 @@ async function makeRequire(requires: string[]) {
   };
 }
 
+/**
+ * Fakes CommonJS stuff so that we can run the user code as if it were a
+ * CommonJS module.
+ */
 function runCode(code: string, requireFn: (mod: string) => any) {
   const userModule = { exports: {} as any };
   eval(`(function userCode(require, module, exports) {${code}})`)(requireFn, userModule, userModule.exports);
@@ -132,6 +133,19 @@ function runCodeInDiv(div: HTMLDivElement, { code, requires }: { code: string; r
   };
 }
 
+export interface ExecuteProps {
+  /** The JavaScript code to execute (in CommonJS syntax) */
+  code: string;
+
+  /** A list of the modules this code `require()`s */
+  requires: string[];
+}
+
+/**
+ * Executes the given `code`, mounting the React component that it exported (via
+ * `export default`) into the DOM. Is automatically debounced to prevent
+ * over-fetching npm modules during typing.
+ */
 export const Execute: FC<ExecuteProps> = props => {
   const { code, requires } = props;
   const ref = useRef<HTMLDivElement | null>(null);
