@@ -4,6 +4,7 @@ import CodeEditor from './code-editor';
 import { CodeOptions } from './interfaces';
 import { Container, Divide, Header, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
+import { Viewer } from './viewer';
 
 function nameify(str: string): [string, string] {
   const base = str
@@ -164,9 +165,7 @@ const Playground: FC = () => {
         <Panel vertical>
           <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
           <Divide />
-          <Panel flex='1'>
-            <div style={{ padding: '1rem' }}>[Insert editor here]</div>
-          </Panel>
+          <Viewer options={options} code={code} />
         </Panel>
       </Main>
     </Container>

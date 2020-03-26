@@ -20,7 +20,7 @@ export const Header: FC = ({ children }) => (
 export const Main: FC = ({ children }) => (
   <div style={{ flex: '1', display: 'flex', backgroundColor: '#ddd' }}>{children}</div>
 );
-export const Panel: FC<{ flex?: string; vertical?: boolean }> = ({ children, flex = 1, vertical }) => (
+export const Panel: FC<{ flex?: string; vertical?: boolean }> = ({ children, flex = '1 0 0', vertical }) => (
   <div style={{ height: '100%', flex, display: 'flex', flexDirection: vertical ? 'column' : 'row' }}>
     {children}
   </div>
