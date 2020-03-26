@@ -24,7 +24,6 @@ const CodeEditor: FC<CodeEditorProps> = props => {
     if (ref.current) {
       editorRef.current = monaco.editor.create(ref.current, {
         model,
-        automaticLayout: true,
       });
     }
   }, [model]);
@@ -42,6 +41,12 @@ const CodeEditor: FC<CodeEditorProps> = props => {
       model.setValue(value);
     }
   }, [model, value]);
+
+  useEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.layout();
+    }
+  });
 
   useEffect(() => {
     model.onDidChangeContent(_event => {
