@@ -1,11 +1,9 @@
 import React, { FC, useCallback, useState } from 'react';
 
 import CodeEditor from './code-editor';
+import { CodeOptions } from './interfaces';
 import { Container, Header, Main, Panel } from './primitives';
-
-interface CodeOptions {
-  extensions?: Array<{ module: string; export?: string; version?: string }>;
-}
+import { SimplePanel } from './simple-panel';
 
 function nameify(str: string): [string, string] {
   const base = str
@@ -159,9 +157,7 @@ const Playground: FC = () => {
               <button onClick={handleToggleAdvanced}>Enter simple mode</button>
             </>
           ) : (
-            <>
-              <button onClick={handleToggleAdvanced}>Enter advanced mode</button>
-            </>
+            <SimplePanel options={options} setOptions={setOptions} onAdvanced={handleToggleAdvanced} />
           )}
         </Panel>
         <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
