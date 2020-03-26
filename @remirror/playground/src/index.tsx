@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useState } from 'react';
 
 import CodeEditor from './code-editor';
+import { ErrorBoundary } from './error-boundary';
 import { CodeOptions } from './interfaces';
 import { Container, Divide, Header, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
@@ -163,9 +164,13 @@ const Playground: FC = () => {
         </Panel>
         <Divide />
         <Panel vertical>
-          <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
+          <ErrorBoundary>
+            <CodeEditor value={code} onChange={setValue} readOnly={!advanced} />
+          </ErrorBoundary>
           <Divide />
-          <Viewer options={options} code={code} />
+          <ErrorBoundary>
+            <Viewer options={options} code={code} />
+          </ErrorBoundary>
         </Panel>
       </Main>
     </Container>

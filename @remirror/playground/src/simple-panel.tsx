@@ -48,8 +48,10 @@ const ExtensionCheckbox: FC<{
   }, [existingIndex, options, setOptions, spec]);
   return (
     <div>
-      <input type='checkbox' checked={existingIndex >= 0} onChange={handleChange} /> {spec.module}{' '}
-      {spec.export ? `: ${spec.export}` : ''}
+      <label>
+        <input type='checkbox' checked={existingIndex >= 0} onChange={handleChange} /> {spec.module}{' '}
+        {spec.export ? `: ${spec.export}` : ''}
+      </label>
     </div>
   );
 };

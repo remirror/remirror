@@ -24,15 +24,15 @@ const CodeEditor: FC<CodeEditorProps> = props => {
 
   useEffect(() => {
     if (ref.current) {
-      editorRef.current = monaco.editor.create(ref.current, {
+      const editor = monaco.editor.create(ref.current, {
         model,
       });
+      editorRef.current = editor;
+      return () => {
+        editor.dispose();
+      };
     }
-    return () => {
-      if (editorRef.current) {
-        editorRef.current.dispose();
-      }
-    };
+    return;
   }, [model]);
 
   useEffect(() => {
