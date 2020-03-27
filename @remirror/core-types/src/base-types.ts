@@ -1,5 +1,7 @@
 /* Utility Types */
 
+import { ConditionalExcept, ConditionalPick } from 'type-fest';
+
 /**
  * Alternative to builtin `keyof` operator.
  */
@@ -253,3 +255,60 @@ export type ExtraAttrs = string | ExtraAttrsTuple | ExtraAttrsObject;
  * This is used to force a certain environment to override checks
  */
 export type RenderEnvironment = 'ssr' | 'dom';
+
+/**
+ * Checks the type provided and if it has any properties which are required it
+ * will return the `Then` type. When none of the properties are required it will
+ * return the `Else` type.
+ */
+export type IfHasRequiredProperties<Type extends object, Then, Else> = GetRequiredKeys<
+  Type
+> extends string
+  ? Then
+  : Else;
+
+/**
+ * Get all the keys for required properties on this type.
+ */
+export type GetRequiredKeys<Type extends object> = keyof ConditionalPick<
+  TransformNonUndefinedToNever<Type>,
+  never
+>;
+
+/**
+ * Get all the keys for partial properties on this type.
+ */
+export type GetPartialKeys<Type extends object> = keyof ConditionalPick<
+  TransformNonUndefinedToNever<Type>,
+  never
+>;
+
+/**
+ * Transforms the properties of a non undefined type to be never. Purely a
+ * utility for use in other type utilities.
+ */
+export type TransformNonUndefinedToNever<Type extends object> = {
+  [Key in keyof Type]: Type[Key] extends undefined ? Type[Key] : never;
+};
+
+/**
+ * Pick the `partial` properties from the provided Type and make them all required.
+ */
+export type PickPartial<Type extends object> = {
+  [Key in keyof ConditionalExcept<TransformNonUndefinedToNever<Type>, never>]-?: Type[Key];
+};
+
+/**
+ * Only pick the required types from the `Type`.
+ */
+export type PickRequired<Type extends object> = {
+  [Key in keyof ConditionalPick<TransformNonUndefinedToNever<Type>, never>]: Type[Key];
+};
+
+/**
+ * Reverses the partial and required keys for the type provided. If it was a
+ * required property it becomes a partial property and if it was a partial
+ * property it becomes a required property.
+ */
+export type FlipPartialAndRequired<Type extends object> = PickPartial<Type> &
+  Partial<PickRequired<Type>>;

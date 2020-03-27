@@ -2,7 +2,6 @@ import { Interpolation } from '@emotion/core';
 import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
 import { Suggester } from 'prosemirror-suggest';
-import { ConditionalExcept, ConditionalPick } from 'type-fest';
 
 import { ExtensionType, RemirrorClassName, Tags } from '@remirror/core-constants';
 import { deepMerge, object } from '@remirror/core-helpers';
@@ -14,6 +13,8 @@ import {
   ExtensionIsActiveFunction,
   ExtensionManagerParams,
   ExtensionManagerTypeParams,
+  FlipPartialAndRequired,
+  IfHasRequiredProperties,
   KeyBindings,
   NodeViewMethod,
   OnTransactionParams,
@@ -122,7 +123,7 @@ export abstract class Extension<
    */
   private pk?: PluginKey;
 
-  constructor(...config: HasRequiredProperties<Config, [Config?], [Config]>) {
+  constructor(...config: IfHasRequiredProperties<Config, [Config?], [Config]>) {
     this.config = deepMerge(defaultConfig, {
       ...this.defaultConfig,
       ...config[0],
@@ -200,74 +201,6 @@ export abstract class Extension<
     return `${RemirrorClassName.Extension}[${this.name}]`;
   }
 }
-
-interface Z {
-  a?: string | undefined;
-}
-interface ZZ {
-  a: string | undefined;
-}
-
-/**
- * Exclude null and undefined from T
- */
-type NonUndefinable<T> = T extends null | undefined ? never : T;
-
-type Y = { [Key in keyof Z]-?: Z[Key] };
-type YY = { [Key in keyof ZZ]-?: NonUndefinable<ZZ[Key]> };
-type X = TransformNonUndefinedToNever<Z>;
-type XX = TransformNonUndefinedToNever<ZZ>;
-
-type HasRequiredProperties<Type extends object, Then, Else> = GetRequiredProperties<
-  Type
-> extends string
-  ? Then
-  : Else;
-type GetRequiredProperties<Type extends object> = keyof ConditionalPick<
-  TransformNonUndefinedToNever<Type>,
-  never
->;
-interface A1 {
-  a?: 'a';
-  b: 'b';
-}
-
-type A2 = HasRequiredProperties<A1>;
-
-/**
- * Transforms the properties of a non undefined type to be never. Purely a
- * utility for use in other type utilities.
- */
-export type TransformNonUndefinedToNever<Type extends object> = {
-  [Key in keyof Type]: Type[Key] extends undefined ? Type[Key] : never;
-};
-
-/**
- * Pick the `partial` properties from the provided Type and make them all required.
- */
-export type PickPartial<Type extends object> = {
-  [Key in keyof ConditionalExcept<TransformNonUndefinedToNever<Type>, never>]-?: Type[Key];
-};
-
-/**
- * Only pick the required types from the `Type`.
- */
-export type PickRequired<Type extends object> = {
-  [Key in keyof ConditionalPick<TransformNonUndefinedToNever<Type>, never>]: Type[Key];
-};
-
-export type FlipPartialAndRequired<Type extends object> = PickPartial<Type> &
-  Partial<PickRequired<Type>>;
-
-interface A {
-  a: string;
-  b?: number | undefined;
-}
-type B = { [P in keyof A]: A[P] extends undefined ? A[P] : never };
-type C = { [P in keyof ConditionalExcept<B, never>]-?: A[P] };
-type D = PickPartial<A>;
-type E = PickRequired<A>;
-type F = FlipPartialAndRequired<A>;
 
 type DefaultConfigType<Config extends BaseExtensionConfig> = FlipPartialAndRequired<Config> &
   Partial<BaseExtensionConfig>;

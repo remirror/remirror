@@ -1,5 +1,9 @@
 import { freeze } from '@remirror/core-helpers';
-import { BaseExtensionConfig, ExtensionCommandReturn } from '@remirror/core-types';
+import {
+  BaseExtensionConfig,
+  ExtensionCommandReturn,
+  IfHasRequiredProperties,
+} from '@remirror/core-types';
 
 import { Extension, ExtensionCreatorOptions } from './extension';
 
@@ -13,16 +17,66 @@ const createBaseExtensionCreator = <
    */
   plain<Name extends string, Commands extends ExtensionCommandReturn>(
     creatorOptions: ExtensionCreatorOptions<Name, Commands, Config, Props>,
-  ) {
+  ): ExtensionConstructor<Name, Commands, Config, Props> {
     const options = freeze(creatorOptions);
 
-    return class extends Extension<Name, Commands, Config, Props> {
+    class PlainExtension extends Extension<Name, Commands, Config, Props> {
+      /**
+       * This static method is the only way to create an instance of this
+       * extension.
+       *
+       * @remarks
+       *
+       * It helps prevent uses from struggling with some of the edge cases when
+       * using the `new` keyword.
+       */
+      public static of(...config: IfHasRequiredProperties<Config, [Config?], [Config]>) {
+        return new PlainExtension(...config);
+      }
+
+      /**
+       * The name of the extension.
+       */
+      static get extensionName() {
+        return options.name;
+      }
+
+      /**
+       * This makes the constructor private so that it can't be extended from
+       * when using Typescript.
+       */
+      private constructor(...config: IfHasRequiredProperties<Config, [Config?], [Config]>) {
+        super(...config);
+      }
+
       public getCreatorOptions() {
         return options;
       }
-    };
+    }
+
+    return PlainExtension;
   },
 });
+
+export interface ExtensionConstructor<
+  Name extends string,
+  Commands extends ExtensionCommandReturn,
+  Config extends BaseExtensionConfig,
+  Props extends object,
+  ProsemirrorType = never
+> {
+  /**
+   * Create a new instance of the extension to be inserted into the editor.
+   */
+  of(
+    ...config: IfHasRequiredProperties<Config, [Config?], [Config]>
+  ): Extension<Name, Commands, Config, Props, ProsemirrorType>;
+
+  /**
+   * Get the name of the extensions created by this constructor.
+   */
+  readonly extensionName: Name;
+}
 
 /**
  * The only way to create extensions using remirror.
@@ -41,7 +95,8 @@ export const ExtensionCreator = {
    * @remarks
    *
    * This might seem like an odd pattern but it's the only way I can think of to
-   * preserve type inference while benefiting from type inference. If you don't
+   * preserve type inference for the config and props without having to manually
+   * type out all the generic types. If you don't
    * want to add any configuration or dynamic props you can use the other
    * methods exposed by this configuration.
    */
@@ -49,5 +104,3 @@ export const ExtensionCreator = {
     return createBaseExtensionCreator<Config, Props>();
   },
 };
-
-const MyExtension = ExtensionCreator.plain({});
