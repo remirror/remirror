@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 
-import { BaseExtensionOptions } from '@remirror/core';
+import { BaseExtensionConfig } from '@remirror/core';
 
 /**
  * This indicates whether the current cursor position is within a textblock or
@@ -14,7 +14,7 @@ export interface DropCursorExtensionComponentProps {
   container: HTMLElement;
 }
 
-export interface DropCursorExtensionOptions extends BaseExtensionOptions {
+export interface DropCursorExtensionOptions extends BaseExtensionConfig {
   /**
    * The component to render when an item is being dragged over and is between two nodes.
    */

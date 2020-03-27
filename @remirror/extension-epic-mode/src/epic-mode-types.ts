@@ -1,7 +1,7 @@
-import { BaseExtensionOptions } from '@remirror/core';
+import { BaseExtensionConfig } from '@remirror/core';
 
 export type EpicModePluginStateParams = Required<
-  Omit<EpicModeExtensionOptions, keyof BaseExtensionOptions>
+  Omit<EpicModeExtensionOptions, keyof BaseExtensionConfig>
 >;
 
 export interface ParticleRange {
@@ -9,7 +9,7 @@ export interface ParticleRange {
   max: number;
 }
 
-export interface EpicModeExtensionOptions extends BaseExtensionOptions {
+export interface EpicModeExtensionOptions extends BaseExtensionConfig {
   /**
    * The particle effect to use
    */

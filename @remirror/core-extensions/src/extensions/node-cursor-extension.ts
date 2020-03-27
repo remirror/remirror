@@ -2,7 +2,7 @@ import { EditorState, Plugin, Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
 import {
-  BaseExtensionOptions,
+  BaseExtensionConfig,
   Extension,
   ExtensionManagerParams,
   NodeMatch,
@@ -105,7 +105,7 @@ const createNodeCursorExtensionPlugin = (ctx: NodeCursorExtension, nodeNames: st
   });
 };
 
-export interface NodeCursorExtensionOptions extends BaseExtensionOptions {
+export interface NodeCursorExtensionOptions extends BaseExtensionConfig {
   targets?: NodeMatch[];
 }
 

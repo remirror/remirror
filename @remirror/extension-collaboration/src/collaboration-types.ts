@@ -1,12 +1,6 @@
 import { Step } from 'prosemirror-transform';
 
-import {
-  Attrs,
-  BaseExtensionOptions,
-  EditorSchema,
-  PlainObject,
-  Transaction,
-} from '@remirror/core';
+import { Attrs, BaseExtensionConfig, EditorSchema, PlainObject, Transaction } from '@remirror/core';
 
 export interface Sendable {
   version: number;
@@ -31,7 +25,7 @@ export interface OnSendableReceivedParams {
   jsonSendable: JSONSendable;
 }
 
-export interface CollaborationExtensionOptions extends BaseExtensionOptions {
+export interface CollaborationExtensionOptions extends BaseExtensionConfig {
   /**
    * The document version.
    *

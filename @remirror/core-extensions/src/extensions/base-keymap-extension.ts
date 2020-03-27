@@ -7,7 +7,7 @@ import {
 import { undoInputRule } from 'prosemirror-inputrules';
 
 import {
-  BaseExtensionOptions,
+  BaseExtensionConfig,
   chainKeyBindingCommands,
   convertCommand,
   Extension,
@@ -17,7 +17,7 @@ import {
   KeyBindings,
 } from '@remirror/core';
 
-export interface BaseKeymapExtensionOptions extends BaseExtensionOptions {
+export interface BaseKeymapExtensionOptions extends BaseExtensionConfig {
   /**
    * Determines whether a backspace after an input rule has been applied undoes the input rule.
    *

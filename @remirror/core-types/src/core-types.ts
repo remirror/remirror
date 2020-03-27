@@ -439,7 +439,7 @@ export interface GetAttrsParams {
  * The interface for SSR Component Props
  */
 export interface SSRComponentProps<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
+  GOptions extends BaseExtensionConfig = BaseExtensionConfig,
   GAttrs extends Attrs = Attrs
 > extends NodeWithAttrsParams<GAttrs>, BaseExtensionOptionsParams<GOptions> {}
 
@@ -504,7 +504,7 @@ export interface OnTransactionParams
     TransactionParams,
     EditorStateParams {}
 
-export interface BaseExtensionOptions {
+export interface BaseExtensionConfig {
   /**
    * Add extra styles to the extension.
    */
@@ -610,11 +610,11 @@ export interface SSRComponentParams {
   SSRComponent?: ComponentType<any>;
 }
 
-export interface NodeExtensionOptions extends BaseExtensionOptions, SSRComponentParams {}
-export interface MarkExtensionOptions extends BaseExtensionOptions, SSRComponentParams {}
+export interface NodeExtensionOptions extends BaseExtensionConfig, SSRComponentParams {}
+export interface MarkExtensionOptions extends BaseExtensionConfig, SSRComponentParams {}
 
 export interface BaseExtensionOptionsParams<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions
+  GOptions extends BaseExtensionConfig = BaseExtensionConfig
 > {
   /**
    * The options that were passed into the extension that created this nodeView

@@ -7,7 +7,7 @@ import { EDITOR_CLASS_NAME, SELECTED_NODE_CLASS_NAME } from '@remirror/core-cons
 import { isFunction, isPlainObject, isString, keys } from '@remirror/core-helpers';
 import {
   Attrs,
-  BaseExtensionOptions,
+  BaseExtensionConfig,
   Decoration,
   EditorView,
   NodeView,
@@ -25,7 +25,7 @@ import {
 } from './node-view-types';
 
 export class ReactNodeView<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
+  GOptions extends BaseExtensionConfig = BaseExtensionConfig,
   GAttrs extends Attrs = Attrs
 > implements NodeView {
   /**
@@ -291,7 +291,7 @@ export class ReactNodeView<
    * A shorthand method for creating the ReactNodeView
    */
   public static createNodeView<
-    GOptions extends BaseExtensionOptions = BaseExtensionOptions,
+    GOptions extends BaseExtensionConfig = BaseExtensionConfig,
     GAttrs extends Attrs = Attrs
   >({ Component, portalContainer, options }: CreateNodeViewParams<GOptions, GAttrs>) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>

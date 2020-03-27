@@ -1,7 +1,7 @@
 import minDocument from 'min-document';
 
 import {
-  BaseExtensionOptions,
+  BaseExtensionConfig,
   Cast,
   DocExtension,
   Extension,
@@ -81,7 +81,7 @@ export const initialJson = {
   ],
 };
 
-export class TestExtension extends Extension<{ run: boolean } & BaseExtensionOptions> {
+export class TestExtension extends Extension<{ run: boolean } & BaseExtensionConfig> {
   get name() {
     return 'test' as const;
   }

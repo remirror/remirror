@@ -4,7 +4,7 @@ import { Decoration, DecorationSet } from 'prosemirror-view';
 import { Extension } from '@remirror/core';
 import { isNullOrUndefined, isNumber, isString, object } from '@remirror/core-helpers';
 import {
-  BaseExtensionOptions,
+  BaseExtensionConfig,
   CommandParams,
   ExtensionManagerParams,
   PosParams,
@@ -20,7 +20,7 @@ const defaultPositionTrackerExtensionOptions: Partial<PositionTrackerExtensionOp
   defaultElement: 'tracker',
 };
 
-export interface PositionTrackerExtensionOptions extends BaseExtensionOptions {
+export interface PositionTrackerExtensionOptions extends BaseExtensionConfig {
   /**
    * The className that is added to all tracker positions
    *

@@ -2,7 +2,7 @@ import { ComponentType } from 'react';
 
 import {
   Attrs,
-  BaseExtensionOptions,
+  BaseExtensionConfig,
   BaseExtensionOptionsParams,
   EditorViewParams,
   NodeWithAttrsParams,
@@ -11,7 +11,7 @@ import {
 import { PortalContainer } from '@remirror/react-portals';
 
 export interface NodeViewComponentProps<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
+  GOptions extends BaseExtensionConfig = BaseExtensionConfig,
   GAttrs extends Attrs = Attrs
 > extends EditorViewParams, SSRComponentProps<GOptions, GAttrs> {
   /**
@@ -37,7 +37,7 @@ export interface NodeViewComponentProps<
 export type GetPosition = (() => number) | boolean;
 
 export interface ReactNodeViewParams<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
+  GOptions extends BaseExtensionConfig = BaseExtensionConfig,
   GAttrs extends Attrs = Attrs
 >
   extends EditorViewParams,
@@ -57,7 +57,7 @@ export interface ReactNodeViewParams<
 }
 
 export interface CreateNodeViewParams<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
+  GOptions extends BaseExtensionConfig = BaseExtensionConfig,
   GAttrs extends Attrs = Attrs
 >
   extends Pick<ReactNodeViewParams, 'portalContainer'>,
@@ -65,7 +65,7 @@ export interface CreateNodeViewParams<
     BaseExtensionOptionsParams<GOptions> {}
 
 export interface ComponentParams<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
+  GOptions extends BaseExtensionConfig = BaseExtensionConfig,
   GAttrs extends Attrs = Attrs
 > {
   /**

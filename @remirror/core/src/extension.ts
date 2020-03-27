@@ -2,6 +2,7 @@ import { Interpolation } from '@emotion/core';
 import { InputRule } from 'prosemirror-inputrules';
 import { PluginKey } from 'prosemirror-state';
 import { Suggester } from 'prosemirror-suggest';
+import { ConditionalExcept, ConditionalPick } from 'type-fest';
 
 import { ExtensionType, RemirrorClassName, Tags } from '@remirror/core-constants';
 import { deepMerge, isString, object } from '@remirror/core-helpers';
@@ -9,7 +10,7 @@ import {
   AnyFunction,
   Attrs,
   AttrsWithClass,
-  BaseExtensionOptions,
+  BaseExtensionConfig,
   CommandTypeParams,
   ExtensionCommandReturn,
   ExtensionHelperReturn,
@@ -28,7 +29,7 @@ import {
  * These are the default options merged into every extension.
  * They can be overridden.
  */
-const defaultOptions: Required<BaseExtensionOptions> = {
+const defaultOptions: Required<BaseExtensionConfig> = {
   extraStyles: '',
   extraAttrs: [],
   exclude: {
@@ -83,7 +84,7 @@ const defaultOptions: Required<BaseExtensionOptions> = {
  * }
  * ```
  */
-export abstract class Extension<GOptions extends BaseExtensionOptions, GType = never> {
+export abstract class Extension<Options extends BaseExtensionConfig, ProsemirrorType = never> {
   /**
    * The options of this extension
    *
@@ -93,7 +94,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
    * of this extension.
    *
    */
-  public readonly options: Required<GOptions>;
+  public readonly options: Required<Options>;
 
   /**
    * The unique name of this extension.
@@ -118,9 +119,13 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
   /**
    * The prosemirror plugin key for this extension.
    */
-  private pk?: PluginKey;
+  #pk?: PluginKey;
 
-  constructor(options: GOptions = object()) {
+  /**
+   * This constructor is kept private so that you don't create your own classes
+   * or extend from this class.
+   */
+  private constructor(options: Options = object()) {
     this.options = deepMerge(defaultOptions, { ...this.defaultOptions, ...options });
 
     this.init();
@@ -201,7 +206,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
    * ```
    */
   protected init() {
-    this.pk = new PluginKey(this.name);
+    this.#pk = new PluginKey(this.name);
   }
 
   /**
@@ -239,11 +244,13 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
    * created by the extension.
    */
   public get pluginKey(): PluginKey {
-    if (this.pk) {
-      return this.pk;
+    if (this.#pk) {
+      return this.#pk;
     }
-    this.pk = new PluginKey(this.name);
-    return this.pk;
+
+    this.#pk = new PluginKey(this.name);
+
+    return this.#pk;
   }
 
   /**
@@ -252,7 +259,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
    * @remarks
    * All non-required options that an extension uses should have a default options defined here.
    */
-  protected get defaultOptions(): Partial<GOptions> {
+  protected get defaultOptions(): Partial<Options> {
     return {};
   }
 
@@ -262,7 +269,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
    * This pseudo property makes it easier to infer generic types of this class.
    * @private
    */
-  public readonly _O!: GOptions;
+  public readonly _O!: Options;
 
   /**
    * `ProsemirrorType`
@@ -270,7 +277,7 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
    * This pseudo property makes it easier to infer generic types from this class.
    * @private
    */
-  public readonly _T!: GType;
+  public readonly _T!: ProsemirrorType;
 
   /**
    * `ExtensionCommands`
@@ -281,25 +288,88 @@ export abstract class Extension<GOptions extends BaseExtensionOptions, GType = n
   public readonly _C!: this['commands'] extends AnyFunction ? ReturnType<this['commands']> : {};
 
   /**
-   * `ExtensionHelpers`
-   *
-   * This pseudo property makes it easier to infer Generic types of this class.
-   * @private
-   */
-  public readonly _H!: this['helpers'] extends AnyFunction ? ReturnType<this['helpers']> : {};
-
-  /**
    * Override the default toString method to match the native toString methods.
    */
   public toString() {
-    return RemirrorClassName.Extension;
+    return `${RemirrorClassName.Extension}[${this.name}]`;
   }
 }
 
-export interface Extension<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
-  GType = never
+interface Z {
+  a?: string | undefined;
+}
+interface ZZ {
+  a: string | undefined;
+}
+
+/**
+ * Exclude null and undefined from T
+ */
+type NonUndefinable<T> = T extends null | undefined ? never : T;
+
+type Y = { [Key in keyof Z]-?: Z[Key] };
+type YY = { [Key in keyof ZZ]-?: NonUndefinable<ZZ[Key]> };
+type X = TransformNonUndefinedToNever<Z>;
+type XX = TransformNonUndefinedToNever<ZZ>;
+
+/**
+ * Transforms the properties of a non undefined type to be never. Purely a
+ * utility for use in other type utilities.
+ */
+type TransformNonUndefinedToNever<Type extends object> = {
+  [Key in keyof Type]: Type[Key] extends undefined ? Type[Key] : never;
+};
+
+/**
+ * Pick the `partial` properties from the provided Type and make them all required.
+ */
+type PickPartial<Type extends object> = {
+  [Key in keyof ConditionalExcept<TransformNonUndefinedToNever<Type>, never>]-?: Type[Key];
+};
+
+/**
+ * Only pick the required types from the `Type`.
+ */
+type PickRequired<Type extends object> = {
+  [Key in keyof ConditionalPick<TransformNonUndefinedToNever<Type>, never>]: Type[Key];
+};
+
+type FlipPartialAndRequired<Type extends object> = PickPartial<Type> & Partial<PickRequired<Type>>;
+
+interface A {
+  a: string;
+  b?: number | undefined;
+}
+type B = { [P in keyof A]: A[P] extends undefined ? A[P] : never };
+type C = { [P in keyof ConditionalExcept<B, never>]-?: A[P] };
+type D = PickPartial<A>;
+type E = PickRequired<A>;
+type F = FlipPartialAndRequired<A>;
+
+export interface ExtensionCreatorMethods<
+  Name extends string,
+  Commands extends ExtensionCommandReturn,
+  Props extends object,
+  Options extends BaseExtensionConfig,
+  ProsemirrorType = never
 > {
+  /**
+   * The unique name of this extension.
+   *
+   * @remarks
+   *
+   * Every extension **must** have a name. Ideally the name should have a
+   * distinct type to allow for better type inference for end users. By
+   * convention the name should be `camelCased` and unique within your editor
+   * instance.
+   */
+  name: Name;
+
+  /**
+   * Props are dynamic within the editor
+   */
+  getDefaultProps?: () => Props;
+
   /**
    * Allows the extension to modify the attributes for the Prosemirror editor
    * dom element.
@@ -311,11 +381,9 @@ export interface Extension<
    * the editor more accessible by setting the `aria-placeholder` value to match
    * the value of the placeholder.
    *
-   * @param params - extension manager params
-   *
    * @alpha
    */
-  attributes?(params: ExtensionManagerParams): AttrsWithClass;
+  attributes?: (params: ExtensionManagerParams) => AttrsWithClass;
 
   /**
    * Register commands for the extension.
@@ -352,7 +420,7 @@ export interface Extension<
    *
    * @param params - schema params with type included
    */
-  commands?(params: CommandTypeParams<GType>): ExtensionCommandReturn;
+  commands?: (params: CommandTypeParams<ProsemirrorType>) => Commands;
 
   /**
    * Each extension can make extension data available which is updated on each
@@ -361,47 +429,7 @@ export interface Extension<
    * Within React this data is passed back into Remirror render prop and also
    * the Remirror context and can be retrieved with a `hook` or `HOC`
    */
-  extensionData?(params: ExtensionManagerTypeParams<GType>): PlainObject;
-
-  /**
-   * A helper method is a function that takes in arguments and returns
-   * a value depicting the state of the editor specific to this extension.
-   *
-   * @remarks
-   *
-   * Unlike commands they can return anything and they do not effect the editor in anyway.
-   *
-   * They are general versions of the `isActive` and `isEnabled` methods.
-   *
-   * Below is an example which should provide some idea on how to add helpers to the app.
-   *
-   * ```tsx
-   * // extension.ts
-   * import { ExtensionManagerParams } from '@remirror/core';
-   *
-   * class MyBeautifulExtension {
-   *   get name() {
-   *     return 'beautiful' as const
-   *   }
-   *
-   *   helpers(params: ExtensionManagerParams) {
-   *     return {
-   *       isMyCodeBeautiful: () => true,
-   *     }
-   *   }
-   * }
-   *
-   * // app.tsx
-   * import { useRemirrorContext } from '@remirror/react';
-   *
-   * export const MyApp = () => {
-   *   const { helpers } = useRemirrorContext();
-   *
-   *   return helpers.isMyCodeBeautiful() ? (<span>😍</span>) : (<span>😢</span>);
-   * };
-   * ```
-   */
-  helpers?(params: ExtensionManagerTypeParams<GType>): ExtensionHelperReturn;
+  extensionData?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => PlainObject;
 
   /**
    * Register input rules which are activated if the regex matches as a user is
@@ -409,7 +437,7 @@ export interface Extension<
    *
    * @param params - schema params with type included
    */
-  inputRules?(params: ExtensionManagerTypeParams<GType>): InputRule[];
+  inputRules?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => InputRule[];
 
   /**
    * Determines whether this extension is currently active (only applies to Node
@@ -417,14 +445,14 @@ export interface Extension<
    *
    * @param params - extension manager params
    */
-  isActive?(params: ExtensionManagerParams): ExtensionIsActiveFunction;
+  isActive?: (params: ExtensionManagerParams) => ExtensionIsActiveFunction;
 
   /**
    * Add key bindings for this extension.
    *
    * @param params - schema params with type included
    */
-  keys?(params: ExtensionManagerTypeParams<GType>): KeyBindings;
+  keys?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => KeyBindings;
 
   /**
    * Registers a node view for the extension.
@@ -440,7 +468,7 @@ export interface Extension<
    *
    * @alpha
    */
-  nodeView?(params: ExtensionManagerTypeParams<GType>): NodeViewMethod;
+  nodeView?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => NodeViewMethod;
 
   /**
    * Called whenever a transaction successfully updates the editor state.
@@ -448,7 +476,7 @@ export interface Extension<
    * Changes to the transaction at this point have no impact at all. It is
    * purely for observational reasons
    */
-  onTransaction?(params: OnTransactionParams): void;
+  onTransaction?: (params: OnTransactionParams) => void;
 
   /**
    * Register paste rules for this extension.
@@ -457,14 +485,14 @@ export interface Extension<
    *
    * @param params - schema params with type included
    */
-  pasteRules?(params: ExtensionManagerTypeParams<GType>): ProsemirrorPlugin[];
+  pasteRules?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => ProsemirrorPlugin[];
 
   /**
    * Register a plugin for the extension.
    *
    * @param params - schema params with type included
    */
-  plugin?(params: ExtensionManagerTypeParams<GType>): ProsemirrorPlugin;
+  plugin?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => ProsemirrorPlugin;
 
   /**
    * An extension can declare the extensions it requires with the default options for
@@ -477,7 +505,6 @@ export interface Extension<
    * extension is already included.
    *
    * @internalremarks
-   * TODO implement this functionality
    */
   readonly requiredExtensions?: string[];
 
@@ -493,7 +520,7 @@ export interface Extension<
    * by the styles. This method can be called to check if there is only one
    * child of the parent
    */
-  ssrTransformer?(element: JSX.Element, params: ExtensionManagerParams): JSX.Element;
+  ssrTransformer?: (element: JSX.Element, params: ExtensionManagerParams) => JSX.Element;
 
   /**
    * Allows extensions to register styles on the editor instance using emotion
@@ -501,11 +528,27 @@ export interface Extension<
    *
    * @param params - extension manager parameters
    */
-  styles?(params: ExtensionManagerParams): Interpolation;
+  styles?: (params: ExtensionManagerParams) => Interpolation;
 
   /**
    * Create suggestions which respond to character key combinations within the
    * editor instance.
    */
-  suggestions?(params: ExtensionManagerTypeParams<GType>): Suggester[] | Suggester;
+  suggestions?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => Suggester[] | Suggester;
+}
+
+export interface ExtensionCreatorOptions<
+  Name extends string,
+  Options extends BaseExtensionConfig = BaseExtensionConfig,
+  Type = never
+> extends ExtensionCreatorMethods<Options, Type> {
+  /**
+   * The name to give this extension. Must be unique within any editor instance.
+   */
+  name: Name;
+
+  /**
+   * The default options.
+   */
+  defaultOptions: Partial<Options>;
 }

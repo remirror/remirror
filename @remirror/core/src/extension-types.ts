@@ -4,7 +4,7 @@ import {
   ActionMethod,
   AnyConstructor,
   AnyFunction,
-  BaseExtensionOptions,
+  BaseExtensionConfig,
   EditorSchema,
   Key,
   StringKey,
@@ -85,7 +85,7 @@ export type PlainNames<GExtension extends AnyExtension> = ProsemirrorTypeOfExten
 
 /** An extension constructor */
 export interface ExtensionConstructor<
-  GOptions extends BaseExtensionOptions,
+  GOptions extends BaseExtensionConfig,
   GExtension extends Extension<GOptions, any>
 > {
   new (options?: GOptions): GExtension;
