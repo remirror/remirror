@@ -14,7 +14,16 @@ import {
   ProsemirrorNode,
   Transaction,
 } from './alias-types';
-import { AnyFunction, Attrs, ExtraAttrs, ObjectNode, RegexTuple, Value } from './base-types';
+import {
+  AnyFunction,
+  Attrs,
+  CreateExtraAttrs,
+  ExtraAttrs,
+  GetExtraAttrs,
+  ObjectNode,
+  RegexTuple,
+  Value,
+} from './base-types';
 import {
   AttrsParams,
   EditorStateParams,
@@ -617,4 +626,40 @@ export interface BaseExtensionConfigParams<
    * or mark.
    */
   config: Config;
+}
+
+/**
+ * The parameters passed to the `createSchema` method for node and mark
+ * extensions.
+ */
+export interface CreateSchemaParams<Config extends BaseExtensionConfig> {
+  /**
+   * All the static config options that have been passed into the extension when
+   * being created (instantiated).
+   */
+  config: Readonly<Config>;
+
+  /**
+   * A method that creates the `AttributeSpec` for prosemirror that can be added
+   * to a node or mark extension to provide extra functionality and store more
+   * information within the DOM and prosemirror state..
+   *
+   * @remarks
+   *
+   * ```ts
+   * const schema = {
+   *   attrs: {
+   *      ...createExtraAttrs({ fallback: null }),
+   *      href: {
+   *       default: null,
+   *     },
+   *   },
+   * }
+   */
+  createExtraAttrs: CreateExtraAttrs;
+
+  /**
+   * Pull all extra attrs from the dom node provided.
+   */
+  getExtraAttrs: GetExtraAttrs;
 }

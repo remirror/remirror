@@ -1,32 +1,44 @@
 import { Interpolation } from '@emotion/core';
 import { InputRule } from 'prosemirror-inputrules';
+import { AttributeSpec } from 'prosemirror-model';
 import { PluginKey } from 'prosemirror-state';
 import { Suggester } from 'prosemirror-suggest';
 
-import { ExtensionType, RemirrorClassName, Tags } from '@remirror/core-constants';
-import { deepMerge, isObject, object } from '@remirror/core-helpers';
+import { ErrorConstant, ExtensionType, RemirrorClassName, Tags } from '@remirror/core-constants';
+import { deepMerge, invariant, isArray, isObject, isString, object } from '@remirror/core-helpers';
 import {
+  Attrs,
   AttrsWithClass,
   BaseExtensionConfig,
   CommandTypeParams,
+  CreateExtraAttrs,
+  CreateSchemaParams,
+  EditorSchema,
   ExtensionCommandReturn,
   ExtensionIsActiveFunction,
+  ExtensionManagerMarkTypeParams,
+  ExtensionManagerNodeTypeParams,
   ExtensionManagerParams,
   ExtensionManagerTypeParams,
+  ExtraAttrs,
   FlipPartialAndRequired,
+  GetExtraAttrs,
   IfNoRequiredProperties,
   KeyBindings,
+  MarkExtensionSpec,
   MarkType,
+  NodeExtensionSpec,
   NodeType,
   NodeViewMethod,
   OnTransactionParams,
   PlainObject,
   ProsemirrorPlugin,
 } from '@remirror/core-types';
+import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
 /**
- * These are the default options merged into every extension.
- * They can be overridden.
+ * These are the default options merged into every extension. They can be
+ * overridden.
  */
 export const defaultConfig: Required<BaseExtensionConfig> = {
   SSRComponent: null,
@@ -42,6 +54,122 @@ export const defaultConfig: Required<BaseExtensionConfig> = {
     ssr: false,
     suggesters: false,
   },
+};
+
+/**
+ * Determines if the passed in extension is any type of extension.
+ *
+ * @param extension - the extension to check
+ */
+export const isExtension = (extension: unknown): extension is AnyExtension =>
+  isObject(extension) && extension.toString().startsWith(RemirrorClassName.Extension);
+
+/**
+ * Checks whether the this is an extension and if it is a plain one
+ *
+ * @param extension - the extension to check
+ */
+export const isPlainExtension = (extension: unknown): extension is Extension<any, any, any, any> =>
+  isExtension(extension) && extension.type === ExtensionType.Plain;
+
+/**
+ * Determines if the passed in extension is a mark extension. Useful as a type
+ * guard where a particular type of extension is needed.
+ *
+ * @param extension - the extension to check
+ */
+export const isMarkExtension = <Config extends BaseExtensionConfig = any>(
+  extension: unknown,
+): extension is AnyMarkExtension<Config> =>
+  isExtension(extension) && extension.type === ExtensionType.Mark;
+
+/**
+ * Determines if the passed in extension is a node extension. Useful as a type
+ * guard where a particular type of extension is needed.
+ *
+ * @param extension - the extension to check
+ */
+export const isNodeExtension = <Config extends BaseExtensionConfig = any>(
+  extension: unknown,
+): extension is AnyNodeExtension<Config> =>
+  isExtension(extension) && extension.type === ExtensionType.Node;
+
+/**
+ * Allows for the addition of attributes to the defined schema. These are
+ * defined in the static config and directly update the schema when applied.
+ * They can't be changed during the lifetime of the editor or the Schema will
+ * break.
+ *
+ * @remarks
+ *
+ * This can only be used in a `NodeExtension` or `MarkExtension`. The additional
+ * attributes can only be optional.
+ */
+export const createExtraAttrsFactory = <Config extends BaseExtensionConfig>(
+  extension: AnyExtension,
+): CreateExtraAttrs => ({ fallback }) => {
+  // Make sure this is a node or mark extension. Will throw if not.
+  invariant(
+    isNodeExtension<Config>(extension) || isMarkExtension<Config>(extension),
+    ErrorConstant.EXTRA_ATTRS,
+  );
+
+  const extraAttrs: ExtraAttrs[] = extension.config.extraAttrs ?? [];
+  const attrs: Record<string, AttributeSpec> = object();
+
+  for (const item of extraAttrs) {
+    if (isArray(item)) {
+      attrs[item[0]] = { default: item[1] };
+      continue;
+    }
+
+    if (isString(item)) {
+      attrs[item] = { default: fallback };
+      continue;
+    }
+
+    const { name, default: def } = item;
+    attrs[name] = def !== undefined ? { default: def } : {};
+  }
+
+  return attrs;
+};
+
+/**
+ * Runs through the extraAttrs provided and retrieves them.
+ */
+export const getExtraAttrsFactory = <Config extends BaseExtensionConfig>(
+  extension: AnyExtension,
+): GetExtraAttrs => (domNode) => {
+  // Make sure this is a node or mark extension. Will throw if not.
+  invariant(
+    isNodeExtension<Config>(extension) || isMarkExtension<Config>(extension),
+    ErrorConstant.EXTRA_ATTRS,
+  );
+
+  const extraAttrs = extension.config.extraAttrs ?? [];
+  const attrs: Attrs = object();
+
+  for (const attr of extraAttrs) {
+    if (isArray(attr)) {
+      // Use the default
+      const [name, , attributeName] = attr;
+      attrs[name] = attributeName ? (domNode as Element).getAttribute(attributeName) : undefined;
+
+      continue;
+    }
+
+    if (isString(attr)) {
+      // Assume the name is the same
+      attrs[attr] = (domNode as Element).getAttribute(attr);
+      continue;
+    }
+
+    const { name, getAttrs, default: fallback } = attr;
+    attrs[name] = getAttrs ? getAttrs(domNode) || fallback : fallback;
+  }
+
+  return attrs;
 };
 
 /**
@@ -110,8 +238,8 @@ export abstract class Extension<
    *
    * @remarks
    *
-   * Static config is passed in at instantiation and merged with the default options
-   * of this extension.
+   * Static config is passed in at instantiation and merged with the default
+   * options of this extension.
    */
   public readonly config: Required<Config>;
 
@@ -154,8 +282,8 @@ export abstract class Extension<
    * @remarks
    *
    * It provides all the `options` passed when this `ExtensionConstructor` was
-   * created. This is for internal usage only since the `Extension` class is
-   * not exported from this library.
+   * created. This is for internal usage only since the `Extension` class is not
+   * exported from this library.
    *
    * @internal
    */
@@ -393,8 +521,8 @@ export interface ExtensionCreatorOptions<
   plugin?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => ProsemirrorPlugin;
 
   /**
-   * An extension can declare the extensions it requires with the default options for
-   * instantiating them.
+   * An extension can declare the extensions it requires with the default
+   * options for instantiating them.
    *
    * @remarks
    *
@@ -447,30 +575,8 @@ export type AnyExtension<Config extends BaseExtensionConfig = any> = Extension<
 >;
 
 /**
- * The type covering any potential NodeExtension.
- */
-export type AnyNodeExtension<Config extends BaseExtensionConfig = any> = Extension<
-  any,
-  any,
-  Config,
-  any,
-  NodeType
->;
-
-/**
- * The type covering any potential `MarkExtension`.
- */
-export type AnyMarkExtension<Config extends BaseExtensionConfig = any> = Extension<
-  any,
-  any,
-  Config,
-  any,
-  MarkType
->;
-
-/**
- * The shape of the ExtensionConstructor used to create extension and returned
- * from the `ExtensionCreator.plain()` method.
+ * The shape of the `ExtensionConstructor` used to create extensions and
+ * returned from the `ExtensionCreator.plain()` method.
  */
 export interface ExtensionConstructor<
   Name extends string,
@@ -496,39 +602,240 @@ export interface ExtensionConstructor<
 }
 
 /**
- * Determines if the passed in extension is any type of extension.
+ * A mark extension is based on the `Mark` concept from from within prosemirror
+ * {@link https://prosemirror.net/docs/guide/#schema.marks}
  *
- * @param extension - the extension to check
+ * @remarks
+ *
+ * Marks are used to add extra styling or other information to inline content.
+ * Mark types are objects much like node types, used to tag mark objects and
+ * provide additional information about them.
  */
-export const isExtension = (extension: unknown): extension is AnyExtension =>
-  isObject(extension) && extension.toString().startsWith(RemirrorClassName.Extension);
+export abstract class MarkExtension<
+  Name extends string,
+  Commands extends ExtensionCommandReturn,
+  Config extends BaseExtensionConfig,
+  Props extends object
+> extends Extension<Name, Commands, Config, Props, MarkType<EditorSchema>> {
+  /**
+   * Set's the type of this extension to be a `Mark`.
+   *
+   * @remarks
+   *
+   * This value is used by the predicates to check whether this is a mark / node
+   * or plain extension.
+   */
+  get type(): ExtensionType.Mark {
+    return ExtensionType.Mark;
+  }
+
+  /**
+   * The prosemirror specification which sets up the mark in the schema.
+   *
+   * @remarks
+   *
+   * The main difference between this and Prosemirror `MarkSpec` is that that
+   * the `toDOM` method doesn't allow dom manipulation. You can only return an
+   * array or string.
+   *
+   * For more advanced requirements, it may be possible to create a nodeView to
+   * manage the dom interactions.
+   */
+  public readonly schema: MarkExtensionSpec;
+
+  constructor(...params: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+    super(...params);
+
+    this.schema = this.getMarkCreatorOptions().createSchema({
+      config: this.config,
+      createExtraAttrs: createExtraAttrsFactory(this as AnyMarkExtension),
+      getExtraAttrs: getExtraAttrsFactory(this as AnyMarkExtension),
+    });
+  }
+
+  /**
+   * Performs a default check to see whether the mark is active at the current
+   * selection.
+   *
+   * @param params - see
+   * {@link @remirror/core-types#ExtensionManagerMarkTypeParams}
+   */
+  public isActive({ getState, type }: ExtensionManagerMarkTypeParams): ExtensionIsActiveFunction {
+    return () => isMarkActive({ state: getState(), type });
+  }
+
+  /**
+   * Get all the options passed through when creating the
+   * `MarkExtensionConstructor`.
+   *
+   * @internal
+   */
+  abstract getMarkCreatorOptions(): Readonly<
+    MarkExtensionCreatorOptions<Name, Commands, Config, Props>
+  >;
+}
 
 /**
- * Checks whether the this is an extension and if it is a plain one
- *
- * @param extension - the extension to check
+ * The creator options when creating a node.
  */
-export const isPlainExtension = (extension: unknown): extension is Extension<any, any, any, any> =>
-  isExtension(extension) && extension.type === ExtensionType.Plain;
+export interface MarkExtensionCreatorOptions<
+  Name extends string,
+  Commands extends ExtensionCommandReturn,
+  Config extends BaseExtensionConfig,
+  Props extends object
+> extends ExtensionCreatorOptions<Name, Commands, Config, Props> {
+  /**
+   * Provide a method for creating the schema. This is required in order to
+   * create a `MarkExtension`.
+   */
+  createSchema(params: CreateSchemaParams<Config>): MarkExtensionSpec;
+}
 
 /**
- * Determines if the passed in extension is a mark extension. Useful as a type guard where a particular type
- * of extension is needed.
- *
- * @param extension - the extension to check
+ * The type covering any potential `MarkExtension`.
  */
-export const isMarkExtension = <Config extends BaseExtensionConfig = any>(
-  extension: unknown,
-): extension is AnyMarkExtension<Config> =>
-  isExtension(extension) && extension.type === ExtensionType.Mark;
+export type AnyMarkExtension<Config extends BaseExtensionConfig = any> = MarkExtension<
+  any,
+  any,
+  Config,
+  any
+>;
 
 /**
- * Determines if the passed in extension is a node extension. Useful as a type guard where a particular type
- * of extension is needed.
- *
- * @param extension - the extension to check
+ * The shape of the `MarkExtensionConstructor` used to create extensions and
+ * returned from the `ExtensionCreator.mark()` method.
  */
-export const isNodeExtension = <Config extends BaseExtensionConfig = any>(
-  extension: unknown,
-): extension is AnyNodeExtension<Config> =>
-  isExtension(extension) && extension.type === ExtensionType.Node;
+export interface MarkExtensionConstructor<
+  Name extends string,
+  Commands extends ExtensionCommandReturn,
+  Config extends BaseExtensionConfig,
+  Props extends object
+> {
+  /**
+   * Create a new instance of the extension to be inserted into the editor.
+   *
+   * This is used to prevent the need for the `new` keyword which can lead to
+   * problems.
+   */
+  of(
+    ...config: IfNoRequiredProperties<Config, [Config?], [Config]>
+  ): MarkExtension<Name, Commands, Config, Props>;
+
+  /**
+   * Get the name of the extensions created by this constructor.
+   */
+  readonly extensionName: Name;
+}
+
+/**
+ * Defines the abstract class for extensions which can place nodes into the
+ * prosemirror state.
+ *
+ * @remarks
+ *
+ * For more information see {@link https://prosemirror.net/docs/ref/#model.Node}
+ */
+export abstract class NodeExtension<
+  Name extends string,
+  Commands extends ExtensionCommandReturn,
+  Config extends BaseExtensionConfig,
+  Props extends object
+> extends Extension<Name, Commands, Config, Props, NodeType<EditorSchema>> {
+  /**
+   * Identifies this extension as a **NODE** type from the prosemirror
+   * terminology.
+   */
+  get type(): ExtensionType.Node {
+    return ExtensionType.Node;
+  }
+
+  /**
+   * The prosemirror specification which sets up the node in the schema.
+   *
+   * The main difference between this and Prosemirror `NodeSpec` is that that
+   * the `toDOM` method doesn't allow dom manipulation. You can only return an
+   * array or string.
+   *
+   * For more advanced configurations, where dom manipulation is required, it is
+   * advisable to set up a nodeView.
+   */
+  public readonly schema: NodeExtensionSpec;
+
+  constructor(...params: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+    super(...params);
+
+    this.schema = this.getNodeCreatorOptions().createSchema({
+      config: this.config,
+      createExtraAttrs: createExtraAttrsFactory(this as AnyNodeExtension),
+      getExtraAttrs: getExtraAttrsFactory(this as AnyNodeExtension),
+    });
+  }
+
+  public isActive({ getState, type }: ExtensionManagerNodeTypeParams): ExtensionIsActiveFunction {
+    return ({ attrs }) => {
+      return isNodeActive({ state: getState(), type, attrs });
+    };
+  }
+
+  /**
+   * Get all the options passed through when creating the
+   * `NodeExtensionConstructor`.
+   *
+   * @internal
+   */
+  abstract getNodeCreatorOptions(): Readonly<
+    NodeExtensionCreatorOptions<Name, Commands, Config, Props>
+  >;
+}
+
+/**
+ * The creator options when creating a node.
+ */
+export interface NodeExtensionCreatorOptions<
+  Name extends string,
+  Commands extends ExtensionCommandReturn,
+  Config extends BaseExtensionConfig,
+  Props extends object
+> extends ExtensionCreatorOptions<Name, Commands, Config, Props> {
+  /**
+   * Provide a method for creating the schema. This is required in order to
+   * create a `NodeExtension`.
+   */
+  createSchema(params: CreateSchemaParams<Config>): NodeExtensionSpec;
+}
+
+/**
+ * The type covering any potential NodeExtension.
+ */
+export type AnyNodeExtension<Config extends BaseExtensionConfig = any> = NodeExtension<
+  any,
+  any,
+  Config,
+  any
+>;
+
+/**
+ * The shape of the `NodeExtensionConstructor` used to create extensions and
+ * returned from the `ExtensionCreator.node()` method.
+ */
+export interface NodeExtensionConstructor<
+  Name extends string,
+  Commands extends ExtensionCommandReturn,
+  Config extends BaseExtensionConfig,
+  Props extends object
+> {
+  /**
+   * Create a new instance of the extension to be inserted into the editor.
+   *
+   * This is used to prevent the need for the `new` keyword which can lead to
+   * problems.
+   */
+  of(
+    ...config: IfNoRequiredProperties<Config, [Config?], [Config]>
+  ): NodeExtension<Name, Commands, Config, Props>;
+
+  /**
+   * Get the name of the extensions created by this constructor.
+   */
+  readonly extensionName: Name;
+}

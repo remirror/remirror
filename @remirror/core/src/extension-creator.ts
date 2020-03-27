@@ -1,19 +1,29 @@
 import { ExtensionType } from '@remirror/core-constants';
-import { freeze } from '@remirror/core-helpers';
+import { Cast, freeze } from '@remirror/core-helpers';
 import {
   BaseExtensionConfig,
   ExtensionCommandReturn,
   IfNoRequiredProperties,
 } from '@remirror/core-types';
 
-import { Extension, ExtensionConstructor, ExtensionCreatorOptions } from './extension';
+import {
+  Extension,
+  ExtensionConstructor,
+  ExtensionCreatorOptions,
+  MarkExtension,
+  MarkExtensionConstructor,
+  MarkExtensionCreatorOptions,
+  NodeExtension,
+  NodeExtensionConstructor,
+  NodeExtensionCreatorOptions,
+} from './extension';
 
 const createBaseExtensionCreator = <
   Config extends BaseExtensionConfig = BaseExtensionConfig,
   Props extends object = {}
 >() => ({
   /**
-   * Creates a `PlainExtension`. This is useful for non content specific
+   * Creates a `PlainExtensionConstructor`. This is useful for non content specific
    * functionality like adding styling or plugins.
    */
   plain<Name extends string, Commands extends ExtensionCommandReturn>(
@@ -21,7 +31,7 @@ const createBaseExtensionCreator = <
   ): ExtensionConstructor<Name, Commands, Config, Props> {
     const options = freeze(creatorOptions);
 
-    class PlainExtension extends Extension<Name, Commands, Config, Props> {
+    class CustomPlainExtension extends Extension<Name, Commands, Config, Props> {
       /**
        * This static method is the only way to create an instance of this
        * extension.
@@ -32,7 +42,7 @@ const createBaseExtensionCreator = <
        * using the `new` keyword.
        */
       public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-        return new PlainExtension(...config);
+        return new CustomPlainExtension(...config);
       }
 
       /**
@@ -62,7 +72,107 @@ const createBaseExtensionCreator = <
       }
     }
 
-    return PlainExtension;
+    return CustomPlainExtension;
+  },
+
+  /**
+   * Creates a `MarkExtensionConstructor`. This is useful for non content specific
+   * functionality like adding styling or plugins.
+   */
+  mark<Name extends string, Commands extends ExtensionCommandReturn>(
+    creatorOptions: MarkExtensionCreatorOptions<Name, Commands, Config, Props>,
+  ): MarkExtensionConstructor<Name, Commands, Config, Props> {
+    const options = freeze(creatorOptions);
+
+    class CustomMarkExtension extends MarkExtension<Name, Commands, Config, Props> {
+      /**
+       * This static method is the only way to create an instance of this
+       * extension.
+       *
+       * @remarks
+       *
+       * It helps prevent uses from struggling with some of the edge cases when
+       * using the `new` keyword.
+       */
+      public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+        return new CustomMarkExtension(...config);
+      }
+
+      /**
+       * The name of the extension.
+       */
+      static get extensionName() {
+        return options.name;
+      }
+
+      /**
+       * This makes the constructor private so that it can't be extended from
+       * when using Typescript.
+       */
+      private constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+        super(...config);
+      }
+
+      public getCreatorOptions() {
+        return Cast(options); // Cast cos I can.
+      }
+
+      public getMarkCreatorOptions() {
+        return options;
+      }
+    }
+
+    return CustomMarkExtension;
+  },
+
+  /**
+   * Creates a `NodeExtensionConstructor`. This is useful for non content specific
+   * functionality like adding styling or plugins.
+   */
+  node<Name extends string, Commands extends ExtensionCommandReturn>(
+    creatorOptions: NodeExtensionCreatorOptions<Name, Commands, Config, Props>,
+  ): NodeExtensionConstructor<Name, Commands, Config, Props> {
+    const options = freeze(creatorOptions);
+
+    class CustomNodeExtension extends NodeExtension<Name, Commands, Config, Props> {
+      /**
+       * This static method is the only way to create an instance of this
+       * extension.
+       *
+       * @remarks
+       *
+       * It helps prevent uses from struggling with some of the edge cases when
+       * using the `new` keyword.
+       */
+      public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+        return new CustomNodeExtension(...config);
+      }
+
+      /**
+       * The name of the extension.
+       */
+      static get extensionName() {
+        return options.name;
+      }
+
+      /**
+       * This makes the constructor private so that it can't be extended from
+       * when using Typescript.
+       */
+      private constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+        super(...config);
+      }
+
+      public getCreatorOptions() {
+        return Cast(options); // Cast cos I can.
+      }
+
+      public getNodeCreatorOptions() {
+        return options;
+      }
+    }
+
+    return CustomNodeExtension;
   },
 });
 
@@ -92,10 +202,3 @@ export const ExtensionCreator = {
     return createBaseExtensionCreator<Config, Props>();
   },
 };
-
-const SimplestExtension = ExtensionCreator.plain({ name: 'simplest' }).of();
-
-const MyExtension = ExtensionCreator.typed<{ isGood: boolean } & BaseExtensionConfig, {}>().plain({
-  name: 'mine',
-});
-// MyExtension.of();
