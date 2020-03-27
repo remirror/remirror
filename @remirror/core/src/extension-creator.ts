@@ -6,14 +6,14 @@ import {
   IfNoRequiredProperties,
 } from '@remirror/core-types';
 
-import { Extension, ExtensionCreatorOptions } from './extension';
+import { Extension, ExtensionConstructor, ExtensionCreatorOptions } from './extension';
 
 const createBaseExtensionCreator = <
   Config extends BaseExtensionConfig = BaseExtensionConfig,
   Props extends object = {}
 >() => ({
   /**
-   * Creates a PlainExtension. This is useful for non content specific
+   * Creates a `PlainExtension`. This is useful for non content specific
    * functionality like adding styling or plugins.
    */
   plain<Name extends string, Commands extends ExtensionCommandReturn>(
@@ -66,26 +66,6 @@ const createBaseExtensionCreator = <
   },
 });
 
-export interface ExtensionConstructor<
-  Name extends string,
-  Commands extends ExtensionCommandReturn,
-  Config extends BaseExtensionConfig,
-  Props extends object,
-  ProsemirrorType = never
-> {
-  /**
-   * Create a new instance of the extension to be inserted into the editor.
-   */
-  of(
-    ...config: IfNoRequiredProperties<Config, [Config?], [Config]>
-  ): Extension<Name, Commands, Config, Props, ProsemirrorType>;
-
-  /**
-   * Get the name of the extensions created by this constructor.
-   */
-  readonly extensionName: Name;
-}
-
 /**
  * The only way to create extensions using remirror.
  *
@@ -118,4 +98,4 @@ const SimplestExtension = ExtensionCreator.plain({ name: 'simplest' }).of();
 const MyExtension = ExtensionCreator.typed<{ isGood: boolean } & BaseExtensionConfig, {}>().plain({
   name: 'mine',
 });
-MyExtension.of();
+// MyExtension.of();

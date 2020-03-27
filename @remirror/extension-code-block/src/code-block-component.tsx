@@ -14,7 +14,7 @@ import { getLanguage } from './code-block-utils';
  * Renders the codeBlock for use in an SSR Environment
  */
 export const CodeBlockComponent = ({
-  options,
+  config: options,
   node,
 }: SSRComponentProps<Required<CodeBlockExtensionOptions>, CodeBlockAttrs>) => {
   const { language: lang } = node.attrs;

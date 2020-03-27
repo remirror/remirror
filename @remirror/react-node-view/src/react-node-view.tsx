@@ -89,7 +89,7 @@ export class ReactNodeView<
     node,
     portalContainer,
     view,
-    options,
+    config: options,
   }: ReactNodeViewParams<GOptions, GAttrs>) {
     this.node = node;
     this.view = view;
@@ -193,7 +193,7 @@ export class ReactNodeView<
         getPosition={getPosition}
         node={node}
         forwardRef={forwardRef}
-        options={options}
+        config={options}
       />
     );
   }
@@ -293,7 +293,7 @@ export class ReactNodeView<
   public static createNodeView<
     GOptions extends BaseExtensionConfig = BaseExtensionConfig,
     GAttrs extends Attrs = Attrs
-  >({ Component, portalContainer, options }: CreateNodeViewParams<GOptions, GAttrs>) {
+  >({ Component, portalContainer, config: options }: CreateNodeViewParams<GOptions, GAttrs>) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
       new ReactNodeView<GOptions, GAttrs>({
         node: node as NodeWithAttrs<GAttrs>,
@@ -301,7 +301,7 @@ export class ReactNodeView<
         getPosition,
         portalContainer,
         Component,
-        options,
+        config: options,
       }).init();
   }
 }

@@ -4,15 +4,12 @@ import {
   ActionMethod,
   AnyConstructor,
   AnyFunction,
-  BaseExtensionConfig,
   EditorSchema,
   Key,
   StringKey,
 } from '@remirror/core-types';
 
-import { AnyExtension, Extension } from './extension';
-import { MarkExtension } from './mark-extension';
-import { NodeExtension } from './node-extension';
+import { AnyExtension, AnyMarkExtension, AnyNodeExtension, Extension } from './extension';
 
 /**
  * Utility type for retrieving the extension options from an extension.
@@ -26,11 +23,15 @@ export type OptionsOfExtension<
 /**
  * Utility type for retrieving the commands provided by an extension.
  */
-export type CommandsOfExtension<
-  GExtension extends {
-    commands?: any;
-  }
-> = GExtension['commands'];
+export type CommandsOfExtension<GExtension> = GExtension extends Extension<
+  infer Name,
+  any,
+  any,
+  any,
+  any
+>
+  ? Name
+  : never;
 
 /**
  * Utility type for retrieving the helpers provided by an extension.
@@ -58,33 +59,40 @@ export type DataOfExtension<
  * - `MarkType`
  * - `never`
  */
-export type ProsemirrorTypeOfExtension<
-  GExtension extends {
-    _T: any;
-  }
-> = GExtension['_T'];
+export type ProsemirrorTypeOfExtension<GExtension> = GExtension extends Extension<
+  any,
+  any,
+  any,
+  any,
+  infer Type
+>
+  ? Type
+  : never;
 
 /**
  * Utility type for retrieving the name of an extension.
  */
-export type NameOfExtension<GExtension extends AnyExtension> = GExtension['name'];
+export type NameOfExtension<GExtension> = GExtension extends Extension<
+  infer Name,
+  any,
+  any,
+  any,
+  any
+>
+  ? Name
+  : never;
 
 /**
  * A utility type for retrieving the name of an extension only when it's a plain extension.
  */
-export type PlainNames<GExtension extends AnyExtension> = ProsemirrorTypeOfExtension<
-  GExtension
-> extends never
-  ? GExtension['name']
+export type PlainExtensionNames<GExtension> = GExtension extends Extension<
+  infer Name,
+  any,
+  any,
+  any
+>
+  ? Name
   : never;
-
-/** An extension constructor */
-export interface ExtensionConstructor<
-  GOptions extends BaseExtensionConfig,
-  GExtension extends Extension<GOptions, any>
-> {
-  new (options?: GOptions): GExtension;
-}
 
 /**
  * Provides a priority value to the extension which determines the priority.
@@ -176,7 +184,7 @@ export type MapCommandToAction<GCommands extends Record<string, AnyFunction>> = 
  * Utility type which receives an extension and provides the type of actions it makes available.
  */
 export type ActionsFromExtensions<GExtension extends AnyExtension> = UnionToIntersection<
-  MapCommandToAction<GExtension['_C']>
+  MapCommandToAction<CommandsOfExtension<GExtension>>
 >;
 
 /**
@@ -184,28 +192,6 @@ export type ActionsFromExtensions<GExtension extends AnyExtension> = UnionToInte
  */
 export type ActionNames<GExtension extends AnyExtension> = StringKey<
   ActionsFromExtensions<GExtension>
->;
-
-/**
- * A utility type which maps the passed in extension helpers to a method called with
- * `manager.data.helpers.helperName()`.
- */
-export type MapHelpers<GHelpers extends Record<string, AnyFunction>> = {
-  [P in Key<GHelpers>]: GHelpers[P];
-};
-
-/**
- * Utility type which receives an extension and provides the type of helpers it makes available.
- */
-export type HelpersFromExtensions<GExtension extends AnyExtension> = UnionToIntersection<
-  MapHelpers<GExtension['_H']>
->;
-
-/**
- * Utility type for pulling all the action names from a list
- */
-export type HelperNames<GExtension extends AnyExtension> = StringKey<
-  HelpersFromExtensions<GExtension>
 >;
 
 /**
@@ -234,14 +220,14 @@ export type TypeOfExtensionClassList<
 /**
  * A utility type for retrieving the name of an extension only when it's a mark extension.
  */
-export type MarkNames<GExtension extends AnyExtension> = GExtension extends MarkExtension<any>
+export type MarkNames<GExtension extends AnyExtension> = GExtension extends AnyMarkExtension
   ? GExtension['name']
   : never;
 
 /**
  * A utility type for retrieving the name of an extension only when it's a node extension.
  */
-export type NodeNames<GExtension extends AnyExtension> = GExtension extends NodeExtension<any>
+export type NodeNames<GExtension extends AnyExtension> = GExtension extends AnyNodeExtension
   ? GExtension['name']
   : never;
 

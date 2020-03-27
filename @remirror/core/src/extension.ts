@@ -4,7 +4,7 @@ import { PluginKey } from 'prosemirror-state';
 import { Suggester } from 'prosemirror-suggest';
 
 import { ExtensionType, RemirrorClassName, Tags } from '@remirror/core-constants';
-import { deepMerge, object } from '@remirror/core-helpers';
+import { deepMerge, isObject, object } from '@remirror/core-helpers';
 import {
   AttrsWithClass,
   BaseExtensionConfig,
@@ -16,6 +16,8 @@ import {
   FlipPartialAndRequired,
   IfNoRequiredProperties,
   KeyBindings,
+  MarkType,
+  NodeType,
   NodeViewMethod,
   OnTransactionParams,
   PlainObject,
@@ -27,6 +29,7 @@ import {
  * They can be overridden.
  */
 export const defaultConfig: Required<BaseExtensionConfig> = {
+  SSRComponent: null,
   extraAttrs: [],
   exclude: {
     inputRules: false,
@@ -435,4 +438,97 @@ export interface ExtensionCreatorOptions<
 /**
  * Provides a type annotation which is applicable to any extension type.
  */
-export type AnyExtension = Extension<any, any, any, any, any>;
+export type AnyExtension<Config extends BaseExtensionConfig = any> = Extension<
+  any,
+  any,
+  Config,
+  any,
+  any
+>;
+
+/**
+ * The type covering any potential NodeExtension.
+ */
+export type AnyNodeExtension<Config extends BaseExtensionConfig = any> = Extension<
+  any,
+  any,
+  Config,
+  any,
+  NodeType
+>;
+
+/**
+ * The type covering any potential `MarkExtension`.
+ */
+export type AnyMarkExtension<Config extends BaseExtensionConfig = any> = Extension<
+  any,
+  any,
+  Config,
+  any,
+  MarkType
+>;
+
+/**
+ * The shape of the ExtensionConstructor used to create extension and returned
+ * from the `ExtensionCreator.plain()` method.
+ */
+export interface ExtensionConstructor<
+  Name extends string,
+  Commands extends ExtensionCommandReturn,
+  Config extends BaseExtensionConfig,
+  Props extends object,
+  ProsemirrorType = never
+> {
+  /**
+   * Create a new instance of the extension to be inserted into the editor.
+   *
+   * This is used to prevent the need for the `new` keyword which can lead to
+   * problems.
+   */
+  of(
+    ...config: IfNoRequiredProperties<Config, [Config?], [Config]>
+  ): Extension<Name, Commands, Config, Props, ProsemirrorType>;
+
+  /**
+   * Get the name of the extensions created by this constructor.
+   */
+  readonly extensionName: Name;
+}
+
+/**
+ * Determines if the passed in extension is any type of extension.
+ *
+ * @param extension - the extension to check
+ */
+export const isExtension = (extension: unknown): extension is AnyExtension =>
+  isObject(extension) && extension.toString().startsWith(RemirrorClassName.Extension);
+
+/**
+ * Checks whether the this is an extension and if it is a plain one
+ *
+ * @param extension - the extension to check
+ */
+export const isPlainExtension = (extension: unknown): extension is Extension<any, any, any, any> =>
+  isExtension(extension) && extension.type === ExtensionType.Plain;
+
+/**
+ * Determines if the passed in extension is a mark extension. Useful as a type guard where a particular type
+ * of extension is needed.
+ *
+ * @param extension - the extension to check
+ */
+export const isMarkExtension = <Config extends BaseExtensionConfig = any>(
+  extension: unknown,
+): extension is AnyMarkExtension<Config> =>
+  isExtension(extension) && extension.type === ExtensionType.Mark;
+
+/**
+ * Determines if the passed in extension is a node extension. Useful as a type guard where a particular type
+ * of extension is needed.
+ *
+ * @param extension - the extension to check
+ */
+export const isNodeExtension = <Config extends BaseExtensionConfig = any>(
+  extension: unknown,
+): extension is AnyNodeExtension<Config> =>
+  isExtension(extension) && extension.type === ExtensionType.Node;

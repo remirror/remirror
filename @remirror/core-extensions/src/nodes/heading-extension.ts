@@ -8,7 +8,7 @@ import {
   ExtensionManagerNodeTypeParams,
   KeyBindings,
   NodeExtension,
-  NodeExtensionOptions,
+  NodeExtensionConfig,
   NodeExtensionSpec,
   NodeGroup,
   object,
@@ -16,7 +16,7 @@ import {
   toggleBlockItem,
 } from '@remirror/core';
 
-export interface HeadingExtensionOptions extends NodeExtensionOptions {
+export interface HeadingExtensionOptions extends NodeExtensionConfig {
   levels?: number[];
   defaultLevel?: number;
 }

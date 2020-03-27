@@ -1,6 +1,6 @@
-import { Attrs, NodeExtensionOptions } from '@remirror/core';
+import { Attrs, NodeExtensionConfig } from '@remirror/core';
 
-export interface ParagraphExtensionOptions extends NodeExtensionOptions {
+export interface ParagraphExtensionOptions extends NodeExtensionConfig {
   /**
    * The attribute to use to store the value of the current indentation level.
    */

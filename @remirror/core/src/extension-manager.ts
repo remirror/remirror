@@ -71,7 +71,7 @@ import {
   InferFlexibleExtensionList,
   MarkNames,
   NodeNames,
-  PlainNames,
+  PlainExtensionNames,
   SchemaFromExtensions,
 } from './extension-types';
 
@@ -797,7 +797,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _P!: PlainNames<GExtension>;
+  public readonly _P!: PlainExtensionNames<GExtension>;
 
   /**
    * `AllNames`

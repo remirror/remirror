@@ -1,9 +1,10 @@
 import { ExtensionType } from '@remirror/core-constants';
 import {
+  BaseExtensionConfig,
   EditorSchema,
+  ExtensionCommandReturn,
   ExtensionIsActiveFunction,
   ExtensionManagerMarkTypeParams,
-  MarkExtensionOptions,
   MarkExtensionSpec,
   MarkType,
 } from '@remirror/core-types';
@@ -12,19 +13,21 @@ import { isMarkActive } from '@remirror/core-utils';
 import { Extension } from './extension';
 
 /**
- * All mark extensions should be created from here.
- *
- * @remarks
  * A mark extension is based on the `Mark` concept from from within prosemirror
  * {@link https://prosemirror.net/docs/guide/#schema.marks}
+ *
+ * @remarks
  *
  * Marks are used to add extra styling or other information to inline content.
  * Mark types are objects much like node types, used to tag mark objects and
  * provide additional information about them.
  */
 export abstract class MarkExtension<
-  GOptions extends MarkExtensionOptions = MarkExtensionOptions
-> extends Extension<GOptions, MarkType<EditorSchema>> {
+  Name extends string,
+  Commands extends ExtensionCommandReturn,
+  Config extends BaseExtensionConfig,
+  Props extends object
+> extends Extension<Name, Commands, Config, Props, MarkType<EditorSchema>> {
   /**
    * Set's the type of this extension to be a `Mark`.
    *

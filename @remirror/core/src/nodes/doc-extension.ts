@@ -1,8 +1,8 @@
-import { NodeExtensionOptions, NodeExtensionSpec } from '@remirror/core-types';
+import { NodeExtensionConfig, NodeExtensionSpec } from '@remirror/core-types';
 
 import { NodeExtension } from '../node-extension';
 
-export interface DocExtensionOptions extends NodeExtensionOptions {
+export interface DocExtensionOptions extends NodeExtensionConfig {
   /**
    * Adjust the content allowed in this prosemirror document.
    *

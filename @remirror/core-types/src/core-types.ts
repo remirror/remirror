@@ -441,7 +441,7 @@ export interface GetAttrsParams {
 export interface SSRComponentProps<
   GOptions extends BaseExtensionConfig = BaseExtensionConfig,
   GAttrs extends Attrs = Attrs
-> extends NodeWithAttrsParams<GAttrs>, BaseExtensionOptionsParams<GOptions> {}
+> extends NodeWithAttrsParams<GAttrs>, BaseExtensionConfigParams<GOptions> {}
 
 /**
  * The tag names that apply to any extension whether plain, node or mark. These
@@ -504,7 +504,7 @@ export interface OnTransactionParams
     TransactionParams,
     EditorStateParams {}
 
-export interface BaseExtensionConfig {
+export interface BaseExtensionConfig extends SSRComponentParams {
   /**
    * Inject additional attributes into the defined mark / node schema. This can
    * only be used for `NodeExtensions` and `MarkExtensions`.
@@ -600,19 +600,21 @@ export interface SSRComponentParams {
   /**
    * The component to render in SSR. The attrs are passed as props.
    *
-   * Each node/mark extension can define it's own particular default component
+   * @remarks
+   *
+   * Each node/mark extension can define it's own particular default component.
+   *
+   * This can only be consumed by Node and Mark extensions.
    */
-  SSRComponent?: ComponentType<any>;
+  SSRComponent?: ComponentType<any> | null;
 }
 
-export interface NodeExtensionOptions extends BaseExtensionConfig, SSRComponentParams {}
-export interface MarkExtensionOptions extends BaseExtensionConfig, SSRComponentParams {}
-
-export interface BaseExtensionOptionsParams<
-  GOptions extends BaseExtensionConfig = BaseExtensionConfig
+export interface BaseExtensionConfigParams<
+  Config extends BaseExtensionConfig = BaseExtensionConfig
 > {
   /**
-   * The options that were passed into the extension that created this nodeView
+   * The static config that was passed into the extension that created this node
+   * or mark.
    */
-  options: GOptions;
+  config: Config;
 }

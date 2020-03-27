@@ -3,7 +3,7 @@ import { ComponentType } from 'react';
 import {
   Attrs,
   BaseExtensionConfig,
-  BaseExtensionOptionsParams,
+  BaseExtensionConfigParams,
   EditorViewParams,
   NodeWithAttrsParams,
   SSRComponentProps,
@@ -43,7 +43,7 @@ export interface ReactNodeViewParams<
   extends EditorViewParams,
     ComponentParams<GOptions, GAttrs>,
     NodeWithAttrsParams<GAttrs>,
-    BaseExtensionOptionsParams<GOptions> {
+    BaseExtensionConfigParams<GOptions> {
   /**
    * Method for retrieving the position of the current nodeView
    */
@@ -62,7 +62,7 @@ export interface CreateNodeViewParams<
 >
   extends Pick<ReactNodeViewParams, 'portalContainer'>,
     ComponentParams<GOptions, GAttrs>,
-    BaseExtensionOptionsParams<GOptions> {}
+    BaseExtensionConfigParams<GOptions> {}
 
 export interface ComponentParams<
   GOptions extends BaseExtensionConfig = BaseExtensionConfig,

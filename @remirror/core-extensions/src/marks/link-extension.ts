@@ -12,7 +12,7 @@ import {
   isTextSelection,
   KeyBindings,
   MarkExtension,
-  MarkExtensionOptions,
+  MarkExtensionConfig,
   MarkExtensionSpec,
   MarkGroup,
   markPasteRule,
@@ -22,7 +22,7 @@ import {
   updateMark,
 } from '@remirror/core';
 
-export interface LinkExtensionOptions extends MarkExtensionOptions {
+export interface LinkExtensionOptions extends MarkExtensionConfig {
   /**
    * Return true to intercept the activation. This is useful for showing a dialog to replace the selected text.
    */

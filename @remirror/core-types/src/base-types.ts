@@ -1,5 +1,6 @@
 /* Utility Types */
 
+import { AttributeSpec } from 'prosemirror-model';
 import { ConditionalExcept, ConditionalPick } from 'type-fest';
 
 /**
@@ -240,6 +241,38 @@ export type ExtraAttrsTuple = [string, string, string?];
  * extension.
  */
 export type ExtraAttrs = string | ExtraAttrsTuple | ExtraAttrsObject;
+
+/**
+ * A method that can pull all the extraAttrs from the provided dom node.
+ */
+export type GetExtraAttrs = (domNode: Node) => Record<string, unknown>;
+
+/**
+ * A method that creates the `AttributeSpec` for prosemirror that can be added
+ * to a node or mark extension to provide extra functionality and store more
+ * information within the DOM and prosemirror state..
+ *
+ * @remarks
+ *
+ * ```ts
+ * const schema = {
+ *   attrs: {
+ *      ...createExtraAttrs({ fallback: null }),
+ *      href: {
+ *       default: null,
+ *     },
+ *   },
+ * }
+ */
+export type CreateExtraAttrs = (params: CreateExtraAttrsParams) => Record<string, AttributeSpec>;
+
+interface CreateExtraAttrsParams {
+  /**
+   * The fallback value to use for the extra attributes being created. Must be
+   * provided.
+   */
+  fallback: string | null;
+}
 
 /**
  * Defines the options that every extension can accept at instantiation.

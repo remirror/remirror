@@ -13,7 +13,7 @@ import {
   isFunction,
   LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
-  MarkExtensionOptions,
+  MarkExtensionConfig,
   MarkExtensionSpec,
   markPasteRule,
   removeMark,
@@ -29,7 +29,7 @@ import {
 } from './enhanced-link-utils';
 import { extractUrl } from './extract-url';
 
-export interface EnhancedLinkExtensionOptions extends MarkExtensionOptions {
+export interface EnhancedLinkExtensionOptions extends MarkExtensionConfig {
   /**
    * This handler is called every time the matched urls are updated.
    */
