@@ -51,7 +51,7 @@ import {
 } from '@remirror/core-utils';
 import { PortalContainer } from '@remirror/react-portals';
 
-import { isMarkExtension, isNodeExtension } from './extension-helpers';
+import { AnyExtension, isMarkExtension, isNodeExtension } from './extension';
 import {
   createCommands,
   createExtensionTags,
@@ -65,9 +65,7 @@ import {
 } from './extension-manager.helpers';
 import {
   ActionsFromExtensions,
-  AnyExtension,
   FlexibleExtension,
-  HelpersFromExtensions,
   InferFlexibleExtensionList,
   MarkNames,
   NodeNames,
@@ -99,6 +97,19 @@ export interface ExtensionManagerData<
   options: Record<GNames, PlainObject>;
   tags: ExtensionTags<GNodes, GMarks, GPlain>;
 }
+
+/**
+ * The `ExtensionManager` has multiple hook phases which are able to hook into
+ * the extension manager flow and add new functionality to the editor.
+ *
+ * The lifecycle methods are
+ *
+ * - onConstruct - when the extension manager is created and after the schema is
+ *   made available.
+ * - onInit - when the editor manager is initialized within the component
+ * - onView - when the view has been received from the dom ref.
+ * -
+ */
 
 /**
  * A class to manage the extensions and prosemirror interactions of our editor.
@@ -185,10 +196,11 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   private readonly getHelpers = (name: keyof this['_H']) => this.initData.helpers[name];
 
   /**
-   * Creates the extension manager which is used to simplify the management the prosemirror editor.
+   * Creates the extension manager which is used to simplify the management of the
+   * prosemirror editor.
    *
-   * This should not be called directly if you want to use prioritized extensions. Instead use
-   * `ExtensionManager.create`.
+   * This should not be called directly if you want to use prioritized
+   * extensions. Instead use `ExtensionManager.create`.
    */
   private constructor(extensions: GExtension[]) {
     this.extensions = extensions;

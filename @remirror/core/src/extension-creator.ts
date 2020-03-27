@@ -27,11 +27,11 @@ const createBaseExtensionCreator = <
    * functionality like adding styling or plugins.
    */
   plain<Name extends string, Commands extends ExtensionCommandReturn>(
-    creatorOptions: ExtensionCreatorOptions<Name, Commands, Config, Props>,
-  ): ExtensionConstructor<Name, Commands, Config, Props> {
+    creatorOptions: ExtensionCreatorOptions<Name, Config, Props, Commands>,
+  ): ExtensionConstructor<Name, Config, Props, Commands> {
     const options = freeze(creatorOptions);
 
-    class CustomPlainExtension extends Extension<Name, Commands, Config, Props> {
+    class CustomPlainExtension extends Extension<Name, Config, Props, Commands> {
       /**
        * This static method is the only way to create an instance of this
        * extension.
@@ -80,11 +80,11 @@ const createBaseExtensionCreator = <
    * functionality like adding styling or plugins.
    */
   mark<Name extends string, Commands extends ExtensionCommandReturn>(
-    creatorOptions: MarkExtensionCreatorOptions<Name, Commands, Config, Props>,
-  ): MarkExtensionConstructor<Name, Commands, Config, Props> {
+    creatorOptions: MarkExtensionCreatorOptions<Name, Config, Props, Commands>,
+  ): MarkExtensionConstructor<Name, Config, Props, Commands> {
     const options = freeze(creatorOptions);
 
-    class CustomMarkExtension extends MarkExtension<Name, Commands, Config, Props> {
+    class CustomMarkExtension extends MarkExtension<Name, Config, Props, Commands> {
       /**
        * This static method is the only way to create an instance of this
        * extension.
@@ -130,11 +130,11 @@ const createBaseExtensionCreator = <
    * functionality like adding styling or plugins.
    */
   node<Name extends string, Commands extends ExtensionCommandReturn>(
-    creatorOptions: NodeExtensionCreatorOptions<Name, Commands, Config, Props>,
-  ): NodeExtensionConstructor<Name, Commands, Config, Props> {
+    creatorOptions: NodeExtensionCreatorOptions<Name, Config, Props, Commands>,
+  ): NodeExtensionConstructor<Name, Config, Props, Commands> {
     const options = freeze(creatorOptions);
 
-    class CustomNodeExtension extends NodeExtension<Name, Commands, Config, Props> {
+    class CustomNodeExtension extends NodeExtension<Name, Config, Props, Commands> {
       /**
        * This static method is the only way to create an instance of this
        * extension.
@@ -197,6 +197,27 @@ export const ExtensionCreator = {
    * type out all the generic types. If you don't
    * want to add any configuration or dynamic props you can use the other
    * methods exposed by this configuration.
+   *
+   * ```ts
+   * import { ExtensionCreator, BaseExtensionConfig } from '@remirror/core';
+   *
+   * interface MyExtensionConfig extends BaseExtensionConfig {
+   *   custom: boolean;
+   * }
+   *
+   * interface MyExtensionProps {
+   *   onChange: (times: number) => void;
+   * }
+   *
+   * const MyExtension = ExtensionCreator
+   *   .typed<MyExtensionConfig, MyExtensionProps>()
+   *   .plain({
+   *     name: 'mine',
+   *     defaultProps: {
+   *       onChange: () => {}, // Do nothing
+   *     },
+   *   });
+   * ```
    */
   typed<Config extends BaseExtensionConfig, Props extends object>() {
     return createBaseExtensionCreator<Config, Props>();

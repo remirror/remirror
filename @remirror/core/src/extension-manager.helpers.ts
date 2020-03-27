@@ -12,13 +12,9 @@ import {
   NodeExtensionTags,
 } from '@remirror/core-types';
 
+import { AnyExtension, isMarkExtension, isNodeExtension } from './extension';
+import { convertToPrioritizedExtension } from './extension-helpers';
 import {
-  convertToPrioritizedExtension,
-  isMarkExtension,
-  isNodeExtension,
-} from './extension-helpers';
-import {
-  AnyExtension,
   ExtensionListParams,
   FlexibleExtension,
   InferFlexibleExtensionList,

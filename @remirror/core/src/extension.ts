@@ -213,9 +213,9 @@ export const getExtraAttrsFactory = <Config extends BaseExtensionConfig>(
  */
 export abstract class Extension<
   Name extends string,
-  Commands extends ExtensionCommandReturn,
   Config extends BaseExtensionConfig,
-  Props extends object,
+  Props extends object = {},
+  Commands extends ExtensionCommandReturn = {},
   ProsemirrorType = never
 > {
   /**
@@ -288,7 +288,7 @@ export abstract class Extension<
    * @internal
    */
   abstract getCreatorOptions(): Readonly<
-    ExtensionCreatorOptions<Name, Commands, Config, Props, ProsemirrorType>
+    ExtensionCreatorOptions<Name, Config, Props, Commands, ProsemirrorType>
   >;
 
   /**
@@ -339,11 +339,11 @@ type DefaultConfigType<Config extends BaseExtensionConfig> = FlipPartialAndRequi
 
 export interface ExtensionCreatorOptions<
   Name extends string,
-  Commands extends ExtensionCommandReturn,
   Config extends BaseExtensionConfig,
-  Props extends object,
+  Props extends object = {},
+  Commands extends ExtensionCommandReturn = {},
   ProsemirrorType = never
-> {
+> extends GlobalExtensionCreatorOptions<Name, Config, Props, Commands, ProsemirrorType> {
   /**
    * The unique name of this extension.
    *
@@ -580,9 +580,9 @@ export type AnyExtension<Config extends BaseExtensionConfig = any> = Extension<
  */
 export interface ExtensionConstructor<
   Name extends string,
-  Commands extends ExtensionCommandReturn,
   Config extends BaseExtensionConfig,
-  Props extends object,
+  Props extends object = {},
+  Commands extends ExtensionCommandReturn = {},
   ProsemirrorType = never
 > {
   /**
@@ -593,7 +593,7 @@ export interface ExtensionConstructor<
    */
   of(
     ...config: IfNoRequiredProperties<Config, [Config?], [Config]>
-  ): Extension<Name, Commands, Config, Props, ProsemirrorType>;
+  ): Extension<Name, Config, Props, Commands, ProsemirrorType>;
 
   /**
    * Get the name of the extensions created by this constructor.
@@ -613,10 +613,10 @@ export interface ExtensionConstructor<
  */
 export abstract class MarkExtension<
   Name extends string,
-  Commands extends ExtensionCommandReturn,
   Config extends BaseExtensionConfig,
-  Props extends object
-> extends Extension<Name, Commands, Config, Props, MarkType<EditorSchema>> {
+  Props extends object = {},
+  Commands extends ExtensionCommandReturn = {}
+> extends Extension<Name, Config, Props, Commands, MarkType<EditorSchema>> {
   /**
    * Set's the type of this extension to be a `Mark`.
    *
@@ -671,7 +671,7 @@ export abstract class MarkExtension<
    * @internal
    */
   abstract getMarkCreatorOptions(): Readonly<
-    MarkExtensionCreatorOptions<Name, Commands, Config, Props>
+    MarkExtensionCreatorOptions<Name, Config, Props, Commands>
   >;
 }
 
@@ -680,10 +680,10 @@ export abstract class MarkExtension<
  */
 export interface MarkExtensionCreatorOptions<
   Name extends string,
-  Commands extends ExtensionCommandReturn,
   Config extends BaseExtensionConfig,
-  Props extends object
-> extends ExtensionCreatorOptions<Name, Commands, Config, Props> {
+  Props extends object = {},
+  Commands extends ExtensionCommandReturn = {}
+> extends ExtensionCreatorOptions<Name, Config, Props, Commands> {
   /**
    * Provide a method for creating the schema. This is required in order to
    * create a `MarkExtension`.
@@ -707,9 +707,9 @@ export type AnyMarkExtension<Config extends BaseExtensionConfig = any> = MarkExt
  */
 export interface MarkExtensionConstructor<
   Name extends string,
-  Commands extends ExtensionCommandReturn,
   Config extends BaseExtensionConfig,
-  Props extends object
+  Props extends object = {},
+  Commands extends ExtensionCommandReturn = {}
 > {
   /**
    * Create a new instance of the extension to be inserted into the editor.
@@ -719,7 +719,7 @@ export interface MarkExtensionConstructor<
    */
   of(
     ...config: IfNoRequiredProperties<Config, [Config?], [Config]>
-  ): MarkExtension<Name, Commands, Config, Props>;
+  ): MarkExtension<Name, Config, Props, Commands>;
 
   /**
    * Get the name of the extensions created by this constructor.
@@ -737,10 +737,10 @@ export interface MarkExtensionConstructor<
  */
 export abstract class NodeExtension<
   Name extends string,
-  Commands extends ExtensionCommandReturn,
   Config extends BaseExtensionConfig,
-  Props extends object
-> extends Extension<Name, Commands, Config, Props, NodeType<EditorSchema>> {
+  Props extends object = {},
+  Commands extends ExtensionCommandReturn = {}
+> extends Extension<Name, Config, Props, Commands, NodeType<EditorSchema>> {
   /**
    * Identifies this extension as a **NODE** type from the prosemirror
    * terminology.
@@ -784,7 +784,7 @@ export abstract class NodeExtension<
    * @internal
    */
   abstract getNodeCreatorOptions(): Readonly<
-    NodeExtensionCreatorOptions<Name, Commands, Config, Props>
+    NodeExtensionCreatorOptions<Name, Config, Props, Commands>
   >;
 }
 
@@ -793,10 +793,10 @@ export abstract class NodeExtension<
  */
 export interface NodeExtensionCreatorOptions<
   Name extends string,
-  Commands extends ExtensionCommandReturn,
   Config extends BaseExtensionConfig,
-  Props extends object
-> extends ExtensionCreatorOptions<Name, Commands, Config, Props> {
+  Props extends object = {},
+  Commands extends ExtensionCommandReturn = {}
+> extends ExtensionCreatorOptions<Name, Config, Props, Commands> {
   /**
    * Provide a method for creating the schema. This is required in order to
    * create a `NodeExtension`.
@@ -820,9 +820,9 @@ export type AnyNodeExtension<Config extends BaseExtensionConfig = any> = NodeExt
  */
 export interface NodeExtensionConstructor<
   Name extends string,
-  Commands extends ExtensionCommandReturn,
   Config extends BaseExtensionConfig,
-  Props extends object
+  Props extends object = {},
+  Commands extends ExtensionCommandReturn = {}
 > {
   /**
    * Create a new instance of the extension to be inserted into the editor.
@@ -832,10 +832,46 @@ export interface NodeExtensionConstructor<
    */
   of(
     ...config: IfNoRequiredProperties<Config, [Config?], [Config]>
-  ): NodeExtension<Name, Commands, Config, Props>;
+  ): NodeExtension<Name, Config, Props, Commands>;
 
   /**
    * Get the name of the extensions created by this constructor.
    */
   readonly extensionName: Name;
+}
+
+declare global {
+  /**
+   * This type should overridden to add extra options to the options that can be
+   * passed into the `ExtensionCreator.plain()`.
+   */
+  interface GlobalExtensionCreatorOptions<
+    Name extends string,
+    Config extends BaseExtensionConfig,
+    Props extends object,
+    Commands extends ExtensionCommandReturn,
+    ProsemirrorType = never
+  > {}
+
+  /**
+   * This type should overridden to add extra options to the options that can be
+   * passed into the `ExtensionCreator.node()`.
+   */
+  interface GlobalNodeExtensionCreatorOptions<
+    Name extends string,
+    Config extends BaseExtensionConfig,
+    Props extends object = {},
+    Commands extends ExtensionCommandReturn = {}
+  > {}
+
+  /**
+   * This type should overridden to add extra options to the options that can be
+   * passed into the `ExtensionCreator.mark()`.
+   */
+  interface GlobalMarkExtensionCreatorOptions<
+    Name extends string,
+    Config extends BaseExtensionConfig,
+    Props extends object = {},
+    Commands extends ExtensionCommandReturn = {}
+  > {}
 }
