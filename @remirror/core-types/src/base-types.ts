@@ -267,6 +267,12 @@ export type IfHasRequiredProperties<Type extends object, Then, Else> = GetRequir
   ? Then
   : Else;
 
+export type IfNoRequiredProperties<Type extends object, Then, Else> = GetRequiredKeys<
+  Type
+> extends never
+  ? Then
+  : Else;
+
 /**
  * Get all the keys for required properties on this type.
  */

@@ -14,7 +14,7 @@ import {
   ExtensionManagerParams,
   ExtensionManagerTypeParams,
   FlipPartialAndRequired,
-  IfHasRequiredProperties,
+  IfNoRequiredProperties,
   KeyBindings,
   NodeViewMethod,
   OnTransactionParams,
@@ -88,6 +88,21 @@ export abstract class Extension<
   ProsemirrorType = never
 > {
   /**
+   * This defines the type of the extension.
+   *
+   * @remarks
+   * There are three types of extension:
+   *
+   * - `plain`
+   * - `node` - see {@link NodeExtension}
+   * - `mark` - see {@link MarkExtension}
+   *
+   * This identifier is used in the extension manager to separate marks from
+   * nodes and to determine the functionality of each extension.
+   */
+  public abstract readonly type: ExtensionType;
+
+  /**
    * The static configuration for this extension.
    *
    * @remarks
@@ -123,7 +138,7 @@ export abstract class Extension<
    */
   private pk?: PluginKey;
 
-  constructor(...config: IfHasRequiredProperties<Config, [Config?], [Config]>) {
+  constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
     this.config = deepMerge(defaultConfig, {
       ...this.defaultConfig,
       ...config[0],
@@ -152,25 +167,11 @@ export abstract class Extension<
     return this.getCreatorOptions().defaultProps ?? object();
   }
 
+  /**
+   * Get the default configuration
+   */
   get defaultConfig(): DefaultConfigType<Config> {
     return this.getCreatorOptions().defaultConfig ?? (defaultConfig as DefaultConfigType<Config>);
-  }
-
-  /**
-   * This defines the type of the extension.
-   *
-   * @remarks
-   * There are three types of extension:
-   *
-   * - `plain`
-   * - `node` - see {@link NodeExtension}
-   * - `mark` - see {@link MarkExtension}
-   *
-   * This identifier is used in the extension manager to separate marks from
-   * nodes and to determine the functionality of each extension.
-   */
-  get type(): ExtensionType {
-    return ExtensionType.Plain;
   }
 
   /**
@@ -430,3 +431,8 @@ export interface ExtensionCreatorOptions<
    */
   suggestions?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => Suggester[] | Suggester;
 }
+
+/**
+ * Provides a type annotation which is applicable to any extension type.
+ */
+export type AnyExtension = Extension<any, any, any, any, any>;

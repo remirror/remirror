@@ -10,14 +10,9 @@ import {
   StringKey,
 } from '@remirror/core-types';
 
-import { Extension } from './extension';
+import { AnyExtension, Extension } from './extension';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
-
-/**
- * Provides a type annotation which is applicable to any extension type.
- */
-export type AnyExtension = Extension<any, any, any, any, any>;
 
 /**
  * Utility type for retrieving the extension options from an extension.

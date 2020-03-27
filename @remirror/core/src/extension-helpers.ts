@@ -7,8 +7,8 @@ import {
 import { invariant, isObject, isString, object } from '@remirror/core-helpers';
 import { Attrs, ExtraAttrs } from '@remirror/core-types';
 
-import { Extension } from './extension';
-import { AnyExtension, FlexibleExtension, PrioritizedExtension } from './extension-types';
+import { AnyExtension, Extension } from './extension';
+import { FlexibleExtension, PrioritizedExtension } from './extension-types';
 import { MarkExtension } from './mark-extension';
 import { NodeExtension } from './node-extension';
 

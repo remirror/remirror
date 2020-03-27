@@ -1,8 +1,9 @@
+import { ExtensionType } from '@remirror/core-constants';
 import { freeze } from '@remirror/core-helpers';
 import {
   BaseExtensionConfig,
   ExtensionCommandReturn,
-  IfHasRequiredProperties,
+  IfNoRequiredProperties,
 } from '@remirror/core-types';
 
 import { Extension, ExtensionCreatorOptions } from './extension';
@@ -30,7 +31,7 @@ const createBaseExtensionCreator = <
        * It helps prevent uses from struggling with some of the edge cases when
        * using the `new` keyword.
        */
-      public static of(...config: IfHasRequiredProperties<Config, [Config?], [Config]>) {
+      public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
         return new PlainExtension(...config);
       }
 
@@ -42,10 +43,17 @@ const createBaseExtensionCreator = <
       }
 
       /**
+       * Set this extension to be a plain type.
+       */
+      get type() {
+        return ExtensionType.Plain;
+      }
+
+      /**
        * This makes the constructor private so that it can't be extended from
        * when using Typescript.
        */
-      private constructor(...config: IfHasRequiredProperties<Config, [Config?], [Config]>) {
+      private constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
         super(...config);
       }
 
@@ -69,7 +77,7 @@ export interface ExtensionConstructor<
    * Create a new instance of the extension to be inserted into the editor.
    */
   of(
-    ...config: IfHasRequiredProperties<Config, [Config?], [Config]>
+    ...config: IfNoRequiredProperties<Config, [Config?], [Config]>
   ): Extension<Name, Commands, Config, Props, ProsemirrorType>;
 
   /**
@@ -104,3 +112,10 @@ export const ExtensionCreator = {
     return createBaseExtensionCreator<Config, Props>();
   },
 };
+
+const SimplestExtension = ExtensionCreator.plain({ name: 'simplest' }).of();
+
+const MyExtension = ExtensionCreator.typed<{ isGood: boolean } & BaseExtensionConfig, {}>().plain({
+  name: 'mine',
+});
+MyExtension.of();
