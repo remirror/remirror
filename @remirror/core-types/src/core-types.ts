@@ -506,11 +506,6 @@ export interface OnTransactionParams
 
 export interface BaseExtensionConfig {
   /**
-   * Add extra styles to the extension.
-   */
-  extraStyles?: RemirrorInterpolation;
-
-  /**
    * Inject additional attributes into the defined mark / node schema. This can
    * only be used for `NodeExtensions` and `MarkExtensions`.
    *

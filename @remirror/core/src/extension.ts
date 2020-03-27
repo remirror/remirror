@@ -5,19 +5,15 @@ import { Suggester } from 'prosemirror-suggest';
 import { ConditionalExcept, ConditionalPick } from 'type-fest';
 
 import { ExtensionType, RemirrorClassName, Tags } from '@remirror/core-constants';
-import { deepMerge, isString, object } from '@remirror/core-helpers';
+import { deepMerge, object } from '@remirror/core-helpers';
 import {
-  AnyFunction,
-  Attrs,
   AttrsWithClass,
   BaseExtensionConfig,
   CommandTypeParams,
   ExtensionCommandReturn,
-  ExtensionHelperReturn,
   ExtensionIsActiveFunction,
   ExtensionManagerParams,
   ExtensionManagerTypeParams,
-  ExtraAttrs,
   KeyBindings,
   NodeViewMethod,
   OnTransactionParams,
@@ -29,8 +25,7 @@ import {
  * These are the default options merged into every extension.
  * They can be overridden.
  */
-const defaultOptions: Required<BaseExtensionConfig> = {
-  extraStyles: '',
+export const defaultConfig: Required<BaseExtensionConfig> = {
   extraAttrs: [],
   exclude: {
     inputRules: false,
@@ -84,27 +79,31 @@ const defaultOptions: Required<BaseExtensionConfig> = {
  * }
  * ```
  */
-export abstract class Extension<Options extends BaseExtensionConfig, ProsemirrorType = never> {
+export abstract class Extension<
+  Name extends string,
+  Commands extends ExtensionCommandReturn,
+  Config extends BaseExtensionConfig,
+  Props extends object,
+  ProsemirrorType = never
+> {
   /**
-   * The options of this extension
+   * The static configuration for this extension.
    *
    * @remarks
    *
-   * Options are passed in at instantiation and merged with the default options
+   * Static config is passed in at instantiation and merged with the default options
    * of this extension.
-   *
    */
-  public readonly options: Required<Options>;
+  public readonly config: Required<Config>;
 
   /**
    * The unique name of this extension.
    *
    * @remarks
    *
-   * Every extension **must** have a name. Ideally the name should have a
-   * distinct type to allow for better type inference for end users. By
-   * convention the name should be `camelCased` and unique within your editor
-   * instance.
+   * Every extension **must** have a name. The name should have a distinct type
+   * to allow for better type inference for end users. By convention the name
+   * should be `camelCased` and unique within your editor instance.
    *
    * ```ts
    * class SimpleExtension extends Extension {
@@ -114,99 +113,46 @@ export abstract class Extension<Options extends BaseExtensionConfig, Prosemirror
    * }
    * ```
    */
-  public abstract readonly name: string;
+  get name(): Name {
+    return this.getCreatorOptions().name;
+  }
 
   /**
    * The prosemirror plugin key for this extension.
    */
-  #pk?: PluginKey;
+  private pk?: PluginKey;
 
-  /**
-   * This constructor is kept private so that you don't create your own classes
-   * or extend from this class.
-   */
-  private constructor(options: Options = object()) {
-    this.options = deepMerge(defaultOptions, { ...this.defaultOptions, ...options });
-
-    this.init();
+  constructor(...config: HasRequiredProperties<Config, [Config?], [Config]>) {
+    this.config = deepMerge(defaultConfig, {
+      ...this.defaultConfig,
+      ...config[0],
+    });
   }
 
   /**
-   * Allows for the addition of attributes to the defined schema.
-   * This is only used in node and mark extensions.
-   *
-   * For now extraAttrs can only be optional
-   */
-  protected extraAttrs(fallback: string | null = '') {
-    if (this.type === ExtensionType.Plain) {
-      throw new Error('Invalid use of extraAttrs within a plain extension.');
-    }
-
-    const extraAttrs: ExtraAttrs[] = (this.options.extraAttrs as ExtraAttrs[] | undefined) ?? [];
-    const attrs: Record<string, { default?: unknown }> = object();
-
-    for (const item of extraAttrs) {
-      if (Array.isArray(item)) {
-        attrs[item[0]] = { default: item[1] };
-      } else if (isString(item)) {
-        attrs[item] = { default: fallback };
-      } else {
-        const { name, default: def } = item;
-        attrs[name] = def !== undefined ? { default: def } : {};
-      }
-    }
-    return attrs;
-  }
-
-  /**
-   * Runs through the extraAttrs and retrieves the
-   */
-  protected getExtraAttrs(domNode: Node) {
-    if (this.type === ExtensionType.Plain) {
-      throw new Error('Invalid use of extraAttrs within a plain extension.');
-    }
-
-    const extraAttrs = (this.options.extraAttrs as ExtraAttrs[] | undefined) ?? [];
-    const attrs: Attrs = object();
-
-    for (const item of extraAttrs) {
-      if (Array.isArray(item)) {
-        // Use the default
-        const [name, , attributeName] = item;
-        attrs[name] = attributeName ? (domNode as Element).getAttribute(attributeName) : undefined;
-      } else if (isString(item)) {
-        // Assume the name is the same
-        attrs[item] = (domNode as Element).getAttribute(item);
-      } else {
-        const { name, getAttrs, default: fallback } = item;
-        attrs[name] = getAttrs ? getAttrs(domNode) || fallback : fallback;
-      }
-    }
-    return attrs;
-  }
-
-  /**
-   * This is a utility method to help avoid the need for defining a constructor
-   * in sub classes.
+   * A method that must be defined on classes that extend this.
    *
    * @remarks
-   * When overriding this method make sure to call the super method.
    *
-   * ```ts
-   * class AwesomeExtension extends Extension {
-   *   protected init() {
-   *     super.init(); // Must be called
-   *     this.doMyThing();
-   *   }
+   * It provides all the `options` passed when this `ExtensionConstructor` was
+   * created. This is for internal usage only since the `Extension` class is
+   * not exported from this library.
    *
-   *   private doMyThing() {
-   *     // Secret sauce
-   *   }
-   * }
-   * ```
+   * @internal
    */
-  protected init() {
-    this.#pk = new PluginKey(this.name);
+  abstract getCreatorOptions(): Readonly<
+    ExtensionCreatorOptions<Name, Commands, Config, Props, ProsemirrorType>
+  >;
+
+  /**
+   * Get the default props.
+   */
+  get defaultProps(): Required<Props> {
+    return this.getCreatorOptions().defaultProps ?? object();
+  }
+
+  get defaultConfig(): DefaultConfigType<Config> {
+    return this.getCreatorOptions().defaultConfig ?? (defaultConfig as DefaultConfigType<Config>);
   }
 
   /**
@@ -227,65 +173,25 @@ export abstract class Extension<Options extends BaseExtensionConfig, Prosemirror
   }
 
   /**
-   * Tags help to categorize the behavior of an extension. This behavior is
-   * later grouped in the extension manager and passed as `tag` to each
-   * extension method. It can be used by commands that need to remove all
-   * formatting and use the tag to identify which registered extensions are formatters.
-   *
-   * There are internally defined tags but it's also possible to define any
-   * custom string as a tag. See {@link Tags}
+   * Retrieves the tags for this extension.
    */
   get tags(): Array<Tags | string> {
-    return [];
+    return this.getCreatorOptions().tags ?? [];
   }
 
   /**
    * Retrieves the plugin key which is used to uniquely identify the plugin
    * created by the extension.
    */
-  public get pluginKey(): PluginKey {
-    if (this.#pk) {
-      return this.#pk;
+  get pluginKey(): PluginKey {
+    if (this.pk) {
+      return this.pk;
     }
 
-    this.#pk = new PluginKey(this.name);
+    this.pk = new PluginKey(this.name);
 
-    return this.#pk;
+    return this.pk;
   }
-
-  /**
-   * This determines the default options for the extension.
-   *
-   * @remarks
-   * All non-required options that an extension uses should have a default options defined here.
-   */
-  protected get defaultOptions(): Partial<Options> {
-    return {};
-  }
-
-  /**
-   * `ExtensionOptions`
-   *
-   * This pseudo property makes it easier to infer generic types of this class.
-   * @private
-   */
-  public readonly _O!: Options;
-
-  /**
-   * `ProsemirrorType`
-   *
-   * This pseudo property makes it easier to infer generic types from this class.
-   * @private
-   */
-  public readonly _T!: ProsemirrorType;
-
-  /**
-   * `ExtensionCommands`
-   *
-   * This pseudo property makes it easier to infer Generic types of this class.
-   * @private
-   */
-  public readonly _C!: this['commands'] extends AnyFunction ? ReturnType<this['commands']> : {};
 
   /**
    * Override the default toString method to match the native toString methods.
@@ -312,29 +218,46 @@ type YY = { [Key in keyof ZZ]-?: NonUndefinable<ZZ[Key]> };
 type X = TransformNonUndefinedToNever<Z>;
 type XX = TransformNonUndefinedToNever<ZZ>;
 
+type HasRequiredProperties<Type extends object, Then, Else> = GetRequiredProperties<
+  Type
+> extends string
+  ? Then
+  : Else;
+type GetRequiredProperties<Type extends object> = keyof ConditionalPick<
+  TransformNonUndefinedToNever<Type>,
+  never
+>;
+interface A1 {
+  a?: 'a';
+  b: 'b';
+}
+
+type A2 = HasRequiredProperties<A1>;
+
 /**
  * Transforms the properties of a non undefined type to be never. Purely a
  * utility for use in other type utilities.
  */
-type TransformNonUndefinedToNever<Type extends object> = {
+export type TransformNonUndefinedToNever<Type extends object> = {
   [Key in keyof Type]: Type[Key] extends undefined ? Type[Key] : never;
 };
 
 /**
  * Pick the `partial` properties from the provided Type and make them all required.
  */
-type PickPartial<Type extends object> = {
+export type PickPartial<Type extends object> = {
   [Key in keyof ConditionalExcept<TransformNonUndefinedToNever<Type>, never>]-?: Type[Key];
 };
 
 /**
  * Only pick the required types from the `Type`.
  */
-type PickRequired<Type extends object> = {
+export type PickRequired<Type extends object> = {
   [Key in keyof ConditionalPick<TransformNonUndefinedToNever<Type>, never>]: Type[Key];
 };
 
-type FlipPartialAndRequired<Type extends object> = PickPartial<Type> & Partial<PickRequired<Type>>;
+export type FlipPartialAndRequired<Type extends object> = PickPartial<Type> &
+  Partial<PickRequired<Type>>;
 
 interface A {
   a: string;
@@ -346,11 +269,14 @@ type D = PickPartial<A>;
 type E = PickRequired<A>;
 type F = FlipPartialAndRequired<A>;
 
-export interface ExtensionCreatorMethods<
+type DefaultConfigType<Config extends BaseExtensionConfig> = FlipPartialAndRequired<Config> &
+  Partial<BaseExtensionConfig>;
+
+export interface ExtensionCreatorOptions<
   Name extends string,
   Commands extends ExtensionCommandReturn,
+  Config extends BaseExtensionConfig,
   Props extends object,
-  Options extends BaseExtensionConfig,
   ProsemirrorType = never
 > {
   /**
@@ -366,9 +292,44 @@ export interface ExtensionCreatorMethods<
   name: Name;
 
   /**
-   * Props are dynamic within the editor
+   * The config helps define the properties schema and built in behaviour of
+   * this extension.
+   *
+   * @remarks
+   *
+   * Once set it can't be updated during run time. Some of the config is
+   * optional and some is not. The required defaultConfig are all the none
+   * required configuration options.
    */
-  getDefaultProps?: () => Props;
+  defaultConfig?: DefaultConfigType<Config>;
+
+  /**
+   * Props are dynamic and generated at run time. For this reason you will need
+   * to provide a default value for every prop this extension uses.
+   *
+   * @remarks
+   *
+   * Props are dynamically assigned options that are injected into the editor at
+   * runtime. Every single prop that the extension will use needs to have a
+   * default value set.
+   */
+  defaultProps?: Required<Props>;
+
+  /**
+   * Define the tags for this extension.
+   *
+   * @remarks
+   *
+   * Tags are a helpful tool for categorizing the behavior of an extension. This
+   * behavior is later grouped in the `ExtensionManager` and passed as `tag` to
+   * each method defined in the `ExtensionCreatorOptions`. It can be used by
+   * commands that need to remove all formatting and use the tag to identify
+   * which registered extensions are formatters.
+   *
+   * There are internally defined tags but it's also possible to define any
+   * custom string as a tag. See {@link Tags}
+   */
+  tags?: Array<Tags | string>;
 
   /**
    * Allows the extension to modify the attributes for the Prosemirror editor
@@ -535,20 +496,4 @@ export interface ExtensionCreatorMethods<
    * editor instance.
    */
   suggestions?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => Suggester[] | Suggester;
-}
-
-export interface ExtensionCreatorOptions<
-  Name extends string,
-  Options extends BaseExtensionConfig = BaseExtensionConfig,
-  Type = never
-> extends ExtensionCreatorMethods<Options, Type> {
-  /**
-   * The name to give this extension. Must be unique within any editor instance.
-   */
-  name: Name;
-
-  /**
-   * The default options.
-   */
-  defaultOptions: Partial<Options>;
 }

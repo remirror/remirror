@@ -16,7 +16,7 @@ interface PlainObject {
 /**
  * Any falsy type.
  */
-export type Falsy = false | 0 | '' | null | undefined;
+type Falsy = false | 0 | '' | null | undefined;
 
 /**
  * Type cast an argument. If no type is provided it will default to any.
@@ -24,6 +24,49 @@ export type Falsy = false | 0 | '' | null | undefined;
  * @param arg - the arg to typecast
  */
 export const Cast = <GType = any>(arg: any): GType => arg;
+
+/**
+ * A typesafe implementation of `Object.entries()`
+ *
+ * Taken from
+ * https://github.com/biggyspender/ts-entries/blob/master/src/ts-entries.ts
+ */
+export const entries = <
+  GType extends object,
+  GKey extends Extract<keyof GType, string>,
+  GValue extends GType[GKey],
+  GEntry extends [GKey, GValue]
+>(
+  obj: GType,
+): GEntry[] => Object.entries(obj) as GEntry[];
+
+/**
+ * A typesafe implementation of `Object.keys()`
+ */
+export const keys = <GType extends object, GKey extends Extract<keyof GType, string>>(
+  obj: GType,
+): GKey[] => Object.keys(obj) as GKey[];
+
+/**
+ * A typesafe implementation of `Object.values()`
+ */
+export const values = <
+  GType extends object,
+  GKey extends Extract<keyof GType, string>,
+  GValue extends GType[GKey]
+>(
+  obj: GType,
+): GValue[] => Object.values(obj) as GValue[];
+
+/**
+ * A more lenient typed version of `Array.prototype.includes` which allow less
+ * specific types to be checked.
+ */
+export const includes = <GType>(
+  array: GType[] | readonly GType[],
+  item: unknown,
+  fromIndex?: number,
+): item is GType => array.includes(item as GType, fromIndex);
 
 /**
  * Creates an object with the null prototype.
@@ -848,38 +891,6 @@ export const uniqueBy = <GItem = any, GKey = any>(
 
   return fromStart ? unique.reverse() : unique;
 };
-
-/**
- * A typesafe implementation of `Object.entries`
- *
- * Taken from
- * https://github.com/biggyspender/ts-entries/blob/master/src/ts-entries.ts
- */
-export const entries = <
-  GType extends object,
-  GKey extends Extract<keyof GType, string>,
-  GValue extends GType[GKey],
-  GEntry extends [GKey, GValue]
->(
-  obj: GType,
-): GEntry[] => Object.entries(obj) as GEntry[];
-
-/**
- * A typesafe implementation of `Object.keys`
- */
-export const keys = <GObj extends object, GKey extends Extract<keyof GObj, string>>(
-  obj: GObj,
-): GKey[] => Object.keys(obj) as GKey[];
-
-/**
- * A more lenient typed version of `Array.prototype.includes` which allow less
- * specific types to be checked.
- */
-export const includes = <GType>(
-  array: GType[] | readonly GType[],
-  item: unknown,
-  fromIndex?: number,
-): item is GType => array.includes(item as GType, fromIndex);
 
 /**
  * Create a range from start to end.

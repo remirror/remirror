@@ -1,7 +1,6 @@
 import { useContext } from 'react';
-import invariant from 'tiny-invariant';
 
-import { AnyExtension } from '@remirror/core';
+import { AnyExtension, invariant } from '@remirror/core';
 
 import { RemirrorContext } from '../react-contexts';
 import { InjectedRemirrorProps } from '../react-types';

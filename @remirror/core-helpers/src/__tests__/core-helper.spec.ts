@@ -43,6 +43,7 @@ import {
   uniqueArray,
   uniqueBy,
   uniqueId,
+  values,
   within,
 } from '../core-helpers';
 
@@ -398,6 +399,12 @@ test('keys', () => {
   const input = { a: 1, b: 'b' };
 
   expect(keys(input).map((key) => key)).toEqual(['a', 'b']);
+});
+
+test('values', () => {
+  const input = { a: 1, b: 'b' };
+
+  expect(values(input).map((value) => value)).toEqual([1, 'b']);
 });
 
 test('range', () => {

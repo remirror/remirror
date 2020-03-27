@@ -164,7 +164,7 @@ export enum ExtensionType {
  * categorizations can be used by other extensions when running commands and
  * updating the document.
  */
-export enum Tags {
+export enum Tag {
   /**
    * Describes a node that can be used as the last node of a document and
    * by extension doesn't need to render a node after itself.

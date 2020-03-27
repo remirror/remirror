@@ -17,7 +17,7 @@ import { NodeExtension } from './node-extension';
 /**
  * Provides a type annotation which is applicable to any extension type.
  */
-export type AnyExtension = Extension<any, any>;
+export type AnyExtension = Extension<any, any, any, any, any>;
 
 /**
  * Utility type for retrieving the extension options from an extension.
