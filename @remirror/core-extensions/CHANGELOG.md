@@ -1,5 +1,11 @@
 # @remirror/core-extensions
 
+## 0.11.1
+
+### Patch Changes
+
+- 5888a7aa: Fix code-extension interactions with hard-break and other editor leaf nodes.
+
 ## 0.11.0
 
 ### Patch Changes
