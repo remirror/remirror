@@ -2,7 +2,7 @@ import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
 import { ComponentType } from 'react';
 
-import { MarkGroup, NodeGroup, Tags } from '@remirror/core-constants';
+import { ExtensionPriority, MarkGroup, NodeGroup, Tag } from '@remirror/core-constants';
 import { PortalContainer } from '@remirror/react-portals';
 
 import {
@@ -90,6 +90,10 @@ export type ProsemirrorCommandFunction<GSchema extends EditorSchema = any> = (
   view: EditorView<GSchema> | undefined,
 ) => boolean;
 
+interface ChainableCommandMethod extends TransactionParams<EditorSchema> {
+  isChained: true;
+}
+
 /**
  * This is the modified type signature for commands within the remirror editor.
  *
@@ -107,6 +111,11 @@ export type CommandFunction<
   GExtraParams extends object = {}
 > = (params: CommandFunctionParams<GSchema> & GExtraParams) => boolean;
 
+export interface ChainableCommandFunction<GSchema extends EditorSchema = any> {
+  (): boolean;
+  (transaction: Transaction<GSchema>): Transaction<GSchema>;
+}
+
 /**
  * A parameter builder interface for the remirror `CommandFunction`.
  *
@@ -120,9 +129,9 @@ export interface CommandFunctionParams<GSchema extends EditorSchema = any>
    *
    * @remarks
    *
-   * `dispatch` can be `undefined`. When no `dispatch` callback is provided the command should perform a 'dry
-   * run', determining whether the command is applicable (`return true`), but not actually performing the
-   * action.
+   * `dispatch` can be `undefined`. When no `dispatch` callback is provided the
+   * command should perform a 'dry run', determining whether the command is
+   * applicable (`return true`), but not actually performing the action.
    */
   dispatch?: DispatchFunction<GSchema>;
 }
@@ -134,37 +143,43 @@ export type KeyBindingCommandFunction<GSchema extends EditorSchema = any> = Comm
   GSchema,
   {
     /**
-     * A method to run the next (lower priority) command in the chain of keybindings.
+     * A method to run the next (lower priority) command in the chain of
+     * keybindings.
      *
      * @remarks
      *
-     * This can be used to chain together keyboard commands between extensions. It's possible that you will
-     * need to combine actions when a key is pressed while still running the default action. This method
-     * allows for the greater degree of control.
+     * This can be used to chain together keyboard commands between extensions.
+     * It's possible that you will need to combine actions when a key is pressed
+     * while still running the default action. This method allows for the
+     * greater degree of control.
      *
-     * By default, matching keyboard commands from the different extension are chained together (in order of
-     * priority) until one returns `true`. Calling `next` changes this default behaviour. The default keyboard
-     * chaining stops and you are given full control of the keyboard command chain.
+     * By default, matching keyboard commands from the different extension are
+     * chained together (in order of priority) until one returns `true`. Calling
+     * `next` changes this default behaviour. The default keyboard chaining
+     * stops and you are given full control of the keyboard command chain.
      */
     next: () => boolean;
   }
 >;
 
 /**
- * A map of keyboard bindings and their corresponding command functions (a.k.a editing actions).
+ * A map of keyboard bindings and their corresponding command functions (a.k.a
+ * editing actions).
  *
  * @typeParam GSchema - the underlying editor schema.
  *
  * @remarks
  *
  * Each keyboard binding returns an object mapping the keys pressed to the
- * {@link KeyBindingCommandFunction}. By default the highest priority extension will be run first. If it
- * returns true, then nothing else will be run after. If it returns `false` then the next (lower priority)
- * extension defining the same keybinding will be run.
+ * {@link KeyBindingCommandFunction}. By default the highest priority extension
+ * will be run first. If it returns true, then nothing else will be run after.
+ * If it returns `false` then the next (lower priority) extension defining the
+ * same keybinding will be run.
  *
- * It is possible to combine the commands being run by using the `next` parameter. When called it will run the
- * keybinding command function for the proceeding (lower priority) extension. The act of calling the `next`
- * method will prevent the default flow from executing.
+ * It is possible to combine the commands being run by using the `next`
+ * parameter. When called it will run the keybinding command function for the
+ * proceeding (lower priority) extension. The act of calling the `next` method
+ * will prevent the default flow from executing.
  */
 export type KeyBindings<GSchema extends EditorSchema = any> = Record<
   string,
@@ -457,7 +472,7 @@ export interface SSRComponentProps<
  * are mostly used for nodes and marks the main difference is they are added to
  * the `tags` parameter of the extension rather than within the schema.
  */
-export type GeneralExtensionTags<GNames extends string = string> = Record<Tags, GNames[]> &
+export type GeneralExtensionTags<GNames extends string = string> = Record<Tag, GNames[]> &
   Record<string, undefined | GNames[]>;
 
 /**
@@ -538,6 +553,19 @@ export interface BaseExtensionConfig extends SSRComponentParams {
    * from an extension.
    */
   exclude?: ExcludeOptions;
+
+  /**
+   * The priority with which this extension should be loaded by the manager.
+   *
+   * @remarks
+   *
+   * Each priority level corresponds to a higher level of importance for the
+   * extension within the editor.
+   *
+   * When this is set to `null` the `defaultPriority` level for the extension
+   * will be used instead.
+   */
+  priority?: ExtensionPriority | null;
 }
 
 export interface ExcludeOptions {

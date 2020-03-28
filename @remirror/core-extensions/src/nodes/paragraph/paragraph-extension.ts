@@ -6,7 +6,7 @@ import {
   NodeExtensionSpec,
   NodeGroup,
   object,
-  Tags,
+  Tag,
 } from '@remirror/core';
 
 import { ALIGN_PATTERN, INDENT_ATTRIBUTE, INDENT_LEVELS } from '../node-constants';
@@ -50,7 +50,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions>
   }
 
   get tags() {
-    return [Tags.LastNodeCompatible];
+    return [Tag.LastNodeCompatible];
   }
 
   get defaultOptions() {

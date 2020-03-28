@@ -1,4 +1,4 @@
-import { MarkGroup, NodeGroup, Tags } from '@remirror/core-constants';
+import { MarkGroup, NodeGroup, Tag } from '@remirror/core-constants';
 import { bool, Cast, entries, isFunction, isUndefined, object, sort } from '@remirror/core-helpers';
 import {
   AnyFunction,
@@ -314,10 +314,10 @@ export const createExtensionTags = <
   extensions: AnyExtension[],
 ): ExtensionTags<GNodes, GMarks, GPlain> => {
   const general: GeneralExtensionTags<GNames> = {
-    [Tags.FormattingMark]: [],
-    [Tags.FormattingNode]: [],
-    [Tags.LastNodeCompatible]: [],
-    [Tags.NodeCursor]: [],
+    [Tag.FormattingMark]: [],
+    [Tag.FormattingNode]: [],
+    [Tag.LastNodeCompatible]: [],
+    [Tag.NodeCursor]: [],
   };
 
   const mark: MarkExtensionTags<GMarks> = {
@@ -345,7 +345,7 @@ export const createExtensionTags = <
         : [...mark[group], extension.name as GMarks];
     }
 
-    (extension.tags as Tags[]).forEach((tag) => {
+    (extension.tags as Tag[]).forEach((tag) => {
       general[tag] = isUndefined(general[tag])
         ? [extension.name as GNames]
         : [...general[tag], extension.name as GNames];

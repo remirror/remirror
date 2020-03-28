@@ -14,7 +14,6 @@ import {
   ElementParams,
   ExtensionManager,
   FromToParams,
-  HelpersFromExtensions,
   ObjectNode,
   OptionsOfExtension,
   PlainObject,
@@ -243,13 +242,14 @@ export interface Positioner<GExtension extends AnyExtension = any> {
    * The default and initial position value. This is used at the start and
    * whenever isActive becomes false
    */
-
   initialPosition: Position;
+
   /**
    * Determines whether anything has changed and whether to continue with a
    * recalculation. By default this is only true when the document has changed.
    *
    * @remarks
+   *
    * Sometimes it is useful to recalculate the positioner on every state update. In this case
    * you can set this method to always return true.
    *
@@ -335,11 +335,6 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
    * A map of all actions made available by the configured extensions.
    */
   actions: ActionsFromExtensions<GExtension>;
-
-  /**
-   * A map of all helpers made available by the configured extensions.
-   */
-  helpers: HelpersFromExtensions<GExtension>;
 
   /**
    * The unique id for the editor instance.

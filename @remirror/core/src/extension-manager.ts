@@ -6,7 +6,7 @@ import { EditorState } from 'prosemirror-state';
 import { suggest, Suggester } from 'prosemirror-suggest';
 import { ComponentType } from 'react';
 
-import { RemirrorClassName } from '@remirror/core-constants';
+import { RemirrorIdentifier } from '@remirror/core-constants';
 import {
   bool,
   hasOwnProperty,
@@ -73,9 +73,11 @@ import {
   SchemaFromExtensions,
 } from './extension-types';
 
-export interface ExtensionManagerData<
+/**
+ * This is the shape of the object where the extension manager stores it's data.
+ */
+export interface ExtensionManagerStore<
   GActions = AnyActions,
-  GHelpers = AnyHelpers,
   GNodes extends string = string,
   GMarks extends string = string,
   GPlain extends string = string,
@@ -91,7 +93,6 @@ export interface ExtensionManagerData<
   pasteRules: ProsemirrorPlugin[];
   suggestions: ProsemirrorPlugin;
   actions: GActions;
-  helpers: GHelpers;
   view: EditorView<EditorSchema<GNodes, GMarks>>;
   isActive: Record<GNames, ExtensionIsActiveFunction>;
   options: Record<GNames, PlainObject>;
@@ -102,13 +103,12 @@ export interface ExtensionManagerData<
  * The `ExtensionManager` has multiple hook phases which are able to hook into
  * the extension manager flow and add new functionality to the editor.
  *
- * The lifecycle methods are
+ * The `ExtensionEventMethod`s
  *
  * - onConstruct - when the extension manager is created and after the schema is
  *   made available.
  * - onInit - when the editor manager is initialized within the component
  * - onView - when the view has been received from the dom ref.
- * -
  */
 
 /**
@@ -189,11 +189,6 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * Retrieve the specified action.
    */
   private readonly getActions = (name: keyof this['_A']) => this.initData.actions[name];
-
-  /**
-   * Retrieve the specified helper.
-   */
-  private readonly getHelpers = (name: keyof this['_H']) => this.initData.helpers[name];
 
   /**
    * Creates the extension manager which is used to simplify the management of the
@@ -310,7 +305,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     const components: Record<string, ComponentType> = object();
 
     for (const extension of this.extensions) {
-      if (!extension.options.SSRComponent || extension.options.exclude.ssr) {
+      if (!extension.config.SSRComponent || extension.options.exclude.ssr) {
         continue;
       }
 
@@ -767,7 +762,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * Used to identify this class as an `ExtensionManager`
    */
   public toString() {
-    return RemirrorClassName.ExtensionManager;
+    return RemirrorIdentifier.ExtensionManager;
   }
 
   /**
@@ -852,7 +847,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _D!: ExtensionManagerData<
+  public readonly _D!: ExtensionManagerStore<
     this['_A'],
     this['_H'],
     this['_N'],
@@ -867,7 +862,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
  * @param value - the value to check
  */
 export const isExtensionManager = (value: unknown): value is ExtensionManager =>
-  isObject(value) && toString(value) === RemirrorClassName.ExtensionManager;
+  isObject(value) && toString(value) === RemirrorIdentifier.ExtensionManager;
 
 export interface ManagerParams<GExtension extends AnyExtension = any> {
   /**
@@ -887,3 +882,11 @@ export type ExtensionsFromManager<GManager extends AnyExtensionManager> = GManag
 export type AnyExtensionManager = ExtensionManager;
 
 export interface OnTransactionManagerParams extends TransactionParams, EditorStateParams {}
+
+declare global {
+  /**
+   * Extension using the lifecycle hooks can store data on the extension manager
+   * cache. This can either be through mutating an already stored value
+   */
+  interface GlobalExtensionManagerCache {}
+}

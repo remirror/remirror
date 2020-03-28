@@ -206,11 +206,96 @@ export enum Tag {
 }
 
 /**
- * The toString return value for any created remirror class.
+ * The identifier key which is used to check objects for whether they are a
+ * certain type.
+ *
+ * @remarks
+ *
+ * Please pretend you don't know this exists.
  *
  * @internal
  */
-export enum RemirrorClassName {
+export const REMIRROR_IDENTIFIER_KEY = '__$$remirrorType$$__' as const;
+
+/**
+ * These constants are stored on the `REMIRROR_IDENTIFIER_KEY` property of
+ * `remirror` related constructors and instances in order to identify them as
+ * being internal to Remirror.
+ *
+ * @remarks
+ *
+ * This helps to prevent issues around check types via `instanceof` which can
+ * lead to false negatives.
+ *
+ * @internal
+ */
+export enum RemirrorIdentifier {
+  /**
+   * The string used to identify an instance of the remirror extension.
+   */
   Extension = '$$RemirrorExtension',
+
+  /**
+   * The string used to identify the constructor used to create extension instances.
+   */
+  ExtensionConstructor = '$$RemirrorExtensionConstructor',
+
+  /**
+   * The string used to identify an instance of the `ExtensionManager`
+   */
   ExtensionManager = '$$RemirrorExtensionManager',
+
+  /**
+   * The preset type identifier.
+   */
+  Preset = '$$RemirrorPreset',
+}
+
+/**
+ * The priority of extension which determines what order it is loaded into the
+ * editor.
+ *
+ * @remarks
+ *
+ * Higher priority extension (lower number) will take precedence when
+ * there's a class. For example if two extensions have the same name the higher
+ * priority extension is the one that will be loaded.
+ *
+ * The lower the numeric value the higher the priority. The priority can also be
+ * passed a number but naming things in this `enum` should help provide some
+ * context to the numbers.
+ */
+export enum ExtensionPriority {
+  /**
+   * Use this **never**.
+   */
+  Critical = 0,
+
+  /**
+   * A very high priority.
+   */
+  Highest = 10,
+
+  /**
+   * The highest priority level that should be used in a publicly shared
+   * extension (to allow some wiggle room for downstream users overriding
+   * priorities).
+   */
+  High = 100,
+
+  /**
+   * A medium priority extension. This is typically all you need to take
+   * priority over built in extensions.
+   */
+  Medium = 1000,
+
+  /**
+   * This is the **default** priority for all extension.
+   */
+  Low = 10000,
+
+  /**
+   * This is useful for extensions that exist to be overridden.
+   */
+  Lowest = 100000,
 }

@@ -269,7 +269,9 @@ export const isPlainObject = (value: unknown): value is PlainObject => {
   if (getObjectType(value) !== TypeName.Object) {
     return false;
   }
+
   const prototype = Object.getPrototypeOf(value);
+
   return prototype === null || prototype === Object.getPrototypeOf({});
 };
 
@@ -284,13 +286,13 @@ export const isNullOrUndefined = (value: unknown): value is null | undefined =>
   isNull(value) || isUndefined(value);
 
 /**
- * Predicate check that value is an object
+ * Predicate check that value is an object.
  *
  * @param value - the value to check
  *
  * @public
  */
-export const isObject = (value: unknown): value is object =>
+export const isObject = (value: unknown): value is PlainObject =>
   !isNullOrUndefined(value) && (isFunction(value) || isOfType('object')(value));
 
 /**

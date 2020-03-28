@@ -4,7 +4,14 @@ import { AttributeSpec } from 'prosemirror-model';
 import { PluginKey } from 'prosemirror-state';
 import { Suggester } from 'prosemirror-suggest';
 
-import { ErrorConstant, ExtensionType, RemirrorClassName, Tags } from '@remirror/core-constants';
+import {
+  ErrorConstant,
+  ExtensionPriority,
+  ExtensionType,
+  REMIRROR_IDENTIFIER_KEY,
+  RemirrorIdentifier,
+  Tag,
+} from '@remirror/core-constants';
 import { deepMerge, invariant, isArray, isObject, isString, object } from '@remirror/core-helpers';
 import {
   Attrs,
@@ -37,23 +44,25 @@ import {
 import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
 /**
+ * The type which is applicable to any extension instance.
+ */
+export type AnyExtension<Config extends BaseExtensionConfig = any> = Extension<
+  any,
+  any,
+  Config,
+  any,
+  any
+>;
+
+/**
  * These are the default options merged into every extension. They can be
  * overridden.
  */
 export const defaultConfig: Required<BaseExtensionConfig> = {
+  priority: null,
   SSRComponent: null,
   extraAttrs: [],
-  exclude: {
-    inputRules: false,
-    keys: false,
-    pasteRules: false,
-    plugin: false,
-    styles: false,
-    attributes: false,
-    nodeView: false,
-    ssr: false,
-    suggesters: false,
-  },
+  exclude: {},
 };
 
 /**
@@ -61,15 +70,19 @@ export const defaultConfig: Required<BaseExtensionConfig> = {
  *
  * @param extension - the extension to check
  */
-export const isExtension = (extension: unknown): extension is AnyExtension =>
-  isObject(extension) && extension.toString().startsWith(RemirrorClassName.Extension);
+export const isExtension = <Config extends BaseExtensionConfig = any>(
+  extension: unknown,
+): extension is AnyExtension<Config> =>
+  isObject(extension) && extension[REMIRROR_IDENTIFIER_KEY] === RemirrorIdentifier.Extension;
 
 /**
- * Checks whether the this is an extension and if it is a plain one
+ * Checks whether the provided value is a plain extension.
  *
  * @param extension - the extension to check
  */
-export const isPlainExtension = (extension: unknown): extension is Extension<any, any, any, any> =>
+export const isPlainExtension = <Config extends BaseExtensionConfig = any>(
+  extension: unknown,
+): extension is AnyPlainExtension<Config> =>
   isExtension(extension) && extension.type === ExtensionType.Plain;
 
 /**
@@ -105,7 +118,7 @@ export const isNodeExtension = <Config extends BaseExtensionConfig = any>(
  * This can only be used in a `NodeExtension` or `MarkExtension`. The additional
  * attributes can only be optional.
  */
-export const createExtraAttrsFactory = <Config extends BaseExtensionConfig>(
+const createExtraAttrsFactory = <Config extends BaseExtensionConfig>(
   extension: AnyExtension,
 ): CreateExtraAttrs => ({ fallback }) => {
   // Make sure this is a node or mark extension. Will throw if not.
@@ -138,7 +151,7 @@ export const createExtraAttrsFactory = <Config extends BaseExtensionConfig>(
 /**
  * Runs through the extraAttrs provided and retrieves them.
  */
-export const getExtraAttrsFactory = <Config extends BaseExtensionConfig>(
+const getExtraAttrsFactory = <Config extends BaseExtensionConfig>(
   extension: AnyExtension,
 ): GetExtraAttrs => (domNode) => {
   // Make sure this is a node or mark extension. Will throw if not.
@@ -219,12 +232,19 @@ export abstract class Extension<
   ProsemirrorType = never
 > {
   /**
+   * An internal property which helps identify this instance as a `RemirrorExtension`.
+   */
+  get $$remirrorType(): RemirrorIdentifier {
+    return RemirrorIdentifier.Extension;
+  }
+
+  /**
    * This defines the type of the extension.
    *
    * @remarks
    * There are three types of extension:
    *
-   * - `plain`
+   * - `plain` - useful for changing the runtime behaviour of the extension.
    * - `node` - see {@link NodeExtension}
    * - `mark` - see {@link MarkExtension}
    *
@@ -265,14 +285,23 @@ export abstract class Extension<
   }
 
   /**
+   * The priority level for this instance of the extension.
+   */
+  get priority(): ExtensionPriority {
+    return (
+      this.config.priority ?? this.getCreatorOptions().defaultPriority ?? ExtensionPriority.Low
+    );
+  }
+
+  /**
    * The prosemirror plugin key for this extension.
    */
   private pk?: PluginKey;
 
-  constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+  constructor(...[config]: IfNoRequiredProperties<Config, [Config?], [Config]>) {
     this.config = deepMerge(defaultConfig, {
       ...this.defaultConfig,
-      ...config[0],
+      ...config,
     });
   }
 
@@ -308,7 +337,7 @@ export abstract class Extension<
   /**
    * Retrieves the tags for this extension.
    */
-  get tags(): Array<Tags | string> {
+  get tags(): Array<Tag | string> {
     return this.getCreatorOptions().tags ?? [];
   }
 
@@ -330,7 +359,7 @@ export abstract class Extension<
    * Override the default toString method to match the native toString methods.
    */
   public toString() {
-    return `${RemirrorClassName.Extension}[${this.name}]`;
+    return `${RemirrorIdentifier.Extension}[${this.name}]`;
   }
 }
 
@@ -343,7 +372,9 @@ export interface ExtensionCreatorOptions<
   Props extends object = {},
   Commands extends ExtensionCommandReturn = {},
   ProsemirrorType = never
-> extends GlobalExtensionCreatorOptions<Name, Config, Props, Commands, ProsemirrorType> {
+>
+  extends ExtensionEventMethods,
+    GlobalExtensionCreatorOptions<Name, Config, Props, Commands, ProsemirrorType> {
   /**
    * The unique name of this extension.
    *
@@ -381,6 +412,18 @@ export interface ExtensionCreatorOptions<
   defaultProps?: Required<Props>;
 
   /**
+   * The default priority level for the extension to use.
+   *
+   * @remarks
+   *
+   * The priority levels help determine the order in which an extension is
+   * loaded within the editor. High priority extensions are given precedence.
+   *
+   * @defaultValue `ExtensionPriority.Default`
+   */
+  defaultPriority?: ExtensionPriority;
+
+  /**
    * Define the tags for this extension.
    *
    * @remarks
@@ -394,7 +437,7 @@ export interface ExtensionCreatorOptions<
    * There are internally defined tags but it's also possible to define any
    * custom string as a tag. See {@link Tags}
    */
-  tags?: Array<Tags | string>;
+  tags?: Array<Tag | string>;
 
   /**
    * Allows the extension to modify the attributes for the Prosemirror editor
@@ -497,14 +540,6 @@ export interface ExtensionCreatorOptions<
   nodeView?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => NodeViewMethod;
 
   /**
-   * Called whenever a transaction successfully updates the editor state.
-   *
-   * Changes to the transaction at this point have no impact at all. It is
-   * purely for observational reasons
-   */
-  onTransaction?: (params: OnTransactionParams) => void;
-
-  /**
    * Register paste rules for this extension.
    *
    * Paste rules are activated when text is pasted into the editor.
@@ -563,22 +598,53 @@ export interface ExtensionCreatorOptions<
   suggestions?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => Suggester[] | Suggester;
 }
 
+export interface ExtensionEventMethods {
+  /**
+   * When the ExtensionManager is first created and the schema is made
+   * available.
+   */
+  onCreate?: () => void;
+
+  /**
+   * This happens when the store is initialized.
+   */
+  onInitialize?: () => void;
+
+  /**
+   * This event happens when the view is first received from the react
+   * component.
+   */
+  onFirstRender?: () => void;
+
+  /**
+   * Called whenever a transaction successfully updates the editor state.
+   *
+   * Changes to the transaction at this point have no impact at all. It is
+   * purely for observational reasons
+   */
+  onTransaction?: (params: OnTransactionParams) => void;
+
+  /**
+   * Happens after the state is first updated.
+   */
+  onStateUpdated?: () => void;
+}
+
 /**
- * Provides a type annotation which is applicable to any extension type.
+ * The type covering any potential `PlainExtension`.
  */
-export type AnyExtension<Config extends BaseExtensionConfig = any> = Extension<
+export type AnyPlainExtension<Config extends BaseExtensionConfig = any> = Extension<
   any,
   any,
   Config,
-  any,
   any
 >;
 
 /**
- * The shape of the `ExtensionConstructor` used to create extensions and
- * returned from the `ExtensionCreator.plain()` method.
+ * The shape of the `ExtensionConstructor` used to create instances of
+ * extensions and returned from the `ExtensionCreator.plain()` method.
  */
-export interface ExtensionConstructor<
+export interface PlainExtensionConstructor<
   Name extends string,
   Config extends BaseExtensionConfig,
   Props extends object = {},

@@ -8,7 +8,6 @@ import {
 
 import {
   Extension,
-  ExtensionConstructor,
   ExtensionCreatorOptions,
   MarkExtension,
   MarkExtensionConstructor,
@@ -16,19 +15,24 @@ import {
   NodeExtension,
   NodeExtensionConstructor,
   NodeExtensionCreatorOptions,
+  PlainExtensionConstructor,
 } from './extension';
 
+/**
+ * This function returns the base extension creator methods. It is exposed as a
+ * function to allow for fully typed `ExtensionConstructor`s.
+ */
 const createBaseExtensionCreator = <
   Config extends BaseExtensionConfig = BaseExtensionConfig,
   Props extends object = {}
 >() => ({
   /**
-   * Creates a `PlainExtensionConstructor`. This is useful for non content specific
-   * functionality like adding styling or plugins.
+   * Creates a `PlainExtensionConstructor`. This is useful for non content
+   * specific functionality like adding styling or plugins.
    */
   plain<Name extends string, Commands extends ExtensionCommandReturn>(
     creatorOptions: ExtensionCreatorOptions<Name, Config, Props, Commands>,
-  ): ExtensionConstructor<Name, Config, Props, Commands> {
+  ): PlainExtensionConstructor<Name, Config, Props, Commands> {
     const options = freeze(creatorOptions);
 
     class CustomPlainExtension extends Extension<Name, Config, Props, Commands> {
@@ -76,8 +80,8 @@ const createBaseExtensionCreator = <
   },
 
   /**
-   * Creates a `MarkExtensionConstructor`. This is useful for non content specific
-   * functionality like adding styling or plugins.
+   * Creates a `MarkExtensionConstructor`. This is useful for non content
+   * specific functionality like adding styling or plugins.
    */
   mark<Name extends string, Commands extends ExtensionCommandReturn>(
     creatorOptions: MarkExtensionCreatorOptions<Name, Config, Props, Commands>,
@@ -126,8 +130,8 @@ const createBaseExtensionCreator = <
   },
 
   /**
-   * Creates a `NodeExtensionConstructor`. This is useful for non content specific
-   * functionality like adding styling or plugins.
+   * Creates a `NodeExtensionConstructor`. This is useful for non content
+   * specific functionality like adding styling or plugins.
    */
   node<Name extends string, Commands extends ExtensionCommandReturn>(
     creatorOptions: NodeExtensionCreatorOptions<Name, Config, Props, Commands>,
@@ -194,9 +198,9 @@ export const ExtensionCreator = {
    *
    * This might seem like an odd pattern but it's the only way I can think of to
    * preserve type inference for the config and props without having to manually
-   * type out all the generic types. If you don't
-   * want to add any configuration or dynamic props you can use the other
-   * methods exposed by this configuration.
+   * type out all the generic types. If you don't want to add any configuration
+   * or dynamic props you can use the other methods exposed by this
+   * configuration.
    *
    * ```ts
    * import { ExtensionCreator, BaseExtensionConfig } from '@remirror/core';

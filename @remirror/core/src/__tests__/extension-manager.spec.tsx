@@ -2,7 +2,7 @@ import { createEditor, doc, p } from 'jest-prosemirror';
 import { EditorView } from 'prosemirror-view';
 import React, { FC } from 'react';
 
-import { EMPTY_PARAGRAPH_NODE, Tags } from '@remirror/core-constants';
+import { EMPTY_PARAGRAPH_NODE, Tag } from '@remirror/core-constants';
 import { Cast } from '@remirror/core-helpers';
 import {
   Attrs,
@@ -40,7 +40,7 @@ describe('ExtensionManager', () => {
 
   class DummyExtension extends Extension {
     public name = 'dummy';
-    public tags = ['simple', Tags.LastNodeCompatible];
+    public tags = ['simple', Tag.LastNodeCompatible];
     public commands() {
       return { dummy: mock };
     }
