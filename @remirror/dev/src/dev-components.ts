@@ -22,6 +22,7 @@ export const ProsemirrorDevTools = () => {
 
     return () => {
       const node = document.querySelector('.__prosemirror-dev-tools__');
+
       if (!node) {
         return;
       }

@@ -1,8 +1,15 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
+    "outFile": "rollup.config.js/",
     "target": "ES5",
     "module": "CommonJS"
   },
-  "include": ["./patches.d.ts"]
+  "include": ["./patches.d.ts"],
+  "files": [
+    "rollup-factory.ts",
+    "rollup-build.ts",
+    "helpers.ts",
+    "../../@remirror/core-helpers/src/index.ts"
+  ]
 }

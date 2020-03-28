@@ -5,7 +5,7 @@
  */
 
 import { BuiltInParserName, CursorOptions, CursorResult } from 'prettier';
-import babelPlugin from 'prettier/parser-babylon';
+import babelPlugin from 'prettier/parser-babel';
 import htmlPlugin from 'prettier/parser-html';
 import markdownPlugin from 'prettier/parser-markdown';
 import typescriptPlugin from 'prettier/parser-typescript';
@@ -101,6 +101,7 @@ export const formatter: CodeBlockFormatter = ({ cursorOffset, language, source }
         return fn(formatCode({ source, cursorOffset, parser: 'typescript' }));
       case 'javascript':
       case 'jsx':
+      case 'js':
         return fn(formatCode({ source, cursorOffset, parser: 'babel-flow' }));
       case 'markdown':
       case 'md':

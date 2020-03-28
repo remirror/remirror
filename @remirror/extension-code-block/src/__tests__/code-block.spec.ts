@@ -295,7 +295,7 @@ describe('commands', () => {
       const markupBlock = codeBlock({ language: 'markup' });
 
       const { state } = add(doc(p(`<cursor>`))).actionsCallback((actions) => {
-        // @ts-ignore
+        // @ts-expect-error
         actions.createCodeBlock();
       });
 
