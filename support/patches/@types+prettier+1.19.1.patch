@@ -1,0 +1,4 @@
+diff --git a/node_modules/@types/prettier/parser-babylon.d.ts b/node_modules/@types/prettier/parser-babel.d.ts
+similarity index 100%
+rename from node_modules/@types/prettier/parser-babylon.d.ts
+rename to node_modules/@types/prettier/parser-babel.d.ts

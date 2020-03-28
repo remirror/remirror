@@ -18,7 +18,7 @@
     "@remirror/ui": "^0.7.6",
     "@types/prosemirror-view": "^1.11.2",
     "min-document": "^2.19.0",
-    "prosemirror-view": "^1.14.4"
+    "prosemirror-view": "^1.14.6"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

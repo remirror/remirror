@@ -1,6 +1,6 @@
 {
   "name": "multishift",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "A repurposed downshift for internal use within remirror",
   "homepage": "https://github.com/remirror/remirror/tree/master/packages/multishift",
   "repository": "https://github.com/remirror/remirror/tree/master/packages/multishift",
@@ -24,7 +24,7 @@
     "@remirror/ui": "^0.7.6",
     "@remirror/ui-a11y-status": "0.7.4",
     "@remirror/ui-buttons": "^0.7.6",
-    "@remirror/ui-icons": "^0.7.7",
+    "@remirror/ui-icons": "^0.7.8",
     "@remirror/ui-text": "^0.7.6",
     "@seznam/compose-react-refs": "^1.0.2",
     "compute-scroll-into-view": "^1.0.11",

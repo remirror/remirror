@@ -74,7 +74,7 @@ describe('basic functionality', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
 
     expect(() =>
-      // @ts-ignore
+      // @ts-expect-error
       render(<RenderEditor label={label} manager={createTestManager()} />),
     ).toThrowErrorMatchingInlineSnapshot(
       `"The child argument to the Remirror component must be a function."`,

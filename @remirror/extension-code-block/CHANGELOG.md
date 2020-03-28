@@ -1,5 +1,11 @@
 # @remirror/extension-code-block
 
+## 0.11.1
+
+### Patch Changes
+
+- bea2f1ff: Fix broken tab key functionality for the code block extension.
+
 ## 0.11.0
 
 ### Patch Changes

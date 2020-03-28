@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-extensions",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "description": "Provides the core extensions for your remirror editor",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/core-extensions",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/core-extensions",
@@ -42,7 +42,7 @@
     "prosemirror-model": "^1.9.1",
     "prosemirror-schema-list": "^1.1.2",
     "prosemirror-state": "^1.3.2",
-    "prosemirror-view": "^1.14.4"
+    "prosemirror-view": "^1.14.6"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

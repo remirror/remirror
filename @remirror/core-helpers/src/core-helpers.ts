@@ -851,8 +851,6 @@ export const get = <GReturn = any>(
   return isUndefined(obj) ? fallback : obj;
 };
 
-export * from 'throttle-debounce';
-
 /**
  * Create a unique array of objects from a getter function or a property list.
  *
@@ -939,3 +937,7 @@ export const hasOwnProperty = <GObj extends object, GProperty extends string | n
 ): obj is GProperty extends keyof GObj ? GObj : GObj & { GKey: unknown } => {
   return Object.prototype.hasOwnProperty.call(obj, key);
 };
+
+// Forwarding exports
+
+export { debounce, throttle } from 'throttle-debounce';
