@@ -1,5 +1,11 @@
 # @remirror/ui-icons
 
+## 0.7.8
+
+### Patch Changes
+
+- 000fdfb0: Upgraded external dependencies with major releases.
+
 ## 0.7.7
 
 ### Patch Changes

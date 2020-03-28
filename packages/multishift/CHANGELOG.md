@@ -1,5 +1,13 @@
 # multishift
 
+## 0.7.7
+
+### Patch Changes
+
+- 000fdfb0: Upgraded external dependencies with major releases.
+- Updated dependencies [000fdfb0]
+  - @remirror/ui-icons@0.7.8
+
 ## 0.7.6
 
 ### Patch Changes

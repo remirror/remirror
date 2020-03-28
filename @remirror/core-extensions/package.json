@@ -1,6 +1,6 @@
 {
   "name": "@remirror/core-extensions",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "description": "Provides the core extensions for your remirror editor",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/core-extensions",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/core-extensions",

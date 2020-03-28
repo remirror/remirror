@@ -1,6 +1,6 @@
 {
   "name": "@remirror/extension-mention",
-  "version": "0.11.0",
+  "version": "0.11.1",
   "description": "Mention extension for the remirror wysiwyg editor",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-mention",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-mention",
