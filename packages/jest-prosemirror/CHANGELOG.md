@@ -1,5 +1,12 @@
 # jest-prosemirror
 
+## 0.8.2
+
+### Patch Changes
+
+- d2a288aa: Remove @types/prosemirror-tables from dependencies
+- 000fdfb0: Upgraded external dependencies with major releases.
+
 ## 0.8.1
 
 ### Patch Changes

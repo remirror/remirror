@@ -1,5 +1,11 @@
 # @remirror/ui-modal
 
+## 0.7.5
+
+### Patch Changes
+
+- 000fdfb0: Upgraded external dependencies with major releases.
+
 ## 0.7.4
 
 ### Patch Changes
