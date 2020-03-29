@@ -160,7 +160,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     propIsFunction(props.children);
 
     // Initialize the manager and create the initial state.
-    this.manager.init({
+    this.manager.initialize({
       getState: this.getState,
       getTheme: this.getTheme,
       portalContainer: this.portalContainer,
@@ -180,7 +180,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    */
   public updateExtensionManager() {
     this.manager
-      .init({
+      .initialize({
         getState: this.getState,
         getTheme: this.getTheme,
         portalContainer: this.portalContainer,

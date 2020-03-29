@@ -6,12 +6,12 @@ import { ConditionalExcept, ConditionalPick } from 'type-fest';
 /**
  * Alternative to builtin `keyof` operator.
  */
-export type Key<GRecord> = keyof GRecord;
+export type Key<Type> = keyof Type;
 
 /**
  * An alternative to keyof that only extracts the string keys.
  */
-export type StringKey<GRecord> = Extract<Key<GRecord>, string>;
+export type StringKey<Type> = Extract<Key<Type>, string>;
 
 /**
  * Extract the values of an object as a union type.
@@ -24,12 +24,12 @@ export type StringKey<GRecord> = Extract<Key<GRecord>, string>;
  * type MyRecord = Value<typeof myRecord>; // 'a' | 'b' | 'c'
  * ```
  */
-export type Value<GRecord> = GRecord[Key<GRecord>];
+export type Value<Type> = Type[Key<Type>];
 
 /**
  * Makes a type nullable or undefined.
  */
-export type Nullable<GType> = GType | null | undefined;
+export type Nullable<Type> = Type | null | undefined;
 
 /**
  * Extract the values of a tuple as a union type.
@@ -42,29 +42,29 @@ export type Nullable<GType> = GType | null | undefined;
  * type MyTuple = TupleValue<typeof myTuple>; // 'a' | 'b' | 'c'
  * ```
  */
-export type TupleValue<GTuple extends readonly unknown[]> = GTuple[number];
+export type TupleValue<Tuple extends readonly unknown[]> = Tuple[number];
 
 /**
  * Creates a predicate type
  */
-export type Predicate<GType> = (u: unknown) => u is GType;
+export type Predicate<Type> = (value: unknown) => value is Type;
 
 declare const _brand: unique symbol;
 declare const _flavor: unique symbol;
 
 /**
- * Used by Flavor to mark a type in a readable way.
+ * Used by `Flavor` to mark a type in a readable way.
  */
-interface Flavoring<GFlavor> {
-  readonly [_flavor]?: GFlavor;
+interface Flavoring<Flavor> {
+  readonly [_flavor]?: Flavor;
 }
 
 /**
- * Create a "flavored" version of a type. TypeScript will disallow mixing flavors,
- * but will allow unflavored values of that type to be passed in where a flavored
- * version is expected. This is a less restrictive form of branding.
+ * Create a "flavored" version of a type. TypeScript will disallow mixing
+ * flavors, but will allow unflavored values of that type to be passed in where
+ * a flavored version is expected. This is a less restrictive form of branding.
  */
-export type Flavor<GType, GFlavor> = GType & Flavoring<GFlavor>;
+export type Flavor<Type, GFlavor> = Type & Flavoring<GFlavor>;
 
 /**
  * Used by Brand to mark a type in a readable way.
@@ -74,7 +74,8 @@ interface Branding<GBrand> {
 }
 
 /**
- * Create a "branded" version of a type. TypeScript won't allow implicit conversion to this type
+ * Create a "branded" version of a type. TypeScript won't allow implicit
+ * conversion to this type
  */
 export type Brand<GType, GBrand> = GType & Branding<GBrand>;
 
@@ -111,8 +112,8 @@ export type AbstractInstanceType<
 > = GConstructor['prototype'];
 
 /**
- * Make the whole interface partial except for some specified keys which will be made
- * required.
+ * Make the whole interface partial except for some specified keys which will be
+ * made required.
  */
 export type PartialWithRequiredKeys<GType extends object, GKeys extends Key<GType>> = Partial<
   Pick<GType, Exclude<keyof GType, GKeys>>
@@ -150,8 +151,8 @@ export type MakeReadonly<GType extends object, GKeys extends Key<GType>> = Omit<
 export type Literal = string | number | boolean | undefined | null | void | {};
 
 /**
- * A recursive partial type. Useful for object that will be merged
- * with defaults.
+ * A recursive partial type. Useful for object that will be merged with
+ * defaults.
  */
 export type DeepPartial<GType> = GType extends object
   ? { [K in keyof GType]?: DeepPartial<GType[K]> }
@@ -331,7 +332,8 @@ export type TransformNonUndefinedToNever<Type extends object> = {
 };
 
 /**
- * Pick the `partial` properties from the provided Type and make them all required.
+ * Pick the `partial` properties from the provided Type and make them all
+ * required.
  */
 export type PickPartial<Type extends object> = {
   [Key in keyof ConditionalExcept<TransformNonUndefinedToNever<Type>, never>]-?: Type[Key];

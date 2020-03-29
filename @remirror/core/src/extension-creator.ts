@@ -1,4 +1,8 @@
-import { ExtensionType } from '@remirror/core-constants';
+import {
+  ExtensionType,
+  REMIRROR_IDENTIFIER_KEY,
+  RemirrorIdentifier,
+} from '@remirror/core-constants';
 import { Cast, freeze } from '@remirror/core-helpers';
 import {
   BaseExtensionConfig,
@@ -35,7 +39,16 @@ const createBaseExtensionCreator = <
   ): PlainExtensionConstructor<Name, Config, Props, Commands> {
     const options = freeze(creatorOptions);
 
-    class CustomPlainExtension extends Extension<Name, Config, Props, Commands> {
+    class PlainConstructor extends Extension<Name, Config, Props, Commands> {
+      /**
+       * Identifies this as a `PlainExtensionConstructor`.
+       *
+       * @internal
+       */
+      static get [REMIRROR_IDENTIFIER_KEY]() {
+        return RemirrorIdentifier.PlainExtensionConstructor;
+      }
+
       /**
        * This static method is the only way to create an instance of this
        * extension.
@@ -46,7 +59,7 @@ const createBaseExtensionCreator = <
        * using the `new` keyword.
        */
       public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-        return new CustomPlainExtension(...config);
+        return new PlainConstructor(...config);
       }
 
       /**
@@ -76,7 +89,7 @@ const createBaseExtensionCreator = <
       }
     }
 
-    return CustomPlainExtension;
+    return PlainConstructor;
   },
 
   /**
@@ -88,7 +101,16 @@ const createBaseExtensionCreator = <
   ): MarkExtensionConstructor<Name, Config, Props, Commands> {
     const options = freeze(creatorOptions);
 
-    class CustomMarkExtension extends MarkExtension<Name, Config, Props, Commands> {
+    class MarkConstructor extends MarkExtension<Name, Config, Props, Commands> {
+      /**
+       * Identifies this as a `MarkExtensionConstructor`.
+       *
+       * @internal
+       */
+      static get [REMIRROR_IDENTIFIER_KEY]() {
+        return RemirrorIdentifier.MarkExtensionConstructor;
+      }
+
       /**
        * This static method is the only way to create an instance of this
        * extension.
@@ -99,7 +121,7 @@ const createBaseExtensionCreator = <
        * using the `new` keyword.
        */
       public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-        return new CustomMarkExtension(...config);
+        return new MarkConstructor(...config);
       }
 
       /**
@@ -126,7 +148,7 @@ const createBaseExtensionCreator = <
       }
     }
 
-    return CustomMarkExtension;
+    return MarkConstructor;
   },
 
   /**
@@ -138,7 +160,16 @@ const createBaseExtensionCreator = <
   ): NodeExtensionConstructor<Name, Config, Props, Commands> {
     const options = freeze(creatorOptions);
 
-    class CustomNodeExtension extends NodeExtension<Name, Config, Props, Commands> {
+    class NodeConstructor extends NodeExtension<Name, Config, Props, Commands> {
+      /**
+       * Identifies this as a `NodeExtensionConstructor`.
+       *
+       * @internal
+       */
+      static get [REMIRROR_IDENTIFIER_KEY]() {
+        return RemirrorIdentifier.NodeExtensionConstructor;
+      }
+
       /**
        * This static method is the only way to create an instance of this
        * extension.
@@ -149,7 +180,7 @@ const createBaseExtensionCreator = <
        * using the `new` keyword.
        */
       public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-        return new CustomNodeExtension(...config);
+        return new NodeConstructor(...config);
       }
 
       /**
@@ -176,7 +207,7 @@ const createBaseExtensionCreator = <
       }
     }
 
-    return CustomNodeExtension;
+    return NodeConstructor;
   },
 });
 

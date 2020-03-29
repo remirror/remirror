@@ -2,6 +2,7 @@ const { jestSupportDir, baseDir } = require('./helpers');
 
 const { TEST_BUILD } = process.env;
 
+/** @type Partial<import("@jest/types").Config.GlobalConfig> */
 module.exports = {
   clearMocks: true,
   verbose: true,

@@ -40,6 +40,7 @@ module.exports = {
     'prettier/@typescript-eslint',
     'prettier/react',
     'plugin:jest-formatting/strict',
+    'plugin:unicorn/recommended',
   ],
   plugins: [
     'jest',
@@ -75,7 +76,10 @@ module.exports = {
   rules: {
     ...graphqlRules,
     eqeqeq: ['error', 'always', { null: 'ignore' }],
+    'prefer-exponentiation-operator': 'error',
+
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
+
     'default-case': 'warn',
 
     'prefer-template': 'warn',
@@ -92,11 +96,11 @@ module.exports = {
 
     'jest/no-focused-tests': 'error',
     'jest/no-identical-title': 'error',
-    'jest/no-duplicate-hooks': 'warn',
-    'jest/no-if': 'warn',
-    'jest/no-test-prefixes': 'warn',
+    'jest/no-duplicate-hooks': 'error',
+    'jest/no-if': 'error',
+    'jest/no-test-prefixes': 'error',
     'jest/prefer-spy-on': 'warn',
-    'jest/no-test-callback': 'warn',
+    'jest/no-test-callback': 'error',
     'jest/no-large-snapshots': ['warn', { maxSize: 12 }],
 
     'react/prop-types': 'off', // Because we're using TypeScript
@@ -104,7 +108,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'error',
     'react-hooks/rules-of-hooks': 'error',
 
-    'import/no-deprecated': 'error',
+    'import/no-deprecated': 'warning',
     'import/first': 'error',
     'import/no-duplicates': 'error',
     'import/no-cycle': 'error',
@@ -141,7 +145,6 @@ module.exports = {
 
     // ESLint rules (those without a '/' in) come after here
 
-    'no-nested-ternary': 'off', // Prettier makes nested ternaries more acceptable
     'no-return-assign': ['error', 'except-parens'],
     '@typescript-eslint/no-unused-expressions': [
       'error',
@@ -223,7 +226,10 @@ module.exports = {
         '@typescript-eslint/no-non-null-assertion': 'off', // Makes writing tests more convenient
         '@typescript-eslint/no-use-before-define': 'off',
         'react/display-name': 'off',
-        ...Object.keys(tsProjectRules).reduce((acc, key) => ({ ...acc, [key]: 'off' }), {}),
+        ...Object.keys(tsProjectRules).reduce(
+          (accumulator, key) => ({ ...accumulator, [key]: 'off' }),
+          {},
+        ),
       },
     },
     {

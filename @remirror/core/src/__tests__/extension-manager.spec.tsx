@@ -88,7 +88,7 @@ describe('ExtensionManager', () => {
       { extension: dummy, priority: 1 },
       { extension: big, priority: 10 },
     ]);
-    manager.init(helpers);
+    manager.initialize(helpers);
     state = manager.createState({ content: EMPTY_PARAGRAPH_NODE });
     view = new EditorView(document.createElement('div'), {
       state,
@@ -206,7 +206,7 @@ test('keymaps', () => {
     { extension: new SecondExtension(), priority: 10 },
     { extension: new ThirdExtension(), priority: 100 },
   ]);
-  manager.init(initHelpers);
+  manager.initialize(initHelpers);
 
   createEditor(doc(p('simple<cursor>')), { plugins: manager.data.keymaps })
     .press('Enter')

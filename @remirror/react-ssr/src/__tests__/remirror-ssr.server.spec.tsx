@@ -19,7 +19,7 @@ beforeEach(() => {
 });
 
 test('should render the ssr component', () => {
-  manager.init({ ...helpers, getState: () => state });
+  manager.initialize({ ...helpers, getState: () => state });
   const state = manager.createState({ content: initialJson });
 
   const htmlString = renderToString(

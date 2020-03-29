@@ -2,7 +2,14 @@ import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
 import { ComponentType } from 'react';
 
-import { ExtensionPriority, MarkGroup, NodeGroup, Tag } from '@remirror/core-constants';
+import {
+  ExtensionPriority,
+  MarkGroup,
+  NodeGroup,
+  REMIRROR_IDENTIFIER_KEY,
+  RemirrorIdentifier,
+  Tag,
+} from '@remirror/core-constants';
 import { PortalContainer } from '@remirror/react-portals';
 
 import {
@@ -271,16 +278,6 @@ export interface ExtensionManagerInitParams<GSchema extends EditorSchema = any> 
    * Retrieve the portal container
    */
   portalContainer: PortalContainer;
-
-  /**
-   * Retrieve the editor state via a function call
-   */
-  getState(): EditorState<GSchema>;
-
-  /**
-   * Provides access to the theme and helpers from the RemirrorThemeContext.
-   */
-  getTheme(): RemirrorThemeContextType;
 }
 
 /**
@@ -690,4 +687,11 @@ export interface CreateSchemaParams<Config extends BaseExtensionConfig> {
    * Pull all extra attrs from the dom node provided.
    */
   getExtraAttrs: GetExtraAttrs;
+}
+
+/**
+ * The core shape of any remirror specific object.
+ */
+export interface RemirrorIdentifierShape {
+  [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
 }

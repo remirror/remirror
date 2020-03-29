@@ -12,7 +12,15 @@ import {
   RemirrorIdentifier,
   Tag,
 } from '@remirror/core-constants';
-import { deepMerge, invariant, isArray, isObject, isString, object } from '@remirror/core-helpers';
+import {
+  capitalize,
+  deepMerge,
+  invariant,
+  isArray,
+  isString,
+  object,
+} from '@remirror/core-helpers';
+import { isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers/lib/core-helpers';
 import {
   Attrs,
   AttrsWithClass,
@@ -68,44 +76,41 @@ export const defaultConfig: Required<BaseExtensionConfig> = {
 /**
  * Determines if the passed in extension is any type of extension.
  *
- * @param extension - the extension to check
+ * @param value - the extension to check
  */
 export const isExtension = <Config extends BaseExtensionConfig = any>(
-  extension: unknown,
-): extension is AnyExtension<Config> =>
-  isObject(extension) && extension[REMIRROR_IDENTIFIER_KEY] === RemirrorIdentifier.Extension;
+  value: unknown,
+): value is AnyExtension<Config> =>
+  isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Extension);
 
 /**
  * Checks whether the provided value is a plain extension.
  *
- * @param extension - the extension to check
+ * @param value - the extension to check
  */
 export const isPlainExtension = <Config extends BaseExtensionConfig = any>(
-  extension: unknown,
-): extension is AnyPlainExtension<Config> =>
-  isExtension(extension) && extension.type === ExtensionType.Plain;
+  value: unknown,
+): value is AnyPlainExtension<Config> => isExtension(value) && value.type === ExtensionType.Plain;
 
 /**
  * Determines if the passed in extension is a mark extension. Useful as a type
  * guard where a particular type of extension is needed.
  *
- * @param extension - the extension to check
+ * @param value - the extension to check
  */
 export const isMarkExtension = <Config extends BaseExtensionConfig = any>(
-  extension: unknown,
-): extension is AnyMarkExtension<Config> =>
-  isExtension(extension) && extension.type === ExtensionType.Mark;
+  value: unknown,
+): value is AnyMarkExtension<Config> => isExtension(value) && value.type === ExtensionType.Mark;
 
 /**
  * Determines if the passed in extension is a node extension. Useful as a type
  * guard where a particular type of extension is needed.
  *
- * @param extension - the extension to check
+ * @param value - the extension to check
  */
 export const isNodeExtension = <Config extends BaseExtensionConfig = any>(
-  extension: unknown,
-): extension is AnyNodeExtension<Config> =>
-  isExtension(extension) && extension.type === ExtensionType.Node;
+  value: unknown,
+): value is AnyNodeExtension<Config> => isExtension(value) && value.type === ExtensionType.Node;
 
 /**
  * Allows for the addition of attributes to the defined schema. These are
@@ -232,9 +237,10 @@ export abstract class Extension<
   ProsemirrorType = never
 > {
   /**
-   * An internal property which helps identify this instance as a `RemirrorExtension`.
+   * An internal property which helps identify this instance as a
+   * `RemirrorExtension`.
    */
-  get $$remirrorType(): RemirrorIdentifier {
+  get [REMIRROR_IDENTIFIER_KEY]() {
     return RemirrorIdentifier.Extension;
   }
 
@@ -359,7 +365,7 @@ export abstract class Extension<
    * Override the default toString method to match the native toString methods.
    */
   public toString() {
-    return `${RemirrorIdentifier.Extension}[${this.name}]`;
+    return `[${RemirrorIdentifier.Extension} ${capitalize(this.name)}]`;
   }
 }
 

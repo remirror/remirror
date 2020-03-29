@@ -166,8 +166,8 @@ export enum ExtensionType {
  */
 export enum Tag {
   /**
-   * Describes a node that can be used as the last node of a document and
-   * by extension doesn't need to render a node after itself.
+   * Describes a node that can be used as the last node of a document and by
+   * extension doesn't need to render a node after itself.
    *
    * @remarks
    *
@@ -233,22 +233,32 @@ export enum RemirrorIdentifier {
   /**
    * The string used to identify an instance of the remirror extension.
    */
-  Extension = '$$RemirrorExtension',
+  Extension = 'RemirrorExtension',
 
   /**
-   * The string used to identify the constructor used to create extension instances.
+   * Identifies `PlainExtensionConstructor`s.
    */
-  ExtensionConstructor = '$$RemirrorExtensionConstructor',
+  PlainExtensionConstructor = 'RemirrorPlainExtensionConstructor',
+
+  /**
+   * Identifies `NodeExtensionConstructor`s.
+   */
+  NodeExtensionConstructor = 'RemirrorNodeExtensionConstructor',
+
+  /**
+   * Identifies `MarkExtensionConstructor`s.
+   */
+  MarkExtensionConstructor = 'RemirrorMarkExtensionConstructor',
 
   /**
    * The string used to identify an instance of the `ExtensionManager`
    */
-  ExtensionManager = '$$RemirrorExtensionManager',
+  ExtensionManager = 'RemirrorExtensionManager',
 
   /**
    * The preset type identifier.
    */
-  Preset = '$$RemirrorPreset',
+  Preset = 'RemirrorPreset',
 }
 
 /**
@@ -257,9 +267,9 @@ export enum RemirrorIdentifier {
  *
  * @remarks
  *
- * Higher priority extension (lower number) will take precedence when
- * there's a class. For example if two extensions have the same name the higher
- * priority extension is the one that will be loaded.
+ * Higher priority extension (lower number) will take precedence when there's a
+ * class. For example if two extensions have the same name the higher priority
+ * extension is the one that will be loaded.
  *
  * The lower the numeric value the higher the priority. The priority can also be
  * passed a number but naming things in this `enum` should help provide some

@@ -5,7 +5,8 @@ import nano from 'nanoid';
 import objectOmit from 'object.omit';
 import objectPick from 'object.pick';
 
-import { Predicate } from '@remirror/core-types';
+import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
+import { Predicate, RemirrorIdentifierShape } from '@remirror/core-types';
 
 type AnyConstructor<GType = unknown> = new (...args: any[]) => GType;
 type AnyFunction<GType = any> = (...args: any[]) => GType;
@@ -23,7 +24,7 @@ type Falsy = false | 0 | '' | null | undefined;
  *
  * @param arg - the arg to typecast
  */
-export const Cast = <GType = any>(arg: any): GType => arg;
+export const Cast = <GType = any>(argument: any): GType => argument;
 
 /**
  * A typesafe implementation of `Object.entries()`
@@ -37,15 +38,15 @@ export const entries = <
   GValue extends GType[GKey],
   GEntry extends [GKey, GValue]
 >(
-  obj: GType,
-): GEntry[] => Object.entries(obj) as GEntry[];
+  object_: GType,
+): GEntry[] => Object.entries(object_) as GEntry[];
 
 /**
  * A typesafe implementation of `Object.keys()`
  */
 export const keys = <GType extends object, GKey extends Extract<keyof GType, string>>(
-  obj: GType,
-): GKey[] => Object.keys(obj) as GKey[];
+  object_: GType,
+): GKey[] => Object.keys(object_) as GKey[];
 
 /**
  * A typesafe implementation of `Object.values()`
@@ -55,8 +56,8 @@ export const values = <
   GKey extends Extract<keyof GType, string>,
   GValue extends GType[GKey]
 >(
-  obj: GType,
-): GValue[] => Object.values(obj) as GValue[];
+  object_: GType,
+): GValue[] => Object.values(object_) as GValue[];
 
 /**
  * A more lenient typed version of `Array.prototype.includes` which allow less
@@ -139,8 +140,13 @@ const getObjectType = (value: unknown): TypeName | undefined => {
  */
 const isOfType = <GType>(type: string, test?: (value: GType) => boolean) => (
   value: unknown,
-): value is GType => (typeof value === type ? (test ? test(value as GType) : true) : false);
+): value is GType => {
+  if (typeof value !== type) {
+    return false;
+  }
 
+  return test ? test(value as GType) : true;
+};
 /**
  * Get the object type of passed in value. This avoids the reliance on
  * `instanceof` checks which are subject to cross frame issues as outlined in
@@ -188,7 +194,7 @@ export const isString = isOfType<string>('string');
  *
  * @public
  */
-export const isNumber = isOfType<number>('number', (val) => !Number.isNaN(val));
+export const isNumber = isOfType<number>('number', (value) => !Number.isNaN(value));
 
 /**
  * Predicate check that value is a function
@@ -292,7 +298,7 @@ export const isNullOrUndefined = (value: unknown): value is null | undefined =>
  *
  * @public
  */
-export const isObject = (value: unknown): value is PlainObject =>
+export const isObject = <Type extends object>(value: unknown): value is Type =>
   !isNullOrUndefined(value) && (isFunction(value) || isOfType('object')(value));
 
 /**
@@ -408,13 +414,35 @@ export const isEmptyArray = (value: unknown): value is never[] =>
   isArray(value) && value.length === 0;
 
 /**
+ * Identifies the value as having a remirror identifier. This is the core
+ * predicate check for the remirror library.
+ *
+ * @param value - the value to be checked
+ *
+ * @internal
+ */
+export const isRemirrorType = (value: unknown): value is RemirrorIdentifierShape =>
+  isObject<RemirrorIdentifierShape>(value);
+
+/**
+ * Checks that the provided remirror shape is of a given type.
+ *
+ * @param value - any remirror shape
+ * @param type - the remirror identifier type to check for
+ *
+ * @internal
+ */
+export const isIdentifierOfType = (value: RemirrorIdentifierShape, type: RemirrorIdentifier) =>
+  value[REMIRROR_IDENTIFIER_KEY] === type;
+
+/**
  * Capitalizes a string value.
  *
  * @param str - the string to capitalize.
  * @public
  */
-export const capitalize = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+export const capitalize = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
 /**
@@ -424,8 +452,8 @@ export const capitalize = (str: string) => {
  *
  * @public
  */
-export const trim = (str: string) => {
-  return str.replace(/^ +| +$/g, '');
+export const trim = (string: string) => {
+  return string.replace(/^ +| +$/g, '');
 };
 
 /**
@@ -435,9 +463,9 @@ export const trim = (str: string) => {
  *
  * @public
  */
-export const format = (str: string) => {
-  str = trim(str);
-  return /^(?:webOS|i(?:OS|P))/.test(str) ? str : capitalize(str);
+export const format = (string: string) => {
+  string = trim(string);
+  return /^(?:webOS|i(?:OS|P))/.test(string) ? string : capitalize(string);
 };
 
 /**
@@ -449,10 +477,10 @@ export const format = (str: string) => {
  */
 export const callIfDefined = <GFunc extends AnyFunction>(
   fn: GFunc | unknown,
-  ...args: Parameters<GFunc>
+  ...arguments_: Parameters<GFunc>
 ) => {
   if (isFunction(fn)) {
-    fn(...args);
+    fn(...arguments_);
   }
 };
 
@@ -496,27 +524,27 @@ export const findMatches = (text: string, regexp: RegExp) => {
  */
 export const cleanupOS = (os: string, pattern?: string, label?: string) => {
   if (pattern && label) {
-    os = os.replace(RegExp(pattern, 'i'), label);
+    os = os.replace(new RegExp(pattern, 'i'), label);
   }
 
-  const val = format(
+  const value = format(
     os
       .replace(/ ce$/i, ' CE')
       .replace(/\bhpw/i, 'web')
       .replace(/\bMacintosh\b/, 'Mac OS')
-      .replace(/_PowerPC\b/i, ' OS')
-      .replace(/\b(OS X) [^ \d]+/i, '$1')
+      .replace(/_powerpc\b/i, ' OS')
+      .replace(/\b(os x) [^\d ]+/i, '$1')
       .replace(/\bMac (OS X)\b/, '$1')
       .replace(/\/(\d)/, ' $1')
       .replace(/_/g, '.')
-      .replace(/(?: BePC|[ .]*fc[ \d.]+)$/i, '')
+      .replace(/(?: bepc|[ .]*fc[\d .]+)$/i, '')
       .replace(/\bx86\.64\b/gi, 'x86_64')
       .replace(/\b(Windows Phone) OS\b/, '$1')
       .replace(/\b(Chrome OS \w+) [\d.]+\b/, '$1')
       .split(' on ')[0],
   );
 
-  return val;
+  return value;
 };
 
 /**
@@ -526,7 +554,7 @@ export const cleanupOS = (os: string, pattern?: string, label?: string) => {
  */
 export const isAndroidOS = () => {
   const ua = navigator.userAgent;
-  const match = RegExp('\\b' + 'Android' + '(?:/[\\d.]+|[ \\w.]*)', 'i').exec(ua);
+  const match = new RegExp('\\b' + 'Android' + '(?:/[\\d.]+|[ \\w.]*)', 'i').exec(ua);
   if (!match) {
     return false;
   }
@@ -545,7 +573,7 @@ export const isAndroidOS = () => {
 export const randomFloat = (min: number, max?: number) => {
   if (!max) {
     max = min;
-    min = 0.0;
+    min = 0;
   }
   return Math.random() * (max - min + 1) + min;
 };
@@ -572,14 +600,14 @@ export const randomInt = (min: number, max?: number) => Math.floor(randomFloat(m
  *
  * @param str - the string to examine
  */
-export const startCase = (str: string) => {
-  return str
+export const startCase = (string: string) => {
+  return string
     .replace(/_/g, ' ')
     .replace(/([a-z])([A-Z])/g, (_, $1: string, $2: string) => `${$1} ${$2}`)
     .replace(/(\s|^)(\w)/g, (_, $1: string, $2: string) => `${$1}${$2.toUpperCase()}`);
 };
 
-const wordSeparators = /[\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-./:;<=>?@[\]^_`{|}~]+/;
+const wordSeparators = /[\s!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~\u2000-\u206F\u2E00-\u2E7F\-]+/;
 const capitals = /[A-Z\u00C0-\u00D6\u00D9-\u00DD]/g;
 
 /**
@@ -596,9 +624,9 @@ const capitals = /[A-Z\u00C0-\u00D6\u00D9-\u00DD]/g;
  * brown# fox'); // 'the-quick-brown-fox' kebabCase('theQUICKBrownFox'); //
  * 'the-q-u-i-c-k-brown-fox'
  */
-export const kebabCase = (str: string) => {
+export const kebabCase = (string: string) => {
   // replace capitals with space + lower case equivalent for later parsing
-  return str
+  return string
     .replace(capitals, (match) => {
       return ` ${match.toLowerCase() || match}`;
     })
@@ -662,9 +690,9 @@ export const uniqueId = ({ prefix = '', size }: UniqueIdParams = { prefix: '' })
  *
  * @public
  */
-export const take = <GArray extends any[]>(arr: GArray, num: number) => {
-  num = Math.max(Math.min(0, num), num);
-  return arr.slice(0, num);
+export const take = <GArray extends any[]>(array: GArray, number: number) => {
+  number = Math.max(Math.min(0, number), number);
+  return array.slice(0, number);
 };
 
 /**
@@ -709,9 +737,9 @@ export const isEqual = fastDeepEqual;
  * @public
  */
 export const uniqueArray = <GType>(array: GType[], fromStart: boolean = false) => {
-  const arr = fromStart ? [...array].reverse() : array;
-  const set = new Set(arr);
-  return fromStart ? Array.from(set).reverse() : Array.from(set);
+  const array_ = fromStart ? [...array].reverse() : array;
+  const set = new Set(array_);
+  return fromStart ? [...set].reverse() : [...set];
 };
 
 /**
@@ -749,8 +777,8 @@ export class Merge {
    * @param [obj] - the object to replace the key with. When blank an empty
    * object is used.
    */
-  public static overwrite<GReturn = any>(obj: PlainObject = object()): GReturn {
-    return new Merge(obj) as any;
+  public static overwrite<GReturn = any>(object_: PlainObject = object()): GReturn {
+    return new Merge(object_) as any;
   }
 
   /**
@@ -765,9 +793,9 @@ export class Merge {
    */
   [key: string]: any;
 
-  private constructor(obj: PlainObject = object()) {
-    Object.keys(obj).forEach((key) => {
-      this[key] = obj[key];
+  private constructor(object_: PlainObject = object()) {
+    Object.keys(object_).forEach((key) => {
+      this[key] = object_[key];
     });
   }
 }
@@ -792,8 +820,13 @@ interface ClampParams {
 /**
  * Clamps the value to the provided range.
  */
-export const clamp = ({ min, max, value }: ClampParams): number =>
-  value < min ? min : value > max ? max : value;
+export const clamp = ({ min, max, value }: ClampParams): number => {
+  if (value < min) {
+    return min;
+  }
+
+  return value > max ? max : value;
+};
 
 /**
  * Get the last element of the array.
@@ -829,27 +862,31 @@ export const sort = <GType>(array: GType[], compareFn: (a: GType, b: GType) => n
  */
 export const get = <GReturn = any>(
   path: string | Array<string | number>,
-  obj: any,
+  object_: any,
   fallback?: any,
 ): GReturn => {
-  if (!path || !path.length) {
-    return isUndefined(obj) ? fallback : obj;
+  if (!path || isEmptyArray(path)) {
+    return isUndefined(object_) ? fallback : object_;
   }
 
   if (isString(path)) {
     path = path.split('.');
   }
 
-  for (let ii = 0, len = path.length; ii < len && obj; ++ii) {
-    if (!isPlainObject(obj) && !isArray(obj)) {
+  for (let ii = 0, length_ = path.length; ii < length_ && object_; ++ii) {
+    if (!isPlainObject(object_) && !isArray(object_)) {
       return fallback;
     }
 
-    obj = (obj as any)[path[ii]];
+    object_ = (object_ as any)[path[ii]];
   }
 
-  return isUndefined(obj) ? fallback : obj;
+  return isUndefined(object_) ? fallback : object_;
 };
+
+const makeFunctionForUniqueBy = <GItem = any, GKey = any>(
+  value: string | Array<string | number>,
+) => (item: GItem) => get<GKey>(value, item);
 
 /**
  * Create a unique array of objects from a getter function or a property list.
@@ -877,11 +914,11 @@ export const uniqueBy = <GItem = any, GKey = any>(
 ): GItem[] => {
   const unique: GItem[] = [];
   const found: Set<GKey> = new Set();
-  const makeFn = (val: string | Array<string | number>) => (item: GItem) => get<GKey>(val, item);
-  const getter = isFunction(getValue) ? getValue : makeFn(getValue);
-  const arr = fromStart ? [...array].reverse() : array;
 
-  for (const item of arr) {
+  const getter = isFunction(getValue) ? getValue : makeFunctionForUniqueBy(getValue);
+  const array_ = fromStart ? [...array].reverse() : array;
+
+  for (const item of array_) {
     const value = getter(item);
     if (!found.has(value)) {
       found.add(value);
@@ -900,11 +937,15 @@ export const uniqueBy = <GItem = any, GKey = any>(
  * final position is end. i.e. `length = (end - start) + 1`
  */
 export const range = (start: number, end?: number) => {
-  return !isNumber(end)
-    ? Array.from({ length: Math.abs(start) }, (_, index) => (start < 0 ? -1 : 1) * index)
-    : start <= end
-    ? Array.from({ length: end + 1 - start }, (_, index) => index + start)
-    : Array.from({ length: start + 1 - end }, (_, index) => -1 * index + start);
+  if (!isNumber(end)) {
+    return Array.from({ length: Math.abs(start) }, (_, index) => (start < 0 ? -1 : 1) * index);
+  }
+
+  if (start <= end) {
+    return Array.from({ length: end + 1 - start }, (_, index) => index + start);
+  }
+
+  return Array.from({ length: start + 1 - end }, (_, index) => -1 * index + start);
 };
 
 /**
@@ -932,12 +973,12 @@ export const within = (value: number, ...rest: Array<number | undefined | null>)
  * @typeParam GProperty - the property which can be a string | number | symbol
  */
 export const hasOwnProperty = <GObj extends object, GProperty extends string | number | symbol>(
-  obj: GObj,
+  object_: GObj,
   key: GProperty,
-): obj is GProperty extends keyof GObj ? GObj : GObj & { GKey: unknown } => {
-  return Object.prototype.hasOwnProperty.call(obj, key);
+): object_ is GProperty extends keyof GObj ? GObj : GObj & { GKey: unknown } => {
+  return Object.prototype.hasOwnProperty.call(object_, key);
 };
 
-// Forwarding exports
+// Forwarded exports
 
 export { debounce, throttle } from 'throttle-debounce';
