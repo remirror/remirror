@@ -1,6 +1,6 @@
 import { bool, isFunction } from '@remirror/core-helpers';
 import {
-  Attrs,
+  Attributes,
   MarkTypeParams,
   NodeTypeParams,
   OptionalProsemirrorNodeParams,
@@ -78,8 +78,8 @@ export const findChildren = ({ node, predicate, descend }: FindChildrenParams) =
   return flatten({ node, descend }).filter((child) => predicate(child.node));
 };
 
-const findNodeByPredicate = ({ predicate }: NodePredicateParams) => (params: FlattenParams) =>
-  findChildren({ ...params, predicate });
+const findNodeByPredicate = ({ predicate }: NodePredicateParams) => (parameters: FlattenParams) =>
+  findChildren({ ...parameters, predicate });
 
 /**
  * Returns text nodes of a given `node`.
@@ -121,7 +121,7 @@ interface FindChildrenByAttrParams extends FlattenParams {
   /**
    * Runs a predicate check after receiving the attrs for the found node.
    */
-  predicate(attrs: Attrs): boolean;
+  predicate(attrs: Attributes): boolean;
 }
 
 /**
@@ -134,7 +134,7 @@ interface FindChildrenByAttrParams extends FlattenParams {
  * const mergedCells = findChildrenByAttr(table, attrs => attrs.colspan === 2);
  * ```
  */
-export const findChildrenByAttr = ({ node, predicate, descend }: FindChildrenByAttrParams) =>
+export const findChildrenByAttribute = ({ node, predicate, descend }: FindChildrenByAttrParams) =>
   findChildren({ node, predicate: (child) => predicate(child.attrs), descend });
 
 interface FindChildrenByNodeParams extends FlattenParams, NodeTypeParams {}

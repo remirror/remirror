@@ -4,14 +4,9 @@ import { AttributeSpec } from 'prosemirror-model';
 import { ConditionalExcept, ConditionalPick } from 'type-fest';
 
 /**
- * Alternative to builtin `keyof` operator.
- */
-export type Key<Type> = keyof Type;
-
-/**
  * An alternative to keyof that only extracts the string keys.
  */
-export type StringKey<Type> = Extract<Key<Type>, string>;
+export type StringKey<Type> = Extract<keyof Type, string>;
 
 /**
  * Extract the values of an object as a union type.
@@ -24,7 +19,7 @@ export type StringKey<Type> = Extract<Key<Type>, string>;
  * type MyRecord = Value<typeof myRecord>; // 'a' | 'b' | 'c'
  * ```
  */
-export type Value<Type> = Type[Key<Type>];
+export type Value<Type> = Type[keyof Type];
 
 /**
  * Makes a type nullable or undefined.
@@ -77,7 +72,7 @@ interface Branding<GBrand> {
  * Create a "branded" version of a type. TypeScript won't allow implicit
  * conversion to this type
  */
-export type Brand<GType, GBrand> = GType & Branding<GBrand>;
+export type Brand<Type, GBrand> = Type & Branding<GBrand>;
 
 /**
  * An object with string keys and values of type `any`
@@ -96,12 +91,12 @@ export interface PlainObject {
  * Taken from `simplytyped` Useful when designing many api's that don't care
  * what function they take in, they just need to know what it returns.
  */
-export type AnyFunction<GType = any> = (...args: any[]) => GType;
+export type AnyFunction<Type = any> = (...args: any[]) => Type;
 
 /**
  * Matches any constructor type (but not of abstract classes).
  */
-export type AnyConstructor<GType = unknown> = new (...args: any[]) => GType;
+export type AnyConstructor<Type = unknown> = new (...args: any[]) => Type;
 
 /**
  * Abstract classes don't support the builtin `InstanceType` helper. This is an
@@ -115,35 +110,35 @@ export type AbstractInstanceType<
  * Make the whole interface partial except for some specified keys which will be
  * made required.
  */
-export type PartialWithRequiredKeys<GType extends object, GKeys extends Key<GType>> = Partial<
-  Pick<GType, Exclude<keyof GType, GKeys>>
+export type PartialWithRequiredKeys<Type extends object, Keys extends keyof Type> = Partial<
+  Pick<Type, Exclude<keyof Type, Keys>>
 > &
-  Required<Pick<GType, GKeys>>;
+  Required<Pick<Type, Keys>>;
 
 /**
  * Makes specified keys of an interface optional while the rest stay the same.
  */
-export type MakeOptional<GType extends object, GKeys extends Key<GType>> = Omit<GType, GKeys> &
-  { [P in GKeys]+?: GType[P] };
+export type MakeOptional<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
+  { [Key in Keys]+?: Type[Key] };
 
 /**
  * Makes specified keys of an interface nullable while the rest stay the same.
  */
-export type MakeNullable<GType extends object, GKeys extends Key<GType>> = Omit<GType, GKeys> &
-  { [P in GKeys]: GType[P] | null };
+export type MakeNullable<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
+  { [Key in Keys]: Type[Key] | null };
 
 /**
  * Makes specified keys of an interface Required while the rest remain
  * unchanged.
  */
-export type MakeRequired<GType extends object, GKeys extends Key<GType>> = Omit<GType, GKeys> &
-  { [P in GKeys]-?: GType[P] };
+export type MakeRequired<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
+  { [Key in Keys]-?: Type[Key] };
 
 /**
  * Makes specified keys of an interface readonly.
  */
-export type MakeReadonly<GType extends object, GKeys extends Key<GType>> = Omit<GType, GKeys> &
-  { +readonly [P in GKeys]: GType[P] };
+export type MakeReadonly<Type extends object, Keys extends keyof Type> = Omit<Type, Keys> &
+  { +readonly [Key in Keys]: Type[Key] };
 
 /**
  * All the literal types
@@ -154,9 +149,9 @@ export type Literal = string | number | boolean | undefined | null | void | {};
  * A recursive partial type. Useful for object that will be merged with
  * defaults.
  */
-export type DeepPartial<GType> = GType extends object
-  ? { [K in keyof GType]?: DeepPartial<GType[K]> }
-  : GType;
+export type DeepPartial<Type> = Type extends object
+  ? { [K in keyof Type]?: DeepPartial<Type[K]> }
+  : Type;
 
 /**
  * A tuple for use with the regex constructor.
@@ -207,11 +202,11 @@ export interface Position {
 /**
  * Used for attributes which can be added to prosemirror nodes and marks.
  */
-export type Attrs<GExtra extends object = {}> = Record<string, unknown> & GExtra;
+export type Attributes<GExtra extends object = {}> = Record<string, unknown> & GExtra;
 
-export type AttrsWithClass = Attrs & { class?: string };
+export type AttributesWithClass = Attributes & { class?: string };
 
-export interface ExtraAttrsObject {
+export interface ExtraAttributesObject {
   /**
    * The name of the attribute
    */
@@ -227,7 +222,7 @@ export interface ExtraAttrsObject {
   /**
    * A function used to extract the attribute from the dom.
    */
-  getAttrs?: (domNode: Node) => unknown;
+  getAttributes?: (domNode: Node) => unknown;
 }
 
 /**
@@ -235,18 +230,18 @@ export interface ExtraAttrsObject {
  * and the third is the optional parse name from the dom via
  * `node.getAttribute()`.
  */
-export type ExtraAttrsTuple = [string, string, string?];
+export type ExtraAttributesTuple = [string, string, string?];
 
 /**
  * Data representation tuple used for injecting extra attributes into an
  * extension.
  */
-export type ExtraAttrs = string | ExtraAttrsTuple | ExtraAttrsObject;
+export type ExtraAttributes = string | ExtraAttributesTuple | ExtraAttributesObject;
 
 /**
  * A method that can pull all the extraAttrs from the provided dom node.
  */
-export type GetExtraAttrs = (domNode: Node) => Record<string, unknown>;
+export type GetExtraAttributes = (domNode: Node) => Record<string, unknown>;
 
 /**
  * A method that creates the `AttributeSpec` for prosemirror that can be added

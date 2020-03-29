@@ -5,7 +5,6 @@ import {
   AnyConstructor,
   AnyFunction,
   EditorSchema,
-  Key,
   StringKey,
 } from '@remirror/core-types';
 
@@ -141,13 +140,13 @@ export type FlexibleExtensions<GExtensions extends AnyExtension[] = any[]> = Arr
   FlexibleExtension<GExtensions[number]>
 >;
 
-export interface ExtensionListParams {
+export interface ExtensionListParameters {
   /**
    * A list of passed extensions
    */
   extensions: AnyExtension[];
 }
-export interface ExtensionParams<GExtension extends AnyExtension = any> {
+export interface ExtensionParameters<GExtension extends AnyExtension = any> {
   /**
    * An extension
    */
@@ -177,7 +176,7 @@ export type InferFlexibleExtensionList<
  * `manager.data.actions.commandName()`.
  */
 export type MapCommandToAction<GCommands extends Record<string, AnyFunction>> = {
-  [P in Key<GCommands>]: ActionMethod<Parameters<GCommands[P]>>;
+  [P in keyof GCommands]: ActionMethod<Parameters<GCommands[P]>>;
 };
 
 /**

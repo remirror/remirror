@@ -6,7 +6,7 @@ import { ComponentType } from 'react';
 import { EDITOR_CLASS_NAME, SELECTED_NODE_CLASS_NAME } from '@remirror/core-constants';
 import { isFunction, isPlainObject, isString, keys } from '@remirror/core-helpers';
 import {
-  Attrs,
+  Attributes,
   BaseExtensionConfig,
   Decoration,
   EditorView,
@@ -18,15 +18,15 @@ import { isDOMNode, isElementDOMNode } from '@remirror/core-utils';
 import { PortalContainer } from '@remirror/react-portals';
 
 import {
-  CreateNodeViewParams,
+  CreateNodeViewParams as CreateNodeViewParameters,
   GetPosition,
-  NodeViewComponentProps,
-  ReactNodeViewParams,
+  NodeViewComponentProps as NodeViewComponentProperties,
+  ReactNodeViewParams as ReactNodeViewParameters,
 } from './node-view-types';
 
 export class ReactNodeView<
   GOptions extends BaseExtensionConfig = BaseExtensionConfig,
-  GAttrs extends Attrs = Attrs
+  GAttrs extends Attributes = Attributes
 > implements NodeView {
   /**
    * The outer element exposed to the editor.
@@ -123,7 +123,7 @@ export class ReactNodeView<
     };
 
     if (contentDOMWrapper) {
-      this.domRef.appendChild(contentDOMWrapper);
+      this.domRef.append(contentDOMWrapper);
       this.contentDOM = contentDOM ? contentDOM : contentDOMWrapper;
       this.contentDOMWrapper = contentDOMWrapper;
     }
@@ -179,11 +179,11 @@ export class ReactNodeView<
 
     // move the contentDOM node inside the inner reference after rendering
     if (node && contentDOM && !node.contains(contentDOM)) {
-      node.appendChild(contentDOM);
+      node.append(contentDOM);
     }
   };
 
-  public render(forwardRef: (node: HTMLElement) => void): JSX.Element {
+  public render(forwardReference: (node: HTMLElement) => void): JSX.Element {
     const { Component, getPosition, node, options, view, selected } = this;
 
     return (
@@ -192,7 +192,7 @@ export class ReactNodeView<
         view={view}
         getPosition={getPosition}
         node={node}
-        forwardRef={forwardRef}
+        forwardRef={forwardReference}
         config={options}
       />
     );
@@ -234,19 +234,19 @@ export class ReactNodeView<
         return;
       }
 
-      const attrs = domSpec[1];
+      const attributes = domSpec[1];
 
-      if (isPlainObject(attrs)) {
-        keys(attrs).forEach((attr) => {
-          element.setAttribute(attr, String(attrs[attr]));
+      if (isPlainObject(attributes)) {
+        keys(attributes).forEach((attribute) => {
+          element.setAttribute(attribute, String(attributes[attribute]));
         });
 
         return;
       }
     }
 
-    keys(node.attrs).forEach((attr) => {
-      element.setAttribute(attr, node.attrs[attr]);
+    keys(node.attrs).forEach((attribute) => {
+      element.setAttribute(attribute, node.attrs[attribute]);
     });
   }
 
@@ -292,7 +292,7 @@ export class ReactNodeView<
    */
   public static createNodeView<
     GOptions extends BaseExtensionConfig = BaseExtensionConfig,
-    GAttrs extends Attrs = Attrs
+    GAttrs extends Attributes = Attributes
   >({ Component, portalContainer, config: options }: CreateNodeViewParams<GOptions, GAttrs>) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
       new ReactNodeView<GOptions, GAttrs>({

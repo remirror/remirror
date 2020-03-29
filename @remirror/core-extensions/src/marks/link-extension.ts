@@ -1,7 +1,7 @@
 import { Plugin, TextSelection } from 'prosemirror-state';
 
 import {
-  Attrs,
+  Attributes,
   Cast,
   CommandMarkTypeParams,
   ExtensionManagerMarkTypeParams,
@@ -100,7 +100,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
       /**
        * A command to update the selected link
        */
-      updateLink: (attrs?: Attrs): ProsemirrorCommandFunction => {
+      updateLink: (attributes: Attributes): ProsemirrorCommandFunction => {
         return (state, dispatch, view) => {
           const { selection } = state;
           if (
@@ -109,7 +109,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
           ) {
             return false;
           }
-          return updateMark({ type, attrs })(state, dispatch, view);
+          return updateMark({ type, attrs: attributes })(state, dispatch, view);
         };
       },
       /**
@@ -129,7 +129,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
   public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
     return [
       markPasteRule({
-        regexp: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
+        regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/g,
         type,
         getAttrs: (url) => ({ href: getMatchString(url) }),
       }),

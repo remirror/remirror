@@ -1,4 +1,4 @@
-import { Attrs } from '@remirror/core';
+import { Attributes } from '@remirror/core';
 import { CSS_ROTATE_PATTERN, EMPTY_CSS_VALUE } from '@remirror/core-extensions';
 
 import { IMAGE_FILE_TYPES } from './image-constants';
@@ -10,7 +10,7 @@ export const isImageFileType = (file: File) => {
   return IMAGE_FILE_TYPES.has(file.type);
 };
 
-export const getAttrs = (extraAttrs: Attrs) => (domNode: HTMLElement) => {
+export const getAttrs = (extraAttributes: Attributes) => (domNode: HTMLElement) => {
   const { cssFloat, display, marginTop, marginLeft } = domNode.style;
   let { width, height } = domNode.style;
   let align = domNode.getAttribute('data-align') ?? domNode.getAttribute('align');
@@ -44,30 +44,30 @@ export const getAttrs = (extraAttrs: Attrs) => (domNode: HTMLElement) => {
       !EMPTY_CSS_VALUE.has(marginTop)
     ) {
       crop = {
-        width: parseInt(ps.width, 10) || 0,
-        height: parseInt(ps.height, 10) || 0,
-        left: parseInt(marginLeft, 10) || 0,
-        top: parseInt(marginTop, 10) || 0,
+        width: Number.parseInt(ps.width, 10) || 0,
+        height: Number.parseInt(ps.height, 10) || 0,
+        left: Number.parseInt(marginLeft, 10) || 0,
+        top: Number.parseInt(marginTop, 10) || 0,
       };
     }
     if (ps.transform) {
       // example: `rotate(1.57rad) translateZ(0px)`;
       const mm = ps.transform.match(CSS_ROTATE_PATTERN);
       if (mm?.[1]) {
-        rotate = parseFloat(mm[1]) || null;
+        rotate = Number.parseFloat(mm[1]) || null;
       }
     }
   }
 
   return {
-    ...extraAttrs,
+    ...extraAttributes,
     align,
     alt: domNode.getAttribute('alt') ?? null,
     crop,
-    height: parseInt(height || '0', 10) || null,
+    height: Number.parseInt(height || '0', 10) || null,
     rotate,
     src: domNode.getAttribute('src') ?? null,
     title: domNode.getAttribute('title') ?? null,
-    width: parseInt(width || '0', 10) || null,
+    width: Number.parseInt(width || '0', 10) || null,
   };
 };

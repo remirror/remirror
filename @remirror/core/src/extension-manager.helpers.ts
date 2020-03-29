@@ -1,4 +1,4 @@
-import { MarkGroup, NodeGroup, Tag } from '@remirror/core-constants';
+import { DEFAULT_EXTENSION_PRIORITY, MarkGroup, NodeGroup, Tag } from '@remirror/core-constants';
 import { bool, Cast, entries, isFunction, isUndefined, object, sort } from '@remirror/core-helpers';
 import {
   AnyFunction,
@@ -7,18 +7,28 @@ import {
   ExtensionManagerParams,
   ExtensionTags,
   GeneralExtensionTags,
-  Key,
   MarkExtensionTags,
   NodeExtensionTags,
 } from '@remirror/core-types';
 
-import { AnyExtension, isMarkExtension, isNodeExtension } from './extension';
-import { convertToPrioritizedExtension } from './extension-helpers';
+import { AnyExtension, isExtension, isMarkExtension, isNodeExtension } from './extension';
 import {
-  ExtensionListParams,
+  ExtensionListParameters,
   FlexibleExtension,
   InferFlexibleExtensionList,
+  PrioritizedExtension,
 } from './extension-types';
+
+/**
+ * Converts an extension to an object with a priority.
+ */
+export const convertToPrioritizedExtension = <GExtension extends AnyExtension = any>(
+  extension: FlexibleExtension<GExtension>,
+): PrioritizedExtension<GExtension> => {
+  return isExtension(extension)
+    ? { priority: DEFAULT_EXTENSION_PRIORITY, extension }
+    : { ...extension };
+};
 
 interface IsNameUniqueParams {
   /**
@@ -70,7 +80,7 @@ const isNameUnique = ({
   }
 };
 
-interface CreateCommandsParams extends ExtensionListParams {
+interface CreateCommandsParams extends ExtensionListParameters {
   /**
    * The command params which are passed to each extensions `commands` method.
    */
@@ -83,16 +93,16 @@ interface CreateCommandsParams extends ExtensionListParams {
  * @param extension - the extension to test.
  * @param params - the params without the type.
  */
-const getParamsType = <GKey extends keyof AnyExtension, GParams extends ExtensionManagerParams>(
+const getParametersType = <GKey extends keyof AnyExtension, GParams extends ExtensionManagerParams>(
   extension: Required<Pick<AnyExtension, GKey>>,
-  params: GParams,
+  parameters: GParams,
 ) => {
   if (isMarkExtension(extension)) {
-    return { type: params.schema.marks[extension.name] };
+    return { type: parameters.schema.marks[extension.name] };
   }
 
   if (isNodeExtension(extension)) {
-    return { type: params.schema.nodes[extension.name] };
+    return { type: parameters.schema.nodes[extension.name] };
   }
 
   return object();
@@ -112,12 +122,16 @@ const getParamsType = <GKey extends keyof AnyExtension, GParams extends Extensio
  *
  * @param property - the extension property / method name
  */
-export const hasExtensionProperty = <GExt extends object, GKey extends Key<GExt>>(
-  property: GKey,
+export const hasExtensionProperty = <
+  ExtensionUnion extends object,
+  ExtensionProperty extends keyof ExtensionUnion
+>(
+  property: ExtensionProperty,
 ) => (
-  extension: GExt,
-): extension is GExt extends undefined ? never : GExt & Pick<Required<GExt>, GKey> =>
-  bool(extension[property]);
+  extension: ExtensionUnion,
+): extension is ExtensionUnion extends undefined
+  ? never
+  : ExtensionUnion & Pick<Required<ExtensionUnion>, ExtensionProperty> => bool(extension[property]);
 
 /**
  * Generate all the action commands for usage within the UI.
@@ -126,17 +140,17 @@ export const hasExtensionProperty = <GExt extends object, GKey extends Key<GExt>
  * toggle bold formatting or to undo the last action.
  */
 export const createCommands = ({ extensions, params }: CreateCommandsParams) => {
-  const getItemParams = (extension: Required<Pick<AnyExtension, 'commands'>>) =>
+  const getItemParameters = (extension: Required<Pick<AnyExtension, 'commands'>>) =>
     extension.commands({
       ...params,
-      ...getParamsType(extension, params),
+      ...getParametersType(extension, params),
     });
 
   const { view, getState } = params;
 
-  const methodFactory = (method: ExtensionCommandFunction) => (...args: unknown[]) => {
+  const methodFactory = (method: ExtensionCommandFunction) => (...arguments_: unknown[]) => {
     view.focus();
-    return method(...args)(getState(), view.dispatch, view);
+    return method(...arguments_)(getState(), view.dispatch, view);
   };
   const items: Record<
     string,
@@ -145,7 +159,7 @@ export const createCommands = ({ extensions, params }: CreateCommandsParams) => 
   const names = new Set<string>();
 
   extensions.filter(hasExtensionProperty('commands')).forEach((currentExtension) => {
-    const item = getItemParams(currentExtension);
+    const item = getItemParameters(currentExtension);
 
     entries(item).forEach(([name, command]) => {
       isNameUnique({ name, set: names, shouldThrow: true });
@@ -153,8 +167,8 @@ export const createCommands = ({ extensions, params }: CreateCommandsParams) => 
       items[name] = {
         name: currentExtension.name,
         command: methodFactory(command),
-        isEnabled: (...args: unknown[]): boolean => {
-          return !!command(...args)(getState(), undefined, view);
+        isEnabled: (...arguments_: unknown[]): boolean => {
+          return !!command(...arguments_)(getState(), undefined, view);
         },
       };
     });
@@ -162,7 +176,7 @@ export const createCommands = ({ extensions, params }: CreateCommandsParams) => 
 
   return items;
 };
-interface CreateHelpersParams extends ExtensionListParams {
+interface CreateHelpersParams extends ExtensionListParameters {
   /**
    * The params which are passed to each extensions `helpers` method.
    */
@@ -176,17 +190,17 @@ interface CreateHelpersParams extends ExtensionListParams {
  * their consumers and other extensions.
  */
 export const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
-  const getItemParams = (extension: Required<Pick<AnyExtension, 'helpers'>>) =>
+  const getItemParameters = (extension: Required<Pick<AnyExtension, 'helpers'>>) =>
     extension.helpers({
       ...params,
-      ...getParamsType(extension, params),
+      ...getParametersType(extension, params),
     });
 
   const items: Record<string, AnyFunction> = object();
   const names = new Set<string>();
 
   extensions.filter(hasExtensionProperty('helpers')).forEach((currentExtension) => {
-    const item = getItemParams(currentExtension);
+    const item = getItemParameters(currentExtension);
 
     Object.entries(item).forEach(([name, helper]) => {
       isNameUnique({ name, set: names, shouldThrow: true });
@@ -223,7 +237,7 @@ export const extensionPropertyMapper = <
   GExtMethodProp extends ExtensionMethodProperties
 >(
   property: GExtMethodProp,
-  params: ExtensionManagerParams,
+  parameters: ExtensionManagerParams,
 ) => (
   extension: GExt,
 ): GExt[GExtMethodProp] extends AnyFunction ? ReturnType<GExt[GExtMethodProp]> : {} => {
@@ -235,17 +249,17 @@ export const extensionPropertyMapper = <
   const getFn = () => {
     if (isNodeExtension(extension)) {
       return extensionMethod.bind(extension)({
-        ...params,
-        type: Cast(params.schema.nodes[extension.name]),
+        ...parameters,
+        type: Cast(parameters.schema.nodes[extension.name]),
       });
     }
     if (isMarkExtension(extension)) {
       return extensionMethod.bind(extension)({
-        ...params,
-        type: Cast(params.schema.marks[extension.name]),
+        ...parameters,
+        type: Cast(parameters.schema.marks[extension.name]),
       });
     }
-    return extensionMethod.bind(extension)(Cast(params));
+    return extensionMethod.bind(extension)(Cast(parameters));
   };
 
   return Cast(getFn());
@@ -279,13 +293,13 @@ export const transformExtensionMap = <GFlexibleList extends FlexibleExtension[]>
  * @param obj - an object which might contain methods
  * @returns a new object without any of the functions defined
  */
-export const ignoreFunctions = (obj: Record<string, unknown>) => {
+export const ignoreFunctions = (object_: Record<string, unknown>) => {
   const newObject: Record<string, unknown> = object();
-  for (const key of Object.keys(obj)) {
-    if (isFunction(obj[key])) {
+  for (const key of Object.keys(object_)) {
+    if (isFunction(object_[key])) {
       continue;
     }
-    newObject[key] = obj[key];
+    newObject[key] = object_[key];
   }
 
   return newObject;

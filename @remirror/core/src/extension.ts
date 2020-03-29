@@ -22,22 +22,23 @@ import {
 } from '@remirror/core-helpers';
 import { isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers/lib/core-helpers';
 import {
-  Attrs,
-  AttrsWithClass,
+  Attributes,
+  AttributesWithClass,
   BaseExtensionConfig,
   CommandTypeParams,
   CreateExtraAttrs,
   CreateSchemaParams,
   EditorSchema,
   ExtensionCommandReturn,
+  ExtensionHelperReturn,
   ExtensionIsActiveFunction,
   ExtensionManagerMarkTypeParams,
   ExtensionManagerNodeTypeParams,
   ExtensionManagerParams,
   ExtensionManagerTypeParams,
-  ExtraAttrs,
+  ExtraAttributes,
   FlipPartialAndRequired,
-  GetExtraAttrs,
+  GetExtraAttributes,
   IfNoRequiredProperties,
   KeyBindings,
   MarkExtensionSpec,
@@ -58,6 +59,7 @@ export type AnyExtension<Config extends BaseExtensionConfig = any> = Extension<
   any,
   any,
   Config,
+  any,
   any,
   any
 >;
@@ -123,7 +125,7 @@ export const isNodeExtension = <Config extends BaseExtensionConfig = any>(
  * This can only be used in a `NodeExtension` or `MarkExtension`. The additional
  * attributes can only be optional.
  */
-const createExtraAttrsFactory = <Config extends BaseExtensionConfig>(
+const createExtraAttributesFactory = <Config extends BaseExtensionConfig>(
   extension: AnyExtension,
 ): CreateExtraAttrs => ({ fallback }) => {
   // Make sure this is a node or mark extension. Will throw if not.
@@ -132,62 +134,64 @@ const createExtraAttrsFactory = <Config extends BaseExtensionConfig>(
     ErrorConstant.EXTRA_ATTRS,
   );
 
-  const extraAttrs: ExtraAttrs[] = extension.config.extraAttrs ?? [];
-  const attrs: Record<string, AttributeSpec> = object();
+  const extraAttributes: ExtraAttributes[] = extension.config.extraAttrs ?? [];
+  const attributes: Record<string, AttributeSpec> = object();
 
-  for (const item of extraAttrs) {
+  for (const item of extraAttributes) {
     if (isArray(item)) {
-      attrs[item[0]] = { default: item[1] };
+      attributes[item[0]] = { default: item[1] };
       continue;
     }
 
     if (isString(item)) {
-      attrs[item] = { default: fallback };
+      attributes[item] = { default: fallback };
       continue;
     }
 
     const { name, default: def } = item;
-    attrs[name] = def !== undefined ? { default: def } : {};
+    attributes[name] = def !== undefined ? { default: def } : {};
   }
 
-  return attrs;
+  return attributes;
 };
 
 /**
  * Runs through the extraAttrs provided and retrieves them.
  */
-const getExtraAttrsFactory = <Config extends BaseExtensionConfig>(
+const getExtraAttributesFactory = <Config extends BaseExtensionConfig>(
   extension: AnyExtension,
-): GetExtraAttrs => (domNode) => {
+): GetExtraAttributes => (domNode) => {
   // Make sure this is a node or mark extension. Will throw if not.
   invariant(
     isNodeExtension<Config>(extension) || isMarkExtension<Config>(extension),
     ErrorConstant.EXTRA_ATTRS,
   );
 
-  const extraAttrs = extension.config.extraAttrs ?? [];
-  const attrs: Attrs = object();
+  const extraAttributes = extension.config.extraAttrs ?? [];
+  const attributes: Attributes = object();
 
-  for (const attr of extraAttrs) {
-    if (isArray(attr)) {
+  for (const attribute of extraAttributes) {
+    if (isArray(attribute)) {
       // Use the default
-      const [name, , attributeName] = attr;
-      attrs[name] = attributeName ? (domNode as Element).getAttribute(attributeName) : undefined;
+      const [name, , attributeName] = attribute;
+      attributes[name] = attributeName
+        ? (domNode as Element).getAttribute(attributeName)
+        : undefined;
 
       continue;
     }
 
-    if (isString(attr)) {
+    if (isString(attribute)) {
       // Assume the name is the same
-      attrs[attr] = (domNode as Element).getAttribute(attr);
+      attributes[attribute] = (domNode as Element).getAttribute(attribute);
       continue;
     }
 
-    const { name, getAttrs, default: fallback } = attr;
-    attrs[name] = getAttrs ? getAttrs(domNode) || fallback : fallback;
+    const { name, getAttrs, default: fallback } = attribute;
+    attributes[name] = getAttrs ? getAttrs(domNode) || fallback : fallback;
   }
 
-  return attrs;
+  return attributes;
 };
 
 /**
@@ -232,8 +236,9 @@ const getExtraAttrsFactory = <Config extends BaseExtensionConfig>(
 export abstract class Extension<
   Name extends string,
   Config extends BaseExtensionConfig,
-  Props extends object = {},
+  Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {},
   ProsemirrorType = never
 > {
   /**
@@ -323,14 +328,14 @@ export abstract class Extension<
    * @internal
    */
   abstract getCreatorOptions(): Readonly<
-    ExtensionCreatorOptions<Name, Config, Props, Commands, ProsemirrorType>
+    ExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers, ProsemirrorType>
   >;
 
   /**
    * Get the default props.
    */
-  get defaultProps(): Required<Props> {
-    return this.getCreatorOptions().defaultProps ?? object();
+  get defaultProperties(): Required<Properties> {
+    return this.getCreatorOptions().defaultProperties ?? object();
   }
 
   /**
@@ -375,12 +380,13 @@ type DefaultConfigType<Config extends BaseExtensionConfig> = FlipPartialAndRequi
 export interface ExtensionCreatorOptions<
   Name extends string,
   Config extends BaseExtensionConfig,
-  Props extends object = {},
+  Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {},
   ProsemirrorType = never
 >
   extends ExtensionEventMethods,
-    GlobalExtensionCreatorOptions<Name, Config, Props, Commands, ProsemirrorType> {
+    GlobalExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers, ProsemirrorType> {
   /**
    * The unique name of this extension.
    *
@@ -406,16 +412,16 @@ export interface ExtensionCreatorOptions<
   defaultConfig?: DefaultConfigType<Config>;
 
   /**
-   * Props are dynamic and generated at run time. For this reason you will need
+   * Properties are dynamic and generated at run time. For this reason you will need
    * to provide a default value for every prop this extension uses.
    *
    * @remarks
    *
-   * Props are dynamically assigned options that are injected into the editor at
+   * Properties are dynamically assigned options that are injected into the editor at
    * runtime. Every single prop that the extension will use needs to have a
    * default value set.
    */
-  defaultProps?: Required<Props>;
+  defaultProperties?: Required<Properties>;
 
   /**
    * The default priority level for the extension to use.
@@ -458,25 +464,26 @@ export interface ExtensionCreatorOptions<
    *
    * @alpha
    */
-  attributes?: (params: ExtensionManagerParams) => AttrsWithClass;
+  attributes?: (params: ExtensionManagerParams) => AttributesWithClass;
 
   /**
-   * Register commands for the extension.
+   * Create and register commands for that can be called within the editor.
    *
    * These are typically used to create menu's actions and as a direct response
    * to user actions.
    *
    * @remarks
    *
-   * The commands function should return an object with each key being unique
-   * within the editor. To ensure that this is the case it is recommended that
-   * the keys of the command are namespaced with the name of the extension.
+   * The `createCommands` method should return an object with each key being
+   * unique within the editor. To ensure that this is the case it is recommended
+   * that the keys of the command are namespaced with the name of the extension.
    *
    * e.g.
    *
    * ```ts
    * class History extends Extension {
    *   name = 'history' as const;
+   *
    *   commands() {
    *     return {
    *       undoHistory: COMMAND_FN,
@@ -495,7 +502,7 @@ export interface ExtensionCreatorOptions<
    *
    * @param params - schema params with type included
    */
-  commands?: (params: CommandTypeParams<ProsemirrorType>) => Commands;
+  createCommands?: (params: CommandTypeParams<ProsemirrorType>) => Commands;
 
   /**
    * Each extension can make extension data available which is updated on each
@@ -643,6 +650,7 @@ export type AnyPlainExtension<Config extends BaseExtensionConfig = any> = Extens
   any,
   any,
   Config,
+  any,
   any
 >;
 
@@ -653,8 +661,9 @@ export type AnyPlainExtension<Config extends BaseExtensionConfig = any> = Extens
 export interface PlainExtensionConstructor<
   Name extends string,
   Config extends BaseExtensionConfig,
-  Props extends object = {},
+  Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {},
   ProsemirrorType = never
 > {
   /**
@@ -665,7 +674,7 @@ export interface PlainExtensionConstructor<
    */
   of(
     ...config: IfNoRequiredProperties<Config, [Config?], [Config]>
-  ): Extension<Name, Config, Props, Commands, ProsemirrorType>;
+  ): Extension<Name, Config, Properties, Commands, Helpers, ProsemirrorType>;
 
   /**
    * Get the name of the extensions created by this constructor.
@@ -686,9 +695,10 @@ export interface PlainExtensionConstructor<
 export abstract class MarkExtension<
   Name extends string,
   Config extends BaseExtensionConfig,
-  Props extends object = {},
-  Commands extends ExtensionCommandReturn = {}
-> extends Extension<Name, Config, Props, Commands, MarkType<EditorSchema>> {
+  Properties extends object = {},
+  Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {}
+> extends Extension<Name, Config, Properties, Commands, Helpers, MarkType<EditorSchema>> {
   /**
    * Set's the type of this extension to be a `Mark`.
    *
@@ -715,13 +725,13 @@ export abstract class MarkExtension<
    */
   public readonly schema: MarkExtensionSpec;
 
-  constructor(...params: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-    super(...params);
+  constructor(...parameters: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+    super(...parameters);
 
     this.schema = this.getMarkCreatorOptions().createSchema({
       config: this.config,
-      createExtraAttrs: createExtraAttrsFactory(this as AnyMarkExtension),
-      getExtraAttrs: getExtraAttrsFactory(this as AnyMarkExtension),
+      createExtraAttrs: createExtraAttributesFactory(this as AnyMarkExtension),
+      getExtraAttrs: getExtraAttributesFactory(this as AnyMarkExtension),
     });
   }
 
@@ -743,7 +753,7 @@ export abstract class MarkExtension<
    * @internal
    */
   abstract getMarkCreatorOptions(): Readonly<
-    MarkExtensionCreatorOptions<Name, Config, Props, Commands>
+    MarkExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>
   >;
 }
 
@@ -753,9 +763,10 @@ export abstract class MarkExtension<
 export interface MarkExtensionCreatorOptions<
   Name extends string,
   Config extends BaseExtensionConfig,
-  Props extends object = {},
-  Commands extends ExtensionCommandReturn = {}
-> extends ExtensionCreatorOptions<Name, Config, Props, Commands> {
+  Properties extends object = {},
+  Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {}
+> extends ExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers> {
   /**
    * Provide a method for creating the schema. This is required in order to
    * create a `MarkExtension`.
@@ -770,6 +781,7 @@ export type AnyMarkExtension<Config extends BaseExtensionConfig = any> = MarkExt
   any,
   any,
   Config,
+  any,
   any
 >;
 
@@ -780,8 +792,9 @@ export type AnyMarkExtension<Config extends BaseExtensionConfig = any> = MarkExt
 export interface MarkExtensionConstructor<
   Name extends string,
   Config extends BaseExtensionConfig,
-  Props extends object = {},
-  Commands extends ExtensionCommandReturn = {}
+  Properties extends object = {},
+  Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {}
 > {
   /**
    * Create a new instance of the extension to be inserted into the editor.
@@ -791,7 +804,7 @@ export interface MarkExtensionConstructor<
    */
   of(
     ...config: IfNoRequiredProperties<Config, [Config?], [Config]>
-  ): MarkExtension<Name, Config, Props, Commands>;
+  ): MarkExtension<Name, Config, Properties, Commands, Helpers>;
 
   /**
    * Get the name of the extensions created by this constructor.
@@ -810,9 +823,10 @@ export interface MarkExtensionConstructor<
 export abstract class NodeExtension<
   Name extends string,
   Config extends BaseExtensionConfig,
-  Props extends object = {},
-  Commands extends ExtensionCommandReturn = {}
-> extends Extension<Name, Config, Props, Commands, NodeType<EditorSchema>> {
+  Properties extends object = {},
+  Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {}
+> extends Extension<Name, Config, Properties, Commands, Helpers, NodeType<EditorSchema>> {
   /**
    * Identifies this extension as a **NODE** type from the prosemirror
    * terminology.
@@ -833,13 +847,13 @@ export abstract class NodeExtension<
    */
   public readonly schema: NodeExtensionSpec;
 
-  constructor(...params: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-    super(...params);
+  constructor(...parameters: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+    super(...parameters);
 
     this.schema = this.getNodeCreatorOptions().createSchema({
       config: this.config,
-      createExtraAttrs: createExtraAttrsFactory(this as AnyNodeExtension),
-      getExtraAttrs: getExtraAttrsFactory(this as AnyNodeExtension),
+      createExtraAttrs: createExtraAttributesFactory(this as AnyNodeExtension),
+      getExtraAttrs: getExtraAttributesFactory(this as AnyNodeExtension),
     });
   }
 
@@ -856,7 +870,7 @@ export abstract class NodeExtension<
    * @internal
    */
   abstract getNodeCreatorOptions(): Readonly<
-    NodeExtensionCreatorOptions<Name, Config, Props, Commands>
+    NodeExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>
   >;
 }
 
@@ -866,9 +880,10 @@ export abstract class NodeExtension<
 export interface NodeExtensionCreatorOptions<
   Name extends string,
   Config extends BaseExtensionConfig,
-  Props extends object = {},
-  Commands extends ExtensionCommandReturn = {}
-> extends ExtensionCreatorOptions<Name, Config, Props, Commands> {
+  Properties extends object = {},
+  Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {}
+> extends ExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers> {
   /**
    * Provide a method for creating the schema. This is required in order to
    * create a `NodeExtension`.
@@ -883,6 +898,7 @@ export type AnyNodeExtension<Config extends BaseExtensionConfig = any> = NodeExt
   any,
   any,
   Config,
+  any,
   any
 >;
 
@@ -893,8 +909,9 @@ export type AnyNodeExtension<Config extends BaseExtensionConfig = any> = NodeExt
 export interface NodeExtensionConstructor<
   Name extends string,
   Config extends BaseExtensionConfig,
-  Props extends object = {},
-  Commands extends ExtensionCommandReturn = {}
+  Properties extends object = {},
+  Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {}
 > {
   /**
    * Create a new instance of the extension to be inserted into the editor.
@@ -904,7 +921,7 @@ export interface NodeExtensionConstructor<
    */
   of(
     ...config: IfNoRequiredProperties<Config, [Config?], [Config]>
-  ): NodeExtension<Name, Config, Props, Commands>;
+  ): NodeExtension<Name, Config, Properties, Commands, Helpers>;
 
   /**
    * Get the name of the extensions created by this constructor.
@@ -920,8 +937,9 @@ declare global {
   interface GlobalExtensionCreatorOptions<
     Name extends string,
     Config extends BaseExtensionConfig,
-    Props extends object,
+    Properties extends object,
     Commands extends ExtensionCommandReturn,
+    Helpers extends ExtensionHelperReturn,
     ProsemirrorType = never
   > {}
 
@@ -932,8 +950,9 @@ declare global {
   interface GlobalNodeExtensionCreatorOptions<
     Name extends string,
     Config extends BaseExtensionConfig,
-    Props extends object = {},
-    Commands extends ExtensionCommandReturn = {}
+    Properties extends object = {},
+    Commands extends ExtensionCommandReturn = {},
+    Helpers extends ExtensionHelperReturn = {}
   > {}
 
   /**
@@ -943,7 +962,8 @@ declare global {
   interface GlobalMarkExtensionCreatorOptions<
     Name extends string,
     Config extends BaseExtensionConfig,
-    Props extends object = {},
-    Commands extends ExtensionCommandReturn = {}
+    Properties extends object = {},
+    Commands extends ExtensionCommandReturn = {},
+    Helpers extends ExtensionHelperReturn = {}
   > {}
 }

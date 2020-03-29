@@ -1,7 +1,7 @@
 import { ComponentType } from 'react';
 
 import {
-  Attrs,
+  Attributes,
   BaseExtensionConfig,
   BaseExtensionConfigParams,
   EditorViewParams,
@@ -12,7 +12,7 @@ import { PortalContainer } from '@remirror/react-portals';
 
 export interface NodeViewComponentProps<
   GOptions extends BaseExtensionConfig = BaseExtensionConfig,
-  GAttrs extends Attrs = Attrs
+  GAttrs extends Attributes = Attributes
 > extends EditorViewParams, SSRComponentProps<GOptions, GAttrs> {
   /**
    * Provides the position of the node view in the prosemirror document
@@ -38,7 +38,7 @@ export type GetPosition = (() => number) | boolean;
 
 export interface ReactNodeViewParams<
   GOptions extends BaseExtensionConfig = BaseExtensionConfig,
-  GAttrs extends Attrs = Attrs
+  GAttrs extends Attributes = Attributes
 >
   extends EditorViewParams,
     ComponentParams<GOptions, GAttrs>,
@@ -58,7 +58,7 @@ export interface ReactNodeViewParams<
 
 export interface CreateNodeViewParams<
   GOptions extends BaseExtensionConfig = BaseExtensionConfig,
-  GAttrs extends Attrs = Attrs
+  GAttrs extends Attributes = Attributes
 >
   extends Pick<ReactNodeViewParams, 'portalContainer'>,
     ComponentParams<GOptions, GAttrs>,
@@ -66,7 +66,7 @@ export interface CreateNodeViewParams<
 
 export interface ComponentParams<
   GOptions extends BaseExtensionConfig = BaseExtensionConfig,
-  GAttrs extends Attrs = Attrs
+  GAttrs extends Attributes = Attributes
 > {
   /**
    * The component that will be rendered by this node view.

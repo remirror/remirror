@@ -7,6 +7,7 @@ import { Cast, freeze } from '@remirror/core-helpers';
 import {
   BaseExtensionConfig,
   ExtensionCommandReturn,
+  ExtensionHelperReturn,
   IfNoRequiredProperties,
 } from '@remirror/core-types';
 
@@ -28,18 +29,22 @@ import {
  */
 const createBaseExtensionCreator = <
   Config extends BaseExtensionConfig = BaseExtensionConfig,
-  Props extends object = {}
+  Properties extends object = {}
 >() => ({
   /**
    * Creates a `PlainExtensionConstructor`. This is useful for non content
    * specific functionality like adding styling or plugins.
    */
-  plain<Name extends string, Commands extends ExtensionCommandReturn>(
-    creatorOptions: ExtensionCreatorOptions<Name, Config, Props, Commands>,
-  ): PlainExtensionConstructor<Name, Config, Props, Commands> {
+  plain<
+    Name extends string,
+    Commands extends ExtensionCommandReturn,
+    Helpers extends ExtensionHelperReturn
+  >(
+    creatorOptions: ExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>,
+  ): PlainExtensionConstructor<Name, Config, Properties, Commands, Helpers> {
     const options = freeze(creatorOptions);
 
-    class PlainConstructor extends Extension<Name, Config, Props, Commands> {
+    class PlainConstructor extends Extension<Name, Config, Properties, Commands, Helpers> {
       /**
        * Identifies this as a `PlainExtensionConstructor`.
        *
@@ -96,12 +101,16 @@ const createBaseExtensionCreator = <
    * Creates a `MarkExtensionConstructor`. This is useful for non content
    * specific functionality like adding styling or plugins.
    */
-  mark<Name extends string, Commands extends ExtensionCommandReturn>(
-    creatorOptions: MarkExtensionCreatorOptions<Name, Config, Props, Commands>,
-  ): MarkExtensionConstructor<Name, Config, Props, Commands> {
+  mark<
+    Name extends string,
+    Commands extends ExtensionCommandReturn,
+    Helpers extends ExtensionHelperReturn
+  >(
+    creatorOptions: MarkExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>,
+  ): MarkExtensionConstructor<Name, Config, Properties, Commands, Helpers> {
     const options = freeze(creatorOptions);
 
-    class MarkConstructor extends MarkExtension<Name, Config, Props, Commands> {
+    class MarkConstructor extends MarkExtension<Name, Config, Properties, Commands, Helpers> {
       /**
        * Identifies this as a `MarkExtensionConstructor`.
        *
@@ -155,12 +164,16 @@ const createBaseExtensionCreator = <
    * Creates a `NodeExtensionConstructor`. This is useful for non content
    * specific functionality like adding styling or plugins.
    */
-  node<Name extends string, Commands extends ExtensionCommandReturn>(
-    creatorOptions: NodeExtensionCreatorOptions<Name, Config, Props, Commands>,
-  ): NodeExtensionConstructor<Name, Config, Props, Commands> {
+  node<
+    Name extends string,
+    Commands extends ExtensionCommandReturn,
+    Helpers extends ExtensionHelperReturn
+  >(
+    creatorOptions: NodeExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>,
+  ): NodeExtensionConstructor<Name, Config, Properties, Commands, Helpers> {
     const options = freeze(creatorOptions);
 
-    class NodeConstructor extends NodeExtension<Name, Config, Props, Commands> {
+    class NodeConstructor extends NodeExtension<Name, Config, Properties, Commands, Helpers> {
       /**
        * Identifies this as a `NodeExtensionConstructor`.
        *

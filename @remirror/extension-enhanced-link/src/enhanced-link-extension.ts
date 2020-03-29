@@ -2,7 +2,7 @@ import { Plugin } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
 
 import {
-  Attrs,
+  Attributes,
   Cast,
   CommandMarkTypeParams,
   EditorState,
@@ -22,7 +22,7 @@ import {
 
 import {
   enhancedLinkHandler,
-  EnhancedLinkHandlerProps,
+  EnhancedLinkHandlerProps as EnhancedLinkHandlerProperties,
   extractHref,
   getUrlsFromState,
   isSetEqual,
@@ -80,9 +80,9 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
 
   public commands({ type }: CommandMarkTypeParams) {
     return {
-      enhancedLink: (attrs?: Attrs) => {
-        if (attrs?.href) {
-          return updateMark({ type, attrs });
+      enhancedLink: (attributes: Attributes) => {
+        if (attributes?.href) {
+          return updateMark({ type, attrs: attributes });
         }
 
         return removeMark({ type });
@@ -115,9 +115,9 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
         init() {
           return null;
         },
-        apply(tr, prev) {
+        apply(tr, previous) {
           const stored = tr.getMeta(key);
-          return stored ? stored : tr.selectionSet || tr.docChanged ? null : prev;
+          return stored ? stored : tr.selectionSet || tr.docChanged ? null : previous;
         },
       },
 
@@ -142,24 +142,24 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
           doc.textBetween($from.start(), from, LEAF_NODE_REPLACING_CHARACTER, leafChar) +
           doc.textBetween(to, $to.end(), LEAF_NODE_REPLACING_CHARACTER, leafChar);
         const tr = state.tr;
-        const collectedParams: EnhancedLinkHandlerProps[] = [];
+        const collectedParameters: EnhancedLinkHandlerProps[] = [];
 
         // If at the start of a new line (i.e. new block added and not at the start of the document)
         if (from === $from.start() && from >= 2) {
           const $pos = doc.resolve(from - 2);
-          const prevSearchText = doc.textBetween(
+          const previousSearchText = doc.textBetween(
             $pos.start(),
             $pos.end(),
             LEAF_NODE_REPLACING_CHARACTER,
             leafChar,
           );
-          findMatches(prevSearchText, extractUrl).forEach((match) => {
+          findMatches(previousSearchText, extractUrl).forEach((match) => {
             const startIndex = match.index;
             const url = match[1];
             const start = $pos.start() + startIndex;
             const end = $pos.start() + startIndex + match[0].length;
 
-            collectedParams.push({ state, url, from: start, to: end, type });
+            collectedParameters.push({ state, url, from: start, to: end, type });
           });
 
           tr.removeMark($pos.start(), $pos.end(), type);
@@ -179,8 +179,8 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
             leafChar,
           );
 
-          if (!/[\w\d]/.test(textBefore)) {
-            collectedParams.push({ state, url, from: start, to: end, type });
+          if (!/\w/.test(textBefore)) {
+            collectedParameters.push({ state, url, from: start, to: end, type });
           }
         });
 
@@ -188,22 +188,22 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
         tr.removeMark($from.start(), $from.end(), type);
 
         // Add all marks again for the nodes
-        collectedParams.forEach((params) => {
-          enhancedLinkHandler({ ...params, tr });
+        collectedParameters.forEach((parameters) => {
+          enhancedLinkHandler({ ...parameters, tr });
         });
 
         return tr;
       },
       view: () => ({
-        update(view: EditorView, prevState: EditorState) {
+        update(view: EditorView, previousState: EditorState) {
           if (!isFunction(onUrlsChange)) {
             return;
           }
 
           const next = getUrlsFromState(view.state, name);
-          const prev = getUrlsFromState(prevState, name);
+          const previous = getUrlsFromState(previousState, name);
 
-          if (!isSetEqual(next.set, prev.set)) {
+          if (!isSetEqual(next.set, previous.set)) {
             onUrlsChange(next);
           }
         },

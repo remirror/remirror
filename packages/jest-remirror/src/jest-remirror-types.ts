@@ -5,7 +5,7 @@ import { Node as PMNode } from 'prosemirror-model';
 import {
   ActionsFromExtensions,
   AnyExtension,
-  Attrs,
+  Attributes,
   AttrsParams,
   EditorSchema,
   EditorState,
@@ -262,12 +262,14 @@ export type AddContent<GExtension extends AnyExtension> = (
 
 export type MarkWithAttrs<GNames extends string> = {
   [P in GNames]: (
-    attrs?: Attrs,
+    attrs?: Attributes,
   ) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
 };
 
 export type NodeWithAttrs<GNames extends string> = {
-  [P in GNames]: (attrs?: Attrs) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
+  [P in GNames]: (
+    attrs?: Attributes,
+  ) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
 export type MarkWithoutAttrs<GNames extends string> = {

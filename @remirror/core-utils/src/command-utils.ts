@@ -4,7 +4,7 @@ import { liftListItem, wrapInList } from 'prosemirror-schema-list';
 import { isFunction, isNumber, object } from '@remirror/core-helpers';
 import {
   AnyFunction,
-  Attrs,
+  Attributes,
   AttrsParams,
   EditorSchema,
   MarkType,
@@ -46,7 +46,7 @@ interface UpdateMarkParams
  */
 export const updateMark = ({
   type,
-  attrs = object<Attrs>(),
+  attrs: attributes = object<Attributes>(),
   appendText,
   range,
 }: UpdateMarkParams): ProsemirrorCommandFunction => (state, dispatch) => {
@@ -54,7 +54,7 @@ export const updateMark = ({
   const { tr } = state;
   const { from, to } = range ?? selection;
 
-  tr.addMark(from, to, type.create(attrs));
+  tr.addMark(from, to, type.create(attributes));
 
   if (appendText) {
     tr.insertText(appendText);
@@ -75,7 +75,7 @@ export const updateMark = ({
  *
  * @public
  */
-export const toggleWrap = (type: NodeType, attrs?: Attrs): ProsemirrorCommandFunction => (
+export const toggleWrap = (type: NodeType, attributes: Attributes): ProsemirrorCommandFunction => (
   state,
   dispatch,
 ) => {
@@ -85,7 +85,7 @@ export const toggleWrap = (type: NodeType, attrs?: Attrs): ProsemirrorCommandFun
     return lift(state, dispatch);
   }
 
-  return wrapIn(type, attrs)(state, dispatch);
+  return wrapIn(type, attributes)(state, dispatch);
 };
 
 /**
@@ -158,15 +158,15 @@ interface ToggleBlockItemParams extends NodeTypeParams, Partial<AttrsParams> {
 export const toggleBlockItem = ({
   type,
   toggleType,
-  attrs = object<Attrs>(),
+  attrs: attributes = object<Attributes>(),
 }: ToggleBlockItemParams): ProsemirrorCommandFunction => (state, dispatch) => {
-  const isActive = isNodeActive({ state, type, attrs });
+  const isActive = isNodeActive({ state, type, attrs: attributes });
 
   if (isActive) {
     return setBlockType(toggleType)(state, dispatch);
   }
 
-  return setBlockType(type, attrs)(state, dispatch);
+  return setBlockType(type, attributes)(state, dispatch);
 };
 
 interface ReplaceTextParams
@@ -204,8 +204,8 @@ const callMethod = <
   GParams extends Parameters<GFunction>
 >(
   { fn, defaultReturn }: CallMethodParams<GFunction, GReturn>,
-  args: GParams,
-): GReturn => (isFunction(fn) ? fn(...args) : defaultReturn);
+  arguments_: GParams,
+): GReturn => (isFunction(fn) ? fn(...arguments_) : defaultReturn);
 
 /**
  * Taken from https://stackoverflow.com/a/4900484
@@ -213,9 +213,9 @@ const callMethod = <
  * Check that the browser is chrome. Supports passing a minimum version to check that it is a greater than or equal version.
  */
 const isChrome = (minVersion = 0): boolean => {
-  const parsedAgent = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+  const parsedAgent = navigator.userAgent.match(/Chrom(e|ium)\/(\d+)\./);
 
-  return parsedAgent ? parseInt(parsedAgent[2], 10) >= minVersion : false;
+  return parsedAgent ? Number.parseInt(parsedAgent[2], 10) >= minVersion : false;
 };
 
 /**
@@ -228,7 +228,7 @@ const isChrome = (minVersion = 0): boolean => {
 export const replaceText = ({
   range,
   type,
-  attrs = object<Attrs>(),
+  attrs: attributes = object<Attributes>(),
   appendText = '',
   content = '',
   startTransaction,
@@ -246,7 +246,7 @@ export const replaceText = ({
       return false;
     }
 
-    tr.replaceWith(from, to, type.create(attrs, content ? schema.text(content) : undefined));
+    tr.replaceWith(from, to, type.create(attributes, content ? schema.text(content) : undefined));
   } else {
     if (!content) {
       throw new Error('`replaceText` cannot be called without content when using a mark type');
@@ -255,7 +255,7 @@ export const replaceText = ({
     tr.replaceWith(
       from,
       to,
-      schema.text(content, isMarkType(type) ? [type.create(attrs)] : undefined),
+      schema.text(content, isMarkType(type) ? [type.create(attributes)] : undefined),
     );
   }
 

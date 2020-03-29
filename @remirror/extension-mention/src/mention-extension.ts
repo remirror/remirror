@@ -9,7 +9,7 @@ import {
 } from 'prosemirror-suggest';
 
 import {
-  Attrs,
+  Attributes,
   CommandMarkTypeParams,
   EditorState,
   ExtensionManagerMarkTypeParams,
@@ -31,12 +31,17 @@ import {
 } from '@remirror/core';
 
 import {
-  MentionExtensionAttrs,
+  MentionExtensionAttrs as MentionExtensionAttributes,
   MentionExtensionOptions,
   MentionExtensionSuggestCommand,
-  SuggestionCommandAttrs,
+  SuggestionCommandAttrs as SuggestionCommandAttributes,
 } from './mention-types';
-import { DEFAULT_MATCHER, getAppendText, getMatcher, isValidMentionAttrs } from './mention-utils';
+import {
+  DEFAULT_MATCHER,
+  getAppendText,
+  getMatcher,
+  isValidMentionAttrs as isValidMentionAttributes,
+} from './mention-utils';
 
 const defaultHandler = () => false;
 
@@ -91,15 +96,20 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
 
             const id = node.getAttribute(dataAttributeId);
             const name = node.getAttribute(dataAttributeName);
-            const label = node.innerText;
+            const label = node.textContent;
             return { ...this.getExtraAttrs(node), id, label, name };
           },
         },
       ],
       toDOM: (node) => {
-        const { label: _, id, name, replacementType, range, ...attrs } = node.attrs as Required<
-          MentionExtensionAttrs
-        >;
+        const {
+          label: _,
+          id,
+          name,
+          replacementType,
+          range,
+          ...attributes
+        } = node.attrs as Required<MentionExtensionAttrs>;
         const matcher = this.options.matchers.find((matcher) => matcher.name === name);
         const mentionClassName = matcher
           ? matcher.mentionClassName ?? DEFAULT_MATCHER.mentionClassName
@@ -108,7 +118,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
         return [
           this.options.mentionTag,
           {
-            ...attrs,
+            ...attributes,
             class: name ? `${mentionClassName} ${mentionClassName}-${name}` : mentionClassName,
             [dataAttributeId]: id,
             [dataAttributeName]: name,
@@ -126,13 +136,13 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     type: MarkType,
     getState: () => EditorState,
     shouldUpdate = false,
-  ) => (config?: Attrs) => {
-    if (!isValidMentionAttrs(config)) {
+  ) => (config?: Attributes) => {
+    if (!isValidMentionAttributes(config)) {
       throw new Error('Invalid configuration attributes passed to the MentionExtension command.');
     }
 
-    const { range, appendText, replacementType, ...attrs } = config;
-    let name = attrs.name;
+    const { range, appendText, replacementType, ...attributes } = config;
+    let name = attributes.name;
     if (!name) {
       if (this.options.matchers.length >= 2) {
         throw new Error(
@@ -185,10 +195,10 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
 
     return replaceText({
       type,
-      attrs: { ...attrs, name },
+      attrs: { ...attributes, name },
       appendText: getAppendText(appendText, matcher.appendText),
       range: range ? { from, to: replacementType === 'full' ? range.end || to : to } : undefined,
-      content: attrs.label,
+      content: attributes.label,
       startTransaction,
     });
   };
@@ -217,9 +227,9 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       return markPasteRule({
         regexp,
         type,
-        getAttrs: (str) => ({
-          id: getMatchString(str.slice(char.length, str.length)),
-          label: getMatchString(str),
+        getAttrs: (string) => ({
+          id: getMatchString(string.slice(char.length, string.length)),
+          label: getMatchString(string),
           name,
         }),
       });
@@ -283,9 +293,9 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
             id = match.queryText[replacementType],
             label = match.matchText[replacementType],
             appendText,
-            ...attrs
+            ...attributes
           }: SuggestionCommandAttrs) => {
-            fn({ id, label, appendText, replacementType, name, range, ...attrs });
+            fn({ id, label, appendText, replacementType, name, range, ...attributes });
           };
 
           const command: MentionExtensionSuggestCommand =

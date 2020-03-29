@@ -1,11 +1,10 @@
-import { history, redo, redoDepth, undo, undoDepth } from 'prosemirror-history';
+import { history, redo, undo } from 'prosemirror-history';
 
 import { Extension, isFunction, KeyBindings } from '@remirror/core';
 import {
   BaseExtensionConfig,
   DispatchFunction,
   EditorState,
-  ExtensionManagerParams,
   ProsemirrorCommandFunction,
 } from '@remirror/core-types';
 import { convertCommand, environment } from '@remirror/core-utils';
@@ -111,34 +110,6 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
   public plugin() {
     const { depth, newGroupDelay } = this.options;
     return history({ depth, newGroupDelay });
-  }
-
-  /**
-   * Provides the isEnabled method to the ActionMethods of undo and redo.
-   *
-   * @remarks
-   *
-   * - Redo is not enabled when at the end of the history and there is nothing left to redo.
-   * - Undo is not enabled when at the beginning of the history and there is nothing left to undo.
-   */
-  public isEnabled({ getState }: ExtensionManagerParams) {
-    return ({ command }: { command?: string }) => {
-      switch (command) {
-        case 'undo':
-          return undoDepth(getState()) > 0;
-        case 'redo':
-          return redoDepth(getState()) > 0;
-        default:
-          return false;
-      }
-    };
-  }
-
-  /**
-   * The history plugin doesn't really have an active state.
-   */
-  public isActive() {
-    return () => false;
   }
 
   /**

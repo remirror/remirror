@@ -6,29 +6,20 @@ import { EditorState } from 'prosemirror-state';
 import { suggest, Suggester } from 'prosemirror-suggest';
 import { ComponentType } from 'react';
 
-import { RemirrorIdentifier, REMIRROR_IDENTIFIER_KEY } from '@remirror/core-constants';
-import {
-  bool,
-  hasOwnProperty,
-  isArray,
-  isEqual,
-  isFunction,
-  isObject,
-  object,
-  toString,
-} from '@remirror/core-helpers';
+import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
+import { bool, hasOwnProperty, isArray, isEqual, isFunction, object } from '@remirror/core-helpers';
+import { isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers/lib/core-helpers';
 import {
   ActionMethod,
   AnyActions,
   AnyHelpers,
-  Attrs,
-  AttrsWithClass,
+  Attributes,
+  AttributesWithClass,
   CommandParams,
   EditorSchema,
   EditorStateParams,
   EditorView,
   ExtensionIsActiveFunction,
-  ExtensionManagerInitParams,
   ExtensionManagerParams,
   ExtensionTags,
   KeyBindingCommandFunction,
@@ -40,7 +31,6 @@ import {
   PluginKey,
   ProsemirrorCommandFunction,
   ProsemirrorPlugin,
-  RemirrorThemeContextType,
   TransactionParams,
 } from '@remirror/core-types';
 import {
@@ -49,7 +39,6 @@ import {
   CreateDocumentNodeParams,
   getPluginState,
 } from '@remirror/core-utils';
-import { PortalContainer } from '@remirror/react-portals';
 
 import { AnyExtension, isMarkExtension, isNodeExtension } from './extension';
 import {
@@ -72,7 +61,6 @@ import {
   PlainExtensionNames,
   SchemaFromExtensions,
 } from './extension-types';
-import { isRemirrorType, isIdentifierOfType } from '@remirror/core-helpers/lib/core-helpers';
 
 /**
  * Checks to see whether the provided value is an `ExtensionManager`.
@@ -125,8 +113,7 @@ export const isExtensionManager = (value: unknown): value is ExtensionManager =>
  * manager.data.actions
  * ```
  */
-export class ExtensionManager<GExtension extends AnyExtension = any>
-  implements ExtensionManagerInitParams<SchemaFromExtensions<GExtension>> {
+export class ExtensionManager<GExtension extends AnyExtension = any> {
   /**
    * A static method for creating a new extension manager.
    */
@@ -147,12 +134,6 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   }
 
   /**
-   * Retrieve the portal container for any custom nodeViews. This is only
-   * made available by the initialization.
-   */
-  public portalContainer!: PortalContainer;
-
-  /**
    * The extensions stored by this manager
    */
   public readonly extensions: GExtension[];
@@ -161,17 +142,17 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * Whether or not the manager has been initialized. This happens after init is
    * called.
    */
-  private _initialized = false;
+  #initialized = false;
 
   /**
-   * The extension manager data which is stored after Initialization
+   * The extension manager store.
    */
-  private _store: this['_D'] = object();
+  #store: ExtensionManagerStore<GExtension> = object();
 
   /**
    * Retrieve the specified action.
    */
-  private readonly getActions = (name: keyof this['_A']) => this._store.actions[name];
+  private readonly getActions = (name: keyof this['_A']) => this.#store.actions[name];
 
   /**
    * Creates the extension manager which is used to simplify the management of
@@ -184,13 +165,13 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     this.extensions = extensions;
 
     // Initialize the schema immediately since this doesn't ever change.
-    this._store.schema = this.createSchema();
+    this.#store.schema = this.createSchema();
 
     // Options are cached here.
-    this._store.options = this.extensionOptions();
+    this.#store.options = this.extensionOptions();
 
     // Tags are stored here.
-    this._store.tags = createExtensionTags(this.extensions);
+    this.#store.tags = createExtensionTags(this.extensions);
   }
 
   /**
@@ -198,33 +179,32 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    *
    * This is called by the view layer and provides
    */
-  public initialize({ portalContainer }: ExtensionManagerInitParams) {
-    if (this._initialized) {
-      console.warn(
-        'This manager is already in use. Avoid using the same manager for more than one editor as this may cause problems.',
-      );
+  public initialize() {
+    if (this.#initialized) {
+      // Destroy the currently running instance of the extension manager and all
+      // the extensions.
+      this.destroy();
     }
 
-    this.portalContainer = portalContainer;
-    this._initialized = true;
+    this.#initialized = true;
 
-    this._store.directPlugins = this.plugins();
-    this._store.nodeViews = this.nodeViews();
-    this._store.keymaps = this.keymaps();
-    this._store.inputRules = this.inputRules();
-    this._store.pasteRules = this.pasteRules();
-    this._store.suggestions = this.suggestions();
-    this._store.isActive = this.isActiveMethods();
+    this.#store.extensionPlugins = this.plugins();
+    this.#store.nodeViews = this.nodeViews();
+    this.#store.keymaps = this.keymaps();
+    this.#store.inputRules = this.inputRules();
+    this.#store.pasteRules = this.pasteRules();
+    this.#store.suggestions = this.suggestions();
+    this.#store.isActive = this.isActiveMethods();
 
-    this._store.plugins = [
-      ...this._store.directPlugins,
-      this._store.suggestions,
-      this._store.inputRules,
-      ...this._store.pasteRules,
-      ...this._store.keymaps,
+    this.#store.plugins = [
+      ...this.#store.extensionPlugins,
+      this.#store.suggestions,
+      this.#store.inputRules,
+      ...this.#store.pasteRules,
+      ...this.#store.keymaps,
     ];
 
-    this._store.helpers = this.helpers();
+    this.#store.helpers = this.helpers();
 
     return this;
   }
@@ -235,8 +215,8 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * @param view - the editor view
    */
   public initView(view: EditorView<SchemaFromExtensions<GExtension>>) {
-    this._store.view = view;
-    this._store.actions = this.actions({
+    this.#store.view = view;
+    this.#store.actions = this.actions({
       ...this.params,
       view,
       isEditable: () =>
@@ -250,7 +230,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * Should be used to check whether the manager needs to be reinitialized.
    */
   get initialized() {
-    return this._initialized;
+    return this.#initialized;
   }
 
   /**
@@ -262,17 +242,19 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * extensions.
    */
   get attributes() {
-    let combinedAttributes: AttrsWithClass = object();
+    let combinedAttributes: AttributesWithClass = object();
     this.extensions
       .filter(hasExtensionProperty('attributes'))
       .filter((extension) => !extension.options.exclude.attributes)
       .map((extension) => extension.attributes(this.params))
       .reverse()
-      .forEach((attrs) => {
+      .forEach((attributes) => {
         combinedAttributes = {
           ...combinedAttributes,
-          ...attrs,
-          class: (combinedAttributes.class ?? '') + (bool(attrs.class) ? attrs.class : '') || '',
+          ...attributes,
+          class:
+            (combinedAttributes.class ?? '') + (bool(attributes.class) ? attributes.class : '') ||
+            '',
         };
       });
 
@@ -298,18 +280,18 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   }
 
   /**
-   * Get the extension manager data which is stored after initializing.
+   * Get the extension manager store which is accessible at initialization.
    */
-  get data() {
-    if (!this._initialized) {
+  get store() {
+    if (!this.#initialized) {
       throw new Error('Extension Manager must be initialized before attempting to access the data');
     }
 
-    return this._store;
+    return this.#store;
   }
 
   get options() {
-    return this._store.options;
+    return this.#store.options;
   }
 
   /**
@@ -349,21 +331,21 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * from the data.
    */
   get schema() {
-    return this._store.schema;
+    return this.#store.schema;
   }
 
   /**
    * A shorthand getter for retrieving the tags from the extension manager.
    */
   get tags() {
-    return this._store.tags;
+    return this.#store.tags;
   }
 
   /**
    * A shorthand way of retrieving view.
    */
   get view(): EditorView<SchemaFromExtensions<GExtension>> {
-    return this._store.view;
+    return this.#store.view;
   }
 
   /* Private Get Properties */
@@ -375,7 +357,6 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     return {
       tags: this.tags,
       schema: this.schema,
-      portalContainer: this.portalContainer,
       getState: this.getState,
       getActions: this.getActions as any,
       getHelpers: this.getHelpers as any,
@@ -400,7 +381,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     stringHandler,
     fallback,
   }: Omit<CreateDocumentNodeParams, 'schema'>) {
-    const { schema, plugins } = this.data;
+    const { schema, plugins } = this.store;
     return EditorState.create({
       schema,
       doc: createDocumentNode({
@@ -454,12 +435,12 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     }
 
     for (let ii = 0; ii <= this.extensions.length - 1; ii++) {
-      const ext = this.extensions[ii];
-      const otherExt = otherManager.extensions[ii];
+      const extension = this.extensions[ii];
+      const otherExtension = otherManager.extensions[ii];
 
       if (
-        ext.constructor === otherExt.constructor &&
-        isEqual(ignoreFunctions(ext.options), ignoreFunctions(otherExt.options))
+        extension.constructor === otherExtension.constructor &&
+        isEqual(ignoreFunctions(extension.options), ignoreFunctions(otherExtension.options))
       ) {
         continue;
       }
@@ -475,9 +456,9 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    *
    * This is currently used in the collaboration plugin.
    */
-  public onTransaction(params: OnTransactionManagerParams) {
+  public onTransaction(parameters: OnTransactionManagerParams) {
     this.extensions.filter(hasExtensionProperty('onTransaction')).forEach(({ onTransaction }) => {
-      onTransaction({ ...params, ...this.params, view: this.data.view });
+      onTransaction({ ...parameters, ...this.params, view: this.store.view });
     });
   }
 
@@ -503,8 +484,8 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     return this.extensions
       .filter(hasExtensionProperty('ssrTransformer'))
       .filter((extension) => !extension.options.exclude.ssr)
-      .reduce((prevElement, extension) => {
-        return extension.ssrTransformer(prevElement, this.params);
+      .reduce((previousElement, extension) => {
+        return extension.ssrTransformer(previousElement, this.params);
       }, element);
   }
 
@@ -515,7 +496,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * not
    */
   private checkInitialized() {
-    if (!this._initialized) {
+    if (!this.#initialized) {
       throw new Error(
         'Before using the extension manager it must be initialized with a portalContainer and getState',
       );
@@ -555,7 +536,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
    * - `isActive` defaults to a function returning false
    * - `isEnabled` defaults to a function returning true
    */
-  private actions(params: CommandParams): this['_A'] {
+  private actions(parameters: CommandParams): this['_A'] {
     // Will throw if not initialized
     this.checkInitialized();
 
@@ -564,13 +545,13 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
 
     // Creates the methods that take in attrs and dispatch an action into the
     // editor
-    const commands = createCommands({ extensions, params });
+    const commands = createCommands({ extensions, params: parameters });
 
     Object.entries(commands).forEach(([commandName, { command, isEnabled, name }]) => {
-      const isActive = this._store.isActive[name as this['_Names']] ?? defaultIsActive;
+      const isActive = this.#store.isActive[name as this['_Names']] ?? defaultIsActive;
 
       actions[commandName] = command as ActionMethod;
-      actions[commandName].isActive = (attrs?: Attrs) => isActive({ attrs });
+      actions[commandName].isActive = (attributes: Attributes) => isActive({ attrs: attributes });
       actions[commandName].isEnabled = isEnabled ?? defaultIsEnabled;
     });
 
@@ -598,8 +579,8 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
     const isActiveMethods: Record<this['_Names'], ExtensionIsActiveFunction> = object();
 
     return this.extensions.filter(hasExtensionProperty('isActive')).reduce(
-      (acc, extension) => ({
-        ...acc,
+      (accumulator, extension) => ({
+        ...accumulator,
         [extension.name]: extensionPropertyMapper('isActive', this.params)(extension),
       }),
       isActiveMethods,
@@ -635,8 +616,8 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
       .filter(hasExtensionProperty('nodeView'))
       .filter((extension) => !extension.options.exclude.nodeView)
       .reduce(
-        (prevNodeViews, extension) => ({
-          ...prevNodeViews,
+        (previousNodeViews, extension) => ({
+          ...previousNodeViews,
           [extension.name]: extensionPropertyMapper(
             'nodeView',
             this.params,
@@ -758,10 +739,15 @@ export class ExtensionManager<GExtension extends AnyExtension = any>
   }
 
   /**
-   * Used to identify this class as an `ExtensionManager`
+   * Called when removing the manager and all preset and extensions.
    */
-  public toString() {
-    return RemirrorIdentifier.ExtensionManager;
+  public destroy() {
+    // Only destroy if this has already been initialized.
+    if (!this.initialized) {
+      return;
+    }
+
+    this.#initialized = false;
   }
 
   /**
@@ -911,4 +897,10 @@ declare global {
    * the `ExtensionManager.store` property.
    */
   interface GlobalExtensionManagerStore<GExtension extends AnyExtension = any> {}
+
+  /**
+   * The initialization params which are passed by the view layer into the
+   * extension manager. This can be added to by the requesting framework layer.
+   */
+  interface ExtensionManagerInitializationParams<GExtension extends AnyExtension = any> {}
 }

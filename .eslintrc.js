@@ -30,18 +30,6 @@ const graphqlRules = existsSync(schemaJsonFilePath)
 
 module.exports = {
   parser: '@typescript-eslint/parser',
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/eslint-recommended', // Disables incompatible eslint:recommended settings
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:import/typescript',
-    'prettier',
-    'prettier/@typescript-eslint',
-    'prettier/react',
-    'plugin:jest-formatting/strict',
-    'plugin:unicorn/recommended',
-  ],
   plugins: [
     'jest',
     'jest-formatting',
@@ -53,7 +41,22 @@ module.exports = {
     'jsx-a11y',
     'graphql',
     'simple-import-sort',
+    'eslint-comments',
   ],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended', // Disables incompatible eslint:recommended settings
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:import/typescript',
+    'prettier',
+    'prettier/@typescript-eslint',
+    'prettier/react',
+    'plugin:jest-formatting/strict',
+    'plugin:unicorn/recommended',
+    'plugin:eslint-comments/recommended',
+  ],
+
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
@@ -74,6 +77,7 @@ module.exports = {
     es6: true,
   },
   rules: {
+    'eslint-comments/no-unused-disable': 'error',
     ...graphqlRules,
     eqeqeq: ['error', 'always', { null: 'ignore' }],
     'prefer-exponentiation-operator': 'error',
@@ -108,7 +112,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'error',
     'react-hooks/rules-of-hooks': 'error',
 
-    'import/no-deprecated': 'warning',
+    'import/no-deprecated': 'warn',
     'import/first': 'error',
     'import/no-duplicates': 'error',
     'import/no-cycle': 'error',

@@ -14,7 +14,13 @@ import {
 } from 'react';
 import keyNames from 'w3c-keyname';
 
-import { ActionNames, AnyFunction, Attrs, getMarkAttrs, KeyOfThemeVariant } from '@remirror/core';
+import {
+  ActionNames,
+  AnyFunction,
+  Attributes,
+  getMarkAttrs,
+  KeyOfThemeVariant,
+} from '@remirror/core';
 import { bubblePositioner, useRemirror } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import {
@@ -43,13 +49,13 @@ import {
   BubbleMenuTooltip,
   IconButton,
   Toolbar,
-  WithPaddingProps,
+  WithPaddingProps as WithPaddingProperties,
 } from './wysiwyg-components';
 
 const menuItems: Array<[
   ActionNames<WysiwygExtensions>,
   [ComponentType<IconProps>, string?],
-  Attrs?,
+  Attributes?,
 ]> = [
   ['bold', [BoldIcon]],
   ['italic', [ItalicIcon]],
@@ -67,9 +73,11 @@ const menuItems: Array<[
   ['horizontalRule', [RulerHorizontalIcon]],
 ];
 
-const runAction = (method: AnyFunction, attrs?: Attrs): MouseEventHandler<HTMLElement> => (e) => {
+const runAction = (method: AnyFunction, attributes: Attributes): MouseEventHandler<HTMLElement> => (
+  e,
+) => {
   e.preventDefault();
-  method(attrs);
+  method(attributes);
 };
 
 /**
@@ -90,8 +98,8 @@ export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
 
   return (
     <Toolbar>
-      {menuItems.map(([name, [Icon, subText], attrs], index) => {
-        const buttonState = getButtonState(actions[name].isActive(attrs), inverse);
+      {menuItems.map(([name, [Icon, subText], attributes], index) => {
+        const buttonState = getButtonState(actions[name].isActive(attributes), inverse);
 
         return (
           <MenuItem
@@ -101,7 +109,7 @@ export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
             subText={subText}
             state={buttonState}
             disabled={!actions[name].isEnabled()}
-            onClick={runAction(actions[name], attrs)}
+            onClick={runAction(actions[name], attributes)}
           />
         );
       })}
@@ -152,7 +160,7 @@ export interface BubbleMenuProps {
 const bubbleMenuItems: Array<[
   ActionNames<WysiwygExtensions>,
   [ComponentType<IconProps>, string?],
-  Attrs?,
+  Attributes?,
 ]> = [
   ['bold', [BoldIcon]],
   ['italic', [ItalicIcon]],
@@ -166,12 +174,12 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({
 }) => {
   const { actions, getPositionerProps, helpers, state, manager } = useRemirror<WysiwygExtensions>();
 
-  const positionerProps = getPositionerProps({
+  const positionerProperties = getPositionerProps({
     ...bubblePositioner,
     hasChanged: () => true,
-    isActive: (params) => {
+    isActive: (parameters) => {
       const answer =
-        (bubblePositioner.isActive(params) || linkActivated) &&
+        (bubblePositioner.isActive(parameters) || linkActivated) &&
         !actions.toggleCodeBlock.isActive() &&
         !helpers.isDragging();
       return answer;
@@ -179,7 +187,7 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({
     positionerId: 'bubbleMenu',
   });
 
-  const { bottom, ref, left } = positionerProps;
+  const { bottom, ref, left } = positionerProperties;
 
   const updateLink = (href: string) => actions.updateLink({ href });
   const removeLink = () => actions.removeLink();
@@ -198,8 +206,8 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({
         />
       ) : (
         <BubbleContent>
-          {bubbleMenuItems.map(([name, [Icon, subText], attrs], index) => {
-            const buttonState = getButtonState(actions[name].isActive(attrs), true);
+          {bubbleMenuItems.map(([name, [Icon, subText], attributes], index) => {
+            const buttonState = getButtonState(actions[name].isActive(attributes), true);
 
             return (
               <MenuItem
@@ -209,7 +217,7 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({
                 subText={subText}
                 state={buttonState}
                 disabled={!actions[name].isEnabled()}
-                onClick={runAction(actions[name], attrs)}
+                onClick={runAction(actions[name], attributes)}
                 variant='inverse'
               />
             );
@@ -242,7 +250,7 @@ const LinkInput: FC<LinkInputProps> = ({
 }) => {
   const [href, setHref] = useState('');
   const { css } = useRemirrorTheme();
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const wrapperReference = useRef<HTMLDivElement>(null);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setHref(event.target.value);
@@ -273,7 +281,7 @@ const LinkInput: FC<LinkInputProps> = ({
   };
 
   const handleClick = (event: MouseEvent) => {
-    if (!wrapperRef.current || wrapperRef.current.contains(event.target as Node)) {
+    if (!wrapperReference.current || wrapperReference.current.contains(event.target as Node)) {
       return;
     }
     deactivateLink();
@@ -287,7 +295,7 @@ const LinkInput: FC<LinkInputProps> = ({
   });
 
   return (
-    <BubbleContent ref={wrapperRef}>
+    <BubbleContent ref={wrapperReference}>
       <input
         defaultValue={defaultValue}
         placeholder='Enter URL...'

@@ -1,6 +1,12 @@
 import { Step } from 'prosemirror-transform';
 
-import { Attrs, BaseExtensionConfig, EditorSchema, PlainObject, Transaction } from '@remirror/core';
+import {
+  Attributes,
+  BaseExtensionConfig,
+  EditorSchema,
+  PlainObject,
+  Transaction,
+} from '@remirror/core';
 
 export interface Sendable {
   version: number;
@@ -57,7 +63,7 @@ export interface CollaborationExtensionOptions extends BaseExtensionConfig {
   onSendableReceived(params: OnSendableReceivedParams): void;
 }
 
-export type CollaborationAttrs = Attrs<{
+export type CollaborationAttrs = Attributes<{
   /**
    * @internalremarks
    * TODO give this some better types

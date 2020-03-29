@@ -5,7 +5,7 @@ import React, { FC } from 'react';
 import { EMPTY_PARAGRAPH_NODE, Tag } from '@remirror/core-constants';
 import { Cast } from '@remirror/core-helpers';
 import {
-  Attrs,
+  Attributes,
   EditorState,
   KeyBindingCommandFunction,
   KeyBindings,
@@ -33,10 +33,10 @@ describe('ExtensionManager', () => {
     getTheme: () => defaultRemirrorThemeValue,
   };
   const innerMock = jest.fn();
-  const mock = jest.fn((_: Attrs) => innerMock);
+  const mock = jest.fn((_: Attributes) => innerMock);
   const getInformation = jest.fn(() => 'information');
 
-  const SSRComponent: FC<Attrs> = () => <div />;
+  const SSRComponent: FC<Attributes> = () => <div />;
 
   class DummyExtension extends Extension {
     public name = 'dummy';
@@ -98,17 +98,17 @@ describe('ExtensionManager', () => {
   });
 
   test('commands', () => {
-    const attrs = { a: 'a' };
-    manager.data.actions.dummy(attrs);
+    const attributes = { a: 'a' };
+    manager.store.actions.dummy(attributes);
 
-    expect(mock).toHaveBeenCalledWith(attrs);
+    expect(mock).toHaveBeenCalledWith(attributes);
     expect(innerMock).toHaveBeenCalledWith(state, view.dispatch, view);
   });
 
   test('helpers', () => {
-    const val = manager.data.helpers.getInformation();
+    const value = manager.store.helpers.getInformation();
 
-    expect(val).toBe('information');
+    expect(value).toBe('information');
     expect(getInformation).toHaveBeenCalled();
   });
 
@@ -208,7 +208,7 @@ test('keymaps', () => {
   ]);
   manager.initialize(initHelpers);
 
-  createEditor(doc(p('simple<cursor>')), { plugins: manager.data.keymaps })
+  createEditor(doc(p('simple<cursor>')), { plugins: manager.store.keymaps })
     .press('Enter')
     .callback(() => {
       expect(mocks.firstEnter).toHaveBeenCalled();

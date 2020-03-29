@@ -228,7 +228,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
       undefined,
       {
         state: this.state.editor.newState,
-        nodeViews: this.manager.data.nodeViews,
+        nodeViews: this.manager.store.nodeViews,
         dispatchTransaction: this.dispatchTransaction,
 
         attributes: () => this.getAttributes(),
@@ -255,7 +255,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     ];
 
     // Inject the styles from extensions
-    styles.unshift(this.manager.data.styles as RemirrorInterpolation);
+    styles.unshift(this.manager.store.styles as RemirrorInterpolation);
 
     if (this.props.usesDefaultStyles) {
       styles.unshift({ variant: 'styles.remirror:editor' });
@@ -601,7 +601,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     // Check if the manager has changed
     if (!prevManager.isEqual(this.props.manager)) {
       this.updateExtensionManager();
-      this.view.setProps({ ...this.view.props, nodeViews: this.manager.data.nodeViews });
+      this.view.setProps({ ...this.view.props, nodeViews: this.manager.store.nodeViews });
 
       // The following converts the current content to HTML and then uses the
       // new manager schema to convert it back into a ProsemirrorNode for
@@ -791,8 +791,8 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
       state: this.state.editor,
 
       /* Mapped methods */
-      actions: this.manager.data.actions,
-      helpers: this.manager.data.helpers,
+      actions: this.manager.store.actions,
+      helpers: this.manager.store.helpers,
 
       /* Getter Methods */
       getRootProps: this.getRootProps,
@@ -820,7 +820,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
   private readonly getHTML = (state?: EditorState<SchemaFromExtensions<GExtension>>) => () => {
     return toHTML({
       node: (state ?? this.state.editor.newState).doc,
-      schema: this.manager.data.schema,
+      schema: this.manager.store.schema,
       doc: this.doc,
     });
   };

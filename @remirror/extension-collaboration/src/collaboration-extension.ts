@@ -2,7 +2,7 @@ import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirr
 import { Step } from 'prosemirror-transform';
 
 import {
-  Attrs,
+  Attributes,
   CommandParams,
   debounce,
   EditorState,
@@ -15,14 +15,17 @@ import {
   uniqueId,
 } from '@remirror/core';
 
-import { CollaborationAttrs, CollaborationExtensionOptions } from './collaboration-types';
+import {
+  CollaborationAttrs as CollaborationAttributes,
+  CollaborationExtensionOptions,
+} from './collaboration-types';
 
 /**
  * Check that the attributes exist and are valid for the collaboration update
  * command method.
  */
-const isValidCollaborationAttrs = (attrs?: Attrs): attrs is CollaborationAttrs => {
-  return !(!attrs || !isArray(attrs.steps) || !isNumber(attrs.version));
+const isValidCollaborationAttributes = (attributes: Attributes): attrs is CollaborationAttrs => {
+  return !(!attributes || !isArray(attributes.steps) || !isNumber(attributes.version));
 };
 
 /**
@@ -58,15 +61,15 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
    */
   public commands({ getState, schema }: CommandParams) {
     return {
-      collaborationUpdate: (attrs: CollaborationAttrs): ProsemirrorCommandFunction => (
+      collaborationUpdate: (attributes: CollaborationAttrs): ProsemirrorCommandFunction => (
         _,
         dispatch,
       ) => {
-        if (!isValidCollaborationAttrs(attrs)) {
+        if (!isValidCollaborationAttributes(attributes)) {
           throw new Error('Invalid attributes passed to the collaboration command.');
         }
 
-        const { version, steps } = attrs;
+        const { version, steps } = attributes;
         const state = getState();
 
         if (getVersion(state) > version) {

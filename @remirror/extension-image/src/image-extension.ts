@@ -1,7 +1,7 @@
 import { ResolvedPos } from 'prosemirror-model';
 
 import {
-  Attrs,
+  Attributes,
   bool,
   Cast,
   CommandNodeTypeParams,
@@ -12,10 +12,10 @@ import {
 } from '@remirror/core';
 
 import { createImageExtensionPlugin } from './image-plugin';
-import { getAttrs } from './image-utils';
+import { getAttrs as getAttributes } from './image-utils';
 
-const hasCursor = <T extends object>(arg: T): arg is T & { $cursor: ResolvedPos } => {
-  return bool(Cast(arg).$cursor);
+const hasCursor = <T extends object>(argument: T): arg is T & { $cursor: ResolvedPos } => {
+  return bool(Cast(argument).$cursor);
 };
 
 export class ImageExtension extends NodeExtension {
@@ -43,7 +43,7 @@ export class ImageExtension extends NodeExtension {
         {
           tag: 'img[src]',
           getAttrs: (domNode) =>
-            isElementDOMNode(domNode) ? getAttrs(this.getExtraAttrs(domNode)) : {},
+            isElementDOMNode(domNode) ? getAttributes(this.getExtraAttrs(domNode)) : {},
         },
       ],
       toDOM(node) {
@@ -54,10 +54,10 @@ export class ImageExtension extends NodeExtension {
 
   public commands({ type }: CommandNodeTypeParams) {
     return {
-      insertImage: (attrs?: Attrs): ProsemirrorCommandFunction => (state, dispatch) => {
+      insertImage: (attributes: Attributes): ProsemirrorCommandFunction => (state, dispatch) => {
         const { selection } = state;
         const position = hasCursor(selection) ? selection.$cursor.pos : selection.$to.pos;
-        const node = type.create(attrs);
+        const node = type.create(attributes);
         const transaction = state.tr.insert(position, node);
 
         if (dispatch) {

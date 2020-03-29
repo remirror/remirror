@@ -2,9 +2,9 @@ import { MarkSpec, NodeSpec } from 'prosemirror-model';
 import { Selection as PMSelection } from 'prosemirror-state';
 import { isUndefined } from 'util';
 
-import { bool, isNullOrUndefined, keys, object, isEmptyArray } from '@remirror/core-helpers';
+import { bool, isEmptyArray, isNullOrUndefined, keys, object } from '@remirror/core-helpers';
 import {
-  Attrs,
+  Attributes,
   AttrsParams,
   CommandFunction,
   EditorSchema,
@@ -185,8 +185,8 @@ export const findNodeAtSelection = (selection: Selection): FindProsemirrorNodeRe
  *
  * @deprecated use `doc.lastChild` instead
  */
-export const findNodeAtEndOfDoc = (doc: ProsemirrorNode) =>
-  findNodeAtPosition(PMSelection.atEnd(doc).$from);
+export const findNodeAtEndOfDoc = (document_: ProsemirrorNode) =>
+  findNodeAtPosition(PMSelection.atEnd(document_).$from);
 
 /**
  * Finds the node at the start of the prosemirror.
@@ -196,8 +196,8 @@ export const findNodeAtEndOfDoc = (doc: ProsemirrorNode) =>
  *
  * @deprecated use `doc.firstChild` instead
  */
-export const findNodeAtStartOfDoc = (doc: ProsemirrorNode) =>
-  findNodeAtPosition(PMSelection.atStart(doc).$from);
+export const findNodeAtStartOfDoc = (document_: ProsemirrorNode) =>
+  findNodeAtPosition(PMSelection.atStart(document_).$from);
 
 interface FindParentNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
 
@@ -448,17 +448,21 @@ interface IsNodeActiveParams extends EditorStateParams, NodeTypeParams, Partial<
  *
  * @param params - the destructured node active parameters
  */
-export const isNodeActive = ({ state, type, attrs = object<Attrs>() }: IsNodeActiveParams) => {
+export const isNodeActive = ({
+  state,
+  type,
+  attrs: attributes = object<Attributes>(),
+}: IsNodeActiveParams) => {
   const { selection } = state;
   const predicate = (node: ProsemirrorNode) => node.type === type;
   const parent =
     findSelectedNodeOfType({ selection, types: type }) ?? findParentNode({ predicate, selection });
 
-  if (!Object.keys(attrs).length || !parent) {
+  if (!Object.keys(attributes).length || !parent) {
     return bool(parent);
   }
 
-  return parent.node.hasMarkup(type, attrs);
+  return parent.node.hasMarkup(type, attributes);
 };
 
 export interface SchemaJSON<GNodes extends string = string, GMarks extends string = string> {
@@ -472,14 +476,14 @@ export interface SchemaJSON<GNodes extends string = string, GMarks extends strin
 export const schemaToJSON = <GNodes extends string = string, GMarks extends string = string>(
   schema: EditorSchema<GNodes, GMarks>,
 ): SchemaJSON<GNodes, GMarks> => {
-  const nodes = keys(schema.nodes).reduce((acc, key) => {
+  const nodes = keys(schema.nodes).reduce((accumulator, key) => {
     const { spec } = schema.nodes[key];
-    return { ...acc, [key]: spec };
+    return { ...accumulator, [key]: spec };
   }, object<SchemaJSON['nodes']>());
 
-  const marks = keys(schema.marks).reduce((acc, key) => {
+  const marks = keys(schema.marks).reduce((accumulator, key) => {
     const { spec } = schema.marks[key];
-    return { ...acc, [key]: spec };
+    return { ...accumulator, [key]: spec };
   }, object<SchemaJSON['marks']>());
 
   return {
@@ -508,8 +512,8 @@ export const convertCommand = <
 export const chainCommands = <GSchema extends EditorSchema = any, GExtraParams extends object = {}>(
   ...commands: Array<CommandFunction<GSchema, GExtraParams>>
 ): CommandFunction<GSchema, GExtraParams> => ({ state, dispatch, view, ...rest }) => {
-  for (let commandIndex = 0; commandIndex < commands.length; commandIndex++) {
-    if (commands[commandIndex]({ state, dispatch, view, ...(rest as GExtraParams) })) {
+  for (const element of commands) {
+    if (element({ state, dispatch, view, ...(rest as GExtraParams) })) {
       return true;
     }
   }
@@ -528,7 +532,7 @@ export const chainCommands = <GSchema extends EditorSchema = any, GExtraParams e
  */
 export const chainKeyBindingCommands = (
   ...commands: KeyBindingCommandFunction[]
-): KeyBindingCommandFunction => (params) => {
+): KeyBindingCommandFunction => (parameters) => {
   // When no commands are passed just ignore and continue.
   if (isEmptyArray(commands)) {
     return false;
@@ -556,11 +560,14 @@ export const chainKeyBindingCommands = (
     const [, ...nextRest] = nextCommands;
 
     // Recursively call the key bindings method.
-    return chainKeyBindingCommands(...nextCommands)({ ...params, next: createNext(...nextRest) });
+    return chainKeyBindingCommands(...nextCommands)({
+      ...parameters,
+      next: createNext(...nextRest),
+    });
   };
 
   const next = createNext(...rest);
-  const exitEarly = command({ ...params, next });
+  const exitEarly = command({ ...parameters, next });
 
   // Exit the chain of commands early if either:
   // - a) next was called

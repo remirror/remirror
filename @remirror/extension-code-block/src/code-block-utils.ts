@@ -8,7 +8,7 @@ import js from 'refractor/lang/javascript';
 import markup from 'refractor/lang/markup';
 
 import {
-  Attrs,
+  Attributes,
   bool,
   EditorState,
   findParentNodeOfType,
@@ -28,7 +28,11 @@ import {
   uniqueArray,
 } from '@remirror/core';
 
-import { CodeBlockAttrs, CodeBlockExtensionOptions, FormattedContent } from './code-block-types';
+import {
+  CodeBlockAttrs as CodeBlockAttributes,
+  CodeBlockExtensionOptions,
+  FormattedContent,
+} from './code-block-types';
 
 interface ParsedRefractorNode extends TextParams {
   /**
@@ -142,8 +146,8 @@ export const posWithinRange = ({ from, to, pos }: PosWithinRangeParams) => from 
 /**
  * Check whether the length of an array has changed
  */
-export const lengthHasChanged = <GType>(prev: ArrayLike<GType>, next: ArrayLike<GType>) =>
-  next.length !== prev.length;
+export const lengthHasChanged = <GType>(previous: ArrayLike<GType>, next: ArrayLike<GType>) =>
+  next.length !== previous.length;
 
 export interface NodeInformation
   extends NodeTypeParams,
@@ -174,8 +178,13 @@ export const getNodeInformationFromState = (state: EditorState): NodeInformation
 /**
  * Check that the attributes exist and are valid for the codeBlock updateAttrs.
  */
-export const isValidCodeBlockAttrs = (attrs?: Attrs): attrs is CodeBlockAttrs =>
-  bool(attrs && isObject(attrs) && isString(attrs.language) && attrs.language.length);
+export const isValidCodeBlockAttrs = (attributes: Attributes): attrs is CodeBlockAttrs =>
+  bool(
+    attributes &&
+      isObject(attributes) &&
+      isString(attributes.language) &&
+      attributes.language.length,
+  );
 
 /**
  * Updates the node attrs.
@@ -183,20 +192,20 @@ export const isValidCodeBlockAttrs = (attrs?: Attrs): attrs is CodeBlockAttrs =>
  * This is used to update the language for the codeBlock.
  */
 export const updateNodeAttrs = (type: NodeType) => (
-  attrs: CodeBlockAttrs,
+  attributes: CodeBlockAttrs,
 ): ProsemirrorCommandFunction => ({ tr, selection }, dispatch) => {
-  if (!isValidCodeBlockAttrs(attrs)) {
+  if (!isValidCodeBlockAttrs(attributes)) {
     throw new Error('Invalid attrs passed to the updateAttrs method');
   }
 
   const parent = findParentNodeOfType({ types: type, selection });
 
-  if (!parent || isEqual(attrs, parent.node.attrs)) {
+  if (!parent || isEqual(attributes, parent.node.attrs)) {
     // Do nothing since the attrs are the same
     return false;
   }
 
-  tr.setNodeMarkup(parent.pos, type, attrs);
+  tr.setNodeMarkup(parent.pos, type, attributes);
 
   if (dispatch) {
     dispatch(tr);
@@ -330,12 +339,12 @@ export const formatCodeBlockFactory = ({
  * Retrieve the supported language names based on configuration.
  */
 export const getSupportedLanguagesMap = (supportedLanguages: RefractorSyntax[]) => {
-  const obj: Record<string, string> = object();
+  const object_: Record<string, string> = object();
   for (const { name, aliases } of [...PRELOADED_LANGUAGES, ...supportedLanguages]) {
-    obj[name] = name;
+    object_[name] = name;
     aliases.forEach((alias) => {
-      obj[alias] = name;
+      object_[alias] = name;
     });
   }
-  return obj;
+  return object_;
 };

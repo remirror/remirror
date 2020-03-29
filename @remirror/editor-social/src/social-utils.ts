@@ -1,7 +1,7 @@
-import { Attrs, EditorView } from '@remirror/core';
+import { Attributes, EditorView } from '@remirror/core';
 import { MentionExtensionAttrs } from '@remirror/extension-mention';
 
-import { MentionGetterParams } from './social-types';
+import { MentionGetterParams as MentionGetterParameters } from './social-types';
 
 /**
  * Maps the items to items with an active property
@@ -48,7 +48,7 @@ export const calculateNewIndexFromArrowPress = ({
 interface CreateOnClickMethodFactoryParams extends MentionGetterParams {
   setExitTriggeredInternally: () => void;
   view: EditorView;
-  command(attrs: Attrs): void;
+  command(attrs: Attributes): void;
 }
 
 /**
@@ -64,7 +64,7 @@ export const createOnClickMethodFactory = ({
     suggester: { char, name },
     range,
   } = getMention();
-  const params: MentionExtensionAttrs = {
+  const parameters: MentionExtensionAttrs = {
     id,
     label: `${char}${id}`,
     name,
@@ -74,7 +74,7 @@ export const createOnClickMethodFactory = ({
     href: `/${id}`,
   };
   setExitTriggeredInternally(); // Prevents further `onExit` calls
-  command(params);
+  command(parameters);
   if (!view.hasFocus()) {
     view.focus();
   }

@@ -9,7 +9,7 @@ import {
   Selection,
   Transaction,
 } from './alias-types';
-import { Attrs, MakeOptional, Position } from './base-types';
+import { Attributes, MakeOptional, Position } from './base-types';
 
 /**
  * A parameter builder interface containing the `view` property.
@@ -118,7 +118,7 @@ export interface AttrsParams {
   /**
    * An object describing the attrs for a prosemirror mark / node
    */
-  attrs: Attrs;
+  attrs: Attributes;
 }
 
 /**
@@ -169,9 +169,11 @@ export interface ProsemirrorNodeParams<GSchema extends EditorSchema = any> {
   node: ProsemirrorNode<GSchema>;
 }
 
-export type NodeWithAttrs<GAttrs extends Attrs = Attrs> = ProsemirrorNode & { attrs: GAttrs };
+export type NodeWithAttrs<GAttrs extends Attributes = Attributes> = ProsemirrorNode & {
+  attrs: GAttrs;
+};
 
-export interface NodeWithAttrsParams<GAttrs extends Attrs = Attrs> {
+export interface NodeWithAttrsParams<GAttrs extends Attributes = Attributes> {
   /**
    * A prosemirror node with a specific shape for `node.attrs`
    */

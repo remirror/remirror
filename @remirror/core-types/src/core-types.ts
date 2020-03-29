@@ -23,20 +23,20 @@ import {
 } from './alias-types';
 import {
   AnyFunction,
-  Attrs,
-  CreateExtraAttrs,
-  ExtraAttrs,
-  GetExtraAttrs,
+  Attributes,
+  CreateExtraAttrs as CreateExtraAttributes,
+  ExtraAttributes,
+  GetExtraAttributes,
   ObjectNode,
   RegexTuple,
   Value,
 } from './base-types';
 import {
-  AttrsParams,
-  EditorStateParams,
-  EditorViewParams,
-  NodeWithAttrsParams,
-  TransactionParams,
+  AttrsParams as AttributesParameters,
+  EditorStateParams as EditorStateParameters,
+  EditorViewParams as EditorViewParameters,
+  NodeWithAttrsParams as NodeWithAttributesParameters,
+  TransactionParams as TransactionParameters,
 } from './type-builders';
 
 /**
@@ -338,6 +338,7 @@ export type ExtensionIsActiveFunction = (params: Partial<AttrsParams>) => boolea
 export interface ExtensionCommandReturn {
   [command: string]: ExtensionCommandFunction;
 }
+
 /**
  * The return signature for an extensions helper method.
  */
@@ -397,7 +398,7 @@ export interface ActionMethod<GParams extends any[] = []> {
    *
    * @param attrs - certain commands require attrs to run
    */
-  isActive(attrs?: Attrs): boolean;
+  isActive(attrs?: Attributes): boolean;
 
   /**
    * Returns true when the command can be run and false when it can't be run.
@@ -409,7 +410,7 @@ export interface ActionMethod<GParams extends any[] = []> {
    *
    * @param attrs - certain commands require attrs to run
    */
-  isEnabled(attrs?: Attrs): boolean;
+  isEnabled(attrs?: Attributes): boolean;
 }
 
 /**
@@ -443,11 +444,13 @@ export interface AnyHelpers {
   [helper: string]: AnyFunction;
 }
 
+type GetAttrsFunction = (p: string[] | string) => Attributes | undefined;
+
 /**
  * A function which takes a regex match array (strings) or a single string match
  * and transforms it into an `Attrs` object.
  */
-export type GetAttrs = Attrs | ((p: string[] | string) => Attrs | undefined);
+export type GetAttrs = Attributes | GetAttrsFunction;
 
 export interface GetAttrsParams {
   /**
@@ -462,7 +465,7 @@ export interface GetAttrsParams {
  */
 export interface SSRComponentProps<
   GOptions extends BaseExtensionConfig = BaseExtensionConfig,
-  GAttrs extends Attrs = Attrs
+  GAttrs extends Attributes = Attributes
 > extends NodeWithAttrsParams<GAttrs>, BaseExtensionConfigParams<GOptions> {}
 
 /**
@@ -544,7 +547,7 @@ export interface BaseExtensionConfig extends SSRComponentParams {
    *
    * @defaultValue `[]`
    */
-  extraAttrs?: ExtraAttrs[];
+  extraAttrs?: ExtraAttributes[];
 
   /**
    * A configuration object which allows for excluding certain functionality
@@ -687,7 +690,7 @@ export interface CreateSchemaParams<Config extends BaseExtensionConfig> {
   /**
    * Pull all extra attrs from the dom node provided.
    */
-  getExtraAttrs: GetExtraAttrs;
+  getExtraAttrs: GetExtraAttributes;
 }
 
 /**

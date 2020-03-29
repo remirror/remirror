@@ -39,3 +39,8 @@ have many extensions that to do one thing. The functionality can later be combin
 
 Presets are a new way of managing functionality in the editor. Combine extensions together with a
 new config api.
+
+`@remirror/react`
+
+Creates and extension which modifies the manager and adds an initialization parameter that allows
+for the portal container to be passed through.

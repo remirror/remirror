@@ -2,7 +2,7 @@ import { setBlockType } from 'prosemirror-commands';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 import {
-  Attrs,
+  Attributes,
   CommandNodeTypeParams,
   convertCommand,
   ExtensionManagerNodeTypeParams,
@@ -21,7 +21,7 @@ export interface HeadingExtensionOptions extends NodeExtensionConfig {
   defaultLevel?: number;
 }
 
-export type HeadingExtensionAttrs = Attrs<{
+export type HeadingExtensionAttrs = Attributes<{
   /**
    * The heading size.
    */
@@ -74,8 +74,8 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
       /**
        * Toggle the heading for the current block.
        */
-      toggleHeading: (attrs?: HeadingExtensionAttrs) =>
-        toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs }),
+      toggleHeading: (attributes: HeadingExtensionAttrs) =>
+        toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs: attributes }),
     };
   }
 
