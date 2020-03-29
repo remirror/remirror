@@ -2,7 +2,7 @@ import { MarkSpec, NodeSpec } from 'prosemirror-model';
 import { Selection as PMSelection } from 'prosemirror-state';
 import { isUndefined } from 'util';
 
-import { bool, isNullOrUndefined, keys, object } from '@remirror/core-helpers';
+import { bool, isNullOrUndefined, keys, object, isEmptyArray } from '@remirror/core-helpers';
 import {
   Attrs,
   AttrsParams,
@@ -35,9 +35,6 @@ import {
   isTextDOMNode,
 } from './dom-utils';
 
-/* "Borrowed" from prosemirror-utils in order to avoid requirement of
-`@prosemirror-tables`*/
-
 interface NodeEqualsTypeParams extends NodeTypesParams, OptionalProsemirrorNodeParams {}
 
 /**
@@ -59,6 +56,7 @@ export const cloneTransaction = (tr: Transaction): Transaction => {
 };
 
 interface RemoveNodeAtPositionParams extends TransactionParams, PosParams {}
+
 /**
  * Returns a `delete` transaction that removes a node at a given position with
  * the given `node`. `position` should point at the position immediately before
@@ -357,7 +355,8 @@ export interface FindProsemirrorNodeResult<GSchema extends EditorSchema = any>
 interface FindParentNodeParams extends SelectionParams, PredicateParams<ProsemirrorNode> {}
 
 /**
- * Returns the position of the node after the current position, selection or state.
+ * Returns the position of the node after the current position, selection or
+ * state.
  *
  * ```ts
  * const pos = findPositionOfNodeBefore(tr.selection);
@@ -490,8 +489,8 @@ export const schemaToJSON = <GNodes extends string = string, GMarks extends stri
 };
 
 /**
- * Wraps the default {@link ProsemirrorCommandFunction} and makes it compatible with the default **remirror**
- * {@link CommandFunction} call signature.
+ * Wraps the default {@link ProsemirrorCommandFunction} and makes it compatible
+ * with the default **remirror** {@link CommandFunction} call signature.
  */
 export const convertCommand = <
   GSchema extends EditorSchema = any,
@@ -502,8 +501,9 @@ export const convertCommand = <
   commandFunction(state, dispatch, view);
 
 /**
- * Similar to the chainCommands from the `prosemirror-commands` library. Allows multiple commands to be
- * chained together and runs until one of them returns true.
+ * Similar to the chainCommands from the `prosemirror-commands` library. Allows
+ * multiple commands to be chained together and runs until one of them returns
+ * true.
  */
 export const chainCommands = <GSchema extends EditorSchema = any, GExtraParams extends object = {}>(
   ...commands: Array<CommandFunction<GSchema, GExtraParams>>
@@ -518,40 +518,57 @@ export const chainCommands = <GSchema extends EditorSchema = any, GExtraParams e
 };
 
 /**
- * Chains together keybindings.
+ * Chains together keybindings, allowing for the sme key binding to be used
+ * across multiple extensions without overriding behavior.
  *
  * @remarks
  *
- * When `next` hands over full control of the keybindings to the caller.
+ * When `next` is called it hands over full control of the keybindings to the
+ * function that invokes it.
  */
 export const chainKeyBindingCommands = (
   ...commands: KeyBindingCommandFunction[]
 ): KeyBindingCommandFunction => (params) => {
-  if (!commands.length) {
+  // When no commands are passed just ignore and continue.
+  if (isEmptyArray(commands)) {
     return false;
   }
 
   const [command, ...rest] = commands;
 
+  // Keeps track of whether the `next` method has been called. If it has been
+  // called we return the result and skip the rest of the downstream commands.
   let calledNext = false;
 
+  /**
+   * Create the next function call. Updates the outer closure when the next
+   * method has been called.
+   */
   const createNext = (...nextCommands: KeyBindingCommandFunction[]): (() => boolean) => () => {
-    if (!nextCommands.length) {
+    if (isEmptyArray(nextCommands)) {
       return false;
     }
 
+    // Update the closure with information that the next method was invoked by
+    // this command.
     calledNext = true;
 
     const [, ...nextRest] = nextCommands;
+
+    // Recursively call the key bindings method.
     return chainKeyBindingCommands(...nextCommands)({ ...params, next: createNext(...nextRest) });
   };
 
   const next = createNext(...rest);
-  const status = command({ ...params, next });
+  const exitEarly = command({ ...params, next });
 
-  if (calledNext || status) {
-    return status;
+  // Exit the chain of commands early if either:
+  // - a) next was called
+  // - b) the command returned true
+  if (calledNext || exitEarly) {
+    return exitEarly;
   }
 
+  // Continue on through the chain of commands.
   return next();
 };

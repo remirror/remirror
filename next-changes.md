@@ -29,3 +29,13 @@ Helpers API should be added back, but this time each node and mark automatically
 helper.
 
 Commands are chainable when called with the `.chain` helper.
+
+Advice when creating extensions
+
+Keep them light and simple especially when public. Extensions can do many things but it's better to
+have many extensions that to do one thing. The functionality can later be combined in a preset.
+
+### Presets
+
+Presets are a new way of managing functionality in the editor. Combine extensions together with a
+new config api.

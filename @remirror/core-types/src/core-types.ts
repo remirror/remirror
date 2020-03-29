@@ -1,4 +1,4 @@
-import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
+import { MarkSpec, MarkType, NodeSpec, NodeType, Schema } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
 import { ComponentType } from 'react';
 
@@ -38,7 +38,6 @@ import {
   NodeWithAttrsParams,
   TransactionParams,
 } from './type-builders';
-import { RemirrorInterpolation, RemirrorThemeContextType } from './ui-types';
 
 /**
  * Supported content for the remirror editor.
@@ -97,10 +96,6 @@ export type ProsemirrorCommandFunction<GSchema extends EditorSchema = any> = (
   view: EditorView<GSchema> | undefined,
 ) => boolean;
 
-interface ChainableCommandMethod extends TransactionParams<EditorSchema> {
-  isChained: true;
-}
-
 /**
  * This is the modified type signature for commands within the remirror editor.
  *
@@ -118,10 +113,21 @@ export type CommandFunction<
   GExtraParams extends object = {}
 > = (params: CommandFunctionParams<GSchema> & GExtraParams) => boolean;
 
-export interface ChainableCommandFunction<GSchema extends EditorSchema = any> {
-  (): boolean;
-  (transaction: Transaction<GSchema>): Transaction<GSchema>;
-}
+/**
+ * Chained commands take a transaction and act on it before returning the
+ * transaction.
+ *
+ * @remarks
+ *
+ * They allow for commands to be chained together before being used to update
+ * the state and allow the composition of complex commands. They are
+ * automatically created from `CommandFunction`'s by providing a fake dispatch
+ * method to the command function which captures the updated `transaction` and
+ * passes it onto the next chainable command.
+ */
+export type ChainedCommandFunction<Schema extends EditorSchema = any> = (
+  transaction: TransactionParams<Schema>,
+) => void;
 
 /**
  * A parameter builder interface for the remirror `CommandFunction`.
@@ -143,30 +149,33 @@ export interface CommandFunctionParams<GSchema extends EditorSchema = any>
   dispatch?: DispatchFunction<GSchema>;
 }
 
+export interface NextParams<Schema extends EditorSchema = any>
+  extends CommandFunctionParams<Schema> {
+  /**
+   * A method to run the next (lower priority) command in the chain of
+   * keybindings.
+   *
+   * @remarks
+   *
+   * This can be used to chain together keyboard commands between extensions.
+   * It's possible that you will need to combine actions when a key is pressed
+   * while still running the default action. This method allows for the
+   * greater degree of control.
+   *
+   * By default, matching keyboard commands from the different extension are
+   * chained together (in order of priority) until one returns `true`. Calling
+   * `next` changes this default behaviour. The default keyboard chaining
+   * stops and you are given full control of the keyboard command chain.
+   */
+  next: () => boolean;
+}
+
 /**
- * The command function passed to any of the keybindings
+ * The command function passed to any of the keybindings.
  */
 export type KeyBindingCommandFunction<GSchema extends EditorSchema = any> = CommandFunction<
   GSchema,
-  {
-    /**
-     * A method to run the next (lower priority) command in the chain of
-     * keybindings.
-     *
-     * @remarks
-     *
-     * This can be used to chain together keyboard commands between extensions.
-     * It's possible that you will need to combine actions when a key is pressed
-     * while still running the default action. This method allows for the
-     * greater degree of control.
-     *
-     * By default, matching keyboard commands from the different extension are
-     * chained together (in order of priority) until one returns `true`. Calling
-     * `next` changes this default behaviour. The default keyboard chaining
-     * stops and you are given full control of the keyboard command chain.
-     */
-    next: () => boolean;
-  }
+  NextParams<GSchema>
 >;
 
 /**
@@ -269,18 +278,6 @@ export interface MarkExtensionSpec
 }
 
 /**
- * The parameters passed into the extension manager init method.
- *
- * @typeParam GSchema - the underlying editor schema.
- */
-export interface ExtensionManagerInitParams<GSchema extends EditorSchema = any> {
-  /**
-   * Retrieve the portal container
-   */
-  portalContainer: PortalContainer;
-}
-
-/**
  * Pull an action method out of the extension manager.
  */
 export type ActionGetter = (name: string) => ActionMethod<any[]>;
@@ -294,8 +291,12 @@ export type HelperGetter = (name: string) => AnyFunction;
  * Parameters passed into many of the extension methods.
  */
 export interface ExtensionManagerParams<GSchema extends EditorSchema = EditorSchema>
-  extends ExtensionManagerInitParams<GSchema>,
-    ExtensionTagParams {
+  extends ExtensionTagParams {
+  /**
+   * A helper method for retrieving the state of the editor
+   */
+  getState: () => EditorState<GSchema>;
+
   /**
    * A helper method to provide access to all the editor actions from within an
    * extension.
