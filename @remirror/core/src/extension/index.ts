@@ -1,0 +1,36 @@
+export type {
+  AnyExtension,
+  AnyMarkExtension,
+  AnyNodeExtension,
+  AnyPlainExtension,
+  DefaultSettingsType,
+  Extension,
+  ExtensionEventMethods,
+  ExtensionFactoryParameter,
+  MarkExtension,
+  MarkExtensionConstructor,
+  MarkExtensionFactoryParameter,
+  NodeExtension,
+  NodeExtensionConstructor,
+  NodeExtensionFactoryParameter,
+  PlainExtensionConstructor,
+} from './extension-base';
+export { isExtension, isMarkExtension, isNodeExtension, isPlainExtension } from './extension-base';
+export { ExtensionFactory } from './extension-factory';
+export type {
+  ActionNames,
+  ActionsFromExtensions,
+  CommandsOfExtension,
+  ExtensionListParameter as ExtensionListParameters,
+  ExtensionParameter as ExtensionParameters,
+  HelpersOfExtension,
+  MapCommandToAction,
+  MarkNames,
+  NameOfExtension,
+  NodeNames,
+  OptionsOfExtension,
+  PlainExtensionNames,
+  SchemaFromExtensions,
+  TypeOfExtensionClass,
+  TypeOfExtensionClassList,
+} from './extension-types';

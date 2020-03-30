@@ -20,9 +20,8 @@ import {
 } from '@remirror/test-fixtures';
 import { defaultRemirrorThemeValue } from '@remirror/ui';
 
-import { Extension } from '../extension';
-import { ExtensionManager, isExtensionManager } from '../extension-manager';
-import { NodeExtension } from '../node-extension';
+import { Extension } from '../extension/extension-base';
+import { ExtensionManager, isExtensionManager } from '../manager/extension-manager';
 
 describe('ExtensionManager', () => {
   let state: EditorState;

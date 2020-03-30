@@ -348,7 +348,7 @@ export interface ExtensionHelperReturn {
 /**
  * A utility type used to create the generic prosemirror typescript types.
  */
-type InferredType<GType> = GType extends object ? { type: GType } : {};
+type InferredType<GType> = GType extends never ? {} : { type: GType };
 
 /**
  * Generic extension manager type params for methods which require a prosemirror
@@ -382,26 +382,10 @@ export interface CommandParameter extends ViewExtensionManagerParameter {
   isEditable: () => boolean;
 }
 
-export type CommandTypeParameter<GType> = CommandParameter & InferredType<GType>;
-
-export type CommandNodeTypeParameter = CommandTypeParameter<NodeType<EditorSchema>>;
-export type CommandMarkTypeParameter = CommandTypeParameter<MarkType<EditorSchema>>;
-
-export type ElementUnion = Value<HTMLElementTagNameMap>;
+export type CreateCommandsParameter<GType = never> = CommandParameter & InferredType<GType>;
 
 export interface ActionMethod<Parameter extends any[] = []> {
   (...args: Parameter): void;
-
-  /**
-   * Determines whether the command is currently in an active state.
-   *
-   * @remarks
-   * This could be used used for menu items to determine whether they should be
-   * highlighted as active or inactive.
-   *
-   * @param attrs - certain commands require attrs to run
-   */
-  isActive(attrs?: Attributes): boolean;
 
   /**
    * Returns true when the command can be run and false when it can't be run.
@@ -532,7 +516,7 @@ export interface OnTransactionParameter
     TransactionParameter,
     EditorStateParameter {}
 
-export interface BaseExtensionSettings extends SSRComponentParameter {
+export interface BaseExtensionSettings extends GlobalRemirrorExtensionSettings {
   /**
    * Inject additional attributes into the defined mark / node schema. This can
    * only be used for `NodeExtensions` and `MarkExtensions`.
@@ -571,7 +555,7 @@ export interface BaseExtensionSettings extends SSRComponentParameter {
   priority?: ExtensionPriority | null;
 }
 
-export interface ExcludeOptions {
+export interface ExcludeOptions extends GlobalRemirrorExcludeOptions {
   /**
    * Whether to exclude the extension's pasteRules
    *
@@ -693,4 +677,17 @@ export interface CreateSchemaParameter<Settings extends BaseExtensionSettings> {
  */
 export interface RemirrorIdentifierShape {
   [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
+}
+
+declare global {
+  /**
+   * A global type which allows setting additional options on the exclude.
+   */
+  interface GlobalRemirrorExcludeOptions {}
+
+  /**
+   * A global type which allows additional default settings to be added to the
+   * editor.
+   */
+  interface GlobalRemirrorExtensionSettings {}
 }

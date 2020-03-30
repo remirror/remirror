@@ -19,9 +19,9 @@ import {
   PlaceholderExtension,
   UnderlineExtension,
 } from '@remirror/core-extensions';
+import { ExtensionFactory } from '@remirror/core/lib/extension/extension-factory';
 import { PortalContainer } from '@remirror/react-portals';
 import { defaultRemirrorThemeValue } from '@remirror/ui';
-import { ExtensionCreator } from '@remirror/core/lib/extension-creator';
 
 export const helpers = {
   getState: Cast(jest.fn()),
@@ -82,14 +82,10 @@ export const initialJson = {
   ],
 };
 
-export const TestExtension = ExtensionCreator<{ run: boolean } & BaseExtensionSettings> {
-  get name() {
-    return 'test' as const;
-  }
-
-  get defaultOptions() {
-    return {
-      run: true,
-    };
-  }
-}
+export const TestExtension = ExtensionFactory.typed<
+  { run?: boolean } & BaseExtensionSettings
+>().plain({
+  name: 'test',
+  defaultSettings: { run: true },
+  defaultProperties: {},
+});

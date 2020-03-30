@@ -1,6 +1,6 @@
 import { BaseExtensionSettings } from '@remirror/core-types';
 
-import { ExtensionCreator } from '../extension-creator';
+import { ExtensionFactory } from '../extension/extension-factory';
 
 export interface DocExtensionOptions extends BaseExtensionSettings {
   /**
@@ -22,11 +22,12 @@ export interface DocExtensionOptions extends BaseExtensionSettings {
  * @required
  * @builtin
  */
-export const DocExtension = ExtensionCreator.typed<DocExtensionOptions>().node({
+export const DocExtension = ExtensionFactory.typed<DocExtensionOptions>().node({
   name: 'doc',
   defaultSettings: {
     content: 'block+',
   },
+  defaultProperties: {},
   createNodeSchema(parameters) {
     return {
       content: parameters.settings.content,

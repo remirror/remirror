@@ -11,13 +11,13 @@ import {
   NodeExtensionTags,
 } from '@remirror/core-types';
 
-import { AnyExtension, isExtension, isMarkExtension, isNodeExtension } from './extension';
+import { AnyExtension, isExtension, isMarkExtension, isNodeExtension } from '../extension';
 import {
-  ExtensionListParameters,
+  ExtensionListParameter,
   FlexibleExtension,
   InferFlexibleExtensionList,
   PrioritizedExtension,
-} from './extension-types';
+} from '../extension/extension-types';
 
 /**
  * Converts an extension to an object with a priority.
@@ -80,7 +80,7 @@ const isNameUnique = ({
   }
 };
 
-interface CreateCommandsParams extends ExtensionListParameters {
+interface CreateCommandsParams extends ExtensionListParameter {
   /**
    * The command params which are passed to each extensions `commands` method.
    */
@@ -93,7 +93,10 @@ interface CreateCommandsParams extends ExtensionListParameters {
  * @param extension - the extension to test.
  * @param params - the params without the type.
  */
-const getParametersType = <GKey extends keyof AnyExtension, GParams extends ExtensionManagerParameter>(
+const getParametersType = <
+  GKey extends keyof AnyExtension,
+  GParams extends ExtensionManagerParameter
+>(
   extension: Required<Pick<AnyExtension, GKey>>,
   parameters: GParams,
 ) => {
@@ -176,7 +179,7 @@ export const createCommands = ({ extensions, params }: CreateCommandsParams) => 
 
   return items;
 };
-interface CreateHelpersParams extends ExtensionListParameters {
+interface CreateHelpersParams extends ExtensionListParameter {
   /**
    * The params which are passed to each extensions `helpers` method.
    */

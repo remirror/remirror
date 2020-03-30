@@ -44,3 +44,8 @@ new config api.
 
 Creates and extension which modifies the manager and adds an initialization parameter that allows
 for the portal container to be passed through.
+
+The flow is like
+
+- Factories (Factorys) -> Constructor -> Instance
+- Factories create Constructors which make Instances.

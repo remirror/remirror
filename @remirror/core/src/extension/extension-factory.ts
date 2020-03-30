@@ -13,22 +13,22 @@ import {
 
 import {
   Extension,
-  ExtensionCreatorOptions,
+  ExtensionFactoryParameter,
   MarkExtension,
   MarkExtensionConstructor,
-  MarkExtensionCreatorOptions,
+  MarkExtensionFactoryParameter,
   NodeExtension,
   NodeExtensionConstructor,
-  NodeExtensionCreatorOptions,
+  NodeExtensionFactoryParameter,
   PlainExtensionConstructor,
-} from './extension';
+} from './extension-base';
 
 /**
  * This function returns the base extension creator methods. It is exposed as a
  * function to allow for fully typed `ExtensionConstructor`s.
  */
-const createBaseExtensionCreator = <
-  Config extends BaseExtensionSettings = BaseExtensionSettings,
+const createBaseExtensionFactory = <
+  Settings extends BaseExtensionSettings = BaseExtensionSettings,
   Properties extends object = {}
 >() => {
   const creators = {
@@ -41,11 +41,11 @@ const createBaseExtensionCreator = <
       Commands extends ExtensionCommandReturn,
       Helpers extends ExtensionHelperReturn
     >(
-      creatorOptions: ExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>,
-    ): PlainExtensionConstructor<Name, Config, Properties, Commands, Helpers> {
+      creatorOptions: ExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>,
+    ): PlainExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
       const options = freeze(creatorOptions);
 
-      class PlainConstructor extends Extension<Name, Config, Properties, Commands, Helpers> {
+      class PlainConstructor extends Extension<Name, Settings, Properties, Commands, Helpers> {
         /**
          * Identifies this as a `PlainExtensionConstructor`.
          *
@@ -64,8 +64,8 @@ const createBaseExtensionCreator = <
          * It helps prevent uses from struggling with some of the edge cases when
          * using the `new` keyword.
          */
-        public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-          return new PlainConstructor(...config);
+        public static of(...arguments_: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+          return new PlainConstructor(...arguments_);
         }
 
         /**
@@ -86,12 +86,13 @@ const createBaseExtensionCreator = <
          * This makes the constructor private so that it can't be extended from
          * when using Typescript.
          */
-        private constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+        private constructor(...config: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
           super(...config);
         }
 
-        public getCreatorOptions() {
-          return options;
+        public getFactoryParameter() {
+          // Not sure why I have to cast to `never` here.
+          return Cast<never>(options);
         }
       }
 
@@ -107,11 +108,11 @@ const createBaseExtensionCreator = <
       Commands extends ExtensionCommandReturn,
       Helpers extends ExtensionHelperReturn
     >(
-      creatorOptions: MarkExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>,
-    ): MarkExtensionConstructor<Name, Config, Properties, Commands, Helpers> {
+      creatorOptions: MarkExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>,
+    ): MarkExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
       const options = freeze(creatorOptions);
 
-      class MarkConstructor extends MarkExtension<Name, Config, Properties, Commands, Helpers> {
+      class MarkConstructor extends MarkExtension<Name, Settings, Properties, Commands, Helpers> {
         /**
          * Identifies this as a `MarkExtensionConstructor`.
          *
@@ -130,8 +131,8 @@ const createBaseExtensionCreator = <
          * It helps prevent uses from struggling with some of the edge cases when
          * using the `new` keyword.
          */
-        public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-          return new MarkConstructor(...config);
+        public static of(...arguments_: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+          return new MarkConstructor(...arguments_);
         }
 
         /**
@@ -145,16 +146,12 @@ const createBaseExtensionCreator = <
          * This makes the constructor private so that it can't be extended from
          * when using Typescript.
          */
-        private constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+        private constructor(...config: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
           super(...config);
         }
 
-        public getCreatorOptions() {
-          return Cast(options); // Cast cos I can.
-        }
-
-        public getMarkCreatorOptions() {
-          return options;
+        public getFactoryParameter() {
+          return options; // Cast cos I can.
         }
       }
 
@@ -170,11 +167,11 @@ const createBaseExtensionCreator = <
       Commands extends ExtensionCommandReturn,
       Helpers extends ExtensionHelperReturn
     >(
-      creatorOptions: NodeExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>,
-    ): NodeExtensionConstructor<Name, Config, Properties, Commands, Helpers> {
+      creatorOptions: NodeExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>,
+    ): NodeExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
       const options = freeze(creatorOptions);
 
-      class NodeConstructor extends NodeExtension<Name, Config, Properties, Commands, Helpers> {
+      class NodeConstructor extends NodeExtension<Name, Settings, Properties, Commands, Helpers> {
         /**
          * Identifies this as a `NodeExtensionConstructor`.
          *
@@ -193,8 +190,8 @@ const createBaseExtensionCreator = <
          * It helps prevent uses from struggling with some of the edge cases when
          * using the `new` keyword.
          */
-        public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-          return new NodeConstructor(...config);
+        public static of(...arguments_: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+          return new NodeConstructor(...arguments_);
         }
 
         /**
@@ -208,15 +205,11 @@ const createBaseExtensionCreator = <
          * This makes the constructor private so that it can't be extended from
          * when using Typescript.
          */
-        private constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+        private constructor(...config: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
           super(...config);
         }
 
-        public getCreatorOptions() {
-          return Cast(options); // Cast cos I can.
-        }
-
-        public getNodeCreatorOptions() {
+        public getFactoryParameter() {
           return options;
         }
       }
@@ -236,11 +229,11 @@ const createBaseExtensionCreator = <
  * The created extensions are instantiated and placed into the editor to provide
  * different kinds of functionality.
  */
-export const ExtensionCreator = {
-  ...createBaseExtensionCreator(),
+export const ExtensionFactory = {
+  ...createBaseExtensionFactory(),
 
   /**
-   * Set the `Config` and `Props` for the created extension.
+   * Set the `Settings` and `Props` for the created extension.
    *
    * @remarks
    *
@@ -251,9 +244,9 @@ export const ExtensionCreator = {
    * configuration.
    *
    * ```ts
-   * import { ExtensionCreator, BaseExtensionConfig } from '@remirror/core';
+   * import { ExtensionFactory, BaseExtensionSettings } from '@remirror/core';
    *
-   * interface MyExtensionConfig extends BaseExtensionConfig {
+   * interface MyExtensionSettings extends BaseExtensionSettings {
    *   custom: boolean;
    * }
    *
@@ -261,8 +254,8 @@ export const ExtensionCreator = {
    *   onChange: (times: number) => void;
    * }
    *
-   * const MyExtension = ExtensionCreator
-   *   .typed<MyExtensionConfig, MyExtensionProps>()
+   * const MyExtension = ExtensionFactory
+   *   .typed<MyExtensionSettings, MyExtensionProps>()
    *   .plain({
    *     name: 'mine',
    *     defaultProps: {
@@ -271,7 +264,7 @@ export const ExtensionCreator = {
    *   });
    * ```
    */
-  typed<Config extends BaseExtensionSettings, Props extends object = {}>() {
-    return createBaseExtensionCreator<Config, Props>();
+  typed<Settings extends BaseExtensionSettings, Props extends object = {}>() {
+    return createBaseExtensionFactory<Settings, Props>();
   },
 };

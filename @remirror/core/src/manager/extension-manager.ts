@@ -7,8 +7,16 @@ import { suggest, Suggester } from 'prosemirror-suggest';
 import { ComponentType } from 'react';
 
 import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
-import { bool, hasOwnProperty, isArray, isEqual, isFunction, object } from '@remirror/core-helpers';
-import { isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers/lib/core-helpers';
+import {
+  bool,
+  hasOwnProperty,
+  isArray,
+  isEqual,
+  isFunction,
+  isIdentifierOfType,
+  isRemirrorType,
+  object,
+} from '@remirror/core-helpers';
 import {
   ActionMethod,
   AnyActions,
@@ -39,7 +47,18 @@ import {
   getPluginState,
 } from '@remirror/core-utils';
 
-import { AnyExtension, isMarkExtension, isNodeExtension } from './extension';
+import {
+  ActionsFromExtensions,
+  AnyExtension,
+  FlexibleExtension,
+  InferFlexibleExtensionList,
+  isMarkExtension,
+  isNodeExtension,
+  MarkNames,
+  NodeNames,
+  PlainExtensionNames,
+  SchemaFromExtensions,
+} from '../extension';
 import {
   createCommands,
   createExtensionTags,
@@ -50,16 +69,7 @@ import {
   hasExtensionProperty,
   ignoreFunctions,
   transformExtensionMap,
-} from './extension-manager.helpers';
-import {
-  ActionsFromExtensions,
-  FlexibleExtension,
-  InferFlexibleExtensionList,
-  MarkNames,
-  NodeNames,
-  PlainExtensionNames,
-  SchemaFromExtensions,
-} from './extension-types';
+} from './manager-helpers';
 
 /**
  * Checks to see whether the provided value is an `ExtensionManager`.

@@ -1,12 +1,12 @@
 import { TestExtension } from '@remirror/test-fixtures';
 
-import { transformExtensionMap } from '../extension-manager.helpers';
+import { transformExtensionMap } from '../manager/manager-helpers';
 import { DocExtension, TextExtension } from '../nodes';
 
 describe('transformExtensionMap', () => {
   it('maps the extensions', () => {
-    const doc = DocExtension.of({});
-    const test = TestExtension.of();
+    const doc = DocExtension.of();
+    const test = TestExtension.of({});
     const text = TextExtension.of();
     const extensions = [
       { extension: doc, priority: 2 },
@@ -19,7 +19,7 @@ describe('transformExtensionMap', () => {
 
   it('sorts the extensions by priority', () => {
     const doc = DocExtension.of();
-    const test = TestExtension.of();
+    const test = TestExtension.of({ run: true });
     const text = TextExtension.of();
     const extensions = [
       { extension: doc, priority: 1 },
