@@ -37,10 +37,10 @@ import {
   CreateTestEditorReturn,
   GenericExtension,
   GetNames,
-  MarkWithAttrs as MarkWithAttributes,
-  MarkWithoutAttrs as MarkWithoutAttributes,
-  NodeWithAttrs as NodeWithAttributes,
-  NodeWithoutAttrs as NodeWithoutAttributes,
+  MarkWithAttributes,
+  MarkWithoutAttributes,
+  NodeWithAttributes,
+  NodeWithoutAttributes,
   Tags,
 } from './jest-remirror-types';
 import { replaceSelection } from './jest-remirror-utils';
@@ -218,26 +218,26 @@ export const renderEditor = <
 
   const { schema } = view.state;
 
-  const nodesWithAttributes: NodeWithAttrs<GAttrNodeNames> = object();
+  const nodesWithAttributes: NodeWithAttributes<GAttrNodeNames> = object();
   attributeNodes.filter(isNodeExtension).forEach(({ name }) => {
     nodesWithAttributes[name as GAttrNodeNames] = (attributes: Attributes = object()) =>
       nodeFactory({ name, schema, attributes: attributes });
   });
 
-  const nodesWithoutAttributes: NodeWithoutAttrs<GPlainNodeNames> = Cast({
+  const nodesWithoutAttributes: NodeWithoutAttributes<GPlainNodeNames> = Cast({
     p: nodeFactory({ name: 'paragraph', schema }),
   });
   [...plainNodes, ...innerNodeExtensions].filter(isNodeExtension).forEach(({ name }) => {
     nodesWithoutAttributes[name as GPlainNodeNames] = nodeFactory({ name, schema });
   });
 
-  const marksWithAttributes: MarkWithAttrs<GAttrMarkNames> = object();
+  const marksWithAttributes: MarkWithAttributes<GAttrMarkNames> = object();
   attributeMarks.filter(isMarkExtension).forEach(({ name }) => {
     marksWithAttributes[name as GAttrMarkNames] = (attributes: Attributes = object()) =>
       markFactory({ name, schema, attributes: attributes });
   });
 
-  const marksWithoutAttributes: MarkWithoutAttrs<GPlainMarkNames> = object();
+  const marksWithoutAttributes: MarkWithoutAttributes<GPlainMarkNames> = object();
   plainMarks.filter(isMarkExtension).forEach(({ name }) => {
     marksWithoutAttributes[name as GPlainMarkNames] = markFactory({ name, schema });
   });

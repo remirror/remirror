@@ -29,8 +29,8 @@ import {
 } from '@remirror/core';
 
 import {
-  CodeBlockAttrs as CodeBlockAttributes,
-  CodeBlockExtensionOptions,
+  CodeBlockAttributes,
+  CodeBlockExtensionSettings,
   FormattedContent,
 } from './code-block-types';
 
@@ -67,7 +67,7 @@ function parseRefractorNodes(
   });
 }
 
-interface CreateDecorationsParams extends Pick<CodeBlockExtensionOptions, 'defaultLanguage'> {
+interface CreateDecorationsParams extends Pick<CodeBlockExtensionSettings, 'defaultLanguage'> {
   /**
    * The list of codeBlocks and their positions which we would like to update.
    */
@@ -176,9 +176,9 @@ export const getNodeInformationFromState = (state: EditorState): NodeInformation
 };
 
 /**
- * Check that the attributes exist and are valid for the codeBlock updateAttrs.
+ * Check that the attributes exist and are valid for the codeBlock updateAttributes.
  */
-export const isValidCodeBlockAttrs = (attributes: Attributes): attrs is CodeBlockAttrs =>
+export const isValidCodeBlockAttributes = (attributes: Attributes): attrs is CodeBlockAttributes =>
   bool(
     attributes &&
       isObject(attributes) &&
@@ -191,11 +191,11 @@ export const isValidCodeBlockAttrs = (attributes: Attributes): attrs is CodeBloc
  *
  * This is used to update the language for the codeBlock.
  */
-export const updateNodeAttrs = (type: NodeType) => (
-  attributes: CodeBlockAttrs,
+export const updateNodeAttributes = (type: NodeType) => (
+  attributes: CodeBlockAttributes,
 ): ProsemirrorCommandFunction => ({ tr, selection }, dispatch) => {
-  if (!isValidCodeBlockAttrs(attributes)) {
-    throw new Error('Invalid attrs passed to the updateAttrs method');
+  if (!isValidCodeBlockAttributes(attributes)) {
+    throw new Error('Invalid attrs passed to the updateAttributes method');
   }
 
   const parent = findParentNodeOfType({ types: type, selection });
@@ -264,7 +264,7 @@ export const getLanguage = ({ language, supportedLanguages, fallback }: GetLangu
 interface FormatCodeBlockFactoryParams
   extends NodeTypeParameter,
     Required<
-      Pick<CodeBlockExtensionOptions, 'formatter' | 'supportedLanguages' | 'defaultLanguage'>
+      Pick<CodeBlockExtensionSettings, 'formatter' | 'supportedLanguages' | 'defaultLanguage'>
     > {}
 
 /**

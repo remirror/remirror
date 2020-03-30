@@ -15,16 +15,15 @@ import {
   uniqueId,
 } from '@remirror/core';
 
-import {
-  CollaborationAttrs as CollaborationAttributes,
-  CollaborationExtensionOptions,
-} from './collaboration-types';
+import { CollaborationAttributes, CollaborationExtensionOptions } from './collaboration-types';
 
 /**
  * Check that the attributes exist and are valid for the collaboration update
  * command method.
  */
-const isValidCollaborationAttributes = (attributes: Attributes): attrs is CollaborationAttrs => {
+const isValidCollaborationAttributes = (
+  attributes: Attributes,
+): attrs is CollaborationAttributes => {
   return !(!attributes || !isArray(attributes.steps) || !isNumber(attributes.version));
 };
 
@@ -61,7 +60,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
    */
   public commands({ getState, schema }: CommandParameter) {
     return {
-      collaborationUpdate: (attributes: CollaborationAttrs): ProsemirrorCommandFunction => (
+      collaborationUpdate: (attributes: CollaborationAttributes): ProsemirrorCommandFunction => (
         _,
         dispatch,
       ) => {

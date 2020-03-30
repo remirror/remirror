@@ -5,7 +5,7 @@ import { NodeExtensionSpec } from '@remirror/core-types';
 import { fromHTML } from '@remirror/core-utils';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 
-import { NodeExtension } from '../';
+import { NodeExtension } from '..';
 
 class CustomExtension extends NodeExtension {
   get name() {
@@ -16,12 +16,12 @@ class CustomExtension extends NodeExtension {
     return {
       content: 'inline*',
       group: NodeGroup.Block,
-      attrs: this.extraAttrs(),
+      attrs: this.extraAttributes(),
       draggable: false,
       parseDOM: [
         {
           tag: 'p',
-          getAttrs: (node) => this.getExtraAttrs(node as Element),
+          getAttrs: (node) => this.getExtraAttributes(node as Element),
         },
       ],
       toDOM: () => ['p', 0],
@@ -29,14 +29,14 @@ class CustomExtension extends NodeExtension {
   }
 }
 
-describe('extraAttrs', () => {
+describe('extraAttributes', () => {
   const run = 'true';
   const title = 'awesome';
 
   const { schema } = createBaseTestManager([
     {
       extension: new CustomExtension({
-        extraAttrs: [
+        extraAttributes: [
           'title',
           ['run', 'failure', 'data-run'],
           {
@@ -83,7 +83,7 @@ describe('extraAttrs', () => {
     expect(node).toEqualProsemirrorNode(expected);
   });
 
-  it('support parsing with getAttrs method', () => {
+  it('support parsing with getAttributes method', () => {
     const node = fromHTML({
       content: `<p title="${title}" data-run="${run}" simple="believe me">hello</p>`,
       schema,

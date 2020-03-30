@@ -23,7 +23,7 @@ export class OrderedListExtension extends NodeExtension {
         order: {
           default: 1,
         },
-        ...this.extraAttrs(),
+        ...this.extraAttributes(),
       },
       content: 'listItem+',
       group: NodeGroup.Block,

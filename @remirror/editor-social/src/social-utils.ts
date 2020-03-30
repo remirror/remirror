@@ -1,5 +1,5 @@
 import { Attributes, EditorView } from '@remirror/core';
-import { MentionExtensionAttrs } from '@remirror/extension-mention';
+import { MentionExtensionAttributes } from '@remirror/extension-mention';
 
 import { MentionGetterParams as MentionGetterParameters } from './social-types';
 
@@ -64,7 +64,7 @@ export const createOnClickMethodFactory = ({
     suggester: { char, name },
     range,
   } = getMention();
-  const parameters: MentionExtensionAttrs = {
+  const parameters: MentionExtensionAttributes = {
     id,
     label: `${char}${id}`,
     name,

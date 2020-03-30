@@ -18,7 +18,7 @@ export enum ErrorConstant {
   UNKNOWN = 'RMR0001',
 
   /**
-   * You can only pass `extraAttrs` to a node extension or a mark extension.
+   * You can only pass `extraAttributes` to a node extension or a mark extension.
    */
   EXTRA_ATTRS = 'RMR0002',
 

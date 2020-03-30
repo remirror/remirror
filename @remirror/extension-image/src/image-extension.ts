@@ -12,7 +12,7 @@ import {
 } from '@remirror/core';
 
 import { createImageExtensionPlugin } from './image-plugin';
-import { getAttrs as getAttributes } from './image-utils';
+import { getAttributes } from './image-utils';
 
 const hasCursor = <T extends object>(argument: T): arg is T & { $cursor: ResolvedPos } => {
   return bool(Cast(argument).$cursor);
@@ -27,7 +27,7 @@ export class ImageExtension extends NodeExtension {
     return {
       inline: true,
       attrs: {
-        ...this.extraAttrs(null),
+        ...this.extraAttributes(null),
         align: { default: null },
         alt: { default: '' },
         crop: { default: null },
@@ -43,7 +43,7 @@ export class ImageExtension extends NodeExtension {
         {
           tag: 'img[src]',
           getAttrs: (domNode) =>
-            isElementDOMNode(domNode) ? getAttributes(this.getExtraAttrs(domNode)) : {},
+            isElementDOMNode(domNode) ? getAttributes(this.getExtraAttributes(domNode)) : {},
         },
       ],
       toDOM(node) {

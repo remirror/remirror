@@ -15,7 +15,7 @@ export class HorizontalRuleExtension extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
-      attrs: this.extraAttrs(),
+      attrs: this.extraAttributes(),
       group: NodeGroup.Block,
       parseDOM: [{ tag: 'hr' }],
       toDOM: () => ['hr'],

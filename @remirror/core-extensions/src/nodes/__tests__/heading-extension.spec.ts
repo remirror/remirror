@@ -31,11 +31,11 @@ describe('schema', () => {
     expect(node).toEqualProsemirrorNode(expected);
   });
 
-  describe('extraAttrs', () => {
+  describe('extraAttributes', () => {
     const { schema } = createBaseTestManager([
       {
         extension: new HeadingExtension({
-          extraAttrs: ['title', ['custom', 'failure', 'data-custom']],
+          extraAttributes: ['title', ['custom', 'failure', 'data-custom']],
         }),
         priority: 1,
       },
@@ -52,7 +52,7 @@ describe('schema', () => {
     it('does not override the built in attributes', () => {
       const { schema } = createBaseTestManager([
         {
-          extension: new HeadingExtension({ extraAttrs: [['level', 'should not appear']] }),
+          extension: new HeadingExtension({ extraAttributes: [['level', 'should not appear']] }),
           priority: 1,
         },
       ]);

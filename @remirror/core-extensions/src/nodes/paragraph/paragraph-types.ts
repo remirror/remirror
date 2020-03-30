@@ -22,7 +22,7 @@ export type IndentLevels = [number, number];
  */
 export type TextAlignment = 'left' | 'right' | 'center' | 'justify';
 
-export type ParagraphExtensionAttrs = Attributes<{
+export type ParagraphExtensionAttributes = Attributes<{
   /**
    * The alignment of the text
    */

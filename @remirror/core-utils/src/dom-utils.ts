@@ -261,7 +261,7 @@ export const isEmptyParagraphNode = (node: ProsemirrorNode | null | undefined) =
  * @param state - the editor state
  * @param type - the mark type
  */
-export const getMarkAttrs = (state: EditorState, type: MarkType) => {
+export const getMarkAttributes = (state: EditorState, type: MarkType) => {
   const { from, to } = state.selection;
   let marks: Mark[] = [];
 

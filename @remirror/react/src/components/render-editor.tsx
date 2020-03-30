@@ -47,24 +47,24 @@ import { RemirrorThemeContext } from '@remirror/ui';
 import { defaultProps } from '../react-constants';
 import { defaultPositioner } from '../react-positioners';
 import {
-  BaseListenerParams,
-  CalculatePositionerParams,
-  EditorStateEventListenerParams,
+  BaseListenerParams as BaseListenerParameters,
+  CalculatePositionerParams as CalculatePositionerParameters,
+  EditorStateEventListenerParams as EditorStateEventListenerParameters,
   FocusType,
-  GetPositionerPropsConfig,
+  GetPositionerPropsConfig as GetPositionerPropertiesConfig,
   GetPositionerReturn,
-  GetRootPropsConfig,
-  InjectedRemirrorProps,
-  ListenerParams,
+  GetRootPropsConfig as GetRootPropertiesConfig,
+  InjectedRemirrorProps as InjectedRemirrorProperties,
+  ListenerParams as ListenerParameters,
   PositionerMapValue,
-  PositionerProps,
-  PositionerRefFactoryParams,
-  RefKeyRootProps,
-  RemirrorEventListenerParams,
-  RemirrorProps,
+  PositionerProps as PositionerProperties,
+  PositionerRefFactoryParams as PositionerReferenceFactoryParameters,
+  RefKeyRootProps as ReferenceKeyRootProperties,
+  RemirrorEventListenerParams as RemirrorEventListenerParameters,
+  RemirrorProps as RemirrorProperties,
   RemirrorState,
-  RemirrorStateListenerParams,
-  UpdateStateParams,
+  RemirrorStateListenerParams as RemirrorStateListenerParameters,
+  UpdateStateParams as UpdateStateParameters,
 } from '../react-types';
 
 export class RenderEditor<GExtension extends AnyExtension = any> extends PureComponent<
@@ -88,10 +88,10 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    * to the components state for internal usage.
    */
   public static getDerivedStateFromProps(
-    props: RemirrorProps,
+    properties: RemirrorProps,
     state: RemirrorState,
   ): RemirrorState | null {
-    const { onStateChange, value } = props;
+    const { onStateChange, value } = properties;
     const {
       editor: { newState },
       ...rest
@@ -153,11 +153,11 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    */
   public context!: RemirrorThemeContextType;
 
-  constructor(props: RemirrorProps<GExtension>, context: RemirrorThemeContextType) {
-    super(props, context);
+  constructor(properties: RemirrorProps<GExtension>, context: RemirrorThemeContextType) {
+    super(properties, context);
 
     // Ensure that children is a render prop.
-    propIsFunction(props.children);
+    propIsFunction(properties.children);
 
     // Initialize the manager and create the initial state.
     this.manager.initialize({
@@ -291,13 +291,14 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     }
     this.rootPropsConfig.called = true;
 
-    const { refKey = 'ref', ...config } = options ?? object<NonNullable<typeof options>>();
+    const { refKey: referenceKey = 'ref', ...config } =
+      options ?? object<NonNullable<typeof options>>();
     const { sx } = this.context;
     const css = sx(this.editorStyles);
     const extra = bool(css) ? { css } : {};
 
     return {
-      [refKey]: this.onRef,
+      [referenceKey]: this.onRef,
       key: this.uid,
       ...extra,
       ...config,
@@ -313,35 +314,35 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
   private readonly getPositionerProps = <GRefKey extends string = 'ref'>(
     options: GetPositionerPropsConfig<GExtension, GRefKey> | undefined,
   ) => {
-    const { refKey = 'ref', ...config } = {
+    const { refKey: referenceKey = 'ref', ...config } = {
       ...defaultPositioner,
       ...(options ?? object<NonNullable<typeof options>>()),
     };
 
     // Create the onRef handler which will store the ref to the positioner
     // component
-    const ref = this.positionerRefFactory({
+    const reference = this.positionerRefFactory({
       positionerId: config.positionerId,
       position: config.initialPosition,
     });
 
     // Calculate the props
-    const props = this.calculatePositionProps({ ...config });
+    const properties = this.calculatePositionProps({ ...config });
 
-    const ret: GetPositionerReturn<GRefKey> = {
-      ...props,
-      [refKey]: ref,
-    } as any;
+    const returnValue: GetPositionerReturn<GRefKey> = {
+      ...properties,
+      [referenceKey]: reference,
+    };
 
-    return ret;
+    return returnValue;
   };
 
   /**
    * Stores the Prosemirror editor dom instance for this component using `refs`
    */
-  private readonly onRef: Ref<HTMLElement> = (ref) => {
-    if (ref) {
-      this.editorRef = ref;
+  private readonly onRef: Ref<HTMLElement> = (reference) => {
+    if (reference) {
+      this.editorRef = reference;
       this.onRefLoad();
     }
   };
@@ -381,11 +382,11 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     positionerId,
   }: CalculatePositionerParams<GExtension>): PositionerProps {
     const positionerMapItem = this.positionerMap.get(positionerId);
-    let positionerProps = { isActive: false, ...initialPosition };
+    let positionerProperties = { isActive: false, ...initialPosition };
 
     // No element exist yet - so we can return early
     if (!positionerMapItem) {
-      return positionerProps;
+      return positionerProperties;
     }
 
     // Nothing has changed so return the prev value.
@@ -394,23 +395,23 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     }
 
     const { element, prev } = positionerMapItem;
-    const params = { element, view: this.view, ...this.state.editor };
+    const parameters = { element, view: this.view, ...this.state.editor };
 
-    positionerProps.isActive = isActive(params);
+    positionerProperties.isActive = isActive(parameters);
 
-    if (!positionerProps.isActive) {
+    if (!positionerProperties.isActive) {
       if (prev.isActive) {
         // This has changed so store the new value.
-        this.positionerMap.set(positionerId, { element, prev: positionerProps });
-        return positionerProps;
+        this.positionerMap.set(positionerId, { element, prev: positionerProperties });
+        return positionerProperties;
       }
       return prev;
     }
 
-    positionerProps = { ...positionerProps, ...getPosition(params) };
-    this.positionerMap.set(positionerId, { element, prev: positionerProps });
+    positionerProperties = { ...positionerProperties, ...getPosition(parameters) };
+    this.positionerMap.set(positionerId, { element, prev: positionerProperties });
 
-    return positionerProps as PositionerProps;
+    return positionerProperties as PositionerProps;
   }
 
   /**
@@ -418,22 +419,24 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    */
   private readonly getAttributes = (ssr = false) => {
     const { attributes } = this.props;
-    const propAttributes = isFunction(attributes)
+    const propertyAttributes = isFunction(attributes)
       ? attributes(this.eventListenerParams())
       : attributes;
 
-    const managerAttrs = this.manager.attributes;
+    const managerAttributes = this.manager.attributes;
 
     const defaultAttributes = {
       role: 'textbox',
       'aria-multiline': 'true',
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label ?? '',
-      ...managerAttrs,
-      class: [ssr && 'Prosemirror', EDITOR_CLASS_NAME, managerAttrs.class].filter(bool).join(' '),
+      ...managerAttributes,
+      class: [ssr && 'Prosemirror', EDITOR_CLASS_NAME, managerAttributes.class]
+        .filter(bool)
+        .join(' '),
     };
 
-    return { ...defaultAttributes, ...propAttributes };
+    return { ...defaultAttributes, ...propertyAttributes };
   };
 
   /**
@@ -535,11 +538,11 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    * Adds the prosemirror view to the dom in the position specified via the
    * component props.
    */
-  private addProsemirrorViewToDom(reactRef: HTMLElement, viewDom: Element) {
+  private addProsemirrorViewToDom(reactReference: HTMLElement, viewDom: Element) {
     if (this.props.insertPosition === 'start') {
-      reactRef.insertBefore(viewDom, reactRef.firstChild);
+      reactReference.insertBefore(viewDom, reactReference.firstChild);
     } else {
-      reactRef.appendChild(viewDom);
+      reactReference.append(viewDom);
     }
   }
 
@@ -551,7 +554,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    */
   private onRefLoad() {
     if (!this.editorRef) {
-      throw Error(
+      throw new Error(
         'Something went wrong when initializing the text editor. Please check your setup.',
       );
     }
@@ -587,8 +590,8 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
   }
 
   public componentDidUpdate(
-    { editable, manager: prevManager }: RemirrorProps<GExtension>,
-    prevState: RemirrorState<SchemaFromExtensions<GExtension>>,
+    { editable, manager: previousManager }: RemirrorProps<GExtension>,
+    previousState: RemirrorState<SchemaFromExtensions<GExtension>>,
   ) {
     // Ensure that children is still a render prop
     propIsFunction(this.props.children);
@@ -599,7 +602,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     }
 
     // Check if the manager has changed
-    if (!prevManager.isEqual(this.props.manager)) {
+    if (!previousManager.isEqual(this.props.manager)) {
       this.updateExtensionManager();
       this.view.setProps({ ...this.view.props, nodeViews: this.manager.store.nodeViews });
 
@@ -608,7 +611,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
       // compatibility with the new manager.
       const htmlString = toHTML({
         node: this.state.editor.newState.doc,
-        schema: prevManager.schema,
+        schema: previousManager.schema,
       });
       const newContent = fromHTML({
         schema: this.manager.schema,
@@ -621,7 +624,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     const { newState } = this.state.editor;
 
     // Check if this is controlled component and run the post update handler
-    if (this.props.onStateChange && newState !== prevState.editor.newState) {
+    if (this.props.onStateChange && newState !== previousState.editor.newState) {
       // The update was caused by an internal change
       this.controlledUpdate(newState);
     }
@@ -716,7 +719,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     return {
       ...this.baseListenerParams({ tr }),
       state: state ?? this.state.editor.newState,
-    } as any;
+    };
   }
 
   /**
@@ -751,7 +754,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     let pos: number | FromToParameter;
 
     /** Ensure the selection is within the current document range */
-    const clampToDoc = (value: number) => clamp({ min: 0, max: doc.content.size, value });
+    const clampToDocument = (value: number) => clamp({ min: 0, max: doc.content.size, value });
 
     if (position === undefined || position === true) {
       pos = { from, to };
@@ -766,11 +769,11 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     let newSelection: TextSelection;
 
     if (isNumber(pos)) {
-      pos = clampToDoc(pos);
+      pos = clampToDocument(pos);
       newSelection = TextSelection.near(doc.resolve(pos));
     } else {
-      const start = clampToDoc(pos.from);
-      const end = clampToDoc(pos.to);
+      const start = clampToDocument(pos.from);
+      const end = clampToDocument(pos.to);
       newSelection = TextSelection.create(doc, start, end);
     }
 
@@ -898,7 +901,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
       ...this.renderParams,
     });
 
-    const { children, ...props } = getElementProps(element);
+    const { children, ...properties } = getElementProps(element);
 
     if (this.rootPropsConfig.called) {
       // Simply return the element as this method can never actually be called
@@ -915,7 +918,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     ) {
       const { childAsRoot } = element.props;
       return childAsRoot
-        ? cloneElement(element, props, this.renderClonedElement(children, childAsRoot))
+        ? cloneElement(element, properties, this.renderClonedElement(children, childAsRoot))
         : element;
     } else {
       return isReactDOMElement(element) ? (
@@ -933,12 +936,15 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    */
   private renderClonedElement(
     element: JSX.Element,
-    rootProps?: GetRootPropsConfig<string> | boolean,
+    rootProperties: GetRootPropsConfig<string> | boolean,
   ) {
     const { children, ...rest } = getElementProps(element);
-    const props = isPlainObject(rootProps) ? { ...rootProps, ...rest } : rest;
+    const properties = isPlainObject(rootProperties) ? { ...rootProperties, ...rest } : rest;
 
-    return cloneElement(element, this.internalGetRootProps(props, this.renderChildren(children)));
+    return cloneElement(
+      element,
+      this.internalGetRootProps(properties, this.renderChildren(children)),
+    );
   }
 
   public render() {

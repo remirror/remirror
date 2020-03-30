@@ -21,7 +21,7 @@ export interface HeadingExtensionOptions extends NodeExtensionConfig {
   defaultLevel?: number;
 }
 
-export type HeadingExtensionAttrs = Attributes<{
+export type HeadingExtensionAttributes = Attributes<{
   /**
    * The heading size.
    */
@@ -45,7 +45,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
   get schema(): NodeExtensionSpec {
     return {
       attrs: {
-        ...this.extraAttrs(null),
+        ...this.extraAttributes(null),
         level: {
           default: this.options.defaultLevel,
         },
@@ -74,7 +74,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
       /**
        * Toggle the heading for the current block.
        */
-      toggleHeading: (attributes: HeadingExtensionAttrs) =>
+      toggleHeading: (attributes: HeadingExtensionAttributes) =>
         toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs: attributes }),
     };
   }

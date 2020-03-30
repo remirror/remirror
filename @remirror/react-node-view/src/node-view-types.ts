@@ -2,8 +2,8 @@ import { ComponentType } from 'react';
 
 import {
   Attributes,
-  BaseExtensionConfigParameter,
   BaseExtensionSettings,
+  BaseExtensionSettingsParameter,
   EditorViewParameter,
   NodeWithAttributesParameter,
   SSRComponentProps,
@@ -12,8 +12,8 @@ import { PortalContainer } from '@remirror/react-portals';
 
 export interface NodeViewComponentProps<
   GOptions extends BaseExtensionSettings = BaseExtensionSettings,
-  GAttrs extends Attributes = Attributes
-> extends EditorViewParameter, SSRComponentProps<GOptions, GAttrs> {
+  GAttributes extends Attributes = Attributes
+> extends EditorViewParameter, SSRComponentProps<GOptions, GAttributes> {
   /**
    * Provides the position of the node view in the prosemirror document
    */
@@ -38,12 +38,12 @@ export type GetPosition = (() => number) | boolean;
 
 export interface ReactNodeViewParams<
   GOptions extends BaseExtensionSettings = BaseExtensionSettings,
-  GAttrs extends Attributes = Attributes
+  GAttributes extends Attributes = Attributes
 >
   extends EditorViewParameter,
-    ComponentParams<GOptions, GAttrs>,
-    NodeWithAttributesParameter<GAttrs>,
-    BaseExtensionConfigParameter<GOptions> {
+    ComponentParams<GOptions, GAttributes>,
+    NodeWithAttributesParameter<GAttributes>,
+    BaseExtensionSettingsParameter<GOptions> {
   /**
    * Method for retrieving the position of the current nodeView
    */
@@ -58,18 +58,18 @@ export interface ReactNodeViewParams<
 
 export interface CreateNodeViewParams<
   GOptions extends BaseExtensionSettings = BaseExtensionSettings,
-  GAttrs extends Attributes = Attributes
+  GAttributes extends Attributes = Attributes
 >
   extends Pick<ReactNodeViewParams, 'portalContainer'>,
-    ComponentParams<GOptions, GAttrs>,
-    BaseExtensionConfigParameter<GOptions> {}
+    ComponentParams<GOptions, GAttributes>,
+    BaseExtensionSettingsParameter<GOptions> {}
 
 export interface ComponentParams<
   GOptions extends BaseExtensionSettings = BaseExtensionSettings,
-  GAttrs extends Attributes = Attributes
+  GAttributes extends Attributes = Attributes
 > {
   /**
    * The component that will be rendered by this node view.
    */
-  Component: ComponentType<NodeViewComponentProps<GOptions, GAttrs>>;
+  Component: ComponentType<NodeViewComponentProps<GOptions, GAttributes>>;
 }

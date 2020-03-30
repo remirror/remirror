@@ -269,7 +269,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
     const components: Record<string, ComponentType> = object();
 
     for (const extension of this.extensions) {
-      if (!extension.config.SSRComponent || extension.options.exclude.ssr) {
+      if (!extension.#config.SSRComponent || extension.options.exclude.ssr) {
         continue;
       }
 

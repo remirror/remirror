@@ -19,7 +19,7 @@ export class BlockquoteExtension extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
-      attrs: this.extraAttrs(),
+      attrs: this.extraAttributes(),
       content: 'block*',
       group: NodeGroup.Block,
       defining: true,

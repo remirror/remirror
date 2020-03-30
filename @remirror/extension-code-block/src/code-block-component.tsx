@@ -7,16 +7,16 @@ import SyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-light';
 
 import { SSRComponentProps } from '@remirror/core';
 
-import { CodeBlockAttrs, CodeBlockExtensionOptions } from './code-block-types';
+import { CodeBlockAttributes, CodeBlockExtensionSettings } from './code-block-types';
 import { getLanguage } from './code-block-utils';
 
 /**
  * Renders the codeBlock for use in an SSR Environment
  */
 export const CodeBlockComponent = ({
-  config: options,
+  settings: options,
   node,
-}: SSRComponentProps<Required<CodeBlockExtensionOptions>, CodeBlockAttrs>) => {
+}: SSRComponentProps<Required<CodeBlockExtensionSettings>, CodeBlockAttributes>) => {
   const { language: lang } = node.attrs;
   const language = getLanguage({
     language: lang,

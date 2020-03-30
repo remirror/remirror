@@ -17,7 +17,7 @@ import {
   TransactionParameter,
 } from '@remirror/core';
 
-import { CodeBlockExtensionOptions } from './code-block-types';
+import { CodeBlockExtensionSettings } from './code-block-types';
 import {
   createDecorations,
   getNodeInformationFromState,
@@ -192,7 +192,7 @@ interface UpdateDecorationSetParams extends TransactionParameter {
 }
 
 interface CreateCodeBlockPluginParams extends ExtensionManagerNodeTypeParams {
-  extension: NodeExtension<CodeBlockExtensionOptions>;
+  extension: NodeExtension<CodeBlockExtensionSettings>;
 }
 
 /**

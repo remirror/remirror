@@ -16,7 +16,7 @@ export class HardBreakExtension extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
-      attrs: this.extraAttrs(),
+      attrs: this.extraAttributes(),
       inline: true,
       group: 'inline',
       selectable: false,

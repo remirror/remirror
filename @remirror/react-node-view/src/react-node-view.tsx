@@ -26,7 +26,7 @@ import {
 
 export class ReactNodeView<
   GOptions extends BaseExtensionSettings = BaseExtensionSettings,
-  GAttrs extends Attributes = Attributes
+  GAttributes extends Attributes = Attributes
 > implements NodeView {
   /**
    * The outer element exposed to the editor.
@@ -45,7 +45,7 @@ export class ReactNodeView<
   /**
    * The ProsemirrorNode that this nodeView is responsible for rendering.
    */
-  public node: NodeWithAttributes<GAttrs>;
+  public node: NodeWithAttributes<GAttributes>;
 
   /**
    * The editor this nodeView belongs to.
@@ -71,7 +71,7 @@ export class ReactNodeView<
   /**
    * The component responsible for rendering the dom via React.
    */
-  private readonly Component: ComponentType<NodeViewComponentProps<GOptions, GAttrs>>;
+  private readonly Component: ComponentType<NodeViewComponentProps<GOptions, GAttributes>>;
 
   /**
    * Whether or not the node is currently selected.
@@ -90,7 +90,7 @@ export class ReactNodeView<
     portalContainer,
     view,
     config: options,
-  }: ReactNodeViewParams<GOptions, GAttrs>) {
+  }: ReactNodeViewParams<GOptions, GAttributes>) {
     this.node = node;
     this.view = view;
     this.portalContainer = portalContainer;
@@ -115,7 +115,7 @@ export class ReactNodeView<
    */
   public init() {
     this.domRef = this.createDomRef();
-    this.setDomAttrs(this.node, this.domRef);
+    this.setDomAttributes(this.node, this.domRef);
 
     const { dom: contentDOMWrapper, contentDOM } = this.getContentDOM() ?? {
       dom: undefined,
@@ -211,10 +211,10 @@ export class ReactNodeView<
     }
 
     if (this.domRef && !this.node.sameMarkup(node)) {
-      this.setDomAttrs(node, this.domRef);
+      this.setDomAttributes(node, this.domRef);
     }
 
-    this.node = node as NodeWithAttributes<GAttrs>;
+    this.node = node as NodeWithAttributes<GAttributes>;
     this.renderReactComponent(() => this.render(this.handleRef));
 
     return true;
@@ -225,7 +225,7 @@ export class ReactNodeView<
    *
    * @param node The Prosemirror Node from which to source the attributes
    */
-  public setDomAttrs(node: ProsemirrorNode, element: HTMLElement) {
+  public setDomAttributes(node: ProsemirrorNode, element: HTMLElement) {
     const { toDOM } = this.node.type.spec;
     if (toDOM) {
       const domSpec = toDOM(node);
@@ -292,11 +292,11 @@ export class ReactNodeView<
    */
   public static createNodeView<
     GOptions extends BaseExtensionSettings = BaseExtensionSettings,
-    GAttrs extends Attributes = Attributes
-  >({ Component, portalContainer, config: options }: CreateNodeViewParams<GOptions, GAttrs>) {
+    GAttributes extends Attributes = Attributes
+  >({ Component, portalContainer, config: options }: CreateNodeViewParams<GOptions, GAttributes>) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
-      new ReactNodeView<GOptions, GAttrs>({
-        node: node as NodeWithAttributes<GAttrs>,
+      new ReactNodeView<GOptions, GAttributes>({
+        node: node as NodeWithAttributes<GAttributes>,
         view,
         getPosition,
         portalContainer,

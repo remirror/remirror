@@ -17,7 +17,7 @@ if (__DEV__) {
   errorMessageMap = {
     RMR0000: 'Production error. No details available.',
     RMR0001: "An error happened but we're not quite sure why.",
-    RMR0002: 'You can only pass `extraAttrs` to a node extension or a mark extension.',
+    RMR0002: 'You can only pass `extraAttributes` to a node extension or a mark extension.',
     RMR0003: 'This is a custom error, possibly thrown by an external library.',
   };
 }

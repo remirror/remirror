@@ -239,7 +239,7 @@ export type ExtraAttributesTuple = [string, string, string?];
 export type ExtraAttributes = string | ExtraAttributesTuple | ExtraAttributesObject;
 
 /**
- * A method that can pull all the extraAttrs from the provided dom node.
+ * A method that can pull all the extraAttributes from the provided dom node.
  */
 export type GetExtraAttributes = (domNode: Node) => Record<string, unknown>;
 
@@ -253,16 +253,16 @@ export type GetExtraAttributes = (domNode: Node) => Record<string, unknown>;
  * ```ts
  * const schema = {
  *   attrs: {
- *      ...createExtraAttrs({ fallback: null }),
+ *      ...createExtraAttributes({ fallback: null }),
  *      href: {
  *       default: null,
  *     },
  *   },
  * }
  */
-export type CreateExtraAttrs = (params: CreateExtraAttrsParams) => Record<string, AttributeSpec>;
+export type CreateExtraAttributes = (params: CreateExtraAttributesParams) => Record<string, AttributeSpec>;
 
-interface CreateExtraAttrsParams {
+interface CreateExtraAttributesParams {
   /**
    * The fallback value to use for the extra attributes being created. Must be
    * provided.

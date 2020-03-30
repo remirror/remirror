@@ -10,7 +10,7 @@ export const isImageFileType = (file: File) => {
   return IMAGE_FILE_TYPES.has(file.type);
 };
 
-export const getAttrs = (extraAttributes: Attributes) => (domNode: HTMLElement) => {
+export const getAttributes = (extraAttributes: Attributes) => (domNode: HTMLElement) => {
   const { cssFloat, display, marginTop, marginLeft } = domNode.style;
   let { width, height } = domNode.style;
   let align = domNode.getAttribute('data-align') ?? domNode.getAttribute('align');

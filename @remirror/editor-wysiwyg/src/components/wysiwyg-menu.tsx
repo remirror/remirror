@@ -18,7 +18,7 @@ import {
   ActionNames,
   AnyFunction,
   Attributes,
-  getMarkAttrs,
+  getMarkAttributes,
   KeyOfThemeVariant,
 } from '@remirror/core';
 import { bubblePositioner, useRemirror } from '@remirror/react';
@@ -194,7 +194,7 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({
   const canRemove = () => actions.removeLink.isActive();
 
   const activatedLinkHref = useMemo<string | undefined>(() => {
-    return getMarkAttrs(state.newState, manager.schema.marks.link).href;
+    return getMarkAttributes(state.newState, manager.schema.marks.link).href;
   }, [manager, state]);
 
   return (

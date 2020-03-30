@@ -20,7 +20,7 @@ export class CodeBlockExtension extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
-      attrs: this.extraAttrs(),
+      attrs: this.extraAttributes(),
       content: 'text*',
       marks: '',
       group: NodeGroup.Block,

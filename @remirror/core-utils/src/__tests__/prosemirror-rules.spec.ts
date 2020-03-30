@@ -48,7 +48,7 @@ describe('markInputRule', () => {
     const rule = markInputRule({
       regexp: /~([^~]+)~$/,
       type: testSchema.marks.strong,
-      getAttributes: getAttributes,
+      getAttrs: getAttributes,
     });
     const {
       state: { selection },
@@ -91,7 +91,7 @@ describe('nodeInputRule', () => {
     const rule = nodeInputRule({
       regexp: /~([^~]+)~$/,
       type: testSchema.nodes.horizontalRule,
-      getAttributes: getAttributes,
+      getAttrs: getAttributes,
     });
     const {
       state: { selection },

@@ -23,7 +23,7 @@ import {
 import {
   AnyFunction,
   Attributes,
-  CreateExtraAttrs as CreateExtraAttributes,
+  CreateExtraAttributes,
   ExtraAttributes,
   GetExtraAttributes,
   ObjectNode,
@@ -451,7 +451,7 @@ type GetAttributesFunction = (p: string[] | string) => Attributes | undefined;
 
 /**
  * A function which takes a regex match array (strings) or a single string match
- * and transforms it into an `Attrs` object.
+ * and transforms it into an `Attributes` object.
  */
 export type GetAttributes = Attributes | GetAttributesFunction;
 
@@ -460,7 +460,7 @@ export interface GetAttributesParameter {
    * A helper function for setting receiving a match array / string and setting
    * the attributes for a node.
    */
-  getAttributes: GetAttributes;
+  getAttrs: GetAttributes;
 }
 
 /**
@@ -468,8 +468,8 @@ export interface GetAttributesParameter {
  */
 export interface SSRComponentProps<
   GOptions extends BaseExtensionSettings = BaseExtensionSettings,
-  GAttrs extends Attributes = Attributes
-> extends NodeWithAttributesParameter<GAttrs>, BaseExtensionConfigParameter<GOptions> {}
+  GAttributes extends Attributes = Attributes
+> extends NodeWithAttributesParameter<GAttributes>, BaseExtensionSettingsParameter<GOptions> {}
 
 /**
  * The tag names that apply to any extension whether plain, node or mark. These
@@ -542,19 +542,18 @@ export interface BaseExtensionSettings extends SSRComponentParameter {
    * Sometimes you need to add additional attributes to a node or mark. This
    * property enables this without needing to create a new extension.
    *
-   * - `extraAttrs: ['title']` Create an attribute with name `title`.When
+   * - `extraAttributes: ['title']` Create an attribute with name `title`.When
    *   parsing the dom it will look for the attribute `title`
-   * - `extraAttrs: [['custom', 'false', 'data-custom'],'title']` - Creates an
+   * - `extraAttributes: [['custom', 'false', 'data-custom'],'title']` - Creates an
    *   attribute with name `custom` and default value `false`. When parsing the
    *   dom it will look for the attribute `data-custom`
    *
    * @defaultValue `[]`
    */
-  extraAttrs?: ExtraAttributes[];
+  extraAttributes?: ExtraAttributes[];
 
   /**
-   * A configuration object which allows for excluding certain functionality
-   * from an extension.
+   * An object which excludes certain functionality from an extension.
    */
   exclude?: ExcludeOptions;
 
@@ -573,13 +572,6 @@ export interface BaseExtensionSettings extends SSRComponentParameter {
 }
 
 export interface ExcludeOptions {
-  /**
-   * Whether to exclude the extension's styles.
-   *
-   * @defaultValue `false`
-   */
-  styles?: boolean;
-
   /**
    * Whether to exclude the extension's pasteRules
    *
@@ -650,26 +642,26 @@ export interface SSRComponentParameter {
   SSRComponent?: ComponentType<any> | null;
 }
 
-export interface BaseExtensionConfigParameter<
-  Config extends BaseExtensionSettings = BaseExtensionSettings
+export interface BaseExtensionSettingsParameter<
+  Settings extends BaseExtensionSettings = BaseExtensionSettings
 > {
   /**
    * The static config that was passed into the extension that created this node
    * or mark.
    */
-  config: Config;
+  settings: Settings;
 }
 
 /**
  * The parameters passed to the `createSchema` method for node and mark
  * extensions.
  */
-export interface CreateSchemaParameter<Config extends BaseExtensionSettings> {
+export interface CreateSchemaParameter<Settings extends BaseExtensionSettings> {
   /**
    * All the static config options that have been passed into the extension when
    * being created (instantiated).
    */
-  config: Readonly<Config>;
+  config: Readonly<Settings>;
 
   /**
    * A method that creates the `AttributeSpec` for prosemirror that can be added
@@ -681,19 +673,19 @@ export interface CreateSchemaParameter<Config extends BaseExtensionSettings> {
    * ```ts
    * const schema = {
    *   attrs: {
-   *      ...createExtraAttrs({ fallback: null }),
+   *      ...createExtraAttributes({ fallback: null }),
    *      href: {
    *       default: null,
    *     },
    *   },
    * }
    */
-  createExtraAttrs: CreateExtraAttributes;
+  createExtraAttributes: CreateExtraAttributes;
 
   /**
    * Pull all extra attrs from the dom node provided.
    */
-  getExtraAttrs: GetExtraAttributes;
+  getExtraAttributes: GetExtraAttributes;
 }
 
 /**

@@ -26,18 +26,11 @@ import {
 
 import { CodeBlockComponent } from './code-block-component';
 import createCodeBlockPlugin from './code-block-plugin';
-import {
-  CodeBlockAttrs as CodeBlockAttributes,
-  CodeBlockExtensionOptions,
-} from './code-block-types';
-import {
-  formatCodeBlockFactory,
-  getLanguage,
-  updateNodeAttrs as updateNodeAttributes,
-} from './code-block-utils';
+import { CodeBlockAttributes, CodeBlockExtensionSettings } from './code-block-types';
+import { formatCodeBlockFactory, getLanguage, updateNodeAttributes } from './code-block-utils';
 import { SyntaxTheme, syntaxTheme } from './themes';
 
-export const codeBlockDefaultOptions: CodeBlockExtensionOptions = {
+export const codeBlockDefaultOptions: CodeBlockExtensionSettings = {
   SSRComponent: CodeBlockComponent,
   supportedLanguages: [],
   syntaxTheme: 'atomDark' as SyntaxTheme,
@@ -47,7 +40,7 @@ export const codeBlockDefaultOptions: CodeBlockExtensionOptions = {
   toggleType: 'paragraph',
 };
 
-export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions> {
+export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings> {
   get name() {
     return 'codeBlock' as const;
   }
@@ -76,7 +69,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
     const dataAttribute = 'data-code-block-language';
     return {
       attrs: {
-        ...this.extraAttrs(),
+        ...this.extraAttributes(),
         language: { default: this.options.defaultLanguage },
       },
       content: 'text*',
@@ -107,7 +100,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
         },
       ],
       toDOM: (node) => {
-        const { language, ...rest } = node.attrs as CodeBlockAttrs;
+        const { language, ...rest } = node.attrs as CodeBlockAttributes;
         const attributes = { ...rest, class: `language-${language}` };
 
         return ['pre', attributes, ['code', { [dataAttribute]: language }, 0]];
@@ -144,7 +137,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
        * The above makes the current node a codeBlock with the language ts or remove the
        * code block altogether.
        */
-      toggleCodeBlock: (attributes: Partial<CodeBlockAttrs>) =>
+      toggleCodeBlock: (attributes: Partial<CodeBlockAttributes>) =>
         toggleBlockItem({
           type,
           toggleType: schema.nodes[toggleType],
@@ -158,7 +151,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
        * actions.createCodeBlock({ language: 'js' });
        * ```
        */
-      createCodeBlock: (attributes: CodeBlockAttrs) =>
+      createCodeBlock: (attributes: CodeBlockAttributes) =>
         setBlockType(type, { language: defaultLanguage, ...attributes }),
 
       /**
@@ -200,7 +193,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
    */
   public inputRules({ type }: ExtensionManagerNodeTypeParams) {
     const regexp = /^```([A-Za-z]*)? $/;
-    const getAttributes: GetAttributes = (match) => {
+    const getAttributes_: GetAttributes = (match) => {
       const language = getLanguage({
         language: getMatchString(match, 1),
         fallback: this.options.defaultLanguage,
@@ -214,7 +207,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
         regexp,
         type,
         updateSelection: true,
-        getAttributes: getAttributes,
+        getAttrs: getAttributes,
       }),
     ];
   }

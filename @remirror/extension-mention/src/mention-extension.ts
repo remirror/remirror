@@ -31,16 +31,16 @@ import {
 } from '@remirror/core';
 
 import {
-  MentionExtensionAttrs as MentionExtensionAttributes,
+  MentionExtensionAttributes,
   MentionExtensionOptions,
   MentionExtensionSuggestCommand,
-  SuggestionCommandAttrs as SuggestionCommandAttributes,
+  SuggestionCommandAttributes,
 } from './mention-types';
 import {
   DEFAULT_MATCHER,
   getAppendText,
   getMatcher,
-  isValidMentionAttrs as isValidMentionAttributes,
+  isValidMentionAttributes,
 } from './mention-utils';
 
 const defaultHandler = () => false;
@@ -63,7 +63,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       matchers: [],
       appendText: ' ',
       mentionClassName: 'mention',
-      extraAttrs: [],
+      extraAttributes: [],
       mentionTag: 'a' as 'a',
       suggestTag: 'a' as 'a',
       onChange: defaultHandler,
@@ -81,7 +81,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
         id: {},
         label: {},
         name: {},
-        ...this.extraAttrs(),
+        ...this.extraAttributes(),
       },
       group: MarkGroup.Behavior,
       excludes: '_',
@@ -97,7 +97,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
             const id = node.getAttribute(dataAttributeId);
             const name = node.getAttribute(dataAttributeName);
             const label = node.textContent;
-            return { ...this.getExtraAttrs(node), id, label, name };
+            return { ...this.getExtraAttributes(node), id, label, name };
           },
         },
       ],
@@ -109,7 +109,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
           replacementType,
           range,
           ...attributes
-        } = node.attrs as Required<MentionExtensionAttrs>;
+        } = node.attrs as Required<MentionExtensionAttributes>;
         const matcher = this.options.matchers.find((matcher) => matcher.name === name);
         const mentionClassName = matcher
           ? matcher.mentionClassName ?? DEFAULT_MATCHER.mentionClassName
@@ -227,7 +227,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       return markPasteRule({
         regexp,
         type,
-        getAttributes: (string) => ({
+        getAttrs: (string) => ({
           id: getMatchString(string.slice(char.length, string.length)),
           label: getMatchString(string),
           name,
@@ -294,7 +294,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
             label = match.matchText[replacementType],
             appendText,
             ...attributes
-          }: SuggestionCommandAttrs) => {
+          }: SuggestionCommandAttributes) => {
             fn({ id, label, appendText, replacementType, name, range, ...attributes });
           };
 

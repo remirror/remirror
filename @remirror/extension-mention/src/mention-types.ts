@@ -35,7 +35,7 @@ export interface OptionalMentionExtensionParams {
  * The attrs that will be added to the node.
  * ID and label are plucked and used while attributes like href and role can be assigned as desired.
  */
-export type MentionExtensionAttrs = Attributes<
+export type MentionExtensionAttributes = Attributes<
   OptionalMentionExtensionParams & {
     /**
      * A unique identifier for the suggestions node
@@ -91,11 +91,11 @@ export interface MentionExtensionOptions
   mentionTag?: string;
 }
 
-export type SuggestionCommandAttrs = Attributes<
-  Partial<Pick<MentionExtensionAttrs, 'id' | 'label' | 'appendText' | 'replacementType'>>
+export type SuggestionCommandAttributes = Attributes<
+  Partial<Pick<MentionExtensionAttributes, 'id' | 'label' | 'appendText' | 'replacementType'>>
 >;
 
 /**
  * The attrs for the command on a mention extension.
  */
-export type MentionExtensionSuggestCommand = (attrs: SuggestionCommandAttrs) => void;
+export type MentionExtensionSuggestCommand = (attrs: SuggestionCommandAttributes) => void;

@@ -37,14 +37,14 @@ describe('schema', () => {
     expect(node).toEqualProsemirrorNode(expected);
   });
 
-  describe('extraAttrs', () => {
+  describe('extraAttributes', () => {
     const custom = 'true';
     const title = 'awesome';
 
     const { schema } = createBaseTestManager([
       {
         extension: new LinkExtension({
-          extraAttrs: ['title', ['custom', 'failure', 'data-custom']],
+          extraAttributes: ['title', ['custom', 'failure', 'data-custom']],
         }),
         priority: 1,
       },
@@ -62,7 +62,7 @@ describe('schema', () => {
       const { schema } = createBaseTestManager([
         {
           extension: new LinkExtension({
-            extraAttrs: [['href', 'should not appear', 'data-custom']],
+            extraAttributes: [['href', 'should not appear', 'data-custom']],
           }),
           priority: 1,
         },

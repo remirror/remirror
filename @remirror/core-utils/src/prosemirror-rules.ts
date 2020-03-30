@@ -15,11 +15,7 @@ import {
 /**
  * Creates an input rule based on the provided regex for the provided mark type
  */
-export const markInputRule = ({
-  regexp,
-  type,
-  getAttributes: getAttributes,
-}: MarkInputRuleParams) => {
+export const markInputRule = ({ regexp, type, getAttrs: getAttributes }: MarkInputRuleParams) => {
   return new InputRule(regexp, (state, match, start, end) => {
     const { tr } = state;
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
@@ -54,11 +50,7 @@ export const markInputRule = ({
 /**
  * Creates a paste rule based on the provided regex for the provided mark type
  */
-export const markPasteRule = ({
-  regexp,
-  type,
-  getAttributes: getAttributes,
-}: MarkInputRuleParams) => {
+export const markPasteRule = ({ regexp, type, getAttrs: getAttributes }: MarkInputRuleParams) => {
   const handler = (fragment: Fragment) => {
     const nodes: ProsemirrorNode[] = [];
 
@@ -110,7 +102,7 @@ export const markPasteRule = ({
 export const nodeInputRule = ({
   regexp,
   type,
-  getAttributes: getAttributes,
+  getAttrs: getAttributes,
   updateSelection = false,
 }: NodeInputRuleParams) => {
   return new InputRule(regexp, (state, match, start, end) => {

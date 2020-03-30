@@ -24,7 +24,7 @@ export interface DocumentExtensionOptions extends BaseExtensionSettings {
  */
 export const DocumentExtension = ExtensionCreator.typed<DocumentExtensionOptions>().node({
   name: 'doc',
-  defaultConfig: {
+  defaultSettings: {
     content: 'block+',
   },
   createNodeSchema(parameters) {

@@ -18,7 +18,7 @@ export class BulletListExtension extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
-      attrs: this.extraAttrs(),
+      attrs: this.extraAttributes(),
       content: 'listItem+',
       group: NodeGroup.Block,
       parseDOM: [{ tag: 'ul' }],
@@ -37,6 +37,6 @@ export class BulletListExtension extends NodeExtension {
   }
 
   public inputRules({ type }: ExtensionManagerNodeTypeParams) {
-    return [wrappingInputRule(/^\s*([-+*])\s$/, type)];
+    return [wrappingInputRule(/^\s*([*+-])\s$/, type)];
   }
 }

@@ -260,23 +260,23 @@ export type AddContent<GExtension extends AnyExtension> = (
   content: TaggedProsemirrorNode<SchemaFromExtensions<GExtension>>,
 ) => AddContentReturn<GExtension>;
 
-export type MarkWithAttrs<GNames extends string> = {
+export type MarkWithAttributes<GNames extends string> = {
   [P in GNames]: (
     attrs?: Attributes,
   ) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
 };
 
-export type NodeWithAttrs<GNames extends string> = {
+export type NodeWithAttributes<GNames extends string> = {
   [P in GNames]: (
     attrs?: Attributes,
   ) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
-export type MarkWithoutAttrs<GNames extends string> = {
+export type MarkWithoutAttributes<GNames extends string> = {
   [P in GNames]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
 };
 
-export type NodeWithoutAttrs<GNames extends string> = {
+export type NodeWithoutAttributes<GNames extends string> = {
   [P in GNames]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
@@ -297,10 +297,10 @@ export type CreateTestEditorReturn<
   TestEditorViewParams<SchemaFromExtensions<GExtension>> & {
     utils: RenderResult;
     add: AddContent<GExtension>;
-    nodes: NodeWithoutAttrs<GetNames<GPlainNodes> | BaseExtensionNodeNames>;
-    marks: MarkWithoutAttrs<GetNames<GPlainMarks>>;
-    attrNodes: NodeWithAttrs<GetNames<GAttrNodes>>;
-    attrMarks: MarkWithAttrs<GetNames<GAttrMarks>>;
+    nodes: NodeWithoutAttributes<GetNames<GPlainNodes> | BaseExtensionNodeNames>;
+    marks: MarkWithoutAttributes<GetNames<GPlainMarks>>;
+    attrNodes: NodeWithAttributes<GetNames<GAttrNodes>>;
+    attrMarks: MarkWithAttributes<GetNames<GAttrMarks>>;
     getState(): EditorState<SchemaFromExtensions<GExtension>>;
     schema: SchemaFromExtensions<GExtension>;
     p: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;

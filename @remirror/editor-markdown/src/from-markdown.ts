@@ -14,7 +14,7 @@ export const fromMarkdown = (markdown: string, schema: EditorSchema) =>
     bullet_list: { block: 'bulletList' },
     ordered_list: {
       block: 'orderedList',
-      getAttrs: (tok) => ({ order: parseInt(tok.attrGet('order') ?? '1', 10) }),
+      getAttrs: (tok) => ({ order: Number.parseInt(tok.attrGet('order') ?? '1', 10) }),
     },
     heading: { block: 'heading', getAttrs: (tok) => ({ level: +tok.tag.slice(1) }) },
     code_block: { block: 'codeBlock' },

@@ -46,7 +46,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     return {
       group: MarkGroup.Link,
       attrs: {
-        ...this.extraAttrs(null),
+        ...this.extraAttributes(null),
         href: {
           default: null,
         },
@@ -57,7 +57,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
           tag: 'a[href]',
           getAttrs: (node) => ({
             href: Cast<Element>(node).getAttribute('href'),
-            ...this.getExtraAttrs(Cast<Element>(node)),
+            ...this.getExtraAttributes(Cast<Element>(node)),
           }),
         },
       ],
@@ -131,7 +131,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
       markPasteRule({
         regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/g,
         type,
-        getAttributes: (url) => ({ href: getMatchString(url) }),
+        getAttrs: (url) => ({ href: getMatchString(url) }),
       }),
     ];
   }
