@@ -96,7 +96,7 @@ describe('text', () => {
 });
 
 const p = nodeFactory({ name: 'paragraph', schema, attributes: {} });
-const document_ = nodeFactory({ name: 'doc', schema, attributes: {} });
+const doc = nodeFactory({ name: 'doc', schema, attributes: {} });
 const blockquote = nodeFactory({ name: 'blockquote', schema, attributes: {} });
 
 describe('nodeFactory', () => {
@@ -123,14 +123,14 @@ describe('nodeFactory', () => {
   });
 
   it('correctly calculates single nested node tag positions', () => {
-    const node = document_(p('t<a>ex<b>t'));
+    const node = doc(p('t<a>ex<b>t'));
     const { a, b } = node.tags;
 
     expect(node.textBetween(a, b)).toBe('ex');
   });
 
   it('correctly calculates twice nested node tag positions', () => {
-    const node = document_(blockquote(p('t<a>ex<b>t')));
+    const node = doc(blockquote(p('t<a>ex<b>t')));
     const { a, b } = node.tags;
 
     expect(node.textBetween(a, b)).toBe('ex');
@@ -258,7 +258,7 @@ describe('sequence', () => {
   });
 
   it('returns tags with correct positions for nested tracking nodes', () => {
-    const a = document_(p('<a>'));
+    const a = doc(p('<a>'));
 
     const { tags } = sequence(a);
 

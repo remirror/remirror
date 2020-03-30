@@ -658,10 +658,10 @@ export interface BaseExtensionSettingsParameter<
  */
 export interface CreateSchemaParameter<Settings extends BaseExtensionSettings> {
   /**
-   * All the static config options that have been passed into the extension when
+   * All the static settings that have been passed into the extension when
    * being created (instantiated).
    */
-  config: Readonly<Settings>;
+  settings: Readonly<Settings>;
 
   /**
    * A method that creates the `AttributeSpec` for prosemirror that can be added

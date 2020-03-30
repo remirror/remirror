@@ -1,12 +1,8 @@
-import { DocumentExtension, TextExtension } from '@remirror/core';
+import { DocExtension, TextExtension } from '@remirror/core';
 import { ParagraphExtension } from '@remirror/core-extensions';
 
 /** All the required and core extensions for testing */
-export const nodeExtensions = [
-  new DocumentExtension(),
-  new TextExtension(),
-  new ParagraphExtension(),
-];
+export const nodeExtensions = [new DocExtension(), new TextExtension(), new ParagraphExtension()];
 
 /** The types of the different nodes injected into every test setup */
 export type BaseExtensionNodes = typeof nodeExtensions[number];

@@ -185,8 +185,8 @@ export const findNodeAtSelection = (selection: Selection): FindProsemirrorNodeRe
  *
  * @deprecated use `doc.lastChild` instead
  */
-export const findNodeAtEndOfDoc = (document_: ProsemirrorNode) =>
-  findNodeAtPosition(PMSelection.atEnd(document_).$from);
+export const findNodeAtEndOfDoc = (doc: ProsemirrorNode) =>
+  findNodeAtPosition(PMSelection.atEnd(doc).$from);
 
 /**
  * Finds the node at the start of the prosemirror.
@@ -196,8 +196,8 @@ export const findNodeAtEndOfDoc = (document_: ProsemirrorNode) =>
  *
  * @deprecated use `doc.firstChild` instead
  */
-export const findNodeAtStartOfDoc = (document_: ProsemirrorNode) =>
-  findNodeAtPosition(PMSelection.atStart(document_).$from);
+export const findNodeAtStartOfDoc = (doc: ProsemirrorNode) =>
+  findNodeAtPosition(PMSelection.atStart(doc).$from);
 
 interface FindParentNodeOfTypeParams extends NodeTypesParameter, SelectionParameter {}
 

@@ -2,7 +2,7 @@ import { BaseExtensionSettings } from '@remirror/core-types';
 
 import { ExtensionCreator } from '../extension-creator';
 
-export interface DocumentExtensionOptions extends BaseExtensionSettings {
+export interface DocExtensionOptions extends BaseExtensionSettings {
   /**
    * Adjust the content allowed in this prosemirror document.
    *
@@ -22,14 +22,14 @@ export interface DocumentExtensionOptions extends BaseExtensionSettings {
  * @required
  * @builtin
  */
-export const DocumentExtension = ExtensionCreator.typed<DocumentExtensionOptions>().node({
+export const DocExtension = ExtensionCreator.typed<DocExtensionOptions>().node({
   name: 'doc',
   defaultSettings: {
     content: 'block+',
   },
   createNodeSchema(parameters) {
     return {
-      content: parameters.config.content,
+      content: parameters.settings.content,
     };
   },
 });

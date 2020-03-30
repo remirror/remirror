@@ -3,7 +3,7 @@ import minDocument from 'min-document';
 import {
   BaseExtensionSettings,
   Cast,
-  DocumentExtension,
+  DocExtension,
   Extension,
   ExtensionManager,
   FlexibleExtension,
@@ -21,6 +21,7 @@ import {
 } from '@remirror/core-extensions';
 import { PortalContainer } from '@remirror/react-portals';
 import { defaultRemirrorThemeValue } from '@remirror/ui';
+import { ExtensionCreator } from '@remirror/core/lib/extension-creator';
 
 export const helpers = {
   getState: Cast(jest.fn()),
@@ -29,7 +30,7 @@ export const helpers = {
 };
 
 export const baseExtensions = [
-  { extension: new DocumentExtension(), priority: 2 },
+  { extension: new DocExtension(), priority: 2 },
   { extension: new TextExtension(), priority: 2 },
   { extension: new ParagraphExtension(), priority: 2 },
 ];
@@ -81,7 +82,7 @@ export const initialJson = {
   ],
 };
 
-export class TestExtension extends Extension<{ run: boolean } & BaseExtensionSettings> {
+export const TestExtension = ExtensionCreator<{ run: boolean } & BaseExtensionSettings> {
   get name() {
     return 'test' as const;
   }

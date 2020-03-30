@@ -620,7 +620,7 @@ export const apply = <GSchema extends EditorSchema = any>(
   const { state, view } = createEditor(taggedDocument);
   let newState = state;
   let pass = true;
-  let document_ = newState.doc as TaggedProsemirrorNode<GSchema>;
+  let doc = newState.doc as TaggedProsemirrorNode<GSchema>;
 
   command(state, (tr) => (newState = state.apply(tr)), view);
 
@@ -630,10 +630,10 @@ export const apply = <GSchema extends EditorSchema = any>(
 
   if (result && taggedDocumentHasSelection(result)) {
     pass = pm.eq(newState.selection, selectionFor(result));
-    document_ = result;
+    doc = result;
   }
 
-  return { pass, taggedDoc: document_, state: newState };
+  return { pass, taggedDoc: doc, state: newState };
 };
 
 /**

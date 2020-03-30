@@ -12,7 +12,7 @@ const ERROR_INFORMATION_URL = 'https://docs.remirror.org/errors';
 
 let errorMessageMap: Partial<Record<ErrorConstant, string>> = {};
 
-// This will be stripped away in production.
+// This will be removed in a production environment.
 if (__DEV__) {
   errorMessageMap = {
     RMR0000: 'Production error. No details available.',

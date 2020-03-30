@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
+
 import { Interpolation } from '@emotion/core';
 import { InputRule } from 'prosemirror-inputrules';
 import { AttributeSpec } from 'prosemirror-model';
@@ -17,10 +19,11 @@ import {
   deepMerge,
   invariant,
   isArray,
+  isIdentifierOfType,
+  isRemirrorType,
   isString,
   object,
 } from '@remirror/core-helpers';
-import { isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers/lib/core-helpers';
 import {
   Attributes,
   AttributesWithClass,
@@ -134,7 +137,7 @@ const createExtraAttributesFactory = <Config extends BaseExtensionSettings>(
     ErrorConstant.EXTRA_ATTRS,
   );
 
-  const extraAttributes: ExtraAttributes[] = extension.#settings.extraAttributes ?? [];
+  const extraAttributes: ExtraAttributes[] = extension.settings.extraAttributes ?? [];
   const attributes: Record<string, AttributeSpec> = object();
 
   for (const item of extraAttributes) {
@@ -167,7 +170,7 @@ const getExtraAttributesFactory = <Config extends BaseExtensionSettings>(
     ErrorConstant.EXTRA_ATTRS,
   );
 
-  const extraAttributes = extension.#settings.extraAttributes ?? [];
+  const extraAttributes = extension.settings.extraAttributes ?? [];
   const attributes: Attributes = object();
 
   for (const attribute of extraAttributes) {
@@ -293,7 +296,8 @@ export abstract class Extension<
   }
 
   /**
-   * The dynamic properties for this extension. These can be updated on the fly.
+   * The dynamic properties for this extension. Callback handlers and
+   * behavioral properties should be placed here.
    */
   get properties() {
     return this.#properties;
@@ -389,6 +393,13 @@ export abstract class Extension<
   abstract getCreatorOptions(): Readonly<
     ExtensionCreatorOptions<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>
   >;
+
+  /**
+   * Update the properties with the provided value when something changes.
+   */
+  public setProperties(properties: Partial<Properties>) {
+    this.#properties = { ...this.#properties, ...properties };
+  }
 
   /**
    * Override the default toString method to match the native toString methods.
@@ -889,7 +900,7 @@ export abstract class NodeExtension<
     super(...parameters);
 
     this.#schema = this.getNodeCreatorOptions().createNodeSchema({
-      settings: this.#settings,
+      settings: this.settings,
       createExtraAttributes: createExtraAttributesFactory(this as AnyNodeExtension),
       getExtraAttributes: getExtraAttributesFactory(this as AnyNodeExtension),
     });
@@ -1015,3 +1026,5 @@ declare global {
     Helpers extends ExtensionHelperReturn = {}
   > {}
 }
+
+/* eslint-enable @typescript-eslint/explicit-member-accessibility */

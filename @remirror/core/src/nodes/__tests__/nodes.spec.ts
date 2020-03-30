@@ -1,6 +1,6 @@
 import { Cast } from '@remirror/core-helpers';
 
-import { DocumentExtension, TextExtension } from '../..';
+import { DocExtension, TextExtension } from '../..';
 
 // While these tests seem simple there is a reason for them.
 //
@@ -17,10 +17,10 @@ import { DocumentExtension, TextExtension } from '../..';
 
 describe('nodes', () => {
   test('doc', () => {
-    const document_ = new DocumentExtension();
+    const doc = DocExtension.of({});
 
-    expect(document_.name).toBe('doc');
-    expect(Cast(document_.pluginKey).key).toInclude('doc$');
+    expect(doc.name).toBe('doc');
+    expect(Cast(doc.pluginKey).key).toInclude('doc$');
   });
 
   test('text', () => {

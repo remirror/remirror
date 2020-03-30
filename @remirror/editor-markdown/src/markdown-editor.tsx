@@ -9,7 +9,7 @@ import typescript from 'refractor/lang/typescript';
 
 import {
   createDocumentNode,
-  DocumentExtension,
+  DocExtension,
   EditorState,
   ExtensionManager,
   ExtensionsFromManager,
@@ -62,7 +62,7 @@ const useMarkdownManager = () => {
   return useMemo(
     () =>
       ExtensionManager.create([
-        { priority: 1, extension: new DocumentExtension({ content: 'block' }) },
+        { priority: 1, extension: new DocExtension({ content: 'block' }) },
         {
           priority: 1,
           extension: new CodeBlockExtension({
@@ -234,10 +234,10 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
   );
 
   const updateMarkdownFromWysiwyg = useCallback(
-    (document_: ProsemirrorNode) =>
+    (doc: ProsemirrorNode) =>
       setMarkdownEditorState(
         markdownManager.createState({
-          content: toMarkdown(document_),
+          content: toMarkdown(doc),
           stringHandler: markdownStringHandler,
         }),
       ),

@@ -12,7 +12,6 @@ import { isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers/lib/c
 import {
   ActionMethod,
   AnyActions,
-  AnyHelpers,
   Attributes,
   AttributesWithClass,
   CommandParameter,

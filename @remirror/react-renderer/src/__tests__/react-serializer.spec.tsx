@@ -3,7 +3,7 @@ import React from 'react';
 import TestRenderer from 'react-test-renderer';
 
 import {
-  DocumentExtension,
+  DocExtension,
   ExtensionManager,
   NodeExtension,
   NodeExtensionSpec,
@@ -44,7 +44,7 @@ test('ReactSerializer.fromExtensionManager', () => {
 
   // fills in for a missing text
   const altExtensions = [
-    { extension: new DocumentExtension(), priority: 2 },
+    { extension: new DocExtension(), priority: 2 },
     { extension: new ParagraphExtension(), priority: 2 },
     { extension: new TextExtension(), priority: 2 },
     { extension: new BoldExtension(), priority: 2 },
