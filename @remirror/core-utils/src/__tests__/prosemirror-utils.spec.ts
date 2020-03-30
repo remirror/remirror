@@ -238,39 +238,39 @@ describe('findPositionOfNodeAfter', () => {
 describe('findElementAtPosition', () => {
   it('should return DOM reference of a top level block leaf node', () => {
     const { view } = createEditor(doc(p('text'), atomBlock()));
-    const ref = findElementAtPosition(6, view);
+    const reference = findElementAtPosition(6, view);
 
-    expect(ref instanceof HTMLDivElement).toBe(true);
-    expect(ref.getAttribute('data-node-type')).toEqual('atomBlock');
+    expect(reference instanceof HTMLDivElement).toBe(true);
+    expect(reference.getAttribute('data-node-type')).toEqual('atomBlock');
   });
 
   it('should return DOM reference of a nested inline leaf node', () => {
     const { view } = createEditor(doc(p('one', atomInline(), 'two')));
-    const ref = findElementAtPosition(4, view);
+    const reference = findElementAtPosition(4, view);
 
-    expect(ref instanceof HTMLSpanElement).toBe(true);
-    expect(ref.getAttribute('data-node-type')).toEqual('atomInline');
+    expect(reference instanceof HTMLSpanElement).toBe(true);
+    expect(reference.getAttribute('data-node-type')).toEqual('atomInline');
   });
 
   it('should return DOM reference of a content block node', () => {
     const { view } = createEditor(doc(p('one'), blockquote(p('two'))));
-    const ref = findElementAtPosition(5, view);
+    const reference = findElementAtPosition(5, view);
 
-    expect(ref instanceof HTMLQuoteElement).toBe(true);
+    expect(reference instanceof HTMLQuoteElement).toBe(true);
   });
 
   it('should return DOM reference of a text node when offset=0', () => {
     const { view } = createEditor(doc(p('text')));
-    const ref = findElementAtPosition(1, view);
+    const reference = findElementAtPosition(1, view);
 
-    expect(ref instanceof HTMLParagraphElement).toBe(true);
+    expect(reference instanceof HTMLParagraphElement).toBe(true);
   });
 
   it('should return DOM reference of a paragraph if cursor is inside of a text node', () => {
     const { view } = createEditor(doc(p(atomInline(), 'text')));
-    const ref = findElementAtPosition(3, view);
+    const reference = findElementAtPosition(3, view);
 
-    expect(ref instanceof HTMLParagraphElement).toBe(true);
+    expect(reference instanceof HTMLParagraphElement).toBe(true);
   });
 });
 
@@ -422,12 +422,12 @@ describe('findParentNodeOfType', () => {
     const {
       state: {
         schema: {
-          nodes: { paragraph, blockquote: bq, table: tbl },
+          nodes: { paragraph, blockquote: bq, table: table_ },
         },
         selection,
       },
     } = createEditor(doc(node));
-    const position = findParentNodeOfType({ types: [tbl, bq, paragraph], selection })!;
+    const position = findParentNodeOfType({ types: [table_, bq, paragraph], selection })!;
 
     expect(position).toEqual({ pos: 0, start: 1, end: 8, depth: 1, node });
   });
@@ -505,10 +505,10 @@ describe('findSelectedNodeOfType', () => {
 
   it('should return selected node of one of the given `nodeType`s', () => {
     const { state } = createEditor(doc(p('<cursor>one')));
-    const { paragraph, table: tbl } = state.schema.nodes;
+    const { paragraph, table: table_ } = state.schema.nodes;
     const tr = state.tr.setSelection(NodeSelection.create(state.doc, 0));
     const selectedNode = findSelectedNodeOfType({
-      types: [paragraph, tbl],
+      types: [paragraph, table_],
       selection: tr.selection,
     });
 
@@ -519,10 +519,10 @@ describe('findSelectedNodeOfType', () => {
 describe('findNodeAt...', () => {
   const expectedEnd = h2('Heading here');
   const expectedStart = p('<cursor> I am champion');
-  const pmDoc = doc(expectedStart, expectedEnd);
+  const pmDocument = doc(expectedStart, expectedEnd);
 
   test('findNodeAtSelection', () => {
-    const selection = Selection.atEnd(pmDoc);
+    const selection = Selection.atEnd(pmDocument);
     const { node, pos, start } = findNodeAtSelection(selection);
 
     expect(node).toBe(expectedEnd);

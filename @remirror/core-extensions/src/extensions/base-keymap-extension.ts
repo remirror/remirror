@@ -7,17 +7,17 @@ import {
 import { undoInputRule } from 'prosemirror-inputrules';
 
 import {
-  BaseExtensionConfig,
+  BaseExtensionSettings,
   chainKeyBindingCommands,
   convertCommand,
   Extension,
-  ExtensionManagerParams,
+  ExtensionManagerParameter,
   hasOwnProperty,
   isFunction,
   KeyBindings,
 } from '@remirror/core';
 
-export interface BaseKeymapExtensionOptions extends BaseExtensionConfig {
+export interface BaseKeymapExtensionOptions extends BaseExtensionSettings {
   /**
    * Determines whether a backspace after an input rule has been applied undoes the input rule.
    *
@@ -51,7 +51,7 @@ export interface BaseKeymapExtensionOptions extends BaseExtensionConfig {
    * }});
    * ```
    */
-  keymap?: KeyBindings | ((params: ExtensionManagerParams) => KeyBindings);
+  keymap?: KeyBindings | ((params: ExtensionManagerParameter) => KeyBindings);
 }
 
 export const defaultBaseKeymapExtensionOptions: BaseKeymapExtensionOptions = {
@@ -89,7 +89,7 @@ export class BaseKeymapExtension extends Extension<BaseKeymapExtensionOptions> {
   /**
    * Injects the baseKeymap into the editor.
    */
-  public keys(params: ExtensionManagerParams) {
+  public keys(parameters: ExtensionManagerParameter) {
     const { selectParentNodeOnEscape, undoInputRuleOnBackspace, keymap } = this.options;
     const backspaceRule: KeyBindings = undoInputRuleOnBackspace
       ? { Backspace: convertCommand(pmChainCommands(undoInputRule, baseKeymap.Backspace)) }
@@ -104,7 +104,7 @@ export class BaseKeymapExtension extends Extension<BaseKeymapExtensionOptions> {
       ...escapeRule,
     };
 
-    const keyBindings = isFunction(keymap) ? keymap(params) : keymap;
+    const keyBindings = isFunction(keymap) ? keymap(parameters) : keymap;
 
     for (const key in keyBindings) {
       if (!hasOwnProperty(keymap, key)) {

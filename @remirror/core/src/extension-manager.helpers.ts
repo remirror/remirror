@@ -2,9 +2,9 @@ import { DEFAULT_EXTENSION_PRIORITY, MarkGroup, NodeGroup, Tag } from '@remirror
 import { bool, Cast, entries, isFunction, isUndefined, object, sort } from '@remirror/core-helpers';
 import {
   AnyFunction,
-  CommandParams,
+  CommandParameter,
   ExtensionCommandFunction,
-  ExtensionManagerParams,
+  ExtensionManagerParameter,
   ExtensionTags,
   GeneralExtensionTags,
   MarkExtensionTags,
@@ -84,7 +84,7 @@ interface CreateCommandsParams extends ExtensionListParameters {
   /**
    * The command params which are passed to each extensions `commands` method.
    */
-  params: CommandParams;
+  params: CommandParameter;
 }
 
 /**
@@ -93,7 +93,7 @@ interface CreateCommandsParams extends ExtensionListParameters {
  * @param extension - the extension to test.
  * @param params - the params without the type.
  */
-const getParametersType = <GKey extends keyof AnyExtension, GParams extends ExtensionManagerParams>(
+const getParametersType = <GKey extends keyof AnyExtension, GParams extends ExtensionManagerParameter>(
   extension: Required<Pick<AnyExtension, GKey>>,
   parameters: GParams,
 ) => {
@@ -180,7 +180,7 @@ interface CreateHelpersParams extends ExtensionListParameters {
   /**
    * The params which are passed to each extensions `helpers` method.
    */
-  params: ExtensionManagerParams;
+  params: ExtensionManagerParameter;
 }
 
 /**
@@ -237,7 +237,7 @@ export const extensionPropertyMapper = <
   GExtMethodProp extends ExtensionMethodProperties
 >(
   property: GExtMethodProp,
-  parameters: ExtensionManagerParams,
+  parameters: ExtensionManagerParameter,
 ) => (
   extension: GExt,
 ): GExt[GExtMethodProp] extends AnyFunction ? ReturnType<GExt[GExtMethodProp]> : {} => {
@@ -348,7 +348,7 @@ export const createExtensionTags = <
 
   for (const extension of extensions) {
     if (isNodeExtension(extension)) {
-      const group = extension.schema.group as NodeGroup;
+      const group = extension.#schema.group as NodeGroup;
       node[group] = isUndefined(node[group])
         ? [extension.name as GNodes]
         : [...node[group], extension.name as GNodes];

@@ -95,13 +95,13 @@ describe('text', () => {
   });
 });
 
-const p = nodeFactory({ name: 'paragraph', schema, attrs: {} });
-const doc = nodeFactory({ name: 'doc', schema, attrs: {} });
-const blockquote = nodeFactory({ name: 'blockquote', schema, attrs: {} });
+const p = nodeFactory({ name: 'paragraph', schema, attributes: {} });
+const document_ = nodeFactory({ name: 'doc', schema, attributes: {} });
+const blockquote = nodeFactory({ name: 'blockquote', schema, attributes: {} });
 
 describe('nodeFactory', () => {
   it('returns a function', () => {
-    expect(nodeFactory({ name: 'paragraph', schema, attrs: {} })).toBeFunction();
+    expect(nodeFactory({ name: 'paragraph', schema, attributes: {} })).toBeFunction();
   });
 
   it("returns a factory that returns tag'd nodes", () => {
@@ -123,14 +123,14 @@ describe('nodeFactory', () => {
   });
 
   it('correctly calculates single nested node tag positions', () => {
-    const node = doc(p('t<a>ex<b>t'));
+    const node = document_(p('t<a>ex<b>t'));
     const { a, b } = node.tags;
 
     expect(node.textBetween(a, b)).toBe('ex');
   });
 
   it('correctly calculates twice nested node tag positions', () => {
-    const node = doc(blockquote(p('t<a>ex<b>t')));
+    const node = document_(blockquote(p('t<a>ex<b>t')));
     const { a, b } = node.tags;
 
     expect(node.textBetween(a, b)).toBe('ex');
@@ -143,7 +143,7 @@ describe('nodeFactory', () => {
   });
 });
 
-const em = markFactory({ name: 'italic', schema, attrs: {} });
+const em = markFactory({ name: 'italic', schema, attributes: {} });
 
 describe('markFactory', () => {
   it('returns a function', () => {
@@ -258,7 +258,7 @@ describe('sequence', () => {
   });
 
   it('returns tags with correct positions for nested tracking nodes', () => {
-    const a = doc(p('<a>'));
+    const a = document_(p('<a>'));
 
     const { tags } = sequence(a);
 

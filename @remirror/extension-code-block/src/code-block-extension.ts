@@ -7,7 +7,7 @@ import {
   ExtensionManagerNodeTypeParams,
   findNodeAtSelection,
   findParentNodeOfType,
-  GetAttrs,
+  GetAttributes,
   getMatchString,
   isElementDOMNode,
   isNodeActive,
@@ -26,8 +26,15 @@ import {
 
 import { CodeBlockComponent } from './code-block-component';
 import createCodeBlockPlugin from './code-block-plugin';
-import { CodeBlockAttrs, CodeBlockExtensionOptions } from './code-block-types';
-import { formatCodeBlockFactory, getLanguage, updateNodeAttrs } from './code-block-utils';
+import {
+  CodeBlockAttrs as CodeBlockAttributes,
+  CodeBlockExtensionOptions,
+} from './code-block-types';
+import {
+  formatCodeBlockFactory,
+  getLanguage,
+  updateNodeAttrs as updateNodeAttributes,
+} from './code-block-utils';
 import { SyntaxTheme, syntaxTheme } from './themes';
 
 export const codeBlockDefaultOptions: CodeBlockExtensionOptions = {
@@ -101,9 +108,9 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
       ],
       toDOM: (node) => {
         const { language, ...rest } = node.attrs as CodeBlockAttrs;
-        const attrs = { ...rest, class: `language-${language}` };
+        const attributes = { ...rest, class: `language-${language}` };
 
-        return ['pre', attrs, ['code', { [dataAttribute]: language }, 0]];
+        return ['pre', attributes, ['code', { [dataAttribute]: language }, 0]];
       },
     };
   }
@@ -137,11 +144,11 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
        * The above makes the current node a codeBlock with the language ts or remove the
        * code block altogether.
        */
-      toggleCodeBlock: (attrs?: Partial<CodeBlockAttrs>) =>
+      toggleCodeBlock: (attributes: Partial<CodeBlockAttrs>) =>
         toggleBlockItem({
           type,
           toggleType: schema.nodes[toggleType],
-          attrs: { language: defaultLanguage, ...attrs },
+          attrs: { language: defaultLanguage, ...attributes },
         }),
 
       /**
@@ -151,8 +158,8 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
        * actions.createCodeBlock({ language: 'js' });
        * ```
        */
-      createCodeBlock: (attrs: CodeBlockAttrs) =>
-        setBlockType(type, { language: defaultLanguage, ...attrs }),
+      createCodeBlock: (attributes: CodeBlockAttrs) =>
+        setBlockType(type, { language: defaultLanguage, ...attributes }),
 
       /**
        * Update the code block at the current position. Primarily this is used to change the language.
@@ -163,7 +170,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
        * }
        * ```
        */
-      updateCodeBlock: updateNodeAttrs(type),
+      updateCodeBlock: updateNodeAttributes(type),
 
       /**
        * Format the code block with the code formatting function passed as an option.
@@ -192,8 +199,8 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
    * Create an input rule that listens converts the code fence into a code block with space.
    */
   public inputRules({ type }: ExtensionManagerNodeTypeParams) {
-    const regexp = /^```([a-zA-Z]*)? $/;
-    const getAttrs: GetAttrs = (match) => {
+    const regexp = /^```([A-Za-z]*)? $/;
+    const getAttributes: GetAttributes = (match) => {
       const language = getLanguage({
         language: getMatchString(match, 1),
         fallback: this.options.defaultLanguage,
@@ -207,7 +214,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
         regexp,
         type,
         updateSelection: true,
-        getAttrs,
+        getAttributes: getAttributes,
       }),
     ];
   }
@@ -286,7 +293,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
           return false;
         }
 
-        const regex = /^```([a-zA-Z]*)?$/;
+        const regex = /^```([A-Za-z]*)?$/;
         const { text } = nodeBefore;
 
         if (!text) {
@@ -333,8 +340,8 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
     };
   }
 
-  public plugin(params: ExtensionManagerNodeTypeParams): Plugin {
-    return createCodeBlockPlugin({ extension: this, ...params });
+  public plugin(parameters: ExtensionManagerNodeTypeParams): Plugin {
+    return createCodeBlockPlugin({ extension: this, ...parameters });
   }
 }
 

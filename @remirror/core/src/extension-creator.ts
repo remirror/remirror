@@ -5,7 +5,7 @@ import {
 } from '@remirror/core-constants';
 import { Cast, freeze } from '@remirror/core-helpers';
 import {
-  BaseExtensionConfig,
+  BaseExtensionSettings,
   ExtensionCommandReturn,
   ExtensionHelperReturn,
   IfNoRequiredProperties,
@@ -28,201 +28,205 @@ import {
  * function to allow for fully typed `ExtensionConstructor`s.
  */
 const createBaseExtensionCreator = <
-  Config extends BaseExtensionConfig = BaseExtensionConfig,
+  Config extends BaseExtensionSettings = BaseExtensionSettings,
   Properties extends object = {}
->() => ({
-  /**
-   * Creates a `PlainExtensionConstructor`. This is useful for non content
-   * specific functionality like adding styling or plugins.
-   */
-  plain<
-    Name extends string,
-    Commands extends ExtensionCommandReturn,
-    Helpers extends ExtensionHelperReturn
-  >(
-    creatorOptions: ExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>,
-  ): PlainExtensionConstructor<Name, Config, Properties, Commands, Helpers> {
-    const options = freeze(creatorOptions);
+>() => {
+  const creators = {
+    /**
+     * Creates a `PlainExtensionConstructor`. This is useful for non content
+     * specific functionality like adding styling or plugins.
+     */
+    plain<
+      Name extends string,
+      Commands extends ExtensionCommandReturn,
+      Helpers extends ExtensionHelperReturn
+    >(
+      creatorOptions: ExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>,
+    ): PlainExtensionConstructor<Name, Config, Properties, Commands, Helpers> {
+      const options = freeze(creatorOptions);
 
-    class PlainConstructor extends Extension<Name, Config, Properties, Commands, Helpers> {
-      /**
-       * Identifies this as a `PlainExtensionConstructor`.
-       *
-       * @internal
-       */
-      static get [REMIRROR_IDENTIFIER_KEY]() {
-        return RemirrorIdentifier.PlainExtensionConstructor;
+      class PlainConstructor extends Extension<Name, Config, Properties, Commands, Helpers> {
+        /**
+         * Identifies this as a `PlainExtensionConstructor`.
+         *
+         * @internal
+         */
+        static get [REMIRROR_IDENTIFIER_KEY]() {
+          return RemirrorIdentifier.PlainExtensionConstructor;
+        }
+
+        /**
+         * This static method is the only way to create an instance of this
+         * extension.
+         *
+         * @remarks
+         *
+         * It helps prevent uses from struggling with some of the edge cases when
+         * using the `new` keyword.
+         */
+        public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+          return new PlainConstructor(...config);
+        }
+
+        /**
+         * The name of the extension.
+         */
+        static get extensionName() {
+          return options.name;
+        }
+
+        /**
+         * Set this extension to be a plain type.
+         */
+        get type() {
+          return ExtensionType.Plain;
+        }
+
+        /**
+         * This makes the constructor private so that it can't be extended from
+         * when using Typescript.
+         */
+        private constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+          super(...config);
+        }
+
+        public getCreatorOptions() {
+          return options;
+        }
       }
 
-      /**
-       * This static method is the only way to create an instance of this
-       * extension.
-       *
-       * @remarks
-       *
-       * It helps prevent uses from struggling with some of the edge cases when
-       * using the `new` keyword.
-       */
-      public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-        return new PlainConstructor(...config);
+      return PlainConstructor;
+    },
+
+    /**
+     * Creates a `MarkExtensionConstructor`. This is useful for non content
+     * specific functionality like adding styling or plugins.
+     */
+    mark<
+      Name extends string,
+      Commands extends ExtensionCommandReturn,
+      Helpers extends ExtensionHelperReturn
+    >(
+      creatorOptions: MarkExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>,
+    ): MarkExtensionConstructor<Name, Config, Properties, Commands, Helpers> {
+      const options = freeze(creatorOptions);
+
+      class MarkConstructor extends MarkExtension<Name, Config, Properties, Commands, Helpers> {
+        /**
+         * Identifies this as a `MarkExtensionConstructor`.
+         *
+         * @internal
+         */
+        static get [REMIRROR_IDENTIFIER_KEY]() {
+          return RemirrorIdentifier.MarkExtensionConstructor;
+        }
+
+        /**
+         * This static method is the only way to create an instance of this
+         * extension.
+         *
+         * @remarks
+         *
+         * It helps prevent uses from struggling with some of the edge cases when
+         * using the `new` keyword.
+         */
+        public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+          return new MarkConstructor(...config);
+        }
+
+        /**
+         * The name of the extension.
+         */
+        static get extensionName() {
+          return options.name;
+        }
+
+        /**
+         * This makes the constructor private so that it can't be extended from
+         * when using Typescript.
+         */
+        private constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+          super(...config);
+        }
+
+        public getCreatorOptions() {
+          return Cast(options); // Cast cos I can.
+        }
+
+        public getMarkCreatorOptions() {
+          return options;
+        }
       }
 
-      /**
-       * The name of the extension.
-       */
-      static get extensionName() {
-        return options.name;
+      return MarkConstructor;
+    },
+
+    /**
+     * Creates a `NodeExtensionConstructor`. This is useful for non content
+     * specific functionality like adding styling or plugins.
+     */
+    node<
+      Name extends string,
+      Commands extends ExtensionCommandReturn,
+      Helpers extends ExtensionHelperReturn
+    >(
+      creatorOptions: NodeExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>,
+    ): NodeExtensionConstructor<Name, Config, Properties, Commands, Helpers> {
+      const options = freeze(creatorOptions);
+
+      class NodeConstructor extends NodeExtension<Name, Config, Properties, Commands, Helpers> {
+        /**
+         * Identifies this as a `NodeExtensionConstructor`.
+         *
+         * @internal
+         */
+        static get [REMIRROR_IDENTIFIER_KEY]() {
+          return RemirrorIdentifier.NodeExtensionConstructor;
+        }
+
+        /**
+         * This static method is the only way to create an instance of this
+         * extension.
+         *
+         * @remarks
+         *
+         * It helps prevent uses from struggling with some of the edge cases when
+         * using the `new` keyword.
+         */
+        public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+          return new NodeConstructor(...config);
+        }
+
+        /**
+         * The name of the extension.
+         */
+        static get extensionName() {
+          return options.name;
+        }
+
+        /**
+         * This makes the constructor private so that it can't be extended from
+         * when using Typescript.
+         */
+        private constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
+          super(...config);
+        }
+
+        public getCreatorOptions() {
+          return Cast(options); // Cast cos I can.
+        }
+
+        public getNodeCreatorOptions() {
+          return options;
+        }
       }
 
-      /**
-       * Set this extension to be a plain type.
-       */
-      get type() {
-        return ExtensionType.Plain;
-      }
+      return NodeConstructor;
+    },
+  };
 
-      /**
-       * This makes the constructor private so that it can't be extended from
-       * when using Typescript.
-       */
-      private constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-        super(...config);
-      }
-
-      public getCreatorOptions() {
-        return options;
-      }
-    }
-
-    return PlainConstructor;
-  },
-
-  /**
-   * Creates a `MarkExtensionConstructor`. This is useful for non content
-   * specific functionality like adding styling or plugins.
-   */
-  mark<
-    Name extends string,
-    Commands extends ExtensionCommandReturn,
-    Helpers extends ExtensionHelperReturn
-  >(
-    creatorOptions: MarkExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>,
-  ): MarkExtensionConstructor<Name, Config, Properties, Commands, Helpers> {
-    const options = freeze(creatorOptions);
-
-    class MarkConstructor extends MarkExtension<Name, Config, Properties, Commands, Helpers> {
-      /**
-       * Identifies this as a `MarkExtensionConstructor`.
-       *
-       * @internal
-       */
-      static get [REMIRROR_IDENTIFIER_KEY]() {
-        return RemirrorIdentifier.MarkExtensionConstructor;
-      }
-
-      /**
-       * This static method is the only way to create an instance of this
-       * extension.
-       *
-       * @remarks
-       *
-       * It helps prevent uses from struggling with some of the edge cases when
-       * using the `new` keyword.
-       */
-      public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-        return new MarkConstructor(...config);
-      }
-
-      /**
-       * The name of the extension.
-       */
-      static get extensionName() {
-        return options.name;
-      }
-
-      /**
-       * This makes the constructor private so that it can't be extended from
-       * when using Typescript.
-       */
-      private constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-        super(...config);
-      }
-
-      public getCreatorOptions() {
-        return Cast(options); // Cast cos I can.
-      }
-
-      public getMarkCreatorOptions() {
-        return options;
-      }
-    }
-
-    return MarkConstructor;
-  },
-
-  /**
-   * Creates a `NodeExtensionConstructor`. This is useful for non content
-   * specific functionality like adding styling or plugins.
-   */
-  node<
-    Name extends string,
-    Commands extends ExtensionCommandReturn,
-    Helpers extends ExtensionHelperReturn
-  >(
-    creatorOptions: NodeExtensionCreatorOptions<Name, Config, Properties, Commands, Helpers>,
-  ): NodeExtensionConstructor<Name, Config, Properties, Commands, Helpers> {
-    const options = freeze(creatorOptions);
-
-    class NodeConstructor extends NodeExtension<Name, Config, Properties, Commands, Helpers> {
-      /**
-       * Identifies this as a `NodeExtensionConstructor`.
-       *
-       * @internal
-       */
-      static get [REMIRROR_IDENTIFIER_KEY]() {
-        return RemirrorIdentifier.NodeExtensionConstructor;
-      }
-
-      /**
-       * This static method is the only way to create an instance of this
-       * extension.
-       *
-       * @remarks
-       *
-       * It helps prevent uses from struggling with some of the edge cases when
-       * using the `new` keyword.
-       */
-      public static of(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-        return new NodeConstructor(...config);
-      }
-
-      /**
-       * The name of the extension.
-       */
-      static get extensionName() {
-        return options.name;
-      }
-
-      /**
-       * This makes the constructor private so that it can't be extended from
-       * when using Typescript.
-       */
-      private constructor(...config: IfNoRequiredProperties<Config, [Config?], [Config]>) {
-        super(...config);
-      }
-
-      public getCreatorOptions() {
-        return Cast(options); // Cast cos I can.
-      }
-
-      public getNodeCreatorOptions() {
-        return options;
-      }
-    }
-
-    return NodeConstructor;
-  },
-});
+  return creators;
+};
 
 /**
  * The only way to create extensions using remirror.
@@ -267,7 +271,7 @@ export const ExtensionCreator = {
    *   });
    * ```
    */
-  typed<Config extends BaseExtensionConfig, Props extends object>() {
+  typed<Config extends BaseExtensionSettings, Props extends object = {}>() {
     return createBaseExtensionCreator<Config, Props>();
   },
 };

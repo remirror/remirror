@@ -5,25 +5,25 @@ import { isFunction, isNumber, object } from '@remirror/core-helpers';
 import {
   AnyFunction,
   Attributes,
-  AttrsParams,
+  AttributesParameter,
   EditorSchema,
   MarkType,
-  MarkTypeParams,
+  MarkTypeParameter,
   NodeType,
-  NodeTypeParams,
+  NodeTypeParameter,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
-  RangeParams,
-  TransformTransactionParams,
+  RangeParameter,
+  TransformTransactionParameter,
 } from '@remirror/core-types';
 
 import { getMarkRange, isMarkType, isNodeType } from './dom-utils';
 import { findParentNode, isNodeActive, selectionEmpty } from './prosemirror-utils';
 
 interface UpdateMarkParams
-  extends Partial<RangeParams>,
-    Partial<AttrsParams>,
-    TransformTransactionParams {
+  extends Partial<RangeParameter>,
+    Partial<AttributesParameter>,
+    TransformTransactionParameter {
   /**
    * The text to append.
    *
@@ -141,7 +141,7 @@ export const toggleList = (type: NodeType, itemType: NodeType): ProsemirrorComma
   return wrapInList(type)(state, dispatch);
 };
 
-interface ToggleBlockItemParams extends NodeTypeParams, Partial<AttrsParams> {
+interface ToggleBlockItemParams extends NodeTypeParameter, Partial<AttributesParameter> {
   /**
    * The type to toggle back to. Usually this is the paragraph node type.
    */
@@ -170,9 +170,9 @@ export const toggleBlockItem = ({
 };
 
 interface ReplaceTextParams
-  extends Partial<RangeParams>,
-    Partial<AttrsParams>,
-    TransformTransactionParams {
+  extends Partial<RangeParameter>,
+    Partial<AttributesParameter>,
+    TransformTransactionParameter {
   /**
    * The text to append.
    *
@@ -277,9 +277,9 @@ export const replaceText = ({
 };
 
 interface RemoveMarkParams
-  extends MarkTypeParams,
-    Partial<RangeParams<'to'>>,
-    TransformTransactionParams {
+  extends MarkTypeParameter,
+    Partial<RangeParameter<'to'>>,
+    TransformTransactionParameter {
   /**
    * Whether to expand empty selections to the current mark range
    *

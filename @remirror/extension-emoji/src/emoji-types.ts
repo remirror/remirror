@@ -4,7 +4,7 @@ import {
   SuggestKeyBindingMap,
 } from 'prosemirror-suggest';
 
-import { BaseExtensionConfig } from '@remirror/core';
+import { BaseExtensionSettings } from '@remirror/core';
 
 import AliasData from './data/aliases';
 import CategoryData from './data/categories';
@@ -39,7 +39,7 @@ export type EmojiSuggestionKeyBindings = SuggestKeyBindingMap<EmojiSuggestComman
 export type EmojiSuggestionChangeHandler = (params: EmojiSuggestionChangeHandlerParams) => void;
 export type EmojiSuggestionExitHandler = (params: SuggestExitHandlerParams) => void;
 
-export interface EmojiExtensionOptions extends BaseExtensionConfig {
+export interface EmojiExtensionOptions extends BaseExtensionSettings {
   /**
    * The character which will trigger the emoji suggestions popup.
    */

@@ -5,26 +5,26 @@ import { isUndefined } from 'util';
 import { bool, isEmptyArray, isNullOrUndefined, keys, object } from '@remirror/core-helpers';
 import {
   Attributes,
-  AttrsParams,
+  AttributesParameter,
   CommandFunction,
   EditorSchema,
   EditorState,
-  EditorStateParams,
+  EditorStateParameter,
   EditorView,
   KeyBindingCommandFunction,
-  NodeTypeParams,
-  NodeTypesParams,
-  OptionalProsemirrorNodeParams,
-  PosParams,
-  PredicateParams,
+  NodeTypeParameter,
+  NodeTypesParameter,
+  OptionalProsemirrorNodeParameter,
+  PosParameter,
+  PredicateParameter,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
-  ProsemirrorNodeParams,
+  ProsemirrorNodeParameter,
   ResolvedPos,
   Selection,
-  SelectionParams,
+  SelectionParameter,
   Transaction,
-  TransactionParams,
+  TransactionParameter,
 } from '@remirror/core-types';
 
 import {
@@ -35,7 +35,7 @@ import {
   isTextDOMNode,
 } from './dom-utils';
 
-interface NodeEqualsTypeParams extends NodeTypesParams, OptionalProsemirrorNodeParams {}
+interface NodeEqualsTypeParams extends NodeTypesParameter, OptionalProsemirrorNodeParameter {}
 
 /**
  * Checks if the type a given `node` equals to a given `nodeType`.
@@ -55,7 +55,7 @@ export const cloneTransaction = (tr: Transaction): Transaction => {
   return Object.assign(Object.create(tr), tr).setTime(Date.now());
 };
 
-interface RemoveNodeAtPositionParams extends TransactionParams, PosParams {}
+interface RemoveNodeAtPositionParams extends TransactionParameter, PosParameter {}
 
 /**
  * Returns a `delete` transaction that removes a node at a given position with
@@ -199,7 +199,7 @@ export const findNodeAtEndOfDoc = (document_: ProsemirrorNode) =>
 export const findNodeAtStartOfDoc = (document_: ProsemirrorNode) =>
   findNodeAtPosition(PMSelection.atStart(document_).$from);
 
-interface FindParentNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
+interface FindParentNodeOfTypeParams extends NodeTypesParameter, SelectionParameter {}
 
 /**
  *  Iterates over parent nodes, returning closest node of a given `nodeType`.
@@ -282,7 +282,7 @@ export const removeNodeBefore = (tr: Transaction): Transaction => {
 interface FindSelectedNodeOfTypeParams<
   GSchema extends EditorSchema = any,
   GSelection extends Selection<GSchema> = Selection<GSchema>
-> extends NodeTypesParams<GSchema>, SelectionParams<GSchema, GSelection> {}
+> extends NodeTypesParameter<GSchema>, SelectionParameter<GSchema, GSelection> {}
 
 export interface FindSelectedNodeOfType<GSchema extends EditorSchema = any>
   extends FindProsemirrorNodeResult<GSchema> {
@@ -330,7 +330,7 @@ export const findSelectedNodeOfType = <
 };
 
 export interface FindProsemirrorNodeResult<GSchema extends EditorSchema = any>
-  extends ProsemirrorNodeParams<GSchema> {
+  extends ProsemirrorNodeParameter<GSchema> {
   /**
    * The start position of the node.
    */
@@ -352,7 +352,7 @@ export interface FindProsemirrorNodeResult<GSchema extends EditorSchema = any>
   depth: number;
 }
 
-interface FindParentNodeParams extends SelectionParams, PredicateParams<ProsemirrorNode> {}
+interface FindParentNodeParams extends SelectionParameter, PredicateParameter<ProsemirrorNode> {}
 
 /**
  * Returns the position of the node after the current position, selection or
@@ -436,7 +436,10 @@ export const transactionChanged = (tr: Transaction) => {
   return tr.docChanged || tr.selectionSet;
 };
 
-interface IsNodeActiveParams extends EditorStateParams, NodeTypeParams, Partial<AttrsParams> {}
+interface IsNodeActiveParams
+  extends EditorStateParameter,
+    NodeTypeParameter,
+    Partial<AttributesParameter> {}
 
 /**
  * Checks whether the node type passed in is active within the region. Used by

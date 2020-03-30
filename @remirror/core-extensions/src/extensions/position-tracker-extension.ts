@@ -4,10 +4,10 @@ import { Decoration, DecorationSet } from 'prosemirror-view';
 import { Extension } from '@remirror/core';
 import { isNullOrUndefined, isNumber, isString, object } from '@remirror/core-helpers';
 import {
-  BaseExtensionConfig,
-  CommandParams,
-  ExtensionManagerParams,
-  PosParams,
+  BaseExtensionSettings,
+  CommandParameter,
+  ExtensionManagerParameter,
+  PosParameter,
   ProsemirrorCommandFunction,
   Transaction,
 } from '@remirror/core-types';
@@ -20,7 +20,7 @@ const defaultPositionTrackerExtensionOptions: Partial<PositionTrackerExtensionOp
   defaultElement: 'tracker',
 };
 
-export interface PositionTrackerExtensionOptions extends BaseExtensionConfig {
+export interface PositionTrackerExtensionOptions extends BaseExtensionSettings {
   /**
    * The className that is added to all tracker positions
    *
@@ -52,7 +52,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
     return defaultPositionTrackerExtensionOptions;
   }
 
-  public helpers({ getState }: ExtensionManagerParams) {
+  public helpers({ getState }: ExtensionManagerParameter) {
     const helpers = {
       /**
        * Add a tracker position with the specified params to the transaction and return the transaction.
@@ -134,12 +134,12 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
     return helpers;
   }
 
-  public commands({ getHelpers }: CommandParams) {
+  public commands({ getHelpers }: CommandParameter) {
     const commandFactory = <GArg>(helperName: string) => (
-      params: GArg,
+      parameters: GArg,
     ): ProsemirrorCommandFunction => (_, dispatch) => {
       const helper = getHelpers(helperName);
-      const tr = helper(params);
+      const tr = helper(parameters);
 
       // Nothing changed therefore do nothing
       if (!tr) {
@@ -245,7 +245,7 @@ interface RemovePositionTrackerParams {
   id: unknown;
 }
 
-interface AddPositionTrackerParams extends Partial<PosParams>, RemovePositionTrackerParams {
+interface AddPositionTrackerParams extends Partial<PosParameter>, RemovePositionTrackerParams {
   /**
    * A custom class name to use for the tracker position. All the trackers
    * will automatically be given the class name `remirror-tracker-position`

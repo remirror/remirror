@@ -2,9 +2,9 @@ import { EditorState, Plugin, Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
 import {
-  BaseExtensionConfig,
+  BaseExtensionSettings,
   Extension,
-  ExtensionManagerParams,
+  ExtensionManagerParameter,
   isEmptyArray,
   NodeMatch,
   ResolvedPos,
@@ -106,7 +106,7 @@ const createNodeCursorExtensionPlugin = (context: NodeCursorExtension, nodeNames
   });
 };
 
-export interface NodeCursorExtensionOptions extends BaseExtensionConfig {
+export interface NodeCursorExtensionOptions extends BaseExtensionSettings {
   targets?: NodeMatch[];
 }
 
@@ -128,7 +128,7 @@ export class NodeCursorExtension extends Extension<NodeCursorExtensionOptions> {
     };
   }
 
-  public plugin({ tags }: ExtensionManagerParams) {
+  public plugin({ tags }: ExtensionManagerParameter) {
     return createNodeCursorExtensionPlugin(this, tags.general.nodeCursor);
   }
 }

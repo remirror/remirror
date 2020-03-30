@@ -1,18 +1,13 @@
-import { NodeExtension } from '../node-extension';
+import { ExtensionCreator } from '../extension-creator';
 
 /**
  * The default text passed into the prosemirror schema.
  *
  * @builtin
  */
-export class TextExtension extends NodeExtension {
-  get name() {
-    return 'text' as const;
-  }
-
-  get schema() {
-    return {
-      group: 'inline',
-    };
-  }
-}
+export const TextExtension = ExtensionCreator.node({
+  name: 'text',
+  createNodeSchema() {
+    return { group: 'inline' };
+  },
+});

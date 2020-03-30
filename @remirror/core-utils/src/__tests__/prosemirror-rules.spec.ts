@@ -44,21 +44,25 @@ describe('markPasteRule', () => {
 
 describe('markInputRule', () => {
   it('should wrap matched content with the specified mark type', () => {
-    const getAttrs = jest.fn(() => ({ 'data-testid': 'awesome' }));
-    const rule = markInputRule({ regexp: /~([^~]+)~$/, type: testSchema.marks.strong, getAttrs });
+    const getAttributes = jest.fn(() => ({ 'data-testid': 'awesome' }));
+    const rule = markInputRule({
+      regexp: /~([^~]+)~$/,
+      type: testSchema.marks.strong,
+      getAttributes: getAttributes,
+    });
     const {
       state: { selection },
       view,
     } = createEditor(doc(p('~Hello<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const params = [view, from, to, '~'];
+    const parameters = [view, from, to, '~'];
 
     view.someProp('handleTextInput', (f) => {
-      f(...params);
+      f(...parameters);
     });
 
     expect(view.state.doc).toEqualProsemirrorNode(doc(p(strong('Hello'))));
-    expect(getAttrs).toHaveBeenCalledWith(expect.arrayContaining(['~Hello~', 'Hello']));
+    expect(getAttributes).toHaveBeenCalledWith(expect.arrayContaining(['~Hello~', 'Hello']));
   });
 
   it('should not give false positives', () => {
@@ -68,9 +72,9 @@ describe('markInputRule', () => {
       view,
     } = createEditor(doc(p('~Hello<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const params = [view, from, to, '@'];
+    const parameters = [view, from, to, '@'];
     view.someProp('handleTextInput', (f) => {
-      const value = f(...params);
+      const value = f(...parameters);
 
       expect(value).toBe(false);
 
@@ -83,25 +87,25 @@ describe('markInputRule', () => {
 
 describe('nodeInputRule', () => {
   it('should wrap matched content with the specified node type', () => {
-    const getAttrs = jest.fn(() => ({ 'data-testid': 'awesome' }));
+    const getAttributes = jest.fn(() => ({ 'data-testid': 'awesome' }));
     const rule = nodeInputRule({
       regexp: /~([^~]+)~$/,
       type: testSchema.nodes.horizontalRule,
-      getAttrs,
+      getAttributes: getAttributes,
     });
     const {
       state: { selection },
       view,
     } = createEditor(doc(p('~Hello<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const params = [view, from, to, '~'];
+    const parameters = [view, from, to, '~'];
 
     view.someProp('handleTextInput', (f) => {
-      f(...params);
+      f(...parameters);
     });
 
     expect(view.state.doc).toEqualProsemirrorNode(doc(horizontalRule(), p()));
-    expect(getAttrs).toHaveBeenCalledWith(expect.arrayContaining(['~Hello~', 'Hello']));
+    expect(getAttributes).toHaveBeenCalledWith(expect.arrayContaining(['~Hello~', 'Hello']));
   });
 
   it('should not give false positives', () => {
@@ -111,9 +115,9 @@ describe('nodeInputRule', () => {
       view,
     } = createEditor(doc(p('~Hello<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const params = [view, from, to, '@'];
+    const parameters = [view, from, to, '@'];
     view.someProp('handleTextInput', (f) => {
-      const value = f(...params);
+      const value = f(...parameters);
 
       expect(value).toBe(false);
 
@@ -128,7 +132,7 @@ describe('plainInputRule', () => {
   it('should replace content with the transformation function', () => {
     const rule = plainInputRule({
       regexp: /abc$/,
-      transformMatch: (val) => val[0].toUpperCase(),
+      transformMatch: (value) => value[0].toUpperCase(),
     });
 
     const {
@@ -136,10 +140,10 @@ describe('plainInputRule', () => {
       view,
     } = createEditor(doc(p('ab<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const params = [view, from, to, 'c'];
+    const parameters = [view, from, to, 'c'];
 
     view.someProp('handleTextInput', (f) => {
-      f(...params);
+      f(...parameters);
     });
 
     expect(view.state.doc).toEqualProsemirrorNode(doc(p('ABC')));
@@ -156,10 +160,10 @@ describe('plainInputRule', () => {
       view,
     } = createEditor(doc(p('abcxy<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const params = [view, from, to, 'z'];
+    const parameters = [view, from, to, 'z'];
 
     view.someProp('handleTextInput', (f) => {
-      f(...params);
+      f(...parameters);
     });
 
     expect(view.state.doc).toEqualProsemirrorNode(doc(p('ABCxyz')));
@@ -176,10 +180,10 @@ describe('plainInputRule', () => {
       view,
     } = createEditor(doc(p('ab<cursor>')), { rules: [rule] });
     const { from, to } = selection;
-    const params = [view, from, to, 'c'];
+    const parameters = [view, from, to, 'c'];
 
     view.someProp('handleTextInput', (f) => {
-      f(...params);
+      f(...parameters);
     });
 
     expect(view.state.doc).toEqualProsemirrorNode(doc(p('')));

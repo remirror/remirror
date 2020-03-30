@@ -221,7 +221,7 @@ export const renderEditor = <
   const nodesWithAttributes: NodeWithAttrs<GAttrNodeNames> = object();
   attributeNodes.filter(isNodeExtension).forEach(({ name }) => {
     nodesWithAttributes[name as GAttrNodeNames] = (attributes: Attributes = object()) =>
-      nodeFactory({ name, schema, attrs: attributes });
+      nodeFactory({ name, schema, attributes: attributes });
   });
 
   const nodesWithoutAttributes: NodeWithoutAttrs<GPlainNodeNames> = Cast({
@@ -234,7 +234,7 @@ export const renderEditor = <
   const marksWithAttributes: MarkWithAttrs<GAttrMarkNames> = object();
   attributeMarks.filter(isMarkExtension).forEach(({ name }) => {
     marksWithAttributes[name as GAttrMarkNames] = (attributes: Attributes = object()) =>
-      markFactory({ name, schema, attrs: attributes });
+      markFactory({ name, schema, attributes: attributes });
   });
 
   const marksWithoutAttributes: MarkWithoutAttrs<GPlainMarkNames> = object();

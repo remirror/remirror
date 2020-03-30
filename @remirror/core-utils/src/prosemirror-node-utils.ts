@@ -1,13 +1,13 @@
 import { bool, isFunction } from '@remirror/core-helpers';
 import {
   Attributes,
-  MarkTypeParams,
-  NodeTypeParams,
-  OptionalProsemirrorNodeParams,
-  PosParams,
-  PredicateParams,
+  MarkTypeParameter,
+  NodeTypeParameter,
+  OptionalProsemirrorNodeParameter,
+  PosParameter,
+  PredicateParameter,
   ProsemirrorNode,
-  ProsemirrorNodeParams,
+  ProsemirrorNodeParameter,
 } from '@remirror/core-types';
 
 import { isProsemirrorNode } from './dom-utils';
@@ -21,16 +21,16 @@ interface DescendParams {
   descend: boolean;
 }
 
-type NodePredicateParams = PredicateParams<ProsemirrorNode>;
+type NodePredicateParams = PredicateParameter<ProsemirrorNode>;
 
 /**
  * A node with it's start position.
  *
  * @public
  */
-export interface NodeWithPosition extends ProsemirrorNodeParams, PosParams {}
+export interface NodeWithPosition extends ProsemirrorNodeParameter, PosParameter {}
 
-interface FlattenParams extends OptionalProsemirrorNodeParams, Partial<DescendParams> {}
+interface FlattenParams extends OptionalProsemirrorNodeParameter, Partial<DescendParams> {}
 
 /**
  * Flattens descendants of a given `node`.
@@ -137,7 +137,7 @@ interface FindChildrenByAttrParams extends FlattenParams {
 export const findChildrenByAttribute = ({ node, predicate, descend }: FindChildrenByAttrParams) =>
   findChildren({ node, predicate: (child) => predicate(child.attrs), descend });
 
-interface FindChildrenByNodeParams extends FlattenParams, NodeTypeParams {}
+interface FindChildrenByNodeParams extends FlattenParams, NodeTypeParameter {}
 
 /**
  * Iterates over descendants of a given `node`, returning child nodes of a given nodeType.
@@ -152,7 +152,7 @@ interface FindChildrenByNodeParams extends FlattenParams, NodeTypeParams {}
 export const findChildrenByNode = ({ node, type, descend }: FindChildrenByNodeParams) =>
   findChildren({ node, predicate: (child) => child.type === type, descend });
 
-interface FindChildrenByMarkParams extends FlattenParams, MarkTypeParams {}
+interface FindChildrenByMarkParams extends FlattenParams, MarkTypeParameter {}
 
 /**
  * Iterates over descendants of a given `node`, returning child nodes that have a mark of a given markType.
@@ -167,7 +167,7 @@ interface FindChildrenByMarkParams extends FlattenParams, MarkTypeParams {}
 export const findChildrenByMark = ({ node, type, descend }: FindChildrenByMarkParams) =>
   findChildren({ node, predicate: (child) => bool(type.isInSet(child.marks)), descend });
 
-interface ContainsParams extends ProsemirrorNodeParams, NodeTypeParams {}
+interface ContainsParams extends ProsemirrorNodeParameter, NodeTypeParameter {}
 
 /**
  * Returns `true` if a given node contains nodes of a given `nodeType`

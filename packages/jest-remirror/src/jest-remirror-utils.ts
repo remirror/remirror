@@ -1,11 +1,11 @@
 import { TestEditorViewParams } from 'jest-prosemirror';
 
-import { isObject, isProsemirrorNode, SchemaParams } from '@remirror/core';
+import { isObject, isProsemirrorNode, SchemaParameter } from '@remirror/core';
 
 import { coerce, offsetTags } from './jest-remirror-builder';
 import { TaggedProsemirrorNode, Tags } from './jest-remirror-types';
 
-interface ProcessTextParams extends SchemaParams {
+interface ProcessTextParams extends SchemaParameter {
   /**
    * The content to process text in
    */
@@ -18,7 +18,7 @@ const processNodeMark = (content: TaggedProsemirrorNode) => {
   const nodes = content;
   const tags = ([] as TaggedProsemirrorNode[])
     .concat(content)
-    .reduce((acc, node) => ({ ...acc, ...node.tags }), {});
+    .reduce((accumulator, node) => ({ ...accumulator, ...node.tags }), {});
   return { nodes, tags };
 };
 
@@ -55,5 +55,5 @@ export const replaceSelection = ({ view, content }: InsertParams): Tags => {
 /**
  * Check if a node is tagged.
  */
-export const isTaggedNode = (val: unknown): val is TaggedProsemirrorNode =>
-  isProsemirrorNode(val) && isObject((val as any).tags);
+export const isTaggedNode = (value: unknown): val is TaggedProsemirrorNode =>
+  isProsemirrorNode(value) && isObject((value as any).tags);

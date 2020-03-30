@@ -7,11 +7,11 @@ import { EDITOR_CLASS_NAME, SELECTED_NODE_CLASS_NAME } from '@remirror/core-cons
 import { isFunction, isPlainObject, isString, keys } from '@remirror/core-helpers';
 import {
   Attributes,
-  BaseExtensionConfig,
+  BaseExtensionSettings,
   Decoration,
   EditorView,
   NodeView,
-  NodeWithAttrs,
+  NodeWithAttributes,
   ProsemirrorNode,
 } from '@remirror/core-types';
 import { isDOMNode, isElementDOMNode } from '@remirror/core-utils';
@@ -25,7 +25,7 @@ import {
 } from './node-view-types';
 
 export class ReactNodeView<
-  GOptions extends BaseExtensionConfig = BaseExtensionConfig,
+  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
   GAttrs extends Attributes = Attributes
 > implements NodeView {
   /**
@@ -45,7 +45,7 @@ export class ReactNodeView<
   /**
    * The ProsemirrorNode that this nodeView is responsible for rendering.
    */
-  public node: NodeWithAttrs<GAttrs>;
+  public node: NodeWithAttributes<GAttrs>;
 
   /**
    * The editor this nodeView belongs to.
@@ -214,7 +214,7 @@ export class ReactNodeView<
       this.setDomAttrs(node, this.domRef);
     }
 
-    this.node = node as NodeWithAttrs<GAttrs>;
+    this.node = node as NodeWithAttributes<GAttrs>;
     this.renderReactComponent(() => this.render(this.handleRef));
 
     return true;
@@ -291,12 +291,12 @@ export class ReactNodeView<
    * A shorthand method for creating the ReactNodeView
    */
   public static createNodeView<
-    GOptions extends BaseExtensionConfig = BaseExtensionConfig,
+    GOptions extends BaseExtensionSettings = BaseExtensionSettings,
     GAttrs extends Attributes = Attributes
   >({ Component, portalContainer, config: options }: CreateNodeViewParams<GOptions, GAttrs>) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
       new ReactNodeView<GOptions, GAttrs>({
-        node: node as NodeWithAttrs<GAttrs>,
+        node: node as NodeWithAttributes<GAttrs>,
         view,
         getPosition,
         portalContainer,

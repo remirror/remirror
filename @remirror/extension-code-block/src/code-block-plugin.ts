@@ -4,7 +4,7 @@ import { Step } from 'prosemirror-transform';
 import { DecorationSet } from 'prosemirror-view';
 
 import {
-  CompareStateParams,
+  CompareStateParameter,
   EditorState,
   ExtensionManagerNodeTypeParams,
   findChildrenByNode,
@@ -12,9 +12,9 @@ import {
   NodeExtension,
   NodeType,
   NodeWithPosition,
-  ProsemirrorNodeParams,
+  ProsemirrorNodeParameter,
   Transaction,
-  TransactionParams,
+  TransactionParameter,
 } from '@remirror/core';
 
 import { CodeBlockExtensionOptions } from './code-block-types';
@@ -174,20 +174,20 @@ export class CodeBlockState {
   }
 }
 
-interface ApplyParams extends TransactionParams, CompareStateParams {}
-interface RefreshDecorationSetParams extends ProsemirrorNodeParams {
+interface ApplyParams extends TransactionParameter, CompareStateParameter {}
+interface RefreshDecorationSetParams extends ProsemirrorNodeParameter {
   /**
    * The positioned nodes
    */
   blocks: NodeWithPosition[];
 }
 
-interface ManageDecorationSetParams extends TransactionParams {
+interface ManageDecorationSetParams extends TransactionParameter {
   previous: NodeInformation;
   current: NodeInformation;
 }
 
-interface UpdateDecorationSetParams extends TransactionParams {
+interface UpdateDecorationSetParams extends TransactionParameter {
   nodeInfo: NodeInformation;
 }
 

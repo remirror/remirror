@@ -2,7 +2,7 @@ import { Step } from 'prosemirror-transform';
 
 import {
   Attributes,
-  BaseExtensionConfig,
+  BaseExtensionSettings,
   EditorSchema,
   PlainObject,
   Transaction,
@@ -31,7 +31,7 @@ export interface OnSendableReceivedParams {
   jsonSendable: JSONSendable;
 }
 
-export interface CollaborationExtensionOptions extends BaseExtensionConfig {
+export interface CollaborationExtensionOptions extends BaseExtensionSettings {
   /**
    * The document version.
    *

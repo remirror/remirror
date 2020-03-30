@@ -1,12 +1,12 @@
 import { bool, isString } from '@remirror/core-helpers';
-import { SelectionParams } from '@remirror/core-types';
+import { SelectionParameter } from '@remirror/core-types';
 
 import { ChangeReason, ExitReason } from './suggest-constants';
 import {
-  CompareMatchParams,
+  CompareMatchParams as CompareMatchParameters,
   SuggestReasonMap,
   SuggestStateMatch,
-  SuggestStateMatchParams,
+  SuggestStateMatchParams as SuggestStateMatchParameters,
 } from './suggest-types';
 
 /**
@@ -92,5 +92,5 @@ export const isValidMatch = (match: SuggestStateMatch | undefined): match is Sug
 export const selectionOutsideMatch = ({
   match,
   selection,
-}: Partial<SuggestStateMatchParams> & SelectionParams) =>
+}: Partial<SuggestStateMatchParams> & SelectionParameter) =>
   match && (selection.from < match.range.from || selection.from > match.range.end);

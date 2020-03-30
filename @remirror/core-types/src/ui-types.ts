@@ -254,7 +254,7 @@ export interface RemirrorThemeContextType {
 /**
  * An interface describing props that receive the remirror theme.
  */
-export interface ThemeParams {
+export interface ThemeParameter {
   /**
    * The remirror theme passed down through the react context.
    */

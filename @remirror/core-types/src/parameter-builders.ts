@@ -14,13 +14,13 @@ import { Attributes, MakeOptional, Position } from './base-types';
 /**
  * A parameter builder interface containing the `view` property.
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
-export interface EditorViewParams<GSchema extends EditorSchema = any> {
+export interface EditorViewParameter<Schema extends EditorSchema = any> {
   /**
    * An instance of the Prosemirror editor `view`.
    */
-  view: EditorView<GSchema>;
+  view: EditorView<Schema>;
 }
 
 /**
@@ -29,46 +29,46 @@ export interface EditorViewParams<GSchema extends EditorSchema = any> {
  * @typeParam GNodes - the names of the nodes within the editor schema.
  * @typeParam GMarks - the names of the marks within the editor schema.
  */
-export interface SchemaParams<GNodes extends string = string, GMarks extends string = string> {
+export interface SchemaParameter<Nodes extends string = string, Marks extends string = string> {
   /**
    * The Prosemirror schema being used for the current interface
    */
-  schema: EditorSchema<GNodes, GMarks>;
+  schema: EditorSchema<Nodes, Marks>;
 }
 
 /**
  * A parameter builder interface containing the `state` property.
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
-export interface EditorStateParams<GSchema extends EditorSchema = any> {
+export interface EditorStateParameter<Schema extends EditorSchema = any> {
   /**
    * A snapshot of the prosemirror editor state
    */
-  state: EditorState<GSchema>;
+  state: EditorState<Schema>;
 }
 
 /**
  * A parameter builder interface for comparing two instances of the editor state.
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
-export interface CompareStateParams<GSchema extends EditorSchema = any> {
+export interface CompareStateParameter<Schema extends EditorSchema = any> {
   /**
    * The previous snapshot of the prosemirror editor state.
    */
-  oldState: EditorState<GSchema>;
+  oldState: EditorState<Schema>;
 
   /**
    * The latest snapshot of the prosemirror editor state.
    */
-  newState: EditorState<GSchema>;
+  newState: EditorState<Schema>;
 }
 
 /**
  * A parameter builder interface for a html dom `element`.
  */
-export interface ElementParams {
+export interface ElementParameter {
   /**
    * The target HTML element
    */
@@ -78,7 +78,7 @@ export interface ElementParams {
 /**
  * A parameter builder interface describing a `from`/`to` range.
  */
-export interface FromToParams {
+export interface FromToParameter {
   /**
    * The starting point
    */
@@ -91,20 +91,20 @@ export interface FromToParams {
 }
 
 /**
- * A paramter builder type which uses {@link FromToParams} where `from` or `to`, or both
+ * A parameter builder type which uses {@link FromToParams} where `from` or `to`, or both
  * can be set as optional.
  *
  * @typeParam GKey - the keys to set as optional (either `from` or `to`).
  */
-export type OptionalFromToParams<GKey extends keyof FromToParams> = MakeOptional<
-  FromToParams,
+export type OptionalFromToParameter<GKey extends keyof FromToParameter> = MakeOptional<
+  FromToParameter,
   GKey
 >;
 
 /**
  * A parameter builder interface containing the `position` property.
  */
-export interface PositionParams {
+export interface PositionParameter {
   /**
    * Defines a generic position with coordinates
    */
@@ -112,9 +112,9 @@ export interface PositionParams {
 }
 
 /**
- * A paramter builder interface containing the `attrs` property.
+ * A parameter builder interface containing the `attrs` property.
  */
-export interface AttrsParams {
+export interface AttributesParameter {
   /**
    * An object describing the attrs for a prosemirror mark / node
    */
@@ -122,65 +122,65 @@ export interface AttrsParams {
 }
 
 /**
- * A paramter builder interface containing the node `type` property.
+ * A parameter builder interface containing the node `type` property.
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
-export interface NodeTypeParams<GSchema extends EditorSchema = any> {
+export interface NodeTypeParameter<Schema extends EditorSchema = any> {
   /**
    * A prosemirror node type instance.
    */
-  type: NodeType<GSchema>;
+  type: NodeType<Schema>;
 }
 
 /**
- * A paramter builder interface containing the `types` property which takes a
+ * A parameter builder interface containing the `types` property which takes a
  * single type or multiple types.
  *
  * @remarks
  *
  * This can be used to check whether a certain type matches any of these types.
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
-export interface NodeTypesParams<GSchema extends EditorSchema = any> {
+export interface NodeTypesParameter<Schema extends EditorSchema = any> {
   /**
    * The prosemirror node types to use.
    */
-  types: NodeType<GSchema> | Array<NodeType<GSchema>>;
+  types: NodeType<Schema> | Array<NodeType<Schema>>;
 }
 
 /**
- * A paramter builder interface containing the mark `type` property.
+ * A parameter builder interface containing the mark `type` property.
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
-export interface MarkTypeParams<GSchema extends EditorSchema = any> {
+export interface MarkTypeParameter<Schema extends EditorSchema = any> {
   /**
    * The prosemirror mark type instance.
    */
-  type: MarkType<GSchema>;
+  type: MarkType<Schema>;
 }
 
-export interface ProsemirrorNodeParams<GSchema extends EditorSchema = any> {
+export interface ProsemirrorNodeParameter<Schema extends EditorSchema = any> {
   /**
    * The prosemirror node
    */
-  node: ProsemirrorNode<GSchema>;
+  node: ProsemirrorNode<Schema>;
 }
 
-export type NodeWithAttrs<GAttrs extends Attributes = Attributes> = ProsemirrorNode & {
-  attrs: GAttrs;
+export type NodeWithAttributes<NodeAttributes extends Attributes = Attributes> = ProsemirrorNode & {
+  attrs: NodeAttributes;
 };
 
-export interface NodeWithAttrsParams<GAttrs extends Attributes = Attributes> {
+export interface NodeWithAttributesParameter<NodeAttributes extends Attributes = Attributes> {
   /**
    * A prosemirror node with a specific shape for `node.attrs`
    */
-  node: NodeWithAttrs<GAttrs>;
+  node: NodeWithAttributes<NodeAttributes>;
 }
 
-export interface DocParams {
+export interface DocParameter {
   /**
    * The parent doc node of the editor which contains all the other nodes.
    * This is also a ProsemirrorNode
@@ -188,25 +188,25 @@ export interface DocParams {
   doc: ProsemirrorNode;
 }
 
-export interface OptionalProsemirrorNodeParams {
+export interface OptionalProsemirrorNodeParameter {
   /**
    * The nullable prosemirror node which may or may not exist.
    */
   node: ProsemirrorNode | null | undefined;
 }
 
-export interface PosParams {
+export interface PosParameter {
   /**
    * The position of the referenced prosemirror item.
    */
   pos: number;
 }
 
-export interface TransactionParams<GSchema extends EditorSchema = any> {
+export interface TransactionParameter<Schema extends EditorSchema = any> {
   /**
    * The prosemirror transaction
    */
-  tr: Transaction<GSchema>;
+  tr: Transaction<Schema>;
 }
 
 export interface CallbackParams {
@@ -221,43 +221,43 @@ export interface CallbackParams {
  *
  * Can be used to update the transaction and customise commands.
  */
-export type TransactionTransformer<GSchema extends EditorSchema = any> = (
-  tr: Transaction<GSchema>,
-  state: EditorState<GSchema>,
-) => Transaction<GSchema>;
+export type TransactionTransformer<Schema extends EditorSchema = any> = (
+  tr: Transaction<Schema>,
+  state: EditorState<Schema>,
+) => Transaction<Schema>;
 
 /**
  * Perform transformations on the transaction before
  */
-export interface TransformTransactionParams<GSchema extends EditorSchema = any> {
+export interface TransformTransactionParameter<Schema extends EditorSchema = any> {
   /**
    * Transforms the transaction before any other actions are done to it.
    *
    * This is useful for updating the transaction value before a command does it's work and helps prevent multiple
    * dispatches.
    */
-  startTransaction?: TransactionTransformer<GSchema>;
+  startTransaction?: TransactionTransformer<Schema>;
   /**
    * Transforms the transaction before after all other actions are performed.
    *
    * This is called immediately before the dispatch.
    */
-  endTransaction?: TransactionTransformer<GSchema>;
+  endTransaction?: TransactionTransformer<Schema>;
 }
 
-export interface RangeParams<GKey extends keyof FromToParams = never> {
+export interface RangeParameter<GKey extends keyof FromToParameter = never> {
   /**
    * The from/to interface.
    */
-  range: OptionalFromToParams<GKey>;
+  range: OptionalFromToParameter<GKey>;
 }
 
-export interface ResolvedPosParams<GSchema extends EditorSchema = any> {
+export interface ResolvedPosParameter<Schema extends EditorSchema = any> {
   /**
    * A prosemirror resolved pos with provides helpful context methods when working with
    * a position in the editor.
    */
-  $pos: ResolvedPos<GSchema>;
+  $pos: ResolvedPos<Schema>;
 }
 
 export interface TextParams {
@@ -267,9 +267,9 @@ export interface TextParams {
   text: string;
 }
 
-export interface SelectionParams<
-  GSchema extends EditorSchema = any,
-  GSelection extends Selection<GSchema> = Selection<GSchema>
+export interface SelectionParameter<
+  Schema extends EditorSchema = any,
+  GSelection extends Selection<Schema> = Selection<Schema>
 > {
   /**
    * The text editor selection
@@ -277,14 +277,14 @@ export interface SelectionParams<
   selection: GSelection;
 }
 
-export interface PredicateParams<GParams> {
+export interface PredicateParameter<Parameter> {
   /**
    * The predicate function
    */
-  predicate(params: GParams): boolean;
+  predicate(parameter: Parameter): boolean;
 }
 
-export interface RegExpParams {
+export interface RegExpParameter {
   /**
    * The regular expression to test against.
    */

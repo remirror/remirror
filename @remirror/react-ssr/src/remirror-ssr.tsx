@@ -2,11 +2,11 @@
 
 import { jsx } from '@emotion/core';
 
-import { AnyExtension, EditorStateParams, ManagerParams, PlainObject } from '@remirror/core';
+import { AnyExtension, EditorStateParameter, ManagerParams, PlainObject } from '@remirror/core';
 import { mapProps, ReactSerializer } from '@remirror/react-renderer';
 
 export interface RemirrorSSRProps<GExtension extends AnyExtension = any>
-  extends EditorStateParams,
+  extends EditorStateParameter,
     ManagerParams<GExtension> {
   /**
    * The attributes to pass into the root div element.
@@ -27,13 +27,13 @@ export const RemirrorSSR = <GExtension extends AnyExtension = any>({
   state,
   editable,
 }: RemirrorSSRProps<GExtension>) => {
-  const outerProps = mapProps(attributes);
+  const outerProperties = mapProps(attributes);
   const ssrElement = ReactSerializer.fromExtensionManager(manager).serializeFragment(
     state.doc.content,
   );
   const transformedElement = manager.ssrTransformer(ssrElement);
   return (
-    <div {...outerProps} suppressContentEditableWarning={true} contentEditable={editable}>
+    <div {...outerProperties} suppressContentEditableWarning={true} contentEditable={editable}>
       {transformedElement}
     </div>
   );

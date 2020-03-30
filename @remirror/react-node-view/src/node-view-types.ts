@@ -2,18 +2,18 @@ import { ComponentType } from 'react';
 
 import {
   Attributes,
-  BaseExtensionConfig,
-  BaseExtensionConfigParams,
-  EditorViewParams,
-  NodeWithAttrsParams,
+  BaseExtensionConfigParameter,
+  BaseExtensionSettings,
+  EditorViewParameter,
+  NodeWithAttributesParameter,
   SSRComponentProps,
 } from '@remirror/core-types';
 import { PortalContainer } from '@remirror/react-portals';
 
 export interface NodeViewComponentProps<
-  GOptions extends BaseExtensionConfig = BaseExtensionConfig,
+  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
   GAttrs extends Attributes = Attributes
-> extends EditorViewParams, SSRComponentProps<GOptions, GAttrs> {
+> extends EditorViewParameter, SSRComponentProps<GOptions, GAttrs> {
   /**
    * Provides the position of the node view in the prosemirror document
    */
@@ -37,13 +37,13 @@ export interface NodeViewComponentProps<
 export type GetPosition = (() => number) | boolean;
 
 export interface ReactNodeViewParams<
-  GOptions extends BaseExtensionConfig = BaseExtensionConfig,
+  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
   GAttrs extends Attributes = Attributes
 >
-  extends EditorViewParams,
+  extends EditorViewParameter,
     ComponentParams<GOptions, GAttrs>,
-    NodeWithAttrsParams<GAttrs>,
-    BaseExtensionConfigParams<GOptions> {
+    NodeWithAttributesParameter<GAttrs>,
+    BaseExtensionConfigParameter<GOptions> {
   /**
    * Method for retrieving the position of the current nodeView
    */
@@ -57,15 +57,15 @@ export interface ReactNodeViewParams<
 }
 
 export interface CreateNodeViewParams<
-  GOptions extends BaseExtensionConfig = BaseExtensionConfig,
+  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
   GAttrs extends Attributes = Attributes
 >
   extends Pick<ReactNodeViewParams, 'portalContainer'>,
     ComponentParams<GOptions, GAttrs>,
-    BaseExtensionConfigParams<GOptions> {}
+    BaseExtensionConfigParameter<GOptions> {}
 
 export interface ComponentParams<
-  GOptions extends BaseExtensionConfig = BaseExtensionConfig,
+  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
   GAttrs extends Attributes = Attributes
 > {
   /**

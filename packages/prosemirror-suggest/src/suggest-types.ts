@@ -1,4 +1,9 @@
-import { AnyFunction, EditorViewParams, FromToParams, TextParams } from '@remirror/core-types';
+import {
+  AnyFunction,
+  EditorViewParameter,
+  FromToParameter,
+  TextParams,
+} from '@remirror/core-types';
 
 import { ChangeReason, ExitReason } from './suggest-constants';
 
@@ -299,7 +304,7 @@ export interface MatchValue {
 /**
  * A parameter builder interface describing a `from`/`to`/`end` range.
  */
-export interface FromToEndParams extends FromToParams {
+export interface FromToEndParams extends FromToParameter {
   /**
    * The absolute end of the matching string.
    */
@@ -378,7 +383,7 @@ export interface SuggestMarkParams {
  */
 export interface CreateSuggestCommandParams
   extends Partial<ReasonParams>,
-    EditorViewParams,
+    EditorViewParameter,
     SuggestStateMatchParams,
     SuggestMarkParams,
     SuggestIgnoreParams {}
@@ -391,7 +396,7 @@ export type SuggestReplacementType = 'full' | 'partial';
 
 export interface SuggestCallbackParams<GCommand extends AnyFunction<void> = AnyFunction<void>>
   extends SuggestStateMatch,
-    EditorViewParams,
+    EditorViewParameter,
     SuggestCommandParams<GCommand>,
     SuggestIgnoreParams {}
 
@@ -405,7 +410,10 @@ export interface SuggestCallbackParams<GCommand extends AnyFunction<void> = AnyF
  * - {@link @remirror/core-types#EditorViewParams}
  * - {@link KeyboardEventParams}
  */
-export interface OnKeyDownParams extends SuggestStateMatch, EditorViewParams, KeyboardEventParams {}
+export interface OnKeyDownParams
+  extends SuggestStateMatch,
+    EditorViewParameter,
+    KeyboardEventParams {}
 
 /**
  * A parameter builder interface describing the event which triggers the
@@ -459,7 +467,7 @@ export interface SuggestExitHandlerParams<GCommand extends AnyFunction<void> = A
  */
 export interface SuggestCharacterEntryParams<
   GCommand extends AnyFunction<void> = AnyFunction<void>
-> extends SuggestCallbackParams<GCommand>, FromToParams, TextParams {}
+> extends SuggestCallbackParams<GCommand>, FromToParameter, TextParams {}
 
 /**
  * The parameters required by the {@link SuggestKeyBinding} method.

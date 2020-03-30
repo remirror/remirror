@@ -1,4 +1,4 @@
-import { DocExtension, InferFlexibleExtensionList, TextExtension } from '@remirror/core';
+import { DocumentExtension, InferFlexibleExtensionList, TextExtension } from '@remirror/core';
 
 import {
   BaseKeymapExtension,
@@ -16,7 +16,7 @@ import { ParagraphExtension } from './nodes';
  * or you can turn off all of the base extensions.
  */
 export const baseExtensions = [
-  { extension: new DocExtension(), priority: 1 },
+  { extension: new DocumentExtension(), priority: 1 },
   { extension: new TextExtension(), priority: 1 },
   { extension: new ParagraphExtension(), priority: 2 },
   { extension: new HistoryExtension(), priority: 3 },

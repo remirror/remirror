@@ -13,17 +13,17 @@ import {
   EditorState,
   findParentNodeOfType,
   flattenArray,
-  FromToParams,
+  FromToParameter,
   isEqual,
   isObject,
   isString,
   NodeType,
-  NodeTypeParams,
+  NodeTypeParameter,
   NodeWithPosition,
   object,
-  PosParams,
+  PosParameter,
   ProsemirrorCommandFunction,
-  ProsemirrorNodeParams,
+  ProsemirrorNodeParameter,
   TextParams,
   uniqueArray,
 } from '@remirror/core';
@@ -41,7 +41,7 @@ interface ParsedRefractorNode extends TextParams {
   classes: string[];
 }
 
-interface PositionedRefractorNode extends FromToParams, ParsedRefractorNode {}
+interface PositionedRefractorNode extends FromToParameter, ParsedRefractorNode {}
 
 /**
  * Maps the refractor nodes into text and classes which will be used to create our decoration.
@@ -136,7 +136,7 @@ export const createDecorations = ({ blocks, skipLast }: CreateDecorationsParams)
   return decorations;
 };
 
-interface PosWithinRangeParams extends PosParams, FromToParams {}
+interface PosWithinRangeParams extends PosParameter, FromToParameter {}
 
 /**
  * Check if the position is within the range.
@@ -150,10 +150,10 @@ export const lengthHasChanged = <GType>(previous: ArrayLike<GType>, next: ArrayL
   next.length !== previous.length;
 
 export interface NodeInformation
-  extends NodeTypeParams,
-    FromToParams,
-    ProsemirrorNodeParams,
-    PosParams {}
+  extends NodeTypeParameter,
+    FromToParameter,
+    ProsemirrorNodeParameter,
+    PosParameter {}
 
 /**
  * Retrieves helpful node information from the current state.
@@ -262,7 +262,7 @@ export const getLanguage = ({ language, supportedLanguages, fallback }: GetLangu
   !isSupportedLanguage(language, supportedLanguages) ? fallback : language;
 
 interface FormatCodeBlockFactoryParams
-  extends NodeTypeParams,
+  extends NodeTypeParameter,
     Required<
       Pick<CodeBlockExtensionOptions, 'formatter' | 'supportedLanguages' | 'defaultLanguage'>
     > {}
@@ -276,7 +276,7 @@ export const formatCodeBlockFactory = ({
   supportedLanguages,
   defaultLanguage: fallback,
 }: FormatCodeBlockFactoryParams) => (
-  { pos }: Partial<PosParams> = object(),
+  { pos }: Partial<PosParameter> = object(),
 ): ProsemirrorCommandFunction => (state, dispatch) => {
   const { tr, selection } = state;
 

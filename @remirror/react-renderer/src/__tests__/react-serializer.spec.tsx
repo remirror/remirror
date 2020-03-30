@@ -3,7 +3,7 @@ import React from 'react';
 import TestRenderer from 'react-test-renderer';
 
 import {
-  DocExtension,
+  DocumentExtension,
   ExtensionManager,
   NodeExtension,
   NodeExtensionSpec,
@@ -22,10 +22,10 @@ class FooExtension extends NodeExtension {
     group: NodeGroup.Block,
 
     toDOM: () => {
-      const attrs = {
+      const attributes = {
         'data-foo-type': 'true',
       };
-      return ['div', attrs, ['div', { class: 'inside' }, 0]];
+      return ['div', attributes, ['div', { class: 'inside' }, 0]];
     },
   };
 }
@@ -44,7 +44,7 @@ test('ReactSerializer.fromExtensionManager', () => {
 
   // fills in for a missing text
   const altExtensions = [
-    { extension: new DocExtension(), priority: 2 },
+    { extension: new DocumentExtension(), priority: 2 },
     { extension: new ParagraphExtension(), priority: 2 },
     { extension: new TextExtension(), priority: 2 },
     { extension: new BoldExtension(), priority: 2 },
@@ -147,7 +147,7 @@ describe('ReactSerializer', () => {
 });
 
 describe('ReactSerializer.renderSpec', () => {
-  const attrs = { 'data-attribute': 'some attribute' };
+  const attributes = { 'data-attribute': 'some attribute' };
 
   it('supports simple renders', () => {
     expect(
@@ -160,7 +160,7 @@ describe('ReactSerializer.renderSpec', () => {
   });
 
   it('supports attrs', () => {
-    expect(TestRenderer.create(ReactSerializer.renderSpec(['p', attrs]) as JSX.Element))
+    expect(TestRenderer.create(ReactSerializer.renderSpec(['p', attributes]) as JSX.Element))
       .toMatchInlineSnapshot(`
       <p
         data-attribute="some attribute"
@@ -171,7 +171,7 @@ describe('ReactSerializer.renderSpec', () => {
   it('supports nesting', () => {
     expect(
       TestRenderer.create(
-        ReactSerializer.renderSpec(['div', attrs, ['p', 0], 'message']) as JSX.Element,
+        ReactSerializer.renderSpec(['div', attributes, ['p', 0], 'message']) as JSX.Element,
       ),
     ).toMatchInlineSnapshot(`
       <div
@@ -187,7 +187,7 @@ describe('ReactSerializer.renderSpec', () => {
     expect(
       TestRenderer.create(
         ReactSerializer.renderSpec(
-          ['div', attrs, ['div', { class: 'inside' }, 0]],
+          ['div', attributes, ['div', { class: 'inside' }, 0]],
           'message',
         ) as JSX.Element,
       ),

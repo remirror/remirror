@@ -131,7 +131,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
       markPasteRule({
         regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/g,
         type,
-        getAttrs: (url) => ({ href: getMatchString(url) }),
+        getAttributes: (url) => ({ href: getMatchString(url) }),
       }),
     ];
   }

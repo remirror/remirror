@@ -1,2 +1,2 @@
-export * from './doc-extension';
+export * from './document-extension';
 export * from './text-extension';

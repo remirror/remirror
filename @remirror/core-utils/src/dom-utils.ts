@@ -32,23 +32,23 @@ import {
 import {
   EditorSchema,
   EditorState,
-  EditorStateParams,
-  EditorViewParams,
-  ElementParams,
-  FromToParams,
-  MarkTypeParams,
+  EditorStateParameter,
+  EditorViewParameter,
+  ElementParameter,
+  FromToParameter,
+  MarkTypeParameter,
   NodeMatch,
   ObjectNode,
   PlainObject,
   PluginKey,
-  PositionParams,
+  PositionParameter,
   ProsemirrorNode,
-  ProsemirrorNodeParams,
+  ProsemirrorNodeParameter,
   RegexTuple,
   RemirrorContentType,
   RenderEnvironment,
   ResolvedPos,
-  SchemaParams,
+  SchemaParameter,
   Selection,
   Transaction,
 } from '@remirror/core-types';
@@ -154,7 +154,10 @@ export const isNodeSelection = <GSchema extends EditorSchema = any>(
   value: unknown,
 ): value is NodeSelection<GSchema> => isObject(value) && value instanceof NodeSelection;
 
-interface IsMarkActiveParams extends MarkTypeParams, EditorStateParams, Partial<FromToParams> {}
+interface IsMarkActiveParams
+  extends MarkTypeParameter,
+    EditorStateParameter,
+    Partial<FromToParameter> {}
 
 /**
  * Checks that a mark is active within the selected region, or the current selection point is within a
@@ -288,7 +291,7 @@ export const getMarkAttrs = (state: EditorState, type: MarkType) => {
 export const getMarkRange = (
   pmPosition: ResolvedPos | null = null,
   type: MarkType | null | undefined = null,
-): FromToParams | false => {
+): FromToParameter | false => {
   if (!pmPosition || !type) {
     return false;
   }
@@ -344,7 +347,7 @@ export const getTextContentFromSlice = (slice: Slice) => {
  *
  * @public
  */
-export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToParams | false => {
+export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToParameter | false => {
   if (!isTextSelection(state.selection)) {
     return false;
   }
@@ -513,7 +516,7 @@ export const isTextDOMNode = (domNode: unknown): domNode is Text => {
   return isDOMNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
 };
 
-interface GetOffsetParentParams extends EditorViewParams, ElementParams {}
+interface GetOffsetParentParams extends EditorViewParameter, ElementParameter {}
 
 export const getOffsetParent = ({ view, element }: GetOffsetParentParams): HTMLElement =>
   isNullOrUndefined(element)
@@ -525,10 +528,10 @@ export const getOffsetParent = ({ view, element }: GetOffsetParentParams): HTMLE
  *
  * @param params - the element params
  */
-export const getLineHeight = ({ element }: ElementParams) =>
-  parseFloat(window.getComputedStyle(element, undefined).lineHeight || '');
+export const getLineHeight = ({ element }: ElementParameter) => PositionParameter;
+Number.parseFloat(window.getComputedStyle(element, undefined).lineHeight || '');
 
-interface AbsoluteCoordinatesParams extends EditorViewParams, ElementParams, PositionParams {
+interface AbsoluteCoordinatesParams extends EditorViewParameter, ElementParameter, PositionParams {
   /**
    * The height offset of the parent
    */
@@ -708,7 +711,7 @@ export const isObjectNode = (value: unknown): value is ObjectNode =>
   Array.isArray((value as PlainObject).content);
 
 export interface CreateDocumentNodeParams
-  extends SchemaParams,
+  extends SchemaParameter,
     Partial<CustomDocParams>,
     StringHandlerParams {
   /**
@@ -764,8 +767,8 @@ export const createDocumentNode = ({
   if (isObjectNode(content)) {
     try {
       return schema.nodeFromJSON(content);
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
       return fallbackContent({ fallback, schema });
     }
   }
@@ -812,7 +815,10 @@ export const toDOM = ({ node, schema, doc }: FromNodeParams): DocumentFragment =
   return DOMSerializer.fromSchema(schema).serializeFragment(fragment, { document: doc });
 };
 
-interface FromNodeParams extends SchemaParams, ProsemirrorNodeParams, Partial<CustomDocParams> {}
+interface FromNodeParams
+  extends SchemaParameter,
+    ProsemirrorNodeParameter,
+    Partial<CustomDocParams> {}
 
 /**
  * Convert a prosemirror node into it's HTML contents
@@ -821,14 +827,14 @@ interface FromNodeParams extends SchemaParams, ProsemirrorNodeParams, Partial<Cu
  *
  * @public
  */
-export const toHTML = ({ node, schema, doc = getDocument() }: FromNodeParams) => {
-  const element = doc.createElement('div');
-  element.appendChild(toDOM({ node, schema, doc }));
+export const toHTML = ({ node, schema, doc: document_ = getDocument() }: FromNodeParams) => {
+  const element = document_.createElement('div');
+  element.append(toDOM({ node, schema, doc: document_ }));
 
   return element.innerHTML;
 };
 
-interface FromStringParams extends Partial<CustomDocParams>, SchemaParams {
+interface FromStringParams extends Partial<CustomDocParams>, SchemaParameter {
   /** The content  passed in an a string */
   content: string;
 }
@@ -843,9 +849,9 @@ interface FromStringParams extends Partial<CustomDocParams>, SchemaParams {
 export const fromHTML = ({
   content,
   schema,
-  doc = getDocument(),
+  doc: document_ = getDocument(),
 }: FromStringParams): ProsemirrorNode => {
-  const element = doc.createElement('div');
+  const element = document_.createElement('div');
   element.innerHTML = content.trim();
   return DOMParser.fromSchema(schema).parse(element);
 };

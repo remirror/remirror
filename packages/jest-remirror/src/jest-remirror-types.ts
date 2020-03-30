@@ -6,11 +6,11 @@ import {
   ActionsFromExtensions,
   AnyExtension,
   Attributes,
-  AttrsParams,
+  AttributesParameter,
   EditorSchema,
   EditorState,
-  EditorStateParams,
-  EditorViewParams,
+  EditorStateParameter,
+  EditorViewParameter,
   Extension,
   FlexibleExtension,
   HelpersFromExtensions,
@@ -25,7 +25,7 @@ import { InjectedRemirrorProps } from '@remirror/react';
 import { BaseExtensionNodeNames, BaseExtensionNodes } from './jest-remirror-schema';
 
 export interface BaseFactoryParams<GSchema extends EditorSchema = EditorSchema>
-  extends Partial<AttrsParams> {
+  extends Partial<AttributesParameter> {
   /**
    * The name of the node or mark
    */
@@ -99,8 +99,8 @@ export interface TaggedProsemirrorNode<GSchema extends EditorSchema = EditorSche
 }
 
 export interface AddContentReturn<GExtension extends AnyExtension>
-  extends EditorStateParams<SchemaFromExtensions<GExtension>>,
-    EditorViewParams<SchemaFromExtensions<GExtension>> {
+  extends EditorStateParameter<SchemaFromExtensions<GExtension>>,
+    EditorViewParameter<SchemaFromExtensions<GExtension>> {
   /**
    * The current prosemirror document.
    */

@@ -2,14 +2,14 @@ import { history, redo, undo } from 'prosemirror-history';
 
 import { Extension, isFunction, KeyBindings } from '@remirror/core';
 import {
-  BaseExtensionConfig,
+  BaseExtensionSettings,
   DispatchFunction,
   EditorState,
   ProsemirrorCommandFunction,
 } from '@remirror/core-types';
 import { convertCommand, environment } from '@remirror/core-utils';
 
-export interface HistoryExtensionOptions extends BaseExtensionConfig {
+export interface HistoryExtensionOptions extends BaseExtensionSettings {
   /**
    * The amount of history events that are collected before the
    * oldest events are discarded.

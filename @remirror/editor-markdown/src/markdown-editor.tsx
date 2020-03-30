@@ -9,7 +9,7 @@ import typescript from 'refractor/lang/typescript';
 
 import {
   createDocumentNode,
-  DocExtension,
+  DocumentExtension,
   EditorState,
   ExtensionManager,
   ExtensionsFromManager,
@@ -19,7 +19,7 @@ import {
   ProsemirrorNode,
   RemirrorContentType,
   SchemaFromExtensions,
-  SchemaParams,
+  SchemaParameter,
   StringHandlerParams,
   TextExtension,
 } from '@remirror/core';
@@ -62,7 +62,7 @@ const useMarkdownManager = () => {
   return useMemo(
     () =>
       ExtensionManager.create([
-        { priority: 1, extension: new DocExtension({ content: 'block' }) },
+        { priority: 1, extension: new DocumentExtension({ content: 'block' }) },
         {
           priority: 1,
           extension: new CodeBlockExtension({
@@ -80,9 +80,9 @@ const useMarkdownManager = () => {
   );
 };
 
-const InternalMarkdownEditor: FC<InternalEditorProps> = (props) => {
+const InternalMarkdownEditor: FC<InternalEditorProps> = (properties) => {
   return (
-    <RemirrorProvider {...props} childAsRoot={true}>
+    <RemirrorProvider {...properties} childAsRoot={true}>
       <div />
     </RemirrorProvider>
   );
@@ -112,15 +112,15 @@ const useWysiwygManager = () => {
   );
 };
 
-const WysiwygEditor: FC<InternalEditorProps> = ({ children, ...props }) => {
+const WysiwygEditor: FC<InternalEditorProps> = ({ children, ...properties }) => {
   return (
-    <RemirrorProvider {...props} childAsRoot={true}>
+    <RemirrorProvider {...properties} childAsRoot={true}>
       <div>{children}</div>
     </RemirrorProvider>
   );
 };
 
-interface CreateInitialContentParams extends SchemaParams {
+interface CreateInitialContentParams extends SchemaParameter {
   /** The content to render */
   content: RemirrorContentType;
 }
@@ -189,15 +189,15 @@ const markdownStringHandler: StringHandlerParams['stringHandler'] = ({
   );
 };
 
-const useDebounce = (fn: () => any, ms: number = 0, args: any[] = []) => {
+const useDebounce = (fn: () => any, ms: number = 0, arguments_: any[] = []) => {
   useEffect(() => {
-    const handle = setTimeout(fn.bind(null, args), ms);
+    const handle = setTimeout(fn.bind(null, arguments_), ms);
 
     return () => {
       // if args change then clear timeout
       clearTimeout(handle);
     };
-  }, [args, fn, ms]);
+  }, [arguments_, fn, ms]);
 };
 
 export const MarkdownEditor: FC<MarkdownEditorProps> = ({
@@ -218,7 +218,7 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
     schema: wysiwygManager.schema,
   });
   const [markdownEditorState, setMarkdownEditorState] = useState<EditorState<MarkdownSchema>>();
-  const [markdownParams, setMarkdownParams] = useState<
+  const [markdownParameters, setMarkdownParameters] = useState<
     Pick<RemirrorStateListenerParams<MarkdownExtensions>, 'getText' | 'tr'>
   >({ getText: () => initialContent.markdown });
   const [wysiwygEditorState, setWysiwygEditorState] = useState<EditorState<WysiwygSchema>>();
@@ -234,10 +234,10 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
   );
 
   const updateMarkdownFromWysiwyg = useCallback(
-    (doc: ProsemirrorNode) =>
+    (document_: ProsemirrorNode) =>
       setMarkdownEditorState(
         markdownManager.createState({
-          content: toMarkdown(doc),
+          content: toMarkdown(document_),
           stringHandler: markdownStringHandler,
         }),
       ),
@@ -246,14 +246,14 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
 
   useDebounce(
     () => {
-      const { tr, getText } = markdownParams;
+      const { tr, getText } = markdownParameters;
       if (tr?.docChanged) {
         updateWysiwygFromMarkdown(getText());
         return;
       }
     },
     500,
-    [markdownParams.getText, markdownParams.tr],
+    [markdownParameters.getText, markdownParameters.tr],
   );
 
   const onMarkdownStateChange = ({
@@ -261,7 +261,7 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
     getText,
     tr,
   }: RemirrorStateListenerParams<MarkdownExtensions>) => {
-    setMarkdownParams({ getText, tr });
+    setMarkdownParameters({ getText, tr });
     setMarkdownEditorState(newState);
   };
 

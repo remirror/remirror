@@ -8,21 +8,31 @@ import { Keyboard } from 'test-keyboard';
 import { isString, object, pick } from '@remirror/core-helpers';
 import {
   EditorSchema,
-  EditorStateParams,
+  EditorStateParameter,
   InputRule,
   PlainObject,
   Plugin,
-  PosParams,
+  PosParameter,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
-  SelectionParams,
+  SelectionParameter,
   TextParams,
 } from '@remirror/core-types';
 import { findElementAtPosition, isElementDOMNode, isTextDOMNode } from '@remirror/core-utils';
 
 import { createEvents, EventType } from './jest-prosemirror-events';
-import { createState, p, pm, selectionFor, taggedDocHasSelection } from './jest-prosemirror-nodes';
-import { TaggedDocParams, TestEditorView, TestEditorViewParams } from './jest-prosemirror-types';
+import {
+  createState,
+  p,
+  pm,
+  selectionFor,
+  taggedDocHasSelection as taggedDocumentHasSelection,
+} from './jest-prosemirror-nodes';
+import {
+  TaggedDocParams as TaggedDocumentParameters,
+  TestEditorView,
+  TestEditorViewParams as TestEditorViewParameters,
+} from './jest-prosemirror-types';
 
 /**
  * Flushes the dom
@@ -128,7 +138,7 @@ export const dispatchAllSelection = <GSchema extends EditorSchema = any>({
 
 interface DispatchNodeSelectionParams<GSchema extends EditorSchema = any>
   extends TestEditorViewParams<GSchema>,
-    PosParams {}
+    PosParameter {}
 
 /**
  * Dispatch a text selection from start to end
@@ -285,7 +295,7 @@ export const fireEventAtPosition = <GSchema extends EditorSchema = any>({
  */
 export interface ApplyReturn<GSchema extends EditorSchema = any>
   extends TaggedDocParams<GSchema>,
-    EditorStateParams<GSchema> {
+    EditorStateParameter<GSchema> {
   /**
    * True when the command was applied successfully.
    */
@@ -382,8 +392,8 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
    *
    * @param newDoc - the new content to use
    */
-  public overwrite(newDoc: TaggedProsemirrorNode<GSchema>) {
-    const tr = this.state.tr.replaceWith(0, this.view.state.doc.nodeSize - 2, newDoc);
+  public overwrite(newDocument: TaggedProsemirrorNode<GSchema>) {
+    const tr = this.state.tr.replaceWith(0, this.view.state.doc.nodeSize - 2, newDocument);
     tr.setMeta('addToHistory', false);
     this.view.dispatch(tr);
     return this;
@@ -451,8 +461,8 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
    *
    * @param mod - the keyboard shortcut to type
    */
-  public shortcut(mod: string) {
-    shortcut({ shortcut: mod, view: this.view });
+  public shortcut(module_: string) {
+    shortcut({ shortcut: module_, view: this.view });
     return this;
   }
 
@@ -490,8 +500,8 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
    *
    * @param params - the fire event parameters
    */
-  public fire(params: Omit<FireEventAtPositionParams<GSchema>, 'view'>) {
-    fireEventAtPosition({ view: this.view, ...params });
+  public fire(parameters: Omit<FireEventAtPositionParams<GSchema>, 'view'>) {
+    fireEventAtPosition({ view: this.view, ...parameters });
     return this;
   }
 
@@ -554,11 +564,11 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
  * {@link http://prosemirror.net/docs/ref/#view.DirectEditorProps | DirectEditorProps} except for `state`.
  */
 export const createEditor = <GSchema extends EditorSchema = any>(
-  taggedDoc: TaggedProsemirrorNode<GSchema>,
+  taggedDocument: TaggedProsemirrorNode<GSchema>,
   { plugins = [], rules = [], autoClean = true, ...editorOptions }: CreateEditorOptions = object(),
 ) => {
   const place = document.body.appendChild(document.createElement('div'));
-  const state = createState(taggedDoc, [...plugins, inputRules({ rules })]);
+  const state = createState(taggedDocument, [...plugins, inputRules({ rules })]);
   const view = new EditorView<GSchema>(place, { state, ...editorOptions }) as TestEditorView<
     GSchema
   >;
@@ -567,7 +577,7 @@ export const createEditor = <GSchema extends EditorSchema = any>(
     afterEach(() => {
       view.destroy();
       if (place.parentNode) {
-        place.parentNode.removeChild(place);
+        place.remove();
       }
     });
   }
@@ -577,8 +587,8 @@ export const createEditor = <GSchema extends EditorSchema = any>(
 
 export interface ReturnValueCallbackParams<GSchema extends EditorSchema = any>
   extends TestEditorViewParams<GSchema>,
-    EditorStateParams<GSchema>,
-    SelectionParams<GSchema> {
+    EditorStateParameter<GSchema>,
+    SelectionParameter<GSchema> {
   start: number;
   end: number;
   schema: GSchema;
@@ -603,27 +613,27 @@ export interface ReturnValueCallbackParams<GSchema extends EditorSchema = any>
  * @param [result]
  */
 export const apply = <GSchema extends EditorSchema = any>(
-  taggedDoc: TaggedProsemirrorNode<GSchema>,
+  taggedDocument: TaggedProsemirrorNode<GSchema>,
   command: ProsemirrorCommandFunction<GSchema>,
   result?: TaggedProsemirrorNode<GSchema>,
 ): ApplyReturn<GSchema> => {
-  const { state, view } = createEditor(taggedDoc);
+  const { state, view } = createEditor(taggedDocument);
   let newState = state;
   let pass = true;
-  let doc = newState.doc as TaggedProsemirrorNode<GSchema>;
+  let document_ = newState.doc as TaggedProsemirrorNode<GSchema>;
 
   command(state, (tr) => (newState = state.apply(tr)), view);
 
-  if (!pm.eq(newState.doc, result || taggedDoc)) {
+  if (!pm.eq(newState.doc, result || taggedDocument)) {
     pass = false;
   }
 
-  if (result && taggedDocHasSelection(result)) {
+  if (result && taggedDocumentHasSelection(result)) {
     pass = pm.eq(newState.selection, selectionFor(result));
-    doc = result;
+    document_ = result;
   }
 
-  return { pass, taggedDoc: doc, state: newState };
+  return { pass, taggedDoc: document_, state: newState };
 };
 
 /**

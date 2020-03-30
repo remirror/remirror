@@ -1,9 +1,9 @@
 import minDocument from 'min-document';
 
 import {
-  BaseExtensionConfig,
+  BaseExtensionSettings,
   Cast,
-  DocExtension,
+  DocumentExtension,
   Extension,
   ExtensionManager,
   FlexibleExtension,
@@ -29,7 +29,7 @@ export const helpers = {
 };
 
 export const baseExtensions = [
-  { extension: new DocExtension(), priority: 2 },
+  { extension: new DocumentExtension(), priority: 2 },
   { extension: new TextExtension(), priority: 2 },
   { extension: new ParagraphExtension(), priority: 2 },
 ];
@@ -81,7 +81,7 @@ export const initialJson = {
   ],
 };
 
-export class TestExtension extends Extension<{ run: boolean } & BaseExtensionConfig> {
+export class TestExtension extends Extension<{ run: boolean } & BaseExtensionSettings> {
   get name() {
     return 'test' as const;
   }

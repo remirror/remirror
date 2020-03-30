@@ -5,20 +5,24 @@ import { Plugin, TextSelection } from 'prosemirror-state';
 import { findMatches, isFunction, isNullOrUndefined } from '@remirror/core-helpers';
 import {
   EditorSchema,
-  GetAttrsParams,
-  MarkTypeParams,
-  NodeTypeParams,
+  GetAttributesParameter,
+  MarkTypeParameter,
+  NodeTypeParameter,
   ProsemirrorNode,
-  RegExpParams,
+  RegExpParameter,
 } from '@remirror/core-types';
 
 /**
  * Creates an input rule based on the provided regex for the provided mark type
  */
-export const markInputRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) => {
+export const markInputRule = ({
+  regexp,
+  type,
+  getAttributes: getAttributes,
+}: MarkInputRuleParams) => {
   return new InputRule(regexp, (state, match, start, end) => {
     const { tr } = state;
-    const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
+    const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
 
     let markEnd = end;
 
@@ -40,7 +44,7 @@ export const markInputRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) =
 
     return (
       tr
-        .addMark(start, markEnd, type.create(attrs))
+        .addMark(start, markEnd, type.create(attributes))
         // Make sure not to continue with any ongoing marks
         .removeStoredMark(type)
     );
@@ -50,7 +54,11 @@ export const markInputRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) =
 /**
  * Creates a paste rule based on the provided regex for the provided mark type
  */
-export const markPasteRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) => {
+export const markPasteRule = ({
+  regexp,
+  type,
+  getAttributes: getAttributes,
+}: MarkInputRuleParams) => {
   const handler = (fragment: Fragment) => {
     const nodes: ProsemirrorNode[] = [];
 
@@ -67,13 +75,13 @@ export const markPasteRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) =
 
           const start = match.index;
           const end = start + match[0].length;
-          const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
+          const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
 
           if (start > 0) {
             nodes.push(child.cut(pos, start));
           }
 
-          nodes.push(child.cut(start, end).mark(type.create(attrs).addToSet(child.marks)));
+          nodes.push(child.cut(start, end).mark(type.create(attributes).addToSet(child.marks)));
 
           pos = end;
         });
@@ -102,14 +110,14 @@ export const markPasteRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) =
 export const nodeInputRule = ({
   regexp,
   type,
-  getAttrs,
+  getAttributes: getAttributes,
   updateSelection = false,
 }: NodeInputRuleParams) => {
   return new InputRule(regexp, (state, match, start, end) => {
-    const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
+    const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
     const { tr } = state;
 
-    tr.replaceWith(start - 1, end, type.create(attrs));
+    tr.replaceWith(start - 1, end, type.create(attributes));
 
     if (updateSelection) {
       const $pos = tr.doc.resolve(start);
@@ -150,14 +158,17 @@ export const plainInputRule = <GSchema extends EditorSchema = EditorSchema>({
   });
 };
 
-interface NodeInputRuleParams extends Partial<GetAttrsParams>, RegExpParams, NodeTypeParams {
+interface NodeInputRuleParams
+  extends Partial<GetAttributesParameter>,
+    RegExpParameter,
+    NodeTypeParameter {
   /**
    * Allows for setting a text selection at the start of the newly created node.
    * Leave blank or set to false to ignore.
    */
   updateSelection?: boolean;
 }
-interface PlainInputRuleParams extends RegExpParams {
+interface PlainInputRuleParams extends RegExpParameter {
   /**
    * Allows for setting a text selection at the start of the newly created node.
    * Leave blank or set to false to ignore.
@@ -170,4 +181,7 @@ interface PlainInputRuleParams extends RegExpParams {
   transformMatch(match: string[]): string | null | undefined;
 }
 
-interface MarkInputRuleParams extends Partial<GetAttrsParams>, RegExpParams, MarkTypeParams {}
+interface MarkInputRuleParams
+  extends Partial<GetAttributesParameter>,
+    RegExpParameter,
+    MarkTypeParameter {}

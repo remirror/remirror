@@ -1,9 +1,9 @@
 import { Extension } from '@remirror/core';
-import { BaseExtensionConfig, ExtensionManagerParams } from '@remirror/core-types';
+import { BaseExtensionSettings, ExtensionManagerParameter } from '@remirror/core-types';
 
 import { DEFAULT_TRANSFORMATIONS, SSRTransformer } from './ssr-helpers-utils';
 
-export interface SSRHelperExtensionOptions extends BaseExtensionConfig {
+export interface SSRHelperExtensionOptions extends BaseExtensionSettings {
   transformers?: SSRTransformer[];
 }
 
@@ -34,9 +34,9 @@ export class SSRHelperExtension extends Extension<SSRHelperExtensionOptions> {
   /**
    * Runs through all the provided transformations for changing the rendered SSR component.
    */
-  public ssrTransformer(element: JSX.Element, params: ExtensionManagerParams) {
+  public ssrTransformer(element: JSX.Element, parameters: ExtensionManagerParameter) {
     return this.options.transformers.reduce((transformedElement, transformer) => {
-      return transformer(transformedElement, params);
+      return transformer(transformedElement, parameters);
     }, element);
   }
 }

@@ -15,12 +15,12 @@ import {
   AnyHelpers,
   Attributes,
   AttributesWithClass,
-  CommandParams,
+  CommandParameter,
   EditorSchema,
-  EditorStateParams,
+  EditorStateParameter,
   EditorView,
   ExtensionIsActiveFunction,
-  ExtensionManagerParams,
+  ExtensionManagerParameter,
   ExtensionTags,
   KeyBindingCommandFunction,
   KeyBindings,
@@ -31,7 +31,7 @@ import {
   PluginKey,
   ProsemirrorCommandFunction,
   ProsemirrorPlugin,
-  TransactionParams,
+  TransactionParameter,
 } from '@remirror/core-types';
 import {
   chainKeyBindingCommands,
@@ -302,7 +302,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
 
     for (const extension of this.extensions) {
       if (isNodeExtension(extension)) {
-        const { name, schema } = extension;
+        const { name, #schema: schema } = extension;
         nodes[name as this['_N']] = schema;
       }
     }
@@ -342,7 +342,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
   }
 
   /**
-   * A shorthand way of retrieving view.
+   * A shorthand way of retrieving the editor view.
    */
   get view(): EditorView<SchemaFromExtensions<GExtension>> {
     return this.#store.view;
@@ -351,15 +351,16 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
   /* Private Get Properties */
 
   /**
-   * Utility getter for accessing the schema params
+   * Utility getter for accessing the parameters which are passed to the
+   * extension methods
    */
-  private get params(): ExtensionManagerParams<SchemaFromExtensions<GExtension>> {
+  private get params(): ExtensionManagerParameter<SchemaFromExtensions<GExtension>> {
     return {
       tags: this.tags,
       schema: this.schema,
       getState: this.getState,
-      getActions: this.getActions as any,
-      getHelpers: this.getHelpers as any,
+      getActions: this.getActions,
+      getHelpers: this.getHelpers,
     };
   }
 
@@ -536,7 +537,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
    * - `isActive` defaults to a function returning false
    * - `isEnabled` defaults to a function returning true
    */
-  private actions(parameters: CommandParams): this['_A'] {
+  private actions(parameters: CommandParameter): this['_A'] {
     // Will throw if not initialized
     this.checkInitialized();
 
@@ -881,7 +882,7 @@ export interface ExtensionManagerStore<GExtension extends AnyExtension = any>
   tags: ExtensionTags<GNodes, GMarks, GPlain>;
 }
 
-export interface OnTransactionManagerParams extends TransactionParams, EditorStateParams {}
+export interface OnTransactionManagerParams extends TransactionParameter, EditorStateParameter {}
 
 declare global {
   /**

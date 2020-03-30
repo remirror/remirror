@@ -2,7 +2,7 @@ import { jsx } from '@emotion/core';
 import { Children, JSXElementConstructor } from 'react';
 
 import { isArray } from '@remirror/core-helpers';
-import { ExtensionManagerParams, PlainObject } from '@remirror/core-types';
+import { ExtensionManagerParameter, PlainObject } from '@remirror/core-types';
 import {
   cloneElement,
   getElementProps,
@@ -13,7 +13,10 @@ import {
 /**
  * A function that transforms the element received during Server Side Rendering
  */
-export type SSRTransformer = (element: JSX.Element, params: ExtensionManagerParams) => JSX.Element;
+export type SSRTransformer = (
+  element: JSX.Element,
+  params: ExtensionManagerParameter,
+) => JSX.Element;
 
 /**
  * Clone SSR elements ignoring the top level Fragment
@@ -36,9 +39,9 @@ export const cloneSSRElement = (
   }
 
   const { children } = getElementProps(element);
-  const childrenProps = getElementProps(children);
+  const childrenProperties = getElementProps(children);
 
-  return cloneElement(element, {}, transformChildElements(children, childrenProps));
+  return cloneElement(element, {}, transformChildElements(children, childrenProperties));
 };
 
 /**
@@ -79,8 +82,8 @@ export const injectBrIntoEmptyParagraphs: SSRTransformer = (element) => {
         return child;
       }
 
-      const props = getElementProps(child);
-      return cloneElement(child, props, jsx('br'));
+      const properties = getElementProps(child);
+      return cloneElement(child, properties, jsx('br'));
     });
   });
 };

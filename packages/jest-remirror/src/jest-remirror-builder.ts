@@ -9,11 +9,11 @@ import {
   isProsemirrorNode,
   isString,
   object,
-  SchemaParams,
+  SchemaParameter,
 } from '@remirror/core';
 
 import {
-  BaseFactoryParams,
+  BaseFactoryParams as BaseFactoryParameters,
   TaggedContent,
   TaggedContentItem,
   TaggedContentWithText,
@@ -44,19 +44,19 @@ export const text = (value: string, schema: EditorSchema): TaggedContentItem => 
   let textIndex = 0;
   const tags: Tags = object();
 
-  for (const match of findMatches(value, /([\\]+)?<(\w+)>/g)) {
+  for (const match of findMatches(value, /(\\+)?<(\w+)>/g)) {
     const [taggedToken, escapeCharacters, tagName] = match;
     let { index } = match;
 
-    const skipLen = escapeCharacters?.length;
-    if (skipLen) {
-      if (isOdd(skipLen)) {
-        stripped += value.slice(textIndex, index + (skipLen - 1) / 2);
-        stripped += value.slice(index + skipLen, index + taggedToken.length);
+    const skipLength = escapeCharacters?.length;
+    if (skipLength) {
+      if (isOdd(skipLength)) {
+        stripped += value.slice(textIndex, index + (skipLength - 1) / 2);
+        stripped += value.slice(index + skipLength, index + taggedToken.length);
         textIndex = index + taggedToken.length;
         continue;
       }
-      index += skipLen / 2;
+      index += skipLength / 2;
     }
 
     stripped += value.slice(textIndex, index);
@@ -129,7 +129,7 @@ export const sequence = (...content: TaggedContentItem[]) => {
   return { nodes, tags };
 };
 
-interface CoerceParams extends SchemaParams {
+interface CoerceParams extends SchemaParameter {
   /**
    * Content that will be transformed into taggedNodes
    */
@@ -172,7 +172,7 @@ interface NodeFactoryParams<GSchema extends EditorSchema = EditorSchema>
 export const nodeFactory = <GSchema extends EditorSchema = EditorSchema>({
   name,
   schema,
-  attrs,
+  attributes: attributes,
   marks,
 }: NodeFactoryParams<GSchema>) => {
   const nodeBuilder = hasOwnProperty(schema.nodes, name) ? schema.nodes[name] : undefined;
@@ -185,7 +185,7 @@ export const nodeFactory = <GSchema extends EditorSchema = EditorSchema>({
   }
   return (...content: TaggedContentWithText[]): TaggedProsemirrorNode => {
     const { nodes, tags } = coerce({ content, schema });
-    const node = nodeBuilder.createChecked(attrs, nodes, marks) as TaggedProsemirrorNode;
+    const node = nodeBuilder.createChecked(attributes, nodes, marks) as TaggedProsemirrorNode;
     node.tags = tags;
     return node;
   };
@@ -204,7 +204,12 @@ interface MarkFactoryParams extends BaseFactoryParams {
  * @param params.attrs
  * @param params.allowDupes
  */
-export const markFactory = ({ name, schema, attrs, allowDupes = false }: MarkFactoryParams) => {
+export const markFactory = ({
+  name,
+  schema,
+  attributes: attributes,
+  allowDupes = false,
+}: MarkFactoryParams) => {
   const markBuilder = hasOwnProperty(schema.marks, name) ? schema.marks[name] : undefined;
   if (!markBuilder) {
     throw new Error(
@@ -215,7 +220,7 @@ export const markFactory = ({ name, schema, attrs, allowDupes = false }: MarkFac
   }
 
   return (...content: TaggedContentWithText[]): TaggedProsemirrorNode[] => {
-    const mark = markBuilder.create(attrs);
+    const mark = markBuilder.create(attributes);
     const { nodes } = coerce({ content, schema });
     return nodes.map((node) => {
       if (!allowDupes && mark.type.isInSet(node.marks)) {
@@ -240,7 +245,7 @@ export const fragment = (...content: TaggedContentWithText[]) =>
 export const slice = (schema: EditorSchema) => (...content: TaggedContentWithText[]) =>
   new Slice(Fragment.from(coerce({ content, schema }).nodes), 0, 0);
 
-interface CleanParams extends SchemaParams {
+interface CleanParams extends SchemaParameter {
   /**
    * The tagged content which will be replaced with a clean Prosemirror node
    */
@@ -257,11 +262,11 @@ interface CleanParams extends SchemaParams {
 export const clean = ({ schema, content }: CleanParams) => {
   const node = content;
   if (Array.isArray(node)) {
-    return node.reduce((acc, next) => {
+    return node.reduce((accumulator, next) => {
       if (isProsemirrorNode(next)) {
-        acc.push(PMNode.fromJSON(schema, next.toJSON()));
+        accumulator.push(PMNode.fromJSON(schema, next.toJSON()));
       }
-      return acc;
+      return accumulator;
     }, [] as PMNode[]);
   }
   return isProsemirrorNode(node) ? PMNode.fromJSON(schema, node.toJSON()) : undefined;

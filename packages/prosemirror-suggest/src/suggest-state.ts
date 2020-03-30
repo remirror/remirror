@@ -3,27 +3,27 @@ import { Decoration, DecorationSet } from 'prosemirror-view';
 
 import { bool, object } from '@remirror/core-helpers';
 import {
-  CompareStateParams,
+  CompareStateParameter,
   EditorSchema,
   EditorState,
-  EditorStateParams,
+  EditorStateParameter,
   EditorView,
-  FromToParams,
-  ResolvedPosParams,
+  FromToParameter,
+  ResolvedPosParameter,
   TextParams,
-  TransactionParams,
+  TransactionParameter,
 } from '@remirror/core-types';
 import { transactionChanged } from '@remirror/core-utils';
 
 import { ChangeReason, DEFAULT_SUGGESTER, ExitReason } from './suggest-constants';
 import { isInvalidSplitReason, isJumpReason, isValidMatch } from './suggest-predicates';
 import {
-  AddIgnoredParams,
-  CompareMatchParams,
-  RemoveIgnoredParams,
-  SuggestCallbackParams,
+  AddIgnoredParams as AddIgnoredParameters,
+  CompareMatchParams as CompareMatchParameters,
+  RemoveIgnoredParams as RemoveIgnoredParameters,
+  SuggestCallbackParams as SuggestCallbackParameters,
   Suggester,
-  SuggestKeyBindingParams,
+  SuggestKeyBindingParams as SuggestKeyBindingParameters,
   SuggestReasonMap,
   SuggestStateMatch,
   SuggestStateMatchReason,
@@ -189,11 +189,15 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     // position that occurs later in the document. This is so that changes don't
     // affect previous positions.
     if (change && exit && isJumpReason({ change, exit })) {
-      const exitParams = this.createReasonParams(exit);
-      const changeParams = this.createReasonParams(change);
+      const exitParameters = this.createReasonParams(exit);
+      const changeParameters = this.createReasonParams(change);
       const movedForwards = exit.range.from < change.range.from;
-      movedForwards ? change.suggester.onChange(changeParams) : exit.suggester.onExit(exitParams);
-      movedForwards ? exit.suggester.onExit(exitParams) : change.suggester.onChange(changeParams);
+      movedForwards
+        ? change.suggester.onChange(changeParameters)
+        : exit.suggester.onExit(exitParameters);
+      movedForwards
+        ? exit.suggester.onExit(exitParameters)
+        : change.suggester.onChange(changeParameters);
       this.removed = false;
       return;
     }
@@ -246,18 +250,18 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    */
   public addIgnored = ({ from, char, name, specific = false }: AddIgnoredParams) => {
     const to = from + char.length;
-    const suggester = this.suggesters.find((val) => val.name === name);
+    const suggester = this.suggesters.find((value) => value.name === name);
 
     if (!suggester) {
       throw new Error(`No suggester exists for the name provided: ${name}`);
     }
 
-    const attrs = suggester.ignoredClassName ? { class: suggester.ignoredClassName } : {};
+    const attributes = suggester.ignoredClassName ? { class: suggester.ignoredClassName } : {};
 
     const decoration = Decoration.inline(
       from,
       to,
-      { nodeName: suggester.ignoredTag, ...attrs },
+      { nodeName: suggester.ignoredTag, ...attributes },
       { char, name, specific },
     );
 
@@ -350,7 +354,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    *
    * @param - params
    */
-  public apply({ tr, newState }: TransactionParams<GSchema> & CompareStateParams<GSchema>) {
+  public apply({ tr, newState }: TransactionParameter<GSchema> & CompareStateParameter<GSchema>) {
     const { exit } = this.handlerMatches;
 
     if (!transactionChanged(tr) && !this.removed) {
@@ -385,13 +389,13 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     }
 
     const { keyBindings } = match.suggester;
-    const params: SuggestKeyBindingParams = {
+    const parameters: SuggestKeyBindingParams = {
       event,
       setMarkRemoved: this.setRemovedTrue,
       ...this.createParams(match),
     };
 
-    return runKeyBindings(keyBindings, params);
+    return runKeyBindings(keyBindings, parameters);
   }
 
   /**
@@ -448,10 +452,10 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   }
 }
 
-interface HandleTextInputParams extends FromToParams, TextParams {}
+interface HandleTextInputParams extends FromToParameter, TextParams {}
 interface UpdateReasonsParams<GSchema extends EditorSchema = any>
-  extends EditorStateParams<GSchema>,
-    ResolvedPosParams<GSchema>,
+  extends EditorStateParameter<GSchema>,
+    ResolvedPosParameter<GSchema>,
     Partial<CompareMatchParams> {}
 
 /**
@@ -467,5 +471,5 @@ interface UpdateReasonsParams<GSchema extends EditorSchema = any>
  * @typeParam GSchema - the underlying editor schema.
  */
 export interface SuggestStateApplyParams<GSchema extends EditorSchema = any>
-  extends TransactionParams<GSchema>,
-    CompareStateParams<GSchema> {}
+  extends TransactionParameter<GSchema>,
+    CompareStateParameter<GSchema> {}

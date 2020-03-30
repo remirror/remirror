@@ -5,20 +5,20 @@ import {
   AbstractInstanceType,
   ActionsFromExtensions,
   AnyExtension,
-  CompareStateParams,
+  CompareStateParameter,
   EditorSchema,
   EditorState,
-  EditorStateParams,
+  EditorStateParameter,
   EditorView,
-  EditorViewParams,
-  ElementParams,
+  EditorViewParameter,
+  ElementParameter,
   ExtensionManager,
-  FromToParams,
+  FromToParameter,
   ObjectNode,
   OptionsOfExtension,
   PlainObject,
   Position,
-  PositionParams,
+  PositionParameter,
   ProsemirrorNode,
   RemirrorContentType,
   RemirrorInterpolation,
@@ -27,7 +27,7 @@ import {
   StringHandlerParams,
   TextParams,
   Transaction,
-  TransactionParams,
+  TransactionParameter,
   TransactionTransformer,
 } from '@remirror/core';
 
@@ -39,7 +39,7 @@ import {
  * - `start` | `end`
  * - `true` which sets the focus to the current position or start.
  */
-export type FocusType = FromToParams | number | 'start' | 'end' | boolean;
+export type FocusType = FromToParameter | number | 'start' | 'end' | boolean;
 
 export interface RemirrorProps<GExtension extends AnyExtension = any> extends StringHandlerParams {
   /**
@@ -261,7 +261,7 @@ export interface Positioner<GExtension extends AnyExtension = any> {
    *
    * @param params
    */
-  hasChanged(params: CompareStateParams<SchemaFromExtensions<GExtension>>): boolean;
+  hasChanged(params: CompareStateParameter<SchemaFromExtensions<GExtension>>): boolean;
 
   /**
    * Determines whether the positioner should be active
@@ -417,7 +417,7 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
   /**
    * The previous and next state
    */
-  state: CompareStateParams<SchemaFromExtensions<GExtension>>;
+  state: CompareStateParameter<SchemaFromExtensions<GExtension>>;
 
   /**
    * Focus the editor at the `start` | `end` a specific position or at a valid range between `{ from, to }`
@@ -462,7 +462,7 @@ export interface RemirrorGetterParams {
 }
 
 export interface BaseListenerParams<GExtension extends AnyExtension = any>
-  extends EditorViewParams<SchemaFromExtensions<GExtension>>,
+  extends EditorViewParameter<SchemaFromExtensions<GExtension>>,
     RemirrorGetterParams {
   /**
    * The original transaction which caused this state update.
@@ -490,11 +490,11 @@ export interface BaseListenerParams<GExtension extends AnyExtension = any>
 }
 
 export interface RemirrorEventListenerParams<GExtension extends AnyExtension = any>
-  extends EditorStateParams<SchemaFromExtensions<GExtension>>,
+  extends EditorStateParameter<SchemaFromExtensions<GExtension>>,
     BaseListenerParams<GExtension> {}
 
 export interface RemirrorStateListenerParams<GExtension extends AnyExtension = any>
-  extends CompareStateParams<SchemaFromExtensions<GExtension>>,
+  extends CompareStateParameter<SchemaFromExtensions<GExtension>>,
     BaseListenerParams<GExtension> {
   /**
    * Manually create a new state object with the desired content.
@@ -517,16 +517,16 @@ export interface PlaceholderConfig extends TextParams {
   style: ObjectInterpolation<undefined>;
 }
 
-export type PositionerMapValue = ElementParams & {
+export type PositionerMapValue = ElementParameter & {
   prev: PositionerProps;
 };
 
-export interface PositionerRefFactoryParams extends PositionerIdParams, PositionParams {}
+export interface PositionerRefFactoryParams extends PositionerIdParams, PositionParameter {}
 
 export interface GetPositionParams<GExtension extends AnyExtension = any>
-  extends EditorViewParams<SchemaFromExtensions<GExtension>>,
-    ElementParams,
-    CompareStateParams<SchemaFromExtensions<GExtension>> {}
+  extends EditorViewParameter<SchemaFromExtensions<GExtension>>,
+    ElementParameter,
+    CompareStateParameter<SchemaFromExtensions<GExtension>> {}
 
 export interface PositionerIdParams {
   /**
@@ -585,8 +585,8 @@ export interface BaseExtensionProps {
 }
 
 export interface UpdateStateParams<GSchema extends EditorSchema = any>
-  extends Partial<TransactionParams<GSchema>>,
-    EditorStateParams<GSchema> {
+  extends Partial<TransactionParameter<GSchema>>,
+    EditorStateParameter<GSchema> {
   /**
    * Called after the state has updated.
    */
@@ -603,13 +603,13 @@ export interface UpdateStateParams<GSchema extends EditorSchema = any>
 export interface EditorStateEventListenerParams<
   GExtension extends AnyExtension = any,
   GSchema extends EditorSchema = any
-> extends Partial<CompareStateParams<GSchema>>, Pick<BaseListenerParams<GExtension>, 'tr'> {}
+> extends Partial<CompareStateParameter<GSchema>>, Pick<BaseListenerParams<GExtension>, 'tr'> {}
 
 export interface RemirrorState<GSchema extends EditorSchema = any> {
   /**
    * The Prosemirror editor state
    */
-  editor: CompareStateParams<GSchema>;
+  editor: CompareStateParameter<GSchema>;
   /**
    * Used when suppressHydrationWarning is true to determine when it's okay to
    * render the client content.
@@ -620,4 +620,4 @@ export interface RemirrorState<GSchema extends EditorSchema = any> {
 export interface ListenerParams<
   GExtension extends AnyExtension = any,
   GSchema extends EditorSchema = any
-> extends Partial<EditorStateParams<GSchema>>, Pick<BaseListenerParams<GExtension>, 'tr'> {}
+> extends Partial<EditorStateParameter<GSchema>>, Pick<BaseListenerParams<GExtension>, 'tr'> {}

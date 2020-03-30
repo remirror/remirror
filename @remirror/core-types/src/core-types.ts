@@ -10,7 +10,6 @@ import {
   RemirrorIdentifier,
   Tag,
 } from '@remirror/core-constants';
-import { PortalContainer } from '@remirror/react-portals';
 
 import {
   EditorSchema,
@@ -32,12 +31,12 @@ import {
   Value,
 } from './base-types';
 import {
-  AttrsParams as AttributesParameters,
-  EditorStateParams as EditorStateParameters,
-  EditorViewParams as EditorViewParameters,
-  NodeWithAttrsParams as NodeWithAttributesParameters,
-  TransactionParams as TransactionParameters,
-} from './type-builders';
+  AttributesParameter,
+  EditorStateParameter,
+  EditorViewParameter,
+  NodeWithAttributesParameter,
+  TransactionParameter,
+} from './parameter-builders';
 
 /**
  * Supported content for the remirror editor.
@@ -99,8 +98,8 @@ export type ProsemirrorCommandFunction<GSchema extends EditorSchema = any> = (
 /**
  * This is the modified type signature for commands within the remirror editor.
  *
- * @typeParam GSchema - the underlying editor schema.
- * @typeParam GExtraParams - extra parameters to add to the command function.
+ * @typeParam Schema - the underlying editor schema.
+ * @typeParam ExtraParameter - extra parameters to add to the command function.
  *
  * @remarks
  *
@@ -110,8 +109,8 @@ export type ProsemirrorCommandFunction<GSchema extends EditorSchema = any> = (
  */
 export type CommandFunction<
   GSchema extends EditorSchema = any,
-  GExtraParams extends object = {}
-> = (params: CommandFunctionParams<GSchema> & GExtraParams) => boolean;
+  ExtraParameter extends object = {}
+> = (params: CommandFunctionParameter<GSchema> & ExtraParameter) => boolean;
 
 /**
  * Chained commands take a transaction and act on it before returning the
@@ -126,7 +125,7 @@ export type CommandFunction<
  * passes it onto the next chainable command.
  */
 export type ChainedCommandFunction<Schema extends EditorSchema = any> = (
-  transaction: TransactionParams<Schema>,
+  transaction: TransactionParameter<Schema>,
 ) => void;
 
 /**
@@ -134,9 +133,9 @@ export type ChainedCommandFunction<Schema extends EditorSchema = any> = (
  *
  * @typeParam GSchema - the underlying editor schema.
  */
-export interface CommandFunctionParams<GSchema extends EditorSchema = any>
-  extends Partial<EditorViewParams<GSchema>>,
-    EditorStateParams<GSchema> {
+export interface CommandFunctionParameter<GSchema extends EditorSchema = any>
+  extends Partial<EditorViewParameter<GSchema>>,
+    EditorStateParameter<GSchema> {
   /**
    * The dispatch function which causes the command to be performed.
    *
@@ -149,8 +148,8 @@ export interface CommandFunctionParams<GSchema extends EditorSchema = any>
   dispatch?: DispatchFunction<GSchema>;
 }
 
-export interface NextParams<Schema extends EditorSchema = any>
-  extends CommandFunctionParams<Schema> {
+export interface NextParameter<Schema extends EditorSchema = any>
+  extends CommandFunctionParameter<Schema> {
   /**
    * A method to run the next (lower priority) command in the chain of
    * keybindings.
@@ -175,7 +174,7 @@ export interface NextParams<Schema extends EditorSchema = any>
  */
 export type KeyBindingCommandFunction<GSchema extends EditorSchema = any> = CommandFunction<
   GSchema,
-  NextParams<GSchema>
+  NextParameter<GSchema>
 >;
 
 /**
@@ -290,8 +289,8 @@ export type HelperGetter = (name: string) => AnyFunction;
 /**
  * Parameters passed into many of the extension methods.
  */
-export interface ExtensionManagerParams<GSchema extends EditorSchema = EditorSchema>
-  extends ExtensionTagParams {
+export interface ExtensionManagerParameter<GSchema extends EditorSchema = EditorSchema>
+  extends ExtensionTagParameter {
   /**
    * A helper method for retrieving the state of the editor
    */
@@ -319,18 +318,18 @@ export interface ExtensionManagerParams<GSchema extends EditorSchema = EditorSch
  * Parameters passed into many of the extension methods with a view added.
  *
  * Inherits from
- * - {@link EditorViewParams}
- * - {@link ExtensionManagerParams}
+ * - {@link EditorViewParameter}
+ * - {@link ExtensionManagerParameter}
  *
  * @typeParam GSchema - the underlying editor schema.
  */
-export interface ViewExtensionManagerParams<GSchema extends EditorSchema = any>
-  extends EditorViewParams<GSchema>,
-    ExtensionManagerParams<GSchema> {}
+export interface ViewExtensionManagerParameter<GSchema extends EditorSchema = any>
+  extends EditorViewParameter<GSchema>,
+    ExtensionManagerParameter<GSchema> {}
 
 export type ExtensionCommandFunction = (...args: any[]) => ProsemirrorCommandFunction;
 
-export type ExtensionIsActiveFunction = (params: Partial<AttrsParams>) => boolean;
+export type ExtensionIsActiveFunction = (params: Partial<AttributesParameter>) => boolean;
 
 /**
  * The return signature for an extensions command method.
@@ -357,19 +356,23 @@ type InferredType<GType> = GType extends object ? { type: GType } : {};
  *
  * This is used to generate the specific types for Marks and Nodes.
  */
-export type ExtensionManagerTypeParams<GType> = ExtensionManagerParams & InferredType<GType>;
+export type ExtensionManagerTypeParameter<GType> = ExtensionManagerParameter & InferredType<GType>;
 
 /**
  * The extension manager type params for a prosemirror `NodeType` extension
  */
-export type ExtensionManagerNodeTypeParams = ExtensionManagerTypeParams<NodeType<EditorSchema>>;
+export type ExtensionManagerNodeTypeParameter = ExtensionManagerTypeParameter<
+  NodeType<EditorSchema>
+>;
 
 /**
  * The extension manager type params for a prosemirror `NodeType` extension
  */
-export type ExtensionManagerMarkTypeParams = ExtensionManagerTypeParams<MarkType<EditorSchema>>;
+export type ExtensionManagerMarkTypeParameter = ExtensionManagerTypeParameter<
+  MarkType<EditorSchema>
+>;
 
-export interface CommandParams extends ViewExtensionManagerParams {
+export interface CommandParameter extends ViewExtensionManagerParameter {
   /**
    * Returns true when the editor can be edited and false when it cannot.
    *
@@ -379,15 +382,15 @@ export interface CommandParams extends ViewExtensionManagerParams {
   isEditable: () => boolean;
 }
 
-export type CommandTypeParams<GType> = CommandParams & InferredType<GType>;
+export type CommandTypeParameter<GType> = CommandParameter & InferredType<GType>;
 
-export type CommandNodeTypeParams = CommandTypeParams<NodeType<EditorSchema>>;
-export type CommandMarkTypeParams = CommandTypeParams<MarkType<EditorSchema>>;
+export type CommandNodeTypeParameter = CommandTypeParameter<NodeType<EditorSchema>>;
+export type CommandMarkTypeParameter = CommandTypeParameter<MarkType<EditorSchema>>;
 
 export type ElementUnion = Value<HTMLElementTagNameMap>;
 
-export interface ActionMethod<GParams extends any[] = []> {
-  (...args: GParams): void;
+export interface ActionMethod<Parameter extends any[] = []> {
+  (...args: Parameter): void;
 
   /**
    * Determines whether the command is currently in an active state.
@@ -444,29 +447,29 @@ export interface AnyHelpers {
   [helper: string]: AnyFunction;
 }
 
-type GetAttrsFunction = (p: string[] | string) => Attributes | undefined;
+type GetAttributesFunction = (p: string[] | string) => Attributes | undefined;
 
 /**
  * A function which takes a regex match array (strings) or a single string match
  * and transforms it into an `Attrs` object.
  */
-export type GetAttrs = Attributes | GetAttrsFunction;
+export type GetAttributes = Attributes | GetAttributesFunction;
 
-export interface GetAttrsParams {
+export interface GetAttributesParameter {
   /**
    * A helper function for setting receiving a match array / string and setting
    * the attributes for a node.
    */
-  getAttrs: GetAttrs;
+  getAttributes: GetAttributes;
 }
 
 /**
  * The interface for SSR Component Props
  */
 export interface SSRComponentProps<
-  GOptions extends BaseExtensionConfig = BaseExtensionConfig,
+  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
   GAttrs extends Attributes = Attributes
-> extends NodeWithAttrsParams<GAttrs>, BaseExtensionConfigParams<GOptions> {}
+> extends NodeWithAttributesParameter<GAttrs>, BaseExtensionConfigParameter<GOptions> {}
 
 /**
  * The tag names that apply to any extension whether plain, node or mark. These
@@ -510,7 +513,7 @@ export interface ExtensionTags<
  * An interface with a `tags` parameter useful as a builder for parameter
  * objects.
  */
-export interface ExtensionTagParams<
+export interface ExtensionTagParameter<
   GNodes extends string = string,
   GMarks extends string = string,
   GPlain extends string = string
@@ -524,12 +527,12 @@ export interface ExtensionTagParams<
 /**
  * The params object received by the onTransaction handler.
  */
-export interface OnTransactionParams
-  extends ViewExtensionManagerParams,
-    TransactionParams,
-    EditorStateParams {}
+export interface OnTransactionParameter
+  extends ViewExtensionManagerParameter,
+    TransactionParameter,
+    EditorStateParameter {}
 
-export interface BaseExtensionConfig extends SSRComponentParams {
+export interface BaseExtensionSettings extends SSRComponentParameter {
   /**
    * Inject additional attributes into the defined mark / node schema. This can
    * only be used for `NodeExtensions` and `MarkExtensions`.
@@ -634,7 +637,7 @@ export interface ExcludeOptions {
   suggesters?: boolean;
 }
 
-export interface SSRComponentParams {
+export interface SSRComponentParameter {
   /**
    * The component to render in SSR. The attrs are passed as props.
    *
@@ -647,8 +650,8 @@ export interface SSRComponentParams {
   SSRComponent?: ComponentType<any> | null;
 }
 
-export interface BaseExtensionConfigParams<
-  Config extends BaseExtensionConfig = BaseExtensionConfig
+export interface BaseExtensionConfigParameter<
+  Config extends BaseExtensionSettings = BaseExtensionSettings
 > {
   /**
    * The static config that was passed into the extension that created this node
@@ -661,7 +664,7 @@ export interface BaseExtensionConfigParams<
  * The parameters passed to the `createSchema` method for node and mark
  * extensions.
  */
-export interface CreateSchemaParams<Config extends BaseExtensionConfig> {
+export interface CreateSchemaParameter<Config extends BaseExtensionSettings> {
   /**
    * All the static config options that have been passed into the extension when
    * being created (instantiated).
@@ -685,7 +688,7 @@ export interface CreateSchemaParams<Config extends BaseExtensionConfig> {
    *   },
    * }
    */
-  createExtraAttrs: CreateExtraAttrs;
+  createExtraAttrs: CreateExtraAttributes;
 
   /**
    * Pull all extra attrs from the dom node provided.

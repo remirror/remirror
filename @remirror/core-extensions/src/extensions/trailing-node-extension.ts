@@ -3,17 +3,17 @@ import { Plugin } from 'prosemirror-state';
 import { Extension, ExtensionParameters } from '@remirror/core';
 import { entries, uniqueArray } from '@remirror/core-helpers';
 import {
-  BaseExtensionConfig,
-  ExtensionManagerParams,
-  ExtensionTagParams,
-  SchemaParams,
+  BaseExtensionSettings,
+  ExtensionManagerParameter,
+  ExtensionTagParameter,
+  SchemaParameter,
 } from '@remirror/core-types';
 import { getPluginState, nodeEqualsType } from '@remirror/core-utils';
 
 interface CreateTrailingNodePluginParams
-  extends ExtensionTagParams,
+  extends ExtensionTagParameter,
     ExtensionParameters<TrailingNodeExtension>,
-    SchemaParams {}
+    SchemaParameter {}
 
 /**
  * Create the paragraph plugin which can check the end of the document and
@@ -76,7 +76,7 @@ export const createTrailingNodePlugin = ({
   });
 };
 
-export interface TrailingNodeExtensionOptions extends BaseExtensionConfig {
+export interface TrailingNodeExtensionOptions extends BaseExtensionSettings {
   /**
    * The node to create at the end of the document.
    *
@@ -135,7 +135,7 @@ export class TrailingNodeExtension extends Extension<TrailingNodeExtensionOption
    * Register the plugin which is responsible for inserting the configured node
    * into the end of the node.
    */
-  public plugin({ tags, schema }: ExtensionManagerParams) {
+  public plugin({ tags, schema }: ExtensionManagerParameter) {
     return createTrailingNodePlugin({ extension: this, tags, schema });
   }
 }

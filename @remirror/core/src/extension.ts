@@ -24,18 +24,18 @@ import { isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers/lib/c
 import {
   Attributes,
   AttributesWithClass,
-  BaseExtensionConfig,
-  CommandTypeParams,
+  BaseExtensionSettings,
+  CommandTypeParameter,
   CreateExtraAttrs,
-  CreateSchemaParams,
+  CreateSchemaParameter,
   EditorSchema,
   ExtensionCommandReturn,
   ExtensionHelperReturn,
   ExtensionIsActiveFunction,
-  ExtensionManagerMarkTypeParams,
-  ExtensionManagerNodeTypeParams,
-  ExtensionManagerParams,
-  ExtensionManagerTypeParams,
+  ExtensionManagerMarkTypeParameter,
+  ExtensionManagerNodeTypeParameter,
+  ExtensionManagerParameter,
+  ExtensionManagerTypeParameter,
   ExtraAttributes,
   FlipPartialAndRequired,
   GetExtraAttributes,
@@ -46,7 +46,7 @@ import {
   NodeExtensionSpec,
   NodeType,
   NodeViewMethod,
-  OnTransactionParams,
+  OnTransactionParameter,
   PlainObject,
   ProsemirrorPlugin,
 } from '@remirror/core-types';
@@ -55,7 +55,7 @@ import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 /**
  * The type which is applicable to any extension instance.
  */
-export type AnyExtension<Config extends BaseExtensionConfig = any> = Extension<
+export type AnyExtension<Config extends BaseExtensionSettings = any> = Extension<
   any,
   any,
   Config,
@@ -68,7 +68,7 @@ export type AnyExtension<Config extends BaseExtensionConfig = any> = Extension<
  * These are the default options merged into every extension. They can be
  * overridden.
  */
-export const defaultConfig: Required<BaseExtensionConfig> = {
+export const defaultConfig: Required<BaseExtensionSettings> = {
   priority: null,
   SSRComponent: null,
   extraAttrs: [],
@@ -80,7 +80,7 @@ export const defaultConfig: Required<BaseExtensionConfig> = {
  *
  * @param value - the extension to check
  */
-export const isExtension = <Config extends BaseExtensionConfig = any>(
+export const isExtension = <Config extends BaseExtensionSettings = any>(
   value: unknown,
 ): value is AnyExtension<Config> =>
   isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Extension);
@@ -90,7 +90,7 @@ export const isExtension = <Config extends BaseExtensionConfig = any>(
  *
  * @param value - the extension to check
  */
-export const isPlainExtension = <Config extends BaseExtensionConfig = any>(
+export const isPlainExtension = <Config extends BaseExtensionSettings = any>(
   value: unknown,
 ): value is AnyPlainExtension<Config> => isExtension(value) && value.type === ExtensionType.Plain;
 
@@ -100,7 +100,7 @@ export const isPlainExtension = <Config extends BaseExtensionConfig = any>(
  *
  * @param value - the extension to check
  */
-export const isMarkExtension = <Config extends BaseExtensionConfig = any>(
+export const isMarkExtension = <Config extends BaseExtensionSettings = any>(
   value: unknown,
 ): value is AnyMarkExtension<Config> => isExtension(value) && value.type === ExtensionType.Mark;
 
@@ -110,7 +110,7 @@ export const isMarkExtension = <Config extends BaseExtensionConfig = any>(
  *
  * @param value - the extension to check
  */
-export const isNodeExtension = <Config extends BaseExtensionConfig = any>(
+export const isNodeExtension = <Config extends BaseExtensionSettings = any>(
   value: unknown,
 ): value is AnyNodeExtension<Config> => isExtension(value) && value.type === ExtensionType.Node;
 
@@ -125,7 +125,7 @@ export const isNodeExtension = <Config extends BaseExtensionConfig = any>(
  * This can only be used in a `NodeExtension` or `MarkExtension`. The additional
  * attributes can only be optional.
  */
-const createExtraAttributesFactory = <Config extends BaseExtensionConfig>(
+const createExtraAttributesFactory = <Config extends BaseExtensionSettings>(
   extension: AnyExtension,
 ): CreateExtraAttrs => ({ fallback }) => {
   // Make sure this is a node or mark extension. Will throw if not.
@@ -158,7 +158,7 @@ const createExtraAttributesFactory = <Config extends BaseExtensionConfig>(
 /**
  * Runs through the extraAttrs provided and retrieves them.
  */
-const getExtraAttributesFactory = <Config extends BaseExtensionConfig>(
+const getExtraAttributesFactory = <Config extends BaseExtensionSettings>(
   extension: AnyExtension,
 ): GetExtraAttributes => (domNode) => {
   // Make sure this is a node or mark extension. Will throw if not.
@@ -235,7 +235,7 @@ const getExtraAttributesFactory = <Config extends BaseExtensionConfig>(
  */
 export abstract class Extension<
   Name extends string,
-  Config extends BaseExtensionConfig,
+  Config extends BaseExtensionSettings,
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {},
@@ -374,12 +374,19 @@ export abstract class Extension<
   }
 }
 
-type DefaultConfigType<Config extends BaseExtensionConfig> = FlipPartialAndRequired<Config> &
-  Partial<BaseExtensionConfig>;
+/**
+ * Get the expected type signature for the `defaultConfig`. Requires that every
+ * non-required property (not from the BaseExtension) has a value assigned.
+ */
+export type DefaultConfigType<Config extends BaseExtensionSettings> = Omit<
+  FlipPartialAndRequired<Config>,
+  keyof BaseExtensionSettings
+> &
+  Partial<BaseExtensionSettings>;
 
 export interface ExtensionCreatorOptions<
   Name extends string,
-  Config extends BaseExtensionConfig,
+  Config extends BaseExtensionSettings,
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {},
@@ -464,7 +471,7 @@ export interface ExtensionCreatorOptions<
    *
    * @alpha
    */
-  attributes?: (params: ExtensionManagerParams) => AttributesWithClass;
+  attributes?: (params: ExtensionManagerParameter) => AttributesWithClass;
 
   /**
    * Create and register commands for that can be called within the editor.
@@ -502,7 +509,7 @@ export interface ExtensionCreatorOptions<
    *
    * @param params - schema params with type included
    */
-  createCommands?: (params: CommandTypeParams<ProsemirrorType>) => Commands;
+  createCommands?: (params: CommandTypeParameter<ProsemirrorType>) => Commands;
 
   /**
    * Each extension can make extension data available which is updated on each
@@ -511,7 +518,7 @@ export interface ExtensionCreatorOptions<
    * Within React this data is passed back into Remirror render prop and also
    * the Remirror context and can be retrieved with a `hook` or `HOC`
    */
-  extensionData?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => PlainObject;
+  extensionData?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => PlainObject;
 
   /**
    * Register input rules which are activated if the regex matches as a user is
@@ -519,7 +526,7 @@ export interface ExtensionCreatorOptions<
    *
    * @param params - schema params with type included
    */
-  inputRules?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => InputRule[];
+  inputRules?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => InputRule[];
 
   /**
    * Determines whether this extension is currently active (only applies to Node
@@ -527,14 +534,14 @@ export interface ExtensionCreatorOptions<
    *
    * @param params - extension manager params
    */
-  isActive?: (params: ExtensionManagerParams) => ExtensionIsActiveFunction;
+  isActive?: (params: ExtensionManagerParameter) => ExtensionIsActiveFunction;
 
   /**
    * Add key bindings for this extension.
    *
    * @param params - schema params with type included
    */
-  keys?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => KeyBindings;
+  keys?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => KeyBindings;
 
   /**
    * Registers a node view for the extension.
@@ -550,7 +557,7 @@ export interface ExtensionCreatorOptions<
    *
    * @alpha
    */
-  nodeView?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => NodeViewMethod;
+  nodeView?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => NodeViewMethod;
 
   /**
    * Register paste rules for this extension.
@@ -559,14 +566,14 @@ export interface ExtensionCreatorOptions<
    *
    * @param params - schema params with type included
    */
-  pasteRules?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => ProsemirrorPlugin[];
+  pasteRules?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => ProsemirrorPlugin[];
 
   /**
    * Register a plugin for the extension.
    *
    * @param params - schema params with type included
    */
-  plugin?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => ProsemirrorPlugin;
+  plugin?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => ProsemirrorPlugin;
 
   /**
    * An extension can declare the extensions it requires with the default
@@ -594,7 +601,7 @@ export interface ExtensionCreatorOptions<
    * by the styles. This method can be called to check if there is only one
    * child of the parent
    */
-  ssrTransformer?: (element: JSX.Element, params: ExtensionManagerParams) => JSX.Element;
+  ssrTransformer?: (element: JSX.Element, params: ExtensionManagerParameter) => JSX.Element;
 
   /**
    * Allows extensions to register styles on the editor instance using emotion
@@ -602,13 +609,13 @@ export interface ExtensionCreatorOptions<
    *
    * @param params - extension manager parameters
    */
-  styles?: (params: ExtensionManagerParams) => Interpolation;
+  styles?: (params: ExtensionManagerParameter) => Interpolation;
 
   /**
    * Create suggestions which respond to character key combinations within the
    * editor instance.
    */
-  suggestions?: (params: ExtensionManagerTypeParams<ProsemirrorType>) => Suggester[] | Suggester;
+  suggestions?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => Suggester[] | Suggester;
 }
 
 export interface ExtensionEventMethods {
@@ -635,7 +642,7 @@ export interface ExtensionEventMethods {
    * Changes to the transaction at this point have no impact at all. It is
    * purely for observational reasons
    */
-  onTransaction?: (params: OnTransactionParams) => void;
+  onTransaction?: (params: OnTransactionParameter) => void;
 
   /**
    * Happens after the state is first updated.
@@ -646,7 +653,7 @@ export interface ExtensionEventMethods {
 /**
  * The type covering any potential `PlainExtension`.
  */
-export type AnyPlainExtension<Config extends BaseExtensionConfig = any> = Extension<
+export type AnyPlainExtension<Config extends BaseExtensionSettings = any> = Extension<
   any,
   any,
   Config,
@@ -660,7 +667,7 @@ export type AnyPlainExtension<Config extends BaseExtensionConfig = any> = Extens
  */
 export interface PlainExtensionConstructor<
   Name extends string,
-  Config extends BaseExtensionConfig,
+  Config extends BaseExtensionSettings,
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {},
@@ -694,7 +701,7 @@ export interface PlainExtensionConstructor<
  */
 export abstract class MarkExtension<
   Name extends string,
-  Config extends BaseExtensionConfig,
+  Config extends BaseExtensionSettings,
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {}
@@ -740,9 +747,12 @@ export abstract class MarkExtension<
    * selection.
    *
    * @param params - see
-   * {@link @remirror/core-types#ExtensionManagerMarkTypeParams}
+   * {@link @remirror/core-types#ExtensionManagerMarkTypeParameter}
    */
-  public isActive({ getState, type }: ExtensionManagerMarkTypeParams): ExtensionIsActiveFunction {
+  public isActive({
+    getState,
+    type,
+  }: ExtensionManagerMarkTypeParameter): ExtensionIsActiveFunction {
     return () => isMarkActive({ state: getState(), type });
   }
 
@@ -762,7 +772,7 @@ export abstract class MarkExtension<
  */
 export interface MarkExtensionCreatorOptions<
   Name extends string,
-  Config extends BaseExtensionConfig,
+  Config extends BaseExtensionSettings,
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {}
@@ -771,13 +781,13 @@ export interface MarkExtensionCreatorOptions<
    * Provide a method for creating the schema. This is required in order to
    * create a `MarkExtension`.
    */
-  createSchema(params: CreateSchemaParams<Config>): MarkExtensionSpec;
+  createSchema(params: CreateSchemaParameter<Config>): MarkExtensionSpec;
 }
 
 /**
  * The type covering any potential `MarkExtension`.
  */
-export type AnyMarkExtension<Config extends BaseExtensionConfig = any> = MarkExtension<
+export type AnyMarkExtension<Config extends BaseExtensionSettings = any> = MarkExtension<
   any,
   any,
   Config,
@@ -791,7 +801,7 @@ export type AnyMarkExtension<Config extends BaseExtensionConfig = any> = MarkExt
  */
 export interface MarkExtensionConstructor<
   Name extends string,
-  Config extends BaseExtensionConfig,
+  Config extends BaseExtensionSettings,
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {}
@@ -822,7 +832,7 @@ export interface MarkExtensionConstructor<
  */
 export abstract class NodeExtension<
   Name extends string,
-  Config extends BaseExtensionConfig,
+  Config extends BaseExtensionSettings,
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {}
@@ -835,6 +845,10 @@ export abstract class NodeExtension<
     return ExtensionType.Node;
   }
 
+  get schema(): Readonly<NodeExtensionSpec> {
+    return this.#schema;
+  }
+
   /**
    * The prosemirror specification which sets up the node in the schema.
    *
@@ -845,21 +859,24 @@ export abstract class NodeExtension<
    * For more advanced configurations, where dom manipulation is required, it is
    * advisable to set up a nodeView.
    */
-  public readonly schema: NodeExtensionSpec;
+  readonly #schema: NodeExtensionSpec;
 
   constructor(...parameters: IfNoRequiredProperties<Config, [Config?], [Config]>) {
     super(...parameters);
 
-    this.schema = this.getNodeCreatorOptions().createSchema({
+    this.#schema = this.getNodeCreatorOptions().createNodeSchema({
       config: this.config,
       createExtraAttrs: createExtraAttributesFactory(this as AnyNodeExtension),
       getExtraAttrs: getExtraAttributesFactory(this as AnyNodeExtension),
     });
   }
 
-  public isActive({ getState, type }: ExtensionManagerNodeTypeParams): ExtensionIsActiveFunction {
+  public isActive({
+    getState,
+    type,
+  }: ExtensionManagerNodeTypeParameter): ExtensionIsActiveFunction {
     return ({ attrs }) => {
-      return isNodeActive({ state: getState(), type, attrs });
+      return isNodeActive({ state: getState(), type, attrs: attrs });
     };
   }
 
@@ -879,7 +896,7 @@ export abstract class NodeExtension<
  */
 export interface NodeExtensionCreatorOptions<
   Name extends string,
-  Config extends BaseExtensionConfig,
+  Config extends BaseExtensionSettings,
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {}
@@ -887,14 +904,21 @@ export interface NodeExtensionCreatorOptions<
   /**
    * Provide a method for creating the schema. This is required in order to
    * create a `NodeExtension`.
+   *
+   * @remarks
+   *
+   * A node schema defines the behaviour of the content within the editor. This
+   * is very tied to the prosemirror implementation and the best place to learn
+   * more about it is in the
+   * {@link https://prosemirror.net/docs/guide/#schema docs}.
    */
-  createSchema(params: CreateSchemaParams<Config>): NodeExtensionSpec;
+  createNodeSchema(params: CreateSchemaParameter<Config>): NodeExtensionSpec;
 }
 
 /**
  * The type covering any potential NodeExtension.
  */
-export type AnyNodeExtension<Config extends BaseExtensionConfig = any> = NodeExtension<
+export type AnyNodeExtension<Config extends BaseExtensionSettings = any> = NodeExtension<
   any,
   any,
   Config,
@@ -908,7 +932,7 @@ export type AnyNodeExtension<Config extends BaseExtensionConfig = any> = NodeExt
  */
 export interface NodeExtensionConstructor<
   Name extends string,
-  Config extends BaseExtensionConfig,
+  Config extends BaseExtensionSettings,
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {}
@@ -936,7 +960,7 @@ declare global {
    */
   interface GlobalExtensionCreatorOptions<
     Name extends string,
-    Config extends BaseExtensionConfig,
+    Config extends BaseExtensionSettings,
     Properties extends object,
     Commands extends ExtensionCommandReturn,
     Helpers extends ExtensionHelperReturn,
@@ -949,7 +973,7 @@ declare global {
    */
   interface GlobalNodeExtensionCreatorOptions<
     Name extends string,
-    Config extends BaseExtensionConfig,
+    Config extends BaseExtensionSettings,
     Properties extends object = {},
     Commands extends ExtensionCommandReturn = {},
     Helpers extends ExtensionHelperReturn = {}
@@ -961,7 +985,7 @@ declare global {
    */
   interface GlobalMarkExtensionCreatorOptions<
     Name extends string,
-    Config extends BaseExtensionConfig,
+    Config extends BaseExtensionSettings,
     Properties extends object = {},
     Commands extends ExtensionCommandReturn = {},
     Helpers extends ExtensionHelperReturn = {}

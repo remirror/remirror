@@ -24,7 +24,7 @@ import {
   MarkType,
   noop,
   object,
-  RangeParams,
+  RangeParameter,
   removeMark,
   replaceText,
   TransactionTransformer,
@@ -207,7 +207,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     return {
       createMention: this.createMention(type, getState),
       updateMention: this.createMention(type, getState, true),
-      removeMention: ({ range }: Partial<RangeParams> = object()) => {
+      removeMention: ({ range }: Partial<RangeParameter> = object()) => {
         return removeMark({ type, expand: true, range });
       },
     };
@@ -227,7 +227,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       return markPasteRule({
         regexp,
         type,
-        getAttrs: (string) => ({
+        getAttributes: (string) => ({
           id: getMatchString(string.slice(char.length, string.length)),
           label: getMatchString(string),
           name,

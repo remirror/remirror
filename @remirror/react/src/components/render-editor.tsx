@@ -12,7 +12,7 @@ import {
   EditorView as EditorViewType,
   ExtensionManager,
   fromHTML,
-  FromToParams,
+  FromToParameter,
   getDocument,
   isArray,
   isFunction,
@@ -748,7 +748,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     const { selection, doc, tr } = this.getState();
     const { from = 0, to = from } = selection;
 
-    let pos: number | FromToParams;
+    let pos: number | FromToParameter;
 
     /** Ensure the selection is within the current document range */
     const clampToDoc = (value: number) => clamp({ min: 0, max: doc.content.size, value });

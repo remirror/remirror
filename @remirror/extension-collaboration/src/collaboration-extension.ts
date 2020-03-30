@@ -3,13 +3,13 @@ import { Step } from 'prosemirror-transform';
 
 import {
   Attributes,
-  CommandParams,
+  CommandParameter,
   debounce,
   EditorState,
   Extension,
   isArray,
   isNumber,
-  OnTransactionParams,
+  OnTransactionParameter,
   Plugin,
   ProsemirrorCommandFunction,
   uniqueId,
@@ -59,7 +59,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
   /**
    * This provides one command for issuing updates .
    */
-  public commands({ getState, schema }: CommandParams) {
+  public commands({ getState, schema }: CommandParameter) {
     return {
       collaborationUpdate: (attributes: CollaborationAttrs): ProsemirrorCommandFunction => (
         _,
@@ -106,7 +106,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
   /**
    * Called whenever a transaction occurs.
    */
-  public onTransaction = ({ getState }: OnTransactionParams) => {
+  public onTransaction = ({ getState }: OnTransactionParameter) => {
     this.getSendableSteps(getState());
   };
 
