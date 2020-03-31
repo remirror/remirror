@@ -1,12 +1,6 @@
 import { UnionToIntersection } from 'type-fest';
 
-import {
-  ActionMethod,
-  AnyConstructor,
-  AnyFunction,
-  EditorSchema,
-  StringKey,
-} from '@remirror/core-types';
+import { ActionMethod, AnyFunction, EditorSchema, StringKey } from '@remirror/core-types';
 
 import {
   AnyExtension,
@@ -16,36 +10,48 @@ import {
 } from './extension-base';
 
 /**
- * Utility type for retrieving the extension options from an extension.
+ * Get the static extension settings.
  */
-export type OptionsOfExtension<
-  GExtension extends {
-    _O: any;
+export type GetSettings<
+  Type extends {
+    settings: unknown;
   }
-> = GExtension['_O'];
+> = Type['settings'];
 
 /**
- * Utility type for retrieving the commands provided by an extension.
+ * Get the dynamic extension properties.
  */
-export type CommandsOfExtension<Type extends { _C: any }> = Type['_C'];
+export type GetProperties<
+  Type extends {
+    properties: unknown;
+  }
+> = Type['properties'];
 
 /**
- * Utility type for retrieving the helpers provided by an extension.
+ * Get the commands provided by an extension.
  */
-export type HelpersOfExtension<Type extends { _H: any }> = Type['_H'];
+export type GetCommands<Type extends { _C: unknown }> = Type['_C'];
 
 /**
- * Utility type for retrieving the name of an extension.
+ * Get the helpers provided by an extension.
  */
-export type NameOfExtension<Type extends { name: string }> = Type['name'];
+export type GetHelpers<Type extends { _H: unknown }> = Type['_H'];
+
+/**
+ * Get the name of an extension.
+ */
+export type GetName<Type extends { name: string }> = Type['name'];
+
+/**
+ * Get the constructor of an extension.
+ */
+export type GetConstructor<Type extends { constructor: unknown }> = Type['constructor'];
 
 /**
  * A utility type for retrieving the name of an extension only when it's a plain
  * extension.
  */
-export type PlainExtensionNames<Type> = Type extends AnyPlainExtension
-  ? NameOfExtension<Type>
-  : never;
+export type PlainExtensionNames<Type> = Type extends AnyPlainExtension ? GetName<Type> : never;
 
 export interface ExtensionListParameter {
   /**
@@ -73,15 +79,15 @@ export type MapCommandToAction<GCommands extends Record<string, AnyFunction>> = 
  * Utility type which receives an extension and provides the type of actions it
  * makes available.
  */
-export type ActionsFromExtensions<GExtension extends AnyExtension> = UnionToIntersection<
-  MapCommandToAction<CommandsOfExtension<GExtension>>
+export type ActionsFromExtensions<ExtensionUnion extends AnyExtension> = UnionToIntersection<
+  MapCommandToAction<GetCommands<ExtensionUnion>>
 >;
 
 /**
  * Utility type for pulling all the action names from a list
  */
-export type ActionNames<GExtension extends AnyExtension> = StringKey<
-  ActionsFromExtensions<GExtension>
+export type ActionNames<ExtensionUnion extends AnyExtension> = StringKey<
+  ActionsFromExtensions<ExtensionUnion>
 >;
 
 /**
@@ -95,22 +101,22 @@ export type ExtensionFromConstructor<ExtensionConstructor extends { of: AnyFunct
  * A utility type for retrieving the name of an extension only when it's a mark
  * extension.
  */
-export type MarkNames<GExtension extends AnyExtension> = GExtension extends AnyMarkExtension
-  ? GExtension['name']
+export type MarkNames<ExtensionUnion extends AnyExtension> = ExtensionUnion extends AnyMarkExtension
+  ? ExtensionUnion['name']
   : never;
 
 /**
  * A utility type for retrieving the name of an extension only when it's a node
  * extension.
  */
-export type NodeNames<GExtension extends AnyExtension> = GExtension extends AnyNodeExtension
-  ? GExtension['name']
+export type NodeNames<ExtensionUnion extends AnyExtension> = ExtensionUnion extends AnyNodeExtension
+  ? ExtensionUnion['name']
   : never;
 
 /**
- * Gets the schema from a list of extensions
+ * Gets the editor schema from an extension union.
  */
-export type SchemaFromExtensions<GExtension extends AnyExtension = any> = EditorSchema<
-  NodeNames<GExtension>,
-  MarkNames<GExtension>
+export type SchemaFromExtension<ExtensionUnion extends AnyExtension> = EditorSchema<
+  NodeNames<ExtensionUnion>,
+  MarkNames<ExtensionUnion>
 >;

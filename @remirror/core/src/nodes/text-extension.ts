@@ -10,6 +10,4 @@ export const TextExtension = ExtensionFactory.node({
   createNodeSchema() {
     return { group: 'inline' };
   },
-  defaultProperties: {},
-  defaultSettings: {},
 });

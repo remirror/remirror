@@ -42,6 +42,8 @@ import {
   ExtraAttributes,
   FlipPartialAndRequired,
   GetExtraAttributes,
+  IfEmpty,
+  IfMatches,
   IfNoRequiredProperties,
   KeyBindings,
   MarkExtensionSpec,
@@ -70,6 +72,17 @@ export type AnyExtension<Settings extends BaseExtensionSettings = any> = Extensi
 >;
 
 /**
+ * Matches any of the three `ExtensionConstructor`s.
+ */
+export interface AnyExtensionConstructor<Settings extends BaseExtensionSettings = any> {
+  of(
+    ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
+  ): AnyExtension<Settings>;
+
+  extensionName: string;
+}
+
+/**
  * Infer the type of factory parameter that's being used.
  */
 type InferFactoryParameter<
@@ -84,6 +97,22 @@ type InferFactoryParameter<
   : ProsemirrorType extends MarkType
   ? MarkExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>
   : ExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>;
+
+/**
+ * Infer the `constructor` for the extension.
+ */
+type InferExtensionConstructor<
+  Name extends string,
+  Settings extends BaseExtensionSettings,
+  Properties extends object = {},
+  Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {},
+  ProsemirrorType = never
+> = ProsemirrorType extends NodeType
+  ? NodeExtensionConstructor<Name, Settings, Properties, Commands, Helpers>
+  : ProsemirrorType extends MarkType
+  ? MarkExtensionConstructor<Name, Settings, Properties, Commands, Helpers>
+  : PlainExtensionConstructor<Name, Settings, Properties, Commands, Helpers>;
 
 /**
  * These are the default options merged into every extension. They can be
@@ -134,6 +163,16 @@ export const isNodeExtension = <Settings extends BaseExtensionSettings = any>(
   value: unknown,
 ): value is AnyNodeExtension<Settings> => isExtension(value) && value.type === ExtensionType.Node;
 
+// export interface IsInstanceOfConstructor<ExtensionConstructor extends AnyExtensionConstructor> {
+//   Constructor
+// }
+
+// /**
+//  * Check to see whether the provided `Extension` is an instance of the provided
+//  * `Constructor`.
+//  */
+// export const isInstanceOfConstructor()
+
 /**
  * Allows for the addition of attributes to the defined schema. These are
  * defined in the static settings and directly update the schema when applied.
@@ -149,10 +188,9 @@ const createExtraAttributesFactory = <Settings extends BaseExtensionSettings>(
   extension: AnyExtension,
 ): CreateExtraAttributes => ({ fallback }) => {
   // Make sure this is a node or mark extension. Will throw if not.
-  invariant(
-    isNodeExtension<Settings>(extension) || isMarkExtension<Settings>(extension),
-    ErrorConstant.EXTRA_ATTRS,
-  );
+  invariant(isNodeExtension<Settings>(extension) || isMarkExtension<Settings>(extension), {
+    code: ErrorConstant.EXTRA_ATTRS,
+  });
 
   const extraAttributes: ExtraAttributes[] = extension.settings.extraAttributes ?? [];
   const attributes: Record<string, AttributeSpec> = object();
@@ -182,10 +220,9 @@ const getExtraAttributesFactory = <Settings extends BaseExtensionSettings>(
   extension: AnyExtension,
 ): GetExtraAttributes => (domNode) => {
   // Make sure this is a node or mark extension. Will throw if not.
-  invariant(
-    isNodeExtension<Settings>(extension) || isMarkExtension<Settings>(extension),
-    ErrorConstant.EXTRA_ATTRS,
-  );
+  invariant(isNodeExtension<Settings>(extension) || isMarkExtension<Settings>(extension), {
+    code: ErrorConstant.EXTRA_ATTRS,
+  });
 
   const extraAttributes = extension.settings.extraAttributes ?? [];
   const attributes: Attributes = object();
@@ -458,6 +495,31 @@ export abstract class Extension<
 }
 
 /**
+ * Declaration merging since the constructor property can't be defined on the
+ * actual class.
+ */
+export interface Extension<
+  Name extends string,
+  Settings extends BaseExtensionSettings,
+  Properties extends object = {},
+  Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {},
+  ProsemirrorType = never
+> {
+  /**
+   * Forcefully give the extensions the `AnyExtensionConstructor` as it's constructor.
+   */
+  constructor: InferExtensionConstructor<
+    Name,
+    Settings,
+    Properties,
+    Commands,
+    Helpers,
+    ProsemirrorType
+  >;
+}
+
+/**
  * Get the expected type signature for the `defaultSettings`. Requires that every
  * non-required property (not from the BaseExtension) has a value assigned.
  */
@@ -467,11 +529,45 @@ export type DefaultSettingsType<Settings extends BaseExtensionSettings> = Omit<
 > &
   Partial<BaseExtensionSettings>;
 
+interface DefaultPropertiesParameter<Properties extends object = {}> {
+  /**
+   * Properties are dynamic and generated at run time. For this reason you will need
+   * to provide a default value for every prop this extension uses.
+   *
+   * @remarks
+   *
+   * Properties are dynamically assigned options that are injected into the editor at
+   * runtime. Every single prop that the extension will use needs to have a
+   * default value set.
+   *
+   * This must be set when creating the extension, even if just to the empty
+   * object when no properties are used at runtime.
+   */
+  defaultProperties: Required<Properties>;
+}
+
+interface DefaultSettingsParameter<Settings extends BaseExtensionSettings> {
+  /**
+   * The settings helps define the properties schema and built in behavior of
+   * this extension.
+   *
+   * @remarks
+   *
+   * Once set it can't be updated during run time. Some of the settings is
+   * optional and some is not. The required `defaultSettings` are all the none
+   * required settings.
+   *
+   * This must be set when creating the extension, even if just to the empty
+   * object when no properties are used at runtime.
+   */
+  defaultSettings: DefaultSettingsType<Settings>;
+}
+
 /**
  * The configuration parameter which is passed into an `ExtensionFactory` to
  * create the `ExtensionConstructor`.
  */
-export interface ExtensionFactoryParameter<
+export interface BaseExtensionFactoryParameter<
   Name extends string,
   Settings extends BaseExtensionSettings,
   Properties extends object = {},
@@ -499,36 +595,6 @@ export interface ExtensionFactoryParameter<
    * instance.
    */
   name: Name;
-
-  /**
-   * The settings helps define the properties schema and built in behavior of
-   * this extension.
-   *
-   * @remarks
-   *
-   * Once set it can't be updated during run time. Some of the settings is
-   * optional and some is not. The required `defaultSettings` are all the none
-   * required settings.
-   *
-   * This must be set when creating the extension, even if just to the empty
-   * object when no properties are used at runtime.
-   */
-  defaultSettings: DefaultSettingsType<Settings>;
-
-  /**
-   * Properties are dynamic and generated at run time. For this reason you will need
-   * to provide a default value for every prop this extension uses.
-   *
-   * @remarks
-   *
-   * Properties are dynamically assigned options that are injected into the editor at
-   * runtime. Every single prop that the extension will use needs to have a
-   * default value set.
-   *
-   * This must be set when creating the extension, even if just to the empty
-   * object when no properties are used at runtime.
-   */
-  defaultProperties: Required<Properties>;
 
   /**
    * The default priority level for the extension to use.
@@ -755,6 +821,26 @@ export interface ExtensionEventMethods {
   onDestroy?: () => void;
 }
 
+export type ExtensionFactoryParameter<
+  Name extends string,
+  Settings extends BaseExtensionSettings,
+  Properties extends object = {},
+  Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {},
+  ProsemirrorType = never
+> = BaseExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers, ProsemirrorType> &
+  IfEmpty<
+    Properties,
+    Partial<DefaultPropertiesParameter<Properties>>,
+    DefaultPropertiesParameter<Properties>
+  > &
+  IfMatches<
+    Settings,
+    BaseExtensionSettings,
+    Partial<DefaultSettingsParameter<Settings>>,
+    DefaultSettingsParameter<Settings>
+  >;
+
 /**
  * The type covering any potential `PlainExtension`.
  */
@@ -865,27 +951,26 @@ export abstract class MarkExtension<
 /**
  * The creator options when creating a node.
  */
-export interface MarkExtensionFactoryParameter<
+export type MarkExtensionFactoryParameter<
   Name extends string,
   Settings extends BaseExtensionSettings,
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {}
->
-  extends ExtensionFactoryParameter<
-    Name,
-    Settings,
-    Properties,
-    Commands,
-    Helpers,
-    MarkType<EditorSchema>
-  > {
+> = ExtensionFactoryParameter<
+  Name,
+  Settings,
+  Properties,
+  Commands,
+  Helpers,
+  MarkType<EditorSchema>
+> & {
   /**
    * Provide a method for creating the schema. This is required in order to
    * create a `MarkExtension`.
    */
   createMarkSchema(params: CreateSchemaParameter<Settings>): MarkExtensionSpec;
-}
+};
 
 /**
  * The type covering any potential `MarkExtension`.
@@ -987,21 +1072,20 @@ export abstract class NodeExtension<
 /**
  * The creator options when creating a node.
  */
-export interface NodeExtensionFactoryParameter<
+export type NodeExtensionFactoryParameter<
   Name extends string,
   Settings extends BaseExtensionSettings,
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {}
->
-  extends ExtensionFactoryParameter<
-    Name,
-    Settings,
-    Properties,
-    Commands,
-    Helpers,
-    NodeType<EditorSchema>
-  > {
+> = ExtensionFactoryParameter<
+  Name,
+  Settings,
+  Properties,
+  Commands,
+  Helpers,
+  NodeType<EditorSchema>
+> & {
   /**
    * Provide a method for creating the schema. This is required in order to
    * create a `NodeExtension`.
@@ -1014,7 +1098,7 @@ export interface NodeExtensionFactoryParameter<
    * {@link https://prosemirror.net/docs/guide/#schema docs}.
    */
   createNodeSchema(params: CreateSchemaParameter<Settings>): NodeExtensionSpec;
-}
+};
 
 /**
  * The type covering any potential NodeExtension.

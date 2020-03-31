@@ -14,8 +14,8 @@ import {
   ElementParameter,
   ExtensionManager,
   FromToParameter,
+  GetSettings,
   ObjectNode,
-  OptionsOfExtension,
   PlainObject,
   Position,
   PositionParameter,
@@ -560,7 +560,7 @@ export interface UsePositionerParams<GRefKey extends string = 'ref'>
 
 export type RemirrorExtensionProps<
   GConstructor extends { prototype: AnyExtension },
-  GOptions extends OptionsOfExtension<AbstractInstanceType<GConstructor>>
+  GOptions extends GetSettings<AbstractInstanceType<GConstructor>>
 > = GOptions &
   BaseExtensionProps & {
     /**

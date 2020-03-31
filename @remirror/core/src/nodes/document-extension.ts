@@ -27,7 +27,6 @@ export const DocExtension = ExtensionFactory.typed<DocExtensionOptions>().node({
   defaultSettings: {
     content: 'block+',
   },
-  defaultProperties: {},
   createNodeSchema(parameters) {
     return {
       content: parameters.settings.content,

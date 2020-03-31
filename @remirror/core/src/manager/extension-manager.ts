@@ -50,8 +50,7 @@ import {
 import {
   ActionsFromExtensions,
   AnyExtension,
-  FlexibleExtension,
-  InferFlexibleExtensionList,
+  GetCommands,
   isMarkExtension,
   isNodeExtension,
   MarkNames,
@@ -59,6 +58,7 @@ import {
   PlainExtensionNames,
   SchemaFromExtensions,
 } from '../extension';
+import { SchemaFromExtension } from '../extension/extension-types';
 import {
   createCommands,
   createExtensionTags,
@@ -122,7 +122,7 @@ export const isExtensionManager = (value: unknown): value is ExtensionManager =>
  * manager.data.actions
  * ```
  */
-export class ExtensionManager<GExtension extends AnyExtension = any> {
+export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
   /**
    * A static method for creating a new extension manager.
    */
@@ -145,7 +145,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
   /**
    * The extensions stored by this manager
    */
-  public readonly extensions: GExtension[];
+  public readonly extensions: ExtensionUnion[];
 
   /**
    * Whether or not the manager has been initialized. This happens after init is
@@ -156,7 +156,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
   /**
    * The extension manager store.
    */
-  #store: ExtensionManagerStore<GExtension> = object();
+  #store: ExtensionManagerStore<ExtensionUnion> = object();
 
   /**
    * Retrieve the specified action.
@@ -170,7 +170,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
    * This should not be called directly if you want to use prioritized
    * extensions. Instead use `ExtensionManager.create`.
    */
-  private constructor(extensions: GExtension[]) {
+  private constructor(extensions: ExtensionUnion[]) {
     this.extensions = extensions;
 
     // Initialize the schema immediately since this doesn't ever change.
@@ -223,7 +223,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
    *
    * @param view - the editor view
    */
-  public initView(view: EditorView<SchemaFromExtensions<GExtension>>) {
+  public initView(view: EditorView<SchemaFromExtensions<ExtensionUnion>>) {
     this.#store.view = view;
     this.#store.actions = this.actions({
       ...this.params,
@@ -353,7 +353,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
   /**
    * A shorthand way of retrieving the editor view.
    */
-  get view(): EditorView<SchemaFromExtensions<GExtension>> {
+  get view(): EditorView<SchemaFromExtensions<ExtensionUnion>> {
     return this.#store.view;
   }
 
@@ -363,7 +363,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
    * Utility getter for accessing the parameters which are passed to the
    * extension methods
    */
-  private get params(): ExtensionManagerParameter<SchemaFromExtensions<GExtension>> {
+  private get params(): ExtensionManagerParameter<SchemaFromExtensions<ExtensionUnion>> {
     return {
       tags: this.tags,
       schema: this.schema,
@@ -769,7 +769,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _E!: GExtension;
+  public readonly _E!: ExtensionUnion;
 
   /**
    * `NodeNames`
@@ -780,7 +780,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _N!: NodeNames<GExtension>;
+  public readonly _N!: NodeNames<ExtensionUnion>;
 
   /**
    * `MarkNames`
@@ -791,7 +791,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _M!: MarkNames<GExtension>;
+  public readonly _M!: MarkNames<ExtensionUnion>;
 
   /**
    * `PlainNames`
@@ -802,7 +802,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _P!: PlainExtensionNames<GExtension>;
+  public readonly _P!: PlainExtensionNames<ExtensionUnion>;
 
   /**
    * `AllNames`
@@ -824,7 +824,7 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _A!: ActionsFromExtensions<GExtension>;
+  public readonly _A!: ActionsFromExtensions<ExtensionUnion>;
 
   /**
    * `ExtensionData`
@@ -838,11 +838,11 @@ export class ExtensionManager<GExtension extends AnyExtension = any> {
   public readonly _D!: ExtensionManagerStore<this['_A'], this['_N'], this['_M'], this['_P']>;
 }
 
-export interface ManagerParams<GExtension extends AnyExtension = any> {
+export interface ManagerParams<ExtensionUnion extends AnyExtension = any> {
   /**
    * The extension manager
    */
-  manager: ExtensionManager<GExtension>;
+  manager: ExtensionManager<ExtensionUnion>;
 }
 
 /**
@@ -853,43 +853,8 @@ export type ExtensionsFromManager<GManager extends ExtensionManager> = GManager[
 /**
  * Describes the object where the extension manager stores it's data.
  */
-export interface ExtensionManagerStore<GExtension extends AnyExtension = any>
-  extends GlobalExtensionManagerStore<GExtension> {
-  /**
-   * The schema created by this extension manager.
-   */
-  schema: SchemaFromExtensions<GExtension>;
-
-  /**
-   * All the plugins defined by the extensions.
-   */
-  extensionPlugins: ProsemirrorPlugin[];
-
-  /** All of the plugins combined together from all sources */
-  plugins: ProsemirrorPlugin[];
-
-  /**
-   * The nodeViews defined by the node and mark extensions.
-   */
-  nodeViews: Record<string, NodeViewMethod>;
-
-  /**
-   * The keymap arrangement.
-   */
-  keymaps: ProsemirrorPlugin[];
-
-  /**
-   * The input rules for the editor.
-   */
-  inputRules: ProsemirrorPlugin;
-  pasteRules: ProsemirrorPlugin[];
-  suggestions: ProsemirrorPlugin;
-  actions: GActions;
-  view: EditorView<EditorSchema<GNodes, GMarks>>;
-  isActive: Record<GNames, ExtensionIsActiveFunction>;
-  options: Record<GNames, PlainObject>;
-  tags: ExtensionTags<GNodes, GMarks, GPlain>;
-}
+export interface ExtensionManagerStore<ExtensionUnion extends AnyExtension = any>
+  extends GlobalExtensionManagerStore<ExtensionUnion> {}
 
 export interface OnTransactionManagerParams extends TransactionParameter, EditorStateParameter {}
 
@@ -906,11 +871,43 @@ declare global {
    * Use this to extend the store if you're extension is modifying the shape of
    * the `ExtensionManager.store` property.
    */
-  interface GlobalExtensionManagerStore<GExtension extends AnyExtension = any> {}
+  interface GlobalExtensionManagerStore<ExtensionUnion extends AnyExtension = any> {
+    /**
+     * The schema created by this extension manager.
+     */
+    schema: SchemaFromExtensions<ExtensionUnion>;
+
+    /**
+     * All the plugins defined by the extensions.
+     */
+    extensionPlugins: ProsemirrorPlugin[];
+
+    /** All of the plugins combined together from all sources */
+    plugins: ProsemirrorPlugin[];
+
+    /**
+     * The keymap arrangement.
+     */
+    keymaps: ProsemirrorPlugin[];
+
+    /**
+     * The input rules for the editor.
+     */
+    inputRules: ProsemirrorPlugin;
+    pasteRules: ProsemirrorPlugin[];
+    suggestions: ProsemirrorPlugin;
+
+    /**
+     * The commands defined within this extension.
+     */
+    commands: GetCommands<ExtensionUnion>;
+    view: EditorView<SchemaFromExtension<ExtensionUnion>>;
+    tags: ExtensionTags<GNodes, GMarks, GPlain>;
+  }
 
   /**
    * The initialization params which are passed by the view layer into the
    * extension manager. This can be added to by the requesting framework layer.
    */
-  interface ExtensionManagerInitializationParams<GExtension extends AnyExtension = any> {}
+  interface ExtensionManagerInitializationParams<ExtensionUnion extends AnyExtension = any> {}
 }

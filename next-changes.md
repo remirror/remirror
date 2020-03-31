@@ -49,3 +49,14 @@ The flow is like
 
 - Factories (Factorys) -> Constructor -> Instance
 - Factories create Constructors which make Instances.
+
+Rules of extensions
+
+Each extension can only be used once for the editor. This means that for a list of extension and
+presets the extension manager will go through the extensions and make sure the highest priority
+duplicates are the only ones that are left. It will then call all presets to their extension
+instances to this new extension.
+
+- [ ] Still to do: define `reactNodeViews` option in the `react` code-base and test nodeViews in a
+      non trivial example `footnotes`. Built in react extension which adds a new parameter to the
+      extensionManager init params `portalContainer` which is then used in `reactNodeViews`.

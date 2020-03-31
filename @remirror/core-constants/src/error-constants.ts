@@ -26,4 +26,11 @@ export enum ErrorConstant {
    * This is a custom error possibly thrown by an external library.
    */
   CUSTOM = 'RMR0003',
+
+  /**
+   * The user requested an invalid extension from the preset. Please check the
+   * `createExtensions` return method is returning an extension with the defined
+   * constructor.
+   */
+  INVALID_PRESET_EXTENSION = 'RMR0010',
 }

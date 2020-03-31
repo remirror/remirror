@@ -19,6 +19,8 @@ if (__DEV__) {
     RMR0001: "An error happened but we're not quite sure why.",
     RMR0002: 'You can only pass `extraAttributes` to a node extension or a mark extension.',
     RMR0003: 'This is a custom error, possibly thrown by an external library.',
+    RMR0010:
+      'The user requested an invalid extension from the preset. Please check the `createExtensions` return method is returning an extension with the requested constructor.',
   };
 }
 
@@ -31,11 +33,12 @@ const isErrorConstant = (code: unknown): code is ErrorConstant =>
 /**
  * Create an error message from the provided code.
  */
-const createErrorMessage = (code: ErrorConstant) => {
+const createErrorMessage = (code: ErrorConstant, extraMessage?: string) => {
   const message = errorMessageMap[code];
   const prefix = message ? `${message}\n` : '';
+  const customMessage = extraMessage ? `${extraMessage}\n` : '';
 
-  return `${prefix}\nFor more information visit ${ERROR_INFORMATION_URL}#${code}`;
+  return `${prefix}${customMessage}For more information visit ${ERROR_INFORMATION_URL}#${code}`;
 };
 
 /**
@@ -51,8 +54,8 @@ export class RemirrorError extends BaseError {
   /**
    * A shorthand way of creating an error message.
    */
-  public static of(code: ErrorConstant | string) {
-    return new RemirrorError(code);
+  public static of(options: RemirrorErrorOptions = {}) {
+    return new RemirrorError(options);
   }
 
   /**
@@ -63,17 +66,19 @@ export class RemirrorError extends BaseError {
   /**
    * The constructor is intentionally kept private to prevent being extended from.
    */
-  private constructor(code: ErrorConstant | string) {
+  private constructor({ code, message }: RemirrorErrorOptions = {}) {
     if (isErrorConstant(code)) {
       // If this is a internal code then use the internal error message.
-      super(createErrorMessage(code));
+      super(createErrorMessage(code, message));
       this.errorCode = code;
 
       return;
     }
 
-    super(code);
-    this.errorCode = ErrorConstant.CUSTOM;
+    const errorCode = ErrorConstant.CUSTOM;
+
+    super(createErrorMessage(errorCode, message));
+    this.errorCode = errorCode;
   }
 }
 
@@ -81,17 +86,35 @@ export class RemirrorError extends BaseError {
  * Throw an error if the condition fails. Strip out error messages for
  * production. Taken from `tiny-invariant`.
  */
-export function invariant(condition: unknown, code: ErrorConstant | string): asserts condition {
+export function invariant(
+  condition: unknown,
+  options: RemirrorErrorOptions = {},
+): asserts condition {
   if (condition) {
     return;
   }
 
   // When not in 'DEV' strip the message but still throw
   if (!__DEV__) {
-    throw RemirrorError.of(ErrorConstant.PROD);
+    throw RemirrorError.of({ code: ErrorConstant.PROD });
   }
 
   // When not in production we allow the message to pass through
-  // *This block will be removed in production builds*
-  throw RemirrorError.of(code);
+  // **This block will be removed in production builds**
+  throw RemirrorError.of(options);
+}
+
+/**
+ * The options are only used in a dev environment.
+ */
+export interface RemirrorErrorOptions {
+  /**
+   * The code for the built in error.
+   */
+  code?: ErrorConstant;
+
+  /**
+   * The message to add to the error.
+   */
+  message?: string;
 }

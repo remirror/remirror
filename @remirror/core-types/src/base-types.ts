@@ -260,7 +260,9 @@ export type GetExtraAttributes = (domNode: Node) => Record<string, unknown>;
  *   },
  * }
  */
-export type CreateExtraAttributes = (params: CreateExtraAttributesParams) => Record<string, AttributeSpec>;
+export type CreateExtraAttributes = (
+  params: CreateExtraAttributesParams,
+) => Record<string, AttributeSpec>;
 
 interface CreateExtraAttributesParams {
   /**
@@ -285,20 +287,35 @@ interface CreateExtraAttributesParams {
  */
 export type RenderEnvironment = 'ssr' | 'dom';
 
+type NeverBrand = Brand<object, never>;
+
 /**
  * Checks the type provided and if it has any properties which are required it
  * will return the `Then` type. When none of the properties are required it will
  * return the `Else` type.
+ *
+ * @remarks
+ *
+ * This is a reverse of the `IfNoRequiredProperties` type.
  */
-export type IfHasRequiredProperties<Type extends object, Then, Else> = GetRequiredKeys<
-  Type
-> extends string
-  ? Then
-  : Else;
+export type IfHasRequiredProperties<Type extends object, Then, Else> = IfNoRequiredProperties<
+  Type,
+  Else,
+  Then
+>;
 
+/**
+ * A conditional check on the type. When there are no required keys it outputs
+ * the `Then` type, otherwise it outputs the `Else` type.
+ *
+ * @remarks
+ *
+ * This is useful for dynamically setting the parameter list of a method call
+ * dynamically depending on whether keys are required.
+ */
 export type IfNoRequiredProperties<Type extends object, Then, Else> = GetRequiredKeys<
   Type
-> extends never
+> extends NeverBrand
   ? Then
   : Else;
 
@@ -306,24 +323,19 @@ export type IfNoRequiredProperties<Type extends object, Then, Else> = GetRequire
  * Get all the keys for required properties on this type.
  */
 export type GetRequiredKeys<Type extends object> = keyof ConditionalPick<
-  TransformNonUndefinedToNever<Type>,
-  never
+  KeepPartialProperties<Type>,
+  NeverBrand
 >;
 
 /**
- * Get all the keys for partial properties on this type.
+ * Keeps the partial properties of a type unchanged. Transforms the rest to
+ * `never`.
+ *
+ * TODO Instead of never why not try a unique brand type to prevent false
+ * positives.
  */
-export type GetPartialKeys<Type extends object> = keyof ConditionalPick<
-  TransformNonUndefinedToNever<Type>,
-  never
->;
-
-/**
- * Transforms the properties of a non undefined type to be never. Purely a
- * utility for use in other type utilities.
- */
-export type TransformNonUndefinedToNever<Type extends object> = {
-  [Key in keyof Type]: Type[Key] extends undefined ? Type[Key] : never;
+export type KeepPartialProperties<Type extends object> = {
+  [Key in keyof Type]: Type[Key] extends undefined ? Type[Key] : NeverBrand;
 };
 
 /**
@@ -331,14 +343,14 @@ export type TransformNonUndefinedToNever<Type extends object> = {
  * required.
  */
 export type PickPartial<Type extends object> = {
-  [Key in keyof ConditionalExcept<TransformNonUndefinedToNever<Type>, never>]-?: Type[Key];
+  [Key in keyof ConditionalExcept<KeepPartialProperties<Type>, NeverBrand>]-?: Type[Key];
 };
 
 /**
- * Only pick the required types from the `Type`.
+ * Only pick the `required` (non-`partial`) types from the given `Type`.
  */
 export type PickRequired<Type extends object> = {
-  [Key in keyof ConditionalPick<TransformNonUndefinedToNever<Type>, never>]: Type[Key];
+  [Key in keyof ConditionalPick<KeepPartialProperties<Type>, NeverBrand>]: Type[Key];
 };
 
 /**
@@ -348,3 +360,27 @@ export type PickRequired<Type extends object> = {
  */
 export type FlipPartialAndRequired<Type extends object> = PickPartial<Type> &
   Partial<PickRequired<Type>>;
+
+/**
+ * Get the diff between two types. All identical keys are stripped away.
+ *
+ * @remarks
+ *
+ * ```ts
+ * type Fun = Diff<{notFun: false, fun: true}, {notFun: true, wow: string}>;
+ * // => { fun: true, wow: string }
+ * ```
+ */
+export type Diff<A, B> = Omit<A, keyof B> & Omit<B, keyof A>;
+
+/**
+ * Conditional type which checks if the provided `Type` is and empty object (no properties). If it is
+ * uses the `Then` type if not falls back to the `Else` type.
+ */
+export type IfEmpty<Type extends object, Then, Else> = keyof Type extends never ? Then : Else;
+
+/**
+ * Condition that checks if the keys of the two objects match. If so,
+ * respond with `Then` otherwise `Else`.
+ */
+export type IfMatches<A, B, Then, Else> = IfEmpty<Diff<A, B>, Then, Else>;

@@ -26,7 +26,7 @@ export const SELECTED_NODE_CLASS_SELECTOR = `.${SELECTED_NODE_CLASS_NAME}`;
  * https://github.com/ProseMirror/prosemirror/issues/262 This can be used in an
  * input rule regex to be able to include or exclude such nodes.
  */
-export const LEAF_NODE_REPLACING_CHARACTER = '\ufffc';
+export const LEAF_NODE_REPLACING_CHARACTER = '\uFFFC';
 
 /**
  * The null character.
@@ -47,7 +47,7 @@ export const NULL_CHARACTER = '\0';
  *
  * This produces the html entity '8203'
  */
-export const ZERO_WIDTH_SPACE_CHAR = '\u200b';
+export const ZERO_WIDTH_SPACE_CHAR = '\u200B';
 
 /**
  * Used to determine the side where a gap-cursor is drawn
@@ -259,6 +259,11 @@ export enum RemirrorIdentifier {
    * The preset type identifier.
    */
   Preset = 'RemirrorPreset',
+
+  /**
+   * The preset type identifier.
+   */
+  PresetConstructor = 'RemirrorPresetConstructor',
 }
 
 /**
