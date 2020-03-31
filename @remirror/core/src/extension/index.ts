@@ -17,7 +17,7 @@ export type {
   PlainExtensionConstructor,
 } from './extension-base';
 export { isExtension, isMarkExtension, isNodeExtension, isPlainExtension } from './extension-base';
-export { ExtensionFactory } from './extension-factory';
+export { ExtensionFactory, isExtensionConstructor } from './extension-factory';
 export type {
   ActionNames,
   ActionsFromExtensions,
@@ -31,5 +31,8 @@ export type {
   NodeNames,
   GetSettings,
   PlainExtensionNames,
-  SchemaFromExtension as SchemaFromExtensions,
+  SchemaFromExtension,
+  ExtensionFromConstructor,
+  GetConstructor,
+  GetProperties,
 } from './extension-types';

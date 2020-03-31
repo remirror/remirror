@@ -4,11 +4,53 @@ import {
   REMIRROR_IDENTIFIER_KEY,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
-import { deepMerge, invariant, object, uniqueBy } from '@remirror/core-helpers';
+import {
+  deepMerge,
+  invariant,
+  isIdentifierOfType,
+  isRemirrorType,
+  object,
+  uniqueBy,
+} from '@remirror/core-helpers';
 import { FlipPartialAndRequired, IfEmpty, IfNoRequiredProperties } from '@remirror/core-types';
 
 import { AnyExtension, AnyExtensionConstructor, DefaultSettingsType } from '../extension';
 import { ExtensionFromConstructor, GetConstructor } from '../extension/extension-types';
+
+/**
+ * The type which is applicable to any `Preset` instances.
+ */
+export type AnyPreset<Settings extends object = any> = Preset<any, Settings, any>;
+
+/**
+ * The interface of a preset constructor. This is used to create an instance of
+ * the preset in your editor.
+ */
+export interface PresetConstructor<
+  ExtensionUnion extends AnyExtension,
+  Settings extends object = {},
+  Properties extends object = {}
+> {
+  /**
+   * Create a new instance of the preset to be used in the extension manager.
+   *
+   * This is used to prevent the need for the `new` keyword which can lead to
+   * problems.
+   */
+  of(
+    ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
+  ): Preset<ExtensionUnion, Settings, Properties>;
+}
+
+/**
+ * Determines if the passed in extension is any type of extension.
+ *
+ * @param value - the extension to check
+ */
+export const isPreset = <Settings extends object = any>(
+  value: unknown,
+): value is AnyExtension<Settings> =>
+  isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Preset);
 
 /**
  * A preset is our way of bundling similar extensions with unified
