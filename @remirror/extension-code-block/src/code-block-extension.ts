@@ -4,7 +4,6 @@ import refractor from 'refractor/core';
 
 import {
   CommandNodeTypeParams,
-  ExtensionManagerNodeTypeParams,
   findNodeAtSelection,
   findParentNodeOfType,
   GetAttributes,
@@ -13,6 +12,7 @@ import {
   isNodeActive,
   isTextSelection,
   KeyBindings,
+  ManagerNodeTypeParams,
   mod,
   nodeEqualsType,
   NodeExtension,
@@ -191,7 +191,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
   /**
    * Create an input rule that listens converts the code fence into a code block with space.
    */
-  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParams) {
     const regexp = /^```([A-Za-z]*)? $/;
     const getAttributes_: GetAttributes = (match) => {
       const language = getLanguage({
@@ -212,7 +212,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
     ];
   }
 
-  public keys({ type, getActions }: ExtensionManagerNodeTypeParams): KeyBindings {
+  public keys({ type, getActions }: ManagerNodeTypeParams): KeyBindings {
     const { keyboardShortcut, toggleType } = this.options;
 
     return {
@@ -333,7 +333,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
     };
   }
 
-  public plugin(parameters: ExtensionManagerNodeTypeParams): Plugin {
+  public plugin(parameters: ManagerNodeTypeParams): Plugin {
     return createCodeBlockPlugin({ extension: this, ...parameters });
   }
 }

@@ -11,14 +11,14 @@ import {
   createDocumentNode,
   DocExtension,
   EditorState,
-  ExtensionManager,
   ExtensionsFromManager,
   isObjectNode,
   isProsemirrorNode,
   isString,
+  Manager,
   ProsemirrorNode,
   RemirrorContentType,
-  SchemaFromExtensions,
+  SchemaFromExtension,
   SchemaParameter,
   StringHandlerParams,
   TextExtension,
@@ -61,7 +61,7 @@ export type InternalEditorProps = Omit<RemirrorProviderProps, 'childAsRoot' | 'c
 const useMarkdownManager = () => {
   return useMemo(
     () =>
-      ExtensionManager.create([
+      Manager.create([
         { priority: 1, extension: new DocExtension({ content: 'block' }) },
         {
           priority: 1,
@@ -91,7 +91,7 @@ const InternalMarkdownEditor: FC<InternalEditorProps> = (properties) => {
 const useWysiwygManager = () => {
   return useMemo(
     () =>
-      ExtensionManager.create([
+      Manager.create([
         ...baseExtensions,
         new CodeBlockExtension({ supportedLanguages: [markdown, bash, tsx, typescript] }),
         new PlaceholderExtension(),
@@ -209,9 +209,9 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
   const markdownManager = useMarkdownManager();
 
   type WysiwygExtensions = ExtensionsFromManager<typeof wysiwygManager>;
-  type WysiwygSchema = SchemaFromExtensions<WysiwygExtensions>;
+  type WysiwygSchema = SchemaFromExtension<WysiwygExtensions>;
   type MarkdownExtensions = ExtensionsFromManager<typeof markdownManager>;
-  type MarkdownSchema = SchemaFromExtensions<MarkdownExtensions>;
+  type MarkdownSchema = SchemaFromExtension<MarkdownExtensions>;
 
   const initialContent = createInitialContent({
     content: initialValue,

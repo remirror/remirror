@@ -3,7 +3,7 @@ import { exitCode } from 'prosemirror-commands';
 import {
   chainCommands,
   convertCommand,
-  ExtensionManagerNodeTypeParams,
+  ManagerNodeTypeParams,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
@@ -25,7 +25,7 @@ export class HardBreakExtension extends NodeExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
+  public keys({ type }: ManagerNodeTypeParams): KeyBindings {
     const command = chainCommands(convertCommand(exitCode), ({ state, dispatch }) => {
       if (dispatch) {
         dispatch(state.tr.replaceSelectionWith(type.create()).scrollIntoView());

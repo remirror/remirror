@@ -4,5 +4,5 @@ export * from '@remirror/core-types';
 export * from '@remirror/core-utils';
 
 export * from './extension';
-export * from './manager/extension-manager';
+export * from './manager';
 export * from './nodes';

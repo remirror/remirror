@@ -3,7 +3,7 @@ import { wrappingInputRule } from 'prosemirror-inputrules';
 import {
   CommandNodeTypeParams,
   convertCommand,
-  ExtensionManagerNodeTypeParams,
+  ManagerNodeTypeParams,
   isElementDOMNode,
   KeyBindings,
   NodeExtension,
@@ -50,13 +50,13 @@ export class OrderedListExtension extends NodeExtension {
     return { toggleOrderedList: () => toggleList(type, schema.nodes.listItem) };
   }
 
-  public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
+  public keys({ type, schema }: ManagerNodeTypeParams): KeyBindings {
     return {
       'Shift-Ctrl-9': convertCommand(toggleList(type, schema.nodes.listItem)),
     };
   }
 
-  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParams) {
     return [
       wrappingInputRule(
         /^(\d+)\.\s$/,

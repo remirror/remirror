@@ -289,7 +289,7 @@ export type HelperGetter = (name: string) => AnyFunction;
 /**
  * Parameters passed into many of the extension methods.
  */
-export interface ExtensionManagerParameter<GSchema extends EditorSchema = EditorSchema>
+export interface ManagerParameter<GSchema extends EditorSchema = EditorSchema>
   extends ExtensionTagParameter {
   /**
    * A helper method for retrieving the state of the editor
@@ -319,13 +319,13 @@ export interface ExtensionManagerParameter<GSchema extends EditorSchema = Editor
  *
  * Inherits from
  * - {@link EditorViewParameter}
- * - {@link ExtensionManagerParameter}
+ * - {@link ManagerParameter}
  *
  * @typeParam GSchema - the underlying editor schema.
  */
-export interface ViewExtensionManagerParameter<GSchema extends EditorSchema = any>
+export interface ViewManagerParameter<GSchema extends EditorSchema = any>
   extends EditorViewParameter<GSchema>,
-    ExtensionManagerParameter<GSchema> {}
+    ManagerParameter<GSchema> {}
 
 export type ExtensionCommandFunction = (...args: any[]) => ProsemirrorCommandFunction;
 
@@ -356,23 +356,19 @@ type InferredType<GType> = GType extends never ? {} : { type: GType };
  *
  * This is used to generate the specific types for Marks and Nodes.
  */
-export type ExtensionManagerTypeParameter<GType> = ExtensionManagerParameter & InferredType<GType>;
+export type ManagerTypeParameter<GType> = ManagerParameter & InferredType<GType>;
 
 /**
  * The extension manager type params for a prosemirror `NodeType` extension
  */
-export type ExtensionManagerNodeTypeParameter = ExtensionManagerTypeParameter<
-  NodeType<EditorSchema>
->;
+export type ManagerNodeTypeParameter = ManagerTypeParameter<NodeType<EditorSchema>>;
 
 /**
  * The extension manager type params for a prosemirror `NodeType` extension
  */
-export type ExtensionManagerMarkTypeParameter = ExtensionManagerTypeParameter<
-  MarkType<EditorSchema>
->;
+export type ManagerMarkTypeParameter = ManagerTypeParameter<MarkType<EditorSchema>>;
 
-export interface CommandParameter extends ViewExtensionManagerParameter {
+export interface CommandParameter extends ViewManagerParameter {
   /**
    * Returns true when the editor can be edited and false when it cannot.
    *
@@ -512,7 +508,7 @@ export interface ExtensionTagParameter<
  * The params object received by the onTransaction handler.
  */
 export interface OnTransactionParameter
-  extends ViewExtensionManagerParameter,
+  extends ViewManagerParameter,
     TransactionParameter,
     EditorStateParameter {}
 

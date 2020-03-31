@@ -21,9 +21,9 @@ import {
 import { defaultRemirrorThemeValue } from '@remirror/ui';
 
 import { Extension } from '../extension/extension-base';
-import { ExtensionManager, isExtensionManager } from '../manager/extension-manager';
+import { isManager, Manager } from '../manager/manager';
 
-describe('ExtensionManager', () => {
+describe('Manager', () => {
   let state: EditorState;
 
   const helpers = {
@@ -73,7 +73,7 @@ describe('ExtensionManager', () => {
 
   const dummy = new DummyExtension();
   const big = new BigExtension();
-  let manager = ExtensionManager.of([
+  let manager = Manager.of([
     ...extensions,
     { extension: dummy, priority: 1 },
     { extension: big, priority: 10 },
@@ -82,7 +82,7 @@ describe('ExtensionManager', () => {
   let view: EditorView;
 
   beforeEach(() => {
-    manager = ExtensionManager.create([
+    manager = Manager.create([
       ...extensions,
       { extension: dummy, priority: 1 },
       { extension: big, priority: 10 },
@@ -139,9 +139,9 @@ describe('ExtensionManager', () => {
     });
   });
 
-  test('isExtensionManager', () => {
-    expect(isExtensionManager({})).toBeFalse();
-    expect(isExtensionManager(manager)).toBeTrue();
+  test('isManager', () => {
+    expect(isManager({})).toBeFalse();
+    expect(isManager(manager)).toBeTrue();
   });
 
   describe('#isEqual', () => {
@@ -199,7 +199,7 @@ test('keymaps', () => {
     }
   }
 
-  const manager = ExtensionManager.of([
+  const manager = Manager.of([
     ...baseExtensions,
     { extension: new FirstExtension(), priority: 1 },
     { extension: new SecondExtension(), priority: 10 },

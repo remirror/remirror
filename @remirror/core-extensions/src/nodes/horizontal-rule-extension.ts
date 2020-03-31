@@ -1,6 +1,6 @@
 import {
   CommandNodeTypeParams,
-  ExtensionManagerNodeTypeParams,
+  ManagerNodeTypeParams,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -34,7 +34,7 @@ export class HorizontalRuleExtension extends NodeExtension {
     };
   }
 
-  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParams) {
     return [nodeInputRule({ regexp: /^(?:---|___\s|\*\*\*\s)$/, type })];
   }
 }

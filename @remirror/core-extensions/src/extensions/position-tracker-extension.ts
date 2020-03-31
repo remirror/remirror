@@ -6,7 +6,7 @@ import { isNullOrUndefined, isNumber, isString, object } from '@remirror/core-he
 import {
   BaseExtensionSettings,
   CommandParameter,
-  ExtensionManagerParameter,
+  ManagerParameter,
   PosParameter,
   ProsemirrorCommandFunction,
   Transaction,
@@ -52,7 +52,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
     return defaultPositionTrackerExtensionOptions;
   }
 
-  public helpers({ getState }: ExtensionManagerParameter) {
+  public helpers({ getState }: ManagerParameter) {
     const helpers = {
       /**
        * Add a tracker position with the specified params to the transaction and return the transaction.

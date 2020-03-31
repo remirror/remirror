@@ -4,8 +4,8 @@ import { Extension, ExtensionParameter } from '@remirror/core';
 import { entries, uniqueArray } from '@remirror/core-helpers';
 import {
   BaseExtensionSettings,
-  ExtensionManagerParameter,
   ExtensionTagParameter,
+  ManagerParameter,
   SchemaParameter,
 } from '@remirror/core-types';
 import { getPluginState, nodeEqualsType } from '@remirror/core-utils';
@@ -135,7 +135,7 @@ export class TrailingNodeExtension extends Extension<TrailingNodeExtensionOption
    * Register the plugin which is responsible for inserting the configured node
    * into the end of the node.
    */
-  public plugin({ tags, schema }: ExtensionManagerParameter) {
+  public plugin({ tags, schema }: ManagerParameter) {
     return createTrailingNodePlugin({ extension: this, tags, schema });
   }
 }

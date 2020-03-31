@@ -4,20 +4,15 @@ import {
   AnyFunction,
   CommandParameter,
   ExtensionCommandFunction,
-  ExtensionManagerParameter,
   ExtensionTags,
   GeneralExtensionTags,
+  ManagerParameter,
   MarkExtensionTags,
   NodeExtensionTags,
 } from '@remirror/core-types';
 
 import { AnyExtension, isExtension, isMarkExtension, isNodeExtension } from '../extension';
-import {
-  ExtensionListParameter,
-  FlexibleExtension,
-  InferFlexibleExtensionList,
-  PrioritizedExtension,
-} from '../extension/extension-types';
+import { ExtensionListParameter } from '../extension/extension-types';
 
 /**
  * Converts an extension to an object with a priority.
@@ -93,10 +88,7 @@ interface CreateCommandsParams extends ExtensionListParameter {
  * @param extension - the extension to test.
  * @param params - the params without the type.
  */
-const getParametersType = <
-  GKey extends keyof AnyExtension,
-  GParams extends ExtensionManagerParameter
->(
+const getParametersType = <GKey extends keyof AnyExtension, GParams extends ManagerParameter>(
   extension: Required<Pick<AnyExtension, GKey>>,
   parameters: GParams,
 ) => {
@@ -183,7 +175,7 @@ interface CreateHelpersParams extends ExtensionListParameter {
   /**
    * The params which are passed to each extensions `helpers` method.
    */
-  params: ExtensionManagerParameter;
+  params: ManagerParameter;
 }
 
 /**
@@ -240,7 +232,7 @@ export const extensionPropertyMapper = <
   GExtMethodProp extends ExtensionMethodProperties
 >(
   property: GExtMethodProp,
-  parameters: ExtensionManagerParameter,
+  parameters: ManagerParameter,
 ) => (
   extension: GExt,
 ): GExt[GExtMethodProp] extends AnyFunction ? ReturnType<GExt[GExtMethodProp]> : {} => {

@@ -3,7 +3,7 @@ import { wrappingInputRule } from 'prosemirror-inputrules';
 import {
   CommandNodeTypeParams,
   convertCommand,
-  ExtensionManagerNodeTypeParams,
+  ManagerNodeTypeParams,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
@@ -30,13 +30,13 @@ export class BulletListExtension extends NodeExtension {
     return { toggleBulletList: () => toggleList(type, schema.nodes.listItem) };
   }
 
-  public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
+  public keys({ type, schema }: ManagerNodeTypeParams): KeyBindings {
     return {
       'Shift-Ctrl-8': convertCommand(toggleList(type, schema.nodes.listItem)),
     };
   }
 
-  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParams) {
     return [wrappingInputRule(/^\s*([*+-])\s$/, type)];
   }
 }

@@ -4,7 +4,7 @@ import TestRenderer from 'react-test-renderer';
 
 import {
   DocExtension,
-  ExtensionManager,
+  Manager,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -35,9 +35,9 @@ const manager = createTestManager([
   { extension: new FooExtension(), priority: 3 },
 ]);
 const { schema } = manager;
-const serializer = ReactSerializer.fromExtensionManager(manager);
+const serializer = ReactSerializer.fromManager(manager);
 
-test('ReactSerializer.fromExtensionManager', () => {
+test('ReactSerializer.fromManager', () => {
   expect(serializer).toBeInstanceOf(ReactSerializer);
   expect(serializer.nodes.paragraph).toBeFunction();
   expect(serializer.marks.bold).toBeFunction();
@@ -50,9 +50,9 @@ test('ReactSerializer.fromExtensionManager', () => {
     { extension: new BoldExtension(), priority: 2 },
     { extension: new CodeBlockExtension(), priority: 2 },
   ];
-  const altManager = ExtensionManager.create(altExtensions);
+  const altManager = Manager.create(altExtensions);
 
-  expect(ReactSerializer.fromExtensionManager(altManager).nodes.text).toBeFunction();
+  expect(ReactSerializer.fromManager(altManager).nodes.text).toBeFunction();
 });
 
 describe('ReactSerializer', () => {

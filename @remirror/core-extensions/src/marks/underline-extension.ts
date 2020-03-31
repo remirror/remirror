@@ -3,7 +3,7 @@ import { toggleMark } from 'prosemirror-commands';
 import {
   CommandMarkTypeParams,
   convertCommand,
-  ExtensionManagerMarkTypeParams,
+  ManagerMarkTypeParams,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
@@ -31,7 +31,7 @@ export class UnderlineExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams): KeyBindings {
+  public keys({ type }: ManagerMarkTypeParams): KeyBindings {
     return {
       'Mod-u': convertCommand(toggleMark(type)),
     };

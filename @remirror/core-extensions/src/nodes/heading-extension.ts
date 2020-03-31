@@ -5,7 +5,7 @@ import {
   Attributes,
   CommandNodeTypeParams,
   convertCommand,
-  ExtensionManagerNodeTypeParams,
+  ManagerNodeTypeParams,
   KeyBindings,
   NodeExtension,
   NodeExtensionConfig,
@@ -79,7 +79,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
     };
   }
 
-  public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
+  public keys({ type }: ManagerNodeTypeParams): KeyBindings {
     const keys: KeyBindings = object();
 
     this.options.levels.forEach((level) => {
@@ -88,7 +88,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
     return keys;
   }
 
-  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParams) {
     return this.options.levels.map((level) =>
       textblockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), type, () => ({ level })),
     );

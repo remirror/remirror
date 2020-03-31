@@ -12,11 +12,11 @@ import {
   Attributes,
   CommandMarkTypeParams,
   EditorState,
-  ExtensionManagerMarkTypeParams,
   getMarkRange,
   getMatchString,
   isElementDOMNode,
   isMarkActive,
+  ManagerMarkTypeParams,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
@@ -213,7 +213,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     };
   }
 
-  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
+  public pasteRules({ type }: ManagerMarkTypeParams) {
     return this.options.matchers.map((matcher) => {
       const { startOfLine, char, supportedCharacters, name } = {
         ...DEFAULT_MATCHER,
@@ -236,7 +236,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     });
   }
 
-  public suggestions({ getActions, type, getState }: ExtensionManagerMarkTypeParams): Suggester[] {
+  public suggestions({ getActions, type, getState }: ManagerMarkTypeParams): Suggester[] {
     const {
       matchers,
       onChange,

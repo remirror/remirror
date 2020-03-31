@@ -27,10 +27,10 @@ import {
   EditorStateParameter,
   EditorView,
   ExtensionIsActiveFunction,
-  ExtensionManagerParameter,
   ExtensionTags,
   KeyBindingCommandFunction,
   KeyBindings,
+  ManagerParameter,
   MarkExtensionSpec,
   NodeExtensionSpec,
   NodeViewMethod,
@@ -56,9 +56,8 @@ import {
   MarkNames,
   NodeNames,
   PlainExtensionNames,
-  SchemaFromExtensions,
+  SchemaFromExtension,
 } from '../extension';
-import { SchemaFromExtension } from '../extension/extension-types';
 import {
   createCommands,
   createExtensionTags,
@@ -72,15 +71,15 @@ import {
 } from './manager-helpers';
 
 /**
- * Checks to see whether the provided value is an `ExtensionManager`.
+ * Checks to see whether the provided value is an `Manager`.
  *
  * @param value - the value to check
  */
-export const isExtensionManager = (value: unknown): value is ExtensionManager =>
-  isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.ExtensionManager);
+export const isManager = (value: unknown): value is Manager =>
+  isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
 
 /**
- * The `ExtensionManager` has multiple hook phases which are able to hook into
+ * The `Manager` has multiple hook phases which are able to hook into
  * the extension manager flow and add new functionality to the editor.
  *
  * The `ExtensionEventMethod`s
@@ -101,7 +100,7 @@ export const isExtensionManager = (value: unknown): value is ExtensionManager =>
  * - Construction - This takes in all the extensions and creates the schema.
  *
  * ```ts
- * const manager = ExtensionManager.create([ new DocExtension(), new TextExtension(), new ParagraphExtension()])
+ * const manager = Manager.create([ new DocExtension(), new TextExtension(), new ParagraphExtension()])
  * ```
  *
  * - Initialize Getters - This connects the extension manager to the lazily
@@ -122,7 +121,7 @@ export const isExtensionManager = (value: unknown): value is ExtensionManager =>
  * manager.data.actions
  * ```
  */
-export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
+export class Manager<ExtensionUnion extends AnyExtension = any> {
   /**
    * A static method for creating a new extension manager.
    */
@@ -130,16 +129,16 @@ export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
     prioritizedExtensions: GFlexibleList,
   ) {
     const extensions = transformExtensionMap(prioritizedExtensions);
-    return new ExtensionManager<InferFlexibleExtensionList<GFlexibleList>>(extensions);
+    return new Manager<InferFlexibleExtensionList<GFlexibleList>>(extensions);
   }
 
   /**
-   * Identifies this as a `ExtensionManager`.
+   * Identifies this as a `Manager`.
    *
    * @internal
    */
   static get [REMIRROR_IDENTIFIER_KEY]() {
-    return RemirrorIdentifier.ExtensionManager;
+    return RemirrorIdentifier.Manager;
   }
 
   /**
@@ -156,7 +155,7 @@ export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
   /**
    * The extension manager store.
    */
-  #store: ExtensionManagerStore<ExtensionUnion> = object();
+  #store: ManagerStore<ExtensionUnion> = object();
 
   /**
    * Retrieve the specified action.
@@ -168,7 +167,7 @@ export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
    * the prosemirror editor.
    *
    * This should not be called directly if you want to use prioritized
-   * extensions. Instead use `ExtensionManager.create`.
+   * extensions. Instead use `Manager.create`.
    */
   private constructor(extensions: ExtensionUnion[]) {
     this.extensions = extensions;
@@ -198,12 +197,10 @@ export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
     this.#initialized = true;
 
     this.#store.extensionPlugins = this.plugins();
-    this.#store.nodeViews = this.nodeViews();
     this.#store.keymaps = this.keymaps();
     this.#store.inputRules = this.inputRules();
     this.#store.pasteRules = this.pasteRules();
     this.#store.suggestions = this.suggestions();
-    this.#store.isActive = this.isActiveMethods();
 
     this.#store.plugins = [
       ...this.#store.extensionPlugins,
@@ -213,7 +210,7 @@ export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
       ...this.#store.keymaps,
     ];
 
-    this.#store.helpers = this.helpers();
+    this.#store = this.helpers();
 
     return this;
   }
@@ -223,7 +220,7 @@ export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
    *
    * @param view - the editor view
    */
-  public initView(view: EditorView<SchemaFromExtensions<ExtensionUnion>>) {
+  public initView(view: EditorView<SchemaFromExtension<ExtensionUnion>>) {
     this.#store.view = view;
     this.#store.actions = this.actions({
       ...this.params,
@@ -353,7 +350,7 @@ export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
   /**
    * A shorthand way of retrieving the editor view.
    */
-  get view(): EditorView<SchemaFromExtensions<ExtensionUnion>> {
+  get view(): EditorView<SchemaFromExtension<ExtensionUnion>> {
     return this.#store.view;
   }
 
@@ -363,7 +360,7 @@ export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
    * Utility getter for accessing the parameters which are passed to the
    * extension methods
    */
-  private get params(): ExtensionManagerParameter<SchemaFromExtensions<ExtensionUnion>> {
+  private get params(): ManagerParameter<SchemaFromExtension<ExtensionUnion>> {
     return {
       tags: this.tags,
       schema: this.schema,
@@ -427,7 +424,7 @@ export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
    * change in props has caused anything to actually change and prevent a
    * rerender.
    *
-   * ExtensionManagers are equal when
+   * Managers are equal when
    * - They have the same number of extensions
    * - Same order of extensions
    * - Each extension has the same options (ignoring methods)
@@ -436,7 +433,7 @@ export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
    */
   public isEqual(otherManager: unknown) {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    if (!isExtensionManager(otherManager)) {
+    if (!isManager(otherManager)) {
       return false;
     }
 
@@ -517,7 +514,7 @@ export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
    * Dynamically create the editor schema based on the extensions that have been
    * passed in.
    *
-   * This is called as soon as the ExtensionManager is created.
+   * This is called as soon as the Manager is created.
    */
   private createSchema(): EditorSchema<this['_N'], this['_M']> {
     return new Schema({ nodes: this.nodes, marks: this.marks });
@@ -690,18 +687,6 @@ export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
   }
 
   /**
-   * Retrieve all the options passed in for the extension manager
-   */
-  private extensionOptions(): Record<string, PlainObject> {
-    const options: Record<string, PlainObject> = object();
-    for (const extension of this.extensions) {
-      options[extension.name] = extension.options;
-    }
-
-    return options;
-  }
-
-  /**
    * Retrieve all pasteRules (rules for how the editor responds to pastedText).
    */
   private pasteRules(): ProsemirrorPlugin[] {
@@ -835,26 +820,21 @@ export class ExtensionManager<ExtensionUnion extends AnyExtension = any> {
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _D!: ExtensionManagerStore<this['_A'], this['_N'], this['_M'], this['_P']>;
+  public readonly _D!: ManagerStore<this['_A'], this['_N'], this['_M'], this['_P']>;
 }
 
 export interface ManagerParams<ExtensionUnion extends AnyExtension = any> {
   /**
    * The extension manager
    */
-  manager: ExtensionManager<ExtensionUnion>;
+  manager: Manager<ExtensionUnion>;
 }
-
-/**
- * Retrieve the extensions from an `ExtensionManager`.
- */
-export type ExtensionsFromManager<GManager extends ExtensionManager> = GManager['_E'];
 
 /**
  * Describes the object where the extension manager stores it's data.
  */
-export interface ExtensionManagerStore<ExtensionUnion extends AnyExtension = any>
-  extends GlobalExtensionManagerStore<ExtensionUnion> {}
+export interface ManagerStore<ExtensionUnion extends AnyExtension = any>
+  extends GlobalManagerStore<ExtensionUnion> {}
 
 export interface OnTransactionManagerParams extends TransactionParameter, EditorStateParameter {}
 
@@ -863,19 +843,19 @@ declare global {
    * Extension using the lifecycle hooks can store data on the extension manager
    * cache. This can either be through mutating an already stored value
    */
-  interface GlobalExtensionManagerCache {}
+  interface GlobalManagerCache {}
 }
 
 declare global {
   /**
    * Use this to extend the store if you're extension is modifying the shape of
-   * the `ExtensionManager.store` property.
+   * the `Manager.store` property.
    */
-  interface GlobalExtensionManagerStore<ExtensionUnion extends AnyExtension = any> {
+  interface GlobalManagerStore<ExtensionUnion extends AnyExtension = any> {
     /**
      * The schema created by this extension manager.
      */
-    schema: SchemaFromExtensions<ExtensionUnion>;
+    schema: SchemaFromExtension<ExtensionUnion>;
 
     /**
      * All the plugins defined by the extensions.
@@ -909,5 +889,5 @@ declare global {
    * The initialization params which are passed by the view layer into the
    * extension manager. This can be added to by the requesting framework layer.
    */
-  interface ExtensionManagerInitializationParams<ExtensionUnion extends AnyExtension = any> {}
+  interface ManagerInitializationParams<ExtensionUnion extends AnyExtension = any> {}
 }

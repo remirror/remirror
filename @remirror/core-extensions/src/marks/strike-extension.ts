@@ -3,7 +3,7 @@ import { toggleMark } from 'prosemirror-commands';
 import {
   CommandMarkTypeParams,
   convertCommand,
-  ExtensionManagerMarkTypeParams,
+  ManagerMarkTypeParams,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
@@ -39,7 +39,7 @@ export class StrikeExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams): KeyBindings {
+  public keys({ type }: ManagerMarkTypeParams): KeyBindings {
     return {
       'Mod-d': convertCommand(toggleMark(type)),
     };
@@ -49,11 +49,11 @@ export class StrikeExtension extends MarkExtension {
     return { strike: () => toggleMark(type) };
   }
 
-  public inputRules({ type }: ExtensionManagerMarkTypeParams) {
+  public inputRules({ type }: ManagerMarkTypeParams) {
     return [markInputRule({ regexp: /~([^~]+)~$/, type })];
   }
 
-  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
+  public pasteRules({ type }: ManagerMarkTypeParams) {
     return [markPasteRule({ regexp: /~([^~]+)~/g, type })];
   }
 }

@@ -3,7 +3,7 @@ import {
   REMIRROR_IDENTIFIER_KEY,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
-import { Cast, freeze } from '@remirror/core-helpers';
+import { Cast, freeze, isRemirrorType } from '@remirror/core-helpers';
 import {
   BaseExtensionSettings,
   ExtensionCommandReturn,
@@ -12,6 +12,7 @@ import {
 } from '@remirror/core-types';
 
 import {
+  AnyExtensionConstructor,
   Extension,
   ExtensionFactoryParameter,
   MarkExtension,
@@ -41,9 +42,9 @@ const createBaseExtensionFactory = <
       Commands extends ExtensionCommandReturn,
       Helpers extends ExtensionHelperReturn
     >(
-      creatorOptions: ExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>,
+      factoryParameter: ExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>,
     ): PlainExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
-      const options = freeze(creatorOptions);
+      const parameter = freeze(factoryParameter);
 
       class PlainConstructor extends Extension<Name, Settings, Properties, Commands, Helpers> {
         /**
@@ -72,7 +73,7 @@ const createBaseExtensionFactory = <
          * The name of the extension.
          */
         static get extensionName() {
-          return options.name;
+          return parameter.name;
         }
 
         /**
@@ -92,7 +93,7 @@ const createBaseExtensionFactory = <
 
         public getFactoryParameter() {
           // Not sure why I have to cast to `never` here.
-          return Cast<never>(options);
+          return Cast<never>(parameter);
         }
       }
 
@@ -108,9 +109,15 @@ const createBaseExtensionFactory = <
       Commands extends ExtensionCommandReturn,
       Helpers extends ExtensionHelperReturn
     >(
-      creatorOptions: MarkExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>,
+      factoryParameter: MarkExtensionFactoryParameter<
+        Name,
+        Settings,
+        Properties,
+        Commands,
+        Helpers
+      >,
     ): MarkExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
-      const options = freeze(creatorOptions);
+      const parameter = freeze(factoryParameter);
 
       class MarkConstructor extends MarkExtension<Name, Settings, Properties, Commands, Helpers> {
         /**
@@ -139,7 +146,7 @@ const createBaseExtensionFactory = <
          * The name of the extension.
          */
         static get extensionName() {
-          return options.name;
+          return parameter.name;
         }
 
         /**
@@ -151,7 +158,7 @@ const createBaseExtensionFactory = <
         }
 
         public getFactoryParameter() {
-          return options; // Cast cos I can.
+          return parameter; // Cast cos I can.
         }
       }
 
@@ -167,9 +174,15 @@ const createBaseExtensionFactory = <
       Commands extends ExtensionCommandReturn,
       Helpers extends ExtensionHelperReturn
     >(
-      creatorOptions: NodeExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>,
+      factoryParameter: NodeExtensionFactoryParameter<
+        Name,
+        Settings,
+        Properties,
+        Commands,
+        Helpers
+      >,
     ): NodeExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
-      const options = freeze(creatorOptions);
+      const parameter = freeze(factoryParameter);
 
       class NodeConstructor extends NodeExtension<Name, Settings, Properties, Commands, Helpers> {
         /**
@@ -198,7 +211,7 @@ const createBaseExtensionFactory = <
          * The name of the extension.
          */
         static get extensionName() {
-          return options.name;
+          return parameter.name;
         }
 
         /**
@@ -210,7 +223,7 @@ const createBaseExtensionFactory = <
         }
 
         public getFactoryParameter() {
-          return options;
+          return parameter;
         }
       }
 
@@ -268,3 +281,13 @@ export const ExtensionFactory = {
     return createBaseExtensionFactory<Settings, Props>();
   },
 };
+
+export const isExtensionConstructor = <Settings extends BaseExtensionSettings = any>(
+  value: unknown,
+): value is AnyExtensionConstructor<Settings> =>
+  isRemirrorType(value) &&
+  [
+    RemirrorIdentifier.PlainExtensionConstructor,
+    RemirrorIdentifier.MarkExtensionConstructor,
+    RemirrorIdentifier.NodeExtensionConstructor,
+  ].includes(value[REMIRROR_IDENTIFIER_KEY]);

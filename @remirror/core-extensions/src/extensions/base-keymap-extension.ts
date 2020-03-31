@@ -11,7 +11,7 @@ import {
   chainKeyBindingCommands,
   convertCommand,
   Extension,
-  ExtensionManagerParameter,
+  ManagerParameter,
   hasOwnProperty,
   isFunction,
   KeyBindings,
@@ -51,7 +51,7 @@ export interface BaseKeymapExtensionOptions extends BaseExtensionSettings {
    * }});
    * ```
    */
-  keymap?: KeyBindings | ((params: ExtensionManagerParameter) => KeyBindings);
+  keymap?: KeyBindings | ((params: ManagerParameter) => KeyBindings);
 }
 
 export const defaultBaseKeymapExtensionOptions: BaseKeymapExtensionOptions = {
@@ -89,7 +89,7 @@ export class BaseKeymapExtension extends Extension<BaseKeymapExtensionOptions> {
   /**
    * Injects the baseKeymap into the editor.
    */
-  public keys(parameters: ExtensionManagerParameter) {
+  public keys(parameters: ManagerParameter) {
     const { selectParentNodeOnEscape, undoInputRuleOnBackspace, keymap } = this.options;
     const backspaceRule: KeyBindings = undoInputRuleOnBackspace
       ? { Backspace: convertCommand(pmChainCommands(undoInputRule, baseKeymap.Backspace)) }

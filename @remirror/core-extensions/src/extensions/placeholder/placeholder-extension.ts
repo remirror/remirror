@@ -1,7 +1,7 @@
 import { Children } from 'react';
 
 import { Extension, isString } from '@remirror/core';
-import { ExtensionManagerParameter, Plugin } from '@remirror/core-types';
+import { ManagerParameter, Plugin } from '@remirror/core-types';
 import { isDocNodeEmpty } from '@remirror/core-utils';
 import { cloneElement, getElementProps } from '@remirror/react-utils';
 
@@ -53,7 +53,7 @@ export class PlaceholderExtension extends Extension<PlaceholderExtensionOptions>
   /**
    * Add a class and props to the root element if the document is empty.
    */
-  public ssrTransformer(element: JSX.Element, { getState }: ExtensionManagerParameter) {
+  public ssrTransformer(element: JSX.Element, { getState }: ManagerParameter) {
     const state = getState();
     const { emptyNodeClass, placeholder } = this.options;
     const { children } = getElementProps(element);

@@ -4,8 +4,8 @@ import { Decoration, DecorationSet } from 'prosemirror-view';
 import {
   BaseExtensionSettings,
   Extension,
-  ExtensionManagerParameter,
   isEmptyArray,
+  ManagerParameter,
   NodeMatch,
   ResolvedPos,
   uniqueArray,
@@ -128,7 +128,7 @@ export class NodeCursorExtension extends Extension<NodeCursorExtensionOptions> {
     };
   }
 
-  public plugin({ tags }: ExtensionManagerParameter) {
+  public plugin({ tags }: ManagerParameter) {
     return createNodeCursorExtensionPlugin(this, tags.general.nodeCursor);
   }
 }

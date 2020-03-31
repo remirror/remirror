@@ -18,7 +18,7 @@ import {
   NodeExtension,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
-  SchemaFromExtensions,
+  SchemaFromExtension,
 } from '@remirror/core';
 import { InjectedRemirrorProps } from '@remirror/react';
 
@@ -99,8 +99,8 @@ export interface TaggedProsemirrorNode<GSchema extends EditorSchema = EditorSche
 }
 
 export interface AddContentReturn<GExtension extends AnyExtension>
-  extends EditorStateParameter<SchemaFromExtensions<GExtension>>,
-    EditorViewParameter<SchemaFromExtensions<GExtension>> {
+  extends EditorStateParameter<SchemaFromExtension<GExtension>>,
+    EditorViewParameter<SchemaFromExtension<GExtension>> {
   /**
    * The current prosemirror document.
    */
@@ -257,7 +257,7 @@ export interface AddContentReturn<GExtension extends AnyExtension>
 }
 
 export type AddContent<GExtension extends AnyExtension> = (
-  content: TaggedProsemirrorNode<SchemaFromExtensions<GExtension>>,
+  content: TaggedProsemirrorNode<SchemaFromExtension<GExtension>>,
 ) => AddContentReturn<GExtension>;
 
 export type MarkWithAttributes<GNames extends string> = {
@@ -294,15 +294,15 @@ export type CreateTestEditorReturn<
     GOthers
   > = GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>
 > = Omit<InjectedRemirrorProps<GExtension>, 'view'> &
-  TestEditorViewParams<SchemaFromExtensions<GExtension>> & {
+  TestEditorViewParams<SchemaFromExtension<GExtension>> & {
     utils: RenderResult;
     add: AddContent<GExtension>;
     nodes: NodeWithoutAttributes<GetNames<GPlainNodes> | BaseExtensionNodeNames>;
     marks: MarkWithoutAttributes<GetNames<GPlainMarks>>;
     attrNodes: NodeWithAttributes<GetNames<GAttrNodes>>;
     attrMarks: MarkWithAttributes<GetNames<GAttrMarks>>;
-    getState(): EditorState<SchemaFromExtensions<GExtension>>;
-    schema: SchemaFromExtensions<GExtension>;
+    getState(): EditorState<SchemaFromExtension<GExtension>>;
+    schema: SchemaFromExtension<GExtension>;
     p: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
     doc: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
   };

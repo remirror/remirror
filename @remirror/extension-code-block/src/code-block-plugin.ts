@@ -6,8 +6,8 @@ import { DecorationSet } from 'prosemirror-view';
 import {
   CompareStateParameter,
   EditorState,
-  ExtensionManagerNodeTypeParams,
   findChildrenByNode,
+  ManagerNodeTypeParams,
   nodeEqualsType,
   NodeExtension,
   NodeType,
@@ -191,7 +191,7 @@ interface UpdateDecorationSetParams extends TransactionParameter {
   nodeInfo: NodeInformation;
 }
 
-interface CreateCodeBlockPluginParams extends ExtensionManagerNodeTypeParams {
+interface CreateCodeBlockPluginParams extends ManagerNodeTypeParams {
   extension: NodeExtension<CodeBlockExtensionSettings>;
 }
 

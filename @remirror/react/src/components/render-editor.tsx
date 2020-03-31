@@ -10,7 +10,6 @@ import {
   clamp,
   EDITOR_CLASS_NAME,
   EditorView as EditorViewType,
-  ExtensionManager,
   fromHTML,
   FromToParameter,
   getDocument,
@@ -18,12 +17,13 @@ import {
   isFunction,
   isNumber,
   isPlainObject,
+  Manager,
   object,
   ObjectNode,
   RemirrorContentType,
   RemirrorInterpolation,
   RemirrorThemeContextType,
-  SchemaFromExtensions,
+  SchemaFromExtension,
   shouldUseDOMEnvironment,
   toHTML,
   Transaction,
@@ -69,7 +69,7 @@ import {
 
 export class RenderEditor<GExtension extends AnyExtension = any> extends PureComponent<
   RemirrorProps<GExtension>,
-  RemirrorState<SchemaFromExtensions<GExtension>>
+  RemirrorState<SchemaFromExtension<GExtension>>
 > {
   public static defaultProps = defaultProps;
 
@@ -120,7 +120,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
   /**
    * The prosemirror EditorView.
    */
-  private readonly view: EditorViewType<SchemaFromExtensions<GExtension>>;
+  private readonly view: EditorViewType<SchemaFromExtension<GExtension>>;
 
   /**
    * A unique ID for the editor which is also used as a key to pass into
@@ -144,7 +144,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
   /**
    * A utility for quickly retrieving the extension manager.
    */
-  private get manager(): ExtensionManager<GExtension> {
+  private get manager(): Manager<GExtension> {
     return this.props.manager;
   }
 
@@ -178,7 +178,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    * TODO check whether or not the schema has changed and log a warning. Schema
    * shouldn't change.
    */
-  public updateExtensionManager() {
+  public updateManager() {
     this.manager
       .initialize({
         getState: this.getState,
@@ -195,7 +195,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     this.props.onStateChange && this.props.value ? this.props.value : this.view.state;
 
   /**
-   * Retrieve the them from the context and pass it to the ExtensionManager
+   * Retrieve the them from the context and pass it to the Manager
    */
   private readonly getTheme = () => this.context;
 
@@ -206,7 +206,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    *
    * At this point both oldState and newState point to the same state object.
    */
-  private createInitialState(): RemirrorState<SchemaFromExtensions<GExtension>> {
+  private createInitialState(): RemirrorState<SchemaFromExtension<GExtension>> {
     const { suppressHydrationWarning } = this.props;
 
     const newState = this.createStateFromContent(this.props.initialContent);
@@ -224,7 +224,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    * Create the prosemirror editor view.
    */
   private createView() {
-    return createEditorView<SchemaFromExtensions<GExtension>>(
+    return createEditorView<SchemaFromExtension<GExtension>>(
       undefined,
       {
         state: this.state.editor.newState,
@@ -465,7 +465,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    * into the editor. Since it's up to the user to provide state updates to the
    * editor this method is called when the value prop has changed.
    */
-  private readonly controlledUpdate = (state: EditorState<SchemaFromExtensions<GExtension>>) => {
+  private readonly controlledUpdate = (state: EditorState<SchemaFromExtension<GExtension>>) => {
     const updateHandler = this.createUpdateStateHandler({ state });
     this.view.updateState(state);
     updateHandler();
@@ -479,7 +479,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     triggerOnChange,
     onUpdate,
     tr,
-  }: UpdateStateParams<SchemaFromExtensions<GExtension>>) => (updatedState = state) => {
+  }: UpdateStateParams<SchemaFromExtension<GExtension>>) => (updatedState = state) => {
     const { onChange } = this.props;
 
     // No need to continue if triggerOnChange is `false`
@@ -505,7 +505,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     triggerOnChange = true,
     onUpdate,
     tr,
-  }: UpdateStateParams<SchemaFromExtensions<GExtension>>) {
+  }: UpdateStateParams<SchemaFromExtension<GExtension>>) {
     const { onStateChange } = this.props;
 
     const updateHandler = this.createUpdateStateHandler({ state, triggerOnChange, onUpdate });
@@ -591,7 +591,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
 
   public componentDidUpdate(
     { editable, manager: previousManager }: RemirrorProps<GExtension>,
-    previousState: RemirrorState<SchemaFromExtensions<GExtension>>,
+    previousState: RemirrorState<SchemaFromExtension<GExtension>>,
   ) {
     // Ensure that children is still a render prop
     propIsFunction(this.props.children);
@@ -603,7 +603,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
 
     // Check if the manager has changed
     if (!previousManager.isEqual(this.props.manager)) {
-      this.updateExtensionManager();
+      this.updateManager();
       this.view.setProps({ ...this.view.props, nodeViews: this.manager.store.nodeViews });
 
       // The following converts the current content to HTML and then uses the
@@ -810,7 +810,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     };
   }
 
-  private readonly getText = (state?: EditorState<SchemaFromExtensions<GExtension>>) => (
+  private readonly getText = (state?: EditorState<SchemaFromExtension<GExtension>>) => (
     lineBreakDivider = '\n\n',
   ) => {
     const { doc } = state ?? this.state.editor.newState;
@@ -820,7 +820,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
   /**
    * Retrieve the HTML from the `doc` prosemirror node
    */
-  private readonly getHTML = (state?: EditorState<SchemaFromExtensions<GExtension>>) => () => {
+  private readonly getHTML = (state?: EditorState<SchemaFromExtension<GExtension>>) => () => {
     return toHTML({
       node: (state ?? this.state.editor.newState).doc,
       schema: this.manager.store.schema,
@@ -832,7 +832,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    * Retrieve the full state json object
    */
   private readonly getJSON = (
-    state?: EditorState<SchemaFromExtensions<GExtension>>,
+    state?: EditorState<SchemaFromExtension<GExtension>>,
   ) => (): ObjectNode => {
     return (state ?? this.state.editor.newState).toJSON() as ObjectNode;
   };
@@ -841,7 +841,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    * Return the json object for the prosemirror document.
    */
   private readonly getObjectNode = (
-    state?: EditorState<SchemaFromExtensions<GExtension>>,
+    state?: EditorState<SchemaFromExtension<GExtension>>,
   ) => (): ObjectNode => {
     return (state ?? this.state.editor.newState).doc.toJSON() as ObjectNode;
   };
@@ -851,7 +851,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    */
   private readonly createStateFromContent = (
     content: RemirrorContentType,
-  ): EditorState<SchemaFromExtensions<GExtension>> => {
+  ): EditorState<SchemaFromExtension<GExtension>> => {
     const { stringHandler, fallbackContent: fallback } = this.props;
     return this.manager.createState({ content, doc: this.doc, stringHandler, fallback });
   };

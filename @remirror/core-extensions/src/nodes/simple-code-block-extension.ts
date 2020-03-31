@@ -5,7 +5,7 @@ import {
   CommandNodeTypeParams,
   convertCommand,
   EDITOR_CLASS_SELECTOR,
-  ExtensionManagerNodeTypeParams,
+  ManagerNodeTypeParams,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
@@ -36,7 +36,7 @@ export class CodeBlockExtension extends NodeExtension {
     return { toggleCodeBlock: () => toggleBlockItem({ type, toggleType: schema.nodes.paragraph }) };
   }
 
-  public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
+  public keys({ type, schema }: ManagerNodeTypeParams): KeyBindings {
     return {
       'Shift-Ctrl-\\': convertCommand(
         toggleBlockItem({ type, toggleType: schema.nodes.paragraph }),
@@ -60,7 +60,7 @@ export class CodeBlockExtension extends NodeExtension {
     };
   }
 
-  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParams) {
     return [textblockTypeInputRule(/^```$/, type)];
   }
 }

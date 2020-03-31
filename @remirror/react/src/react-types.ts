@@ -12,9 +12,9 @@ import {
   EditorView,
   EditorViewParameter,
   ElementParameter,
-  ExtensionManager,
   FromToParameter,
   GetSettings,
+  Manager,
   ObjectNode,
   PlainObject,
   Position,
@@ -23,7 +23,7 @@ import {
   RemirrorContentType,
   RemirrorInterpolation,
   RenderEnvironment,
-  SchemaFromExtensions,
+  SchemaFromExtension,
   StringHandlerParams,
   TextParams,
   Transaction,
@@ -48,7 +48,7 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
    * The manager is responsible for handling all Prosemirror related
    * functionality.
    */
-  manager: ExtensionManager<GExtension>;
+  manager: Manager<GExtension>;
 
   /**
    * Set the starting value object of the editor.
@@ -74,7 +74,7 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
    * When onStateChange is defined this prop is used to set the next state value
    * of the remirror editor.
    */
-  value?: EditorState<SchemaFromExtensions<GExtension>> | null;
+  value?: EditorState<SchemaFromExtension<GExtension>> | null;
 
   /**
    * Adds attributes directly to the prosemirror html element.
@@ -132,7 +132,7 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
    * Use this to update the transaction which will be used to update the editor
    * state.
    */
-  onDispatchTransaction: TransactionTransformer<SchemaFromExtensions<GExtension>>;
+  onDispatchTransaction: TransactionTransformer<SchemaFromExtension<GExtension>>;
 
   /**
    * Sets the accessibility label for the editor instance.
@@ -261,7 +261,7 @@ export interface Positioner<GExtension extends AnyExtension = any> {
    *
    * @param params
    */
-  hasChanged(params: CompareStateParameter<SchemaFromExtensions<GExtension>>): boolean;
+  hasChanged(params: CompareStateParameter<SchemaFromExtension<GExtension>>): boolean;
 
   /**
    * Determines whether the positioner should be active
@@ -325,11 +325,11 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
   /**
    * An instance of the extension manager
    */
-  manager: ExtensionManager<GExtension>;
+  manager: Manager<GExtension>;
   /**
    * The prosemirror view
    */
-  view: EditorView<SchemaFromExtensions<GExtension>>;
+  view: EditorView<SchemaFromExtension<GExtension>>;
 
   /**
    * A map of all actions made available by the configured extensions.
@@ -417,7 +417,7 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
   /**
    * The previous and next state
    */
-  state: CompareStateParameter<SchemaFromExtensions<GExtension>>;
+  state: CompareStateParameter<SchemaFromExtension<GExtension>>;
 
   /**
    * Focus the editor at the `start` | `end` a specific position or at a valid range between `{ from, to }`
@@ -462,7 +462,7 @@ export interface RemirrorGetterParams {
 }
 
 export interface BaseListenerParams<GExtension extends AnyExtension = any>
-  extends EditorViewParameter<SchemaFromExtensions<GExtension>>,
+  extends EditorViewParameter<SchemaFromExtension<GExtension>>,
     RemirrorGetterParams {
   /**
    * The original transaction which caused this state update.
@@ -476,7 +476,7 @@ export interface BaseListenerParams<GExtension extends AnyExtension = any>
    * - Was ths change caused by an updated selection? `tr.selectionSet`
    * - `tr.steps` can be inspected for further granularity.
    */
-  tr?: Transaction<SchemaFromExtensions<GExtension>>;
+  tr?: Transaction<SchemaFromExtension<GExtension>>;
 
   /**
    * A shorthand way of checking whether the update was triggered by editor usage (internal) or
@@ -490,18 +490,18 @@ export interface BaseListenerParams<GExtension extends AnyExtension = any>
 }
 
 export interface RemirrorEventListenerParams<GExtension extends AnyExtension = any>
-  extends EditorStateParameter<SchemaFromExtensions<GExtension>>,
+  extends EditorStateParameter<SchemaFromExtension<GExtension>>,
     BaseListenerParams<GExtension> {}
 
 export interface RemirrorStateListenerParams<GExtension extends AnyExtension = any>
-  extends CompareStateParameter<SchemaFromExtensions<GExtension>>,
+  extends CompareStateParameter<SchemaFromExtension<GExtension>>,
     BaseListenerParams<GExtension> {
   /**
    * Manually create a new state object with the desired content.
    */
   createStateFromContent(
     content: RemirrorContentType,
-  ): EditorState<SchemaFromExtensions<GExtension>>;
+  ): EditorState<SchemaFromExtension<GExtension>>;
 }
 
 export type RemirrorEventListener<GExtension extends AnyExtension = any> = (
@@ -524,9 +524,9 @@ export type PositionerMapValue = ElementParameter & {
 export interface PositionerRefFactoryParams extends PositionerIdParams, PositionParameter {}
 
 export interface GetPositionParams<GExtension extends AnyExtension = any>
-  extends EditorViewParameter<SchemaFromExtensions<GExtension>>,
+  extends EditorViewParameter<SchemaFromExtension<GExtension>>,
     ElementParameter,
-    CompareStateParameter<SchemaFromExtensions<GExtension>> {}
+    CompareStateParameter<SchemaFromExtension<GExtension>> {}
 
 export interface PositionerIdParams {
   /**

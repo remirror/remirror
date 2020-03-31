@@ -4,7 +4,7 @@ import { jsx } from '@emotion/core';
 import { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { ExtensionManager, object, PlainObject } from '@remirror/core';
+import { Manager, object, PlainObject } from '@remirror/core';
 
 import { useRemirror } from './hooks/use-remirror';
 
@@ -77,7 +77,7 @@ export const getSchemaFromComponentTree = ({
   prop = 'children',
   extraProps = object<PlainObject>(),
 }: GetManagerFromComponentTreeParams) =>
-  new Promise<ExtensionManager>((resolve, reject) => {
+  new Promise<Manager>((resolve, reject) => {
     const ManagerRetriever = () => {
       const { manager } = useRemirror();
       resolve(manager);

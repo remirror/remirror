@@ -17,10 +17,10 @@ import {
   Cast,
   convertToPrioritizedExtension,
   Extension,
-  ExtensionManager,
   FlexibleExtension,
   isMarkExtension,
   isNodeExtension,
+  Manager,
   MarkExtension,
   NodeExtension,
   object,
@@ -88,7 +88,7 @@ export const renderEditor = <
     ...attributeMarks,
     ...attributeNodes,
   ].map(convertToPrioritizedExtension);
-  const manager = ExtensionManager.create(extensions);
+  const manager = Manager.create(extensions);
   let returnedParameters: InjectedRemirrorProps<GExtension>;
 
   const utils = render(

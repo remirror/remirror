@@ -9,10 +9,10 @@ import { ComponentType } from 'react';
 import {
   EditorView,
   Extension,
-  ExtensionManagerParameter,
   findPositionOfNodeAfter,
   findPositionOfNodeBefore,
   isUndefined,
+  ManagerParameter,
   pick,
   ResolvedPos,
   throttle,
@@ -66,7 +66,7 @@ export class DropCursorState {
   public decorationSet = DecorationSet.empty;
 
   constructor(
-    { portalContainer }: ExtensionManagerParameter,
+    { portalContainer }: ManagerParameter,
     extension: Extension<DropCursorExtensionOptions>,
   ) {
     this.portalContainer = portalContainer;
@@ -295,7 +295,7 @@ interface CreateDropPlaceholderParams {
  * Create a drop cursor plugin which adds a decoration to the position that is currently being dragged over.
  */
 export function dropCursorPlugin(
-  parameters: ExtensionManagerParameter,
+  parameters: ManagerParameter,
   extension: Extension<DropCursorExtensionOptions>,
 ) {
   const dropCursorState = new DropCursorState(parameters, extension);

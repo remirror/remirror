@@ -4,7 +4,7 @@ import {
   Attributes,
   Cast,
   CommandMarkTypeParams,
-  ExtensionManagerMarkTypeParams,
+  ManagerMarkTypeParams,
   getMarkRange,
   getMatchString,
   getSelectedWord,
@@ -126,7 +126,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
+  public pasteRules({ type }: ManagerMarkTypeParams) {
     return [
       markPasteRule({
         regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/g,
@@ -136,7 +136,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     ];
   }
 
-  public plugin({ type }: ExtensionManagerMarkTypeParams) {
+  public plugin({ type }: ManagerMarkTypeParams) {
     return new Plugin({
       props: {
         handleClick(view, pos) {

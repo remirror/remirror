@@ -7,11 +7,11 @@ import {
   CommandMarkTypeParams,
   EditorState,
   EditorView,
-  ExtensionManagerMarkTypeParams,
   findMatches,
   getMatchString,
   isFunction,
   LEAF_NODE_REPLACING_CHARACTER,
+  ManagerMarkTypeParams,
   MarkExtension,
   MarkExtensionConfig,
   MarkExtensionSpec,
@@ -90,7 +90,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
     };
   }
 
-  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
+  public pasteRules({ type }: ManagerMarkTypeParams) {
     return [
       markPasteRule({
         regexp: extractUrl,
@@ -104,7 +104,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
     ];
   }
 
-  public plugin = ({ type }: ExtensionManagerMarkTypeParams) => {
+  public plugin = ({ type }: ManagerMarkTypeParams) => {
     const key = this.pluginKey;
     const name = this.name;
     const onUrlsChange = this.options.onUrlsChange;

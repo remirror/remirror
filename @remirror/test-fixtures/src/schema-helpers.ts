@@ -5,8 +5,8 @@ import {
   Cast,
   DocExtension,
   Extension,
-  ExtensionManager,
   FlexibleExtension,
+  Manager,
   TextExtension,
 } from '@remirror/core';
 import {
@@ -63,15 +63,15 @@ export const ExtensionMap = {
 /**
  * @deprecated Causes issues when multiple tests use this. Prefer {@link createTestManager}
  */
-export const manager = ExtensionManager.create(extensions).init(helpers);
+export const manager = Manager.create(extensions).init(helpers);
 
 export const createBaseTestManager = <GFlexibleList extends FlexibleExtension[]>(
   extra: GFlexibleList = [] as any,
-) => ExtensionManager.create([...baseExtensions, ...extra]);
+) => Manager.create([...baseExtensions, ...extra]);
 
 export const createTestManager = <GFlexibleList extends FlexibleExtension[]>(
   extra: GFlexibleList = [] as any,
-) => ExtensionManager.create([...extensions, ...extra]);
+) => Manager.create([...extensions, ...extra]);
 
 export const { schema, plugins } = manager.data;
 export const testDocument = minDocument;

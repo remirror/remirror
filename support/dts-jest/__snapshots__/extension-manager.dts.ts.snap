@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ExtensionManager.create([
+exports[`Manager.create([
     new HistoryExtension(),
     new ParagraphExtension(),
     new BoldExtension(),
@@ -8,7 +8,7 @@ exports[`ExtensionManager.create([
     new PositionTrackerExtension(),
     { priority: 1, extension: new TextExtension() },
     { priority: 0, extension: new DocExtension() },
-  ]) (type) should match snapshot 1`] = `"ExtensionManager<HistoryExtension | PositionTrackerExtension | ParagraphExtension | BoldExtension | CodeBlockExtension | TextExtension | DocExtension>"`;
+  ]) (type) should match snapshot 1`] = `"Manager<HistoryExtension | PositionTrackerExtension | ParagraphExtension | BoldExtension | CodeBlockExtension | TextExtension | DocExtension>"`;
 
 exports[`historyActions.redo (type) should match snapshot 1`] = `"ActionMethod<[]>"`;
 

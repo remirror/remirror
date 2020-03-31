@@ -4,7 +4,7 @@ import {
   CommandNodeTypeParams,
   convertCommand,
   EDITOR_CLASS_SELECTOR,
-  ExtensionManagerNodeTypeParams,
+  ManagerNodeTypeParams,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
@@ -59,13 +59,13 @@ export class BlockquoteExtension extends NodeExtension {
     `;
   }
 
-  public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
+  public keys({ type }: ManagerNodeTypeParams): KeyBindings {
     return {
       'Ctrl->': convertCommand(toggleWrap(type)),
     };
   }
 
-  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParams) {
     return [wrappingInputRule(/^\s*>\s$/, type)];
   }
 }

@@ -44,7 +44,7 @@ library.
 
 ```ts
 import {
-  ExtensionManagerMarkTypeParams,
+  ManagerMarkTypeParams,
   MarkExtension,
   MarkExtensionSpec,
   markInputRule,
@@ -80,7 +80,7 @@ export class StrikeExtension extends MarkExtension {
   }
 
   // Defines keymaps for this extension
-  public keys({ type }: ExtensionManagerMarkTypeParams) {
+  public keys({ type }: ManagerMarkTypeParams) {
     return {
       'Mod-d': toggleMark(type),
     };
@@ -92,12 +92,12 @@ export class StrikeExtension extends MarkExtension {
   }
 
   // Input rules happen as code is being typed
-  public inputRules({ type }: ExtensionManagerMarkTypeParams) {
+  public inputRules({ type }: ManagerMarkTypeParams) {
     return [markInputRule({ regexp: /~([^~]+)~$/, type })];
   }
 
   // Paste rules are activated when code is pasted into the editor
-  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
+  public pasteRules({ type }: ManagerMarkTypeParams) {
     return [markPasteRule({ regexp: /~([^~]+)~/g, type })];
   }
 }
@@ -109,10 +109,10 @@ The extension manager is used to manage the extensions passed into the editor. I
 creates the nodes and marks which are used for generating a schema.
 
 ```ts
-import { DocExtension, ExtensionManager, TextExtension } from '@remirror/core';
+import { DocExtension, Manager, TextExtension } from '@remirror/core';
 import { BoldExtension, ItalicExtension, ParagraphExtension } from '@remirror/core-extensions';
 
-const manager = ExtensionManager.create([
+const manager = Manager.create([
   { extension: new DocExtension(), priority: 2 },
   { extension: new TextExtension(), priority: 2 },
   { extension: new ParagraphExtension(), priority: 2 },

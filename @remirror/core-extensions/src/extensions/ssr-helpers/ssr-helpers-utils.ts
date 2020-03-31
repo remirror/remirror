@@ -2,7 +2,7 @@ import { jsx } from '@emotion/core';
 import { Children, JSXElementConstructor } from 'react';
 
 import { isArray } from '@remirror/core-helpers';
-import { ExtensionManagerParameter, PlainObject } from '@remirror/core-types';
+import { ManagerParameter, PlainObject } from '@remirror/core-types';
 import {
   cloneElement,
   getElementProps,
@@ -13,10 +13,7 @@ import {
 /**
  * A function that transforms the element received during Server Side Rendering
  */
-export type SSRTransformer = (
-  element: JSX.Element,
-  params: ExtensionManagerParameter,
-) => JSX.Element;
+export type SSRTransformer = (element: JSX.Element, params: ManagerParameter) => JSX.Element;
 
 /**
  * Clone SSR elements ignoring the top level Fragment

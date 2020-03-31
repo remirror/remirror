@@ -35,10 +35,6 @@ import {
   ExtensionCommandReturn,
   ExtensionHelperReturn,
   ExtensionIsActiveFunction,
-  ExtensionManagerMarkTypeParameter,
-  ExtensionManagerNodeTypeParameter,
-  ExtensionManagerParameter,
-  ExtensionManagerTypeParameter,
   ExtraAttributes,
   FlipPartialAndRequired,
   GetExtraAttributes,
@@ -46,6 +42,10 @@ import {
   IfMatches,
   IfNoRequiredProperties,
   KeyBindings,
+  ManagerMarkTypeParameter,
+  ManagerNodeTypeParameter,
+  ManagerParameter,
+  ManagerTypeParameter,
   MarkExtensionSpec,
   MarkType,
   NodeExtensionSpec,
@@ -614,7 +614,7 @@ export interface BaseExtensionFactoryParameter<
    * @remarks
    *
    * Tags are a helpful tool for categorizing the behavior of an extension. This
-   * behavior is later grouped in the `ExtensionManager` and passed as `tag` to
+   * behavior is later grouped in the `Manager` and passed as `tag` to
    * each method defined in the `ExtensionFactoryParameter`. It can be used by
    * commands that need to remove all formatting and use the tag to identify
    * which registered extensions are formatters.
@@ -637,7 +637,7 @@ export interface BaseExtensionFactoryParameter<
    *
    * @alpha
    */
-  attributes?: (params: ExtensionManagerParameter) => AttributesWithClass;
+  attributes?: (params: ManagerParameter) => AttributesWithClass;
 
   /**
    * Create and register commands for that can be called within the editor.
@@ -684,7 +684,7 @@ export interface BaseExtensionFactoryParameter<
    * Within React this data is passed back into Remirror render prop and also
    * the Remirror context and can be retrieved with a `hook` or `HOC`
    */
-  extensionData?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => PlainObject;
+  extensionData?: (params: ManagerTypeParameter<ProsemirrorType>) => PlainObject;
 
   /**
    * Register input rules which are activated if the regex matches as a user is
@@ -692,7 +692,7 @@ export interface BaseExtensionFactoryParameter<
    *
    * @param params - schema params with type included
    */
-  inputRules?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => InputRule[];
+  inputRules?: (params: ManagerTypeParameter<ProsemirrorType>) => InputRule[];
 
   /**
    * Determines whether this extension is currently active (only applies to Node
@@ -700,14 +700,14 @@ export interface BaseExtensionFactoryParameter<
    *
    * @param params - extension manager params
    */
-  isActive?: (params: ExtensionManagerParameter) => ExtensionIsActiveFunction;
+  isActive?: (params: ManagerParameter) => ExtensionIsActiveFunction;
 
   /**
    * Add key bindings for this extension.
    *
    * @param params - schema params with type included
    */
-  keys?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => KeyBindings;
+  keys?: (params: ManagerTypeParameter<ProsemirrorType>) => KeyBindings;
 
   /**
    * Registers a node view for the extension.
@@ -723,7 +723,7 @@ export interface BaseExtensionFactoryParameter<
    *
    * @alpha
    */
-  nodeView?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => NodeViewMethod;
+  nodeView?: (params: ManagerTypeParameter<ProsemirrorType>) => NodeViewMethod;
 
   /**
    * Register paste rules for this extension.
@@ -732,14 +732,14 @@ export interface BaseExtensionFactoryParameter<
    *
    * @param params - schema params with type included
    */
-  pasteRules?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => ProsemirrorPlugin[];
+  pasteRules?: (params: ManagerTypeParameter<ProsemirrorType>) => ProsemirrorPlugin[];
 
   /**
    * Register a plugin for the extension.
    *
    * @param params - schema params with type included
    */
-  plugin?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => ProsemirrorPlugin;
+  plugin?: (params: ManagerTypeParameter<ProsemirrorType>) => ProsemirrorPlugin;
 
   /**
    * An extension can declare the extensions it requires with the default
@@ -767,7 +767,7 @@ export interface BaseExtensionFactoryParameter<
    * by the styles. This method can be called to check if there is only one
    * child of the parent
    */
-  ssrTransformer?: (element: JSX.Element, params: ExtensionManagerParameter) => JSX.Element;
+  ssrTransformer?: (element: JSX.Element, params: ManagerParameter) => JSX.Element;
 
   /**
    * Allows extensions to register styles on the editor instance using emotion
@@ -775,18 +775,18 @@ export interface BaseExtensionFactoryParameter<
    *
    * @param params - extension manager parameters
    */
-  styles?: (params: ExtensionManagerParameter) => Interpolation;
+  styles?: (params: ManagerParameter) => Interpolation;
 
   /**
    * Create suggestions which respond to character key combinations within the
    * editor instance.
    */
-  suggestions?: (params: ExtensionManagerTypeParameter<ProsemirrorType>) => Suggester[] | Suggester;
+  suggestions?: (params: ManagerTypeParameter<ProsemirrorType>) => Suggester[] | Suggester;
 }
 
 export interface ExtensionEventMethods {
   /**
-   * When the ExtensionManager is first created and the schema is made
+   * When the Manager is first created and the schema is made
    * available.
    */
   onCreate?: () => void;
@@ -938,12 +938,9 @@ export abstract class MarkExtension<
    * selection.
    *
    * @param params - see
-   * {@link @remirror/core-types#ExtensionManagerMarkTypeParameter}
+   * {@link @remirror/core-types#ManagerMarkTypeParameter}
    */
-  public isActive({
-    getState,
-    type,
-  }: ExtensionManagerMarkTypeParameter): ExtensionIsActiveFunction {
+  public isActive({ getState, type }: ManagerMarkTypeParameter): ExtensionIsActiveFunction {
     return () => isMarkActive({ state: getState(), type });
   }
 }
@@ -1059,10 +1056,7 @@ export abstract class NodeExtension<
     });
   }
 
-  public isActive({
-    getState,
-    type,
-  }: ExtensionManagerNodeTypeParameter): ExtensionIsActiveFunction {
+  public isActive({ getState, type }: ManagerNodeTypeParameter): ExtensionIsActiveFunction {
     return ({ attrs }) => {
       return isNodeActive({ state: getState(), type, attrs: attrs });
     };

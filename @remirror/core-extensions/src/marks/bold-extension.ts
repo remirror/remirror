@@ -3,7 +3,7 @@ import { toggleMark } from 'prosemirror-commands';
 import {
   CommandMarkTypeParams,
   convertCommand,
-  ExtensionManagerMarkTypeParams,
+  ManagerMarkTypeParams,
   isElementDOMNode,
   isString,
   KeyBindings,
@@ -43,7 +43,7 @@ export class BoldExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams): KeyBindings {
+  public keys({ type }: ManagerMarkTypeParams): KeyBindings {
     return {
       'Mod-b': convertCommand(toggleMark(type)),
     };
@@ -57,7 +57,7 @@ export class BoldExtension extends MarkExtension {
     };
   }
 
-  public inputRules({ type }: ExtensionManagerMarkTypeParams) {
+  public inputRules({ type }: ManagerMarkTypeParams) {
     return [markInputRule({ regexp: /(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type })];
   }
 }

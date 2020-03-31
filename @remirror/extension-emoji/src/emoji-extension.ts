@@ -3,9 +3,9 @@ import { Suggester } from 'prosemirror-suggest';
 
 import {
   Extension,
-  ExtensionManagerParameter,
   FromToParameter,
   isNullOrUndefined,
+  ManagerParameter,
   noop,
   object,
   plainInputRule,
@@ -154,7 +154,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
     };
   }
 
-  public suggestions({ getActions }: ExtensionManagerParameter): Suggester<EmojiSuggestCommand> {
+  public suggestions({ getActions }: ManagerParameter): Suggester<EmojiSuggestCommand> {
     const {
       suggestionCharacter,
       suggestionKeyBindings,

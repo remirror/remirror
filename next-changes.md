@@ -60,3 +60,5 @@ instances to this new extension.
 - [ ] Still to do: define `reactNodeViews` option in the `react` code-base and test nodeViews in a
       non trivial example `footnotes`. Built in react extension which adds a new parameter to the
       extensionManager init params `portalContainer` which is then used in `reactNodeViews`.
+
+Rename `ExtensionManager` to just `Manager` since it now also manages presets.

@@ -251,9 +251,9 @@ export enum RemirrorIdentifier {
   MarkExtensionConstructor = 'RemirrorMarkExtensionConstructor',
 
   /**
-   * The string used to identify an instance of the `ExtensionManager`
+   * The string used to identify an instance of the `Manager`
    */
-  ExtensionManager = 'RemirrorExtensionManager',
+  Manager = 'RemirrorManager',
 
   /**
    * The preset type identifier.
