@@ -1,28 +1,55 @@
-import { DEFAULT_EXTENSION_PRIORITY, MarkGroup, NodeGroup, Tag } from '@remirror/core-constants';
-import { bool, Cast, entries, isFunction, isUndefined, object, sort } from '@remirror/core-helpers';
+import {
+  DEFAULT_EXTENSION_PRIORITY,
+  ErrorConstant,
+  MarkGroup,
+  NodeGroup,
+  Tag,
+} from '@remirror/core-constants';
+import {
+  bool,
+  Cast,
+  entries,
+  invariant,
+  isFunction,
+  isUndefined,
+  object,
+  sort,
+  uniqueBy,
+} from '@remirror/core-helpers';
 import {
   AnyFunction,
   CommandParameter,
   ExtensionCommandFunction,
-  ExtensionTags,
-  GeneralExtensionTags,
   ManagerParameter,
-  MarkExtensionTags,
-  NodeExtensionTags,
 } from '@remirror/core-types';
 
-import { AnyExtension, isExtension, isMarkExtension, isNodeExtension } from '../extension';
-import { ExtensionListParameter } from '../extension/extension-types';
+import {
+  AnyExtension,
+  ExtensionListParameter,
+  GetConstructor,
+  GetMarkNames,
+  GetName,
+  GetNodeNames,
+  isExtension,
+  isMarkExtension,
+  isNodeExtension,
+} from '../extension';
+import { AnyPreset, isPreset } from '../preset';
+import {
+  ExtensionOrPreset,
+  ExtensionTags,
+  GeneralExtensionTags,
+  MarkExtensionTags,
+  NodeExtensionTags,
+} from './manager-types';
 
 /**
- * Converts an extension to an object with a priority.
+ * Converts an extension preset array to a list of extensions.
  */
-export const convertToPrioritizedExtension = <GExtension extends AnyExtension = any>(
-  extension: FlexibleExtension<GExtension>,
-): PrioritizedExtension<GExtension> => {
-  return isExtension(extension)
-    ? { priority: DEFAULT_EXTENSION_PRIORITY, extension }
-    : { ...extension };
+export const extensionOrPresetToExtension = <ExtensionUnion extends AnyExtension = any>(
+  presetOrExtension: ExtensionOrPreset<ExtensionUnion>,
+): readonly ExtensionUnion[] => {
+  return isExtension(presetOrExtension) ? [presetOrExtension] : presetOrExtension.extensions;
 };
 
 interface IsNameUniqueParams {
@@ -260,21 +287,75 @@ export const extensionPropertyMapper = <
   return Cast(getFn());
 };
 
+export interface TransformExtensionOrPreset<
+  ExtensionUnion extends AnyExtension,
+  PresetUnion extends AnyPreset<ExtensionUnion>
+> {
+  extensions: ExtensionUnion[];
+  extensionMap: Map<GetConstructor<ExtensionUnion>, ExtensionUnion>;
+  presets: PresetUnion[];
+  presetMap: Map<GetConstructor<PresetUnion>, PresetUnion>;
+}
+
 /**
- * Sorts and transforms extension map based on the provided priorities and outputs just the
- * extensions
+ * Transforms the unsorted array of presets and extension into presets and
+ * sorted extensions. Handles uniqueness of extensions and automatically pulling
+ * in required extensions.
  *
  * TODO Add a check for requiredExtensions and inject them automatically
  *
- * @param values - the extensions to transform as well as their priorities
+ * @param unionValues - the extensions to transform as well as their priorities
  * @returns the list of extension instances sorted by priority
  */
-export const transformExtensionMap = <GFlexibleList extends FlexibleExtension[]>(
-  values: GFlexibleList,
-): Array<InferFlexibleExtensionList<GFlexibleList>> =>
-  sort(values.map(convertToPrioritizedExtension), (a, b) => a.priority - b.priority).map(
-    ({ extension }) => extension,
+export const transformExtensionOrPreset = <
+  ExtensionUnion extends AnyExtension,
+  PresetUnion extends AnyPreset<ExtensionUnion>
+>(
+  unionValues: Array<ExtensionUnion | PresetUnion>,
+): TransformExtensionOrPreset<ExtensionUnion, PresetUnion> => {
+  const presets = [] as PresetUnion[];
+  const extensionMap = new Map<GetConstructor<ExtensionUnion>, ExtensionUnion>();
+  const presetMap = new Map<GetConstructor<PresetUnion>, PresetUnion>();
+
+  let extensions = [] as ExtensionUnion[];
+
+  for (const presetOrExtension of unionValues) {
+    // Update the extension list in this block
+    if (isExtension(presetOrExtension)) {
+      extensions.push(presetOrExtension);
+      extensionMap.set(presetOrExtension.constructor, presetOrExtension);
+
+      continue;
+    }
+
+    // Update the presets list in this block
+    if (isPreset(presetOrExtension)) {
+      presets.push(presetOrExtension);
+      extensions.push(...presetOrExtension.extensions);
+      presetMap.set(presetOrExtension.constructor, presetOrExtension);
+
+      continue;
+    }
+
+    // This is only reached if the passed value is invalid.
+    invariant(false, { code: ErrorConstant.INVALID_MANAGER_ARGUMENTS });
+  }
+
+  // Sort the extensions.
+  extensions = sort(
+    uniqueBy(extensions, (extension) => extension.name),
+    (a, b) => a.priority - b.priority,
   );
+
+  // Pull in all required extensions.
+
+  return {
+    extensions,
+    extensionMap,
+    presets,
+    presetMap,
+  };
+};
 
 /**
  * Takes in an object and removes all function values.
@@ -314,22 +395,21 @@ export const defaultIsEnabled = () => true;
  * Create the extension tags which are passed into each extensions method to enable dynamically
  * generated rules and commands.
  */
-export const createExtensionTags = <
-  GNodes extends string = string,
-  GMarks extends string = string,
-  GPlain extends string = string,
-  GNames extends string = GNodes | GMarks | GPlain
->(
-  extensions: AnyExtension[],
-): ExtensionTags<GNodes, GMarks, GPlain> => {
-  const general: GeneralExtensionTags<GNames> = {
+export const createExtensionTags = <ExtensionUnion extends AnyExtension>(
+  extensions: readonly ExtensionUnion[],
+): ExtensionTags<ExtensionUnion> => {
+  type MarkNames = GetMarkNames<ExtensionUnion>;
+  type NodeNames = GetNodeNames<ExtensionUnion>;
+  type AllNames = GetName<ExtensionUnion>;
+
+  const general: GeneralExtensionTags<AllNames> = {
     [Tag.FormattingMark]: [],
     [Tag.FormattingNode]: [],
     [Tag.LastNodeCompatible]: [],
     [Tag.NodeCursor]: [],
   };
 
-  const mark: MarkExtensionTags<GMarks> = {
+  const mark: MarkExtensionTags<MarkNames> = {
     [MarkGroup.Alignment]: [],
     [MarkGroup.Behavior]: [],
     [MarkGroup.Color]: [],
@@ -339,31 +419,34 @@ export const createExtensionTags = <
     [MarkGroup.Code]: [],
   };
 
-  const node: NodeExtensionTags<GNodes> = { [NodeGroup.Block]: [], [NodeGroup.Inline]: [] };
+  const node: NodeExtensionTags<NodeNames> = {
+    [NodeGroup.Block]: [],
+    [NodeGroup.Inline]: [],
+  };
 
   for (const extension of extensions) {
     if (isNodeExtension(extension)) {
-      const group = extension.#schema.group as NodeGroup;
-      node[group] = isUndefined(node[group])
-        ? [extension.name as GNodes]
-        : [...node[group], extension.name as GNodes];
-    } else if (isMarkExtension(extension)) {
-      const group = extension.schema.group as MarkGroup;
-      mark[group] = isUndefined(mark[group])
-        ? [extension.name as GMarks]
-        : [...mark[group], extension.name as GMarks];
+      const group = extension.schema.group as NodeGroup;
+
+      node[group] = isUndefined(node[group]) ? [extension.name] : [...node[group], extension.name];
     }
 
-    (extension.tags as Tag[]).forEach((tag) => {
+    if (isMarkExtension(extension)) {
+      const group = extension.schema.group as MarkGroup;
+
+      mark[group] = isUndefined(mark[group]) ? [extension.name] : [...mark[group], extension.name];
+    }
+
+    for (const tag of extension.tags as Tag[]) {
       general[tag] = isUndefined(general[tag])
-        ? [extension.name as GNames]
-        : [...general[tag], extension.name as GNames];
-    });
+        ? [extension.name]
+        : [...general[tag], extension.name];
+    }
   }
 
-  return ({
+  return {
     general,
     mark,
     node,
-  } as unknown) as ExtensionTags<GNodes, GMarks, GPlain>;
+  };
 };

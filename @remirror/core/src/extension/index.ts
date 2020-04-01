@@ -20,7 +20,7 @@ export { isExtension, isMarkExtension, isNodeExtension, isPlainExtension } from 
 export { ExtensionFactory, isExtensionConstructor } from './extension-factory';
 export type {
   ActionNames,
-  ActionsFromExtensions,
+  CommandsFromExtensions as ActionsFromExtensions,
   ExtensionFromConstructor,
   ExtensionListParameter,
   ExtensionParameter,
@@ -33,8 +33,8 @@ export type {
   GetProperties,
   GetSettings,
   MapCommandToAction,
-  MarkNames,
-  NodeNames,
-  PlainExtensionNames,
+  GetMarkNames,
+  GetNodeNames,
+  GetPlainNames,
   SchemaFromExtension,
 } from './extension-types';

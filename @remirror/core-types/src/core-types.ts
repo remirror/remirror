@@ -1,4 +1,4 @@
-import { MarkSpec, MarkType, NodeSpec, NodeType, Schema } from 'prosemirror-model';
+import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
 import { ComponentType } from 'react';
 
@@ -28,7 +28,6 @@ import {
   GetExtraAttributes,
   ObjectNode,
   RegexTuple,
-  Value,
 } from './base-types';
 import {
   AttributesParameter,
@@ -48,32 +47,30 @@ import {
  * - JSON object matching Prosemirror expected shape
  * - A top level ProsemirrorNode
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
-export type RemirrorContentType<GSchema extends EditorSchema = any> =
+export type RemirrorContentType<Schema extends EditorSchema = any> =
   | string
   | ObjectNode
-  | ProsemirrorNode<GSchema>
-  | EditorState<GSchema>;
+  | ProsemirrorNode<Schema>
+  | EditorState<Schema>;
 
 /**
  * Utility type for matching the name of a node to via a string or function.
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
-export type NodeMatch<GSchema extends EditorSchema = any> =
+export type NodeMatch<Schema extends EditorSchema = any> =
   | string
-  | ((name: string, node: ProsemirrorNode<GSchema>) => boolean)
+  | ((name: string, node: ProsemirrorNode<Schema>) => boolean)
   | RegexTuple;
 
 /**
  * Used to apply the Prosemirror transaction to the current {@link EditorState}.
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
-export type DispatchFunction<GSchema extends EditorSchema = any> = (
-  tr: Transaction<GSchema>,
-) => void;
+export type DispatchFunction<Schema extends EditorSchema = any> = (tr: Transaction<Schema>) => void;
 
 /**
  * This is the type signature for commands within the prosemirror editor.
@@ -87,12 +84,12 @@ export type DispatchFunction<GSchema extends EditorSchema = any> = (
  * When no dispatch callback is passed, the command should do a 'dry run',
  * determining whether it is applicable, but not actually performing any action.
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
-export type ProsemirrorCommandFunction<GSchema extends EditorSchema = any> = (
-  state: EditorState<GSchema>,
-  dispatch: DispatchFunction<GSchema> | undefined,
-  view: EditorView<GSchema> | undefined,
+export type ProsemirrorCommandFunction<Schema extends EditorSchema = any> = (
+  state: EditorState<Schema>,
+  dispatch: DispatchFunction<Schema> | undefined,
+  view: EditorView<Schema> | undefined,
 ) => boolean;
 
 /**
@@ -108,9 +105,9 @@ export type ProsemirrorCommandFunction<GSchema extends EditorSchema = any> = (
  * @see {@link ProsemirrorCommandFunction}
  */
 export type CommandFunction<
-  GSchema extends EditorSchema = any,
+  Schema extends EditorSchema = any,
   ExtraParameter extends object = {}
-> = (params: CommandFunctionParameter<GSchema> & ExtraParameter) => boolean;
+> = (params: CommandFunctionParameter<Schema> & ExtraParameter) => boolean;
 
 /**
  * Chained commands take a transaction and act on it before returning the
@@ -131,11 +128,11 @@ export type ChainedCommandFunction<Schema extends EditorSchema = any> = (
 /**
  * A parameter builder interface for the remirror `CommandFunction`.
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
-export interface CommandFunctionParameter<GSchema extends EditorSchema = any>
-  extends Partial<EditorViewParameter<GSchema>>,
-    EditorStateParameter<GSchema> {
+export interface CommandFunctionParameter<Schema extends EditorSchema = any>
+  extends Partial<EditorViewParameter<Schema>>,
+    EditorStateParameter<Schema> {
   /**
    * The dispatch function which causes the command to be performed.
    *
@@ -145,7 +142,7 @@ export interface CommandFunctionParameter<GSchema extends EditorSchema = any>
    * command should perform a 'dry run', determining whether the command is
    * applicable (`return true`), but not actually performing the action.
    */
-  dispatch?: DispatchFunction<GSchema>;
+  dispatch?: DispatchFunction<Schema>;
 }
 
 export interface NextParameter<Schema extends EditorSchema = any>
@@ -172,16 +169,16 @@ export interface NextParameter<Schema extends EditorSchema = any>
 /**
  * The command function passed to any of the keybindings.
  */
-export type KeyBindingCommandFunction<GSchema extends EditorSchema = any> = CommandFunction<
-  GSchema,
-  NextParameter<GSchema>
+export type KeyBindingCommandFunction<Schema extends EditorSchema = any> = CommandFunction<
+  Schema,
+  NextParameter<Schema>
 >;
 
 /**
  * A map of keyboard bindings and their corresponding command functions (a.k.a
  * editing actions).
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  *
  * @remarks
  *
@@ -196,9 +193,9 @@ export type KeyBindingCommandFunction<GSchema extends EditorSchema = any> = Comm
  * proceeding (lower priority) extension. The act of calling the `next` method
  * will prevent the default flow from executing.
  */
-export type KeyBindings<GSchema extends EditorSchema = any> = Record<
+export type KeyBindings<Schema extends EditorSchema = any> = Record<
   string,
-  KeyBindingCommandFunction<GSchema>
+  KeyBindingCommandFunction<Schema>
 >;
 
 type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string };
@@ -279,7 +276,7 @@ export interface MarkExtensionSpec
 /**
  * Pull an action method out of the extension manager.
  */
-export type ActionGetter = (name: string) => ActionMethod<any[]>;
+export type CommandGetter = (name: string) => CommandMethod<any[]>;
 
 /**
  * Pull a helper method out of the extension manager.
@@ -289,18 +286,18 @@ export type HelperGetter = (name: string) => AnyFunction;
 /**
  * Parameters passed into many of the extension methods.
  */
-export interface ManagerParameter<GSchema extends EditorSchema = EditorSchema>
+export interface ManagerParameter<Schema extends EditorSchema = EditorSchema>
   extends ExtensionTagParameter {
   /**
    * A helper method for retrieving the state of the editor
    */
-  getState: () => EditorState<GSchema>;
+  getState: () => EditorState<Schema>;
 
   /**
    * A helper method to provide access to all the editor actions from within an
    * extension.
    */
-  getActions: ActionGetter;
+  getCommands: CommandGetter;
 
   /**
    * A helper method to provide access to all the helper methods from within an
@@ -311,7 +308,7 @@ export interface ManagerParameter<GSchema extends EditorSchema = EditorSchema>
   /**
    * The Prosemirror schema being used for the current interface
    */
-  schema: GSchema;
+  schema: Schema;
 }
 
 /**
@@ -321,11 +318,11 @@ export interface ManagerParameter<GSchema extends EditorSchema = EditorSchema>
  * - {@link EditorViewParameter}
  * - {@link ManagerParameter}
  *
- * @typeParam GSchema - the underlying editor schema.
+ * @typeParam Schema - the underlying editor schema.
  */
-export interface ViewManagerParameter<GSchema extends EditorSchema = any>
-  extends EditorViewParameter<GSchema>,
-    ManagerParameter<GSchema> {}
+export interface ViewManagerParameter<Schema extends EditorSchema = any>
+  extends EditorViewParameter<Schema>,
+    ManagerParameter<Schema> {}
 
 export type ExtensionCommandFunction = (...args: any[]) => ProsemirrorCommandFunction;
 
@@ -348,7 +345,9 @@ export interface ExtensionHelperReturn {
 /**
  * A utility type used to create the generic prosemirror typescript types.
  */
-type InferredType<GType> = GType extends never ? {} : { type: GType };
+type WithProsemirrorType<ProsemirrorType> = ProsemirrorType extends never
+  ? {}
+  : { type: ProsemirrorType };
 
 /**
  * Generic extension manager type params for methods which require a prosemirror
@@ -356,7 +355,7 @@ type InferredType<GType> = GType extends never ? {} : { type: GType };
  *
  * This is used to generate the specific types for Marks and Nodes.
  */
-export type ManagerTypeParameter<GType> = ManagerParameter & InferredType<GType>;
+export type ManagerTypeParameter<GType> = ManagerParameter & WithProsemirrorType<GType>;
 
 /**
  * The extension manager type params for a prosemirror `NodeType` extension
@@ -368,7 +367,7 @@ export type ManagerNodeTypeParameter = ManagerTypeParameter<NodeType<EditorSchem
  */
 export type ManagerMarkTypeParameter = ManagerTypeParameter<MarkType<EditorSchema>>;
 
-export interface CommandParameter extends ViewManagerParameter {
+export interface CommandParameter extends ViewManagerParameter<EditorSchema> {
   /**
    * Returns true when the editor can be edited and false when it cannot.
    *
@@ -378,9 +377,18 @@ export interface CommandParameter extends ViewManagerParameter {
   isEditable: () => boolean;
 }
 
-export type CreateCommandsParameter<GType = never> = CommandParameter & InferredType<GType>;
+/**
+ * The parameter passed to the commands method.
+ */
+export type CreateCommandsParameter<GType = never> = CommandParameter & WithProsemirrorType<GType>;
 
-export interface ActionMethod<Parameter extends any[] = []> {
+/**
+ * The parameter passed to the helper methods.
+ */
+export type CreateHelpersParameter<GType = never> = ViewManagerParameter<EditorSchema> &
+  WithProsemirrorType<GType>;
+
+export interface CommandMethod<Parameter extends any[] = []> {
   (...args: Parameter): void;
 
   /**
@@ -416,8 +424,8 @@ export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (
 /**
  * The type signature for all actions.
  */
-export interface AnyActions {
-  [action: string]: ActionMethod<any>;
+export interface AnyCommands {
+  [action: string]: CommandMethod<any>;
 }
 
 /**
@@ -450,59 +458,6 @@ export interface SSRComponentProps<
   GOptions extends BaseExtensionSettings = BaseExtensionSettings,
   GAttributes extends Attributes = Attributes
 > extends NodeWithAttributesParameter<GAttributes>, BaseExtensionSettingsParameter<GOptions> {}
-
-/**
- * The tag names that apply to any extension whether plain, node or mark. These
- * are mostly used for nodes and marks the main difference is they are added to
- * the `tags` parameter of the extension rather than within the schema.
- */
-export type GeneralExtensionTags<GNames extends string = string> = Record<Tag, GNames[]> &
-  Record<string, undefined | GNames[]>;
-
-/**
- * Provides the different mark groups which are defined in the mark extension
- * specification.
- */
-export type MarkExtensionTags<GMarks extends string = string> = Record<MarkGroup, GMarks[]> &
-  Record<string, undefined | GMarks[]>;
-
-/**
- * Provides an object of the different node groups `block` and `inline` which
- * are defined in the node extension specification.
- */
-export type NodeExtensionTags<GNodes extends string = string> = Record<NodeGroup, GNodes[]> &
-  Record<string, undefined | GNodes[]>;
-
-/**
- * The shape of the tag data stored by the extension manager.
- *
- * This data can be used by other extensions to dynamically determine which
- * nodes should affected by commands / plugins / keys etc...
- */
-export interface ExtensionTags<
-  GNodes extends string = string,
-  GMarks extends string = string,
-  GPlain extends string = string
-> {
-  node: NodeExtensionTags<GNodes>;
-  mark: MarkExtensionTags<GMarks>;
-  general: GeneralExtensionTags<GPlain | GNodes | GMarks>;
-}
-
-/**
- * An interface with a `tags` parameter useful as a builder for parameter
- * objects.
- */
-export interface ExtensionTagParameter<
-  GNodes extends string = string,
-  GMarks extends string = string,
-  GPlain extends string = string
-> {
-  /**
-   * The tags provided by the configured extensions.
-   */
-  tags: ExtensionTags<GNodes, GMarks, GPlain>;
-}
 
 /**
  * The params object received by the onTransaction handler.

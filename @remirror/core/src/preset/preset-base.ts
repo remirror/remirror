@@ -33,7 +33,7 @@ import { PropertiesShape } from '../types';
 /**
  * The type which is applicable to any `Preset` instances.
  */
-export type AnyPreset<Settings extends object = any> = Preset<any, Settings, any>;
+export type AnyPreset<ExtensionUnion extends AnyExtension = any> = Preset<ExtensionUnion, any, any>;
 
 /**
  * The interface of a preset constructor. This is used to create an instance of

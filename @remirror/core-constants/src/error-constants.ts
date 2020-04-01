@@ -44,4 +44,10 @@ export enum ErrorConstant {
    * constructor.
    */
   INVALID_PRESET_EXTENSION = 'RMR0010',
+
+  /**
+   * Invalid value passed into `Manager constructor`. Only `Presets` and
+   * `Extensions` are supported.
+   */
+  INVALID_MANAGER_ARGUMENTS = 'RMR0011',
 }

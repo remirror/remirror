@@ -23,6 +23,8 @@ if (__DEV__) {
     RMR0005: 'Mutation of immutable value detected.',
     RMR0010:
       'The user requested an invalid extension from the preset. Please check the `createExtensions` return method is returning an extension with the requested constructor.',
+    RMR0011:
+      'Invalid value(s) passed into `Manager` constructor. Only `Presets` and `Extensions` are supported.',
   };
 }
 

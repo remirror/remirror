@@ -154,7 +154,9 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
     };
   }
 
-  public suggestions({ getActions }: ManagerParameter): Suggester<EmojiSuggestCommand> {
+  public suggestions({
+    getCommands: getActions,
+  }: ManagerParameter): Suggester<EmojiSuggestCommand> {
     const {
       suggestionCharacter,
       suggestionKeyBindings,

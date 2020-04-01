@@ -1,6 +1,6 @@
 import { UnionToIntersection } from 'type-fest';
 
-import { ActionMethod, AnyFunction, EditorSchema, StringKey } from '@remirror/core-types';
+import { AnyFunction, CommandMethod, EditorSchema, StringKey } from '@remirror/core-types';
 
 import {
   AnyExtension,
@@ -47,12 +47,6 @@ export type GetName<Type extends { name: string }> = Type['name'];
  */
 export type GetConstructor<Type extends { constructor: unknown }> = Type['constructor'];
 
-/**
- * A utility type for retrieving the name of an extension only when it's a plain
- * extension.
- */
-export type PlainExtensionNames<Type> = Type extends AnyPlainExtension ? GetName<Type> : never;
-
 export interface ExtensionListParameter {
   /**
    * A list of passed extensions
@@ -79,14 +73,14 @@ export interface ExtensionsParameter<ExtensionUnion extends AnyExtension = any> 
  * is store in the `manager.store.actions.commandName()`.
  */
 export type MapCommandToAction<GCommands extends Record<string, AnyFunction>> = {
-  [P in keyof GCommands]: ActionMethod<Parameters<GCommands[P]>>;
+  [P in keyof GCommands]: CommandMethod<Parameters<GCommands[P]>>;
 };
 
 /**
  * Utility type which receives an extension and provides the type of actions it
  * makes available.
  */
-export type ActionsFromExtensions<ExtensionUnion extends AnyExtension> = UnionToIntersection<
+export type CommandsFromExtensions<ExtensionUnion extends AnyExtension> = UnionToIntersection<
   MapCommandToAction<GetCommands<ExtensionUnion>>
 >;
 
@@ -94,7 +88,7 @@ export type ActionsFromExtensions<ExtensionUnion extends AnyExtension> = UnionTo
  * Utility type for pulling all the action names from a list
  */
 export type ActionNames<ExtensionUnion extends AnyExtension> = StringKey<
-  ActionsFromExtensions<ExtensionUnion>
+  CommandsFromExtensions<ExtensionUnion>
 >;
 
 /**
@@ -105,27 +99,33 @@ export type ExtensionFromConstructor<ExtensionConstructor extends { of: AnyFunct
 >;
 
 /**
+ * A utility type for retrieving the name of an extension only when it's a plain
+ * extension.
+ */
+export type GetPlainNames<Type> = Type extends AnyPlainExtension ? GetName<Type> : never;
+
+/**
  * A utility type for retrieving the name of an extension only when it's a mark
  * extension.
  */
-export type MarkNames<ExtensionUnion extends AnyExtension> = ExtensionUnion extends AnyMarkExtension
-  ? ExtensionUnion['name']
-  : never;
+export type GetMarkNames<
+  ExtensionUnion extends AnyExtension
+> = ExtensionUnion extends AnyMarkExtension ? ExtensionUnion['name'] : never;
 
 /**
  * A utility type for retrieving the name of an extension only when it's a node
  * extension.
  */
-export type NodeNames<ExtensionUnion extends AnyExtension> = ExtensionUnion extends AnyNodeExtension
-  ? ExtensionUnion['name']
-  : never;
+export type GetNodeNames<
+  ExtensionUnion extends AnyExtension
+> = ExtensionUnion extends AnyNodeExtension ? ExtensionUnion['name'] : never;
 
 /**
  * Gets the editor schema from an extension union.
  */
 export type SchemaFromExtension<ExtensionUnion extends AnyExtension> = EditorSchema<
-  NodeNames<ExtensionUnion>,
-  MarkNames<ExtensionUnion>
+  GetNodeNames<ExtensionUnion>,
+  GetMarkNames<ExtensionUnion>
 >;
 
 /**

@@ -1,7 +1,6 @@
 export type {
   AnyPreset,
   BasePresetFactoryParameter,
-  ExtensionsParameter,
   Preset,
   PresetConstructor,
   PresetFactoryParameter,

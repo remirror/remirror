@@ -18,16 +18,15 @@ import {
   object,
 } from '@remirror/core-helpers';
 import {
-  ActionMethod,
-  AnyActions,
+  AnyCommands,
   Attributes,
   AttributesWithClass,
+  CommandMethod,
   CommandParameter,
   EditorSchema,
   EditorStateParameter,
   EditorView,
   ExtensionIsActiveFunction,
-  ExtensionTags,
   KeyBindingCommandFunction,
   KeyBindings,
   ManagerParameter,
@@ -48,16 +47,15 @@ import {
 } from '@remirror/core-utils';
 
 import {
-  ActionsFromExtensions,
+  ActionsFromExtensions as CommandsFromExtensions,
   AnyExtension,
   GetCommands,
+  GetConstructor,
   isMarkExtension,
   isNodeExtension,
-  MarkNames,
-  NodeNames,
-  PlainExtensionNames,
   SchemaFromExtension,
 } from '../extension';
+import { AnyPreset } from '../preset';
 import {
   createCommands,
   createExtensionTags,
@@ -67,15 +65,22 @@ import {
   extensionPropertyMapper,
   hasExtensionProperty,
   ignoreFunctions,
-  transformExtensionMap,
+  transformExtensionOrPreset as transformExtensionOrPresetList,
 } from './manager-helpers';
+
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
+
+/**
+ * A type that matches any manager.
+ */
+export type AnyManager = Manager<any, any>;
 
 /**
  * Checks to see whether the provided value is an `Manager`.
  *
  * @param value - the value to check
  */
-export const isManager = (value: unknown): value is Manager =>
+export const isManager = (value: unknown): value is AnyManager =>
   isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
 
 /**
@@ -121,15 +126,18 @@ export const isManager = (value: unknown): value is Manager =>
  * manager.data.actions
  * ```
  */
-export class Manager<ExtensionUnion extends AnyExtension = any> {
+export class Manager<
+  ExtensionUnion extends AnyExtension,
+  PresetUnion extends AnyPreset<ExtensionUnion>
+> {
   /**
    * A static method for creating a manager.
    */
-  public static of<GFlexibleList extends FlexibleExtension[]>(
-    prioritizedExtensions: GFlexibleList,
-  ) {
-    const extensions = transformExtensionMap(prioritizedExtensions);
-    return new Manager<InferFlexibleExtensionList<GFlexibleList>>(extensions);
+  public static of<
+    ExtensionUnion extends AnyExtension,
+    PresetUnion extends AnyPreset<ExtensionUnion>
+  >(...extensionOrPresetList: Array<ExtensionUnion | PresetUnion>) {
+    return new Manager<ExtensionUnion, PresetUnion>(...extensionOrPresetList);
   }
 
   /**
@@ -141,16 +149,25 @@ export class Manager<ExtensionUnion extends AnyExtension = any> {
     return RemirrorIdentifier.Manager;
   }
 
+  #extensions: ExtensionUnion[];
+  #extensionMap: Map<GetConstructor<ExtensionUnion>, ExtensionUnion>;
+
   /**
    * The extensions stored by this manager
    */
-  public readonly extensions: ExtensionUnion[];
+  get extensions(): readonly ExtensionUnion[] {
+    return this.#extensions;
+  }
+
+  #presets: PresetUnion[];
+  #presetMap: Map<GetConstructor<PresetUnion>, PresetUnion>;
 
   /**
-   * Whether or not the manager has been initialized. This happens after init is
-   * called.
+   * The preset stored by this manager
    */
-  #initialized = false;
+  get presets(): readonly PresetUnion[] {
+    return this.#presets;
+  }
 
   /**
    * The extension manager store.
@@ -160,7 +177,7 @@ export class Manager<ExtensionUnion extends AnyExtension = any> {
   /**
    * Retrieve the specified action.
    */
-  private readonly getActions = (name: keyof this['_A']) => this.#store.actions[name];
+  private readonly getActions = (name: keyof this['_C']) => this.#store.actions[name];
 
   /**
    * Creates the extension manager which is used to simplify the management of
@@ -169,16 +186,21 @@ export class Manager<ExtensionUnion extends AnyExtension = any> {
    * This should not be called directly if you want to use prioritized
    * extensions. Instead use `Manager.create`.
    */
-  private constructor(extensions: ExtensionUnion[]) {
-    this.extensions = extensions;
+  private constructor(...extensionOrPresetList: Array<ExtensionUnion | PresetUnion>) {
+    const { extensions, extensionMap, presets, presetMap } = transformExtensionOrPresetList<
+      ExtensionUnion,
+      PresetUnion
+    >(extensionOrPresetList);
+
+    this.#extensions = extensions;
+    this.#extensionMap = extensionMap;
+    this.#presets = presets;
+    this.#presetMap = presetMap;
 
     // Initialize the schema immediately since this doesn't ever change.
     this.#store.schema = this.createSchema();
 
-    // Options are cached here.
-    this.#store.options = this.extensionOptions();
-
-    // Tags are stored here.
+    // The tags in the editor are stored here.
     this.#store.tags = createExtensionTags(this.extensions);
   }
 
@@ -365,7 +387,7 @@ export class Manager<ExtensionUnion extends AnyExtension = any> {
       tags: this.tags,
       schema: this.schema,
       getState: this.getState,
-      getActions: this.getActions,
+      getCommands: this.getActions,
       getHelpers: this.getHelpers,
     };
   }
@@ -543,12 +565,12 @@ export class Manager<ExtensionUnion extends AnyExtension = any> {
    * - `isActive` defaults to a function returning false
    * - `isEnabled` defaults to a function returning true
    */
-  private actions(parameters: CommandParameter): this['_A'] {
+  private actions(parameters: CommandParameter): this['_C'] {
     // Will throw if not initialized
     this.checkInitialized();
 
     const extensions = this.extensions;
-    const actions: AnyActions = object();
+    const actions: AnyCommands = object();
 
     // Creates the methods that take in attrs and dispatch an action into the
     // editor
@@ -557,12 +579,12 @@ export class Manager<ExtensionUnion extends AnyExtension = any> {
     Object.entries(commands).forEach(([commandName, { command, isEnabled, name }]) => {
       const isActive = this.#store.isActive[name as this['_Names']] ?? defaultIsActive;
 
-      actions[commandName] = command as ActionMethod;
+      actions[commandName] = command as CommandMethod;
       actions[commandName].isActive = (attributes: Attributes) => isActive({ attrs: attributes });
       actions[commandName].isEnabled = isEnabled ?? defaultIsEnabled;
     });
 
-    return actions as this['_A'];
+    return actions as this['_C'];
   }
 
   private helpers(): this['_H'] {
@@ -741,67 +763,10 @@ export class Manager<ExtensionUnion extends AnyExtension = any> {
     if (!this.initialized) {
       return;
     }
-
-    this.#initialized = false;
   }
 
   /**
-   * `Extensions`
-   *
-   * Type inference hack for the extensions union of an extension manager. This
-   * is the only way I know to store types on a class.
-   *
-   * @internal
-   * INTERNAL USE ONLY
-   */
-  public readonly _E!: ExtensionUnion;
-
-  /**
-   * `NodeNames`
-   *
-   * Type inference hack for node extension names. This is the only way I know
-   * to store types on a class.
-   *
-   * @internal
-   * INTERNAL USE ONLY
-   */
-  public readonly _N!: NodeNames<ExtensionUnion>;
-
-  /**
-   * `MarkNames`
-   *
-   * Type inference hack for mark extension names. This is the only way I know
-   * to store types on a class.
-   *
-   * @internal
-   * INTERNAL USE ONLY
-   */
-  public readonly _M!: MarkNames<ExtensionUnion>;
-
-  /**
-   * `PlainNames`
-   *
-   * Type inference hack for plain extension names. This is the only way I know
-   * to store types on a class.
-   *
-   * @internal
-   * INTERNAL USE ONLY
-   */
-  public readonly _P!: PlainExtensionNames<ExtensionUnion>;
-
-  /**
-   * `AllNames`
-   *
-   * Type inference hack for all extension names. This is the only way I know to
-   * store types on a class.
-   *
-   * @internal
-   * INTERNAL USE ONLY
-   */
-  public readonly _Names!: this['_P'] | this['_N'] | this['_M'];
-
-  /**
-   * `Actions`
+   * `Commands`
    *
    * Type inference hack for all the actions this manager provides. This is the
    * only way I know to store types on a class.
@@ -809,25 +774,17 @@ export class Manager<ExtensionUnion extends AnyExtension = any> {
    * @internal
    * INTERNAL USE ONLY
    */
-  public readonly _A!: ActionsFromExtensions<ExtensionUnion>;
-
-  /**
-   * `ExtensionData`
-   *
-   * Type inference hack for all the extensionData that this manager provides.
-   * Also provides a shorthand way for accessing types on a class.
-   *
-   * @internal
-   * INTERNAL USE ONLY
-   */
-  public readonly _D!: ManagerStore<this['_A'], this['_N'], this['_M'], this['_P']>;
+  public readonly _C!: CommandsFromExtensions<ExtensionUnion>;
 }
 
-export interface ManagerParams<ExtensionUnion extends AnyExtension = any> {
+export interface ManagerParams<
+  ExtensionUnion extends AnyExtension = any,
+  PresetUnion extends AnyPreset<ExtensionUnion> = any
+> {
   /**
    * The extension manager
    */
-  manager: Manager<ExtensionUnion>;
+  manager: Manager<ExtensionUnion, PresetUnion>;
 }
 
 /**
@@ -837,14 +794,6 @@ export interface ManagerStore<ExtensionUnion extends AnyExtension = any>
   extends GlobalManagerStore<ExtensionUnion> {}
 
 export interface OnTransactionManagerParams extends TransactionParameter, EditorStateParameter {}
-
-declare global {
-  /**
-   * Extension using the lifecycle hooks can store data on the extension manager
-   * cache. This can either be through mutating an already stored value
-   */
-  interface GlobalManagerCache {}
-}
 
 declare global {
   /**
@@ -891,3 +840,5 @@ declare global {
    */
   interface ManagerInitializationParams<ExtensionUnion extends AnyExtension = any> {}
 }
+
+/* eslint-enable @typescript-eslint/explicit-member-accessibility */

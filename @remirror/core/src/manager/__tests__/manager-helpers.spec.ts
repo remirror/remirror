@@ -1,7 +1,7 @@
 import { TestExtension } from '@remirror/test-fixtures';
 
 import { DocExtension, TextExtension } from '../../nodes';
-import { transformExtensionMap } from '../manager-helpers';
+import { transformExtensionOrPreset } from '../manager-helpers';
 
 describe('transformExtensionMap', () => {
   it('maps the extensions', () => {
@@ -14,7 +14,7 @@ describe('transformExtensionMap', () => {
       { extension: text, priority: 2 },
     ];
 
-    expect(transformExtensionMap(extensions)).toEqual([doc, test, text]);
+    expect(transformExtensionOrPreset(extensions)).toEqual([doc, test, text]);
   });
 
   it('sorts the extensions by priority', () => {
@@ -27,7 +27,7 @@ describe('transformExtensionMap', () => {
       { extension: text, priority: -1 },
     ];
 
-    expect(transformExtensionMap(extensions)).toEqual([text, doc, test]);
+    expect(transformExtensionOrPreset(extensions)).toEqual([text, doc, test]);
   });
 
   it('can sort with default priority', () => {
@@ -36,6 +36,6 @@ describe('transformExtensionMap', () => {
     const text = TextExtension.of();
     const extensions = [{ extension: doc, priority: 1 }, test, { extension: text, priority: -1 }];
 
-    expect(transformExtensionMap(extensions)).toEqual([text, doc, test]);
+    expect(transformExtensionOrPreset(extensions)).toEqual([text, doc, test]);
   });
 });

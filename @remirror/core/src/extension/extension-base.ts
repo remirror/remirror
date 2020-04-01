@@ -30,6 +30,7 @@ import {
   BaseExtensionSettings,
   CreateCommandsParameter,
   CreateExtraAttributes,
+  CreateHelpersParameter,
   CreateSchemaParameter,
   EditorSchema,
   ExtensionCommandReturn,
@@ -639,7 +640,7 @@ export interface BaseExtensionFactoryParameter<
    *
    * @alpha
    */
-  attributes?: (params: ManagerParameter) => AttributesWithClass;
+  attributes?: (parameter: ManagerParameter) => AttributesWithClass;
 
   /**
    * Create and register commands for that can be called within the editor.
@@ -675,9 +676,49 @@ export interface BaseExtensionFactoryParameter<
    * Another benefit of commands is that they are picked up by typescript and
    * can provide code completion for consumers of the extension.
    *
-   * @param params - schema params with type included
+   * @param parameter - schema parameter with type included
    */
-  createCommands?: (params: CreateCommandsParameter<ProsemirrorType>) => Commands;
+  createCommands?: (parameter: CreateCommandsParameter<ProsemirrorType>) => Commands;
+
+  /**
+   * A helper method is a function that takes in arguments and returns
+   * a value depicting the state of the editor specific to this extension.
+   *
+   * @remarks
+   *
+   * Unlike commands they can return anything and they do not effect the
+   * behaviour of the editor.
+   *
+   * Nodes and Marks provide the default `isActive` helper by default.
+   *
+   * Below is an example which should provide some idea on how to add helpers to the app.
+   *
+   * ```tsx
+   * // extension.ts
+   * import { ExtensionFactory } from '@remirror/core';
+   *
+   * const MyBeautifulExtension = ExtensionFactory.plain({
+   *   name: 'beautiful',
+   *   createHelpers: () => ({
+   *     checkBeautyLevel: () => 100
+   *   }),
+   * })
+   * ```
+   *
+   * ```
+   * // app.tsx
+   * import { useRemirror } from '@remirror/react';
+   *
+   * export const MyEditor = () => {
+   *   const { helpers } = useRemirror();
+   *
+   *   return helpers.beautiful.checkBeautyLevel() > 50
+   *     ? (<span>😍</span>)
+   *     : (<span>😢</span>);
+   * };
+   * ```
+   */
+  createHelpers?: (parameter: CreateHelpersParameter<ProsemirrorType>) => Helpers;
 
   /**
    * Each extension can make extension data available which is updated on each
@@ -686,30 +727,30 @@ export interface BaseExtensionFactoryParameter<
    * Within React this data is passed back into Remirror render prop and also
    * the Remirror context and can be retrieved with a `hook` or `HOC`
    */
-  extensionData?: (params: ManagerTypeParameter<ProsemirrorType>) => PlainObject;
+  extensionData?: (parameter: ManagerTypeParameter<ProsemirrorType>) => PlainObject;
 
   /**
    * Register input rules which are activated if the regex matches as a user is
    * typing.
    *
-   * @param params - schema params with type included
+   * @param parameter - schema parameter with type included
    */
-  inputRules?: (params: ManagerTypeParameter<ProsemirrorType>) => InputRule[];
+  inputRules?: (parameter: ManagerTypeParameter<ProsemirrorType>) => InputRule[];
 
   /**
    * Determines whether this extension is currently active (only applies to Node
    * Extensions and Mark Extensions).
    *
-   * @param params - extension manager params
+   * @param parameter - extension manager parameter
    */
-  isActive?: (params: ManagerParameter) => ExtensionIsActiveFunction;
+  isActive?: (parameter: ManagerParameter) => ExtensionIsActiveFunction;
 
   /**
    * Add key bindings for this extension.
    *
-   * @param params - schema params with type included
+   * @param parameter - schema parameter with type included
    */
-  keys?: (params: ManagerTypeParameter<ProsemirrorType>) => KeyBindings;
+  keys?: (parameter: ManagerTypeParameter<ProsemirrorType>) => KeyBindings;
 
   /**
    * Registers a node view for the extension.
@@ -721,27 +762,27 @@ export interface BaseExtensionFactoryParameter<
    * To register more than one you would need to use a custom plugin returned
    * from the `plugin` method.
    *
-   * @param params - schema params with type included
+   * @param parameter - schema parameter with type included
    *
    * @alpha
    */
-  nodeView?: (params: ManagerTypeParameter<ProsemirrorType>) => NodeViewMethod;
+  nodeView?: (parameter: ManagerTypeParameter<ProsemirrorType>) => NodeViewMethod;
 
   /**
    * Register paste rules for this extension.
    *
    * Paste rules are activated when text is pasted into the editor.
    *
-   * @param params - schema params with type included
+   * @param parameter - schema parameter with type included
    */
-  pasteRules?: (params: ManagerTypeParameter<ProsemirrorType>) => ProsemirrorPlugin[];
+  pasteRules?: (parameter: ManagerTypeParameter<ProsemirrorType>) => ProsemirrorPlugin[];
 
   /**
    * Register a plugin for the extension.
    *
-   * @param params - schema params with type included
+   * @param parameter - schema parameter with type included
    */
-  plugin?: (params: ManagerTypeParameter<ProsemirrorType>) => ProsemirrorPlugin;
+  plugin?: (parameter: ManagerTypeParameter<ProsemirrorType>) => ProsemirrorPlugin;
 
   /**
    * An extension can declare the extensions it requires with the default
@@ -769,21 +810,21 @@ export interface BaseExtensionFactoryParameter<
    * by the styles. This method can be called to check if there is only one
    * child of the parent
    */
-  ssrTransformer?: (element: JSX.Element, params: ManagerParameter) => JSX.Element;
+  ssrTransformer?: (element: JSX.Element, parameter: ManagerParameter) => JSX.Element;
 
   /**
    * Allows extensions to register styles on the editor instance using emotion
    * for dynamic styling.
    *
-   * @param params - extension manager parameters
+   * @param parameter - extension manager parameters
    */
-  styles?: (params: ManagerParameter) => Interpolation;
+  styles?: (parameter: ManagerParameter) => Interpolation;
 
   /**
    * Create suggestions which respond to character key combinations within the
    * editor instance.
    */
-  suggestions?: (params: ManagerTypeParameter<ProsemirrorType>) => Suggester[] | Suggester;
+  suggestions?: (parameter: ManagerTypeParameter<ProsemirrorType>) => Suggester[] | Suggester;
 }
 
 export interface ExtensionEventMethods {
@@ -810,7 +851,7 @@ export interface ExtensionEventMethods {
    * Changes to the transaction at this point have no impact at all. It is
    * purely for observational reasons
    */
-  onTransaction?: (params: OnTransactionParameter) => void;
+  onTransaction?: (parameter: OnTransactionParameter) => void;
 
   /**
    * Happens after the state is first updated.
@@ -939,7 +980,7 @@ export abstract class MarkExtension<
    * Performs a default check to see whether the mark is active at the current
    * selection.
    *
-   * @param params - see
+   * @param parameter - see
    * {@link @remirror/core-types#ManagerMarkTypeParameter}
    */
   public isActive({ getState, type }: ManagerMarkTypeParameter): ExtensionIsActiveFunction {
@@ -968,7 +1009,7 @@ export type MarkExtensionFactoryParameter<
    * Provide a method for creating the schema. This is required in order to
    * create a `MarkExtension`.
    */
-  createMarkSchema(params: CreateSchemaParameter<Settings>): MarkExtensionSpec;
+  createMarkSchema(parameter: CreateSchemaParameter<Settings>): MarkExtensionSpec;
 };
 
 /**
@@ -1093,7 +1134,7 @@ export type NodeExtensionFactoryParameter<
    * more about it is in the
    * {@link https://prosemirror.net/docs/guide/#schema docs}.
    */
-  createNodeSchema(params: CreateSchemaParameter<Settings>): NodeExtensionSpec;
+  createNodeSchema(parameter: CreateSchemaParameter<Settings>): NodeExtensionSpec;
 };
 
 /**
