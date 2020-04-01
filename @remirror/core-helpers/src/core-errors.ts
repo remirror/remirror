@@ -19,6 +19,8 @@ if (__DEV__) {
     RMR0001: "An error happened but we're not quite sure why.",
     RMR0002: 'You can only pass `extraAttributes` to a node extension or a mark extension.',
     RMR0003: 'This is a custom error, possibly thrown by an external library.',
+    RMR0004: 'An error occurred in a function called from the `@remirror/core-helpers` library.',
+    RMR0005: 'Mutation of immutable value detected.',
     RMR0010:
       'The user requested an invalid extension from the preset. Please check the `createExtensions` return method is returning an extension with the requested constructor.',
   };

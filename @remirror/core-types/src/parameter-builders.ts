@@ -290,3 +290,18 @@ export interface RegExpParameter {
    */
   regexp: RegExp;
 }
+
+/**
+ * Shows the previous and next value.
+ */
+export interface PreviousNextParameter<Type> {
+  /**
+   * The previous value.
+   */
+  previous: Type;
+
+  /**
+   * The next value.
+   */
+  next: Type;
+}

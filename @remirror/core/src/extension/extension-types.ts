@@ -67,6 +67,13 @@ export interface ExtensionParameter<ExtensionUnion extends AnyExtension = any> {
   extension: ExtensionUnion;
 }
 
+export interface ExtensionsParameter<ExtensionUnion extends AnyExtension = any> {
+  /**
+   * The extensions property.
+   */
+  readonly extensions: readonly ExtensionUnion[];
+}
+
 /**
  * A utility type which maps the passed in extension command in an action that
  * is store in the `manager.store.actions.commandName()`.
@@ -120,3 +127,18 @@ export type SchemaFromExtension<ExtensionUnion extends AnyExtension> = EditorSch
   NodeNames<ExtensionUnion>,
   MarkNames<ExtensionUnion>
 >;
+
+/**
+ * Provides a method for retrieving an extension from an extension holder.
+ */
+export interface GetExtensionParameter<ExtensionUnion extends AnyExtension> {
+  /**
+   * Get and extension from the extension holder (either a preset or a manager)
+   * that corresponds to the provided `Constructor`.
+   *
+   * @param Constructor - the extension constructor to find in the editor.
+   */
+  getExtension: <ExtensionConstructor extends GetConstructor<ExtensionUnion>>(
+    Constructor: ExtensionConstructor,
+  ) => ExtensionFromConstructor<ExtensionConstructor>;
+}

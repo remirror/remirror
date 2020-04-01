@@ -123,7 +123,7 @@ export const isManager = (value: unknown): value is Manager =>
  */
 export class Manager<ExtensionUnion extends AnyExtension = any> {
   /**
-   * A static method for creating a new extension manager.
+   * A static method for creating a manager.
    */
   public static of<GFlexibleList extends FlexibleExtension[]>(
     prioritizedExtensions: GFlexibleList,

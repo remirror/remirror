@@ -57,6 +57,8 @@ import {
 } from '@remirror/core-types';
 import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
+import { PropertiesShape } from '../types';
+
 /**
  * The type which is applicable to any extension instance.
  *
@@ -298,7 +300,7 @@ export abstract class Extension<
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {},
   ProsemirrorType = never
-> {
+> implements PropertiesShape<Properties> {
   /**
    * An internal property which helps identify this instance as a
    * `RemirrorExtension`.
@@ -531,14 +533,14 @@ export type DefaultSettingsType<Settings extends BaseExtensionSettings> = Omit<
 
 interface DefaultPropertiesParameter<Properties extends object = {}> {
   /**
-   * Properties are dynamic and generated at run time. For this reason you will need
-   * to provide a default value for every prop this extension uses.
+   * Properties are dynamic and generated at run time. For this reason you will
+   * need to provide a default value for every prop this extension uses.
    *
    * @remarks
    *
-   * Properties are dynamically assigned options that are injected into the editor at
-   * runtime. Every single prop that the extension will use needs to have a
-   * default value set.
+   * Properties are dynamically assigned options that are injected into the
+   * editor at runtime. Every single property that the extension will use needs
+   * to have a default value set.
    *
    * This must be set when creating the extension, even if just to the empty
    * object when no properties are used at runtime.

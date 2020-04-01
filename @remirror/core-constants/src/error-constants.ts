@@ -28,6 +28,17 @@ export enum ErrorConstant {
   CUSTOM = 'RMR0003',
 
   /**
+   * An error occurred in a function called from the `@remirror/core-helpers`
+   * library.
+   */
+  CORE_HELPERS = 'RMR0004',
+
+  /**
+   * You have attempted to change a value that shouldn't be changed.
+   */
+  MUTATION = 'RMR0005',
+
+  /**
    * The user requested an invalid extension from the preset. Please check the
    * `createExtensions` return method is returning an extension with the defined
    * constructor.
