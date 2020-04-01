@@ -1,6 +1,6 @@
 import { RefractorSyntax } from 'refractor/core';
 
-import { Attributes, BaseExtensionSettings } from '@remirror/core';
+import { BaseExtensionSettings, ProsemirrorAttributes } from '@remirror/core';
 
 import { SyntaxTheme } from './themes';
 
@@ -121,7 +121,7 @@ export interface FormattedContent {
   cursorOffset: number;
 }
 
-export interface CodeBlockAttributes extends Attributes {
+export interface CodeBlockAttributes extends ProsemirrorAttributes {
   /**
    * The language attribute
    */

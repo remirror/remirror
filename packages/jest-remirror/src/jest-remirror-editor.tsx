@@ -13,7 +13,6 @@ import {
 import React from 'react';
 
 import {
-  Attributes,
   Cast,
   convertToPrioritizedExtension,
   Extension,
@@ -25,6 +24,7 @@ import {
   NodeExtension,
   object,
   pick,
+  ProsemirrorAttributes,
 } from '@remirror/core';
 import { InjectedRemirrorProps, RemirrorProps, RenderEditor } from '@remirror/react';
 
@@ -220,7 +220,7 @@ export const renderEditor = <
 
   const nodesWithAttributes: NodeWithAttributes<GAttrNodeNames> = object();
   attributeNodes.filter(isNodeExtension).forEach(({ name }) => {
-    nodesWithAttributes[name as GAttrNodeNames] = (attributes: Attributes = object()) =>
+    nodesWithAttributes[name as GAttrNodeNames] = (attributes: ProsemirrorAttributes = object()) =>
       nodeFactory({ name, schema, attributes: attributes });
   });
 
@@ -233,7 +233,7 @@ export const renderEditor = <
 
   const marksWithAttributes: MarkWithAttributes<GAttrMarkNames> = object();
   attributeMarks.filter(isMarkExtension).forEach(({ name }) => {
-    marksWithAttributes[name as GAttrMarkNames] = (attributes: Attributes = object()) =>
+    marksWithAttributes[name as GAttrMarkNames] = (attributes: ProsemirrorAttributes = object()) =>
       markFactory({ name, schema, attributes: attributes });
   });
 

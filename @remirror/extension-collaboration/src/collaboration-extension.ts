@@ -2,7 +2,7 @@ import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirr
 import { Step } from 'prosemirror-transform';
 
 import {
-  Attributes,
+  ProsemirrorAttributes,
   CommandParameter,
   debounce,
   EditorState,
@@ -22,7 +22,7 @@ import { CollaborationAttributes, CollaborationExtensionOptions } from './collab
  * command method.
  */
 const isValidCollaborationAttributes = (
-  attributes: Attributes,
+  attributes: ProsemirrorAttributes,
 ): attrs is CollaborationAttributes => {
   return !(!attributes || !isArray(attributes.steps) || !isNumber(attributes.version));
 };

@@ -18,23 +18,18 @@ import {
   object,
 } from '@remirror/core-helpers';
 import {
-  AnyCommands,
-  Attributes,
   AttributesWithClass,
-  CommandMethod,
-  CommandParameter,
   EditorSchema,
   EditorStateParameter,
   EditorView,
-  ExtensionIsActiveFunction,
   KeyBindingCommandFunction,
   KeyBindings,
-  ManagerParameter,
   MarkExtensionSpec,
   NodeExtensionSpec,
   NodeViewMethod,
   PlainObject,
   PluginKey,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   ProsemirrorPlugin,
   TransactionParameter,
@@ -51,6 +46,8 @@ import {
   AnyExtension,
   GetCommands,
   GetConstructor,
+  GetMarkNames,
+  GetNodeNames,
   isMarkExtension,
   isNodeExtension,
   SchemaFromExtension,
@@ -174,10 +171,8 @@ export class Manager<
    */
   #store: ManagerStore<ExtensionUnion> = object();
 
-  /**
-   * Retrieve the specified action.
-   */
-  private readonly getActions = (name: keyof this['_C']) => this.#store.actions[name];
+  #nodes: Record<GetNodeNames<ExtensionUnion>, NodeExtensionSpec> = object();
+  #marks: Record<GetMarkNames<ExtensionUnion>, MarkExtensionSpec> = object();
 
   /**
    * Creates the extension manager which is used to simplify the management of
@@ -197,6 +192,19 @@ export class Manager<
     this.#presets = presets;
     this.#presetMap = presetMap;
 
+    for (const extension of this.#extensions) {
+      if (isNodeExtension(extension)) {
+        const { name, schema } = extension;
+        this.#nodes[name as GetNodeNames<ExtensionUnion>] = schema;
+      }
+
+      if (isMarkExtension(extension)) {
+        const { name, schema } = extension;
+
+        this.#marks[name as GetMarkNames<ExtensionUnion>] = schema;
+      }
+    }
+
     // Initialize the schema immediately since this doesn't ever change.
     this.#store.schema = this.createSchema();
 
@@ -210,14 +218,6 @@ export class Manager<
    * This is called by the view layer and provides
    */
   public initialize() {
-    if (this.#initialized) {
-      // Destroy the currently running instance of the extension manager and all
-      // the extensions.
-      this.destroy();
-    }
-
-    this.#initialized = true;
-
     this.#store.extensionPlugins = this.plugins();
     this.#store.keymaps = this.keymaps();
     this.#store.inputRules = this.inputRules();
@@ -232,7 +232,7 @@ export class Manager<
       ...this.#store.keymaps,
     ];
 
-    this.#store = this.helpers();
+    this.#store.helpers = this.helpers();
 
     return this;
   }
@@ -244,7 +244,7 @@ export class Manager<
    */
   public initView(view: EditorView<SchemaFromExtension<ExtensionUnion>>) {
     this.#store.view = view;
-    this.#store.actions = this.actions({
+    this.#store.actions = this.createCommands({
       ...this.params,
       view,
       isEditable: () =>
@@ -311,47 +311,21 @@ export class Manager<
    * Get the extension manager store which is accessible at initialization.
    */
   get store() {
-    if (!this.#initialized) {
-      throw new Error('Extension Manager must be initialized before attempting to access the data');
-    }
-
     return this.#store;
   }
 
-  get options() {
-    return this.#store.options;
-  }
-
   /**
-   * Filters through all provided extensions and picks the nodes
+   * Returns the stored nodes
    */
   get nodes() {
-    const nodes: Record<this['_N'], NodeExtensionSpec> = object();
-
-    for (const extension of this.extensions) {
-      if (isNodeExtension(extension)) {
-        const { name, #schema: schema } = extension;
-        nodes[name as this['_N']] = schema;
-      }
-    }
-
-    return nodes;
+    return this.#nodes;
   }
 
   /**
-   * Filters through all provided extensions and picks the marks
+   * Returns the store marks.
    */
   get marks() {
-    const marks: Record<this['_M'], MarkExtensionSpec> = object();
-
-    for (const extension of this.extensions) {
-      if (isMarkExtension(extension)) {
-        const { name, schema } = extension;
-        marks[name as this['_M']] = schema;
-      }
-    }
-
-    return marks;
+    return this.#marks;
   }
 
   /**
@@ -387,7 +361,7 @@ export class Manager<
       tags: this.tags,
       schema: this.schema,
       getState: this.getState,
-      getCommands: this.getActions,
+      commands: this.commands,
       getHelpers: this.getHelpers,
     };
   }
@@ -538,7 +512,7 @@ export class Manager<
    *
    * This is called as soon as the Manager is created.
    */
-  private createSchema(): EditorSchema<this['_N'], this['_M']> {
+  private createSchema(): EditorSchema<GetNodeNames<ExtensionUnion>, GetMarkNames<ExtensionUnion>> {
     return new Schema({ nodes: this.nodes, marks: this.marks });
   }
 
@@ -565,7 +539,7 @@ export class Manager<
    * - `isActive` defaults to a function returning false
    * - `isEnabled` defaults to a function returning true
    */
-  private actions(parameters: CommandParameter): this['_C'] {
+  private createCommands(parameters: CommandParameter): this['_C'] {
     // Will throw if not initialized
     this.checkInitialized();
 
@@ -580,14 +554,15 @@ export class Manager<
       const isActive = this.#store.isActive[name as this['_Names']] ?? defaultIsActive;
 
       actions[commandName] = command as CommandMethod;
-      actions[commandName].isActive = (attributes: Attributes) => isActive({ attrs: attributes });
+      actions[commandName].isActive = (attributes: ProsemirrorAttributes) =>
+        isActive({ attrs: attributes });
       actions[commandName].isEnabled = isEnabled ?? defaultIsEnabled;
     });
 
     return actions as this['_C'];
   }
 
-  private helpers(): this['_H'] {
+  private createHelpers(): this['_H'] {
     const helpers = object<PlainObject>();
     const methods = createHelpers({ extensions: this.extensions, params: this.params });
 
@@ -831,7 +806,7 @@ declare global {
      */
     commands: GetCommands<ExtensionUnion>;
     view: EditorView<SchemaFromExtension<ExtensionUnion>>;
-    tags: ExtensionTags<GNodes, GMarks, GPlain>;
+    tags: ExtensionTags<ExtensionUnion>;
   }
 
   /**

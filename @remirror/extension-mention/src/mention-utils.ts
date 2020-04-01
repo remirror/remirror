@@ -1,6 +1,6 @@
 import { DEFAULT_SUGGESTER } from 'prosemirror-suggest';
 
-import { Attributes, bool, isPlainObject, isString, pick } from '@remirror/core';
+import { bool, isPlainObject, isString, pick, ProsemirrorAttributes } from '@remirror/core';
 
 import { MentionExtensionAttributes, MentionExtensionMatcher } from './mention-types';
 
@@ -26,7 +26,7 @@ export const DEFAULT_MATCHER = {
  * command method.
  */
 export const isValidMentionAttributes = (
-  attributes: Attributes,
+  attributes: ProsemirrorAttributes,
 ): attrs is MentionExtensionAttributes =>
   bool(attributes && isPlainObject(attributes) && attributes.id && attributes.label);
 

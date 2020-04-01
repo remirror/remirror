@@ -4,10 +4,16 @@ export type {
   AnyMarkExtension,
   AnyNodeExtension,
   AnyPlainExtension,
+  BaseExtensionFactoryParameter,
   DefaultSettingsType,
   Extension,
   ExtensionEventMethods,
   ExtensionFactoryParameter,
+  ExtensionTagParameter,
+  ExtensionTags,
+  GetMarkNames,
+  GetNodeNames,
+  GetPlainNames,
   MarkExtension,
   MarkExtensionConstructor,
   MarkExtensionFactoryParameter,
@@ -15,7 +21,9 @@ export type {
   NodeExtensionConstructor,
   NodeExtensionFactoryParameter,
   PlainExtensionConstructor,
+  SchemaFromExtension,
 } from './extension-base';
+
 export { isExtension, isMarkExtension, isNodeExtension, isPlainExtension } from './extension-base';
 export { ExtensionFactory, isExtensionConstructor } from './extension-factory';
 export type {
@@ -25,16 +33,6 @@ export type {
   ExtensionListParameter,
   ExtensionParameter,
   ExtensionsParameter,
-  GetCommands,
-  GetConstructor,
   GetExtensionParameter,
-  GetHelpers,
-  GetName,
-  GetProperties,
-  GetSettings,
   MapCommandToAction,
-  GetMarkNames,
-  GetNodeNames,
-  GetPlainNames,
-  SchemaFromExtension,
 } from './extension-types';

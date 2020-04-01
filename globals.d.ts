@@ -4,12 +4,6 @@
 declare const __E2E__: boolean;
 
 /**
- * A constant injected by the build process which is true when this is a
- * development build.
- */
-declare const __DEV__: boolean;
-
-/**
  * A constant injected by jest to identify when this is a test run.
  */
 declare const __TEST__: boolean;

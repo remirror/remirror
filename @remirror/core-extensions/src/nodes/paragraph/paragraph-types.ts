@@ -1,4 +1,4 @@
-import { Attributes, NodeExtensionConfig } from '@remirror/core';
+import { NodeExtensionConfig, ProsemirrorAttributes } from '@remirror/core';
 
 export interface ParagraphExtensionOptions extends NodeExtensionConfig {
   /**
@@ -22,7 +22,7 @@ export type IndentLevels = [number, number];
  */
 export type TextAlignment = 'left' | 'right' | 'center' | 'justify';
 
-export type ParagraphExtensionAttributes = Attributes<{
+export type ParagraphExtensionAttributes = ProsemirrorAttributes<{
   /**
    * The alignment of the text
    */

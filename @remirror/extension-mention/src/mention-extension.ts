@@ -9,7 +9,7 @@ import {
 } from 'prosemirror-suggest';
 
 import {
-  Attributes,
+  ProsemirrorAttributes,
   CommandMarkTypeParams,
   EditorState,
   getMarkRange,
@@ -136,7 +136,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     type: MarkType,
     getState: () => EditorState,
     shouldUpdate = false,
-  ) => (config?: Attributes) => {
+  ) => (config?: ProsemirrorAttributes) => {
     if (!isValidMentionAttributes(config)) {
       throw new Error('Invalid configuration attributes passed to the MentionExtension command.');
     }

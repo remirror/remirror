@@ -1,7 +1,7 @@
 import { Step } from 'prosemirror-transform';
 
 import {
-  Attributes,
+  ProsemirrorAttributes,
   BaseExtensionSettings,
   EditorSchema,
   PlainObject,
@@ -63,7 +63,7 @@ export interface CollaborationExtensionOptions extends BaseExtensionSettings {
   onSendableReceived(params: OnSendableReceivedParams): void;
 }
 
-export type CollaborationAttributes = Attributes<{
+export type CollaborationAttributes = ProsemirrorAttributes<{
   /**
    * @internalremarks
    * TODO give this some better types

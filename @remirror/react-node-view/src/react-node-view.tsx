@@ -6,7 +6,7 @@ import { ComponentType } from 'react';
 import { EDITOR_CLASS_NAME, SELECTED_NODE_CLASS_NAME } from '@remirror/core-constants';
 import { isFunction, isPlainObject, isString, keys } from '@remirror/core-helpers';
 import {
-  Attributes,
+  ProsemirrorAttributes,
   BaseExtensionSettings,
   Decoration,
   EditorView,
@@ -26,7 +26,7 @@ import {
 
 export class ReactNodeView<
   GOptions extends BaseExtensionSettings = BaseExtensionSettings,
-  GAttributes extends Attributes = Attributes
+  GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
 > implements NodeView {
   /**
    * The outer element exposed to the editor.
@@ -292,7 +292,7 @@ export class ReactNodeView<
    */
   public static createNodeView<
     GOptions extends BaseExtensionSettings = BaseExtensionSettings,
-    GAttributes extends Attributes = Attributes
+    GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
   >({ Component, portalContainer, config: options }: CreateNodeViewParams<GOptions, GAttributes>) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
       new ReactNodeView<GOptions, GAttributes>({

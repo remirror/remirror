@@ -1,11 +1,11 @@
 import { bool, isFunction } from '@remirror/core-helpers';
 import {
-  Attributes,
   MarkTypeParameter,
   NodeTypeParameter,
   OptionalProsemirrorNodeParameter,
   PosParameter,
   PredicateParameter,
+  ProsemirrorAttributes,
   ProsemirrorNode,
   ProsemirrorNodeParameter,
 } from '@remirror/core-types';
@@ -121,7 +121,7 @@ interface FindChildrenByAttrParams extends FlattenParams {
   /**
    * Runs a predicate check after receiving the attrs for the found node.
    */
-  predicate(attrs: Attributes): boolean;
+  predicate(attrs: ProsemirrorAttributes): boolean;
 }
 
 /**

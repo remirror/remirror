@@ -39,6 +39,16 @@ export enum ErrorConstant {
   MUTATION = 'RMR0005',
 
   /**
+   * This is an error which should not occur and is internal to the remirror codebase.
+   */
+  INTERNAL = 'RMR0006',
+
+  /**
+   * You're editor is missing a required extension.
+   */
+  MISSING_REQUIRED_EXTENSION = 'RMR007',
+
+  /**
    * The user requested an invalid extension from the preset. Please check the
    * `createExtensions` return method is returning an extension with the defined
    * constructor.
@@ -50,4 +60,11 @@ export enum ErrorConstant {
    * `Extensions` are supported.
    */
   INVALID_MANAGER_ARGUMENTS = 'RMR0011',
+
+  /**
+   * The commands method which is passed into the `createCommands` function
+   * should only be called within the created command function otherwise it will
+   * not have access to the other commands.
+   */
+  COMMANDS_CALLED_IN_OUTER_SCOPE = 'RMR0012',
 }

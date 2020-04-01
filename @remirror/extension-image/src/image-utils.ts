@@ -1,4 +1,4 @@
-import { Attributes } from '@remirror/core';
+import { ProsemirrorAttributes } from '@remirror/core';
 import { CSS_ROTATE_PATTERN, EMPTY_CSS_VALUE } from '@remirror/core-extensions';
 
 import { IMAGE_FILE_TYPES } from './image-constants';
@@ -10,7 +10,7 @@ export const isImageFileType = (file: File) => {
   return IMAGE_FILE_TYPES.has(file.type);
 };
 
-export const getAttributes = (extraAttributes: Attributes) => (domNode: HTMLElement) => {
+export const getAttributes = (extraAttributes: ProsemirrorAttributes) => (domNode: HTMLElement) => {
   const { cssFloat, display, marginTop, marginLeft } = domNode.style;
   let { width, height } = domNode.style;
   let align = domNode.getAttribute('data-align') ?? domNode.getAttribute('align');

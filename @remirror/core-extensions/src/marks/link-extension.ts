@@ -1,21 +1,21 @@
 import { Plugin, TextSelection } from 'prosemirror-state';
 
 import {
-  Attributes,
   Cast,
   CommandMarkTypeParams,
-  ManagerMarkTypeParams,
   getMarkRange,
   getMatchString,
   getSelectedWord,
   isMarkActive,
   isTextSelection,
   KeyBindings,
+  ManagerMarkTypeParams,
   MarkExtension,
   MarkExtensionConfig,
   MarkExtensionSpec,
   MarkGroup,
   markPasteRule,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   removeMark,
   selectionEmpty,
@@ -100,7 +100,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
       /**
        * A command to update the selected link
        */
-      updateLink: (attributes: Attributes): ProsemirrorCommandFunction => {
+      updateLink: (attributes: ProsemirrorAttributes): ProsemirrorCommandFunction => {
         return (state, dispatch, view) => {
           const { selection } = state;
           if (

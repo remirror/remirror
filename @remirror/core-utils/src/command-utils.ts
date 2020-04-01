@@ -4,13 +4,13 @@ import { liftListItem, wrapInList } from 'prosemirror-schema-list';
 import { isFunction, isNumber, object } from '@remirror/core-helpers';
 import {
   AnyFunction,
-  Attributes,
   AttributesParameter,
   EditorSchema,
   MarkType,
   MarkTypeParameter,
   NodeType,
   NodeTypeParameter,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
   RangeParameter,
@@ -46,7 +46,7 @@ interface UpdateMarkParams
  */
 export const updateMark = ({
   type,
-  attrs: attributes = object<Attributes>(),
+  attrs: attributes = object<ProsemirrorAttributes>(),
   appendText,
   range,
 }: UpdateMarkParams): ProsemirrorCommandFunction => (state, dispatch) => {
@@ -75,10 +75,10 @@ export const updateMark = ({
  *
  * @public
  */
-export const toggleWrap = (type: NodeType, attributes: Attributes): ProsemirrorCommandFunction => (
-  state,
-  dispatch,
-) => {
+export const toggleWrap = (
+  type: NodeType,
+  attributes: ProsemirrorAttributes,
+): ProsemirrorCommandFunction => (state, dispatch) => {
   const isActive = isNodeActive({ state, type });
 
   if (isActive) {
@@ -158,7 +158,7 @@ interface ToggleBlockItemParams extends NodeTypeParameter, Partial<AttributesPar
 export const toggleBlockItem = ({
   type,
   toggleType,
-  attrs: attributes = object<Attributes>(),
+  attrs: attributes = object<ProsemirrorAttributes>(),
 }: ToggleBlockItemParams): ProsemirrorCommandFunction => (state, dispatch) => {
   const isActive = isNodeActive({ state, type, attrs: attributes });
 
@@ -228,7 +228,7 @@ const isChrome = (minVersion = 0): boolean => {
 export const replaceText = ({
   range,
   type,
-  attrs: attributes = object<Attributes>(),
+  attrs: attributes = object<ProsemirrorAttributes>(),
   appendText = '',
   content = '',
   startTransaction,

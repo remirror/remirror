@@ -17,7 +17,7 @@ import keyNames from 'w3c-keyname';
 import {
   ActionNames,
   AnyFunction,
-  Attributes,
+  ProsemirrorAttributes,
   getMarkAttributes,
   KeyOfThemeVariant,
 } from '@remirror/core';
@@ -55,7 +55,7 @@ import {
 const menuItems: Array<[
   ActionNames<WysiwygExtensions>,
   [ComponentType<IconProps>, string?],
-  Attributes?,
+  ProsemirrorAttributes?,
 ]> = [
   ['bold', [BoldIcon]],
   ['italic', [ItalicIcon]],
@@ -73,9 +73,10 @@ const menuItems: Array<[
   ['horizontalRule', [RulerHorizontalIcon]],
 ];
 
-const runAction = (method: AnyFunction, attributes: Attributes): MouseEventHandler<HTMLElement> => (
-  e,
-) => {
+const runAction = (
+  method: AnyFunction,
+  attributes: ProsemirrorAttributes,
+): MouseEventHandler<HTMLElement> => (e) => {
   e.preventDefault();
   method(attributes);
 };
@@ -160,7 +161,7 @@ export interface BubbleMenuProps {
 const bubbleMenuItems: Array<[
   ActionNames<WysiwygExtensions>,
   [ComponentType<IconProps>, string?],
-  Attributes?,
+  ProsemirrorAttributes?,
 ]> = [
   ['bold', [BoldIcon]],
   ['italic', [ItalicIcon]],

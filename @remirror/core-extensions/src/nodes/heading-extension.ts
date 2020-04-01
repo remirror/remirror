@@ -2,16 +2,16 @@ import { setBlockType } from 'prosemirror-commands';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 import {
-  Attributes,
   CommandNodeTypeParams,
   convertCommand,
-  ManagerNodeTypeParams,
   KeyBindings,
+  ManagerNodeTypeParams,
   NodeExtension,
   NodeExtensionConfig,
   NodeExtensionSpec,
   NodeGroup,
   object,
+  ProsemirrorAttributes,
   ProsemirrorNode,
   toggleBlockItem,
 } from '@remirror/core';
@@ -21,7 +21,7 @@ export interface HeadingExtensionOptions extends NodeExtensionConfig {
   defaultLevel?: number;
 }
 
-export type HeadingExtensionAttributes = Attributes<{
+export type HeadingExtensionAttributes = ProsemirrorAttributes<{
   /**
    * The heading size.
    */

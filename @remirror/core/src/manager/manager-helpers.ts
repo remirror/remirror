@@ -10,25 +10,21 @@ import {
   Cast,
   entries,
   invariant,
+  isEmptyArray,
   isFunction,
   isUndefined,
   object,
   sort,
   uniqueBy,
 } from '@remirror/core-helpers';
-import {
-  AnyFunction,
-  CommandParameter,
-  ExtensionCommandFunction,
-  ManagerParameter,
-} from '@remirror/core-types';
+import { AnyFunction } from '@remirror/core-types';
 
 import {
   AnyExtension,
+  AnyExtensionConstructor,
   ExtensionListParameter,
-  GetConstructor,
+  ExtensionTags,
   GetMarkNames,
-  GetName,
   GetNodeNames,
   isExtension,
   isMarkExtension,
@@ -36,12 +32,16 @@ import {
 } from '../extension';
 import { AnyPreset, isPreset } from '../preset';
 import {
-  ExtensionOrPreset,
-  ExtensionTags,
+  CommandParameter,
+  ExtensionCommandFunction,
   GeneralExtensionTags,
+  GetConstructor,
+  GetName,
+  ManagerParameter,
   MarkExtensionTags,
   NodeExtensionTags,
-} from './manager-types';
+} from '../types';
+import { ExtensionOrPreset } from './manager-types';
 
 /**
  * Converts an extension preset array to a list of extensions.
@@ -79,8 +79,8 @@ interface IsNameUniqueParams {
 }
 
 /**
- * Checks whether a given string is unique to the set. Add the name if it doesn't already exist, or
- * throw an error when `shouldThrow` is true.
+ * Checks whether a given string is unique to the set. Add the name if it
+ * doesn't already exist, or throw an error when `shouldThrow` is true.
  *
  * @param params - destructured params
  */
@@ -158,8 +158,8 @@ export const hasExtensionProperty = <
 /**
  * Generate all the action commands for usage within the UI.
  *
- * Typically actions are used to create interactive menus. For example a menu can use a command to
- * toggle bold formatting or to undo the last action.
+ * Typically actions are used to create interactive menus. For example a menu
+ * can use a command to toggle bold formatting or to undo the last action.
  */
 export const createCommands = ({ extensions, params }: CreateCommandsParams) => {
   const getItemParameters = (extension: Required<Pick<AnyExtension, 'commands'>>) =>
@@ -208,8 +208,8 @@ interface CreateHelpersParams extends ExtensionListParameter {
 /**
  * Generate all the helpers from the extension list.
  *
- * Helpers are functions which enable extensions to provide useful information or transformations to
- * their consumers and other extensions.
+ * Helpers are functions which enable extensions to provide useful information
+ * or transformations to their consumers and other extensions.
  */
 export const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
   const getItemParameters = (extension: Required<Pick<AnyExtension, 'helpers'>>) =>
@@ -249,7 +249,8 @@ type ExtensionMethodProperties =
   | 'isActive';
 
 /**
- * Looks at the passed property and calls the extension with the required parameters.
+ * Looks at the passed property and calls the extension with the required
+ * parameters.
  *
  * @param property - the extension method to map
  * @param params - the params the method will be called with
@@ -303,6 +304,8 @@ export interface TransformExtensionOrPreset<
  * in required extensions.
  *
  * TODO Add a check for requiredExtensions and inject them automatically
+ * TODO Currently matching by constructor - what if different versions exist in
+ * the same app...
  *
  * @param unionValues - the extensions to transform as well as their priorities
  * @returns the list of extension instances sorted by priority
@@ -313,17 +316,39 @@ export const transformExtensionOrPreset = <
 >(
   unionValues: Array<ExtensionUnion | PresetUnion>,
 ): TransformExtensionOrPreset<ExtensionUnion, PresetUnion> => {
-  const presets = [] as PresetUnion[];
-  const extensionMap = new Map<GetConstructor<ExtensionUnion>, ExtensionUnion>();
-  const presetMap = new Map<GetConstructor<PresetUnion>, PresetUnion>();
+  type ExtensionConstructor = GetConstructor<ExtensionUnion>;
+  type PresetConstructor = GetConstructor<PresetUnion>;
+  interface MissingConstructor {
+    Constructor: ExtensionConstructor;
+    extension: ExtensionUnion;
+  }
 
-  let extensions = [] as ExtensionUnion[];
+  // The items to return.
+  const presets = [] as PresetUnion[];
+  const extensionMap = new Map<ExtensionConstructor, ExtensionUnion>();
+  const presetMap = new Map<PresetConstructor, PresetUnion>();
+  const extensions = [] as ExtensionUnion[];
+
+  // Used to check track duplicates and the presets they've been added by.
+  const duplicateMap = new WeakMap<ExtensionConstructor, Array<PresetUnion | undefined>>();
+
+  // The extensions
+  let rawExtensions = [] as ExtensionUnion[];
+
+  /**
+   * Adds the values to the duplicate map for checking duplicates.
+   */
+  const updateDuplicateMap = (extension: ExtensionUnion, preset?: PresetUnion) => {
+    const key = extension.constructor;
+    const duplicate = duplicateMap.get(key);
+    duplicateMap.set(key, duplicate ? [...duplicate, preset] : [preset]);
+  };
 
   for (const presetOrExtension of unionValues) {
     // Update the extension list in this block
     if (isExtension(presetOrExtension)) {
-      extensions.push(presetOrExtension);
-      extensionMap.set(presetOrExtension.constructor, presetOrExtension);
+      rawExtensions.push(presetOrExtension);
+      updateDuplicateMap(presetOrExtension);
 
       continue;
     }
@@ -331,8 +356,12 @@ export const transformExtensionOrPreset = <
     // Update the presets list in this block
     if (isPreset(presetOrExtension)) {
       presets.push(presetOrExtension);
-      extensions.push(...presetOrExtension.extensions);
+      rawExtensions.push(...presetOrExtension.extensions);
       presetMap.set(presetOrExtension.constructor, presetOrExtension);
+
+      presetOrExtension.extensions.forEach((extension) =>
+        updateDuplicateMap(extension, presetOrExtension),
+      );
 
       continue;
     }
@@ -342,15 +371,66 @@ export const transformExtensionOrPreset = <
   }
 
   // Sort the extensions.
-  extensions = sort(
-    uniqueBy(extensions, (extension) => extension.name),
-    (a, b) => a.priority - b.priority,
-  );
+  rawExtensions = sort(rawExtensions, (a, b) => a.priority - b.priority);
 
-  // Pull in all required extensions.
+  // Keep track of added constructors for uniqueness.
+  const found = new WeakSet<ExtensionConstructor>();
+
+  // Remove extension duplicates and update the preset with the non duplicated
+  // value.
+  for (const extension of rawExtensions) {
+    const key = extension.constructor;
+    const duplicates = duplicateMap.get(key);
+
+    invariant(duplicates, {
+      message: `No entries where found for the ExtensionConstructor ${extension.name}`,
+      code: ErrorConstant.INTERNAL,
+    });
+
+    if (found.has(key)) {
+      continue;
+    }
+
+    found.add(key);
+    extensions.push(extension);
+
+    // Replace the extensions for all presets that referenced this constructor.
+    duplicates.forEach((preset) => preset?.replaceExtension(key, extension));
+  }
+
+  const missing: MissingConstructor[] = [];
+
+  /**
+   * Populate the missing Constructors.
+   */
+  const findMissingExtensions = (extension: ExtensionUnion) => {
+    for (const Constructor of extension.requiredExtensions) {
+      if (found.has(Constructor)) {
+        continue;
+      }
+
+      missing.push({ Constructor, extension });
+    }
+    extension.requiredExtensions.every((Constructor) => found.has(Constructor));
+  };
+
+  // Throw if any required extension missing.
+  for (const extension of extensions) {
+    findMissingExtensions(extension);
+  }
+
+  invariant(isEmptyArray(missing), {
+    code: ErrorConstant.MISSING_REQUIRED_EXTENSION,
+    message: missing
+      .map(
+        ({ Constructor, extension }) =>
+          `The extension '${extension.name}' requires '${Constructor.extensionName} in order to run correctly.`,
+      )
+      .join('\n'),
+  });
 
   return {
-    extensions,
+    extensions: rawExtensions,
     extensionMap,
     presets,
     presetMap,
@@ -363,8 +443,8 @@ export const transformExtensionOrPreset = <
  * @remarks
  * This is useful for deep equality checks when functions need to be ignored.
  *
- * A current limitation is that it only dives one level deep. So objects with nested object methods
- * will retain those methods.
+ * A current limitation is that it only dives one level deep. So objects with
+ * nested object methods will retain those methods.
  *
  * @param obj - an object which might contain methods
  * @returns a new object without any of the functions defined
@@ -387,13 +467,14 @@ export const ignoreFunctions = (object_: Record<string, unknown>) => {
 export const defaultIsActive = () => false;
 
 /**
- * By default isEnabled should return true to let the code know that the commands are available.
+ * By default isEnabled should return true to let the code know that the
+ * commands are available.
  */
 export const defaultIsEnabled = () => true;
 
 /**
- * Create the extension tags which are passed into each extensions method to enable dynamically
- * generated rules and commands.
+ * Create the extension tags which are passed into each extensions method to
+ * enable dynamically generated rules and commands.
  */
 export const createExtensionTags = <ExtensionUnion extends AnyExtension>(
   extensions: readonly ExtensionUnion[],
@@ -427,14 +508,16 @@ export const createExtensionTags = <ExtensionUnion extends AnyExtension>(
   for (const extension of extensions) {
     if (isNodeExtension(extension)) {
       const group = extension.schema.group as NodeGroup;
+      const name = extension.name as NodeNames;
 
-      node[group] = isUndefined(node[group]) ? [extension.name] : [...node[group], extension.name];
+      node[group] = isUndefined(node[group]) ? [name] : [...node[group], name];
     }
 
     if (isMarkExtension(extension)) {
       const group = extension.schema.group as MarkGroup;
+      const name = extension.name as MarkNames;
 
-      mark[group] = isUndefined(mark[group]) ? [extension.name] : [...mark[group], extension.name];
+      mark[group] = isUndefined(mark[group]) ? [name] : [...mark[group], name];
     }
 
     for (const tag of extension.tags as Tag[]) {

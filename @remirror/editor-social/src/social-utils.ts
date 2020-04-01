@@ -1,4 +1,4 @@
-import { Attributes, EditorView } from '@remirror/core';
+import { ProsemirrorAttributes, EditorView } from '@remirror/core';
 import { MentionExtensionAttributes } from '@remirror/extension-mention';
 
 import { MentionGetterParams as MentionGetterParameters } from './social-types';
@@ -48,7 +48,7 @@ export const calculateNewIndexFromArrowPress = ({
 interface CreateOnClickMethodFactoryParams extends MentionGetterParams {
   setExitTriggeredInternally: () => void;
   view: EditorView;
-  command(attrs: Attributes): void;
+  command(attrs: ProsemirrorAttributes): void;
 }
 
 /**

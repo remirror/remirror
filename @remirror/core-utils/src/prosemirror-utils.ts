@@ -4,7 +4,6 @@ import { isUndefined } from 'util';
 
 import { bool, isEmptyArray, isNullOrUndefined, keys, object } from '@remirror/core-helpers';
 import {
-  Attributes,
   AttributesParameter,
   CommandFunction,
   EditorSchema,
@@ -17,6 +16,7 @@ import {
   OptionalProsemirrorNodeParameter,
   PosParameter,
   PredicateParameter,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
   ProsemirrorNodeParameter,
@@ -454,7 +454,7 @@ interface IsNodeActiveParams
 export const isNodeActive = ({
   state,
   type,
-  attrs: attributes = object<Attributes>(),
+  attrs: attributes = object<ProsemirrorAttributes>(),
 }: IsNodeActiveParams) => {
   const { selection } = state;
   const predicate = (node: ProsemirrorNode) => node.type === type;

@@ -123,15 +123,21 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
 
     'import/no-deprecated': 'warn',
+    // 'import/exports-last': 'error',
+    'import/max-dependencies': ['error', { max: 10 }],
+    'import/no-default-export': 'error',
+    'import/no-mutable-exports': 'error',
     'import/first': 'error',
     'import/no-duplicates': 'error',
     'import/no-cycle': 'error',
     'import/no-self-import': 'error',
-    'import/newline-after-import': 'warn',
+    'import/newline-after-import': 'error',
 
-    // Turn off import rules
+    // Turn off conflicting import rules
     'import/order': 'off',
     'sort-imports': 'off',
+
+    // Use nice import rules
     'simple-import-sort/sort': [
       'warn',
       {

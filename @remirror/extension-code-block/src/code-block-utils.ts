@@ -8,7 +8,6 @@ import js from 'refractor/lang/javascript';
 import markup from 'refractor/lang/markup';
 
 import {
-  Attributes,
   bool,
   EditorState,
   findParentNodeOfType,
@@ -22,6 +21,7 @@ import {
   NodeWithPosition,
   object,
   PosParameter,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   ProsemirrorNodeParameter,
   TextParams,
@@ -178,7 +178,9 @@ export const getNodeInformationFromState = (state: EditorState): NodeInformation
 /**
  * Check that the attributes exist and are valid for the codeBlock updateAttributes.
  */
-export const isValidCodeBlockAttributes = (attributes: Attributes): attrs is CodeBlockAttributes =>
+export const isValidCodeBlockAttributes = (
+  attributes: ProsemirrorAttributes,
+): attrs is CodeBlockAttributes =>
   bool(
     attributes &&
       isObject(attributes) &&

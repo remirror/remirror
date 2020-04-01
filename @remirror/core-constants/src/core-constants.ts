@@ -42,7 +42,7 @@ export const NULL_CHARACTER = '\0';
  * Typically used in decorations as follows.
  *
  * ```ts
- * document.createTextNode(ZERO_WIDTH_SPACE_CHAR)
+ * document.createTextNode(ZERO_WIDTH_SPACE_CHAR);
  * ```
  *
  * This produces the html entity '8203'
@@ -71,11 +71,6 @@ export const EMPTY_PARAGRAPH_NODE = {
 };
 
 /**
- * The default extension priority level
- */
-export const DEFAULT_EXTENSION_PRIORITY = 3;
-
-/**
  * Marks are categorized into different groups. One motivation for this was to
  * allow the `code` mark to exclude other marks, without needing to explicitly
  * name them. Explicit naming requires the named mark to exist in the schema.
@@ -88,32 +83,32 @@ export enum MarkGroup {
    */
   FontStyle = 'fontStyle',
   /**
-   * Mark groups for links
+   * Mark groups for links.
    */
   Link = 'link',
 
   /**
-   * Mark groups for colors (text-color, background-color, etc)
+   * Mark groups for colors (text-color, background-color, etc).
    */
   Color = 'color',
 
   /**
-   * Mark group for alignment
+   * Mark group for alignment.
    */
   Alignment = 'alignment',
 
   /**
-   * Mark group for indentation
+   * Mark group for indentation.
    */
   Indentation = 'indentation',
 
   /**
-   * Marks which affect behavior
+   * Marks which affect behavior.
    */
   Behavior = 'behavior',
 
   /**
-   * Marks which store code
+   * Marks which store code.
    */
   Code = 'code',
 }
@@ -166,8 +161,8 @@ export enum ExtensionType {
  */
 export enum Tag {
   /**
-   * Describes a node that can be used as the last node of a document and by
-   * extension doesn't need to render a node after itself.
+   * Describes a node that can be used as the last node of a document and
+   * doesn't need to have anything else rendered after itself.
    *
    * @remarks
    *
@@ -185,7 +180,7 @@ export enum Tag {
   FormattingMark = 'formattingMark',
 
   /**
-   * A node that is deemed to format in a non standard way.
+   * A node that formats text in a non-standard way.
    *
    * @remarks
    *
@@ -200,7 +195,7 @@ export enum Tag {
    *
    * When this tag is added to an extension this will be picked up by
    * behavioural extensions such as the NodeCursorExtension which makes hard to
-   * reach nodes navigable via the keyboard arrows.
+   * reach nodes reachable using keyboard arrows.
    */
   NodeCursor = 'nodeCursor',
 }
@@ -211,11 +206,11 @@ export enum Tag {
  *
  * @remarks
  *
- * Please pretend you don't know this exists.
+ * Just pretend you don't know this exists.
  *
  * @internal
  */
-export const REMIRROR_IDENTIFIER_KEY = '__$$remirrorType$$__' as const;
+export const REMIRROR_IDENTIFIER_KEY = '__$$%remirrorType%$$__' as const;
 
 /**
  * These constants are stored on the `REMIRROR_IDENTIFIER_KEY` property of

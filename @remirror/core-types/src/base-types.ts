@@ -202,9 +202,9 @@ export interface Position {
 /**
  * Used for attributes which can be added to prosemirror nodes and marks.
  */
-export type Attributes<GExtra extends object = {}> = Record<string, unknown> & GExtra;
+export type ProsemirrorAttributes<GExtra extends object = {}> = Record<string, unknown> & GExtra;
 
-export type AttributesWithClass = Attributes & { class?: string };
+export type AttributesWithClass = ProsemirrorAttributes & { class?: string };
 
 export interface ExtraAttributesObject {
   /**

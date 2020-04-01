@@ -90,10 +90,7 @@ export class RemirrorError extends BaseError {
  * Throw an error if the condition fails. Strip out error messages for
  * production. Taken from `tiny-invariant`.
  */
-export function invariant(
-  condition: unknown,
-  options: RemirrorErrorOptions = {},
-): asserts condition {
+export function invariant(condition: unknown, options: RemirrorErrorOptions): asserts condition {
   if (condition) {
     return;
   }

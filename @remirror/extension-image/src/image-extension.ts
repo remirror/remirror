@@ -1,13 +1,13 @@
 import { ResolvedPos } from 'prosemirror-model';
 
 import {
-  Attributes,
   bool,
   Cast,
   CommandNodeTypeParams,
   isElementDOMNode,
   NodeExtension,
   NodeExtensionSpec,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
 } from '@remirror/core';
 
@@ -54,7 +54,10 @@ export class ImageExtension extends NodeExtension {
 
   public commands({ type }: CommandNodeTypeParams) {
     return {
-      insertImage: (attributes: Attributes): ProsemirrorCommandFunction => (state, dispatch) => {
+      insertImage: (attributes: ProsemirrorAttributes): ProsemirrorCommandFunction => (
+        state,
+        dispatch,
+      ) => {
         const { selection } = state;
         const position = hasCursor(selection) ? selection.$cursor.pos : selection.$to.pos;
         const node = type.create(attributes);

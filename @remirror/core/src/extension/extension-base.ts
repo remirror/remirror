@@ -25,17 +25,9 @@ import {
   object,
 } from '@remirror/core-helpers';
 import {
-  Attributes,
   AttributesWithClass,
-  BaseExtensionSettings,
-  CreateCommandsParameter,
   CreateExtraAttributes,
-  CreateHelpersParameter,
-  CreateSchemaParameter,
   EditorSchema,
-  ExtensionCommandReturn,
-  ExtensionHelperReturn,
-  ExtensionIsActiveFunction,
   ExtraAttributes,
   FlipPartialAndRequired,
   GetExtraAttributes,
@@ -43,22 +35,36 @@ import {
   IfMatches,
   IfNoRequiredProperties,
   KeyBindings,
-  ManagerMarkTypeParameter,
-  ManagerNodeTypeParameter,
-  ManagerParameter,
-  ManagerTypeParameter,
   MarkExtensionSpec,
   MarkType,
   NodeExtensionSpec,
   NodeType,
   NodeViewMethod,
-  OnTransactionParameter,
   PlainObject,
+  ProsemirrorAttributes,
   ProsemirrorPlugin,
 } from '@remirror/core-types';
 import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
-import { PropertiesShape } from '../types';
+import {
+  BaseExtensionSettings,
+  CreateCommandsParameter,
+  CreateHelpersParameter,
+  CreateSchemaParameter,
+  ExtensionCommandReturn,
+  ExtensionHelperReturn,
+  ExtensionIsActiveFunction,
+  GeneralExtensionTags,
+  GetName,
+  ManagerMarkTypeParameter,
+  ManagerNodeTypeParameter,
+  ManagerParameter,
+  ManagerTypeParameter,
+  MarkExtensionTags,
+  NodeExtensionTags,
+  OnTransactionParameter,
+  PropertiesShape,
+} from '../types';
 
 /**
  * The type which is applicable to any extension instance.
@@ -66,7 +72,7 @@ import { PropertiesShape } from '../types';
  * TODO Figure out how to improve the formatting of this.
  */
 export type AnyExtension<Settings extends BaseExtensionSettings = any> = Extension<
-  any,
+  string,
   any,
   Settings,
   any,
@@ -228,7 +234,7 @@ const getExtraAttributesFactory = <Settings extends BaseExtensionSettings>(
   });
 
   const extraAttributes = extension.settings.extraAttributes ?? [];
-  const attributes: Attributes = object();
+  const attributes: ProsemirrorAttributes = object();
 
   for (const attribute of extraAttributes) {
     if (isArray(attribute)) {
@@ -418,6 +424,13 @@ export abstract class Extension<
   }
 
   /**
+   * Get the required extensions for this extension.
+   */
+  get requiredExtensions() {
+    return this.parameter.requiredExtensions ?? [];
+  }
+
+  /**
    * Retrieves the plugin key which is used to uniquely identify the plugin
    * created by the extension.
    */
@@ -598,6 +611,12 @@ export interface BaseExtensionFactoryParameter<
    * instance.
    */
   name: Name;
+
+  /**
+   * Every extension requires compatible string with the version number of the extension. This
+   * is required
+   */
+  version: string;
 
   /**
    * The default priority level for the extension to use.
@@ -785,18 +804,16 @@ export interface BaseExtensionFactoryParameter<
   plugin?: (parameter: ManagerTypeParameter<ProsemirrorType>) => ProsemirrorPlugin;
 
   /**
-   * An extension can declare the extensions it requires with the default
-   * options for instantiating them.
+   * An extension can declare the extensions it requires.
    *
    * @remarks
    *
    * When creating the extension manager the extension will be checked for
    * required extension as well as a quick check to see if the required
-   * extension is already included.
-   *
-   * @internalremarks
+   * extension is already included. If not present a descriptive error will be
+   * thrown.
    */
-  readonly requiredExtensions?: string[];
+  readonly requiredExtensions?: AnyExtensionConstructor[];
 
   /**
    * A method for transforming the SSR JSX received by the extension. Some
@@ -888,7 +905,7 @@ export type ExtensionFactoryParameter<
  * The type covering any potential `PlainExtension`.
  */
 export type AnyPlainExtension<Settings extends BaseExtensionSettings = any> = Extension<
-  any,
+  string,
   any,
   Settings,
   any,
@@ -1016,7 +1033,7 @@ export type MarkExtensionFactoryParameter<
  * The type covering any potential `MarkExtension`.
  */
 export type AnyMarkExtension<Settings extends BaseExtensionSettings = any> = MarkExtension<
-  any,
+  string,
   any,
   Settings,
   any,
@@ -1141,7 +1158,7 @@ export type NodeExtensionFactoryParameter<
  * The type covering any potential NodeExtension.
  */
 export type AnyNodeExtension<Settings extends BaseExtensionSettings = any> = NodeExtension<
-  any,
+  string,
   any,
   Settings,
   any,
@@ -1212,6 +1229,72 @@ declare global {
     Commands extends ExtensionCommandReturn = {},
     Helpers extends ExtensionHelperReturn = {}
   > {}
+
+  interface GlobalExtensionTagParameter extends ExtensionTagParameter {}
 }
 
 /* eslint-enable @typescript-eslint/explicit-member-accessibility */
+
+/**
+ * The shape of the tag data stored by the extension manager.
+ *
+ * This data can be used by other extensions to dynamically determine which
+ * nodes should affected by commands / plugins / keys etc...
+ */
+export interface ExtensionTags<ExtensionUnion extends AnyExtension> {
+  /**
+   * All the node extension tags.
+   */
+  node: NodeExtensionTags<GetNodeNames<ExtensionUnion>>;
+
+  /**
+   * All the mar extension tags.
+   */
+  mark: MarkExtensionTags<GetMarkNames<ExtensionUnion>>;
+
+  /**
+   * All the general extension tags.
+   */
+  general: GeneralExtensionTags<GetName<ExtensionUnion>>;
+}
+
+/**
+ * An interface with a `tags` parameter useful as a builder for parameter
+ * objects.
+ */
+export interface ExtensionTagParameter<ExtensionUnion extends AnyExtension = any> {
+  /**
+   * The tags provided by the configured extensions.
+   */
+  tags: ExtensionTags<ExtensionUnion>;
+}
+
+/**
+ * A utility type for retrieving the name of an extension only when it's a plain
+ * extension.
+ */
+export type GetPlainNames<Type> = Type extends AnyPlainExtension ? GetName<Type> : never;
+
+/**
+ * A utility type for retrieving the name of an extension only when it's a mark
+ * extension.
+ */
+export type GetMarkNames<
+  ExtensionUnion extends AnyExtension
+> = ExtensionUnion extends AnyMarkExtension ? ExtensionUnion['name'] : never;
+
+/**
+ * A utility type for retrieving the name of an extension only when it's a node
+ * extension.
+ */
+export type GetNodeNames<
+  ExtensionUnion extends AnyExtension
+> = ExtensionUnion extends AnyNodeExtension ? ExtensionUnion['name'] : never;
+
+/**
+ * Gets the editor schema from an extension union.
+ */
+export type SchemaFromExtension<ExtensionUnion extends AnyExtension> = EditorSchema<
+  GetNodeNames<ExtensionUnion>,
+  GetMarkNames<ExtensionUnion>
+>;

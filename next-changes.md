@@ -62,3 +62,5 @@ instances to this new extension.
       extensionManager init params `portalContainer` which is then used in `reactNodeViews`.
 
 Rename `ExtensionManager` to just `Manager` since it now also manages presets.
+
+All extensions require a version string.

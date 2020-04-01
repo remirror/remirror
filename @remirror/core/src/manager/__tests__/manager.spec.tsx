@@ -5,7 +5,7 @@ import React, { FC } from 'react';
 import { EMPTY_PARAGRAPH_NODE, Tag } from '@remirror/core-constants';
 import { Cast } from '@remirror/core-helpers';
 import {
-  Attributes,
+  ProsemirrorAttributes,
   EditorState,
   KeyBindingCommandFunction,
   KeyBindings,
@@ -32,10 +32,10 @@ describe('Manager', () => {
     getTheme: () => defaultRemirrorThemeValue,
   };
   const innerMock = jest.fn();
-  const mock = jest.fn((_: Attributes) => innerMock);
+  const mock = jest.fn((_: ProsemirrorAttributes) => innerMock);
   const getInformation = jest.fn(() => 'information');
 
-  const SSRComponent: FC<Attributes> = () => <div />;
+  const SSRComponent: FC<ProsemirrorAttributes> = () => <div />;
 
   class DummyExtension extends Extension {
     public name = 'dummy';

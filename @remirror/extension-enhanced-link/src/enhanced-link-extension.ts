@@ -2,7 +2,6 @@ import { Plugin } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
 
 import {
-  Attributes,
   Cast,
   CommandMarkTypeParams,
   EditorState,
@@ -16,6 +15,7 @@ import {
   MarkExtensionConfig,
   MarkExtensionSpec,
   markPasteRule,
+  ProsemirrorAttributes,
   removeMark,
   updateMark,
 } from '@remirror/core';
@@ -80,7 +80,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
 
   public commands({ type }: CommandMarkTypeParams) {
     return {
-      enhancedLink: (attributes: Attributes) => {
+      enhancedLink: (attributes: ProsemirrorAttributes) => {
         if (attributes?.href) {
           return updateMark({ type, attrs: attributes });
         }

@@ -33,7 +33,8 @@
     "prosemirror-keymap": "^1.0.2",
     "prosemirror-model": "^1.9.1",
     "prosemirror-state": "^1.3.2",
-    "prosemirror-suggest": "^0.7.6"
+    "prosemirror-suggest": "^0.7.6",
+    "semver": "^7.1.3"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

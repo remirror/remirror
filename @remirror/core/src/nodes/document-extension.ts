@@ -1,3 +1,5 @@
+import getVersion from 'pkg.macro';
+
 import { BaseExtensionSettings } from '@remirror/core-types';
 
 import { ExtensionFactory } from '../extension/extension-factory';
@@ -24,6 +26,7 @@ export interface DocExtensionOptions extends BaseExtensionSettings {
  */
 export const DocExtension = ExtensionFactory.typed<DocExtensionOptions>().node({
   name: 'doc',
+  version: getVersion<string>('version').version,
   defaultSettings: {
     content: 'block+',
   },

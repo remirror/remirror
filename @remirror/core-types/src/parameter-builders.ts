@@ -9,7 +9,7 @@ import {
   Selection,
   Transaction,
 } from './alias-types';
-import { Attributes, MakeOptional, Position } from './base-types';
+import { MakeOptional, Position, ProsemirrorAttributes } from './base-types';
 
 /**
  * A parameter builder interface containing the `view` property.
@@ -118,7 +118,7 @@ export interface AttributesParameter {
   /**
    * An object describing the attrs for a prosemirror mark / node
    */
-  attrs: Attributes;
+  attrs: ProsemirrorAttributes;
 }
 
 /**
@@ -169,11 +169,15 @@ export interface ProsemirrorNodeParameter<Schema extends EditorSchema = any> {
   node: ProsemirrorNode<Schema>;
 }
 
-export type NodeWithAttributes<NodeAttributes extends Attributes = Attributes> = ProsemirrorNode & {
+export type NodeWithAttributes<
+  NodeAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
+> = ProsemirrorNode & {
   attrs: NodeAttributes;
 };
 
-export interface NodeWithAttributesParameter<NodeAttributes extends Attributes = Attributes> {
+export interface NodeWithAttributesParameter<
+  NodeAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
+> {
   /**
    * A prosemirror node with a specific shape for `node.attrs`
    */

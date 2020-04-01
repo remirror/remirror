@@ -1,6 +1,6 @@
 import { FromToEndParams, Suggester, SuggestReplacementType } from 'prosemirror-suggest';
 
-import { Attributes, MarkExtensionConfig } from '@remirror/core';
+import { MarkExtensionConfig, ProsemirrorAttributes } from '@remirror/core';
 
 export interface OptionalMentionExtensionParams {
   /**
@@ -35,7 +35,7 @@ export interface OptionalMentionExtensionParams {
  * The attrs that will be added to the node.
  * ID and label are plucked and used while attributes like href and role can be assigned as desired.
  */
-export type MentionExtensionAttributes = Attributes<
+export type MentionExtensionAttributes = ProsemirrorAttributes<
   OptionalMentionExtensionParams & {
     /**
      * A unique identifier for the suggestions node
@@ -91,7 +91,7 @@ export interface MentionExtensionOptions
   mentionTag?: string;
 }
 
-export type SuggestionCommandAttributes = Attributes<
+export type SuggestionCommandAttributes = ProsemirrorAttributes<
   Partial<Pick<MentionExtensionAttributes, 'id' | 'label' | 'appendText' | 'replacementType'>>
 >;
 
