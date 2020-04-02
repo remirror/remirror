@@ -12,16 +12,17 @@
     "declaration": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "pretty": true,
     "forceConsistentCasingInFileNames": true,
-    "allowUnreachableCode": false,
     "experimentalDecorators": true,
     "strict": true,
     "alwaysStrict": true,
     "resolveJsonModule": true,
     "plugins": [{ "name": "typescript-styled-plugin" }],
-    "preserveWatchOutput": true
+    "preserveWatchOutput": true,
+
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "allowUnreachableCode": true
   }
 }
