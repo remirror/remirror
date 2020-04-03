@@ -4,13 +4,9 @@ import {
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import { Cast, freeze, isRemirrorType } from '@remirror/core-helpers';
-import {
-  BaseExtensionSettings,
-  ExtensionCommandReturn,
-  ExtensionHelperReturn,
-  IfNoRequiredProperties,
-} from '@remirror/core-types';
+import { IfNoRequiredProperties } from '@remirror/core-types';
 
+import { ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
 import {
   AnyExtensionConstructor,
   Extension,
@@ -29,7 +25,7 @@ import {
  * function to allow for fully typed `ExtensionConstructor`s.
  */
 const createBaseExtensionFactory = <
-  Settings extends BaseExtensionSettings = BaseExtensionSettings,
+  Settings extends object = {},
   Properties extends object = {}
 >() => {
   const creators = {
@@ -259,7 +255,7 @@ export const ExtensionFactory = {
    * ```ts
    * import { ExtensionFactory, BaseExtensionSettings } from '@remirror/core';
    *
-   * interface MyExtensionSettings extends BaseExtensionSettings {
+   * interface MyExtensionSettings extends object {
    *   custom: boolean;
    * }
    *
@@ -277,12 +273,17 @@ export const ExtensionFactory = {
    *   });
    * ```
    */
-  typed<Settings extends BaseExtensionSettings, Props extends object = {}>() {
+  typed<Settings extends object, Props extends object = {}>() {
     return createBaseExtensionFactory<Settings, Props>();
   },
 };
 
-export const isExtensionConstructor = <Settings extends BaseExtensionSettings = any>(
+/**
+ * Returns true when provided value is an ExtensionConstructor.
+ *
+ * @param value - the value to test
+ */
+export const isExtensionConstructor = <Settings extends object = any>(
   value: unknown,
 ): value is AnyExtensionConstructor<Settings> =>
   isRemirrorType(value) &&

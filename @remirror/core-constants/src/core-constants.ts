@@ -210,7 +210,7 @@ export enum Tag {
  *
  * @internal
  */
-export const REMIRROR_IDENTIFIER_KEY = '__$$%remirrorType%$$__' as const;
+export const REMIRROR_IDENTIFIER_KEY = '~~remirror~~' as const;
 
 /**
  * These constants are stored on the `REMIRROR_IDENTIFIER_KEY` property of

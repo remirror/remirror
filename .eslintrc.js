@@ -123,10 +123,11 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
 
     'import/no-deprecated': 'warn',
-    // 'import/exports-last': 'error',
-    'import/max-dependencies': ['error', { max: 10 }],
+    'import/exports-last': 'warn',
+    'import/max-dependencies': ['warn', { max: 10 }],
     'import/no-default-export': 'error',
     'import/no-mutable-exports': 'error',
+    // 'import/group-exports': 'error', // doesn't support export type
     'import/first': 'error',
     'import/no-duplicates': 'error',
     'import/no-cycle': 'error',
@@ -172,12 +173,16 @@ module.exports = {
     ],
     'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
 
-    // Temporarily disabled rules (please re-enable these!):
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-namespace': 'off',
+
     '@typescript-eslint/no-non-null-assertion': 'warn',
+    '@typescript-eslint/no-inferrable-types': 'warn',
+    '@typescript-eslint/member-ordering': [
+      'warn',
+      { default: ['signature', 'static-field', 'static-method', 'field', 'constructor', 'method'] },
+    ],
     '@typescript-eslint/no-use-before-define': ['warn', { typedefs: false }],
     '@typescript-eslint/no-unused-vars': [
       'warn',
@@ -191,9 +196,9 @@ module.exports = {
     '@typescript-eslint/ban-types': 'warn',
 
     'react/display-name': 'warn',
-    'react/no-unescaped-entities': 'warn',
-    'react/no-unused-state': 'warn',
-    'react/no-children-prop': 'warn',
+    'react/no-unescaped-entities': 'error',
+    'react/no-unused-state': 'error',
+    'react/no-children-prop': 'error',
     'react/no-multi-comp': 'off', // Might want to enable this later
 
     'no-invalid-regexp': 'error',

@@ -1,31 +1,35 @@
-import {
-  DEFAULT_EXTENSION_PRIORITY,
-  ErrorConstant,
-  MarkGroup,
-  NodeGroup,
-  Tag,
-} from '@remirror/core-constants';
+import { keymap } from 'prosemirror-keymap';
+
+import { ErrorConstant, MarkGroup, NodeGroup, Tag } from '@remirror/core-constants';
 import {
   bool,
-  Cast,
   entries,
+  hasOwnProperty,
   invariant,
   isEmptyArray,
   isFunction,
   isUndefined,
   object,
   sort,
-  uniqueBy,
 } from '@remirror/core-helpers';
-import { AnyFunction } from '@remirror/core-types';
+import {
+  AnyFunction,
+  AttributesWithClass,
+  KeyBindingCommandFunction,
+  KeyBindings,
+  ProsemirrorCommandFunction,
+  ProsemirrorPlugin,
+} from '@remirror/core-types';
 
+import { chainKeyBindingCommands } from '..';
 import {
   AnyExtension,
-  AnyExtensionConstructor,
   ExtensionListParameter,
   ExtensionTags,
   GetMarkNames,
   GetNodeNames,
+  InitializeEventMethodParameter,
+  InitializeEventMethodReturn,
   isExtension,
   isMarkExtension,
   isNodeExtension,
@@ -41,16 +45,6 @@ import {
   MarkExtensionTags,
   NodeExtensionTags,
 } from '../types';
-import { ExtensionOrPreset } from './manager-types';
-
-/**
- * Converts an extension preset array to a list of extensions.
- */
-export const extensionOrPresetToExtension = <ExtensionUnion extends AnyExtension = any>(
-  presetOrExtension: ExtensionOrPreset<ExtensionUnion>,
-): readonly ExtensionUnion[] => {
-  return isExtension(presetOrExtension) ? [presetOrExtension] : presetOrExtension.extensions;
-};
 
 interface IsNameUniqueParams {
   /**
@@ -115,45 +109,23 @@ interface CreateCommandsParams extends ExtensionListParameter {
  * @param extension - the extension to test.
  * @param params - the params without the type.
  */
-const getParametersType = <GKey extends keyof AnyExtension, GParams extends ManagerParameter>(
-  extension: Required<Pick<AnyExtension, GKey>>,
-  parameters: GParams,
+const getParameterWithType = <
+  ExtensionUnion extends AnyExtension,
+  Parameter extends ManagerParameter
+>(
+  extension: ExtensionUnion,
+  parameter: Parameter,
 ) => {
   if (isMarkExtension(extension)) {
-    return { type: parameters.schema.marks[extension.name] };
+    return { ...parameter, type: parameter.schema.marks[extension.name] };
   }
 
   if (isNodeExtension(extension)) {
-    return { type: parameters.schema.nodes[extension.name] };
+    return { ...parameter, type: parameter.schema.nodes[extension.name] };
   }
 
-  return object();
+  return parameter as any;
 };
-
-/**
- * Checks to see if an optional property exists on an extension.
- *
- * @remarks
- *
- * This is used by the extension manager to build the:
- * - plugins
- * - keys
- * - styles
- * - inputRules
- * - pasteRules
- *
- * @param property - the extension property / method name
- */
-export const hasExtensionProperty = <
-  ExtensionUnion extends object,
-  ExtensionProperty extends keyof ExtensionUnion
->(
-  property: ExtensionProperty,
-) => (
-  extension: ExtensionUnion,
-): extension is ExtensionUnion extends undefined
-  ? never
-  : ExtensionUnion & Pick<Required<ExtensionUnion>, ExtensionProperty> => bool(extension[property]);
 
 /**
  * Generate all the action commands for usage within the UI.
@@ -161,11 +133,11 @@ export const hasExtensionProperty = <
  * Typically actions are used to create interactive menus. For example a menu
  * can use a command to toggle bold formatting or to undo the last action.
  */
-export const createCommands = ({ extensions, params }: CreateCommandsParams) => {
+const createCommands = ({ extensions, params }: CreateCommandsParams) => {
   const getItemParameters = (extension: Required<Pick<AnyExtension, 'commands'>>) =>
     extension.commands({
       ...params,
-      ...getParametersType(extension, params),
+      ...getParameterWithType(extension, params),
     });
 
   const { view, getState } = params;
@@ -211,11 +183,11 @@ interface CreateHelpersParams extends ExtensionListParameter {
  * Helpers are functions which enable extensions to provide useful information
  * or transformations to their consumers and other extensions.
  */
-export const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
+const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
   const getItemParameters = (extension: Required<Pick<AnyExtension, 'helpers'>>) =>
     extension.helpers({
       ...params,
-      ...getParametersType(extension, params),
+      ...getParameterWithType(extension, params),
     });
 
   const items: Record<string, AnyFunction> = object();
@@ -234,68 +206,14 @@ export const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
   return items;
 };
 
-/**
- * Keys for the methods available on an extension (useful for filtering)
- */
-type ExtensionMethodProperties =
-  | 'inputRules'
-  | 'pasteRules'
-  | 'keys'
-  | 'plugin'
-  | 'styles'
-  | 'nodeView'
-  | 'extensionData'
-  | 'suggestions'
-  | 'isActive';
-
-/**
- * Looks at the passed property and calls the extension with the required
- * parameters.
- *
- * @param property - the extension method to map
- * @param params - the params the method will be called with
- */
-export const extensionPropertyMapper = <
-  GExt extends AnyExtension,
-  GExtMethodProp extends ExtensionMethodProperties
->(
-  property: GExtMethodProp,
-  parameters: ManagerParameter,
-) => (
-  extension: GExt,
-): GExt[GExtMethodProp] extends AnyFunction ? ReturnType<GExt[GExtMethodProp]> : {} => {
-  const extensionMethod = extension[property];
-  if (!extensionMethod) {
-    throw new Error('Invalid extension passed into the extension manager');
-  }
-
-  const getFn = () => {
-    if (isNodeExtension(extension)) {
-      return extensionMethod.bind(extension)({
-        ...parameters,
-        type: Cast(parameters.schema.nodes[extension.name]),
-      });
-    }
-    if (isMarkExtension(extension)) {
-      return extensionMethod.bind(extension)({
-        ...parameters,
-        type: Cast(parameters.schema.marks[extension.name]),
-      });
-    }
-    return extensionMethod.bind(extension)(Cast(parameters));
-  };
-
-  return Cast(getFn());
-};
-
-export interface TransformExtensionOrPreset<
+interface TransformExtensionOrPreset<
   ExtensionUnion extends AnyExtension,
   PresetUnion extends AnyPreset<ExtensionUnion>
 > {
   extensions: ExtensionUnion[];
-  extensionMap: Map<GetConstructor<ExtensionUnion>, ExtensionUnion>;
+  extensionMap: WeakMap<GetConstructor<ExtensionUnion>, ExtensionUnion>;
   presets: PresetUnion[];
-  presetMap: Map<GetConstructor<PresetUnion>, PresetUnion>;
+  presetMap: WeakMap<GetConstructor<PresetUnion>, PresetUnion>;
 }
 
 /**
@@ -310,7 +228,7 @@ export interface TransformExtensionOrPreset<
  * @param unionValues - the extensions to transform as well as their priorities
  * @returns the list of extension instances sorted by priority
  */
-export const transformExtensionOrPreset = <
+const transformExtensionOrPreset = <
   ExtensionUnion extends AnyExtension,
   PresetUnion extends AnyPreset<ExtensionUnion>
 >(
@@ -325,8 +243,8 @@ export const transformExtensionOrPreset = <
 
   // The items to return.
   const presets = [] as PresetUnion[];
-  const extensionMap = new Map<ExtensionConstructor, ExtensionUnion>();
-  const presetMap = new Map<PresetConstructor, PresetUnion>();
+  const extensionMap = new WeakMap<ExtensionConstructor, ExtensionUnion>();
+  const presetMap = new WeakMap<PresetConstructor, PresetUnion>();
   const extensions = [] as ExtensionUnion[];
 
   // Used to check track duplicates and the presets they've been added by.
@@ -449,7 +367,7 @@ export const transformExtensionOrPreset = <
  * @param obj - an object which might contain methods
  * @returns a new object without any of the functions defined
  */
-export const ignoreFunctions = (object_: Record<string, unknown>) => {
+const ignoreFunctions = (object_: Record<string, unknown>) => {
   const newObject: Record<string, unknown> = object();
   for (const key of Object.keys(object_)) {
     if (isFunction(object_[key])) {
@@ -464,19 +382,19 @@ export const ignoreFunctions = (object_: Record<string, unknown>) => {
 /**
  * By default isActive should return false when no method specified.
  */
-export const defaultIsActive = () => false;
+const defaultIsActive = () => false;
 
 /**
  * By default isEnabled should return true to let the code know that the
  * commands are available.
  */
-export const defaultIsEnabled = () => true;
+const defaultIsEnabled = () => true;
 
 /**
  * Create the extension tags which are passed into each extensions method to
  * enable dynamically generated rules and commands.
  */
-export const createExtensionTags = <ExtensionUnion extends AnyExtension>(
+const createExtensionTags = <ExtensionUnion extends AnyExtension>(
   extensions: readonly ExtensionUnion[],
 ): ExtensionTags<ExtensionUnion> => {
   type MarkNames = GetMarkNames<ExtensionUnion>;
@@ -532,4 +450,158 @@ export const createExtensionTags = <ExtensionUnion extends AnyExtension>(
     mark,
     node,
   };
+};
+
+/**
+ * All the dynamically generated attributes provided by each extension.
+ *
+ * @remarks
+ *
+ * High priority extensions have preference over the lower priority
+ * extensions.
+ */
+const createAttributes = <ExtensionUnion extends AnyExtension>({
+  getParameter,
+  setStoreKey,
+}: InitializeEventMethodParameter<ExtensionUnion>): InitializeEventMethodReturn<ExtensionUnion> => {
+  const attributeList: AttributesWithClass[] = [];
+  let attributeObject: AttributesWithClass = object();
+
+  const forEachExtension = (extension: ExtensionUnion) => {
+    if (!extension.parameter.createAttributes || extension.settings.exclude.attributes) {
+      return;
+    }
+
+    // Inserted at the start of the list so that when building the attribute
+    // the higher priority extension attributes are preferred to the lower
+    // priority since they merge with the object later.
+    attributeList.unshift(extension.parameter.createAttributes(getParameter(extension)));
+  };
+
+  const afterMap = () => {
+    for (const attributes of attributeList) {
+      attributeObject = {
+        ...attributeObject,
+        ...attributes,
+        class:
+          (attributeObject.class ?? '') + (bool(attributes.class) ? attributes.class : '') || '',
+      };
+    }
+
+    setStoreKey('attributes', attributeObject);
+  };
+
+  return {
+    beforeExtensionLoop: afterMap,
+    forEachExtension: forEachExtension,
+  };
+};
+
+/**
+ * Retrieve all plugins from the passed in extensions
+ */
+const createExtensionPlugins = <ExtensionUnion extends AnyExtension>({
+  getParameter,
+  setStoreKey,
+}: InitializeEventMethodParameter<ExtensionUnion>): InitializeEventMethodReturn<ExtensionUnion> => {
+  const extensionPlugins: ProsemirrorPlugin[] = [];
+
+  return {
+    forEachExtension: (extension) => {
+      if (!extension.parameter.createPlugin || extension.settings.exclude.plugin) {
+        return;
+      }
+
+      extensionPlugins.push(extension.parameter.createPlugin(getParameter(extension)));
+    },
+
+    afterExtensionLoop: () => {
+      setStoreKey('extensionPlugins', extensionPlugins);
+    },
+  };
+};
+
+/**
+ * Retrieve all keymaps (how the editor responds to keyboard commands).
+ */
+const createKeymaps = <ExtensionUnion extends AnyExtension>({
+  getParameter,
+  setStoreKey,
+}: InitializeEventMethodParameter<ExtensionUnion>): InitializeEventMethodReturn<ExtensionUnion> => {
+  const extensionKeymaps: KeyBindings[] = [];
+
+  return {
+    forEachExtension: (extension) => {
+      if (!extension.parameter.createKeys || extension.settings.exclude.keys) {
+        return;
+      }
+
+      extensionKeymaps.push(extension.parameter.createKeys(getParameter(extension)));
+    },
+    afterExtensionLoop: () => {
+      const previousCommandsMap = new Map<string, KeyBindingCommandFunction[]>();
+      const mappedCommands: Record<string, ProsemirrorCommandFunction> = object();
+
+      for (const extensionKeymap of extensionKeymaps) {
+        for (const key in extensionKeymap) {
+          if (!hasOwnProperty(extensionKeymap, key)) {
+            continue;
+          }
+
+          const previousCommands: KeyBindingCommandFunction[] = previousCommandsMap.get(key) ?? [];
+          const commands = [...previousCommands, extensionKeymap[key]];
+          const command = chainKeyBindingCommands(...commands);
+          previousCommandsMap.set(key, commands);
+
+          mappedCommands[key] = (state, dispatch, view) => {
+            return command({ state, dispatch, view, next: () => false });
+          };
+        }
+      }
+
+      setStoreKey('keymaps', [keymap(mappedCommands)]);
+    },
+  };
+};
+
+/**
+ * Identifies the stage the extension manager is at.
+ */
+enum ManagerPhase {
+  /**
+   * When the extension manager is being created.
+   */
+  None,
+
+  /**
+   * When the extension manager is being initialized. This is when the
+   * onInitialize methods are being called.
+   */
+  Initialize,
+
+  /**
+   * When the view is being added and all onViewAdded methods are being called.
+   */
+  AddView,
+
+  /**
+   * The phases of creating this manager are completed.
+   */
+  Done,
+}
+
+export {
+  createAttributes,
+  createCommands,
+  createExtensionPlugins,
+  createExtensionTags,
+  createKeymaps,
+  createHelpers,
+  defaultIsActive,
+  defaultIsEnabled,
+  getParameterWithType,
+  ignoreFunctions,
+  ManagerPhase,
+  transformExtensionOrPreset,
+  TransformExtensionOrPreset,
 };

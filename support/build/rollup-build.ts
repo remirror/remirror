@@ -1,3 +1,4 @@
+/* eslint-disable import/no-default-export */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import chalk from 'chalk';
 import { join } from 'path';

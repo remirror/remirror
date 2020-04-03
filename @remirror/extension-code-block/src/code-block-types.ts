@@ -4,7 +4,7 @@ import { BaseExtensionSettings, ProsemirrorAttributes } from '@remirror/core';
 
 import { SyntaxTheme } from './themes';
 
-export interface CodeBlockExtensionSettings extends BaseExtensionSettings {
+export interface CodeBlockExtensionSettings extends object {
   /**
    * Import languages from refractor.
    *

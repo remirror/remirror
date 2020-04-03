@@ -14,3 +14,9 @@ declare const __TEST__: boolean;
  * packages with a types field.
  */
 declare const __VERSION__: string;
+
+/**
+ * A constant injected by the build process which is true when this is a
+ * development build.
+ */
+declare const __DEV__: boolean;

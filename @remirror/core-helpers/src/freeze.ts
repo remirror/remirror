@@ -1,7 +1,7 @@
 import { ErrorConstant } from '@remirror/core-constants';
 
 import { invariant } from './core-errors';
-import { isObject } from './core-helpers';
+import { isArray, isObject } from './core-helpers';
 
 /**
  * A freeze method for objects that only runs in development. Helps prevent code
@@ -18,8 +18,8 @@ export const freeze = <Target extends object>(target: Target): Readonly<Target> 
     return target;
   }
 
-  invariant(isObject(target), {
-    message: '`freeze` only supports objects.',
+  invariant(isObject(target) || isArray(target), {
+    message: '`freeze` only supports objects and arrays.',
     code: ErrorConstant.CORE_HELPERS,
   });
 

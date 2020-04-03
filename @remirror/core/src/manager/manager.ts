@@ -1,15 +1,18 @@
-import type { Interpolation } from '@emotion/core';
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
 import { suggest, Suggester } from 'prosemirror-suggest';
-import { ComponentType } from 'react';
 
-import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
 import {
-  bool,
+  ErrorConstant,
+  REMIRROR_IDENTIFIER_KEY,
+  RemirrorIdentifier,
+} from '@remirror/core-constants';
+import {
+  freeze,
   hasOwnProperty,
+  invariant,
   isArray,
   isEqual,
   isFunction,
@@ -44,24 +47,29 @@ import {
 import {
   ActionsFromExtensions as CommandsFromExtensions,
   AnyExtension,
-  GetCommands,
-  GetConstructor,
+  ExtensionTags,
   GetMarkNames,
   GetNodeNames,
+  InitializeEventMethodParameter,
+  InitializeEventMethodReturn,
   isMarkExtension,
   isNodeExtension,
   SchemaFromExtension,
 } from '../extension';
 import { AnyPreset } from '../preset';
+import { BaseExtensionSettings, GetCommands, GetConstructor, ManagerParameter } from '../types';
 import {
+  createAttributes,
   createCommands,
+  createExtensionPlugins,
   createExtensionTags,
   createHelpers,
+  createKeymaps,
   defaultIsActive,
   defaultIsEnabled,
-  extensionPropertyMapper,
-  hasExtensionProperty,
+  getParameterWithType,
   ignoreFunctions,
+  ManagerPhase,
   transformExtensionOrPreset as transformExtensionOrPresetList,
 } from './manager-helpers';
 
@@ -70,14 +78,14 @@ import {
 /**
  * A type that matches any manager.
  */
-export type AnyManager = Manager<any, any>;
+type AnyManager = Manager<any, any>;
 
 /**
  * Checks to see whether the provided value is an `Manager`.
  *
  * @param value - the value to check
  */
-export const isManager = (value: unknown): value is AnyManager =>
+const isManager = (value: unknown): value is AnyManager =>
   isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
 
 /**
@@ -123,10 +131,7 @@ export const isManager = (value: unknown): value is AnyManager =>
  * manager.data.actions
  * ```
  */
-export class Manager<
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset<ExtensionUnion>
-> {
+class Manager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset<ExtensionUnion>> {
   /**
    * A static method for creating a manager.
    */
@@ -142,22 +147,22 @@ export class Manager<
    *
    * @internal
    */
-  static get [REMIRROR_IDENTIFIER_KEY]() {
+  get [REMIRROR_IDENTIFIER_KEY]() {
     return RemirrorIdentifier.Manager;
   }
 
-  #extensions: ExtensionUnion[];
-  #extensionMap: Map<GetConstructor<ExtensionUnion>, ExtensionUnion>;
+  #extensions: readonly ExtensionUnion[];
+  #extensionMap: WeakMap<GetConstructor<ExtensionUnion>, ExtensionUnion>;
 
   /**
    * The extensions stored by this manager
    */
-  get extensions(): readonly ExtensionUnion[] {
+  get extensions() {
     return this.#extensions;
   }
 
-  #presets: PresetUnion[];
-  #presetMap: Map<GetConstructor<PresetUnion>, PresetUnion>;
+  #presets: readonly PresetUnion[];
+  #presetMap: WeakMap<GetConstructor<PresetUnion>, PresetUnion>;
 
   /**
    * The preset stored by this manager
@@ -169,149 +174,35 @@ export class Manager<
   /**
    * The extension manager store.
    */
-  #store: ManagerStore<ExtensionUnion> = object();
+  #store: Remirror.ManagerStore<ExtensionUnion> = object();
 
+  /**
+   * The nodes to place on the schema.
+   */
   #nodes: Record<GetNodeNames<ExtensionUnion>, NodeExtensionSpec> = object();
+
+  /**
+   * The marks to be added to the schema.
+   */
   #marks: Record<GetMarkNames<ExtensionUnion>, MarkExtensionSpec> = object();
 
   /**
-   * Creates the extension manager which is used to simplify the management of
-   * the prosemirror editor.
-   *
-   * This should not be called directly if you want to use prioritized
-   * extensions. Instead use `Manager.create`.
+   * The editor view stored by this instance.
    */
-  private constructor(...extensionOrPresetList: Array<ExtensionUnion | PresetUnion>) {
-    const { extensions, extensionMap, presets, presetMap } = transformExtensionOrPresetList<
-      ExtensionUnion,
-      PresetUnion
-    >(extensionOrPresetList);
-
-    this.#extensions = extensions;
-    this.#extensionMap = extensionMap;
-    this.#presets = presets;
-    this.#presetMap = presetMap;
-
-    for (const extension of this.#extensions) {
-      if (isNodeExtension(extension)) {
-        const { name, schema } = extension;
-        this.#nodes[name as GetNodeNames<ExtensionUnion>] = schema;
-      }
-
-      if (isMarkExtension(extension)) {
-        const { name, schema } = extension;
-
-        this.#marks[name as GetMarkNames<ExtensionUnion>] = schema;
-      }
-    }
-
-    // Initialize the schema immediately since this doesn't ever change.
-    this.#store.schema = this.createSchema();
-
-    // The tags in the editor are stored here.
-    this.#store.tags = createExtensionTags(this.extensions);
-  }
+  #view!: EditorView<SchemaFromExtension<ExtensionUnion>>;
 
   /**
-   * Initialize the extension manager with important data.
-   *
-   * This is called by the view layer and provides
+   * Store the built in and custom tags for the editor instance.
    */
-  public initialize() {
-    this.#store.extensionPlugins = this.plugins();
-    this.#store.keymaps = this.keymaps();
-    this.#store.inputRules = this.inputRules();
-    this.#store.pasteRules = this.pasteRules();
-    this.#store.suggestions = this.suggestions();
+  #tags: Readonly<ExtensionTags<ExtensionUnion>>;
 
-    this.#store.plugins = [
-      ...this.#store.extensionPlugins,
-      this.#store.suggestions,
-      this.#store.inputRules,
-      ...this.#store.pasteRules,
-      ...this.#store.keymaps,
-    ];
-
-    this.#store.helpers = this.helpers();
-
-    return this;
-  }
-
-  /**
-   * Stores the editor view on the manager
-   *
-   * @param view - the editor view
-   */
-  public initView(view: EditorView<SchemaFromExtension<ExtensionUnion>>) {
-    this.#store.view = view;
-    this.#store.actions = this.createCommands({
-      ...this.params,
-      view,
-      isEditable: () =>
-        isFunction(view.props.editable) ? view.props.editable(this.getState()) : false,
-    });
-  }
-
-  /* Public Get Properties */
-
-  /**
-   * Should be used to check whether the manager needs to be reinitialized.
-   */
-  get initialized() {
-    return this.#initialized;
-  }
-
-  /**
-   * All the dynamically generated attributes provided by each extension.
-   *
-   * @remarks
-   *
-   * High priority extensions have preference over the lower priority
-   * extensions.
-   */
-  get attributes() {
-    let combinedAttributes: AttributesWithClass = object();
-    this.extensions
-      .filter(hasExtensionProperty('attributes'))
-      .filter((extension) => !extension.options.exclude.attributes)
-      .map((extension) => extension.attributes(this.params))
-      .reverse()
-      .forEach((attributes) => {
-        combinedAttributes = {
-          ...combinedAttributes,
-          ...attributes,
-          class:
-            (combinedAttributes.class ?? '') + (bool(attributes.class) ? attributes.class : '') ||
-            '',
-        };
-      });
-
-    return combinedAttributes;
-  }
-
-  /**
-   * Retrieve all the SSRComponent's from the extensions. This is used to render
-   * the initial SSR output.
-   */
-  get components() {
-    const components: Record<string, ComponentType> = object();
-
-    for (const extension of this.extensions) {
-      if (!extension.#config.SSRComponent || extension.options.exclude.ssr) {
-        continue;
-      }
-
-      components[extension.name] = extension.options.SSRComponent;
-    }
-
-    return components;
-  }
+  #phase: ManagerPhase = ManagerPhase.None;
 
   /**
    * Get the extension manager store which is accessible at initialization.
    */
   get store() {
-    return this.#store;
+    return freeze(this.#store);
   }
 
   /**
@@ -340,36 +231,220 @@ export class Manager<
    * A shorthand getter for retrieving the tags from the extension manager.
    */
   get tags() {
-    return this.#store.tags;
+    return this.#tags;
   }
 
   /**
    * A shorthand way of retrieving the editor view.
    */
   get view(): EditorView<SchemaFromExtension<ExtensionUnion>> {
-    return this.#store.view;
+    return this.view;
   }
 
   /* Private Get Properties */
 
   /**
-   * Utility getter for accessing the parameters which are passed to the
+   * Utility getter for accessing the parameter which is passed to the
    * extension methods
    */
-  private get params(): ManagerParameter<SchemaFromExtension<ExtensionUnion>> {
+  private get parameter(): ManagerParameter<SchemaFromExtension<ExtensionUnion>> {
     return {
       tags: this.tags,
       schema: this.schema,
       getState: this.getState,
-      commands: this.commands,
-      getHelpers: this.getHelpers,
+      commands: () => ({}),
+      helpers: () => ({}),
+      chain: () => ({}),
     };
+  }
+
+  #onInitializeHandlers: Array<InitializeEventMethodReturn<ExtensionUnion>> = [];
+
+  /**
+   * Creates the extension manager which is used to simplify the management of
+   * the prosemirror editor.
+   *
+   * This should not be called directly if you want to use prioritized
+   * extensions. Instead use `Manager.create`.
+   */
+  private constructor(...extensionOrPresetList: Array<ExtensionUnion | PresetUnion>) {
+    const { extensions, extensionMap, presets, presetMap } = transformExtensionOrPresetList<
+      ExtensionUnion,
+      PresetUnion
+    >(extensionOrPresetList);
+
+    this.#extensions = freeze(extensions);
+    this.#extensionMap = extensionMap;
+    this.#presets = freeze(presets);
+    this.#presetMap = presetMap;
+
+    const parameter = this.initializeParameter;
+
+    this.createDefaultOnInitializeMethods(parameter);
+
+    for (const extension of this.#extensions) {
+      if (isNodeExtension(extension)) {
+        const { name, schema } = extension;
+        this.#nodes[name as GetNodeNames<ExtensionUnion>] = schema;
+      }
+
+      if (isMarkExtension(extension)) {
+        const { name, schema } = extension;
+
+        this.#marks[name as GetMarkNames<ExtensionUnion>] = schema;
+      }
+
+      const handlers = extension.parameter.onInitialize?.(parameter);
+
+      if (handlers) {
+        this.#onInitializeHandlers.push(handlers);
+      }
+    }
+
+    // Initialize the schema immediately since this doesn't ever change.
+    this.#store.schema = this.createSchema();
+
+    // The tags in the editor are stored here.
+    this.#tags = freeze(createExtensionTags(this.extensions));
+
+    this.initialize();
+  }
+
+  private get initializeParameter(): InitializeEventMethodParameter<ExtensionUnion> {
+    return {
+      getParameter: (extension) => {
+        invariant(this.#phase >= ManagerPhase.Initialize, {
+          code: ErrorConstant.MANAGER_PHASE_ERROR,
+          message: '`getParameter` should only be called within the returned methods scope.',
+        });
+
+        return getParameterWithType(extension, this.parameter);
+      },
+      getStore: () => {
+        invariant(this.#phase >= ManagerPhase.Initialize, {
+          code: ErrorConstant.MANAGER_PHASE_ERROR,
+          message: '`getStore` should only be called within the returned methods scope.',
+        });
+
+        return this.store;
+      },
+      setStoreKey: this.setStoreKey,
+    };
+  }
+
+  /**
+   * Create the default on initialize methods.
+   */
+  private createDefaultOnInitializeMethods(
+    parameter: InitializeEventMethodParameter<ExtensionUnion>,
+  ) {
+    [createAttributes, createExtensionPlugins, createKeymaps].forEach((method) =>
+      this.#onInitializeHandlers.push(method(parameter)),
+    );
+  }
+
+  /**
+   * Called before the extension loop of the initialization phase.
+   */
+  private onInitializeBeforeExtensionLoop() {
+    for (const { beforeExtensionLoop } of this.#onInitializeHandlers) {
+      beforeExtensionLoop?.();
+    }
+  }
+
+  /**
+   * Called after the extension loop of the initialization phase.
+   */
+  private onInitializeAfterExtensionLoop() {
+    for (const { afterExtensionLoop } of this.#onInitializeHandlers) {
+      afterExtensionLoop?.();
+    }
+  }
+
+  /**
+   * Called during the extension loop of the initialization phase.
+   */
+  private onInitializeEachExtension(extension: ExtensionUnion) {
+    for (const { forEachExtension } of this.#onInitializeHandlers) {
+      forEachExtension?.(extension);
+    }
+  }
+
+  /**
+   * Set the store key.
+   */
+  private setStoreKey<Key extends keyof Remirror.ManagerStore>(
+    key: Key,
+    value: Remirror.ManagerStore[Key],
+  ) {
+    invariant(this.#phase > ManagerPhase.Initialize, {
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+      message: '`setStoreKey` should only be called within the returned methods scope.',
+    });
+
+    this.#store[key] = value;
+  }
+
+  /**
+   * Initialize the extension manager with important data.
+   *
+   * This is called by the view layer and provides
+   */
+  private initialize() {
+    this.#phase = ManagerPhase.Initialize;
+
+    this.onInitializeBeforeExtensionLoop();
+
+    for (const extension of this.#extensions) {
+      this.onInitializeEachExtension(extension);
+    }
+
+    this.onInitializeAfterExtensionLoop();
+
+    this.#store.inputRules = this.inputRules();
+    this.#store.pasteRules = this.pasteRules();
+    this.#store.suggestions = this.suggestions();
+
+    this.#store.plugins = [
+      ...this.#store.extensionPlugins,
+      this.#store.suggestions,
+      this.#store.inputRules,
+      ...this.#store.pasteRules,
+      ...this.#store.keymaps,
+    ];
+
+    // this.#store.helpers = this.helpers();
+  }
+
+  /**
+   * Stores the editor view on the manager
+   *
+   * @param view - the editor view
+   */
+  public addView(view: EditorView<SchemaFromExtension<ExtensionUnion>>) {
+    this.#phase = ManagerPhase.AddView;
+    this.#view = view;
+
+    this.#store.commands = this.createCommands({
+      ...this.parameter,
+      view,
+      isEditable: () =>
+        isFunction(view.props.editable) ? view.props.editable(this.getState()) : false,
+    });
+
+    this.#phase = ManagerPhase.Done;
   }
 
   /**
    * A state getter method which is passed into the params.
    */
   private getState() {
+    invariant(this.#phase >= ManagerPhase.AddView, {
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+      message:
+        '`getState` can only be called after the view has been added to the manager. Avoid using it in the outer scope of `creatorMethods`.',
+    });
+
     return this.view.state;
   }
 
@@ -408,7 +483,7 @@ export class Manager<
 
     for (const extension of this.extensions) {
       data[extension.name] = extension.extensionData
-        ? extensionPropertyMapper('extensionData', this.params)(extension)
+        ? extensionPropertyMapper('extensionData', this.parameter)(extension)
         : {};
     }
 
@@ -428,7 +503,6 @@ export class Manager<
    * @param otherManager - the value to test against
    */
   public isEqual(otherManager: unknown) {
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     if (!isManager(otherManager)) {
       return false;
     }
@@ -461,7 +535,7 @@ export class Manager<
    */
   public onTransaction(parameters: OnTransactionManagerParams) {
     this.extensions.filter(hasExtensionProperty('onTransaction')).forEach(({ onTransaction }) => {
-      onTransaction({ ...parameters, ...this.params, view: this.store.view });
+      onTransaction({ ...parameters, ...this.parameter, view: this.store.view });
     });
   }
 
@@ -478,32 +552,6 @@ export class Manager<
       throw new Error(`Cannot retrieve state for an extension: ${name} which doesn't exist`);
     }
     return getPluginState<GState>(key, this.getState());
-  }
-
-  /**
-   * Adjusts the rendered element based on the extension transformers.
-   */
-  public ssrTransformer(element: JSX.Element): JSX.Element {
-    return this.extensions
-      .filter(hasExtensionProperty('ssrTransformer'))
-      .filter((extension) => !extension.options.exclude.ssr)
-      .reduce((previousElement, extension) => {
-        return extension.ssrTransformer(previousElement, this.params);
-      }, element);
-  }
-
-  /* Private Methods */
-
-  /**
-   * Checks to see if the extension manager has been initialized and throws if
-   * not
-   */
-  private checkInitialized() {
-    if (!this.#initialized) {
-      throw new Error(
-        'Before using the extension manager it must be initialized with a portalContainer and getState',
-      );
-    }
   }
 
   /**
@@ -564,49 +612,13 @@ export class Manager<
 
   private createHelpers(): this['_H'] {
     const helpers = object<PlainObject>();
-    const methods = createHelpers({ extensions: this.extensions, params: this.params });
+    const methods = createHelpers({ extensions: this.extensions, params: this.parameter });
 
     Object.entries(methods).forEach(([helperName, helper]) => {
       helpers[helperName] = helper;
     });
 
     return helpers as this['_H'];
-  }
-
-  /**
-   * Retrieve an object mapping extension names to their isActive() methods
-   */
-  private isActiveMethods() {
-    // Will throw if not initialized
-    this.checkInitialized();
-
-    const isActiveMethods: Record<this['_Names'], ExtensionIsActiveFunction> = object();
-
-    return this.extensions.filter(hasExtensionProperty('isActive')).reduce(
-      (accumulator, extension) => ({
-        ...accumulator,
-        [extension.name]: extensionPropertyMapper('isActive', this.params)(extension),
-      }),
-      isActiveMethods,
-    );
-  }
-
-  /**
-   * Retrieve all plugins from the passed in extensions
-   */
-  private plugins() {
-    this.checkInitialized();
-    const plugins: ProsemirrorPlugin[] = [];
-    const extensionPlugins = this.extensions
-      .filter(hasExtensionProperty('plugin'))
-      .filter((extension) => !extension.options.exclude.plugin)
-      .map(extensionPropertyMapper('plugin', this.params)) as ProsemirrorPlugin[];
-
-    extensionPlugins.forEach((plugin) => {
-      plugins.push(plugin);
-    });
-
-    return plugins;
   }
 
   /**
@@ -624,44 +636,11 @@ export class Manager<
           ...previousNodeViews,
           [extension.name]: extensionPropertyMapper(
             'nodeView',
-            this.params,
+            this.parameter,
           )(extension) as NodeViewMethod,
         }),
         nodeViews,
       );
-  }
-
-  /**
-   * Retrieve all keymaps (how the editor responds to keyboard commands).
-   */
-  private keymaps() {
-    this.checkInitialized();
-    const extensionKeymaps: KeyBindings[] = this.extensions
-      .filter(hasExtensionProperty('keys'))
-      .filter((extension) => !extension.options.exclude.keys)
-      .map(extensionPropertyMapper('keys', this.params));
-
-    const previousCommandsMap = new Map<string, KeyBindingCommandFunction[]>();
-    const mappedCommands: Record<string, ProsemirrorCommandFunction> = object();
-
-    for (const extensionKeymap of extensionKeymaps) {
-      for (const key in extensionKeymap) {
-        if (!hasOwnProperty(extensionKeymap, key)) {
-          continue;
-        }
-
-        const previousCommands: KeyBindingCommandFunction[] = previousCommandsMap.get(key) ?? [];
-        const commands = [...previousCommands, extensionKeymap[key]];
-        const command = chainKeyBindingCommands(...commands);
-        previousCommandsMap.set(key, commands);
-
-        mappedCommands[key] = (state, dispatch, view) => {
-          return command({ state, dispatch, view, next: () => false });
-        };
-      }
-    }
-
-    return [keymap(mappedCommands)];
   }
 
   /**
@@ -674,7 +653,7 @@ export class Manager<
     const extensionInputRules = this.extensions
       .filter(hasExtensionProperty('inputRules'))
       .filter((extension) => !extension.options.exclude.inputRules)
-      .map(extensionPropertyMapper('inputRules', this.params)) as InputRule[][];
+      .map(extensionPropertyMapper('inputRules', this.parameter));
 
     extensionInputRules.forEach((rule) => {
       rules.push(...rule);
@@ -692,7 +671,7 @@ export class Manager<
     const extensionPasteRules = this.extensions
       .filter(hasExtensionProperty('pasteRules'))
       .filter((extension) => !extension.options.exclude.pasteRules)
-      .map(extensionPropertyMapper('pasteRules', this.params)) as ProsemirrorPlugin[][];
+      .map(extensionPropertyMapper('pasteRules', this.parameter));
 
     extensionPasteRules.forEach((rules) => {
       pasteRules.push(...rules);
@@ -701,27 +680,13 @@ export class Manager<
     return pasteRules;
   }
 
-  /**
-   * Extensions can register custom styles for the editor. This retrieves them.
-   */
-  private styles(): Interpolation[] {
-    this.checkInitialized();
-    const extensionStyles = this.extensions
-      .filter(hasExtensionProperty('styles'))
-      .filter((extension) => !extension.options.exclude.styles)
-      .map(extensionPropertyMapper('styles', this.params));
-
-    return extensionStyles;
-  }
-
   private suggestions() {
-    this.checkInitialized();
     const suggestions: Suggester[] = [];
 
     const extensionSuggesters = this.extensions
       .filter(hasExtensionProperty('suggestions'))
       .filter((extension) => !extension.options.exclude.suggestions)
-      .map(extensionPropertyMapper('suggestions', this.params));
+      .map(extensionPropertyMapper('suggestions', this.parameter));
 
     extensionSuggesters.forEach((suggester) => {
       suggestions.push(...(isArray(suggester) ? suggester : [suggester]));
@@ -752,7 +717,7 @@ export class Manager<
   public readonly _C!: CommandsFromExtensions<ExtensionUnion>;
 }
 
-export interface ManagerParams<
+interface ManagerParams<
   ExtensionUnion extends AnyExtension = any,
   PresetUnion extends AnyPreset<ExtensionUnion> = any
 > {
@@ -762,58 +727,65 @@ export interface ManagerParams<
   manager: Manager<ExtensionUnion, PresetUnion>;
 }
 
-/**
- * Describes the object where the extension manager stores it's data.
- */
-export interface ManagerStore<ExtensionUnion extends AnyExtension = any>
-  extends GlobalManagerStore<ExtensionUnion> {}
-
-export interface OnTransactionManagerParams extends TransactionParameter, EditorStateParameter {}
+interface OnTransactionManagerParams extends TransactionParameter, EditorStateParameter {}
 
 declare global {
-  /**
-   * Use this to extend the store if you're extension is modifying the shape of
-   * the `Manager.store` property.
-   */
-  interface GlobalManagerStore<ExtensionUnion extends AnyExtension = any> {
+  namespace Remirror {
     /**
-     * The schema created by this extension manager.
+     * Describes the object where the extension manager stores it's data.
+     *
+     * @remarks
+     *
+     * Since this is a global namespace, you can extend the store if your
+     * extension is modifying the shape of the `Manager.store` property.
      */
-    schema: SchemaFromExtension<ExtensionUnion>;
+    interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
+      /**
+       * The attributes to be added to the prosemirror editor.
+       */
+      attributes: AttributesWithClass;
+
+      /**
+       * The schema created by this extension manager.
+       */
+      schema: SchemaFromExtension<ExtensionUnion>;
+
+      /**
+       * All the plugins defined by the extensions.
+       */
+      extensionPlugins: ProsemirrorPlugin[];
+
+      /**
+       * All of the plugins combined together from all sources
+       */
+      plugins: ProsemirrorPlugin[];
+
+      /**
+       * The keymap arrangement.
+       */
+      keymaps: ProsemirrorPlugin[];
+
+      /**
+       * The input rules for the editor.
+       */
+      inputRules: ProsemirrorPlugin;
+      pasteRules: ProsemirrorPlugin[];
+      suggestions: ProsemirrorPlugin;
+
+      /**
+       * The commands defined within this extension.
+       */
+      commands: GetCommands<ExtensionUnion>;
+    }
 
     /**
-     * All the plugins defined by the extensions.
+     * The initialization params which are passed by the view layer into the
+     * extension manager. This can be added to by the requesting framework layer.
      */
-    extensionPlugins: ProsemirrorPlugin[];
-
-    /** All of the plugins combined together from all sources */
-    plugins: ProsemirrorPlugin[];
-
-    /**
-     * The keymap arrangement.
-     */
-    keymaps: ProsemirrorPlugin[];
-
-    /**
-     * The input rules for the editor.
-     */
-    inputRules: ProsemirrorPlugin;
-    pasteRules: ProsemirrorPlugin[];
-    suggestions: ProsemirrorPlugin;
-
-    /**
-     * The commands defined within this extension.
-     */
-    commands: GetCommands<ExtensionUnion>;
-    view: EditorView<SchemaFromExtension<ExtensionUnion>>;
-    tags: ExtensionTags<ExtensionUnion>;
+    interface ManagerInitializationParams<ExtensionUnion extends AnyExtension = any> {}
   }
-
-  /**
-   * The initialization params which are passed by the view layer into the
-   * extension manager. This can be added to by the requesting framework layer.
-   */
-  interface ManagerInitializationParams<ExtensionUnion extends AnyExtension = any> {}
 }
 
 /* eslint-enable @typescript-eslint/explicit-member-accessibility */
+
+export { AnyManager, isManager, Manager, ManagerParams, OnTransactionManagerParams };

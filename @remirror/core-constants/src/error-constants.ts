@@ -46,7 +46,14 @@ export enum ErrorConstant {
   /**
    * You're editor is missing a required extension.
    */
-  MISSING_REQUIRED_EXTENSION = 'RMR007',
+  MISSING_REQUIRED_EXTENSION = 'RMR0007',
+
+  /**
+   * Called a method event at the wrong time. Please make sure getter functions
+   * are only called with within the scope of the returned functions. They
+   * should not be called in the outer scope of your method.
+   */
+  MANAGER_PHASE_ERROR = 'RMR0008',
 
   /**
    * The user requested an invalid extension from the preset. Please check the

@@ -62,11 +62,14 @@ const elementIsOfType = <
 ) => element.type === type;
 
 /**
- * This utility maps through the SSR element and injects break tags into all empty p tags.
+ * This utility maps through the SSR element and injects break tags into all
+ * empty p tags.
  *
  * @remarks
- * Prosemirror automatically injects break tags into empty paragraph tags. This causes the document
- * rendered during SSR to be different than when the page loads.
+ *
+ * Prosemirror automatically injects break tags into empty paragraph tags. This
+ * causes the document rendered during SSR to be different than when the page
+ * loads.
  */
 export const injectBrIntoEmptyParagraphs: SSRTransformer = (element) => {
   return cloneSSRElement(element, (children) => {

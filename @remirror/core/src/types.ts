@@ -25,7 +25,7 @@ import {
  *
  * @typeParam Properties - The properties used by the object.
  */
-export interface PropertiesShape<Properties extends object> {
+interface PropertiesShape<Properties extends object> {
   /**
    * A properties object with all value required.
    */
@@ -72,7 +72,7 @@ type Changes<Type> =
 /**
  * Highlights all the properties that have changed.
  */
-export type ChangedProperties<Properties extends object> = {
+type ChangedProperties<Properties extends object> = {
   [Key in keyof Properties]: Changes<Properties[Key]>;
 };
 
@@ -81,27 +81,27 @@ export type ChangedProperties<Properties extends object> = {
  * are mostly used for nodes and marks the main difference is they are added to
  * the `tags` parameter of the extension rather than within the schema.
  */
-export type GeneralExtensionTags<Names extends string = string> = Record<Tag, Names[]> &
+type GeneralExtensionTags<Names extends string = string> = Record<Tag, Names[]> &
   Record<string, undefined | Names[]>;
 
 /**
  * Provides the different mark groups which are defined in the mark extension
  * specification.
  */
-export type MarkExtensionTags<MarkNames extends string = string> = Record<MarkGroup, MarkNames[]> &
+type MarkExtensionTags<MarkNames extends string = string> = Record<MarkGroup, MarkNames[]> &
   Record<string, undefined | MarkNames[]>;
 
 /**
  * Provides an object of the different node groups `block` and `inline` which
  * are defined in the node extension specification.
  */
-export type NodeExtensionTags<NodeNames extends string = string> = Record<NodeGroup, NodeNames[]> &
+type NodeExtensionTags<NodeNames extends string = string> = Record<NodeGroup, NodeNames[]> &
   Record<string, undefined | NodeNames[]>;
 
 /**
  * Get the static extension settings.
  */
-export type GetSettings<
+type GetSettings<
   Type extends {
     settings: unknown;
   }
@@ -110,7 +110,7 @@ export type GetSettings<
 /**
  * Get the dynamic extension properties.
  */
-export type GetProperties<
+type GetProperties<
   Type extends {
     properties: unknown;
   }
@@ -119,28 +119,33 @@ export type GetProperties<
 /**
  * Get the commands provided by an extension.
  */
-export type GetCommands<Type extends { _C: unknown }> = Type['_C'];
+type GetCommands<Type extends { ['~C']: unknown }> = Type['~C'];
 
 /**
  * Get the helpers provided by an extension.
  */
-export type GetHelpers<Type extends { _H: unknown }> = Type['_H'];
+type GetHelpers<Type extends { ['~H']: unknown }> = Type['~H'];
 
 /**
  * Get the name of an extension.
  */
-export type GetName<Type extends { name: string }> = Type['name'];
+type GetName<Type extends { name: string }> = Type['name'];
 
 /**
  * Get the constructor of an extension.
  */
-export type GetConstructor<Type extends { constructor: unknown }> = Type['constructor'];
+type GetConstructor<Type extends { constructor: unknown }> = Type['constructor'];
 
 /**
  * Parameters passed into many of the extension methods.
  */
-export interface ManagerParameter<Schema extends EditorSchema = EditorSchema>
-  extends GlobalExtensionTagParameter {
+interface ManagerParameter<Schema extends EditorSchema = EditorSchema>
+  extends Remirror.ExtensionTagParameter {
+  /**
+   * The Prosemirror schema being used for the current interface
+   */
+  schema: Schema;
+
   /**
    * A helper method for retrieving the state of the editor
    */
@@ -211,11 +216,6 @@ export interface ManagerParameter<Schema extends EditorSchema = EditorSchema>
    * extension can register its own helpers.
    */
   helpers: () => any;
-
-  /**
-   * The Prosemirror schema being used for the current interface
-   */
-  schema: Schema;
 }
 
 /**
@@ -227,34 +227,27 @@ export interface ManagerParameter<Schema extends EditorSchema = EditorSchema>
  *
  * @typeParam Schema - the underlying editor schema.
  */
-export interface ViewManagerParameter<Schema extends EditorSchema = any>
+interface ViewManagerParameter<Schema extends EditorSchema = any>
   extends EditorViewParameter<Schema>,
     ManagerParameter<Schema> {}
 
-export type ExtensionCommandFunction = (...args: any[]) => ProsemirrorCommandFunction;
+type ExtensionCommandFunction = (...args: any[]) => ProsemirrorCommandFunction;
 
-export type ExtensionIsActiveFunction = (params: Partial<AttributesParameter>) => boolean;
+type ExtensionIsActiveFunction = (params: Partial<AttributesParameter>) => boolean;
 
 /**
  * The return signature for an extensions command method.
  */
-export interface ExtensionCommandReturn {
+interface ExtensionCommandReturn {
   [command: string]: ExtensionCommandFunction;
 }
 
 /**
  * The return signature for an extensions helper method.
  */
-export interface ExtensionHelperReturn {
+interface ExtensionHelperReturn {
   [helper: string]: AnyFunction;
 }
-
-/**
- * A utility type used to create the generic prosemirror typescript types.
- */
-type WithProsemirrorType<ProsemirrorType> = ProsemirrorType extends never
-  ? {}
-  : { type: ProsemirrorType };
 
 /**
  * Generic extension manager type params for methods which require a prosemirror
@@ -262,19 +255,21 @@ type WithProsemirrorType<ProsemirrorType> = ProsemirrorType extends never
  *
  * This is used to generate the specific types for Marks and Nodes.
  */
-export type ManagerTypeParameter<GType> = ManagerParameter & WithProsemirrorType<GType>;
+interface ManagerTypeParameter<ProsemirrorType> extends ManagerParameter {
+  type: ProsemirrorType;
+}
 
 /**
  * The extension manager type params for a prosemirror `NodeType` extension
  */
-export type ManagerNodeTypeParameter = ManagerTypeParameter<NodeType<EditorSchema>>;
+interface ManagerNodeTypeParameter extends ManagerTypeParameter<NodeType<EditorSchema>> {}
 
 /**
  * The extension manager type params for a prosemirror `NodeType` extension
  */
-export type ManagerMarkTypeParameter = ManagerTypeParameter<MarkType<EditorSchema>>;
+interface ManagerMarkTypeParameter extends ManagerTypeParameter<MarkType<EditorSchema>> {}
 
-export interface CommandParameter extends ViewManagerParameter<EditorSchema> {
+interface CommandParameter extends ViewManagerParameter<EditorSchema> {
   /**
    * Returns true when the editor can be edited and false when it cannot.
    *
@@ -287,15 +282,18 @@ export interface CommandParameter extends ViewManagerParameter<EditorSchema> {
 /**
  * The parameter passed to the commands method.
  */
-export type CreateCommandsParameter<GType = never> = CommandParameter & WithProsemirrorType<GType>;
+interface CreateCommandsParameter<ProsemirrorType> extends CommandParameter {
+  type: ProsemirrorType;
+}
 
 /**
  * The parameter passed to the helper methods.
  */
-export type CreateHelpersParameter<GType = never> = ViewManagerParameter<EditorSchema> &
-  WithProsemirrorType<GType>;
+interface CreateHelpersParameter<ProsemirrorType> extends ViewManagerParameter<EditorSchema> {
+  type: ProsemirrorType;
+}
 
-export interface CommandMethod<Parameter extends any[] = []> {
+interface CommandMethod<Parameter extends any[] = []> {
   (...args: Parameter): void;
 
   /**
@@ -314,34 +312,34 @@ export interface CommandMethod<Parameter extends any[] = []> {
 /**
  * The type signature for all actions.
  */
-export interface AnyCommands {
+interface AnyCommands {
   [action: string]: CommandMethod<any>;
 }
 
 /**
  * The type signature for all helpers.
  */
-export interface AnyHelpers {
+interface AnyHelpers {
   [helper: string]: AnyFunction;
 }
 
 /**
  * The interface for SSR Component Props
  */
-export interface SSRComponentProps<
-  Settings extends BaseExtensionSettings = BaseExtensionSettings,
+interface SSRComponentProps<
+  Settings extends object = {},
   Attributes extends ProsemirrorAttributes = ProsemirrorAttributes
 > extends NodeWithAttributesParameter<Attributes>, BaseExtensionSettingsParameter<Settings> {}
 
 /**
  * The params object received by the onTransaction handler.
  */
-export interface OnTransactionParameter
+interface OnTransactionParameter
   extends ViewManagerParameter,
     TransactionParameter,
     EditorStateParameter {}
 
-export interface BaseExtensionSettings extends GlobalRemirrorExtensionSettings {
+interface BaseExtensionSettings extends GlobalRemirrorExtensionSettings {
   /**
    * Inject additional attributes into the defined mark / node schema. This can
    * only be used for `NodeExtensions` and `MarkExtensions`.
@@ -380,7 +378,7 @@ export interface BaseExtensionSettings extends GlobalRemirrorExtensionSettings {
   priority?: ExtensionPriority | null;
 }
 
-export interface ExcludeOptions extends GlobalRemirrorExcludeOptions {
+interface ExcludeOptions extends GlobalRemirrorExcludeOptions {
   /**
    * Whether to exclude the extension's pasteRules
    *
@@ -438,7 +436,7 @@ export interface ExcludeOptions extends GlobalRemirrorExcludeOptions {
   suggesters?: boolean;
 }
 
-export interface SSRComponentParameter {
+interface SSRComponentParameter {
   /**
    * The component to render in SSR. The attrs are passed as props.
    *
@@ -451,9 +449,7 @@ export interface SSRComponentParameter {
   SSRComponent?: ComponentType<any> | null;
 }
 
-export interface BaseExtensionSettingsParameter<
-  Settings extends BaseExtensionSettings = BaseExtensionSettings
-> {
+interface BaseExtensionSettingsParameter<Settings extends object = {}> {
   /**
    * The static config that was passed into the extension that created this node
    * or mark.
@@ -465,7 +461,7 @@ export interface BaseExtensionSettingsParameter<
  * The parameters passed to the `createSchema` method for node and mark
  * extensions.
  */
-export interface CreateSchemaParameter<Settings extends BaseExtensionSettings> {
+interface CreateSchemaParameter<Settings extends object> {
   /**
    * All the static settings that have been passed into the extension when
    * being created (instantiated).
@@ -509,3 +505,38 @@ declare global {
    */
   interface GlobalRemirrorExtensionSettings {}
 }
+export {
+  PropertiesShape,
+  ChangedProperties,
+  GeneralExtensionTags,
+  MarkExtensionTags,
+  NodeExtensionTags,
+  GetSettings,
+  GetProperties,
+  GetCommands,
+  GetHelpers,
+  GetName,
+  GetConstructor,
+  ManagerParameter,
+  ViewManagerParameter,
+  ExtensionCommandFunction,
+  ExtensionIsActiveFunction,
+  ExtensionCommandReturn,
+  ExtensionHelperReturn,
+  ManagerTypeParameter,
+  ManagerNodeTypeParameter,
+  ManagerMarkTypeParameter,
+  CommandParameter,
+  CreateCommandsParameter,
+  CreateHelpersParameter,
+  CommandMethod,
+  AnyCommands,
+  AnyHelpers,
+  SSRComponentProps,
+  OnTransactionParameter,
+  BaseExtensionSettings,
+  ExcludeOptions,
+  SSRComponentParameter,
+  BaseExtensionSettingsParameter,
+  CreateSchemaParameter,
+};

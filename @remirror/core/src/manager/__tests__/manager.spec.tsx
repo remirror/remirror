@@ -5,11 +5,11 @@ import React, { FC } from 'react';
 import { EMPTY_PARAGRAPH_NODE, Tag } from '@remirror/core-constants';
 import { Cast } from '@remirror/core-helpers';
 import {
-  ProsemirrorAttributes,
   EditorState,
   KeyBindingCommandFunction,
   KeyBindings,
   NodeExtensionSpec,
+  ProsemirrorAttributes,
 } from '@remirror/core-types';
 import { PortalContainer } from '@remirror/react-portals';
 import {
@@ -93,7 +93,7 @@ describe('Manager', () => {
       state,
       editable: () => true,
     });
-    manager.initView(view);
+    manager.addView(view);
   });
 
   test('commands', () => {
