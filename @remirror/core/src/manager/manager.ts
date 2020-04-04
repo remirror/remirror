@@ -37,8 +37,8 @@ import {
   AnyExtension,
   CommandsFromExtensions,
   ExtensionTags,
-  GetMarkNames,
-  GetNodeNames,
+  GetMarkNameUnion,
+  GetNodeNameUnion,
   InitializeEventMethodParameter,
   InitializeEventMethodReturn,
   isMarkExtension,
@@ -46,11 +46,16 @@ import {
   SchemaFromExtension,
 } from '../extension';
 import { AnyPreset } from '../preset';
-import { GetCommands, GetConstructor, ManagerParameter } from '../types';
+import {
+  GetCommands,
+  GetConstructor,
+  GetNameUnion,
+  ManagerParameter,
+  ManagerSettings,
+} from '../types';
 import {
   createAttributes,
   createCommands,
-  createExtensionPlugins,
   createExtensionTags,
   createHelpers,
   createKeymaps,
@@ -130,8 +135,8 @@ class Manager<
   public static of<
     ExtensionUnion extends AnyExtension,
     PresetUnion extends AnyPreset<ExtensionUnion>
-  >(...extensionOrPresetList: Array<ExtensionUnion | PresetUnion>) {
-    return new Manager<ExtensionUnion, PresetUnion>(...extensionOrPresetList);
+  >(extensionOrPresetList: Array<ExtensionUnion | PresetUnion>, settings: ManagerSettings) {
+    return new Manager<ExtensionUnion, PresetUnion>(extensionOrPresetList, settings);
   }
 
   /**
@@ -168,7 +173,12 @@ class Manager<
    */
   #store: Remirror.ManagerStore<ExtensionUnion> = this.createInitialStore();
 
+  /**
+   * The stage the manager is currently running.
+   */
   #phase: ManagerPhase = ManagerPhase.None;
+
+  #settings: ManagerSettings;
 
   /**
    * Get the extension manager store which is accessible at initialization.
@@ -239,7 +249,12 @@ class Manager<
    * This should not be called directly if you want to use prioritized
    * extensions. Instead use `Manager.create`.
    */
-  private constructor(...extensionOrPresetList: Array<ExtensionUnion | PresetUnion>) {
+  private constructor(
+    extensionOrPresetList: Array<ExtensionUnion | PresetUnion>,
+    settings: ManagerSettings,
+  ) {
+    this.#settings = settings;
+
     const { extensions, extensionMap, presets, presetMap } = transformExtensionOrPresetList<
       ExtensionUnion,
       PresetUnion
@@ -256,13 +271,13 @@ class Manager<
     for (const extension of this.#extensions) {
       if (isNodeExtension(extension)) {
         const { name, schema } = extension;
-        this.#store.nodes[name as GetNodeNames<ExtensionUnion>] = schema;
+        this.#store.nodes[name as GetNodeNameUnion<ExtensionUnion>] = schema;
       }
 
       if (isMarkExtension(extension)) {
-        const { name, schema } = extension;
+        const { name, #schema: schema } = extension;
 
-        this.#store.marks[name as GetMarkNames<ExtensionUnion>] = schema;
+        this.#store.marks[name as GetMarkNameUnion<ExtensionUnion>] = schema;
       }
 
       const handlers = extension.parameter.onInitialize?.(parameter);
@@ -294,6 +309,7 @@ class Manager<
       },
       getStoreKey: this.getStoreKey,
       setStoreKey: this.setStoreKey,
+      managerSettings: this.#settings,
     };
   }
 
@@ -301,7 +317,7 @@ class Manager<
    * Create the default on initialize methods.
    */
   private createDefaultOnInitializeMethods(parameter: InitializeEventMethodParameter) {
-    [createAttributes, createExtensionPlugins, createKeymaps].forEach((method) =>
+    [createAttributes, createKeymaps].forEach((method) =>
       this.#onInitializeHandlers.push(method(parameter)),
     );
   }
@@ -460,23 +476,6 @@ class Manager<
   }
 
   /**
-   * Collect data from all the extensions. This will be made available to the
-   * consuming react component within the context data and also the child
-   * renderProp function parameters.
-   */
-  public extensionData() {
-    const data: Record<string, PlainObject> = object();
-
-    for (const extension of this.extensions) {
-      data[extension.name] = extension.extensionData
-        ? extensionPropertyMapper('extensionData', this.parameter)(extension)
-        : {};
-    }
-
-    return data;
-  }
-
-  /**
    * Checks whether two manager's are equal. Can be used to determine whether a
    * change in props has caused anything to actually change and prevent a
    * rerender.
@@ -493,17 +492,19 @@ class Manager<
       return false;
     }
 
-    if (this.extensions.length !== otherManager.extensions.length) {
+    const manager = otherManager;
+
+    if (this.extensions.length !== manager.extensions.length) {
       return false;
     }
 
     for (let ii = 0; ii <= this.extensions.length - 1; ii++) {
       const extension = this.extensions[ii];
-      const otherExtension = otherManager.extensions[ii];
+      const otherExtension = manager.extensions[ii];
 
       if (
         extension.constructor === otherExtension.constructor &&
-        isEqual(ignoreFunctions(extension.options), ignoreFunctions(otherExtension.options))
+        isEqual(ignoreFunctions(extension.settings), ignoreFunctions(otherExtension.options))
       ) {
         continue;
       }
@@ -526,42 +527,16 @@ class Manager<
   }
 
   /**
-   * Retrieve the state for a given extension name. This will throw an error if
-   * the extension doesn't exist.
-   *
-   * @param name - the name of the extension
-   */
-  public getPluginState<GState>(name: this['_N']): GState {
-    this.checkInitialized();
-    const key = this.pluginKeys[name];
-    if (!key) {
-      throw new Error(`Cannot retrieve state for an extension: ${name} which doesn't exist`);
-    }
-    return getPluginState<GState>(key, this.getState());
-  }
-
-  /**
    * Dynamically create the editor schema based on the extensions that have been
    * passed in.
    *
    * This is called as soon as the Manager is created.
    */
-  private createSchema(): EditorSchema<GetNodeNames<ExtensionUnion>, GetMarkNames<ExtensionUnion>> {
+  private createSchema(): EditorSchema<
+    GetNodeNameUnion<ExtensionUnion>,
+    GetMarkNameUnion<ExtensionUnion>
+  > {
     return new Schema({ nodes: this.nodes, marks: this.marks });
-  }
-
-  /**
-   * Retrieve all the extension plugin keys
-   */
-  private get pluginKeys() {
-    const pluginKeys: Record<this['_N'], PluginKey> = object();
-    this.extensions
-      .filter((extension) => extension.plugin)
-      .forEach(({ pluginKey, name }) => {
-        pluginKeys[name as this['_N']] = pluginKey;
-      });
-
-    return pluginKeys;
   }
 
   /**
@@ -627,25 +602,6 @@ class Manager<
         }),
         nodeViews,
       );
-  }
-
-  /**
-   * Retrieve all inputRules (how the editor responds to text matching certain
-   * rules).
-   */
-  private inputRules() {
-    this.checkInitialized();
-    const rules: InputRule[] = [];
-    const extensionInputRules = this.extensions
-      .filter(hasExtensionProperty('inputRules'))
-      .filter((extension) => !extension.options.exclude.inputRules)
-      .map(extensionPropertyMapper('inputRules', this.parameter));
-
-    extensionInputRules.forEach((rule) => {
-      rules.push(...rule);
-    });
-
-    return inputRules({ rules });
   }
 
   /**
@@ -729,12 +685,12 @@ declare global {
       /**
        * The nodes to place on the schema.
        */
-      nodes: Record<GetNodeNames<ExtensionUnion>, NodeExtensionSpec>;
+      nodes: Record<GetNodeNameUnion<ExtensionUnion>, NodeExtensionSpec>;
 
       /**
        * The marks to be added to the schema.
        */
-      marks: Record<GetMarkNames<ExtensionUnion>, MarkExtensionSpec>;
+      marks: Record<GetMarkNameUnion<ExtensionUnion>, MarkExtensionSpec>;
 
       /**
        * The editor view stored by this instance.
@@ -775,6 +731,11 @@ declare global {
        * The input rules for the editor.
        */
       inputRules: ProsemirrorPlugin;
+
+      /**
+       * The paste rules for editor. This determines what happens when the user
+       * pastes content into the editor.
+       */
       pasteRules: ProsemirrorPlugin[];
 
       /**

@@ -1,8 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
-
-import { InputRule } from 'prosemirror-inputrules';
 import { AttributeSpec } from 'prosemirror-model';
-import { PluginKey } from 'prosemirror-state';
 import { Suggester } from 'prosemirror-suggest';
 
 import {
@@ -31,7 +27,6 @@ import {
   FlipPartialAndRequired,
   GetExtraAttributes,
   IfEmpty,
-  IfMatches,
   IfNoRequiredProperties,
   KeyBindings,
   MarkExtensionSpec,
@@ -53,10 +48,11 @@ import {
   ExtensionHelperReturn,
   ExtensionIsActiveFunction,
   GeneralExtensionTags,
-  GetName,
+  GetNameUnion,
   ManagerMarkTypeParameter,
   ManagerNodeTypeParameter,
   ManagerParameter,
+  ManagerSettings,
   ManagerTypeParameter,
   MarkExtensionTags,
   NodeExtensionTags,
@@ -343,11 +339,6 @@ abstract class Extension<
   public abstract readonly type: ExtensionType;
 
   /**
-   * The prosemirror plugin key for this extension.
-   */
-  #pk?: PluginKey;
-
-  /**
    * Private instance of the static settings.
    */
   #settings: Required<Settings & BaseExtensionSettings>;
@@ -410,7 +401,7 @@ abstract class Extension<
    * The priority level for this instance of the extension.
    */
   get priority(): ExtensionPriority {
-    return this.#settings.priority ?? this.parameter.defaultPriority ?? ExtensionPriority.Low;
+    return this.#settings.priority ?? this.parameter.defaultPriority ?? ExtensionPriority.Default;
   }
 
   /**
@@ -439,20 +430,6 @@ abstract class Extension<
    */
   get requiredExtensions() {
     return this.parameter.requiredExtensions ?? [];
-  }
-
-  /**
-   * Retrieves the plugin key which is used to uniquely identify the plugin
-   * created by the extension.
-   */
-  get pluginKey(): PluginKey {
-    if (this.#pk) {
-      return this.#pk;
-    }
-
-    this.#pk = new PluginKey(this.name);
-
-    return this.#pk;
   }
 
   constructor(...[settings]: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
@@ -626,7 +603,7 @@ interface BaseExtensionFactoryParameter<
    * The priority levels help determine the order in which an extension is
    * loaded within the editor. High priority extensions are given precedence.
    *
-   * @defaultValue `ExtensionPriority.Low`
+   * @defaultValue `ExtensionPriority.Default`
    */
   defaultPriority?: ExtensionPriority;
 
@@ -778,17 +755,6 @@ interface ExtensionCreatorMethods<
   ) => Helpers;
 
   /**
-   * Register input rules which are activated if the regex matches as a user is
-   * typing.
-   *
-   * @param parameter - schema parameter with type included
-   */
-  createInputRules?: (
-    parameter: ManagerTypeParameter<ProsemirrorType>,
-    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
-  ) => InputRule[];
-
-  /**
    * Add key bindings for this extension.
    *
    * @param parameter - schema parameter with type included
@@ -828,16 +794,6 @@ interface ExtensionCreatorMethods<
     parameter: ManagerTypeParameter<ProsemirrorType>,
     extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
   ) => ProsemirrorPlugin[];
-
-  /**
-   * Register a plugin for the extension.
-   *
-   * @param parameter - schema parameter with type included
-   */
-  createPlugin?: (
-    parameter: ManagerTypeParameter<ProsemirrorType>,
-    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
-  ) => ProsemirrorPlugin;
 
   /**
    * Create suggestions which respond to character key combinations within the
@@ -900,9 +856,8 @@ type ExtensionFactoryParameter<
     Partial<DefaultPropertiesParameter<Properties>>,
     DefaultPropertiesParameter<Properties>
   > &
-  IfMatches<
+  IfEmpty<
     Settings,
-    BaseExtensionSettings,
     Partial<DefaultSettingsParameter<Settings>>,
     DefaultSettingsParameter<Settings>
   >;
@@ -975,6 +930,10 @@ abstract class MarkExtension<
     return ExtensionType.Mark;
   }
 
+  get schema(): Readonly<MarkExtensionSpec> {
+    return this.#schema;
+  }
+
   /**
    * The prosemirror specification which sets up the mark in the schema.
    *
@@ -987,12 +946,12 @@ abstract class MarkExtension<
    * For more advanced requirements, it may be possible to create a nodeView to
    * manage the dom interactions.
    */
-  public readonly schema: MarkExtensionSpec;
+  readonly #schema: MarkExtensionSpec;
 
   constructor(...parameters: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
     super(...parameters);
 
-    this.schema = this.parameter.createMarkSchema({
+    this.#schema = this.parameter.createMarkSchema({
       settings: this.settings,
       createExtraAttributes: createExtraAttributesFactory(this as AnyMarkExtension),
       getExtraAttributes: getExtraAttributesFactory(this as AnyMarkExtension),
@@ -1200,8 +1159,6 @@ interface NodeExtensionConstructor<
   ): NodeExtension<Name, Settings, Properties, Commands, Helpers>;
 }
 
-/* eslint-enable @typescript-eslint/explicit-member-accessibility */
-
 /**
  * The shape of the tag data stored by the extension manager.
  *
@@ -1212,30 +1169,30 @@ interface ExtensionTags<ExtensionUnion extends AnyExtension> {
   /**
    * All the node extension tags.
    */
-  node: NodeExtensionTags<GetNodeNames<ExtensionUnion>>;
+  node: NodeExtensionTags<GetNodeNameUnion<ExtensionUnion>>;
 
   /**
    * All the mar extension tags.
    */
-  mark: MarkExtensionTags<GetMarkNames<ExtensionUnion>>;
+  mark: MarkExtensionTags<GetMarkNameUnion<ExtensionUnion>>;
 
   /**
    * All the general extension tags.
    */
-  general: GeneralExtensionTags<GetName<ExtensionUnion>>;
+  general: GeneralExtensionTags<GetNameUnion<ExtensionUnion>>;
 }
 
 /**
  * A utility type for retrieving the name of an extension only when it's a plain
  * extension.
  */
-type GetPlainNames<Type> = Type extends AnyPlainExtension ? GetName<Type> : never;
+type GetPlainNames<Type> = Type extends AnyPlainExtension ? GetNameUnion<Type> : never;
 
 /**
  * A utility type for retrieving the name of an extension only when it's a mark
  * extension.
  */
-type GetMarkNames<ExtensionUnion extends AnyExtension> = ExtensionUnion extends AnyMarkExtension
+type GetMarkNameUnion<ExtensionUnion extends AnyExtension> = ExtensionUnion extends AnyMarkExtension
   ? ExtensionUnion['name']
   : never;
 
@@ -1243,7 +1200,7 @@ type GetMarkNames<ExtensionUnion extends AnyExtension> = ExtensionUnion extends 
  * A utility type for retrieving the name of an extension only when it's a node
  * extension.
  */
-type GetNodeNames<ExtensionUnion extends AnyExtension> = ExtensionUnion extends AnyNodeExtension
+type GetNodeNameUnion<ExtensionUnion extends AnyExtension> = ExtensionUnion extends AnyNodeExtension
   ? ExtensionUnion['name']
   : never;
 
@@ -1251,8 +1208,8 @@ type GetNodeNames<ExtensionUnion extends AnyExtension> = ExtensionUnion extends 
  * Gets the editor schema from an extension union.
  */
 type SchemaFromExtension<ExtensionUnion extends AnyExtension> = EditorSchema<
-  GetNodeNames<ExtensionUnion>,
-  GetMarkNames<ExtensionUnion>
+  GetNodeNameUnion<ExtensionUnion>,
+  GetMarkNameUnion<ExtensionUnion>
 >;
 
 type ManagerStoreKeys = keyof Remirror.ManagerStore;
@@ -1285,6 +1242,11 @@ interface InitializeEventMethodParameter {
    * list after the extensionPlugins.
    */
   addPlugins: (...plugins: ProsemirrorPlugin[]) => void;
+
+  /**
+   * The settings passed through to the manager.
+   */
+  managerSettings: ManagerSettings;
 }
 
 interface InitializeEventMethodReturn {
@@ -1409,8 +1371,8 @@ export type {
   ExtensionEventMethods,
   ExtensionFactoryParameter,
   ExtensionTags,
-  GetMarkNames,
-  GetNodeNames,
+  GetMarkNameUnion,
+  GetNodeNameUnion,
   GetPlainNames,
   InitializeEventMethodParameter,
   InitializeEventMethodReturn,

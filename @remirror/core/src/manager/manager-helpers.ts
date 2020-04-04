@@ -26,8 +26,8 @@ import {
   AnyExtension,
   ExtensionListParameter,
   ExtensionTags,
-  GetMarkNames,
-  GetNodeNames,
+  GetMarkNameUnion,
+  GetNodeNameUnion,
   InitializeEventMethodParameter,
   InitializeEventMethodReturn,
   isExtension,
@@ -40,7 +40,7 @@ import {
   ExtensionCommandFunction,
   GeneralExtensionTags,
   GetConstructor,
-  GetName,
+  GetNameUnion,
   ManagerParameter,
   MarkExtensionTags,
   NodeExtensionTags,
@@ -397,9 +397,9 @@ const defaultIsEnabled = () => true;
 const createExtensionTags = <ExtensionUnion extends AnyExtension>(
   extensions: readonly ExtensionUnion[],
 ): ExtensionTags<ExtensionUnion> => {
-  type MarkNames = GetMarkNames<ExtensionUnion>;
-  type NodeNames = GetNodeNames<ExtensionUnion>;
-  type AllNames = GetName<ExtensionUnion>;
+  type MarkNames = GetMarkNameUnion<ExtensionUnion>;
+  type NodeNames = GetNodeNameUnion<ExtensionUnion>;
+  type AllNames = GetNameUnion<ExtensionUnion>;
 
   const general: GeneralExtensionTags<AllNames> = {
     [Tag.FormattingMark]: [],
@@ -497,30 +497,6 @@ const createAttributes = ({
 };
 
 /**
- * Retrieve all plugins from the passed in extensions
- */
-const createExtensionPlugins = ({
-  getParameter,
-  addPlugins,
-}: InitializeEventMethodParameter): InitializeEventMethodReturn => {
-  const extensionPlugins: ProsemirrorPlugin[] = [];
-
-  return {
-    forEachExtension: (extension) => {
-      if (!extension.parameter.createPlugin || extension.settings.exclude.plugin) {
-        return;
-      }
-
-      extensionPlugins.push(extension.parameter.createPlugin(getParameter(extension), extension));
-    },
-
-    afterExtensionLoop: () => {
-      addPlugins(...extensionPlugins);
-    },
-  };
-};
-
-/**
  * Retrieve all keymaps (how the editor responds to keyboard commands).
  */
 const createKeymaps = ({
@@ -592,7 +568,6 @@ enum ManagerPhase {
 export {
   createAttributes,
   createCommands,
-  createExtensionPlugins,
   createExtensionTags,
   createKeymaps,
   createHelpers,

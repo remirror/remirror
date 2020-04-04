@@ -277,12 +277,12 @@ export enum RemirrorIdentifier {
  */
 export enum ExtensionPriority {
   /**
-   * Use this **never**.
+   * Use this **never** 😉
    */
   Critical = 0,
 
   /**
-   * A very high priority.
+   * A, like super duper, high priority.
    */
   Highest = 10,
 
@@ -300,7 +300,12 @@ export enum ExtensionPriority {
   Medium = 1000,
 
   /**
-   * This is the **default** priority for all extension.
+   * This is the **default** priority for most extensions.
+   */
+  Default = 5000,
+
+  /**
+   * This is the **default** priority for builtin behavior changing extensions.
    */
   Low = 10000,
 

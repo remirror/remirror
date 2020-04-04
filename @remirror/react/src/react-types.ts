@@ -68,7 +68,7 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
    *
    * Without a deep understanding of Prosemirror this is not recommended.
    */
-  onStateChange?(params: RemirrorStateListenerParams<GExtension>): void;
+  onStateChange?: (params: RemirrorStateListenerParams<GExtension>) => void;
 
   /**
    * When onStateChange is defined this prop is used to set the next state value

@@ -1,12 +1,7 @@
-import { MarkSpec, MarkType, NodeSpec, NodeType } from 'prosemirror-model';
+import { MarkSpec, NodeSpec } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
-import { ComponentType } from 'react';
 
-import {
-  ExtensionPriority,
-  REMIRROR_IDENTIFIER_KEY,
-  RemirrorIdentifier,
-} from '@remirror/core-constants';
+import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
 
 import {
   EditorSchema,
@@ -17,22 +12,30 @@ import {
   ProsemirrorNode,
   Transaction,
 } from './alias-types';
+import { ObjectNode as RemirrorJSON, ProsemirrorAttributes, RegexTuple } from './base-types';
 import {
-  AnyFunction,
-  CreateExtraAttributes,
-  ExtraAttributes,
-  GetExtraAttributes,
-  ObjectNode as RemirrorJSON,
-  ProsemirrorAttributes,
-  RegexTuple,
-} from './base-types';
-import {
-  AttributesParameter,
   EditorStateParameter,
   EditorViewParameter,
-  NodeWithAttributesParameter,
   TransactionParameter,
 } from './parameter-builders';
+
+type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string };
+type DOMOutputSpecPosX = string | 0 | [string, 0] | [string, { [attr: string]: string }, 0];
+type GetAttributesFunction = (p: string[] | string) => ProsemirrorAttributes | undefined;
+
+/**
+ * A function which takes a regex match array (strings) or a single string match
+ * and transforms it into an `Attributes` object.
+ */
+export type GetAttributes = ProsemirrorAttributes | GetAttributesFunction;
+
+export interface GetAttributesParameter {
+  /**
+   * A helper function for setting receiving a match array / string and setting
+   * the attributes for a node.
+   */
+  getAttrs: GetAttributes;
+}
 
 /**
  * Supported content for the remirror editor.
@@ -195,9 +198,6 @@ export type KeyBindings<Schema extends EditorSchema = any> = Record<
   KeyBindingCommandFunction<Schema>
 >;
 
-type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string };
-type DOMOutputSpecPosX = string | 0 | [string, 0] | [string, { [attr: string]: string }, 0];
-
 /**
  * Defines the return type of the toDom methods for both Nodes and marks
  *
@@ -286,22 +286,6 @@ export type NodeViewMethod<GNodeView extends NodeView = NodeView> = (
   getPos: (() => number) | boolean,
   decorations: Decoration[],
 ) => GNodeView;
-
-type GetAttributesFunction = (p: string[] | string) => ProsemirrorAttributes | undefined;
-
-/**
- * A function which takes a regex match array (strings) or a single string match
- * and transforms it into an `Attributes` object.
- */
-export type GetAttributes = ProsemirrorAttributes | GetAttributesFunction;
-
-export interface GetAttributesParameter {
-  /**
-   * A helper function for setting receiving a match array / string and setting
-   * the attributes for a node.
-   */
-  getAttrs: GetAttributes;
-}
 
 /**
  * The core shape of any remirror specific object.

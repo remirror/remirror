@@ -64,3 +64,17 @@ instances to this new extension.
 Rename `ExtensionManager` to just `Manager` since it now also manages presets.
 
 All extensions require a version string.
+
+So many changes. And one I want to add
+
+**TODO** - use the `ExtensionType` enum as a way of separating the plain, node and mark types.
+
+```ts
+interface A {
+  [ExtensionType.Mark]: MarkType;
+  [ExtensionType.Plain]: never;
+  [ExtensionType.Node]: NodeType;
+}
+
+type B = A[ExtensionType.Plain];
+```

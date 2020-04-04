@@ -129,12 +129,20 @@ type GetHelpers<Type extends { ['~H']: unknown }> = Type['~H'];
 /**
  * Get the name of an extension.
  */
-type GetName<Type extends { name: string }> = Type['name'];
+type GetNameUnion<Type extends { name: string }> = Type['name'];
 
 /**
  * Get the constructor of an extension.
  */
 type GetConstructor<Type extends { constructor: unknown }> = Type['constructor'];
+
+interface ManagerSettings {
+  /**
+   * An object which excludes certain functionality from all extensions within
+   * the manager.
+   */
+  exclude?: ExcludeOptions;
+}
 
 /**
  * Parameters passed into many of the extension methods.
@@ -402,13 +410,6 @@ interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {
   keys?: boolean;
 
   /**
-   * Whether to exclude the extension's plugin
-   *
-   * @defaultValue `false`
-   */
-  plugin?: boolean;
-
-  /**
    * Whether to exclude the extension's nodeView
    *
    * @defaultValue `false`
@@ -502,38 +503,39 @@ declare global {
   }
 }
 
-export {
-  PropertiesShape,
+export type {
+  AnyCommands,
+  AnyHelpers,
+  BaseExtensionSettings,
+  BaseExtensionSettingsParameter,
   ChangedProperties,
-  GeneralExtensionTags,
-  MarkExtensionTags,
-  NodeExtensionTags,
-  GetSettings,
-  GetProperties,
-  GetCommands,
-  GetHelpers,
-  GetName,
-  GetConstructor,
-  ManagerParameter,
-  ViewManagerParameter,
-  ExtensionCommandFunction,
-  ExtensionIsActiveFunction,
-  ExtensionCommandReturn,
-  ExtensionHelperReturn,
-  ManagerTypeParameter,
-  ManagerNodeTypeParameter,
-  ManagerMarkTypeParameter,
+  CommandMethod,
   CommandParameter,
   CreateCommandsParameter,
   CreateHelpersParameter,
-  CommandMethod,
-  AnyCommands,
-  AnyHelpers,
-  SSRComponentProps,
-  OnTransactionParameter,
-  BaseExtensionSettings,
-  ExcludeOptions,
-  SSRComponentParameter,
-  BaseExtensionSettingsParameter,
   CreateSchemaParameter,
+  ExcludeOptions,
+  ExtensionCommandFunction,
+  ExtensionCommandReturn,
+  ExtensionHelperReturn,
+  ExtensionIsActiveFunction,
+  GeneralExtensionTags,
+  GetCommands,
+  GetConstructor,
+  GetHelpers,
+  GetNameUnion,
+  GetProperties,
+  GetSettings,
+  ManagerMarkTypeParameter,
+  ManagerNodeTypeParameter,
+  ManagerParameter,
+  ManagerSettings,
+  ManagerTypeParameter,
+  MarkExtensionTags,
+  NodeExtensionTags,
+  OnTransactionParameter,
+  PropertiesShape,
+  SSRComponentParameter,
+  SSRComponentProps,
+  ViewManagerParameter,
 };
