@@ -6,3 +6,4 @@ export * from '@remirror/core-utils';
 export * from './extension';
 export * from './manager';
 export * from './nodes';
+export * from './types';

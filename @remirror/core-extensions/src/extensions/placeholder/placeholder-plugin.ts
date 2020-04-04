@@ -1,11 +1,25 @@
 import { EditorState, Plugin } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
-import { Extension } from '@remirror/core';
+import { AnyExtension } from '@remirror/core';
 import { EditorSchema, Transaction } from '@remirror/core-types';
 import { getPluginState, isDocNodeEmpty } from '@remirror/core-utils';
 
-import { PlaceholderExtensionOptions, PlaceholderPluginState } from '../../core-extension-types';
+import { PlaceholderExtensionSettings, PlaceholderPluginState } from '../../core-extension-types';
+
+interface SharedParams {
+  /** The placeholder extension */
+  extension: AnyExtension<PlaceholderExtensionSettings>;
+  /** The editor state */
+  state: EditorState;
+}
+
+interface ApplyStateParams extends SharedParams {
+  /** The plugin state passed through to apply */
+  pluginState: PlaceholderPluginState;
+  /** A state transaction */
+  tr: Transaction;
+}
 
 /**
  * Apply state for managing the created placeholder plugin
@@ -17,7 +31,7 @@ const applyState = ({ pluginState, extension, tr, state }: ApplyStateParams) => 
     return pluginState;
   }
 
-  return { ...extension.options, empty: isDocNodeEmpty(state.doc) };
+  return { ...extension.settings, empty: isDocNodeEmpty(state.doc) };
 };
 
 /**
@@ -28,7 +42,7 @@ const applyState = ({ pluginState, extension, tr, state }: ApplyStateParams) => 
  */
 const createDecorationSet = ({ extension, state }: SharedParams) => {
   const { empty } = getPluginState<PlaceholderPluginState>(extension.pluginKey, state);
-  const { emptyNodeClass, placeholder } = extension.options;
+  const { emptyNodeClass, placeholder } = extension.settings;
 
   if (!empty) {
     return;
@@ -50,12 +64,12 @@ const createDecorationSet = ({ extension, state }: SharedParams) => {
  *
  * @param extension
  */
-export const createPlaceholderPlugin = (extension: Extension<PlaceholderExtensionOptions>) => {
+export const createPlaceholderPlugin = (extension: AnyExtension<PlaceholderExtensionSettings>) => {
   return new Plugin<PlaceholderPluginState, EditorSchema>({
     key: extension.pluginKey,
     state: {
       init: (_, state): PlaceholderPluginState => ({
-        ...extension.options,
+        ...extension.settings,
         empty: isDocNodeEmpty(state.doc),
       }),
       apply: (tr, pluginState: PlaceholderPluginState, _, state): PlaceholderPluginState => {
@@ -69,17 +83,3 @@ export const createPlaceholderPlugin = (extension: Extension<PlaceholderExtensio
     },
   });
 };
-
-interface SharedParams {
-  /** The placeholder extension */
-  extension: Extension<PlaceholderExtensionOptions>;
-  /** The editor state */
-  state: EditorState;
-}
-
-interface ApplyStateParams extends SharedParams {
-  /** The plugin state passed through to apply */
-  pluginState: PlaceholderPluginState;
-  /** A state transaction */
-  tr: Transaction;
-}

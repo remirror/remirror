@@ -255,7 +255,8 @@ interface ExtensionHelperReturn {
  *
  * This is used to generate the specific types for Marks and Nodes.
  */
-interface ManagerTypeParameter<ProsemirrorType> extends ManagerParameter {
+interface ManagerTypeParameter<ProsemirrorType, Schema extends EditorSchema = EditorSchema>
+  extends ManagerParameter<Schema> {
   type: ProsemirrorType;
 }
 
@@ -339,7 +340,7 @@ interface OnTransactionParameter
     TransactionParameter,
     EditorStateParameter {}
 
-interface BaseExtensionSettings extends GlobalRemirrorExtensionSettings {
+interface BaseExtensionSettings extends Remirror.ExtensionSettings {
   /**
    * Inject additional attributes into the defined mark / node schema. This can
    * only be used for `NodeExtensions` and `MarkExtensions`.
@@ -378,7 +379,7 @@ interface BaseExtensionSettings extends GlobalRemirrorExtensionSettings {
   priority?: ExtensionPriority | null;
 }
 
-interface ExcludeOptions extends GlobalRemirrorExcludeOptions {
+interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {
   /**
    * Whether to exclude the extension's pasteRules
    *
@@ -420,13 +421,6 @@ interface ExcludeOptions extends GlobalRemirrorExcludeOptions {
    * @defaultValue `false`
    */
   attributes?: boolean;
-
-  /**
-   * Whether to use the SSR component when not in a DOM environment
-   *
-   * @defaultValue `false`
-   */
-  ssr?: boolean;
 
   /**
    * Whether to exclude the suggestions plugin configuration for the extension.
@@ -494,17 +488,20 @@ interface CreateSchemaParameter<Settings extends object> {
 }
 
 declare global {
-  /**
-   * A global type which allows setting additional options on the exclude.
-   */
-  interface GlobalRemirrorExcludeOptions {}
+  namespace Remirror {
+    /**
+     * A global type which allows setting additional options on the exclude.
+     */
+    interface ExcludeOptions {}
 
-  /**
-   * A global type which allows additional default settings to be added to the
-   * editor.
-   */
-  interface GlobalRemirrorExtensionSettings {}
+    /**
+     * A global type which allows additional default settings to be added to the
+     * editor.
+     */
+    interface ExtensionSettings {}
+  }
 }
+
 export {
   PropertiesShape,
   ChangedProperties,

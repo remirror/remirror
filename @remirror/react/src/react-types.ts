@@ -3,8 +3,8 @@ import { ReactNode, Ref } from 'react';
 
 import {
   AbstractInstanceType,
-  ActionsFromExtensions,
   AnyExtension,
+  CommandsFromExtensions,
   CompareStateParameter,
   EditorSchema,
   EditorState,
@@ -334,7 +334,7 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
   /**
    * A map of all actions made available by the configured extensions.
    */
-  actions: ActionsFromExtensions<GExtension>;
+  actions: CommandsFromExtensions<GExtension>;
 
   /**
    * The unique id for the editor instance.

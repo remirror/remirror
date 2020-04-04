@@ -3,9 +3,9 @@ import { FireParams, TestEditorViewParams } from 'jest-prosemirror';
 import { Node as PMNode } from 'prosemirror-model';
 
 import {
-  ActionsFromExtensions,
   AnyExtension,
   AttributesParameter,
+  CommandsFromExtensions,
   EditorSchema,
   EditorState,
   EditorStateParameter,
@@ -110,7 +110,7 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    * The actions available in the editor. When updating the content of the TestEditor make sure not to
    * use a stale copy of the actions otherwise it will throw errors due to using an outdated state.
    */
-  actions: ActionsFromExtensions<GExtension>;
+  actions: CommandsFromExtensions<GExtension>;
 
   /**
    * The helpers available in the editor. When updating the content of the TestEditor make sure not to
@@ -178,7 +178,7 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    * Allows for the chaining of action calls.
    */
   actionsCallback(
-    callback: (actions: ActionsFromExtensions<GExtension>) => void,
+    callback: (actions: CommandsFromExtensions<GExtension>) => void,
   ): AddContentReturn<GExtension>;
 
   /**

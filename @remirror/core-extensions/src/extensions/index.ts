@@ -6,5 +6,4 @@ export * from './history-extension';
 export * from './node-cursor-extension';
 export * from './placeholder-extension';
 export * from './position-tracker-extension';
-export * from './ssr-helpers-extension';
 export * from './trailing-node-extension';

@@ -460,50 +460,49 @@ const createExtensionTags = <ExtensionUnion extends AnyExtension>(
  * High priority extensions have preference over the lower priority
  * extensions.
  */
-const createAttributes = <ExtensionUnion extends AnyExtension>({
+const createAttributes = ({
   getParameter,
   setStoreKey,
-}: InitializeEventMethodParameter<ExtensionUnion>): InitializeEventMethodReturn<ExtensionUnion> => {
+}: InitializeEventMethodParameter): InitializeEventMethodReturn => {
   const attributeList: AttributesWithClass[] = [];
   let attributeObject: AttributesWithClass = object();
 
-  const forEachExtension = (extension: ExtensionUnion) => {
-    if (!extension.parameter.createAttributes || extension.settings.exclude.attributes) {
-      return;
-    }
-
-    // Inserted at the start of the list so that when building the attribute
-    // the higher priority extension attributes are preferred to the lower
-    // priority since they merge with the object later.
-    attributeList.unshift(extension.parameter.createAttributes(getParameter(extension)));
-  };
-
-  const afterMap = () => {
-    for (const attributes of attributeList) {
-      attributeObject = {
-        ...attributeObject,
-        ...attributes,
-        class:
-          (attributeObject.class ?? '') + (bool(attributes.class) ? attributes.class : '') || '',
-      };
-    }
-
-    setStoreKey('attributes', attributeObject);
-  };
-
   return {
-    beforeExtensionLoop: afterMap,
-    forEachExtension: forEachExtension,
+    beforeExtensionLoop: () => {
+      for (const attributes of attributeList) {
+        attributeObject = {
+          ...attributeObject,
+          ...attributes,
+          class:
+            (attributeObject.class ?? '') + (bool(attributes.class) ? attributes.class : '') || '',
+        };
+      }
+
+      setStoreKey('attributes', attributeObject);
+    },
+
+    forEachExtension: (extension) => {
+      if (!extension.parameter.createAttributes || extension.settings.exclude.attributes) {
+        return;
+      }
+
+      // Inserted at the start of the list so that when building the attribute
+      // the higher priority extension attributes are preferred to the lower
+      // priority since they merge with the object later.
+      attributeList.unshift(
+        extension.parameter.createAttributes(getParameter(extension), extension),
+      );
+    },
   };
 };
 
 /**
  * Retrieve all plugins from the passed in extensions
  */
-const createExtensionPlugins = <ExtensionUnion extends AnyExtension>({
+const createExtensionPlugins = ({
   getParameter,
-  setStoreKey,
-}: InitializeEventMethodParameter<ExtensionUnion>): InitializeEventMethodReturn<ExtensionUnion> => {
+  addPlugins,
+}: InitializeEventMethodParameter): InitializeEventMethodReturn => {
   const extensionPlugins: ProsemirrorPlugin[] = [];
 
   return {
@@ -512,11 +511,11 @@ const createExtensionPlugins = <ExtensionUnion extends AnyExtension>({
         return;
       }
 
-      extensionPlugins.push(extension.parameter.createPlugin(getParameter(extension)));
+      extensionPlugins.push(extension.parameter.createPlugin(getParameter(extension), extension));
     },
 
     afterExtensionLoop: () => {
-      setStoreKey('extensionPlugins', extensionPlugins);
+      addPlugins(...extensionPlugins);
     },
   };
 };
@@ -524,10 +523,10 @@ const createExtensionPlugins = <ExtensionUnion extends AnyExtension>({
 /**
  * Retrieve all keymaps (how the editor responds to keyboard commands).
  */
-const createKeymaps = <ExtensionUnion extends AnyExtension>({
+const createKeymaps = ({
   getParameter,
   setStoreKey,
-}: InitializeEventMethodParameter<ExtensionUnion>): InitializeEventMethodReturn<ExtensionUnion> => {
+}: InitializeEventMethodParameter): InitializeEventMethodReturn => {
   const extensionKeymaps: KeyBindings[] = [];
 
   return {
@@ -536,7 +535,7 @@ const createKeymaps = <ExtensionUnion extends AnyExtension>({
         return;
       }
 
-      extensionKeymaps.push(extension.parameter.createKeys(getParameter(extension)));
+      extensionKeymaps.push(extension.parameter.createKeys(getParameter(extension), extension));
     },
     afterExtensionLoop: () => {
       const previousCommandsMap = new Map<string, KeyBindingCommandFunction[]>();

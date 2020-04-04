@@ -1,5 +1,4 @@
 import { InputRule, inputRules } from 'prosemirror-inputrules';
-import { keymap } from 'prosemirror-keymap';
 import { Schema } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
 import { suggest, Suggester } from 'prosemirror-suggest';
@@ -11,11 +10,9 @@ import {
 } from '@remirror/core-constants';
 import {
   freeze,
-  hasOwnProperty,
   invariant,
   isArray,
   isEqual,
-  isFunction,
   isIdentifierOfType,
   isRemirrorType,
   object,
@@ -25,28 +22,20 @@ import {
   EditorSchema,
   EditorStateParameter,
   EditorView,
-  KeyBindingCommandFunction,
-  KeyBindings,
   MarkExtensionSpec,
   NodeExtensionSpec,
   NodeViewMethod,
   PlainObject,
   PluginKey,
   ProsemirrorAttributes,
-  ProsemirrorCommandFunction,
   ProsemirrorPlugin,
   TransactionParameter,
 } from '@remirror/core-types';
-import {
-  chainKeyBindingCommands,
-  createDocumentNode,
-  CreateDocumentNodeParams,
-  getPluginState,
-} from '@remirror/core-utils';
+import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from '@remirror/core-utils';
 
 import {
-  ActionsFromExtensions as CommandsFromExtensions,
   AnyExtension,
+  CommandsFromExtensions,
   ExtensionTags,
   GetMarkNames,
   GetNodeNames,
@@ -57,7 +46,7 @@ import {
   SchemaFromExtension,
 } from '../extension';
 import { AnyPreset } from '../preset';
-import { BaseExtensionSettings, GetCommands, GetConstructor, ManagerParameter } from '../types';
+import { GetCommands, GetConstructor, ManagerParameter } from '../types';
 import {
   createAttributes,
   createCommands,
@@ -78,7 +67,7 @@ import {
 /**
  * A type that matches any manager.
  */
-type AnyManager = Manager<any, any>;
+type AnyManager = Manager;
 
 /**
  * Checks to see whether the provided value is an `Manager`.
@@ -131,7 +120,10 @@ const isManager = (value: unknown): value is AnyManager =>
  * manager.data.actions
  * ```
  */
-class Manager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset<ExtensionUnion>> {
+class Manager<
+  ExtensionUnion extends AnyExtension = any,
+  PresetUnion extends AnyPreset<ExtensionUnion> = any
+> {
   /**
    * A static method for creating a manager.
    */
@@ -174,27 +166,7 @@ class Manager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset
   /**
    * The extension manager store.
    */
-  #store: Remirror.ManagerStore<ExtensionUnion> = object();
-
-  /**
-   * The nodes to place on the schema.
-   */
-  #nodes: Record<GetNodeNames<ExtensionUnion>, NodeExtensionSpec> = object();
-
-  /**
-   * The marks to be added to the schema.
-   */
-  #marks: Record<GetMarkNames<ExtensionUnion>, MarkExtensionSpec> = object();
-
-  /**
-   * The editor view stored by this instance.
-   */
-  #view!: EditorView<SchemaFromExtension<ExtensionUnion>>;
-
-  /**
-   * Store the built in and custom tags for the editor instance.
-   */
-  #tags: Readonly<ExtensionTags<ExtensionUnion>>;
+  #store: Remirror.ManagerStore<ExtensionUnion> = this.createInitialStore();
 
   #phase: ManagerPhase = ManagerPhase.None;
 
@@ -209,14 +181,14 @@ class Manager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset
    * Returns the stored nodes
    */
   get nodes() {
-    return this.#nodes;
+    return this.#store.nodes;
   }
 
   /**
    * Returns the store marks.
    */
   get marks() {
-    return this.#marks;
+    return this.#store.marks;
   }
 
   /**
@@ -231,7 +203,7 @@ class Manager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset
    * A shorthand getter for retrieving the tags from the extension manager.
    */
   get tags() {
-    return this.#tags;
+    return this.#store.tags;
   }
 
   /**
@@ -258,7 +230,7 @@ class Manager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset
     };
   }
 
-  #onInitializeHandlers: Array<InitializeEventMethodReturn<ExtensionUnion>> = [];
+  #onInitializeHandlers: InitializeEventMethodReturn[] = [];
 
   /**
    * Creates the extension manager which is used to simplify the management of
@@ -279,19 +251,18 @@ class Manager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset
     this.#presetMap = presetMap;
 
     const parameter = this.initializeParameter;
-
     this.createDefaultOnInitializeMethods(parameter);
 
     for (const extension of this.#extensions) {
       if (isNodeExtension(extension)) {
         const { name, schema } = extension;
-        this.#nodes[name as GetNodeNames<ExtensionUnion>] = schema;
+        this.#store.nodes[name as GetNodeNames<ExtensionUnion>] = schema;
       }
 
       if (isMarkExtension(extension)) {
         const { name, schema } = extension;
 
-        this.#marks[name as GetMarkNames<ExtensionUnion>] = schema;
+        this.#store.marks[name as GetMarkNames<ExtensionUnion>] = schema;
       }
 
       const handlers = extension.parameter.onInitialize?.(parameter);
@@ -301,16 +272,14 @@ class Manager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset
       }
     }
 
-    // Initialize the schema immediately since this doesn't ever change.
+    // Initialize the schema and tags immediately since these don't ever change.
     this.#store.schema = this.createSchema();
-
-    // The tags in the editor are stored here.
-    this.#tags = freeze(createExtensionTags(this.extensions));
+    this.#store.tags = freeze(createExtensionTags(this.extensions));
 
     this.initialize();
   }
 
-  private get initializeParameter(): InitializeEventMethodParameter<ExtensionUnion> {
+  private get initializeParameter(): InitializeEventMethodParameter {
     return {
       getParameter: (extension) => {
         invariant(this.#phase >= ManagerPhase.Initialize, {
@@ -320,14 +289,10 @@ class Manager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset
 
         return getParameterWithType(extension, this.parameter);
       },
-      getStore: () => {
-        invariant(this.#phase >= ManagerPhase.Initialize, {
-          code: ErrorConstant.MANAGER_PHASE_ERROR,
-          message: '`getStore` should only be called within the returned methods scope.',
-        });
-
-        return this.store;
+      addPlugins: (...plugins: ProsemirrorPlugin[]) => {
+        this.#store.extensionPlugins.push(...plugins);
       },
+      getStoreKey: this.getStoreKey,
       setStoreKey: this.setStoreKey,
     };
   }
@@ -335,9 +300,7 @@ class Manager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset
   /**
    * Create the default on initialize methods.
    */
-  private createDefaultOnInitializeMethods(
-    parameter: InitializeEventMethodParameter<ExtensionUnion>,
-  ) {
+  private createDefaultOnInitializeMethods(parameter: InitializeEventMethodParameter) {
     [createAttributes, createExtensionPlugins, createKeymaps].forEach((method) =>
       this.#onInitializeHandlers.push(method(parameter)),
     );
@@ -385,6 +348,17 @@ class Manager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset
     this.#store[key] = value;
   }
 
+  private getStoreKey<Key extends keyof Remirror.ManagerStore>(
+    key: Key,
+  ): Remirror.ManagerStore[Key] {
+    invariant(this.#phase >= ManagerPhase.Initialize, {
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+      message: '`getStoreKey` should only be called within the returned methods scope.',
+    });
+
+    return this.store[key];
+  }
+
   /**
    * Initialize the extension manager with important data.
    *
@@ -417,19 +391,31 @@ class Manager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset
   }
 
   /**
+   * Create the initial store.
+   */
+  private createInitialStore() {
+    const store: Remirror.ManagerStore<ExtensionUnion> = object();
+
+    store.nodes = object();
+    store.marks = object();
+    store.extensionPlugins = [];
+
+    return store;
+  }
+
+  /**
    * Stores the editor view on the manager
    *
    * @param view - the editor view
    */
   public addView(view: EditorView<SchemaFromExtension<ExtensionUnion>>) {
     this.#phase = ManagerPhase.AddView;
-    this.#view = view;
+    this.#store.view = view;
 
     this.#store.commands = this.createCommands({
       ...this.parameter,
       view,
-      isEditable: () =>
-        isFunction(view.props.editable) ? view.props.editable(this.getState()) : false,
+      isEditable: () => view.props.editable?.(this.getState()) ?? false,
     });
 
     this.#phase = ManagerPhase.Done;
@@ -741,6 +727,26 @@ declare global {
      */
     interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
       /**
+       * The nodes to place on the schema.
+       */
+      nodes: Record<GetNodeNames<ExtensionUnion>, NodeExtensionSpec>;
+
+      /**
+       * The marks to be added to the schema.
+       */
+      marks: Record<GetMarkNames<ExtensionUnion>, MarkExtensionSpec>;
+
+      /**
+       * The editor view stored by this instance.
+       */
+      view: EditorView<SchemaFromExtension<ExtensionUnion>>;
+
+      /**
+       * Store the built in and custom tags for the editor instance.
+       */
+      tags: Readonly<ExtensionTags<ExtensionUnion>>;
+
+      /**
        * The attributes to be added to the prosemirror editor.
        */
       attributes: AttributesWithClass;
@@ -770,6 +776,10 @@ declare global {
        */
       inputRules: ProsemirrorPlugin;
       pasteRules: ProsemirrorPlugin[];
+
+      /**
+       * The suggestions to be added to the editor instance.
+       */
       suggestions: ProsemirrorPlugin;
 
       /**

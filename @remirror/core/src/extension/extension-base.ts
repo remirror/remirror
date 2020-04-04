@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
-import { Interpolation } from '@emotion/core';
 import { InputRule } from 'prosemirror-inputrules';
 import { AttributeSpec } from 'prosemirror-model';
 import { PluginKey } from 'prosemirror-state';
@@ -40,7 +39,6 @@ import {
   NodeExtensionSpec,
   NodeType,
   NodeViewMethod,
-  PlainObject,
   ProsemirrorAttributes,
   ProsemirrorPlugin,
 } from '@remirror/core-types';
@@ -71,12 +69,19 @@ import {
  *
  * TODO Figure out how to improve the formatting of this.
  */
-type AnyExtension<Settings extends object = {}> = Extension<string, Settings, any, any, any, any>;
+type AnyExtension<Settings extends object = {}, Properties extends object = {}> = Extension<
+  string,
+  Settings,
+  Properties,
+  any,
+  any,
+  any
+>;
 
 /**
  * Matches any of the three `ExtensionConstructor`s.
  */
-interface AnyExtensionConstructor<Settings extends object = {}> {
+interface AnyExtensionConstructor<Settings extends object = {}, Properties extends object = {}> {
   /**
    * The name of the extension that will be created. Also available on the
    * instance as `name`.
@@ -89,7 +94,7 @@ interface AnyExtensionConstructor<Settings extends object = {}> {
    */
   of(
     ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
-  ): AnyExtension<Settings>;
+  ): AnyExtension<Settings, Properties>;
 }
 
 /**
@@ -139,9 +144,9 @@ const defaultSettings: Required<BaseExtensionSettings> = {
  *
  * @param value - the value to test
  */
-const isExtension = <Settings extends object = {}>(
+const isExtension = <Settings extends object = {}, Properties extends object = {}>(
   value: unknown,
-): value is AnyExtension<Settings> =>
+): value is AnyExtension<Settings, Properties> =>
   isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Extension);
 
 /**
@@ -149,9 +154,10 @@ const isExtension = <Settings extends object = {}>(
  *
  * @param value - the extension to check
  */
-const isPlainExtension = <Settings extends object = {}>(
+const isPlainExtension = <Settings extends object = {}, Properties extends object = {}>(
   value: unknown,
-): value is AnyPlainExtension<Settings> => isExtension(value) && value.type === ExtensionType.Plain;
+): value is AnyPlainExtension<Settings, Properties> =>
+  isExtension(value) && value.type === ExtensionType.Plain;
 
 /**
  * Determines if the passed in extension is a mark extension. Useful as a type
@@ -159,9 +165,10 @@ const isPlainExtension = <Settings extends object = {}>(
  *
  * @param value - the extension to check
  */
-const isMarkExtension = <Settings extends object = {}>(
+const isMarkExtension = <Settings extends object = {}, Properties extends object = {}>(
   value: unknown,
-): value is AnyMarkExtension<Settings> => isExtension(value) && value.type === ExtensionType.Mark;
+): value is AnyMarkExtension<Settings, Properties> =>
+  isExtension(value) && value.type === ExtensionType.Mark;
 
 /**
  * Determines if the passed in extension is a node extension. Useful as a type
@@ -169,9 +176,10 @@ const isMarkExtension = <Settings extends object = {}>(
  *
  * @param value - the extension to check
  */
-const isNodeExtension = <Settings extends object = {}>(
+const isNodeExtension = <Settings extends object = {}, Properties extends object = {}>(
   value: unknown,
-): value is AnyNodeExtension<Settings> => isExtension(value) && value.type === ExtensionType.Node;
+): value is AnyNodeExtension<Settings, Properties> =>
+  isExtension(value) && value.type === ExtensionType.Node;
 
 /**
  * Allows for the addition of attributes to the defined schema. These are
@@ -590,7 +598,8 @@ interface BaseExtensionFactoryParameter<
       Commands,
       Helpers,
       ProsemirrorType
-    > {
+    >,
+    ExtensionCreatorMethods<Name, Settings, Properties, Commands, Helpers, ProsemirrorType> {
   /**
    * The unique name of this extension.
    *
@@ -607,7 +616,7 @@ interface BaseExtensionFactoryParameter<
    * Every extension requires compatible string with the version number of the extension. This
    * is required
    */
-  version: string;
+  version?: string;
 
   /**
    * The default priority level for the extension to use.
@@ -638,6 +647,35 @@ interface BaseExtensionFactoryParameter<
   tags?: Array<Tag | string>;
 
   /**
+   * An extension can declare the extensions it requires.
+   *
+   * @remarks
+   *
+   * When creating the extension manager the extension will be checked for
+   * required extension as well as a quick check to see if the required
+   * extension is already included. If not present a descriptive error will be
+   * thrown.
+   */
+  requiredExtensions?: readonly AnyExtensionConstructor[];
+}
+
+interface ExtensionCreatorMethods<
+  Name extends string,
+  Settings extends object,
+  Properties extends object = {},
+  Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {},
+  ProsemirrorType = never
+>
+  extends Remirror.ExtensionCreatorMethods<
+    Name,
+    Settings,
+    Properties,
+    Commands,
+    Helpers,
+    ProsemirrorType
+  > {
+  /**
    * Allows the extension to modify the attributes for the Prosemirror editor
    * dom element.
    *
@@ -650,7 +688,10 @@ interface BaseExtensionFactoryParameter<
    *
    * @alpha
    */
-  createAttributes?: (parameter: ManagerParameter) => AttributesWithClass;
+  createAttributes?: (
+    parameter: ManagerParameter,
+    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+  ) => AttributesWithClass;
 
   /**
    * Create and register commands for that can be called within the editor.
@@ -688,7 +729,10 @@ interface BaseExtensionFactoryParameter<
    *
    * @param parameter - schema parameter with type included
    */
-  createCommands?: (parameter: CreateCommandsParameter<ProsemirrorType>) => Commands;
+  createCommands?: (
+    parameter: CreateCommandsParameter<ProsemirrorType>,
+    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+  ) => Commands;
 
   /**
    * A helper method is a function that takes in arguments and returns
@@ -728,7 +772,10 @@ interface BaseExtensionFactoryParameter<
    * };
    * ```
    */
-  createHelpers?: (parameter: CreateHelpersParameter<ProsemirrorType>) => Helpers;
+  createHelpers?: (
+    parameter: CreateHelpersParameter<ProsemirrorType>,
+    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+  ) => Helpers;
 
   /**
    * Register input rules which are activated if the regex matches as a user is
@@ -736,14 +783,20 @@ interface BaseExtensionFactoryParameter<
    *
    * @param parameter - schema parameter with type included
    */
-  createInputRules?: (parameter: ManagerTypeParameter<ProsemirrorType>) => InputRule[];
+  createInputRules?: (
+    parameter: ManagerTypeParameter<ProsemirrorType>,
+    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+  ) => InputRule[];
 
   /**
    * Add key bindings for this extension.
    *
    * @param parameter - schema parameter with type included
    */
-  createKeys?: (parameter: ManagerTypeParameter<ProsemirrorType>) => KeyBindings;
+  createKeys?: (
+    parameter: ManagerTypeParameter<ProsemirrorType>,
+    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+  ) => KeyBindings;
 
   /**
    * Registers a node view for the extension.
@@ -759,7 +812,10 @@ interface BaseExtensionFactoryParameter<
    *
    * @alpha
    */
-  createNodeView?: (parameter: ManagerTypeParameter<ProsemirrorType>) => NodeViewMethod;
+  createNodeView?: (
+    parameter: ManagerTypeParameter<ProsemirrorType>,
+    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+  ) => NodeViewMethod;
 
   /**
    * Register paste rules for this extension.
@@ -768,28 +824,20 @@ interface BaseExtensionFactoryParameter<
    *
    * @param parameter - schema parameter with type included
    */
-  createPasteRules?: (parameter: ManagerTypeParameter<ProsemirrorType>) => ProsemirrorPlugin[];
+  createPasteRules?: (
+    parameter: ManagerTypeParameter<ProsemirrorType>,
+    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+  ) => ProsemirrorPlugin[];
 
   /**
    * Register a plugin for the extension.
    *
    * @param parameter - schema parameter with type included
    */
-  createPlugin?: (parameter: ManagerTypeParameter<ProsemirrorType>) => ProsemirrorPlugin;
-
-  /**
-   * A method for transforming the SSR JSX received by the extension. Some
-   * extensions add decorations to the ProsemirrorView based on their state.
-   * These decorations can touch any node or mark and it would be very difficult
-   * to model this without being able to take the completed JSX render and
-   * transforming it some way.
-   *
-   * An example use case is for placeholders which need to render a
-   * `data-placeholder` and `class` attribute so that the placeholder is shown
-   * by the styles. This method can be called to check if there is only one
-   * child of the parent
-   */
-  ssrTransformer?: (element: JSX.Element, parameter: ManagerParameter) => JSX.Element;
+  createPlugin?: (
+    parameter: ManagerTypeParameter<ProsemirrorType>,
+    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+  ) => ProsemirrorPlugin;
 
   /**
    * Create suggestions which respond to character key combinations within the
@@ -801,7 +849,10 @@ interface BaseExtensionFactoryParameter<
    * functionality. They can support `@` mentions, `#` tagging, `/` special
    * command keys which trigger an actions menu and much more.
    */
-  createSuggestions?: (parameter: ManagerTypeParameter<ProsemirrorType>) => Suggester[] | Suggester;
+  createSuggestions?: (
+    parameter: ManagerTypeParameter<ProsemirrorType>,
+    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+  ) => Suggester[] | Suggester;
 }
 
 interface ExtensionEventMethods {
@@ -814,9 +865,7 @@ interface ExtensionEventMethods {
   /**
    * This happens when the store is initialized.
    */
-  onInitialize?: <ExtensionUnion extends AnyExtension>(
-    parameter: InitializeEventMethodParameter<ExtensionUnion>,
-  ) => InitializeEventMethodReturn<ExtensionUnion>;
+  onInitialize?: (parameter: InitializeEventMethodParameter) => InitializeEventMethodReturn;
 
   /**
    * This event happens when the view is first received from the view layer
@@ -831,11 +880,6 @@ interface ExtensionEventMethods {
    * purely for observational reasons
    */
   onTransaction?: (parameter: OnTransactionParameter) => void;
-
-  /**
-   * Happens after the state is first updated.
-   */
-  onStateUpdated?: () => void;
 
   /**
    * Called when the extension is being destroyed.
@@ -866,7 +910,13 @@ type ExtensionFactoryParameter<
 /**
  * The type covering any potential `PlainExtension`.
  */
-type AnyPlainExtension<Settings extends object = {}> = Extension<string, Settings, any, any, any>;
+type AnyPlainExtension<Settings extends object = {}, Properties extends object = {}> = Extension<
+  string,
+  Settings,
+  Properties,
+  any,
+  any
+>;
 
 /**
  * The shape of the `ExtensionConstructor` used to create instances of
@@ -988,10 +1038,10 @@ type MarkExtensionFactoryParameter<
 /**
  * The type covering any potential `MarkExtension`.
  */
-type AnyMarkExtension<Settings extends object = {}> = MarkExtension<
+type AnyMarkExtension<Settings extends object = {}, Properties extends object = {}> = MarkExtension<
   string,
   Settings,
-  any,
+  Properties,
   any,
   any
 >;
@@ -1115,10 +1165,10 @@ type NodeExtensionFactoryParameter<
 /**
  * The type covering any potential NodeExtension.
  */
-type AnyNodeExtension<Settings extends object = {}> = NodeExtension<
+type AnyNodeExtension<Settings extends object = {}, Properties extends object = {}> = NodeExtension<
   string,
   Settings,
-  any,
+  Properties,
   any,
   any
 >;
@@ -1205,27 +1255,39 @@ type SchemaFromExtension<ExtensionUnion extends AnyExtension> = EditorSchema<
   GetMarkNames<ExtensionUnion>
 >;
 
-interface InitializeEventMethodParameter<ExtensionUnion extends AnyExtension> {
+type ManagerStoreKeys = keyof Remirror.ManagerStore;
+type EditableManagerStoreKeys = Exclude<
+  ManagerStoreKeys,
+  'nodes' | 'marks' | 'view' | 'tags' | 'schema' | 'extensionPlugins' | 'plugins'
+>;
+
+interface InitializeEventMethodParameter {
   /**
    * The parameter passed into most of the extension creator methods.
    */
-  getParameter: <Type = never>(extension: ExtensionUnion) => ManagerTypeParameter<Type>;
+  getParameter: <Type = never>(extension: AnyExtension) => ManagerTypeParameter<Type>;
 
   /**
-   * The readonly store.
+   * Get the value of a key from the manager store.
    */
-  getStore: () => Readonly<Remirror.ManagerStore>;
+  getStoreKey: <Key extends ManagerStoreKeys>(key: Key) => Readonly<Remirror.ManagerStore[Key]>;
 
   /**
-   * Allows for updating the store.
+   * Update the store with a specific key.
    */
-  setStoreKey: <Key extends keyof Remirror.ManagerStore>(
+  setStoreKey: <Key extends EditableManagerStoreKeys>(
     key: Key,
     value: Remirror.ManagerStore[Key],
   ) => void;
+
+  /**
+   * Use this to push custom plugins to the store which are added to the plugin
+   * list after the extensionPlugins.
+   */
+  addPlugins: (...plugins: ProsemirrorPlugin[]) => void;
 }
 
-interface InitializeEventMethodReturn<ExtensionUnion extends AnyExtension> {
+interface InitializeEventMethodReturn {
   /**
    * Called before the extension loop is run.
    */
@@ -1233,7 +1295,7 @@ interface InitializeEventMethodReturn<ExtensionUnion extends AnyExtension> {
   /**
    * Called for each extension in order of their priority.
    */
-  forEachExtension?: (extension: ExtensionUnion) => void;
+  forEachExtension?: (extension: AnyExtension) => void;
 
   /**
    * Run after the extensions have been looped through. Useful for adding data
@@ -1243,10 +1305,43 @@ interface InitializeEventMethodReturn<ExtensionUnion extends AnyExtension> {
 }
 
 declare global {
+  /**
+   * This namespace is global and you can use declaration merging to extend
+   * and create new types used by the `remirror` project.
+   *
+   * @remarks
+   *
+   * The following would add `MyCustomType` to the `Remirror` namespace.
+   * Please note that this can only be used for types and interfaces.
+   *
+   * ```ts
+   * declare global {
+   *   namespace Remirror {
+   *     type MyCustomType = 'look-at-me';
+   *   }
+   * }
+   * ```
+   */
   namespace Remirror {
     /**
-     * This type should overridden to add extra options to the options that can be
-     * passed into the `ExtensionFactory.plain()`.
+     * This interface is global and can use declaration merging to add extra
+     * options that can be passed into the passed into the `ExtensionFactory`.
+     *
+     * @remarks
+     *
+     * The following will add `newOption` to the expected options. This is the
+     * way that extensions which add new functionality to the editor can request
+     * configuration options.
+     *
+     * ```ts
+     * declare global {
+     *   namespace Remirror {
+     *     interface ExtensionFactoryParameter {
+     *       newOption?: string;
+     *     }
+     *   }
+     * }
+     * ```
      */
     export interface ExtensionFactoryParameter<
       Name extends string,
@@ -1257,8 +1352,17 @@ declare global {
       ProsemirrorType = never
     > {}
 
+    export interface ExtensionCreatorMethods<
+      Name extends string,
+      Settings extends object,
+      Properties extends object,
+      Commands extends ExtensionCommandReturn,
+      Helpers extends ExtensionHelperReturn,
+      ProsemirrorType = never
+    > {}
+
     /**
-     * This type should overridden to add extra options to the options that can be
+     * This interface should overridden to add extra options to the options that can be
      * passed into the `ExtensionFactory.node()`.
      */
     export interface NodeExtensionFactoryParameter<
@@ -1296,26 +1400,28 @@ declare global {
 
 export type {
   AnyExtension,
-  DefaultSettingsType,
-  ExtensionFactoryParameter,
-  AnyPlainExtension,
-  MarkExtensionFactoryParameter,
+  AnyExtensionConstructor,
   AnyMarkExtension,
-  NodeExtensionFactoryParameter,
   AnyNodeExtension,
-  GetPlainNames,
+  AnyPlainExtension,
+  BaseExtensionFactoryParameter,
+  DefaultSettingsType,
+  ExtensionEventMethods,
+  ExtensionFactoryParameter,
+  ExtensionTags,
   GetMarkNames,
   GetNodeNames,
-  SchemaFromExtension,
-  AnyExtensionConstructor,
-  BaseExtensionFactoryParameter,
-  ExtensionEventMethods,
-  PlainExtensionConstructor,
-  MarkExtensionConstructor,
-  NodeExtensionConstructor,
-  ExtensionTags,
-  InitializeEventMethodReturn,
+  GetPlainNames,
   InitializeEventMethodParameter,
+  InitializeEventMethodReturn,
+  ManagerStoreKeys,
+  EditableManagerStoreKeys,
+  MarkExtensionConstructor,
+  MarkExtensionFactoryParameter,
+  NodeExtensionConstructor,
+  NodeExtensionFactoryParameter,
+  PlainExtensionConstructor,
+  SchemaFromExtension,
 };
 
 export {

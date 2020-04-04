@@ -1,19 +1,19 @@
-import { jsx } from '@emotion/core';
-import { Children, JSXElementConstructor } from 'react';
+import { Children, cloneElement, createElement, JSXElementConstructor } from 'react';
 
+import { AnyExtension, ManagerParameter, PlainObject } from '@remirror/core';
 import { isArray } from '@remirror/core-helpers';
-import { ManagerParameter, PlainObject } from '@remirror/core-types';
-import {
-  cloneElement,
-  getElementProps,
-  isReactDOMElement,
-  isReactFragment,
-} from '@remirror/react-utils';
+import { getElementProps, isReactDOMElement, isReactFragment } from '@remirror/react-utils';
 
 /**
- * A function that transforms the element received during Server Side Rendering
+ * A function that creates the SSR Transformer which will take in the current
+ * JSX  and return the new element for Server Side Rendering.
  */
-export type SSRTransformer = (element: JSX.Element, params: ManagerParameter) => JSX.Element;
+type CreateSSRTransformer = <ExtensionUnion extends AnyExtension>(
+  params: ManagerParameter,
+  extension: ExtensionUnion,
+) => SSRTransformer;
+
+type SSRTransformer = (element: JSX.Element) => JSX.Element;
 
 /**
  * Clone SSR elements ignoring the top level Fragment
@@ -24,7 +24,7 @@ export type SSRTransformer = (element: JSX.Element, params: ManagerParameter) =>
  * @param element - the element to transform which must be from the JSX received in `ssrTransformer`
  * @param transformChildElements - receives the nested elements and props and transforms them into another JSX.Element
  */
-export const cloneSSRElement = (
+const cloneSSRElement = (
   element: JSX.Element,
   transformChildElements: (
     children: JSX.Element | JSX.Element[],
@@ -71,7 +71,7 @@ const elementIsOfType = <
  * causes the document rendered during SSR to be different than when the page
  * loads.
  */
-export const injectBrIntoEmptyParagraphs: SSRTransformer = (element) => {
+const injectBrIntoEmptyParagraphs: SSRTransformer = (element) => {
   return cloneSSRElement(element, (children) => {
     if (!isArray(children)) {
       return children;
@@ -83,7 +83,7 @@ export const injectBrIntoEmptyParagraphs: SSRTransformer = (element) => {
       }
 
       const properties = getElementProps(child);
-      return cloneElement(child, properties, jsx('br'));
+      return cloneElement(child, properties, createElement('br'));
     });
   });
 };
@@ -91,4 +91,6 @@ export const injectBrIntoEmptyParagraphs: SSRTransformer = (element) => {
 /**
  * The default transformations which are applied when none are passed.
  */
-export const DEFAULT_TRANSFORMATIONS: SSRTransformer[] = [injectBrIntoEmptyParagraphs];
+const DEFAULT_TRANSFORMATIONS: SSRTransformer[] = [injectBrIntoEmptyParagraphs];
+
+export { cloneSSRElement, DEFAULT_TRANSFORMATIONS, SSRTransformer, CreateSSRTransformer };

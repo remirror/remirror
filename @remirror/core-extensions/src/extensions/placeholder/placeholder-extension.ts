@@ -1,77 +1,72 @@
-import { Children } from 'react';
-
-import { Extension, isString } from '@remirror/core';
-import { ManagerParameter, Plugin } from '@remirror/core-types';
-import { isDocNodeEmpty } from '@remirror/core-utils';
-import { cloneElement, getElementProps } from '@remirror/react-utils';
+import { ExtensionFactory } from '@remirror/core';
 
 import { EMPTY_NODE_CLASS_NAME } from '../../core-extension-constants';
-import { PlaceholderExtensionOptions, PlaceholderPluginState } from '../../core-extension-types';
+import { PlaceholderExtensionSettings } from '../../core-extension-types';
 import { createPlaceholderPlugin } from './placeholder-plugin';
 
-export class PlaceholderExtension extends Extension<PlaceholderExtensionOptions> {
-  get name() {
-    return 'placeholder' as const;
-  }
+export const PlaceholderExtension = ExtensionFactory.typed<PlaceholderExtensionSettings>().plain({
+  name: 'placeholder',
+  defaultSettings: {
+    emptyNodeClass: EMPTY_NODE_CLASS_NAME,
+    placeholderStyle: {},
+    placeholder: '',
+  },
+  createPlugin: (_, extension) => {
+    return createPlaceholderPlugin(extension);
+  },
+  createAttributes: (_, extension) => ({ 'aria-placeholder': extension.settings.placeholder }),
+});
 
-  get defaultOptions() {
-    return {
-      emptyNodeClass: EMPTY_NODE_CLASS_NAME,
-      placeholderStyles: {},
-      placeholder: '',
-    };
-  }
+//   public styles() {
+//     const selector = `.${this.options.emptyNodeClass}:first-of-type::before`;
+//     return [
+//       `
+//        ${selector} {
+//         position: absolute;
+//         color: #aaa;
+//         pointer-events: none;
+//         height: 0;
+//         font-style: italic;
+//         content: attr(data-placeholder);
+//       }
+//     `,
+//       { [selector]: this.options.placeholderStyle },
+//     ];
+//   }
 
-  public styles() {
-    const selector = `.${this.options.emptyNodeClass}:first-of-type::before`;
-    return [
-      `
-       ${selector} {
-        position: absolute;
-        color: #aaa;
-        pointer-events: none;
-        height: 0;
-        font-style: italic;
-        content: attr(data-placeholder);
-      }
-    `,
-      { [selector]: this.options.placeholderStyle },
-    ];
-  }
+//   public plugin(): Plugin<PlaceholderPluginState> {
+//     return createPlaceholderPlugin(this);
+//   }
 
-  public plugin(): Plugin<PlaceholderPluginState> {
-    return createPlaceholderPlugin(this);
-  }
+//   /**
+//    * When the view becomes available set the aria placeholder property.
+//    */
+//   public attributes() {
+//     return { 'aria-placeholder': this.options.placeholder };
+//   }
 
-  /**
-   * When the view becomes available set the aria placeholder property.
-   */
-  public attributes() {
-    return { 'aria-placeholder': this.options.placeholder };
-  }
+//   /**
+//    * Add a class and props to the root element if the document is empty.
+//    */
+//   public ssrTransformer(element: JSX.Element, { getState }: ManagerParameter) {
+//     const state = getState();
+//     const { emptyNodeClass, placeholder } = this.options;
+//     const { children } = getElementProps(element);
+//     if (Children.count(children) > 1 || !isDocNodeEmpty(state.doc)) {
+//       return element;
+//     }
 
-  /**
-   * Add a class and props to the root element if the document is empty.
-   */
-  public ssrTransformer(element: JSX.Element, { getState }: ManagerParameter) {
-    const state = getState();
-    const { emptyNodeClass, placeholder } = this.options;
-    const { children } = getElementProps(element);
-    if (Children.count(children) > 1 || !isDocNodeEmpty(state.doc)) {
-      return element;
-    }
-
-    const properties = getElementProps(children);
-    return cloneElement(
-      element,
-      {},
-      cloneElement(children, {
-        ...properties,
-        className: isString(properties.className)
-          ? `${properties.className} ${emptyNodeClass}`
-          : emptyNodeClass,
-        'data-placeholder': placeholder,
-      }),
-    );
-  }
-}
+//     const properties = getElementProps(children);
+//     return cloneElement(
+//       element,
+//       {},
+//       cloneElement(children, {
+//         ...properties,
+//         className: isString(properties.className)
+//           ? `${properties.className} ${emptyNodeClass}`
+//           : emptyNodeClass,
+//         'data-placeholder': placeholder,
+//       }),
+//     );
+//   }
+// }

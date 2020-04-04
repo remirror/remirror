@@ -29,7 +29,8 @@ export const RemirrorSSR = <GExtension extends AnyExtension = any>({
 }: RemirrorSSRProps<GExtension>) => {
   const outerProperties = mapProps(attributes);
   const ssrElement = ReactSerializer.fromManager(manager).serializeFragment(state.doc.content);
-  const transformedElement = manager.ssrTransformer(ssrElement);
+  const transformedElement = manager.store.ssrTransformer(ssrElement);
+
   return (
     <div {...outerProperties} suppressContentEditableWarning={true} contentEditable={editable}>
       {transformedElement}

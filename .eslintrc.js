@@ -183,15 +183,12 @@ module.exports = {
       'warn',
       { default: ['signature', 'static-field', 'static-method', 'field', 'constructor', 'method'] },
     ],
+
     '@typescript-eslint/no-use-before-define': ['warn', { typedefs: false }],
-    '@typescript-eslint/no-unused-vars': [
-      'warn',
-      {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
-        args: 'after-used',
-        ignoreRestSiblings: true,
-      },
+    '@typescript-eslint/no-unused-vars': ['off'],
+    '@typescript-eslint/no-unused-vars-experimental': [
+      'error',
+      { ignoreArgsIfArgsAfterAreUsed: true },
     ],
     '@typescript-eslint/ban-types': 'warn',
 

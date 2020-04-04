@@ -15,6 +15,8 @@ export type {
   GetPlainNames,
   InitializeEventMethodParameter,
   InitializeEventMethodReturn,
+  ManagerStoreKeys,
+  EditableManagerStoreKeys,
   MarkExtension,
   MarkExtensionConstructor,
   MarkExtensionFactoryParameter,
@@ -29,7 +31,7 @@ export { isExtension, isMarkExtension, isNodeExtension, isPlainExtension } from 
 export { ExtensionFactory, isExtensionConstructor } from './extension-factory';
 export type {
   ActionNames,
-  CommandsFromExtensions as ActionsFromExtensions,
+  CommandsFromExtensions,
   ExtensionFromConstructor,
   ExtensionListParameter,
   ExtensionParameter,
