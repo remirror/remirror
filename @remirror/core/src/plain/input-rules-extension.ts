@@ -14,7 +14,7 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  * This is an example of adding custom functionality to an extension via the
  * `ExtensionParameterMethods`.
  */
-const InputRulesExtension = ExtensionFactory.plain({
+const CoreInputRulesExtension = ExtensionFactory.plain({
   name: 'inputRules',
   defaultPriority: ExtensionPriority.Low,
 
@@ -47,7 +47,7 @@ declare global {
       /**
        * Whether to use the inputRules for this particular extension.
        *
-       * @defaultValue `false`
+       * @defaultValue `undefined`
        */
       inputRules?: boolean;
     }
@@ -74,4 +74,4 @@ declare global {
   }
 }
 
-export { InputRulesExtension };
+export { CoreInputRulesExtension };

@@ -391,42 +391,28 @@ interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {
   /**
    * Whether to exclude the extension's pasteRules
    *
-   * @defaultValue `false`
+   * @defaultValue `undefined`
    */
   pasteRules?: boolean;
 
   /**
-   * Whether to exclude the extension's inputRules
-   *
-   * @defaultValue `false`
-   */
-  inputRules?: boolean;
-
-  /**
-   * Whether to exclude the extension's keymaps
-   *
-   * @defaultValue `false`
-   */
-  keys?: boolean;
-
-  /**
    * Whether to exclude the extension's nodeView
    *
-   * @defaultValue `false`
+   * @defaultValue `undefined`
    */
   nodeView?: boolean;
 
   /**
    * Whether to use the attributes provided by this extension
    *
-   * @defaultValue `false`
+   * @defaultValue `undefined`
    */
   attributes?: boolean;
 
   /**
    * Whether to exclude the suggestions plugin configuration for the extension.
    *
-   * @defaultValue `false`
+   * @defaultValue `undefined`
    */
   suggesters?: boolean;
 }

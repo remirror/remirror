@@ -1,4 +1,3 @@
-import { InputRule, inputRules } from 'prosemirror-inputrules';
 import { Schema } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
 import { suggest, Suggester } from 'prosemirror-suggest';
@@ -26,16 +25,14 @@ import {
   NodeExtensionSpec,
   NodeViewMethod,
   PlainObject,
-  PluginKey,
   ProsemirrorAttributes,
   ProsemirrorPlugin,
   TransactionParameter,
 } from '@remirror/core-types';
-import { createDocumentNode, CreateDocumentNodeParams, getPluginState } from '@remirror/core-utils';
+import { createDocumentNode, CreateDocumentNodeParams } from '@remirror/core-utils';
 
 import {
   AnyExtension,
-  CommandsFromExtensions,
   ExtensionTags,
   GetMarkNameUnion,
   GetNodeNameUnion,
@@ -46,19 +43,12 @@ import {
   SchemaFromExtension,
 } from '../extension';
 import { AnyPreset } from '../preset';
-import {
-  GetCommands,
-  GetConstructor,
-  GetNameUnion,
-  ManagerParameter,
-  ManagerSettings,
-} from '../types';
+import { GetCommands, GetConstructor, ManagerParameter, ManagerSettings } from '../types';
 import {
   createAttributes,
   createCommands,
   createExtensionTags,
   createHelpers,
-  createKeymaps,
   defaultIsActive,
   defaultIsEnabled,
   getParameterWithType,
@@ -304,9 +294,7 @@ class Manager<
 
         return getParameterWithType(extension, this.parameter);
       },
-      addPlugins: (...plugins: ProsemirrorPlugin[]) => {
-        this.#store.extensionPlugins.push(...plugins);
-      },
+      addPlugins: this.addPlugins,
       getStoreKey: this.getStoreKey,
       setStoreKey: this.setStoreKey,
       managerSettings: this.#settings,
@@ -314,18 +302,46 @@ class Manager<
   }
 
   /**
+   * Set the store key.
+   */
+  private readonly setStoreKey = <Key extends keyof Remirror.ManagerStore>(
+    key: Key,
+    value: Remirror.ManagerStore[Key],
+  ) => {
+    invariant(this.#phase > ManagerPhase.Initialize, {
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+      message: '`setStoreKey` should only be called within the returned methods scope.',
+    });
+
+    this.#store[key] = value;
+  };
+
+  private readonly getStoreKey = <Key extends keyof Remirror.ManagerStore>(
+    key: Key,
+  ): Remirror.ManagerStore[Key] => {
+    invariant(this.#phase >= ManagerPhase.Initialize, {
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+      message: '`getStoreKey` should only be called within the returned methods scope.',
+    });
+
+    return this.#store[key];
+  };
+
+  private readonly addPlugins = (...plugins: ProsemirrorPlugin[]) => {
+    this.#store.plugins.push(...plugins);
+  };
+
+  /**
    * Create the default on initialize methods.
    */
   private createDefaultOnInitializeMethods(parameter: InitializeEventMethodParameter) {
-    [createAttributes, createKeymaps].forEach((method) =>
-      this.#onInitializeHandlers.push(method(parameter)),
-    );
+    [createAttributes].forEach((method) => this.#onInitializeHandlers.push(method(parameter)));
   }
 
   /**
    * Called before the extension loop of the initialization phase.
    */
-  private onInitializeBeforeExtensionLoop() {
+  private beforeInitialize() {
     for (const { beforeExtensionLoop } of this.#onInitializeHandlers) {
       beforeExtensionLoop?.();
     }
@@ -334,7 +350,7 @@ class Manager<
   /**
    * Called after the extension loop of the initialization phase.
    */
-  private onInitializeAfterExtensionLoop() {
+  private afterInitialize() {
     for (const { afterExtensionLoop } of this.#onInitializeHandlers) {
       afterExtensionLoop?.();
     }
@@ -343,36 +359,10 @@ class Manager<
   /**
    * Called during the extension loop of the initialization phase.
    */
-  private onInitializeEachExtension(extension: ExtensionUnion) {
+  private initializeEachExtension(extension: ExtensionUnion) {
     for (const { forEachExtension } of this.#onInitializeHandlers) {
       forEachExtension?.(extension);
     }
-  }
-
-  /**
-   * Set the store key.
-   */
-  private setStoreKey<Key extends keyof Remirror.ManagerStore>(
-    key: Key,
-    value: Remirror.ManagerStore[Key],
-  ) {
-    invariant(this.#phase > ManagerPhase.Initialize, {
-      code: ErrorConstant.MANAGER_PHASE_ERROR,
-      message: '`setStoreKey` should only be called within the returned methods scope.',
-    });
-
-    this.#store[key] = value;
-  }
-
-  private getStoreKey<Key extends keyof Remirror.ManagerStore>(
-    key: Key,
-  ): Remirror.ManagerStore[Key] {
-    invariant(this.#phase >= ManagerPhase.Initialize, {
-      code: ErrorConstant.MANAGER_PHASE_ERROR,
-      message: '`getStoreKey` should only be called within the returned methods scope.',
-    });
-
-    return this.store[key];
   }
 
   /**
@@ -383,22 +373,20 @@ class Manager<
   private initialize() {
     this.#phase = ManagerPhase.Initialize;
 
-    this.onInitializeBeforeExtensionLoop();
+    this.beforeInitialize();
 
     for (const extension of this.#extensions) {
-      this.onInitializeEachExtension(extension);
+      this.initializeEachExtension(extension);
     }
 
-    this.onInitializeAfterExtensionLoop();
+    this.afterInitialize();
 
-    this.#store.inputRules = this.inputRules();
     this.#store.pasteRules = this.pasteRules();
     this.#store.suggestions = this.suggestions();
 
     this.#store.plugins = [
       ...this.#store.extensionPlugins,
       this.#store.suggestions,
-      this.#store.inputRules,
       ...this.#store.pasteRules,
       ...this.#store.keymaps,
     ];
@@ -414,7 +402,7 @@ class Manager<
 
     store.nodes = object();
     store.marks = object();
-    store.extensionPlugins = [];
+    store.plugins = [];
 
     return store;
   }
@@ -548,7 +536,7 @@ class Manager<
    * - `isActive` defaults to a function returning false
    * - `isEnabled` defaults to a function returning true
    */
-  private createCommands(parameters: CommandParameter): this['_C'] {
+  private createCommands(parameters: CommandParameter): this['~C'] {
     // Will throw if not initialized
     this.checkInitialized();
 
@@ -568,7 +556,7 @@ class Manager<
       actions[commandName].isEnabled = isEnabled ?? defaultIsEnabled;
     });
 
-    return actions as this['_C'];
+    return actions as this['~C'];
   }
 
   private createHelpers(): this['_H'] {
@@ -641,22 +629,10 @@ class Manager<
    * Called when removing the manager and all preset and extensions.
    */
   public destroy() {
-    // Only destroy if this has already been initialized.
-    if (!this.initialized) {
-      return;
+    for (const extension of this.extensions) {
+      extension.destroy?.();
     }
   }
-
-  /**
-   * `Commands`
-   *
-   * Type inference hack for all the actions this manager provides. This is the
-   * only way I know to store types on a class.
-   *
-   * @internal
-   * INTERNAL USE ONLY
-   */
-  public readonly _C!: CommandsFromExtensions<ExtensionUnion>;
 }
 
 interface ManagerParams<
@@ -726,11 +702,6 @@ declare global {
        * The keymap arrangement.
        */
       keymaps: ProsemirrorPlugin[];
-
-      /**
-       * The input rules for the editor.
-       */
-      inputRules: ProsemirrorPlugin;
 
       /**
        * The paste rules for editor. This determines what happens when the user

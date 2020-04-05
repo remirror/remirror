@@ -28,7 +28,6 @@ import {
   GetExtraAttributes,
   IfEmpty,
   IfNoRequiredProperties,
-  KeyBindings,
   MarkExtensionSpec,
   MarkType,
   NodeExtensionSpec,
@@ -753,16 +752,6 @@ interface ExtensionCreatorMethods<
     parameter: CreateHelpersParameter<ProsemirrorType>,
     extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
   ) => Helpers;
-
-  /**
-   * Add key bindings for this extension.
-   *
-   * @param parameter - schema parameter with type included
-   */
-  createKeys?: (
-    parameter: ManagerTypeParameter<ProsemirrorType>,
-    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
-  ) => KeyBindings;
 
   /**
    * Registers a node view for the extension.

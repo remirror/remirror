@@ -18,7 +18,6 @@ import {
   KeyBindingCommandFunction,
   KeyBindings,
   ProsemirrorCommandFunction,
-  ProsemirrorPlugin,
 } from '@remirror/core-types';
 
 import { chainKeyBindingCommands } from '..';
@@ -497,49 +496,6 @@ const createAttributes = ({
 };
 
 /**
- * Retrieve all keymaps (how the editor responds to keyboard commands).
- */
-const createKeymaps = ({
-  getParameter,
-  setStoreKey,
-}: InitializeEventMethodParameter): InitializeEventMethodReturn => {
-  const extensionKeymaps: KeyBindings[] = [];
-
-  return {
-    forEachExtension: (extension) => {
-      if (!extension.parameter.createKeys || extension.settings.exclude.keys) {
-        return;
-      }
-
-      extensionKeymaps.push(extension.parameter.createKeys(getParameter(extension), extension));
-    },
-    afterExtensionLoop: () => {
-      const previousCommandsMap = new Map<string, KeyBindingCommandFunction[]>();
-      const mappedCommands: Record<string, ProsemirrorCommandFunction> = object();
-
-      for (const extensionKeymap of extensionKeymaps) {
-        for (const key in extensionKeymap) {
-          if (!hasOwnProperty(extensionKeymap, key)) {
-            continue;
-          }
-
-          const previousCommands: KeyBindingCommandFunction[] = previousCommandsMap.get(key) ?? [];
-          const commands = [...previousCommands, extensionKeymap[key]];
-          const command = chainKeyBindingCommands(...commands);
-          previousCommandsMap.set(key, commands);
-
-          mappedCommands[key] = (state, dispatch, view) => {
-            return command({ state, dispatch, view, next: () => false });
-          };
-        }
-      }
-
-      setStoreKey('keymaps', [keymap(mappedCommands)]);
-    },
-  };
-};
-
-/**
  * Identifies the stage the extension manager is at.
  */
 enum ManagerPhase {
@@ -569,7 +525,6 @@ export {
   createAttributes,
   createCommands,
   createExtensionTags,
-  createKeymaps,
   createHelpers,
   defaultIsActive,
   defaultIsEnabled,
