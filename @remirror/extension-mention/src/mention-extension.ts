@@ -9,7 +9,6 @@ import {
 } from 'prosemirror-suggest';
 
 import {
-  ProsemirrorAttributes,
   CommandMarkTypeParams,
   EditorState,
   getMarkRange,
@@ -24,6 +23,7 @@ import {
   MarkType,
   noop,
   object,
+  ProsemirrorAttributes,
   RangeParameter,
   removeMark,
   replaceText,
@@ -227,7 +227,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       return markPasteRule({
         regexp,
         type,
-        getAttrs: (string) => ({
+        getAttributes: (string) => ({
           id: getMatchString(string.slice(char.length, string.length)),
           label: getMatchString(string),
           name,

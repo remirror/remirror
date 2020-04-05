@@ -95,7 +95,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
       markPasteRule({
         regexp: extractUrl,
         type,
-        getAttrs: (url) => {
+        getAttributes: (url) => {
           return {
             href: extractHref(getMatchString(url)),
           };

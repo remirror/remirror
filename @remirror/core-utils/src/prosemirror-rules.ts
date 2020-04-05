@@ -12,45 +12,38 @@ import {
   RegExpParameter,
 } from '@remirror/core-types';
 
-/**
- * Creates an input rule based on the provided regex for the provided mark type
- */
-export const markInputRule = ({ regexp, type, getAttrs: getAttributes }: MarkInputRuleParams) => {
-  return new InputRule(regexp, (state, match, start, end) => {
-    const { tr } = state;
-    const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
+interface NodeInputRuleParams
+  extends Partial<GetAttributesParameter>,
+    RegExpParameter,
+    NodeTypeParameter {
+  /**
+   * Allows for setting a text selection at the start of the newly created node.
+   * Leave blank or set to false to ignore.
+   */
+  updateSelection?: boolean;
+}
+interface PlainInputRuleParams extends RegExpParameter {
+  /**
+   * Allows for setting a text selection at the start of the newly created node.
+   * Leave blank or set to false to ignore.
+   */
+  updateSelection?: boolean;
 
-    let markEnd = end;
+  /**
+   * A function that transforms the match into the desired value.
+   */
+  transformMatch(match: string[]): string | null | undefined;
+}
 
-    if (match[1]) {
-      const startSpaces = match[0].search(/\S/);
-      const textStart = start + match[0].indexOf(match[1]);
-      const textEnd = textStart + match[1].length;
-
-      if (textEnd < end) {
-        tr.delete(textEnd, end);
-      }
-
-      if (textStart > start) {
-        tr.delete(start + startSpaces, textStart);
-      }
-
-      markEnd = start + startSpaces + match[1].length;
-    }
-
-    return (
-      tr
-        .addMark(start, markEnd, type.create(attributes))
-        // Make sure not to continue with any ongoing marks
-        .removeStoredMark(type)
-    );
-  });
-};
+interface MarkInputRuleParams
+  extends Partial<GetAttributesParameter>,
+    RegExpParameter,
+    MarkTypeParameter {}
 
 /**
  * Creates a paste rule based on the provided regex for the provided mark type
  */
-export const markPasteRule = ({ regexp, type, getAttrs: getAttributes }: MarkInputRuleParams) => {
+export const markPasteRule = ({ regexp, type, getAttributes }: MarkInputRuleParams) => {
   const handler = (fragment: Fragment) => {
     const nodes: ProsemirrorNode[] = [];
 
@@ -97,12 +90,51 @@ export const markPasteRule = ({ regexp, type, getAttrs: getAttributes }: MarkInp
 };
 
 /**
+ * Creates an input rule based on the provided regex for the provided mark type
+ */
+export const markInputRule = ({
+  regexp,
+  type,
+  getAttributes: getAttributes,
+}: MarkInputRuleParams) => {
+  return new InputRule(regexp, (state, match, start, end) => {
+    const { tr } = state;
+    const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
+
+    let markEnd = end;
+
+    if (match[1]) {
+      const startSpaces = match[0].search(/\S/);
+      const textStart = start + match[0].indexOf(match[1]);
+      const textEnd = textStart + match[1].length;
+
+      if (textEnd < end) {
+        tr.delete(textEnd, end);
+      }
+
+      if (textStart > start) {
+        tr.delete(start + startSpaces, textStart);
+      }
+
+      markEnd = start + startSpaces + match[1].length;
+    }
+
+    return (
+      tr
+        .addMark(start, markEnd, type.create(attributes))
+        // Make sure not to continue with any ongoing marks
+        .removeStoredMark(type)
+    );
+  });
+};
+
+/**
  * Creates an node input rule based on the provided regex for the provided node type
  */
 export const nodeInputRule = ({
   regexp,
   type,
-  getAttrs: getAttributes,
+  getAttributes: getAttributes,
   updateSelection = false,
 }: NodeInputRuleParams) => {
   return new InputRule(regexp, (state, match, start, end) => {
@@ -149,31 +181,3 @@ export const plainInputRule = <GSchema extends EditorSchema = EditorSchema>({
     return tr;
   });
 };
-
-interface NodeInputRuleParams
-  extends Partial<GetAttributesParameter>,
-    RegExpParameter,
-    NodeTypeParameter {
-  /**
-   * Allows for setting a text selection at the start of the newly created node.
-   * Leave blank or set to false to ignore.
-   */
-  updateSelection?: boolean;
-}
-interface PlainInputRuleParams extends RegExpParameter {
-  /**
-   * Allows for setting a text selection at the start of the newly created node.
-   * Leave blank or set to false to ignore.
-   */
-  updateSelection?: boolean;
-
-  /**
-   * A function that transforms the match into the desired value.
-   */
-  transformMatch(match: string[]): string | null | undefined;
-}
-
-interface MarkInputRuleParams
-  extends Partial<GetAttributesParameter>,
-    RegExpParameter,
-    MarkTypeParameter {}

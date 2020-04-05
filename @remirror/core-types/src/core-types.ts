@@ -34,7 +34,7 @@ export interface GetAttributesParameter {
    * A helper function for setting receiving a match array / string and setting
    * the attributes for a node.
    */
-  getAttrs: GetAttributes;
+  getAttributes: GetAttributes;
 }
 
 /**

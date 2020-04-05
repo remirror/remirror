@@ -207,7 +207,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
         regexp,
         type,
         updateSelection: true,
-        getAttrs: getAttributes,
+        getAttributes: getAttributes,
       }),
     ];
   }

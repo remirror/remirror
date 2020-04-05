@@ -773,18 +773,6 @@ interface ExtensionCreatorMethods<
   ) => NodeViewMethod;
 
   /**
-   * Register paste rules for this extension.
-   *
-   * Paste rules are activated when text is pasted into the editor.
-   *
-   * @param parameter - schema parameter with type included
-   */
-  createPasteRules?: (
-    parameter: ManagerTypeParameter<ProsemirrorType>,
-    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
-  ) => ProsemirrorPlugin[];
-
-  /**
    * Create suggestions which respond to character key combinations within the
    * editor instance.
    *

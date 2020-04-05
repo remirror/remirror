@@ -381,16 +381,6 @@ class Manager<
 
     this.afterInitialize();
 
-    this.#store.pasteRules = this.pasteRules();
-    this.#store.suggestions = this.suggestions();
-
-    this.#store.plugins = [
-      ...this.#store.extensionPlugins,
-      this.#store.suggestions,
-      ...this.#store.pasteRules,
-      ...this.#store.keymaps,
-    ];
-
     // this.#store.helpers = this.helpers();
   }
 
@@ -592,24 +582,6 @@ class Manager<
       );
   }
 
-  /**
-   * Retrieve all pasteRules (rules for how the editor responds to pastedText).
-   */
-  private pasteRules(): ProsemirrorPlugin[] {
-    this.checkInitialized();
-    const pasteRules: ProsemirrorPlugin[] = [];
-    const extensionPasteRules = this.extensions
-      .filter(hasExtensionProperty('pasteRules'))
-      .filter((extension) => !extension.options.exclude.pasteRules)
-      .map(extensionPropertyMapper('pasteRules', this.parameter));
-
-    extensionPasteRules.forEach((rules) => {
-      pasteRules.push(...rules);
-    });
-
-    return pasteRules;
-  }
-
   private suggestions() {
     const suggestions: Suggester[] = [];
 
@@ -689,25 +661,9 @@ declare global {
       schema: SchemaFromExtension<ExtensionUnion>;
 
       /**
-       * All the plugins defined by the extensions.
-       */
-      extensionPlugins: ProsemirrorPlugin[];
-
-      /**
        * All of the plugins combined together from all sources
        */
       plugins: ProsemirrorPlugin[];
-
-      /**
-       * The keymap arrangement.
-       */
-      keymaps: ProsemirrorPlugin[];
-
-      /**
-       * The paste rules for editor. This determines what happens when the user
-       * pastes content into the editor.
-       */
-      pasteRules: ProsemirrorPlugin[];
 
       /**
        * The suggestions to be added to the editor instance.

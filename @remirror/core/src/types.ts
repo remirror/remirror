@@ -389,13 +389,6 @@ interface BaseExtensionSettings extends Remirror.ExtensionSettings {
 
 interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {
   /**
-   * Whether to exclude the extension's pasteRules
-   *
-   * @defaultValue `undefined`
-   */
-  pasteRules?: boolean;
-
-  /**
    * Whether to exclude the extension's nodeView
    *
    * @defaultValue `undefined`

@@ -20,7 +20,7 @@ import {
  * `ExtensionParameterMethods`.
  */
 const CorePluginsExtension = ExtensionFactory.plain({
-  name: 'inputRules',
+  name: 'plugins',
   defaultPriority: ExtensionPriority.Low,
 
   /**
