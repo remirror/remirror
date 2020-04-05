@@ -22,13 +22,13 @@ import {
   CompareMatchParams as CompareMatchParameters,
   RemoveIgnoredParams as RemoveIgnoredParameters,
   SuggestCallbackParams as SuggestCallbackParameters,
-  Suggester,
+  Suggestion,
   SuggestKeyBindingParams as SuggestKeyBindingParameters,
   SuggestReasonMap,
   SuggestStateMatch,
   SuggestStateMatchReason,
 } from './suggest-types';
-import { findFromSuggesters, findReason, runKeyBindings } from './suggest-utils';
+import { findFromSuggestions, findReason, runKeyBindings } from './suggest-utils';
 
 /**
  * The suggestion state which manages the list of suggestions.
@@ -37,14 +37,14 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * Create an instance of the SuggestState class.
    */
-  public static create(suggesters: Suggester[]) {
+  public static create(suggesters: Suggestion[]) {
     return new SuggestState(suggesters);
   }
 
   /**
    * The suggesters that have been registered for the suggestions plugin.
    */
-  private readonly suggesters: Array<Required<Suggester>>;
+  private readonly suggesters: Array<Required<Suggestion>>;
 
   /**
    * Keeps track of the current state.
@@ -123,7 +123,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    * `regex` and the order in which they are passed in. Earlier suggesters are
    * prioritized.
    */
-  constructor(suggesters: Suggester[]) {
+  constructor(suggesters: Suggestion[]) {
     const names: string[] = [];
     this.suggesters = suggesters.map((suggester) => {
       if (names.includes(suggester.name)) {
@@ -329,7 +329,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    * Update the next state value.
    */
   private updateReasons({ $pos, state }: UpdateReasonsParams) {
-    const match = findFromSuggesters({ suggesters: this.suggesters, $pos });
+    const match = findFromSuggestions({ suggesters: this.suggesters, $pos });
     this.next = match && this.shouldIgnoreMatch(match) ? undefined : match;
 
     // Store the matches with reasons

@@ -12,13 +12,13 @@ import {
 import { selectionEmpty } from '@remirror/core-utils';
 
 import { ChangeReason, ExitReason } from './suggest-constants';
-import { createRegexFromSuggester, regexToString } from './suggest-helpers';
+import { createRegexFromSuggestion, regexToString } from './suggest-helpers';
 import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates';
 import {
   CompareMatchParams as CompareMatchParameters,
   ReasonParams as ReasonParameters,
-  Suggester,
-  SuggesterParams as SuggesterParameters,
+  Suggestion,
+  SuggestionParams as SuggestionParameters,
   SuggestKeyBindingMap,
   SuggestKeyBindingParams as SuggestKeyBindingParameters,
   SuggestReasonMap,
@@ -48,7 +48,7 @@ const isPrefixValid = (
   {
     invalidPrefixCharacters,
     validPrefixCharacters,
-  }: Pick<Required<Suggester>, 'invalidPrefixCharacters' | 'validPrefixCharacters'>,
+  }: Pick<Required<Suggestion>, 'invalidPrefixCharacters' | 'validPrefixCharacters'>,
 ) => {
   if (!isUndefined(invalidPrefixCharacters)) {
     const regex = new RegExp(regexToString(invalidPrefixCharacters));
@@ -112,11 +112,11 @@ const findPosition = ({ text, regexp, $pos, char, suggester }: FindPositionParam
 const findMatch = ({
   $pos,
   suggester,
-}: ResolvedPosParameter & SuggesterParams): SuggestStateMatch | undefined => {
+}: ResolvedPosParameter & SuggestionParams): SuggestStateMatch | undefined => {
   const { char, name, startOfLine, supportedCharacters, matchOffset } = suggester;
 
   // Create the regular expression to match the text against
-  const regexp = createRegexFromSuggester({ char, matchOffset, startOfLine, supportedCharacters });
+  const regexp = createRegexFromSuggestion({ char, matchOffset, startOfLine, supportedCharacters });
 
   // All the text in the current node
   const text = $pos.doc.textBetween($pos.before(), $pos.end(), NULL_CHARACTER, NULL_CHARACTER);
@@ -317,17 +317,17 @@ export const runKeyBindings = (
   );
 };
 
-interface FindFromSuggestersParams extends ResolvedPosParameter {
+interface FindFromSuggestionsParams extends ResolvedPosParameter {
   /**
    * The matchers to search through.
    */
-  suggesters: Array<Required<Suggester>>;
+  suggesters: Array<Required<Suggestion>>;
 }
 
 interface FindPositionParams
-  extends Pick<Suggester, 'name' | 'char'>,
+  extends Pick<Suggestion, 'name' | 'char'>,
     TextParams,
-    SuggesterParams,
+    SuggestionParams,
     ResolvedPosParameter {
   /**
    * The regexp to use
@@ -387,10 +387,10 @@ export const findReason = ({
 /**
  * Find a match for the provided matchers
  */
-export const findFromSuggesters = ({
+export const findFromSuggestions = ({
   suggesters,
   $pos,
-}: FindFromSuggestersParams): SuggestStateMatch | undefined => {
+}: FindFromSuggestionsParams): SuggestStateMatch | undefined => {
   // Find the first match and break when done
   for (const suggester of suggesters) {
     try {

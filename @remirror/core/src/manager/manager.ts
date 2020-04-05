@@ -1,6 +1,6 @@
 import { Schema } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
-import { suggest, Suggester } from 'prosemirror-suggest';
+import { suggest, Suggestion } from 'prosemirror-suggest';
 
 import {
   ErrorConstant,

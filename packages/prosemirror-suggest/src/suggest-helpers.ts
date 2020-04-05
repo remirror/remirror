@@ -2,7 +2,7 @@ import escapeStringRegex from 'escape-string-regexp';
 
 import { isRegExp } from '@remirror/core-helpers';
 
-import { Suggester } from './suggest-types';
+import { Suggestion } from './suggest-types';
 
 export const escapeChar = (char: string) => escapeStringRegex(char);
 
@@ -31,13 +31,13 @@ const getRegexSupportedCharacters = (supportedCharacters: string | RegExp, match
 /**
  * Create a regex expression to evaluate matches directly from the suggester properties.
  */
-export const createRegexFromSuggester = (
+export const createRegexFromSuggestion = (
   {
     char,
     matchOffset,
     startOfLine,
     supportedCharacters,
-  }: Pick<Required<Suggester>, 'startOfLine' | 'char' | 'supportedCharacters' | 'matchOffset'>,
+  }: Pick<Required<Suggestion>, 'startOfLine' | 'char' | 'supportedCharacters' | 'matchOffset'>,
   flags = 'gm',
 ) =>
   new RegExp(

@@ -1,5 +1,5 @@
 import { AttributeSpec } from 'prosemirror-model';
-import { Suggester } from 'prosemirror-suggest';
+import { Suggestion } from 'prosemirror-suggest';
 
 import {
   ErrorConstant,

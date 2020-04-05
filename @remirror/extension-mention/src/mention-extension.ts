@@ -5,7 +5,7 @@ import {
   isRemovedReason,
   isSplitReason,
   regexToString,
-  Suggester,
+  Suggestion,
 } from 'prosemirror-suggest';
 
 import {
@@ -236,7 +236,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     });
   }
 
-  public suggestions({ getActions, type, getState }: ManagerMarkTypeParams): Suggester[] {
+  public suggestions({ getActions, type, getState }: ManagerMarkTypeParams): Suggestion[] {
     const {
       matchers,
       onChange,
@@ -246,7 +246,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       onCharacterEntry,
       suggestTag,
     } = this.options;
-    return matchers.map<Suggester<MentionExtensionSuggestCommand>>((matcher) => {
+    return matchers.map<Suggestion<MentionExtensionSuggestCommand>>((matcher) => {
       return {
         ...DEFAULT_MATCHER,
         ...matcher,

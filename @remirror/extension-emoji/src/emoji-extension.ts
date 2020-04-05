@@ -1,5 +1,5 @@
 import escapeStringRegex from 'escape-string-regexp';
-import { Suggester } from 'prosemirror-suggest';
+import { Suggestion } from 'prosemirror-suggest';
 
 import {
   Extension,
@@ -156,7 +156,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
 
   public suggestions({
     getCommands: getActions,
-  }: ManagerParameter): Suggester<EmojiSuggestCommand> {
+  }: ManagerParameter): Suggestion<EmojiSuggestCommand> {
     const {
       suggestionCharacter,
       suggestionKeyBindings,

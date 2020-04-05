@@ -1,4 +1,4 @@
-import { suggest, Suggester } from 'prosemirror-suggest';
+import { suggest, Suggestion } from 'prosemirror-suggest';
 
 import { ExtensionPriority } from '@remirror/core-constants';
 import { isArray } from '@remirror/core-helpers';
@@ -23,7 +23,7 @@ const CoreSuggestionExtension = ExtensionFactory.plain({
    * Ensure that all ssr transformers are run.
    */
   onInitialize: ({ getParameter, addPlugins, managerSettings }) => {
-    const suggestions: Suggester[] = [];
+    const suggestions: Suggestion[] = [];
 
     return {
       forEachExtension: (extension) => {
@@ -83,7 +83,7 @@ declare global {
       createSuggestions?: (
         parameter: ManagerTypeParameter<ProsemirrorType>,
         extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
-      ) => Suggester[] | Suggester;
+      ) => Suggestion[] | Suggestion;
     }
   }
 }
