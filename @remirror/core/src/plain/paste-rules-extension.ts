@@ -9,7 +9,7 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  * for automatically transforming pasted text which matches a certain regex
  * pattern in the dom.
  */
-const CorePasteRulesExtension = ExtensionFactory.plain({
+const PasteRulesExtension = ExtensionFactory.plain({
   name: 'pasteRules',
   defaultPriority: ExtensionPriority.Low,
 
@@ -77,4 +77,4 @@ declare global {
   }
 }
 
-export { CorePasteRulesExtension };
+export { PasteRulesExtension };

@@ -35,7 +35,6 @@ export type {
   ExtensionFromConstructor,
   ExtensionListParameter,
   ExtensionParameter,
-  ExtensionsParameter,
   GetExtensionParameter,
   MapCommandToAction,
 } from './extension-types';

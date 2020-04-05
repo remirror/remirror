@@ -5,13 +5,6 @@ import { AnyFunction, StringKey } from '@remirror/core-types';
 import { CommandMethod, GetCommands, GetConstructor } from '../types';
 import { AnyExtension } from './extension-base';
 
-export interface ExtensionListParameter {
-  /**
-   * A list of passed extensions
-   */
-  extensions: AnyExtension[];
-}
-
 export interface ExtensionParameter<ExtensionUnion extends AnyExtension = any> {
   /**
    * An extension.
@@ -19,7 +12,7 @@ export interface ExtensionParameter<ExtensionUnion extends AnyExtension = any> {
   extension: ExtensionUnion;
 }
 
-export interface ExtensionsParameter<ExtensionUnion extends AnyExtension = any> {
+export interface ExtensionListParameter<ExtensionUnion extends AnyExtension = AnyExtension> {
   /**
    * The extensions property.
    */

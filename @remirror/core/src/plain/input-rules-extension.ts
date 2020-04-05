@@ -14,19 +14,26 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  * This is an example of adding custom functionality to an extension via the
  * `ExtensionParameterMethods`.
  */
-const CoreInputRulesExtension = ExtensionFactory.plain({
+const InputRulesExtension = ExtensionFactory.plain({
   name: 'inputRules',
   defaultPriority: ExtensionPriority.Low,
 
   /**
    * Ensure that all ssr transformers are run.
    */
-  onInitialize: ({ getParameter, addPlugins }) => {
+  onInitialize: ({ getParameter, addPlugins, managerSettings }) => {
     const rules: InputRule[] = [];
 
     return {
       forEachExtension: (extension) => {
-        if (!extension.parameter.createInputRules || extension.settings.exclude.inputRules) {
+        if (
+          // managerSettings excluded this from running
+          managerSettings.exclude?.inputRules ||
+          // Method doesn't exist
+          !extension.parameter.createInputRules ||
+          // Extension settings exclude it
+          extension.settings.exclude.inputRules
+        ) {
           return;
         }
 
@@ -74,4 +81,4 @@ declare global {
   }
 }
 
-export { CoreInputRulesExtension };
+export { InputRulesExtension };

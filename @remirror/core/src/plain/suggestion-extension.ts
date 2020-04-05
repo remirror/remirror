@@ -15,7 +15,7 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  * This is an example of adding custom functionality to an extension via the
  * `ExtensionParameterMethods`.
  */
-const CoreSuggestionExtension = ExtensionFactory.plain({
+const SuggestionExtension = ExtensionFactory.plain({
   name: 'suggestion',
   defaultPriority: ExtensionPriority.Low,
 
@@ -88,4 +88,4 @@ declare global {
   }
 }
 
-export { CoreSuggestionExtension };
+export { SuggestionExtension };

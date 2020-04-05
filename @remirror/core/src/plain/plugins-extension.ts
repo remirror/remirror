@@ -19,7 +19,7 @@ import {
  * This is an example of adding custom functionality to an extension via the
  * `ExtensionParameterMethods`.
  */
-const CorePluginsExtension = ExtensionFactory.plain({
+const PluginsExtension = ExtensionFactory.plain({
   name: 'plugins',
   defaultPriority: ExtensionPriority.Low,
 
@@ -107,4 +107,4 @@ declare global {
   }
 }
 
-export { CorePluginsExtension };
+export { PluginsExtension };

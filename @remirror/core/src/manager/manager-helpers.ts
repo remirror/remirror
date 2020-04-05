@@ -1,10 +1,7 @@
-import { keymap } from 'prosemirror-keymap';
-
 import { ErrorConstant, MarkGroup, NodeGroup, Tag } from '@remirror/core-constants';
 import {
   bool,
   entries,
-  hasOwnProperty,
   invariant,
   isEmptyArray,
   isFunction,
@@ -12,15 +9,8 @@ import {
   object,
   sort,
 } from '@remirror/core-helpers';
-import {
-  AnyFunction,
-  AttributesWithClass,
-  KeyBindingCommandFunction,
-  KeyBindings,
-  ProsemirrorCommandFunction,
-} from '@remirror/core-types';
+import { AnyFunction, AttributesWithClass } from '@remirror/core-types';
 
-import { chainKeyBindingCommands } from '..';
 import {
   AnyExtension,
   ExtensionListParameter,

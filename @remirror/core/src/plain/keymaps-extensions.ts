@@ -24,7 +24,7 @@ import {
   ManagerTypeParameter,
 } from '../types';
 
-interface CoreKeymapExtensionOptions {
+interface KeymapExtensionOptions {
   /**
    * Determines whether a backspace after an input rule has been applied undoes the input rule.
    *
@@ -78,7 +78,7 @@ interface CoreKeymapExtensionOptions {
  * Keymaps are the way of controlling how the editor responds to a
  * keypress and different key combinations.
  */
-const CoreKeymapExtension = ExtensionFactory.typed<CoreKeymapExtensionOptions>().plain({
+const KeymapExtension = ExtensionFactory.typed<KeymapExtensionOptions>().plain({
   name: 'keymap',
   defaultPriority: ExtensionPriority.Low,
   defaultSettings: {
@@ -223,5 +223,5 @@ declare global {
   }
 }
 
-export type { CoreKeymapExtensionOptions };
-export { CoreKeymapExtension };
+export type { KeymapExtensionOptions };
+export { KeymapExtension };

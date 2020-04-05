@@ -76,7 +76,7 @@ const createBaseExtensionFactory = <
          * Set this extension to be a plain type.
          */
         get type() {
-          return ExtensionType.Plain;
+          return ExtensionType.Plain as const;
         }
 
         /**
