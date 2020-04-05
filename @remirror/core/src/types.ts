@@ -401,13 +401,6 @@ interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {
    * @defaultValue `undefined`
    */
   attributes?: boolean;
-
-  /**
-   * Whether to exclude the suggestions plugin configuration for the extension.
-   *
-   * @defaultValue `undefined`
-   */
-  suggesters?: boolean;
 }
 
 interface SSRComponentParameter {

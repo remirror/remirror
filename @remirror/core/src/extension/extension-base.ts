@@ -771,21 +771,6 @@ interface ExtensionCreatorMethods<
     parameter: ManagerTypeParameter<ProsemirrorType>,
     extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
   ) => NodeViewMethod;
-
-  /**
-   * Create suggestions which respond to character key combinations within the
-   * editor instance.
-   *
-   * @remarks
-   *
-   * Suggestions are a very powerful way of building up the editors
-   * functionality. They can support `@` mentions, `#` tagging, `/` special
-   * command keys which trigger an actions menu and much more.
-   */
-  createSuggestions?: (
-    parameter: ManagerTypeParameter<ProsemirrorType>,
-    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
-  ) => Suggester[] | Suggester;
 }
 
 interface ExtensionEventMethods {

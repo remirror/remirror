@@ -582,21 +582,6 @@ class Manager<
       );
   }
 
-  private suggestions() {
-    const suggestions: Suggester[] = [];
-
-    const extensionSuggesters = this.extensions
-      .filter(hasExtensionProperty('suggestions'))
-      .filter((extension) => !extension.options.exclude.suggestions)
-      .map(extensionPropertyMapper('suggestions', this.parameter));
-
-    extensionSuggesters.forEach((suggester) => {
-      suggestions.push(...(isArray(suggester) ? suggester : [suggester]));
-    });
-
-    return suggest(...suggestions);
-  }
-
   /**
    * Called when removing the manager and all preset and extensions.
    */
@@ -664,11 +649,6 @@ declare global {
        * All of the plugins combined together from all sources
        */
       plugins: ProsemirrorPlugin[];
-
-      /**
-       * The suggestions to be added to the editor instance.
-       */
-      suggestions: ProsemirrorPlugin;
 
       /**
        * The commands defined within this extension.
