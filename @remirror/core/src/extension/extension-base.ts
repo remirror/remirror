@@ -1,3 +1,4 @@
+
 import { AttributeSpec } from 'prosemirror-model';
 
 import {
@@ -105,6 +106,8 @@ type InferFactoryParameter<
   ? NodeExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>
   : ProsemirrorType extends MarkType
   ? MarkExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>
+  : ProsemirrorType extends never
+  ? PlainExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>
   : ExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>;
 
 /**
@@ -121,7 +124,9 @@ type InferExtensionConstructor<
   ? NodeExtensionConstructor<Name, Settings, Properties, Commands, Helpers>
   : ProsemirrorType extends MarkType
   ? MarkExtensionConstructor<Name, Settings, Properties, Commands, Helpers>
-  : PlainExtensionConstructor<Name, Settings, Properties, Commands, Helpers>;
+  : ProsemirrorType extends never
+  ? PlainExtensionConstructor<Name, Settings, Properties, Commands, Helpers>
+  : AnyExtensionConstructor;
 
 /**
  * These are the default options merged into every extension. They can be
@@ -336,6 +341,7 @@ abstract class Extension<
    */
   public abstract readonly type: ExtensionType;
 
+  /* eslint-disable @typescript-eslint/explicit-member-accessibility */
   /**
    * Private instance of the static settings.
    */
@@ -350,8 +356,19 @@ abstract class Extension<
    * The parameter that was passed when creating the constructor for this instance.
    * TODO [2020-04-06] - Consider renaming this.
    */
-  get parameter() {
-    return this.getFactoryParameter();
+  get parameter(): InferFactoryParameter<
+    Name,
+    Settings,
+    Properties,
+    Commands,
+    Helpers,
+    ProsemirrorType
+  > extends never
+    ? Readonly<ExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>>
+    : Readonly<
+        InferFactoryParameter<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>
+      > {
+    return this.getFactoryParameter() as any;
   }
 
   /**
@@ -791,7 +808,7 @@ interface ExtensionEventMethods {
   onView?: () => void;
 
   /**
-   * Called whenever a transaction successfully updates the editor state.
+   * Called wheundefined a transaction successfully updates the editor state.
    *
    * Changes to the transaction at this point have no impact at all. It is
    * purely for observational reasons
@@ -823,6 +840,30 @@ type ExtensionFactoryParameter<
     DefaultSettingsParameter<Settings>
   >;
 
+abstract class PlainExtension<
+  Name extends string,
+  Settings extends object,
+  Properties extends object = {},
+  Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {}
+> extends Extension<Name, Settings, Properties, Commands, Helpers> {
+  /**
+   * Identifies this extension as a **NODE** type from the prosemirror
+   * terminology.
+   */
+  get type() {
+    return ExtensionType.Plain as const;
+  }
+}
+
+type PlainExtensionFactoryParameter<
+  Name extends string,
+  Settings extends object,
+  Properties extends object = {},
+  Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {}
+> = ExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>;
+
 /**
  * The type covering any potential `PlainExtension`.
  */
@@ -843,8 +884,7 @@ interface PlainExtensionConstructor<
   Settings extends object,
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {},
-  ProsemirrorType = never
+  Helpers extends ExtensionHelperReturn = {}
 > {
   /**
    * Get the name of the extensions created by this constructor.
@@ -859,7 +899,7 @@ interface PlainExtensionConstructor<
    */
   of(
     ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
-  ): Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
+  ): PlainExtension<Name, Settings, Properties, Commands, Helpers>;
 }
 
 /**
@@ -887,8 +927,8 @@ abstract class MarkExtension<
    * This value is used by the predicates to check whether this is a mark / node
    * or plain extension.
    */
-  get type(): ExtensionType.Mark {
-    return ExtensionType.Mark;
+  get type() {
+    return ExtensionType.Mark as const;
   }
 
   get schema(): Readonly<MarkExtensionSpec> {
@@ -912,7 +952,7 @@ abstract class MarkExtension<
   constructor(...parameters: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
     super(...parameters);
 
-    this.#schema = this.parameter.createMarkSchema({
+    this.#schema = this.getFactoryParameter().createMarkSchema({
       settings: this.settings,
       createExtraAttributes: createExtraAttributesFactory(this as AnyMarkExtension),
       getExtraAttributes: getExtraAttributesFactory(this as AnyMarkExtension),
@@ -1012,8 +1052,8 @@ abstract class NodeExtension<
    * Identifies this extension as a **NODE** type from the prosemirror
    * terminology.
    */
-  get type(): ExtensionType.Node {
-    return ExtensionType.Node;
+  get type() {
+    return ExtensionType.Node as const;
   }
 
   get schema(): Readonly<NodeExtensionSpec> {
@@ -1033,11 +1073,12 @@ abstract class NodeExtension<
    * advisable to set up a nodeView.
    */
   readonly #schema: NodeExtensionSpec;
+  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
   constructor(...parameters: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
     super(...parameters);
 
-    this.#schema = this.parameter.createNodeSchema({
+    this.#schema = this.getFactoryParameter().createNodeSchema({
       settings: this.settings,
       createExtraAttributes: createExtraAttributesFactory(this as AnyNodeExtension),
       getExtraAttributes: getExtraAttributesFactory(this as AnyNodeExtension),
@@ -1329,6 +1370,7 @@ export type {
   AnyPlainExtension,
   BaseExtensionFactoryParameter,
   DefaultSettingsType,
+  EditableManagerStoreKeys,
   ExtensionEventMethods,
   ExtensionFactoryParameter,
   ExtensionTags,
@@ -1338,22 +1380,23 @@ export type {
   InitializeEventMethodParameter,
   InitializeEventMethodReturn,
   ManagerStoreKeys,
-  EditableManagerStoreKeys,
   MarkExtensionConstructor,
   MarkExtensionFactoryParameter,
   NodeExtensionConstructor,
   NodeExtensionFactoryParameter,
   PlainExtensionConstructor,
   SchemaFromExtension,
+  PlainExtensionFactoryParameter,
 };
 
 export {
   defaultSettings,
+  Extension,
   isExtension,
-  isPlainExtension,
   isMarkExtension,
   isNodeExtension,
-  Extension,
+  isPlainExtension,
   MarkExtension,
   NodeExtension,
+  PlainExtension,
 };

@@ -1,10 +1,8 @@
 import getVersion from 'pkg.macro';
 
-import { BaseExtensionSettings } from '@remirror/core-types';
-
 import { ExtensionFactory } from '../extension/extension-factory';
 
-export interface DocExtensionOptions extends BaseExtensionSettings {
+export interface DocExtensionOptions {
   /**
    * Adjust the content allowed in this prosemirror document.
    *

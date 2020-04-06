@@ -3,6 +3,33 @@
 import { AttributeSpec } from 'prosemirror-model';
 import { ConditionalExcept, ConditionalPick } from 'type-fest';
 
+declare const _brand: unique symbol;
+declare const _flavor: unique symbol;
+
+interface CreateExtraAttributesParams {
+  /**
+   * The fallback value to use for the extra attributes being created. Must be
+   * provided.
+   */
+  fallback: string | null;
+}
+
+type NeverBrand = Brand<object, never>;
+
+/**
+ * Used by Brand to mark a type in a readable way.
+ */
+interface Branding<GBrand> {
+  readonly [_brand]: GBrand;
+}
+
+/**
+ * Used by `Flavor` to mark a type in a readable way.
+ */
+interface Flavoring<Flavor> {
+  readonly [_flavor]?: Flavor;
+}
+
 /**
  * An alternative to keyof that only extracts the string keys.
  */
@@ -44,29 +71,12 @@ export type TupleValue<Tuple extends readonly unknown[]> = Tuple[number];
  */
 export type Predicate<Type> = (value: unknown) => value is Type;
 
-declare const _brand: unique symbol;
-declare const _flavor: unique symbol;
-
-/**
- * Used by `Flavor` to mark a type in a readable way.
- */
-interface Flavoring<Flavor> {
-  readonly [_flavor]?: Flavor;
-}
-
 /**
  * Create a "flavored" version of a type. TypeScript will disallow mixing
  * flavors, but will allow unflavored values of that type to be passed in where
  * a flavored version is expected. This is a less restrictive form of branding.
  */
 export type Flavor<Type, GFlavor> = Type & Flavoring<GFlavor>;
-
-/**
- * Used by Brand to mark a type in a readable way.
- */
-interface Branding<GBrand> {
-  readonly [_brand]: GBrand;
-}
 
 /**
  * Create a "branded" version of a type. TypeScript won't allow implicit
@@ -264,14 +274,6 @@ export type CreateExtraAttributes = (
   params: CreateExtraAttributesParams,
 ) => Record<string, AttributeSpec>;
 
-interface CreateExtraAttributesParams {
-  /**
-   * The fallback value to use for the extra attributes being created. Must be
-   * provided.
-   */
-  fallback: string | null;
-}
-
 /**
  * Defines the options that every extension can accept at instantiation.
  *
@@ -286,8 +288,6 @@ interface CreateExtraAttributesParams {
  * This is used to force a certain environment to override checks
  */
 export type RenderEnvironment = 'ssr' | 'dom';
-
-type NeverBrand = Brand<object, never>;
 
 /**
  * Checks the type provided and if it has any properties which are required it
