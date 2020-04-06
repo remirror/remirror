@@ -7,6 +7,7 @@ import {
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import {
+  entries,
   freeze,
   invariant,
   isEqual,
@@ -20,8 +21,6 @@ import {
   EditorView,
   MarkExtensionSpec,
   NodeExtensionSpec,
-  PlainObject,
-  ProsemirrorAttributes,
   ProsemirrorPlugin,
   TransactionParameter,
 } from '@remirror/core-types';
@@ -29,6 +28,7 @@ import { createDocumentNode, CreateDocumentNodeParams } from '@remirror/core-uti
 
 import {
   AnyExtension,
+  CommandsFromExtensions,
   ExtensionLifecyleMethods,
   ExtensionTags,
   GetMarkNameUnion,
@@ -42,6 +42,7 @@ import {
 import { AnyPreset } from '../preset';
 import {
   AnyCommands,
+  CommandMethod,
   CommandParameter,
   GetCommands,
   GetConstructor,
@@ -49,14 +50,11 @@ import {
   ManagerSettings,
 } from '../types';
 import {
-  createCommands,
   createExtensionTags,
-  createHelpers,
-  defaultIsActive,
-  defaultIsEnabled,
   getParameterWithType,
   ignoreFunctions,
   ManagerPhase,
+  transformCommands,
   transformExtensionOrPreset as transformExtensionOrPresetList,
 } from './manager-helpers';
 
@@ -535,35 +533,22 @@ class Manager<
    * - `isActive` defaults to a function returning false
    * - `isEnabled` defaults to a function returning true
    */
-  private createCommands(parameters: CommandParameter) {
+  private createCommands(
+    parameters: CommandParameter,
+  ): [CommandsFromExtensions<ExtensionUnion>, any] {
     const extensions = this.extensions;
-    const actions: AnyCommands = object();
+    const commands: AnyCommands = object();
 
     // Creates the methods that take in attrs and dispatch an action into the
     // editor
-    const commands = createCommands({ extensions, params: parameters });
+    const { chained, unchained } = transformCommands({ extensions, params: parameters });
 
-    Object.entries(commands).forEach(([commandName, { command, isEnabled, name }]) => {
-      const isActive = this.#store.isActive[name as this['_Names']] ?? defaultIsActive;
+    for (const [commandName, { command, isEnabled }] of entries(unchained)) {
+      commands[commandName] = command as CommandMethod;
+      commands[commandName].isEnabled = isEnabled;
+    }
 
-      actions[commandName] = command as CommandMethod;
-      actions[commandName].isActive = (attributes: ProsemirrorAttributes) =>
-        isActive({ attrs: attributes });
-      actions[commandName].isEnabled = isEnabled ?? defaultIsEnabled;
-    });
-
-    return actions as this['~C'];
-  }
-
-  private createHelpers(): this['_H'] {
-    const helpers = object<PlainObject>();
-    const methods = createHelpers({ extensions: this.extensions, params: this.parameter });
-
-    Object.entries(methods).forEach(([helperName, helper]) => {
-      helpers[helperName] = helper;
-    });
-
-    return helpers as this['_H'];
+    return [commands as CommandsFromExtensions<ExtensionUnion>, chained];
   }
 
   /**

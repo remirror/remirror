@@ -30,11 +30,11 @@ export type {
 export { isExtension, isMarkExtension, isNodeExtension, isPlainExtension } from './extension-base';
 export { ExtensionFactory, isExtensionConstructor } from './extension-factory';
 export type {
-  ActionNames,
+  CommandNames,
   CommandsFromExtensions,
   ExtensionFromConstructor,
   ExtensionListParameter,
   ExtensionParameter,
   GetExtensionParameter,
-  MapCommandToAction,
+  MapToUnchainedCommand,
 } from './extension-types';

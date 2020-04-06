@@ -23,7 +23,7 @@ export interface ExtensionListParameter<ExtensionUnion extends AnyExtension = An
  * A utility type which maps the passed in extension command in an action that
  * is store in the `manager.store.actions.commandName()`.
  */
-export type MapCommandToAction<GCommands extends Record<string, AnyFunction>> = {
+export type MapToUnchainedCommand<GCommands extends Record<string, AnyFunction>> = {
   [P in keyof GCommands]: CommandMethod<Parameters<GCommands[P]>>;
 };
 
@@ -32,13 +32,13 @@ export type MapCommandToAction<GCommands extends Record<string, AnyFunction>> = 
  * makes available.
  */
 export type CommandsFromExtensions<ExtensionUnion extends AnyExtension> = UnionToIntersection<
-  MapCommandToAction<GetCommands<ExtensionUnion>>
+  MapToUnchainedCommand<GetCommands<ExtensionUnion>>
 >;
 
 /**
  * Utility type for pulling all the action names from a list
  */
-export type ActionNames<ExtensionUnion extends AnyExtension> = StringKey<
+export type CommandNames<ExtensionUnion extends AnyExtension> = StringKey<
   CommandsFromExtensions<ExtensionUnion>
 >;
 

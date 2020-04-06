@@ -15,7 +15,7 @@ import {
 import keyNames from 'w3c-keyname';
 
 import {
-  ActionNames,
+  CommandNames,
   AnyFunction,
   ProsemirrorAttributes,
   getMarkAttributes,
@@ -53,7 +53,7 @@ import {
 } from './wysiwyg-components';
 
 const menuItems: Array<[
-  ActionNames<WysiwygExtensions>,
+  CommandNames<WysiwygExtensions>,
   [ComponentType<IconProps>, string?],
   ProsemirrorAttributes?,
 ]> = [
@@ -159,7 +159,7 @@ export interface BubbleMenuProps {
 }
 
 const bubbleMenuItems: Array<[
-  ActionNames<WysiwygExtensions>,
+  CommandNames<WysiwygExtensions>,
   [ComponentType<IconProps>, string?],
   ProsemirrorAttributes?,
 ]> = [

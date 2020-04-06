@@ -1,6 +1,5 @@
 import { ErrorConstant, MarkGroup, NodeGroup, Tag } from '@remirror/core-constants';
 import {
-  bool,
   entries,
   invariant,
   isEmptyArray,
@@ -9,7 +8,7 @@ import {
   object,
   sort,
 } from '@remirror/core-helpers';
-import { AnyFunction, AttributesWithClass } from '@remirror/core-types';
+import { AnyFunction, DispatchFunction } from '@remirror/core-types';
 
 import {
   AnyExtension,
@@ -17,8 +16,6 @@ import {
   ExtensionTags,
   GetMarkNameUnion,
   GetNodeNameUnion,
-  InitializeEventMethodParameter,
-  InitializeEventMethodReturn,
   isExtension,
   isMarkExtension,
   isNodeExtension,
@@ -85,7 +82,8 @@ const isNameUnique = ({
   }
 };
 
-interface CreateCommandsParams extends ExtensionListParameter {
+interface TransformCommandsParameter<ExtensionUnion extends AnyExtension>
+  extends ExtensionListParameter<ExtensionUnion> {
   /**
    * The command params which are passed to each extensions `commands` method.
    */
@@ -122,78 +120,106 @@ const getParameterWithType = <
  * Typically actions are used to create interactive menus. For example a menu
  * can use a command to toggle bold formatting or to undo the last action.
  */
-const createCommands = ({ extensions, params }: CreateCommandsParams) => {
-  const getItemParameters = (extension: Required<Pick<AnyExtension, 'commands'>>) =>
-    extension.commands({
-      ...params,
-      ...getParameterWithType(extension, params),
-    });
+const transformCommands = <ExtensionUnion extends AnyExtension>({
+  extensions,
+  params,
+}: TransformCommandsParameter<ExtensionUnion>) => {
+  const unchained: Record<
+    string,
+    { command: AnyFunction; isEnabled: AnyFunction; name: string }
+  > = object();
+
+  const chained: Record<string, any> = object();
+
+  const names = new Set<string>();
 
   const { view, getState } = params;
 
-  const methodFactory = (method: ExtensionCommandFunction) => (...arguments_: unknown[]) => {
-    view.focus();
-    return method(...arguments_)(getState(), view.dispatch, view);
+  const unchainedFactory = ({
+    command,
+    shouldDispatch = true,
+  }: {
+    command: ExtensionCommandFunction;
+    shouldDispatch?: boolean;
+  }) => (...spread: unknown[]) => {
+    let dispatch: DispatchFunction | undefined = undefined;
+
+    if (shouldDispatch) {
+      dispatch = view.dispatch;
+      view.focus(); // TODO should this be configurable?
+    }
+
+    return command(...spread)({ state: getState(), dispatch, view });
   };
-  const items: Record<
-    string,
-    { command: AnyFunction; isEnabled: AnyFunction; name: string }
-  > = Object.create(null);
-  const names = new Set<string>();
 
-  extensions.filter(hasExtensionProperty('commands')).forEach((currentExtension) => {
-    const item = getItemParameters(currentExtension);
+  const chainedFactory = (command: ExtensionCommandFunction) => (...spread: unknown[]) => {
+    const state = getState();
+    const dispatch: DispatchFunction = (transaction) => {
+      invariant(transaction === state.tr, {
+        message:
+          'Chaining currently only supports methods which do not clone the transaction object.',
+      });
+    };
 
-    entries(item).forEach(([name, command]) => {
+    command(...spread)({ state, dispatch, view });
+
+    return chained;
+  };
+
+  const getItemParameters = (extension: ExtensionUnion) =>
+    extension.parameter.createCommands?.(getParameterWithType(extension, params), extension);
+
+  for (const extension of extensions) {
+    if (extension.parameter.createCommands) {
+      continue;
+    }
+
+    const item = getItemParameters(extension);
+
+    for (const [name, command] of entries(item)) {
       isNameUnique({ name, set: names, shouldThrow: true });
 
-      items[name] = {
-        name: currentExtension.name,
-        command: methodFactory(command),
-        isEnabled: (...arguments_: unknown[]): boolean => {
-          return !!command(...arguments_)(getState(), undefined, view);
-        },
+      unchained[name] = {
+        name: extension.name,
+        command: unchainedFactory({ command }),
+        isEnabled: unchainedFactory({ command, shouldDispatch: false }),
       };
-    });
-  });
 
-  return items;
+      chained[name] = chainedFactory(command);
+    }
+  }
+
+  return { unchained, chained };
 };
-interface CreateHelpersParams extends ExtensionListParameter {
-  /**
-   * The params which are passed to each extensions `helpers` method.
-   */
-  params: ManagerParameter;
-}
 
-/**
- * Generate all the helpers from the extension list.
- *
- * Helpers are functions which enable extensions to provide useful information
- * or transformations to their consumers and other extensions.
- */
-const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
-  const getItemParameters = (extension: Required<Pick<AnyExtension, 'helpers'>>) =>
-    extension.helpers({
-      ...params,
-      ...getParameterWithType(extension, params),
-    });
+// /**
+//  * Generate all the helpers from the extension list.
+//  *
+//  * Helpers are functions which enable extensions to provide useful information
+//  * or transformations to their consumers and other extensions.
+//  */
+// const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
+//   const getItemParameters = (extension: Required<Pick<AnyExtension, 'helpers'>>) =>
+//     extension.helpers({
+//       ...params,
+//       ...getParameterWithType(extension, params),
+//     });
 
-  const items: Record<string, AnyFunction> = object();
-  const names = new Set<string>();
+//   const items: Record<string, AnyFunction> = object();
+//   const names = new Set<string>();
 
-  extensions.filter(hasExtensionProperty('helpers')).forEach((currentExtension) => {
-    const item = getItemParameters(currentExtension);
+//   extensions.filter(hasExtensionProperty('helpers')).forEach((currentExtension) => {
+//     const item = getItemParameters(currentExtension);
 
-    Object.entries(item).forEach(([name, helper]) => {
-      isNameUnique({ name, set: names, shouldThrow: true });
+//     Object.entries(item).forEach(([name, helper]) => {
+//       isNameUnique({ name, set: names, shouldThrow: true });
 
-      items[name] = helper;
-    });
-  });
+//       items[name] = helper;
+//     });
+//   });
 
-  return items;
-};
+//   return items;
+// };
 
 interface TransformExtensionOrPreset<
   ExtensionUnion extends AnyExtension,
@@ -370,17 +396,6 @@ const ignoreFunctions = (object_: Record<string, unknown>) => {
 };
 
 /**
- * By default isActive should return false when no method specified.
- */
-const defaultIsActive = () => false;
-
-/**
- * By default isEnabled should return true to let the code know that the
- * commands are available.
- */
-const defaultIsEnabled = () => true;
-
-/**
  * Create the extension tags which are passed into each extensions method to
  * enable dynamically generated rules and commands.
  */
@@ -469,11 +484,9 @@ enum ManagerPhase {
 }
 
 export {
-  createCommands,
+  transformCommands,
   createExtensionTags,
-  createHelpers,
-  defaultIsActive,
-  defaultIsEnabled,
+  // createHelpers,
   getParameterWithType,
   ignoreFunctions,
   ManagerPhase,

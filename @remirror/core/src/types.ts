@@ -4,6 +4,7 @@ import { ExtensionPriority, MarkGroup, NodeGroup, Tag } from '@remirror/core-con
 import {
   AnyFunction,
   AttributesParameter,
+  CommandFunction,
   CreateExtraAttributes,
   EditorSchema,
   EditorState,
@@ -15,7 +16,6 @@ import {
   NodeType,
   NodeWithAttributesParameter,
   ProsemirrorAttributes,
-  ProsemirrorCommandFunction,
   TransactionParameter,
 } from '@remirror/core-types';
 
@@ -239,7 +239,7 @@ interface ViewManagerParameter<Schema extends EditorSchema = any>
   extends EditorViewParameter<Schema>,
     ManagerParameter<Schema> {}
 
-type ExtensionCommandFunction = (...args: any[]) => ProsemirrorCommandFunction;
+type ExtensionCommandFunction = (...args: any[]) => CommandFunction<EditorSchema>;
 
 type ExtensionIsActiveFunction = (params: Partial<AttributesParameter>) => boolean;
 
@@ -306,9 +306,12 @@ interface CommandMethod<Parameter extends any[] = []> {
   (...args: Parameter): void;
 
   /**
-   * Returns true when the command can be run and false when it can't be run.
+   * Returns true when the command can be run and false when it can't be run. It
+   * basically runs the command without dispatching it to see whether it returns
+   * true or false.
    *
    * @remarks
+   *
    * Some commands can have rules and restrictions. For example you may want to
    * disable styling making text bold when within a codeBlock. In that case
    * isEnabled would be false when within the codeBlock and true when outside.
@@ -387,11 +390,7 @@ interface BaseExtensionSettings extends Remirror.ExtensionSettings {
   priority?: ExtensionPriority | null;
 }
 
-interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {
-
-
-
-}
+interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {}
 
 interface SSRComponentParameter {
   /**
