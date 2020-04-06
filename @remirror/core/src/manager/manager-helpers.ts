@@ -215,6 +215,7 @@ interface TransformExtensionOrPreset<
  * the same app...
  *
  * @param unionValues - the extensions to transform as well as their priorities
+ *
  * @returns the list of extension instances sorted by priority
  */
 const transformExtensionOrPreset = <
@@ -442,50 +443,6 @@ const createExtensionTags = <ExtensionUnion extends AnyExtension>(
 };
 
 /**
- * All the dynamically generated attributes provided by each extension.
- *
- * @remarks
- *
- * High priority extensions have preference over the lower priority
- * extensions.
- */
-const createAttributes = ({
-  getParameter,
-  setStoreKey,
-}: InitializeEventMethodParameter): InitializeEventMethodReturn => {
-  const attributeList: AttributesWithClass[] = [];
-  let attributeObject: AttributesWithClass = object();
-
-  return {
-    beforeExtensionLoop: () => {
-      for (const attributes of attributeList) {
-        attributeObject = {
-          ...attributeObject,
-          ...attributes,
-          class:
-            (attributeObject.class ?? '') + (bool(attributes.class) ? attributes.class : '') || '',
-        };
-      }
-
-      setStoreKey('attributes', attributeObject);
-    },
-
-    forEachExtension: (extension) => {
-      if (!extension.parameter.createAttributes || extension.settings.exclude.attributes) {
-        return;
-      }
-
-      // Inserted at the start of the list so that when building the attribute
-      // the higher priority extension attributes are preferred to the lower
-      // priority since they merge with the object later.
-      attributeList.unshift(
-        extension.parameter.createAttributes(getParameter(extension), extension),
-      );
-    },
-  };
-};
-
-/**
  * Identifies the stage the extension manager is at.
  */
 enum ManagerPhase {
@@ -512,7 +469,6 @@ enum ManagerPhase {
 }
 
 export {
-  createAttributes,
   createCommands,
   createExtensionTags,
   createHelpers,

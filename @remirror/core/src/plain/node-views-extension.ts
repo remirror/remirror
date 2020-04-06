@@ -1,12 +1,12 @@
-import { InputRule, inputRules } from 'prosemirror-inputrules';
-
 import { ExtensionPriority } from '@remirror/core-constants';
+import { isFunction, object } from '@remirror/core-helpers';
+import { NodeViewMethod } from '@remirror/core-types';
 
-import { Extension, ExtensionFactory } from '../extension';
+import { AnyExtension, Extension, ExtensionFactory } from '../extension';
 import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';
 
 /**
- * This extension allows others extension to add the `createNodeViews` method
+ * This extension allows others extension to add the `createNodeView` method
  * for creating nodeViews which alter how the dom is rendered for the node.
  *
  * @remarks
@@ -15,34 +15,43 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  * `ExtensionParameterMethods`.
  */
 const NodeViewsExtension = ExtensionFactory.plain({
-  name: 'inputRules',
+  name: 'nodeView',
   defaultPriority: ExtensionPriority.Low,
 
   /**
    * Ensure that all ssr transformers are run.
    */
-  onInitialize: ({ getParameter, addPlugins, managerSettings }) => {
-    const rules: InputRule[] = [];
+  onInitialize: ({ getParameter, setStoreKey, managerSettings }) => {
+    const nodeViewList: Array<Record<string, NodeViewMethod>> = [];
+    const nodeViews: Record<string, NodeViewMethod> = object();
 
     return {
       forEachExtension: (extension) => {
         if (
           // managerSettings excluded this from running
-          managerSettings.exclude?.inputRules ||
+          managerSettings.exclude?.nodeViews ||
           // Method doesn't exist
           !extension.parameter.createNodeViews ||
           // Extension settings exclude it
-          extension.settings.exclude.inputRules
+          extension.settings.exclude.nodeViews
         ) {
           return;
         }
 
         const parameter = getParameter(extension);
-        rules.push(...extension.parameter.createNodeViews(parameter, extension));
+        const nodeView = extension.parameter.createNodeViews(parameter, extension);
+
+        // Unshift used to add make sure higher priority extensions can
+        // overwrite the lower priority nodeViews.
+        nodeViewList.unshift(isFunction(nodeView) ? { [extension.name]: nodeView } : nodeView);
       },
 
       afterExtensionLoop: () => {
-        addPlugins(inputRules({ rules }));
+        for (const nodeView of nodeViewList) {
+          Object.assign(nodeViews, nodeView);
+        }
+
+        setStoreKey('nodeViews', nodeViews);
       },
     };
   },
@@ -50,13 +59,21 @@ const NodeViewsExtension = ExtensionFactory.plain({
 
 declare global {
   namespace Remirror {
+    interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
+      /**
+       * The custom nodeView which can be used to replace the nodes or marks in
+       * the dom and change their browser behaviour.
+       */
+      nodeViews: Record<string, NodeViewMethod>;
+    }
+
     interface ExcludeOptions {
       /**
-       * Whether to use the inputRules for this particular extension.
+       * Whether to exclude the extension's nodeView
        *
        * @defaultValue `undefined`
        */
-      inputRules?: boolean;
+      nodeViews?: boolean;
     }
 
     interface ExtensionCreatorMethods<
@@ -68,15 +85,23 @@ declare global {
       ProsemirrorType = never
     > {
       /**
-       * Register input rules which are activated if the regex matches as a user is
-       * typing.
+       * Registers one or multiple nodeViews for the extension.
+       *
+       * This is a shorthand way of registering a nodeView without the need to
+       * create a prosemirror plugin. It allows for the registration of one nodeView
+       * which has the same name as the extension.
+       *
+       * To register more than one you would need to use a custom plugin returned
+       * from the `plugin` method.
        *
        * @param parameter - schema parameter with type included
+       *
+       * @alpha
        */
       createNodeViews?: (
         parameter: ManagerTypeParameter<ProsemirrorType>,
         extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
-      ) => InputRule[];
+      ) => NodeViewMethod | Record<string, NodeViewMethod>;
     }
   }
 }

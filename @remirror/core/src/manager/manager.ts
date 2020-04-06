@@ -1,6 +1,5 @@
 import { Schema } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
-import { suggest, Suggestion } from 'prosemirror-suggest';
 
 import {
   ErrorConstant,
@@ -10,20 +9,17 @@ import {
 import {
   freeze,
   invariant,
-  isArray,
   isEqual,
   isIdentifierOfType,
   isRemirrorType,
   object,
 } from '@remirror/core-helpers';
 import {
-  AttributesWithClass,
   EditorSchema,
   EditorStateParameter,
   EditorView,
   MarkExtensionSpec,
   NodeExtensionSpec,
-  NodeViewMethod,
   PlainObject,
   ProsemirrorAttributes,
   ProsemirrorPlugin,
@@ -33,6 +29,7 @@ import { createDocumentNode, CreateDocumentNodeParams } from '@remirror/core-uti
 
 import {
   AnyExtension,
+  ExtensionLifecyleMethods,
   ExtensionTags,
   GetMarkNameUnion,
   GetNodeNameUnion,
@@ -43,9 +40,15 @@ import {
   SchemaFromExtension,
 } from '../extension';
 import { AnyPreset } from '../preset';
-import { GetCommands, GetConstructor, ManagerParameter, ManagerSettings } from '../types';
 import {
-  createAttributes,
+  AnyCommands,
+  CommandParameter,
+  GetCommands,
+  GetConstructor,
+  ManagerParameter,
+  ManagerSettings,
+} from '../types';
+import {
   createCommands,
   createExtensionTags,
   createHelpers,
@@ -230,7 +233,13 @@ class Manager<
     };
   }
 
-  #onInitializeHandlers: InitializeEventMethodReturn[] = [];
+  /**
+   * Store the handlers that will be run when for each event method.
+   */
+  #handlers: {
+    initialize: InitializeEventMethodReturn[];
+    transaction: Array<NonNullable<ExtensionLifecyleMethods['onTransaction']>>;
+  } = { initialize: [], transaction: [] };
 
   /**
    * Creates the extension manager which is used to simplify the management of
@@ -256,7 +265,6 @@ class Manager<
     this.#presetMap = presetMap;
 
     const parameter = this.initializeParameter;
-    this.createDefaultOnInitializeMethods(parameter);
 
     for (const extension of this.#extensions) {
       if (isNodeExtension(extension)) {
@@ -270,10 +278,18 @@ class Manager<
         this.#store.marks[name as GetMarkNameUnion<ExtensionUnion>] = schema;
       }
 
-      const handlers = extension.parameter.onInitialize?.(parameter);
+      const initializeHandler = extension.parameter.onInitialize?.(parameter);
+      // const createHandler = extension.parameter.onCreate;
+      // const viewHandler = extension.parameter.onView;
+      // const destroyHandler = extension.parameter.onDestroy;
+      const transactionHandler = extension.parameter.onTransaction;
 
-      if (handlers) {
-        this.#onInitializeHandlers.push(handlers);
+      if (initializeHandler) {
+        this.#handlers.initialize.push(initializeHandler);
+      }
+
+      if (transactionHandler) {
+        this.#handlers.transaction.push(transactionHandler);
       }
     }
 
@@ -332,17 +348,10 @@ class Manager<
   };
 
   /**
-   * Create the default on initialize methods.
-   */
-  private createDefaultOnInitializeMethods(parameter: InitializeEventMethodParameter) {
-    [createAttributes].forEach((method) => this.#onInitializeHandlers.push(method(parameter)));
-  }
-
-  /**
    * Called before the extension loop of the initialization phase.
    */
   private beforeInitialize() {
-    for (const { beforeExtensionLoop } of this.#onInitializeHandlers) {
+    for (const { beforeExtensionLoop } of this.#handlers.initialize) {
       beforeExtensionLoop?.();
     }
   }
@@ -351,7 +360,7 @@ class Manager<
    * Called after the extension loop of the initialization phase.
    */
   private afterInitialize() {
-    for (const { afterExtensionLoop } of this.#onInitializeHandlers) {
+    for (const { afterExtensionLoop } of this.#handlers.initialize) {
       afterExtensionLoop?.();
     }
   }
@@ -360,7 +369,7 @@ class Manager<
    * Called during the extension loop of the initialization phase.
    */
   private initializeEachExtension(extension: ExtensionUnion) {
-    for (const { forEachExtension } of this.#onInitializeHandlers) {
+    for (const { forEachExtension } of this.#handlers.initialize) {
       forEachExtension?.(extension);
     }
   }
@@ -496,12 +505,12 @@ class Manager<
    * A handler which allows the extension to respond to each transaction without
    * needing to register a plugin.
    *
-   * This is currently used in the collaboration plugin.
+   * An example usage of this is within the collaboration plugin.
    */
   public onTransaction(parameters: OnTransactionManagerParams) {
-    this.extensions.filter(hasExtensionProperty('onTransaction')).forEach(({ onTransaction }) => {
+    for (const onTransaction of this.#handlers.transaction) {
       onTransaction({ ...parameters, ...this.parameter, view: this.store.view });
-    });
+    }
   }
 
   /**
@@ -526,10 +535,7 @@ class Manager<
    * - `isActive` defaults to a function returning false
    * - `isEnabled` defaults to a function returning true
    */
-  private createCommands(parameters: CommandParameter): this['~C'] {
-    // Will throw if not initialized
-    this.checkInitialized();
-
+  private createCommands(parameters: CommandParameter) {
     const extensions = this.extensions;
     const actions: AnyCommands = object();
 
@@ -558,28 +564,6 @@ class Manager<
     });
 
     return helpers as this['_H'];
-  }
-
-  /**
-   * Retrieve the nodeViews created on the extensions for use within prosemirror
-   * state
-   */
-  private nodeViews() {
-    this.checkInitialized();
-    const nodeViews: Record<string, NodeViewMethod> = object();
-    return this.extensions
-      .filter(hasExtensionProperty('nodeView'))
-      .filter((extension) => !extension.options.exclude.nodeView)
-      .reduce(
-        (previousNodeViews, extension) => ({
-          ...previousNodeViews,
-          [extension.name]: extensionPropertyMapper(
-            'nodeView',
-            this.parameter,
-          )(extension) as NodeViewMethod,
-        }),
-        nodeViews,
-      );
   }
 
   /**
@@ -634,11 +618,6 @@ declare global {
        * Store the built in and custom tags for the editor instance.
        */
       tags: Readonly<ExtensionTags<ExtensionUnion>>;
-
-      /**
-       * The attributes to be added to the prosemirror editor.
-       */
-      attributes: AttributesWithClass;
 
       /**
        * The schema created by this extension manager.

@@ -1,4 +1,3 @@
-
 import { AttributeSpec } from 'prosemirror-model';
 
 import {
@@ -20,7 +19,6 @@ import {
   object,
 } from '@remirror/core-helpers';
 import {
-  AttributesWithClass,
   CreateExtraAttributes,
   EditorSchema,
   ExtraAttributes,
@@ -32,7 +30,6 @@ import {
   MarkType,
   NodeExtensionSpec,
   NodeType,
-  NodeViewMethod,
   ProsemirrorAttributes,
   ProsemirrorPlugin,
 } from '@remirror/core-types';
@@ -50,7 +47,6 @@ import {
   GetNameUnion,
   ManagerMarkTypeParameter,
   ManagerNodeTypeParameter,
-  ManagerParameter,
   ManagerSettings,
   ManagerTypeParameter,
   MarkExtensionTags,
@@ -582,7 +578,7 @@ interface BaseExtensionFactoryParameter<
   Helpers extends ExtensionHelperReturn = {},
   ProsemirrorType = never
 >
-  extends ExtensionEventMethods,
+  extends ExtensionLifecyleMethods,
     Remirror.ExtensionFactoryParameter<
       Name,
       Settings,
@@ -668,24 +664,6 @@ interface ExtensionCreatorMethods<
     ProsemirrorType
   > {
   /**
-   * Allows the extension to modify the attributes for the Prosemirror editor
-   * dom element.
-   *
-   * @remarks
-   *
-   * Sometimes an extension will need to make a change to the attributes of the
-   * editor itself. For example a placeholder may need to do some work to make
-   * the editor more accessible by setting the `aria-placeholder` value to match
-   * the value of the placeholder.
-   *
-   * @alpha
-   */
-  createAttributes?: (
-    parameter: ManagerParameter,
-    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
-  ) => AttributesWithClass;
-
-  /**
    * Create and register commands for that can be called within the editor.
    *
    * These are typically used to create menu's actions and as a direct response
@@ -768,28 +746,9 @@ interface ExtensionCreatorMethods<
     parameter: CreateHelpersParameter<ProsemirrorType>,
     extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
   ) => Helpers;
-
-  /**
-   * Registers a node view for the extension.
-   *
-   * This is a shorthand way of registering a nodeView without the need to
-   * create a prosemirror plugin. It allows for the registration of one nodeView
-   * which has the same name as the extension.
-   *
-   * To register more than one you would need to use a custom plugin returned
-   * from the `plugin` method.
-   *
-   * @param parameter - schema parameter with type included
-   *
-   * @alpha
-   */
-  createNodeView?: (
-    parameter: ManagerTypeParameter<ProsemirrorType>,
-    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
-  ) => NodeViewMethod;
 }
 
-interface ExtensionEventMethods {
+interface ExtensionLifecyleMethods {
   /**
    * When the Manager is first created and the schema is made
    * available.
@@ -808,7 +767,7 @@ interface ExtensionEventMethods {
   onView?: () => void;
 
   /**
-   * Called wheundefined a transaction successfully updates the editor state.
+   * Called when a transaction successfully updates the editor state.
    *
    * Changes to the transaction at this point have no impact at all. It is
    * purely for observational reasons
@@ -1371,7 +1330,7 @@ export type {
   BaseExtensionFactoryParameter,
   DefaultSettingsType,
   EditableManagerStoreKeys,
-  ExtensionEventMethods,
+  ExtensionLifecyleMethods,
   ExtensionFactoryParameter,
   ExtensionTags,
   GetMarkNameUnion,

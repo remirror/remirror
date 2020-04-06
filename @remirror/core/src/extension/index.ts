@@ -7,7 +7,7 @@ export type {
   BaseExtensionFactoryParameter,
   DefaultSettingsType,
   Extension,
-  ExtensionEventMethods,
+  ExtensionLifecyleMethods,
   ExtensionFactoryParameter,
   ExtensionTags,
   GetMarkNameUnion,

@@ -388,19 +388,9 @@ interface BaseExtensionSettings extends Remirror.ExtensionSettings {
 }
 
 interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {
-  /**
-   * Whether to exclude the extension's nodeView
-   *
-   * @defaultValue `undefined`
-   */
-  nodeView?: boolean;
 
-  /**
-   * Whether to use the attributes provided by this extension
-   *
-   * @defaultValue `undefined`
-   */
-  attributes?: boolean;
+
+
 }
 
 interface SSRComponentParameter {
