@@ -29,7 +29,7 @@ import { InjectedRenderEditorProps } from '../react-types';
  * }
  * ```
  */
-export const useRemirror = <ManagerType extends Manager = any>(): InjectedRenderEditorProps<
+export const useRemirror = <ManagerType extends Manager = Manager>(): InjectedRenderEditorProps<
   ManagerType
 > => {
   const params = useContext(RemirrorContext);

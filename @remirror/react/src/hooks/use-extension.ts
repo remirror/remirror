@@ -1,8 +1,10 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import {
+  AnyExtension,
   AnyExtensionConstructor,
   ExtensionFromConstructor,
+  GetProperties,
   GetSettings,
   IfNoRequiredProperties,
   keys,
@@ -36,7 +38,7 @@ export const useExtension = <Type extends AnyExtensionConstructor>(
  *
  * Written in shorthand as it's only used in this file.
  */
-type POEC<Constructor extends AnyExtensionConstructor> = GetSettings<
+type POEC<Constructor extends AnyExtensionConstructor> = GetProperties<
   ExtensionFromConstructor<Constructor>
 >;
 
@@ -44,5 +46,16 @@ export const useExtensionProperties = <Type extends AnyExtensionConstructor>(
   Constructor: Type,
   properties: POEC<Type>,
 ) => {
+  const dependencyArray = useRef(Constructor.propertyKeys).current;
   const { manager } = useRemirror();
+
+  const extension: AnyExtension = useMemo(() => manager.getExtension(Constructor), [
+    Constructor,
+    manager,
+  ]);
+
+  useEffect(() => {
+    extension.setProperties(properties);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [extension, ...dependencyArray]);
 };
