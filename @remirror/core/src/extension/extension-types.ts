@@ -28,12 +28,25 @@ export type MapToUnchainedCommand<GCommands extends Record<string, AnyFunction>>
 };
 
 /**
+ * A utility type which maps the chained commands.
+ */
+export type MapToChainedCommand<GCommands extends Record<string, AnyFunction>> = {
+  [P in keyof GCommands]: (...args: Parameters<GCommands[P]>) => any;
+};
+
+/**
  * Utility type which receives an extension and provides the type of actions it
  * makes available.
  */
 export type CommandsFromExtensions<ExtensionUnion extends AnyExtension> = UnionToIntersection<
   MapToUnchainedCommand<GetCommands<ExtensionUnion>>
 >;
+
+export type ChainedFromExtensions<ExtensionUnion extends AnyExtension> = {
+  [Key in keyof UnionToIntersection<MapToChainedCommand<GetCommands<ExtensionUnion>>>]: (
+    ...args: Parameters<MapToChainedCommand<GetCommands<ExtensionUnion>>[Key]>
+  ) => ChainedFromExtensions<ExtensionUnion>;
+};
 
 /**
  * Utility type for pulling all the action names from a list

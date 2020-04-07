@@ -3,6 +3,7 @@ import { ReactNode, Ref } from 'react';
 
 import {
   AnyExtension,
+  ChainedFromExtensions,
   CommandsFromExtensions,
   CompareStateParameter,
   EditorSchema,
@@ -290,9 +291,7 @@ export type CalculatePositionerParameter<
 export type GetPositionerPropsConfig<
   ExtensionUnion extends AnyExtension = any,
   GRefKey extends string = 'ref'
-> = RefParameter<GRefKey> &
-  Partial<Omit<CalculatePositionerParameter<ExtensionUnion>, 'positionerId'>> &
-  PositionerIdParameter;
+> = RefParameter<GRefKey> & Partial<Positioner<ExtensionUnion>> & PositionerIdParameter;
 
 export interface RefParameter<GRefKey = 'ref'> {
   /**
@@ -330,7 +329,7 @@ export type GetPositionerReturn<GRefKey extends string = 'ref'> =
  * These are the props passed to the render function provided when setting up
  * your editor.
  */
-export interface InjectedRemirrorProps<ManagerType extends Manager = any> {
+export interface InjectedRenderEditorProps<ManagerType extends Manager = any> {
   /**
    * An instance of the extension manager
    */
@@ -343,7 +342,12 @@ export interface InjectedRemirrorProps<ManagerType extends Manager = any> {
   /**
    * A map of all actions made available by the configured extensions.
    */
-  actions: CommandsFromExtensions<GetExtensionUnion<ManagerType>>;
+  commands: CommandsFromExtensions<GetExtensionUnion<ManagerType>>;
+
+  /**
+   * The chainable commands.
+   */
+  chain: ChainedFromExtensions<GetExtensionUnion<ManagerType>>;
 
   /**
    * The unique id for the editor instance.
@@ -440,7 +444,7 @@ export interface InjectedRemirrorProps<ManagerType extends Manager = any> {
  * @param - injected remirror params
  */
 export type RenderPropFunction<ManagerType extends Manager = any> = (
-  params: InjectedRemirrorProps<ManagerType>,
+  params: InjectedRenderEditorProps<ManagerType>,
 ) => JSX.Element;
 
 export interface RemirrorGetterParameter {
@@ -470,7 +474,7 @@ export interface RemirrorGetterParameter {
   getObjectNode(): ObjectNode;
 }
 
-export interface BaseListenerParameters<ExtensionUnion extends AnyExtension = any>
+export interface BaseListenerParameter<ExtensionUnion extends AnyExtension = any>
   extends EditorViewParameter<SchemaFromExtension<ExtensionUnion>>,
     RemirrorGetterParameter {
   /**
@@ -500,11 +504,11 @@ export interface BaseListenerParameters<ExtensionUnion extends AnyExtension = an
 
 export interface RemirrorEventListenerParameter<ExtensionUnion extends AnyExtension = any>
   extends EditorStateParameter<SchemaFromExtension<ExtensionUnion>>,
-    BaseListenerParameters<ExtensionUnion> {}
+    BaseListenerParameter<ExtensionUnion> {}
 
 export interface RemirrorStateListenerParameter<ExtensionUnion extends AnyExtension = any>
   extends CompareStateParameter<SchemaFromExtension<ExtensionUnion>>,
-    BaseListenerParameters<ExtensionUnion> {
+    BaseListenerParameter<ExtensionUnion> {
   /**
    * Manually create a new state object with the desired content.
    */
@@ -588,7 +592,7 @@ export interface EditorStateEventListenerParameter<
   GSchema extends EditorSchema = any
 >
   extends Partial<CompareStateParameter<GSchema>>,
-    Pick<BaseListenerParameters<ExtensionUnion>, 'tr'> {}
+    Pick<BaseListenerParameter<ExtensionUnion>, 'tr'> {}
 
 export interface RemirrorState<GSchema extends EditorSchema = any> {
   /**
@@ -607,4 +611,4 @@ export interface ListenerParameter<
   GSchema extends EditorSchema = any
 >
   extends Partial<EditorStateParameter<GSchema>>,
-    Pick<BaseListenerParameters<ExtensionUnion>, 'tr'> {}
+    Pick<BaseListenerParameter<ExtensionUnion>, 'tr'> {}

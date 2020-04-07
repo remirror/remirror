@@ -88,6 +88,10 @@ export const toggleWrap = (
   return wrapIn(type, attributes)(state, dispatch);
 };
 
+function isList(node: ProsemirrorNode, schema: EditorSchema) {
+  return node.type === schema.nodes.bulletList || node.type === schema.nodes.orderedList;
+}
+
 /**
  * Toggles a list item.
  *
@@ -110,10 +114,6 @@ export const toggleList = (type: NodeType, itemType: NodeType): ProsemirrorComma
 
   if (!range) {
     return false;
-  }
-
-  function isList(node: ProsemirrorNode, schema: EditorSchema) {
-    return node.type === schema.nodes.bulletList || node.type === schema.nodes.orderedList;
   }
 
   const parentList = findParentNode({

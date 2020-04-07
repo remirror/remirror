@@ -37,4 +37,5 @@ export type {
   ExtensionParameter,
   GetExtensionParameter,
   MapToUnchainedCommand,
+  ChainedFromExtensions,
 } from './extension-types';

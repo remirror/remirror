@@ -1,5 +1,5 @@
 import minDocument from 'min-document';
-import { DirectEditorProps as DEP, EditorView } from 'prosemirror-view';
+import { DirectEditorProps, EditorView } from 'prosemirror-view';
 
 import {
   Cast,
@@ -10,17 +10,27 @@ import {
   Transaction,
 } from '@remirror/core';
 
-type DirectEditorProps = DEP<EditorSchema>;
-
 /**
  * A mock editor view used only when prosemirror is running on the server
  */
-export class EditorViewSSR {
+export class EditorViewSSR<Schema extends EditorSchema = any> {
   public state: EditorState;
   public dom: Element;
   public dragging = null;
-  public update(_props: DirectEditorProps): void {}
-  public setProps(_props: DirectEditorProps): void {}
+  public root: Document | DocumentFragment;
+
+  constructor(
+    public place: Node | ((p: Node) => void) | { mount: Node } | undefined,
+    public props: DirectEditorProps<Schema>,
+  ) {
+    const doc = minDocument;
+    this.root = doc;
+    this.dom = doc.createElement('div');
+    this.state = props.state;
+  }
+
+  public update(_props: DirectEditorProps<Schema>): void {}
+  public setProps(_props: DirectEditorProps<Schema>): void {}
   public updateState(_state: EditorState): void {}
   public someProp(_propName: string, f?: (prop: any) => any): any {
     return f ? f(null) : null;
@@ -29,7 +39,6 @@ export class EditorViewSSR {
     return false;
   }
   public focus(): void {}
-  public root: Document | DocumentFragment;
   public posAtCoords(_coords: {
     left: number;
     top: number;
@@ -60,16 +69,6 @@ export class EditorViewSSR {
    */
   public destroy(): void {}
   public dispatch(_tr: Transaction): void {}
-
-  constructor(
-    public place: Node | ((p: Node) => void) | { mount: Node } | undefined,
-    public props: DirectEditorProps,
-  ) {
-    const doc = minDocument;
-    this.root = doc;
-    this.dom = doc.createElement('div');
-    this.state = props.state;
-  }
 }
 
 /**
@@ -79,11 +78,11 @@ export class EditorViewSSR {
  * @param props
  * @param forceEnvironment
  */
-export const createEditorView = <GSchema extends EditorSchema = any>(
+export const createEditorView = <Schema extends EditorSchema = any>(
   place: Node | ((p: Node) => void) | { mount: Node } | undefined,
-  props: DirectEditorProps,
+  props: DirectEditorProps<Schema>,
   forceEnvironment?: RenderEnvironment,
-): EditorView<GSchema> => {
+): EditorView<Schema> => {
   const Constructor = shouldUseDOMEnvironment(forceEnvironment)
     ? EditorView
     : Cast<typeof EditorView>(EditorViewSSR);

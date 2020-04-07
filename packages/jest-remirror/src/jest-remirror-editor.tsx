@@ -26,7 +26,7 @@ import {
   pick,
   ProsemirrorAttributes,
 } from '@remirror/core';
-import { InjectedRemirrorProps, RenderEditor, RenderEditorProps } from '@remirror/react';
+import { InjectedRenderEditorProps, RenderEditor, RenderEditorProps } from '@remirror/react';
 
 import { markFactory, nodeFactory } from './jest-remirror-builder';
 import { BaseExtensionNodeNames, nodeExtensions } from './jest-remirror-schema';
@@ -89,7 +89,7 @@ export const renderEditor = <
     ...attributeNodes,
   ].map(convertToPrioritizedExtension);
   const manager = Manager.create(extensions);
-  let returnedParameters: InjectedRemirrorProps<GExtension>;
+  let returnedParameters: InjectedRenderEditorProps<GExtension>;
 
   const utils = render(
     <RenderEditor {...(properties as any)} manager={manager as any}>

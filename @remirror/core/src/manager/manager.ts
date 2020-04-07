@@ -28,6 +28,7 @@ import { createDocumentNode, CreateDocumentNodeParameter } from '@remirror/core-
 
 import {
   AnyExtension,
+  ChainedFromExtensions,
   CommandsFromExtensions,
   ExtensionFromConstructor,
   ExtensionLifecyleMethods,
@@ -45,7 +46,6 @@ import {
   AnyCommands,
   CommandMethod,
   CommandParameter,
-  GetCommands,
   GetConstructor,
   ManagerParameter,
   ManagerSettings,
@@ -409,7 +409,7 @@ class Manager<
     this.#phase = ManagerPhase.AddView;
     this.#store.view = view;
 
-    this.#store.commands = this.createCommands({
+    [this.#store.commands, this.#store.chain] = this.createCommands({
       ...this.parameter,
       view,
       isEditable: () => view.props.editable?.(this.getState()) ?? false,
@@ -501,9 +501,9 @@ class Manager<
    *
    * An example usage of this is within the collaboration plugin.
    */
-  public onTransaction(parameters: OnTransactionManagerParameter) {
+  public onTransaction(parameter: OnTransactionManagerParameter) {
     for (const onTransaction of this.#handlers.transaction) {
-      onTransaction({ ...parameters, ...this.parameter, view: this.store.view });
+      onTransaction({ ...parameter, ...this.parameter, view: this.store.view });
     }
   }
 
@@ -531,7 +531,7 @@ class Manager<
    */
   private createCommands(
     parameters: CommandParameter,
-  ): [CommandsFromExtensions<ExtensionUnion>, any] {
+  ): [CommandsFromExtensions<ExtensionUnion>, ChainedFromExtensions<ExtensionUnion>] {
     const extensions = this.extensions;
     const commands: AnyCommands = object();
 
@@ -544,7 +544,10 @@ class Manager<
       commands[commandName].isEnabled = isEnabled;
     }
 
-    return [commands as CommandsFromExtensions<ExtensionUnion>, chained];
+    return [
+      commands as CommandsFromExtensions<ExtensionUnion>,
+      chained as ChainedFromExtensions<ExtensionUnion>,
+    ];
   }
 
   public getExtension = <ExtensionConstructor extends GetConstructor<ExtensionUnion>>(
@@ -567,16 +570,6 @@ class Manager<
       extension.destroy?.();
     }
   }
-}
-
-interface ManagerParameter<
-  ExtensionUnion extends AnyExtension = any,
-  PresetUnion extends AnyPreset<ExtensionUnion> = any
-> {
-  /**
-   * The extension manager
-   */
-  manager: Manager<ExtensionUnion, PresetUnion>;
 }
 
 interface OnTransactionManagerParameter extends TransactionParameter, EditorStateParameter {}
@@ -625,7 +618,12 @@ declare global {
       /**
        * The commands defined within this extension.
        */
-      commands: GetCommands<ExtensionUnion>;
+      commands: CommandsFromExtensions<ExtensionUnion>;
+
+      /**
+       * The commands defined within this extension.
+       */
+      chain: ChainedFromExtensions<ExtensionUnion>;
     }
 
     /**
@@ -638,4 +636,4 @@ declare global {
 
 /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
-export { AnyManager, isManager, Manager, ManagerParameter, OnTransactionManagerParameter };
+export { isManager, Manager, OnTransactionManagerParameter };

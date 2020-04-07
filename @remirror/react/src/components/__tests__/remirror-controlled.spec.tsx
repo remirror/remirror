@@ -5,7 +5,7 @@ import { EditorState, fromHTML } from '@remirror/core';
 import { createTestManager } from '@remirror/test-fixtures';
 
 import { RenderEditor } from '..';
-import { InjectedRemirrorProps, RemirrorStateListenerParameter } from '../../react-types';
+import { InjectedRenderEditorProps, RemirrorStateListenerParameter } from '../../react-types';
 import { RemirrorProviderProps } from '../remirror-provider';
 
 const label = 'Remirror editor';
@@ -41,12 +41,12 @@ describe('Remirror Controlled Component', () => {
 
   it('responds to setContent updates', () => {
     let stateParameter!: RemirrorStateListenerParameter;
-    let renderParameter!: InjectedRemirrorProps;
+    let renderParameter!: InjectedRenderEditorProps;
 
     const onStateChange = jest.fn<void, [RemirrorStateListenerParameter]>((params) => {
       stateParameter = params;
     });
-    const mock = jest.fn((params: InjectedRemirrorProps) => {
+    const mock = jest.fn((params: InjectedRenderEditorProps) => {
       renderParameter = params;
       return <div />;
     });
@@ -96,7 +96,7 @@ describe('Remirror Controlled Component', () => {
 
   it('responds to internal editor updates', () => {
     let latestState: EditorState | null = null;
-    let renderParameter!: InjectedRemirrorProps;
+    let renderParameter!: InjectedRenderEditorProps;
 
     const Component = () => {
       const [value, setValue] = useState<EditorState>();
@@ -108,7 +108,7 @@ describe('Remirror Controlled Component', () => {
 
       return (
         <RenderEditor {...props} onStateChange={onStateChange} value={value}>
-          {(params: InjectedRemirrorProps) => {
+          {(params: InjectedRenderEditorProps) => {
             renderParameter = params;
             return <div />;
           }}
@@ -127,7 +127,7 @@ describe('Remirror Controlled Component', () => {
   });
 
   it('responds to state overrides', () => {
-    let renderParameter!: InjectedRemirrorProps;
+    let renderParameter!: InjectedRenderEditorProps;
 
     const Component = () => {
       const [value, setValue] = useState<EditorState>();
@@ -147,7 +147,7 @@ describe('Remirror Controlled Component', () => {
 
       return (
         <RenderEditor {...props} onStateChange={onStateChange} value={value}>
-          {(params: InjectedRemirrorProps) => {
+          {(params: InjectedRenderEditorProps) => {
             renderParameter = params;
             return <div />;
           }}

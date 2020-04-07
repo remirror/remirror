@@ -83,6 +83,8 @@ module.exports = {
     'prefer-exponentiation-operator': 'error',
 
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
+    'unicorn/no-nested-ternary': 'off',
+
     'unicorn/prevent-abbreviations': [
       'off',
       {

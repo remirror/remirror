@@ -7,7 +7,7 @@ import { fromHTML } from '@remirror/core';
 import { createTestManager } from '@remirror/test-fixtures';
 
 import { RenderEditor } from '../';
-import { InjectedRemirrorProps } from '../../react-types';
+import { InjectedRenderEditorProps } from '../../react-types';
 
 const textContent = `This is editor text`;
 const label = 'Remirror editor';
@@ -85,8 +85,8 @@ describe('basic functionality', () => {
   });
 
   it('should allow text input and fire all handlers', () => {
-    let setContent: InjectedRemirrorProps['setContent'] = jest.fn();
-    const mock = jest.fn((value: InjectedRemirrorProps) => {
+    let setContent: InjectedRenderEditorProps['setContent'] = jest.fn();
+    const mock = jest.fn((value: InjectedRenderEditorProps) => {
       setContent = value.setContent;
       return <div />;
     });
@@ -178,7 +178,7 @@ describe('focus', () => {
     content: [{ type: 'paragraph', content: [{ type: 'text', text: 'A sentence here' }] }],
   };
 
-  let props!: InjectedRemirrorProps<any>;
+  let props!: InjectedRenderEditorProps<any>;
   let editorNode: HTMLElement;
 
   beforeEach(() => {

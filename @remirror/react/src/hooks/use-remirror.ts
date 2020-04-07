@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { invariant, Manager } from '@remirror/core';
 
 import { RemirrorContext } from '../react-contexts';
-import { InjectedRemirrorProps } from '../react-types';
+import { InjectedRenderEditorProps } from '../react-types';
 
 /**
  * This provides access to the Remirror Editor context using hooks.
@@ -29,7 +29,7 @@ import { InjectedRemirrorProps } from '../react-types';
  * }
  * ```
  */
-export const useRemirror = <ManagerType extends Manager = any>(): InjectedRemirrorProps<
+export const useRemirror = <ManagerType extends Manager = any>(): InjectedRenderEditorProps<
   ManagerType
 > => {
   const params = useContext(RemirrorContext);

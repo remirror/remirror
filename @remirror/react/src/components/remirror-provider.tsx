@@ -8,11 +8,11 @@ import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 
 import { defaultProps } from '../react-constants';
 import { RemirrorContext } from '../react-contexts';
-import { GetRootPropsConfig, InjectedRemirrorProps, RenderEditorProps } from '../react-types';
+import { GetRootPropsConfig, InjectedRenderEditorProps, RenderEditorProps } from '../react-types';
 import { RenderEditor } from './render-editor';
 
 export interface RemirrorContextProviderProps<ManagerType extends Manager = any>
-  extends ProviderProps<InjectedRemirrorProps<ManagerType>> {
+  extends ProviderProps<InjectedRenderEditorProps<ManagerType>> {
   /**
    * Sets the first child element as a the root (where the prosemirror editor
    * instance will be rendered).

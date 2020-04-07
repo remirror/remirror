@@ -2,12 +2,17 @@
 
 import { jsx } from '@emotion/core';
 
-import { AnyExtension, EditorStateParameter, ManagerParameter, PlainObject } from '@remirror/core';
+import {
+  EditorStateParameter,
+  GetExtensionUnion,
+  Manager,
+  PlainObject,
+  SchemaFromExtension,
+} from '@remirror/core';
 import { mapProps, ReactSerializer } from '@remirror/react-renderer';
 
-export interface RemirrorSSRProps<GExtension extends AnyExtension = any>
-  extends EditorStateParameter,
-    ManagerParameter<GExtension> {
+export interface RemirrorSSRProps<ManagerType extends Manager = any>
+  extends EditorStateParameter<SchemaFromExtension<GetExtensionUnion<ManagerType>>> {
   /**
    * The attributes to pass into the root div element.
    */
@@ -16,17 +21,22 @@ export interface RemirrorSSRProps<GExtension extends AnyExtension = any>
    * Whether or not the editor is in an editable state
    */
   editable: boolean;
+
+  /**
+   * The manager.
+   */
+  manager: ManagerType;
 }
 
 /**
  * Remirror SSR component used for rendering in non dom environments
  */
-export const RemirrorSSR = <GExtension extends AnyExtension = any>({
+export const RemirrorSSR = <ManagerType extends Manager = any>({
   attributes,
   manager,
   state,
   editable,
-}: RemirrorSSRProps<GExtension>) => {
+}: RemirrorSSRProps<ManagerType>) => {
   const outerProperties = mapProps(attributes);
   const ssrElement = ReactSerializer.fromManager(manager).serializeFragment(state.doc.content);
   const transformedElement = manager.store.ssrTransformer(ssrElement);

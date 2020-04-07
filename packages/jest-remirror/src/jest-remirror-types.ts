@@ -20,7 +20,7 @@ import {
   ProsemirrorNode,
   SchemaFromExtension,
 } from '@remirror/core';
-import { InjectedRemirrorProps } from '@remirror/react';
+import { InjectedRenderEditorProps } from '@remirror/react';
 
 import { BaseExtensionNodeNames, BaseExtensionNodes } from './jest-remirror-schema';
 
@@ -293,7 +293,7 @@ export type CreateTestEditorReturn<
     GAttrNodes,
     GOthers
   > = GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>
-> = Omit<InjectedRemirrorProps<GExtension>, 'view'> &
+> = Omit<InjectedRenderEditorProps<GExtension>, 'view'> &
   TestEditorViewParameter<SchemaFromExtension<GExtension>> & {
     utils: RenderResult;
     add: AddContent<GExtension>;
