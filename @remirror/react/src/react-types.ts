@@ -2,7 +2,6 @@ import { Interpolation, ObjectInterpolation } from '@emotion/core';
 import { ReactNode, Ref } from 'react';
 
 import {
-  AbstractInstanceType,
   AnyExtension,
   CommandsFromExtensions,
   CompareStateParameter,
@@ -13,7 +12,6 @@ import {
   EditorViewParameter,
   ElementParameter,
   FromToParameter,
-  GetSettings,
   Manager,
   ObjectNode,
   PlainObject,
@@ -24,12 +22,13 @@ import {
   RemirrorInterpolation,
   RenderEnvironment,
   SchemaFromExtension,
-  StringHandlerParams,
-  TextParams,
+  StringHandlerParameter,
+  TextParameter,
   Transaction,
   TransactionParameter,
   TransactionTransformer,
 } from '@remirror/core';
+import { GetExtensionUnion } from '@remirror/core/lib/manager/manager-types';
 
 /**
  * The type of arguments acceptable for the focus parameter.
@@ -41,14 +40,15 @@ import {
  */
 export type FocusType = FromToParameter | number | 'start' | 'end' | boolean;
 
-export interface RemirrorProps<GExtension extends AnyExtension = any> extends StringHandlerParams {
+export interface RenderEditorProps<ManagerType extends Manager = any>
+  extends StringHandlerParameter {
   /**
    * Pass in the extension manager.
    *
    * The manager is responsible for handling all Prosemirror related
    * functionality.
    */
-  manager: Manager<GExtension>;
+  manager: ManagerType;
 
   /**
    * Set the starting value object of the editor.
@@ -68,13 +68,13 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
    *
    * Without a deep understanding of Prosemirror this is not recommended.
    */
-  onStateChange?: (params: RemirrorStateListenerParams<GExtension>) => void;
+  onStateChange?: (params: RemirrorStateListenerParams<GetExtensionUnion<ManagerType>>) => void;
 
   /**
    * When onStateChange is defined this prop is used to set the next state value
    * of the remirror editor.
    */
-  value?: EditorState<SchemaFromExtension<GExtension>> | null;
+  value?: EditorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>> | null;
 
   /**
    * Adds attributes directly to the prosemirror html element.
@@ -101,29 +101,35 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
   /**
    * An event listener which is called whenever the editor gains focus.
    */
-  onFocus?: (params: RemirrorEventListenerParams<GExtension>, event: Event) => void;
+  onFocus?: (
+    params: RemirrorEventListenerParams<GetExtensionUnion<ManagerType>>,
+    event: Event,
+  ) => void;
 
   /**
    * An event listener which is called whenever the editor is blurred.
    */
-  onBlur?: (params: RemirrorEventListenerParams<GExtension>, event: Event) => void;
+  onBlur?: (
+    params: RemirrorEventListenerParams<GetExtensionUnion<ManagerType>>,
+    event: Event,
+  ) => void;
 
   /**
    * Called on the first render when the prosemirror instance first becomes
    * available
    */
-  onFirstRender?: RemirrorEventListener<GExtension>;
+  onFirstRender?: RemirrorEventListener<GetExtensionUnion<ManagerType>>;
 
   /**
    * Called on every change to the Prosemirror state.
    */
-  onChange?: RemirrorEventListener<GExtension>;
+  onChange?: RemirrorEventListener<GetExtensionUnion<ManagerType>>;
 
   /**
    * The render prop that takes the injected remirror params and returns an
    * element to render. The editor view is automatically attached to the DOM.
    */
-  children: RenderPropFunction<GExtension>;
+  children: RenderPropFunction<GetExtensionUnion<ManagerType>>;
 
   /**
    * A method called when the editor is dispatching the transaction.
@@ -132,7 +138,9 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
    * Use this to update the transaction which will be used to update the editor
    * state.
    */
-  onDispatchTransaction: TransactionTransformer<SchemaFromExtension<GExtension>>;
+  onDispatchTransaction: TransactionTransformer<
+    SchemaFromExtension<GetExtensionUnion<ManagerType>>
+  >;
 
   /**
    * Sets the accessibility label for the editor instance.
@@ -237,7 +245,7 @@ export interface RemirrorProps<GExtension extends AnyExtension = any> extends St
   fallbackContent: ObjectNode | ProsemirrorNode;
 }
 
-export interface Positioner<GExtension extends AnyExtension = any> {
+export interface Positioner<ExtensionUnion extends AnyExtension = any> {
   /**
    * The default and initial position value. This is used at the start and
    * whenever isActive becomes false
@@ -261,28 +269,29 @@ export interface Positioner<GExtension extends AnyExtension = any> {
    *
    * @param params
    */
-  hasChanged(params: CompareStateParameter<SchemaFromExtension<GExtension>>): boolean;
+  hasChanged(params: CompareStateParameter<SchemaFromExtension<ExtensionUnion>>): boolean;
 
   /**
    * Determines whether the positioner should be active
    */
-  isActive(params: GetPositionParams<GExtension>): boolean;
+  isActive(params: GetPositionParams<ExtensionUnion>): boolean;
 
   /**
    * Calculate and return a new position (only called when `hasChanged` and
    * `isActive` return true)
    */
-  getPosition(params: GetPositionParams<GExtension>): Position;
+  getPosition(params: GetPositionParams<ExtensionUnion>): Position;
 }
 
-export type CalculatePositionerParams<GExtension extends AnyExtension = any> = PositionerIdParams &
-  Positioner<GExtension>;
+export type CalculatePositionerParams<
+  ExtensionUnion extends AnyExtension = any
+> = PositionerIdParams & Positioner<ExtensionUnion>;
 
 export type GetPositionerPropsConfig<
-  GExtension extends AnyExtension = any,
+  ExtensionUnion extends AnyExtension = any,
   GRefKey extends string = 'ref'
 > = RefParams<GRefKey> &
-  Partial<Omit<CalculatePositionerParams<GExtension>, 'positionerId'>> &
+  Partial<Omit<CalculatePositionerParams<ExtensionUnion>, 'positionerId'>> &
   PositionerIdParams;
 
 export interface RefParams<GRefKey = 'ref'> {
@@ -321,20 +330,20 @@ export type GetPositionerReturn<GRefKey extends string = 'ref'> =
  * These are the props passed to the render function provided when setting up
  * your editor.
  */
-export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
+export interface InjectedRemirrorProps<ManagerType extends Manager = any> {
   /**
    * An instance of the extension manager
    */
-  manager: Manager<GExtension>;
+  manager: ManagerType;
   /**
    * The prosemirror view
    */
-  view: EditorView<SchemaFromExtension<GExtension>>;
+  view: EditorView<SchemaFromExtension<GetExtensionUnion<ManagerType>>>;
 
   /**
    * A map of all actions made available by the configured extensions.
    */
-  actions: CommandsFromExtensions<GExtension>;
+  actions: CommandsFromExtensions<GetExtensionUnion<ManagerType>>;
 
   /**
    * The unique id for the editor instance.
@@ -347,7 +356,7 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
    * @param triggerOnChange - whether onChange handlers should be triggered by
    * the update.
    */
-  clearContent(triggerOnChange?: boolean): void;
+  clearContent: (triggerOnChange?: boolean) => void;
 
   /**
    * Replace all editor content with the new content.
@@ -359,7 +368,7 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
    * @param triggerOnChange - whether onChange handlers should be triggered by
    * the update.
    */
-  setContent(content: RemirrorContentType, triggerOnChange?: boolean): void;
+  setContent: (content: RemirrorContentType, triggerOnChange?: boolean) => void;
 
   /**
    * A function that returns props which should be spread on a react element and
@@ -399,9 +408,9 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
    * }
    * ```
    */
-  getRootProps<GRefKey extends string = 'ref'>(
+  getRootProps: <GRefKey extends string = 'ref'>(
     options?: GetRootPropsConfig<GRefKey>,
-  ): RefKeyRootProps<GRefKey>;
+  ) => RefKeyRootProps<GRefKey>;
 
   /**
    * Attach these props to a component to inject it with position data.
@@ -410,19 +419,19 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
    * A custom positioner can be passed in to update the method used to calculate
    * the position.
    */
-  getPositionerProps<GRefKey extends string = 'ref'>(
-    options: GetPositionerPropsConfig<GExtension, GRefKey>,
-  ): GetPositionerReturn<GRefKey>;
+  getPositionerProps: <GRefKey extends string = 'ref'>(
+    options: GetPositionerPropsConfig<GetExtensionUnion<ManagerType>, GRefKey>,
+  ) => GetPositionerReturn<GRefKey>;
 
   /**
    * The previous and next state
    */
-  state: CompareStateParameter<SchemaFromExtension<GExtension>>;
+  state: CompareStateParameter<SchemaFromExtension<GetExtensionUnion<ManagerType>>>;
 
   /**
    * Focus the editor at the `start` | `end` a specific position or at a valid range between `{ from, to }`
    */
-  focus(position?: FocusType): void;
+  focus: (position?: FocusType) => void;
 }
 
 /**
@@ -430,8 +439,8 @@ export interface InjectedRemirrorProps<GExtension extends AnyExtension = any> {
  *
  * @param - injected remirror params
  */
-export type RenderPropFunction<GExtension extends AnyExtension = any> = (
-  params: InjectedRemirrorProps<GExtension>,
+export type RenderPropFunction<ManagerType extends Manager = any> = (
+  params: InjectedRemirrorProps<ManagerType>,
 ) => JSX.Element;
 
 export interface RemirrorGetterParams {
@@ -461,8 +470,8 @@ export interface RemirrorGetterParams {
   getObjectNode(): ObjectNode;
 }
 
-export interface BaseListenerParams<GExtension extends AnyExtension = any>
-  extends EditorViewParameter<SchemaFromExtension<GExtension>>,
+export interface BaseListenerParameters<ExtensionUnion extends AnyExtension = any>
+  extends EditorViewParameter<SchemaFromExtension<ExtensionUnion>>,
     RemirrorGetterParams {
   /**
    * The original transaction which caused this state update.
@@ -476,7 +485,7 @@ export interface BaseListenerParams<GExtension extends AnyExtension = any>
    * - Was ths change caused by an updated selection? `tr.selectionSet`
    * - `tr.steps` can be inspected for further granularity.
    */
-  tr?: Transaction<SchemaFromExtension<GExtension>>;
+  tr?: Transaction<SchemaFromExtension<ExtensionUnion>>;
 
   /**
    * A shorthand way of checking whether the update was triggered by editor usage (internal) or
@@ -489,30 +498,30 @@ export interface BaseListenerParams<GExtension extends AnyExtension = any>
   internalUpdate: boolean;
 }
 
-export interface RemirrorEventListenerParams<GExtension extends AnyExtension = any>
-  extends EditorStateParameter<SchemaFromExtension<GExtension>>,
-    BaseListenerParams<GExtension> {}
+export interface RemirrorEventListenerParams<ExtensionUnion extends AnyExtension = any>
+  extends EditorStateParameter<SchemaFromExtension<ExtensionUnion>>,
+    BaseListenerParameters<ExtensionUnion> {}
 
-export interface RemirrorStateListenerParams<GExtension extends AnyExtension = any>
-  extends CompareStateParameter<SchemaFromExtension<GExtension>>,
-    BaseListenerParams<GExtension> {
+export interface RemirrorStateListenerParams<ExtensionUnion extends AnyExtension = any>
+  extends CompareStateParameter<SchemaFromExtension<ExtensionUnion>>,
+    BaseListenerParameters<ExtensionUnion> {
   /**
    * Manually create a new state object with the desired content.
    */
   createStateFromContent(
     content: RemirrorContentType,
-  ): EditorState<SchemaFromExtension<GExtension>>;
+  ): EditorState<SchemaFromExtension<ExtensionUnion>>;
 }
 
-export type RemirrorEventListener<GExtension extends AnyExtension = any> = (
-  params: RemirrorEventListenerParams<GExtension>,
+export type RemirrorEventListener<ExtensionUnion extends AnyExtension = any> = (
+  params: RemirrorEventListenerParams<ExtensionUnion>,
 ) => void;
 
-export type AttributePropFunction<GExtension extends AnyExtension = any> = (
-  params: RemirrorEventListenerParams<GExtension>,
+export type AttributePropFunction<ExtensionUnion extends AnyExtension = any> = (
+  params: RemirrorEventListenerParams<ExtensionUnion>,
 ) => Record<string, string>;
 
-export interface PlaceholderConfig extends TextParams {
+export interface PlaceholderConfig extends TextParameter {
   className: string;
   style: ObjectInterpolation<undefined>;
 }
@@ -523,10 +532,10 @@ export type PositionerMapValue = ElementParameter & {
 
 export interface PositionerRefFactoryParams extends PositionerIdParams, PositionParameter {}
 
-export interface GetPositionParams<GExtension extends AnyExtension = any>
-  extends EditorViewParameter<SchemaFromExtension<GExtension>>,
+export interface GetPositionParams<ExtensionUnion extends AnyExtension = any>
+  extends EditorViewParameter<SchemaFromExtension<ExtensionUnion>>,
     ElementParameter,
-    CompareStateParameter<SchemaFromExtension<GExtension>> {}
+    CompareStateParameter<SchemaFromExtension<ExtensionUnion>> {}
 
 export interface PositionerIdParams {
   /**
@@ -558,52 +567,28 @@ export interface UsePositionerParams<GRefKey extends string = 'ref'>
     PositionerParams,
     RefParams<GRefKey> {}
 
-export type RemirrorExtensionProps<
-  GConstructor extends { prototype: AnyExtension },
-  GOptions extends GetSettings<AbstractInstanceType<GConstructor>>
-> = GOptions &
-  BaseExtensionProps & {
-    /**
-     * The constructor for the remirror extension.
-     * Will be instantiated with the options passed through as props.
-     */
-    Constructor: GConstructor;
-  };
-
-export interface BaseExtensionProps {
-  /**
-   * Sets the priority for the extension. Lower number means the extension is
-   * loaded first and gives it priority. `-1` is loaded before `0` and will
-   * overwrite any conflicting configuration.
-   *
-   * Base extensions are loaded with a priority of 1.
-   *
-   * @defaultValue 2
-   */
-  priority?: number;
-  children?: never;
-}
-
 export interface UpdateStateParams<GSchema extends EditorSchema = any>
   extends Partial<TransactionParameter<GSchema>>,
     EditorStateParameter<GSchema> {
-  /**
-   * Called after the state has updated.
-   */
-  onUpdate?(): void;
-
   /**
    * Whether or not to trigger this as a change and call any handlers.
    *
    * @defaultValue true
    */
   triggerOnChange?: boolean;
+
+  /**
+   * Called after the state has updated.
+   */
+  onUpdate?: () => void;
 }
 
 export interface EditorStateEventListenerParams<
-  GExtension extends AnyExtension = any,
+  ExtensionUnion extends AnyExtension = any,
   GSchema extends EditorSchema = any
-> extends Partial<CompareStateParameter<GSchema>>, Pick<BaseListenerParams<GExtension>, 'tr'> {}
+>
+  extends Partial<CompareStateParameter<GSchema>>,
+    Pick<BaseListenerParameters<ExtensionUnion>, 'tr'> {}
 
 export interface RemirrorState<GSchema extends EditorSchema = any> {
   /**
@@ -618,6 +603,8 @@ export interface RemirrorState<GSchema extends EditorSchema = any> {
 }
 
 export interface ListenerParams<
-  GExtension extends AnyExtension = any,
+  ExtensionUnion extends AnyExtension = any,
   GSchema extends EditorSchema = any
-> extends Partial<EditorStateParameter<GSchema>>, Pick<BaseListenerParams<GExtension>, 'tr'> {}
+>
+  extends Partial<EditorStateParameter<GSchema>>,
+    Pick<BaseListenerParameters<ExtensionUnion>, 'tr'> {}

@@ -26,7 +26,7 @@ import {
   pick,
   ProsemirrorAttributes,
 } from '@remirror/core';
-import { InjectedRemirrorProps, RemirrorProps, RenderEditor } from '@remirror/react';
+import { InjectedRemirrorProps, RenderEditor, RenderEditorProps } from '@remirror/react';
 
 import { markFactory, nodeFactory } from './jest-remirror-builder';
 import { BaseExtensionNodeNames, nodeExtensions } from './jest-remirror-schema';
@@ -71,7 +71,7 @@ export const renderEditor = <
   }: Partial<
     CreateTestEditorExtensions<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>
   > = object(),
-  properties: Partial<Omit<RemirrorProps<GExtension>, 'manager'>> = object(),
+  properties: Partial<Omit<RenderEditorProps<GExtension>, 'manager'>> = object(),
 ): GReturn => {
   const innerNodeExtensions = nodeExtensions.filter(
     ({ name }) =>

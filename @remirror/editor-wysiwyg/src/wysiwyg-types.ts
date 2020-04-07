@@ -21,7 +21,7 @@ import {
 import { CodeBlockExtension, CodeBlockExtensionSettings } from '@remirror/extension-code-block';
 import { DropCursorExtension } from '@remirror/extension-drop-cursor';
 import { ImageExtension } from '@remirror/extension-image';
-import { RemirrorProps } from '@remirror/react';
+import { RenderEditorProps } from '@remirror/react';
 
 /**
  * The union type of all the extension used within the Wysiwyg Editor.
@@ -58,7 +58,7 @@ export type WysiwygExtensions =
 export interface WysiwygEditorProps
   extends Partial<
       Pick<
-        RemirrorProps<WysiwygExtensions>,
+        RenderEditorProps<WysiwygExtensions>,
         | 'initialContent'
         | 'attributes'
         | 'editable'

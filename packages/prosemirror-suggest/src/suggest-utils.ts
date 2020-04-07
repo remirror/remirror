@@ -7,7 +7,7 @@ import {
   MakeOptional,
   ProsemirrorCommandFunction,
   ResolvedPosParameter,
-  TextParams,
+  TextParameter,
 } from '@remirror/core-types';
 import { selectionEmpty } from '@remirror/core-utils';
 
@@ -326,7 +326,7 @@ interface FindFromSuggestionsParams extends ResolvedPosParameter {
 
 interface FindPositionParams
   extends Pick<Suggestion, 'name' | 'char'>,
-    TextParams,
+    TextParameter,
     SuggestionParams,
     ResolvedPosParameter {
   /**

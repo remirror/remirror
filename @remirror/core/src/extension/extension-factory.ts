@@ -3,12 +3,13 @@ import {
   REMIRROR_IDENTIFIER_KEY,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
-import { Cast, freeze, isRemirrorType } from '@remirror/core-helpers';
+import { Cast, freeze, isRemirrorType, keys, uniqueArray } from '@remirror/core-helpers';
 import { IfNoRequiredProperties } from '@remirror/core-types';
 
-import { ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
+import { BaseExtensionSettings, ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
 import {
   AnyExtensionConstructor,
+  defaultSettings,
   Extension,
   ExtensionFactoryParameter,
   MarkExtension,
@@ -53,6 +54,24 @@ const createBaseExtensionFactory = <
         }
 
         /**
+         * The name of the extension.
+         */
+        static get extensionName() {
+          return parameter.name;
+        }
+
+        public static readonly settingKeys: Array<
+          keyof (Settings & BaseExtensionSettings)
+        > = uniqueArray([
+          ...keys(defaultSettings),
+          ...keys(factoryParameter.defaultSettings as {}),
+        ]);
+
+        public static readonly propertyKeys: Array<keyof Properties> = keys(
+          parameter.defaultProperties as {},
+        );
+
+        /**
          * This static method is the only way to create an instance of this
          * extension.
          *
@@ -63,13 +82,6 @@ const createBaseExtensionFactory = <
          */
         public static of(...arguments_: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
           return new PlainConstructor(...arguments_);
-        }
-
-        /**
-         * The name of the extension.
-         */
-        static get extensionName() {
-          return parameter.name;
         }
 
         /**
@@ -124,6 +136,17 @@ const createBaseExtensionFactory = <
         static get [REMIRROR_IDENTIFIER_KEY]() {
           return RemirrorIdentifier.MarkExtensionConstructor;
         }
+
+        public static readonly settingKeys: Array<
+          keyof (Settings & BaseExtensionSettings)
+        > = uniqueArray([
+          ...keys(defaultSettings),
+          ...keys(factoryParameter.defaultSettings as {}),
+        ]);
+
+        public static readonly propertyKeys: Array<keyof Properties> = keys(
+          parameter.defaultProperties as {},
+        );
 
         /**
          * This static method is the only way to create an instance of this
@@ -189,6 +212,17 @@ const createBaseExtensionFactory = <
         static get [REMIRROR_IDENTIFIER_KEY]() {
           return RemirrorIdentifier.NodeExtensionConstructor;
         }
+
+        public static readonly settingKeys: Array<
+          keyof (Settings & BaseExtensionSettings)
+        > = uniqueArray([
+          ...keys(defaultSettings),
+          ...keys(factoryParameter.defaultSettings as {}),
+        ]);
+
+        public static readonly propertyKeys: Array<keyof Properties> = keys(
+          parameter.defaultProperties as {},
+        );
 
         /**
          * This static method is the only way to create an instance of this
@@ -283,9 +317,7 @@ export const ExtensionFactory = {
  *
  * @param value - the value to test
  */
-export const isExtensionConstructor = <Settings extends object = any>(
-  value: unknown,
-): value is AnyExtensionConstructor<Settings> =>
+export const isExtensionConstructor = (value: unknown): value is AnyExtensionConstructor =>
   isRemirrorType(value) &&
   [
     RemirrorIdentifier.PlainExtensionConstructor,

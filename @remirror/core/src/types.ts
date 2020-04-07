@@ -103,18 +103,18 @@ type NodeExtensionTags<NodeNames extends string = string> = Record<NodeGroup, No
  */
 type GetSettings<
   Type extends {
-    settings: unknown;
+    ['~S']: unknown;
   }
-> = Type['settings'];
+> = Type['~S'];
 
 /**
  * Get the dynamic extension properties.
  */
 type GetProperties<
   Type extends {
-    properties: unknown;
+    ['~P']: unknown;
   }
-> = Type['properties'];
+> = Type['~P'];
 
 /**
  * Get the commands provided by an extension.

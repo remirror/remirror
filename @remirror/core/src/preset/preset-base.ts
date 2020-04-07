@@ -19,8 +19,7 @@ import {
   AnyExtensionConstructor,
   DefaultSettingsType,
   ExtensionFromConstructor,
-  ExtensionsParameter,
-  GetConstructor,
+  ExtensionListParameter,
   GetExtensionParameter,
 } from '../extension';
 import {
@@ -28,7 +27,7 @@ import {
   GetChangedPropertiesParameter,
   GetChangedPropertiesReturn,
 } from '../helpers';
-import { PropertiesShape } from '../types';
+import { GetConstructor, PropertiesShape } from '../types';
 
 /**
  * The type which is applicable to any `Preset` instances.
@@ -75,9 +74,21 @@ export abstract class Preset<
   Properties extends object = {}
 >
   implements
-    ExtensionsParameter<ExtensionUnion>,
+    ExtensionListParameter<ExtensionUnion>,
     PropertiesShape<Properties>,
     GetExtensionParameter<ExtensionUnion> {
+  /**
+   * Not for public usage. This is purely for types to make it easier to infer
+   * the type of `Settings` on an extension instance.
+   */
+  public readonly ['~S']!: Settings;
+
+  /**
+   * Not for public usage. This is purely for types to make it easier to infer
+   * the type of `Settings` on an extension instance.
+   */
+  public readonly ['~P']!: Properties;
+
   /**
    * The remirror identifier key.
    *

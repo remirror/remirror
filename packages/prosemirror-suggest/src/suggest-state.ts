@@ -10,7 +10,7 @@ import {
   EditorView,
   FromToParameter,
   ResolvedPosParameter,
-  TextParams,
+  TextParameter,
   TransactionParameter,
 } from '@remirror/core-types';
 import { transactionChanged } from '@remirror/core-utils';
@@ -452,7 +452,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   }
 }
 
-interface HandleTextInputParams extends FromToParameter, TextParams {}
+interface HandleTextInputParams extends FromToParameter, TextParameter {}
 interface UpdateReasonsParams<GSchema extends EditorSchema = any>
   extends EditorStateParameter<GSchema>,
     ResolvedPosParameter<GSchema>,

@@ -2,7 +2,7 @@ import {
   AnyFunction,
   EditorViewParameter,
   FromToParameter,
-  TextParams,
+  TextParameter,
 } from '@remirror/core-types';
 
 import { ChangeReason, ExitReason } from './suggest-constants';
@@ -467,7 +467,7 @@ export interface SuggestExitHandlerParams<GCommand extends AnyFunction<void> = A
  */
 export interface SuggestCharacterEntryParams<
   GCommand extends AnyFunction<void> = AnyFunction<void>
-> extends SuggestCallbackParams<GCommand>, FromToParameter, TextParams {}
+> extends SuggestCallbackParams<GCommand>, FromToParameter, TextParameter {}
 
 /**
  * The parameters required by the {@link SuggestKeyBinding} method.

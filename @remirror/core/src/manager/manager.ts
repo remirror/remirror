@@ -29,6 +29,7 @@ import { createDocumentNode, CreateDocumentNodeParams } from '@remirror/core-uti
 import {
   AnyExtension,
   CommandsFromExtensions,
+  ExtensionFromConstructor,
   ExtensionLifecyleMethods,
   ExtensionTags,
   GetMarkNameUnion,
@@ -61,16 +62,11 @@ import {
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
 /**
- * A type that matches any manager.
- */
-type AnyManager = Manager;
-
-/**
  * Checks to see whether the provided value is an `Manager`.
  *
  * @param value - the value to check
  */
-const isManager = (value: unknown): value is AnyManager =>
+const isManager = (value: unknown): value is Manager =>
   isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
 
 /**
@@ -550,6 +546,18 @@ class Manager<
 
     return [commands as CommandsFromExtensions<ExtensionUnion>, chained];
   }
+
+  public getExtension = <ExtensionConstructor extends GetConstructor<ExtensionUnion>>(
+    Constructor: ExtensionConstructor,
+  ): ExtensionFromConstructor<ExtensionConstructor> => {
+    const extension = this.#extensionMap.get(Constructor);
+
+    // Throws an error if attempting to get an extension which is not preset
+    // in this preset.
+    invariant(extension, { code: ErrorConstant.INVALID_PRESET_EXTENSION });
+
+    return extension as ExtensionFromConstructor<typeof Constructor>;
+  };
 
   /**
    * Called when removing the manager and all preset and extensions.

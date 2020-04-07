@@ -86,9 +86,6 @@ export type Brand<Type, GBrand> = Type & Branding<GBrand>;
 
 /**
  * An object with string keys and values of type `any`
- *
- * @remarks
- * Taken from `simplytyped`
  */
 export interface PlainObject {
   [key: string]: unknown;
@@ -102,19 +99,6 @@ export interface PlainObject {
  * what function they take in, they just need to know what it returns.
  */
 export type AnyFunction<Type = any> = (...args: any[]) => Type;
-
-/**
- * Matches any constructor type (but not of abstract classes).
- */
-export type AnyConstructor<Type = unknown> = new (...args: any[]) => Type;
-
-/**
- * Abstract classes don't support the builtin `InstanceType` helper. This is an
- * alternative which allows us to pull out the type of the prototype.
- */
-export type AbstractInstanceType<
-  GConstructor extends { prototype: any }
-> = GConstructor['prototype'];
 
 /**
  * Make the whole interface partial except for some specified keys which will be

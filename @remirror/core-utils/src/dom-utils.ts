@@ -713,7 +713,7 @@ export const isObjectNode = (value: unknown): value is ObjectNode =>
 export interface CreateDocumentNodeParams
   extends SchemaParameter,
     Partial<CustomDocParams>,
-    StringHandlerParams {
+    StringHandlerParameter {
   /**
    * The content to render
    */
@@ -725,7 +725,7 @@ export interface CreateDocumentNodeParams
   fallback?: ObjectNode | ProsemirrorNode;
 }
 
-export interface StringHandlerParams {
+export interface StringHandlerParameter {
   /**
    * A function which transforms a string into a prosemirror node.
    *
@@ -735,7 +735,7 @@ export interface StringHandlerParams {
    *
    * See {@link fromHTML} for an example of how this could work.
    */
-  stringHandler?(params: FromStringParams): ProsemirrorNode;
+  stringHandler?(params: FromStringParameter): ProsemirrorNode;
 }
 
 const fallbackContent = ({
@@ -834,7 +834,7 @@ export const toHTML = ({ node, schema, doc: doc = getDocument() }: FromNodeParam
   return element.innerHTML;
 };
 
-interface FromStringParams extends Partial<CustomDocParams>, SchemaParameter {
+interface FromStringParameter extends Partial<CustomDocParams>, SchemaParameter {
   /** The content  passed in an a string */
   content: string;
 }
@@ -850,7 +850,7 @@ export const fromHTML = ({
   content,
   schema,
   doc: doc = getDocument(),
-}: FromStringParams): ProsemirrorNode => {
+}: FromStringParameter): ProsemirrorNode => {
   const element = doc.createElement('div');
   element.innerHTML = content.trim();
   return DOMParser.fromSchema(schema).parse(element);

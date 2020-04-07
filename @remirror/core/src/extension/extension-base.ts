@@ -19,6 +19,7 @@ import {
   object,
 } from '@remirror/core-helpers';
 import {
+  AnyFunction,
   CreateExtraAttributes,
   EditorSchema,
   ExtraAttributes,
@@ -72,20 +73,21 @@ type AnyExtension<Settings extends object = {}, Properties extends object = {}> 
 /**
  * Matches any of the three `ExtensionConstructor`s.
  */
-interface AnyExtensionConstructor<Settings extends object = {}, Properties extends object = {}> {
+interface AnyExtensionConstructor {
   /**
    * The name of the extension that will be created. Also available on the
    * instance as `name`.
    */
   readonly extensionName: string;
 
+  settingKeys: string[];
+  propertyKeys: string[];
+
   /**
    * Creates a new instance of the extension. Used when adding the extension to
    * the editor.
    */
-  of(
-    ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
-  ): AnyExtension<Settings, Properties>;
+  of: AnyFunction;
 }
 
 /**
@@ -304,6 +306,18 @@ abstract class Extension<
 > implements PropertiesShape<Properties> {
   /**
    * Not for public usage. This is purely for types to make it easier to infer
+   * the type of `Settings` on an extension instance.
+   */
+  public readonly ['~S']!: Settings & BaseExtensionSettings;
+
+  /**
+   * Not for public usage. This is purely for types to make it easier to infer
+   * the type of `Settings` on an extension instance.
+   */
+  public readonly ['~P']!: Properties;
+
+  /**
+   * Not for public usage. This is purely for types to make it easier to infer
    * the type of `Commands` on an extension instance.
    */
   public readonly ['~C']!: Commands;
@@ -350,7 +364,7 @@ abstract class Extension<
 
   /**
    * The parameter that was passed when creating the constructor for this instance.
-   * TODO [2020-04-06] - Consider renaming this.
+   * TODO [2020-05-01] - Consider renaming this.
    */
   get parameter(): InferFactoryParameter<
     Name,
@@ -850,6 +864,9 @@ interface PlainExtensionConstructor<
    */
   readonly extensionName: Name;
 
+  settingKeys: Array<keyof (Settings & BaseExtensionSettings)>;
+  propertyKeys: Array<keyof Properties>;
+
   /**
    * Create a new instance of the extension to be inserted into the editor.
    *
@@ -913,8 +930,8 @@ abstract class MarkExtension<
 
     this.#schema = this.getFactoryParameter().createMarkSchema({
       settings: this.settings,
-      createExtraAttributes: createExtraAttributesFactory(this as AnyMarkExtension),
-      getExtraAttributes: getExtraAttributesFactory(this as AnyMarkExtension),
+      createExtraAttributes: createExtraAttributesFactory(this as AnyExtension),
+      getExtraAttributes: getExtraAttributesFactory(this as AnyExtension),
     });
   }
 
@@ -981,6 +998,9 @@ interface MarkExtensionConstructor<
    */
   readonly extensionName: Name;
 
+  settingKeys: Array<keyof (Settings & BaseExtensionSettings)>;
+  propertyKeys: Array<keyof Properties>;
+
   /**
    * Create a new instance of the extension to be inserted into the editor.
    *
@@ -1039,8 +1059,8 @@ abstract class NodeExtension<
 
     this.#schema = this.getFactoryParameter().createNodeSchema({
       settings: this.settings,
-      createExtraAttributes: createExtraAttributesFactory(this as AnyNodeExtension),
-      getExtraAttributes: getExtraAttributesFactory(this as AnyNodeExtension),
+      createExtraAttributes: createExtraAttributesFactory(this as AnyExtension),
+      getExtraAttributes: getExtraAttributesFactory(this as AnyExtension),
     });
   }
 
@@ -1108,6 +1128,9 @@ interface NodeExtensionConstructor<
    * Get the name of the extensions created by this constructor.
    */
   readonly extensionName: Name;
+
+  settingKeys: Array<keyof (Settings & BaseExtensionSettings)>;
+  propertyKeys: Array<keyof Properties>;
 
   /**
    * Create a new instance of the extension to be inserted into the editor.

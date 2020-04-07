@@ -84,7 +84,7 @@ module.exports = {
 
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
     'unicorn/prevent-abbreviations': [
-      'error',
+      'off',
       {
         replacements: {
           doc: false,
@@ -123,11 +123,9 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
 
     'import/no-deprecated': 'warn',
-    'import/exports-last': 'warn',
     'import/max-dependencies': ['warn', { max: 10 }],
     'import/no-default-export': 'error',
     'import/no-mutable-exports': 'error',
-    // 'import/group-exports': 'error', // doesn't support export type
     'import/first': 'error',
     'import/no-duplicates': 'error',
     'import/no-cycle': 'error',

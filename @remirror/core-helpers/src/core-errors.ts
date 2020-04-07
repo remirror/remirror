@@ -27,11 +27,12 @@ if (__DEV__) {
       'Called a method event at the wrong time. Please make sure getter functions are only called with within the scope of the returned functions. They should not be called in the outer scope of your method.',
 
     RMR0010:
-      'The user requested an invalid extension from the preset. Please check the `createExtensions` return method is returning an extension with the requested constructor.',
+      'You requested an invalid extension from the preset. Please check the `createExtensions` return method is returning an extension with the requested constructor.',
     RMR0011:
       'Invalid value(s) passed into `Manager` constructor. Only `Presets` and `Extensions` are supported.',
     RMR0012:
       'The commands method which is passed into the `createCommands` function should only be called within the created command function otherwise it will not have access to the other commands.',
+    RMR0013: 'You requested an invalid extension from the manager.',
   };
 }
 

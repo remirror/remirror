@@ -74,4 +74,9 @@ export enum ErrorConstant {
    * not have access to the other commands.
    */
   COMMANDS_CALLED_IN_OUTER_SCOPE = 'RMR0012',
+
+  /**
+   * The user requested an invalid extension from the manager.
+   */
+  INVALID_MANAGER_EXTENSION = 'RMR0013',
 }

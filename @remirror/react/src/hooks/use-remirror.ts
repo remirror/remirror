@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { AnyExtension, invariant } from '@remirror/core';
+import { invariant, Manager } from '@remirror/core';
 
 import { RemirrorContext } from '../react-contexts';
 import { InjectedRemirrorProps } from '../react-types';
@@ -29,11 +29,11 @@ import { InjectedRemirrorProps } from '../react-types';
  * }
  * ```
  */
-export const useRemirror = <GExtension extends AnyExtension = any>(): InjectedRemirrorProps<
-  GExtension
+export const useRemirror = <ManagerType extends Manager = any>(): InjectedRemirrorProps<
+  ManagerType
 > => {
   const params = useContext(RemirrorContext);
-  invariant(params, 'There is no remirror context defined.');
+  invariant(params, { message: 'There is no remirror context defined.' });
 
   return params;
 };

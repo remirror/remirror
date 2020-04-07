@@ -213,7 +213,7 @@ export interface TransactionParameter<Schema extends EditorSchema = any> {
   tr: Transaction<Schema>;
 }
 
-export interface CallbackParams {
+export interface CallbackParameter {
   /**
    * A simple callback to run.
    */
@@ -264,7 +264,7 @@ export interface ResolvedPosParameter<Schema extends EditorSchema = any> {
   $pos: ResolvedPos<Schema>;
 }
 
-export interface TextParams {
+export interface TextParameter {
   /**
    * The text to insert or work with.
    */

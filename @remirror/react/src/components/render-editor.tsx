@@ -47,24 +47,24 @@ import { RemirrorThemeContext } from '@remirror/ui';
 import { defaultProps } from '../react-constants';
 import { defaultPositioner } from '../react-positioners';
 import {
-  BaseListenerParams as BaseListenerParameters,
-  CalculatePositionerParams as CalculatePositionerParameters,
-  EditorStateEventListenerParams as EditorStateEventListenerParameters,
+  BaseListenerParameters,
+  CalculatePositionerParams,
+  EditorStateEventListenerParams,
   FocusType,
-  GetPositionerPropsConfig as GetPositionerPropertiesConfig,
+  GetPositionerPropsConfig,
   GetPositionerReturn,
-  GetRootPropsConfig as GetRootPropertiesConfig,
-  InjectedRemirrorProps as InjectedRemirrorProperties,
-  ListenerParams as ListenerParameters,
+  GetRootPropsConfig,
+  InjectedRemirrorProps,
+  ListenerParams,
   PositionerMapValue,
-  PositionerProps as PositionerProperties,
-  PositionerRefFactoryParams as PositionerReferenceFactoryParameters,
-  RefKeyRootProps as ReferenceKeyRootProperties,
-  RemirrorEventListenerParams as RemirrorEventListenerParameters,
-  RemirrorProps as RemirrorProperties,
+  PositionerProps,
+  PositionerRefFactoryParams,
+  RefKeyRootProps,
+  RemirrorEventListenerParams,
+  RemirrorProps,
   RemirrorState,
-  RemirrorStateListenerParams as RemirrorStateListenerParameters,
-  UpdateStateParams as UpdateStateParameters,
+  RemirrorStateListenerParams,
+  UpdateStateParams,
 } from '../react-types';
 
 export class RenderEditor<GExtension extends AnyExtension = any> extends PureComponent<

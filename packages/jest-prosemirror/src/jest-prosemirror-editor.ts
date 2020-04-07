@@ -16,7 +16,7 @@ import {
   ProsemirrorCommandFunction,
   ProsemirrorNode,
   SelectionParameter,
-  TextParams,
+  TextParameter,
 } from '@remirror/core-types';
 import { findElementAtPosition, isElementDOMNode, isTextDOMNode } from '@remirror/core-utils';
 
@@ -61,7 +61,7 @@ export const pasteContent = <GSchema extends EditorSchema = any>({
 
 export interface InsertTextParams<GSchema extends EditorSchema = any>
   extends TestEditorViewParams<GSchema>,
-    TextParams {
+    TextParameter {
   /**
    * The start point of text insertion
    */

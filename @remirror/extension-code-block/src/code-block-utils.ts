@@ -24,7 +24,7 @@ import {
   ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   ProsemirrorNodeParameter,
-  TextParams,
+  TextParameter,
   uniqueArray,
 } from '@remirror/core';
 
@@ -34,7 +34,7 @@ import {
   FormattedContent,
 } from './code-block-types';
 
-interface ParsedRefractorNode extends TextParams {
+interface ParsedRefractorNode extends TextParameter {
   /**
    * The classes that will wrap the node
    */

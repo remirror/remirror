@@ -20,7 +20,7 @@ import {
   RemirrorContentType,
   SchemaFromExtension,
   SchemaParameter,
-  StringHandlerParams,
+  StringHandlerParameter,
   TextExtension,
 } from '@remirror/core';
 import {
@@ -176,7 +176,7 @@ interface Content {
 /**
  * Transform a markdown content string into a Prosemirror node within a codeBlock editor instance
  */
-const markdownStringHandler: StringHandlerParams['stringHandler'] = ({
+const markdownStringHandler: StringHandlerParameter['stringHandler'] = ({
   content: markdownContent,
   schema,
 }) => {
@@ -189,7 +189,7 @@ const markdownStringHandler: StringHandlerParams['stringHandler'] = ({
   );
 };
 
-const useDebounce = (fn: () => any, ms: number = 0, arguments_: any[] = []) => {
+const useDebounce = (fn: () => any, ms = 0, arguments_: any[] = []) => {
   useEffect(() => {
     const handle = setTimeout(fn.bind(null, arguments_), ms);
 

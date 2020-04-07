@@ -1,4 +1,4 @@
-import { AnyExtension, ExtensionsParameter } from '../extension';
+import { AnyExtension, ExtensionListParameter } from '../extension';
 import { AnyPreset, Preset } from '../preset';
 
 /**
@@ -11,9 +11,14 @@ export type ExtensionOrPreset<ExtensionUnion extends AnyExtension = any> =
   | Preset<ExtensionUnion, any, any>;
 
 /**
- * Get the extensions from any type with an extension property.
+ * Get the extensions from any type with an `extensions` property.
  */
-export type GetExtensionUnion<Type extends ExtensionsParameter> = Type['extensions'][number];
+export type GetExtensionUnion<Type extends ExtensionListParameter> = Type['extensions'][number];
+
+/**
+ * Get the extensions from any type with a `presets` property.
+ */
+export type GetPresetUnion<Type extends { presets: any[] }> = Type['presets'][number];
 
 /**
  * Pull the extension union from the `ExtensionOrPreset` union.
