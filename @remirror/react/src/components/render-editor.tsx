@@ -48,23 +48,23 @@ import { defaultProps } from '../react-constants';
 import { defaultPositioner } from '../react-positioners';
 import {
   BaseListenerParameters,
-  CalculatePositionerParams,
-  EditorStateEventListenerParams,
+  CalculatePositionerParameter,
+  EditorStateEventListenerParameter,
   FocusType,
   GetPositionerPropsConfig,
   GetPositionerReturn,
   GetRootPropsConfig,
   InjectedRemirrorProps,
-  ListenerParams,
+  ListenerParameter,
   PositionerMapValue,
   PositionerProps,
-  PositionerRefFactoryParams,
+  PositionerRefFactoryParameter,
   RefKeyRootProps,
-  RemirrorEventListenerParams,
+  RemirrorEventListenerParameter,
   RemirrorProps,
   RemirrorState,
-  RemirrorStateListenerParams,
-  UpdateStateParams,
+  RemirrorStateListenerParameter,
+  UpdateStateParameter,
 } from '../react-types';
 
 export class RenderEditor<GExtension extends AnyExtension = any> extends PureComponent<
@@ -359,7 +359,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
   private readonly positionerRefFactory = ({
     positionerId,
     position,
-  }: PositionerRefFactoryParams): Ref<HTMLElement> => (element) => {
+  }: PositionerRefFactoryParameter): Ref<HTMLElement> => (element) => {
     if (!element) {
       return;
     }
@@ -380,7 +380,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     hasChanged,
     isActive,
     positionerId,
-  }: CalculatePositionerParams<GExtension>): PositionerProps {
+  }: CalculatePositionerParameter<GExtension>): PositionerProps {
     const positionerMapItem = this.positionerMap.get(positionerId);
     let positionerProperties = { isActive: false, ...initialPosition };
 
@@ -420,7 +420,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
   private readonly getAttributes = (ssr = false) => {
     const { attributes } = this.props;
     const propertyAttributes = isFunction(attributes)
-      ? attributes(this.eventListenerParams())
+      ? attributes(this.eventListenerParameter())
       : attributes;
 
     const managerAttributes = this.manager.attributes;
@@ -479,7 +479,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     triggerOnChange,
     onUpdate,
     tr,
-  }: UpdateStateParams<SchemaFromExtension<GExtension>>) => (updatedState = state) => {
+  }: UpdateStateParameter<SchemaFromExtension<GExtension>>) => (updatedState = state) => {
     const { onChange } = this.props;
 
     // No need to continue if triggerOnChange is `false`
@@ -492,7 +492,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     }
 
     if (onChange) {
-      onChange(this.eventListenerParams({ state: updatedState, tr }));
+      onChange(this.eventListenerParameter({ state: updatedState, tr }));
     }
   };
 
@@ -505,7 +505,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     triggerOnChange = true,
     onUpdate,
     tr,
-  }: UpdateStateParams<SchemaFromExtension<GExtension>>) {
+  }: UpdateStateParameter<SchemaFromExtension<GExtension>>) {
     const { onStateChange } = this.props;
 
     const updateHandler = this.createUpdateStateHandler({ state, triggerOnChange, onUpdate });
@@ -513,7 +513,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     // Check if this is a controlled component.
     if (onStateChange) {
       onStateChange(
-        this.editorStateEventListenerParams({
+        this.editorStateEventListenerParameter({
           oldState: this.state.editor.newState,
           newState: state,
           tr,
@@ -565,12 +565,12 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     }
 
     if (onFirstRender) {
-      onFirstRender(this.eventListenerParams());
+      onFirstRender(this.eventListenerParameter());
     }
 
     // Handle setting the state when this is a controlled component
     if (onStateChange) {
-      onStateChange(this.editorStateEventListenerParams());
+      onStateChange(this.editorStateEventListenerParameter());
     }
 
     this.view.dom.addEventListener('blur', this.onBlur);
@@ -657,7 +657,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    */
   private readonly onBlur = (event: Event) => {
     if (this.props.onBlur) {
-      this.props.onBlur(this.eventListenerParams(), event);
+      this.props.onBlur(this.eventListenerParameter(), event);
     }
   };
 
@@ -666,7 +666,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    */
   private readonly onFocus = (event: Event) => {
     if (this.props.onFocus) {
-      this.props.onFocus(this.eventListenerParams(), event);
+      this.props.onFocus(this.eventListenerParameter(), event);
     }
   };
 
@@ -694,10 +694,10 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
   /**
    * The params used in the event listeners and the state listener
    */
-  private baseListenerParams({
+  private baseListenerParameter({
     state,
     tr,
-  }: ListenerParams<GExtension>): BaseListenerParams<GExtension> {
+  }: ListenerParameter<GExtension>): BaseListenerParameter<GExtension> {
     return {
       tr,
       internalUpdate: !tr,
@@ -713,11 +713,11 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
    * Creates the parameters passed into all event listener handlers.
    * e.g. `onChange`
    */
-  private eventListenerParams(
-    { state, tr }: ListenerParams = object(),
-  ): RemirrorEventListenerParams<GExtension> {
+  private eventListenerParameter(
+    { state, tr }: ListenerParameter = object(),
+  ): RemirrorEventListenerParameter<GExtension> {
     return {
-      ...this.baseListenerParams({ tr }),
+      ...this.baseListenerParameter({ tr }),
       state: state ?? this.state.editor.newState,
     };
   }
@@ -725,11 +725,11 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
   /**
    * The params passed into onStateChange (within controlled components)
    */
-  private editorStateEventListenerParams(
-    { newState, oldState, tr }: EditorStateEventListenerParams<GExtension> = object(),
-  ): RemirrorStateListenerParams<GExtension> {
+  private editorStateEventListenerParameter(
+    { newState, oldState, tr }: EditorStateEventListenerParameter<GExtension> = object(),
+  ): RemirrorStateListenerParameter<GExtension> {
     return {
-      ...this.baseListenerParams({ state: newState, tr }),
+      ...this.baseListenerParameter({ state: newState, tr }),
       newState: newState ?? this.state.editor.newState,
       oldState: oldState ?? this.state.editor.oldState,
       createStateFromContent: this.createStateFromContent,
@@ -785,7 +785,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
     requestAnimationFrame(() => this.view.focus());
   };
 
-  get renderParams(): InjectedRemirrorProps<GExtension> {
+  get renderParameter(): InjectedRemirrorProps<GExtension> {
     return {
       /* Properties */
       uid: this.uid,
@@ -898,7 +898,7 @@ export class RenderEditor<GExtension extends AnyExtension = any> extends PureCom
 
   private renderReactElement() {
     const element: JSX.Element | null = this.props.children({
-      ...this.renderParams,
+      ...this.renderParameter,
     });
 
     const { children, ...properties } = getElementProps(element);

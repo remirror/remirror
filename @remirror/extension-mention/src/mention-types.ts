@@ -1,8 +1,8 @@
-import { FromToEndParams, Suggestion, SuggestReplacementType } from 'prosemirror-suggest';
+import { FromToEndParameter, Suggestion, SuggestReplacementType } from 'prosemirror-suggest';
 
 import { MarkExtensionConfig, ProsemirrorAttributes } from '@remirror/core';
 
-export interface OptionalMentionExtensionParams {
+export interface OptionalMentionExtensionParameter {
   /**
    * The text to append to the replacement.
    *
@@ -28,7 +28,7 @@ export interface OptionalMentionExtensionParams {
   /**
    * The range of the requested selection.
    */
-  range?: FromToEndParams;
+  range?: FromToEndParameter;
 }
 
 /**
@@ -36,7 +36,7 @@ export interface OptionalMentionExtensionParams {
  * ID and label are plucked and used while attributes like href and role can be assigned as desired.
  */
 export type MentionExtensionAttributes = ProsemirrorAttributes<
-  OptionalMentionExtensionParams & {
+  OptionalMentionExtensionParameter & {
     /**
      * A unique identifier for the suggestions node
      */

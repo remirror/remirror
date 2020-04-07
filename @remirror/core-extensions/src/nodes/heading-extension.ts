@@ -2,10 +2,10 @@ import { setBlockType } from 'prosemirror-commands';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 import {
-  CommandNodeTypeParams,
+  CommandNodeTypeParameter,
   convertCommand,
   KeyBindings,
-  ManagerNodeTypeParams,
+  ManagerNodeTypeParameter,
   NodeExtension,
   NodeExtensionConfig,
   NodeExtensionSpec,
@@ -69,7 +69,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
     };
   }
 
-  public commands({ type, schema }: CommandNodeTypeParams) {
+  public commands({ type, schema }: CommandNodeTypeParameter) {
     return {
       /**
        * Toggle the heading for the current block.
@@ -79,7 +79,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
     };
   }
 
-  public keys({ type }: ManagerNodeTypeParams): KeyBindings {
+  public keys({ type }: ManagerNodeTypeParameter): KeyBindings {
     const keys: KeyBindings = object();
 
     this.options.levels.forEach((level) => {
@@ -88,7 +88,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
     return keys;
   }
 
-  public inputRules({ type }: ManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParameter) {
     return this.options.levels.map((level) =>
       textblockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), type, () => ({ level })),
     );

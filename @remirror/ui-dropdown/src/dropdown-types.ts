@@ -66,7 +66,7 @@ export interface DropdownProps {
   /**
    * A render prop for the label. Allows setting a custom label.
    */
-  renderLabel?(params: RenderLabelParams): ReactNode;
+  renderLabel?(params: RenderLabelParameter): ReactNode;
 
   /**
    * Whether to show the selected item label within the button.
@@ -134,7 +134,7 @@ export interface DropdownProps {
   initialIsOpen?: boolean;
 }
 
-export interface RenderLabelParams {
+export interface RenderLabelParameter {
   getLabelProps: MultishiftPropGetters<DropdownItem>['getLabelProps'];
   label?: string;
   selectedItems: DropdownItem[];

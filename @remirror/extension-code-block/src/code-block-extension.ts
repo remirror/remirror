@@ -3,7 +3,7 @@ import { TextSelection } from 'prosemirror-state';
 import refractor from 'refractor/core';
 
 import {
-  CommandNodeTypeParams,
+  CommandNodeTypeParameter,
   findNodeAtSelection,
   findParentNodeOfType,
   GetAttributes,
@@ -12,7 +12,7 @@ import {
   isNodeActive,
   isTextSelection,
   KeyBindings,
-  ManagerNodeTypeParams,
+  ManagerNodeTypeParameter,
   mod,
   nodeEqualsType,
   NodeExtension,
@@ -119,7 +119,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
     return;
   }
 
-  public commands({ type, schema }: CommandNodeTypeParams) {
+  public commands({ type, schema }: CommandNodeTypeParameter) {
     const {
       defaultLanguage,
       supportedLanguages,
@@ -191,7 +191,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
   /**
    * Create an input rule that listens converts the code fence into a code block with space.
    */
-  public inputRules({ type }: ManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParameter) {
     const regexp = /^```([A-Za-z]*)? $/;
     const getAttributes_: GetAttributes = (match) => {
       const language = getLanguage({
@@ -212,7 +212,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
     ];
   }
 
-  public keys({ type, getActions }: ManagerNodeTypeParams): KeyBindings {
+  public keys({ type, getActions }: ManagerNodeTypeParameter): KeyBindings {
     const { keyboardShortcut, toggleType } = this.options;
 
     return {
@@ -333,7 +333,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
     };
   }
 
-  public plugin(parameters: ManagerNodeTypeParams): Plugin {
+  public plugin(parameters: ManagerNodeTypeParameter): Plugin {
     return createCodeBlockPlugin({ extension: this, ...parameters });
   }
 }

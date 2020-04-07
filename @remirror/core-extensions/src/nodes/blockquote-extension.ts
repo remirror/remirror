@@ -1,10 +1,10 @@
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
 import {
-  CommandNodeTypeParams,
+  CommandNodeTypeParameter,
   convertCommand,
   EDITOR_CLASS_SELECTOR,
-  ManagerNodeTypeParams,
+  ManagerNodeTypeParameter,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
@@ -29,7 +29,7 @@ export class BlockquoteExtension extends NodeExtension {
     };
   }
 
-  public commands({ type }: CommandNodeTypeParams) {
+  public commands({ type }: CommandNodeTypeParameter) {
     return {
       /**
        * Toggle the blockquote at the current selection.
@@ -59,13 +59,13 @@ export class BlockquoteExtension extends NodeExtension {
     `;
   }
 
-  public keys({ type }: ManagerNodeTypeParams): KeyBindings {
+  public keys({ type }: ManagerNodeTypeParameter): KeyBindings {
     return {
       'Ctrl->': convertCommand(toggleWrap(type)),
     };
   }
 
-  public inputRules({ type }: ManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParameter) {
     return [wrappingInputRule(/^\s*>\s$/, type)];
   }
 }

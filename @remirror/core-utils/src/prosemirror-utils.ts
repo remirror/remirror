@@ -35,12 +35,12 @@ import {
   isTextDOMNode,
 } from './dom-utils';
 
-interface NodeEqualsTypeParams extends NodeTypesParameter, OptionalProsemirrorNodeParameter {}
+interface NodeEqualsTypeParameter extends NodeTypesParameter, OptionalProsemirrorNodeParameter {}
 
 /**
  * Checks if the type a given `node` equals to a given `nodeType`.
  */
-export const nodeEqualsType = ({ types, node }: NodeEqualsTypeParams) => {
+export const nodeEqualsType = ({ types, node }: NodeEqualsTypeParameter) => {
   return node ? (Array.isArray(types) && types.includes(node.type)) || node.type === types : false;
 };
 
@@ -55,7 +55,7 @@ export const cloneTransaction = (tr: Transaction): Transaction => {
   return Object.assign(Object.create(tr), tr).setTime(Date.now());
 };
 
-interface RemoveNodeAtPositionParams extends TransactionParameter, PosParameter {}
+interface RemoveNodeAtPositionParameter extends TransactionParameter, PosParameter {}
 
 /**
  * Returns a `delete` transaction that removes a node at a given position with
@@ -66,7 +66,7 @@ interface RemoveNodeAtPositionParams extends TransactionParameter, PosParameter 
  *
  * @public
  */
-export const removeNodeAtPosition = ({ pos, tr }: RemoveNodeAtPositionParams) => {
+export const removeNodeAtPosition = ({ pos, tr }: RemoveNodeAtPositionParameter) => {
   const node = tr.doc.nodeAt(pos);
 
   if (!node) {
@@ -123,7 +123,7 @@ export const findElementAtPosition = (position: number, view: EditorView): HTMLE
 export const findParentNode = ({
   predicate,
   selection,
-}: FindParentNodeParams): FindProsemirrorNodeResult | undefined => {
+}: FindParentNodeParameter): FindProsemirrorNodeResult | undefined => {
   const { $from } = selection;
   for (let depth = $from.depth; depth > 0; depth--) {
     const node = $from.node(depth);
@@ -199,7 +199,7 @@ export const findNodeAtEndOfDoc = (doc: ProsemirrorNode) =>
 export const findNodeAtStartOfDoc = (doc: ProsemirrorNode) =>
   findNodeAtPosition(PMSelection.atStart(doc).$from);
 
-interface FindParentNodeOfTypeParams extends NodeTypesParameter, SelectionParameter {}
+interface FindParentNodeOfTypeParameter extends NodeTypesParameter, SelectionParameter {}
 
 /**
  *  Iterates over parent nodes, returning closest node of a given `nodeType`.
@@ -213,7 +213,7 @@ interface FindParentNodeOfTypeParams extends NodeTypesParameter, SelectionParame
 export const findParentNodeOfType = ({
   types,
   selection,
-}: FindParentNodeOfTypeParams): FindProsemirrorNodeResult | undefined => {
+}: FindParentNodeOfTypeParameter): FindProsemirrorNodeResult | undefined => {
   return findParentNode({ predicate: (node) => nodeEqualsType({ types, node }), selection });
 };
 
@@ -279,7 +279,7 @@ export const removeNodeBefore = (tr: Transaction): Transaction => {
   return tr;
 };
 
-interface FindSelectedNodeOfTypeParams<
+interface FindSelectedNodeOfTypeParameter<
   GSchema extends EditorSchema = any,
   GSelection extends Selection<GSchema> = Selection<GSchema>
 > extends NodeTypesParameter<GSchema>, SelectionParameter<GSchema, GSelection> {}
@@ -311,7 +311,7 @@ export const findSelectedNodeOfType = <
 >({
   types,
   selection,
-}: FindSelectedNodeOfTypeParams<GSchema, GSelection>):
+}: FindSelectedNodeOfTypeParameter<GSchema, GSelection>):
   | FindSelectedNodeOfType<GSchema>
   | undefined => {
   if (isNodeSelection(selection)) {
@@ -352,7 +352,7 @@ export interface FindProsemirrorNodeResult<GSchema extends EditorSchema = any>
   depth: number;
 }
 
-interface FindParentNodeParams extends SelectionParameter, PredicateParameter<ProsemirrorNode> {}
+interface FindParentNodeParameter extends SelectionParameter, PredicateParameter<ProsemirrorNode> {}
 
 /**
  * Returns the position of the node after the current position, selection or
@@ -430,13 +430,13 @@ export const selectionEmpty = (value: Selection | EditorState) =>
  * Check to see if a transaction has changed either the document or the current
  * selection.
  *
- * @param params - the TransactionChangeParams object
+ * @param params - the TransactionChangeParameter object
  */
 export const transactionChanged = (tr: Transaction) => {
   return tr.docChanged || tr.selectionSet;
 };
 
-interface IsNodeActiveParams
+interface IsNodeActiveParameter
   extends EditorStateParameter,
     NodeTypeParameter,
     Partial<AttributesParameter> {}
@@ -455,7 +455,7 @@ export const isNodeActive = ({
   state,
   type,
   attrs: attributes = object<ProsemirrorAttributes>(),
-}: IsNodeActiveParams) => {
+}: IsNodeActiveParameter) => {
   const { selection } = state;
   const predicate = (node: ProsemirrorNode) => node.type === type;
   const parent =
@@ -501,10 +501,10 @@ export const schemaToJSON = <GNodes extends string = string, GMarks extends stri
  */
 export const convertCommand = <
   GSchema extends EditorSchema = any,
-  GExtraParams extends object = {}
+  GExtraParameter extends object = {}
 >(
   commandFunction: ProsemirrorCommandFunction<GSchema>,
-): CommandFunction<GSchema, GExtraParams> => ({ state, dispatch, view }) =>
+): CommandFunction<GSchema, GExtraParameter> => ({ state, dispatch, view }) =>
   commandFunction(state, dispatch, view);
 
 /**
@@ -512,11 +512,14 @@ export const convertCommand = <
  * multiple commands to be chained together and runs until one of them returns
  * true.
  */
-export const chainCommands = <GSchema extends EditorSchema = any, GExtraParams extends object = {}>(
-  ...commands: Array<CommandFunction<GSchema, GExtraParams>>
-): CommandFunction<GSchema, GExtraParams> => ({ state, dispatch, view, ...rest }) => {
+export const chainCommands = <
+  GSchema extends EditorSchema = any,
+  GExtraParameter extends object = {}
+>(
+  ...commands: Array<CommandFunction<GSchema, GExtraParameter>>
+): CommandFunction<GSchema, GExtraParameter> => ({ state, dispatch, view, ...rest }) => {
   for (const element of commands) {
-    if (element({ state, dispatch, view, ...(rest as GExtraParams) })) {
+    if (element({ state, dispatch, view, ...(rest as GExtraParameter) })) {
       return true;
     }
   }

@@ -36,12 +36,12 @@ export interface NodeViewComponentProps<
  */
 export type GetPosition = (() => number) | boolean;
 
-export interface ReactNodeViewParams<
+export interface ReactNodeViewParameter<
   GOptions extends BaseExtensionSettings = BaseExtensionSettings,
   GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
 >
   extends EditorViewParameter,
-    ComponentParams<GOptions, GAttributes>,
+    ComponentParameter<GOptions, GAttributes>,
     NodeWithAttributesParameter<GAttributes>,
     BaseExtensionSettingsParameter<GOptions> {
   /**
@@ -56,15 +56,15 @@ export interface ReactNodeViewParams<
   portalContainer: PortalContainer;
 }
 
-export interface CreateNodeViewParams<
+export interface CreateNodeViewParameter<
   GOptions extends BaseExtensionSettings = BaseExtensionSettings,
   GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
 >
-  extends Pick<ReactNodeViewParams, 'portalContainer'>,
-    ComponentParams<GOptions, GAttributes>,
+  extends Pick<ReactNodeViewParameter, 'portalContainer'>,
+    ComponentParameter<GOptions, GAttributes>,
     BaseExtensionSettingsParameter<GOptions> {}
 
-export interface ComponentParams<
+export interface ComponentParameter<
   GOptions extends BaseExtensionSettings = BaseExtensionSettings,
   GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
 > {

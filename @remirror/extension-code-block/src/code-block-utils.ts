@@ -67,7 +67,7 @@ function parseRefractorNodes(
   });
 }
 
-interface CreateDecorationsParams extends Pick<CodeBlockExtensionSettings, 'defaultLanguage'> {
+interface CreateDecorationsParameter extends Pick<CodeBlockExtensionSettings, 'defaultLanguage'> {
   /**
    * The list of codeBlocks and their positions which we would like to update.
    */
@@ -112,7 +112,7 @@ const getPositionedRefractorNodes = ({ node, pos }: NodeWithPosition) => {
 /**
  * Creates a decoration set for the provided blocks
  */
-export const createDecorations = ({ blocks, skipLast }: CreateDecorationsParams) => {
+export const createDecorations = ({ blocks, skipLast }: CreateDecorationsParameter) => {
   const decorations: Decoration[] = [];
 
   blocks.forEach((block) => {
@@ -136,12 +136,13 @@ export const createDecorations = ({ blocks, skipLast }: CreateDecorationsParams)
   return decorations;
 };
 
-interface PosWithinRangeParams extends PosParameter, FromToParameter {}
+interface PosWithinRangeParameter extends PosParameter, FromToParameter {}
 
 /**
  * Check if the position is within the range.
  */
-export const posWithinRange = ({ from, to, pos }: PosWithinRangeParams) => from <= pos && to >= pos;
+export const posWithinRange = ({ from, to, pos }: PosWithinRangeParameter) =>
+  from <= pos && to >= pos;
 
 /**
  * Check whether the length of an array has changed
@@ -240,7 +241,7 @@ export const isSupportedLanguage = (language: string, supportedLanguages: Refrac
   return getLanguageNamesAndAliases(supportedLanguages).includes(language);
 };
 
-interface GetLanguageParams {
+interface GetLanguageParameter {
   /**
    * The language input from the user;
    */
@@ -260,10 +261,10 @@ interface GetLanguageParams {
 /**
  * Get the language from user input.
  */
-export const getLanguage = ({ language, supportedLanguages, fallback }: GetLanguageParams) =>
+export const getLanguage = ({ language, supportedLanguages, fallback }: GetLanguageParameter) =>
   !isSupportedLanguage(language, supportedLanguages) ? fallback : language;
 
-interface FormatCodeBlockFactoryParams
+interface FormatCodeBlockFactoryParameter
   extends NodeTypeParameter,
     Required<
       Pick<CodeBlockExtensionSettings, 'formatter' | 'supportedLanguages' | 'defaultLanguage'>
@@ -277,7 +278,7 @@ export const formatCodeBlockFactory = ({
   formatter,
   supportedLanguages,
   defaultLanguage: fallback,
-}: FormatCodeBlockFactoryParams) => (
+}: FormatCodeBlockFactoryParameter) => (
   { pos }: Partial<PosParameter> = object(),
 ): ProsemirrorCommandFunction => (state, dispatch) => {
   const { tr, selection } = state;

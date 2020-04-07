@@ -2,14 +2,14 @@ import { Plugin, TextSelection } from 'prosemirror-state';
 
 import {
   Cast,
-  CommandMarkTypeParams,
+  CommandMarkTypeParameter,
   getMarkRange,
   getMatchString,
   getSelectedWord,
   isMarkActive,
   isTextSelection,
   KeyBindings,
-  ManagerMarkTypeParams,
+  ManagerMarkTypeParameter,
   MarkExtension,
   MarkExtensionConfig,
   MarkExtensionSpec,
@@ -95,7 +95,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public commands({ type }: CommandMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParameter) {
     return {
       /**
        * A command to update the selected link
@@ -126,7 +126,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public pasteRules({ type }: ManagerMarkTypeParams) {
+  public pasteRules({ type }: ManagerMarkTypeParameter) {
     return [
       markPasteRule({
         regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/g,
@@ -136,7 +136,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     ];
   }
 
-  public plugin({ type }: ManagerMarkTypeParams) {
+  public plugin({ type }: ManagerMarkTypeParameter) {
     return new Plugin({
       props: {
         handleClick(view, pos) {

@@ -1,7 +1,7 @@
 import { EditorView, randomInt, throttle } from '@remirror/core';
 
 import {
-  EpicModePluginStateParams,
+  EpicModePluginStateParameter,
   Particle,
   ParticleEffect,
   ParticleRange,
@@ -46,7 +46,7 @@ export class EpicModePluginState {
     particleRange,
     getCanvasContainer,
     shake,
-  }: EpicModePluginStateParams) {
+  }: EpicModePluginStateParameter) {
     this.particleEffect = particleEffect;
     this.particleRange = particleRange;
     this.shakeActive = shake;

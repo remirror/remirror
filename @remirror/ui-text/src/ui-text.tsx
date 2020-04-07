@@ -24,13 +24,13 @@ interface InjectedTextProps {
   css: Interpolation;
 }
 
-interface RenderPropsParams {
+interface RenderPropsParameter {
   props: InjectedTextProps;
   mergeProps: MergeProp;
 }
 
 export interface BaseTextProps {
-  render: (params: RenderPropsParams) => ReactElement;
+  render: (params: RenderPropsParameter) => ReactElement;
   children?: ReactNode;
   variant?: KeyOfThemeVariant<'remirror:text'>;
   className?: string;

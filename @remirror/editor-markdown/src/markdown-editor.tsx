@@ -47,7 +47,7 @@ import { ImageExtension } from '@remirror/extension-image';
 import {
   RemirrorProvider,
   RemirrorProviderProps,
-  RemirrorStateListenerParams,
+  RemirrorStateListenerParameter,
 } from '@remirror/react';
 
 import { fromMarkdown } from './from-markdown';
@@ -120,7 +120,7 @@ const WysiwygEditor: FC<InternalEditorProps> = ({ children, ...properties }) => 
   );
 };
 
-interface CreateInitialContentParams extends SchemaParameter {
+interface CreateInitialContentParameter extends SchemaParameter {
   /** The content to render */
   content: RemirrorContentType;
 }
@@ -132,7 +132,7 @@ interface CreateInitialContentParams extends SchemaParameter {
  * - prosemirror node
  * - object node (json)
  */
-const createInitialContent = ({ content, schema }: CreateInitialContentParams): Content => {
+const createInitialContent = ({ content, schema }: CreateInitialContentParameter): Content => {
   if (isString(content)) {
     return {
       markdown: content,
@@ -219,7 +219,7 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
   });
   const [markdownEditorState, setMarkdownEditorState] = useState<EditorState<MarkdownSchema>>();
   const [markdownParameters, setMarkdownParameters] = useState<
-    Pick<RemirrorStateListenerParams<MarkdownExtensions>, 'getText' | 'tr'>
+    Pick<RemirrorStateListenerParameter<MarkdownExtensions>, 'getText' | 'tr'>
   >({ getText: () => initialContent.markdown });
   const [wysiwygEditorState, setWysiwygEditorState] = useState<EditorState<WysiwygSchema>>();
 
@@ -260,7 +260,7 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
     newState,
     getText,
     tr,
-  }: RemirrorStateListenerParams<MarkdownExtensions>) => {
+  }: RemirrorStateListenerParameter<MarkdownExtensions>) => {
     setMarkdownParameters({ getText, tr });
     setMarkdownEditorState(newState);
   };
@@ -268,7 +268,7 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
   const onWysiwygStateChange = ({
     newState,
     tr,
-  }: RemirrorStateListenerParams<WysiwygExtensions>) => {
+  }: RemirrorStateListenerParameter<WysiwygExtensions>) => {
     setWysiwygEditorState(newState);
 
     if (tr?.docChanged) {

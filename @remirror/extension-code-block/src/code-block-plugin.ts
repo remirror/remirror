@@ -7,7 +7,7 @@ import {
   CompareStateParameter,
   EditorState,
   findChildrenByNode,
-  ManagerNodeTypeParams,
+  ManagerNodeTypeParameter,
   nodeEqualsType,
   NodeExtension,
   NodeType,
@@ -54,7 +54,7 @@ export class CodeBlockState {
   /**
    * Recreate all the decorations again for all the provided blocks.
    */
-  private refreshDecorationSet({ blocks, node }: RefreshDecorationSetParams) {
+  private refreshDecorationSet({ blocks, node }: RefreshDecorationSetParameter) {
     const decorations = createDecorations({ blocks, skipLast: this.deleted });
     this.decorationSet = DecorationSet.create(node, decorations);
     this.blocks = blocks;
@@ -113,7 +113,7 @@ export class CodeBlockState {
   /**
    * Apply the state and update decorations when something has changed.
    */
-  public apply({ tr, oldState, newState }: ApplyParams): this {
+  public apply({ tr, oldState, newState }: ApplyParameter): this {
     if (!tr.docChanged) {
       return this;
     }
@@ -146,7 +146,7 @@ export class CodeBlockState {
   private updateDecorationSet({
     nodeInfo: { from, to, node, pos },
     tr,
-  }: UpdateDecorationSetParams) {
+  }: UpdateDecorationSetParameter) {
     const decorationSet = this.decorationSet.remove(this.decorationSet.find(from, to));
     this.decorationSet = decorationSet.add(
       tr.doc,
@@ -154,7 +154,7 @@ export class CodeBlockState {
     );
   }
 
-  private manageDecorationSet({ previous, current, tr }: ManageDecorationSetParams) {
+  private manageDecorationSet({ previous, current, tr }: ManageDecorationSetParameter) {
     // Update the previous first although this could be buggy when deleting (possibly)
     if (
       nodeEqualsType({ types: this.type, node: previous.node }) &&
@@ -174,31 +174,31 @@ export class CodeBlockState {
   }
 }
 
-interface ApplyParams extends TransactionParameter, CompareStateParameter {}
-interface RefreshDecorationSetParams extends ProsemirrorNodeParameter {
+interface ApplyParameter extends TransactionParameter, CompareStateParameter {}
+interface RefreshDecorationSetParameter extends ProsemirrorNodeParameter {
   /**
    * The positioned nodes
    */
   blocks: NodeWithPosition[];
 }
 
-interface ManageDecorationSetParams extends TransactionParameter {
+interface ManageDecorationSetParameter extends TransactionParameter {
   previous: NodeInformation;
   current: NodeInformation;
 }
 
-interface UpdateDecorationSetParams extends TransactionParameter {
+interface UpdateDecorationSetParameter extends TransactionParameter {
   nodeInfo: NodeInformation;
 }
 
-interface CreateCodeBlockPluginParams extends ManagerNodeTypeParams {
+interface CreateCodeBlockPluginParameter extends ManagerNodeTypeParameter {
   extension: NodeExtension<CodeBlockExtensionSettings>;
 }
 
 /**
  * Create a codeBlock plugin to manage the internal prosemirror functionality
  */
-export default function createCodeBlockPlugin({ extension, type }: CreateCodeBlockPluginParams) {
+export default function createCodeBlockPlugin({ extension, type }: CreateCodeBlockPluginParameter) {
   const pluginState = new CodeBlockState(type);
   const handler = () => {
     pluginState.setDeleted(true);

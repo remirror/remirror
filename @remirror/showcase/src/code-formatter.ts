@@ -22,7 +22,7 @@ const options: Partial<CursorOptions> = {
   semi: true,
 };
 
-interface FormatCodeParams {
+interface FormatCodeParameter {
   /**
    * The initial code.
    */
@@ -42,7 +42,7 @@ interface FormatCodeParams {
 /**
  * Wrapper around the prettier formatWithCursor.
  */
-const formatCode = ({ parser, source, cursorOffset }: FormatCodeParams) => {
+const formatCode = ({ parser, source, cursorOffset }: FormatCodeParameter) => {
   return formatWithCursor(source, {
     ...options,
     cursorOffset,

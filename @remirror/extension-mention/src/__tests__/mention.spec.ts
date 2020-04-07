@@ -1,6 +1,6 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
-import { SuggestCommandParams } from 'prosemirror-suggest';
+import { SuggestCommandParameter } from 'prosemirror-suggest';
 
 import { fromHTML, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@remirror/test-fixtures';
@@ -109,7 +109,7 @@ describe('plugin', () => {
 
   const mocks = {
     onChange: jest.fn(),
-    onExit: jest.fn(({ command }: SuggestCommandParams<MentionExtensionSuggestCommand>) => {
+    onExit: jest.fn(({ command }: SuggestCommandParameter<MentionExtensionSuggestCommand>) => {
       command({ appendText: '' });
     }),
   };

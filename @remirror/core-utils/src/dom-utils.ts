@@ -154,7 +154,7 @@ export const isNodeSelection = <GSchema extends EditorSchema = any>(
   value: unknown,
 ): value is NodeSelection<GSchema> => isObject(value) && value instanceof NodeSelection;
 
-interface IsMarkActiveParams
+interface IsMarkActiveParameter
   extends MarkTypeParameter,
     EditorStateParameter,
     Partial<FromToParameter> {}
@@ -171,7 +171,7 @@ interface IsMarkActiveParams
  *
  * @public
  */
-export const isMarkActive = ({ state, type, from, to }: IsMarkActiveParams) => {
+export const isMarkActive = ({ state, type, from, to }: IsMarkActiveParameter) => {
   const { selection, doc, storedMarks } = state;
   const { $from, empty } = selection;
 
@@ -516,9 +516,9 @@ export const isTextDOMNode = (domNode: unknown): domNode is Text => {
   return isDOMNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
 };
 
-interface GetOffsetParentParams extends EditorViewParameter, ElementParameter {}
+interface GetOffsetParentParameter extends EditorViewParameter, ElementParameter {}
 
-export const getOffsetParent = ({ view, element }: GetOffsetParentParams): HTMLElement =>
+export const getOffsetParent = ({ view, element }: GetOffsetParentParameter): HTMLElement =>
   isNullOrUndefined(element)
     ? ((view.dom as HTMLElement).offsetParent as HTMLElement)
     : (element.offsetParent as HTMLElement);
@@ -531,7 +531,10 @@ export const getOffsetParent = ({ view, element }: GetOffsetParentParams): HTMLE
 export const getLineHeight = ({ element }: ElementParameter) => PositionParameter;
 Number.parseFloat(window.getComputedStyle(element, undefined).lineHeight || '');
 
-interface AbsoluteCoordinatesParams extends EditorViewParameter, ElementParameter, PositionParams {
+interface AbsoluteCoordinatesParameter
+  extends EditorViewParameter,
+    ElementParameter,
+    PositionParameter {
   /**
    * The height offset of the parent
    */
@@ -554,14 +557,14 @@ interface AbsoluteCoordinatesParams extends EditorViewParameter, ElementParamete
  * |               | [FloatingToolbar]               |  |
  * ```
  *
- * @param params - see {@link AbsoluteCoordinatesParams}.
+ * @param params - see {@link AbsoluteCoordinatesParameter}.
  */
 export const absoluteCoordinates = ({
   view,
   element,
   position,
   cursorHeight = getLineHeight({ element }),
-}: AbsoluteCoordinatesParams) => {
+}: AbsoluteCoordinatesParameter) => {
   const offsetParent = getOffsetParent({ view, element });
   const box = offsetParent.getBoundingClientRect();
 
@@ -710,9 +713,9 @@ export const isObjectNode = (value: unknown): value is ObjectNode =>
   (value as PlainObject).type === 'doc' &&
   Array.isArray((value as PlainObject).content);
 
-export interface CreateDocumentNodeParams
+export interface CreateDocumentNodeParameter
   extends SchemaParameter,
-    Partial<CustomDocParams>,
+    Partial<CustomDocParameter>,
     StringHandlerParameter {
   /**
    * The content to render
@@ -759,7 +762,7 @@ export const createDocumentNode = ({
   doc,
   stringHandler,
   fallback = EMPTY_PARAGRAPH_NODE,
-}: CreateDocumentNodeParams): ProsemirrorNode => {
+}: CreateDocumentNodeParameter): ProsemirrorNode => {
   if (isProsemirrorNode(content)) {
     return content;
   }
@@ -798,7 +801,7 @@ export const getDocument = (forceEnvironment?: RenderEnvironment) => {
   return shouldUseDOMEnvironment(forceEnvironment) ? document : minDocument;
 };
 
-export interface CustomDocParams {
+export interface CustomDocParameter {
   /** The custom document to use (allows for ssr rendering) */
   doc: Document;
 }
@@ -810,15 +813,15 @@ export interface CustomDocParams {
  *
  * @public
  */
-export const toDOM = ({ node, schema, doc }: FromNodeParams): DocumentFragment => {
+export const toDOM = ({ node, schema, doc }: FromNodeParameter): DocumentFragment => {
   const fragment = isDocNode(node, schema) ? node.content : Fragment.from(node);
   return DOMSerializer.fromSchema(schema).serializeFragment(fragment, { document: doc });
 };
 
-interface FromNodeParams
+interface FromNodeParameter
   extends SchemaParameter,
     ProsemirrorNodeParameter,
-    Partial<CustomDocParams> {}
+    Partial<CustomDocParameter> {}
 
 /**
  * Convert a prosemirror node into it's HTML contents
@@ -827,14 +830,14 @@ interface FromNodeParams
  *
  * @public
  */
-export const toHTML = ({ node, schema, doc: doc = getDocument() }: FromNodeParams) => {
+export const toHTML = ({ node, schema, doc: doc = getDocument() }: FromNodeParameter) => {
   const element = doc.createElement('div');
   element.append(toDOM({ node, schema, doc: doc }));
 
   return element.innerHTML;
 };
 
-interface FromStringParameter extends Partial<CustomDocParams>, SchemaParameter {
+interface FromStringParameter extends Partial<CustomDocParameter>, SchemaParameter {
   /** The content  passed in an a string */
   content: string;
 }

@@ -2,7 +2,7 @@ import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-li
 
 import {
   convertCommand,
-  ManagerNodeTypeParams,
+  ManagerNodeTypeParameter,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
@@ -24,7 +24,7 @@ export class ListItemExtension extends NodeExtension {
     };
   }
 
-  public keys({ type }: ManagerNodeTypeParams): KeyBindings {
+  public keys({ type }: ManagerNodeTypeParameter): KeyBindings {
     return {
       Enter: convertCommand(splitListItem(type)),
       Tab: convertCommand(sinkListItem(type)),

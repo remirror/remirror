@@ -7,9 +7,9 @@ import { EmojiObject, EmojiSuggestCommand } from '@remirror/extension-emoji';
 import { popupMenuPositioner, useRemirror } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 
-import { DataParams, SocialExtensions } from '../social-types';
+import { DataParameter, SocialExtensions } from '../social-types';
 
-interface EmojiSuggestionsProps extends DataParams<EmojiObject> {
+interface EmojiSuggestionsProps extends DataParameter<EmojiObject> {
   highlightedIndex: number;
   command: EmojiSuggestCommand;
 }

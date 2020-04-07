@@ -3,7 +3,7 @@ import { ResolvedPos } from 'prosemirror-model';
 import {
   bool,
   Cast,
-  CommandNodeTypeParams,
+  CommandNodeTypeParameter,
   isElementDOMNode,
   NodeExtension,
   NodeExtensionSpec,
@@ -52,7 +52,7 @@ export class ImageExtension extends NodeExtension {
     };
   }
 
-  public commands({ type }: CommandNodeTypeParams) {
+  public commands({ type }: CommandNodeTypeParameter) {
     return {
       insertImage: (attributes: ProsemirrorAttributes): ProsemirrorCommandFunction => (
         state,

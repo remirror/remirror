@@ -26,7 +26,7 @@ const createDropPlaceholder = ({
   portalContainer,
   Component,
   container,
-}: CreateDropPlaceholderParams) => {
+}: CreateDropPlaceholderParameter) => {
   const PortalContainerComponent = () => <Component />;
   portalContainer.render({ render: PortalContainerComponent, container });
 };
@@ -285,7 +285,7 @@ export class DropCursorState {
   };
 }
 
-interface CreateDropPlaceholderParams {
+interface CreateDropPlaceholderParameter {
   portalContainer: PortalContainer;
   Component: ComponentType;
   container: HTMLElement;

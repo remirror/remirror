@@ -84,9 +84,9 @@ export interface CodeBlockExtensionSettings extends object {
  *
  * TODO - possibly allow error management if failure is because of invalid syntax
  */
-export type CodeBlockFormatter = (params: FormatterParams) => FormattedContent | undefined;
+export type CodeBlockFormatter = (params: FormatterParameter) => FormattedContent | undefined;
 
-export interface FormatterParams {
+export interface FormatterParameter {
   /**
    * The code to be formatted
    */

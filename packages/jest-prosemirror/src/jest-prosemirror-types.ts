@@ -34,7 +34,7 @@ export interface CommandTransformation<GSchema extends EditorSchema = any> {
   to?: TaggedProsemirrorNode<GSchema>;
 }
 
-export interface TaggedDocParams<GSchema extends EditorSchema = any> {
+export interface TaggedDocParameter<GSchema extends EditorSchema = any> {
   /**
    * A tagged ProsemirrorNode which can hold cursor information from the passed in text.
    */
@@ -48,7 +48,7 @@ export interface TestEditorView<GSchema extends EditorSchema = any> extends Edit
   };
 }
 
-export interface TestEditorViewParams<GSchema extends EditorSchema = any> {
+export interface TestEditorViewParameter<GSchema extends EditorSchema = any> {
   /**
    * An instance of the test editor view which allows for dispatching events
    * and also containers TaggedProsemirrorNodes

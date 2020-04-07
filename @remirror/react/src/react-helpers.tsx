@@ -8,7 +8,7 @@ import { Manager, object, PlainObject } from '@remirror/core';
 
 import { useRemirror } from './hooks/use-remirror';
 
-export interface GetManagerFromComponentTreeParams {
+export interface GetManagerFromComponentTreeParameter {
   /**
    * The full remirror component tree wrapped with an outer <RemirrorManager />
    */
@@ -76,7 +76,7 @@ export const getSchemaFromComponentTree = ({
   Component,
   prop = 'children',
   extraProps = object<PlainObject>(),
-}: GetManagerFromComponentTreeParams) =>
+}: GetManagerFromComponentTreeParameter) =>
   new Promise<Manager>((resolve, reject) => {
     const ManagerRetriever = () => {
       const { manager } = useRemirror();

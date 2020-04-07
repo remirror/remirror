@@ -10,8 +10,8 @@ import {
   ActiveTagData,
   ActiveUserData,
   MatchName,
-  MentionGetterParams,
-  SetExitTriggeredInternallyParams,
+  MentionGetterParameter,
+  SetExitTriggeredInternallyParameter,
   SocialExtensions,
 } from '../social-types';
 import { EmojiSuggestions } from './emoji-suggestion-component';
@@ -19,7 +19,9 @@ import { CharacterCountWrapper, EditorWrapper } from './social-base-components';
 import { CharacterCountIndicator } from './social-character-count-component';
 import { AtSuggestions, TagSuggestions } from './social-suggestion-components';
 
-interface SocialEditorComponentProps extends MentionGetterParams, SetExitTriggeredInternallyParams {
+interface SocialEditorComponentProps
+  extends MentionGetterParameter,
+    SetExitTriggeredInternallyParameter {
   emojiList: EmojiObject[];
   hideEmojiSuggestions: boolean;
   activeEmojiIndex: number;

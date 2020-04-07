@@ -3,43 +3,45 @@ import { SelectionParameter } from '@remirror/core-types';
 
 import { ChangeReason, ExitReason } from './suggest-constants';
 import {
-  CompareMatchParams as CompareMatchParameters,
+  CompareMatchParameter as CompareMatchParameters,
   SuggestReasonMap,
   SuggestStateMatch,
-  SuggestStateMatchParams as SuggestStateMatchParameters,
+  SuggestStateMatchParameter as SuggestStateMatchParameters,
 } from './suggest-types';
 
 /**
  * Is this a change in the current suggestion (added or deleted characters)?
  */
-export const isChange = (compare: Partial<CompareMatchParams>): compare is CompareMatchParams =>
+export const isChange = (
+  compare: Partial<CompareMatchParameter>,
+): compare is CompareMatchParameter =>
   bool(compare.prev && compare.next && compare.prev.queryText.full !== compare.next.queryText.full);
 
 /**
  * Has the cursor moved within the current suggestion (added or deleted
  * characters)?
  */
-export const isMove = (compare: Partial<CompareMatchParams>): compare is CompareMatchParams =>
+export const isMove = (compare: Partial<CompareMatchParameter>): compare is CompareMatchParameter =>
   bool(compare.prev && compare.next && compare.prev.range.to !== compare.next.range.to);
 
 /**
  * Are we entering a new suggestion?
  */
 export const isEntry = (
-  compare: Partial<CompareMatchParams>,
-): compare is Pick<CompareMatchParams, 'next'> => bool(!compare.prev && compare.next);
+  compare: Partial<CompareMatchParameter>,
+): compare is Pick<CompareMatchParameter, 'next'> => bool(!compare.prev && compare.next);
 
 /**
  * Are we exiting a suggestion?
  */
 export const isExit = (
-  compare: Partial<CompareMatchParams>,
-): compare is Pick<CompareMatchParams, 'prev'> => bool(compare.prev && !compare.next);
+  compare: Partial<CompareMatchParameter>,
+): compare is Pick<CompareMatchParameter, 'prev'> => bool(compare.prev && !compare.next);
 
 /**
  * Is this a jump from one suggestion to another?
  */
-export const isJump = (compare: Partial<CompareMatchParams>): compare is CompareMatchParams =>
+export const isJump = (compare: Partial<CompareMatchParameter>): compare is CompareMatchParameter =>
   bool(compare.prev && compare.next && compare.prev.range.from !== compare.next.range.from);
 
 /**
@@ -92,5 +94,5 @@ export const isValidMatch = (match: SuggestStateMatch | undefined): match is Sug
 export const selectionOutsideMatch = ({
   match,
   selection,
-}: Partial<SuggestStateMatchParams> & SelectionParameter) =>
+}: Partial<SuggestStateMatchParameter> & SelectionParameter) =>
   match && (selection.from < match.range.from || selection.from > match.range.end);

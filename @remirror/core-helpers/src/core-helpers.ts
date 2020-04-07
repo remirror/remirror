@@ -653,7 +653,7 @@ export interface Memoize extends MemoizeFunc {
  */
 export const memoize: Memoize = fastMemoize;
 
-interface UniqueIdParams {
+interface UniqueIdParameter {
   /**
    * The prefix for the unique id
    *
@@ -677,7 +677,7 @@ interface UniqueIdParams {
  *
  * @public
  */
-export const uniqueId = ({ prefix = '', size }: UniqueIdParams = { prefix: '' }) => {
+export const uniqueId = ({ prefix = '', size }: UniqueIdParameter = { prefix: '' }) => {
   return `${prefix}${nano(size)}`;
 };
 
@@ -811,7 +811,7 @@ export const deepMerge = <GType = any>(...objects: Array<PlainObject | unknown[]
   return deepmerge.all<GType>(objects as any, { isMergeableObject: isPlainObject });
 };
 
-interface ClampParams {
+interface ClampParameter {
   min: number;
   max: number;
   value: number;
@@ -820,7 +820,7 @@ interface ClampParams {
 /**
  * Clamps the value to the provided range.
  */
-export const clamp = ({ min, max, value }: ClampParams): number => {
+export const clamp = ({ min, max, value }: ClampParameter): number => {
   if (value < min) {
     return min;
   }

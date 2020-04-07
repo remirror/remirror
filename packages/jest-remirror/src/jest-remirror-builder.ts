@@ -13,7 +13,7 @@ import {
 } from '@remirror/core';
 
 import {
-  BaseFactoryParams as BaseFactoryParameters,
+  BaseFactoryParameter as BaseFactoryParameters,
   TaggedContent,
   TaggedContentItem,
   TaggedContentWithText,
@@ -129,7 +129,7 @@ export const sequence = (...content: TaggedContentItem[]) => {
   return { nodes, tags };
 };
 
-interface CoerceParams extends SchemaParameter {
+interface CoerceParameter extends SchemaParameter {
   /**
    * Content that will be transformed into taggedNodes
    */
@@ -145,15 +145,15 @@ interface CoerceParams extends SchemaParameter {
  * @param content
  * @param schema
  */
-export const coerce = ({ content, schema }: CoerceParams) => {
+export const coerce = ({ content, schema }: CoerceParameter) => {
   const taggedContent = content.map((item) =>
     isString(item) ? text(item, schema) : item,
   ) as Array<TaggedContentItem | TaggedContentItem[]>;
   return sequence(...flattenArray<TaggedContentItem>(taggedContent));
 };
 
-interface NodeFactoryParams<GSchema extends EditorSchema = EditorSchema>
-  extends BaseFactoryParams<GSchema> {
+interface NodeFactoryParameter<GSchema extends EditorSchema = EditorSchema>
+  extends BaseFactoryParameter<GSchema> {
   /**
    * The marks which wrap this node.
    */
@@ -174,7 +174,7 @@ export const nodeFactory = <GSchema extends EditorSchema = EditorSchema>({
   schema,
   attributes: attributes,
   marks,
-}: NodeFactoryParams<GSchema>) => {
+}: NodeFactoryParameter<GSchema>) => {
   const nodeBuilder = hasOwnProperty(schema.nodes, name) ? schema.nodes[name] : undefined;
   if (!nodeBuilder) {
     throw new Error(
@@ -191,7 +191,7 @@ export const nodeFactory = <GSchema extends EditorSchema = EditorSchema>({
   };
 };
 
-interface MarkFactoryParams extends BaseFactoryParams {
+interface MarkFactoryParameter extends BaseFactoryParameter {
   allowDupes?: boolean;
 }
 
@@ -209,7 +209,7 @@ export const markFactory = ({
   schema,
   attributes: attributes,
   allowDupes = false,
-}: MarkFactoryParams) => {
+}: MarkFactoryParameter) => {
   const markBuilder = hasOwnProperty(schema.marks, name) ? schema.marks[name] : undefined;
   if (!markBuilder) {
     throw new Error(
@@ -245,7 +245,7 @@ export const fragment = (...content: TaggedContentWithText[]) =>
 export const slice = (schema: EditorSchema) => (...content: TaggedContentWithText[]) =>
   new Slice(Fragment.from(coerce({ content, schema }).nodes), 0, 0);
 
-interface CleanParams extends SchemaParameter {
+interface CleanParameter extends SchemaParameter {
   /**
    * The tagged content which will be replaced with a clean Prosemirror node
    */
@@ -259,7 +259,7 @@ interface CleanParams extends SchemaParameter {
  * @param params.schema
  * @param params.content
  */
-export const clean = ({ schema, content }: CleanParams) => {
+export const clean = ({ schema, content }: CleanParameter) => {
   const node = content;
   if (Array.isArray(node)) {
     return node.reduce((accumulator, next) => {

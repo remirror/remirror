@@ -24,7 +24,7 @@ import {
   ProsemirrorPlugin,
   TransactionParameter,
 } from '@remirror/core-types';
-import { createDocumentNode, CreateDocumentNodeParams } from '@remirror/core-utils';
+import { createDocumentNode, CreateDocumentNodeParameter } from '@remirror/core-utils';
 
 import {
   AnyExtension,
@@ -441,7 +441,7 @@ class Manager<
     doc,
     stringHandler,
     fallback,
-  }: Omit<CreateDocumentNodeParams, 'schema'>) {
+  }: Omit<CreateDocumentNodeParameter, 'schema'>) {
     const { schema, plugins } = this.store;
     return EditorState.create({
       schema,
@@ -501,7 +501,7 @@ class Manager<
    *
    * An example usage of this is within the collaboration plugin.
    */
-  public onTransaction(parameters: OnTransactionManagerParams) {
+  public onTransaction(parameters: OnTransactionManagerParameter) {
     for (const onTransaction of this.#handlers.transaction) {
       onTransaction({ ...parameters, ...this.parameter, view: this.store.view });
     }
@@ -569,7 +569,7 @@ class Manager<
   }
 }
 
-interface ManagerParams<
+interface ManagerParameter<
   ExtensionUnion extends AnyExtension = any,
   PresetUnion extends AnyPreset<ExtensionUnion> = any
 > {
@@ -579,7 +579,7 @@ interface ManagerParams<
   manager: Manager<ExtensionUnion, PresetUnion>;
 }
 
-interface OnTransactionManagerParams extends TransactionParameter, EditorStateParameter {}
+interface OnTransactionManagerParameter extends TransactionParameter, EditorStateParameter {}
 
 declare global {
   namespace Remirror {
@@ -632,10 +632,10 @@ declare global {
      * The initialization params which are passed by the view layer into the
      * extension manager. This can be added to by the requesting framework layer.
      */
-    interface ManagerInitializationParams<ExtensionUnion extends AnyExtension = any> {}
+    interface ManagerInitializationParameter<ExtensionUnion extends AnyExtension = any> {}
   }
 }
 
 /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
-export { AnyManager, isManager, Manager, ManagerParams, OnTransactionManagerParams };
+export { AnyManager, isManager, Manager, ManagerParameter, OnTransactionManagerParameter };

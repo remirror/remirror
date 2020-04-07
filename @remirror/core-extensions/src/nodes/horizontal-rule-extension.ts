@@ -1,6 +1,6 @@
 import {
-  CommandNodeTypeParams,
-  ManagerNodeTypeParams,
+  CommandNodeTypeParameter,
+  ManagerNodeTypeParameter,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -22,7 +22,7 @@ export class HorizontalRuleExtension extends NodeExtension {
     };
   }
 
-  public commands({ type }: CommandNodeTypeParams) {
+  public commands({ type }: CommandNodeTypeParameter) {
     return {
       horizontalRule: (): ProsemirrorCommandFunction => (state, dispatch) => {
         if (dispatch) {
@@ -34,7 +34,7 @@ export class HorizontalRuleExtension extends NodeExtension {
     };
   }
 
-  public inputRules({ type }: ManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParameter) {
     return [nodeInputRule({ regexp: /^(?:---|___\s|\*\*\*\s)$/, type })];
   }
 }

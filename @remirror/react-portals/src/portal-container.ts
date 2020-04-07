@@ -2,18 +2,18 @@ import { createNanoEvents } from 'nanoevents';
 import nano from 'nanoid';
 import { ReactElement } from 'react';
 
-export interface RenderParams {
+export interface RenderParameter {
   /**
    * Renders a JSX element.
    */
   render: () => ReactElement;
 }
 
-export interface MountedPortal extends RenderParams {
+export interface MountedPortal extends RenderParameter {
   key: string;
 }
 
-export interface RenderMethodParams extends RenderParams {
+export interface RenderMethodParameter extends RenderParameter {
   /**
    * The DOM element to contain the react portal.
    */
@@ -75,7 +75,7 @@ export class PortalContainer {
   /**
    * Responsible for registering a new portal by rendering the react element into the provided container.
    */
-  public render({ render, container }: RenderMethodParams) {
+  public render({ render, container }: RenderMethodParameter) {
     const portal = this.portals.get(container);
     const key = portal ? portal.key : nano();
 

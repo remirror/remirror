@@ -8,7 +8,7 @@ import { startCase, take } from '@remirror/core';
 import {
   ActiveTagData,
   ActiveUserData,
-  OnMentionChangeParams,
+  OnMentionChangeParameter,
   SocialEditor,
   SocialEditorProps,
   UserData,
@@ -42,9 +42,9 @@ const userData: UserData[] = fakeUsers.results.map(
 export { fakeUsers, fakeTags, userData };
 
 export const ExampleSocialEditor = (props: Partial<SocialEditorProps>) => {
-  const [mention, setMention] = useState<OnMentionChangeParams>();
+  const [mention, setMention] = useState<OnMentionChangeParameter>();
 
-  const onChange = (params: OnMentionChangeParams) => {
+  const onChange = (params: OnMentionChangeParameter) => {
     setMention(params);
   };
 

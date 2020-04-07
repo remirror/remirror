@@ -2,9 +2,9 @@
 
 import { jsx } from '@emotion/core';
 import {
-  SuggestChangeHandlerParams,
+  SuggestChangeHandlerParameter,
   SuggestKeyBindingMap,
-  SuggestKeyBindingParams,
+  SuggestKeyBindingParameter,
   SuggestStateMatch,
 } from 'prosemirror-suggest';
 import { Fragment, PureComponent } from 'react';
@@ -35,7 +35,7 @@ import {
   ActiveUserData,
   MatchName,
   MentionState,
-  OnMentionChangeParams as OnMentionChangeParameters,
+  OnMentionChangeParameter as OnMentionChangeParameters,
   SocialEditorProps as SocialEditorProperties,
 } from '../social-types';
 import { calculateNewIndexFromArrowPress, mapToActiveIndex } from '../social-utils';
@@ -97,7 +97,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   private readonly createMentionArrowBindings = (direction: 'up' | 'down') => ({
     queryText,
     suggester: { name },
-  }: SuggestKeyBindingParams) => {
+  }: SuggestKeyBindingParameter) => {
     const { activeIndex: previousIndex, hideMentionSuggestions: hideSuggestions } = this.state;
     const { onMentionChange: onMentionStateChange } = this.props;
 
@@ -115,7 +115,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     });
 
     this.setState({ activeIndex, activeMatcher: name as MatchName });
-    onMentionStateChange({ name, query: queryText.full, activeIndex } as OnMentionChangeParams);
+    onMentionStateChange({ name, query: queryText.full, activeIndex } as OnMentionChangeParameter);
 
     return true;
   };
@@ -229,7 +229,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * The is the callback for when a suggestion is changed.
    */
-  private readonly onChange = (parameters: SuggestChangeHandlerParams) => {
+  private readonly onChange = (parameters: SuggestChangeHandlerParameter) => {
     const {
       queryText,
       suggester: { name },

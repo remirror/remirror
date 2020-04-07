@@ -59,7 +59,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
        *
        * It is up to you to dispatch the transaction or you can just use the commands.
        */
-      addPositionTracker: ({ pos, id }: AddPositionTrackerParams, tr = getState().tr) => {
+      addPositionTracker: ({ pos, id }: AddPositionTrackerParameter, tr = getState().tr) => {
         const existingPosition = helpers.findPositionTracker(id);
 
         if (existingPosition) {
@@ -76,7 +76,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
        *
        * This should be used to cleanup once the position is no longer needed.
        */
-      removePositionTracker: ({ id }: RemovePositionTrackerParams, tr = getState().tr) => {
+      removePositionTracker: ({ id }: RemovePositionTrackerParameter, tr = getState().tr) => {
         const existingPosition = helpers.findPositionTracker(id);
 
         if (!existingPosition) {
@@ -158,12 +158,14 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
        * Command to dispatch a transaction adding the tracker position to be tracked.
        * If no position parameter is specified it uses the current position.
        */
-      addPositionTracker: commandFactory<AddPositionTrackerParams>('addPositionTracker'),
+      addPositionTracker: commandFactory<AddPositionTrackerParameter>('addPositionTracker'),
 
       /**
        * A command to remove the specified tracker position.
        */
-      removePositionTracker: commandFactory<RemovePositionTrackerParams>('removePositionTracker'),
+      removePositionTracker: commandFactory<RemovePositionTrackerParameter>(
+        'removePositionTracker',
+      ),
 
       /**
        * A command to remove all active tracker positions.
@@ -233,19 +235,21 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
 }
 
 export interface PositionTrackerExtensionMeta {
-  add?: Required<AddPositionTrackerParams>;
-  remove?: RemovePositionTrackerParams;
+  add?: Required<AddPositionTrackerParameter>;
+  remove?: RemovePositionTrackerParameter;
   clear?: symbol;
 }
 
-interface RemovePositionTrackerParams {
+interface RemovePositionTrackerParameter {
   /**
    * The ID by which this position will be uniquely identified.
    */
   id: unknown;
 }
 
-interface AddPositionTrackerParams extends Partial<PosParameter>, RemovePositionTrackerParams {
+interface AddPositionTrackerParameter
+  extends Partial<PosParameter>,
+    RemovePositionTrackerParameter {
   /**
    * A custom class name to use for the tracker position. All the trackers
    * will automatically be given the class name `remirror-tracker-position`

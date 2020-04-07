@@ -1,2 +1,2 @@
 export { Manager, isManager } from './manager';
-export type { ManagerStore, ManagerParams } from './manager';
+export type { ManagerParameter } from './manager';

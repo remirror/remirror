@@ -3,14 +3,14 @@ import { ReplaceStep } from 'prosemirror-transform';
 
 import {
   Cast,
-  CommandMarkTypeParams,
+  CommandMarkTypeParameter,
   EditorState,
   EditorView,
   findMatches,
   getMatchString,
   isFunction,
   LEAF_NODE_REPLACING_CHARACTER,
-  ManagerMarkTypeParams,
+  ManagerMarkTypeParameter,
   MarkExtension,
   MarkExtensionConfig,
   MarkExtensionSpec,
@@ -78,7 +78,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
     };
   }
 
-  public commands({ type }: CommandMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParameter) {
     return {
       enhancedLink: (attributes: ProsemirrorAttributes) => {
         if (attributes?.href) {
@@ -90,7 +90,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
     };
   }
 
-  public pasteRules({ type }: ManagerMarkTypeParams) {
+  public pasteRules({ type }: ManagerMarkTypeParameter) {
     return [
       markPasteRule({
         regexp: extractUrl,
@@ -104,7 +104,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
     ];
   }
 
-  public plugin = ({ type }: ManagerMarkTypeParams) => {
+  public plugin = ({ type }: ManagerMarkTypeParameter) => {
     const key = this.pluginKey;
     const name = this.name;
     const onUrlsChange = this.options.onUrlsChange;

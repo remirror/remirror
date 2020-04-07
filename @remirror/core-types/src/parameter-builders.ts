@@ -91,7 +91,7 @@ export interface FromToParameter {
 }
 
 /**
- * A parameter builder type which uses {@link FromToParams} where `from` or `to`, or both
+ * A parameter builder type which uses {@link FromToParameter} where `from` or `to`, or both
  * can be set as optional.
  *
  * @typeParam GKey - the keys to set as optional (either `from` or `to`).

@@ -15,7 +15,7 @@ import { IconProps } from '@remirror/ui-icons';
 
 import { ResetButton, ResetButtonProps } from './reset-button';
 
-export interface RenderIconParams {
+export interface RenderIconParameter {
   remirrorTheme: RemirrorThemeContextType;
 }
 
@@ -57,14 +57,14 @@ export type ButtonProps = ResetButtonProps & {
    *
    * When provided `RightIconComponent` and `rightIconProps` will be ignored
    */
-  renderRightIcon?(params: RenderIconParams): ReactNode;
+  renderRightIcon?(params: RenderIconParameter): ReactNode;
 
   /**
    * A render prop for the left icon.
    *
    * When provided `LeftIconComponent` and `leftIconProps` will be ignored
    */
-  renderLeftIcon?(params: RenderIconParams): ReactNode;
+  renderLeftIcon?(params: RenderIconParameter): ReactNode;
 
   /**
    * Custom styles to add to the icon

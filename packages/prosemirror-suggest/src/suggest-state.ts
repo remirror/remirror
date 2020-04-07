@@ -18,12 +18,12 @@ import { transactionChanged } from '@remirror/core-utils';
 import { ChangeReason, DEFAULT_SUGGESTER, ExitReason } from './suggest-constants';
 import { isInvalidSplitReason, isJumpReason, isValidMatch } from './suggest-predicates';
 import {
-  AddIgnoredParams as AddIgnoredParameters,
-  CompareMatchParams as CompareMatchParameters,
-  RemoveIgnoredParams as RemoveIgnoredParameters,
-  SuggestCallbackParams as SuggestCallbackParameters,
+  AddIgnoredParameter as AddIgnoredParameters,
+  CompareMatchParameter as CompareMatchParameters,
+  RemoveIgnoredParameter as RemoveIgnoredParameters,
+  SuggestCallbackParameter as SuggestCallbackParameters,
   Suggestion,
-  SuggestKeyBindingParams as SuggestKeyBindingParameters,
+  SuggestKeyBindingParameter as SuggestKeyBindingParameters,
   SuggestReasonMap,
   SuggestStateMatch,
   SuggestStateMatchReason,
@@ -148,7 +148,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * Create the props which should be passed into each action handler
    */
-  private createParams(match: SuggestStateMatch): SuggestCallbackParams {
+  private createParameter(match: SuggestStateMatch): SuggestCallbackParameter {
     return {
       view: this.view,
       addIgnored: this.addIgnored,
@@ -161,11 +161,11 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * Create the prop to be passed into the `onChange` or `onExit` handler.
    */
-  private createReasonParams<GReason extends ExitReason | ChangeReason>(
+  private createReasonParameter<GReason extends ExitReason | ChangeReason>(
     match: SuggestStateMatchReason<GReason>,
   ) {
     return {
-      ...this.createParams(match),
+      ...this.createParameter(match),
       command: this.getCommand(match, match.reason),
       ...match,
     };
@@ -189,8 +189,8 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     // position that occurs later in the document. This is so that changes don't
     // affect previous positions.
     if (change && exit && isJumpReason({ change, exit })) {
-      const exitParameters = this.createReasonParams(exit);
-      const changeParameters = this.createReasonParams(change);
+      const exitParameters = this.createReasonParameter(exit);
+      const changeParameters = this.createReasonParameter(change);
       const movedForwards = exit.range.from < change.range.from;
       movedForwards
         ? change.suggester.onChange(changeParameters)
@@ -203,11 +203,11 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     }
 
     if (change) {
-      change.suggester.onChange(this.createReasonParams(change));
+      change.suggester.onChange(this.createReasonParameter(change));
     }
 
     if (exit) {
-      exit.suggester.onExit(this.createReasonParams(exit));
+      exit.suggester.onExit(this.createReasonParameter(exit));
       this.removed = false;
       if (isInvalidSplitReason(exit.reason)) {
         this.handlerMatches = object();
@@ -248,7 +248,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    * All we need to ignore is the match character. This means that any further
    * matches from the activation character will be ignored.
    */
-  public addIgnored = ({ from, char, name, specific = false }: AddIgnoredParams) => {
+  public addIgnored = ({ from, char, name, specific = false }: AddIgnoredParameter) => {
     const to = from + char.length;
     const suggester = this.suggesters.find((value) => value.name === name);
 
@@ -276,7 +276,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    * After this point event handlers will begin to be called again for match
    * character.
    */
-  public removeIgnored = ({ from, char, name }: RemoveIgnoredParams) => {
+  public removeIgnored = ({ from, char, name }: RemoveIgnoredParameter) => {
     const decorations = this.ignored.find(from, from + char.length);
     const decoration = decorations[0];
 
@@ -328,7 +328,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * Update the next state value.
    */
-  private updateReasons({ $pos, state }: UpdateReasonsParams) {
+  private updateReasons({ $pos, state }: UpdateReasonsParameter) {
     const match = findFromSuggestions({ suggesters: this.suggesters, $pos });
     this.next = match && this.shouldIgnoreMatch(match) ? undefined : match;
 
@@ -389,10 +389,10 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     }
 
     const { keyBindings } = match.suggester;
-    const parameters: SuggestKeyBindingParams = {
+    const parameters: SuggestKeyBindingParameter = {
       event,
       setMarkRemoved: this.setRemovedTrue,
-      ...this.createParams(match),
+      ...this.createParameter(match),
     };
 
     return runKeyBindings(keyBindings, parameters);
@@ -401,7 +401,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * Handle any key presses of non supported characters
    */
-  public handleTextInput({ text, from, to }: HandleTextInputParams): boolean {
+  public handleTextInput({ text, from, to }: HandleTextInputParameter): boolean {
     const match = this.match;
 
     if (!isValidMatch(match)) {
@@ -411,7 +411,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     const { onCharacterEntry } = match.suggester;
 
     return onCharacterEntry({
-      ...this.createParams(match),
+      ...this.createParameter(match),
       from,
       to,
       text,
@@ -452,11 +452,11 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   }
 }
 
-interface HandleTextInputParams extends FromToParameter, TextParameter {}
-interface UpdateReasonsParams<GSchema extends EditorSchema = any>
+interface HandleTextInputParameter extends FromToParameter, TextParameter {}
+interface UpdateReasonsParameter<GSchema extends EditorSchema = any>
   extends EditorStateParameter<GSchema>,
     ResolvedPosParameter<GSchema>,
-    Partial<CompareMatchParams> {}
+    Partial<CompareMatchParameter> {}
 
 /**
  * The parameter object for the {@link SuggestState.apply} method.
@@ -465,11 +465,11 @@ interface UpdateReasonsParams<GSchema extends EditorSchema = any>
  *
  * **Extends**
  *
- * -  {@link @remirror/core-types#TransactionParams}
- * -  {@link @remirror/core-types#CompareStateParams}
+ * -  {@link @remirror/core-types#TransactionParameter}
+ * -  {@link @remirror/core-types#CompareStateParameter}
  *
  * @typeParam GSchema - the underlying editor schema.
  */
-export interface SuggestStateApplyParams<GSchema extends EditorSchema = any>
+export interface SuggestStateApplyParameter<GSchema extends EditorSchema = any>
   extends TransactionParameter<GSchema>,
     CompareStateParameter<GSchema> {}

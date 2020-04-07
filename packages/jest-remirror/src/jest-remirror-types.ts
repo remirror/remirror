@@ -1,5 +1,5 @@
 import { RenderResult } from '@testing-library/react/pure';
-import { FireParams, TestEditorViewParams } from 'jest-prosemirror';
+import { FireParameter, TestEditorViewParameter } from 'jest-prosemirror';
 import { Node as PMNode } from 'prosemirror-model';
 
 import {
@@ -24,7 +24,7 @@ import { InjectedRemirrorProps } from '@remirror/react';
 
 import { BaseExtensionNodeNames, BaseExtensionNodes } from './jest-remirror-schema';
 
-export interface BaseFactoryParams<GSchema extends EditorSchema = EditorSchema>
+export interface BaseFactoryParameter<GSchema extends EditorSchema = EditorSchema>
   extends Partial<AttributesParameter> {
   /**
    * The name of the node or mark
@@ -248,7 +248,7 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    *
    * @param shortcut - the shortcut to type
    */
-  fire(params: FireParams): AddContentReturn<GExtension>;
+  fire(params: FireParameter): AddContentReturn<GExtension>;
 
   /**
    * Simply calls add again which overwrites the whole doc
@@ -294,7 +294,7 @@ export type CreateTestEditorReturn<
     GOthers
   > = GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>
 > = Omit<InjectedRemirrorProps<GExtension>, 'view'> &
-  TestEditorViewParams<SchemaFromExtension<GExtension>> & {
+  TestEditorViewParameter<SchemaFromExtension<GExtension>> & {
     utils: RenderResult;
     add: AddContent<GExtension>;
     nodes: NodeWithoutAttributes<GetNames<GPlainNodes> | BaseExtensionNodeNames>;

@@ -6,7 +6,7 @@ import { setStatus } from '@remirror/ui-a11y-status';
 
 import { multishiftReducer } from './multishift-reducer';
 import {
-  A11yStatusMessageParams,
+  A11yStatusMessageParameter,
   GetA11yStatusMessage,
   ItemsToString,
   MultishiftA11yIdProps,
@@ -90,7 +90,7 @@ const defaultGetA11yStatusMessage = <GItem = any>({
   items,
   state: { selectedItems, isOpen },
   itemsToString = defaultItemsToString,
-}: A11yStatusMessageParams<GItem>) => {
+}: A11yStatusMessageParameter<GItem>) => {
   if (selectedItems.length) {
     return `${itemsToString(selectedItems)} has been selected.`;
   }

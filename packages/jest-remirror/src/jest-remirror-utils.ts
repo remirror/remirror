@@ -1,18 +1,18 @@
-import { TestEditorViewParams } from 'jest-prosemirror';
+import { TestEditorViewParameter } from 'jest-prosemirror';
 
 import { isObject, isProsemirrorNode, SchemaParameter } from '@remirror/core';
 
 import { coerce, offsetTags } from './jest-remirror-builder';
 import { TaggedProsemirrorNode, Tags } from './jest-remirror-types';
 
-interface ProcessTextParams extends SchemaParameter {
+interface ProcessTextParameter extends SchemaParameter {
   /**
    * The content to process text in
    */
   content: string[] | TaggedProsemirrorNode[];
 }
 
-const processText = ({ schema, content }: ProcessTextParams) => coerce({ content, schema });
+const processText = ({ schema, content }: ProcessTextParameter) => coerce({ content, schema });
 
 const processNodeMark = (content: TaggedProsemirrorNode) => {
   const nodes = content;
@@ -25,7 +25,7 @@ const processNodeMark = (content: TaggedProsemirrorNode) => {
 /**
  * Insert
  */
-interface InsertParams extends TestEditorViewParams {
+interface InsertParameter extends TestEditorViewParameter {
   /**
    * The content to replace the current selection with
    * This can be strings a node or an array of nodes.
@@ -41,7 +41,7 @@ interface InsertParams extends TestEditorViewParams {
  * @param params.view
  * @param params.content
  */
-export const replaceSelection = ({ view, content }: InsertParams): Tags => {
+export const replaceSelection = ({ view, content }: InsertParameter): Tags => {
   const { state } = view;
   const { from, to } = state.selection;
   const { nodes, tags } = Array.isArray(content)

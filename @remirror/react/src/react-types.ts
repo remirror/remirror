@@ -68,7 +68,7 @@ export interface RenderEditorProps<ManagerType extends Manager = any>
    *
    * Without a deep understanding of Prosemirror this is not recommended.
    */
-  onStateChange?: (params: RemirrorStateListenerParams<GetExtensionUnion<ManagerType>>) => void;
+  onStateChange?: (params: RemirrorStateListenerParameter<GetExtensionUnion<ManagerType>>) => void;
 
   /**
    * When onStateChange is defined this prop is used to set the next state value
@@ -102,7 +102,7 @@ export interface RenderEditorProps<ManagerType extends Manager = any>
    * An event listener which is called whenever the editor gains focus.
    */
   onFocus?: (
-    params: RemirrorEventListenerParams<GetExtensionUnion<ManagerType>>,
+    params: RemirrorEventListenerParameter<GetExtensionUnion<ManagerType>>,
     event: Event,
   ) => void;
 
@@ -110,7 +110,7 @@ export interface RenderEditorProps<ManagerType extends Manager = any>
    * An event listener which is called whenever the editor is blurred.
    */
   onBlur?: (
-    params: RemirrorEventListenerParams<GetExtensionUnion<ManagerType>>,
+    params: RemirrorEventListenerParameter<GetExtensionUnion<ManagerType>>,
     event: Event,
   ) => void;
 
@@ -274,27 +274,27 @@ export interface Positioner<ExtensionUnion extends AnyExtension = any> {
   /**
    * Determines whether the positioner should be active
    */
-  isActive(params: GetPositionParams<ExtensionUnion>): boolean;
+  isActive(params: GetPositionParameter<ExtensionUnion>): boolean;
 
   /**
    * Calculate and return a new position (only called when `hasChanged` and
    * `isActive` return true)
    */
-  getPosition(params: GetPositionParams<ExtensionUnion>): Position;
+  getPosition(params: GetPositionParameter<ExtensionUnion>): Position;
 }
 
-export type CalculatePositionerParams<
+export type CalculatePositionerParameter<
   ExtensionUnion extends AnyExtension = any
-> = PositionerIdParams & Positioner<ExtensionUnion>;
+> = PositionerIdParameter & Positioner<ExtensionUnion>;
 
 export type GetPositionerPropsConfig<
   ExtensionUnion extends AnyExtension = any,
   GRefKey extends string = 'ref'
-> = RefParams<GRefKey> &
-  Partial<Omit<CalculatePositionerParams<ExtensionUnion>, 'positionerId'>> &
-  PositionerIdParams;
+> = RefParameter<GRefKey> &
+  Partial<Omit<CalculatePositionerParameter<ExtensionUnion>, 'positionerId'>> &
+  PositionerIdParameter;
 
-export interface RefParams<GRefKey = 'ref'> {
+export interface RefParameter<GRefKey = 'ref'> {
   /**
    * A custom ref key which allows a reference to be obtained from non standard
    * components.
@@ -304,10 +304,10 @@ export interface RefParams<GRefKey = 'ref'> {
   refKey?: GRefKey;
 }
 
-export type PositionerProps = IsActiveParams & Position;
+export type PositionerProps = IsActiveParameter & Position;
 
 export interface GetRootPropsConfig<GRefKey extends string = 'ref'>
-  extends RefParams<GRefKey>,
+  extends RefParameter<GRefKey>,
     PlainObject {
   editorStyles?: Interpolation;
 }
@@ -443,7 +443,7 @@ export type RenderPropFunction<ManagerType extends Manager = any> = (
   params: InjectedRemirrorProps<ManagerType>,
 ) => JSX.Element;
 
-export interface RemirrorGetterParams {
+export interface RemirrorGetterParameter {
   /**
    * Get the current HTML from the latest editor state.
    */
@@ -472,7 +472,7 @@ export interface RemirrorGetterParams {
 
 export interface BaseListenerParameters<ExtensionUnion extends AnyExtension = any>
   extends EditorViewParameter<SchemaFromExtension<ExtensionUnion>>,
-    RemirrorGetterParams {
+    RemirrorGetterParameter {
   /**
    * The original transaction which caused this state update.
    *
@@ -498,11 +498,11 @@ export interface BaseListenerParameters<ExtensionUnion extends AnyExtension = an
   internalUpdate: boolean;
 }
 
-export interface RemirrorEventListenerParams<ExtensionUnion extends AnyExtension = any>
+export interface RemirrorEventListenerParameter<ExtensionUnion extends AnyExtension = any>
   extends EditorStateParameter<SchemaFromExtension<ExtensionUnion>>,
     BaseListenerParameters<ExtensionUnion> {}
 
-export interface RemirrorStateListenerParams<ExtensionUnion extends AnyExtension = any>
+export interface RemirrorStateListenerParameter<ExtensionUnion extends AnyExtension = any>
   extends CompareStateParameter<SchemaFromExtension<ExtensionUnion>>,
     BaseListenerParameters<ExtensionUnion> {
   /**
@@ -514,11 +514,11 @@ export interface RemirrorStateListenerParams<ExtensionUnion extends AnyExtension
 }
 
 export type RemirrorEventListener<ExtensionUnion extends AnyExtension = any> = (
-  params: RemirrorEventListenerParams<ExtensionUnion>,
+  params: RemirrorEventListenerParameter<ExtensionUnion>,
 ) => void;
 
 export type AttributePropFunction<ExtensionUnion extends AnyExtension = any> = (
-  params: RemirrorEventListenerParams<ExtensionUnion>,
+  params: RemirrorEventListenerParameter<ExtensionUnion>,
 ) => Record<string, string>;
 
 export interface PlaceholderConfig extends TextParameter {
@@ -530,14 +530,14 @@ export type PositionerMapValue = ElementParameter & {
   prev: PositionerProps;
 };
 
-export interface PositionerRefFactoryParams extends PositionerIdParams, PositionParameter {}
+export interface PositionerRefFactoryParameter extends PositionerIdParameter, PositionParameter {}
 
-export interface GetPositionParams<ExtensionUnion extends AnyExtension = any>
+export interface GetPositionParameter<ExtensionUnion extends AnyExtension = any>
   extends EditorViewParameter<SchemaFromExtension<ExtensionUnion>>,
     ElementParameter,
     CompareStateParameter<SchemaFromExtension<ExtensionUnion>> {}
 
-export interface PositionerIdParams {
+export interface PositionerIdParameter {
   /**
    * A unique id for the positioner.
    *
@@ -547,14 +547,14 @@ export interface PositionerIdParams {
   positionerId: string;
 }
 
-export interface IsActiveParams {
+export interface IsActiveParameter {
   /**
    * A boolean value determining whether the positioner should be active.
    */
   isActive: boolean;
 }
 
-export interface PositionerParams {
+export interface PositionerParameter {
   /**
    * The positioner object which determines how the changes in the view impact
    * the calculated position.
@@ -562,12 +562,12 @@ export interface PositionerParams {
   positioner: Partial<Positioner>;
 }
 
-export interface UsePositionerParams<GRefKey extends string = 'ref'>
-  extends PositionerIdParams,
-    PositionerParams,
-    RefParams<GRefKey> {}
+export interface UsePositionerParameter<GRefKey extends string = 'ref'>
+  extends PositionerIdParameter,
+    PositionerParameter,
+    RefParameter<GRefKey> {}
 
-export interface UpdateStateParams<GSchema extends EditorSchema = any>
+export interface UpdateStateParameter<GSchema extends EditorSchema = any>
   extends Partial<TransactionParameter<GSchema>>,
     EditorStateParameter<GSchema> {
   /**
@@ -583,7 +583,7 @@ export interface UpdateStateParams<GSchema extends EditorSchema = any>
   onUpdate?: () => void;
 }
 
-export interface EditorStateEventListenerParams<
+export interface EditorStateEventListenerParameter<
   ExtensionUnion extends AnyExtension = any,
   GSchema extends EditorSchema = any
 >
@@ -602,7 +602,7 @@ export interface RemirrorState<GSchema extends EditorSchema = any> {
   shouldRenderClient?: boolean;
 }
 
-export interface ListenerParams<
+export interface ListenerParameter<
   ExtensionUnion extends AnyExtension = any,
   GSchema extends EditorSchema = any
 >

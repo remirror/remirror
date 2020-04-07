@@ -22,7 +22,7 @@ can be used in your front-end code.
 yarn add test-keyboard
 ```
 
-## `Keyboard.create` - `(params: KeyboardConstructorParams) => Keyboard`
+## `Keyboard.create` - `(params: KeyboardConstructorParameter) => Keyboard`
 
 ```ts
 import { Keyboard } from 'test-keyboard';
@@ -37,7 +37,7 @@ Keyboard.create({
 };
 ```
 
-### `KeyboardConstructorParams`
+### `KeyboardConstructorParameter`
 
 | **Property**      |             **Type**             | **Default**  | **Description**                                                                |
 | ----------------- | :------------------------------: | :----------: | ------------------------------------------------------------------------------ |

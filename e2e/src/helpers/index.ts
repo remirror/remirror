@@ -64,7 +64,7 @@ const times = <GType = number>(length: number, fn?: (index: number) => GType): G
 const promiseSequence = async (sequence: Array<() => Promise<void>>) =>
   sequence.reduce((current, next) => current.then(next), Promise.resolve());
 
-export interface TypeParams {
+export interface TypeParameter {
   /**
    * The text to type.
    */
@@ -76,7 +76,7 @@ export interface TypeParams {
   delay?: number;
 }
 
-export interface PressParams extends MakeOptional<TypeParams, 'text'> {
+export interface PressParameter extends MakeOptional<TypeParameter, 'text'> {
   /**
    * The key to press.
    */
@@ -97,13 +97,14 @@ export interface PressParams extends MakeOptional<TypeParams, 'text'> {
  *
  * @return Promise resolving when key presses complete.
  */
-export const press = async ({ key, count = 1, delay = 50, text }: PressParams) =>
+export const press = async ({ key, count = 1, delay = 50, text }: PressParameter) =>
   promiseSequence(times(count, () => () => page.keyboard.press(key, { text, delay })));
 
 /**
  * Wrapper around `page.keyboard.type` with default typing delay.
  */
-export const type = async ({ text, delay = 10 }: TypeParams) => page.keyboard.type(text, { delay });
+export const type = async ({ text, delay = 10 }: TypeParameter) =>
+  page.keyboard.type(text, { delay });
 
 export * from './modifier-keys';
 

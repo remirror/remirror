@@ -2,12 +2,12 @@
 
 import { jsx } from '@emotion/core';
 
-import { AnyExtension, EditorStateParameter, ManagerParams, PlainObject } from '@remirror/core';
+import { AnyExtension, EditorStateParameter, ManagerParameter, PlainObject } from '@remirror/core';
 import { mapProps, ReactSerializer } from '@remirror/react-renderer';
 
 export interface RemirrorSSRProps<GExtension extends AnyExtension = any>
   extends EditorStateParameter,
-    ManagerParams<GExtension> {
+    ManagerParameter<GExtension> {
   /**
    * The attributes to pass into the root div element.
    */

@@ -15,15 +15,15 @@ import { ChangeReason, ExitReason } from './suggest-constants';
 import { createRegexFromSuggestion, regexToString } from './suggest-helpers';
 import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates';
 import {
-  CompareMatchParams as CompareMatchParameters,
-  ReasonParams as ReasonParameters,
+  CompareMatchParameter as CompareMatchParameters,
+  ReasonParameter as ReasonParameters,
   Suggestion,
-  SuggestionParams as SuggestionParameters,
+  SuggestionParameter as SuggestionParameters,
   SuggestKeyBindingMap,
-  SuggestKeyBindingParams as SuggestKeyBindingParameters,
+  SuggestKeyBindingParameter as SuggestKeyBindingParameters,
   SuggestReasonMap,
   SuggestStateMatch,
-  SuggestStateMatchParams as SuggestStateMatchParameters,
+  SuggestStateMatchParameter as SuggestStateMatchParameters,
 } from './suggest-types';
 
 /**
@@ -32,7 +32,7 @@ import {
 const createMatchWithReason = <GReason>({
   match,
   reason,
-}: SuggestStateMatchParams & ReasonParams<GReason>) => ({
+}: SuggestStateMatchParameter & ReasonParameter<GReason>) => ({
   ...match,
   reason,
 });
@@ -66,7 +66,7 @@ const isPrefixValid = (
  *
  * @param params
  */
-const findPosition = ({ text, regexp, $pos, char, suggester }: FindPositionParams) => {
+const findPosition = ({ text, regexp, $pos, char, suggester }: FindPositionParameter) => {
   let position: SuggestStateMatch | undefined;
 
   const cursor = $pos.pos; // The current cursor position
@@ -112,7 +112,7 @@ const findPosition = ({ text, regexp, $pos, char, suggester }: FindPositionParam
 const findMatch = ({
   $pos,
   suggester,
-}: ResolvedPosParameter & SuggestionParams): SuggestStateMatch | undefined => {
+}: ResolvedPosParameter & SuggestionParameter): SuggestStateMatch | undefined => {
   const { char, name, startOfLine, supportedCharacters, matchOffset } = suggester;
 
   // Create the regular expression to match the text against
@@ -139,7 +139,7 @@ const findMatch = ({
  * If the match still exists and it is different then it's likely a split has
  * occurred.
  */
-const recheckMatch = ({ state, match }: SuggestStateMatchParams & EditorStateParameter) => {
+const recheckMatch = ({ state, match }: SuggestStateMatchParameter & EditorStateParameter) => {
   try {
     // Wrapped in try catch because it's possible for everything to be deleted
     // and the doc.resolve will fail.
@@ -163,7 +163,7 @@ const createInsertReason = ({
   prev,
   next,
   state,
-}: MakeOptional<CompareMatchParams, 'next'> & EditorStateParameter): SuggestReasonMap => {
+}: MakeOptional<CompareMatchParameter, 'next'> & EditorStateParameter): SuggestReasonMap => {
   // Has the text been removed? TODO how to tests for deletions mid document?
   if (!next && prev.range.from >= state.doc.nodeSize) {
     return {
@@ -204,7 +204,7 @@ const findJumpReason = ({
   prev,
   next,
   state,
-}: CompareMatchParams & EditorStateParameter): SuggestReasonMap => {
+}: CompareMatchParameter & EditorStateParameter): SuggestReasonMap => {
   const value: SuggestReasonMap = object();
 
   const updatedPrevious = recheckMatch({ state, match: prev });
@@ -239,7 +239,7 @@ const findExitReason = ({
   match,
   state,
   $pos,
-}: SuggestStateMatchParams & EditorStateParameter & ResolvedPosParameter) => {
+}: SuggestStateMatchParameter & EditorStateParameter & ResolvedPosParameter) => {
   const { selection } = state;
   const updatedPrevious = recheckMatch({ match, state });
 
@@ -269,7 +269,7 @@ const findExitReason = ({
   return {};
 };
 
-interface TransformKeyBindingsParams {
+interface TransformKeyBindingsParameter {
   /**
    * The object where each keys are mapped to corresponding actions.
    */
@@ -278,7 +278,7 @@ interface TransformKeyBindingsParams {
   /**
    * The param object which is passed into each method.
    */
-  params: SuggestKeyBindingParams;
+  params: SuggestKeyBindingParameter;
 }
 
 /**
@@ -288,7 +288,7 @@ interface TransformKeyBindingsParams {
 export const transformKeyBindings = ({
   bindings,
   params,
-}: TransformKeyBindingsParams): Record<string, ProsemirrorCommandFunction> => {
+}: TransformKeyBindingsParameter): Record<string, ProsemirrorCommandFunction> => {
   const keys: Record<string, ProsemirrorCommandFunction> = object();
   return Object.entries(bindings).reduce((previous, [key, method]) => {
     return {
@@ -309,7 +309,7 @@ export const transformKeyBindings = ({
  */
 export const runKeyBindings = (
   bindings: SuggestKeyBindingMap,
-  parameters: SuggestKeyBindingParams,
+  parameters: SuggestKeyBindingParameter,
 ) => {
   return keydownHandler(transformKeyBindings({ bindings, params: parameters }))(
     parameters.view,
@@ -317,17 +317,17 @@ export const runKeyBindings = (
   );
 };
 
-interface FindFromSuggestionsParams extends ResolvedPosParameter {
+interface FindFromSuggestionsParameter extends ResolvedPosParameter {
   /**
    * The matchers to search through.
    */
   suggesters: Array<Required<Suggestion>>;
 }
 
-interface FindPositionParams
+interface FindPositionParameter
   extends Pick<Suggestion, 'name' | 'char'>,
     TextParameter,
-    SuggestionParams,
+    SuggestionParameter,
     ResolvedPosParameter {
   /**
    * The regexp to use
@@ -344,7 +344,9 @@ export const findReason = ({
   next,
   state,
   $pos,
-}: EditorStateParameter & ResolvedPosParameter & Partial<CompareMatchParams>): SuggestReasonMap => {
+}: EditorStateParameter &
+  ResolvedPosParameter &
+  Partial<CompareMatchParameter>): SuggestReasonMap => {
   const value: SuggestReasonMap = object();
 
   if (!prev && !next) {
@@ -390,7 +392,7 @@ export const findReason = ({
 export const findFromSuggestions = ({
   suggesters,
   $pos,
-}: FindFromSuggestionsParams): SuggestStateMatch | undefined => {
+}: FindFromSuggestionsParameter): SuggestStateMatch | undefined => {
   // Find the first match and break when done
   for (const suggester of suggesters) {
     try {

@@ -1,7 +1,7 @@
 import { setBlockType } from 'prosemirror-commands';
 
 import {
-  CommandNodeTypeParams,
+  CommandNodeTypeParameter,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -114,7 +114,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions>
   /**
    * Provides the commands that this extension uses.
    */
-  public commands({ type }: CommandNodeTypeParams) {
+  public commands({ type }: CommandNodeTypeParameter) {
     return {
       createParagraph: (attributes: ParagraphExtensionAttributes) => {
         return setBlockType(type, attributes);

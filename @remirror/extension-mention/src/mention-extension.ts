@@ -9,13 +9,13 @@ import {
 } from 'prosemirror-suggest';
 
 import {
-  CommandMarkTypeParams,
+  CommandMarkTypeParameter,
   EditorState,
   getMarkRange,
   getMatchString,
   isElementDOMNode,
   isMarkActive,
-  ManagerMarkTypeParams,
+  ManagerMarkTypeParameter,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
@@ -203,7 +203,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     });
   };
 
-  public commands({ type, getState }: CommandMarkTypeParams) {
+  public commands({ type, getState }: CommandMarkTypeParameter) {
     return {
       createMention: this.createMention(type, getState),
       updateMention: this.createMention(type, getState, true),
@@ -213,7 +213,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     };
   }
 
-  public pasteRules({ type }: ManagerMarkTypeParams) {
+  public pasteRules({ type }: ManagerMarkTypeParameter) {
     return this.options.matchers.map((matcher) => {
       const { startOfLine, char, supportedCharacters, name } = {
         ...DEFAULT_MATCHER,
@@ -236,7 +236,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     });
   }
 
-  public suggestions({ getActions, type, getState }: ManagerMarkTypeParams): Suggestion[] {
+  public suggestions({ getActions, type, getState }: ManagerMarkTypeParameter): Suggestion[] {
     const {
       matchers,
       onChange,

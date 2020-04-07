@@ -12,7 +12,7 @@ import {
   RegExpParameter,
 } from '@remirror/core-types';
 
-interface NodeInputRuleParams
+interface NodeInputRuleParameter
   extends Partial<GetAttributesParameter>,
     RegExpParameter,
     NodeTypeParameter {
@@ -22,7 +22,7 @@ interface NodeInputRuleParams
    */
   updateSelection?: boolean;
 }
-interface PlainInputRuleParams extends RegExpParameter {
+interface PlainInputRuleParameter extends RegExpParameter {
   /**
    * Allows for setting a text selection at the start of the newly created node.
    * Leave blank or set to false to ignore.
@@ -35,7 +35,7 @@ interface PlainInputRuleParams extends RegExpParameter {
   transformMatch(match: string[]): string | null | undefined;
 }
 
-interface MarkInputRuleParams
+interface MarkInputRuleParameter
   extends Partial<GetAttributesParameter>,
     RegExpParameter,
     MarkTypeParameter {}
@@ -43,7 +43,7 @@ interface MarkInputRuleParams
 /**
  * Creates a paste rule based on the provided regex for the provided mark type
  */
-export const markPasteRule = ({ regexp, type, getAttributes }: MarkInputRuleParams) => {
+export const markPasteRule = ({ regexp, type, getAttributes }: MarkInputRuleParameter) => {
   const handler = (fragment: Fragment) => {
     const nodes: ProsemirrorNode[] = [];
 
@@ -96,7 +96,7 @@ export const markInputRule = ({
   regexp,
   type,
   getAttributes: getAttributes,
-}: MarkInputRuleParams) => {
+}: MarkInputRuleParameter) => {
   return new InputRule(regexp, (state, match, start, end) => {
     const { tr } = state;
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
@@ -136,7 +136,7 @@ export const nodeInputRule = ({
   type,
   getAttributes: getAttributes,
   updateSelection = false,
-}: NodeInputRuleParams) => {
+}: NodeInputRuleParameter) => {
   return new InputRule(regexp, (state, match, start, end) => {
     const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
     const { tr } = state;
@@ -158,7 +158,7 @@ export const plainInputRule = <GSchema extends EditorSchema = EditorSchema>({
   regexp,
   transformMatch,
   updateSelection = false,
-}: PlainInputRuleParams) => {
+}: PlainInputRuleParameter) => {
   return new InputRule<GSchema>(regexp, (state, match, start, end) => {
     const value = transformMatch(match);
 

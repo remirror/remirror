@@ -1,4 +1,4 @@
-import { UsePositionerParams } from '../react-types';
+import { UsePositionerParameter } from '../react-types';
 import { useRemirror } from './use-remirror';
 
 /**
@@ -32,7 +32,7 @@ import { useRemirror } from './use-remirror';
 export const usePositioner = <GRefKey extends string = 'ref'>({
   positioner,
   ...rest
-}: UsePositionerParams<GRefKey>) => {
+}: UsePositionerParameter<GRefKey>) => {
   const { getPositionerProps } = useRemirror();
 
   return getPositionerProps<GRefKey>({ ...positioner, ...rest });

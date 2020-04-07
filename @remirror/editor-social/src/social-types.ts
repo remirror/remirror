@@ -12,7 +12,7 @@ import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
 import { MentionExtension, MentionExtensionMatcher } from '@remirror/extension-mention';
 import { ManagedRemirrorProviderProps, RemirrorManagerProps } from '@remirror/react';
 
-export type OnMentionChangeParams = MentionState & {
+export type OnMentionChangeParameter = MentionState & {
   /**
    * The currently active matching index
    */
@@ -50,7 +50,7 @@ export interface SocialEditorProps
   /**
    * Called any time there is a change in the mention
    */
-  onMentionChange(params?: OnMentionChangeParams): void;
+  onMentionChange(params?: OnMentionChangeParameter): void;
 
   /**
    * The theme to be used for setting .
@@ -75,7 +75,7 @@ interface BaseMentionState {
   query: string;
 }
 
-interface NameParams<GName extends string> {
+interface NameParameter<GName extends string> {
   /**
    * The name of the currently active suggestion.
    * This is the name passed into the suggestionsMatcher config object.
@@ -83,9 +83,9 @@ interface NameParams<GName extends string> {
   name: GName;
 }
 
-interface AtMentionState extends BaseMentionState, NameParams<'at'> {}
+interface AtMentionState extends BaseMentionState, NameParameter<'at'> {}
 
-interface HashMentionState extends BaseMentionState, NameParams<'tag'> {}
+interface HashMentionState extends BaseMentionState, NameParameter<'tag'> {}
 
 /**
  * The possible active suggestion names.
@@ -121,7 +121,7 @@ export interface ActiveTagData extends TagData {
  */
 export type MentionGetter = () => SuggestStateMatch;
 
-export interface SetExitTriggeredInternallyParams {
+export interface SetExitTriggeredInternallyParameter {
   /**
    * Identifies the command as an internal exit inducing command.
    * Prevents a second onExit from being dispatched.
@@ -129,14 +129,14 @@ export interface SetExitTriggeredInternallyParams {
   setExitTriggeredInternally: () => void;
 }
 
-export interface MentionGetterParams {
+export interface MentionGetterParameter {
   /**
    * Provides access to the most recent mention data.
    */
   getMention: MentionGetter;
 }
 
-export interface DataParams<GData> {
+export interface DataParameter<GData> {
   /**
    * A list of data items.
    */
@@ -144,14 +144,14 @@ export interface DataParams<GData> {
 }
 
 export interface UserSuggestionsProps
-  extends MentionGetterParams,
-    DataParams<ActiveUserData>,
-    SetExitTriggeredInternallyParams {}
+  extends MentionGetterParameter,
+    DataParameter<ActiveUserData>,
+    SetExitTriggeredInternallyParameter {}
 
 export interface TagSuggestionsProps
-  extends MentionGetterParams,
-    DataParams<ActiveTagData>,
-    SetExitTriggeredInternallyParams {}
+  extends MentionGetterParameter,
+    DataParameter<ActiveTagData>,
+    SetExitTriggeredInternallyParameter {}
 
 export type DivProps = JSX.IntrinsicElements['div'];
 export type SpanProps = JSX.IntrinsicElements['span'];

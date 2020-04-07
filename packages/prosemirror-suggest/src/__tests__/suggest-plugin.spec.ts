@@ -2,14 +2,14 @@ import { createEditor, doc, p } from 'jest-prosemirror';
 
 import { ExitReason } from '../suggest-constants';
 import { suggest } from '../suggest-plugin';
-import { SuggestExitHandlerParams, SuggestKeyBindingParams } from '../suggest-types';
+import { SuggestExitHandlerParameter, SuggestKeyBindingParameter } from '../suggest-types';
 
 describe('Suggest Handlers', () => {
   it('should call `onChange`, `onExit` and `createCommand` handlers', () => {
     const command = jest.fn();
     const expected = 'suggest';
     const handlers = {
-      onExit: jest.fn((params: SuggestExitHandlerParams) => {
+      onExit: jest.fn((params: SuggestExitHandlerParameter) => {
         params.command('command');
 
         expect(params.queryText.full).toBe(expected);
@@ -44,7 +44,7 @@ describe('Suggest Handlers', () => {
 
   it('should respond to keyBindings', () => {
     const keyBindings = {
-      Enter: jest.fn((params: SuggestKeyBindingParams) => {
+      Enter: jest.fn((params: SuggestKeyBindingParameter) => {
         params.command();
       }),
     };
@@ -101,7 +101,11 @@ describe('Suggest Ignore', () => {
   it('should ignore matches when called', () => {
     const handlers = {
       onExit: jest.fn(
-        ({ addIgnored, range: { from }, suggester: { char, name } }: SuggestExitHandlerParams) => {
+        ({
+          addIgnored,
+          range: { from },
+          suggester: { char, name },
+        }: SuggestExitHandlerParameter) => {
           addIgnored({ from, char, name });
         },
       ),
@@ -127,7 +131,7 @@ describe('Suggest Ignore', () => {
       tag: (_name?: string) => {},
     };
 
-    const onExitMaker = (type: keyof typeof clear) => (params: SuggestExitHandlerParams) => {
+    const onExitMaker = (type: keyof typeof clear) => (params: SuggestExitHandlerParameter) => {
       const { name, char } = params.suggester;
       params.addIgnored({ from: params.range.from, char, name });
       clear[type] = params.clearIgnored;

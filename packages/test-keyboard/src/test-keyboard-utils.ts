@@ -15,7 +15,7 @@ export const createKeyboardEvent = (
   options: KeyboardEventInit & PlainObject,
 ) => new KeyboardEvent(type, { ...options, bubbles: true });
 
-interface GetModifierInformationParams {
+interface GetModifierInformationParameter {
   /**
    * The modifier keys passed in
    */
@@ -39,7 +39,7 @@ interface GetModifierInformationParams {
 export const getModifierInformation = ({
   modifiers,
   isMac = false,
-}: GetModifierInformationParams) => {
+}: GetModifierInformationParameter) => {
   const info: ModifierInformation = {
     altKey: false,
     ctrlKey: false,

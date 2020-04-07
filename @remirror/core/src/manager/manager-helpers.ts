@@ -32,7 +32,7 @@ import {
   NodeExtensionTags,
 } from '../types';
 
-interface IsNameUniqueParams {
+interface IsNameUniqueParameter {
   /**
    * The name to check against
    */
@@ -69,7 +69,7 @@ const isNameUnique = ({
   set,
   shouldThrow = false,
   type = 'extension',
-}: IsNameUniqueParams) => {
+}: IsNameUniqueParameter) => {
   if (set.has(name)) {
     const message = `There is a naming conflict for the name: ${name} used in this type: ${type}. Please rename to avoid runtime errors.`;
     if (shouldThrow) {
@@ -198,7 +198,7 @@ const transformCommands = <ExtensionUnion extends AnyExtension>({
 //  * Helpers are functions which enable extensions to provide useful information
 //  * or transformations to their consumers and other extensions.
 //  */
-// const createHelpers = ({ extensions, params }: CreateHelpersParams) => {
+// const createHelpers = ({ extensions, params }: CreateHelpersParameter) => {
 //   const getItemParameters = (extension: Required<Pick<AnyExtension, 'helpers'>>) =>
 //     extension.helpers({
 //       ...params,

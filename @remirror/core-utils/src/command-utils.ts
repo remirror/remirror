@@ -20,7 +20,7 @@ import {
 import { getMarkRange, isMarkType, isNodeType } from './dom-utils';
 import { findParentNode, isNodeActive, selectionEmpty } from './prosemirror-utils';
 
-interface UpdateMarkParams
+interface UpdateMarkParameter
   extends Partial<RangeParameter>,
     Partial<AttributesParameter>,
     TransformTransactionParameter {
@@ -49,7 +49,7 @@ export const updateMark = ({
   attrs: attributes = object<ProsemirrorAttributes>(),
   appendText,
   range,
-}: UpdateMarkParams): ProsemirrorCommandFunction => (state, dispatch) => {
+}: UpdateMarkParameter): ProsemirrorCommandFunction => (state, dispatch) => {
   const { selection } = state;
   const { tr } = state;
   const { from, to } = range ?? selection;
@@ -141,7 +141,7 @@ export const toggleList = (type: NodeType, itemType: NodeType): ProsemirrorComma
   return wrapInList(type)(state, dispatch);
 };
 
-interface ToggleBlockItemParams extends NodeTypeParameter, Partial<AttributesParameter> {
+interface ToggleBlockItemParameter extends NodeTypeParameter, Partial<AttributesParameter> {
   /**
    * The type to toggle back to. Usually this is the paragraph node type.
    */
@@ -159,7 +159,7 @@ export const toggleBlockItem = ({
   type,
   toggleType,
   attrs: attributes = object<ProsemirrorAttributes>(),
-}: ToggleBlockItemParams): ProsemirrorCommandFunction => (state, dispatch) => {
+}: ToggleBlockItemParameter): ProsemirrorCommandFunction => (state, dispatch) => {
   const isActive = isNodeActive({ state, type, attrs: attributes });
 
   if (isActive) {
@@ -169,7 +169,7 @@ export const toggleBlockItem = ({
   return setBlockType(type, attributes)(state, dispatch);
 };
 
-interface ReplaceTextParams
+interface ReplaceTextParameter
   extends Partial<RangeParameter>,
     Partial<AttributesParameter>,
     TransformTransactionParameter {
@@ -190,7 +190,10 @@ interface ReplaceTextParams
   type?: NodeType | MarkType;
 }
 
-interface CallMethodParams<GFunction extends AnyFunction, GReturn extends ReturnType<GFunction>> {
+interface CallMethodParameter<
+  GFunction extends AnyFunction,
+  GReturn extends ReturnType<GFunction>
+> {
   fn: GFunction | unknown;
   defaultReturn: GReturn;
 }
@@ -201,10 +204,10 @@ interface CallMethodParams<GFunction extends AnyFunction, GReturn extends Return
 const callMethod = <
   GFunction extends AnyFunction,
   GReturn extends ReturnType<GFunction>,
-  GParams extends Parameters<GFunction>
+  GParameter extends Parameters<GFunction>
 >(
-  { fn, defaultReturn }: CallMethodParams<GFunction, GReturn>,
-  arguments_: GParams,
+  { fn, defaultReturn }: CallMethodParameter<GFunction, GReturn>,
+  arguments_: GParameter,
 ): GReturn => (isFunction(fn) ? fn(...arguments_) : defaultReturn);
 
 /**
@@ -233,7 +236,7 @@ export const replaceText = ({
   content = '',
   startTransaction,
   endTransaction,
-}: ReplaceTextParams): ProsemirrorCommandFunction => (state, dispatch) => {
+}: ReplaceTextParameter): ProsemirrorCommandFunction => (state, dispatch) => {
   const { schema, selection } = state;
   // const { $from, $to } = selection;
   const index = selection.$from.index();
@@ -276,7 +279,7 @@ export const replaceText = ({
   return true;
 };
 
-interface RemoveMarkParams
+interface RemoveMarkParameter
   extends MarkTypeParameter,
     Partial<RangeParameter<'to'>>,
     TransformTransactionParameter {
@@ -301,7 +304,7 @@ export const removeMark = ({
   range,
   endTransaction,
   startTransaction,
-}: RemoveMarkParams): ProsemirrorCommandFunction => (state, dispatch) => {
+}: RemoveMarkParameter): ProsemirrorCommandFunction => (state, dispatch) => {
   const { selection } = state;
   const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
   let { from, to } = range ?? selection;

@@ -7,14 +7,14 @@ import { getPluginState, isDocNodeEmpty } from '@remirror/core-utils';
 
 import { PlaceholderExtensionSettings, PlaceholderPluginState } from '../../core-extension-types';
 
-interface SharedParams {
+interface SharedParameter {
   /** The placeholder extension */
   extension: AnyExtension<PlaceholderExtensionSettings>;
   /** The editor state */
   state: EditorState;
 }
 
-interface ApplyStateParams extends SharedParams {
+interface ApplyStateParameter extends SharedParameter {
   /** The plugin state passed through to apply */
   pluginState: PlaceholderPluginState;
   /** A state transaction */
@@ -26,7 +26,7 @@ interface ApplyStateParams extends SharedParams {
  *
  * @param params
  */
-const applyState = ({ pluginState, extension, tr, state }: ApplyStateParams) => {
+const applyState = ({ pluginState, extension, tr, state }: ApplyStateParameter) => {
   if (!tr.docChanged) {
     return pluginState;
   }
@@ -40,7 +40,7 @@ const applyState = ({ pluginState, extension, tr, state }: ApplyStateParams) => 
  * @param params.extension
  * @param params.state
  */
-const createDecorationSet = ({ extension, state }: SharedParams) => {
+const createDecorationSet = ({ extension, state }: SharedParameter) => {
   const { empty } = getPluginState<PlaceholderPluginState>(extension.pluginKey, state);
   const { emptyNodeClass, placeholder } = extension.settings;
 

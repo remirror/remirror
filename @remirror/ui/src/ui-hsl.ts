@@ -55,7 +55,7 @@ export interface HSLObject {
 
 export type HSLTuple = [number | string, number | string, number | string, (number | string)?];
 
-export type HSLCreateParams = HSL | HSLObject | NamedHSLObject | HSLTuple | string;
+export type HSLCreateParameter = HSL | HSLObject | NamedHSLObject | HSLTuple | string;
 
 // Taken from https://github.com/regexhq/hsla-regex/blob/master/test/test.js#L7
 const HSLA_REGEX = /^hsla\((\d+),\s*([\d.]+)%,\s*([\d.]+)%,\s*(\d*(?:\.\d+)?)\)$/;
@@ -234,7 +234,7 @@ export class HSL {
    *
    * Throws a descriptive error if invalid parameters are passed in.
    */
-  public static create(value: HSLCreateParams): HSL {
+  public static create(value: HSLCreateParameter): HSL {
     if (isHSL(value)) {
       return value.clone();
     }

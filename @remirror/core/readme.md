@@ -44,7 +44,7 @@ library.
 
 ```ts
 import {
-  ManagerMarkTypeParams,
+  ManagerMarkTypeParameter,
   MarkExtension,
   MarkExtensionSpec,
   markInputRule,
@@ -80,24 +80,24 @@ export class StrikeExtension extends MarkExtension {
   }
 
   // Defines keymaps for this extension
-  public keys({ type }: ManagerMarkTypeParams) {
+  public keys({ type }: ManagerMarkTypeParameter) {
     return {
       'Mod-d': toggleMark(type),
     };
   }
 
   // Defines commands that can be used to build menu UI's
-  public commands({ type }: CommandMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParameter) {
     return () => toggleMark(type);
   }
 
   // Input rules happen as code is being typed
-  public inputRules({ type }: ManagerMarkTypeParams) {
+  public inputRules({ type }: ManagerMarkTypeParameter) {
     return [markInputRule({ regexp: /~([^~]+)~$/, type })];
   }
 
   // Paste rules are activated when code is pasted into the editor
-  public pasteRules({ type }: ManagerMarkTypeParams) {
+  public pasteRules({ type }: ManagerMarkTypeParameter) {
     return [markPasteRule({ regexp: /~([^~]+)~/g, type })];
   }
 }

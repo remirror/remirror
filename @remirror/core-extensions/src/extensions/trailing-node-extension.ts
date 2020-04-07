@@ -10,7 +10,7 @@ import {
 } from '@remirror/core-types';
 import { getPluginState, nodeEqualsType } from '@remirror/core-utils';
 
-interface CreateTrailingNodePluginParams
+interface CreateTrailingNodePluginParameter
   extends ExtensionTagParameter,
     ExtensionParameter<TrailingNodeExtension>,
     SchemaParameter {}
@@ -23,7 +23,7 @@ export const createTrailingNodePlugin = ({
   extension,
   tags,
   schema,
-}: CreateTrailingNodePluginParams) => {
+}: CreateTrailingNodePluginParameter) => {
   const { options, pluginKey } = extension;
   const { disableTags, ignoredNodes, nodeName } = options;
 

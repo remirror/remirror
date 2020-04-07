@@ -6,7 +6,7 @@ import { ConditionalExcept, ConditionalPick } from 'type-fest';
 declare const _brand: unique symbol;
 declare const _flavor: unique symbol;
 
-interface CreateExtraAttributesParams {
+interface CreateExtraAttributesParameter {
   /**
    * The fallback value to use for the extra attributes being created. Must be
    * provided.
@@ -255,7 +255,7 @@ export type GetExtraAttributes = (domNode: Node) => Record<string, unknown>;
  * }
  */
 export type CreateExtraAttributes = (
-  params: CreateExtraAttributesParams,
+  params: CreateExtraAttributesParameter,
 ) => Record<string, AttributeSpec>;
 
 /**

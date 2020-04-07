@@ -18,10 +18,10 @@ import { isDOMNode, isElementDOMNode } from '@remirror/core-utils';
 import { PortalContainer } from '@remirror/react-portals';
 
 import {
-  CreateNodeViewParams as CreateNodeViewParameters,
+  CreateNodeViewParameter as CreateNodeViewParameters,
   GetPosition,
   NodeViewComponentProps as NodeViewComponentProperties,
-  ReactNodeViewParams as ReactNodeViewParameters,
+  ReactNodeViewParameter as ReactNodeViewParameters,
 } from './node-view-types';
 
 export class ReactNodeView<
@@ -90,7 +90,7 @@ export class ReactNodeView<
     portalContainer,
     view,
     config: options,
-  }: ReactNodeViewParams<GOptions, GAttributes>) {
+  }: ReactNodeViewParameter<GOptions, GAttributes>) {
     this.node = node;
     this.view = view;
     this.portalContainer = portalContainer;
@@ -293,7 +293,11 @@ export class ReactNodeView<
   public static createNodeView<
     GOptions extends BaseExtensionSettings = BaseExtensionSettings,
     GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
-  >({ Component, portalContainer, config: options }: CreateNodeViewParams<GOptions, GAttributes>) {
+  >({
+    Component,
+    portalContainer,
+    config: options,
+  }: CreateNodeViewParameter<GOptions, GAttributes>) {
     return (node: ProsemirrorNode, view: EditorView, getPosition: GetPosition) =>
       new ReactNodeView<GOptions, GAttributes>({
         node: node as NodeWithAttributes<GAttributes>,

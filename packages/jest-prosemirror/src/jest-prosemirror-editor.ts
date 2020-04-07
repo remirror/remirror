@@ -29,9 +29,9 @@ import {
   taggedDocHasSelection as taggedDocumentHasSelection,
 } from './jest-prosemirror-nodes';
 import {
-  TaggedDocParams as TaggedDocumentParameters,
+  TaggedDocParameter as TaggedDocumentParameters,
   TestEditorView,
-  TestEditorViewParams as TestEditorViewParameters,
+  TestEditorViewParameter as TestEditorViewParameters,
 } from './jest-prosemirror-types';
 
 /**
@@ -47,8 +47,8 @@ export const flush = (view: TestEditorView) => {
 export const pasteContent = <GSchema extends EditorSchema = any>({
   view,
   content,
-}: TestEditorViewParams<GSchema> &
-  TestEditorViewParams<GSchema> & { content: ProsemirrorNode | string }) => {
+}: TestEditorViewParameter<GSchema> &
+  TestEditorViewParameter<GSchema> & { content: ProsemirrorNode | string }) => {
   let slice = isString(content)
     ? p(content).slice(0)
     : content.slice(content.type.name === 'doc' ? 1 : 0);
@@ -59,8 +59,8 @@ export const pasteContent = <GSchema extends EditorSchema = any>({
   view.dispatch(view.state.tr.replaceSelection(slice));
 };
 
-export interface InsertTextParams<GSchema extends EditorSchema = any>
-  extends TestEditorViewParams<GSchema>,
+export interface InsertTextParameter<GSchema extends EditorSchema = any>
+  extends TestEditorViewParameter<GSchema>,
     TextParameter {
   /**
    * The start point of text insertion
@@ -76,7 +76,7 @@ export const insertText = <GSchema extends EditorSchema = any>({
   view,
   text,
   start: from,
-}: InsertTextParams<GSchema>) => {
+}: InsertTextParameter<GSchema>) => {
   const keys = Keyboard.create({
     target: view.dom,
   }).start();
@@ -97,8 +97,8 @@ export const insertText = <GSchema extends EditorSchema = any>({
   keys.end();
 };
 
-interface DispatchTextSelectionParams<GSchema extends EditorSchema = any>
-  extends TestEditorViewParams<GSchema> {
+interface DispatchTextSelectionParameter<GSchema extends EditorSchema = any>
+  extends TestEditorViewParameter<GSchema> {
   start: number;
   end?: number;
 }
@@ -115,7 +115,7 @@ export const dispatchTextSelection = <GSchema extends EditorSchema = any>({
   view,
   start,
   end,
-}: DispatchTextSelectionParams<GSchema>) => {
+}: DispatchTextSelectionParameter<GSchema>) => {
   const { state } = view;
   const tr = state.tr.setSelection(TextSelection.create(state.doc, start, end));
 
@@ -131,13 +131,13 @@ export const dispatchTextSelection = <GSchema extends EditorSchema = any>({
  */
 export const dispatchAllSelection = <GSchema extends EditorSchema = any>({
   view,
-}: TestEditorViewParams<GSchema>) => {
+}: TestEditorViewParameter<GSchema>) => {
   const { tr, doc } = view.state;
   view.dispatch(tr.setSelection(new AllSelection(doc)));
 };
 
-interface DispatchNodeSelectionParams<GSchema extends EditorSchema = any>
-  extends TestEditorViewParams<GSchema>,
+interface DispatchNodeSelectionParameter<GSchema extends EditorSchema = any>
+  extends TestEditorViewParameter<GSchema>,
     PosParameter {}
 
 /**
@@ -150,13 +150,14 @@ interface DispatchNodeSelectionParams<GSchema extends EditorSchema = any>
 export const dispatchNodeSelection = <GSchema extends EditorSchema = any>({
   view,
   pos,
-}: DispatchNodeSelectionParams<GSchema>) => {
+}: DispatchNodeSelectionParameter<GSchema>) => {
   const { state } = view;
   const tr = state.tr.setSelection(NodeSelection.create(state.doc, pos));
   view.dispatch(tr);
 };
 
-interface PressParams<GSchema extends EditorSchema = any> extends TestEditorViewParams<GSchema> {
+interface PressParameter<GSchema extends EditorSchema = any>
+  extends TestEditorViewParameter<GSchema> {
   /**
    * The keyboard shortcut to run
    */
@@ -166,7 +167,10 @@ interface PressParams<GSchema extends EditorSchema = any> extends TestEditorView
 /**
  * Press a key.
  */
-export const press = <GSchema extends EditorSchema = any>({ view, char }: PressParams<GSchema>) => {
+export const press = <GSchema extends EditorSchema = any>({
+  view,
+  char,
+}: PressParameter<GSchema>) => {
   Keyboard.create({
     target: view.dom,
     batch: true,
@@ -185,7 +189,7 @@ export const press = <GSchema extends EditorSchema = any>({ view, char }: PressP
 export const backspace = <GSchema extends EditorSchema = any>({
   view,
   times = 1,
-}: TestEditorViewParams<GSchema> & { times?: number }) => {
+}: TestEditorViewParameter<GSchema> & { times?: number }) => {
   const { selection, tr } = view.state;
   const { from, empty } = selection;
 
@@ -203,8 +207,8 @@ export const backspace = <GSchema extends EditorSchema = any>({
   view.dispatch(tr);
 };
 
-interface KeyboardShortcutParams<GSchema extends EditorSchema = any>
-  extends TestEditorViewParams<GSchema> {
+interface KeyboardShortcutParameter<GSchema extends EditorSchema = any>
+  extends TestEditorViewParameter<GSchema> {
   /**
    * The keyboard shortcut to run
    */
@@ -217,7 +221,7 @@ interface KeyboardShortcutParams<GSchema extends EditorSchema = any>
 export const shortcut = <GSchema extends EditorSchema = any>({
   view,
   shortcut: text,
-}: KeyboardShortcutParams<GSchema>) => {
+}: KeyboardShortcutParameter<GSchema>) => {
   Keyboard.create({
     target: view.dom,
     batch: true,
@@ -230,7 +234,7 @@ export const shortcut = <GSchema extends EditorSchema = any>({
     });
 };
 
-export interface FireParams {
+export interface FireParameter {
   /**
    * The event to fire on the view
    */
@@ -247,9 +251,9 @@ export interface FireParams {
   position?: number;
 }
 
-interface FireEventAtPositionParams<GSchema extends EditorSchema = any>
-  extends TestEditorViewParams<GSchema>,
-    FireParams {}
+interface FireEventAtPositionParameter<GSchema extends EditorSchema = any>
+  extends TestEditorViewParameter<GSchema>,
+    FireParameter {}
 
 /**
  * Fires an event at the provided position or the current selected position in the dom.
@@ -259,7 +263,7 @@ export const fireEventAtPosition = <GSchema extends EditorSchema = any>({
   event,
   options = object<PlainObject>(),
   position = view.state.selection.anchor,
-}: FireEventAtPositionParams<GSchema>) => {
+}: FireEventAtPositionParameter<GSchema>) => {
   const element = findElementAtPosition(position, view);
   const syntheticEvents = createEvents(event, options);
 
@@ -294,7 +298,7 @@ export const fireEventAtPosition = <GSchema extends EditorSchema = any>({
  * @typeParam GSchema - the editor schema used node.
  */
 export interface ApplyReturn<GSchema extends EditorSchema = any>
-  extends TaggedDocParams<GSchema>,
+  extends TaggedDocParameter<GSchema>,
     EditorStateParameter<GSchema> {
   /**
    * True when the command was applied successfully.
@@ -500,7 +504,7 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
    *
    * @param params - the fire event parameters
    */
-  public fire(parameters: Omit<FireEventAtPositionParams<GSchema>, 'view'>) {
+  public fire(parameters: Omit<FireEventAtPositionParameter<GSchema>, 'view'>) {
     fireEventAtPosition({ view: this.view, ...parameters });
     return this;
   }
@@ -509,7 +513,7 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
    * Callback function which receives the `start`, `end`, `state`, `view`, `schema` and `selection` properties
    * and allows for easier testing of the current state of the editor.
    */
-  public callback(fn: (content: ReturnValueCallbackParams<GSchema>) => void) {
+  public callback(fn: (content: ReturnValueCallbackParameter<GSchema>) => void) {
     fn(pick(this, ['start', 'end', 'state', 'view', 'schema', 'selection', 'doc', 'debug']));
     return this;
   }
@@ -541,7 +545,7 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
  *
  * test('`keyBindings`', () => {
  * const keyBindings = {
- *  Enter: jest.fn((params: SuggestKeyBindingParams) => {
+ *  Enter: jest.fn((params: SuggestKeyBindingParameter) => {
  *    params.command();
  *  }),
  * };
@@ -585,8 +589,8 @@ export const createEditor = <GSchema extends EditorSchema = any>(
   return ProsemirrorTestChain.of(view);
 };
 
-export interface ReturnValueCallbackParams<GSchema extends EditorSchema = any>
-  extends TestEditorViewParams<GSchema>,
+export interface ReturnValueCallbackParameter<GSchema extends EditorSchema = any>
+  extends TestEditorViewParameter<GSchema>,
     EditorStateParameter<GSchema>,
     SelectionParameter<GSchema> {
   start: number;
