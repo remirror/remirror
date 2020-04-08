@@ -22,7 +22,7 @@ import {
 
 import {
   enhancedLinkHandler,
-  EnhancedLinkHandlerProps as EnhancedLinkHandlerProperties,
+  EnhancedLinkHandlerProps,
   extractHref,
   getUrlsFromState,
   isSetEqual,

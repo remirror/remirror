@@ -1,7 +1,7 @@
-import { ProsemirrorAttributes, EditorView } from '@remirror/core';
+import { EditorView, ProsemirrorAttributes } from '@remirror/core';
 import { MentionExtensionAttributes } from '@remirror/extension-mention';
 
-import { MentionGetterParameter as MentionGetterParameters } from './social-types';
+import { MentionGetterParameter } from './social-types';
 
 /**
  * Maps the items to items with an active property

@@ -18,12 +18,12 @@ import { transactionChanged } from '@remirror/core-utils';
 import { ChangeReason, DEFAULT_SUGGESTER, ExitReason } from './suggest-constants';
 import { isInvalidSplitReason, isJumpReason, isValidMatch } from './suggest-predicates';
 import {
-  AddIgnoredParameter as AddIgnoredParameters,
-  CompareMatchParameter as CompareMatchParameters,
-  RemoveIgnoredParameter as RemoveIgnoredParameters,
-  SuggestCallbackParameter as SuggestCallbackParameters,
+  AddIgnoredParameter,
+  CompareMatchParameter,
+  RemoveIgnoredParameter,
+  SuggestCallbackParameter,
   Suggestion,
-  SuggestKeyBindingParameter as SuggestKeyBindingParameters,
+  SuggestKeyBindingParameter,
   SuggestReasonMap,
   SuggestStateMatch,
   SuggestStateMatchReason,

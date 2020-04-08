@@ -1,5 +1,3 @@
-import getVersion from 'pkg.macro';
-
 import { ExtensionFactory } from '../extension/extension-factory';
 
 export interface DocExtensionOptions {
@@ -24,7 +22,6 @@ export interface DocExtensionOptions {
  */
 export const DocExtension = ExtensionFactory.typed<DocExtensionOptions>().node({
   name: 'doc',
-  version: getVersion<string>('version').version,
   defaultSettings: {
     content: 'block+',
   },

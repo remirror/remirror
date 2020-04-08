@@ -1,4 +1,5 @@
 require('source-map-support').install();
+require('tsconfig-paths/register');
 
 const { baseDir } = require('../scripts/helpers');
 require('ts-node').register({

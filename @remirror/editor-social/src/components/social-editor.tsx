@@ -35,8 +35,8 @@ import {
   ActiveUserData,
   MatchName,
   MentionState,
-  OnMentionChangeParameter as OnMentionChangeParameters,
-  SocialEditorProps as SocialEditorProperties,
+  OnMentionChangeParameter,
+  SocialEditorProps,
 } from '../social-types';
 import { calculateNewIndexFromArrowPress, mapToActiveIndex } from '../social-utils';
 import { SocialEditorComponent } from './social-wrapper-component';

@@ -6,22 +6,22 @@ import { ComponentType } from 'react';
 import { EDITOR_CLASS_NAME, SELECTED_NODE_CLASS_NAME } from '@remirror/core-constants';
 import { isFunction, isPlainObject, isString, keys } from '@remirror/core-helpers';
 import {
-  ProsemirrorAttributes,
   BaseExtensionSettings,
   Decoration,
   EditorView,
   NodeView,
   NodeWithAttributes,
+  ProsemirrorAttributes,
   ProsemirrorNode,
 } from '@remirror/core-types';
 import { isDOMNode, isElementDOMNode } from '@remirror/core-utils';
 import { PortalContainer } from '@remirror/react-portals';
 
 import {
-  CreateNodeViewParameter as CreateNodeViewParameters,
+  CreateNodeViewParameter,
   GetPosition,
-  NodeViewComponentProps as NodeViewComponentProperties,
-  ReactNodeViewParameter as ReactNodeViewParameters,
+  NodeViewComponentProps,
+  ReactNodeViewParameter,
 } from './node-view-types';
 
 export class ReactNodeView<

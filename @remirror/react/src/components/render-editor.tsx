@@ -149,6 +149,10 @@ export class RenderEditor<ManagerType extends Manager = any> extends PureCompone
    */
   public context!: RemirrorThemeContextType;
 
+  private rootPropsConfig = {
+    called: false,
+  };
+
   constructor(
     properties: RenderEditorProps<GetExtensionUnion<ManagerType>>,
     context: RemirrorThemeContextType,
@@ -222,10 +226,6 @@ export class RenderEditor<ManagerType extends Manager = any> extends PureCompone
       this.props.forceEnvironment,
     );
   }
-
-  private rootPropsConfig = {
-    called: false,
-  };
 
   /**
    * The external `getRootProps` that is used to spread props onto a desired

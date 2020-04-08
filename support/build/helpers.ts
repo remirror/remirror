@@ -3,7 +3,7 @@ import { outputFile } from 'fs-extra';
 import { join, relative, resolve } from 'path';
 import { PackageJson as BasePackageJson } from 'type-fest';
 
-export { keys, uniqueArray } from '../../@remirror/core-helpers/src';
+export { keys, uniqueArray } from '../../@remirror/core-helpers/src/core-helpers';
 
 export const DEPENDENCY_TYPES = [
   'dependencies',

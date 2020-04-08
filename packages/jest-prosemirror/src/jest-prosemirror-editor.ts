@@ -29,9 +29,9 @@ import {
   taggedDocHasSelection as taggedDocumentHasSelection,
 } from './jest-prosemirror-nodes';
 import {
-  TaggedDocParameter as TaggedDocumentParameters,
+  TaggedDocParameter,
   TestEditorView,
-  TestEditorViewParameter as TestEditorViewParameters,
+  TestEditorViewParameter,
 } from './jest-prosemirror-types';
 
 /**

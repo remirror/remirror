@@ -15,11 +15,11 @@ import {
 import keyNames from 'w3c-keyname';
 
 import {
-  CommandNames,
   AnyFunction,
-  ProsemirrorAttributes,
+  CommandNames,
   getMarkAttributes,
   KeyOfThemeVariant,
+  ProsemirrorAttributes,
 } from '@remirror/core';
 import { bubblePositioner, useRemirror } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
@@ -49,7 +49,7 @@ import {
   BubbleMenuTooltip,
   IconButton,
   Toolbar,
-  WithPaddingProps as WithPaddingProperties,
+  WithPaddingProps,
 } from './wysiwyg-components';
 
 const menuItems: Array<[

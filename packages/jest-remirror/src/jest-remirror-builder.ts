@@ -13,7 +13,7 @@ import {
 } from '@remirror/core';
 
 import {
-  BaseFactoryParameter as BaseFactoryParameters,
+  BaseFactoryParameter,
   TaggedContent,
   TaggedContentItem,
   TaggedContentWithText,

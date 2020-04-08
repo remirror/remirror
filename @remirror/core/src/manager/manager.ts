@@ -267,7 +267,7 @@ class Manager<
       }
 
       if (isMarkExtension(extension)) {
-        const { name, #schema: schema } = extension;
+        const { name, schema } = extension;
 
         this.#store.marks[name as GetMarkNameUnion<ExtensionUnion>] = schema;
       }

@@ -3,10 +3,10 @@ import { SelectionParameter } from '@remirror/core-types';
 
 import { ChangeReason, ExitReason } from './suggest-constants';
 import {
-  CompareMatchParameter as CompareMatchParameters,
+  CompareMatchParameter,
   SuggestReasonMap,
   SuggestStateMatch,
-  SuggestStateMatchParameter as SuggestStateMatchParameters,
+  SuggestStateMatchParameter,
 } from './suggest-types';
 
 /**

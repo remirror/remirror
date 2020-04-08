@@ -15,15 +15,15 @@ import { ChangeReason, ExitReason } from './suggest-constants';
 import { createRegexFromSuggestion, regexToString } from './suggest-helpers';
 import { isChange, isEntry, isExit, isJump, isMove } from './suggest-predicates';
 import {
-  CompareMatchParameter as CompareMatchParameters,
-  ReasonParameter as ReasonParameters,
+  CompareMatchParameter,
+  ReasonParameter,
   Suggestion,
-  SuggestionParameter as SuggestionParameters,
+  SuggestionParameter,
   SuggestKeyBindingMap,
-  SuggestKeyBindingParameter as SuggestKeyBindingParameters,
+  SuggestKeyBindingParameter,
   SuggestReasonMap,
   SuggestStateMatch,
-  SuggestStateMatchParameter as SuggestStateMatchParameters,
+  SuggestStateMatchParameter,
 } from './suggest-types';
 
 /**
