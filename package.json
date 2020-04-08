@@ -42,7 +42,7 @@
     "if-clean": "node support/scripts/run-if-clean.js",
     "if-config": "node support/scripts/run-if-config.js",
     "if-not-ci": "node support/scripts/run-if-not-ci.js",
-    "postinstall": "yarn patch && yarn if-not-ci run-p build:cli build:cli:ts",
+    "postinstall": "yarn patch",
     "integrity": "yarn check --integrity",
     "is-logged-in": "npm whoami",
     "lint": "run-s lint:*",
