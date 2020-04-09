@@ -1,23 +1,31 @@
-import * as crypto from 'crypto';
-
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
 import * as babelRuntimeHelpersInteropRequireDefault from '@babel/runtime/helpers/interopRequireDefault';
+import * as crypto from 'crypto';
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
-import { debounce } from 'remirror';
-import * as remirror from 'remirror';
 
-import * as remirrorCoreExtensions from '@remirror/core-extensions';
-import * as remirrorReact from '@remirror/react';
+import { DocExtension, ParagraphExtension, TextExtension } from '@remirror/core';
+// addImport('@remirror/react', 'RemirrorProvider');
+// addImport('@remirror/react', 'useManager');
+// addImport('@remirror/react', 'useExtension');
+import { debounce } from '@remirror/core-helpers';
+// import * as remirrorCoreExtensions from '@remirror/core-extensions';
+//import * as remirrorReact from '@remirror/react';
+import { RemirrorProvider, useExtension, useManager, useRemirror } from '@remirror/react';
 
+//import * as remirror from 'remirror';
 import { ErrorBoundary } from './error-boundary';
+
+const remirrorReact = { RemirrorProvider, useManager, useExtension, useRemirror };
+const remirrorCore = { DocExtension, TextExtension, ParagraphExtension };
 
 const knownRequires: { [moduleName: string]: any } = {
   '@babel/runtime/helpers/interopRequireDefault': babelRuntimeHelpersInteropRequireDefault,
-  '@remirror/core-extensions': remirrorCoreExtensions,
+  // '@remirror/core-extensions': remirrorCoreExtensions,
   '@remirror/react': remirrorReact,
-  remirror: remirror,
+  '@remirror/core': remirrorCore,
+  //remirror: remirror,
   react: React,
 };
 
@@ -29,25 +37,24 @@ const fetchedModules: {
 } = {};
 
 const hash = (str: string): string => {
-  return `_${crypto
-    .createHash('sha1')
-    .update(str)
-    .digest('hex')}`;
+  return `_${crypto.createHash('sha1').update(str).digest('hex')}`;
 };
 
 function bundle(moduleName: string, id: string): Promise<any> {
   return new Promise((resolve, reject) => {
     const el = document.createElement('script');
-    el.onload = () => {
+    el.addEventListener('load', () => {
       console.log(`LOADED ${moduleName}`);
       resolve((window as any)[id]);
-    };
-    el.onerror = _event => {
+    });
+    el.addEventListener('error', (_event) => {
       // We cannot really get details from the event because browsers prevent that for security reasons.
       reject(new Error(`Failed to load ${el.src}`));
-    };
-    el.src = `http://bundle.run/${encodeURIComponent(moduleName)}@latest?name=${encodeURIComponent(id)}`;
-    document.body.appendChild(el);
+    });
+    el.src = `http://bundle.run/${encodeURIComponent(moduleName)}@latest?name=${encodeURIComponent(
+      id,
+    )}`;
+    document.body.append(el);
   });
 }
 
@@ -66,7 +73,7 @@ async function makeRequire(requires: string[]) {
         };
       }
       tasks.push(
-        fetchedModules[id].modulePromise.then(remoteModule => {
+        fetchedModules[id].modulePromise.then((remoteModule) => {
           modules[moduleName] = remoteModule;
         }),
       );
@@ -90,11 +97,18 @@ async function makeRequire(requires: string[]) {
  */
 function runCode(code: string, requireFn: (mod: string) => any) {
   const userModule = { exports: {} as any };
-  eval(`(function userCode(require, module, exports) {${code}})`)(requireFn, userModule, userModule.exports);
+  eval(`(function userCode(require, module, exports) {${code}})`)(
+    requireFn,
+    userModule,
+    userModule.exports,
+  );
   return userModule;
 }
 
-function runCodeInDiv(div: HTMLDivElement, { code, requires }: { code: string; requires: string[] }) {
+function runCodeInDiv(
+  div: HTMLDivElement,
+  { code, requires }: { code: string; requires: string[] },
+) {
   let active = true;
   (async function doIt() {
     try {
@@ -115,13 +129,13 @@ function runCodeInDiv(div: HTMLDivElement, { code, requires }: { code: string; r
         </ErrorBoundary>,
         div,
       );
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
       render(
         <div>
           <h1>Error occurred</h1>
           <pre>
-            <code>{String(e)}</code>
+            <code>{String(error)}</code>
           </pre>
         </div>,
         div,
@@ -148,7 +162,7 @@ export interface ExecuteProps {
  * `export default`) into the DOM. Is automatically debounced to prevent
  * over-fetching npm modules during typing.
  */
-export const Execute: FC<ExecuteProps> = props => {
+export const Execute: FC<ExecuteProps> = (props) => {
   const { code, requires } = props;
   const ref = useRef<HTMLDivElement | null>(null);
   const debouncedRunCodeInDiv = useMemo(

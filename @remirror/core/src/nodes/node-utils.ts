@@ -3,10 +3,10 @@ import { clamp } from '@remirror/core';
 import {
   INDENT_LEVELS,
   INDENT_MARGIN_PT_SIZE,
+  IndentLevels,
   PIXEL_TO_PT_RATIO,
   SIZE_PATTERN,
 } from './node-constants';
-import { IndentLevels } from './paragraph/paragraph-types';
 
 /**
  * Converts a style value for size into into the same `pt`.

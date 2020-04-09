@@ -38,7 +38,6 @@ import {
   propIsFunction,
   RemirrorType,
 } from '@remirror/react-utils';
-import { RemirrorThemeContext } from '@remirror/ui';
 
 import { defaultProps } from '../react-constants';
 import { defaultPositioner } from '../react-positioners';
@@ -68,11 +67,6 @@ export class RenderEditor<ManagerType extends Manager = any> extends PureCompone
   RemirrorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>>
 > {
   public static defaultProps = defaultProps;
-
-  /**
-   * Allow the component to pull in context from the `RemirrorThemeContext`
-   */
-  public static contextType = RemirrorThemeContext;
 
   /**
    * Sets a flag to be a static remirror
@@ -141,6 +135,7 @@ export class RenderEditor<ManagerType extends Manager = any> extends PureCompone
    * A utility for quickly retrieving the extension manager.
    */
   private get manager(): ManagerType {
+    console.info(this.props);
     return this.props.manager;
   }
 
@@ -382,7 +377,7 @@ export class RenderEditor<ManagerType extends Manager = any> extends PureCompone
       ? attributes(this.eventListenerParameter())
       : attributes;
 
-    const managerAttributes = this.manager.store.attributes;
+    const managerAttributes = this.manager.store?.attributes;
 
     const defaultAttributes = {
       role: 'textbox',
@@ -390,7 +385,7 @@ export class RenderEditor<ManagerType extends Manager = any> extends PureCompone
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label ?? '',
       ...managerAttributes,
-      class: [ssr && 'Prosemirror', EDITOR_CLASS_NAME, managerAttributes.class]
+      class: [ssr && 'Prosemirror', EDITOR_CLASS_NAME, managerAttributes?.class]
         .filter(bool)
         .join(' '),
     };

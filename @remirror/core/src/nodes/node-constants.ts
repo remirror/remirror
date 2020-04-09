@@ -1,4 +1,4 @@
-import { IndentLevels } from './paragraph/paragraph-types';
+export type IndentLevels = [number, number];
 
 /**
  * The size of the default indentation size (in pt).

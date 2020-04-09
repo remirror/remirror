@@ -20,6 +20,7 @@ import {
 } from 'prosemirror-state';
 
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
+import { EMPTY_NODE } from '@remirror/core-constants/lib/core-constants';
 import {
   bool,
   Cast,
@@ -756,13 +757,14 @@ const fallbackContent = ({
  *
  * @public
  */
-export const createDocumentNode = ({
-  content,
-  schema,
-  doc,
-  stringHandler,
-  fallback = EMPTY_PARAGRAPH_NODE,
-}: CreateDocumentNodeParameter): ProsemirrorNode => {
+export const createDocumentNode = (params: CreateDocumentNodeParameter): ProsemirrorNode => {
+  const { content, schema, doc, stringHandler } = params;
+
+  const fallback =
+    params.fallback ?? schema.nodes.doc.spec.content?.startsWith('block')
+      ? EMPTY_PARAGRAPH_NODE
+      : EMPTY_NODE;
+
   if (isProsemirrorNode(content)) {
     return content;
   }

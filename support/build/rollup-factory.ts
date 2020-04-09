@@ -85,8 +85,8 @@ const configure = async ({
       globals(),
 
       replace({
-        'process.env.NODE_ENV': env,
-        __VERSION__: pkg.version,
+        'process.env.NODE_ENV': JSON.stringify(env),
+        __VERSION__: JSON.stringify(pkg.version),
       }),
 
       // Loading files with existing source maps

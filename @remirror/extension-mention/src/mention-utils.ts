@@ -1,4 +1,4 @@
-import pick from 'object.pick';
+// import pick from 'object.pick';
 import { DEFAULT_SUGGESTER } from 'prosemirror-suggest';
 
 import { bool, isPlainObject, isString, ProsemirrorAttributes } from '@remirror/core';

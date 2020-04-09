@@ -44,12 +44,8 @@ function makeCode(codeOptions: CodeOptions): string {
   addImport('react', ['default', 'React']);
   addImport('react', 'FC');
   addImport('@remirror/react', 'RemirrorProvider');
-  addImport('@remirror/core', 'DocExtension');
-  addImport('@remirror/core', 'ParagraphExtension');
-  addImport('@remirror/core', 'TextExtension');
   addImport('@remirror/react', 'useManager');
   addImport('@remirror/react', 'useExtension');
-  addImport('@remirror/react', 'useRemirror');
 
   const useExtensions: string[] = [];
   const extensionList: string[] = [];
@@ -108,17 +104,14 @@ const SmallEditor: FC = () => {
 const SmallEditorWrapper = () => {
   ${useExtensions.join('\n  ')}
 
-  const extensionManager = useManager([
-    DocExtension.of({content: 'inline*'}),
-    ParagraphExtension.of(),
-    TextExtension.of(),
+  const extensionManager = useExtensionManager([
     ${extensionList.join(',\n    ')}
   ], {
-    //excludeBaseExtensions: false,
+    excludeBaseExtensions: false,
   });
 
   return (
-    <RemirrorProvider manager={extensionManager}>
+    <RemirrorProvider extensionManager={extensionManager}>
       <SmallEditor />
     </RemirrorProvider>
   );
@@ -135,14 +128,14 @@ const Playground: FC = () => {
   const [advanced, setAdvanced] = useState(false);
   const [options, setOptions] = useState({
     extensions: [
-      // {
-      //   module: '@remirror/core-extensions',
-      //   export: 'BoldExtension',
-      // },
-      // {
-      //   module: '@remirror/core-extensions',
-      //   export: 'ItalicExtension',
-      // },
+      {
+        module: '@remirror/core-extensions',
+        export: 'BoldExtension',
+      },
+      {
+        module: '@remirror/core-extensions',
+        export: 'ItalicExtension',
+      },
     ],
   } as CodeOptions);
   const handleToggleAdvanced = useCallback(() => {

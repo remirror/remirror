@@ -17,7 +17,7 @@ export class ErrorBoundary extends React.Component<{}, { error: Error | null }> 
         <div>
           <h1>Error</h1>
           <pre>
-            <code>{String(this.state.error)}</code>
+            <code>{String(this.state.error.stack ?? this.state.error)}</code>
           </pre>
         </div>
       );
