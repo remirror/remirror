@@ -31,7 +31,7 @@ import {
   ChainedFromExtensions,
   CommandsFromExtensions,
   ExtensionFromConstructor,
-  ExtensionLifecyleMethods,
+  ExtensionLifecyleMethods as ExtensionLifecycleMethods,
   ExtensionTags,
   GetMarkNameUnion,
   GetNodeNameUnion,
@@ -113,8 +113,8 @@ const isManager = (value: unknown): value is Manager =>
  * ```
  */
 class Manager<
-  ExtensionUnion extends AnyExtension = any,
-  PresetUnion extends AnyPreset<ExtensionUnion> = any
+  ExtensionUnion extends AnyExtension = AnyExtension,
+  PresetUnion extends AnyPreset<ExtensionUnion> = AnyPreset
 > {
   /**
    * A static method for creating a manager.
@@ -232,7 +232,7 @@ class Manager<
    */
   #handlers: {
     initialize: InitializeEventMethodReturn[];
-    transaction: Array<NonNullable<ExtensionLifecyleMethods['onTransaction']>>;
+    transaction: Array<NonNullable<ExtensionLifecycleMethods['onTransaction']>>;
   } = { initialize: [], transaction: [] };
 
   /**
@@ -485,7 +485,7 @@ class Manager<
 
       if (
         extension.constructor === otherExtension.constructor &&
-        isEqual(ignoreFunctions(extension.settings), ignoreFunctions(otherExtension.options))
+        isEqual(ignoreFunctions(extension.settings), ignoreFunctions(otherExtension.settings))
       ) {
         continue;
       }

@@ -63,12 +63,12 @@ const createBaseExtensionFactory = <
         public static readonly settingKeys: Array<
           keyof (Settings & BaseExtensionSettings)
         > = uniqueArray([
-          ...keys(defaultSettings),
-          ...keys(factoryParameter.defaultSettings as {}),
+          ...keys(defaultSettings ?? {}),
+          ...keys(factoryParameter.defaultSettings ?? {}),
         ]);
 
         public static readonly propertyKeys: Array<keyof Properties> = keys(
-          parameter.defaultProperties as {},
+          parameter.defaultProperties ?? {},
         );
 
         /**
@@ -140,12 +140,12 @@ const createBaseExtensionFactory = <
         public static readonly settingKeys: Array<
           keyof (Settings & BaseExtensionSettings)
         > = uniqueArray([
-          ...keys(defaultSettings),
-          ...keys(factoryParameter.defaultSettings as {}),
+          ...keys(defaultSettings ?? {}),
+          ...keys(factoryParameter.defaultSettings ?? {}),
         ]);
 
         public static readonly propertyKeys: Array<keyof Properties> = keys(
-          parameter.defaultProperties as {},
+          parameter.defaultProperties ?? {},
         );
 
         /**
@@ -216,12 +216,12 @@ const createBaseExtensionFactory = <
         public static readonly settingKeys: Array<
           keyof (Settings & BaseExtensionSettings)
         > = uniqueArray([
-          ...keys(defaultSettings),
-          ...keys(factoryParameter.defaultSettings as {}),
+          ...keys(defaultSettings ?? {}),
+          ...keys(factoryParameter.defaultSettings ?? {}),
         ]);
 
         public static readonly propertyKeys: Array<keyof Properties> = keys(
-          parameter.defaultProperties as {},
+          parameter.defaultProperties ?? {},
         );
 
         /**

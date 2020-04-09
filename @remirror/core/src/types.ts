@@ -422,7 +422,7 @@ interface CreateSchemaParameter<Settings extends object> {
    * All the static settings that have been passed into the extension when
    * being created (instantiated).
    */
-  settings: Readonly<Settings>;
+  settings: Readonly<Required<Settings>>;
 
   /**
    * A method that creates the `AttributeSpec` for prosemirror that can be added

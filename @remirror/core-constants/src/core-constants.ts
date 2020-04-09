@@ -70,6 +70,11 @@ export const EMPTY_PARAGRAPH_NODE = {
   ],
 };
 
+export const EMPTY_NODE = {
+  type: 'doc',
+  content: [],
+};
+
 /**
  * Marks are categorized into different groups. One motivation for this was to
  * allow the `code` mark to exclude other marks, without needing to explicitly

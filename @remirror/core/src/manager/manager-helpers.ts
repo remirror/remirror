@@ -32,6 +32,8 @@ import {
   NodeExtensionTags,
 } from '../types';
 
+const isDev = process.env.NODE_ENV === 'development';
+
 interface IsNameUniqueParameter {
   /**
    * The name to check against
@@ -167,7 +169,7 @@ const transformCommands = <ExtensionUnion extends AnyExtension>({
   };
 
   const getItemParameters = (extension: ExtensionUnion) =>
-    extension.parameter.createCommands?.(getParameterWithType(extension, params), extension);
+    extension.parameter.createCommands?.(getParameterWithType(extension, params), extension) ?? {};
 
   for (const extension of extensions) {
     if (extension.parameter.createCommands) {
@@ -299,6 +301,13 @@ const transformExtensionOrPreset = <
 
       continue;
     }
+
+    if (isDev) {
+      console.error("We couldn't figure out if this was a preset or an extension");
+      console.dir(presetOrExtension);
+    }
+
+    // TODO if it is an
 
     // This is only reached if the passed value is invalid.
     invariant(false, { code: ErrorConstant.INVALID_MANAGER_ARGUMENTS });

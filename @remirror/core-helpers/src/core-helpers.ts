@@ -1,9 +1,7 @@
 import deepmerge from 'deepmerge';
 import fastDeepEqual from 'fast-deep-equal';
-import fastMemoize, { MemoizeFunc } from 'fast-memoize';
-import nano from 'nanoid';
+import { nanoid } from 'nanoid';
 import objectOmit from 'object.omit';
-import objectPick from 'object.pick';
 
 import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
 import { Predicate, RemirrorIdentifierShape } from '@remirror/core-types';
@@ -635,24 +633,6 @@ export const kebabCase = (string: string) => {
     .join('-');
 };
 
-/**
- * This is required since it is not exported from `fastMemomize`
- *
- * @internalRemarks
- * TODO create a pull request to fix this.
- */
-export interface Memoize extends MemoizeFunc {
-  strategies: {
-    variadic: MemoizeFunc;
-    monadic: MemoizeFunc;
-  };
-}
-
-/**
- * Alias for caching function calls
- */
-export const memoize: Memoize = fastMemoize;
-
 interface UniqueIdParameter {
   /**
    * The prefix for the unique id
@@ -678,7 +658,7 @@ interface UniqueIdParameter {
  * @public
  */
 export const uniqueId = ({ prefix = '', size }: UniqueIdParameter = { prefix: '' }) => {
-  return `${prefix}${nano(size)}`;
+  return `${prefix}${nanoid(size)}`;
 };
 
 /**
@@ -694,11 +674,6 @@ export const take = <GArray extends any[]>(array: GArray, number: number) => {
   number = Math.max(Math.min(0, number), number);
   return array.slice(0, number);
 };
-
-/**
- * Alias for picking properties from an object
- */
-export const pick = objectPick;
 
 /**
  * Alias for excluding properties from an object
@@ -736,7 +711,7 @@ export const isEqual = fastDeepEqual;
  *
  * @public
  */
-export const uniqueArray = <GType>(array: GType[], fromStart: boolean = false) => {
+export const uniqueArray = <GType>(array: GType[], fromStart = false) => {
   const array_ = fromStart ? [...array].reverse() : array;
   const set = new Set(array_);
   return fromStart ? [...set].reverse() : [...set];

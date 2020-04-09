@@ -1,5 +1,3 @@
-import { useRef } from 'react';
-
 import { AnyExtension, AnyPreset, Manager, ManagerSettings } from '@remirror/core';
 
 /**
@@ -13,5 +11,6 @@ export const useManager = <
   settings: ManagerSettings,
 ) => {
   // No updates for now.
-  return useRef(Manager.of(extensionOrPresetList, settings));
+
+  return Manager.of(extensionOrPresetList, settings);
 };

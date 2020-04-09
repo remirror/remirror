@@ -14,8 +14,8 @@ import { isArray, isObject } from './core-helpers';
  * by avoiding mutation of values that shouldn't be mutated.
  */
 export const freeze = <Target extends object>(target: Target): Readonly<Target> => {
-  if (!__DEV__) {
-    return target;
+  return target;
+  if (process.env.NODE === 'production') {
   }
 
   invariant(isObject(target) || isArray(target), {

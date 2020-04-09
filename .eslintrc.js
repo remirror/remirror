@@ -126,7 +126,7 @@ module.exports = {
 
     'import/no-deprecated': 'warn',
     'import/max-dependencies': ['warn', { max: 10 }],
-    'import/no-default-export': 'error',
+    'import/no-default-export': 'warn',
     'import/no-mutable-exports': 'error',
     'import/first': 'error',
     'import/no-duplicates': 'error',

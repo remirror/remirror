@@ -1,0 +1,39 @@
+{
+  "name": "@remirror/playground",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Remirror Playground",
+  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/playground",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/playground",
+  "license": "MIT",
+  "contributors": [
+    "Benjie Gillam <code@benjiegillam.com>",
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
+  "files": [
+    "lib"
+  ],
+  "sideEffects": false,
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@babel/runtime": "^7",
+    "@babel/standalone": "^7.9.4",
+    "@types/babel__standalone": "^7.1.2",
+    "monaco-editor": "^0.20.0",
+    "monaco-editor-webpack-plugin": "^1.9.0"
+  },
+  "peerDependencies": {
+    "@emotion/core": "^10",
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "meta": {
+    "sizeLimit": "2 MB"
+  }
+}

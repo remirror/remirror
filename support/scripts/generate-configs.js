@@ -175,7 +175,7 @@ const generatePackageTsConfigs = async () => {
   ]);
 
   const fn = async (json) => {
-    const references = Object.keys(json.dependencies)
+    const references = Object.keys(json.dependencies ?? {})
       .filter((dependency) => !!dependencies[dependency])
       .map((dependency) => {
         const path = join(
