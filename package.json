@@ -95,7 +95,7 @@
     "jsxBracketSameLine": false,
     "jsxSingleQuote": true,
     "plugins": [
-      "prettier-plugin-packagejson"
+      "./node_modules/prettier-plugin-packagejson"
     ],
     "printWidth": 100,
     "proseWrap": "always",
@@ -227,7 +227,7 @@
     "babel-plugin-macros": "^2.8.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-transform-async-to-promises": "^0.8.15",
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "cpy-cli": "^3.0.0",
     "cross-env": "^7.0.0",
     "diffable-html": "^4.0.0",
@@ -255,7 +255,7 @@
     "jest-emotion": "^10.0.32",
     "jest-environment-jsdom-sixteen": "^1.0.2",
     "jest-extended": "^0.11.2",
-    "jest-watch-typeahead": "^0.4.2",
+    "jest-watch-typeahead": "^0.5.0",
     "lint-staged": "^10.0.8",
     "npm-run-all": "^4.1.5",
     "patch-package": "^6.2.0",
