@@ -1,3 +1,4 @@
+import { DocExtension, TextExtension } from '../nodes';
 import { AttributesExtension } from './attributes-extension';
 import { InputRulesExtension } from './input-rules-extension';
 import { KeymapExtension } from './keymap-extensions';
@@ -15,5 +16,5 @@ export * from  './plugins-extension'
 export * from  './suggestion-extension'
 
 
-export const builtInExtensions = [NodeViewsExtension, AttributesExtension,InputRulesExtension, KeymapExtension, PasteRulesExtension, PluginsExtension, SuggestionExtension] as const;
+export const builtInExtensions = [NodeViewsExtension, AttributesExtension,InputRulesExtension, KeymapExtension, PasteRulesExtension, PluginsExtension, SuggestionExtension, DocExtension, TextExtension] as const;
 export type BuiltInExtensions = (typeof builtInExtensions)[number]

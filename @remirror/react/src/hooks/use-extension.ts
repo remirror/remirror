@@ -7,8 +7,6 @@ import {
   GetProperties,
   GetSettings,
   IfNoRequiredProperties,
-  keys,
-  uniqueArray,
 } from '@remirror/core';
 
 import { useRemirror } from './use-remirror';
@@ -18,19 +16,19 @@ import { useRemirror } from './use-remirror';
  *
  * Written in shorthand as it's only used in this file.
  */
-type SOEC<Constructor extends AnyExtensionConstructor> = GetSettings<
+type SettingsOfConstructor<Constructor extends AnyExtensionConstructor> = GetSettings<
   ExtensionFromConstructor<Constructor>
 >;
 
 export const useExtension = <Type extends AnyExtensionConstructor>(
   Constructor: Type,
-  ...[settings]: IfNoRequiredProperties<SOEC<Type>, [SOEC<Type>?], [SOEC<Type>]>
+  ...[settings]: IfNoRequiredProperties<
+    SettingsOfConstructor<Type>,
+    [SettingsOfConstructor<Type>?],
+    [SettingsOfConstructor<Type>]
+  >
 ) => {
-  const dependencyArray = useRef(uniqueArray([...Constructor.settingKeys, keys(settings ?? {})]))
-    .current;
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  return useMemo(() => Constructor.of(settings), [Constructor, ...dependencyArray]);
+  return useMemo(() => Constructor.of(settings), [Constructor, settings]);
 };
 
 /**
@@ -38,13 +36,13 @@ export const useExtension = <Type extends AnyExtensionConstructor>(
  *
  * Written in shorthand as it's only used in this file.
  */
-type POEC<Constructor extends AnyExtensionConstructor> = GetProperties<
+type PropertiesOfConstructor<Constructor extends AnyExtensionConstructor> = GetProperties<
   ExtensionFromConstructor<Constructor>
 >;
 
 export const useExtensionProperties = <Type extends AnyExtensionConstructor>(
   Constructor: Type,
-  properties: POEC<Type>,
+  properties: PropertiesOfConstructor<Type>,
 ) => {
   const dependencyArray = useRef(Constructor.propertyKeys).current;
   const { manager } = useRemirror();
