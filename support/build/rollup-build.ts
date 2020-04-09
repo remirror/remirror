@@ -1,5 +1,3 @@
-/* eslint-disable import/no-default-export */
-/* eslint-disable @typescript-eslint/no-var-requires */
 import chalk from 'chalk';
 import { join } from 'path';
 import { RollupOptions } from 'rollup';
@@ -87,6 +85,7 @@ const getNamesCreator = (
     }
 
     const path = baseDirectory(config.path);
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const package_: PackageJson = require(join(path, 'package.json'));
 
     return DEPENDENCY_TYPES.reduce((accumulator, key) => {

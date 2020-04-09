@@ -113,9 +113,7 @@ const configure = async ({
   };
 
   const defaultOutput: Partial<OutputOptions> = {
-    exports: 'named',
     sourcemap: true,
-    esModule: true,
   };
 
   const createBundledOutput = (env: 'production' | 'development'): RollupOptions => {
@@ -153,6 +151,7 @@ const configure = async ({
         ...defaultOutput,
         file: isProd ? cjsProdFileName : cjsFileName,
         format: 'cjs',
+        exports: 'named',
       });
     }
 

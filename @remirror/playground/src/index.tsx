@@ -9,13 +9,15 @@ import { Viewer } from './viewer';
 
 function nameify(str: string): [string, string] {
   const base = str
-    .replace(/[^a-z0-9]/gi, '-')
+    .replace(/[^\da-z]/gi, '-')
     .replace(/^-+|-+$/g, '')
-    .replace(/-+([a-z0-9])/gi, (_, capture: string) => capture.toUpperCase());
+    .replace(/-+([\da-z])/gi, (_, capture: string) => capture.toUpperCase());
   // Need it to start with a letter - if it doesn't then prefix with `ext`
-  const safeBase = base.match(/^[a-z]/i) ? base : `ext${base.substr(0, 1).toUpperCase()}${base.substr(1)}`;
-  const upper = safeBase.substr(0, 1).toUpperCase() + safeBase.substr(1);
-  const lower = safeBase.substr(0, 1).toLowerCase() + safeBase.substr(1);
+  const safeBase = base.match(/^[a-z]/i)
+    ? base
+    : `ext${base.slice(0, 1).toUpperCase()}${base.slice(1)}`;
+  const upper = safeBase.slice(0, 1).toUpperCase() + safeBase.slice(1);
+  const lower = safeBase.slice(0, 1).toLowerCase() + safeBase.slice(1);
   return [upper, lower];
 }
 
@@ -31,7 +33,9 @@ function makeCode(codeOptions: CodeOptions): string {
     if (!imports[packageName]) {
       imports[packageName] = [];
     }
-    const existing = imports[packageName].find(oldSpec => oldSpec[0] === spec[0] && oldSpec[1] === spec[1]);
+    const existing = imports[packageName].find(
+      (oldSpec) => oldSpec[0] === spec[0] && oldSpec[1] === spec[1],
+    );
     if (!existing) {
       imports[packageName].push(spec);
     }
@@ -40,13 +44,15 @@ function makeCode(codeOptions: CodeOptions): string {
   addImport('react', ['default', 'React']);
   addImport('react', 'FC');
   addImport('@remirror/react', 'RemirrorProvider');
-  addImport('@remirror/react', 'useExtensionManager');
+  addImport('@remirror/react', 'useManager');
   addImport('@remirror/react', 'useExtension');
 
   const useExtensions: string[] = [];
   const extensionList: string[] = [];
-  extensions.forEach(ext => {
-    const [ExtensionName, extensionName] = nameify(ext.module + (ext.export ? `-${ext.export}` : ''));
+  extensions.forEach((ext) => {
+    const [ExtensionName, extensionName] = nameify(
+      ext.module + (ext.export ? `-${ext.export}` : ''),
+    );
     addImport(ext.module, ext.export ? [ext.export, ExtensionName] : ['default', ExtensionName]);
     useExtensions.push(`const ${extensionName} = useExtension(${ExtensionName}, 2);`);
     extensionList.push(extensionName);
@@ -160,7 +166,11 @@ const Playground: FC = () => {
               <button onClick={handleToggleAdvanced}>Enter simple mode</button>
             </div>
           ) : (
-            <SimplePanel options={options} setOptions={setOptions} onAdvanced={handleToggleAdvanced} />
+            <SimplePanel
+              options={options}
+              setOptions={setOptions}
+              onAdvanced={handleToggleAdvanced}
+            />
           )}
         </Panel>
         <Divide />

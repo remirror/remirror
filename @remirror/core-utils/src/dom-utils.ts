@@ -528,8 +528,8 @@ export const getOffsetParent = ({ view, element }: GetOffsetParentParameter): HT
  *
  * @param params - the element params
  */
-export const getLineHeight = ({ element }: ElementParameter) => PositionParameter;
-Number.parseFloat(window.getComputedStyle(element, undefined).lineHeight || '');
+export const getLineHeight = ({ element }: ElementParameter) =>
+  Number.parseFloat(window.getComputedStyle(element, undefined).lineHeight || '');
 
 interface AbsoluteCoordinatesParameter
   extends EditorViewParameter,
