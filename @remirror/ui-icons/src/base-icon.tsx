@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import VisuallyHidden from '@reach/visually-hidden';
-import { Fragment, forwardRef, useMemo } from 'react';
+import { forwardRef, Fragment, useMemo } from 'react';
 
 import { omitUndefined, uniqueId } from '@remirror/core-helpers';
 import { KeyOfThemeVariant, RemirrorInterpolation } from '@remirror/core-types';
@@ -77,7 +77,9 @@ export const Icon = forwardRef<SVGSVGElement, BaseIconProps>(
 
     const defaultStyles = { color: 'text', backgroundColor: 'background', verticalAlign: 'middle' };
     const id = useMemo(() => uniqueId(), []);
-    const extraProps = standalone ? { role: 'img', 'aria-labelledby': id } : { 'aria-hidden': true };
+    const extraProps = standalone
+      ? { role: 'img', 'aria-labelledby': id }
+      : { 'aria-hidden': true };
     const colorStyles = omitUndefined({ color, backgroundColor });
 
     return (

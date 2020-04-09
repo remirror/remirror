@@ -11,7 +11,7 @@ import { renderToString } from 'react-dom/server';
 import { EDITOR_CLASS_NAME } from '@remirror/core';
 import { createTestManager, docNodeSimpleJSON } from '@remirror/test-fixtures';
 
-import { Remirror } from '..';
+import { RenderEditor } from '..';
 
 const label = 'Remirror editor';
 const handlers = {
@@ -25,9 +25,14 @@ test('can render in a node server environment', () => {
   const Component = 'span';
   const mock = jest.fn(() => <Component />);
   const reactString = renderToString(
-    <Remirror {...handlers} label={label} initialContent={docNodeSimpleJSON} manager={createTestManager()}>
+    <RenderEditor
+      {...handlers}
+      label={label}
+      initialContent={docNodeSimpleJSON}
+      manager={createTestManager()}
+    >
       {mock}
-    </Remirror>,
+    </RenderEditor>,
   );
 
   expect(mock).toHaveBeenCalledWith(expect.any(Object));
@@ -38,9 +43,14 @@ test('can render in a node server environment', () => {
 
 test('can render with a non-dom top level node', () => {
   const reactString = renderToString(
-    <Remirror {...handlers} label={label} initialContent={docNodeSimpleJSON} manager={createTestManager()}>
+    <RenderEditor
+      {...handlers}
+      label={label}
+      initialContent={docNodeSimpleJSON}
+      manager={createTestManager()}
+    >
       {() => <Fragment />}
-    </Remirror>,
+    </RenderEditor>,
   );
 
   expect(reactString).toInclude('This is a node with');
@@ -53,7 +63,12 @@ const outerId = 'OUTER123';
 
 test('appends to the react element by default with getRootProps', () => {
   const reactString = renderToString(
-    <Remirror {...handlers} label={label} initialContent={docNodeSimpleJSON} manager={createTestManager()}>
+    <RenderEditor
+      {...handlers}
+      label={label}
+      initialContent={docNodeSimpleJSON}
+      manager={createTestManager()}
+    >
       {({ getRootProps }) => (
         <div>
           <div data-testid={outerId}>
@@ -65,7 +80,7 @@ test('appends to the react element by default with getRootProps', () => {
           </div>
         </div>
       )}
-    </Remirror>,
+    </RenderEditor>,
   );
 
   expect(reactString).toInclude('This is a node with');
@@ -83,7 +98,7 @@ test('appends to the react element by default with getRootProps', () => {
 
 test('prepends to the react element when insertPosition=start with getRootProps', () => {
   const reactString = renderToString(
-    <Remirror
+    <RenderEditor
       {...handlers}
       label={label}
       initialContent={docNodeSimpleJSON}
@@ -99,7 +114,7 @@ test('prepends to the react element when insertPosition=start with getRootProps'
           <div data-testid={outerId} />
         </div>
       )}
-    </Remirror>,
+    </RenderEditor>,
   );
 
   const indexOfOuter = reactString.indexOf(outerId);

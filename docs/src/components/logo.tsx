@@ -59,7 +59,12 @@ export const Logo = ({ size = 512, color = theme.colors.primary, ...props }: Log
           }}
         />
         <path id='prefix__Rectangle' fill='#C7D3DD' fillRule='nonzero' d='M104 0h8v156h-8z' />
-        <use fill='#A9AEB1' xlinkHref='#prefix__path-1' className='prefix__bounce' id='prefix__remirror' />
+        <use
+          fill='#A9AEB1'
+          xlinkHref='#prefix__path-1'
+          className='prefix__bounce'
+          id='prefix__remirror'
+        />
       </g>
     </g>
   </svg>

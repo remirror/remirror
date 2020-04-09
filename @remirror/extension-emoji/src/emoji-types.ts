@@ -1,10 +1,10 @@
 import {
-  SuggestChangeHandlerParams,
-  SuggestExitHandlerParams,
+  SuggestChangeHandlerParameter,
+  SuggestExitHandlerParameter,
   SuggestKeyBindingMap,
 } from 'prosemirror-suggest';
 
-import { BaseExtensionOptions } from '@remirror/core';
+import { BaseExtensionSettings } from '@remirror/core';
 
 import AliasData from './data/aliases';
 import CategoryData from './data/categories';
@@ -24,7 +24,8 @@ export interface EmojiObject {
   skinVariations: boolean;
 }
 
-export interface EmojiSuggestionChangeHandlerParams extends SuggestChangeHandlerParams<EmojiSuggestCommand> {
+export interface EmojiSuggestionChangeHandlerParameter
+  extends SuggestChangeHandlerParameter<EmojiSuggestCommand> {
   /**
    * The currently matching objects
    */
@@ -35,10 +36,10 @@ export type SkinVariation = 0 | 1 | 2 | 3 | 4;
 
 export type EmojiSuggestCommand = (emoji: EmojiObject, skinVariation?: SkinVariation) => void;
 export type EmojiSuggestionKeyBindings = SuggestKeyBindingMap<EmojiSuggestCommand>;
-export type EmojiSuggestionChangeHandler = (params: EmojiSuggestionChangeHandlerParams) => void;
-export type EmojiSuggestionExitHandler = (params: SuggestExitHandlerParams) => void;
+export type EmojiSuggestionChangeHandler = (params: EmojiSuggestionChangeHandlerParameter) => void;
+export type EmojiSuggestionExitHandler = (params: SuggestExitHandlerParameter) => void;
 
-export interface EmojiExtensionOptions extends BaseExtensionOptions {
+export interface EmojiExtensionOptions extends BaseExtensionSettings {
   /**
    * The character which will trigger the emoji suggestions popup.
    */

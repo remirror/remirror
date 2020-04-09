@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 
 import pkg from '../../package.json';
 
-export const Head: FC<Pick<GatsbyTypes.MdxFrontmatter, 'fullWidth' | 'title'>> = props => {
+export const Head: FC<Pick<GatsbyTypes.MdxFrontmatter, 'fullWidth' | 'title'>> = (props) => {
   const title = [props ? props.title : false, 'Remirror'].filter(Boolean).join(' — ');
 
   return (

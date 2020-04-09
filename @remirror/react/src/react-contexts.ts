@@ -1,15 +1,15 @@
 import { createContext } from 'react';
 
-import { ExtensionManager } from '@remirror/core';
+import { Manager } from '@remirror/core';
 
-import { InjectedRemirrorProps } from './react-types';
+import { InjectedRenderEditorProps } from './react-types';
 
 /**
  * Creates a ReactContext for the Remirror editor
  */
-export const RemirrorContext = createContext<InjectedRemirrorProps | null>(null);
+export const RemirrorContext = createContext<InjectedRenderEditorProps | null>(null);
 
 /**
  * Creates a ReactContext for the RemirrorManager component
  */
-export const RemirrorManagerContext = createContext<ExtensionManager | null>(null);
+export const RemirrorManagerContext = createContext<Manager | null>(null);

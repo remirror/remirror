@@ -2,6 +2,7 @@ const { jestSupportDir, baseDir } = require('./helpers');
 
 const { TEST_BUILD } = process.env;
 
+/** @type Partial<import("@jest/types").Config.GlobalConfig> */
 module.exports = {
   clearMocks: true,
   verbose: true,
@@ -17,14 +18,16 @@ module.exports = {
   moduleDirectories: ['node_modules'],
   testPathIgnorePatterns: ['<rootDir>/lib/', '<rootDir>/node_modules/'],
   testRegex: '/__tests__/.*\\.spec\\.tsx?$',
-  setupFilesAfterEnv: [jestSupportDir('jest.framework.ts'), jestSupportDir('jest.framework.dom.ts')],
+  setupFilesAfterEnv: [
+    jestSupportDir('jest.framework.ts'),
+    jestSupportDir('jest.framework.dom.ts'),
+  ],
   snapshotSerializers: ['jest-emotion'],
-  cacheDirectory: baseDir('.jest'),
+  cacheDirectory: baseDir('.jest', TEST_BUILD ? 'build' : 'aliased'),
   testEnvironment: 'jest-environment-jsdom-sixteen',
   moduleNameMapper:
     TEST_BUILD === 'true'
-      ? // ? { '^@remirror\\/test-fixtures$': baseDir('@remirror', 'test-fixtures', 'src') }
-        {}
+      ? { '^@remirror\\/test-fixtures$': baseDir('@remirror', 'test-fixtures', 'src') }
       : {
           '^test-keyboard$': baseDir('packages', 'test-keyboard', 'src'),
           '^jest-remirror$': baseDir('packages', 'jest-remirror', 'src'),

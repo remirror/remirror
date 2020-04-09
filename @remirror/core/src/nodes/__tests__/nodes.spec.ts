@@ -17,7 +17,7 @@ import { DocExtension, TextExtension } from '../..';
 
 describe('nodes', () => {
   test('doc', () => {
-    const doc = new DocExtension();
+    const doc = DocExtension.of({});
 
     expect(doc.name).toBe('doc');
     expect(Cast(doc.pluginKey).key).toInclude('doc$');

@@ -1,22 +1,22 @@
 {
   "name": "@remirror/ui-icons",
-  "version": "0.7.7",
+  "version": "0.7.8",
   "description": "ui-icons utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/ui-icons",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/ui-icons",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "sideEffects": false,
+  "main": "lib/dist/index.js",
+  "module": "lib/dist/ui-icons.esm.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib",
     "src"
   ],
-  "sideEffects": false,
-  "main": "lib/index.js",
-  "module": "lib/dist/ui-icons.esm.js",
-  "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
-    "@reach/visually-hidden": "^0.9.0",
+    "@reach/visually-hidden": "^0.10.0",
     "@remirror/core-helpers": "^0.7.6",
     "@remirror/core-types": "^0.9.0",
     "@remirror/ui": "^0.7.6",

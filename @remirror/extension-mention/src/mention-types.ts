@@ -1,8 +1,8 @@
-import { FromToEndParams, SuggestReplacementType, Suggester } from 'prosemirror-suggest';
+import { FromToEndParameter, Suggestion, SuggestReplacementType } from 'prosemirror-suggest';
 
-import { Attrs, MarkExtensionOptions } from '@remirror/core';
+import { MarkExtensionConfig, ProsemirrorAttributes } from '@remirror/core';
 
-export interface OptionalMentionExtensionParams {
+export interface OptionalMentionExtensionParameter {
   /**
    * The text to append to the replacement.
    *
@@ -28,15 +28,15 @@ export interface OptionalMentionExtensionParams {
   /**
    * The range of the requested selection.
    */
-  range?: FromToEndParams;
+  range?: FromToEndParameter;
 }
 
 /**
  * The attrs that will be added to the node.
  * ID and label are plucked and used while attributes like href and role can be assigned as desired.
  */
-export type MentionExtensionAttrs = Attrs<
-  OptionalMentionExtensionParams & {
+export type MentionExtensionAttributes = ProsemirrorAttributes<
+  OptionalMentionExtensionParameter & {
     /**
      * A unique identifier for the suggestions node
      */
@@ -54,7 +54,7 @@ export type MentionExtensionAttrs = Attrs<
  */
 export interface MentionExtensionMatcher
   extends Pick<
-    Suggester,
+    Suggestion,
     | 'char'
     | 'name'
     | 'startOfLine'
@@ -75,9 +75,9 @@ export interface MentionExtensionMatcher
  * The options passed into a mention
  */
 export interface MentionExtensionOptions
-  extends MarkExtensionOptions,
+  extends MarkExtensionConfig,
     Pick<
-      Suggester<MentionExtensionSuggestCommand>,
+      Suggestion<MentionExtensionSuggestCommand>,
       'suggestTag' | 'noDecorations' | 'onChange' | 'onExit' | 'onCharacterEntry' | 'keyBindings'
     > {
   /**
@@ -91,11 +91,11 @@ export interface MentionExtensionOptions
   mentionTag?: string;
 }
 
-export type SuggestionCommandAttrs = Attrs<
-  Partial<Pick<MentionExtensionAttrs, 'id' | 'label' | 'appendText' | 'replacementType'>>
+export type SuggestionCommandAttributes = ProsemirrorAttributes<
+  Partial<Pick<MentionExtensionAttributes, 'id' | 'label' | 'appendText' | 'replacementType'>>
 >;
 
 /**
  * The attrs for the command on a mention extension.
  */
-export type MentionExtensionSuggestCommand = (attrs: SuggestionCommandAttrs) => void;
+export type MentionExtensionSuggestCommand = (attrs: SuggestionCommandAttributes) => void;

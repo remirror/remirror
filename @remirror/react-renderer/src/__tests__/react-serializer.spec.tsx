@@ -4,7 +4,7 @@ import TestRenderer from 'react-test-renderer';
 
 import {
   DocExtension,
-  ExtensionManager,
+  Manager,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -22,10 +22,10 @@ class FooExtension extends NodeExtension {
     group: NodeGroup.Block,
 
     toDOM: () => {
-      const attrs = {
+      const attributes = {
         'data-foo-type': 'true',
       };
-      return ['div', attrs, ['div', { class: 'inside' }, 0]];
+      return ['div', attributes, ['div', { class: 'inside' }, 0]];
     },
   };
 }
@@ -35,9 +35,9 @@ const manager = createTestManager([
   { extension: new FooExtension(), priority: 3 },
 ]);
 const { schema } = manager;
-const serializer = ReactSerializer.fromExtensionManager(manager);
+const serializer = ReactSerializer.fromManager(manager);
 
-test('ReactSerializer.fromExtensionManager', () => {
+test('ReactSerializer.fromManager', () => {
   expect(serializer).toBeInstanceOf(ReactSerializer);
   expect(serializer.nodes.paragraph).toBeFunction();
   expect(serializer.marks.bold).toBeFunction();
@@ -50,9 +50,9 @@ test('ReactSerializer.fromExtensionManager', () => {
     { extension: new BoldExtension(), priority: 2 },
     { extension: new CodeBlockExtension(), priority: 2 },
   ];
-  const altManager = ExtensionManager.create(altExtensions);
+  const altManager = Manager.create(altExtensions);
 
-  expect(ReactSerializer.fromExtensionManager(altManager).nodes.text).toBeFunction();
+  expect(ReactSerializer.fromManager(altManager).nodes.text).toBeFunction();
 });
 
 describe('ReactSerializer', () => {
@@ -60,7 +60,8 @@ describe('ReactSerializer', () => {
     it('serializes the node', () => {
       const node = PMNode.fromJSON(schema, simpleJSON);
 
-      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchInlineSnapshot(`
+      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element))
+        .toMatchInlineSnapshot(`
         <p>
           This is a node with${' '}
           <strong>
@@ -83,7 +84,8 @@ describe('ReactSerializer', () => {
 
       const node = PMNode.fromJSON(schema, codeBlockJSON);
 
-      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchInlineSnapshot(`
+      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element))
+        .toMatchInlineSnapshot(`
         <pre>
           <code>
             Hello
@@ -95,7 +97,8 @@ describe('ReactSerializer', () => {
     it('serializes the node with nested data', () => {
       const node = PMNode.fromJSON(schema, testJSON);
 
-      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchInlineSnapshot(`
+      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element))
+        .toMatchInlineSnapshot(`
         <p>
           This is a node with${' '}
           <strong>
@@ -120,10 +123,13 @@ describe('ReactSerializer', () => {
     it('serializes a deeply nested custom node', () => {
       const node = PMNode.fromJSON(schema, {
         type: 'foo',
-        content: [{ type: 'paragraph', content: [{ type: 'text', text: 'This is the foo thing' }] }],
+        content: [
+          { type: 'paragraph', content: [{ type: 'text', text: 'This is the foo thing' }] },
+        ],
       });
 
-      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element)).toMatchInlineSnapshot(`
+      expect(TestRenderer.create(serializer.serializeNode(node) as JSX.Element))
+        .toMatchInlineSnapshot(`
         <div
           data-foo-type="true"
         >
@@ -141,12 +147,12 @@ describe('ReactSerializer', () => {
 });
 
 describe('ReactSerializer.renderSpec', () => {
-  const attrs = { 'data-attribute': 'some attribute' };
+  const attributes = { 'data-attribute': 'some attribute' };
 
   it('supports simple renders', () => {
-    expect(TestRenderer.create(ReactSerializer.renderSpec(['p']) as JSX.Element)).toMatchInlineSnapshot(
-      `<p />`,
-    );
+    expect(
+      TestRenderer.create(ReactSerializer.renderSpec(['p']) as JSX.Element),
+    ).toMatchInlineSnapshot(`<p />`);
   });
 
   it('renders just text when a string is passed', () => {
@@ -154,7 +160,7 @@ describe('ReactSerializer.renderSpec', () => {
   });
 
   it('supports attrs', () => {
-    expect(TestRenderer.create(ReactSerializer.renderSpec(['p', attrs]) as JSX.Element))
+    expect(TestRenderer.create(ReactSerializer.renderSpec(['p', attributes]) as JSX.Element))
       .toMatchInlineSnapshot(`
       <p
         data-attribute="some attribute"
@@ -164,7 +170,9 @@ describe('ReactSerializer.renderSpec', () => {
 
   it('supports nesting', () => {
     expect(
-      TestRenderer.create(ReactSerializer.renderSpec(['div', attrs, ['p', 0], 'message']) as JSX.Element),
+      TestRenderer.create(
+        ReactSerializer.renderSpec(['div', attributes, ['p', 0], 'message']) as JSX.Element,
+      ),
     ).toMatchInlineSnapshot(`
       <div
         data-attribute="some attribute"
@@ -178,7 +186,10 @@ describe('ReactSerializer.renderSpec', () => {
   it('supports deep nesting', () => {
     expect(
       TestRenderer.create(
-        ReactSerializer.renderSpec(['div', attrs, ['div', { class: 'inside' }, 0]], 'message') as JSX.Element,
+        ReactSerializer.renderSpec(
+          ['div', attributes, ['div', { class: 'inside' }, 0]],
+          'message',
+        ) as JSX.Element,
       ),
     ).toMatchInlineSnapshot(`
       <div

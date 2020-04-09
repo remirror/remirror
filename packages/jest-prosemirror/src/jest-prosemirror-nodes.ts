@@ -1,14 +1,24 @@
 import { GapCursor } from 'prosemirror-gapcursor';
 import { Schema } from 'prosemirror-model';
-import { AllSelection, EditorState, NodeSelection, Selection, TextSelection } from 'prosemirror-state';
-import { CellSelection, cellAround } from 'prosemirror-tables';
-import pm, { MarkTypeAttributes, NodeTypeAttributes, TaggedProsemirrorNode } from 'prosemirror-test-builder';
+import {
+  AllSelection,
+  EditorState,
+  NodeSelection,
+  Selection,
+  TextSelection,
+} from 'prosemirror-state';
+import { cellAround, CellSelection } from 'prosemirror-tables';
+import pm, {
+  MarkTypeAttributes,
+  NodeTypeAttributes,
+  TaggedProsemirrorNode,
+} from 'prosemirror-test-builder';
 
 import { Cast } from '@remirror/core-helpers';
 import { EditorSchema, Plugin } from '@remirror/core-types';
 
 import { schema } from './jest-prosemirror-schema';
-import { TaggedDocParams } from './jest-prosemirror-types';
+import { TaggedDocParameter } from './jest-prosemirror-types';
 
 /**
  * Table specific cell resolution
@@ -23,7 +33,8 @@ const resolveCell = (taggedDoc: TaggedProsemirrorNode, tag?: number) => {
   return cellAround(taggedDoc.resolve(tag));
 };
 
-interface CreateTextSelectionParams<GSchema extends EditorSchema = any> extends TaggedDocParams<GSchema> {
+interface CreateTextSelectionParameter<GSchema extends EditorSchema = any>
+  extends TaggedDocParameter<GSchema> {
   start: number;
   end?: number;
 }
@@ -40,7 +51,7 @@ const createTextSelection = <GSchema extends EditorSchema = any>({
   taggedDoc,
   start,
   end,
-}: CreateTextSelectionParams<GSchema>) => {
+}: CreateTextSelectionParameter<GSchema>) => {
   const $start = taggedDoc.resolve(start);
   const $end = end && start <= end ? taggedDoc.resolve(end) : taggedDoc.resolve($start.end());
   return new TextSelection<GSchema>($start, $end);
@@ -54,7 +65,7 @@ const supportedTags = ['cursor', 'node', 'start', 'end', 'anchor', 'all', 'gap']
  * @param taggedDoc
  */
 export const taggedDocHasSelection = (taggedDoc: TaggedProsemirrorNode) =>
-  Object.keys(taggedDoc.tag).some(tag => supportedTags.includes(tag));
+  Object.keys(taggedDoc.tag).some((tag) => supportedTags.includes(tag));
 
 /**
  * Initialize the selection based on the passed in tagged node via it's cursor.
@@ -117,7 +128,12 @@ export const createState = <GSchema extends EditorSchema = any>(
   taggedDoc: TaggedProsemirrorNode<GSchema>,
   plugins: Plugin[] = [],
 ): EditorState<GSchema> => {
-  return EditorState.create({ doc: taggedDoc, selection: initSelection(taggedDoc), schema, plugins });
+  return EditorState.create({
+    doc: taggedDoc,
+    selection: initSelection(taggedDoc),
+    schema,
+    plugins,
+  });
 };
 
 /**

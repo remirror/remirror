@@ -1,19 +1,19 @@
 import { ComponentType } from 'react';
 
 import {
-  Attrs,
-  BaseExtensionOptions,
-  BaseExtensionOptionsParams,
-  EditorViewParams,
-  NodeWithAttrsParams,
+  ProsemirrorAttributes,
+  BaseExtensionSettings,
+  BaseExtensionSettingsParameter,
+  EditorViewParameter,
+  NodeWithAttributesParameter,
   SSRComponentProps,
 } from '@remirror/core-types';
 import { PortalContainer } from '@remirror/react-portals';
 
 export interface NodeViewComponentProps<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
-  GAttrs extends Attrs = Attrs
-> extends EditorViewParams, SSRComponentProps<GOptions, GAttrs> {
+  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
+  GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
+> extends EditorViewParameter, SSRComponentProps<GOptions, GAttributes> {
   /**
    * Provides the position of the node view in the prosemirror document
    */
@@ -36,14 +36,14 @@ export interface NodeViewComponentProps<
  */
 export type GetPosition = (() => number) | boolean;
 
-export interface ReactNodeViewParams<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
-  GAttrs extends Attrs = Attrs
+export interface ReactNodeViewParameter<
+  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
+  GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
 >
-  extends EditorViewParams,
-    ComponentParams<GOptions, GAttrs>,
-    NodeWithAttrsParams<GAttrs>,
-    BaseExtensionOptionsParams<GOptions> {
+  extends EditorViewParameter,
+    ComponentParameter<GOptions, GAttributes>,
+    NodeWithAttributesParameter<GAttributes>,
+    BaseExtensionSettingsParameter<GOptions> {
   /**
    * Method for retrieving the position of the current nodeView
    */
@@ -56,20 +56,20 @@ export interface ReactNodeViewParams<
   portalContainer: PortalContainer;
 }
 
-export interface CreateNodeViewParams<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
-  GAttrs extends Attrs = Attrs
+export interface CreateNodeViewParameter<
+  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
+  GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
 >
-  extends Pick<ReactNodeViewParams, 'portalContainer'>,
-    ComponentParams<GOptions, GAttrs>,
-    BaseExtensionOptionsParams<GOptions> {}
+  extends Pick<ReactNodeViewParameter, 'portalContainer'>,
+    ComponentParameter<GOptions, GAttributes>,
+    BaseExtensionSettingsParameter<GOptions> {}
 
-export interface ComponentParams<
-  GOptions extends BaseExtensionOptions = BaseExtensionOptions,
-  GAttrs extends Attrs = Attrs
+export interface ComponentParameter<
+  GOptions extends BaseExtensionSettings = BaseExtensionSettings,
+  GAttributes extends ProsemirrorAttributes = ProsemirrorAttributes
 > {
   /**
    * The component that will be rendered by this node view.
    */
-  Component: ComponentType<NodeViewComponentProps<GOptions, GAttrs>>;
+  Component: ComponentType<NodeViewComponentProps<GOptions, GAttributes>>;
 }

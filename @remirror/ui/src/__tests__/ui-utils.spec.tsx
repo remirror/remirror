@@ -51,7 +51,10 @@ describe('sx', () => {
   });
 
   it('renders variant styles from the theme', () => {
-    const theme = { ...baseTheme, v: { test1: { color: 'red ' }, test2: { backgroundColor: 'pink' } } };
+    const theme = {
+      ...baseTheme,
+      v: { test1: { color: 'red ' }, test2: { backgroundColor: 'pink' } },
+    };
     const styles = sx({ variant: 'v.test1' }, { variant: 'v.test2' });
 
     const { getByText } = render(

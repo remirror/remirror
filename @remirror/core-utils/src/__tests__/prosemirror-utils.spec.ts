@@ -7,12 +7,12 @@ import {
   doc,
   h2,
   p,
-  tr as row,
   schema,
   table,
   td,
   tdCursor,
   tdEmpty,
+  tr as row,
 } from 'jest-prosemirror';
 import { Schema } from 'prosemirror-model';
 import { marks, nodes } from 'prosemirror-schema-basic';
@@ -238,39 +238,39 @@ describe('findPositionOfNodeAfter', () => {
 describe('findElementAtPosition', () => {
   it('should return DOM reference of a top level block leaf node', () => {
     const { view } = createEditor(doc(p('text'), atomBlock()));
-    const ref = findElementAtPosition(6, view);
+    const reference = findElementAtPosition(6, view);
 
-    expect(ref instanceof HTMLDivElement).toBe(true);
-    expect(ref.getAttribute('data-node-type')).toEqual('atomBlock');
+    expect(reference instanceof HTMLDivElement).toBe(true);
+    expect(reference.getAttribute('data-node-type')).toEqual('atomBlock');
   });
 
   it('should return DOM reference of a nested inline leaf node', () => {
     const { view } = createEditor(doc(p('one', atomInline(), 'two')));
-    const ref = findElementAtPosition(4, view);
+    const reference = findElementAtPosition(4, view);
 
-    expect(ref instanceof HTMLSpanElement).toBe(true);
-    expect(ref.getAttribute('data-node-type')).toEqual('atomInline');
+    expect(reference instanceof HTMLSpanElement).toBe(true);
+    expect(reference.getAttribute('data-node-type')).toEqual('atomInline');
   });
 
   it('should return DOM reference of a content block node', () => {
     const { view } = createEditor(doc(p('one'), blockquote(p('two'))));
-    const ref = findElementAtPosition(5, view);
+    const reference = findElementAtPosition(5, view);
 
-    expect(ref instanceof HTMLQuoteElement).toBe(true);
+    expect(reference instanceof HTMLQuoteElement).toBe(true);
   });
 
   it('should return DOM reference of a text node when offset=0', () => {
     const { view } = createEditor(doc(p('text')));
-    const ref = findElementAtPosition(1, view);
+    const reference = findElementAtPosition(1, view);
 
-    expect(ref instanceof HTMLParagraphElement).toBe(true);
+    expect(reference instanceof HTMLParagraphElement).toBe(true);
   });
 
   it('should return DOM reference of a paragraph if cursor is inside of a text node', () => {
     const { view } = createEditor(doc(p(atomInline(), 'text')));
-    const ref = findElementAtPosition(3, view);
+    const reference = findElementAtPosition(3, view);
 
-    expect(ref instanceof HTMLParagraphElement).toBe(true);
+    expect(reference instanceof HTMLParagraphElement).toBe(true);
   });
 });
 
@@ -340,7 +340,7 @@ describe('cloneTransaction', () => {
   });
 
   it('clones the transaction', () => {
-    return new Promise(done => {
+    return new Promise((done) => {
       const {
         state: { tr },
       } = createEditor(doc(p()));
@@ -365,7 +365,7 @@ describe('findParentNode', () => {
       state: { selection },
     } = createEditor(doc(node));
     const position = findParentNode({
-      predicate: pmNode => pmNode.type === schema.nodes.paragraph,
+      predicate: (pmNode) => pmNode.type === schema.nodes.paragraph,
       selection,
     })!;
 
@@ -376,7 +376,10 @@ describe('findParentNode', () => {
     const {
       state: { selection },
     } = createEditor(doc(table(row(tdCursor))));
-    const { node } = findParentNode({ predicate: pmNode => pmNode.type === schema.nodes.table, selection })!;
+    const { node } = findParentNode({
+      predicate: (pmNode) => pmNode.type === schema.nodes.table,
+      selection,
+    })!;
 
     expect(node.type.name).toEqual('table');
   });
@@ -386,7 +389,7 @@ describe('findParentNode', () => {
       state: { selection },
     } = createEditor(doc(table(row(tdCursor))));
     const result = findParentNode({
-      predicate: pmNode => pmNode.type === schema.nodes.table_header,
+      predicate: (pmNode) => pmNode.type === schema.nodes.table_header,
       selection,
     });
 
@@ -419,12 +422,12 @@ describe('findParentNodeOfType', () => {
     const {
       state: {
         schema: {
-          nodes: { paragraph, blockquote: bq, table: tbl },
+          nodes: { paragraph, blockquote: bq, table: table_ },
         },
         selection,
       },
     } = createEditor(doc(node));
-    const position = findParentNodeOfType({ types: [tbl, bq, paragraph], selection })!;
+    const position = findParentNodeOfType({ types: [table_, bq, paragraph], selection })!;
 
     expect(position).toEqual({ pos: 0, start: 1, end: 8, depth: 1, node });
   });
@@ -432,7 +435,9 @@ describe('findParentNodeOfType', () => {
 
 describe('nodeActive', () => {
   it('shows active when within an active region', () => {
-    const { state, schema: sch } = createEditor(doc(p('Something', blockquote('is <cursor>in blockquote'))));
+    const { state, schema: sch } = createEditor(
+      doc(p('Something', blockquote('is <cursor>in blockquote'))),
+    );
 
     expect(isNodeActive({ state, type: sch.nodes.blockquote })).toBeTrue();
   });
@@ -452,19 +457,25 @@ describe('nodeActive', () => {
   });
 
   it('returns true when node selection directly before node', () => {
-    const { state, schema: sch } = createEditor(doc(p('Something', blockquote('<node>is italic'), 'here')));
+    const { state, schema: sch } = createEditor(
+      doc(p('Something', blockquote('<node>is italic'), 'here')),
+    );
 
     expect(isNodeActive({ state, type: sch.nodes.blockquote })).toBeTrue();
   });
 
   it('returns false nested within other nodes', () => {
-    const { state, schema: sch } = createEditor(doc(p('a<node>', p(p(blockquote('is italic')), 'here'))));
+    const { state, schema: sch } = createEditor(
+      doc(p('a<node>', p(p(blockquote('is italic')), 'here'))),
+    );
 
     expect(isNodeActive({ state, type: sch.nodes.blockquote })).toBeFalse();
   });
 
   it('matches nodes by specified attributes', () => {
-    const { state, schema: sch } = createEditor(doc(p('Something', h2('is <cursor> heading'), 'here')));
+    const { state, schema: sch } = createEditor(
+      doc(p('Something', h2('is <cursor> heading'), 'here')),
+    );
 
     expect(isNodeActive({ state, type: sch.nodes.heading, attrs: { level: 1 } })).toBeFalse();
     expect(isNodeActive({ state, type: sch.nodes.heading, attrs: { level: 2 } })).toBeTrue();
@@ -494,9 +505,12 @@ describe('findSelectedNodeOfType', () => {
 
   it('should return selected node of one of the given `nodeType`s', () => {
     const { state } = createEditor(doc(p('<cursor>one')));
-    const { paragraph, table: tbl } = state.schema.nodes;
+    const { paragraph, table: table_ } = state.schema.nodes;
     const tr = state.tr.setSelection(NodeSelection.create(state.doc, 0));
-    const selectedNode = findSelectedNodeOfType({ types: [paragraph, tbl], selection: tr.selection });
+    const selectedNode = findSelectedNodeOfType({
+      types: [paragraph, table_],
+      selection: tr.selection,
+    });
 
     expect(selectedNode!.node.type.name).toEqual('paragraph');
   });
@@ -505,10 +519,10 @@ describe('findSelectedNodeOfType', () => {
 describe('findNodeAt...', () => {
   const expectedEnd = h2('Heading here');
   const expectedStart = p('<cursor> I am champion');
-  const pmDoc = doc(expectedStart, expectedEnd);
+  const pmDocument = doc(expectedStart, expectedEnd);
 
   test('findNodeAtSelection', () => {
-    const selection = Selection.atEnd(pmDoc);
+    const selection = Selection.atEnd(pmDocument);
     const { node, pos, start } = findNodeAtSelection(selection);
 
     expect(node).toBe(expectedEnd);

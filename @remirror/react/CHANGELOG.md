@@ -4,9 +4,9 @@
 
 ### Minor Changes
 
-- 026d4238: Add a `focus` method to the remirror editor context object. It allows focusing at a provided
-  position which can be `start`, `end`, a specific position or a range using the `{from: number; to: number}`
-  type signature.
+- 026d4238: Add a `focus` method to the remirror editor context object. It allows focusing at a
+  provided position which can be `start`, `end`, a specific position or a range using the
+  `{from: number; to: number}` type signature.
 
   To use this run
 
@@ -25,8 +25,8 @@
 
   Resolves the initial issue raised in #229.
 
-- 69d00c62: Add custom arguments to `autoFocus` props. The same arguments that can added to the `focus()`
-  context method can now be passed as a prop.
+- 69d00c62: Add custom arguments to `autoFocus` props. The same arguments that can added to the
+  `focus()` context method can now be passed as a prop.
 
 ### Patch Changes
 

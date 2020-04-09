@@ -1,20 +1,21 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { MinWidthProperty, WidthProperty } from 'csstype';
-import { ComponentType, ReactNode, forwardRef } from 'react';
+import { ComponentType, forwardRef, ReactNode } from 'react';
 
 import {
   KeyOfThemeVariant,
+  object,
+  omitUndefined,
   RemirrorInterpolation,
   RemirrorThemeContextType,
-  omitUndefined,
 } from '@remirror/core';
 import { useRemirrorTheme } from '@remirror/ui';
 import { IconProps } from '@remirror/ui-icons';
 
 import { ResetButton, ResetButtonProps } from './reset-button';
 
-export interface RenderIconParams {
+export interface RenderIconParameter {
   remirrorTheme: RemirrorThemeContextType;
 }
 
@@ -56,14 +57,14 @@ export type ButtonProps = ResetButtonProps & {
    *
    * When provided `RightIconComponent` and `rightIconProps` will be ignored
    */
-  renderRightIcon?(params: RenderIconParams): ReactNode;
+  renderRightIcon?(params: RenderIconParameter): ReactNode;
 
   /**
    * A render prop for the left icon.
    *
    * When provided `LeftIconComponent` and `leftIconProps` will be ignored
    */
-  renderLeftIcon?(params: RenderIconParams): ReactNode;
+  renderLeftIcon?(params: RenderIconParameter): ReactNode;
 
   /**
    * Custom styles to add to the icon
@@ -78,10 +79,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       active = false,
       LeftIconComponent,
       renderLeftIcon,
-      leftIconProps = Object.create(null),
+      leftIconProps = object<Partial<IconProps>>(),
       RightIconComponent,
       renderRightIcon,
-      rightIconProps = Object.create(null),
+      rightIconProps = object<Partial<IconProps>>(),
       color,
       backgroundColor,
       fontWeight,

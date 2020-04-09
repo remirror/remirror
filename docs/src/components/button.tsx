@@ -4,7 +4,7 @@ import { jsx } from 'theme-ui';
 
 export type ButtonProps = JSX.IntrinsicElements['button'];
 
-export const Button: FC<ButtonProps> = props => (
+export const Button: FC<ButtonProps> = (props) => (
   <button
     {...props}
     sx={{

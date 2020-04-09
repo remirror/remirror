@@ -95,13 +95,13 @@ describe('text', () => {
   });
 });
 
-const p = nodeFactory({ name: 'paragraph', schema, attrs: {} });
-const doc = nodeFactory({ name: 'doc', schema, attrs: {} });
-const blockquote = nodeFactory({ name: 'blockquote', schema, attrs: {} });
+const p = nodeFactory({ name: 'paragraph', schema, attributes: {} });
+const doc = nodeFactory({ name: 'doc', schema, attributes: {} });
+const blockquote = nodeFactory({ name: 'blockquote', schema, attributes: {} });
 
 describe('nodeFactory', () => {
   it('returns a function', () => {
-    expect(nodeFactory({ name: 'paragraph', schema, attrs: {} })).toBeFunction();
+    expect(nodeFactory({ name: 'paragraph', schema, attributes: {} })).toBeFunction();
   });
 
   it("returns a factory that returns tag'd nodes", () => {
@@ -143,7 +143,7 @@ describe('nodeFactory', () => {
   });
 });
 
-const em = markFactory({ name: 'italic', schema, attrs: {} });
+const em = markFactory({ name: 'italic', schema, attributes: {} });
 
 describe('markFactory', () => {
   it('returns a function', () => {

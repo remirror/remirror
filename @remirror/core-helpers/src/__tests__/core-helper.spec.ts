@@ -1,5 +1,6 @@
+import { PlainObject } from '@remirror/core-types';
+
 import {
-  Merge,
   capitalize,
   clone,
   deepMerge,
@@ -31,6 +32,8 @@ import {
   isUndefined,
   kebabCase,
   keys,
+  Merge,
+  object,
   randomInt,
   range,
   sort,
@@ -40,6 +43,7 @@ import {
   uniqueArray,
   uniqueBy,
   uniqueId,
+  values,
   within,
 } from '../core-helpers';
 
@@ -148,7 +152,7 @@ describe('predicates', () => {
 
   it('isMap', () => {
     const passValue = new Map();
-    const failValue = Object.create(null);
+    const failValue = object();
 
     expect(isMap(passValue)).toBeTrue();
     expect(isMap(failValue)).toBeFalse();
@@ -265,7 +269,7 @@ describe('predicates', () => {
   });
 
   it('isEmptyObject', () => {
-    const passValue = Object.create(null);
+    const passValue = object();
     const failValue = { oop: 'sie' };
     const altPassValue = new (class Simple {})();
 
@@ -357,11 +361,15 @@ describe('kebabCase', () => {
 
 test('deepMerge', () => {
   expect(deepMerge({ a: 'a', c: 2 }, { b: 'b', c: 'c' })).toEqual({ a: 'a', b: 'b', c: 'c' });
-  expect(deepMerge({ a: 'a', c: 2 }, Merge.overwrite({ b: 'b', c: 'c', a: Merge.delete() }))).toEqual({
+  expect(
+    deepMerge({ a: 'a', c: 2 }, Merge.overwrite({ b: 'b', c: 'c', a: Merge.delete() })),
+  ).toEqual({
     b: 'b',
     c: 'c',
   });
-  expect(deepMerge({ a: { b: 'b ' } }, { a: Merge.overwrite({ c: 'c' }) })).toEqual({ a: { c: 'c' } });
+  expect(deepMerge({ a: { b: 'b ' } }, { a: Merge.overwrite({ c: 'c' }) })).toEqual({
+    a: { c: 'c' },
+  });
 });
 
 test('uniqueBy', () => {
@@ -373,9 +381,9 @@ test('uniqueBy', () => {
 
   expect(uniqueBy(original, 'key')).toEqual(expected);
   expect(uniqueBy(original, ['key'])).toEqual(expected);
-  expect(uniqueBy(original, item => item.key)).toEqual(expected);
+  expect(uniqueBy(original, (item) => item.key)).toEqual(expected);
 
-  expect(uniqueBy(original, item => item.key, true)).toEqual([bar, baz]);
+  expect(uniqueBy(original, (item) => item.key, true)).toEqual([bar, baz]);
 });
 
 test('entries', () => {
@@ -390,7 +398,13 @@ test('entries', () => {
 test('keys', () => {
   const input = { a: 1, b: 'b' };
 
-  expect(keys(input).map(key => key)).toEqual(['a', 'b']);
+  expect(keys(input).map((key) => key)).toEqual(['a', 'b']);
+});
+
+test('values', () => {
+  const input = { a: 1, b: 'b' };
+
+  expect(values(input).map((value) => value)).toEqual([1, 'b']);
 });
 
 test('range', () => {
@@ -418,7 +432,7 @@ test('hasOwnProperty', () => {
   expect(hasOwnProperty({ a: 1 }, 'b')).toBeFalse();
   expect(hasOwnProperty({ a: 1, hasOwnProperty: () => true }, 'b')).toBeFalse();
 
-  const noProto = Object.create(null);
+  const noProto = object<PlainObject>();
   noProto.a = 1;
 
   expect(hasOwnProperty(noProto, 'a')).toBeTrue();

@@ -1,3 +1,7 @@
+import { SyntheticEvent } from 'react';
+
+import { object } from '@remirror/core-helpers';
+
 import { callAllEventHandlers } from '../multishift-utils';
 
 describe('callAllEventHandlers', () => {
@@ -5,7 +9,7 @@ describe('callAllEventHandlers', () => {
     expect(callAllEventHandlers()).toEqual(expect.any(Function));
   });
 
-  const args = [Object.create(null), 1, '2', true] as const;
+  const args = [object<SyntheticEvent>(), 1, '2', true] as const;
   const handler1 = jest.fn();
   const handler2 = jest.fn();
 
@@ -36,7 +40,7 @@ describe('callAllEventHandlers', () => {
       return true;
     });
     const result = callAllEventHandlers(handler, handler1, handler2);
-    result(Object.create(null), 1, '2', true);
+    result(object(), 1, '2', true);
 
     expect(handler1).not.toHaveBeenCalled();
     expect(handler2).not.toHaveBeenCalled();

@@ -7,13 +7,14 @@
 
 ## Usage
 
-The following editor would add emoji characters as valid prefix characters when typing the `@` key in the
-editor.
+The following editor would add emoji characters as valid prefix characters when typing the `@` key
+in the editor.
 
 ```tsx
 import emojiRegex from 'emoji-regex';
 import { SocialEditor } from '@remirror/editor-social';
-const Editor = props => (
+
+const Editor = (props) => (
   <SocialEditor
     {...props}
     attributes={{ 'data-testid': 'editor-social' }}

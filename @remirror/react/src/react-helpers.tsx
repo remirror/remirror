@@ -4,11 +4,11 @@ import { jsx } from '@emotion/core';
 import { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { ExtensionManager, PlainObject } from '@remirror/core';
+import { Manager, object, PlainObject } from '@remirror/core';
 
-import { useRemirrorManager } from './hooks/context-hooks';
+import { useRemirror } from './hooks/use-remirror';
 
-export interface GetManagerFromComponentTreeParams {
+export interface GetManagerFromComponentTreeParameter {
   /**
    * The full remirror component tree wrapped with an outer <RemirrorManager />
    */
@@ -72,14 +72,14 @@ export interface GetManagerFromComponentTreeParams {
  *
  * This is useful in DOM-less (e.g. server-side) environments.
  */
-export const getManagerFromComponentTree = ({
+export const getSchemaFromComponentTree = ({
   Component,
   prop = 'children',
-  extraProps = Object.create(null),
-}: GetManagerFromComponentTreeParams) =>
-  new Promise<ExtensionManager>((resolve, reject) => {
+  extraProps = object<PlainObject>(),
+}: GetManagerFromComponentTreeParameter) =>
+  new Promise<Manager>((resolve, reject) => {
     const ManagerRetriever = () => {
-      const manager = useRemirrorManager();
+      const { manager } = useRemirror();
       resolve(manager);
       return null;
     };
@@ -89,8 +89,9 @@ export const getManagerFromComponentTree = ({
 
     reject(
       new Error(
-        `The manager was not found. Please check that \`${Component.displayName ??
-          Component.name}\` has a prop called \`${prop}\` which is rendered within the \`<RemirrorManager />\` context`,
+        `The manager was not found. Please check that \`${
+          Component.displayName ?? Component.name
+        }\` has a prop called \`${prop}\` which is rendered within the \`<RemirrorManager />\` context`,
       ),
     );
   });

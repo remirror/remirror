@@ -4,7 +4,7 @@ import { EditorSchema, EditorState } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
 
 import { SuggestState } from './suggest-state';
-import { Suggester } from './suggest-types';
+import { Suggestion } from './suggest-types';
 
 const suggestPluginKey = new PluginKey('suggest');
 
@@ -13,8 +13,9 @@ const suggestPluginKey = new PluginKey('suggest');
  *
  * @param state - the editor state.
  */
-export const getSuggestPluginState = <GSchema extends EditorSchema = any>(state: EditorState<GSchema>) =>
-  getPluginState<SuggestState>(suggestPluginKey, state);
+export const getSuggestPluginState = <GSchema extends EditorSchema = any>(
+  state: EditorState<GSchema>,
+) => getPluginState<SuggestState>(suggestPluginKey, state);
 
 /**
  * This creates a suggestion plugin with all the suggestions provided.
@@ -26,14 +27,14 @@ export const getSuggestPluginState = <GSchema extends EditorSchema = any>(state:
  * emojis based on the query typed so far.
  *
  * ```ts
- * import { Suggester, suggest } from 'prosemirror-suggest';
+ * import { Suggestion, suggest } from 'prosemirror-suggest';
  *
  * const maxResults = 10;
  * let selectedIndex = 0;
  * let emojiList: string[] = [];
  * let showSuggestions = false;
  *
- * const suggestEmojis: Suggester = {
+ * const suggestEmojis: Suggestion = {
  *   // By default decorations are used to highlight the currently matched
  *   // suggestion in the dom.
  *   // In this example we don't need decorations (in fact they cause problems when the
@@ -111,14 +112,14 @@ export const getSuggestPluginState = <GSchema extends EditorSchema = any>(state:
  * @param suggesters - a list of suggesters in the order they should be
  * evaluated.
  */
-export const suggest = <GSchema extends EditorSchema = any>(...suggesters: Suggester[]) => {
+export const suggest = <GSchema extends EditorSchema = any>(...suggesters: Suggestion[]) => {
   const pluginState = SuggestState.create(suggesters);
 
   return new Plugin<SuggestState, GSchema>({
     key: suggestPluginKey,
 
     // Handle the plugin view
-    view: view => {
+    view: (view) => {
       return pluginState.init(view).viewHandler();
     },
 
@@ -147,7 +148,7 @@ export const suggest = <GSchema extends EditorSchema = any>(...suggesters: Sugge
 
       // Sets up a decoration (styling options) on the currently active
       // decoration
-      decorations: state => {
+      decorations: (state) => {
         return pluginState.decorations(state);
       },
     },

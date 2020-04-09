@@ -9,13 +9,12 @@ import { renderToStaticMarkup } from 'react-dom/server';
 
 import { createTestManager, docNodeBasicJSON } from '@remirror/test-fixtures';
 
-import { useRemirrorContext } from '../../hooks/context-hooks';
-import { RemirrorManager } from '../remirror-manager';
-import { ManagedRemirrorProvider, RemirrorProvider } from '../remirror-providers';
+import { useRemirror } from '../../hooks/use-remirror';
+import { RemirrorProvider } from '../remirror-provider';
 
 test('RemirrorProvider', () => {
   const TestComponent = () => {
-    const { getRootProps } = useRemirrorContext();
+    const { getRootProps } = useRemirror();
     const rootProps = getRootProps();
     return (
       <div data-testid='1'>
@@ -32,29 +31,6 @@ test('RemirrorProvider', () => {
     </RemirrorProvider>
   );
   const reactString = renderToStaticMarkup(element);
-
-  expect(reactString).toInclude('basic');
-});
-
-test('ManagedRemirrorProvider', () => {
-  // global.render = renderToStaticMarkup;
-  const TestComponent = () => {
-    const { getRootProps } = useRemirrorContext();
-    const rootProps = getRootProps();
-    return (
-      <div>
-        <div data-testid='target' {...rootProps} />
-      </div>
-    );
-  };
-
-  const reactString = renderToStaticMarkup(
-    <RemirrorManager>
-      <ManagedRemirrorProvider initialContent={docNodeBasicJSON}>
-        <TestComponent />
-      </ManagedRemirrorProvider>
-    </RemirrorManager>,
-  );
 
   expect(reactString).toInclude('basic');
 });

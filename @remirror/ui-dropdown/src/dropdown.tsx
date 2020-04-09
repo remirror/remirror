@@ -4,10 +4,11 @@ import { MultishiftPropGetters, Type, useMultishift } from 'multishift';
 import { forwardRef, useLayoutEffect, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 
+import { object } from '@remirror/core-helpers';
 import { useMeasure, usePrevious } from '@remirror/react-hooks';
 import { useRemirrorTheme } from '@remirror/ui';
 import { Button } from '@remirror/ui-buttons';
-import { AngleDownIcon, AngleRightIcon } from '@remirror/ui-icons';
+import { AngleDownIcon, AngleRightIcon, IconProps } from '@remirror/ui-icons';
 import { Label } from '@remirror/ui-text';
 
 import { dropdownPositions } from './dropdown-constants';
@@ -28,7 +29,7 @@ export const DropdownSelect = forwardRef<HTMLDivElement, DropdownProps>(
       renderLabel,
       initialItem,
       IconComponent,
-      iconProps = Object.create(null),
+      iconProps = object<Partial<IconProps>>(),
       dropdownPosition: dropdownPositionProp = 'below left',
       autoPositionY,
       autoPositionYSpace = 20,
@@ -44,7 +45,9 @@ export const DropdownSelect = forwardRef<HTMLDivElement, DropdownProps>(
     },
     ref,
   ) => {
-    const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>(dropdownPositionProp);
+    const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>(
+      dropdownPositionProp,
+    );
     const {
       isOpen,
       getToggleButtonProps,
@@ -61,8 +64,8 @@ export const DropdownSelect = forwardRef<HTMLDivElement, DropdownProps>(
       selectedItems: selectedItemsProp,
       type: Type.Select,
       onSelectedItemsChange: onSelect,
-      itemToString: item => item.label,
-      getItemId: item => item.id,
+      itemToString: (item) => item.label,
+      getItemId: (item) => item.id,
     });
 
     const { sx } = useRemirrorTheme();
@@ -135,7 +138,9 @@ export const DropdownSelect = forwardRef<HTMLDivElement, DropdownProps>(
           variant='background'
           {...getToggleButtonProps({ disabled, ref: buttonRef })}
           content={showSelectedAsLabel && selectedItems[0] ? selectedItems[0].label : label}
-          RightIconComponent={IconComponent ? IconComponent : isOpen ? AngleDownIcon : AngleRightIcon}
+          RightIconComponent={
+            IconComponent ? IconComponent : isOpen ? AngleDownIcon : AngleRightIcon
+          }
           rightIconProps={{ backgroundColor: 'transparent', ...iconProps }}
           fontWeight='normal'
           css={sx({ position: 'relative' })}
@@ -199,7 +204,13 @@ const DropdownItemComponent = ({
   return (
     <div
       css={sxx({
-        backgroundColor: isSelected ? 'grey' : isHighlighted ? 'light' : isHovered ? 'grey' : 'background',
+        backgroundColor: isSelected
+          ? 'grey'
+          : isHighlighted
+          ? 'light'
+          : isHovered
+          ? 'grey'
+          : 'background',
         p: 2,
       })}
       {...getItemProps({ index, item })}

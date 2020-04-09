@@ -71,25 +71,27 @@ module.exports = {
 
 ## The problem
 
-Testing contenteditable is really difficult, especially with `jsdom`. There are certain events that can't be
-fired and it's often hard to conceptualize how the test result translates to the actual user experience.
+Testing contenteditable is really difficult, especially with `jsdom`. There are certain events that
+can't be fired and it's often hard to conceptualize how the test result translates to the actual
+user experience.
 
 ## A solution
 
-`jest-remirror` makes rendering the remirror editor painless so that you can test that your extensions:
+`jest-remirror` makes rendering the remirror editor painless so that you can test that your
+extensions:
 
 - have the intended effect on the HTML output
 - call the correct callbacks
 
-Under the hood `jest-remirror` leans heavily on `@testing-library/react` to render an instance of your test
-editor to the dom and provides a number of utilities exposed when calling the `renderEditor` method.
+Under the hood `jest-remirror` leans heavily on `@testing-library/react` to render an instance of
+your test editor to the dom and provides a number of utilities exposed when calling the
+`renderEditor` method.
 
 ## Example
 
 ```ts
-import { renderEditor } from 'jest-remirror';
-
 import { EmojiExtension } from '@remirror/extension-emoji';
+import { renderEditor } from 'jest-remirror';
 
 test('emoticons replaced with emoji', () => {
   const {
@@ -98,7 +100,7 @@ test('emoticons replaced with emoji', () => {
   } = renderEditor({ plainNodes: [], others: [new EmojiExtension()] });
   add(doc(p('<cursor>')))
     .insertText(':-)')
-    .callback(content => {
+    .callback((content) => {
       expect(content.state.doc).toEqualRemirrorDocument(doc(p('😃')));
     });
 });

@@ -1,7 +1,7 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
-import { fromHTML, toHTML } from '@remirror/core';
+import { fromHTML, object, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 
 import { LinkExtension, LinkExtensionOptions } from '../link-extension';
@@ -37,13 +37,15 @@ describe('schema', () => {
     expect(node).toEqualProsemirrorNode(expected);
   });
 
-  describe('extraAttrs', () => {
+  describe('extraAttributes', () => {
     const custom = 'true';
     const title = 'awesome';
 
     const { schema } = createBaseTestManager([
       {
-        extension: new LinkExtension({ extraAttrs: ['title', ['custom', 'failure', 'data-custom']] }),
+        extension: new LinkExtension({
+          extraAttributes: ['title', ['custom', 'failure', 'data-custom']],
+        }),
         priority: 1,
       },
     ]);
@@ -59,7 +61,9 @@ describe('schema', () => {
     it('does not override the href', () => {
       const { schema } = createBaseTestManager([
         {
-          extension: new LinkExtension({ extraAttrs: [['href', 'should not appear', 'data-custom']] }),
+          extension: new LinkExtension({
+            extraAttributes: [['href', 'should not appear', 'data-custom']],
+          }),
           priority: 1,
         },
       ]);
@@ -86,7 +90,7 @@ describe('schema', () => {
   });
 });
 
-const create = (params: LinkExtensionOptions = Object.create(null)) =>
+const create = (params: LinkExtensionOptions = object()) =>
   renderEditor({
     attrMarks: [new LinkExtension({ ...params })],
     plainNodes: [],
@@ -176,7 +180,9 @@ describe('actions', () => {
         add(doc(p('Paragraph <start>A link<end>')));
         actions.updateLink({ href });
 
-        expect(getState()).toContainRemirrorDocument(p('Paragraph ', testLink('<start>A link<end>')));
+        expect(getState()).toContainRemirrorDocument(
+          p('Paragraph ', testLink('<start>A link<end>')),
+        );
       });
 
       it('does nothing for an empty selection', () => {
@@ -193,7 +199,9 @@ describe('actions', () => {
         add(doc(p('Paragraph ', testLink('<start>A link<end>'))));
         actions.updateLink(attrs);
 
-        expect(getState()).toContainRemirrorDocument(p('Paragraph ', altLink('<start>A link<end>')));
+        expect(getState()).toContainRemirrorDocument(
+          p('Paragraph ', altLink('<start>A link<end>')),
+        );
       });
 
       it('overwrites multiple existing links', () => {

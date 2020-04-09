@@ -1,15 +1,15 @@
 import { toggleMark } from 'prosemirror-commands';
 
 import {
-  CommandMarkTypeParams,
-  ExtensionManagerMarkTypeParams,
+  CommandMarkTypeParameter,
+  convertCommand,
+  ManagerMarkTypeParameter,
+  isElementDOMNode,
+  isString,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
-  convertCommand,
-  isElementDOMNode,
-  isString,
   markInputRule,
 } from '@remirror/core';
 
@@ -30,24 +30,26 @@ export class BoldExtension extends MarkExtension {
         // tags with a font-weight normal.
         {
           tag: 'b',
-          getAttrs: node => (isElementDOMNode(node) && node.style.fontWeight !== 'normal' ? null : false),
+          getAttrs: (node) =>
+            isElementDOMNode(node) && node.style.fontWeight !== 'normal' ? null : false,
         },
         {
           style: 'font-weight',
-          getAttrs: node => (isString(node) && /^(bold(er)?|[5-9]\d{2,})$/.test(node) ? null : false),
+          getAttrs: (node) =>
+            isString(node) && /^(bold(er)?|[5-9]\d{2,})$/.test(node) ? null : false,
         },
       ],
       toDOM: () => ['strong', 0],
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams): KeyBindings {
+  public keys({ type }: ManagerMarkTypeParameter): KeyBindings {
     return {
       'Mod-b': convertCommand(toggleMark(type)),
     };
   }
 
-  public commands({ type }: CommandMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParameter) {
     return {
       bold: () => {
         return toggleMark(type);
@@ -55,7 +57,7 @@ export class BoldExtension extends MarkExtension {
     };
   }
 
-  public inputRules({ type }: ExtensionManagerMarkTypeParams) {
+  public inputRules({ type }: ManagerMarkTypeParameter) {
     return [markInputRule({ regexp: /(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type })];
   }
 }

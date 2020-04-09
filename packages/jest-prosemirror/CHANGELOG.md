@@ -1,5 +1,12 @@
 # jest-prosemirror
 
+## 0.8.2
+
+### Patch Changes
+
+- d2a288aa: Remove @types/prosemirror-tables from dependencies
+- 000fdfb0: Upgraded external dependencies with major releases.
+
 ## 0.8.1
 
 ### Patch Changes
@@ -15,9 +22,9 @@
 
 ### Minor Changes
 
-- 24f83413: Create a new class `ProsemirrorTestChain` for chaining the return from `createEditor`. Previously
-  it was manually chained with a function. The plan is to extend this class within the `jest-remirror`
-  codebase.
+- 24f83413: Create a new class `ProsemirrorTestChain` for chaining the return from `createEditor`.
+  Previously it was manually chained with a function. The plan is to extend this class within the
+  `jest-remirror` codebase.
 
 ### Patch Changes
 

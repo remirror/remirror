@@ -14,8 +14,14 @@ import {
 } from 'react';
 import keyNames from 'w3c-keyname';
 
-import { ActionNames, AnyFunction, Attrs, KeyOfThemeVariant, getMarkAttrs } from '@remirror/core';
-import { bubblePositioner, useRemirrorContext } from '@remirror/react';
+import {
+  AnyFunction,
+  CommandNames,
+  getMarkAttributes,
+  KeyOfThemeVariant,
+  ProsemirrorAttributes,
+} from '@remirror/core';
+import { bubblePositioner, useRemirror } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 import {
   BoldIcon,
@@ -46,7 +52,11 @@ import {
   WithPaddingProps,
 } from './wysiwyg-components';
 
-const menuItems: Array<[ActionNames<WysiwygExtensions>, [ComponentType<IconProps>, string?], Attrs?]> = [
+const menuItems: Array<[
+  CommandNames<WysiwygExtensions>,
+  [ComponentType<IconProps>, string?],
+  ProsemirrorAttributes?,
+]> = [
   ['bold', [BoldIcon]],
   ['italic', [ItalicIcon]],
   ['underline', [UnderlineIcon]],
@@ -63,9 +73,12 @@ const menuItems: Array<[ActionNames<WysiwygExtensions>, [ComponentType<IconProps
   ['horizontalRule', [RulerHorizontalIcon]],
 ];
 
-const runAction = (method: AnyFunction, attrs?: Attrs): MouseEventHandler<HTMLElement> => e => {
+const runAction = (
+  method: AnyFunction,
+  attributes: ProsemirrorAttributes,
+): MouseEventHandler<HTMLElement> => (e) => {
   e.preventDefault();
-  method(attrs);
+  method(attributes);
 };
 
 /**
@@ -82,12 +95,12 @@ interface MenuBarProps extends Pick<BubbleMenuProps, 'activateLink'> {
  * The MenuBar component which renders the actions that can be taken on the text within the editor.
  */
 export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
-  const { actions } = useRemirrorContext<WysiwygExtensions>();
+  const { actions } = useRemirror<WysiwygExtensions>();
 
   return (
     <Toolbar>
-      {menuItems.map(([name, [Icon, subText], attrs], index) => {
-        const buttonState = getButtonState(actions[name].isActive(attrs), inverse);
+      {menuItems.map(([name, [Icon, subText], attributes], index) => {
+        const buttonState = getButtonState(actions[name].isActive(attributes), inverse);
 
         return (
           <MenuItem
@@ -97,7 +110,7 @@ export const MenuBar: FC<MenuBarProps> = ({ inverse, activateLink }) => {
             subText={subText}
             state={buttonState}
             disabled={!actions[name].isEnabled()}
-            onClick={runAction(actions[name], attrs)}
+            onClick={runAction(actions[name], attributes)}
           />
         );
       })}
@@ -124,7 +137,14 @@ interface MenuItemProps extends Partial<WithPaddingProps> {
 /**
  * A single clickable menu item for editing the styling and format of the text.
  */
-const MenuItem: FC<MenuItemProps> = ({ state, onClick, Icon, variant, disabled = false, index }) => {
+const MenuItem: FC<MenuItemProps> = ({
+  state,
+  onClick,
+  Icon,
+  variant,
+  disabled = false,
+  index,
+}) => {
   return (
     <IconButton onClick={onClick} state={state} disabled={disabled} index={index}>
       <Icon variant={variant} styles={{ color: disabled ? 'gray' : undefined }} />
@@ -139,24 +159,28 @@ export interface BubbleMenuProps {
 }
 
 const bubbleMenuItems: Array<[
-  ActionNames<WysiwygExtensions>,
+  CommandNames<WysiwygExtensions>,
   [ComponentType<IconProps>, string?],
-  Attrs?,
+  ProsemirrorAttributes?,
 ]> = [
   ['bold', [BoldIcon]],
   ['italic', [ItalicIcon]],
   ['underline', [UnderlineIcon]],
 ];
 
-export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactivateLink, activateLink }) => {
-  const { actions, getPositionerProps, helpers, state, manager } = useRemirrorContext<WysiwygExtensions>();
+export const BubbleMenu: FC<BubbleMenuProps> = ({
+  linkActivated = false,
+  deactivateLink,
+  activateLink,
+}) => {
+  const { actions, getPositionerProps, helpers, state, manager } = useRemirror<WysiwygExtensions>();
 
-  const positionerProps = getPositionerProps({
+  const positionerProperties = getPositionerProps({
     ...bubblePositioner,
     hasChanged: () => true,
-    isActive: params => {
+    isActive: (parameters) => {
       const answer =
-        (bubblePositioner.isActive(params) || linkActivated) &&
+        (bubblePositioner.isActive(parameters) || linkActivated) &&
         !actions.toggleCodeBlock.isActive() &&
         !helpers.isDragging();
       return answer;
@@ -164,14 +188,14 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
     positionerId: 'bubbleMenu',
   });
 
-  const { bottom, ref, left } = positionerProps;
+  const { bottom, ref, left } = positionerProperties;
 
   const updateLink = (href: string) => actions.updateLink({ href });
   const removeLink = () => actions.removeLink();
   const canRemove = () => actions.removeLink.isActive();
 
   const activatedLinkHref = useMemo<string | undefined>(() => {
-    return getMarkAttrs(state.newState, manager.schema.marks.link).href;
+    return getMarkAttributes(state.newState, manager.schema.marks.link).href;
   }, [manager, state]);
 
   return (
@@ -183,8 +207,8 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
         />
       ) : (
         <BubbleContent>
-          {bubbleMenuItems.map(([name, [Icon, subText], attrs], index) => {
-            const buttonState = getButtonState(actions[name].isActive(attrs), true);
+          {bubbleMenuItems.map(([name, [Icon, subText], attributes], index) => {
+            const buttonState = getButtonState(actions[name].isActive(attributes), true);
 
             return (
               <MenuItem
@@ -194,7 +218,7 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({ linkActivated = false, deactiv
                 subText={subText}
                 state={buttonState}
                 disabled={!actions[name].isEnabled()}
-                onClick={runAction(actions[name], attrs)}
+                onClick={runAction(actions[name], attributes)}
                 variant='inverse'
               />
             );
@@ -227,9 +251,9 @@ const LinkInput: FC<LinkInputProps> = ({
 }) => {
   const [href, setHref] = useState('');
   const { css } = useRemirrorTheme();
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const wrapperReference = useRef<HTMLDivElement>(null);
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = event => {
+  const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     setHref(event.target.value);
   };
 
@@ -238,7 +262,7 @@ const LinkInput: FC<LinkInputProps> = ({
     deactivateLink();
   };
 
-  const onKeyPress: KeyboardEventHandler<HTMLInputElement> = event => {
+  const onKeyPress: KeyboardEventHandler<HTMLInputElement> = (event) => {
     const key = keyNames.keyName(event.nativeEvent);
     if (key === 'Escape') {
       event.preventDefault();
@@ -251,14 +275,14 @@ const LinkInput: FC<LinkInputProps> = ({
     }
   };
 
-  const onClickRemoveLink: DOMAttributes<HTMLButtonElement>['onClick'] = event => {
+  const onClickRemoveLink: DOMAttributes<HTMLButtonElement>['onClick'] = (event) => {
     event.preventDefault();
     removeLink();
     deactivateLink();
   };
 
   const handleClick = (event: MouseEvent) => {
-    if (!wrapperRef.current || wrapperRef.current.contains(event.target as Node)) {
+    if (!wrapperReference.current || wrapperReference.current.contains(event.target as Node)) {
       return;
     }
     deactivateLink();
@@ -272,7 +296,7 @@ const LinkInput: FC<LinkInputProps> = ({
   });
 
   return (
-    <BubbleContent ref={wrapperRef}>
+    <BubbleContent ref={wrapperReference}>
       <input
         defaultValue={defaultValue}
         placeholder='Enter URL...'
@@ -290,7 +314,12 @@ const LinkInput: FC<LinkInputProps> = ({
         `}
       />
       {canRemove() && (
-        <MenuItem Icon={TimesIcon} state='active-inverse' onClick={onClickRemoveLink} variant='inverse' />
+        <MenuItem
+          Icon={TimesIcon}
+          state='active-inverse'
+          onClick={onClickRemoveLink}
+          variant='inverse'
+        />
       )}
     </BubbleContent>
   );

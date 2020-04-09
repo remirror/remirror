@@ -38,7 +38,10 @@ describe('removeMark', () => {
 
     expect(removeMark({ type, range: { from: 7, to: 11 } })).toTransformNode({ from, to });
     expect(removeMark({ type, range: { from: 8 }, expand: true })).toTransformNode({ from, to });
-    expect(removeMark({ type, range: { from: 3, to: 7 }, expand: true })).toTransformNode({ from, to });
+    expect(removeMark({ type, range: { from: 3, to: 7 }, expand: true })).toTransformNode({
+      from,
+      to,
+    });
   });
 });
 
@@ -47,7 +50,10 @@ describe('replaceText', () => {
     const from = doc(p('replace <start>me<end>'));
     const to = doc(p('replace ', atomInline()));
 
-    expect(replaceText({ appendText: '', type: schema.nodes.atomInline })).toTransformNode({ from, to });
+    expect(replaceText({ appendText: '', type: schema.nodes.atomInline })).toTransformNode({
+      from,
+      to,
+    });
   });
 
   it('does not replace invalid content', () => {

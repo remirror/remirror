@@ -39,7 +39,11 @@ export const RemirrorPortals = ({ portalContainer }: RemirrorPortalsProps) => {
       {state.map(([container, { render: Component, key }]) => (
         <Fragment key={key}>
           {createPortal(
-            <Portal container={container} Component={Component} portalContainer={portalContainer} />,
+            <Portal
+              container={container}
+              Component={Component}
+              portalContainer={portalContainer}
+            />,
             container,
           )}
         </Fragment>

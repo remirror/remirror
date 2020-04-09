@@ -1,12 +1,12 @@
 import { RefractorSyntax } from 'refractor/core';
 
-import { Attrs, NodeExtensionOptions } from '@remirror/core';
+import { BaseExtensionSettings, ProsemirrorAttributes } from '@remirror/core';
 
 import { SyntaxTheme } from './themes';
 
-export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
+export interface CodeBlockExtensionSettings extends object {
   /**
-   * Import languages from refractor
+   * Import languages from refractor.
    *
    * @remarks
    *
@@ -84,9 +84,9 @@ export interface CodeBlockExtensionOptions extends NodeExtensionOptions {
  *
  * TODO - possibly allow error management if failure is because of invalid syntax
  */
-export type CodeBlockFormatter = (params: FormatterParams) => FormattedContent | undefined;
+export type CodeBlockFormatter = (params: FormatterParameter) => FormattedContent | undefined;
 
-export interface FormatterParams {
+export interface FormatterParameter {
   /**
    * The code to be formatted
    */
@@ -121,7 +121,7 @@ export interface FormattedContent {
   cursorOffset: number;
 }
 
-export interface CodeBlockAttrs extends Attrs {
+export interface CodeBlockAttributes extends ProsemirrorAttributes {
   /**
    * The language attribute
    */

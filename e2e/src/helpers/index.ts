@@ -20,17 +20,20 @@ export const sel = (...selectors: string[]) => selectors.join(' ');
 /**
  * Obtain the inner HTML
  */
-export const innerHtml = async (selector: string) => page.$eval(selector, element => element.innerHTML);
+export const innerHtml = async (selector: string) =>
+  page.$eval(selector, (element) => element.innerHTML);
 
 /**
  * Retrieve the text content from the editor
  */
-export const textContent = async (selector: string) => page.$eval(selector, element => element.textContent);
+export const textContent = async (selector: string) =>
+  page.$eval(selector, (element) => element.textContent);
 
 /**
  * Retrieve the outerHTML from the editor
  */
-export const outerHtml = async (selector: string) => page.$eval(selector, element => element.outerHTML);
+export const outerHtml = async (selector: string) =>
+  page.$eval(selector, (element) => element.outerHTML);
 
 /**
  * Skips the test on Firefox.
@@ -44,7 +47,9 @@ export const skipTestOnFirefox = getBrowserName() === 'firefox' ? test.skip : te
  * @param fn - the transformer function called with the index position
  */
 const times = <GType = number>(length: number, fn?: (index: number) => GType): GType[] =>
-  Array.from<unknown, GType>({ length }, (_, index) => (fn ? fn(index) : ((index as unknown) as GType)));
+  Array.from<unknown, GType>({ length }, (_, index) =>
+    fn ? fn(index) : ((index as unknown) as GType),
+  );
 
 /* Taken from https://github.com/WordPress/gutenberg/blob/5bbda3656a530616a7a78c0a101d6ec2d8fa6a7a/packages/e2e-test-utils/src/press-key-times.js */
 
@@ -59,7 +64,7 @@ const times = <GType = number>(length: number, fn?: (index: number) => GType): G
 const promiseSequence = async (sequence: Array<() => Promise<void>>) =>
   sequence.reduce((current, next) => current.then(next), Promise.resolve());
 
-export interface TypeParams {
+export interface TypeParameter {
   /**
    * The text to type.
    */
@@ -71,7 +76,7 @@ export interface TypeParams {
   delay?: number;
 }
 
-export interface PressParams extends MakeOptional<TypeParams, 'text'> {
+export interface PressParameter extends MakeOptional<TypeParameter, 'text'> {
   /**
    * The key to press.
    */
@@ -92,13 +97,14 @@ export interface PressParams extends MakeOptional<TypeParams, 'text'> {
  *
  * @return Promise resolving when key presses complete.
  */
-export const press = async ({ key, count = 1, delay = 50, text }: PressParams) =>
+export const press = async ({ key, count = 1, delay = 50, text }: PressParameter) =>
   promiseSequence(times(count, () => () => page.keyboard.press(key, { text, delay })));
 
 /**
  * Wrapper around `page.keyboard.type` with default typing delay.
  */
-export const type = async ({ text, delay = 10 }: TypeParams) => page.keyboard.type(text, { delay });
+export const type = async ({ text, delay = 10 }: TypeParameter) =>
+  page.keyboard.type(text, { delay });
 
 export * from './modifier-keys';
 
@@ -110,8 +116,8 @@ interface HTMLObject {
 }
 
 function makeHtmlObject(htmlOrPromise: string | Promise<string>): Promise<HTMLObject> {
-  return Promise.resolve(htmlOrPromise).then(html => Promise.resolve({ _: 'HTML', html }));
+  return Promise.resolve(htmlOrPromise).then((html) => Promise.resolve({ _: 'HTML', html }));
 }
 
 export const $innerHTML = (selector: string) =>
-  makeHtmlObject(page.$eval(selector, element => element.innerHTML));
+  makeHtmlObject(page.$eval(selector, (element) => element.innerHTML));

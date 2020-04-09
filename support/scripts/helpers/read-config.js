@@ -10,7 +10,7 @@ const base = (...path) => resolve(__dirname, '../../..', join(...path));
 
 const configFilePath = base('.config.json');
 
-const readJSON = str => {
+const readJSON = (str) => {
   try {
     return JSON.parse(str);
   } catch (e) {

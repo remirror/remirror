@@ -12,19 +12,20 @@
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react-portals",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "sideEffects": false,
+  "main": "lib/dist/index.js",
+  "module": "lib/dist/react-portals.esm.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib",
     "src"
   ],
-  "sideEffects": false,
-  "main": "lib/index.js",
-  "module": "lib/dist/react-portals.esm.js",
-  "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
     "@types/nanoid": "2.1.0",
-    "nanoid": "^2.1.7",
-    "type-fest": "^0.12.0"
+    "nanoevents": "^5.1.5",
+    "nanoid": "^3.0.2",
+    "type-fest": "^0.13.0"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

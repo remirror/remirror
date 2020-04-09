@@ -1,20 +1,20 @@
-import { includes, take } from '@remirror/core-helpers';
+import { includes, object, take } from '@remirror/core-helpers';
 
 import {
-  KeyboardConstructorParams,
+  KeyboardConstructorParameter,
   KeyboardEventName,
   ModifierInformation,
-  OptionsParams,
-  OptionsWithTypingParams,
-  TextInputParams,
-  TypingInputParams,
+  OptionsParameter,
+  OptionsWithTypingParameter,
+  TextInputParameter,
+  TypingInputParameter,
 } from './test-keyboard-types';
 import { cleanKey, createKeyboardEvent, getModifierInformation } from './test-keyboard-utils';
 import {
-  SupportedCharacters,
   isUSKeyboardCharacter,
   noKeyPress,
   noKeyUp,
+  SupportedCharacters,
   usKeyboardLayout,
 } from './us-keyboard-layout';
 
@@ -36,7 +36,8 @@ export interface BatchedKeyboardAction {
 }
 
 /**
- * The callback function signature for the `eachEvent` which is available when `batch` is true.
+ * The callback function signature for the `eachEvent` which is available when
+ * `batch` is true.
  */
 export type BatchedCallback = (
   action: BatchedKeyboardAction,
@@ -45,7 +46,7 @@ export type BatchedCallback = (
 ) => void;
 
 export class Keyboard {
-  public static create(params: KeyboardConstructorParams) {
+  public static create(params: KeyboardConstructorParameter) {
     return new Keyboard(params);
   }
 
@@ -76,7 +77,7 @@ export class Keyboard {
     isMac = false,
     batch = false,
     onEventDispatch,
-  }: KeyboardConstructorParams) {
+  }: KeyboardConstructorParameter) {
     this.target = target as HTMLElement;
     this.defaultOptions = defaultOptions;
     this.isMac = isMac;
@@ -116,7 +117,8 @@ export class Keyboard {
   }
 
   /**
-   * When batched is true the user can run through each event and fire as they please.
+   * When batched is true the user can run through each event and fire as they
+   * please.
    */
   public forEach(fn: BatchedCallback) {
     if (!this.started) {
@@ -137,22 +139,22 @@ export class Keyboard {
    * Runs all the batched events.
    */
   private runBatchedEvents() {
-    this.actions.forEach(action => {
+    this.actions.forEach((action) => {
       action.dispatch();
     });
   }
 
   /**
-   * Like `this.char` but only supports US Keyboard Characters. This is mainly
-   * a utility for TypeScript and autocomplete support when typing characters.
+   * Like `this.char` but only supports US Keyboard Characters. This is mainly a
+   * utility for TypeScript and autocomplete support when typing characters.
    *
-   * @param params - see {@link TextInputParams}
+   * @param params - see {@link TextInputParameter}
    */
   public usChar({
     text,
-    options = Object.create(null),
+    options = object(),
     typing = false,
-  }: TextInputParams<SupportedCharacters>) {
+  }: TextInputParameter<SupportedCharacters>) {
     if (!isUSKeyboardCharacter(text)) {
       throw new Error(
         'This is not a supported character. For generic characters use the `keyboard.char` method instead',
@@ -164,9 +166,9 @@ export class Keyboard {
   /**
    * Dispatches an event for a keyboard character
    *
-   * @param params - see {@link TextInputParams}
+   * @param params - see {@link TextInputParameter}
    */
-  public char({ text, options, typing }: TextInputParams) {
+  public char({ text, options, typing }: TextInputParameter) {
     options = {
       ...options,
       ...(isUSKeyboardCharacter(text) ? cleanKey(text) : { key: text }),
@@ -180,36 +182,37 @@ export class Keyboard {
   /**
    * Triggers a keydown event with provided options
    *
-   * @param params - see {@link OptionsParams}
+   * @param params - see {@link OptionsParameter}
    */
-  public keyDown = ({ options }: OptionsParams) => {
+  public keyDown = ({ options }: OptionsParameter) => {
     return this.dispatchEvent('keydown', options);
   };
 
   /**
    * Trigger a keypress event with the provided options
    *
-   * @param params - see {@link OptionsParams}
+   * @param params - see {@link OptionsParameter}
    */
-  public keyPress = ({ options }: OptionsParams) => {
+  public keyPress = ({ options }: OptionsParameter) => {
     return this.dispatchEvent('keypress', options);
   };
 
   /**
    * Trigger a keyup event with the provided options
    *
-   * @param params - see {@link OptionsParams}
+   * @param params - see {@link OptionsParameter}
    */
-  public keyUp = ({ options }: OptionsParams) => {
+  public keyUp = ({ options }: OptionsParameter) => {
     return this.dispatchEvent('keyup', options);
   };
 
   /**
-   * Breaks a string into single characters and fires a keyboard into the target node
+   * Breaks a string into single characters and fires a keyboard into the target
+   * node
    *
-   * @param params - see {@link TypingInputParams}
+   * @param params - see {@link TypingInputParameter}
    */
-  public type({ text, options = Object.create(null) }: TypingInputParams) {
+  public type({ text, options = object() }: TypingInputParameter) {
     for (const char of text) {
       this.char({ text: char, options, typing: true });
     }
@@ -228,9 +231,9 @@ export class Keyboard {
    *   .end();
    * ```
    *
-   * @param params - see {@link TextInputParams}
+   * @param params - see {@link TextInputParameter}
    */
-  public mod({ text, options = Object.create(null) }: TextInputParams) {
+  public mod({ text, options = object() }: TextInputParameter) {
     let modifiers = text.split(/-(?!$)/);
     let result = modifiers[modifiers.length - 1];
     modifiers = take(modifiers, modifiers.length - 1);
@@ -251,9 +254,9 @@ export class Keyboard {
   /**
    * Fires events where valid.
    *
-   * @param options - see {@link OptionsWithTypingParams}
+   * @param options - see {@link OptionsWithTypingParameter}
    */
-  private fireAllEvents({ options, typing = false }: OptionsWithTypingParams) {
+  private fireAllEvents({ options, typing = false }: OptionsWithTypingParameter) {
     this.keyDown({ options });
     if (
       !includes(noKeyPress, options.key) ||
@@ -271,7 +274,8 @@ export class Keyboard {
   /**
    * Fires all modifier events
    *
-   * @param info - the modifier information for the keys see {@link ModifierInformation}
+   * @param info - the modifier information for the keys see
+   * {@link ModifierInformation}
    * @param type - the keyboard event type
    *
    */
@@ -305,7 +309,8 @@ export class Keyboard {
    * Dispatches the action or adds it to the queue when batching is enabled.
    *
    * @param type - the keyboard event name
-   * @param options - options passed to the keyboard event. See {@link KeyboardEventInit}
+   * @param options - options passed to the keyboard event. See
+   * {@link KeyboardEventInit}
    */
   private dispatchEvent(type: KeyboardEventName, options: KeyboardEventInit) {
     if (!this.started) {

@@ -1,0 +1,61 @@
+---
+title: React
+---
+
+## Quick start
+
+Creating an editor consists of two steps.
+
+1. Creating the wrapper with `RemirrorProvider` which sets up the editor functionality by passing in
+   the extension manager.
+
+```tsx
+import { useCorePreset, useFormattingPreset } from '@remirror/core-presets';
+import { RemirrorProvider, useManager } from '@remirror/react';
+
+import { MyEditor } from './my-editor';
+
+const EditorWrapper = () => {
+  const formattingPreset = useFormattingPreset();
+  const corePreset = useCorePreset();
+
+  const manager = useManager({ presets: [formattingPreset, corePreset] });
+
+  return (
+    <RemirrorProvider manager={manager}>
+      <MyEditor />
+    </RemirrorProvider>
+  );
+};
+```
+
+2. Creating the inner editor which has access to the editor commands, functionality, updating
+   dynamic props cursor position and more. This is where the editor specifis UI will live.
+
+```tsx
+import { MouseEventHandler } from 'react';
+import { useFormattingPresetProps } from '@remirror/core-presets';
+import { useRemirror } from '@remirror/react';
+
+export const MyEditor = () => {
+  const { getRootProps, commands } = useRemirror();
+
+  const onBold: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
+    commands.bold();
+  };
+
+  const onItalic: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.preventDefault();
+    commands.italic();
+  };
+
+  return (
+    <div>
+      <button onClick={onBold} />
+      <button onClick={onItalic} />
+      <div {...getRootProps} />
+    </div>
+  );
+};
+```

@@ -260,7 +260,10 @@ declare global {
       ItemsPayload<GItem>,
       [GItem, boolean?]
     >;
-    setState: CreateMultishiftAction<typeof MultishiftActionTypes.SetState, MultishiftStateProps<GItem>>;
+    setState: CreateMultishiftAction<
+      typeof MultishiftActionTypes.SetState,
+      MultishiftStateProps<GItem>
+    >;
     clearSelection: typeof clearSelection;
     setHoverItemIndex: typeof setHoverItemIndex;
     inputValueChange: typeof inputValueChange;

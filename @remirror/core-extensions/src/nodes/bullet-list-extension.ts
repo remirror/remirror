@@ -1,13 +1,13 @@
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
 import {
-  CommandNodeTypeParams,
-  ExtensionManagerNodeTypeParams,
+  CommandNodeTypeParameter,
+  convertCommand,
+  ManagerNodeTypeParameter,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
-  convertCommand,
   toggleList,
 } from '@remirror/core';
 
@@ -18,7 +18,7 @@ export class BulletListExtension extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
-      attrs: this.extraAttrs(),
+      attrs: this.extraAttributes(),
       content: 'listItem+',
       group: NodeGroup.Block,
       parseDOM: [{ tag: 'ul' }],
@@ -26,17 +26,17 @@ export class BulletListExtension extends NodeExtension {
     };
   }
 
-  public commands({ type, schema }: CommandNodeTypeParams) {
+  public commands({ type, schema }: CommandNodeTypeParameter) {
     return { toggleBulletList: () => toggleList(type, schema.nodes.listItem) };
   }
 
-  public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
+  public keys({ type, schema }: ManagerNodeTypeParameter): KeyBindings {
     return {
       'Shift-Ctrl-8': convertCommand(toggleList(type, schema.nodes.listItem)),
     };
   }
 
-  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
-    return [wrappingInputRule(/^\s*([-+*])\s$/, type)];
+  public inputRules({ type }: ManagerNodeTypeParameter) {
+    return [wrappingInputRule(/^\s*([*+-])\s$/, type)];
   }
 }

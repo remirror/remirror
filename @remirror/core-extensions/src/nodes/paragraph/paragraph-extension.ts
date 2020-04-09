@@ -1,21 +1,28 @@
 import { setBlockType } from 'prosemirror-commands';
 
-import { CommandNodeTypeParams, NodeExtension, NodeExtensionSpec, NodeGroup, Tags } from '@remirror/core';
+import {
+  CommandNodeTypeParameter,
+  NodeExtension,
+  NodeExtensionSpec,
+  NodeGroup,
+  object,
+  Tag,
+} from '@remirror/core';
 
 import { ALIGN_PATTERN, INDENT_ATTRIBUTE, INDENT_LEVELS } from '../node-constants';
 import { marginToIndent } from '../node-utils';
-import { ParagraphExtensionAttrs, ParagraphExtensionOptions } from './paragraph-types';
+import { ParagraphExtensionAttributes, ParagraphExtensionOptions } from './paragraph-types';
 
 /**
  * Pull the paragraph attributes from the dom element.
  */
-const getAttrs = (
+const getAttributes = (
   { indentAttribute, indentLevels }: Required<ParagraphExtensionOptions>,
   dom: HTMLElement,
 ) => {
   const { lineHeight, textAlign, marginLeft } = dom.style;
   let align: string | undefined = dom.getAttribute('align') ?? (textAlign || '');
-  let indent = parseInt(dom.getAttribute(indentAttribute) ?? '0', 10);
+  let indent = Number.parseInt(dom.getAttribute(indentAttribute) ?? '0', 10);
 
   align = ALIGN_PATTERN.test(align) ? align : undefined;
 
@@ -28,7 +35,7 @@ const getAttrs = (
   const lineSpacing = lineHeight ? lineHeight : undefined;
   const id = dom.getAttribute('id') ?? undefined;
 
-  return { align, indent, lineSpacing, id } as ParagraphExtensionAttrs;
+  return { align, indent, lineSpacing, id } as ParagraphExtensionAttributes;
 };
 
 /**
@@ -43,7 +50,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions>
   }
 
   get tags() {
-    return [Tags.LastNodeCompatible];
+    return [Tag.LastNodeCompatible];
   }
 
   get defaultOptions() {
@@ -58,7 +65,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions>
       content: 'inline*',
       group: NodeGroup.Block,
       attrs: {
-        ...this.extraAttrs(),
+        ...this.extraAttributes(),
         align: { default: null },
         id: { default: null },
         indent: { default: 0 },
@@ -68,15 +75,15 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions>
       parseDOM: [
         {
           tag: 'p',
-          getAttrs: node => ({
-            ...this.getExtraAttrs(node as HTMLElement),
-            ...getAttrs(this.options, node as HTMLElement),
+          getAttrs: (node) => ({
+            ...this.getExtraAttributes(node as HTMLElement),
+            ...getAttributes(this.options, node as HTMLElement),
           }),
         },
       ],
-      toDOM: node => {
-        const { align, indent, lineSpacing, id } = node.attrs as ParagraphExtensionAttrs;
-        const attrs: Record<string, string> = Object.create(null);
+      toDOM: (node) => {
+        const { align, indent, lineSpacing, id } = node.attrs as ParagraphExtensionAttributes;
+        const attributes: Record<string, string> = object();
         let style = '';
 
         if (align && align !== 'left') {
@@ -88,18 +95,18 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions>
         }
 
         if (style) {
-          attrs.style = style;
+          attributes.style = style;
         }
 
         if (indent) {
-          attrs[INDENT_ATTRIBUTE] = String(indent);
+          attributes[INDENT_ATTRIBUTE] = String(indent);
         }
 
         if (id) {
-          attrs.id = id;
+          attributes.id = id;
         }
 
-        return ['p', attrs, 0];
+        return ['p', attributes, 0];
       },
     };
   }
@@ -107,10 +114,10 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions>
   /**
    * Provides the commands that this extension uses.
    */
-  public commands({ type }: CommandNodeTypeParams) {
+  public commands({ type }: CommandNodeTypeParameter) {
     return {
-      createParagraph: (attrs?: ParagraphExtensionAttrs) => {
-        return setBlockType(type, attrs);
+      createParagraph: (attributes: ParagraphExtensionAttributes) => {
+        return setBlockType(type, attributes);
       },
     };
   }

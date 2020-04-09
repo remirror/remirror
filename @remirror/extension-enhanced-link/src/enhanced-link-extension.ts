@@ -2,34 +2,34 @@ import { Plugin } from 'prosemirror-state';
 import { ReplaceStep } from 'prosemirror-transform';
 
 import {
-  Attrs,
   Cast,
-  CommandMarkTypeParams,
+  CommandMarkTypeParameter,
   EditorState,
   EditorView,
-  ExtensionManagerMarkTypeParams,
-  LEAF_NODE_REPLACING_CHARACTER,
-  MarkExtension,
-  MarkExtensionOptions,
-  MarkExtensionSpec,
   findMatches,
   getMatchString,
   isFunction,
+  LEAF_NODE_REPLACING_CHARACTER,
+  ManagerMarkTypeParameter,
+  MarkExtension,
+  MarkExtensionConfig,
+  MarkExtensionSpec,
   markPasteRule,
+  ProsemirrorAttributes,
   removeMark,
   updateMark,
 } from '@remirror/core';
 
 import {
-  EnhancedLinkHandlerProps,
   enhancedLinkHandler,
+  EnhancedLinkHandlerProps,
   extractHref,
   getUrlsFromState,
   isSetEqual,
 } from './enhanced-link-utils';
 import { extractUrl } from './extract-url';
 
-export interface EnhancedLinkExtensionOptions extends MarkExtensionOptions {
+export interface EnhancedLinkExtensionOptions extends MarkExtensionConfig {
   /**
    * This handler is called every time the matched urls are updated.
    */
@@ -60,12 +60,12 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
       parseDOM: [
         {
           tag: 'a[href]',
-          getAttrs: node => ({
+          getAttrs: (node) => ({
             href: Cast<Element>(node).getAttribute('href'),
           }),
         },
       ],
-      toDOM: node => {
+      toDOM: (node) => {
         return [
           'a',
           {
@@ -78,11 +78,11 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
     };
   }
 
-  public commands({ type }: CommandMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParameter) {
     return {
-      enhancedLink: (attrs?: Attrs) => {
-        if (attrs?.href) {
-          return updateMark({ type, attrs });
+      enhancedLink: (attributes: ProsemirrorAttributes) => {
+        if (attributes?.href) {
+          return updateMark({ type, attrs: attributes });
         }
 
         return removeMark({ type });
@@ -90,12 +90,12 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
     };
   }
 
-  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
+  public pasteRules({ type }: ManagerMarkTypeParameter) {
     return [
       markPasteRule({
         regexp: extractUrl,
         type,
-        getAttrs: url => {
+        getAttributes: (url) => {
           return {
             href: extractHref(getMatchString(url)),
           };
@@ -104,7 +104,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
     ];
   }
 
-  public plugin = ({ type }: ExtensionManagerMarkTypeParams) => {
+  public plugin = ({ type }: ManagerMarkTypeParameter) => {
     const key = this.pluginKey;
     const name = this.name;
     const onUrlsChange = this.options.onUrlsChange;
@@ -115,9 +115,9 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
         init() {
           return null;
         },
-        apply(tr, prev) {
+        apply(tr, previous) {
           const stored = tr.getMeta(key);
-          return stored ? stored : tr.selectionSet || tr.docChanged ? null : prev;
+          return stored ? stored : tr.selectionSet || tr.docChanged ? null : previous;
         },
       },
 
@@ -130,7 +130,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
         const { selection, doc } = state;
         const { $from, $to, from, to } = selection;
         const hasReplaceTransactions = transactions.some(({ steps }) =>
-          steps.some(step => step instanceof ReplaceStep),
+          steps.some((step) => step instanceof ReplaceStep),
         );
 
         if (!hasReplaceTransactions) {
@@ -142,40 +142,45 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
           doc.textBetween($from.start(), from, LEAF_NODE_REPLACING_CHARACTER, leafChar) +
           doc.textBetween(to, $to.end(), LEAF_NODE_REPLACING_CHARACTER, leafChar);
         const tr = state.tr;
-        const collectedParams: EnhancedLinkHandlerProps[] = [];
+        const collectedParameters: EnhancedLinkHandlerProps[] = [];
 
         // If at the start of a new line (i.e. new block added and not at the start of the document)
         if (from === $from.start() && from >= 2) {
           const $pos = doc.resolve(from - 2);
-          const prevSearchText = doc.textBetween(
+          const previousSearchText = doc.textBetween(
             $pos.start(),
             $pos.end(),
             LEAF_NODE_REPLACING_CHARACTER,
             leafChar,
           );
-          findMatches(prevSearchText, extractUrl).forEach(match => {
+          findMatches(previousSearchText, extractUrl).forEach((match) => {
             const startIndex = match.index;
             const url = match[1];
             const start = $pos.start() + startIndex;
             const end = $pos.start() + startIndex + match[0].length;
 
-            collectedParams.push({ state, url, from: start, to: end, type });
+            collectedParameters.push({ state, url, from: start, to: end, type });
           });
 
           tr.removeMark($pos.start(), $pos.end(), type);
         }
 
         // Finds matches within the current node when in the middle of a node
-        findMatches(searchText, extractUrl).forEach(match => {
+        findMatches(searchText, extractUrl).forEach((match) => {
           const startIndex = match.index;
           const url = match[1];
           const start = $from.start() + startIndex;
           const end = $from.start() + startIndex + match[0].length;
           // The text directly before the match
-          const textBefore = doc.textBetween(start - 1, start, LEAF_NODE_REPLACING_CHARACTER, leafChar);
+          const textBefore = doc.textBetween(
+            start - 1,
+            start,
+            LEAF_NODE_REPLACING_CHARACTER,
+            leafChar,
+          );
 
-          if (!/[\w\d]/.test(textBefore)) {
-            collectedParams.push({ state, url, from: start, to: end, type });
+          if (!/\w/.test(textBefore)) {
+            collectedParameters.push({ state, url, from: start, to: end, type });
           }
         });
 
@@ -183,22 +188,22 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
         tr.removeMark($from.start(), $from.end(), type);
 
         // Add all marks again for the nodes
-        collectedParams.forEach(params => {
-          enhancedLinkHandler({ ...params, tr });
+        collectedParameters.forEach((parameters) => {
+          enhancedLinkHandler({ ...parameters, tr });
         });
 
         return tr;
       },
       view: () => ({
-        update(view: EditorView, prevState: EditorState) {
+        update(view: EditorView, previousState: EditorState) {
           if (!isFunction(onUrlsChange)) {
             return;
           }
 
           const next = getUrlsFromState(view.state, name);
-          const prev = getUrlsFromState(prevState, name);
+          const previous = getUrlsFromState(previousState, name);
 
-          if (!isSetEqual(next.set, prev.set)) {
+          if (!isSetEqual(next.set, previous.set)) {
             onUrlsChange(next);
           }
         },

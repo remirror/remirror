@@ -6,14 +6,14 @@
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/editor-social",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "sideEffects": false,
+  "main": "lib/dist/index.js",
+  "module": "lib/dist/editor-social.esm.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib",
     "src"
   ],
-  "sideEffects": false,
-  "main": "lib/index.js",
-  "module": "lib/dist/editor-social.esm.js",
-  "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
     "@emotion/styled": "^10.0.17",
@@ -28,7 +28,7 @@
     "@remirror/ui-buttons": "^0.7.7",
     "@remirror/ui-icons": "^0.7.7",
     "multishift": "^0.7.6",
-    "type-fest": "^0.12.0"
+    "type-fest": "^0.13.0"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

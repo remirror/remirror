@@ -8,9 +8,9 @@ import {
   hardBreak,
   p,
   pm,
+  schema as testSchema,
   table,
   tableRow,
-  schema as testSchema,
 } from 'jest-prosemirror';
 import { TextSelection } from 'prosemirror-state';
 
@@ -18,19 +18,19 @@ import { NodeMatch } from '@remirror/core-types';
 import { docNodeBasicJSON } from '@remirror/test-fixtures';
 
 import {
-  atDocEnd,
-  atDocStart,
+  atDocEnd as atDocumentEnd,
+  atDocStart as atDocumentStart,
   canInsertNode,
   createDocumentNode,
   endPositionOfParent,
   fromHTML,
   getCursor,
-  getMarkAttrs,
+  getMarkAttributes,
   getMarkRange,
   getNearestNonTextNode,
   getSelectedWord,
-  isDocNode,
-  isDocNodeEmpty,
+  isDocNode as isDocumentNode,
+  isDocNodeEmpty as isDocumentNodeEmpty,
   isElementDOMNode,
   isMarkActive,
   isNodeSelection,
@@ -65,13 +65,17 @@ describe('markActive', () => {
   });
 
   it('returns true when surrounding an active region', () => {
-    const { state, schema } = createEditor(doc(p('Something<start>', em('is italic'), '<end> here')));
+    const { state, schema } = createEditor(
+      doc(p('Something<start>', em('is italic'), '<end> here')),
+    );
 
     expect(isMarkActive({ state, type: schema.marks.em })).toBeTrue();
   });
 
   it('can override from and to', () => {
-    const { state, schema } = createEditor(doc(p('<start>Something<end>', em('is italic'), ' here')));
+    const { state, schema } = createEditor(
+      doc(p('<start>Something<end>', em('is italic'), ' here')),
+    );
 
     expect(isMarkActive({ state, type: schema.marks.em, from: 11, to: 20 })).toBeTrue();
   });
@@ -111,15 +115,15 @@ describe('canInsertNode', () => {
 
 describe('isDocNodeEmpty', () => {
   it('returns true for a doc with an empty paragraph', () => {
-    expect(isDocNodeEmpty(doc(p()))).toBeTrue();
+    expect(isDocumentNodeEmpty(doc(p()))).toBeTrue();
   });
 
   it('returns false for a doc with nothing inside', () => {
-    expect(isDocNodeEmpty(doc())).toBeFalse();
+    expect(isDocumentNodeEmpty(doc())).toBeFalse();
   });
 
   it('returns false for a doc with content', () => {
-    expect(isDocNodeEmpty(doc(p(blockquote('quote this...'))))).toBeFalse();
+    expect(isDocumentNodeEmpty(doc(p(blockquote('quote this...'))))).toBeFalse();
   });
 });
 
@@ -134,21 +138,21 @@ describe('isProsemirrorNode', () => {
   });
 });
 
-describe('getMarkAttrs', () => {
+describe('getMarkAttributes', () => {
   it('returns correct mark attrs', () => {
-    const attrs = { href: '/awesome', title: 'awesome' };
+    const attributes = { href: '/awesome', title: 'awesome' };
     const { aHref } = pm.builders(testSchema, {
-      aHref: { markType: 'link', ...attrs },
+      aHref: { markType: 'link', ...attributes },
     });
     const { state, schema } = createEditor(doc(p('a link', aHref('linked <cursor>here'))));
 
-    expect(getMarkAttrs(state, schema.marks.link)).toEqual(attrs);
+    expect(getMarkAttributes(state, schema.marks.link)).toEqual(attributes);
   });
 
   it('returns an empty object when mark not found', () => {
     const { state, schema } = createEditor(doc(p('a link', em('linked <cursor>here'))));
 
-    expect(getMarkAttrs(state, schema.marks.link)).toEqual({});
+    expect(getMarkAttributes(state, schema.marks.link)).toEqual({});
   });
 });
 
@@ -203,7 +207,7 @@ describe('getMarkRange', () => {
 test('getNearestNonTextNode', () => {
   const div = document.createElement('div');
   const text = document.createTextNode('hello');
-  div.appendChild(text);
+  div.append(text);
 
   expect(getNearestNonTextNode(text)).toBe(div);
   expect(getNearestNonTextNode(div)).toBe(div);
@@ -274,25 +278,25 @@ describe('atDocEnd', () => {
   it('returns true at the end of the document', () => {
     const { state } = createEditor(doc(p('Something<cursor>')));
 
-    expect(atDocEnd(state)).toBeTrue();
+    expect(atDocumentEnd(state)).toBeTrue();
   });
 
   it('returns false when no selection', () => {
     const { state } = createEditor(doc(p('Something')));
 
-    expect(atDocEnd(state)).toBeFalse();
+    expect(atDocumentEnd(state)).toBeFalse();
   });
 
   it('returns true for a node selection', () => {
     const { state } = createEditor(doc(p('<node>Something')));
 
-    expect(atDocEnd(state)).toBeTrue();
+    expect(atDocumentEnd(state)).toBeTrue();
   });
 
   it('returns true for full selection', () => {
     const { state } = createEditor(doc(p('<all>Something')));
 
-    expect(atDocEnd(state)).toBeTrue();
+    expect(atDocumentEnd(state)).toBeTrue();
   });
 });
 
@@ -300,19 +304,19 @@ describe('atDocStart', () => {
   it('returns true at the start of the document', () => {
     const { state } = createEditor(doc(p('<cursor>Something')));
 
-    expect(atDocStart(state)).toBeTrue();
+    expect(atDocumentStart(state)).toBeTrue();
   });
 
   it('returns true for full selection', () => {
     const { state } = createEditor(doc(p('Some<all>thing')));
 
-    expect(atDocStart(state)).toBeTrue();
+    expect(atDocumentStart(state)).toBeTrue();
   });
 
   it('returns false elsewhere', () => {
     const { state } = createEditor(doc(p('Someth<cursor>ing')));
 
-    expect(atDocStart(state)).toBeFalse();
+    expect(atDocumentStart(state)).toBeFalse();
   });
 });
 
@@ -323,7 +327,9 @@ test('startPositionOfParent', () => {
 });
 
 test('endPositionOfParent', () => {
-  const { state } = createEditor(doc(p('Something', p('This has a position<cursor>'), 'what becomes')));
+  const { state } = createEditor(
+    doc(p('Something', p('This has a position<cursor>'), 'what becomes')),
+  );
 
   expect(endPositionOfParent(state.selection.$from)).toBe(31);
 });
@@ -343,7 +349,7 @@ describe('getCursor', () => {
 });
 
 describe('nodeNameMatchesList', () => {
-  const matchers: NodeMatch[] = ['paragraph', name => name === 'blockquote', ['table', 'gi']];
+  const matchers: NodeMatch[] = ['paragraph', (name) => name === 'blockquote', ['table', 'gi']];
 
   it('returns true when it successfully matches', () => {
     expect(nodeNameMatchesList(p(), matchers)).toBeTrue();
@@ -362,13 +368,13 @@ describe('nodeNameMatchesList', () => {
 
 describe('isDocNode', () => {
   it('returns true for doc nodes', () => {
-    expect(isDocNode(doc(), testSchema)).toBeTrue();
-    expect(isDocNode(doc())).toBeTrue();
+    expect(isDocumentNode(doc(), testSchema)).toBeTrue();
+    expect(isDocumentNode(doc())).toBeTrue();
   });
 
   it('returns false for non-doc nodes', () => {
-    expect(isDocNode(p())).toBeFalse();
-    expect(isDocNode(undefined)).toBeFalse();
+    expect(isDocumentNode(p())).toBeFalse();
+    expect(isDocumentNode(undefined)).toBeFalse();
   });
 });
 
@@ -395,15 +401,18 @@ describe('createDocumentNode', () => {
   });
 
   it('creates content via an ObjectNode', () => {
-    expect(createDocumentNode({ content: docNodeBasicJSON, schema: testSchema })!.textContent).toContain(
-      'basic',
-    );
+    expect(
+      createDocumentNode({ content: docNodeBasicJSON, schema: testSchema })!.textContent,
+    ).toContain('basic');
   });
 
   it('creates content via custom string handler', () => {
     expect(
-      createDocumentNode({ content: '<p>basic html</p>', schema: testSchema, stringHandler: fromHTML })!
-        .textContent,
+      createDocumentNode({
+        content: '<p>basic html</p>',
+        schema: testSchema,
+        stringHandler: fromHTML,
+      })!.textContent,
     ).toContain('basic html');
   });
 });
@@ -440,8 +449,8 @@ describe('fromHTML', () => {
   });
 
   it('allows for custom document to be passed in', () => {
-    expect(fromHTML({ content, schema: testSchema, doc: domino.createDocument() })).toEqualProsemirrorNode(
-      doc(p('Hello')),
-    );
+    expect(
+      fromHTML({ content, schema: testSchema, doc: domino.createDocument() }),
+    ).toEqualProsemirrorNode(doc(p('Hello')));
   });
 });

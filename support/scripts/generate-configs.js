@@ -25,7 +25,6 @@ const EXCLUDE_PROD = [
 
 const configs = {
   sizeLimit: '.size-limit.json',
-  rollup: 'support/rollup/config.json',
   tsconfig: 'support/tsconfig.paths.json',
   eslint: 'support/eslint-imports.json',
   storybook: 'support/storybook/modules.json',
@@ -37,8 +36,8 @@ const filesToPrettify = [];
 const generateSizeLimitConfig = async () => {
   const packages = await getAllDependencies();
   const sizes = packages
-    .filter(pkg => pkg.module && pkg.meta && pkg.meta.sizeLimit)
-    .map(json => ({
+    .filter((pkg) => pkg.module && pkg.meta && pkg.meta.sizeLimit)
+    .map((json) => ({
       name: json.name,
       path: join(getRelativePathFromJson(json), json.module),
       limit: json.meta.sizeLimit,
@@ -51,28 +50,10 @@ const generateSizeLimitConfig = async () => {
   filesToPrettify.push(path);
 };
 
-const generateRollupConfig = async () => {
-  const [packages, dependencies] = await Promise.all([getAllDependencies(), getDependencyPackageMap(true)]);
-
-  const rollup = packages
-    .filter(pkg => !pkg.private || pkg.name === '@remirror/test-fixtures')
-    .map(json => {
-      const packagePath = getRelativePathFromJson(json);
-      return {
-        path: packagePath,
-        name: json.name,
-      };
-    });
-  const jsonPath = baseDir(configs.rollup);
-
-  await writeJSON(jsonPath, { ...AUTO_GENERATED_FLAG, rollup, dependencies });
-  filesToPrettify.push(jsonPath);
-};
-
 const generateTSConfig = async () => {
   const packages = await getAllDependencies();
   const tsPaths = packages
-    .filter(pkg => pkg.types)
+    .filter((pkg) => pkg.types)
     .reduce((acc, json) => {
       const packagePath = getRelativePathFromJson(json);
       return {
@@ -96,7 +77,7 @@ const generateTSConfig = async () => {
 const generateStorybookResolverConfig = async () => {
   const packages = await getAllDependencies();
   const modules = packages
-    .filter(pkg => !pkg.private && pkg.module)
+    .filter((pkg) => !pkg.private && pkg.module)
     .reduce((acc, json) => {
       const packagePath = getRelativePathFromJson(json);
       const name = json.name.includes('@remirror') ? json.name : `${json.name}`;
@@ -114,7 +95,8 @@ const generateStorybookResolverConfig = async () => {
 
 const API_EXTRACTOR_FILENAME = 'api-extractor.json';
 const API_EXTRACTOR_CONFIG = {
-  $schema: 'https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json',
+  $schema:
+    'https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json',
   extends: join('../../support', API_EXTRACTOR_FILENAME),
   mainEntryPointFilePath: './lib/index.d.ts',
 };
@@ -135,8 +117,8 @@ const generateApiExtractorConfigs = async () => {
   const packages = await getAllDependencies();
 
   const paths = packages
-    .filter(pkg => !pkg.private && pkg.types && !(pkg.meta && pkg.meta.skipApi))
-    .map(json => ({
+    .filter((pkg) => !pkg.private && pkg.types && !(pkg.meta && pkg.meta.skipApi))
+    .map((json) => ({
       path: getRelativePathFromJson(json),
       name: mangleScopedPackageName(json.name),
     }));
@@ -171,8 +153,8 @@ const generateMainTsConfig = async () => {
   const packages = await getAllDependencies();
 
   const config = packages
-    .filter(pkg => pkg.types && !pkg.private)
-    .map(json => ({
+    .filter((pkg) => pkg.types && !pkg.private)
+    .map((json) => ({
       path: join(getRelativePathFromJson(json), TSCONFIG_PROD_FILENAME),
     }))
     .reduce((acc, path) => ({ ...acc, references: [...acc.references, path] }), {
@@ -187,14 +169,19 @@ const generateMainTsConfig = async () => {
 };
 
 const generatePackageTsConfigs = async () => {
-  const [packages, dependencies] = await Promise.all([getAllDependencies(), getDependencyPackageMap()]);
+  const [packages, dependencies] = await Promise.all([
+    getAllDependencies(),
+    getDependencyPackageMap(),
+  ]);
 
-  const fn = async json => {
-    json.dependencies = json.dependencies || {};
-    const references = Object.keys(json.dependencies)
-      .filter(dependency => !!dependencies[dependency])
-      .map(dependency => {
-        const path = join(relative(json.location, dependencies[dependency]), TSCONFIG_PROD_FILENAME);
+  const fn = async (json) => {
+    const references = Object.keys(json.dependencies ?? {})
+      .filter((dependency) => !!dependencies[dependency])
+      .map((dependency) => {
+        const path = join(
+          relative(json.location, dependencies[dependency]),
+          TSCONFIG_PROD_FILENAME,
+        );
         return {
           path,
         };
@@ -232,7 +219,6 @@ const generatePackageTsConfigs = async () => {
 const run = async () => {
   await Promise.all([
     generateSizeLimitConfig(),
-    generateRollupConfig(),
     generateTSConfig(),
     generateStorybookResolverConfig(),
     generateApiExtractorConfigs(),

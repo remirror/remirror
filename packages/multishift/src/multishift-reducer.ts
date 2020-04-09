@@ -1,3 +1,5 @@
+import { object } from '@remirror/core-helpers';
+
 import { MultishiftActionTypes } from './multishift-constants';
 import {
   MultishiftProps,
@@ -13,9 +15,9 @@ import {
   getChangesFromMenuKeyDown,
   getChangesFromToggleButtonKeyDown,
   getDefaultState,
-  getHighlightReset,
-  getHighlightedIndexOnOpen,
   getHighlightedIndexes,
+  getHighlightedIndexOnOpen,
+  getHighlightReset,
   getItemIndexesByJumpText,
   omitUnchangedState,
   removeItems,
@@ -27,7 +29,7 @@ export const multishiftReducer = <GItem = any>(
   action: MultishiftRootActions<GItem>,
   props: MultishiftProps<GItem>,
 ): [MultishiftState<GItem>, MultishiftStateProps<GItem>] => {
-  let changes: MultishiftStateProps<GItem> = Object.create(null);
+  let changes: MultishiftStateProps<GItem> = object();
 
   const defaultState = getDefaultState(props);
   const { multiple, items, getItemId = defaultGetItemId, autoSelectOnBlur = true } = props;
@@ -112,7 +114,7 @@ export const multishiftReducer = <GItem = any>(
           ? {
               selectedItems: addItems(
                 selected,
-                indexes.map(index => items[index]),
+                indexes.map((index) => items[index]),
                 getItemId,
                 multiple,
               ),
@@ -265,7 +267,7 @@ export const multishiftReducer = <GItem = any>(
         indexes: highlightedIndexes,
         items,
       });
-      const highlightedItems = indexes.map(index => items[index]);
+      const highlightedItems = indexes.map((index) => items[index]);
       const extra =
         indexes.length && autoSelectOnBlur
           ? { selectedItems: addItems(selected, highlightedItems, getItemId, multiple) }

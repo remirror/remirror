@@ -9,14 +9,24 @@ const validInputString: Array<[string, ValidHSLObject, ValidHSLTuple, string]> =
     [111, 12.343, 0.9, 10],
     'hsla(111, 12.343%, 0.9%, 0.1)',
   ],
-  ['hsla(123, 45%, 67%, 1)', { h: 123, s: 45, l: 67, a: 100 }, [123, 45, 67, 100], 'hsl(123, 45%, 67%)'],
+  [
+    'hsla(123, 45%, 67%, 1)',
+    { h: 123, s: 45, l: 67, a: 100 },
+    [123, 45, 67, 100],
+    'hsl(123, 45%, 67%)',
+  ],
   [
     'hsla(1, 1.111%, 1.1111%, .4)',
     { h: 1, s: 1.111, l: 1.1111, a: 40 },
     [1, 1.111, 1.1111, 40],
     'hsla(1, 1.111%, 1.1111%, 0.4)',
   ],
-  ['hsl(180, 50.000%, 50%)', { h: 180, s: 50, l: 50, a: 100 }, [180, 50, 50, 100], 'hsl(180, 50%, 50%)'],
+  [
+    'hsl(180, 50.000%, 50%)',
+    { h: 180, s: 50, l: 50, a: 100 },
+    [180, 50, 50, 100],
+    'hsl(180, 50%, 50%)',
+  ],
 ];
 
 const hslToRGBValues: Array<[string, [number, number, number, number?]]> = [
@@ -44,9 +54,12 @@ describe('valid `HSL.create`', () => {
     expect(HSL.create(input).toArray()).toEqual(expected);
   });
 
-  it.each(validInputString)('validates input string toString #%#', (input, _obj, _arr, expected) => {
-    expect(HSL.create(input).toString()).toEqual(expected);
-  });
+  it.each(validInputString)(
+    'validates input string toString #%#',
+    (input, _obj, _arr, expected) => {
+      expect(HSL.create(input).toString()).toEqual(expected);
+    },
+  );
 
   it.each(hslToRGBValues)('validates hsl to RGB #%#', (input, expected) => {
     expect(HSL.create(input).toRGB()).toEqual(expected);
@@ -76,11 +89,11 @@ const invalidInputObject: Array<[any]> = [
 ];
 
 describe('invalid `HSL.create`', () => {
-  it.each(invalidInputString)('invalid input string should throw #%#', input => {
+  it.each(invalidInputString)('invalid input string should throw #%#', (input) => {
     expect(() => HSL.create(input)).toThrowErrorMatchingSnapshot();
   });
 
-  it.each(invalidInputObject)('invalid input object should throw #%#', input => {
+  it.each(invalidInputObject)('invalid input object should throw #%#', (input) => {
     expect(() => HSL.create(input)).toThrowErrorMatchingSnapshot();
   });
 });

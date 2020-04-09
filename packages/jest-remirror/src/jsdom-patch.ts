@@ -52,7 +52,7 @@ export const jsdomSelectionPatch = (view: EditorView) => {
   (view as any).selectionReader = new NullSelectionReader(warnOnce);
 
   // Make sure that we don't attempt to scroll down to selection when dispatching a transaction
-  (view as any).updateState = function(state: EditorState) {
+  (view as any).updateState = function (state: EditorState) {
     warnOnce();
     Cast(state).scrollToSelection = 0;
     EditorView.prototype.updateState.apply(this, [state]);
@@ -63,7 +63,7 @@ export const jsdomSelectionPatch = (view: EditorView) => {
     warnOnce();
   };
 
-  (view as any).destroy = function() {
+  (view as any).destroy = function () {
     EditorView.prototype.destroy.apply(this);
   };
 };

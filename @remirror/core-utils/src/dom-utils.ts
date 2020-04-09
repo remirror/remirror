@@ -5,24 +5,24 @@ import {
   Fragment,
   Mark,
   MarkType,
-  NodeType,
   Node as PMNode,
+  NodeType,
   ResolvedPos as PMResolvedPos,
   Schema,
   Slice,
 } from 'prosemirror-model';
 import {
-  NodeSelection,
   EditorState as PMEditorState,
-  Selection as PMSelection,
+  NodeSelection,
   Plugin,
+  Selection as PMSelection,
   TextSelection,
 } from 'prosemirror-state';
 
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
 import {
-  Cast,
   bool,
+  Cast,
   isFunction,
   isNullOrUndefined,
   isNumber,
@@ -32,23 +32,23 @@ import {
 import {
   EditorSchema,
   EditorState,
-  EditorStateParams,
-  EditorViewParams,
-  ElementParams,
-  FromToParams,
-  MarkTypeParams,
+  EditorStateParameter,
+  EditorViewParameter,
+  ElementParameter,
+  FromToParameter,
+  MarkTypeParameter,
   NodeMatch,
   ObjectNode,
   PlainObject,
   PluginKey,
-  PositionParams,
+  PositionParameter,
   ProsemirrorNode,
-  ProsemirrorNodeParams,
+  ProsemirrorNodeParameter,
   RegexTuple,
   RemirrorContentType,
   RenderEnvironment,
   ResolvedPos,
-  SchemaParams,
+  SchemaParameter,
   Selection,
   Transaction,
 } from '@remirror/core-types';
@@ -62,8 +62,9 @@ import { environment } from './environment';
  *
  * @public
  */
-export const isNodeType = <GSchema extends EditorSchema = any>(value: unknown): value is NodeType<GSchema> =>
-  isObject(value) && value instanceof NodeType;
+export const isNodeType = <GSchema extends EditorSchema = any>(
+  value: unknown,
+): value is NodeType<GSchema> => isObject(value) && value instanceof NodeType;
 
 /**
  * Check to see if the passed value is a MarkType.
@@ -72,8 +73,9 @@ export const isNodeType = <GSchema extends EditorSchema = any>(value: unknown): 
  *
  * @public
  */
-export const isMarkType = <GSchema extends EditorSchema = any>(value: unknown): value is MarkType<GSchema> =>
-  isObject(value) && value instanceof MarkType;
+export const isMarkType = <GSchema extends EditorSchema = any>(
+  value: unknown,
+): value is MarkType<GSchema> => isObject(value) && value instanceof MarkType;
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
@@ -152,7 +154,10 @@ export const isNodeSelection = <GSchema extends EditorSchema = any>(
   value: unknown,
 ): value is NodeSelection<GSchema> => isObject(value) && value instanceof NodeSelection;
 
-interface IsMarkActiveParams extends MarkTypeParams, EditorStateParams, Partial<FromToParams> {}
+interface IsMarkActiveParameter
+  extends MarkTypeParameter,
+    EditorStateParameter,
+    Partial<FromToParameter> {}
 
 /**
  * Checks that a mark is active within the selected region, or the current selection point is within a
@@ -166,7 +171,7 @@ interface IsMarkActiveParams extends MarkTypeParams, EditorStateParams, Partial<
  *
  * @public
  */
-export const isMarkActive = ({ state, type, from, to }: IsMarkActiveParams) => {
+export const isMarkActive = ({ state, type, from, to }: IsMarkActiveParameter) => {
   const { selection, doc, storedMarks } = state;
   const { $from, empty } = selection;
 
@@ -243,7 +248,8 @@ export const isDocNodeEmpty = (node: ProsemirrorNode) => {
  */
 export const isEmptyParagraphNode = (node: ProsemirrorNode | null | undefined) => {
   return (
-    !isProsemirrorNode(node) || (node.type.name === 'paragraph' && !node.textContent && !node.childCount)
+    !isProsemirrorNode(node) ||
+    (node.type.name === 'paragraph' && !node.textContent && !node.childCount)
   );
 };
 
@@ -255,15 +261,15 @@ export const isEmptyParagraphNode = (node: ProsemirrorNode | null | undefined) =
  * @param state - the editor state
  * @param type - the mark type
  */
-export const getMarkAttrs = (state: EditorState, type: MarkType) => {
+export const getMarkAttributes = (state: EditorState, type: MarkType) => {
   const { from, to } = state.selection;
   let marks: Mark[] = [];
 
-  state.doc.nodesBetween(from, to, node => {
+  state.doc.nodesBetween(from, to, (node) => {
     marks = [...marks, ...node.marks];
   });
 
-  const mark = marks.find(markItem => markItem.type.name === type.name);
+  const mark = marks.find((markItem) => markItem.type.name === type.name);
 
   if (mark) {
     return mark.attrs;
@@ -285,7 +291,7 @@ export const getMarkAttrs = (state: EditorState, type: MarkType) => {
 export const getMarkRange = (
   pmPosition: ResolvedPos | null = null,
   type: MarkType | null | undefined = null,
-): FromToParams | false => {
+): FromToParameter | false => {
   if (!pmPosition || !type) {
     return false;
   }
@@ -341,7 +347,7 @@ export const getTextContentFromSlice = (slice: Slice) => {
  *
  * @public
  */
-export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToParams | false => {
+export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToParameter | false => {
   if (!isTextSelection(state.selection)) {
     return false;
   }
@@ -359,7 +365,11 @@ export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToPar
     // Step backwards until reaching first excluded character or empty text content.
   }
 
-  for (let char = getChar(to, to + 1); char && !exclude.test(char); to++, char = getChar(to, to + 1)) {
+  for (
+    let char = getChar(to, to + 1);
+    char && !exclude.test(char);
+    to++, char = getChar(to, to + 1)
+  ) {
     // Step forwards until reaching the first excluded character or empty text content
   }
 
@@ -474,7 +484,10 @@ export const isElementDOMNode = (domNode: unknown): domNode is HTMLElement =>
  *
  * @public
  */
-export const closestElement = (domNode: Node | null | undefined, selector: string): HTMLElement | null => {
+export const closestElement = (
+  domNode: Node | null | undefined,
+  selector: string,
+): HTMLElement | null => {
   if (!isElementDOMNode(domNode)) {
     return null;
   }
@@ -503,9 +516,9 @@ export const isTextDOMNode = (domNode: unknown): domNode is Text => {
   return isDOMNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
 };
 
-interface GetOffsetParentParams extends EditorViewParams, ElementParams {}
+interface GetOffsetParentParameter extends EditorViewParameter, ElementParameter {}
 
-export const getOffsetParent = ({ view, element }: GetOffsetParentParams): HTMLElement =>
+export const getOffsetParent = ({ view, element }: GetOffsetParentParameter): HTMLElement =>
   isNullOrUndefined(element)
     ? ((view.dom as HTMLElement).offsetParent as HTMLElement)
     : (element.offsetParent as HTMLElement);
@@ -515,10 +528,13 @@ export const getOffsetParent = ({ view, element }: GetOffsetParentParams): HTMLE
  *
  * @param params - the element params
  */
-export const getLineHeight = ({ element }: ElementParams) =>
-  parseFloat(window.getComputedStyle(element, undefined).lineHeight || '');
+export const getLineHeight = ({ element }: ElementParameter) => PositionParameter;
+Number.parseFloat(window.getComputedStyle(element, undefined).lineHeight || '');
 
-interface AbsoluteCoordinatesParams extends EditorViewParams, ElementParams, PositionParams {
+interface AbsoluteCoordinatesParameter
+  extends EditorViewParameter,
+    ElementParameter,
+    PositionParameter {
   /**
    * The height offset of the parent
    */
@@ -541,14 +557,14 @@ interface AbsoluteCoordinatesParams extends EditorViewParams, ElementParams, Pos
  * |               | [FloatingToolbar]               |  |
  * ```
  *
- * @param params - see {@link AbsoluteCoordinatesParams}.
+ * @param params - see {@link AbsoluteCoordinatesParameter}.
  */
 export const absoluteCoordinates = ({
   view,
   element,
   position,
   cursorHeight = getLineHeight({ element }),
-}: AbsoluteCoordinatesParams) => {
+}: AbsoluteCoordinatesParameter) => {
   const offsetParent = getOffsetParent({ view, element });
   const box = offsetParent.getBoundingClientRect();
 
@@ -589,7 +605,8 @@ export const atDocStart = (state: EditorState): boolean =>
  *
  * @param pmPosition - the resolved prosemirror position
  */
-export const startPositionOfParent = (pmPosition: ResolvedPos): number => pmPosition.start(pmPosition.depth);
+export const startPositionOfParent = (pmPosition: ResolvedPos): number =>
+  pmPosition.start(pmPosition.depth);
 
 /**
  * Get the end position of the parent of the current resolve position
@@ -598,7 +615,8 @@ export const startPositionOfParent = (pmPosition: ResolvedPos): number => pmPosi
  *
  * @public
  */
-export const endPositionOfParent = (pmPosition: ResolvedPos): number => pmPosition.end(pmPosition.depth) + 1;
+export const endPositionOfParent = (pmPosition: ResolvedPos): number =>
+  pmPosition.end(pmPosition.depth) + 1;
 
 /**
  * Retrieve the current position of the cursor
@@ -678,7 +696,9 @@ export const nodeNameMatchesList = (
  * @public
  */
 export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: EditorSchema) => {
-  return isProsemirrorNode(node) && (schema ? node.type === schema.nodes.doc : node.type.name === 'doc');
+  return (
+    isProsemirrorNode(node) && (schema ? node.type === schema.nodes.doc : node.type.name === 'doc')
+  );
 };
 
 /**
@@ -689,12 +709,14 @@ export const isDocNode = (node: ProsemirrorNode | null | undefined, schema?: Edi
  * @public
  */
 export const isObjectNode = (value: unknown): value is ObjectNode =>
-  isObject(value) && (value as PlainObject).type === 'doc' && Array.isArray((value as PlainObject).content);
+  isObject(value) &&
+  (value as PlainObject).type === 'doc' &&
+  Array.isArray((value as PlainObject).content);
 
-export interface CreateDocumentNodeParams
-  extends SchemaParams,
-    Partial<CustomDocParams>,
-    StringHandlerParams {
+export interface CreateDocumentNodeParameter
+  extends SchemaParameter,
+    Partial<CustomDocParameter>,
+    StringHandlerParameter {
   /**
    * The content to render
    */
@@ -706,7 +728,7 @@ export interface CreateDocumentNodeParams
   fallback?: ObjectNode | ProsemirrorNode;
 }
 
-export interface StringHandlerParams {
+export interface StringHandlerParameter {
   /**
    * A function which transforms a string into a prosemirror node.
    *
@@ -716,7 +738,7 @@ export interface StringHandlerParams {
    *
    * See {@link fromHTML} for an example of how this could work.
    */
-  stringHandler?(params: FromStringParams): ProsemirrorNode;
+  stringHandler?(params: FromStringParameter): ProsemirrorNode;
 }
 
 const fallbackContent = ({
@@ -740,7 +762,7 @@ export const createDocumentNode = ({
   doc,
   stringHandler,
   fallback = EMPTY_PARAGRAPH_NODE,
-}: CreateDocumentNodeParams): ProsemirrorNode => {
+}: CreateDocumentNodeParameter): ProsemirrorNode => {
   if (isProsemirrorNode(content)) {
     return content;
   }
@@ -748,8 +770,8 @@ export const createDocumentNode = ({
   if (isObjectNode(content)) {
     try {
       return schema.nodeFromJSON(content);
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
       return fallbackContent({ fallback, schema });
     }
   }
@@ -779,7 +801,7 @@ export const getDocument = (forceEnvironment?: RenderEnvironment) => {
   return shouldUseDOMEnvironment(forceEnvironment) ? document : minDocument;
 };
 
-export interface CustomDocParams {
+export interface CustomDocParameter {
   /** The custom document to use (allows for ssr rendering) */
   doc: Document;
 }
@@ -791,12 +813,15 @@ export interface CustomDocParams {
  *
  * @public
  */
-export const toDOM = ({ node, schema, doc }: FromNodeParams): DocumentFragment => {
+export const toDOM = ({ node, schema, doc }: FromNodeParameter): DocumentFragment => {
   const fragment = isDocNode(node, schema) ? node.content : Fragment.from(node);
   return DOMSerializer.fromSchema(schema).serializeFragment(fragment, { document: doc });
 };
 
-interface FromNodeParams extends SchemaParams, ProsemirrorNodeParams, Partial<CustomDocParams> {}
+interface FromNodeParameter
+  extends SchemaParameter,
+    ProsemirrorNodeParameter,
+    Partial<CustomDocParameter> {}
 
 /**
  * Convert a prosemirror node into it's HTML contents
@@ -805,14 +830,14 @@ interface FromNodeParams extends SchemaParams, ProsemirrorNodeParams, Partial<Cu
  *
  * @public
  */
-export const toHTML = ({ node, schema, doc = getDocument() }: FromNodeParams) => {
+export const toHTML = ({ node, schema, doc: doc = getDocument() }: FromNodeParameter) => {
   const element = doc.createElement('div');
-  element.appendChild(toDOM({ node, schema, doc }));
+  element.append(toDOM({ node, schema, doc: doc }));
 
   return element.innerHTML;
 };
 
-interface FromStringParams extends Partial<CustomDocParams>, SchemaParams {
+interface FromStringParameter extends Partial<CustomDocParameter>, SchemaParameter {
   /** The content  passed in an a string */
   content: string;
 }
@@ -824,7 +849,11 @@ interface FromStringParams extends Partial<CustomDocParams>, SchemaParams {
  *
  * @public
  */
-export const fromHTML = ({ content, schema, doc = getDocument() }: FromStringParams): ProsemirrorNode => {
+export const fromHTML = ({
+  content,
+  schema,
+  doc: doc = getDocument(),
+}: FromStringParameter): ProsemirrorNode => {
   const element = doc.createElement('div');
   element.innerHTML = content.trim();
   return DOMParser.fromSchema(schema).parse(element);

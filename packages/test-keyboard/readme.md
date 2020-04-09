@@ -6,15 +6,15 @@ A test keyboard for dispatching events to the dom which mimics keyboard actions 
 
 ## The problem
 
-You want to write tests for code that makes heavy usage of the keyboard and you're finding it hard to compose
-these keyboard events together.
+You want to write tests for code that makes heavy usage of the keyboard and you're finding it hard
+to compose these keyboard events together.
 
 ## This solution
 
 `test-keyboard` is an elegant way of composing keyboard events together as if a user was typing.
 
-It is primarily designed for dom-test environments but could be extracted out into something that can be used
-in your front-end code.
+It is primarily designed for dom-test environments but could be extracted out into something that
+can be used in your front-end code.
 
 ## Installation
 
@@ -22,7 +22,7 @@ in your front-end code.
 yarn add test-keyboard
 ```
 
-## `Keyboard.create` - `(params: KeyboardConstructorParams) => Keyboard`
+## `Keyboard.create` - `(params: KeyboardConstructorParameter) => Keyboard`
 
 ```ts
 import { Keyboard } from 'test-keyboard';
@@ -37,7 +37,7 @@ Keyboard.create({
 };
 ```
 
-### `KeyboardConstructorParams`
+### `KeyboardConstructorParameter`
 
 | **Property**      |             **Type**             | **Default**  | **Description**                                                                |
 | ----------------- | :------------------------------: | :----------: | ------------------------------------------------------------------------------ |
@@ -49,4 +49,5 @@ Keyboard.create({
 
 ## Acknowledgements
 
-- [Puppeteer](https://github.com/GoogleChrome/puppeteer) for providing the _US Keyboard_ information.
+- [Puppeteer](https://github.com/GoogleChrome/puppeteer) for providing the _US Keyboard_
+  information.

@@ -7,33 +7,33 @@ import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 
-import { fromHTML, toHTML } from '@remirror/core';
+import { fromHTML, object, toHTML } from '@remirror/core';
 import { BaseKeymapExtension } from '@remirror/core-extensions';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 
-import { CodeBlockExtension, CodeBlockExtensionOptions } from '../';
+import { CodeBlockExtension, CodeBlockExtensionSettings } from '..';
 import { CodeBlockFormatter } from '../code-block-types';
 import { getLanguage } from '../code-block-utils';
 
 describe('schema', () => {
   const { schema } = createBaseTestManager([{ extension: new CodeBlockExtension(), priority: 1 }]);
-  const attrs = { language: 'typescript' };
+  const attributes = { language: 'typescript' };
   const content = 'unchanged without decorations';
 
   const { codeBlock, doc } = pmBuild(schema, {
-    codeBlock: { nodeType: 'codeBlock', ...attrs },
+    codeBlock: { nodeType: 'codeBlock', ...attributes },
   });
 
   it('creates the correct dom node', () => {
     expect(toHTML({ node: codeBlock(content), schema })).toBe(
-      `<pre class="language-${attrs.language}"><code data-code-block-language="${attrs.language}">${content}</code></pre>`,
+      `<pre class="language-${attributes.language}"><code data-code-block-language="${attributes.language}">${content}</code></pre>`,
     );
   });
 
   it('parses the dom structure and finds itself', () => {
     const node = fromHTML({
       schema,
-      content: `<pre><code class="language-${attrs.language}" data-code-block-language="${attrs.language}">${content}</code></pre>`,
+      content: `<pre><code class="language-${attributes.language}" data-code-block-language="${attributes.language}">${content}</code></pre>`,
     });
     const expected = doc(codeBlock(content));
 
@@ -54,10 +54,10 @@ describe('constructor', () => {
 
 const supportedLanguages = [typescript, javascript, markdown, tsx];
 
-const create = (params: CodeBlockExtensionOptions = Object.create(null)) =>
+const create = (parameters: CodeBlockExtensionSettings = object()) =>
   renderEditor({
     plainNodes: [],
-    attrNodes: [new CodeBlockExtension({ ...params, supportedLanguages })],
+    attrNodes: [new CodeBlockExtension({ ...parameters, supportedLanguages })],
     others: [{ priority: 10, extension: new BaseKeymapExtension() }],
   });
 
@@ -284,7 +284,7 @@ describe('commands', () => {
 
   describe('createCodeBlock ', () => {
     it('creates the codeBlock', () => {
-      const { state } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
+      const { state } = add(doc(p(`<cursor>`))).actionsCallback((actions) => {
         actions.createCodeBlock({ language: 'typescript' });
       });
 
@@ -294,8 +294,8 @@ describe('commands', () => {
     it('creates the default codeBlock when no language is provided', () => {
       const markupBlock = codeBlock({ language: 'markup' });
 
-      const { state } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
-        // @ts-ignore
+      const { state } = add(doc(p(`<cursor>`))).actionsCallback((actions) => {
+        // @ts-expect-error
         actions.createCodeBlock();
       });
 
@@ -305,13 +305,13 @@ describe('commands', () => {
 
   describe('toggleCodeBlock ', () => {
     it('toggles the codeBlock', () => {
-      const { state, actionsCallback } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
+      const { state, actionsCallback } = add(doc(p(`<cursor>`))).actionsCallback((actions) => {
         actions.toggleCodeBlock({ language: 'typescript' });
       });
 
       expect(state.doc).toEqualRemirrorDocument(doc(tsBlock('')));
 
-      const { state: stateTwo } = actionsCallback(actions =>
+      const { state: stateTwo } = actionsCallback((actions) =>
         actions.toggleCodeBlock({ language: 'typescript' }),
       );
 
@@ -320,13 +320,15 @@ describe('commands', () => {
 
     it('toggles the default codeBlock when no language is provided', () => {
       const markupBlock = codeBlock({ language: 'markup' });
-      const { state: stateOne, actionsCallback } = add(doc(p(`<cursor>`))).actionsCallback(actions => {
-        actions.toggleCodeBlock();
-      });
+      const { state: stateOne, actionsCallback } = add(doc(p(`<cursor>`))).actionsCallback(
+        (actions) => {
+          actions.toggleCodeBlock();
+        },
+      );
 
       expect(stateOne.doc).toEqualRemirrorDocument(doc(markupBlock('')));
 
-      const { state: stateTwo } = actionsCallback(actions => actions.toggleCodeBlock());
+      const { state: stateTwo } = actionsCallback((actions) => actions.toggleCodeBlock());
 
       expect(stateTwo.doc).toEqualRemirrorDocument(doc(p('')));
     });
@@ -359,7 +361,7 @@ describe('commands', () => {
     it('can format the codebase', () => {
       const { state } = add(
         doc(tsBlock(`const a: string\n = 'test'  ;\n\n\nlog("welcome friends")<cursor>`)),
-      ).actionsCallback(actions => actions.formatCodeBlock());
+      ).actionsCallback((actions) => actions.formatCodeBlock());
 
       expect(state.doc).toEqualRemirrorDocument(
         doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
@@ -367,8 +369,10 @@ describe('commands', () => {
     });
 
     it('maintains cursor position after formatting', () => {
-      const { state } = add(doc(tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`)))
-        .actionsCallback(actions => actions.formatCodeBlock())
+      const { state } = add(
+        doc(tsBlock(`const a: string\n = 'test<cursor>'  ;\n\n\nlog("welcome friends")`)),
+      )
+        .actionsCallback((actions) => actions.formatCodeBlock())
         .insertText('ing');
 
       expect(state.doc).toEqualRemirrorDocument(
@@ -379,7 +383,7 @@ describe('commands', () => {
     it('formats text selections', () => {
       const { state, start, end } = add(
         doc(tsBlock(`<start>const a: string\n = 'test'  ;<end>\n\n\nlog("welcome friends")`)),
-      ).actionsCallback(actions => actions.formatCodeBlock());
+      ).actionsCallback((actions) => actions.formatCodeBlock());
 
       expect(state.doc).toEqualRemirrorDocument(
         doc(tsBlock(`const a: string = 'test';\n\nlog('welcome friends');\n`)),
@@ -400,7 +404,7 @@ describe('commands', () => {
           otherCode,
         ),
       )
-        .actionsCallback(actions => actions.formatCodeBlock())
+        .actionsCallback((actions) => actions.formatCodeBlock())
         .insertText('ing');
 
       expect(state.doc).toEqualRemirrorDocument(

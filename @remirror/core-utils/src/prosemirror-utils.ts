@@ -1,43 +1,46 @@
-import { isUndefined } from 'util';
-
 import { MarkSpec, NodeSpec } from 'prosemirror-model';
 import { Selection as PMSelection } from 'prosemirror-state';
+import { isUndefined } from 'util';
 
-import { bool, isNullOrUndefined, keys } from '@remirror/core-helpers';
+import { bool, isEmptyArray, isNullOrUndefined, keys, object } from '@remirror/core-helpers';
 import {
-  AttrsParams,
+  AttributesParameter,
   CommandFunction,
   EditorSchema,
   EditorState,
-  EditorStateParams,
+  EditorStateParameter,
   EditorView,
   KeyBindingCommandFunction,
-  NodeTypeParams,
-  NodeTypesParams,
-  OptionalProsemirrorNodeParams,
-  PosParams,
-  PredicateParams,
+  NodeTypeParameter,
+  NodeTypesParameter,
+  OptionalProsemirrorNodeParameter,
+  PosParameter,
+  PredicateParameter,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
-  ProsemirrorNodeParams,
+  ProsemirrorNodeParameter,
   ResolvedPos,
   Selection,
-  SelectionParams,
+  SelectionParameter,
   Transaction,
-  TransactionParams,
+  TransactionParameter,
 } from '@remirror/core-types';
 
-import { isEditorState, isNodeSelection, isResolvedPos, isSelection, isTextDOMNode } from './dom-utils';
+import {
+  isEditorState,
+  isNodeSelection,
+  isResolvedPos,
+  isSelection,
+  isTextDOMNode,
+} from './dom-utils';
 
-/* "Borrowed" from prosemirror-utils in order to avoid requirement of
-`@prosemirror-tables`*/
-
-interface NodeEqualsTypeParams extends NodeTypesParams, OptionalProsemirrorNodeParams {}
+interface NodeEqualsTypeParameter extends NodeTypesParameter, OptionalProsemirrorNodeParameter {}
 
 /**
  * Checks if the type a given `node` equals to a given `nodeType`.
  */
-export const nodeEqualsType = ({ types, node }: NodeEqualsTypeParams) => {
+export const nodeEqualsType = ({ types, node }: NodeEqualsTypeParameter) => {
   return node ? (Array.isArray(types) && types.includes(node.type)) || node.type === types : false;
 };
 
@@ -52,7 +55,8 @@ export const cloneTransaction = (tr: Transaction): Transaction => {
   return Object.assign(Object.create(tr), tr).setTime(Date.now());
 };
 
-interface RemoveNodeAtPositionParams extends TransactionParams, PosParams {}
+interface RemoveNodeAtPositionParameter extends TransactionParameter, PosParameter {}
+
 /**
  * Returns a `delete` transaction that removes a node at a given position with
  * the given `node`. `position` should point at the position immediately before
@@ -62,7 +66,7 @@ interface RemoveNodeAtPositionParams extends TransactionParams, PosParams {}
  *
  * @public
  */
-export const removeNodeAtPosition = ({ pos, tr }: RemoveNodeAtPositionParams) => {
+export const removeNodeAtPosition = ({ pos, tr }: RemoveNodeAtPositionParameter) => {
   const node = tr.doc.nodeAt(pos);
 
   if (!node) {
@@ -119,7 +123,7 @@ export const findElementAtPosition = (position: number, view: EditorView): HTMLE
 export const findParentNode = ({
   predicate,
   selection,
-}: FindParentNodeParams): FindProsemirrorNodeResult | undefined => {
+}: FindParentNodeParameter): FindProsemirrorNodeResult | undefined => {
   const { $from } = selection;
   for (let depth = $from.depth; depth > 0; depth--) {
     const node = $from.node(depth);
@@ -181,7 +185,8 @@ export const findNodeAtSelection = (selection: Selection): FindProsemirrorNodeRe
  *
  * @deprecated use `doc.lastChild` instead
  */
-export const findNodeAtEndOfDoc = (doc: ProsemirrorNode) => findNodeAtPosition(PMSelection.atEnd(doc).$from);
+export const findNodeAtEndOfDoc = (doc: ProsemirrorNode) =>
+  findNodeAtPosition(PMSelection.atEnd(doc).$from);
 
 /**
  * Finds the node at the start of the prosemirror.
@@ -194,7 +199,7 @@ export const findNodeAtEndOfDoc = (doc: ProsemirrorNode) => findNodeAtPosition(P
 export const findNodeAtStartOfDoc = (doc: ProsemirrorNode) =>
   findNodeAtPosition(PMSelection.atStart(doc).$from);
 
-interface FindParentNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
+interface FindParentNodeOfTypeParameter extends NodeTypesParameter, SelectionParameter {}
 
 /**
  *  Iterates over parent nodes, returning closest node of a given `nodeType`.
@@ -208,8 +213,8 @@ interface FindParentNodeOfTypeParams extends NodeTypesParams, SelectionParams {}
 export const findParentNodeOfType = ({
   types,
   selection,
-}: FindParentNodeOfTypeParams): FindProsemirrorNodeResult | undefined => {
-  return findParentNode({ predicate: node => nodeEqualsType({ types, node }), selection });
+}: FindParentNodeOfTypeParameter): FindProsemirrorNodeResult | undefined => {
+  return findParentNode({ predicate: (node) => nodeEqualsType({ types, node }), selection });
 };
 
 /**
@@ -224,7 +229,11 @@ export const findParentNodeOfType = ({
 export const findPositionOfNodeBefore = <GSchema extends EditorSchema = any>(
   value: Selection<GSchema> | ResolvedPos<GSchema> | EditorState<GSchema> | Transaction<GSchema>,
 ): FindProsemirrorNodeResult | undefined => {
-  const $pos = isResolvedPos(value) ? value : isSelection(value) ? value.$from : value.selection.$from;
+  const $pos = isResolvedPos(value)
+    ? value
+    : isSelection(value)
+    ? value.$from
+    : value.selection.$from;
 
   if (isNullOrUndefined($pos)) {
     throw new Error('Invalid value passed in.');
@@ -270,10 +279,10 @@ export const removeNodeBefore = (tr: Transaction): Transaction => {
   return tr;
 };
 
-interface FindSelectedNodeOfTypeParams<
+interface FindSelectedNodeOfTypeParameter<
   GSchema extends EditorSchema = any,
   GSelection extends Selection<GSchema> = Selection<GSchema>
-> extends NodeTypesParams<GSchema>, SelectionParams<GSchema, GSelection> {}
+> extends NodeTypesParameter<GSchema>, SelectionParameter<GSchema, GSelection> {}
 
 export interface FindSelectedNodeOfType<GSchema extends EditorSchema = any>
   extends FindProsemirrorNodeResult<GSchema> {
@@ -302,7 +311,9 @@ export const findSelectedNodeOfType = <
 >({
   types,
   selection,
-}: FindSelectedNodeOfTypeParams<GSchema, GSelection>): FindSelectedNodeOfType<GSchema> | undefined => {
+}: FindSelectedNodeOfTypeParameter<GSchema, GSelection>):
+  | FindSelectedNodeOfType<GSchema>
+  | undefined => {
   if (isNodeSelection(selection)) {
     const { node, $from } = selection;
     if (nodeEqualsType({ types, node })) {
@@ -319,7 +330,7 @@ export const findSelectedNodeOfType = <
 };
 
 export interface FindProsemirrorNodeResult<GSchema extends EditorSchema = any>
-  extends ProsemirrorNodeParams<GSchema> {
+  extends ProsemirrorNodeParameter<GSchema> {
   /**
    * The start position of the node.
    */
@@ -341,10 +352,11 @@ export interface FindProsemirrorNodeResult<GSchema extends EditorSchema = any>
   depth: number;
 }
 
-interface FindParentNodeParams extends SelectionParams, PredicateParams<ProsemirrorNode> {}
+interface FindParentNodeParameter extends SelectionParameter, PredicateParameter<ProsemirrorNode> {}
 
 /**
- * Returns the position of the node after the current position, selection or state.
+ * Returns the position of the node after the current position, selection or
+ * state.
  *
  * ```ts
  * const pos = findPositionOfNodeBefore(tr.selection);
@@ -355,7 +367,11 @@ interface FindParentNodeParams extends SelectionParams, PredicateParams<Prosemir
 export const findPositionOfNodeAfter = <GSchema extends EditorSchema = any>(
   value: Selection<GSchema> | ResolvedPos<GSchema> | EditorState<GSchema>,
 ): FindProsemirrorNodeResult | undefined => {
-  const $pos = isResolvedPos(value) ? value : isSelection(value) ? value.$from : value.selection.$from;
+  const $pos = isResolvedPos(value)
+    ? value
+    : isSelection(value)
+    ? value.$from
+    : value.selection.$from;
 
   if (isNullOrUndefined($pos)) {
     throw new Error('Invalid value passed in.');
@@ -414,13 +430,16 @@ export const selectionEmpty = (value: Selection | EditorState) =>
  * Check to see if a transaction has changed either the document or the current
  * selection.
  *
- * @param params - the TransactionChangeParams object
+ * @param params - the TransactionChangeParameter object
  */
 export const transactionChanged = (tr: Transaction) => {
   return tr.docChanged || tr.selectionSet;
 };
 
-interface IsNodeActiveParams extends EditorStateParams, NodeTypeParams, Partial<AttrsParams> {}
+interface IsNodeActiveParameter
+  extends EditorStateParameter,
+    NodeTypeParameter,
+    Partial<AttributesParameter> {}
 
 /**
  * Checks whether the node type passed in is active within the region. Used by
@@ -432,17 +451,21 @@ interface IsNodeActiveParams extends EditorStateParams, NodeTypeParams, Partial<
  *
  * @param params - the destructured node active parameters
  */
-export const isNodeActive = ({ state, type, attrs = Object.create(null) }: IsNodeActiveParams) => {
+export const isNodeActive = ({
+  state,
+  type,
+  attrs: attributes = object<ProsemirrorAttributes>(),
+}: IsNodeActiveParameter) => {
   const { selection } = state;
   const predicate = (node: ProsemirrorNode) => node.type === type;
   const parent =
     findSelectedNodeOfType({ selection, types: type }) ?? findParentNode({ predicate, selection });
 
-  if (!Object.keys(attrs).length || !parent) {
+  if (!Object.keys(attributes).length || !parent) {
     return bool(parent);
   }
 
-  return parent.node.hasMarkup(type, attrs);
+  return parent.node.hasMarkup(type, attributes);
 };
 
 export interface SchemaJSON<GNodes extends string = string, GMarks extends string = string> {
@@ -456,15 +479,15 @@ export interface SchemaJSON<GNodes extends string = string, GMarks extends strin
 export const schemaToJSON = <GNodes extends string = string, GMarks extends string = string>(
   schema: EditorSchema<GNodes, GMarks>,
 ): SchemaJSON<GNodes, GMarks> => {
-  const nodes = keys(schema.nodes).reduce((acc, key) => {
+  const nodes = keys(schema.nodes).reduce((accumulator, key) => {
     const { spec } = schema.nodes[key];
-    return { ...acc, [key]: spec };
-  }, Object.create(null));
+    return { ...accumulator, [key]: spec };
+  }, object<SchemaJSON['nodes']>());
 
-  const marks = keys(schema.marks).reduce((acc, key) => {
+  const marks = keys(schema.marks).reduce((accumulator, key) => {
     const { spec } = schema.marks[key];
-    return { ...acc, [key]: spec };
-  }, Object.create(null));
+    return { ...accumulator, [key]: spec };
+  }, object<SchemaJSON['marks']>());
 
   return {
     nodes,
@@ -473,23 +496,30 @@ export const schemaToJSON = <GNodes extends string = string, GMarks extends stri
 };
 
 /**
- * Wraps the default {@link ProsemirrorCommandFunction} and makes it compatible with the default **remirror**
- * {@link CommandFunction} call signature.
+ * Wraps the default {@link ProsemirrorCommandFunction} and makes it compatible
+ * with the default **remirror** {@link CommandFunction} call signature.
  */
-export const convertCommand = <GSchema extends EditorSchema = any, GExtraParams extends object = {}>(
+export const convertCommand = <
+  GSchema extends EditorSchema = any,
+  GExtraParameter extends object = {}
+>(
   commandFunction: ProsemirrorCommandFunction<GSchema>,
-): CommandFunction<GSchema, GExtraParams> => ({ state, dispatch, view }) =>
+): CommandFunction<GSchema, GExtraParameter> => ({ state, dispatch, view }) =>
   commandFunction(state, dispatch, view);
 
 /**
- * Similar to the chainCommands from the `prosemirror-commands` library. Allows multiple commands to be
- * chained together and runs until one of them returns true.
+ * Similar to the chainCommands from the `prosemirror-commands` library. Allows
+ * multiple commands to be chained together and runs until one of them returns
+ * true.
  */
-export const chainCommands = <GSchema extends EditorSchema = any, GExtraParams extends object = {}>(
-  ...commands: Array<CommandFunction<GSchema, GExtraParams>>
-): CommandFunction<GSchema, GExtraParams> => ({ state, dispatch, view, ...rest }) => {
-  for (let commandIndex = 0; commandIndex < commands.length; commandIndex++) {
-    if (commands[commandIndex]({ state, dispatch, view, ...(rest as GExtraParams) })) {
+export const chainCommands = <
+  GSchema extends EditorSchema = any,
+  GExtraParameter extends object = {}
+>(
+  ...commands: Array<CommandFunction<GSchema, GExtraParameter>>
+): CommandFunction<GSchema, GExtraParameter> => ({ state, dispatch, view, ...rest }) => {
+  for (const element of commands) {
+    if (element({ state, dispatch, view, ...(rest as GExtraParameter) })) {
       return true;
     }
   }
@@ -498,40 +528,60 @@ export const chainCommands = <GSchema extends EditorSchema = any, GExtraParams e
 };
 
 /**
- * Chains together keybindings.
+ * Chains together keybindings, allowing for the sme key binding to be used
+ * across multiple extensions without overriding behavior.
  *
  * @remarks
  *
- * When `next` hands over full control of the keybindings to the caller.
+ * When `next` is called it hands over full control of the keybindings to the
+ * function that invokes it.
  */
 export const chainKeyBindingCommands = (
   ...commands: KeyBindingCommandFunction[]
-): KeyBindingCommandFunction => params => {
-  if (!commands.length) {
+): KeyBindingCommandFunction => (parameters) => {
+  // When no commands are passed just ignore and continue.
+  if (isEmptyArray(commands)) {
     return false;
   }
 
   const [command, ...rest] = commands;
 
+  // Keeps track of whether the `next` method has been called. If it has been
+  // called we return the result and skip the rest of the downstream commands.
   let calledNext = false;
 
+  /**
+   * Create the next function call. Updates the outer closure when the next
+   * method has been called.
+   */
   const createNext = (...nextCommands: KeyBindingCommandFunction[]): (() => boolean) => () => {
-    if (!nextCommands.length) {
+    if (isEmptyArray(nextCommands)) {
       return false;
     }
 
+    // Update the closure with information that the next method was invoked by
+    // this command.
     calledNext = true;
 
     const [, ...nextRest] = nextCommands;
-    return chainKeyBindingCommands(...nextCommands)({ ...params, next: createNext(...nextRest) });
+
+    // Recursively call the key bindings method.
+    return chainKeyBindingCommands(...nextCommands)({
+      ...parameters,
+      next: createNext(...nextRest),
+    });
   };
 
   const next = createNext(...rest);
-  const status = command({ ...params, next });
+  const exitEarly = command({ ...parameters, next });
 
-  if (calledNext || status) {
-    return status;
+  // Exit the chain of commands early if either:
+  // - a) next was called
+  // - b) the command returned true
+  if (calledNext || exitEarly) {
+    return exitEarly;
   }
 
+  // Continue on through the chain of commands.
   return next();
 };

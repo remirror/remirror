@@ -9,7 +9,7 @@
 import { css } from '@remirror/react-utils';
 
 export default css`
-  @import url(https://fonts.googleapis.com/css?family=Fira+Mono);
+  @import url(https://fonts.googleapis.com/css?family=Fira + Mono);
 
   code[class*='language-'],
   pre[class*='language-'] {

@@ -121,7 +121,12 @@ export const baseTheme: RemirrorTheme = {
     focus: 'hsla(205, 73%, 57%, 0.6) 0px 0px 0px 3px',
     buttons: '0 0 0 0 hsla(205, 6%, 14%, 0.15) inset',
     text: 'none',
-    card: `${HSL.create([baseHue, baseSaturation, 15, 25]).toString()} 0 4px 8px -2px, ${HSL.create([
+    card: `${HSL.create([
+      baseHue,
+      baseSaturation,
+      15,
+      25,
+    ]).toString()} 0 4px 8px -2px, ${HSL.create([
       baseHue,
       baseSaturation,
       15,

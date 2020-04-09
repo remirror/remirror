@@ -5,7 +5,7 @@
  */
 
 import { BuiltInParserName, CursorOptions, CursorResult } from 'prettier';
-import babelPlugin from 'prettier/parser-babylon';
+import babelPlugin from 'prettier/parser-babel';
 import htmlPlugin from 'prettier/parser-html';
 import markdownPlugin from 'prettier/parser-markdown';
 import typescriptPlugin from 'prettier/parser-typescript';
@@ -22,7 +22,7 @@ const options: Partial<CursorOptions> = {
   semi: true,
 };
 
-interface FormatCodeParams {
+interface FormatCodeParameter {
   /**
    * The initial code.
    */
@@ -42,7 +42,7 @@ interface FormatCodeParams {
 /**
  * Wrapper around the prettier formatWithCursor.
  */
-const formatCode = ({ parser, source, cursorOffset }: FormatCodeParams) => {
+const formatCode = ({ parser, source, cursorOffset }: FormatCodeParameter) => {
   return formatWithCursor(source, {
     ...options,
     cursorOffset,
@@ -83,7 +83,13 @@ export const formatter: CodeBlockFormatter = ({ cursorOffset, language, source }
       ["'", '"'],
     ],
   ) => {
-    const increment = offsetIncrement(source, cursorOffset, result.formatted, result.cursorOffset, pairs);
+    const increment = offsetIncrement(
+      source,
+      cursorOffset,
+      result.formatted,
+      result.cursorOffset,
+      pairs,
+    );
     return { ...result, cursorOffset: result.cursorOffset + increment };
   };
 
@@ -95,6 +101,7 @@ export const formatter: CodeBlockFormatter = ({ cursorOffset, language, source }
         return fn(formatCode({ source, cursorOffset, parser: 'typescript' }));
       case 'javascript':
       case 'jsx':
+      case 'js':
         return fn(formatCode({ source, cursorOffset, parser: 'babel-flow' }));
       case 'markdown':
       case 'md':

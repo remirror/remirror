@@ -8,13 +8,16 @@ export const createImageExtensionPlugin = () => {
       handleDOMEvents: {
         drop(view, e) {
           const event = Cast<DragEvent>(e);
-          const hasFiles = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length;
+          const hasFiles =
+            event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length;
 
           if (!hasFiles || !event.dataTransfer) {
             return false;
           }
 
-          const images = Array.from(event.dataTransfer.files).filter(file => /image/i.test(file.type));
+          const images = Array.from(event.dataTransfer.files).filter((file) =>
+            /image/i.test(file.type),
+          );
 
           if (images.length === 0) {
             return false;
@@ -29,10 +32,10 @@ export const createImageExtensionPlugin = () => {
 
           event.preventDefault();
 
-          images.forEach(image => {
+          images.forEach((image) => {
             const reader = new FileReader();
 
-            reader.onload = readerEvent => {
+            reader.onload = (readerEvent) => {
               const node = schema.nodes.image.create({
                 src: readerEvent.target && Cast(readerEvent.target).result,
               });

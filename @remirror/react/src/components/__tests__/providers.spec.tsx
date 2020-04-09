@@ -6,36 +6,12 @@ import { FC } from 'react';
 
 import { createBaseTestManager, docNodeBasicJSON } from '@remirror/test-fixtures';
 
-import { useRemirrorContext } from '../../hooks/context-hooks';
-import { RemirrorManager } from '../remirror-manager';
-import { ManagedRemirrorProvider, RemirrorProvider } from '../remirror-providers';
-
-test('ManagedRemirrorProvider', () => {
-  const TestComponent: FC = () => {
-    const { getRootProps } = useRemirrorContext();
-    return (
-      <div>
-        <div data-testid='target' {...getRootProps()} />
-      </div>
-    );
-  };
-
-  const { getByRole, getByTestId } = render(
-    <RemirrorManager>
-      <ManagedRemirrorProvider initialContent={docNodeBasicJSON}>
-        <TestComponent />
-      </ManagedRemirrorProvider>
-    </RemirrorManager>,
-  );
-  const target = getByTestId('target');
-  const editor = getByRole('textbox');
-
-  expect(target).toContainElement(editor);
-});
+import { useRemirror } from '../../hooks/use-remirror';
+import { RemirrorProvider } from '../remirror-provider';
 
 test('RemirrorProvider', () => {
   const TestComponent: FC = () => {
-    const { getRootProps } = useRemirrorContext();
+    const { getRootProps } = useRemirror();
     return (
       <div>
         <div data-testid='target' {...getRootProps()} />

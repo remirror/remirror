@@ -3,7 +3,13 @@
     "name": "@remirror/core",
     "path": "@remirror/core/lib/dist/core.esm.js",
     "limit": "70 KB",
-    "ignore": ["@emotion/core", "@types/prosemirror-view", "@types/react", "prosemirror-view", "react"],
+    "ignore": [
+      "@emotion/core",
+      "@types/prosemirror-view",
+      "@types/react",
+      "prosemirror-view",
+      "react"
+    ],
     "running": false
   },
   {
@@ -24,7 +30,13 @@
     "name": "@remirror/core-types",
     "path": "@remirror/core-types/lib/dist/core-types.esm.js",
     "limit": "1 KB",
-    "ignore": ["@emotion/core", "@types/prosemirror-view", "@types/react", "prosemirror-view", "react"],
+    "ignore": [
+      "@emotion/core",
+      "@types/prosemirror-view",
+      "@types/react",
+      "prosemirror-view",
+      "react"
+    ],
     "running": false
   },
   {

@@ -1,5 +1,11 @@
 # @remirror/extension-code-block
 
+## 0.11.1
+
+### Patch Changes
+
+- bea2f1ff: Fix broken tab key functionality for the code block extension.
+
 ## 0.11.0
 
 ### Patch Changes
@@ -19,7 +25,8 @@
 
 ### Patch Changes
 
-- 47493cc2: Doesn't step into the previous node when pressing Backspace if the selection isn't empty #231.
+- 47493cc2: Doesn't step into the previous node when pressing Backspace if the selection isn't empty
+  #231.
 - Updated dependencies [24f83413]
 - Updated dependencies [24f83413]
   - @remirror/core@0.8.0

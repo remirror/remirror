@@ -1,17 +1,16 @@
 import { render } from '@testing-library/react';
 import React, { FC } from 'react';
 
-import { createTestManager, injectedPropsShape, positionerShape } from '@remirror/test-fixtures';
-
-import { RemirrorProvider } from '../components/remirror-providers';
-import { usePositioner, useRemirrorContext } from '../hooks/context-hooks';
+import { RemirrorProvider } from '../components/remirror-provider';
+import { usePositioner } from '../hooks/use-positioner';
+import { useRemirror } from '../hooks/use-remirror';
 import { bubblePositioner } from '../react-positioners';
 
 test('useRemirrorContext', () => {
   expect.assertions(1);
 
   const HookComponent: FC = () => {
-    const injectedProps = useRemirrorContext();
+    const injectedProps = useRemirror();
 
     expect(injectedProps).toMatchObject(injectedPropsShape);
 
@@ -29,7 +28,10 @@ test('usePositioner', () => {
   expect.assertions(1);
 
   const HookComponent: FC = () => {
-    const injectedProps = usePositioner({ positioner: bubblePositioner, positionerId: 'bubble-menu' });
+    const injectedProps = usePositioner({
+      positioner: bubblePositioner,
+      positionerId: 'bubble-menu',
+    });
 
     expect(injectedProps).toMatchObject(positionerShape);
 

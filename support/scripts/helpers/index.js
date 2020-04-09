@@ -5,11 +5,11 @@ const exec = util.promisify(require('child_process').exec);
 
 const separator = '__';
 
-const unmangleScopedPackage = mangledName => {
+const unmangleScopedPackage = (mangledName) => {
   return mangledName.includes(separator) ? `@${mangledName.replace(separator, '/')}` : mangledName;
 };
 
-const mangleScopedPackageName = packageName => {
+const mangleScopedPackageName = (packageName) => {
   const [scope, name] = packageName.split('/');
 
   if (name) {
@@ -20,7 +20,7 @@ const mangleScopedPackageName = packageName => {
 };
 
 const baseDir = (...paths) => resolve(__dirname, '../../..', join(...paths));
-const getRelativePathFromJson = json => relative(baseDir(), json.location);
+const getRelativePathFromJson = (json) => relative(baseDir(), json.location);
 
 const formatFiles = async (path = '', silent = false) => {
   const { stderr, stdout } = await exec(`prettier ${path} --write`);
@@ -47,7 +47,7 @@ const getAllDependencies = () => {
         return [];
       }
 
-      return packages.map(pkg => ({
+      return packages.map((pkg) => ({
         ...pkg.packageJson,
         location: pkg.dir,
       }));
@@ -63,7 +63,7 @@ const getAllDependencies = () => {
  */
 const getDependencyPackageMap = async (relative = false) => {
   const packages = await getAllDependencies();
-  const tsPackages = packages.filter(pkg => pkg.types);
+  const tsPackages = packages.filter((pkg) => pkg.types);
   return tsPackages.reduce(
     (acc, json) => ({
       ...acc,

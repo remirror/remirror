@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { Container, ThemeProvider, jsx } from 'theme-ui';
+import { Container, jsx, ThemeProvider } from 'theme-ui';
 
 export const Tiles = (props: any) => (
   <ThemeProvider

@@ -1,34 +1,34 @@
 import { Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
-import { bool } from '@remirror/core-helpers';
+import { bool, object } from '@remirror/core-helpers';
 import {
-  CompareStateParams,
+  CompareStateParameter,
   EditorSchema,
   EditorState,
-  EditorStateParams,
+  EditorStateParameter,
   EditorView,
-  FromToParams,
-  ResolvedPosParams,
-  TextParams,
-  TransactionParams,
+  FromToParameter,
+  ResolvedPosParameter,
+  TextParameter,
+  TransactionParameter,
 } from '@remirror/core-types';
 import { transactionChanged } from '@remirror/core-utils';
 
 import { ChangeReason, DEFAULT_SUGGESTER, ExitReason } from './suggest-constants';
 import { isInvalidSplitReason, isJumpReason, isValidMatch } from './suggest-predicates';
 import {
-  AddIgnoredParams,
-  CompareMatchParams,
-  RemoveIgnoredParams,
-  SuggestCallbackParams,
-  SuggestKeyBindingParams,
+  AddIgnoredParameter,
+  CompareMatchParameter,
+  RemoveIgnoredParameter,
+  SuggestCallbackParameter,
+  Suggestion,
+  SuggestKeyBindingParameter,
   SuggestReasonMap,
   SuggestStateMatch,
   SuggestStateMatchReason,
-  Suggester,
 } from './suggest-types';
-import { findFromSuggesters, findReason, runKeyBindings } from './suggest-utils';
+import { findFromSuggestions, findReason, runKeyBindings } from './suggest-utils';
 
 /**
  * The suggestion state which manages the list of suggestions.
@@ -37,14 +37,14 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * Create an instance of the SuggestState class.
    */
-  public static create(suggesters: Suggester[]) {
+  public static create(suggesters: Suggestion[]) {
     return new SuggestState(suggesters);
   }
 
   /**
    * The suggesters that have been registered for the suggestions plugin.
    */
-  private readonly suggesters: Array<Required<Suggester>>;
+  private readonly suggesters: Array<Required<Suggestion>>;
 
   /**
    * Keeps track of the current state.
@@ -59,7 +59,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * The handler matches which are passed into `onChange` / `onExit` handlers.
    */
-  private handlerMatches: SuggestReasonMap = Object.create(null);
+  private handlerMatches: SuggestReasonMap = object();
 
   /**
    * Holds a copy of the view
@@ -123,9 +123,9 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    * `regex` and the order in which they are passed in. Earlier suggesters are
    * prioritized.
    */
-  constructor(suggesters: Suggester[]) {
+  constructor(suggesters: Suggestion[]) {
     const names: string[] = [];
-    this.suggesters = suggesters.map(suggester => {
+    this.suggesters = suggesters.map((suggester) => {
       if (names.includes(suggester.name)) {
         throw new Error(
           `A suggester already exists with the name '${suggester.name}'. The name provided must be unique.`,
@@ -148,7 +148,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * Create the props which should be passed into each action handler
    */
-  private createParams(match: SuggestStateMatch): SuggestCallbackParams {
+  private createParameter(match: SuggestStateMatch): SuggestCallbackParameter {
     return {
       view: this.view,
       addIgnored: this.addIgnored,
@@ -161,11 +161,11 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * Create the prop to be passed into the `onChange` or `onExit` handler.
    */
-  private createReasonParams<GReason extends ExitReason | ChangeReason>(
+  private createReasonParameter<GReason extends ExitReason | ChangeReason>(
     match: SuggestStateMatchReason<GReason>,
   ) {
     return {
-      ...this.createParams(match),
+      ...this.createParameter(match),
       command: this.getCommand(match, match.reason),
       ...match,
     };
@@ -185,29 +185,32 @@ export class SuggestState<GSchema extends EditorSchema = any> {
       return;
     }
 
-    // Call Handlers
-    // When a jump happens run the action that involves the position that occurs
-    // later in the document. This is so that changes don't affect previous
-    // positions.
+    // Call Handlers When a jump happens run the action that involves the
+    // position that occurs later in the document. This is so that changes don't
+    // affect previous positions.
     if (change && exit && isJumpReason({ change, exit })) {
-      const exitParams = this.createReasonParams(exit);
-      const changeParams = this.createReasonParams(change);
+      const exitParameters = this.createReasonParameter(exit);
+      const changeParameters = this.createReasonParameter(change);
       const movedForwards = exit.range.from < change.range.from;
-      movedForwards ? change.suggester.onChange(changeParams) : exit.suggester.onExit(exitParams);
-      movedForwards ? exit.suggester.onExit(exitParams) : change.suggester.onChange(changeParams);
+      movedForwards
+        ? change.suggester.onChange(changeParameters)
+        : exit.suggester.onExit(exitParameters);
+      movedForwards
+        ? exit.suggester.onExit(exitParameters)
+        : change.suggester.onChange(changeParameters);
       this.removed = false;
       return;
     }
 
     if (change) {
-      change.suggester.onChange(this.createReasonParams(change));
+      change.suggester.onChange(this.createReasonParameter(change));
     }
 
     if (exit) {
-      exit.suggester.onExit(this.createReasonParams(exit));
+      exit.suggester.onExit(this.createReasonParameter(exit));
       this.removed = false;
       if (isInvalidSplitReason(exit.reason)) {
-        this.handlerMatches = Object.create(null);
+        this.handlerMatches = object();
       }
     }
   };
@@ -222,9 +225,9 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     const decorations = ignored.find();
 
     // For suggesters with multiple characters it is possible for a `paste` or
-    // any edit action within the decoration to expand the ignored section. We check for
-    // that here and if the section size has changed it should be marked as
-    // invalid and removed from the ignored `DecorationSet`.
+    // any edit action within the decoration to expand the ignored section. We
+    // check for that here and if the section size has changed it should be
+    // marked as invalid and removed from the ignored `DecorationSet`.
     const invalid = decorations.filter(({ from, to, spec }) => {
       if (to - from !== spec.char.length) {
         return true;
@@ -245,20 +248,20 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    * All we need to ignore is the match character. This means that any further
    * matches from the activation character will be ignored.
    */
-  public addIgnored = ({ from, char, name, specific = false }: AddIgnoredParams) => {
+  public addIgnored = ({ from, char, name, specific = false }: AddIgnoredParameter) => {
     const to = from + char.length;
-    const suggester = this.suggesters.find(val => val.name === name);
+    const suggester = this.suggesters.find((value) => value.name === name);
 
     if (!suggester) {
       throw new Error(`No suggester exists for the name provided: ${name}`);
     }
 
-    const attrs = suggester.ignoredClassName ? { class: suggester.ignoredClassName } : {};
+    const attributes = suggester.ignoredClassName ? { class: suggester.ignoredClassName } : {};
 
     const decoration = Decoration.inline(
       from,
       to,
-      { nodeName: suggester.ignoredTag, ...attrs },
+      { nodeName: suggester.ignoredTag, ...attributes },
       { char, name, specific },
     );
 
@@ -270,9 +273,10 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    *
    * @remarks
    *
-   * After this point event handlers will begin to be called again for match character.
+   * After this point event handlers will begin to be called again for match
+   * character.
    */
-  public removeIgnored = ({ from, char, name }: RemoveIgnoredParams) => {
+  public removeIgnored = ({ from, char, name }: RemoveIgnoredParameter) => {
     const decorations = this.ignored.find(from, from + char.length);
     const decoration = decorations[0];
 
@@ -316,7 +320,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    * Reset the state.
    */
   private resetState() {
-    this.handlerMatches = Object.create(null);
+    this.handlerMatches = object();
     this.next = undefined;
     this.removed = false;
   }
@@ -324,8 +328,8 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   /**
    * Update the next state value.
    */
-  private updateReasons({ $pos, state }: UpdateReasonsParams) {
-    const match = findFromSuggesters({ suggesters: this.suggesters, $pos });
+  private updateReasons({ $pos, state }: UpdateReasonsParameter) {
+    const match = findFromSuggestions({ suggesters: this.suggesters, $pos });
     this.next = match && this.shouldIgnoreMatch(match) ? undefined : match;
 
     // Store the matches with reasons
@@ -350,7 +354,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
    *
    * @param - params
    */
-  public apply({ tr, newState }: TransactionParams<GSchema> & CompareStateParams<GSchema>) {
+  public apply({ tr, newState }: TransactionParameter<GSchema> & CompareStateParameter<GSchema>) {
     const { exit } = this.handlerMatches;
 
     if (!transactionChanged(tr) && !this.removed) {
@@ -385,19 +389,19 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     }
 
     const { keyBindings } = match.suggester;
-    const params: SuggestKeyBindingParams = {
+    const parameters: SuggestKeyBindingParameter = {
       event,
       setMarkRemoved: this.setRemovedTrue,
-      ...this.createParams(match),
+      ...this.createParameter(match),
     };
 
-    return runKeyBindings(keyBindings, params);
+    return runKeyBindings(keyBindings, parameters);
   }
 
   /**
    * Handle any key presses of non supported characters
    */
-  public handleTextInput({ text, from, to }: HandleTextInputParams): boolean {
+  public handleTextInput({ text, from, to }: HandleTextInputParameter): boolean {
     const match = this.match;
 
     if (!isValidMatch(match)) {
@@ -407,7 +411,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     const { onCharacterEntry } = match.suggester;
 
     return onCharacterEntry({
-      ...this.createParams(match),
+      ...this.createParameter(match),
       from,
       to,
       text,
@@ -440,17 +444,19 @@ export class SuggestState<GSchema extends EditorSchema = any> {
       : this.ignored.add(state.doc, [
           Decoration.inline(from, end, {
             nodeName: decorationsTag,
-            class: name ? `${suggestionClassName} ${suggestionClassName}-${name}` : suggestionClassName,
+            class: name
+              ? `${suggestionClassName} ${suggestionClassName}-${name}`
+              : suggestionClassName,
           }),
         ]);
   }
 }
 
-interface HandleTextInputParams extends FromToParams, TextParams {}
-interface UpdateReasonsParams<GSchema extends EditorSchema = any>
-  extends EditorStateParams<GSchema>,
-    ResolvedPosParams<GSchema>,
-    Partial<CompareMatchParams> {}
+interface HandleTextInputParameter extends FromToParameter, TextParameter {}
+interface UpdateReasonsParameter<GSchema extends EditorSchema = any>
+  extends EditorStateParameter<GSchema>,
+    ResolvedPosParameter<GSchema>,
+    Partial<CompareMatchParameter> {}
 
 /**
  * The parameter object for the {@link SuggestState.apply} method.
@@ -459,11 +465,11 @@ interface UpdateReasonsParams<GSchema extends EditorSchema = any>
  *
  * **Extends**
  *
- * -  {@link @remirror/core-types#TransactionParams}
- * -  {@link @remirror/core-types#CompareStateParams}
+ * -  {@link @remirror/core-types#TransactionParameter}
+ * -  {@link @remirror/core-types#CompareStateParameter}
  *
  * @typeParam GSchema - the underlying editor schema.
  */
-export interface SuggestStateApplyParams<GSchema extends EditorSchema = any>
-  extends TransactionParams<GSchema>,
-    CompareStateParams<GSchema> {}
+export interface SuggestStateApplyParameter<GSchema extends EditorSchema = any>
+  extends TransactionParameter<GSchema>,
+    CompareStateParameter<GSchema> {}

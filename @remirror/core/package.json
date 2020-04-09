@@ -6,18 +6,18 @@
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/core",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "files": [
-    "internal",
-    "lib",
-    "src"
-  ],
   "sideEffects": false,
-  "main": "lib/index.js",
+  "main": "lib/dist/index.js",
   "module": "lib/dist/core.esm.js",
   "browser": {
     "min-document": false
   },
   "types": "lib/index.d.ts",
+  "files": [
+    "internal",
+    "lib",
+    "src"
+  ],
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core-constants": "^0.7.4",
@@ -29,11 +29,14 @@
     "@types/prosemirror-keymap": "^1.0.1",
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-state": "^1.2.3",
+    "map-obj": "^4.1.0",
+    "prosemirror-commands": "^1.1.3",
     "prosemirror-inputrules": "^1.1.2",
     "prosemirror-keymap": "^1.0.2",
     "prosemirror-model": "^1.9.1",
     "prosemirror-state": "^1.3.2",
-    "prosemirror-suggest": "^0.7.6"
+    "prosemirror-suggest": "^0.7.6",
+    "semver": "^7.2.1"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

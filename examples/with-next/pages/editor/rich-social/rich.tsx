@@ -24,13 +24,13 @@ import {
 import {
   ActiveTagData,
   ActiveUserData,
-  OnMentionChangeParams,
+  OnMentionChangeParameter,
   SocialEditor,
   SocialEditorProps,
   SocialExtensions,
 } from '@remirror/editor-social';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
-import { RemirrorStateListenerParams } from '@remirror/react';
+import { RemirrorStateListenerParameter } from '@remirror/react';
 import { userData } from '@remirror/showcase';
 
 const DEFAULT_LANGUAGES = [markdown, typescript, tsx, bash];
@@ -49,9 +49,9 @@ const fakeTags = [
 ];
 
 export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
-  const [mention, setMention] = useState<OnMentionChangeParams>();
+  const [mention, setMention] = useState<OnMentionChangeParameter>();
 
-  const onChange = (params: OnMentionChangeParams) => {
+  const onChange = (params: OnMentionChangeParameter) => {
     setMention(params);
   };
 
@@ -126,9 +126,12 @@ export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
 
   const [value, setValue] = useState<EditorState | null>(null);
 
-  const handleStateChange = useCallback((params: RemirrorStateListenerParams<SocialExtensions>): void => {
-    setValue(params.newState);
-  }, []);
+  const handleStateChange = useCallback(
+    (params: RemirrorStateListenerParameter<SocialExtensions>): void => {
+      setValue(params.newState);
+    },
+    [],
+  );
 
   const [showJSON, setShowJSON] = useState(
     typeof localStorage === 'object' && localStorage
@@ -166,8 +169,8 @@ export const ExampleRichSocialEditor = (props: Partial<SocialEditorProps>) => {
         extensions={extensions}
       />
       <label>
-        <input type='checkbox' checked={showJSON} onChange={handleShowJSONChange} /> Show document source as
-        JSON
+        <input type='checkbox' checked={showJSON} onChange={handleShowJSONChange} /> Show document
+        source as JSON
       </label>
       {showJSON ? (
         <pre>

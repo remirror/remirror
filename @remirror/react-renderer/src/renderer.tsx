@@ -3,7 +3,7 @@
 import { jsx } from '@emotion/core';
 import { ComponentType, FC, Fragment } from 'react';
 
-import { ObjectMark, ObjectNode, isString } from '@remirror/core';
+import { isString, object, ObjectMark, ObjectNode } from '@remirror/core';
 
 /* Inspired by https://github.com/rexxars/react-prosemirror-document */
 
@@ -50,7 +50,7 @@ const TextHandler: FC<TextHandlerProps> = ({ node, ...props }) => {
 const CodeBlock: FC<{
   node: ObjectNode;
   markMap: MarkMap;
-}> = props => {
+}> = (props) => {
   const content = props.node.content;
   if (!content) {
     return null;
@@ -77,7 +77,7 @@ const Doc: FC<SubRenderTreeProps> = ({ node, ...props }) => {
     return <RenderTree json={child} {...props} key={ii} />;
   });
 
-  return <div {...(node.attrs ?? Object.create(null))}>{children}</div>;
+  return <div {...(node.attrs ?? object())}>{children}</div>;
 };
 
 const defaultTypeMap: MarkMap = {
@@ -134,7 +134,7 @@ export const RenderTree: FC<RenderTreeProps> = ({
     return null;
   }
 
-  const props = isString(TypeHandler) ? json.attrs ?? Object.create(null) : { ...rest, node: json };
+  const props = isString(TypeHandler) ? json.attrs ?? object() : { ...rest, node: json };
   const { content } = json;
   if (!content || !content.length) {
     return <TypeHandler {...props} />;

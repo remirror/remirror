@@ -1,7 +1,7 @@
-import { Attrs, EditorView } from '@remirror/core';
-import { MentionExtensionAttrs } from '@remirror/extension-mention';
+import { EditorView, ProsemirrorAttributes } from '@remirror/core';
+import { MentionExtensionAttributes } from '@remirror/extension-mention';
 
-import { MentionGetterParams } from './social-types';
+import { MentionGetterParameter } from './social-types';
 
 /**
  * Maps the items to items with an active property
@@ -16,7 +16,7 @@ export const mapToActiveIndex = <GItem extends object>(
   }));
 };
 
-interface CalculateNewIndexFromArrowPressParams {
+interface CalculateNewIndexFromArrowPressParameter {
   /**
    * Whether the arrow key was the up key or the down key
    */
@@ -36,7 +36,7 @@ export const calculateNewIndexFromArrowPress = ({
   direction,
   matchLength,
   prevIndex,
-}: CalculateNewIndexFromArrowPressParams) =>
+}: CalculateNewIndexFromArrowPressParameter) =>
   direction === 'down'
     ? prevIndex + 1 > matchLength - 1
       ? 0
@@ -45,10 +45,10 @@ export const calculateNewIndexFromArrowPress = ({
     ? matchLength - 1
     : prevIndex - 1;
 
-interface CreateOnClickMethodFactoryParams extends MentionGetterParams {
+interface CreateOnClickMethodFactoryParameter extends MentionGetterParameter {
   setExitTriggeredInternally: () => void;
   view: EditorView;
-  command(attrs: Attrs): void;
+  command(attrs: ProsemirrorAttributes): void;
 }
 
 /**
@@ -59,12 +59,12 @@ export const createOnClickMethodFactory = ({
   setExitTriggeredInternally,
   view,
   command,
-}: CreateOnClickMethodFactoryParams) => (id: string) => () => {
+}: CreateOnClickMethodFactoryParameter) => (id: string) => () => {
   const {
     suggester: { char, name },
     range,
   } = getMention();
-  const params: MentionExtensionAttrs = {
+  const parameters: MentionExtensionAttributes = {
     id,
     label: `${char}${id}`,
     name,
@@ -74,7 +74,7 @@ export const createOnClickMethodFactory = ({
     href: `/${id}`,
   };
   setExitTriggeredInternally(); // Prevents further `onExit` calls
-  command(params);
+  command(parameters);
   if (!view.hasFocus()) {
     view.focus();
   }

@@ -1,18 +1,18 @@
 import { bool, isFunction } from '@remirror/core-helpers';
 import {
-  Attrs,
-  MarkTypeParams,
-  NodeTypeParams,
-  OptionalProsemirrorNodeParams,
-  PosParams,
-  PredicateParams,
+  MarkTypeParameter,
+  NodeTypeParameter,
+  OptionalProsemirrorNodeParameter,
+  PosParameter,
+  PredicateParameter,
+  ProsemirrorAttributes,
   ProsemirrorNode,
-  ProsemirrorNodeParams,
+  ProsemirrorNodeParameter,
 } from '@remirror/core-types';
 
 import { isProsemirrorNode } from './dom-utils';
 
-interface DescendParams {
+interface DescendParameter {
   /**
    * Whether to descend into a node.
    *
@@ -21,16 +21,16 @@ interface DescendParams {
   descend: boolean;
 }
 
-type NodePredicateParams = PredicateParams<ProsemirrorNode>;
+type NodePredicateParameter = PredicateParameter<ProsemirrorNode>;
 
 /**
  * A node with it's start position.
  *
  * @public
  */
-export interface NodeWithPosition extends ProsemirrorNodeParams, PosParams {}
+export interface NodeWithPosition extends ProsemirrorNodeParameter, PosParameter {}
 
-interface FlattenParams extends OptionalProsemirrorNodeParams, Partial<DescendParams> {}
+interface FlattenParameter extends OptionalProsemirrorNodeParameter, Partial<DescendParameter> {}
 
 /**
  * Flattens descendants of a given `node`.
@@ -42,7 +42,7 @@ interface FlattenParams extends OptionalProsemirrorNodeParams, Partial<DescendPa
  * const children = flatten(node);
  * ```
  */
-export const flatten = ({ node, descend = true }: FlattenParams): NodeWithPosition[] => {
+export const flatten = ({ node, descend = true }: FlattenParameter): NodeWithPosition[] => {
   if (!isProsemirrorNode(node)) {
     throw new Error('Invalid "node" parameter');
   }
@@ -57,7 +57,7 @@ export const flatten = ({ node, descend = true }: FlattenParams): NodeWithPositi
   return result;
 };
 
-interface FindChildrenParams extends FlattenParams, NodePredicateParams {}
+interface FindChildrenParameter extends FlattenParameter, NodePredicateParameter {}
 
 /**
  * Iterates over descendants of a given `node`, returning child nodes predicate returns truthy for.
@@ -69,17 +69,18 @@ interface FindChildrenParams extends FlattenParams, NodePredicateParams {}
  * const textNodes = findChildren(node, child => child.isText, false);
  * ```
  */
-export const findChildren = ({ node, predicate, descend }: FindChildrenParams) => {
+export const findChildren = ({ node, predicate, descend }: FindChildrenParameter) => {
   if (!node) {
     throw new Error('Invalid "node" parameter');
   } else if (!isFunction(predicate)) {
     throw new Error('Invalid "predicate" parameter');
   }
-  return flatten({ node, descend }).filter(child => predicate(child.node));
+  return flatten({ node, descend }).filter((child) => predicate(child.node));
 };
 
-const findNodeByPredicate = ({ predicate }: NodePredicateParams) => (params: FlattenParams) =>
-  findChildren({ ...params, predicate });
+const findNodeByPredicate = ({ predicate }: NodePredicateParameter) => (
+  parameters: FlattenParameter,
+) => findChildren({ ...parameters, predicate });
 
 /**
  * Returns text nodes of a given `node`.
@@ -91,7 +92,7 @@ const findNodeByPredicate = ({ predicate }: NodePredicateParams) => (params: Fla
  * const textNodes = findTextNodes(node);
  * ```
  */
-export const findTextNodes = findNodeByPredicate({ predicate: child => child.isText });
+export const findTextNodes = findNodeByPredicate({ predicate: (child) => child.isText });
 
 /**
  * Returns inline nodes of a given `node`.
@@ -103,7 +104,7 @@ export const findTextNodes = findNodeByPredicate({ predicate: child => child.isT
  * const inlineNodes = findInlineNodes(node);
  * ```
  */
-export const findInlineNodes = findNodeByPredicate({ predicate: child => child.isInline });
+export const findInlineNodes = findNodeByPredicate({ predicate: (child) => child.isInline });
 
 /**
  * Returns block descendants of a given `node`.
@@ -115,13 +116,13 @@ export const findInlineNodes = findNodeByPredicate({ predicate: child => child.i
  * const blockNodes = findBlockNodes(node);
  * ```
  */
-export const findBlockNodes = findNodeByPredicate({ predicate: child => child.isBlock });
+export const findBlockNodes = findNodeByPredicate({ predicate: (child) => child.isBlock });
 
-interface FindChildrenByAttrParams extends FlattenParams {
+interface FindChildrenByAttrParameter extends FlattenParameter {
   /**
    * Runs a predicate check after receiving the attrs for the found node.
    */
-  predicate(attrs: Attrs): boolean;
+  predicate(attrs: ProsemirrorAttributes): boolean;
 }
 
 /**
@@ -134,10 +135,14 @@ interface FindChildrenByAttrParams extends FlattenParams {
  * const mergedCells = findChildrenByAttr(table, attrs => attrs.colspan === 2);
  * ```
  */
-export const findChildrenByAttr = ({ node, predicate, descend }: FindChildrenByAttrParams) =>
-  findChildren({ node, predicate: child => predicate(child.attrs), descend });
+export const findChildrenByAttribute = ({
+  node,
+  predicate,
+  descend,
+}: FindChildrenByAttrParameter) =>
+  findChildren({ node, predicate: (child) => predicate(child.attrs), descend });
 
-interface FindChildrenByNodeParams extends FlattenParams, NodeTypeParams {}
+interface FindChildrenByNodeParameter extends FlattenParameter, NodeTypeParameter {}
 
 /**
  * Iterates over descendants of a given `node`, returning child nodes of a given nodeType.
@@ -149,10 +154,10 @@ interface FindChildrenByNodeParams extends FlattenParams, NodeTypeParams {}
  * const cells = findChildrenByNode(table, schema.nodes.tableCell);
  * ```
  */
-export const findChildrenByNode = ({ node, type, descend }: FindChildrenByNodeParams) =>
-  findChildren({ node, predicate: child => child.type === type, descend });
+export const findChildrenByNode = ({ node, type, descend }: FindChildrenByNodeParameter) =>
+  findChildren({ node, predicate: (child) => child.type === type, descend });
 
-interface FindChildrenByMarkParams extends FlattenParams, MarkTypeParams {}
+interface FindChildrenByMarkParameter extends FlattenParameter, MarkTypeParameter {}
 
 /**
  * Iterates over descendants of a given `node`, returning child nodes that have a mark of a given markType.
@@ -164,10 +169,10 @@ interface FindChildrenByMarkParams extends FlattenParams, MarkTypeParams {}
  * const nodes = findChildrenByMark(state.doc, schema.marks.strong);
  * ```
  */
-export const findChildrenByMark = ({ node, type, descend }: FindChildrenByMarkParams) =>
-  findChildren({ node, predicate: child => bool(type.isInSet(child.marks)), descend });
+export const findChildrenByMark = ({ node, type, descend }: FindChildrenByMarkParameter) =>
+  findChildren({ node, predicate: (child) => bool(type.isInSet(child.marks)), descend });
 
-interface ContainsParams extends ProsemirrorNodeParams, NodeTypeParams {}
+interface ContainsParameter extends ProsemirrorNodeParameter, NodeTypeParameter {}
 
 /**
  * Returns `true` if a given node contains nodes of a given `nodeType`
@@ -179,4 +184,5 @@ interface ContainsParams extends ProsemirrorNodeParams, NodeTypeParams {}
  * }
  * ```
  */
-export const contains = ({ node, type }: ContainsParams) => findChildrenByNode({ node, type }).length > 0;
+export const contains = ({ node, type }: ContainsParameter) =>
+  findChildrenByNode({ node, type }).length > 0;

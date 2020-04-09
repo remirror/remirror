@@ -31,7 +31,9 @@ export const DropCursorComponent = ({ options, type, container }: DropCursorComp
         display: 'inline',
         backgroundColor: rest.color,
         borderRadius: 0,
-        margin: `0 ${numberToPixels(rest.inlineSpacing ?? defaultDropCursorExtensionOptions.inlineSpacing)}`,
+        margin: `0 ${numberToPixels(
+          rest.inlineSpacing ?? defaultDropCursorExtensionOptions.inlineSpacing,
+        )}`,
         width: numberToPixels(rest.inlineWidth ?? defaultDropCursorExtensionOptions.inlineWidth),
       })}
     >

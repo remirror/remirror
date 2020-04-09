@@ -1,14 +1,14 @@
 import { toggleMark } from 'prosemirror-commands';
 
 import {
-  CommandMarkTypeParams,
-  ExtensionManagerMarkTypeParams,
+  CommandMarkTypeParameter,
+  convertCommand,
+  ManagerMarkTypeParameter,
   KeyBindings,
   LEAF_NODE_REPLACING_CHARACTER,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
-  convertCommand,
   markInputRule,
   markPasteRule,
 } from '@remirror/core';
@@ -26,23 +26,26 @@ export class CodeExtension extends MarkExtension {
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams): KeyBindings {
+  public keys({ type }: ManagerMarkTypeParameter): KeyBindings {
     return {
       'Mod-`': convertCommand(toggleMark(type)),
     };
   }
 
-  public commands({ type }: CommandMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParameter) {
     return { code: () => toggleMark(type) };
   }
 
-  public inputRules({ type }: ExtensionManagerMarkTypeParams) {
+  public inputRules({ type }: ManagerMarkTypeParameter) {
     return [
-      markInputRule({ regexp: new RegExp(`(?:\`)([^\`${LEAF_NODE_REPLACING_CHARACTER}]+)(?:\`)$`), type }),
+      markInputRule({
+        regexp: new RegExp(`(?:\`)([^\`${LEAF_NODE_REPLACING_CHARACTER}]+)(?:\`)$`),
+        type,
+      }),
     ];
   }
 
-  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
+  public pasteRules({ type }: ManagerMarkTypeParameter) {
     return [markPasteRule({ regexp: /(?:`)([^`]+)(?:`)/g, type })];
   }
 }

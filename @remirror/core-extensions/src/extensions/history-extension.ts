@@ -1,16 +1,15 @@
-import { history, redo, redoDepth, undo, undoDepth } from 'prosemirror-history';
+import { history, redo, undo } from 'prosemirror-history';
 
-import { Extension, KeyBindings, isFunction } from '@remirror/core';
+import { Extension, isFunction, KeyBindings } from '@remirror/core';
 import {
-  BaseExtensionOptions,
+  BaseExtensionSettings,
   DispatchFunction,
   EditorState,
-  ExtensionManagerParams,
   ProsemirrorCommandFunction,
 } from '@remirror/core-types';
 import { convertCommand, environment } from '@remirror/core-utils';
 
-export interface HistoryExtensionOptions extends BaseExtensionOptions {
+export interface HistoryExtensionOptions extends BaseExtensionSettings {
   /**
    * The amount of history events that are collected before the
    * oldest events are discarded.
@@ -76,7 +75,9 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
    *
    * @param method - the method to wrap
    */
-  private readonly wrapMethod = (method: ProsemirrorCommandFunction): ProsemirrorCommandFunction => {
+  private readonly wrapMethod = (
+    method: ProsemirrorCommandFunction,
+  ): ProsemirrorCommandFunction => {
     return (state, dispatch, view) => {
       const { getState, getDispatch } = this.options;
 
@@ -91,7 +92,9 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
    * Adds the default key mappings for undo and redo.
    */
   public keys(): KeyBindings {
-    const notMacOS = !environment.isMac ? { ['Mod-y']: convertCommand(this.wrapMethod(redo)) } : undefined;
+    const notMacOS = !environment.isMac
+      ? { ['Mod-y']: convertCommand(this.wrapMethod(redo)) }
+      : undefined;
 
     return {
       'Mod-y': () => false,
@@ -107,34 +110,6 @@ export class HistoryExtension extends Extension<HistoryExtensionOptions> {
   public plugin() {
     const { depth, newGroupDelay } = this.options;
     return history({ depth, newGroupDelay });
-  }
-
-  /**
-   * Provides the isEnabled method to the ActionMethods of undo and redo.
-   *
-   * @remarks
-   *
-   * - Redo is not enabled when at the end of the history and there is nothing left to redo.
-   * - Undo is not enabled when at the beginning of the history and there is nothing left to undo.
-   */
-  public isEnabled({ getState }: ExtensionManagerParams) {
-    return ({ command }: { command?: string }) => {
-      switch (command) {
-        case 'undo':
-          return undoDepth(getState()) > 0;
-        case 'redo':
-          return redoDepth(getState()) > 0;
-        default:
-          return false;
-      }
-    };
-  }
-
-  /**
-   * The history plugin doesn't really have an active state.
-   */
-  public isActive() {
-    return () => false;
   }
 
   /**

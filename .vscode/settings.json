@@ -1,6 +1,6 @@
 {
   "editor.tabSize": 2,
-  "editor.rulers": [110],
+  "editor.rulers": [80, 100],
   "editor.insertSpaces": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
@@ -16,7 +16,8 @@
     "source.fixAll.eslint": true
   },
   "prettier.ignorePath": ".eslintignore",
-  "[javascript]": {
-    "editor.rulers": [90],
-  },
+
+  "files.exclude": {
+    ".yarn/releases/**": true
+  }
 }

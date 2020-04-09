@@ -6,22 +6,22 @@
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/ui",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "sideEffects": false,
+  "main": "lib/dist/index.js",
+  "module": "lib/dist/ui.esm.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib",
     "src"
   ],
-  "sideEffects": false,
-  "main": "lib/index.js",
-  "module": "lib/dist/ui.esm.js",
-  "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core-constants": "^0.7.4",
     "@remirror/core-helpers": "^0.7.6",
     "@remirror/core-types": "^0.9.0",
     "@styled-system/css": "^5.0.23",
-    "@types/styled-system__css": "^5.0.6",
-    "csstype": "^2.6.7",
+    "@types/styled-system__css": "^5.0.8",
+    "csstype": "^2.6.10",
     "emotion-theming": "^10.0.19"
   },
   "peerDependencies": {

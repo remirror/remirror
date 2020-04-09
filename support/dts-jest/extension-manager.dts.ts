@@ -2,8 +2,9 @@ import {
   ActionsFromExtensions,
   DocExtension,
   Extension,
-  ExtensionManager,
   HelpersFromExtensions,
+  Manager,
+  object,
   TextExtension,
 } from '@remirror/core';
 import {
@@ -14,7 +15,7 @@ import {
   PositionTrackerExtension,
 } from '@remirror/core-extensions';
 
-class ErrExtension extends Extension {
+class ErrorExtension extends Extension {
   get name() {
     return 'base' as 'base';
   }
@@ -22,13 +23,13 @@ class ErrExtension extends Extension {
   // @dts-jest:fail:snap
   public commands() {
     return {
-      nothing: (param: string) => () => 'true',
+      nothing: (parameter: string) => () => 'true',
     };
   }
 }
 
 type HistoryExtensionActions = ActionsFromExtensions<HistoryExtension>;
-const historyActions: HistoryExtensionActions = Object.create(null);
+const historyActions: HistoryExtensionActions = object();
 
 // @dts-jest:pass:snap
 historyActions.redo;
@@ -38,7 +39,7 @@ historyActions.undo;
 historyActions.undo({});
 
 type PositionTrackerExtensionHelpers = HelpersFromExtensions<PositionTrackerExtension>;
-const trackerHelpers: PositionTrackerExtensionHelpers = Object.create(null);
+const trackerHelpers: PositionTrackerExtensionHelpers = object();
 
 // @dts-jest:pass:snap
 trackerHelpers.addPositionTracker({ id: 'yo' });
@@ -46,7 +47,7 @@ trackerHelpers.addPositionTracker({ id: 'yo' });
 trackerHelpers.clearPositionTrackers();
 
 // @dts-jest:pass:snap
-ExtensionManager.create([
+Manager.create([
   new HistoryExtension(),
   new ParagraphExtension(),
   new BoldExtension(),
@@ -56,7 +57,7 @@ ExtensionManager.create([
   { priority: 0, extension: new DocExtension() },
 ]);
 
-const manager1 = ExtensionManager.create([
+const manager1 = Manager.create([
   new HistoryExtension(),
   new ParagraphExtension(),
   new BoldExtension(),

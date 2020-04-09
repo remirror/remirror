@@ -6,17 +6,17 @@
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react-ssr",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
-  "files": [
-    "lib",
-    "src"
-  ],
   "sideEffects": false,
-  "main": "lib/index.js",
+  "main": "lib/dist/index.js",
   "module": "lib/dist/react-ssr.esm.js",
   "browser": {
     "min-document": false
   },
   "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
@@ -26,7 +26,7 @@
     "@types/prosemirror-view": "^1.11.2",
     "min-document": "^2.19.0",
     "prosemirror-state": "^1.3.2",
-    "prosemirror-view": "^1.14.4"
+    "prosemirror-view": "^1.14.6"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

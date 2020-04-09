@@ -7,7 +7,7 @@ import { jsx } from 'theme-ui';
 import { capitalize, isString } from '@remirror/core-helpers';
 
 const heading = (Tag: ElementType) => {
-  const Component: FC<{ id: string }> = props =>
+  const Component: FC<{ id: string }> = (props) =>
     props.id ? (
       <Tag {...props}>
         <a

@@ -1,7 +1,7 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 
-import { fromHTML, toHTML } from '@remirror/core';
+import { fromHTML, object, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 
 import { BoldExtension } from '../../marks';
@@ -31,10 +31,12 @@ describe('schema', () => {
     expect(node).toEqualProsemirrorNode(expected);
   });
 
-  describe('extraAttrs', () => {
+  describe('extraAttributes', () => {
     const { schema } = createBaseTestManager([
       {
-        extension: new HeadingExtension({ extraAttrs: ['title', ['custom', 'failure', 'data-custom']] }),
+        extension: new HeadingExtension({
+          extraAttributes: ['title', ['custom', 'failure', 'data-custom']],
+        }),
         priority: 1,
       },
     ]);
@@ -50,7 +52,7 @@ describe('schema', () => {
     it('does not override the built in attributes', () => {
       const { schema } = createBaseTestManager([
         {
-          extension: new HeadingExtension({ extraAttrs: [['level', 'should not appear']] }),
+          extension: new HeadingExtension({ extraAttributes: [['level', 'should not appear']] }),
           priority: 1,
         },
       ]);
@@ -63,7 +65,7 @@ describe('schema', () => {
 });
 
 describe('plugins', () => {
-  const create = (params: HeadingExtensionOptions = Object.create(null)) =>
+  const create = (params: HeadingExtensionOptions = object()) =>
     renderEditor({
       attrNodes: [new HeadingExtension({ ...params })],
       plainNodes: [],
@@ -106,7 +108,11 @@ describe('plugins', () => {
     const h3 = heading({ level: 3 });
     const text = 'Welcome to the jungle';
 
-    expect(add(doc(p(`<cursor>${text}`))).shortcut('Shift-Ctrl-1').state).toContainRemirrorDocument(h1(text));
-    expect(add(doc(p(`<cursor>${text}`))).shortcut('Shift-Ctrl-3').state).toContainRemirrorDocument(h3(text));
+    expect(add(doc(p(`<cursor>${text}`))).shortcut('Shift-Ctrl-1').state).toContainRemirrorDocument(
+      h1(text),
+    );
+    expect(add(doc(p(`<cursor>${text}`))).shortcut('Shift-Ctrl-3').state).toContainRemirrorDocument(
+      h3(text),
+    );
   });
 });

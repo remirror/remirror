@@ -1,14 +1,15 @@
 import escapeStringRegex from 'escape-string-regexp';
-import { Suggester } from 'prosemirror-suggest';
+import { Suggestion } from 'prosemirror-suggest';
 
 import {
   Extension,
-  ExtensionManagerParams,
-  FromToParams,
-  ProsemirrorCommandFunction,
+  FromToParameter,
   isNullOrUndefined,
+  ManagerParameter,
   noop,
+  object,
   plainInputRule,
+  ProsemirrorCommandFunction,
 } from '@remirror/core';
 
 import {
@@ -20,11 +21,11 @@ import {
 } from './emoji-types';
 import {
   DEFAULT_FREQUENTLY_USED,
-  SKIN_VARIATIONS,
   emoticonRegex,
   getEmojiByName,
   getEmojiFromEmoticon,
   populateFrequentlyUsed,
+  SKIN_VARIATIONS,
   sortEmojiMatches,
 } from './emoji-utils';
 
@@ -66,7 +67,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
 
       // Emoji Names
       plainInputRule({
-        regexp: /:([\w\d_-]+):$/,
+        regexp: /:([\w-]+):$/,
         transformMatch: ([, match]) => {
           const emoji = getEmojiByName(match);
           return emoji ? emoji.char : null;
@@ -89,15 +90,15 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
        */
       insertEmojiByName: (
         name: string,
-        options: EmojiCommandOptions = Object.create(null),
-      ): ProsemirrorCommandFunction => (...args) => {
+        options: EmojiCommandOptions = object(),
+      ): ProsemirrorCommandFunction => (...arguments_) => {
         const emoji = getEmojiByName(name);
         if (!emoji) {
           console.warn('invalid emoji name passed into emoji insertion');
           return false;
         }
 
-        return commands.insertEmojiByObject(emoji, options)(...args);
+        return commands.insertEmojiByObject(emoji, options)(...arguments_);
       },
       /**
        * Insert an emoji into the document at the requested location.
@@ -110,7 +111,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
        */
       insertEmojiByObject: (
         emoji: EmojiObject,
-        { from, to, skinVariation }: EmojiCommandOptions = Object.create(null),
+        { from, to, skinVariation }: EmojiCommandOptions = object(),
       ): ProsemirrorCommandFunction => (state, dispatch) => {
         const { tr } = state;
         const emojiChar = skinVariation ? emoji.char + SKIN_VARIATIONS[skinVariation] : emoji.char;
@@ -128,7 +129,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
        * in order to activate the suggestion popup..
        */
       openEmojiSuggestions: (
-        { from, to }: Partial<FromToParams> = Object.create(null),
+        { from, to }: Partial<FromToParameter> = object(),
       ): ProsemirrorCommandFunction => (state, dispatch) => {
         if (dispatch) {
           dispatch(state.tr.insertText(suggestionCharacter, from, to));
@@ -153,7 +154,9 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
     };
   }
 
-  public suggestions({ getActions }: ExtensionManagerParams): Suggester<EmojiSuggestCommand> {
+  public suggestions({
+    getCommands: getActions,
+  }: ManagerParameter): Suggestion<EmojiSuggestCommand> {
     const {
       suggestionCharacter,
       suggestionKeyBindings,
@@ -171,10 +174,11 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       appendText: '',
       suggestTag: 'span',
       keyBindings: suggestionKeyBindings,
-      onChange: params => {
-        const query = params.queryText.full;
-        const emojiMatches = query.length === 0 ? this.frequentlyUsed : sortEmojiMatches(query, maxResults);
-        onSuggestionChange({ ...params, emojiMatches });
+      onChange: (parameters) => {
+        const query = parameters.queryText.full;
+        const emojiMatches =
+          query.length === 0 ? this.frequentlyUsed : sortEmojiMatches(query, maxResults);
+        onSuggestionChange({ ...parameters, emojiMatches });
       },
       onExit: onSuggestionExit,
       createCommand: ({ match }) => {
@@ -182,7 +186,9 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
 
         return (emoji, skinVariation) => {
           if (isNullOrUndefined(emoji)) {
-            throw new Error('An emoji object is required when calling the emoji suggestions command');
+            throw new Error(
+              'An emoji object is required when calling the emoji suggestions command',
+            );
           }
 
           const { from, end: to } = match.range;
@@ -193,7 +199,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
   }
 }
 
-export interface EmojiCommandOptions extends Partial<FromToParams> {
+export interface EmojiCommandOptions extends Partial<FromToParameter> {
   /**
    * The skin variation which is a number between `0` and `4`.
    */

@@ -29,7 +29,7 @@ export const Bundle = ({ args, startTime = Date.now(), runBundler }: BundleProps
   useEffect(() => {
     runBundler()
       .then(() => setState({ completed: true, endTime: Date.now() }))
-      .catch(e => setState({ error: e, completed: true }));
+      .catch((e) => setState({ error: e, completed: true }));
   }, [runBundler, setState]);
 
   return (

@@ -23,9 +23,9 @@ const Component = ({ multiple }: { multiple: boolean }) => {
   } = useMultishift({
     multiple,
     type: 'select',
-    itemToString: item => item.id,
+    itemToString: (item) => item.id,
     items,
-    getItemId: item => item.id,
+    getItemId: (item) => item.id,
   });
 
   return (
@@ -34,7 +34,7 @@ const Component = ({ multiple }: { multiple: boolean }) => {
         <label {...getLabelProps()}>Label</label>
         {selectedItems.length && (
           <ul>
-            {selectedItems.map(item => {
+            {selectedItems.map((item) => {
               return (
                 <li key={item.id} {...getRemoveButtonProps({ item })} data-testid={item.id}>
                   {item.label}
@@ -60,7 +60,9 @@ const Component = ({ multiple }: { multiple: boolean }) => {
 };
 
 test('uncontrolled editor with multiple selection enabled', () => {
-  const { getByTestId, getByRole, getByText, getAllByTestId } = render(<Component multiple={true} />);
+  const { getByTestId, getByRole, getByText, getAllByTestId } = render(
+    <Component multiple={true} />,
+  );
 
   expect(getByRole('listbox')).toHaveAttribute('aria-multiselectable', 'true');
 
@@ -281,7 +283,7 @@ test('it supports multi highlight arrow keys', () => {
   expect(epsilonItem).toHaveAttribute('aria-selected', 'true');
 
   fireEvent.keyDown(menu, { key: 'Enter' });
-  ['a', 'b', 'c', 'e'].forEach(id => getByTestId(id));
+  ['a', 'b', 'c', 'e'].forEach((id) => getByTestId(id));
 
   expect(() => getByTestId('d')).toThrow();
 });

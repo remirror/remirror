@@ -5,11 +5,11 @@ import {
   ComponentType,
   FC,
   Fragment,
+  isValidElement as reactIsValidElement,
   LegacyRef,
   PropsWithChildren,
   ReactElement,
   ReactNode,
-  isValidElement as reactIsValidElement,
 } from 'react';
 
 import { bool, isArray, isFunction, isObject, isString, uniqueArray } from '@remirror/core-helpers';
@@ -54,8 +54,9 @@ export enum RemirrorType {
  *
  * @param value - the value to check
  */
-export const isValidElement = <GProps extends object = any>(value: unknown): value is ReactElement<GProps> =>
-  isObject(value) && reactIsValidElement(value);
+export const isValidElement = <GProps extends object = any>(
+  value: unknown,
+): value is ReactElement<GProps> => isObject(value) && reactIsValidElement(value);
 
 /**
  * Check whether a react node is a built in dom element (i.e. `div`, `span`)
@@ -125,7 +126,8 @@ export const isRemirrorElement = <GOptions extends object = any>(
 
 const isRemirrorElementOfType = (type: RemirrorType) => <GOptions extends object = any>(
   value: unknown,
-): value is RemirrorElement<GOptions> => isRemirrorElement(value) && value.type.$$remirrorType === type;
+): value is RemirrorElement<GOptions> =>
+  isRemirrorElement(value) && value.type.$$remirrorType === type;
 
 /**
  * Checks to see if this is the wrapper we've created around the RemirrorContent.Provider component.
@@ -158,7 +160,9 @@ export const isRemirrorProvider = isRemirrorElementOfType(RemirrorType.EditorPro
  *
  * @param value - the value to check
  */
-export const isManagedRemirrorProvider = isRemirrorElementOfType(RemirrorType.ManagedEditorProvider);
+export const isManagedRemirrorProvider = isRemirrorElementOfType(
+  RemirrorType.ManagedEditorProvider,
+);
 
 /**
  * Clones an element while also enabling the css prop on jsx elements at the same time.
@@ -232,7 +236,9 @@ export const oneChildOnly = <GProps extends object = any>(value: unknown): React
   }
 
   if (!isValidElement(value)) {
-    throw new Error('This component requires ONE child component - An invalid element was provided');
+    throw new Error(
+      'This component requires ONE child component - An invalid element was provided',
+    );
   }
 
   return Children.only(value);

@@ -6,8 +6,8 @@ import { renderToString } from 'react-dom/server';
 import { fromHTML } from '@remirror/core';
 import { createTestManager } from '@remirror/test-fixtures';
 
-import { InjectedRemirrorProps } from '../../react-types';
-import { Remirror } from '../';
+import { RenderEditor } from '../';
+import { InjectedRenderEditorProps } from '../../react-types';
 
 const textContent = `This is editor text`;
 const label = 'Remirror editor';
@@ -21,9 +21,9 @@ const handlers = {
 test('should be called via a render prop', () => {
   const mock = jest.fn(() => <div />);
   const { getByLabelText } = render(
-    <Remirror manager={createTestManager()} label={label} {...handlers}>
+    <RenderEditor manager={createTestManager()} label={label} {...handlers}>
       {mock}
-    </Remirror>,
+    </RenderEditor>,
   );
 
   expect(mock).toHaveBeenCalledWith(expect.any(Object));
@@ -40,9 +40,14 @@ test('should be called via a render prop', () => {
 test('can suppressHydrationWarning without breaking', () => {
   const mock = jest.fn(() => <div />);
   const { getByLabelText } = render(
-    <Remirror manager={createTestManager()} label={label} {...handlers} suppressHydrationWarning={true}>
+    <RenderEditor
+      manager={createTestManager()}
+      label={label}
+      {...handlers}
+      suppressHydrationWarning={true}
+    >
       {mock}
-    </Remirror>,
+    </RenderEditor>,
   );
 
   expect(mock).toHaveBeenCalledWith(expect.any(Object));
@@ -59,7 +64,7 @@ test('can suppressHydrationWarning without breaking', () => {
 describe('basic functionality', () => {
   it('is accessible', async () => {
     const results = await axe(
-      renderToString(<Remirror manager={createTestManager()}>{() => <div />}</Remirror>),
+      renderToString(<RenderEditor manager={createTestManager()}>{() => <div />}</RenderEditor>),
     );
 
     expect(results).toHaveNoViolations();
@@ -69,8 +74,8 @@ describe('basic functionality', () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => undefined);
 
     expect(() =>
-      // @ts-ignore
-      render(<Remirror label={label} manager={createTestManager()} />),
+      // @ts-expect-error
+      render(<RenderEditor label={label} manager={createTestManager()} />),
     ).toThrowErrorMatchingInlineSnapshot(
       `"The child argument to the Remirror component must be a function."`,
     );
@@ -80,15 +85,20 @@ describe('basic functionality', () => {
   });
 
   it('should allow text input and fire all handlers', () => {
-    let setContent: InjectedRemirrorProps['setContent'] = jest.fn();
-    const mock = jest.fn((value: InjectedRemirrorProps) => {
+    let setContent: InjectedRenderEditorProps['setContent'] = jest.fn();
+    const mock = jest.fn((value: InjectedRenderEditorProps) => {
       setContent = value.setContent;
       return <div />;
     });
     const { getByLabelText } = render(
-      <Remirror label={label} {...handlers} manager={createTestManager()} stringHandler={fromHTML}>
+      <RenderEditor
+        label={label}
+        {...handlers}
+        manager={createTestManager()}
+        stringHandler={fromHTML}
+      >
         {mock}
-      </Remirror>,
+      </RenderEditor>,
     );
 
     setContent(`<p>${textContent}</p>`, true);
@@ -110,9 +120,9 @@ describe('basic functionality', () => {
     const mock = jest.fn(() => <div />);
     const manager = createTestManager();
     const El = ({ editable }: { editable: boolean }) => (
-      <Remirror editable={editable} label={label} manager={manager}>
+      <RenderEditor editable={editable} label={label} manager={manager}>
         {mock}
-      </Remirror>
+      </RenderEditor>
     );
     const { rerender, getByLabelText } = render(<El editable={true} />);
 
@@ -127,7 +137,7 @@ describe('basic functionality', () => {
 describe('initialContent', () => {
   it('should render with string content', () => {
     const { container } = render(
-      <Remirror
+      <RenderEditor
         label={label}
         {...handlers}
         manager={createTestManager()}
@@ -135,7 +145,7 @@ describe('initialContent', () => {
         stringHandler={fromHTML}
       >
         {() => <div />}
-      </Remirror>,
+      </RenderEditor>,
     );
 
     expect(container.innerHTML).toInclude('Hello');
@@ -148,9 +158,14 @@ describe('initialContent', () => {
     };
 
     const { container } = render(
-      <Remirror label={label} {...handlers} manager={createTestManager()} initialContent={content}>
+      <RenderEditor
+        label={label}
+        {...handlers}
+        manager={createTestManager()}
+        initialContent={content}
+      >
         {() => <div />}
-      </Remirror>,
+      </RenderEditor>,
     );
 
     expect(container.innerHTML).toInclude('Hello');
@@ -163,24 +178,24 @@ describe('focus', () => {
     content: [{ type: 'paragraph', content: [{ type: 'text', text: 'A sentence here' }] }],
   };
 
-  let props!: InjectedRemirrorProps<any>;
+  let props!: InjectedRenderEditorProps<any>;
   let editorNode: HTMLElement;
 
   beforeEach(() => {
     jest.useFakeTimers();
     const { getByRole } = render(
-      <Remirror
+      <RenderEditor
         label={label}
         {...handlers}
         manager={createTestManager()}
         initialContent={content}
         autoFocus={true}
       >
-        {context => {
+        {(context) => {
           props = context;
           return <div />;
         }}
-      </Remirror>,
+      </RenderEditor>,
     );
 
     editorNode = getByRole('textbox');

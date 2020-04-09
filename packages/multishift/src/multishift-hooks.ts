@@ -1,12 +1,12 @@
 import { useId } from '@reach/auto-id';
 import { useEffect, useReducer, useRef } from 'react';
 
-import { useEffectOnUpdate, useEffectOnce } from '@remirror/react-hooks';
+import { useEffectOnce, useEffectOnUpdate } from '@remirror/react-hooks';
 import { setStatus } from '@remirror/ui-a11y-status';
 
 import { multishiftReducer } from './multishift-reducer';
 import {
-  A11yStatusMessageParams,
+  A11yStatusMessageParameter,
   GetA11yStatusMessage,
   ItemsToString,
   MultishiftA11yIdProps,
@@ -25,7 +25,10 @@ import {
 /**
  * Creates the reducer for managing the multishift internal state.
  */
-export const useMultishiftReducer = <GItem = any>({ stateReducer, ...props }: MultishiftProps<GItem>) => {
+export const useMultishiftReducer = <GItem = any>({
+  stateReducer,
+  ...props
+}: MultishiftProps<GItem>) => {
   const initialState = getInitialStateProps<GItem>(props);
 
   return useReducer((prevState: MultishiftState<GItem>, action: MultishiftRootActions<GItem>) => {
@@ -87,7 +90,7 @@ const defaultGetA11yStatusMessage = <GItem = any>({
   items,
   state: { selectedItems, isOpen },
   itemsToString = defaultItemsToString,
-}: A11yStatusMessageParams<GItem>) => {
+}: A11yStatusMessageParameter<GItem>) => {
   if (selectedItems.length) {
     return `${itemsToString(selectedItems)} has been selected.`;
   }
@@ -172,7 +175,7 @@ export const useOuterEventListener = <GItem = any>(
       refs.input.current,
       ...refs.ignored.current,
       ...refs.items.current,
-    ].some(node => {
+    ].some((node) => {
       return (
         node &&
         (isOrContainsNode(node, target) ||

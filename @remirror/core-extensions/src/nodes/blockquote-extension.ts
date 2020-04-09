@@ -1,14 +1,14 @@
 import { wrappingInputRule } from 'prosemirror-inputrules';
 
 import {
-  CommandNodeTypeParams,
+  CommandNodeTypeParameter,
+  convertCommand,
   EDITOR_CLASS_SELECTOR,
-  ExtensionManagerNodeTypeParams,
+  ManagerNodeTypeParameter,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
-  convertCommand,
   toggleWrap,
 } from '@remirror/core';
 
@@ -19,7 +19,7 @@ export class BlockquoteExtension extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
-      attrs: this.extraAttrs(),
+      attrs: this.extraAttributes(),
       content: 'block*',
       group: NodeGroup.Block,
       defining: true,
@@ -29,7 +29,7 @@ export class BlockquoteExtension extends NodeExtension {
     };
   }
 
-  public commands({ type }: CommandNodeTypeParams) {
+  public commands({ type }: CommandNodeTypeParameter) {
     return {
       /**
        * Toggle the blockquote at the current selection.
@@ -59,13 +59,13 @@ export class BlockquoteExtension extends NodeExtension {
     `;
   }
 
-  public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
+  public keys({ type }: ManagerNodeTypeParameter): KeyBindings {
     return {
       'Ctrl->': convertCommand(toggleWrap(type)),
     };
   }
 
-  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParameter) {
     return [wrappingInputRule(/^\s*>\s$/, type)];
   }
 }

@@ -19,8 +19,8 @@ Remirror is an extensible text-editor for react, built on top of Prosemirror.
 yarn add remirror
 ```
 
-The following is a small example which renders a floating menu and enables the extensions `Bold`, `Italic` and
-`Underline`.
+The following is a small example which renders a floating menu and enables the extensions `Bold`,
+`Italic` and `Underline`.
 
 ```ts
 import React, { FC, FunctionComponent, MouseEventHandler, useState } from 'react';
@@ -39,7 +39,7 @@ import {
   useRemirrorContext,
 } from 'remirror';
 
-const runAction = (action: () => void): MouseEventHandler<HTMLElement> => e => {
+const runAction = (action: () => void): MouseEventHandler<HTMLElement> => (e) => {
   e.preventDefault();
   action();
 };

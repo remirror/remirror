@@ -1,4 +1,4 @@
-import { Global, css } from '@emotion/core';
+import { css, Global } from '@emotion/core';
 import App from 'next/app';
 import React from 'react';
 

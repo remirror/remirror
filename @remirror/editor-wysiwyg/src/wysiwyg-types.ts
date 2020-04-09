@@ -18,10 +18,10 @@ import {
   TrailingNodeExtension,
   UnderlineExtension,
 } from '@remirror/core-extensions';
-import { CodeBlockExtension, CodeBlockExtensionOptions } from '@remirror/extension-code-block';
+import { CodeBlockExtension, CodeBlockExtensionSettings } from '@remirror/extension-code-block';
 import { DropCursorExtension } from '@remirror/extension-drop-cursor';
 import { ImageExtension } from '@remirror/extension-image';
-import { RemirrorManagerProps, RemirrorProps } from '@remirror/react';
+import { RenderEditorProps } from '@remirror/react';
 
 /**
  * The union type of all the extension used within the Wysiwyg Editor.
@@ -58,7 +58,7 @@ export type WysiwygExtensions =
 export interface WysiwygEditorProps
   extends Partial<
       Pick<
-        RemirrorProps<WysiwygExtensions>,
+        RenderEditorProps<WysiwygExtensions>,
         | 'initialContent'
         | 'attributes'
         | 'editable'
@@ -74,7 +74,10 @@ export interface WysiwygEditorProps
         | 'suppressHydrationWarning'
       >
     >,
-    Pick<CodeBlockExtensionOptions, 'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'>,
+    Pick<
+      CodeBlockExtensionSettings,
+      'supportedLanguages' | 'defaultLanguage' | 'syntaxTheme' | 'formatter'
+    >,
     Pick<RemirrorManagerProps, 'extensions'> {
   /**
    * The message to show when the editor is empty.

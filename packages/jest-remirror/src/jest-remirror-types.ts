@@ -1,30 +1,31 @@
 import { RenderResult } from '@testing-library/react/pure';
-import { FireParams, TestEditorViewParams } from 'jest-prosemirror';
+import { FireParameter, TestEditorViewParameter } from 'jest-prosemirror';
 import { Node as PMNode } from 'prosemirror-model';
 
 import {
-  ActionsFromExtensions,
   AnyExtension,
-  Attrs,
-  AttrsParams,
+  AttributesParameter,
+  CommandsFromExtensions,
   EditorSchema,
   EditorState,
-  EditorStateParams,
-  EditorViewParams,
+  EditorStateParameter,
+  EditorViewParameter,
   Extension,
   FlexibleExtension,
   HelpersFromExtensions,
   MarkExtension,
   NodeExtension,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
-  SchemaFromExtensions,
+  SchemaFromExtension,
 } from '@remirror/core';
-import { InjectedRemirrorProps } from '@remirror/react';
+import { InjectedRenderEditorProps } from '@remirror/react';
 
 import { BaseExtensionNodeNames, BaseExtensionNodes } from './jest-remirror-schema';
 
-export interface BaseFactoryParams<GSchema extends EditorSchema = EditorSchema> extends Partial<AttrsParams> {
+export interface BaseFactoryParameter<GSchema extends EditorSchema = EditorSchema>
+  extends Partial<AttributesParameter> {
   /**
    * The name of the node or mark
    */
@@ -92,13 +93,14 @@ export class TagTracker {
 /**
  * A standard ProseMirror Node that also tracks tags.
  */
-export interface TaggedProsemirrorNode<GSchema extends EditorSchema = EditorSchema> extends PMNode<GSchema> {
+export interface TaggedProsemirrorNode<GSchema extends EditorSchema = EditorSchema>
+  extends PMNode<GSchema> {
   tags: Tags;
 }
 
 export interface AddContentReturn<GExtension extends AnyExtension>
-  extends EditorStateParams<SchemaFromExtensions<GExtension>>,
-    EditorViewParams<SchemaFromExtensions<GExtension>> {
+  extends EditorStateParameter<SchemaFromExtension<GExtension>>,
+    EditorViewParameter<SchemaFromExtension<GExtension>> {
   /**
    * The current prosemirror document.
    */
@@ -108,7 +110,7 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    * The actions available in the editor. When updating the content of the TestEditor make sure not to
    * use a stale copy of the actions otherwise it will throw errors due to using an outdated state.
    */
-  actions: ActionsFromExtensions<GExtension>;
+  actions: CommandsFromExtensions<GExtension>;
 
   /**
    * The helpers available in the editor. When updating the content of the TestEditor make sure not to
@@ -176,7 +178,7 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    * Allows for the chaining of action calls.
    */
   actionsCallback(
-    callback: (actions: ActionsFromExtensions<GExtension>) => void,
+    callback: (actions: CommandsFromExtensions<GExtension>) => void,
   ): AddContentReturn<GExtension>;
 
   /**
@@ -246,7 +248,7 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    *
    * @param shortcut - the shortcut to type
    */
-  fire(params: FireParams): AddContentReturn<GExtension>;
+  fire(params: FireParameter): AddContentReturn<GExtension>;
 
   /**
    * Simply calls add again which overwrites the whole doc
@@ -255,22 +257,26 @@ export interface AddContentReturn<GExtension extends AnyExtension>
 }
 
 export type AddContent<GExtension extends AnyExtension> = (
-  content: TaggedProsemirrorNode<SchemaFromExtensions<GExtension>>,
+  content: TaggedProsemirrorNode<SchemaFromExtension<GExtension>>,
 ) => AddContentReturn<GExtension>;
 
-export type MarkWithAttrs<GNames extends string> = {
-  [P in GNames]: (attrs?: Attrs) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
+export type MarkWithAttributes<GNames extends string> = {
+  [P in GNames]: (
+    attrs?: ProsemirrorAttributes,
+  ) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
 };
 
-export type NodeWithAttrs<GNames extends string> = {
-  [P in GNames]: (attrs?: Attrs) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
+export type NodeWithAttributes<GNames extends string> = {
+  [P in GNames]: (
+    attrs?: ProsemirrorAttributes,
+  ) => (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
-export type MarkWithoutAttrs<GNames extends string> = {
+export type MarkWithoutAttributes<GNames extends string> = {
   [P in GNames]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode[];
 };
 
-export type NodeWithoutAttrs<GNames extends string> = {
+export type NodeWithoutAttributes<GNames extends string> = {
   [P in GNames]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
 
@@ -287,16 +293,16 @@ export type CreateTestEditorReturn<
     GAttrNodes,
     GOthers
   > = GenericExtension<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>
-> = Omit<InjectedRemirrorProps<GExtension>, 'view'> &
-  TestEditorViewParams<SchemaFromExtensions<GExtension>> & {
+> = Omit<InjectedRenderEditorProps<GExtension>, 'view'> &
+  TestEditorViewParameter<SchemaFromExtension<GExtension>> & {
     utils: RenderResult;
     add: AddContent<GExtension>;
-    nodes: NodeWithoutAttrs<GetNames<GPlainNodes> | BaseExtensionNodeNames>;
-    marks: MarkWithoutAttrs<GetNames<GPlainMarks>>;
-    attrNodes: NodeWithAttrs<GetNames<GAttrNodes>>;
-    attrMarks: MarkWithAttrs<GetNames<GAttrMarks>>;
-    getState(): EditorState<SchemaFromExtensions<GExtension>>;
-    schema: SchemaFromExtensions<GExtension>;
+    nodes: NodeWithoutAttributes<GetNames<GPlainNodes> | BaseExtensionNodeNames>;
+    marks: MarkWithoutAttributes<GetNames<GPlainMarks>>;
+    attrNodes: NodeWithAttributes<GetNames<GAttrNodes>>;
+    attrMarks: MarkWithAttributes<GetNames<GAttrMarks>>;
+    getState(): EditorState<SchemaFromExtension<GExtension>>;
+    schema: SchemaFromExtension<GExtension>;
     p: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
     doc: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
   };

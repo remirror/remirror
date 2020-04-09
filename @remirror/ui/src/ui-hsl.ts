@@ -9,6 +9,7 @@ import {
   isPlainObject,
   isString,
   isUndefined,
+  object,
 } from '@remirror/core-helpers';
 import { Brand } from '@remirror/core-types';
 
@@ -54,7 +55,7 @@ export interface HSLObject {
 
 export type HSLTuple = [number | string, number | string, number | string, (number | string)?];
 
-export type HSLCreateParams = HSL | HSLObject | NamedHSLObject | HSLTuple | string;
+export type HSLCreateParameter = HSL | HSLObject | NamedHSLObject | HSLTuple | string;
 
 // Taken from https://github.com/regexhq/hsla-regex/blob/master/test/test.js#L7
 const HSLA_REGEX = /^hsla\((\d+),\s*([\d.]+)%,\s*([\d.]+)%,\s*(\d*(?:\.\d+)?)\)$/;
@@ -108,7 +109,9 @@ const convertHSLToObject = (value: HSLObject | NamedHSLObject | HSLTuple | strin
     return hslStringToObject(value);
   }
 
-  throw new Error(`Invalid HSL input value passed: ${isPlainObject(value) ? JSON.stringify(value) : value}`);
+  throw new Error(
+    `Invalid HSL input value passed: ${isPlainObject(value) ? JSON.stringify(value) : value}`,
+  );
 };
 
 const isValidHue = (hue: unknown): hue is Hue => isNumber(hue) && hue <= 360 && hue >= 0;
@@ -166,7 +169,8 @@ const createValidHSLObject = ({
   a: createValidAlpha(alpha),
 });
 
-const freeze = (hslObject: BrandedHSLObject): Readonly<BrandedHSLObject> => Object.freeze(hslObject);
+const freeze = (hslObject: BrandedHSLObject): Readonly<BrandedHSLObject> =>
+  Object.freeze(hslObject);
 
 /**
  * Taken from https://github.com/usemeta/hsl-rgb/blob/1afed9a9703816e375839b4fbb6458f2765a76a8/index.js#L1
@@ -185,7 +189,11 @@ const calculateHue = (pp: number, qq: number, hh: number) => {
 /**
  * Taken from https://github.com/usemeta/hsl-rgb/blob/1afed9a9703816e375839b4fbb6458f2765a76a8/index.js#L1
  */
-const hslToRgb = ([hue, saturation, lightness]: [number, number, number]): [number, number, number] => {
+const hslToRgb = ([hue, saturation, lightness]: [number, number, number]): [
+  number,
+  number,
+  number,
+] => {
   let [rr, gg, bb] = [0, 0, 0];
   const hh = hue / 360;
   const ss = saturation / 100;
@@ -212,7 +220,8 @@ const hslToRgb = ([hue, saturation, lightness]: [number, number, number]): [numb
 /**
  * Convert a percentage to a ratio while avoid
  */
-const percentageToRatio = (percent: number, precision = 10) => Number((percent / 100).toFixed(precision));
+const percentageToRatio = (percent: number, precision = 10) =>
+  Number((percent / 100).toFixed(precision));
 
 /**
  * HSLColor is a small utility for transforming colors, but only hsl colors.
@@ -225,7 +234,7 @@ export class HSL {
    *
    * Throws a descriptive error if invalid parameters are passed in.
    */
-  public static create(value: HSLCreateParams): HSL {
+  public static create(value: HSLCreateParameter): HSL {
     if (isHSL(value)) {
       return value.clone();
     }
@@ -322,7 +331,12 @@ export class HSL {
    */
   public toString() {
     const { h, s, l, a } = this;
-    const [hue, saturation, lightness, alpha] = [h.toString(), `${s}%`, `${l}%`, `${percentageToRatio(a)}`];
+    const [hue, saturation, lightness, alpha] = [
+      h.toString(),
+      `${s}%`,
+      `${l}%`,
+      `${percentageToRatio(a)}`,
+    ];
 
     return alpha === '1'
       ? `hsl(${hue}, ${saturation}, ${lightness})`
@@ -513,7 +527,7 @@ export class HSL {
    *
    * If an HSLObject is provided it merges these properties into the final object.
    */
-  public clone(hsla: Partial<HSLObject> = Object.create(null)) {
+  public clone(hsla: Partial<HSLObject> = object()) {
     return new HSL(createValidHSLObject({ ...this.hsla, ...hsla }));
   }
 

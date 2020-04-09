@@ -26,7 +26,7 @@ export const Menu = forwardRef<HTMLDivElement, JSX.IntrinsicElements['div']>((pr
 
 Menu.displayName = 'Menu';
 
-export const Toolbar: FC = props => {
+export const Toolbar: FC = (props) => {
   const { sx } = useRemirrorTheme();
 
   return (
@@ -76,56 +76,62 @@ IconButton.displayName = 'IconButton';
 /**
  * Allows positioners to work.
  */
-export const EditorWrapper = forwardRef<HTMLDivElement, JSX.IntrinsicElements['div']>((props, ref) => {
-  const { sx } = useRemirrorTheme();
+export const EditorWrapper = forwardRef<HTMLDivElement, JSX.IntrinsicElements['div']>(
+  (props, ref) => {
+    const { sx } = useRemirrorTheme();
 
-  return <div {...props} ref={ref} css={sx({ position: 'relative' })} />;
-});
+    return <div {...props} ref={ref} css={sx({ position: 'relative' })} />;
+  },
+);
 
 EditorWrapper.displayName = 'EditorWrapper';
 
 type BubbleMenuTooltipProps = { bottom: number; left: number } & JSX.IntrinsicElements['span'];
 
-export const BubbleMenuTooltip = forwardRef<HTMLSpanElement, BubbleMenuTooltipProps>((props, ref) => {
-  const { css } = useRemirrorTheme();
+export const BubbleMenuTooltip = forwardRef<HTMLSpanElement, BubbleMenuTooltipProps>(
+  (props, ref) => {
+    const { css } = useRemirrorTheme();
 
-  return (
-    <span
-      {...props}
-      ref={ref}
-      css={css`
-        z-index: 10;
-        position: absolute;
-        bottom: ${props.bottom}px;
-        left: ${props.left}px;
-        padding-bottom: 9px;
-        transform: translateX(-50%);
-      `}
-    />
-  );
-});
+    return (
+      <span
+        {...props}
+        ref={ref}
+        css={css`
+          z-index: 10;
+          position: absolute;
+          bottom: ${props.bottom}px;
+          left: ${props.left}px;
+          padding-bottom: 9px;
+          transform: translateX(-50%);
+        `}
+      />
+    );
+  },
+);
 
 BubbleMenuTooltip.displayName = 'BubbleMenuTooltip';
 
-export const BubbleContent = forwardRef<HTMLSpanElement, JSX.IntrinsicElements['span']>((props, ref) => {
-  const { css } = useRemirrorTheme();
+export const BubbleContent = forwardRef<HTMLSpanElement, JSX.IntrinsicElements['span']>(
+  (props, ref) => {
+    const { css } = useRemirrorTheme();
 
-  return (
-    <span
-      {...props}
-      ref={ref}
-      css={css`
-        background: black;
-        border-radius: 3px;
-        color: white;
-        font-size: 0.75rem;
-        line-height: 1.4;
-        padding: 0.75em;
-        text-align: center;
-        display: flex;
-      `}
-    />
-  );
-});
+    return (
+      <span
+        {...props}
+        ref={ref}
+        css={css`
+          background: black;
+          border-radius: 3px;
+          color: white;
+          font-size: 0.75rem;
+          line-height: 1.4;
+          padding: 0.75em;
+          text-align: center;
+          display: flex;
+        `}
+      />
+    );
+  },
+);
 
 BubbleContent.displayName = 'BubbleContent';

@@ -2,21 +2,21 @@ import { TextSelection } from 'prosemirror-state';
 
 import {
   EditorState,
-  EditorStateParams,
-  FromToParams,
+  EditorStateParameter,
+  FromToParameter,
   Mark,
-  MarkTypeParams,
-  TransactionParams,
+  MarkTypeParameter,
+  TransactionParameter,
 } from '@remirror/core';
 
 export const extractHref = (url: string) =>
   url.startsWith('http') || url.startsWith('//') ? url : `http://${url}`;
 
 export interface EnhancedLinkHandlerProps
-  extends EditorStateParams,
-    FromToParams,
-    Partial<TransactionParams>,
-    MarkTypeParams {
+  extends EditorStateParameter,
+    FromToParameter,
+    Partial<TransactionParameter>,
+    MarkTypeParameter {
   /**
    * The url to add as a mark to the range provided.
    */
@@ -26,7 +26,14 @@ export interface EnhancedLinkHandlerProps
 /**
  * Add the provided URL as a mark to the text range provided
  */
-export const enhancedLinkHandler = ({ state, url, from, to, tr, type }: EnhancedLinkHandlerProps) => {
+export const enhancedLinkHandler = ({
+  state,
+  url,
+  from,
+  to,
+  tr,
+  type,
+}: EnhancedLinkHandlerProps) => {
   const endPosition = state.selection.to;
   const enhancedLink = type.create({ href: extractHref(url) });
 
@@ -47,11 +54,13 @@ export const getUrlsFromState = (state: EditorState, markName: string) => {
   const $pos = state.doc.resolve(0);
   let marks: Mark[] = [];
 
-  state.doc.nodesBetween($pos.start(), $pos.end(), node => {
+  state.doc.nodesBetween($pos.start(), $pos.end(), (node) => {
     marks = [...marks, ...node.marks];
   });
 
-  const urls = marks.filter(markItem => markItem.type.name === markName).map(mark => mark.attrs.href);
+  const urls = marks
+    .filter((markItem) => markItem.type.name === markName)
+    .map((mark) => mark.attrs.href);
 
   return { set: new Set(urls), urls };
 };
@@ -66,8 +75,8 @@ export const isSetEqual = <GSetType>(setOne: Set<GSetType>, setTwo: Set<GSetType
     return false;
   }
 
-  for (const val of setOne) {
-    if (!setTwo.has(val)) {
+  for (const value of setOne) {
+    if (!setTwo.has(value)) {
       return false;
     }
   }

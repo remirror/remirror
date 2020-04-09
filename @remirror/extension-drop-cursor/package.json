@@ -6,15 +6,15 @@
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-drop-cursor",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "sideEffects": false,
+  "main": "lib/dist/index.js",
+  "module": "lib/dist/extension-drop-cursor.esm.js",
+  "types": "lib/index.d.ts",
   "files": [
     "internal",
     "lib",
     "src"
   ],
-  "sideEffects": false,
-  "main": "lib/index.js",
-  "module": "lib/dist/extension-drop-cursor.esm.js",
-  "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
@@ -26,7 +26,7 @@
     "@types/prosemirror-view": "^1.11.2",
     "prosemirror-state": "^1.3.2",
     "prosemirror-transform": "^1.1.5",
-    "prosemirror-view": "^1.14.4"
+    "prosemirror-view": "^1.14.6"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

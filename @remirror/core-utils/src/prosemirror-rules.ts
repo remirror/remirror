@@ -5,20 +5,101 @@ import { Plugin, TextSelection } from 'prosemirror-state';
 import { findMatches, isFunction, isNullOrUndefined } from '@remirror/core-helpers';
 import {
   EditorSchema,
-  GetAttrsParams,
-  MarkTypeParams,
-  NodeTypeParams,
+  GetAttributesParameter,
+  MarkTypeParameter,
+  NodeTypeParameter,
   ProsemirrorNode,
-  RegExpParams,
+  RegExpParameter,
 } from '@remirror/core-types';
+
+interface NodeInputRuleParameter
+  extends Partial<GetAttributesParameter>,
+    RegExpParameter,
+    NodeTypeParameter {
+  /**
+   * Allows for setting a text selection at the start of the newly created node.
+   * Leave blank or set to false to ignore.
+   */
+  updateSelection?: boolean;
+}
+interface PlainInputRuleParameter extends RegExpParameter {
+  /**
+   * Allows for setting a text selection at the start of the newly created node.
+   * Leave blank or set to false to ignore.
+   */
+  updateSelection?: boolean;
+
+  /**
+   * A function that transforms the match into the desired value.
+   */
+  transformMatch(match: string[]): string | null | undefined;
+}
+
+interface MarkInputRuleParameter
+  extends Partial<GetAttributesParameter>,
+    RegExpParameter,
+    MarkTypeParameter {}
+
+/**
+ * Creates a paste rule based on the provided regex for the provided mark type
+ */
+export const markPasteRule = ({ regexp, type, getAttributes }: MarkInputRuleParameter) => {
+  const handler = (fragment: Fragment) => {
+    const nodes: ProsemirrorNode[] = [];
+
+    fragment.forEach((child) => {
+      if (child.isText) {
+        const text = child.text ?? '';
+        let pos = 0;
+
+        // ? For some reason including the index param makes this work. I'm not sure why...?
+        findMatches(text, regexp).forEach((match, _) => {
+          if (!match[1]) {
+            return;
+          }
+
+          const start = match.index;
+          const end = start + match[0].length;
+          const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
+
+          if (start > 0) {
+            nodes.push(child.cut(pos, start));
+          }
+
+          nodes.push(child.cut(start, end).mark(type.create(attributes).addToSet(child.marks)));
+
+          pos = end;
+        });
+
+        if (text && pos < text.length) {
+          nodes.push(child.cut(pos));
+        }
+      } else {
+        nodes.push(child.copy(handler(child.content)));
+      }
+    });
+
+    return Fragment.fromArray(nodes);
+  };
+
+  return new Plugin({
+    props: {
+      transformPasted: (slice) => new Slice(handler(slice.content), slice.openStart, slice.openEnd),
+    },
+  });
+};
 
 /**
  * Creates an input rule based on the provided regex for the provided mark type
  */
-export const markInputRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) => {
+export const markInputRule = ({
+  regexp,
+  type,
+  getAttributes: getAttributes,
+}: MarkInputRuleParameter) => {
   return new InputRule(regexp, (state, match, start, end) => {
     const { tr } = state;
-    const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
+    const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
 
     let markEnd = end;
 
@@ -40,7 +121,7 @@ export const markInputRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) =
 
     return (
       tr
-        .addMark(start, markEnd, type.create(attrs))
+        .addMark(start, markEnd, type.create(attributes))
         // Make sure not to continue with any ongoing marks
         .removeStoredMark(type)
     );
@@ -48,63 +129,19 @@ export const markInputRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) =
 };
 
 /**
- * Creates a paste rule based on the provided regex for the provided mark type
- */
-export const markPasteRule = ({ regexp, type, getAttrs }: MarkInputRuleParams) => {
-  const handler = (fragment: Fragment) => {
-    const nodes: ProsemirrorNode[] = [];
-
-    fragment.forEach(child => {
-      if (child.isText) {
-        const text = child.text ?? '';
-        let pos = 0;
-
-        // ? For some reason including the index param makes this work. I'm not sure why...?
-        findMatches(text, regexp).forEach((match, _) => {
-          if (!match[1]) {
-            return;
-          }
-
-          const start = match.index;
-          const end = start + match[0].length;
-          const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
-
-          if (start > 0) {
-            nodes.push(child.cut(pos, start));
-          }
-
-          nodes.push(child.cut(start, end).mark(type.create(attrs).addToSet(child.marks)));
-
-          pos = end;
-        });
-
-        if (text && pos < text.length) {
-          nodes.push(child.cut(pos));
-        }
-      } else {
-        nodes.push(child.copy(handler(child.content)));
-      }
-    });
-
-    return Fragment.fromArray(nodes);
-  };
-
-  return new Plugin({
-    props: {
-      transformPasted: slice => new Slice(handler(slice.content), slice.openStart, slice.openEnd),
-    },
-  });
-};
-
-/**
  * Creates an node input rule based on the provided regex for the provided node type
  */
-export const nodeInputRule = ({ regexp, type, getAttrs, updateSelection = false }: NodeInputRuleParams) => {
+export const nodeInputRule = ({
+  regexp,
+  type,
+  getAttributes: getAttributes,
+  updateSelection = false,
+}: NodeInputRuleParameter) => {
   return new InputRule(regexp, (state, match, start, end) => {
-    const attrs = isFunction(getAttrs) ? getAttrs(match) : getAttrs;
+    const attributes = isFunction(getAttributes) ? getAttributes(match) : getAttributes;
     const { tr } = state;
 
-    tr.replaceWith(start - 1, end, type.create(attrs));
+    tr.replaceWith(start - 1, end, type.create(attributes));
 
     if (updateSelection) {
       const $pos = tr.doc.resolve(start);
@@ -121,7 +158,7 @@ export const plainInputRule = <GSchema extends EditorSchema = EditorSchema>({
   regexp,
   transformMatch,
   updateSelection = false,
-}: PlainInputRuleParams) => {
+}: PlainInputRuleParameter) => {
   return new InputRule<GSchema>(regexp, (state, match, start, end) => {
     const value = transformMatch(match);
 
@@ -144,25 +181,3 @@ export const plainInputRule = <GSchema extends EditorSchema = EditorSchema>({
     return tr;
   });
 };
-
-interface NodeInputRuleParams extends Partial<GetAttrsParams>, RegExpParams, NodeTypeParams {
-  /**
-   * Allows for setting a text selection at the start of the newly created node.
-   * Leave blank or set to false to ignore.
-   */
-  updateSelection?: boolean;
-}
-interface PlainInputRuleParams extends RegExpParams {
-  /**
-   * Allows for setting a text selection at the start of the newly created node.
-   * Leave blank or set to false to ignore.
-   */
-  updateSelection?: boolean;
-
-  /**
-   * A function that transforms the match into the desired value.
-   */
-  transformMatch(match: string[]): string | null | undefined;
-}
-
-interface MarkInputRuleParams extends Partial<GetAttrsParams>, RegExpParams, MarkTypeParams {}

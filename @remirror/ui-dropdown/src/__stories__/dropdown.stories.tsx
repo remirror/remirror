@@ -39,10 +39,7 @@ const DropdownWithPosition = ({
   return (
     <DropdownSelect
       items={items}
-      label={dropdownPosition
-        .split(' ')
-        .map(capitalize)
-        .join(' ')}
+      label={dropdownPosition.split(' ').map(capitalize).join(' ')}
       dropdownPosition={dropdownPosition}
     />
   );

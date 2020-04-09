@@ -1,9 +1,8 @@
 import { writeFile } from 'fs';
-import { dirname, resolve } from 'path';
-import { promisify } from 'util';
-
 import looksSame, { createDiff } from 'looks-same';
 import md from 'mkdirp-promise';
+import { dirname, resolve } from 'path';
+import { promisify } from 'util';
 
 import { kebabCase } from '@remirror/core';
 
@@ -47,7 +46,7 @@ export const imagesMatch = (image1: string | Buffer, image2: string | Buffer) =>
               diff: diff,
               highlightColor: '#ff00ff',
             },
-            diffError => {
+            (diffError) => {
               if (diffError) {
                 console.error('Could not create diff after failing test', diffError.message);
                 reject(new Error('Could not create diff after failing test'));

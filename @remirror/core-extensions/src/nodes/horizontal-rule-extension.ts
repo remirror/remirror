@@ -1,11 +1,11 @@
 import {
-  CommandNodeTypeParams,
-  ExtensionManagerNodeTypeParams,
+  CommandNodeTypeParameter,
+  ManagerNodeTypeParameter,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
-  ProsemirrorCommandFunction,
   nodeInputRule,
+  ProsemirrorCommandFunction,
 } from '@remirror/core';
 
 export class HorizontalRuleExtension extends NodeExtension {
@@ -15,14 +15,14 @@ export class HorizontalRuleExtension extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
-      attrs: this.extraAttrs(),
+      attrs: this.extraAttributes(),
       group: NodeGroup.Block,
       parseDOM: [{ tag: 'hr' }],
       toDOM: () => ['hr'],
     };
   }
 
-  public commands({ type }: CommandNodeTypeParams) {
+  public commands({ type }: CommandNodeTypeParameter) {
     return {
       horizontalRule: (): ProsemirrorCommandFunction => (state, dispatch) => {
         if (dispatch) {
@@ -34,7 +34,7 @@ export class HorizontalRuleExtension extends NodeExtension {
     };
   }
 
-  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParameter) {
     return [nodeInputRule({ regexp: /^(?:---|___\s|\*\*\*\s)$/, type })];
   }
 }

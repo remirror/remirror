@@ -1,20 +1,22 @@
 import { render } from '@testing-library/react';
-import React, { FunctionComponent, RefAttributes, forwardRef } from 'react';
+import React, { forwardRef, FunctionComponent, RefAttributes } from 'react';
 
 import { PlainObject } from '@remirror/core';
 import { createTestManager } from '@remirror/test-fixtures';
 
-import { Remirror } from '..';
+import { RenderEditor } from '..';
 
 const mock = jest.fn();
-const Menu: FunctionComponent<RefAttributes<HTMLDivElement> & PlainObject> = forwardRef((_, ref) => {
-  mock(ref);
-  return null;
-});
+const Menu: FunctionComponent<RefAttributes<HTMLDivElement> & PlainObject> = forwardRef(
+  (_, ref) => {
+    mock(ref);
+    return null;
+  },
+);
 
 test('updates the offscreen attribute when a selection is active', () => {
   render(
-    <Remirror manager={createTestManager()}>
+    <RenderEditor manager={createTestManager()}>
       {({ getPositionerProps }) => {
         const { ref } = getPositionerProps({ positionerId: 'test' });
         return (
@@ -23,7 +25,7 @@ test('updates the offscreen attribute when a selection is active', () => {
           </div>
         );
       }}
-    </Remirror>,
+    </RenderEditor>,
   );
 
   expect(mock).toHaveBeenCalledWith(expect.any(Function));
@@ -31,7 +33,7 @@ test('updates the offscreen attribute when a selection is active', () => {
 
 test('provides correct menu props', () => {
   render(
-    <Remirror manager={createTestManager()}>
+    <RenderEditor manager={createTestManager()}>
       {({ getPositionerProps }) => {
         const { ref, ...props } = getPositionerProps({ positionerId: 'test' });
 
@@ -40,7 +42,7 @@ test('provides correct menu props', () => {
 
         return <div />;
       }}
-    </Remirror>,
+    </RenderEditor>,
   );
 
   expect.hasAssertions();

@@ -1,4 +1,14 @@
-import { atomInline, createEditor, doc, p, tr as row, strong, table, td, tdEmpty } from 'jest-prosemirror';
+import {
+  atomInline,
+  createEditor,
+  doc,
+  p,
+  strong,
+  table,
+  td,
+  tdEmpty,
+  tr as row,
+} from 'jest-prosemirror';
 
 import { bool } from '@remirror/core-helpers';
 
@@ -6,7 +16,7 @@ import {
   contains,
   findBlockNodes,
   findChildren,
-  findChildrenByAttr,
+  findChildrenByAttribute,
   findChildrenByMark,
   findChildrenByNode,
   findTextNodes,
@@ -25,7 +35,7 @@ describe('flatten', () => {
 
       expect(result.length).toEqual(3);
 
-      result.forEach(item => {
+      result.forEach((item) => {
         expect(Object.keys(item)).toEqual(['node', 'pos']);
         expect(typeof item.pos).toEqual('number');
         expect(item.node.type.name).toEqual('table_row');
@@ -48,12 +58,12 @@ describe('findChildren', () => {
     const { state } = createEditor(doc(table(row(tdEmpty), row(tdEmpty), row(tdEmpty))));
     const result = findChildren({
       node: state.doc.firstChild,
-      predicate: node => node.type === state.schema.nodes.paragraph,
+      predicate: (node) => node.type === state.schema.nodes.paragraph,
     });
 
     expect(result.length).toEqual(3);
 
-    result.forEach(item => {
+    result.forEach((item) => {
       expect(item.node.type.name).toEqual('paragraph');
     });
   });
@@ -62,7 +72,7 @@ describe('findChildren', () => {
     const { state } = createEditor(doc(table(row(tdEmpty))));
     const result = findChildren({
       node: state.doc.firstChild,
-      predicate: node => node.type === state.schema.nodes.atomInline,
+      predicate: (node) => node.type === state.schema.nodes.atomInline,
     });
 
     expect(result.length).toEqual(0);
@@ -78,12 +88,14 @@ describe('findTextNodes', () => {
   });
 
   it('should return an array if text nodes of a given node', () => {
-    const { state } = createEditor(doc(table(row(td(p('one', atomInline(), 'two'), td(p('three')))))));
+    const { state } = createEditor(
+      doc(table(row(td(p('one', atomInline(), 'two'), td(p('three')))))),
+    );
     const result = findTextNodes({ node: state.doc.firstChild });
 
     expect(result.length).toEqual(3);
 
-    result.forEach(item => {
+    result.forEach((item) => {
       expect(item.node.isText).toBe(true);
     });
   });
@@ -103,7 +115,7 @@ describe('findBlockNodes', () => {
 
     expect(result.length).toEqual(5);
 
-    result.forEach(item => {
+    result.forEach((item) => {
       expect(item.node.isBlock).toBe(true);
     });
   });
@@ -112,9 +124,9 @@ describe('findBlockNodes', () => {
 describe('findChildrenByAttr', () => {
   it('should return an empty array if a given node does not have nodes with the given attribute', () => {
     const { state } = createEditor(doc(p('')));
-    const result = findChildrenByAttr({
+    const result = findChildrenByAttribute({
       node: state.doc.firstChild,
-      predicate: attrs => bool(attrs && attrs.colspan === 2),
+      predicate: (attributes) => bool(attributes && attributes.colspan === 2),
     });
 
     expect(result.length).toEqual(0);
@@ -129,14 +141,14 @@ describe('findChildrenByAttr', () => {
         ),
       ),
     );
-    const result = findChildrenByAttr({
+    const result = findChildrenByAttribute({
       node: state.doc.firstChild,
-      predicate: attrs => attrs.colspan === 2,
+      predicate: (attributes) => attributes.colspan === 2,
     });
 
     expect(result.length).toEqual(2);
 
-    result.forEach(item => {
+    result.forEach((item) => {
       expect(item.node.attrs.colspan).toEqual(2);
     });
   });
@@ -156,7 +168,7 @@ describe('findChildrenByNode', () => {
 
     expect(result.length).toEqual(3);
 
-    result.forEach(item => {
+    result.forEach((item) => {
       expect(item.node.type.name).toEqual('table_cell');
     });
   });
@@ -178,7 +190,7 @@ describe('findChildrenByMark', () => {
 
     expect(result.length).toEqual(2);
 
-    result.forEach(item => {
+    result.forEach((item) => {
       expect(item.node.marks[0].type.name).toEqual('strong');
     });
   });

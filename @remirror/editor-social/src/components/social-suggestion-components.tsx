@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { FunctionComponent, forwardRef } from 'react';
+import { forwardRef, FunctionComponent } from 'react';
 
-import { Position, RemirrorTheme } from '@remirror/core';
-import { useRemirrorContext } from '@remirror/react';
+import { object, Position, RemirrorTheme } from '@remirror/core';
+import { useRemirror } from '@remirror/react';
 import { useRemirrorTheme } from '@remirror/ui';
 
 import {
@@ -16,12 +16,13 @@ import {
 } from '../social-types';
 import { createOnClickMethodFactory } from '../social-utils';
 
+type SuggestionsDropdownPosition = Partial<Position> & { position?: 'absolute' };
 type SuggestionsDropdownProps = DivProps & {
-  position?: Partial<Position> & { position?: 'absolute' };
+  position?: SuggestionsDropdownPosition;
 };
 
 const SuggestionsDropdown = forwardRef<HTMLDivElement, SuggestionsDropdownProps>(
-  ({ position = Object.create(null), ...props }, ref) => {
+  ({ position = object<SuggestionsDropdownPosition>(), ...props }, ref) => {
     const { sx, css } = useRemirrorTheme();
 
     return (
@@ -119,7 +120,7 @@ export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
   data,
   setExitTriggeredInternally,
 }) => {
-  const { view, actions } = useRemirrorContext<SocialExtensions>();
+  const { view, actions } = useRemirror<SocialExtensions>();
 
   /**
    * Click handler for accepting a user suggestion
@@ -133,7 +134,7 @@ export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
 
   return (
     <SuggestionsDropdown role='presentation'>
-      {data.map(user => {
+      {data.map((user) => {
         return (
           <ItemWrapper
             active={user.active}
@@ -161,7 +162,7 @@ const HashTagText = forwardRef<HTMLSpanElement, SpanProps>((props, ref) => {
     <span
       {...props}
       ref={ref}
-      css={theme => css`
+      css={(theme) => css`
         font-weight: bold;
         color: #66757f;
 
@@ -183,7 +184,7 @@ export const TagSuggestions: FunctionComponent<TagSuggestionsProps> = ({
   data,
   setExitTriggeredInternally,
 }) => {
-  const { view, actions } = useRemirrorContext<SocialExtensions>();
+  const { view, actions } = useRemirror<SocialExtensions>();
 
   /**
    * Click handler for accepting a tag suggestion

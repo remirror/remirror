@@ -6,20 +6,20 @@
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/ui-buttons",
   "license": "MIT",
   "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "sideEffects": false,
+  "main": "lib/dist/index.js",
+  "module": "lib/dist/ui-buttons.esm.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib",
     "src"
   ],
-  "sideEffects": false,
-  "main": "lib/index.js",
-  "module": "lib/dist/ui-buttons.esm.js",
-  "types": "lib/index.d.ts",
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
     "@remirror/ui": "^0.7.6",
     "@remirror/ui-icons": "^0.7.7",
-    "csstype": "^2.6.7"
+    "csstype": "^2.6.10"
   },
   "peerDependencies": {
     "@emotion/core": "^10",

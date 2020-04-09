@@ -5,18 +5,19 @@ import { ComponentType, Fragment, ReactNode } from 'react';
 
 import {
   AnyExtension,
-  DOMOutputSpec,
-  ExtensionManager,
-  Mark,
-  MarkExtensionSpec,
-  NodeExtensionSpec,
-  PlainObject,
-  Fragment as ProsemirrorFragment,
-  ProsemirrorNode,
   bool,
+  DOMOutputSpec,
+  Fragment as ProsemirrorFragment,
   isArray,
   isPlainObject,
   isString,
+  Manager,
+  Mark,
+  MarkExtensionSpec,
+  NodeExtensionSpec,
+  object,
+  PlainObject,
+  ProsemirrorNode,
 } from '@remirror/core';
 
 import { gatherToDOM, mapProps } from './renderer-utils';
@@ -36,7 +37,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
   constructor(
     nodes: Record<string, NodeToDOM>,
     marks: Record<string, MarkToDOM>,
-    manager: ExtensionManager<GExtension>,
+    manager: Manager<GExtension>,
   ) {
     this.nodes = nodes;
     this.marks = marks;
@@ -56,10 +57,10 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
   public serializeFragment(fragment: ProsemirrorFragment): JSX.Element {
     const children: ReactNode[] = [];
 
-    fragment.forEach(node => {
+    fragment.forEach((node) => {
       let child: ReactNode;
       child = this.serializeNode(node);
-      node.marks.reverse().forEach(mark => {
+      node.marks.reverse().forEach((mark) => {
         // TODO test behaviour expectations for `spanning` marks. Currently not HANDLED.
         child = this.serializeMark(mark, node.isInline, child);
       });
@@ -128,15 +129,15 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
     }
 
     const Component = structure[0];
-    const props: PlainObject = Object.create(null);
-    const attrs = structure[1];
+    const props: PlainObject = object();
+    const attributes = structure[1];
     const children: ReactNode[] = [];
     let currentIndex = 1;
-    if (isPlainObject(attrs) && !isArray(attrs)) {
+    if (isPlainObject(attributes) && !isArray(attributes)) {
       currentIndex = 2;
-      for (const name in attrs) {
-        if (attrs[name] != null) {
-          props[name] = attrs[name];
+      for (const name in attributes) {
+        if (attributes[name] != null) {
+          props[name] = attributes[name];
         }
       }
     }
@@ -160,12 +161,10 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
    *
    * @param manager
    */
-  public static fromExtensionManager<GExtension extends AnyExtension = any>(
-    manager: ExtensionManager<GExtension>,
-  ) {
+  public static fromManager<GExtension extends AnyExtension = any>(manager: Manager<GExtension>) {
     return new ReactSerializer(
-      this.nodesFromExtensionManager(manager),
-      this.marksFromExtensionManager(manager),
+      this.nodesFromManager(manager),
+      this.marksFromManager(manager),
       manager,
     );
   }
@@ -175,12 +174,12 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
    *
    * @param manager
    */
-  private static nodesFromExtensionManager<GExtension extends AnyExtension = any>(
-    manager: ExtensionManager<GExtension>,
+  private static nodesFromManager<GExtension extends AnyExtension = any>(
+    manager: Manager<GExtension>,
   ) {
     const result = gatherToDOM(manager.nodes);
     if (!result.text) {
-      result.text = node => (node.text ? node.text : '');
+      result.text = (node) => (node.text ? node.text : '');
     }
     return result;
   }
@@ -190,8 +189,8 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
    *
    * @param manager
    */
-  private static marksFromExtensionManager<GExtension extends AnyExtension = any>(
-    manager: ExtensionManager<GExtension>,
+  private static marksFromManager<GExtension extends AnyExtension = any>(
+    manager: Manager<GExtension>,
   ) {
     return gatherToDOM(manager.marks);
   }

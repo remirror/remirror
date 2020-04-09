@@ -7,7 +7,7 @@ import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
 
-import { RemirrorTheme, deepMerge } from '@remirror/core';
+import { deepMerge, object, RemirrorTheme } from '@remirror/core';
 import {
   BlockquoteExtension,
   BoldExtension,
@@ -34,7 +34,7 @@ import {
   ManagedRemirrorProvider,
   RemirrorExtension,
   RemirrorManager,
-  useRemirrorContext,
+  useRemirror,
 } from '@remirror/react';
 import { RemirrorThemeProvider } from '@remirror/ui';
 
@@ -48,7 +48,7 @@ const DEFAULT_LANGUAGES = [markdown, typescript, tsx, bash];
 
 export const WysiwygEditor: FC<WysiwygEditorProps> = ({
   placeholder = defaultPlaceholder,
-  theme = Object.create(null),
+  theme = object<RemirrorTheme>(),
   supportedLanguages: supportedLanguagesProp = [],
   syntaxTheme = 'atomDark',
   defaultLanguage,
@@ -91,7 +91,11 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
         <RemirrorExtension Constructor={UnderlineExtension} />
         <RemirrorExtension Constructor={ItalicExtension} />
         <RemirrorExtension Constructor={BlockquoteExtension} />
-        <RemirrorExtension Constructor={LinkExtension} activationHandler={activateLink} priority={1} />
+        <RemirrorExtension
+          Constructor={LinkExtension}
+          activationHandler={activateLink}
+          priority={1}
+        />
         <RemirrorExtension Constructor={StrikeExtension} />
         <RemirrorExtension Constructor={CodeExtension} />
         <RemirrorExtension Constructor={HeadingExtension} />
@@ -130,12 +134,16 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
  * Any component rendered has access to the remirror context.
  */
 const InnerEditor: FC<BubbleMenuProps> = ({ linkActivated, deactivateLink, activateLink }) => {
-  const { getRootProps } = useRemirrorContext<WysiwygExtensions>();
+  const { getRootProps } = useRemirror<WysiwygExtensions>();
 
   return (
     <EditorWrapper>
       <MenuBar activateLink={activateLink} />
-      <BubbleMenu linkActivated={linkActivated} deactivateLink={deactivateLink} activateLink={activateLink} />
+      <BubbleMenu
+        linkActivated={linkActivated}
+        deactivateLink={deactivateLink}
+        activateLink={activateLink}
+      />
       <div {...getRootProps()} data-testid='remirror-wysiwyg-editor' />
     </EditorWrapper>
   );

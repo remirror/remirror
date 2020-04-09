@@ -4,14 +4,14 @@ import { jsx } from '@emotion/core';
 import { FC } from 'react';
 
 import { EmojiObject, EmojiSuggestCommand } from '@remirror/extension-emoji';
-import { useRemirrorContext } from '@remirror/react';
+import { useRemirror } from '@remirror/react';
 
 import {
   ActiveTagData,
   ActiveUserData,
   MatchName,
-  MentionGetterParams,
-  SetExitTriggeredInternallyParams,
+  MentionGetterParameter,
+  SetExitTriggeredInternallyParameter,
   SocialExtensions,
 } from '../social-types';
 import { EmojiSuggestions } from './emoji-suggestion-component';
@@ -19,7 +19,9 @@ import { CharacterCountWrapper, EditorWrapper } from './social-base-components';
 import { CharacterCountIndicator } from './social-character-count-component';
 import { AtSuggestions, TagSuggestions } from './social-suggestion-components';
 
-interface SocialEditorComponentProps extends MentionGetterParams, SetExitTriggeredInternallyParams {
+interface SocialEditorComponentProps
+  extends MentionGetterParameter,
+    SetExitTriggeredInternallyParameter {
   emojiList: EmojiObject[];
   hideEmojiSuggestions: boolean;
   activeEmojiIndex: number;
@@ -71,7 +73,7 @@ export const SocialEditorComponent: FC<SocialEditorComponentProps> = ({
   const {
     getRootProps,
     state: { newState },
-  } = useRemirrorContext<SocialExtensions>();
+  } = useRemirror<SocialExtensions>();
   const content = newState.doc.textContent;
   return (
     <div>
@@ -83,7 +85,11 @@ export const SocialEditorComponent: FC<SocialEditorComponentProps> = ({
           </CharacterCountWrapper>
         ) : null}
         {hideEmojiSuggestions || !emojiCommand ? null : (
-          <EmojiSuggestions highlightedIndex={activeEmojiIndex} data={emojiList} command={emojiCommand} />
+          <EmojiSuggestions
+            highlightedIndex={activeEmojiIndex}
+            data={emojiList}
+            command={emojiCommand}
+          />
         )}
       </EditorWrapper>
       <div>

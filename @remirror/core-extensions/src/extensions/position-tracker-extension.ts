@@ -2,12 +2,12 @@ import { Plugin } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
 import { Extension } from '@remirror/core';
-import { isNullOrUndefined, isNumber, isString } from '@remirror/core-helpers';
+import { isNullOrUndefined, isNumber, isString, object } from '@remirror/core-helpers';
 import {
-  BaseExtensionOptions,
-  CommandParams,
-  ExtensionManagerParams,
-  PosParams,
+  BaseExtensionSettings,
+  CommandParameter,
+  ManagerParameter,
+  PosParameter,
   ProsemirrorCommandFunction,
   Transaction,
 } from '@remirror/core-types';
@@ -20,7 +20,7 @@ const defaultPositionTrackerExtensionOptions: Partial<PositionTrackerExtensionOp
   defaultElement: 'tracker',
 };
 
-export interface PositionTrackerExtensionOptions extends BaseExtensionOptions {
+export interface PositionTrackerExtensionOptions extends BaseExtensionSettings {
   /**
    * The className that is added to all tracker positions
    *
@@ -52,21 +52,23 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
     return defaultPositionTrackerExtensionOptions;
   }
 
-  public helpers({ getState }: ExtensionManagerParams) {
+  public helpers({ getState }: ManagerParameter) {
     const helpers = {
       /**
        * Add a tracker position with the specified params to the transaction and return the transaction.
        *
        * It is up to you to dispatch the transaction or you can just use the commands.
        */
-      addPositionTracker: ({ pos, id }: AddPositionTrackerParams, tr = getState().tr) => {
+      addPositionTracker: ({ pos, id }: AddPositionTrackerParameter, tr = getState().tr) => {
         const existingPosition = helpers.findPositionTracker(id);
 
         if (existingPosition) {
           return;
         }
 
-        return tr.setMeta(this.pluginKey, { add: { id, pos: isNumber(pos) ? pos : tr.selection.from } });
+        return tr.setMeta(this.pluginKey, {
+          add: { id, pos: isNumber(pos) ? pos : tr.selection.from },
+        });
       },
 
       /**
@@ -74,7 +76,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
        *
        * This should be used to cleanup once the position is no longer needed.
        */
-      removePositionTracker: ({ id }: RemovePositionTrackerParams, tr = getState().tr) => {
+      removePositionTracker: ({ id }: RemovePositionTrackerParameter, tr = getState().tr) => {
         const existingPosition = helpers.findPositionTracker(id);
 
         if (!existingPosition) {
@@ -106,7 +108,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
        */
       findPositionTracker: (id: unknown) => {
         const decorations = getPluginState<DecorationSet>(this.pluginKey, getState());
-        const found = decorations.find(undefined, undefined, spec => spec.id === id);
+        const found = decorations.find(undefined, undefined, (spec) => spec.id === id);
 
         return found.length ? found[0].from : undefined;
       },
@@ -117,9 +119,9 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
        * @param id - the unique position id which can be any type
        */
       findAllPositionTrackers: (): Record<string, number> => {
-        const trackers: Record<string, number> = Object.create(null);
+        const trackers: Record<string, number> = object();
         const decorations = getPluginState<DecorationSet>(this.pluginKey, getState());
-        const found = decorations.find(undefined, undefined, spec => spec.type === this.name);
+        const found = decorations.find(undefined, undefined, (spec) => spec.type === this.name);
 
         for (const decoration of found) {
           trackers[decoration.spec.id] = decoration.from;
@@ -132,13 +134,12 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
     return helpers;
   }
 
-  public commands({ getHelpers }: CommandParams) {
-    const commandFactory = <GArg>(helperName: string) => (params: GArg): ProsemirrorCommandFunction => (
-      _,
-      dispatch,
-    ) => {
+  public commands({ getHelpers }: CommandParameter) {
+    const commandFactory = <GArg>(helperName: string) => (
+      parameters: GArg,
+    ): ProsemirrorCommandFunction => (_, dispatch) => {
       const helper = getHelpers(helperName);
-      const tr = helper(params);
+      const tr = helper(parameters);
 
       // Nothing changed therefore do nothing
       if (!tr) {
@@ -157,12 +158,14 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
        * Command to dispatch a transaction adding the tracker position to be tracked.
        * If no position parameter is specified it uses the current position.
        */
-      addPositionTracker: commandFactory<AddPositionTrackerParams>('addPositionTracker'),
+      addPositionTracker: commandFactory<AddPositionTrackerParameter>('addPositionTracker'),
 
       /**
        * A command to remove the specified tracker position.
        */
-      removePositionTracker: commandFactory<RemovePositionTrackerParams>('removePositionTracker'),
+      removePositionTracker: commandFactory<RemovePositionTrackerParameter>(
+        'removePositionTracker',
+      ),
 
       /**
        * A command to remove all active tracker positions.
@@ -210,7 +213,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
 
           if (tracker.remove) {
             const { remove } = tracker;
-            const found = decorationSet.find(undefined, undefined, spec => spec.id === remove.id);
+            const found = decorationSet.find(undefined, undefined, (spec) => spec.id === remove.id);
 
             return decorationSet.remove(found);
           }
@@ -223,7 +226,7 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
         },
       },
       props: {
-        decorations: state => {
+        decorations: (state) => {
           return getPluginState(key, state);
         },
       },
@@ -232,19 +235,21 @@ export class PositionTrackerExtension extends Extension<PositionTrackerExtension
 }
 
 export interface PositionTrackerExtensionMeta {
-  add?: Required<AddPositionTrackerParams>;
-  remove?: RemovePositionTrackerParams;
+  add?: Required<AddPositionTrackerParameter>;
+  remove?: RemovePositionTrackerParameter;
   clear?: symbol;
 }
 
-interface RemovePositionTrackerParams {
+interface RemovePositionTrackerParameter {
   /**
    * The ID by which this position will be uniquely identified.
    */
   id: unknown;
 }
 
-interface AddPositionTrackerParams extends Partial<PosParams>, RemovePositionTrackerParams {
+interface AddPositionTrackerParameter
+  extends Partial<PosParameter>,
+    RemovePositionTrackerParameter {
   /**
    * A custom class name to use for the tracker position. All the trackers
    * will automatically be given the class name `remirror-tracker-position`

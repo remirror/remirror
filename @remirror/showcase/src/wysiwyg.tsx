@@ -14,7 +14,12 @@ export const ExampleWysiwygEditor: FC<WysiwygEditorProps> = ({
   ...props
 }) => {
   return (
-    <WysiwygEditor {...props} initialContent={initialContent} autoFocus={autoFocus} formatter={formatter} />
+    <WysiwygEditor
+      {...props}
+      initialContent={initialContent}
+      autoFocus={autoFocus}
+      formatter={formatter}
+    />
   );
 };
 
@@ -58,7 +63,9 @@ export const WYSIWYG_SHOWCASE_CONTENT = {
               content: [
                 {
                   type: 'listItem',
-                  content: [{ type: 'paragraph', content: [{ type: 'text', text: 'With nesting' }] }],
+                  content: [
+                    { type: 'paragraph', content: [{ type: 'text', text: 'With nesting' }] },
+                  ],
                 },
               ],
             },
@@ -87,7 +94,11 @@ export const WYSIWYG_SHOWCASE_CONTENT = {
       type: 'paragraph',
       content: [
         { type: 'text', text: 'And ' },
-        { type: 'text', marks: [{ type: 'link', attrs: { href: 'https://google.com' } }], text: 'urls' },
+        {
+          type: 'text',
+          marks: [{ type: 'link', attrs: { href: 'https://google.com' } }],
+          text: 'urls',
+        },
         { type: 'text', text: ' with support for ' },
         { type: 'text', marks: [{ type: 'code' }], text: 'Cmd-k' },
         { type: 'text', text: ' shortcut to enter a link manually.' },

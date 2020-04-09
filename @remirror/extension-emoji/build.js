@@ -6,7 +6,7 @@ const { execSync } = require('child_process');
 const { startCase, uniqueArray, omit, entries, capitalize } = require('../core-helpers/lib');
 
 const dir = (...paths) => resolve(__dirname, join(...paths));
-const formatFile = path => execSync(`prettier ${path} --write`, { stdio: 'inherit' });
+const formatFile = (path) => execSync(`prettier ${path} --write`, { stdio: 'inherit' });
 
 const baseEmojis = emojiLib.lib;
 const enhancedEmojis = data.emojis;
@@ -27,7 +27,7 @@ const TYPES = {
 const createFileContents = (json, name, type) => {
   const typeName = `${capitalize(name)}Type`;
   const typeKeys = Object.keys(json)
-    .map(key => `'${key}'`)
+    .map((key) => `'${key}'`)
     .join(' | ');
   const typeString = `Record<${typeKeys}, ${type}>;`;
   const jsonString = JSON.stringify(json, null, 2);
@@ -55,8 +55,12 @@ const generateData = () => {
       const other = enhancedEmojis[name] || enhancedEmojis[`flag-${name}`];
       const firstKeyword = entry.keywords[0];
       const category = entry.category;
-      const description = other ? other[DESCRIPTION] : startCase(getStartCase(category, name, firstKeyword));
-      const keywords = other ? uniqueArray([...entry.keywords, ...(other[KEYWORDS] || [])]) : entry.keywords;
+      const description = other
+        ? other[DESCRIPTION]
+        : startCase(getStartCase(category, name, firstKeyword));
+      const keywords = other
+        ? uniqueArray([...entry.keywords, ...(other[KEYWORDS] || [])])
+        : entry.keywords;
 
       const { fitzpatrick_scale: skinVariations } = entry;
 
@@ -71,16 +75,19 @@ const generateData = () => {
     .reduce((acc, curr) => ({ ...acc, [curr.name]: curr }), {});
 
   const categories = Object.values(emojis)
-    .map(entry => ({
+    .map((entry) => ({
       id: entry.category,
       name: startCase(entry.category.replace('_and_', '_&_')),
     }))
     .reduce((acc, { id, name }) => ({ ...acc, [id]: name }), {});
 
   writeFileSync(files.emojis, createFileContents(emojis, 'emojis', TYPES['emoji']));
-  writeFileSync(files.categories, createFileContents(categories, 'categories', TYPES['categories']));
+  writeFileSync(
+    files.categories,
+    createFileContents(categories, 'categories', TYPES['categories']),
+  );
 
-  Object.values(files).forEach(path => formatFile(path));
+  Object.values(files).forEach((path) => formatFile(path));
 };
 
 generateData();

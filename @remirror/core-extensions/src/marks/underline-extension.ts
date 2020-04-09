@@ -1,13 +1,13 @@
 import { toggleMark } from 'prosemirror-commands';
 
 import {
-  CommandMarkTypeParams,
-  ExtensionManagerMarkTypeParams,
+  CommandMarkTypeParameter,
+  convertCommand,
+  ManagerMarkTypeParameter,
   KeyBindings,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
-  convertCommand,
 } from '@remirror/core';
 
 export class UnderlineExtension extends MarkExtension {
@@ -24,20 +24,20 @@ export class UnderlineExtension extends MarkExtension {
         },
         {
           style: 'text-decoration',
-          getAttrs: node => (node === 'underline' ? {} : false),
+          getAttrs: (node) => (node === 'underline' ? {} : false),
         },
       ],
       toDOM: () => ['u', 0],
     };
   }
 
-  public keys({ type }: ExtensionManagerMarkTypeParams): KeyBindings {
+  public keys({ type }: ManagerMarkTypeParameter): KeyBindings {
     return {
       'Mod-u': convertCommand(toggleMark(type)),
     };
   }
 
-  public commands({ type }: CommandMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParameter) {
     return { underline: () => toggleMark(type) };
   }
 }
