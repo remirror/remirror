@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { ThemeProvider } from 'emotion-theming';
 import React from 'react';
 
-import { Remirror } from '@remirror/react';
+import { RenderEditor } from '@remirror/react';
 import { createTestManager } from '@remirror/test-fixtures';
 
 import { baseTheme } from '..';
@@ -130,14 +130,14 @@ describe('withoutEmotion', () => {
   it.skip('should not render extra class names when true', () => {
     const child = () => <div data-testid='test' />;
     const { getByTestId, rerender } = render(
-      <Remirror manager={createTestManager()}>{child}</Remirror>,
+      <RenderEditor manager={createTestManager()}>{child}</RenderEditor>,
     );
 
     expect(getByTestId('test')).toHaveAttribute('class');
 
     rerender(
       <RemirrorThemeProvider theme={baseTheme} withoutEmotion={true}>
-        <Remirror manager={createTestManager()}>{child}</Remirror>
+        <RenderEditor manager={createTestManager()}>{child}</RenderEditor>
       </RemirrorThemeProvider>,
     );
 

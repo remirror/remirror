@@ -1,15 +1,15 @@
 import { ObjectInterpolation } from '@emotion/core';
 
-import { BaseExtensionOptions, NodeMatch } from '@remirror/core-types';
+import { NodeMatch } from '@remirror/core-types';
 
-export interface CompositionExtensionOptions extends BaseExtensionOptions {
+export interface CompositionExtensionOptions {
   /**
    * The nodes that need to be deleted when backspace is pressed
    */
   ensureNodeDeletion?: NodeMatch[];
 }
 
-export interface PlaceholderExtensionOptions extends BaseExtensionOptions {
+export interface PlaceholderExtensionSettings {
   /**
    * The placeholder text to use.
    */
@@ -26,7 +26,7 @@ export interface PlaceholderExtensionOptions extends BaseExtensionOptions {
   placeholderStyle?: ObjectInterpolation<undefined>;
 }
 
-export interface PlaceholderPluginState extends Required<PlaceholderExtensionOptions> {
+export interface PlaceholderPluginState extends Required<PlaceholderExtensionSettings> {
   empty: boolean;
 }
 

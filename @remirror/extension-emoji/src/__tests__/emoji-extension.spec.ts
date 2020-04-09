@@ -1,5 +1,5 @@
 import { renderEditor } from 'jest-remirror';
-import { SuggestKeyBindingParams } from 'prosemirror-suggest';
+import { SuggestKeyBindingParameter } from 'prosemirror-suggest';
 
 import { object } from '@remirror/core';
 
@@ -8,7 +8,7 @@ import {
   EmojiExtensionOptions,
   EmojiObject,
   EmojiSuggestCommand,
-  EmojiSuggestionChangeHandlerParams,
+  EmojiSuggestionChangeHandlerParameter,
 } from '../emoji-types';
 
 const create = (options: EmojiExtensionOptions = object()) =>
@@ -26,14 +26,14 @@ const create = (options: EmojiExtensionOptions = object()) =>
 
 let emoji: EmojiObject | undefined;
 
-const onSuggestionChange = jest.fn((params: EmojiSuggestionChangeHandlerParams) => {
+const onSuggestionChange = jest.fn((params: EmojiSuggestionChangeHandlerParameter) => {
   emoji = params.emojiMatches[0];
 });
 const onSuggestionExit = jest.fn(() => {
   emoji = undefined;
 });
 const suggestionKeyBindings = {
-  Enter: jest.fn((params: SuggestKeyBindingParams<EmojiSuggestCommand>) => {
+  Enter: jest.fn((params: SuggestKeyBindingParameter<EmojiSuggestCommand>) => {
     params.command(emoji!);
     return true;
   }),

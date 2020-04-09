@@ -34,7 +34,7 @@ import {
   ManagedRemirrorProvider,
   RemirrorExtension,
   RemirrorManager,
-  useRemirrorContext,
+  useRemirror,
 } from '@remirror/react';
 import { RemirrorThemeProvider } from '@remirror/ui';
 
@@ -134,7 +134,7 @@ export const WysiwygEditor: FC<WysiwygEditorProps> = ({
  * Any component rendered has access to the remirror context.
  */
 const InnerEditor: FC<BubbleMenuProps> = ({ linkActivated, deactivateLink, activateLink }) => {
-  const { getRootProps } = useRemirrorContext<WysiwygExtensions>();
+  const { getRootProps } = useRemirror<WysiwygExtensions>();
 
   return (
     <EditorWrapper>

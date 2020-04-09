@@ -24,7 +24,7 @@
     "@remirror/ui-buttons": "^0.7.6",
     "@remirror/ui-icons": "^0.7.7",
     "@remirror/ui-text": "^0.7.6",
-    "csstype": "^2.6.7",
+    "csstype": "^2.6.10",
     "multishift": "^0.7.6",
     "react-spring": "8.0.27"
   },

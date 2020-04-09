@@ -25,6 +25,7 @@ import React from 'react';
 import { BoldExtension, ItalicExtension, UnderlineExtension } from '@remirror/core-extensions';
 import { ProsemirrorDevTools } from '@remirror/dev';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
+
 const MyEditor = () => {
   return (
     <RemirrorManager>

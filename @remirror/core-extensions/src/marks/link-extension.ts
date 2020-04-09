@@ -1,28 +1,28 @@
 import { Plugin, TextSelection } from 'prosemirror-state';
 
 import {
-  Attrs,
   Cast,
-  CommandMarkTypeParams,
-  ExtensionManagerMarkTypeParams,
+  CommandMarkTypeParameter,
   getMarkRange,
   getMatchString,
   getSelectedWord,
   isMarkActive,
   isTextSelection,
   KeyBindings,
+  ManagerMarkTypeParameter,
   MarkExtension,
-  MarkExtensionOptions,
+  MarkExtensionConfig,
   MarkExtensionSpec,
   MarkGroup,
   markPasteRule,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   removeMark,
   selectionEmpty,
   updateMark,
 } from '@remirror/core';
 
-export interface LinkExtensionOptions extends MarkExtensionOptions {
+export interface LinkExtensionOptions extends MarkExtensionConfig {
   /**
    * Return true to intercept the activation. This is useful for showing a dialog to replace the selected text.
    */
@@ -46,7 +46,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     return {
       group: MarkGroup.Link,
       attrs: {
-        ...this.extraAttrs(null),
+        ...this.extraAttributes(null),
         href: {
           default: null,
         },
@@ -57,7 +57,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
           tag: 'a[href]',
           getAttrs: (node) => ({
             href: Cast<Element>(node).getAttribute('href'),
-            ...this.getExtraAttrs(Cast<Element>(node)),
+            ...this.getExtraAttributes(Cast<Element>(node)),
           }),
         },
       ],
@@ -95,12 +95,12 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public commands({ type }: CommandMarkTypeParams) {
+  public commands({ type }: CommandMarkTypeParameter) {
     return {
       /**
        * A command to update the selected link
        */
-      updateLink: (attrs?: Attrs): ProsemirrorCommandFunction => {
+      updateLink: (attributes: ProsemirrorAttributes): ProsemirrorCommandFunction => {
         return (state, dispatch, view) => {
           const { selection } = state;
           if (
@@ -109,7 +109,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
           ) {
             return false;
           }
-          return updateMark({ type, attrs })(state, dispatch, view);
+          return updateMark({ type, attrs: attributes })(state, dispatch, view);
         };
       },
       /**
@@ -126,17 +126,17 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     };
   }
 
-  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
+  public pasteRules({ type }: ManagerMarkTypeParameter) {
     return [
       markPasteRule({
-        regexp: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/g,
+        regexp: /https?:\/\/(www\.)?[\w#%+.:=@~-]{2,256}\.[a-z]{2,6}\b([\w#%&+./:=?@~-]*)/g,
         type,
-        getAttrs: (url) => ({ href: getMatchString(url) }),
+        getAttributes: (url) => ({ href: getMatchString(url) }),
       }),
     ];
   }
 
-  public plugin({ type }: ExtensionManagerMarkTypeParams) {
+  public plugin({ type }: ManagerMarkTypeParameter) {
     return new Plugin({
       props: {
         handleClick(view, pos) {

@@ -2,21 +2,21 @@ import { TextSelection } from 'prosemirror-state';
 
 import {
   EditorState,
-  EditorStateParams,
-  FromToParams,
+  EditorStateParameter,
+  FromToParameter,
   Mark,
-  MarkTypeParams,
-  TransactionParams,
+  MarkTypeParameter,
+  TransactionParameter,
 } from '@remirror/core';
 
 export const extractHref = (url: string) =>
   url.startsWith('http') || url.startsWith('//') ? url : `http://${url}`;
 
 export interface EnhancedLinkHandlerProps
-  extends EditorStateParams,
-    FromToParams,
-    Partial<TransactionParams>,
-    MarkTypeParams {
+  extends EditorStateParameter,
+    FromToParameter,
+    Partial<TransactionParameter>,
+    MarkTypeParameter {
   /**
    * The url to add as a mark to the range provided.
    */
@@ -75,8 +75,8 @@ export const isSetEqual = <GSetType>(setOne: Set<GSetType>, setTwo: Set<GSetType
     return false;
   }
 
-  for (const val of setOne) {
-    if (!setTwo.has(val)) {
+  for (const value of setOne) {
+    if (!setTwo.has(value)) {
       return false;
     }
   }

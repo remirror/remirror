@@ -11,29 +11,29 @@ import { fromHTML, object, toHTML } from '@remirror/core';
 import { BaseKeymapExtension } from '@remirror/core-extensions';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 
-import { CodeBlockExtension, CodeBlockExtensionOptions } from '../';
+import { CodeBlockExtension, CodeBlockExtensionSettings } from '..';
 import { CodeBlockFormatter } from '../code-block-types';
 import { getLanguage } from '../code-block-utils';
 
 describe('schema', () => {
   const { schema } = createBaseTestManager([{ extension: new CodeBlockExtension(), priority: 1 }]);
-  const attrs = { language: 'typescript' };
+  const attributes = { language: 'typescript' };
   const content = 'unchanged without decorations';
 
   const { codeBlock, doc } = pmBuild(schema, {
-    codeBlock: { nodeType: 'codeBlock', ...attrs },
+    codeBlock: { nodeType: 'codeBlock', ...attributes },
   });
 
   it('creates the correct dom node', () => {
     expect(toHTML({ node: codeBlock(content), schema })).toBe(
-      `<pre class="language-${attrs.language}"><code data-code-block-language="${attrs.language}">${content}</code></pre>`,
+      `<pre class="language-${attributes.language}"><code data-code-block-language="${attributes.language}">${content}</code></pre>`,
     );
   });
 
   it('parses the dom structure and finds itself', () => {
     const node = fromHTML({
       schema,
-      content: `<pre><code class="language-${attrs.language}" data-code-block-language="${attrs.language}">${content}</code></pre>`,
+      content: `<pre><code class="language-${attributes.language}" data-code-block-language="${attributes.language}">${content}</code></pre>`,
     });
     const expected = doc(codeBlock(content));
 
@@ -54,10 +54,10 @@ describe('constructor', () => {
 
 const supportedLanguages = [typescript, javascript, markdown, tsx];
 
-const create = (params: CodeBlockExtensionOptions = object()) =>
+const create = (parameters: CodeBlockExtensionSettings = object()) =>
   renderEditor({
     plainNodes: [],
-    attrNodes: [new CodeBlockExtension({ ...params, supportedLanguages })],
+    attrNodes: [new CodeBlockExtension({ ...parameters, supportedLanguages })],
     others: [{ priority: 10, extension: new BaseKeymapExtension() }],
   });
 

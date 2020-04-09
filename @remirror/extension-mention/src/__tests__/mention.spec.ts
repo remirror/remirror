@@ -1,23 +1,23 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
-import { SuggestCommandParams } from 'prosemirror-suggest';
+import { SuggestCommandParameter } from 'prosemirror-suggest';
 
 import { fromHTML, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 
-import { MentionExtension, MentionExtensionOptions } from '../';
+import { MentionExtension, MentionExtensionOptions } from '..';
 import { MentionExtensionSuggestCommand } from '../mention-types';
 
 describe('schema', () => {
   const { schema } = createBaseTestManager([{ extension: new MentionExtension(), priority: 1 }]);
-  const attrs = { id: 'test', label: '@test', name: 'testing' };
+  const attributes = { id: 'test', label: '@test', name: 'testing' };
 
   const { mention, p, doc } = pmBuild(schema, {
-    mention: { markType: 'mention', ...attrs },
+    mention: { markType: 'mention', ...attributes },
   });
 
   it('creates the correct dom node', () => {
-    expect(toHTML({ node: p(mention(attrs.label)), schema })).toMatchInlineSnapshot(`
+    expect(toHTML({ node: p(mention(attributes.label)), schema })).toMatchInlineSnapshot(`
       <p>
         <a class="mention mention-testing"
            data-mention-id="test"
@@ -32,36 +32,36 @@ describe('schema', () => {
   it('parses the dom structure and finds itself', () => {
     const node = fromHTML({
       schema,
-      content: `<a class="mention mention-at" data-mention-id="${attrs.id}" data-mention-name="${attrs.name}">${attrs.label}</a>`,
+      content: `<a class="mention mention-at" data-mention-id="${attributes.id}" data-mention-name="${attributes.name}">${attributes.label}</a>`,
     });
-    const expected = doc(p(mention(attrs.label)));
+    const expected = doc(p(mention(attributes.label)));
 
     expect(node).toEqualProsemirrorNode(expected);
   });
 
-  describe('extraAttrs', () => {
+  describe('extraAttributes', () => {
     const custom = 'test';
     const { schema } = createBaseTestManager([
       {
         extension: new MentionExtension({
           matchers: [],
-          extraAttrs: ['data-custom'],
+          extraAttributes: ['data-custom'],
         }),
         priority: 1,
       },
     ]);
 
     const { doc, p, mention } = pmBuild(schema, {
-      mention: { markType: 'mention', ['data-custom']: custom, ...attrs },
+      mention: { markType: 'mention', ['data-custom']: custom, ...attributes },
     });
 
     it('parses the dom structure and finds itself with custom attributes', () => {
       const node = fromHTML({
         schema,
-        content: `<a class="mention mention-at" data-custom="${custom}" data-mention-id="${attrs.id}" data-mention-name="${attrs.name}">${attrs.label}</a>`,
+        content: `<a class="mention mention-at" data-custom="${custom}" data-mention-id="${attributes.id}" data-mention-name="${attributes.name}">${attributes.label}</a>`,
       });
 
-      const expected = doc(p(mention(attrs.label)));
+      const expected = doc(p(mention(attributes.label)));
 
       expect(node).toEqualProsemirrorNode(expected);
     });
@@ -93,9 +93,9 @@ describe('constructor', () => {
   });
 });
 
-const create = (params: MentionExtensionOptions) =>
+const create = (parameters: MentionExtensionOptions) =>
   renderEditor({
-    attrMarks: [new MentionExtension(params)],
+    attrMarks: [new MentionExtension(parameters)],
   });
 
 describe('plugin', () => {
@@ -109,7 +109,7 @@ describe('plugin', () => {
 
   const mocks = {
     onChange: jest.fn(),
-    onExit: jest.fn(({ command }: SuggestCommandParams<MentionExtensionSuggestCommand>) => {
+    onExit: jest.fn(({ command }: SuggestCommandParameter<MentionExtensionSuggestCommand>) => {
       command({ appendText: '' });
     }),
   };
@@ -290,7 +290,7 @@ describe('commands', () => {
     add,
   } = create(options);
 
-  const attrs = { id: 'test', label: '@test', name: 'at', appendText: '' };
+  const attributes = { id: 'test', label: '@test', name: 'at', appendText: '' };
 
   beforeEach(() => {
     ({
@@ -305,16 +305,20 @@ describe('commands', () => {
   describe('createMention', () => {
     it('replaces text at the current position by default', () => {
       add(doc(p('This is ', '<cursor>')));
-      actions.createMention(attrs);
+      actions.createMention(attributes);
 
-      expect(view.state).toContainRemirrorDocument(p('This is ', mention(attrs)(attrs.label)));
+      expect(view.state).toContainRemirrorDocument(
+        p('This is ', mention(attributes)(attributes.label)),
+      );
     });
 
     it('replaces text at the specified position', () => {
       add(doc(p('This is ', '<cursor>')));
-      actions.createMention({ ...attrs, range: { from: 1, to: 1, end: 1 } });
+      actions.createMention({ ...attributes, range: { from: 1, to: 1, end: 1 } });
 
-      expect(view.state).toContainRemirrorDocument(p(mention(attrs)(attrs.label), 'This is '));
+      expect(view.state).toContainRemirrorDocument(
+        p(mention(attributes)(attributes.label), 'This is '),
+      );
     });
 
     it('throws when invalid config passed into the command', () => {
@@ -326,21 +330,23 @@ describe('commands', () => {
       expect(() => actions.createMention({})).toThrowErrorMatchingInlineSnapshot(
         `"Invalid configuration attributes passed to the MentionExtension command."`,
       );
-      expect(() => actions.createMention({ ...attrs, id: '' })).toThrowErrorMatchingInlineSnapshot(
-        `"Invalid configuration attributes passed to the MentionExtension command."`,
-      );
       expect(() =>
-        actions.createMention({ ...attrs, label: '' }),
+        actions.createMention({ ...attributes, id: '' }),
       ).toThrowErrorMatchingInlineSnapshot(
         `"Invalid configuration attributes passed to the MentionExtension command."`,
       );
       expect(() =>
-        actions.createMention({ ...attrs, name: 'invalid' }),
+        actions.createMention({ ...attributes, label: '' }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"Invalid configuration attributes passed to the MentionExtension command."`,
+      );
+      expect(() =>
+        actions.createMention({ ...attributes, name: 'invalid' }),
       ).toThrowErrorMatchingInlineSnapshot(
         `"The name 'invalid' specified for this command is invalid. Please choose from: [\\"tag\\",\\"at\\",\\"plus\\"]."`,
       );
       expect(() =>
-        actions.createMention({ ...attrs, name: undefined }),
+        actions.createMention({ ...attributes, name: undefined }),
       ).toThrowErrorMatchingInlineSnapshot(
         `"The MentionExtension command must specify a name since there are multiple matchers configured"`,
       );

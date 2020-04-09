@@ -13,20 +13,20 @@ import {
 import React from 'react';
 
 import {
-  Attrs,
   Cast,
   convertToPrioritizedExtension,
   Extension,
-  ExtensionManager,
   FlexibleExtension,
   isMarkExtension,
   isNodeExtension,
+  Manager,
   MarkExtension,
   NodeExtension,
   object,
   pick,
+  ProsemirrorAttributes,
 } from '@remirror/core';
-import { InjectedRemirrorProps, Remirror, RemirrorProps } from '@remirror/react';
+import { InjectedRenderEditorProps, RenderEditor, RenderEditorProps } from '@remirror/react';
 
 import { markFactory, nodeFactory } from './jest-remirror-builder';
 import { BaseExtensionNodeNames, nodeExtensions } from './jest-remirror-schema';
@@ -37,10 +37,10 @@ import {
   CreateTestEditorReturn,
   GenericExtension,
   GetNames,
-  MarkWithAttrs,
-  MarkWithoutAttrs,
-  NodeWithAttrs,
-  NodeWithoutAttrs,
+  MarkWithAttributes,
+  MarkWithoutAttributes,
+  NodeWithAttributes,
+  NodeWithoutAttributes,
   Tags,
 } from './jest-remirror-types';
 import { replaceSelection } from './jest-remirror-utils';
@@ -65,17 +65,19 @@ export const renderEditor = <
   {
     plainMarks = Cast<GPlainMarks>([]),
     plainNodes = Cast<GPlainNodes>([]),
-    attrMarks = Cast<GAttrMarks>([]),
-    attrNodes = Cast<GAttrNodes>([]),
+    attrMarks: attributeMarks = Cast<GAttrMarks>([]),
+    attrNodes: attributeNodes = Cast<GAttrNodes>([]),
     others = Cast<GOthers>([]),
   }: Partial<
     CreateTestEditorExtensions<GPlainMarks, GPlainNodes, GAttrMarks, GAttrNodes, GOthers>
   > = object(),
-  props: Partial<Omit<RemirrorProps<GExtension>, 'manager'>> = object(),
+  properties: Partial<Omit<RenderEditorProps<GExtension>, 'manager'>> = object(),
 ): GReturn => {
   const innerNodeExtensions = nodeExtensions.filter(
     ({ name }) =>
-      !plainNodes.some((ext) => convertToPrioritizedExtension(ext).extension.name === name),
+      !plainNodes.some(
+        (extension) => convertToPrioritizedExtension(extension).extension.name === name,
+      ),
   );
 
   const extensions = [
@@ -83,34 +85,34 @@ export const renderEditor = <
     ...others,
     ...plainMarks,
     ...plainNodes,
-    ...attrMarks,
-    ...attrNodes,
+    ...attributeMarks,
+    ...attributeNodes,
   ].map(convertToPrioritizedExtension);
-  const manager = ExtensionManager.create(extensions);
-  let returnedParams!: InjectedRemirrorProps<GExtension>;
+  const manager = Manager.create(extensions);
+  let returnedParameters: InjectedRenderEditorProps<GExtension>;
 
   const utils = render(
-    <Remirror {...(props as any)} manager={manager as any}>
-      {(params) => {
-        returnedParams = params as any;
+    <RenderEditor {...(properties as any)} manager={manager as any}>
+      {(parameters) => {
+        returnedParameters = parameters;
 
-        if (props.children) {
-          return props.children(params as any);
+        if (properties.children) {
+          return properties.children(parameters);
         }
 
         return <div />;
       }}
-    </Remirror>,
+    </RenderEditor>,
   );
 
-  const view = returnedParams.view as TestEditorView;
+  const view = returnedParameters.view as TestEditorView;
 
-  const add: AddContent<GExtension> = (taggedDoc) => {
+  const add: AddContent<GExtension> = (taggedDocument) => {
     // Work around JSDOM/Node not supporting DOM Selection API
     jsdomSelectionPatch(view);
 
-    const { content } = taggedDoc;
-    const { cursor, node, start, end, all, ...tags } = taggedDoc.tags;
+    const { content } = taggedDocument;
+    const { cursor, node, start, end, all, ...tags } = taggedDocument.tags;
     const { dispatch, state } = view;
 
     // Add the text to the dom
@@ -129,7 +131,7 @@ export const renderEditor = <
       dispatchTextSelection({
         view,
         start,
-        end: end && start <= end ? end : taggedDoc.resolve(start).end(),
+        end: end && start <= end ? end : taggedDocument.resolve(start).end(),
       });
     }
 
@@ -143,8 +145,8 @@ export const renderEditor = <
         overwrite: add,
         state: view.state,
         view,
-        actions: returnedParams.actions,
-        helpers: returnedParams.helpers,
+        actions: returnedParameters.actions,
+        helpers: returnedParameters.helpers,
         jumpTo: (pos: 'start' | 'end' | number, endPos?: number) => {
           if (pos === 'start') {
             dispatchTextSelection({ view, start: 1 });
@@ -179,11 +181,11 @@ export const renderEditor = <
           return updateContent();
         },
         actionsCallback: (callback) => {
-          callback(returnedParams.actions);
+          callback(returnedParameters.actions);
           return updateContent();
         },
         helpersCallback: (callback) => {
-          callback(returnedParams.helpers);
+          callback(returnedParameters.helpers);
           return updateContent(); // Helpers don't update the content but this is easier.
         },
         shortcut: (text) => {
@@ -202,8 +204,8 @@ export const renderEditor = <
           command(view.state, view.dispatch, view);
           return updateContent();
         },
-        fire: (params) => {
-          fireEventAtPosition({ view, ...params });
+        fire: (parameters) => {
+          fireEventAtPosition({ view, ...parameters });
           return updateContent();
         },
       };
@@ -216,42 +218,42 @@ export const renderEditor = <
 
   const { schema } = view.state;
 
-  const nodesWithAttrs: NodeWithAttrs<GAttrNodeNames> = object();
-  attrNodes.filter(isNodeExtension).forEach(({ name }) => {
-    nodesWithAttrs[name as GAttrNodeNames] = (attrs: Attrs = object()) =>
-      nodeFactory({ name, schema, attrs });
+  const nodesWithAttributes: NodeWithAttributes<GAttrNodeNames> = object();
+  attributeNodes.filter(isNodeExtension).forEach(({ name }) => {
+    nodesWithAttributes[name as GAttrNodeNames] = (attributes: ProsemirrorAttributes = object()) =>
+      nodeFactory({ name, schema, attributes: attributes });
   });
 
-  const nodesWithoutAttrs: NodeWithoutAttrs<GPlainNodeNames> = Cast({
+  const nodesWithoutAttributes: NodeWithoutAttributes<GPlainNodeNames> = Cast({
     p: nodeFactory({ name: 'paragraph', schema }),
   });
   [...plainNodes, ...innerNodeExtensions].filter(isNodeExtension).forEach(({ name }) => {
-    nodesWithoutAttrs[name as GPlainNodeNames] = nodeFactory({ name, schema });
+    nodesWithoutAttributes[name as GPlainNodeNames] = nodeFactory({ name, schema });
   });
 
-  const marksWithAttrs: MarkWithAttrs<GAttrMarkNames> = object();
-  attrMarks.filter(isMarkExtension).forEach(({ name }) => {
-    marksWithAttrs[name as GAttrMarkNames] = (attrs: Attrs = object()) =>
-      markFactory({ name, schema, attrs });
+  const marksWithAttributes: MarkWithAttributes<GAttrMarkNames> = object();
+  attributeMarks.filter(isMarkExtension).forEach(({ name }) => {
+    marksWithAttributes[name as GAttrMarkNames] = (attributes: ProsemirrorAttributes = object()) =>
+      markFactory({ name, schema, attributes: attributes });
   });
 
-  const marksWithoutAttrs: MarkWithoutAttrs<GPlainMarkNames> = object();
+  const marksWithoutAttributes: MarkWithoutAttributes<GPlainMarkNames> = object();
   plainMarks.filter(isMarkExtension).forEach(({ name }) => {
-    marksWithoutAttrs[name as GPlainMarkNames] = markFactory({ name, schema });
+    marksWithoutAttributes[name as GPlainMarkNames] = markFactory({ name, schema });
   });
 
   return ({
-    ...returnedParams,
+    ...returnedParameters,
     utils,
     view,
     schema,
-    getState: returnedParams.manager.getState,
+    getState: returnedParameters.manager.getState,
     add,
-    nodes: nodesWithoutAttrs,
-    marks: marksWithoutAttrs,
-    attrNodes: nodesWithAttrs,
-    attrMarks: marksWithAttrs,
-    p: (nodesWithoutAttrs as any).p,
-    doc: (nodesWithoutAttrs as any).doc,
+    nodes: nodesWithoutAttributes,
+    marks: marksWithoutAttributes,
+    attrNodes: nodesWithAttributes,
+    attrMarks: marksWithAttributes,
+    p: (nodesWithoutAttributes as any).p,
+    doc: (nodesWithoutAttributes as any).doc,
   } as unknown) as GReturn;
 };

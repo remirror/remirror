@@ -1,8 +1,6 @@
 import { act, render } from '@testing-library/react';
 import React from 'react';
 
-import { RemirrorManager, useRemirrorManager } from '@remirror/react';
-
 import { PortalContainer, RemirrorPortals } from '..';
 
 describe('RemirrorPortals', () => {
@@ -25,30 +23,6 @@ describe('RemirrorPortals', () => {
 
     expect(getByTestId('test')).toBeTruthy();
     expect(mockRender).toBeCalledWith({}, {});
-  });
-
-  it('provides access to the manager context', () => {
-    expect.assertions(1);
-
-    const Component = () => {
-      const manager = useRemirrorManager();
-
-      expect(manager).toBeTruthy();
-
-      return <div data-testid='test' />;
-    };
-
-    const portalContainer = new PortalContainer();
-    render(
-      <RemirrorManager>
-        <RemirrorPortals portalContainer={portalContainer} />
-      </RemirrorManager>,
-    );
-
-    act(() => {
-      document.body.appendChild(container);
-      portalContainer.render({ render: Component, container });
-    });
   });
 
   it('removes the portal the when dom node is removed', () => {

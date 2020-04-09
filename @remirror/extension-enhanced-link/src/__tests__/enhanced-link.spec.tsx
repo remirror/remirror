@@ -4,7 +4,7 @@ import { EnhancedLinkExtension } from '../enhanced-link-extension';
 
 test('ssr', () => {
   // const manager = createBaseTestManager([new EnhancedLinkExtension({})]);
-  // ReactSerializer.fromExtensionManager(manager);
+  // ReactSerializer.fromManager(manager);
   const initialContent = {
     type: 'doc',
     content: [

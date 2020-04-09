@@ -1,8 +1,8 @@
 import { DEFAULT_SUGGESTER } from 'prosemirror-suggest';
 
-import { Attrs, bool, isPlainObject, isString, pick } from '@remirror/core';
+import { bool, isPlainObject, isString, pick, ProsemirrorAttributes } from '@remirror/core';
 
-import { MentionExtensionAttrs, MentionExtensionMatcher } from './mention-types';
+import { MentionExtensionAttributes, MentionExtensionMatcher } from './mention-types';
 
 /**
  * The default matcher to use when none is provided in options
@@ -25,8 +25,10 @@ export const DEFAULT_MATCHER = {
  * Check that the attributes exist and are valid for the mention update
  * command method.
  */
-export const isValidMentionAttrs = (attrs?: Attrs): attrs is MentionExtensionAttrs =>
-  bool(attrs && isPlainObject(attrs) && attrs.id && attrs.label);
+export const isValidMentionAttributes = (
+  attributes: ProsemirrorAttributes,
+): attrs is MentionExtensionAttributes =>
+  bool(attributes && isPlainObject(attributes) && attributes.id && attributes.label);
 
 /**
  * Gets the matcher from the list of matchers if it exists.

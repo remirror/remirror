@@ -4,26 +4,26 @@ import { liftListItem, wrapInList } from 'prosemirror-schema-list';
 import { isFunction, isNumber, object } from '@remirror/core-helpers';
 import {
   AnyFunction,
-  Attrs,
-  AttrsParams,
+  AttributesParameter,
   EditorSchema,
   MarkType,
-  MarkTypeParams,
+  MarkTypeParameter,
   NodeType,
-  NodeTypeParams,
+  NodeTypeParameter,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   ProsemirrorNode,
-  RangeParams,
-  TransformTransactionParams,
+  RangeParameter,
+  TransformTransactionParameter,
 } from '@remirror/core-types';
 
 import { getMarkRange, isMarkType, isNodeType } from './dom-utils';
 import { findParentNode, isNodeActive, selectionEmpty } from './prosemirror-utils';
 
-interface UpdateMarkParams
-  extends Partial<RangeParams>,
-    Partial<AttrsParams>,
-    TransformTransactionParams {
+interface UpdateMarkParameter
+  extends Partial<RangeParameter>,
+    Partial<AttributesParameter>,
+    TransformTransactionParameter {
   /**
    * The text to append.
    *
@@ -46,15 +46,15 @@ interface UpdateMarkParams
  */
 export const updateMark = ({
   type,
-  attrs = object<Attrs>(),
+  attrs: attributes = object<ProsemirrorAttributes>(),
   appendText,
   range,
-}: UpdateMarkParams): ProsemirrorCommandFunction => (state, dispatch) => {
+}: UpdateMarkParameter): ProsemirrorCommandFunction => (state, dispatch) => {
   const { selection } = state;
   const { tr } = state;
   const { from, to } = range ?? selection;
 
-  tr.addMark(from, to, type.create(attrs));
+  tr.addMark(from, to, type.create(attributes));
 
   if (appendText) {
     tr.insertText(appendText);
@@ -75,18 +75,22 @@ export const updateMark = ({
  *
  * @public
  */
-export const toggleWrap = (type: NodeType, attrs?: Attrs): ProsemirrorCommandFunction => (
-  state,
-  dispatch,
-) => {
+export const toggleWrap = (
+  type: NodeType,
+  attributes: ProsemirrorAttributes,
+): ProsemirrorCommandFunction => (state, dispatch) => {
   const isActive = isNodeActive({ state, type });
 
   if (isActive) {
     return lift(state, dispatch);
   }
 
-  return wrapIn(type, attrs)(state, dispatch);
+  return wrapIn(type, attributes)(state, dispatch);
 };
+
+function isList(node: ProsemirrorNode, schema: EditorSchema) {
+  return node.type === schema.nodes.bulletList || node.type === schema.nodes.orderedList;
+}
 
 /**
  * Toggles a list item.
@@ -110,10 +114,6 @@ export const toggleList = (type: NodeType, itemType: NodeType): ProsemirrorComma
 
   if (!range) {
     return false;
-  }
-
-  function isList(node: ProsemirrorNode, schema: EditorSchema) {
-    return node.type === schema.nodes.bulletList || node.type === schema.nodes.orderedList;
   }
 
   const parentList = findParentNode({
@@ -141,7 +141,7 @@ export const toggleList = (type: NodeType, itemType: NodeType): ProsemirrorComma
   return wrapInList(type)(state, dispatch);
 };
 
-interface ToggleBlockItemParams extends NodeTypeParams, Partial<AttrsParams> {
+interface ToggleBlockItemParameter extends NodeTypeParameter, Partial<AttributesParameter> {
   /**
    * The type to toggle back to. Usually this is the paragraph node type.
    */
@@ -158,21 +158,21 @@ interface ToggleBlockItemParams extends NodeTypeParams, Partial<AttrsParams> {
 export const toggleBlockItem = ({
   type,
   toggleType,
-  attrs = object<Attrs>(),
-}: ToggleBlockItemParams): ProsemirrorCommandFunction => (state, dispatch) => {
-  const isActive = isNodeActive({ state, type, attrs });
+  attrs: attributes = object<ProsemirrorAttributes>(),
+}: ToggleBlockItemParameter): ProsemirrorCommandFunction => (state, dispatch) => {
+  const isActive = isNodeActive({ state, type, attrs: attributes });
 
   if (isActive) {
     return setBlockType(toggleType)(state, dispatch);
   }
 
-  return setBlockType(type, attrs)(state, dispatch);
+  return setBlockType(type, attributes)(state, dispatch);
 };
 
-interface ReplaceTextParams
-  extends Partial<RangeParams>,
-    Partial<AttrsParams>,
-    TransformTransactionParams {
+interface ReplaceTextParameter
+  extends Partial<RangeParameter>,
+    Partial<AttributesParameter>,
+    TransformTransactionParameter {
   /**
    * The text to append.
    *
@@ -190,7 +190,10 @@ interface ReplaceTextParams
   type?: NodeType | MarkType;
 }
 
-interface CallMethodParams<GFunction extends AnyFunction, GReturn extends ReturnType<GFunction>> {
+interface CallMethodParameter<
+  GFunction extends AnyFunction,
+  GReturn extends ReturnType<GFunction>
+> {
   fn: GFunction | unknown;
   defaultReturn: GReturn;
 }
@@ -201,11 +204,11 @@ interface CallMethodParams<GFunction extends AnyFunction, GReturn extends Return
 const callMethod = <
   GFunction extends AnyFunction,
   GReturn extends ReturnType<GFunction>,
-  GParams extends Parameters<GFunction>
+  GParameter extends Parameters<GFunction>
 >(
-  { fn, defaultReturn }: CallMethodParams<GFunction, GReturn>,
-  args: GParams,
-): GReturn => (isFunction(fn) ? fn(...args) : defaultReturn);
+  { fn, defaultReturn }: CallMethodParameter<GFunction, GReturn>,
+  arguments_: GParameter,
+): GReturn => (isFunction(fn) ? fn(...arguments_) : defaultReturn);
 
 /**
  * Taken from https://stackoverflow.com/a/4900484
@@ -213,9 +216,9 @@ const callMethod = <
  * Check that the browser is chrome. Supports passing a minimum version to check that it is a greater than or equal version.
  */
 const isChrome = (minVersion = 0): boolean => {
-  const parsedAgent = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+  const parsedAgent = navigator.userAgent.match(/Chrom(e|ium)\/(\d+)\./);
 
-  return parsedAgent ? parseInt(parsedAgent[2], 10) >= minVersion : false;
+  return parsedAgent ? Number.parseInt(parsedAgent[2], 10) >= minVersion : false;
 };
 
 /**
@@ -228,12 +231,12 @@ const isChrome = (minVersion = 0): boolean => {
 export const replaceText = ({
   range,
   type,
-  attrs = object<Attrs>(),
+  attrs: attributes = object<ProsemirrorAttributes>(),
   appendText = '',
   content = '',
   startTransaction,
   endTransaction,
-}: ReplaceTextParams): ProsemirrorCommandFunction => (state, dispatch) => {
+}: ReplaceTextParameter): ProsemirrorCommandFunction => (state, dispatch) => {
   const { schema, selection } = state;
   // const { $from, $to } = selection;
   const index = selection.$from.index();
@@ -246,7 +249,7 @@ export const replaceText = ({
       return false;
     }
 
-    tr.replaceWith(from, to, type.create(attrs, content ? schema.text(content) : undefined));
+    tr.replaceWith(from, to, type.create(attributes, content ? schema.text(content) : undefined));
   } else {
     if (!content) {
       throw new Error('`replaceText` cannot be called without content when using a mark type');
@@ -255,7 +258,7 @@ export const replaceText = ({
     tr.replaceWith(
       from,
       to,
-      schema.text(content, isMarkType(type) ? [type.create(attrs)] : undefined),
+      schema.text(content, isMarkType(type) ? [type.create(attributes)] : undefined),
     );
   }
 
@@ -276,10 +279,10 @@ export const replaceText = ({
   return true;
 };
 
-interface RemoveMarkParams
-  extends MarkTypeParams,
-    Partial<RangeParams<'to'>>,
-    TransformTransactionParams {
+interface RemoveMarkParameter
+  extends MarkTypeParameter,
+    Partial<RangeParameter<'to'>>,
+    TransformTransactionParameter {
   /**
    * Whether to expand empty selections to the current mark range
    *
@@ -301,7 +304,7 @@ export const removeMark = ({
   range,
   endTransaction,
   startTransaction,
-}: RemoveMarkParams): ProsemirrorCommandFunction => (state, dispatch) => {
+}: RemoveMarkParameter): ProsemirrorCommandFunction => (state, dispatch) => {
   const { selection } = state;
   const tr = callMethod({ fn: startTransaction, defaultReturn: state.tr }, [state.tr, state]);
   let { from, to } = range ?? selection;

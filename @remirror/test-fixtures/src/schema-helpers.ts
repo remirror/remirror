@@ -1,12 +1,12 @@
 import minDocument from 'min-document';
 
 import {
-  BaseExtensionOptions,
+  BaseExtensionSettings,
   Cast,
   DocExtension,
   Extension,
-  ExtensionManager,
   FlexibleExtension,
+  Manager,
   TextExtension,
 } from '@remirror/core';
 import {
@@ -19,6 +19,7 @@ import {
   PlaceholderExtension,
   UnderlineExtension,
 } from '@remirror/core-extensions';
+import { ExtensionFactory } from '@remirror/core/lib/extension/extension-factory';
 import { PortalContainer } from '@remirror/react-portals';
 import { defaultRemirrorThemeValue } from '@remirror/ui';
 
@@ -62,15 +63,15 @@ export const ExtensionMap = {
 /**
  * @deprecated Causes issues when multiple tests use this. Prefer {@link createTestManager}
  */
-export const manager = ExtensionManager.create(extensions).init(helpers);
+export const manager = Manager.create(extensions).init(helpers);
 
 export const createBaseTestManager = <GFlexibleList extends FlexibleExtension[]>(
   extra: GFlexibleList = [] as any,
-) => ExtensionManager.create([...baseExtensions, ...extra]);
+) => Manager.create([...baseExtensions, ...extra]);
 
 export const createTestManager = <GFlexibleList extends FlexibleExtension[]>(
   extra: GFlexibleList = [] as any,
-) => ExtensionManager.create([...extensions, ...extra]);
+) => Manager.create([...extensions, ...extra]);
 
 export const { schema, plugins } = manager.data;
 export const testDocument = minDocument;
@@ -81,14 +82,10 @@ export const initialJson = {
   ],
 };
 
-export class TestExtension extends Extension<{ run: boolean } & BaseExtensionOptions> {
-  get name() {
-    return 'test' as const;
-  }
-
-  get defaultOptions() {
-    return {
-      run: true,
-    };
-  }
-}
+export const TestExtension = ExtensionFactory.typed<
+  { run?: boolean } & BaseExtensionSettings
+>().plain({
+  name: 'test',
+  defaultSettings: { run: true },
+  defaultProperties: {},
+});

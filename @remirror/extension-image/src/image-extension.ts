@@ -1,21 +1,21 @@
 import { ResolvedPos } from 'prosemirror-model';
 
 import {
-  Attrs,
   bool,
   Cast,
-  CommandNodeTypeParams,
+  CommandNodeTypeParameter,
   isElementDOMNode,
   NodeExtension,
   NodeExtensionSpec,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
 } from '@remirror/core';
 
 import { createImageExtensionPlugin } from './image-plugin';
-import { getAttrs } from './image-utils';
+import { getAttributes } from './image-utils';
 
-const hasCursor = <T extends object>(arg: T): arg is T & { $cursor: ResolvedPos } => {
-  return bool(Cast(arg).$cursor);
+const hasCursor = <T extends object>(argument: T): arg is T & { $cursor: ResolvedPos } => {
+  return bool(Cast(argument).$cursor);
 };
 
 export class ImageExtension extends NodeExtension {
@@ -27,7 +27,7 @@ export class ImageExtension extends NodeExtension {
     return {
       inline: true,
       attrs: {
-        ...this.extraAttrs(null),
+        ...this.extraAttributes(null),
         align: { default: null },
         alt: { default: '' },
         crop: { default: null },
@@ -43,7 +43,7 @@ export class ImageExtension extends NodeExtension {
         {
           tag: 'img[src]',
           getAttrs: (domNode) =>
-            isElementDOMNode(domNode) ? getAttrs(this.getExtraAttrs(domNode)) : {},
+            isElementDOMNode(domNode) ? getAttributes(this.getExtraAttributes(domNode)) : {},
         },
       ],
       toDOM(node) {
@@ -52,12 +52,15 @@ export class ImageExtension extends NodeExtension {
     };
   }
 
-  public commands({ type }: CommandNodeTypeParams) {
+  public commands({ type }: CommandNodeTypeParameter) {
     return {
-      insertImage: (attrs?: Attrs): ProsemirrorCommandFunction => (state, dispatch) => {
+      insertImage: (attributes: ProsemirrorAttributes): ProsemirrorCommandFunction => (
+        state,
+        dispatch,
+      ) => {
         const { selection } = state;
         const position = hasCursor(selection) ? selection.$cursor.pos : selection.$to.pos;
-        const node = type.create(attrs);
+        const node = type.create(attributes);
         const transaction = state.tr.insert(position, node);
 
         if (dispatch) {

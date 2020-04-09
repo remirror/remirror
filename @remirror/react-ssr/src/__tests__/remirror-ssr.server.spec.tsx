@@ -7,19 +7,19 @@
 import { jsx } from '@emotion/core';
 import { renderToString } from 'react-dom/server';
 
-import { ExtensionManager } from '@remirror/core';
+import { Manager } from '@remirror/core';
 import { createTestManager, helpers, initialJson } from '@remirror/test-fixtures';
 
 import { RemirrorSSR } from '..';
 
-let manager: ExtensionManager;
+let manager: Manager;
 
 beforeEach(() => {
   manager = createTestManager();
 });
 
 test('should render the ssr component', () => {
-  manager.init({ ...helpers, getState: () => state });
+  manager.initialize({ ...helpers, getState: () => state });
   const state = manager.createState({ content: initialJson });
 
   const htmlString = renderToString(

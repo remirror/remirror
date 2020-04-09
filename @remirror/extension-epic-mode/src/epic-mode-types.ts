@@ -1,7 +1,7 @@
-import { BaseExtensionOptions } from '@remirror/core';
+import { BaseExtensionSettings } from '@remirror/core';
 
-export type EpicModePluginStateParams = Required<
-  Omit<EpicModeExtensionOptions, keyof BaseExtensionOptions>
+export type EpicModePluginStateParameter = Required<
+  Omit<EpicModeExtensionOptions, keyof BaseExtensionSettings>
 >;
 
 export interface ParticleRange {
@@ -9,7 +9,7 @@ export interface ParticleRange {
   max: number;
 }
 
-export interface EpicModeExtensionOptions extends BaseExtensionOptions {
+export interface EpicModeExtensionOptions extends BaseExtensionSettings {
   /**
    * The particle effect to use
    */
@@ -56,7 +56,7 @@ export interface Particle {
   theta?: number;
 }
 
-export interface CreateParticleParams {
+export interface CreateParticleParameter {
   /**
    * x coordinate
    */
@@ -88,7 +88,7 @@ export interface CreateParticleParams {
   canvas: HTMLCanvasElement;
 }
 
-export interface UpdateParticleParams {
+export interface UpdateParticleParameter {
   particle: Particle;
   ctx: CanvasRenderingContext2D;
   canvas: HTMLCanvasElement;
@@ -100,12 +100,12 @@ export interface ParticleEffect {
    *
    * @param params
    */
-  createParticle(params: CreateParticleParams): Particle;
+  createParticle(params: CreateParticleParameter): Particle;
 
   /**
    * Update the created particle (via mutation)
    *
    * @param params
    */
-  updateParticle(params: UpdateParticleParams): void;
+  updateParticle(params: UpdateParticleParameter): void;
 }

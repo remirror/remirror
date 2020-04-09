@@ -1,6 +1,6 @@
-import { Attrs, NodeExtensionOptions } from '@remirror/core';
+import { NodeExtensionConfig, ProsemirrorAttributes } from '@remirror/core';
 
-export interface ParagraphExtensionOptions extends NodeExtensionOptions {
+export interface ParagraphExtensionOptions extends NodeExtensionConfig {
   /**
    * The attribute to use to store the value of the current indentation level.
    */
@@ -22,7 +22,7 @@ export type IndentLevels = [number, number];
  */
 export type TextAlignment = 'left' | 'right' | 'center' | 'justify';
 
-export type ParagraphExtensionAttrs = Attrs<{
+export type ParagraphExtensionAttributes = ProsemirrorAttributes<{
   /**
    * The alignment of the text
    */

@@ -2,27 +2,29 @@ import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirr
 import { Step } from 'prosemirror-transform';
 
 import {
-  Attrs,
-  CommandParams,
+  ProsemirrorAttributes,
+  CommandParameter,
   debounce,
   EditorState,
   Extension,
   isArray,
   isNumber,
-  OnTransactionParams,
+  OnTransactionParameter,
   Plugin,
   ProsemirrorCommandFunction,
   uniqueId,
 } from '@remirror/core';
 
-import { CollaborationAttrs, CollaborationExtensionOptions } from './collaboration-types';
+import { CollaborationAttributes, CollaborationExtensionOptions } from './collaboration-types';
 
 /**
  * Check that the attributes exist and are valid for the collaboration update
  * command method.
  */
-const isValidCollaborationAttrs = (attrs?: Attrs): attrs is CollaborationAttrs => {
-  return !(!attrs || !isArray(attrs.steps) || !isNumber(attrs.version));
+const isValidCollaborationAttributes = (
+  attributes: ProsemirrorAttributes,
+): attrs is CollaborationAttributes => {
+  return !(!attributes || !isArray(attributes.steps) || !isNumber(attributes.version));
 };
 
 /**
@@ -56,17 +58,17 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
   /**
    * This provides one command for issuing updates .
    */
-  public commands({ getState, schema }: CommandParams) {
+  public commands({ getState, schema }: CommandParameter) {
     return {
-      collaborationUpdate: (attrs: CollaborationAttrs): ProsemirrorCommandFunction => (
+      collaborationUpdate: (attributes: CollaborationAttributes): ProsemirrorCommandFunction => (
         _,
         dispatch,
       ) => {
-        if (!isValidCollaborationAttrs(attrs)) {
+        if (!isValidCollaborationAttributes(attributes)) {
           throw new Error('Invalid attributes passed to the collaboration command.');
         }
 
-        const { version, steps } = attrs;
+        const { version, steps } = attributes;
         const state = getState();
 
         if (getVersion(state) > version) {
@@ -103,7 +105,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
   /**
    * Called whenever a transaction occurs.
    */
-  public onTransaction = ({ getState }: OnTransactionParams) => {
+  public onTransaction = ({ getState }: OnTransactionParameter) => {
     this.getSendableSteps(getState());
   };
 

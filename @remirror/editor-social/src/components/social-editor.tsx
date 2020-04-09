@@ -2,9 +2,9 @@
 
 import { jsx } from '@emotion/core';
 import {
-  SuggestChangeHandlerParams,
+  SuggestChangeHandlerParameter,
   SuggestKeyBindingMap,
-  SuggestKeyBindingParams,
+  SuggestKeyBindingParameter,
   SuggestStateMatch,
 } from 'prosemirror-suggest';
 import { Fragment, PureComponent } from 'react';
@@ -35,7 +35,7 @@ import {
   ActiveUserData,
   MatchName,
   MentionState,
-  OnMentionChangeParams,
+  OnMentionChangeParameter,
   SocialEditorProps,
 } from '../social-types';
 import { calculateNewIndexFromArrowPress, mapToActiveIndex } from '../social-utils';
@@ -97,8 +97,8 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   private readonly createMentionArrowBindings = (direction: 'up' | 'down') => ({
     queryText,
     suggester: { name },
-  }: SuggestKeyBindingParams) => {
-    const { activeIndex: prevIndex, hideMentionSuggestions: hideSuggestions } = this.state;
+  }: SuggestKeyBindingParameter) => {
+    const { activeIndex: previousIndex, hideMentionSuggestions: hideSuggestions } = this.state;
     const { onMentionChange: onMentionStateChange } = this.props;
 
     const matches = name === 'at' ? this.users : this.tags;
@@ -111,11 +111,11 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     const activeIndex = calculateNewIndexFromArrowPress({
       direction,
       matchLength: matches.length,
-      prevIndex,
+      prevIndex: previousIndex,
     });
 
     this.setState({ activeIndex, activeMatcher: name as MatchName });
-    onMentionStateChange({ name, query: queryText.full, activeIndex } as OnMentionChangeParams);
+    onMentionStateChange({ name, query: queryText.full, activeIndex } as OnMentionChangeParameter);
 
     return true;
   };
@@ -229,18 +229,18 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * The is the callback for when a suggestion is changed.
    */
-  private readonly onChange = (params: SuggestChangeHandlerParams) => {
+  private readonly onChange = (parameters: SuggestChangeHandlerParameter) => {
     const {
       queryText,
       suggester: { name },
-    } = params;
+    } = parameters;
 
     if (name) {
-      const props = {
+      const properties = {
         name,
         query: queryText.full,
       } as MentionState;
-      this.props.onMentionChange({ ...props, activeIndex: this.state.activeIndex });
+      this.props.onMentionChange({ ...properties, activeIndex: this.state.activeIndex });
     }
 
     // Reset the active index so that the dropdown is back to the top.
@@ -249,14 +249,14 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
       activeMatcher: name as MatchName,
       hideMentionSuggestions: false,
     });
-    this.mention = params;
+    this.mention = parameters;
   };
 
   /**
    * Called when the none of our configured matchers match
    */
-  private readonly onExit: Required<MentionExtensionOptions>['onExit'] = (params) => {
-    const { queryText, command } = params;
+  private readonly onExit: Required<MentionExtensionOptions>['onExit'] = (parameters) => {
+    const { queryText, command } = parameters;
 
     // Check whether we've manually caused this exit. If not, trigger the
     // command.
@@ -311,7 +311,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
    * Create the arrow bindings for the emoji suggestions.
    */
   private readonly createEmojiArrowBindings = (direction: 'up' | 'down') => () => {
-    const { activeEmojiIndex: prevIndex, hideMentionSuggestions, emojiList } = this.state;
+    const { activeEmojiIndex: previousIndex, hideMentionSuggestions, emojiList } = this.state;
 
     if (hideMentionSuggestions || !emojiList.length) {
       return false;
@@ -321,7 +321,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     const activeEmojiIndex = calculateNewIndexFromArrowPress({
       direction,
       matchLength: emojiList.length,
-      prevIndex,
+      prevIndex: previousIndex,
     });
 
     this.setState({ activeEmojiIndex });
@@ -397,7 +397,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
           <RemirrorExtension
             Constructor={MentionExtension}
             matchers={this.matchers}
-            extraAttrs={['href', ['role', 'presentation']]}
+            extraAttributes={['href', ['role', 'presentation']]}
             onChange={this.onChange}
             onExit={this.onExit}
             keyBindings={this.mentionKeyBindings}

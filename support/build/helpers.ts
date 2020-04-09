@@ -3,7 +3,7 @@ import { outputFile } from 'fs-extra';
 import { join, relative, resolve } from 'path';
 import { PackageJson as BasePackageJson } from 'type-fest';
 
-export { keys, uniqueArray } from '../../@remirror/core-helpers/src';
+export { keys, uniqueArray } from '../../@remirror/core-helpers/src/core-helpers';
 
 export const DEPENDENCY_TYPES = [
   'dependencies',
@@ -30,21 +30,24 @@ export interface WorkspacePackage extends PackageJson {
 
 let packages: Packages | undefined;
 
-export const baseDir = (...paths: string[]) => resolve(__dirname, '../..', join(...paths));
+export const baseDirectory = (...paths: string[]) => resolve(__dirname, '../..', join(...paths));
 
 /**
  * Get all the dependencies for the remirror project.
  */
 export const getAllDependencies = async (): Promise<WorkspacePackage[]> => {
   if (!packages) {
-    packages = await getPackages(baseDir());
+    packages = await getPackages(baseDirectory());
   }
 
-  return packages?.packages.map((pkg) => ({ ...pkg.packageJson, location: pkg.dir })) ?? [];
+  return (
+    packages?.packages.map((package_) => ({ ...package_.packageJson, location: package_.dir })) ??
+    []
+  );
 };
 
 export const getRelativePathFromJson = (json: WorkspacePackage) =>
-  relative(baseDir(), json.location);
+  relative(baseDirectory(), json.location);
 
 /**
  * Get all the packages that can be used as dependencies within the project.
@@ -55,7 +58,7 @@ export const getDependencyPackageMap = async () => {
 
   // Only the packages that have types can be dependencies with the remirror
   // workspace. This naturally excludes examples and the e2e packages.
-  const tsPackages = packages.filter((pkg) => pkg.types);
+  const tsPackages = packages.filter((package_) => package_.types);
 
   // Relative packages are here.
   const tsPackagesWithRelativePaths: Record<string, string> = {};
@@ -107,12 +110,12 @@ export const writeCjsEntryFile = async ({
   production,
   development,
   fileName = 'index.js',
-  devOnly = false,
+  devOnly: developmentOnly = false,
 }: WriteCjsEntryFileOptions) => {
   const commonJsRequire = (fileName: string) =>
     `module.exports = require('./${relative(path, fileName)}');`;
 
-  const contents = devOnly
+  const contents = developmentOnly
     ? commonJsRequire(development)
     : `'use strict'
 

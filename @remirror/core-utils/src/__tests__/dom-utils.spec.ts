@@ -18,19 +18,19 @@ import { NodeMatch } from '@remirror/core-types';
 import { docNodeBasicJSON } from '@remirror/test-fixtures';
 
 import {
-  atDocEnd,
-  atDocStart,
+  atDocEnd as atDocumentEnd,
+  atDocStart as atDocumentStart,
   canInsertNode,
   createDocumentNode,
   endPositionOfParent,
   fromHTML,
   getCursor,
-  getMarkAttrs,
+  getMarkAttributes,
   getMarkRange,
   getNearestNonTextNode,
   getSelectedWord,
-  isDocNode,
-  isDocNodeEmpty,
+  isDocNode as isDocumentNode,
+  isDocNodeEmpty as isDocumentNodeEmpty,
   isElementDOMNode,
   isMarkActive,
   isNodeSelection,
@@ -115,15 +115,15 @@ describe('canInsertNode', () => {
 
 describe('isDocNodeEmpty', () => {
   it('returns true for a doc with an empty paragraph', () => {
-    expect(isDocNodeEmpty(doc(p()))).toBeTrue();
+    expect(isDocumentNodeEmpty(doc(p()))).toBeTrue();
   });
 
   it('returns false for a doc with nothing inside', () => {
-    expect(isDocNodeEmpty(doc())).toBeFalse();
+    expect(isDocumentNodeEmpty(doc())).toBeFalse();
   });
 
   it('returns false for a doc with content', () => {
-    expect(isDocNodeEmpty(doc(p(blockquote('quote this...'))))).toBeFalse();
+    expect(isDocumentNodeEmpty(doc(p(blockquote('quote this...'))))).toBeFalse();
   });
 });
 
@@ -138,21 +138,21 @@ describe('isProsemirrorNode', () => {
   });
 });
 
-describe('getMarkAttrs', () => {
+describe('getMarkAttributes', () => {
   it('returns correct mark attrs', () => {
-    const attrs = { href: '/awesome', title: 'awesome' };
+    const attributes = { href: '/awesome', title: 'awesome' };
     const { aHref } = pm.builders(testSchema, {
-      aHref: { markType: 'link', ...attrs },
+      aHref: { markType: 'link', ...attributes },
     });
     const { state, schema } = createEditor(doc(p('a link', aHref('linked <cursor>here'))));
 
-    expect(getMarkAttrs(state, schema.marks.link)).toEqual(attrs);
+    expect(getMarkAttributes(state, schema.marks.link)).toEqual(attributes);
   });
 
   it('returns an empty object when mark not found', () => {
     const { state, schema } = createEditor(doc(p('a link', em('linked <cursor>here'))));
 
-    expect(getMarkAttrs(state, schema.marks.link)).toEqual({});
+    expect(getMarkAttributes(state, schema.marks.link)).toEqual({});
   });
 });
 
@@ -207,7 +207,7 @@ describe('getMarkRange', () => {
 test('getNearestNonTextNode', () => {
   const div = document.createElement('div');
   const text = document.createTextNode('hello');
-  div.appendChild(text);
+  div.append(text);
 
   expect(getNearestNonTextNode(text)).toBe(div);
   expect(getNearestNonTextNode(div)).toBe(div);
@@ -278,25 +278,25 @@ describe('atDocEnd', () => {
   it('returns true at the end of the document', () => {
     const { state } = createEditor(doc(p('Something<cursor>')));
 
-    expect(atDocEnd(state)).toBeTrue();
+    expect(atDocumentEnd(state)).toBeTrue();
   });
 
   it('returns false when no selection', () => {
     const { state } = createEditor(doc(p('Something')));
 
-    expect(atDocEnd(state)).toBeFalse();
+    expect(atDocumentEnd(state)).toBeFalse();
   });
 
   it('returns true for a node selection', () => {
     const { state } = createEditor(doc(p('<node>Something')));
 
-    expect(atDocEnd(state)).toBeTrue();
+    expect(atDocumentEnd(state)).toBeTrue();
   });
 
   it('returns true for full selection', () => {
     const { state } = createEditor(doc(p('<all>Something')));
 
-    expect(atDocEnd(state)).toBeTrue();
+    expect(atDocumentEnd(state)).toBeTrue();
   });
 });
 
@@ -304,19 +304,19 @@ describe('atDocStart', () => {
   it('returns true at the start of the document', () => {
     const { state } = createEditor(doc(p('<cursor>Something')));
 
-    expect(atDocStart(state)).toBeTrue();
+    expect(atDocumentStart(state)).toBeTrue();
   });
 
   it('returns true for full selection', () => {
     const { state } = createEditor(doc(p('Some<all>thing')));
 
-    expect(atDocStart(state)).toBeTrue();
+    expect(atDocumentStart(state)).toBeTrue();
   });
 
   it('returns false elsewhere', () => {
     const { state } = createEditor(doc(p('Someth<cursor>ing')));
 
-    expect(atDocStart(state)).toBeFalse();
+    expect(atDocumentStart(state)).toBeFalse();
   });
 });
 
@@ -368,13 +368,13 @@ describe('nodeNameMatchesList', () => {
 
 describe('isDocNode', () => {
   it('returns true for doc nodes', () => {
-    expect(isDocNode(doc(), testSchema)).toBeTrue();
-    expect(isDocNode(doc())).toBeTrue();
+    expect(isDocumentNode(doc(), testSchema)).toBeTrue();
+    expect(isDocumentNode(doc())).toBeTrue();
   });
 
   it('returns false for non-doc nodes', () => {
-    expect(isDocNode(p())).toBeFalse();
-    expect(isDocNode(undefined)).toBeFalse();
+    expect(isDocumentNode(p())).toBeFalse();
+    expect(isDocumentNode(undefined)).toBeFalse();
   });
 });
 

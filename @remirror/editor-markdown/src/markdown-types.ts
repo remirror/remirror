@@ -1,9 +1,9 @@
-import { RemirrorProps } from '@remirror/react';
+import { RenderEditorProps } from '@remirror/react';
 
 export interface MarkdownEditorProps
   extends Partial<
     Pick<
-      RemirrorProps,
+      RenderEditorProps,
       | 'initialContent'
       | 'attributes'
       | 'editable'

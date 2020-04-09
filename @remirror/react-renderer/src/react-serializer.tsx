@@ -7,11 +7,11 @@ import {
   AnyExtension,
   bool,
   DOMOutputSpec,
-  ExtensionManager,
   Fragment as ProsemirrorFragment,
   isArray,
   isPlainObject,
   isString,
+  Manager,
   Mark,
   MarkExtensionSpec,
   NodeExtensionSpec,
@@ -37,7 +37,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
   constructor(
     nodes: Record<string, NodeToDOM>,
     marks: Record<string, MarkToDOM>,
-    manager: ExtensionManager<GExtension>,
+    manager: Manager<GExtension>,
   ) {
     this.nodes = nodes;
     this.marks = marks;
@@ -130,14 +130,14 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
 
     const Component = structure[0];
     const props: PlainObject = object();
-    const attrs = structure[1];
+    const attributes = structure[1];
     const children: ReactNode[] = [];
     let currentIndex = 1;
-    if (isPlainObject(attrs) && !isArray(attrs)) {
+    if (isPlainObject(attributes) && !isArray(attributes)) {
       currentIndex = 2;
-      for (const name in attrs) {
-        if (attrs[name] != null) {
-          props[name] = attrs[name];
+      for (const name in attributes) {
+        if (attributes[name] != null) {
+          props[name] = attributes[name];
         }
       }
     }
@@ -161,12 +161,10 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
    *
    * @param manager
    */
-  public static fromExtensionManager<GExtension extends AnyExtension = any>(
-    manager: ExtensionManager<GExtension>,
-  ) {
+  public static fromManager<GExtension extends AnyExtension = any>(manager: Manager<GExtension>) {
     return new ReactSerializer(
-      this.nodesFromExtensionManager(manager),
-      this.marksFromExtensionManager(manager),
+      this.nodesFromManager(manager),
+      this.marksFromManager(manager),
       manager,
     );
   }
@@ -176,8 +174,8 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
    *
    * @param manager
    */
-  private static nodesFromExtensionManager<GExtension extends AnyExtension = any>(
-    manager: ExtensionManager<GExtension>,
+  private static nodesFromManager<GExtension extends AnyExtension = any>(
+    manager: Manager<GExtension>,
   ) {
     const result = gatherToDOM(manager.nodes);
     if (!result.text) {
@@ -191,8 +189,8 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
    *
    * @param manager
    */
-  private static marksFromExtensionManager<GExtension extends AnyExtension = any>(
-    manager: ExtensionManager<GExtension>,
+  private static marksFromManager<GExtension extends AnyExtension = any>(
+    manager: Manager<GExtension>,
   ) {
     return gatherToDOM(manager.marks);
   }

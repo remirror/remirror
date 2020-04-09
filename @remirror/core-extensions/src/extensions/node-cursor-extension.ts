@@ -2,9 +2,10 @@ import { EditorState, Plugin, Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
 import {
-  BaseExtensionOptions,
+  BaseExtensionSettings,
   Extension,
-  ExtensionManagerParams,
+  isEmptyArray,
+  ManagerParameter,
   NodeMatch,
   ResolvedPos,
   uniqueArray,
@@ -18,9 +19,9 @@ export const findSpecialNodeAfter = ($pos: ResolvedPos, tr: Transaction, matcher
   }
 
   const { parentOffset, parent } = $pos;
-  const docSize = tr.doc.nodeSize - 2;
+  const documentSize = tr.doc.nodeSize - 2;
 
-  if (parentOffset === parent.content.size && $pos.pos + 1 < docSize - 2) {
+  if (parentOffset === parent.content.size && $pos.pos + 1 < documentSize - 2) {
     const { nodeAfter } = tr.doc.resolve($pos.pos + 1);
     if (nodeAfter && nodeNameMatchesList(nodeAfter.firstChild, matchers)) {
       return $pos.pos + 2;
@@ -55,10 +56,10 @@ export const findSpecialNodeBefore = (
   return;
 };
 
-const createNodeCursorExtensionPlugin = (ctx: NodeCursorExtension, nodeNames: string[]) => {
-  const targets = uniqueArray([...nodeNames, ...ctx.options.targets]);
+const createNodeCursorExtensionPlugin = (context: NodeCursorExtension, nodeNames: string[]) => {
+  const targets = uniqueArray([...nodeNames, ...context.options.targets]);
   return new Plugin({
-    key: ctx.pluginKey,
+    key: context.pluginKey,
 
     state: {
       init: () => [],
@@ -85,12 +86,12 @@ const createNodeCursorExtensionPlugin = (ctx: NodeCursorExtension, nodeNames: st
     props: {
       decorations(state: EditorState) {
         const { doc } = state;
-        const positions = getPluginState<number[]>(ctx.pluginKey, state);
+        const positions = getPluginState<number[]>(context.pluginKey, state);
 
-        if (positions?.length) {
+        if (!isEmptyArray(positions)) {
           const decorations = positions.map((position) => {
             const node = document.createElement('span');
-            node.appendChild(document.createTextNode(ZERO_WIDTH_SPACE_CHAR));
+            node.append(document.createTextNode(ZERO_WIDTH_SPACE_CHAR));
             return Decoration.widget(position, node, {
               raw: true,
               side: -1,
@@ -105,7 +106,7 @@ const createNodeCursorExtensionPlugin = (ctx: NodeCursorExtension, nodeNames: st
   });
 };
 
-export interface NodeCursorExtensionOptions extends BaseExtensionOptions {
+export interface NodeCursorExtensionOptions extends BaseExtensionSettings {
   targets?: NodeMatch[];
 }
 
@@ -127,7 +128,7 @@ export class NodeCursorExtension extends Extension<NodeCursorExtensionOptions> {
     };
   }
 
-  public plugin({ tags }: ExtensionManagerParams) {
+  public plugin({ tags }: ManagerParameter) {
     return createNodeCursorExtensionPlugin(this, tags.general.nodeCursor);
   }
 }

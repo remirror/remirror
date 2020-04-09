@@ -2,26 +2,26 @@ import { setBlockType } from 'prosemirror-commands';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 import {
-  Attrs,
-  CommandNodeTypeParams,
+  CommandNodeTypeParameter,
   convertCommand,
-  ExtensionManagerNodeTypeParams,
   KeyBindings,
+  ManagerNodeTypeParameter,
   NodeExtension,
-  NodeExtensionOptions,
+  NodeExtensionConfig,
   NodeExtensionSpec,
   NodeGroup,
   object,
+  ProsemirrorAttributes,
   ProsemirrorNode,
   toggleBlockItem,
 } from '@remirror/core';
 
-export interface HeadingExtensionOptions extends NodeExtensionOptions {
+export interface HeadingExtensionOptions extends NodeExtensionConfig {
   levels?: number[];
   defaultLevel?: number;
 }
 
-export type HeadingExtensionAttrs = Attrs<{
+export type HeadingExtensionAttributes = ProsemirrorAttributes<{
   /**
    * The heading size.
    */
@@ -45,7 +45,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
   get schema(): NodeExtensionSpec {
     return {
       attrs: {
-        ...this.extraAttrs(null),
+        ...this.extraAttributes(null),
         level: {
           default: this.options.defaultLevel,
         },
@@ -69,17 +69,17 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
     };
   }
 
-  public commands({ type, schema }: CommandNodeTypeParams) {
+  public commands({ type, schema }: CommandNodeTypeParameter) {
     return {
       /**
        * Toggle the heading for the current block.
        */
-      toggleHeading: (attrs?: HeadingExtensionAttrs) =>
-        toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs }),
+      toggleHeading: (attributes: HeadingExtensionAttributes) =>
+        toggleBlockItem({ type, toggleType: schema.nodes.paragraph, attrs: attributes }),
     };
   }
 
-  public keys({ type }: ExtensionManagerNodeTypeParams): KeyBindings {
+  public keys({ type }: ManagerNodeTypeParameter): KeyBindings {
     const keys: KeyBindings = object();
 
     this.options.levels.forEach((level) => {
@@ -88,7 +88,7 @@ export class HeadingExtension extends NodeExtension<HeadingExtensionOptions> {
     return keys;
   }
 
-  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParameter) {
     return this.options.levels.map((level) =>
       textblockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), type, () => ({ level })),
     );

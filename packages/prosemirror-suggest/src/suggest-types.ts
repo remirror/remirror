@@ -1,19 +1,24 @@
-import { AnyFunction, EditorViewParams, FromToParams, TextParams } from '@remirror/core-types';
+import {
+  AnyFunction,
+  EditorViewParameter,
+  FromToParameter,
+  TextParameter,
+} from '@remirror/core-types';
 
 import { ChangeReason, ExitReason } from './suggest-constants';
 
 /**
- * This `Suggester` interface defines all the options required to create a
+ * This `Suggestion` interface defines all the options required to create a
  * suggestion within your editor.
  *
  * @remarks
  *
  * The options are passed to the {@link suggest} method which uses them.
  *
- * @typeParam GCommand - the command method a {@link Suggester} makes available
+ * @typeParam GCommand - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
-export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void>> {
+export interface Suggestion<GCommand extends AnyFunction<void> = AnyFunction<void>> {
   /**
    * The activation character(s) to match against.
    *
@@ -60,7 +65,7 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
    *
    * @remarks
    *
-   * This will be used when {@link Suggester.invalidPrefixCharacters} is not
+   * This will be used when {@link Suggestion.invalidPrefixCharacters} is not
    * provided.
    *
    * @defaultValue `/^[\s\0]?$/` - translation: only space and zero width
@@ -149,7 +154,7 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
    *
    * @defaultValue `() => void`
    */
-  onChange?(params: SuggestChangeHandlerParams<GCommand>): void;
+  onChange?(params: SuggestChangeHandlerParameter<GCommand>): void;
 
   /**
    * Called whenever a suggestion is exited with the pre-exit match value.
@@ -162,7 +167,7 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
    *
    * @defaultValue `() => void`
    */
-  onExit?(params: SuggestExitHandlerParams<GCommand>): void;
+  onExit?(params: SuggestExitHandlerParameter<GCommand>): void;
 
   /**
    * Called for each character entry and can be used to disable certain
@@ -176,7 +181,7 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
    *
    * @defaultValue `() => false`
    */
-  onCharacterEntry?(params: SuggestCharacterEntryParams<GCommand>): boolean;
+  onCharacterEntry?(params: SuggestCharacterEntryParameter<GCommand>): boolean;
 
   /**
    * An object that describes how certain key bindings should be handled.
@@ -197,19 +202,19 @@ export interface Suggester<GCommand extends AnyFunction<void> = AnyFunction<void
    * Suggested actions are useful for developing plugins and extensions which
    * provide useful defaults for managing the suggestion lifecycle.
    */
-  createCommand?(params: CreateSuggestCommandParams): GCommand;
+  createCommand?(params: CreateSuggestCommandParameter): GCommand;
 }
 
 /**
- * The parameters needed for the {@link SuggestIgnoreParams.addIgnored} action
+ * The parameters needed for the {@link SuggestIgnoreParameter.addIgnored} action
  * method available to the suggest plugin handlers.
  *
  * @remarks
  *
  * See:
- * - {@link RemoveIgnoredParams}
+ * - {@link RemoveIgnoredParameter}
  */
-export interface AddIgnoredParams extends RemoveIgnoredParams {
+export interface AddIgnoredParameter extends RemoveIgnoredParameter {
   /**
    * When `false` this will ignore the range for all matching suggesters. When
    * true the ignored suggesters will only be the one provided by the name.
@@ -218,10 +223,10 @@ export interface AddIgnoredParams extends RemoveIgnoredParams {
 }
 
 /**
- * The parameters needed for the {@link SuggestIgnoreParams.removeIgnored}
+ * The parameters needed for the {@link SuggestIgnoreParameter.removeIgnored}
  * action method available to the suggest plugin handlers.
  */
-export interface RemoveIgnoredParams extends Pick<Suggester, 'char' | 'name'> {
+export interface RemoveIgnoredParameter extends Pick<Suggestion, 'char' | 'name'> {
   /**
    * The starting point of the match that should be ignored.
    */
@@ -230,9 +235,9 @@ export interface RemoveIgnoredParams extends Pick<Suggester, 'char' | 'name'> {
 
 /**
  * A parameter builder interface describing the ignore methods available to the
- * {@link Suggester} handlers.
+ * {@link Suggestion} handlers.
  */
-export interface SuggestIgnoreParams {
+export interface SuggestIgnoreParameter {
   /**
    * Add a match target to the ignored matches.
    *
@@ -255,13 +260,13 @@ export interface SuggestIgnoreParams {
    *
    * ```ts
    * const suggester = {
-   *   onExit: ({ addIgnored, range: { from }, suggester: { char, name } }: SuggestExitHandlerParams) => {
+   *   onExit: ({ addIgnored, range: { from }, suggester: { char, name } }: SuggestExitHandlerParameter) => {
    *     addIgnored({ from, char, name }); // Ignore this suggestion
    *   },
    * }
    * ```
    */
-  addIgnored(params: AddIgnoredParams): void;
+  addIgnored(params: AddIgnoredParameter): void;
 
   /**
    * When name is provided remove all ignored decorations which match the named
@@ -299,7 +304,7 @@ export interface MatchValue {
 /**
  * A parameter builder interface describing a `from`/`to`/`end` range.
  */
-export interface FromToEndParams extends FromToParams {
+export interface FromToEndParameter extends FromToParameter {
   /**
    * The absolute end of the matching string.
    */
@@ -310,18 +315,18 @@ export interface FromToEndParams extends FromToParams {
  * Describes the properties of a match which includes range and the text as well
  * as information of the suggester that created the match.
  *
- * @typeParam GCommand - the command method a {@link Suggester} makes available
+ * @typeParam GCommand - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
 export interface SuggestStateMatch<GCommand extends AnyFunction<void> = AnyFunction<void>>
-  extends SuggesterParams<GCommand> {
+  extends SuggestionParameter<GCommand> {
   /**
    * Range of current match; for example `@foo|bar` (where | is the cursor)
    * - `from` is the start (= 0)
    * - `to` is cursor position (= 4)
    * - `end` is the end of the match (= 7)
    */
-  range: FromToEndParams;
+  range: FromToEndParameter;
 
   /**
    * Current query of match which doesn't include the activation character.
@@ -342,7 +347,7 @@ export interface SuggestStateMatch<GCommand extends AnyFunction<void> = AnyFunct
 /**
  * A parameter builder interface describing match found by the suggest plugin.
  */
-export interface SuggestStateMatchParams {
+export interface SuggestStateMatchParameter {
   /**
    * The match that will be triggered.
    */
@@ -354,7 +359,7 @@ export interface SuggestStateMatchParams {
  * `Marks`. The method should be called when removing a suggestion that was
  * identified by a prosemirror `Mark`.
  */
-export interface SuggestMarkParams {
+export interface SuggestMarkParameter {
   /**
    * When managing suggestions with marks it is possible to remove a mark
    * without the change reflecting in the prosemirror state. This method should
@@ -370,18 +375,18 @@ export interface SuggestMarkParams {
  * @remarks
  *
  * See:
- * - {@link ReasonParams}
- * - {@link @remirror/core-types#EditorViewParams}
- * - {@link SuggestStateMatchParams}
- * - {@link SuggestMarkParams}
- * - {@link SuggestIgnoreParams}
+ * - {@link ReasonParameter}
+ * - {@link @remirror/core-types#EditorViewParameter}
+ * - {@link SuggestStateMatchParameter}
+ * - {@link SuggestMarkParameter}
+ * - {@link SuggestIgnoreParameter}
  */
-export interface CreateSuggestCommandParams
-  extends Partial<ReasonParams>,
-    EditorViewParams,
-    SuggestStateMatchParams,
-    SuggestMarkParams,
-    SuggestIgnoreParams {}
+export interface CreateSuggestCommandParameter
+  extends Partial<ReasonParameter>,
+    EditorViewParameter,
+    SuggestStateMatchParameter,
+    SuggestMarkParameter,
+    SuggestIgnoreParameter {}
 
 /**
  * Determines whether to replace the full match or the partial match (up to the
@@ -389,29 +394,32 @@ export interface CreateSuggestCommandParams
  */
 export type SuggestReplacementType = 'full' | 'partial';
 
-export interface SuggestCallbackParams<GCommand extends AnyFunction<void> = AnyFunction<void>>
+export interface SuggestCallbackParameter<GCommand extends AnyFunction<void> = AnyFunction<void>>
   extends SuggestStateMatch,
-    EditorViewParams,
-    SuggestCommandParams<GCommand>,
-    SuggestIgnoreParams {}
+    EditorViewParameter,
+    SuggestCommandParameter<GCommand>,
+    SuggestIgnoreParameter {}
 
 /**
- * The parameters required by the {@link Suggester.onKeyDown}.
+ * The parameters required by the {@link Suggestion.onKeyDown}.
  *
  * @remarks
  *
  * See:
  * - {@link SuggestStateMatch}
- * - {@link @remirror/core-types#EditorViewParams}
- * - {@link KeyboardEventParams}
+ * - {@link @remirror/core-types#EditorViewParameter}
+ * - {@link KeyboardEventParameter}
  */
-export interface OnKeyDownParams extends SuggestStateMatch, EditorViewParams, KeyboardEventParams {}
+export interface OnKeyDownParameter
+  extends SuggestStateMatch,
+    EditorViewParameter,
+    KeyboardEventParameter {}
 
 /**
  * A parameter builder interface describing the event which triggers the
  * keyboard event handler.
  */
-export interface KeyboardEventParams {
+export interface KeyboardEventParameter {
   /**
    * The keyboard event which triggered the call to the event handler.
    */
@@ -423,7 +431,7 @@ export interface KeyboardEventParams {
  *
  * @typeParam GReason - Whether this is change or an exit reason.
  */
-export interface ReasonParams<GReason = ExitReason | ChangeReason> {
+export interface ReasonParameter<GReason = ExitReason | ChangeReason> {
   /**
    * The reason this callback was triggered. This can be used to determine the
    * action to use in your own code.
@@ -432,34 +440,34 @@ export interface ReasonParams<GReason = ExitReason | ChangeReason> {
 }
 
 /**
- * The parameters passed to the {@link Suggester.onChange} method.
+ * The parameters passed to the {@link Suggestion.onChange} method.
  *
- * @typeParam GCommand - the command method a {@link Suggester} makes available
+ * @typeParam GCommand - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
-export interface SuggestChangeHandlerParams<GCommand extends AnyFunction<void> = AnyFunction<void>>
-  extends SuggestCallbackParams<GCommand>,
-    ReasonParams<ChangeReason> {}
-
-/**
- * The parameters passed to the {@link Suggester.onExit} method.
- *
- * @typeParam GCommand - the command method a {@link Suggester} makes available
- * to its handlers.
- */
-export interface SuggestExitHandlerParams<GCommand extends AnyFunction<void> = AnyFunction<void>>
-  extends SuggestCallbackParams<GCommand>,
-    ReasonParams<ExitReason> {}
-
-/**
- * The parameters passed to the {@link Suggester.onCharacterEntry} method.
- *
- * @typeParam GCommand - the command method a {@link Suggester} makes available
- * to its handlers.
- */
-export interface SuggestCharacterEntryParams<
+export interface SuggestChangeHandlerParameter<
   GCommand extends AnyFunction<void> = AnyFunction<void>
-> extends SuggestCallbackParams<GCommand>, FromToParams, TextParams {}
+> extends SuggestCallbackParameter<GCommand>, ReasonParameter<ChangeReason> {}
+
+/**
+ * The parameters passed to the {@link Suggestion.onExit} method.
+ *
+ * @typeParam GCommand - the command method a {@link Suggestion} makes available
+ * to its handlers.
+ */
+export interface SuggestExitHandlerParameter<
+  GCommand extends AnyFunction<void> = AnyFunction<void>
+> extends SuggestCallbackParameter<GCommand>, ReasonParameter<ExitReason> {}
+
+/**
+ * The parameters passed to the {@link Suggestion.onCharacterEntry} method.
+ *
+ * @typeParam GCommand - the command method a {@link Suggestion} makes available
+ * to its handlers.
+ */
+export interface SuggestCharacterEntryParameter<
+  GCommand extends AnyFunction<void> = AnyFunction<void>
+> extends SuggestCallbackParameter<GCommand>, FromToParameter, TextParameter {}
 
 /**
  * The parameters required by the {@link SuggestKeyBinding} method.
@@ -467,17 +475,17 @@ export interface SuggestCharacterEntryParams<
  * @remarks
  *
  * See:
- * - {@link SuggestCallbackParams}
- * - {@link SuggestMarkParams}
- * - {@link KeyboardEventParams}
+ * - {@link SuggestCallbackParameter}
+ * - {@link SuggestMarkParameter}
+ * - {@link KeyboardEventParameter}
  *
- * @typeParam GCommand - the command method a {@link Suggester} makes available
+ * @typeParam GCommand - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
-export interface SuggestKeyBindingParams<GCommand extends AnyFunction<void> = AnyFunction<void>>
-  extends SuggestCallbackParams<GCommand>,
-    SuggestMarkParams,
-    KeyboardEventParams {}
+export interface SuggestKeyBindingParameter<GCommand extends AnyFunction<void> = AnyFunction<void>>
+  extends SuggestCallbackParameter<GCommand>,
+    SuggestMarkParameter,
+    KeyboardEventParameter {}
 
 /**
  * A method for performing actions when a certain key / pattern is pressed.
@@ -487,17 +495,17 @@ export interface SuggestKeyBindingParams<GCommand extends AnyFunction<void> = An
  * Return true to prevent any further bubbling of the key event and to stop
  * other handlers from also processing the event.
  *
- * @typeParam GCommand - the command method a {@link Suggester} makes available
+ * @typeParam GCommand - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
 export type SuggestKeyBinding<GCommand extends AnyFunction<void> = AnyFunction<void>> = (
-  params: SuggestKeyBindingParams<GCommand>,
+  params: SuggestKeyBindingParameter<GCommand>,
 ) => boolean | void;
 
 /**
- * The keybindings shape for the {@link Suggester.keyBindings} property.
+ * The keybindings shape for the {@link Suggestion.keyBindings} property.
  *
- * @typeParam GCommand - the command method a {@link Suggester} makes available
+ * @typeParam GCommand - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
 export type SuggestKeyBindingMap<GCommand extends AnyFunction<void> = AnyFunction<void>> = Partial<
@@ -511,10 +519,10 @@ export type SuggestKeyBindingMap<GCommand extends AnyFunction<void> = AnyFunctio
 /**
  * A parameter builder interface which adds the command property.
  *
- * @typeParam GCommand - the command method a {@link Suggester} makes available
+ * @typeParam GCommand - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
-export interface SuggestCommandParams<GCommand extends AnyFunction<void> = AnyFunction<void>> {
+export interface SuggestCommandParameter<GCommand extends AnyFunction<void> = AnyFunction<void>> {
   /**
    * A command which automatically applies the provided attributes to the
    * command.
@@ -522,16 +530,16 @@ export interface SuggestCommandParams<GCommand extends AnyFunction<void> = AnyFu
   command: GCommand;
 }
 
-export interface SuggesterParams<GCommand extends AnyFunction<void> = AnyFunction<void>> {
+export interface SuggestionParameter<GCommand extends AnyFunction<void> = AnyFunction<void>> {
   /**
    * The suggester to use for finding matches.
    */
-  suggester: Required<Suggester<GCommand>>;
+  suggester: Required<Suggestion<GCommand>>;
 }
 
 export interface SuggestStateMatchReason<GReason>
   extends SuggestStateMatch,
-    ReasonParams<GReason> {}
+    ReasonParameter<GReason> {}
 
 /**
  * A mapping of the handler matches with their reasons for occurring within the
@@ -554,11 +562,11 @@ export interface SuggestReasonMap {
  *
  * @remarks
  *
- * This is used to build parameters for {@link Suggester} handler methods.
+ * This is used to build parameters for {@link Suggestion} handler methods.
  *
  * @typeParam GReason - Whether this is change or an exit reason.
  */
-export interface ReasonMatchParams<GReason> {
+export interface ReasonMatchParameter<GReason> {
   /**
    * The match with its reason property.
    */
@@ -574,7 +582,7 @@ export interface ReasonMatchParams<GReason> {
  * occurred (i.e. change or exit see {@link SuggestReasonMap}) and the reason
  * for that that change. See {@link ExitReason} {@link ChangeReason}
  */
-export interface CompareMatchParams {
+export interface CompareMatchParameter {
   /**
    * The initial match
    */

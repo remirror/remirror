@@ -79,7 +79,7 @@ export const possibleStandardNames: Record<string, string> = {
   itemref: 'itemRef',
   itemscope: 'itemScope',
   itemtype: 'itemType',
-  keyparams: 'keyParams',
+  keyparams: 'keyParameter',
   keytype: 'keyType',
   kind: 'kind',
   label: 'label',

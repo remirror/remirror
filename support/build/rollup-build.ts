@@ -1,3 +1,4 @@
+/* eslint-disable import/no-default-export */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import chalk from 'chalk';
 import { join } from 'path';
@@ -5,7 +6,7 @@ import { RollupOptions } from 'rollup';
 import { PackageJson } from 'type-fest';
 
 import {
-  baseDir,
+  baseDirectory,
   DEPENDENCY_TYPES,
   getAllDependencies,
   getDependencyPackageMap,
@@ -25,17 +26,17 @@ const requestedPackageNames = PACKAGES?.split(',') ?? [];
 
 // Whether this build should ignore minification. Used when running `rollup
 // --watch`
-const devOnly = DEV_ONLY === 'true';
+const developmentOnly = DEV_ONLY === 'true';
 
 // The list of packages to ignore from the list. Basically packages which have
 // types but are never published.
-const IGNORED_PACKAGES = ['@remirror/test-fixtures'];
+const IGNORED_PACKAGES = new Set(['@remirror/test-fixtures']);
 
 /**
  * Checks if the current package name should be ignored. These are excluded from
  * the buildable packages list.
  */
-const isIgnoredPackage = (name: string) => IGNORED_PACKAGES.includes(name);
+const isIgnoredPackage = (name: string) => IGNORED_PACKAGES.has(name);
 
 interface BuildablePackage {
   path: string;
@@ -78,28 +79,28 @@ const getNamesCreator = (
   dependencies: Record<string, string>,
 ) => {
   const getNames = (name = ''): string[] => {
-    const config = buildablePackages.find((conf) => conf.name === name);
-    const arr = [name];
+    const config = buildablePackages.find((config_) => config_.name === name);
+    const array = [name];
 
     if (!config) {
-      return arr;
+      return array;
     }
 
-    const path = baseDir(config.path);
-    const pkg: PackageJson = require(join(path, 'package.json'));
+    const path = baseDirectory(config.path);
+    const package_: PackageJson = require(join(path, 'package.json'));
 
-    return DEPENDENCY_TYPES.reduce((acc, key) => {
-      if (pkg[key]) {
+    return DEPENDENCY_TYPES.reduce((accumulator, key) => {
+      if (package_[key]) {
         return [
-          ...acc,
-          ...keys(pkg[key] ?? {})
+          ...accumulator,
+          ...keys(package_[key] ?? {})
             .filter((dep) => dependencies[dep])
-            .reduce((acc, key) => [...acc, ...getNames(key)], [] as string[]),
+            .reduce((accumulator, key) => [...accumulator, ...getNames(key)], [] as string[]),
         ];
       }
 
-      return acc;
-    }, arr);
+      return accumulator;
+    }, array);
   };
   return getNames;
 };
@@ -132,7 +133,10 @@ const createRollupConfig = async () => {
   // Only filter when entry points have been specified.
   if (entryPoints?.length) {
     filtered = uniqueArray(
-      entryPoints.reduce((acc, config) => [...acc, ...getNames(config.name)], [] as string[]),
+      entryPoints.reduce(
+        (accumulator, config) => [...accumulator, ...getNames(config.name)],
+        [] as string[],
+      ),
     )
       .map((key) => buildablePackages.find((config) => config.name === key))
       .filter<BuildablePackage>(
@@ -144,13 +148,13 @@ const createRollupConfig = async () => {
   const configurations: RollupOptions[] = [];
 
   for (const config of filtered) {
-    const path = baseDir(config.path);
+    const path = baseDirectory(config.path);
     const packageJson = join(path, 'package.json');
 
     const configs = await factory({
       pkg: require(packageJson),
       root: path,
-      devOnly,
+      devOnly: developmentOnly,
     });
 
     for (const config of configs) {

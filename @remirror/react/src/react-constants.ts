@@ -1,9 +1,9 @@
 import { EMPTY_PARAGRAPH_NODE, Transaction } from '@remirror/core';
 import { asDefaultProps } from '@remirror/react-utils';
 
-import { RemirrorProps } from './react-types';
+import { RenderEditorProps } from './react-types';
 
-export const defaultProps = asDefaultProps<RemirrorProps>()({
+export const defaultProps = asDefaultProps<RenderEditorProps>()({
   initialContent: EMPTY_PARAGRAPH_NODE,
   fallbackContent: EMPTY_PARAGRAPH_NODE,
   editable: true,

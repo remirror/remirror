@@ -5,18 +5,17 @@ import {
   isRemovedReason,
   isSplitReason,
   regexToString,
-  Suggester,
+  Suggestion,
 } from 'prosemirror-suggest';
 
 import {
-  Attrs,
-  CommandMarkTypeParams,
+  CommandMarkTypeParameter,
   EditorState,
-  ExtensionManagerMarkTypeParams,
   getMarkRange,
   getMatchString,
   isElementDOMNode,
   isMarkActive,
+  ManagerMarkTypeParameter,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
@@ -24,19 +23,25 @@ import {
   MarkType,
   noop,
   object,
-  RangeParams,
+  ProsemirrorAttributes,
+  RangeParameter,
   removeMark,
   replaceText,
   TransactionTransformer,
 } from '@remirror/core';
 
 import {
-  MentionExtensionAttrs,
+  MentionExtensionAttributes,
   MentionExtensionOptions,
   MentionExtensionSuggestCommand,
-  SuggestionCommandAttrs,
+  SuggestionCommandAttributes,
 } from './mention-types';
-import { DEFAULT_MATCHER, getAppendText, getMatcher, isValidMentionAttrs } from './mention-utils';
+import {
+  DEFAULT_MATCHER,
+  getAppendText,
+  getMatcher,
+  isValidMentionAttributes,
+} from './mention-utils';
 
 const defaultHandler = () => false;
 
@@ -58,7 +63,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       matchers: [],
       appendText: ' ',
       mentionClassName: 'mention',
-      extraAttrs: [],
+      extraAttributes: [],
       mentionTag: 'a' as 'a',
       suggestTag: 'a' as 'a',
       onChange: defaultHandler,
@@ -76,7 +81,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
         id: {},
         label: {},
         name: {},
-        ...this.extraAttrs(),
+        ...this.extraAttributes(),
       },
       group: MarkGroup.Behavior,
       excludes: '_',
@@ -91,15 +96,20 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
 
             const id = node.getAttribute(dataAttributeId);
             const name = node.getAttribute(dataAttributeName);
-            const label = node.innerText;
-            return { ...this.getExtraAttrs(node), id, label, name };
+            const label = node.textContent;
+            return { ...this.getExtraAttributes(node), id, label, name };
           },
         },
       ],
       toDOM: (node) => {
-        const { label: _, id, name, replacementType, range, ...attrs } = node.attrs as Required<
-          MentionExtensionAttrs
-        >;
+        const {
+          label: _,
+          id,
+          name,
+          replacementType,
+          range,
+          ...attributes
+        } = node.attrs as Required<MentionExtensionAttributes>;
         const matcher = this.options.matchers.find((matcher) => matcher.name === name);
         const mentionClassName = matcher
           ? matcher.mentionClassName ?? DEFAULT_MATCHER.mentionClassName
@@ -108,7 +118,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
         return [
           this.options.mentionTag,
           {
-            ...attrs,
+            ...attributes,
             class: name ? `${mentionClassName} ${mentionClassName}-${name}` : mentionClassName,
             [dataAttributeId]: id,
             [dataAttributeName]: name,
@@ -126,13 +136,13 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
     type: MarkType,
     getState: () => EditorState,
     shouldUpdate = false,
-  ) => (config?: Attrs) => {
-    if (!isValidMentionAttrs(config)) {
+  ) => (config?: ProsemirrorAttributes) => {
+    if (!isValidMentionAttributes(config)) {
       throw new Error('Invalid configuration attributes passed to the MentionExtension command.');
     }
 
-    const { range, appendText, replacementType, ...attrs } = config;
-    let name = attrs.name;
+    const { range, appendText, replacementType, ...attributes } = config;
+    let name = attributes.name;
     if (!name) {
       if (this.options.matchers.length >= 2) {
         throw new Error(
@@ -185,25 +195,25 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
 
     return replaceText({
       type,
-      attrs: { ...attrs, name },
+      attrs: { ...attributes, name },
       appendText: getAppendText(appendText, matcher.appendText),
       range: range ? { from, to: replacementType === 'full' ? range.end || to : to } : undefined,
-      content: attrs.label,
+      content: attributes.label,
       startTransaction,
     });
   };
 
-  public commands({ type, getState }: CommandMarkTypeParams) {
+  public commands({ type, getState }: CommandMarkTypeParameter) {
     return {
       createMention: this.createMention(type, getState),
       updateMention: this.createMention(type, getState, true),
-      removeMention: ({ range }: Partial<RangeParams> = object()) => {
+      removeMention: ({ range }: Partial<RangeParameter> = object()) => {
         return removeMark({ type, expand: true, range });
       },
     };
   }
 
-  public pasteRules({ type }: ExtensionManagerMarkTypeParams) {
+  public pasteRules({ type }: ManagerMarkTypeParameter) {
     return this.options.matchers.map((matcher) => {
       const { startOfLine, char, supportedCharacters, name } = {
         ...DEFAULT_MATCHER,
@@ -217,16 +227,16 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       return markPasteRule({
         regexp,
         type,
-        getAttrs: (str) => ({
-          id: getMatchString(str.slice(char.length, str.length)),
-          label: getMatchString(str),
+        getAttributes: (string) => ({
+          id: getMatchString(string.slice(char.length, string.length)),
+          label: getMatchString(string),
           name,
         }),
       });
     });
   }
 
-  public suggestions({ getActions, type, getState }: ExtensionManagerMarkTypeParams): Suggester[] {
+  public suggestions({ getActions, type, getState }: ManagerMarkTypeParameter): Suggestion[] {
     const {
       matchers,
       onChange,
@@ -236,7 +246,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
       onCharacterEntry,
       suggestTag,
     } = this.options;
-    return matchers.map<Suggester<MentionExtensionSuggestCommand>>((matcher) => {
+    return matchers.map<Suggestion<MentionExtensionSuggestCommand>>((matcher) => {
       return {
         ...DEFAULT_MATCHER,
         ...matcher,
@@ -283,9 +293,9 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
             id = match.queryText[replacementType],
             label = match.matchText[replacementType],
             appendText,
-            ...attrs
-          }: SuggestionCommandAttrs) => {
-            fn({ id, label, appendText, replacementType, name, range, ...attrs });
+            ...attributes
+          }: SuggestionCommandAttributes) => {
+            fn({ id, label, appendText, replacementType, name, range, ...attributes });
           };
 
           const command: MentionExtensionSuggestCommand =

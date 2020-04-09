@@ -16,7 +16,7 @@ import {
   contains,
   findBlockNodes,
   findChildren,
-  findChildrenByAttr,
+  findChildrenByAttribute,
   findChildrenByMark,
   findChildrenByNode,
   findTextNodes,
@@ -124,9 +124,9 @@ describe('findBlockNodes', () => {
 describe('findChildrenByAttr', () => {
   it('should return an empty array if a given node does not have nodes with the given attribute', () => {
     const { state } = createEditor(doc(p('')));
-    const result = findChildrenByAttr({
+    const result = findChildrenByAttribute({
       node: state.doc.firstChild,
-      predicate: (attrs) => bool(attrs && attrs.colspan === 2),
+      predicate: (attributes) => bool(attributes && attributes.colspan === 2),
     });
 
     expect(result.length).toEqual(0);
@@ -141,9 +141,9 @@ describe('findChildrenByAttr', () => {
         ),
       ),
     );
-    const result = findChildrenByAttr({
+    const result = findChildrenByAttribute({
       node: state.doc.firstChild,
-      predicate: (attrs) => attrs.colspan === 2,
+      predicate: (attributes) => attributes.colspan === 2,
     });
 
     expect(result.length).toEqual(2);

@@ -13,7 +13,7 @@ import {
   RemirrorTheme,
   RemirrorThemeContextType,
   SxThemeProp,
-  ThemeParams,
+  ThemeParameter,
   WithVariants,
 } from '@remirror/core-types';
 
@@ -51,23 +51,23 @@ export const getFactory = (theme: RemirrorTheme) => <GReturn = any>(
 /**
  * Checks whether an object passed is a serialized style
  */
-export const isSerializedStyle = (val: unknown): val is SerializedStyles =>
-  isPlainObject(val) && isString(val.name) && isString(val.styles);
+export const isSerializedStyle = (value: unknown): val is SerializedStyles =>
+  isPlainObject(value) && isString(value.name) && isString(value.styles);
 
 /**
  * Return true when a theme prop exists on the value passed in.
  */
-export const hasThemeProp = (val: unknown): val is ThemeParams =>
-  isPlainObject(val) && isPlainObject(val.theme);
+export const hasThemeProp = (value: unknown): val is ThemeParameter =>
+  isPlainObject(value) && isPlainObject(value.theme);
 
 const getTheme = (
-  props:
+  properties:
     | RemirrorTheme
     | {
         theme: RemirrorTheme;
       }
     | undefined,
-): RemirrorTheme | undefined => (hasThemeProp(props) ? props.theme : props);
+): RemirrorTheme | undefined => (hasThemeProp(properties) ? properties.theme : properties);
 
 /**
  * A wrapper around the `@styled-system/css` for composing multiple themed
@@ -84,8 +84,8 @@ const getTheme = (
  * };
  * ```
  */
-export const sx: RemirrorThemeContextType['sx'] = (...styles) => (props) => {
-  const theme = getTheme(props);
+export const sx: RemirrorThemeContextType['sx'] = (...styles) => (properties) => {
+  const theme = getTheme(properties);
 
   return serializeStyles(
     styles.map((style) =>
@@ -102,11 +102,11 @@ export const sx: RemirrorThemeContextType['sx'] = (...styles) => (props) => {
   );
 };
 
-export const cssValueUnits = (val: unknown): string | undefined =>
-  isString(val) ? val.replace(/[0-9 ]+/g, '') : undefined;
+export const cssValueUnits = (value: unknown): string | undefined =>
+  isString(value) ? value.replace(/[\d ]+/g, '') : undefined;
 
 /**
  * Transforms a number to
  */
-export const numberToPixels = (val: number | string): string =>
-  cssValueUnits(val) ? `${val}`.replace(/ /g, '') : `${val}px`;
+export const numberToPixels = (value: number | string): string =>
+  cssValueUnits(value) ? `${value}`.replace(/ /g, '') : `${value}px`;

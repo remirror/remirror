@@ -470,9 +470,11 @@ export type ItemsToString<GItem = any> = (
 ) => string;
 export type GetItemId<GItem = any> = (items: GItem) => any;
 export type ItemToString<GItem = any> = (item: GItem) => string;
-export type GetA11yStatusMessage<GItem = any> = (options: A11yStatusMessageParams<GItem>) => string;
+export type GetA11yStatusMessage<GItem = any> = (
+  options: A11yStatusMessageParameter<GItem>,
+) => string;
 
-export interface A11yStatusMessageParams<GItem = any> {
+export interface A11yStatusMessageParameter<GItem = any> {
   state: MultishiftState<GItem>;
   items: GItem[];
   itemsToString(items: GItem[], itemToString?: (item: GItem) => string): string;
@@ -532,7 +534,7 @@ export interface GetRemoveButtonReturn<GElement extends HTMLElement = any>
 export interface GetComboBoxPropsOptions<
   GElement extends HTMLElement = any,
   GRefKey extends string = 'ref'
-> extends RefParams<GRefKey>, HTMLProps<GElement> {}
+> extends RefParameter<GRefKey>, HTMLProps<GElement> {}
 
 export type GetComboBoxPropsReturn<
   GElement extends HTMLElement = any,
@@ -552,7 +554,7 @@ export type GetComboBoxPropsReturn<
 export interface GetPropsWithRefOptions<
   GElement extends HTMLElement = any,
   GRefKey extends string = 'ref'
-> extends RefParams<GRefKey>, HTMLProps<GElement> {
+> extends RefParameter<GRefKey>, HTMLProps<GElement> {
   /**
    * Determine whether or not the item can be highlighted and selected.
    */
@@ -910,7 +912,7 @@ export interface MultishiftReturn<GItem = any>
   dispatch: Dispatch<MultishiftRootActions<GItem>>;
 }
 
-export interface RefParams<GRefKey extends string = 'ref'> {
+export interface RefParameter<GRefKey extends string = 'ref'> {
   /**
    * A custom ref key which allows a reference to be obtained from non standard
    * components.

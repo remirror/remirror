@@ -2,10 +2,10 @@ import { Interpolation } from '@emotion/core';
 import { textblockTypeInputRule } from 'prosemirror-inputrules';
 
 import {
-  CommandNodeTypeParams,
+  CommandNodeTypeParameter,
   convertCommand,
   EDITOR_CLASS_SELECTOR,
-  ExtensionManagerNodeTypeParams,
+  ManagerNodeTypeParameter,
   KeyBindings,
   NodeExtension,
   NodeExtensionSpec,
@@ -20,7 +20,7 @@ export class CodeBlockExtension extends NodeExtension {
 
   get schema(): NodeExtensionSpec {
     return {
-      attrs: this.extraAttrs(),
+      attrs: this.extraAttributes(),
       content: 'text*',
       marks: '',
       group: NodeGroup.Block,
@@ -32,11 +32,11 @@ export class CodeBlockExtension extends NodeExtension {
     };
   }
 
-  public commands({ type, schema }: CommandNodeTypeParams) {
+  public commands({ type, schema }: CommandNodeTypeParameter) {
     return { toggleCodeBlock: () => toggleBlockItem({ type, toggleType: schema.nodes.paragraph }) };
   }
 
-  public keys({ type, schema }: ExtensionManagerNodeTypeParams): KeyBindings {
+  public keys({ type, schema }: ManagerNodeTypeParameter): KeyBindings {
     return {
       'Shift-Ctrl-\\': convertCommand(
         toggleBlockItem({ type, toggleType: schema.nodes.paragraph }),
@@ -60,7 +60,7 @@ export class CodeBlockExtension extends NodeExtension {
     };
   }
 
-  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+  public inputRules({ type }: ManagerNodeTypeParameter) {
     return [textblockTypeInputRule(/^```$/, type)];
   }
 }

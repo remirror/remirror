@@ -1,11 +1,11 @@
 import escapeStringRegex from 'escape-string-regexp';
-import { Suggester } from 'prosemirror-suggest';
+import { Suggestion } from 'prosemirror-suggest';
 
 import {
   Extension,
-  ExtensionManagerParams,
-  FromToParams,
+  FromToParameter,
   isNullOrUndefined,
+  ManagerParameter,
   noop,
   object,
   plainInputRule,
@@ -67,7 +67,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
 
       // Emoji Names
       plainInputRule({
-        regexp: /:([\w\d_-]+):$/,
+        regexp: /:([\w-]+):$/,
         transformMatch: ([, match]) => {
           const emoji = getEmojiByName(match);
           return emoji ? emoji.char : null;
@@ -91,14 +91,14 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       insertEmojiByName: (
         name: string,
         options: EmojiCommandOptions = object(),
-      ): ProsemirrorCommandFunction => (...args) => {
+      ): ProsemirrorCommandFunction => (...arguments_) => {
         const emoji = getEmojiByName(name);
         if (!emoji) {
           console.warn('invalid emoji name passed into emoji insertion');
           return false;
         }
 
-        return commands.insertEmojiByObject(emoji, options)(...args);
+        return commands.insertEmojiByObject(emoji, options)(...arguments_);
       },
       /**
        * Insert an emoji into the document at the requested location.
@@ -129,7 +129,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
        * in order to activate the suggestion popup..
        */
       openEmojiSuggestions: (
-        { from, to }: Partial<FromToParams> = object(),
+        { from, to }: Partial<FromToParameter> = object(),
       ): ProsemirrorCommandFunction => (state, dispatch) => {
         if (dispatch) {
           dispatch(state.tr.insertText(suggestionCharacter, from, to));
@@ -154,7 +154,9 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
     };
   }
 
-  public suggestions({ getActions }: ExtensionManagerParams): Suggester<EmojiSuggestCommand> {
+  public suggestions({
+    getCommands: getActions,
+  }: ManagerParameter): Suggestion<EmojiSuggestCommand> {
     const {
       suggestionCharacter,
       suggestionKeyBindings,
@@ -172,11 +174,11 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
       appendText: '',
       suggestTag: 'span',
       keyBindings: suggestionKeyBindings,
-      onChange: (params) => {
-        const query = params.queryText.full;
+      onChange: (parameters) => {
+        const query = parameters.queryText.full;
         const emojiMatches =
           query.length === 0 ? this.frequentlyUsed : sortEmojiMatches(query, maxResults);
-        onSuggestionChange({ ...params, emojiMatches });
+        onSuggestionChange({ ...parameters, emojiMatches });
       },
       onExit: onSuggestionExit,
       createCommand: ({ match }) => {
@@ -197,7 +199,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
   }
 }
 
-export interface EmojiCommandOptions extends Partial<FromToParams> {
+export interface EmojiCommandOptions extends Partial<FromToParameter> {
   /**
    * The skin variation which is a number between `0` and `4`.
    */

@@ -11,16 +11,16 @@ import {
   createDocumentNode,
   DocExtension,
   EditorState,
-  ExtensionManager,
   ExtensionsFromManager,
   isObjectNode,
   isProsemirrorNode,
   isString,
+  Manager,
   ProsemirrorNode,
   RemirrorContentType,
-  SchemaFromExtensions,
-  SchemaParams,
-  StringHandlerParams,
+  SchemaFromExtension,
+  SchemaParameter,
+  StringHandlerParameter,
   TextExtension,
 } from '@remirror/core';
 import {
@@ -47,7 +47,7 @@ import { ImageExtension } from '@remirror/extension-image';
 import {
   RemirrorProvider,
   RemirrorProviderProps,
-  RemirrorStateListenerParams,
+  RemirrorStateListenerParameter,
 } from '@remirror/react';
 
 import { fromMarkdown } from './from-markdown';
@@ -61,7 +61,7 @@ export type InternalEditorProps = Omit<RemirrorProviderProps, 'childAsRoot' | 'c
 const useMarkdownManager = () => {
   return useMemo(
     () =>
-      ExtensionManager.create([
+      Manager.create([
         { priority: 1, extension: new DocExtension({ content: 'block' }) },
         {
           priority: 1,
@@ -80,9 +80,9 @@ const useMarkdownManager = () => {
   );
 };
 
-const InternalMarkdownEditor: FC<InternalEditorProps> = (props) => {
+const InternalMarkdownEditor: FC<InternalEditorProps> = (properties) => {
   return (
-    <RemirrorProvider {...props} childAsRoot={true}>
+    <RemirrorProvider {...properties} childAsRoot={true}>
       <div />
     </RemirrorProvider>
   );
@@ -91,7 +91,7 @@ const InternalMarkdownEditor: FC<InternalEditorProps> = (props) => {
 const useWysiwygManager = () => {
   return useMemo(
     () =>
-      ExtensionManager.create([
+      Manager.create([
         ...baseExtensions,
         new CodeBlockExtension({ supportedLanguages: [markdown, bash, tsx, typescript] }),
         new PlaceholderExtension(),
@@ -112,15 +112,15 @@ const useWysiwygManager = () => {
   );
 };
 
-const WysiwygEditor: FC<InternalEditorProps> = ({ children, ...props }) => {
+const WysiwygEditor: FC<InternalEditorProps> = ({ children, ...properties }) => {
   return (
-    <RemirrorProvider {...props} childAsRoot={true}>
+    <RemirrorProvider {...properties} childAsRoot={true}>
       <div>{children}</div>
     </RemirrorProvider>
   );
 };
 
-interface CreateInitialContentParams extends SchemaParams {
+interface CreateInitialContentParameter extends SchemaParameter {
   /** The content to render */
   content: RemirrorContentType;
 }
@@ -132,7 +132,7 @@ interface CreateInitialContentParams extends SchemaParams {
  * - prosemirror node
  * - object node (json)
  */
-const createInitialContent = ({ content, schema }: CreateInitialContentParams): Content => {
+const createInitialContent = ({ content, schema }: CreateInitialContentParameter): Content => {
   if (isString(content)) {
     return {
       markdown: content,
@@ -176,7 +176,7 @@ interface Content {
 /**
  * Transform a markdown content string into a Prosemirror node within a codeBlock editor instance
  */
-const markdownStringHandler: StringHandlerParams['stringHandler'] = ({
+const markdownStringHandler: StringHandlerParameter['stringHandler'] = ({
   content: markdownContent,
   schema,
 }) => {
@@ -189,15 +189,15 @@ const markdownStringHandler: StringHandlerParams['stringHandler'] = ({
   );
 };
 
-const useDebounce = (fn: () => any, ms: number = 0, args: any[] = []) => {
+const useDebounce = (fn: () => any, ms = 0, arguments_: any[] = []) => {
   useEffect(() => {
-    const handle = setTimeout(fn.bind(null, args), ms);
+    const handle = setTimeout(fn.bind(null, arguments_), ms);
 
     return () => {
       // if args change then clear timeout
       clearTimeout(handle);
     };
-  }, [args, fn, ms]);
+  }, [arguments_, fn, ms]);
 };
 
 export const MarkdownEditor: FC<MarkdownEditorProps> = ({
@@ -209,17 +209,17 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
   const markdownManager = useMarkdownManager();
 
   type WysiwygExtensions = ExtensionsFromManager<typeof wysiwygManager>;
-  type WysiwygSchema = SchemaFromExtensions<WysiwygExtensions>;
+  type WysiwygSchema = SchemaFromExtension<WysiwygExtensions>;
   type MarkdownExtensions = ExtensionsFromManager<typeof markdownManager>;
-  type MarkdownSchema = SchemaFromExtensions<MarkdownExtensions>;
+  type MarkdownSchema = SchemaFromExtension<MarkdownExtensions>;
 
   const initialContent = createInitialContent({
     content: initialValue,
     schema: wysiwygManager.schema,
   });
   const [markdownEditorState, setMarkdownEditorState] = useState<EditorState<MarkdownSchema>>();
-  const [markdownParams, setMarkdownParams] = useState<
-    Pick<RemirrorStateListenerParams<MarkdownExtensions>, 'getText' | 'tr'>
+  const [markdownParameters, setMarkdownParameters] = useState<
+    Pick<RemirrorStateListenerParameter<MarkdownExtensions>, 'getText' | 'tr'>
   >({ getText: () => initialContent.markdown });
   const [wysiwygEditorState, setWysiwygEditorState] = useState<EditorState<WysiwygSchema>>();
 
@@ -246,29 +246,29 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
 
   useDebounce(
     () => {
-      const { tr, getText } = markdownParams;
+      const { tr, getText } = markdownParameters;
       if (tr?.docChanged) {
         updateWysiwygFromMarkdown(getText());
         return;
       }
     },
     500,
-    [markdownParams.getText, markdownParams.tr],
+    [markdownParameters.getText, markdownParameters.tr],
   );
 
   const onMarkdownStateChange = ({
     newState,
     getText,
     tr,
-  }: RemirrorStateListenerParams<MarkdownExtensions>) => {
-    setMarkdownParams({ getText, tr });
+  }: RemirrorStateListenerParameter<MarkdownExtensions>) => {
+    setMarkdownParameters({ getText, tr });
     setMarkdownEditorState(newState);
   };
 
   const onWysiwygStateChange = ({
     newState,
     tr,
-  }: RemirrorStateListenerParams<WysiwygExtensions>) => {
+  }: RemirrorStateListenerParameter<WysiwygExtensions>) => {
     setWysiwygEditorState(newState);
 
     if (tr?.docChanged) {

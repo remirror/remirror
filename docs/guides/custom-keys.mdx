@@ -60,12 +60,12 @@ export class CustomKeymapExtension extends Extension<CustomKeymapExtensionOption
 To use the above example you could do the following.
 
 ```ts
-import { ExtensionManager } from '@remirror/core';
+import { Manager } from '@remirror/core';
 import { baseExtensions } from '@remirror/core-extensions';
 
 import { CustomKeymapExtension } from './custom-keymap-extension';
 
-const manager = ExtensionManager.of([
+const manager = Manager.of([
   ...baseExtensions,
   { priority: 1, extension: CustomKeymapExtension.of({ override: true }) },
 ]);

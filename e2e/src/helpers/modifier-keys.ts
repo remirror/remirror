@@ -5,7 +5,7 @@ import { ALT, COMMAND, CTRL, mod, SHIFT, take } from '@remirror/core';
 /**
  * Returns a list of normalized modifier keys
  */
-export const getModifiers = ({ modifiers, isMac = false }: GetModifiersParams) => {
+export const getModifiers = ({ modifiers, isMac = false }: GetModifiersParameter) => {
   const list: string[] = [];
 
   for (const modifier of modifiers) {
@@ -180,7 +180,7 @@ export async function pressKeyWithModifier(pattern: string) {
 
 export { mod };
 
-interface GetModifiersParams {
+interface GetModifiersParameter {
   /**
    * The modifier keys passed in
    */

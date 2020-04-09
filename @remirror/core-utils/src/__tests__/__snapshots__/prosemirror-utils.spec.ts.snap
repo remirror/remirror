@@ -23,11 +23,11 @@ Object {
           "tag": "strong",
         },
         Object {
-          "getAttrs": [Function],
+          "getAttributes": [Function],
           "tag": "b",
         },
         Object {
-          "getAttrs": [Function],
+          "getAttributes": [Function],
           "style": "font-weight",
         },
       ],

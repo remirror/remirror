@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { AnyExtension, ExtensionManager } from '@remirror/core';
+import { AnyExtension, Manager } from '@remirror/core';
 import { PlaceholderExtension } from '@remirror/core-extensions';
 import { TestExtension } from '@remirror/test-fixtures';
 
@@ -22,14 +22,14 @@ describe('getManagerFromComponentTree', () => {
       </RemirrorManager>
     );
   };
-  let manager: ExtensionManager;
+  let manager: Manager;
 
   beforeEach(async () => {
     manager = await getManagerFromComponentTree({ Component: Tester });
   });
 
   it('should provide a manager instance', async () => {
-    expect(manager).toBeInstanceOf(ExtensionManager);
+    expect(manager).toBeInstanceOf(Manager);
   });
 
   it('should include the new extension', () => {
@@ -55,7 +55,7 @@ describe('getManagerFromComponentTree', () => {
 
     await expect(
       getManagerFromComponentTree({ Component: DifferentProp, prop: 'renderSpot' }),
-    ).resolves.toBeInstanceOf(ExtensionManager);
+    ).resolves.toBeInstanceOf(Manager);
   });
 
   it('should throw an error when no manager found because `prop` not rendered', async () => {

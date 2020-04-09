@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import { EditorState, fromHTML } from '@remirror/core';
 import { createTestManager } from '@remirror/test-fixtures';
 
-import { Remirror } from '..';
-import { InjectedRemirrorProps, RemirrorStateListenerParams } from '../../react-types';
-import { RemirrorProviderProps } from '../remirror-providers';
+import { RenderEditor } from '..';
+import { InjectedRenderEditorProps, RemirrorStateListenerParameter } from '../../react-types';
+import { RemirrorProviderProps } from '../remirror-provider';
 
 const label = 'Remirror editor';
 
@@ -26,13 +26,13 @@ describe('Remirror Controlled Component', () => {
 
   it('should call onStateChange', () => {
     let value: EditorState | null = null;
-    const onStateChange = jest.fn<void, [RemirrorStateListenerParams]>((params) => {
+    const onStateChange = jest.fn<void, [RemirrorStateListenerParameter]>((params) => {
       value = params.newState;
     });
     render(
-      <Remirror {...props} value={value} onStateChange={onStateChange}>
+      <RenderEditor {...props} value={value} onStateChange={onStateChange}>
         {() => <div />}
-      </Remirror>,
+      </RenderEditor>,
     );
 
     expect(onStateChange).toHaveBeenCalled();
@@ -40,54 +40,54 @@ describe('Remirror Controlled Component', () => {
   });
 
   it('responds to setContent updates', () => {
-    let stateParams!: RemirrorStateListenerParams;
-    let renderParams!: InjectedRemirrorProps;
+    let stateParameter!: RemirrorStateListenerParameter;
+    let renderParameter!: InjectedRenderEditorProps;
 
-    const onStateChange = jest.fn<void, [RemirrorStateListenerParams]>((params) => {
-      stateParams = params;
+    const onStateChange = jest.fn<void, [RemirrorStateListenerParameter]>((params) => {
+      stateParameter = params;
     });
-    const mock = jest.fn((params: InjectedRemirrorProps) => {
-      renderParams = params;
+    const mock = jest.fn((params: InjectedRenderEditorProps) => {
+      renderParameter = params;
       return <div />;
     });
     const Component = ({ value }: { value?: EditorState | null }) => (
-      <Remirror {...props} onStateChange={onStateChange} value={value}>
+      <RenderEditor {...props} onStateChange={onStateChange} value={value}>
         {mock}
-      </Remirror>
+      </RenderEditor>
     );
     const { rerender, getByRole } = render(<Component value={null} />);
 
-    renderParams.setContent(expectedContent, true);
+    renderParameter.setContent(expectedContent, true);
     rerender(<Component value={null} />);
 
     expect(getByRole('textbox')).toContainHTML(initialContent);
 
-    rerender(<Component value={stateParams.newState} />);
+    rerender(<Component value={stateParameter.newState} />);
 
     expect(getByRole('textbox')).toContainHTML(expectedContent);
   });
 
   it('responds to direct value updates', () => {
-    let stateParams!: RemirrorStateListenerParams;
+    let stateParameter!: RemirrorStateListenerParameter;
 
-    const onStateChange = jest.fn<void, [RemirrorStateListenerParams]>((params) => {
-      stateParams = params;
+    const onStateChange = jest.fn<void, [RemirrorStateListenerParameter]>((params) => {
+      stateParameter = params;
     });
 
     const Component = ({ value }: { value?: EditorState | null }) => (
-      <Remirror {...props} onStateChange={onStateChange} value={value}>
+      <RenderEditor {...props} onStateChange={onStateChange} value={value}>
         {() => <div />}
-      </Remirror>
+      </RenderEditor>
     );
     const { rerender, getByRole } = render(<Component value={null} />);
 
     const firstUpdate = '<p>First Update</p>';
-    rerender(<Component value={stateParams.createStateFromContent(firstUpdate)} />);
+    rerender(<Component value={stateParameter.createStateFromContent(firstUpdate)} />);
 
     expect(getByRole('textbox')).toContainHTML(firstUpdate);
 
     const secondUpdate = '<p>Second Update</p>';
-    rerender(<Component value={stateParams.createStateFromContent(secondUpdate)} />);
+    rerender(<Component value={stateParameter.createStateFromContent(secondUpdate)} />);
 
     expect(getByRole('textbox')).toContainHTML(secondUpdate);
 
@@ -96,45 +96,47 @@ describe('Remirror Controlled Component', () => {
 
   it('responds to internal editor updates', () => {
     let latestState: EditorState | null = null;
-    let renderParams!: InjectedRemirrorProps;
+    let renderParameter!: InjectedRenderEditorProps;
 
     const Component = () => {
       const [value, setValue] = useState<EditorState>();
 
-      const onStateChange = (params: RemirrorStateListenerParams) => {
+      const onStateChange = (params: RemirrorStateListenerParameter) => {
         latestState = params.newState;
         setValue(params.newState);
       };
 
       return (
-        <Remirror {...props} onStateChange={onStateChange} value={value}>
-          {(params: InjectedRemirrorProps) => {
-            renderParams = params;
+        <RenderEditor {...props} onStateChange={onStateChange} value={value}>
+          {(params: InjectedRenderEditorProps) => {
+            renderParameter = params;
             return <div />;
           }}
-        </Remirror>
+        </RenderEditor>
       );
     };
     const { getByRole } = render(<Component />);
 
-    expect(latestState).toBe(renderParams.state.newState);
+    expect(latestState).toBe(renderParameter.state.newState);
 
-    act(() => renderParams.view.dispatch(renderParams.state.newState.tr.insertText('Awesome')));
+    act(() =>
+      renderParameter.view.dispatch(renderParameter.state.newState.tr.insertText('Awesome')),
+    );
 
     expect(getByRole('textbox')).toHaveTextContent('Awesome');
   });
 
   it('responds to state overrides', () => {
-    let renderParams!: InjectedRemirrorProps;
+    let renderParameter!: InjectedRenderEditorProps;
 
     const Component = () => {
       const [value, setValue] = useState<EditorState>();
 
-      const onStateChange = (params: RemirrorStateListenerParams) => {
+      const onStateChange = (params: RemirrorStateListenerParameter) => {
         if (params.getText().includes('World')) {
           setValue(params.newState);
         } else {
-          const stateOverride = renderParams.manager.createState({
+          const stateOverride = renderParameter.manager.createState({
             content: expectedContent,
             stringHandler: fromHTML,
           });
@@ -144,18 +146,20 @@ describe('Remirror Controlled Component', () => {
       };
 
       return (
-        <Remirror {...props} onStateChange={onStateChange} value={value}>
-          {(params: InjectedRemirrorProps) => {
-            renderParams = params;
+        <RenderEditor {...props} onStateChange={onStateChange} value={value}>
+          {(params: InjectedRenderEditorProps) => {
+            renderParameter = params;
             return <div />;
           }}
-        </Remirror>
+        </RenderEditor>
       );
     };
 
     const { getByRole } = render(<Component />);
 
-    act(() => renderParams.view.dispatch(renderParams.state.newState.tr.insertText('Awesome')));
+    act(() =>
+      renderParameter.view.dispatch(renderParameter.state.newState.tr.insertText('Awesome')),
+    );
 
     expect(getByRole('textbox')).toHaveTextContent('Awesome');
   });

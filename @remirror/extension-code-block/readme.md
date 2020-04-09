@@ -17,5 +17,6 @@ Refractor is a peer dependency and is needed when adding extra language support.
 import jsx from 'refractor/lang/jsx';
 import typescript from 'refractor/lang/typescript';
 import { CodeBlockExtension } from '@remirror/extension-code-block';
+
 new CodeBlockExtension({ supportedLanguages: [typescript, jsx] });
 ```
