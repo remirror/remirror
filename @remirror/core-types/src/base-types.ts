@@ -295,7 +295,7 @@ export type IfHasRequiredProperties<Type extends object, Then, Else> = IfNoRequi
  * @remarks
  *
  * This is useful for dynamically setting the parameter list of a method call
- * dynamically depending on whether keys are required.
+ * depending on whether keys are required.
  */
 export type IfNoRequiredProperties<Type extends object, Then, Else> = GetRequiredKeys<
   Type

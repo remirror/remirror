@@ -1,8 +1,15 @@
 import { MarkSpec, NodeSpec } from 'prosemirror-model';
 import { Selection as PMSelection } from 'prosemirror-state';
-import { isUndefined } from 'util';
 
-import { bool, isEmptyArray, isNullOrUndefined, keys, object } from '@remirror/core-helpers';
+import { isUndefined } from '@remirror/core';
+import {
+  bool,
+  isEmptyArray,
+  isEmptyObject,
+  isNullOrUndefined,
+  keys,
+  object,
+} from '@remirror/core-helpers';
 import {
   AttributesParameter,
   CommandFunction,
@@ -461,7 +468,7 @@ export const isNodeActive = ({
   const parent =
     findSelectedNodeOfType({ selection, types: type }) ?? findParentNode({ predicate, selection });
 
-  if (!Object.keys(attributes).length || !parent) {
+  if (isEmptyObject(attributes) || !parent) {
     return bool(parent);
   }
 

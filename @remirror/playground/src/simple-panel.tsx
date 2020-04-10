@@ -8,26 +8,33 @@ export interface SimplePanelProps {
   onAdvanced: () => void;
 }
 const knownExtensions: ExtensionSpec[] = [
-  // {
-  //   module: '@remirror/core-extensions',
-  //   export: 'BoldExtension',
-  // },
-  // {
-  //   module: '@remirror/core-extensions',
-  //   export: 'ItalicExtension',
-  // },
-  // {
-  //   module: '@remirror/core-extensions',
-  //   export: 'UnderlineExtension',
-  // },
+  {
+    module: '@remirror/core',
+    export: 'ParagraphExtension',
+  },
+  {
+    module: '@remirror/core',
+    export: 'BoldExtension',
+  },
+  {
+    module: '@remirror/core',
+    export: 'ItalicExtension',
+  },
+  {
+    module: '@remirror/core',
+    export: 'UnderlineExtension',
+  },
 ];
 
-const ExtensionCheckbox: FC<{
+interface ExtensionCheckboxProps {
   options: CodeOptions;
   setOptions: (newOptions: CodeOptions) => void;
   spec: ExtensionSpec;
-}> = (props) => {
-  const { options, setOptions, spec } = props;
+  hideModuleName: boolean;
+}
+
+const ExtensionCheckbox: FC<ExtensionCheckboxProps> = (props) => {
+  const { options, setOptions, spec, hideModuleName } = props;
   const existingIndex = useMemo(
     () =>
       options.extensions.findIndex(
@@ -50,11 +57,15 @@ const ExtensionCheckbox: FC<{
       });
     }
   }, [existingIndex, options, setOptions, spec]);
+  const text = hideModuleName
+    ? spec.export
+      ? spec.export
+      : 'default'
+    : `${spec.module}${spec.export ? ` : ${spec.export}` : ''}`;
   return (
     <div>
       <label>
-        <input type='checkbox' checked={existingIndex >= 0} onChange={handleChange} /> {spec.module}{' '}
-        {spec.export ? `: ${spec.export}` : ''}
+        <input type='checkbox' checked={existingIndex >= 0} onChange={handleChange} /> {text}
       </label>
     </div>
   );
@@ -62,16 +73,35 @@ const ExtensionCheckbox: FC<{
 
 export const SimplePanel: FC<SimplePanelProps> = (props) => {
   const { options, setOptions, onAdvanced } = props;
+  const grouped = useMemo(() => {
+    const groups: { [module: string]: ExtensionSpec[] } = {};
+    for (const ext of knownExtensions) {
+      if (!groups[ext.module]) {
+        groups[ext.module] = [];
+      }
+      groups[ext.module].push(ext);
+    }
+    return groups;
+  }, []);
+  const modules = Object.keys(grouped).sort();
   return (
     <div>
       <button onClick={onAdvanced}>Enter advanced mode</button>
-      {knownExtensions.map((spec) => (
-        <ExtensionCheckbox
-          key={`${`${spec.module}|${spec.export ?? 'default'}`}`}
-          spec={spec}
-          options={options}
-          setOptions={setOptions}
-        />
+      {modules.map((moduleName) => (
+        <>
+          <p>
+            <strong>{moduleName}</strong>
+          </p>
+          {grouped[moduleName].map((spec) => (
+            <ExtensionCheckbox
+              key={`${`${spec.module}|${spec.export ?? 'default'}`}`}
+              spec={spec}
+              options={options}
+              setOptions={setOptions}
+              hideModuleName
+            />
+          ))}
+        </>
       ))}
     </div>
   );

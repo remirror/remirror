@@ -78,3 +78,52 @@ interface A {
 
 type B = A[ExtensionType.Plain];
 ```
+
+The above solution let to a lot of problems. It seems it's just better to use the current settings.
+
+Meta field in package.json of field
+
+Extension metatadata
+
+- Build extension for skeletons which everyone can just fork from.
+- Testing, init command, yo generator (typescript support)
+
+Writes out all the basic metadata after asking questions to the user. The metadata is there which
+the playground can rely on. Define
+
+Remirror metadata field.
+
+Presets
+
+useEnvPreset({chrome: 73}) // useBrowseSupport({chrome: 73})
+
+useBrowseSupport({chrome: 72})
+
+declare module "@remirror/core" { interface ModuleConfig { MyModule: MyModuleConfig } }
+
+useConfigureExtension(extension, init)
+
+useConfigureExtension(BoldExtension, {weight:'900'}) useConfigureExtension(MyModule, config)
+useConfigureExtension(OtherExtension, config)
+
+declare module "@remirror/react" { useBrowserSupport(mod: MyModule, confg: MyModuleConf) => void; }
+
+https://github.com/graphile/worker/issues/57
+
+> > > THIS ONE useExtensionSpec(extension, spec) <<<
+
+> > > THIS ONE useExtensionConfig(extension, config) <<<
+
+useExtensionEvent(EmbedExtension, 'load', () => { console.log('Hey!') })
+
+useButtonPressCount() ... useExtensionState(ButtonExtension, 'pressCount')
+
+BEHAVIOURS:
+
+- UNIQUE - require that it's only set once, if set more than once fail
+- PRIORITY - use value with highest priority
+- ALL - collect all together (e.g. 'load' callback)
+
+```ts
+const { commands, helpers } = useRemirror();
+```
