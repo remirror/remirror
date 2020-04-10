@@ -12,7 +12,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import keyNames from 'w3c-keyname';
+import { keyName } from 'w3c-keyname';
 
 import { ActionNames, AnyFunction, Attrs, KeyOfThemeVariant, getMarkAttrs } from '@remirror/core';
 import { bubblePositioner, useRemirrorContext } from '@remirror/react';
@@ -239,7 +239,7 @@ const LinkInput: FC<LinkInputProps> = ({
   };
 
   const onKeyPress: KeyboardEventHandler<HTMLInputElement> = event => {
-    const key = keyNames.keyName(event.nativeEvent);
+    const key = keyName(event.nativeEvent);
     if (key === 'Escape') {
       event.preventDefault();
       deactivateLink();
