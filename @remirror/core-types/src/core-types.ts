@@ -1,7 +1,7 @@
 import { MarkSpec, NodeSpec } from 'prosemirror-model';
 import { Decoration } from 'prosemirror-view';
 
-import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
+import type { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
 
 import {
   EditorSchema,

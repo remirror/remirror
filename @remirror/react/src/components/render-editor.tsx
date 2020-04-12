@@ -62,7 +62,7 @@ import {
   UpdateStateParameter,
 } from '../react-types';
 
-export class RenderEditor<ManagerType extends Manager = any> extends PureComponent<
+export class RenderEditor<ManagerType extends Manager = Manager> extends PureComponent<
   RenderEditorProps<ManagerType>,
   RemirrorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>>
 > {
@@ -148,11 +148,8 @@ export class RenderEditor<ManagerType extends Manager = any> extends PureCompone
     called: false,
   };
 
-  constructor(
-    properties: RenderEditorProps<GetExtensionUnion<ManagerType>>,
-    context: RemirrorThemeContextType,
-  ) {
-    super(properties, context);
+  constructor(properties: RenderEditorProps<ManagerType>) {
+    super(properties);
 
     // Ensure that children is a render prop.
     propIsFunction(properties.children);
@@ -372,7 +369,7 @@ export class RenderEditor<ManagerType extends Manager = any> extends PureCompone
    * This sets the attributes that wrap the outer prosemirror node.
    */
   private readonly getAttributes = (ssr = false) => {
-    const { attributes } = this.props;
+    const { attributes, autoFocus } = this.props;
     const propertyAttributes = isFunction(attributes)
       ? attributes(this.eventListenerParameter())
       : attributes;
@@ -381,6 +378,7 @@ export class RenderEditor<ManagerType extends Manager = any> extends PureCompone
 
     const defaultAttributes = {
       role: 'textbox',
+      autofocus: autoFocus ? 'true' : 'false',
       'aria-multiline': 'true',
       ...(!this.props.editable ? { 'aria-readonly': 'true' } : {}),
       'aria-label': this.props.label ?? '',

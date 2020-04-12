@@ -71,7 +71,8 @@ export class CodeBlockState {
 
     // Urm yeah this is a loop within a loop within a loop and it makes my head hurt.
     for (const { node, pos: from } of this.blocks) {
-      let hasChanged: boolean = false;
+      let hasChanged = false;
+
       for (const step of steps) {
         step.getMap().forEach((oldStart, oldEnd) => {
           const to = from + node.nodeSize;
@@ -198,7 +199,7 @@ interface CreateCodeBlockPluginParameter extends ManagerNodeTypeParameter {
 /**
  * Create a codeBlock plugin to manage the internal prosemirror functionality
  */
-export default function createCodeBlockPlugin({ extension, type }: CreateCodeBlockPluginParameter) {
+export function createCodeBlockPlugin({ extension, type }: CreateCodeBlockPluginParameter) {
   const pluginState = new CodeBlockState(type);
   const handler = () => {
     pluginState.setDeleted(true);

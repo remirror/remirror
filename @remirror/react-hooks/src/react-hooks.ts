@@ -122,7 +122,7 @@ export type PartialSetStateAction<GState> =
  *
  * @remarks
  *
- * It also åaccepts partial updates to the state object and a callback which
+ * It also accepts partial updates to the state object and a callback which
  * runs when the state has updated.
  *
  * It also returns a 3rd argument which resets the state to the original

@@ -1,4 +1,5 @@
 import { AttributeSpec } from 'prosemirror-model';
+import { LiteralUnion } from 'type-fest';
 
 import {
   ErrorConstant,
@@ -1192,8 +1193,8 @@ type GetNodeNameUnion<ExtensionUnion extends AnyExtension> = ExtensionUnion exte
  * Gets the editor schema from an extension union.
  */
 type SchemaFromExtension<ExtensionUnion extends AnyExtension> = EditorSchema<
-  GetNodeNameUnion<ExtensionUnion>,
-  GetMarkNameUnion<ExtensionUnion>
+  LiteralUnion<GetNodeNameUnion<ExtensionUnion>, string>,
+  LiteralUnion<GetMarkNameUnion<ExtensionUnion>, string>
 >;
 
 type ManagerStoreKeys = keyof Remirror.ManagerStore;

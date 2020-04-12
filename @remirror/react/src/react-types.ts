@@ -41,7 +41,7 @@ import { GetExtensionUnion } from '@remirror/core/lib/manager/manager-types';
  */
 export type FocusType = FromToParameter | number | 'start' | 'end' | boolean;
 
-export interface RenderEditorProps<ManagerType extends Manager = any>
+export interface RenderEditorProps<ManagerType extends Manager = Manager>
   extends StringHandlerParameter {
   /**
    * Pass in the extension manager.
@@ -130,7 +130,7 @@ export interface RenderEditorProps<ManagerType extends Manager = any>
    * The render prop that takes the injected remirror params and returns an
    * element to render. The editor view is automatically attached to the DOM.
    */
-  children: RenderPropFunction<GetExtensionUnion<ManagerType>>;
+  children: RenderPropFunction<ManagerType>;
 
   /**
    * A method called when the editor is dispatching the transaction.
