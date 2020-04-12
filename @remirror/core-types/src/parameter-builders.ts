@@ -217,7 +217,7 @@ export interface CallbackParameter {
   /**
    * A simple callback to run.
    */
-  callback(): void;
+  callback: () => void;
 }
 
 /**
@@ -285,7 +285,7 @@ export interface PredicateParameter<Parameter> {
   /**
    * The predicate function
    */
-  predicate(parameter: Parameter): boolean;
+  predicate: (parameter: Parameter) => boolean;
 }
 
 export interface RegExpParameter {

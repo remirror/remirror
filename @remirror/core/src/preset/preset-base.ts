@@ -49,20 +49,21 @@ export interface PresetConstructor<
    * This is used to prevent the need for the `new` keyword which can lead to
    * problems.
    */
-  of(
+  of: (
     ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
-  ): Preset<ExtensionUnion, Settings, Properties>;
+  ) => Preset<ExtensionUnion, Settings, Properties>;
 }
 
 /**
- * Determines if the passed in extension is any type of extension.
+ * Determines if the passed in value is a preset.
  *
- * @param value - the extension to check
+ * @param value - the preset to check
  */
-export const isPreset = <Settings extends object = any>(
+export function isPreset<Settings extends object = any>(
   value: unknown,
-): value is AnyExtension<Settings> =>
-  isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Preset);
+): value is AnyExtension<Settings> {
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Preset);
+}
 
 /**
  * A preset is our way of bundling similar extensions with unified

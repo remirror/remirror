@@ -9,7 +9,6 @@ import {
 } from 'prosemirror-suggest';
 
 import {
-  CommandMarkTypeParameter,
   EditorState,
   getMarkRange,
   getMatchString,

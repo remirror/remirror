@@ -1,4 +1,4 @@
-// import pick from 'object.pick';
+import pick from 'object.pick';
 import { DEFAULT_SUGGESTER } from 'prosemirror-suggest';
 
 import { bool, isPlainObject, isString, ProsemirrorAttributes } from '@remirror/core';
@@ -26,10 +26,11 @@ export const DEFAULT_MATCHER = {
  * Check that the attributes exist and are valid for the mention update
  * command method.
  */
-export const isValidMentionAttributes = (
+export function isValidMentionAttributes(
   attributes: ProsemirrorAttributes,
-): attributes is MentionExtensionAttributes =>
-  bool(attributes && isPlainObject(attributes) && attributes.id && attributes.label);
+): attributes is MentionExtensionAttributes {
+  return bool(attributes && isPlainObject(attributes) && attributes.id && attributes.label);
+}
 
 /**
  * Gets the matcher from the list of matchers if it exists.
@@ -37,16 +38,16 @@ export const isValidMentionAttributes = (
  * @param name - the name of the matcher to find
  * @param matchers - the list of matchers to search through
  */
-export const getMatcher = (name: string, matchers: MentionExtensionMatcher[]) => {
+export function getMatcher(name: string, matchers: MentionExtensionMatcher[]) {
   const matcher = matchers.find((matcher) => matcher.name === name);
   return matcher ? { ...DEFAULT_MATCHER, ...matcher } : undefined;
-};
+}
 
 /**
  * Get the append text value which needs to be handled carefully since it can
  * also be an empty string.
  */
-export const getAppendText = (preferred: string | undefined, fallback: string | undefined) => {
+export function getAppendText(preferred: string | undefined, fallback: string | undefined) {
   if (isString(preferred)) {
     return preferred;
   }
@@ -54,4 +55,4 @@ export const getAppendText = (preferred: string | undefined, fallback: string | 
     return fallback;
   }
   return DEFAULT_MATCHER.appendText;
-};
+}

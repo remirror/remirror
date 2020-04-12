@@ -46,13 +46,6 @@ interface IsNameUniqueParameter {
   set: Set<string>;
 
   /**
-   * Whether to throw when not unique
-   *
-   * @defaultValue `false`
-   */
-  shouldThrow?: boolean;
-
-  /**
    * The type of the unique check
    *
    * @defaultValue 'extension'
@@ -64,32 +57,24 @@ interface IsNameUniqueParameter {
  * Checks whether a given string is unique to the set. Add the name if it
  * doesn't already exist, or throw an error when `shouldThrow` is true.
  *
- * @param params - destructured params
+ * @param parameter - destructured params
  */
-const isNameUnique = ({
-  name,
-  set,
-  shouldThrow = false,
-  type = 'extension',
-}: IsNameUniqueParameter) => {
-  if (set.has(name)) {
-    const message = `There is a naming conflict for the name: ${name} used in this type: ${type}. Please rename to avoid runtime errors.`;
-    if (shouldThrow) {
-      throw new Error(message);
-    } else {
-      console.error(message);
-    }
-  } else {
-    set.add(name);
-  }
-};
+function throwIfNameNotUnique(parameter: IsNameUniqueParameter) {
+  const { name, set, type = 'extension' } = parameter;
+
+  invariant(!set.has(name), {
+    message: `There is a naming conflict for the name: ${name} used in this type: ${type}. Please rename to avoid runtime errors.`,
+  });
+
+  set.add(name);
+}
 
 interface TransformCommandsParameter<ExtensionUnion extends AnyExtension>
   extends ExtensionListParameter<ExtensionUnion> {
   /**
    * The command params which are passed to each extensions `commands` method.
    */
-  params: CommandParameter;
+  commandParameter: CommandParameter;
 }
 
 /**
@@ -98,13 +83,10 @@ interface TransformCommandsParameter<ExtensionUnion extends AnyExtension>
  * @param extension - the extension to test.
  * @param params - the params without the type.
  */
-const getParameterWithType = <
+export function getParameterWithType<
   ExtensionUnion extends AnyExtension,
   Parameter extends ManagerParameter
->(
-  extension: ExtensionUnion,
-  parameter: Parameter,
-) => {
+>(extension: ExtensionUnion, parameter: Parameter) {
   if (isMarkExtension(extension)) {
     return { ...parameter, type: parameter.schema.marks[extension.name] };
   }
@@ -114,7 +96,9 @@ const getParameterWithType = <
   }
 
   return parameter as any;
-};
+}
+
+const forbiddenNames = new Set(['run']);
 
 /**
  * Generate all the action commands for usage within the UI.
@@ -122,10 +106,10 @@ const getParameterWithType = <
  * Typically actions are used to create interactive menus. For example a menu
  * can use a command to toggle bold formatting or to undo the last action.
  */
-const transformCommands = <ExtensionUnion extends AnyExtension>({
-  extensions,
-  params,
-}: TransformCommandsParameter<ExtensionUnion>) => {
+export function transformCommands<ExtensionUnion extends AnyExtension>(
+  parameter: TransformCommandsParameter<ExtensionUnion>,
+) {
+  const { extensions, commandParameter } = parameter;
   const unchained: Record<
     string,
     { command: AnyFunction; isEnabled: AnyFunction; name: string }
@@ -135,7 +119,7 @@ const transformCommands = <ExtensionUnion extends AnyExtension>({
 
   const names = new Set<string>();
 
-  const { view, getState } = params;
+  const { view, getState } = commandParameter;
 
   const unchainedFactory = ({
     command,
@@ -169,17 +153,21 @@ const transformCommands = <ExtensionUnion extends AnyExtension>({
   };
 
   const getItemParameters = (extension: ExtensionUnion) =>
-    extension.parameter.createCommands?.(getParameterWithType(extension, params), extension) ?? {};
+    extension.parameter.createCommands?.(
+      getParameterWithType(extension, commandParameter),
+      extension,
+    ) ?? {};
 
   for (const extension of extensions) {
-    if (extension.parameter.createCommands) {
+    if (!extension.parameter.createCommands) {
       continue;
     }
 
     const item = getItemParameters(extension);
 
     for (const [name, command] of entries(item)) {
-      isNameUnique({ name, set: names, shouldThrow: true });
+      throwIfNameNotUnique({ name, set: names });
+      invariant(!forbiddenNames.has(name), { message: 'The command name you chose is forbidden.' });
 
       unchained[name] = {
         name: extension.name,
@@ -191,8 +179,10 @@ const transformCommands = <ExtensionUnion extends AnyExtension>({
     }
   }
 
+  chained.run = () => view.dispatch(getState().tr);
+
   return { unchained, chained };
-};
+}
 
 // /**
 //  * Generate all the helpers from the extension list.
@@ -223,7 +213,7 @@ const transformCommands = <ExtensionUnion extends AnyExtension>({
 //   return items;
 // };
 
-interface TransformExtensionOrPreset<
+export interface TransformExtensionOrPreset<
   ExtensionUnion extends AnyExtension,
   PresetUnion extends AnyPreset<ExtensionUnion>
 > {
@@ -246,12 +236,12 @@ interface TransformExtensionOrPreset<
  *
  * @returns the list of extension instances sorted by priority
  */
-const transformExtensionOrPreset = <
+export function transformExtensionOrPreset<
   ExtensionUnion extends AnyExtension,
   PresetUnion extends AnyPreset<ExtensionUnion>
 >(
   unionValues: Array<ExtensionUnion | PresetUnion>,
-): TransformExtensionOrPreset<ExtensionUnion, PresetUnion> => {
+): TransformExtensionOrPreset<ExtensionUnion, PresetUnion> {
   type ExtensionConstructor = GetConstructor<ExtensionUnion>;
   type PresetConstructor = GetConstructor<PresetUnion>;
   interface MissingConstructor {
@@ -378,21 +368,23 @@ const transformExtensionOrPreset = <
     presets,
     presetMap,
   };
-};
+}
 
 /**
  * Takes in an object and removes all function values.
  *
  * @remarks
+ *
  * This is useful for deep equality checks when functions need to be ignored.
  *
  * A current limitation is that it only dives one level deep. So objects with
  * nested object methods will retain those methods.
  *
- * @param obj - an object which might contain methods
+ * @param object_ - an object which might contain methods
+ *
  * @returns a new object without any of the functions defined
  */
-const ignoreFunctions = (object_: Record<string, unknown>) => {
+export function ignoreFunctions(object_: Record<string, unknown>) {
   const newObject: Record<string, unknown> = object();
   for (const key of Object.keys(object_)) {
     if (isFunction(object_[key])) {
@@ -402,15 +394,15 @@ const ignoreFunctions = (object_: Record<string, unknown>) => {
   }
 
   return newObject;
-};
+}
 
 /**
  * Create the extension tags which are passed into each extensions method to
  * enable dynamically generated rules and commands.
  */
-const createExtensionTags = <ExtensionUnion extends AnyExtension>(
+export function createExtensionTags<ExtensionUnion extends AnyExtension>(
   extensions: readonly ExtensionUnion[],
-): ExtensionTags<ExtensionUnion> => {
+): ExtensionTags<ExtensionUnion> {
   type MarkNames = GetMarkNameUnion<ExtensionUnion>;
   type NodeNames = GetNodeNameUnion<ExtensionUnion>;
   type AllNames = GetNameUnion<ExtensionUnion>;
@@ -464,12 +456,12 @@ const createExtensionTags = <ExtensionUnion extends AnyExtension>(
     mark,
     node,
   };
-};
+}
 
 /**
  * Identifies the stage the extension manager is at.
  */
-enum ManagerPhase {
+export enum ManagerPhase {
   /**
    * When the extension manager is being created.
    */
@@ -491,14 +483,3 @@ enum ManagerPhase {
    */
   Done,
 }
-
-export {
-  transformCommands,
-  createExtensionTags,
-  // createHelpers,
-  getParameterWithType,
-  ignoreFunctions,
-  ManagerPhase,
-  transformExtensionOrPreset,
-  TransformExtensionOrPreset,
-};

@@ -19,16 +19,17 @@ export interface GetChangedPropertiesParameter<Properties extends object> {
   equals?: (valueA: unknown, valueB: unknown) => boolean;
 }
 
-const defaultEquals = (valueA: unknown, valueB: unknown) => valueA === valueB;
+function defaultEquals(valueA: unknown, valueB: unknown) {
+  return valueA === valueB;
+}
 
 /**
  * Get the property changes and the next value from an update.
  */
-export const getChangedProperties = <Properties extends object>({
-  previous,
-  update,
-  equals = defaultEquals,
-}: GetChangedPropertiesParameter<Properties>): GetChangedPropertiesReturn<Properties> => {
+export function getChangedProperties<Properties extends object>(
+  parameter: GetChangedPropertiesParameter<Properties>,
+): GetChangedPropertiesReturn<Properties> {
+  const { previous, update, equals = defaultEquals } = parameter;
   const next = freeze({ ...previous, update });
   const changes = {} as ChangedProperties<Properties>;
   const propertyKeys = keys(previous);
@@ -46,7 +47,7 @@ export const getChangedProperties = <Properties extends object>({
   }
 
   return { changes: freeze(changes), next };
-};
+}
 
 export interface GetChangedPropertiesReturn<Properties extends object> {
   /**

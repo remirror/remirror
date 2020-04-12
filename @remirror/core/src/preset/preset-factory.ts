@@ -5,41 +5,45 @@ import { IfNoRequiredProperties } from '@remirror/core-types';
 import { AnyExtension } from '../extension';
 import { Preset, PresetConstructor, PresetFactoryParameter } from './preset-base';
 
-const createPresetFactory = <Settings extends object = {}, Properties extends object = {}>() => ({
-  /**
-   * Create a preset.
-   */
-  preset<ExtensionUnion extends AnyExtension>(
-    factoryParameter: PresetFactoryParameter<ExtensionUnion, Settings, Properties>,
-  ): PresetConstructor<ExtensionUnion, Settings, Properties> {
-    const parameter = freeze(factoryParameter);
+function createPresetFactory<Settings extends object = {}, Properties extends object = {}>() {
+  return {
+    /**
+     * Create a preset.
+     */
+    preset<ExtensionUnion extends AnyExtension>(
+      factoryParameter: PresetFactoryParameter<ExtensionUnion, Settings, Properties>,
+    ): PresetConstructor<ExtensionUnion, Settings, Properties> {
+      const parameter = freeze(factoryParameter);
 
-    class EditorPresetConstructor extends Preset<ExtensionUnion, Settings, Properties> {
-      /**
-       * Identifies this as a `PresetConstructor`.
-       *
-       * @internal
-       */
-      static get [REMIRROR_IDENTIFIER_KEY]() {
-        return RemirrorIdentifier.PresetConstructor;
+      class EditorPresetConstructor extends Preset<ExtensionUnion, Settings, Properties> {
+        /**
+         * Identifies this as a `PresetConstructor`.
+         *
+         * @internal
+         */
+        static get [REMIRROR_IDENTIFIER_KEY]() {
+          return RemirrorIdentifier.PresetConstructor;
+        }
+
+        public static of(...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+          return new EditorPresetConstructor(...settings);
+        }
+
+        private constructor(
+          ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
+        ) {
+          super(...settings);
+        }
+
+        public getFactoryParameter() {
+          return parameter;
+        }
       }
 
-      public static of(...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
-        return new EditorPresetConstructor(...settings);
-      }
-
-      private constructor(...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
-        super(...settings);
-      }
-
-      public getFactoryParameter() {
-        return parameter;
-      }
-    }
-
-    return EditorPresetConstructor;
-  },
-});
+      return EditorPresetConstructor;
+    },
+  };
+}
 
 /**
  * The factory for creating a new preset.
@@ -57,7 +61,12 @@ export const PresetFactory = {
   },
 };
 
-export const isPresetConstructor = <Settings extends object = any>(
+/**
+ * Determines if the passed in value is a preset constructor (which is used to
+ * create preset instances).
+ */
+export function isPresetConstructor<Settings extends object = any>(
   value: unknown,
-): value is PresetConstructor<any, Settings, any> =>
-  isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.PresetConstructor);
+): value is PresetConstructor<any, Settings, any> {
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.PresetConstructor);
+}

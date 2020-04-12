@@ -270,18 +270,18 @@ export interface Positioner<ExtensionUnion extends AnyExtension = any> {
    *
    * @param params
    */
-  hasChanged(params: CompareStateParameter<SchemaFromExtension<ExtensionUnion>>): boolean;
+  hasChanged: (params: CompareStateParameter<SchemaFromExtension<ExtensionUnion>>) => boolean;
 
   /**
    * Determines whether the positioner should be active
    */
-  isActive(params: GetPositionParameter<ExtensionUnion>): boolean;
+  isActive: (params: GetPositionParameter<ExtensionUnion>) => boolean;
 
   /**
    * Calculate and return a new position (only called when `hasChanged` and
    * `isActive` return true)
    */
-  getPosition(params: GetPositionParameter<ExtensionUnion>): Position;
+  getPosition: (params: GetPositionParameter<ExtensionUnion>) => Position;
 }
 
 export type CalculatePositionerParameter<
@@ -451,7 +451,7 @@ export interface RemirrorGetterParameter {
   /**
    * Get the current HTML from the latest editor state.
    */
-  getHTML(): string;
+  getHTML: () => string;
 
   /**
    * Get the current raw text from the latest editor state.
@@ -459,19 +459,19 @@ export interface RemirrorGetterParameter {
    * @param lineBreakDivider - the divider to use for new lines defaults to
    * '\n\n'
    */
-  getText(lineBreakDivider?: string): string;
+  getText: (lineBreakDivider?: string) => string;
 
   /**
    * Get the full JSON representation of the state (including the selection
    * information)
    */
-  getJSON(): ObjectNode;
+  getJSON: () => ObjectNode;
 
   /**
    * Get a representation of the editor content as an ObjectNode which can be
    * used to set content for and editor.
    */
-  getObjectNode(): ObjectNode;
+  getObjectNode: () => ObjectNode;
 }
 
 export interface BaseListenerParameter<ExtensionUnion extends AnyExtension = any>
@@ -512,9 +512,9 @@ export interface RemirrorStateListenerParameter<ExtensionUnion extends AnyExtens
   /**
    * Manually create a new state object with the desired content.
    */
-  createStateFromContent(
+  createStateFromContent: (
     content: RemirrorContentType,
-  ): EditorState<SchemaFromExtension<ExtensionUnion>>;
+  ) => EditorState<SchemaFromExtension<ExtensionUnion>>;
 }
 
 export type RemirrorEventListener<ExtensionUnion extends AnyExtension = any> = (

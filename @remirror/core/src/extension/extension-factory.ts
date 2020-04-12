@@ -25,10 +25,10 @@ import {
  * This function returns the base extension creator methods. It is exposed as a
  * function to allow for fully typed `ExtensionConstructor`s.
  */
-const createBaseExtensionFactory = <
+function createBaseExtensionFactory<
   Settings extends object = {},
   Properties extends object = {}
->() => {
+>() {
   const creators = {
     /**
      * Creates a `PlainExtensionConstructor`. This is useful for non content
@@ -262,7 +262,7 @@ const createBaseExtensionFactory = <
   };
 
   return creators;
-};
+}
 
 /**
  * The only way to create extensions using remirror.
@@ -317,10 +317,13 @@ export const ExtensionFactory = {
  *
  * @param value - the value to test
  */
-export const isExtensionConstructor = (value: unknown): value is AnyExtensionConstructor =>
-  isRemirrorType(value) &&
-  [
-    RemirrorIdentifier.PlainExtensionConstructor,
-    RemirrorIdentifier.MarkExtensionConstructor,
-    RemirrorIdentifier.NodeExtensionConstructor,
-  ].includes(value[REMIRROR_IDENTIFIER_KEY]);
+export function isExtensionConstructor(value: unknown): value is AnyExtensionConstructor {
+  return (
+    isRemirrorType(value) &&
+    [
+      RemirrorIdentifier.PlainExtensionConstructor,
+      RemirrorIdentifier.MarkExtensionConstructor,
+      RemirrorIdentifier.NodeExtensionConstructor,
+    ].includes(value[REMIRROR_IDENTIFIER_KEY])
+  );
+}

@@ -201,7 +201,7 @@ export interface RemirrorThemeContextType {
    * @param path - a string or array path to search within the theme
    * @param fallback - the value to use when no value found
    */
-  get<GReturn = any>(path: string | Array<string | number>, fallback?: any): GReturn;
+  get: <GReturn = any>(path: string | Array<string | number>, fallback?: any) => GReturn;
 
   /**
    * Access to the css method from within the remirror theme context
@@ -212,16 +212,16 @@ export interface RemirrorThemeContextType {
    * This is similar to the css method but an array of themed objects which
    * have all the `@styled-system/css` props available. All objects will be themed
    */
-  sx(
+  sx: (
     ...args: Array<RemirrorInterpolation | RemirrorInterpolation[]>
-  ): (props?: RemirrorTheme | { theme: RemirrorTheme }) => SerializedStyles;
+  ) => (props?: RemirrorTheme | { theme: RemirrorTheme }) => SerializedStyles;
 
   /**
    * Like the sx prop except this directly returns an object.
    *
    * Useful for the times when you don't want to return a function
    */
-  sxx(...args: Array<RemirrorInterpolation | RemirrorInterpolation[]>): SerializedStyles;
+  sxx: (...args: Array<RemirrorInterpolation | RemirrorInterpolation[]>) => SerializedStyles;
 
   /**
    * The currently active theme. If this is a deeply nested provider then it will extend
@@ -248,7 +248,7 @@ export interface RemirrorThemeContextType {
   /**
    * A method to set the color mode.
    */
-  setColorMode(mode: string): void;
+  setColorMode: (mode: string) => void;
 }
 
 /**

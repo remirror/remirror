@@ -72,12 +72,12 @@ export interface GetManagerFromComponentTreeParameter {
  *
  * This is useful in DOM-less (e.g. server-side) environments.
  */
-export const getSchemaFromComponentTree = ({
+export function getSchemaFromComponentTree({
   Component,
   prop = 'children',
   extraProps = object<PlainObject>(),
-}: GetManagerFromComponentTreeParameter) =>
-  new Promise<Manager>((resolve, reject) => {
+}: GetManagerFromComponentTreeParameter) {
+  return new Promise<Manager>((resolve, reject) => {
     const ManagerRetriever = () => {
       const { manager } = useRemirror();
       resolve(manager);
@@ -95,3 +95,4 @@ export const getSchemaFromComponentTree = ({
       ),
     );
   });
+}

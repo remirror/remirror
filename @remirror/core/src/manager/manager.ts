@@ -31,15 +31,16 @@ import {
   ChainedFromExtensions,
   CommandsFromExtensions,
   ExtensionFromConstructor,
-  ExtensionLifecyleMethods as ExtensionLifecycleMethods,
+  ExtensionLifecycleMethods,
   ExtensionTags,
   GetMarkNameUnion,
   GetNodeNameUnion,
-  InitializeEventMethodParameter,
-  InitializeEventMethodReturn,
+  InitializeLifecycleMethodParameter,
+  InitializeLifecycleMethodReturn,
   isMarkExtension,
   isNodeExtension,
   SchemaFromExtension,
+  ViewLifecycleMethodReturn,
 } from '../extension';
 import { AnyPreset } from '../preset';
 import {
@@ -66,8 +67,9 @@ import {
  *
  * @param value - the value to check
  */
-const isManager = (value: unknown): value is Manager =>
-  isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
+export function isManager(value: unknown): value is Manager {
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
+}
 
 /**
  * The `Manager` has multiple hook phases which are able to hook into
@@ -112,7 +114,7 @@ const isManager = (value: unknown): value is Manager =>
  * manager.data.actions
  * ```
  */
-class Manager<
+export class Manager<
   ExtensionUnion extends AnyExtension = AnyExtension,
   PresetUnion extends AnyPreset<ExtensionUnion> = AnyPreset
 > {
@@ -231,9 +233,12 @@ class Manager<
    * Store the handlers that will be run when for each event method.
    */
   #handlers: {
-    initialize: InitializeEventMethodReturn[];
+    initialize: InitializeLifecycleMethodReturn[];
+    view: ViewLifecycleMethodReturn[];
     transaction: Array<NonNullable<ExtensionLifecycleMethods['onTransaction']>>;
-  } = { initialize: [], transaction: [] };
+  } = { initialize: [], transaction: [], view: [] };
+
+  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
   /**
    * Creates the extension manager which is used to simplify the management of
@@ -258,7 +263,8 @@ class Manager<
     this.#presets = freeze(presets);
     this.#presetMap = presetMap;
 
-    const parameter = this.initializeParameter;
+    const initializeParameter = this.initializeParameter;
+    const { addPlugins: _, ...viewParameter } = initializeParameter;
 
     for (const extension of this.#extensions) {
       if (isNodeExtension(extension)) {
@@ -272,14 +278,18 @@ class Manager<
         this.#store.marks[name as GetMarkNameUnion<ExtensionUnion>] = schema;
       }
 
-      const initializeHandler = extension.parameter.onInitialize?.(parameter);
+      const initializeHandler = extension.parameter.onInitialize?.(initializeParameter);
       // const createHandler = extension.parameter.onCreate;
-      // const viewHandler = extension.parameter.onView;
+      const viewHandler = extension.parameter.onView?.(viewParameter);
       // const destroyHandler = extension.parameter.onDestroy;
       const transactionHandler = extension.parameter.onTransaction;
 
       if (initializeHandler) {
         this.#handlers.initialize.push(initializeHandler);
+      }
+
+      if (viewHandler) {
+        this.#handlers.view.push(viewHandler);
       }
 
       if (transactionHandler) {
@@ -294,7 +304,7 @@ class Manager<
     this.initialize();
   }
 
-  private get initializeParameter(): InitializeEventMethodParameter {
+  private get initializeParameter(): InitializeLifecycleMethodParameter {
     return {
       getParameter: (extension) => {
         invariant(this.#phase >= ManagerPhase.Initialize, {
@@ -369,6 +379,24 @@ class Manager<
   }
 
   /**
+   * Called after the extension loop of the initialization phase.
+   */
+  private afterOnView(view: EditorView<EditorSchema>) {
+    for (const { afterExtensionLoop } of this.#handlers.view) {
+      afterExtensionLoop?.(view);
+    }
+  }
+
+  /**
+   * Called during the extension loop of the initialization phase.
+   */
+  private onViewEachExtension(extension: ExtensionUnion, view: EditorView<EditorSchema>) {
+    for (const { forEachExtension } of this.#handlers.view) {
+      forEachExtension?.(extension, view);
+    }
+  }
+
+  /**
    * Initialize the extension manager with important data.
    *
    * This is called by the view layer and provides
@@ -408,6 +436,12 @@ class Manager<
   public addView(view: EditorView<SchemaFromExtension<ExtensionUnion>>) {
     this.#phase = ManagerPhase.AddView;
     this.#store.view = view;
+
+    for (const extension of this.#extensions) {
+      this.onViewEachExtension(extension, view);
+    }
+
+    this.afterOnView(view);
 
     [this.#store.commands, this.#store.chain] = this.createCommands({
       ...this.parameter,
@@ -513,10 +547,7 @@ class Manager<
    *
    * This is called as soon as the Manager is created.
    */
-  private createSchema(): EditorSchema<
-    GetNodeNameUnion<ExtensionUnion>,
-    GetMarkNameUnion<ExtensionUnion>
-  > {
+  private createSchema(): SchemaFromExtension<ExtensionUnion> {
     return new Schema({ nodes: this.nodes, marks: this.marks });
   }
 
@@ -537,7 +568,7 @@ class Manager<
 
     // Creates the methods that take in attrs and dispatch an action into the
     // editor
-    const { chained, unchained } = transformCommands({ extensions, params: parameters });
+    const { chained, unchained } = transformCommands({ extensions, commandParameter: parameters });
 
     for (const [commandName, { command, isEnabled }] of entries(unchained)) {
       commands[commandName] = command as CommandMethod;
@@ -572,7 +603,7 @@ class Manager<
   }
 }
 
-interface OnTransactionManagerParameter extends TransactionParameter, EditorStateParameter {}
+export interface OnTransactionManagerParameter extends TransactionParameter, EditorStateParameter {}
 
 declare global {
   namespace Remirror {
@@ -633,7 +664,3 @@ declare global {
     interface ManagerInitializationParameter<ExtensionUnion extends AnyExtension = any> {}
   }
 }
-
-/* eslint-enable @typescript-eslint/explicit-member-accessibility */
-
-export { isManager, Manager, OnTransactionManagerParameter };

@@ -1,5 +1,4 @@
 import { AttributeSpec } from 'prosemirror-model';
-import { LiteralUnion } from 'type-fest';
 
 import {
   ErrorConstant,
@@ -23,6 +22,7 @@ import {
   AnyFunction,
   CreateExtraAttributes,
   EditorSchema,
+  EditorView,
   ExtraAttributes,
   FlipPartialAndRequired,
   GetExtraAttributes,
@@ -62,7 +62,7 @@ import {
  *
  * TODO Figure out how to improve the formatting of this.
  */
-type AnyExtension<Settings extends object = {}, Properties extends object = {}> = Extension<
+export type AnyExtension<Settings extends object = {}, Properties extends object = {}> = Extension<
   string,
   Settings,
   Properties,
@@ -74,7 +74,7 @@ type AnyExtension<Settings extends object = {}, Properties extends object = {}> 
 /**
  * Matches any of the three `ExtensionConstructor`s.
  */
-interface AnyExtensionConstructor {
+export interface AnyExtensionConstructor {
   /**
    * The name of the extension that will be created. Also available on the
    * instance as `name`.
@@ -131,7 +131,7 @@ type InferExtensionConstructor<
  * These are the default options merged into every extension. They can be
  * overridden.
  */
-const defaultSettings: Required<BaseExtensionSettings> = {
+export const defaultSettings: Required<BaseExtensionSettings> = {
   priority: null,
   extraAttributes: [],
   exclude: {},
@@ -142,20 +142,22 @@ const defaultSettings: Required<BaseExtensionSettings> = {
  *
  * @param value - the value to test
  */
-const isExtension = <Settings extends object = {}, Properties extends object = {}>(
+export function isExtension<Settings extends object = {}, Properties extends object = {}>(
   value: unknown,
-): value is AnyExtension<Settings, Properties> =>
-  isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Extension);
+): value is AnyExtension<Settings, Properties> {
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Extension);
+}
 
 /**
  * Checks whether the provided value is a plain extension.
  *
  * @param value - the extension to check
  */
-const isPlainExtension = <Settings extends object = {}, Properties extends object = {}>(
+export function isPlainExtension<Settings extends object = {}, Properties extends object = {}>(
   value: unknown,
-): value is AnyPlainExtension<Settings, Properties> =>
-  isExtension(value) && value.type === ExtensionType.Plain;
+): value is AnyPlainExtension<Settings, Properties> {
+  return isExtension(value) && value.type === ExtensionType.Plain;
+}
 
 /**
  * Determines if the passed in extension is a mark extension. Useful as a type
@@ -163,10 +165,11 @@ const isPlainExtension = <Settings extends object = {}, Properties extends objec
  *
  * @param value - the extension to check
  */
-const isMarkExtension = <Settings extends object = {}, Properties extends object = {}>(
+export function isMarkExtension<Settings extends object = {}, Properties extends object = {}>(
   value: unknown,
-): value is AnyMarkExtension<Settings, Properties> =>
-  isExtension(value) && value.type === ExtensionType.Mark;
+): value is AnyMarkExtension<Settings, Properties> {
+  return isExtension(value) && value.type === ExtensionType.Mark;
+}
 
 /**
  * Determines if the passed in extension is a node extension. Useful as a type
@@ -174,10 +177,11 @@ const isMarkExtension = <Settings extends object = {}, Properties extends object
  *
  * @param value - the extension to check
  */
-const isNodeExtension = <Settings extends object = {}, Properties extends object = {}>(
+export function isNodeExtension<Settings extends object = {}, Properties extends object = {}>(
   value: unknown,
-): value is AnyNodeExtension<Settings, Properties> =>
-  isExtension(value) && value.type === ExtensionType.Node;
+): value is AnyNodeExtension<Settings, Properties> {
+  return isExtension(value) && value.type === ExtensionType.Node;
+}
 
 /**
  * Allows for the addition of attributes to the defined schema. These are
@@ -190,72 +194,80 @@ const isNodeExtension = <Settings extends object = {}, Properties extends object
  * This can only be used in a `NodeExtension` or `MarkExtension`. The additional
  * attributes can only be optional.
  */
-const createExtraAttributesFactory = <Settings extends object>(
+function createExtraAttributesFactory<Settings extends object>(
   extension: AnyExtension,
-): CreateExtraAttributes => ({ fallback }) => {
-  // Make sure this is a node or mark extension. Will throw if not.
-  invariant(isNodeExtension<Settings>(extension) || isMarkExtension<Settings>(extension), {
-    code: ErrorConstant.EXTRA_ATTRS,
-  });
+): CreateExtraAttributes {
+  const createExtraAttributes: CreateExtraAttributes = ({ fallback }) => {
+    // Make sure this is a node or mark extension. Will throw if not.
+    invariant(isNodeExtension<Settings>(extension) || isMarkExtension<Settings>(extension), {
+      code: ErrorConstant.EXTRA_ATTRS,
+    });
 
-  const extraAttributes: ExtraAttributes[] = extension.settings.extraAttributes ?? [];
-  const attributes: Record<string, AttributeSpec> = object();
+    const extraAttributes: ExtraAttributes[] = extension.settings.extraAttributes ?? [];
+    const attributes: Record<string, AttributeSpec> = object();
 
-  for (const item of extraAttributes) {
-    if (isArray(item)) {
-      attributes[item[0]] = { default: item[1] };
-      continue;
+    for (const item of extraAttributes) {
+      if (isArray(item)) {
+        attributes[item[0]] = { default: item[1] };
+        continue;
+      }
+
+      if (isString(item)) {
+        attributes[item] = { default: fallback };
+        continue;
+      }
+
+      const { name, default: def } = item;
+      attributes[name] = def !== undefined ? { default: def } : {};
     }
 
-    if (isString(item)) {
-      attributes[item] = { default: fallback };
-      continue;
-    }
+    return attributes;
+  };
 
-    const { name, default: def } = item;
-    attributes[name] = def !== undefined ? { default: def } : {};
-  }
-
-  return attributes;
-};
+  return createExtraAttributes;
+}
 
 /**
  * Runs through the extraAttributes provided and retrieves them.
  */
-const getExtraAttributesFactory = <Settings extends object>(
+function getExtraAttributesFactory<Settings extends object>(
   extension: AnyExtension,
-): GetExtraAttributes => (domNode) => {
-  // Make sure this is a node or mark extension. Will throw if not.
-  invariant(isNodeExtension<Settings>(extension) || isMarkExtension<Settings>(extension), {
-    code: ErrorConstant.EXTRA_ATTRS,
-  });
+): GetExtraAttributes {
+  const getExtraAttributes: GetExtraAttributes = (domNode) => {
+    // Make sure this is a node or mark extension. Will throw if not.
+    invariant(isNodeExtension<Settings>(extension) || isMarkExtension<Settings>(extension), {
+      code: ErrorConstant.EXTRA_ATTRS,
+    });
 
-  const extraAttributes = extension.settings.extraAttributes ?? [];
-  const attributes: ProsemirrorAttributes = object();
+    const extraAttributes = extension.settings.extraAttributes ?? [];
+    const attributes: ProsemirrorAttributes = object();
 
-  for (const attribute of extraAttributes) {
-    if (isArray(attribute)) {
-      // Use the default
-      const [name, , attributeName] = attribute;
-      attributes[name] = attributeName
-        ? (domNode as Element).getAttribute(attributeName)
-        : undefined;
+    for (const attribute of extraAttributes) {
+      if (isArray(attribute)) {
+        // Use the default
+        const [name, , attributeName] = attribute;
+        attributes[name] = attributeName
+          ? (domNode as Element).getAttribute(attributeName)
+          : undefined;
 
-      continue;
+        continue;
+      }
+
+      if (isString(attribute)) {
+        // Assume the name is the same
+        attributes[attribute] = (domNode as Element).getAttribute(attribute);
+        continue;
+      }
+
+      const { name, getAttributes, default: fallback } = attribute;
+      attributes[name] = getAttributes ? getAttributes(domNode) || fallback : fallback;
     }
 
-    if (isString(attribute)) {
-      // Assume the name is the same
-      attributes[attribute] = (domNode as Element).getAttribute(attribute);
-      continue;
-    }
+    return attributes;
+  };
 
-    const { name, getAttributes, default: fallback } = attribute;
-    attributes[name] = getAttributes ? getAttributes(domNode) || fallback : fallback;
-  }
-
-  return attributes;
-};
+  return getExtraAttributes;
+}
 
 /**
  * Extensions are fundamental to the way that Remirror works and they handle the
@@ -297,7 +309,7 @@ const getExtraAttributesFactory = <Settings extends object>(
  * }
  * ```
  */
-abstract class Extension<
+export abstract class Extension<
   Name extends string,
   Settings extends object,
   Properties extends object = {},
@@ -516,7 +528,7 @@ abstract class Extension<
  * Declaration merging since the constructor property can't be defined on the
  * actual class.
  */
-interface Extension<
+export interface Extension<
   Name extends string,
   Settings extends object,
   Properties extends object = {},
@@ -541,7 +553,7 @@ interface Extension<
  * Get the expected type signature for the `defaultSettings`. Requires that every
  * non-required property (not from the BaseExtension) has a value assigned.
  */
-type DefaultSettingsType<Settings extends object> = Omit<
+export type DefaultSettingsType<Settings extends object> = Omit<
   FlipPartialAndRequired<Settings>,
   keyof BaseExtensionSettings
 > &
@@ -585,7 +597,7 @@ interface DefaultSettingsParameter<Settings extends object> {
  * The configuration parameter which is passed into an `ExtensionFactory` to
  * create the `ExtensionConstructor`.
  */
-interface BaseExtensionFactoryParameter<
+export interface BaseExtensionFactoryParameter<
   Name extends string,
   Settings extends object,
   Properties extends object = {},
@@ -593,7 +605,7 @@ interface BaseExtensionFactoryParameter<
   Helpers extends ExtensionHelperReturn = {},
   ProsemirrorType = never
 >
-  extends ExtensionLifecyleMethods,
+  extends ExtensionLifecycleMethods,
     Remirror.ExtensionFactoryParameter<
       Name,
       Settings,
@@ -763,7 +775,7 @@ interface ExtensionCreatorMethods<
   ) => Helpers;
 }
 
-interface ExtensionLifecyleMethods {
+export interface ExtensionLifecycleMethods {
   /**
    * When the Manager is first created and the schema is made
    * available.
@@ -773,13 +785,13 @@ interface ExtensionLifecyleMethods {
   /**
    * This happens when the store is initialized.
    */
-  onInitialize?: (parameter: InitializeEventMethodParameter) => InitializeEventMethodReturn;
+  onInitialize?: (parameter: InitializeLifecycleMethodParameter) => InitializeLifecycleMethodReturn;
 
   /**
    * This event happens when the view is first received from the view layer
    * (e.g. React).
    */
-  onView?: () => void;
+  onView?: (parameter: ViewLifecycleMethodParameter) => ViewLifecycleMethodReturn;
 
   /**
    * Called when a transaction successfully updates the editor state.
@@ -795,7 +807,7 @@ interface ExtensionLifecyleMethods {
   onDestroy?: () => void;
 }
 
-type ExtensionFactoryParameter<
+export type ExtensionFactoryParameter<
   Name extends string,
   Settings extends object,
   Properties extends object = {},
@@ -814,7 +826,7 @@ type ExtensionFactoryParameter<
     DefaultSettingsParameter<Settings>
   >;
 
-abstract class PlainExtension<
+export abstract class PlainExtension<
   Name extends string,
   Settings extends object,
   Properties extends object = {},
@@ -830,7 +842,7 @@ abstract class PlainExtension<
   }
 }
 
-type PlainExtensionFactoryParameter<
+export type PlainExtensionFactoryParameter<
   Name extends string,
   Settings extends object,
   Properties extends object = {},
@@ -841,19 +853,16 @@ type PlainExtensionFactoryParameter<
 /**
  * The type covering any potential `PlainExtension`.
  */
-type AnyPlainExtension<Settings extends object = {}, Properties extends object = {}> = Extension<
-  string,
-  Settings,
-  Properties,
-  any,
-  any
->;
+export type AnyPlainExtension<
+  Settings extends object = {},
+  Properties extends object = {}
+> = Extension<string, Settings, Properties, any, any>;
 
 /**
  * The shape of the `ExtensionConstructor` used to create instances of
  * extensions and returned from the `ExtensionFactory.plain()` method.
  */
-interface PlainExtensionConstructor<
+export interface PlainExtensionConstructor<
   Name extends string,
   Settings extends object,
   Properties extends object = {},
@@ -874,9 +883,9 @@ interface PlainExtensionConstructor<
    * This is used to prevent the need for the `new` keyword which can lead to
    * problems.
    */
-  of(
+  of: (
     ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
-  ): PlainExtension<Name, Settings, Properties, Commands, Helpers>;
+  ) => PlainExtension<Name, Settings, Properties, Commands, Helpers>;
 }
 
 /**
@@ -889,7 +898,7 @@ interface PlainExtensionConstructor<
  * Mark types are objects much like node types, used to tag mark objects and
  * provide additional information about them.
  */
-abstract class MarkExtension<
+export abstract class MarkExtension<
   Name extends string,
   Settings extends object,
   Properties extends object = {},
@@ -951,7 +960,7 @@ abstract class MarkExtension<
 /**
  * The creator options when creating a node.
  */
-type MarkExtensionFactoryParameter<
+export type MarkExtensionFactoryParameter<
   Name extends string,
   Settings extends object,
   Properties extends object = {},
@@ -969,25 +978,22 @@ type MarkExtensionFactoryParameter<
    * Provide a method for creating the schema. This is required in order to
    * create a `MarkExtension`.
    */
-  createMarkSchema(parameter: CreateSchemaParameter<Settings>): MarkExtensionSpec;
+  createMarkSchema: (parameter: CreateSchemaParameter<Settings>) => MarkExtensionSpec;
 };
 
 /**
  * The type covering any potential `MarkExtension`.
  */
-type AnyMarkExtension<Settings extends object = {}, Properties extends object = {}> = MarkExtension<
-  string,
-  Settings,
-  Properties,
-  any,
-  any
->;
+export type AnyMarkExtension<
+  Settings extends object = {},
+  Properties extends object = {}
+> = MarkExtension<string, Settings, Properties, any, any>;
 
 /**
  * The shape of the `MarkExtensionConstructor` used to create extensions and
  * returned from the `ExtensionFactory.mark()` method.
  */
-interface MarkExtensionConstructor<
+export interface MarkExtensionConstructor<
   Name extends string,
   Settings extends object,
   Properties extends object = {},
@@ -1008,9 +1014,9 @@ interface MarkExtensionConstructor<
    * This is used to prevent the need for the `new` keyword which can lead to
    * problems.
    */
-  of(
+  of: (
     ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
-  ): MarkExtension<Name, Settings, Properties, Commands, Helpers>;
+  ) => MarkExtension<Name, Settings, Properties, Commands, Helpers>;
 }
 
 /**
@@ -1021,7 +1027,7 @@ interface MarkExtensionConstructor<
  *
  * For more information see {@link https://prosemirror.net/docs/ref/#model.Node}
  */
-abstract class NodeExtension<
+export abstract class NodeExtension<
   Name extends string,
   Settings extends object,
   Properties extends object = {},
@@ -1075,7 +1081,7 @@ abstract class NodeExtension<
 /**
  * The creator options when creating a node.
  */
-type NodeExtensionFactoryParameter<
+export type NodeExtensionFactoryParameter<
   Name extends string,
   Settings extends object,
   Properties extends object = {},
@@ -1100,25 +1106,22 @@ type NodeExtensionFactoryParameter<
    * more about it is in the
    * {@link https://prosemirror.net/docs/guide/#schema docs}.
    */
-  createNodeSchema(parameter: CreateSchemaParameter<Settings>): NodeExtensionSpec;
+  createNodeSchema: (parameter: CreateSchemaParameter<Settings>) => NodeExtensionSpec;
 };
 
 /**
  * The type covering any potential NodeExtension.
  */
-type AnyNodeExtension<Settings extends object = {}, Properties extends object = {}> = NodeExtension<
-  string,
-  Settings,
-  Properties,
-  any,
-  any
->;
+export type AnyNodeExtension<
+  Settings extends object = {},
+  Properties extends object = {}
+> = NodeExtension<string, Settings, Properties, any, any>;
 
 /**
  * The shape of the `NodeExtensionConstructor` used to create extensions and
  * returned from the `ExtensionFactory.node()` method.
  */
-interface NodeExtensionConstructor<
+export interface NodeExtensionConstructor<
   Name extends string,
   Settings extends object,
   Properties extends object = {},
@@ -1139,9 +1142,9 @@ interface NodeExtensionConstructor<
    * This is used to prevent the need for the `new` keyword which can lead to
    * problems.
    */
-  of(
+  of: (
     ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
-  ): NodeExtension<Name, Settings, Properties, Commands, Helpers>;
+  ) => NodeExtension<Name, Settings, Properties, Commands, Helpers>;
 }
 
 /**
@@ -1150,7 +1153,7 @@ interface NodeExtensionConstructor<
  * This data can be used by other extensions to dynamically determine which
  * nodes should affected by commands / plugins / keys etc...
  */
-interface ExtensionTags<ExtensionUnion extends AnyExtension> {
+export interface ExtensionTags<ExtensionUnion extends AnyExtension> {
   /**
    * All the node extension tags.
    */
@@ -1171,39 +1174,39 @@ interface ExtensionTags<ExtensionUnion extends AnyExtension> {
  * A utility type for retrieving the name of an extension only when it's a plain
  * extension.
  */
-type GetPlainNames<Type> = Type extends AnyPlainExtension ? GetNameUnion<Type> : never;
+export type GetPlainNames<Type> = Type extends AnyPlainExtension ? GetNameUnion<Type> : never;
 
 /**
  * A utility type for retrieving the name of an extension only when it's a mark
  * extension.
  */
-type GetMarkNameUnion<ExtensionUnion extends AnyExtension> = ExtensionUnion extends AnyMarkExtension
-  ? ExtensionUnion['name']
-  : never;
+export type GetMarkNameUnion<
+  ExtensionUnion extends AnyExtension
+> = ExtensionUnion extends AnyMarkExtension ? ExtensionUnion['name'] : never;
 
 /**
  * A utility type for retrieving the name of an extension only when it's a node
  * extension.
  */
-type GetNodeNameUnion<ExtensionUnion extends AnyExtension> = ExtensionUnion extends AnyNodeExtension
-  ? ExtensionUnion['name']
-  : never;
+export type GetNodeNameUnion<
+  ExtensionUnion extends AnyExtension
+> = ExtensionUnion extends AnyNodeExtension ? ExtensionUnion['name'] : never;
 
 /**
  * Gets the editor schema from an extension union.
  */
-type SchemaFromExtension<ExtensionUnion extends AnyExtension> = EditorSchema<
-  LiteralUnion<GetNodeNameUnion<ExtensionUnion>, string>,
-  LiteralUnion<GetMarkNameUnion<ExtensionUnion>, string>
+export type SchemaFromExtension<ExtensionUnion extends AnyExtension> = EditorSchema<
+  GetNodeNameUnion<ExtensionUnion>,
+  GetMarkNameUnion<ExtensionUnion>
 >;
 
-type ManagerStoreKeys = keyof Remirror.ManagerStore;
-type EditableManagerStoreKeys = Exclude<
+export type ManagerStoreKeys = keyof Remirror.ManagerStore;
+export type EditableManagerStoreKeys = Exclude<
   ManagerStoreKeys,
   'nodes' | 'marks' | 'view' | 'tags' | 'schema' | 'extensionPlugins' | 'plugins'
 >;
 
-interface InitializeEventMethodParameter {
+export interface InitializeLifecycleMethodParameter {
   /**
    * The parameter passed into most of the extension creator methods.
    */
@@ -1234,7 +1237,7 @@ interface InitializeEventMethodParameter {
   managerSettings: ManagerSettings;
 }
 
-interface InitializeEventMethodReturn {
+export interface InitializeLifecycleMethodReturn {
   /**
    * Called before the extension loop is run.
    */
@@ -1249,6 +1252,43 @@ interface InitializeEventMethodReturn {
    * to the store and doing any cleanup for the RemirrorMethod.
    */
   afterExtensionLoop?: () => void;
+}
+export interface ViewLifecycleMethodParameter {
+  /**
+   * The parameter passed into most of the extension creator methods.
+   */
+  getParameter: <Type = never>(extension: AnyExtension) => ManagerTypeParameter<Type>;
+
+  /**
+   * Get the value of a key from the manager store.
+   */
+  getStoreKey: <Key extends ManagerStoreKeys>(key: Key) => Readonly<Remirror.ManagerStore[Key]>;
+
+  /**
+   * Update the store with a specific key.
+   */
+  setStoreKey: <Key extends EditableManagerStoreKeys>(
+    key: Key,
+    value: Remirror.ManagerStore[Key],
+  ) => void;
+
+  /**
+   * The settings passed through to the manager.
+   */
+  managerSettings: ManagerSettings;
+}
+
+export interface ViewLifecycleMethodReturn {
+  /**
+   * Called for each extension in order of their priority.
+   */
+  forEachExtension?: (extension: AnyExtension, view: EditorView<EditorSchema>) => void;
+
+  /**
+   * Run after the extensions have been looped through. Useful for adding data
+   * to the store and doing any cleanup for the RemirrorMethod.
+   */
+  afterExtensionLoop?: (view: EditorView<EditorSchema>) => void;
 }
 
 declare global {
@@ -1344,42 +1384,3 @@ declare global {
     }
   }
 }
-
-export type {
-  AnyExtension,
-  AnyExtensionConstructor,
-  AnyMarkExtension,
-  AnyNodeExtension,
-  AnyPlainExtension,
-  BaseExtensionFactoryParameter,
-  DefaultSettingsType,
-  EditableManagerStoreKeys,
-  ExtensionLifecyleMethods,
-  ExtensionFactoryParameter,
-  ExtensionTags,
-  GetMarkNameUnion,
-  GetNodeNameUnion,
-  GetPlainNames,
-  InitializeEventMethodParameter,
-  InitializeEventMethodReturn,
-  ManagerStoreKeys,
-  MarkExtensionConstructor,
-  MarkExtensionFactoryParameter,
-  NodeExtensionConstructor,
-  NodeExtensionFactoryParameter,
-  PlainExtensionConstructor,
-  SchemaFromExtension,
-  PlainExtensionFactoryParameter,
-};
-
-export {
-  defaultSettings,
-  Extension,
-  isExtension,
-  isMarkExtension,
-  isNodeExtension,
-  isPlainExtension,
-  MarkExtension,
-  NodeExtension,
-  PlainExtension,
-};
