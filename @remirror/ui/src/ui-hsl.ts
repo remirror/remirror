@@ -129,7 +129,7 @@ const isValidPercent = (percent: unknown): percent is Percent =>
   isNumber(percent) && percent <= 100 && percent >= 0;
 
 const createValidPercent = (value: number | string) => {
-  const percent = isString(value) ? Number(value.replace(/[%\s]+/g, '')) : value;
+  const percent = isString(value) ? Number(value.replace(/[\s%]+/g, '')) : value;
 
   if (!isValidPercent(percent)) {
     throw new Error(`Invalid 'percentage': ${value}`);
@@ -143,7 +143,7 @@ const clampPercent = (value: number) => clamp({ min: 0, max: 100, value });
 const createValidAlpha = (value: number | string | undefined): Alpha => {
   const alpha = isString(value)
     ? value.includes('%')
-      ? Number(value.replace(/[%\s]+/g, ''))
+      ? Number(value.replace(/[\s%]+/g, ''))
       : Number(value) * 100
     : value;
 

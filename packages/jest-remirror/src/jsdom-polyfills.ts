@@ -48,7 +48,7 @@ export const jsdomPolyfill = () => {
         Array.prototype.slice.call(this.childNodes).forEach((node) => this.removeChild(node));
 
         // Append a single text child node with the text
-        this.appendChild(this.ownerDocument.createTextNode(text));
+        this.append(this.ownerDocument.createTextNode(text));
       },
     });
   }
@@ -122,7 +122,7 @@ export const jsdomExtras = () => {
   const mutationObserverScript = window.document.createElement('script');
   mutationObserverScript.textContent = mutationObserver;
 
-  window.document.head.appendChild(mutationObserverScript);
+  window.document.head.append(mutationObserverScript);
 };
 
 /**

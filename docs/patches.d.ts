@@ -151,17 +151,17 @@ declare module 'compass-vertical-rhythm' {
     }
 
     interface RhythmType {
-      rhythm(lines?: number, fontSize?: number, offset?: number): string;
+      rhythm: (lines?: number, fontSize?: number, offset?: number) => string;
       /**
        * Set these values on the html tag in your css.
        */
       establishBaseline: RhythmStyleObject;
-      linesForFontSize(fontSize: CSS.FontSizeProperty<number | string>): number;
-      adjustFontSizeTo(
+      linesForFontSize: (fontSize: CSS.FontSizeProperty<number | string>) => number;
+      adjustFontSizeTo: (
         toSize: CSS.FontSizeProperty<number | string>,
         lines?: number | 'auto',
         fromSize?: CSS.FontSizeProperty<number | string>,
-      ): RhythmStyleObject;
+      ) => RhythmStyleObject;
     }
 
     interface RhythmStyleObject {
@@ -215,10 +215,10 @@ declare module 'typography' {
 
   export interface TypographyOutput extends VerticalRhythmType {
     options: TypographyOptions;
-    createStyles(): string;
-    toJSON(): Record<string, any>;
-    toString(): string;
-    injectStyles(): void;
+    createStyles: () => string;
+    toJSON: () => Record<string, any>;
+    toString: () => string;
+    injectStyles: () => void;
   }
 
   function typography(options: TypographyOptions): TypographyOutput;

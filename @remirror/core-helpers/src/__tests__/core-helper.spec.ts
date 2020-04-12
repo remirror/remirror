@@ -48,7 +48,7 @@ import {
 } from '../core-helpers';
 
 describe('findMatches', () => {
-  const regex = /(@[0-9]+)/g;
+  const regex = /(@\d+)/g;
   const str = '@12 @34 #12';
 
   it('finds the correct number of matches', () => {
@@ -213,8 +213,8 @@ describe('predicates', () => {
   });
 
   it('isSafeInteger', () => {
-    const passValue = Math.pow(2, 53) - 1;
-    const failValue = Math.pow(2, 53);
+    const passValue = 2 ** 53 - 1;
+    const failValue = 2 ** 53;
 
     expect(isSafeInteger(passValue)).toBeTrue();
     expect(isSafeInteger(failValue)).toBeFalse();
@@ -306,7 +306,7 @@ test('uniqueArray', () => {
 });
 
 test('sort', () => {
-  const arr = [...Array(100), 11, 9, 12].map((value, index) => ({ value: value || 10, index }));
+  const arr = [...new Array(100), 11, 9, 12].map((value, index) => ({ value: value || 10, index }));
 
   expect(sort(arr, (a, b) => a.value - b.value)).toEqual([
     { value: 9, index: 101 },

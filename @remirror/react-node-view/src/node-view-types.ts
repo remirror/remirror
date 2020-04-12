@@ -1,11 +1,11 @@
 import { ComponentType } from 'react';
 
 import {
-  ProsemirrorAttributes,
   BaseExtensionSettings,
   BaseExtensionSettingsParameter,
   EditorViewParameter,
   NodeWithAttributesParameter,
+  ProsemirrorAttributes,
   SSRComponentProps,
 } from '@remirror/core-types';
 import { PortalContainer } from '@remirror/react-portals';

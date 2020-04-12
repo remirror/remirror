@@ -35,5 +35,4 @@
 'remirror': major
 ---
 
-Rename all types postfixed with `Params` to use the postfix `Parameter`. If your code was importing
-any matching interface you will need to update the name.
+Rename all types postfixed with `Params` to use the postfix `Parameter`. If your code was importing any matching interface you will need to update the name.

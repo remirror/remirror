@@ -6,7 +6,7 @@ import { renderToString } from 'react-dom/server';
 import { fromHTML } from '@remirror/core';
 import { createTestManager } from '@remirror/test-fixtures';
 
-import { RenderEditor } from '../';
+import { RenderEditor } from '..';
 import { InjectedRenderEditorProps } from '../../react-types';
 
 const textContent = `This is editor text`;

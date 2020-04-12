@@ -32,7 +32,7 @@ interface PlainInputRuleParameter extends RegExpParameter {
   /**
    * A function that transforms the match into the desired value.
    */
-  transformMatch(match: string[]): string | null | undefined;
+  transformMatch: (match: string[]) => string | null | undefined;
 }
 
 interface MarkInputRuleParameter

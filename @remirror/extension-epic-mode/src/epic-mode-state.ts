@@ -80,7 +80,7 @@ export class EpicModePluginState {
     }
 
     this.ctx = ctx;
-    this.container.appendChild(this.canvas);
+    this.container.append(this.canvas);
     this.isActive = true;
     this.loop();
 
@@ -123,9 +123,9 @@ export class EpicModePluginState {
     const textColor = getRGBComponents(node);
     for (let ii = 0; ii < numParticles; ii++) {
       const colorCode = this.colors[ii % this.colors.length];
-      const r = parseInt(colorCode.slice(1, 3), 16);
-      const g = parseInt(colorCode.slice(3, 5), 16);
-      const b = parseInt(colorCode.slice(5, 7), 16);
+      const r = Number.parseInt(colorCode.slice(1, 3), 16);
+      const g = Number.parseInt(colorCode.slice(3, 5), 16);
+      const b = Number.parseInt(colorCode.slice(5, 7), 16);
       const color = [r, g, b];
 
       this.particles[ii] = this.particleEffect.createParticle({

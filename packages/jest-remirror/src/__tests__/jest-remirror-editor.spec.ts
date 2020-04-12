@@ -75,7 +75,7 @@ test('can be configured with plain mark extensions', () => {
   } = renderEditor({ plainNodes: [], plainMarks: [new BoldExtension()] });
   add(doc(p('Text is ', bold(expected))));
 
-  expect(dom.querySelector('strong')!.innerText).toBe(expected);
+  expect(dom.querySelector('strong')!.textContent).toBe(expected);
 });
 
 test('can be configured with attribute mark extensions', () => {

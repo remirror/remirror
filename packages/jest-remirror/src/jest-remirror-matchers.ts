@@ -132,11 +132,11 @@ declare global {
        * expect(view.state).toContainRemirrorDocument(p(`This is SPARTA`));
        * ```
        */
-      toContainRemirrorDocument(builder: TaggedProsemirrorNode): R;
+      toContainRemirrorDocument: (builder: TaggedProsemirrorNode) => R;
       /**
        * Checks that two prosemirror documents are identical.
        */
-      toEqualRemirrorDocument(builder: TaggedProsemirrorNode): R;
+      toEqualRemirrorDocument: (builder: TaggedProsemirrorNode) => R;
     }
   }
 }

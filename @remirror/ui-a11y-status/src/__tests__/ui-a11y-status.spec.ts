@@ -6,7 +6,7 @@ test('setStatus', () => {
   const initialStatus = 'Test status';
   const endStatus = 'Oh well time to go... 😢';
   setStatus(initialStatus);
-  const element = document.getElementById('a11y-status-message');
+  const element = document.querySelector('#a11y-status-message');
 
   expect(element).toHaveTextContent(initialStatus);
 

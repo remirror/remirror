@@ -5,7 +5,7 @@ import { FC } from 'react';
 
 import { useRemirrorTheme } from '@remirror/ui';
 
-import { Caption, H1, H2, H3, H4, H5, H6, Label, Text } from '../';
+import { Caption, H1, H2, H3, H4, H5, H6, Label, Text } from '..';
 
 const Grid: FC = ({ children }) => {
   const { sx } = useRemirrorTheme();

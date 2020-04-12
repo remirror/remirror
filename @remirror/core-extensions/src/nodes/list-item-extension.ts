@@ -2,8 +2,8 @@ import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-li
 
 import {
   convertCommand,
-  ManagerNodeTypeParameter,
   KeyBindings,
+  ManagerNodeTypeParameter,
   NodeExtension,
   NodeExtensionSpec,
 } from '@remirror/core';

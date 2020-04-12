@@ -7,12 +7,12 @@ let keyboard: Keyboard;
 
 beforeEach(() => {
   target = document.createElement('div');
-  document.body.appendChild(target);
+  document.body.append(target);
   keyboard = Keyboard.create({ target });
 });
 
 afterEach(() => {
-  document.body.removeChild(target);
+  target.remove();
 });
 
 describe('char', () => {

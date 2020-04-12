@@ -154,8 +154,8 @@ const MenuItem: FC<MenuItemProps> = ({
 
 export interface BubbleMenuProps {
   linkActivated: boolean;
-  deactivateLink(): void;
-  activateLink(): void;
+  deactivateLink: () => void;
+  activateLink: () => void;
 }
 
 const bubbleMenuItems: Array<[
@@ -237,9 +237,9 @@ export const BubbleMenu: FC<BubbleMenuProps> = ({
 
 interface LinkInputProps extends Pick<BubbleMenuProps, 'deactivateLink'> {
   defaultValue?: string;
-  updateLink(href: string): void;
-  removeLink(): void;
-  canRemove(): boolean;
+  updateLink: (href: string) => void;
+  removeLink: () => void;
+  canRemove: () => boolean;
 }
 
 const LinkInput: FC<LinkInputProps> = ({

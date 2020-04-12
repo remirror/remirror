@@ -1,4 +1,4 @@
-import { Uri, editor } from 'monaco-editor';
+import { editor, Uri } from 'monaco-editor';
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 
 interface CodeEditorProps {
@@ -7,10 +7,13 @@ interface CodeEditorProps {
   onChange: (newValue: string) => void;
 }
 
-const CodeEditor: FC<CodeEditorProps> = props => {
+const CodeEditor: FC<CodeEditorProps> = (props) => {
   const { value, onChange, readOnly } = props;
   const ref = useRef<HTMLDivElement | null>(null);
-  const model = useMemo(() => editor.createModel('', 'typescript', Uri.parse('file:///usercode.tsx')), []);
+  const model = useMemo(
+    () => editor.createModel('', 'typescript', Uri.parse('file:///usercode.tsx')),
+    [],
+  );
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
 
   useEffect(() => {
@@ -53,7 +56,7 @@ const CodeEditor: FC<CodeEditorProps> = props => {
   });
 
   useEffect(() => {
-    model.onDidChangeContent(_event => {
+    model.onDidChangeContent((_event) => {
       onChange(model.getValue());
     });
   }, [model, onChange]);

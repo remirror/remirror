@@ -82,5 +82,5 @@ export interface KeyboardConstructorParameter {
   /**
    * Whenever an event is dispatched this is run
    */
-  onEventDispatch?(event: KeyboardEvent): void;
+  onEventDispatch?: (event: KeyboardEvent) => void;
 }

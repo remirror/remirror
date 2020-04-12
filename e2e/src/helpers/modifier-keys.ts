@@ -133,7 +133,15 @@ export const selectAll = async () => {
 /**
  * A list of the lowercase shortcuts that should trigger the custom select all method.
  */
-const selectAllShortcuts = ['cmd-a', 'meta-a', 'm-a', 'ctrl-a', 'control-a', 'c-a', 'mod-a'];
+const selectAllShortcuts = new Set([
+  'cmd-a',
+  'meta-a',
+  'm-a',
+  'ctrl-a',
+  'control-a',
+  'c-a',
+  'mod-a',
+]);
 
 /**
  * Determines whether this is an apple machine
@@ -149,7 +157,7 @@ const isApple = () => process.platform === 'darwin';
  * ```
  */
 export async function pressKeyWithModifier(pattern: string) {
-  if (selectAllShortcuts.includes(pattern.toLowerCase())) {
+  if (selectAllShortcuts.has(pattern.toLowerCase())) {
     return selectAll();
   }
 

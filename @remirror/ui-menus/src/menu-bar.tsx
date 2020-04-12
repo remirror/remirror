@@ -76,7 +76,7 @@ const MenuTree: FC<MenuTreeProps> = ({ content }) => {
 };
 
 interface MenubarGroupProps {
-  render?(MenubarGroupProps: MenubarGroupConfiguration): ReactElement;
+  render?: (MenubarGroupProps: MenubarGroupConfiguration) => ReactElement;
   content: MenubarContent[];
 }
 

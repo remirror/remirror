@@ -3,8 +3,8 @@ import { wrappingInputRule } from 'prosemirror-inputrules';
 import {
   CommandNodeTypeParameter,
   convertCommand,
-  ManagerNodeTypeParameter,
   KeyBindings,
+  ManagerNodeTypeParameter,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,

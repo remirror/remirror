@@ -19,7 +19,7 @@ export const DEFAULT_SUGGESTER = {
   startOfLine: false,
   suggestClassName: 'suggest',
   suggestTag: 'span',
-  supportedCharacters: /[\w\d_]+/,
+  supportedCharacters: /\w+/,
   validPrefixCharacters: /^[\s\0]?$/,
 };
 

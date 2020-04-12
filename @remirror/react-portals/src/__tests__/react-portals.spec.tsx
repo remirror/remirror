@@ -17,7 +17,7 @@ describe('RemirrorPortals', () => {
     const mockRender = jest.fn(() => <div data-testid='test' />);
 
     act(() => {
-      document.body.appendChild(container);
+      document.body.append(container);
       portalContainer.render({ render: mockRender, container });
     });
 
@@ -32,13 +32,13 @@ describe('RemirrorPortals', () => {
     const { queryByTestId } = render(<RemirrorPortals portalContainer={portalContainer} />);
 
     act(() => {
-      document.body.appendChild(container);
+      document.body.append(container);
       portalContainer.render({ render: () => <div data-testid='test' />, container });
     });
 
     expect(queryByTestId('test')).toBeTruthy();
 
-    document.body.removeChild(container);
+    container.remove();
     portalContainer.on((portals) => {
       expect(portals.has(container)).toBeFalse();
     });

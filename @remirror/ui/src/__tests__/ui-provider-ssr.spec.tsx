@@ -20,7 +20,7 @@ describe('withoutEmotion', () => {
       </RemirrorThemeProvider>,
     );
 
-    expect(withEmotionString).toMatch(/css-[a-z0-9]+/gi);
+    expect(withEmotionString).toMatch(/css-[\da-z]+/gi);
 
     const withoutEmotionString = renderToString(
       <RemirrorThemeProvider theme={baseTheme} withoutEmotion={true}>
@@ -28,6 +28,6 @@ describe('withoutEmotion', () => {
       </RemirrorThemeProvider>,
     );
 
-    expect(withoutEmotionString).not.toMatch(/css-[a-z0-9]+/gi);
+    expect(withoutEmotionString).not.toMatch(/css-[\da-z]+/gi);
   });
 });

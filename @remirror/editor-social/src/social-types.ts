@@ -35,7 +35,7 @@ export interface SocialEditorProps
   /**
    * onUrlChange
    */
-  onUrlsChange?(params: { set: Set<string>; urls: string[] }): void;
+  onUrlsChange?: (params: { set: Set<string>; urls: string[] }) => void;
 
   /**
    * List of users
@@ -50,7 +50,7 @@ export interface SocialEditorProps
   /**
    * Called any time there is a change in the mention
    */
-  onMentionChange(params?: OnMentionChangeParameter): void;
+  onMentionChange: (params?: OnMentionChangeParameter) => void;
 
   /**
    * The theme to be used for setting .

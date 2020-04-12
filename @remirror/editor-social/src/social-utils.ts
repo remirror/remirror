@@ -48,7 +48,7 @@ export const calculateNewIndexFromArrowPress = ({
 interface CreateOnClickMethodFactoryParameter extends MentionGetterParameter {
   setExitTriggeredInternally: () => void;
   view: EditorView;
-  command(attrs: ProsemirrorAttributes): void;
+  command: (attrs: ProsemirrorAttributes) => void;
 }
 
 /**

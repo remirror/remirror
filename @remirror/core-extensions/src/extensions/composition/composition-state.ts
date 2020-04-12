@@ -8,7 +8,7 @@ import { EditorView, Transaction } from '@remirror/core-types';
  * TODO verify that this is still necessary with `prosemirror-view@1.9.0`
  */
 export class CompositionState {
-  public deleteInProgress: boolean = false;
+  public deleteInProgress = false;
   public decorationTicks = 0;
   public active = false;
   public selection?: Selection;

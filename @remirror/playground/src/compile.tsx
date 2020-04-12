@@ -59,8 +59,8 @@ export function compile(
         'playgroundImports',
       ],
     });
-  } catch (e) {
-    error = e;
+  } catch (error_) {
+    error = error_;
   }
   return {
     requires: [...requires],

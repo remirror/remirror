@@ -3,8 +3,8 @@ import { exitCode } from 'prosemirror-commands';
 import {
   chainCommands,
   convertCommand,
-  ManagerNodeTypeParameter,
   KeyBindings,
+  ManagerNodeTypeParameter,
   NodeExtension,
   NodeExtensionSpec,
 } from '@remirror/core';

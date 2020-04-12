@@ -3,9 +3,9 @@ import { toggleMark } from 'prosemirror-commands';
 import {
   CommandMarkTypeParameter,
   convertCommand,
-  ManagerMarkTypeParameter,
   KeyBindings,
   LEAF_NODE_REPLACING_CHARACTER,
+  ManagerMarkTypeParameter,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,
@@ -46,6 +46,6 @@ export class CodeExtension extends MarkExtension {
   }
 
   public pasteRules({ type }: ManagerMarkTypeParameter) {
-    return [markPasteRule({ regexp: /(?:`)([^`]+)(?:`)/g, type })];
+    return [markPasteRule({ regexp: /`([^`]+)`/g, type })];
   }
 }

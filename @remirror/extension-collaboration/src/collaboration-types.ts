@@ -1,10 +1,10 @@
 import { Step } from 'prosemirror-transform';
 
 import {
-  ProsemirrorAttributes,
   BaseExtensionSettings,
   EditorSchema,
   PlainObject,
+  ProsemirrorAttributes,
   Transaction,
 } from '@remirror/core';
 
@@ -60,7 +60,7 @@ export interface CollaborationExtensionOptions extends BaseExtensionSettings {
    *
    * @param params - the sendable and jsonSendable properties which can be sent to your backend
    */
-  onSendableReceived(params: OnSendableReceivedParameter): void;
+  onSendableReceived: (params: OnSendableReceivedParameter) => void;
 }
 
 export type CollaborationAttributes = ProsemirrorAttributes<{

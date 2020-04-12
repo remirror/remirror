@@ -55,7 +55,7 @@ export const jsdomSelectionPatch = (view: EditorView) => {
   (view as any).updateState = function (state: EditorState) {
     warnOnce();
     Cast(state).scrollToSelection = 0;
-    EditorView.prototype.updateState.apply(this, [state]);
+    Reflect.apply(EditorView.prototype.updateState, this, [state]);
   };
 
   // Do nothing to update selection

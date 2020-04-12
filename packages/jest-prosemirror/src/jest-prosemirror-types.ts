@@ -42,7 +42,7 @@ export interface TaggedDocParameter<GSchema extends EditorSchema = any> {
 }
 
 export interface TestEditorView<GSchema extends EditorSchema = any> extends EditorView<GSchema> {
-  dispatchEvent(event: string | CustomEvent | { type: string }): void;
+  dispatchEvent: (event: string | CustomEvent | { type: string }) => void;
   domObserver: {
     flush: () => void;
   };

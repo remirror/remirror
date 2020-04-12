@@ -20,13 +20,13 @@ export interface RemirrorPortalsProps {
  * widget method on Decorations.
  */
 export const RemirrorPortals = ({ portalContainer }: RemirrorPortalsProps) => {
-  const [state, setState] = useState(Array.from(portalContainer.portals.entries()));
+  const [state, setState] = useState([...portalContainer.portals.entries()]);
 
   /**
    * Update the state whenever the portal is updated.
    */
   const onPortalChange = useCallback((portalMap: PortalMap) => {
-    setState(Array.from(portalMap.entries()));
+    setState([...portalMap.entries()]);
   }, []);
 
   useEffect(() => {

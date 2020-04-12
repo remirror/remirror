@@ -15,9 +15,7 @@ export const createImageExtensionPlugin = () => {
             return false;
           }
 
-          const images = Array.from(event.dataTransfer.files).filter((file) =>
-            /image/i.test(file.type),
-          );
+          const images = [...event.dataTransfer.files].filter((file) => /image/i.test(file.type));
 
           if (images.length === 0) {
             return false;
@@ -35,14 +33,14 @@ export const createImageExtensionPlugin = () => {
           images.forEach((image) => {
             const reader = new FileReader();
 
-            reader.onload = (readerEvent) => {
+            reader.addEventListener('load', (readerEvent) => {
               const node = schema.nodes.image.create({
                 src: readerEvent.target && Cast(readerEvent.target).result,
               });
               const transaction = view.state.tr.insert(coordinates.pos, node);
 
               view.dispatch(transaction);
-            };
+            });
             reader.readAsDataURL(image);
           });
           return true;

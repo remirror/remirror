@@ -33,7 +33,7 @@ export interface EnhancedLinkExtensionOptions extends MarkExtensionConfig {
   /**
    * This handler is called every time the matched urls are updated.
    */
-  onUrlsChange?(params: { set: Set<string>; urls: string[] }): void;
+  onUrlsChange?: (params: { set: Set<string>; urls: string[] }) => void;
 }
 
 /**

@@ -739,7 +739,7 @@ export interface StringHandlerParameter {
    *
    * See {@link fromHTML} for an example of how this could work.
    */
-  stringHandler?(params: FromStringParameter): ProsemirrorNode;
+  stringHandler?: (params: FromStringParameter) => ProsemirrorNode;
 }
 
 const fallbackContent = ({

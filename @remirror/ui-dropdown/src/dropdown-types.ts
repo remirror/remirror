@@ -66,7 +66,7 @@ export interface DropdownProps {
   /**
    * A render prop for the label. Allows setting a custom label.
    */
-  renderLabel?(params: RenderLabelParameter): ReactNode;
+  renderLabel?: (params: RenderLabelParameter) => ReactNode;
 
   /**
    * Whether to show the selected item label within the button.

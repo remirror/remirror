@@ -17,8 +17,8 @@ class InitialPropsDetail extends Component<Props> {
       const { id } = query;
       const item = await findData(Array.isArray(id) ? id[0] : id);
       return { item };
-    } catch (err) {
-      return { errors: err.message };
+    } catch (error) {
+      return { errors: error.message };
     }
   };
 

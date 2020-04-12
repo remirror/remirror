@@ -141,8 +141,8 @@ declare module 'signal-exit' {
 
   export interface SignalExit {
     (listener: ExitListener, options?: Options): void;
-    load(): void;
-    unload(): void;
+    load: () => void;
+    unload: () => void;
 
     /**
      * A method which returns the possible signals for this platform
@@ -165,7 +165,7 @@ declare module 'signal-exit' {
      * state from which it is not safe to try and enter JS
      * listeners.
      */
-    signals(): string[];
+    signals: () => string[];
   }
 
   const signalExit: SignalExit;

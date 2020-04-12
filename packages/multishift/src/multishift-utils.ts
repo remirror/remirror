@@ -1047,7 +1047,7 @@ export const createItemClickPayload = (event: any, index: number): ItemClickPayl
 /**
  * Check that the character is valid for jumpText.
  */
-export const isValidCharacterKey = (key: string) => /^\S{1}$/.test(key);
+export const isValidCharacterKey = (key: string) => /^\S$/.test(key);
 
 /**
  * Scroll node into view if necessary

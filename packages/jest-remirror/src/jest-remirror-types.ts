@@ -11,8 +11,6 @@ import {
   EditorStateParameter,
   EditorViewParameter,
   Extension,
-  FlexibleExtension,
-  HelpersFromExtensions,
   MarkExtension,
   NodeExtension,
   ProsemirrorAttributes,
@@ -165,41 +163,41 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    *   });
    * ```
    */
-  callback(
+  callback: (
     fn: (
       content: Pick<
         AddContentReturn<GExtension>,
         'helpers' | 'actions' | 'end' | 'state' | 'tags' | 'start' | 'doc' | 'view'
       >,
     ) => void,
-  ): AddContentReturn<GExtension>;
+  ) => AddContentReturn<GExtension>;
 
   /**
    * Allows for the chaining of action calls.
    */
-  actionsCallback(
+  actionsCallback: (
     callback: (actions: CommandsFromExtensions<GExtension>) => void,
-  ): AddContentReturn<GExtension>;
+  ) => AddContentReturn<GExtension>;
 
   /**
    * Allows for the chaining of helper calls.
    */
-  helpersCallback(
+  helpersCallback: (
     callback: (helpers: HelpersFromExtensions<GExtension>) => void,
-  ): AddContentReturn<GExtension>;
+  ) => AddContentReturn<GExtension>;
 
   /**
    * Set selection in the document to a certain position
    */
-  jumpTo(pos: 'start' | 'end'): AddContentReturn<GExtension>;
-  jumpTo(start: number, end?: number): AddContentReturn<GExtension>;
+  jumpTo: ((pos: 'start' | 'end') => AddContentReturn<GExtension>) &
+    ((start: number, end?: number) => AddContentReturn<GExtension>);
 
   /**
    * A function which replaces the current selection with the new content.
    *
    * This should be used to add new content to the dom.
    */
-  replace(...content: string[] | TaggedProsemirrorNode[]): AddContentReturn<GExtension>;
+  replace: (...content: string[] | TaggedProsemirrorNode[]) => AddContentReturn<GExtension>;
 
   /**
    * Insert text at the current starting point for the cursor.
@@ -208,7 +206,7 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    * ! This doesn't currently support the use of tags and cursors.
    * ! Also adding multiple strings which create nodes also creates an out of position error
    */
-  insertText(text: string): AddContentReturn<GExtension>;
+  insertText: (text: string) => AddContentReturn<GExtension>;
 
   /**
    * Runs a keyboard shortcut.
@@ -216,7 +214,7 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    *
    * @param shortcut
    */
-  shortcut(shortcut: string): AddContentReturn<GExtension>;
+  shortcut: (shortcut: string) => AddContentReturn<GExtension>;
 
   /**
    * Presses a key on the keyboard.
@@ -224,7 +222,7 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    *
    * @param key - the key to press (or string representing a key)
    */
-  press(key: string): AddContentReturn<GExtension>;
+  press: (key: string) => AddContentReturn<GExtension>;
 
   /**
    * A simplistic implementation of pasting content into the editor.
@@ -233,14 +231,14 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    * @param content - The text or node to paste into the document at the current
    * selection.
    */
-  paste(content: TaggedProsemirrorNode | string): AddContentReturn<GExtension>;
+  paste: (content: TaggedProsemirrorNode | string) => AddContentReturn<GExtension>;
 
   /**
    * Takes any command as an input and dispatches it within the document context.
    *
    * @param command - the command function to run with the current state and view
    */
-  dispatchCommand(command: ProsemirrorCommandFunction): AddContentReturn<GExtension>;
+  dispatchCommand: (command: ProsemirrorCommandFunction) => AddContentReturn<GExtension>;
 
   /**
    * Fires a custom event at the specified dom node.
@@ -248,7 +246,7 @@ export interface AddContentReturn<GExtension extends AnyExtension>
    *
    * @param shortcut - the shortcut to type
    */
-  fire(params: FireParameter): AddContentReturn<GExtension>;
+  fire: (params: FireParameter) => AddContentReturn<GExtension>;
 
   /**
    * Simply calls add again which overwrites the whole doc
@@ -301,7 +299,7 @@ export type CreateTestEditorReturn<
     marks: MarkWithoutAttributes<GetNames<GPlainMarks>>;
     attrNodes: NodeWithAttributes<GetNames<GAttrNodes>>;
     attrMarks: MarkWithAttributes<GetNames<GAttrMarks>>;
-    getState(): EditorState<SchemaFromExtension<GExtension>>;
+    getState: () => EditorState<SchemaFromExtension<GExtension>>;
     schema: SchemaFromExtension<GExtension>;
     p: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
     doc: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;

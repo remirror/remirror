@@ -9,7 +9,7 @@ import typescript from 'refractor/lang/typescript';
 
 import { ObjectNode } from '@remirror/core';
 
-import { CodeBlockExtension } from '../';
+import { CodeBlockExtension } from '..';
 
 const supportedLanguages = [typescript, javascript, markdown];
 const create = (initialContent: ObjectNode) =>

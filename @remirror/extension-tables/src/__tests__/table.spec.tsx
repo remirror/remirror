@@ -53,7 +53,7 @@ describe('command', () => {
 
     const buildRegularTable = (rows: string[][]) => {
       // Esnure that all rows have same length
-      expect(Array.from(new Set(rows.map((row) => row.length)))).toHaveLength(1);
+      expect([...new Set(rows.map((row) => row.length))]).toHaveLength(1);
 
       return table(...rows.map((row) => tableRow(...row.map((cell) => tableCell(cell)))));
     };

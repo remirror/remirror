@@ -36,7 +36,7 @@ export interface HistoryExtensionOptions extends BaseExtensionSettings {
    * can be dispatched into the parent editor allowing them to propagate into
    * the child editor
    */
-  getState?(): EditorState;
+  getState?: () => EditorState;
 
   /**
    * Provide a custom dispatch getter function for embedded editors
@@ -48,7 +48,7 @@ export interface HistoryExtensionOptions extends BaseExtensionSettings {
    * can be dispatched into the parent editor allowing them to propagate into
    * the child editor.
    */
-  getDispatch?(): DispatchFunction;
+  getDispatch?: () => DispatchFunction;
 }
 
 /**

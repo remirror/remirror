@@ -600,7 +600,7 @@ export interface ReturnValueCallbackParameter<GSchema extends EditorSchema = any
   /**
    * Pretty log the current view to the dom.
    */
-  debug(): void;
+  debug: () => void;
 }
 
 /**

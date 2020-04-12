@@ -137,7 +137,7 @@ export const getEmojiFromEmoticon = (emoticon: string) => {
  */
 export const sortEmojiMatches = (query: string, maxResults = -1) => {
   const results = matchSorter(emojiList, query, {
-    keys: ['name', (item) => item.description.replace(/[^\w]/g, '')],
+    keys: ['name', (item) => item.description.replace(/\W/g, '')],
     threshold: matchSorter.rankings.CONTAINS,
   });
 

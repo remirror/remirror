@@ -31,7 +31,7 @@ const getStatusDiv = (doc = document) => {
     width: '1px',
   });
 
-  doc.body.appendChild(statusDiv);
+  doc.body.append(statusDiv);
   return statusDiv;
 };
 

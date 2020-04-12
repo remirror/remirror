@@ -3,9 +3,9 @@ import { wrappingInputRule } from 'prosemirror-inputrules';
 import {
   CommandNodeTypeParameter,
   convertCommand,
-  ManagerNodeTypeParameter,
   isElementDOMNode,
   KeyBindings,
+  ManagerNodeTypeParameter,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,

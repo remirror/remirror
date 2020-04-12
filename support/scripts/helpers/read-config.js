@@ -6,20 +6,22 @@ const { resolve, join } = require('path');
  *
  * @param  {...string} path
  */
-const base = (...path) => resolve(__dirname, '../../..', join(...path));
+function base(...path) {
+  return resolve(__dirname, '../../..', join(...path));
+}
 
 const configFilePath = base('.config.json');
 
-const readJSON = (str) => {
+function readJSON(str) {
   try {
     return JSON.parse(str);
-  } catch (e) {
+  } catch {
     console.log('Invalid JSON data in file .config.json');
     return {};
   }
-};
+}
 
-exports.readConfigFile = () => {
+function readConfigFile() {
   if (!existsSync(configFilePath)) {
     console.log('No .config.json file');
     return {};
@@ -27,9 +29,11 @@ exports.readConfigFile = () => {
 
   const fileContents = readFileSync(configFilePath).toString();
   return readJSON(fileContents);
-};
+}
 
-exports.readProperty = ({ property = '', config = exports.readConfigFile() }) => {
+exports.readConfigFile = readConfigFile;
+
+function readProperty({ property = '', config = exports.readConfigFile() }) {
   let item = config;
   if (!property || !config) {
     return undefined;
@@ -44,4 +48,6 @@ exports.readProperty = ({ property = '', config = exports.readConfigFile() }) =>
   }
 
   return item;
-};
+}
+
+exports.readProperty = readProperty;

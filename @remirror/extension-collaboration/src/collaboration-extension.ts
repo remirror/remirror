@@ -2,7 +2,6 @@ import { collab, getVersion, receiveTransaction, sendableSteps } from 'prosemirr
 import { Step } from 'prosemirror-transform';
 
 import {
-  ProsemirrorAttributes,
   CommandParameter,
   debounce,
   EditorState,
@@ -11,6 +10,7 @@ import {
   isNumber,
   OnTransactionParameter,
   Plugin,
+  ProsemirrorAttributes,
   ProsemirrorCommandFunction,
   uniqueId,
 } from '@remirror/core';

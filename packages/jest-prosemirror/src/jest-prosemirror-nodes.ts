@@ -14,7 +14,7 @@ import pm, {
   TaggedProsemirrorNode,
 } from 'prosemirror-test-builder';
 
-import { Cast } from '@remirror/core-helpers';
+import { Cast, keys } from '@remirror/core-helpers';
 import { EditorSchema, Plugin } from '@remirror/core-types';
 
 import { schema } from './jest-prosemirror-schema';
@@ -26,12 +26,13 @@ import { TaggedDocParameter } from './jest-prosemirror-types';
  * @param taggedDoc
  * @param [tag]
  */
-const resolveCell = (taggedDoc: TaggedProsemirrorNode, tag?: number) => {
+function resolveCell(taggedDoc: TaggedProsemirrorNode, tag?: number) {
   if (!tag) {
     return null;
   }
+
   return cellAround(taggedDoc.resolve(tag));
-};
+}
 
 interface CreateTextSelectionParameter<GSchema extends EditorSchema = any>
   extends TaggedDocParameter<GSchema> {
@@ -47,25 +48,26 @@ interface CreateTextSelectionParameter<GSchema extends EditorSchema = any>
  * @param param.start
  * @param param.end
  */
-const createTextSelection = <GSchema extends EditorSchema = any>({
+function createTextSelection<GSchema extends EditorSchema = any>({
   taggedDoc,
   start,
   end,
-}: CreateTextSelectionParameter<GSchema>) => {
+}: CreateTextSelectionParameter<GSchema>) {
   const $start = taggedDoc.resolve(start);
   const $end = end && start <= end ? taggedDoc.resolve(end) : taggedDoc.resolve($start.end());
   return new TextSelection<GSchema>($start, $end);
-};
+}
 
-const supportedTags = ['cursor', 'node', 'start', 'end', 'anchor', 'all', 'gap'];
+const supportedTags = new Set(['cursor', 'node', 'start', 'end', 'anchor', 'all', 'gap']);
 
 /**
  * Checks that the tagged doc has a selection
  *
  * @param taggedDoc
  */
-export const taggedDocHasSelection = (taggedDoc: TaggedProsemirrorNode) =>
-  Object.keys(taggedDoc.tag).some((tag) => supportedTags.includes(tag));
+export function taggedDocHasSelection(taggedDoc: TaggedProsemirrorNode) {
+  return keys(taggedDoc.tag).some((tag) => supportedTags.has(tag));
+}
 
 /**
  * Initialize the selection based on the passed in tagged node via it's cursor.
@@ -74,9 +76,9 @@ export const taggedDocHasSelection = (taggedDoc: TaggedProsemirrorNode) =>
  *
  * @param taggedDoc
  */
-export const initSelection = <GSchema extends EditorSchema = any>(
+export function initSelection<GSchema extends EditorSchema = any>(
   taggedDoc: TaggedProsemirrorNode<GSchema>,
-) => {
+) {
   const { cursor, node, start, end, anchor, all, gap } = taggedDoc.tag;
   if (all) {
     return new AllSelection<GSchema>(taggedDoc);
@@ -106,35 +108,35 @@ export const initSelection = <GSchema extends EditorSchema = any>(
     );
   }
   return null;
-};
+}
 
 /**
  * Returns a selection regardless of whether anything is tagged in the provided doc
  *
  * @param taggedDoc
  */
-export const selectionFor = <GSchema extends EditorSchema = any>(
+export function selectionFor<GSchema extends EditorSchema = any>(
   taggedDoc: TaggedProsemirrorNode<GSchema>,
-): Selection<GSchema> => {
+): Selection<GSchema> {
   return initSelection(taggedDoc) ?? Selection.atStart(taggedDoc);
-};
+}
 
 /**
  * Create the editor state for a tagged prosemirror doc
  *
  * @param taggedDoc
  */
-export const createState = <GSchema extends EditorSchema = any>(
+export function createState<GSchema extends EditorSchema = any>(
   taggedDoc: TaggedProsemirrorNode<GSchema>,
   plugins: Plugin[] = [],
-): EditorState<GSchema> => {
+): EditorState<GSchema> {
   return EditorState.create({
     doc: taggedDoc,
     selection: initSelection(taggedDoc),
     schema,
     plugins,
   });
-};
+}
 
 /**
  * A short hand way for building prosemirror test builders with the core nodes already provided
@@ -145,24 +147,21 @@ export const createState = <GSchema extends EditorSchema = any>(
  * @param testSchema - The schema to use which provided a doc, paragraph and text schema
  * @param names - the extra marks and nodes to provide with their attributes
  */
-export const pmBuild = <
+export function pmBuild<
   GObj extends Record<string, NodeTypeAttributes | MarkTypeAttributes> = Record<
     string,
     NodeTypeAttributes | MarkTypeAttributes
   >,
   GNodes extends string = string,
   GMarks extends string = string
->(
-  testSchema: Schema<GNodes, GMarks>,
-  names: GObj,
-) => {
+>(testSchema: Schema<GNodes, GMarks>, names: GObj) {
   return pm.builders(testSchema, {
     doc: { nodeType: 'doc' },
     p: { nodeType: 'paragraph' },
     text: { nodeType: 'text' },
     ...names,
   });
-};
+}
 
 const built = pm.builders(schema, {
   doc: { nodeType: 'doc' },

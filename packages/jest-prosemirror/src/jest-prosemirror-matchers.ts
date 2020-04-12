@@ -109,7 +109,7 @@ declare global {
        * The `to` property is optional and can be left blank to test that the
        * node is identical after the transform.
        */
-      toTransformNode(params: CommandTransformation): R;
+      toTransformNode: (params: CommandTransformation) => R;
 
       /**
        * Tests that two prosemirror documents are equal. Pass in the expected
@@ -130,7 +130,7 @@ declare global {
        * });
        * ```
        */
-      toEqualProsemirrorNode(params: _ProsemirrorNode): R;
+      toEqualProsemirrorNode: (params: _ProsemirrorNode) => R;
     }
   }
 }

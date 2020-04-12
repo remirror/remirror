@@ -10,12 +10,12 @@
     "Benjie Gillam <code@benjiegillam.com>",
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "files": [
-    "lib"
-  ],
   "sideEffects": false,
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "dependencies": {
     "@babel/runtime": "^7",
     "@babel/standalone": "^7.9.4",

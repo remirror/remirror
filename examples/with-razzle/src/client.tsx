@@ -8,7 +8,7 @@ hydrate(
   <BrowserRouter>
     <App />
   </BrowserRouter>,
-  document.getElementById('root'),
+  document.querySelector('#root'),
 );
 
 if (module.hot) {

@@ -8,7 +8,7 @@ import { msToDuration } from '../cli-utils';
 import { BundleArgv } from './cli-types';
 
 export interface BundleProps {
-  runBundler(): Promise<void>;
+  runBundler: () => Promise<void>;
   args: BundleArgv;
   startTime?: number;
 }
@@ -29,7 +29,7 @@ export const Bundle = ({ args, startTime = Date.now(), runBundler }: BundleProps
   useEffect(() => {
     runBundler()
       .then(() => setState({ completed: true, endTime: Date.now() }))
-      .catch((e) => setState({ error: e, completed: true }));
+      .catch((error) => setState({ error: error, completed: true }));
   }, [runBundler, setState]);
 
   return (

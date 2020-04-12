@@ -80,11 +80,6 @@ module.exports = {
   rules: {
     ...graphqlRules,
 
-    '@getify/proper-arrows/where': [
-      'error',
-      { global: true, export: true, trivial: true, property: false },
-    ],
-
     'eslint-comments/no-unused-disable': 'error',
 
     'unicorn/no-nested-ternary': 'off',
@@ -210,6 +205,10 @@ module.exports = {
       files: ['*.ts', '*.tsx'],
       rules: {
         ...tsProjectRules,
+        '@getify/proper-arrows/where': [
+          'error',
+          { global: true, export: true, trivial: false, property: false },
+        ],
         '@typescript-eslint/explicit-member-accessibility': [
           'warn',
           {
@@ -235,8 +234,9 @@ module.exports = {
       },
     },
     {
-      files: ['**/__tests__/**'],
+      files: ['**/__tests__/**', '**/__stories__/**', 'support/**'],
       rules: {
+        '@getify/proper-arrows/where': 'off',
         '@typescript-eslint/ban-ts-ignore': 'off', // Often you need to use @ts-ignore in tests
         '@typescript-eslint/no-non-null-assertion': 'off', // Makes writing tests more convenient
         '@typescript-eslint/no-use-before-define': 'off',
@@ -250,6 +250,7 @@ module.exports = {
     {
       files: ['**/*.d.ts'],
       rules: {
+        'import/no-default-export': 'off',
         'import/no-duplicates': 'off',
         '@typescript-eslint/no-namespace': 'off',
       },

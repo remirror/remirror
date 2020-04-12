@@ -32,7 +32,7 @@ test('Dropdown', () => {
   // TODO find out why this `getByRole` lookup just started failing - possibly
   // to do with an update
   // const menu = getByRole('listbox');
-  const menu = document.getElementById('multishift-1-menu');
+  const menu = document.querySelector('#multishift-1-menu');
 
   expect(button).toHaveTextContent(label);
   expect(menu).toBeEmpty();

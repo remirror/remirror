@@ -206,22 +206,25 @@ export interface MultishiftChangeHandlerProps<GItem = any> {
    * the selection was cleared.
    * @param state - the list of all currently selected items.
    */
-  onSelectedItemsChange?(selectedItems: GItem[], state: MultishiftState<GItem>): void;
+  onSelectedItemsChange?: (selectedItems: GItem[], state: MultishiftState<GItem>) => void;
 
   onOuterClick?: (state: MultishiftState<GItem>) => void;
-  onJumpTextChange?(jumpText: string, state: MultishiftState<GItem>): void;
-  onIsOpenChange?(isOpen: boolean, state: MultishiftState<GItem>): void;
-  onInputValueChange?(inputValue: string, state: MultishiftState<GItem>): void;
-  onHoveredIndexChange?(hoveredIndex: number, state: MultishiftState<GItem>): void;
-  onHighlightedIndexesChange?(highlightedIndexes: number[], state: MultishiftState<GItem>): void;
-  onHighlightedGroupStartIndexChange?(
+  onJumpTextChange?: (jumpText: string, state: MultishiftState<GItem>) => void;
+  onIsOpenChange?: (isOpen: boolean, state: MultishiftState<GItem>) => void;
+  onInputValueChange?: (inputValue: string, state: MultishiftState<GItem>) => void;
+  onHoveredIndexChange?: (hoveredIndex: number, state: MultishiftState<GItem>) => void;
+  onHighlightedIndexesChange?: (
+    highlightedIndexes: number[],
+    state: MultishiftState<GItem>,
+  ) => void;
+  onHighlightedGroupStartIndexChange?: (
     highlightedGroupStartIndex: number,
     state: MultishiftState<GItem>,
-  ): void;
-  onHighlightedGroupEndIndexChange?(
+  ) => void;
+  onHighlightedGroupEndIndexChange?: (
     highlightedGroupEndIndex: number | undefined,
     state: MultishiftState<GItem>,
-  ): void;
+  ) => void;
 }
 export interface MultishiftA11yIdProps {
   id?: string;
@@ -477,7 +480,7 @@ export type GetA11yStatusMessage<GItem = any> = (
 export interface A11yStatusMessageParameter<GItem = any> {
   state: MultishiftState<GItem>;
   items: GItem[];
-  itemsToString(items: GItem[], itemToString?: (item: GItem) => string): string;
+  itemsToString: (items: GItem[], itemToString?: (item: GItem) => string) => string;
 }
 
 export interface MultishiftItemsChangeset<GItem = any> {
@@ -642,9 +645,9 @@ export interface MultishiftPropGetters<GItem = any> {
    * should always be used for `autocomplete` dropdowns but will throw an error
    * if used within a `select` dropdown.
    */
-  getComboBoxProps<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
+  getComboBoxProps: <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
     options?: GetComboBoxPropsOptions<GElement, GRefKey>,
-  ): GetComboBoxPropsReturn<GElement, GRefKey>;
+  ) => GetComboBoxPropsReturn<GElement, GRefKey>;
 
   /**
    * Get the augmented props for the toggle button which typically opens and
@@ -655,9 +658,9 @@ export interface MultishiftPropGetters<GItem = any> {
    * Returns the props you should apply to any menu toggle button element you
    * render.
    */
-  getToggleButtonProps<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
+  getToggleButtonProps: <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
     options?: GetPropsWithRefOptions<GElement, GRefKey>,
-  ): GetPropsWithRefReturn<GElement, GRefKey>;
+  ) => GetPropsWithRefReturn<GElement, GRefKey>;
 
   /**
    * Get the augmented props for your menu dropdown container element.
@@ -704,9 +707,9 @@ export interface MultishiftPropGetters<GItem = any> {
    * > Note that for accessibility reasons it's best if you always render this
    * > element whether or not downshift is in an isOpen state.
    */
-  getMenuProps<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
+  getMenuProps: <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
     options?: GetPropsWithRefOptions<GElement, GRefKey>,
-  ): GetPropsWithRefReturn<GElement, GRefKey>;
+  ) => GetPropsWithRefReturn<GElement, GRefKey>;
 
   /**
    * Get the augmented props for each item being rendered.
@@ -719,9 +722,9 @@ export interface MultishiftPropGetters<GItem = any> {
    * This is an impure function, so it should only be called when you will
    * actually be applying the props to an item.
    */
-  getItemProps<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
+  getItemProps: <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
     options: GetItemPropsOptions<GElement, GRefKey, GItem>,
-  ): GetPropsWithRefReturn<GElement, GRefKey>;
+  ) => GetPropsWithRefReturn<GElement, GRefKey>;
 
   /**
    * Get the augmented props for the autocomplete input element.
@@ -742,16 +745,16 @@ export interface MultishiftPropGetters<GItem = any> {
    * disabling the input).
    *
    */
-  getInputProps<GElement extends HTMLInputElement = any, GRefKey extends string = 'ref'>(
+  getInputProps: <GElement extends HTMLInputElement = any, GRefKey extends string = 'ref'>(
     options?: GetPropsWithRefOptions<GElement, GRefKey>,
-  ): GetPropsWithRefReturn<GElement, GRefKey>;
+  ) => GetPropsWithRefReturn<GElement, GRefKey>;
 
   /**
    * Gets the props to attach to a button that removes a selected item.
    */
-  getRemoveButtonProps<GElement extends HTMLElement = any>(
+  getRemoveButtonProps: <GElement extends HTMLElement = any>(
     options: GetRemoveButtonOptions<GElement, GItem>,
-  ): GetRemoveButtonReturn<GElement>;
+  ) => GetRemoveButtonReturn<GElement>;
 
   /**
    * This method should be applied to the label you render. It will generate an
@@ -764,9 +767,9 @@ export interface MultishiftPropGetters<GItem = any> {
    * > Note: For accessibility purposes, calling this method is highly
    * recommended.
    */
-  getLabelProps<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
+  getLabelProps: <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
     options?: IgnoredElementOptions<GElement, GRefKey>,
-  ): GetLabelPropsWithRefReturn<GElement, GRefKey>;
+  ) => GetLabelPropsWithRefReturn<GElement, GRefKey>;
 
   /**
    * Adds a ref to an element which will prevent blurring from happening when
@@ -777,9 +780,9 @@ export interface MultishiftPropGetters<GItem = any> {
    * - Allows for autofocusing the input / toggle button or items when [a
    *   specific one] when focused.
    */
-  getIgnoredElementProps<GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
+  getIgnoredElementProps: <GElement extends HTMLElement = any, GRefKey extends string = 'ref'>(
     options?: IgnoredElementOptions<GElement, GRefKey>,
-  ): GetPropsWithRefReturn<GElement, GRefKey>;
+  ) => GetPropsWithRefReturn<GElement, GRefKey>;
 }
 
 export interface IgnoredElementOptions<
@@ -797,12 +800,12 @@ export interface MultishiftHelpers<GItem = any> {
    * arrow keys> as well as multi selection highlighting when the shift key is
    * pressed.
    */
-  itemHighlightedAtIndex(index: number): boolean;
+  itemHighlightedAtIndex: (index: number) => boolean;
 
   /**
    * Return true when the provided item is selected.
    */
-  itemIsSelected(item: GItem): boolean;
+  itemIsSelected: (item: GItem) => boolean;
 
   /**
    * Return the index of the provided item within the list of items.
@@ -811,7 +814,7 @@ export interface MultishiftHelpers<GItem = any> {
    *
    * `-1` when not found
    */
-  indexOfItem(item: GItem): number;
+  indexOfItem: (item: GItem) => number;
 
   /**
    * The most recently highlighted index which can be used when making a
@@ -836,22 +839,22 @@ export interface MultishiftFocusHelpers {
   /**
    * Focus on the menu.
    */
-  focusMenu(): void;
+  focusMenu: () => void;
 
   /**
    * Focus on a menu item by the provided index.
    */
-  focusMenuItem(index: number): void;
+  focusMenuItem: (index: number) => void;
 
   /**
    * Focus on the input element when defined.
    */
-  focusInput(): void;
+  focusInput: () => void;
 
   /**
    * Focus on the toggle button.
    */
-  focusToggleButton(): void;
+  focusToggleButton: () => void;
 }
 
 /**

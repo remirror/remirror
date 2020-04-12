@@ -15,13 +15,21 @@ export const Container: FC = ({ children }) => (
   </div>
 );
 export const Header: FC = ({ children }) => (
-  <div style={{ flex: '0 0 3rem', borderBottom: '1px solid black', background: '#aaa' }}>{children}</div>
+  <div style={{ flex: '0 0 3rem', borderBottom: '1px solid black', background: '#aaa' }}>
+    {children}
+  </div>
 );
 export const Main: FC = ({ children }) => (
   <div style={{ flex: '1', display: 'flex', backgroundColor: '#ddd' }}>{children}</div>
 );
-export const Panel: FC<{ flex?: string; vertical?: boolean }> = ({ children, flex = '1 0 0', vertical }) => (
-  <div style={{ height: '100%', flex, display: 'flex', flexDirection: vertical ? 'column' : 'row' }}>
+export const Panel: FC<{ flex?: string; vertical?: boolean }> = ({
+  children,
+  flex = '1 0 0',
+  vertical,
+}) => (
+  <div
+    style={{ height: '100%', flex, display: 'flex', flexDirection: vertical ? 'column' : 'row' }}
+  >
     {children}
   </div>
 );

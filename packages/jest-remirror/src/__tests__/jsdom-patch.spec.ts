@@ -36,10 +36,10 @@ describe('jsdomPolyfill', () => {
 
   it('should create an innerText attribute', () => {
     const div = document.createElement('div');
-    document.documentElement.appendChild(div);
-    div.innerText = 'Hello';
+    document.documentElement.append(div);
+    div.textContent = 'Hello';
 
-    expect(div.innerText).toBe('Hello');
+    expect(div.textContent).toBe('Hello');
   });
 
   it('sets up cancelAnimationFrame', () => {

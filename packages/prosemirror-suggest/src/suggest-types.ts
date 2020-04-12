@@ -154,7 +154,7 @@ export interface Suggestion<GCommand extends AnyFunction<void> = AnyFunction<voi
    *
    * @defaultValue `() => void`
    */
-  onChange?(params: SuggestChangeHandlerParameter<GCommand>): void;
+  onChange?: (params: SuggestChangeHandlerParameter<GCommand>) => void;
 
   /**
    * Called whenever a suggestion is exited with the pre-exit match value.
@@ -167,7 +167,7 @@ export interface Suggestion<GCommand extends AnyFunction<void> = AnyFunction<voi
    *
    * @defaultValue `() => void`
    */
-  onExit?(params: SuggestExitHandlerParameter<GCommand>): void;
+  onExit?: (params: SuggestExitHandlerParameter<GCommand>) => void;
 
   /**
    * Called for each character entry and can be used to disable certain
@@ -181,7 +181,7 @@ export interface Suggestion<GCommand extends AnyFunction<void> = AnyFunction<voi
    *
    * @defaultValue `() => false`
    */
-  onCharacterEntry?(params: SuggestCharacterEntryParameter<GCommand>): boolean;
+  onCharacterEntry?: (params: SuggestCharacterEntryParameter<GCommand>) => boolean;
 
   /**
    * An object that describes how certain key bindings should be handled.
@@ -202,7 +202,7 @@ export interface Suggestion<GCommand extends AnyFunction<void> = AnyFunction<voi
    * Suggested actions are useful for developing plugins and extensions which
    * provide useful defaults for managing the suggestion lifecycle.
    */
-  createCommand?(params: CreateSuggestCommandParameter): GCommand;
+  createCommand?: (params: CreateSuggestCommandParameter) => GCommand;
 }
 
 /**
@@ -266,13 +266,13 @@ export interface SuggestIgnoreParameter {
    * }
    * ```
    */
-  addIgnored(params: AddIgnoredParameter): void;
+  addIgnored: (params: AddIgnoredParameter) => void;
 
   /**
    * When name is provided remove all ignored decorations which match the named
    * suggester. Otherwise remove **all** ignored decorations from the document.
    */
-  clearIgnored(name?: string): void;
+  clearIgnored: (name?: string) => void;
 }
 
 /**
@@ -366,7 +366,7 @@ export interface SuggestMarkParameter {
    * be used when removing a suggestion if you are using prosemirror `Marks` to
    * identify the suggestion.
    */
-  setMarkRemoved(): void;
+  setMarkRemoved: () => void;
 }
 
 /**

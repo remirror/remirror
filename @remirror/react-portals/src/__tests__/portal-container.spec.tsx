@@ -10,13 +10,13 @@ test('PortalContainer', () => {
 
   const mockRender = jest.fn(() => <div data-testid='test' />);
   const element = document.createElement('span');
-  document.body.appendChild(element);
+  document.body.append(element);
   portalContainer.render({ render: mockRender, container: element });
 
-  expect(Array.from(portalContainer.portals.entries())).toHaveLength(1);
+  expect([...portalContainer.portals.entries()]).toHaveLength(1);
   expect(mockListener).toHaveBeenCalledWith(portalContainer.portals);
 
   portalContainer.remove(element);
 
-  expect(Array.from(portalContainer.portals.entries())).toHaveLength(0);
+  expect([...portalContainer.portals.entries()]).toHaveLength(0);
 });

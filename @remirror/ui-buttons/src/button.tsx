@@ -57,14 +57,14 @@ export type ButtonProps = ResetButtonProps & {
    *
    * When provided `RightIconComponent` and `rightIconProps` will be ignored
    */
-  renderRightIcon?(params: RenderIconParameter): ReactNode;
+  renderRightIcon?: (params: RenderIconParameter) => ReactNode;
 
   /**
    * A render prop for the left icon.
    *
    * When provided `LeftIconComponent` and `leftIconProps` will be ignored
    */
-  renderLeftIcon?(params: RenderIconParameter): ReactNode;
+  renderLeftIcon?: (params: RenderIconParameter) => ReactNode;
 
   /**
    * Custom styles to add to the icon

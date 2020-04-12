@@ -26,7 +26,7 @@ export interface LinkExtensionOptions extends MarkExtensionConfig {
   /**
    * Return true to intercept the activation. This is useful for showing a dialog to replace the selected text.
    */
-  activationHandler?(): void;
+  activationHandler?: () => void;
 }
 
 export type LinkExtensionCommands = 'updateLink' | 'removeLink';

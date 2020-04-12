@@ -30,7 +30,7 @@ export const ProsemirrorDevTools = () => {
       unmountComponentAtNode(node);
 
       if (node.parentNode) {
-        node.parentNode.removeChild(node);
+        node.remove();
       }
     };
   }, [view]);

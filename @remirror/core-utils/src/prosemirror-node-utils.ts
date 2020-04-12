@@ -122,7 +122,7 @@ interface FindChildrenByAttrParameter extends FlattenParameter {
   /**
    * Runs a predicate check after receiving the attrs for the found node.
    */
-  predicate(attrs: ProsemirrorAttributes): boolean;
+  predicate: (attrs: ProsemirrorAttributes) => boolean;
 }
 
 /**

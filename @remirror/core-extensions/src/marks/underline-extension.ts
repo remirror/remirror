@@ -3,8 +3,8 @@ import { toggleMark } from 'prosemirror-commands';
 import {
   CommandMarkTypeParameter,
   convertCommand,
-  ManagerMarkTypeParameter,
   KeyBindings,
+  ManagerMarkTypeParameter,
   MarkExtension,
   MarkExtensionSpec,
   MarkGroup,

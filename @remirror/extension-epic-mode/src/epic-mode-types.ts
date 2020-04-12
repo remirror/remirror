@@ -18,7 +18,7 @@ export interface EpicModeExtensionOptions extends BaseExtensionSettings {
   /**
    * Where in the dom the canvas element should be stored
    */
-  getCanvasContainer?(): HTMLElement;
+  getCanvasContainer?: () => HTMLElement;
 
   /**
    * The colors for the epic effect
@@ -100,12 +100,12 @@ export interface ParticleEffect {
    *
    * @param params
    */
-  createParticle(params: CreateParticleParameter): Particle;
+  createParticle: (params: CreateParticleParameter) => Particle;
 
   /**
    * Update the created particle (via mutation)
    *
    * @param params
    */
-  updateParticle(params: UpdateParticleParameter): void;
+  updateParticle: (params: UpdateParticleParameter) => void;
 }

@@ -4,7 +4,4 @@ import { storiesOf } from '@storybook/react';
 
 import Playground from '..';
 
-storiesOf('Playground', module)
-  .add('Main', () => (
-    <Playground />
-  ))
+storiesOf('Playground', module).add('Main', () => <Playground />);
