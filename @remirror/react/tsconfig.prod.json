@@ -36,9 +36,6 @@
     },
     {
       "path": "../react-utils/tsconfig.prod.json"
-    },
-    {
-      "path": "../ui/tsconfig.prod.json"
     }
   ]
 }

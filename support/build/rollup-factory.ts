@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="./patches.d.ts" />
 
+import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
@@ -81,6 +82,8 @@ const configure = async ({
         peerDependencies: true,
       }),
 
+      commonjs({ include: /node_modules/ }),
+
       // Register Node.js globals for browserify compatibility.
       globals(),
 
@@ -128,6 +131,7 @@ const configure = async ({
       // they are present at runtime.
       external: (id) => {
         const isExternal = !!deps.find((dep) => dep === id || id.startsWith(`${dep}/`));
+
         if (id === '@emotion/core' && !isExternal) {
           throw new Error(
             chalk`{red.bold Invalid configuration for '${pkg.name}'}: {yellow '@emotion/core' must be declared as a {bold dependency} or {bold peerDependency}.}`,
@@ -143,6 +147,7 @@ const configure = async ({
         ...defaultOutput,
         file: isProd ? moduleProdFileName : moduleFileName,
         format: 'es',
+        esModule: true,
       });
     }
 

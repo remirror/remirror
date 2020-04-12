@@ -31,8 +31,9 @@ module.exports = {
     },
   ],
   plugins: [
-    'babel-plugin-annotate-pure-calls',
-    'babel-plugin-dev-expression',
+    'annotate-pure-calls',
+    'dev-expression',
+    'macros',
     '@babel/plugin-transform-runtime',
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-syntax-dynamic-import',
