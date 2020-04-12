@@ -247,6 +247,17 @@ export abstract class Preset<
   };
 }
 
+export interface Preset<
+  ExtensionUnion extends AnyExtension,
+  Settings extends object = {},
+  Properties extends object = {}
+> {
+  /**
+   * The typed constructor for the `Preset` instance.
+   */
+  constructor: PresetConstructor<ExtensionUnion, Settings, Properties>;
+}
+
 interface CreateExtensionsParameter<Settings extends object = {}, Properties extends object = {}>
   extends PropertiesParameter<Properties>,
     SettingsParameter<Settings> {}

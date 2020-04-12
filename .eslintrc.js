@@ -55,7 +55,6 @@ module.exports = {
     'plugin:jest-formatting/strict',
     'plugin:unicorn/recommended',
     'plugin:eslint-comments/recommended',
-    'plugin:security/recommended',
   ],
 
   parserOptions: {

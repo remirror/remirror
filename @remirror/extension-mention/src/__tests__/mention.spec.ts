@@ -5,7 +5,7 @@ import { SuggestCommandParameter } from 'prosemirror-suggest';
 import { fromHTML, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@remirror/test-fixtures';
 
-import { MentionExtension, MentionExtensionOptions } from '..';
+import { MentionExtension, MentionExtensionSettings } from '..';
 import { MentionExtensionSuggestCommand } from '../mention-types';
 
 describe('schema', () => {
@@ -93,13 +93,13 @@ describe('constructor', () => {
   });
 });
 
-const create = (parameters: MentionExtensionOptions) =>
+const create = (parameters: MentionExtensionSettings) =>
   renderEditor({
     attrMarks: [new MentionExtension(parameters)],
   });
 
 describe('plugin', () => {
-  const options: MentionExtensionOptions = {
+  const options: MentionExtensionSettings = {
     matchers: [
       { char: '#', name: 'tag', mentionClassName: 'custom' },
       { char: '@', name: 'at', mentionClassName: 'custom' },

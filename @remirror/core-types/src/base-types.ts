@@ -11,7 +11,7 @@ interface CreateExtraAttributesParameter {
    * The fallback value to use for the extra attributes being created. Must be
    * provided.
    */
-  fallback: string | null;
+  fallback?: string | null;
 }
 
 type NeverBrand = Brand<object, never>;
@@ -216,7 +216,7 @@ export interface ExtraAttributesObject {
   /**
    * A function used to extract the attribute from the dom.
    */
-  getAttributes?: (domNode: Node) => unknown;
+  getAttribute?: (domNode: Node) => unknown;
 }
 
 /**
@@ -235,7 +235,7 @@ export type ExtraAttributes = string | ExtraAttributesTuple | ExtraAttributesObj
 /**
  * A method that can pull all the extraAttributes from the provided dom node.
  */
-export type GetExtraAttributes = (domNode: Node) => Record<string, unknown>;
+export type GetExtraAttributes = (domNode: Node | string) => Record<string, unknown>;
 
 /**
  * A method that creates the `AttributeSpec` for prosemirror that can be added
@@ -253,18 +253,11 @@ export type GetExtraAttributes = (domNode: Node) => Record<string, unknown>;
  *     },
  *   },
  * }
+ * ```
  */
 export type CreateExtraAttributes = (
-  params: CreateExtraAttributesParameter,
+  params?: CreateExtraAttributesParameter,
 ) => Record<string, AttributeSpec>;
-
-/**
- * Defines the options that every extension can accept at instantiation.
- *
- * @remarks
- * Make sure to extend from this when defining custom options for your
- * extension.
- */
 
 /**
  * The render environment which is either on the server (ssr) or in the dom.

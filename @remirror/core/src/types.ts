@@ -134,14 +134,6 @@ export type GetNameUnion<Type extends { name: string }> = Type['name'];
  */
 export type GetConstructor<Type extends { constructor: unknown }> = Type['constructor'];
 
-export interface ManagerSettings {
-  /**
-   * An object which excludes certain functionality from all extensions within
-   * the manager.
-   */
-  exclude?: ExcludeOptions;
-}
-
 /**
  * Parameters passed into many of the extension methods.
  */
@@ -348,26 +340,7 @@ export interface OnTransactionParameter
     TransactionParameter,
     EditorStateParameter {}
 
-export interface BaseExtensionSettings extends Remirror.ExtensionSettings {
-  /**
-   * Inject additional attributes into the defined mark / node schema. This can
-   * only be used for `NodeExtensions` and `MarkExtensions`.
-   *
-   * @remarks
-   *
-   * Sometimes you need to add additional attributes to a node or mark. This
-   * property enables this without needing to create a new extension.
-   *
-   * - `extraAttributes: ['title']` Create an attribute with name `title`.When
-   *   parsing the dom it will look for the attribute `title`
-   * - `extraAttributes: [['custom', 'false', 'data-custom'],'title']` - Creates an
-   *   attribute with name `custom` and default value `false`. When parsing the
-   *   dom it will look for the attribute `data-custom`
-   *
-   * @defaultValue `[]`
-   */
-  extraAttributes?: ExtraAttributes[];
-
+export interface BaseExtensionSettings extends Remirror.BaseExtensionSettings {
   /**
    * An object which excludes certain functionality from an extension.
    */
@@ -401,7 +374,7 @@ export interface BaseExtensionSettingsParameter<Settings extends object = {}> {
  * The parameters passed to the `createSchema` method for node and mark
  * extensions.
  */
-export interface CreateSchemaParameter<Settings extends object> {
+export interface CreateSchemaParameter<Settings extends object, Properties extends object> {
   /**
    * All the static settings that have been passed into the extension when
    * being created (instantiated).
@@ -409,28 +382,9 @@ export interface CreateSchemaParameter<Settings extends object> {
   settings: Readonly<Required<Settings>>;
 
   /**
-   * A method that creates the `AttributeSpec` for prosemirror that can be added
-   * to a node or mark extension to provide extra functionality and store more
-   * information within the DOM and prosemirror state..
-   *
-   * @remarks
-   *
-   * ```ts
-   * const schema = {
-   *   attrs: {
-   *      ...createExtraAttributes({ fallback: null }),
-   *      href: {
-   *       default: null,
-   *     },
-   *   },
-   * }
+   * All the properties for the extension.
    */
-  createExtraAttributes: CreateExtraAttributes;
-
-  /**
-   * Pull all extra attrs from the dom node provided.
-   */
-  getExtraAttributes: GetExtraAttributes;
+  properties: Readonly<Required<Properties>>;
 }
 
 declare global {
@@ -444,6 +398,6 @@ declare global {
      * A global type which allows additional default settings to be added to the
      * editor.
      */
-    interface ExtensionSettings {}
+    interface BaseExtensionSettings {}
   }
 }

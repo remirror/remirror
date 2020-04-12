@@ -27,11 +27,12 @@ import {
   removeMark,
   replaceText,
   TransactionTransformer,
+  ExtensionFactory,
 } from '@remirror/core';
 
 import {
   MentionExtensionAttributes,
-  MentionExtensionOptions,
+  MentionExtensionSettings,
   MentionExtensionSuggestCommand,
   SuggestionCommandAttributes,
 } from './mention-types';
@@ -49,45 +50,38 @@ const defaultHandler = () => false;
  * It also allows for configuration options to be passed into transforming suggestion queries into a mention
  * node.
  */
-export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
-  get name() {
-    return 'mention' as const;
-  }
+export const MentionExtension = ExtensionFactory.typed<MentionExtensionSettings>().mark({
+  name: 'mention',
+  defaultSettings: {
+    matchers: [],
+    appendText: ' ',
+    extraAttributes: [],
+    mentionTag: 'a' as 'a',
+    suggestTag: 'a' as 'a',
+    onChange: defaultHandler,
+    onExit: defaultHandler,
+    onCharacterEntry: defaultHandler,
+    keyBindings: {},
+    noDecorations: false,
+  },
+  createMarkSchema: (parameter) => {
+    const {getExtraAttributes, settings, createExtraAttributes} = parameter;
 
-  /**
-   * Provide the default options for this extension
-   */
-  get defaultOptions() {
-    return {
-      matchers: [],
-      appendText: ' ',
-      mentionClassName: 'mention',
-      extraAttributes: [],
-      mentionTag: 'a' as 'a',
-      suggestTag: 'a' as 'a',
-      onChange: defaultHandler,
-      onExit: defaultHandler,
-      onCharacterEntry: defaultHandler,
-      keyBindings: {},
-    };
-  }
-
-  get schema(): MarkExtensionSpec {
-    const dataAttributeId = 'data-mention-id';
+    return const dataAttributeId = 'data-mention-id';
     const dataAttributeName = 'data-mention-name';
     return {
       attrs: {
         id: {},
         label: {},
         name: {},
-        ...this.extraAttributes(),
+        ...createExtraAttributes(),
       },
       group: MarkGroup.Behavior,
       excludes: '_',
       inclusive: false,
       parseDOM: [
         {
-          tag: `${this.options.mentionTag}[${dataAttributeId}]`,
+          tag: `${settings.mentionTag}[${dataAttributeId}]`,
           getAttrs: (node) => {
             if (!isElementDOMNode(node)) {
               return false;
@@ -96,7 +90,7 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
             const id = node.getAttribute(dataAttributeId);
             const name = node.getAttribute(dataAttributeName);
             const label = node.textContent;
-            return { ...this.getExtraAttributes(node), id, label, name };
+            return { ...getExtraAttributes(node), id, label, name };
           },
         },
       ],
@@ -126,6 +120,23 @@ export class MentionExtension extends MarkExtension<MentionExtensionOptions> {
         ];
       },
     };
+  }
+}) {
+  get name() {
+    return 'mention' as const;
+  }
+
+  /**
+   * Provide the default options for this extension
+   */
+  get defaultOptions() {
+    return {
+
+    };
+  }
+
+  get schema(): MarkExtensionSpec {
+
   }
 
   /**

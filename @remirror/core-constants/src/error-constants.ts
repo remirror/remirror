@@ -20,7 +20,7 @@ export enum ErrorConstant {
   /**
    * You can only pass `extraAttributes` to a node extension or a mark extension.
    */
-  EXTRA_ATTRS = 'RMR0002',
+  EXTRA_ATTRIBUTES = 'RMR0002',
 
   /**
    * This is a custom error possibly thrown by an external library.
@@ -79,4 +79,9 @@ export enum ErrorConstant {
    * The user requested an invalid extension from the manager.
    */
   INVALID_MANAGER_EXTENSION = 'RMR0013',
+
+  /**
+   * The user requested an invalid preset from the manager.
+   */
+  INVALID_MANAGER_PRESET = 'RMR0014',
 }

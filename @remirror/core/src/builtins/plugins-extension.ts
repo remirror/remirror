@@ -21,12 +21,22 @@ import {
  */
 const PluginsExtension = ExtensionFactory.plain({
   name: 'plugins',
-  defaultPriority: ExtensionPriority.Low,
+  defaultPriority: ExtensionPriority.Medium,
+
+  onCreate({ setStoreKey }) {
+    return {
+      afterExtensionLoop() {
+        setStoreKey('plugins', []);
+      },
+    };
+  },
 
   /**
    * Ensure that all ssr transformers are run.
    */
-  onInitialize: ({ getParameter, addPlugins, setStoreKey, managerSettings }) => {
+  onInitialize(parameter) {
+    const { getParameter, addPlugins, setStoreKey, managerSettings } = parameter;
+
     const extensionPlugins: ProsemirrorPlugin[] = [];
     const stateGetters: Record<string, <State>() => State> = object();
 
@@ -64,6 +74,11 @@ const PluginsExtension = ExtensionFactory.plain({
 declare global {
   namespace Remirror {
     interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
+      /**
+       * All of the plugins combined together from all sources
+       */
+      plugins: ProsemirrorPlugin[];
+
       /**
        * Retrieve the state for a given extension name. This will throw an error
        * if the extension doesn't exist.

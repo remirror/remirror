@@ -2,7 +2,7 @@ import { UnionToIntersection } from 'type-fest';
 
 import { AnyFunction, StringKey } from '@remirror/core-types';
 
-import { CommandMethod, GetCommands, GetConstructor } from '../types';
+import { CommandMethod, GetCommands, GetConstructor, GetHelpers } from '../types';
 import { AnyExtension } from './extension-base';
 
 export interface ExtensionParameter<ExtensionUnion extends AnyExtension = any> {
@@ -23,15 +23,15 @@ export interface ExtensionListParameter<ExtensionUnion extends AnyExtension = An
  * A utility type which maps the passed in extension command in an action that
  * is store in the `manager.store.actions.commandName()`.
  */
-export type MapToUnchainedCommand<GCommands extends Record<string, AnyFunction>> = {
-  [P in keyof GCommands]: CommandMethod<Parameters<GCommands[P]>>;
+export type MapToUnchainedCommand<RawCommands extends Record<string, AnyFunction>> = {
+  [Command in keyof RawCommands]: CommandMethod<Parameters<RawCommands[Command]>>;
 };
 
 /**
  * A utility type which maps the chained commands.
  */
-export type MapToChainedCommand<GCommands extends Record<string, AnyFunction>> = {
-  [P in keyof GCommands]: (...args: Parameters<GCommands[P]>) => any;
+export type MapToChainedCommand<RawCommands extends Record<string, AnyFunction>> = {
+  [Command in keyof RawCommands]: (...args: Parameters<RawCommands[Command]>) => any;
 };
 
 /**
@@ -53,6 +53,28 @@ export type ChainedFromExtensions<ExtensionUnion extends AnyExtension> = {
  */
 export type CommandNames<ExtensionUnion extends AnyExtension> = StringKey<
   CommandsFromExtensions<ExtensionUnion>
+>;
+
+/**
+ * A utility type which maps the passed in extension helpers to a method called with
+ * `manager.data.helpers.helperName()`.
+ */
+export type MapHelpers<RawHelpers extends Record<string, AnyFunction>> = {
+  [Helper in keyof RawHelpers]: RawHelpers[Helper];
+};
+
+/**
+ * Utility type which receives an extension and provides the type of helpers it makes available.
+ */
+export type HelpersFromExtensions<ExtensionUnion extends AnyExtension> = UnionToIntersection<
+  MapHelpers<GetHelpers<ExtensionUnion>>
+>;
+
+/**
+ * Utility type for pulling all the action names from a list
+ */
+export type HelperNames<GExtension extends AnyExtension> = StringKey<
+  HelpersFromExtensions<GExtension>
 >;
 
 /**

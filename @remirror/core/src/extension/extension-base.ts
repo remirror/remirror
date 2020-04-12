@@ -1,7 +1,4 @@
-import { AttributeSpec } from 'prosemirror-model';
-
 import {
-  ErrorConstant,
   ExtensionPriority,
   ExtensionType,
   REMIRROR_IDENTIFIER_KEY,
@@ -11,28 +8,21 @@ import {
 import {
   capitalize,
   deepMerge,
-  invariant,
-  isArray,
   isIdentifierOfType,
   isRemirrorType,
-  isString,
   object,
 } from '@remirror/core-helpers';
 import {
   AnyFunction,
-  CreateExtraAttributes,
   EditorSchema,
   EditorView,
-  ExtraAttributes,
   FlipPartialAndRequired,
-  GetExtraAttributes,
   IfEmpty,
   IfNoRequiredProperties,
   MarkExtensionSpec,
   MarkType,
   NodeExtensionSpec,
   NodeType,
-  ProsemirrorAttributes,
   ProsemirrorPlugin,
 } from '@remirror/core-types';
 import { isMarkActive, isNodeActive } from '@remirror/core-utils';
@@ -49,7 +39,6 @@ import {
   GetNameUnion,
   ManagerMarkTypeParameter,
   ManagerNodeTypeParameter,
-  ManagerSettings,
   ManagerTypeParameter,
   MarkExtensionTags,
   NodeExtensionTags,
@@ -135,7 +124,18 @@ export const defaultSettings: Required<BaseExtensionSettings> = {
   priority: null,
   extraAttributes: [],
   exclude: {},
-};
+} as any;
+
+/**
+ * Set the value for a key of the default settings. This is made available only
+ * to extensions making use of the `ExtensionLifecycleMethods`.
+ */
+export function setDefaultExtensionSettings<Key extends keyof Remirror.BaseExtensionSettings>(
+  key: Key,
+  value: Required<Remirror.BaseExtensionSettings>[Key],
+): void {
+  defaultSettings[key] = value;
+}
 
 /**
  * Determines if the passed value is an extension.
@@ -181,92 +181,6 @@ export function isNodeExtension<Settings extends object = {}, Properties extends
   value: unknown,
 ): value is AnyNodeExtension<Settings, Properties> {
   return isExtension(value) && value.type === ExtensionType.Node;
-}
-
-/**
- * Allows for the addition of attributes to the defined schema. These are
- * defined in the static settings and directly update the schema when applied.
- * They can't be changed during the lifetime of the editor or the Schema will
- * break.
- *
- * @remarks
- *
- * This can only be used in a `NodeExtension` or `MarkExtension`. The additional
- * attributes can only be optional.
- */
-function createExtraAttributesFactory<Settings extends object>(
-  extension: AnyExtension,
-): CreateExtraAttributes {
-  const createExtraAttributes: CreateExtraAttributes = ({ fallback }) => {
-    // Make sure this is a node or mark extension. Will throw if not.
-    invariant(isNodeExtension<Settings>(extension) || isMarkExtension<Settings>(extension), {
-      code: ErrorConstant.EXTRA_ATTRS,
-    });
-
-    const extraAttributes: ExtraAttributes[] = extension.settings.extraAttributes ?? [];
-    const attributes: Record<string, AttributeSpec> = object();
-
-    for (const item of extraAttributes) {
-      if (isArray(item)) {
-        attributes[item[0]] = { default: item[1] };
-        continue;
-      }
-
-      if (isString(item)) {
-        attributes[item] = { default: fallback };
-        continue;
-      }
-
-      const { name, default: def } = item;
-      attributes[name] = def !== undefined ? { default: def } : {};
-    }
-
-    return attributes;
-  };
-
-  return createExtraAttributes;
-}
-
-/**
- * Runs through the extraAttributes provided and retrieves them.
- */
-function getExtraAttributesFactory<Settings extends object>(
-  extension: AnyExtension,
-): GetExtraAttributes {
-  const getExtraAttributes: GetExtraAttributes = (domNode) => {
-    // Make sure this is a node or mark extension. Will throw if not.
-    invariant(isNodeExtension<Settings>(extension) || isMarkExtension<Settings>(extension), {
-      code: ErrorConstant.EXTRA_ATTRS,
-    });
-
-    const extraAttributes = extension.settings.extraAttributes ?? [];
-    const attributes: ProsemirrorAttributes = object();
-
-    for (const attribute of extraAttributes) {
-      if (isArray(attribute)) {
-        // Use the default
-        const [name, , attributeName] = attribute;
-        attributes[name] = attributeName
-          ? (domNode as Element).getAttribute(attributeName)
-          : undefined;
-
-        continue;
-      }
-
-      if (isString(attribute)) {
-        // Assume the name is the same
-        attributes[attribute] = (domNode as Element).getAttribute(attribute);
-        continue;
-      }
-
-      const { name, getAttributes, default: fallback } = attribute;
-      attributes[name] = getAttributes ? getAttributes(domNode) || fallback : fallback;
-    }
-
-    return attributes;
-  };
-
-  return getExtraAttributes;
 }
 
 /**
@@ -537,7 +451,7 @@ export interface Extension<
   ProsemirrorType = never
 > {
   /**
-   * Forcefully give the extensions the `AnyExtensionConstructor` as it's constructor.
+   * Provides the type for the extensions constructor.
    */
   constructor: InferExtensionConstructor<
     Name,
@@ -777,10 +691,9 @@ interface ExtensionCreatorMethods<
 
 export interface ExtensionLifecycleMethods {
   /**
-   * When the Manager is first created and the schema is made
-   * available.
+   * Handlers called when the Manager is first created.
    */
-  onCreate?: () => void;
+  onCreate?: (parameter: CreateLifecycleMethodParameter) => CreateLifecycleMethodReturn;
 
   /**
    * This happens when the store is initialized.
@@ -940,8 +853,7 @@ export abstract class MarkExtension<
 
     this.#schema = this.getFactoryParameter().createMarkSchema({
       settings: this.settings,
-      createExtraAttributes: createExtraAttributesFactory(this as AnyExtension),
-      getExtraAttributes: getExtraAttributesFactory(this as AnyExtension),
+      properties: this.properties,
     });
   }
 
@@ -978,7 +890,7 @@ export type MarkExtensionFactoryParameter<
    * Provide a method for creating the schema. This is required in order to
    * create a `MarkExtension`.
    */
-  createMarkSchema: (parameter: CreateSchemaParameter<Settings>) => MarkExtensionSpec;
+  createMarkSchema: (parameter: CreateSchemaParameter<Settings, Properties>) => MarkExtensionSpec;
 };
 
 /**
@@ -1066,8 +978,7 @@ export abstract class NodeExtension<
 
     this.#schema = this.getFactoryParameter().createNodeSchema({
       settings: this.settings,
-      createExtraAttributes: createExtraAttributesFactory(this as AnyExtension),
-      getExtraAttributes: getExtraAttributesFactory(this as AnyExtension),
+      properties: this.properties,
     });
   }
 
@@ -1106,7 +1017,7 @@ export type NodeExtensionFactoryParameter<
    * more about it is in the
    * {@link https://prosemirror.net/docs/guide/#schema docs}.
    */
-  createNodeSchema: (parameter: CreateSchemaParameter<Settings>) => NodeExtensionSpec;
+  createNodeSchema: (parameter: CreateSchemaParameter<Settings, Properties>) => NodeExtensionSpec;
 };
 
 /**
@@ -1206,12 +1117,7 @@ export type EditableManagerStoreKeys = Exclude<
   'nodes' | 'marks' | 'view' | 'tags' | 'schema' | 'extensionPlugins' | 'plugins'
 >;
 
-export interface InitializeLifecycleMethodParameter {
-  /**
-   * The parameter passed into most of the extension creator methods.
-   */
-  getParameter: <Type = never>(extension: AnyExtension) => ManagerTypeParameter<Type>;
-
+export interface CreateLifecycleMethodParameter {
   /**
    * Get the value of a key from the manager store.
    */
@@ -1220,28 +1126,28 @@ export interface InitializeLifecycleMethodParameter {
   /**
    * Update the store with a specific key.
    */
-  setStoreKey: <Key extends EditableManagerStoreKeys>(
-    key: Key,
-    value: Remirror.ManagerStore[Key],
-  ) => void;
-
-  /**
-   * Use this to push custom plugins to the store which are added to the plugin
-   * list after the extensionPlugins.
-   */
-  addPlugins: (...plugins: ProsemirrorPlugin[]) => void;
+  setStoreKey: <Key extends ManagerStoreKeys>(key: Key, value: Remirror.ManagerStore[Key]) => void;
 
   /**
    * The settings passed through to the manager.
    */
-  managerSettings: ManagerSettings;
+  managerSettings: Remirror.ManagerSettings;
+
+  /**
+   * Sets a property for the default settings object.
+   */
+  setDefaultExtensionSettings: <Key extends keyof Remirror.BaseExtensionSettings>(
+    key: Key,
+    value: Required<Remirror.BaseExtensionSettings>[Key],
+  ) => void;
 }
 
-export interface InitializeLifecycleMethodReturn {
+export interface CreateLifecycleMethodReturn {
   /**
    * Called before the extension loop is run.
    */
   beforeExtensionLoop?: () => void;
+
   /**
    * Called for each extension in order of their priority.
    */
@@ -1253,29 +1159,23 @@ export interface InitializeLifecycleMethodReturn {
    */
   afterExtensionLoop?: () => void;
 }
-export interface ViewLifecycleMethodParameter {
+
+export interface InitializeLifecycleMethodParameter extends ViewLifecycleMethodParameter {
+  /**
+   * Use this to push custom plugins to the store which are added to the plugin
+   * list after the extensionPlugins.
+   */
+  addPlugins: (...plugins: ProsemirrorPlugin[]) => void;
+}
+
+export interface InitializeLifecycleMethodReturn extends CreateLifecycleMethodReturn {}
+
+export interface ViewLifecycleMethodParameter
+  extends Omit<CreateLifecycleMethodParameter, 'setDefaultExtensionSettings'> {
   /**
    * The parameter passed into most of the extension creator methods.
    */
   getParameter: <Type = never>(extension: AnyExtension) => ManagerTypeParameter<Type>;
-
-  /**
-   * Get the value of a key from the manager store.
-   */
-  getStoreKey: <Key extends ManagerStoreKeys>(key: Key) => Readonly<Remirror.ManagerStore[Key]>;
-
-  /**
-   * Update the store with a specific key.
-   */
-  setStoreKey: <Key extends EditableManagerStoreKeys>(
-    key: Key,
-    value: Remirror.ManagerStore[Key],
-  ) => void;
-
-  /**
-   * The settings passed through to the manager.
-   */
-  managerSettings: ManagerSettings;
 }
 
 export interface ViewLifecycleMethodReturn {

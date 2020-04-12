@@ -1,6 +1,6 @@
 import { FromToEndParameter, Suggestion, SuggestReplacementType } from 'prosemirror-suggest';
 
-import { MarkExtensionConfig, ProsemirrorAttributes } from '@remirror/core';
+import { ProsemirrorAttributes } from '@remirror/core';
 
 export interface OptionalMentionExtensionParameter {
   /**
@@ -74,12 +74,17 @@ export interface MentionExtensionMatcher
 /**
  * The options passed into a mention
  */
-export interface MentionExtensionOptions
-  extends MarkExtensionConfig,
-    Pick<
-      Suggestion<MentionExtensionSuggestCommand>,
-      'suggestTag' | 'noDecorations' | 'onChange' | 'onExit' | 'onCharacterEntry' | 'keyBindings'
-    > {
+export interface MentionExtensionSettings
+  extends Pick<
+    Suggestion<MentionExtensionSuggestCommand>,
+    | 'suggestTag'
+    | 'noDecorations'
+    | 'onChange'
+    | 'onExit'
+    | 'onCharacterEntry'
+    | 'keyBindings'
+    | 'appendText'
+  > {
   /**
    * Provide a custom matcher with options
    */

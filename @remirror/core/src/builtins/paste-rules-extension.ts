@@ -16,7 +16,7 @@ const PasteRulesExtension = ExtensionFactory.plain({
   /**
    * Ensure that all ssr transformers are run.
    */
-  onInitialize: ({ getParameter, addPlugins, managerSettings }) => {
+  onInitialize({ getParameter, addPlugins, managerSettings }) {
     const pasteRules: ProsemirrorPlugin[] = [];
 
     return {

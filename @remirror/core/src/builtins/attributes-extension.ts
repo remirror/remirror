@@ -22,25 +22,11 @@ const AttributesExtension = ExtensionFactory.plain({
   /**
    * Ensure that all ssr transformers are run.
    */
-  onInitialize: ({ getParameter, managerSettings, setStoreKey }) => {
+  onInitialize({ getParameter, managerSettings, setStoreKey }) {
     const attributeList: AttributesWithClass[] = [];
     let attributeObject: AttributesWithClass = object();
 
     return {
-      afterExtensionLoop: () => {
-        for (const attributes of attributeList) {
-          attributeObject = {
-            ...attributeObject,
-            ...attributes,
-            class:
-              (attributeObject.class ?? '') + (bool(attributes.class) ? attributes.class : '') ||
-              '',
-          };
-        }
-
-        setStoreKey('attributes', attributeObject);
-      },
-
       forEachExtension: (extension) => {
         if (
           !extension.parameter.createAttributes ||
@@ -56,6 +42,19 @@ const AttributesExtension = ExtensionFactory.plain({
         attributeList.unshift(
           extension.parameter.createAttributes(getParameter(extension), extension),
         );
+      },
+      afterExtensionLoop: () => {
+        for (const attributes of attributeList) {
+          attributeObject = {
+            ...attributeObject,
+            ...attributes,
+            class:
+              (attributeObject.class ?? '') + (bool(attributes.class) ? attributes.class : '') ||
+              '',
+          };
+        }
+
+        setStoreKey('attributes', attributeObject);
       },
     };
   },

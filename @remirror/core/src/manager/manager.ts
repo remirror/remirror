@@ -14,13 +14,12 @@ import {
   isIdentifierOfType,
   isRemirrorType,
   object,
+  omit,
 } from '@remirror/core-helpers';
 import {
   EditorSchema,
   EditorStateParameter,
   EditorView,
-  MarkExtensionSpec,
-  NodeExtensionSpec,
   ProsemirrorPlugin,
   TransactionParameter,
 } from '@remirror/core-types';
@@ -30,26 +29,24 @@ import {
   AnyExtension,
   ChainedFromExtensions,
   CommandsFromExtensions,
+  CreateLifecycleMethodReturn,
   ExtensionFromConstructor,
   ExtensionLifecycleMethods,
   ExtensionTags,
-  GetMarkNameUnion,
-  GetNodeNameUnion,
+  HelpersFromExtensions,
   InitializeLifecycleMethodParameter,
   InitializeLifecycleMethodReturn,
-  isMarkExtension,
-  isNodeExtension,
   SchemaFromExtension,
+  setDefaultExtensionSettings,
   ViewLifecycleMethodReturn,
 } from '../extension';
-import { AnyPreset } from '../preset';
+import { AnyPreset, PresetFromConstructor } from '../preset';
 import {
   AnyCommands,
   CommandMethod,
   CommandParameter,
   GetConstructor,
   ManagerParameter,
-  ManagerSettings,
 } from '../types';
 import {
   createExtensionTags,
@@ -124,7 +121,10 @@ export class Manager<
   public static of<
     ExtensionUnion extends AnyExtension,
     PresetUnion extends AnyPreset<ExtensionUnion>
-  >(extensionOrPresetList: Array<ExtensionUnion | PresetUnion>, settings: ManagerSettings) {
+  >(
+    extensionOrPresetList: Array<ExtensionUnion | PresetUnion>,
+    settings: Remirror.ManagerSettings,
+  ) {
     return new Manager<ExtensionUnion, PresetUnion>(extensionOrPresetList, settings);
   }
 
@@ -167,7 +167,7 @@ export class Manager<
    */
   #phase: ManagerPhase = ManagerPhase.None;
 
-  #settings: ManagerSettings;
+  #settings: Remirror.ManagerSettings;
 
   /**
    * Get the extension manager store which is accessible at initialization.
@@ -223,9 +223,9 @@ export class Manager<
       tags: this.tags,
       schema: this.schema,
       getState: this.getState,
-      commands: () => ({}),
-      helpers: () => ({}),
-      chain: () => ({}),
+      commands: () => this.#store.commands,
+      helpers: () => this.#store.helpers,
+      chain: () => this.#store.chain,
     };
   }
 
@@ -233,10 +233,12 @@ export class Manager<
    * Store the handlers that will be run when for each event method.
    */
   #handlers: {
+    create: CreateLifecycleMethodReturn[];
     initialize: InitializeLifecycleMethodReturn[];
     view: ViewLifecycleMethodReturn[];
     transaction: Array<NonNullable<ExtensionLifecycleMethods['onTransaction']>>;
-  } = { initialize: [], transaction: [], view: [] };
+    destroy: Array<() => void>;
+  } = { initialize: [], transaction: [], view: [], create: [], destroy: [] };
 
   /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
@@ -249,7 +251,7 @@ export class Manager<
    */
   private constructor(
     extensionOrPresetList: Array<ExtensionUnion | PresetUnion>,
-    settings: ManagerSettings,
+    settings: Remirror.ManagerSettings,
   ) {
     this.#settings = settings;
 
@@ -263,26 +265,40 @@ export class Manager<
     this.#presets = freeze(presets);
     this.#presetMap = presetMap;
 
-    const initializeParameter = this.initializeParameter;
-    const { addPlugins: _, ...viewParameter } = initializeParameter;
+    this.setupLifecycleHandlers();
 
     for (const extension of this.#extensions) {
-      if (isNodeExtension(extension)) {
-        const { name, schema } = extension;
-        this.#store.nodes[name as GetNodeNameUnion<ExtensionUnion>] = schema;
-      }
+      this.onCreateExtensionLoop(extension);
+    }
 
-      if (isMarkExtension(extension)) {
-        const { name, schema } = extension;
+    this.afterCreate();
 
-        this.#store.marks[name as GetMarkNameUnion<ExtensionUnion>] = schema;
-      }
+    this.#store.tags = freeze(createExtensionTags(this.extensions));
 
+    this.initialize();
+  }
+
+  /**
+   * Loops through all extensions to set up the lifecycle handlers.
+   */
+  private setupLifecycleHandlers() {
+    const initializeParameter = this.initializeParameter;
+    const viewParameter = omit(initializeParameter, ['addPlugins']);
+    const createParameter = {
+      ...omit(viewParameter, ['getParameter']),
+      setDefaultExtensionSettings,
+    };
+
+    for (const extension of this.#extensions) {
+      const createHandler = extension.parameter.onCreate?.(createParameter);
       const initializeHandler = extension.parameter.onInitialize?.(initializeParameter);
-      // const createHandler = extension.parameter.onCreate;
       const viewHandler = extension.parameter.onView?.(viewParameter);
-      // const destroyHandler = extension.parameter.onDestroy;
       const transactionHandler = extension.parameter.onTransaction;
+      const destroyHandler = extension.parameter.onDestroy;
+
+      if (createHandler) {
+        this.#handlers.create.push(createHandler);
+      }
 
       if (initializeHandler) {
         this.#handlers.initialize.push(initializeHandler);
@@ -295,13 +311,11 @@ export class Manager<
       if (transactionHandler) {
         this.#handlers.transaction.push(transactionHandler);
       }
+
+      if (destroyHandler) {
+        this.#handlers.destroy.push(destroyHandler);
+      }
     }
-
-    // Initialize the schema and tags immediately since these don't ever change.
-    this.#store.schema = this.createSchema();
-    this.#store.tags = freeze(createExtensionTags(this.extensions));
-
-    this.initialize();
   }
 
   private get initializeParameter(): InitializeLifecycleMethodParameter {
@@ -352,6 +366,24 @@ export class Manager<
   };
 
   /**
+   * Called after the extension loop of the initialization phase.
+   */
+  private afterCreate() {
+    for (const { afterExtensionLoop } of this.#handlers.create) {
+      afterExtensionLoop?.();
+    }
+  }
+
+  /**
+   * Called during the extension loop of the initialization phase.
+   */
+  private onCreateExtensionLoop(extension: ExtensionUnion) {
+    for (const { forEachExtension } of this.#handlers.create) {
+      forEachExtension?.(extension);
+    }
+  }
+
+  /**
    * Called before the extension loop of the initialization phase.
    */
   private beforeInitialize() {
@@ -372,7 +404,7 @@ export class Manager<
   /**
    * Called during the extension loop of the initialization phase.
    */
-  private initializeEachExtension(extension: ExtensionUnion) {
+  private onInitializeExtensionLoop(extension: ExtensionUnion) {
     for (const { forEachExtension } of this.#handlers.initialize) {
       forEachExtension?.(extension);
     }
@@ -381,7 +413,7 @@ export class Manager<
   /**
    * Called after the extension loop of the initialization phase.
    */
-  private afterOnView(view: EditorView<EditorSchema>) {
+  private afterView(view: EditorView<EditorSchema>) {
     for (const { afterExtensionLoop } of this.#handlers.view) {
       afterExtensionLoop?.(view);
     }
@@ -390,7 +422,7 @@ export class Manager<
   /**
    * Called during the extension loop of the initialization phase.
    */
-  private onViewEachExtension(extension: ExtensionUnion, view: EditorView<EditorSchema>) {
+  private onViewExtensionLoop(extension: ExtensionUnion, view: EditorView<EditorSchema>) {
     for (const { forEachExtension } of this.#handlers.view) {
       forEachExtension?.(extension, view);
     }
@@ -407,7 +439,7 @@ export class Manager<
     this.beforeInitialize();
 
     for (const extension of this.#extensions) {
-      this.initializeEachExtension(extension);
+      this.onInitializeExtensionLoop(extension);
     }
 
     this.afterInitialize();
@@ -438,10 +470,10 @@ export class Manager<
     this.#store.view = view;
 
     for (const extension of this.#extensions) {
-      this.onViewEachExtension(extension, view);
+      this.onViewExtensionLoop(extension, view);
     }
 
-    this.afterOnView(view);
+    this.afterView(view);
 
     [this.#store.commands, this.#store.chain] = this.createCommands({
       ...this.parameter,
@@ -581,24 +613,39 @@ export class Manager<
     ];
   }
 
-  public getExtension = <ExtensionConstructor extends GetConstructor<ExtensionUnion>>(
+  /**
+   * Get the extension instance matching the provided constructor from the
+   */
+  public getExtension<ExtensionConstructor extends GetConstructor<ExtensionUnion>>(
     Constructor: ExtensionConstructor,
-  ): ExtensionFromConstructor<ExtensionConstructor> => {
+  ): ExtensionFromConstructor<ExtensionConstructor> {
     const extension = this.#extensionMap.get(Constructor);
 
-    // Throws an error if attempting to get an extension which is not preset
-    // in this preset.
-    invariant(extension, { code: ErrorConstant.INVALID_PRESET_EXTENSION });
+    // Throws an error if attempting to get an extension which is not present
+    // in the manager.
+    invariant(extension, { code: ErrorConstant.INVALID_MANAGER_EXTENSION });
 
     return extension as ExtensionFromConstructor<typeof Constructor>;
-  };
+  }
+
+  public getPreset<PresetConstructor extends GetConstructor<PresetUnion>>(
+    Constructor: PresetConstructor,
+  ): PresetFromConstructor<PresetConstructor> {
+    const preset = this.#presetMap.get(Constructor);
+
+    // Throws an error if attempting to get a preset which is not present
+    // in the manager.
+    invariant(preset, { code: ErrorConstant.INVALID_MANAGER_PRESET });
+
+    return preset as PresetFromConstructor<PresetConstructor>;
+  }
 
   /**
    * Called when removing the manager and all preset and extensions.
    */
   public destroy() {
-    for (const extension of this.extensions) {
-      extension.destroy?.();
+    for (const onDestroy of this.#handlers.destroy) {
+      onDestroy();
     }
   }
 }
@@ -608,6 +655,17 @@ export interface OnTransactionManagerParameter extends TransactionParameter, Edi
 declare global {
   namespace Remirror {
     /**
+     * Settings which can be passed into the manager.
+     */
+    interface ManagerSettings<ExtensionUnion extends AnyExtension = any> {
+      /**
+       * An object which excludes certain functionality from all extensions within
+       * the manager.
+       */
+      exclude?: ExcludeOptions;
+    }
+
+    /**
      * Describes the object where the extension manager stores it's data.
      *
      * @remarks
@@ -616,16 +674,6 @@ declare global {
      * extension is modifying the shape of the `Manager.store` property.
      */
     interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
-      /**
-       * The nodes to place on the schema.
-       */
-      nodes: Record<GetNodeNameUnion<ExtensionUnion>, NodeExtensionSpec>;
-
-      /**
-       * The marks to be added to the schema.
-       */
-      marks: Record<GetMarkNameUnion<ExtensionUnion>, MarkExtensionSpec>;
-
       /**
        * The editor view stored by this instance.
        */
@@ -637,24 +685,19 @@ declare global {
       tags: Readonly<ExtensionTags<ExtensionUnion>>;
 
       /**
-       * The schema created by this extension manager.
-       */
-      schema: SchemaFromExtension<ExtensionUnion>;
-
-      /**
-       * All of the plugins combined together from all sources
-       */
-      plugins: ProsemirrorPlugin[];
-
-      /**
-       * The commands defined within this extension.
+       * The commands defined within this manager.
        */
       commands: CommandsFromExtensions<ExtensionUnion>;
 
       /**
-       * The commands defined within this extension.
+       * The chained commands defined within this manger.
        */
       chain: ChainedFromExtensions<ExtensionUnion>;
+
+      /**
+       * The helpers defined within this manager.
+       */
+      helpers: HelpersFromExtensions<ExtensionUnion>;
     }
 
     /**

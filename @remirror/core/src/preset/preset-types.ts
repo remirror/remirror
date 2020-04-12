@@ -1,3 +1,5 @@
+import { AnyFunction } from '@remirror/core-types';
+
 import { AnyPreset } from './preset-base';
 
 export interface PresetParameter<PresetUnion extends AnyPreset> {
@@ -7,3 +9,10 @@ export interface PresetParameter<PresetUnion extends AnyPreset> {
 export interface PresetsParamter<PresetUnion extends AnyPreset> {
   presets: PresetUnion[];
 }
+
+/**
+ * Retrieve the instance type from an ExtensionConstructor.
+ */
+export type PresetFromConstructor<PresetConstructor extends { of: AnyFunction }> = ReturnType<
+  PresetConstructor['of']
+>;

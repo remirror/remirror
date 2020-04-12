@@ -21,7 +21,7 @@ const NodeViewsExtension = ExtensionFactory.plain({
   /**
    * Ensure that all ssr transformers are run.
    */
-  onInitialize: ({ getParameter, setStoreKey, managerSettings }) => {
+  onInitialize({ getParameter, setStoreKey, managerSettings }) {
     const nodeViewList: Array<Record<string, NodeViewMethod>> = [];
     const nodeViews: Record<string, NodeViewMethod> = object();
 

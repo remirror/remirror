@@ -90,7 +90,7 @@ const KeymapExtension = ExtensionFactory.typed<KeymapExtensionOptions>().plain({
   /**
    * This adds the `createKeymap` method functionality to all extensions.
    */
-  onInitialize: ({ getParameter, addPlugins, managerSettings }) => {
+  onInitialize({ getParameter, addPlugins, managerSettings }) {
     const extensionKeymaps: KeyBindings[] = [];
 
     return {
@@ -139,7 +139,7 @@ const KeymapExtension = ExtensionFactory.typed<KeymapExtensionOptions>().plain({
   /**
    * Use the default keymap available via
    */
-  createKeymap: (parameter, extension) => {
+  createKeymap(parameter, extension) {
     const {
       selectParentNodeOnEscape,
       undoInputRuleOnBackspace,

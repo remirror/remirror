@@ -24,7 +24,7 @@ import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
 import {
   MentionExtension,
   MentionExtensionMatcher,
-  MentionExtensionOptions,
+  MentionExtensionSettings,
 } from '@remirror/extension-mention';
 import { ManagedRemirrorProvider, RemirrorExtension, RemirrorManager } from '@remirror/react';
 import { RemirrorThemeProvider } from '@remirror/ui';
@@ -255,7 +255,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   /**
    * Called when the none of our configured matchers match
    */
-  private readonly onExit: Required<MentionExtensionOptions>['onExit'] = (parameters) => {
+  private readonly onExit: Required<MentionExtensionSettings>['onExit'] = (parameters) => {
     const { queryText, command } = parameters;
 
     // Check whether we've manually caused this exit. If not, trigger the
