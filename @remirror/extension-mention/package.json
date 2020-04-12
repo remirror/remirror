@@ -20,6 +20,7 @@
     "@types/prosemirror-keymap": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
     "@types/prosemirror-view": "^1.11.2",
+    "object.pick": "^1.3.0",
     "prosemirror-keymap": "^1.0.2",
     "prosemirror-state": "^1.3.2",
     "prosemirror-suggest": "^0.7.6",

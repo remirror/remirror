@@ -6,6 +6,7 @@ on:
     types: [opened, synchronize]
     branches:
       - master
+      - next # Temporarily enable
 
 env:
   CI: true

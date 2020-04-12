@@ -44,7 +44,7 @@ jobs:
         run: yarn ci
 
       - name: lint files
-        run: yarn lint
+        run: yarn lint --formatter github
 
       - name: typecheck project
         run: yarn typecheck

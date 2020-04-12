@@ -3,15 +3,13 @@ const { existsSync } = require('fs');
 const tsProjectOptions = { project: ['./tsconfig.lint.json'] };
 
 const tsProjectRules = {
-  '@typescript-eslint/prefer-nullish-coalescing': 'error',
   '@typescript-eslint/prefer-readonly': 'warn',
   '@typescript-eslint/await-thenable': 'warn',
-  '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
   '@typescript-eslint/no-unnecessary-type-arguments': 'warn',
   '@typescript-eslint/restrict-plus-operands': 'warn',
   '@typescript-eslint/no-misused-promises': 'warn',
-  '@typescript-eslint/prefer-includes': 'warn',
-  '@typescript-eslint/prefer-string-starts-ends-with': 'warn',
+  '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+  '@typescript-eslint/prefer-nullish-coalescing': 'error',
 };
 
 const schemaJsonFilePath = `${__dirname}/docs/.cache/caches/gatsby-plugin-typegen/schema.json`;
@@ -42,6 +40,8 @@ module.exports = {
     'graphql',
     'simple-import-sort',
     'eslint-comments',
+    '@getify/proper-arrows',
+    'security',
   ],
   extends: [
     'eslint:recommended',
@@ -55,6 +55,7 @@ module.exports = {
     'plugin:jest-formatting/strict',
     'plugin:unicorn/recommended',
     'plugin:eslint-comments/recommended',
+    'plugin:security/recommended',
   ],
 
   parserOptions: {
@@ -77,55 +78,30 @@ module.exports = {
     es6: true,
   },
   rules: {
-    'eslint-comments/no-unused-disable': 'error',
     ...graphqlRules,
-    eqeqeq: ['error', 'always', { null: 'ignore' }],
-    'prefer-exponentiation-operator': 'error',
 
-    'unicorn/filename-case': ['error', { case: 'kebabCase' }],
-    'unicorn/no-nested-ternary': 'off',
-
-    'unicorn/prevent-abbreviations': [
-      'off',
-      {
-        replacements: {
-          doc: false,
-          prop: false,
-          props: false,
-          params: false,
-        },
-      },
-    ],
-    'default-case': 'warn',
-
-    'prefer-template': 'warn',
-    'guard-for-in': 'warn',
-
-    '@typescript-eslint/array-type': [
+    '@getify/proper-arrows/where': [
       'error',
-      { default: 'array-simple', readonly: 'array-simple' },
+      { global: true, export: true, trivial: true, property: false },
     ],
-    '@typescript-eslint/camelcase': ['warn', { ignoreDestructuring: true, properties: 'never' }],
-    '@typescript-eslint/no-empty-function': 'off', // Empty functions/methods are often desired
-    '@typescript-eslint/no-empty-interface': 'off', // Empty interfaces are useful for future planning
-    '@typescript-eslint/no-var-requires': 'off', // We use 'require(..)' throughout
 
+    'eslint-comments/no-unused-disable': 'error',
+
+    'unicorn/no-nested-ternary': 'off',
+    'unicorn/prevent-abbreviations': 'off', // Too aggressive.
+    'unicorn/filename-case': ['error', { case: 'kebabCase' }],
+
+    'jest/prefer-spy-on': 'warn',
+    'jest/no-large-snapshots': ['warn', { maxSize: 12 }],
     'jest/no-focused-tests': 'error',
     'jest/no-identical-title': 'error',
     'jest/no-duplicate-hooks': 'error',
     'jest/no-if': 'error',
     'jest/no-test-prefixes': 'error',
-    'jest/prefer-spy-on': 'warn',
     'jest/no-test-callback': 'error',
-    'jest/no-large-snapshots': ['warn', { maxSize: 12 }],
-
-    'react/prop-types': 'off', // Because we're using TypeScript
-
-    'react-hooks/exhaustive-deps': 'error',
-    'react-hooks/rules-of-hooks': 'error',
 
     'import/no-deprecated': 'warn',
-    'import/max-dependencies': ['warn', { max: 10 }],
+    'import/max-dependencies': ['warn', { max: 20 }],
     'import/no-default-export': 'warn',
     'import/no-mutable-exports': 'error',
     'import/first': 'error',
@@ -164,58 +140,76 @@ module.exports = {
       },
     ],
 
-    // ESLint rules (those without a '/' in) come after here
-
-    'no-return-assign': ['error', 'except-parens'],
     '@typescript-eslint/no-unused-expressions': [
       'error',
       { allowTernary: true, allowShortCircuit: true },
     ],
-    'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
 
+    '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-namespace': 'off',
-
+    '@typescript-eslint/no-unused-vars': ['off'],
+    '@typescript-eslint/camelcase': ['warn', { ignoreDestructuring: true, properties: 'never' }],
     '@typescript-eslint/no-non-null-assertion': 'warn',
     '@typescript-eslint/no-inferrable-types': 'warn',
+    '@typescript-eslint/ban-types': 'warn',
+    '@typescript-eslint/no-use-before-define': ['warn', { typedefs: false }],
     '@typescript-eslint/member-ordering': [
       'warn',
       { default: ['signature', 'static-field', 'static-method', 'field', 'constructor', 'method'] },
     ],
-
-    '@typescript-eslint/no-use-before-define': ['warn', { typedefs: false }],
-    '@typescript-eslint/no-unused-vars': ['off'],
+    '@typescript-eslint/method-signature-style': 'error',
+    '@typescript-eslint/prefer-function-type': 'error',
     '@typescript-eslint/no-unused-vars-experimental': [
       'error',
       { ignoreArgsIfArgsAfterAreUsed: true },
     ],
-    '@typescript-eslint/ban-types': 'warn',
+    '@typescript-eslint/array-type': [
+      'error',
+      { default: 'array-simple', readonly: 'array-simple' },
+    ],
 
+    // React Rules
+
+    'react/no-multi-comp': 'off',
+    'react/prop-types': 'off',
     'react/display-name': 'warn',
     'react/no-unescaped-entities': 'error',
     'react/no-unused-state': 'error',
     'react/no-children-prop': 'error',
-    'react/no-multi-comp': 'off', // Might want to enable this later
 
+    // React Hooks
+
+    'react-hooks/exhaustive-deps': 'error',
+    'react-hooks/rules-of-hooks': 'error',
+
+    // Built in eslint rules
+
+    'no-empty': 'warn',
+    'no-useless-escape': 'warn',
+    'default-case': 'warn',
+    'prefer-template': 'warn',
+    'guard-for-in': 'warn',
+    'prefer-object-spread': 'warn',
+    curly: ['warn', 'all'],
     'no-invalid-regexp': 'error',
     'no-multi-str': 'error',
     'no-constant-condition': 'error',
     'no-extra-boolean-cast': 'error',
-    'no-empty': 'warn', // Later, put a `/* noop */` comment in empty blocks to explain why
-    'no-useless-escape': 'warn',
-    radix: 'warn',
-    'prefer-object-spread': 'warn',
-    curly: ['warn', 'all'],
+    radix: 'error',
+    'no-return-assign': ['error', 'except-parens'],
+    eqeqeq: ['error', 'always', { null: 'ignore' }],
+    'prefer-exponentiation-operator': 'error',
+    'prefer-arrow-callback': ['error', { allowNamedFunctions: true }],
   },
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
       rules: {
         ...tsProjectRules,
-        '@typescript-eslint/no-extra-non-null-assertion': ['error'],
-        '@typescript-eslint/prefer-optional-chain': ['error'],
-        '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
         '@typescript-eslint/explicit-member-accessibility': [
           'warn',
           {
@@ -229,16 +223,15 @@ module.exports = {
             },
           },
         ],
-        '@typescript-eslint/no-var-requires': 'error',
         '@typescript-eslint/restrict-template-expressions': [
           'warn',
           { allowNumber: true, allowBoolean: true },
         ],
+        '@typescript-eslint/no-extra-non-null-assertion': ['error'],
+        '@typescript-eslint/prefer-optional-chain': ['error'],
+        '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
         '@typescript-eslint/no-dynamic-delete': ['error'],
-        '@typescript-eslint/camelcase': [
-          'warn',
-          { ignoreDestructuring: true, properties: 'never' },
-        ],
+        '@typescript-eslint/no-var-requires': 'error',
       },
     },
     {
