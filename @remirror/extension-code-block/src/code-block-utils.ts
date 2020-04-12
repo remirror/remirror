@@ -198,19 +198,12 @@ const PRELOADED_LANGUAGES = [markup, clike, css, js];
  * The list of strings that are recognised language names based on the the configured
  * supported languages.
  */
-export const getLanguageNamesAndAliases = (supportedLanguages: RefractorSyntax[]) => {
+export const getLanguageNamesAndAliases = (supportedLanguages: RefractorSyntax[]): string[] => {
   return uniqueArray(
     flattenArray(
       [...PRELOADED_LANGUAGES, ...supportedLanguages].map(({ name, aliases }) => [name, ...aliases]),
     ),
   );
-};
-
-/**
- * Returns true if the language is supported.
- */
-export const isSupportedLanguage = (language: string, supportedLanguages: RefractorSyntax[]) => {
-  return getLanguageNamesAndAliases(supportedLanguages).includes(language);
 };
 
 interface GetLanguageParams {
@@ -233,8 +226,17 @@ interface GetLanguageParams {
 /**
  * Get the language from user input.
  */
-export const getLanguage = ({ language, supportedLanguages, fallback }: GetLanguageParams) =>
-  !isSupportedLanguage(language, supportedLanguages) ? fallback : language;
+export const getLanguage = ({ language, supportedLanguages, fallback }: GetLanguageParams): string => {
+  if (!language) {
+    return fallback;
+  }
+  for (const name of getLanguageNamesAndAliases(supportedLanguages)) {
+    if (name.toLowerCase() === language.toLowerCase()) {
+      return name;
+    }
+  }
+  return fallback;
+};
 
 interface FormatCodeBlockFactoryParams
   extends NodeTypeParams,
@@ -306,18 +308,4 @@ export const formatCodeBlockFactory = ({
   }
 
   return true;
-};
-
-/**
- * Retrieve the supported language names based on configuration.
- */
-export const getSupportedLanguagesMap = (supportedLanguages: RefractorSyntax[]) => {
-  const obj: Record<string, string> = Object.create(null);
-  for (const { name, aliases } of [...PRELOADED_LANGUAGES, ...supportedLanguages]) {
-    obj[name] = name;
-    aliases.forEach(alias => {
-      obj[alias] = name;
-    });
-  }
-  return obj;
 };
