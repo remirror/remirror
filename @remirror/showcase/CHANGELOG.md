@@ -1,5 +1,15 @@
 # @remirror/showcase
 
+## 0.12.0
+
+### Patch Changes
+
+- Updated dependencies [a43b0fd5]
+- Updated dependencies [44f85e79]
+  - @remirror/extension-code-block@0.12.0
+  - @remirror/editor-markdown@0.12.0
+  - @remirror/editor-wysiwyg@0.12.0
+
 ## 0.11.0
 
 ### Patch Changes
