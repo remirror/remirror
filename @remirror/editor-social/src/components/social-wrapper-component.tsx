@@ -42,7 +42,7 @@ interface SocialEditorComponentProps
   activeMatcher: MatchName | undefined;
 
   /**
-   * Whether or not suggestions have been hidden by pressing the escape key
+   * Whether or not suggesters have been hidden by pressing the escape key
    */
   hideSuggestions: boolean;
 
@@ -55,7 +55,7 @@ interface SocialEditorComponentProps
 /**
  * This is the internal editor component which relies on being wrapped within the remirror context.
  *
- * It renders suggestions, the editor, emoji picker and more to com.
+ * It renders suggesters, the editor, emoji picker and more to com.
  */
 export const SocialEditorComponent: FC<SocialEditorComponentProps> = ({
   users,

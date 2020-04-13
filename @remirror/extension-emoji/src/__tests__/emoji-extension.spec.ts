@@ -87,8 +87,8 @@ describe('inputRules', () => {
   });
 });
 
-describe('suggestions', () => {
-  it('creates suggestions from the defaultList first', () => {
+describe('suggesters', () => {
+  it('creates suggesters from the defaultList first', () => {
     const {
       nodes: { doc, p },
       add,

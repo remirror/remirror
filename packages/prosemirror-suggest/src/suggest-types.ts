@@ -256,7 +256,7 @@ export interface SuggestIgnoreParameter {
    * - The user presses the `escape` key to exit your suggestion dropdown.
    * - The user continues typing without selecting any of the options for the
    *   selection drop down.
-   * - The user clicks outside of the suggestions dropdown.
+   * - The user clicks outside of the suggesters dropdown.
    *
    * ```ts
    * const suggester = {
@@ -361,7 +361,7 @@ export interface SuggestStateMatchParameter {
  */
 export interface SuggestMarkParameter {
   /**
-   * When managing suggestions with marks it is possible to remove a mark
+   * When managing suggesters with marks it is possible to remove a mark
    * without the change reflecting in the prosemirror state. This method should
    * be used when removing a suggestion if you are using prosemirror `Marks` to
    * identify the suggestion.

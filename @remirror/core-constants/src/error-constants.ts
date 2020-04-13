@@ -18,9 +18,9 @@ export enum ErrorConstant {
   UNKNOWN = 'RMR0001',
 
   /**
-   * You can only pass `extraAttributes` to a node extension or a mark extension.
+   * The arguments passed to the command method were invalid.
    */
-  EXTRA_ATTRIBUTES = 'RMR0002',
+  INVALID_COMMAND_ARGUMENTS = 'RMR0002',
 
   /**
    * This is a custom error possibly thrown by an external library.

@@ -41,12 +41,12 @@ export type EmojiSuggestionExitHandler = (params: SuggestExitHandlerParameter) =
 
 export interface EmojiExtensionOptions extends BaseExtensionSettings {
   /**
-   * The character which will trigger the emoji suggestions popup.
+   * The character which will trigger the emoji suggesters popup.
    */
   suggestionCharacter?: string;
 
   /**
-   * Key bindings for suggestions.
+   * Key bindings for suggesters.
    */
   suggestionKeyBindings?: EmojiSuggestionKeyBindings;
 

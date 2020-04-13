@@ -38,12 +38,12 @@ export interface OptionalMentionExtensionParameter {
 export type MentionExtensionAttributes = ProsemirrorAttributes<
   OptionalMentionExtensionParameter & {
     /**
-     * A unique identifier for the suggestions node
+     * A unique identifier for the suggesters node
      */
     id: string;
 
     /**
-     * The text to be placed within the suggestions node
+     * The text to be placed within the suggesters node
      */
     label: string;
   }
@@ -72,9 +72,25 @@ export interface MentionExtensionMatcher
 }
 
 /**
- * The options passed into a mention
+ * The static settings passed into a mention
  */
-export interface MentionExtensionSettings
+export interface MentionExtensionSettings {
+  /**
+   * Provide a custom tag for the mention
+   */
+  mentionTag?: string;
+
+  /**
+   * Provide the custom matchers that will be used to match mention text in the
+   * editor.
+   */
+  matchers: MentionExtensionMatcher[];
+}
+
+/**
+ * The dynamic properties used to change the behaviour of the mentions created.
+ */
+export interface MentionExtensionProperties
   extends Pick<
     Suggestion<MentionExtensionSuggestCommand>,
     | 'suggestTag'
@@ -84,17 +100,7 @@ export interface MentionExtensionSettings
     | 'onCharacterEntry'
     | 'keyBindings'
     | 'appendText'
-  > {
-  /**
-   * Provide a custom matcher with options
-   */
-  matchers: MentionExtensionMatcher[];
-
-  /**
-   * Provide a custom tag for the mention
-   */
-  mentionTag?: string;
-}
+  > {}
 
 export type SuggestionCommandAttributes = ProsemirrorAttributes<
   Partial<Pick<MentionExtensionAttributes, 'id' | 'label' | 'appendText' | 'replacementType'>>

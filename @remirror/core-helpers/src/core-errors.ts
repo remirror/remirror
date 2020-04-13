@@ -15,43 +15,49 @@ let errorMessageMap: Partial<Record<ErrorConstant, string>> = {};
 // This will be removed in a production environment.
 if (process.env.NODE !== 'production') {
   errorMessageMap = {
-    RMR0000: 'Production error. No details available.',
-    RMR0001: "An error occurred but we're not quite sure why. 🧐",
-    RMR0002: 'You can only pass `extraAttributes` to a node extension or a mark extension.',
-    RMR0003: 'This is a custom error, possibly thrown by an external library.',
-    RMR0004: 'An error occurred in a function called from the `@remirror/core-helpers` library.',
-    RMR0005: 'Mutation of immutable value detected.',
-    RMR0006: 'This is an error which should not occur and is internal to the remirror codebase.',
-    RMR0007: 'Your editor is missing a required extension.',
-    RMR0008:
+    [ErrorConstant.PROD]: 'Production error. No details available.',
+    [ErrorConstant.UNKNOWN]: "An error occurred but we're not quite sure why. 🧐",
+    [ErrorConstant.INVALID_COMMAND_ARGUMENTS]:
+      'The arguments passed to the command method were invalid.',
+    [ErrorConstant.CUSTOM]: 'This is a custom error, possibly thrown by an external library.',
+    [ErrorConstant.CORE_HELPERS]:
+      'An error occurred in a function called from the `@remirror/core-helpers` library.',
+    [ErrorConstant.MUTATION]: 'Mutation of immutable value detected.',
+    [ErrorConstant.INTERNAL]:
+      'This is an error which should not occur and is internal to the remirror codebase.',
+    [ErrorConstant.MISSING_REQUIRED_EXTENSION]: 'Your editor is missing a required extension.',
+    [ErrorConstant.MANAGER_PHASE_ERROR]:
       'Called a method event at the wrong time. Please make sure getter functions are only called with within the scope of the returned functions. They should not be called in the outer scope of your method.',
 
-    RMR0010:
+    [ErrorConstant.INVALID_PRESET_EXTENSION]:
       'You requested an invalid extension from the preset. Please check the `createExtensions` return method is returning an extension with the requested constructor.',
-    RMR0011:
+    [ErrorConstant.INVALID_MANAGER_ARGUMENTS]:
       'Invalid value(s) passed into `Manager` constructor. Only `Presets` and `Extensions` are supported.',
-    RMR0012:
+    [ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE]:
       'The commands method which is passed into the `createCommands` function should only be called within the created command function otherwise it will not have access to the other commands.',
-    RMR0013: 'You requested an invalid extension from the manager.',
+    [ErrorConstant.INVALID_MANAGER_EXTENSION]:
+      'You requested an invalid extension from the manager.',
+    [ErrorConstant.INVALID_MANAGER_PRESET]: '',
   };
 }
 
 /**
  * Checks whether the passed code is an `ErrorConstant`.
  */
-const isErrorConstant = (code: unknown): code is ErrorConstant =>
-  isString(code) && includes(values(ErrorConstant), code);
+function isErrorConstant(code: unknown): code is ErrorConstant {
+  return isString(code) && includes(values(ErrorConstant), code);
+}
 
 /**
  * Create an error message from the provided code.
  */
-const createErrorMessage = (code: ErrorConstant, extraMessage?: string) => {
+function createErrorMessage(code: ErrorConstant, extraMessage?: string) {
   const message = errorMessageMap[code];
   const prefix = message ? `${message}\n` : '';
   const customMessage = extraMessage ? `${extraMessage}\n` : '';
 
   return `${prefix}${customMessage}For more information visit ${ERROR_INFORMATION_URL}#${code}`;
-};
+}
 
 /**
  * This marks the error as a remirror specific error, with enhanced stack

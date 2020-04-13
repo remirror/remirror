@@ -1,3 +1,4 @@
+import mergeDescriptors from 'merge-descriptors';
 import { Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
@@ -31,7 +32,7 @@ import {
 import { findFromSuggestions, findReason, runKeyBindings } from './suggest-utils';
 
 /**
- * The suggestion state which manages the list of suggestions.
+ * The suggestion state which manages the list of suggesters.
  */
 export class SuggestState<GSchema extends EditorSchema = any> {
   /**
@@ -42,7 +43,7 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   }
 
   /**
-   * The suggesters that have been registered for the suggestions plugin.
+   * The suggesters that have been registered for the suggesters plugin.
    */
   private readonly suggesters: Array<Required<Suggestion>>;
 
@@ -82,28 +83,6 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   private removed = false;
 
   /**
-   * Sets the removed property to be true. This is passed as a property to the
-   * `createCommand` option.
-   */
-  private readonly setRemovedTrue = () => {
-    this.removed = true;
-  };
-
-  /**
-   * The actions created by the extension.
-   */
-  private getCommand(match: SuggestStateMatch, reason?: ExitReason | ChangeReason) {
-    return match.suggester.createCommand({
-      match,
-      reason,
-      view: this.view,
-      setMarkRemoved: this.setRemovedTrue,
-      addIgnored: this.addIgnored,
-      clearIgnored: this.clearIgnored,
-    });
-  }
-
-  /**
    * Returns the current active suggestion state field if one exists
    */
   get match(): Readonly<SuggestStateMatch> | undefined {
@@ -132,8 +111,14 @@ export class SuggestState<GSchema extends EditorSchema = any> {
         );
       }
 
+      const clone = { ...DEFAULT_SUGGESTER, ...suggester };
+
+      // Preserve any descriptors (getters and setters)
+      mergeDescriptors(clone, suggester);
+
       names.push(suggester.name);
-      return { ...DEFAULT_SUGGESTER, ...suggester };
+
+      return clone;
     });
   }
 
@@ -143,6 +128,28 @@ export class SuggestState<GSchema extends EditorSchema = any> {
   public init(view: EditorView) {
     this.view = view;
     return this;
+  }
+
+  /**
+   * Sets the removed property to be true. This is passed as a property to the
+   * `createCommand` option.
+   */
+  private readonly setRemovedTrue = () => {
+    this.removed = true;
+  };
+
+  /**
+   * The actions created by the extension.
+   */
+  private getCommand(match: SuggestStateMatch, reason?: ExitReason | ChangeReason) {
+    return match.suggester.createCommand({
+      match,
+      reason,
+      view: this.view,
+      setMarkRemoved: this.setRemovedTrue,
+      addIgnored: this.addIgnored,
+      clearIgnored: this.clearIgnored,
+    });
   }
 
   /**

@@ -78,7 +78,7 @@ interface BaseMentionState {
 interface NameParameter<GName extends string> {
   /**
    * The name of the currently active suggestion.
-   * This is the name passed into the suggestionsMatcher config object.
+   * This is the name passed into the suggestersMatcher config object.
    */
   name: GName;
 }

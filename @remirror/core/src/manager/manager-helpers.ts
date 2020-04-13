@@ -127,7 +127,7 @@ export function transformCommands<ExtensionUnion extends AnyExtension>(
   }: {
     command: ExtensionCommandFunction;
     shouldDispatch?: boolean;
-  }) => (...spread: unknown[]) => {
+  }) => (...args: unknown[]) => {
     let dispatch: DispatchFunction | undefined = undefined;
 
     if (shouldDispatch) {
@@ -135,7 +135,7 @@ export function transformCommands<ExtensionUnion extends AnyExtension>(
       view.focus(); // TODO should this be configurable?
     }
 
-    return command(...spread)({ state: getState(), dispatch, view });
+    return command(...args)({ state: getState(), dispatch, view });
   };
 
   const chainedFactory = (command: ExtensionCommandFunction) => (...spread: unknown[]) => {

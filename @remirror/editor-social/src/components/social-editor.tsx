@@ -164,7 +164,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     },
 
     /**
-     * Hide the suggestions when the escape key is pressed.
+     * Hide the suggesters when the escape key is pressed.
      */
     Escape: ({ suggester: { name } }) => {
       const matches = name === 'at' ? this.users : this.tags;
@@ -308,7 +308,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
   };
 
   /**
-   * Create the arrow bindings for the emoji suggestions.
+   * Create the arrow bindings for the emoji suggesters.
    */
   private readonly createEmojiArrowBindings = (direction: 'up' | 'down') => () => {
     const { activeEmojiIndex: previousIndex, hideMentionSuggestions, emojiList } = this.state;
@@ -352,7 +352,7 @@ export class SocialEditor extends PureComponent<SocialEditorProps, State> {
     },
 
     /**
-     * Hide the suggestions when the escape key is pressed.
+     * Hide the suggesters when the escape key is pressed.
      */
     Escape: () => {
       const { emojiList } = this.state;

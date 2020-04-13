@@ -6,7 +6,7 @@
  * ## The problem
  *
  * You want to create a plugin for your prosemirror editor that responds to an
- * activation character to create suggestions or options or actions for the
+ * activation character to create suggesters or options or actions for the
  * user. Doing this from scratch can be difficult.
  *
  * ## This solution
@@ -33,7 +33,7 @@
  * ## Getting Started
  *
  * `prosemirror-suggest` uses configuration objects called `Suggestion`'s to
- * define the behaviour of the suggestions you create. By calling the exported
+ * define the behaviour of the suggesters you create. By calling the exported
  * `suggest` method with all required `Suggestion`'s the functionality is added
  * to the editor in one plugin.
  *
@@ -97,7 +97,7 @@
  *   createCommand: ({ match, view }) => {
  *     return (emoji,skinVariation) => {
  *       if (!emoji) {
- *         throw new Error('An emoji is required when calling the emoji suggestions command');
+ *         throw new Error('An emoji is required when calling the emoji suggesters command');
  *       }
  *
  *       const tr = view.state.tr; const { from, end: to } = match.range;

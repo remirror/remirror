@@ -15,7 +15,7 @@ interface EmojiSuggestionsProps extends DataParameter<EmojiObject> {
 }
 
 /**
- * Render the suggestions for tagging.
+ * Render the suggesters for tagging.
  */
 export const EmojiSuggestions: FunctionComponent<EmojiSuggestionsProps> = ({
   data,
@@ -73,7 +73,7 @@ export const EmojiSuggestions: FunctionComponent<EmojiSuggestionsProps> = ({
               whiteSpace: 'nowrap',
             })}
             {...getItemProps({
-              className: `suggestions-item${isHighlighted ? ' active' : ''}`,
+              className: `suggesters-item${isHighlighted ? ' active' : ''}`,
               onClick: () => {
                 command(emoji);
                 view.focus();

@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import objectOmit from 'object.omit';
 
 import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
-import { Predicate, RemirrorIdentifierShape } from '@remirror/core-types';
+import { Nullable, Predicate, RemirrorIdentifierShape } from '@remirror/core-types';
 
 type AnyConstructor<GType = unknown> = new (...args: any[]) => GType;
 type AnyFunction<GType = any> = (...args: any[]) => GType;
@@ -439,9 +439,9 @@ export const isIdentifierOfType = (value: RemirrorIdentifierShape, type: Remirro
  * @param str - the string to capitalize.
  * @public
  */
-export const capitalize = (string: string) => {
+export function capitalize(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
-};
+}
 
 /**
  * Removes leading and trailing whitespace from a string.
@@ -450,9 +450,9 @@ export const capitalize = (string: string) => {
  *
  * @public
  */
-export const trim = (string: string) => {
+export function trim(string: string) {
   return string.replace(/^ +| +$/g, '');
-};
+}
 
 /**
  * Trim and conditionally capitalize string values.
@@ -461,10 +461,10 @@ export const trim = (string: string) => {
  *
  * @public
  */
-export const format = (string: string) => {
+export function format(string: string) {
   string = trim(string);
   return /^(?:webOS|i(?:OS|P))/.test(string) ? string : capitalize(string);
-};
+}
 
 /**
  * Calls a function if defined and provides compile time type checking for the
@@ -473,14 +473,14 @@ export const format = (string: string) => {
  * @param fn - the function to call if it exists
  * @param args - the rest of the parameters with types
  */
-export const callIfDefined = <GFunc extends AnyFunction>(
-  fn: GFunc | unknown,
-  ...arguments_: Parameters<GFunc>
-) => {
+export function callIfDefined<Method extends AnyFunction>(
+  fn: Nullable<Method>,
+  ...args: Parameters<Method>
+) {
   if (isFunction(fn)) {
-    fn(...arguments_);
+    fn(...args);
   }
-};
+}
 
 /**
  * Finds all the regex matches for a string
@@ -490,7 +490,7 @@ export const callIfDefined = <GFunc extends AnyFunction>(
  *
  * @public
  */
-export const findMatches = (text: string, regexp: RegExp) => {
+export function findMatches(text: string, regexp: RegExp) {
   const results: RegExpExecArray[] = [];
   const flags = regexp.flags;
   let match: RegExpExecArray | null;
@@ -508,7 +508,7 @@ export const findMatches = (text: string, regexp: RegExp) => {
 
   regexp.lastIndex = 0;
   return results;
-};
+}
 
 /**
  * A utility function to clean up the Operating System name.
@@ -520,7 +520,7 @@ export const findMatches = (text: string, regexp: RegExp) => {
  *
  * @public
  */
-export const cleanupOS = (os: string, pattern?: string, label?: string) => {
+export function cleanupOS(os: string, pattern?: string, label?: string) {
   if (pattern && label) {
     os = os.replace(new RegExp(pattern, 'i'), label);
   }
@@ -543,21 +543,21 @@ export const cleanupOS = (os: string, pattern?: string, label?: string) => {
   );
 
   return value;
-};
+}
 
 /**
  * A utility function to check whether the current browser is running on the
  * android platform.
  * @public
  */
-export const isAndroidOS = () => {
+export function isAndroidOS() {
   const ua = navigator.userAgent;
   const match = new RegExp('\\b' + 'Android' + '(?:/[\\d.]+|[ \\w.]*)', 'i').exec(ua);
   if (!match) {
     return false;
   }
   return cleanupOS(match[0], 'Android', 'Android').includes('Android');
-};
+}
 
 /**
  * Generate a random float between min and max. If only one parameter is
@@ -568,13 +568,14 @@ export const isAndroidOS = () => {
  *
  * @public
  */
-export const randomFloat = (min: number, max?: number) => {
+export function randomFloat(min: number, max?: number) {
   if (!max) {
     max = min;
     min = 0;
   }
+
   return Math.random() * (max - min + 1) + min;
-};
+}
 
 /**
  * Generate a random integer between min and max. If only one parameter is
@@ -585,7 +586,9 @@ export const randomFloat = (min: number, max?: number) => {
  *
  * @public
  */
-export const randomInt = (min: number, max?: number) => Math.floor(randomFloat(min, max));
+export function randomInt(min: number, max?: number) {
+  return Math.floor(randomFloat(min, max));
+}
 
 /**
  * Converts a string, including strings in camelCase or snake_case, into Start
@@ -598,12 +601,12 @@ export const randomInt = (min: number, max?: number) => Math.floor(randomFloat(m
  *
  * @param str - the string to examine
  */
-export const startCase = (string: string) => {
+export function startCase(string: string) {
   return string
     .replace(/_/g, ' ')
     .replace(/([a-z])([A-Z])/g, (_, $1: string, $2: string) => `${$1} ${$2}`)
     .replace(/(\s|^)(\w)/g, (_, $1: string, $2: string) => `${$1}${$2.toUpperCase()}`);
-};
+}
 
 const wordSeparators = /[\s!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~\u2000-\u206F\u2E00-\u2E7F\-]+/;
 const capitals = /[A-Z\u00C0-\u00D6\u00D9-\u00DD]/g;
@@ -622,7 +625,7 @@ const capitals = /[A-Z\u00C0-\u00D6\u00D9-\u00DD]/g;
  * brown# fox'); // 'the-quick-brown-fox' kebabCase('theQUICKBrownFox'); //
  * 'the-q-u-i-c-k-brown-fox'
  */
-export const kebabCase = (string: string) => {
+export function kebabCase(string: string) {
   // replace capitals with space + lower case equivalent for later parsing
   return string
     .replace(capitals, (match) => {
@@ -631,7 +634,7 @@ export const kebabCase = (string: string) => {
     .trim()
     .split(wordSeparators)
     .join('-');
-};
+}
 
 interface UniqueIdParameter {
   /**
@@ -657,9 +660,9 @@ interface UniqueIdParameter {
  *
  * @public
  */
-export const uniqueId = ({ prefix = '', size }: UniqueIdParameter = { prefix: '' }) => {
+export function uniqueId({ prefix = '', size }: UniqueIdParameter = { prefix: '' }) {
   return `${prefix}${nanoid(size)}`;
-};
+}
 
 /**
  * Takes a number of elements from the provided array starting from the
@@ -670,17 +673,19 @@ export const uniqueId = ({ prefix = '', size }: UniqueIdParameter = { prefix: ''
  *
  * @public
  */
-export const take = <GArray extends any[]>(array: GArray, number: number) => {
+export function take<GArray extends any[]>(array: GArray, number: number) {
   number = Math.max(Math.min(0, number), number);
   return array.slice(0, number);
-};
+}
 
 /**
  * Alias for excluding properties from an object
  */
 export const omit = objectOmit;
 
-export const omitUndefined = (object: PlainObject) => omit(object, (value) => !isUndefined(value));
+export function omitUndefined(object: PlainObject) {
+  return omit(object, (value) => !isUndefined(value));
+}
 
 /**
  * Clones a plain object using object spread notation
@@ -689,12 +694,25 @@ export const omitUndefined = (object: PlainObject) => omit(object, (value) => !i
  *
  * @public
  */
-export const clone = <GObject extends object>(value: GObject) => {
+export function clone<Type extends object>(value: Type): Type {
   if (!isPlainObject(value)) {
     throw new Error('An invalid value was passed into this clone utility. Expected a plain object');
   }
+
   return { ...value };
-};
+}
+
+/**
+ * Shallow clone an object while preserving it's getters and setters. This is a
+ * an alternative to the spread clone.
+ */
+export function shallowClone<Type extends object>(value: Type): Type {
+  const clone = Object.create(Object.getPrototypeOf(value));
+  const descriptors = Object.getOwnPropertyDescriptors(value);
+  Object.defineProperties(clone, descriptors);
+
+  return clone;
+}
 
 /**
  * Alias for fast deep equal

@@ -144,8 +144,8 @@ describe('Social Showcase', () => {
         await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe('@ab');
       });
 
-      it('allows clicking on suggestions', async () => {
-        const selector = '.suggestions-item.active';
+      it('allows clicking on suggesters', async () => {
+        const selector = '.suggesters-item.active';
         await $editor.type('hello @alex');
         await page.click(selector);
         await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe(
@@ -154,7 +154,7 @@ describe('Social Showcase', () => {
         await expect(textContent(EDITOR_CLASS_SELECTOR)).resolves.toBe('hello @lazymeercat594 ');
       });
 
-      it('allows arrowing between suggestions', async () => {
+      it('allows arrowing between suggesters', async () => {
         await $editor.type('hello  1');
         await press({ key: 'ArrowLeft', count: 2 });
         await $editor.type('@ab');
@@ -162,7 +162,7 @@ describe('Social Showcase', () => {
         await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-at'))).resolves.toBe('@ab');
       });
 
-      it('allows arrowing between suggestions and breaking up the suggestion', async () => {
+      it('allows arrowing between suggesters and breaking up the suggestion', async () => {
         await $editor.type('hello  1');
         await press({ key: 'ArrowLeft' });
         await $editor.type('@ab ');
@@ -229,8 +229,8 @@ describe('Social Showcase', () => {
         await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-tag'))).resolves.toBe('#T');
       });
 
-      it('allows clicking on suggestions', async () => {
-        const selector = '.suggestions-item.active';
+      it('allows clicking on suggesters', async () => {
+        const selector = '.suggesters-item.active';
         await $editor.type('My #T');
         await page.click(selector);
         await expect(textContent(sel(EDITOR_CLASS_SELECTOR, '.mention-tag'))).resolves.toBe(

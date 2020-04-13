@@ -29,14 +29,16 @@ import {
 /**
  * Small utility method for creating a match with the reason property available.
  */
-const createMatchWithReason = <GReason>({
-  match,
-  reason,
-}: SuggestStateMatchParameter & ReasonParameter<GReason>) => ({
-  ...match,
-  reason,
-});
+function createMatchWithReason<GReason>(
+  parameter: SuggestStateMatchParameter & ReasonParameter<GReason>,
+) {
+  const { match, reason } = parameter;
 
+  return {
+    ...match,
+    reason,
+  };
+}
 /**
  * Checks to see if the text before the matching character is a valid prefix.
  *
@@ -107,12 +109,12 @@ const findPosition = ({ text, regexp, $pos, char, suggester }: FindPositionParam
 
 /**
  * Checks if any matches exist at the current selection for so that the
- * suggestions be activated or deactivated.
+ * suggesters be activated or deactivated.
  */
-const findMatch = ({
+function findMatch({
   $pos,
   suggester,
-}: ResolvedPosParameter & SuggestionParameter): SuggestStateMatch | undefined => {
+}: ResolvedPosParameter & SuggestionParameter): SuggestStateMatch | undefined {
   const { char, name, startOfLine, supportedCharacters, matchOffset } = suggester;
 
   // Create the regular expression to match the text against
@@ -130,7 +132,7 @@ const findMatch = ({
     char,
     name,
   });
-};
+}
 
 /**
  * Checks the provided match and generates a new match. This is useful for
@@ -389,10 +391,10 @@ export const findReason = ({
 /**
  * Find a match for the provided matchers
  */
-export const findFromSuggestions = ({
+export function findFromSuggestions({
   suggesters,
   $pos,
-}: FindFromSuggestionsParameter): SuggestStateMatch | undefined => {
+}: FindFromSuggestionsParameter): SuggestStateMatch | undefined {
   // Find the first match and break when done
   for (const suggester of suggesters) {
     try {
@@ -406,4 +408,4 @@ export const findFromSuggestions = ({
   }
 
   return undefined;
-};
+}

@@ -52,7 +52,7 @@ interface CreateOnClickMethodFactoryParameter extends MentionGetterParameter {
 }
 
 /**
- * This method helps create the onclick factory method used by both types of suggestions supported
+ * This method helps create the onclick factory method used by both types of suggesters supported
  */
 export const createOnClickMethodFactory = ({
   getMention,

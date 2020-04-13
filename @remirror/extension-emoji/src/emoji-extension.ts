@@ -154,7 +154,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
     };
   }
 
-  public suggestions({
+  public suggesters({
     getCommands: getActions,
   }: ManagerParameter): Suggestion<EmojiSuggestCommand> {
     const {
@@ -187,7 +187,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
         return (emoji, skinVariation) => {
           if (isNullOrUndefined(emoji)) {
             throw new Error(
-              'An emoji object is required when calling the emoji suggestions command',
+              'An emoji object is required when calling the emoji suggesters command',
             );
           }
 

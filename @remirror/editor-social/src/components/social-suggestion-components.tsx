@@ -113,7 +113,7 @@ const AtUsername = forwardRef<HTMLSpanElement, SpanProps>((props, ref) => {
 AtUsername.displayName = 'AtUsername';
 
 /**
- * Render the suggestions for mentioning a user.
+ * Render the suggesters for mentioning a user.
  */
 export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
   getMention,
@@ -138,7 +138,7 @@ export const AtSuggestions: FunctionComponent<UserSuggestionsProps> = ({
         return (
           <ItemWrapper
             active={user.active}
-            className={`suggestions-item${user.active ? ' active' : ''}`}
+            className={`suggesters-item${user.active ? ' active' : ''}`}
             key={user.username}
             aria-selected={user.active ? 'true' : 'false'}
             aria-haspopup='false'
@@ -177,7 +177,7 @@ const HashTagText = forwardRef<HTMLSpanElement, SpanProps>((props, ref) => {
 HashTagText.displayName = 'HashTagText';
 
 /**
- * Render the suggestions for tagging.
+ * Render the suggesters for tagging.
  */
 export const TagSuggestions: FunctionComponent<TagSuggestionsProps> = ({
   getMention,
@@ -201,7 +201,7 @@ export const TagSuggestions: FunctionComponent<TagSuggestionsProps> = ({
       {data.map(({ tag, active }) => (
         <ItemWrapper
           active={active}
-          className={`suggestions-item${active ? ' active' : ''}`}
+          className={`suggesters-item${active ? ' active' : ''}`}
           key={tag}
           aria-selected={active ? 'true' : 'false'}
           aria-haspopup='false'

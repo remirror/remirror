@@ -23,17 +23,17 @@ const SuggestionExtension = ExtensionFactory.plain({
    * Ensure that all ssr transformers are run.
    */
   onInitialize({ getParameter, addPlugins, managerSettings }) {
-    const suggestions: Suggestion[] = [];
+    const suggesters: Suggestion[] = [];
 
     return {
       forEachExtension: (extension) => {
         if (
           // Manager settings excluded this from running
-          managerSettings.exclude?.suggestions ||
+          managerSettings.exclude?.suggesters ||
           // Method doesn't exist
           !extension.parameter.createSuggestions ||
           // Extension settings exclude it from running
-          extension.settings.exclude.suggestions
+          extension.settings.exclude.suggesters
         ) {
           return;
         }
@@ -41,11 +41,11 @@ const SuggestionExtension = ExtensionFactory.plain({
         const parameter = getParameter(extension);
         const suggester = extension.parameter.createSuggestions(parameter, extension);
 
-        suggestions.push(...(isArray(suggester) ? suggester : [suggester]));
+        suggesters.push(...(isArray(suggester) ? suggester : [suggester]));
       },
 
       afterExtensionLoop: () => {
-        addPlugins(suggest(...suggestions));
+        addPlugins(suggest(...suggesters));
       },
     };
   },
@@ -55,11 +55,11 @@ declare global {
   namespace Remirror {
     interface ExcludeOptions {
       /**
-       * Whether to exclude the suggestions plugin configuration for the extension.
+       * Whether to exclude the suggesters plugin configuration for the extension.
        *
        * @defaultValue `undefined`
        */
-      suggestions?: boolean;
+      suggesters?: boolean;
     }
 
     interface ExtensionCreatorMethods<
@@ -71,7 +71,7 @@ declare global {
       ProsemirrorType = never
     > {
       /**
-       * Create suggestions which respond to character key combinations within the
+       * Create suggesters which respond to character key combinations within the
        * editor instance.
        *
        * @remarks

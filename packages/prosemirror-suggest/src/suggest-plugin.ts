@@ -13,12 +13,14 @@ const suggestPluginKey = new PluginKey('suggest');
  *
  * @param state - the editor state.
  */
-export const getSuggestPluginState = <GSchema extends EditorSchema = any>(
+export function getSuggestPluginState<GSchema extends EditorSchema = any>(
   state: EditorState<GSchema>,
-) => getPluginState<SuggestState>(suggestPluginKey, state);
+) {
+  return getPluginState<SuggestState>(suggestPluginKey, state);
+}
 
 /**
- * This creates a suggestion plugin with all the suggestions provided.
+ * This creates a suggestion plugin with all the suggesters provided.
  *
  * @remarks
  *
@@ -82,7 +84,7 @@ export const getSuggestPluginState = <GSchema extends EditorSchema = any>(
  *   createCommand: ({ match, view }) => {
  *     return (emoji,skinVariation) => {
  *       if (!emoji) {
- *         throw new Error('An emoji is required when calling the emoji suggestions command');
+ *         throw new Error('An emoji is required when calling the emoji suggesters command');
  *       }
  *
  *       const tr = view.state.tr; const { from, end: to } = match.range;
@@ -100,7 +102,7 @@ export const getSuggestPluginState = <GSchema extends EditorSchema = any>(
  * });
  * ```
  *
- * The priority of the suggestions is the order in which they are passed into
+ * The priority of the suggesters is the order in which they are passed into
  * this function.
  *
  * - `const plugin = suggest(two, one, three)` - Here `two` will be checked
@@ -112,7 +114,7 @@ export const getSuggestPluginState = <GSchema extends EditorSchema = any>(
  * @param suggesters - a list of suggesters in the order they should be
  * evaluated.
  */
-export const suggest = <GSchema extends EditorSchema = any>(...suggesters: Suggestion[]) => {
+export function suggest<GSchema extends EditorSchema = any>(...suggesters: Suggestion[]) {
   const pluginState = SuggestState.create(suggesters);
 
   return new Plugin<SuggestState, GSchema>({
@@ -153,4 +155,4 @@ export const suggest = <GSchema extends EditorSchema = any>(...suggesters: Sugge
       },
     },
   });
-};
+}

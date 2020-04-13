@@ -8,7 +8,7 @@ Primitives for building your prosemirror suggestion and autocomplete functionali
 ## The problem
 
 You want to create a plugin for your prosemirror editor that responds to an activation character to
-create suggestions or options or actions for the user. Doing this from scratch can be difficult.
+create suggesters or options or actions for the user. Doing this from scratch can be difficult.
 
 ## This solution
 
@@ -32,7 +32,7 @@ yarn add prosemirror-suggest prosemirror-view
 ## Getting Started
 
 `prosemirror-suggest` uses configuration objects called `Suggestion`<!-- -->'s to define the
-behaviour of the suggestions you create. By calling the exported `suggest` method with all required
+behaviour of the suggesters you create. By calling the exported `suggest` method with all required
 `Suggestion`<!-- -->'s the functionality is added to the editor in one plugin.
 
 In the following example we're creating an emoji suggestion plugin that responds to the colon
@@ -94,7 +94,7 @@ const suggestEmojis: Suggestion = {
   createCommand: ({ match, view }) => {
     return (emoji, skinVariation) => {
       if (!emoji) {
-        throw new Error('An emoji is required when calling the emoji suggestions command');
+        throw new Error('An emoji is required when calling the emoji suggesters command');
       }
 
       const tr = view.state.tr;
@@ -137,7 +137,7 @@ Each mention is a mark that wraps the mentioned text with a spec property of `in
 
 ### `suggest`
 
-This creates a suggestion plugin with all the suggestions provided.
+This creates a suggestion plugin with all the suggesters provided.
 
 <b>Signature:</b>
 
@@ -145,7 +145,7 @@ This creates a suggestion plugin with all the suggestions provided.
 suggest: <GSchema extends import("prosemirror-model").Schema<string, string> = any>(...suggesters: Suggestion<import("@remirror/core-types").AnyFunction<void>>[]) => Plugin<SuggestState<any>, GSchema>
 ```
 
-The priority of the suggestions is the order in which they are passed into this function.
+The priority of the suggesters is the order in which they are passed into this function.
 
 ```ts
 const plugin = suggest(two, one, three);
@@ -265,7 +265,7 @@ method which uses them.
 | [isValidMatch](https://github.com/remirror/remirror/blob/master/docs/api/prosemirror-suggest/prosemirror-suggest.isvalidmatch.md)                          | True when the match is currently active (i.e. it's query has a value)                                                                       |
 | [regexToString](https://github.com/remirror/remirror/blob/master/docs/api/prosemirror-suggest/prosemirror-suggest.regextostring.md)                        | Convert a RegExp into a string                                                                                                              |
 | [selectionOutsideMatch](https://github.com/remirror/remirror/blob/master/docs/api/prosemirror-suggest/prosemirror-suggest.selectionoutsidematch.md)        | True when the current selection is outside the match.                                                                                       |
-| [suggest](https://github.com/remirror/remirror/blob/master/docs/api/prosemirror-suggest/prosemirror-suggest.suggest.md)                                    | This creates a suggestion plugin with all the suggestions provided.                                                                         |
+| [suggest](https://github.com/remirror/remirror/blob/master/docs/api/prosemirror-suggest/prosemirror-suggest.suggest.md)                                    | This creates a suggestion plugin with all the suggesters provided.                                                                          |
 
 ### Type Aliases
 

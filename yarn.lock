@@ -3955,6 +3955,11 @@
   dependencies:
     "@types/react" "*"
 
+"@types/merge-descriptors@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@types/merge-descriptors/-/merge-descriptors-1.0.1.tgz#a9a49afa9457f5fb373d2b078ad44e1455e4053c"
+  integrity sha512-dvY3+KXKTXn7sD9bFQsaPcw3FN9ljk82YDUDl7O2FsBVBhiN7Ya216aYUqUvlRdbL/lvW90SYAUJZ1fFnmtMUQ==
+
 "@types/mime-types@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@types/mime-types/-/mime-types-2.1.0.tgz#9ca52cda363f699c69466c2a6ccdaad913ea7a73"
