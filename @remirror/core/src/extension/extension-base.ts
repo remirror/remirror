@@ -29,7 +29,6 @@ import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
 import {
   BaseExtensionSettings,
-  CreateCommandsParameter,
   CreateHelpersParameter,
   CreateSchemaParameter,
   ExtensionCommandReturn,
@@ -605,47 +604,6 @@ interface ExtensionCreatorMethods<
     ProsemirrorType
   > {
   /**
-   * Create and register commands for that can be called within the editor.
-   *
-   * These are typically used to create menu's actions and as a direct response
-   * to user actions.
-   *
-   * @remarks
-   *
-   * The `createCommands` method should return an object with each key being
-   * unique within the editor. To ensure that this is the case it is recommended
-   * that the keys of the command are namespaced with the name of the extension.
-   *
-   * e.g.
-   *
-   * ```ts
-   * class History extends Extension {
-   *   name = 'history' as const;
-   *
-   *   commands() {
-   *     return {
-   *       undoHistory: COMMAND_FN,
-   *       redoHistory: COMMAND_FN,
-   *     }
-   *   }
-   * }
-   * ```
-   *
-   * The actions available in this case would be `undoHistory` and
-   * `redoHistory`. It is unlikely that any other extension would override these
-   * commands.
-   *
-   * Another benefit of commands is that they are picked up by typescript and
-   * can provide code completion for consumers of the extension.
-   *
-   * @param parameter - schema parameter with type included
-   */
-  createCommands?: (
-    parameter: CreateCommandsParameter<ProsemirrorType>,
-    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
-  ) => Commands;
-
-  /**
    * A helper method is a function that takes in arguments and returns
    * a value depicting the state of the editor specific to this extension.
    *
@@ -1140,6 +1098,12 @@ export interface CreateLifecycleMethodParameter {
     key: Key,
     value: Required<Remirror.BaseExtensionSettings>[Key],
   ) => void;
+
+  /** Set a custom manager method parameter. */
+  setManagerMethodParameter: <Key extends keyof Remirror.ManagerMethodParameter>(
+    key: Key,
+    value: Remirror.ManagerMethodParameter[Key],
+  ) => void;
 }
 
 export interface CreateLifecycleMethodReturn {
@@ -1171,7 +1135,10 @@ export interface InitializeLifecycleMethodParameter extends ViewLifecycleMethodP
 export interface InitializeLifecycleMethodReturn extends CreateLifecycleMethodReturn {}
 
 export interface ViewLifecycleMethodParameter
-  extends Omit<CreateLifecycleMethodParameter, 'setDefaultExtensionSettings'> {
+  extends Omit<
+    CreateLifecycleMethodParameter,
+    'setDefaultExtensionSettings' | 'setManagerMethodParameter'
+  > {
   /**
    * The parameter passed into most of the extension creator methods.
    */
@@ -1179,6 +1146,12 @@ export interface ViewLifecycleMethodParameter
 }
 
 export interface ViewLifecycleMethodReturn {
+  /**
+   * Run before the extensions have been looped through. Useful for adding data
+   * to the store and doing any cleanup for the RemirrorMethod.
+   */
+  beforeExtensionLoop?: (view: EditorView<EditorSchema>) => void;
+
   /**
    * Called for each extension in order of their priority.
    */
@@ -1271,16 +1244,5 @@ declare global {
       Commands extends ExtensionCommandReturn = {},
       Helpers extends ExtensionHelperReturn = {}
     > {}
-
-    /**
-     * An interface with a `tags` parameter useful as a builder for parameter
-     * objects.
-     */
-    export interface ExtensionTagParameter<ExtensionUnion extends AnyExtension = any> {
-      /**
-       * The tags provided by the configured extensions.
-       */
-      tags: ExtensionTags<ExtensionUnion>;
-    }
   }
 }

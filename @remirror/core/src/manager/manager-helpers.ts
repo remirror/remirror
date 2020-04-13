@@ -1,25 +1,11 @@
 import { ErrorConstant } from '@remirror/core-constants';
-import { entries, invariant, isEmptyArray, isFunction, object, sort } from '@remirror/core-helpers';
-import { AnyFunction, DispatchFunction } from '@remirror/core-types';
+import { invariant, isEmptyArray, isFunction, object, sort } from '@remirror/core-helpers';
 
-import {
-  AnyExtension,
-  ExtensionListParameter,
-  isExtension,
-  isMarkExtension,
-  isNodeExtension,
-} from '../extension';
+import { AnyExtension, isExtension, isMarkExtension, isNodeExtension } from '../extension';
 import { AnyPreset, isPreset } from '../preset';
-import {
-  CommandParameter,
-  ExtensionCommandFunction,
-  GetConstructor,
-  ManagerParameter,
-} from '../types';
+import { GetConstructor, ManagerMethodParameter } from '../types';
 
-const isDev = process.env.NODE_ENV === 'development';
-
-interface IsNameUniqueParameter {
+export interface IsNameUniqueParameter {
   /**
    * The name to check against
    */
@@ -44,7 +30,7 @@ interface IsNameUniqueParameter {
  *
  * @param parameter - destructured params
  */
-function throwIfNameNotUnique(parameter: IsNameUniqueParameter) {
+export function throwIfNameNotUnique(parameter: IsNameUniqueParameter) {
   const { name, set, type = 'extension' } = parameter;
 
   invariant(!set.has(name), {
@@ -52,14 +38,6 @@ function throwIfNameNotUnique(parameter: IsNameUniqueParameter) {
   });
 
   set.add(name);
-}
-
-interface TransformCommandsParameter<ExtensionUnion extends AnyExtension>
-  extends ExtensionListParameter<ExtensionUnion> {
-  /**
-   * The command params which are passed to each extensions `commands` method.
-   */
-  commandParameter: CommandParameter;
 }
 
 /**
@@ -70,7 +48,7 @@ interface TransformCommandsParameter<ExtensionUnion extends AnyExtension>
  */
 export function getParameterWithType<
   ExtensionUnion extends AnyExtension,
-  Parameter extends ManagerParameter
+  Parameter extends ManagerMethodParameter
 >(extension: ExtensionUnion, parameter: Parameter) {
   if (isMarkExtension(extension)) {
     return { ...parameter, type: parameter.schema.marks[extension.name] };
@@ -81,92 +59,6 @@ export function getParameterWithType<
   }
 
   return parameter as any;
-}
-
-const forbiddenNames = new Set(['run']);
-
-/**
- * Generate all the action commands for usage within the UI.
- *
- * Typically actions are used to create interactive menus. For example a menu
- * can use a command to toggle bold formatting or to undo the last action.
- */
-export function transformCommands<ExtensionUnion extends AnyExtension>(
-  parameter: TransformCommandsParameter<ExtensionUnion>,
-) {
-  const { extensions, commandParameter } = parameter;
-  const unchained: Record<
-    string,
-    { command: AnyFunction; isEnabled: AnyFunction; name: string }
-  > = object();
-
-  const chained: Record<string, any> = object();
-
-  const names = new Set<string>();
-
-  const { view, getState } = commandParameter;
-
-  const unchainedFactory = ({
-    command,
-    shouldDispatch = true,
-  }: {
-    command: ExtensionCommandFunction;
-    shouldDispatch?: boolean;
-  }) => (...args: unknown[]) => {
-    let dispatch: DispatchFunction | undefined = undefined;
-
-    if (shouldDispatch) {
-      dispatch = view.dispatch;
-      view.focus(); // TODO should this be configurable?
-    }
-
-    return command(...args)({ state: getState(), dispatch, view });
-  };
-
-  const chainedFactory = (command: ExtensionCommandFunction) => (...spread: unknown[]) => {
-    const state = getState();
-    const dispatch: DispatchFunction = (transaction) => {
-      invariant(transaction === state.tr, {
-        message:
-          'Chaining currently only supports methods which do not clone the transaction object.',
-      });
-    };
-
-    command(...spread)({ state, dispatch, view });
-
-    return chained;
-  };
-
-  const getItemParameters = (extension: ExtensionUnion) =>
-    extension.parameter.createCommands?.(
-      getParameterWithType(extension, commandParameter),
-      extension,
-    ) ?? {};
-
-  for (const extension of extensions) {
-    if (!extension.parameter.createCommands) {
-      continue;
-    }
-
-    const item = getItemParameters(extension);
-
-    for (const [name, command] of entries(item)) {
-      throwIfNameNotUnique({ name, set: names });
-      invariant(!forbiddenNames.has(name), { message: 'The command name you chose is forbidden.' });
-
-      unchained[name] = {
-        name: extension.name,
-        command: unchainedFactory({ command }),
-        isEnabled: unchainedFactory({ command, shouldDispatch: false }),
-      };
-
-      chained[name] = chainedFactory(command);
-    }
-  }
-
-  chained.run = () => view.dispatch(getState().tr);
-
-  return { unchained, chained };
 }
 
 // /**
@@ -277,12 +169,7 @@ export function transformExtensionOrPreset<
       continue;
     }
 
-    if (isDev) {
-      console.error("We couldn't figure out if this was a preset or an extension");
-      console.dir(presetOrExtension);
-    }
-
-    // TODO if it is an
+    // TODO: Allow constructors to be auto instantiated.
 
     // This is only reached if the passed value is invalid.
     invariant(false, { code: ErrorConstant.INVALID_MANAGER_ARGUMENTS });

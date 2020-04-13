@@ -6,7 +6,6 @@ import {
   RemirrorIdentifier,
 } from '@remirror/core-constants';
 import {
-  entries,
   freeze,
   invariant,
   isEqual,
@@ -26,8 +25,6 @@ import { createDocumentNode, CreateDocumentNodeParameter } from '@remirror/core-
 
 import {
   AnyExtension,
-  ChainedFromExtensions,
-  CommandsFromExtensions,
   CreateLifecycleMethodReturn,
   ExtensionFromConstructor,
   ExtensionLifecycleMethods,
@@ -39,22 +36,13 @@ import {
   ViewLifecycleMethodReturn,
 } from '../extension';
 import { AnyPreset, PresetFromConstructor } from '../preset';
-import {
-  AnyCommands,
-  CommandMethod,
-  CommandParameter,
-  GetConstructor,
-  ManagerParameter,
-} from '../types';
+import { GetConstructor, ManagerMethodParameter } from '../types';
 import {
   getParameterWithType,
   ignoreFunctions,
   ManagerPhase,
-  transformCommands,
   transformExtensionOrPreset as transformExtensionOrPresetList,
 } from './manager-helpers';
-
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
 /**
  * Checks to see whether the provided value is an `Manager`.
@@ -124,6 +112,8 @@ export class Manager<
   ) {
     return new Manager<ExtensionUnion, PresetUnion>(extensionOrPresetList, settings);
   }
+
+  /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
   /**
    * Identifies this as a `Manager`.
@@ -218,14 +208,14 @@ export class Manager<
    * Utility getter for accessing the parameter which is passed to the
    * extension methods
    */
-  private get parameter(): ManagerParameter<SchemaFromExtension<ExtensionUnion>> {
+  private get parameter(): ManagerMethodParameter<SchemaFromExtension<ExtensionUnion>> {
     return {
       tags: this.tags,
       schema: this.schema,
       getState: this.getState,
       commands: () => this.#store.commands,
+      dispatch: () => this.#store.dispatch,
       helpers: () => this.#store.helpers,
-      chain: () => this.#store.chain,
     };
   }
 
@@ -411,9 +401,9 @@ export class Manager<
   /**
    * Called after the extension loop of the initialization phase.
    */
-  private afterView(view: EditorView<EditorSchema>) {
-    for (const { afterExtensionLoop } of this.#handlers.view) {
-      afterExtensionLoop?.(view);
+  private beforeView(view: EditorView<EditorSchema>) {
+    for (const { beforeExtensionLoop } of this.#handlers.view) {
+      beforeExtensionLoop?.(view);
     }
   }
 
@@ -423,6 +413,15 @@ export class Manager<
   private onViewExtensionLoop(extension: ExtensionUnion, view: EditorView<EditorSchema>) {
     for (const { forEachExtension } of this.#handlers.view) {
       forEachExtension?.(extension, view);
+    }
+  }
+
+  /**
+   * Called after the extension loop of the initialization phase.
+   */
+  private afterView(view: EditorView<EditorSchema>) {
+    for (const { afterExtensionLoop } of this.#handlers.view) {
+      afterExtensionLoop?.(view);
     }
   }
 
@@ -466,18 +465,13 @@ export class Manager<
   public addView(view: EditorView<SchemaFromExtension<ExtensionUnion>>) {
     this.#phase = ManagerPhase.AddView;
     this.#store.view = view;
+    this.beforeView(view);
 
     for (const extension of this.#extensions) {
       this.onViewExtensionLoop(extension, view);
     }
 
     this.afterView(view);
-
-    [this.#store.commands, this.#store.chain] = this.createCommands({
-      ...this.parameter,
-      view,
-      isEditable: () => view.props.editable?.(this.getState()) ?? false,
-    });
 
     this.#phase = ManagerPhase.Done;
   }
@@ -572,36 +566,6 @@ export class Manager<
   }
 
   /**
-   * Create the actions which are passed into the render props.
-   *
-   * RemirrorActions allow for checking if a node / mark is active, enabled, and
-   * also running the command.
-   *
-   * - `isActive` defaults to a function returning false
-   * - `isEnabled` defaults to a function returning true
-   */
-  private createCommands(
-    parameters: CommandParameter,
-  ): [CommandsFromExtensions<ExtensionUnion>, ChainedFromExtensions<ExtensionUnion>] {
-    const extensions = this.extensions;
-    const commands: AnyCommands = object();
-
-    // Creates the methods that take in attrs and dispatch an action into the
-    // editor
-    const { chained, unchained } = transformCommands({ extensions, commandParameter: parameters });
-
-    for (const [commandName, { command, isEnabled }] of entries(unchained)) {
-      commands[commandName] = command as CommandMethod;
-      commands[commandName].isEnabled = isEnabled;
-    }
-
-    return [
-      commands as CommandsFromExtensions<ExtensionUnion>,
-      chained as ChainedFromExtensions<ExtensionUnion>,
-    ];
-  }
-
-  /**
    * Get the extension instance matching the provided constructor from the
    */
   public getExtension<ExtensionConstructor extends GetConstructor<ExtensionUnion>>(
@@ -616,6 +580,9 @@ export class Manager<
     return extension as ExtensionFromConstructor<typeof Constructor>;
   }
 
+  /**
+   * Get the preset from the editor.
+   */
   public getPreset<PresetConstructor extends GetConstructor<PresetUnion>>(
     Constructor: PresetConstructor,
   ): PresetFromConstructor<PresetConstructor> {
@@ -666,16 +633,6 @@ declare global {
        * The editor view stored by this instance.
        */
       view: EditorView<SchemaFromExtension<ExtensionUnion>>;
-
-      /**
-       * The commands defined within this manager.
-       */
-      commands: CommandsFromExtensions<ExtensionUnion>;
-
-      /**
-       * The chained commands defined within this manger.
-       */
-      chain: ChainedFromExtensions<ExtensionUnion>;
 
       /**
        * The helpers defined within this manager.

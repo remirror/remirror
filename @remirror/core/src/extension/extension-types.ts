@@ -42,11 +42,21 @@ export type CommandsFromExtensions<ExtensionUnion extends AnyExtension> = UnionT
   MapToUnchainedCommand<GetCommands<ExtensionUnion>>
 >;
 
-export type ChainedFromExtensions<ExtensionUnion extends AnyExtension> = {
-  [Key in keyof UnionToIntersection<MapToChainedCommand<GetCommands<ExtensionUnion>>>]: (
-    ...args: Parameters<MapToChainedCommand<GetCommands<ExtensionUnion>>[Key]>
-  ) => ChainedFromExtensions<ExtensionUnion>;
-};
+export interface ChainedCommandRunParameter {
+  /**
+   * Run the chained commands.
+   */
+  run: () => void;
+}
+
+export type ChainedFromExtensions<
+  ExtensionUnion extends AnyExtension
+> = ChainedCommandRunParameter &
+  {
+    [Key in keyof UnionToIntersection<MapToChainedCommand<GetCommands<ExtensionUnion>>>]: (
+      ...args: Parameters<MapToChainedCommand<GetCommands<ExtensionUnion>>[Key]>
+    ) => ChainedFromExtensions<ExtensionUnion>;
+  };
 
 /**
  * Utility type for pulling all the action names from a list
