@@ -2,4 +2,4 @@
 "jest-prosemirror": patch
 ---
 
-chore(deps): support jest v25+.
+Support `jest` v25+.
