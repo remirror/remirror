@@ -64,9 +64,10 @@ export const CommandsExtension = ExtensionFactory.plain({
         }
       },
       afterExtensionLoop() {
-        const { setStoreKey } = parameter;
+        const { setStoreKey, setManagerMethodParameter, getStoreKey } = parameter;
 
         setStoreKey('tags', { general, mark, node });
+        setManagerMethodParameter('tags', () => getStoreKey('tags') as any);
       },
     };
   },
@@ -85,7 +86,7 @@ declare global {
       /**
        * The tags provided by the configured extensions.
        */
-      tags: <ExtensionUnion extends AnyExtension>() => ExtensionTags<ExtensionUnion>;
+      tags: () => ExtensionTags<AnyExtension>;
     }
   }
 }
