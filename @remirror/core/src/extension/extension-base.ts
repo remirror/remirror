@@ -51,7 +51,7 @@ import {
  * TODO Figure out how to improve the formatting of this.
  */
 export type AnyExtension<Settings extends object = {}, Properties extends object = {}> = Extension<
-  string,
+  any,
   Settings,
   Properties,
   any,

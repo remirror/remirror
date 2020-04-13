@@ -5,13 +5,10 @@ import {
   AnyFunction,
   AttributesParameter,
   CommandFunction,
-  CreateExtraAttributes,
   EditorSchema,
   EditorState,
   EditorStateParameter,
   EditorViewParameter,
-  ExtraAttributes,
-  GetExtraAttributes,
   MarkType,
   NodeType,
   TransactionParameter,
@@ -137,84 +134,8 @@ export type GetConstructor<Type extends { constructor: unknown }> = Type['constr
 /**
  * Parameters passed into many of the extension methods.
  */
-export interface ManagerParameter<Schema extends EditorSchema = EditorSchema>
-  extends Remirror.ExtensionTagParameter {
-  /**
-   * The Prosemirror schema being used for the current interface
-   */
-  schema: Schema;
-
-  /**
-   * A helper method for retrieving the state of the editor
-   */
-  getState: () => EditorState<Schema>;
-
-  /**
-   * A method that returns an object with all the commands available to be run.
-   *
-   * @remarks
-   *
-   * Commands are instantly run and also have an `isEnabled()` method attached
-   * to them for checking if the command would day anything if run.
-   *
-   * This should only be called when the view has been initialized (i.e.) within
-   * the `createCommands` method calls.
-   *
-   * ```ts
-   * import { ExtensionFactory } from '@remirror/core';
-   *
-   * const MyExtension = ExtensionFactory.plain({
-   *   name: 'myExtension',
-   *   version: '1.0.0',
-   *   createCommands: ({ commands }) => {
-   *     // This will throw since it can only be called within the returned methods.
-   *     const c = commands();
-   *
-   *     return {
-   *       // This is good 😋
-   *       haveFun() => commands().insertText('fun!');
-   *     }
-   *   }
-   * })
-   * ```
-   */
-  commands: () => any;
-
-  /**
-   * Chainable commands for composing functionality together in quaint and
-   * beautiful way..
-   *
-   * @remarks
-   *
-   * This should only be called when the view has been initialized (i.e.) within
-   * the `createCommands` method calls.
-   *
-   * ```ts
-   * import { ExtensionFactory } from '@remirror/core';
-   *
-   * const MyExtension = ExtensionFactory.plain({
-   *   name: 'myExtension',
-   *   version: '1.0.0',
-   *   createCommands: ({ chain }) => {
-   *     // This will throw since it can only be called within the returned methods.
-   *     const c = chain();
-   *
-   *     return {
-   *       // This is good 😋
-   *       haveFun() => chain().insertText('fun!').changeSelection('end').insertText('hello');
-   *     }
-   *   }
-   * })
-   * ```
-   */
-  chain: () => any;
-
-  /**
-   * Helper method to provide information about the content of the editor. Each
-   * extension can register its own helpers.
-   */
-  helpers: () => any;
-}
+export interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema>
+  extends Remirror.ManagerMethodParameter<Schema> {}
 
 /**
  * Parameters passed into many of the extension methods with a view added.
@@ -227,7 +148,7 @@ export interface ManagerParameter<Schema extends EditorSchema = EditorSchema>
  */
 export interface ViewManagerParameter<Schema extends EditorSchema = any>
   extends EditorViewParameter<Schema>,
-    ManagerParameter<Schema> {}
+    Remirror.ManagerMethodParameter {}
 
 export type ExtensionCommandFunction = (...args: any[]) => CommandFunction<EditorSchema>;
 
@@ -254,7 +175,7 @@ export interface ExtensionHelperReturn {
  * This is used to generate the specific types for Marks and Nodes.
  */
 export interface ManagerTypeParameter<ProsemirrorType, Schema extends EditorSchema = EditorSchema>
-  extends ManagerParameter<Schema> {
+  extends ManagerMethodParameter<Schema> {
   type: ProsemirrorType;
 }
 export interface ViewManagerTypeParameter<
@@ -300,8 +221,6 @@ export interface CreateHelpersParameter<ProsemirrorType>
 }
 
 export interface CommandMethod<Parameter extends any[] = []> {
-  (...args: Parameter): void;
-
   /**
    * Returns true when the command can be run and false when it can't be run. It
    * basically runs the command without dispatching it to see whether it returns
@@ -316,6 +235,8 @@ export interface CommandMethod<Parameter extends any[] = []> {
    * @param attrs - certain commands require attrs to run
    */
   isEnabled: (attrs?: Attributes) => boolean;
+
+  (...args: Parameter): void;
 }
 
 /**
@@ -399,5 +320,22 @@ declare global {
      * editor.
      */
     interface BaseExtensionSettings {}
+
+    /**
+     * Parameters passed into many of the extension methods. These can be added
+     * to by the parameter methods.
+     */
+    interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
+      /**
+       * A helper method for retrieving the state of the editor
+       */
+      getState: () => EditorState<Schema>;
+
+      /**
+       * Helper method to provide information about the content of the editor. Each
+       * extension can register its own helpers.
+       */
+      helpers: () => any;
+    }
   }
 }

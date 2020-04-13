@@ -4,6 +4,7 @@ import { ExtensionPriority } from '@remirror/core-constants';
 import { freeze, isArray, isFunction, isString, object } from '@remirror/core-helpers';
 import {
   CreateExtraAttributes,
+  EditorSchema,
   ExtraAttributes,
   GetExtraAttributes,
   MarkExtensionSpec,
@@ -139,8 +140,8 @@ const SchemeExtension = ExtensionFactory.plain({
     return {
       beforeExtensionLoop() {
         const { setDefaultExtensionSettings } = parameter;
-        // Set the default extraAttributes on every extension to be an empty
-        // array
+
+        // Set default extraAttributes on every extension to be empty array
         setDefaultExtensionSettings('extraAttributes', []);
       },
 
@@ -164,11 +165,14 @@ const SchemeExtension = ExtensionFactory.plain({
       },
 
       afterExtensionLoop() {
-        const { setStoreKey } = parameter;
+        const { setStoreKey, setManagerMethodParameter, getStoreKey } = parameter;
+
+        const schema = new Schema({ nodes, marks });
 
         setStoreKey('nodes', nodes);
         setStoreKey('marks', marks);
-        setStoreKey('schema', new Schema({ nodes, marks }));
+        setStoreKey('schema', schema);
+        setManagerMethodParameter('schema', () => getStoreKey('schema'));
       },
     };
   },
@@ -254,6 +258,13 @@ declare global {
        * The schema created by this extension manager.
        */
       schema: SchemaFromExtension<ExtensionUnion>;
+    }
+
+    interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
+      /**
+       * The Prosemirror schema being used for the current interface
+       */
+      schema: () => Schema;
     }
   }
 }

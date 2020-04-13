@@ -5,7 +5,7 @@ import {
   BaseExtensionSettings,
   Extension,
   isEmptyArray,
-  ManagerParameter,
+  ManagerMethodParameter,
   NodeMatch,
   ResolvedPos,
   uniqueArray,
@@ -128,7 +128,7 @@ export class NodeCursorExtension extends Extension<NodeCursorExtensionOptions> {
     };
   }
 
-  public plugin({ tags }: ManagerParameter) {
+  public plugin({ tags }: ManagerMethodParameter) {
     return createNodeCursorExtensionPlugin(this, tags.general.nodeCursor);
   }
 }

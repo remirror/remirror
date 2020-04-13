@@ -84,4 +84,10 @@ export enum ErrorConstant {
    * The user requested an invalid preset from the manager.
    */
   INVALID_MANAGER_PRESET = 'RMR0014',
+
+  /** Command method names must be unique within the editor. */
+  DUPLICATE_COMMAND_NAMES = 'RMR0015',
+
+  /** Helper method names must be unique within the editor. */
+  DUPLICATE_HELPER_NAMES = 'RMR0016',
 }

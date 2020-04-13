@@ -1,5 +1,6 @@
 import { MarkGroup, NodeGroup, Tag } from '@remirror/core-constants';
 import { isUndefined } from '@remirror/core-helpers';
+import { EditorSchema } from '@remirror/core-types';
 
 import {
   AnyExtension,
@@ -78,6 +79,13 @@ declare global {
        * Store the built in and custom tags for the editor instance.
        */
       tags: Readonly<ExtensionTags<ExtensionUnion>>;
+    }
+
+    export interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
+      /**
+       * The tags provided by the configured extensions.
+       */
+      tags: <ExtensionUnion extends AnyExtension>() => ExtensionTags<ExtensionUnion>;
     }
   }
 }

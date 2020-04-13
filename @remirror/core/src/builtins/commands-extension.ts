@@ -10,6 +10,7 @@ import {
   CommandsFromExtensions,
   Extension,
   ExtensionFactory,
+  ExtensionFromConstructor,
 } from '../extension';
 import { throwIfNameNotUnique } from '../manager/manager-helpers';
 import {
@@ -92,6 +93,22 @@ const forbiddenNames = new Set(['run']);
  */
 export const CommandsExtension = ExtensionFactory.plain({
   name: 'commands',
+
+  onCreate(parameter) {
+    return {
+      beforeExtensionLoop() {
+        const { setManagerMethodParameter, getStoreKey } = parameter;
+
+        setManagerMethodParameter('commands', () => {
+          return getStoreKey('commands') as any;
+        });
+
+        setManagerMethodParameter('dispatch', () => {
+          return getStoreKey('dispatch') as any;
+        });
+      },
+    };
+  },
 
   onView(parameter) {
     const { getParameter } = parameter;
@@ -218,6 +235,72 @@ declare global {
         parameter: CreateCommandsParameter<ProsemirrorType>,
         extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
       ) => Commands;
+    }
+
+    interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
+      /**
+       * A method that returns an object with all the commands available to be run.
+       *
+       * @remarks
+       *
+       * Commands are instantly run and also have an `isEnabled()` method attached
+       * to them for checking if the command would day anything if run.
+       *
+       * This should only be called when the view has been initialized (i.e.) within
+       * the `createCommands` method calls.
+       *
+       * ```ts
+       * import { ExtensionFactory } from '@remirror/core';
+       *
+       * const MyExtension = ExtensionFactory.plain({
+       *   name: 'myExtension',
+       *   version: '1.0.0',
+       *   createCommands: ({ commands }) => {
+       *     // This will throw since it can only be called within the returned methods.
+       *     const c = commands();
+       *
+       *     return {
+       *       // This is good 😋
+       *       haveFun() => commands().insertText('fun!');
+       *     }
+       *   }
+       * })
+       * ```
+       */
+      dispatch: <ExtensionUnion extends AnyExtension = AnyExtension>() => CommandsFromExtensions<
+        ExtensionUnion | ExtensionFromConstructor<typeof CommandsExtension>
+      >;
+
+      /**
+       * Chainable commands for composing functionality together in quaint and
+       * beautiful way..
+       *
+       * @remarks
+       *
+       * This should only be called when the view has been initialized (i.e.) within
+       * the `createCommands` method calls.
+       *
+       * ```ts
+       * import { ExtensionFactory } from '@remirror/core';
+       *
+       * const MyExtension = ExtensionFactory.plain({
+       *   name: 'myExtension',
+       *   version: '1.0.0',
+       *   createCommands: ({ chain }) => {
+       *     // This will throw since it can only be called within the returned methods.
+       *     const c = chain();
+       *
+       *     return {
+       *       // This is good 😋
+       *       haveFun() => chain().insertText('fun!').changeSelection('end').insertText('hello');
+       *     }
+       *   }
+       * })
+       * ```
+       */
+      commands: <ExtensionUnion extends AnyExtension = AnyExtension>() => ChainedFromExtensions<
+        ExtensionUnion | ExtensionFromConstructor<typeof CommandsExtension>
+      >;
     }
   }
 }

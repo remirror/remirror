@@ -1,4 +1,4 @@
-import { Extension, getPluginState, ManagerParameter, Plugin } from '@remirror/core';
+import { Extension, getPluginState, ManagerMethodParameter, Plugin } from '@remirror/core';
 
 import { defaultDropCursorExtensionOptions } from './drop-cursor-constants';
 import { dropCursorPlugin, DropCursorState } from './drop-cursor-plugin';
@@ -17,7 +17,7 @@ export class DropCursorExtension extends Extension<DropCursorExtensionOptions> {
     return defaultDropCursorExtensionOptions;
   }
 
-  public helpers({ getState }: ManagerParameter) {
+  public helpers({ getState }: ManagerMethodParameter) {
     return {
       /**
        * Check if the editor is currently being dragged
@@ -31,7 +31,7 @@ export class DropCursorExtension extends Extension<DropCursorExtensionOptions> {
   /**
    * Use the dropCursor plugin with provided options.
    */
-  public plugin(parameters: ManagerParameter): Plugin {
+  public plugin(parameters: ManagerMethodParameter): Plugin {
     return dropCursorPlugin(parameters, this);
   }
 }

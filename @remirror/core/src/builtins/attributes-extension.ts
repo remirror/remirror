@@ -3,7 +3,7 @@ import { bool, object } from '@remirror/core-helpers';
 import { AttributesWithClass } from '@remirror/core-types';
 
 import { AnyExtension, Extension, ExtensionFactory } from '../extension';
-import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerParameter } from '../types';
+import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerMethodParameter } from '../types';
 
 /**
  * This extension allows others extension to add the `createAttributes` method
@@ -100,7 +100,7 @@ declare global {
        * @alpha
        */
       createAttributes?: (
-        parameter: ManagerParameter,
+        parameter: ManagerMethodParameter,
         extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
       ) => AttributesWithClass;
     }

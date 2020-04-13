@@ -13,7 +13,7 @@ import {
   hasOwnProperty,
   isFunction,
   KeyBindings,
-  ManagerParameter,
+  ManagerMethodParameter,
 } from '@remirror/core';
 
 export interface BaseKeymapExtensionOptions {
@@ -50,7 +50,7 @@ export interface BaseKeymapExtensionOptions {
    * }});
    * ```
    */
-  keymap?: KeyBindings | ((params: ManagerParameter) => KeyBindings);
+  keymap?: KeyBindings | ((params: ManagerMethodParameter) => KeyBindings);
 }
 
 export const defaultBaseKeymapExtensionOptions: BaseKeymapExtensionOptions = {
@@ -88,7 +88,7 @@ export class BaseKeymapExtension extends Extension<BaseKeymapExtensionOptions> {
   /**
    * Injects the baseKeymap into the editor.
    */
-  public keys(parameters: ManagerParameter) {
+  public keys(parameters: ManagerMethodParameter) {
     const { selectParentNodeOnEscape, undoInputRuleOnBackspace, keymap } = this.options;
     const backspaceRule: KeyBindings = undoInputRuleOnBackspace
       ? { Backspace: convertCommand(pmChainCommands(undoInputRule, baseKeymap.Backspace)) }

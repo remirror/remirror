@@ -51,11 +51,11 @@ export function getParameterWithType<
   Parameter extends ManagerMethodParameter
 >(extension: ExtensionUnion, parameter: Parameter) {
   if (isMarkExtension(extension)) {
-    return { ...parameter, type: parameter.schema.marks[extension.name] };
+    return { ...parameter, type: parameter.schema().marks[extension.name] };
   }
 
   if (isNodeExtension(extension)) {
-    return { ...parameter, type: parameter.schema.nodes[extension.name] };
+    return { ...parameter, type: parameter.schema().nodes[extension.name] };
   }
 
   return parameter as any;
@@ -272,10 +272,12 @@ export function ignoreFunctions(object_: Record<string, unknown>) {
  * Identifies the stage the extension manager is at.
  */
 export enum ManagerPhase {
+  None,
+
   /**
    * When the extension manager is being created.
    */
-  None,
+  Create,
 
   /**
    * When the extension manager is being initialized. This is when the

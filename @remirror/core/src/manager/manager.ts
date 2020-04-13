@@ -25,6 +25,7 @@ import { createDocumentNode, CreateDocumentNodeParameter } from '@remirror/core-
 
 import {
   AnyExtension,
+  CreateLifecycleMethodParameter,
   CreateLifecycleMethodReturn,
   ExtensionFromConstructor,
   ExtensionLifecycleMethods,
@@ -36,7 +37,7 @@ import {
   ViewLifecycleMethodReturn,
 } from '../extension';
 import { AnyPreset, PresetFromConstructor } from '../preset';
-import { GetConstructor, ManagerMethodParameter } from '../types';
+import { GetConstructor } from '../types';
 import {
   getParameterWithType,
   ignoreFunctions,
@@ -116,33 +117,18 @@ export class Manager<
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
   /**
-   * Identifies this as a `Manager`.
-   *
-   * @internal
+   * Utility getter for storing the base method parameter which is passed to the
+   * extension methods
    */
-  get [REMIRROR_IDENTIFIER_KEY]() {
-    return RemirrorIdentifier.Manager;
-  }
+  #methodParameter: Remirror.ManagerMethodParameter<
+    SchemaFromExtension<ExtensionUnion>
+  > = this.createInitialMethodParameter();
 
   #extensions: readonly ExtensionUnion[];
   #extensionMap: WeakMap<GetConstructor<ExtensionUnion>, ExtensionUnion>;
 
-  /**
-   * The extensions stored by this manager
-   */
-  get extensions() {
-    return this.#extensions;
-  }
-
   #presets: readonly PresetUnion[];
   #presetMap: WeakMap<GetConstructor<PresetUnion>, PresetUnion>;
-
-  /**
-   * The preset stored by this manager
-   */
-  get presets(): readonly PresetUnion[] {
-    return this.#presets;
-  }
 
   /**
    * The extension manager store.
@@ -158,6 +144,42 @@ export class Manager<
    * The settings used to create the manager.
    */
   #settings: Remirror.ManagerSettings;
+
+  /**
+   * Store the handlers that will be run when for each event method.
+   */
+  #handlers: {
+    create: CreateLifecycleMethodReturn[];
+    initialize: InitializeLifecycleMethodReturn[];
+    view: ViewLifecycleMethodReturn[];
+    transaction: Array<NonNullable<ExtensionLifecycleMethods['onTransaction']>>;
+    destroy: Array<() => void>;
+  } = { initialize: [], transaction: [], view: [], create: [], destroy: [] };
+
+  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
+
+  /**
+   * Identifies this as a `Manager`.
+   *
+   * @internal
+   */
+  get [REMIRROR_IDENTIFIER_KEY]() {
+    return RemirrorIdentifier.Manager;
+  }
+
+  /**
+   * The extensions stored by this manager
+   */
+  get extensions() {
+    return this.#extensions;
+  }
+
+  /**
+   * The preset stored by this manager
+   */
+  get presets(): readonly PresetUnion[] {
+    return this.#presets;
+  }
 
   /**
    * Get the extension manager store which is accessible at initialization.
@@ -202,36 +224,6 @@ export class Manager<
     return this.view;
   }
 
-  /* Private Get Properties */
-
-  /**
-   * Utility getter for accessing the parameter which is passed to the
-   * extension methods
-   */
-  private get parameter(): ManagerMethodParameter<SchemaFromExtension<ExtensionUnion>> {
-    return {
-      tags: this.tags,
-      schema: this.schema,
-      getState: this.getState,
-      commands: () => this.#store.commands,
-      dispatch: () => this.#store.dispatch,
-      helpers: () => this.#store.helpers,
-    };
-  }
-
-  /**
-   * Store the handlers that will be run when for each event method.
-   */
-  #handlers: {
-    create: CreateLifecycleMethodReturn[];
-    initialize: InitializeLifecycleMethodReturn[];
-    view: ViewLifecycleMethodReturn[];
-    transaction: Array<NonNullable<ExtensionLifecycleMethods['onTransaction']>>;
-    destroy: Array<() => void>;
-  } = { initialize: [], transaction: [], view: [], create: [], destroy: [] };
-
-  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
-
   /**
    * Creates the extension manager which is used to simplify the management of
    * the prosemirror editor.
@@ -257,6 +249,10 @@ export class Manager<
 
     this.setupLifecycleHandlers();
 
+    this.#phase = ManagerPhase.Create;
+
+    this.beforeCreate();
+
     for (const extension of this.#extensions) {
       this.onCreateExtensionLoop(extension);
     }
@@ -272,9 +268,18 @@ export class Manager<
   private setupLifecycleHandlers() {
     const initializeParameter = this.initializeParameter;
     const viewParameter = omit(initializeParameter, ['addPlugins']);
-    const createParameter = {
+    const createParameter: CreateLifecycleMethodParameter = {
       ...omit(viewParameter, ['getParameter']),
       setDefaultExtensionSettings,
+      setManagerMethodParameter: (key, value) => {
+        invariant(this.#phase <= ManagerPhase.Create, {
+          code: ErrorConstant.MANAGER_PHASE_ERROR,
+          message:
+            '`setManagerMethodParameter` should only be called during the `onCreate` lifecycle hook. Make sure to only call it within the returned methods.',
+        });
+
+        this.#methodParameter[key] = value;
+      },
     };
 
     for (const extension of this.#extensions) {
@@ -314,7 +319,7 @@ export class Manager<
           message: '`getParameter` should only be called within the returned methods scope.',
         });
 
-        return getParameterWithType(extension, this.parameter);
+        return getParameterWithType(extension, { ...this.#methodParameter });
       },
       addPlugins: this.addPlugins,
       getStoreKey: this.getStoreKey,
@@ -352,6 +357,15 @@ export class Manager<
   private readonly addPlugins = (...plugins: ProsemirrorPlugin[]) => {
     this.#store.plugins.push(...plugins);
   };
+
+  /**
+   * Called before the extension loop of the initialization phase.
+   */
+  private beforeCreate() {
+    for (const { beforeExtensionLoop } of this.#handlers.create) {
+      beforeExtensionLoop?.();
+    }
+  }
 
   /**
    * Called after the extension loop of the initialization phase.
@@ -449,12 +463,31 @@ export class Manager<
    */
   private createInitialStore() {
     const store: Remirror.ManagerStore<ExtensionUnion> = object();
-
-    store.nodes = object();
-    store.marks = object();
-    store.plugins = [];
-
     return store;
+  }
+
+  /**
+   * Create the initial store.
+   */
+  private createInitialMethodParameter() {
+    const methodParameter: Remirror.ManagerMethodParameter<SchemaFromExtension<
+      ExtensionUnion
+    >> = object();
+
+    /**
+     * A state getter method which is passed into the params.
+     */
+    methodParameter.getState = () => {
+      invariant(this.#phase >= ManagerPhase.AddView, {
+        code: ErrorConstant.MANAGER_PHASE_ERROR,
+        message:
+          '`getState` can only be called after the view has been added to the manager. Avoid using it in the outer scope of `creatorMethods`.',
+      });
+
+      return this.view.state;
+    };
+
+    return methodParameter;
   }
 
   /**
@@ -474,19 +507,6 @@ export class Manager<
     this.afterView(view);
 
     this.#phase = ManagerPhase.Done;
-  }
-
-  /**
-   * A state getter method which is passed into the params.
-   */
-  private getState() {
-    invariant(this.#phase >= ManagerPhase.AddView, {
-      code: ErrorConstant.MANAGER_PHASE_ERROR,
-      message:
-        '`getState` can only be called after the view has been added to the manager. Avoid using it in the outer scope of `creatorMethods`.',
-    });
-
-    return this.view.state;
   }
 
   /* Public Methods */
@@ -561,7 +581,7 @@ export class Manager<
    */
   public onTransaction(parameter: OnTransactionManagerParameter) {
     for (const onTransaction of this.#handlers.transaction) {
-      onTransaction({ ...parameter, ...this.parameter, view: this.store.view });
+      onTransaction({ ...parameter, ...this.#methodParameter, view: this.store.view });
     }
   }
 

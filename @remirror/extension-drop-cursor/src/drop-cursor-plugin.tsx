@@ -12,7 +12,7 @@ import {
   findPositionOfNodeAfter,
   findPositionOfNodeBefore,
   isUndefined,
-  ManagerParameter,
+  ManagerMethodParameter,
   pick,
   ResolvedPos,
   throttle,
@@ -66,7 +66,7 @@ export class DropCursorState {
   public decorationSet = DecorationSet.empty;
 
   constructor(
-    { portalContainer }: ManagerParameter,
+    { portalContainer }: ManagerMethodParameter,
     extension: Extension<DropCursorExtensionOptions>,
   ) {
     this.portalContainer = portalContainer;
@@ -295,7 +295,7 @@ interface CreateDropPlaceholderParameter {
  * Create a drop cursor plugin which adds a decoration to the position that is currently being dragged over.
  */
 export function dropCursorPlugin(
-  parameters: ManagerParameter,
+  parameters: ManagerMethodParameter,
   extension: Extension<DropCursorExtensionOptions>,
 ) {
   const dropCursorState = new DropCursorState(parameters, extension);

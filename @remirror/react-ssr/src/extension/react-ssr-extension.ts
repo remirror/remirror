@@ -4,7 +4,7 @@ import {
   ExtensionCommandReturn,
   ExtensionFactory,
   ExtensionHelperReturn,
-  ManagerParameter,
+  ManagerMethodParameter,
 } from '@remirror/core';
 
 import { DEFAULT_TRANSFORMATIONS, SSRTransformer } from './react-ssr-helpers';
@@ -121,7 +121,7 @@ declare global {
        * only one child of the parent
        */
       createSSRTransformer?: (
-        parameter: ManagerParameter,
+        parameter: ManagerMethodParameter,
         extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
       ) => SSRTransformer;
     }

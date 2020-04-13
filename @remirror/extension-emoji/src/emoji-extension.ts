@@ -5,7 +5,7 @@ import {
   Extension,
   FromToParameter,
   isNullOrUndefined,
-  ManagerParameter,
+  ManagerMethodParameter,
   noop,
   object,
   plainInputRule,
@@ -156,7 +156,7 @@ export class EmojiExtension extends Extension<EmojiExtensionOptions> {
 
   public suggesters({
     getCommands: getActions,
-  }: ManagerParameter): Suggestion<EmojiSuggestCommand> {
+  }: ManagerMethodParameter): Suggestion<EmojiSuggestCommand> {
     const {
       suggestionCharacter,
       suggestionKeyBindings,

@@ -20,7 +20,7 @@ import { Extension, ExtensionFactory } from '../extension';
 import {
   ExtensionCommandReturn,
   ExtensionHelperReturn,
-  ManagerParameter,
+  ManagerMethodParameter,
   ManagerTypeParameter,
 } from '../types';
 
@@ -58,7 +58,7 @@ interface KeymapExtensionOptions {
    * }});
    * ```
    */
-  keymap?: KeyBindings | ((params: ManagerParameter) => KeyBindings);
+  keymap?: KeyBindings | ((params: ManagerMethodParameter) => KeyBindings);
 
   /**
    * When true will exclude the default prosemirror keymap.
