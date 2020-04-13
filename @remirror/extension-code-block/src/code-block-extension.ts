@@ -181,7 +181,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionOptions>
    * Create an input rule that listens converts the code fence into a code block with space.
    */
   public inputRules({ type }: ExtensionManagerNodeTypeParams) {
-    const regexp = /^```([a-zA-Z]*)? $/;
+    const regexp = /^```([a-zA-Z0-9]*) $/;
     const getAttrs: GetAttrs = match => {
       const language = getLanguage({
         language: getMatchString(match, 1),

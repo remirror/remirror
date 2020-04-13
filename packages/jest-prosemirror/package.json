@@ -50,7 +50,7 @@
     "test-keyboard": "^0.7.6"
   },
   "peerDependencies": {
-    "jest": "^24"
+    "jest": ">= 24"
   },
   "publishConfig": {
     "access": "public"

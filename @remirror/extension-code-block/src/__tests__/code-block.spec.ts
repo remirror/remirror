@@ -2,10 +2,13 @@ import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
 import typescriptPlugin from 'prettier/parser-typescript';
 import { formatWithCursor } from 'prettier/standalone';
+import cssExtras from 'refractor/lang/css-extras';
+import graphql from 'refractor/lang/graphql';
 import javascript from 'refractor/lang/javascript';
 import markdown from 'refractor/lang/markdown';
 import tsx from 'refractor/lang/tsx';
 import typescript from 'refractor/lang/typescript';
+import yaml from 'refractor/lang/yaml';
 
 import { fromHTML, toHTML } from '@remirror/core';
 import { BaseKeymapExtension } from '@remirror/core-extensions';
@@ -414,5 +417,44 @@ describe('commands', () => {
         ),
       );
     });
+  });
+});
+
+describe('language', () => {
+  const getLang = (language: string) =>
+    getLanguage({
+      language,
+      supportedLanguages: [yaml, graphql, cssExtras],
+      fallback: '',
+    });
+
+  it('yaml', () => {
+    expect(yaml.name).toEqual('yaml');
+    expect(yaml.aliases[0]).toEqual('yml');
+
+    expect(getLang('yaml')).toEqual(yaml.name);
+    expect(getLang('yml')).toEqual(yaml.aliases[0]);
+    expect(getLang('YAML')).toEqual(yaml.name);
+    expect(getLang('YML')).toEqual(yaml.aliases[0]);
+  });
+
+  it('graphql', () => {
+    expect(graphql.name).toEqual('graphql');
+
+    expect(getLang('graphql')).toEqual(graphql.name);
+    expect(getLang('GraphQL')).toEqual(graphql.name);
+    expect(getLang('GRAPHQL')).toEqual(graphql.name);
+  });
+
+  it('cssExtras', () => {
+    expect(cssExtras.name).toEqual('cssExtras');
+
+    expect(getLang('cssExtras')).toEqual(cssExtras.name);
+    expect(getLang('cssextras')).toEqual(cssExtras.name);
+    expect(getLang('CSSExtras')).toEqual(cssExtras.name);
+  });
+
+  it('unknow', () => {
+    expect(getLang(`this_language_does_not_exist`)).toEqual('');
   });
 });
