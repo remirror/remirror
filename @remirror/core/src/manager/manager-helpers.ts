@@ -1,21 +1,10 @@
-import { ErrorConstant, MarkGroup, NodeGroup, Tag } from '@remirror/core-constants';
-import {
-  entries,
-  invariant,
-  isEmptyArray,
-  isFunction,
-  isUndefined,
-  object,
-  sort,
-} from '@remirror/core-helpers';
+import { ErrorConstant } from '@remirror/core-constants';
+import { entries, invariant, isEmptyArray, isFunction, object, sort } from '@remirror/core-helpers';
 import { AnyFunction, DispatchFunction } from '@remirror/core-types';
 
 import {
   AnyExtension,
   ExtensionListParameter,
-  ExtensionTags,
-  GetMarkNameUnion,
-  GetNodeNameUnion,
   isExtension,
   isMarkExtension,
   isNodeExtension,
@@ -24,12 +13,8 @@ import { AnyPreset, isPreset } from '../preset';
 import {
   CommandParameter,
   ExtensionCommandFunction,
-  GeneralExtensionTags,
   GetConstructor,
-  GetNameUnion,
   ManagerParameter,
-  MarkExtensionTags,
-  NodeExtensionTags,
 } from '../types';
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -394,68 +379,6 @@ export function ignoreFunctions(object_: Record<string, unknown>) {
   }
 
   return newObject;
-}
-
-/**
- * Create the extension tags which are passed into each extensions method to
- * enable dynamically generated rules and commands.
- */
-export function createExtensionTags<ExtensionUnion extends AnyExtension>(
-  extensions: readonly ExtensionUnion[],
-): ExtensionTags<ExtensionUnion> {
-  type MarkNames = GetMarkNameUnion<ExtensionUnion>;
-  type NodeNames = GetNodeNameUnion<ExtensionUnion>;
-  type AllNames = GetNameUnion<ExtensionUnion>;
-
-  const general: GeneralExtensionTags<AllNames> = {
-    [Tag.FormattingMark]: [],
-    [Tag.FormattingNode]: [],
-    [Tag.LastNodeCompatible]: [],
-    [Tag.NodeCursor]: [],
-  };
-
-  const mark: MarkExtensionTags<MarkNames> = {
-    [MarkGroup.Alignment]: [],
-    [MarkGroup.Behavior]: [],
-    [MarkGroup.Color]: [],
-    [MarkGroup.FontStyle]: [],
-    [MarkGroup.Indentation]: [],
-    [MarkGroup.Link]: [],
-    [MarkGroup.Code]: [],
-  };
-
-  const node: NodeExtensionTags<NodeNames> = {
-    [NodeGroup.Block]: [],
-    [NodeGroup.Inline]: [],
-  };
-
-  for (const extension of extensions) {
-    if (isNodeExtension(extension)) {
-      const group = extension.schema.group as NodeGroup;
-      const name = extension.name as NodeNames;
-
-      node[group] = isUndefined(node[group]) ? [name] : [...node[group], name];
-    }
-
-    if (isMarkExtension(extension)) {
-      const group = extension.schema.group as MarkGroup;
-      const name = extension.name as MarkNames;
-
-      mark[group] = isUndefined(mark[group]) ? [name] : [...mark[group], name];
-    }
-
-    for (const tag of extension.tags as Tag[]) {
-      general[tag] = isUndefined(general[tag])
-        ? [extension.name]
-        : [...general[tag], extension.name];
-    }
-  }
-
-  return {
-    general,
-    mark,
-    node,
-  };
 }
 
 /**

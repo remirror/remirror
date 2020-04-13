@@ -1,4 +1,3 @@
-import { Schema } from 'prosemirror-model';
 import { EditorState } from 'prosemirror-state';
 
 import {
@@ -32,7 +31,6 @@ import {
   CreateLifecycleMethodReturn,
   ExtensionFromConstructor,
   ExtensionLifecycleMethods,
-  ExtensionTags,
   HelpersFromExtensions,
   InitializeLifecycleMethodParameter,
   InitializeLifecycleMethodReturn,
@@ -49,7 +47,6 @@ import {
   ManagerParameter,
 } from '../types';
 import {
-  createExtensionTags,
   getParameterWithType,
   ignoreFunctions,
   ManagerPhase,
@@ -167,6 +164,9 @@ export class Manager<
    */
   #phase: ManagerPhase = ManagerPhase.None;
 
+  /**
+   * The settings used to create the manager.
+   */
   #settings: Remirror.ManagerSettings;
 
   /**
@@ -272,8 +272,6 @@ export class Manager<
     }
 
     this.afterCreate();
-
-    this.#store.tags = freeze(createExtensionTags(this.extensions));
 
     this.initialize();
   }
@@ -574,16 +572,6 @@ export class Manager<
   }
 
   /**
-   * Dynamically create the editor schema based on the extensions that have been
-   * passed in.
-   *
-   * This is called as soon as the Manager is created.
-   */
-  private createSchema(): SchemaFromExtension<ExtensionUnion> {
-    return new Schema({ nodes: this.nodes, marks: this.marks });
-  }
-
-  /**
    * Create the actions which are passed into the render props.
    *
    * RemirrorActions allow for checking if a node / mark is active, enabled, and
@@ -678,11 +666,6 @@ declare global {
        * The editor view stored by this instance.
        */
       view: EditorView<SchemaFromExtension<ExtensionUnion>>;
-
-      /**
-       * Store the built in and custom tags for the editor instance.
-       */
-      tags: Readonly<ExtensionTags<ExtensionUnion>>;
 
       /**
        * The commands defined within this manager.
