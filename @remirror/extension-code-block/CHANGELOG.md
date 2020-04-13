@@ -1,5 +1,17 @@
 # @remirror/extension-code-block
 
+## 0.12.0
+
+### Minor Changes
+
+- 44f85e79: Support syntax highlighting for uppercase language names.
+
+  Removed `getSupportedLanguagesMap` and `isSupportedLanguage`.
+
+### Patch Changes
+
+- a43b0fd5: Support syntax highlight for `json5` and `jinjia2`.
+
 ## 0.11.1
 
 ### Patch Changes

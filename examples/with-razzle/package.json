@@ -1,6 +1,6 @@
 {
   "name": "with-razzle",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "build": "razzle build",
@@ -10,7 +10,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.22",
     "@emotion/styled": "^10.0.23",
-    "@remirror/showcase": "^0.11.0",
+    "@remirror/showcase": "^0.12.0",
     "express": "^4.17.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
