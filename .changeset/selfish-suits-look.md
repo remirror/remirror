@@ -2,6 +2,6 @@
 "@remirror/extension-code-block": minor
 ---
 
-feat(code-extension): support syntax highlight for upper language names.
+Support syntax highlighting for uppercase language names.
 
 Removed `getSupportedLanguagesMap` and `isSupportedLanguage`.
