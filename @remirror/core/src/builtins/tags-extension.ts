@@ -1,4 +1,4 @@
-import { MarkGroup, NodeGroup, Tag } from '@remirror/core-constants';
+import { ExtensionTag, MarkGroup, NodeGroup } from '@remirror/core-constants';
 import { isUndefined } from '@remirror/core-helpers';
 import { EditorSchema } from '@remirror/core-types';
 
@@ -22,10 +22,10 @@ export const TagsExtension = ExtensionFactory.plain({
 
   onCreate(parameter) {
     const general: GeneralExtensionTags = {
-      [Tag.FormattingMark]: [],
-      [Tag.FormattingNode]: [],
-      [Tag.LastNodeCompatible]: [],
-      [Tag.NodeCursor]: [],
+      [ExtensionTag.FormattingMark]: [],
+      [ExtensionTag.FormattingNode]: [],
+      [ExtensionTag.LastNodeCompatible]: [],
+      [ExtensionTag.NodeCursor]: [],
     };
 
     const mark: MarkExtensionTags = {
@@ -59,7 +59,7 @@ export const TagsExtension = ExtensionFactory.plain({
           mark[group] = isUndefined(mark[group]) ? [name] : [...mark[group], name];
         }
 
-        for (const tag of extension.tags as Tag[]) {
+        for (const tag of extension.tags as ExtensionTag[]) {
           general[tag] = isUndefined(general[tag])
             ? [extension.name]
             : [...general[tag], extension.name];
@@ -68,8 +68,8 @@ export const TagsExtension = ExtensionFactory.plain({
       afterExtensionLoop() {
         const { setStoreKey, setManagerMethodParameter, getStoreKey } = parameter;
 
-        setStoreKey('tags', { general, mark, node });
-        setManagerMethodParameter('tags', () => getStoreKey('tags') as any);
+        setStoreKey('extensionTags', { general, mark, node });
+        setManagerMethodParameter('extensionTags', () => getStoreKey('extensionTags') as any);
       },
     };
   },
@@ -81,14 +81,14 @@ declare global {
       /**
        * Store the built in and custom tags for the editor instance.
        */
-      tags: Readonly<ExtensionTags<ExtensionUnion>>;
+      extensionTags: Readonly<ExtensionTags<ExtensionUnion>>;
     }
 
     export interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
       /**
        * The tags provided by the configured extensions.
        */
-      tags: () => ExtensionTags<AnyExtension>;
+      extensionTags: () => ExtensionTags<AnyExtension>;
     }
   }
 }

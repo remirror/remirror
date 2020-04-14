@@ -13,7 +13,7 @@ export {
   SELECTED_NODE_CLASS_NAME,
   SELECTED_NODE_CLASS_SELECTOR,
   Side,
-  Tag,
+  ExtensionTag,
   ZERO_WIDTH_SPACE_CHAR,
 } from './core-constants';
 export { ErrorConstant } from './error-constants';

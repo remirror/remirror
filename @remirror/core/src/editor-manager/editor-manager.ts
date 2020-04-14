@@ -215,8 +215,8 @@ export class EditorManager<
   /**
    * A shorthand getter for retrieving the tags from the extension manager.
    */
-  get tags() {
-    return this.#store.tags;
+  get extensionTags() {
+    return this.#store.extensionTags;
   }
 
   /**

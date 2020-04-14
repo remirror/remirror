@@ -50,7 +50,7 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionOptions>
   }
 
   get tags() {
-    return [Tag.LastNodeCompatible];
+    return [ExtensionTag.LastNodeCompatible];
   }
 
   get defaultOptions() {

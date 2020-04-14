@@ -1,9 +1,9 @@
 import {
   ExtensionPriority,
+  ExtensionTag,
   ExtensionType,
   REMIRROR_IDENTIFIER_KEY,
   RemirrorIdentifier,
-  Tag,
 } from '@remirror/core-constants';
 import {
   capitalize,
@@ -371,7 +371,7 @@ export abstract class Extension<
   /**
    * Retrieves the tags for this extension.
    */
-  get tags(): Array<Tag | string> {
+  get tags(): Array<ExtensionTag | string> {
     return this.parameter.tags ?? [];
   }
 
@@ -571,7 +571,7 @@ export interface BaseExtensionFactoryParameter<
    * There are internally defined tags but it's also possible to define any
    * custom string as a tag. See {@link Tags}
    */
-  tags?: Array<Tag | string>;
+  tags?: Array<ExtensionTag | string>;
 
   /**
    * An extension can declare the extensions it requires.

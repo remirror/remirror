@@ -1,6 +1,6 @@
 import { Attributes } from 'react';
 
-import { ExtensionPriority, MarkGroup, NodeGroup, Tag } from '@remirror/core-constants';
+import { ExtensionPriority, ExtensionTag, MarkGroup, NodeGroup } from '@remirror/core-constants';
 import {
   AnyFunction,
   AttributesParameter,
@@ -76,7 +76,7 @@ export type ChangedProperties<Properties extends object> = {
  * are mostly used for nodes and marks the main difference is they are added to
  * the `tags` parameter of the extension rather than within the schema.
  */
-export type GeneralExtensionTags<Names extends string = string> = Record<Tag, Names[]> &
+export type GeneralExtensionTags<Names extends string = string> = Record<ExtensionTag, Names[]> &
   Record<string, undefined | Names[]>;
 
 /**

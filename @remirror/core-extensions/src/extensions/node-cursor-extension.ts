@@ -128,7 +128,7 @@ export class NodeCursorExtension extends Extension<NodeCursorExtensionOptions> {
     };
   }
 
-  public plugin({ tags }: ManagerMethodParameter) {
+  public plugin({ extensionTags: tags }: ManagerMethodParameter) {
     return createNodeCursorExtensionPlugin(this, tags.general.nodeCursor);
   }
 }
