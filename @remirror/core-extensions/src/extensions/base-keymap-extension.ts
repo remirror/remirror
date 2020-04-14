@@ -9,14 +9,15 @@ import { undoInputRule } from 'prosemirror-inputrules';
 import {
   chainKeyBindingCommands,
   convertCommand,
-  Extension,
+  ExtensionFactory,
+  ExtensionPriority,
   hasOwnProperty,
   isFunction,
   KeyBindings,
   ManagerMethodParameter,
 } from '@remirror/core';
 
-export interface BaseKeymapExtensionOptions {
+interface KeymapExtensionSettings {
   /**
    * Determines whether a backspace after an input rule has been applied undoes the input rule.
    *
@@ -51,13 +52,20 @@ export interface BaseKeymapExtensionOptions {
    * ```
    */
   keymap?: KeyBindings | ((params: ManagerMethodParameter) => KeyBindings);
-}
 
-export const defaultBaseKeymapExtensionOptions: BaseKeymapExtensionOptions = {
-  undoInputRuleOnBackspace: true,
-  selectParentNodeOnEscape: false,
-  keymap: {},
-};
+  /**
+   * When true will exclude the default prosemirror keymap.
+   *
+   * @remarks
+   *
+   * You might want to set this to true if you want to fully customise the
+   * keyboard mappings for your editor. Otherwise it is advisable to leave it
+   * unchanged.
+   *
+   * @default `false`
+   */
+  excludeBaseKeymap?: boolean;
+}
 
 /**
  * Provides the expected default key mappings to the editor.
@@ -69,41 +77,55 @@ export const defaultBaseKeymapExtensionOptions: BaseKeymapExtensionOptions = {
  *
  * @builtin
  */
-export class BaseKeymapExtension extends Extension<BaseKeymapExtensionOptions> {
-  /**
-   * Shorthand method for creating the `BaseKeymapExtension`
-   */
-  public static create(options: BaseKeymapExtensionOptions) {
-    return new BaseKeymapExtension(options);
-  }
-
-  get name() {
-    return 'baseKeymap' as const;
-  }
-
-  get defaultOptions() {
-    return defaultBaseKeymapExtensionOptions;
-  }
+export const BaseKeymapExtension = ExtensionFactory.typed<KeymapExtensionSettings>().plain({
+  name: 'baseKeymap',
+  defaultPriority: ExtensionPriority.Low,
+  defaultSettings: {
+    undoInputRuleOnBackspace: true,
+    selectParentNodeOnEscape: false,
+    excludeBaseKeymap: false,
+    keymap: {},
+  },
 
   /**
-   * Injects the baseKeymap into the editor.
+   * Use the default keymaps available via
    */
-  public keys(parameters: ManagerMethodParameter) {
-    const { selectParentNodeOnEscape, undoInputRuleOnBackspace, keymap } = this.options;
-    const backspaceRule: KeyBindings = undoInputRuleOnBackspace
-      ? { Backspace: convertCommand(pmChainCommands(undoInputRule, baseKeymap.Backspace)) }
-      : {};
-    const escapeRule: KeyBindings = selectParentNodeOnEscape
-      ? { Escape: convertCommand(selectParentNode) }
-      : {};
+  createKeymap(parameter, extension) {
+    const {
+      selectParentNodeOnEscape,
+      undoInputRuleOnBackspace,
+      keymap,
+      excludeBaseKeymap,
+    } = extension.settings;
+
+    let base: KeyBindings = {};
+    let backspaceRule: KeyBindings = {};
+    let escapeRule: KeyBindings = {};
+
+    // Only add the base keymap if it is **NOT** excluded.
+    if (!excludeBaseKeymap) {
+      base = mapObject(baseKeymap, (key, value) => [key as string, convertCommand(value)]);
+    }
+
+    // Automatically remove the input rule when the option is set to true.
+    if (undoInputRuleOnBackspace) {
+      backspaceRule = {
+        Backspace: convertCommand(pmChainCommands(undoInputRule, baseKeymap.Backspace)),
+      };
+    }
+
+    // Allow escape to select the parent node when set to true.
+    if (selectParentNodeOnEscape) {
+      escapeRule = { Escape: convertCommand(selectParentNode) };
+    }
 
     const mappedKeys: KeyBindings = {
-      ...mapObject(baseKeymap, (key, value) => [key as string, convertCommand(value)]),
+      ...base,
       ...backspaceRule,
       ...escapeRule,
     };
 
-    const keyBindings = isFunction(keymap) ? keymap(parameters) : keymap;
+    const keyBindings = isFunction(keymap) ? keymap(parameter) : keymap;
 
     for (const key in keyBindings) {
       if (!hasOwnProperty(keymap, key)) {
@@ -117,5 +139,5 @@ export class BaseKeymapExtension extends Extension<BaseKeymapExtensionOptions> {
     }
 
     return mappedKeys;
-  }
-}
+  },
+});

@@ -6,7 +6,7 @@ export interface PresetParameter<PresetUnion extends AnyPreset> {
   preset: PresetUnion;
 }
 
-export interface PresetsParamter<PresetUnion extends AnyPreset> {
+export interface PresetListParameter<PresetUnion extends AnyPreset> {
   presets: PresetUnion[];
 }
 

@@ -16,7 +16,7 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  *
  * @builtin
  */
-const NodeViewsExtension = ExtensionFactory.plain({
+export const NodeViewsExtension = ExtensionFactory.plain({
   name: 'nodeView',
   defaultPriority: ExtensionPriority.Low,
 
@@ -107,5 +107,3 @@ declare global {
     }
   }
 }
-
-export { NodeViewsExtension };

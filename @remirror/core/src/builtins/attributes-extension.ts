@@ -17,7 +17,7 @@ import { ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
  *
  * @builtin
  */
-const AttributesExtension = ExtensionFactory.plain({
+export const AttributesExtension = ExtensionFactory.plain({
   name: 'attributes',
   defaultPriority: ExtensionPriority.Low,
 
@@ -108,5 +108,3 @@ declare global {
     }
   }
 }
-
-export { AttributesExtension };

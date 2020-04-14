@@ -118,7 +118,7 @@ function transformSchemaAttributes<
  *
  * @builtin
  */
-const SchemeExtension = ExtensionFactory.plain({
+export const SchemaExtension = ExtensionFactory.plain({
   name: 'schema',
 
   /**
@@ -270,5 +270,3 @@ declare global {
     }
   }
 }
-
-export { SchemeExtension };

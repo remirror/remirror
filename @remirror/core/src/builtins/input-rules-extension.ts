@@ -16,7 +16,7 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  *
  * @builtin
  */
-const InputRulesExtension = ExtensionFactory.plain({
+export const InputRulesExtension = ExtensionFactory.plain({
   name: 'inputRules',
   defaultPriority: ExtensionPriority.Low,
 
@@ -82,5 +82,3 @@ declare global {
     }
   }
 }
-
-export { InputRulesExtension };

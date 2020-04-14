@@ -21,7 +21,7 @@ import {
  *
  * @builtin
  */
-const PluginsExtension = ExtensionFactory.plain({
+export const PluginsExtension = ExtensionFactory.plain({
   name: 'plugins',
   defaultPriority: ExtensionPriority.Medium,
 
@@ -123,5 +123,3 @@ declare global {
     }
   }
 }
-
-export { PluginsExtension };

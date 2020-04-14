@@ -11,7 +11,7 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  *
  * @builtin
  */
-const PasteRulesExtension = ExtensionFactory.plain({
+export const PasteRulesExtension = ExtensionFactory.plain({
   name: 'pasteRules',
   defaultPriority: ExtensionPriority.Low,
 
@@ -78,5 +78,3 @@ declare global {
     }
   }
 }
-
-export { PasteRulesExtension };

@@ -579,7 +579,7 @@ export class Manager<
    *
    * An example usage of this is within the collaboration plugin.
    */
-  public onTransaction(parameter: OnTransactionManagerParameter) {
+  public onTransaction(parameter: ManagerTransactionHandlerParameter) {
     for (const onTransaction of this.#handlers.transaction) {
       onTransaction({ ...parameter, ...this.#methodParameter, view: this.store.view });
     }
@@ -625,7 +625,9 @@ export class Manager<
   }
 }
 
-export interface OnTransactionManagerParameter extends TransactionParameter, EditorStateParameter {}
+export interface ManagerTransactionHandlerParameter
+  extends TransactionParameter,
+    EditorStateParameter {}
 
 declare global {
   namespace Remirror {

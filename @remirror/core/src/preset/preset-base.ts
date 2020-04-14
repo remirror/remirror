@@ -201,7 +201,7 @@ export abstract class Preset<
 
     // Trigger the update handler so that child extension properties can also be
     // updated.
-    this.parameter.onSetProperties({
+    this.parameter.onSetProperties?.({
       previous,
       changes,
       update,
@@ -222,7 +222,7 @@ export abstract class Preset<
 
     // Trigger the update handler so that child extension properties can also be
     // updated.
-    this.parameter.onResetProperties({
+    this.parameter.onResetProperties?.({
       previous,
       changes,
       defaultProperties: update,
@@ -299,7 +299,7 @@ export interface BasePresetFactoryParameter<
   /**
    * Called when the properties are to be set.
    */
-  onSetProperties: (
+  onSetProperties?: (
     parameter: SetPropertiesParameter<ExtensionUnion, Settings, Properties>,
   ) => void;
 
@@ -307,7 +307,7 @@ export interface BasePresetFactoryParameter<
    * Called when resetting the properties for this preset. It allows you to
    * update the properties of the child extensions when reset is called.
    */
-  onResetProperties: (
+  onResetProperties?: (
     parameter: ResetPropertiesParameter<ExtensionUnion, Settings, Properties>,
   ) => void;
 }
