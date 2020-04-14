@@ -1,5 +1,11 @@
 # @remirror/editor-wysiwyg
 
+## 0.13.0
+
+### Minor Changes
+
+- 70ab69c8: Change import of w3c-keyname@2 from default to named due to breaking change in package.
+
 ## 0.12.0
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @remirror/showcase
 
+## 0.13.0
+
+### Patch Changes
+
+- Updated dependencies [70ab69c8]
+  - @remirror/editor-wysiwyg@0.13.0
+
 ## 0.12.0
 
 ### Patch Changes
