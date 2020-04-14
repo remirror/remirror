@@ -143,13 +143,11 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 <br />
 
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-
 ### Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 <table>
   <tr>
     <td align="center"><a href="https://ifiokjr.com"><img src="https://avatars2.githubusercontent.com/u/1160934?v=4" width="100px;" alt=""/><br /><sub><b>Ifiok Jr.</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=ifiokjr" title="Documentation">📖</a> <a href="https://github.com/remirror/remirror/commits?author=ifiokjr" title="Code">💻</a> <a href="#example-ifiokjr" title="Examples">💡</a> <a href="https://github.com/remirror/remirror/commits?author=ifiokjr" title="Tests">⚠️</a> <a href="#maintenance-ifiokjr" title="Maintenance">🚧</a></td>
@@ -162,10 +160,19 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
   </tr>
   <tr>
     <td align="center"><a href="https://splitinfinities.com"><img src="https://avatars0.githubusercontent.com/u/1245238?v=4" width="100px;" alt=""/><br /><sub><b>William M. Riley</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=splitinfinities" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Asplitinfinities" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://www.thebabyboxco.com"><img src="https://avatars3.githubusercontent.com/u/1892132?v=4" width="100px;" alt=""/><br /><sub><b>Adam Lane</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=Enalmada" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3AEnalmada" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://pensight.com"><img src="https://avatars0.githubusercontent.com/u/5213953?v=4" width="100px;" alt=""/><br /><sub><b>Tomas Cerskus</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=tomas-c" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Atomas-c" title="Bug reports">🐛</a> <a href="https://github.com/remirror/remirror/commits?author=tomas-c" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://lightpohl.me"><img src="https://avatars0.githubusercontent.com/u/4073684?v=4" width="100px;" alt=""/><br /><sub><b>Joshua Pohl</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=lightpohl" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Alightpohl" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://newline.co"><img src="https://avatars2.githubusercontent.com/u/4318?v=4" width="100px;" alt=""/><br /><sub><b>Nate Murray</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=jashmenn" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/zhaoyao91"><img src="https://avatars3.githubusercontent.com/u/3808838?v=4" width="100px;" alt=""/><br /><sub><b>Yao Zhao</b></sub></a><br /><a href="https://github.com/remirror/remirror/issues?q=author%3Azhaoyao91" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="http://hennessyevan.com"><img src="https://avatars1.githubusercontent.com/u/16711653?v=4" width="100px;" alt=""/><br /><sub><b>Evan Hennessy</b></sub></a><br /><a href="https://github.com/remirror/remirror/commits?author=hennessyevan" title="Code">💻</a> <a href="https://github.com/remirror/remirror/issues?q=author%3Ahennessyevan" title="Bug reports">🐛</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/watlandc"><img src="https://avatars3.githubusercontent.com/u/6117504?v=4" width="100px;" alt=""/><br /><sub><b>Chris Watland</b></sub></a><br /><a href="https://github.com/remirror/remirror/issues?q=author%3Awatlandc" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->

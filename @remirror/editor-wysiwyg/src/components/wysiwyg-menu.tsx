@@ -1,4 +1,5 @@
 /** @jsx jsx */
+
 import { jsx } from '@emotion/core';
 import {
   ChangeEventHandler,
@@ -12,7 +13,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import keyNames from 'w3c-keyname';
+import { keyName } from 'w3c-keyname';
 
 import {
   AnyFunction,
@@ -263,7 +264,7 @@ const LinkInput: FC<LinkInputProps> = ({
   };
 
   const onKeyPress: KeyboardEventHandler<HTMLInputElement> = (event) => {
-    const key = keyNames.keyName(event.nativeEvent);
+    const key = keyName(event.nativeEvent);
     if (key === 'Escape') {
       event.preventDefault();
       deactivateLink();

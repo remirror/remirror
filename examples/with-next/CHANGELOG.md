@@ -1,5 +1,23 @@
 # with-next
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies [70ab69c8]
+  - @remirror/editor-wysiwyg@0.13.0
+  - @remirror/showcase@0.13.0
+
+## 0.0.6
+
+### Patch Changes
+
+- Updated dependencies [a43b0fd5]
+- Updated dependencies [44f85e79]
+  - @remirror/extension-code-block@0.12.0
+  - @remirror/editor-wysiwyg@0.12.0
+  - @remirror/showcase@0.12.0
+
 ## 0.0.5
 
 ### Patch Changes

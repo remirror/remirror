@@ -1,6 +1,6 @@
 {
   "name": "@remirror/editor-wysiwyg",
-  "version": "0.11.0",
+  "version": "0.13.0",
   "description": "ui for a what you see is what you get (wysiwyg) editing experience",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/editor-wysiwyg",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/editor-wysiwyg",
@@ -19,7 +19,7 @@
     "@emotion/styled": "^10.0.17",
     "@remirror/core": "^0.11.0",
     "@remirror/core-extensions": "^0.11.0",
-    "@remirror/extension-code-block": "^0.11.0",
+    "@remirror/extension-code-block": "^0.12.0",
     "@remirror/extension-drop-cursor": "^0.11.0",
     "@remirror/extension-image": "^0.11.0",
     "@remirror/react": "^0.11.0",

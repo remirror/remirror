@@ -1,6 +1,6 @@
 {
   "name": "jest-prosemirror",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Write expressive tests for your prosemirror editor",
   "keywords": [
     "jest",
@@ -50,7 +50,7 @@
     "test-keyboard": "^0.7.6"
   },
   "peerDependencies": {
-    "jest": "^24"
+    "jest": ">= 24"
   },
   "publishConfig": {
     "access": "public"

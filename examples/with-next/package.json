@@ -1,6 +1,6 @@
 {
   "name": "with-next",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "private": true,
   "scripts": {
     "build": "next build",
@@ -13,10 +13,10 @@
     "@remirror/core": "^0.11.0",
     "@remirror/core-extensions": "^0.11.0",
     "@remirror/editor-social": "^0.11.0",
-    "@remirror/editor-wysiwyg": "^0.11.0",
-    "@remirror/extension-code-block": "^0.11.0",
+    "@remirror/editor-wysiwyg": "^0.13.0",
+    "@remirror/extension-code-block": "^0.12.0",
     "@remirror/react": "^0.11.0",
-    "@remirror/showcase": "^0.11.0",
+    "@remirror/showcase": "^0.13.0",
     "next": "^9.3.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

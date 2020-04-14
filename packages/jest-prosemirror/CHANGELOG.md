@@ -1,5 +1,11 @@
 # jest-prosemirror
 
+## 0.8.3
+
+### Patch Changes
+
+- b134e437: Support `jest` v25+.
+
 ## 0.8.2
 
 ### Patch Changes
