@@ -59,9 +59,7 @@ export interface PresetConstructor<
  *
  * @param value - the preset to check
  */
-export function isPreset<Settings extends object = any>(
-  value: unknown,
-): value is AnyExtension<Settings> {
+export function isPreset(value: unknown): value is AnyPreset {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Preset);
 }
 

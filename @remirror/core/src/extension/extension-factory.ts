@@ -1,8 +1,4 @@
-import {
-  ExtensionType,
-  REMIRROR_IDENTIFIER_KEY,
-  RemirrorIdentifier,
-} from '@remirror/core-constants';
+import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
 import { Cast, freeze, isRemirrorType, keys, uniqueArray } from '@remirror/core-helpers';
 import { IfNoRequiredProperties } from '@remirror/core-types';
 
@@ -10,7 +6,6 @@ import { BaseExtensionSettings, ExtensionCommandReturn, ExtensionHelperReturn } 
 import {
   AnyExtensionConstructor,
   defaultSettings,
-  Extension,
   ExtensionFactoryParameter,
   MarkExtension,
   MarkExtensionConstructor,
@@ -18,6 +13,7 @@ import {
   NodeExtension,
   NodeExtensionConstructor,
   NodeExtensionFactoryParameter,
+  PlainExtension,
   PlainExtensionConstructor,
 } from './extension-base';
 
@@ -43,7 +39,7 @@ function createBaseExtensionFactory<
     ): PlainExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
       const parameter = freeze(factoryParameter);
 
-      class PlainConstructor extends Extension<Name, Settings, Properties, Commands, Helpers> {
+      class PlainConstructor extends PlainExtension<Name, Settings, Properties, Commands, Helpers> {
         /**
          * Identifies this as a `PlainExtensionConstructor`.
          *
@@ -82,13 +78,6 @@ function createBaseExtensionFactory<
          */
         public static of(...arguments_: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
           return new PlainConstructor(...arguments_);
-        }
-
-        /**
-         * Set this extension to be a plain type.
-         */
-        get type() {
-          return ExtensionType.Plain as const;
         }
 
         /**

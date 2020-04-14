@@ -16,6 +16,7 @@ export type {
   AnyNodeExtension,
   AnyPlainExtension,
   Extension,
+  GetExtensionUnion,
   MarkExtension,
   NodeExtension,
   PlainExtension,
@@ -23,14 +24,16 @@ export type {
 } from './extension';
 
 export { Manager, isManager } from './manager';
-export type {
-  GetExtensionUnion,
-  GetPresetUnion,
-  ManagerTransactionHandlerParameter,
-} from './manager';
+export type { ManagerTransactionHandlerParameter } from './manager';
 
 export { PresetFactory, isPreset, isPresetConstructor } from './preset';
-export type { Preset, PresetConstructor, PresetListParameter, PresetParameter } from './preset';
+export type {
+  GetPresetUnion,
+  Preset,
+  PresetConstructor,
+  PresetListParameter,
+  PresetParameter,
+} from './preset';
 
 export type {
   ExtensionCommandReturn,

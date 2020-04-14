@@ -60,8 +60,6 @@ function createPresetFactory<Settings extends object = {}, Properties extends ob
  * The factory for creating a new preset.
  */
 export const PresetFactory = {
-  ...createPresetFactory(),
-
   /**
    * A pattern which allows you to specify the exact types for the preset
    * settings and properties. Without it, the typescript compiler would try and

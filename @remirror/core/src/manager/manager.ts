@@ -23,8 +23,10 @@ import {
 } from '@remirror/core-types';
 import { createDocumentNode, CreateDocumentNodeParameter } from '@remirror/core-utils';
 
+import { BuiltInExtensions, BuiltinPreset } from '../builtins';
 import {
   AnyExtension,
+  AnyExtensionConstructor,
   CreateLifecycleMethodParameter,
   CreateLifecycleMethodReturn,
   ExtensionFromConstructor,
@@ -124,11 +126,11 @@ export class Manager<
     SchemaFromExtension<ExtensionUnion>
   > = this.createInitialMethodParameter();
 
-  #extensions: readonly ExtensionUnion[];
-  #extensionMap: WeakMap<GetConstructor<ExtensionUnion>, ExtensionUnion>;
+  #extensions: ReadonlyArray<ExtensionUnion | BuiltInExtensions>;
+  #extensionMap: WeakMap<AnyExtensionConstructor, ExtensionUnion | BuiltInExtensions>;
 
-  #presets: readonly PresetUnion[];
-  #presetMap: WeakMap<GetConstructor<PresetUnion>, PresetUnion>;
+  #presets: ReadonlyArray<PresetUnion | BuiltinPreset>;
+  #presetMap: WeakMap<GetConstructor<PresetUnion | BuiltinPreset>, PresetUnion | BuiltinPreset>;
 
   /**
    * The extension manager store.
@@ -177,7 +179,7 @@ export class Manager<
   /**
    * The preset stored by this manager
    */
-  get presets(): readonly PresetUnion[] {
+  get presets() {
     return this.#presets;
   }
 
@@ -379,7 +381,7 @@ export class Manager<
   /**
    * Called during the extension loop of the initialization phase.
    */
-  private onCreateExtensionLoop(extension: ExtensionUnion) {
+  private onCreateExtensionLoop(extension: this['extensions'][number]) {
     for (const { forEachExtension } of this.#handlers.create) {
       forEachExtension?.(extension);
     }
@@ -406,7 +408,7 @@ export class Manager<
   /**
    * Called during the extension loop of the initialization phase.
    */
-  private onInitializeExtensionLoop(extension: ExtensionUnion) {
+  private onInitializeExtensionLoop(extension: this['extensions'][number]) {
     for (const { forEachExtension } of this.#handlers.initialize) {
       forEachExtension?.(extension);
     }
@@ -424,7 +426,10 @@ export class Manager<
   /**
    * Called during the extension loop of the initialization phase.
    */
-  private onViewExtensionLoop(extension: ExtensionUnion, view: EditorView<EditorSchema>) {
+  private onViewExtensionLoop(
+    extension: this['extensions'][number],
+    view: EditorView<EditorSchema>,
+  ) {
     for (const { forEachExtension } of this.#handlers.view) {
       forEachExtension?.(extension, view);
     }
@@ -588,7 +593,7 @@ export class Manager<
   /**
    * Get the extension instance matching the provided constructor from the
    */
-  public getExtension<ExtensionConstructor extends GetConstructor<ExtensionUnion>>(
+  public getExtension<ExtensionConstructor extends GetConstructor<this['extensions'][number]>>(
     Constructor: ExtensionConstructor,
   ): ExtensionFromConstructor<ExtensionConstructor> {
     const extension = this.#extensionMap.get(Constructor);

@@ -1,3 +1,4 @@
+import { ExtensionFromConstructor } from '../extension';
 import { PresetFactory } from '../preset';
 import { AttributesExtension } from './attributes-extension';
 import { CommandsExtension } from './commands-extension';
@@ -26,9 +27,6 @@ export const builtInExtensions = [
   TagsExtension,
 ] as const;
 
-/** The built in extension as a type. */
-export type BuiltInExtensions = typeof builtInExtensions[number];
-
 /**
  * Provides all the builtin extensions to the editor.
  *
@@ -41,7 +39,7 @@ export type BuiltInExtensions = typeof builtInExtensions[number];
  *
  * @builtin
  */
-export const BuiltinPreset = PresetFactory.preset({
+const BuiltinPreset = PresetFactory.typed().preset({
   name: 'builtin',
   createExtensions() {
     return builtInExtensions.map((extension) => extension.of());
@@ -52,3 +50,11 @@ export const BuiltinPreset = PresetFactory.preset({
  * The builtin preset to be injected into all editors by default.
  */
 export const builtinPreset = BuiltinPreset.of();
+
+/**
+ * The type of builtinPreset which allows for extracting the editor shape.
+ */
+export type BuiltinPreset = typeof builtinPreset;
+
+/** The built in extension as a type. */
+export type BuiltInExtensions = ExtensionFromConstructor<typeof builtInExtensions[number]>;

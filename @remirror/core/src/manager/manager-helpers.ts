@@ -1,50 +1,17 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { invariant, isEmptyArray, isFunction, object, sort } from '@remirror/core-helpers';
 
-import { AnyExtension, isExtension, isMarkExtension, isNodeExtension } from '../extension';
+import { BuiltInExtensions, BuiltinPreset, builtinPreset } from '../builtins';
+import {
+  AnyExtension,
+  AnyExtensionConstructor,
+  ExtensionFromConstructor,
+  isExtension,
+  isMarkExtension,
+  isNodeExtension,
+} from '../extension';
 import { AnyPreset, isPreset } from '../preset';
 import { GetConstructor, ManagerMethodParameter } from '../types';
-
-export interface IsNameUniqueParameter {
-  /**
-   * The name to check against
-   */
-  name: string;
-
-  /**
-   * The set to check within
-   */
-  set: Set<string>;
-
-  /**
-   * The error code to use
-   *
-   * @defaultValue 'extension'
-   */
-  code: ErrorConstant.DUPLICATE_HELPER_NAMES | ErrorConstant.DUPLICATE_COMMAND_NAMES;
-}
-
-const codeLabelMap = {
-  [ErrorConstant.DUPLICATE_HELPER_NAMES]: 'helper method',
-  [ErrorConstant.DUPLICATE_COMMAND_NAMES]: 'command method',
-};
-
-/**
- * Checks whether a given string is unique to the set. Add the name if it
- * doesn't already exist, or throw an error when `shouldThrow` is true.
- *
- * @param parameter - destructured params
- */
-export function throwIfNameNotUnique(parameter: IsNameUniqueParameter) {
-  const { name, set, code } = parameter;
-  const label = codeLabelMap[code];
-
-  invariant(!set.has(name), {
-    message: `There is a naming conflict for the name: ${name} used in this '${label}'. Please rename or remove from the editor to avoid runtime errors.`,
-  });
-
-  set.add(name);
-}
 
 /**
  * Get the params to which will be passed into the extension method call.
@@ -67,43 +34,17 @@ export function getParameterWithType<
   return parameter as any;
 }
 
-// /**
-//  * Generate all the helpers from the extension list.
-//  *
-//  * Helpers are functions which enable extensions to provide useful information
-//  * or transformations to their consumers and other extensions.
-//  */
-// const createHelpers = ({ extensions, params }: CreateHelpersParameter) => {
-//   const getItemParameters = (extension: Required<Pick<AnyExtension, 'helpers'>>) =>
-//     extension.helpers({
-//       ...params,
-//       ...getParameterWithType(extension, params),
-//     });
-
-//   const items: Record<string, AnyFunction> = object();
-//   const names = new Set<string>();
-
-//   extensions.filter(hasExtensionProperty('helpers')).forEach((currentExtension) => {
-//     const item = getItemParameters(currentExtension);
-
-//     Object.entries(item).forEach(([name, helper]) => {
-//       isNameUnique({ name, set: names, shouldThrow: true });
-
-//       items[name] = helper;
-//     });
-//   });
-
-//   return items;
-// };
-
 export interface TransformExtensionOrPreset<
   ExtensionUnion extends AnyExtension,
   PresetUnion extends AnyPreset<ExtensionUnion>
 > {
-  extensions: ExtensionUnion[];
-  extensionMap: WeakMap<GetConstructor<ExtensionUnion>, ExtensionUnion>;
-  presets: PresetUnion[];
-  presetMap: WeakMap<GetConstructor<PresetUnion>, PresetUnion>;
+  extensions: Array<ExtensionUnion | BuiltInExtensions>;
+  extensionMap: WeakMap<
+    GetConstructor<ExtensionUnion | BuiltInExtensions>,
+    ExtensionUnion | BuiltInExtensions
+  >;
+  presets: Array<PresetUnion | BuiltinPreset>;
+  presetMap: WeakMap<GetConstructor<PresetUnion | BuiltinPreset>, PresetUnion | BuiltinPreset>;
 }
 
 /**
@@ -123,37 +64,42 @@ export function transformExtensionOrPreset<
   ExtensionUnion extends AnyExtension,
   PresetUnion extends AnyPreset<ExtensionUnion>
 >(
-  unionValues: Array<ExtensionUnion | PresetUnion>,
+  unionValues: ReadonlyArray<ExtensionUnion | PresetUnion>,
 ): TransformExtensionOrPreset<ExtensionUnion, PresetUnion> {
-  type ExtensionConstructor = GetConstructor<ExtensionUnion>;
-  type PresetConstructor = GetConstructor<PresetUnion>;
+  type BuiltinExtensionUnion = ExtensionUnion | BuiltInExtensions;
+  type BuiltinPresetUnion = PresetUnion | BuiltinPreset;
+  type ExtensionConstructor = GetConstructor<BuiltinExtensionUnion>;
+  type PresetConstructor = GetConstructor<BuiltinPresetUnion>;
   interface MissingConstructor {
-    Constructor: ExtensionConstructor;
-    extension: ExtensionUnion;
+    Constructor: AnyExtensionConstructor;
+    extension: BuiltinExtensionUnion;
   }
 
   // The items to return.
-  const presets = [] as PresetUnion[];
-  const extensionMap = new WeakMap<ExtensionConstructor, ExtensionUnion>();
-  const presetMap = new WeakMap<PresetConstructor, PresetUnion>();
-  const extensions = [] as ExtensionUnion[];
+  const presets: BuiltinPresetUnion[] = [];
+  const presetMap = new WeakMap<PresetConstructor, BuiltinPresetUnion>();
+  const extensions: BuiltinExtensionUnion[] = [];
+  const extensionMap = new WeakMap<ExtensionConstructor, BuiltinExtensionUnion>();
 
-  // Used to check track duplicates and the presets they've been added by.
-  const duplicateMap = new WeakMap<ExtensionConstructor, Array<PresetUnion | undefined>>();
+  // Used to track duplicates and the presets they've been added by.
+  const duplicateMap = new WeakMap<
+    AnyExtensionConstructor,
+    Array<BuiltinPresetUnion | undefined>
+  >();
 
-  // The extensions
-  let rawExtensions = [] as ExtensionUnion[];
+  // The unsorted, undeduped, unrefined extensions.
+  let rawExtensions: BuiltinExtensionUnion[] = [];
 
   /**
    * Adds the values to the duplicate map for checking duplicates.
    */
-  const updateDuplicateMap = (extension: ExtensionUnion, preset?: PresetUnion) => {
+  const updateDuplicateMap = (extension: BuiltinExtensionUnion, preset?: BuiltinPresetUnion) => {
     const key = extension.constructor;
     const duplicate = duplicateMap.get(key);
-    duplicateMap.set(key, duplicate ? [...duplicate, preset] : [preset]);
+    duplicateMap.set(key as never, duplicate ? [...duplicate, preset] : [preset]);
   };
 
-  for (const presetOrExtension of unionValues) {
+  for (const presetOrExtension of [builtinPreset, ...unionValues]) {
     // Update the extension list in this block
     if (isExtension(presetOrExtension)) {
       rawExtensions.push(presetOrExtension);
@@ -185,7 +131,7 @@ export function transformExtensionOrPreset<
   rawExtensions = sort(rawExtensions, (a, b) => a.priority - b.priority);
 
   // Keep track of added constructors for uniqueness.
-  const found = new WeakSet<ExtensionConstructor>();
+  const found = new WeakSet<AnyExtensionConstructor>();
 
   // Remove extension duplicates and update the preset with the non duplicated
   // value.
@@ -206,7 +152,9 @@ export function transformExtensionOrPreset<
     extensions.push(extension);
 
     // Replace the extensions for all presets that referenced this constructor.
-    duplicates.forEach((preset) => preset?.replaceExtension(key, extension));
+    duplicates.forEach((preset) =>
+      preset?.replaceExtension(key, extension as ExtensionFromConstructor<typeof key>),
+    );
   }
 
   const missing: MissingConstructor[] = [];
@@ -214,7 +162,7 @@ export function transformExtensionOrPreset<
   /**
    * Populate the missing Constructors.
    */
-  const findMissingExtensions = (extension: ExtensionUnion) => {
+  const findMissingExtensions = (extension: BuiltinExtensionUnion) => {
     for (const Constructor of extension.requiredExtensions) {
       if (found.has(Constructor)) {
         continue;

@@ -108,3 +108,8 @@ export interface GetExtensionParameter<ExtensionUnion extends AnyExtension> {
     Constructor: ExtensionConstructor,
   ) => ExtensionFromConstructor<ExtensionConstructor>;
 }
+
+/**
+ * Get the extensions from any type with an `extensions` property.
+ */
+export type GetExtensionUnion<Type extends ExtensionListParameter> = Type['extensions'][number];
