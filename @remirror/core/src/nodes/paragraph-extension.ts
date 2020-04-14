@@ -90,13 +90,12 @@ export const ParagraphExtension = ExtensionFactory.typed<ParagraphExtensionSetti
     indentLevels: INDENT_LEVELS,
   },
   createNodeSchema(parameter) {
-    const { createExtraAttributes, getExtraAttributes, settings } = parameter;
+    const { settings } = parameter;
 
     return {
       content: 'inline*',
       group: NodeGroup.Block,
       attrs: {
-        ...createExtraAttributes({ fallback: null }),
         align: { default: null },
         id: { default: null },
         indent: { default: 0 },
@@ -107,7 +106,6 @@ export const ParagraphExtension = ExtensionFactory.typed<ParagraphExtensionSetti
         {
           tag: 'p',
           getAttrs: (node) => ({
-            ...getExtraAttributes(node as HTMLElement),
             ...getAttributes(settings, node as HTMLElement),
           }),
         },
