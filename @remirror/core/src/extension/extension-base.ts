@@ -602,50 +602,7 @@ interface ExtensionCreatorMethods<
     Commands,
     Helpers,
     ProsemirrorType
-  > {
-  /**
-   * A helper method is a function that takes in arguments and returns
-   * a value depicting the state of the editor specific to this extension.
-   *
-   * @remarks
-   *
-   * Unlike commands they can return anything and they do not effect the
-   * behavior of the editor.
-   *
-   * Nodes and Marks provide the default `isActive` helper by default.
-   *
-   * Below is an example which should provide some idea on how to add helpers to the app.
-   *
-   * ```tsx
-   * // extension.ts
-   * import { ExtensionFactory } from '@remirror/core';
-   *
-   * const MyBeautifulExtension = ExtensionFactory.plain({
-   *   name: 'beautiful',
-   *   createHelpers: () => ({
-   *     checkBeautyLevel: () => 100
-   *   }),
-   * })
-   * ```
-   *
-   * ```
-   * // app.tsx
-   * import { useRemirror } from '@remirror/react';
-   *
-   * const MyEditor = () => {
-   *   const { helpers } = useRemirror();
-   *
-   *   return helpers.beautiful.checkBeautyLevel() > 50
-   *     ? (<span>😍</span>)
-   *     : (<span>😢</span>);
-   * };
-   * ```
-   */
-  createHelpers?: (
-    parameter: CreateHelpersParameter<ProsemirrorType>,
-    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
-  ) => Helpers;
-}
+  > {}
 
 export interface ExtensionLifecycleMethods {
   /**

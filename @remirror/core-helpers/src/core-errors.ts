@@ -28,7 +28,6 @@ if (process.env.NODE !== 'production') {
     [ErrorConstant.MISSING_REQUIRED_EXTENSION]: 'Your editor is missing a required extension.',
     [ErrorConstant.MANAGER_PHASE_ERROR]:
       'Called a method event at the wrong time. Please make sure getter functions are only called with within the scope of the returned functions. They should not be called in the outer scope of your method.',
-
     [ErrorConstant.INVALID_PRESET_EXTENSION]:
       'You requested an invalid extension from the preset. Please check the `createExtensions` return method is returning an extension with the requested constructor.',
     [ErrorConstant.INVALID_MANAGER_ARGUMENTS]:
@@ -37,7 +36,11 @@ if (process.env.NODE !== 'production') {
       'The commands method which is passed into the `createCommands` function should only be called within the created command function otherwise it will not have access to the other commands.',
     [ErrorConstant.INVALID_MANAGER_EXTENSION]:
       'You requested an invalid extension from the manager.',
-    [ErrorConstant.INVALID_MANAGER_PRESET]: '',
+    [ErrorConstant.INVALID_MANAGER_PRESET]:
+      'The user requested an invalid preset from the manager.',
+    [ErrorConstant.DUPLICATE_COMMAND_NAMES]:
+      'Command method names must be unique within the editor.',
+    [ErrorConstant.DUPLICATE_HELPER_NAMES]: 'Helper method names must be unique within the editor.',
   };
 }
 

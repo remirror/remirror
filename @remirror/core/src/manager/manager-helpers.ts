@@ -17,12 +17,17 @@ export interface IsNameUniqueParameter {
   set: Set<string>;
 
   /**
-   * The type of the unique check
+   * The error code to use
    *
    * @defaultValue 'extension'
    */
-  type?: string;
+  code: ErrorConstant.DUPLICATE_HELPER_NAMES | ErrorConstant.DUPLICATE_COMMAND_NAMES;
 }
+
+const codeLabelMap = {
+  [ErrorConstant.DUPLICATE_HELPER_NAMES]: 'helper method',
+  [ErrorConstant.DUPLICATE_COMMAND_NAMES]: 'command method',
+};
 
 /**
  * Checks whether a given string is unique to the set. Add the name if it
@@ -31,10 +36,11 @@ export interface IsNameUniqueParameter {
  * @param parameter - destructured params
  */
 export function throwIfNameNotUnique(parameter: IsNameUniqueParameter) {
-  const { name, set, type = 'extension' } = parameter;
+  const { name, set, code } = parameter;
+  const label = codeLabelMap[code];
 
   invariant(!set.has(name), {
-    message: `There is a naming conflict for the name: ${name} used in this type: ${type}. Please rename to avoid runtime errors.`,
+    message: `There is a naming conflict for the name: ${name} used in this '${label}'. Please rename or remove from the editor to avoid runtime errors.`,
   });
 
   set.add(name);

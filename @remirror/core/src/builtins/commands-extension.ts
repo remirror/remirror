@@ -1,5 +1,6 @@
 import { EditorState } from 'prosemirror-state';
 
+import { ErrorConstant } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
 import { AnyFunction, DispatchFunction, EditorSchema, EditorView } from '@remirror/core-types';
 
@@ -73,15 +74,18 @@ function chainedFactory(parameter: ChainedFactoryParameter) {
   };
 }
 
+/**
+ * Create the extension commands from the passed extension.
+ */
 function createExtensionCommands(
-  extension: AnyExtension,
   parameter: CreateCommandsParameter<never>,
+  extension: AnyExtension,
 ) {
   return extension.parameter.createCommands?.(parameter, extension) ?? {};
 }
 
 /**
- * The names that are forbidden
+ * The names that are forbidden from being used as a command name.
  */
 const forbiddenNames = new Set(['run']);
 
@@ -100,11 +104,17 @@ export const CommandsExtension = ExtensionFactory.plain({
         const { setManagerMethodParameter, getStoreKey } = parameter;
 
         setManagerMethodParameter('commands', () => {
-          return getStoreKey('commands') as any;
+          const commands = getStoreKey('commands');
+          invariant(commands, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
+
+          return commands as any;
         });
 
         setManagerMethodParameter('dispatch', () => {
-          return getStoreKey('dispatch') as any;
+          const dispatch = getStoreKey('dispatch');
+          invariant(dispatch, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
+
+          return dispatch as any;
         });
       },
     };
@@ -135,11 +145,12 @@ export const CommandsExtension = ExtensionFactory.plain({
 
         const { getState } = commandParameter;
 
-        const extensionCommands = createExtensionCommands(extension, commandParameter);
+        const extensionCommands = createExtensionCommands(commandParameter, extension);
 
         for (const [name, command] of entries(extensionCommands)) {
-          throwIfNameNotUnique({ name, set: names });
+          throwIfNameNotUnique({ name, set: names, code: ErrorConstant.DUPLICATE_COMMAND_NAMES });
           invariant(!forbiddenNames.has(name), {
+            code: ErrorConstant.DUPLICATE_COMMAND_NAMES,
             message: 'The command name you chose is forbidden.',
           });
 

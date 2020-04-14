@@ -330,12 +330,6 @@ declare global {
        * A helper method for retrieving the state of the editor
        */
       getState: () => EditorState<Schema>;
-
-      /**
-       * Helper method to provide information about the content of the editor. Each
-       * extension can register its own helpers.
-       */
-      helpers: () => any;
     }
   }
 }

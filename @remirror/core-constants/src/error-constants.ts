@@ -7,24 +7,16 @@
  * reference the errors within search engines.
  */
 export enum ErrorConstant {
-  /**
-   * An error occurred in production. Details shall be hidden.
-   */
+  /** An error occurred in production. Details shall be hidden. */
   PROD = 'RMR0000',
 
-  /**
-   * An error happened but we're not quite sure why.
-   */
+  /** An error happened but we're not quite sure why. */
   UNKNOWN = 'RMR0001',
 
-  /**
-   * The arguments passed to the command method were invalid.
-   */
+  /** The arguments passed to the command method were invalid. */
   INVALID_COMMAND_ARGUMENTS = 'RMR0002',
 
-  /**
-   * This is a custom error possibly thrown by an external library.
-   */
+  /** This is a custom error possibly thrown by an external library. */
   CUSTOM = 'RMR0003',
 
   /**
@@ -33,19 +25,16 @@ export enum ErrorConstant {
    */
   CORE_HELPERS = 'RMR0004',
 
-  /**
-   * You have attempted to change a value that shouldn't be changed.
-   */
+  /** You have attempted to change a value that shouldn't be changed. */
   MUTATION = 'RMR0005',
 
   /**
-   * This is an error which should not occur and is internal to the remirror codebase.
+   * This is an error which should not occur and is internal to the remirror
+   * codebase.
    */
   INTERNAL = 'RMR0006',
 
-  /**
-   * You're editor is missing a required extension.
-   */
+  /** You're editor is missing a required extension. */
   MISSING_REQUIRED_EXTENSION = 'RMR0007',
 
   /**
@@ -75,14 +64,10 @@ export enum ErrorConstant {
    */
   COMMANDS_CALLED_IN_OUTER_SCOPE = 'RMR0012',
 
-  /**
-   * The user requested an invalid extension from the manager.
-   */
+  /** The user requested an invalid extension from the manager. */
   INVALID_MANAGER_EXTENSION = 'RMR0013',
 
-  /**
-   * The user requested an invalid preset from the manager.
-   */
+  /** The user requested an invalid preset from the manager. */
   INVALID_MANAGER_PRESET = 'RMR0014',
 
   /** Command method names must be unique within the editor. */
