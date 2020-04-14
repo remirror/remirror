@@ -1,5 +1,13 @@
 # with-next
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies [70ab69c8]
+  - @remirror/editor-wysiwyg@0.13.0
+  - @remirror/showcase@0.13.0
+
 ## 0.0.6
 
 ### Patch Changes
