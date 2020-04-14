@@ -115,6 +115,8 @@ function transformSchemaAttributes<
 /**
  * This extension creates the schema that is used throughout the rest of the
  * extension.
+ *
+ * @builtin
  */
 const SchemeExtension = ExtensionFactory.plain({
   name: 'schema',

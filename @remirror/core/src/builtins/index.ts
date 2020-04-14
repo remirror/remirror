@@ -5,7 +5,7 @@ import { KeymapExtension } from './keymap-extensions';
 import { NodeViewsExtension } from './node-views-extension';
 import { PasteRulesExtension } from './paste-rules-extension';
 import { PluginsExtension } from './plugins-extension';
-import { SuggestionExtension } from './suggestion-extension';
+import { SuggestionsExtension } from './suggestion-extension';
 
 export * from './attributes-extension';
 export * from './input-rules-extension';
@@ -22,7 +22,7 @@ export const builtInExtensions = [
   KeymapExtension,
   PasteRulesExtension,
   PluginsExtension,
-  SuggestionExtension,
+  SuggestionsExtension,
   DocExtension,
   TextExtension,
 ] as const;

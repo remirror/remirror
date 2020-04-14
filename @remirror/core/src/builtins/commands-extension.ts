@@ -92,8 +92,12 @@ const forbiddenNames = new Set(['run']);
 /**
  * Generate chained and unchained commands for making changes to the editor.
  *
+ * @remarks
+ *
  * Typically actions are used to create interactive menus. For example a menu
  * can use a command to toggle bold formatting or to undo the last action.
+ *
+ * @builtin
  */
 export const CommandsExtension = ExtensionFactory.plain({
   name: 'commands',

@@ -29,7 +29,6 @@ import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
 import {
   BaseExtensionSettings,
-  CreateHelpersParameter,
   CreateSchemaParameter,
   ExtensionCommandReturn,
   ExtensionHelperReturn,

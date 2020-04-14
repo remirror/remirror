@@ -58,21 +58,28 @@ export enum ErrorConstant {
   INVALID_MANAGER_ARGUMENTS = 'RMR0011',
 
   /**
-   * The commands method which is passed into the `createCommands` function
-   * should only be called within the created command function otherwise it will
-   * not have access to the other commands.
+   * The `commands` or `dispatch` method which is passed into the `create*`
+   * method should only be called within returned method since it relies on an
+   * active view (not present in the outer scope).
    */
   COMMANDS_CALLED_IN_OUTER_SCOPE = 'RMR0012',
 
+  /**
+   * The `helpers` method which is passed into the ``create*` method should only
+   * be called within returned method since it relies on an active view (not
+   * present in the outer scope).
+   */
+  HELPERS_CALLED_IN_OUTER_SCOPE = 'RMR0013',
+
   /** The user requested an invalid extension from the manager. */
-  INVALID_MANAGER_EXTENSION = 'RMR0013',
+  INVALID_MANAGER_EXTENSION = 'RMR0014',
 
   /** The user requested an invalid preset from the manager. */
-  INVALID_MANAGER_PRESET = 'RMR0014',
+  INVALID_MANAGER_PRESET = 'RMR0015',
 
   /** Command method names must be unique within the editor. */
-  DUPLICATE_COMMAND_NAMES = 'RMR0015',
+  DUPLICATE_COMMAND_NAMES = 'RMR0016',
 
   /** Helper method names must be unique within the editor. */
-  DUPLICATE_HELPER_NAMES = 'RMR0016',
+  DUPLICATE_HELPER_NAMES = 'RMR0017',
 }

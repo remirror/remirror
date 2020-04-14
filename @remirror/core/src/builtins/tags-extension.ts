@@ -14,8 +14,10 @@ import { GeneralExtensionTags, MarkExtensionTags, NodeExtensionTags } from '../t
 /**
  * Create the extension tags which are passed into each extensions method to
  * enable dynamically generated rules and commands.
+ *
+ * @builtin
  */
-export const CommandsExtension = ExtensionFactory.plain({
+export const TagsExtension = ExtensionFactory.plain({
   name: 'tags',
 
   onCreate(parameter) {

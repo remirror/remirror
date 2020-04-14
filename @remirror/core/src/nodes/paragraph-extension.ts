@@ -80,7 +80,7 @@ const getAttributes = (
  * The paragraph is one of the essential building blocks for a prosemirror
  * editor and by default it is provided to all editors.
  *
- * @builtin
+ * @core
  */
 export const ParagraphExtension = ExtensionFactory.typed<ParagraphExtensionSettings>().node({
   name: 'paragraph',

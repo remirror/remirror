@@ -18,13 +18,14 @@ export interface DocExtensionOptions {
  * editors.
  *
  * @required
- * @builtin
+ * @core
  */
 export const DocExtension = ExtensionFactory.typed<DocExtensionOptions>().node({
   name: 'doc',
   defaultSettings: {
     content: 'block+',
   },
+
   createNodeSchema(parameters) {
     return {
       content: parameters.settings.content,

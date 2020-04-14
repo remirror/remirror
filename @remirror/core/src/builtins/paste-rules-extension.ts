@@ -8,6 +8,8 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  * This extension allows others extension to add the `createPasteRules` method
  * for automatically transforming pasted text which matches a certain regex
  * pattern in the dom.
+ *
+ * @builtin
  */
 const PasteRulesExtension = ExtensionFactory.plain({
   name: 'pasteRules',

@@ -33,7 +33,9 @@ if (process.env.NODE !== 'production') {
     [ErrorConstant.INVALID_MANAGER_ARGUMENTS]:
       'Invalid value(s) passed into `Manager` constructor. Only `Presets` and `Extensions` are supported.',
     [ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE]:
-      'The commands method which is passed into the `createCommands` function should only be called within the created command function otherwise it will not have access to the other commands.',
+      'The `commands` or `dispatch` method which is passed into the `create*` method should only be called within returned method since it relies on an active view (not present in the outer scope).',
+    [ErrorConstant.HELPERS_CALLED_IN_OUTER_SCOPE]:
+      'The `helpers` method which is passed into the ``create*` method should only be called within returned method since it relies on an active view (not present in the outer scope).',
     [ErrorConstant.INVALID_MANAGER_EXTENSION]:
       'You requested an invalid extension from the manager.',
     [ErrorConstant.INVALID_MANAGER_PRESET]:

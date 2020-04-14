@@ -3,7 +3,7 @@ import { bool, object } from '@remirror/core-helpers';
 import { AttributesWithClass } from '@remirror/core-types';
 
 import { AnyExtension, Extension, ExtensionFactory } from '../extension';
-import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerMethodParameter } from '../types';
+import { ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
 
 /**
  * This extension allows others extension to add the `createAttributes` method
@@ -14,6 +14,8 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerMethodParameter }
  * Use this to include all the dynamically generated attributes provided by each
  * extension. High priority extensions have preference over the lower priority
  * extensions.
+ *
+ * @builtin
  */
 const AttributesExtension = ExtensionFactory.plain({
   name: 'attributes',

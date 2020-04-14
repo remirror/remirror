@@ -66,7 +66,8 @@ interface KeymapExtensionOptions {
    * @remarks
    *
    * You might want to set this to true if you want to fully customise the
-   * keyboard mappings for your editor. Otherwise it is advisable to leave it unchanged.
+   * keyboard mappings for your editor. Otherwise it is advisable to leave it
+   * unchanged.
    *
    * @default `false`
    */
@@ -75,8 +76,13 @@ interface KeymapExtensionOptions {
 
 /**
  * This extension allows others extension to use the `createKeymaps` method.
+ *
+ * @remarks
+ *
  * Keymaps are the way of controlling how the editor responds to a
  * keypress and different key combinations.
+ *
+ * @builtin
  */
 const KeymapExtension = ExtensionFactory.typed<KeymapExtensionOptions>().plain({
   name: 'keymap',

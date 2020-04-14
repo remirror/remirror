@@ -13,6 +13,8 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  *
  * This is an example of adding custom functionality to an extension via the
  * `ExtensionParameterMethods`.
+ *
+ * @builtin
  */
 const NodeViewsExtension = ExtensionFactory.plain({
   name: 'nodeView',

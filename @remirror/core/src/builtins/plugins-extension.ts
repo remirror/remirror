@@ -18,6 +18,8 @@ import {
  *
  * This is an example of adding custom functionality to an extension via the
  * `ExtensionParameterMethods`.
+ *
+ * @builtin
  */
 const PluginsExtension = ExtensionFactory.plain({
   name: 'plugins',

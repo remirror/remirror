@@ -1,5 +1,5 @@
 import { ErrorConstant } from '@remirror/core-constants';
-import { entries, object } from '@remirror/core-helpers';
+import { entries, invariant, object } from '@remirror/core-helpers';
 import { AnyFunction, EditorSchema } from '@remirror/core-types';
 
 import {
@@ -29,6 +29,8 @@ function createExtensionHelpers(parameter: CreateHelpersParameter<never>, extens
  * async commands.
  *
  * Also provides the default helpers used within the extension.
+ *
+ * @builtin
  */
 export const HelpersExtension = ExtensionFactory.plain({
   name: 'helpers',
@@ -39,7 +41,10 @@ export const HelpersExtension = ExtensionFactory.plain({
         const { setManagerMethodParameter, getStoreKey } = parameter;
 
         setManagerMethodParameter('helpers', () => {
-          return getStoreKey('helpers') as any;
+          const helpers = getStoreKey('helpers');
+          invariant(helpers, { code: ErrorConstant.HELPERS_CALLED_IN_OUTER_SCOPE });
+
+          return helpers as any;
         });
       },
     };
