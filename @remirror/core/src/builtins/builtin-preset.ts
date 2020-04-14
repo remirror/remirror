@@ -41,6 +41,7 @@ export type BuiltInExtensions = typeof builtInExtensions[number];
  * @builtin
  */
 export const BuiltinPreset = PresetFactory.preset({
+  name: 'builtin',
   createExtensions() {
     return builtInExtensions.map((extension) => extension.of());
   },

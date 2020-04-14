@@ -290,6 +290,11 @@ export interface BasePresetFactoryParameter<
   Properties extends object = {}
 > {
   /**
+   * The `camelCased` name of the preset.
+   */
+  name: string;
+
+  /**
    * Create the extensions which will be consumed by the preset.
    */
   createExtensions: (

@@ -1,5 +1,5 @@
 import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
-import { freeze, isIdentifierOfType, isRemirrorType } from '@remirror/core-helpers';
+import { freeze, isIdentifierOfType, isRemirrorType, startCase } from '@remirror/core-helpers';
 import { IfNoRequiredProperties } from '@remirror/core-types';
 
 import { AnyExtension } from '../extension';
@@ -14,33 +14,44 @@ function createPresetFactory<Settings extends object = {}, Properties extends ob
       factoryParameter: PresetFactoryParameter<ExtensionUnion, Settings, Properties>,
     ): PresetConstructor<ExtensionUnion, Settings, Properties> {
       const parameter = freeze(factoryParameter);
+      const presetClassName = `${startCase(parameter.name)}Preset`;
 
-      class EditorPresetConstructor extends Preset<ExtensionUnion, Settings, Properties> {
-        /**
-         * Identifies this as a `PresetConstructor`.
-         *
-         * @internal
-         */
-        static get [REMIRROR_IDENTIFIER_KEY]() {
-          return RemirrorIdentifier.PresetConstructor;
-        }
+      // This is wrapped in an object so that a readable name appears in error
+      // traces for better debugging. The name is taken from the
+      // `presetClassName` variable and is the only way to name a class.
+      const classNameHack: Record<
+        string,
+        PresetConstructor<ExtensionUnion, Settings, Properties>
+      > = {
+        [presetClassName]: class extends Preset<ExtensionUnion, Settings, Properties> {
+          /**
+           * Identifies this as a `PresetConstructor`.
+           *
+           * @internal
+           */
+          static get [REMIRROR_IDENTIFIER_KEY]() {
+            return RemirrorIdentifier.PresetConstructor;
+          }
 
-        public static of(...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
-          return new EditorPresetConstructor(...settings);
-        }
+          public static of(...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+            // Using this to refer to itself. If you ever want to pick the off
+            // method from here you would need to bind it to the constructor.
+            return new this(...settings);
+          }
 
-        private constructor(
-          ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
-        ) {
-          super(...settings);
-        }
+          private constructor(
+            ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
+          ) {
+            super(...settings);
+          }
 
-        public getFactoryParameter() {
-          return parameter;
-        }
-      }
+          public getFactoryParameter() {
+            return parameter;
+          }
+        },
+      };
 
-      return EditorPresetConstructor;
+      return classNameHack[presetClassName];
     },
   };
 }
