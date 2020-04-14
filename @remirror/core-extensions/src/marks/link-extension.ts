@@ -76,9 +76,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
     return {
       'Mod-k': ({ state, dispatch }) => {
         // if the selection is empty, expand it
-        const range = state.selection.empty
-          ? getSelectedWord(state)
-          : state.selection;
+        const range = state.selection.empty ? getSelectedWord(state) : state.selection;
 
         if (!range) {
           return false;
