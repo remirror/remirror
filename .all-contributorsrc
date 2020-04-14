@@ -89,6 +89,74 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "Enalmada",
+      "name": "Adam Lane",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1892132?v=4",
+      "profile": "https://www.thebabyboxco.com",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "tomas-c",
+      "name": "Tomas Cerskus",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5213953?v=4",
+      "profile": "https://pensight.com",
+      "contributions": [
+        "code",
+        "bug",
+        "test"
+      ]
+    },
+    {
+      "login": "lightpohl",
+      "name": "Joshua Pohl",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/4073684?v=4",
+      "profile": "https://lightpohl.me",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "jashmenn",
+      "name": "Nate Murray",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/4318?v=4",
+      "profile": "https://newline.co",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "zhaoyao91",
+      "name": "Yao Zhao",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3808838?v=4",
+      "profile": "https://github.com/zhaoyao91",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "hennessyevan",
+      "name": "Evan Hennessy",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/16711653?v=4",
+      "profile": "http://hennessyevan.com",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "watlandc",
+      "name": "Chris Watland",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6117504?v=4",
+      "profile": "https://github.com/watlandc",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
