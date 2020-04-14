@@ -19,7 +19,7 @@ import { ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
  */
 export const AttributesExtension = ExtensionFactory.plain({
   name: 'attributes',
-  defaultPriority: ExtensionPriority.Low,
+  defaultPriority: ExtensionPriority.High,
 
   /**
    * Ensure that all ssr transformers are run.

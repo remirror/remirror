@@ -1,4 +1,5 @@
-import { freeze, keys } from '@remirror/core-helpers';
+import { ErrorConstant } from '@remirror/core-constants';
+import { freeze, invariant, keys } from '@remirror/core-helpers';
 
 import { ChangedProperties } from './types';
 
@@ -65,4 +66,45 @@ export interface GetChangedPropertiesReturn<Properties extends object> {
    * the object was changed this can be avoided.
    */
   changes: Readonly<ChangedProperties<Properties>>;
+}
+
+export interface IsNameUniqueParameter {
+  /**
+   * The name to check against
+   */
+  name: string;
+
+  /**
+   * The set to check within
+   */
+  set: Set<string>;
+
+  /**
+   * The error code to use
+   *
+   * @defaultValue 'extension'
+   */
+  code: ErrorConstant.DUPLICATE_HELPER_NAMES | ErrorConstant.DUPLICATE_COMMAND_NAMES;
+}
+
+const codeLabelMap = {
+  [ErrorConstant.DUPLICATE_HELPER_NAMES]: 'helper method',
+  [ErrorConstant.DUPLICATE_COMMAND_NAMES]: 'command method',
+};
+
+/**
+ * Checks whether a given string is unique to the set. Add the name if it
+ * doesn't already exist, or throw an error when `shouldThrow` is true.
+ *
+ * @param parameter - destructured params
+ */
+export function throwIfNameNotUnique(parameter: IsNameUniqueParameter) {
+  const { name, set, code } = parameter;
+  const label = codeLabelMap[code];
+
+  invariant(!set.has(name), {
+    message: `There is a naming conflict for the name: ${name} used in this '${label}'. Please rename or remove from the editor to avoid runtime errors.`,
+  });
+
+  set.add(name);
 }

@@ -9,7 +9,7 @@ import {
   ExtensionFromConstructor,
   HelpersFromExtensions,
 } from '../extension';
-import { throwIfNameNotUnique } from '../manager/manager-helpers';
+import { throwIfNameNotUnique } from '../helpers';
 import { CreateHelpersParameter, ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
 
 /**

@@ -13,7 +13,7 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  */
 export const PasteRulesExtension = ExtensionFactory.plain({
   name: 'pasteRules',
-  defaultPriority: ExtensionPriority.Low,
+  defaultPriority: ExtensionPriority.High,
 
   /**
    * Ensure that all ssr transformers are run.

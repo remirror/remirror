@@ -18,7 +18,7 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  */
 export const InputRulesExtension = ExtensionFactory.plain({
   name: 'inputRules',
-  defaultPriority: ExtensionPriority.Low,
+  defaultPriority: ExtensionPriority.High,
 
   /**
    * Ensure that all ssr transformers are run.

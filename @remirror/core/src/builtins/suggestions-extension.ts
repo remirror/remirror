@@ -19,7 +19,7 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  */
 export const SuggestionsExtension = ExtensionFactory.plain({
   name: 'suggestions',
-  defaultPriority: ExtensionPriority.Low,
+  defaultPriority: ExtensionPriority.High,
 
   /**
    * Ensure that all ssr transformers are run.

@@ -13,7 +13,7 @@ import {
   ExtensionFactory,
   ExtensionFromConstructor,
 } from '../extension';
-import { throwIfNameNotUnique } from '../manager/manager-helpers';
+import { throwIfNameNotUnique } from '../helpers';
 import {
   AnyCommands,
   CommandMethod,

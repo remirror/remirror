@@ -18,7 +18,7 @@ import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } f
  */
 export const NodeViewsExtension = ExtensionFactory.plain({
   name: 'nodeView',
-  defaultPriority: ExtensionPriority.Low,
+  defaultPriority: ExtensionPriority.High,
 
   /**
    * Ensure that all ssr transformers are run.

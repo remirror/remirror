@@ -26,6 +26,7 @@ export const builtInExtensions = [
   TagsExtension,
 ] as const;
 
+/** The built in extension as a type. */
 export type BuiltInExtensions = typeof builtInExtensions[number];
 
 /**
@@ -46,3 +47,8 @@ export const BuiltinPreset = PresetFactory.preset({
     return builtInExtensions.map((extension) => extension.of());
   },
 });
+
+/**
+ * The builtin preset to be injected into all editors by default.
+ */
+export const builtinPreset = BuiltinPreset.of();
