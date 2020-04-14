@@ -75,8 +75,9 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
   public keys(): KeyBindings {
     return {
       'Mod-k': ({ state, dispatch }) => {
-        // Expand selection
-        const range = getSelectedWord(state);
+        // if the selection is empty, expand it
+        const range = state.selection.empty ? getSelectedWord(state) : state.selection;
+
         if (!range) {
           return false;
         }
