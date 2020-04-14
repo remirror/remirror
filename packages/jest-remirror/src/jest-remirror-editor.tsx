@@ -15,11 +15,11 @@ import React from 'react';
 import {
   Cast,
   convertToPrioritizedExtension,
+  EditorManager,
   Extension,
   FlexibleExtension,
   isMarkExtension,
   isNodeExtension,
-  Manager,
   MarkExtension,
   NodeExtension,
   object,
@@ -88,7 +88,7 @@ export const renderEditor = <
     ...attributeMarks,
     ...attributeNodes,
   ].map(convertToPrioritizedExtension);
-  const manager = Manager.create(extensions);
+  const manager = EditorManager.create(extensions);
   let returnedParameters: InjectedRenderEditorProps<GExtension>;
 
   const utils = render(

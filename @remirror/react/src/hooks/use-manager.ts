@@ -1,4 +1,4 @@
-import { AnyExtension, AnyPreset, Manager, ManagerSettings } from '@remirror/core';
+import { AnyExtension, AnyPreset, EditorManager, ManagerSettings } from '@remirror/core';
 
 /**
  * Create a manager which can be passed into the editor.
@@ -12,5 +12,5 @@ export const useManager = <
 ) => {
   // No updates for now.
 
-  return Manager.of(extensionOrPresetList, settings);
+  return EditorManager.of(extensionOrPresetList, settings);
 };

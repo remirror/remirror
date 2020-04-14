@@ -4,7 +4,7 @@ import TestRenderer from 'react-test-renderer';
 
 import {
   DocExtension,
-  Manager,
+  EditorManager,
   NodeExtension,
   NodeExtensionSpec,
   NodeGroup,
@@ -50,7 +50,7 @@ test('ReactSerializer.fromManager', () => {
     { extension: new BoldExtension(), priority: 2 },
     { extension: new CodeBlockExtension(), priority: 2 },
   ];
-  const altManager = Manager.create(altExtensions);
+  const altManager = EditorManager.create(altExtensions);
 
   expect(ReactSerializer.fromManager(altManager).nodes.text).toBeFunction();
 });

@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { Manager } from '@remirror/core';
+import { EditorManager } from '@remirror/core';
 
 import { InjectedRenderEditorProps } from './react-types';
 
@@ -12,4 +12,4 @@ export const RemirrorContext = createContext<InjectedRenderEditorProps | null>(n
 /**
  * Creates a ReactContext for the RemirrorManager component
  */
-export const RemirrorManagerContext = createContext<Manager | null>(null);
+export const RemirrorManagerContext = createContext<EditorManager | null>(null);

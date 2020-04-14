@@ -1,7 +1,7 @@
 import { TestExtension } from '@remirror/test-fixtures';
 
 import { DocExtension, TextExtension } from '../../nodes';
-import { transformExtensionOrPreset } from '../manager-helpers';
+import { transformExtensionOrPreset } from '../editor-manager-helpers';
 
 describe('transformExtensionMap', () => {
   it('maps the extensions', () => {

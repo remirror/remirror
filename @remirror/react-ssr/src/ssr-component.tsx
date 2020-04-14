@@ -3,15 +3,15 @@
 import { jsx } from '@emotion/core';
 
 import {
+  EditorManager,
   EditorStateParameter,
   GetExtensionUnion,
-  Manager,
   PlainObject,
   SchemaFromExtension,
 } from '@remirror/core';
 import { mapProps, ReactSerializer } from '@remirror/react-renderer';
 
-export interface RemirrorSSRProps<ManagerType extends Manager = any>
+export interface RemirrorSSRProps<ManagerType extends EditorManager = any>
   extends EditorStateParameter<SchemaFromExtension<GetExtensionUnion<ManagerType>>> {
   /**
    * The attributes to pass into the root div element.
@@ -31,7 +31,7 @@ export interface RemirrorSSRProps<ManagerType extends Manager = any>
 /**
  * Remirror SSR component used for rendering in non dom environments
  */
-export const RemirrorSSR = <ManagerType extends Manager = any>({
+export const RemirrorSSR = <ManagerType extends EditorManager = any>({
   attributes,
   manager,
   state,

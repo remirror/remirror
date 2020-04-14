@@ -6,6 +6,7 @@ import {
   ChainedFromExtensions,
   CommandsFromExtensions,
   CompareStateParameter,
+  EditorManager,
   EditorSchema,
   EditorState,
   EditorStateParameter,
@@ -13,7 +14,7 @@ import {
   EditorViewParameter,
   ElementParameter,
   FromToParameter,
-  Manager,
+  GetExtensionUnion,
   ObjectNode,
   PlainObject,
   Position,
@@ -29,7 +30,6 @@ import {
   TransactionParameter,
   TransactionTransformer,
 } from '@remirror/core';
-import { GetExtensionUnion } from '@remirror/core/lib/manager/manager-types';
 
 /**
  * The type of arguments acceptable for the focus parameter.
@@ -41,7 +41,7 @@ import { GetExtensionUnion } from '@remirror/core/lib/manager/manager-types';
  */
 export type FocusType = FromToParameter | number | 'start' | 'end' | boolean;
 
-export interface RenderEditorProps<ManagerType extends Manager = Manager>
+export interface RenderEditorProps<ManagerType extends EditorManager = EditorManager>
   extends StringHandlerParameter {
   /**
    * Pass in the extension manager.
@@ -329,7 +329,7 @@ export type GetPositionerReturn<GRefKey extends string = 'ref'> =
  * These are the props passed to the render function provided when setting up
  * your editor.
  */
-export interface InjectedRenderEditorProps<ManagerType extends Manager = any> {
+export interface InjectedRenderEditorProps<ManagerType extends EditorManager = any> {
   /**
    * An instance of the extension manager
    */
@@ -443,7 +443,7 @@ export interface InjectedRenderEditorProps<ManagerType extends Manager = any> {
  *
  * @param - injected remirror params
  */
-export type RenderPropFunction<ManagerType extends Manager = any> = (
+export type RenderPropFunction<ManagerType extends EditorManager = any> = (
   params: InjectedRenderEditorProps<ManagerType>,
 ) => JSX.Element;
 

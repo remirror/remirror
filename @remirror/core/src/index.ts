@@ -23,8 +23,8 @@ export type {
   ExtensionTags,
 } from './extension';
 
-export { Manager, isManager } from './manager';
-export type { ManagerTransactionHandlerParameter } from './manager';
+export { EditorManager, isEditorManager } from './editor-manager';
+export type { ManagerTransactionHandlerParameter } from './editor-manager';
 
 export { PresetFactory, isPreset, isPresetConstructor } from './preset';
 export type {

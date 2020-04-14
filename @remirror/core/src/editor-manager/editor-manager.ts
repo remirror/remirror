@@ -45,14 +45,14 @@ import {
   ignoreFunctions,
   ManagerPhase,
   transformExtensionOrPreset as transformExtensionOrPresetList,
-} from './manager-helpers';
+} from './editor-manager-helpers';
 
 /**
  * Checks to see whether the provided value is an `Manager`.
  *
  * @param value - the value to check
  */
-export function isManager(value: unknown): value is Manager {
+export function isEditorManager(value: unknown): value is EditorManager {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
 }
 
@@ -99,7 +99,7 @@ export function isManager(value: unknown): value is Manager {
  * manager.data.actions
  * ```
  */
-export class Manager<
+export class EditorManager<
   ExtensionUnion extends AnyExtension = AnyExtension,
   PresetUnion extends AnyPreset<ExtensionUnion> = AnyPreset
 > {
@@ -113,7 +113,7 @@ export class Manager<
     extensionOrPresetList: Array<ExtensionUnion | PresetUnion>,
     settings: Remirror.ManagerSettings,
   ) {
-    return new Manager<ExtensionUnion, PresetUnion>(extensionOrPresetList, settings);
+    return new EditorManager<ExtensionUnion, PresetUnion>(extensionOrPresetList, settings);
   }
 
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
@@ -552,7 +552,7 @@ export class Manager<
    * @param otherManager - the value to test against
    */
   public isEqual(otherManager: unknown) {
-    if (!isManager(otherManager)) {
+    if (!isEditorManager(otherManager)) {
       return false;
     }
 

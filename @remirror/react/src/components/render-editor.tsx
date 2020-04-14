@@ -5,6 +5,7 @@ import {
   bool,
   clamp,
   EDITOR_CLASS_NAME,
+  EditorManager,
   EditorView as EditorViewType,
   fromHTML,
   FromToParameter,
@@ -14,7 +15,6 @@ import {
   isFunction,
   isNumber,
   isPlainObject,
-  Manager,
   object,
   ObjectNode,
   RemirrorContentType,
@@ -62,7 +62,7 @@ import {
   UpdateStateParameter,
 } from '../react-types';
 
-export class RenderEditor<ManagerType extends Manager = Manager> extends PureComponent<
+export class RenderEditor<ManagerType extends EditorManager = EditorManager> extends PureComponent<
   RenderEditorProps<ManagerType>,
   RemirrorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>>
 > {
@@ -254,7 +254,7 @@ export class RenderEditor<ManagerType extends Manager = Manager> extends PureCom
       key: this.uid,
       ...config,
       children: children ?? this.renderChildren(null),
-    } as RefKeyRootProps<GRefKey>;
+    };
   };
 
   /**
@@ -283,7 +283,7 @@ export class RenderEditor<ManagerType extends Manager = Manager> extends PureCom
     const returnValue: GetPositionerReturn<GRefKey> = {
       ...properties,
       [referenceKey]: reference,
-    } as any;
+    };
 
     return returnValue;
   };
@@ -362,7 +362,7 @@ export class RenderEditor<ManagerType extends Manager = Manager> extends PureCom
     positionerProperties = { ...positionerProperties, ...getPosition(parameters) };
     this.positionerMap.set(positionerId, { element, prev: positionerProperties });
 
-    return positionerProperties as PositionerProps;
+    return positionerProperties;
   }
 
   /**

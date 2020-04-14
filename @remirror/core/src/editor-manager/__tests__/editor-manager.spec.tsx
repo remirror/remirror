@@ -21,7 +21,7 @@ import {
 import { defaultRemirrorThemeValue } from '@remirror/ui';
 
 import { Extension } from '../../extension/extension-base';
-import { isManager, Manager } from '../manager';
+import { EditorManager, isEditorManager } from '../editor-manager';
 
 describe('Manager', () => {
   let state: EditorState;
@@ -73,7 +73,7 @@ describe('Manager', () => {
 
   const dummy = new DummyExtension();
   const big = new BigExtension();
-  let manager = Manager.of([
+  let manager = EditorManager.of([
     ...extensions,
     { extension: dummy, priority: 1 },
     { extension: big, priority: 10 },
@@ -82,7 +82,7 @@ describe('Manager', () => {
   let view: EditorView;
 
   beforeEach(() => {
-    manager = Manager.create([
+    manager = EditorManager.create([
       ...extensions,
       { extension: dummy, priority: 1 },
       { extension: big, priority: 10 },
@@ -140,8 +140,8 @@ describe('Manager', () => {
   });
 
   test('isManager', () => {
-    expect(isManager({})).toBeFalse();
-    expect(isManager(manager)).toBeTrue();
+    expect(isEditorManager({})).toBeFalse();
+    expect(isEditorManager(manager)).toBeTrue();
   });
 
   describe('#isEqual', () => {
@@ -199,7 +199,7 @@ test('keymaps', () => {
     }
   }
 
-  const manager = Manager.of([
+  const manager = EditorManager.of([
     ...baseExtensions,
     { extension: new FirstExtension(), priority: 1 },
     { extension: new SecondExtension(), priority: 10 },

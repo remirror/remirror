@@ -10,12 +10,12 @@ import typescript from 'refractor/lang/typescript';
 import {
   createDocumentNode,
   DocExtension,
+  EditorManager,
   EditorState,
   ExtensionsFromManager,
   isObjectNode,
   isProsemirrorNode,
   isString,
-  Manager,
   ProsemirrorNode,
   RemirrorContentType,
   SchemaFromExtension,
@@ -61,7 +61,7 @@ export type InternalEditorProps = Omit<RemirrorProviderProps, 'childAsRoot' | 'c
 const useMarkdownManager = () => {
   return useMemo(
     () =>
-      Manager.create([
+      EditorManager.create([
         { priority: 1, extension: new DocExtension({ content: 'block' }) },
         {
           priority: 1,
@@ -91,7 +91,7 @@ const InternalMarkdownEditor: FC<InternalEditorProps> = (properties) => {
 const useWysiwygManager = () => {
   return useMemo(
     () =>
-      Manager.create([
+      EditorManager.create([
         ...baseExtensions,
         new CodeBlockExtension({ supportedLanguages: [markdown, bash, tsx, typescript] }),
         new PlaceholderExtension(),

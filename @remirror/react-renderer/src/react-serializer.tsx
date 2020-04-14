@@ -7,11 +7,11 @@ import {
   AnyExtension,
   bool,
   DOMOutputSpec,
+  EditorManager,
   Fragment as ProsemirrorFragment,
   isArray,
   isPlainObject,
   isString,
-  Manager,
   Mark,
   MarkExtensionSpec,
   NodeExtensionSpec,
@@ -37,7 +37,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
   constructor(
     nodes: Record<string, NodeToDOM>,
     marks: Record<string, MarkToDOM>,
-    manager: Manager<GExtension>,
+    manager: EditorManager<GExtension>,
   ) {
     this.nodes = nodes;
     this.marks = marks;
@@ -150,7 +150,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
         }
         return jsx(Component, mapProps(props), wraps);
       }
-      children.push(ReactSerializer.renderSpec(child as DOMOutputSpec, wraps));
+      children.push(ReactSerializer.renderSpec(child, wraps));
     }
 
     return jsx(Component, mapProps(props), ...children);
@@ -161,7 +161,9 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
    *
    * @param manager
    */
-  public static fromManager<GExtension extends AnyExtension = any>(manager: Manager<GExtension>) {
+  public static fromManager<GExtension extends AnyExtension = any>(
+    manager: EditorManager<GExtension>,
+  ) {
     return new ReactSerializer(
       this.nodesFromManager(manager),
       this.marksFromManager(manager),
@@ -175,7 +177,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
    * @param manager
    */
   private static nodesFromManager<GExtension extends AnyExtension = any>(
-    manager: Manager<GExtension>,
+    manager: EditorManager<GExtension>,
   ) {
     const result = gatherToDOM(manager.nodes);
     if (!result.text) {
@@ -190,7 +192,7 @@ export class ReactSerializer<GExtension extends AnyExtension = any> {
    * @param manager
    */
   private static marksFromManager<GExtension extends AnyExtension = any>(
-    manager: Manager<GExtension>,
+    manager: EditorManager<GExtension>,
   ) {
     return gatherToDOM(manager.marks);
   }

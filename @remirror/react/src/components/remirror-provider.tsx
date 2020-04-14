@@ -3,7 +3,7 @@
 import { jsx } from '@emotion/core';
 import { ProviderProps, ReactElement } from 'react';
 
-import { MakeOptional, Manager } from '@remirror/core';
+import { EditorManager, MakeOptional } from '@remirror/core';
 import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
 
 import { defaultProps } from '../react-constants';
@@ -11,7 +11,7 @@ import { RemirrorContext } from '../react-contexts';
 import { GetRootPropsConfig, InjectedRenderEditorProps, RenderEditorProps } from '../react-types';
 import { RenderEditor } from './render-editor';
 
-export interface RemirrorContextProviderProps<ManagerType extends Manager = any>
+export interface RemirrorContextProviderProps<ManagerType extends EditorManager = any>
   extends ProviderProps<InjectedRenderEditorProps<ManagerType>> {
   /**
    * Sets the first child element as a the root (where the prosemirror editor
@@ -55,7 +55,7 @@ export interface RemirrorContextProviderProps<ManagerType extends Manager = any>
   childAsRoot?: GetRootPropsConfig<string> | boolean;
 }
 
-export interface RemirrorProviderProps<ManagerType extends Manager = any>
+export interface RemirrorProviderProps<ManagerType extends EditorManager = any>
   extends MakeOptional<Omit<RenderEditorProps<ManagerType>, 'children'>, keyof typeof defaultProps>,
     Pick<RemirrorContextProviderProps<ManagerType>, 'childAsRoot'> {
   /**
@@ -74,7 +74,7 @@ export interface RemirrorProviderProps<ManagerType extends Manager = any>
  * the element is actually rendered that the getRootProp in any nested
  * components is called.
  */
-const RemirrorContextProvider = <ManagerType extends Manager = any>({
+const RemirrorContextProvider = <ManagerType extends EditorManager = any>({
   childAsRoot: _,
   ...props
 }: RemirrorContextProviderProps<ManagerType>) => {
@@ -98,7 +98,7 @@ RemirrorContextProvider.defaultProps = {
  * - `useRemirrorContext`
  * - `usePositioner`
  */
-export const RemirrorProvider = <ManagerType extends Manager = any>({
+export const RemirrorProvider = <ManagerType extends EditorManager = any>({
   children,
   childAsRoot,
   ...props
@@ -118,5 +118,5 @@ export const RemirrorProvider = <ManagerType extends Manager = any>({
 
 RemirrorProvider.$$remirrorType = RemirrorType.EditorProvider;
 
-export interface ManagedRemirrorProviderProps<ManagerType extends Manager = any>
+export interface ManagedRemirrorProviderProps<ManagerType extends EditorManager = any>
   extends Omit<RemirrorProviderProps<ManagerType>, 'manager'> {}

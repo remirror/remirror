@@ -1,10 +1,10 @@
 import { EditorView } from 'prosemirror-view';
 
-import { Manager } from '@remirror/core';
+import { EditorManager } from '@remirror/core';
 
 export const injectedPropsShape = {
   view: expect.any(EditorView),
-  manager: expect.any(Manager),
+  manager: expect.any(EditorManager),
   actions: expect.any(Object),
   uid: expect.any(String),
   clearContent: expect.any(Function),
