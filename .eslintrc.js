@@ -204,10 +204,10 @@ module.exports = {
       files: ['*.ts', '*.tsx'],
       rules: {
         ...tsProjectRules,
-        '@getify/proper-arrows/where': [
-          'error',
-          { global: true, export: true, trivial: false, property: false },
-        ],
+        // '@getify/proper-arrows/where': [
+        //   'error',
+        //   { global: true, export: true, trivial: false, property: false },
+        // ],
         '@typescript-eslint/explicit-member-accessibility': [
           'warn',
           {
