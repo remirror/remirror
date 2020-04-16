@@ -55,13 +55,13 @@ type Changes<Type> =
        * The previous value before the changed. This is only accessible when
        * `changed` is `true`.
        */
-      previous: Type;
+      previousValue: Type;
 
       /**
-       * The new value after the change. This is only accessible when
+       * The latest value after the change. This is only accessible when
        * `changed` is `true`.
        */
-      next: Type;
+      value: Type;
     };
 
 /**

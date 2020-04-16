@@ -15,7 +15,7 @@ export interface GetChangedPropertiesParameter<Properties extends object> {
   update: Partial<Properties>;
 
   /**
-   * A method to check whether two value are equal.
+   * A method to check whether two values are equal.
    */
   equals?: (valueA: unknown, valueB: unknown) => boolean;
 }

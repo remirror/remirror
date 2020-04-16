@@ -148,10 +148,10 @@ export const SchemaExtension = ExtensionFactory.plain({
       },
 
       forEachExtension(extension) {
-        const currentAttributes = extraAttributes[extension.name];
+        const currentAttributes = extraAttributes[extension.name] ?? [];
         extraAttributes[extension.name] = [
           ...currentAttributes,
-          ...extension.settings.extraAttributes,
+          ...(extension.settings.extraAttributes ?? []),
         ];
 
         if (isNodeExtension(extension)) {

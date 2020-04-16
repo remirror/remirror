@@ -337,7 +337,7 @@ export class EditorManager<
     key: Key,
     value: Remirror.ManagerStore[Key],
   ) => {
-    invariant(this.#phase > ManagerPhase.Initialize, {
+    invariant(this.#phase > ManagerPhase.None, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
       message: '`setStoreKey` should only be called within the returned methods scope.',
     });

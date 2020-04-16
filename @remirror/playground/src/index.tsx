@@ -46,6 +46,7 @@ function makeCode(codeOptions: CodeOptions): string {
   addImport('@remirror/react', 'RemirrorProvider');
   addImport('@remirror/core', 'DocExtension');
   addImport('@remirror/core', 'TextExtension');
+  addImport('@remirror/core', 'ParagraphExtension');
   addImport('@remirror/react', 'useManager');
   addImport('@remirror/react', 'useExtension');
   addImport('@remirror/react', 'useRemirror');
@@ -108,8 +109,9 @@ const SmallEditorWrapper = () => {
   ${useExtensions.join('\n  ')}
 
   const extensionManager = useManager([
-    DocExtension.of({content: 'inline*'}),
+    DocExtension.of(),
     TextExtension.of(),
+    ParagraphExtension.of(),
     ${extensionList.join(',\n    ')}
   ], {
     //excludeBaseExtensions: false,

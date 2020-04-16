@@ -3,6 +3,8 @@ export * from '@remirror/core-utils';
 export * from '@remirror/core-types';
 export * from '@remirror/core-helpers';
 
+export { DocExtension, ParagraphExtension, TextExtension } from './nodes';
+
 export { builtInExtensions } from './builtins';
 export type { BuiltInExtensions, BuiltinPreset } from './builtins';
 
