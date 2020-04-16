@@ -125,7 +125,7 @@ export type ExtensionFromConstructor<ExtensionConstructor extends { of: AnyFunct
  */
 export interface GetExtensionParameter<ExtensionUnion extends AnyExtension> {
   /**
-   * Get and extension from the extension holder (either a preset or a manager)
+   * Get an extension from the extension holder (either a preset or a manager)
    * that corresponds to the provided `Constructor`.
    *
    * @param Constructor - the extension constructor to find in the editor.

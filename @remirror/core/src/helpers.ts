@@ -7,7 +7,7 @@ export interface GetChangedPropertiesParameter<Properties extends object> {
   /**
    * The previous readonly properties object.
    */
-  previous: Required<Readonly<Properties>>;
+  previousProperties: Required<Readonly<Properties>>;
 
   /**
    * The partial update object that was passed through.
@@ -30,40 +30,46 @@ function defaultEquals(valueA: unknown, valueB: unknown) {
 export function getChangedProperties<Properties extends object>(
   parameter: GetChangedPropertiesParameter<Properties>,
 ): GetChangedPropertiesReturn<Properties> {
-  const { previous, update, equals = defaultEquals } = parameter;
+  const { previousProperties: previous, update, equals = defaultEquals } = parameter;
   const next = freeze({ ...previous, update });
   const changes = {} as ChangedProperties<Properties>;
   const propertyKeys = keys(previous);
 
   for (const key of propertyKeys) {
     const previousValue = previous[key];
-    const nextValue = next[key];
+    const value = next[key];
 
-    if (equals(previousValue, nextValue)) {
+    if (equals(previousValue, value)) {
       changes[key] = { changed: false };
       continue;
     }
 
-    changes[key] = { changed: true, previous: previousValue, next: nextValue };
+    changes[key] = { changed: true, previousValue, value };
   }
 
-  return { changes: freeze(changes), next };
+  return { changes: freeze(changes), properties: next };
 }
 
 export interface GetChangedPropertiesReturn<Properties extends object> {
   /**
-   * The next value of the properties after the update.
+   * The next value of the properties after the update.This also includes values which have not been changed.
    */
-  next: Readonly<Required<Properties>>;
+  properties: Readonly<Required<Properties>>;
 
   /**
-   * An object with all the keys showing what's been changed.
+   * An object with all the keys showing what's been changed. This should be
+   * used to determine the children extensions which should be updated.
    *
    * @remarks
    *
    * Using this can prevent unnecessary updates. It's possible for new
    * properties to be passed that are identical to the previous, by checking if
    * the object was changed this can be avoided.
+   *
+   * This uses a discriminated union. When the `changed` property
+   *
+   * ```ts
+   * if (changes.myProperty.changed) {}
    */
   changes: Readonly<ChangedProperties<Properties>>;
 }

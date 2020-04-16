@@ -194,36 +194,38 @@ export abstract class Preset<
    * Calls the `onSetProperties` parameter property when creating the constructor.
    */
   public setProperties(update: Partial<Properties>) {
-    const previous = this.#properties;
-    const { changes, next } = getChangedProperties({ previous, update });
+    const previousProperties = this.#properties;
+    const { changes, properties } = getChangedProperties({
+      previousProperties,
+      update,
+    });
 
     // Trigger the update handler so that child extension properties can also be
     // updated.
     this.parameter.onSetProperties?.({
-      previous,
       changes,
-      update,
-      next,
+      properties,
       defaultProperties: this.defaultProperties,
       settings: this.settings,
       getExtension: this.getExtension,
     });
 
     // Update the stored properties value.
-    this.#properties = next;
+    this.#properties = properties;
   }
 
   public resetProperties() {
-    const previous = this.#properties;
-    const update = this.defaultProperties;
-    const { changes, next } = getChangedProperties({ previous, update });
+    const previousProperties = this.#properties;
+    const { changes, properties: next } = getChangedProperties({
+      previousProperties,
+      update: this.defaultProperties,
+    });
 
     // Trigger the update handler so that child extension properties can also be
     // updated.
     this.parameter.onResetProperties?.({
-      previous,
       changes,
-      defaultProperties: update,
+      defaultProperties: this.defaultProperties,
       settings: this.settings,
       getExtension: this.getExtension,
     });
@@ -265,8 +267,7 @@ interface SetPropertiesParameter<
   Settings extends object = {},
   Properties extends object = {}
 >
-  extends Omit<GetChangedPropertiesParameter<Properties>, 'equals'>,
-    GetExtensionParameter<ExtensionUnion>,
+  extends GetExtensionParameter<ExtensionUnion>,
     DefaultPropertiesParameter<Properties>,
     GetChangedPropertiesReturn<Properties>,
     SettingsParameter<Settings> {}
@@ -276,8 +277,7 @@ interface ResetPropertiesParameter<
   Settings extends object = {},
   Properties extends object = {}
 >
-  extends Pick<GetChangedPropertiesParameter<Properties>, 'previous'>,
-    GetExtensionParameter<ExtensionUnion>,
+  extends GetExtensionParameter<ExtensionUnion>,
     DefaultPropertiesParameter<Properties>,
     Pick<GetChangedPropertiesReturn<Properties>, 'changes'>,
     SettingsParameter<Settings> {}
