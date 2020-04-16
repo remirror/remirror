@@ -1,5 +1,5 @@
 import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
-import { Cast, freeze, isRemirrorType, keys, uniqueArray } from '@remirror/core-helpers';
+import { Cast, freeze, isRemirrorType, keys, startCase, uniqueArray } from '@remirror/core-helpers';
 import { IfNoRequiredProperties } from '@remirror/core-types';
 
 import { BaseExtensionSettings, ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
@@ -38,8 +38,15 @@ function createBaseExtensionFactory<
       factoryParameter: ExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>,
     ): PlainExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
       const parameter = freeze(factoryParameter);
+      const extensionClassName = `${startCase(parameter.name)}PlainExtension`;
 
-      class PlainConstructor extends PlainExtension<Name, Settings, Properties, Commands, Helpers> {
+      const PlainExtensionClass = class extends PlainExtension<
+        Name,
+        Settings,
+        Properties,
+        Commands,
+        Helpers
+      > {
         /**
          * Identifies this as a `PlainExtensionConstructor`.
          *
@@ -77,7 +84,7 @@ function createBaseExtensionFactory<
          * using the `new` keyword.
          */
         public static of(...arguments_: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
-          return new PlainConstructor(...arguments_);
+          return new PlainExtensionClass(...arguments_);
         }
 
         /**
@@ -92,9 +99,12 @@ function createBaseExtensionFactory<
           // Not sure why I have to cast to `never` here.
           return Cast<never>(parameter);
         }
-      }
+      };
 
-      return PlainConstructor;
+      // Rename the class name for easier debugging.
+      Object.defineProperty(PlainExtensionClass, 'name', { value: extensionClassName });
+
+      return PlainExtensionClass;
     },
 
     /**
@@ -115,8 +125,15 @@ function createBaseExtensionFactory<
       >,
     ): MarkExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
       const parameter = freeze(factoryParameter);
+      const extensionClassName = `${startCase(parameter.name)}MarkExtension`;
 
-      class MarkConstructor extends MarkExtension<Name, Settings, Properties, Commands, Helpers> {
+      const MarkExtensionClass = class extends MarkExtension<
+        Name,
+        Settings,
+        Properties,
+        Commands,
+        Helpers
+      > {
         /**
          * Identifies this as a `MarkExtensionConstructor`.
          *
@@ -147,7 +164,7 @@ function createBaseExtensionFactory<
          * using the `new` keyword.
          */
         public static of(...arguments_: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
-          return new MarkConstructor(...arguments_);
+          return new MarkExtensionClass(...arguments_);
         }
 
         /**
@@ -168,9 +185,12 @@ function createBaseExtensionFactory<
         public getFactoryParameter() {
           return parameter; // Cast cos I can.
         }
-      }
+      };
 
-      return MarkConstructor;
+      // Rename the class name for easier debugging.
+      Object.defineProperty(MarkExtensionClass, 'name', { value: extensionClassName });
+
+      return MarkExtensionClass;
     },
 
     /**
@@ -191,8 +211,15 @@ function createBaseExtensionFactory<
       >,
     ): NodeExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
       const parameter = freeze(factoryParameter);
+      const extensionClassName = `${startCase(parameter.name)}NodeExtension`;
 
-      class NodeConstructor extends NodeExtension<Name, Settings, Properties, Commands, Helpers> {
+      const NodeExtensionClass = class extends NodeExtension<
+        Name,
+        Settings,
+        Properties,
+        Commands,
+        Helpers
+      > {
         /**
          * Identifies this as a `NodeExtensionConstructor`.
          *
@@ -223,7 +250,7 @@ function createBaseExtensionFactory<
          * using the `new` keyword.
          */
         public static of(...arguments_: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
-          return new NodeConstructor(...arguments_);
+          return new NodeExtensionClass(...arguments_);
         }
 
         /**
@@ -244,9 +271,12 @@ function createBaseExtensionFactory<
         public getFactoryParameter() {
           return parameter;
         }
-      }
+      };
 
-      return NodeConstructor;
+      // Rename the class name for easier debugging.
+      Object.defineProperty(NodeExtensionClass, 'name', { value: extensionClassName });
+
+      return NodeExtensionClass;
     },
   };
 
