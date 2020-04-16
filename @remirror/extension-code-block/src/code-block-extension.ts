@@ -25,7 +25,7 @@ import {
 } from '@remirror/core';
 
 import { CodeBlockComponent } from './code-block-component';
-import createCodeBlockPlugin from './code-block-plugin';
+import { createCodeBlockPlugin } from './code-block-plugin';
 import { CodeBlockAttributes, CodeBlockExtensionSettings } from './code-block-types';
 import { formatCodeBlockFactory, getLanguage, updateNodeAttributes } from './code-block-utils';
 import { SyntaxTheme, syntaxTheme } from './themes';

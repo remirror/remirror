@@ -1,5 +1,10 @@
-export { BuiltinPreset, builtInExtensions } from './builtins';
-export type { BuiltInExtensions } from './builtins';
+export * from '@remirror/core-constants';
+export * from '@remirror/core-utils';
+export * from '@remirror/core-types';
+export * from '@remirror/core-helpers';
+
+export { builtInExtensions } from './builtins';
+export type { BuiltInExtensions, BuiltinPreset } from './builtins';
 
 export {
   ExtensionFactory,
