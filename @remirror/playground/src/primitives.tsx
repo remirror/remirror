@@ -26,7 +26,11 @@ export const Header: FC = function ({ children }) {
 };
 
 export const Main: FC = function ({ children }) {
-  return <div style={{ flex: '1', display: 'flex', backgroundColor: '#ddd' }}>{children}</div>;
+  return (
+    <div style={{ flex: '1', display: 'flex', backgroundColor: '#ddd', overflow: 'hidden' }}>
+      {children}
+    </div>
+  );
 };
 
 export const Panel: FC<{ flex?: string; vertical?: boolean }> = function ({
@@ -36,7 +40,13 @@ export const Panel: FC<{ flex?: string; vertical?: boolean }> = function ({
 }) {
   return (
     <div
-      style={{ height: '100%', flex, display: 'flex', flexDirection: vertical ? 'column' : 'row' }}
+      style={{
+        height: '100%',
+        flex,
+        display: 'flex',
+        flexDirection: vertical ? 'column' : 'row',
+        overflow: 'hidden',
+      }}
     >
       {children}
     </div>

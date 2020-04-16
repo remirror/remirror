@@ -50,9 +50,20 @@ const CodeEditor: FC<CodeEditorProps> = function (props) {
   }, [model, value]);
 
   useEffect(() => {
-    if (editorRef.current) {
-      editorRef.current.layout();
+    function layout() {
+      if (editorRef.current) {
+        editorRef.current.layout();
+      }
     }
+
+    // Layout on each render
+    layout();
+
+    // Also layout whenever the window resizes
+    window.addEventListener('resize', layout, false);
+    return () => {
+      window.removeEventListener('resize', layout, false);
+    };
   });
 
   useEffect(() => {
@@ -61,7 +72,7 @@ const CodeEditor: FC<CodeEditorProps> = function (props) {
     });
   }, [model, onChange]);
 
-  return <div style={{ flex: '1', height: '100%', backgroundColor: '#f3f' }} ref={ref} />;
+  return <div style={{ flex: '1', overflow: 'hidden', backgroundColor: '#f3f' }} ref={ref} />;
 };
 
 export default CodeEditor;
