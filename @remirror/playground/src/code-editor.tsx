@@ -7,7 +7,7 @@ interface CodeEditorProps {
   onChange: (newValue: string) => void;
 }
 
-const CodeEditor: FC<CodeEditorProps> = (props) => {
+const CodeEditor: FC<CodeEditorProps> = function (props) {
   const { value, onChange, readOnly } = props;
   const ref = useRef<HTMLDivElement | null>(null);
   const model = useMemo(

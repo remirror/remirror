@@ -33,7 +33,7 @@ interface ExtensionCheckboxProps {
   hideModuleName: boolean;
 }
 
-const ExtensionCheckbox: FC<ExtensionCheckboxProps> = (props) => {
+const ExtensionCheckbox: FC<ExtensionCheckboxProps> = function (props) {
   const { options, setOptions, spec, hideModuleName } = props;
   const existingIndex = useMemo(
     () =>
@@ -71,7 +71,7 @@ const ExtensionCheckbox: FC<ExtensionCheckboxProps> = (props) => {
   );
 };
 
-export const SimplePanel: FC<SimplePanelProps> = (props) => {
+export const SimplePanel: FC<SimplePanelProps> = function (props) {
   const { options, setOptions, onAdvanced } = props;
   const grouped = useMemo(() => {
     const groups: { [module: string]: ExtensionSpec[] } = {};

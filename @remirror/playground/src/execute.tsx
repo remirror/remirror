@@ -36,9 +36,9 @@ const fetchedModules: {
   };
 } = {};
 
-const hash = (str: string): string => {
+function hash(str: string): string {
   return `_${crypto.createHash('sha1').update(str).digest('hex')}`;
-};
+}
 
 function bundle(moduleName: string, id: string): Promise<any> {
   return new Promise((resolve, reject) => {
@@ -162,7 +162,7 @@ export interface ExecuteProps {
  * `export default`) into the DOM. Is automatically debounced to prevent
  * over-fetching npm modules during typing.
  */
-export const Execute: FC<ExecuteProps> = (props) => {
+export const Execute: FC<ExecuteProps> = function (props) {
   const { code, requires } = props;
   const ref = useRef<HTMLDivElement | null>(null);
   const debouncedRunCodeInDiv = useMemo(

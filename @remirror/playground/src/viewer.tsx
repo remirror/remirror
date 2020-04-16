@@ -9,7 +9,7 @@ export interface ViewerProps {
   code: string;
 }
 
-export const Viewer: FC<ViewerProps> = (props) => {
+export const Viewer: FC<ViewerProps> = function (props) {
   const { code } = props;
   const result = useMemo(() => compile(code), [code]);
 

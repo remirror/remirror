@@ -128,7 +128,7 @@ export default SmallEditorWrapper;
   return code;
 }
 
-const Playground: FC = () => {
+export const Playground: FC = function () {
   const [value, setValue] = useState('// Add some code here\n');
   const [advanced, setAdvanced] = useState(false);
   const [options, setOptions] = useState({
@@ -192,5 +192,3 @@ const Playground: FC = () => {
     </Container>
   );
 };
-
-export default Playground;
