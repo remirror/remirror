@@ -2,6 +2,7 @@
 // @ts-ignore
 import * as babelRuntimeHelpersInteropRequireDefault from '@babel/runtime/helpers/interopRequireDefault';
 import * as crypto from 'crypto';
+import { languages } from 'monaco-editor';
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 
@@ -16,10 +17,22 @@ import { RemirrorProvider, useExtension, useManager, useRemirror } from '@remirr
 
 //import * as remirror from 'remirror';
 import { ErrorBoundary } from './error-boundary';
+import { acquiredTypeDefs, dtsCache } from './vendor/type-acquisition';
 
 const remirrorReact = { RemirrorProvider, useManager, useExtension, useRemirror };
 const remirrorCore = { DocExtension, TextExtension, ParagraphExtension };
+export const addLibraryToRuntime = (code: string, path: string) => {
+  languages.typescript.typescriptDefaults.addExtraLib(code, path);
+};
 
+/*
+
+## IMPORTANT! ##
+
+For every module added here, you must provided `acquiredTypeDefs` below,
+otherwise it will fetch out-of-sync typedefs from npm
+
+*/
 const knownRequires: { [moduleName: string]: any } = {
   '@babel/runtime/helpers/interopRequireDefault': babelRuntimeHelpersInteropRequireDefault,
   // '@remirror/core-extensions': remirrorCoreExtensions,
@@ -28,6 +41,34 @@ const knownRequires: { [moduleName: string]: any } = {
   //remirror: remirror,
   react: React,
 };
+acquiredTypeDefs['@remirror/core'] = {
+  types: {
+    ts: 'included',
+  },
+};
+acquiredTypeDefs['node_modules/@remirror/core/package.json'] = JSON.stringify({
+  // This should be the package.json
+  name: '@remirror/core',
+  types: 'index.d.ts',
+});
+dtsCache['@remirror/core'] = {
+  'index.d.ts': `
+declare module "@remirror/core" {
+
+export const DocExtension = any;
+export const ParagraphExtension = any;
+
+}
+`,
+};
+addLibraryToRuntime(
+  acquiredTypeDefs['node_modules/@remirror/core/package.json'],
+  'node_modules/@remirror/core/package.json',
+);
+addLibraryToRuntime(
+  dtsCache['@remirror/core']['index.d.ts'],
+  'node_modules/@remirror/core/index.d.ts',
+);
 
 const fetchedModules: {
   [id: string]: {

@@ -34,7 +34,12 @@ globalishObj.typeDefinitions = {};
  * Type Defs we've already got, and nulls when something has failed.
  * This is to make sure that it doesn't infinite loop.
  */
-export const acquiredTypeDefs: { [name: string]: string | null } = globalishObj.typeDefinitions;
+export const acquiredTypeDefs: { [name: string]: string | { types: { ts: string } } | null } =
+  globalishObj.typeDefinitions;
+/**
+ * `.d.ts` file contents for a particular path (e.g. `@remirror/core/index.d.ts`)
+ */
+export const dtsCache: { [module: string]: { [path: string]: string } } = {};
 
 export type AddLibToRuntimeFunc = (code: string, path: string) => void;
 
@@ -203,7 +208,8 @@ const addModuleToRuntime = async (mod: string, path: string, config: ATAConfig) 
 
   const dtsFileURL = isDeno ? path : unpkgURL(mod, path);
 
-  const content = await getCachedDTSString(config, dtsFileURL);
+  const content =
+    (dtsCache[mod] && dtsCache[mod][path]) || (await getCachedDTSString(config, dtsFileURL));
   if (!content) {
     return errorMsg(`Could not get root d.ts file for the module '${mod}' at ${path}`, {});
   }

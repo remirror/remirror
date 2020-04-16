@@ -83,7 +83,7 @@ function makeCode(codeOptions: CodeOptions): string {
     if (defaultName) {
       things.push(defaultName);
     }
-    if (namedImports.length) {
+    if (namedImports.length > 0) {
       things.push(`{\n  ${namedImports.join(',\n  ')}\n}`);
     }
     importLines.push(`import ${things.join(', ')} from '${moduleName}';`);

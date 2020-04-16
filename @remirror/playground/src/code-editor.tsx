@@ -1,6 +1,9 @@
 import { editor, Uri } from 'monaco-editor';
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 
+import { addLibraryToRuntime } from './execute';
+import { detectNewImportsToAcquireTypeFor } from './vendor/type-acquisition';
+
 interface CodeEditorProps {
   readOnly?: boolean;
   value: string;
@@ -26,8 +29,18 @@ const CodeEditor: FC<CodeEditorProps> = function (props) {
     if (ref.current) {
       const myEditor = editor.create(ref.current, {
         model,
+        language: 'typescript',
       });
       editorRef.current = myEditor;
+
+      const getTypes = () => {
+        const code = model.getValue();
+        detectNewImportsToAcquireTypeFor(code, addLibraryToRuntime, window.fetch.bind(window));
+      };
+
+      myEditor.onDidChangeModelContent(getTypes);
+      getTypes();
+
       return () => {
         myEditor.dispose();
       };
