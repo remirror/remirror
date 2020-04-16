@@ -495,12 +495,16 @@ interface DefaultSettingsParameter<Settings extends object> {
    *
    * @remarks
    *
-   * Once set it can't be updated during run time. Some of the settings is
-   * optional and some is not. The required `defaultSettings` are all the none
-   * required settings.
+   * Once set it can't be updated during run time. Some of the settings are
+   * optional and some are not. Any non-required settings must be specified in
+   * the `defaultSettings`.
    *
    * This must be set when creating the extension, even if just to the empty
    * object when no properties are used at runtime.
+   *
+   * There is a slight downside in the way this is setup. `undefined` is not
+   * supported for partial settings at this point in time. As a workaround
+   * use `null` as the type and pass it as the value in the default settings.
    */
   defaultSettings: DefaultSettingsType<Settings>;
 }

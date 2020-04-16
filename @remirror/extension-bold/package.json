@@ -1,0 +1,31 @@
+{
+  "name": "@remirror/extension-bold",
+  "version": "0.11.0",
+  "description": "Make your text bold. Make it courageous.",
+  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-bold",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-bold",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "sideEffects": false,
+  "main": "lib/dist/index.js",
+  "module": "lib/dist/extension-bold.esm.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "internal",
+    "lib",
+    "src"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7",
+    "@remirror/core": "^0.11.0",
+    "csstype": "^2.6.10",
+    "prosemirror-view": "^1.14.6"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/extension-bold.cjs.js",
+  "meta": {
+    "sizeLimit": "90 KB"
+  }
+}
