@@ -7,7 +7,6 @@ import {
   GapCursorExtension,
   HistoryExtension,
 } from './extensions';
-import { ParagraphExtension } from './nodes';
 
 /**
  * Base extensions are automatically injected into the default RemirrorEditor.
