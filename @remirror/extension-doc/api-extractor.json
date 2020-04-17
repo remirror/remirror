@@ -1,0 +1,15 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
+  "extends": "../../support/api-extractor.json",
+  "mainEntryPointFilePath": "./lib/index.d.ts",
+  "apiReport": {
+    "enabled": true,
+    "reportFolder": "../../support/api/",
+    "reportFileName": "remirror__extension-doc.api.md",
+    "reportTempFolder": "./temp/"
+  },
+  "docModel": {
+    "enabled": true,
+    "apiJsonFilePath": "./temp/<unscopedPackageName>.api.json"
+  }
+}

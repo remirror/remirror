@@ -1,0 +1,36 @@
+{
+  "name": "@remirror/extension-doc",
+  "version": "0.11.0",
+  "description": "The root of your text-editor. One doc to rule them all.",
+  "keywords": [
+    "remirror",
+    "extension",
+    "doc",
+    "root",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-doc",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-doc",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "sideEffects": false,
+  "main": "lib/dist/index.js",
+  "module": "lib/dist/extension-doc.esm.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "internal",
+    "lib",
+    "src"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7",
+    "@remirror/core": "^0.11.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/extension-doc.cjs.js",
+  "meta": {
+    "sizeLimit": "50 KB"
+  }
+}

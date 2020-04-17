@@ -1,4 +1,4 @@
-import { ExtensionFactory } from '../extension/extension-factory';
+import { ExtensionFactory } from '@remirror/core';
 
 export interface DocExtensionOptions {
   /**
