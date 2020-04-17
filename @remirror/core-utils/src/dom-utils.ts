@@ -33,7 +33,6 @@ import {
 import {
   EditorSchema,
   EditorState,
-  EditorStateParameter,
   EditorViewParameter,
   ElementParameter,
   FromToParameter,
@@ -51,6 +50,7 @@ import {
   ResolvedPos,
   SchemaParameter,
   Selection,
+  StateOrTransactionParameter,
   Transaction,
 } from '@remirror/core-types';
 
@@ -155,25 +155,28 @@ export const isNodeSelection = <GSchema extends EditorSchema = any>(
   value: unknown,
 ): value is NodeSelection<GSchema> => isObject(value) && value instanceof NodeSelection;
 
-interface IsMarkActiveParameter
-  extends MarkTypeParameter,
-    EditorStateParameter,
-    Partial<FromToParameter> {}
+interface IsMarkActiveParameter<Schema extends EditorSchema = any>
+  extends MarkTypeParameter<Schema>,
+    Partial<FromToParameter>,
+    StateOrTransactionParameter<Schema> {}
 
 /**
- * Checks that a mark is active within the selected region, or the current selection point is within a
- * region with the mark active. Used by extensions to implement their active methods.
+ * Checks that a mark is active within the selected region, or the current
+ * selection point is within a region with the mark active. Used by extensions
+ * to implement their active methods.
  *
  * @remarks
- * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
  * @param state - the editor state
  * @param type - the mark type
  *
  * @public
  */
-export const isMarkActive = ({ state, type, from, to }: IsMarkActiveParameter) => {
-  const { selection, doc, storedMarks } = state;
+export const isMarkActive = <Schema extends EditorSchema = any>(
+  parameter: IsMarkActiveParameter<Schema>,
+) => {
+  const { stateOrTransaction, type, from, to } = parameter;
+  const { selection, doc, storedMarks } = stateOrTransaction;
   const { $from, empty } = selection;
 
   if (from && to) {
@@ -192,7 +195,8 @@ export const isMarkActive = ({ state, type, from, to }: IsMarkActiveParameter) =
 };
 
 /**
- * Check if the specified type (NodeType) can be inserted at the current selection point.
+ * Check if the specified type (NodeType) can be inserted at the current
+ * selection point.
  *
  * @remarks
  *
@@ -324,7 +328,8 @@ export const getMarkRange = (
  * Retrieves the text content from a slice
  *
  * @remarks
- * A utility that's useful for pulling text content from a slice which is usually created via `selection.content()`
+ * A utility that's useful for pulling text content from a slice which is
+ * usually created via `selection.content()`
  *
  * @param slice - the prosemirror slice
  *
@@ -336,7 +341,8 @@ export const getTextContentFromSlice = (slice: Slice) => {
 };
 
 /**
- * Takes an empty selection and expands it out to the nearest group not matching the excluded characters.
+ * Takes an empty selection and expands it out to the nearest group not matching
+ * the excluded characters.
  *
  * @remarks
  *
@@ -363,7 +369,8 @@ export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToPar
     char && !exclude.test(char);
     from--, char = getChar(from - 1, from)
   ) {
-    // Step backwards until reaching first excluded character or empty text content.
+    // Step backwards until reaching first excluded character or empty text
+    // content.
   }
 
   for (
@@ -371,7 +378,8 @@ export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToPar
     char && !exclude.test(char);
     to++, char = getChar(to, to + 1)
   ) {
-    // Step forwards until reaching the first excluded character or empty text content
+    // Step forwards until reaching the first excluded character or empty text
+    // content
   }
 
   if (from === to) {
@@ -386,10 +394,8 @@ export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToPar
  *
  * @remarks
  *
- * This always expands outward so that given:
- * `The tw<start>o words<end>`
- * The selection would become
- * `The <start>two words<end>`
+ * This always expands outward so that given: `The tw<start>o words<end>` The
+ * selection would become `The <start>two words<end>`
  *
  * In other words it expands until it meets an invalid character.
  *
@@ -442,10 +448,11 @@ export const setPluginMeta = <GMeta>(
  * Get matching string from a list or single value
  *
  * @remarks
- * Get attrs can be called with a direct match string or array of string matches.
- * This method should be used to retrieve the required string.
+ * Get attrs can be called with a direct match string or array of string
+ * matches. This method should be used to retrieve the required string.
  *
- * The index of the matched array used defaults to 0 but can be updated via the second parameter.
+ * The index of the matched array used defaults to 0 but can be updated via the
+ * second parameter.
  *
  * @param match - the match(es)
  * @param index - the zero-index point from which to start
@@ -547,9 +554,9 @@ interface AbsoluteCoordinatesParameter
  *
  * @remarks
  *
- * We need to translate the co-ordinates because `coordsAtPos` returns co-ordinates
- * relative to `window`. And, also need to adjust the cursor container height.
- * (0, 0)
+ * We need to translate the co-ordinates because `coordsAtPos` returns
+ * co-ordinates relative to `window`. And, also need to adjust the cursor
+ * container height. (0, 0)
  *
  * ```
  * +--------------------- [window] ---------------------+
@@ -634,7 +641,8 @@ export const getCursor = (selection: Selection): ResolvedPos | null | undefined 
  * Checks to see whether a nodeMatch checker is a tuple
  *
  * @remarks
- * A node matcher can either be a string, a function a regex or a regex tuple. This check for the latter two.
+ * A node matcher can either be a string, a function a regex or a regex tuple.
+ * This check for the latter two.
  *
  * @param nodeMatch - the node match
  *
@@ -657,11 +665,13 @@ const regexTest = (tuple: RegexTuple, value: string) => {
 };
 
 /**
- * Checks to see whether the name of the passed node matches anything in the list provided.
+ * Checks to see whether the name of the passed node matches anything in the
+ * list provided.
  *
  * @param node - the prosemirror node
  * @param nodeMatches - the node matches array
- * @returns true if the node name is a match to any of the items in the nodeMatches array
+ * @returns true if the node name is a match to any of the items in the
+ * nodeMatches array
  *
  * @public
  */
@@ -786,9 +796,11 @@ export const createDocumentNode = (params: CreateDocumentNodeParameter): Prosemi
 };
 
 /**
- * Checks which environment should be used. Returns true when we are in the dom environment.
+ * Checks which environment should be used. Returns true when we are in the dom
+ * environment.
  *
- * @param forceEnvironment - force a specific environment to override the outcome
+ * @param forceEnvironment - force a specific environment to override the
+ * outcome
  */
 export const shouldUseDOMEnvironment = (forceEnvironment?: RenderEnvironment) => {
   return forceEnvironment === 'dom' || (environment.isBrowser && !forceEnvironment);

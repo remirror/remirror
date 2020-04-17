@@ -372,7 +372,7 @@ export abstract class Extension<
    * Retrieves the tags for this extension.
    */
   get tags(): Array<ExtensionTag | string> {
-    return this.parameter.tags ?? [];
+    return this.parameter.extensionTags ?? [];
   }
 
   /**
@@ -573,9 +573,9 @@ export interface BaseExtensionFactoryParameter<
    * which registered extensions are formatters.
    *
    * There are internally defined tags but it's also possible to define any
-   * custom string as a tag. See {@link Tags}
+   * custom string as a tag. See {@link ExtensionTag}
    */
-  tags?: Array<ExtensionTag | string>;
+  extensionTags?: Array<ExtensionTag | string>;
 
   /**
    * An extension can declare the extensions it requires.
@@ -783,7 +783,7 @@ export abstract class MarkExtension<
    * {@link @remirror/core-types#ManagerMarkTypeParameter}
    */
   public isActive({ getState, type }: ManagerMarkTypeParameter): ExtensionIsActiveFunction {
-    return () => isMarkActive({ state: getState(), type });
+    return () => isMarkActive({ stateOrTransaction: getState(), type });
   }
 }
 

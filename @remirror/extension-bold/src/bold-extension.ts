@@ -1,13 +1,14 @@
 import { FontWeightProperty } from 'csstype';
-import { toggleMark } from 'prosemirror-commands';
 
 import {
-  convertCommand,
   ExtensionFactory,
+  ExtensionTag,
+  FromToParameter,
   isElementDOMNode,
   isString,
   MarkGroup,
   markInputRule,
+  toggleMark,
 } from '@remirror/core';
 
 export interface BoldExtensionSettings {
@@ -23,7 +24,11 @@ export interface BoldExtensionSettings {
  */
 export const BoldExtension = ExtensionFactory.typed<BoldExtensionSettings>().mark({
   name: 'bold',
+
   defaultSettings: { weight: null },
+
+  extensionTags: [ExtensionTag.FormattingMark],
+
   createMarkSchema(parameter) {
     const { weight } = parameter.settings;
     return {
@@ -57,8 +62,10 @@ export const BoldExtension = ExtensionFactory.typed<BoldExtensionSettings>().mar
   },
 
   createKeymap(parameter) {
+    const { type } = parameter;
+
     return {
-      'Mod-b': convertCommand(toggleMark(parameter.type)),
+      'Mod-b': toggleMark({ type }),
     };
   },
 
@@ -67,9 +74,43 @@ export const BoldExtension = ExtensionFactory.typed<BoldExtensionSettings>().mar
   },
 
   createCommands(parameter) {
+    const { type } = parameter;
+
     return {
-      bold: () => {
-        return convertCommand(toggleMark(parameter.type));
+      /**
+       * Toggle the bold styling on and off. Remove the formatting if any
+       * matching bold formatting within the selection or provided range.
+       */
+      toggleBold: (range?: FromToParameter) => {
+        return toggleMark({ type, range });
+      },
+
+      /**
+       * Set the bold formatting for the provided range.
+       *
+       * TODO add selection support.
+       * TODO add check to see that provided range is valid.
+       */
+      setBold: (range: FromToParameter) => ({ state, dispatch }) => {
+        if (dispatch) {
+          dispatch(state.tr.addMark(range?.from, range?.to, type.create()));
+        }
+
+        return true;
+      },
+
+      /**
+       * Remove the bold formatting from the provided range.
+       *
+       * TODO add selection support.
+       * TODO add check that the provided range is valid.
+       */
+      removeBold: (range: FromToParameter) => ({ state, dispatch }) => {
+        if (dispatch) {
+          dispatch(state.tr.removeMark(range?.from, range?.to, type));
+        }
+
+        return true;
       },
     };
   },
