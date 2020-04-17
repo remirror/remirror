@@ -1,11 +1,14 @@
 import { setBlockType } from 'prosemirror-commands';
 
-import { ExtensionTag, NodeGroup } from '@remirror/core-constants';
-import { object } from '@remirror/core-helpers';
-import { ProsemirrorAttributes } from '@remirror/core-types';
-import { convertCommand } from '@remirror/core-utils';
+import {
+  convertCommand,
+  ExtensionFactory,
+  ExtensionTag,
+  NodeGroup,
+  object,
+  ProsemirrorAttributes,
+} from '@remirror/core';
 
-import { ExtensionFactory } from '../extension';
 import { ALIGN_PATTERN, INDENT_ATTRIBUTE, INDENT_LEVELS, IndentLevels } from './node-constants';
 import { marginToIndent } from './node-utils';
 
