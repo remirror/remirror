@@ -1,0 +1,36 @@
+{
+  "name": "@remirror/extension-text",
+  "version": "0.11.0",
+  "description": "Enable text in your text-editor, an oxymoron of sorts.",
+  "keywords": [
+    "remirror",
+    "extension",
+    "text",
+    "text-editor"
+  ],
+  "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-text",
+  "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-text",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "sideEffects": false,
+  "main": "lib/dist/index.js",
+  "module": "lib/dist/extension-text.esm.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "internal",
+    "lib",
+    "src"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7",
+    "@remirror/core": "^0.11.0",
+    "csstype": "^2.6.10"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/extension-text.cjs.js",
+  "meta": {
+    "sizeLimit": "50 KB"
+  }
+}

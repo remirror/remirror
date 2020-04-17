@@ -361,3 +361,29 @@ export type IfEmpty<Type extends object, Then, Else> = keyof Type extends never 
  * respond with `Then` otherwise `Else`.
  */
 export type IfMatches<A, B, Then, Else> = IfEmpty<Diff<A, B>, Then, Else>;
+
+export interface FunctionLike {
+  /** Returns a string representation of a function. */
+  toString: () => string;
+
+  prototype: any;
+  readonly length: number;
+
+  // Non-standard extensions
+  arguments: any;
+  caller: FunctionLike;
+
+  /**
+   * Returns the name of the function. Function names are read-only and can not be changed.
+   */
+  readonly name: string;
+
+  /**
+   * Determines whether the given value inherits from this function if this function was used
+   * as a constructor function.
+   *
+   * A constructor function can control which objects are recognized as its instances by
+   * 'instanceof' by overriding this method.
+   */
+  [Symbol.hasInstance]: (value: any) => boolean;
+}
