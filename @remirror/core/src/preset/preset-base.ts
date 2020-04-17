@@ -18,16 +18,11 @@ import {
   AnyExtension,
   AnyExtensionConstructor,
   DefaultSettingsType,
-  ExtensionFromConstructor,
   ExtensionListParameter,
   GetExtensionParameter,
 } from '../extension';
-import {
-  getChangedProperties,
-  GetChangedPropertiesParameter,
-  GetChangedPropertiesReturn,
-} from '../helpers';
-import { GetConstructor, PropertiesShape } from '../types';
+import { getChangedProperties, GetChangedPropertiesReturn } from '../helpers';
+import { GetConstructor, Of, PropertiesShape } from '../types';
 
 /**
  * The type which is applicable to any `Preset` instances.
@@ -236,14 +231,14 @@ export abstract class Preset<
 
   public getExtension = <ExtensionConstructor extends GetConstructor<ExtensionUnion>>(
     Constructor: ExtensionConstructor,
-  ): ExtensionFromConstructor<ExtensionConstructor> => {
+  ): Of<ExtensionConstructor> => {
     const extension = this.#extensionMap.get(Constructor);
 
     // Throws an error if attempting to get an extension which is not preset
     // in this preset.
     invariant(extension, { code: ErrorConstant.INVALID_PRESET_EXTENSION });
 
-    return extension as ExtensionFromConstructor<typeof Constructor>;
+    return extension as Of<typeof Constructor>;
   };
 }
 

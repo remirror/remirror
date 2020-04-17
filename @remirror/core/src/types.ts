@@ -127,9 +127,25 @@ export type GetHelpers<Type extends { ['~H']: unknown }> = Type['~H'];
 export type GetNameUnion<Type extends { name: string }> = Type['name'];
 
 /**
- * Get the constructor of an extension.
+ * Get the constructor of an instance.
  */
 export type GetConstructor<Type extends { constructor: unknown }> = Type['constructor'];
+
+/**
+ * Retrieve the instance type from an ExtensionConstructor.
+ */
+export type InstanceFromConstructor<Constructor extends { of: AnyFunction }> = ReturnType<
+  Constructor['of']
+>;
+
+/**
+ * Retrieve the instance type from any of the library constructors.
+ *
+ * @remarks
+ *
+ * This is an alias of the `InstanceFromConstructor` type.
+ */
+export type Of<Constructor extends { of: AnyFunction }> = InstanceFromConstructor<Constructor>;
 
 /**
  * Parameters passed into many of the extension methods.

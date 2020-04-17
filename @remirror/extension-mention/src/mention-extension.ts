@@ -53,7 +53,7 @@ export const MentionExtension = ExtensionFactory.typed<
   MentionExtensionProperties
 >().mark({
   name: 'mention',
-  tags: [],
+  extensionTags: [],
   defaultSettings: {
     mentionTag: 'a' as 'a',
     matchers: [],
@@ -289,7 +289,7 @@ export const MentionExtension = ExtensionFactory.typed<
             to: range.end,
             type: type,
 
-            state: getState(),
+            stateOrTransaction: getState(),
           });
 
           const fn = isActive ? update : create;

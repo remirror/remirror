@@ -3,7 +3,7 @@ import { UnionToIntersection } from 'type-fest';
 import { AnyFunction, StringKey } from '@remirror/core-types';
 import { NonChainableCommandFunction } from '@remirror/core-utils';
 
-import { CommandMethod, GetCommands, GetConstructor, GetHelpers } from '../types';
+import { CommandMethod, GetCommands, GetConstructor, GetHelpers, Of } from '../types';
 import { AnyExtension } from './extension-base';
 
 export interface ExtensionParameter<ExtensionUnion extends AnyExtension = any> {
@@ -114,13 +114,6 @@ export type HelperNames<GExtension extends AnyExtension> = StringKey<
 >;
 
 /**
- * Retrieve the instance type from an ExtensionConstructor.
- */
-export type ExtensionFromConstructor<ExtensionConstructor extends { of: AnyFunction }> = ReturnType<
-  ExtensionConstructor['of']
->;
-
-/**
  * Provides a method for retrieving an extension from an extension holder.
  */
 export interface GetExtensionParameter<ExtensionUnion extends AnyExtension> {
@@ -132,7 +125,7 @@ export interface GetExtensionParameter<ExtensionUnion extends AnyExtension> {
    */
   getExtension: <ExtensionConstructor extends GetConstructor<ExtensionUnion>>(
     Constructor: ExtensionConstructor,
-  ) => ExtensionFromConstructor<ExtensionConstructor>;
+  ) => Of<ExtensionConstructor>;
 }
 
 /**

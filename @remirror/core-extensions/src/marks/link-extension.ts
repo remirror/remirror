@@ -105,7 +105,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
           const { selection } = state;
           if (
             selectionEmpty(selection) ||
-            (!isTextSelection(selection) && !isMarkActive({ state, type }))
+            (!isTextSelection(selection) && !isMarkActive({ stateOrTransaction: state, type }))
           ) {
             return false;
           }
@@ -117,7 +117,7 @@ export class LinkExtension extends MarkExtension<LinkExtensionOptions> {
        */
       removeLink: (): ProsemirrorCommandFunction => {
         return (state, dispatch, view) => {
-          if (!isMarkActive({ state, type })) {
+          if (!isMarkActive({ stateOrTransaction: state, type })) {
             return false;
           }
           return removeMark({ type, expand: true })(state, dispatch, view);

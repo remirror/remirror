@@ -18,7 +18,6 @@ import {
   CommandsFromExtensions,
   Extension,
   ExtensionFactory,
-  ExtensionFromConstructor,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import {
@@ -27,6 +26,7 @@ import {
   ExtensionCommandFunction,
   ExtensionCommandReturn,
   ExtensionHelperReturn,
+  Of,
 } from '../types';
 
 interface UnchainedFactoryParameter {
@@ -204,11 +204,6 @@ export const CommandsExtension = ExtensionFactory.plain({
           return true;
         };
       },
-
-      /** Doesn't support chaining */
-      nonChainableThing() {
-        return nonChainable(() => false);
-      },
     };
   },
 });
@@ -351,7 +346,7 @@ declare global {
        * ```
        */
       commands: <ExtensionUnion extends AnyExtension = any>() => ChainedFromExtensions<
-        ExtensionFromConstructor<typeof CommandsExtension> & ChainedFromExtensions<ExtensionUnion>
+        Of<typeof CommandsExtension> & ChainedFromExtensions<ExtensionUnion>
       >;
     }
   }

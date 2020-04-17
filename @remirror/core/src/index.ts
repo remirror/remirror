@@ -1,3 +1,4 @@
+// TODO remove these exports
 export * from '@remirror/core-constants';
 export * from '@remirror/core-utils';
 export * from '@remirror/core-types';
@@ -47,3 +48,6 @@ export type {
   ExtensionHelperReturn,
   ManagerMethodParameter,
 } from './types';
+
+// TODO move to a new package.
+export * from './commands';

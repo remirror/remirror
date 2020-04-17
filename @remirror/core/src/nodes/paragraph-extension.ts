@@ -84,7 +84,7 @@ const getAttributes = (
  */
 export const ParagraphExtension = ExtensionFactory.typed<ParagraphExtensionSettings>().node({
   name: 'paragraph',
-  tags: [ExtensionTag.LastNodeCompatible],
+  extensionTags: [ExtensionTag.LastNodeCompatible],
   defaultSettings: {
     indentAttribute: INDENT_ATTRIBUTE,
     indentLevels: INDENT_LEVELS,

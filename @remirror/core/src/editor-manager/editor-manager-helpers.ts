@@ -5,13 +5,12 @@ import { BuiltInExtensions, BuiltinPreset, builtinPreset } from '../builtins';
 import {
   AnyExtension,
   AnyExtensionConstructor,
-  ExtensionFromConstructor,
   isExtension,
   isMarkExtension,
   isNodeExtension,
 } from '../extension';
 import { AnyPreset, isPreset } from '../preset';
-import { GetConstructor, ManagerMethodParameter } from '../types';
+import { GetConstructor, ManagerMethodParameter, Of } from '../types';
 
 /**
  * Get the params to which will be passed into the extension method call.
@@ -152,9 +151,7 @@ export function transformExtensionOrPreset<
     extensions.push(extension);
 
     // Replace the extensions for all presets that referenced this constructor.
-    duplicates.forEach((preset) =>
-      preset?.replaceExtension(key, extension as ExtensionFromConstructor<typeof key>),
-    );
+    duplicates.forEach((preset) => preset?.replaceExtension(key, extension as Of<typeof key>));
   }
 
   const missing: MissingConstructor[] = [];

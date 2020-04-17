@@ -1,5 +1,5 @@
-import { ExtensionFromConstructor } from '../extension';
 import { PresetFactory } from '../preset';
+import { Of } from '../types';
 import { AttributesExtension } from './attributes-extension';
 import { CommandsExtension } from './commands-extension';
 import { HelpersExtension } from './helpers-extension';
@@ -57,4 +57,4 @@ export const builtinPreset = BuiltinPreset.of();
 export type BuiltinPreset = typeof builtinPreset;
 
 /** The built in extension as a type. */
-export type BuiltInExtensions = ExtensionFromConstructor<typeof builtInExtensions[number]>;
+export type BuiltInExtensions = Of<typeof builtInExtensions[number]>;

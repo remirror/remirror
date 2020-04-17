@@ -29,7 +29,6 @@ import {
   AnyExtensionConstructor,
   CreateLifecycleMethodParameter,
   CreateLifecycleMethodReturn,
-  ExtensionFromConstructor,
   ExtensionLifecycleMethods,
   HelpersFromExtensions,
   InitializeLifecycleMethodParameter,
@@ -39,7 +38,7 @@ import {
   ViewLifecycleMethodReturn,
 } from '../extension';
 import { AnyPreset, PresetFromConstructor } from '../preset';
-import { GetConstructor } from '../types';
+import { GetConstructor, Of } from '../types';
 import {
   getParameterWithType,
   ignoreFunctions,
@@ -595,14 +594,14 @@ export class EditorManager<
    */
   public getExtension<ExtensionConstructor extends GetConstructor<this['extensions'][number]>>(
     Constructor: ExtensionConstructor,
-  ): ExtensionFromConstructor<ExtensionConstructor> {
+  ): Of<ExtensionConstructor> {
     const extension = this.#extensionMap.get(Constructor);
 
     // Throws an error if attempting to get an extension which is not present
     // in the manager.
     invariant(extension, { code: ErrorConstant.INVALID_MANAGER_EXTENSION });
 
-    return extension as ExtensionFromConstructor<typeof Constructor>;
+    return extension as Of<typeof Constructor>;
   }
 
   /**

@@ -2,15 +2,14 @@ import { ErrorConstant } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
 import { AnyFunction, EditorSchema } from '@remirror/core-types';
 
-import {
-  AnyExtension,
-  Extension,
-  ExtensionFactory,
-  ExtensionFromConstructor,
-  HelpersFromExtensions,
-} from '../extension';
+import { AnyExtension, Extension, ExtensionFactory, HelpersFromExtensions } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
-import { CreateHelpersParameter, ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
+import {
+  CreateHelpersParameter,
+  ExtensionCommandReturn,
+  ExtensionHelperReturn,
+  Of,
+} from '../types';
 
 /**
  * Create the extension helpers from the passed extension.
@@ -149,7 +148,7 @@ declare global {
        * extension can register its own helpers.
        */
       helpers: <ExtensionUnion extends AnyExtension = AnyExtension>() => HelpersFromExtensions<
-        ExtensionUnion | ExtensionFromConstructor<typeof HelpersExtension>
+        ExtensionUnion | Of<typeof HelpersExtension>
       >;
     }
   }
