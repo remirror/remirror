@@ -40,11 +40,32 @@ export type MapToChainedCommand<RawCommands extends Record<string, AnyFunction>>
  */
 export type CommandsFromExtensions<ExtensionUnion extends AnyExtension> = UnionToIntersection<
   MapToUnchainedCommand<GetCommands<ExtensionUnion>>
->;
+> & {
+  /**
+   * Chainable commands for composing functionality together in quaint and
+   * beautiful ways...
+   *
+   * @remarks
+   *
+   * You can use this property to create expressive and complex commands that
+   * build up the transaction until it can be run.
+   *
+   * ```ts
+   * commands.chain.bold().insertText('Hi').setSelection('start').run();
+   * ```
+   */
+  chain: ChainedFromExtensions<ExtensionUnion>;
+};
 
 export interface ChainedCommandRunParameter {
   /**
-   * Run the chained commands.
+   * Dispatches the chained commands.
+   *
+   * @remarks
+   *
+   * ```ts
+   * commands.chain.insertText('hello').run();
+   * ```
    */
   run: () => void;
 }

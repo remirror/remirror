@@ -2,7 +2,13 @@ import { EditorState } from 'prosemirror-state';
 
 import { ErrorConstant } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
-import { AnyFunction, DispatchFunction, EditorSchema, EditorView } from '@remirror/core-types';
+import {
+  AnyFunction,
+  DispatchFunction,
+  EditorSchema,
+  EditorView,
+  Transaction,
+} from '@remirror/core-types';
 
 import {
   AnyExtension,
@@ -15,7 +21,6 @@ import {
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import {
-  AnyCommands,
   CommandMethod,
   CreateCommandsParameter,
   ExtensionCommandFunction,
@@ -87,7 +92,7 @@ function createExtensionCommands(
 /**
  * The names that are forbidden from being used as a command name.
  */
-const forbiddenNames = new Set(['run']);
+const forbiddenNames = new Set(['run', 'chain']);
 
 /**
  * Generate chained and unchained commands for making changes to the editor.
@@ -111,14 +116,7 @@ export const CommandsExtension = ExtensionFactory.plain({
           const commands = getStoreKey('commands');
           invariant(commands, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
 
-          return commands as any;
-        });
-
-        setManagerMethodParameter('dispatch', () => {
-          const dispatch = getStoreKey('dispatch');
-          invariant(dispatch, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
-
-          return dispatch as any;
+          return commands.chain as any;
         });
       },
     };
@@ -126,14 +124,13 @@ export const CommandsExtension = ExtensionFactory.plain({
 
   onView(parameter) {
     const { getParameter } = parameter;
-    const commands: AnyCommands = object();
+    const commands: any = object();
+    const names = new Set<string>();
+    const chained: Record<string, any> & ChainedCommandRunParameter = object();
     const unchained: Record<
       string,
       { command: AnyFunction; isEnabled: AnyFunction; name: string }
     > = object();
-
-    const chained: Record<string, any> & ChainedCommandRunParameter = object();
-    const names = new Set<string>();
 
     return {
       forEachExtension(extension, view) {
@@ -176,15 +173,35 @@ export const CommandsExtension = ExtensionFactory.plain({
         }
 
         chained.run = () => view.dispatch(view.state.tr);
+        commands.chain = chained;
 
-        setStoreKey('dispatch', commands);
-        setStoreKey('commands', chained);
+        setStoreKey('commands', commands);
       },
     };
   },
 
   createCommands() {
-    return {};
+    return {
+      /**
+       * Create a custom transaction.
+       *
+       * @remarks
+       *
+       * The callback method can be used to update the transaction in the editor.
+       *
+       * Since transactions are mutable there is no return type.
+       */
+      customTransaction(transactionUpdater: (transaction: Transaction) => void) {
+        return ({ state, dispatch }) => {
+          if (dispatch) {
+            transactionUpdater(state.tr);
+            dispatch(state.tr);
+          }
+
+          return true;
+        };
+      },
+    };
   },
 });
 
@@ -192,14 +209,43 @@ declare global {
   namespace Remirror {
     interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
       /**
-       * Single time dispatch of the commands.
+       * Enables the use of custom commands created by the extensions for
+       * extending the functionality of your editor in an expressive way.
+       *
+       * @remarks
+       *
+       * There are two ways of using these commands.
+       *
+       * ### Single Time Usage
+       *
+       * The command is immediately dispatched. This can be used to create menu
+       * items when the functionality you need is already available by the
+       * commands.
+       *
+       * ```ts
+       * if (commands.bold.isEnabled()) {
+       *   commands.bold();
+       * }
+       * ```
+       *
+       * ### Chainable composition.
+       *
+       * The `chain` property of the commands object provides composition of
+       * command through `.` (dot) chaining.
+       *
+       * ```ts
+       * commands
+       *   .bold()
+       *   .insertText('Hello')
+       *   .setSelection('start')
+       *   .custom((transaction) => transaction)
+       *   .run();
+       * ```
+       *
+       * The `run()` method ends the chain.
+       *
        */
-      dispatch: CommandsFromExtensions<ExtensionUnion>;
-
-      /**
-       * The chained commands defined within this manger.
-       */
-      commands: ChainedFromExtensions<ExtensionUnion>;
+      commands: CommandsFromExtensions<ExtensionUnion>;
     }
 
     interface ExtensionCreatorMethods<
@@ -213,28 +259,39 @@ declare global {
       /**
        * Create and register commands for that can be called within the editor.
        *
-       * These are typically used to create menu's actions and as a direct response
-       * to user actions.
+       * These are typically used to create menu's actions and as a direct
+       * response to user actions.
        *
        * @remarks
        *
        * The `createCommands` method should return an object with each key being
-       * unique within the editor. To ensure that this is the case it is recommended
-       * that the keys of the command are namespaced with the name of the extension.
+       * unique within the editor. To ensure that this is the case it is
+       * recommended that the keys of the command are namespaced with the name
+       * of the extension.
        *
        * e.g.
        *
        * ```ts
-       * class History extends Extension {
-       *   name = 'history' as const;
+       * import { ExtensionFactory } from '@remirror/core';
        *
-       *   commands() {
+       * const MyExtension = ExtensionFactory.plain({
+       *   name: 'myExtension',
+       *   version: '1.0.0',
+       *   createCommands: () => {
        *     return {
-       *       undoHistory: COMMAND_FN,
-       *       redoHistory: COMMAND_FN,
+       *       haveFun() {
+       *         return ({ state, dispatch }) => {
+       *           if (dispatch) {
+       *             dispatch(tr.insertText(...));
+       *           }
+       *
+       *           return true; // True return signifies that this command is enabled.
+       *         }
+       *       },
        *     }
        *   }
-       * }
+       * })
+       * ```
        * ```
        *
        * The actions available in this case would be `undoHistory` and
@@ -254,15 +311,16 @@ declare global {
 
     interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
       /**
-       * A method that returns an object with all the commands available to be run.
+       * A method that returns an object with all the chainable commands
+       * available to be run.
        *
        * @remarks
        *
-       * Commands are instantly run and also have an `isEnabled()` method attached
-       * to them for checking if the command would day anything if run.
+       * Each chainable command mutates the states transaction so after running
+       * all your commands. you should dispatch the desired transaction.
        *
-       * This should only be called when the view has been initialized (i.e.) within
-       * the `createCommands` method calls.
+       * This should only be called when the view has been initialized (i.e.)
+       * within the `createCommands` method calls.
        *
        * ```ts
        * import { ExtensionFactory } from '@remirror/core';
@@ -272,49 +330,20 @@ declare global {
        *   version: '1.0.0',
        *   createCommands: ({ commands }) => {
        *     // This will throw since it can only be called within the returned methods.
-       *     const c = commands();
+       *     const c = commands(); // ❌
        *
        *     return {
        *       // This is good 😋
-       *       haveFun() => commands().insertText('fun!');
+       *       haveFun() {
+       *         return ({ state, dispatch }) => commands().insertText('fun!'); ✅
+       *       },
        *     }
        *   }
        * })
        * ```
        */
-      dispatch: <ExtensionUnion extends AnyExtension = AnyExtension>() => CommandsFromExtensions<
-        ExtensionUnion | ExtensionFromConstructor<typeof CommandsExtension>
-      >;
-
-      /**
-       * Chainable commands for composing functionality together in quaint and
-       * beautiful way..
-       *
-       * @remarks
-       *
-       * This should only be called when the view has been initialized (i.e.) within
-       * the `createCommands` method calls.
-       *
-       * ```ts
-       * import { ExtensionFactory } from '@remirror/core';
-       *
-       * const MyExtension = ExtensionFactory.plain({
-       *   name: 'myExtension',
-       *   version: '1.0.0',
-       *   createCommands: ({ chain }) => {
-       *     // This will throw since it can only be called within the returned methods.
-       *     const c = chain();
-       *
-       *     return {
-       *       // This is good 😋
-       *       haveFun() => chain().insertText('fun!').changeSelection('end').insertText('hello');
-       *     }
-       *   }
-       * })
-       * ```
-       */
-      commands: <ExtensionUnion extends AnyExtension = AnyExtension>() => ChainedFromExtensions<
-        ExtensionUnion | ExtensionFromConstructor<typeof CommandsExtension>
+      commands: <ExtensionUnion extends AnyExtension = any>() => ChainedFromExtensions<
+        ExtensionFromConstructor<typeof CommandsExtension> & ChainedFromExtensions<ExtensionUnion>
       >;
     }
   }

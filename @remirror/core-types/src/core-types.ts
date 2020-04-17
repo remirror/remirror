@@ -93,7 +93,7 @@ export type ProsemirrorCommandFunction<Schema extends EditorSchema = any> = (
 ) => boolean;
 
 /**
- * This is the modified type signature for commands within the remirror editor.
+ * A command method for running commands in your editor.
  *
  * @typeParam Schema - the underlying editor schema.
  * @typeParam ExtraParameter - extra parameters to add to the command function.
@@ -101,6 +101,18 @@ export type ProsemirrorCommandFunction<Schema extends EditorSchema = any> = (
  * @remarks
  *
  * This groups all the prosemirror command arguments into a single parameter.
+ *
+ * tldr; When `dispatch=undefined` make sure the command function is **idempotent**.
+ *
+ * One thing to be aware of is that when creating a command function the
+ * `tr` should only be updated when the `dispatch` method is available. This is
+ * because by convention calling the command function with `dispatch=undefined`
+ * is used to check if the function returns `true`, an indicator that it is
+ * enabled, or returns `false` to indicate it is not enabled.
+ *
+ * If the transaction has been updated outside of the `dispatch=true` condition
+ * then running the command again will result in multiple transaction updates
+ * and unpredictable behavior.
  *
  * @see {@link ProsemirrorCommandFunction}
  */

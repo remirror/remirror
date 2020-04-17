@@ -240,20 +240,6 @@ export interface CommandMethod<Parameter extends any[] = []> {
 }
 
 /**
- * The type signature for all actions.
- */
-export interface AnyCommands {
-  [action: string]: CommandMethod<any>;
-}
-
-/**
- * The type signature for all helpers.
- */
-export interface AnyHelpers {
-  [helper: string]: AnyFunction;
-}
-
-/**
  * The params object received by the onTransaction handler.
  */
 export interface OnTransactionParameter
