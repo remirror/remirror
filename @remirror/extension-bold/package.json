@@ -2,6 +2,12 @@
   "name": "@remirror/extension-bold",
   "version": "0.11.0",
   "description": "Make your text bold. Make it courageous.",
+  "keywords": [
+    "remirror",
+    "extension",
+    "bold",
+    "text-editor"
+  ],
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-bold",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-bold",
   "license": "MIT",
@@ -18,14 +24,13 @@
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
-    "csstype": "^2.6.10",
-    "prosemirror-view": "^1.14.6"
+    "csstype": "^2.6.10"
   },
   "publishConfig": {
     "access": "public"
   },
   "cjs": "lib/dist/extension-bold.cjs.js",
   "meta": {
-    "sizeLimit": "90 KB"
+    "sizeLimit": "50 KB"
   }
 }

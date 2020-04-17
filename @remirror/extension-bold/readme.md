@@ -14,26 +14,36 @@
 [typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
 [downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-bold/red?icon=npm
 
+<br />
+
 ## Installation
 
 ```bash
 yarn add @remirror/extension-bold
 ```
 
+<br />
+
 ## Usage
 
-When added to your editor it will provide the `bold` command which makes the text under the cursor /
-or at the provided position range bold.
+When added to your editor it will provide the `toggleBold` command which makes the text under the
+cursor / or at the provided position range bold.
 
 ```ts
-import { EditorManager } from '@remirror/core';
+import { EditorManager, ExtensionPriority } from '@remirror/core';
+import { ParagraphExtension } from '@remirror/extension-paragraph';
+import { DocExtension } from '@remirror/extension-doc';
+import { TextExtension } from '@remirror/extension-text';
 import { BoldExtension } from '@remirror/extension-bold';
 
 // Create the extension
+const paragraphExtension = ParagraphExtension.of();
+const docExtension = DocExtension.of({ priority: ExtensionPriority.Low });
+const textExtension = TextExtension.of({ priority: ExtensionPriority.Low });
 const boldExtension = BoldExtension.of({ weight: '500' });
 
 // Create the Editor Manager with the bold extension passed through.
-const manager = EditorManager.of([boldExtension]);
+const manager = EditorManager.of([boldExtension, paragraphExtension, docExtension, textExtension]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');
@@ -42,11 +52,20 @@ document.body.appendChild(element);
 // Add the view to the editor manager.
 manager.addView(element);
 
-// Access the commands.
-manager.commands.bold(); // Make selection bold.
+// Access the commands and toggleBoldness
+manager.commands.toggleBold();
 
-manager.commands.bold({ from: 1, to: 7 }); // Make provided range bold.
+// Toggle at the provided range
+manager.commands.toggleBold({ from: 1, to: 7 });
 ```
+
+### Alternatives
+
+There are presets which contain this extension and make the installation process less verbose.
+
+- `@remirror/preset-formatting`
+
+<br />
 
 ## Credits
 
