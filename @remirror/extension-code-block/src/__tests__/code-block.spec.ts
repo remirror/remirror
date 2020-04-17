@@ -458,7 +458,7 @@ describe('language', () => {
     expect(getLang('CSSExtras')).toEqual(cssExtras.name);
   });
 
-  it('unknow', () => {
+  it('handles unknown', () => {
     expect(getLang(`this_language_does_not_exist`)).toEqual('');
   });
 });

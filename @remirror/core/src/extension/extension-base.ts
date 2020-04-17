@@ -17,6 +17,7 @@ import {
   EditorSchema,
   EditorView,
   FlipPartialAndRequired,
+  FunctionLike,
   IfEmpty,
   IfNoRequiredProperties,
   MarkExtensionSpec,
@@ -61,7 +62,7 @@ export type AnyExtension<Settings extends object = {}, Properties extends object
 /**
  * Matches any of the three `ExtensionConstructor`s.
  */
-export interface AnyExtensionConstructor {
+export interface AnyExtensionConstructor extends FunctionLike {
   /**
    * The name of the extension that will be created. Also available on the
    * instance as `name`.
@@ -699,7 +700,7 @@ export interface PlainExtensionConstructor<
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {}
-> {
+> extends FunctionLike {
   /**
    * Get the name of the extensions created by this constructor.
    */
@@ -829,7 +830,7 @@ export interface MarkExtensionConstructor<
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {}
-> {
+> extends FunctionLike {
   /**
    * Get the name of the extensions created by this constructor.
    */
@@ -956,7 +957,7 @@ export interface NodeExtensionConstructor<
   Properties extends object = {},
   Commands extends ExtensionCommandReturn = {},
   Helpers extends ExtensionHelperReturn = {}
-> {
+> extends FunctionLike {
   /**
    * Get the name of the extensions created by this constructor.
    */

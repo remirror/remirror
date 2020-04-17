@@ -38,7 +38,7 @@ function createBaseExtensionFactory<
       factoryParameter: ExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>,
     ): PlainExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
       const parameter = freeze(factoryParameter);
-      const extensionClassName = `${startCase(parameter.name)}PlainExtension`;
+      const extensionClassName = `${startCase(parameter.name)}Extension`;
 
       const PlainExtensionClass = class extends PlainExtension<
         Name,

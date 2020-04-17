@@ -1,11 +1,12 @@
 import { fireEvent, prettyDOM } from '@testing-library/dom';
+import pick from 'object.pick';
 import { inputRules } from 'prosemirror-inputrules';
 import { AllSelection, NodeSelection, TextSelection } from 'prosemirror-state';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { DirectEditorProps, EditorView } from 'prosemirror-view';
 import { Keyboard } from 'test-keyboard';
 
-import { isString, object, pick } from '@remirror/core-helpers';
+import { isString, object } from '@remirror/core-helpers';
 import {
   EditorSchema,
   EditorStateParameter,
@@ -69,8 +70,8 @@ export interface InsertTextParameter<GSchema extends EditorSchema = any>
 }
 
 /**
- * Insert text from the provided index. Each key is entered individually to better simulate calls to
- * handleTextInput.
+ * Insert text from the provided index. Each key is entered individually to
+ * better simulate calls to handleTextInput.
  */
 export const insertText = <GSchema extends EditorSchema = any>({
   view,
@@ -88,9 +89,10 @@ export const insertText = <GSchema extends EditorSchema = any>({
       view.dispatch(view.state.tr.insertText(character, pos, pos));
     }
 
-    // Update the position based on the current state selection. This allows plugins and commands to make
-    // changes to the size of the editor while typing and as long as there is a selection position this
-    // function won't fail.
+    // Update the position based on the current state selection. This allows
+    // plugins and commands to make changes to the size of the editor while
+    // typing and as long as there is a selection position this function won't
+    // fail.
     pos = view.state.selection.anchor;
   });
 
@@ -256,7 +258,8 @@ interface FireEventAtPositionParameter<GSchema extends EditorSchema = any>
     FireParameter {}
 
 /**
- * Fires an event at the provided position or the current selected position in the dom.
+ * Fires an event at the provided position or the current selected position in
+ * the dom.
  */
 export const fireEventAtPosition = <GSchema extends EditorSchema = any>({
   view,
@@ -308,7 +311,8 @@ export interface ApplyReturn<GSchema extends EditorSchema = any>
 
 export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
   /**
-   * Whether to auto remove the editor from the dom after each test. It is advisable to leave this unchanged.
+   * Whether to auto remove the editor from the dom after each test. It is
+   * advisable to leave this unchanged.
    *
    * @defaultValue true
    */
@@ -329,8 +333,9 @@ export interface CreateEditorOptions extends Omit<DirectEditorProps, 'state'> {
 }
 
 /**
- * An instance of this class is returned when using `createEditor`. It allows for chaining of test operations and
- * adds some useful helpers to your testing toolkit.
+ * An instance of this class is returned when using `createEditor`. It allows
+ * for chaining of test operations and adds some useful helpers to your testing
+ * toolkit.
  */
 export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
   /**
@@ -387,7 +392,7 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
     return this.state.selection.to;
   }
 
-  constructor(view: TestEditorView<GSchema>) {
+  private constructor(view: TestEditorView<GSchema>) {
     this.view = view;
   }
 
@@ -460,8 +465,8 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
   /**
    * Type a keyboard shortcut - e.g. `Mod-Enter`.
    *
-   * **NOTE** This only simulates the events. For example an `Mod-Enter` would run all enter key handlers but
-   * not actually create a new line.
+   * **NOTE** This only simulates the events. For example an `Mod-Enter` would
+   * run all enter key handlers but not actually create a new line.
    *
    * @param mod - the keyboard shortcut to type
    */
@@ -473,8 +478,8 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
   /**
    * Simulate a keypress which is run through the editor's key handlers.
    *
-   * **NOTE** This only simulates the events. For example an `Enter` would run all enter key handlers but not
-   * actually create a new line.
+   * **NOTE** This only simulates the events. For example an `Enter` would run
+   * all enter key handlers but not actually create a new line.
    *
    * @param char - the character to type
    */
@@ -510,8 +515,9 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
   }
 
   /**
-   * Callback function which receives the `start`, `end`, `state`, `view`, `schema` and `selection` properties
-   * and allows for easier testing of the current state of the editor.
+   * Callback function which receives the `start`, `end`, `state`, `view`,
+   * `schema` and `selection` properties and allows for easier testing of the
+   * current state of the editor.
    */
   public callback(fn: (content: ReturnValueCallbackParameter<GSchema>) => void) {
     fn(pick(this, ['start', 'end', 'state', 'view', 'schema', 'selection', 'doc', 'debug']));
@@ -521,8 +527,8 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
   /**
    * Paste text into the editor.
    *
-   * TODO - this is overly simplistic and doesn't fully express what prosemirror can do so will need to be
-   * improved.
+   * TODO - this is overly simplistic and doesn't fully express what prosemirror
+   * can do so will need to be improved.
    */
   public paste(content: ProsemirrorNode | string) {
     pasteContent({ view: this.view, content });
@@ -535,8 +541,9 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
  *
  * @remarks
  *
- * The call to create editor can be chained with various commands to enable testing of the editor at each step
- * along it's state without the need for intermediate holding variables.
+ * The call to create editor can be chained with various commands to enable
+ * testing of the editor at each step along it's state without the need for
+ * intermediate holding variables.
  *
  * The created editor is automatically cleaned after each test.
  *
@@ -565,13 +572,15 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
  *
  * @param taggedDoc - the tagged prosemirror node to inject into the editor.
  * @param options - the {@link CreateEditorOptions} interface which includes all
- * {@link http://prosemirror.net/docs/ref/#view.DirectEditorProps | DirectEditorProps} except for `state`.
+ * {@link http://prosemirror.net/docs/ref/#view.DirectEditorProps | DirectEditorProps}
+ * except for `state`.
  */
 export const createEditor = <GSchema extends EditorSchema = any>(
   taggedDocument: TaggedProsemirrorNode<GSchema>,
   { plugins = [], rules = [], autoClean = true, ...editorOptions }: CreateEditorOptions = object(),
 ) => {
-  const place = document.body.appendChild(document.createElement('div'));
+  const place = document.createElement('div');
+  document.body.append(place);
   const state = createState(taggedDocument, [...plugins, inputRules({ rules })]);
   const view = new EditorView<GSchema>(place, { state, ...editorOptions }) as TestEditorView<
     GSchema
@@ -608,11 +617,13 @@ export interface ReturnValueCallbackParameter<GSchema extends EditorSchema = any
  *
  * Returns a tuple matching the following structure
  * [
- *   bool => was the command successfully applied taggedDoc => the new doc as a result of the command state =>
- *   The new editor state after applying the command
+ *   bool => was the command successfully applied taggedDoc => the new doc as a
+ *   result of the command state => The new editor state after applying the
+ *   command
  * ]
  *
- * @param taggedDoc - the tagged prosemirror node see {@link TaggedProsemirrorNode}
+ * @param taggedDoc - the tagged prosemirror node see
+ * {@link TaggedProsemirrorNode}
  * @param command
  * @param [result]
  */
