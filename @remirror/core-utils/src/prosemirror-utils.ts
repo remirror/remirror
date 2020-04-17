@@ -1,9 +1,10 @@
 import { MarkSpec, NodeSpec } from 'prosemirror-model';
 import { Selection as PMSelection } from 'prosemirror-state';
 
-import { isUndefined } from '@remirror/core';
+import { ErrorConstant, isUndefined } from '@remirror/core';
 import {
   bool,
+  invariant,
   isEmptyArray,
   isEmptyObject,
   isNullOrUndefined,
@@ -12,6 +13,7 @@ import {
 } from '@remirror/core-helpers';
 import {
   AttributesParameter,
+  Brand,
   CommandFunction,
   EditorSchema,
   EditorState,
@@ -513,6 +515,40 @@ export const convertCommand = <
   commandFunction: ProsemirrorCommandFunction<GSchema>,
 ): CommandFunction<GSchema, GExtraParameter> => ({ state, dispatch, view }) =>
   commandFunction(state, dispatch, view);
+
+/**
+ * Brands a command as non chainable so that it can be excluded from the
+ * inferred chainable commands.
+ */
+export type NonChainableCommandFunction<
+  GSchema extends EditorSchema = any,
+  GExtraParameter extends object = {}
+> = Brand<CommandFunction<GSchema, GExtraParameter>, 'non-chainable'>;
+
+/**
+ * Marks a command function as non chainable. It will throw an error when
+ * chaining is attempted.
+ *
+ * @remarks
+ *
+ * ```ts
+ * const command = nonChainable(({ state, dispatch }) => {...});
+ * ```
+ */
+export function nonChainable<
+  GSchema extends EditorSchema = any,
+  GExtraParameter extends object = {}
+>(
+  commandFunction: CommandFunction<GSchema, GExtraParameter>,
+): NonChainableCommandFunction<GSchema, GExtraParameter> {
+  return ((parameter) => {
+    invariant(parameter.dispatch === undefined || parameter.dispatch === parameter.view?.dispatch, {
+      code: ErrorConstant.NON_CHAINABLE_COMMAND,
+    });
+
+    return commandFunction(parameter);
+  }) as NonChainableCommandFunction<GSchema, GExtraParameter>;
+}
 
 /**
  * Similar to the chainCommands from the `prosemirror-commands` library. Allows

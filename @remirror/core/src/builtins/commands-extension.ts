@@ -9,6 +9,7 @@ import {
   EditorView,
   Transaction,
 } from '@remirror/core-types';
+import { nonChainable } from '@remirror/core-utils';
 
 import {
   AnyExtension,
@@ -185,11 +186,13 @@ export const CommandsExtension = ExtensionFactory.plain({
       /**
        * Create a custom transaction.
        *
+       * @param transactionUpdater - callback method for updating the
+       * transaction in the editor. Since transactions are mutable there is no
+       * return type.
+       *
        * @remarks
        *
-       * The callback method can be used to update the transaction in the editor.
-       *
-       * Since transactions are mutable there is no return type.
+       * This is primarily intended for use within a chainable command chain.
        */
       customTransaction(transactionUpdater: (transaction: Transaction) => void) {
         return ({ state, dispatch }) => {
@@ -200,6 +203,11 @@ export const CommandsExtension = ExtensionFactory.plain({
 
           return true;
         };
+      },
+
+      /** Doesn't support chaining */
+      nonChainableThing() {
+        return nonChainable(() => false);
       },
     };
   },

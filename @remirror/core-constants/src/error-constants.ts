@@ -82,4 +82,7 @@ export enum ErrorConstant {
 
   /** Helper method names must be unique within the editor. */
   DUPLICATE_HELPER_NAMES = 'RMR0017',
+
+  /** Attempted to chain a non chainable command. */
+  NON_CHAINABLE_COMMAND = 'RMR0018',
 }

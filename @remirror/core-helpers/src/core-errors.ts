@@ -43,6 +43,7 @@ if (process.env.NODE !== 'production') {
     [ErrorConstant.DUPLICATE_COMMAND_NAMES]:
       'Command method names must be unique within the editor.',
     [ErrorConstant.DUPLICATE_HELPER_NAMES]: 'Helper method names must be unique within the editor.',
+    [ErrorConstant.NON_CHAINABLE_COMMAND]: 'Attempted to chain a non chainable command.',
   };
 }
 
@@ -107,7 +108,7 @@ export class RemirrorError extends BaseError {
 
 /**
  * Throw an error if the condition fails. Strip out error messages for
- * production. Taken from `tiny-invariant`.
+ * production. Adapted from `tiny-invariant`.
  */
 export function invariant(condition: unknown, options: RemirrorErrorOptions): asserts condition {
   if (condition) {
