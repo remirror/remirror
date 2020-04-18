@@ -15,15 +15,26 @@
   "exclude": [
     "lib",
     "**/*.test.{ts,tsx}",
+    "**/*.tsd.{ts,tsx}",
     "**/*.stories.{ts,tsx}",
     "**/*.spec.{ts,tsx}",
     "**/__mocks__/**",
     "**/__tests__/**",
+    "**/__dts__/**",
     "**/__stories__/**"
   ],
   "references": [
     {
       "path": "../core/tsconfig.prod.json"
+    },
+    {
+      "path": "../extension-doc/tsconfig.prod.json"
+    },
+    {
+      "path": "../extension-paragraph/tsconfig.prod.json"
+    },
+    {
+      "path": "../extension-text/tsconfig.prod.json"
     }
   ]
 }

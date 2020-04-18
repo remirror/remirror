@@ -15,10 +15,12 @@
   "exclude": [
     "lib",
     "**/*.test.{ts,tsx}",
+    "**/*.tsd.{ts,tsx}",
     "**/*.stories.{ts,tsx}",
     "**/*.spec.{ts,tsx}",
     "**/__mocks__/**",
     "**/__tests__/**",
+    "**/__dts__/**",
     "**/__stories__/**"
   ],
   "references": [
