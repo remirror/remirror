@@ -233,7 +233,7 @@ module.exports = {
       },
     },
     {
-      files: ['**/__tests__/**', '**/__stories__/**', 'support/**'],
+      files: ['**/__tests__/**', '**/__stories__/**', 'support/**', '**/__dts__/**'],
       rules: {
         '@getify/proper-arrows/where': 'off',
         '@typescript-eslint/ban-ts-ignore': 'off', // Often you need to use @ts-ignore in tests
@@ -255,11 +255,11 @@ module.exports = {
       },
     },
     {
-      files: ['**/*.dts.ts'],
+      files: ['**/__dts__/**'],
       rules: {
         '@typescript-eslint/no-namespace': 'off',
         '@typescript-eslint/no-unused-vars': 'off',
-        '@typescript-eslint/no-unused-expressions': 'off',
+        '@typescript-eslint/no-unused-vars-experimental': 'off',
       },
     },
   ],

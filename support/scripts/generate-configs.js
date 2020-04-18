@@ -16,10 +16,12 @@ const AUTO_GENERATED_FLAG = {
 const EXCLUDE_PROD = [
   'lib',
   '**/*.test.{ts,tsx}',
+  '**/*.tsd.{ts,tsx}',
   '**/*.stories.{ts,tsx}',
   '**/*.spec.{ts,tsx}',
   '**/__mocks__/**',
   '**/__tests__/**',
+  '**/__dts__/**',
   '**/__stories__/**',
 ];
 

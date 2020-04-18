@@ -9,7 +9,7 @@ export interface DocExtensionOptions {
    *
    * @schema
    */
-  content?: string;
+  content?: string | null;
 }
 
 /**

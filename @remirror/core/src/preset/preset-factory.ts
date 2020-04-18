@@ -26,6 +26,13 @@ function createPresetFactory<Settings extends object = {}, Properties extends ob
           return RemirrorIdentifier.PresetConstructor;
         }
 
+        /**
+         * Sets a readable `toString` property.
+         */
+        public static toString() {
+          return `class ${presetClassName} { }`;
+        }
+
         public static of(...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
           // Using this to refer to itself. If you ever want to pick the off
           // method from here you would need to bind it to the constructor.

@@ -1,11 +1,12 @@
 import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
-import { Cast, freeze, isRemirrorType, keys, startCase, uniqueArray } from '@remirror/core-helpers';
+import { Cast, freeze, isRemirrorType, object, startCase } from '@remirror/core-helpers';
 import { IfNoRequiredProperties } from '@remirror/core-types';
 
 import { BaseExtensionSettings, ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
 import {
   AnyExtensionConstructor,
   defaultSettings,
+  DefaultSettingsType,
   ExtensionFactoryParameter,
   MarkExtension,
   MarkExtensionConstructor,
@@ -63,16 +64,16 @@ function createBaseExtensionFactory<
           return parameter.name;
         }
 
-        public static readonly settingKeys: Array<
-          keyof (Settings & BaseExtensionSettings)
-        > = uniqueArray([
-          ...keys(defaultSettings ?? {}),
-          ...keys(factoryParameter.defaultSettings ?? {}),
-        ]);
+        /** The default settings. */
+        public static readonly defaultSettings: DefaultSettingsType<Settings> = {
+          ...defaultSettings,
+          ...parameter.defaultSettings,
+        } as DefaultSettingsType<Settings>;
 
-        public static readonly propertyKeys: Array<keyof Properties> = keys(
-          parameter.defaultProperties ?? {},
-        );
+        /** The default properties */
+        static get defaultProperties(): Required<Properties> {
+          return parameter.defaultProperties ?? object();
+        }
 
         /**
          * This static method is the only way to create an instance of this
@@ -83,7 +84,13 @@ function createBaseExtensionFactory<
          * It helps prevent uses from struggling with some of the edge cases when
          * using the `new` keyword.
          */
-        public static of(...arguments_: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+        public static of(
+          ...arguments_: IfNoRequiredProperties<
+            Settings,
+            [(Settings & BaseExtensionSettings)?],
+            [Settings & BaseExtensionSettings]
+          >
+        ) {
           return new PlainExtensionClass(...arguments_);
         }
 
@@ -91,7 +98,13 @@ function createBaseExtensionFactory<
          * This makes the constructor private so that it can't be extended from
          * when using Typescript.
          */
-        private constructor(...config: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+        private constructor(
+          ...config: IfNoRequiredProperties<
+            Settings,
+            [(Settings & BaseExtensionSettings)?],
+            [Settings & BaseExtensionSettings]
+          >
+        ) {
           super(...config);
         }
 
@@ -143,16 +156,15 @@ function createBaseExtensionFactory<
           return RemirrorIdentifier.MarkExtensionConstructor;
         }
 
-        public static readonly settingKeys: Array<
-          keyof (Settings & BaseExtensionSettings)
-        > = uniqueArray([
-          ...keys(defaultSettings ?? {}),
-          ...keys(factoryParameter.defaultSettings ?? {}),
-        ]);
+        public static readonly defaultSettings: DefaultSettingsType<Settings> = {
+          ...defaultSettings,
+          ...parameter.defaultSettings,
+        } as DefaultSettingsType<Settings>;
 
-        public static readonly propertyKeys: Array<keyof Properties> = keys(
-          parameter.defaultProperties ?? {},
-        );
+        /** The default properties */
+        static get defaultProperties(): Required<Properties> {
+          return parameter.defaultProperties ?? object();
+        }
 
         /**
          * This static method is the only way to create an instance of this
@@ -163,7 +175,13 @@ function createBaseExtensionFactory<
          * It helps prevent uses from struggling with some of the edge cases when
          * using the `new` keyword.
          */
-        public static of(...arguments_: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+        public static of(
+          ...arguments_: IfNoRequiredProperties<
+            Settings,
+            [(Settings & BaseExtensionSettings)?],
+            [Settings & BaseExtensionSettings]
+          >
+        ) {
           return new MarkExtensionClass(...arguments_);
         }
 
@@ -178,7 +196,13 @@ function createBaseExtensionFactory<
          * This makes the constructor private so that it can't be extended from
          * when using Typescript.
          */
-        private constructor(...config: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+        private constructor(
+          ...config: IfNoRequiredProperties<
+            Settings,
+            [(Settings & BaseExtensionSettings)?],
+            [Settings & BaseExtensionSettings]
+          >
+        ) {
           super(...config);
         }
 
@@ -229,16 +253,15 @@ function createBaseExtensionFactory<
           return RemirrorIdentifier.NodeExtensionConstructor;
         }
 
-        public static readonly settingKeys: Array<
-          keyof (Settings & BaseExtensionSettings)
-        > = uniqueArray([
-          ...keys(defaultSettings ?? {}),
-          ...keys(factoryParameter.defaultSettings ?? {}),
-        ]);
+        public static readonly defaultSettings: DefaultSettingsType<Settings> = {
+          ...defaultSettings,
+          ...parameter.defaultSettings,
+        } as DefaultSettingsType<Settings>;
 
-        public static readonly propertyKeys: Array<keyof Properties> = keys(
-          parameter.defaultProperties ?? {},
-        );
+        /** The default properties */
+        static get defaultProperties(): Required<Properties> {
+          return parameter.defaultProperties ?? object();
+        }
 
         /**
          * This static method is the only way to create an instance of this
@@ -249,7 +272,13 @@ function createBaseExtensionFactory<
          * It helps prevent uses from struggling with some of the edge cases when
          * using the `new` keyword.
          */
-        public static of(...arguments_: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+        public static of(
+          ...arguments_: IfNoRequiredProperties<
+            Settings,
+            [(Settings & BaseExtensionSettings)?],
+            [Settings & BaseExtensionSettings]
+          >
+        ) {
           return new NodeExtensionClass(...arguments_);
         }
 
@@ -264,7 +293,13 @@ function createBaseExtensionFactory<
          * This makes the constructor private so that it can't be extended from
          * when using Typescript.
          */
-        private constructor(...config: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+        private constructor(
+          ...config: IfNoRequiredProperties<
+            Settings,
+            [(Settings & BaseExtensionSettings)?],
+            [Settings & BaseExtensionSettings]
+          >
+        ) {
           super(...config);
         }
 

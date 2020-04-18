@@ -51,6 +51,8 @@
       "@remirror/extension-text/lib/*": ["@remirror/extension-text/src/*"],
       "@remirror/playground": ["@remirror/playground/src/index.ts"],
       "@remirror/playground/lib/*": ["@remirror/playground/src/*"],
+      "@remirror/preset-core": ["@remirror/preset-core/src/index.ts"],
+      "@remirror/preset-core/lib/*": ["@remirror/preset-core/src/*"],
       "@remirror/react": ["@remirror/react/src/index.ts"],
       "@remirror/react/lib/*": ["@remirror/react/src/*"],
       "@remirror/react-hooks": ["@remirror/react-hooks/src/index.ts"],

@@ -50,14 +50,15 @@ import {
  *
  * TODO Figure out how to improve the formatting of this.
  */
-export type AnyExtension<Settings extends object = {}, Properties extends object = {}> = Extension<
-  any,
-  Settings,
-  Properties,
-  any,
-  any,
-  any
->;
+export type AnyExtension<Settings extends object = {}, Properties extends object = {}> = Omit<
+  Extension<any, Settings, Properties, any, any, any>,
+  'parameter'
+> & {
+  parameter: ExtensionLifecycleMethods &
+    {
+      [MethodName in keyof ExtensionCreatorMethods<any, any, any, any, any, any>]: AnyFunction;
+    };
+};
 
 /**
  * Matches any of the three `ExtensionConstructor`s.
@@ -69,8 +70,8 @@ export interface AnyExtensionConstructor extends FunctionLike {
    */
   readonly extensionName: string;
 
-  settingKeys: string[];
-  propertyKeys: string[];
+  defaultSettings: any;
+  defaultProperties: any;
 
   /**
    * Creates a new instance of the extension. Used when adding the extension to
@@ -292,18 +293,9 @@ export abstract class Extension<
    * The parameter that was passed when creating the constructor for this instance.
    * TODO [2020-05-01] - Consider renaming this.
    */
-  get parameter(): InferFactoryParameter<
-    Name,
-    Settings,
-    Properties,
-    Commands,
-    Helpers,
-    ProsemirrorType
-  > extends never
-    ? Readonly<ExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>>
-    : Readonly<
-        InferFactoryParameter<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>
-      > {
+  get parameter(): Readonly<
+    InferFactoryParameter<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>
+  > {
     return this.getFactoryParameter() as any;
   }
 
@@ -366,7 +358,7 @@ export abstract class Extension<
    * Get the default settings for this extension.
    */
   get defaultSettings(): DefaultSettingsType<Settings> {
-    return this.parameter.defaultSettings ?? (defaultSettings as DefaultSettingsType<Settings>);
+    return this.constructor.defaultSettings;
   }
 
   /**
@@ -383,7 +375,13 @@ export abstract class Extension<
     return this.parameter.requiredExtensions ?? [];
   }
 
-  constructor(...[settings]: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+  constructor(
+    ...[settings]: IfNoRequiredProperties<
+      Settings,
+      [(Settings & BaseExtensionSettings)?],
+      [Settings & BaseExtensionSettings]
+    >
+  ) {
     this.#settings = deepMerge(defaultSettings, {
       ...this.defaultSettings,
       ...settings,
@@ -507,7 +505,13 @@ interface DefaultSettingsParameter<Settings extends object> {
    * supported for partial settings at this point in time. As a workaround
    * use `null` as the type and pass it as the value in the default settings.
    */
+  /**
+   * The default settings for instances of this extension.
+   */
   defaultSettings: DefaultSettingsType<Settings>;
+
+  /**
+   * The default properties for instances of this extension. */
 }
 
 /**
@@ -706,8 +710,15 @@ export interface PlainExtensionConstructor<
    */
   readonly extensionName: Name;
 
-  settingKeys: Array<keyof (Settings & BaseExtensionSettings)>;
-  propertyKeys: Array<keyof Properties>;
+  /**
+   * The default settings for instances of this extension.
+   */
+  defaultSettings: DefaultSettingsType<Settings>;
+
+  /**
+   * The default properties for instances of this extension.
+   */
+  defaultProperties: Required<Properties>;
 
   /**
    * Create a new instance of the extension to be inserted into the editor.
@@ -716,7 +727,11 @@ export interface PlainExtensionConstructor<
    * problems.
    */
   of: (
-    ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
+    ...settings: IfNoRequiredProperties<
+      Settings,
+      [(Settings & BaseExtensionSettings)?],
+      [Settings & BaseExtensionSettings]
+    >
   ) => PlainExtension<Name, Settings, Properties, Commands, Helpers>;
 }
 
@@ -767,7 +782,13 @@ export abstract class MarkExtension<
    */
   readonly #schema: MarkExtensionSpec;
 
-  constructor(...parameters: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+  constructor(
+    ...parameters: IfNoRequiredProperties<
+      Settings,
+      [(Settings & BaseExtensionSettings)?],
+      [Settings & BaseExtensionSettings]
+    >
+  ) {
     super(...parameters);
 
     this.#schema = this.getFactoryParameter().createMarkSchema({
@@ -836,8 +857,15 @@ export interface MarkExtensionConstructor<
    */
   readonly extensionName: Name;
 
-  settingKeys: Array<keyof (Settings & BaseExtensionSettings)>;
-  propertyKeys: Array<keyof Properties>;
+  /**
+   * The default settings for instances of this extension.
+   */
+  defaultSettings: DefaultSettingsType<Settings>;
+
+  /**
+   * The default properties for instances of this extension.
+   */
+  defaultProperties: Required<Properties>;
 
   /**
    * Create a new instance of the extension to be inserted into the editor.
@@ -846,7 +874,11 @@ export interface MarkExtensionConstructor<
    * problems.
    */
   of: (
-    ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
+    ...settings: IfNoRequiredProperties<
+      Settings,
+      [(Settings & BaseExtensionSettings)?],
+      [Settings & BaseExtensionSettings]
+    >
   ) => MarkExtension<Name, Settings, Properties, Commands, Helpers>;
 }
 
@@ -892,7 +924,13 @@ export abstract class NodeExtension<
   readonly #schema: NodeExtensionSpec;
   /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
-  constructor(...parameters: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+  constructor(
+    ...parameters: IfNoRequiredProperties<
+      Settings,
+      [(Settings & BaseExtensionSettings)?],
+      [Settings & BaseExtensionSettings]
+    >
+  ) {
     super(...parameters);
 
     this.#schema = this.getFactoryParameter().createNodeSchema({
@@ -963,8 +1001,15 @@ export interface NodeExtensionConstructor<
    */
   readonly extensionName: Name;
 
-  settingKeys: Array<keyof (Settings & BaseExtensionSettings)>;
-  propertyKeys: Array<keyof Properties>;
+  /**
+   * The default settings for instances of this extension.
+   */
+  defaultSettings: DefaultSettingsType<Settings>;
+
+  /**
+   * The default properties for instances of this extension.
+   */
+  defaultProperties: Required<Properties>;
 
   /**
    * Create a new instance of the extension to be inserted into the editor.
@@ -973,7 +1018,11 @@ export interface NodeExtensionConstructor<
    * problems.
    */
   of: (
-    ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
+    ...settings: IfNoRequiredProperties<
+      Settings,
+      [(Settings & BaseExtensionSettings)?],
+      [Settings & BaseExtensionSettings]
+    >
   ) => NodeExtension<Name, Settings, Properties, Commands, Helpers>;
 }
 

@@ -159,6 +159,13 @@
     "running": false
   },
   {
+    "name": "@remirror/preset-core",
+    "path": "@remirror/preset-core/lib/dist/preset-core.esm.js",
+    "limit": "50 KB",
+    "ignore": [],
+    "running": false
+  },
+  {
     "name": "@remirror/react",
     "path": "@remirror/react/lib/dist/react.esm.js",
     "limit": "140 KB",

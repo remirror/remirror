@@ -66,8 +66,9 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
   /**
    * The nodes available for building the prosemirror document.
    */
-  public readonly nodes: NodeWithoutAttributes<
-    GetNodeNameUnion<GetExtensionUnion<Manager>>
+  public readonly nodes: Omit<
+    NodeWithoutAttributes<GetNodeNameUnion<GetExtensionUnion<Manager>> | 'p'>,
+    'text'
   > = object();
 
   /**
@@ -83,8 +84,9 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
    *
    * Use this when testing nodes that can take custom attributes.
    */
-  public readonly attributeNodes: NodeWithAttributes<
-    GetNodeNameUnion<GetExtensionUnion<Manager>>
+  public readonly attributeNodes: Omit<
+    NodeWithAttributes<GetNodeNameUnion<GetExtensionUnion<Manager>>>,
+    'text'
   > = object();
 
   /**
@@ -102,22 +104,22 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
     return this.#manager;
   }
 
-  get extensions() {
-    return this.#manager.extensions;
-  }
-
+  /** The editor view. */
   get view() {
     return this.#manager.view as TestEditorView<SchemaFromExtension<GetExtensionUnion<Manager>>>;
   }
 
+  /** The editor state. */
   get state() {
     return this.view.state;
   }
 
+  /** The editor schema. */
   get schema() {
     return this.state.schema;
   }
 
+  /** The root node for the editor. */
   get doc() {
     return this.state.doc;
   }
@@ -184,7 +186,9 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
     type MarkNames = GetMarkNameUnion<GetExtensionUnion<Manager>>;
     type NodeNames = GetNodeNameUnion<GetExtensionUnion<Manager>>;
 
-    for (const extension of this.extensions) {
+    this.nodes.p = nodeFactory({ name: 'paragraph', schema: this.schema });
+
+    for (const extension of this.#manager.extensions) {
       if (isMarkExtension(extension)) {
         this.marks[extension.name as MarkNames] = markFactory({
           name: extension.name,
