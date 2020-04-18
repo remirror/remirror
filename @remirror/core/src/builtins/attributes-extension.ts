@@ -3,6 +3,7 @@ import { bool, object } from '@remirror/core-helpers';
 import { AttributesWithClass } from '@remirror/core-types';
 
 import { AnyExtension, Extension, ExtensionFactory } from '../extension';
+import { AnyPreset } from '../preset';
 import { ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
 
 /**
@@ -64,7 +65,10 @@ export const AttributesExtension = ExtensionFactory.plain({
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
+    interface ManagerStore<
+      ExtensionUnion extends AnyExtension,
+      PresetUnion extends AnyPreset<ExtensionUnion>
+    > {
       /**
        * The attributes to be added to the prosemirror editor.
        */

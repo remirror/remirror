@@ -27,12 +27,14 @@ import { BuiltInExtensions, BuiltinPreset } from '../builtins';
 import {
   AnyExtension,
   AnyExtensionConstructor,
+  AnyManagerStore,
   CreateLifecycleMethodParameter,
   CreateLifecycleMethodReturn,
   ExtensionLifecycleMethods,
-  HelpersFromExtensions,
+  GetExtensionUnion,
   InitializeLifecycleMethodParameter,
   InitializeLifecycleMethodReturn,
+  ManagerStoreKeys,
   SchemaFromExtension,
   setDefaultExtensionSettings,
   ViewLifecycleMethodReturn,
@@ -46,12 +48,14 @@ import {
   transformExtensionOrPreset as transformExtensionOrPresetList,
 } from './editor-manager-helpers';
 
+export type AnyEditorManager = EditorManager<any, any>;
+
 /**
  * Checks to see whether the provided value is an `Manager`.
  *
  * @param value - the value to check
  */
-export function isEditorManager(value: unknown): value is EditorManager {
+export function isEditorManager(value: unknown): value is AnyEditorManager {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
 }
 
@@ -99,8 +103,8 @@ export function isEditorManager(value: unknown): value is EditorManager {
  * ```
  */
 export class EditorManager<
-  ExtensionUnion extends AnyExtension = AnyExtension,
-  PresetUnion extends AnyPreset<ExtensionUnion> = AnyPreset
+  ExtensionUnion extends AnyExtension,
+  PresetUnion extends AnyPreset<ExtensionUnion>
 > {
   /**
    * A static method for creating a manager.
@@ -110,10 +114,16 @@ export class EditorManager<
     PresetUnion extends AnyPreset<ExtensionUnion>
   >(
     extensionOrPresetList: Array<ExtensionUnion | PresetUnion>,
-    settings: Remirror.ManagerSettings,
-  ) {
+    settings: Remirror.ManagerSettings = object(),
+  ): EditorManager<ExtensionUnion, PresetUnion> {
     return new EditorManager<ExtensionUnion, PresetUnion>(extensionOrPresetList, settings);
   }
+
+  /**
+   * Pseudo property which is a small hack to store the type of the extension union.
+   */
+  public ['~E']!: Remirror.ManagerExtensions<ExtensionUnion, PresetUnion>;
+  public ['~P']!: PresetUnion | BuiltinPreset;
 
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
@@ -122,19 +132,19 @@ export class EditorManager<
    * extension methods
    */
   #methodParameter: Remirror.ManagerMethodParameter<
-    SchemaFromExtension<ExtensionUnion>
+    SchemaFromExtension<this['~E']>
   > = this.createInitialMethodParameter();
 
-  #extensions: ReadonlyArray<ExtensionUnion | BuiltInExtensions>;
-  #extensionMap: WeakMap<AnyExtensionConstructor, ExtensionUnion | BuiltInExtensions>;
+  #extensions: ReadonlyArray<this['~E']>;
+  #extensionMap: WeakMap<AnyExtensionConstructor, this['~E']>;
 
-  #presets: ReadonlyArray<PresetUnion | BuiltinPreset>;
-  #presetMap: WeakMap<GetConstructor<PresetUnion | BuiltinPreset>, PresetUnion | BuiltinPreset>;
+  #presets: ReadonlyArray<this['~P']>;
+  #presetMap: WeakMap<GetConstructor<this['~P']>, this['~P']>;
 
   /**
    * The extension manager store.
    */
-  #store: Remirror.ManagerStore<ExtensionUnion> = this.createInitialStore();
+  #store: Remirror.ManagerStore<ExtensionUnion, PresetUnion> = this.createInitialStore();
 
   /**
    * The stage the manager is currently running.
@@ -221,8 +231,8 @@ export class EditorManager<
   /**
    * A shorthand way of retrieving the editor view.
    */
-  get view(): EditorView<SchemaFromExtension<ExtensionUnion>> {
-    return this.view;
+  get view() {
+    return this.#store.view;
   }
 
   /**
@@ -332,9 +342,9 @@ export class EditorManager<
   /**
    * Set the store key.
    */
-  private readonly setStoreKey = <Key extends keyof Remirror.ManagerStore>(
+  private readonly setStoreKey = <Key extends ManagerStoreKeys>(
     key: Key,
-    value: Remirror.ManagerStore[Key],
+    value: AnyManagerStore[Key],
   ) => {
     invariant(this.#phase > ManagerPhase.None, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
@@ -344,9 +354,7 @@ export class EditorManager<
     this.#store[key] = value;
   };
 
-  private readonly getStoreKey = <Key extends keyof Remirror.ManagerStore>(
-    key: Key,
-  ): Remirror.ManagerStore[Key] => {
+  private readonly getStoreKey = <Key extends ManagerStoreKeys>(key: Key): AnyManagerStore[Key] => {
     invariant(this.#phase >= ManagerPhase.Initialize, {
       code: ErrorConstant.MANAGER_PHASE_ERROR,
       message: '`getStoreKey` should only be called within the returned methods scope.',
@@ -466,7 +474,7 @@ export class EditorManager<
    * Create the initial store.
    */
   private createInitialStore() {
-    const store: Remirror.ManagerStore<ExtensionUnion> = object();
+    const store: Remirror.ManagerStore<ExtensionUnion, PresetUnion> = object();
     return store;
   }
 
@@ -475,7 +483,7 @@ export class EditorManager<
    */
   private createInitialMethodParameter() {
     const methodParameter: Remirror.ManagerMethodParameter<SchemaFromExtension<
-      ExtensionUnion
+      this['~E']
     >> = object();
 
     /**
@@ -499,7 +507,7 @@ export class EditorManager<
    *
    * @param view - the editor view
    */
-  public addView(view: EditorView<SchemaFromExtension<ExtensionUnion>>) {
+  public addView(view: EditorView<SchemaFromExtension<this['~E']>>) {
     this.#phase = ManagerPhase.AddView;
     this.#store.view = view;
     this.beforeView(view);
@@ -654,22 +662,32 @@ declare global {
      * Since this is a global namespace, you can extend the store if your
      * extension is modifying the shape of the `Manager.store` property.
      */
-    interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
+    interface ManagerStore<
+      ExtensionUnion extends AnyExtension,
+      PresetUnion extends AnyPreset<ExtensionUnion>
+    > {
       /**
        * The editor view stored by this instance.
        */
-      view: EditorView<SchemaFromExtension<ExtensionUnion>>;
-
-      /**
-       * The helpers defined within this manager.
-       */
-      helpers: HelpersFromExtensions<ExtensionUnion>;
+      view: EditorView<SchemaFromExtension<ManagerExtensions<ExtensionUnion, PresetUnion>>>;
     }
+
+    /**
+     * The extension which are available on an `EditorManager` based on the passed
+     * in type params.
+     */
+    type ManagerExtensions<
+      ExtensionUnion extends AnyExtension,
+      PresetUnion extends AnyPreset<ExtensionUnion>
+    > = ExtensionUnion | BuiltInExtensions | GetExtensionUnion<PresetUnion>;
 
     /**
      * The initialization params which are passed by the view layer into the
      * extension manager. This can be added to by the requesting framework layer.
      */
-    interface ManagerInitializationParameter<ExtensionUnion extends AnyExtension = any> {}
+    interface ManagerInitializationParameter<
+      ExtensionUnion extends AnyExtension,
+      PresetUnion extends AnyPreset
+    > {}
   }
 }

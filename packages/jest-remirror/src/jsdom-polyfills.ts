@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 
-import { environment, isTextDOMNode } from '@remirror/core';
+import { environment, isEmptyArray, isTextDOMNode } from '@remirror/core';
 
 /**
  * Polyfill DOMElement.innerText because JSDOM lacks support for it.
@@ -20,7 +20,7 @@ export const jsdomPolyfill = () => {
           return `${text as string}${child.textContent as string}`;
         }
 
-        if (child.childNodes.length) {
+        if (!isEmptyArray(child.childNodes.length)) {
           return `${text as string}${getInnerText(child)}`;
         }
 
@@ -45,7 +45,7 @@ export const jsdomPolyfill = () => {
         }
 
         // Remove all child nodes as per WHATWG LS Spec
-        Array.prototype.slice.call(this.childNodes).forEach((node) => this.removeChild(node));
+        Array.prototype.slice.call(this.childNodes).forEach((node) => node.remove());
 
         // Append a single text child node with the text
         this.append(this.ownerDocument.createTextNode(text));

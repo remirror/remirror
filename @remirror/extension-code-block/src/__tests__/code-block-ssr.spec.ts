@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { renderSSREditor } from 'jest-remirror';
+import { renderEditorString } from 'jest-remirror';
 import javascript from 'refractor/lang/javascript';
 import markdown from 'refractor/lang/markdown';
 import typescript from 'refractor/lang/typescript';
@@ -13,7 +13,7 @@ import { CodeBlockExtension } from '..';
 
 const supportedLanguages = [typescript, javascript, markdown];
 const create = (initialContent: ObjectNode) =>
-  renderSSREditor([new CodeBlockExtension({ supportedLanguages })], { initialContent });
+  renderEditorString([new CodeBlockExtension({ supportedLanguages })], { initialContent });
 
 test('ssr component', () => {
   const reactString = create({

@@ -21,19 +21,23 @@ export type {
   AnyMarkExtension,
   AnyNodeExtension,
   AnyPlainExtension,
+  CommandsFromExtensions,
   Extension,
+  ExtensionTags,
   GetExtensionUnion,
+  HelpersFromExtensions,
   MarkExtension,
   NodeExtension,
   PlainExtension,
-  ExtensionTags,
+  SchemaFromExtension,
 } from './extension';
 
 export { EditorManager, isEditorManager } from './editor-manager';
-export type { ManagerTransactionHandlerParameter } from './editor-manager';
+export type { AnyEditorManager, ManagerTransactionHandlerParameter } from './editor-manager';
 
 export { PresetFactory, isPreset, isPresetConstructor } from './preset';
 export type {
+  AnyPreset,
   GetPresetUnion,
   Preset,
   PresetConstructor,

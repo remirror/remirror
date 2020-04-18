@@ -9,7 +9,6 @@ import {
   EditorView,
   Transaction,
 } from '@remirror/core-types';
-import { nonChainable } from '@remirror/core-utils';
 
 import {
   AnyExtension,
@@ -20,6 +19,7 @@ import {
   ExtensionFactory,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
+import { AnyPreset } from '../preset';
 import {
   CommandMethod,
   CreateCommandsParameter,
@@ -210,7 +210,10 @@ export const CommandsExtension = ExtensionFactory.plain({
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
+    interface ManagerStore<
+      ExtensionUnion extends AnyExtension,
+      PresetUnion extends AnyPreset<ExtensionUnion>
+    > {
       /**
        * Enables the use of custom commands created by the extensions for
        * extending the functionality of your editor in an expressive way.
@@ -248,7 +251,7 @@ declare global {
        * The `run()` method ends the chain.
        *
        */
-      commands: CommandsFromExtensions<ExtensionUnion>;
+      commands: CommandsFromExtensions<ManagerExtensions<ExtensionUnion, PresetUnion>>;
     }
 
     interface ExtensionCreatorMethods<

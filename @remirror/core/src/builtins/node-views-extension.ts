@@ -3,6 +3,7 @@ import { isFunction, object } from '@remirror/core-helpers';
 import { NodeViewMethod } from '@remirror/core-types';
 
 import { AnyExtension, Extension, ExtensionFactory } from '../extension';
+import { AnyPreset } from '../preset';
 import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';
 
 /**
@@ -61,7 +62,10 @@ export const NodeViewsExtension = ExtensionFactory.plain({
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
+    interface ManagerStore<
+      ExtensionUnion extends AnyExtension,
+      PresetUnion extends AnyPreset<ExtensionUnion>
+    > {
       /**
        * The custom nodeView which can be used to replace the nodes or marks in
        * the dom and change their browser behaviour.

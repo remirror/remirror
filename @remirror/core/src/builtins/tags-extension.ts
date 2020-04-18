@@ -9,6 +9,7 @@ import {
   isMarkExtension,
   isNodeExtension,
 } from '../extension';
+import { AnyPreset } from '../preset';
 import { GeneralExtensionTags, MarkExtensionTags, NodeExtensionTags } from '../types';
 
 /**
@@ -77,7 +78,10 @@ export const TagsExtension = ExtensionFactory.plain({
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
+    interface ManagerStore<
+      ExtensionUnion extends AnyExtension,
+      PresetUnion extends AnyPreset<ExtensionUnion>
+    > {
       /**
        * Store the built in and custom tags for the editor instance.
        */

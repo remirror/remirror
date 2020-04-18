@@ -4,6 +4,7 @@ import { AnyFunction, EditorSchema } from '@remirror/core-types';
 
 import { AnyExtension, Extension, ExtensionFactory, HelpersFromExtensions } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
+import { AnyPreset } from '../preset';
 import {
   CreateHelpersParameter,
   ExtensionCommandReturn,
@@ -83,11 +84,14 @@ export const HelpersExtension = ExtensionFactory.plain({
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
+    interface ManagerStore<
+      ExtensionUnion extends AnyExtension,
+      PresetUnion extends AnyPreset<ExtensionUnion>
+    > {
       /**
        * The helpers provided by the extensions used.
        */
-      helpers: HelpersFromExtensions<ExtensionUnion>;
+      helpers: HelpersFromExtensions<ManagerExtensions<ExtensionUnion, PresetUnion>>;
     }
 
     interface ExtensionCreatorMethods<

@@ -68,6 +68,13 @@
     "running": false
   },
   {
+    "name": "@remirror/extension-bold",
+    "path": "@remirror/extension-bold/lib/dist/extension-bold.esm.js",
+    "limit": "50 KB",
+    "ignore": [],
+    "running": false
+  },
+  {
     "name": "@remirror/extension-code-block",
     "path": "@remirror/extension-code-block/lib/dist/extension-code-block.esm.js",
     "limit": "120 KB",
@@ -79,6 +86,13 @@
     "path": "@remirror/extension-collaboration/lib/dist/extension-collaboration.esm.js",
     "limit": "90 KB",
     "ignore": ["@emotion/core"],
+    "running": false
+  },
+  {
+    "name": "@remirror/extension-doc",
+    "path": "@remirror/extension-doc/lib/dist/extension-doc.esm.js",
+    "limit": "50 KB",
+    "ignore": [],
     "running": false
   },
   {
@@ -124,9 +138,23 @@
     "running": false
   },
   {
+    "name": "@remirror/extension-paragraph",
+    "path": "@remirror/extension-paragraph/lib/dist/extension-paragraph.esm.js",
+    "limit": "90 KB",
+    "ignore": [],
+    "running": false
+  },
+  {
     "name": "@remirror/extension-tables",
     "path": "@remirror/extension-tables/lib/dist/extension-tables.esm.js",
     "limit": "120 KB",
+    "ignore": [],
+    "running": false
+  },
+  {
+    "name": "@remirror/extension-text",
+    "path": "@remirror/extension-text/lib/dist/extension-text.esm.js",
+    "limit": "50 KB",
     "ignore": [],
     "running": false
   },

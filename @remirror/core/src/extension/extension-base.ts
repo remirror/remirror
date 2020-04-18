@@ -1030,22 +1030,19 @@ export type SchemaFromExtension<ExtensionUnion extends AnyExtension> = EditorSch
   GetMarkNameUnion<ExtensionUnion>
 >;
 
-export type ManagerStoreKeys = keyof Remirror.ManagerStore;
-export type EditableManagerStoreKeys = Exclude<
-  ManagerStoreKeys,
-  'nodes' | 'marks' | 'view' | 'tags' | 'schema' | 'extensionPlugins' | 'plugins'
->;
+export type AnyManagerStore = Remirror.ManagerStore<any, any>;
+export type ManagerStoreKeys = keyof Remirror.ManagerStore<any, any>;
 
 export interface CreateLifecycleMethodParameter {
   /**
    * Get the value of a key from the manager store.
    */
-  getStoreKey: <Key extends ManagerStoreKeys>(key: Key) => Readonly<Remirror.ManagerStore[Key]>;
+  getStoreKey: <Key extends ManagerStoreKeys>(key: Key) => Readonly<AnyManagerStore[Key]>;
 
   /**
    * Update the store with a specific key.
    */
-  setStoreKey: <Key extends ManagerStoreKeys>(key: Key, value: Remirror.ManagerStore[Key]) => void;
+  setStoreKey: <Key extends ManagerStoreKeys>(key: Key, value: AnyManagerStore[Key]) => void;
 
   /**
    * The settings passed through to the manager.

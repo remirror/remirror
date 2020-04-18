@@ -2,11 +2,10 @@ import { Interpolation, ObjectInterpolation } from '@emotion/core';
 import { ReactNode, Ref } from 'react';
 
 import {
+  AnyEditorManager,
   AnyExtension,
-  ChainedFromExtensions,
   CommandsFromExtensions,
   CompareStateParameter,
-  EditorManager,
   EditorSchema,
   EditorState,
   EditorStateParameter,
@@ -41,7 +40,7 @@ import {
  */
 export type FocusType = FromToParameter | number | 'start' | 'end' | boolean;
 
-export interface RenderEditorProps<ManagerType extends EditorManager = EditorManager>
+export interface RenderEditorProps<Manager extends AnyEditorManager>
   extends StringHandlerParameter {
   /**
    * Pass in the extension manager.
@@ -49,7 +48,7 @@ export interface RenderEditorProps<ManagerType extends EditorManager = EditorMan
    * The manager is responsible for handling all Prosemirror related
    * functionality.
    */
-  manager: ManagerType;
+  manager: Manager;
 
   /**
    * Set the starting value object of the editor.
@@ -69,13 +68,13 @@ export interface RenderEditorProps<ManagerType extends EditorManager = EditorMan
    *
    * Without a deep understanding of Prosemirror this is not recommended.
    */
-  onStateChange?: (params: RemirrorStateListenerParameter<GetExtensionUnion<ManagerType>>) => void;
+  onStateChange?: (params: RemirrorStateListenerParameter<GetExtensionUnion<Manager>>) => void;
 
   /**
    * When onStateChange is defined this prop is used to set the next state value
    * of the remirror editor.
    */
-  value?: EditorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>> | null;
+  value?: EditorState<SchemaFromExtension<GetExtensionUnion<Manager>>> | null;
 
   /**
    * Adds attributes directly to the prosemirror html element.
@@ -103,7 +102,7 @@ export interface RenderEditorProps<ManagerType extends EditorManager = EditorMan
    * An event listener which is called whenever the editor gains focus.
    */
   onFocus?: (
-    params: RemirrorEventListenerParameter<GetExtensionUnion<ManagerType>>,
+    params: RemirrorEventListenerParameter<GetExtensionUnion<Manager>>,
     event: Event,
   ) => void;
 
@@ -111,7 +110,7 @@ export interface RenderEditorProps<ManagerType extends EditorManager = EditorMan
    * An event listener which is called whenever the editor is blurred.
    */
   onBlur?: (
-    params: RemirrorEventListenerParameter<GetExtensionUnion<ManagerType>>,
+    params: RemirrorEventListenerParameter<GetExtensionUnion<Manager>>,
     event: Event,
   ) => void;
 
@@ -119,18 +118,18 @@ export interface RenderEditorProps<ManagerType extends EditorManager = EditorMan
    * Called on the first render when the prosemirror instance first becomes
    * available
    */
-  onFirstRender?: RemirrorEventListener<GetExtensionUnion<ManagerType>>;
+  onFirstRender?: RemirrorEventListener<GetExtensionUnion<Manager>>;
 
   /**
    * Called on every change to the Prosemirror state.
    */
-  onChange?: RemirrorEventListener<GetExtensionUnion<ManagerType>>;
+  onChange?: RemirrorEventListener<GetExtensionUnion<Manager>>;
 
   /**
    * The render prop that takes the injected remirror params and returns an
    * element to render. The editor view is automatically attached to the DOM.
    */
-  children: RenderPropFunction<ManagerType>;
+  children: RenderPropFunction<Manager>;
 
   /**
    * A method called when the editor is dispatching the transaction.
@@ -139,9 +138,7 @@ export interface RenderEditorProps<ManagerType extends EditorManager = EditorMan
    * Use this to update the transaction which will be used to update the editor
    * state.
    */
-  onDispatchTransaction: TransactionTransformer<
-    SchemaFromExtension<GetExtensionUnion<ManagerType>>
-  >;
+  onDispatchTransaction: TransactionTransformer<SchemaFromExtension<GetExtensionUnion<Manager>>>;
 
   /**
    * Sets the accessibility label for the editor instance.
@@ -290,64 +287,55 @@ export type CalculatePositionerParameter<
 
 export type GetPositionerPropsConfig<
   ExtensionUnion extends AnyExtension = any,
-  GRefKey extends string = 'ref'
-> = RefParameter<GRefKey> & Partial<Positioner<ExtensionUnion>> & PositionerIdParameter;
+  RefKey extends string = 'ref'
+> = RefParameter<RefKey> & Partial<Positioner<ExtensionUnion>> & PositionerIdParameter;
 
-export interface RefParameter<GRefKey = 'ref'> {
+export interface RefParameter<RefKey = 'ref'> {
   /**
    * A custom ref key which allows a reference to be obtained from non standard
    * components.
    *
    * @defaultValue 'ref'
    */
-  refKey?: GRefKey;
+  refKey?: RefKey;
 }
 
 export type PositionerProps = IsActiveParameter & Position;
 
-export interface GetRootPropsConfig<GRefKey extends string = 'ref'>
-  extends RefParameter<GRefKey>,
+export interface GetRootPropsConfig<RefKey extends string = 'ref'>
+  extends RefParameter<RefKey>,
     PlainObject {
   editorStyles?: Interpolation;
 }
 
-export type RefKeyRootProps<GRefKey extends string = 'ref'> = {
-  [P in Exclude<GRefKey, 'key'>]: Ref<any>;
+export type RefKeyRootProps<RefKey extends string = 'ref'> = {
+  [P in Exclude<RefKey, 'key'>]: Ref<any>;
 } & {
-  css: Interpolation | ((theme: any) => Interpolation);
   key: string;
   children: ReactNode;
 } & PlainObject;
 
-export type GetPositionerReturn<GRefKey extends string = 'ref'> =
-  // GRefKey extends 'ref'
-  //   ? PositionerProps & { ref: Ref<any> }
-  // :
-  PositionerProps & { [P in GRefKey]: Ref<any> };
+export type GetPositionerReturn<RefKey extends string = 'ref'> = { [P in RefKey]: Ref<any> } &
+  PositionerProps;
 
 /**
  * These are the props passed to the render function provided when setting up
  * your editor.
  */
-export interface InjectedRenderEditorProps<ManagerType extends EditorManager = any> {
+export interface InjectedRenderEditorProps<Manager extends AnyEditorManager> {
   /**
    * An instance of the extension manager
    */
-  manager: ManagerType;
+  manager: Manager;
   /**
    * The prosemirror view
    */
-  view: EditorView<SchemaFromExtension<GetExtensionUnion<ManagerType>>>;
+  view: EditorView<SchemaFromExtension<GetExtensionUnion<Manager>>>;
 
   /**
    * A map of all actions made available by the configured extensions.
    */
-  commands: CommandsFromExtensions<GetExtensionUnion<ManagerType>>;
-
-  /**
-   * The chainable commands.
-   */
-  chain: ChainedFromExtensions<GetExtensionUnion<ManagerType>>;
+  commands: CommandsFromExtensions<GetExtensionUnion<Manager>>;
 
   /**
    * The unique id for the editor instance.
@@ -412,9 +400,9 @@ export interface InjectedRenderEditorProps<ManagerType extends EditorManager = a
    * }
    * ```
    */
-  getRootProps: <GRefKey extends string = 'ref'>(
-    options?: GetRootPropsConfig<GRefKey>,
-  ) => RefKeyRootProps<GRefKey>;
+  getRootProps: <RefKey extends string = 'ref'>(
+    options?: GetRootPropsConfig<RefKey>,
+  ) => RefKeyRootProps<RefKey>;
 
   /**
    * Attach these props to a component to inject it with position data.
@@ -423,14 +411,14 @@ export interface InjectedRenderEditorProps<ManagerType extends EditorManager = a
    * A custom positioner can be passed in to update the method used to calculate
    * the position.
    */
-  getPositionerProps: <GRefKey extends string = 'ref'>(
-    options: GetPositionerPropsConfig<GetExtensionUnion<ManagerType>, GRefKey>,
-  ) => GetPositionerReturn<GRefKey>;
+  getPositionerProps: <RefKey extends string = 'ref'>(
+    options: GetPositionerPropsConfig<GetExtensionUnion<Manager>, RefKey>,
+  ) => GetPositionerReturn<RefKey>;
 
   /**
    * The previous and next state
    */
-  state: CompareStateParameter<SchemaFromExtension<GetExtensionUnion<ManagerType>>>;
+  state: CompareStateParameter<SchemaFromExtension<GetExtensionUnion<Manager>>>;
 
   /**
    * Focus the editor at the `start` | `end` a specific position or at a valid range between `{ from, to }`
@@ -443,8 +431,8 @@ export interface InjectedRenderEditorProps<ManagerType extends EditorManager = a
  *
  * @param - injected remirror params
  */
-export type RenderPropFunction<ManagerType extends EditorManager = any> = (
-  params: InjectedRenderEditorProps<ManagerType>,
+export type RenderPropFunction<Manager extends AnyEditorManager> = (
+  params: InjectedRenderEditorProps<Manager>,
 ) => JSX.Element;
 
 export interface RemirrorGetterParameter {
@@ -566,10 +554,10 @@ export interface PositionerParameter {
   positioner: Partial<Positioner>;
 }
 
-export interface UsePositionerParameter<GRefKey extends string = 'ref'>
+export interface UsePositionerParameter<RefKey extends string = 'ref'>
   extends PositionerIdParameter,
     PositionerParameter,
-    RefParameter<GRefKey> {}
+    RefParameter<RefKey> {}
 
 export interface UpdateStateParameter<GSchema extends EditorSchema = any>
   extends Partial<TransactionParameter<GSchema>>,

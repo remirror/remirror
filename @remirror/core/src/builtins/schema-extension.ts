@@ -22,6 +22,7 @@ import {
   isNodeExtension,
   SchemaFromExtension,
 } from '../extension';
+import { AnyPreset } from '../preset';
 
 /**
  * Automatically set the default attributes and also parse the extra attributes .
@@ -245,7 +246,10 @@ declare global {
       schemaAttributes?: ExtraSchemaAttributes[];
     }
 
-    interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
+    interface ManagerStore<
+      ExtensionUnion extends AnyExtension,
+      PresetUnion extends AnyPreset<ExtensionUnion>
+    > {
       /**
        * The nodes to place on the schema.
        */

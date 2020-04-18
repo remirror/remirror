@@ -1,4 +1,4 @@
-import { renderSSREditor } from 'jest-remirror';
+import { renderEditorString } from 'jest-remirror';
 
 import { EnhancedLinkExtension } from '../enhanced-link-extension';
 
@@ -21,7 +21,7 @@ test('ssr', () => {
       },
     ],
   };
-  const string = renderSSREditor([new EnhancedLinkExtension({})], {
+  const string = renderEditorString([new EnhancedLinkExtension({})], {
     initialContent,
     forceEnvironment: 'ssr',
   });

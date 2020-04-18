@@ -33,7 +33,7 @@ export class NullSelectionReader {
   }
 }
 
-export const jsdomSelectionPatch = (view: EditorView) => {
+export function jsdomSelectionPatch(view: EditorView) {
   const warnOnce = (() => {
     return () => {
       if (window.hasWarnedAboutJsdomFixtures || window.ignoreAllJSDOMWarnings) {
@@ -66,4 +66,4 @@ export const jsdomSelectionPatch = (view: EditorView) => {
   (view as any).destroy = function () {
     EditorView.prototype.destroy.apply(this);
   };
-};
+}

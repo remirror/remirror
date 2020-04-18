@@ -327,7 +327,7 @@ declare global {
      * Parameters passed into many of the extension methods. These can be added
      * to by the parameter methods.
      */
-    interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
+    interface ManagerMethodParameter<Schema extends EditorSchema> {
       /**
        * A helper method for retrieving the state of the editor
        */

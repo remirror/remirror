@@ -86,7 +86,7 @@ export function transformExtensionOrPreset<
     Array<BuiltinPresetUnion | undefined>
   >();
 
-  // The unsorted, undeduped, unrefined extensions.
+  // The unsorted, de-duped, unrefined extensions.
   let rawExtensions: BuiltinExtensionUnion[] = [];
 
   /**

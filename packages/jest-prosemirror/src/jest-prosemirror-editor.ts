@@ -392,7 +392,7 @@ export class ProsemirrorTestChain<GSchema extends EditorSchema = any> {
     return this.state.selection.to;
   }
 
-  private constructor(view: TestEditorView<GSchema>) {
+  constructor(view: TestEditorView<GSchema>) {
     this.view = view;
   }
 

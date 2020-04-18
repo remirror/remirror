@@ -2,15 +2,17 @@ import { EditorState, TextSelection } from 'prosemirror-state';
 import React, { Fragment, PureComponent, ReactNode, Ref } from 'react';
 
 import {
+  AnyEditorManager,
   bool,
   clamp,
+  CommandsFromExtensions,
   EDITOR_CLASS_NAME,
-  EditorManager,
   EditorView as EditorViewType,
   fromHTML,
   FromToParameter,
   getDocument,
   GetExtensionUnion,
+  invariant,
   isArray,
   isFunction,
   isNumber,
@@ -62,9 +64,9 @@ import {
   UpdateStateParameter,
 } from '../react-types';
 
-export class RenderEditor<ManagerType extends EditorManager = EditorManager> extends PureComponent<
-  RenderEditorProps<ManagerType>,
-  RemirrorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>>
+export class RenderEditor<Manager extends AnyEditorManager> extends PureComponent<
+  RenderEditorProps<Manager>,
+  RemirrorState<SchemaFromExtension<GetExtensionUnion<Manager>>>
 > {
   public static defaultProps = defaultProps;
 
@@ -78,7 +80,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
    * to the components state for internal usage.
    */
   public static getDerivedStateFromProps(
-    properties: RenderEditorProps,
+    properties: RenderEditorProps<AnyEditorManager>,
     state: RemirrorState,
   ): RemirrorState | null {
     const { onStateChange, value } = properties;
@@ -110,7 +112,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
   /**
    * The prosemirror EditorView.
    */
-  private readonly view: EditorViewType<SchemaFromExtension<GetExtensionUnion<ManagerType>>>;
+  private readonly view: EditorViewType<SchemaFromExtension<GetExtensionUnion<Manager>>>;
 
   /**
    * A unique ID for the editor which is also used as a key to pass into
@@ -134,7 +136,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
   /**
    * A utility for quickly retrieving the extension manager.
    */
-  private get manager(): ManagerType {
+  private get manager(): Manager {
     console.info(this.props);
     return this.props.manager;
   }
@@ -148,7 +150,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
     called: false,
   };
 
-  constructor(properties: RenderEditorProps<ManagerType>) {
+  constructor(properties: RenderEditorProps<Manager>) {
     super(properties);
 
     // Ensure that children is a render prop.
@@ -185,7 +187,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
    *
    * At this point both oldState and newState point to the same state object.
    */
-  private createInitialState(): RemirrorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>> {
+  private createInitialState(): RemirrorState<SchemaFromExtension<GetExtensionUnion<Manager>>> {
     const { suppressHydrationWarning } = this.props;
 
     const newState = this.createStateFromContent(this.props.initialContent);
@@ -203,7 +205,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
    * Create the prosemirror editor view.
    */
   private createView() {
-    return createEditorView<SchemaFromExtension<GetExtensionUnion<ManagerType>>>(
+    return createEditorView<SchemaFromExtension<GetExtensionUnion<Manager>>>(
       undefined,
       {
         state: this.state.editor.newState,
@@ -239,11 +241,10 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
   ): RefKeyRootProps<GRefKey> => {
     // Ensure that this is the first time `getRootProps` is being called during
     // this render.
-    if (this.rootPropsConfig.called) {
-      throw new Error(
+    invariant(!this.rootPropsConfig.called, {
+      message:
         '`getRootProps` has been called MULTIPLE times. It should only be called ONCE during render.',
-      );
-    }
+    });
     this.rootPropsConfig.called = true;
 
     const { refKey: referenceKey = 'ref', ...config } =
@@ -254,7 +255,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
       key: this.uid,
       ...config,
       children: children ?? this.renderChildren(null),
-    };
+    } as any;
   };
 
   /**
@@ -263,8 +264,8 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
    * cursor position (e.g.) a floating / bubble menu.
    */
   private readonly getPositionerProps = <GRefKey extends string = 'ref'>(
-    options: GetPositionerPropsConfig<GetExtensionUnion<ManagerType>, GRefKey> | undefined,
-  ) => {
+    options: GetPositionerPropsConfig<GetExtensionUnion<Manager>, GRefKey> | undefined,
+  ): GetPositionerReturn<GRefKey> => {
     const { refKey: referenceKey = 'ref', ...config } = {
       ...defaultPositioner,
       ...(options ?? object<NonNullable<typeof options>>()),
@@ -280,12 +281,10 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
     // Calculate the props
     const properties = this.calculatePositionProps({ ...config });
 
-    const returnValue: GetPositionerReturn<GRefKey> = {
+    return {
       ...properties,
       [referenceKey]: reference,
-    };
-
-    return returnValue;
+    } as GetPositionerReturn<GRefKey>;
   };
 
   /**
@@ -331,7 +330,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
     hasChanged,
     isActive,
     positionerId,
-  }: CalculatePositionerParameter<GetExtensionUnion<ManagerType>>): PositionerProps {
+  }: CalculatePositionerParameter<GetExtensionUnion<Manager>>): PositionerProps {
     const positionerMapItem = this.positionerMap.get(positionerId);
     let positionerProperties = { isActive: false, ...initialPosition };
 
@@ -418,7 +417,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
    * editor this method is called when the value prop has changed.
    */
   private readonly controlledUpdate = (
-    state: EditorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>>,
+    state: EditorState<SchemaFromExtension<GetExtensionUnion<Manager>>>,
   ) => {
     const updateHandler = this.createUpdateStateHandler({ state });
     this.view.updateState(state);
@@ -433,7 +432,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
     triggerOnChange,
     onUpdate,
     tr,
-  }: UpdateStateParameter<SchemaFromExtension<GetExtensionUnion<ManagerType>>>) => (
+  }: UpdateStateParameter<SchemaFromExtension<GetExtensionUnion<Manager>>>) => (
     updatedState = state,
   ) => {
     const { onChange } = this.props;
@@ -461,7 +460,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
     triggerOnChange = true,
     onUpdate,
     tr,
-  }: UpdateStateParameter<SchemaFromExtension<GetExtensionUnion<ManagerType>>>) {
+  }: UpdateStateParameter<SchemaFromExtension<GetExtensionUnion<Manager>>>) {
     const { onStateChange } = this.props;
 
     const updateHandler = this.createUpdateStateHandler({ state, triggerOnChange, onUpdate });
@@ -546,8 +545,8 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
   }
 
   public componentDidUpdate(
-    { editable, manager: previousManager }: RenderEditorProps<ManagerType>,
-    previousState: RemirrorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>>,
+    { editable, manager: previousManager }: RenderEditorProps<Manager>,
+    previousState: RemirrorState<SchemaFromExtension<GetExtensionUnion<Manager>>>,
   ) {
     // Ensure that children is still a render prop
     propIsFunction(this.props.children);
@@ -653,8 +652,8 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
   private baseListenerParameter({
     state,
     tr,
-  }: ListenerParameter<GetExtensionUnion<ManagerType>>): BaseListenerParameter<
-    GetExtensionUnion<ManagerType>
+  }: ListenerParameter<GetExtensionUnion<Manager>>): BaseListenerParameter<
+    GetExtensionUnion<Manager>
   > {
     return {
       tr,
@@ -673,7 +672,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
    */
   private eventListenerParameter(
     { state, tr }: ListenerParameter = object(),
-  ): RemirrorEventListenerParameter<GetExtensionUnion<ManagerType>> {
+  ): RemirrorEventListenerParameter<GetExtensionUnion<Manager>> {
     return {
       ...this.baseListenerParameter({ tr }),
       state: state ?? this.state.editor.newState,
@@ -688,8 +687,8 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
       newState,
       oldState,
       tr,
-    }: EditorStateEventListenerParameter<GetExtensionUnion<ManagerType>> = object(),
-  ): RemirrorStateListenerParameter<GetExtensionUnion<ManagerType>> {
+    }: EditorStateEventListenerParameter<GetExtensionUnion<Manager>> = object(),
+  ): RemirrorStateListenerParameter<GetExtensionUnion<Manager>> {
     return {
       ...this.baseListenerParameter({ state: newState, tr }),
       newState: newState ?? this.state.editor.newState,
@@ -747,7 +746,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
     requestAnimationFrame(() => this.view.focus());
   };
 
-  get renderParameter(): InjectedRenderEditorProps<ManagerType> {
+  get renderParameter(): InjectedRenderEditorProps<Manager> {
     return {
       /* Properties */
       uid: this.uid,
@@ -756,8 +755,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
       state: this.state.editor,
 
       /* Mapped methods */
-      commands: this.manager.store.commands as any,
-      chain: this.manager.store.chain,
+      commands: this.manager.store.commands as CommandsFromExtensions<GetExtensionUnion<Manager>>,
 
       /* Getter Methods */
       getRootProps: this.getRootProps,
@@ -773,7 +771,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
   }
 
   private readonly getText = (
-    state?: EditorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>>,
+    state?: EditorState<SchemaFromExtension<GetExtensionUnion<Manager>>>,
   ) => (lineBreakDivider = '\n\n') => {
     const { doc } = state ?? this.state.editor.newState;
     return doc.textBetween(0, doc.content.size, lineBreakDivider);
@@ -783,7 +781,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
    * Retrieve the HTML from the `doc` prosemirror node
    */
   private readonly getHTML = (
-    state?: EditorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>>,
+    state?: EditorState<SchemaFromExtension<GetExtensionUnion<Manager>>>,
   ) => () => {
     return toHTML({
       node: (state ?? this.state.editor.newState).doc,
@@ -796,7 +794,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
    * Retrieve the full state json object
    */
   private readonly getJSON = (
-    state?: EditorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>>,
+    state?: EditorState<SchemaFromExtension<GetExtensionUnion<Manager>>>,
   ) => (): ObjectNode => {
     return (state ?? this.state.editor.newState).toJSON() as ObjectNode;
   };
@@ -805,7 +803,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
    * Return the json object for the prosemirror document.
    */
   private readonly getObjectNode = (
-    state?: EditorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>>,
+    state?: EditorState<SchemaFromExtension<GetExtensionUnion<Manager>>>,
   ) => (): ObjectNode => {
     return (state ?? this.state.editor.newState).doc.toJSON() as ObjectNode;
   };
@@ -815,7 +813,7 @@ export class RenderEditor<ManagerType extends EditorManager = EditorManager> ext
    */
   private readonly createStateFromContent = (
     content: RemirrorContentType,
-  ): EditorState<SchemaFromExtension<GetExtensionUnion<ManagerType>>> => {
+  ): EditorState<SchemaFromExtension<GetExtensionUnion<Manager>>> => {
     const { stringHandler, fallbackContent: fallback } = this.props;
     return this.manager.createState({ content, doc: this.doc, stringHandler, fallback });
   };

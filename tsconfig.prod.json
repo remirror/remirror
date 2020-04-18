@@ -33,10 +33,16 @@
       "path": "@remirror/editor-wysiwyg/tsconfig.prod.json"
     },
     {
+      "path": "@remirror/extension-bold/tsconfig.prod.json"
+    },
+    {
       "path": "@remirror/extension-code-block/tsconfig.prod.json"
     },
     {
       "path": "@remirror/extension-collaboration/tsconfig.prod.json"
+    },
+    {
+      "path": "@remirror/extension-doc/tsconfig.prod.json"
     },
     {
       "path": "@remirror/extension-drop-cursor/tsconfig.prod.json"
@@ -57,7 +63,13 @@
       "path": "@remirror/extension-mention/tsconfig.prod.json"
     },
     {
+      "path": "@remirror/extension-paragraph/tsconfig.prod.json"
+    },
+    {
       "path": "@remirror/extension-tables/tsconfig.prod.json"
+    },
+    {
+      "path": "@remirror/extension-text/tsconfig.prod.json"
     },
     {
       "path": "@remirror/react/tsconfig.prod.json"

@@ -3,6 +3,7 @@ import { invariant, object } from '@remirror/core-helpers';
 import { ProsemirrorPlugin } from '@remirror/core-types';
 
 import { AnyExtension, Extension, ExtensionFactory } from '../extension';
+import { AnyPreset } from '../preset';
 import {
   ExtensionCommandReturn,
   ExtensionHelperReturn,
@@ -75,7 +76,10 @@ export const PluginsExtension = ExtensionFactory.plain({
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<ExtensionUnion extends AnyExtension = any> {
+    interface ManagerStore<
+      ExtensionUnion extends AnyExtension,
+      PresetUnion extends AnyPreset<ExtensionUnion>
+    > {
       /**
        * All of the plugins combined together from all sources
        */
