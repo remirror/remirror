@@ -12,7 +12,12 @@ import {
   object,
   uniqueBy,
 } from '@remirror/core-helpers';
-import { FlipPartialAndRequired, IfEmpty, IfNoRequiredProperties } from '@remirror/core-types';
+import {
+  FlipPartialAndRequired,
+  FunctionLike,
+  IfEmpty,
+  IfNoRequiredProperties,
+} from '@remirror/core-types';
 
 import {
   AnyExtension,
@@ -27,7 +32,19 @@ import { GetConstructor, Of, PropertiesShape } from '../types';
 /**
  * The type which is applicable to any `Preset` instances.
  */
-export type AnyPreset<ExtensionUnion extends AnyExtension = any> = Preset<ExtensionUnion, any, any>;
+export type AnyPreset<ExtensionUnion extends AnyExtension = any> = Omit<
+  Preset<ExtensionUnion, {}, {}>,
+  'parameter'
+> & {
+  parameter: Omit<
+    BasePresetFactoryParameter<ExtensionUnion, {}, {}>,
+    'createExtensions' | 'onSetProperties' | 'onResetProperties'
+  > & {
+    createExtensions: (...args: any[]) => ExtensionUnion[];
+    onSetProperties?: (...args: any[]) => void;
+    onResetProperties?: (...args: any[]) => void;
+  };
+};
 
 /**
  * The interface of a preset constructor. This is used to create an instance of
@@ -35,9 +52,9 @@ export type AnyPreset<ExtensionUnion extends AnyExtension = any> = Preset<Extens
  */
 export interface PresetConstructor<
   ExtensionUnion extends AnyExtension,
-  Settings extends object = {},
-  Properties extends object = {}
-> {
+  Settings extends object,
+  Properties extends object
+> extends FunctionLike {
   /**
    * Create a new instance of the preset to be used in the extension manager.
    *
@@ -64,8 +81,8 @@ export function isPreset(value: unknown): value is AnyPreset {
  */
 export abstract class Preset<
   ExtensionUnion extends AnyExtension,
-  Settings extends object = {},
-  Properties extends object = {}
+  Settings extends object,
+  Properties extends object
 >
   implements
     ExtensionListParameter<ExtensionUnion>,
@@ -168,7 +185,7 @@ export abstract class Preset<
     }
   }
 
-  abstract getFactoryParameter(): Readonly<
+  protected abstract getFactoryParameter(): Readonly<
     PresetFactoryParameter<ExtensionUnion, Settings, Properties>
   >;
 
@@ -244,8 +261,8 @@ export abstract class Preset<
 
 export interface Preset<
   ExtensionUnion extends AnyExtension,
-  Settings extends object = {},
-  Properties extends object = {}
+  Settings extends object,
+  Properties extends object
 > {
   /**
    * The typed constructor for the `Preset` instance.
@@ -253,14 +270,14 @@ export interface Preset<
   constructor: PresetConstructor<ExtensionUnion, Settings, Properties>;
 }
 
-interface CreateExtensionsParameter<Settings extends object = {}, Properties extends object = {}>
+interface CreateExtensionsParameter<Settings extends object, Properties extends object>
   extends PropertiesParameter<Properties>,
     SettingsParameter<Settings> {}
 
 interface SetPropertiesParameter<
   ExtensionUnion extends AnyExtension,
-  Settings extends object = {},
-  Properties extends object = {}
+  Settings extends object,
+  Properties extends object
 >
   extends GetExtensionParameter<ExtensionUnion>,
     DefaultPropertiesParameter<Properties>,
@@ -269,8 +286,8 @@ interface SetPropertiesParameter<
 
 interface ResetPropertiesParameter<
   ExtensionUnion extends AnyExtension,
-  Settings extends object = {},
-  Properties extends object = {}
+  Settings extends object,
+  Properties extends object
 >
   extends GetExtensionParameter<ExtensionUnion>,
     DefaultPropertiesParameter<Properties>,
@@ -279,8 +296,8 @@ interface ResetPropertiesParameter<
 
 export interface BasePresetFactoryParameter<
   ExtensionUnion extends AnyExtension,
-  Settings extends object = {},
-  Properties extends object = {}
+  Settings extends object,
+  Properties extends object
 > {
   /**
    * The `camelCased` name of the preset.
@@ -313,8 +330,8 @@ export interface BasePresetFactoryParameter<
 
 export type PresetFactoryParameter<
   ExtensionUnion extends AnyExtension,
-  Settings extends object = {},
-  Properties extends object = {}
+  Settings extends object,
+  Properties extends object
 > = BasePresetFactoryParameter<ExtensionUnion, Settings, Properties> &
   IfEmpty<
     Properties,

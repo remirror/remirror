@@ -1,4 +1,5 @@
 import { ExtensionFactory } from '../../extension';
+import { AnyPreset } from '../preset-base';
 import { PresetFactory } from '../preset-factory';
 
 // @ts-expect-error
@@ -26,3 +27,5 @@ const PresetExtensionWithSettings = PresetFactory.typed().preset({
     return [ExtensionWithSettings.of({ oops: true })];
   },
 });
+
+const anyPresetWithSettings: AnyPreset = PresetExtensionWithSettings.of();
