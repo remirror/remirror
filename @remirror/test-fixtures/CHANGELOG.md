@@ -1,5 +1,12 @@
 # @remirror/test-fixtures
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [4dbb7461]
+  - @remirror/core-extensions@0.13.1
+
 ## 0.0.3
 
 ### Patch Changes
