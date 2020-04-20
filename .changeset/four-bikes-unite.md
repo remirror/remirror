@@ -2,4 +2,4 @@
 "@remirror/extension-image": patch
 ---
 
-Fix the `schema.parseDOM` property so that it can access `this.getExtraAttrs`.
+Make the `schema.toDOM` and arrow function so that it can access `this`.
