@@ -42,10 +42,10 @@ export class ImageExtension extends NodeExtension {
       parseDOM: [
         {
           tag: 'img[src]',
-          getAttrs: (domNode) => (isElementDOMNode(domNode) ? getAttrs(this.getExtraAttrs(domNode)) : {}),
+          getAttrs: domNode => (isElementDOMNode(domNode) ? getAttrs(this.getExtraAttrs(domNode)) : {}),
         },
       ],
-      toDOM: (node) => {
+      toDOM: node => {
         return ['img', node.attrs];
       },
     };
