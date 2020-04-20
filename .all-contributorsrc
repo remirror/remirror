@@ -157,6 +157,16 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "lanyusan",
+      "name": "lanyusan",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/56706512?v=4",
+      "profile": "https://github.com/lanyusan",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
