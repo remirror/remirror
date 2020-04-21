@@ -1,5 +1,16 @@
 # with-next
 
+## 0.0.8
+
+### Patch Changes
+
+- Updated dependencies [4dbb7461]
+  - @remirror/core-extensions@0.13.1
+  - @remirror/editor-wysiwyg@0.13.1
+  - @remirror/editor-social@0.13.1
+  - @remirror/react@0.13.1
+  - @remirror/showcase@0.13.1
+
 ## 0.0.7
 
 ### Patch Changes

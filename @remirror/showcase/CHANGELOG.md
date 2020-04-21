@@ -1,5 +1,17 @@
 # @remirror/showcase
 
+## 0.13.1
+
+### Patch Changes
+
+- Updated dependencies [4dbb7461]
+  - @remirror/core-extensions@0.13.1
+  - @remirror/editor-markdown@0.13.1
+  - @remirror/editor-wysiwyg@0.13.1
+  - @remirror/editor-social@0.13.1
+  - @remirror/react@0.13.1
+  - @remirror/dev@0.13.1
+
 ## 0.13.0
 
 ### Patch Changes

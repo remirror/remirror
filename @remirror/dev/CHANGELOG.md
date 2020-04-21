@@ -1,5 +1,11 @@
 # @remirror/dev
 
+## 0.13.1
+
+### Patch Changes
+
+- @remirror/react@0.13.1
+
 ## 0.11.0
 
 ### Patch Changes

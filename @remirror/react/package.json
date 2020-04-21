@@ -1,6 +1,6 @@
 {
   "name": "@remirror/react",
-  "version": "0.11.0",
+  "version": "0.13.1",
   "description": "react utilities for remirror",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/react",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react",
@@ -17,7 +17,7 @@
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
-    "@remirror/core-extensions": "^0.11.0",
+    "@remirror/core-extensions": "^0.13.1",
     "@remirror/react-portals": "^0.7.4",
     "@remirror/react-ssr": "^0.11.0",
     "@remirror/react-utils": "^0.7.6",
