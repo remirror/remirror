@@ -1,8 +1,8 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 
 import CodeEditor from './code-editor';
 import { ErrorBoundary } from './error-boundary';
-import { CodeOptions } from './interfaces';
+import { CodeOptions, RemirrorModules } from './interfaces';
 import { Container, Divide, Header, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
 import { Viewer } from './viewer';
@@ -133,6 +133,24 @@ export default SmallEditorWrapper;
 export const Playground: FC = function () {
   const [value, setValue] = useState('// Add some code here\n');
   const [advanced, setAdvanced] = useState(false);
+  const [modules, setModules] = useState<RemirrorModules>({});
+  const addModule = useCallback((moduleName: string) => {
+    setModules((oldModules) => ({
+      ...oldModules,
+      [moduleName]: {
+        loading: true,
+      },
+    }));
+  }, []);
+  const removeModule = useCallback((moduleName: string) => {
+    setModules(({ [moduleName]: _deleteMe, ...otherModules }) => otherModules);
+  }, []);
+  useEffect(() => {
+    const CORE = '@remirror/core';
+    if (!modules[CORE]) {
+      addModule(CORE);
+    }
+  });
   const [options, setOptions] = useState({
     extensions: [
       // {
@@ -176,6 +194,9 @@ export const Playground: FC = function () {
             <SimplePanel
               options={options}
               setOptions={setOptions}
+              modules={modules}
+              addModule={addModule}
+              removeModule={removeModule}
               onAdvanced={handleToggleAdvanced}
             />
           )}

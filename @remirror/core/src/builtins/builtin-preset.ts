@@ -46,6 +46,33 @@ const BuiltinPreset = PresetFactory.typed().preset({
   },
 });
 
+/*
+const BuiltinPreset = PresetFactory.typed<
+  { excludeStrikeThrough: boolean },
+  { boldWeight: number }
+>().preset({
+  name: 'builtin',
+  defaultSettings: {
+    excludeStrikeThrough: false,
+  },
+  defaultProperties: {
+    boldWeight: 500,
+  },
+  createExtensions({ settings }) {
+    if (settings.excludeStrikeThrough) {
+    }
+    return builtInExtensions.map(extension => extension.of());
+  },
+  onSetProperties({ getExtension, changes, previous, update }) {
+    if (changes.boldWeight.changed) {
+
+      const extension = getExtension(InputRulesExtension);
+      extension.setProperties({weight: changes.boldWeight.value})
+    }
+  },
+});
+*/
+
 /**
  * The builtin preset to be injected into all editors by default.
  */

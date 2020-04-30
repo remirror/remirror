@@ -1,12 +1,16 @@
 import React, { FC, useCallback, useMemo } from 'react';
 
-import { CodeOptions, ExtensionSpec } from './interfaces';
+import { CodeOptions, ExtensionSpec, RemirrorModules } from './interfaces';
 
 export interface SimplePanelProps {
   options: CodeOptions;
   setOptions: (newOptions: CodeOptions) => void;
   onAdvanced: () => void;
+  modules: RemirrorModules;
+  addModule: (moduleName: string) => void;
+  removeModule: (moduleName: string) => void;
 }
+/*
 const knownExtensions: ExtensionSpec[] = [
   {
     module: '@remirror/core',
@@ -25,6 +29,7 @@ const knownExtensions: ExtensionSpec[] = [
     export: 'UnderlineExtension',
   },
 ];
+*/
 
 interface ExtensionCheckboxProps {
   options: CodeOptions;
@@ -72,7 +77,16 @@ const ExtensionCheckbox: FC<ExtensionCheckboxProps> = function (props) {
 };
 
 export const SimplePanel: FC<SimplePanelProps> = function (props) {
-  const { options, setOptions, onAdvanced } = props;
+  const { options, setOptions, onAdvanced, modules, addModule, removeModule } = props;
+
+  const onAddModule = useCallback(() => {
+    const moduleName = prompt('What module name do you wish to add?');
+    if (moduleName) {
+      addModule(moduleName);
+    }
+  }, [addModule]);
+
+  /*
   const grouped = useMemo(() => {
     const groups: { [module: string]: ExtensionSpec[] } = {};
     for (const ext of knownExtensions) {
@@ -83,26 +97,42 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
     }
     return groups;
   }, []);
-  const modules = Object.keys(grouped).sort();
+  */
+  //const modules = Object.keys(grouped).sort();
   return (
     <div>
       <button onClick={onAdvanced}>Enter advanced mode</button>
-      {modules.map((moduleName) => (
-        <>
-          <p>
-            <strong>{moduleName}</strong>
-          </p>
-          {grouped[moduleName].map((spec) => (
-            <ExtensionCheckbox
-              key={`${`${spec.module}|${spec.export ?? 'default'}`}`}
-              spec={spec}
-              options={options}
-              setOptions={setOptions}
-              hideModuleName
-            />
-          ))}
-        </>
-      ))}
+      {Object.keys(modules).map((moduleName) => {
+        const mod = modules[moduleName];
+        return (
+          <>
+            <p>
+              <strong>{moduleName}</strong>{' '}
+              {moduleName !== '@remirror/core' ? (
+                <button onClick={() => removeModule(moduleName)} title='remove'>
+                  -
+                </button>
+              ) : null}
+            </p>
+            {mod.loading ? (
+              <em>Loading...</em>
+            ) : (
+              mod.exports.map((exportName) => (
+                <ExtensionCheckbox
+                  key={`${`${moduleName}|${exportName ?? 'default'}`}`}
+                  spec={{ module: moduleName, export: exportName }}
+                  options={options}
+                  setOptions={setOptions}
+                  hideModuleName
+                />
+              ))
+            )}
+          </>
+        );
+      })}
+      <p>
+        <button onClick={onAddModule}>+ Add module</button>
+      </p>
     </div>
   );
 };

@@ -19,6 +19,15 @@ import { RemirrorProvider, useExtension, useManager, useRemirror } from '@remirr
 import { ErrorBoundary } from './error-boundary';
 import { acquiredTypeDefs, dtsCache } from './vendor/type-acquisition';
 
+const tsOptions = {
+  // Maybe need to do manual syntax highlighting like found here:
+  // http://demo.rekit.org/element/src%2Ffeatures%2Feditor%2Fworkers%2FsyntaxHighlighter.js/code
+
+  jsx: languages.typescript.JsxEmit.React,
+};
+languages.typescript.typescriptDefaults.setCompilerOptions(tsOptions);
+languages.typescript.javascriptDefaults.setCompilerOptions(tsOptions);
+
 const remirrorReact = { RemirrorProvider, useManager, useExtension, useRemirror };
 const remirrorCore = { DocExtension, TextExtension, ParagraphExtension };
 export const addLibraryToRuntime = (code: string, path: string) => {
