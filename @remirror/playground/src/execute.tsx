@@ -17,6 +17,7 @@ import { RemirrorProvider, useExtension, useManager, useRemirror } from '@remirr
 
 //import * as remirror from 'remirror';
 import { ErrorBoundary } from './error-boundary';
+import { useRemirrorPlayground } from './use-remirror-playground';
 import { acquiredTypeDefs, dtsCache } from './vendor/type-acquisition';
 
 const tsOptions = {
@@ -47,6 +48,7 @@ const knownRequires: { [moduleName: string]: any } = {
   // '@remirror/core-extensions': remirrorCoreExtensions,
   '@remirror/react': remirrorReact,
   '@remirror/core': remirrorCore,
+  '@remirror/playground': { useRemirrorPlayground },
   //remirror: remirror,
   react: React,
 };

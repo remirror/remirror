@@ -10,6 +10,8 @@ import { Container, Divide, Header, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
 import { Viewer } from './viewer';
 
+export { useRemirrorPlayground } from './use-remirror-playground';
+
 function cleanse(moduleName: string, moduleExports: Exports): Exports {
   const cleansedExports = { ...moduleExports };
   if (moduleName === '@remirror/core') {
