@@ -119,6 +119,12 @@ const SmallEditorWrapper = () => {
 
 export default SmallEditorWrapper;
 `;
-  // TODO: prettier
-  return code;
+  if (window.prettier) {
+    return window.prettier.format(code, {
+      parser: 'typescript',
+      plugins: (window as any).prettierPlugins,
+    });
+  } else {
+    return code;
+  }
 }

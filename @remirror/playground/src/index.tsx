@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 
 import CodeEditor from './code-editor';
 import { ErrorBoundary } from './error-boundary';
@@ -26,6 +26,10 @@ function cleanse(moduleName: string, moduleExports: Exports): Exports {
 
   return cleansedExports;
 }
+const PRETTIER_SCRIPTS = [
+  'https://unpkg.com/prettier@2.0.5/standalone.js',
+  'https://unpkg.com/prettier@2.0.5/parser-typescript.js',
+];
 
 export const Playground: FC = function () {
   const [value, setValue] = useState('// Add some code here\n');
@@ -86,6 +90,45 @@ export const Playground: FC = function () {
       // },
     ],
   } as CodeOptions);
+
+  // Load prettier for formatting
+  const handleFormat = useCallback(() => {
+    setValue(makeCode(options));
+  }, [options]);
+  const handleFormatRef = useRef(handleFormat);
+  useEffect(() => {
+    const loadedScripts: string[] = [];
+    for (let i = 0, l = document.head.childNodes.length; i < l; i++) {
+      const child = document.head.childNodes[i];
+      if (child.nodeType === 1 && child.nodeName === 'SCRIPT') {
+        const scriptEl = child as HTMLScriptElement;
+        if (scriptEl.src) {
+          loadedScripts.push(scriptEl.src);
+        }
+      }
+    }
+    const unlisten: Array<() => void> = [];
+    const format = () => {
+      handleFormatRef.current();
+    };
+    PRETTIER_SCRIPTS.forEach((script) => {
+      if (!loadedScripts.includes(script)) {
+        const scriptEl = document.createElement('script');
+        scriptEl.src = script;
+        scriptEl.addEventListener('load', format, false);
+        unlisten.push(() => {
+          scriptEl.removeEventListener('load', format, false);
+        });
+        document.head.append(scriptEl);
+      }
+    });
+    return () => {
+      for (const cb of unlisten) {
+        cb();
+      }
+    };
+  }, []);
+
   const handleToggleAdvanced = useCallback(() => {
     if (
       confirm(
