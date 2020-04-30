@@ -2658,6 +2658,97 @@
   dependencies:
     tslib "^1.10.0"
 
+"@remirror/core-extensions@^0.11.0", "@remirror/core-extensions@^0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@remirror/core-extensions/-/core-extensions-0.11.1.tgz#6ceb2d5a474655bbed343b66300805d6c891d35f"
+  integrity sha512-Ju2U6EFRa+S5XNUnK43PiAd/IFtDTU0Y/jQtgnzSNISEnyuvFfJhLHkxio0Cn7vve7sqm4A92suDU81cONalYQ==
+  dependencies:
+    "@babel/runtime" "^7"
+    "@remirror/core" "^0.11.0"
+    "@remirror/core-constants" "^0.7.4"
+    "@remirror/core-helpers" "^0.7.6"
+    "@remirror/core-types" "^0.9.0"
+    "@remirror/core-utils" "^0.8.0"
+    "@remirror/react-portals" "^0.7.4"
+    "@remirror/react-utils" "^0.7.6"
+    "@remirror/ui" "^0.7.6"
+    "@types/prosemirror-commands" "^1.0.1"
+    "@types/prosemirror-dropcursor" "^1.0.0"
+    "@types/prosemirror-gapcursor" "^1.0.1"
+    "@types/prosemirror-history" "^1.0.1"
+    "@types/prosemirror-inputrules" "^1.0.2"
+    "@types/prosemirror-model" "^1.7.2"
+    "@types/prosemirror-schema-list" "^1.0.1"
+    "@types/prosemirror-state" "^1.2.3"
+    "@types/prosemirror-view" "^1.11.2"
+    map-obj "^4.1.0"
+    prosemirror-commands "^1.1.3"
+    prosemirror-dropcursor "^1.2.0"
+    prosemirror-gapcursor "^1.1.3"
+    prosemirror-history "^1.0.4"
+    prosemirror-inputrules "^1.1.2"
+    prosemirror-model "^1.9.1"
+    prosemirror-schema-list "^1.1.2"
+    prosemirror-state "^1.3.2"
+    prosemirror-view "^1.14.4"
+
+"@remirror/core-extensions@^0.13.1":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@remirror/core-extensions/-/core-extensions-0.13.1.tgz#56b6c878ddde28de29b45dfcce7ad1fec04be961"
+  integrity sha512-ssjBdm3MDYSFRNRx4qyo1KLb+7amqmCFUHri0C/jawdcQmaQE7RIRggI0lhZxthhSsq9+R4iZjkF8rRe/sUiVQ==
+  dependencies:
+    "@babel/runtime" "^7"
+    "@remirror/core" "^0.11.0"
+    "@remirror/core-constants" "^0.7.4"
+    "@remirror/core-helpers" "^0.7.6"
+    "@remirror/core-types" "^0.9.0"
+    "@remirror/core-utils" "^0.8.0"
+    "@remirror/react-portals" "^0.7.4"
+    "@remirror/react-utils" "^0.7.6"
+    "@remirror/ui" "^0.7.6"
+    "@types/prosemirror-commands" "^1.0.1"
+    "@types/prosemirror-dropcursor" "^1.0.0"
+    "@types/prosemirror-gapcursor" "^1.0.1"
+    "@types/prosemirror-history" "^1.0.1"
+    "@types/prosemirror-inputrules" "^1.0.2"
+    "@types/prosemirror-model" "^1.7.2"
+    "@types/prosemirror-schema-list" "^1.0.1"
+    "@types/prosemirror-state" "^1.2.3"
+    "@types/prosemirror-view" "^1.11.2"
+    map-obj "^4.1.0"
+    prosemirror-commands "^1.1.3"
+    prosemirror-dropcursor "^1.2.0"
+    prosemirror-gapcursor "^1.1.3"
+    prosemirror-history "^1.0.4"
+    prosemirror-inputrules "^1.1.2"
+    prosemirror-model "^1.9.1"
+    prosemirror-schema-list "^1.1.2"
+    prosemirror-state "^1.3.2"
+    prosemirror-view "^1.14.4"
+
+"@remirror/react@^0.13.1":
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/@remirror/react/-/react-0.13.1.tgz#e8015e14daaadd192fda5a6663f5aad39f16b966"
+  integrity sha512-HfAaBSzfkz6YC6ngyRt3XzOg+TsjV7KvwjZgzLyxW6DpTNLqiGjbwrTF27S7P0hzwhwT4D9rihrt36i+eXrZmg==
+  dependencies:
+    "@babel/runtime" "^7"
+    "@remirror/core" "^0.11.0"
+    "@remirror/core-extensions" "^0.13.1"
+    "@remirror/react-portals" "^0.7.4"
+    "@remirror/react-ssr" "^0.11.0"
+    "@remirror/react-utils" "^0.7.6"
+    "@remirror/ui" "^0.7.6"
+    "@types/hoist-non-react-statics" "^3.3.0"
+    "@types/prosemirror-commands" "^1.0.1"
+    "@types/prosemirror-model" "^1.7.2"
+    "@types/prosemirror-state" "^1.2.3"
+    "@types/prosemirror-view" "^1.11.2"
+    hoist-non-react-statics "^3.3.0"
+    prosemirror-commands "^1.1.3"
+    prosemirror-model "^1.9.1"
+    prosemirror-state "^1.3.2"
+    prosemirror-view "^1.14.4"
+
 "@rollup/plugin-commonjs@^11.0.2":
   version "11.0.2"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-11.0.2.tgz#837cc6950752327cb90177b608f0928a4e60b582"
@@ -16559,7 +16650,7 @@ nanoid@^2.1.11:
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-2.1.11.tgz#ec24b8a758d591561531b4176a01e3ab4f0f0280"
   integrity sha512-s/snB+WGm6uwi0WjsZdaVcuf3KJXlfGl2LcxgwkEwJF0D/BWzVWAZW/XY4bFaiR7s0Jk3FPvlnepg1H1b1UwlA==
 
-nanoid@^3.0.2:
+nanoid@^3.0.2, nanoid@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.3.tgz#b2bcfcfda4b4d6838bc22a0c8dd3c0a17a204c20"
   integrity sha512-Zw8rTOUfh6FlKgkEbHiB1buOF2zOPOQyGirABUWn+9Z7m9PpyoLVkh6Ksc53vBjndINQ2+9LfRPaHxb/u45EGg==
@@ -19226,6 +19317,15 @@ prosemirror-commands@^1.1.3:
     prosemirror-state "^1.0.0"
     prosemirror-transform "^1.0.0"
 
+prosemirror-commands@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/prosemirror-commands/-/prosemirror-commands-1.1.4.tgz#991563e67623acab4f8c510fad1570f8b4693780"
+  integrity sha512-kj4Qi+8h3EpJtZuuEDwZ9h2/QNGWDsIX/CzjmClxi9GhxWyBUMVUvIFk0mgdqHyX20lLeGmOpc0TLA5aPzgpWg==
+  dependencies:
+    prosemirror-model "^1.0.0"
+    prosemirror-state "^1.0.0"
+    prosemirror-transform "^1.0.0"
+
 prosemirror-dev-tools@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/prosemirror-dev-tools/-/prosemirror-dev-tools-2.1.1.tgz#0c4304b05b437608b3666b72fdb4b21e24fa29fc"
@@ -19253,7 +19353,7 @@ prosemirror-dropcursor@^1.2.0:
     prosemirror-transform "^1.1.0"
     prosemirror-view "^1.1.0"
 
-prosemirror-gapcursor@^1.1.5:
+prosemirror-gapcursor@^1.1.3, prosemirror-gapcursor@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/prosemirror-gapcursor/-/prosemirror-gapcursor-1.1.5.tgz#0c37fd6cbb1d7c46358c2e7397f8da9a8b5c6246"
   integrity sha512-SjbUZq5pgsBDuV3hu8GqgIpZR5eZvGLM+gPQTqjVVYSMUCfKW3EGXTEYaLHEl1bGduwqNC95O3bZflgtAb4L6w==
@@ -19318,7 +19418,7 @@ prosemirror-schema-list@^1.0.0, prosemirror-schema-list@^1.1.2:
     prosemirror-model "^1.0.0"
     prosemirror-transform "^1.0.0"
 
-prosemirror-state@>=1.0.0, prosemirror-state@^1.0.0, prosemirror-state@^1.2.2, prosemirror-state@^1.3.1, prosemirror-state@^1.3.2:
+prosemirror-state@>=1.0.0, prosemirror-state@^1.0.0, prosemirror-state@^1.2.2, prosemirror-state@^1.3.1, prosemirror-state@^1.3.2, prosemirror-state@^1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/prosemirror-state/-/prosemirror-state-1.3.3.tgz#b2862866b14dec2b3ae1ab18229f2bd337651a2c"
   integrity sha512-PLXh2VJsIgvlgSTH6I2Yg6vk1CzPDp21DFreVpQtDMY2S6WaMmrQgDTLRcsrD8X38v8Yc873H7+ogdGzyIPn+w==
@@ -19357,6 +19457,15 @@ prosemirror-view@^1.0.0, prosemirror-view@^1.1.0, prosemirror-view@^1.13.3, pros
   version "1.14.6"
   resolved "https://registry.yarnpkg.com/prosemirror-view/-/prosemirror-view-1.14.6.tgz#fa1e7ed14a38f2cb234f622037a07dbd9d2830de"
   integrity sha512-0qNSFWVBHPrdQaZtIO3aou/NRsxMGER3IuI3cePHYbk5pf9wSsbMIWWaeHtXqblL+rqtgkLfcw0D2na6+WBgpA==
+  dependencies:
+    prosemirror-model "^1.1.0"
+    prosemirror-state "^1.0.0"
+    prosemirror-transform "^1.1.0"
+
+prosemirror-view@^1.14.4, prosemirror-view@^1.14.7:
+  version "1.14.7"
+  resolved "https://registry.yarnpkg.com/prosemirror-view/-/prosemirror-view-1.14.7.tgz#5480f2ec7f091e616989894983b62c5e2d16edc1"
+  integrity sha512-ZCRbGAmJa0ORIY4xrDvOpxS/oAnph3egDauvQEI7SX4eex0zovUfC61I5X4AtPCaNN4JpLWEk60voCWi0cE2vA==
   dependencies:
     prosemirror-model "^1.1.0"
     prosemirror-state "^1.0.0"

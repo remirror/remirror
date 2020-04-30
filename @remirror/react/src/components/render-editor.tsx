@@ -27,20 +27,8 @@ import {
   Transaction,
   uniqueId,
 } from '@remirror/core';
-import { PortalContainer, RemirrorPortals } from '@remirror/react-portals';
-import { createEditorView, RemirrorSSR } from '@remirror/react-ssr';
-import {
-  addKeyToElement,
-  cloneElement,
-  getElementProps,
-  isManagedRemirrorProvider,
-  isReactDOMElement,
-  isRemirrorContextProvider,
-  isRemirrorProvider,
-  propIsFunction,
-  RemirrorType,
-} from '@remirror/react-utils';
 
+import { PortalContainer, RemirrorPortals } from '../portals';
 import { defaultProps } from '../react-constants';
 import { defaultPositioner } from '../react-positioners';
 import {
@@ -63,6 +51,18 @@ import {
   RenderEditorProps,
   UpdateStateParameter,
 } from '../react-types';
+import {
+  addKeyToElement,
+  cloneElement,
+  getElementProps,
+  isManagedRemirrorProvider,
+  isReactDOMElement,
+  isRemirrorContextProvider,
+  isRemirrorProvider,
+  propIsFunction,
+  RemirrorType,
+} from '../react-utils';
+import { createEditorView, RemirrorSSR } from '../ssr';
 
 export class RenderEditor<Manager extends AnyEditorManager> extends PureComponent<
   RenderEditorProps<Manager>,

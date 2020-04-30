@@ -4,6 +4,7 @@
   "workspaces": {
     "packages": [
       "@remirror/*",
+      "deprecated/*",
       "packages/*",
       "docs",
       "e2e",
@@ -12,8 +13,6 @@
   },
   "scripts": {
     "build": "run-p build:rollup build:ts",
-    "build:cli": "cross-env PACKAGES=@remirror/cli yarn build:rollup",
-    "build:cli:ts": "tsc -b ./@remirror/cli/tsconfig.prod.json --verbose",
     "build:docs": "cd docs && yarn build",
     "build:rollup": "rollup --config ./support/build/rollup.config.js",
     "build:ts": "tsc -b tsconfig.prod.json --verbose",

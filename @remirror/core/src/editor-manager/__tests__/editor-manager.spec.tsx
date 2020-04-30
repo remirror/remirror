@@ -11,14 +11,12 @@ import {
   NodeExtensionSpec,
   ProsemirrorAttributes,
 } from '@remirror/core-types';
-import { PortalContainer } from '@remirror/react-portals';
 import {
   baseExtensions,
   createTestManager,
   extensions,
   helpers as initHelpers,
 } from '@remirror/test-fixtures';
-import { defaultRemirrorThemeValue } from '@remirror/ui';
 
 import { Extension } from '../../extension/extension-base';
 import { EditorManager, isEditorManager } from '../editor-manager';
@@ -26,11 +24,6 @@ import { EditorManager, isEditorManager } from '../editor-manager';
 describe('Manager', () => {
   let state: EditorState;
 
-  const helpers = {
-    getState: Cast(jest.fn(() => state)),
-    portalContainer: new PortalContainer(),
-    getTheme: () => defaultRemirrorThemeValue,
-  };
   const innerMock = jest.fn();
   const mock = jest.fn((_: ProsemirrorAttributes) => innerMock);
   const getInformation = jest.fn(() => 'information');

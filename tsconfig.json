@@ -18,5 +18,5 @@
     "skipLibCheck": false
   },
   "include": ["**/*.ts", "**/*.tsx", "../global.d.ts"],
-  "exclude": ["./support/dts-jest/**", "**/dist/", "**/lib/", "dist", "lib"]
+  "exclude": ["./support/dts-jest/**", "**/dist/", "**/lib/", "dist", "lib", "deprecated/**"]
 }

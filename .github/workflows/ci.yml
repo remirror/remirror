@@ -15,6 +15,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: install libgbm
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgbm-dev
+
       - name: checkout code repository
         uses: actions/checkout@v1
         with:
@@ -58,7 +63,7 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: "echo Coverage"
+          coverageCommand: 'echo Coverage'
           debug: false
 
       - name: build project

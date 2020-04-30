@@ -79,6 +79,7 @@ jspm_packages/
 
 dist
 @remirror/**/lib
+deprecated/**/lib
 packages/**/lib
 
 # We are using yarn
