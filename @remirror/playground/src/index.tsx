@@ -42,28 +42,31 @@ export const Playground: FC = function () {
     (async () => {
       const reqr = await makeRequire([moduleName]);
       const moduleExports = reqr(moduleName);
-      console.dir(moduleExports);
-      setModules((oldModules) => ({
-        ...oldModules,
-        ...(moduleName in oldModules
+      setModules((oldModules) =>
+        moduleName in oldModules
           ? {
+              ...oldModules,
               [moduleName]: {
                 loading: false,
                 error: null,
                 exports: cleanse(moduleName, moduleExports),
               },
             }
-          : null),
-      }));
+          : oldModules,
+      );
     })().catch((error) => {
-      setModules((oldModules) => ({
-        ...oldModules,
-        ...(moduleName in oldModules ? { [moduleName]: { loading: false, error } } : null),
-      }));
+      setModules((oldModules) =>
+        moduleName in oldModules
+          ? {
+              ...oldModules,
+              [moduleName]: { loading: false, error },
+            }
+          : oldModules,
+      );
     });
   }, []);
   const removeModule = useCallback((moduleName: string) => {
-    setModules(({ [moduleName]: _deleteMe, ...otherModules }) => otherModules);
+    setModules(({ [moduleName]: _moduleToDelete, ...remainingModules }) => remainingModules);
   }, []);
   useEffect(() => {
     const CORE = '@remirror/core';
