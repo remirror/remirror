@@ -37,7 +37,7 @@ export function makeCode(codeOptions: CodeOptions): string {
   addImport('react', ['default', 'React']);
   addImport('react', 'FC');
   addImport('@remirror/react', 'RemirrorProvider');
-  addImport('@remirror/core', 'DocExtension');
+j addImport('@remirror/core', 'DocExtension');
   addImport('@remirror/core', 'TextExtension');
   addImport('@remirror/core', 'ParagraphExtension');
   addImport('@remirror/react', 'useManager');
@@ -88,9 +88,8 @@ ${importLines.join('\n')}
 
 // Set up the component to provide the functionality for the editor
 const SmallEditor: FC = () => {
-  const remirrorContext = useRemirror();
-  useRemirrorPlayground(remirrorContext); // Remove this line
-  const { getRootProps, commands } = remirrorContext;
+  const { getRootProps, commands } = useRemirror(); // Picked from the context.
+  useRemirrorPlayground(); // Remove this line
 
   return (
     <div>

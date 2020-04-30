@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 
-import { InjectedRenderEditorProps } from 'remirror';
+import { useRemirror } from 'remirror';
 
-export function useRemirrorPlayground(remirror: InjectedRenderEditorProps<any>) {
+export function useRemirrorPlayground() {
   // Serialize/deserialize
+  const remirror = useRemirror();
   useEffect(() => {
     console.log(remirror.state.newState);
   }, [remirror.state.newState]);
