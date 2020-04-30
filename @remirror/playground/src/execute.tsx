@@ -6,7 +6,7 @@ import { languages } from 'monaco-editor';
 import React, { FC, useEffect, useMemo, useRef } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 
-import { DocExtension, ParagraphExtension, TextExtension } from '@remirror/core';
+import * as remirrorCore from '@remirror/core';
 // addImport('@remirror/react', 'RemirrorProvider');
 // addImport('@remirror/react', 'useManager');
 // addImport('@remirror/react', 'useExtension');
@@ -29,7 +29,7 @@ languages.typescript.typescriptDefaults.setCompilerOptions(tsOptions);
 languages.typescript.javascriptDefaults.setCompilerOptions(tsOptions);
 
 const remirrorReact = { RemirrorProvider, useManager, useExtension, useRemirror };
-const remirrorCore = { DocExtension, TextExtension, ParagraphExtension };
+// const remirrorCore = { DocExtension, TextExtension, ParagraphExtension };
 export const addLibraryToRuntime = (code: string, path: string) => {
   languages.typescript.typescriptDefaults.addExtraLib(code, path);
 };
@@ -108,7 +108,7 @@ function bundle(moduleName: string, id: string): Promise<any> {
   });
 }
 
-async function makeRequire(requires: string[]) {
+export async function makeRequire(requires: string[]) {
   const tasks: Array<Promise<void>> = [];
   const modules: { [moduleName: string]: any } = {};
   for (const moduleName of requires) {

@@ -2,11 +2,30 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 
 import CodeEditor from './code-editor';
 import { ErrorBoundary } from './error-boundary';
-import { CodeOptions, RemirrorModules } from './interfaces';
+import { makeRequire } from './execute';
+import { isExtensionName } from './exports';
+import { CodeOptions, Exports, RemirrorModules } from './interfaces';
 import { makeCode } from './make-code';
 import { Container, Divide, Header, Main, Panel } from './primitives';
 import { SimplePanel } from './simple-panel';
 import { Viewer } from './viewer';
+
+function cleanse(moduleName: string, moduleExports: Exports): Exports {
+  const cleansedExports = { ...moduleExports };
+  if (moduleName === '@remirror/core') {
+    delete cleansedExports.DocExtension;
+    delete cleansedExports.TextExtension;
+    delete cleansedExports.ParagraphExtension;
+  }
+  for (const exportName of Object.keys(cleansedExports)) {
+    if (!isExtensionName(exportName)) {
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+      delete cleansedExports[exportName];
+    }
+  }
+
+  return cleansedExports;
+}
 
 export const Playground: FC = function () {
   const [value, setValue] = useState('// Add some code here\n');
@@ -19,6 +38,29 @@ export const Playground: FC = function () {
         loading: true,
       },
     }));
+
+    (async () => {
+      const reqr = await makeRequire([moduleName]);
+      const moduleExports = reqr(moduleName);
+      console.dir(moduleExports);
+      setModules((oldModules) => ({
+        ...oldModules,
+        ...(moduleName in oldModules
+          ? {
+              [moduleName]: {
+                loading: false,
+                error: null,
+                exports: cleanse(moduleName, moduleExports),
+              },
+            }
+          : null),
+      }));
+    })().catch((error) => {
+      setModules((oldModules) => ({
+        ...oldModules,
+        ...(moduleName in oldModules ? { [moduleName]: { loading: false, error } } : null),
+      }));
+    });
   }, []);
   const removeModule = useCallback((moduleName: string) => {
     setModules(({ [moduleName]: _deleteMe, ...otherModules }) => otherModules);

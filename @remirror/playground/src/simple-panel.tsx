@@ -116,8 +116,10 @@ export const SimplePanel: FC<SimplePanelProps> = function (props) {
             </p>
             {mod.loading ? (
               <em>Loading...</em>
+            ) : mod.error ? (
+              <em>An error occurred: {String(mod.error)}</em>
             ) : (
-              mod.exports.map((exportName) => (
+              Object.keys(mod.exports).map((exportName) => (
                 <ExtensionCheckbox
                   key={`${`${moduleName}|${exportName ?? 'default'}`}`}
                   spec={{ module: moduleName, export: exportName }}
