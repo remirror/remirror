@@ -37,7 +37,7 @@ export function makeCode(codeOptions: CodeOptions): string {
   addImport('react', ['default', 'React']);
   addImport('react', 'FC');
   addImport('@remirror/react', 'RemirrorProvider');
-j addImport('@remirror/core', 'DocExtension');
+  addImport('@remirror/core', 'DocExtension');
   addImport('@remirror/core', 'TextExtension');
   addImport('@remirror/core', 'ParagraphExtension');
   addImport('@remirror/react', 'useManager');

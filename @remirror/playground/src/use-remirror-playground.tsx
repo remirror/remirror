@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useRemirror } from 'remirror';
+import { useRemirror } from '@remirror/react';
 
 export function useRemirrorPlayground() {
   // Serialize/deserialize
