@@ -24,7 +24,7 @@
     "@remirror/react": "^0.13.1",
     "@remirror/react-utils": "^0.7.6",
     "@remirror/ui": "^0.7.6",
-    "@types/markdown-it": "^0.0.9",
+    "@types/markdown-it": "^10.0.1",
     "@types/prosemirror-markdown": "^1.0.3",
     "@types/refractor": "2.8.0",
     "markdown-it": "^10.0.0",
