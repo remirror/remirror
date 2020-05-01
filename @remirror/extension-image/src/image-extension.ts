@@ -46,7 +46,7 @@ export class ImageExtension extends NodeExtension {
             isElementDOMNode(domNode) ? getAttributes(this.getExtraAttributes(domNode)) : {},
         },
       ],
-      toDOM(node) {
+      toDOM: node => {
         return ['img', node.attrs];
       },
     };

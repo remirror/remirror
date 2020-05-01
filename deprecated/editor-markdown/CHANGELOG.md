@@ -1,5 +1,15 @@
 # @remirror/editor-markdown
 
+## 0.13.1
+
+### Patch Changes
+
+- Updated dependencies [95526bc7]
+- Updated dependencies [4dbb7461]
+  - @remirror/extension-image@0.13.1
+  - @remirror/core-extensions@0.13.1
+  - @remirror/react@0.13.1
+
 ## 0.12.0
 
 ### Patch Changes

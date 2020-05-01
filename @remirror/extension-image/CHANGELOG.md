@@ -1,5 +1,13 @@
 # @remirror/extension-image
 
+## 0.13.1
+
+### Patch Changes
+
+- 95526bc7: Make the `schema.toDOM` an arrow function so that it can access `this`.
+- Updated dependencies [4dbb7461]
+  - @remirror/core-extensions@0.13.1
+
 ## 0.11.0
 
 ### Patch Changes

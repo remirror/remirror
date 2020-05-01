@@ -1,6 +1,6 @@
 {
   "name": "remirror",
-  "version": "0.11.0",
+  "version": "0.13.1",
   "description": "An advanced text editor for react built with prosemirror",
   "keywords": [
     "prosemirror",
@@ -23,8 +23,8 @@
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
-    "@remirror/core-extensions": "^0.11.0",
-    "@remirror/react": "^0.11.0"
+    "@remirror/core-extensions": "^0.13.1",
+    "@remirror/react": "^0.13.1"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
