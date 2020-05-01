@@ -26,18 +26,6 @@
   "references": [
     {
       "path": "../core/tsconfig.prod.json"
-    },
-    {
-      "path": "../core-extensions/tsconfig.prod.json"
-    },
-    {
-      "path": "../react-portals/tsconfig.prod.json"
-    },
-    {
-      "path": "../react-ssr/tsconfig.prod.json"
-    },
-    {
-      "path": "../react-utils/tsconfig.prod.json"
     }
   ]
 }

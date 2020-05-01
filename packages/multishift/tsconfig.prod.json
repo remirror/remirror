@@ -29,27 +29,6 @@
     },
     {
       "path": "../../@remirror/core-types/tsconfig.prod.json"
-    },
-    {
-      "path": "../../@remirror/react-hooks/tsconfig.prod.json"
-    },
-    {
-      "path": "../../@remirror/react-utils/tsconfig.prod.json"
-    },
-    {
-      "path": "../../@remirror/ui/tsconfig.prod.json"
-    },
-    {
-      "path": "../../@remirror/ui-a11y-status/tsconfig.prod.json"
-    },
-    {
-      "path": "../../@remirror/ui-buttons/tsconfig.prod.json"
-    },
-    {
-      "path": "../../@remirror/ui-icons/tsconfig.prod.json"
-    },
-    {
-      "path": "../../@remirror/ui-text/tsconfig.prod.json"
     }
   ]
 }

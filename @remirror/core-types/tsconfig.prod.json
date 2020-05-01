@@ -26,9 +26,6 @@
   "references": [
     {
       "path": "../core-constants/tsconfig.prod.json"
-    },
-    {
-      "path": "../react-portals/tsconfig.prod.json"
     }
   ]
 }

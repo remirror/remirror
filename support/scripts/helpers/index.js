@@ -47,10 +47,12 @@ const getAllDependencies = () => {
         return [];
       }
 
-      return packages.map((pkg) => ({
-        ...pkg.packageJson,
-        location: pkg.dir,
-      }));
+      return packages
+        .filter((pkg) => !pkg.dir.includes('deprecated'))
+        .map((pkg) => ({
+          ...pkg.packageJson,
+          location: pkg.dir,
+        }));
     });
   }
 

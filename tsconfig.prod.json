@@ -9,9 +9,6 @@
       "path": "@remirror/core-constants/tsconfig.prod.json"
     },
     {
-      "path": "@remirror/core-extensions/tsconfig.prod.json"
-    },
-    {
       "path": "@remirror/core-helpers/tsconfig.prod.json"
     },
     {
@@ -19,18 +16,6 @@
     },
     {
       "path": "@remirror/core-utils/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/dev/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/editor-markdown/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/editor-social/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/editor-wysiwyg/tsconfig.prod.json"
     },
     {
       "path": "@remirror/extension-bold/tsconfig.prod.json"
@@ -78,49 +63,7 @@
       "path": "@remirror/react/tsconfig.prod.json"
     },
     {
-      "path": "@remirror/react-hooks/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/react-node-view/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/react-portals/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/react-renderer/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/react-ssr/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/react-utils/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/showcase/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/ui/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/ui-a11y-status/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/ui-buttons/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/ui-dropdown/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/ui-icons/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/ui-menus/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/ui-modal/tsconfig.prod.json"
-    },
-    {
-      "path": "@remirror/ui-text/tsconfig.prod.json"
+      "path": "@remirror/react-dev/tsconfig.prod.json"
     },
     {
       "path": "packages/jest-prosemirror/tsconfig.prod.json"

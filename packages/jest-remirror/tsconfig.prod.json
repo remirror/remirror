@@ -28,16 +28,10 @@
       "path": "../../@remirror/core/tsconfig.prod.json"
     },
     {
-      "path": "../../@remirror/core-extensions/tsconfig.prod.json"
-    },
-    {
       "path": "../../@remirror/preset-core/tsconfig.prod.json"
     },
     {
       "path": "../../@remirror/react/tsconfig.prod.json"
-    },
-    {
-      "path": "../../@remirror/react-utils/tsconfig.prod.json"
     },
     {
       "path": "../jest-prosemirror/tsconfig.prod.json"

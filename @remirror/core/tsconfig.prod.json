@@ -37,9 +37,6 @@
       "path": "../core-utils/tsconfig.prod.json"
     },
     {
-      "path": "../react-portals/tsconfig.prod.json"
-    },
-    {
       "path": "../../packages/prosemirror-suggest/tsconfig.prod.json"
     }
   ]

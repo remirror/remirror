@@ -22,9 +22,6 @@
   "references": [
     {
       "path": "../@remirror/core/tsconfig.prod.json"
-    },
-    {
-      "path": "../@remirror/showcase/tsconfig.prod.json"
     }
   ]
 }

@@ -19,9 +19,5 @@
     "**/__dts__/**",
     "**/__stories__/**"
   ],
-  "references": [
-    {
-      "path": "../../@remirror/showcase/tsconfig.prod.json"
-    }
-  ]
+  "references": []
 }
