@@ -37,7 +37,7 @@
     "@types/prosemirror-test-builder": "^1.0.1",
     "@types/prosemirror-view": "^1.11.2",
     "chalk": "^4.0.0",
-    "jest-matcher-utils": "^25.2.7",
+    "jest-matcher-utils": "^26.0.0",
     "object.pick": "^1.3.0",
     "prosemirror-gapcursor": "^1.1.5",
     "prosemirror-inputrules": "^1.1.2",
