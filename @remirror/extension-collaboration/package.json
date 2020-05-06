@@ -17,13 +17,14 @@
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
-    "@types/prosemirror-collab": "^1.0.2",
-    "@types/prosemirror-transform": "^1.1.0",
-    "prosemirror-collab": "^1.1.2",
-    "prosemirror-transform": "^1.1.5"
+    "@types/prosemirror-collab": "^1.0.2"
+  },
+  "devDependencies": {
+    "prosemirror-collab": "^1.2.2"
   },
   "peerDependencies": {
-    "@emotion/core": "^10"
+    "@remirror/pm": "^1.0.0",
+    "prosemirror-collab": "^1.2.2"
   },
   "publishConfig": {
     "access": "public"

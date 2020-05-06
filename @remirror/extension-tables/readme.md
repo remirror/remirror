@@ -6,7 +6,7 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-tables
+yarn add @remirror/extension-tables prosemirror-tables
 ```
 
 ```ts

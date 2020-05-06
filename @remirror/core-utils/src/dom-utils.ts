@@ -844,9 +844,9 @@ interface FromNodeParameter
  *
  * @public
  */
-export const toHTML = ({ node, schema, doc: doc = getDocument() }: FromNodeParameter) => {
+export const toHTML = ({ node, schema, doc = getDocument() }: FromNodeParameter) => {
   const element = doc.createElement('div');
-  element.append(toDOM({ node, schema, doc: doc }));
+  element.append(toDOM({ node, schema, doc }));
 
   return element.innerHTML;
 };
@@ -866,7 +866,7 @@ interface FromStringParameter extends Partial<CustomDocParameter>, SchemaParamet
 export const fromHTML = ({
   content,
   schema,
-  doc: doc = getDocument(),
+  doc = getDocument(),
 }: FromStringParameter): ProsemirrorNode => {
   const element = doc.createElement('div');
   element.innerHTML = content.trim();

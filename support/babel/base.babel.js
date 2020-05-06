@@ -15,7 +15,7 @@ const basePreset = ['@babel/preset-react'];
 
 const presets = [...basePreset, ['@babel/preset-env']];
 
-const testBabelPresetEnv = ['@babel/preset-env', { targets: { node: '10' } }];
+const testBabelPresetEnv = ['@babel/preset-env', { targets: { node: '12' } }];
 const nonTestEnv = { ignore, presets };
 
 module.exports = {

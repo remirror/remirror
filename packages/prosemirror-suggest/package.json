@@ -23,14 +23,14 @@
     "@types/merge-descriptors": "1.0.1",
     "@types/prosemirror-keymap": "^1.0.1",
     "@types/prosemirror-state": "^1.2.3",
+    "@types/prosemirror-view": "^1.11.4",
     "escape-string-regexp": "^4.0.0",
     "merge-descriptors": "1.0.1",
-    "prosemirror-keymap": "^1.0.2",
-    "prosemirror-state": "^1.3.2"
+    "prosemirror-keymap": "^1.1.3",
+    "prosemirror-state": "^1.3.3"
   },
   "peerDependencies": {
-    "@types/prosemirror-view": "^1.11.0",
-    "prosemirror-view": "^1.11.1"
+    "prosemirror-view": "^1.14.9"
   },
   "publishConfig": {
     "access": "public"

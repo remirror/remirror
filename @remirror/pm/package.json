@@ -1,0 +1,46 @@
+{
+  "name": "@remirror/pm",
+  "version": "1.0.0",
+  "description": "A bundled library containing all the core prosemirror libraries required for using remirror",
+  "homepage": "https://github.com/remirror/remirror/tree/master/packages/@remirror/pm",
+  "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/pm",
+  "license": "MIT",
+  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "sideEffects": false,
+  "main": "lib/dist/index.js",
+  "module": "lib/dist/pm.esm.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7",
+    "@types/prosemirror-commands": "^1.0.1",
+    "@types/prosemirror-gapcursor": "^1.0.1",
+    "@types/prosemirror-inputrules": "^1.0.2",
+    "@types/prosemirror-keymap": "^1.0.1",
+    "@types/prosemirror-model": "^1.7.2",
+    "@types/prosemirror-schema-list": "^1.0.1",
+    "@types/prosemirror-state": "^1.2.3",
+    "@types/prosemirror-transform": "^1.1.1",
+    "@types/prosemirror-view": "^1.11.4",
+    "prosemirror-commands": "^1.1.4",
+    "prosemirror-gapcursor": "^1.1.5",
+    "prosemirror-inputrules": "^1.1.2",
+    "prosemirror-keymap": "^1.1.3",
+    "prosemirror-model": "^1.9.1",
+    "prosemirror-schema-list": "^1.1.2",
+    "prosemirror-state": "^1.3.3",
+    "prosemirror-suggest": "^0.7.6",
+    "prosemirror-transform": "^1.2.5",
+    "prosemirror-view": "^1.14.9"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "cjs": "lib/dist/@remirror/pm.cjs.js",
+  "meta": {
+    "sizeLimit": "90 KB"
+  }
+}
