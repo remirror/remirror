@@ -291,7 +291,6 @@ export abstract class Extension<
 
   /**
    * The parameter that was passed when creating the constructor for this instance.
-   * TODO [2020-05-01] - Consider renaming this.
    */
   get parameter(): Readonly<
     InferFactoryParameter<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>

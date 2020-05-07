@@ -13,6 +13,7 @@ import {
   uniqueBy,
 } from '@remirror/core-helpers';
 import {
+  AnyFunction,
   FlipPartialAndRequired,
   FunctionLike,
   IfEmpty,
@@ -46,6 +47,23 @@ export type AnyPreset<ExtensionUnion extends AnyExtension = any> = Omit<
   };
 };
 
+export interface AnyPresetConstructor extends FunctionLike {
+  /**
+   * The name of the extension that will be created. Also available on the
+   * instance as `name`.
+   */
+  readonly presetName: string;
+
+  defaultSettings: any;
+  defaultProperties: any;
+
+  /**
+   * Creates a new instance of the extension. Used when adding the extension to
+   * the editor.
+   */
+  of: AnyFunction;
+}
+
 /**
  * The interface of a preset constructor. This is used to create an instance of
  * the preset in your editor.
@@ -55,6 +73,10 @@ export interface PresetConstructor<
   Settings extends object,
   Properties extends object
 > extends FunctionLike {
+  readonly presetName: string;
+  defaultSettings: Settings;
+  defaultProperties: Properties;
+
   /**
    * Create a new instance of the preset to be used in the extension manager.
    *

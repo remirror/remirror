@@ -1,8 +1,8 @@
 import { useEffect, useMemo } from 'react';
 
 import {
-  AnyExtension,
-  AnyExtensionConstructor,
+  AnyPreset,
+  AnyPresetConstructor,
   GetProperties,
   GetSettings,
   IfNoRequiredProperties,
@@ -16,11 +16,9 @@ import { useRemirror } from './use-remirror';
  *
  * Written in shorthand as it's only used in this file.
  */
-type SettingsOfConstructor<Constructor extends AnyExtensionConstructor> = GetSettings<
-  Of<Constructor>
->;
+type SettingsOfConstructor<Constructor extends AnyPresetConstructor> = GetSettings<Of<Constructor>>;
 
-export const useExtension = <Type extends AnyExtensionConstructor>(
+export const usePreset = <Type extends AnyPresetConstructor>(
   Constructor: Type,
   ...[settings]: IfNoRequiredProperties<
     SettingsOfConstructor<Type>,
@@ -33,25 +31,26 @@ export const useExtension = <Type extends AnyExtensionConstructor>(
 
 /**
  * Properties Of Extension Constructor
- *
- * Written in shorthand as it's only used in this file.
  */
-type PropertiesOfConstructor<Constructor extends AnyExtensionConstructor> = GetProperties<
+type PropertiesOfConstructor<Constructor extends AnyPresetConstructor> = GetProperties<
   Of<Constructor>
 >;
 
-export const useExtensionProperties = <Type extends AnyExtensionConstructor>(
+/**
+ * Update preset properties dynamically why the editor is still running.
+ */
+export const usePresetProperties = <Type extends AnyPresetConstructor>(
   Constructor: Type,
   properties: PropertiesOfConstructor<Type>,
 ) => {
   const { manager } = useRemirror();
 
-  const extension: AnyExtension = useMemo(() => manager.getExtension(Constructor), [
+  const preset: AnyPreset = useMemo(() => manager.getExtension(Constructor), [
     Constructor,
     manager,
   ]);
 
   useEffect(() => {
-    extension.setProperties(properties);
-  }, [extension, properties]);
+    preset.setProperties(properties);
+  }, [preset, properties]);
 };
