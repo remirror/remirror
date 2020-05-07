@@ -4,6 +4,7 @@ import { Step } from 'prosemirror-transform';
 import { DecorationSet } from 'prosemirror-view';
 
 import {
+  AnyExtension,
   CompareStateParameter,
   EditorState,
   findChildrenByNode,
@@ -192,10 +193,6 @@ interface UpdateDecorationSetParameter extends TransactionParameter {
   nodeInfo: NodeInformation;
 }
 
-interface CreateCodeBlockPluginParameter extends ManagerNodeTypeParameter {
-  extension: NodeExtension<CodeBlockExtensionSettings>;
-}
-
 /**
  * Create a codeBlock plugin to manage the internal prosemirror functionality
  */
@@ -207,7 +204,6 @@ export function createCodeBlockPlugin({ extension, type }: CreateCodeBlockPlugin
   };
 
   return new Plugin<CodeBlockState>({
-    key: extension.pluginKey,
     state: {
       init(_, state) {
         return pluginState.init(state);

@@ -1,8 +1,5 @@
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
 import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
-import { FC, ReactElement, useMemo, useState } from 'react';
+import React, { FC, ReactElement, useMemo, useState } from 'react';
 
 import { bool, deepMerge, isFunction, object } from '@remirror/core-helpers';
 import { RemirrorTheme, RemirrorThemeContextType } from '@remirror/core-types';

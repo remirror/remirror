@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
+import React from 'react';
 import { Type, useMultishift } from 'multishift';
 import { FunctionComponent } from 'react';
 

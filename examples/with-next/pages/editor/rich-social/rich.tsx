@@ -1,6 +1,4 @@
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
+import React from 'react';
 import matchSorter from 'match-sorter';
 import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import bash from 'refractor/lang/bash';

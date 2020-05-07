@@ -258,10 +258,15 @@ export interface CommandMethod<Parameter extends any[] = []> {
 /**
  * The params object received by the onTransaction handler.
  */
-export interface OnTransactionParameter
+export interface OnTransactionParameter<
+  Settings extends object = {},
+  Properties extends object = {}
+>
   extends ViewManagerParameter,
     TransactionParameter,
-    EditorStateParameter {}
+    EditorStateParameter,
+    ReadonlySettingsParameter<Settings>,
+    ReadonlyPropertiesParameter<Properties> {}
 
 export interface BaseExtensionSettings extends Remirror.BaseExtensionSettings {
   /**
@@ -285,12 +290,19 @@ export interface BaseExtensionSettings extends Remirror.BaseExtensionSettings {
 
 export interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {}
 
-export interface BaseExtensionSettingsParameter<Settings extends object = {}> {
+export interface ReadonlySettingsParameter<Settings extends object = {}> {
   /**
    * The static config that was passed into the extension that created this node
    * or mark.
    */
-  settings: Settings;
+  readonly settings: Required<Readonly<Settings>>;
+}
+
+export interface ReadonlyPropertiesParameter<Properties extends object = {}> {
+  /**
+   * The current value of the dynamic properties.
+   */
+  readonly properties: Required<Readonly<Properties>>;
 }
 
 /**

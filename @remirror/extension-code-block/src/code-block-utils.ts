@@ -9,6 +9,7 @@ import markup from 'refractor/lang/markup';
 
 import {
   bool,
+  CommandFunction,
   EditorState,
   findParentNodeOfType,
   flattenArray,
@@ -181,7 +182,7 @@ export const getNodeInformationFromState = (state: EditorState): NodeInformation
  */
 export const isValidCodeBlockAttributes = (
   attributes: ProsemirrorAttributes,
-): attrs is CodeBlockAttributes =>
+): attributes is CodeBlockAttributes =>
   bool(
     attributes &&
       isObject(attributes) &&
@@ -196,7 +197,7 @@ export const isValidCodeBlockAttributes = (
  */
 export const updateNodeAttributes = (type: NodeType) => (
   attributes: CodeBlockAttributes,
-): ProsemirrorCommandFunction => ({ tr, selection }, dispatch) => {
+): CommandFunction => ({ state: { tr, selection }, dispatch }) => {
   if (!isValidCodeBlockAttributes(attributes)) {
     throw new Error('Invalid attrs passed to the updateAttributes method');
   }
@@ -286,7 +287,7 @@ export const formatCodeBlockFactory = ({
   defaultLanguage: fallback,
 }: FormatCodeBlockFactoryParameter) => (
   { pos }: Partial<PosParameter> = object(),
-): ProsemirrorCommandFunction => (state, dispatch) => {
+): CommandFunction => ({ state, dispatch }) => {
   const { tr, selection } = state;
 
   const { from, to } = pos ? { from: pos, to: pos } : selection;

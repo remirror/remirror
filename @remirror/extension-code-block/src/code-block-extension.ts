@@ -1,9 +1,8 @@
-import { setBlockType } from 'prosemirror-commands';
-import { TextSelection } from 'prosemirror-state';
 import refractor from 'refractor/core';
 
 import {
-  CommandNodeTypeParameter,
+  convertCommand,
+  ExtensionFactory,
   findNodeAtSelection,
   findParentNodeOfType,
   GetAttributes,
@@ -11,27 +10,23 @@ import {
   isElementDOMNode,
   isNodeActive,
   isTextSelection,
-  KeyBindings,
-  ManagerNodeTypeParameter,
   mod,
   nodeEqualsType,
-  NodeExtension,
-  NodeExtensionSpec,
   NodeGroup,
   nodeInputRule,
-  Plugin,
   removeNodeAtPosition,
   toggleBlockItem,
 } from '@remirror/core';
+import { keydownHandler, Plugin, setBlockType, TextSelection } from '@remirror/pm';
 
-import { CodeBlockComponent } from './code-block-component';
-import { createCodeBlockPlugin } from './code-block-plugin';
+import { CodeBlockState } from './code-block-plugin';
 import { CodeBlockAttributes, CodeBlockExtensionSettings } from './code-block-types';
 import { formatCodeBlockFactory, getLanguage, updateNodeAttributes } from './code-block-utils';
-import { SyntaxTheme, syntaxTheme } from './themes';
+import { SyntaxTheme } from './themes';
+
+const dataAttribute = 'data-code-block-language';
 
 export const codeBlockDefaultOptions: CodeBlockExtensionSettings = {
-  SSRComponent: CodeBlockComponent,
   supportedLanguages: [],
   syntaxTheme: 'atomDark' as SyntaxTheme,
   defaultLanguage: 'markup',
@@ -40,37 +35,30 @@ export const codeBlockDefaultOptions: CodeBlockExtensionSettings = {
   toggleType: 'paragraph',
 };
 
-export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings> {
-  get name() {
-    return 'codeBlock' as const;
-  }
+export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSettings>().node({
+  name: 'codeBlock',
+  defaultSettings: {
+    supportedLanguages: [],
+    syntaxTheme: 'atomDark' as SyntaxTheme,
+    defaultLanguage: 'markup',
+    formatter: () => undefined,
+    keyboardShortcut: mod('ShiftAlt', 'f'),
+    toggleType: 'paragraph',
+  },
+  onCreate({ settings }) {
+    return {
+      beforeExtensionLoop() {
+        for (const language of settings.supportedLanguages) {
+          refractor.register(language);
+        }
+      },
+    };
+  },
 
-  /**
-   * Provide the default options for this extension
-   */
-  get defaultOptions() {
-    return codeBlockDefaultOptions;
-  }
-
-  /**
-   * Register the configured languages.
-   */
-  protected init() {
-    super.init();
-    for (const language of this.options.supportedLanguages) {
-      refractor.register(language);
-    }
-  }
-
-  /**
-   * Provides the codeBlock schema.
-   */
-  get schema(): NodeExtensionSpec {
-    const dataAttribute = 'data-code-block-language';
+  createNodeSchema({ settings }) {
     return {
       attrs: {
-        ...this.extraAttributes(),
-        language: { default: this.options.defaultLanguage },
+        language: { default: settings.defaultLanguage },
       },
       content: 'text*',
       marks: '',
@@ -106,26 +94,16 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
         return ['pre', attributes, ['code', { [dataAttribute]: language }, 0]];
       },
     };
-  }
+  },
 
-  /**
-   * Add styles for the editor into the dom.
-   */
-  public styles() {
-    const { syntaxTheme: theme } = this.options;
-    if (theme) {
-      return syntaxTheme[theme];
-    }
-    return;
-  }
-
-  public commands({ type, schema }: CommandNodeTypeParameter) {
+  createCommands({ type, schema }, extension) {
     const {
       defaultLanguage,
       supportedLanguages,
       formatter,
       toggleType = 'paragraph',
-    } = this.options;
+    } = extension.settings;
+
     return {
       /**
        * Call this method to toggle the code block.
@@ -138,11 +116,13 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
        * code block altogether.
        */
       toggleCodeBlock: (attributes: Partial<CodeBlockAttributes>) =>
-        toggleBlockItem({
-          type,
-          toggleType: schema.nodes[toggleType],
-          attrs: { language: defaultLanguage, ...attributes },
-        }),
+        convertCommand(
+          toggleBlockItem({
+            type,
+            toggleType: schema().nodes[toggleType],
+            attrs: { language: defaultLanguage, ...attributes },
+          }),
+        ),
 
       /**
        * Creates a code at the current position.
@@ -152,7 +132,7 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
        * ```
        */
       createCodeBlock: (attributes: CodeBlockAttributes) =>
-        setBlockType(type, { language: defaultLanguage, ...attributes }),
+        convertCommand(setBlockType(type, attributes)),
 
       /**
        * Update the code block at the current position. Primarily this is used to change the language.
@@ -186,18 +166,18 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
         supportedLanguages,
       }),
     };
-  }
+  },
 
   /**
    * Create an input rule that listens converts the code fence into a code block with space.
    */
-  public inputRules({ type }: ExtensionManagerNodeTypeParams) {
+  createInputRules({ type }, extension) {
     const regexp = /^```([\dA-Za-z]*) $/;
-    const getAttrs: GetAttrs = (match) => {
+    const getAttributes: GetAttributes = (match) => {
       const language = getLanguage({
         language: getMatchString(match, 1),
-        fallback: this.options.defaultLanguage,
-        supportedLanguages: this.options.supportedLanguages,
+        fallback: extension.settings.defaultLanguage,
+        supportedLanguages: extension.settings.supportedLanguages,
       });
       return { language };
     };
@@ -210,10 +190,10 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
         getAttributes: getAttributes,
       }),
     ];
-  }
+  },
 
-  public keys({ type, getActions }: ManagerNodeTypeParameter): KeyBindings {
-    const { keyboardShortcut, toggleType } = this.options;
+  createKeymap({ type, commands }, extension) {
+    const { keyboardShortcut, toggleType } = extension.settings;
 
     return {
       Tab: ({ state, dispatch }) => {
@@ -303,8 +283,8 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
 
         const language = getLanguage({
           language: lang,
-          fallback: this.options.defaultLanguage,
-          supportedLanguages: this.options.supportedLanguages,
+          fallback: extension.settings.defaultLanguage,
+          supportedLanguages: extension.settings.supportedLanguages,
         });
 
         const pos = selection.$from.before();
@@ -321,21 +301,56 @@ export class CodeBlockExtension extends NodeExtension<CodeBlockExtensionSettings
         return true;
       },
       [keyboardShortcut]: ({ state }) => {
-        const command = getActions('formatCodeBlock');
+        const chain = commands<typeof extension>();
 
-        if (!isNodeActive({ type, state }) || !command) {
+        if (!isNodeActive({ type, state })) {
           return false;
         }
 
-        command();
+        chain.formatCodeBlock().run();
         return true;
       },
     };
-  }
+  },
 
-  public plugin(parameters: ManagerNodeTypeParameter): Plugin {
-    return createCodeBlockPlugin({ extension: this, ...parameters });
-  }
-}
+  createPlugin({ type, key }) {
+    const pluginState = new CodeBlockState(type);
+    const handler = () => {
+      pluginState.setDeleted(true);
+      return false;
+    };
+
+    return new Plugin<CodeBlockState>({
+      key,
+      state: {
+        init(_, state) {
+          return pluginState.init(state);
+        },
+        apply(tr, _, oldState, newState) {
+          return pluginState.apply({ tr, oldState, newState });
+        },
+      },
+      props: {
+        handleKeyDown: keydownHandler({
+          Backspace: handler,
+          'Mod-Backspace': handler,
+          Delete: handler,
+          'Mod-Delete': handler,
+          'Ctrl-h': handler,
+          'Alt-Backspace': handler,
+          'Ctrl-d': handler,
+          'Ctrl-Alt-Backspace': handler,
+          'Alt-Delete': handler,
+          'Alt-d': handler,
+        }),
+        // handleDOMEvents:
+        decorations() {
+          pluginState.setDeleted(false);
+          return pluginState.decorationSet;
+        },
+      },
+    });
+  },
+});
 
 export { getLanguage };

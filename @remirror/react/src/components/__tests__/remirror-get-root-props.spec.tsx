@@ -1,6 +1,4 @@
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
+import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 import { axe } from 'jest-axe';
 import { forwardRef, FunctionComponent, Ref, RefAttributes } from 'react';

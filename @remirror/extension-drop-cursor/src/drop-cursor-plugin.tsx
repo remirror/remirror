@@ -1,10 +1,7 @@
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
 import { Plugin } from 'prosemirror-state';
 import { dropPoint, insertPoint } from 'prosemirror-transform';
 import { Decoration, DecorationSet } from 'prosemirror-view';
-import { ComponentType } from 'react';
+import React from 'react';
 
 import {
   EditorView,
@@ -18,7 +15,6 @@ import {
   throttle,
 } from '@remirror/core';
 
-import { DropCursorComponent } from './drop-cursor-component';
 import { DropCursorExtensionOptions } from './drop-cursor-types';
 
 const createDropPlaceholder = ({
@@ -31,7 +27,6 @@ const createDropPlaceholder = ({
 };
 
 export class DropCursorState {
-  private readonly portalContainer: PortalContainer;
   private readonly extension: Extension<DropCursorExtensionOptions>;
 
   /**
@@ -285,8 +280,6 @@ export class DropCursorState {
 }
 
 interface CreateDropPlaceholderParameter {
-  portalContainer: PortalContainer;
-  Component: ComponentType;
   container: HTMLElement;
 }
 

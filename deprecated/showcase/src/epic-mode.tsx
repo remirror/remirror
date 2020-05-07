@@ -1,6 +1,4 @@
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
+import React from 'react';
 import { FC, FunctionComponent } from 'react';
 
 import { EDITOR_CLASS_SELECTOR } from '@remirror/core';

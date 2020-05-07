@@ -25,6 +25,9 @@
   ],
   "references": [
     {
+      "path": "../pm/tsconfig.prod.json"
+    },
+    {
       "path": "../react/tsconfig.prod.json"
     }
   ]

@@ -32,9 +32,7 @@ sx(styleObject)(theme);
 **Usage:**
 
 ```jsx
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
-
+import React from 'react';
 <div css={sx(styles)} />;
 ```
 

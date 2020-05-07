@@ -1,6 +1,4 @@
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
+import React from 'react';
 import { ComponentType, FC, Fragment } from 'react';
 
 import { isString, object, ObjectMark, ObjectNode } from '@remirror/core';

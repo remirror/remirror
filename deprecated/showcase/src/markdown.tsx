@@ -1,6 +1,4 @@
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
+import React from 'react';
 import { FC, useState } from 'react';
 
 import { capitalize } from '@remirror/core';

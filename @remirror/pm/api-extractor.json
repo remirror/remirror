@@ -5,7 +5,7 @@
   "apiReport": {
     "enabled": true,
     "reportFolder": "../../support/api/",
-    "reportFileName": "@remirror/pm.api.md",
+    "reportFileName": "remirror__pm.api.md",
     "reportTempFolder": "./temp/"
   },
   "docModel": {

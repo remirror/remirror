@@ -57,6 +57,9 @@
       "path": "@remirror/extension-text/tsconfig.prod.json"
     },
     {
+      "path": "@remirror/pm/tsconfig.prod.json"
+    },
+    {
       "path": "@remirror/preset-core/tsconfig.prod.json"
     },
     {

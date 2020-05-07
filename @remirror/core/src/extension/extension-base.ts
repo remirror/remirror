@@ -43,6 +43,8 @@ import {
   NodeExtensionTags,
   OnTransactionParameter,
   PropertiesShape,
+  ReadonlyPropertiesParameter,
+  ReadonlySettingsParameter,
 } from '../types';
 
 /**
@@ -54,7 +56,9 @@ export type AnyExtension<Settings extends object = {}, Properties extends object
   Extension<any, Settings, Properties, any, any, any>,
   'parameter'
 > & {
-  parameter: ExtensionLifecycleMethods &
+  parameter: {
+    [MethodName in keyof ExtensionLifecycleMethods<any, any>]: AnyFunction;
+  } &
     {
       [MethodName in keyof ExtensionCreatorMethods<any, any, any, any, any, any>]: AnyFunction;
     };
@@ -525,7 +529,7 @@ export interface BaseExtensionFactoryParameter<
   Helpers extends ExtensionHelperReturn = {},
   ProsemirrorType = never
 >
-  extends ExtensionLifecycleMethods,
+  extends ExtensionLifecycleMethods<Settings, Properties>,
     Remirror.ExtensionFactoryParameter<
       Name,
       Settings,
@@ -611,22 +615,31 @@ interface ExtensionCreatorMethods<
     ProsemirrorType
   > {}
 
-export interface ExtensionLifecycleMethods {
+export interface ExtensionLifecycleMethods<
+  Settings extends object = {},
+  Properties extends object = {}
+> {
   /**
    * Handlers called when the Manager is first created.
    */
-  onCreate?: (parameter: CreateLifecycleMethodParameter) => CreateLifecycleMethodReturn;
+  onCreate?: (
+    parameter: CreateLifecycleMethodParameter<Settings, Properties>,
+  ) => CreateLifecycleMethodReturn;
 
   /**
    * This happens when the store is initialized.
    */
-  onInitialize?: (parameter: InitializeLifecycleMethodParameter) => InitializeLifecycleMethodReturn;
+  onInitialize?: (
+    parameter: InitializeLifecycleMethodParameter<Settings, Properties>,
+  ) => InitializeLifecycleMethodReturn;
 
   /**
    * This event happens when the view is first received from the view layer
    * (e.g. React).
    */
-  onView?: (parameter: ViewLifecycleMethodParameter) => ViewLifecycleMethodReturn;
+  onView?: (
+    parameter: ViewLifecycleMethodParameter<Settings, Properties>,
+  ) => ViewLifecycleMethodReturn;
 
   /**
    * Called when a transaction successfully updates the editor state.
@@ -634,7 +647,7 @@ export interface ExtensionLifecycleMethods {
    * Changes to the transaction at this point have no impact at all. It is
    * purely for observational reasons
    */
-  onTransaction?: (parameter: OnTransactionParameter) => void;
+  onTransaction?: (parameter: OnTransactionParameter<Settings, Properties>) => void;
 
   /**
    * Called when the extension is being destroyed.
@@ -1081,7 +1094,10 @@ export type SchemaFromExtension<ExtensionUnion extends AnyExtension> = EditorSch
 export type AnyManagerStore = Remirror.ManagerStore<any, any>;
 export type ManagerStoreKeys = keyof Remirror.ManagerStore<any, any>;
 
-export interface CreateLifecycleMethodParameter {
+export interface CreateLifecycleMethodParameter<
+  Settings extends object = {},
+  Properties extends object = {}
+> extends ReadonlySettingsParameter<Settings>, ReadonlyPropertiesParameter<Properties> {
   /**
    * Get the value of a key from the manager store.
    */
@@ -1130,7 +1146,10 @@ export interface CreateLifecycleMethodReturn {
   afterExtensionLoop?: () => void;
 }
 
-export interface InitializeLifecycleMethodParameter extends ViewLifecycleMethodParameter {
+export interface InitializeLifecycleMethodParameter<
+  Settings extends object = {},
+  Properties extends object = {}
+> extends ViewLifecycleMethodParameter<Settings, Properties> {
   /**
    * Use this to push custom plugins to the store which are added to the plugin
    * list after the extensionPlugins.
@@ -1140,9 +1159,12 @@ export interface InitializeLifecycleMethodParameter extends ViewLifecycleMethodP
 
 export interface InitializeLifecycleMethodReturn extends CreateLifecycleMethodReturn {}
 
-export interface ViewLifecycleMethodParameter
+export interface ViewLifecycleMethodParameter<
+  Settings extends object = {},
+  Properties extends object = {}
+>
   extends Omit<
-    CreateLifecycleMethodParameter,
+    CreateLifecycleMethodParameter<Settings, Properties>,
     'setDefaultExtensionSettings' | 'setManagerMethodParameter'
   > {
   /**

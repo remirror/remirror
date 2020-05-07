@@ -45,6 +45,6 @@
   },
   "cjs": "lib/dist/@remirror/pm.cjs.js",
   "meta": {
-    "sizeLimit": "90 KB"
+    "sizeLimit": "250 KB"
   }
 }

@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
+import React from 'react';
 import { FC, forwardRef, Fragment, ReactElement } from 'react';
 
 import { isPlainObject } from '@remirror/core-helpers';

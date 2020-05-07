@@ -1,6 +1,7 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { invariant, object } from '@remirror/core-helpers';
 import { ProsemirrorPlugin } from '@remirror/core-types';
+import { PluginKey } from '@remirror/pm';
 
 import { AnyExtension, Extension, ExtensionFactory } from '../extension';
 import { AnyPreset } from '../preset';
@@ -60,7 +61,7 @@ export const PluginsExtension = ExtensionFactory.plain({
           return;
         }
 
-        const pluginParameter = getParameter(extension);
+        const pluginParameter = { ...getParameter(extension), key: new PluginKey(extension.name) };
         const plugin = extension.parameter.createPlugin(pluginParameter, extension);
 
         extensionPlugins.push(plugin);
@@ -121,7 +122,7 @@ declare global {
        * @param parameter - schema parameter with the prosemirror type included
        */
       createPlugin?: (
-        parameter: ManagerTypeParameter<ProsemirrorType>,
+        parameter: ManagerTypeParameter<ProsemirrorType> & { key: PluginKey },
         extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
       ) => ProsemirrorPlugin;
     }

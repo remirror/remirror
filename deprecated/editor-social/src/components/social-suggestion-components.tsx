@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
+import React from 'react';
 import { forwardRef, FunctionComponent } from 'react';
 
 import { object, Position, RemirrorTheme } from '@remirror/core';

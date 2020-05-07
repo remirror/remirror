@@ -1,10 +1,10 @@
 import { RefractorSyntax } from 'refractor/core';
 
-import { BaseExtensionSettings, ProsemirrorAttributes } from '@remirror/core';
+import { ProsemirrorAttributes } from '@remirror/core';
 
 import { SyntaxTheme } from './themes';
 
-export interface CodeBlockExtensionSettings extends object {
+export interface CodeBlockExtensionSettings {
   /**
    * Import languages from refractor.
    *

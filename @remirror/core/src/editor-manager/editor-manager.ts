@@ -163,7 +163,7 @@ export class EditorManager<
     create: CreateLifecycleMethodReturn[];
     initialize: InitializeLifecycleMethodReturn[];
     view: ViewLifecycleMethodReturn[];
-    transaction: Array<NonNullable<ExtensionLifecycleMethods['onTransaction']>>;
+    transaction: Array<[NonNullable<ExtensionLifecycleMethods['onTransaction']>, AnyExtension]>;
     destroy: Array<() => void>;
   } = { initialize: [], transaction: [], view: [], create: [], destroy: [] };
 
@@ -279,7 +279,7 @@ export class EditorManager<
   private setupLifecycleHandlers() {
     const initializeParameter = this.initializeParameter;
     const viewParameter = omit(initializeParameter, ['addPlugins']);
-    const createParameter: CreateLifecycleMethodParameter = {
+    const createParameter: Omit<CreateLifecycleMethodParameter, 'settings' | 'properties'> = {
       ...omit(viewParameter, ['getParameter']),
       setDefaultExtensionSettings,
       setManagerMethodParameter: (key, value) => {
@@ -294,9 +294,18 @@ export class EditorManager<
     };
 
     for (const extension of this.#extensions) {
-      const createHandler = extension.parameter.onCreate?.(createParameter);
-      const initializeHandler = extension.parameter.onInitialize?.(initializeParameter);
-      const viewHandler = extension.parameter.onView?.(viewParameter);
+      const { settings, properties } = extension;
+      const createHandler = extension.parameter.onCreate?.({
+        ...createParameter,
+        settings,
+        properties,
+      });
+      const initializeHandler = extension.parameter.onInitialize?.({
+        ...initializeParameter,
+        settings,
+        properties,
+      });
+      const viewHandler = extension.parameter.onView?.({ ...viewParameter, settings, properties });
       const transactionHandler = extension.parameter.onTransaction;
       const destroyHandler = extension.parameter.onDestroy;
 
@@ -313,7 +322,7 @@ export class EditorManager<
       }
 
       if (transactionHandler) {
-        this.#handlers.transaction.push(transactionHandler);
+        this.#handlers.transaction.push([transactionHandler, extension]);
       }
 
       if (destroyHandler) {
@@ -322,7 +331,10 @@ export class EditorManager<
     }
   }
 
-  private get initializeParameter(): InitializeLifecycleMethodParameter {
+  private get initializeParameter(): Omit<
+    InitializeLifecycleMethodParameter,
+    'settings' | 'properties'
+  > {
     return {
       getParameter: (extension) => {
         invariant(this.#phase >= ManagerPhase.Initialize, {
@@ -592,8 +604,14 @@ export class EditorManager<
    * An example usage of this is within the collaboration plugin.
    */
   public onTransaction(parameter: ManagerTransactionHandlerParameter) {
-    for (const onTransaction of this.#handlers.transaction) {
-      onTransaction({ ...parameter, ...this.#methodParameter, view: this.store.view });
+    for (const [onTransaction, extension] of this.#handlers.transaction) {
+      onTransaction({
+        ...parameter,
+        ...this.#methodParameter,
+        view: this.store.view,
+        settings: extension.settings,
+        properties: extension.properties,
+      });
     }
   }
 

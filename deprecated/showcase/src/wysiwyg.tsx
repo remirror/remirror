@@ -1,6 +1,4 @@
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
+import React from 'react';
 import { FC } from 'react';
 
 import { EMPTY_PARAGRAPH_NODE } from '@remirror/core';

@@ -2,9 +2,7 @@
  * @jest-environment node
  */
 
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
+import React from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { EditorManager } from '@remirror/core';

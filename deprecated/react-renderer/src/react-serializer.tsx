@@ -1,7 +1,4 @@
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
-import { ComponentType, Fragment, ReactNode } from 'react';
+import React, { ComponentType, Fragment, ReactNode } from 'react';
 
 import {
   AnyExtension,

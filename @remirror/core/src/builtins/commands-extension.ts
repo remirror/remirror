@@ -349,8 +349,9 @@ declare global {
        * ```
        */
       commands: <ExtensionUnion extends AnyExtension = any>() => ChainedFromExtensions<
-        Of<typeof CommandsExtension> & ChainedFromExtensions<ExtensionUnion>
-      >;
+        Of<typeof CommandsExtension>
+      > &
+        ChainedFromExtensions<ExtensionUnion>;
     }
   }
 }

@@ -3,13 +3,7 @@
     "name": "@remirror/core",
     "path": "@remirror/core/lib/dist/core.esm.js",
     "limit": "70 KB",
-    "ignore": [
-      "@emotion/core",
-      "@types/prosemirror-view",
-      "@types/react",
-      "prosemirror-view",
-      "react"
-    ],
+    "ignore": ["@remirror/pm"],
     "running": false
   },
   {
@@ -23,20 +17,14 @@
     "name": "@remirror/core-types",
     "path": "@remirror/core-types/lib/dist/core-types.esm.js",
     "limit": "1 KB",
-    "ignore": [
-      "@emotion/core",
-      "@types/prosemirror-view",
-      "@types/react",
-      "prosemirror-view",
-      "react"
-    ],
+    "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/core-utils",
     "path": "@remirror/core-utils/lib/dist/core-utils.esm.js",
     "limit": "50 KB",
-    "ignore": [],
+    "ignore": ["@remirror/pm"],
     "running": false
   },
   {
@@ -50,14 +38,14 @@
     "name": "@remirror/extension-code-block",
     "path": "@remirror/extension-code-block/lib/dist/extension-code-block.esm.js",
     "limit": "120 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"],
+    "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-collaboration",
     "path": "@remirror/extension-collaboration/lib/dist/extension-collaboration.esm.js",
     "limit": "90 KB",
-    "ignore": ["@emotion/core"],
+    "ignore": ["@remirror/pm", "prosemirror-collab"],
     "running": false
   },
   {
@@ -71,42 +59,42 @@
     "name": "@remirror/extension-drop-cursor",
     "path": "@remirror/extension-drop-cursor/lib/dist/extension-drop-cursor.esm.js",
     "limit": "90 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"],
+    "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-emoji",
     "path": "@remirror/extension-emoji/lib/dist/extension-emoji.esm.js",
     "limit": "150 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-enhanced-link",
     "path": "@remirror/extension-enhanced-link/lib/dist/extension-enhanced-link.esm.js",
     "limit": "90 KB",
-    "ignore": ["@emotion/core"],
+    "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-epic-mode",
     "path": "@remirror/extension-epic-mode/lib/dist/extension-epic-mode.esm.js",
     "limit": "90 KB",
-    "ignore": ["@emotion/core"],
+    "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-image",
     "path": "@remirror/extension-image/lib/dist/extension-image.esm.js",
     "limit": "120 KB",
-    "ignore": ["@emotion/core", "@types/react", "react"],
+    "ignore": ["@remirror/pm"],
     "running": false
   },
   {
     "name": "@remirror/extension-mention",
     "path": "@remirror/extension-mention/lib/dist/extension-mention.esm.js",
     "limit": "90 KB",
-    "ignore": ["@emotion/core"],
+    "ignore": ["@remirror/pm"],
     "running": false
   },
   {
@@ -120,13 +108,20 @@
     "name": "@remirror/extension-tables",
     "path": "@remirror/extension-tables/lib/dist/extension-tables.esm.js",
     "limit": "120 KB",
-    "ignore": [],
+    "ignore": ["@remirror/pm", "prosemirror-tables"],
     "running": false
   },
   {
     "name": "@remirror/extension-text",
     "path": "@remirror/extension-text/lib/dist/extension-text.esm.js",
     "limit": "50 KB",
+    "ignore": [],
+    "running": false
+  },
+  {
+    "name": "@remirror/pm",
+    "path": "@remirror/pm/lib/dist/pm.esm.js",
+    "limit": "250 KB",
     "ignore": [],
     "running": false
   },
@@ -141,7 +136,7 @@
     "name": "@remirror/react",
     "path": "@remirror/react/lib/dist/react.esm.js",
     "limit": "140 KB",
-    "ignore": ["@emotion/core", "@types/react", "@types/react-dom", "react", "react-dom"],
+    "ignore": ["@remirror/pm", "@types/react", "@types/react-dom", "react", "react-dom"],
     "running": false
   },
   {
@@ -155,7 +150,7 @@
     "name": "prosemirror-suggest",
     "path": "packages/prosemirror-suggest/lib/dist/prosemirror-suggest.esm.js",
     "limit": "90 KB",
-    "ignore": ["@types/prosemirror-view", "prosemirror-view"],
+    "ignore": ["prosemirror-view"],
     "running": false
   },
   {

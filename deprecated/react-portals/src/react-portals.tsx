@@ -1,6 +1,4 @@
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
+import React from 'react';
 import { Fragment, ReactElement, useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 

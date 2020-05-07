@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
+import React from 'react';
 import { MinWidthProperty, WidthProperty } from 'csstype';
 import { ComponentType, forwardRef, ReactNode } from 'react';
 

@@ -1,7 +1,4 @@
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
-import { ComponentType } from 'react';
+import React, { ComponentType } from 'react';
 
 import { EDITOR_CLASS_NAME, SELECTED_NODE_CLASS_NAME } from '@remirror/core-constants';
 import { isFunction, isPlainObject, isString, keys } from '@remirror/core-helpers';

@@ -1,7 +1,5 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
 import { storiesOf } from '@storybook/react';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import { useRemirrorTheme } from '@remirror/ui';
 

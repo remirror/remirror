@@ -2,9 +2,7 @@
  * @jest-environment node
  */
 
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
+import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import { createTestManager, docNodeBasicJSON } from '@remirror/test-fixtures';

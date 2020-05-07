@@ -37,6 +37,9 @@
       "path": "../../@remirror/core-utils/tsconfig.prod.json"
     },
     {
+      "path": "../../@remirror/pm/tsconfig.prod.json"
+    },
+    {
       "path": "../test-keyboard/tsconfig.prod.json"
     }
   ]

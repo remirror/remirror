@@ -1,7 +1,4 @@
-/** @jsx jsx */
-
-import { jsx } from '@emotion/core';
-import { ComponentType } from 'react';
+import React, { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { EditorManager, object, PlainObject } from '@remirror/core';

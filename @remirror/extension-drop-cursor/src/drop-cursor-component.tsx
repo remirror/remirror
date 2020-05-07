@@ -1,6 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
-
+import React from 'react';
 import { numberToPixels, useRemirrorTheme } from '@remirror/ui';
 
 import { defaultDropCursorExtensionOptions } from './drop-cursor-constants';

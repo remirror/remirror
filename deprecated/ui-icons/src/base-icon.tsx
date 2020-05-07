@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
+import React from 'react';
 import VisuallyHidden from '@reach/visually-hidden';
 import { forwardRef, Fragment, useMemo } from 'react';
 

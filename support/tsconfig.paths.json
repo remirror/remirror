@@ -41,6 +41,8 @@
       "@remirror/extension-text/lib/*": ["@remirror/extension-text/src/*"],
       "@remirror/playground": ["@remirror/playground/src/index.ts"],
       "@remirror/playground/lib/*": ["@remirror/playground/src/*"],
+      "@remirror/pm": ["@remirror/pm/src/index.ts"],
+      "@remirror/pm/lib/*": ["@remirror/pm/src/*"],
       "@remirror/preset-core": ["@remirror/preset-core/src/index.ts"],
       "@remirror/preset-core/lib/*": ["@remirror/preset-core/src/*"],
       "@remirror/react": ["@remirror/react/src/index.ts"],
