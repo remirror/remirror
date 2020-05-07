@@ -11,25 +11,26 @@ import {
   shortcut,
   TestEditorView,
 } from 'jest-prosemirror';
-import pick from 'object.pick';
 import React from 'react';
 
 import {
   AnyEditorManager,
   AnyExtension,
+  AnyPreset,
   CommandFunction,
   CommandsFromExtensions,
   EditorManager,
   GetExtensionUnion,
+  GetMarkNameUnion,
+  GetNodeNameUnion,
   HelpersFromExtensions,
   isMarkExtension,
   isNodeExtension,
   object,
+  pick,
   ProsemirrorAttributes,
   SchemaFromExtension,
 } from '@remirror/core';
-import { GetMarkNameUnion, GetNodeNameUnion } from '@remirror/core/lib/extension';
-import { AnyPreset } from '@remirror/core/lib/preset';
 import { RenderEditor, RenderEditorProps } from '@remirror/react';
 
 import { markFactory, nodeFactory } from './jest-remirror-builder';

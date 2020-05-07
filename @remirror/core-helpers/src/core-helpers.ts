@@ -1,7 +1,8 @@
 import deepmerge from 'deepmerge';
 import fastDeepEqual from 'fast-deep-equal';
 import { nanoid } from 'nanoid';
-import objectOmit from 'object.omit';
+import omit from 'object.omit';
+import pick from 'object.pick';
 
 import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
 import { Nullable, Predicate, RemirrorIdentifierShape } from '@remirror/core-types';
@@ -608,7 +609,7 @@ export function startCase(string: string) {
     .replace(/(\s|^)(\w)/g, (_, $1: string, $2: string) => `${$1}${$2.toUpperCase()}`);
 }
 
-const wordSeparators = /[\s!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~\u2000-\u206F\u2E00-\u2E7F\-]+/;
+const wordSeparators = /[\s!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~\u2000-\u206F\u2E00-\u2E7F-]+/;
 const capitals = /[A-Z\u00C0-\u00D6\u00D9-\u00DD]/g;
 
 /**
@@ -677,11 +678,6 @@ export function take<GArray extends any[]>(array: GArray, number: number) {
   number = Math.max(Math.min(0, number), number);
   return array.slice(0, number);
 }
-
-/**
- * Alias for excluding properties from an object
- */
-export const omit = objectOmit;
 
 export function omitUndefined(object: PlainObject) {
   return omit(object, (value) => !isUndefined(value));
@@ -765,6 +761,11 @@ export const noop = () => {};
  */
 export class Merge {
   /**
+   * This can be used to mimic any object shape.
+   */
+  [key: string]: unknown;
+
+  /**
    * Create an object that will completely replace the key when merging.
    *
    * @param [obj] - the object to replace the key with. When blank an empty
@@ -781,13 +782,8 @@ export class Merge {
     return undefined as any;
   }
 
-  /**
-   * This can be used to mimic any object shape.
-   */
-  [key: string]: any;
-
   private constructor(object_: PlainObject = object()) {
-    Object.keys(object_).forEach((key) => {
+    keys(object_).forEach((key) => {
       this[key] = object_[key];
     });
   }
@@ -975,3 +971,5 @@ export const hasOwnProperty = <GObj extends object, GProperty extends string | n
 // Forwarded exports
 
 export { debounce, throttle } from 'throttle-debounce';
+
+export { omit, pick };

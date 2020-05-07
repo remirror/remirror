@@ -34,7 +34,6 @@
     "@types/prosemirror-test-builder": "^1.0.1",
     "chalk": "^4.0.0",
     "jest-matcher-utils": "^26.0.1",
-    "object.pick": "^1.3.0",
     "prosemirror-schema-basic": "^1.1.2",
     "prosemirror-tables": "^1.1.0",
     "prosemirror-test-builder": "^1.0.3",

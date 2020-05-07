@@ -1,12 +1,11 @@
 import { fireEvent, prettyDOM } from '@testing-library/dom';
-import pick from 'object.pick';
 import { inputRules } from 'prosemirror-inputrules';
 import { AllSelection, NodeSelection, TextSelection } from 'prosemirror-state';
 import { TaggedProsemirrorNode } from 'prosemirror-test-builder';
 import { DirectEditorProps, EditorView } from 'prosemirror-view';
 import { Keyboard } from 'test-keyboard';
 
-import { isString, object } from '@remirror/core-helpers';
+import { isString, object, pick } from '@remirror/core-helpers';
 import {
   EditorSchema,
   EditorStateParameter,

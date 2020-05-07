@@ -1,7 +1,6 @@
-import pick from 'object.pick';
 import { DEFAULT_SUGGESTER } from 'prosemirror-suggest';
 
-import { bool, isPlainObject, isString } from '@remirror/core';
+import { bool, isPlainObject, isString, pick } from '@remirror/core';
 
 import { MentionExtensionAttributes, MentionExtensionMatcher } from './mention-types';
 
