@@ -11,7 +11,9 @@
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/react-portals",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react-portals",
   "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
   "sideEffects": false,
   "main": "lib/dist/index.js",
   "module": "lib/dist/react-portals.esm.js",

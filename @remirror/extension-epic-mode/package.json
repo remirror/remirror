@@ -4,7 +4,9 @@
   "description": "Epic (power) mode extension for the remirror wysiwyg editor",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-epic-mode",
   "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
   "sideEffects": false,
   "main": "lib/dist/index.js",
   "module": "lib/dist/extension-epic-mode.esm.js",

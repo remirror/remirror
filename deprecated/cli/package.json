@@ -9,7 +9,9 @@
     "directory": "@remirror/cli"
   },
   "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
   "sideEffects": false,
   "main": "lib/index.js",
   "bin": {

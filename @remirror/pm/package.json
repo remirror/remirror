@@ -5,7 +5,7 @@
   "homepage": "https://github.com/remirror/remirror/tree/master/packages/@remirror/pm",
   "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/pm",
   "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "contributors": ["Ifiok Jr. <ifiokotung@gmail.com>"],
   "sideEffects": false,
   "main": "lib/dist/index.js",
   "module": "lib/dist/pm.esm.js",

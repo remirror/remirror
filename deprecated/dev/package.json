@@ -5,7 +5,9 @@
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/dev",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/dev",
   "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
   "sideEffects": false,
   "main": "lib/dist/index.js",
   "module": "lib/dist/dev.esm.js",

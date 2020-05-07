@@ -12,7 +12,9 @@
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-doc",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-doc",
   "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
   "sideEffects": false,
   "main": "lib/dist/index.js",
   "module": "lib/dist/extension-doc.esm.js",

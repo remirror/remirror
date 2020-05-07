@@ -5,7 +5,9 @@
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/ui-a11y-status",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/ui-a11y-status",
   "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
   "sideEffects": false,
   "main": "lib/dist/index.js",
   "module": "lib/dist/ui-a11y-status.esm.js",

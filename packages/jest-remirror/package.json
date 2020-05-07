@@ -11,7 +11,9 @@
   "homepage": "https://github.com/remirror/remirror/tree/master/packages/jest-remirror",
   "repository": "https://github.com/remirror/remirror/tree/master/packages/jest-remirror",
   "license": "MIT",
-  "author": "Ifiok Jr. <ifiokotung@gmail.com>",
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
