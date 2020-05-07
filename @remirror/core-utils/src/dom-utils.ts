@@ -19,8 +19,7 @@ import {
   TextSelection,
 } from 'prosemirror-state';
 
-import { EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
-import { EMPTY_NODE } from '@remirror/core-constants/lib/core-constants';
+import { EMPTY_NODE, EMPTY_PARAGRAPH_NODE } from '@remirror/core-constants';
 import {
   bool,
   Cast,

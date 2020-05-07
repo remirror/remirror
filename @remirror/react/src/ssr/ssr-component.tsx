@@ -1,14 +1,16 @@
 import React from 'react';
+
 import {
-  EditorManager,
+  AnyEditorManager,
   EditorStateParameter,
   GetExtensionUnion,
   PlainObject,
   SchemaFromExtension,
 } from '@remirror/core';
-import { mapProps, ReactSerializer } from '@remirror/react-renderer';
 
-export interface RemirrorSSRProps<ManagerType extends EditorManager = any>
+import { mapProps, ReactSerializer } from '../renderers';
+
+export interface RemirrorSSRProps<ManagerType extends AnyEditorManager = any>
   extends EditorStateParameter<SchemaFromExtension<GetExtensionUnion<ManagerType>>> {
   /**
    * The attributes to pass into the root div element.
@@ -28,7 +30,7 @@ export interface RemirrorSSRProps<ManagerType extends EditorManager = any>
 /**
  * Remirror SSR component used for rendering in non dom environments
  */
-export const RemirrorSSR = <ManagerType extends EditorManager = any>({
+export const RemirrorSSR = <ManagerType extends AnyEditorManager = any>({
   attributes,
   manager,
   state,

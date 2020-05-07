@@ -1,7 +1,7 @@
 import React, { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { EditorManager, object, PlainObject } from '@remirror/core';
+import { AnyEditorManager, object, PlainObject } from '@remirror/core';
 
 import { useRemirror } from './hooks/use-remirror';
 
@@ -74,7 +74,7 @@ export function getSchemaFromComponentTree({
   prop = 'children',
   extraProps = object<PlainObject>(),
 }: GetManagerFromComponentTreeParameter) {
-  return new Promise<EditorManager>((resolve, reject) => {
+  return new Promise<AnyEditorManager>((resolve, reject) => {
     const ManagerRetriever = () => {
       const { manager } = useRemirror();
       resolve(manager);

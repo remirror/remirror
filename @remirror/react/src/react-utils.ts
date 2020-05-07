@@ -1,4 +1,3 @@
-import { css as emotionCss, jsx } from '@emotion/core';
 import {
   Children,
   ComponentClass,
@@ -6,13 +5,11 @@ import {
   FC,
   Fragment,
   isValidElement as isValidReactElement,
-  LegacyRef,
-  PropsWithChildren,
   ReactElement,
   ReactNode,
 } from 'react';
 
-import { bool, isArray, isFunction, isObject, isString, uniqueArray } from '@remirror/core-helpers';
+import { bool, isFunction, isObject, isString } from '@remirror/core-helpers';
 import { AnyFunction, PlainObject } from '@remirror/core-types';
 
 export interface RemirrorComponentStaticProperties {
@@ -166,38 +163,6 @@ export const isManagedRemirrorProvider = isRemirrorElementOfType(
 );
 
 /**
- * Clones an element while also enabling the css prop on jsx elements at the same time.
- * This is used for emotion which needs to inject the css property which React.cloneElement doesn't support.
- *
- * @param element - the element to clone
- * @param props - the props to pass through to the cloned element
- * @param rest - the children of the cloned element
- *
- * @returns a cloned react element with builtin support for the emotion `css` props
- */
-export const cloneElement = <GProps extends PropsWithChildren<{ ref?: LegacyRef<any> }> = any>(
-  element: ReactElement<GProps>,
-  props: GProps,
-  ...rest: ReactNode[]
-) => {
-  const children = uniqueArray([
-    ...(isArray(props.children) ? props.children : props.children ? [props.children] : []),
-    ...rest,
-  ]);
-
-  return jsx(
-    element.type,
-    {
-      key: element.key,
-      ref: element.props.ref,
-      ...element.props,
-      ...props,
-    },
-    ...children,
-  );
-};
-
-/**
  * Will throw an error if the child provided is not a function.
  *
  * @remarks
@@ -212,20 +177,6 @@ export const propIsFunction = (prop: unknown): prop is AnyFunction => {
   }
   return true;
 };
-
-/**
- * A noop function that mimics the css emotion call but renders no output.
- *
- * @remarks
- * This is useful for enabling the library user to switch off emotion for core react elements.
- */
-export const cssNoOp: typeof emotionCss = () => undefined as any;
-
-/**
- * A css function that just returns the string.
- * This is typically used for css syntax highlighting of plain strings in editors.
- */
-export const css = bool(String.raw) ? String.raw : (template: TemplateStringsArray) => template[0];
 
 /**
  * A drop in replacement for React.Children.only which provides more readable errors

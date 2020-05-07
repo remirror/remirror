@@ -1,13 +1,14 @@
 import { MarkSpec, NodeSpec } from 'prosemirror-model';
 import { Selection as PMSelection } from 'prosemirror-state';
 
-import { ErrorConstant, isUndefined } from '@remirror/core';
+import { ErrorConstant } from '@remirror/core-constants';
 import {
   bool,
   invariant,
   isEmptyArray,
   isEmptyObject,
   isNullOrUndefined,
+  isUndefined,
   keys,
   object,
 } from '@remirror/core-helpers';

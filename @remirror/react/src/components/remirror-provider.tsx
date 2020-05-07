@@ -1,15 +1,14 @@
-import React from 'react';
-import { ProviderProps, ReactElement } from 'react';
+import React, { ProviderProps, ReactElement } from 'react';
 
-import { EditorManager, MakeOptional } from '@remirror/core';
-import { oneChildOnly, RemirrorType } from '@remirror/react-utils';
+import { AnyEditorManager, EditorManager, MakeOptional } from '@remirror/core';
 
 import { defaultProps } from '../react-constants';
 import { RemirrorContext } from '../react-contexts';
 import { GetRootPropsConfig, InjectedRenderEditorProps, RenderEditorProps } from '../react-types';
+import { oneChildOnly, RemirrorType } from '../react-utils';
 import { RenderEditor } from './render-editor';
 
-export interface RemirrorContextProviderProps<ManagerType extends EditorManager = any>
+export interface RemirrorContextProviderProps<ManagerType extends AnyEditorManager = any>
   extends ProviderProps<InjectedRenderEditorProps<ManagerType>> {
   /**
    * Sets the first child element as a the root (where the prosemirror editor

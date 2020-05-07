@@ -53,7 +53,6 @@ import {
 } from '../react-types';
 import {
   addKeyToElement,
-  cloneElement,
   getElementProps,
   isManagedRemirrorProvider,
   isReactDOMElement,
@@ -880,7 +879,7 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
     ) {
       const { childAsRoot } = element.props;
       return childAsRoot
-        ? cloneElement(element, properties, this.renderClonedElement(children, childAsRoot))
+        ? React.cloneElement(element, properties, this.renderClonedElement(children, childAsRoot))
         : element;
     } else {
       return isReactDOMElement(element) ? (
