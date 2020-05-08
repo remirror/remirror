@@ -336,13 +336,13 @@ export class EditorManager<
     'settings' | 'properties'
   > {
     return {
-      getParameter: (extension) => {
+      getParameter: (extension, other) => {
         invariant(this.#phase >= ManagerPhase.Initialize, {
           code: ErrorConstant.MANAGER_PHASE_ERROR,
           message: '`getParameter` should only be called within the returned methods scope.',
         });
 
-        return getParameterWithType(extension, { ...this.#methodParameter });
+        return getParameterWithType(extension, { ...this.#methodParameter, ...other });
       },
       addPlugins: this.addPlugins,
       getStoreKey: this.getStoreKey,

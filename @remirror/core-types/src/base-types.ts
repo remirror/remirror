@@ -3,33 +3,6 @@
 import { AttributeSpec } from 'prosemirror-model';
 import { ConditionalExcept, ConditionalPick } from 'type-fest';
 
-declare const _brand: unique symbol;
-declare const _flavor: unique symbol;
-
-interface CreateExtraAttributesParameter {
-  /**
-   * The fallback value to use for the extra attributes being created. Must be
-   * provided.
-   */
-  fallback?: string | null;
-}
-
-type NeverBrand = Brand<object, never>;
-
-/**
- * Used by Brand to mark a type in a readable way.
- */
-interface Branding<GBrand> {
-  readonly [_brand]: GBrand;
-}
-
-/**
- * Used by `Flavor` to mark a type in a readable way.
- */
-interface Flavoring<Flavor> {
-  readonly [_flavor]?: Flavor;
-}
-
 /**
  * An alternative to keyof that only extracts the string keys.
  */
@@ -54,6 +27,11 @@ export type Value<Type> = Type[keyof Type];
 export type Nullable<Type> = Type | null | undefined;
 
 /**
+ * A shorthand for creating and intersection of two object types.
+ */
+export type And<Type extends object, Other extends object> = Type & Other;
+
+/**
  * Extract the values of a tuple as a union type.
  *
  * @remarks
@@ -70,6 +48,23 @@ export type TupleValue<Tuple extends readonly unknown[]> = Tuple[number];
  * Creates a predicate type
  */
 export type Predicate<Type> = (value: unknown) => value is Type;
+
+declare const _brand: unique symbol;
+declare const _flavor: unique symbol;
+
+/**
+ * Used by Brand to mark a type in a readable way.
+ */
+interface Branding<GBrand> {
+  readonly [_brand]: GBrand;
+}
+
+/**
+ * Used by `Flavor` to mark a type in a readable way.
+ */
+interface Flavoring<Flavor> {
+  readonly [_flavor]?: Flavor;
+}
 
 /**
  * Create a "flavored" version of a type. TypeScript will disallow mixing
@@ -237,6 +232,14 @@ export type ExtraAttributes = string | ExtraAttributesTuple | ExtraAttributesObj
  */
 export type GetExtraAttributes = (domNode: Node | string) => Record<string, unknown>;
 
+interface CreateExtraAttributesParameter {
+  /**
+   * The fallback value to use for the extra attributes being created. Must be
+   * provided.
+   */
+  fallback?: string | null;
+}
+
 /**
  * A method that creates the `AttributeSpec` for prosemirror that can be added
  * to a node or mark extension to provide extra functionality and store more
@@ -280,6 +283,8 @@ export type IfHasRequiredProperties<Type extends object, Then, Else> = IfNoRequi
   Else,
   Then
 >;
+
+type NeverBrand = Brand<object, never>;
 
 /**
  * A conditional check on the type. When there are no required keys it outputs

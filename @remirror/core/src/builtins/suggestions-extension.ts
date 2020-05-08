@@ -2,6 +2,7 @@ import { suggest, Suggestion } from 'prosemirror-suggest';
 
 import { ExtensionPriority } from '@remirror/core-constants';
 import { isArray } from '@remirror/core-helpers';
+import { And } from '@remirror/core-types';
 
 import { Extension, ExtensionFactory } from '../extension';
 import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';
@@ -41,7 +42,7 @@ export const SuggestionsExtension = ExtensionFactory.plain({
         }
 
         const parameter = getParameter(extension);
-        const suggester = extension.parameter.createSuggestions(parameter, extension);
+        const suggester = extension.parameter.createSuggestions(parameter);
 
         suggesters.push(...(isArray(suggester) ? suggester : [suggester]));
       },
@@ -83,8 +84,15 @@ declare global {
        * command keys which trigger an actions menu and much more.
        */
       createSuggestions?: (
-        parameter: ManagerTypeParameter<ProsemirrorType>,
-        extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+        parameter: And<
+          ManagerTypeParameter<ProsemirrorType>,
+          {
+            /**
+             * The extension which provides access to the settings and properties.
+             */
+            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
+          }
+        >,
       ) => Suggestion[] | Suggestion;
     }
   }

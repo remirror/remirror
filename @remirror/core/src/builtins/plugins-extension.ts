@@ -1,6 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { invariant, object } from '@remirror/core-helpers';
-import { ProsemirrorPlugin } from '@remirror/core-types';
+import { And, ProsemirrorPlugin } from '@remirror/core-types';
 import { PluginKey } from '@remirror/pm';
 
 import { AnyExtension, Extension, ExtensionFactory } from '../extension';
@@ -13,8 +13,8 @@ import {
 } from '../types';
 
 /**
- * This extension allows others extension to add the `createInputRules` method
- * for automatically transforming text when a certain regex pattern is typed.
+ * This extension allows others extension to add the `createPlugin` method
+ * using Prosemirror Plugins.
  *
  * @remarks
  *
@@ -61,8 +61,10 @@ export const PluginsExtension = ExtensionFactory.plain({
           return;
         }
 
-        const pluginParameter = { ...getParameter(extension), key: new PluginKey(extension.name) };
-        const plugin = extension.parameter.createPlugin(pluginParameter, extension);
+        const pluginParameter = {
+          ...getParameter(extension, { key: new PluginKey(extension.name) }),
+        };
+        const plugin = extension.parameter.createPlugin(pluginParameter);
 
         extensionPlugins.push(plugin);
       },
@@ -122,8 +124,20 @@ declare global {
        * @param parameter - schema parameter with the prosemirror type included
        */
       createPlugin?: (
-        parameter: ManagerTypeParameter<ProsemirrorType> & { key: PluginKey },
-        extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+        parameter: And<
+          ManagerTypeParameter<ProsemirrorType>,
+          {
+            /**
+             * The plugin key which should be used when creating this plugin
+             */
+            key: PluginKey;
+
+            /**
+             * The extension which provides access to the settings and properties.
+             */
+            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
+          }
+        >,
       ) => ProsemirrorPlugin;
     }
   }

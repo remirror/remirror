@@ -1,6 +1,6 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
-import { AnyFunction, EditorSchema } from '@remirror/core-types';
+import { And, AnyFunction, EditorSchema } from '@remirror/core-types';
 
 import { AnyExtension, Extension, ExtensionFactory, HelpersFromExtensions } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
@@ -16,7 +16,7 @@ import {
  * Create the extension helpers from the passed extension.
  */
 function createExtensionHelpers(parameter: CreateHelpersParameter<never>, extension: AnyExtension) {
-  return extension.parameter.createHelpers?.(parameter, extension) ?? {};
+  return extension.parameter.createHelpers?.(parameter) ?? {};
 }
 
 /**
@@ -61,10 +61,7 @@ export const HelpersExtension = ExtensionFactory.plain({
           return;
         }
 
-        const helperParameter: CreateHelpersParameter<never> = {
-          ...getParameter(extension),
-          view,
-        };
+        const helperParameter = getParameter(extension, { view });
 
         const extensionHelpers = createExtensionHelpers(helperParameter, extension);
 
@@ -141,8 +138,15 @@ declare global {
        * ```
        */
       createHelpers?: (
-        parameter: CreateHelpersParameter<ProsemirrorType>,
-        extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+        parameter: And<
+          CreateHelpersParameter<ProsemirrorType>,
+          {
+            /**
+             * The extension which provides access to the settings and properties.
+             */
+            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
+          }
+        >,
       ) => Helpers;
     }
 

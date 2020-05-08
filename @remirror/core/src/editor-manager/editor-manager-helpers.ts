@@ -23,14 +23,14 @@ export function getParameterWithType<
   Parameter extends ManagerMethodParameter
 >(extension: ExtensionUnion, parameter: Parameter) {
   if (isMarkExtension(extension)) {
-    return { ...parameter, type: parameter.schema().marks[extension.name] };
+    return { ...parameter, type: parameter.schema().marks[extension.name], extension };
   }
 
   if (isNodeExtension(extension)) {
-    return { ...parameter, type: parameter.schema().nodes[extension.name] };
+    return { ...parameter, type: parameter.schema().nodes[extension.name], extension };
   }
 
-  return parameter as any;
+  return { ...parameter, extension } as any;
 }
 
 export interface TransformExtensionOrPreset<

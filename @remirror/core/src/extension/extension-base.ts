@@ -13,6 +13,7 @@ import {
   object,
 } from '@remirror/core-helpers';
 import {
+  And,
   AnyFunction,
   EditorSchema,
   EditorView,
@@ -1170,7 +1171,10 @@ export interface ViewLifecycleMethodParameter<
   /**
    * The parameter passed into most of the extension creator methods.
    */
-  getParameter: <Type = never>(extension: AnyExtension) => ManagerTypeParameter<Type>;
+  getParameter: <Type = never, Other extends object = object>(
+    extension: AnyExtension,
+    other?: Other,
+  ) => And<ManagerTypeParameter<Type>, { extension: AnyExtension }> & Other;
 }
 
 export interface ViewLifecycleMethodReturn {

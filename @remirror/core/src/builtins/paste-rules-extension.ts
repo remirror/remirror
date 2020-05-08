@@ -1,5 +1,5 @@
 import { ExtensionPriority } from '@remirror/core-constants';
-import { ProsemirrorPlugin } from '@remirror/core-types';
+import { And, ProsemirrorPlugin } from '@remirror/core-types';
 
 import { Extension, ExtensionFactory } from '../extension';
 import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';
@@ -35,7 +35,7 @@ export const PasteRulesExtension = ExtensionFactory.plain({
         }
 
         const parameter = getParameter(extension);
-        pasteRules.push(...extension.parameter.createPasteRules(parameter, extension));
+        pasteRules.push(...extension.parameter.createPasteRules(parameter));
       },
 
       afterExtensionLoop: () => {
@@ -72,8 +72,15 @@ declare global {
        * @param parameter - schema parameter with type included
        */
       createPasteRules?: (
-        parameter: ManagerTypeParameter<ProsemirrorType>,
-        extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+        parameter: And<
+          ManagerTypeParameter<ProsemirrorType>,
+          {
+            /**
+             * The extension which provides access to the settings and properties.
+             */
+            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
+          }
+        >,
       ) => ProsemirrorPlugin[];
     }
   }

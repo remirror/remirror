@@ -3,6 +3,7 @@ import { keymap } from 'prosemirror-keymap';
 import { ExtensionPriority } from '@remirror/core-constants';
 import { hasOwnProperty, object } from '@remirror/core-helpers';
 import {
+  And,
   KeyBindingCommandFunction,
   KeyBindings,
   ProsemirrorCommandFunction,
@@ -45,7 +46,7 @@ export const KeymapExtension = ExtensionFactory.plain({
           return;
         }
 
-        extensionKeymaps.push(extension.parameter.createKeymap(getParameter(extension), extension));
+        extensionKeymaps.push(extension.parameter.createKeymap(getParameter(extension)));
       },
       afterExtensionLoop: () => {
         const previousCommandsMap = new Map<string, KeyBindingCommandFunction[]>();
@@ -100,8 +101,15 @@ declare global {
        * @param parameter - schema parameter with type included
        */
       createKeymap?: (
-        parameter: ManagerTypeParameter<ProsemirrorType>,
-        extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+        parameter: And<
+          ManagerTypeParameter<ProsemirrorType>,
+          {
+            /**
+             * The extension which provides access to the settings and properties.
+             */
+            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
+          }
+        >,
       ) => KeyBindings;
     }
   }

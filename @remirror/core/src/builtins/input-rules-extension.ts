@@ -1,6 +1,7 @@
 import { InputRule, inputRules } from 'prosemirror-inputrules';
 
 import { ExtensionPriority } from '@remirror/core-constants';
+import { And } from '@remirror/core-types';
 
 import { Extension, ExtensionFactory } from '../extension';
 import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';
@@ -40,7 +41,7 @@ export const InputRulesExtension = ExtensionFactory.plain({
         }
 
         const parameter = getParameter(extension);
-        rules.push(...extension.parameter.createInputRules(parameter, extension));
+        rules.push(...extension.parameter.createInputRules(parameter));
       },
 
       afterExtensionLoop: () => {
@@ -76,8 +77,15 @@ declare global {
        * @param parameter - schema parameter with type included
        */
       createInputRules?: (
-        parameter: ManagerTypeParameter<ProsemirrorType>,
-        extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+        parameter: And<
+          ManagerTypeParameter<ProsemirrorType>,
+          {
+            /**
+             * The extension which provides access to the settings and properties.
+             */
+            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
+          }
+        >,
       ) => InputRule[];
     }
   }

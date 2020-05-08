@@ -1,6 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { bool, object } from '@remirror/core-helpers';
-import { AttributesWithClass } from '@remirror/core-types';
+import { And, AttributesWithClass } from '@remirror/core-types';
 
 import { AnyExtension, Extension, ExtensionFactory } from '../extension';
 import { AnyPreset } from '../preset';
@@ -42,9 +42,7 @@ export const AttributesExtension = ExtensionFactory.plain({
         // Inserted at the start of the list so that when building the attribute
         // the higher priority extension attributes are preferred to the lower
         // priority since they merge with the object later.
-        attributeList.unshift(
-          extension.parameter.createAttributes(getParameter(extension), extension),
-        );
+        attributeList.unshift(extension.parameter.createAttributes(getParameter(extension)));
       },
       afterExtensionLoop: () => {
         for (const attributes of attributeList) {
@@ -106,8 +104,15 @@ declare global {
        * @alpha
        */
       createAttributes?: (
-        parameter: ManagerMethodParameter,
-        extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+        parameter: And<
+          ManagerMethodParameter,
+          {
+            /**
+             * The extension which provides access to the settings and properties.
+             */
+            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
+          }
+        >,
       ) => AttributesWithClass;
     }
   }

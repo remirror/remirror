@@ -1,6 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { isFunction, object } from '@remirror/core-helpers';
-import { NodeViewMethod } from '@remirror/core-types';
+import { And, NodeViewMethod } from '@remirror/core-types';
 
 import { AnyExtension, Extension, ExtensionFactory } from '../extension';
 import { AnyPreset } from '../preset';
@@ -42,7 +42,7 @@ export const NodeViewsExtension = ExtensionFactory.plain({
         }
 
         const parameter = getParameter(extension);
-        const nodeView = extension.parameter.createNodeViews(parameter, extension);
+        const nodeView = extension.parameter.createNodeViews(parameter);
 
         // Unshift used to add make sure higher priority extensions can
         // overwrite the lower priority nodeViews.
@@ -105,8 +105,15 @@ declare global {
        * @alpha
        */
       createNodeViews?: (
-        parameter: ManagerTypeParameter<ProsemirrorType>,
-        extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+        parameter: And<
+          ManagerTypeParameter<ProsemirrorType>,
+          {
+            /**
+             * The extension which provides access to the settings and properties.
+             */
+            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
+          }
+        >,
       ) => NodeViewMethod | Record<string, NodeViewMethod>;
     }
   }

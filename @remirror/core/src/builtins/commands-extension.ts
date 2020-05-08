@@ -3,6 +3,7 @@ import { EditorState } from 'prosemirror-state';
 import { ErrorConstant } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
 import {
+  And,
   AnyFunction,
   DispatchFunction,
   EditorSchema,
@@ -87,7 +88,7 @@ function createExtensionCommands(
   parameter: CreateCommandsParameter<never>,
   extension: AnyExtension,
 ) {
-  return extension.parameter.createCommands?.(parameter, extension) ?? {};
+  return extension.parameter.createCommands?.(parameter) ?? {};
 }
 
 /**
@@ -310,8 +311,15 @@ declare global {
        * @param parameter - schema parameter with type included
        */
       createCommands?: (
-        parameter: CreateCommandsParameter<ProsemirrorType>,
-        extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+        parameter: And<
+          CreateCommandsParameter<ProsemirrorType>,
+          {
+            /**
+             * The extension which provides access to the settings and properties.
+             */
+            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
+          }
+        >,
       ) => Commands;
     }
 
