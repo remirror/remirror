@@ -1,4 +1,5 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import {
   AnyExtension,
@@ -51,7 +52,7 @@ export const useExtensionProperties = <Type extends AnyExtensionConstructor>(
     manager,
   ]);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     extension.setProperties(properties);
   }, [extension, properties]);
 };

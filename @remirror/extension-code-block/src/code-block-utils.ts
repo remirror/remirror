@@ -1,6 +1,4 @@
 // Refractor languages
-import { TextSelection } from 'prosemirror-state';
-import { Decoration } from 'prosemirror-view';
 import refractor, { RefractorNode, RefractorSyntax } from 'refractor/core';
 import clike from 'refractor/lang/clike';
 import css from 'refractor/lang/css';
@@ -23,11 +21,11 @@ import {
   object,
   PosParameter,
   ProsemirrorAttributes,
-  ProsemirrorCommandFunction,
   ProsemirrorNodeParameter,
   TextParameter,
   uniqueArray,
 } from '@remirror/core';
+import { Decoration, TextSelection } from '@remirror/pm';
 
 import {
   CodeBlockAttributes,

@@ -1,4 +1,5 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 import {
   AnyPreset,
@@ -50,7 +51,7 @@ export const usePresetProperties = <Type extends AnyPresetConstructor>(
     manager,
   ]);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     preset.setProperties(properties);
   }, [preset, properties]);
 };

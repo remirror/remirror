@@ -1,24 +1,16 @@
-import { keydownHandler } from 'prosemirror-keymap';
-import { Plugin } from 'prosemirror-state';
-import { Step } from 'prosemirror-transform';
-import { DecorationSet } from 'prosemirror-view';
-
 import {
-  AnyExtension,
   CompareStateParameter,
   EditorState,
   findChildrenByNode,
-  ManagerNodeTypeParameter,
   nodeEqualsType,
-  NodeExtension,
   NodeType,
   NodeWithPosition,
   ProsemirrorNodeParameter,
   Transaction,
   TransactionParameter,
 } from '@remirror/core';
+import { DecorationSet, Step } from '@remirror/pm';
 
-import { CodeBlockExtensionSettings } from './code-block-types';
 import {
   createDecorations,
   getNodeInformationFromState,
@@ -191,45 +183,4 @@ interface ManageDecorationSetParameter extends TransactionParameter {
 
 interface UpdateDecorationSetParameter extends TransactionParameter {
   nodeInfo: NodeInformation;
-}
-
-/**
- * Create a codeBlock plugin to manage the internal prosemirror functionality
- */
-export function createCodeBlockPlugin({ extension, type }: CreateCodeBlockPluginParameter) {
-  const pluginState = new CodeBlockState(type);
-  const handler = () => {
-    pluginState.setDeleted(true);
-    return false;
-  };
-
-  return new Plugin<CodeBlockState>({
-    state: {
-      init(_, state) {
-        return pluginState.init(state);
-      },
-      apply(tr, _, oldState, newState) {
-        return pluginState.apply({ tr, oldState, newState });
-      },
-    },
-    props: {
-      handleKeyDown: keydownHandler({
-        Backspace: handler,
-        'Mod-Backspace': handler,
-        Delete: handler,
-        'Mod-Delete': handler,
-        'Ctrl-h': handler,
-        'Alt-Backspace': handler,
-        'Ctrl-d': handler,
-        'Ctrl-Alt-Backspace': handler,
-        'Alt-Delete': handler,
-        'Alt-d': handler,
-      }),
-      // handleDOMEvents:
-      decorations() {
-        pluginState.setDeleted(false);
-        return pluginState.decorationSet;
-      },
-    },
-  });
 }
