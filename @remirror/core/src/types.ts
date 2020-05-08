@@ -255,18 +255,17 @@ export interface CommandMethod<Parameter extends any[] = []> {
   (...args: Parameter): void;
 }
 
+export interface TransactionHandlerParameter extends TransactionParameter, EditorStateParameter {}
 /**
  * The params object received by the onTransaction handler.
  */
-export interface OnTransactionParameter<
-  Settings extends object = {},
-  Properties extends object = {}
->
-  extends ViewManagerParameter,
-    TransactionParameter,
-    EditorStateParameter,
-    ReadonlySettingsParameter<Settings>,
-    ReadonlyPropertiesParameter<Properties> {}
+export interface TransactionHandlerReturnParameter<Schema extends EditorSchema = any>
+  extends EditorViewParameter<Schema>,
+    TransactionHandlerParameter {}
+
+export type TransactionHandlerReturn = (
+  parameter: TransactionHandlerReturnParameter<EditorSchema>,
+) => void;
 
 export interface BaseExtensionSettings extends Remirror.BaseExtensionSettings {
   /**
@@ -290,7 +289,7 @@ export interface BaseExtensionSettings extends Remirror.BaseExtensionSettings {
 
 export interface ExcludeOptions extends Partial<Remirror.ExcludeOptions> {}
 
-export interface ReadonlySettingsParameter<Settings extends object = {}> {
+export interface ReadonlySettingsParameter<Settings extends object> {
   /**
    * The static config that was passed into the extension that created this node
    * or mark.
@@ -298,7 +297,7 @@ export interface ReadonlySettingsParameter<Settings extends object = {}> {
   readonly settings: Required<Readonly<Settings>>;
 }
 
-export interface ReadonlyPropertiesParameter<Properties extends object = {}> {
+export interface ReadonlyPropertiesParameter<Properties extends object> {
   /**
    * The current value of the dynamic properties.
    */
@@ -306,21 +305,47 @@ export interface ReadonlyPropertiesParameter<Properties extends object = {}> {
 }
 
 /**
+ * @internal
+ */
+export type PropertiesUpdateReason = 'init' | 'set' | 'reset';
+
+export interface PropertiesUpdateReasonParameter {
+  /**
+   * Describes what triggered an update.
+   *
+   * - `set` - the change was triggered by an update in some properties
+   * - `reset` - the user has specifically requested to reset all properties
+   *   to their initial defaults
+   * - `init` - the update is happening when the preset is being
+   *   It will receive all the items as changes.
+   */
+  reason: PropertiesUpdateReason;
+}
+
+export interface DefaultPropertiesParameter<Properties extends object> {
+  /**
+   * Properties are dynamic and generated at run time. For this reason you will
+   * need to provide a default value for every prop this extension uses.
+   *
+   * @remarks
+   *
+   * Properties are dynamically assigned options that are injected into the
+   * editor at runtime. Every single property that the extension will use needs
+   * to have a default value set.
+   *
+   * This must be set when creating the extension, even if just to the empty
+   * object when no properties are used at runtime.
+   */
+  defaultProperties: Required<Properties>;
+}
+
+/**
  * The parameters passed to the `createSchema` method for node and mark
  * extensions.
  */
-export interface CreateSchemaParameter<Settings extends object, Properties extends object> {
-  /**
-   * All the static settings that have been passed into the extension when
-   * being created (instantiated).
-   */
-  settings: Readonly<Required<Settings>>;
-
-  /**
-   * All the properties for the extension.
-   */
-  properties: Readonly<Required<Properties>>;
-}
+export interface CreateSchemaParameter<Settings extends object, Properties extends object>
+  extends ReadonlySettingsParameter<Settings>,
+    ReadonlyPropertiesParameter<Properties> {}
 
 declare global {
   namespace Remirror {

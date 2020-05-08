@@ -13,7 +13,6 @@ import {
   object,
 } from '@remirror/core-helpers';
 import {
-  And,
   AnyFunction,
   EditorSchema,
   EditorView,
@@ -32,6 +31,7 @@ import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 import {
   BaseExtensionSettings,
   CreateSchemaParameter,
+  DefaultPropertiesParameter,
   ExtensionCommandReturn,
   ExtensionHelperReturn,
   ExtensionIsActiveFunction,
@@ -42,10 +42,10 @@ import {
   ManagerTypeParameter,
   MarkExtensionTags,
   NodeExtensionTags,
-  OnTransactionParameter,
   PropertiesShape,
   ReadonlyPropertiesParameter,
   ReadonlySettingsParameter,
+  TransactionHandlerReturn,
 } from '../types';
 
 /**
@@ -410,14 +410,14 @@ export abstract class Extension<
   >;
 
   /**
-   * Update the properties with the provided value when something changes.
+   * Update the properties with the provided partial value when changed.
    */
   public setProperties(properties: Partial<Properties>) {
     this.#properties = { ...this.#properties, ...properties };
   }
 
   /**
-   * Reset the properties to their initial state.
+   * Reset the extension properties to their default values.
    */
   public resetProperties() {
     this.#properties = { ...this.defaultProperties };
@@ -474,23 +474,6 @@ export type DefaultSettingsType<Settings extends object> = Omit<
 > &
   Partial<BaseExtensionSettings>;
 
-interface DefaultPropertiesParameter<Properties extends object = {}> {
-  /**
-   * Properties are dynamic and generated at run time. For this reason you will
-   * need to provide a default value for every prop this extension uses.
-   *
-   * @remarks
-   *
-   * Properties are dynamically assigned options that are injected into the
-   * editor at runtime. Every single property that the extension will use needs
-   * to have a default value set.
-   *
-   * This must be set when creating the extension, even if just to the empty
-   * object when no properties are used at runtime.
-   */
-  defaultProperties: Required<Properties>;
-}
-
 interface DefaultSettingsParameter<Settings extends object> {
   /**
    * The settings helps define the properties schema and built in behavior of
@@ -530,7 +513,7 @@ export interface BaseExtensionFactoryParameter<
   Helpers extends ExtensionHelperReturn = {},
   ProsemirrorType = never
 >
-  extends ExtensionLifecycleMethods<Settings, Properties>,
+  extends ExtensionLifecycleMethods<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
     Remirror.ExtensionFactoryParameter<
       Name,
       Settings,
@@ -617,8 +600,12 @@ interface ExtensionCreatorMethods<
   > {}
 
 export interface ExtensionLifecycleMethods<
-  Settings extends object = {},
-  Properties extends object = {}
+  Name extends string,
+  Settings extends object,
+  Properties extends object = {},
+  Commands extends ExtensionCommandReturn = {},
+  Helpers extends ExtensionHelperReturn = {},
+  ProsemirrorType = never
 > {
   /**
    * Handlers called when the Manager is first created.
@@ -645,10 +632,14 @@ export interface ExtensionLifecycleMethods<
   /**
    * Called when a transaction successfully updates the editor state.
    *
-   * Changes to the transaction at this point have no impact at all. It is
-   * purely for observational reasons
+   * @remarks
+   *
+   * It should return a handler function which receives the state and the
+   * transaction which created the new state. It also receives the view.
    */
-  onTransaction?: (parameter: OnTransactionParameter<Settings, Properties>) => void;
+  onTransaction?: (
+    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+  ) => TransactionHandlerReturn;
 
   /**
    * Called when the extension is being destroyed.
@@ -1174,7 +1165,7 @@ export interface ViewLifecycleMethodParameter<
   getParameter: <Type = never, Other extends object = object>(
     extension: AnyExtension,
     other?: Other,
-  ) => And<ManagerTypeParameter<Type>, { extension: AnyExtension }> & Other;
+  ) => ManagerTypeParameter<Type> & { extension: AnyExtension } & Other;
 }
 
 export interface ViewLifecycleMethodReturn {

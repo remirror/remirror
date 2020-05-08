@@ -28,7 +28,16 @@ import {
   GetExtensionParameter,
 } from '../extension';
 import { getChangedProperties, GetChangedPropertiesReturn } from '../helpers';
-import { GetConstructor, Of, PropertiesShape } from '../types';
+import {
+  DefaultPropertiesParameter,
+  GetConstructor,
+  Of,
+  PropertiesShape,
+  PropertiesUpdateReason,
+  PropertiesUpdateReasonParameter,
+  ReadonlyPropertiesParameter,
+  ReadonlySettingsParameter,
+} from '../types';
 
 /**
  * The type which is applicable to any `Preset` instances.
@@ -151,6 +160,11 @@ export abstract class Preset<
    */
   #extensionMap = new Map<AnyExtensionConstructor, ExtensionUnion>();
 
+  /**
+   * Keep track of whether this extension has been initialized or not.
+   */
+  #hasInitialized = false;
+
   get parameter() {
     return this.getFactoryParameter();
   }
@@ -194,8 +208,8 @@ export abstract class Preset<
     // Create the extension list.
     this.#extensions = uniqueBy(
       this.parameter.createExtensions({
-        settings: this.settings,
-        properties: this.properties,
+        settings: this.#settings,
+        properties: this.#properties,
       }),
       // Ensure that all the provided extensions are unique.
       (extension) => extension.constructor,
@@ -205,6 +219,10 @@ export abstract class Preset<
     for (const extension of this.#extensions) {
       this.#extensionMap.set(extension.constructor, extension);
     }
+
+    // Triggers the `init` properties update for this extension.
+    this.setProperties(this.#properties);
+    this.#hasInitialized = true;
   }
 
   protected abstract getFactoryParameter(): Readonly<
@@ -228,6 +246,7 @@ export abstract class Preset<
    * Calls the `onSetProperties` parameter property when creating the constructor.
    */
   public setProperties(update: Partial<Properties>) {
+    const reason: PropertiesUpdateReason = this.#hasInitialized ? 'set' : 'init';
     const previousProperties = this.#properties;
     const { changes, properties } = getChangedProperties({
       previousProperties,
@@ -237,6 +256,7 @@ export abstract class Preset<
     // Trigger the update handler so that child extension properties can also be
     // updated.
     this.parameter.onSetProperties?.({
+      reason,
       changes,
       properties,
       defaultProperties: this.defaultProperties,
@@ -244,20 +264,27 @@ export abstract class Preset<
       getExtension: this.getExtension,
     });
 
+    // The constructor already sets the properties to their default values.
+    if (reason === 'init') {
+      return;
+    }
+
     // Update the stored properties value.
     this.#properties = properties;
   }
 
   public resetProperties() {
     const previousProperties = this.#properties;
-    const { changes, properties: next } = getChangedProperties({
+    const { changes, properties } = getChangedProperties({
       previousProperties,
       update: this.defaultProperties,
     });
 
     // Trigger the update handler so that child extension properties can also be
     // updated.
-    this.parameter.onResetProperties?.({
+    this.parameter.onSetProperties?.({
+      reason: 'reset',
+      properties,
       changes,
       defaultProperties: this.defaultProperties,
       settings: this.settings,
@@ -265,7 +292,7 @@ export abstract class Preset<
     });
 
     // Update the stored properties value.
-    this.#properties = next;
+    this.#properties = properties;
   }
 
   public getExtension = <ExtensionConstructor extends GetConstructor<ExtensionUnion>>(
@@ -293,10 +320,10 @@ export interface Preset<
 }
 
 interface CreateExtensionsParameter<Settings extends object, Properties extends object>
-  extends PropertiesParameter<Properties>,
-    SettingsParameter<Settings> {}
+  extends ReadonlyPropertiesParameter<Properties>,
+    ReadonlySettingsParameter<Settings> {}
 
-interface SetPropertiesParameter<
+interface SetPresetPropertiesParameter<
   ExtensionUnion extends AnyExtension,
   Settings extends object,
   Properties extends object
@@ -304,17 +331,8 @@ interface SetPropertiesParameter<
   extends GetExtensionParameter<ExtensionUnion>,
     DefaultPropertiesParameter<Properties>,
     GetChangedPropertiesReturn<Properties>,
-    SettingsParameter<Settings> {}
-
-interface ResetPropertiesParameter<
-  ExtensionUnion extends AnyExtension,
-  Settings extends object,
-  Properties extends object
->
-  extends GetExtensionParameter<ExtensionUnion>,
-    DefaultPropertiesParameter<Properties>,
-    Pick<GetChangedPropertiesReturn<Properties>, 'changes'>,
-    SettingsParameter<Settings> {}
+    ReadonlySettingsParameter<Settings>,
+    PropertiesUpdateReasonParameter {}
 
 export interface BasePresetFactoryParameter<
   ExtensionUnion extends AnyExtension,
@@ -334,18 +352,11 @@ export interface BasePresetFactoryParameter<
   ) => ExtensionUnion[];
 
   /**
-   * Called when the properties are to be set.
+   * Called every time properties for this extension are set or reset. This is
+   * also called when the extension is first created with the default properties.
    */
   onSetProperties?: (
-    parameter: SetPropertiesParameter<ExtensionUnion, Settings, Properties>,
-  ) => void;
-
-  /**
-   * Called when resetting the properties for this preset. It allows you to
-   * update the properties of the child extensions when reset is called.
-   */
-  onResetProperties?: (
-    parameter: ResetPropertiesParameter<ExtensionUnion, Settings, Properties>,
+    parameter: SetPresetPropertiesParameter<ExtensionUnion, Settings, Properties>,
   ) => void;
 }
 /* eslint-enable @typescript-eslint/explicit-member-accessibility */
@@ -371,25 +382,4 @@ interface DefaultSettingsParameter<Settings extends object> {
    * The default settings to use.
    */
   defaultSettings: FlipPartialAndRequired<Settings>;
-}
-
-interface DefaultPropertiesParameter<Properties extends object> {
-  /**
-   * The default properties to use.
-   */
-  defaultProperties: Required<Properties>;
-}
-
-interface SettingsParameter<Settings extends object> {
-  /**
-   * The settings this preset was initialized with.
-   */
-  settings: Readonly<Required<Settings>>;
-}
-
-interface PropertiesParameter<Properties extends object> {
-  /**
-   * The dynamic properties for the instance.
-   */
-  properties: Readonly<Required<Properties>>;
 }

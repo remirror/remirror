@@ -14,13 +14,7 @@ import {
   object,
   omit,
 } from '@remirror/core-helpers';
-import {
-  EditorSchema,
-  EditorStateParameter,
-  EditorView,
-  ProsemirrorPlugin,
-  TransactionParameter,
-} from '@remirror/core-types';
+import { EditorSchema, EditorView, ProsemirrorPlugin } from '@remirror/core-types';
 import { createDocumentNode, CreateDocumentNodeParameter } from '@remirror/core-utils';
 
 import { BuiltInExtensions, BuiltinPreset } from '../builtins';
@@ -30,7 +24,6 @@ import {
   AnyManagerStore,
   CreateLifecycleMethodParameter,
   CreateLifecycleMethodReturn,
-  ExtensionLifecycleMethods,
   GetExtensionUnion,
   InitializeLifecycleMethodParameter,
   InitializeLifecycleMethodReturn,
@@ -40,7 +33,12 @@ import {
   ViewLifecycleMethodReturn,
 } from '../extension';
 import { AnyPreset, PresetFromConstructor } from '../preset';
-import { GetConstructor, Of } from '../types';
+import {
+  GetConstructor,
+  Of,
+  TransactionHandlerParameter,
+  TransactionHandlerReturn,
+} from '../types';
 import {
   getParameterWithType,
   ignoreFunctions,
@@ -163,7 +161,7 @@ export class EditorManager<
     create: CreateLifecycleMethodReturn[];
     initialize: InitializeLifecycleMethodReturn[];
     view: ViewLifecycleMethodReturn[];
-    transaction: Array<[NonNullable<ExtensionLifecycleMethods['onTransaction']>, AnyExtension]>;
+    transaction: TransactionHandlerReturn[];
     destroy: Array<() => void>;
   } = { initialize: [], transaction: [], view: [], create: [], destroy: [] };
 
@@ -306,7 +304,7 @@ export class EditorManager<
         properties,
       });
       const viewHandler = extension.parameter.onView?.({ ...viewParameter, settings, properties });
-      const transactionHandler = extension.parameter.onTransaction;
+      const transactionHandler = extension.parameter.onTransaction?.(extension);
       const destroyHandler = extension.parameter.onDestroy;
 
       if (createHandler) {
@@ -322,7 +320,7 @@ export class EditorManager<
       }
 
       if (transactionHandler) {
-        this.#handlers.transaction.push([transactionHandler, extension]);
+        this.#handlers.transaction.push(transactionHandler);
       }
 
       if (destroyHandler) {
@@ -603,15 +601,9 @@ export class EditorManager<
    *
    * An example usage of this is within the collaboration plugin.
    */
-  public onTransaction(parameter: ManagerTransactionHandlerParameter) {
-    for (const [onTransaction, extension] of this.#handlers.transaction) {
-      onTransaction({
-        ...parameter,
-        ...this.#methodParameter,
-        view: this.store.view,
-        settings: extension.settings,
-        properties: extension.properties,
-      });
+  public onTransaction(parameter: TransactionHandlerParameter) {
+    for (const handler of this.#handlers.transaction) {
+      handler({ ...parameter, view: this.#store.view });
     }
   }
 
@@ -654,10 +646,6 @@ export class EditorManager<
     }
   }
 }
-
-export interface ManagerTransactionHandlerParameter
-  extends TransactionParameter,
-    EditorStateParameter {}
 
 declare global {
   namespace Remirror {
