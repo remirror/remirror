@@ -84,6 +84,7 @@ module.exports = {
     'unicorn/no-nested-ternary': 'off',
     'unicorn/prevent-abbreviations': 'off', // Too aggressive.
     'unicorn/filename-case': ['error', { case: 'kebabCase' }],
+    'unicorn/no-null': 'off',
 
     'jest/prefer-spy-on': 'warn',
     'jest/no-large-snapshots': ['warn', { maxSize: 12 }],

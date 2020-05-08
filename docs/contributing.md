@@ -115,6 +115,19 @@ rest of us.
 
 <br />
 
+## Code style
+
+Over time this project has accumulated quite an active set of lint rules.
+
+The following are some points to keep in mind while developing for this codebase.
+
+- Functions with more than two arguments should condense these arguments into a parameter object.
+- TypeScript as a first class solution. Make the process as seamless for the user. The types should
+  guide them as they develop with good inline docs and auto suggestions on what's available.
+- Choose simplicity over performance. Performance is abstract and I'd rather have a simple
+  implementation that can be made more performant in the future than something that's complex from
+  day one.
+
 <br />
 
 ## Code of Conduct
