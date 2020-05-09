@@ -23,6 +23,7 @@ import {
   isNumber,
   isObject,
   isPlainObject,
+  isPrimitive,
   isPromise,
   isRegExp,
   isSafeInteger,
@@ -135,6 +136,7 @@ describe('predicates', () => {
   });
 
   it('isFunction', () => {
+    // eslint-disable-next-line unicorn/consistent-function-scoping
     const passValue = () => {};
     const failValue = '() => {}';
 
@@ -182,6 +184,20 @@ describe('predicates', () => {
     expect(isNumber(failValue)).toBeFalse();
     expect(isNumber(Number('01'))).toBeTrue();
     expect(isNumber(Number('abc'))).toBeFalse();
+  });
+
+  it('isPrimitive', () => {
+    expect(isPrimitive(1)).toBeTrue();
+    expect(isPrimitive('string')).toBeTrue();
+    expect(isPrimitive(10000000000000n)).toBeTrue();
+    expect(isPrimitive(Symbol(''))).toBeTrue();
+    expect(isPrimitive(null)).toBeTrue();
+    expect(isPrimitive(undefined)).toBeTrue();
+    expect(isPrimitive(false)).toBeTrue();
+    expect(isPrimitive([])).toBeFalse();
+    expect(isPrimitive({})).toBeFalse();
+    expect(isPrimitive(class A {})).toBeFalse();
+    expect(isPrimitive(/regexp/)).toBeFalse();
   });
 
   it('isPlainObject', () => {

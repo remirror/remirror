@@ -3,14 +3,15 @@ import fastDeepEqual from 'fast-deep-equal';
 import { nanoid } from 'nanoid';
 import omit from 'object.omit';
 import pick from 'object.pick';
+import { Primitive } from 'type-fest';
 
 import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
 import { Nullable, Predicate, RemirrorIdentifierShape } from '@remirror/core-types';
 
 type AnyConstructor<GType = unknown> = new (...args: any[]) => GType;
 type AnyFunction<GType = any> = (...args: any[]) => GType;
-interface PlainObject {
-  [key: string]: unknown;
+interface PlainObject<Type = unknown> {
+  [key: string]: Type;
 }
 
 /**
@@ -270,7 +271,7 @@ export const isSafeInteger = (value: unknown): value is number =>
  *
  * @public
  */
-export const isPlainObject = (value: unknown): value is PlainObject => {
+export function isPlainObject<Type = unknown>(value: unknown): value is PlainObject<Type> {
   if (getObjectType(value) !== TypeName.Object) {
     return false;
   }
@@ -278,7 +279,14 @@ export const isPlainObject = (value: unknown): value is PlainObject => {
   const prototype = Object.getPrototypeOf(value);
 
   return prototype === null || prototype === Object.getPrototypeOf({});
-};
+}
+
+/**
+ * Predicate check for whether passed in value is a primitive value
+ */
+export function isPrimitive(value: unknown): value is Primitive {
+  return value == null || /^[bns]/.test(typeof value);
+}
 
 /**
  * Utility predicate check that value is either null or undefined
