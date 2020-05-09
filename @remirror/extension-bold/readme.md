@@ -31,19 +31,15 @@ cursor / or at the provided position range bold.
 
 ```ts
 import { EditorManager, ExtensionPriority } from '@remirror/core';
-import { ParagraphExtension } from '@remirror/extension-paragraph';
-import { DocExtension } from '@remirror/extension-doc';
-import { TextExtension } from '@remirror/extension-text';
+import { CorePreset } from '@remirror/preset-core';
 import { BoldExtension } from '@remirror/extension-bold';
 
-// Create the extension
-const paragraphExtension = ParagraphExtension.of();
-const docExtension = DocExtension.of({ priority: ExtensionPriority.Low });
-const textExtension = TextExtension.of({ priority: ExtensionPriority.Low });
+// Create the bold extension
 const boldExtension = BoldExtension.of({ weight: '500' });
+const corePreset = CorePreset.of();
 
 // Create the Editor Manager with the bold extension passed through.
-const manager = EditorManager.of([boldExtension, paragraphExtension, docExtension, textExtension]);
+const manager = EditorManager.of([boldExtension, corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');
@@ -61,7 +57,8 @@ manager.commands.toggleBold({ from: 1, to: 7 });
 
 ### Alternatives
 
-There are presets which contain this extension and make the installation process less verbose.
+There are presets which contain this extension and can help make setup process for you editor less
+verbose.
 
 - `@remirror/preset-formatting`
 

@@ -20,7 +20,11 @@ import {
 import { keydownHandler, Plugin, setBlockType, TextSelection } from '@remirror/pm';
 
 import { CodeBlockState } from './code-block-plugin';
-import { CodeBlockAttributes, CodeBlockExtensionSettings } from './code-block-types';
+import {
+  CodeBlockAttributes,
+  CodeBlockExtensionProperties,
+  CodeBlockExtensionSettings,
+} from './code-block-types';
 import {
   codeBlockToDOM,
   dataAttribute,
@@ -29,15 +33,20 @@ import {
   updateNodeAttributes,
 } from './code-block-utils';
 
-export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSettings>().node({
+export const CodeBlockExtension = ExtensionFactory.typed<
+  CodeBlockExtensionSettings,
+  CodeBlockExtensionProperties
+>().node({
   name: 'codeBlock',
   defaultSettings: {
     supportedLanguages: [],
+    keyboardShortcut: mod('ShiftAlt', 'f'),
+  },
+  defaultProperties: {
+    toggleName: 'paragraph',
+    formatter: () => undefined,
     syntaxTheme: 'atomDark',
     defaultLanguage: 'markup',
-    formatter: () => undefined,
-    keyboardShortcut: mod('ShiftAlt', 'f'),
-    toggleType: 'paragraph',
   },
   onCreate({ settings }) {
     return {
@@ -48,10 +57,10 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
       },
     };
   },
-  createNodeSchema({ settings }) {
+  createNodeSchema({ properties }) {
     return {
       attrs: {
-        language: { default: settings.defaultLanguage },
+        language: { default: properties.defaultLanguage },
       },
       content: 'text*',
       marks: '',
@@ -80,18 +89,11 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
           },
         },
       ],
-      toDOM: (node) => codeBlockToDOM(node, settings.defaultLanguage),
+      toDOM: (node) => codeBlockToDOM(node, properties.defaultLanguage),
     };
   },
 
   createCommands({ type, schema, extension }) {
-    const {
-      defaultLanguage,
-      supportedLanguages,
-      formatter,
-      toggleType = 'paragraph',
-    } = extension.settings;
-
     return {
       /**
        * Call this method to toggle the code block.
@@ -107,8 +109,8 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
         convertCommand(
           toggleBlockItem({
             type,
-            toggleType: schema().nodes[toggleType],
-            attrs: { language: defaultLanguage, ...attributes },
+            toggleType: schema().nodes[extension.properties.toggleName],
+            attrs: { language: extension.properties.defaultLanguage, ...attributes },
           }),
         ),
 
@@ -116,7 +118,7 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
        * Creates a code at the current position.
        *
        * ```ts
-       * actions.createCodeBlock({ language: 'js' });
+       * commands.createCodeBlock({ language: 'js' });
        * ```
        */
       createCodeBlock: (attributes: CodeBlockAttributes) =>
@@ -126,8 +128,8 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
        * Update the code block at the current position. Primarily this is used to change the language.
        *
        * ```ts
-       * if (actions.updateCodeBlock.isActive()) {
-       *   actions.updateCodeBlock({ language: 'markdown' });
+       * if (commands.updateCodeBlock.isEnabled()) {
+       *   commands.updateCodeBlock({ language: 'markdown' });
        * }
        * ```
        */
@@ -143,16 +145,16 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
        * if (actions.formatCodeBlock.isActive()) {
        *   actions.formatCodeBlockFactory();
        *   // Or with a specific position
-       *   actions.formatCodeBlock({ pos: 100 }) // to format a seperate code block
+       *   actions.formatCodeBlock({ pos: 100 }) // to format a separate code block
        * }
        * ```
        */
-      formatCodeBlock: formatCodeBlockFactory({
-        type,
-        formatter,
-        defaultLanguage,
-        supportedLanguages,
-      }),
+      formatCodeBlock: (parameter) =>
+        formatCodeBlockFactory({
+          type,
+          formatter: extension.properties.formatter,
+          defaultLanguage: extension.properties.defaultLanguage,
+        })(parameter),
     };
   },
 
@@ -164,9 +166,9 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
     const getAttributes: GetAttributes = (match) => {
       const language = getLanguage({
         language: getMatchString(match, 1),
-        fallback: extension.settings.defaultLanguage,
-        supportedLanguages: extension.settings.supportedLanguages,
+        fallback: extension.properties.defaultLanguage,
       });
+
       return { language };
     };
 
@@ -181,8 +183,6 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
   },
 
   createKeymap({ type, commands, extension }) {
-    const { keyboardShortcut, toggleType } = extension.settings;
-
     return {
       Tab: ({ state, dispatch }) => {
         const { selection, tr, schema } = state;
@@ -233,7 +233,7 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
           tr.setSelection(TextSelection.create(tr.doc, start - 2));
         } else {
           // There is no content before the codeBlock so simply create a new block and jump into it.
-          tr.insert(0, state.schema.nodes[toggleType].create());
+          tr.insert(0, state.schema.nodes[extension.properties.toggleName].create());
           tr.setSelection(TextSelection.create(tr.doc, 1));
         }
 
@@ -271,8 +271,7 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
 
         const language = getLanguage({
           language: lang,
-          fallback: extension.settings.defaultLanguage,
-          supportedLanguages: extension.settings.supportedLanguages,
+          fallback: extension.properties.defaultLanguage,
         });
 
         const pos = selection.$from.before();
@@ -288,7 +287,7 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
 
         return true;
       },
-      [keyboardShortcut]: ({ state }) => {
+      [extension.settings.keyboardShortcut]: ({ state }) => {
         const chain = commands<typeof extension>();
 
         if (!isNodeActive({ type, state })) {
@@ -301,8 +300,10 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
     };
   },
 
-  createPlugin({ type, key }) {
-    const pluginState = new CodeBlockState(type);
+  createPlugin({ type, key, extension }) {
+    const pluginState = new CodeBlockState(type, extension);
+
+    /** Handles deletions within the plugin state. */
     const handler = () => {
       pluginState.setDeleted(true);
       return false;

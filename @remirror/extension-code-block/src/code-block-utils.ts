@@ -1,9 +1,5 @@
 // Refractor languages
-import refractor, { RefractorNode, RefractorSyntax } from 'refractor/core';
-import clike from 'refractor/lang/clike';
-import css from 'refractor/lang/css';
-import js from 'refractor/lang/javascript';
-import markup from 'refractor/lang/markup';
+import refractor, { RefractorNode } from 'refractor/core';
 
 import {
   bool,
@@ -26,13 +22,12 @@ import {
   ProsemirrorNode,
   ProsemirrorNodeParameter,
   TextParameter,
-  uniqueArray,
 } from '@remirror/core';
 import { Decoration, TextSelection } from '@remirror/pm';
 
 import {
   CodeBlockAttributes,
-  CodeBlockExtensionSettings,
+  CodeBlockExtensionProperties,
   FormattedContent,
 } from './code-block-types';
 
@@ -48,7 +43,8 @@ interface ParsedRefractorNode extends TextParameter {
 interface PositionedRefractorNode extends FromToParameter, ParsedRefractorNode {}
 
 /**
- * Maps the refractor nodes into text and classes which will be used to create our decoration.
+ * Maps the refractor nodes into text and classes which will be used to create
+ * our decoration.
  */
 function parseRefractorNodes(
   refractorNodes: RefractorNode[],
@@ -71,16 +67,19 @@ function parseRefractorNodes(
   });
 }
 
-interface CreateDecorationsParameter extends Pick<CodeBlockExtensionSettings, 'defaultLanguage'> {
+interface CreateDecorationsParameter {
+  defaultLanguage: string;
+
   /**
    * The list of codeBlocks and their positions which we would like to update.
    */
   blocks: NodeWithPosition[];
 
   /**
-   * When a delete happens within the last valid decoration in a block it causes the editor to jump. This skipLast
-   * should be set to true immediately after a delete which then allows for createDecorations to skip updating the decoration
-   * for the last refactor node, and hence preventing the jumpy bug.
+   * When a delete happens within the last valid decoration in a block it causes
+   * the editor to jump. This skipLast should be set to true immediately after a
+   * delete which then allows for createDecorations to skip updating the
+   * decoration for the last refactor node, and hence preventing the jumpy bug.
    */
   skipLast: boolean;
 }
@@ -89,7 +88,8 @@ interface CreateDecorationsParameter extends Pick<CodeBlockExtensionSettings, 'd
  * Retrieves positioned refractor nodes from the positionedNode
  *
  * @param nodeWithPosition - a node and position
- * @returns the positioned refractor nodes which are text, classes and a FromTo interface
+ * @returns the positioned refractor nodes which are text, classes and a FromTo
+ * interface
  */
 function getPositionedRefractorNodes(parameter: NodeWithPosition) {
   const { node, pos } = parameter;
@@ -188,7 +188,8 @@ export const getNodeInformationFromState = (state: EditorState): NodeInformation
 };
 
 /**
- * Check that the attributes exist and are valid for the codeBlock updateAttributes.
+ * Check that the attributes exist and are valid for the codeBlock
+ * updateAttributes.
  */
 export const isValidCodeBlockAttributes = (
   attributes: ProsemirrorAttributes,
@@ -228,33 +229,11 @@ export const updateNodeAttributes = (type: NodeType) => (
   return true;
 };
 
-const PRELOADED_LANGUAGES = [markup, clike, css, js];
-
-/**
- * The list of strings that are recognised language names based on the the configured
- * supported languages.
- */
-export const getLanguageNamesAndAliases = (supportedLanguages: RefractorSyntax[]): string[] => {
-  return uniqueArray(
-    flattenArray(
-      [...PRELOADED_LANGUAGES, ...supportedLanguages].map(({ name, aliases }) => [
-        name,
-        ...aliases,
-      ]),
-    ),
-  );
-};
-
 interface GetLanguageParameter {
   /**
    * The language input from the user;
    */
   language: string;
-
-  /**
-   * The languages supported by the editor.
-   */
-  supportedLanguages: RefractorSyntax[];
 
   /**
    * The default language to use if none found.
@@ -266,13 +245,15 @@ interface GetLanguageParameter {
  * Get the language from user input.
  */
 export function getLanguage(parameter: GetLanguageParameter): string {
-  const { language, supportedLanguages, fallback } = parameter;
+  const { language, fallback } = parameter;
 
   if (!language) {
     return fallback;
   }
 
-  for (const name of getLanguageNamesAndAliases(supportedLanguages)) {
+  const supportedLanguages = refractor.listLanguages();
+
+  for (const name of supportedLanguages) {
     if (name.toLowerCase() === language.toLowerCase()) {
       return name;
     }
@@ -295,8 +276,8 @@ function mapRefractorNodesToDOMArray(nodes: RefractorNode[]): any[] {
 }
 
 /**
- * Used to provide a `toDom` function for the codeblock for both the browser and non
- * browser environments.
+ * Used to provide a `toDom` function for the codeblock for both the browser and
+ * non browser environments.
  */
 export function codeBlockToDOM(node: ProsemirrorNode, defaultLanguage = 'markup'): DOMOutputSpec {
   const { language, ...rest } = node.attrs as CodeBlockAttributes;
@@ -319,17 +300,15 @@ export function codeBlockToDOM(node: ProsemirrorNode, defaultLanguage = 'markup'
 
 interface FormatCodeBlockFactoryParameter
   extends NodeTypeParameter,
-    Required<
-      Pick<CodeBlockExtensionSettings, 'formatter' | 'supportedLanguages' | 'defaultLanguage'>
-    > {}
+    Required<Pick<CodeBlockExtensionProperties, 'formatter' | 'defaultLanguage'>> {}
 
 /**
- * A factory for creating a command which can format a selected codeBlock (or one located at the provided position).
+ * A factory for creating a command which can format a selected codeBlock (or
+ * one located at the provided position).
  */
 export const formatCodeBlockFactory = ({
   type,
   formatter,
-  supportedLanguages,
   defaultLanguage: fallback,
 }: FormatCodeBlockFactoryParameter) => (
   { pos }: Partial<PosParameter> = object(),
@@ -345,7 +324,8 @@ export const formatCodeBlockFactory = ({
     return false;
   }
 
-  // Get the `language`, `source` and `cursorOffset` for the block and run the formatter
+  // Get the `language`, `source` and `cursorOffset` for the block and run the
+  // formatter
   const {
     node: { attrs, textContent },
     start,
@@ -353,7 +333,7 @@ export const formatCodeBlockFactory = ({
 
   const offsetStart = from - start;
   const offsetEnd = to - start;
-  const language = getLanguage({ language: attrs.language, fallback, supportedLanguages });
+  const language = getLanguage({ language: attrs.language, fallback });
   const formatStart = formatter({ source: textContent, language, cursorOffset: offsetStart });
   let formatEnd: FormattedContent | undefined;
 

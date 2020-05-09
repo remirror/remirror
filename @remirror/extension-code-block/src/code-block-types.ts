@@ -1,8 +1,29 @@
 import { RefractorSyntax } from 'refractor/core';
+import { LiteralUnion } from 'type-fest';
 
 import { ProsemirrorAttributes } from '@remirror/core';
 
-import { SyntaxTheme } from './themes';
+/**
+ * The default supported syntax themes.
+ */
+export type SyntaxTheme =
+  | 'a11y-dark'
+  | 'atom-dark'
+  | 'base16-ateliersulphurpool.light'
+  | 'cb'
+  | 'darcula'
+  | 'dracula'
+  | 'duotone-dark'
+  | 'duotone-earth'
+  | 'duotone-forest'
+  | 'duotone-light'
+  | 'duotone-sea'
+  | 'duotone-space'
+  | 'ghcolors'
+  | 'hopscotch'
+  | 'pojoaque'
+  | 'vs'
+  | 'xonokai';
 
 export interface CodeBlockExtensionSettings {
   /**
@@ -38,6 +59,15 @@ export interface CodeBlockExtensionSettings {
   supportedLanguages?: RefractorSyntax[];
 
   /**
+   * A keyboard shortcut to trigger formatting the current block.
+   *
+   * @defaultValue `Alt-Shift-F` (Mac) `Shift-Ctrl-F` (PC)
+   */
+  keyboardShortcut?: string;
+}
+
+export interface CodeBlockExtensionProperties {
+  /**
    * The default language to use when none is provided.
    *
    * @defaultValue 'markup'
@@ -55,8 +85,7 @@ export interface CodeBlockExtensionSettings {
    *
    * @defaultValue 'atomDark'
    */
-  syntaxTheme?: SyntaxTheme | false;
-
+  syntaxTheme?: LiteralUnion<SyntaxTheme, string>;
   /**
    * Provide a formatter which can format the provided source code.
    *
@@ -65,18 +94,11 @@ export interface CodeBlockExtensionSettings {
   formatter?: CodeBlockFormatter;
 
   /**
-   * A keyboard shortcut to trigger formatting the current block.
-   *
-   * @defaultValue `Alt-Shift-F` (Mac) `Shift-Ctrl-F` (PC)
-   */
-  keyboardShortcut?: string;
-
-  /**
    * The name of the node that the code block should toggle back and forth from.
    *
    * @defaultValue 'paragraph'
    */
-  toggleType?: string;
+  toggleName?: string;
 }
 
 /**

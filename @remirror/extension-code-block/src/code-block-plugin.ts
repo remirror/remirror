@@ -1,4 +1,5 @@
 import {
+  AnyExtension,
   CompareStateParameter,
   EditorState,
   findChildrenByNode,
@@ -11,6 +12,7 @@ import {
 } from '@remirror/core';
 import { DecorationSet, Step } from '@remirror/pm';
 
+import { CodeBlockExtensionProperties, CodeBlockExtensionSettings } from './code-block-types';
 import {
   createDecorations,
   getNodeInformationFromState,
@@ -25,6 +27,8 @@ export class CodeBlockState {
    * Keep track of all document codeBlocks
    */
   #blocks: NodeWithPosition[] = [];
+
+  #extension: AnyExtension<CodeBlockExtensionSettings, CodeBlockExtensionProperties>;
 
   /**
    * Keep track of the node type of the `codeBlock`
@@ -42,8 +46,12 @@ export class CodeBlockState {
    */
   public decorationSet!: DecorationSet;
 
-  constructor(type: NodeType) {
+  constructor(
+    type: NodeType,
+    extension: AnyExtension<CodeBlockExtensionSettings, CodeBlockExtensionProperties>,
+  ) {
     this.#type = type;
+    this.#extension = extension;
   }
 
   /**
@@ -60,7 +68,11 @@ export class CodeBlockState {
    * Recreate all the decorations again for all the provided blocks.
    */
   private refreshDecorationSet({ blocks, node }: RefreshDecorationSetParameter) {
-    const decorations = createDecorations({ blocks, skipLast: this.#deleted });
+    const decorations = createDecorations({
+      blocks,
+      skipLast: this.#deleted,
+      defaultLanguage: this.#extension.properties.defaultLanguage,
+    });
     this.decorationSet = DecorationSet.create(node, decorations);
     this.#blocks = blocks;
   }
@@ -156,7 +168,11 @@ export class CodeBlockState {
     const decorationSet = this.decorationSet.remove(this.decorationSet.find(from, to));
     this.decorationSet = decorationSet.add(
       tr.doc,
-      createDecorations({ blocks: [{ node, pos }], skipLast: this.#deleted }),
+      createDecorations({
+        blocks: [{ node, pos }],
+        skipLast: this.#deleted,
+        defaultLanguage: this.#extension.properties.defaultLanguage,
+      }),
     );
   }
 
