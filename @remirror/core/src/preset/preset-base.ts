@@ -26,6 +26,7 @@ import {
   DefaultSettingsType,
   ExtensionListParameter,
   GetExtensionParameter,
+  WithProperties,
 } from '../extension';
 import { getChangedProperties, GetChangedPropertiesReturn } from '../helpers';
 import {
@@ -83,8 +84,8 @@ export interface PresetConstructor<
   Properties extends object
 > extends FunctionLike {
   readonly presetName: string;
-  defaultSettings: Settings;
-  defaultProperties: Properties;
+  defaultSettings: DefaultSettingsType<Settings>;
+  defaultProperties: Required<Properties>;
 
   /**
    * Create a new instance of the preset to be used in the extension manager.
@@ -93,7 +94,7 @@ export interface PresetConstructor<
    * problems.
    */
   of: (
-    ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
+    ...settings: PresetConstructorParameter<Settings, Properties>
   ) => Preset<ExtensionUnion, Settings, Properties>;
 }
 
@@ -105,6 +106,15 @@ export interface PresetConstructor<
 export function isPreset(value: unknown): value is AnyPreset {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Preset);
 }
+
+export type PresetConstructorParameter<
+  Settings extends object,
+  Properties extends object
+> = IfNoRequiredProperties<
+  Settings,
+  [WithProperties<Settings, Properties>?],
+  [WithProperties<Settings, Properties>]
+>;
 
 /**
  * A preset is our way of bundling similar extensions with unified
@@ -195,7 +205,7 @@ export abstract class Preset<
     return this.parameter.defaultSettings ?? object();
   }
 
-  constructor(...[settings]: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+  constructor(...[settings]: PresetConstructorParameter<Settings, Properties>) {
     // Create the preset settings.
     this.#settings = deepMerge(object(), {
       ...this.defaultSettings,
@@ -203,7 +213,7 @@ export abstract class Preset<
     });
 
     // Create the preset properties.
-    this.#properties = { ...this.defaultProperties };
+    this.#properties = { ...this.defaultProperties, ...settings?.properties };
 
     // Create the extension list.
     this.#extensions = uniqueBy(

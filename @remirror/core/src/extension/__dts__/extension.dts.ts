@@ -37,8 +37,12 @@ anyExtensionTester(extensionWithSettings);
 
 // Extension with properties
 
-const ExtensionWithProperties = ExtensionFactory.typed<{}, { oops: boolean }>().plain({
+const ExtensionWithProperties = ExtensionFactory.typed<
+  { awesome?: string },
+  { oops: boolean }
+>().plain({
   name: 'withProperties',
+  defaultSettings: { awesome: 'never' },
   defaultProperties: { oops: false },
 });
 
@@ -47,7 +51,7 @@ ExtensionFactory.typed<{}, { oops: boolean }>().plain({
   name: 'withProperties',
 });
 
-const extensionWithProperties = ExtensionWithProperties.of();
+const extensionWithProperties = ExtensionWithProperties.of({ properties: { oops: true } });
 
 type AnyExtensionsSupportsProperties = typeof extensionWithProperties extends AnyExtension
   ? true

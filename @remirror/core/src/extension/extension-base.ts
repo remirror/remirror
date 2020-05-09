@@ -13,6 +13,7 @@ import {
   object,
 } from '@remirror/core-helpers';
 import {
+  And,
   AnyFunction,
   EditorSchema,
   EditorView,
@@ -42,6 +43,7 @@ import {
   ManagerTypeParameter,
   MarkExtensionTags,
   NodeExtensionTags,
+  PartialProperties,
   PropertiesShape,
   ReadonlyPropertiesParameter,
   ReadonlySettingsParameter,
@@ -187,6 +189,20 @@ export function isNodeExtension<Settings extends object = {}, Properties extends
 ): value is AnyNodeExtension<Settings, Properties> {
   return isExtension(value) && value.type === ExtensionType.Node;
 }
+
+export type WithProperties<Type extends object, Properties extends object> = And<
+  Type,
+  Partial<PartialProperties<Properties>>
+>;
+
+export type ExtensionConstructorParameter<
+  Settings extends object,
+  Properties extends object
+> = IfNoRequiredProperties<
+  Settings,
+  [WithProperties<Settings & BaseExtensionSettings, Properties>?],
+  [WithProperties<Settings & BaseExtensionSettings, Properties>]
+>;
 
 /**
  * Extensions are fundamental to the way that Remirror works and they handle the
@@ -379,19 +395,13 @@ export abstract class Extension<
     return this.parameter.requiredExtensions ?? [];
   }
 
-  constructor(
-    ...[settings]: IfNoRequiredProperties<
-      Settings,
-      [(Settings & BaseExtensionSettings)?],
-      [Settings & BaseExtensionSettings]
-    >
-  ) {
+  constructor(...[settings]: ExtensionConstructorParameter<Settings, Properties>) {
     this.#settings = deepMerge(defaultSettings, {
       ...this.defaultSettings,
       ...settings,
     });
 
-    this.#properties = { ...this.defaultProperties };
+    this.#properties = { ...this.defaultProperties, ...settings?.properties };
   }
 
   /**
@@ -731,11 +741,7 @@ export interface PlainExtensionConstructor<
    * problems.
    */
   of: (
-    ...settings: IfNoRequiredProperties<
-      Settings,
-      [(Settings & BaseExtensionSettings)?],
-      [Settings & BaseExtensionSettings]
-    >
+    ...settings: ExtensionConstructorParameter<Settings, Properties>
   ) => PlainExtension<Name, Settings, Properties, Commands, Helpers>;
 }
 
@@ -786,13 +792,7 @@ export abstract class MarkExtension<
    */
   readonly #schema: MarkExtensionSpec;
 
-  constructor(
-    ...parameters: IfNoRequiredProperties<
-      Settings,
-      [(Settings & BaseExtensionSettings)?],
-      [Settings & BaseExtensionSettings]
-    >
-  ) {
+  constructor(...parameters: ExtensionConstructorParameter<Settings, Properties>) {
     super(...parameters);
 
     this.#schema = this.getFactoryParameter().createMarkSchema({
@@ -878,11 +878,7 @@ export interface MarkExtensionConstructor<
    * problems.
    */
   of: (
-    ...settings: IfNoRequiredProperties<
-      Settings,
-      [(Settings & BaseExtensionSettings)?],
-      [Settings & BaseExtensionSettings]
-    >
+    ...settings: ExtensionConstructorParameter<Settings, Properties>
   ) => MarkExtension<Name, Settings, Properties, Commands, Helpers>;
 }
 
@@ -928,13 +924,7 @@ export abstract class NodeExtension<
   readonly #schema: NodeExtensionSpec;
   /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
-  constructor(
-    ...parameters: IfNoRequiredProperties<
-      Settings,
-      [(Settings & BaseExtensionSettings)?],
-      [Settings & BaseExtensionSettings]
-    >
-  ) {
+  constructor(...parameters: ExtensionConstructorParameter<Settings, Properties>) {
     super(...parameters);
 
     this.#schema = this.getFactoryParameter().createNodeSchema({
@@ -1022,11 +1012,7 @@ export interface NodeExtensionConstructor<
    * problems.
    */
   of: (
-    ...settings: IfNoRequiredProperties<
-      Settings,
-      [(Settings & BaseExtensionSettings)?],
-      [Settings & BaseExtensionSettings]
-    >
+    ...settings: ExtensionConstructorParameter<Settings, Properties>
   ) => NodeExtension<Name, Settings, Properties, Commands, Helpers>;
 }
 
@@ -1078,7 +1064,7 @@ export type GetNodeNameUnion<
 /**
  * Gets the editor schema from an extension union.
  */
-export type SchemaFromExtension<ExtensionUnion extends AnyExtension> = EditorSchema<
+export type SchemaFromExtensionUnion<ExtensionUnion extends AnyExtension> = EditorSchema<
   GetNodeNameUnion<ExtensionUnion>,
   GetMarkNameUnion<ExtensionUnion>
 >;

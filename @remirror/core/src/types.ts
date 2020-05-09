@@ -20,12 +20,8 @@ import {
  *
  * @typeParam Properties - The properties used by the object.
  */
-export interface PropertiesShape<Properties extends object> {
-  /**
-   * A properties object with all value required.
-   */
-  readonly properties: Required<Properties>;
-
+export interface PropertiesShape<Properties extends object>
+  extends ReadonlyPropertiesParameter<Properties> {
   /**
    * Reset the properties object to the default values.
    */
@@ -112,12 +108,17 @@ export type GetProperties<
 > = Type['~P'];
 
 /**
- * Get the commands provided by an extension.
+ * Get the schema from an `EditorManager`.
+ */
+export type GetSchema<Type extends { ['~S']: unknown }> = Type['~S'];
+
+/**
+ * Get the commands from an `EditorManager`, `Extension` or `Preset`.
  */
 export type GetCommands<Type extends { ['~C']: unknown }> = Type['~C'];
 
 /**
- * Get the helpers provided by an extension.
+ * Get the helpers provided by an from an `EditorManager`, `Extension` or `Preset`.
  */
 export type GetHelpers<Type extends { ['~H']: unknown }> = Type['~H'];
 
@@ -130,6 +131,20 @@ export type GetNameUnion<Type extends { name: string }> = Type['name'];
  * Get the constructor of an instance.
  */
 export type GetConstructor<Type extends { constructor: unknown }> = Type['constructor'];
+
+/**
+ * Get the settings from any constructor. Can be used for both presets and extensions.
+ */
+export type SettingsOfConstructor<Constructor extends { of: AnyFunction }> = GetSettings<
+  Of<Constructor>
+>;
+
+/**
+ * Get the properties from any constructor. Can be used for both presets and extensions.
+ */
+export type PropertiesOfConstructor<Constructor extends { of: AnyFunction }> = GetProperties<
+  Of<Constructor>
+>;
 
 /**
  * Retrieve the instance type from an ExtensionConstructor.
@@ -302,6 +317,13 @@ export interface ReadonlyPropertiesParameter<Properties extends object> {
    * The current value of the dynamic properties.
    */
   readonly properties: Required<Readonly<Properties>>;
+}
+
+export interface PartialProperties<Properties extends object> {
+  /**
+   * The current value of the dynamic properties.
+   */
+  properties?: Partial<Properties>;
 }
 
 /**

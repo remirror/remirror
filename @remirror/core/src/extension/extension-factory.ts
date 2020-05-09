@@ -1,12 +1,12 @@
 import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
 import { Cast, freeze, isRemirrorType, object, startCase } from '@remirror/core-helpers';
-import { IfNoRequiredProperties } from '@remirror/core-types';
 
-import { BaseExtensionSettings, ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
+import { ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
 import {
   AnyExtensionConstructor,
   defaultSettings,
   DefaultSettingsType,
+  ExtensionConstructorParameter,
   ExtensionFactoryParameter,
   MarkExtension,
   MarkExtensionConstructor,
@@ -84,27 +84,15 @@ function createBaseExtensionFactory<
          * It helps prevent uses from struggling with some of the edge cases when
          * using the `new` keyword.
          */
-        public static of(
-          ...arguments_: IfNoRequiredProperties<
-            Settings,
-            [(Settings & BaseExtensionSettings)?],
-            [Settings & BaseExtensionSettings]
-          >
-        ) {
-          return new PlainExtensionClass(...arguments_);
+        public static of(...config: ExtensionConstructorParameter<Settings, Properties>) {
+          return new PlainExtensionClass(...config);
         }
 
         /**
          * This makes the constructor private so that it can't be extended from
          * when using Typescript.
          */
-        private constructor(
-          ...config: IfNoRequiredProperties<
-            Settings,
-            [(Settings & BaseExtensionSettings)?],
-            [Settings & BaseExtensionSettings]
-          >
-        ) {
+        private constructor(...config: ExtensionConstructorParameter<Settings, Properties>) {
           super(...config);
         }
 
@@ -175,14 +163,8 @@ function createBaseExtensionFactory<
          * It helps prevent uses from struggling with some of the edge cases when
          * using the `new` keyword.
          */
-        public static of(
-          ...arguments_: IfNoRequiredProperties<
-            Settings,
-            [(Settings & BaseExtensionSettings)?],
-            [Settings & BaseExtensionSettings]
-          >
-        ) {
-          return new MarkExtensionClass(...arguments_);
+        public static of(...config: ExtensionConstructorParameter<Settings, Properties>) {
+          return new MarkExtensionClass(...config);
         }
 
         /**
@@ -196,13 +178,7 @@ function createBaseExtensionFactory<
          * This makes the constructor private so that it can't be extended from
          * when using Typescript.
          */
-        private constructor(
-          ...config: IfNoRequiredProperties<
-            Settings,
-            [(Settings & BaseExtensionSettings)?],
-            [Settings & BaseExtensionSettings]
-          >
-        ) {
+        private constructor(...config: ExtensionConstructorParameter<Settings, Properties>) {
           super(...config);
         }
 
@@ -272,14 +248,8 @@ function createBaseExtensionFactory<
          * It helps prevent uses from struggling with some of the edge cases when
          * using the `new` keyword.
          */
-        public static of(
-          ...arguments_: IfNoRequiredProperties<
-            Settings,
-            [(Settings & BaseExtensionSettings)?],
-            [Settings & BaseExtensionSettings]
-          >
-        ) {
-          return new NodeExtensionClass(...arguments_);
+        public static of(...config: ExtensionConstructorParameter<Settings, Properties>) {
+          return new NodeExtensionClass(...config);
         }
 
         /**
@@ -293,13 +263,7 @@ function createBaseExtensionFactory<
          * This makes the constructor private so that it can't be extended from
          * when using Typescript.
          */
-        private constructor(
-          ...config: IfNoRequiredProperties<
-            Settings,
-            [(Settings & BaseExtensionSettings)?],
-            [Settings & BaseExtensionSettings]
-          >
-        ) {
+        private constructor(...config: ExtensionConstructorParameter<Settings, Properties>) {
           super(...config);
         }
 

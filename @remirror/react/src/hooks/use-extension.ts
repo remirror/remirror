@@ -4,42 +4,53 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import {
   AnyExtension,
   AnyExtensionConstructor,
-  GetProperties,
-  GetSettings,
-  IfNoRequiredProperties,
-  Of,
+  ExtensionConstructorParameter,
+  PropertiesOfConstructor,
+  SettingsOfConstructor,
 } from '@remirror/core';
 
 import { useRemirror } from './use-remirror';
 
 /**
- * Settings Of Extension Constructor
+ * A react hook for for creating an extension within the editor. This ensures
+ * that the editor
  *
- * Written in shorthand as it's only used in this file.
+ * @remarks
+ *
+ * This can be used if you'd like to create your extensions and EditorManager
+ * within a react component.
+ *
+ * @example
+ *
+ * ```tsx
+ * import { useExtension } from '@remirror/react';
+ * import { PresetCore } from '@remirror/preset-core';
+ * import { BoldExtension } from '@remirror/extension-bold';
+ *
+ * const EditorWrapper = () => {
+ *   const corePreset = usePreset(PresetCore);
+ *   const boldExtension = useExtension(BoldExtension, { weight: 700 });
+ *   const manager = useManager([corePreset, boldExtension]);
+ *
+ *   <RemirrorProvider >
+ *     <MyEditor />
+ *   </RemirrorProvider>;
+ * }
+ * ```
+ *
+ * You'll probably only need to work this way if you expect to dynamically
+ * switch out the editor multiple times in apps like the
+ * `@remirror/playground`.
  */
-type SettingsOfConstructor<Constructor extends AnyExtensionConstructor> = GetSettings<
-  Of<Constructor>
->;
-
 export const useExtension = <Type extends AnyExtensionConstructor>(
   Constructor: Type,
-  ...[settings]: IfNoRequiredProperties<
+  ...[settings]: ExtensionConstructorParameter<
     SettingsOfConstructor<Type>,
-    [SettingsOfConstructor<Type>?],
-    [SettingsOfConstructor<Type>]
+    PropertiesOfConstructor<Type>
   >
 ) => {
   return useMemo(() => Constructor.of(settings), [Constructor, settings]);
 };
-
-/**
- * Properties Of Extension Constructor
- *
- * Written in shorthand as it's only used in this file.
- */
-type PropertiesOfConstructor<Constructor extends AnyExtensionConstructor> = GetProperties<
-  Of<Constructor>
->;
 
 export const useExtensionProperties = <Type extends AnyExtensionConstructor>(
   Constructor: Type,

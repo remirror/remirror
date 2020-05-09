@@ -1,9 +1,19 @@
 import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
-import { freeze, isIdentifierOfType, isRemirrorType, startCase } from '@remirror/core-helpers';
-import { IfNoRequiredProperties } from '@remirror/core-types';
+import {
+  freeze,
+  isIdentifierOfType,
+  isRemirrorType,
+  object,
+  startCase,
+} from '@remirror/core-helpers';
 
-import { AnyExtension } from '../extension';
-import { Preset, PresetConstructor, PresetFactoryParameter } from './preset-base';
+import { AnyExtension, DefaultSettingsType } from '../extension';
+import {
+  Preset,
+  PresetConstructor,
+  PresetConstructorParameter,
+  PresetFactoryParameter,
+} from './preset-base';
 
 function createPresetFactory<Settings extends object = {}, Properties extends object = {}>() {
   return {
@@ -26,6 +36,18 @@ function createPresetFactory<Settings extends object = {}, Properties extends ob
           return RemirrorIdentifier.PresetConstructor;
         }
 
+        static get presetName() {
+          return parameter.name;
+        }
+
+        static get defaultSettings(): DefaultSettingsType<Settings> {
+          return parameter.defaultSettings ?? object();
+        }
+
+        static get defaultProperties(): Required<Properties> {
+          return parameter.defaultProperties ?? object();
+        }
+
         /**
          * Sets a readable `toString` property.
          */
@@ -33,15 +55,13 @@ function createPresetFactory<Settings extends object = {}, Properties extends ob
           return `class ${presetClassName} { }`;
         }
 
-        public static of(...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>) {
+        public static of(...settings: PresetConstructorParameter<Settings, Properties>) {
           // Using this to refer to itself. If you ever want to pick the off
           // method from here you would need to bind it to the constructor.
           return new PresetClass(...settings);
         }
 
-        private constructor(
-          ...settings: IfNoRequiredProperties<Settings, [Settings?], [Settings]>
-        ) {
+        private constructor(...settings: PresetConstructorParameter<Settings, Properties>) {
           super(...settings);
         }
 
