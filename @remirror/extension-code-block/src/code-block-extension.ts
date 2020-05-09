@@ -21,25 +21,19 @@ import { keydownHandler, Plugin, setBlockType, TextSelection } from '@remirror/p
 
 import { CodeBlockState } from './code-block-plugin';
 import { CodeBlockAttributes, CodeBlockExtensionSettings } from './code-block-types';
-import { formatCodeBlockFactory, getLanguage, updateNodeAttributes } from './code-block-utils';
-import { SyntaxTheme } from './themes';
-
-const dataAttribute = 'data-code-block-language';
-
-export const codeBlockDefaultOptions: CodeBlockExtensionSettings = {
-  supportedLanguages: [],
-  syntaxTheme: 'atomDark' as SyntaxTheme,
-  defaultLanguage: 'markup',
-  formatter: () => undefined,
-  keyboardShortcut: mod('ShiftAlt', 'f'),
-  toggleType: 'paragraph',
-};
+import {
+  codeBlockToDOM,
+  dataAttribute,
+  formatCodeBlockFactory,
+  getLanguage,
+  updateNodeAttributes,
+} from './code-block-utils';
 
 export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSettings>().node({
   name: 'codeBlock',
   defaultSettings: {
     supportedLanguages: [],
-    syntaxTheme: 'atomDark' as SyntaxTheme,
+    syntaxTheme: 'atomDark',
     defaultLanguage: 'markup',
     formatter: () => undefined,
     keyboardShortcut: mod('ShiftAlt', 'f'),
@@ -54,7 +48,6 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
       },
     };
   },
-
   createNodeSchema({ settings }) {
     return {
       attrs: {
@@ -87,16 +80,11 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
           },
         },
       ],
-      toDOM: (node) => {
-        const { language, ...rest } = node.attrs as CodeBlockAttributes;
-        const attributes = { ...rest, class: `language-${language}` };
-
-        return ['pre', attributes, ['code', { [dataAttribute]: language }, 0]];
-      },
+      toDOM: (node) => codeBlockToDOM(node, settings.defaultLanguage),
     };
   },
 
-  createCommands({ type, schema }, extension) {
+  createCommands({ type, schema, extension }) {
     const {
       defaultLanguage,
       supportedLanguages,
@@ -171,7 +159,7 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
   /**
    * Create an input rule that listens converts the code fence into a code block with space.
    */
-  createInputRules({ type }, extension) {
+  createInputRules({ type, extension }) {
     const regexp = /^```([\dA-Za-z]*) $/;
     const getAttributes: GetAttributes = (match) => {
       const language = getLanguage({
@@ -192,7 +180,7 @@ export const CodeBlockExtension = ExtensionFactory.typed<CodeBlockExtensionSetti
     ];
   },
 
-  createKeymap({ type, commands }, extension) {
+  createKeymap({ type, commands, extension }) {
     const { keyboardShortcut, toggleType } = extension.settings;
 
     return {

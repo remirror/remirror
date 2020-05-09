@@ -20,25 +20,37 @@ import {
 } from './code-block-utils';
 
 export class CodeBlockState {
+  /* eslint-disable @typescript-eslint/explicit-member-accessibility */
   /**
    * Keep track of all document codeBlocks
    */
-  private blocks: NodeWithPosition[] = [];
+  #blocks: NodeWithPosition[] = [];
+
+  /**
+   * Keep track of the node type of the `codeBlock`
+   */
+  readonly #type: NodeType;
+
+  /**
+   * Tracks whether or not a deletion has occurred.
+   */
+  #deleted = false;
+  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
 
   /**
    * The set of cached decorations to minimise dom updates
    */
   public decorationSet!: DecorationSet;
 
-  private deleted = false;
-
-  constructor(private readonly type: NodeType) {}
+  constructor(type: NodeType) {
+    this.#type = type;
+  }
 
   /**
    * Creates the initial set of decorations
    */
   public init(state: EditorState) {
-    const blocks = findChildrenByNode({ node: state.doc, type: this.type });
+    const blocks = findChildrenByNode({ node: state.doc, type: this.#type });
     this.refreshDecorationSet({ blocks, node: state.doc });
 
     return this;
@@ -48,9 +60,9 @@ export class CodeBlockState {
    * Recreate all the decorations again for all the provided blocks.
    */
   private refreshDecorationSet({ blocks, node }: RefreshDecorationSetParameter) {
-    const decorations = createDecorations({ blocks, skipLast: this.deleted });
+    const decorations = createDecorations({ blocks, skipLast: this.#deleted });
     this.decorationSet = DecorationSet.create(node, decorations);
-    this.blocks = blocks;
+    this.#blocks = blocks;
   }
 
   /**
@@ -63,7 +75,7 @@ export class CodeBlockState {
     let changes = 0;
 
     // Urm yeah this is a loop within a loop within a loop and it makes my head hurt.
-    for (const { node, pos: from } of this.blocks) {
+    for (const { node, pos: from } of this.#blocks) {
       let hasChanged = false;
 
       for (const step of steps) {
@@ -94,7 +106,7 @@ export class CodeBlockState {
    * True when number of blocks in the document has changed.
    */
   private sizeHasChanged(blocks: NodeWithPosition[]) {
-    return lengthHasChanged(blocks, this.blocks);
+    return lengthHasChanged(blocks, this.#blocks);
   }
 
   /**
@@ -113,7 +125,7 @@ export class CodeBlockState {
     }
 
     // Get all the codeBlocks in the document
-    const blocks = findChildrenByNode({ node: tr.doc, type: this.type });
+    const blocks = findChildrenByNode({ node: tr.doc, type: this.#type });
 
     this.decorationSet = this.decorationSet.map(tr.mapping, tr.doc);
 
@@ -144,27 +156,29 @@ export class CodeBlockState {
     const decorationSet = this.decorationSet.remove(this.decorationSet.find(from, to));
     this.decorationSet = decorationSet.add(
       tr.doc,
-      createDecorations({ blocks: [{ node, pos }], skipLast: this.deleted }),
+      createDecorations({ blocks: [{ node, pos }], skipLast: this.#deleted }),
     );
   }
 
   private manageDecorationSet({ previous, current, tr }: ManageDecorationSetParameter) {
     // Update the previous first although this could be buggy when deleting (possibly)
     if (
-      nodeEqualsType({ types: this.type, node: previous.node }) &&
+      nodeEqualsType({ types: this.#type, node: previous.node }) &&
       !previous.node.eq(current.node)
     ) {
       this.updateDecorationSet({ nodeInfo: previous, tr });
     }
 
-    if (current.type === this.type) {
+    if (current.type === this.#type) {
       this.updateDecorationSet({ nodeInfo: current, tr });
     }
   }
 
+  /**
+   * Flags that a deletion has just occured.
+   */
   public setDeleted(deleted: boolean) {
-    // this._deleted = deleted ? DELETED_THRESHOLD : this._deleted <= 0 ? 0 : this._deleted - 1;
-    this.deleted = deleted;
+    this.#deleted = deleted;
   }
 }
 

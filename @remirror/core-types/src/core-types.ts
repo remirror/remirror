@@ -19,8 +19,6 @@ import {
   TransactionParameter,
 } from './parameter-builders';
 
-type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string };
-type DOMOutputSpecPosX = string | 0 | [string, 0] | [string, { [attr: string]: string }, 0];
 type GetAttributesFunction = (p: string[] | string) => ProsemirrorAttributes | undefined;
 
 /**
@@ -210,6 +208,9 @@ export type KeyBindings<Schema extends EditorSchema = any> = Record<
   KeyBindingCommandFunction<Schema>
 >;
 
+type DOMOutputSpecPos1 = DOMOutputSpecPosX | { [attr: string]: string };
+type DOMOutputSpecPosX = string | 0 | [string, 0] | [string, { [attr: string]: string }, 0];
+
 /**
  * Defines the return type of the toDom methods for both Nodes and marks
  *
@@ -222,6 +223,7 @@ export type KeyBindings<Schema extends EditorSchema = any> = Record<
  */
 export type DOMOutputSpec =
   | string
+  | [string, 0?]
   | [string, 0?]
   | [string, { [attr: string]: string }, 0?]
   | [

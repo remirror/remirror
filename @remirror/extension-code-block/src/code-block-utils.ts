@@ -8,7 +8,9 @@ import markup from 'refractor/lang/markup';
 import {
   bool,
   CommandFunction,
+  DOMOutputSpec,
   EditorState,
+  environment,
   findParentNodeOfType,
   flattenArray,
   FromToParameter,
@@ -21,6 +23,7 @@ import {
   object,
   PosParameter,
   ProsemirrorAttributes,
+  ProsemirrorNode,
   ProsemirrorNodeParameter,
   TextParameter,
   uniqueArray,
@@ -32,6 +35,8 @@ import {
   CodeBlockExtensionSettings,
   FormattedContent,
 } from './code-block-types';
+
+export const dataAttribute = 'data-code-block-language';
 
 interface ParsedRefractorNode extends TextParameter {
   /**
@@ -86,12 +91,16 @@ interface CreateDecorationsParameter extends Pick<CodeBlockExtensionSettings, 'd
  * @param nodeWithPosition - a node and position
  * @returns the positioned refractor nodes which are text, classes and a FromTo interface
  */
-const getPositionedRefractorNodes = ({ node, pos }: NodeWithPosition) => {
-  let startPos = pos + 1;
+function getPositionedRefractorNodes(parameter: NodeWithPosition) {
+  const { node, pos } = parameter;
   const refractorNodes = refractor.highlight(
-    node.textContent || '',
-    node.attrs.language || 'markup',
+    node.textContent ?? '',
+    node.attrs.language ?? 'markup',
   );
+  const parsedRefractorNodes = parseRefractorNodes(refractorNodes);
+
+  let startPos = pos + 1;
+
   function mapper(refractorNode: ParsedRefractorNode): PositionedRefractorNode {
     const from = startPos;
     const to = from + refractorNode.text.length;
@@ -103,24 +112,26 @@ const getPositionedRefractorNodes = ({ node, pos }: NodeWithPosition) => {
     };
   }
 
-  const parsedRefractorNodes = parseRefractorNodes(refractorNodes);
-
   return flattenArray<ParsedRefractorNode>(parsedRefractorNodes).map(mapper);
-};
+}
 
 /**
  * Creates a decoration set for the provided blocks
  */
-export const createDecorations = ({ blocks, skipLast }: CreateDecorationsParameter) => {
+export const createDecorations = ({
+  blocks,
+  skipLast,
+}: CreateDecorationsParameter): Decoration[] => {
   const decorations: Decoration[] = [];
 
-  blocks.forEach((block) => {
+  for (const block of blocks) {
     const positionedRefractorNodes = getPositionedRefractorNodes(block);
     const lastBlockLength = skipLast
       ? positionedRefractorNodes.length - 1
       : positionedRefractorNodes.length;
-    for (let ii = 0; ii < lastBlockLength; ii++) {
-      const positionedRefractorNode = positionedRefractorNodes[ii];
+
+    for (let index = 0; index < lastBlockLength; index++) {
+      const positionedRefractorNode = positionedRefractorNodes[index];
       const decoration = Decoration.inline(
         positionedRefractorNode.from,
         positionedRefractorNode.to,
@@ -128,9 +139,10 @@ export const createDecorations = ({ blocks, skipLast }: CreateDecorationsParamet
           class: positionedRefractorNode.classes.join(' '),
         },
       );
+
       decorations.push(decoration);
     }
-  });
+  }
 
   return decorations;
 };
@@ -253,7 +265,7 @@ interface GetLanguageParameter {
 /**
  * Get the language from user input.
  */
-export const getLanguage = (parameter: GetLanguageParameter): string => {
+export function getLanguage(parameter: GetLanguageParameter): string {
   const { language, supportedLanguages, fallback } = parameter;
 
   if (!language) {
@@ -267,7 +279,43 @@ export const getLanguage = (parameter: GetLanguageParameter): string => {
   }
 
   return fallback;
-};
+}
+
+function mapRefractorNodesToDOMArray(nodes: RefractorNode[]): any[] {
+  return nodes.map((node) => {
+    if (node.type === 'text') {
+      return node.value;
+    }
+
+    const { properties, children, tagName } = node;
+    const { className, ...rest } = properties;
+
+    return [tagName, { class: className, ...rest }, mapRefractorNodesToDOMArray(children)];
+  });
+}
+
+/**
+ * Used to provide a `toDom` function for the codeblock for both the browser and non
+ * browser environments.
+ */
+export function codeBlockToDOM(node: ProsemirrorNode, defaultLanguage = 'markup'): DOMOutputSpec {
+  const { language, ...rest } = node.attrs as CodeBlockAttributes;
+  const attributes = { ...rest, class: `language-${language}` };
+
+  if (environment.isBrowser) {
+    return ['pre', attributes, ['code', { [dataAttribute]: language }, 0]];
+  }
+
+  const refractorNodes = refractor.highlight(
+    node.textContent ?? '',
+    node.attrs.language ?? defaultLanguage,
+  );
+
+  const mappedNodes = mapRefractorNodesToDOMArray(refractorNodes);
+
+  // TODO test the logic for this
+  return ['pre', attributes, ['code', { [dataAttribute]: language }, mappedNodes, 0]] as any;
+}
 
 interface FormatCodeBlockFactoryParameter
   extends NodeTypeParameter,

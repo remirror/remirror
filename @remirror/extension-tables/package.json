@@ -6,7 +6,8 @@
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-tables",
   "license": "MIT",
   "contributors": [
-    "Ocavue <ocavue@gmail.com>"
+    "Ocavue <ocavue@gmail.com>",
+    "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
   "main": "lib/dist/index.js",

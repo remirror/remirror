@@ -1,7 +1,7 @@
 {
   "name": "@remirror/extension-code-block",
   "version": "0.12.0",
-  "description": "CodeBlock extension for the remirror wysiwyg editor",
+  "description": "A lightweight code block extension for use in the your remirror editor.",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-code-block",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-code-block",
   "license": "MIT",
