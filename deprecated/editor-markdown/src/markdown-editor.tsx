@@ -16,7 +16,7 @@ import {
   isString,
   ProsemirrorNode,
   RemirrorContentType,
-  SchemaFromExtension,
+  SchemaFromExtensionUnion,
   SchemaParameter,
   StringHandlerParameter,
   TextExtension,
@@ -207,9 +207,9 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
   const markdownManager = useMarkdownManager();
 
   type WysiwygExtensions = ExtensionsFromManager<typeof wysiwygManager>;
-  type WysiwygSchema = SchemaFromExtension<WysiwygExtensions>;
+  type WysiwygSchema = SchemaFromExtensionUnion<WysiwygExtensions>;
   type MarkdownExtensions = ExtensionsFromManager<typeof markdownManager>;
-  type MarkdownSchema = SchemaFromExtension<MarkdownExtensions>;
+  type MarkdownSchema = SchemaFromExtensionUnion<MarkdownExtensions>;
 
   const initialContent = createInitialContent({
     content: initialValue,

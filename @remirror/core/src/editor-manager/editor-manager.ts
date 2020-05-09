@@ -22,13 +22,15 @@ import {
   AnyExtension,
   AnyExtensionConstructor,
   AnyManagerStore,
+  CommandsFromExtensions,
   CreateLifecycleMethodParameter,
   CreateLifecycleMethodReturn,
   GetExtensionUnion,
+  HelpersFromExtensions,
   InitializeLifecycleMethodParameter,
   InitializeLifecycleMethodReturn,
   ManagerStoreKeys,
-  SchemaFromExtension,
+  SchemaFromExtensionUnion,
   setDefaultExtensionSettings,
   ViewLifecycleMethodReturn,
 } from '../extension';
@@ -121,7 +123,30 @@ export class EditorManager<
    * Pseudo property which is a small hack to store the type of the extension union.
    */
   public ['~E']!: Remirror.ManagerExtensions<ExtensionUnion, PresetUnion>;
+
+  /**
+   * Pseudo property which is a small hack to store the type of the presets
+   * available from this manager..
+   */
   public ['~P']!: PresetUnion | BuiltinPreset;
+
+  /**
+   * Pseudo property which is a small hack to store the type of the commands
+   * available from this manager.
+   */
+  public ['~C']!: CommandsFromExtensions<this['~E']>;
+
+  /**
+   * Pseudo property which is a small hack to store the type of the helpers
+   * available from this manager.
+   */
+  public ['~H']!: HelpersFromExtensions<this['~E']>;
+
+  /**
+   * Pseudo property which is a small hack to store the type of the schema
+   * available from this manager..
+   */
+  public ['~S']!: SchemaFromExtensionUnion<this['~E']>;
 
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
@@ -130,7 +155,7 @@ export class EditorManager<
    * extension methods
    */
   #methodParameter: Remirror.ManagerMethodParameter<
-    SchemaFromExtension<this['~E']>
+    SchemaFromExtensionUnion<this['~E']>
   > = this.createInitialMethodParameter();
 
   #extensions: ReadonlyArray<this['~E']>;
@@ -492,7 +517,7 @@ export class EditorManager<
    * Create the initial store.
    */
   private createInitialMethodParameter() {
-    const methodParameter: Remirror.ManagerMethodParameter<SchemaFromExtension<
+    const methodParameter: Remirror.ManagerMethodParameter<SchemaFromExtensionUnion<
       this['~E']
     >> = object();
 
@@ -517,7 +542,7 @@ export class EditorManager<
    *
    * @param view - the editor view
    */
-  public addView(view: EditorView<SchemaFromExtension<this['~E']>>) {
+  public addView(view: EditorView<SchemaFromExtensionUnion<this['~E']>>) {
     this.#phase = ManagerPhase.AddView;
     this.#store.view = view;
     this.beforeView(view);
@@ -675,7 +700,7 @@ declare global {
       /**
        * The editor view stored by this instance.
        */
-      view: EditorView<SchemaFromExtension<ManagerExtensions<ExtensionUnion, PresetUnion>>>;
+      view: EditorView<SchemaFromExtensionUnion<ManagerExtensions<ExtensionUnion, PresetUnion>>>;
     }
 
     /**

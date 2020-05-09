@@ -29,7 +29,7 @@ import {
   object,
   pick,
   ProsemirrorAttributes,
-  SchemaFromExtension,
+  SchemaFromExtensionUnion,
 } from '@remirror/core';
 import { RenderEditor, RenderEditorProps } from '@remirror/react';
 
@@ -107,7 +107,9 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
 
   /** The editor view. */
   get view() {
-    return this.#manager.view as TestEditorView<SchemaFromExtension<GetExtensionUnion<Manager>>>;
+    return this.#manager.view as TestEditorView<
+      SchemaFromExtensionUnion<GetExtensionUnion<Manager>>
+    >;
   }
 
   /** The editor state. */
@@ -220,7 +222,7 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
    * If content already exists it will be overwritten.
    */
   public add(
-    taggedDocument: TaggedProsemirrorNode<SchemaFromExtension<GetExtensionUnion<Manager>>>,
+    taggedDocument: TaggedProsemirrorNode<SchemaFromExtensionUnion<GetExtensionUnion<Manager>>>,
   ) {
     const { content } = taggedDocument;
     const { cursor, node, start, end, all, ...tags } = taggedDocument.tags;

@@ -1,9 +1,9 @@
-import { EMPTY_PARAGRAPH_NODE, Transaction } from '@remirror/core';
-import { asDefaultProps } from '@remirror/react-utils';
+import { AnyEditorManager, EMPTY_PARAGRAPH_NODE, Transaction } from '@remirror/core';
 
-import { RenderEditorProps } from './react-types';
+import { BaseProps } from './react-types';
+import { asDefaultProps } from './react-utils';
 
-export const defaultProps = asDefaultProps<RenderEditorProps>()({
+export const defaultProps = asDefaultProps<BaseProps<AnyEditorManager>>()({
   initialContent: EMPTY_PARAGRAPH_NODE,
   fallbackContent: EMPTY_PARAGRAPH_NODE,
   editable: true,
@@ -11,8 +11,6 @@ export const defaultProps = asDefaultProps<RenderEditorProps>()({
   attributes: {},
   usesDefaultStyles: true,
   label: '',
-  styles: {},
-  editorStyles: {},
   insertPosition: 'end',
   onDispatchTransaction: (tr: Transaction) => tr,
   stringHandler: () => {

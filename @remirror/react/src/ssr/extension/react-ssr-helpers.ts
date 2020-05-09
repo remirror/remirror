@@ -2,7 +2,8 @@ import { Children, cloneElement, createElement, JSXElementConstructor } from 're
 
 import { AnyExtension, ManagerMethodParameter, PlainObject } from '@remirror/core';
 import { isArray } from '@remirror/core-helpers';
-import { getElementProps, isReactDOMElement, isReactFragment } from '@remirror/react-utils';
+
+import { getElementProps, isReactDOMElement, isReactFragment } from '../../react-utils';
 
 /**
  * A function that creates the SSR Transformer which will take in the current

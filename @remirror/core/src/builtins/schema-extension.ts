@@ -20,7 +20,7 @@ import {
   GetNodeNameUnion,
   isMarkExtension,
   isNodeExtension,
-  SchemaFromExtension,
+  SchemaFromExtensionUnion,
 } from '../extension';
 import { AnyPreset } from '../preset';
 
@@ -263,7 +263,7 @@ declare global {
       /**
        * The schema created by this extension manager.
        */
-      schema: SchemaFromExtension<ExtensionUnion>;
+      schema: SchemaFromExtensionUnion<ExtensionUnion>;
     }
 
     interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {

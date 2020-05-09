@@ -4,12 +4,12 @@ import {
   EditorStateParameter,
   GetExtensionUnion,
   PlainObject,
-  SchemaFromExtension,
+  SchemaFromExtensionUnion,
 } from '@remirror/core';
 import { mapProps, ReactSerializer } from '@remirror/react-renderer';
 
 export interface RemirrorSSRProps<ManagerType extends EditorManager = any>
-  extends EditorStateParameter<SchemaFromExtension<GetExtensionUnion<ManagerType>>> {
+  extends EditorStateParameter<SchemaFromExtensionUnion<GetExtensionUnion<ManagerType>>> {
   /**
    * The attributes to pass into the root div element.
    */

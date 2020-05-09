@@ -4,7 +4,6 @@ import { ReactNode, Ref } from 'react';
 import {
   AnyEditorManager,
   AnyExtension,
-  CommandsFromExtensions,
   CompareStateParameter,
   EditorSchema,
   EditorState,
@@ -13,16 +12,17 @@ import {
   EditorViewParameter,
   ElementParameter,
   FromToParameter,
+  GetCommands,
   GetExtensionUnion,
+  GetSchema,
   ObjectNode,
   PlainObject,
   Position,
   PositionParameter,
   ProsemirrorNode,
   RemirrorContentType,
-  RemirrorInterpolation,
   RenderEnvironment,
-  SchemaFromExtension,
+  SchemaFromExtensionUnion,
   StringHandlerParameter,
   TextParameter,
   Transaction,
@@ -40,8 +40,7 @@ import {
  */
 export type FocusType = FromToParameter | number | 'start' | 'end' | boolean;
 
-export interface RenderEditorProps<Manager extends AnyEditorManager>
-  extends StringHandlerParameter {
+export interface BaseProps<Manager extends AnyEditorManager> extends StringHandlerParameter {
   /**
    * Pass in the extension manager.
    *
@@ -60,7 +59,7 @@ export interface RenderEditorProps<Manager extends AnyEditorManager>
    *
    * @defaultValue `{ type: 'doc', content: [{ type: 'paragraph' }] }`
    */
-  initialContent: RemirrorContentType;
+  initialContent?: RemirrorContentType;
 
   /**
    * If this exists the editor becomes a controlled component. Nothing will be
@@ -74,21 +73,21 @@ export interface RenderEditorProps<Manager extends AnyEditorManager>
    * When onStateChange is defined this prop is used to set the next state value
    * of the remirror editor.
    */
-  value?: EditorState<SchemaFromExtension<GetExtensionUnion<Manager>>> | null;
+  value?: EditorState<GetSchema<Manager>> | null;
 
   /**
    * Adds attributes directly to the prosemirror html element.
    *
    * @defaultValue `{}`
    */
-  attributes: Record<string, string> | AttributePropFunction;
+  attributes?: Record<string, string> | AttributePropFunction;
 
   /**
    * Determines whether this editor is editable or not.
    *
    * @defaultValue true
    */
-  editable: boolean;
+  editable?: boolean;
 
   /**
    * When set to true focus will be place on the editor as soon as it first
@@ -126,26 +125,20 @@ export interface RenderEditorProps<Manager extends AnyEditorManager>
   onChange?: RemirrorEventListener<GetExtensionUnion<Manager>>;
 
   /**
-   * The render prop that takes the injected remirror params and returns an
-   * element to render. The editor view is automatically attached to the DOM.
-   */
-  children: RenderPropFunction<Manager>;
-
-  /**
    * A method called when the editor is dispatching the transaction.
    *
    * @remarks
    * Use this to update the transaction which will be used to update the editor
    * state.
    */
-  onDispatchTransaction: TransactionTransformer<SchemaFromExtension<GetExtensionUnion<Manager>>>;
+  onDispatchTransaction?: TransactionTransformer<GetSchema<Manager>>;
 
   /**
    * Sets the accessibility label for the editor instance.
    *
    * @defaultValue ''
    */
-  label: string;
+  label?: string;
 
   /**
    * Determines whether or not to use the built in extensions.
@@ -161,37 +154,14 @@ export interface RenderEditorProps<Manager extends AnyEditorManager>
    *
    * @defaultValue true
    */
-  usesBuiltInExtensions: boolean;
+  usesBuiltInExtensions?: boolean;
 
   /**
    * Determine whether the editor should use default styles.
    *
    * @defaultValue true
    */
-  usesDefaultStyles: boolean;
-
-  /**
-   * Additional editor styles passed into prosemirror. Used to provide styles
-   * for the text, nodes and marks rendered in the editor.
-   *
-   * @defaultValue `{}`
-   *
-   * @deprecated use `styles` or `css` prop instead.
-   */
-  editorStyles: RemirrorInterpolation;
-
-  /**
-   * Addition styles that will be passed directly to the prosemirror editor dom node.
-   *
-   * This can be used to provide extra styles
-   *
-   */
-  styles?: RemirrorInterpolation;
-
-  /**
-   * Emotion css prop for injecting styles into a component.
-   */
-  css?: Interpolation;
+  usesDefaultStyles?: boolean;
 
   /**
    * Determine whether the Prosemirror view is inserted at the `start` or `end`
@@ -199,7 +169,7 @@ export interface RenderEditorProps<Manager extends AnyEditorManager>
    *
    * @defaultValue 'end'
    */
-  insertPosition: 'start' | 'end';
+  insertPosition?: 'start' | 'end';
 
   /**
    * By default remirror will work out whether this is a dom environment or
@@ -240,7 +210,7 @@ export interface RenderEditorProps<Manager extends AnyEditorManager>
    *
    * @defaultValue EMPTY_PARAGRAPH_NODE
    */
-  fallbackContent: ObjectNode | ProsemirrorNode;
+  fallbackContent?: ObjectNode | ProsemirrorNode;
 }
 
 export interface Positioner<ExtensionUnion extends AnyExtension = any> {
@@ -267,7 +237,7 @@ export interface Positioner<ExtensionUnion extends AnyExtension = any> {
    *
    * @param params
    */
-  hasChanged: (params: CompareStateParameter<SchemaFromExtension<ExtensionUnion>>) => boolean;
+  hasChanged: (params: CompareStateParameter<SchemaFromExtensionUnion<ExtensionUnion>>) => boolean;
 
   /**
    * Determines whether the positioner should be active
@@ -330,12 +300,12 @@ export interface InjectedRenderEditorProps<Manager extends AnyEditorManager> {
   /**
    * The prosemirror view
    */
-  view: EditorView<SchemaFromExtension<GetExtensionUnion<Manager>>>;
+  view: EditorView<GetSchema<Manager>>;
 
   /**
    * A map of all actions made available by the configured extensions.
    */
-  commands: CommandsFromExtensions<GetExtensionUnion<Manager>>;
+  commands: GetCommands<Manager>;
 
   /**
    * The unique id for the editor instance.
@@ -418,22 +388,13 @@ export interface InjectedRenderEditorProps<Manager extends AnyEditorManager> {
   /**
    * The previous and next state
    */
-  state: CompareStateParameter<SchemaFromExtension<GetExtensionUnion<Manager>>>;
+  state: CompareStateParameter<GetSchema<Manager>>;
 
   /**
    * Focus the editor at the `start` | `end` a specific position or at a valid range between `{ from, to }`
    */
   focus: (position?: FocusType) => void;
 }
-
-/**
- * A function that takes the injected remirror params and returns JSX to render.
- *
- * @param - injected remirror params
- */
-export type RenderPropFunction<Manager extends AnyEditorManager> = (
-  params: InjectedRenderEditorProps<Manager>,
-) => JSX.Element;
 
 export interface RemirrorGetterParameter {
   /**
@@ -463,7 +424,7 @@ export interface RemirrorGetterParameter {
 }
 
 export interface BaseListenerParameter<ExtensionUnion extends AnyExtension = any>
-  extends EditorViewParameter<SchemaFromExtension<ExtensionUnion>>,
+  extends EditorViewParameter<SchemaFromExtensionUnion<ExtensionUnion>>,
     RemirrorGetterParameter {
   /**
    * The original transaction which caused this state update.
@@ -477,7 +438,7 @@ export interface BaseListenerParameter<ExtensionUnion extends AnyExtension = any
    * - Was ths change caused by an updated selection? `tr.selectionSet`
    * - `tr.steps` can be inspected for further granularity.
    */
-  tr?: Transaction<SchemaFromExtension<ExtensionUnion>>;
+  tr?: Transaction<SchemaFromExtensionUnion<ExtensionUnion>>;
 
   /**
    * A shorthand way of checking whether the update was triggered by editor usage (internal) or
@@ -491,18 +452,18 @@ export interface BaseListenerParameter<ExtensionUnion extends AnyExtension = any
 }
 
 export interface RemirrorEventListenerParameter<ExtensionUnion extends AnyExtension = any>
-  extends EditorStateParameter<SchemaFromExtension<ExtensionUnion>>,
+  extends EditorStateParameter<SchemaFromExtensionUnion<ExtensionUnion>>,
     BaseListenerParameter<ExtensionUnion> {}
 
 export interface RemirrorStateListenerParameter<ExtensionUnion extends AnyExtension = any>
-  extends CompareStateParameter<SchemaFromExtension<ExtensionUnion>>,
+  extends CompareStateParameter<SchemaFromExtensionUnion<ExtensionUnion>>,
     BaseListenerParameter<ExtensionUnion> {
   /**
    * Manually create a new state object with the desired content.
    */
   createStateFromContent: (
     content: RemirrorContentType,
-  ) => EditorState<SchemaFromExtension<ExtensionUnion>>;
+  ) => EditorState<SchemaFromExtensionUnion<ExtensionUnion>>;
 }
 
 export type RemirrorEventListener<ExtensionUnion extends AnyExtension = any> = (
@@ -525,9 +486,9 @@ export type PositionerMapValue = ElementParameter & {
 export interface PositionerRefFactoryParameter extends PositionerIdParameter, PositionParameter {}
 
 export interface GetPositionParameter<ExtensionUnion extends AnyExtension = any>
-  extends EditorViewParameter<SchemaFromExtension<ExtensionUnion>>,
+  extends EditorViewParameter<SchemaFromExtensionUnion<ExtensionUnion>>,
     ElementParameter,
-    CompareStateParameter<SchemaFromExtension<ExtensionUnion>> {}
+    CompareStateParameter<SchemaFromExtensionUnion<ExtensionUnion>> {}
 
 export interface PositionerIdParameter {
   /**
