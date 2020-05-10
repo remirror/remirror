@@ -9,5 +9,7 @@ editing.
 ## Installation
 
 ```bash
-yarn add @remirror/editor-markdown
+yarn add @remirror/editor-markdown # yarn
+pnpm add @remirror/editor-markdown # pnpm
+npm install @remirror/editor-markdown # npm
 ```

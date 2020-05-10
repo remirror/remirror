@@ -8,5 +8,7 @@ This packages provides the core extensions used to build up a world class text-e
 ## Installation
 
 ```bash
-yarn add @remirror/core-extensions
+yarn add @remirror/core-extensions # yarn
+pnpm add @remirror/core-extensions # pnpm
+npm install @remirror/core-extensions # npm
 ```

@@ -5,9 +5,12 @@
 # Logs
 logs
 *.log
+pnpm-debug.log*
+pnpm-error.log*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
 
 # Runtime data
 pids
@@ -82,7 +85,11 @@ dist
 deprecated/**/lib
 packages/**/lib
 
-# We are using yarn
+# We are using pnpm
+.yarn/
+.yarnrc
+yarn.lock
+**/yarn.lock
 package-lock.json
 **/package-lock.json
 

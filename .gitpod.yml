@@ -10,7 +10,7 @@ ports:
   - port: 3000
   - port: 3001
 tasks:
-  - init: yarn
+  - init: pnpm install
 
 vscode:
   extensions:

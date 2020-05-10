@@ -13,7 +13,9 @@ library.
 ## Installation
 
 ```bash
-yarn add @remirror/extension-enhanced-link
+yarn add @remirror/extension-enhanced-link # yarn
+pnpm add @remirror/extension-enhanced-link # pnpm
+npm install @remirror/extension-enhanced-link # npm
 ```
 
 ## Usage

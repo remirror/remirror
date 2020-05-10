@@ -13,39 +13,35 @@
   },
   "scripts": {
     "build": "preconstruct build",
-    "build:docs": "cd docs && yarn build",
-    "checks": "run-s integrity lint typecheck test",
+    "build:docs": "cd docs && pnpm run build",
+    "checks": "run-s lint typecheck test",
     "checks:ci": "run-s lint typecheck",
-    "checks:release": "run-s ci checks build test:e2e:ssr",
-    "ci": "yarn clean:all && yarn --pure-lockfile",
-    "clean": "yarn if-clean git clean -fdx --exclude=.config.json --exclude=node_modules --exclude=**/node_modules",
-    "clean:all": "git clean -fdX --exclude=.config.json --exclude=.yarn",
+    "checks:release": "run-s checks build test:e2e:ssr",
+    "clean": "pnpm run if-clean -- git clean -fdx --exclude=.config.json --exclude=node_modules --exclude=**/node_modules",
+    "clean:all": "git clean -fdX --exclude=.config.json ",
     "clean:build": "rimraf @remirror/*/lib packages/*/lib docs/public docs/.cache .jest examples/with-next/.next {@remirror,packages}/*/*.tsbuildinfo",
     "clean:modules": "git clean -fdX @remirror support docs e2e packages",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate",
-    "dev": "run-p dev:ts dev:rollup",
-    "dev:rollup": "cross-env DEV_ONLY=true yarn build:rollup --watch",
-    "dev:ts": "yarn build:ts --watch",
-    "docs": "cd docs && yarn start",
+    "dev": "preconstruct watch",
+    "docs": "cd docs && pnpm run start",
     "fix": "run-s fix:prettier fix:es",
-    "fix:es": "yarn lint:es --fix",
-    "fix:prettier": "yarn run:prettier --write",
+    "fix:es": "run-s lint:es -- --fix",
+    "fix:prettier": "run-s run:prettier -- --write",
     "fix:repo": "manypkg fix",
-    "frozen": "yarn --frozen-lockfile install",
     "generate:size": "node support/scripts/generate-configs.js",
     "if-clean": "node support/scripts/run-if-clean.js",
     "if-config": "node support/scripts/run-if-config.js",
     "if-not-ci": "node support/scripts/run-if-not-ci.js",
+    "preinstall": "node support/scripts/check-pnpm.js",
     "postinstall": "preconstruct dev",
-    "integrity": "yarn check --integrity",
     "is-logged-in": "npm whoami",
     "lint": "run-s lint:*",
     "lint:es": "eslint -f github --ext=.tsx,.ts,.js .",
-    "lint:prettier": "yarn run:prettier \"!**/CHANGELOG.md\" --check",
+    "lint:prettier": "run-s run:prettier -- \"!**/CHANGELOG.md\" --check",
     "lint:repo": "manypkg check",
     "md": "node support/scripts/md.js",
-    "prerelease": "yarn if-not-ci run-s checks:release",
+    "prerelease": "run-s if-not-ci -- run-s checks:release",
     "release": "changeset publish",
     "run:prettier": "prettier --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx,md,mdx,json,html,css,yml,yaml,graphql}\"",
     "size": "size-limit",
@@ -55,17 +51,17 @@
     "test": "jest --verbose",
     "test:build": "cross-env TEST_BUILD=true jest --verbose --coverage=false",
     "test:e2e": "jest --verbose --runInBand --config e2e/jest.config.js",
-    "test:e2e:debug": "cross-env REMIRROR_E2E_DEBUG=true yarn test:e2e",
-    "test:e2e:ssr": "cross-env REMIRROR_E2E_SERVER=razzle yarn test:e2e",
-    "test:e2e:ssr:watch": "yarn test:e2e:ssr --verbose=false --watch",
+    "test:e2e:debug": "cross-env REMIRROR_E2E_DEBUG=true run-s test:e2e",
+    "test:e2e:ssr": "cross-env REMIRROR_E2E_SERVER=razzle run-s test:e2e",
+    "test:e2e:ssr:watch": "run-s test:e2e:ssr -- --verbose=false --watch",
     "test:e2e:watch": "jest --watch --verbose=false --runInBand --config e2e/jest.config.js",
     "test:watch": "jest  --watch --verbose=false --coverage=false",
     "typecheck": "tsc -p ./tsconfig.json"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn if-config hooks.preCommit lint-staged",
-      "pre-push": "yarn if-config hooks.prePush \"yarn checks\""
+      "pre-commit": "pnpm run if-config hooks.preCommit lint-staged",
+      "pre-push": "pnpm run if-config hooks.prePush \"pnpm run checks\""
     }
   },
   "lint-staged": {
@@ -283,7 +279,7 @@
     "write-json-file": "^4.3.0"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "preconstruct": {
     "packages": [

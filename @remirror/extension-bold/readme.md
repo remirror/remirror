@@ -19,7 +19,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-bold
+yarn add @remirror/extension-bold # yarn
+pnpm add @remirror/extension-bold # pnpm
+npm install @remirror/extension-bold # npm
 ```
 
 <br />

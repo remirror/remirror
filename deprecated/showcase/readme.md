@@ -9,7 +9,9 @@ demonstration showcasing how it can be used.
 ## Installation
 
 ```bash
-yarn add @remirror/showcase
+yarn add @remirror/showcase # yarn
+pnpm add @remirror/showcase # pnpm
+npm install @remirror/showcase # npm
 ```
 
 The recommendation is to import from the direct files.

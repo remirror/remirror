@@ -24,7 +24,7 @@ const allTestRegex = getRegex();
 const servers = (exports.servers = {
   next: {
     server: {
-      command: 'cd examples/with-next && yarn dev -p 3030',
+      command: 'cd examples/with-next && pnpm run dev -p 3030',
       port: 3030,
       usedPortAction: 'kill',
       launchTimeout: 120000,
@@ -35,7 +35,7 @@ const servers = (exports.servers = {
 
   storybook: {
     server: {
-      command: 'yarn start-storybook -p 3030 -c support/storybook --quiet --ci',
+      command: 'pnpm run start-storybook -p 3030 -c support/storybook --quiet --ci',
       port: 3030,
       usedPortAction: 'kill',
       launchTimeout: 120000,
@@ -46,7 +46,7 @@ const servers = (exports.servers = {
 
   docs: {
     server: {
-      command: 'cd docs && yarn start -p 3030',
+      command: 'cd docs && pnpm run start -p 3030',
       port: 3030,
       usedPortAction: 'kill',
       launchTimeout: 120000,
@@ -57,7 +57,7 @@ const servers = (exports.servers = {
 
   razzle: {
     server: {
-      command: 'cd examples/with-razzle && PORT=3030 yarn start',
+      command: 'cd examples/with-razzle && PORT=3030 pnpm run start',
       port: 3030,
       usedPortAction: 'kill',
       launchTimeout: 120000,

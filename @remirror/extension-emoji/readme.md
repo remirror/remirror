@@ -8,5 +8,7 @@ This packages adds emoji support to the remirror editor.
 ## Installation
 
 ```bash
-yarn add @remirror/extension-emoji
+yarn add @remirror/extension-emoji # yarn
+pnpm add @remirror/extension-emoji # pnpm
+npm install @remirror/extension-emoji # npm
 ```

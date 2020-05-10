@@ -17,7 +17,9 @@ to write more intuitive tests for your prosemirror editor.
 ## Installation
 
 ```bash
-yarn add jest-prosemirror
+yarn add jest-prosemirror # yarn
+pnpm add jest-prosemirror # pnpm
+npm install jest-prosemirror # npm
 ```
 
 ## Getting started

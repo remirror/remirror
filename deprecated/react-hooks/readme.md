@@ -8,7 +8,9 @@ Some helper react hooks for the remirror library.
 ## Installation
 
 ```bash
-yarn add @remirror/react-hooks
+yarn add @remirror/react-hooks # yarn
+pnpm add @remirror/react-hooks # pnpm
+npm install @remirror/react-hooks # npm
 ```
 
 ## Usage

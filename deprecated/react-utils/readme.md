@@ -8,7 +8,9 @@ A react component library for the remirror project.
 ## Installation
 
 ```bash
-yarn add @remirror/react-utils
+yarn add @remirror/react-utils # yarn
+pnpm add @remirror/react-utils # pnpm
+npm install @remirror/react-utils # npm
 ```
 
 ## Usage

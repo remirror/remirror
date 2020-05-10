@@ -32,5 +32,7 @@ const Editor = (props) => (
 ### Installation
 
 ```bash
-yarn add @remirror/editor-social
+yarn add @remirror/editor-social # yarn
+pnpm add @remirror/editor-social # pnpm
+npm install @remirror/editor-social # npm
 ```

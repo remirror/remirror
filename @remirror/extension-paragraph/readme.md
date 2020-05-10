@@ -19,7 +19,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-paragraph
+yarn add @remirror/extension-paragraph # yarn
+pnpm add @remirror/extension-paragraph # pnpm
+npm install @remirror/extension-paragraph # npm
 ```
 
 <br />

@@ -16,7 +16,9 @@ Remirror is an extensible text-editor for react, built on top of Prosemirror.
 ## Installation
 
 ```bash
-yarn add remirror
+yarn add remirror # yarn
+pnpm add remirror # pnpm
+npm install remirror # npm
 ```
 
 The following is a small example which renders a floating menu and enables the extensions `Bold`,

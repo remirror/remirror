@@ -9,12 +9,14 @@ on:
 
 env:
   CI: true
+  PNPM_CACHE_FOLDER: .pnpm-store
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      # Required for the latest version of puppeteer
       - name: install libgbm
         run: |
           sudo apt-get update
@@ -25,37 +27,37 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: get yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
       - uses: actions/cache@v1
         with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ env.PNPM_CACHE_FOLDER }}
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-pnpm-
 
       - name: setup node.js
         uses: actions/setup-node@v1
         with:
           node-version: 12
 
+      - name: install pnpm
+        run: |
+          curl -L https://unpkg.com/@pnpm/self-installer | node
+          pnpm config set store-dir $PNPM_CACHE_FOLDER
+
       - name: audit dependencies
-        # Currently yarn audit fails due to decompress - re-enable once there's a resolution.
-        run: yarn audit || true
+        run: pnpm audit --audit-level high
 
       - name: install dependencies
-        run: yarn ci
+        run: pnpm install
 
       - name: lint files
-        run: yarn lint --formatter github
+        run: pnpm run lint
 
       - name: typecheck project
-        run: yarn typecheck
+        run: pnpm run typecheck
 
       - name: run unit tests
-        run: yarn test
+        run: pnpm run test
 
       - name: publish code coverage report
         uses: paambaati/codeclimate-action@v2.4.0
@@ -67,19 +69,19 @@ jobs:
           debug: false
 
       - name: build project
-        run: yarn build
+        run: pnpm run build
 
       - name: check sizes
-        run: yarn size
+        run: pnpm run size
 
       - name: integration tests
-        run: yarn test:e2e
+        run: pnpm run test:e2e
 
       - name: create release pr or publish to npm
         if: github.ref == 'refs/heads/master'
         uses: changesets/action@master
         with:
-          publish: yarn release
+          publish: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

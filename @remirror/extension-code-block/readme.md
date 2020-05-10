@@ -17,7 +17,9 @@
 ## Installation
 
 ```bash
-yarn add refractor @remirror/extension-code-block
+yarn add refractor @remirror/extension-code-block # yarn
+pnpm add refractor @remirror/extension-code-block # pnpm
+npm install refractor @remirror/extension-code-block # npm
 ```
 
 Refractor is a peer dependency and is needed when adding extra language support.

@@ -36,6 +36,7 @@ export default {
     description: pkg.description,
   },
   plugins: [
+    'gatsby-plugin-pnpm',
     {
       resolve: 'gatsby-source-filesystem',
       options: {

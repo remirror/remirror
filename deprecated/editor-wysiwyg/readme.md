@@ -9,5 +9,7 @@ A configurable editor which provides the foundation for highclass What You See I
 ## Installation
 
 ```bash
-yarn add @remirror/editor-wysiwyg
+yarn add @remirror/editor-wysiwyg # yarn
+pnpm add @remirror/editor-wysiwyg # pnpm
+npm install @remirror/editor-wysiwyg # npm
 ```

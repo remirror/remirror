@@ -14,7 +14,9 @@ users it's possible to widen the scope to `angular`, `vue` and other popular fra
 ## Installation
 
 ```bash
-yarn add @remirror/core prosemirror-view
+yarn add @remirror/core prosemirror-view # yarn
+pnpm add @remirror/core prosemirror-view # pnpm
+npm install @remirror/core prosemirror-view # npm
 ```
 
 ## Extensions

@@ -8,5 +8,7 @@ An accessible modal component for rendering dialogs within the interface.
 ## Installation
 
 ```bash
-yarn add @remirror/ui-modal
+yarn add @remirror/ui-modal # yarn
+pnpm add @remirror/ui-modal # pnpm
+npm install @remirror/ui-modal # npm
 ```

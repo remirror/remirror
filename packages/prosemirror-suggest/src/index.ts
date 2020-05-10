@@ -27,7 +27,9 @@
  * be installed as well.
  *
  * ```bash
- * yarn add prosemirror-suggest prosemirror-view
+ * yarn add prosemirror-suggest prosemirror-view # yarn
+ * pnpm add prosemirror-suggest prosemirror-view # pnpm
+ * npm install prosemirror-suggest prosemirror-view # npm
  *  ```
  *
  * ## Getting Started

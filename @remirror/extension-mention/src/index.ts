@@ -21,7 +21,9 @@
  * in the [docs](https://docs.remirror.org/install) run the following command.
  *
  * ```bash
- * yarn add @remirror/extension-mention`
+ * yarn add @remirror/extension-mention # yarn
+ * pnpm add @remirror/extension-mention # pnpm
+ * npm install @remirror/extension-mention # npm
  * ```
  *
  * ## Getting started

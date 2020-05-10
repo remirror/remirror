@@ -9,7 +9,9 @@ uses `@emotion/core` and `@styled-system/css`, but was inspired by `theme-ui`.
 ## Installation
 
 ```bash
-yarn add @remirror/ui @remirror/core @remirror/react
+yarn add @remirror/ui @remirror/core @remirror/react # yarn
+pnpm add @remirror/ui @remirror/core @remirror/react # pnpm
+npm install @remirror/ui @remirror/core @remirror/react # npm
 ```
 
 ## Usage

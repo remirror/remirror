@@ -1,5 +1,5 @@
 {
-  "__AUTO_GENERATED__": "To update run: `yarn generate:json`",
+  "__AUTO_GENERATED__": "To update run: `pnpm generate:json`",
   "extends": "../../support/api-extractor.json",
   "mainEntryPointFilePath": "<projectFolder>/lib/index.d.ts",
   "apiReport": {

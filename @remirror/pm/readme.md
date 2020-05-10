@@ -17,7 +17,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/pm
+yarn add @remirror/pm # yarn
+pnpm add @remirror/pm # pnpm
+npm install @remirror/pm # npm
 ```
 
 ## Usage

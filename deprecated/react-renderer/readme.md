@@ -8,5 +8,7 @@ Enables rendering a remirror object node into react components.
 ## Installation
 
 ```bash
-yarn add @remirror/react-renderer
+yarn add @remirror/react-renderer # yarn
+pnpm add @remirror/react-renderer # pnpm
+npm install @remirror/react-renderer # npm
 ```

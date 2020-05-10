@@ -17,7 +17,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-collaboration prosemirror-collab
+yarn add @remirror/extension-collaboration prosemirror-collab # yarn
+pnpm add @remirror/extension-collaboration prosemirror-collab # pnpm
+npm install @remirror/extension-collaboration prosemirror-collab # npm
 ```
 
 `@remirror/extension-collaboration` has a peer dependency on `prosemirror-collab`.

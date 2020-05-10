@@ -9,5 +9,7 @@ uninitialized state.
 ## Installation
 
 ```bash
-yarn add @remirror/react-ssr
+yarn add @remirror/react-ssr # yarn
+pnpm add @remirror/react-ssr # pnpm
+npm install @remirror/react-ssr # npm
 ```

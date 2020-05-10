@@ -8,5 +8,7 @@ Icon components for rendering your interface.
 ## Installation
 
 ```bash
-yarn add @remirror/ui-icons
+yarn add @remirror/ui-icons # yarn
+pnpm add @remirror/ui-icons # pnpm
+npm install @remirror/ui-icons # npm
 ```

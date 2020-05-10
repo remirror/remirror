@@ -16,7 +16,9 @@ reader users of updates to the accessibility status of the UI.
 ## Installation
 
 ```bash
-yarn add @remirror/ui-a11y-status
+yarn add @remirror/ui-a11y-status # yarn
+pnpm add @remirror/ui-a11y-status # pnpm
+npm install @remirror/ui-a11y-status # npm
 ```
 
 Note that the `11` is two digit ones. It is a widely used shorthand for typing `accessibility`.

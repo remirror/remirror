@@ -17,5 +17,6 @@
 
   "files.exclude": {
     ".yarn/releases/**": true
-  }
+  },
+  "gitdoc.enabled": false
 }

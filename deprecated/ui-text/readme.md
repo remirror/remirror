@@ -8,5 +8,7 @@ Text components for rendering your interface.
 ## Installation
 
 ```bash
-yarn add @remirror/ui-text
+yarn add @remirror/ui-text # yarn
+pnpm add @remirror/ui-text # pnpm
+npm install @remirror/ui-text # npm
 ```

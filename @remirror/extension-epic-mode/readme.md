@@ -13,5 +13,7 @@ library.
 ## Installation
 
 ```bash
-yarn add @remirror/extension-epic-mode
+yarn add @remirror/extension-epic-mode # yarn
+pnpm add @remirror/extension-epic-mode # pnpm
+npm install @remirror/extension-epic-mode # npm
 ```

@@ -1,0 +1,7 @@
+packages:
+  - 'packages/**'
+  - '@remirror/**'
+  - '@examples/**'
+  - 'deprecated/**'
+  - docs
+  - e2e

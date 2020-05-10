@@ -8,5 +8,7 @@ A command line interface for internal and external use.
 ## Installation
 
 ```bash
-yarn add @remirror/cli
+yarn add @remirror/cli # yarn
+pnpm add @remirror/cli # pnpm
+npm install @remirror/cli # npm
 ```

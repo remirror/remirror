@@ -25,8 +25,9 @@ foundation with a structured API.
 `prosemirror-view` is a peer dependency of `prosemirror-suggest` and needs to be installed as well.
 
 ```bash
-yarn add prosemirror-suggest prosemirror-view
-
+yarn add prosemirror-suggest prosemirror-view # yarn
+pnpm add prosemirror-suggest prosemirror-view # pnpm
+npm add prosemirror-suggest prosemirror-view # npm
 ```
 
 ## Getting Started

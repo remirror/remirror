@@ -1,6 +1,6 @@
 variables:
   CI: 'true'
-  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
+  PNPM_CACHE_FOLDER: $(Pipeline.Workspace)/.pnpm-store
 
 jobs:
   - template: pipeline-jobs.yml
@@ -16,7 +16,7 @@ jobs:
 # Cron jobs for scheduling builds
 schedules:
   - cron: '0 0 * * *'
-    displayName: Daily midnight build
+    displayName: daily midnight build
     branches:
       include:
         - master

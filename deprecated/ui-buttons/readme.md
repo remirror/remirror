@@ -8,5 +8,7 @@ Button components for rendering your interface.
 ## Installation
 
 ```bash
-yarn add @remirror/ui-buttons
+yarn add @remirror/ui-buttons # yarn
+pnpm add @remirror/ui-buttons # pnpm
+npm install @remirror/ui-buttons # npm
 ```

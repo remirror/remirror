@@ -8,34 +8,34 @@ jobs:
         pool:
           vmImage: ${{ parameters.vmImage }}
         steps:
-          - template: pipeline-yarn-install.yml
-          - bash: yarn lint
-            displayName: 'Check all lint rules'
-          - bash: yarn typecheck
-            displayName: 'Typecheck code and tests'
+          - template: pipeline-install.yml
+          - bash: pnpm run lint
+            displayName: 'check all lint rules'
+          - bash: pnpm run typecheck
+            displayName: 'typecheck code and tests'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
       - job: ${{ parameters.name }}UnitTests
         pool:
           vmImage: ${{ parameters.vmImage }}
         steps:
-          - template: pipeline-yarn-install.yml
+          - template: pipeline-install.yml
           - bash: |
-              yarn test
-            displayName: 'Run unit tests across project'
+              pnpm run test
+            displayName: 'run unit tests across project'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
       - job: ${{ parameters.name }}Build
         pool:
           vmImage: ${{ parameters.vmImage }}
         steps:
-          - template: pipeline-yarn-install.yml
-          - bash: yarn build
-            displayName: 'Build all project dependencies'
+          - template: pipeline-install.yml
+          - bash: pnpm run build
+            displayName: 'build all project dependencies'
           - publish: $(System.DefaultWorkingDirectory)/
             condition: succeeded()
             artifact: Build
-            displayName: Create build artifact
+            displayName: create build artifact
 
   - ${{ if eq(parameters.name, 'Linux') }}:
       - job: ${{ parameters.name }}SizeChecks
@@ -44,10 +44,10 @@ jobs:
         dependsOn:
           - LinuxBuild
         steps:
-          - template: pipeline-yarn-install.yml
+          - template: pipeline-install.yml
           - template: pipeline-restore-build.yml
-          - bash: yarn size
-            displayName: 'Check size limits'
+          - bash: pnpm run size
+            displayName: 'check size limits'
 
   - ${{ if eq(parameters.name, 'Linux') }}:
       - job: ${{ parameters.name }}BuildUnitTests
@@ -56,10 +56,10 @@ jobs:
         dependsOn:
           - LinuxBuild
         steps:
-          - template: pipeline-yarn-install.yml
+          - template: pipeline-install.yml
           - template: pipeline-restore-build.yml
-          - bash: yarn test:build
-            displayName: 'Run unit tests against built code'
+          - bash: pnpm run test:build
+            displayName: 'run unit tests against built code'
 
   - job: ${{ parameters.name }}ChromeIntegrationTests
     pool:
@@ -73,11 +73,11 @@ jobs:
           - bash:
               echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl
               -p
-            displayName: 'Increase file watch limit for Linux only'
-      - template: pipeline-yarn-install.yml
+            displayName: 'increase file watch limit for linux only'
+      - template: pipeline-install.yml
       - template: pipeline-restore-build.yml
-      - bash: yarn test:e2e
-        displayName: 'Razzle integration tests'
+      - bash: pnpm run test:e2e
+        displayName: 'razzle integration tests'
         env:
           REMIRROR_E2E_SERVER: razzle
       - publish: $(System.DefaultWorkingDirectory)/e2e/__failed-diffs__

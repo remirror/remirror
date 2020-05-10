@@ -69,9 +69,9 @@ View our documentation website at https://docs.remirror.org/
 
 ### Prerequisites
 
-- Typescript `>= 3.6`
-- React `>= 16.9`
-- Yarn `>= 1.17`
+- [Typescript](https://www.typescriptlang.org/) `>= 3.6`
+- [React](https://reactjs.org/) `>= 16.9`
+- [pnpm](https://pnpm.js.org/en/installation) `>= 4.14`
 
 <br />
 
@@ -83,20 +83,20 @@ From the root of this repository run the following to trigger a full typecheck, 
 tests.
 
 ```bash
-yarn checks
+pnpm run checks
 ```
 
 By default these checks are not run automatically. To enable automatic precommit and prepush hooks
 use the following command:
 
 ```bash
-yarn start:checks
+pnpm run start:checks
 ```
 
 To stop per-commit / per-push checks run:
 
 ```bash
-yarn stop:checks
+pnpm run stop:checks
 ```
 
 <br />

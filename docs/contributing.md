@@ -10,19 +10,23 @@ title: Contributing
 
 Fork [this respository][repo], clone your fork and add this repository as the upstream remote.
 
+You will need to have `pnpm` installed so make sure you follow the installation
+[instructions](https://pnpm.js.org/en/installation).
+
 ```bash
 git clone <<FORKED_REPO_URL>>
+cd remirror
 git remote add upstream https://github.com/remirror/remirror
+pnpm install
 
-yarn ## Install all dependencies
-
-git checkout -b BRANCH_NAME # Checkout a branch and start working on it
+# Checkout a branch and start working on it
+git checkout -b BRANCH_NAME
 ```
 
-To work on examples or the documentation website run:
+From the root directory use the following command to work on examples or the documentation website.
 
 ```bash
-yarn docs
+pnpm run docs
 ```
 
 Once the build completes (can take a minute the first time) navigate to http://localhost:8000 (or
@@ -30,7 +34,13 @@ another port if that one is already being used).
 
 The documentation is written using [gatsby] and all files and dependencies are available in the
 `/docs/` subdirectory. To add a new dependency, you will need to add it to `/docs/package.json` and
-not the top level package.json file.
+not the top level package.json file. You can either do this by manually editing the
+`/docs/package.json` file or you use the following command.
+
+```bash
+cd docs
+pnpm add <package>
+```
 
 <br />
 
@@ -39,17 +49,17 @@ not the top level package.json file.
 Unit tests can be run with the following commands.
 
 ```bash
-yarn test # Unit Test
-yarn test:e2e # Unit + Integration Tests on chrome
-yarn test:watch # Incremental unit tests since the last build
+pnpm run test # Unit Test
+pnpm run test:e2e # Unit + Integration Tests on chrome
+pnpm run test:watch # Test changed files since the last commit
 ```
 
-Create tests inside of a `__tests__/` subfolder.
+Always create your tests inside of a `__tests__/` sub-folder.
 
 **For naming conventions, use the following.**
 
 - Unit tests: `*.spec.ts(x)`
-- Integration tests: `*.e2e.test.ts` within the e2e folder
+- Integration tests: `*.e2e.test.ts` within the `/e2e` folder
 
 <br />
 
@@ -57,7 +67,7 @@ Create tests inside of a `__tests__/` subfolder.
 
 I recommend that while working on your code you commit early and often. You won't be judged. All
 worked submitted in a pull request (see following section) will be squashed into one commit before
-merging.
+merging (unless it makes sense to keep the commits as separate items).
 
 `remirror` has built in [husky] support for git hooks
 
@@ -68,28 +78,28 @@ By default these checks are **not** run automatically. To enable automatic pre-c
 hooks use the following command:
 
 ```bash
-yarn start:checks
+pnpm run start:checks
 ```
 
 To stop per-commit / per-push checks run:
 
 ```bash
-yarn stop:checks
+pnpm run stop:checks
 ```
 
 <br />
 
 ## Development
 
-First, run `yarn build` so the initial version of everything is built.
+First, run `pnpm run build` so the initial version of everything is built.
 
-After your first build, you can run `yarn dev` to watch for changes and recompile as necessary.
+After your first build, you can run `pnpm run dev` to watch for changes and recompile as necessary.
 
 If you're modifying a package and import helpers from another packages in the monorepo, ensure that
 the other package is referenced in the referring package's `package.json` file.
 
 This project is using composite types and adding a new dependency to the project throws the build
-process since it's location has to explicitly be updated. Running `yarn generate:json` will
+process since it's location has to explicitly be updated. Running `pnpm run generate:json` will
 automatically update all your project references so that the build still works. (It basically
 creates all the project `tsconfig.prod.json` files for you as can be seen
 [here](https://github.com/remirror/remirror/blob/b096ed1dd3/support/scripts/generate-configs.js#L186-L228).)
@@ -209,11 +219,13 @@ To do so from command line run the following commands.
 
 ```bash
 # Add yourself where GITHUB_USERNAME is your username
-yarn all-contributors add GITHUB_USERNAME doc code
+pnpm run contributors:add <GITHUB_USERNAME> doc,code
 
 # Update the readme.md
-yarn all-contributors generate
+pnpm run contributors:generate
 ```
+
+You might need to rerun `pnpm run fix` to update the formatting of the readme.
 
 ### Troubleshooting
 
