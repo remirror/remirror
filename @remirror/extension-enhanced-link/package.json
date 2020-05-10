@@ -8,12 +8,10 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/extension-enhanced-link.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/extension-enhanced-link.cjs.js",
+  "module": "dist/extension-enhanced-link.esm.js",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -25,8 +23,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/extension-enhanced-link.cjs.js",
   "meta": {
     "sizeLimit": "90 KB"
+  },
+  "devDependencies": {
+    "@remirror/pm": "*"
   }
 }

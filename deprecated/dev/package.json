@@ -9,12 +9,8 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/dev.esm.js",
-  "types": "lib/index.d.ts",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -35,5 +31,15 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/dev.cjs.js"
+  "cjs": "lib/dist/dev.cjs.js",
+  "devDependencies": {
+    "@types/prosemirror-state": "^1.2.3",
+    "@types/prosemirror-view": "^1.11.4",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "prosemirror-state": "^1.3.3",
+    "prosemirror-view": "^1.14.9",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
 }

@@ -9,12 +9,8 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/react-utils.esm.js",
-  "types": "lib/index.d.ts",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -29,8 +25,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/react-utils.cjs.js",
   "meta": {
     "sizeLimit": "15 KB"
+  },
+  "devDependencies": {
+    "@emotion/core": "^10.0.22",
+    "@types/react": "^16.9.34",
+    "react": "^16.13.1"
   }
 }

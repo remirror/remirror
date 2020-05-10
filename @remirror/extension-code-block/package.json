@@ -18,18 +18,16 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/extension-code-block.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/extension-code-block.cjs.js",
+  "module": "dist/extension-code-block.esm.js",
   "files": [
     "themes",
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
-    "@types/refractor": "^2.8.0",
+    "@types/refractor": "2.8.0",
     "refractor": "^3.0.0",
     "type-fest": "^0.13.1"
   },
@@ -39,8 +37,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/extension-code-block.cjs.js",
   "meta": {
     "sizeLimit": "120 KB"
+  },
+  "devDependencies": {
+    "@remirror/pm": "*"
   }
 }

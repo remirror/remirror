@@ -15,19 +15,15 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/react-portals.esm.js",
-  "types": "lib/index.d.ts",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
     "@types/nanoid": "2.1.0",
     "nanoevents": "^5.1.5",
-    "nanoid": "^3.0.2",
-    "type-fest": "^0.13.0"
+    "nanoid": "^3.1.5",
+    "type-fest": "^0.13.1"
   },
   "peerDependencies": {
     "@emotion/core": "^10",
@@ -39,8 +35,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/react-portals.cjs.js",
   "meta": {
     "sizeLimit": "15 KB"
+  },
+  "devDependencies": {
+    "@emotion/core": "^10.0.22",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }

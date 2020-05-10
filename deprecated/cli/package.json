@@ -18,21 +18,20 @@
     "remirror": "lib/cli.js"
   },
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
-    "@emotion/core": "^10",
+    "@emotion/core": "^10.0.22",
     "@remirror/core-helpers": "^0.7.4",
     "figures": "^3.1.0",
     "ink": "^2.5.0",
     "ink-spinner": "^3.0.1",
     "jsesc": "^3.0.0",
     "parcel-bundler": "^1.12.4",
-    "react": "^16.8.0",
+    "react": "^16.13.1",
     "react-use": "^14.0.0",
-    "rimraf": "^3.0.0",
+    "rimraf": "^3.0.2",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
@@ -40,7 +39,7 @@
     "@types/ink-spinner": "^3.0.0",
     "@types/ink-testing-library": "^1.0.1",
     "@types/jsesc": "^2.5.0",
-    "@types/node": ">=12.11.2",
+    "@types/node": ">=13.11.0",
     "@types/parcel-bundler": "^1.12.1",
     "@types/rimraf": "^3.0.0",
     "@types/yargs": "^15.0.4",

@@ -9,15 +9,15 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/react.esm.js",
+  "main": "dist/react.cjs.js",
+  "module": "dist/react.esm.js",
   "browser": {
-    "min-document": false
+    "./dist/react.cjs.js": "./dist/react.browser.cjs.js",
+    "./dist/react.esm.js": "./dist/react.browser.esm.js"
   },
   "types": "lib/index.d.ts",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -28,7 +28,7 @@
     "min-document": "^2.19.0",
     "nanoevents": "^5.1.5",
     "nanoid": "^3.1.5",
-    "type-fest": "^0.13.0",
+    "type-fest": "^0.13.1",
     "use-deep-compare-effect": "^1.3.1"
   },
   "peerDependencies": {
@@ -41,8 +41,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/react.cjs.js",
   "meta": {
     "sizeLimit": "140 KB"
+  },
+  "devDependencies": {
+    "@remirror/pm": "*",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }

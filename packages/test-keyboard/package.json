@@ -13,14 +13,12 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/test-keyboard.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/test-keyboard.cjs.js",
+  "module": "dist/test-keyboard.esm.js",
   "files": [
     "environment.d.ts",
     "environment.js",
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -30,7 +28,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/test-keyboard.cjs.js",
   "meta": {
     "sizeLimit": "10 KB"
   }

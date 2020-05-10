@@ -15,12 +15,10 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/extension-collaboration.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/extension-collaboration.cjs.js",
+  "module": "dist/extension-collaboration.esm.js",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -28,6 +26,7 @@
     "@types/prosemirror-collab": "^1.0.2"
   },
   "devDependencies": {
+    "@remirror/pm": "*",
     "prosemirror-collab": "^1.2.2"
   },
   "peerDependencies": {
@@ -37,7 +36,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/extension-collaboration.cjs.js",
   "meta": {
     "sizeLimit": "90 KB"
   }

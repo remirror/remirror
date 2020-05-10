@@ -9,12 +9,10 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/extension-emoji.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/extension-emoji.cjs.js",
+  "module": "dist/extension-emoji.esm.js",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -27,6 +25,7 @@
     "match-sorter": "^4.1.0"
   },
   "devDependencies": {
+    "@remirror/pm": "*",
     "emoji-mart": "3.0.0",
     "emojilib": "^2.4.0"
   },
@@ -36,7 +35,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/extension-emoji.cjs.js",
   "meta": {
     "sizeLimit": "150 KB"
   }

@@ -11,10 +11,11 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/playground.cjs.js",
+  "module": "dist/playground.esm.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "lib"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -35,5 +36,12 @@
   },
   "meta": {
     "sizeLimit": "2 MB"
+  },
+  "devDependencies": {
+    "@emotion/core": "^10.0.22",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }

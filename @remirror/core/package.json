@@ -9,16 +9,16 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/core.esm.js",
+  "main": "dist/core.cjs.js",
+  "module": "dist/core.esm.js",
   "browser": {
-    "min-document": false
+    "./dist/core.cjs.js": "./dist/core.browser.cjs.js",
+    "./dist/core.esm.js": "./dist/core.browser.esm.js"
   },
   "types": "lib/index.d.ts",
   "files": [
     "internal",
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -34,8 +34,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/core.cjs.js",
   "meta": {
     "sizeLimit": "70 KB"
+  },
+  "devDependencies": {
+    "@remirror/pm": "*"
   }
 }

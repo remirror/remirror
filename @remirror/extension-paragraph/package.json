@@ -15,13 +15,11 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/extension-paragraph.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/extension-paragraph.cjs.js",
+  "module": "dist/extension-paragraph.esm.js",
   "files": [
     "internal",
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -30,7 +28,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/extension-paragraph.cjs.js",
   "meta": {
     "sizeLimit": "90 KB"
   }

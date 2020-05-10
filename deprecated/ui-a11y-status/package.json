@@ -9,12 +9,8 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/ui-a11y-status.esm.js",
-  "types": "lib/index.d.ts",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -23,7 +19,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/ui-a11y-status.cjs.js",
   "meta": {
     "sizeLimit": "1 KB"
   }

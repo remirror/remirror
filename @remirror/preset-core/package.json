@@ -15,13 +15,11 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/preset-core.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/preset-core.cjs.js",
+  "module": "dist/preset-core.esm.js",
   "files": [
     "internal",
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -33,7 +31,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/preset-core.cjs.js",
   "meta": {
     "sizeLimit": "50 KB"
   }

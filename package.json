@@ -12,10 +12,8 @@
     ]
   },
   "scripts": {
-    "build": "run-p build:rollup build:ts",
+    "build": "preconstruct build",
     "build:docs": "cd docs && yarn build",
-    "build:rollup": "rollup --config ./support/build/rollup.config.js",
-    "build:ts": "tsc -b tsconfig.prod.json --verbose",
     "checks": "run-s integrity lint typecheck test",
     "checks:ci": "run-s lint typecheck",
     "checks:release": "run-s ci checks build test:e2e:ssr",
@@ -33,20 +31,19 @@
     "fix": "run-s fix:prettier fix:es",
     "fix:es": "yarn lint:es --fix",
     "fix:prettier": "yarn run:prettier --write",
+    "fix:repo": "manypkg fix",
     "frozen": "yarn --frozen-lockfile install",
-    "generate:all": "node support/scripts/generate-api-docs.js --all",
-    "generate:api": "node support/scripts/generate-api-docs.js --api",
-    "generate:docs": "node support/scripts/generate-api-docs.js --docs",
-    "generate:json": "node support/scripts/generate-configs.js",
+    "generate:size": "node support/scripts/generate-configs.js",
     "if-clean": "node support/scripts/run-if-clean.js",
     "if-config": "node support/scripts/run-if-config.js",
     "if-not-ci": "node support/scripts/run-if-not-ci.js",
-    "postinstall": "yarn patch",
+    "postinstall": "yarn patch && preconstruct dev",
     "integrity": "yarn check --integrity",
     "is-logged-in": "npm whoami",
     "lint": "run-s lint:*",
     "lint:es": "eslint -f github --ext=.tsx,.ts,.js .",
     "lint:prettier": "yarn run:prettier \"!**/CHANGELOG.md\" --check",
+    "lint:repo": "manypkg check",
     "md": "node support/scripts/md.js",
     "patch": "patch-package --patch-dir support/patches",
     "prerelease": "yarn if-not-ci run-s checks:release",
@@ -153,7 +150,6 @@
     ],
     "projects": [
       "<rootDir>/@remirror/*/jest.config.js",
-      "<rootDir>/support/dts-jest",
       "<rootDir>/packages/*/jest.config.js"
     ],
     "reporters": [
@@ -169,7 +165,7 @@
   "resolutions": {
     "@babel/core": "^7.9.0",
     "@babel/parser": "^7.9.4",
-    "@babel/runtime": "^7.9.2",
+    "@babel/runtime": "^7",
     "@jest/environment": "^26",
     "@jest/fake-timers": "^26",
     "@jest/types": "^26",
@@ -192,7 +188,7 @@
     "tar": ">=4.4.10",
     "typescript": "3.9.1-rc"
   },
-  "devDependencies": {
+  "dependencies": {
     "@babel/core": "^7.9.6",
     "@babel/parser": "^7.9.6",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
@@ -205,13 +201,15 @@
     "@babel/plugin-transform-typescript": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
-    "@babel/runtime": "^7.9.6",
+    "@babel/runtime": "^7",
     "@changesets/cli": "^2.6.5",
     "@getify/eslint-plugin-proper-arrows": "^9.1.1",
     "@jest/types": "^26.0.0",
+    "@manypkg/cli": "^0.12.0",
     "@manypkg/get-packages": "^1.0.1",
     "@microsoft/api-documenter": "^7.7.20",
     "@microsoft/api-extractor": "^7.7.13",
+    "@preconstruct/cli": "^1.1.14",
     "@rollup/plugin-commonjs": "^11.1.0",
     "@rollup/plugin-json": "^4.0.3",
     "@rollup/plugin-node-resolve": "^7.1.3",
@@ -224,7 +222,7 @@
     "@storybook/react": "^5.3.18",
     "@testing-library/dom": "^7.2.2",
     "@testing-library/jest-dom": "^5.5.0",
-    "@testing-library/react": "^10.0.1",
+    "@testing-library/react": "^10.0.2",
     "@types/fs-extra": "^8.1.0",
     "@types/jest": "^25.2.1",
     "@types/jest-axe": "^3.2.1",
@@ -299,5 +297,11 @@
   },
   "engines": {
     "node": ">=10"
+  },
+  "preconstruct": {
+    "packages": [
+      "@remirror/*",
+      "packages/*"
+    ]
   }
 }

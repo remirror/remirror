@@ -9,12 +9,10 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/core-constants.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/core-constants.cjs.js",
+  "module": "dist/core-constants.esm.js",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7"
@@ -22,7 +20,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/core-constants.cjs.js",
   "meta": {
     "sizeLimit": "2 KB"
   }

@@ -1,9 +1,8 @@
 {
-  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
-    "lib": ["dom", "esnext"],
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "jsx": "react",
     "types": ["node", "jest"],
     "moduleResolution": "node",

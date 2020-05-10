@@ -15,12 +15,10 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/remirror.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/remirror.cjs.js",
+  "module": "dist/remirror.esm.js",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -37,8 +35,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/remirror.cjs.js",
   "meta": {
     "skipApi": true
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }

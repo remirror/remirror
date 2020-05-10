@@ -50,6 +50,7 @@ export const HelpersExtension = ExtensionFactory.plain({
     };
   },
 
+  // Helpers are only available once the view has been added to the dom.
   onView(parameter) {
     const { getParameter } = parameter;
     const helpers: Record<string, AnyFunction> = object();
@@ -100,17 +101,18 @@ declare global {
       ProsemirrorType = never
     > {
       /**
-       * A helper method is a function that takes in arguments and returns
-       * a value depicting the state of the editor specific to this extension.
+       * A helper method is a function that takes in arguments and returns a
+       * value depicting the state of the editor specific to this extension.
        *
        * @remarks
        *
-       * Unlike commands they can return anything and they do not effect the
+       * Unlike commands they can return anything and may not effect the
        * behavior of the editor.
        *
-       * Nodes and Marks provide the default `isActive` helper by default.
+       * Below is an example which should provide some idea on how to add
+       * helpers to the app.
        *
-       * Below is an example which should provide some idea on how to add helpers to the app.
+       * @example
        *
        * ```tsx
        * // extension.ts
@@ -142,7 +144,8 @@ declare global {
           CreateHelpersParameter<ProsemirrorType>,
           {
             /**
-             * The extension which provides access to the settings and properties.
+             * The extension which provides access to the settings and
+             * properties.
              */
             extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
           }
@@ -152,8 +155,8 @@ declare global {
 
     interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
       /**
-       * Helper method to provide information about the content of the editor. Each
-       * extension can register its own helpers.
+       * Helper method to provide information about the content of the editor.
+       * Each extension can register its own helpers.
        */
       helpers: <ExtensionUnion extends AnyExtension = AnyExtension>() => HelpersFromExtensions<
         ExtensionUnion | Of<typeof HelpersExtension>

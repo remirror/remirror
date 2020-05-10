@@ -9,12 +9,10 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/prosemirror-suggest.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/prosemirror-suggest.cjs.js",
+  "module": "dist/prosemirror-suggest.esm.js",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -37,8 +35,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/prosemirror-suggest.cjs.js",
   "meta": {
     "sizeLimit": "90 KB"
+  },
+  "devDependencies": {
+    "prosemirror-view": "^1.14.9"
   }
 }

@@ -9,12 +9,10 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/core-types.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/core-types.cjs.js",
+  "module": "dist/core-types.esm.js",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -22,7 +20,7 @@
     "@styled-system/css": "^5.0.23",
     "@types/styled-system__css": "^5.0.8",
     "csstype": "^2.6.10",
-    "type-fest": "^0.13.0"
+    "type-fest": "^0.13.1"
   },
   "peerDependencies": {
     "@remirror/pm": "^1.0.0"
@@ -30,8 +28,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/core-types.cjs.js",
   "meta": {
     "sizeLimit": "1 KB"
+  },
+  "devDependencies": {
+    "@remirror/pm": "*"
   }
 }

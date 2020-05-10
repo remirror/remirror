@@ -8,13 +8,11 @@
   "contributors": [
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/multishift.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/multishift.cjs.js",
+  "module": "dist/multishift.esm.js",
   "files": [
     "globals.d.ts",
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -33,15 +31,17 @@
     "w3c-keyname": "^2.2.4"
   },
   "peerDependencies": {
-    "@emotion/core": "^10",
     "@types/react": "^16.8.0",
     "react": "^16.8.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/multishift.cjs.js",
   "meta": {
     "sizeLimit": "20 KB"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.34",
+    "react": "^16.13.1"
   }
 }

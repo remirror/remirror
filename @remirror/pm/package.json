@@ -5,14 +5,14 @@
   "homepage": "https://github.com/remirror/remirror/tree/master/packages/@remirror/pm",
   "repository": "https://github.com/remirror/remirror/tree/master/packages/@remirror/pm",
   "license": "MIT",
-  "contributors": ["Ifiok Jr. <ifiokotung@gmail.com>"],
+  "contributors": [
+    "Ifiok Jr. <ifiokotung@gmail.com>"
+  ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/pm.esm.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/pm.cjs.js",
+  "module": "dist/pm.esm.js",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -43,7 +43,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/@remirror/pm.cjs.js",
   "meta": {
     "sizeLimit": "250 KB"
   }

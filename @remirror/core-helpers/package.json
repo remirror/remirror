@@ -2,6 +2,8 @@
   "name": "@remirror/core-helpers",
   "version": "0.7.6",
   "description": "Provide helper functions for the remirror codebase, kinda like a tiny lodash",
+  "main": "dist/core-helpers.cjs.js",
+  "module": "dist/core-helpers.esm.js",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/core-helpers",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/core-helpers",
   "license": "MIT",
@@ -9,12 +11,8 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
-  "main": "lib/dist/index.js",
-  "module": "lib/dist/core-helpers.esm.js",
-  "types": "lib/index.d.ts",
   "files": [
-    "lib",
-    "src"
+    "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
@@ -26,11 +24,11 @@
     "deepmerge": "^4.2.0",
     "fast-deep-equal": "^2.0.1",
     "make-error": "^1.3.6",
-    "nanoid": "^3.0.2",
+    "nanoid": "^3.1.5",
     "object.omit": "^3.0.0",
     "object.pick": "^1.3.0",
     "throttle-debounce": "^2.1.0",
-    "type-fest": "^0.13.0"
+    "type-fest": "^0.13.1"
   },
   "publishConfig": {
     "access": "public"
