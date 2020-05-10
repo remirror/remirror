@@ -1,12 +1,11 @@
-import { writeFile } from 'fs';
+import { promises } from 'fs';
 import looksSame, { createDiff } from 'looks-same';
-import md from 'mkdirp-promise';
 import { dirname, resolve } from 'path';
 import { promisify } from 'util';
 
 import { kebabCase } from '@remirror/core';
 
-const write = promisify(writeFile);
+const {mkdir, writeFile} = promises
 
 const tempDir = (...paths: string[]) => resolve(__dirname, '../..', '__failed-diffs__', ...paths);
 
@@ -34,9 +33,9 @@ export const imagesMatch = (image1: string | Buffer, image2: string | Buffer) =>
       }
       const { diff, one, two } = getDiffPaths();
 
-      md(dirname(diff))
+      mkdir(dirname(diff), {recursive: true})
         .then(() => {
-          return Promise.all([write(one, image1), write(two, image2)]);
+          return Promise.all([writeFile(one, image1), writeFile(two, image2)]);
         })
         .then(() => {
           createDiff(
