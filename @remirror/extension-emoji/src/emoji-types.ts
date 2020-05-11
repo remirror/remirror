@@ -2,7 +2,7 @@ import {
   SuggestChangeHandlerParameter,
   SuggestExitHandlerParameter,
   SuggestKeyBindingMap,
-} from 'prosemirror-suggest';
+} from '@remirror/pm/suggest';
 
 import { BaseExtensionSettings } from '@remirror/core';
 

@@ -11,6 +11,7 @@
   "sideEffects": false,
   "main": "dist/core-constants.cjs.js",
   "module": "dist/core-constants.esm.js",
+  "types": "dist/core-constants.cjs.d.ts",
   "files": [
     "dist"
   ],

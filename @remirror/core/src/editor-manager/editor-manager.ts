@@ -1,5 +1,3 @@
-import { EditorState } from 'prosemirror-state';
-
 import {
   ErrorConstant,
   REMIRROR_IDENTIFIER_KEY,
@@ -16,6 +14,7 @@ import {
 } from '@remirror/core-helpers';
 import { EditorSchema, EditorView, ProsemirrorPlugin } from '@remirror/core-types';
 import { createDocumentNode, CreateDocumentNodeParameter } from '@remirror/core-utils';
+import { EditorState } from '@remirror/pm/state';
 
 import { BuiltInExtensions, BuiltinPreset } from '../builtins';
 import {

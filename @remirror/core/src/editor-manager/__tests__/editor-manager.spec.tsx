@@ -1,5 +1,5 @@
 import { createEditor, doc, p } from 'jest-prosemirror';
-import { EditorView } from 'prosemirror-view';
+import { EditorView } from '@remirror/pm/view';
 import React, { FC } from 'react';
 
 import { EMPTY_PARAGRAPH_NODE, ExtensionTag } from '@remirror/core-constants';

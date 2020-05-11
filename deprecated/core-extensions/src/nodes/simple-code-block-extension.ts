@@ -1,5 +1,5 @@
 import { Interpolation } from '@emotion/core';
-import { textblockTypeInputRule } from 'prosemirror-inputrules';
+import { textblockTypeInputRule } from '@remirror/pm/inputrules';
 
 import {
   CommandNodeTypeParameter,

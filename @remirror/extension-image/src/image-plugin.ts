@@ -1,6 +1,5 @@
-import { Plugin } from 'prosemirror-state';
-
 import { Cast } from '@remirror/core';
+import { Plugin } from '@remirror/pm/state';
 
 export const createImageExtensionPlugin = () => {
   return new Plugin({

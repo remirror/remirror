@@ -24,19 +24,20 @@ npm install @remirror/pm # npm
 
 ## Usage
 
-This bundles up the prosemirror libaries into one package to prevent multiple installs. Tree shaking
-with rollup and webpack means that the compiled code only picks out what is used.
+This bundles up the prosemirror libraries into one package to make development and consumption of
+the remirror codebase simpler. Since the prosemirror libraries all provide es modules then tree
+shaking with rollup and webpack means that the compiled code only picks out what is used.
 
-While you should install this alongside other `remirror` libraries (it is a peer dependency) you
-will probably never need to use it. However if you decide you would like to to the following can
-serve as a guide.
+This library is a required peer dependency when using remirror in your codebase. While you may never
+need to use it directly, the following code is an example of how you could potentially consume it.
 
 ```ts
-import { View } from '@remirror/pm/lib/view';
-import { } from '@remirror/pm/lib/state;
+import { View } from '@remirror/pm/view';
+import { EditorState } from '@remirror/pm/state';
+import { Suggest } from '@remirror/pm/suggest';
 
-// Top level
-import {} from '@remirror/pm';
+// Top level (not recommended).
+import { Node, Mark } from '@remirror/pm';
 ```
 
 And that is'

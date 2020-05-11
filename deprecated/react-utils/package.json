@@ -17,6 +17,11 @@
     "@remirror/core-helpers": "^0.7.6",
     "@remirror/core-types": "^0.9.0"
   },
+  "devDependencies": {
+    "@emotion/core": "^10.0.22",
+    "@types/react": "^16.9.34",
+    "react": "^16.13.1"
+  },
   "peerDependencies": {
     "@emotion/core": "^10",
     "@types/react": "^16.8.0",
@@ -27,10 +32,5 @@
   },
   "meta": {
     "sizeLimit": "15 KB"
-  },
-  "devDependencies": {
-    "@emotion/core": "^10.0.22",
-    "@types/react": "^16.9.34",
-    "react": "^16.13.1"
   }
 }

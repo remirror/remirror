@@ -1,4 +1,4 @@
-import { Plugin } from 'prosemirror-state';
+import { Plugin } from '@remirror/pm/state';
 
 import { Extension, ExtensionParameter } from '@remirror/core';
 import { entries, uniqueArray } from '@remirror/core-helpers';

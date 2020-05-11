@@ -17,6 +17,7 @@
   "sideEffects": false,
   "main": "dist/extension-text.cjs.js",
   "module": "dist/extension-text.esm.js",
+  "types": "dist/extension-text.cjs.d.ts",
   "files": [
     "internal",
     "dist"

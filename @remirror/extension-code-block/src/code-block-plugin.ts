@@ -10,7 +10,8 @@ import {
   Transaction,
   TransactionParameter,
 } from '@remirror/core';
-import { DecorationSet, Step } from '@remirror/pm';
+import { Step } from '@remirror/pm/transform';
+import { DecorationSet } from '@remirror/pm/view';
 
 import { CodeBlockExtensionProperties, CodeBlockExtensionSettings } from './code-block-types';
 import {

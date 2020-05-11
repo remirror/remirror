@@ -1,4 +1,4 @@
-import { EditorView } from 'prosemirror-view';
+import { EditorView } from '@remirror/pm/view';
 
 import { EditorManager } from '@remirror/core';
 

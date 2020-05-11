@@ -2,8 +2,6 @@
   "name": "@remirror/react-dev",
   "version": "0.11.0",
   "description": "Development utilities for remirror",
-  "main": "dist/react-dev.cjs.js",
-  "module": "dist/react-dev.esm.js",
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/react-dev",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/react-dev",
   "license": "MIT",
@@ -11,15 +9,24 @@
     "Ifiok Jr. <ifiokotung@gmail.com>"
   ],
   "sideEffects": false,
+  "main": "dist/react-dev.cjs.js",
+  "module": "dist/react-dev.esm.js",
+  "types": "dist/react-dev.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
-    "@remirror/pm": "^1.0.0",
+    "@remirror/pm": "^0.0.0",
     "@remirror/react": "^0.13.1",
     "@types/prosemirror-dev-tools": "^2.1.0",
     "prosemirror-dev-tools": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "peerDependencies": {
     "@types/react": "^16.8.0",
@@ -30,11 +37,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/react-dev.cjs.js",
-  "devDependencies": {
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.7",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
-  }
+  "cjs": "lib/dist/react-dev.cjs.js"
 }

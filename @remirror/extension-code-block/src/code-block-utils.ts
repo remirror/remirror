@@ -23,7 +23,8 @@ import {
   ProsemirrorNodeParameter,
   TextParameter,
 } from '@remirror/core';
-import { Decoration, TextSelection } from '@remirror/pm';
+import { Decoration } from '@remirror/pm/view';
+import { TextSelection } from '@remirror/pm/state';
 
 import {
   CodeBlockAttributes,

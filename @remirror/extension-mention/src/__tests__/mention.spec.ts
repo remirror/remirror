@@ -1,6 +1,6 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
-import { SuggestCommandParameter } from 'prosemirror-suggest';
+import { SuggestCommandParameter } from '@remirror/pm/suggest';
 
 import { fromHTML, toHTML } from '@remirror/core';
 import { createBaseTestManager } from '@remirror/test-fixtures';

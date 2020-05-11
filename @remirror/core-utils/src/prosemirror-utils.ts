@@ -1,6 +1,3 @@
-import { MarkSpec, NodeSpec } from 'prosemirror-model';
-import { Selection as PMSelection } from 'prosemirror-state';
-
 import { ErrorConstant } from '@remirror/core-constants';
 import {
   bool,
@@ -36,6 +33,8 @@ import {
   Transaction,
   TransactionParameter,
 } from '@remirror/core-types';
+import { MarkSpec, NodeSpec } from '@remirror/pm/model';
+import { Selection as PMSelection } from '@remirror/pm/state';
 
 import {
   isEditorState,

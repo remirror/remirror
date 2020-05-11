@@ -1,5 +1,5 @@
 import { cleanup } from '@testing-library/react';
-import { Plugin } from 'prosemirror-state';
+import { Plugin } from '@remirror/pm/state';
 
 import { Extension, toHTML } from '@remirror/core';
 import {

@@ -1,5 +1,5 @@
-import { EditorState, Plugin, Transaction } from 'prosemirror-state';
-import { Decoration, DecorationSet } from 'prosemirror-view';
+import { EditorState, Plugin, Transaction } from '@remirror/pm/state';
+import { Decoration, DecorationSet } from '@remirror/pm/view';
 
 import {
   BaseExtensionSettings,

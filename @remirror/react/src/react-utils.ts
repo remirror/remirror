@@ -9,8 +9,7 @@ import {
   ReactNode,
 } from 'react';
 
-import { bool, isFunction, isObject, isString } from '@remirror/core-helpers';
-import { AnyFunction, PlainObject } from '@remirror/core-types';
+import { AnyFunction, bool, isFunction, isObject, isString, PlainObject } from '@remirror/core';
 
 export interface RemirrorComponentStaticProperties {
   /**

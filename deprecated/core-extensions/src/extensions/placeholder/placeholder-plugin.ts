@@ -1,5 +1,5 @@
-import { EditorState, Plugin } from 'prosemirror-state';
-import { Decoration, DecorationSet } from 'prosemirror-view';
+import { EditorState, Plugin } from '@remirror/pm/state';
+import { Decoration, DecorationSet } from '@remirror/pm/view';
 
 import { AnyExtension } from '@remirror/core';
 import { EditorSchema, Transaction } from '@remirror/core-types';

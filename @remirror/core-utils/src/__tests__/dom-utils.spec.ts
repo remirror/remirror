@@ -12,7 +12,7 @@ import {
   table,
   tableRow,
 } from 'jest-prosemirror';
-import { TextSelection } from 'prosemirror-state';
+import { TextSelection } from '@remirror/pm/state';
 
 import { NodeMatch } from '@remirror/core-types';
 import { docNodeBasicJSON } from '@remirror/test-fixtures';

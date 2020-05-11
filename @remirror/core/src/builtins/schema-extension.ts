@@ -1,5 +1,3 @@
-import { AttributeSpec, ParseRule, Schema } from 'prosemirror-model';
-
 import { ExtensionPriority } from '@remirror/core-constants';
 import { freeze, isArray, isFunction, isString, object } from '@remirror/core-helpers';
 import {
@@ -12,6 +10,7 @@ import {
   ProsemirrorAttributes,
 } from '@remirror/core-types';
 import { isElementDOMNode } from '@remirror/core-utils';
+import { AttributeSpec, ParseRule, Schema } from '@remirror/pm/model';
 
 import {
   AnyExtension,

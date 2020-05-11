@@ -1,5 +1,4 @@
 import minDocument from 'min-document';
-import { DirectEditorProps, EditorView } from 'prosemirror-view';
 
 import {
   Cast,
@@ -9,6 +8,7 @@ import {
   shouldUseDOMEnvironment,
   Transaction,
 } from '@remirror/core';
+import { DirectEditorProps, EditorView } from '@remirror/pm/view';
 
 /**
  * A mock editor view used only when prosemirror is running on the server

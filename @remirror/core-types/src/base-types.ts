@@ -1,6 +1,6 @@
 /* Utility Types */
 
-import { AttributeSpec } from 'prosemirror-model';
+import { AttributeSpec } from '@remirror/pm/model';
 import { ConditionalExcept, ConditionalPick } from 'type-fest';
 
 /**

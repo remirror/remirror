@@ -1,13 +1,13 @@
-import { NodeSpec, Schema } from 'prosemirror-model';
 import { marks, nodes } from 'prosemirror-schema-basic';
+import { tableNodes } from 'prosemirror-tables';
+
+import { NodeGroup } from '@remirror/core-constants';
 import {
   bulletList as baseBulletList,
   listItem as baseListItem,
   orderedList as baseOrderedList,
-} from 'prosemirror-schema-list';
-import { tableNodes } from 'prosemirror-tables';
-
-import { NodeGroup } from '@remirror/core-constants';
+} from '@remirror/pm/schema-list';
+import { NodeSpec, Schema } from '@remirror/pm/model';
 
 const {
   doc,

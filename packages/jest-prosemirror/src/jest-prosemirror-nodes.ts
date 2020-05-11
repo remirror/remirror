@@ -1,12 +1,3 @@
-import { GapCursor } from 'prosemirror-gapcursor';
-import { Schema } from 'prosemirror-model';
-import {
-  AllSelection,
-  EditorState,
-  NodeSelection,
-  Selection,
-  TextSelection,
-} from 'prosemirror-state';
 import { cellAround, CellSelection } from 'prosemirror-tables';
 import pm, {
   MarkTypeAttributes,
@@ -16,6 +7,15 @@ import pm, {
 
 import { Cast, keys } from '@remirror/core-helpers';
 import { EditorSchema, Plugin } from '@remirror/core-types';
+import {
+  AllSelection,
+  EditorState,
+  NodeSelection,
+  Selection,
+  TextSelection,
+} from '@remirror/pm/state';
+import { Schema } from '@remirror/pm/model';
+import { GapCursor } from '@remirror/pm/gapcursor';
 
 import { schema } from './jest-prosemirror-schema';
 import { TaggedDocParameter } from './jest-prosemirror-types';

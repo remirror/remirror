@@ -3,8 +3,8 @@ import {
   baseKeymap,
   chainCommands as pmChainCommands,
   selectParentNode,
-} from 'prosemirror-commands';
-import { undoInputRule } from 'prosemirror-inputrules';
+} from '@remirror/pm/commands';
+import { undoInputRule } from '@remirror/pm/inputrules';
 
 import {
   chainKeyBindingCommands,

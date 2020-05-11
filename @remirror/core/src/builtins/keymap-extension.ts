@@ -1,5 +1,3 @@
-import { keymap } from 'prosemirror-keymap';
-
 import { ExtensionPriority } from '@remirror/core-constants';
 import { hasOwnProperty, object } from '@remirror/core-helpers';
 import {
@@ -9,6 +7,7 @@ import {
   ProsemirrorCommandFunction,
 } from '@remirror/core-types';
 import { chainKeyBindingCommands } from '@remirror/core-utils';
+import { keymap } from '@remirror/pm/keymap';
 
 import { Extension, ExtensionFactory } from '../extension';
 import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';

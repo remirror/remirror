@@ -19,6 +19,11 @@
     "@remirror/ui": "^0.7.4",
     "react-modal": "^3.10.1"
   },
+  "devDependencies": {
+    "@emotion/core": "^10.0.22",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7"
+  },
   "peerDependencies": {
     "@emotion/core": "^10",
     "@types/react": "^16.8.0",
@@ -29,10 +34,5 @@
   },
   "meta": {
     "sizeLimit": "30 KB"
-  },
-  "devDependencies": {
-    "@emotion/core": "^10.0.22",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.7"
   }
 }

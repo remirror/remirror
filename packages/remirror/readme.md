@@ -3,7 +3,7 @@
 [![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/remirror.svg?)](https://bundlephobia.com/result?p=remirror)
 [![npm](https://img.shields.io/npm/dm/remirror.svg?&logo=npm)](https://www.npmjs.com/package/remirror)
 
-Remirror is an extensible text-editor for react, built on top of Prosemirror.
+Remirror is an extensible text-editor for react, built with prosemirror.
 
 ## Getting Started
 

@@ -20,6 +20,7 @@
   "sideEffects": false,
   "main": "dist/extension-code-block.cjs.js",
   "module": "dist/extension-code-block.esm.js",
+  "types": "dist/extension-code-block.cjs.d.ts",
   "files": [
     "themes",
     "dist"
@@ -31,16 +32,16 @@
     "refractor": "^3.0.0",
     "type-fest": "^0.13.1"
   },
+  "devDependencies": {
+    "@remirror/pm": "*"
+  },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.0"
+    "@remirror/pm": "^0.0.0"
   },
   "publishConfig": {
     "access": "public"
   },
   "meta": {
     "sizeLimit": "120 KB"
-  },
-  "devDependencies": {
-    "@remirror/pm": "*"
   }
 }

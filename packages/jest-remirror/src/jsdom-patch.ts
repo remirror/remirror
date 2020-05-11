@@ -1,7 +1,6 @@
-import { EditorState } from 'prosemirror-state';
-import { EditorView } from 'prosemirror-view';
-
 import { Cast } from '@remirror/core';
+import { EditorState } from '@remirror/pm/state';
+import { EditorView } from '@remirror/pm/view';
 
 export class NullSelectionReader {
   constructor(private readonly warnOnce: () => void) {}

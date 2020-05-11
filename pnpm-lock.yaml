@@ -15,7 +15,7 @@ importers:
       '@babel/preset-react': 7.9.4_@babel+core@7.9.6
       '@babel/runtime': 7.9.6
       '@changesets/cli': 2.6.5
-      '@getify/eslint-plugin-proper-arrows': 9.1.1_eslint@7.0.0
+      '@getify/eslint-plugin-proper-arrows': 9.1.1_eslint@6.8.0
       '@jest/types': 26.0.1
       '@manypkg/cli': 0.12.0
       '@manypkg/get-packages': 1.0.1
@@ -37,8 +37,9 @@ importers:
       '@types/react': 16.9.34
       '@types/react-dom': 16.9.7
       '@types/react-test-renderer': 16.9.2
-      '@typescript-eslint/eslint-plugin': 2.31.0_03c2c5a214facbe1a70092dcc0786d9b
-      '@typescript-eslint/parser': 2.31.0_eslint@7.0.0+typescript@3.9.1-rc
+      '@types/testing-library__jest-dom': 5.0.4
+      '@typescript-eslint/eslint-plugin': 2.31.0_9127dbcc90207b15ee682ef4163edade
+      '@typescript-eslint/parser': 2.31.0_eslint@6.8.0+typescript@3.9.1-rc
       all-contributors-cli: 6.14.2
       babel-jest: 26.0.1_@babel+core@7.9.6
       babel-loader: 8.1.0_@babel+core@7.9.6
@@ -50,22 +51,22 @@ importers:
       cpy-cli: 3.1.1
       cross-env: 7.0.2
       diffable-html: 4.0.0
-      eslint: 7.0.0
-      eslint-config-prettier: 6.11.0_eslint@7.0.0
+      eslint: 6.8.0
+      eslint-config-prettier: 6.11.0_eslint@6.8.0
       eslint-formatter-friendly: 7.0.0
-      eslint-formatter-github: 0.4.2_eslint@7.0.0
-      eslint-plugin-eslint-comments: 3.1.2_eslint@7.0.0
+      eslint-formatter-github: 0.4.2_eslint@6.8.0
+      eslint-plugin-eslint-comments: 3.1.2_eslint@6.8.0
       eslint-plugin-graphql: 3.1.1
-      eslint-plugin-import: 2.20.2_eslint@7.0.0
-      eslint-plugin-jest: 23.10.0_eslint@7.0.0+typescript@3.9.1-rc
-      eslint-plugin-jest-formatting: 1.2.0_eslint@7.0.0
-      eslint-plugin-jsx-a11y: 6.2.3_eslint@7.0.0
+      eslint-plugin-import: 2.20.2_eslint@6.8.0
+      eslint-plugin-jest: 23.10.0_eslint@6.8.0+typescript@3.9.1-rc
+      eslint-plugin-jest-formatting: 1.2.0_eslint@6.8.0
+      eslint-plugin-jsx-a11y: 6.2.3_eslint@6.8.0
       eslint-plugin-promise: 4.2.1
-      eslint-plugin-react: 7.19.0_eslint@7.0.0
-      eslint-plugin-react-hooks: 4.0.0_eslint@7.0.0
+      eslint-plugin-react: 7.19.0_eslint@6.8.0
+      eslint-plugin-react-hooks: 4.0.0_eslint@6.8.0
       eslint-plugin-security: 1.4.0
-      eslint-plugin-simple-import-sort: 5.0.3_eslint@7.0.0
-      eslint-plugin-unicorn: 19.0.1_eslint@7.0.0
+      eslint-plugin-simple-import-sort: 5.0.3_eslint@6.8.0
+      eslint-plugin-unicorn: 19.0.1_eslint@6.8.0
       fs-extra: 9.0.0
       husky: 4.2.5
       jest: 26.0.1
@@ -131,6 +132,7 @@ importers:
       '@types/react': ^16.9.34
       '@types/react-dom': ^16.9.7
       '@types/react-test-renderer': ^16.9.2
+      '@types/testing-library__jest-dom': ^5.0.4
       '@typescript-eslint/eslint-plugin': ^2.31.0
       '@typescript-eslint/parser': ^2.31.0
       all-contributors-cli: ^6.14.0
@@ -144,7 +146,7 @@ importers:
       cpy-cli: ^3.1.1
       cross-env: ^7.0.2
       diffable-html: ^4.0.0
-      eslint: ^7.0.0
+      eslint: ^6.8.0
       eslint-config-prettier: ^6.11.0
       eslint-formatter-friendly: ^7.0.0
       eslint-formatter-github: ^0.4.2
@@ -408,9 +410,11 @@ importers:
     dependencies:
       '@babel/runtime': 7.9.6
       '@remirror/core': 'link:../core'
+      '@remirror/pm': 'link:../pm'
     specifiers:
       '@babel/runtime': ^7
       '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
   '@remirror/extension-tables':
     dependencies:
       '@babel/runtime': 7.9.6
@@ -436,11 +440,14 @@ importers:
     dependencies:
       '@babel/runtime': 7.9.6
       '@babel/standalone': 7.9.6
+      '@babel/types': 7.9.6
+      '@remirror/core': 'link:../core'
+      '@remirror/core-helpers': 'link:../core-helpers'
+      '@remirror/react': 'link:../react'
       '@types/babel__standalone': 7.1.2
       monaco-editor: 0.20.0
       monaco-editor-webpack-plugin: 1.9.0_monaco-editor@0.20.0
     devDependencies:
-      '@emotion/core': 10.0.28_react@16.13.1
       '@types/react': 16.9.34
       '@types/react-dom': 16.9.7
       react: 16.13.1
@@ -448,7 +455,10 @@ importers:
     specifiers:
       '@babel/runtime': ^7
       '@babel/standalone': ^7.9.4
-      '@emotion/core': ^10.0.22
+      '@babel/types': ^7.9.6
+      '@remirror/core': ^0.11.0
+      '@remirror/core-helpers': ^0.7.6
+      '@remirror/react': ^0.13.1
       '@types/babel__standalone': ^7.1.2
       '@types/react': ^16.9.34
       '@types/react-dom': ^16.9.7
@@ -480,6 +490,7 @@ importers:
       prosemirror-schema-list: 1.1.2
       prosemirror-state: 1.3.3
       prosemirror-suggest: 'link:../../packages/prosemirror-suggest'
+      prosemirror-tables: 1.1.0
       prosemirror-transform: 1.2.5
       prosemirror-view: 1.14.9
     specifiers:
@@ -505,8 +516,35 @@ importers:
       prosemirror-schema-list: ^1.1.2
       prosemirror-state: ^1.3.3
       prosemirror-suggest: ^0.7.6
+      prosemirror-tables: ^1.1.0
       prosemirror-transform: ^1.2.5
       prosemirror-view: ^1.14.9
+  '@remirror/pm/commands':
+    specifiers: {}
+  '@remirror/pm/dropcursor':
+    specifiers: {}
+  '@remirror/pm/gapcursor':
+    specifiers: {}
+  '@remirror/pm/history':
+    specifiers: {}
+  '@remirror/pm/inputrules':
+    specifiers: {}
+  '@remirror/pm/keymap':
+    specifiers: {}
+  '@remirror/pm/model':
+    specifiers: {}
+  '@remirror/pm/schema-list':
+    specifiers: {}
+  '@remirror/pm/state':
+    specifiers: {}
+  '@remirror/pm/suggest':
+    specifiers: {}
+  '@remirror/pm/tables':
+    specifiers: {}
+  '@remirror/pm/transform':
+    specifiers: {}
+  '@remirror/pm/view':
+    specifiers: {}
   '@remirror/preset-core':
     dependencies:
       '@babel/runtime': 7.9.6
@@ -530,6 +568,7 @@ importers:
       min-document: 2.19.0
       nanoevents: 5.1.5
       nanoid: 3.1.6
+      resize-observer-polyfill: 1.5.1
       type-fest: 0.13.1
       use-deep-compare-effect: 1.3.1_react@16.13.1
     devDependencies:
@@ -552,6 +591,7 @@ importers:
       nanoid: ^3.1.5
       react: ^16.13.1
       react-dom: ^16.13.1
+      resize-observer-polyfill: ^1.5.1
       type-fest: ^0.13.1
       use-deep-compare-effect: ^1.3.1
   '@remirror/react-dev':
@@ -568,7 +608,7 @@ importers:
       react-dom: 16.13.1_react@16.13.1
     specifiers:
       '@babel/runtime': ^7
-      '@remirror/pm': ^1.0.0
+      '@remirror/pm': ^0.0.0
       '@remirror/react': ^0.13.1
       '@types/prosemirror-dev-tools': ^2.1.0
       '@types/react': ^16.9.34
@@ -580,26 +620,15 @@ importers:
     dependencies:
       '@babel/runtime': 7.9.6
       '@remirror/core': 'link:../core'
-      '@remirror/react-portals': 'link:../../deprecated/react-portals'
+      '@remirror/pm': 'link:../pm'
       '@remirror/ui': 'link:../../deprecated/ui'
-      '@types/prosemirror-view': 1.11.4
       min-document: 2.19.0
-      prosemirror-view: 1.14.9
-    devDependencies:
-      '@emotion/core': 10.0.28
-      '@types/react': 16.9.34
-      '@types/react-dom': 16.9.7
     specifiers:
       '@babel/runtime': ^7
-      '@emotion/core': ^10.0.22
       '@remirror/core': ^0.11.0
-      '@remirror/react-portals': ^0.7.3
+      '@remirror/pm': ^0.0.0
       '@remirror/ui': ^0.7.6
-      '@types/prosemirror-view': ^1.11.4
-      '@types/react': ^16.9.34
-      '@types/react-dom': ^16.9.7
       min-document: ^2.19.0
-      prosemirror-view: ^1.14.9
   deprecated/cli:
     dependencies:
       '@babel/runtime': 7.9.6
@@ -1415,7 +1444,7 @@ importers:
       '@remirror/core-helpers': ^0.7.6
       '@remirror/core-types': ^0.9.0
       '@remirror/core-utils': ^0.8.0
-      '@remirror/pm': ^1.0.0
+      '@remirror/pm': ^0.0.0
       '@testing-library/dom': ^7.2.2
       '@types/prosemirror-schema-basic': ^1.0.1
       '@types/prosemirror-test-builder': ^1.0.1
@@ -1430,44 +1459,35 @@ importers:
     dependencies:
       '@babel/runtime': 7.9.6
       '@remirror/core': 'link:../../@remirror/core'
+      '@remirror/pm': 'link:../../@remirror/pm'
       '@remirror/preset-core': 'link:../../@remirror/preset-core'
       '@remirror/react': 'link:../../@remirror/react'
       '@remirror/react-utils': 'link:../../deprecated/react-utils'
       '@testing-library/react': 10.0.4_react-dom@16.13.1+react@16.13.1
       '@types/node': 13.13.5
-      '@types/prosemirror-model': 1.7.2
-      '@types/prosemirror-view': 1.11.4
+      '@types/react': 16.9.34
+      '@types/react-dom': 16.9.7
+      '@types/testing-library__react': 10.0.1
       jest-prosemirror: 'link:../jest-prosemirror'
       jest-snapshot: 26.0.1
       mutationobserver-shim: 0.3.5
-      prosemirror-model: 1.9.1
-      prosemirror-state: 1.3.3
-      prosemirror-view: 1.14.9
-    devDependencies:
-      '@emotion/core': 10.0.28_react@16.13.1
-      '@types/react': 16.9.34
-      '@types/react-dom': 16.9.7
       react: 16.13.1
       react-dom: 16.13.1_react@16.13.1
     specifiers:
       '@babel/runtime': ^7
-      '@emotion/core': ^10.0.22
       '@remirror/core': ^0.11.0
+      '@remirror/pm': ^0.0.0
       '@remirror/preset-core': ^0.11.0
       '@remirror/react': ^0.13.1
       '@remirror/react-utils': ^0.7.6
       '@testing-library/react': ^10.0.2
       '@types/node': '>=13.11.0'
-      '@types/prosemirror-model': ^1.7.2
-      '@types/prosemirror-view': ^1.11.4
       '@types/react': ^16.9.34
       '@types/react-dom': ^16.9.7
-      jest-prosemirror: ^0.8.2
+      '@types/testing-library__react': ^10.0.1
+      jest-prosemirror: ^0.8.3
       jest-snapshot: ^26.0.0
       mutationobserver-shim: ^0.3.5
-      prosemirror-model: ^1.9.1
-      prosemirror-state: ^1.3.3
-      prosemirror-view: ^1.14.9
       react: ^16.13.1
       react-dom: ^16.13.1
   packages/multishift:
@@ -2550,7 +2570,10 @@ packages:
     dependencies:
       core-js: 2.6.11
       regenerator-runtime: 0.13.5
-    deprecated: "\U0001F6A8 This package has been deprecated in favor of separate inclusion of a polyfill and regenerator-runtime (when needed). See the @babel/polyfill docs (https://babeljs.io/docs/en/babel-polyfill) for more information."
+    deprecated:
+      "\U0001F6A8 This package has been deprecated in favor of separate inclusion of a polyfill and
+      regenerator-runtime (when needed). See the @babel/polyfill docs
+      (https://babeljs.io/docs/en/babel-polyfill) for more information."
     dev: false
     resolution:
       integrity: sha512-LeSfP9bNZH2UOZgcGcZ0PIHUt1ZuHub1L3CVmEyqLxCeDLm4C5Gi8jRH8ZX2PNpDhQCo0z6y/+DIs2JlliXW8w==
@@ -3094,9 +3117,9 @@ packages:
   /@emotion/weak-memoize/0.2.5:
     resolution:
       integrity: sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
-  /@getify/eslint-plugin-proper-arrows/9.1.1_eslint@7.0.0:
+  /@getify/eslint-plugin-proper-arrows/9.1.1_eslint@6.8.0:
     dependencies:
-      eslint: 7.0.0
+      eslint: 6.8.0
     dev: false
     peerDependencies:
       eslint: '>= 5.0'
@@ -6258,7 +6281,9 @@ packages:
   /@types/vfile-message/2.0.0:
     dependencies:
       vfile-message: 2.0.4
-    deprecated: 'This is a stub types definition. vfile-message provides its own type definitions, so you do not need this installed.'
+    deprecated:
+      'This is a stub types definition. vfile-message provides its own type definitions, so you do
+      not need this installed.'
     dev: false
     resolution:
       integrity: sha512-GpTIuDpb9u4zIO165fUy9+fXcULdD8HFRNli04GehoMVbeNq7D6OBnqSmg3lxZnC+UvgUhEWKxdKiwYUkGltIw==
@@ -6326,15 +6351,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-OpfgQXWLZn5Dl7mOd8dBNcV8NywXbYYoHjUpa64vJ/RQABaxMzJ5bVicKLGIvIiMnQPtPgKNgXb5jkv9fkOQtw==
-  /@typescript-eslint/eslint-plugin/2.31.0_03c2c5a214facbe1a70092dcc0786d9b:
+  /@typescript-eslint/eslint-plugin/2.31.0_4c9305f28d9279ddeb9de83a2c6b960a:
     dependencies:
-      '@typescript-eslint/experimental-utils': 2.31.0_eslint@7.0.0+typescript@3.9.1-rc
-      '@typescript-eslint/parser': 2.31.0_eslint@7.0.0+typescript@3.9.1-rc
-      eslint: 7.0.0
+      '@typescript-eslint/experimental-utils': 2.31.0_eslint@6.8.0
+      '@typescript-eslint/parser': 2.31.0_eslint@6.8.0
+      eslint: 6.8.0
       functional-red-black-tree: 1.0.1
       regexpp: 3.1.0
-      tsutils: 3.17.1_typescript@3.9.1-rc
-      typescript: 3.9.1-rc
+      tsutils: 3.17.1
     dev: false
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
@@ -6347,14 +6371,15 @@ packages:
         optional: true
     resolution:
       integrity: sha512-iIC0Pb8qDaoit+m80Ln/aaeu9zKQdOLF4SHcGLarSeY1gurW6aU4JsOPMjKQwXlw70MvWKZQc6S2NamA8SJ/gg==
-  /@typescript-eslint/eslint-plugin/2.31.0_4c9305f28d9279ddeb9de83a2c6b960a:
+  /@typescript-eslint/eslint-plugin/2.31.0_9127dbcc90207b15ee682ef4163edade:
     dependencies:
-      '@typescript-eslint/experimental-utils': 2.31.0_eslint@6.8.0
-      '@typescript-eslint/parser': 2.31.0_eslint@6.8.0
+      '@typescript-eslint/experimental-utils': 2.31.0_eslint@6.8.0+typescript@3.9.1-rc
+      '@typescript-eslint/parser': 2.31.0_eslint@6.8.0+typescript@3.9.1-rc
       eslint: 6.8.0
       functional-red-black-tree: 1.0.1
       regexpp: 3.1.0
-      tsutils: 3.17.1
+      tsutils: 3.17.1_typescript@3.9.1-rc
+      typescript: 3.9.1-rc
     dev: false
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
@@ -6382,11 +6407,11 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-MI6IWkutLYQYTQgZ48IVnRXmLR/0Q6oAyJgiOror74arUMh7EWjJkADfirZhRsUMHeLJ85U2iySDwHTSnNi9vA==
-  /@typescript-eslint/experimental-utils/2.31.0_eslint@7.0.0+typescript@3.9.1-rc:
+  /@typescript-eslint/experimental-utils/2.31.0_eslint@6.8.0+typescript@3.9.1-rc:
     dependencies:
       '@types/json-schema': 7.0.4
       '@typescript-eslint/typescript-estree': 2.31.0_typescript@3.9.1-rc
-      eslint: 7.0.0
+      eslint: 6.8.0
       eslint-scope: 5.0.0
       eslint-utils: 2.0.0
     dev: false
@@ -6415,12 +6440,12 @@ packages:
         optional: true
     resolution:
       integrity: sha512-uph+w6xUOlyV2DLSC6o+fBDzZ5i7+3/TxAsH4h3eC64tlga57oMb96vVlXoMwjR/nN+xyWlsnxtbDkB46M2EPQ==
-  /@typescript-eslint/parser/2.31.0_eslint@7.0.0+typescript@3.9.1-rc:
+  /@typescript-eslint/parser/2.31.0_eslint@6.8.0+typescript@3.9.1-rc:
     dependencies:
       '@types/eslint-visitor-keys': 1.0.0
-      '@typescript-eslint/experimental-utils': 2.31.0_eslint@7.0.0+typescript@3.9.1-rc
+      '@typescript-eslint/experimental-utils': 2.31.0_eslint@6.8.0+typescript@3.9.1-rc
       '@typescript-eslint/typescript-estree': 2.31.0_typescript@3.9.1-rc
-      eslint: 7.0.0
+      eslint: 6.8.0
       eslint-visitor-keys: 1.1.0
       typescript: 3.9.1-rc
     dev: false
@@ -8808,7 +8833,8 @@ packages:
       path-is-absolute: 1.0.1
       readdirp: 2.2.1
       upath: 1.2.0
-    deprecated: Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
+    deprecated:
+      Chokidar 2 will break on node v14+. Upgrade to chokidar 3 with 15x less dependencies.
     dev: false
     optionalDependencies:
       fsevents: 1.2.13
@@ -9442,12 +9468,16 @@ packages:
     resolution:
       integrity: sha512-lacdXOimsiD0QyNf9BC/mxivNJ/ybBGJXQFKzRekp1WTHoVUWsUHEn+2T8GJAzzIhyOuXA+gOxCVN3l+5PLPUA==
   /core-js/1.2.7:
-    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
+    deprecated:
+      'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues.
+      Please, upgrade your dependencies to the actual version of core-js@3.'
     dev: false
     resolution:
       integrity: sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
   /core-js/2.6.11:
-    deprecated: 'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.'
+    deprecated:
+      'core-js@<3 is no longer maintained and not recommended for usage due to the number of issues.
+      Please, upgrade your dependencies to the actual version of core-js@3.'
     dev: false
     requiresBuild: true
     resolution:
@@ -10641,7 +10671,11 @@ packages:
       '@sheerun/mutationobserver-shim': 0.3.3
       pretty-format: 24.9.0
       wait-for-expect: 1.3.0
-    deprecated: "\U0001F6A8  dom-testing-library has moved to @testing-library/dom. Please uninstall dom-testing-library and install @testing-library/dom instead, or use an older version of dom-testing-library. Learn more about this change here: https://github.com/testing-library/dom-testing-library/issues/260 Thanks! :)"
+    deprecated:
+      "\U0001F6A8  dom-testing-library has moved to @testing-library/dom. Please uninstall
+      dom-testing-library and install @testing-library/dom instead, or use an older version of
+      dom-testing-library. Learn more about this change here:
+      https://github.com/testing-library/dom-testing-library/issues/260 Thanks! :)"
     dev: false
     engines:
       node: '>=8'
@@ -11229,9 +11263,9 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-otzzTim2/1+lVrlH19EfQQJEhVJSu0zOb9ygb3iapN6UlyaDtyRq4b5U1FuW0v1lRa9Fp/GJyHkSwm6NqABgCA==
-  /eslint-config-prettier/6.11.0_eslint@7.0.0:
+  /eslint-config-prettier/6.11.0_eslint@6.8.0:
     dependencies:
-      eslint: 7.0.0
+      eslint: 6.8.0
       get-stdin: 6.0.0
     dev: false
     hasBin: true
@@ -11276,11 +11310,11 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-WXg2D5kMHcRxIZA3ulxdevi8/BGTXu72pfOO5vXHqcAfClfIWDSlOljROjCSOCcKvilgmHz1jDWbvFCZHjMQ5w==
-  /eslint-formatter-github/0.4.2_eslint@7.0.0:
+  /eslint-formatter-github/0.4.2_eslint@6.8.0:
     dependencies:
       '@octokit/rest': 16.43.1
       create-check: 0.5.1
-      eslint: 7.0.0
+      eslint: 6.8.0
       eslint-formatter-pretty: 2.1.1
     dev: false
     peerDependencies:
@@ -11332,10 +11366,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-6j9xxegbqe8/kZY8cYpcp0xhbK0EgJlg3g9mib3/miLaExuuwc3n5UEfSnU6hWMbT0FAYVvDbL9RrRgpUeQIvA==
-  /eslint-plugin-eslint-comments/3.1.2_eslint@7.0.0:
+  /eslint-plugin-eslint-comments/3.1.2_eslint@6.8.0:
     dependencies:
       escape-string-regexp: 1.0.5
-      eslint: 7.0.0
+      eslint: 6.8.0
       ignore: 5.1.4
     dev: false
     engines:
@@ -11400,31 +11434,9 @@ packages:
       eslint: 2.x - 6.x
     resolution:
       integrity: sha512-FObidqpXrR8OnCh4iNsxy+WACztJLXAHBO5hK79T1Hc77PgQZkyDGA5Ag9xAvRpglvLNxhH/zSmZ70/pZ31dHg==
-  /eslint-plugin-import/2.20.2_eslint@7.0.0:
+  /eslint-plugin-jest-formatting/1.2.0_eslint@6.8.0:
     dependencies:
-      array-includes: 3.1.1
-      array.prototype.flat: 1.2.3
-      contains-path: 0.1.0
-      debug: 2.6.9
-      doctrine: 1.5.0
-      eslint: 7.0.0
-      eslint-import-resolver-node: 0.3.3
-      eslint-module-utils: 2.6.0
-      has: 1.0.3
-      minimatch: 3.0.4
-      object.values: 1.1.1
-      read-pkg-up: 2.0.0
-      resolve: 1.17.0
-    dev: false
-    engines:
-      node: '>=4'
-    peerDependencies:
-      eslint: 2.x - 6.x
-    resolution:
-      integrity: sha512-FObidqpXrR8OnCh4iNsxy+WACztJLXAHBO5hK79T1Hc77PgQZkyDGA5Ag9xAvRpglvLNxhH/zSmZ70/pZ31dHg==
-  /eslint-plugin-jest-formatting/1.2.0_eslint@7.0.0:
-    dependencies:
-      eslint: 7.0.0
+      eslint: 6.8.0
     dev: false
     engines:
       node: '>=8.10.0'
@@ -11432,10 +11444,10 @@ packages:
       eslint: '>=0.8.0'
     resolution:
       integrity: sha512-EqsbDByAtdQa5vEhJFUFMqTW7fghN0Qhb8oulM7R3j9+9xRuMsQKCPjWvCIxpWhl3SJJmlxBC25o1pUXiBHaAw==
-  /eslint-plugin-jest/23.10.0_eslint@7.0.0+typescript@3.9.1-rc:
+  /eslint-plugin-jest/23.10.0_eslint@6.8.0+typescript@3.9.1-rc:
     dependencies:
-      '@typescript-eslint/experimental-utils': 2.31.0_eslint@7.0.0+typescript@3.9.1-rc
-      eslint: 7.0.0
+      '@typescript-eslint/experimental-utils': 2.31.0_eslint@6.8.0+typescript@3.9.1-rc
+      eslint: 6.8.0
     dev: false
     engines:
       node: '>=8'
@@ -11463,25 +11475,6 @@ packages:
       eslint: ^3 || ^4 || ^5 || ^6
     resolution:
       integrity: sha512-CawzfGt9w83tyuVekn0GDPU9ytYtxyxyFZ3aSWROmnRRFQFT2BiPJd7jvRdzNDi6oLWaS2asMeYSNMjWTV4eNg==
-  /eslint-plugin-jsx-a11y/6.2.3_eslint@7.0.0:
-    dependencies:
-      '@babel/runtime': 7.9.6
-      aria-query: 3.0.0
-      array-includes: 3.1.1
-      ast-types-flow: 0.0.7
-      axobject-query: 2.1.2
-      damerau-levenshtein: 1.0.6
-      emoji-regex: 7.0.3
-      eslint: 7.0.0
-      has: 1.0.3
-      jsx-ast-utils: 2.2.3
-    dev: false
-    engines:
-      node: '>=4.0'
-    peerDependencies:
-      eslint: ^3 || ^4 || ^5 || ^6
-    resolution:
-      integrity: sha512-CawzfGt9w83tyuVekn0GDPU9ytYtxyxyFZ3aSWROmnRRFQFT2BiPJd7jvRdzNDi6oLWaS2asMeYSNMjWTV4eNg==
   /eslint-plugin-promise/4.2.1:
     dev: false
     engines:
@@ -11498,9 +11491,9 @@ packages:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0
     resolution:
       integrity: sha512-iXTCFcOmlWvw4+TOE8CLWj6yX1GwzT0Y6cUfHHZqWnSk144VmVIRcVGtUAzrLES7C798lmvnt02C7rxaOX1HNA==
-  /eslint-plugin-react-hooks/4.0.0_eslint@7.0.0:
+  /eslint-plugin-react-hooks/4.0.0_eslint@6.8.0:
     dependencies:
-      eslint: 7.0.0
+      eslint: 6.8.0
     dev: false
     engines:
       node: '>=10'
@@ -11530,49 +11523,27 @@ packages:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0
     resolution:
       integrity: sha512-SPT8j72CGuAP+JFbT0sJHOB80TX/pu44gQ4vXH/cq+hQTiY2PuZ6IHkqXJV6x1b28GDdo1lbInjKUrrdUf0LOQ==
-  /eslint-plugin-react/7.19.0_eslint@7.0.0:
-    dependencies:
-      array-includes: 3.1.1
-      doctrine: 2.1.0
-      eslint: 7.0.0
-      has: 1.0.3
-      jsx-ast-utils: 2.2.3
-      object.entries: 1.1.1
-      object.fromentries: 2.0.2
-      object.values: 1.1.1
-      prop-types: 15.7.2
-      resolve: 1.17.0
-      semver: 6.3.0
-      string.prototype.matchall: 4.0.2
-      xregexp: 4.3.0
-    dev: false
-    engines:
-      node: '>=4'
-    peerDependencies:
-      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0
-    resolution:
-      integrity: sha512-SPT8j72CGuAP+JFbT0sJHOB80TX/pu44gQ4vXH/cq+hQTiY2PuZ6IHkqXJV6x1b28GDdo1lbInjKUrrdUf0LOQ==
   /eslint-plugin-security/1.4.0:
     dependencies:
       safe-regex: 1.1.0
     dev: false
     resolution:
       integrity: sha512-xlS7P2PLMXeqfhyf3NpqbvbnW04kN8M9NtmhpR3XGyOvt/vNKS7XPXT5EDbwKW9vCjWH4PpfQvgD/+JgN0VJKA==
-  /eslint-plugin-simple-import-sort/5.0.3_eslint@7.0.0:
+  /eslint-plugin-simple-import-sort/5.0.3_eslint@6.8.0:
     dependencies:
-      eslint: 7.0.0
+      eslint: 6.8.0
     dev: false
     peerDependencies:
       eslint: '>=5.0.0'
     resolution:
       integrity: sha512-1rf3AWiHeWNCQdAq0iXNnlccnH1UDnelGgrPbjBBHE8d2hXVtOudcmy0vTF4hri3iJ0MKz8jBhmH6lJ0ZWZLHQ==
-  /eslint-plugin-unicorn/19.0.1_eslint@7.0.0:
+  /eslint-plugin-unicorn/19.0.1_eslint@6.8.0:
     dependencies:
       ci-info: 2.0.0
       clean-regexp: 1.0.0
-      eslint: 7.0.0
+      eslint: 6.8.0
       eslint-ast-utils: 1.1.0
-      eslint-template-visitor: 1.1.0_eslint@7.0.0
+      eslint-template-visitor: 1.1.0_eslint@6.8.0
       eslint-utils: 2.0.0
       import-modules: 2.0.0
       lodash: 4.17.15
@@ -11610,9 +11581,9 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-oYrhJW7S0bxAFDvWqzvMPRm6pcgcnWc4QnofCAqRTRfQC0JcwenzGglTtsLyIuuWFfkqDG9vz67cnttSd53djw==
-  /eslint-template-visitor/1.1.0_eslint@7.0.0:
+  /eslint-template-visitor/1.1.0_eslint@6.8.0:
     dependencies:
-      eslint: 7.0.0
+      eslint: 6.8.0
       eslint-visitor-keys: 1.1.0
       espree: 6.2.1
       multimap: 1.1.0
@@ -11688,50 +11659,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-K+Iayyo2LtyYhDSYwz5D5QdWw0hCacNzyq1Y821Xna2xSJj7cijoLLYmLxTQgcgZ9mC61nryMy9S7GRbYpI5Ig==
-  /eslint/7.0.0:
-    dependencies:
-      '@babel/code-frame': 7.8.3
-      ajv: 6.12.2
-      chalk: 4.0.0
-      cross-spawn: 7.0.2
-      debug: 4.1.1
-      doctrine: 3.0.0
-      eslint-scope: 5.0.0
-      eslint-utils: 2.0.0
-      eslint-visitor-keys: 1.1.0
-      espree: 7.0.0
-      esquery: 1.3.1
-      esutils: 2.0.3
-      file-entry-cache: 5.0.1
-      functional-red-black-tree: 1.0.1
-      glob-parent: 5.1.1
-      globals: 12.4.0
-      ignore: 4.0.6
-      import-fresh: 3.2.1
-      imurmurhash: 0.1.4
-      inquirer: 7.1.0
-      is-glob: 4.0.1
-      js-yaml: 3.13.1
-      json-stable-stringify-without-jsonify: 1.0.1
-      levn: 0.4.1
-      lodash: 4.17.15
-      minimatch: 3.0.4
-      natural-compare: 1.4.0
-      optionator: 0.9.1
-      progress: 2.0.3
-      regexpp: 3.1.0
-      semver: 7.3.2
-      strip-ansi: 6.0.0
-      strip-json-comments: 3.1.0
-      table: 5.4.6
-      text-table: 0.2.0
-      v8-compile-cache: 2.1.0
-    dev: false
-    engines:
-      node: ^10.12.0 || >=12.0.0
-    hasBin: true
-    resolution:
-      integrity: sha512-qY1cwdOxMONHJfGqw52UOpZDeqXy8xmD0u8CT6jIstil72jkhURC704W8CFyTPDPllz4z4lu0Ql1+07PG/XdIg==
   /espree/6.2.1:
     dependencies:
       acorn: 7.2.0
@@ -11742,16 +11669,6 @@ packages:
       node: '>=6.0.0'
     resolution:
       integrity: sha512-ysCxRQY3WaXJz9tdbWOwuWr5Y/XrPTGX9Kiz3yoUXwW0VZ4w30HTkQLaGx/+ttFjF8i+ACbArnB4ce68a9m5hw==
-  /espree/7.0.0:
-    dependencies:
-      acorn: 7.2.0
-      acorn-jsx: 5.2.0_acorn@7.2.0
-      eslint-visitor-keys: 1.1.0
-    dev: false
-    engines:
-      node: ^10.12.0 || >=12.0.0
-    resolution:
-      integrity: sha512-/r2XEx5Mw4pgKdyb7GNLQNsu++asx/dltf/CI8RFi9oGHxmQFgvLbc5Op4U6i8Oaj+kdslhJtVlEZeAqH5qOTw==
   /esprima/3.1.3:
     dev: false
     engines:
@@ -12880,7 +12797,9 @@ packages:
     dependencies:
       bindings: 1.5.0
       nan: 2.14.1
-    deprecated: fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents 2.
+    deprecated:
+      fsevents 1 will break on node v14+ and could be using insecure binaries. Upgrade to fsevents
+      2.
     dev: false
     engines:
       node: '>= 4.0'
@@ -17253,15 +17172,6 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha1-OwmSTt+fCDwEkP3UwLxEIeBHZO4=
-  /levn/0.4.1:
-    dependencies:
-      prelude-ls: 1.2.1
-      type-check: 0.4.0
-    dev: false
-    engines:
-      node: '>= 0.8.0'
-    resolution:
-      integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==
   /lines-and-columns/1.1.6:
     resolution:
       integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
@@ -19238,19 +19148,6 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha512-+IW9pACdk3XWmmTXG8m3upGUJst5XRGzxMRjXzAuJ1XnIFNvfhjjIuYkDvysnPQ7qzqVzLt78BCruntqRhWQbA==
-  /optionator/0.9.1:
-    dependencies:
-      deep-is: 0.1.3
-      fast-levenshtein: 2.0.6
-      levn: 0.4.1
-      prelude-ls: 1.2.1
-      type-check: 0.4.0
-      word-wrap: 1.2.3
-    dev: false
-    engines:
-      node: '>= 0.8.0'
-    resolution:
-      integrity: sha512-74RlY5FCnhq4jRxVUPKDaRwrVNXMqsGsiW6AJw4XK8hmtm10wC0ypZBLw5IIp85NZMr91+qd1RvvENwg7jjRFw==
   /ora/2.1.0:
     dependencies:
       chalk: 2.4.2
@@ -20217,7 +20114,8 @@ packages:
     resolution:
       integrity: sha512-V0dyaVJUM5e5wIhLHvZyyE9PhXoI0AlGT6RDww1V/v+STsocLsVGWmi+9OKTL49oaQj85XFDvsWi/uHQJ0rpWg==
   /popper.js/1.16.1:
-    deprecated: 'You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1'
+    deprecated:
+      'You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1'
     dev: false
     resolution:
       integrity: sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
@@ -20747,12 +20645,6 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
-  /prelude-ls/1.2.1:
-    dev: false
-    engines:
-      node: '>= 0.8.0'
-    resolution:
-      integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
   /prepend-http/1.0.4:
     dev: false
     engines:
@@ -21198,7 +21090,11 @@ packages:
       proxy-from-env: 1.1.0
       rimraf: 2.7.1
       ws: 6.2.1
-    deprecated: 'Firefox support is gradually transitioning to the puppeteer package. As of puppeteer v2.1.0 you can interact with Firefox Nightly. The puppeteer-firefox package will remain available until the transition is complete, but it is no longer actively maintained. For more information visit https://wiki.mozilla.org/Remote'
+    deprecated:
+      'Firefox support is gradually transitioning to the puppeteer package. As of puppeteer v2.1.0
+      you can interact with Firefox Nightly. The puppeteer-firefox package will remain available
+      until the transition is complete, but it is no longer actively maintained. For more
+      information visit https://wiki.mozilla.org/Remote'
     dev: false
     engines:
       node: '>=8.9.4'
@@ -24962,7 +24858,9 @@ packages:
     engines:
       node: '>= 6'
     peerDependencies:
-      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+      typescript:
+        '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev ||
+        >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
     resolution:
       integrity: sha512-kzeQ5B8H3w60nFY2g8cJIuH7JDpsALXySGtwGJ0p2LSjLgay3NdIpqq5SoOBe46bKDW2iq25irHCr8wjomUS2g==
   /tsutils/3.17.1_typescript@3.9.1-rc:
@@ -24973,7 +24871,9 @@ packages:
     engines:
       node: '>= 6'
     peerDependencies:
-      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+      typescript:
+        '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev ||
+        >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
     resolution:
       integrity: sha512-kzeQ5B8H3w60nFY2g8cJIuH7JDpsALXySGtwGJ0p2LSjLgay3NdIpqq5SoOBe46bKDW2iq25irHCr8wjomUS2g==
   /tty-browserify/0.0.0:
@@ -25009,14 +24909,6 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha1-WITKtRLPHTVeP7eE8wgEsrUg23I=
-  /type-check/0.4.0:
-    dependencies:
-      prelude-ls: 1.2.1
-    dev: false
-    engines:
-      node: '>= 0.8.0'
-    resolution:
-      integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==
   /type-detect/4.0.8:
     engines:
       node: '>=4'

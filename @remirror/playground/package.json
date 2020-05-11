@@ -13,19 +13,28 @@
   "sideEffects": false,
   "main": "dist/playground.cjs.js",
   "module": "dist/playground.esm.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/playground.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
     "@babel/standalone": "^7.9.4",
+    "@babel/types": "^7.9.6",
+    "@remirror/core": "^0.11.0",
+    "@remirror/core-helpers": "^0.7.6",
+    "@remirror/react": "^0.13.1",
     "@types/babel__standalone": "^7.1.2",
     "monaco-editor": "^0.20.0",
     "monaco-editor-webpack-plugin": "^1.9.0"
   },
+  "devDependencies": {
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
   "peerDependencies": {
-    "@emotion/core": "^10",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",
@@ -36,12 +45,5 @@
   },
   "meta": {
     "sizeLimit": "2 MB"
-  },
-  "devDependencies": {
-    "@emotion/core": "^10.0.22",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.7",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
   }
 }

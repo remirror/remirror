@@ -1,5 +1,5 @@
-import { ResolvedPos } from 'prosemirror-model';
-import { Selection, SelectionRange, TextSelection } from 'prosemirror-state';
+import { ResolvedPos } from '@remirror/pm/model';
+import { Selection, SelectionRange, TextSelection } from '@remirror/pm/state';
 
 import { bool } from '@remirror/core-helpers';
 import {

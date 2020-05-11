@@ -1,6 +1,5 @@
-import { FromToEndParameter, Suggestion, SuggestReplacementType } from 'prosemirror-suggest';
-
 import { ProsemirrorAttributes } from '@remirror/core';
+import { FromToEndParameter, Suggestion, SuggestReplacementType } from '@remirror/pm/suggest';
 
 export interface OptionalMentionExtensionParameter {
   /**

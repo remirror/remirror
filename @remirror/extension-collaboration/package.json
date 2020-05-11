@@ -17,6 +17,7 @@
   "sideEffects": false,
   "main": "dist/extension-collaboration.cjs.js",
   "module": "dist/extension-collaboration.esm.js",
+  "types": "dist/extension-collaboration.cjs.d.ts",
   "files": [
     "dist"
   ],
@@ -30,7 +31,7 @@
     "prosemirror-collab": "^1.2.2"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.0",
+    "@remirror/pm": "^0.0.0",
     "prosemirror-collab": "^1.2.2"
   },
   "publishConfig": {

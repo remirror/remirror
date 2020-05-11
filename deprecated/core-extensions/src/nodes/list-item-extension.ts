@@ -1,4 +1,4 @@
-import { liftListItem, sinkListItem, splitListItem } from 'prosemirror-schema-list';
+import { liftListItem, sinkListItem, splitListItem } from '@remirror/pm/schema-list';
 
 import {
   convertCommand,

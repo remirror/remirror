@@ -4,7 +4,7 @@ import {
   SuggestKeyBindingMap,
   SuggestKeyBindingParameter,
   SuggestStateMatch,
-} from 'prosemirror-suggest';
+} from '@remirror/pm/suggest';
 import { Fragment, PureComponent } from 'react';
 
 import { deepMerge, isUndefined, object, omit, RemirrorTheme } from '@remirror/core';

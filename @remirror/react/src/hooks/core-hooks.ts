@@ -9,7 +9,7 @@ import {
 } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 
-import { isFunction, object } from '@remirror/core-helpers';
+import { isFunction, object } from '@remirror/core';
 
 /**
  * Preserves the previous version of a provided value.

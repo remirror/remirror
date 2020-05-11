@@ -17,6 +17,7 @@
   "sideEffects": false,
   "main": "dist/preset-core.cjs.js",
   "module": "dist/preset-core.esm.js",
+  "types": "dist/preset-core.cjs.d.ts",
   "files": [
     "internal",
     "dist"

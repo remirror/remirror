@@ -15,10 +15,10 @@ import { ChangeReason, ExitReason } from './suggest-constants';
  *
  * The options are passed to the {@link suggest} method which uses them.
  *
- * @typeParam GCommand - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
-export interface Suggestion<GCommand extends AnyFunction<void> = AnyFunction<void>> {
+export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void>> {
   /**
    * The activation character(s) to match against.
    *
@@ -154,7 +154,7 @@ export interface Suggestion<GCommand extends AnyFunction<void> = AnyFunction<voi
    *
    * @defaultValue `() => void`
    */
-  onChange?: (params: SuggestChangeHandlerParameter<GCommand>) => void;
+  onChange?: (params: SuggestChangeHandlerParameter<Command>) => void;
 
   /**
    * Called whenever a suggestion is exited with the pre-exit match value.
@@ -167,7 +167,7 @@ export interface Suggestion<GCommand extends AnyFunction<void> = AnyFunction<voi
    *
    * @defaultValue `() => void`
    */
-  onExit?: (params: SuggestExitHandlerParameter<GCommand>) => void;
+  onExit?: (params: SuggestExitHandlerParameter<Command>) => void;
 
   /**
    * Called for each character entry and can be used to disable certain
@@ -181,7 +181,7 @@ export interface Suggestion<GCommand extends AnyFunction<void> = AnyFunction<voi
    *
    * @defaultValue `() => false`
    */
-  onCharacterEntry?: (params: SuggestCharacterEntryParameter<GCommand>) => boolean;
+  onCharacterEntry?: (params: SuggestCharacterEntryParameter<Command>) => boolean;
 
   /**
    * An object that describes how certain key bindings should be handled.
@@ -191,7 +191,7 @@ export interface Suggestion<GCommand extends AnyFunction<void> = AnyFunction<voi
    * Return `true` to prevent any further prosemirror actions or return `false`
    * to allow prosemirror to continue.
    */
-  keyBindings?: SuggestKeyBindingMap<GCommand>;
+  keyBindings?: SuggestKeyBindingMap<Command>;
 
   /**
    * Create the suggested actions which are made available to the `onExit` and
@@ -202,7 +202,7 @@ export interface Suggestion<GCommand extends AnyFunction<void> = AnyFunction<voi
    * Suggested actions are useful for developing plugins and extensions which
    * provide useful defaults for managing the suggestion lifecycle.
    */
-  createCommand?: (params: CreateSuggestCommandParameter) => GCommand;
+  createCommand?: (params: CreateSuggestCommandParameter) => Command;
 }
 
 /**
@@ -315,11 +315,11 @@ export interface FromToEndParameter extends FromToParameter {
  * Describes the properties of a match which includes range and the text as well
  * as information of the suggester that created the match.
  *
- * @typeParam GCommand - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
-export interface SuggestStateMatch<GCommand extends AnyFunction<void> = AnyFunction<void>>
-  extends SuggestionParameter<GCommand> {
+export interface SuggestStateMatch<Command extends AnyFunction<void> = AnyFunction<void>>
+  extends SuggestionParameter<Command> {
   /**
    * Range of current match; for example `@foo|bar` (where | is the cursor)
    * - `from` is the start (= 0)
@@ -394,10 +394,10 @@ export interface CreateSuggestCommandParameter
  */
 export type SuggestReplacementType = 'full' | 'partial';
 
-export interface SuggestCallbackParameter<GCommand extends AnyFunction<void> = AnyFunction<void>>
+export interface SuggestCallbackParameter<Command extends AnyFunction<void> = AnyFunction<void>>
   extends SuggestStateMatch,
     EditorViewParameter,
-    SuggestCommandParameter<GCommand>,
+    SuggestCommandParameter<Command>,
     SuggestIgnoreParameter {}
 
 /**
@@ -429,45 +429,45 @@ export interface KeyboardEventParameter {
 /**
  * A parameter builder interface indicating the reason the handler was called.
  *
- * @typeParam GReason - Whether this is change or an exit reason.
+ * @typeParam Reason - Whether this is change or an exit reason.
  */
-export interface ReasonParameter<GReason = ExitReason | ChangeReason> {
+export interface ReasonParameter<Reason = ExitReason | ChangeReason> {
   /**
    * The reason this callback was triggered. This can be used to determine the
    * action to use in your own code.
    */
-  reason: GReason;
+  reason: Reason;
 }
 
 /**
  * The parameters passed to the {@link Suggestion.onChange} method.
  *
- * @typeParam GCommand - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
 export interface SuggestChangeHandlerParameter<
-  GCommand extends AnyFunction<void> = AnyFunction<void>
-> extends SuggestCallbackParameter<GCommand>, ReasonParameter<ChangeReason> {}
+  Command extends AnyFunction<void> = AnyFunction<void>
+> extends SuggestCallbackParameter<Command>, ReasonParameter<ChangeReason> {}
 
 /**
  * The parameters passed to the {@link Suggestion.onExit} method.
  *
- * @typeParam GCommand - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
-export interface SuggestExitHandlerParameter<
-  GCommand extends AnyFunction<void> = AnyFunction<void>
-> extends SuggestCallbackParameter<GCommand>, ReasonParameter<ExitReason> {}
+export interface SuggestExitHandlerParameter<Command extends AnyFunction<void> = AnyFunction<void>>
+  extends SuggestCallbackParameter<Command>,
+    ReasonParameter<ExitReason> {}
 
 /**
  * The parameters passed to the {@link Suggestion.onCharacterEntry} method.
  *
- * @typeParam GCommand - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
 export interface SuggestCharacterEntryParameter<
-  GCommand extends AnyFunction<void> = AnyFunction<void>
-> extends SuggestCallbackParameter<GCommand>, FromToParameter, TextParameter {}
+  Command extends AnyFunction<void> = AnyFunction<void>
+> extends SuggestCallbackParameter<Command>, FromToParameter, TextParameter {}
 
 /**
  * The parameters required by the {@link SuggestKeyBinding} method.
@@ -479,11 +479,11 @@ export interface SuggestCharacterEntryParameter<
  * - {@link SuggestMarkParameter}
  * - {@link KeyboardEventParameter}
  *
- * @typeParam GCommand - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
-export interface SuggestKeyBindingParameter<GCommand extends AnyFunction<void> = AnyFunction<void>>
-  extends SuggestCallbackParameter<GCommand>,
+export interface SuggestKeyBindingParameter<Command extends AnyFunction<void> = AnyFunction<void>>
+  extends SuggestCallbackParameter<Command>,
     SuggestMarkParameter,
     KeyboardEventParameter {}
 
@@ -495,51 +495,51 @@ export interface SuggestKeyBindingParameter<GCommand extends AnyFunction<void> =
  * Return true to prevent any further bubbling of the key event and to stop
  * other handlers from also processing the event.
  *
- * @typeParam GCommand - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
-export type SuggestKeyBinding<GCommand extends AnyFunction<void> = AnyFunction<void>> = (
-  params: SuggestKeyBindingParameter<GCommand>,
+export type SuggestKeyBinding<Command extends AnyFunction<void> = AnyFunction<void>> = (
+  params: SuggestKeyBindingParameter<Command>,
 ) => boolean | void;
 
 /**
  * The keybindings shape for the {@link Suggestion.keyBindings} property.
  *
- * @typeParam GCommand - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
-export type SuggestKeyBindingMap<GCommand extends AnyFunction<void> = AnyFunction<void>> = Partial<
+export type SuggestKeyBindingMap<Command extends AnyFunction<void> = AnyFunction<void>> = Partial<
   Record<
     'Enter' | 'ArrowDown' | 'ArrowUp' | 'ArrowLeft' | 'ArrowRight' | 'Esc' | 'Delete' | 'Backspace',
-    SuggestKeyBinding<GCommand>
+    SuggestKeyBinding<Command>
   >
 > &
-  Record<string, SuggestKeyBinding<GCommand>>;
+  Record<string, SuggestKeyBinding<Command>>;
 
 /**
  * A parameter builder interface which adds the command property.
  *
- * @typeParam GCommand - the command method a {@link Suggestion} makes available
+ * @typeParam Command - the command method a {@link Suggestion} makes available
  * to its handlers.
  */
-export interface SuggestCommandParameter<GCommand extends AnyFunction<void> = AnyFunction<void>> {
+export interface SuggestCommandParameter<Command extends AnyFunction<void> = AnyFunction<void>> {
   /**
    * A command which automatically applies the provided attributes to the
    * command.
    */
-  command: GCommand;
+  command: Command;
 }
 
-export interface SuggestionParameter<GCommand extends AnyFunction<void> = AnyFunction<void>> {
+export interface SuggestionParameter<Command extends AnyFunction<void> = AnyFunction<void>> {
   /**
    * The suggester to use for finding matches.
    */
-  suggester: Required<Suggestion<GCommand>>;
+  suggester: Required<Suggestion<Command>>;
 }
 
-export interface SuggestStateMatchReason<GReason>
+export interface SuggestStateMatchReason<Reason>
   extends SuggestStateMatch,
-    ReasonParameter<GReason> {}
+    ReasonParameter<Reason> {}
 
 /**
  * A mapping of the handler matches with their reasons for occurring within the
@@ -564,13 +564,13 @@ export interface SuggestReasonMap {
  *
  * This is used to build parameters for {@link Suggestion} handler methods.
  *
- * @typeParam GReason - Whether this is change or an exit reason.
+ * @typeParam Reason - Whether this is change or an exit reason.
  */
-export interface ReasonMatchParameter<GReason> {
+export interface ReasonMatchParameter<Reason> {
   /**
    * The match with its reason property.
    */
-  match: SuggestStateMatchReason<GReason>;
+  match: SuggestStateMatchReason<Reason>;
 }
 
 /**

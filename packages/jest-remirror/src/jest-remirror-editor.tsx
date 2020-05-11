@@ -133,7 +133,7 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
    * will throw errors due to using an outdated state.
    */
   get commands(): CommandsFromExtensions<GetExtensionUnion<Manager>> {
-    return this.#manager.store.commands as any;
+    return this.#manager.store.commands;
   }
 
   /**
@@ -142,7 +142,7 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
    * otherwise it will throw errors due to using an outdated state.
    */
   get helpers(): HelpersFromExtensions<GetExtensionUnion<Manager>> {
-    return this.#manager.store.helpers as any;
+    return this.#manager.store.helpers;
   }
 
   /**

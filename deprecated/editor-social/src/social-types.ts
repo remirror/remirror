@@ -1,4 +1,4 @@
-import { SuggestStateMatch } from 'prosemirror-suggest';
+import { SuggestStateMatch } from '@remirror/pm/suggest';
 import { Except } from 'type-fest';
 
 import { RemirrorTheme } from '@remirror/core';

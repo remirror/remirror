@@ -1,4 +1,3 @@
-import { EditorState, TextSelection } from 'prosemirror-state';
 import React, { cloneElement, Fragment, PureComponent, ReactNode, Ref } from 'react';
 
 import {
@@ -28,6 +27,7 @@ import {
   Transaction,
   uniqueId,
 } from '@remirror/core';
+import { EditorState, TextSelection } from '@remirror/pm/state';
 
 import { PortalContainer, RemirrorPortals } from '../portals';
 import { defaultProps } from '../react-constants';

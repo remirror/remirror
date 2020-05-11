@@ -1,4 +1,4 @@
-import { Plugin, TextSelection } from 'prosemirror-state';
+import { Plugin, TextSelection } from '@remirror/pm/state';
 
 import {
   Cast,

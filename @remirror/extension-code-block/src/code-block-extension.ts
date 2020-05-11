@@ -17,7 +17,9 @@ import {
   removeNodeAtPosition,
   toggleBlockItem,
 } from '@remirror/core';
-import { keydownHandler, Plugin, setBlockType, TextSelection } from '@remirror/pm';
+import { setBlockType } from '@remirror/pm/commands';
+import { keydownHandler } from '@remirror/pm/keymap';
+import { Plugin, TextSelection } from '@remirror/pm/state';
 
 import { CodeBlockState } from './code-block-plugin';
 import {

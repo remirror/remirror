@@ -22,6 +22,11 @@
     "@remirror/ui-icons": "^0.7.5",
     "@remirror/ui-text": "^0.7.4"
   },
+  "devDependencies": {
+    "@emotion/core": "^10.0.22",
+    "@types/react": "^16.9.34",
+    "react": "^16.13.1"
+  },
   "peerDependencies": {
     "@emotion/core": "^10",
     "@types/react": "^16.8.0",
@@ -32,10 +37,5 @@
   },
   "meta": {
     "sizeLimit": "50 KB"
-  },
-  "devDependencies": {
-    "@emotion/core": "^10.0.22",
-    "@types/react": "^16.9.34",
-    "react": "^16.13.1"
   }
 }

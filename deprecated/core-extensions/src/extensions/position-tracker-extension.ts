@@ -1,5 +1,5 @@
-import { Plugin } from 'prosemirror-state';
-import { Decoration, DecorationSet } from 'prosemirror-view';
+import { Plugin } from '@remirror/pm/state';
+import { Decoration, DecorationSet } from '@remirror/pm/view';
 
 import { Extension } from '@remirror/core';
 import { isNullOrUndefined, isNumber, isString, object } from '@remirror/core-helpers';

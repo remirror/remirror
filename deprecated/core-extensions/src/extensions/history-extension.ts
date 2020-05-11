@@ -1,4 +1,4 @@
-import { history, redo, undo } from 'prosemirror-history';
+import { history, redo, undo } from '@remirror/pm/history';
 
 import { Extension, isFunction, KeyBindings } from '@remirror/core';
 import {

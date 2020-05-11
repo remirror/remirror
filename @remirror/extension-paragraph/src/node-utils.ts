@@ -1,12 +1,11 @@
-import { clamp } from '@remirror/core';
-
 import {
+  clamp,
   INDENT_LEVELS,
   INDENT_MARGIN_PT_SIZE,
   IndentLevels,
   PIXEL_TO_PT_RATIO,
   SIZE_PATTERN,
-} from './node-constants';
+} from '@remirror/core';
 
 /**
  * Converts a style value for size into into the same `pt`.

@@ -1,5 +1,4 @@
-import { ProsemirrorAttributes } from '@remirror/core';
-import { CSS_ROTATE_PATTERN, EMPTY_CSS_VALUE } from '@remirror/core-extensions';
+import { CSS_ROTATE_PATTERN, EMPTY_CSS_VALUE, ProsemirrorAttributes } from '@remirror/core';
 
 import { IMAGE_FILE_TYPES } from './image-constants';
 

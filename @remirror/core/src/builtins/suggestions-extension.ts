@@ -1,8 +1,7 @@
-import { suggest, Suggestion } from 'prosemirror-suggest';
-
 import { ExtensionPriority } from '@remirror/core-constants';
 import { isArray } from '@remirror/core-helpers';
 import { And } from '@remirror/core-types';
+import { suggest, Suggestion } from '@remirror/pm/suggest';
 
 import { Extension, ExtensionFactory } from '../extension';
 import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';

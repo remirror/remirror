@@ -1,4 +1,4 @@
-import { GapCursor, gapCursor } from 'prosemirror-gapcursor';
+import { GapCursor, gapCursor } from '@remirror/pm/gapcursor';
 
 import { Extension } from '@remirror/core';
 import { isInstanceOf } from '@remirror/core-helpers';

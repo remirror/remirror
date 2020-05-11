@@ -1,4 +1,4 @@
-import { Plugin, Selection } from 'prosemirror-state';
+import { Plugin, Selection } from '@remirror/pm/state';
 
 import { Extension } from '@remirror/core';
 import { Cast, isAndroidOS } from '@remirror/core-helpers';

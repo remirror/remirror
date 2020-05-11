@@ -21,6 +21,13 @@
     "csstype": "^2.6.10",
     "merge-props": "^5.0.1"
   },
+  "devDependencies": {
+    "@emotion/core": "^10.0.22",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
   "peerDependencies": {
     "@emotion/core": "^10",
     "@types/react": "^16.8.0",
@@ -33,12 +40,5 @@
   },
   "meta": {
     "sizeLimit": "20 KB"
-  },
-  "devDependencies": {
-    "@emotion/core": "^10.0.22",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.7",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
   }
 }

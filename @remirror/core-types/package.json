@@ -11,6 +11,7 @@
   "sideEffects": false,
   "main": "dist/core-types.cjs.js",
   "module": "dist/core-types.esm.js",
+  "types": "dist/core-types.cjs.d.ts",
   "files": [
     "dist"
   ],
@@ -22,16 +23,16 @@
     "csstype": "^2.6.10",
     "type-fest": "^0.13.1"
   },
+  "devDependencies": {
+    "@remirror/pm": "*"
+  },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.0"
+    "@remirror/pm": "^0.0.0"
   },
   "publishConfig": {
     "access": "public"
   },
   "meta": {
     "sizeLimit": "1 KB"
-  },
-  "devDependencies": {
-    "@remirror/pm": "*"
   }
 }

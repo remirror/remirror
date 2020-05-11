@@ -1,6 +1,3 @@
-import { Plugin } from 'prosemirror-state';
-import { ReplaceStep } from 'prosemirror-transform';
-
 import {
   Cast,
   CommandMarkTypeParameter,
@@ -19,6 +16,8 @@ import {
   removeMark,
   updateMark,
 } from '@remirror/core';
+import { Plugin } from '@remirror/pm/state';
+import { ReplaceStep } from '@remirror/pm/transform';
 
 import {
   enhancedLinkHandler,

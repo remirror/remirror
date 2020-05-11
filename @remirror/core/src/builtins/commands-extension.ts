@@ -1,5 +1,3 @@
-import { EditorState } from 'prosemirror-state';
-
 import { ErrorConstant } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
 import {
@@ -10,6 +8,7 @@ import {
   EditorView,
   Transaction,
 } from '@remirror/core-types';
+import { EditorState } from '@remirror/pm/state';
 
 import {
   AnyExtension,
@@ -118,7 +117,7 @@ export const CommandsExtension = ExtensionFactory.plain({
           const commands = getStoreKey('commands');
           invariant(commands, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
 
-          return commands.chain as any;
+          return commands.chain;
         });
       },
     };

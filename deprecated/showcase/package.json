@@ -29,6 +29,11 @@
     "match-sorter": "^4.1.0",
     "prettier": "^2.0.5"
   },
+  "devDependencies": {
+    "@emotion/core": "^10.0.22",
+    "@types/react": "^16.9.34",
+    "react": "^16.13.1"
+  },
   "peerDependencies": {
     "@emotion/core": "^10",
     "@types/react": "^16.8.0",
@@ -37,10 +42,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "cjs": "lib/dist/showcase.cjs.js",
-  "devDependencies": {
-    "@emotion/core": "^10.0.22",
-    "@types/react": "^16.9.34",
-    "react": "^16.13.1"
-  }
+  "cjs": "lib/dist/showcase.cjs.js"
 }

@@ -11,6 +11,7 @@
   "sideEffects": false,
   "main": "dist/extension-emoji.cjs.js",
   "module": "dist/extension-emoji.esm.js",
+  "types": "dist/extension-emoji.cjs.d.ts",
   "files": [
     "dist"
   ],
@@ -30,7 +31,7 @@
     "emojilib": "^2.4.0"
   },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.0"
+    "@remirror/pm": "^0.0.0"
   },
   "publishConfig": {
     "access": "public"

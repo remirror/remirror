@@ -1,5 +1,5 @@
 import escapeStringRegex from 'escape-string-regexp';
-import { Suggestion } from 'prosemirror-suggest';
+import { Suggestion } from '@remirror/pm/suggest';
 
 import {
   Extension,

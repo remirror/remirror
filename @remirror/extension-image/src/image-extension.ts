@@ -1,4 +1,4 @@
-import { ResolvedPos } from 'prosemirror-model';
+import { ResolvedPos } from '@remirror/pm/model';
 
 import {
   bool,
@@ -46,7 +46,7 @@ export class ImageExtension extends NodeExtension {
             isElementDOMNode(domNode) ? getAttributes(this.getExtraAttributes(domNode)) : {},
         },
       ],
-      toDOM: node => {
+      toDOM: (node) => {
         return ['img', node.attrs];
       },
     };

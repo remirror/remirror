@@ -1,4 +1,4 @@
-import applyDevTools from 'prosemirror-dev-tools';
+import applyDevTools from '@remirror/pm/dev-tools';
 import { useEffect } from 'react';
 import { unmountComponentAtNode } from 'react-dom';
 

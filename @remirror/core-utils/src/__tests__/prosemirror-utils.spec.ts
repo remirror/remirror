@@ -14,9 +14,9 @@ import {
   tdEmpty,
   tr as row,
 } from 'jest-prosemirror';
-import { Schema } from 'prosemirror-model';
+import { Schema } from '@remirror/pm/model';
 import { marks, nodes } from 'prosemirror-schema-basic';
-import { NodeSelection, Selection, TextSelection } from 'prosemirror-state';
+import { NodeSelection, Selection, TextSelection } from '@remirror/pm/state';
 
 import { omit, pick } from '@remirror/core-helpers';
 

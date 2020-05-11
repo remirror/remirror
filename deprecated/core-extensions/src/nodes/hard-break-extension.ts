@@ -1,4 +1,4 @@
-import { exitCode } from 'prosemirror-commands';
+import { exitCode } from '@remirror/pm/commands';
 
 import {
   chainCommands,

@@ -1,6 +1,5 @@
-import { Plugin } from 'prosemirror-state';
-
 import { EditorSchema, Extension, getPluginState } from '@remirror/core';
+import { Plugin } from '@remirror/pm/state';
 
 import { EpicModePluginState } from './epic-mode-state';
 import { EpicModeExtensionOptions } from './epic-mode-types';

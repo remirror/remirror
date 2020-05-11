@@ -44,6 +44,8 @@ if (process.env.NODE !== 'production') {
       'Command method names must be unique within the editor.',
     [ErrorConstant.DUPLICATE_HELPER_NAMES]: 'Helper method names must be unique within the editor.',
     [ErrorConstant.NON_CHAINABLE_COMMAND]: 'Attempted to chain a non chainable command.',
+    [ErrorConstant.EXTENSION]:
+      'An error occurred within an extension. More details should be made available.',
   };
 }
 
@@ -126,7 +128,7 @@ export function invariant(condition: unknown, options: RemirrorErrorOptions): as
 }
 
 /**
- * The options are only used in a dev environment.
+ * The invariant options which only show up during development.
  */
 export interface RemirrorErrorOptions {
   /**

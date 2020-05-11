@@ -1,5 +1,5 @@
-import { setBlockType } from 'prosemirror-commands';
-import { textblockTypeInputRule } from 'prosemirror-inputrules';
+import { setBlockType } from '@remirror/pm/commands';
+import { textblockTypeInputRule } from '@remirror/pm/inputrules';
 
 import {
   CommandNodeTypeParameter,

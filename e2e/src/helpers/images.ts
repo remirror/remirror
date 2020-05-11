@@ -5,7 +5,7 @@ import { promisify } from 'util';
 
 import { kebabCase } from '@remirror/core';
 
-const {mkdir, writeFile} = promises
+const { mkdir, writeFile } = promises;
 
 const tempDir = (...paths: string[]) => resolve(__dirname, '../..', '__failed-diffs__', ...paths);
 
@@ -33,7 +33,7 @@ export const imagesMatch = (image1: string | Buffer, image2: string | Buffer) =>
       }
       const { diff, one, two } = getDiffPaths();
 
-      mkdir(dirname(diff), {recursive: true})
+      mkdir(dirname(diff), { recursive: true })
         .then(() => {
           return Promise.all([writeFile(one, image1), writeFile(two, image2)]);
         })

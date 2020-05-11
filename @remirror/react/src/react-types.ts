@@ -350,22 +350,24 @@ export interface InjectedRenderEditorProps<Manager extends AnyEditorManager> {
    * **Example with indirectly nested components**
    *
    * ```tsx
-   * // @jsx jsx
-   * import { jsx } from '@emotion/core';
-   * import { ManagedRemirrorProvider, RemirrorManager, useRemirrorContext } from '@remirror/react';
+   * import { RemirrorProvider } from '@remirror/react';
+   * import { PresetCore } from '@remirror/preset-core';
+   * import { BoldExtension } from '@remirror/extension-bold';
    *
-   * const InnerEditor = () => {
-   *   const { getRootProps } = useRemirrorContext();
+   * const Editor = () => {
+   *   const { getRootProps } = useRemirror();
    *   return <div {...getRootProps()} />;
    * }
    *
-   * const Editor = () => {
+   * const EditorWrapper = () => {
+   *   const corePreset = usePreset(CorePreset);
+   *   const boldExtension = useExtension(BoldExtension);
+   *   const manager = useManager([corePreset, boldExtension]);
+   *
    *   return (
-   *     <RemirrorManager>
-   *       <ManagedRemirrorProvider>
-   *         <InnerEditor />
-   *       </ManagedRemirrorProvider>
-   *     </RemirrorManager>
+   *     <RemirrorProvider manager={manager}>
+   *       <InnerEditor />
+   *     </RemirrorProvider>
    *   );
    * }
    * ```

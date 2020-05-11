@@ -1,8 +1,3 @@
-import { Plugin } from 'prosemirror-state';
-import { dropPoint, insertPoint } from 'prosemirror-transform';
-import { Decoration, DecorationSet } from 'prosemirror-view';
-import React from 'react';
-
 import {
   EditorView,
   Extension,
@@ -14,6 +9,9 @@ import {
   ResolvedPos,
   throttle,
 } from '@remirror/core';
+import { Decoration, DecorationSet } from '@remirror/pm/view';
+import { Plugin } from '@remirror/pm/state';
+import { dropPoint, insertPoint } from '@remirror/pm/transform';
 
 import { DropCursorExtensionOptions } from './drop-cursor-types';
 

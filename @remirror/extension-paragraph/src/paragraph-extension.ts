@@ -1,15 +1,17 @@
-import { setBlockType } from 'prosemirror-commands';
-
 import {
+  ALIGN_PATTERN,
   convertCommand,
   ExtensionFactory,
   ExtensionTag,
+  INDENT_ATTRIBUTE,
+  INDENT_LEVELS,
+  IndentLevels,
   NodeGroup,
   object,
   ProsemirrorAttributes,
 } from '@remirror/core';
+import { setBlockType } from '@remirror/pm/commands';
 
-import { ALIGN_PATTERN, INDENT_ATTRIBUTE, INDENT_LEVELS, IndentLevels } from './node-constants';
 import { marginToIndent } from './node-utils';
 
 export interface ParagraphExtensionSettings {

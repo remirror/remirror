@@ -1,15 +1,6 @@
 import {
-  escapeChar,
-  getRegexPrefix,
-  isInvalidSplitReason,
-  isRemovedReason,
-  isSplitReason,
-  regexToString,
-  Suggestion,
-} from 'prosemirror-suggest';
-
-import {
   convertCommand,
+  ErrorConstant,
   ExtensionFactory,
   getMarkRange,
   getMatchString,
@@ -26,6 +17,15 @@ import {
   replaceText,
   TransactionTransformer,
 } from '@remirror/core';
+import {
+  escapeChar,
+  getRegexPrefix,
+  isInvalidSplitReason,
+  isRemovedReason,
+  isSplitReason,
+  regexToString,
+  Suggestion,
+} from '@remirror/pm/suggest';
 
 import {
   MentionExtensionAttributes,
@@ -126,8 +126,8 @@ export const MentionExtension = ExtensionFactory.typed<
     };
   },
 
-  createCommands(parameter, extension) {
-    const { type, getState } = parameter;
+  createCommands(parameter) {
+    const { type, getState, extension } = parameter;
 
     const createMention = ({ shouldUpdate }: { shouldUpdate: boolean }) => (
       config?: ProsemirrorAttributes,
@@ -138,12 +138,13 @@ export const MentionExtension = ExtensionFactory.typed<
 
       const { range, appendText, replacementType, ...attributes } = config;
       let name = attributes.name;
+
       if (!name) {
-        if (extension.settings.matchers.length >= 2) {
-          throw new Error(
+        invariant(extension.settings.matchers.length < 2, {
+          code: ErrorConstant.EXTENSION,
+          message:
             'The MentionExtension command must specify a name since there are multiple matchers configured',
-          );
-        }
+        });
 
         name = extension.settings.matchers[0].name;
       }

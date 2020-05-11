@@ -6,27 +6,15 @@
   "sideEffects": false,
   "main": "dist/test-fixtures.cjs.js",
   "module": "dist/test-fixtures.esm.js",
-  "types": "lib/index.d.ts",
+  "types": "dist/test-fixtures.cjs.d.ts",
   "files": [
     "dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
-    "@remirror/react-portals": "^0.7.3",
+    "@remirror/pm": "^0.0.0",
     "@remirror/ui": "^0.7.6",
-    "@types/prosemirror-view": "^1.11.4",
-    "min-document": "^2.19.0",
-    "prosemirror-view": "^1.14.9"
-  },
-  "peerDependencies": {
-    "@emotion/core": "^10",
-    "@types/react": "^16.8.0",
-    "@types/react-dom": "^16.8.0"
-  },
-  "devDependencies": {
-    "@emotion/core": "^10.0.22",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.7"
+    "min-document": "^2.19.0"
   }
 }

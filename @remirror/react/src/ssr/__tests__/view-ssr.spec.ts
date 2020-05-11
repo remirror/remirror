@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { EditorState } from 'prosemirror-state';
+import { EditorState } from '@remirror/pm/state';
 
 import { initialJson, plugins, schema, testDocument } from '@remirror/test-fixtures';
 

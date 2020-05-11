@@ -11,6 +11,7 @@
   "sideEffects": false,
   "main": "dist/extension-image.cjs.js",
   "module": "dist/extension-image.esm.js",
+  "types": "dist/extension-image.cjs.d.ts",
   "files": [
     "internal",
     "dist"
@@ -19,16 +20,16 @@
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0"
   },
+  "devDependencies": {
+    "@remirror/pm": "*"
+  },
   "peerDependencies": {
-    "@remirror/pm": "^1.0.0"
+    "@remirror/pm": "^0.0.0"
   },
   "publishConfig": {
     "access": "public"
   },
   "meta": {
     "sizeLimit": "120 KB"
-  },
-  "devDependencies": {
-    "@remirror/pm": "*"
   }
 }

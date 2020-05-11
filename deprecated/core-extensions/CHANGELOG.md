@@ -4,8 +4,8 @@
 
 ### Patch Changes
 
-- 4dbb7461: Prevent the link selection from selecting word on click if there is already a selection. Fixes
-  #278.
+- 4dbb7461: Prevent the link selection from selecting word on click if there is already a selection.
+  Fixes #278.
 
 ## 0.11.1
 

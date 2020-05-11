@@ -1,4 +1,4 @@
-import { wrappingInputRule } from 'prosemirror-inputrules';
+import { wrappingInputRule } from '@remirror/pm/inputrules';
 
 import {
   CommandNodeTypeParameter,

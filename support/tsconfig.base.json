@@ -9,6 +9,7 @@
     "noImplicitReturns": true,
     "sourceMap": true,
     "declaration": true,
+    "declarationMap": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "pretty": true,

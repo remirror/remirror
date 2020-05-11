@@ -1,4 +1,4 @@
-import { toggleMark } from 'prosemirror-commands';
+import { toggleMark } from '@remirror/pm/commands';
 
 import {
   CommandMarkTypeParameter,

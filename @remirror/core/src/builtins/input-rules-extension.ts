@@ -1,7 +1,6 @@
-import { InputRule, inputRules } from 'prosemirror-inputrules';
-
 import { ExtensionPriority } from '@remirror/core-constants';
 import { And } from '@remirror/core-types';
+import { InputRule, inputRules } from '@remirror/pm/inputrules';
 
 import { Extension, ExtensionFactory } from '../extension';
 import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';

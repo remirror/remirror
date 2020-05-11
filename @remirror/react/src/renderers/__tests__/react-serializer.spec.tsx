@@ -1,4 +1,4 @@
-import { Node as PMNode } from 'prosemirror-model';
+import { Node as PMNode } from '@remirror/pm/model';
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
 

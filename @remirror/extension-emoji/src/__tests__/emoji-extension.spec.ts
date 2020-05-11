@@ -1,5 +1,5 @@
 import { renderEditor } from 'jest-remirror';
-import { SuggestKeyBindingParameter } from 'prosemirror-suggest';
+import { SuggestKeyBindingParameter } from '@remirror/pm/suggest';
 
 import { object } from '@remirror/core';
 

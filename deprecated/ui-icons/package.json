@@ -20,6 +20,11 @@
     "@remirror/ui": "^0.7.6",
     "@types/reach__visually-hidden": "^0.2.0"
   },
+  "devDependencies": {
+    "@emotion/core": "^10.0.22",
+    "@types/react": "^16.9.34",
+    "react": "^16.13.1"
+  },
   "peerDependencies": {
     "@emotion/core": "^10",
     "@types/react": "^16.8.0",
@@ -30,10 +35,5 @@
   },
   "meta": {
     "sizeLimit": "40 KB"
-  },
-  "devDependencies": {
-    "@emotion/core": "^10.0.22",
-    "@types/react": "^16.9.34",
-    "react": "^16.13.1"
   }
 }

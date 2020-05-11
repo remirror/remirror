@@ -1,7 +1,3 @@
-import { InputRule } from 'prosemirror-inputrules';
-import { Fragment, Slice } from 'prosemirror-model';
-import { Plugin, TextSelection } from 'prosemirror-state';
-
 import { findMatches, isFunction, isNullOrUndefined } from '@remirror/core-helpers';
 import {
   EditorSchema,
@@ -11,6 +7,9 @@ import {
   ProsemirrorNode,
   RegExpParameter,
 } from '@remirror/core-types';
+import { InputRule } from '@remirror/pm/inputrules';
+import { Fragment, Slice } from '@remirror/pm/model';
+import { Plugin, TextSelection } from '@remirror/pm/state';
 
 interface NodeInputRuleParameter
   extends Partial<GetAttributesParameter>,
@@ -171,7 +170,7 @@ export const plainInputRule = <GSchema extends EditorSchema = EditorSchema>({
     if (value === '') {
       tr.delete(start, end);
     } else {
-      tr.replaceWith(start, end, state.schema.text(value) as any);
+      tr.replaceWith(start, end, state.schema.text(value));
     }
 
     if (updateSelection) {

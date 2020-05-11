@@ -1,5 +1,5 @@
 import minDocument from 'min-document';
-import { DirectEditorProps, EditorView } from 'prosemirror-view';
+import { DirectEditorProps, EditorView } from '@remirror/pm/view';
 
 import {
   Cast,

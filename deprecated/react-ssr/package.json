@@ -14,7 +14,6 @@
   "browser": {
     "min-document": false
   },
-  "types": "lib/index.d.ts",
   "files": [
     "dist"
   ],
@@ -29,6 +28,13 @@
     "prosemirror-state": "^1.3.3",
     "prosemirror-view": "^1.14.9"
   },
+  "devDependencies": {
+    "@emotion/core": "^10.0.22",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
   "peerDependencies": {
     "@emotion/core": "^10",
     "@types/react": "^16.8.0",
@@ -41,12 +47,5 @@
   },
   "meta": {
     "sizeLimit": "90 KB"
-  },
-  "devDependencies": {
-    "@emotion/core": "^10.0.22",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.7",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
   }
 }

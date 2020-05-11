@@ -18,5 +18,24 @@
   "files.exclude": {
     ".yarn/releases/**": true
   },
-  "gitdoc.enabled": false
+  "gitdoc.enabled": false,
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#43619d",
+    "activityBar.activeBorder": "#cf8fa5",
+    "activityBar.background": "#43619d",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#cf8fa5",
+    "activityBarBadge.foreground": "#15202b",
+    "statusBar.background": "#344b79",
+    "statusBar.border": "#344b79",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#43619d",
+    "titleBar.activeBackground": "#344b79",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.border": "#344b79",
+    "titleBar.inactiveBackground": "#344b7999",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#344b79"
 }

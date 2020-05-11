@@ -16,7 +16,7 @@
   ],
   "main": "dist/jest-remirror.cjs.js",
   "module": "dist/jest-remirror.esm.js",
-  "types": "lib/index.d.ts",
+  "types": "dist/jest-remirror.cjs.d.ts",
   "files": [
     "environment.d.ts",
     "environment.js",
@@ -25,35 +25,22 @@
   "dependencies": {
     "@babel/runtime": "^7",
     "@remirror/core": "^0.11.0",
+    "@remirror/pm": "^0.0.0",
     "@remirror/preset-core": "^0.11.0",
     "@remirror/react": "^0.13.1",
     "@remirror/react-utils": "^0.7.6",
     "@testing-library/react": "^10.0.2",
     "@types/node": ">=13.11.0",
-    "@types/prosemirror-model": "^1.7.2",
-    "@types/prosemirror-view": "^1.11.4",
-    "jest-prosemirror": "^0.8.2",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "@types/testing-library__react": "^10.0.1",
+    "jest-prosemirror": "^0.8.3",
     "jest-snapshot": "^26.0.0",
     "mutationobserver-shim": "^0.3.5",
-    "prosemirror-model": "^1.9.1",
-    "prosemirror-state": "^1.3.3",
-    "prosemirror-view": "^1.14.9"
-  },
-  "peerDependencies": {
-    "@emotion/core": "^10",
-    "@types/react": "^16.8.0",
-    "@types/react-dom": "^16.8.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "devDependencies": {
-    "@emotion/core": "^10.0.22",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.7",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
   }
 }

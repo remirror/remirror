@@ -1,5 +1,3 @@
-import { TextSelection } from 'prosemirror-state';
-
 import {
   EditorState,
   EditorStateParameter,
@@ -8,6 +6,7 @@ import {
   MarkTypeParameter,
   TransactionParameter,
 } from '@remirror/core';
+import { TextSelection } from '@remirror/pm/state';
 
 export const extractHref = (url: string) =>
   url.startsWith('http') || url.startsWith('//') ? url : `http://${url}`;

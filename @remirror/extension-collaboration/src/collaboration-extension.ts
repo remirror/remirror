@@ -13,7 +13,7 @@ import {
   Transaction,
   uniqueId,
 } from '@remirror/core';
-import { Step } from '@remirror/pm';
+import { Step } from '@remirror/pm/transform';
 
 export interface Sendable {
   version: number;

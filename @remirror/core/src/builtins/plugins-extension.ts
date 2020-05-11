@@ -1,7 +1,7 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { invariant, object } from '@remirror/core-helpers';
 import { And, ProsemirrorPlugin } from '@remirror/core-types';
-import { PluginKey } from '@remirror/pm';
+import { PluginKey } from '@remirror/pm/state';
 
 import { AnyExtension, Extension, ExtensionFactory } from '../extension';
 import { AnyPreset } from '../preset';
