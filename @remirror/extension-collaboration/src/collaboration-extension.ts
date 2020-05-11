@@ -74,7 +74,7 @@ export class CollaborationExtension extends Extension<CollaborationExtensionOpti
           dispatch(
             receiveTransaction(
               state,
-              steps.map(item => Step.fromJSON(schema, item.step)),
+              steps.map(item => Step.fromJSON(schema, item)),
               steps.map(item => item.clientID),
             ),
           );
