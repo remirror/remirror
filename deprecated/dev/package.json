@@ -19,10 +19,10 @@
     "prosemirror-dev-tools": "^2.1.1"
   },
   "devDependencies": {
-    "@types/prosemirror-state": "^1.2.3",
+    "@types/prosemirror-state": "^1.2.4",
     "@types/prosemirror-view": "^1.11.4",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.7",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
     "prosemirror-state": "^1.3.3",
     "prosemirror-view": "^1.14.9",
     "react": "^16.13.1",

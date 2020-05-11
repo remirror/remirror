@@ -153,12 +153,12 @@ export const nodeInputRule = ({
 /**
  * Creates an node input rule based on the provided regex for the provided node type
  */
-export const plainInputRule = <GSchema extends EditorSchema = EditorSchema>({
+export const plainInputRule = <Schema extends EditorSchema = EditorSchema>({
   regexp,
   transformMatch,
   updateSelection = false,
 }: PlainInputRuleParameter) => {
-  return new InputRule<GSchema>(regexp, (state, match, start, end) => {
+  return new InputRule<Schema>(regexp, (state, match, start, end) => {
     const value = transformMatch(match);
 
     if (isNullOrUndefined(value)) {
@@ -170,7 +170,7 @@ export const plainInputRule = <GSchema extends EditorSchema = EditorSchema>({
     if (value === '') {
       tr.delete(start, end);
     } else {
-      tr.replaceWith(start, end, state.schema.text(value));
+      tr.replaceWith(start, end, state.schema.text(value) as ProsemirrorNode<Schema>);
     }
 
     if (updateSelection) {

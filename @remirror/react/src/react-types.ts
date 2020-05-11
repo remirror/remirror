@@ -1,4 +1,3 @@
-import { Interpolation, ObjectInterpolation } from '@emotion/core';
 import { ReactNode, Ref } from 'react';
 
 import {
@@ -274,9 +273,7 @@ export type PositionerProps = IsActiveParameter & Position;
 
 export interface GetRootPropsConfig<RefKey extends string = 'ref'>
   extends RefParameter<RefKey>,
-    PlainObject {
-  editorStyles?: Interpolation;
-}
+    PlainObject {}
 
 export type RefKeyRootProps<RefKey extends string = 'ref'> = {
   [P in Exclude<RefKey, 'key'>]: Ref<any>;
@@ -478,7 +475,6 @@ export type AttributePropFunction<ExtensionUnion extends AnyExtension = any> = (
 
 export interface PlaceholderConfig extends TextParameter {
   className: string;
-  style: ObjectInterpolation<undefined>;
 }
 
 export type PositionerMapValue = ElementParameter & {

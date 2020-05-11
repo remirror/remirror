@@ -295,9 +295,9 @@ export function isPrimitive(value: unknown): value is Primitive {
  *
  * @public
  */
-export const isNullOrUndefined = (value: unknown): value is null | undefined =>
-  isNull(value) || isUndefined(value);
-
+export function isNullOrUndefined(value: unknown): value is null | undefined {
+  return isNull(value) || isUndefined(value);
+}
 /**
  * Predicate check that value is an object.
  *

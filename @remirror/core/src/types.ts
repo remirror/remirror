@@ -92,25 +92,17 @@ export type NodeExtensionTags<NodeNames extends string = string> = Record<NodeGr
 /**
  * Get the static extension settings.
  */
-export type GetSettings<
-  Type extends {
-    ['~S']: unknown;
-  }
-> = Type['~S'];
+export type GetSettings<Type extends { ['~S']: unknown }> = Type['~S'];
 
 /**
  * Get the dynamic extension properties.
  */
-export type GetProperties<
-  Type extends {
-    ['~P']: unknown;
-  }
-> = Type['~P'];
+export type GetProperties<Type extends { ['~P']: unknown }> = Type['~P'];
 
 /**
  * Get the schema from an `EditorManager`.
  */
-export type GetSchema<Type extends { ['~S']: unknown }> = Type['~S'];
+export type GetSchema<Type extends { ['~Sch']: unknown }> = Type['~Sch'];
 
 /**
  * Get the commands from an `EditorManager`, `Extension` or `Preset`.

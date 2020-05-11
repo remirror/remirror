@@ -29,7 +29,7 @@
     "@types/prosemirror-inputrules": "^1.0.2",
     "@types/prosemirror-model": "^1.7.2",
     "@types/prosemirror-schema-list": "^1.0.1",
-    "@types/prosemirror-state": "^1.2.3",
+    "@types/prosemirror-state": "^1.2.4",
     "@types/prosemirror-view": "^1.11.4",
     "map-obj": "^4.1.0",
     "prosemirror-commands": "^1.1.4",
@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@emotion/core": "^10.0.22",
-    "@types/react": "^16.9.34",
+    "@types/react": "^16.9.35",
     "react": "^16.13.1"
   },
   "peerDependencies": {

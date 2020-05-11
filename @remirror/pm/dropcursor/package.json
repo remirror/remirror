@@ -1,4 +1,5 @@
 {
+  "name": "@remirror/pm/dropcursor",
   "main": "dist/pm.cjs.js",
   "module": "dist/pm.esm.js",
   "preconstruct": {

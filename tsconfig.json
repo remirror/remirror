@@ -1,20 +1,8 @@
 {
   "extends": "./support/tsconfig.base.json",
   "compilerOptions": {
-    "types": [
-      "node",
-      "jest",
-      "jest-extended",
-      "jest-axe",
-      "@testing-library/jest-dom",
-      "jest-emotion",
-      "snapshot-diff",
-      "jest-environment-puppeteer",
-      "expect-puppeteer",
-      "puppeteer"
-    ],
+    "types": ["node", "jest", "jest-extended", "jest-axe", "@testing-library/jest-dom"],
     "noEmit": true,
-    "declaration": false,
     "skipLibCheck": false
   },
   "include": ["**/*.ts", "**/*.tsx", "../global.d.ts"],

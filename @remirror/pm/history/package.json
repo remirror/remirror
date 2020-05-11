@@ -1,4 +1,5 @@
 {
+  "name": "@remirror/pm/history",
   "main": "dist/pm.cjs.js",
   "module": "dist/pm.esm.js",
   "preconstruct": {

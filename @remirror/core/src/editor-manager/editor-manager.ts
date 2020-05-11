@@ -145,7 +145,7 @@ export class EditorManager<
    * Pseudo property which is a small hack to store the type of the schema
    * available from this manager..
    */
-  public ['~S']!: SchemaFromExtensionUnion<this['~E']>;
+  public ['~Sch']!: SchemaFromExtensionUnion<this['~E']>;
 
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 

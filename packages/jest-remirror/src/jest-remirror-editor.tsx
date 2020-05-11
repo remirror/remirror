@@ -30,6 +30,7 @@ import {
   pick,
   ProsemirrorAttributes,
   SchemaFromExtensionUnion,
+  ProsemirrorNode,
 } from '@remirror/core';
 import { RenderEditor, RenderEditorProps } from '@remirror/react';
 
@@ -100,30 +101,40 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
     GetMarkNameUnion<GetExtensionUnion<Manager>>
   > = object();
 
-  /** Provide access to the editor manager. */
+  /**
+   * Provide access to the editor manager.
+   */
   get manager() {
     return this.#manager;
   }
 
-  /** The editor view. */
+  /**
+   * The editor view.
+   */
   get view() {
     return this.#manager.view as TestEditorView<
       SchemaFromExtensionUnion<GetExtensionUnion<Manager>>
     >;
   }
 
-  /** The editor state. */
+  /**
+   * The editor state.
+   */
   get state() {
     return this.view.state;
   }
 
-  /** The editor schema. */
+  /**
+   * The editor schema.
+   */
   get schema() {
     return this.state.schema;
   }
 
-  /** The root node for the editor. */
-  get doc() {
+  /**
+   * The root node for the editor.
+   */
+  get doc(): ProsemirrorNode<this['schema']> {
     return this.state.doc;
   }
 

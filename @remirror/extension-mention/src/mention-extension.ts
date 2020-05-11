@@ -219,8 +219,8 @@ export const MentionExtension = ExtensionFactory.typed<
     };
   },
 
-  createPasteRules(parameter, extension) {
-    const { type } = parameter;
+  createPasteRules(parameter) {
+    const { type, extension } = parameter;
 
     return extension.settings.matchers.map((matcher) => {
       const { startOfLine, char, supportedCharacters, name } = {
@@ -244,87 +244,88 @@ export const MentionExtension = ExtensionFactory.typed<
     });
   },
 
-  createSuggestions(parameter, extension) {
-    const { commands, type, getState } = parameter;
-    const { settings, properties } = extension;
+  createSuggestions(parameter) {
+    const { commands, type, getState, extension } = parameter;
 
-    return settings.matchers.map<Suggestion<MentionExtensionSuggestCommand>>((matcher) => {
-      return {
-        ...DEFAULT_MATCHER,
-        ...matcher,
+    return extension.settings.matchers.map<Suggestion<MentionExtensionSuggestCommand>>(
+      (matcher) => {
+        return {
+          ...DEFAULT_MATCHER,
+          ...matcher,
 
-        // The following properties are wrapped in getters so that they always
-        // use the latest version of the suggestion.
-        get noDecorations() {
-          return properties.noDecorations;
-        },
+          // The following properties are wrapped in getters so that they always
+          // use the latest version of the suggestion.
+          get noDecorations() {
+            return extension.properties.noDecorations;
+          },
 
-        get suggestTag() {
-          return properties.suggestTag;
-        },
+          get suggestTag() {
+            return extension.properties.suggestTag;
+          },
 
-        get onChange() {
-          return properties.onChange;
-        },
+          get onChange() {
+            return extension.properties.onChange;
+          },
 
-        get onExit() {
-          return properties.onExit;
-        },
+          get onExit() {
+            return extension.properties.onExit;
+          },
 
-        get keyBindings() {
-          return properties.keyBindings;
-        },
+          get keyBindings() {
+            return extension.properties.keyBindings;
+          },
 
-        get onCharacterEntry() {
-          return properties.onCharacterEntry;
-        },
+          get onCharacterEntry() {
+            return extension.properties.onCharacterEntry;
+          },
 
-        createCommand: ({ match, reason, setMarkRemoved }) => {
-          const { range, suggester } = match;
-          const { name } = suggester;
-          const create = commands().createMention;
-          const update = commands().updateMention;
-          const remove = commands().removeMention;
-          const isActive = isMarkActive({
-            from: range.from,
-            to: range.end,
-            type: type,
+          createCommand: ({ match, reason, setMarkRemoved }) => {
+            const { range, suggester } = match;
+            const { name } = suggester;
+            const create = commands().createMention;
+            const update = commands().updateMention;
+            const remove = commands().removeMention;
+            const isActive = isMarkActive({
+              from: range.from,
+              to: range.end,
+              type: type,
 
-            stateOrTransaction: getState(),
-          });
+              stateOrTransaction: getState(),
+            });
 
-          const fn = isActive ? update : create;
-          const isSplit = isSplitReason(reason);
-          const isInvalid = isInvalidSplitReason(reason);
-          const isRemoved = isRemovedReason(reason);
+            const fn = isActive ? update : create;
+            const isSplit = isSplitReason(reason);
+            const isInvalid = isInvalidSplitReason(reason);
+            const isRemoved = isRemovedReason(reason);
 
-          const removeCommand = () => {
-            setMarkRemoved();
-            try {
-              // This might fail when a deletion has taken place.
-              isInvalid ? remove({ range }) : noop();
-            } catch {
-              // This sometimes fails and it's best to ignore until more is
-              // known about the impact.
-            }
-          };
+            const removeCommand = () => {
+              setMarkRemoved();
+              try {
+                // This might fail when a deletion has taken place.
+                isInvalid ? remove({ range }) : noop();
+              } catch {
+                // This sometimes fails and it's best to ignore until more is
+                // known about the impact.
+              }
+            };
 
-          const createCommand = ({
-            replacementType = isSplit ? 'partial' : 'full',
-            id = match.queryText[replacementType],
-            label = match.matchText[replacementType],
-            appendText,
-            ...attributes
-          }: SuggestionCommandAttributes) => {
-            fn({ id, label, appendText, replacementType, name, range, ...attributes });
-          };
+            const createCommand = ({
+              replacementType = isSplit ? 'partial' : 'full',
+              id = match.queryText[replacementType],
+              label = match.matchText[replacementType],
+              appendText,
+              ...attributes
+            }: SuggestionCommandAttributes) => {
+              fn({ id, label, appendText, replacementType, name, range, ...attributes });
+            };
 
-          const command: MentionExtensionSuggestCommand =
-            isInvalid || isRemoved ? removeCommand : createCommand;
+            const command: MentionExtensionSuggestCommand =
+              isInvalid || isRemoved ? removeCommand : createCommand;
 
-          return command;
-        },
-      };
-    });
+            return command;
+          },
+        };
+      },
+    );
   },
 });
