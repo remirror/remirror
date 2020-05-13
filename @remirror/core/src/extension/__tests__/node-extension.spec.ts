@@ -47,14 +47,7 @@ describe('extraAttributes', () => {
     ],
   });
 
-  const { schema } = createBaseManager([customExtension])([
-    {
-      extension: new CustomExtension({
-        extraAttributes: [],
-      }),
-      priority: 1,
-    },
-  ]);
+  const { schema } = createBaseManager({ extensions: [customExtension], presets: [] });
   const { doc, custom, other } = pmBuild(schema, {
     custom: { nodeType: 'custom', run, title, crazy: 'yo' },
     other: { nodeType: 'custom', run, title, crazy: 'believe me' },
@@ -62,7 +55,7 @@ describe('extraAttributes', () => {
 
   it('creates attrs with the correct shape', () => {
     expect(schema.nodes.custom.spec.attrs).toEqual({
-      title: { default: '' },
+      title: { default: null },
       run: { default: 'failure' },
       crazy: { default: 'yo' },
       foo: { default: '' },
@@ -75,6 +68,7 @@ describe('extraAttributes', () => {
       content: `<p title="${title}" data-run="${run}">hello</p>`,
       schema,
     });
+    console.log(node);
 
     const expected = doc(custom('hello'));
 

@@ -125,6 +125,8 @@ function transformSchemaAttributes<
       })
     : originalParseDom;
 
+  console.log(attrs);
+
   return freeze({ ...rest, attrs, parseDOM }) as Spec;
 }
 

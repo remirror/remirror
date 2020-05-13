@@ -810,9 +810,9 @@ export const shouldUseDOMEnvironment = (forceEnvironment?: RenderEnvironment) =>
  *
  * @param forceEnvironment - force a specific environment
  */
-export const getDocument = (forceEnvironment?: RenderEnvironment) => {
+export function getDocument(forceEnvironment?: RenderEnvironment) {
   return shouldUseDOMEnvironment(forceEnvironment) ? document : minDocument;
-};
+}
 
 export interface CustomDocParameter {
   /** The custom document to use (allows for ssr rendering) */
@@ -862,12 +862,10 @@ interface FromStringParameter extends Partial<CustomDocParameter>, SchemaParamet
  *
  * @public
  */
-export const fromHTML = ({
-  content,
-  schema,
-  doc = getDocument(),
-}: FromStringParameter): ProsemirrorNode => {
+export function fromHTML(parameter: FromStringParameter): ProsemirrorNode {
+  const { content, schema, doc = getDocument() } = parameter;
   const element = doc.createElement('div');
   element.innerHTML = content.trim();
+
   return DOMParser.fromSchema(schema).parse(element);
-};
+}
