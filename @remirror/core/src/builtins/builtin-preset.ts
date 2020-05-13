@@ -39,7 +39,7 @@ export const builtInExtensions = [
  *
  * @builtin
  */
-const BuiltinPreset = PresetFactory.typed().preset({
+export const BuiltinPreset = PresetFactory.typed().preset({
   name: 'builtin',
   createExtensions() {
     return builtInExtensions.map((extension) => extension.of());
@@ -72,16 +72,6 @@ const BuiltinPreset = PresetFactory.typed<
   },
 });
 */
-
-/**
- * The builtin preset to be injected into all editors by default.
- */
-export const builtinPreset = BuiltinPreset.of();
-
-/**
- * The type of builtinPreset which allows for extracting the editor shape.
- */
-export type BuiltinPreset = typeof builtinPreset;
 
 /** The built in extension as a type. */
 export type BuiltInExtensions = Of<typeof builtInExtensions[number]>;

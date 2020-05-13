@@ -24,20 +24,31 @@ import {
 import { AnyPreset } from '../preset';
 
 /**
- * Automatically set the default attributes and also parse the extra attributes .
+ * Automatically set the default attributes and also parse the extra attributes.
+ *
+ * @remarks
+ *
+ * TODO thing about how to automatically set the to dom
  */
 function transformSchemaAttributes<
   Spec extends { parseDOM?: ParseRule[] | null; attrs?: { [name: string]: AttributeSpec } | null }
 >(extraAttributes: ExtraAttributes[], spec: Readonly<Spec>): Readonly<Spec> {
-  const { parseDOM: originalParseDom, attrs: originAttrs, ...rest } = spec;
+  const { parseDOM: originalParseDom, attrs: initialAttributes, ...rest } = spec;
 
+  /**
+   * Set the default extra attributes.
+   */
   const defaultExtraAttributes: CreateExtraAttributes = (parameter) => {
     const { fallback = null } = parameter ?? {};
 
+    // Store all the default attributes here.
     const attributes: Record<string, AttributeSpec> = object();
 
+    // Loop through the extra attributes and attach to the attributes object.
     for (const item of extraAttributes) {
       if (isArray(item)) {
+        // Arrays have a first element as the attribute name and second as the
+        // default value.
         attributes[item[0]] = { default: item[1] };
         continue;
       }
@@ -47,15 +58,18 @@ function transformSchemaAttributes<
         continue;
       }
 
-      const { name, default: def } = item;
-      attributes[name] = def !== undefined ? { default: def } : {};
+      const { name, default: default_ } = item;
+      attributes[name] = default_ !== undefined ? { default: default_ } : {};
     }
 
     return attributes;
   };
 
-  const attrs = { ...defaultExtraAttributes(), ...originAttrs };
+  const attrs = { ...defaultExtraAttributes(), ...initialAttributes };
 
+  /**
+   * Retrieve the extra attributes from the domNode.
+   */
   const parseExtraAttributes: GetExtraAttributes = (domNode) => {
     const attributes: ProsemirrorAttributes = object();
 
@@ -87,6 +101,7 @@ function transformSchemaAttributes<
     return attributes;
   };
 
+  // Rewrite the parse dom to correctly parse the extra attributes.
   const parseDOM = originalParseDom
     ? originalParseDom.map((parseRule) => {
         const prevGetAttrs = parseRule.getAttrs;

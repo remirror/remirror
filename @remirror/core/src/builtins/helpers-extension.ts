@@ -2,7 +2,13 @@ import { ErrorConstant } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
 import { And, AnyFunction, EditorSchema } from '@remirror/core-types';
 
-import { AnyExtension, Extension, ExtensionFactory, HelpersFromExtensions } from '../extension';
+import {
+  AnyExtension,
+  Extension,
+  ExtensionFactory,
+  HelpersFromExtensions,
+  GetExtensionUnion,
+} from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import { AnyPreset } from '../preset';
 import {
@@ -89,7 +95,7 @@ declare global {
       /**
        * The helpers provided by the extensions used.
        */
-      helpers: HelpersFromExtensions<ManagerExtensions<ExtensionUnion, PresetUnion>>;
+      helpers: HelpersFromExtensions<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
     }
 
     interface ExtensionCreatorMethods<

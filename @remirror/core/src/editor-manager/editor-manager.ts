@@ -33,7 +33,7 @@ import {
   setDefaultExtensionSettings,
   ViewLifecycleMethodReturn,
 } from '../extension';
-import { AnyPreset, PresetFromConstructor } from '../preset';
+import { AnyPreset } from '../preset';
 import {
   GetConstructor,
   Of,
@@ -57,6 +57,9 @@ export type AnyEditorManager = EditorManager<any, any>;
 export function isEditorManager(value: unknown): value is AnyEditorManager {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
 }
+
+type PresetsFromArray<T extends AnyExtension | AnyPreset> = T extends AnyPreset ? T : never;
+type ExtensionsFromArray<T extends AnyExtension | AnyPreset> = T extends AnyExtension ? T : never;
 
 /**
  * The `Manager` has multiple hook phases which are able to hook into
@@ -111,23 +114,37 @@ export class EditorManager<
   public static of<
     ExtensionUnion extends AnyExtension,
     PresetUnion extends AnyPreset<ExtensionUnion>
-  >(
-    extensionOrPresetList: Array<ExtensionUnion | PresetUnion>,
-    settings: Remirror.ManagerSettings = object(),
-  ): EditorManager<ExtensionUnion, PresetUnion> {
-    return new EditorManager<ExtensionUnion, PresetUnion>(extensionOrPresetList, settings);
+  >({
+    extensions = [] as ExtensionUnion[],
+    presets = [] as PresetUnion[],
+    settings = {},
+  }: {
+    extensions?: ExtensionUnion[];
+    presets?: PresetUnion[];
+    settings?: Remirror.ManagerSettings;
+  }) {
+    type Extensions = ExtensionUnion;
+    // | GetExtensionUnion<typeof builtInPreset>;
+    type Presets = PresetUnion | typeof builtInPreset;
+
+    const builtInPreset = BuiltinPreset.of();
+    return new EditorManager<ExtensionUnion, Presets>({
+      extensions,
+      presets: [...presets, builtInPreset],
+      settings,
+    });
   }
 
   /**
    * Pseudo property which is a small hack to store the type of the extension union.
    */
-  public ['~E']!: Remirror.ManagerExtensions<ExtensionUnion, PresetUnion>;
+  public ['~E']!: ExtensionUnion | GetExtensionUnion<PresetUnion>;
 
   /**
    * Pseudo property which is a small hack to store the type of the presets
    * available from this manager..
    */
-  public ['~P']!: PresetUnion | BuiltinPreset;
+  public ['~P']!: PresetUnion;
 
   /**
    * Pseudo property which is a small hack to store the type of the commands
@@ -203,7 +220,7 @@ export class EditorManager<
   /**
    * The extensions stored by this manager
    */
-  get extensions() {
+  get extensions(): ReadonlyArray<ExtensionUnion | GetExtensionUnion<PresetUnion>> {
     return this.#extensions;
   }
 
@@ -264,16 +281,17 @@ export class EditorManager<
    * This should not be called directly if you want to use prioritized
    * extensions. Instead use `Manager.create`.
    */
-  private constructor(
-    extensionOrPresetList: Array<ExtensionUnion | PresetUnion>,
-    settings: Remirror.ManagerSettings,
-  ) {
-    this.#settings = settings;
+  private constructor(parameter: {
+    extensions: ExtensionUnion[];
+    presets: PresetUnion[];
+    settings?: Remirror.ManagerSettings;
+  }) {
+    this.#settings = parameter.settings ?? {};
 
     const { extensions, extensionMap, presets, presetMap } = transformExtensionOrPresetList<
       ExtensionUnion,
       PresetUnion
-    >(extensionOrPresetList);
+    >([...parameter.extensions, ...parameter.presets]);
 
     this.#extensions = freeze(extensions);
     this.#extensionMap = extensionMap;
@@ -651,14 +669,14 @@ export class EditorManager<
    */
   public getPreset<PresetConstructor extends GetConstructor<PresetUnion>>(
     Constructor: PresetConstructor,
-  ): PresetFromConstructor<PresetConstructor> {
+  ): Of<PresetConstructor> {
     const preset = this.#presetMap.get(Constructor);
 
     // Throws an error if attempting to get a preset which is not present
     // in the manager.
     invariant(preset, { code: ErrorConstant.INVALID_MANAGER_PRESET });
 
-    return preset as PresetFromConstructor<PresetConstructor>;
+    return preset as Of<PresetConstructor>;
   }
 
   /**
@@ -709,7 +727,7 @@ declare global {
     type ManagerExtensions<
       ExtensionUnion extends AnyExtension,
       PresetUnion extends AnyPreset<ExtensionUnion>
-    > = ExtensionUnion | BuiltInExtensions | GetExtensionUnion<PresetUnion>;
+    > = ExtensionUnion | GetExtensionUnion<PresetUnion>;
 
     /**
      * The initialization params which are passed by the view layer into the

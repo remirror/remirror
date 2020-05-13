@@ -28,7 +28,6 @@
   },
   "peerDependencies": {
     "@emotion/core": "^10",
-    "@remirror/ui-icons": "^0.7.7",
     "@types/react": "^16.8.0",
     "@types/react-dom": "^16.8.0",
     "react": "^16.8.0",

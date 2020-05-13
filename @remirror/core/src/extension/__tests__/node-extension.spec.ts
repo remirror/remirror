@@ -3,56 +3,54 @@ import { pmBuild } from 'jest-prosemirror';
 import { NodeGroup } from '@remirror/core-constants';
 import { NodeExtensionSpec } from '@remirror/core-types';
 import { fromHTML } from '@remirror/core-utils';
-import { createBaseTestManager } from '@remirror/test-fixtures';
+import { createBaseManager } from '@remirror/test-fixtures';
 
-import { NodeExtension } from '../..';
+import { ExtensionFactory } from '..';
 
-class CustomExtension extends NodeExtension {
-  get name() {
-    return 'custom' as const;
-  }
-
-  get schema(): NodeExtensionSpec {
+const CustomExtension = ExtensionFactory.node({
+  name: 'custom',
+  createNodeSchema() {
     return {
       content: 'inline*',
       group: NodeGroup.Block,
-      attrs: this.extraAttributes(),
       draggable: false,
       parseDOM: [
         {
           tag: 'p',
-          getAttrs: (node) => this.getExtraAttributes(node as Element),
         },
       ],
       toDOM: () => ['p', 0],
     };
-  }
-}
+  },
+});
 
 describe('extraAttributes', () => {
   const run = 'true';
   const title = 'awesome';
+  const customExtension = CustomExtension.of({
+    extraAttributes: [
+      'title',
+      ['run', 'failure', 'data-run'],
+      {
+        default: 'yo',
+        getAttribute: (domNode) => (domNode as Element).getAttribute('simple'),
+        name: 'crazy',
+      },
+      {
+        name: 'foo',
+        default: '',
+      },
+      {
+        name: 'bar',
+        default: null,
+      },
+    ],
+  });
 
-  const { schema } = createBaseTestManager([
+  const { schema } = createBaseManager([customExtension])([
     {
       extension: new CustomExtension({
-        extraAttributes: [
-          'title',
-          ['run', 'failure', 'data-run'],
-          {
-            default: 'yo',
-            getAttrs: (domNode) => (domNode as Element).getAttribute('simple'),
-            name: 'crazy',
-          },
-          {
-            name: 'foo',
-            default: '',
-          },
-          {
-            name: 'bar',
-            default: null,
-          },
-        ],
+        extraAttributes: [],
       }),
       priority: 1,
     },

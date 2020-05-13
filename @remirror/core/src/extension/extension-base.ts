@@ -57,7 +57,7 @@ import {
  */
 export type AnyExtension<Settings extends object = {}, Properties extends object = {}> = Omit<
   Extension<any, Settings, Properties, any, any, any>,
-  'parameter'
+  'parameter' | 'constructor'
 > & {
   parameter: {
     [MethodName in keyof ExtensionLifecycleMethods<any, any>]: AnyFunction;
@@ -65,6 +65,7 @@ export type AnyExtension<Settings extends object = {}, Properties extends object
     {
       [MethodName in keyof ExtensionCreatorMethods<any, any, any, any, any, any>]: AnyFunction;
     };
+  constructor: AnyExtensionConstructor;
 };
 
 /**
@@ -277,11 +278,17 @@ export abstract class Extension<
   public readonly ['~H']!: Helpers;
 
   /**
+   * Not for public usage. This is purely for types to make it easier to infer
+   * the type of `ProsemirrorType` on an extension instance.
+   */
+  public readonly ['~T']!: ProsemirrorType;
+
+  /**
    * An internal property which helps identify this instance as a
    * `RemirrorExtension`.
    */
   get [REMIRROR_IDENTIFIER_KEY]() {
-    return RemirrorIdentifier.Extension;
+    return RemirrorIdentifier.Extension as const;
   }
 
   /**
@@ -703,10 +710,18 @@ export type PlainExtensionFactoryParameter<
 /**
  * The type covering any potential `PlainExtension`.
  */
-export type AnyPlainExtension<
-  Settings extends object = {},
-  Properties extends object = {}
-> = Extension<string, Settings, Properties, any, any>;
+export type AnyPlainExtension<Settings extends object = {}, Properties extends object = {}> = Omit<
+  PlainExtension<any, Settings, Properties, any, any>,
+  'parameter' | 'constructor'
+> & {
+  parameter: {
+    [MethodName in keyof ExtensionLifecycleMethods<any, any>]: AnyFunction;
+  } &
+    {
+      [MethodName in keyof ExtensionCreatorMethods<any, any, any, any, any, any>]: AnyFunction;
+    };
+  constructor: AnyExtensionConstructor;
+};
 
 /**
  * The shape of the `ExtensionConstructor` used to create instances of
@@ -840,10 +855,18 @@ export type MarkExtensionFactoryParameter<
 /**
  * The type covering any potential `MarkExtension`.
  */
-export type AnyMarkExtension<
-  Settings extends object = {},
-  Properties extends object = {}
-> = MarkExtension<string, Settings, Properties, any, any>;
+export type AnyMarkExtension<Settings extends object = {}, Properties extends object = {}> = Omit<
+  MarkExtension<any, Settings, Properties, any, any>,
+  'parameter' | 'constructor'
+> & {
+  parameter: {
+    [MethodName in keyof ExtensionLifecycleMethods<any, any>]: AnyFunction;
+  } &
+    {
+      [MethodName in keyof ExtensionCreatorMethods<any, any, any, any, any, any>]: AnyFunction;
+    };
+  constructor: AnyExtensionConstructor;
+};
 
 /**
  * The shape of the `MarkExtensionConstructor` used to create extensions and
@@ -974,10 +997,18 @@ export type NodeExtensionFactoryParameter<
 /**
  * The type covering any potential NodeExtension.
  */
-export type AnyNodeExtension<
-  Settings extends object = {},
-  Properties extends object = {}
-> = NodeExtension<string, Settings, Properties, any, any>;
+export type AnyNodeExtension<Settings extends object = {}, Properties extends object = {}> = Omit<
+  NodeExtension<any, Settings, Properties, any, any>,
+  'parameter' | 'constructor'
+> & {
+  parameter: {
+    [MethodName in keyof ExtensionLifecycleMethods<any, any>]: AnyFunction;
+  } &
+    {
+      [MethodName in keyof ExtensionCreatorMethods<any, any, any, any, any, any>]: AnyFunction;
+    };
+  constructor: AnyExtensionConstructor;
+};
 
 /**
  * The shape of the `NodeExtensionConstructor` used to create extensions and

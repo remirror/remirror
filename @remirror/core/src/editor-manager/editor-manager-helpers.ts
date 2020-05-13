@@ -1,7 +1,6 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { invariant, isEmptyArray, isFunction, object, sort } from '@remirror/core-helpers';
 
-import { BuiltInExtensions, BuiltinPreset, builtinPreset } from '../builtins';
 import {
   AnyExtension,
   AnyExtensionConstructor,
@@ -37,13 +36,10 @@ export interface TransformExtensionOrPreset<
   ExtensionUnion extends AnyExtension,
   PresetUnion extends AnyPreset<ExtensionUnion>
 > {
-  extensions: Array<ExtensionUnion | BuiltInExtensions>;
-  extensionMap: WeakMap<
-    GetConstructor<ExtensionUnion | BuiltInExtensions>,
-    ExtensionUnion | BuiltInExtensions
-  >;
-  presets: Array<PresetUnion | BuiltinPreset>;
-  presetMap: WeakMap<GetConstructor<PresetUnion | BuiltinPreset>, PresetUnion | BuiltinPreset>;
+  extensions: ExtensionUnion[];
+  extensionMap: WeakMap<GetConstructor<ExtensionUnion>, ExtensionUnion>;
+  presets: PresetUnion[];
+  presetMap: WeakMap<GetConstructor<PresetUnion>, PresetUnion>;
 }
 
 /**
@@ -65,8 +61,8 @@ export function transformExtensionOrPreset<
 >(
   unionValues: ReadonlyArray<ExtensionUnion | PresetUnion>,
 ): TransformExtensionOrPreset<ExtensionUnion, PresetUnion> {
-  type BuiltinExtensionUnion = ExtensionUnion | BuiltInExtensions;
-  type BuiltinPresetUnion = PresetUnion | BuiltinPreset;
+  type BuiltinExtensionUnion = ExtensionUnion;
+  type BuiltinPresetUnion = PresetUnion;
   type ExtensionConstructor = GetConstructor<BuiltinExtensionUnion>;
   type PresetConstructor = GetConstructor<BuiltinPresetUnion>;
   interface MissingConstructor {
@@ -98,7 +94,7 @@ export function transformExtensionOrPreset<
     duplicateMap.set(key as never, duplicate ? [...duplicate, preset] : [preset]);
   };
 
-  for (const presetOrExtension of [builtinPreset, ...unionValues]) {
+  for (const presetOrExtension of unionValues) {
     // Update the extension list in this block
     if (isExtension(presetOrExtension)) {
       rawExtensions.push(presetOrExtension);

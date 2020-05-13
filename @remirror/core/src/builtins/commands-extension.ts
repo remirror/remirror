@@ -17,6 +17,7 @@ import {
   CommandsFromExtensions,
   Extension,
   ExtensionFactory,
+  GetExtensionUnion,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import { AnyPreset } from '../preset';
@@ -251,7 +252,7 @@ declare global {
        * The `run()` method ends the chain.
        *
        */
-      commands: CommandsFromExtensions<ManagerExtensions<ExtensionUnion, PresetUnion>>;
+      commands: CommandsFromExtensions<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
     }
 
     interface ExtensionCreatorMethods<

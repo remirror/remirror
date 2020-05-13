@@ -43,18 +43,18 @@ import {
 /**
  * The type which is applicable to any `Preset` instances.
  */
-export type AnyPreset<ExtensionUnion extends AnyExtension = any> = Omit<
+export type AnyPreset<ExtensionUnion extends AnyExtension = AnyExtension> = Omit<
   Preset<ExtensionUnion, {}, {}>,
-  'parameter'
+  'parameter' | 'constructor'
 > & {
   parameter: Omit<
     BasePresetFactoryParameter<ExtensionUnion, {}, {}>,
-    'createExtensions' | 'onSetProperties' | 'onResetProperties'
+    'createExtensions' | 'onSetProperties'
   > & {
-    createExtensions: (...args: any[]) => ExtensionUnion[];
-    onSetProperties?: (...args: any[]) => void;
-    onResetProperties?: (...args: any[]) => void;
+    createExtensions: AnyFunction;
+    onSetProperties?: AnyFunction;
   };
+  constructor: AnyPresetConstructor;
 };
 
 export interface AnyPresetConstructor extends FunctionLike {
@@ -147,7 +147,7 @@ export abstract class Preset<
    * @internal
    */
   get [REMIRROR_IDENTIFIER_KEY]() {
-    return RemirrorIdentifier.Preset;
+    return RemirrorIdentifier.Preset as const;
   }
 
   /**

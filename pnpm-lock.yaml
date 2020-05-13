@@ -22,6 +22,7 @@ importers:
       '@microsoft/api-documenter': 7.8.0
       '@microsoft/api-extractor': 7.8.0
       '@preconstruct/cli': 1.1.14
+      '@remirror/test-fixtures': 'link:@remirror/test-fixtures'
       '@size-limit/preset-big-lib': 4.5.0_588f51d7d80a65bdc2bcaa0aef6bb5fe
       '@storybook/addon-actions': 5.3.18_1d1197b5638d1692b5a5f313a7adf944
       '@storybook/addon-info': 5.3.18_1d1197b5638d1692b5a5f313a7adf944
@@ -78,6 +79,8 @@ importers:
       jest-emotion: 10.0.32
       jest-extended: 0.11.5
       jest-github-reporter: 0.4.4_jest@26.0.1
+      jest-prosemirror: 'link:packages/jest-prosemirror'
+      jest-remirror: 'link:packages/jest-remirror'
       jest-watch-typeahead: 0.6.0_jest@26.0.1
       lint-staged: 10.2.2
       npm-run-all: 4.1.5
@@ -118,6 +121,7 @@ importers:
       '@microsoft/api-documenter': ^7.7.20
       '@microsoft/api-extractor': ^7.7.13
       '@preconstruct/cli': ^1.1.14
+      '@remirror/test-fixtures': 0.0.4
       '@size-limit/preset-big-lib': ^4.5.0
       '@storybook/addon-actions': ^5.3.18
       '@storybook/addon-info': ^5.3.18
@@ -174,6 +178,8 @@ importers:
       jest-emotion: ^10.0.32
       jest-extended: ^0.11.5
       jest-github-reporter: ^0.4.4
+      jest-prosemirror: ^0.8.3
+      jest-remirror: ^0.13.1
       jest-watch-typeahead: ^0.6.0
       lint-staged: ^10.2.2
       npm-run-all: ^4.1.5
@@ -596,13 +602,19 @@ importers:
     dependencies:
       '@babel/runtime': 7.9.6
       '@remirror/core': 'link:../core'
+      '@remirror/extension-bold': 'link:../extension-bold'
+      '@remirror/extension-paragraph': 'link:../extension-paragraph'
       '@remirror/pm': 'link:../pm'
+      '@remirror/preset-core': 'link:../preset-core'
       '@remirror/ui': 'link:../../deprecated/ui'
       min-document: 2.19.0
     specifiers:
       '@babel/runtime': ^7
       '@remirror/core': ^0.11.0
+      '@remirror/extension-bold': ^0.11.0
+      '@remirror/extension-paragraph': ^0.11.0
       '@remirror/pm': ^0.0.0
+      '@remirror/preset-core': ^0.11.0
       '@remirror/ui': ^0.7.6
       min-document: ^2.19.0
   deprecated/cli:
@@ -1377,7 +1389,6 @@ importers:
       looks-same: 7.2.3
       pptr-testing-library: 0.5.0_puppeteer@3.0.4
       puppeteer: 3.0.4
-      puppeteer-firefox: 0.5.1
       signal-exit: 3.0.3
       test-keyboard: 'link:../packages/test-keyboard'
     specifiers:
@@ -1392,7 +1403,6 @@ importers:
       looks-same: ^7.2.2
       pptr-testing-library: ^0.5.0
       puppeteer: ^3.0.2
-      puppeteer-firefox: ^0.5.1
       signal-exit: ^3.0.3
       test-keyboard: ^0.7.6
   packages/jest-prosemirror:
@@ -6735,14 +6745,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-/ts5T58OAqqXaOcCvaI7UF+ufh8=
-  /agent-base/4.3.0:
-    dependencies:
-      es6-promisify: 5.0.0
-    dev: false
-    engines:
-      node: '>= 4.0.0'
-    resolution:
-      integrity: sha512-salcGninV0nPrwpGNn4VTXBb1SOuXQBiqbrNXoeizJsHrsL6ERFM2Ne3JUSBWRE6aeNJI2ROP/WEEIDUiDe3cg==
   /agent-base/5.1.1:
     dev: false
     engines:
@@ -11158,16 +11160,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-wsNYJlYkfDnqEHyx5mUrb58kUjw=
-  /es6-promise/4.2.8:
-    dev: false
-    resolution:
-      integrity: sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==
-  /es6-promisify/5.0.0:
-    dependencies:
-      es6-promise: 4.2.8
-    dev: false
-    resolution:
-      integrity: sha1-UQnWLz5W6pZ8S2NQWu8IKRyKUgM=
   /es6-shim/0.35.5:
     dev: false
     resolution:
@@ -14751,15 +14743,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
-  /https-proxy-agent/2.2.4:
-    dependencies:
-      agent-base: 4.3.0
-      debug: 3.2.6
-    dev: false
-    engines:
-      node: '>= 4.5.0'
-    resolution:
-      integrity: sha512-OmvfoQ53WLjtA9HeYP9RNrWMJzzAz1JGaSFr1nijg0PVR1JaD/xbJq1mdEIIlxGpXp9eSe/O2LgU9DJmTPd0Eg==
   /https-proxy-agent/4.0.0:
     dependencies:
       agent-base: 5.1.1
@@ -21058,23 +21041,6 @@ packages:
       node: '>=8.16.0'
     resolution:
       integrity: sha512-n13AWriBMPYxnpbb6bnaY5YoY6rGj8vPLrz6CZF3o0qJNEwlcfJVxBzYZ0NJsQ21UbdJoijPCDrM++SUVEz7+w==
-  /puppeteer-firefox/0.5.1:
-    dependencies:
-      debug: 4.1.1
-      extract-zip: 1.7.0
-      https-proxy-agent: 2.2.4
-      mime: 2.4.5
-      progress: 2.0.3
-      proxy-from-env: 1.1.0
-      rimraf: 2.7.1
-      ws: 6.2.1
-    deprecated: 'Firefox support is gradually transitioning to the puppeteer package. As of puppeteer v2.1.0 you can interact with Firefox Nightly. The puppeteer-firefox package will remain available until the transition is complete, but it is no longer actively maintained. For more information visit https://wiki.mozilla.org/Remote'
-    dev: false
-    engines:
-      node: '>=8.9.4'
-    requiresBuild: true
-    resolution:
-      integrity: sha512-3BIgcBPoSzlmmzG0+xGRlYjq8ow0H9Avi6pHHfdYqaQOtUjdxqHfnGmKuHjdO4QdzCipvh68n8Pk9OZWl19f3g==
   /puppeteer/3.0.4:
     dependencies:
       debug: 4.1.1

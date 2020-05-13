@@ -1,7 +1,13 @@
-import { AnyExtension, AnyPlainExtension } from '../extension-base';
+import { AnyExtension, AnyNodeExtension, AnyMarkExtension } from '../extension-base';
 import { ExtensionFactory } from '../extension-factory';
 
 const anyExtensionTester = <ExtensionUnion extends AnyExtension>(extension: ExtensionUnion) => {};
+const anyNodeExtensionTester = <ExtensionUnion extends AnyNodeExtension>(
+  extension: ExtensionUnion,
+) => {};
+const anyMarkExtensionTester = <ExtensionUnion extends AnyMarkExtension>(
+  extension: ExtensionUnion,
+) => {};
 
 // Extension without settings.
 
@@ -45,6 +51,28 @@ const ExtensionWithProperties = ExtensionFactory.typed<
   defaultSettings: { awesome: 'never' },
   defaultProperties: { oops: false },
 });
+const NodeExtensionWithProperties = ExtensionFactory.typed<
+  { awesome?: string },
+  { oops: boolean }
+>().node({
+  name: 'withProperties',
+  defaultSettings: { awesome: 'never' },
+  defaultProperties: { oops: false },
+  createNodeSchema() {
+    return {};
+  },
+});
+const MarkExtensionWithProperties = ExtensionFactory.typed<
+  { awesome?: string },
+  { oops: boolean }
+>().mark({
+  name: 'withProperties',
+  defaultSettings: { awesome: 'never' },
+  defaultProperties: { oops: false },
+  createMarkSchema() {
+    return {};
+  },
+});
 
 // @ts-expect-error
 ExtensionFactory.typed<{}, { oops: boolean }>().plain({
@@ -52,9 +80,28 @@ ExtensionFactory.typed<{}, { oops: boolean }>().plain({
 });
 
 const extensionWithProperties = ExtensionWithProperties.of({ properties: { oops: true } });
-
 type AnyExtensionsSupportsProperties = typeof extensionWithProperties extends AnyExtension
   ? true
   : never;
 const anyExtensionsSupportsProperties: AnyExtension = extensionWithProperties;
 anyExtensionTester(extensionWithProperties);
+// @ts-expect-error
+anyNodeExtensionTester(extensionWithProperties);
+// @ts-expect-error
+anyMarkExtensionTester(extensionWithProperties);
+
+const nodeExtensionWithProperties = NodeExtensionWithProperties.of({ properties: { oops: true } });
+const anyNodeExtensionsSupportsProperties: AnyNodeExtension = nodeExtensionWithProperties;
+anyExtensionTester(nodeExtensionWithProperties);
+anyNodeExtensionTester(nodeExtensionWithProperties);
+// @ts-expect-error
+anyMarkExtensionTester(nodeExtensionWithProperties);
+
+const markExtensionWithProperties = MarkExtensionWithProperties.of({ properties: { oops: true } });
+const anyMarkExtensionsSupportsProperties: AnyMarkExtension = markExtensionWithProperties;
+anyExtensionTester(markExtensionWithProperties);
+anyMarkExtensionTester(markExtensionWithProperties);
+// @ts-expect-error
+anyNodeExtensionTester(markExtensionWithProperties);
+
+const a = anyMarkExtensionsSupportsProperties['~~remirror~~'];
