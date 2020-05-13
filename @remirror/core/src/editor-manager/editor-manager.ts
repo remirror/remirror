@@ -47,7 +47,7 @@ import {
   transformExtensionOrPreset as transformExtensionOrPresetList,
 } from './editor-manager-helpers';
 
-export type AnyEditorManager = EditorManager<any, any>;
+export type AnyEditorManager = EditorManager<AnyExtension, AnyPreset>;
 
 /**
  * Checks to see whether the provided value is an `Manager`.
@@ -58,8 +58,25 @@ export function isEditorManager(value: unknown): value is AnyEditorManager {
   return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Manager);
 }
 
-type PresetsFromArray<T extends AnyExtension | AnyPreset> = T extends AnyPreset ? T : never;
-type ExtensionsFromArray<T extends AnyExtension | AnyPreset> = T extends AnyExtension ? T : never;
+export interface EditorManagerParameter<
+  ExtensionUnion extends AnyExtension,
+  PresetUnion extends AnyPreset
+> {
+  /**
+   * The extensions so use when creating the editor.
+   */
+  extensions: ExtensionUnion[];
+
+  /**
+   * The presets to include with the editor.
+   */
+  presets: PresetUnion[];
+
+  /**
+   * Settings to customise the behaviour of the editor.
+   */
+  settings?: Remirror.ManagerSettings;
+}
 
 /**
  * The `Manager` has multiple hook phases which are able to hook into
@@ -104,31 +121,17 @@ type ExtensionsFromArray<T extends AnyExtension | AnyPreset> = T extends AnyExte
  * manager.data.actions
  * ```
  */
-export class EditorManager<
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset<ExtensionUnion>
-> {
+export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
   /**
    * A static method for creating a manager.
    */
-  public static of<
-    ExtensionUnion extends AnyExtension,
-    PresetUnion extends AnyPreset<ExtensionUnion>
-  >({
+  public static of<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>({
     extensions = [] as ExtensionUnion[],
     presets = [] as PresetUnion[],
     settings = {},
-  }: {
-    extensions?: ExtensionUnion[];
-    presets?: PresetUnion[];
-    settings?: Remirror.ManagerSettings;
-  }) {
-    type Extensions = ExtensionUnion;
-    // | GetExtensionUnion<typeof builtInPreset>;
-    type Presets = PresetUnion | typeof builtInPreset;
-
+  }: Partial<EditorManagerParameter<ExtensionUnion, PresetUnion>>) {
     const builtInPreset = BuiltinPreset.of();
-    return new EditorManager<ExtensionUnion, Presets>({
+    return new EditorManager<ExtensionUnion, PresetUnion | typeof builtInPreset>({
       extensions,
       presets: [...presets, builtInPreset],
       settings,
@@ -281,11 +284,7 @@ export class EditorManager<
    * This should not be called directly if you want to use prioritized
    * extensions. Instead use `Manager.create`.
    */
-  private constructor(parameter: {
-    extensions: ExtensionUnion[];
-    presets: PresetUnion[];
-    settings?: Remirror.ManagerSettings;
-  }) {
+  private constructor(parameter: EditorManagerParameter<ExtensionUnion, PresetUnion>) {
     this.#settings = parameter.settings ?? {};
 
     const { extensions, extensionMap, presets, presetMap } = transformExtensionOrPresetList<
@@ -710,10 +709,7 @@ declare global {
      * Since this is a global namespace, you can extend the store if your
      * extension is modifying the shape of the `Manager.store` property.
      */
-    interface ManagerStore<
-      ExtensionUnion extends AnyExtension,
-      PresetUnion extends AnyPreset<ExtensionUnion>
-    > {
+    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
       /**
        * The editor view stored by this instance.
        */
@@ -724,10 +720,9 @@ declare global {
      * The extension which are available on an `EditorManager` based on the passed
      * in type params.
      */
-    type ManagerExtensions<
-      ExtensionUnion extends AnyExtension,
-      PresetUnion extends AnyPreset<ExtensionUnion>
-    > = ExtensionUnion | GetExtensionUnion<PresetUnion>;
+    type ManagerExtensions<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> =
+      | ExtensionUnion
+      | GetExtensionUnion<PresetUnion>;
 
     /**
      * The initialization params which are passed by the view layer into the

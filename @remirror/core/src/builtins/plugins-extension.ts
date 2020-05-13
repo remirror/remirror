@@ -79,10 +79,7 @@ export const PluginsExtension = ExtensionFactory.plain({
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<
-      ExtensionUnion extends AnyExtension,
-      PresetUnion extends AnyPreset<ExtensionUnion>
-    > {
+    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
       /**
        * All of the plugins combined together from all sources
        */

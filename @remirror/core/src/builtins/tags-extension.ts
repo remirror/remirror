@@ -78,10 +78,7 @@ export const TagsExtension = ExtensionFactory.plain({
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<
-      ExtensionUnion extends AnyExtension,
-      PresetUnion extends AnyPreset<ExtensionUnion>
-    > {
+    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
       /**
        * Store the built in and custom tags for the editor instance.
        */

@@ -34,7 +34,7 @@ export function getParameterWithType<
 
 export interface TransformExtensionOrPreset<
   ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset<ExtensionUnion>
+  PresetUnion extends AnyPreset
 > {
   extensions: ExtensionUnion[];
   extensionMap: WeakMap<GetConstructor<ExtensionUnion>, ExtensionUnion>;
@@ -57,7 +57,7 @@ export interface TransformExtensionOrPreset<
  */
 export function transformExtensionOrPreset<
   ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset<ExtensionUnion>
+  PresetUnion extends AnyPreset
 >(
   unionValues: ReadonlyArray<ExtensionUnion | PresetUnion>,
 ): TransformExtensionOrPreset<ExtensionUnion, PresetUnion> {

@@ -1,54 +1,20 @@
-import {
-  EditorManager,
-  object,
-  AnyExtension,
-  AnyPreset,
-  GetConstructor,
-  Of,
-  GetExtensionUnion,
-  GetNodeNameUnion,
-  GetMarkNameUnion,
-  AnyNodeExtension,
-} from '@remirror/core';
+import { EditorManager, AnyExtension, AnyPreset, EditorManagerParameter } from '@remirror/core';
 import { CorePreset } from '@remirror/preset-core';
-import { ParagraphExtension } from '@remirror/extension-paragraph';
-import { BoldExtension } from '@remirror/extension-bold';
-import { NodeType } from '@remirror/pm/model';
-
+import type {} from '@remirror/extension-paragraph';
+import type {} from '@remirror/extension-doc';
 /**
  * A manager used for testing with the preset core already applied.
  */
 export function createBaseManager<
   ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset<ExtensionUnion>
->(
-  extensionOrPresetList: Array<ExtensionUnion | PresetUnion>,
-  settings: Remirror.ManagerSettings = object(),
-) {
+  PresetUnion extends AnyPreset
+>(parameter: Partial<EditorManagerParameter<ExtensionUnion, PresetUnion>>) {
+  const { extensions, presets = [], settings } = parameter;
   const corePreset = CorePreset.of();
-  const paragraphExtension = ParagraphExtension.of();
-  const boldExtension = BoldExtension.of();
 
-  const manager = EditorManager.of([...extensionOrPresetList, corePreset], settings);
-  manager.nodes;
-
-  return manager;
+  return EditorManager.of<ExtensionUnion, PresetUnion | typeof corePreset>({
+    extensions,
+    presets: [...presets, corePreset],
+    settings,
+  });
 }
-
-const corePreset = CorePreset.of();
-const paragraphExtension = ParagraphExtension.of();
-const boldExtension = BoldExtension.of();
-const manager = EditorManager.of({
-  extensions: [paragraphExtension, boldExtension],
-  // presets: [corePreset],
-});
-manager.nodes;
-manager.store.helpers;
-manager.marks;
-manager.extensions.map((ext) => ext);
-
-type Ext = typeof manager['~E'];
-type Names = Get<Ext>;
-type Get<Extension extends AnyExtension> = Extension extends AnyNodeExtension
-  ? Extension['name']
-  : never;

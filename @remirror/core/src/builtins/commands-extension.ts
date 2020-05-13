@@ -211,10 +211,7 @@ export const CommandsExtension = ExtensionFactory.plain({
 
 declare global {
   namespace Remirror {
-    interface ManagerStore<
-      ExtensionUnion extends AnyExtension,
-      PresetUnion extends AnyPreset<ExtensionUnion>
-    > {
+    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
       /**
        * Enables the use of custom commands created by the extensions for
        * extending the functionality of your editor in an expressive way.

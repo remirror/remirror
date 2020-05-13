@@ -20,6 +20,7 @@ import {
   isMarkExtension,
   isNodeExtension,
   SchemaFromExtensionUnion,
+  GetExtensionUnion,
 } from '../extension';
 import { AnyPreset } from '../preset';
 
@@ -260,24 +261,27 @@ declare global {
       schemaAttributes?: ExtraSchemaAttributes[];
     }
 
-    interface ManagerStore<
-      ExtensionUnion extends AnyExtension,
-      PresetUnion extends AnyPreset<ExtensionUnion>
-    > {
+    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
       /**
        * The nodes to place on the schema.
        */
-      nodes: Record<GetNodeNameUnion<ExtensionUnion>, NodeExtensionSpec>;
+      nodes: Record<
+        GetNodeNameUnion<ExtensionUnion | GetExtensionUnion<PresetUnion>>,
+        NodeExtensionSpec
+      >;
 
       /**
        * The marks to be added to the schema.
        */
-      marks: Record<GetMarkNameUnion<ExtensionUnion>, MarkExtensionSpec>;
+      marks: Record<
+        GetMarkNameUnion<ExtensionUnion | GetExtensionUnion<PresetUnion>>,
+        MarkExtensionSpec
+      >;
 
       /**
        * The schema created by this extension manager.
        */
-      schema: SchemaFromExtensionUnion<ExtensionUnion>;
+      schema: SchemaFromExtensionUnion<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
     }
 
     interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {

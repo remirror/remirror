@@ -48,10 +48,7 @@ function useParameter<Type extends object>(parameter: Type): Type {
  * }
  * ```
  */
-export const useManager = <
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset<ExtensionUnion>
->(
+export const useManager = <ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(
   extensionOrPresetList: Array<ExtensionUnion | PresetUnion>,
   settings: Remirror.ManagerSettings,
 ) => {

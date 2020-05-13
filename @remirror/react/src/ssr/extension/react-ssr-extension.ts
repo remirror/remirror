@@ -91,10 +91,7 @@ declare global {
       reactSSR?: boolean;
     }
 
-    interface ManagerStore<
-      ExtensionUnion extends AnyExtension,
-      PresetUnion extends AnyPreset<ExtensionUnion>
-    > {
+    interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {
       /**
        * The transformer for updating the SSR rendering of the prosemirror state
        * and allowing it to render without defects.

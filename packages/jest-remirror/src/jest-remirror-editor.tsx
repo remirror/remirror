@@ -426,10 +426,7 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
 /**
  * Render the editor with the params passed in. Useful for testing.
  */
-export function renderEditor<
-  ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset<ExtensionUnion>
->(
+export function renderEditor<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(
   extensionOrPresetList: Array<ExtensionUnion | PresetUnion>,
   properties: Partial<
     Omit<RenderEditorProps<EditorManager<ExtensionUnion, PresetUnion>>, 'manager'>

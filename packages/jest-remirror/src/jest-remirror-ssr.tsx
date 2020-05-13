@@ -9,7 +9,7 @@ import { RenderEditor, RenderEditorProps } from '@remirror/react';
  */
 export function renderEditorString<
   ExtensionUnion extends AnyExtension,
-  PresetUnion extends AnyPreset<ExtensionUnion>
+  PresetUnion extends AnyPreset
 >(
   extensionOrPresetList: Array<ExtensionUnion | PresetUnion>,
   properties: Partial<
