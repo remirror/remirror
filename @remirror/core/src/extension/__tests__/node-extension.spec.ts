@@ -1,11 +1,10 @@
 import { pmBuild } from 'jest-prosemirror';
 
 import { NodeGroup } from '@remirror/core-constants';
-import { NodeExtensionSpec } from '@remirror/core-types';
 import { fromHTML } from '@remirror/core-utils';
 import { createBaseManager } from '@remirror/test-fixtures';
 
-import { ExtensionFactory } from '..';
+import { ExtensionFactory } from '../..';
 
 const CustomExtension = ExtensionFactory.node({
   name: 'custom',
@@ -68,11 +67,8 @@ describe('extraAttributes', () => {
       content: `<p title="${title}" data-run="${run}">hello</p>`,
       schema,
     });
-    console.log(node);
 
-    const expected = doc(custom('hello'));
-
-    expect(node).toEqualProsemirrorNode(expected);
+    expect(node).toEqualProsemirrorNode(doc(custom('hello')));
   });
 
   it('support parsing with getAttributes method', () => {

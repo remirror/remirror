@@ -107,11 +107,15 @@ function transformSchemaAttributes<
     ? originalParseDom.map((parseRule) => {
         const prevGetAttrs = parseRule.getAttrs;
 
-        if (!isFunction(prevGetAttrs)) {
+        if (parseRule.attrs && !prevGetAttrs) {
           return parseRule;
         }
 
         const getAttrs: NonNullable<ParseRule['getAttrs']> = (domNode) => {
+          if (!isFunction(prevGetAttrs)) {
+            return parseExtraAttributes(domNode);
+          }
+
           const attrs = prevGetAttrs(domNode);
 
           if (attrs) {
@@ -124,8 +128,6 @@ function transformSchemaAttributes<
         return { ...parseRule, getAttrs };
       })
     : originalParseDom;
-
-  console.log(attrs);
 
   return freeze({ ...rest, attrs, parseDOM }) as Spec;
 }

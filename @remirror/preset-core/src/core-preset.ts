@@ -16,7 +16,7 @@ export interface CorePresetSettings {
 export const CorePreset = PresetFactory.typed<CorePresetSettings>().preset({
   name: 'core',
   defaultSettings: {
-    content: null,
+    content: DocExtension.defaultSettings.content,
   },
 
   createExtensions(parameter) {
