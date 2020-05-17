@@ -1,7 +1,14 @@
 {
   "name": "@remirror/extension-drop-cursor",
   "version": "0.11.0",
-  "description": "CodeBlock extension for the remirror wysiwyg editor",
+  "description": "A cursor for the ages. Drag and drop content in your editor with class.",
+  "keywords": [
+    "remirror",
+    "remirror-extension",
+    "drop cursor",
+    "placeholder",
+    "editor"
+  ],
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-drop-cursor",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-drop-cursor",
   "license": "MIT",

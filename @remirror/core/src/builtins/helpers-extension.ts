@@ -6,8 +6,8 @@ import {
   AnyExtension,
   Extension,
   ExtensionFactory,
-  HelpersFromExtensions,
   GetExtensionUnion,
+  HelpersFromExtensions,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import { AnyPreset } from '../preset';
@@ -114,8 +114,6 @@ declare global {
        *
        * Below is an example which should provide some idea on how to add
        * helpers to the app.
-       *
-       * @example
        *
        * ```tsx
        * // extension.ts

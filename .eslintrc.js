@@ -152,7 +152,9 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'warn',
     '@typescript-eslint/no-inferrable-types': 'warn',
     '@typescript-eslint/ban-types': 'warn',
-    '@typescript-eslint/no-use-before-define': ['warn', { typedefs: false }],
+    // Turning off as it leads to code with bad patterns, where implementation
+    // details are placed before the actual meaningful code.
+    '@typescript-eslint/no-use-before-define': ['off', { typedefs: false }],
     '@typescript-eslint/member-ordering': [
       'warn',
       { default: ['signature', 'static-field', 'static-method', 'field', 'constructor', 'method'] },
