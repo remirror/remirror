@@ -1,5 +1,16 @@
-import { REMIRROR_IDENTIFIER_KEY, RemirrorIdentifier } from '@remirror/core-constants';
-import { Cast, freeze, isRemirrorType, object, startCase } from '@remirror/core-helpers';
+import {
+  ErrorConstant,
+  REMIRROR_IDENTIFIER_KEY,
+  RemirrorIdentifier,
+} from '@remirror/core-constants';
+import {
+  Cast,
+  freeze,
+  invariant,
+  isRemirrorType,
+  object,
+  pascalCase,
+} from '@remirror/core-helpers';
 
 import { ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
 import {
@@ -39,7 +50,11 @@ function createBaseExtensionFactory<
       factoryParameter: ExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>,
     ): PlainExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
       const parameter = freeze(factoryParameter);
-      const extensionClassName = `${startCase(parameter.name)}Extension`;
+      invariant(parameter.name, {
+        code: ErrorConstant.INVALID_NAME,
+        message: `${parameter.name} is not a valid name.`,
+      });
+      const extensionClassName = `${pascalCase(parameter.name)}Extension`;
 
       const PlainExtensionClass = class extends PlainExtension<
         Name,
@@ -126,7 +141,7 @@ function createBaseExtensionFactory<
       >,
     ): MarkExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
       const parameter = freeze(factoryParameter);
-      const extensionClassName = `${startCase(parameter.name)}MarkExtension`;
+      const extensionClassName = `${pascalCase(parameter.name)}MarkExtension`;
 
       const MarkExtensionClass = class extends MarkExtension<
         Name,
@@ -211,7 +226,7 @@ function createBaseExtensionFactory<
       >,
     ): NodeExtensionConstructor<Name, Settings, Properties, Commands, Helpers> {
       const parameter = freeze(factoryParameter);
-      const extensionClassName = `${startCase(parameter.name)}NodeExtension`;
+      const extensionClassName = `${pascalCase(parameter.name)}NodeExtension`;
 
       const NodeExtensionClass = class extends NodeExtension<
         Name,
@@ -329,6 +344,45 @@ export const ExtensionFactory = {
     return createBaseExtensionFactory<Settings, Props>();
   },
 };
+
+/**
+ * Create an extension with the option of settings it's types
+ *
+ * @remarks
+ *
+ * This might seem like an odd pattern but it's the only way I can think of to
+ * preserve type inference for the config and props without having to manually
+ * type out all the generic types. If you don't want to add any configuration
+ * or dynamic props you can use the other methods exposed by this
+ * configuration.
+ *
+ * #### Example
+ *
+ * ```ts
+ * import { createTypedExtension } from '@remirror/core';
+ *
+ * interface MyExtensionSettings {
+ *   custom: boolean;
+ * }
+ *
+ * interface MyExtensionProperties {
+ *   onChange: (times: number) => void;
+ * }
+ *
+ * const MyExtension = createTypedExtension<MyExtensionSettings, MyExtensionProps>()
+ *   .plain({
+ *     name: 'mine',
+ *     defaultProps: {
+ *       onChange: () => {}, // Do nothing
+ *     },
+ *   });
+ * ```
+ *
+ * The above example creates a plain extension with the provided types.
+ */
+export function createTypedExtension<Settings extends object, Props extends object = {}>() {
+  return createBaseExtensionFactory<Settings, Props>();
+}
 
 /**
  * Returns true when provided value is an ExtensionConstructor.

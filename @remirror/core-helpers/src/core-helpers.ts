@@ -601,7 +601,7 @@ export function randomInt(min: number, max?: number) {
 
 /**
  * Converts a string, including strings in camelCase or snake_case, into Start
- * Case (a variant of Title Case where all words start with a capital letter),
+ * Case (a variant of Title case where all words start with a capital letter),
  * it keeps original single quote and hyphen in the word.
  *
  *   'management_companies' to 'Management Companies' 'managementCompanies' to
@@ -615,34 +615,6 @@ export function startCase(string: string) {
     .replace(/_/g, ' ')
     .replace(/([a-z])([A-Z])/g, (_, $1: string, $2: string) => `${$1} ${$2}`)
     .replace(/(\s|^)(\w)/g, (_, $1: string, $2: string) => `${$1}${$2.toUpperCase()}`);
-}
-
-const wordSeparators = /[\s!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~\u2000-\u206F\u2E00-\u2E7F-]+/;
-const capitals = /[A-Z\u00C0-\u00D6\u00D9-\u00DD]/g;
-
-/**
- * Returns the kebab cased form of a string.
- *
- * Taken from
- * https://github.com/angus-c/just/blob/master/packages/string-kebab-case/index.js
- * kebabCase('the quick brown fox'); // 'the-quick-brown-fox'
- * kebabCase('the-quick-brown-fox'); // 'the-quick-brown-fox'
- * kebabCase('the_quick_brown_fox'); // 'the-quick-brown-fox'
- * kebabCase('theQuickBrownFox'); // 'the-quick-brown-fox'
- * kebabCase('theQuickBrown Fox'); // 'the-quick-brown-fox'
- * kebabCase('thequickbrownfox'); // 'thequickbrownfox' kebabCase('the - quick *
- * brown# fox'); // 'the-quick-brown-fox' kebabCase('theQUICKBrownFox'); //
- * 'the-q-u-i-c-k-brown-fox'
- */
-export function kebabCase(string: string) {
-  // replace capitals with space + lower case equivalent for later parsing
-  return string
-    .replace(capitals, (match) => {
-      return ` ${match.toLowerCase() || match}`;
-    })
-    .trim()
-    .split(wordSeparators)
-    .join('-');
 }
 
 interface UniqueIdParameter {
@@ -978,6 +950,6 @@ export const hasOwnProperty = <GObj extends object, GProperty extends string | n
 
 // Forwarded exports
 
+export * from 'case-anything';
 export { debounce, throttle } from 'throttle-debounce';
-
 export { omit, pick };

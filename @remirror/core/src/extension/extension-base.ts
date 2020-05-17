@@ -310,7 +310,7 @@ export abstract class Extension<
   /**
    * Private instance of the static settings.
    */
-  #settings: Required<Settings & BaseExtensionSettings>;
+  #settings: Readonly<Required<Settings & BaseExtensionSettings>>;
 
   /**
    * Private instance of the dynamic properties for this extension.
@@ -691,8 +691,7 @@ export abstract class PlainExtension<
   Helpers extends ExtensionHelperReturn = {}
 > extends Extension<Name, Settings, Properties, Commands, Helpers> {
   /**
-   * Identifies this extension as a **NODE** type from the prosemirror
-   * terminology.
+   * Identifies this extension as **`plain`**.
    */
   get type() {
     return ExtensionType.Plain as const;

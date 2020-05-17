@@ -15,12 +15,12 @@ import { AttributeSpec, ParseRule, Schema } from '@remirror/pm/model';
 import {
   AnyExtension,
   ExtensionFactory,
+  GetExtensionUnion,
   GetMarkNameUnion,
   GetNodeNameUnion,
   isMarkExtension,
   isNodeExtension,
   SchemaFromExtensionUnion,
-  GetExtensionUnion,
 } from '../extension';
 import { AnyPreset } from '../preset';
 

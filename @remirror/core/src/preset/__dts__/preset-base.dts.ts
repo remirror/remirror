@@ -1,7 +1,8 @@
+import { RemirrorIdentifier } from '@remirror/core-constants';
+
 import { ExtensionFactory } from '../../extension';
 import { AnyPreset } from '../preset-base';
 import { PresetFactory } from '../preset-factory';
-import { RemirrorIdentifier } from '@remirror/core-constants';
 
 // @ts-expect-error
 const PresetNoName = PresetFactory.typed().preset({});

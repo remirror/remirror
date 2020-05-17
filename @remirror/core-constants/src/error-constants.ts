@@ -86,6 +86,9 @@ export enum ErrorConstant {
   /** Attempted to chain a non chainable command. */
   NON_CHAINABLE_COMMAND = 'RMR0018',
 
+  /** An invalid name was used for the extension. */
+  INVALID_NAME = 'RMR0050',
+
   /** An error occurred within an extension. */
   EXTENSION = 'RMR0100',
 }

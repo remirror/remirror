@@ -600,6 +600,7 @@ importers:
       '@remirror/core': 'link:../core'
       '@remirror/extension-doc': 'link:../extension-doc'
       '@remirror/extension-paragraph': 'link:../extension-paragraph'
+      '@remirror/extension-text': 'link:../extension-text'
       '@remirror/pm': 'link:../pm'
       '@remirror/preset-core': 'link:../preset-core'
       '@remirror/ui': 'link:../../deprecated/ui'
@@ -609,6 +610,7 @@ importers:
       '@remirror/core': ^0.11.0
       '@remirror/extension-doc': ^0.11.0
       '@remirror/extension-paragraph': ^0.11.0
+      '@remirror/extension-text': ^0.11.0
       '@remirror/pm': ^0.0.0
       '@remirror/preset-core': ^0.11.0
       '@remirror/ui': ^0.7.6

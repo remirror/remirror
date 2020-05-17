@@ -15,7 +15,7 @@
     "contributors:generate": "all-contributors generate",
     "dev": "preconstruct watch",
     "docs": "cd docs && pnpm run start",
-    "fix": "run-s fix:*",
+    "fix": "run-s -c fix:*",
     "fix:build": "preconstruct fix",
     "fix:es": "pnpm run lint:es -- --fix",
     "fix:prettier": "pnpm run run:prettier -- --write",

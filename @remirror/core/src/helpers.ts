@@ -31,7 +31,7 @@ export function getChangedProperties<Properties extends object>(
   parameter: GetChangedPropertiesParameter<Properties>,
 ): GetChangedPropertiesReturn<Properties> {
   const { previousProperties: previous, update, equals = defaultEquals } = parameter;
-  const next = freeze({ ...previous, update });
+  const next = freeze({ ...previous, ...update });
   const changes = {} as ChangedProperties<Properties>;
   const propertyKeys = keys(previous);
 

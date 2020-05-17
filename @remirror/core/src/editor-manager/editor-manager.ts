@@ -16,7 +16,7 @@ import { EditorSchema, EditorView, ProsemirrorPlugin } from '@remirror/core-type
 import { createDocumentNode, CreateDocumentNodeParameter } from '@remirror/core-utils';
 import { EditorState } from '@remirror/pm/state';
 
-import { BuiltInExtensions, BuiltinPreset } from '../builtins';
+import { BuiltinPreset } from '../builtins';
 import {
   AnyExtension,
   AnyExtensionConstructor,

@@ -3,8 +3,8 @@ import { UnionToIntersection } from 'type-fest';
 import { AnyFunction, StringKey } from '@remirror/core-types';
 import { NonChainableCommandFunction } from '@remirror/core-utils';
 
-import { CommandMethod, GetCommands, GetConstructor, GetHelpers, Of } from '../types';
-import { AnyExtension } from './extension-base';
+import { CommandMethod, GetCommands, GetHelpers, Of } from '../types';
+import { AnyExtension, AnyExtensionConstructor } from './extension-base';
 
 export interface ExtensionParameter<ExtensionUnion extends AnyExtension = any> {
   /**
@@ -116,14 +116,18 @@ export type HelperNames<GExtension extends AnyExtension> = StringKey<
 /**
  * Provides a method for retrieving an extension from an extension holder.
  */
-export interface GetExtensionParameter<ExtensionUnion extends AnyExtension> {
+export interface GetExtensionParameter<_ExtensionUnion extends AnyExtension> {
   /**
    * Get an extension from the extension holder (either a preset or a manager)
    * that corresponds to the provided `Constructor`.
    *
    * @param Constructor - the extension constructor to find in the editor.
+   *
+   * @remarks
+   *
+   * This method will throw and error if the constructor doesn't exist.
    */
-  getExtension: <ExtensionConstructor extends GetConstructor<ExtensionUnion>>(
+  getExtension: <ExtensionConstructor extends AnyExtensionConstructor>(
     Constructor: ExtensionConstructor,
   ) => Of<ExtensionConstructor>;
 }

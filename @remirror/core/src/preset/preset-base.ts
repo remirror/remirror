@@ -31,7 +31,6 @@ import {
 import { getChangedProperties, GetChangedPropertiesReturn } from '../helpers';
 import {
   DefaultPropertiesParameter,
-  GetConstructor,
   Of,
   PropertiesShape,
   PropertiesUpdateReason,
@@ -305,14 +304,24 @@ export abstract class Preset<
     this.#properties = properties;
   }
 
-  public getExtension = <ExtensionConstructor extends GetConstructor<ExtensionUnion>>(
+  /**
+   * Provides access to all the extensions contained in the preset.
+   *
+   * @remarks
+   *
+   * TODO make it only accept constructors for values contained in the extension.
+   */
+  public getExtension = <ExtensionConstructor extends AnyExtensionConstructor>(
     Constructor: ExtensionConstructor,
   ): Of<ExtensionConstructor> => {
     const extension = this.#extensionMap.get(Constructor);
 
-    // Throws an error if attempting to get an extension which is not preset
+    // Throws an error if attempting to get an extension which is not available
     // in this preset.
-    invariant(extension, { code: ErrorConstant.INVALID_PRESET_EXTENSION });
+    invariant(extension, {
+      code: ErrorConstant.INVALID_PRESET_EXTENSION,
+      message: `'${Constructor.name}' does not exist within the preset: '${this.parameter.name}'`,
+    });
 
     return extension as Of<typeof Constructor>;
   };

@@ -4,7 +4,7 @@ import {
   isIdentifierOfType,
   isRemirrorType,
   object,
-  startCase,
+  pascalCase,
 } from '@remirror/core-helpers';
 
 import { AnyExtension, DefaultSettingsType } from '../extension';
@@ -24,7 +24,7 @@ function createPresetFactory<Settings extends object = {}, Properties extends ob
       factoryParameter: PresetFactoryParameter<ExtensionUnion, Settings, Properties>,
     ): PresetConstructor<ExtensionUnion, Settings, Properties> {
       const parameter = freeze(factoryParameter);
-      const presetClassName = `${startCase(parameter.name)}Preset`;
+      const presetClassName = `${pascalCase(parameter.name)}Preset`;
 
       const PresetClass = class extends Preset<ExtensionUnion, Settings, Properties> {
         /**
@@ -91,6 +91,19 @@ export const PresetFactory = {
     return createPresetFactory<Settings, Properties>();
   },
 };
+
+/**
+ * Use this to create a new preset.
+ *
+ * @remarks
+ *
+ * The pattern used here allows you to specify the exact types for the `Preset`
+ * settings and properties. Without it, the typescript compiler would try and
+ * infer them from the default props and default settings.
+ */
+export function createTypedPreset<Settings extends object, Properties extends object = {}>() {
+  return createPresetFactory<Settings, Properties>();
+}
 
 /**
  * Determines if the passed in value is a preset constructor (which is used to

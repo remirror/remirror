@@ -1,24 +1,15 @@
 import { createEditor, doc, p } from 'jest-prosemirror';
-import { EditorView } from '@remirror/pm/view';
-import React, { FC } from 'react';
 
-import { EMPTY_PARAGRAPH_NODE, ExtensionTag } from '@remirror/core-constants';
-import { Cast } from '@remirror/core-helpers';
+import { EMPTY_PARAGRAPH_NODE, ExtensionPriority, ExtensionTag } from '@remirror/core-constants';
 import {
   EditorState,
   KeyBindingCommandFunction,
-  KeyBindings,
-  NodeExtensionSpec,
   ProsemirrorAttributes,
 } from '@remirror/core-types';
-import {
-  baseExtensions,
-  createTestManager,
-  extensions,
-  helpers as initHelpers,
-} from '@remirror/test-fixtures';
+import { EditorView } from '@remirror/pm/view';
+import { CorePreset, createBaseManager } from '@remirror/test-fixtures';
 
-import { Extension } from '../../extension/extension-base';
+import { ExtensionFactory } from '../../extension';
 import { EditorManager, isEditorManager } from '../editor-manager';
 
 describe('Manager', () => {
@@ -28,59 +19,47 @@ describe('Manager', () => {
   const mock = jest.fn((_: ProsemirrorAttributes) => innerMock);
   const getInformation = jest.fn(() => 'information');
 
-  const SSRComponent: FC<ProsemirrorAttributes> = () => <div />;
-
-  class DummyExtension extends Extension {
-    public name = 'dummy';
-    public tags = ['simple', ExtensionTag.LastNodeCompatible];
-    public commands() {
+  const DummyExtension = ExtensionFactory.plain({
+    name: 'dummy',
+    extensionTags: ['simple', ExtensionTag.LastNodeCompatible],
+    createCommands() {
       return { dummy: mock };
-    }
-
-    public helpers() {
+    },
+    createHelpers() {
       return {
         getInformation,
       };
-    }
-
-    public attributes() {
+    },
+    createAttributes() {
       return {
         class: 'custom',
       };
-    }
-  }
+    },
+  });
 
-  class BigExtension extends NodeExtension {
-    public name = 'big' as const;
-
-    public schema: NodeExtensionSpec = {
-      toDOM: () => ['h1', 0],
-    };
-
-    get defaultOptions() {
+  const BigExtension = ExtensionFactory.node({
+    name: 'big',
+    createNodeSchema() {
       return {
-        SSRComponent,
+        toDOM: () => ['h1', 0],
       };
-    }
-  }
+    },
+  });
 
-  const dummy = new DummyExtension();
-  const big = new BigExtension();
-  let manager = EditorManager.of([
-    ...extensions,
-    { extension: dummy, priority: 1 },
-    { extension: big, priority: 10 },
-  ]);
+  const dummyExtension = DummyExtension.of({ priority: ExtensionPriority.Critical });
+  const bigExtension = BigExtension.of({ priority: ExtensionPriority.Lowest });
+  let manager = EditorManager.of({
+    extensions: [dummyExtension, bigExtension],
+    presets: [CorePreset.of()],
+  });
 
   let view: EditorView;
 
   beforeEach(() => {
-    manager = EditorManager.create([
-      ...extensions,
-      { extension: dummy, priority: 1 },
-      { extension: big, priority: 10 },
-    ]);
-    manager.initialize(helpers);
+    manager = EditorManager.of({
+      extensions: [dummyExtension, bigExtension],
+      presets: [CorePreset.of()],
+    });
     state = manager.createState({ content: EMPTY_PARAGRAPH_NODE });
     view = new EditorView(document.createElement('div'), {
       state,
@@ -91,10 +70,10 @@ describe('Manager', () => {
 
   test('commands', () => {
     const attributes = { a: 'a' };
-    manager.store.actions.dummy(attributes);
+    manager.store.commands.dummy(attributes);
 
     expect(mock).toHaveBeenCalledWith(attributes);
-    expect(innerMock).toHaveBeenCalledWith(state, view.dispatch, view);
+    expect(innerMock).toHaveBeenCalledWith({ state, dispatch: view.dispatch, view });
   });
 
   test('helpers', () => {
@@ -106,34 +85,24 @@ describe('Manager', () => {
 
   describe('#properties', () => {
     it('should sort extensions by priority', () => {
-      expect(manager.extensions).toHaveLength(11);
-      expect(manager.extensions[0]).toEqual(dummy);
-      expect(manager.extensions[10]).toEqual(big);
-    });
-
-    it('should throw if data accessed without init', () => {
-      const testManager = createTestManager();
-
-      expect(() => testManager.data).toThrowErrorMatchingInlineSnapshot(
-        `"Extension Manager must be initialized before attempting to access the data"`,
-      );
+      expect(manager.extensions).toHaveLength(16);
+      expect(manager.extensions[0]).toEqual(dummyExtension);
+      expect(manager.extensions[15]).toEqual(bigExtension);
     });
 
     it('should provide the schema at instantiation', () => {
-      expect(createTestManager().schema).toBeTruthy();
+      expect(createBaseManager({}).schema).toBeTruthy();
     });
 
     it('should provide access to `attributes`', () => {
-      expect(manager.attributes.class).toInclude('custom');
-    });
-
-    it('should provide access to `components`', () => {
-      expect(manager.components.big).toEqual(SSRComponent);
+      expect(manager.store.attributes.class).toInclude('custom');
     });
   });
 
   test('isManager', () => {
     expect(isEditorManager({})).toBeFalse();
+    expect(isEditorManager(null)).toBeFalse();
+    expect(isEditorManager(dummyExtension)).toBeFalse();
     expect(isEditorManager(manager)).toBeTrue();
   });
 
@@ -143,11 +112,11 @@ describe('Manager', () => {
     });
 
     it('should be equal for different instances but identical otherwise', () => {
-      expect(createTestManager().isEqual(createTestManager())).toBeTrue();
+      expect(createBaseManager().isEqual(createBaseManager())).toBeTrue();
     });
 
     it('should not be equal for different managers', () => {
-      expect(manager.isEqual(createTestManager())).toBeFalse();
+      expect(manager.isEqual(createBaseManager())).toBeFalse();
     });
 
     it('should not be equal for different objects', () => {
@@ -163,44 +132,39 @@ test('keymaps', () => {
     thirdEnter: jest.fn((..._: Parameters<KeyBindingCommandFunction>) => false),
   };
 
-  class FirstExtension extends Extension {
-    public name = 'first' as const;
-
-    public keys(): KeyBindings {
+  const FirstExtension = ExtensionFactory.plain({
+    name: 'first',
+    createKeymap() {
       return {
         Enter: mocks.firstEnter,
       };
-    }
-  }
+    },
+  });
 
-  class SecondExtension extends Extension {
-    public name = 'second' as const;
-
-    public keys() {
+  const SecondExtension = ExtensionFactory.plain({
+    name: 'second',
+    createKeymap() {
       return {
         Enter: mocks.secondEnter,
       };
-    }
-  }
-  class ThirdExtension extends Extension {
-    public name = 'third' as const;
+    },
+  });
 
-    public keys() {
+  const ThirdExtension = ExtensionFactory.plain({
+    name: 'third',
+    createKeymap() {
       return {
         Enter: mocks.thirdEnter,
       };
-    }
-  }
+    },
+  });
 
-  const manager = EditorManager.of([
-    ...baseExtensions,
-    { extension: new FirstExtension(), priority: 1 },
-    { extension: new SecondExtension(), priority: 10 },
-    { extension: new ThirdExtension(), priority: 100 },
-  ]);
-  manager.initialize(initHelpers);
+  const manager = EditorManager.of({
+    extensions: [FirstExtension.of(), SecondExtension.of(), ThirdExtension.of()],
+    presets: [CorePreset.of()],
+  });
 
-  createEditor(doc(p('simple<cursor>')), { plugins: manager.store.keymaps })
+  createEditor(doc(p('simple<cursor>')), { plugins: manager.store.plugins })
     .press('Enter')
     .callback(() => {
       expect(mocks.firstEnter).toHaveBeenCalled();
