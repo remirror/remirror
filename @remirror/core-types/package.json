@@ -24,7 +24,7 @@
     "type-fest": "^0.13.1"
   },
   "devDependencies": {
-    "@remirror/pm": "*"
+    "@remirror/pm": "^0.0.0"
   },
   "peerDependencies": {
     "@remirror/pm": "^0.0.0"

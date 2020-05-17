@@ -26,7 +26,7 @@
     "match-sorter": "^4.1.0"
   },
   "devDependencies": {
-    "@remirror/pm": "*",
+    "@remirror/pm": "^0.0.0",
     "emoji-mart": "3.0.0",
     "emojilib": "^2.4.0"
   },

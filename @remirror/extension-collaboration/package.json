@@ -27,7 +27,7 @@
     "@types/prosemirror-collab": "^1.0.2"
   },
   "devDependencies": {
-    "@remirror/pm": "*",
+    "@remirror/pm": "^0.0.0",
     "prosemirror-collab": "^1.2.2"
   },
   "peerDependencies": {
