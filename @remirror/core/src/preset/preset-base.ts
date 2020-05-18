@@ -141,6 +141,12 @@ export abstract class Preset<
   public readonly ['~P']!: Properties;
 
   /**
+   * Not for public usage. This is purely for types to make it easier to infer
+   * available extension types.
+   */
+  public readonly ['~E']!: ExtensionUnion;
+
+  /**
    * The remirror identifier key.
    *
    * @internal

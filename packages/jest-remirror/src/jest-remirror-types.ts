@@ -1,11 +1,15 @@
-import { Node as PMNode } from '@remirror/pm/model';
-
 import {
+  AnyExtension,
+  AnyPreset,
   AttributesParameter,
+  EditorManager,
+  EditorManagerParameter,
   EditorSchema,
   ProsemirrorAttributes,
   ProsemirrorNode,
 } from '@remirror/core';
+import { Node as PMNode } from '@remirror/pm/model';
+import { RenderEditorProps } from '@remirror/react';
 
 export interface BaseFactoryParameter<GSchema extends EditorSchema = EditorSchema>
   extends Partial<AttributesParameter> {
@@ -100,3 +104,10 @@ export type MarkWithoutAttributes<GNames extends string> = {
 export type NodeWithoutAttributes<GNames extends string> = {
   [P in GNames]: (...content: TaggedContentWithText[]) => TaggedProsemirrorNode;
 };
+
+export interface RenderEditorParameter<
+  ExtensionUnion extends AnyExtension,
+  PresetUnion extends AnyPreset
+> extends Partial<EditorManagerParameter<ExtensionUnion, PresetUnion>> {
+  props?: Partial<Omit<RenderEditorProps<EditorManager<ExtensionUnion, PresetUnion>>, 'manager'>>;
+}

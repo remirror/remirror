@@ -154,7 +154,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
    *
    * @defaultValue `() => void`
    */
-  onChange?: (params: SuggestChangeHandlerParameter<Command>) => void;
+  onChange?: (parameter: SuggestChangeHandlerParameter<Command>) => void;
 
   /**
    * Called whenever a suggestion is exited with the pre-exit match value.
@@ -167,7 +167,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
    *
    * @defaultValue `() => void`
    */
-  onExit?: (params: SuggestExitHandlerParameter<Command>) => void;
+  onExit?: (parameter: SuggestExitHandlerParameter<Command>) => void;
 
   /**
    * Called for each character entry and can be used to disable certain
@@ -181,7 +181,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
    *
    * @defaultValue `() => false`
    */
-  onCharacterEntry?: (params: SuggestCharacterEntryParameter<Command>) => boolean;
+  onCharacterEntry?: (parameter: SuggestCharacterEntryParameter<Command>) => boolean;
 
   /**
    * An object that describes how certain key bindings should be handled.
@@ -191,7 +191,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
    * Return `true` to prevent any further prosemirror actions or return `false`
    * to allow prosemirror to continue.
    */
-  keyBindings?: SuggestKeyBindingMap<Command>;
+  keyBindings?: SuggestKeyBindingMap<Command> | (() => SuggestKeyBindingMap<Command>);
 
   /**
    * Create the suggested actions which are made available to the `onExit` and
@@ -202,7 +202,7 @@ export interface Suggestion<Command extends AnyFunction<void> = AnyFunction<void
    * Suggested actions are useful for developing plugins and extensions which
    * provide useful defaults for managing the suggestion lifecycle.
    */
-  createCommand?: (params: CreateSuggestCommandParameter) => Command;
+  createCommand?: (parameter: CreateSuggestCommandParameter) => Command;
 }
 
 /**
@@ -266,7 +266,7 @@ export interface SuggestIgnoreParameter {
    * }
    * ```
    */
-  addIgnored: (params: AddIgnoredParameter) => void;
+  addIgnored: (parameter: AddIgnoredParameter) => void;
 
   /**
    * When name is provided remove all ignored decorations which match the named
@@ -499,7 +499,7 @@ export interface SuggestKeyBindingParameter<Command extends AnyFunction<void> = 
  * to its handlers.
  */
 export type SuggestKeyBinding<Command extends AnyFunction<void> = AnyFunction<void>> = (
-  params: SuggestKeyBindingParameter<Command>,
+  parameter: SuggestKeyBindingParameter<Command>,
 ) => boolean | void;
 
 /**

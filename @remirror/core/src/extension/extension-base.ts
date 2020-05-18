@@ -318,6 +318,11 @@ export abstract class Extension<
   #properties: Required<Properties>;
 
   /**
+   * An internal data store for this extension. Can be used to store internal data.
+   */
+  #data: any;
+
+  /**
    * The parameter that was passed when creating the constructor for this instance.
    */
   get parameter(): Readonly<
@@ -409,6 +414,11 @@ export abstract class Extension<
     });
 
     this.#properties = { ...this.defaultProperties, ...settings?.properties };
+
+    this.#data = this.parameter.setInitialData?.({
+      settings: this.#settings,
+      properties: this.#properties,
+    });
   }
 
   /**
@@ -446,6 +456,24 @@ export abstract class Extension<
    */
   public destroy() {
     this.parameter.onDestroy?.();
+  }
+
+  /**
+   * Get the internal data from the extension.
+   *
+   * Used to store persistent internal state.
+   */
+  public getData<Data>(): Data {
+    return this.#data;
+  }
+
+  /**
+   * Set the internal data for the extension.
+   *
+   * Used to store persistent internal state.
+   */
+  public setData<Data>(data: Data) {
+    this.#data = data;
   }
 
   /**
@@ -509,13 +537,7 @@ interface DefaultSettingsParameter<Settings extends object> {
    * supported for partial settings at this point in time. As a workaround
    * use `null` as the type and pass it as the value in the default settings.
    */
-  /**
-   * The default settings for instances of this extension.
-   */
   defaultSettings: DefaultSettingsType<Settings>;
-
-  /**
-   * The default properties for instances of this extension. */
 }
 
 /**
@@ -597,6 +619,18 @@ export interface BaseExtensionFactoryParameter<
    * thrown.
    */
   requiredExtensions?: readonly AnyExtensionConstructor[];
+
+  /**
+   * Set the initial private data.
+   *
+   * Data is a way of storing internal state for the extension.
+   */
+  setInitialData?: (parameter: ExtensionSettingsAndProperties<Settings, Properties>) => unknown;
+}
+
+interface ExtensionSettingsAndProperties<Settings extends object, Properties extends object> {
+  settings: Readonly<Required<Settings & BaseExtensionSettings>>;
+  properties: Required<Properties>;
 }
 
 interface ExtensionCreatorMethods<

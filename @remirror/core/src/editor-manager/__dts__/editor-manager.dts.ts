@@ -1,7 +1,8 @@
-import { DocExtension } from '@remirror/extension-doc';
-import { ParagraphExtension } from '@remirror/extension-paragraph';
-import { CorePreset } from '@remirror/preset-core';
+import { CorePreset, DocExtension, ParagraphExtension } from '@remirror/test-fixtures';
 
 import { EditorManager } from '../editor-manager';
 
-EditorManager.of([ParagraphExtension.of(), DocExtension.of(), CorePreset.of()]);
+EditorManager.of({
+  extensions: [ParagraphExtension.of(), DocExtension.of()],
+  presets: [CorePreset.of()],
+});

@@ -2,7 +2,7 @@ import mergeDescriptors from 'merge-descriptors';
 import { Transaction } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 
-import { bool, object } from '@remirror/core-helpers';
+import { bool, isFunction, object } from '@remirror/core-helpers';
 import {
   CompareStateParameter,
   EditorSchema,
@@ -396,13 +396,13 @@ export class SuggestState<GSchema extends EditorSchema = any> {
     }
 
     const { keyBindings } = match.suggester;
-    const parameters: SuggestKeyBindingParameter = {
+    const parameter: SuggestKeyBindingParameter = {
       event,
       setMarkRemoved: this.setRemovedTrue,
       ...this.createParameter(match),
     };
 
-    return runKeyBindings(keyBindings, parameters);
+    return runKeyBindings(isFunction(keyBindings) ? keyBindings() : keyBindings, parameter);
   }
 
   /**

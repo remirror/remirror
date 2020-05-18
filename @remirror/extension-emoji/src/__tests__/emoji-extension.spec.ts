@@ -1,37 +1,46 @@
 import { renderEditor } from 'jest-remirror';
-import { SuggestKeyBindingParameter } from '@remirror/pm/suggest';
 
-import { object } from '@remirror/core';
+import { BaseExtensionSettings, object, WithProperties } from '@remirror/core';
+import { SuggestKeyBindingParameter } from '@remirror/pm/suggest';
 
 import { EmojiExtension } from '../emoji-extension';
 import {
-  EmojiExtensionOptions,
   EmojiObject,
+  EmojiProperties,
+  EmojiSettings,
   EmojiSuggestCommand,
   EmojiSuggestionChangeHandlerParameter,
 } from '../emoji-types';
 
-const create = (options: EmojiExtensionOptions = object()) =>
-  renderEditor({
-    plainNodes: [],
-    others: [
-      new EmojiExtension({
-        onSuggestionChange,
-        onSuggestionExit,
-        suggestionKeyBindings,
-        ...options,
+function create(
+  parameter: WithProperties<EmojiSettings & BaseExtensionSettings, EmojiProperties> = object(),
+) {
+  return renderEditor({
+    extensions: [
+      EmojiExtension.of({
+        ...parameter,
+        properties: {
+          onSuggestionChange,
+          onSuggestionExit,
+          suggestionKeyBindings,
+          ...parameter.properties,
+        },
       }),
     ],
+    presets: [],
   });
+}
 
 let emoji: EmojiObject | undefined;
 
 const onSuggestionChange = jest.fn((params: EmojiSuggestionChangeHandlerParameter) => {
   emoji = params.emojiMatches[0];
 });
+
 const onSuggestionExit = jest.fn(() => {
   emoji = undefined;
 });
+
 const suggestionKeyBindings = {
   Enter: jest.fn((params: SuggestKeyBindingParameter<EmojiSuggestCommand>) => {
     params.command(emoji!);
@@ -87,12 +96,12 @@ describe('inputRules', () => {
   });
 });
 
-describe('suggesters', () => {
-  it('creates suggesters from the defaultList first', () => {
+describe('suggestions', () => {
+  it('creates suggestions from the defaultList first', () => {
     const {
       nodes: { doc, p },
       add,
-    } = create();
+    } = create({ properties: {} });
 
     add(doc(p('<cursor>')))
       .insertText(':')
@@ -141,23 +150,23 @@ describe('suggesters', () => {
 });
 
 describe('commands', () => {
-  test('`openEmojiSuggestion`', () => {
+  test('`suggestEmoji`', () => {
     const {
       nodes: { doc, p },
       add,
     } = create();
 
     add(doc(p('<cursor>')))
-      .actionsCallback((actions) => {
-        actions.openEmojiSuggestions();
+      .commandsCallback((commands) => {
+        commands.suggestEmoji();
       })
       .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p(':')));
         expect(onSuggestionChange).toHaveBeenCalledTimes(1);
       })
       .overwrite(doc(p('abcde')))
-      .actionsCallback((actions) => {
-        actions.openEmojiSuggestions({ from: 3, to: 4 });
+      .commandsCallback((commands) => {
+        commands.suggestEmoji({ from: 3, to: 4 });
       })
       .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('ab:de')));
@@ -171,15 +180,15 @@ describe('commands', () => {
     } = create();
 
     add(doc(p('<cursor>')))
-      .actionsCallback((actions) => {
-        actions.insertEmojiByName('heart');
+      .commandsCallback((commands) => {
+        commands.insertEmojiByName('heart');
       })
       .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('❤️')));
       })
       .overwrite(doc(p('abcde')))
-      .actionsCallback((actions) => {
-        actions.insertEmojiByName('heart', { from: 3, to: 4 });
+      .commandsCallback((commands) => {
+        commands.insertEmojiByName('heart', { from: 3, to: 4 });
       })
       .callback((content) => {
         expect(content.state.doc).toEqualRemirrorDocument(doc(p('ab❤️de')));

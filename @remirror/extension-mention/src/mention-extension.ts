@@ -245,7 +245,7 @@ export const MentionExtension = ExtensionFactory.typed<
   },
 
   createSuggestions(parameter) {
-    const { commands, type, getState, extension } = parameter;
+    const { getCommands: commands, type, getState, extension } = parameter;
 
     return extension.settings.matchers.map<Suggestion<MentionExtensionSuggestCommand>>(
       (matcher) => {

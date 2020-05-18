@@ -1,6 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { invariant, object } from '@remirror/core-helpers';
-import { And, EditorSchema, ProsemirrorPlugin } from '@remirror/core-types';
+import { EditorSchema, ProsemirrorPlugin } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
 import { Plugin, PluginKey } from '@remirror/pm/state';
 
@@ -38,10 +38,7 @@ export const PluginsExtension = ExtensionFactory.plain({
   // These methods are later used.
   onCreate({ setStoreKey, setManagerMethodParameter, getStoreKey }) {
     const pluginKeys: Record<string, PluginKey> = object();
-    const stateGetters: Map<
-      string | AnyExtensionConstructor,
-      <State = unknown>() => State
-    > = object();
+    const stateGetters = new Map<string | AnyExtensionConstructor, <State = unknown>() => State>();
 
     // Method for retrieving the plugin state by the extension name.
     const getStateByName = <State>(identifier: string | AnyExtensionConstructor) => {

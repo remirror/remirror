@@ -10,7 +10,7 @@ import {
   keys,
   range,
   take,
-  uniqueArray,
+  values,
   within,
 } from '@remirror/core';
 
@@ -88,10 +88,13 @@ export const DEFAULT_FREQUENTLY_USED: Names[] = [
 ];
 
 const emojiObject: EmojiObjectRecord = rawEmojiObject as EmojiObjectRecord;
-const emoticonList = uniqueArray(
-  entries(EMOTICONS).reduce((acc, [, emoticons]) => [...acc, ...emoticons], [] as string[]),
-);
-const emoticonSource = emoticonList.map(escapeStringRegex).join('|');
+const emoticonSet = new Set<string>();
+
+for (const emoticons of values(EMOTICONS)) {
+  emoticons.forEach((emoticon) => emoticon && emoticonSet.add(emoticon));
+}
+
+const emoticonSource = [...emoticonSet].map(escapeStringRegex).join('|');
 export const emoticonRegex = new RegExp(`(${emoticonSource})[\\s]$`);
 export const emojiNames = keys(emojiObject);
 export const emojiList = entries(emojiObject).map(([, entry]) => entry);

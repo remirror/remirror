@@ -8,7 +8,6 @@ import {
   EditorView as EditorViewType,
   fromHTML,
   FromToParameter,
-  GetCommands,
   getDocument,
   GetExtensionUnion,
   invariant,
@@ -774,7 +773,7 @@ export class RenderEditor<Manager extends AnyEditorManager> extends PureComponen
       state: this.state.editor,
 
       /* Mapped methods */
-      commands: this.manager.store.commands as GetCommands<Manager>,
+      commands: this.manager.store.commands as any,
 
       /* Getter Methods */
       getRootProps: this.getRootProps,

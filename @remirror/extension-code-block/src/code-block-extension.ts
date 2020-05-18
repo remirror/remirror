@@ -46,7 +46,7 @@ export const CodeBlockExtension = ExtensionFactory.typed<
   },
   defaultProperties: {
     toggleName: 'paragraph',
-    formatter: () => undefined,
+    formatter: () => {},
     syntaxTheme: 'atomDark',
     defaultLanguage: 'markup',
   },
@@ -184,7 +184,7 @@ export const CodeBlockExtension = ExtensionFactory.typed<
     ];
   },
 
-  createKeymap({ type, commands, extension }) {
+  createKeymap({ type, getCommands: commands, extension }) {
     return {
       Tab: ({ state, dispatch }) => {
         const { selection, tr, schema } = state;

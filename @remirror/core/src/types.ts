@@ -110,6 +110,11 @@ export type GetSchema<Type extends { ['~Sch']: unknown }> = Type['~Sch'];
 export type GetCommands<Type extends { ['~C']: unknown }> = Type['~C'];
 
 /**
+ * Get the Extensions from an `EditorManager`, or `Preset`.
+ */
+export type GetExtensions<Type extends { ['~E']: unknown }> = Type['~E'];
+
+/**
  * Get the helpers provided by an from an `EditorManager`, `Extension` or `Preset`.
  */
 export type GetHelpers<Type extends { ['~H']: unknown }> = Type['~H'];

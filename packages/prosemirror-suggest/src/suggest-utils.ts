@@ -1,7 +1,7 @@
 import { keydownHandler } from 'prosemirror-keymap';
 
 import { NULL_CHARACTER } from '@remirror/core-constants';
-import { bool, findMatches, isUndefined, object } from '@remirror/core-helpers';
+import { bool, entries, findMatches, isUndefined, object } from '@remirror/core-helpers';
 import {
   EditorStateParameter,
   MakeOptional,
@@ -150,7 +150,7 @@ const recheckMatch = ({ state, match }: SuggestStateMatchParameter & EditorState
       suggester: match.suggester,
     });
   } catch {
-    return undefined;
+    return;
   }
 };
 
@@ -280,24 +280,24 @@ interface TransformKeyBindingsParameter {
   /**
    * The param object which is passed into each method.
    */
-  params: SuggestKeyBindingParameter;
+  suggestionParameter: SuggestKeyBindingParameter;
 }
 
 /**
  * Transforms the keybindings into an object that can be consumed by the
  * prosemirror keydownHandler method.
  */
-export const transformKeyBindings = ({
-  bindings,
-  params,
-}: TransformKeyBindingsParameter): Record<string, ProsemirrorCommandFunction> => {
-  const keys: Record<string, ProsemirrorCommandFunction> = object();
-  return Object.entries(bindings).reduce((previous, [key, method]) => {
-    return {
-      ...previous,
-      [key]: () => bool(method(params)),
-    };
-  }, keys);
+export const transformKeyBindings = (
+  parameter: TransformKeyBindingsParameter,
+): Record<string, ProsemirrorCommandFunction> => {
+  const { bindings, suggestionParameter } = parameter;
+  const transformed: Record<string, ProsemirrorCommandFunction> = object();
+
+  for (const [key, method] of entries(bindings)) {
+    transformed[key] = () => bool(method(suggestionParameter));
+  }
+
+  return transformed;
 };
 
 /**
@@ -311,11 +311,11 @@ export const transformKeyBindings = ({
  */
 export const runKeyBindings = (
   bindings: SuggestKeyBindingMap,
-  parameters: SuggestKeyBindingParameter,
+  suggestionParameter: SuggestKeyBindingParameter,
 ) => {
-  return keydownHandler(transformKeyBindings({ bindings, params: parameters }))(
-    parameters.view,
-    parameters.event,
+  return keydownHandler(transformKeyBindings({ bindings, suggestionParameter }))(
+    suggestionParameter.view,
+    suggestionParameter.event,
   );
 };
 
@@ -407,5 +407,5 @@ export function findFromSuggestions({
     }
   }
 
-  return undefined;
+  return;
 }

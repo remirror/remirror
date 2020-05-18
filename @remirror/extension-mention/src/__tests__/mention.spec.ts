@@ -1,15 +1,17 @@
 import { pmBuild } from 'jest-prosemirror';
 import { renderEditor } from 'jest-remirror';
-import { SuggestCommandParameter } from '@remirror/pm/suggest';
 
 import { fromHTML, toHTML } from '@remirror/core';
-import { createBaseTestManager } from '@remirror/test-fixtures';
+import { SuggestCommandParameter } from '@remirror/pm/suggest';
+import { createBaseManager } from '@remirror/test-fixtures';
 
 import { MentionExtension, MentionExtensionSettings } from '..';
 import { MentionExtensionSuggestCommand } from '../mention-types';
 
 describe('schema', () => {
-  const { schema } = createBaseTestManager([{ extension: new MentionExtension(), priority: 1 }]);
+  const { schema } = createBaseManager({
+    extensions: [MentionExtension.of({ matchers: [{ char: '@', name: 'at' }] })],
+  });
   const attributes = { id: 'test', label: '@test', name: 'testing' };
 
   const { mention, p, doc } = pmBuild(schema, {

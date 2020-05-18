@@ -1,7 +1,15 @@
 {
   "name": "@remirror/extension-emoji",
   "version": "0.11.0",
-  "description": "Emoji extension for the remirror wysiwyg editor",
+  "description": "Add flavor to your editor with emoji's that make the heart sing.",
+  "keywords": [
+    "remirror",
+    "remirror-extension",
+    "emoji",
+    "smiley",
+    "emoticons",
+    "editor"
+  ],
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-emoji",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-emoji",
   "license": "MIT",

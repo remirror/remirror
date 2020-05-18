@@ -21,11 +21,9 @@ import {
   AnyExtension,
   AnyExtensionConstructor,
   AnyManagerStore,
-  CommandsFromExtensions,
   CreateLifecycleMethodParameter,
   CreateLifecycleMethodReturn,
   GetExtensionUnion,
-  HelpersFromExtensions,
   InitializeLifecycleMethodParameter,
   InitializeLifecycleMethodReturn,
   ManagerStoreKeys,
@@ -36,6 +34,7 @@ import {
 import { AnyPreset } from '../preset';
 import {
   GetConstructor,
+  GetExtensions,
   Of,
   TransactionHandlerParameter,
   TransactionHandlerReturn,
@@ -47,7 +46,7 @@ import {
   transformExtensionOrPreset as transformExtensionOrPresetList,
 } from './editor-manager-helpers';
 
-export type AnyEditorManager = EditorManager<AnyExtension, AnyPreset>;
+export type AnyEditorManager = EditorManager<any, any>;
 
 /**
  * Checks to see whether the provided value is an `Manager`.
@@ -141,25 +140,13 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   /**
    * Pseudo property which is a small hack to store the type of the extension union.
    */
-  public ['~E']!: ExtensionUnion | GetExtensionUnion<PresetUnion>;
+  public ['~E']!: ExtensionUnion | GetExtensions<PresetUnion>;
 
   /**
    * Pseudo property which is a small hack to store the type of the presets
    * available from this manager..
    */
   public ['~P']!: PresetUnion;
-
-  /**
-   * Pseudo property which is a small hack to store the type of the commands
-   * available from this manager.
-   */
-  public ['~C']!: CommandsFromExtensions<this['~E']>;
-
-  /**
-   * Pseudo property which is a small hack to store the type of the helpers
-   * available from this manager.
-   */
-  public ['~H']!: HelpersFromExtensions<this['~E']>;
 
   /**
    * Pseudo property which is a small hack to store the type of the schema

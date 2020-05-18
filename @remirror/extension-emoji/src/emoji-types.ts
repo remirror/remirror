@@ -4,8 +4,6 @@ import {
   SuggestKeyBindingMap,
 } from '@remirror/pm/suggest';
 
-import { BaseExtensionSettings } from '@remirror/core';
-
 import AliasData from './data/aliases';
 import CategoryData from './data/categories';
 import EmojiData from './data/emojis';
@@ -36,15 +34,32 @@ export type SkinVariation = 0 | 1 | 2 | 3 | 4;
 
 export type EmojiSuggestCommand = (emoji: EmojiObject, skinVariation?: SkinVariation) => void;
 export type EmojiSuggestionKeyBindings = SuggestKeyBindingMap<EmojiSuggestCommand>;
-export type EmojiSuggestionChangeHandler = (params: EmojiSuggestionChangeHandlerParameter) => void;
-export type EmojiSuggestionExitHandler = (params: SuggestExitHandlerParameter) => void;
+export type EmojiSuggestionChangeHandler = (
+  parameter: EmojiSuggestionChangeHandlerParameter,
+) => void;
+export type EmojiSuggestionExitHandler = (parameter: SuggestExitHandlerParameter) => void;
 
-export interface EmojiExtensionOptions extends BaseExtensionSettings {
+export interface EmojiSettings {
   /**
    * The character which will trigger the emoji suggesters popup.
    */
   suggestionCharacter?: string;
 
+  /**
+   * A list of the initial (frequently used) emoji displayed to the user.
+   * These are used when the query typed is less than two characters long.
+   */
+  defaultEmoji?: NamesAndAliases[];
+
+  /**
+   * The maximum results to show when searching for matching emoji.
+   *
+   * @defaultValue 15
+   */
+  maxResults?: number;
+}
+
+export interface EmojiProperties {
   /**
    * Key bindings for suggesters.
    */
@@ -60,19 +75,6 @@ export interface EmojiExtensionOptions extends BaseExtensionSettings {
    * This is useful for cleaning up local state when emoji is set.
    */
   onSuggestionExit?: EmojiSuggestionExitHandler;
-
-  /**
-   * A list of the initial (frequently used) emoji displayed to the user.
-   * These are used when the query typed is less than two characters long.
-   */
-  defaultEmoji?: NamesAndAliases[];
-
-  /**
-   * The maximum results to show when searching for matching emoji.
-   *
-   * @defaultValue 15
-   */
-  maxResults?: number;
 }
 
 export type EmojiObjectRecord = Record<Names, EmojiObject>;

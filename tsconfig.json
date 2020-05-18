@@ -6,5 +6,21 @@
     "skipLibCheck": false
   },
   "include": ["**/*.ts", "**/*.tsx", "../global.d.ts"],
-  "exclude": ["./support/dts-jest/**", "**/dist/", "**/lib/", "dist", "lib", "deprecated/**"]
+  "exclude": [
+    "./support/dts-jest/**",
+    "**/dist/",
+    "**/lib/",
+    "dist",
+    "lib",
+    "deprecated/**",
+
+    // TODO remove these temporary exclusions
+    "./deprecated/**",
+    "**/*.test.{ts,tsx}",
+    "**/*.stories.{ts,tsx}",
+    "**/*.spec.{ts,tsx}",
+    "**/__mocks__/**",
+    "**/__tests__/**",
+    "**/__stories__/**"
+  ]
 }

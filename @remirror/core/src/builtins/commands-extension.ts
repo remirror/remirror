@@ -40,7 +40,7 @@ interface UnchainedFactoryParameter {
 function unchainedFactory(parameter: UnchainedFactoryParameter) {
   return (...args: unknown[]) => {
     const { shouldDispatch = true, view, command, getState } = parameter;
-    let dispatch: DispatchFunction | undefined = undefined;
+    let dispatch: DispatchFunction | undefined;
 
     if (shouldDispatch) {
       dispatch = view.dispatch;
@@ -114,11 +114,18 @@ export const CommandsExtension = ExtensionFactory.plain({
       beforeExtensionLoop() {
         const { setManagerMethodParameter, getStoreKey } = parameter;
 
-        setManagerMethodParameter('commands', () => {
+        setManagerMethodParameter('getCommands', () => {
           const commands = getStoreKey('commands');
           invariant(commands, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
 
-          return commands.chain;
+          return commands as any;
+        });
+
+        setManagerMethodParameter('getChain', () => {
+          const chain = getStoreKey('chain');
+          invariant(chain, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
+
+          return chain as any;
         });
       },
     };
@@ -175,9 +182,9 @@ export const CommandsExtension = ExtensionFactory.plain({
         }
 
         chained.run = () => view.dispatch(view.state.tr);
-        commands.chain = chained;
 
         setStoreKey('commands', commands);
+        setStoreKey('chain', chained);
       },
     };
   },
@@ -250,6 +257,21 @@ declare global {
        *
        */
       commands: CommandsFromExtensions<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
+
+      /**
+       * Chainable commands for composing functionality together in quaint and
+       * beautiful ways...
+       *
+       * @remarks
+       *
+       * You can use this property to create expressive and complex commands that
+       * build up the transaction until it can be run.
+       *
+       * ```ts
+       * chain.bold().insertText('Hi').setSelection('start').run();
+       * ```
+       */
+      chain: ChainedFromExtensions<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
     }
 
     interface ExtensionCreatorMethods<
@@ -322,6 +344,14 @@ declare global {
 
     interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
       /**
+       * A method to return the editor's available commands.
+       */
+      getCommands: <ExtensionUnion extends AnyExtension = any>() => CommandsFromExtensions<
+        Of<typeof CommandsExtension>
+      > &
+        CommandsFromExtensions<ExtensionUnion>;
+
+      /**
        * A method that returns an object with all the chainable commands
        * available to be run.
        *
@@ -353,7 +383,7 @@ declare global {
        * })
        * ```
        */
-      commands: <ExtensionUnion extends AnyExtension = any>() => ChainedFromExtensions<
+      getChain: <ExtensionUnion extends AnyExtension = any>() => ChainedFromExtensions<
         Of<typeof CommandsExtension>
       > &
         ChainedFromExtensions<ExtensionUnion>;

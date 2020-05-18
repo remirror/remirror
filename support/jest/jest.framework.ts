@@ -3,7 +3,7 @@
 
 import 'jest-extended';
 
-import toDiffableHtml from 'diffable-html';
+import diffHtml from 'diffable-html';
 import { prosemirrorSerializer } from 'jest-prosemirror';
 import { getSnapshotDiffSerializer, toMatchDiffSnapshot } from 'snapshot-diff';
 
@@ -31,8 +31,8 @@ expect.addSnapshotSerializer({
     const trimmed = object.trim();
     return trimmed.length > 2 && trimmed.startsWith('<') && trimmed.endsWith('>');
   },
-  print: (val) => {
-    return toDiffableHtml(val).trim();
+  serialize: (val: string) => {
+    return diffHtml(val).trim();
   },
 });
 
@@ -45,7 +45,7 @@ interface PuppeteerHtml {
 
 expect.addSnapshotSerializer({
   test: (val) => val?._ === 'HTML',
-  print(val: PuppeteerHtml) {
-    return toDiffableHtml(val.html).trim();
+  serialize(val: PuppeteerHtml) {
+    return diffHtml(val.html).trim();
   },
 });
