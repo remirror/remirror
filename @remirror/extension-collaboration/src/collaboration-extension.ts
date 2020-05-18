@@ -137,7 +137,7 @@ export const CollaborationExtension = ExtensionFactory.typed<
           dispatch(
             receiveTransaction(
               state,
-              steps.map((item) => Step.fromJSON(schema(), item.step)),
+              steps.map((item) => Step.fromJSON(schema(), item)),
               steps.map((item) => item.clientID),
             ),
           );

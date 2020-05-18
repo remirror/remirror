@@ -1,5 +1,11 @@
 # @remirror/extension-collaboration
 
+## 0.13.2
+
+### Patch Changes
+
+- 696fffd3: [fix] API mismatch in step enumeration
+
 ## 0.11.0
 
 ### Patch Changes
