@@ -1,15 +1,11 @@
-import { BaseExtensionSettings } from '@remirror/core';
-
-export type EpicModePluginStateParameter = Required<
-  Omit<EpicModeExtensionOptions, keyof BaseExtensionSettings>
->;
+export type EpicModePluginStateParameter = Required<EpicModeProperties>;
 
 export interface ParticleRange {
   min: number;
   max: number;
 }
 
-export interface EpicModeExtensionOptions extends BaseExtensionSettings {
+export interface EpicModeProperties {
   /**
    * The particle effect to use
    */
@@ -31,16 +27,25 @@ export interface EpicModeExtensionOptions extends BaseExtensionSettings {
   particleRange?: ParticleRange;
 
   /**
-   * Whether the editor should shake
+   * Whether epic mode is active.
+   *
    * @defaultValue `true`
    */
-  shake?: boolean;
+  active?: boolean;
 
   /**
-   * How long the shaking should last for
+   * How long the shaking should last for.
+   *
    * @defaultValue 0.3
    */
   shakeTime?: number;
+
+  /**
+   * How strong should the intensity of the shaking be.
+   *
+   * @defaultValue 5
+   */
+  shakeIntensity?: number;
 }
 
 export interface Particle {

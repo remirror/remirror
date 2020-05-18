@@ -1,14 +1,18 @@
 # @remirror/extension-epic-mode
 
-[![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@remirror/extension-epic-mode.svg?)](https://bundlephobia.com/result?p=@remirror/extension-epic-mode)
-[![npm](https://img.shields.io/npm/dm/@remirror/extension-epic-mode.svg?&logo=npm)](https://www.npmjs.com/package/@remirror/extension-epic-mode)
+> Epic (power) mode extension for the remirror wysiwyg editor.
 
-Adds better support for links to the editor and should be used in place of the more basic `Link`
-extension provided in the [`@remirror/core-extensions`](../core-extensions) library.
+[![Version][version]][npm] [![Weekly Downloads][downloads-badge]][npm]
+[![Bundled size][size-badge]][size] [![Typed Codebase][typescript]](./src/index.ts)
+![MIT License][license]
 
-The regex matcher has been pulled from the
-[social-text](https://github.com/social/social-text/blob/752b9476d5ed00c2ec60d0a6bb3b34bd5b19bcf9/js/src/regexp/extractUrl.js)
-library.
+[version]: https://flat.badgen.net/npm/v/@remirror/extension-epic-mode
+[npm]: https://npmjs.com/package/@remirror/extension-epic-mode
+[license]: https://flat.badgen.net/badge/license/MIT/purple
+[size]: https://bundlephobia.com/result?p=@remirror/extension-epic-mode
+[size-badge]: https://flat.badgen.net/bundlephobia/minzip/@remirror/extension-epic-mode
+[typescript]: https://flat.badgen.net/badge/icon/TypeScript?icon=typescript&label
+[downloads-badge]: https://badgen.net/npm/dw/@remirror/extension-epic-mode/red?icon=npm
 
 ## Installation
 
@@ -16,4 +20,56 @@ library.
 yarn add @remirror/extension-epic-mode # yarn
 pnpm add @remirror/extension-epic-mode # pnpm
 npm install @remirror/extension-epic-mode # npm
+```
+
+## Usage
+
+The following code sample will create a limited editor and run the available commands from this
+extension.
+
+```ts
+import { EditorManager, ExtensionPriority } from '@remirror/core';
+import { CorePreset } from '@remirror/preset-core';
+import { EpicModeExtension } from '@remirror/extension-epic-mode';
+
+// Create the codeBlock extension
+const epicModeExtension = EpicModeExtension.of();
+const corePreset = CorePreset.of();
+
+// Create the Editor Manager with the codeBlock extension passed through.
+const manager = EditorManager.of([epicModeExtension, corePreset]);
+
+// Pass the dom element to the editor. If you are using `@remirror/react` or
+// other framework wrappers then this is handled for you.
+const element = document.createElement('div');
+document.body.appendChild(element);
+
+// Add the view to the editor manager.
+manager.addView(element);
+
+// Make the epic mode extension active.
+epicModeExtension.setProperties({ active: true });
+```
+
+When using with react you can update the properties with the `useExtensionProperties` hook.
+
+```ts
+import { EpicModeExtension } from '@remirror/extension-epic-mode';
+import { useExtensionProperties, useRemirror } from '@remirror/react';
+
+const InternalEditor = () => {
+  useExtensionProperties(EpicModeExtension, { active: true });
+
+  return <div />;
+};
+```
+
+## Credits
+
+This package was bootstrapped with [monots].
+
+[monots]: https://github.com/monots/monots
+
+```
+
 ```

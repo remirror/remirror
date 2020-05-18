@@ -1,7 +1,7 @@
 {
   "name": "@remirror/extension-epic-mode",
   "version": "0.11.0",
-  "description": "Epic (power) mode extension for the remirror wysiwyg editor",
+  "description": "Epic (power) mode extension for the remirror wysiwyg editor.",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-epic-mode",
   "license": "MIT",
   "contributors": [
