@@ -1,4 +1,4 @@
-import {
+import React, {
   Children,
   ComponentClass,
   ComponentType,
@@ -205,5 +205,5 @@ export const addKeyToElement = (element: ReactNode, key: string | number) => {
     return element;
   }
 
-  return cloneElement(element, { ...element.props, key });
+  return React.cloneElement(element, { ...element.props, key });
 };

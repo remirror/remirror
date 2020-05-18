@@ -265,6 +265,13 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   }
 
   /**
+   * Retrieve the settings used when creating the manager.
+   */
+  get settings() {
+    return this.#settings;
+  }
+
+  /**
    * Creates the extension manager which is used to simplify the management of
    * the prosemirror editor.
    *

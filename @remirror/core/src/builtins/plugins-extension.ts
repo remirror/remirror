@@ -62,6 +62,7 @@ export const PluginsExtension = ExtensionFactory.plain({
       },
       afterExtensionLoop() {
         setStoreKey('plugins', []);
+        setStoreKey('pluginKeys', pluginKeys);
         setStoreKey('getPluginState', getStateByName);
         setManagerMethodParameter('getPluginState', getStateByName);
       },
@@ -90,9 +91,7 @@ export const PluginsExtension = ExtensionFactory.plain({
         }
 
         const key: PluginKey = getStoreKey('pluginKeys')[extension.name];
-        const pluginParameter = {
-          ...getParameter(extension, { key }),
-        };
+        const pluginParameter = getParameter(extension, { key });
         const plugin: Plugin = extension.parameter.createPlugin(pluginParameter);
 
         extensionPlugins.push(plugin);

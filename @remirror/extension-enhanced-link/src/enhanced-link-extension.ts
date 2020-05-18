@@ -1,53 +1,41 @@
 import {
   Cast,
-  CommandMarkTypeParameter,
+  convertCommand,
+  createTypedExtension,
   EditorState,
+  EditorStateParameter,
   EditorView,
   findMatches,
+  FromToParameter,
   getMatchString,
-  isFunction,
   LEAF_NODE_REPLACING_CHARACTER,
-  ManagerMarkTypeParameter,
-  MarkExtension,
-  MarkExtensionConfig,
-  MarkExtensionSpec,
+  Mark,
   markPasteRule,
+  MarkTypeParameter,
   ProsemirrorAttributes,
   removeMark,
+  TransactionParameter,
   updateMark,
 } from '@remirror/core';
-import { Plugin } from '@remirror/pm/state';
+import { Plugin, TextSelection } from '@remirror/pm/state';
 import { ReplaceStep } from '@remirror/pm/transform';
-
-import {
-  enhancedLinkHandler,
-  EnhancedLinkHandlerProps,
-  extractHref,
-  getUrlsFromState,
-  isSetEqual,
-} from './enhanced-link-utils';
-import { extractUrl } from './extract-url';
-
-export interface EnhancedLinkExtensionOptions extends MarkExtensionConfig {
-  /**
-   * This handler is called every time the matched urls are updated.
-   */
-  onUrlsChange?: (params: { set: Set<string>; urls: string[] }) => void;
-}
 
 /**
  * An auto complete auto decorated linker.
  *
+ * @remarks
+ *
  * There's nothing enhanced about it.
  *
- * TODO Consider renaming this extension
+ * TODO Merge this with the link extension
  */
-export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOptions> {
-  get name() {
-    return 'enhancedLink' as const;
-  }
+export const EnhancedLinkExtension = createTypedExtension<{}, EnhancedLinkProperties>().mark({
+  name: 'enhancedLink',
+  defaultProperties: {
+    onUrlUpdate() {}, // Default noop
+  },
 
-  get schema(): MarkExtensionSpec {
+  createMarkSchema() {
     return {
       attrs: {
         href: {
@@ -75,24 +63,25 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
         ];
       },
     };
-  }
+  },
 
-  public commands({ type }: CommandMarkTypeParameter) {
+  createCommands(parameter) {
+    const { type } = parameter;
     return {
-      enhancedLink: (attributes: ProsemirrorAttributes) => {
+      toggleEnhancedLink: (attributes: ProsemirrorAttributes) => {
         if (attributes?.href) {
-          return updateMark({ type, attrs: attributes });
+          return convertCommand(updateMark({ type, attrs: attributes }));
         }
 
-        return removeMark({ type });
+        return convertCommand(removeMark({ type }));
       },
     };
-  }
+  },
 
-  public pasteRules({ type }: ManagerMarkTypeParameter) {
+  createPasteRules({ type }) {
     return [
       markPasteRule({
-        regexp: extractUrl,
+        regexp: URL_REGEX,
         type,
         getAttributes: (url) => {
           return {
@@ -101,12 +90,10 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
         },
       }),
     ];
-  }
+  },
 
-  public plugin = ({ type }: ManagerMarkTypeParameter) => {
-    const key = this.pluginKey;
-    const name = this.name;
-    const onUrlsChange = this.options.onUrlsChange;
+  createPlugin({ type, key, extension }) {
+    const name = extension.name;
 
     return new Plugin({
       key,
@@ -152,7 +139,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
             LEAF_NODE_REPLACING_CHARACTER,
             leafChar,
           );
-          findMatches(previousSearchText, extractUrl).forEach((match) => {
+          findMatches(previousSearchText, URL_REGEX).forEach((match) => {
             const startIndex = match.index;
             const url = match[1];
             const start = $pos.start() + startIndex;
@@ -165,7 +152,7 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
         }
 
         // Finds matches within the current node when in the middle of a node
-        findMatches(searchText, extractUrl).forEach((match) => {
+        findMatches(searchText, URL_REGEX).forEach((match) => {
           const startIndex = match.index;
           const url = match[1];
           const start = $from.start() + startIndex;
@@ -195,18 +182,95 @@ export class EnhancedLinkExtension extends MarkExtension<EnhancedLinkExtensionOp
       },
       view: () => ({
         update(view: EditorView, previousState: EditorState) {
-          if (!isFunction(onUrlsChange)) {
-            return;
-          }
-
           const next = getUrlsFromState(view.state, name);
           const previous = getUrlsFromState(previousState, name);
 
           if (!isSetEqual(next.set, previous.set)) {
-            onUrlsChange(next);
+            extension.properties.onUrlUpdate(next);
           }
         },
       }),
     });
-  };
+  },
+});
+
+export const URL_REGEX = /((http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[\da-z]+([.-][\da-z]+)*\.[a-z]{2,5}(:\d{1,5})?(\/.*)?)/gi;
+
+export interface UrlUpdateHandlerParameter {
+  set: Set<string>;
+  urls: string[];
 }
+export interface EnhancedLinkProperties {
+  /**
+   * This handler is called every time the matched urls are updated.
+   */
+  onUrlUpdate?: (parameter: UrlUpdateHandlerParameter) => void;
+}
+
+const extractHref = (url: string) =>
+  url.startsWith('http') || url.startsWith('//') ? url : `http://${url}`;
+
+interface EnhancedLinkHandlerProps
+  extends EditorStateParameter,
+    FromToParameter,
+    Partial<TransactionParameter>,
+    MarkTypeParameter {
+  /**
+   * The url to add as a mark to the range provided.
+   */
+  url: string;
+}
+
+/**
+ * Add the provided URL as a mark to the text range provided
+ */
+const enhancedLinkHandler = ({ state, url, from, to, tr, type }: EnhancedLinkHandlerProps) => {
+  const endPosition = state.selection.to;
+  const enhancedLink = type.create({ href: extractHref(url) });
+
+  tr = (tr ?? state.tr).replaceWith(from, to, state.schema.text(url, [enhancedLink]));
+
+  // Ensure that the selection doesn't jump when the the current selection is within the range
+  if (endPosition < to) {
+    return tr.setSelection(TextSelection.create(tr.doc, endPosition));
+  }
+
+  return tr;
+};
+
+/**
+ * Retrieves all the automatically applied URLs from the state.
+ */
+const getUrlsFromState = (state: EditorState, markName: string) => {
+  const $pos = state.doc.resolve(0);
+  let marks: Mark[] = [];
+
+  state.doc.nodesBetween($pos.start(), $pos.end(), (node) => {
+    marks = [...marks, ...node.marks];
+  });
+
+  const urls = marks
+    .filter((markItem) => markItem.type.name === markName)
+    .map((mark) => mark.attrs.href);
+
+  return { set: new Set(urls), urls };
+};
+
+/**
+ * Checks whether two sets are equal
+ * @param setOne
+ * @param setTwo
+ */
+const isSetEqual = <GSetType>(setOne: Set<GSetType>, setTwo: Set<GSetType>) => {
+  if (setOne.size !== setTwo.size) {
+    return false;
+  }
+
+  for (const value of setOne) {
+    if (!setTwo.has(value)) {
+      return false;
+    }
+  }
+
+  return true;
+};

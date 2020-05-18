@@ -1,3 +1,5 @@
+import { ComponentType } from 'react';
+
 import {
   AnyExtension,
   AnyPreset,
@@ -5,7 +7,7 @@ import {
   ExtensionCommandReturn,
   ExtensionFactory,
   ExtensionHelperReturn,
-  ManagerMethodParameter,
+  object,
 } from '@remirror/core';
 
 import { DEFAULT_TRANSFORMATIONS, SSRTransformer } from './react-ssr-helpers';
@@ -42,13 +44,15 @@ const ReactSSRExtension = ExtensionFactory.typed<ReactSSRExtensionSettings>().pl
   name: 'reactSSR',
   defaultSettings: { transformers: DEFAULT_TRANSFORMATIONS },
 
-  /**
-   * Transform all the transformers.
-   */
-  createSSRTransformer: (_, extension) => (element) => {
-    return extension.settings.transformers.reduce((transformedElement, transformer) => {
-      return transformer(transformedElement);
-    }, element);
+  onCreate(parameter) {
+    const { setStoreKey } = parameter;
+
+    return {
+      afterExtensionLoop() {
+        setStoreKey('components', object());
+        setStoreKey('componentOptions', object());
+      },
+    };
   },
 
   /**
@@ -58,9 +62,13 @@ const ReactSSRExtension = ExtensionFactory.typed<ReactSSRExtensionSettings>().pl
     const ssrTransformers: SSRTransformer[] = [];
 
     const ssrTransformer: SSRTransformer = (initialElement) => {
-      return ssrTransformers.reduce((accumulatedElement, currentTransformer) => {
-        return currentTransformer(accumulatedElement);
-      }, initialElement);
+      let element: JSX.Element = initialElement;
+
+      for (const transformer of ssrTransformers) {
+        element = transformer(element);
+      }
+
+      return element;
     };
 
     return {
@@ -70,13 +78,26 @@ const ReactSSRExtension = ExtensionFactory.typed<ReactSSRExtensionSettings>().pl
         }
 
         const parameter = getParameter(extension);
-        ssrTransformers.push(extension.parameter.createSSRTransformer(parameter, extension));
+        ssrTransformers.push(extension.parameter.createSSRTransformer(parameter));
       },
 
       afterExtensionLoop: () => {
         setStoreKey('ssrTransformer', ssrTransformer);
       },
     };
+  },
+
+  /**
+   * Transform all the transformers.
+   */
+  createSSRTransformer: ({ extension }) => (initialElement) => {
+    let element: JSX.Element = initialElement;
+
+    for (const transformer of extension.settings.transformers) {
+      element = transformer(element);
+    }
+
+    return element;
   },
 });
 
@@ -97,6 +118,16 @@ declare global {
        * and allowing it to render without defects.
        */
       ssrTransformer: SSRTransformer;
+
+      /**
+       * Components for ssr transformations.
+       */
+      components: Record<string, ComponentType<any>>;
+
+      /**
+       * The options for each component
+       */
+      componentOptions: Record<string, any>;
     }
 
     interface ExtensionCreatorMethods<
@@ -122,8 +153,9 @@ declare global {
        * only one child of the parent
        */
       createSSRTransformer?: (
-        parameter: ManagerMethodParameter,
-        extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
+        parameter: ManagerMethodParameter & {
+          extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
+        },
       ) => SSRTransformer;
     }
   }

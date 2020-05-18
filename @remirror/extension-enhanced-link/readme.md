@@ -17,11 +17,3 @@ yarn add @remirror/extension-enhanced-link # yarn
 pnpm add @remirror/extension-enhanced-link # pnpm
 npm install @remirror/extension-enhanced-link # npm
 ```
-
-## Usage
-
-```ts
-import { EnhancedLinkExtension } from '@remirror/extension-enhanced-link';
-
-new EnhancedLinkExtension({ onUrlsChange: (urls) => log('Changed urls', urls) }),
-```
