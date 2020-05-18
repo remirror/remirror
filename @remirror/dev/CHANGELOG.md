@@ -1,5 +1,11 @@
 # @remirror/dev
 
+## 0.13.2
+
+### Patch Changes
+
+- 89392ff7: Upgrade prosemirror-dev-tools to 3.0.0
+
 ## 0.13.1
 
 ### Patch Changes
