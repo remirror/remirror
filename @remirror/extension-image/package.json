@@ -1,7 +1,15 @@
 {
   "name": "@remirror/extension-image",
   "version": "0.13.1",
-  "description": "CodeBlock extension for the remirror wysiwyg editor",
+  "description": "Add images to your editor.",
+  "keywords": [
+    "remirror",
+    "remirror-extension",
+    "images",
+    "jpg",
+    "png",
+    "editor"
+  ],
   "homepage": "https://github.com/remirror/remirror/tree/master/@remirror/extension-image",
   "repository": "https://github.com/remirror/remirror/tree/master/@remirror/extension-image",
   "license": "MIT",

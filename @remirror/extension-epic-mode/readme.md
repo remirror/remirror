@@ -69,7 +69,3 @@ const InternalEditor = () => {
 This package was bootstrapped with [monots].
 
 [monots]: https://github.com/monots/monots
-
-```
-
-```
