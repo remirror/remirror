@@ -14,11 +14,13 @@ import { AttributeSpec, ParseRule, Schema } from '@remirror/pm/model';
 
 import {
   AnyExtension,
+  CreateLifecycleMethod,
   GetExtensionUnion,
   GetMarkNameUnion,
   GetNodeNameUnion,
   isMarkExtension,
   isNodeExtension,
+  PlainExtension,
   SchemaFromExtensionUnion,
 } from '../extension';
 import { AnyPreset } from '../preset';
@@ -137,15 +139,23 @@ function transformSchemaAttributes<
  *
  * @builtin
  */
-export const SchemaExtension = ExtensionFactory.plain({
-  name: 'schema',
+export class SchemaExtension extends PlainExtension {
+  public readonly name = 'schema' as const;
 
   /**
    * This extension is essential and hence the priority is set to high.
    */
-  defaultPriority: ExtensionPriority.High,
+  public readonly defaultPriority = ExtensionPriority.High;
 
-  onCreate(parameter) {
+  protected createDefaultSettings() {
+    return {};
+  }
+
+  protected createDefaultProperties() {
+    return {};
+  }
+
+  public onCreate: CreateLifecycleMethod = (parameter) => {
     const { managerSettings } = parameter;
     const nodes: Record<string, NodeExtensionSpec> = object();
     const marks: Record<string, MarkExtensionSpec> = object();
@@ -159,13 +169,6 @@ export const SchemaExtension = ExtensionFactory.plain({
     }
 
     return {
-      beforeExtensionLoop() {
-        const { setDefaultExtensionSettings } = parameter;
-
-        // Set default extraAttributes on every extension to be empty array
-        setDefaultExtensionSettings('extraAttributes', []);
-      },
-
       forEachExtension(extension) {
         const currentAttributes = extraAttributes[extension.name] ?? [];
         extraAttributes[extension.name] = [
@@ -174,30 +177,30 @@ export const SchemaExtension = ExtensionFactory.plain({
         ];
 
         if (isNodeExtension(extension)) {
-          const { name, spec: schema } = extension;
-          nodes[name] = transformSchemaAttributes(extraAttributes[extension.name], schema);
+          const { name, spec } = extension;
+          nodes[name] = transformSchemaAttributes(extraAttributes[extension.name], spec);
         }
 
         if (isMarkExtension(extension)) {
-          const { name, spec: schema } = extension;
+          const { name, spec } = extension;
 
-          marks[name] = transformSchemaAttributes(extraAttributes[extension.name], schema);
+          marks[name] = transformSchemaAttributes(extraAttributes[extension.name], spec);
         }
       },
 
       afterExtensionLoop() {
-        const { setStoreKey, setManagerMethodParameter, getStoreKey } = parameter;
+        const { setStoreKey, setExtensionStore } = parameter;
 
         const schema = new Schema({ nodes, marks });
 
         setStoreKey('nodes', nodes);
         setStoreKey('marks', marks);
         setStoreKey('schema', schema);
-        setManagerMethodParameter('schema', () => getStoreKey('schema'));
+        setExtensionStore('schema', schema);
       },
     };
-  },
-});
+  };
+}
 
 /**
  * The interface for adding extra attributes to multiple node and mark extensions.
@@ -287,11 +290,11 @@ declare global {
       schema: SchemaFromExtensionUnion<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
     }
 
-    interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
+    interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
       /**
        * The Prosemirror schema being used for the current interface
        */
-      schema: () => Schema;
+      schema: Schema;
     }
   }
 }

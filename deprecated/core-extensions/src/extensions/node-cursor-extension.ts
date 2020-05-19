@@ -1,17 +1,16 @@
-import { EditorState, Plugin, Transaction } from '@remirror/pm/state';
-import { Decoration, DecorationSet } from '@remirror/pm/view';
-
 import {
   BaseExtensionSettings,
   Extension,
+  ExtensionStore,
   isEmptyArray,
-  ManagerMethodParameter,
   NodeMatch,
   ResolvedPos,
   uniqueArray,
   ZERO_WIDTH_SPACE_CHAR,
 } from '@remirror/core';
 import { getPluginState, nodeNameMatchesList } from '@remirror/core-utils';
+import { EditorState, Plugin, Transaction } from '@remirror/pm/state';
+import { Decoration, DecorationSet } from '@remirror/pm/view';
 
 export const findSpecialNodeAfter = ($pos: ResolvedPos, tr: Transaction, matchers: NodeMatch[]) => {
   if (nodeNameMatchesList($pos.nodeAfter, matchers)) {
@@ -128,7 +127,7 @@ export class NodeCursorExtension extends Extension<NodeCursorExtensionOptions> {
     };
   }
 
-  public plugin({ extensionTags: tags }: ManagerMethodParameter) {
+  public plugin({ extensionTags: tags }: ExtensionStore) {
     return createNodeCursorExtensionPlugin(this, tags.general.nodeCursor);
   }
 }

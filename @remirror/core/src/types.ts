@@ -162,8 +162,8 @@ export type Of<Constructor extends { of: AnyFunction }> = InstanceFromConstructo
 /**
  * Parameters passed into many of the extension methods.
  */
-export interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema>
-  extends Remirror.ManagerMethodParameter<Schema> {}
+export interface ExtensionStore<Schema extends EditorSchema = EditorSchema>
+  extends Remirror.ExtensionStore<Schema> {}
 
 /**
  * Parameters passed into many of the extension methods with a view added.
@@ -176,7 +176,7 @@ export interface ManagerMethodParameter<Schema extends EditorSchema = EditorSche
  */
 export interface ViewManagerParameter<Schema extends EditorSchema = any>
   extends EditorViewParameter<Schema>,
-    Remirror.ManagerMethodParameter {}
+    Remirror.ExtensionStore {}
 
 export type ExtensionCommandFunction = (...args: any[]) => CommandFunction<EditorSchema>;
 
@@ -203,7 +203,7 @@ export interface ExtensionHelperReturn {
  * This is used to generate the specific types for Marks and Nodes.
  */
 export interface ManagerTypeParameter<ProsemirrorType, Schema extends EditorSchema = EditorSchema>
-  extends ManagerMethodParameter<Schema> {
+  extends ExtensionStore<Schema> {
   type: ProsemirrorType;
 }
 export interface ViewManagerTypeParameter<
@@ -374,7 +374,7 @@ declare global {
      * Parameters passed into many of the extension methods. These can be added
      * to by the parameter methods.
      */
-    interface ManagerMethodParameter<Schema extends EditorSchema> {
+    interface ExtensionStore<Schema extends EditorSchema> {
       /**
        * A helper method for retrieving the state of the editor
        */

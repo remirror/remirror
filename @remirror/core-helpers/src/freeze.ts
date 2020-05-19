@@ -1,7 +1,7 @@
 import { ErrorConstant } from '@remirror/core-constants';
 
 import { invariant } from './core-errors';
-import { isArray, isObject } from './core-helpers';
+import { includes, isArray, isObject } from './core-helpers';
 
 /**
  * A freeze method for objects that only runs in development. Helps prevent code
@@ -13,9 +13,12 @@ import { isArray, isObject } from './core-helpers';
  * environment. It's purpose is to help prevent bad practice while developing
  * by avoiding mutation of values that shouldn't be mutated.
  */
-export const freeze = <Target extends object>(target: Target): Readonly<Target> => {
-  return target;
+export const freeze = <Target extends object>(
+  target: Target,
+  options: FreezeOptions = {},
+): Readonly<Target> => {
   if (process.env.NODE === 'production') {
+    return target;
   }
 
   invariant(isObject(target) || isArray(target), {
@@ -24,6 +27,13 @@ export const freeze = <Target extends object>(target: Target): Readonly<Target> 
   });
 
   return new Proxy(target, {
+    get: (target, prop, receiver) => {
+      invariant(prop in target || !options.requireKeys, {
+        message: `The prop: '${prop.toString()}' you are trying to access does not yet exist on the target.`,
+      });
+
+      return Reflect.get(target, prop, receiver);
+    },
     set: (_, prop) => {
       invariant(false, {
         message: `It seems you're trying to set the value of the property (${String(
@@ -34,3 +44,12 @@ export const freeze = <Target extends object>(target: Target): Readonly<Target> 
     },
   });
 };
+
+interface FreezeOptions {
+  /**
+   * Whether the key that is being accessed should exist on the target object.
+   *
+   * @defaultValue undefined
+   */
+  requireKeys?: boolean;
+}

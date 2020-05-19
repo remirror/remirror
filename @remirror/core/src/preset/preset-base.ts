@@ -12,89 +12,43 @@ import {
   object,
   uniqueBy,
 } from '@remirror/core-helpers';
-import {
-  AnyFunction,
-  FlipPartialAndRequired,
-  FunctionLike,
-  IfEmpty,
-  IfNoRequiredProperties,
-} from '@remirror/core-types';
+import { FlipPartialAndRequired, IfNoRequiredProperties, Shape } from '@remirror/core-types';
 
-import {
-  AnyExtension,
-  AnyExtensionConstructor,
-  DefaultSettingsType,
-  ExtensionListParameter,
-  GetExtensionParameter,
-  WithProperties,
-} from '../extension';
+import { AnyExtension, AnyExtensionConstructor, WithProperties } from '../extension';
 import { getChangedProperties, GetChangedPropertiesReturn } from '../helpers';
 import {
   DefaultPropertiesParameter,
-  Of,
-  PropertiesShape,
   PropertiesUpdateReason,
   PropertiesUpdateReasonParameter,
-  ReadonlyPropertiesParameter,
-  ReadonlySettingsParameter,
 } from '../types';
 
 /**
  * The type which is applicable to any `Preset` instances.
  */
-export type AnyPreset<ExtensionUnion extends AnyExtension = AnyExtension> = Omit<
-  Preset<ExtensionUnion, {}, {}>,
-  'parameter' | 'constructor'
-> & {
-  parameter: Omit<
-    BasePresetFactoryParameter<ExtensionUnion, {}, {}>,
-    'createExtensions' | 'onSetProperties'
-  > & {
-    createExtensions: AnyFunction;
-    onSetProperties?: AnyFunction;
-  };
-  constructor: AnyPresetConstructor;
-};
-
-export interface AnyPresetConstructor extends FunctionLike {
-  /**
-   * The name of the extension that will be created. Also available on the
-   * instance as `name`.
-   */
-  readonly presetName: string;
-
-  defaultSettings: any;
-  defaultProperties: any;
-
-  /**
-   * Creates a new instance of the extension. Used when adding the extension to
-   * the editor.
-   */
-  of: AnyFunction;
-}
+export type AnyPreset<Settings extends Shape = Shape, Properties extends Shape = Shape> = Preset<
+  Settings,
+  Properties
+>;
 
 /**
- * The interface of a preset constructor. This is used to create an instance of
- * the preset in your editor.
+ * The type which is applicable to any `Preset` constructor.
  */
-export interface PresetConstructor<
-  ExtensionUnion extends AnyExtension,
-  Settings extends object,
-  Properties extends object
-> extends FunctionLike {
-  readonly presetName: string;
-  defaultSettings: DefaultSettingsType<Settings>;
-  defaultProperties: Required<Properties>;
+export type AnyPresetConstructor<
+  Settings extends Shape = Shape,
+  Properties extends Shape = Shape
+> = PresetConstructor<Settings, Properties>;
 
+/**
+ *
+ */
+export interface PresetConstructor<Settings extends Shape = {}, Properties extends Shape = {}>
+  extends Function {
   /**
-   * Create a new instance of the preset to be used in the extension manager.
-   *
-   * This is used to prevent the need for the `new` keyword which can lead to
-   * problems.
+   * The identifier for the constructor which identifies it as a preset constructor.
+   * @internal
    */
-  of: (
-    ...settings: PresetConstructorParameter<Settings, Properties>
-  ) => Preset<ExtensionUnion, Settings, Properties>;
+  readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
+  new (...args: PresetConstructorParameter<Settings, Properties>): Preset<Settings, Shape>;
 }
 
 /**
@@ -107,8 +61,8 @@ export function isPreset(value: unknown): value is AnyPreset {
 }
 
 export type PresetConstructorParameter<
-  Settings extends object,
-  Properties extends object
+  Settings extends Shape = {},
+  Properties extends Shape = {}
 > = IfNoRequiredProperties<
   Settings,
   [WithProperties<Settings, Properties>?],
@@ -119,33 +73,15 @@ export type PresetConstructorParameter<
  * A preset is our way of bundling similar extensions with unified
  * settings and dynamic properties.
  */
-export abstract class Preset<
-  ExtensionUnion extends AnyExtension,
-  Settings extends object,
-  Properties extends object
->
-  implements
-    ExtensionListParameter<ExtensionUnion>,
-    PropertiesShape<Properties>,
-    GetExtensionParameter<ExtensionUnion> {
+export abstract class Preset<Settings extends Shape = {}, Properties extends Shape = {}> {
   /**
-   * Not for public usage. This is purely for types to make it easier to infer
-   * the type of `Settings` on an extension instance.
+   * The preset constructor identifier key.
+   *
+   * @internal
    */
-  public readonly ['~S']!: Settings;
-
-  /**
-   * Not for public usage. This is purely for types to make it easier to infer
-   * the type of `Settings` on an extension instance.
-   */
-  public readonly ['~P']!: Properties;
-
-  /**
-   * Not for public usage. This is purely for types to make it easier to infer
-   * available extension types.
-   */
-  public readonly ['~E']!: ExtensionUnion;
-
+  static get [REMIRROR_IDENTIFIER_KEY]() {
+    return RemirrorIdentifier.PresetConstructor as const;
+  }
   /**
    * The remirror identifier key.
    *
@@ -153,6 +89,23 @@ export abstract class Preset<
    */
   get [REMIRROR_IDENTIFIER_KEY]() {
     return RemirrorIdentifier.Preset as const;
+  }
+
+  /**
+   * The `camelCased` name of the preset.
+   */
+  public abstract readonly name: string;
+
+  get settings() {
+    return this.#settings;
+  }
+
+  get properties() {
+    return this.#properties;
+  }
+
+  get extensions() {
+    return this.#extensions;
   }
 
   /**
@@ -168,64 +121,44 @@ export abstract class Preset<
   /**
    * Private list of extension stored in within this preset.
    */
-  #extensions: ExtensionUnion[];
+  #extensions: Array<this['~E']>;
 
   /**
    * An extension mapping of the extensions and their constructors.
    */
-  #extensionMap = new Map<AnyExtensionConstructor, ExtensionUnion>();
+  #extensionMap = new Map<this['~E']['constructor'], this['~E']>();
 
   /**
    * Keep track of whether this extension has been initialized or not.
    */
   #hasInitialized = false;
 
-  get parameter() {
-    return this.getFactoryParameter();
-  }
-
-  get settings() {
-    return this.#settings;
-  }
-
-  get properties() {
-    return this.#properties;
-  }
-
-  get extensions(): readonly ExtensionUnion[] {
-    return this.#extensions;
-  }
+  /**
+   * Cached `defaultSettings`.
+   */
+  #defaultSettings: FlipPartialAndRequired<Settings>;
 
   /**
-   * Get the default properties for this preset.
+   * Cached `defaultProperties`.
    */
-  get defaultProperties(): Required<Properties> {
-    return this.parameter.defaultProperties ?? object();
-  }
-
-  /**
-   * Get the default settings for the preset.
-   */
-  get defaultSettings(): DefaultSettingsType<Settings> {
-    return this.parameter.defaultSettings ?? object();
-  }
+  #defaultProperties: Required<Properties>;
 
   constructor(...[settings]: PresetConstructorParameter<Settings, Properties>) {
+    this.#defaultSettings = this.createDefaultSettings();
+    this.#defaultProperties = this.createDefaultProperties();
+
     // Create the preset settings.
     this.#settings = deepMerge(object(), {
-      ...this.defaultSettings,
+      ...this.#defaultSettings,
       ...settings,
     });
 
     // Create the preset properties.
-    this.#properties = { ...this.defaultProperties, ...settings?.properties };
+    this.#properties = { ...this.#defaultProperties, ...settings?.properties };
 
     // Create the extension list.
     this.#extensions = uniqueBy(
-      this.parameter.createExtensions({
-        settings: this.#settings,
-        properties: this.#properties,
-      }),
+      this.createExtensions(),
       // Ensure that all the provided extensions are unique.
       (extension) => extension.constructor,
     );
@@ -240,16 +173,38 @@ export abstract class Preset<
     this.#hasInitialized = true;
   }
 
-  protected abstract getFactoryParameter(): Readonly<
-    PresetFactoryParameter<ExtensionUnion, Settings, Properties>
-  >;
+  /**
+   * Define the `defaultSettings` for this preset.
+   *
+   * @internal
+   */
+  protected abstract createDefaultSettings(): FlipPartialAndRequired<Settings>;
+
+  /**
+   * A method that creates the default properties. All properties must have a
+   * default value assigned.
+   *
+   * @internal
+   */
+  protected abstract createDefaultProperties(): Required<Properties>;
+
+  /**
+   * Create the extensions which will be consumed by the preset.
+   */
+  public abstract createExtensions(): AnyExtension[];
+
+  /**
+   * Called every time properties for this extension are set or reset. This is
+   * also called when the extension is first created with the default properties.
+   */
+  protected abstract onSetProperties(parameter: SetPresetPropertiesParameter<Properties>): void;
 
   /**
    * When there are duplicate extensions used within the editor the extension
-   * manager will call this method and make sure all preset are using the same
+   * manager will call this method and make sure all presets are using the same
    * instance of the `ExtensionConstructor`.
    */
-  public replaceExtension(constructor: AnyExtensionConstructor, extension: ExtensionUnion): void {
+  public replaceExtension(constructor: AnyExtensionConstructor, extension: this['~E']): void {
     if (this.#extensionMap.has(constructor)) {
       this.#extensionMap.set(constructor, extension);
     }
@@ -270,13 +225,11 @@ export abstract class Preset<
 
     // Trigger the update handler so that child extension properties can also be
     // updated.
-    this.parameter.onSetProperties?.({
+    this.onSetProperties({
       reason,
       changes,
       properties,
-      defaultProperties: this.defaultProperties,
-      settings: this.settings,
-      getExtension: this.getExtension,
+      defaultProperties: this.#defaultProperties,
     });
 
     // The constructor already sets the properties to their default values.
@@ -292,18 +245,16 @@ export abstract class Preset<
     const previousProperties = this.#properties;
     const { changes, properties } = getChangedProperties({
       previousProperties,
-      update: this.defaultProperties,
+      update: this.#defaultProperties,
     });
 
     // Trigger the update handler so that child extension properties can also be
     // updated.
-    this.parameter.onSetProperties?.({
+    this.onSetProperties({
       reason: 'reset',
       properties,
       changes,
-      defaultProperties: this.defaultProperties,
-      settings: this.settings,
-      getExtension: this.getExtension,
+      defaultProperties: this.#defaultProperties,
     });
 
     // Update the stored properties value.
@@ -311,100 +262,59 @@ export abstract class Preset<
   }
 
   /**
-   * Provides access to all the extensions contained in the preset.
+   * Get an extension from the extension holder (either a preset or a manager)
+   * that corresponds to the provided `Constructor`.
+   *
+   * @param Constructor - the extension constructor to find in the editor.
    *
    * @remarks
    *
-   * TODO make it only accept constructors for values contained in the extension.
+   * This method will throw and error if the constructor doesn't exist.
    */
-  public getExtension = <ExtensionConstructor extends AnyExtensionConstructor>(
+  public getExtension = <ExtensionConstructor extends this['~E']['constructor']>(
     Constructor: ExtensionConstructor,
-  ): Of<ExtensionConstructor> => {
+  ): InstanceType<ExtensionConstructor> => {
     const extension = this.#extensionMap.get(Constructor);
 
     // Throws an error if attempting to get an extension which is not available
     // in this preset.
     invariant(extension, {
       code: ErrorConstant.INVALID_PRESET_EXTENSION,
-      message: `'${Constructor.name}' does not exist within the preset: '${this.parameter.name}'`,
+      message: `'${Constructor.name}' does not exist within the preset: '${this.name}'`,
     });
 
-    return extension as Of<typeof Constructor>;
+    return extension as InstanceType<ExtensionConstructor>;
   };
 }
 
-export interface Preset<
-  ExtensionUnion extends AnyExtension,
-  Settings extends object,
-  Properties extends object
-> {
+export interface Preset<Settings extends Shape = {}, Properties extends Shape = {}> {
   /**
    * The typed constructor for the `Preset` instance.
    */
-  constructor: PresetConstructor<ExtensionUnion, Settings, Properties>;
+  constructor: PresetConstructor<Settings, Properties>;
+
+  /**
+   * Not for public usage. This is purely for types to make it easier to infer
+   * the type of `Settings` on an extension instance.
+   */
+  ['~S']: Settings;
+
+  /**
+   * Not for public usage. This is purely for types to make it easier to infer
+   * the type of `Settings` on an extension instance.
+   */
+  ['~P']: Properties;
+
+  /**
+   * Not for public usage. This is purely for types to make it easier to infer
+   * available extension types.
+   */
+  ['~E']: ReturnType<this['createExtensions']>[number];
 }
 
-interface CreateExtensionsParameter<Settings extends object, Properties extends object>
-  extends ReadonlyPropertiesParameter<Properties>,
-    ReadonlySettingsParameter<Settings> {}
-
-interface SetPresetPropertiesParameter<
-  ExtensionUnion extends AnyExtension,
-  Settings extends object,
-  Properties extends object
->
-  extends GetExtensionParameter<ExtensionUnion>,
-    DefaultPropertiesParameter<Properties>,
+interface SetPresetPropertiesParameter<Properties extends Shape = {}>
+  extends DefaultPropertiesParameter<Properties>,
     GetChangedPropertiesReturn<Properties>,
-    ReadonlySettingsParameter<Settings>,
     PropertiesUpdateReasonParameter {}
 
-export interface BasePresetFactoryParameter<
-  ExtensionUnion extends AnyExtension,
-  Settings extends object,
-  Properties extends object
-> {
-  /**
-   * The `camelCased` name of the preset.
-   */
-  name: string;
-
-  /**
-   * Create the extensions which will be consumed by the preset.
-   */
-  createExtensions: (
-    parameter: CreateExtensionsParameter<Settings, Properties>,
-  ) => ExtensionUnion[];
-
-  /**
-   * Called every time properties for this extension are set or reset. This is
-   * also called when the extension is first created with the default properties.
-   */
-  onSetProperties?: (
-    parameter: SetPresetPropertiesParameter<ExtensionUnion, Settings, Properties>,
-  ) => void;
-}
 /* eslint-enable @typescript-eslint/explicit-member-accessibility */
-
-export type PresetFactoryParameter<
-  ExtensionUnion extends AnyExtension,
-  Settings extends object,
-  Properties extends object
-> = BasePresetFactoryParameter<ExtensionUnion, Settings, Properties> &
-  IfEmpty<
-    Properties,
-    Partial<DefaultPropertiesParameter<Properties>>,
-    DefaultPropertiesParameter<Properties>
-  > &
-  IfEmpty<
-    Settings,
-    Partial<DefaultSettingsParameter<Settings>>,
-    DefaultSettingsParameter<Settings>
-  >;
-
-interface DefaultSettingsParameter<Settings extends object> {
-  /**
-   * The default settings to use.
-   */
-  defaultSettings: FlipPartialAndRequired<Settings>;
-}

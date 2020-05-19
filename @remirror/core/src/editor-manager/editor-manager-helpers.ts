@@ -1,36 +1,9 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { invariant, isEmptyArray, isFunction, object, sort } from '@remirror/core-helpers';
 
-import {
-  AnyExtension,
-  AnyExtensionConstructor,
-  isExtension,
-  isMarkExtension,
-  isNodeExtension,
-} from '../extension';
+import { AnyExtension, AnyExtensionConstructor, isExtension } from '../extension';
 import { AnyPreset, isPreset } from '../preset';
-import { GetConstructor, ManagerMethodParameter, Of } from '../types';
-
-/**
- * Get the params to which will be passed into the extension method call.
- *
- * @param extension - the extension to test.
- * @param params - the params without the type.
- */
-export function getParameterWithType<
-  ExtensionUnion extends AnyExtension,
-  Parameter extends ManagerMethodParameter
->(extension: ExtensionUnion, parameter: Parameter) {
-  if (isMarkExtension(extension)) {
-    return { ...parameter, type: parameter.schema().marks[extension.name], extension };
-  }
-
-  if (isNodeExtension(extension)) {
-    return { ...parameter, type: parameter.schema().nodes[extension.name], extension };
-  }
-
-  return { ...parameter, extension } as any;
-}
+import { GetConstructor, Of } from '../types';
 
 export interface TransformExtensionOrPreset<
   ExtensionUnion extends AnyExtension,

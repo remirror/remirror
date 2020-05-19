@@ -1,5 +1,3 @@
-import { AnyFunction } from '@remirror/core-types';
-
 import { AnyPreset } from './preset-base';
 
 export interface PresetParameter<PresetUnion extends AnyPreset> {

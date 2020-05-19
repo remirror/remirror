@@ -5,7 +5,7 @@ import {
   ExtensionCommandReturn,
   ExtensionFactory,
   ExtensionHelperReturn,
-  ManagerMethodParameter,
+  ExtensionStore,
   Shape,
 } from '@remirror/core';
 
@@ -116,7 +116,7 @@ declare global {
        * only one child of the parent
        */
       createSSRTransformer?: (
-        parameter: ManagerMethodParameter,
+        parameter: ExtensionStore,
         extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
       ) => SSRTransformer;
     }

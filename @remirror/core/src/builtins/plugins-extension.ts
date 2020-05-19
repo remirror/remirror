@@ -4,20 +4,9 @@ import { EditorSchema, ProsemirrorPlugin, Shape } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
 import { Plugin, PluginKey } from '@remirror/pm/state';
 
-import {
-  AnyExtension,
-  AnyExtensionConstructor,
-  Extension,
-  ExtensionFactory,
-  GetExtensionUnion,
-} from '../extension';
+import { AnyExtension, AnyExtensionConstructor, GetExtensionUnion } from '../extension';
 import { AnyPreset } from '../preset';
-import {
-  ExtensionCommandReturn,
-  ExtensionHelperReturn,
-  GetNameUnion,
-  ManagerTypeParameter,
-} from '../types';
+import { GetNameUnion, ManagerTypeParameter } from '../types';
 
 /**
  * This extension allows others extension to add the `createPlugin` method
@@ -36,7 +25,7 @@ export const PluginsExtension = ExtensionFactory.plain({
 
   // Here set the plugins keys and state getters for retrieving plugin state.
   // These methods are later used.
-  onCreate({ setStoreKey, setManagerMethodParameter, getStoreKey }) {
+  onCreate({ setStoreKey, setExtensionStore, getStoreKey }) {
     const pluginKeys: Record<string, PluginKey> = object();
     const stateGetters = new Map<string | AnyExtensionConstructor, <State = unknown>() => State>();
 
@@ -64,7 +53,7 @@ export const PluginsExtension = ExtensionFactory.plain({
         setStoreKey('plugins', []);
         setStoreKey('pluginKeys', pluginKeys);
         setStoreKey('getPluginState', getStateByName);
-        setManagerMethodParameter('getPluginState', getStateByName);
+        setExtensionStore('getPluginState', getStateByName);
       },
     };
   },
@@ -106,7 +95,7 @@ export const PluginsExtension = ExtensionFactory.plain({
 
 declare global {
   namespace Remirror {
-    interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
+    interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
       /**
        * Retrieve the state for a given extension name. This will throw an error
        * if the extension doesn't exist.

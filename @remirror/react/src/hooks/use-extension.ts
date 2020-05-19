@@ -22,7 +22,7 @@ import { useRemirror } from './use-remirror';
  *
  * @example
  *
- * ```tsx
+ * ```javascript
  * import { useExtension } from '@remirror/react';
  * import { PresetCore } from '@remirror/preset-core';
  * import { BoldExtension } from '@remirror/extension-bold';

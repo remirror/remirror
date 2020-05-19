@@ -6,7 +6,13 @@ import {
   REMIRROR_IDENTIFIER_KEY,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
-import { deepMerge, isIdentifierOfType, isRemirrorType, object } from '@remirror/core-helpers';
+import {
+  deepMerge,
+  freeze,
+  isIdentifierOfType,
+  isRemirrorType,
+  object,
+} from '@remirror/core-helpers';
 import {
   And,
   EditorSchema,
@@ -266,14 +272,6 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
   public abstract readonly name: string;
 
   /**
-   * This store is modified by the extension manager with properties. It is
-   * designed to be used by the methods on the extension class.
-   *
-   * Different properties are added at different times so it's important
-   */
-  public store: Remirror.ExtensionStore = object();
-
-  /**
    * The static settings for this extension.
    *
    * @remarks
@@ -299,6 +297,24 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
   get priority(): ExtensionPriority {
     return this.#settings.priority ?? this.defaultPriority ?? ExtensionPriority.Default;
   }
+
+  /**
+   * The store is a property that's internal to extension. It include important
+   * items like the `view` and `schema` that are added by the extension manager
+   * and also the lifecycle extension methods.
+   */
+  protected get store() {
+    return freeze(this.#store, { requireKeys: true });
+  }
+
+  /**
+   * This store is can be modified by the extension manager with and lifecycle
+   * extension methods.
+   *
+   * Different properties are added at different times so it's important to
+   * check the documentation for each property to know what phase is being added.
+   */
+  #store!: Remirror.ExtensionStore;
 
   /**
    * Cached `defaultSettings`.
@@ -367,6 +383,23 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
    */
   public resetProperties() {
     this.#properties = { ...this.#defaultProperties };
+  }
+
+  /**
+   * Pass a reference to the manager store into the extension.
+   *
+   * @remarks
+   *
+   * This should only be used by the `EditorManager`.
+   *
+   * @internal
+   */
+  public setStore(store: Remirror.ExtensionStore) {
+    if (this.#store) {
+      return;
+    }
+
+    this.#store = store;
   }
 
   /**
@@ -707,9 +740,9 @@ export interface CreateLifecycleParameter {
   ) => void;
 
   /** Set a custom manager method parameter. */
-  setManagerMethodParameter: <Key extends keyof Remirror.ManagerMethodParameter>(
+  setExtensionStore: <Key extends keyof Remirror.ExtensionStore>(
     key: Key,
-    value: Remirror.ManagerMethodParameter[Key],
+    value: Remirror.ExtensionStore[Key],
   ) => void;
 }
 
@@ -743,10 +776,7 @@ export type InitializeLifecycleMethod = (
 ) => InitializeLifecycleReturn;
 
 export interface ViewLifecycleParameter
-  extends Omit<
-    CreateLifecycleParameter,
-    'setDefaultExtensionSettings' | 'setManagerMethodParameter'
-  > {}
+  extends Omit<CreateLifecycleParameter, 'setDefaultExtensionSettings' | 'setExtensionStore'> {}
 
 export interface ViewLifecycleReturn {
   /**
@@ -783,11 +813,6 @@ declare global {
    */
   namespace Remirror {
     /**
-     * Keeps track of data available on the extension.
-     */
-    export interface ExtensionStore {}
-
-    /**
      * This interface is global and can use declaration merging to add extra
      * methods and properties on all `Extension`s.
      *
@@ -822,18 +847,3 @@ declare global {
 
 /* eslint-enable @typescript-eslint/member-ordering */
 /* eslint-enable @typescript-eslint/explicit-member-accessibility */
-
-class A extends PlainExtension {
-  protected createDefaultSettings(): DefaultSettingsType<{}> {
-    throw new Error('Method not implemented.');
-  }
-
-  protected createDefaultProperties(): Required<{}> {
-    throw new Error('Method not implemented.');
-  }
-
-  name = 'awesome';
-}
-
-const a = new A();
-type B = typeof a.constructor;

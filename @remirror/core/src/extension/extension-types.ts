@@ -3,7 +3,7 @@ import { UnionToIntersection } from 'type-fest';
 import { AnyFunction, StringKey } from '@remirror/core-types';
 import { NonChainableCommandFunction } from '@remirror/core-utils';
 
-import { CommandMethod, GetCommands, GetHelpers, Of } from '../types';
+import { CommandMethod, GetHelpers } from '../types';
 import { AnyExtension } from './extension-base';
 
 export interface ExtensionParameter<ExtensionUnion extends AnyExtension = any> {
@@ -35,7 +35,7 @@ type MapToChainedCommand<RawCommands extends Record<string, AnyFunction>> = {
   [Command in keyof RawCommands]: ReturnType<
     RawCommands[Command]
   > extends NonChainableCommandFunction
-    ? never
+    ? void
     : (...args: Parameters<RawCommands[Command]>) => any;
 };
 
@@ -60,13 +60,21 @@ export interface ChainedCommandRunParameter {
   run: () => void;
 }
 
+export type ChainedIntersection<ExtensionUnion extends AnyExtension> = UnionToIntersection<
+  MapToChainedCommand<ExtensionUnion['~C']>
+>;
+
 export type ChainedFromExtensions<
   ExtensionUnion extends AnyExtension
 > = ChainedCommandRunParameter &
   {
-    [Key in keyof UnionToIntersection<MapToChainedCommand<GetCommands<ExtensionUnion>>>]: (
-      ...args: Parameters<MapToChainedCommand<ExtensionUnion['~C']>[Key]>
-    ) => ChainedFromExtensions<ExtensionUnion>;
+    [Command in keyof ChainedIntersection<ExtensionUnion>]: ChainedIntersection<
+      ExtensionUnion
+    >[Command] extends (...args: any[]) => any
+      ? (
+          ...args: Parameters<ChainedIntersection<ExtensionUnion>[Command]>
+        ) => ChainedFromExtensions<ExtensionUnion>
+      : never;
   };
 
 /**
@@ -101,7 +109,7 @@ export type HelperNames<GExtension extends AnyExtension> = StringKey<
 /**
  * Provides a method for retrieving an extension from an extension holder.
  */
-export interface GetExtensionParameter<_ExtensionUnion extends AnyExtension> {
+export interface GetExtensionParameter<ExtensionUnion extends AnyExtension> {
   /**
    * Get an extension from the extension holder (either a preset or a manager)
    * that corresponds to the provided `Constructor`.
@@ -112,9 +120,9 @@ export interface GetExtensionParameter<_ExtensionUnion extends AnyExtension> {
    *
    * This method will throw and error if the constructor doesn't exist.
    */
-  getExtension: <ExtensionConstructor extends AnyExtensionConstructor>(
+  getExtension: <ExtensionConstructor extends ExtensionUnion['constructor']>(
     Constructor: ExtensionConstructor,
-  ) => Of<ExtensionConstructor>;
+  ) => InstanceType<ExtensionConstructor>;
 }
 
 /**

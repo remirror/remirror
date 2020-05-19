@@ -1,12 +1,10 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
-import { And, AnyFunction, EditorSchema, Shape } from '@remirror/core-types';
+import { AnyFunction, EditorSchema, Shape } from '@remirror/core-types';
 
 import {
   AnyExtension,
   CreateLifecycleMethod,
-  Extension,
-  ExtensionFactory,
   GetExtensionUnion,
   HelpersFromExtensions,
   PlainExtension,
@@ -14,19 +12,7 @@ import {
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import { AnyPreset } from '../preset';
-import {
-  CreateHelpersParameter,
-  ExtensionCommandReturn,
-  ExtensionHelperReturn,
-  Of,
-} from '../types';
-
-/**
- * Create the extension helpers from the passed extension.
- */
-function createExtensionHelpers(parameter: CreateHelpersParameter<never>, extension: AnyExtension) {
-  return extension.parameter.createHelpers?.(parameter) ?? {};
-}
+import { ExtensionHelperReturn } from '../types';
 
 /**
  * Helpers are custom methods that can provide extra functionality to the
@@ -44,22 +30,33 @@ function createExtensionHelpers(parameter: CreateHelpersParameter<never>, extens
 export class HelpersExtension extends PlainExtension {
   public readonly name = 'helpers' as const;
 
+  protected createDefaultSettings() {
+    return {};
+  }
+
+  protected createDefaultProperties() {
+    return {};
+  }
+
+  /**
+   * Provide a method with access to the helpers for use in commands and helpers.
+   */
   public onCreate: CreateLifecycleMethod = (parameter) => {
-    return {
-      beforeExtensionLoop() {
-        const { setManagerMethodParameter, getStoreKey } = parameter;
+    const { setExtensionStore, getStoreKey } = parameter;
 
-        setManagerMethodParameter('helpers', () => {
-          const helpers = getStoreKey('helpers');
-          invariant(helpers, { code: ErrorConstant.HELPERS_CALLED_IN_OUTER_SCOPE });
+    setExtensionStore('helpers', () => {
+      const helpers = getStoreKey('helpers');
+      invariant(helpers, { code: ErrorConstant.HELPERS_CALLED_IN_OUTER_SCOPE });
 
-          return helpers as any;
-        });
-      },
-    };
+      return helpers as any;
+    });
+
+    return {};
   };
 
-  /** Helpers are only available once the view has been added to the dom. */
+  /**
+   * Helpers are only available once the view has been added to `EditorManager`.
+   */
   public onView: ViewLifecycleMethod = (parameter) => {
     const helpers: Record<string, AnyFunction> = object();
     const names = new Set<string>();
@@ -143,7 +140,7 @@ declare global {
       ['~H']: this['createHelpers'] extends AnyFunction ? ReturnType<this['createHelpers']> : {};
     }
 
-    interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
+    interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
       /**
        * Helper method to provide information about the content of the editor.
        * Each extension can register its own helpers.

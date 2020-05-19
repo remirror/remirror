@@ -5,11 +5,9 @@ import {
   CommandFunction,
   DispatchFunction,
   EditorSchema,
-  EditorView,
   Shape,
   Transaction,
 } from '@remirror/core-types';
-import { EditorState } from '@remirror/pm/state';
 
 import {
   AnyExtension,
@@ -23,12 +21,7 @@ import {
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import { AnyPreset } from '../preset';
-import {
-  CommandMethod,
-  CreateCommandsParameter,
-  ExtensionCommandFunction,
-  ExtensionCommandReturn,
-} from '../types';
+import { CommandMethod, ExtensionCommandFunction, ExtensionCommandReturn } from '../types';
 
 /**
  * Generate chained and unchained commands for making changes to the editor.
@@ -53,17 +46,17 @@ export class CommandsExtension extends PlainExtension {
 
   public onCreate: CreateLifecycleMethod = (parameter) => {
     return {
-      beforeExtensionLoop() {
-        const { setManagerMethodParameter, getStoreKey } = parameter;
+      afterExtensionLoop() {
+        const { setExtensionStore, getStoreKey } = parameter;
 
-        setManagerMethodParameter('getCommands', () => {
+        setExtensionStore('getCommands', () => {
           const commands = getStoreKey('commands');
           invariant(commands, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
 
           return commands as any;
         });
 
-        setManagerMethodParameter('getChain', () => {
+        setExtensionStore('getChain', () => {
           const chain = getStoreKey('chain');
           invariant(chain, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
 
@@ -74,7 +67,6 @@ export class CommandsExtension extends PlainExtension {
   };
 
   public onView: ViewLifecycleMethod = (parameter) => {
-    const { getParameter } = parameter;
     const commands: any = object();
     const names = new Set<string>();
     const chained: Record<string, any> & ChainedCommandRunParameter = object();
@@ -84,18 +76,10 @@ export class CommandsExtension extends PlainExtension {
     > = object();
 
     return {
-      forEachExtension(extension) {
+      forEachExtension: (extension) => {
         if (!extension.createCommands) {
           return;
         }
-
-        const commandParameter: CreateCommandsParameter<never> = {
-          ...getParameter(extension),
-          view,
-          isEditable: () => view.props.editable?.(view.state) ?? false,
-        };
-
-        const { getState } = commandParameter;
 
         const extensionCommands = extension.createCommands();
 
@@ -108,14 +92,14 @@ export class CommandsExtension extends PlainExtension {
 
           unchained[name] = {
             name: extension.name,
-            command: unchainedFactory({ command, getState, view }),
-            isEnabled: unchainedFactory({ command, getState, view, shouldDispatch: false }),
+            command: this.unchainedFactory({ command }),
+            isEnabled: this.unchainedFactory({ command, shouldDispatch: false }),
           };
 
-          chained[name] = chainedFactory({ command, getState, view, chained });
+          chained[name] = this.chainedFactory({ command, chained });
         }
       },
-      afterExtensionLoop(view) {
+      afterExtensionLoop: (view) => {
         const { setStoreKey } = parameter;
 
         for (const [commandName, { command, isEnabled }] of entries(unchained)) {
@@ -126,7 +110,7 @@ export class CommandsExtension extends PlainExtension {
         chained.run = () => view.dispatch(view.state.tr);
 
         setStoreKey('commands', commands);
-        setStoreKey('chain', chained);
+        setStoreKey('chain', chained as never);
       },
     };
   };
@@ -156,57 +140,76 @@ export class CommandsExtension extends PlainExtension {
       },
     };
   };
+
+  /**
+   * Create an unchained command method.
+   */
+  private unchainedFactory(parameter: UnchainedFactoryParameter) {
+    return (...args: unknown[]) => {
+      const { shouldDispatch = true, command } = parameter;
+      const { view } = this.store;
+
+      let dispatch: DispatchFunction | undefined;
+
+      if (shouldDispatch) {
+        dispatch = view.dispatch;
+
+        // TODO make this be configurable?
+        view.focus();
+      }
+
+      return command(...args)({ state: view.state, dispatch, view });
+    };
+  }
+
+  /**
+   * Create a chained command method.
+   */
+  private chainedFactory(parameter: ChainedFactoryParameter) {
+    return (...spread: unknown[]) => {
+      const { chained, command } = parameter;
+      const { view } = this.store;
+      const { state } = view;
+
+      /** Dispatch should do nothing here except check transaction */
+      const dispatch: DispatchFunction = (transaction) => {
+        invariant(transaction === state.tr, {
+          message:
+            'Chaining currently only supports methods which do not clone the transaction object.',
+        });
+      };
+
+      command(...spread)({ state, dispatch, view });
+
+      return chained;
+    };
+  }
 }
 
 interface UnchainedFactoryParameter {
-  getState: () => EditorState<EditorSchema>;
-  view: EditorView<EditorSchema>;
+  /**
+   * All the commands.
+   */
   command: ExtensionCommandFunction;
+
+  /**
+   * When false the dispatch is not provided (making this an `isEnabled` check).
+   *
+   * @defaultValue true
+   */
   shouldDispatch?: boolean;
 }
 
-function unchainedFactory(parameter: UnchainedFactoryParameter) {
-  return (...args: unknown[]) => {
-    const { shouldDispatch = true, view, command, getState } = parameter;
-    let dispatch: DispatchFunction | undefined;
-
-    if (shouldDispatch) {
-      dispatch = view.dispatch;
-
-      // TODO make this be configurable?
-      view.focus();
-    }
-
-    return command(...args)({ state: getState(), dispatch, view });
-  };
-}
-
 interface ChainedFactoryParameter {
-  getState: () => EditorState<EditorSchema>;
-  view: EditorView<EditorSchema>;
+  /**
+   * All the commands.
+   */
   command: ExtensionCommandFunction;
 
-  /** All the chained commands accumulated */
+  /**
+   * All the chained commands
+   */
   chained: Record<string, any>;
-}
-
-function chainedFactory(parameter: ChainedFactoryParameter) {
-  return (...spread: unknown[]) => {
-    const { getState, chained, command, view } = parameter;
-    const state = getState();
-
-    /** Dispatch should do nothing here except check transaction */
-    const dispatch: DispatchFunction = (transaction) => {
-      invariant(transaction === state.tr, {
-        message:
-          'Chaining currently only supports methods which do not clone the transaction object.',
-      });
-    };
-
-    command(...spread)({ state, dispatch, view });
-
-    return chained;
-  };
 }
 
 /**
@@ -328,7 +331,7 @@ declare global {
       [`~C`]: this['createCommands'] extends AnyFunction ? ReturnType<this['createCommands']> : {};
     }
 
-    interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
+    interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
       /**
        * A method to return the editor's available commands.
        */

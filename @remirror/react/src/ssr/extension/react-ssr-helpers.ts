@@ -1,6 +1,6 @@
 import { Children, cloneElement, createElement, JSXElementConstructor } from 'react';
 
-import { AnyExtension, ManagerMethodParameter, PlainObject } from '@remirror/core';
+import { AnyExtension, ExtensionStore, PlainObject } from '@remirror/core';
 import { isArray } from '@remirror/core-helpers';
 
 import { getElementProps, isReactDOMElement, isReactFragment } from '../../react-utils';
@@ -10,7 +10,7 @@ import { getElementProps, isReactDOMElement, isReactFragment } from '../../react
  * JSX  and return the new element for Server Side Rendering.
  */
 type CreateSSRTransformer = <ExtensionUnion extends AnyExtension>(
-  params: ManagerMethodParameter,
+  params: ExtensionStore,
   extension: ExtensionUnion,
 ) => SSRTransformer;
 

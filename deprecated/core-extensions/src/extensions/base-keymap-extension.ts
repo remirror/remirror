@@ -1,21 +1,21 @@
 import mapObject from 'map-obj';
-import {
-  baseKeymap,
-  chainCommands as pmChainCommands,
-  selectParentNode,
-} from '@remirror/pm/commands';
-import { undoInputRule } from '@remirror/pm/inputrules';
 
 import {
   chainKeyBindingCommands,
   convertCommand,
   ExtensionFactory,
   ExtensionPriority,
+  ExtensionStore,
   hasOwnProperty,
   isFunction,
   KeyBindings,
-  ManagerMethodParameter,
 } from '@remirror/core';
+import {
+  baseKeymap,
+  chainCommands as pmChainCommands,
+  selectParentNode,
+} from '@remirror/pm/commands';
+import { undoInputRule } from '@remirror/pm/inputrules';
 
 interface KeymapExtensionSettings {
   /**
@@ -51,7 +51,7 @@ interface KeymapExtensionSettings {
    * }});
    * ```
    */
-  keymap?: KeyBindings | ((params: ManagerMethodParameter) => KeyBindings);
+  keymap?: KeyBindings | ((params: ExtensionStore) => KeyBindings);
 
   /**
    * When true will exclude the default prosemirror keymap.

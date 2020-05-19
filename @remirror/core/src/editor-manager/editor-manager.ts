@@ -34,13 +34,10 @@ import {
 import { AnyPreset } from '../preset';
 import {
   GetConstructor,
-  GetExtensions,
-  Of,
-  TransactionHandlerReturn,
+  TransactionLifecycleMethod,
   TransactionLifecycleParameter,
 } from '../types';
 import {
-  getParameterWithType,
   ignoreFunctions,
   ManagerPhase,
   transformExtensionOrPreset as transformExtensionOrPresetList,
@@ -140,7 +137,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   /**
    * Pseudo property which is a small hack to store the type of the extension union.
    */
-  public ['~E']!: ExtensionUnion | GetExtensions<PresetUnion>;
+  public ['~E']!: ExtensionUnion;
 
   /**
    * Pseudo property which is a small hack to store the type of the presets
@@ -157,12 +154,12 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
   /**
-   * Utility getter for storing the base method parameter which is passed to the
-   * extension methods
+   * Utility getter for storing the base method parameter which is available to
+   * all extensions.
    */
-  #methodParameter: Remirror.ManagerMethodParameter<
+  #extensionStore: Remirror.ExtensionStore<
     SchemaFromExtensionUnion<this['~E']>
-  > = this.createInitialMethodParameter();
+  > = this.createExtensionStore();
 
   #extensions: ReadonlyArray<this['~E']>;
   #extensionMap: WeakMap<AnyExtensionConstructor, this['~E']>;
@@ -192,7 +189,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     create: CreateLifecycleReturn[];
     initialize: InitializeLifecycleReturn[];
     view: ViewLifecycleReturn[];
-    transaction: TransactionHandlerReturn[];
+    transaction: TransactionLifecycleMethod[];
     destroy: Array<() => void>;
   } = { initialize: [], transaction: [], view: [], create: [], destroy: [] };
 
@@ -310,35 +307,28 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   private setupLifecycleHandlers() {
     const initializeParameter = this.initializeParameter;
     const viewParameter = omit(initializeParameter, ['addPlugins']);
-    const createParameter: Omit<CreateLifecycleParameter, 'settings' | 'properties'> = {
-      ...omit(viewParameter, ['getParameter']),
+    const createParameter: CreateLifecycleParameter = {
+      ...viewParameter,
       setDefaultExtensionSettings,
-      setManagerMethodParameter: (key, value) => {
+      setExtensionStore: (key, value) => {
         invariant(this.#phase <= ManagerPhase.Create, {
           code: ErrorConstant.MANAGER_PHASE_ERROR,
           message:
-            '`setManagerMethodParameter` should only be called during the `onCreate` lifecycle hook. Make sure to only call it within the returned methods.',
+            '`setExtensionStore` should only be called during the `onCreate` lifecycle hook. Make sure to only call it within the returned methods.',
         });
 
-        this.#methodParameter[key] = value;
+        this.#extensionStore[key] = value;
       },
     };
 
     for (const extension of this.#extensions) {
-      const { settings, properties } = extension;
-      const createHandler = extension.parameter.onCreate?.({
-        ...createParameter,
-        settings,
-        properties,
-      });
-      const initializeHandler = extension.parameter.onInitialize?.({
-        ...initializeParameter,
-        settings,
-        properties,
-      });
-      const viewHandler = extension.parameter.onView?.({ ...viewParameter, settings, properties });
-      const transactionHandler = extension.parameter.onTransaction?.(extension);
-      const destroyHandler = extension.parameter.onDestroy;
+      extension.setStore(this.#extensionStore);
+
+      const createHandler = extension.onCreate?.({ ...createParameter });
+      const initializeHandler = extension.onInitialize?.({ ...initializeParameter });
+      const viewHandler = extension.onView?.({ ...viewParameter });
+      const transactionHandler = extension.onTransaction;
+      const destroyHandler = extension.onDestroy;
 
       if (createHandler) {
         this.#handlers.create.push(createHandler);
@@ -481,10 +471,8 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   /**
    * Create the initial store.
    */
-  private createInitialMethodParameter() {
-    const methodParameter: Remirror.ManagerMethodParameter<SchemaFromExtensionUnion<
-      this['~E']
-    >> = object();
+  private createExtensionStore() {
+    const methodParameter: Remirror.ExtensionStore<SchemaFromExtensionUnion<this['~E']>> = object();
 
     /**
      * A state getter method which is passed into the params.
@@ -508,8 +496,14 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * @param view - the editor view
    */
   public addView(view: EditorView<SchemaFromExtensionUnion<this['~E']>>) {
+    invariant(this.#phase === ManagerPhase.Initialize, {
+      message: '`addView` called before manager was initialized.',
+      code: ErrorConstant.MANAGER_PHASE_ERROR,
+    });
+
     this.#phase = ManagerPhase.AddView;
     this.#store.view = view;
+    this.#extensionStore.view = view;
 
     for (const extension of this.#extensions) {
       this.onViewExtensionLoop(extension);
@@ -592,38 +586,38 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    */
   public onTransaction(parameter: TransactionLifecycleParameter) {
     for (const handler of this.#handlers.transaction) {
-      handler({ ...parameter, view: this.#store.view });
+      handler(parameter);
     }
   }
 
   /**
    * Get the extension instance matching the provided constructor from the
    */
-  public getExtension<ExtensionConstructor extends GetConstructor<this['extensions'][number]>>(
+  public getExtension<ExtensionConstructor extends this['~E']['constructor']>(
     Constructor: ExtensionConstructor,
-  ): Of<ExtensionConstructor> {
+  ): InstanceType<ExtensionConstructor> {
     const extension = this.#extensionMap.get(Constructor);
 
     // Throws an error if attempting to get an extension which is not present
     // in the manager.
     invariant(extension, { code: ErrorConstant.INVALID_MANAGER_EXTENSION });
 
-    return extension as Of<typeof Constructor>;
+    return extension as InstanceType<ExtensionConstructor>;
   }
 
   /**
    * Get the preset from the editor.
    */
-  public getPreset<PresetConstructor extends GetConstructor<PresetUnion>>(
+  public getPreset<PresetConstructor extends PresetUnion['constructor']>(
     Constructor: PresetConstructor,
-  ): Of<PresetConstructor> {
+  ): InstanceType<PresetConstructor> {
     const preset = this.#presetMap.get(Constructor);
 
-    // Throws an error if attempting to get a preset which is not present
+    // Throws an error if attempting to retrieve a preset which is not present
     // in the manager.
     invariant(preset, { code: ErrorConstant.INVALID_MANAGER_PRESET });
 
-    return preset as Of<PresetConstructor>;
+    return preset as InstanceType<PresetConstructor>;
   }
 
   /**
@@ -680,5 +674,13 @@ declare global {
       ExtensionUnion extends AnyExtension,
       PresetUnion extends AnyPreset
     > {}
+
+    interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
+      /**
+       * The view available to extensions once `addView` has been called on the
+       * `EditorManager` instance.
+       */
+      view: EditorView<Schema>;
+    }
   }
 }

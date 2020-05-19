@@ -67,10 +67,10 @@ export const TagsExtension = ExtensionFactory.plain({
         }
       },
       afterExtensionLoop() {
-        const { setStoreKey, setManagerMethodParameter, getStoreKey } = parameter;
+        const { setStoreKey, setExtensionStore, getStoreKey } = parameter;
 
         setStoreKey('extensionTags', { general, mark, node });
-        setManagerMethodParameter('extensionTags', () => getStoreKey('extensionTags'));
+        setExtensionStore('extensionTags', () => getStoreKey('extensionTags'));
       },
     };
   },
@@ -85,7 +85,7 @@ declare global {
       extensionTags: Readonly<ExtensionTags<ExtensionUnion>>;
     }
 
-    export interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
+    export interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
       /**
        * The tags provided by the configured extensions.
        */
