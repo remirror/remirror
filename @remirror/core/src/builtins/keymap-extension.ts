@@ -5,6 +5,7 @@ import {
   KeyBindingCommandFunction,
   KeyBindings,
   ProsemirrorCommandFunction,
+  Shape,
 } from '@remirror/core-types';
 import { chainKeyBindingCommands } from '@remirror/core-utils';
 import { keymap } from '@remirror/pm/keymap';
@@ -86,14 +87,7 @@ declare global {
       keymap?: boolean;
     }
 
-    interface ExtensionCreatorMethods<
-      Name extends string,
-      Settings extends object,
-      Properties extends object,
-      Commands extends ExtensionCommandReturn,
-      Helpers extends ExtensionHelperReturn,
-      ProsemirrorType = never
-    > {
+    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
       /**
        * Add keymap bindings for this extension.
        *

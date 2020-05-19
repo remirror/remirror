@@ -1,6 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
-import { invariant, object } from '@remirror/core-helpers';
-import { EditorSchema, ProsemirrorPlugin } from '@remirror/core-types';
+import { invariant, isArray, object } from '@remirror/core-helpers';
+import { EditorSchema, ProsemirrorPlugin, Shape } from '@remirror/core-types';
 import { getPluginState } from '@remirror/core-utils';
 import { Plugin, PluginKey } from '@remirror/pm/state';
 
@@ -94,7 +94,7 @@ export const PluginsExtension = ExtensionFactory.plain({
         const pluginParameter = getParameter(extension, { key });
         const plugin: Plugin = extension.parameter.createPlugin(pluginParameter);
 
-        extensionPlugins.push(plugin);
+        extensionPlugins.push(...(isArray(plugin) ? plugin : [plugin]));
       },
 
       afterExtensionLoop: () => {
@@ -153,14 +153,7 @@ declare global {
       plugins?: boolean;
     }
 
-    interface ExtensionCreatorMethods<
-      Name extends string,
-      Settings extends object,
-      Properties extends object,
-      Commands extends ExtensionCommandReturn,
-      Helpers extends ExtensionHelperReturn,
-      ProsemirrorType = never
-    > {
+    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
       /**
        * Register a prosemirror plugin for the extension.
        *
@@ -182,7 +175,7 @@ declare global {
            */
           extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
         },
-      ) => ProsemirrorPlugin;
+      ) => ProsemirrorPlugin | ProsemirrorPlugin[];
     }
   }
 }

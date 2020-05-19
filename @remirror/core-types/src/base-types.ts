@@ -1,7 +1,8 @@
 /* Utility Types */
 
-import { AttributeSpec } from '@remirror/pm/model';
 import { ConditionalExcept, ConditionalPick } from 'type-fest';
+
+import { AttributeSpec } from '@remirror/pm/model';
 
 /**
  * An alternative to keyof that only extracts the string keys.
@@ -80,10 +81,17 @@ export type Flavor<Type, GFlavor> = Type & Flavoring<GFlavor>;
 export type Brand<Type, GBrand> = Type & Branding<GBrand>;
 
 /**
- * An object with string keys and values of type `any`
+ * An object with string keys and values of type `unknown`
  */
 export interface PlainObject {
   [key: string]: unknown;
+}
+
+/**
+ * An object with string keys and value type of `any`.
+ */
+export interface Shape {
+  [key: string]: any;
 }
 
 /**

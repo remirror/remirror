@@ -1,5 +1,5 @@
 import { ExtensionPriority } from '@remirror/core-constants';
-import { And, ProsemirrorPlugin } from '@remirror/core-types';
+import { And, ProsemirrorPlugin, Shape } from '@remirror/core-types';
 
 import { Extension, ExtensionFactory } from '../extension';
 import { ExtensionCommandReturn, ExtensionHelperReturn, ManagerTypeParameter } from '../types';
@@ -56,14 +56,7 @@ declare global {
       pasteRules?: boolean;
     }
 
-    interface ExtensionCreatorMethods<
-      Name extends string,
-      Settings extends object,
-      Properties extends object,
-      Commands extends ExtensionCommandReturn,
-      Helpers extends ExtensionHelperReturn,
-      ProsemirrorType = never
-    > {
+    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
       /**
        * Register paste rules for this extension.
        *

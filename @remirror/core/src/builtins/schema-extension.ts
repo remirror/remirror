@@ -14,7 +14,6 @@ import { AttributeSpec, ParseRule, Schema } from '@remirror/pm/model';
 
 import {
   AnyExtension,
-  ExtensionFactory,
   GetExtensionUnion,
   GetMarkNameUnion,
   GetNodeNameUnion,
@@ -175,12 +174,12 @@ export const SchemaExtension = ExtensionFactory.plain({
         ];
 
         if (isNodeExtension(extension)) {
-          const { name, schema } = extension;
+          const { name, spec: schema } = extension;
           nodes[name] = transformSchemaAttributes(extraAttributes[extension.name], schema);
         }
 
         if (isMarkExtension(extension)) {
-          const { name, schema } = extension;
+          const { name, spec: schema } = extension;
 
           marks[name] = transformSchemaAttributes(extraAttributes[extension.name], schema);
         }

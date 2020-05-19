@@ -1,11 +1,12 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
 import {
-  And,
   AnyFunction,
+  CommandFunction,
   DispatchFunction,
   EditorSchema,
   EditorView,
+  Shape,
   Transaction,
 } from '@remirror/core-types';
 import { EditorState } from '@remirror/pm/state';
@@ -15,9 +16,10 @@ import {
   ChainedCommandRunParameter,
   ChainedFromExtensions,
   CommandsFromExtensions,
-  Extension,
-  ExtensionFactory,
+  CreateLifecycleMethod,
   GetExtensionUnion,
+  PlainExtension,
+  ViewLifecycleMethod,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import { AnyPreset } from '../preset';
@@ -26,9 +28,135 @@ import {
   CreateCommandsParameter,
   ExtensionCommandFunction,
   ExtensionCommandReturn,
-  ExtensionHelperReturn,
-  Of,
 } from '../types';
+
+/**
+ * Generate chained and unchained commands for making changes to the editor.
+ *
+ * @remarks
+ *
+ * Typically actions are used to create interactive menus. For example a menu
+ * can use a command to toggle bold formatting or to undo the last action.
+ *
+ * @builtin
+ */
+export class CommandsExtension extends PlainExtension {
+  public readonly name = 'commands' as const;
+
+  public createDefaultSettings() {
+    return {};
+  }
+
+  public createDefaultProperties() {
+    return {};
+  }
+
+  public onCreate: CreateLifecycleMethod = (parameter) => {
+    return {
+      beforeExtensionLoop() {
+        const { setManagerMethodParameter, getStoreKey } = parameter;
+
+        setManagerMethodParameter('getCommands', () => {
+          const commands = getStoreKey('commands');
+          invariant(commands, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
+
+          return commands as any;
+        });
+
+        setManagerMethodParameter('getChain', () => {
+          const chain = getStoreKey('chain');
+          invariant(chain, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
+
+          return chain as any;
+        });
+      },
+    };
+  };
+
+  public onView: ViewLifecycleMethod = (parameter) => {
+    const { getParameter } = parameter;
+    const commands: any = object();
+    const names = new Set<string>();
+    const chained: Record<string, any> & ChainedCommandRunParameter = object();
+    const unchained: Record<
+      string,
+      { command: AnyFunction; isEnabled: AnyFunction; name: string }
+    > = object();
+
+    return {
+      forEachExtension(extension) {
+        if (!extension.createCommands) {
+          return;
+        }
+
+        const commandParameter: CreateCommandsParameter<never> = {
+          ...getParameter(extension),
+          view,
+          isEditable: () => view.props.editable?.(view.state) ?? false,
+        };
+
+        const { getState } = commandParameter;
+
+        const extensionCommands = extension.createCommands();
+
+        for (const [name, command] of entries(extensionCommands)) {
+          throwIfNameNotUnique({ name, set: names, code: ErrorConstant.DUPLICATE_COMMAND_NAMES });
+          invariant(!forbiddenNames.has(name), {
+            code: ErrorConstant.DUPLICATE_COMMAND_NAMES,
+            message: 'The command name you chose is forbidden.',
+          });
+
+          unchained[name] = {
+            name: extension.name,
+            command: unchainedFactory({ command, getState, view }),
+            isEnabled: unchainedFactory({ command, getState, view, shouldDispatch: false }),
+          };
+
+          chained[name] = chainedFactory({ command, getState, view, chained });
+        }
+      },
+      afterExtensionLoop(view) {
+        const { setStoreKey } = parameter;
+
+        for (const [commandName, { command, isEnabled }] of entries(unchained)) {
+          commands[commandName] = command as CommandMethod;
+          commands[commandName].isEnabled = isEnabled;
+        }
+
+        chained.run = () => view.dispatch(view.state.tr);
+
+        setStoreKey('commands', commands);
+        setStoreKey('chain', chained);
+      },
+    };
+  };
+
+  public createCommands = () => {
+    return {
+      /**
+       * Create a custom transaction.
+       *
+       * @param transactionUpdater - callback method for updating the
+       * transaction in the editor. Since transactions are mutable there is no
+       * return type.
+       *
+       * @remarks
+       *
+       * This is primarily intended for use within a chainable command chain.
+       */
+      customTransaction(transactionUpdater: (transaction: Transaction) => void): CommandFunction {
+        return ({ state, dispatch }) => {
+          if (dispatch) {
+            transactionUpdater(state.tr);
+            dispatch(state.tr);
+          }
+
+          return true;
+        };
+      },
+    };
+  };
+}
 
 interface UnchainedFactoryParameter {
   getState: () => EditorState<EditorSchema>;
@@ -82,139 +210,9 @@ function chainedFactory(parameter: ChainedFactoryParameter) {
 }
 
 /**
- * Create the extension commands from the passed extension.
- */
-function createExtensionCommands(
-  parameter: CreateCommandsParameter<never>,
-  extension: AnyExtension,
-) {
-  return extension.parameter.createCommands?.(parameter) ?? {};
-}
-
-/**
  * The names that are forbidden from being used as a command name.
  */
 const forbiddenNames = new Set(['run', 'chain']);
-
-/**
- * Generate chained and unchained commands for making changes to the editor.
- *
- * @remarks
- *
- * Typically actions are used to create interactive menus. For example a menu
- * can use a command to toggle bold formatting or to undo the last action.
- *
- * @builtin
- */
-export const CommandsExtension = ExtensionFactory.plain({
-  name: 'commands',
-
-  onCreate(parameter) {
-    return {
-      beforeExtensionLoop() {
-        const { setManagerMethodParameter, getStoreKey } = parameter;
-
-        setManagerMethodParameter('getCommands', () => {
-          const commands = getStoreKey('commands');
-          invariant(commands, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
-
-          return commands as any;
-        });
-
-        setManagerMethodParameter('getChain', () => {
-          const chain = getStoreKey('chain');
-          invariant(chain, { code: ErrorConstant.COMMANDS_CALLED_IN_OUTER_SCOPE });
-
-          return chain as any;
-        });
-      },
-    };
-  },
-
-  onView(parameter) {
-    const { getParameter } = parameter;
-    const commands: any = object();
-    const names = new Set<string>();
-    const chained: Record<string, any> & ChainedCommandRunParameter = object();
-    const unchained: Record<
-      string,
-      { command: AnyFunction; isEnabled: AnyFunction; name: string }
-    > = object();
-
-    return {
-      forEachExtension(extension, view) {
-        if (!extension.parameter.createCommands) {
-          return;
-        }
-
-        const commandParameter: CreateCommandsParameter<never> = {
-          ...getParameter(extension),
-          view,
-          isEditable: () => view.props.editable?.(view.state) ?? false,
-        };
-
-        const { getState } = commandParameter;
-
-        const extensionCommands = createExtensionCommands(commandParameter, extension);
-
-        for (const [name, command] of entries(extensionCommands)) {
-          throwIfNameNotUnique({ name, set: names, code: ErrorConstant.DUPLICATE_COMMAND_NAMES });
-          invariant(!forbiddenNames.has(name), {
-            code: ErrorConstant.DUPLICATE_COMMAND_NAMES,
-            message: 'The command name you chose is forbidden.',
-          });
-
-          unchained[name] = {
-            name: extension.name,
-            command: unchainedFactory({ command, getState, view }),
-            isEnabled: unchainedFactory({ command, getState, view, shouldDispatch: false }),
-          };
-
-          chained[name] = chainedFactory(command);
-        }
-      },
-      afterExtensionLoop(view) {
-        const { setStoreKey } = parameter;
-
-        for (const [commandName, { command, isEnabled }] of entries(unchained)) {
-          commands[commandName] = command as CommandMethod;
-          commands[commandName].isEnabled = isEnabled;
-        }
-
-        chained.run = () => view.dispatch(view.state.tr);
-
-        setStoreKey('commands', commands);
-        setStoreKey('chain', chained);
-      },
-    };
-  },
-
-  createCommands() {
-    return {
-      /**
-       * Create a custom transaction.
-       *
-       * @param transactionUpdater - callback method for updating the
-       * transaction in the editor. Since transactions are mutable there is no
-       * return type.
-       *
-       * @remarks
-       *
-       * This is primarily intended for use within a chainable command chain.
-       */
-      customTransaction(transactionUpdater: (transaction: Transaction) => void) {
-        return ({ state, dispatch }) => {
-          if (dispatch) {
-            transactionUpdater(state.tr);
-            dispatch(state.tr);
-          }
-
-          return true;
-        };
-      },
-    };
-  },
-});
 
 declare global {
   namespace Remirror {
@@ -274,14 +272,7 @@ declare global {
       chain: ChainedFromExtensions<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
     }
 
-    interface ExtensionCreatorMethods<
-      Name extends string,
-      Settings extends object,
-      Properties extends object,
-      Commands extends ExtensionCommandReturn,
-      Helpers extends ExtensionHelperReturn,
-      ProsemirrorType = never
-    > {
+    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
       /**
        * Create and register commands for that can be called within the editor.
        *
@@ -294,8 +285,6 @@ declare global {
        * unique within the editor. To ensure that this is the case it is
        * recommended that the keys of the command are namespaced with the name
        * of the extension.
-       *
-       * e.g.
        *
        * ```ts
        * import { ExtensionFactory } from '@remirror/core';
@@ -318,38 +307,34 @@ declare global {
        *   }
        * })
        * ```
-       * ```
        *
        * The actions available in this case would be `undoHistory` and
-       * `redoHistory`. It is unlikely that any other extension would override these
-       * commands.
+       * `redoHistory`. It is unlikely that any other extension would override
+       * these commands.
        *
-       * Another benefit of commands is that they are picked up by typescript and
-       * can provide code completion for consumers of the extension.
+       * Another benefit of commands is that they are picked up by typescript
+       * and can provide code completion for consumers of the extension.
        *
        * @param parameter - schema parameter with type included
        */
-      createCommands?: (
-        parameter: And<
-          CreateCommandsParameter<ProsemirrorType>,
-          {
-            /**
-             * The extension which provides access to the settings and properties.
-             */
-            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
-          }
-        >,
-      ) => Commands;
+      createCommands?: () => ExtensionCommandReturn;
+
+      /**
+       * `ExtensionCommands`
+       *
+       * This pseudo property makes it easier to infer Generic types of this class.
+       * @private
+       */
+      [`~C`]: this['createCommands'] extends AnyFunction ? ReturnType<this['createCommands']> : {};
     }
 
     interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
       /**
        * A method to return the editor's available commands.
        */
-      getCommands: <ExtensionUnion extends AnyExtension = any>() => CommandsFromExtensions<
-        Of<typeof CommandsExtension>
-      > &
-        CommandsFromExtensions<ExtensionUnion>;
+      getCommands: <ExtensionUnion extends AnyExtension = AnyExtension>() => CommandsFromExtensions<
+        CommandsExtension | ExtensionUnion
+      >;
 
       /**
        * A method that returns an object with all the chainable commands
@@ -384,9 +369,8 @@ declare global {
        * ```
        */
       getChain: <ExtensionUnion extends AnyExtension = any>() => ChainedFromExtensions<
-        Of<typeof CommandsExtension>
-      > &
-        ChainedFromExtensions<ExtensionUnion>;
+        CommandsExtension | ExtensionUnion
+      >;
     }
   }
 }

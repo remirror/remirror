@@ -1,5 +1,5 @@
 import { ExtensionPriority } from '@remirror/core-constants';
-import { And } from '@remirror/core-types';
+import { And, Shape } from '@remirror/core-types';
 import { InputRule, inputRules } from '@remirror/pm/inputrules';
 
 import { Extension, ExtensionFactory } from '../extension';
@@ -61,14 +61,7 @@ declare global {
       inputRules?: boolean;
     }
 
-    interface ExtensionCreatorMethods<
-      Name extends string,
-      Settings extends object,
-      Properties extends object,
-      Commands extends ExtensionCommandReturn,
-      Helpers extends ExtensionHelperReturn,
-      ProsemirrorType = never
-    > {
+    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
       /**
        * Register input rules which are activated if the regex matches as a user is
        * typing.

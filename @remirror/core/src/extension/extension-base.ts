@@ -1,128 +1,78 @@
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import {
   ExtensionPriority,
   ExtensionTag,
-  ExtensionType,
   REMIRROR_IDENTIFIER_KEY,
   RemirrorIdentifier,
 } from '@remirror/core-constants';
-import {
-  capitalize,
-  deepMerge,
-  isIdentifierOfType,
-  isRemirrorType,
-  object,
-} from '@remirror/core-helpers';
+import { deepMerge, isIdentifierOfType, isRemirrorType, object } from '@remirror/core-helpers';
 import {
   And,
-  AnyFunction,
   EditorSchema,
   EditorView,
   FlipPartialAndRequired,
-  FunctionLike,
-  IfEmpty,
   IfNoRequiredProperties,
   MarkExtensionSpec,
-  MarkType,
   NodeExtensionSpec,
-  NodeType,
   ProsemirrorPlugin,
+  Shape,
 } from '@remirror/core-types';
 import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
 import {
   BaseExtensionSettings,
-  CreateSchemaParameter,
-  DefaultPropertiesParameter,
-  ExtensionCommandReturn,
-  ExtensionHelperReturn,
   ExtensionIsActiveFunction,
   GeneralExtensionTags,
   GetNameUnion,
   ManagerMarkTypeParameter,
   ManagerNodeTypeParameter,
-  ManagerTypeParameter,
   MarkExtensionTags,
   NodeExtensionTags,
   PartialProperties,
   PropertiesShape,
-  ReadonlyPropertiesParameter,
-  ReadonlySettingsParameter,
-  TransactionHandlerReturn,
+  TransactionLifecycleMethod,
 } from '../types';
 
 /**
  * The type which is applicable to any extension instance.
- *
- * TODO Figure out how to improve the formatting of this.
  */
-export type AnyExtension<Settings extends object = {}, Properties extends object = {}> = Omit<
-  Extension<any, Settings, Properties, any, any, any>,
-  'parameter' | 'constructor'
-> & {
-  parameter: {
-    [MethodName in keyof ExtensionLifecycleMethods<any, any>]: AnyFunction;
-  } &
-    {
-      [MethodName in keyof ExtensionCreatorMethods<any, any, any, any, any, any>]: AnyFunction;
-    };
-  constructor: AnyExtensionConstructor;
-};
+export type AnyExtension<
+  Settings extends Shape = Shape,
+  Properties extends Shape = Shape
+> = Extension<Settings, Properties>;
 
 /**
- * Matches any of the three `ExtensionConstructor`s.
+ * The type which is applicable to any extension instance.
  */
-export interface AnyExtensionConstructor extends FunctionLike {
-  /**
-   * The name of the extension that will be created. Also available on the
-   * instance as `name`.
-   */
-  readonly extensionName: string;
-
-  defaultSettings: any;
-  defaultProperties: any;
-
-  /**
-   * Creates a new instance of the extension. Used when adding the extension to
-   * the editor.
-   */
-  of: AnyFunction;
-}
+export type AnyExtensionConstructor<
+  Settings extends Shape = Shape,
+  Properties extends Shape = Shape
+> = ExtensionConstructor<Settings, Properties>;
 
 /**
- * Infer the type of factory parameter that's being used.
+ * The type for any potential PlainExtension.
  */
-type InferFactoryParameter<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {},
-  ProsemirrorType = never
-> = ProsemirrorType extends NodeType
-  ? NodeExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>
-  : ProsemirrorType extends MarkType
-  ? MarkExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>
-  : ProsemirrorType extends never
-  ? PlainExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>
-  : ExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>;
+export type AnyPlainExtension<
+  Settings extends Shape = Shape,
+  Properties extends Shape = Shape
+> = PlainExtension<Settings, Properties>;
 
 /**
- * Infer the `constructor` for the extension.
+ * The type for any potential NodeExtension.
  */
-type InferExtensionConstructor<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {},
-  ProsemirrorType = never
-> = ProsemirrorType extends NodeType
-  ? NodeExtensionConstructor<Name, Settings, Properties, Commands, Helpers>
-  : ProsemirrorType extends MarkType
-  ? MarkExtensionConstructor<Name, Settings, Properties, Commands, Helpers>
-  : ProsemirrorType extends never
-  ? PlainExtensionConstructor<Name, Settings, Properties, Commands, Helpers>
-  : AnyExtensionConstructor;
+export type AnyNodeExtension<
+  Settings extends Shape = Shape,
+  Properties extends Shape = Shape
+> = NodeExtension<Settings, Properties>;
+
+/**
+ * The type for any potential MarkExtension.
+ */
+export type AnyMarkExtension<
+  Settings extends Shape = Shape,
+  Properties extends Shape = Shape
+> = MarkExtension<Settings, Properties>;
 
 /**
  * These are the default options merged into every extension. They can be
@@ -150,10 +100,36 @@ export function setDefaultExtensionSettings<Key extends keyof Remirror.BaseExten
  *
  * @param value - the value to test
  */
-export function isExtension<Settings extends object = {}, Properties extends object = {}>(
+export function isExtension<Settings extends Shape = Shape, Properties extends Shape = Shape>(
   value: unknown,
 ): value is AnyExtension<Settings, Properties> {
-  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Extension);
+  return (
+    isRemirrorType(value) &&
+    isIdentifierOfType(value, [
+      RemirrorIdentifier.PlainExtension,
+      RemirrorIdentifier.MarkExtension,
+      RemirrorIdentifier.NodeExtension,
+    ])
+  );
+}
+
+/**
+ * Determines if the passed value is an extension constructor.
+ *
+ * @param value - the value to test
+ */
+export function isExtensionConstructor<
+  Settings extends Shape = Shape,
+  Properties extends Shape = Shape
+>(value: unknown): value is AnyExtension<Settings, Properties> {
+  return (
+    isRemirrorType(value) &&
+    isIdentifierOfType(value, [
+      RemirrorIdentifier.PlainExtensionConstructor,
+      RemirrorIdentifier.MarkExtensionConstructor,
+      RemirrorIdentifier.NodeExtensionConstructor,
+    ])
+  );
 }
 
 /**
@@ -161,22 +137,10 @@ export function isExtension<Settings extends object = {}, Properties extends obj
  *
  * @param value - the extension to check
  */
-export function isPlainExtension<Settings extends object = {}, Properties extends object = {}>(
+export function isPlainExtension<Settings extends Shape = Shape, Properties extends Shape = Shape>(
   value: unknown,
 ): value is AnyPlainExtension<Settings, Properties> {
-  return isExtension(value) && value.type === ExtensionType.Plain;
-}
-
-/**
- * Determines if the passed in extension is a mark extension. Useful as a type
- * guard where a particular type of extension is needed.
- *
- * @param value - the extension to check
- */
-export function isMarkExtension<Settings extends object = {}, Properties extends object = {}>(
-  value: unknown,
-): value is AnyMarkExtension<Settings, Properties> {
-  return isExtension(value) && value.type === ExtensionType.Mark;
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.PlainExtension);
 }
 
 /**
@@ -185,25 +149,56 @@ export function isMarkExtension<Settings extends object = {}, Properties extends
  *
  * @param value - the extension to check
  */
-export function isNodeExtension<Settings extends object = {}, Properties extends object = {}>(
+export function isNodeExtension<Settings extends Shape = Shape, Properties extends Shape = Shape>(
   value: unknown,
 ): value is AnyNodeExtension<Settings, Properties> {
-  return isExtension(value) && value.type === ExtensionType.Node;
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.NodeExtension);
 }
 
-export type WithProperties<Type extends object, Properties extends object> = And<
+/**
+ * Determines if the passed in extension is a mark extension. Useful as a type
+ * guard where a particular type of extension is needed.
+ *
+ * @param value - the extension to check
+ */
+export function isMarkExtension<Settings extends Shape = Shape, Properties extends Shape = Shape>(
+  value: unknown,
+): value is AnyMarkExtension<Settings, Properties> {
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.MarkExtension);
+}
+
+/**
+ * Allows for properties to be used as
+ */
+export type WithProperties<Type extends Shape, Properties extends Shape = {}> = And<
   Type,
   Partial<PartialProperties<Properties>>
 >;
 
+/**
+ * Auto infers the parameter for the extension constructor. If there is a
+ * required setting then it won't compile without that setting defined.
+ */
 export type ExtensionConstructorParameter<
-  Settings extends object,
-  Properties extends object
+  Settings extends Shape,
+  Properties extends Shape = {}
 > = IfNoRequiredProperties<
   Settings,
   [WithProperties<Settings & BaseExtensionSettings, Properties>?],
   [WithProperties<Settings & BaseExtensionSettings, Properties>]
 >;
+
+interface ExtensionConstructor<Settings extends Shape = {}, Properties extends Shape = {}>
+  extends Function {
+  new (...args: ExtensionConstructorParameter<Settings, Properties>): Extension<Settings, Shape>;
+
+  /**
+   * The identifier for the constructor which can determine whether it is a node
+   * constructor, mark constructor or plain constructor.
+   * @internal
+   */
+  readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
+}
 
 /**
  * Extensions are fundamental to the way that Remirror works and they handle the
@@ -234,102 +229,49 @@ export type ExtensionConstructorParameter<
  * rather extended to add the intended functionality.
  *
  * ```ts
- * interface AwesomeExtOptions extends BaseExtensionOptions {
+ * import { PlainExtension } from '@remirror/core';
+ *
+ * interface AwesomeExtensionSettings {
  *   isAwesome: boolean;
  * }
  *
- * class AwesomeExt extends Extension<AwesomeExtOptions> {
- *   get name() {
- *     return 'awesome' as const
- *   }
+ * interface AwesomeExtensionProperties {
+ *   id: string;
+ * }
+ *
+ * class AwesomeExtension extends PlainExtension<AwesomeExtensionSettings, AwesomeExtensionProperties> {
+ *   name = 'awesome' as const;
  * }
  * ```
  */
-export abstract class Extension<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {},
-  ProsemirrorType = never
-> implements PropertiesShape<Properties> {
+abstract class Extension<Settings extends Shape = {}, Properties extends Shape = {}>
+  implements PropertiesShape<Properties> {
   /**
-   * Not for public usage. This is purely for types to make it easier to infer
-   * the type of `Settings` on an extension instance.
-   */
-  public readonly ['~S']!: Settings & BaseExtensionSettings;
-
-  /**
-   * Not for public usage. This is purely for types to make it easier to infer
-   * the type of `Settings` on an extension instance.
-   */
-  public readonly ['~P']!: Properties;
-
-  /**
-   * Not for public usage. This is purely for types to make it easier to infer
-   * the type of `Commands` on an extension instance.
-   */
-  public readonly ['~C']!: Commands;
-
-  /**
-   * Not for public usage. This is purely for types to make it easier to infer
-   * the type of `Helpers` on an extension instance.
-   */
-  public readonly ['~H']!: Helpers;
-
-  /**
-   * Not for public usage. This is purely for types to make it easier to infer
-   * the type of `ProsemirrorType` on an extension instance.
-   */
-  public readonly ['~T']!: ProsemirrorType;
-
-  /**
-   * An internal property which helps identify this instance as a
-   * `RemirrorExtension`.
-   */
-  get [REMIRROR_IDENTIFIER_KEY]() {
-    return RemirrorIdentifier.Extension as const;
-  }
-
-  /**
-   * This defines the type of the extension.
+   * The unique name of this extension.
    *
    * @remarks
-   * There are three types of extension:
    *
-   * - `plain` - useful for changing the runtime behavior of the extension.
-   * - `node` - see {@link NodeExtension}
-   * - `mark` - see {@link MarkExtension}
+   * Every extension **must** have a name. The name should have a distinct type
+   * to allow for better type inference for end users. By convention the name
+   * should be `camelCased` and unique within your editor instance.
    *
-   * This identifier is used in the extension manager to separate marks from
-   * nodes and to determine the functionality of each extension.
+   * ```ts
+   * class SimpleExtension extends Extension {
+   *   get name() {
+   *     return 'simple' as const;
+   *   }
+   * }
+   * ```
    */
-  public abstract readonly type: ExtensionType;
-
-  /* eslint-disable @typescript-eslint/explicit-member-accessibility */
-  /**
-   * Private instance of the static settings.
-   */
-  #settings: Readonly<Required<Settings & BaseExtensionSettings>>;
-
-  /**
-   * Private instance of the dynamic properties for this extension.
-   */
-  #properties: Required<Properties>;
+  public abstract readonly name: string;
 
   /**
-   * An internal data store for this extension. Can be used to store internal data.
+   * This store is modified by the extension manager with properties. It is
+   * designed to be used by the methods on the extension class.
+   *
+   * Different properties are added at different times so it's important
    */
-  #data: any;
-
-  /**
-   * The parameter that was passed when creating the constructor for this instance.
-   */
-  get parameter(): Readonly<
-    InferFactoryParameter<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>
-  > {
-    return this.getFactoryParameter() as any;
-  }
+  public store: Remirror.ExtensionStore = object();
 
   /**
    * The static settings for this extension.
@@ -352,177 +294,41 @@ export abstract class Extension<
   }
 
   /**
-   * The unique name of this extension.
-   *
-   * @remarks
-   *
-   * Every extension **must** have a name. The name should have a distinct type
-   * to allow for better type inference for end users. By convention the name
-   * should be `camelCased` and unique within your editor instance.
-   *
-   * ```ts
-   * class SimpleExtension extends Extension {
-   *   get name() {
-   *     return 'simple' as const;
-   *   }
-   * }
-   * ```
-   */
-  get name(): Name {
-    return this.parameter.name;
-  }
-
-  /**
    * The priority level for this instance of the extension.
    */
   get priority(): ExtensionPriority {
-    return this.#settings.priority ?? this.parameter.defaultPriority ?? ExtensionPriority.Default;
+    return this.#settings.priority ?? this.defaultPriority ?? ExtensionPriority.Default;
   }
 
   /**
-   * Get the default properties for this extension.
+   * Cached `defaultSettings`.
    */
-  get defaultProperties(): Required<Properties> {
-    return this.parameter.defaultProperties ?? object();
-  }
+  #defaultSettings: DefaultSettingsType<Settings>;
 
   /**
-   * Get the default settings for this extension.
+   * Cached `defaultProperties`.
    */
-  get defaultSettings(): DefaultSettingsType<Settings> {
-    return this.constructor.defaultSettings;
-  }
+  #defaultProperties: Required<Properties>;
 
   /**
-   * Retrieves the tags for this extension.
+   * Private instance of the static settings.
    */
-  get tags(): Array<ExtensionTag | string> {
-    return this.parameter.extensionTags ?? [];
-  }
+  #settings: Readonly<Required<Settings & BaseExtensionSettings>>;
 
   /**
-   * Get the required extensions for this extension.
+   * Private instance of the dynamic properties for this extension.
    */
-  get requiredExtensions() {
-    return this.parameter.requiredExtensions ?? [];
-  }
+  #properties: Required<Properties>;
 
   constructor(...[settings]: ExtensionConstructorParameter<Settings, Properties>) {
-    this.#settings = deepMerge(defaultSettings, {
-      ...this.defaultSettings,
-      ...settings,
-    });
-
-    this.#properties = { ...this.defaultProperties, ...settings?.properties };
-
-    this.#data = this.parameter.setInitialData?.({
-      settings: this.#settings,
-      properties: this.#properties,
-    });
+    this.#defaultSettings = this.createDefaultSettings();
+    this.#defaultProperties = this.createDefaultProperties();
+    this.#settings = deepMerge(defaultSettings, this.#defaultSettings, settings ?? object());
+    this.#properties = { ...this.#defaultProperties, ...settings?.properties };
   }
 
   /**
-   * A method that must be defined on classes that extend this.
-   *
-   * @remarks
-   *
-   * It provides all the `options` passed when this `ExtensionConstructor` was
-   * created. This is for internal usage only since the `Extension` class is not
-   * exported from this library.
-   *
-   * @internal
-   */
-  protected abstract getFactoryParameter(): Readonly<
-    InferFactoryParameter<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>
-  >;
-
-  /**
-   * Update the properties with the provided partial value when changed.
-   */
-  public setProperties(properties: Partial<Properties>) {
-    this.#properties = { ...this.#properties, ...properties };
-  }
-
-  /**
-   * Reset the extension properties to their default values.
-   */
-  public resetProperties() {
-    this.#properties = { ...this.defaultProperties };
-  }
-
-  /**
-   * Called when the extension is removed by the manager during it's `onDestroy`
-   * phase.
-   */
-  public destroy() {
-    this.parameter.onDestroy?.();
-  }
-
-  /**
-   * Get the internal data from the extension.
-   *
-   * Used to store persistent internal state.
-   */
-  public getData<Data>(): Data {
-    return this.#data;
-  }
-
-  /**
-   * Set the internal data for the extension.
-   *
-   * Used to store persistent internal state.
-   */
-  public setData<Data>(data: Data) {
-    this.#data = data;
-  }
-
-  /**
-   * Override the default toString method to match the native toString methods.
-   */
-  public toString() {
-    return `[${RemirrorIdentifier.Extension} ${capitalize(this.name)}]`;
-  }
-}
-
-/**
- * Declaration merging since the constructor property can't be defined on the
- * actual class.
- */
-export interface Extension<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {},
-  ProsemirrorType = never
-> {
-  /**
-   * Provides the type for the extensions constructor.
-   */
-  constructor: InferExtensionConstructor<
-    Name,
-    Settings,
-    Properties,
-    Commands,
-    Helpers,
-    ProsemirrorType
-  >;
-}
-
-/**
- * Get the expected type signature for the `defaultSettings`. Requires that every
- * non-required property (not from the BaseExtension) has a value assigned.
- */
-export type DefaultSettingsType<Settings extends object> = Omit<
-  FlipPartialAndRequired<Settings>,
-  keyof BaseExtensionSettings
-> &
-  Partial<BaseExtensionSettings>;
-
-interface DefaultSettingsParameter<Settings extends object> {
-  /**
-   * The settings helps define the properties schema and built in behavior of
-   * this extension.
+   * Define the `defaultSettings` for this extension.
    *
    * @remarks
    *
@@ -536,50 +342,50 @@ interface DefaultSettingsParameter<Settings extends object> {
    * There is a slight downside in the way this is setup. `undefined` is not
    * supported for partial settings at this point in time. As a workaround
    * use `null` as the type and pass it as the value in the default settings.
+   *
+   * @internal
    */
-  defaultSettings: DefaultSettingsType<Settings>;
+  protected abstract createDefaultSettings(): DefaultSettingsType<Settings>;
+
+  /**
+   * A method that creates the default properties. All properties must have a
+   * default property assigned.
+   *
+   * @internal
+   */
+  protected abstract createDefaultProperties(): Required<Properties>;
+
+  /**
+   * Update the properties with the provided partial value when changed.
+   */
+  public setProperties(properties: Partial<Properties>) {
+    this.#properties = { ...this.#properties, ...properties };
+  }
+
+  /**
+   * Reset the extension properties to their default values.
+   */
+  public resetProperties() {
+    this.#properties = { ...this.#defaultProperties };
+  }
+
+  /**
+   * The identifier for the extension which can determine whether it is a node,
+   * mark or plain extension.
+   * @internal
+   */
+  public abstract readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
 }
 
 /**
- * The configuration parameter which is passed into an `ExtensionFactory` to
- * create the `ExtensionConstructor`.
+ * Declaration merging since the constructor property can't be defined on the
+ * actual class.
  */
-export interface BaseExtensionFactoryParameter<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {},
-  ProsemirrorType = never
->
-  extends ExtensionLifecycleMethods<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
-    Remirror.ExtensionFactoryParameter<
-      Name,
-      Settings,
-      Properties,
-      Commands,
-      Helpers,
-      ProsemirrorType
-    >,
-    ExtensionCreatorMethods<Name, Settings, Properties, Commands, Helpers, ProsemirrorType> {
-  /**
-   * The unique name of this extension.
-   *
-   * @remarks
-   *
-   * Every extension **must** have a name. Ideally the name should have a
-   * distinct type to allow for better type inference for end users. By
-   * convention the name should be `camelCased` and unique within your editor
-   * instance.
-   */
-  name: Name;
-
-  /**
-   * Every extension requires compatible string with the version number of the extension. This
-   * is required
-   */
-  version?: string;
-
+interface Extension<Settings extends Shape = {}, Properties extends Shape = {}>
+  extends ExtensionLifecycleMethods,
+    Remirror.ExtensionCreatorMethods<Settings, Properties>,
+    Remirror.BaseExtension {
+  constructor: ExtensionConstructor<Settings, Properties>;
   /**
    * The default priority level for the extension to use.
    *
@@ -606,7 +412,7 @@ export interface BaseExtensionFactoryParameter<
    * There are internally defined tags but it's also possible to define any
    * custom string as a tag. See {@link ExtensionTag}
    */
-  extensionTags?: Array<ExtensionTag | string>;
+  tags?: Array<ExtensionTag | string>;
 
   /**
    * An extension can declare the extensions it requires.
@@ -618,67 +424,48 @@ export interface BaseExtensionFactoryParameter<
    * extension is already included. If not present a descriptive error will be
    * thrown.
    */
-  requiredExtensions?: readonly AnyExtensionConstructor[];
+  requiredExtensions?: object[];
 
   /**
-   * Set the initial private data.
-   *
-   * Data is a way of storing internal state for the extension.
+   * Not for public usage. This is purely for types to make it easier to infer
+   * the type of `Settings` on an extension instance.
    */
-  setInitialData?: (parameter: ExtensionSettingsAndProperties<Settings, Properties>) => unknown;
+  ['~S']: Settings & BaseExtensionSettings;
+
+  /**
+   * Not for public usage. This is purely for types to make it easier to infer
+   * the type of `Settings` on an extension instance.
+   */
+  ['~P']: Properties;
 }
 
-interface ExtensionSettingsAndProperties<Settings extends object, Properties extends object> {
-  settings: Readonly<Required<Settings & BaseExtensionSettings>>;
-  properties: Required<Properties>;
-}
+/**
+ * Get the expected type signature for the `defaultSettings`. Requires that
+ * every optional setting key (except for keys which are defined on the
+ * `BaseExtensionSettings`) has a value assigned.
+ */
+export type DefaultSettingsType<Settings extends Shape> = Omit<
+  FlipPartialAndRequired<Settings>,
+  keyof BaseExtensionSettings
+> &
+  Partial<BaseExtensionSettings>;
 
-interface ExtensionCreatorMethods<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {},
-  ProsemirrorType = never
->
-  extends Remirror.ExtensionCreatorMethods<
-    Name,
-    Settings,
-    Properties,
-    Commands,
-    Helpers,
-    ProsemirrorType
-  > {}
-
-export interface ExtensionLifecycleMethods<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {},
-  ProsemirrorType = never
-> {
+interface ExtensionLifecycleMethods {
   /**
    * Handlers called when the Manager is first created.
    */
-  onCreate?: (
-    parameter: CreateLifecycleMethodParameter<Settings, Properties>,
-  ) => CreateLifecycleMethodReturn;
+  onCreate?: CreateLifecycleMethod;
 
   /**
    * This happens when the store is initialized.
    */
-  onInitialize?: (
-    parameter: InitializeLifecycleMethodParameter<Settings, Properties>,
-  ) => InitializeLifecycleMethodReturn;
+  onInitialize?: InitializeLifecycleMethod;
 
   /**
    * This event happens when the view is first received from the view layer
    * (e.g. React).
    */
-  onView?: (
-    parameter: ViewLifecycleMethodParameter<Settings, Properties>,
-  ) => ViewLifecycleMethodReturn;
+  onView?: ViewLifecycleMethod;
 
   /**
    * Called when a transaction successfully updates the editor state.
@@ -688,9 +475,7 @@ export interface ExtensionLifecycleMethods<
    * It should return a handler function which receives the state and the
    * transaction which created the new state. It also receives the view.
    */
-  onTransaction?: (
-    extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>,
-  ) => TransactionHandlerReturn;
+  onTransaction?: TransactionLifecycleMethod;
 
   /**
    * Called when the extension is being destroyed.
@@ -698,99 +483,17 @@ export interface ExtensionLifecycleMethods<
   onDestroy?: () => void;
 }
 
-export type ExtensionFactoryParameter<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {},
-  ProsemirrorType = never
-> = BaseExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers, ProsemirrorType> &
-  IfEmpty<
-    Properties,
-    Partial<DefaultPropertiesParameter<Properties>>,
-    DefaultPropertiesParameter<Properties>
-  > &
-  IfEmpty<
-    Settings,
-    Partial<DefaultSettingsParameter<Settings>>,
-    DefaultSettingsParameter<Settings>
-  >;
-
 export abstract class PlainExtension<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {}
-> extends Extension<Name, Settings, Properties, Commands, Helpers> {
-  /**
-   * Identifies this extension as **`plain`**.
-   */
-  get type() {
-    return ExtensionType.Plain as const;
+  Settings extends Shape = {},
+  Properties extends Shape = {}
+> extends Extension<Settings, Properties> {
+  static get [REMIRROR_IDENTIFIER_KEY]() {
+    return RemirrorIdentifier.PlainExtensionConstructor as const;
   }
-}
 
-export type PlainExtensionFactoryParameter<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {}
-> = ExtensionFactoryParameter<Name, Settings, Properties, Commands, Helpers>;
-
-/**
- * The type covering any potential `PlainExtension`.
- */
-export type AnyPlainExtension<Settings extends object = {}, Properties extends object = {}> = Omit<
-  PlainExtension<any, Settings, Properties, any, any>,
-  'parameter' | 'constructor'
-> & {
-  parameter: {
-    [MethodName in keyof ExtensionLifecycleMethods<any, any>]: AnyFunction;
-  } &
-    {
-      [MethodName in keyof ExtensionCreatorMethods<any, any, any, any, any, any>]: AnyFunction;
-    };
-  constructor: AnyExtensionConstructor;
-};
-
-/**
- * The shape of the `ExtensionConstructor` used to create instances of
- * extensions and returned from the `ExtensionFactory.plain()` method.
- */
-export interface PlainExtensionConstructor<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {}
-> extends FunctionLike {
-  /**
-   * Get the name of the extensions created by this constructor.
-   */
-  readonly extensionName: Name;
-
-  /**
-   * The default settings for instances of this extension.
-   */
-  defaultSettings: DefaultSettingsType<Settings>;
-
-  /**
-   * The default properties for instances of this extension.
-   */
-  defaultProperties: Required<Properties>;
-
-  /**
-   * Create a new instance of the extension to be inserted into the editor.
-   *
-   * This is used to prevent the need for the `new` keyword which can lead to
-   * problems.
-   */
-  of: (
-    ...settings: ExtensionConstructorParameter<Settings, Properties>
-  ) => PlainExtension<Name, Settings, Properties, Commands, Helpers>;
+  get [REMIRROR_IDENTIFIER_KEY]() {
+    return RemirrorIdentifier.PlainExtension as const;
+  }
 }
 
 /**
@@ -804,26 +507,19 @@ export interface PlainExtensionConstructor<
  * provide additional information about them.
  */
 export abstract class MarkExtension<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {}
-> extends Extension<Name, Settings, Properties, Commands, Helpers, MarkType<EditorSchema>> {
-  /**
-   * Set's the type of this extension to be a `Mark`.
-   *
-   * @remarks
-   *
-   * This value is used by the predicates to check whether this is a mark / node
-   * or plain extension.
-   */
-  get type() {
-    return ExtensionType.Mark as const;
+  Settings extends Shape = {},
+  Properties extends Shape = {}
+> extends Extension<Settings, Properties> {
+  static get [REMIRROR_IDENTIFIER_KEY]() {
+    return RemirrorIdentifier.MarkExtensionConstructor as const;
   }
 
-  get schema(): Readonly<MarkExtensionSpec> {
-    return this.#schema;
+  get [REMIRROR_IDENTIFIER_KEY]() {
+    return RemirrorIdentifier.NodeExtension as const;
+  }
+
+  get spec(): Readonly<MarkExtensionSpec> {
+    return this.#spec;
   }
 
   /**
@@ -838,15 +534,12 @@ export abstract class MarkExtension<
    * For more advanced requirements, it may be possible to create a nodeView to
    * manage the dom interactions.
    */
-  readonly #schema: MarkExtensionSpec;
+  readonly #spec: MarkExtensionSpec;
 
   constructor(...parameters: ExtensionConstructorParameter<Settings, Properties>) {
     super(...parameters);
 
-    this.#schema = this.getFactoryParameter().createMarkSchema({
-      settings: this.settings,
-      properties: this.properties,
-    });
+    this.#spec = this.createMarkSchema();
   }
 
   /**
@@ -854,88 +547,16 @@ export abstract class MarkExtension<
    * selection.
    *
    * @param parameter - see
-   * {@link @remirror/core-types#ManagerMarkTypeParameter}
    */
   public isActive({ getState, type }: ManagerMarkTypeParameter): ExtensionIsActiveFunction {
     return () => isMarkActive({ stateOrTransaction: getState(), type });
   }
-}
 
-/**
- * The creator options when creating a node.
- */
-export type MarkExtensionFactoryParameter<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {}
-> = ExtensionFactoryParameter<
-  Name,
-  Settings,
-  Properties,
-  Commands,
-  Helpers,
-  MarkType<EditorSchema>
-> & {
   /**
    * Provide a method for creating the schema. This is required in order to
    * create a `MarkExtension`.
    */
-  createMarkSchema: (parameter: CreateSchemaParameter<Settings, Properties>) => MarkExtensionSpec;
-};
-
-/**
- * The type covering any potential `MarkExtension`.
- */
-export type AnyMarkExtension<Settings extends object = {}, Properties extends object = {}> = Omit<
-  MarkExtension<any, Settings, Properties, any, any>,
-  'parameter' | 'constructor'
-> & {
-  parameter: {
-    [MethodName in keyof ExtensionLifecycleMethods<any, any>]: AnyFunction;
-  } &
-    {
-      [MethodName in keyof ExtensionCreatorMethods<any, any, any, any, any, any>]: AnyFunction;
-    };
-  constructor: AnyExtensionConstructor;
-};
-
-/**
- * The shape of the `MarkExtensionConstructor` used to create extensions and
- * returned from the `ExtensionFactory.mark()` method.
- */
-export interface MarkExtensionConstructor<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {}
-> extends FunctionLike {
-  /**
-   * Get the name of the extensions created by this constructor.
-   */
-  readonly extensionName: Name;
-
-  /**
-   * The default settings for instances of this extension.
-   */
-  defaultSettings: DefaultSettingsType<Settings>;
-
-  /**
-   * The default properties for instances of this extension.
-   */
-  defaultProperties: Required<Properties>;
-
-  /**
-   * Create a new instance of the extension to be inserted into the editor.
-   *
-   * This is used to prevent the need for the `new` keyword which can lead to
-   * problems.
-   */
-  of: (
-    ...settings: ExtensionConstructorParameter<Settings, Properties>
-  ) => MarkExtension<Name, Settings, Properties, Commands, Helpers>;
+  public abstract createMarkSchema(): MarkExtensionSpec;
 }
 
 /**
@@ -947,22 +568,19 @@ export interface MarkExtensionConstructor<
  * For more information see {@link https://prosemirror.net/docs/ref/#model.Node}
  */
 export abstract class NodeExtension<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {}
-> extends Extension<Name, Settings, Properties, Commands, Helpers, NodeType<EditorSchema>> {
-  /**
-   * Identifies this extension as a **NODE** type from the prosemirror
-   * terminology.
-   */
-  get type() {
-    return ExtensionType.Node as const;
+  Settings extends Shape,
+  Properties extends Shape = {}
+> extends Extension<Settings, Properties> {
+  static get [REMIRROR_IDENTIFIER_KEY]() {
+    return RemirrorIdentifier.NodeExtensionConstructor as const;
   }
 
-  get schema(): Readonly<NodeExtensionSpec> {
-    return this.#schema;
+  get [REMIRROR_IDENTIFIER_KEY]() {
+    return RemirrorIdentifier.NodeExtension as const;
+  }
+
+  get spec(): Readonly<NodeExtensionSpec> {
+    return this.#spec;
   }
 
   /**
@@ -977,42 +595,23 @@ export abstract class NodeExtension<
    * For more advanced settings, where dom manipulation is required, it is
    * advisable to set up a nodeView.
    */
-  readonly #schema: NodeExtensionSpec;
-  /* eslint-enable @typescript-eslint/explicit-member-accessibility */
+  readonly #spec: NodeExtensionSpec;
 
   constructor(...parameters: ExtensionConstructorParameter<Settings, Properties>) {
     super(...parameters);
 
-    this.#schema = this.getFactoryParameter().createNodeSchema({
-      settings: this.settings,
-      properties: this.properties,
-    });
+    this.#spec = this.createNodeSchema();
   }
 
+  /**
+   * Check if the node is active.
+   */
   public isActive({ getState, type }: ManagerNodeTypeParameter): ExtensionIsActiveFunction {
     return ({ attrs }) => {
       return isNodeActive({ state: getState(), type, attrs: attrs });
     };
   }
-}
 
-/**
- * The creator options when creating a node.
- */
-export type NodeExtensionFactoryParameter<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {}
-> = ExtensionFactoryParameter<
-  Name,
-  Settings,
-  Properties,
-  Commands,
-  Helpers,
-  NodeType<EditorSchema>
-> & {
   /**
    * Provide a method for creating the schema. This is required in order to
    * create a `NodeExtension`.
@@ -1024,60 +623,7 @@ export type NodeExtensionFactoryParameter<
    * more about it is in the
    * {@link https://prosemirror.net/docs/guide/#schema docs}.
    */
-  createNodeSchema: (parameter: CreateSchemaParameter<Settings, Properties>) => NodeExtensionSpec;
-};
-
-/**
- * The type covering any potential NodeExtension.
- */
-export type AnyNodeExtension<Settings extends object = {}, Properties extends object = {}> = Omit<
-  NodeExtension<any, Settings, Properties, any, any>,
-  'parameter' | 'constructor'
-> & {
-  parameter: {
-    [MethodName in keyof ExtensionLifecycleMethods<any, any>]: AnyFunction;
-  } &
-    {
-      [MethodName in keyof ExtensionCreatorMethods<any, any, any, any, any, any>]: AnyFunction;
-    };
-  constructor: AnyExtensionConstructor;
-};
-
-/**
- * The shape of the `NodeExtensionConstructor` used to create extensions and
- * returned from the `ExtensionFactory.node()` method.
- */
-export interface NodeExtensionConstructor<
-  Name extends string,
-  Settings extends object,
-  Properties extends object = {},
-  Commands extends ExtensionCommandReturn = {},
-  Helpers extends ExtensionHelperReturn = {}
-> extends FunctionLike {
-  /**
-   * Get the name of the extensions created by this constructor.
-   */
-  readonly extensionName: Name;
-
-  /**
-   * The default settings for instances of this extension.
-   */
-  defaultSettings: DefaultSettingsType<Settings>;
-
-  /**
-   * The default properties for instances of this extension.
-   */
-  defaultProperties: Required<Properties>;
-
-  /**
-   * Create a new instance of the extension to be inserted into the editor.
-   *
-   * This is used to prevent the need for the `new` keyword which can lead to
-   * problems.
-   */
-  of: (
-    ...settings: ExtensionConstructorParameter<Settings, Properties>
-  ) => NodeExtension<Name, Settings, Properties, Commands, Helpers>;
+  public abstract createNodeSchema(): NodeExtensionSpec;
 }
 
 /**
@@ -1136,10 +682,7 @@ export type SchemaFromExtensionUnion<ExtensionUnion extends AnyExtension> = Edit
 export type AnyManagerStore = Remirror.ManagerStore<any, any>;
 export type ManagerStoreKeys = keyof Remirror.ManagerStore<any, any>;
 
-export interface CreateLifecycleMethodParameter<
-  Settings extends object = {},
-  Properties extends object = {}
-> extends ReadonlySettingsParameter<Settings>, ReadonlyPropertiesParameter<Properties> {
+export interface CreateLifecycleParameter {
   /**
    * Get the value of a key from the manager store.
    */
@@ -1170,12 +713,7 @@ export interface CreateLifecycleMethodParameter<
   ) => void;
 }
 
-export interface CreateLifecycleMethodReturn {
-  /**
-   * Called before the extension loop is run.
-   */
-  beforeExtensionLoop?: () => void;
-
+export interface CreateLifecycleReturn {
   /**
    * Called for each extension in order of their priority.
    */
@@ -1188,10 +726,9 @@ export interface CreateLifecycleMethodReturn {
   afterExtensionLoop?: () => void;
 }
 
-export interface InitializeLifecycleMethodParameter<
-  Settings extends object = {},
-  Properties extends object = {}
-> extends ViewLifecycleMethodParameter<Settings, Properties> {
+export type CreateLifecycleMethod = (parameter: CreateLifecycleParameter) => CreateLifecycleReturn;
+
+export interface InitializeLifecycleParameter extends ViewLifecycleParameter {
   /**
    * Use this to push custom plugins to the store which are added to the plugin
    * list after the extensionPlugins.
@@ -1199,36 +736,23 @@ export interface InitializeLifecycleMethodParameter<
   addPlugins: (...plugins: ProsemirrorPlugin[]) => void;
 }
 
-export interface InitializeLifecycleMethodReturn extends CreateLifecycleMethodReturn {}
+export interface InitializeLifecycleReturn extends CreateLifecycleReturn {}
 
-export interface ViewLifecycleMethodParameter<
-  Settings extends object = {},
-  Properties extends object = {}
->
+export type InitializeLifecycleMethod = (
+  parameter: InitializeLifecycleParameter,
+) => InitializeLifecycleReturn;
+
+export interface ViewLifecycleParameter
   extends Omit<
-    CreateLifecycleMethodParameter<Settings, Properties>,
+    CreateLifecycleParameter,
     'setDefaultExtensionSettings' | 'setManagerMethodParameter'
-  > {
-  /**
-   * The parameter passed into most of the extension creator methods.
-   */
-  getParameter: <Type = never, Other extends object = object>(
-    extension: AnyExtension,
-    other?: Other,
-  ) => ManagerTypeParameter<Type> & { extension: AnyExtension } & Other;
-}
+  > {}
 
-export interface ViewLifecycleMethodReturn {
-  /**
-   * Run before the extensions have been looped through. Useful for adding data
-   * to the store and doing any cleanup for the RemirrorMethod.
-   */
-  beforeExtensionLoop?: (view: EditorView<EditorSchema>) => void;
-
+export interface ViewLifecycleReturn {
   /**
    * Called for each extension in order of their priority.
    */
-  forEachExtension?: (extension: AnyExtension, view: EditorView<EditorSchema>) => void;
+  forEachExtension?: (extension: AnyExtension) => void;
 
   /**
    * Run after the extensions have been looped through. Useful for adding data
@@ -1236,6 +760,8 @@ export interface ViewLifecycleMethodReturn {
    */
   afterExtensionLoop?: (view: EditorView<EditorSchema>) => void;
 }
+
+export type ViewLifecycleMethod = (parameter: ViewLifecycleParameter) => ViewLifecycleReturn;
 
 declare global {
   /**
@@ -1257,8 +783,13 @@ declare global {
    */
   namespace Remirror {
     /**
+     * Keeps track of data available on the extension.
+     */
+    export interface ExtensionStore {}
+
+    /**
      * This interface is global and can use declaration merging to add extra
-     * options that can be passed into the passed into the `ExtensionFactory`.
+     * methods and properties on all `Extension`s.
      *
      * @remarks
      *
@@ -1276,46 +807,33 @@ declare global {
      * }
      * ```
      */
-    export interface ExtensionFactoryParameter<
-      Name extends string,
-      Settings extends object,
-      Properties extends object,
-      Commands extends ExtensionCommandReturn,
-      Helpers extends ExtensionHelperReturn,
-      ProsemirrorType = never
-    > {}
+    export interface BaseExtension {}
 
+    /**
+     * This interface is global and uses declaration merging to add new methods
+     * to the `Extension` class.
+     */
     export interface ExtensionCreatorMethods<
-      Name extends string,
-      Settings extends object,
-      Properties extends object,
-      Commands extends ExtensionCommandReturn,
-      Helpers extends ExtensionHelperReturn,
-      ProsemirrorType = never
-    > {}
-
-    /**
-     * This interface should overridden to add extra options to the options that can be
-     * passed into the `ExtensionFactory.node()`.
-     */
-    export interface NodeExtensionFactoryParameter<
-      Name extends string,
-      Settings extends object,
-      Properties extends object = {},
-      Commands extends ExtensionCommandReturn = {},
-      Helpers extends ExtensionHelperReturn = {}
-    > {}
-
-    /**
-     * This type should overridden to add extra options to the options that can be
-     * passed into the `ExtensionFactory.mark()`.
-     */
-    export interface MarkExtensionFactoryParameter<
-      Name extends string,
-      Settings extends object,
-      Properties extends object = {},
-      Commands extends ExtensionCommandReturn = {},
-      Helpers extends ExtensionHelperReturn = {}
+      Settings extends Shape,
+      Properties extends Shape = {}
     > {}
   }
 }
+
+/* eslint-enable @typescript-eslint/member-ordering */
+/* eslint-enable @typescript-eslint/explicit-member-accessibility */
+
+class A extends PlainExtension {
+  protected createDefaultSettings(): DefaultSettingsType<{}> {
+    throw new Error('Method not implemented.');
+  }
+
+  protected createDefaultProperties(): Required<{}> {
+    throw new Error('Method not implemented.');
+  }
+
+  name = 'awesome';
+}
+
+const a = new A();
+type B = typeof a.constructor;

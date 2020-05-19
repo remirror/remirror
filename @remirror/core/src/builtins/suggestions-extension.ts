@@ -1,6 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { isArray } from '@remirror/core-helpers';
-import { And } from '@remirror/core-types';
+import { And, Shape } from '@remirror/core-types';
 import { suggest, Suggestion } from '@remirror/pm/suggest';
 
 import { Extension, ExtensionFactory } from '../extension';
@@ -64,14 +64,7 @@ declare global {
       suggesters?: boolean;
     }
 
-    interface ExtensionCreatorMethods<
-      Name extends string,
-      Settings extends object,
-      Properties extends object,
-      Commands extends ExtensionCommandReturn,
-      Helpers extends ExtensionHelperReturn,
-      ProsemirrorType = never
-    > {
+    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
       /**
        * Create suggesters which respond to character key combinations within the
        * editor instance.

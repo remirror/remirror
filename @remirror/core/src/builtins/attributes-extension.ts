@@ -1,10 +1,9 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { bool, object } from '@remirror/core-helpers';
-import { And, AttributesWithClass } from '@remirror/core-types';
+import { AttributesWithClass, Shape } from '@remirror/core-types';
 
-import { AnyExtension, Extension, ExtensionFactory } from '../extension';
+import { AnyExtension, InitializeLifecycleMethod, PlainExtension } from '../extension';
 import { AnyPreset } from '../preset';
-import { ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
 
 /**
  * This extension allows others extension to add the `createAttributes` method
@@ -18,32 +17,46 @@ import { ExtensionCommandReturn, ExtensionHelperReturn } from '../types';
  *
  * @builtin
  */
-export const AttributesExtension = ExtensionFactory.plain({
-  name: 'attributes',
-  defaultPriority: ExtensionPriority.High,
+export class AttributesExtension extends PlainExtension {
+  public readonly name = 'attributes' as const;
+  public readonly defaultPriority = ExtensionPriority.High;
+
+  protected createDefaultSettings() {
+    return {};
+  }
+
+  protected createDefaultProperties(): Required<{}> {
+    return {};
+  }
 
   /**
-   * Ensure that all ssr transformers are run.
+   * Create the attributes object on initialization.
+   *
+   * @internal
    */
-  onInitialize({ getParameter, managerSettings, setStoreKey }) {
+  public onInitialize: InitializeLifecycleMethod = (parameter) => {
+    const { managerSettings, setStoreKey } = parameter;
+
     const attributeList: AttributesWithClass[] = [];
     let attributeObject: AttributesWithClass = object();
 
     return {
       forEachExtension: (extension) => {
         if (
-          !extension.parameter.createAttributes ||
+          !extension.createAttributes ||
           managerSettings.exclude?.attributes ||
           extension.settings.exclude.attributes
         ) {
           return;
         }
 
-        // Inserted at the start of the list so that when building the attribute
-        // the higher priority extension attributes are preferred to the lower
-        // priority since they merge with the object later.
-        attributeList.unshift(extension.parameter.createAttributes(getParameter(extension)));
+        // Inserted at the start of the list so that when combining the full
+        // attribute object the higher priority extension attributes are
+        // preferred to the lower priority since they merge with the object
+        // later.
+        attributeList.unshift(extension.createAttributes());
       },
+
       afterExtensionLoop: () => {
         for (const attributes of attributeList) {
           attributeObject = {
@@ -58,8 +71,8 @@ export const AttributesExtension = ExtensionFactory.plain({
         setStoreKey('attributes', attributeObject);
       },
     };
-  },
-});
+  };
+}
 
 declare global {
   namespace Remirror {
@@ -79,14 +92,7 @@ declare global {
       attributes?: boolean;
     }
 
-    interface ExtensionCreatorMethods<
-      Name extends string,
-      Settings extends object,
-      Properties extends object,
-      Commands extends ExtensionCommandReturn,
-      Helpers extends ExtensionHelperReturn,
-      ProsemirrorType = never
-    > {
+    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
       /**
        * Allows the extension to modify the attributes for the Prosemirror editor
        * dom element.
@@ -100,17 +106,7 @@ declare global {
        *
        * @alpha
        */
-      createAttributes?: (
-        parameter: And<
-          ManagerMethodParameter,
-          {
-            /**
-             * The extension which provides access to the settings and properties.
-             */
-            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
-          }
-        >,
-      ) => AttributesWithClass;
+      createAttributes?: () => AttributesWithClass;
     }
   }
 }

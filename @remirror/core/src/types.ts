@@ -267,17 +267,8 @@ export interface CommandMethod<Parameter extends any[] = []> {
   (...args: Parameter): void;
 }
 
-export interface TransactionHandlerParameter extends TransactionParameter, EditorStateParameter {}
-/**
- * The params object received by the onTransaction handler.
- */
-export interface TransactionHandlerReturnParameter<Schema extends EditorSchema = any>
-  extends EditorViewParameter<Schema>,
-    TransactionHandlerParameter {}
-
-export type TransactionHandlerReturn = (
-  parameter: TransactionHandlerReturnParameter<EditorSchema>,
-) => void;
+export interface TransactionLifecycleParameter extends TransactionParameter, EditorStateParameter {}
+export type TransactionLifecycleMethod = (parameter: TransactionLifecycleParameter) => void;
 
 export interface BaseExtensionSettings extends Remirror.BaseExtensionSettings {
   /**

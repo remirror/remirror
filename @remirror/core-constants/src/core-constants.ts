@@ -231,9 +231,19 @@ export const REMIRROR_IDENTIFIER_KEY = '~~remirror~~' as const;
  */
 export enum RemirrorIdentifier {
   /**
-   * The string used to identify an instance of the remirror extension.
+   * Identifies `PlainExtension`s.
    */
-  Extension = 'RemirrorExtension',
+  PlainExtension = 'RemirrorPlainExtension',
+
+  /**
+   * Identifies `NodeExtension`s.
+   */
+  NodeExtension = 'RemirrorNodeExtension',
+
+  /**
+   * Identifies `MarkExtension`s.
+   */
+  MarkExtension = 'RemirrorMarkExtension',
 
   /**
    * Identifies `PlainExtensionConstructor`s.

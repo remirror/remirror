@@ -1,13 +1,16 @@
 import { ErrorConstant } from '@remirror/core-constants';
 import { entries, invariant, object } from '@remirror/core-helpers';
-import { And, AnyFunction, EditorSchema } from '@remirror/core-types';
+import { And, AnyFunction, EditorSchema, Shape } from '@remirror/core-types';
 
 import {
   AnyExtension,
+  CreateLifecycleMethod,
   Extension,
   ExtensionFactory,
   GetExtensionUnion,
   HelpersFromExtensions,
+  PlainExtension,
+  ViewLifecycleMethod,
 } from '../extension';
 import { throwIfNameNotUnique } from '../helpers';
 import { AnyPreset } from '../preset';
@@ -38,10 +41,10 @@ function createExtensionHelpers(parameter: CreateHelpersParameter<never>, extens
  *
  * @builtin
  */
-export const HelpersExtension = ExtensionFactory.plain({
-  name: 'helpers',
+export class HelpersExtension extends PlainExtension {
+  public readonly name = 'helpers' as const;
 
-  onCreate(parameter) {
+  public onCreate: CreateLifecycleMethod = (parameter) => {
     return {
       beforeExtensionLoop() {
         const { setManagerMethodParameter, getStoreKey } = parameter;
@@ -54,23 +57,20 @@ export const HelpersExtension = ExtensionFactory.plain({
         });
       },
     };
-  },
+  };
 
-  // Helpers are only available once the view has been added to the dom.
-  onView(parameter) {
-    const { getParameter } = parameter;
+  /** Helpers are only available once the view has been added to the dom. */
+  public onView: ViewLifecycleMethod = (parameter) => {
     const helpers: Record<string, AnyFunction> = object();
     const names = new Set<string>();
 
     return {
-      forEachExtension(extension, view) {
-        if (!extension.parameter.createHelpers) {
+      forEachExtension(extension) {
+        if (!extension.createHelpers) {
           return;
         }
 
-        const helperParameter = getParameter(extension, { view });
-
-        const extensionHelpers = createExtensionHelpers(helperParameter, extension);
+        const extensionHelpers = extension.createHelpers();
 
         for (const [name, helper] of entries(extensionHelpers)) {
           throwIfNameNotUnique({ name, set: names, code: ErrorConstant.DUPLICATE_HELPER_NAMES });
@@ -83,8 +83,8 @@ export const HelpersExtension = ExtensionFactory.plain({
         setStoreKey('helpers', helpers);
       },
     };
-  },
-});
+  };
+}
 
 declare global {
   namespace Remirror {
@@ -95,14 +95,7 @@ declare global {
       helpers: HelpersFromExtensions<ExtensionUnion | GetExtensionUnion<PresetUnion>>;
     }
 
-    interface ExtensionCreatorMethods<
-      Name extends string,
-      Settings extends object,
-      Properties extends object,
-      Commands extends ExtensionCommandReturn,
-      Helpers extends ExtensionHelperReturn,
-      ProsemirrorType = never
-    > {
+    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
       /**
        * A helper method is a function that takes in arguments and returns a
        * value depicting the state of the editor specific to this extension.
@@ -140,18 +133,14 @@ declare global {
        * };
        * ```
        */
-      createHelpers?: (
-        parameter: And<
-          CreateHelpersParameter<ProsemirrorType>,
-          {
-            /**
-             * The extension which provides access to the settings and
-             * properties.
-             */
-            extension: Extension<Name, Settings, Properties, Commands, Helpers, ProsemirrorType>;
-          }
-        >,
-      ) => Helpers;
+      createHelpers?: () => ExtensionHelperReturn;
+      /**
+       * `ExtensionHelpers`
+       *
+       * This pseudo property makes it easier to infer Generic types of this class.
+       * @private
+       */
+      ['~H']: this['createHelpers'] extends AnyFunction ? ReturnType<this['createHelpers']> : {};
     }
 
     interface ManagerMethodParameter<Schema extends EditorSchema = EditorSchema> {
@@ -160,7 +149,7 @@ declare global {
        * Each extension can register its own helpers.
        */
       helpers: <ExtensionUnion extends AnyExtension = AnyExtension>() => HelpersFromExtensions<
-        ExtensionUnion | Of<typeof HelpersExtension>
+        ExtensionUnion | HelpersExtension
       >;
     }
   }

@@ -47,14 +47,14 @@ export const TagsExtension = ExtensionFactory.plain({
     return {
       forEachExtension(extension) {
         if (isNodeExtension(extension)) {
-          const group = extension.schema.group as NodeGroup;
+          const group = extension.spec.group as NodeGroup;
           const name = extension.name;
 
           node[group] = isUndefined(node[group]) ? [name] : [...node[group], name];
         }
 
         if (isMarkExtension(extension)) {
-          const group = extension.schema.group as MarkGroup;
+          const group = extension.spec.group as MarkGroup;
           const name = extension.name;
 
           mark[group] = isUndefined(mark[group]) ? [name] : [...mark[group], name];
@@ -70,7 +70,7 @@ export const TagsExtension = ExtensionFactory.plain({
         const { setStoreKey, setManagerMethodParameter, getStoreKey } = parameter;
 
         setStoreKey('extensionTags', { general, mark, node });
-        setManagerMethodParameter('extensionTags', () => getStoreKey('extensionTags') as any);
+        setManagerMethodParameter('extensionTags', () => getStoreKey('extensionTags'));
       },
     };
   },

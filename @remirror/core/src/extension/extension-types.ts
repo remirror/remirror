@@ -4,7 +4,7 @@ import { AnyFunction, StringKey } from '@remirror/core-types';
 import { NonChainableCommandFunction } from '@remirror/core-utils';
 
 import { CommandMethod, GetCommands, GetHelpers, Of } from '../types';
-import { AnyExtension, AnyExtensionConstructor } from './extension-base';
+import { AnyExtension } from './extension-base';
 
 export interface ExtensionParameter<ExtensionUnion extends AnyExtension = any> {
   /**
@@ -44,7 +44,7 @@ type MapToChainedCommand<RawCommands extends Record<string, AnyFunction>> = {
  * makes available.
  */
 export type CommandsFromExtensions<ExtensionUnion extends AnyExtension> = UnionToIntersection<
-  MapToUnchainedCommand<GetCommands<ExtensionUnion>>
+  MapToUnchainedCommand<ExtensionUnion['~C']>
 >;
 
 export interface ChainedCommandRunParameter {
@@ -65,12 +65,12 @@ export type ChainedFromExtensions<
 > = ChainedCommandRunParameter &
   {
     [Key in keyof UnionToIntersection<MapToChainedCommand<GetCommands<ExtensionUnion>>>]: (
-      ...args: Parameters<MapToChainedCommand<GetCommands<ExtensionUnion>>[Key]>
+      ...args: Parameters<MapToChainedCommand<ExtensionUnion['~C']>[Key]>
     ) => ChainedFromExtensions<ExtensionUnion>;
   };
 
 /**
- * Utility type for pulling all the action names from a list
+ * Utility type for pulling all the command names from a list
  */
 export type CommandNames<ExtensionUnion extends AnyExtension> = StringKey<
   CommandsFromExtensions<ExtensionUnion>

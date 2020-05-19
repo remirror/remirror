@@ -1,6 +1,6 @@
 import { ExtensionPriority } from '@remirror/core-constants';
 import { isFunction, object } from '@remirror/core-helpers';
-import { And, NodeViewMethod } from '@remirror/core-types';
+import { And, NodeViewMethod, Shape } from '@remirror/core-types';
 
 import { AnyExtension, Extension, ExtensionFactory } from '../extension';
 import { AnyPreset } from '../preset';
@@ -79,14 +79,7 @@ declare global {
       nodeViews?: boolean;
     }
 
-    interface ExtensionCreatorMethods<
-      Name extends string,
-      Settings extends object,
-      Properties extends object,
-      Commands extends ExtensionCommandReturn,
-      Helpers extends ExtensionHelperReturn,
-      ProsemirrorType = never
-    > {
+    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
       /**
        * Registers one or multiple nodeViews for the extension.
        *

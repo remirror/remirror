@@ -6,6 +6,7 @@ import {
   ExtensionFactory,
   ExtensionHelperReturn,
   ManagerMethodParameter,
+  Shape,
 } from '@remirror/core';
 
 import { DEFAULT_TRANSFORMATIONS, SSRTransformer } from './react-ssr-helpers';
@@ -99,14 +100,7 @@ declare global {
       ssrTransformer: SSRTransformer;
     }
 
-    interface ExtensionCreatorMethods<
-      Name extends string,
-      Settings extends object,
-      Properties extends object,
-      Commands extends ExtensionCommandReturn,
-      Helpers extends ExtensionHelperReturn,
-      ProsemirrorType = never
-    > {
+    interface ExtensionCreatorMethods<Settings extends Shape = {}, Properties extends Shape = {}> {
       /**
        * A method for transforming the SSR JSX received by the extension. Some
        * extensions add decorations to the ProsemirrorView based on their state.

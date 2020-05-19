@@ -21,23 +21,23 @@ import {
   AnyExtension,
   AnyExtensionConstructor,
   AnyManagerStore,
-  CreateLifecycleMethodParameter,
-  CreateLifecycleMethodReturn,
+  CreateLifecycleParameter,
+  CreateLifecycleReturn,
   GetExtensionUnion,
-  InitializeLifecycleMethodParameter,
-  InitializeLifecycleMethodReturn,
+  InitializeLifecycleParameter,
+  InitializeLifecycleReturn,
   ManagerStoreKeys,
   SchemaFromExtensionUnion,
   setDefaultExtensionSettings,
-  ViewLifecycleMethodReturn,
+  ViewLifecycleReturn,
 } from '../extension';
 import { AnyPreset } from '../preset';
 import {
   GetConstructor,
   GetExtensions,
   Of,
-  TransactionHandlerParameter,
   TransactionHandlerReturn,
+  TransactionLifecycleParameter,
 } from '../types';
 import {
   getParameterWithType,
@@ -189,9 +189,9 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * Store the handlers that will be run when for each event method.
    */
   #handlers: {
-    create: CreateLifecycleMethodReturn[];
-    initialize: InitializeLifecycleMethodReturn[];
-    view: ViewLifecycleMethodReturn[];
+    create: CreateLifecycleReturn[];
+    initialize: InitializeLifecycleReturn[];
+    view: ViewLifecycleReturn[];
     transaction: TransactionHandlerReturn[];
     destroy: Array<() => void>;
   } = { initialize: [], transaction: [], view: [], create: [], destroy: [] };
@@ -295,8 +295,6 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
 
     this.#phase = ManagerPhase.Create;
 
-    this.beforeCreate();
-
     for (const extension of this.#extensions) {
       this.onCreateExtensionLoop(extension);
     }
@@ -312,7 +310,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   private setupLifecycleHandlers() {
     const initializeParameter = this.initializeParameter;
     const viewParameter = omit(initializeParameter, ['addPlugins']);
-    const createParameter: Omit<CreateLifecycleMethodParameter, 'settings' | 'properties'> = {
+    const createParameter: Omit<CreateLifecycleParameter, 'settings' | 'properties'> = {
       ...omit(viewParameter, ['getParameter']),
       setDefaultExtensionSettings,
       setManagerMethodParameter: (key, value) => {
@@ -364,19 +362,8 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     }
   }
 
-  private get initializeParameter(): Omit<
-    InitializeLifecycleMethodParameter,
-    'settings' | 'properties'
-  > {
+  private get initializeParameter(): Omit<InitializeLifecycleParameter, 'settings' | 'properties'> {
     return {
-      getParameter: (extension, other) => {
-        invariant(this.#phase >= ManagerPhase.Initialize, {
-          code: ErrorConstant.MANAGER_PHASE_ERROR,
-          message: '`getParameter` should only be called within the returned methods scope.',
-        });
-
-        return getParameterWithType(extension, { ...this.#methodParameter, ...other });
-      },
       addPlugins: this.addPlugins,
       getStoreKey: this.getStoreKey,
       setStoreKey: this.setStoreKey,
@@ -413,15 +400,6 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   };
 
   /**
-   * Called before the extension loop of the initialization phase.
-   */
-  private beforeCreate() {
-    for (const { beforeExtensionLoop } of this.#handlers.create) {
-      beforeExtensionLoop?.();
-    }
-  }
-
-  /**
    * Called after the extension loop of the initialization phase.
    */
   private afterCreate() {
@@ -436,15 +414,6 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   private onCreateExtensionLoop(extension: this['extensions'][number]) {
     for (const { forEachExtension } of this.#handlers.create) {
       forEachExtension?.(extension);
-    }
-  }
-
-  /**
-   * Called before the extension loop of the initialization phase.
-   */
-  private beforeInitialize() {
-    for (const { beforeExtensionLoop } of this.#handlers.initialize) {
-      beforeExtensionLoop?.();
     }
   }
 
@@ -467,23 +436,11 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   }
 
   /**
-   * Called after the extension loop of the initialization phase.
-   */
-  private beforeView(view: EditorView<EditorSchema>) {
-    for (const { beforeExtensionLoop } of this.#handlers.view) {
-      beforeExtensionLoop?.(view);
-    }
-  }
-
-  /**
    * Called during the extension loop of the initialization phase.
    */
-  private onViewExtensionLoop(
-    extension: this['extensions'][number],
-    view: EditorView<EditorSchema>,
-  ) {
+  private onViewExtensionLoop(extension: AnyExtension) {
     for (const { forEachExtension } of this.#handlers.view) {
-      forEachExtension?.(extension, view);
+      forEachExtension?.(extension);
     }
   }
 
@@ -503,8 +460,6 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    */
   private initialize() {
     this.#phase = ManagerPhase.Initialize;
-
-    this.beforeInitialize();
 
     for (const extension of this.#extensions) {
       this.onInitializeExtensionLoop(extension);
@@ -555,10 +510,9 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
   public addView(view: EditorView<SchemaFromExtensionUnion<this['~E']>>) {
     this.#phase = ManagerPhase.AddView;
     this.#store.view = view;
-    this.beforeView(view);
 
     for (const extension of this.#extensions) {
-      this.onViewExtensionLoop(extension, view);
+      this.onViewExtensionLoop(extension);
     }
 
     this.afterView(view);
@@ -636,7 +590,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    *
    * An example usage of this is within the collaboration plugin.
    */
-  public onTransaction(parameter: TransactionHandlerParameter) {
+  public onTransaction(parameter: TransactionLifecycleParameter) {
     for (const handler of this.#handlers.transaction) {
       handler({ ...parameter, view: this.#store.view });
     }
