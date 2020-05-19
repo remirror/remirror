@@ -6,9 +6,9 @@
 ## Installation
 
 ```bash
-yarn add @remirror/extension-tables prosemirror-tables # yarn
-pnpm add @remirror/extension-tables prosemirror-tables # pnpm
-npm install @remirror/extension-tables prosemirror-tables # npm
+yarn add @remirror/extension-tables # yarn
+pnpm add @remirror/extension-tables # pnpm
+npm install @remirror/extension-tables # npm
 ```
 
 ```ts

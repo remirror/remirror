@@ -439,8 +439,14 @@ export const isRemirrorType = (value: unknown): value is RemirrorIdentifierShape
  *
  * @internal
  */
-export const isIdentifierOfType = (value: RemirrorIdentifierShape, type: RemirrorIdentifier) =>
-  value[REMIRROR_IDENTIFIER_KEY] === type;
+export function isIdentifierOfType(
+  value: RemirrorIdentifierShape,
+  type: RemirrorIdentifier | RemirrorIdentifier[],
+) {
+  return isArray(type)
+    ? includes(type, value[REMIRROR_IDENTIFIER_KEY])
+    : type === value[REMIRROR_IDENTIFIER_KEY];
+}
 
 /**
  * Capitalizes a string value.
