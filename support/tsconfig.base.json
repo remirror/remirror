@@ -16,6 +16,7 @@
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "strict": true,
+    "noImplicitAny": true,
     "alwaysStrict": true,
     "resolveJsonModule": true,
     "plugins": [{ "name": "typescript-styled-plugin" }],

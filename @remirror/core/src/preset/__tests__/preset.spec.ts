@@ -26,14 +26,6 @@ class FirstExtension extends PlainExtension<FirstSettings, FirstProperties> {
   public static defaultProperties = { y: 100 };
 
   public readonly name = 'first' as const;
-
-  protected createDefaultSettings() {
-    return FirstExtension.defaultSettings;
-  }
-
-  protected createDefaultProperties() {
-    return FirstExtension.defaultProperties;
-  }
 }
 
 class SecondExtension extends PlainExtension<SecondSettings, SecondProperties> {
@@ -41,29 +33,20 @@ class SecondExtension extends PlainExtension<SecondSettings, SecondProperties> {
   public static defaultProperties = { z: 'property z' };
 
   public readonly name = 'second' as const;
-
-  protected createDefaultSettings() {
-    return SecondExtension.defaultSettings;
-  }
-
-  protected createDefaultProperties() {
-    return SecondExtension.defaultProperties;
-  }
 }
 
 describe('simplest preset', () => {
   class TestPreset extends Preset<Partial<Settings>, Properties> {
-    public readonly name = 'test';
+    public static readonly defaultSettings = {
+      a: FirstExtension.defaultSettings.a,
+      b: SecondExtension.defaultSettings.b ?? 'none specified',
+    };
+    public static readonly defaultProperties = {
+      y: FirstExtension.defaultProperties.y,
+      z: 'override property z',
+    };
+    public readonly name = 'test' as const;
 
-    protected createDefaultSettings() {
-      return {
-        a: FirstExtension.defaultSettings.a,
-        b: SecondExtension.defaultSettings.b ?? 'none specified',
-      };
-    }
-    protected createDefaultProperties() {
-      return { y: FirstExtension.defaultProperties.y, z: 'override property z' };
-    }
     public createExtensions() {
       return [new FirstExtension({}), new SecondExtension({ b: this.settings.b })];
     }

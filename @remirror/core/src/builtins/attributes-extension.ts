@@ -24,14 +24,6 @@ export class AttributesExtension extends PlainExtension {
   public readonly name = 'attributes' as const;
   public readonly defaultPriority = ExtensionPriority.High as const;
 
-  protected createDefaultSettings() {
-    return {};
-  }
-
-  protected createDefaultProperties() {
-    return {};
-  }
-
   /**
    * Create the attributes object on initialization.
    *

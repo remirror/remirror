@@ -11,14 +11,6 @@ export class TextExtension extends NodeExtension {
 
   public readonly name = 'text' as const;
 
-  protected createDefaultSettings() {
-    return TextExtension.defaultSettings;
-  }
-
-  protected createDefaultProperties() {
-    return TextExtension.defaultProperties;
-  }
-
   protected createNodeSpec() {
     return { group: NodeGroup.Inline };
   }

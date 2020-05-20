@@ -31,14 +31,6 @@ export class ParagraphExtension extends NodeExtension<ParagraphExtensionSettings
   public readonly name = 'paragraph' as const;
   public readonly extensionTags = [ExtensionTag.LastNodeCompatible] as const;
 
-  protected createDefaultSettings() {
-    return ParagraphExtension.defaultSettings;
-  }
-
-  protected createDefaultProperties() {
-    return ParagraphExtension.defaultProperties;
-  }
-
   protected createNodeSpec(): NodeExtensionSpec {
     return {
       content: 'inline*',

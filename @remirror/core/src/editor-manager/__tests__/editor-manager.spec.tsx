@@ -20,15 +20,11 @@ describe('Manager', () => {
   const getInformation = jest.fn(() => 'information');
 
   class DummyExtension extends PlainExtension {
+    public static readonly defaultSettings = {};
+    public static readonly defaultProperties = {};
+
     public readonly name = 'dummy' as const;
     public readonly extensionTags = ['simple', ExtensionTag.LastNodeCompatible];
-
-    protected createDefaultSettings() {
-      return {};
-    }
-    protected createDefaultProperties() {
-      return {};
-    }
 
     public createCommands = () => {
       return { dummy: mock };
@@ -48,15 +44,10 @@ describe('Manager', () => {
   }
 
   class BigExtension extends PlainExtension {
+    public static readonly defaultSettings = {};
+    public static readonly defaultProperties = {};
+
     public readonly name = 'big' as const;
-
-    protected createDefaultSettings() {
-      return {};
-    }
-
-    protected createDefaultProperties() {
-      return {};
-    }
 
     public createNodeSpec = () => {
       return {
@@ -87,6 +78,11 @@ describe('Manager', () => {
       editable: () => true,
     });
     manager.addView(view);
+  });
+
+  test('constructor is private', () => {
+    // @ts-expect-error
+    expect(() => new EditorManager({})).toThrowError();
   });
 
   test('commands', () => {
@@ -154,15 +150,10 @@ test('keymaps', () => {
   };
 
   class FirstExtension extends PlainExtension {
+    public static readonly defaultSettings = {};
+    public static readonly defaultProperties = {};
+
     public readonly name = 'first' as const;
-
-    protected createDefaultSettings() {
-      return {};
-    }
-
-    protected createDefaultProperties() {
-      return {};
-    }
 
     public createKeymap = () => {
       return {
@@ -172,15 +163,10 @@ test('keymaps', () => {
   }
 
   class SecondExtension extends PlainExtension {
+    public static readonly defaultSettings = {};
+    public static readonly defaultProperties = {};
+
     public readonly name = 'second' as const;
-
-    protected createDefaultSettings() {
-      return {};
-    }
-
-    protected createDefaultProperties() {
-      return {};
-    }
 
     public createKeymap = () => {
       return {
@@ -190,15 +176,10 @@ test('keymaps', () => {
   }
 
   class ThirdExtension extends PlainExtension {
+    public static readonly defaultSettings = {};
+    public static readonly defaultProperties = {};
+
     public readonly name = 'third' as const;
-
-    protected createDefaultSettings() {
-      return {};
-    }
-
-    protected createDefaultProperties() {
-      return {};
-    }
 
     public createKeymap = () => {
       console.log('creating the keymap 3');

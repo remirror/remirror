@@ -6,7 +6,10 @@ import { ChainedFromExtensions, PlainExtension } from '..';
 import { CommandsFromExtensions } from '../extension-types';
 
 class FirstExtension extends PlainExtension {
-  public name = 'first' as const;
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
+
+  public readonly name = 'first' as const;
 
   public createCommands = () => {
     return {
@@ -21,26 +24,27 @@ class FirstExtension extends PlainExtension {
   };
 }
 
-class SecondExtension extends PlainExtension {
-  public name = 'second' as const;
+class SecondExtension extends PlainExtension<{ option: boolean }> {
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
 
-  protected createDefaultSettings(): import('..').DefaultExtensionSettings<{}> {
-    throw new Error('Method not implemented.');
-  }
-  protected createDefaultProperties() {
-    throw new Error('Method not implemented.');
-  }
+  public readonly name = 'second' as const;
+
+  public createCommands = () => {
+    return {
+      fun: (value: { key?: boolean }) => {
+        return () => false;
+      },
+    };
+  };
 }
 
 class ThirdExtension extends PlainExtension {
-  public name = 'third' as const;
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
 
-  protected createDefaultSettings(): import('..').DefaultExtensionSettings<{}> {
-    throw new Error('Method not implemented.');
-  }
-  protected createDefaultProperties() {
-    throw new Error('Method not implemented.');
-  }
+  public readonly name = 'third' as const;
+
   public createCommands = () => {
     return {
       notChainable: (value: string) => {
@@ -53,12 +57,13 @@ class ThirdExtension extends PlainExtension {
 type Chainable = ChainedFromExtensions<FirstExtension | SecondExtension | ThirdExtension>;
 type Commands = CommandsFromExtensions<FirstExtension | SecondExtension | ThirdExtension>;
 
-const command: Commands['free'] = Cast(() => {});
-const isEnabled: boolean = command.isEnabled();
-command('');
+const commands: Commands = object();
+const isEnabled: boolean = commands.free.isEnabled();
+commands.free('');
 // @ts-expect-error
-command(0);
-const commandOutput: void = command();
+commands.free(0);
+const commandOutput: void = commands.free();
+commands.notChainable('works');
 
 const love: Chainable['love'] = (value: number) => ({} as Chainable);
 // @ts-expect-error
@@ -68,6 +73,6 @@ const chain: Chainable = object();
 
 // @ts-expect-error
 chain.free().love().run();
-chain.free().love(100).run();
+chain.free().love(100).fun({ key: false }).run();
 // @ts-expect-error
 chain.free('asdf').love(20).notChainable().run();

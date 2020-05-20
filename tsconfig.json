@@ -1,26 +1,25 @@
 {
   "extends": "./support/tsconfig.base.json",
   "compilerOptions": {
-    "types": ["node", "jest", "jest-extended/types", "jest-axe", "@testing-library/jest-dom"],
+    "types": ["node", "jest", "jest-extended", "jest-axe", "@testing-library/jest-dom"],
     "noEmit": true,
     "skipLibCheck": false
   },
   "include": ["**/*.ts", "**/*.tsx", "../global.d.ts"],
   "exclude": [
-    "./support/dts-jest/**",
     "**/dist/",
     "**/lib/",
     "dist",
     "lib",
-    "deprecated/**",
+    "deprecated/**"
 
     // TODO remove these temporary exclusions
-    "./deprecated/**",
-    "**/*.test.{ts,tsx}",
-    "**/*.stories.{ts,tsx}",
-    "**/*.spec.{ts,tsx}",
-    "**/__mocks__/**",
-    "**/__tests__/**",
-    "**/__stories__/**"
+    // "./deprecated/**",
+    // "**/*.test.{ts,tsx}",
+    // "**/*.stories.{ts,tsx}",
+    // "**/*.spec.{ts,tsx}",
+    // "**/__mocks__/**",
+    // "**/__tests__/**",
+    // "**/__stories__/**"
   ]
 }

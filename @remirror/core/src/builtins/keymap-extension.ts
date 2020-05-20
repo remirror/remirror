@@ -22,16 +22,11 @@ import { InitializeLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class KeymapExtension extends PlainExtension {
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
+
   public readonly name = 'keymap' as const;
   public readonly defaultPriority = ExtensionPriority.High as const;
-
-  protected createDefaultSettings() {
-    return {};
-  }
-
-  protected createDefaultProperties() {
-    return {};
-  }
 
   /**
    * This adds the `createKeymap` method functionality to all extensions.

@@ -26,16 +26,11 @@ export interface BoldExtensionSettings {
  * or at the provided position range bold.
  */
 export class BoldExtension extends MarkExtension<BoldExtensionSettings> {
+  public static readonly defaultSettings = { weight: null };
+  public static readonly defaultProperties = {};
+
   public readonly name = 'bold' as const;
   public readonly tags = [ExtensionTag.FormattingMark];
-
-  protected createDefaultSettings() {
-    return { weight: null };
-  }
-
-  protected createDefaultProperties() {
-    return {};
-  }
 
   public createMarkSpec(): MarkExtensionSpec {
     const { weight } = this.settings;

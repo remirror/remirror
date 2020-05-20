@@ -1,7 +1,9 @@
 import {
   AnyExtension,
+  AnyExtensionConstructor,
   AnyMarkExtension,
   AnyNodeExtension,
+  EditorManager,
   MarkExtension,
   NodeExtension,
   NodeExtensionSpec,
@@ -20,15 +22,10 @@ const anyMarkExtensionTester = <ExtensionUnion extends AnyMarkExtension>(
 // Extension without settings.
 
 class ExtensionWithoutSettings extends PlainExtension {
-  public name = 'withoutSettings' as const;
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
 
-  protected createDefaultSettings(): import('../extension-base').DefaultExtensionSettings<{}> {
-    throw new Error('Method not implemented.');
-  }
-
-  protected createDefaultProperties() {
-    throw new Error('Method not implemented.');
-  }
+  public readonly name = 'withoutSettings' as const;
 }
 const extensionWithoutSettings = new ExtensionWithoutSettings();
 
@@ -41,17 +38,10 @@ anyExtensionTester(extensionWithoutSettings);
 // Extension with settings
 
 class ExtensionWithSettings extends PlainExtension<{ oops: boolean }> {
-  public name = 'withSettings' as const;
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
 
-  protected createDefaultSettings(): import('../extension-base').DefaultExtensionSettings<{
-    oops: boolean;
-  }> {
-    throw new Error('Method not implemented.');
-  }
-
-  protected createDefaultProperties() {
-    throw new Error('Method not implemented.');
-  }
+  public readonly name = 'withSettings' as const;
 }
 
 // @ts-expect-error
@@ -71,66 +61,42 @@ anyExtensionTester(extensionWithSettings);
 // Extension with properties
 
 class ExtensionWithProperties extends PlainExtension<{ awesome?: string }, { oops: boolean }> {
-  public name = 'withProperties';
+  public static readonly defaultSettings = { awesome: 'never' };
+  public static readonly defaultProperties = { oops: false };
 
-  protected createDefaultSettings(): import('../extension-base').DefaultExtensionSettings<{
-    awesome?: string | undefined;
-  }> {
-    return { awesome: 'never' };
-  }
-  protected createDefaultProperties(): Required<{ oops: boolean }> {
-    return { oops: false };
-  }
+  public readonly name = 'withProperties' as const;
 }
 
 new ExtensionWithProperties();
 
 class NodeExtensionWithProperties extends NodeExtension<{ awesome?: string }, { oops: boolean }> {
-  public name = 'withProperties' as const;
+  public readonly name = 'withProperties' as const;
 
   protected createNodeSpec(): NodeExtensionSpec {
     return {};
   }
-
-  protected createDefaultSettings(): import('../extension-base').DefaultExtensionSettings<{
-    awesome?: string | undefined;
-  }> {
-    return { awesome: 'never' };
-  }
-
-  protected createDefaultProperties(): Required<{ oops: boolean }> {
-    return { oops: false };
-  }
 }
 
 class MarkExtensionWithProperties extends MarkExtension<{ awesome?: string }, { oops: boolean }> {
-  public name = 'withProperties' as const;
+  public static readonly defaultSettings = { awesome: 'nice' };
+  public static readonly defaultProperties = { oops: true };
+
+  public readonly name = 'withProperties' as const;
 
   protected createMarkSpec() {
     return {};
   }
-
-  protected createDefaultSettings(): import('../extension-base').DefaultExtensionSettings<{
-    awesome?: string | undefined;
-  }> {
-    return { awesome: 'never' };
-  }
-
-  protected createDefaultProperties(): Required<{ oops: boolean }> {
-    return { oops: false };
-  }
 }
 
 class InvalidPropertiesExtension extends PlainExtension<{}, { oops: boolean }> {
-  public name = 'withProperties' as const;
-  protected createDefaultSettings(): import('../extension-base').DefaultExtensionSettings<{}> {
-    return {};
-  }
-  protected createDefaultProperties(): Required<{ oops: boolean }> {
-    // @ts-expect-error
-    return {};
-  }
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
+
+  public readonly name = 'withProperties' as const;
 }
+
+function fn<Type extends AnyExtension>(extension: Type) {}
+fn(new InvalidPropertiesExtension());
 
 const extensionWithProperties = new ExtensionWithProperties({ properties: { oops: true } });
 const anyExtensionsSupportsProperties: AnyExtension = extensionWithProperties;

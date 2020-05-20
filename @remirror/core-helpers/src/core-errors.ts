@@ -46,6 +46,8 @@ if (process.env.NODE !== 'production') {
       'Command method names must be unique within the editor.',
     [ErrorConstant.DUPLICATE_HELPER_NAMES]: 'Helper method names must be unique within the editor.',
     [ErrorConstant.NON_CHAINABLE_COMMAND]: 'Attempted to chain a non chainable command.',
+    [ErrorConstant.INVALID_EXTENSION]: 'The provided extension is invalid.',
+    [ErrorConstant.INVALID_PRESET]: 'The provided preset is invalid.',
     [ErrorConstant.INVALID_NAME]: 'An invalid name was used for the extension.',
     [ErrorConstant.EXTENSION]:
       'An error occurred within an extension. More details should be made available.',
@@ -65,7 +67,7 @@ function isErrorConstant(code: unknown): code is ErrorConstant {
 function createErrorMessage(code: ErrorConstant, extraMessage?: string) {
   const message = errorMessageMap[code];
   const prefix = message ? `${message}\n\n` : '';
-  const customMessage = extraMessage ? `${extraMessage}\n\n` : '';
+  const customMessage = extraMessage ? `${extraMessage}\n` : '';
 
   return `${prefix}${customMessage}For more information visit ${ERROR_INFORMATION_URL}#${code}`;
 }

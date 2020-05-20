@@ -21,14 +21,6 @@ export class CorePreset extends Preset<CorePresetSettings> {
 
   public readonly name = 'core' as const;
 
-  protected createDefaultSettings() {
-    return CorePreset.defaultSettings;
-  }
-
-  protected createDefaultProperties() {
-    return CorePreset.defaultProperties;
-  }
-
   /**
    * No properties are defined so this can be ignored.
    */

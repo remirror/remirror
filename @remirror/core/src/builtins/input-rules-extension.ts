@@ -16,16 +16,11 @@ import { InitializeLifecycleMethod, PlainExtension } from '../extension';
  * @builtin
  */
 export class InputRulesExtension extends PlainExtension {
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
+
   public readonly name = 'inputRules' as const;
   public readonly defaultPriority = ExtensionPriority.High as const;
-
-  protected createDefaultSettings() {
-    return {};
-  }
-
-  protected createDefaultProperties() {
-    return {};
-  }
 
   /**
    * Ensure that all ssr transformers are run.

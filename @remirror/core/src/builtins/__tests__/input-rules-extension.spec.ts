@@ -2,6 +2,6 @@ import { isExtensionValid } from '@remirror/test-fixtures';
 
 import { InputRulesExtension } from '..';
 
-test('is valid', () => {
+test('is input rules extension valid', () => {
   expect(isExtensionValid(InputRulesExtension, {}));
 });

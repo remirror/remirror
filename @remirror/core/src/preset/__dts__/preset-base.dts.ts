@@ -9,30 +9,21 @@ class PresetNoName extends Preset {}
 
 // @ts-expect-error
 class NoExtensionPreset extends Preset {
-  public name = 'noExtensions';
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
 
-  protected createDefaultSettings() {
-    return {};
-  }
-  protected createDefaultProperties() {
-    return {};
-  }
+  public readonly name = 'noExtensions' as const;
+
   protected onSetProperties(): void {
     return;
   }
 }
 
 class MissingSettingsPreset extends Preset<{ oops?: boolean }> {
-  public name = 'missingSettings' as const;
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
 
-  protected createDefaultProperties() {
-    return {};
-  }
-
-  // @ts-expect-error
-  protected createDefaultSettings() {
-    return { a: '', oops: 'wrong type' };
-  }
+  public readonly name = 'missingSettings' as const;
 
   protected onSetProperties(): void {
     return;
@@ -47,33 +38,21 @@ class ExtensionWithSettings extends PlainExtension<{ oops: boolean }> {
   public static readonly defaultSettings = {};
   public static readonly defaultProperties = {};
 
-  public name = 'withSettings' as const;
-
-  protected createDefaultSettings() {
-    return {};
-  }
-  protected createDefaultProperties() {
-    return {};
-  }
+  public readonly name = 'withSettings' as const;
 }
 
 class WithSettingsPreset extends Preset<{ me: 'friend' | 'enemy' }> {
-  public name = 'withSettings' as const;
+  public static readonly defaultSettings = { me: 'friend' };
+  public static readonly defaultProperties = {};
 
-  protected createDefaultProperties() {
-    return {};
-  }
-
-  protected createDefaultSettings() {
-    return { me: 'friend' as const };
-  }
-
-  protected onSetProperties(): void {
-    return;
-  }
+  public readonly name = 'withSettings' as const;
 
   public createExtensions() {
     return [new ExtensionWithSettings({ oops: false })];
+  }
+
+  protected onSetProperties() {
+    throw new Error('Method not implemented.');
   }
 }
 
@@ -92,15 +71,10 @@ const temp1: RemirrorIdentifier.Preset = anyPresetWithSettings['~~remirror~~'];
 const temp2: RemirrorIdentifier.Extension = anyPresetWithSettings['~~remirror~~'];
 
 class WithPropertiesPreset extends Preset<{ me?: string }, { required: boolean }> {
-  public name = 'withSettings' as const;
+  public static readonly defaultSettings = { required: true };
+  public static readonly defaultProperties = { me: 'friend' };
 
-  protected createDefaultProperties() {
-    return { required: true };
-  }
-
-  protected createDefaultSettings() {
-    return { me: 'friend' };
-  }
+  public readonly name = 'withSettings' as const;
 
   protected onSetProperties(parameter: SetPresetPropertiesParameter<{ required: boolean }>): void {
     const { changes } = parameter;
@@ -110,7 +84,8 @@ class WithPropertiesPreset extends Preset<{ me?: string }, { required: boolean }
 
     if (changes.required.changed) {
       const extension = this.getExtension(ExtensionWithSettings);
-      changes.required.value;
+      ignoreUnused(changes.required.value);
+      ignoreUnused(changes.required.previousValue);
     }
   }
 

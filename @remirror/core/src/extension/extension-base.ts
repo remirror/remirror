@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import {
+  ErrorConstant,
   ExtensionPriority,
   ExtensionTag,
   REMIRROR_IDENTIFIER_KEY,
@@ -9,7 +10,9 @@ import {
 import {
   deepMerge,
   freeze,
+  invariant,
   isIdentifierOfType,
+  isPlainObject,
   isRemirrorType,
   object,
 } from '@remirror/core-helpers';
@@ -41,232 +44,24 @@ import {
 } from '../types';
 
 /**
- * The type which is applicable to any extension instance.
- */
-export type AnyExtension<Settings extends Shape = Shape, Properties extends Shape = Shape> = Omit<
-  Extension<Settings, Properties>,
-  'constructor'
-> & { constructor: AnyExtensionConstructor };
-
-/**
- * The type which is applicable to any extension instance.
- */
-export type AnyExtensionConstructor = ExtensionConstructor<any, any>;
-
-/**
- * The type for any potential PlainExtension.
- */
-export type AnyPlainExtension = Omit<PlainExtension<any, any>, 'constructor'> & {
-  constructor: AnyExtensionConstructor;
-};
-
-/**
- * The type for any potential NodeExtension.
- */
-export type AnyNodeExtension = Omit<NodeExtension<any, any>, 'constructor'> & {
-  constructor: AnyExtensionConstructor;
-};
-
-/**
- * The type for any potential MarkExtension.
- */
-export type AnyMarkExtension = Omit<MarkExtension<any, any>, 'constructor'> & {
-  constructor: AnyExtensionConstructor;
-};
-
-/**
- * These are the default options merged into every extension. They can be
- * overridden.
- */
-export const defaultSettings: Required<BaseExtensionSettings> = {
-  priority: null,
-  extraAttributes: [],
-  exclude: {},
-} as any;
-
-/**
- * Set the value for a key of the default settings.
+ * Extensions are fundamental to the way that Remirror works by grouping
+ * together the functionality and handling the management of similar concerns.
  *
  * @remarks
  *
- * This is a dangerous method since it allows you to mutate the received object.
- * Don't use it unless you absolutely have to.
- *
- * A potential use case is for adding a new default option to all extensions. It
- * shows an example of how to accomplish this in a typesafe way.
- *
- * @example
- *
- * ```ts
- * import { mutateDefaultExtensionSettings } from 'remirror/core';
- *
- * mutateDefaultExtensionSettings((settings) => {
- *   // Set the default value of all extensions to have a property `customSetting` with value `false`.
- *   settings.customSetting = false;
- * })
- *
- * declare global {
- *   namespace Remirror {
- *     interface BaseExtensionSettings {
- *       customSetting?: boolean;
- *     }
- *   }
- * }
- * ```
- *
- * The mutation must happen before any extension have been instantiated.
- */
-export function mutateDefaultExtensionSettings(
-  mutatorMethod: (defaultSettings: BaseExtensionSettings) => void,
-): void {
-  mutatorMethod(defaultSettings);
-}
-
-/**
- * Determines if the passed value is an extension.
- *
- * @param value - the value to test
- */
-export function isExtension<Settings extends Shape = Shape, Properties extends Shape = Shape>(
-  value: unknown,
-): value is AnyExtension<Settings, Properties> {
-  return (
-    isRemirrorType(value) &&
-    isIdentifierOfType(value, [
-      RemirrorIdentifier.PlainExtension,
-      RemirrorIdentifier.MarkExtension,
-      RemirrorIdentifier.NodeExtension,
-    ])
-  );
-}
-
-/**
- * Determines if the passed value is an extension constructor.
- *
- * @param value - the value to test
- */
-export function isExtensionConstructor(value: unknown): value is AnyExtensionConstructor {
-  return (
-    isRemirrorType(value) &&
-    isIdentifierOfType(value, [
-      RemirrorIdentifier.PlainExtensionConstructor,
-      RemirrorIdentifier.MarkExtensionConstructor,
-      RemirrorIdentifier.NodeExtensionConstructor,
-    ])
-  );
-}
-
-/**
- * Checks whether the provided value is a plain extension.
- *
- * @param value - the extension to check
- */
-export function isPlainExtension(value: unknown): value is AnyPlainExtension {
-  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.PlainExtension);
-}
-
-/**
- * Determines if the passed in extension is a node extension. Useful as a type
- * guard where a particular type of extension is needed.
- *
- * @param value - the extension to check
- */
-export function isNodeExtension(value: unknown): value is AnyNodeExtension {
-  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.NodeExtension);
-}
-
-/**
- * Determines if the passed in extension is a mark extension. Useful as a type
- * guard where a particular type of extension is needed.
- *
- * @param value - the extension to check
- */
-export function isMarkExtension(value: unknown): value is AnyMarkExtension {
-  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.MarkExtension);
-}
-
-/**
- * Adds a partial and optional properties key to the provided object.
- *
- * This is used to allow for the settings object to also define some initial
- * properties when being constructed.
- */
-export type WithProperties<Type extends Shape, Properties extends Shape = {}> = And<
-  Type,
-  Partial<PartialProperties<Properties>>
->;
-
-/**
- * Auto infers the parameter for the extension constructor. If there is a
- * required setting then it won't compile without that setting defined.
- */
-export type ExtensionConstructorParameter<
-  Settings extends Shape,
-  Properties extends Shape
-> = IfNoRequiredProperties<
-  Settings,
-  [WithProperties<Settings & BaseExtensionSettings, Properties>?],
-  [WithProperties<Settings & BaseExtensionSettings, Properties>]
->;
-
-interface ExtensionConstructor<Settings extends Shape = {}, Properties extends Shape = {}>
-  extends Function {
-  new (...parameters: ExtensionConstructorParameter<Settings, Properties>): Extension<
-    Settings,
-    Shape
-  >;
-
-  /**
-   * The identifier for the constructor which can determine whether it is a node
-   * constructor, mark constructor or plain constructor.
-   * @internal
-   */
-  readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
-
-  /**
-   * Defines the `defaultSettings` for all extension instances.
-   *
-   * @remarks
-   *
-   * Once set it can't be updated during run time. Some of the settings are
-   * optional and some are not. Any non-required settings must be specified in
-   * the `defaultSettings`.
-   *
-   * This must be set when creating the extension, even if just to the empty
-   * object when no properties are used at runtime.
-   *
-   * **Please note**: There is a slight downside when setting up
-   * `defaultSettings`. `undefined` is not supported for partial settings at
-   * this point in time. As a workaround use `null` as the type and pass it as
-   * the value in the default settings.
-   *
-   * @internal
-   */
-  readonly defaultSettings: DefaultExtensionSettings<Settings>;
-
-  /**
-   * A method that creates the default properties. All properties must have a
-   * default property assigned.
-   */
-  readonly defaultProperties: Required<Properties>;
-}
-
-/**
- * Extensions are fundamental to the way that Remirror works and they handle the
- * management of similar concerns.
- *
- * @remarks
- *
- * They allows for grouping items that affect editor functionality.
+ *  Extension can adjust editor functionality in any way. Here are some
+ *  examples.
  *
  * - How the editor displays certain content, i.e. **bold**, _italic_,
  *   **underline**.
- * - Which commands should be made available e.g. `actions.bold()` to make
+ * - Which commands should be made available e.g. `commands.toggleBold()` to make
  *   selected text bold.
- * - Check if a command is currently active or enabled e.g.
- *   `actions.bold.isActive()`.
- * - Register Prosemirror plugins, keymaps, input rules paste rules and custom
- *   nodeViews which affect the behavior of the editor.
+ * - Check if a command is currently enabled (it would have an impact if run) e.g.
+ *   `commands.toggleBold.isEnabled()`.
+ * - Register Prosemirror `Plugin`s, `keymap`s, `InputRule`s `PasteRule`s and custom
+ *   `nodeViews` which affect the behavior of the editor.
+ *
+ *
  *
  * There are three types of `Extension`.
  *
@@ -283,15 +78,27 @@ interface ExtensionConstructor<Settings extends Shape = {}, Properties extends S
  * import { PlainExtension } from '@remirror/core';
  *
  * interface AwesomeExtensionSettings {
- *   isAwesome: boolean;
+ *   isAwesome?: boolean;
  * }
  *
  * interface AwesomeExtensionProperties {
  *   id: string;
  * }
  *
- * class AwesomeExtension extends PlainExtension<AwesomeExtensionSettings, AwesomeExtensionProperties> {
- *   name = 'awesome' as const;
+ * class AwesomeExtension extends PlainExtension<
+ *   AwesomeExtensionSettings,
+ *   AwesomeExtensionProperties
+ * > {
+ *   public static defaultSettings: DefaultExtensionSettings<
+ *     AwesomeExtensionSettings
+ *   > = {
+ *     isAwesome: true,
+ *   }
+ *   public static defaultProperties: Required<AwesomeExtensionProperties> = {
+ *     id: '',
+ *   }
+ *
+ *   public readonly name = 'awesome' as const;
  * }
  * ```
  */
@@ -373,6 +180,8 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
   #properties: Required<Properties>;
 
   constructor(...parameters: ExtensionConstructorParameter<Settings, Properties>) {
+    isValidExtensionConstructor(this.constructor);
+
     const [settings] = parameters;
 
     this.#settings = deepMerge(
@@ -589,7 +398,7 @@ export abstract class MarkExtension<
    * the `toDOM` method doesn't allow dom manipulation. You can only return an
    * array or string.
    *
-   * For more advanced requirements, it may be possible to create a nodeView to
+   * For more advanced requirements, it may be possible to create a `nodeView` to
    * manage the dom interactions.
    */
   readonly #spec: MarkExtensionSpec;
@@ -687,6 +496,240 @@ export abstract class NodeExtension<
    * {@link https://prosemirror.net/docs/guide/#schema docs}.
    */
   protected abstract createNodeSpec(): NodeExtensionSpec;
+}
+
+/**
+ * The type which is applicable to any extension instance.
+ */
+export type AnyExtension<Settings extends Shape = Shape, Properties extends Shape = Shape> = Omit<
+  Extension<Settings, Properties>,
+  'constructor'
+> & { constructor: AnyExtensionConstructor };
+
+/**
+ * The type which is applicable to any extension instance.
+ */
+export type AnyExtensionConstructor = ExtensionConstructor<any, any>;
+
+/**
+ * The type for any potential PlainExtension.
+ */
+export type AnyPlainExtension = Omit<PlainExtension<any, any>, 'constructor'> & {
+  constructor: AnyExtensionConstructor;
+};
+
+/**
+ * The type for any potential NodeExtension.
+ */
+export type AnyNodeExtension = Omit<NodeExtension<any, any>, 'constructor'> & {
+  constructor: AnyExtensionConstructor;
+};
+
+/**
+ * The type for any potential MarkExtension.
+ */
+export type AnyMarkExtension = Omit<MarkExtension<any, any>, 'constructor'> & {
+  constructor: AnyExtensionConstructor;
+};
+
+/**
+ * These are the default options merged into every extension. They can be
+ * overridden.
+ */
+const defaultSettings: Required<BaseExtensionSettings> = {
+  priority: null,
+  extraAttributes: [],
+  exclude: {},
+} as any;
+
+/**
+ * Set the value for a key of the default settings.
+ *
+ * @remarks
+ *
+ * This is a dangerous method since it allows you to mutate the received object.
+ * Don't use it unless you absolutely have to.
+ *
+ * A potential use case is for adding a new default option to all extensions. It
+ * shows an example of how to accomplish this in a typesafe way.
+ *
+ * @example
+ *
+ * ```ts
+ * import { mutateDefaultExtensionSettings } from 'remirror/core';
+ *
+ * mutateDefaultExtensionSettings((settings) => {
+ *   // Set the default value of all extensions to have a property `customSetting` with value `false`.
+ *   settings.customSetting = false;
+ * })
+ *
+ * declare global {
+ *   namespace Remirror {
+ *     interface BaseExtensionSettings {
+ *       customSetting?: boolean;
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * The mutation must happen before any extension have been instantiated.
+ */
+export function mutateDefaultExtensionSettings(
+  mutatorMethod: (defaultSettings: BaseExtensionSettings) => void,
+): void {
+  mutatorMethod(defaultSettings);
+}
+
+/**
+ * Determines if the passed value is an extension.
+ *
+ * @param value - the value to test
+ */
+export function isExtension<Settings extends Shape = Shape, Properties extends Shape = Shape>(
+  value: unknown,
+): value is AnyExtension<Settings, Properties> {
+  return (
+    isRemirrorType(value) &&
+    isIdentifierOfType(value, [
+      RemirrorIdentifier.PlainExtension,
+      RemirrorIdentifier.MarkExtension,
+      RemirrorIdentifier.NodeExtension,
+    ])
+  );
+}
+
+/**
+ * Checks that the extension has a valid constructor with the `defaultSettings`
+ * and `defaultProperties` defined as static properties.
+ */
+export function isValidExtensionConstructor(
+  Constructor: unknown,
+): asserts Constructor is AnyExtensionConstructor {
+  invariant(isExtensionConstructor(Constructor), {
+    message: 'This is not a valid extension constructor',
+    code: ErrorConstant.INVALID_EXTENSION,
+  });
+
+  invariant(isPlainObject(Constructor.defaultSettings), {
+    message: `No static 'defaultSettings' provided for '${Constructor.name}'.\n`,
+    code: ErrorConstant.INVALID_EXTENSION,
+  });
+
+  invariant(isPlainObject(Constructor.defaultProperties), {
+    message: `No static 'defaultProperties' provided for '${Constructor.name}'.\n`,
+    code: ErrorConstant.INVALID_EXTENSION,
+  });
+}
+
+/**
+ * Determines if the passed value is an extension constructor.
+ *
+ * @param value - the value to test
+ */
+export function isExtensionConstructor(value: unknown): value is AnyExtensionConstructor {
+  return (
+    isRemirrorType(value) &&
+    isIdentifierOfType(value, [
+      RemirrorIdentifier.PlainExtensionConstructor,
+      RemirrorIdentifier.MarkExtensionConstructor,
+      RemirrorIdentifier.NodeExtensionConstructor,
+    ])
+  );
+}
+
+/**
+ * Checks whether the provided value is a plain extension.
+ *
+ * @param value - the extension to check
+ */
+export function isPlainExtension(value: unknown): value is AnyPlainExtension {
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.PlainExtension);
+}
+
+/**
+ * Determines if the passed in extension is a node extension. Useful as a type
+ * guard where a particular type of extension is needed.
+ *
+ * @param value - the extension to check
+ */
+export function isNodeExtension(value: unknown): value is AnyNodeExtension {
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.NodeExtension);
+}
+
+/**
+ * Determines if the passed in extension is a mark extension. Useful as a type
+ * guard where a particular type of extension is needed.
+ *
+ * @param value - the extension to check
+ */
+export function isMarkExtension(value: unknown): value is AnyMarkExtension {
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.MarkExtension);
+}
+
+/**
+ * Adds a partial and optional properties key to the provided object.
+ *
+ * This is used to allow for the settings object to also define some initial
+ * properties when being constructed.
+ */
+export type WithProperties<Type extends Shape, Properties extends Shape = {}> = And<
+  Type,
+  Partial<PartialProperties<Properties>>
+>;
+
+/**
+ * Auto infers the parameter for the extension constructor. If there is a
+ * required setting then it won't compile without that setting defined.
+ */
+export type ExtensionConstructorParameter<
+  Settings extends Shape,
+  Properties extends Shape
+> = IfNoRequiredProperties<
+  Settings,
+  [WithProperties<Settings & BaseExtensionSettings, Properties>?],
+  [WithProperties<Settings & BaseExtensionSettings, Properties>]
+>;
+
+interface ExtensionConstructor<Settings extends Shape = {}, Properties extends Shape = {}>
+  extends Function {
+  new (...parameters: ExtensionConstructorParameter<Settings, Properties>): Extension<
+    Settings,
+    Shape
+  >;
+
+  /**
+   * The identifier for the constructor which can determine whether it is a node
+   * constructor, mark constructor or plain constructor.
+   * @internal
+   */
+  readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
+
+  /**
+   * Defines the `defaultSettings` for all extension instances.
+   *
+   * @remarks
+   *
+   * Once set it can't be updated during run time. Some of the settings are
+   * optional and some are not. Any non-required settings must be specified in
+   * the `defaultSettings`.
+   *
+   * This must be set when creating the extension, even if just to the empty
+   * object when no properties are used at runtime.
+   *
+   * **Please note**: There is a slight downside when setting up
+   * `defaultSettings`. `undefined` is not supported for partial settings at
+   * this point in time. As a workaround use `null` as the type and pass it as
+   * the value in the default settings.
+   *
+   * @internal
+   */
+  readonly defaultSettings: DefaultExtensionSettings<Settings>;
+
+  /**
+   * A method that creates the default properties. All properties must have a
+   * default property assigned.
+   */
+  readonly defaultProperties: Required<Properties>;
 }
 
 /**

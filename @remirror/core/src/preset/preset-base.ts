@@ -8,6 +8,7 @@ import {
   deepMerge,
   invariant,
   isIdentifierOfType,
+  isPlainObject,
   isRemirrorType,
   object,
   uniqueBy,
@@ -21,69 +22,6 @@ import {
   PropertiesUpdateReason,
   PropertiesUpdateReasonParameter,
 } from '../types';
-
-/**
- * The type which is applicable to any `Preset` instances.
- */
-export type AnyPreset = Omit<Preset<any, any>, 'constructor'> & {
-  constructor: AnyPresetConstructor;
-};
-
-/**
- * The type which is applicable to any `Preset` constructor.
- */
-export type AnyPresetConstructor = PresetConstructor<any, any>;
-
-/**
- *
- */
-export interface PresetConstructor<Settings extends Shape = {}, Properties extends Shape = {}>
-  extends Function {
-  /**
-   * The identifier for the constructor which identifies it as a preset constructor.
-   * @internal
-   */
-  readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
-
-  /**
-   * Default settings.
-   */
-  readonly defaultSettings: FlipPartialAndRequired<Settings>;
-
-  /**
-   * Default properties.
-   */
-  readonly defaultProperties: Required<Properties>;
-
-  new (...args: PresetConstructorParameter<Settings, Properties>): Preset<Settings, Shape>;
-}
-
-/**
- * Determines if the passed in value is a preset.
- *
- * @param value - the preset to check
- */
-export function isPreset(value: unknown): value is AnyPreset {
-  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Preset);
-}
-
-/**
- * Determines if the passed in value is a preset constructor.
- *
- * @param value - the value to test
- */
-export function isPresetConstructor(value: unknown): value is AnyPresetConstructor {
-  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.PresetConstructor);
-}
-
-export type PresetConstructorParameter<
-  Settings extends Shape,
-  Properties extends Shape
-> = IfNoRequiredProperties<
-  Settings,
-  [WithProperties<Settings, Properties>?],
-  [WithProperties<Settings, Properties>]
->;
 
 /**
  * A preset is our way of bundling similar extensions with unified
@@ -149,30 +87,18 @@ export abstract class Preset<Settings extends Shape = {}, Properties extends Sha
    */
   #hasInitialized = false;
 
-  /**
-   * Cached `defaultSettings`.
-   */
-  #defaultSettings: FlipPartialAndRequired<Settings>;
-
-  /**
-   * Cached `defaultProperties`.
-   */
-  #defaultProperties: Required<Properties>;
-
   constructor(...parameters: PresetConstructorParameter<Settings, Properties>) {
+    isValidPresetConstructor(this.constructor);
     const [settings] = parameters;
-
-    this.#defaultSettings = this.createDefaultSettings();
-    this.#defaultProperties = this.createDefaultProperties();
 
     // Create the preset settings.
     this.#settings = deepMerge(object(), {
-      ...this.#defaultSettings,
+      ...this.constructor.defaultSettings,
       ...settings,
     });
 
     // Create the preset properties.
-    this.#properties = { ...this.#defaultProperties, ...settings?.properties };
+    this.#properties = { ...this.constructor.defaultProperties, ...settings?.properties };
 
     // Create the extension list.
     this.#extensions = uniqueBy(
@@ -190,21 +116,6 @@ export abstract class Preset<Settings extends Shape = {}, Properties extends Sha
     this.setProperties(this.#properties);
     this.#hasInitialized = true;
   }
-
-  /**
-   * Define the `defaultSettings` for this preset.
-   *
-   * @internal
-   */
-  protected abstract createDefaultSettings(): FlipPartialAndRequired<Settings>;
-
-  /**
-   * A method that creates the default properties. All properties must have a
-   * default value assigned.
-   *
-   * @internal
-   */
-  protected abstract createDefaultProperties(): Required<Properties>;
 
   /**
    * Create the extensions which will be consumed by the preset.
@@ -247,7 +158,7 @@ export abstract class Preset<Settings extends Shape = {}, Properties extends Sha
       reason,
       changes,
       properties,
-      defaultProperties: this.#defaultProperties,
+      defaultProperties: this.constructor.defaultProperties,
     });
 
     // The constructor already sets the properties to their default values.
@@ -263,7 +174,7 @@ export abstract class Preset<Settings extends Shape = {}, Properties extends Sha
     const previousProperties = this.#properties;
     const { changes, properties } = getChangedProperties({
       previousProperties,
-      update: this.#defaultProperties,
+      update: this.constructor.defaultProperties,
     });
 
     // Trigger the update handler so that child extension properties can also be
@@ -272,7 +183,7 @@ export abstract class Preset<Settings extends Shape = {}, Properties extends Sha
       reason: 'reset',
       properties,
       changes,
-      defaultProperties: this.#defaultProperties,
+      defaultProperties: this.constructor.defaultProperties,
     });
 
     // Update the stored properties value.
@@ -334,5 +245,99 @@ export interface SetPresetPropertiesParameter<Properties extends Shape = {}>
   extends DefaultPropertiesParameter<Properties>,
     GetChangedPropertiesReturn<Properties>,
     PropertiesUpdateReasonParameter {}
+
+/**
+ * The type which is applicable to any `Preset` instances.
+ */
+export type AnyPreset = Omit<Preset<any, any>, 'constructor'> & {
+  constructor: AnyPresetConstructor;
+};
+
+/**
+ * The type which is applicable to any `Preset` constructor.
+ */
+export type AnyPresetConstructor = PresetConstructor<any, any>;
+
+export type DefaultPresetSettings<Settings extends Shape> = FlipPartialAndRequired<Settings>;
+
+/**
+ *
+ */
+export interface PresetConstructor<Settings extends Shape = {}, Properties extends Shape = {}>
+  extends Function {
+  /**
+   * The identifier for the constructor which identifies it as a preset constructor.
+   * @internal
+   */
+  readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
+
+  /**
+   * Default settings.
+   */
+  readonly defaultSettings: DefaultPresetSettings<Settings>;
+
+  /**
+   * Default properties.
+   */
+  readonly defaultProperties: Required<Properties>;
+
+  new (...args: PresetConstructorParameter<Settings, Properties>): Preset<Settings, Shape>;
+}
+
+/**
+ * Determines if the passed in value is a preset.
+ *
+ * @param value - the preset to check
+ */
+export function isPreset(value: unknown): value is AnyPreset {
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.Preset);
+}
+
+/**
+ * Determines if the passed in value is a preset constructor.
+ *
+ * @param value - the value to test
+ */
+export function isPresetConstructor(value: unknown): value is AnyPresetConstructor {
+  return isRemirrorType(value) && isIdentifierOfType(value, RemirrorIdentifier.PresetConstructor);
+}
+
+/**
+ * Checks that the preset has a valid constructor with the `defaultSettings`
+ * and `defaultProperties` defined as static properties.
+ */
+export function isValidPresetConstructor(
+  Constructor: unknown,
+): asserts Constructor is AnyPresetConstructor {
+  invariant(isPresetConstructor(Constructor), {
+    message: 'This is not a valid extension constructor',
+    code: ErrorConstant.INVALID_PRESET,
+  });
+
+  invariant(isPlainObject(Constructor.defaultSettings), {
+    message: `No static 'defaultSettings' provided for '${Constructor.name}'.\n`,
+    code: ErrorConstant.INVALID_PRESET,
+  });
+
+  invariant(isPlainObject(Constructor.defaultProperties), {
+    message: `No static 'defaultProperties' provided for '${Constructor.name}'.\n`,
+    code: ErrorConstant.INVALID_PRESET,
+  });
+}
+
+/**
+ * Automatically infers whether the constructor parameter is required for the
+ * Preset.
+ *
+ * - Required when any of the settings are not optional.
+ */
+export type PresetConstructorParameter<
+  Settings extends Shape,
+  Properties extends Shape
+> = IfNoRequiredProperties<
+  Settings,
+  [WithProperties<Settings, Properties>?],
+  [WithProperties<Settings, Properties>]
+>;
 
 /* eslint-enable @typescript-eslint/explicit-member-accessibility */

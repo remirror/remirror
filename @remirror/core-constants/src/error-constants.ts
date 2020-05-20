@@ -92,6 +92,12 @@ export enum ErrorConstant {
   /** Attempted to chain a non chainable command. */
   NON_CHAINABLE_COMMAND = 'RMR0018',
 
+  /** The provided extension is invalid. */
+  INVALID_EXTENSION = 'RMR0019',
+
+  /** The provided preset is invalid. */
+  INVALID_PRESET = 'RMR0020',
+
   /** An invalid name was used for the extension. */
   INVALID_NAME = 'RMR0050',
 

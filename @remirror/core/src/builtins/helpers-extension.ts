@@ -28,15 +28,10 @@ import { ExtensionHelperReturn } from '../types';
  * @builtin
  */
 export class HelpersExtension extends PlainExtension {
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
+
   public readonly name = 'helpers' as const;
-
-  protected createDefaultSettings() {
-    return {};
-  }
-
-  protected createDefaultProperties() {
-    return {};
-  }
 
   /**
    * Provide a method with access to the helpers for use in commands and helpers.

@@ -39,14 +39,6 @@ export class CommandsExtension extends PlainExtension {
 
   public readonly name = 'commands' as const;
 
-  public createDefaultSettings() {
-    return {};
-  }
-
-  public createDefaultProperties() {
-    return {};
-  }
-
   public onCreate: CreateLifecycleMethod = (parameter) => {
     return {
       afterExtensionLoop() {

@@ -39,15 +39,10 @@ export const builtInExtensions = [
  * @builtin
  */
 export class BuiltinPreset extends Preset {
-  public name = 'builtin' as const;
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
 
-  protected createDefaultSettings() {
-    return {};
-  }
-
-  protected createDefaultProperties() {
-    return {};
-  }
+  public readonly name = 'builtin' as const;
 
   protected onSetProperties(): void {
     return;

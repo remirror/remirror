@@ -8,15 +8,10 @@ import { createBaseManager } from '@remirror/test-fixtures';
 import { NodeExtension } from '..';
 
 class CustomExtension extends NodeExtension {
-  public name = 'custom' as const;
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
 
-  protected createDefaultSettings() {
-    return {};
-  }
-
-  protected createDefaultProperties() {
-    return {};
-  }
+  public readonly name = 'custom' as const;
 
   public createNodeSpec(): NodeExtensionSpec {
     return {

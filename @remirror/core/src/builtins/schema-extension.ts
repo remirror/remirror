@@ -26,6 +26,85 @@ import {
 import { AnyPreset } from '../preset';
 
 /**
+ * This extension creates the schema that is used throughout the rest of the
+ * extension.
+ *
+ * @builtin
+ */
+export class SchemaExtension extends PlainExtension {
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
+
+  public readonly name = 'schema' as const;
+
+  /**
+   * This extension is essential and hence the priority is set to high.
+   */
+  public readonly defaultPriority = ExtensionPriority.High;
+
+  public onCreate: CreateLifecycleMethod = (parameter) => {
+    const { managerSettings } = parameter;
+    const nodes: Record<string, NodeExtensionSpec> = object();
+    const marks: Record<string, MarkExtensionSpec> = object();
+    const extraAttributes: Record<string, ExtraAttributes[]> = object();
+
+    for (const attributeGroup of managerSettings.extraAttributes ?? []) {
+      for (const identifier of attributeGroup.identifiers) {
+        const currentValue = extraAttributes[identifier] ?? [];
+        extraAttributes[identifier] = [...currentValue, ...attributeGroup.attributes];
+      }
+    }
+
+    return {
+      forEachExtension(extension) {
+        const currentAttributes = extraAttributes[extension.name] ?? [];
+        extraAttributes[extension.name] = [
+          ...currentAttributes,
+          ...(extension.settings.extraAttributes ?? []),
+        ];
+
+        if (isNodeExtension(extension)) {
+          const { name, spec } = extension;
+          nodes[name] = transformSchemaAttributes(extraAttributes[extension.name], spec);
+        }
+
+        if (isMarkExtension(extension)) {
+          const { name, spec } = extension;
+
+          marks[name] = transformSchemaAttributes(extraAttributes[extension.name], spec);
+        }
+      },
+
+      afterExtensionLoop() {
+        const { setStoreKey, setExtensionStore } = parameter;
+
+        const schema = new Schema({ nodes, marks });
+
+        setStoreKey('nodes', nodes);
+        setStoreKey('marks', marks);
+        setStoreKey('schema', schema);
+        setExtensionStore('schema', schema);
+      },
+    };
+  };
+}
+
+/**
+ * The interface for adding extra attributes to multiple node and mark extensions.
+ */
+export interface ExtraSchemaAttributes {
+  /**
+   * The string identifiers for the extension.
+   */
+  identifiers: string[];
+
+  /**
+   * The attributes to be added.
+   */
+  attributes: ExtraAttributes[];
+}
+
+/**
  * Automatically set the default attributes and also parse the extra attributes.
  *
  * @remarks
@@ -133,90 +212,6 @@ function transformSchemaAttributes<
   return freeze({ ...rest, attrs, parseDOM }) as Spec;
 }
 
-/**
- * This extension creates the schema that is used throughout the rest of the
- * extension.
- *
- * @builtin
- */
-export class SchemaExtension extends PlainExtension {
-  public readonly name = 'schema' as const;
-
-  /**
-   * This extension is essential and hence the priority is set to high.
-   */
-  public readonly defaultPriority = ExtensionPriority.High;
-
-  protected createDefaultSettings() {
-    return {};
-  }
-
-  protected createDefaultProperties() {
-    return {};
-  }
-
-  public onCreate: CreateLifecycleMethod = (parameter) => {
-    const { managerSettings } = parameter;
-    const nodes: Record<string, NodeExtensionSpec> = object();
-    const marks: Record<string, MarkExtensionSpec> = object();
-    const extraAttributes: Record<string, ExtraAttributes[]> = object();
-
-    for (const attributeGroup of managerSettings.schemaAttributes ?? []) {
-      for (const identifier of attributeGroup.identifiers) {
-        const currentValue = extraAttributes[identifier] ?? [];
-        extraAttributes[identifier] = [...currentValue, ...attributeGroup.attributes];
-      }
-    }
-
-    return {
-      forEachExtension(extension) {
-        const currentAttributes = extraAttributes[extension.name] ?? [];
-        extraAttributes[extension.name] = [
-          ...currentAttributes,
-          ...(extension.settings.extraAttributes ?? []),
-        ];
-
-        if (isNodeExtension(extension)) {
-          const { name, spec } = extension;
-          nodes[name] = transformSchemaAttributes(extraAttributes[extension.name], spec);
-        }
-
-        if (isMarkExtension(extension)) {
-          const { name, spec } = extension;
-
-          marks[name] = transformSchemaAttributes(extraAttributes[extension.name], spec);
-        }
-      },
-
-      afterExtensionLoop() {
-        const { setStoreKey, setExtensionStore } = parameter;
-
-        const schema = new Schema({ nodes, marks });
-
-        setStoreKey('nodes', nodes);
-        setStoreKey('marks', marks);
-        setStoreKey('schema', schema);
-        setExtensionStore('schema', schema);
-      },
-    };
-  };
-}
-
-/**
- * The interface for adding extra attributes to multiple node and mark extensions.
- */
-export interface ExtraSchemaAttributes {
-  /**
-   * The string identifiers for the extension.
-   */
-  identifiers: string[];
-
-  /**
-   * The attributes to be added.
-   */
-  attributes: ExtraAttributes[];
-}
-
 declare global {
   namespace Remirror {
     interface BaseExtensionSettings {
@@ -264,7 +259,7 @@ declare global {
        * };
        * ```
        */
-      schemaAttributes?: ExtraSchemaAttributes[];
+      extraAttributes?: ExtraSchemaAttributes[];
     }
 
     interface ManagerStore<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset> {

@@ -7,12 +7,14 @@ import diff from 'jest-diff';
 import {
   AnyExtensionConstructor,
   AnyPresetConstructor,
+  BaseExtensionSettings,
   Cast,
-  defaultSettings,
+  ErrorConstant,
   ExtensionConstructorParameter,
   invariant,
   isEqual,
-  isPlainObject,
+  mutateDefaultExtensionSettings,
+  object,
   PresetConstructorParameter,
   PropertiesOfConstructor,
   SettingsOfConstructor,
@@ -28,21 +30,20 @@ export function isExtensionValid<Type extends AnyExtensionConstructor>(
     PropertiesOfConstructor<Type>
   >
 ) {
-  invariant(isPlainObject(Extension.defaultSettings), {
-    message: `No static 'defaultSettings' provided for '${Extension.name}'.\n`,
-  });
-
-  invariant(isPlainObject(Extension.defaultProperties), {
-    message: `No static 'defaultProperties' provided for '${Extension.name}'.\n`,
-  });
-
   const extension = new Extension(settings);
+
+  let defaultSettings: BaseExtensionSettings = object();
+
+  mutateDefaultExtensionSettings((value) => {
+    defaultSettings = value;
+  });
 
   const expectedSettings = { ...defaultSettings, ...Extension.defaultSettings, ...settings };
   invariant(isEqual(extension.settings, expectedSettings), {
     message: `Invalid 'defaultSettings' for '${Extension.name}'\n\n${
       diff(extension.settings, expectedSettings) ?? ''
     }\n`,
+    code: ErrorConstant.INVALID_EXTENSION,
   });
 
   const expectedProperties = { ...Extension.defaultProperties, ...Cast(settings)?.properties };
@@ -50,6 +51,7 @@ export function isExtensionValid<Type extends AnyExtensionConstructor>(
     message: `Invalid 'defaultProperties' for '${Extension.name}' \n\n${
       diff(extension.properties, expectedProperties) ?? ''
     }\n`,
+    code: ErrorConstant.INVALID_EXTENSION,
   });
 
   return true;
@@ -65,14 +67,6 @@ export function isPresetValid<Type extends AnyPresetConstructor>(
     PropertiesOfConstructor<Type>
   >
 ) {
-  invariant(isPlainObject(Preset.defaultSettings), {
-    message: `No static 'defaultSettings' provided for '${Preset.name}'.\n`,
-  });
-
-  invariant(isPlainObject(Preset.defaultProperties), {
-    message: `No static 'defaultProperties' provided for '${Preset.name}'.\n`,
-  });
-
   const extension = new Preset(settings);
 
   const expectedSettings = { ...Preset.defaultSettings, ...settings };

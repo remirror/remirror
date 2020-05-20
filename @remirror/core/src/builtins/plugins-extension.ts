@@ -27,15 +27,11 @@ import { GetNameUnion } from '../types';
  * @builtin
  */
 export class PluginsExtension extends PlainExtension {
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
+
   public readonly name = 'plugins' as const;
   public readonly defaultPriority = ExtensionPriority.Medium as const;
-
-  protected createDefaultSettings() {
-    return {};
-  }
-  protected createDefaultProperties() {
-    return {};
-  }
 
   // Here set the plugins keys and state getters for retrieving plugin state.
   // These methods are later used.

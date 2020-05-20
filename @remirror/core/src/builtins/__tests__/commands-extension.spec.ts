@@ -2,6 +2,6 @@ import { isExtensionValid } from '@remirror/test-fixtures';
 
 import { CommandsExtension } from '..';
 
-test('is valid', () => {
+test('is commands extension valid', () => {
   expect(isExtensionValid(CommandsExtension, {}));
 });

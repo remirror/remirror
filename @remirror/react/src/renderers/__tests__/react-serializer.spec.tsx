@@ -1,4 +1,3 @@
-import { Node as PMNode } from '@remirror/pm/model';
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
 
@@ -11,12 +10,13 @@ import {
   TextExtension,
 } from '@remirror/core';
 import { BoldExtension, CodeBlockExtension, ParagraphExtension } from '@remirror/core-extensions';
+import { Node as PMNode } from '@remirror/pm/model';
 import { createTestManager, simpleJSON, testJSON } from '@remirror/test-fixtures';
 
 import { ReactSerializer } from '../react-serializer';
 
 class FooExtension extends NodeExtension {
-  public name = 'foo';
+  public readonly name = 'foo' as const;
   public schema: NodeExtensionSpec = {
     content: 'block*',
     group: NodeGroup.Block,
