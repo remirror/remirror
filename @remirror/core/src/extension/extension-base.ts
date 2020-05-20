@@ -20,7 +20,9 @@ import {
   FlipPartialAndRequired,
   IfNoRequiredProperties,
   MarkExtensionSpec,
+  MarkType,
   NodeExtensionSpec,
+  NodeType,
   ProsemirrorPlugin,
   Shape,
 } from '@remirror/core-types';
@@ -549,6 +551,19 @@ export abstract class MarkExtension<
   }
 
   /**
+   * Provides access to the mark type from the schema.
+   *
+   * @remarks
+   *
+   * The type is available when the manager initializes. So it can be used in
+   * the outer scope of `createCommands`, `createHelpers`, `createKeymap` and
+   * most of the creator methods.
+   */
+  get type(): MarkType {
+    return this.store.schema.marks[this.name];
+  }
+
+  /**
    * The prosemirror specification which sets up the mark in the schema.
    *
    * @remarks
@@ -607,6 +622,13 @@ export abstract class NodeExtension<
 
   get spec(): Readonly<NodeExtensionSpec> {
     return this.#spec;
+  }
+
+  /**
+   * Provides access to the node type from the schema.
+   */
+  get type(): NodeType {
+    return this.store.schema.nodes[this.name];
   }
 
   /**

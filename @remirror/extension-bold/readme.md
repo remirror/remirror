@@ -37,11 +37,11 @@ import { CorePreset } from '@remirror/preset-core';
 import { BoldExtension } from '@remirror/extension-bold';
 
 // Create the bold extension
-const boldExtension = BoldExtension.of({ weight: '500' });
-const corePreset = CorePreset.of();
+const boldExtension = new BoldExtension({ weight: '500' });
+const corePreset = new CorePreset();
 
 // Create the Editor Manager with the bold extension passed through.
-const manager = EditorManager.of([boldExtension, corePreset]);
+const manager = new EditorManager([boldExtension, corePreset]);
 
 // Pass the dom element to the editor. If you are using `@remirror/react` this is done for you.
 const element = document.createElement('div');

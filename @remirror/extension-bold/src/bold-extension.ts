@@ -1,11 +1,14 @@
 import { FontWeightProperty } from 'csstype';
 
 import {
-  ExtensionFactory,
+  CommandFunction,
   ExtensionTag,
   FromToParameter,
+  InputRule,
   isElementDOMNode,
   isString,
+  MarkExtension,
+  MarkExtensionSpec,
   MarkGroup,
   markInputRule,
   toggleMark,
@@ -22,15 +25,21 @@ export interface BoldExtensionSettings {
  * When added to your editor it will provide the `bold` command which makes the text under the cursor /
  * or at the provided position range bold.
  */
-export const BoldExtension = ExtensionFactory.typed<BoldExtensionSettings>().mark({
-  name: 'bold',
+export class BoldExtension extends MarkExtension<BoldExtensionSettings> {
+  public readonly name = 'bold' as const;
+  public readonly tags = [ExtensionTag.FormattingMark];
 
-  defaultSettings: { weight: null },
+  protected createDefaultSettings() {
+    return { weight: null };
+  }
 
-  extensionTags: [ExtensionTag.FormattingMark],
+  protected createDefaultProperties() {
+    return {};
+  }
 
-  createMarkSpec(parameter) {
-    const { weight } = parameter.settings;
+  public createMarkSpec(): MarkExtensionSpec {
+    const { weight } = this.settings;
+
     return {
       group: MarkGroup.FontStyle,
       parseDOM: [
@@ -59,30 +68,26 @@ export const BoldExtension = ExtensionFactory.typed<BoldExtensionSettings>().mar
         return ['strong', 0];
       },
     };
-  },
+  }
 
-  createKeymap(parameter) {
-    const { type } = parameter;
-
+  public createKeymap = () => {
     return {
-      'Mod-b': toggleMark({ type }),
+      'Mod-b': toggleMark({ type: this.type }),
     };
-  },
+  };
 
-  createInputRules(parameter) {
-    return [markInputRule({ regexp: /(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type: parameter.type })];
-  },
+  public createInputRules = (): InputRule[] => {
+    return [markInputRule({ regexp: /(?:\*\*|__)([^*_]+)(?:\*\*|__)$/, type: this.type })];
+  };
 
-  createCommands(parameter) {
-    const { type } = parameter;
-
+  public createCommands = () => {
     return {
       /**
        * Toggle the bold styling on and off. Remove the formatting if any
        * matching bold formatting within the selection or provided range.
        */
       toggleBold: (range?: FromToParameter) => {
-        return toggleMark({ type, range });
+        return toggleMark({ type: this.type, range });
       },
 
       /**
@@ -91,9 +96,9 @@ export const BoldExtension = ExtensionFactory.typed<BoldExtensionSettings>().mar
        * TODO add selection support.
        * TODO add check to see that provided range is valid.
        */
-      setBold: (range: FromToParameter) => ({ state, dispatch }) => {
+      setBold: (range: FromToParameter): CommandFunction => ({ state, dispatch }) => {
         if (dispatch) {
-          dispatch(state.tr.addMark(range?.from, range?.to, type.create()));
+          dispatch(state.tr.addMark(range?.from, range?.to, this.type.create()));
         }
 
         return true;
@@ -105,13 +110,13 @@ export const BoldExtension = ExtensionFactory.typed<BoldExtensionSettings>().mar
        * TODO add selection support.
        * TODO add check that the provided range is valid.
        */
-      removeBold: (range: FromToParameter) => ({ state, dispatch }) => {
+      removeBold: (range: FromToParameter): CommandFunction => ({ state, dispatch }) => {
         if (dispatch) {
-          dispatch(state.tr.removeMark(range?.from, range?.to, type));
+          dispatch(state.tr.removeMark(range?.from, range?.to, this.type));
         }
 
         return true;
       },
     };
-  },
-});
+  };
+}

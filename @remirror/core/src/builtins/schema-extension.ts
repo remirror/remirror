@@ -292,7 +292,13 @@ declare global {
 
     interface ExtensionStore<Schema extends EditorSchema = EditorSchema> {
       /**
-       * The Prosemirror schema being used for the current interface
+       * The Prosemirror schema being used for the current editor.
+       *
+       * @remarks
+       *
+       * The type is available when the manager initializes. So it can be used
+       * in the outer scope of `createCommands`, `createHelpers`, `createKeymap`
+       * and most of the creator methods.
        */
       schema: Schema;
     }
