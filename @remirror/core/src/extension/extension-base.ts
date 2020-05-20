@@ -175,7 +175,7 @@ export type WithProperties<Type extends Shape, Properties extends Shape = {}> = 
  */
 export type ExtensionConstructorParameter<
   Settings extends Shape,
-  Properties extends Shape = {}
+  Properties extends Shape
 > = IfNoRequiredProperties<
   Settings,
   [WithProperties<Settings & BaseExtensionSettings, Properties>?],
@@ -184,7 +184,10 @@ export type ExtensionConstructorParameter<
 
 interface ExtensionConstructor<Settings extends Shape = {}, Properties extends Shape = {}>
   extends Function {
-  new (...args: ExtensionConstructorParameter<Settings, Properties>): Extension<Settings, Shape>;
+  new (...parameters: ExtensionConstructorParameter<Settings, Properties>): Extension<
+    Settings,
+    Shape
+  >;
 
   /**
    * The identifier for the constructor which can determine whether it is a node
@@ -324,7 +327,9 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
    */
   #properties: Required<Properties>;
 
-  constructor(...[settings]: ExtensionConstructorParameter<Settings, Properties>) {
+  constructor(...parameters: ExtensionConstructorParameter<Settings, Properties>) {
+    const [settings] = parameters;
+
     this.#defaultSettings = this.createDefaultSettings();
     this.#defaultProperties = this.createDefaultProperties();
     this.#settings = deepMerge(defaultSettings, this.#defaultSettings, settings ?? object());

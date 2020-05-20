@@ -1,8 +1,9 @@
+import { Cast, object } from '@remirror/core-helpers';
 import { CommandFunction } from '@remirror/core-types';
 import { nonChainable } from '@remirror/core-utils';
 
-import { ChainedFromExtensions, ChainedIntersection, PlainExtension } from '..';
-import { CommandsExtension } from '../../builtins';
+import { ChainedFromExtensions, PlainExtension } from '..';
+import { CommandsFromExtensions } from '../extension-types';
 
 class FirstExtension extends PlainExtension {
   public name = 'first' as const;
@@ -57,13 +58,21 @@ class ThirdExtension extends PlainExtension {
   };
 }
 
-type Commands = ChainedFromExtensions<FirstExtension | SecondExtension | ThirdExtension>;
+type Chainable = ChainedFromExtensions<FirstExtension | SecondExtension | ThirdExtension>;
+type Commands = CommandsFromExtensions<FirstExtension | SecondExtension | ThirdExtension>;
 
-const love: Commands['love'] = (value: number) => ({} as Commands);
+const command: Commands['free'] = Cast(() => {});
+const isEnabled: boolean = command.isEnabled();
+command('');
 // @ts-expect-error
-const loveFail: Commands['love'] = (value: string) => ({} as Commands);
+command(0);
+const commandOutput: void = command();
 
-const chain: Commands = {} as any;
+const love: Chainable['love'] = (value: number) => ({} as Chainable);
+// @ts-expect-error
+const loveFail: Chainable['love'] = (value: string) => ({} as Chainable);
+
+const chain: Chainable = object();
 
 // @ts-expect-error
 chain.free().love().run();

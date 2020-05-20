@@ -11,7 +11,7 @@ export function createBaseManager<
   PresetUnion extends AnyPreset
 >(parameter: Partial<EditorManagerParameter<ExtensionUnion, PresetUnion>> = {}) {
   const { extensions, presets = [] as PresetUnion[], settings } = parameter;
-  const corePreset = CorePreset.of();
+  const corePreset = new CorePreset();
 
   return EditorManager.of({
     extensions,

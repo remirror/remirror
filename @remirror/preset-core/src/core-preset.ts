@@ -10,7 +10,7 @@ export interface CorePresetSettings {
   /**
    * The content type accepted by the top level `DocumentExtension`.
    */
-  content?: string | null;
+  content?: string;
 }
 
 export class CorePreset extends Preset<CorePresetSettings> {

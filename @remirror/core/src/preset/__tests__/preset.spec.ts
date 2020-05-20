@@ -1,4 +1,5 @@
-import { createTypedExtension, createTypedPreset } from '../..';
+import { PlainExtension } from '../../extension';
+import { Preset, SetPresetPropertiesParameter } from '../preset-base';
 
 interface FirstSettings {
   a?: number;
@@ -20,47 +21,69 @@ interface SecondProperties {
 
 interface Properties extends FirstProperties, SecondProperties {}
 
-const FirstExtension = createTypedExtension<FirstSettings, FirstProperties>().plain({
-  name: 'first',
-  defaultSettings: { a: 0 },
-  defaultProperties: { y: 100 },
-});
+class FirstExtension extends PlainExtension<FirstSettings, FirstProperties> {
+  public static defaultSettings = { a: 0 };
+  public static defaultProperties = { y: 100 };
 
-const SecondExtension = createTypedExtension<SecondSettings, SecondProperties>().plain({
-  name: 'second',
-  defaultSettings: { b: 'setting b' },
-  defaultProperties: { z: 'property z' },
-});
+  public readonly name = 'first' as const;
+
+  protected createDefaultSettings() {
+    return FirstExtension.defaultSettings;
+  }
+
+  protected createDefaultProperties() {
+    return FirstExtension.defaultProperties;
+  }
+}
+
+class SecondExtension extends PlainExtension<SecondSettings, SecondProperties> {
+  public static defaultSettings = { b: 'setting b' };
+  public static defaultProperties = { z: 'property z' };
+
+  public readonly name = 'second' as const;
+
+  protected createDefaultSettings() {
+    return SecondExtension.defaultSettings;
+  }
+
+  protected createDefaultProperties() {
+    return SecondExtension.defaultProperties;
+  }
+}
 
 describe('simplest preset', () => {
-  const TestPreset = createTypedPreset<Partial<Settings>, Properties>().preset({
-    defaultSettings: {
-      a: FirstExtension.defaultSettings.a,
-      b: SecondExtension.defaultSettings.b ?? 'none specified',
-    },
-    defaultProperties: { y: FirstExtension.defaultProperties.y, z: 'override property z' },
-    name: 'test',
-    createExtensions(parameter) {
-      const { settings } = parameter;
+  class TestPreset extends Preset<Partial<Settings>, Properties> {
+    public readonly name = 'test';
 
-      return [FirstExtension.of(), SecondExtension.of({ b: settings.b })];
-    },
-    onSetProperties(parameter) {
-      const { changes, getExtension } = parameter;
+    protected createDefaultSettings() {
+      return {
+        a: FirstExtension.defaultSettings.a,
+        b: SecondExtension.defaultSettings.b ?? 'none specified',
+      };
+    }
+    protected createDefaultProperties() {
+      return { y: FirstExtension.defaultProperties.y, z: 'override property z' };
+    }
+    public createExtensions() {
+      return [new FirstExtension({}), new SecondExtension({ b: this.settings.b })];
+    }
+
+    protected onSetProperties(parameter: SetPresetPropertiesParameter<Properties>) {
+      const { changes } = parameter;
 
       if (changes.y.changed) {
-        const firstExtension = getExtension(FirstExtension);
+        const firstExtension = this.getExtension(FirstExtension);
         firstExtension.setProperties({ y: changes.y.value });
       }
 
       if (changes.z.changed) {
-        const secondExtension = getExtension(SecondExtension);
+        const secondExtension = this.getExtension(SecondExtension);
         secondExtension.setProperties({ z: changes.z.value });
       }
-    },
-  });
+    }
+  }
 
-  const testPreset = TestPreset.of();
+  const testPreset = new TestPreset({});
   const extensionNames = testPreset.extensions.map((extension) => extension.name);
   const firstExtension = testPreset.getExtension(FirstExtension);
   const secondExtension = testPreset.getExtension(SecondExtension);

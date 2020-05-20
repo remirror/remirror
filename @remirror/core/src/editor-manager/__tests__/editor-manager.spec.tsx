@@ -23,10 +23,10 @@ describe('Manager', () => {
     public readonly name = 'dummy' as const;
     public readonly extensionTags = ['simple', ExtensionTag.LastNodeCompatible];
 
-    protected createDefaultSettings(): import('../../extension').DefaultSettingsType<{}> {
+    protected createDefaultSettings() {
       return {};
     }
-    protected createDefaultProperties(): Required<{}> {
+    protected createDefaultProperties() {
       return {};
     }
 
@@ -50,11 +50,11 @@ describe('Manager', () => {
   class BigExtension extends PlainExtension {
     public readonly name = 'big' as const;
 
-    protected createDefaultSettings(): import('../../extension').DefaultSettingsType<{}> {
+    protected createDefaultSettings() {
       return {};
     }
 
-    protected createDefaultProperties(): Required<{}> {
+    protected createDefaultProperties() {
       return {};
     }
 
@@ -67,17 +67,19 @@ describe('Manager', () => {
 
   const dummyExtension = new DummyExtension({ priority: ExtensionPriority.Critical });
   const bigExtension = new BigExtension({ priority: ExtensionPriority.Lowest });
-  let manager = EditorManager.of({
+  const corePreset = new CorePreset({});
+
+  let manager = new EditorManager({
     extensions: [dummyExtension, bigExtension],
-    presets: [new CorePreset()],
+    presets: [corePreset],
   });
 
   let view: EditorView;
 
   beforeEach(() => {
-    manager = EditorManager.of({
+    manager = new EditorManager({
       extensions: [dummyExtension, bigExtension],
-      presets: [new CorePreset()],
+      presets: [new CorePreset({})],
     });
     state = manager.createState({ content: EMPTY_PARAGRAPH_NODE });
     view = new EditorView(document.createElement('div'), {
@@ -151,36 +153,63 @@ test('keymaps', () => {
     thirdEnter: jest.fn((..._: Parameters<KeyBindingCommandFunction>) => false),
   };
 
-  const FirstExtension = ExtensionFactory.plain({
-    name: 'first',
-    createKeymap() {
+  class FirstExtension extends PlainExtension {
+    public readonly name = 'first' as const;
+
+    protected createDefaultSettings() {
+      return {};
+    }
+
+    protected createDefaultProperties() {
+      return {};
+    }
+
+    public createKeymap = () => {
       return {
         Enter: mocks.firstEnter,
       };
-    },
-  });
+    };
+  }
 
-  const SecondExtension = ExtensionFactory.plain({
-    name: 'second',
-    createKeymap() {
+  class SecondExtension extends PlainExtension {
+    public readonly name = 'second' as const;
+
+    protected createDefaultSettings() {
+      return {};
+    }
+
+    protected createDefaultProperties() {
+      return {};
+    }
+
+    public createKeymap = () => {
       return {
         Enter: mocks.secondEnter,
       };
-    },
-  });
+    };
+  }
 
-  const ThirdExtension = ExtensionFactory.plain({
-    name: 'third',
-    createKeymap() {
+  class ThirdExtension extends PlainExtension {
+    public readonly name = 'third' as const;
+
+    protected createDefaultSettings() {
+      return {};
+    }
+
+    protected createDefaultProperties() {
+      return {};
+    }
+
+    public createKeymap = () => {
       return {
         Enter: mocks.thirdEnter,
       };
-    },
-  });
+    };
+  }
 
-  const manager = EditorManager.of({
-    extensions: [FirstExtension.of(), SecondExtension.of(), ThirdExtension.of()],
-    presets: [CorePreset.of()],
+  const manager = new EditorManager({
+    extensions: [new FirstExtension(), new SecondExtension(), new ThirdExtension()],
+    presets: [new CorePreset({})],
   });
 
   createEditor(doc(p('simple<cursor>')), { plugins: manager.store.plugins })

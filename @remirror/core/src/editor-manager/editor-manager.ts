@@ -276,7 +276,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
    * This should not be called directly if you want to use prioritized
    * extensions. Instead use `Manager.create`.
    */
-  private constructor(parameter: EditorManagerParameter<ExtensionUnion, PresetUnion>) {
+  constructor(parameter: EditorManagerParameter<ExtensionUnion, PresetUnion>) {
     this.#settings = parameter.settings ?? {};
 
     const { extensions, extensionMap, presets, presetMap } = transformExtensionOrPresetList<

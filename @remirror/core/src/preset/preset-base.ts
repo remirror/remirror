@@ -66,8 +66,8 @@ export function isPresetConstructor(value: unknown): value is AnyPresetConstruct
 }
 
 export type PresetConstructorParameter<
-  Settings extends Shape = {},
-  Properties extends Shape = {}
+  Settings extends Shape,
+  Properties extends Shape
 > = IfNoRequiredProperties<
   Settings,
   [WithProperties<Settings, Properties>?],
@@ -148,7 +148,9 @@ export abstract class Preset<Settings extends Shape = {}, Properties extends Sha
    */
   #defaultProperties: Required<Properties>;
 
-  constructor(...[settings]: PresetConstructorParameter<Settings, Properties>) {
+  constructor(...parameters: PresetConstructorParameter<Settings, Properties>) {
+    const [settings] = parameters;
+
     this.#defaultSettings = this.createDefaultSettings();
     this.#defaultProperties = this.createDefaultProperties();
 

@@ -1,7 +1,7 @@
 {
   "extends": "./support/tsconfig.base.json",
   "compilerOptions": {
-    "types": ["node", "jest", "jest-extended", "jest-axe", "@testing-library/jest-dom"],
+    "types": ["node", "jest", "jest-extended/types", "jest-axe", "@testing-library/jest-dom"],
     "noEmit": true,
     "skipLibCheck": false
   },
