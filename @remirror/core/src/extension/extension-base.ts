@@ -15,6 +15,7 @@ import {
 } from '@remirror/core-helpers';
 import {
   And,
+  AttributesParameter,
   EditorSchema,
   EditorView,
   FlipPartialAndRequired,
@@ -30,7 +31,6 @@ import { isMarkActive, isNodeActive } from '@remirror/core-utils';
 
 import {
   BaseExtensionSettings,
-  ExtensionIsActiveFunction,
   GeneralExtensionTags,
   GetNameUnion,
   MarkExtensionTags,
@@ -85,14 +85,41 @@ export const defaultSettings: Required<BaseExtensionSettings> = {
 } as any;
 
 /**
- * Set the value for a key of the default settings. This is made available only
- * to extensions making use of the `ExtensionLifecycleMethods`.
+ * Set the value for a key of the default settings.
+ *
+ * @remarks
+ *
+ * This is a dangerous method since it allows you to mutate the received object.
+ * Don't use it unless you absolutely have to.
+ *
+ * A potential use case is for adding a new default option to all extensions. It
+ * shows an example of how to accomplish this in a typesafe way.
+ *
+ * @example
+ *
+ * ```ts
+ * import { mutateDefaultExtensionSettings } from 'remirror/core';
+ *
+ * mutateDefaultExtensionSettings((settings) => {
+ *   // Set the default value of all extensions to have a property `customSetting` with value `false`.
+ *   settings.customSetting = false;
+ * })
+ *
+ * declare global {
+ *   namespace Remirror {
+ *     interface BaseExtensionSettings {
+ *       customSetting?: boolean;
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * The mutation must happen before any extension have been instantiated.
  */
-export function setDefaultExtensionSettings<Key extends keyof Remirror.BaseExtensionSettings>(
-  key: Key,
-  value: Required<Remirror.BaseExtensionSettings>[Key],
+export function mutateDefaultExtensionSettings(
+  mutatorMethod: (defaultSettings: BaseExtensionSettings) => void,
 ): void {
-  defaultSettings[key] = value;
+  mutatorMethod(defaultSettings);
 }
 
 /**
@@ -197,12 +224,29 @@ interface ExtensionConstructor<Settings extends Shape = {}, Properties extends S
   readonly [REMIRROR_IDENTIFIER_KEY]: RemirrorIdentifier;
 
   /**
-   * Default settings.
+   * Defines the `defaultSettings` for all extension instances.
+   *
+   * @remarks
+   *
+   * Once set it can't be updated during run time. Some of the settings are
+   * optional and some are not. Any non-required settings must be specified in
+   * the `defaultSettings`.
+   *
+   * This must be set when creating the extension, even if just to the empty
+   * object when no properties are used at runtime.
+   *
+   * **Please note**: There is a slight downside when setting up
+   * `defaultSettings`. `undefined` is not supported for partial settings at
+   * this point in time. As a workaround use `null` as the type and pass it as
+   * the value in the default settings.
+   *
+   * @internal
    */
-  readonly defaultSettings: DefaultSettingsType<Settings>;
+  readonly defaultSettings: DefaultExtensionSettings<Settings>;
 
   /**
-   * Default properties.
+   * A method that creates the default properties. All properties must have a
+   * default property assigned.
    */
   readonly defaultProperties: Required<Properties>;
 }
@@ -277,16 +321,16 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
    *
    * @remarks
    *
-   * The static settings are automatically merged with the default
-   * options of this extension when it is created.
+   * The static settings are automatically merged with the default options of
+   * this extension when it is created.
    */
   get settings(): Readonly<Required<Settings & BaseExtensionSettings>> {
     return this.#settings;
   }
 
   /**
-   * The dynamic properties for this extension. Callback handlers and
-   * behavioral properties should be placed here.
+   * The dynamic properties for this extension. Callback handlers and behavioral
+   * properties should be placed here.
    */
   get properties() {
     return this.#properties;
@@ -313,19 +357,10 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
    * extension methods.
    *
    * Different properties are added at different times so it's important to
-   * check the documentation for each property to know what phase is being added.
+   * check the documentation for each property to know what phase is being
+   * added.
    */
   private _store!: Remirror.ExtensionStore;
-
-  /**
-   * Cached `defaultSettings`.
-   */
-  #defaultSettings: DefaultSettingsType<Settings>;
-
-  /**
-   * Cached `defaultProperties`.
-   */
-  #defaultProperties: Required<Properties>;
 
   /**
    * Private instance of the static settings.
@@ -340,39 +375,13 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
   constructor(...parameters: ExtensionConstructorParameter<Settings, Properties>) {
     const [settings] = parameters;
 
-    this.#defaultSettings = this.createDefaultSettings();
-    this.#defaultProperties = this.createDefaultProperties();
-    this.#settings = deepMerge(defaultSettings, this.#defaultSettings, settings ?? object());
-    this.#properties = { ...this.#defaultProperties, ...settings?.properties };
+    this.#settings = deepMerge(
+      defaultSettings,
+      this.constructor.defaultSettings,
+      settings ?? object(),
+    );
+    this.#properties = { ...this.constructor.defaultProperties, ...settings?.properties };
   }
-
-  /**
-   * Define the `defaultSettings` for this extension.
-   *
-   * @remarks
-   *
-   * Once set it can't be updated during run time. Some of the settings are
-   * optional and some are not. Any non-required settings must be specified in
-   * the `defaultSettings`.
-   *
-   * This must be set when creating the extension, even if just to the empty
-   * object when no properties are used at runtime.
-   *
-   * There is a slight downside in the way this is setup. `undefined` is not
-   * supported for partial settings at this point in time. As a workaround
-   * use `null` as the type and pass it as the value in the default settings.
-   *
-   * @internal
-   */
-  protected abstract createDefaultSettings(): DefaultSettingsType<Settings>;
-
-  /**
-   * A method that creates the default properties. All properties must have a
-   * default property assigned.
-   *
-   * @internal
-   */
-  protected abstract createDefaultProperties(): Required<Properties>;
 
   /**
    * Update the properties with the provided partial value when changed.
@@ -385,7 +394,7 @@ abstract class Extension<Settings extends Shape = {}, Properties extends Shape =
    * Reset the extension properties to their default values.
    */
   public resetProperties() {
-    this.#properties = { ...this.#defaultProperties };
+    this.#properties = { ...this.constructor.defaultProperties };
   }
 
   /**
@@ -440,8 +449,8 @@ interface Extension<Settings extends Shape = {}, Properties extends Shape = {}>
    * @remarks
    *
    * Tags are a helpful tool for categorizing the behavior of an extension. This
-   * behavior is later grouped in the `Manager` and passed as `tag` to
-   * each method defined in the `ExtensionFactoryParameter`. It can be used by
+   * behavior is later grouped in the `Manager` and passed as `tag` to each
+   * method defined in the `ExtensionFactoryParameter`. It can be used by
    * commands that need to remove all formatting and use the tag to identify
    * which registered extensions are formatters.
    *
@@ -480,7 +489,7 @@ interface Extension<Settings extends Shape = {}, Properties extends Shape = {}>
  * every optional setting key (except for keys which are defined on the
  * `BaseExtensionSettings`) has a value assigned.
  */
-export type DefaultSettingsType<Settings extends Shape> = Omit<
+export type DefaultExtensionSettings<Settings extends Shape> = Omit<
   FlipPartialAndRequired<Settings>,
   keyof BaseExtensionSettings
 > &
@@ -594,11 +603,9 @@ export abstract class MarkExtension<
   /**
    * Performs a default check to see whether the mark is active at the current
    * selection.
-   *
-   * @param parameter - see
    */
-  public isActive({ getState, type }: ManagerMarkTypeParameter): ExtensionIsActiveFunction {
-    return () => isMarkActive({ stateOrTransaction: getState(), type });
+  public isActive() {
+    return () => isMarkActive({ stateOrTransaction: this.store.getState(), type: this.type });
   }
 
   /**
@@ -662,9 +669,9 @@ export abstract class NodeExtension<
   /**
    * Check if the node is active.
    */
-  public isActive({ getState, type }: ManagerNodeTypeParameter): ExtensionIsActiveFunction {
-    return ({ attrs }) => {
-      return isNodeActive({ state: getState(), type, attrs: attrs });
+  public isActive() {
+    return ({ attrs }: Partial<AttributesParameter>) => {
+      return isNodeActive({ state: this.store.getState(), type: this.type, attrs });
     };
   }
 
@@ -754,14 +761,6 @@ export interface CreateLifecycleParameter {
    */
   managerSettings: Remirror.ManagerSettings;
 
-  /**
-   * Sets a property for the default settings object.
-   */
-  setDefaultExtensionSettings: <Key extends keyof Remirror.BaseExtensionSettings>(
-    key: Key,
-    value: Required<Remirror.BaseExtensionSettings>[Key],
-  ) => void;
-
   /** Set a custom manager method parameter. */
   setExtensionStore: <Key extends keyof Remirror.ExtensionStore>(
     key: Key,
@@ -799,7 +798,7 @@ export type InitializeLifecycleMethod = (
 ) => InitializeLifecycleReturn;
 
 export interface ViewLifecycleParameter
-  extends Omit<CreateLifecycleParameter, 'setDefaultExtensionSettings' | 'setExtensionStore'> {}
+  extends Omit<CreateLifecycleParameter, 'setExtensionStore'> {}
 
 export interface ViewLifecycleReturn {
   /**
@@ -818,13 +817,13 @@ export type ViewLifecycleMethod = (parameter: ViewLifecycleParameter) => ViewLif
 
 declare global {
   /**
-   * This namespace is global and you can use declaration merging to extend
-   * and create new types used by the `remirror` project.
+   * This namespace is global and you can use declaration merging to extend and
+   * create new types used by the `remirror` project.
    *
    * @remarks
    *
-   * The following would add `MyCustomType` to the `Remirror` namespace.
-   * Please note that this can only be used for types and interfaces.
+   * The following would add `MyCustomType` to the `Remirror` namespace. Please
+   * note that this can only be used for types and interfaces.
    *
    * ```ts
    * declare global {

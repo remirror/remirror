@@ -22,11 +22,11 @@ const anyMarkExtensionTester = <ExtensionUnion extends AnyMarkExtension>(
 class ExtensionWithoutSettings extends PlainExtension {
   public name = 'withoutSettings' as const;
 
-  protected createDefaultSettings(): import('../extension-base').DefaultSettingsType<{}> {
+  protected createDefaultSettings(): import('../extension-base').DefaultExtensionSettings<{}> {
     throw new Error('Method not implemented.');
   }
 
-  protected createDefaultProperties(): Required<{}> {
+  protected createDefaultProperties() {
     throw new Error('Method not implemented.');
   }
 }
@@ -43,13 +43,13 @@ anyExtensionTester(extensionWithoutSettings);
 class ExtensionWithSettings extends PlainExtension<{ oops: boolean }> {
   public name = 'withSettings' as const;
 
-  protected createDefaultSettings(): import('../extension-base').DefaultSettingsType<{
+  protected createDefaultSettings(): import('../extension-base').DefaultExtensionSettings<{
     oops: boolean;
   }> {
     throw new Error('Method not implemented.');
   }
 
-  protected createDefaultProperties(): Required<{}> {
+  protected createDefaultProperties() {
     throw new Error('Method not implemented.');
   }
 }
@@ -73,7 +73,7 @@ anyExtensionTester(extensionWithSettings);
 class ExtensionWithProperties extends PlainExtension<{ awesome?: string }, { oops: boolean }> {
   public name = 'withProperties';
 
-  protected createDefaultSettings(): import('../extension-base').DefaultSettingsType<{
+  protected createDefaultSettings(): import('../extension-base').DefaultExtensionSettings<{
     awesome?: string | undefined;
   }> {
     return { awesome: 'never' };
@@ -92,7 +92,7 @@ class NodeExtensionWithProperties extends NodeExtension<{ awesome?: string }, { 
     return {};
   }
 
-  protected createDefaultSettings(): import('../extension-base').DefaultSettingsType<{
+  protected createDefaultSettings(): import('../extension-base').DefaultExtensionSettings<{
     awesome?: string | undefined;
   }> {
     return { awesome: 'never' };
@@ -110,7 +110,7 @@ class MarkExtensionWithProperties extends MarkExtension<{ awesome?: string }, { 
     return {};
   }
 
-  protected createDefaultSettings(): import('../extension-base').DefaultSettingsType<{
+  protected createDefaultSettings(): import('../extension-base').DefaultExtensionSettings<{
     awesome?: string | undefined;
   }> {
     return { awesome: 'never' };
@@ -123,7 +123,7 @@ class MarkExtensionWithProperties extends MarkExtension<{ awesome?: string }, { 
 
 class InvalidPropertiesExtension extends PlainExtension<{}, { oops: boolean }> {
   public name = 'withProperties' as const;
-  protected createDefaultSettings(): import('../extension-base').DefaultSettingsType<{}> {
+  protected createDefaultSettings(): import('../extension-base').DefaultExtensionSettings<{}> {
     return {};
   }
   protected createDefaultProperties(): Required<{ oops: boolean }> {

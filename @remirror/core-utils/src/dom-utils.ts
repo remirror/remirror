@@ -62,9 +62,11 @@ import { environment } from './environment';
  *
  * @public
  */
-export const isNodeType = <Schema extends EditorSchema = any>(
+export function isNodeType<Schema extends EditorSchema = EditorSchema>(
   value: unknown,
-): value is NodeType<Schema> => isObject(value) && value instanceof NodeType;
+): value is NodeType<Schema> {
+  return isObject(value) && value instanceof NodeType;
+}
 
 /**
  * Check to see if the passed value is a MarkType.
@@ -73,9 +75,11 @@ export const isNodeType = <Schema extends EditorSchema = any>(
  *
  * @public
  */
-export const isMarkType = <Schema extends EditorSchema = any>(
+export function isMarkType<Schema extends EditorSchema = EditorSchema>(
   value: unknown,
-): value is MarkType<Schema> => isObject(value) && value instanceof MarkType;
+): value is MarkType<Schema> {
+  return isObject(value) && value instanceof MarkType;
+}
 
 /**
  * Checks to see if the passed value is a ProsemirrorNode
@@ -84,9 +88,11 @@ export const isMarkType = <Schema extends EditorSchema = any>(
  *
  * @public
  */
-export const isProsemirrorNode = <Schema extends EditorSchema = any>(
+export function isProsemirrorNode<Schema extends EditorSchema = EditorSchema>(
   value: unknown,
-): value is PMNode<Schema> => isObject(value) && value instanceof PMNode;
+): value is PMNode<Schema> {
+  return isObject(value) && value instanceof PMNode;
+}
 
 /**
  * Checks to see if the passed value is a Prosemirror Editor State
@@ -95,9 +101,11 @@ export const isProsemirrorNode = <Schema extends EditorSchema = any>(
  *
  * @public
  */
-export const isEditorState = <Schema extends EditorSchema = any>(
+export function isEditorState<Schema extends EditorSchema = EditorSchema>(
   value: unknown,
-): value is PMEditorState<Schema> => isObject(value) && value instanceof PMEditorState;
+): value is PMEditorState<Schema> {
+  return isObject(value) && value instanceof PMEditorState;
+}
 
 /**
  * Checks to see if the passed value is an instance of the editor schema
@@ -106,9 +114,11 @@ export const isEditorState = <Schema extends EditorSchema = any>(
  *
  * @public
  */
-export const isEditorSchema = <GNodes extends string = string, GMarks extends string = string>(
+export function isEditorSchema<GNodes extends string = string, GMarks extends string = string>(
   value: unknown,
-): value is Schema<GNodes, GMarks> => isObject(value) && value instanceof Schema;
+): value is Schema<GNodes, GMarks> {
+  return isObject(value) && value instanceof Schema;
+}
 
 /**
  * Predicate checking whether the selection is a TextSelection
@@ -117,9 +127,11 @@ export const isEditorSchema = <GNodes extends string = string, GMarks extends st
  *
  * @public
  */
-export const isTextSelection = <Schema extends EditorSchema = any>(
+export function isTextSelection<Schema extends EditorSchema = EditorSchema>(
   value: unknown,
-): value is TextSelection<Schema> => isObject(value) && value instanceof TextSelection;
+): value is TextSelection<Schema> {
+  return isObject(value) && value instanceof TextSelection;
+}
 
 /**
  * Predicate checking whether the value is a Selection
@@ -128,9 +140,11 @@ export const isTextSelection = <Schema extends EditorSchema = any>(
  *
  * @public
  */
-export const isSelection = <Schema extends EditorSchema = any>(
+export function isSelection<Schema extends EditorSchema = EditorSchema>(
   value: unknown,
-): value is PMSelection<Schema> => isObject(value) && value instanceof PMSelection;
+): value is PMSelection<Schema> {
+  return isObject(value) && value instanceof PMSelection;
+}
 
 /**
  * Predicate checking whether the value is a ResolvedPosition.
@@ -139,9 +153,11 @@ export const isSelection = <Schema extends EditorSchema = any>(
  *
  * @public
  */
-export const isResolvedPos = <Schema extends EditorSchema = any>(
+export function isResolvedPos<Schema extends EditorSchema = EditorSchema>(
   value: unknown,
-): value is PMResolvedPos<Schema> => isObject(value) && value instanceof PMResolvedPos;
+): value is PMResolvedPos<Schema> {
+  return isObject(value) && value instanceof PMResolvedPos;
+}
 
 /**
  * Predicate checking whether the selection is a NodeSelection
@@ -150,11 +166,13 @@ export const isResolvedPos = <Schema extends EditorSchema = any>(
  *
  * @public
  */
-export const isNodeSelection = <Schema extends EditorSchema = any>(
+export function isNodeSelection<Schema extends EditorSchema = EditorSchema>(
   value: unknown,
-): value is NodeSelection<Schema> => isObject(value) && value instanceof NodeSelection;
+): value is NodeSelection<Schema> {
+  return isObject(value) && value instanceof NodeSelection;
+}
 
-interface IsMarkActiveParameter<Schema extends EditorSchema = any>
+interface IsMarkActiveParameter<Schema extends EditorSchema = EditorSchema>
   extends MarkTypeParameter<Schema>,
     Partial<FromToParameter>,
     StateOrTransactionParameter<Schema> {}
@@ -164,16 +182,11 @@ interface IsMarkActiveParameter<Schema extends EditorSchema = any>
  * selection point is within a region with the mark active. Used by extensions
  * to implement their active methods.
  *
- * @remarks
- *
- * @param state - the editor state
- * @param type - the mark type
- *
  * @public
  */
-export const isMarkActive = <Schema extends EditorSchema = any>(
+export function isMarkActive<Schema extends EditorSchema = EditorSchema>(
   parameter: IsMarkActiveParameter<Schema>,
-) => {
+) {
   const { stateOrTransaction, type, from, to } = parameter;
   const { selection, doc, storedMarks } = stateOrTransaction;
   const { $from, empty } = selection;
@@ -191,22 +204,18 @@ export const isMarkActive = <Schema extends EditorSchema = any>(
   }
 
   return doc.rangeHasMark(selection.from, selection.to, type);
-};
+}
 
 /**
  * Check if the specified type (NodeType) can be inserted at the current
  * selection point.
- *
- * @remarks
- *
- * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
  *
  * @param state - the editor state
  * @param type - the node type
  *
  * @public
  */
-export const canInsertNode = (state: EditorState, type: NodeType) => {
+export function canInsertNode(state: EditorState, type: NodeType) {
   const { $from } = state.selection;
   for (let depth = $from.depth; depth >= 0; depth--) {
     const index = $from.index(depth);
@@ -219,7 +228,7 @@ export const canInsertNode = (state: EditorState, type: NodeType) => {
     }
   }
   return false;
-};
+}
 
 /**
  * Checks if a node looks like an empty document
@@ -228,7 +237,7 @@ export const canInsertNode = (state: EditorState, type: NodeType) => {
  *
  * @public
  */
-export const isDocNodeEmpty = (node: ProsemirrorNode) => {
+export function isDocNodeEmpty(node: ProsemirrorNode) {
   const nodeChild = node.content.firstChild;
 
   if (node.childCount !== 1 || !nodeChild) {
@@ -241,7 +250,7 @@ export const isDocNodeEmpty = (node: ProsemirrorNode) => {
     nodeChild.nodeSize === 2 &&
     (isNullOrUndefined(nodeChild.marks) || nodeChild.marks.length === 0)
   );
-};
+}
 
 /**
  * Checks if the current node a paragraph node and empty
@@ -250,22 +259,20 @@ export const isDocNodeEmpty = (node: ProsemirrorNode) => {
  *
  * @public
  */
-export const isEmptyParagraphNode = (node: ProsemirrorNode | null | undefined) => {
+export function isEmptyParagraphNode(node: ProsemirrorNode | null | undefined) {
   return (
     !isProsemirrorNode(node) ||
     (node.type.name === 'paragraph' && !node.textContent && !node.childCount)
   );
-};
+}
 
 /**
  * Retrieve the attributes for a mark.
  *
- * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
- *
  * @param state - the editor state
  * @param type - the mark type
  */
-export const getMarkAttributes = (state: EditorState, type: MarkType) => {
+export function getMarkAttributes(state: EditorState, type: MarkType) {
   const { from, to } = state.selection;
   let marks: Mark[] = [];
 
@@ -280,22 +287,20 @@ export const getMarkAttributes = (state: EditorState, type: MarkType) => {
   }
 
   return {};
-};
+}
 
 /**
  * Retrieve the start and end position of a mark
  *
  * @remarks
  *
- * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
- *
  * @param pmPosition - the resolved prosemirror position
  * @param type - the mark type
  */
-export const getMarkRange = (
+export function getMarkRange(
   pmPosition: ResolvedPos | null = null,
   type: MarkType | null | undefined = null,
-): FromToParameter | false => {
+): FromToParameter | false {
   if (!pmPosition || !type) {
     return false;
   }
@@ -321,7 +326,7 @@ export const getMarkRange = (
   const endPos = startPos + start.node.nodeSize;
 
   return { from: startPos, to: endPos };
-};
+}
 
 /**
  * Retrieves the text content from a slice
@@ -334,10 +339,10 @@ export const getMarkRange = (
  *
  * @public
  */
-export const getTextContentFromSlice = (slice: Slice) => {
+export function getTextContentFromSlice(slice: Slice) {
   const node = slice.content.firstChild;
   return node ? node.textContent : '';
-};
+}
 
 /**
  * Takes an empty selection and expands it out to the nearest group not matching
@@ -353,7 +358,7 @@ export const getTextContentFromSlice = (slice: Slice) => {
  *
  * @public
  */
-export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToParameter | false => {
+export function getSelectedGroup(state: EditorState, exclude: RegExp): FromToParameter | false {
   if (!isTextSelection(state.selection)) {
     return false;
   }
@@ -386,7 +391,7 @@ export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToPar
   }
 
   return { from, to };
-};
+}
 
 /**
  * Retrieves the nearest space separated word from the current selection.
@@ -402,9 +407,9 @@ export const getSelectedGroup = (state: EditorState, exclude: RegExp): FromToPar
  *
  * @public
  */
-export const getSelectedWord = (state: EditorState) => {
+export function getSelectedWord(state: EditorState) {
   return getSelectedGroup(state, /[\s\0]/);
-};
+}
 
 /**
  * Retrieve plugin state of specified type
@@ -414,8 +419,9 @@ export const getSelectedWord = (state: EditorState) => {
  *
  * @public
  */
-export const getPluginState = <GState>(plugin: Plugin | PluginKey, state: EditorState): GState =>
-  plugin.getState(state);
+export function getPluginState<GState>(plugin: Plugin | PluginKey, state: EditorState): GState {
+  return plugin.getState(state);
+}
 
 /**
  * Retrieve plugin meta data of specified type
@@ -425,8 +431,9 @@ export const getPluginState = <GState>(plugin: Plugin | PluginKey, state: Editor
  *
  * @public
  */
-export const getPluginMeta = <GMeta>(key: PluginKey | Plugin | string, tr: Transaction): GMeta =>
-  tr.getMeta(key);
+export function getPluginMeta<GMeta>(key: PluginKey | Plugin | string, tr: Transaction): GMeta {
+  return tr.getMeta(key);
+}
 
 /**
  * Set the plugin meta data
@@ -437,12 +444,13 @@ export const getPluginMeta = <GMeta>(key: PluginKey | Plugin | string, tr: Trans
  *
  * @public
  */
-export const setPluginMeta = <GMeta>(
+export function setPluginMeta<GMeta>(
   key: PluginKey | Plugin | string,
   tr: Transaction,
   data: GMeta,
-): Transaction => tr.setMeta(key, data);
-
+): Transaction {
+  return tr.setMeta(key, data);
+}
 /**
  * Get matching string from a list or single value
  *
@@ -458,8 +466,9 @@ export const setPluginMeta = <GMeta>(
  *
  * @public
  */
-export const getMatchString = (match: string | string[], index = 0) =>
-  Array.isArray(match) ? match[index] : match;
+export function getMatchString(match: string | string[], index = 0) {
+  return Array.isArray(match) ? match[index] : match;
+}
 
 /**
  * Checks whether the passed value is a valid dom node
@@ -468,10 +477,11 @@ export const getMatchString = (match: string | string[], index = 0) =>
  *
  * @public
  */
-export const isDOMNode = (domNode: unknown): domNode is Node =>
-  isObject(Node)
+export function isDOMNode(domNode: unknown): domNode is Node {
+  return isObject(Node)
     ? domNode instanceof Node
     : isObject(domNode) && isNumber(Cast(domNode).nodeType) && isString(Cast(domNode).nodeName);
+}
 
 /**
  * Checks for an element node like `<p>` or `<div>`.
@@ -480,8 +490,9 @@ export const isDOMNode = (domNode: unknown): domNode is Node =>
  *
  * @public
  */
-export const isElementDOMNode = (domNode: unknown): domNode is HTMLElement =>
-  isDOMNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE;
+export function isElementDOMNode(domNode: unknown): domNode is HTMLElement {
+  return isDOMNode(domNode) && domNode.nodeType === Node.ELEMENT_NODE;
+}
 
 /**
  * Finds the closest element which matches the passed selector
@@ -491,10 +502,10 @@ export const isElementDOMNode = (domNode: unknown): domNode is HTMLElement =>
  *
  * @public
  */
-export const closestElement = (
+export function closestElement(
   domNode: Node | null | undefined,
   selector: string,
-): HTMLElement | null => {
+): HTMLElement | null {
   if (!isElementDOMNode(domNode)) {
     return null;
   }
@@ -510,7 +521,7 @@ export const closestElement = (
     domNode = (domNode.parentElement ?? domNode.parentNode) as HTMLElement;
   } while (isElementDOMNode(domNode));
   return null;
-};
+}
 
 /**
  * Checks for a text node.
@@ -519,24 +530,26 @@ export const closestElement = (
  *
  * @public
  */
-export const isTextDOMNode = (domNode: unknown): domNode is Text => {
+export function isTextDOMNode(domNode: unknown): domNode is Text {
   return isDOMNode(domNode) && domNode.nodeType === Node.TEXT_NODE;
-};
+}
 
 interface GetOffsetParentParameter extends EditorViewParameter, ElementParameter {}
 
-export const getOffsetParent = ({ view, element }: GetOffsetParentParameter): HTMLElement =>
-  isNullOrUndefined(element)
+export function getOffsetParent({ view, element }: GetOffsetParentParameter): HTMLElement {
+  return isNullOrUndefined(element)
     ? ((view.dom as HTMLElement).offsetParent as HTMLElement)
     : (element.offsetParent as HTMLElement);
+}
 
 /**
  * Retrieve the line height from a an element
  *
  * @param params - the element params
  */
-export const getLineHeight = ({ element }: ElementParameter) =>
-  Number.parseFloat(window.getComputedStyle(element, undefined).lineHeight || '');
+export function getLineHeight({ element }: ElementParameter) {
+  return Number.parseFloat(window.getComputedStyle(element).lineHeight || '');
+}
 
 interface AbsoluteCoordinatesParameter
   extends EditorViewParameter,
@@ -566,12 +579,9 @@ interface AbsoluteCoordinatesParameter
  *
  * @param params - see {@link AbsoluteCoordinatesParameter}.
  */
-export const absoluteCoordinates = ({
-  view,
-  element,
-  position,
-  cursorHeight = getLineHeight({ element }),
-}: AbsoluteCoordinatesParameter) => {
+export function absoluteCoordinates(parameter: AbsoluteCoordinatesParameter) {
+  const { view, element, position, cursorHeight = getLineHeight({ element }) } = parameter;
+
   const offsetParent = getOffsetParent({ view, element });
   const box = offsetParent.getBoundingClientRect();
 
@@ -581,7 +591,7 @@ export const absoluteCoordinates = ({
     top: position.top - (box.top - cursorHeight) + offsetParent.scrollTop,
     bottom: box.height - (position.top - (box.top - cursorHeight) - offsetParent.scrollTop),
   };
-};
+}
 
 /**
  * Retrieve the nearest non-text node

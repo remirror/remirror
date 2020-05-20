@@ -8,14 +8,6 @@ import { CommandsFromExtensions } from '../extension-types';
 class FirstExtension extends PlainExtension {
   public name = 'first' as const;
 
-  protected createDefaultSettings(): import('..').DefaultSettingsType<{}> {
-    throw new Error('Method not implemented.');
-  }
-
-  protected createDefaultProperties(): Required<{}> {
-    throw new Error('Method not implemented.');
-  }
-
   public createCommands = () => {
     return {
       free(title?: string) {
@@ -32,10 +24,10 @@ class FirstExtension extends PlainExtension {
 class SecondExtension extends PlainExtension {
   public name = 'second' as const;
 
-  protected createDefaultSettings(): import('..').DefaultSettingsType<{}> {
+  protected createDefaultSettings(): import('..').DefaultExtensionSettings<{}> {
     throw new Error('Method not implemented.');
   }
-  protected createDefaultProperties(): Required<{}> {
+  protected createDefaultProperties() {
     throw new Error('Method not implemented.');
   }
 }
@@ -43,10 +35,10 @@ class SecondExtension extends PlainExtension {
 class ThirdExtension extends PlainExtension {
   public name = 'third' as const;
 
-  protected createDefaultSettings(): import('..').DefaultSettingsType<{}> {
+  protected createDefaultSettings(): import('..').DefaultExtensionSettings<{}> {
     throw new Error('Method not implemented.');
   }
-  protected createDefaultProperties(): Required<{}> {
+  protected createDefaultProperties() {
     throw new Error('Method not implemented.');
   }
   public createCommands = () => {

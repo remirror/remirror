@@ -335,7 +335,7 @@ export const findSelectedNodeOfType = <
       };
     }
   }
-  return undefined;
+  return;
 };
 
 export interface FindProsemirrorNodeResult<GSchema extends EditorSchema = any>
@@ -454,27 +454,22 @@ interface IsNodeActiveParameter
  * Checks whether the node type passed in is active within the region. Used by
  * extensions to implement the `#active` method.
  *
- * To ignore attrs just leave the attrs object empty or undefined.
- *
- * "Borrowed" from [tiptap](https://github.com/scrumpy/tiptap)
+ * To ignore `attrs` just leave the attrs object empty or undefined.
  *
  * @param params - the destructured node active parameters
  */
-export const isNodeActive = ({
-  state,
-  type,
-  attrs: attributes = object<ProsemirrorAttributes>(),
-}: IsNodeActiveParameter) => {
+export const isNodeActive = ({ state, type, attrs }: IsNodeActiveParameter) => {
   const { selection } = state;
   const predicate = (node: ProsemirrorNode) => node.type === type;
+
   const parent =
     findSelectedNodeOfType({ selection, types: type }) ?? findParentNode({ predicate, selection });
 
-  if (isEmptyObject(attributes) || !parent) {
+  if (!attrs || isEmptyObject(attrs) || !parent) {
     return bool(parent);
   }
 
-  return parent.node.hasMarkup(type, attributes);
+  return parent.node.hasMarkup(type, attrs);
 };
 
 export interface SchemaJSON<GNodes extends string = string, GMarks extends string = string> {

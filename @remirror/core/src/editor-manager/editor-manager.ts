@@ -28,7 +28,6 @@ import {
   InitializeLifecycleReturn,
   ManagerStoreKeys,
   SchemaFromExtensionUnion,
-  setDefaultExtensionSettings,
   ViewLifecycleReturn,
 } from '../extension';
 import { AnyPreset } from '../preset';
@@ -285,7 +284,6 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
     const viewParameter = omit(initializeParameter, ['addPlugins']);
     const createParameter: CreateLifecycleParameter = {
       ...viewParameter,
-      setDefaultExtensionSettings,
       setExtensionStore: (key, value) => {
         invariant(this.#phase <= ManagerPhase.Create, {
           code: ErrorConstant.MANAGER_PHASE_ERROR,
@@ -618,7 +616,7 @@ export class EditorManager<ExtensionUnion extends AnyExtension, PresetUnion exte
  */
 const privacySymbol = Symbol('privacy symbol');
 
-export type AnyEditorManager = EditorManager<AnyExtension, AnyPreset>;
+export type AnyEditorManager = EditorManager<any, any>;
 
 /**
  * Checks to see whether the provided value is an `Manager`.

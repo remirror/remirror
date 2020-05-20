@@ -8,6 +8,7 @@ import {
   AnyExtensionConstructor,
   AnyPresetConstructor,
   Cast,
+  defaultSettings,
   ExtensionConstructorParameter,
   invariant,
   isEqual,
@@ -20,7 +21,7 @@ import {
 /**
  * Validate the shape of your extension.
  */
-export function validateExtension<Type extends AnyExtensionConstructor>(
+export function isExtensionValid<Type extends AnyExtensionConstructor>(
   Extension: Type,
   ...[settings]: ExtensionConstructorParameter<
     SettingsOfConstructor<Type>,
@@ -37,7 +38,7 @@ export function validateExtension<Type extends AnyExtensionConstructor>(
 
   const extension = new Extension(settings);
 
-  const expectedSettings = { ...Extension.defaultSettings, ...settings };
+  const expectedSettings = { ...defaultSettings, ...Extension.defaultSettings, ...settings };
   invariant(isEqual(extension.settings, expectedSettings), {
     message: `Invalid 'defaultSettings' for '${Extension.name}'\n\n${
       diff(extension.settings, expectedSettings) ?? ''
@@ -50,12 +51,14 @@ export function validateExtension<Type extends AnyExtensionConstructor>(
       diff(extension.properties, expectedProperties) ?? ''
     }\n`,
   });
+
+  return true;
 }
 
 /**
  * Validate the shape of your preset.
  */
-export function validatePreset<Type extends AnyPresetConstructor>(
+export function isPresetValid<Type extends AnyPresetConstructor>(
   Preset: Type,
   ...[settings]: PresetConstructorParameter<
     SettingsOfConstructor<Type>,
@@ -85,4 +88,6 @@ export function validatePreset<Type extends AnyPresetConstructor>(
       diff(extension.properties, expectedProperties) ?? ''
     }\n`,
   });
+
+  return true;
 }

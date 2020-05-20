@@ -10,11 +10,11 @@ import { NodeExtension } from '..';
 class CustomExtension extends NodeExtension {
   public name = 'custom' as const;
 
-  protected createDefaultSettings(): import('..').DefaultSettingsType<{}> {
+  protected createDefaultSettings() {
     return {};
   }
 
-  protected createDefaultProperties(): Required<{}> {
+  protected createDefaultProperties() {
     return {};
   }
 

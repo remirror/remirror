@@ -1,7 +1,7 @@
 import { isExtensionValid } from '@remirror/test-fixtures';
 
-import { DocExtension } from '../..';
+import { SchemaExtension } from '..';
 
 test('is valid', () => {
-  expect(isExtensionValid(DocExtension, {}));
+  expect(isExtensionValid(SchemaExtension, {}));
 });

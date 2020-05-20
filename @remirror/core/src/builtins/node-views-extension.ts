@@ -20,11 +20,11 @@ export class NodeViewsExtension extends PlainExtension {
   public readonly name = 'nodeView' as const;
   public readonly defaultPriority = ExtensionPriority.High as const;
 
-  protected createDefaultSettings(): import('../extension').DefaultSettingsType<{}> {
+  protected createDefaultSettings(): import('../extension').DefaultExtensionSettings<{}> {
     return {};
   }
 
-  protected createDefaultProperties(): Required<{}> {
+  protected createDefaultProperties() {
     return {};
   }
 

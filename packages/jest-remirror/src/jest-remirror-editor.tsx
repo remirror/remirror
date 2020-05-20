@@ -28,7 +28,6 @@ import {
   isMarkExtension,
   isNodeExtension,
   object,
-  Of,
   pick,
   ProsemirrorAttributes,
   ProsemirrorNode,
@@ -50,7 +49,7 @@ import {
 import { replaceSelection } from './jest-remirror-utils';
 
 /**
- * Render the editor with the params passed in.
+ * Render the editor for test purposes.
  */
 export function renderEditor<ExtensionUnion extends AnyExtension, PresetUnion extends AnyPreset>(
   parameter: RenderEditorParameter<ExtensionUnion, PresetUnion>,
@@ -61,7 +60,7 @@ export function renderEditor<ExtensionUnion extends AnyExtension, PresetUnion ex
     props,
     settings = object(),
   } = parameter;
-  const corePreset = CorePreset.of();
+  const corePreset = new CorePreset();
 
   const manager = EditorManager.of({
     extensions,
@@ -148,8 +147,8 @@ export class RemirrorTestChain<Manager extends AnyEditorManager> {
   /**
    * The editor view.
    */
-  get view() {
-    return this.#manager.view as TestEditorView<SchemaFromExtensionUnion<GetExtensions<Manager>>>;
+  get view(): TestEditorView {
+    return this.#manager.view as TestEditorView;
   }
 
   /**

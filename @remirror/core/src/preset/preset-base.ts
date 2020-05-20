@@ -289,9 +289,9 @@ export abstract class Preset<Settings extends Shape = {}, Properties extends Sha
    *
    * This method will throw and error if the constructor doesn't exist.
    */
-  public getExtension = <ExtensionConstructor extends this['~E']['constructor']>(
-    Constructor: ExtensionConstructor,
-  ): InstanceType<ExtensionConstructor> => {
+  public getExtension<Type extends this['~E']['constructor']>(
+    Constructor: Type,
+  ): InstanceType<Type> {
     const extension = this.#extensionMap.get(Constructor);
 
     // Throws an error if attempting to get an extension which is not available
@@ -301,8 +301,8 @@ export abstract class Preset<Settings extends Shape = {}, Properties extends Sha
       message: `'${Constructor.name}' does not exist within the preset: '${this.name}'`,
     });
 
-    return extension as InstanceType<ExtensionConstructor>;
-  };
+    return extension as InstanceType<Type>;
+  }
 }
 
 export interface Preset<Settings extends Shape = {}, Properties extends Shape = {}> {

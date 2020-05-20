@@ -20,7 +20,7 @@ export function renderEditorString<
     props,
     settings = object(),
   } = parameter;
-  const corePreset = CorePreset.of();
+  const corePreset = new CorePreset();
 
   const manager = EditorManager.of({
     extensions,

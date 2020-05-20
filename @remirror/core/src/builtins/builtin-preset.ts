@@ -45,7 +45,7 @@ export class BuiltinPreset extends Preset {
     return {};
   }
 
-  protected createDefaultProperties(): Required<{}> {
+  protected createDefaultProperties() {
     return {};
   }
 

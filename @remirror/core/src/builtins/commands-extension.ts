@@ -34,6 +34,9 @@ import { CommandMethod, ExtensionCommandFunction, ExtensionCommandReturn } from 
  * @builtin
  */
 export class CommandsExtension extends PlainExtension {
+  public static readonly defaultSettings = {};
+  public static readonly defaultProperties = {};
+
   public readonly name = 'commands' as const;
 
   public createDefaultSettings() {

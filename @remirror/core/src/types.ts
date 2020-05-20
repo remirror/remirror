@@ -153,8 +153,6 @@ export interface ExtensionStore<Schema extends EditorSchema = EditorSchema>
 
 export type ExtensionCommandFunction = (...args: any[]) => CommandFunction<EditorSchema>;
 
-export type ExtensionIsActiveFunction = (params: Partial<AttributesParameter>) => boolean;
-
 /**
  * The return signature for an extensions command method.
  */

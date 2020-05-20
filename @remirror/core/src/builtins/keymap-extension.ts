@@ -25,11 +25,11 @@ export class KeymapExtension extends PlainExtension {
   public readonly name = 'keymap' as const;
   public readonly defaultPriority = ExtensionPriority.High as const;
 
-  protected createDefaultSettings(): import('../extension').DefaultSettingsType<{}> {
+  protected createDefaultSettings() {
     return {};
   }
 
-  protected createDefaultProperties(): Required<{}> {
+  protected createDefaultProperties() {
     return {};
   }
 

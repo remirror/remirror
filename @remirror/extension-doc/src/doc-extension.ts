@@ -1,4 +1,4 @@
-import { DefaultSettingsType, NodeExtension } from '@remirror/core';
+import { DefaultExtensionSettings, NodeExtension } from '@remirror/core';
 
 export interface DocExtensionSettings {
   /**
@@ -45,7 +45,7 @@ export interface DocExtensionSettings {
  * @core
  */
 export class DocExtension extends NodeExtension<DocExtensionSettings> {
-  public static defaultSettings: DefaultSettingsType<DocExtensionSettings> = {
+  public static defaultSettings: DefaultExtensionSettings<DocExtensionSettings> = {
     content: 'block+',
   };
 
